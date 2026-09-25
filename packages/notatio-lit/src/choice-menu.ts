@@ -27,8 +27,7 @@ export const LONG_PRESS_MS = 750;
 /** Pointer travel a press may make and still count as a press rather than a drag. */
 export const PRESS_SLOP_PX = 4;
 
-const escape = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escape = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** An entry as it appears in a grip or a menu: typeset when it is a value, prose when a word. */
 export async function entryMarkup(source: string): Promise<string> {

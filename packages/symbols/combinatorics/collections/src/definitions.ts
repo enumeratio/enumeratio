@@ -62,12 +62,8 @@ export const DEFINITIONS: Readonly<Record<string, MathJSON>> = {
   Excedances: perPosition(howMany(positions, ["Greater", here, "i"])),
   Antiexcedances: perPosition(howMany(positions, ["Less", here, "i"])),
 
-  Peaks: perInteriorPoint(
-    howMany(strictInterior, ["And", ["Less", previous, here], ["Greater", here, next]]),
-  ),
-  Valleys: perInteriorPoint(
-    howMany(strictInterior, ["And", ["Greater", previous, here], ["Less", here, next]]),
-  ),
+  Peaks: perInteriorPoint(howMany(strictInterior, ["And", ["Less", previous, here], ["Greater", here, next]])),
+  Valleys: perInteriorPoint(howMany(strictInterior, ["And", ["Greater", previous, here], ["Less", here, next]])),
 
   /** A left-to-right maximum: nothing before it is larger. */
   Records: perPosition(howMany(positions, ["Equal", here, ["Max", ["Take", "_p", "i"]]])),
@@ -78,11 +74,7 @@ export const DEFINITIONS: Readonly<Record<string, MathJSON>> = {
     [
       "Map",
       // The inner filter binds `j`, so the outer `i` stays visible inside it.
-      [
-        "Function",
-        howMany(["Range", ["Add", "i", 1], length], ["Greater", here, at("j")], "j"),
-        "i",
-      ],
+      ["Function", howMany(["Range", ["Add", "i", 1], length], ["Greater", here, at("j")], "j"), "i"],
       positions,
     ],
   ]),

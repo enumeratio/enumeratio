@@ -38,8 +38,6 @@ examples:
     expected: [DirichletEta, [Rational, 1, 2]]
     category: Possible issues
     caption: An exact non-integer argument stays symbolic until N()
-    divergence:
-      wolfram: An exact non-integer argument stays symbolic here; Wolfram rewrites it as $(1-\sqrt2)\zeta(1/2)$ instead.
   - id: numeric-for-a-floating-point-argument
     expr: [DirichletEta, 1.5]
     expected: { num: "0.765147024625407945367" }
@@ -64,8 +62,6 @@ examples:
       ]
     category: Scope
     caption: Threads elementwise over an array
-    divergence:
-      wolfram: Wolfram also threads, but rewrites $\eta(\tfrac12)$ as $(1-\sqrt2)\zeta(\tfrac12)$.
   - id: eta-s-to-1-as-s-to-infty
     expr: [DirichletEta, PositiveInfinity]
     expected: 1

@@ -1,18 +1,5 @@
 import { BigDecimal } from "@cortex-js/compute-engine";
-import {
-  type Ball,
-  add,
-  certify,
-  div,
-  exact,
-  ln,
-  lower,
-  mul,
-  powInt,
-  rational,
-  sub,
-  upper,
-} from "./ball.ts";
+import { type Ball, add, certify, div, exact, ln, lower, mul, powInt, rational, sub, upper } from "./ball.ts";
 import { bernoulliRational } from "./bernoulli.ts";
 import { atDigits } from "./bigzeta.ts";
 
@@ -49,11 +36,7 @@ const TAIL_ATTEMPTS = 3;
 const TWO_PI_BELOW = new BigDecimal("6.283");
 
 /** γ_n(a) to `digits` significant digits, or undefined for a ≤ 0 or a negative or non-integer n. */
-export function stieltjesGammaBig(
-  n: number,
-  a: BigDecimal,
-  digits: number,
-): BigDecimal | undefined {
+export function stieltjesGammaBig(n: number, a: BigDecimal, digits: number): BigDecimal | undefined {
   return stieltjesGammaBall(n, exact(a), digits)?.mid;
 }
 
@@ -68,9 +51,7 @@ export function stieltjesGammaBall(n: number, a: Ball, digits: number): Ball | u
     const xd = terms + ad;
     // The partial sum and the subtracted log power are each ~ln^{n+1}(x)/(n+1), and cancel.
     const cancelled = Math.max(0, (n + 1) * Math.log10(Math.log(xd)) - Math.log10(n + 1));
-    const r = atDigits(target + Math.ceil(cancelled), () =>
-      certify(() => eulerMaclaurin(n, a, terms)),
-    );
+    const r = atDigits(target + Math.ceil(cancelled), () => certify(() => eulerMaclaurin(n, a, terms)));
     if (r !== undefined) return r;
     // The Bernoulli terms turned before reaching the digits the cancellation and a small
     // γ_n(a) call for: move the tail point out.
@@ -162,5 +143,4 @@ const times = (p: readonly bigint[], c: bigint): bigint[] =>
   Array.from({ length: p.length + 1 }, (_, i) => (p[i - 1] ?? 0n) - c * (p[i] ?? 0n));
 
 /** log10 |x|, or −∞ for 0. */
-const log10Abs = (x: BigDecimal): number =>
-  x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber()));
+const log10Abs = (x: BigDecimal): number => (x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber())));

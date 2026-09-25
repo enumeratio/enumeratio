@@ -11,11 +11,7 @@ import {
 } from "../src/collection-table.ts";
 
 test("columns split at top-level commas only", () => {
-  expect(splitColumns("Descents, Part(_, 1), Max(_) - Min(_)")).toEqual([
-    "Descents",
-    "Part(_, 1)",
-    "Max(_) - Min(_)",
-  ]);
+  expect(splitColumns("Descents, Part(_, 1), Max(_) - Min(_)")).toEqual(["Descents", "Part(_, 1)", "Max(_) - Min(_)"]);
   expect(splitColumns("")).toEqual([]);
 });
 
@@ -26,14 +22,10 @@ test("a bare head is shorthand for applying it to the row", () => {
 
 test("the row wildcard is substituted in both MathJSON encodings", () => {
   const row = ["List", 3, 1, 2] as const;
-  expect(substituteRow(["Equal", ["Descents", "_"], 1], row)).toEqual([
-    "Equal",
-    ["Descents", row],
-    1,
-  ]);
-  expect(
-    substituteRow({ fn: ["Length", { sym: "_", sourceOffsets: [7, 8] }] } as never, row),
-  ).toEqual({ fn: ["Length", row] });
+  expect(substituteRow(["Equal", ["Descents", "_"], 1], row)).toEqual(["Equal", ["Descents", row], 1]);
+  expect(substituteRow({ fn: ["Length", { sym: "_", sourceOffsets: [7, 8] }] } as never, row)).toEqual({
+    fn: ["Length", row],
+  });
 });
 
 test("counts are exact below 2^53 and flagged approximate above", () => {

@@ -17,9 +17,7 @@ test("NSym multiplies by concatenating", () => {
   same(times(H(2), H(1, 3)), H(2, 1, 3));
   same(times(H(1), H(1)), H(1, 1));
   // And it is NOT commutative — that is what the name records.
-  expect(ce.box(times(H(1), H(2))).evaluate().json).not.toEqual(
-    ce.box(times(H(2), H(1))).evaluate().json,
-  );
+  expect(ce.box(times(H(1), H(2))).evaluate().json).not.toEqual(ce.box(times(H(2), H(1))).evaluate().json);
 });
 
 test("QSym multiplies by quasi-shuffling", () => {
@@ -41,13 +39,9 @@ test("the coproduct returns tensor pairs", () => {
       .map((t) => JSON.stringify(t))
       .sort();
   };
-  expect(terms(["Coproduct", H(2)])).toEqual(
-    terms(["Add", T(H(), H(2)), T(H(1), H(1)), T(H(2), H())]),
-  );
+  expect(terms(["Coproduct", H(2)])).toEqual(terms(["Add", T(H(), H(2)), T(H(1), H(1)), T(H(2), H())]));
   // Δ(M_{1,2}) is deconcatenation: three terms, splitting the composition each way.
-  expect(terms(["Coproduct", M(1, 2)])).toEqual(
-    terms(["Add", T(M(), M(1, 2)), T(M(1), M(2)), T(M(1, 2), M())]),
-  );
+  expect(terms(["Coproduct", M(1, 2)])).toEqual(terms(["Add", T(M(), M(1, 2)), T(M(1), M(2)), T(M(1, 2), M())]));
 });
 
 test("the antipode, and S² = id on the commutative one", () => {

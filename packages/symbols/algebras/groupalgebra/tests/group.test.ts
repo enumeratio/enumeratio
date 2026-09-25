@@ -38,9 +38,7 @@ test("the multiplication tables really are groups", () => {
       expect(inverse(g, i), `${g.name} inverse of ${i}`).toBeDefined();
       for (let j = 0; j < n; j++) {
         for (let k = 0; k < n; k++) {
-          expect(g.multiply(g.multiply(i, j), k), `${g.name} associativity`).toBe(
-            g.multiply(i, g.multiply(j, k)),
-          );
+          expect(g.multiply(g.multiply(i, j), k), `${g.name} associativity`).toBe(g.multiply(i, g.multiply(j, k)));
         }
       }
     }
@@ -145,9 +143,7 @@ test("k[Z_n] multiplies by adding indices mod n — it is k[x]/(x^n − 1)", () 
   const g = cyclicGroup(n)!;
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
-      expect(show(multiplyElements(g, basisElement(i), basisElement(j)))).toEqual([
-        [(i + j) % n, 1],
-      ]);
+      expect(show(multiplyElements(g, basisElement(i), basisElement(j)))).toEqual([[(i + j) % n, 1]]);
     }
   }
   // (1 + x)(1 + x^5) in k[Z_6] = 1 + x + x^5 + x^0 = 2 + x + x^5.
@@ -172,10 +168,9 @@ test("the group algebra's product is associative", () => {
     for (const a of sample) {
       for (const b of sample) {
         for (const c of sample.slice(0, 4)) {
-          expect(
-            show(multiplyElements(g, multiplyElements(g, a, b), c)),
-            `${g.name} associativity`,
-          ).toEqual(show(multiplyElements(g, a, multiplyElements(g, b, c))));
+          expect(show(multiplyElements(g, multiplyElements(g, a, b), c)), `${g.name} associativity`).toEqual(
+            show(multiplyElements(g, a, multiplyElements(g, b, c))),
+          );
         }
       }
     }

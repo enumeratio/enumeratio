@@ -93,9 +93,7 @@ test("the Lorenz knots that ARE torus knots are the ones with rotation permutati
     const n = word.length;
     const [a, b] = [step, n - step];
     const expected = a === 1 || b === 1 ? "1" : format(normalise(torusAlexander(a, b)!));
-    expect(format(alexanderPolynomial(lorenzBraid(word)!)!), `${word} vs T(${a},${b})`).toBe(
-      expected,
-    );
+    expect(format(alexanderPolynomial(lorenzBraid(word)!)!), `${word} vs T(${a},${b})`).toBe(expected);
   }
   expect(found).toBeGreaterThan(10); // not a vacuous test
 });
@@ -143,13 +141,9 @@ test("the first few genuinely knotted geodesics", () => {
   expect(positiveBraidGenus(lorenzBraid("LLRLR")!)).toBe(1);
   expect(crossings(lorenzBraid("LLRLR")!)).toBe(6);
   // …and it is the same trefoil the torus braid gives, by a completely different route.
-  expect(format(alexanderPolynomial(lorenzBraid("LLRLR")!)!)).toBe(
-    format(alexanderPolynomial(torusBraid(2, 3)!)!),
-  );
+  expect(format(alexanderPolynomial(lorenzBraid("LLRLR")!)!)).toBe(format(alexanderPolynomial(torusBraid(2, 3)!)!));
   // The next one up is the (2,5) torus knot, at length 7.
-  expect(format(alexanderPolynomial(lorenzBraid("LLLRLLR")!)!)).toBe(
-    format(normalise(torusAlexander(2, 5)!)),
-  );
+  expect(format(alexanderPolynomial(lorenzBraid("LLLRLLR")!)!)).toBe(format(normalise(torusAlexander(2, 5)!)));
 });
 
 test("degenerate words yield nothing", () => {

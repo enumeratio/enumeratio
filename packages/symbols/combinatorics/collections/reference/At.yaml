@@ -61,8 +61,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: An out-of-range index evaluates to $NaN$ rather than raising an error
-    divergence:
-      wolfram: An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).
   - id: list-a-b-c-d-list-3
     expr: [At, [List, a, b, c, d], 3]
     expected: c
@@ -102,8 +100,7 @@ examples:
     category: Scope
     caption: $All$ at the first level takes a whole column
   - id: index-lists-at-two-levels-extract-a-submatrix
-    expr:
-      [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [List, 1, 3], [List, 2, 3]]
+    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [List, 1, 3], [List, 2, 3]]
     expected: [List, [List, 2, 3], [List, 8, 9]]
     category: Scope
     caption: Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3)

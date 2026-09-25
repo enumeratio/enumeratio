@@ -95,8 +95,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
     ]);
 
   /** The same blocks, spelt with the orbit head. */
-  const orbitExpression = (d: Diagram): BoxedExpression =>
-    ce.function("OrbitDiagram", operandsOf(toExpression(d)));
+  const orbitExpression = (d: Diagram): BoxedExpression => ce.function("OrbitDiagram", operandsOf(toExpression(d)));
 
   // The carrier normalises itself. A diagram has one canonical spelling — blocks
   // sorted, and sorted among themselves — so that a hand-written diagram and a computed
@@ -126,10 +125,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
     const body = toExpression(current);
     return loops === 0
       ? body
-      : ce.function("Multiply", [
-          ce.function("Power", [ce.symbol(LOOP_PARAMETER), ce.number(loops)]),
-          body,
-        ]);
+      : ce.function("Multiply", [ce.function("Power", [ce.symbol(LOOP_PARAMETER), ce.number(loops)]), body]);
   };
 
   // Everything shared lives on the seam: Basis, AlgebraDimension, the ordered product
@@ -160,9 +156,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
       if (inner === undefined) return undefined;
       return {
         head: inner.head,
-        element: algebraElement(
-          [...inner.element.values()].map((v) => [v.diagram, -v.coefficient] as const),
-        ),
+        element: algebraElement([...inner.element.values()].map((v) => [v.diagram, -v.coefficient] as const)),
       };
     }
     if (expr.operator === "Add") {
@@ -173,9 +167,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
       return {
         head,
         element: algebraElement(
-          parts.flatMap((p) =>
-            [...p.element.values()].map((v) => [v.diagram, v.coefficient] as const),
-          ),
+          parts.flatMap((p) => [...p.element.values()].map((v) => [v.diagram, v.coefficient] as const)),
         ),
       };
     }
@@ -190,21 +182,14 @@ export function declareDiagrams(ce: ComputeEngine): void {
       const one = carried[0] as NonNullable<(typeof parts)[number]>;
       return {
         head: one.head,
-        element: algebraElement(
-          [...one.element.values()].map((v) => [v.diagram, v.coefficient * factor] as const),
-        ),
+        element: algebraElement([...one.element.values()].map((v) => [v.diagram, v.coefficient * factor] as const)),
       };
     }
     return undefined;
   };
 
-  const writeAlgebra = (
-    head: "Diagram" | "OrbitDiagram",
-    value: AlgebraElement,
-  ): BoxedExpression => {
-    const terms = [...value.values()].sort((a, b) =>
-      diagramKey(a.diagram) < diagramKey(b.diagram) ? -1 : 1,
-    );
+  const writeAlgebra = (head: "Diagram" | "OrbitDiagram", value: AlgebraElement): BoxedExpression => {
+    const terms = [...value.values()].sort((a, b) => (diagramKey(a.diagram) < diagramKey(b.diagram) ? -1 : 1));
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map(({ diagram: d, coefficient }) => {
       const b = head === "Diagram" ? toExpression(d) : orbitExpression(d);
@@ -221,8 +206,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
         const read = ops[0] === undefined ? undefined : readAlgebra(ops[0]);
         if (read === undefined) return undefined;
         if (read.head === into) return writeAlgebra(into, read.element);
-        const converted =
-          into === "Diagram" ? orbitToDiagram(read.element) : diagramToOrbit(read.element);
+        const converted = into === "Diagram" ? orbitToDiagram(read.element) : diagramToOrbit(read.element);
         return writeAlgebra(into, converted);
       },
     });
@@ -247,8 +231,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
   ce.declare("DiagramCoarsenings", {
     signature: "(number) -> list",
     evaluate: (ops: readonly BoxedExpression[]) => {
-      const d =
-        ops[0] === undefined ? undefined : diagramOf(ce.function("Diagram", operandsOf(ops[0])));
+      const d = ops[0] === undefined ? undefined : diagramOf(ce.function("Diagram", operandsOf(ops[0])));
       return d === undefined ? undefined : ce.function("List", coarsenings(d).map(toExpression));
     },
   });
@@ -263,9 +246,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
     },
     dimension: (expr) => {
       const algebra = algebraOf(expr);
-      return algebra === undefined
-        ? undefined
-        : ce.number(dimensionOf(algebra.cls, algebra.strands));
+      return algebra === undefined ? undefined : ce.number(dimensionOf(algebra.cls, algebra.strands));
     },
     product: (ops) => {
       const diagrams = ops.map(diagramOf);

@@ -14,24 +14,13 @@ export const GROUPS: Readonly<Record<string, readonly string[]>> = {
   arithmetic: ["residues", "numerals", "number-theory", "adeles"],
   analysis: ["analytic"],
   combinatorics: ["collections", "statistics", "domains", "polytope"],
-  algebras: [
-    "algebra",
-    "hypercomplex",
-    "geometric",
-    "diagram",
-    "groupalgebra",
-    "hecke",
-    "hopf",
-    "incidence",
-    "quiver",
-  ],
+  algebras: ["algebra", "hypercomplex", "geometric", "diagram", "groupalgebra", "hecke", "hopf", "incidence", "quiver"],
   groups: ["braid", "modular"],
   evaluation: ["aestimatio"],
 };
 
 const root = fileURLToPath(new URL("../../../../", import.meta.url));
-const git = (...args: string[]): string =>
-  execFileSync("git", args, { cwd: root, encoding: "utf8" });
+const git = (...args: string[]): string => execFileSync("git", args, { cwd: root, encoding: "utf8" });
 
 const moves = Object.entries(GROUPS).flatMap(([group, pkgs]) =>
   pkgs.map((pkg) => ({ pkg, to: `packages/symbols/${group}/${pkg}` })),
@@ -77,11 +66,7 @@ for (const file of files) {
 
 // Relative paths that climb out of a moved package: two levels deeper now.
 const deeper = [
-  [
-    "packages/symbols/combinatorics/collections/tests/definitions-core.test.ts",
-    '"../../.."',
-    '"../../../../.."',
-  ],
+  ["packages/symbols/combinatorics/collections/tests/definitions-core.test.ts", '"../../.."', '"../../../../.."'],
 ] as const;
 for (const [file, from, to] of deeper) {
   const path = `${root}${file}`;
@@ -91,12 +76,6 @@ for (const [file, from, to] of deeper) {
 }
 
 const ws = `${root}pnpm-workspace.yaml`;
-writeFileSync(
-  ws,
-  readFileSync(ws, "utf8").replace(
-    "  - packages/*\n",
-    "  - packages/*\n  - packages/symbols/*/*\n",
-  ),
-);
+writeFileSync(ws, readFileSync(ws, "utf8").replace("  - packages/*\n", "  - packages/*\n  - packages/symbols/*/*\n"));
 
 console.log(`${moves.length} packages moved, ${touched} files rewritten`);

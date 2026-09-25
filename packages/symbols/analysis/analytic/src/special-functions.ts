@@ -1,9 +1,4 @@
-import {
-  type BoxedExpression,
-  type ComputeEngine,
-  isNumber,
-  isSymbol,
-} from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
 import { barnesG, logBarnesG } from "./barnes-g.ts";
 import { bernoulliPolyExpr } from "./bernoulli.ts";
 import { type BoxInput, type EvalOptions, isFiniteNum, isRealInt, numberResult } from "./box.ts";
@@ -40,8 +35,7 @@ const box = (ce: ComputeEngine, expr: Json): BoxedExpression => ce.box(expr as u
 const json = (x: BoxedExpression): Json => x.json as unknown as Json;
 
 /** Evaluate `expr` the way the caller asked — to a number or symbolically. */
-const finish = (expr: BoxedExpression, numeric: boolean): BoxedExpression =>
-  numeric ? expr.N() : expr.evaluate();
+const finish = (expr: BoxedExpression, numeric: boolean): BoxedExpression => (numeric ? expr.N() : expr.evaluate());
 
 const isNonPosInt = (x: BoxedExpression): boolean => isRealInt(x) && x.re <= 0;
 
@@ -79,8 +73,7 @@ const bigint = (v: bigint): Json => ({ num: v.toString() });
 function evaluateLogGamma(ce: ComputeEngine, z: BoxedExpression, numeric: boolean) {
   if (isNonPosInt(z)) return ce.symbol("PositiveInfinity"); // Wolfram: Infinity at the poles
   if (isRealInt(z)) return finish(box(ce, ["Ln", ["Factorial", z.re - 1]]), numeric);
-  if (!numeric && z.im === 0 && z.re === 0.5)
-    return box(ce, ["Divide", ["Ln", "Pi"], 2]).evaluate();
+  if (!numeric && z.im === 0 && z.re === 0.5) return box(ce, ["Divide", ["Ln", "Pi"], 2]).evaluate();
   // z > 0: compute-engine's own GammaLn agrees with the continuation there, and carries
   // arbitrary precision where the double kernel below is stuck at ~1e-15. Left of the origin
   // the continuation is complex (GammaLn keeps the real part but drops the winding, which is
@@ -115,12 +108,7 @@ function evaluateBarnesG(ce: ComputeEngine, z: BoxedExpression, numeric: boolean
   return undefined;
 }
 
-function evaluateClausen(
-  ce: ComputeEngine,
-  n: BoxedExpression,
-  theta: BoxedExpression,
-  numeric: boolean,
-) {
+function evaluateClausen(ce: ComputeEngine, n: BoxedExpression, theta: BoxedExpression, numeric: boolean) {
   if (!isRealInt(n) || n.re < 1) return undefined;
   const even = n.re % 2 === 0;
   // Cl_n(0): 0 for the sine series, ζ(n) for the cosine one (and Cl₁(0) = ∞).
@@ -166,11 +154,7 @@ function evaluateEta(ce: ComputeEngine, s: BoxedExpression, numeric: boolean) {
   if (numeric && isFiniteNum(s) && s.im === 0) {
     const viaZeta = atEnginePrecision(
       ce,
-      box(ce, [
-        "Multiply",
-        ["Subtract", 1, ["Power", 2, ["Subtract", 1, json(s)]]],
-        ["Zeta", json(s)],
-      ]).N(),
+      box(ce, ["Multiply", ["Subtract", 1, ["Power", 2, ["Subtract", 1, json(s)]]], ["Zeta", json(s)]]).N(),
     );
     if (viaZeta !== undefined) return viaZeta;
   }
@@ -205,11 +189,7 @@ function evaluateBeta(ce: ComputeEngine, s: BoxedExpression, numeric: boolean) {
       box(ce, [
         "Multiply",
         ["Power", 4, ["Negate", json(s)]],
-        [
-          "Subtract",
-          ["HurwitzZeta", json(s), ["Rational", 1, 4]],
-          ["HurwitzZeta", json(s), ["Rational", 3, 4]],
-        ],
+        ["Subtract", ["HurwitzZeta", json(s), ["Rational", 1, 4]], ["HurwitzZeta", json(s), ["Rational", 3, 4]]],
       ]).N(),
     );
     if (viaHurwitz !== undefined) return viaHurwitz;
@@ -222,12 +202,7 @@ function evaluateBeta(ce: ComputeEngine, s: BoxedExpression, numeric: boolean) {
  * head declines. */
 export const STIELTJES_MAX_ORDER = 30;
 
-function evaluateStieltjes(
-  ce: ComputeEngine,
-  n: BoxedExpression,
-  a: BoxedExpression | undefined,
-  numeric: boolean,
-) {
+function evaluateStieltjes(ce: ComputeEngine, n: BoxedExpression, a: BoxedExpression | undefined, numeric: boolean) {
   if (!isRealInt(n) || n.re < 0) return undefined;
   if (a === undefined) {
     if (n.re === 0) return finish(ce.symbol("EulerGamma"), numeric);
@@ -309,11 +284,7 @@ function evaluateDirichletL(
   // compute-engine cannot evaluate numerically; those fall through to the kernel.
   const complexS = isFiniteNum(s) && s.im !== 0;
   if (j.re === 1 && !complexS) {
-    const factors = primeFactors(m).map((p): Json => [
-      "Subtract",
-      1,
-      ["Power", p, ["Negate", sJson]],
-    ]);
+    const factors = primeFactors(m).map((p): Json => ["Subtract", 1, ["Power", p, ["Negate", sJson]]]);
     return finish(box(ce, ["Multiply", ["Zeta", sJson], ...factors]), numeric);
   }
   // The odd character mod 4 IS the Dirichlet beta function.
@@ -329,10 +300,7 @@ function evaluateDirichletL(
       terms.push(["Multiply", chi, bernoulliPolyExpr(n + 1, ["Rational", r, m])]);
     }
     const total: Json = terms.length === 1 ? terms[0] : ["Add", ...terms];
-    return finish(
-      box(ce, ["Negate", ["Divide", ["Multiply", ["Power", m, n], total], n + 1]]),
-      numeric,
-    );
+    return finish(box(ce, ["Negate", ["Divide", ["Multiply", ["Power", m, n], total], n + 1]]), numeric);
   }
 
   if (numeric && isFiniteNum(s)) return numberResult(ce, dirichletL(m, j.re, cx(s.re, s.im)));
@@ -340,8 +308,7 @@ function evaluateDirichletL(
 }
 
 /** A float literal operand — a float in means a float out, as CE's own handlers behave. */
-const inexact = (x: BoxedExpression): boolean =>
-  (x as Partial<{ isExact: boolean }>).isExact === false;
+const inexact = (x: BoxedExpression): boolean => (x as Partial<{ isExact: boolean }>).isExact === false;
 
 /** The evaluate option plus the float-operand rule, as one flag. */
 const wants = (ops: readonly BoxedExpression[], options: EvalOptions): boolean =>
@@ -354,17 +321,14 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
       type: "real",
       isConstant: true,
       holdUntil: "N",
-      value: ce.number(
-        "0.9159655941772190150546035149323841107741493742816721342664981196217630197762547694794",
-      ),
+      value: ce.number("0.9159655941772190150546035149323841107741493742816721342664981196217630197762547694794"),
     });
   }
 
   ce.declare("LogGamma", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops, options) =>
-      ops[0] === undefined ? undefined : evaluateLogGamma(ce, ops[0], wants(ops, options)),
+    evaluate: (ops, options) => (ops[0] === undefined ? undefined : evaluateLogGamma(ce, ops[0], wants(ops, options))),
   });
 
   ce.declare("BarnesG", {
@@ -392,15 +356,13 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
   ce.declare("DirichletEta", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops, options) =>
-      ops[0] === undefined ? undefined : evaluateEta(ce, ops[0], wants(ops, options)),
+    evaluate: (ops, options) => (ops[0] === undefined ? undefined : evaluateEta(ce, ops[0], wants(ops, options))),
   });
 
   ce.declare("DirichletBeta", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops, options) =>
-      ops[0] === undefined ? undefined : evaluateBeta(ce, ops[0], wants(ops, options)),
+    evaluate: (ops, options) => (ops[0] === undefined ? undefined : evaluateBeta(ce, ops[0], wants(ops, options))),
   });
 
   ce.declare("DirichletCharacter", {
@@ -480,8 +442,7 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
 
   ce.declare("XGCD", {
     signature: "(integer, integer) -> tuple<integer, integer, integer>",
-    evaluate: (ops) =>
-      ops[0] === undefined || ops[1] === undefined ? undefined : evaluateXGCD(ce, ops[0], ops[1]),
+    evaluate: (ops) => (ops[0] === undefined || ops[1] === undefined ? undefined : evaluateXGCD(ce, ops[0], ops[1])),
   });
 
   ce.declare("Csgn", {

@@ -50,18 +50,9 @@ examples:
   - id: exact-at-the-integers-ln-g-10-ln
     expr: [LogBarnesG, 10]
     expected:
-      [
-        Add,
-        [Multiply, 2, [Ln, 14]],
-        [Multiply, 3, [Ln, 10]],
-        [Multiply, 9, [Ln, 3]],
-        [Multiply, 18, [Ln, 2]],
-        [Ln, 5],
-      ]
+      [Add, [Multiply, 2, [Ln, 14]], [Multiply, 3, [Ln, 10]], [Multiply, 9, [Ln, 3]], [Multiply, 18, [Ln, 2]], [Ln, 5]]
     category: Properties
     caption: 'Exact at the integers: $\ln G(10) = \ln 5056584744960000$, split into logarithms of its factors'
-    divergence:
-      wolfram: Wolfram keeps a single logarithm, Log[5056584744960000].
   - id: the-continuation-not-ln-of-the-value-g-2-5-0-yet
     expr: [LogBarnesG, -2.5]
     expected: [Complex, -2.5747484768528466, 18.84955592153876]

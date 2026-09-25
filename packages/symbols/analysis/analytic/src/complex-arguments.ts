@@ -9,8 +9,7 @@ import { digamma } from "./polygamma.ts";
 // package's complex kernels: ψ(z) directly, and B(a, b) = exp(lnΓ(a) + lnΓ(b) − lnΓ(a + b)).
 // Numeric only, as for real arguments: a float in, or N() asked.
 
-const isComplexValue = (op: BoxedExpression | undefined): boolean =>
-  op !== undefined && isFiniteNum(op) && op.im !== 0;
+const isComplexValue = (op: BoxedExpression | undefined): boolean => op !== undefined && isFiniteNum(op) && op.im !== 0;
 
 export function declareComplexArguments(ce: ComputeEngine): void {
   wrapOperator(

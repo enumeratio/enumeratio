@@ -186,9 +186,8 @@ test("NarcissisticNumbers matches A005188 (excluding 0) for its safe-integer-rep
   expect(entry).toBeDefined();
   if (!entry) return;
   const oeisPrefix = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1634, 8208, 9474, 54748, 92727, 93084, 548834,
-    1741725, 4210818, 9800817, 9926315, 24678050, 24678051, 88593477, 146511208, 472335975,
-    534494836,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1634, 8208, 9474, 54748, 92727, 93084, 548834, 1741725, 4210818,
+    9800817, 9926315, 24678050, 24678051, 88593477, 146511208, 472335975, 534494836,
   ];
   const got = oeisPrefix.map((_, r) => entry.unrank([], r));
   expect(got).toEqual(oeisPrefix);
@@ -219,7 +218,7 @@ test("NarcissisticNumbers matches an independent digit-power-sum predicate for i
 
 test("NarcissisticNumbers.unrank returns exact bigint past the safe-integer prefix, never NaN (issue #90)", () => {
   // Past the 43rd term, unrank used to answer NaN -- a known value the `number` element
-  // couldn't carry, but one that made every large pair collide under quickcheck's
+  // couldn't carry, but one that made every large pair collide under Plausible's
   // JSON.stringify-keyed injectivity check (NaN -> "null" for all of them). Now it returns
   // the exact bigint instead, so every rank stays distinct.
   const entry = byHead.get("NarcissisticNumbers");
@@ -411,9 +410,7 @@ test("Element membership on TwinPrimes and SmithNumbers", () => {
 });
 
 test("Take(NarcissisticNumbers, 10) gives the first ten Armstrong numbers", () => {
-  expect(ce.box(["Take", "NarcissisticNumbers", 10]).evaluate().toString()).toBe(
-    "[1,2,3,4,5,6,7,8,9,153]",
-  );
+  expect(ce.box(["Take", "NarcissisticNumbers", 10]).evaluate().toString()).toBe("[1,2,3,4,5,6,7,8,9,153]");
 });
 
 test("Count(NarcissisticNumbers) is the exact 88 through the engine", () => {

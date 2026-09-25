@@ -18,8 +18,7 @@ examples:
     expr: [Union, [List, 1, 2], [List, 2, 3], [List, 3, 4]]
     expected: [Set, 1, 2, 3, 4]
   - id: union-is-commutative-argument-order-doesn-t
-    expr:
-      [Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]
+    expr: [Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]
     expected: True
     category: Properties
     caption: "$Union$ is commutative: argument order doesn't matter"
@@ -71,15 +70,11 @@ examples:
     expected: [Set, [List, 1, 2], [List, 1, 2, 3], [List, 2, 1], [List, 3, 2, 1]]
     category: Scope
     caption: Elements can themselves be lists; $\{1, 2\}$ and $\{2, 1\}$ stay distinct
-    divergence:
-      wolfram: "Wolfram sorts the result into canonical order, shorter lists first: {{1, 2}, {2, 1}, {1, 2, 3}, {3, 2, 1}}."
   - id: with-no-arguments-the-union-is-empty
     expr: [Union]
     expected: EmptySet
     category: Scope
     caption: With no arguments, the union is empty
-    divergence:
-      wolfram: Union[] is the empty list {} in Wolfram.
   - id: the-empty-set-is-the-identity-for-union-a-cup
     expr: [Union, [Set, 1, 2], EmptySet]
     expected: [Set, 1, 2]

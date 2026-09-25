@@ -1,0 +1,30 @@
+in-process-the-call-simply-does-not-reduce-see:
+  epsil:
+    in: MemoryConstrained(1 + 2, 1_000_000)
+    out: MemoryConstrained(1 + 2, 1_000_000)
+  tex:
+    in: \mathrm{MemoryConstrained}(1+2, 1\,000\,000)
+    out: \mathrm{MemoryConstrained}(1+2, 1\,000\,000)
+  fullform:
+    in: MemoryConstrained[Plus[1, 2], 1000000]
+  wolfram:
+    in: MemoryConstrained[Plus[1, 2], 1000000]
+    out: "3"
+    tex:
+      in: \text{MemoryConstrained}[1+2,1000000]
+      out: "3"
+    verdict: disagree
+    kind: unevaluated
+    note: Wolfram enforces the cap in-kernel and evaluates to 3.
+a-failexpr-does-not-change-that-in-process-there:
+  epsil:
+    in: MemoryConstrained(1 + 2, 1_000_000, -1)
+    out: MemoryConstrained(1 + 2, 1_000_000, -1)
+  tex:
+    in: \mathrm{MemoryConstrained}(1+2, 1\,000\,000, -1)
+    out: \mathrm{MemoryConstrained}(1+2, 1\,000\,000, -1)
+  fullform:
+    in: MemoryConstrained[Plus[1, 2], 1000000, -1]
+  wolfram:
+    in: MemoryConstrained[Plus[1, 2], 1000000, -1]
+    note: Wolfram evaluates to 3, returning failexpr only if the cap is exceeded.

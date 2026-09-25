@@ -41,8 +41,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: Negative even arguments hit a pole in the recurrence (the $(0)!!/0$ term is undefined), so compute-engine returns NaN
-    divergence:
-      wolfram: The pole at a negative even argument is NaN here and ComplexInfinity in Wolfram.
   - id: 15-2-027-025-already-past-two-million-despite
     expr: [Factorial2, 15]
     expected: 2027025
@@ -67,8 +65,7 @@ examples:
     category: Properties
     caption: 'Even double factorials: $(2n)!! = 2^n\,n!$'
   - id: odd-double-factorials-2n-1-frac-2n-2-n-n
-    expr:
-      [Equal, [Factorial2, 9], [Divide, [Factorial, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]]
+    expr: [Equal, [Factorial2, 9], [Divide, [Factorial, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]]
     expected: True
     category: Properties
     caption: 'Odd double factorials: $(2n-1)!! = \frac{(2n)!}{2^n\,n!}$'

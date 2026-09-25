@@ -71,8 +71,7 @@ elif kernel.returncode != 0:
     print("<<%d>>!!KernelDied: exit %d" % (last + 1, kernel.returncode), flush=True)
 `;
 
-const failAll = (count: number, reason: string): Result[] =>
-  Array.from({ length: count }, () => ({ error: reason }));
+const failAll = (count: number, reason: string): Result[] => Array.from({ length: count }, () => ({ error: reason }));
 
 /** A directory beside this package (a Julia environment, the Lake project). */
 const local = (name: string): string => fileURLToPath(new URL(`../${name}`, import.meta.url));
@@ -86,8 +85,7 @@ async function transcript(
 ): Promise<{ out: string } | { reason: string }> {
   try {
     const run = await runBounded(command, args, { timeoutMs: 900_000, ...bounds });
-    if (run.stdout !== "" || (run.killed === undefined && run.code === 0))
-      return { out: run.stdout };
+    if (run.stdout !== "" || (run.killed === undefined && run.code === 0)) return { out: run.stdout };
     const why =
       run.killed === undefined
         ? `exit ${run.code}: ${run.stderr.slice(0, 120)}`
@@ -122,7 +120,7 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
  * is handed to `ToExpression` as a string: a syntax error then yields `$Failed` for that
  * item instead of aborting the batch, which used to silently zero every item after the
  * first bad one. A `TestObject` keeps only its outcome fields: the rest (timestamps, IDs,
- * timings, memory) change every run and would rewrite its sidecar row on every scan. */
+ * timings, memory) change every run and would rewrite its implementations row on every scan. */
 async function runWolfram(sources: readonly string[]): Promise<Result[]> {
   const list = sources.map((source) => JSON.stringify(source)).join(", ");
   const stable = `/. TestObject[a_Association] :> TestObject[KeyTake[a, {"Outcome", "Input", "ExpectedOutput", "ActualOutput"}]]`;
@@ -131,9 +129,7 @@ async function runWolfram(sources: readonly string[]): Promise<Result[]> {
   const tex = `tex[x_] := StringReplace[ToString[Quiet[TeXForm[x]]], "\\n" -> " "]; atoms = {Rational -> Divide, Complex[0, 1] :> I, Complex[a_, 1] :> a + I, Complex[0, b_] :> b I, Complex[a_, b_] :> a + b I};`;
   const code = `${tex} Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", i, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", i, "^>>", tex[ToExpression[{${list}}[[i]], InputForm, HoldForm] /. atoms]]; Print["<<", i, "$>>", tex[v]]], {i, 1, ${sources.length}}]`;
   const run = await transcript("wolframscript", ["-code", code], { timeoutMs: 600_000 });
-  return "out" in run
-    ? collectWolfram(run.out, sources.length)
-    : failAll(sources.length, run.reason);
+  return "out" in run ? collectWolfram(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 
 /** SymPy / mpmath / Sage all evaluate Python, differing only in the preamble, binary and
@@ -171,14 +167,7 @@ for i, src in enumerate(sources):
     finally:
         signal.alarm(0)
 `;
-  const run = await transcript("python3", [
-    "-c",
-    SUPERVISOR,
-    String(MAX_BYTES),
-    binary,
-    ...args,
-    program,
-  ]);
+  const run = await transcript("python3", ["-c", SUPERVISOR, String(MAX_BYTES), binary, ...args, program]);
   if (!("out" in run)) return failAll(sources.length, run.reason);
   return valueOf ? collectWolfram(run.out, sources.length) : collect(run.out, sources.length);
 }
@@ -203,9 +192,7 @@ for (i, src) in enumerate([${list}])
     end
 end
 `;
-  const run = await withFile("batch.jl", program, (file) =>
-    transcript("julia", [...juliaFlags(project), file], {}),
-  );
+  const run = await withFile("batch.jl", program, (file) => transcript("julia", [...juliaFlags(project), file], {}));
   return "out" in run ? collect(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 
@@ -245,9 +232,7 @@ const LEAN_IMPORTS = [
  * project. Lean reports an error per command, by line, so a bad item costs only itself. */
 async function runLean(sources: readonly string[]): Promise<Result[]> {
   const header = [...LEAN_IMPORTS.map((module) => `import ${module}`), "open Nat"];
-  const lines = sources.map(
-    (source, i) => `#eval IO.println ("<<${i + 1}>>" ++ toString (${source}))`,
-  );
+  const lines = sources.map((source, i) => `#eval IO.println ("<<${i + 1}>>" ++ toString (${source}))`);
   const cap = memoryCapMb();
   const run = await withFile("Batch.lean", [...header, ...lines, ""].join("\n"), (file) =>
     transcript("lake", ["env", "lean", `--memory=${cap}`, "--threads=1", file], {
@@ -286,19 +271,14 @@ async function runRust(sources: readonly string[]): Promise<Result[]> {
       cwd: crate,
       timeoutMs: 900_000,
     });
-    if (build.killed !== undefined)
-      return failAll(sources.length, `cargo: killed (${build.killed})`);
+    if (build.killed !== undefined) return failAll(sources.length, `cargo: killed (${build.killed})`);
     if (build.code !== 0) {
       const rejected = new Map<number, string>();
-      for (const match of build.stderr.matchAll(
-        /src\/main\.rs:(\d+):\d+: error(?:\[\w+\])?: (.*)/g,
-      )) {
+      for (const match of build.stderr.matchAll(/src\/main\.rs:(\d+):\d+: error(?:\[\w+\])?: (.*)/g)) {
         const at = order[Number(match[1]) - header.length - 1];
-        if (at !== undefined && !rejected.has(at))
-          rejected.set(at, `compile: ${(match[2] as string).slice(0, 90)}`);
+        if (at !== undefined && !rejected.has(at)) rejected.set(at, `compile: ${(match[2] as string).slice(0, 90)}`);
       }
-      if (rejected.size === 0)
-        return failAll(sources.length, `cargo: ${build.stderr.slice(0, 120)}`);
+      if (rejected.size === 0) return failAll(sources.length, `cargo: ${build.stderr.slice(0, 120)}`);
       for (const [i, error] of rejected) {
         results[i] = { error };
         live.delete(i);
@@ -612,12 +592,7 @@ export async function runIn(system: System, sources: readonly string[]): Promise
     // A kernel that died mid-batch leaves "no output" after the item that killed it.
     const lost = batch.findIndex((r) => "error" in r && r.error === "no output");
     // Nothing came back at all: count the first item as the culprit and move past it.
-    const kept =
-      lost === 0
-        ? [{ error: "kernel died before answering" }]
-        : lost > 0
-          ? batch.slice(0, lost)
-          : batch;
+    const kept = lost === 0 ? [{ error: "kernel died before answering" }] : lost > 0 ? batch.slice(0, lost) : batch;
     results.push(...kept);
     start += kept.length;
   }

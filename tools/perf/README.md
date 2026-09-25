@@ -37,7 +37,7 @@ current duration to the **trailing median** of its prior durations, and flags it
 - current ≥ median + 200ms
 
 Hosted runners vary roughly 2x run to run, so a ratio or an absolute jump alone is noise — the
-same reasoning `quickcheck.yml` uses. Both thresholds are the second and third parameters to
+same reasoning `plausible.yml` uses. Both thresholds are the second and third parameters to
 `detectDrift`'s `options` argument if they ever need tuning.
 
 ## What the workflow does, end to end
@@ -51,7 +51,7 @@ same reasoning `quickcheck.yml` uses. Both thresholds are the second and third p
    `NODE_OPTIONS=--cpu-prof`, uploaded as a 7-day workflow artifact.
 3. The workflow pushes the updated `history.json` to `perf-data`, then files/reopens (or closes)
    the rolling **"perf drift"** issue (label `nightly-fixup`), the same pattern
-   `quickcheck.yml` uses for its rolling issue.
+   `plausible.yml` uses for its rolling issue.
 
 Never a required check — a drift is a lead to look at the trend in `perf-data`, not a gate.
 

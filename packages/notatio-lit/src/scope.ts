@@ -71,11 +71,7 @@ export class Scope {
     // instances (VitePress binds custom-element strings as properties).
     customElements.upgrade(this.root);
     const controls = this.controls;
-    await Promise.all(
-      [...new Set(controls.map((el) => el.localName))].map((tag) =>
-        customElements.whenDefined(tag),
-      ),
-    );
+    await Promise.all([...new Set(controls.map((el) => el.localName))].map((tag) => customElements.whenDefined(tag)));
     const engine = (this.#engine ??= await loadEngine());
     for (const el of controls) this.#read(el);
     // A re-read MERGES: a template already applied has its result where the wildcard
@@ -83,16 +79,9 @@ export class Scope {
     // has left the page, and add what is new.
     const kept = this.#templates.filter((t) => t.el.isConnected);
     const seen = new Set(
-      kept
-        .map((t) => `${"attr" in t ? "a:" + t.attr : "p:" + t.prop}`)
-        .map((k, i) => `${k}@${idOf(kept[i].el)}`),
+      kept.map((t) => `${"attr" in t ? "a:" + t.attr : "p:" + t.prop}`).map((k, i) => `${k}@${idOf(kept[i].el)}`),
     );
-    const found = captureTemplates(
-      this.root,
-      new Set(this.#values.keys()),
-      engine,
-      (el) => !this.owns(el),
-    );
+    const found = captureTemplates(this.root, new Set(this.#values.keys()), engine, (el) => !this.owns(el));
     for (const t of found) {
       const key = `${"attr" in t ? "a:" + t.attr : "p:" + t.prop}@${idOf(t.el)}`;
       if (!seen.has(key)) {
@@ -101,12 +90,7 @@ export class Scope {
       }
     }
     this.#templates = kept;
-    log(
-      "%s: %o over %d templates",
-      this.owner?.localName ?? "page",
-      [...this.#values.keys()],
-      this.#templates.length,
-    );
+    log("%s: %o over %d templates", this.owner?.localName ?? "page", [...this.#values.keys()], this.#templates.length);
     this.#apply();
   }
 

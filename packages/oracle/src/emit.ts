@@ -8,19 +8,13 @@ import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/sr
 import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import type { System } from "./systems.ts";
 
-export type MathJSON =
-  | number
-  | string
-  | boolean
-  | readonly MathJSON[]
-  | { readonly [key: string]: unknown };
+export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 export type Emitted =
   | { readonly ok: true; readonly source: string }
   | { readonly ok: false; readonly missing: readonly string[] };
 
-const isCall = (value: MathJSON): value is readonly MathJSON[] =>
-  Array.isArray(value) && typeof value[0] === "string";
+const isCall = (value: MathJSON): value is readonly MathJSON[] => Array.isArray(value) && typeof value[0] === "string";
 
 /** compute-engine symbol constants, per system. */
 const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
@@ -88,8 +82,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
       if (constant !== undefined) return constant;
       // Wolfram also knows the rest of the constants, the slots a Function binds, and a
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
-      if (system === "wolfram" && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node)))
-        return toWolfram(node);
+      if (system === "wolfram" && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
       // An unknown bare symbol is a free variable; emitting it is fine for SymPy and Sage
       // but meaningless numerically, so treat it as missing rather than guess.
       if (!bound.has(node)) missing.push(`symbol:${node}`);
@@ -107,12 +100,9 @@ export function emit(expr: MathJSON, system: System): Emitted {
     }
     const head = node[0] as string;
     const operands = node.slice(1);
-    const iterated =
-      (head === "Sum" || head === "Product") && operands.length > 1 ? operands.slice(1) : [];
+    const iterated = (head === "Sum" || head === "Product") && operands.length > 1 ? operands.slice(1) : [];
     const binders = iterated.flatMap((it) =>
-      isCall(it) && (it[0] === "Tuple" || it[0] === "List") && typeof it[1] === "string"
-        ? [it[1]]
-        : [],
+      isCall(it) && (it[0] === "Tuple" || it[0] === "List") && typeof it[1] === "string" ? [it[1]] : [],
     );
     const fresh = binders.filter((v) => !bound.has(v));
     for (const v of fresh) bound.add(v);
@@ -128,12 +118,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
    * `others` filled into every position but `threadArg`) at each leaf — the manual
    * Listable thread `threadArg` asks for on a Python-family system.
    */
-  const threadOver = (
-    node: MathJSON,
-    template: string,
-    others: readonly string[],
-    threadArg: number,
-  ): string => {
+  const threadOver = (node: MathJSON, template: string, others: readonly string[], threadArg: number): string => {
     if (isCall(node) && node[0] === "List") {
       return `[${node
         .slice(1)
@@ -169,8 +154,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // Wolfram has a whole transpiler behind it; a signature row here only overrides it.
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare
     // symbol through verbatim, so handing them back as symbols yields the head's shape.
-    if (system === "wolfram" && isWolframHead(head))
-      return toWolfram([head, ...operands.map(walk)]);
+    if (system === "wolfram" && isWolframHead(head)) return toWolfram([head, ...operands.map(walk)]);
     missing.push(`${head}/${operands.length}`);
     return "0";
   };

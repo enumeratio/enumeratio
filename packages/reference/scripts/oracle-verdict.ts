@@ -1,5 +1,5 @@
 // How one oracle answer is judged against our pinned value — shared by the scan
-// (oracle-scan.ts) and the sampler (oracle-quickcheck.ts), so both mean the same thing
+// (oracle-scan.ts) and the sampler (oracle-plausible.ts), so both mean the same thing
 // by "agree".
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
@@ -52,11 +52,7 @@ export const show = (expr: MathJSON): string => {
   // A list prints as the systems print one, element by element.
   if (Array.isArray(expr) && expr[0] === "List") return `[${expr.slice(1).map(show).join(", ")}]`;
   const value = leaf(expr);
-  return typeof value === "number"
-    ? String(value)
-    : typeof value === "string"
-      ? value
-      : JSON.stringify(value);
+  return typeof value === "number" ? String(value) : typeof value === "string" ? value : JSON.stringify(value);
 };
 
 /** Wolfram's answer, parsed and reduced by `evaluate`; `undefined` when it cannot be read. */
@@ -77,8 +73,7 @@ export interface Answer {
 }
 
 /** An example that asks for digits, `N(x, d)`: its answer promises every digit it shows. */
-export const asksForDigits = (expr: MathJSON): boolean =>
-  Array.isArray(expr) && expr[0] === "N" && expr.length === 3;
+export const asksForDigits = (expr: MathJSON): boolean => Array.isArray(expr) && expr[0] === "N" && expr.length === 3;
 
 /** A decimal's significant digits alone -- no sign, point, exponent, or leading and trailing
  * zeros -- so `"0.1250"` and `"1.25e-1"` read the same. */
@@ -96,9 +91,7 @@ function ourDigits(expr: MathJSON): string[] {
   const text =
     typeof expr === "number"
       ? String(expr)
-      : typeof expr === "object" &&
-          expr !== null &&
-          typeof (expr as { num?: unknown }).num === "string"
+      : typeof expr === "object" && expr !== null && typeof (expr as { num?: unknown }).num === "string"
         ? (expr as { num: string }).num
         : undefined;
   return text === undefined || !/[.eE]/.test(text) ? [] : [significant(text)];
@@ -137,12 +130,7 @@ export function verdictOf(
       result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf)),
     ].filter((tree) => tree !== undefined);
     const verdicts = trees.map((tree) => compareTrees(ours, tree, tolerance));
-    verdict =
-      verdicts.length === 0
-        ? "inconclusive"
-        : verdicts.includes("agree")
-          ? "agree"
-          : (verdicts[0] as Verdict);
+    verdict = verdicts.length === 0 ? "inconclusive" : verdicts.includes("agree") ? "agree" : (verdicts[0] as Verdict);
     if (verdict === "agree" && asksForDigits && result.shown !== undefined) {
       if (sameDigits(expected, result.shown) === false) verdict = "disagree";
     }

@@ -27,16 +27,7 @@ examples:
     expected: 1
     caption: 10 = 2·5, a product of an even number of distinct primes
   - id: sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind
-    expr:
-      [
-        Add,
-        [MoebiusMu, 1],
-        [MoebiusMu, 2],
-        [MoebiusMu, 3],
-        [MoebiusMu, 4],
-        [MoebiusMu, 6],
-        [MoebiusMu, 12],
-      ]
+    expr: [Add, [MoebiusMu, 1], [MoebiusMu, 2], [MoebiusMu, 3], [MoebiusMu, 4], [MoebiusMu, 6], [MoebiusMu, 12]]
     expected: 0
     category: Properties
     caption: $\sum_{d\mid n}\mu(d)=0$ for $n>1$, the identity behind Möbius inversion
@@ -45,8 +36,6 @@ examples:
     expected: [MoebiusMu, 0]
     category: Possible issues
     caption: $\mu$ is only defined for positive integers; compute-engine leaves $n=0$ unevaluated
-    divergence:
-      wolfram: μ(0) is left unevaluated here; Wolfram defines it as 0.
   - id: threads-element-wise-over-a-list-as-wolfram-s
     expr: [MoebiusMu, [List, 1, 2, 3, 4]]
     expected: [List, 1, -1, -1, 0]

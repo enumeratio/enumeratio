@@ -195,12 +195,7 @@ export function declareIncidence(ce: ComputeEngine): void {
       const ends = operandsOf(element);
       const from = ends[0] === undefined ? undefined : present.read(ends[0]);
       const to = ends[1] === undefined ? undefined : present.read(ends[1]);
-      const inside =
-        from !== undefined &&
-        to !== undefined &&
-        from >= 0 &&
-        to >= 0 &&
-        present.poset.leq(from, to);
+      const inside = from !== undefined && to !== undefined && from >= 0 && to >= 0 && present.poset.leq(from, to);
       return ce.symbol(inside ? "True" : "False");
     },
   });

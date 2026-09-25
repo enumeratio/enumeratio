@@ -51,8 +51,7 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // for why (a per-head, per-tagged-type `wrapOperator` chain cost ~4x on every Add/Multiply
 // in the engine, tagged or not).
 
-const isInterval = (e: BoxedExpression): boolean =>
-  e.operator === "Interval" && operandsOf(e).length === 2;
+const isInterval = (e: BoxedExpression): boolean => e.operator === "Interval" && operandsOf(e).length === 2;
 
 const lo = (e: BoxedExpression): BoxedExpression => operandsOf(e)[0];
 const hi = (e: BoxedExpression): BoxedExpression => operandsOf(e)[1];
@@ -60,23 +59,14 @@ const hi = (e: BoxedExpression): BoxedExpression => operandsOf(e)[1];
 /** A numeric approximation of `e`, for ordering endpoints only — never the returned value. */
 const numAt = (e: BoxedExpression): number => e.N().re;
 
-const minOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
-  xs.reduce((a, b) => (numAt(b) < numAt(a) ? b : a));
-const maxOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
-  xs.reduce((a, b) => (numAt(b) > numAt(a) ? b : a));
+const minOf = (xs: readonly BoxedExpression[]): BoxedExpression => xs.reduce((a, b) => (numAt(b) < numAt(a) ? b : a));
+const maxOf = (xs: readonly BoxedExpression[]): BoxedExpression => xs.reduce((a, b) => (numAt(b) > numAt(a) ? b : a));
 
 /** Unary heads with no known shape (interval-shapes.ts), or one known on part of the axis only
  * (Zeta, right of its pole): their images come from sampling the derivative's sign
  * (tagged-calculus.ts), which can miss a pair of extrema lying between two samples -- except
  * where the third route proves them (BarnesG, LogBarnesG). */
-const NOT_RIGOROUS_UNARY = [
-  "BarnesG",
-  "LogBarnesG",
-  "DirichletEta",
-  "DirichletBeta",
-  "Zeta",
-  "CatalanNumber",
-] as const;
+const NOT_RIGOROUS_UNARY = ["BarnesG", "LogBarnesG", "DirichletEta", "DirichletBeta", "Zeta", "CatalanNumber"] as const;
 
 /** `{head: the argument position an Interval can occupy}` for the multi-argument heads --
  * every other argument is taken as given (exact, fixed) by `imageOverArg`. All of them are
@@ -95,10 +85,7 @@ const MULTI_ARG_IMAGE_HEADS: Readonly<Record<string, number>> = {
 /** Every head whose interval image is, or may be, sampled rather than guaranteed -- see the file
  * header's fourth route. BarnesG, LogBarnesG and PolyLog are sampled only where the third
  * route's proof declines, Zeta only left of its pole. The reference entries say so. */
-export const NOT_RIGOROUS: readonly string[] = [
-  ...NOT_RIGOROUS_UNARY,
-  ...Object.keys(MULTI_ARG_IMAGE_HEADS),
-];
+export const NOT_RIGOROUS: readonly string[] = [...NOT_RIGOROUS_UNARY, ...Object.keys(MULTI_ARG_IMAGE_HEADS)];
 
 /** This module's resolvers, one per head it extends — see the file header. Built once per
  * engine and merged with CenteredInterval's and Around's before a single
@@ -108,8 +95,7 @@ export const NOT_RIGOROUS: readonly string[] = [
 export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
   const add = (a: BoxedExpression, b: BoxedExpression) => ce.function("Add", [a, b]).evaluate();
   const neg = (a: BoxedExpression) => ce.function("Negate", [a]).evaluate();
-  const mul = (a: BoxedExpression, b: BoxedExpression) =>
-    ce.function("Multiply", [a, b]).evaluate();
+  const mul = (a: BoxedExpression, b: BoxedExpression) => ce.function("Multiply", [a, b]).evaluate();
   const div = (a: BoxedExpression, b: BoxedExpression) => ce.function("Divide", [a, b]).evaluate();
   const pow = (a: BoxedExpression, n: number) => ce.function("Power", [a, n]).evaluate();
   const interval = (l: BoxedExpression | number, h: BoxedExpression | number) =>
@@ -180,9 +166,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   const piMultiple = (k: number, phaseNum: number, phaseDen: number): BoxedExpression => {
     const numerator = k * phaseDen + phaseNum;
     const coefficient =
-      phaseDen === 1
-        ? ce.number(numerator)
-        : ce.function("Rational", [numerator, phaseDen]).evaluate();
+      phaseDen === 1 ? ce.number(numerator) : ce.function("Rational", [numerator, phaseDen]).evaluate();
     return ce.function("Multiply", [coefficient, "Pi"]).evaluate();
   };
 
@@ -192,12 +176,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * strictly-interior: a pole sitting right at an endpoint is still a pole to decline on, and a
    * critical point sitting right at an endpoint is already covered by the endpoint evaluation,
    * so including it again is harmless. */
-  const pointsInRange = (
-    l: number,
-    h: number,
-    phaseNum: number,
-    phaseDen: number,
-  ): BoxedExpression[] => {
+  const pointsInRange = (l: number, h: number, phaseNum: number, phaseDen: number): BoxedExpression[] => {
     const phase = phaseNum / phaseDen;
     const eps = 1e-9;
     const kLow = Math.ceil(l / Math.PI - phase - eps);
@@ -231,11 +210,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   /** Which way a periodic head heads off to infinity just beside the pole `pole`, on the side
    * `side` of it: the sign of its value a hair away. Near a simple pole the sign is constant on
    * each side, so one nearby point decides it. */
-  const infinityBeside = (
-    head: string,
-    pole: BoxedExpression,
-    side: "below" | "above",
-  ): BoxedExpression => {
+  const infinityBeside = (head: string, pole: BoxedExpression, side: "below" | "above"): BoxedExpression => {
     const p = numAt(pole);
     const hair = 1e-9 * Math.max(1, Math.abs(p));
     const value = ce.function(head, [ce.number(side === "below" ? p - hair : p + hair)]).N().re;
@@ -340,11 +315,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * `NOT_RIGOROUS` only -- `imageOverArg`'s derivative-sign sampling. Declines when none does,
    * never a guess past them.
    */
-  const image = (
-    ops: readonly BoxedExpression[],
-    head: string,
-    argIndex: number,
-  ): BoxedExpression | undefined => {
+  const image = (ops: readonly BoxedExpression[], head: string, argIndex: number): BoxedExpression | undefined => {
     const target = ops[argIndex];
     if (target === undefined || !isInterval(target)) return undefined;
     const [l, h] = [lo(target), hi(target)];
@@ -371,8 +342,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     const base = b ?? ce.number(10);
     const shape = logShape(numAt(base));
     if (shape === undefined) return undefined;
-    const valueAt = (at: BoxedExpression) =>
-      ce.function("Log", b === undefined ? [at] : [at, base]).evaluate();
+    const valueAt = (at: BoxedExpression) => ce.function("Log", b === undefined ? [at] : [at, base]).evaluate();
     return shapedImage(shape, valueAt, lo(x), hi(x));
   };
 
@@ -391,18 +361,13 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
 
   const resolvers: Record<string, Resolver> = {
     Negate: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? intervalNegate(ops[0])
-        : undefined,
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? intervalNegate(ops[0]) : undefined,
     Add: (ops) => (ops.some(isInterval) ? ops.reduce((acc, e) => intervalAdd(acc, e)) : undefined),
-    Multiply: (ops) =>
-      ops.some(isInterval) ? ops.reduce((acc, e) => intervalMul(acc, e)) : undefined,
+    Multiply: (ops) => (ops.some(isInterval) ? ops.reduce((acc, e) => intervalMul(acc, e)) : undefined),
     Divide: (ops) => {
       if (ops.length !== 2) return undefined;
       const [a, b] = ops;
-      return a !== undefined && b !== undefined && (isInterval(a) || isInterval(b))
-        ? intervalDiv(a, b)
-        : undefined;
+      return a !== undefined && b !== undefined && (isInterval(a) || isInterval(b)) ? intervalDiv(a, b) : undefined;
     },
     Power: (ops, raw) => {
       if (ops.length !== 2) return undefined;
@@ -420,34 +385,19 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
       }
       return undefined;
     },
-    Abs: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? intervalAbs(ops[0])
-        : undefined,
+    Abs: (ops) => (ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? intervalAbs(ops[0]) : undefined),
     Sin: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? boundedOscillation(ops[0], "Sin")
-        : undefined,
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? boundedOscillation(ops[0], "Sin") : undefined,
     Cos: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? boundedOscillation(ops[0], "Cos")
-        : undefined,
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? boundedOscillation(ops[0], "Cos") : undefined,
     Tan: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? periodicImage("Tan", ops[0])
-        : undefined,
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? periodicImage("Tan", ops[0]) : undefined,
     Cot: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? periodicImage("Cot", ops[0])
-        : undefined,
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? periodicImage("Cot", ops[0]) : undefined,
     Sec: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? periodicImage("Sec", ops[0])
-        : undefined,
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? periodicImage("Sec", ops[0]) : undefined,
     Csc: (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
-        ? periodicImage("Csc", ops[0])
-        : undefined,
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0]) ? periodicImage("Csc", ops[0]) : undefined,
     Log: logImage,
     Sign: (ops) => {
       const a = ops.length === 1 ? ops[0] : undefined;

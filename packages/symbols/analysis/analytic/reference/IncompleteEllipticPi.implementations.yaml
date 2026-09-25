@@ -1,0 +1,75 @@
+pi-n-0-m-0:
+  epsil:
+    in: IncompleteEllipticPi(0.5, 0, 0.3)
+    out: "0"
+  tex:
+    in: \mathrm{IncompleteEllipticPi}(0.5, 0, 0.3)
+    out: "0"
+  fullform:
+    in: EllipticPi[0.5, 0, 0.3]
+  wolfram:
+    in: EllipticPi[0.5, 0, 0.3]
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(IncompleteEllipticPi(0.5, 0.4, 0.3))
+    out: 0.414_151_736_824_476_76
+  tex:
+    in: N(\mathrm{IncompleteEllipticPi}(0.5, 0.4, 0.3))
+    out: 0.414\,151\,736\,824\,476\,76
+  fullform:
+    in: N[EllipticPi[0.5, 0.4, 0.3]]
+  wolfram:
+    in: N[EllipticPi[0.5, 0.4, 0.3]]
+n-0-reduces-to-the-incomplete-elliptic-integral:
+  epsil:
+    in: N(IncompleteEllipticPi(0, 0.4, 0.3))
+    out: 0.403_164_991_947_139_34
+  tex:
+    in: N(\mathrm{IncompleteEllipticPi}(0, 0.4, 0.3))
+    out: 0.403\,164\,991\,947\,139\,34
+  fullform:
+    in: N[EllipticPi[0, 0.4, 0.3]]
+  wolfram:
+    in: N[EllipticPi[0, 0.4, 0.3]]
+a-complex-amplitude-phi-where-native-ellipticpi:
+  epsil:
+    in: N(IncompleteEllipticPi(0.2, 1.2 + 0.5i, 0.3))
+    out: 1.321_415_376_117_118 + 0.718_665_718_875_180_6i
+  tex:
+    in: N(\mathrm{IncompleteEllipticPi}(0.2, 1.2+0.5i, 0.3))
+    out: 1.321\,415\,376\,117\,118+0.718\,665\,718\,875\,180\,6i
+  fullform:
+    in: N[EllipticPi[0.2, Complex[1.2, 0.5], 0.3]]
+  wolfram:
+    in: N[EllipticPi[0.2, Complex[1.2, 0.5], 0.3]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: IncompleteEllipticPi(n, phi, m)
+    out: IncompleteEllipticPi(n, phi, m)
+  tex:
+    in: \mathrm{IncompleteEllipticPi}(n, \phi, m)
+    out: \mathrm{IncompleteEllipticPi}(n, \phi, m)
+  fullform:
+    in: EllipticPi[n, phi, m]
+all-three-arguments-complex-matches-mpmath-s:
+  epsil:
+    in: N(IncompleteEllipticPi(1.17 + 0.45i, 1.17 + 0.45i, 1.17 + 0.45i))
+    out: 0.343_014_061_827_736_86 + 1.078_685_669_354_995_8i
+  tex:
+    in: N(\mathrm{IncompleteEllipticPi}(1.17+0.45i, 1.17+0.45i, 1.17+0.45i))
+    out: 0.343\,014\,061\,827\,736\,86+1.078\,685\,669\,354\,995\,8i
+  fullform:
+    in: N[EllipticPi[Complex[1.17, 0.45], Complex[1.17, 0.45], Complex[1.17, 0.45]]]
+  wolfram:
+    in: N[EllipticPi[Complex[1.17, 0.45], Complex[1.17, 0.45], Complex[1.17, 0.45]]]
+characteristic-n-1:
+  epsil:
+    in: N(IncompleteEllipticPi(0.3, 1.1, 0.4))
+    out: 1.323_800_815_047_493_6
+  tex:
+    in: N(\mathrm{IncompleteEllipticPi}(0.3, 1.1, 0.4))
+    out: 1.323\,800\,815\,047\,493\,6
+  fullform:
+    in: N[EllipticPi[0.3, 1.1, 0.4]]
+  wolfram:
+    in: N[EllipticPi[0.3, 1.1, 0.4]]

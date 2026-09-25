@@ -20,18 +20,12 @@ examples:
     expr: [AlgebraDimension, [BrauerAlgebra, 4]]
     expected: 105
   - id: a-crossing-is-a-brauer-diagram
-    expr:
-      [Element, [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]], [BrauerAlgebra, 3]]
+    expr: [Element, [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]], [BrauerAlgebra, 3]]
     expected: True
     caption: a crossing is a Brauer diagram…
     category: Properties
   - id: but-not-a-planar-one
-    expr:
-      [
-        Element,
-        [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]],
-        [TemperleyLiebAlgebra, 3],
-      ]
+    expr: [Element, [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]], [TemperleyLiebAlgebra, 3]]
     expected: False
     caption: …but not a planar one
     category: Properties

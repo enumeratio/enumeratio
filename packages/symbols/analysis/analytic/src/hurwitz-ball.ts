@@ -1,19 +1,5 @@
 import { BigDecimal } from "@cortex-js/compute-engine";
-import {
-  type Ball,
-  add,
-  certify,
-  div,
-  exact,
-  lower,
-  magnitude,
-  mul,
-  neg,
-  pow,
-  rational,
-  sub,
-  upper,
-} from "./ball.ts";
+import { type Ball, add, certify, div, exact, lower, magnitude, mul, neg, pow, rational, sub, upper } from "./ball.ts";
 import { bernoulliRational } from "./bernoulli.ts";
 import { atDigits, type Plan, plan } from "./bigzeta.ts";
 

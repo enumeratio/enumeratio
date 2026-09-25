@@ -84,9 +84,7 @@ export default defineConfig({
     // The repo's `vite` specifier resolves to vite-plus-core (see pnpm-workspace.yaml),
     // while vitepress's `plugins` field types against its own nested real `vite` --
     // two structurally-identical but nominally distinct `Plugin` types.
-    plugins: (dev
-      ? [reviewModePlugin(webDir), referenceDataPlugin()]
-      : [referenceDataPlugin()]) as never,
+    plugins: (dev ? [reviewModePlugin(webDir), referenceDataPlugin()] : [referenceDataPlugin()]) as never,
   },
   title: "enumeratio",
   description:
@@ -127,15 +125,6 @@ export default defineConfig({
       { text: "Docs", link: "/docs/" },
     ],
     sidebar: [
-      {
-        text: "The pieces",
-        items: [
-          { text: "nucleus — the kernel", link: "/nucleus/" },
-          { text: "aestimatio — the core", link: "/aestimatio/" },
-          { text: "notatio — the notation", link: "/notatio/" },
-          { text: "enumeratio — the catalogue", link: "/enumeratio/" },
-        ],
-      },
       {
         text: "Guides",
         items: [
@@ -207,9 +196,7 @@ export default defineConfig({
           {
             text: "The two-argument zeta",
             link: "/explore/zeta/",
-            items: [
-              { text: "ζ on the GPU: a phase portrait", link: "/explore/zeta/phase-portrait" },
-            ],
+            items: [{ text: "ζ on the GPU: a phase portrait", link: "/explore/zeta/phase-portrait" }],
           },
           { text: "The Lerch transcendent", link: "/explore/lerchphi/" },
           { text: "The polylog and the polygamma", link: "/explore/polylog/" },

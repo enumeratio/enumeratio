@@ -1,0 +1,43 @@
+gather-list-1-7-3-7-2-3-9:
+  epsil:
+    in: Gather([1, 7, 3, 7, 2, 3, 9])
+    out: "[[1], [7, 7], [3, 3], [2], [9]]"
+  tex:
+    in: \mathrm{Gather}(\bigl\lbrack1, 7, 3, 7, 2, 3, 9\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack7, 7\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack9\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Gather[List[1, 7, 3, 7, 2, 3, 9]]
+  wolfram:
+    in: Gather[List[1, 7, 3, 7, 2, 3, 9]]
+symbolic-elements:
+  epsil:
+    in: Gather([a, b, a, a, c, b])
+    out: "[[a, a, a], [b, b], [c]]"
+  tex:
+    in: \mathrm{Gather}(\bigl\lbrack a, b, a, a, c, b\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack a, a, a\bigr\rbrack, \bigl\lbrack b, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Gather[List[a, b, a, a, c, b]]
+a-test-decides-which-elements-belong-together:
+  epsil:
+    in: Gather([1, 2, 3, 4, 5, 6], Function(_1 % 2 == _2 % 2))
+    out: "[[1, 3, 5], [2, 4, 6]]"
+  tex:
+    in: \mathrm{Gather}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=\operatorname{\_2}\bmod2)
+    out: \bigl\lbrack\bigl\lbrack1, 3, 5\bigr\rbrack, \bigl\lbrack2, 4, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Gather[List[1, 2, 3, 4, 5, 6], Function[Equal[Mod[Slot[1], 2], Mod[Slot[2], 2]]]]
+  wolfram:
+    in: Gather[List[1, 2, 3, 4, 5, 6], Function[(Mod[Slot[1], 2] == Mod[Slot[2], 2])]]
+the-group-sizes-are-the-multiplicities-of-the:
+  epsil:
+    in: Map(Length, Gather([1, 7, 3, 7, 2, 3, 9])) == [1, 2, 2, 1, 1]
+    out: True
+  tex:
+    in: \mathrm{Map}(\mathrm{Length}, \mathrm{Gather}(\bigl\lbrack1, 7, 3, 7, 2, 3, 9\bigr\rbrack))=\bigl\lbrack1, 2, 2, 1, 1\bigr\rbrack
+    out: \top
+  traditional:
+    in: \mathrm{Map}(\mathrm{Length}, \mathrm{Gather}(\bigl\lbrack1, 7, 3, 7, 2, 3, 9\bigr\rbrack))=\bigl\lbrack1, 2, 2, 1, 1\bigr\rbrack
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Map[Length, Gather[List[1, 7, 3, 7, 2, 3, 9]]], List[1, 2, 2, 1, 1]]

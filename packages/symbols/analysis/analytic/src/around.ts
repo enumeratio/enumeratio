@@ -26,8 +26,7 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // the numerator and the denominator as if they were independent (the dependency problem).
 // Differentiating the whole head gives the true first-order spread, `Around(6, 0.035)`.
 
-const isAround = (e: BoxedExpression): boolean =>
-  e.operator === "Around" && operandsOf(e).length === 2;
+const isAround = (e: BoxedExpression): boolean => e.operator === "Around" && operandsOf(e).length === 2;
 
 const centerOf = (e: BoxedExpression): BoxedExpression => operandsOf(e)[0];
 const deltaOf = (e: BoxedExpression): BoxedExpression => operandsOf(e)[1];
@@ -87,11 +86,7 @@ function aroundExpBase(ce: ComputeEngine, x: BoxedExpression): BoxedExpression {
  * `derivativeAt` — compute-engine's own `D` where that resolves (BarnesG, Gamma, Erf, the
  * trig and hyperbolic families), a central difference where it doesn't (DirichletEta,
  * DirichletBeta, ErfInv — checked in `.scratch/probe2.ts`, not guessed). */
-function aroundUnary(
-  ce: ComputeEngine,
-  head: string,
-  a: BoxedExpression,
-): BoxedExpression | undefined {
+function aroundUnary(ce: ComputeEngine, head: string, a: BoxedExpression): BoxedExpression | undefined {
   const A = asAround(ce, a);
   const c = numOf(centerOf(A));
   const derivative = derivativeAt(ce, head, [ce.number(c)], 0, c);
@@ -184,6 +179,12 @@ function aroundInAnySlot(
 /** Heads whose `Around` may sit in any argument -- see `aroundInAnySlot`. */
 const ANY_SLOT_HEADS = ["Multinomial"] as const;
 
+/** The head itself, inert: every operation on it goes through the resolvers below. Declared
+ *  so `Around` is a binding like any other head, not just a name the resolvers recognise. */
+export function declareAround(ce: ComputeEngine): void {
+  ce.declare("Around", { signature: "(value, value?) -> number" });
+}
+
 /** This module's resolvers, one per head it extends — see the file header. */
 export function aroundResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
   const resolvers: Record<string, Resolver> = {
@@ -203,9 +204,7 @@ export function aroundResolvers(ce: ComputeEngine): Readonly<Record<string, Reso
   };
   for (const head of UNARY_HEADS) {
     resolvers[head] = (ops) =>
-      ops.length === 1 && ops[0] !== undefined && isAround(ops[0])
-        ? aroundUnary(ce, head, ops[0])
-        : undefined;
+      ops.length === 1 && ops[0] !== undefined && isAround(ops[0]) ? aroundUnary(ce, head, ops[0]) : undefined;
   }
   for (const [head, argIndex] of Object.entries(MULTI_ARG_HEADS)) {
     resolvers[head] = (ops) => aroundOverArg(ce, head, ops, argIndex);

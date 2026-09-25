@@ -2,8 +2,7 @@
 // Rendering them needs an escape and two replacements, not a second markdown pipeline
 // on the client.
 
-const escape = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escape = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** One paragraph of JSDoc prose as inline HTML. */
 export const inline = (s: string): string =>

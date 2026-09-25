@@ -8,14 +8,7 @@
 // selects a 2-face, a line a 1-face, a dot a 0-face — and the highlight follows face IDENTITY,
 // not screen position, so faces that overlap in projection stay distinguishable.
 
-import {
-  type DrawOptions,
-  drawn,
-  type Face,
-  type Polytope,
-  type Projected,
-  sameFace,
-} from "@enumeratio/polytope";
+import { type DrawOptions, drawn, type Face, type Polytope, type Projected, sameFace } from "@enumeratio/polytope";
 import { camera, type CameraOptions, frameSvg, titleSvg, viewDirection } from "./project3d.ts";
 
 export interface Polytope3dOptions extends CameraOptions, Omit<DrawOptions, "reorient"> {
@@ -77,8 +70,7 @@ export const parseFaces = (value: string): number[][] =>
     .map((part) => part.split(",").map(Number))
     .filter((face) => face.length > 0 && face.every(Number.isFinite));
 
-export const spellFaces = (faces: readonly Face[]): string =>
-  faces.map((face) => face.join(",")).join(";");
+export const spellFaces = (faces: readonly Face[]): string => faces.map((face) => face.join(",")).join(";");
 
 /** Add `face` to the selection, or drop it if it is already there — so clicking the same mark
  *  twice backs out of a selection without a second control to do it with. */
@@ -106,21 +98,11 @@ export const parseLabelForm = (value: string | undefined): LabelForm => {
 
 /** Does this mark get a label? */
 const labelled = (which: LabelWhich, dimension: number, selected: boolean): boolean =>
-  which === "all"
-    ? true
-    : which === "selected"
-      ? selected
-      : which !== "none" && which.includes(dimension);
+  which === "all" ? true : which === "selected" ? selected : which !== "none" && which.includes(dimension);
 
 /** What a label says. `index` counts within the mark's own stratum, which is what makes
  *  "number the vertices" produce 1…v rather than a position in the whole face list. */
-const labelText = (
-  form: LabelForm,
-  face: Face,
-  dimension: number,
-  index: number,
-  vertices: number,
-): string =>
+const labelText = (form: LabelForm, face: Face, dimension: number, index: number, vertices: number): string =>
   form === "index"
     ? String(index + 1)
     : form === "dimension"
@@ -138,11 +120,7 @@ const labelText = (
  * the cube's inscribed sphere, so the fit is one number and — being a sphere — it does not
  * change as the figure turns.
  */
-export function polytope3dSvg(
-  polytope: Polytope,
-  n: number,
-  options: Polytope3dOptions = {},
-): string {
+export function polytope3dSvg(polytope: Polytope, n: number, options: Polytope3dOptions = {}): string {
   const which = options.labels ?? "selected";
   const form = options.labelForm ?? "data";
   // Labels sit outside the marks they name, so they need room the solid does not.
@@ -161,8 +139,7 @@ export function polytope3dSvg(
   });
 
   const emphasised = options.dimension;
-  const faint = (dimension: number): number =>
-    emphasised === undefined || emphasised === dimension ? 1 : 0.25;
+  const faint = (dimension: number): number => (emphasised === undefined || emphasised === dimension ? 1 : 0.25);
 
   const polygons =
     options.shade === false
@@ -194,20 +171,17 @@ export function polytope3dSvg(
       (vertex) =>
         `<circle ${faceAttr(vertex.face)} data-dimension="0" cx="${n2(vertex.at.x)}" cy="${n2(
           vertex.at.y,
-        )}" r="${vertex.selected ? 3.5 : 2}" fill="${
-          vertex.selected ? ACCENT : INK
-        }" opacity="${faint(0)}"/>`,
+        )}" r="${vertex.selected ? 3.5 : 2}" fill="${vertex.selected ? ACCENT : INK}" opacity="${faint(0)}"/>`,
     )
     .join("");
 
   // One list for every dimension, so a label is styled the same way whatever it names, and the
   // selected ones are drawn LAST — a label is worth nothing if a neighbouring polygon covers it.
-  const marks: { face: Face; dimension: number; at: Projected; selected: boolean; ring: number }[] =
-    [
-      ...picture.vertices.map((v) => ({ ...v, dimension: 0, ring: 1 })),
-      ...picture.edges.map((e) => ({ ...e, dimension: 1, ring: 2 })),
-      ...picture.shaded.map((f) => ({ ...f, dimension: 2, ring: f.ring.length })),
-    ];
+  const marks: { face: Face; dimension: number; at: Projected; selected: boolean; ring: number }[] = [
+    ...picture.vertices.map((v) => ({ ...v, dimension: 0, ring: 1 })),
+    ...picture.edges.map((e) => ({ ...e, dimension: 1, ring: 2 })),
+    ...picture.shaded.map((f) => ({ ...f, dimension: 2, ring: f.ring.length })),
+  ];
   const byDimension = new Map<number, number>();
   const texts = marks
     .map((mark) => {

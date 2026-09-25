@@ -62,9 +62,7 @@ function writeQuery(): void {
 }
 
 const runs = computed<readonly IndexRun[]>(() => index.value?.runs ?? []);
-const currentRun = computed<IndexRun | undefined>(() =>
-  runs.value.find((r) => r.id === runId.value),
-);
+const currentRun = computed<IndexRun | undefined>(() => runs.value.find((r) => r.id === runId.value));
 const allCaseNames = ref<string[]>([]);
 const plan = ref<Plan | null>(null);
 const reports = ref<Map<BenchSystem, Report>>(new Map());
@@ -80,9 +78,7 @@ async function loadRun(run: IndexRun): Promise<void> {
     allCaseNames.value = p.cases.map((c) => c.name);
     const systemsToLoad = new Set<BenchSystem>([baseline.value, ...selectedSystems.value]);
     const loaded = await Promise.all(
-      [...systemsToLoad].map(
-        async (sys) => [sys, await loadReport(baseUrl.value, run.id, sys)] as const,
-      ),
+      [...systemsToLoad].map(async (sys) => [sys, await loadReport(baseUrl.value, run.id, sys)] as const),
     );
     reports.value = new Map(loaded);
 
@@ -90,9 +86,7 @@ async function loadRun(run: IndexRun): Promise<void> {
       const cmpRun = runs.value.find((r) => r.id === compareRunId.value);
       if (cmpRun) {
         compareReport.value = await loadReport(baseUrl.value, cmpRun.id, compareSystem.value);
-        compareTsReport.value = cmpRun.systems.includes("ts")
-          ? await loadReport(baseUrl.value, cmpRun.id, "ts")
-          : null;
+        compareTsReport.value = cmpRun.systems.includes("ts") ? await loadReport(baseUrl.value, cmpRun.id, "ts") : null;
       }
     } else {
       compareReport.value = null;
@@ -147,8 +141,7 @@ const timeLoading = ref(false);
 const timeTag = ref("");
 const allTags = computed(() => [...new Set(plan.value?.cases.flatMap((c) => c.tags ?? []))].sort());
 const tagCases = computed(
-  () =>
-    new Set(plan.value?.cases.filter((c) => c.tags?.includes(timeTag.value)).map((c) => c.name)),
+  () => new Set(plan.value?.cases.filter((c) => c.tags?.includes(timeTag.value)).map((c) => c.name)),
 );
 
 async function loadTimeSeries(): Promise<void> {
@@ -160,12 +153,8 @@ async function loadTimeSeries(): Promise<void> {
       eligibleRuns.map(async (r) => {
         const report = await loadReport(baseUrl.value, r.id, timeSystem.value);
         const byN = new Map(report.results.map((res) => [res.name, res] as const));
-        const caseNames = timeTag.value
-          ? [...byN.keys()].filter((n) => tagCases.value.has(n))
-          : [timeBench.value];
-        const oks = caseNames
-          .map((n) => byN.get(n))
-          .filter((r): r is Report["results"][number] => r?.status === "ok");
+        const caseNames = timeTag.value ? [...byN.keys()].filter((n) => tagCases.value.has(n)) : [timeBench.value];
+        const oks = caseNames.map((n) => byN.get(n)).filter((r): r is Report["results"][number] => r?.status === "ok");
         return { run: r, oks };
       }),
     );
@@ -178,15 +167,11 @@ async function loadTimeSeries(): Promise<void> {
       for (const name of caseNamesSeen) {
         byCase.set(
           name,
-          normaliseToFirst(
-            perRun.map((pr) => pr.oks.find((o) => o.name === name)?.median ?? Number.NaN),
-          ),
+          normaliseToFirst(perRun.map((pr) => pr.oks.find((o) => o.name === name)?.median ?? Number.NaN)),
         );
       }
       timePoints.value = perRun.map((pr, i) => {
-        const ratios = [...byCase.values()]
-          .map((series) => series[i])
-          .filter((x) => Number.isFinite(x));
+        const ratios = [...byCase.values()].map((series) => series[i]).filter((x) => Number.isFinite(x));
         const g = geomean(ratios);
         return {
           runId: pr.run.id,
@@ -268,8 +253,8 @@ onMounted(async () => {
     <div v-else-if="state === 'empty'" class="bench-panel">
       <p>No benchmark runs published yet.</p>
       <p>
-        Once the nightly job lands its first run, this page will show medians across systems, a
-        support matrix, and trends over time. See
+        Once the nightly job lands its first run, this page will show medians across systems, a support matrix, and
+        trends over time. See
         <a
           href="https://github.com/enumeratio/enumeratio/blob/main/design/benchmarking.md"
           target="_blank"
@@ -300,9 +285,7 @@ onMounted(async () => {
           run
           <select
             :value="runId"
-            @change="
-              selectRun(runs.find((r) => r.id === ($event.target as HTMLSelectElement).value)!)
-            "
+            @change="selectRun(runs.find((r) => r.id === ($event.target as HTMLSelectElement).value)!)"
           >
             <option v-for="r in [...runs].reverse()" :key="r.id" :value="r.id">
               {{ new Date(r.date).toLocaleDateString() }} · {{ r.job }} · {{ r.sha.slice(0, 7) }}
@@ -311,15 +294,9 @@ onMounted(async () => {
         </label>
 
         <div class="bench-tabs" role="tablist">
-          <button type="button" :aria-selected="view === 'across'" @click="view = 'across'">
-            across systems
-          </button>
-          <button type="button" :aria-selected="view === 'time'" @click="view = 'time'">
-            over time
-          </button>
-          <button type="button" :aria-selected="view === 'matrix'" @click="view = 'matrix'">
-            support matrix
-          </button>
+          <button type="button" :aria-selected="view === 'across'" @click="view = 'across'">across systems</button>
+          <button type="button" :aria-selected="view === 'time'" @click="view = 'time'">over time</button>
+          <button type="button" :aria-selected="view === 'matrix'" @click="view = 'matrix'">support matrix</button>
         </div>
       </div>
 
@@ -346,11 +323,7 @@ onMounted(async () => {
             run
             <select v-model="compareRunId">
               <option value="">none</option>
-              <option
-                v-for="r in [...runs].reverse().filter((r) => r.id !== runId)"
-                :key="r.id"
-                :value="r.id"
-              >
+              <option v-for="r in [...runs].reverse().filter((r) => r.id !== runId)" :key="r.id" :value="r.id">
                 {{ new Date(r.date).toLocaleDateString() }} · {{ r.job }}
               </option>
             </select>
@@ -359,11 +332,7 @@ onMounted(async () => {
             system
             <select v-model="compareSystem">
               <option value="">choose…</option>
-              <option
-                v-for="sys in runs.find((r) => r.id === compareRunId)?.systems ?? []"
-                :key="sys"
-                :value="sys"
-              >
+              <option v-for="sys in runs.find((r) => r.id === compareRunId)?.systems ?? []" :key="sys" :value="sys">
                 {{ sys }}
               </option>
             </select>
@@ -385,11 +354,7 @@ onMounted(async () => {
         <label class="bench-inline">
           system
           <select v-model="timeSystem">
-            <option
-              v-for="sys in [...new Set(runs.flatMap((r) => r.systems))]"
-              :key="sys"
-              :value="sys"
-            >
+            <option v-for="sys in [...new Set(runs.flatMap((r) => r.systems))]" :key="sys" :value="sys">
               {{ sys }}
             </option>
           </select>
@@ -409,14 +374,11 @@ onMounted(async () => {
           </select>
         </label>
         <p v-if="timeTag" class="bench-note">
-          Each case in the tag is normalised to its own first run, then the cases are averaged
-          (geometric mean) per run.
+          Each case in the tag is normalised to its own first run, then the cases are averaged (geometric mean) per run.
         </p>
 
         <p v-if="timeLoading" class="bench-loading">Loading…</p>
-        <p v-else-if="!timeBench && !timeTag" class="bench-loading">
-          Pick a benchmark or a tag to see its trend.
-        </p>
+        <p v-else-if="!timeBench && !timeTag" class="bench-loading">Pick a benchmark or a tag to see its trend.</p>
         <OverTimeChart v-else :points="timePoints" />
       </section>
 

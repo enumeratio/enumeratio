@@ -17,10 +17,7 @@ import { isFiniteNum } from "./box.ts";
 
 const isConcretelyComplex = (x: BoxedExpression): boolean => Number.isFinite(x.im) && x.im !== 0;
 
-function evaluateIntegerPart(
-  ce: ComputeEngine,
-  x: BoxedExpression | undefined,
-): BoxedExpression | undefined {
+function evaluateIntegerPart(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
   if (x === undefined) return undefined;
   if (x.im === 0) {
     const q = bigRationalAt(x);
@@ -32,10 +29,7 @@ function evaluateIntegerPart(
   return ce.number(Math.trunc(approx.re));
 }
 
-function evaluateFractionalPart(
-  ce: ComputeEngine,
-  x: BoxedExpression | undefined,
-): BoxedExpression | undefined {
+function evaluateFractionalPart(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
   if (x === undefined) return undefined;
   if (isConcretelyComplex(x)) return undefined; // real domain only
   const q = bigRationalAt(x);

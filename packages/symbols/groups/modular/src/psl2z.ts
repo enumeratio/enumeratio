@@ -53,8 +53,7 @@ export const multiply = (m: Matrix, n: Matrix): Matrix => [
 ];
 
 /** The inverse, which for determinant 1 needs no division. */
-export const invert = ([a, b, c, d]: Matrix): Matrix | undefined =>
-  a * d - b * c === 1 ? [d, -b, -c, a] : undefined;
+export const invert = ([a, b, c, d]: Matrix): Matrix | undefined => (a * d - b * c === 1 ? [d, -b, -c, a] : undefined);
 
 export const isModular = (m: Matrix): boolean => m.every(isInt) && determinant(m) === 1;
 
@@ -206,9 +205,7 @@ export function continuedFraction(p: number, q: number): number[] | undefined {
 }
 
 /** The rational a continued fraction denotes, as a reduced [numerator, denominator]. */
-export function fromContinuedFraction(
-  quotients: readonly number[],
-): readonly [number, number] | undefined {
+export function fromContinuedFraction(quotients: readonly number[]): readonly [number, number] | undefined {
   if (quotients.length === 0 || !quotients.every(isInt)) return undefined;
   if (quotients.slice(1).some((a) => a <= 0)) return undefined;
   let [numerator, denominator] = [1, 0];

@@ -9,11 +9,15 @@
 import { useRoute, useRouter } from "vitepress";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import type { BacklogItem, ItemStatus } from "../../review/backlog.ts";
-import { resolveReviewLink, splitHash } from "../../review/link.ts";
+import { resolveReviewLink } from "../../review/link.ts";
 import { reviewModeOn, toggleReviewMode } from "../review/mode.ts";
 import { area, prField, prNumber, useReviewStore } from "../review/store.ts";
 
-const STATUS_GLYPH: Record<ItemStatus, string> = { open: "○", reviewed: "✓", "needs-work": "!" };
+// Reviewed is a checkbox; needs work is a flag, and setting either clears the other.
+const toggleReviewed = (item: BacklogItem): Promise<void> =>
+  store.setStatus(item.status === "reviewed" ? "open" : "reviewed", item);
+const toggleNeedsWork = (item: BacklogItem): Promise<void> =>
+  store.setStatus(item.status === "needs-work" ? "open" : "needs-work", item);
 
 const store = useReviewStore();
 const route = useRoute();
@@ -64,9 +68,7 @@ watch(
 function onKeydown(e: KeyboardEvent): void {
   if (!store.isOpen.value) return;
   const target = e.target as HTMLElement | null;
-  const typing =
-    !!target &&
-    (target.tagName === "TEXTAREA" || target.tagName === "INPUT" || target.isContentEditable);
+  const typing = !!target && (target.tagName === "TEXTAREA" || target.tagName === "INPUT" || target.isContentEditable);
   if (typing) return;
   if (e.key === "j" || e.key === "k") {
     const list = store.filtered.value;
@@ -92,59 +94,8 @@ function stopResize(): void {
   resizing = false;
 }
 
-// --- Persistent highlight (requirement 1) ---------------------------------------
-// While the selected item's link targets a fragment on the CURRENT page, keep that
-// element outlined for as long as it stays selected -- not just a brief flash (see
-// ReferencePage.vue's `highlight()`, which is unrelated and still just flashes on
-// hash navigation). Cleared whenever the selection changes, the panel closes, or the
-// route changes away from the target's page.
-const HIGHLIGHT_CLASS = "review-highlight-target";
-let highlightedEl: HTMLElement | null = null;
-let highlightRaf = 0;
-
-function clearHighlight(): void {
-  if (highlightRaf) cancelAnimationFrame(highlightRaf);
-  highlightRaf = 0;
-  highlightedEl?.classList.remove(HIGHLIGHT_CLASS);
-  highlightedEl = null;
-}
-
-// The target element may not exist yet (e.g. a ClientOnly example section still
-// mounting) -- poll a few animation frames, then give up silently: a stale or
-// no-longer-valid anchor (a later `#example-N` → `#example/<id>` migration, say)
-// just means no highlight, never an error.
-function tryHighlight(id: string, attemptsLeft: number): void {
-  const el = document.getElementById(id);
-  if (el) {
-    el.classList.add(HIGHLIGHT_CLASS);
-    highlightedEl = el;
-    return;
-  }
-  if (attemptsLeft <= 0) return;
-  highlightRaf = requestAnimationFrame(() => tryHighlight(id, attemptsLeft - 1));
-}
-
-function updateHighlight(): void {
-  clearHighlight();
-  if (!store.isOpen.value) return;
-  const item = store.selected.value;
-  if (!item?.link) return;
-  const resolved = resolveReviewLink(item.link);
-  if (resolved.kind !== "local") return;
-  const { path, id } = splitHash(resolved.path);
-  if (!id || path !== route.path) return;
-  tryHighlight(id, 20); // ~20 frames, generous enough for ClientOnly content to mount
-}
-
-watch(
-  // `.link` too, not just `.id` -- a live reload from the file watcher (Dean editing
-  // REVIEW.md, or another tab syncing localStorage) can change the already-selected
-  // item's link in place without changing which item is selected.
-  () =>
-    [store.isOpen.value, store.selected.value?.id, store.selected.value?.link, route.path] as const,
-  () => updateHighlight(),
-  { immediate: true },
-);
+// The item's target stays outlined through the URL's fragment (../fragment.ts): choosing
+// an item navigates to its link, anchor included.
 
 // --- Modifier-click to review (requirement 2) -------------------------------------
 // alt + (cmd on macOS / ctrl elsewhere) on any element with an id -- the
@@ -184,7 +135,6 @@ onBeforeUnmount(() => {
   window.removeEventListener("mousemove", onMouseMove);
   window.removeEventListener("mouseup", stopResize);
   document.removeEventListener("click", onDocumentClick, true);
-  clearHighlight();
 });
 </script>
 
@@ -230,14 +180,13 @@ onBeforeUnmount(() => {
       <details class="review-help">
         <summary>Help</summary>
         <p>
-          Review mode exists under <code>vitepress dev</code> (or a build made with
-          <code>VITE_REVIEW=1</code>), where it's on by default. <code>?review=off</code> turns it
-          off for this browser, and <code>?review</code> back on. The panel starts collapsed.
+          Review mode exists under <code>vitepress dev</code> (or a build made with <code>VITE_REVIEW=1</code>), where
+          it's on by default. <code>?review=off</code> turns it off for this browser, and <code>?review</code> back on.
+          The panel starts collapsed.
         </p>
         <p>
-          Alt + Cmd-click (macOS) or Alt + Ctrl-click (elsewhere) on any anchored element -- an
-          example, a heading, an implementation section -- opens this panel on its review item,
-          creating one if it doesn't exist yet.
+          Alt + Cmd-click (macOS) or Alt + Ctrl-click (elsewhere) on any anchored element -- an example, a heading, an
+          implementation section -- opens this panel on its review item, creating one if it doesn't exist yet.
         </p>
       </details>
       <div class="review-filters">
@@ -252,12 +201,7 @@ onBeforeUnmount(() => {
           <option v-for="a in store.areas.value" :key="a" :value="a">{{ a }}</option>
         </select>
       </div>
-      <input
-        v-model="store.search.value"
-        class="review-search"
-        type="search"
-        placeholder="Search…"
-      />
+      <input v-model="store.search.value" class="review-search" type="search" placeholder="Search…" />
       <ul class="review-list">
         <li
           v-for="item in store.filtered.value"
@@ -265,15 +209,47 @@ onBeforeUnmount(() => {
           :class="['review-list-item', { active: item.id === store.selectedId.value }]"
           @click="choose(item.id)"
         >
-          <span class="review-glyph" :class="`status-${item.status}`">{{
-            STATUS_GLYPH[item.status]
-          }}</span>
+          <input
+            type="checkbox"
+            class="review-check"
+            :checked="item.status === 'reviewed'"
+            :aria-label="`Reviewed: ${item.title}`"
+            @click.stop="toggleReviewed(item)"
+          />
+          <button
+            class="review-flag"
+            :class="{ on: item.status === 'needs-work' }"
+            :aria-pressed="item.status === 'needs-work'"
+            :title="item.status === 'needs-work' ? 'Needs work (click to clear)' : 'Flag as needs work'"
+            @click.stop="toggleNeedsWork(item)"
+          >
+            ⚑
+          </button>
           <span class="review-title">{{ item.title }}</span>
           <span class="review-meta">{{ prField(item, 0) }} · {{ area(item) }}</span>
         </li>
       </ul>
       <section v-if="store.selected.value" class="review-detail">
-        <h3>{{ store.selected.value.title }}</h3>
+        <h3 class="review-detail-title">
+          <input
+            type="checkbox"
+            class="review-check"
+            :checked="store.selected.value.status === 'reviewed'"
+            aria-label="Reviewed"
+            title="Reviewed (2)"
+            @click="toggleReviewed(store.selected.value)"
+          />
+          <button
+            class="review-flag"
+            :class="{ on: store.selected.value.status === 'needs-work' }"
+            :aria-pressed="store.selected.value.status === 'needs-work'"
+            title="Needs work (3)"
+            @click="toggleNeedsWork(store.selected.value)"
+          >
+            ⚑
+          </button>
+          <span>{{ store.selected.value.title }}</span>
+        </h3>
         <p v-if="store.selected.value.check" class="review-field">
           <strong>Check</strong> {{ store.selected.value.check }}
         </p>
@@ -299,26 +275,6 @@ onBeforeUnmount(() => {
             <a v-else href="#" @click.prevent="goToItem(store.selected.value)">Go to page</a>
           </template>
         </p>
-        <div class="review-status-buttons">
-          <button
-            :class="{ active: store.selected.value.status === 'open' }"
-            @click="store.setStatus('open')"
-          >
-            1 · Open
-          </button>
-          <button
-            :class="{ active: store.selected.value.status === 'reviewed' }"
-            @click="store.setStatus('reviewed')"
-          >
-            2 · Reviewed
-          </button>
-          <button
-            :class="{ active: store.selected.value.status === 'needs-work' }"
-            @click="store.setStatus('needs-work')"
-          >
-            3 · Needs work
-          </button>
-        </div>
         <label class="review-feedback-label" for="review-feedback">
           Feedback
           <span class="review-save-state" :class="store.saveState.value">{{
@@ -463,20 +419,33 @@ onBeforeUnmount(() => {
 .review-list-item.active {
   background: var(--vp-c-brand-soft);
 }
-.review-glyph {
-  font-family: var(--vp-font-family-mono);
-  width: 1.1em;
+.review-check {
   flex: none;
-  text-align: center;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--vp-c-green-1);
 }
-.review-glyph.status-open {
+.review-flag {
+  flex: none;
+  border: none;
+  background: none;
+  padding: 0 0.1rem;
+  line-height: 1;
+  cursor: pointer;
   color: var(--vp-c-text-3);
+  opacity: 0.35;
 }
-.review-glyph.status-reviewed {
-  color: var(--vp-c-green-1);
+.review-flag:hover,
+.review-flag.on {
+  opacity: 1;
 }
-.review-glyph.status-needs-work {
+.review-flag.on {
   color: var(--vp-c-warning-1);
+}
+.review-detail-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
 }
 .review-title {
   flex: 1 1 auto;
@@ -516,25 +485,6 @@ onBeforeUnmount(() => {
   gap: 0.75rem;
   margin: 0;
   font-size: 0.8rem;
-}
-.review-status-buttons {
-  display: flex;
-  gap: 0.4rem;
-}
-.review-status-buttons button {
-  flex: 1;
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  border-radius: 4px;
-  padding: 0.3rem 0.4rem;
-  font-size: 0.72rem;
-  cursor: pointer;
-}
-.review-status-buttons button.active {
-  background: var(--vp-c-brand-soft);
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
 }
 .review-feedback-label {
   display: flex;
@@ -598,17 +548,4 @@ onBeforeUnmount(() => {
 }
 </style>
 
-<style>
-/* Persistent highlight (requirement 1) -- global, not scoped: the target lives
-   outside this component's DOM (a review item's link points at an id anywhere on
-   the current page). Subtle and theme-aware so it reads fine in light and dark. */
-.review-highlight-target {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 3px;
-  border-radius: 6px;
-  background-color: var(--vp-c-brand-soft);
-  transition:
-    outline-color 0.15s,
-    background-color 0.15s;
-}
-</style>
+<style></style>

@@ -51,8 +51,7 @@ const unitOf = (x: Rational, p: bigint): Adic => {
 };
 
 export function multiply(x: IdeleFinite, y: IdeleFinite): IdeleFinite | undefined {
-  if (x.kind === "principal" && y.kind === "principal")
-    return { kind: "principal", value: Q.mul(x.value, y.value) };
+  if (x.kind === "principal" && y.kind === "principal") return { kind: "principal", value: Q.mul(x.value, y.value) };
   if (x.kind === "principal") return multiply(y, x);
   if (x.kind !== "local") return undefined;
   const units: Adic[] = [];

@@ -28,8 +28,7 @@ export const DEFAULT_PRECISION = 20;
 export const pow = (b: bigint, e: number): bigint => b ** BigInt(e);
 
 /** The largest `k` with `b^k | n` (`Infinity` for `n = 0`). */
-const order = (base: bigint, n: bigint): number =>
-  n === 0n ? Number.POSITIVE_INFINITY : integerValuation(n, base)[0];
+const order = (base: bigint, n: bigint): number => (n === 0n ? Number.POSITIVE_INFINITY : integerValuation(n, base)[0]);
 
 /**
  * The b-adic valuation of `num/den`. For prime `b` this is `ord(num) − ord(den)`; for
@@ -112,12 +111,8 @@ const minPrec = (...ps: (number | undefined)[]): number | undefined =>
     undefined,
   );
 
-const finish = (
-  base: bigint,
-  num: bigint,
-  den: bigint,
-  prec: number | undefined,
-): Adic | undefined => (prec === undefined ? exact(base, num, den) : capped(base, num, den, prec));
+const finish = (base: bigint, num: bigint, den: bigint, prec: number | undefined): Adic | undefined =>
+  prec === undefined ? exact(base, num, den) : capped(base, num, den, prec);
 
 export function add(x: Adic, y: Adic): Adic | undefined {
   if (!sameBase(x, y)) return undefined;
@@ -324,7 +319,5 @@ export function sqrt(x: Adic, prec: number = DEFAULT_PRECISION): Adic | undefine
     root = lifted.num;
   }
   const half = pow(p, Math.abs(v) / 2);
-  return v >= 0
-    ? capped(p, root * half, 1n, target + v / 2)
-    : capped(p, root, half, target + v / 2);
+  return v >= 0 ? capped(p, root * half, 1n, target + v / 2) : capped(p, root, half, target + v / 2);
 }

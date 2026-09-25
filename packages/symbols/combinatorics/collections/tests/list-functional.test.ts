@@ -65,9 +65,7 @@ test("FixedPoint(Cos, 0.5) lands within the working precision of the true fixed 
 test("FixedPoint(Newton's method, 1.5) lands within the working precision of sqrt(2)", () => {
   const fn = ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]];
   const x = runExpr(["FixedPoint", fn, 1.5]);
-  const residual = Math.abs(
-    ce.function("Subtract", [ce.function("Apply", [ce.box(fn as never), x]), x]).evaluate().re,
-  );
+  const residual = Math.abs(ce.function("Subtract", [ce.function("Apply", [ce.box(fn as never), x]), x]).evaluate().re);
   expect(residual).toBeLessThanOrEqual(residualBound);
 });
 
@@ -84,24 +82,15 @@ function handRecurrence(kernel: number[], init: number[], n: number): number[] {
 
 test("LinearRecurrence matches a hand-rolled Fibonacci recurrence", () => {
   const expected = handRecurrence([1, 1], [1, 1], 15);
-  expect(run(["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], 15])).toEqual([
-    "List",
-    ...expected,
-  ]);
+  expect(run(["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], 15])).toEqual(["List", ...expected]);
 });
 test("LinearRecurrence matches a hand-rolled tribonacci recurrence", () => {
   const expected = handRecurrence([1, 1, 1], [0, 0, 1], 12);
-  expect(run(["LinearRecurrence", ["List", 1, 1, 1], ["List", 0, 0, 1], 12])).toEqual([
-    "List",
-    ...expected,
-  ]);
+  expect(run(["LinearRecurrence", ["List", 1, 1, 1], ["List", 0, 0, 1], 12])).toEqual(["List", ...expected]);
 });
 test("LinearRecurrence({m}) is the m-th term of the full sequence", () => {
   const full = run(["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], 10]) as readonly unknown[];
-  expect(run(["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 7]])).toEqual([
-    "List",
-    full[7],
-  ]);
+  expect(run(["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 7]])).toEqual(["List", full[7]]);
 });
 test("LinearRecurrence({start, end}) is a slice of the full sequence", () => {
   const full = run(["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], 10]) as readonly unknown[];
@@ -141,11 +130,7 @@ test("RecurrenceTable handles a shifted-index equation (a(n+1) = ...)", () => {
   expect(
     run([
       "RecurrenceTable",
-      [
-        "List",
-        ["Equal", ["a", ["Add", "n", 1]], ["Multiply", 3, ["a", "n"]]],
-        ["Equal", ["a", 1], 7],
-      ],
+      ["List", ["Equal", ["a", ["Add", "n", 1]], ["Multiply", 3, ["a", "n"]]], ["Equal", ["a", 1], 7]],
       "a",
       ["List", "n", 1, 5],
     ]),
@@ -222,17 +207,16 @@ test("First(nonEmptyAssociation, default) still reads the first value, ignoring 
 });
 test("Join on Associations keeps first-seen key order and lets a later value win", () => {
   expect(
-    run([
-      "Join",
-      ["Association", ["Rule", "a", "b"]],
-      ["Association", ["Rule", "c", "d"], ["Rule", "a", "f"]],
-    ]),
+    run(["Join", ["Association", ["Rule", "a", "b"]], ["Association", ["Rule", "c", "d"], ["Rule", "a", "f"]]]),
   ).toEqual(["Association", ["Rule", "a", "f"], ["Rule", "c", "d"]]);
 });
 test("Sort on an Association orders by value", () => {
-  expect(
-    run(["Sort", ["Association", ["Rule", "a", 4], ["Rule", "b", 1], ["Rule", "c", 3]]]),
-  ).toEqual(["Association", ["Rule", "b", 1], ["Rule", "c", 3], ["Rule", "a", 4]]);
+  expect(run(["Sort", ["Association", ["Rule", "a", 4], ["Rule", "b", 1], ["Rule", "c", 3]]])).toEqual([
+    "Association",
+    ["Rule", "b", 1],
+    ["Rule", "c", 3],
+    ["Rule", "a", 4],
+  ]);
 });
 
 // GeometricMean / HarmonicMean
@@ -248,11 +232,7 @@ test("HarmonicMean of n equal values is that value", () => {
 });
 test("HarmonicMean is the reciprocal of the mean of the reciprocals", () => {
   const list = ["List", 1, 2, 4];
-  const viaDefinition = run([
-    "Divide",
-    1,
-    ["Mean", ["List", ["Divide", 1, 1], ["Divide", 1, 2], ["Divide", 1, 4]]],
-  ]);
+  const viaDefinition = run(["Divide", 1, ["Mean", ["List", ["Divide", 1, 1], ["Divide", 1, 2], ["Divide", 1, 4]]]]);
   expect(run(["HarmonicMean", list])).toEqual(viaDefinition);
 });
 test("AM-GM-HM ordering holds on a non-constant list: HM <= GM <= AM", () => {

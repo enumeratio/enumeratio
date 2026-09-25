@@ -30,11 +30,7 @@ test("LogGamma(10^300) uses Stirling directly, not Gamma(10^300) first", () => {
   // prints as a double, not a 303-digit exact-integer expansion of that double's bits
   expect(r.toString().length).toBeLessThan(25);
   // small arguments, and the actual poles, are unaffected
-  expect(ce.box(["LogGamma", 5]).evaluate().json).toEqual([
-    "Add",
-    ["Multiply", 3, ["Ln", 2]],
-    ["Ln", 3],
-  ]);
+  expect(ce.box(["LogGamma", 5]).evaluate().json).toEqual(["Add", ["Multiply", 3, ["Ln", 2]], ["Ln", 3]]);
   expect(ce.box(["LogGamma", 0]).evaluate().json).toEqual("PositiveInfinity");
   expect(ce.box(["LogGamma", -3]).evaluate().json).toEqual("PositiveInfinity");
 });
@@ -49,9 +45,5 @@ test("Rationalize(Pi, tolerance) finds the smallest denominator, not the closest
   // a loose tolerance spanning 0 still snaps to the integer, not Rational(0, 1)
   expect(ce.box(["Rationalize", 0.1, 0.5]).evaluate().json).toEqual(0);
   // an already-exact value is returned unchanged
-  expect(ce.box(["Rationalize", ["Rational", 1, 3], 0.1]).evaluate().json).toEqual([
-    "Rational",
-    1,
-    3,
-  ]);
+  expect(ce.box(["Rationalize", ["Rational", 1, 3], 0.1]).evaluate().json).toEqual(["Rational", 1, 3]);
 });

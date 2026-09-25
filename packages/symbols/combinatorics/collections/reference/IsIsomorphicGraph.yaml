@@ -1,0 +1,29 @@
+name: IsIsomorphicGraph
+domain: Collections
+signature: IsIsomorphicGraph(g1, g2)
+summary: Whether two [[Graph]] values have the same structure, up to relabelling vertices.
+signatures:
+  - call: IsIsomorphicGraph(g1, g2)
+    description: true iff some relabelling of g1's vertices reproduces g2's edges exactly (direction included); unevaluated once either graph has more than 9 vertices.
+    library: enumeratio-collections
+details:
+  - Wolfram calls this `IsomorphicGraphQ`; this library uses the `Is…` spelling everywhere.
+  - Brute force over all n! vertex permutations, cheap-filtered first by vertex count, edge count and sorted degree sequence -- fine through 9 vertices (9! = 362,880), unevaluated beyond that rather than guessing.
+examples:
+  - id: relabelled-cycle-is-isomorphic-to-itself
+    expr:
+      [
+        IsIsomorphicGraph,
+        [CycleGraph, 4],
+        [
+          Graph,
+          [List, 3, 1, 4, 2],
+          [List, [UndirectedEdge, 3, 1], [UndirectedEdge, 1, 4], [UndirectedEdge, 4, 2], [UndirectedEdge, 2, 3]],
+        ],
+      ]
+    expected: True
+  - id: same-vertex-count-different-structure
+    expr: [IsIsomorphicGraph, [CycleGraph, 4], [StarGraph, 4]]
+    expected: False
+seeAlso:
+  - IsConnectedGraph

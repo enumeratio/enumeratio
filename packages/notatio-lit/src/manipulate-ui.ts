@@ -84,12 +84,7 @@ export function controlsTemplate(
     e.stopPropagation();
     h.set(e.detail.name, String(e.detail.re));
   };
-  return html`<div
-    class="notatio-controls"
-    role="group"
-    aria-label="parameters"
-    @notatio-control-change=${onChange}
-  >
+  return html`<div class="notatio-controls" role="group" aria-label="parameters" @notatio-control-change=${onChange}>
     ${controls.map((c) =>
       c.kind === "slider"
         ? html`<label class="notatio-control"
@@ -108,8 +103,7 @@ export function controlsTemplate(
               }}
             >
               ${playing.has(c.name) ? "⏸" : "▶"}</button
-            ><span class="notatio-control-name">${c.name}</span>${sliderControl(c)}<span
-              class="notatio-control-val"
+            ><span class="notatio-control-name">${c.name}</span>${sliderControl(c)}<span class="notatio-control-val"
               >${formatValue(c.value, c.step)}</span
             ></label
           >`
@@ -133,11 +127,7 @@ function sliderControl(c: Extract<Control, { kind: "slider" }>): TemplateResult 
         step=${c.step}
       ></notatio-knob>`;
     case "notatio-input-field":
-      return html`<notatio-input-field
-        name=${c.name}
-        .value=${value}
-        type="number"
-      ></notatio-input-field>`;
+      return html`<notatio-input-field name=${c.name} .value=${value} type="number"></notatio-input-field>`;
     case "notatio-vertical-slider":
       return html`<notatio-vertical-slider
         name=${c.name}
@@ -178,29 +168,12 @@ function choiceControl(c: Extract<Control, { kind: "choice" }>): TemplateResult 
         .value=${value}
       ></notatio-radio-button-bar>`;
     case "notatio-popup-menu":
-      return html`<notatio-popup-menu
-        name=${c.name}
-        values=${values}
-        .value=${value}
-      ></notatio-popup-menu>`;
+      return html`<notatio-popup-menu name=${c.name} values=${values} .value=${value}></notatio-popup-menu>`;
     case "notatio-toggler":
-      return html`<notatio-toggler
-        name=${c.name}
-        values=${values}
-        .value=${value}
-      ></notatio-toggler>`;
+      return html`<notatio-toggler name=${c.name} values=${values} .value=${value}></notatio-toggler>`;
     case "notatio-list-picker":
-      return html`<notatio-list-picker
-        name=${c.name}
-        values=${values}
-        .value=${value}
-        single
-      ></notatio-list-picker>`;
+      return html`<notatio-list-picker name=${c.name} values=${values} .value=${value} single></notatio-list-picker>`;
     default:
-      return html`<notatio-setter-bar
-        name=${c.name}
-        values=${values}
-        .value=${value}
-      ></notatio-setter-bar>`;
+      return html`<notatio-setter-bar name=${c.name} values=${values} .value=${value}></notatio-setter-bar>`;
   }
 }

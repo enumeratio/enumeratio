@@ -39,11 +39,7 @@ export function numberJson(re: number, im = 0): MathJsonExpression {
 }
 
 /** The numeric shorthand of a change, filled from the value when it is a number. */
-export function numericParts(
-  value: MathJsonExpression,
-  re?: number,
-  im?: number,
-): { re: number; im: number } {
+export function numericParts(value: MathJsonExpression, re?: number, im?: number): { re: number; im: number } {
   if (re !== undefined) return { re, im: im ?? 0 };
   if (typeof value === "number") return { re: value, im: 0 };
   if (Array.isArray(value) && value[0] === "Complex") {

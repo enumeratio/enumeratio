@@ -1,17 +1,9 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import {
-  dataUri,
-  declareGraphics,
-  GRAPHICS_HEADS,
-  imageUri,
-  setRasterizer,
-  svgDataUri,
-} from "../src/graphics.ts";
+import { dataUri, declareGraphics, GRAPHICS_HEADS, imageUri, setRasterizer, svgDataUri } from "../src/graphics.ts";
 import { parseNotatio } from "../src/notatio.ts";
 
-const SVG =
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="10" height="10"/></svg>';
+const SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="10" height="10"/></svg>';
 
 const engine = () => {
   const ce = new ComputeEngine();
@@ -71,9 +63,7 @@ test("with no rasterizer the document still becomes a drawable Image", () => {
 test("Rasterize leaves an Image alone and declines a non-graphic", () => {
   const ce = engine();
   const img = ce.box(["Image", { str: "data:image/png;base64,AAA" }] as never);
-  expect(imageUri(ce.box(["Rasterize", img.json] as never).evaluate())).toBe(
-    "data:image/png;base64,AAA",
-  );
+  expect(imageUri(ce.box(["Rasterize", img.json] as never).evaluate())).toBe("data:image/png;base64,AAA");
   // A number is not a picture; it stays as it was written rather than becoming one.
   expect(imageUri(ce.box(["Rasterize", 42] as never).evaluate())).toBeUndefined();
 });

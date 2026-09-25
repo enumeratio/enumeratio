@@ -115,8 +115,7 @@ export function lerchPhi(z: Cx, s: Cx, a: Cx): Cx {
   const negSr = -s.re;
   const negSi = -s.im;
   // |z|<1: term ~ |z|ⁿ, so log|z| sets how many terms reach machine precision.
-  const maxN =
-    absZ < 1 ? Math.min(2_000_000, Math.ceil(Math.log(1e-17) / Math.log(absZ)) + 64) : 200_000;
+  const maxN = absZ < 1 ? Math.min(2_000_000, Math.ceil(Math.log(1e-17) / Math.log(absZ)) + 64) : 200_000;
   let sumR = 0;
   let sumI = 0;
   let zpR = 1; // zⁿ

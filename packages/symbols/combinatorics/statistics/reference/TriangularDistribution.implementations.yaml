@@ -1,0 +1,44 @@
+triangular-pdf-exact:
+  epsil:
+    in: PDF(TriangularDistribution([0, 1]), 1 / 4)
+    out: "1"
+  tex:
+    in: \operatorname{PDF}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack), \frac{1}{4})
+    out: "1"
+  fullform:
+    in: PDF[TriangularDistribution[List[0, 1]], Rational[1, 4]]
+  wolfram:
+    in: PDF[TriangularDistribution[List[0, 1]], Rational[1, 4]]
+triangular-cdf-exact:
+  epsil:
+    in: CDF(TriangularDistribution([0, 1]), 1 / 4)
+    out: 1 / 8
+  tex:
+    in: \operatorname{CDF}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack), \frac{1}{4})
+    out: \frac{1}{8}
+  fullform:
+    in: CDF[TriangularDistribution[List[0, 1]], Rational[1, 4]]
+  wolfram:
+    in: CDF[TriangularDistribution[List[0, 1]], Rational[1, 4]]
+triangular-mean-exact:
+  epsil:
+    in: Mean(TriangularDistribution([0, 1]))
+    out: 1 / 2
+  tex:
+    in: \mathrm{mean}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack))
+    out: \frac{1}{2}
+  fullform:
+    in: Mean[TriangularDistribution[List[0, 1]]]
+  wolfram:
+    in: Mean[TriangularDistribution[List[0, 1]]]
+triangular-variance-exact:
+  epsil:
+    in: Variance(TriangularDistribution([0, 1]))
+    out: 1 / 24
+  tex:
+    in: \mathrm{Variance}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack))
+    out: \frac{1}{24}
+  fullform:
+    in: Variance[TriangularDistribution[List[0, 1]]]
+  wolfram:
+    in: Variance[TriangularDistribution[List[0, 1]]]

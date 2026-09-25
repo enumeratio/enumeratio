@@ -17,8 +17,7 @@ details:
 examples:
   - id: a-triangle-vertices-inferred
     expr: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]
-    expected:
-      [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]
+    expected: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]
     caption: A triangle, vertices inferred from the edges
   - id: an-isolated-vertex-needs-the-explicit-form
     expr: [VertexList, [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2]]]]

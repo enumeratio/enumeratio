@@ -51,8 +51,7 @@ test("Möbius inversion undoes summing down", () => {
 test("elements come back in a linear extension", () => {
   same(["PosetElements", ["Chain", 4]], L(1, 2, 3, 4));
   same(["PosetElements", ["DivisorLattice", 12]], L(1, 2, 3, 4, 6, 12));
-  const subsets = ce.box(["PosetElements", ["BooleanLattice", 2]]).evaluate()
-    .json as unknown as unknown[];
+  const subsets = ce.box(["PosetElements", ["BooleanLattice", 2]]).evaluate().json as unknown as unknown[];
   expect(subsets.length - 1).toBe(4);
 });
 
@@ -60,8 +59,7 @@ test("the incidence algebra's dimension is its interval count", () => {
   same(["AlgebraDimension", ["IncidenceAlgebra", ["Chain", 4]]], 10); // C(5,2)
   same(["AlgebraDimension", ["IncidenceAlgebra", ["BooleanLattice", 3]]], 27); // 3^3
   same(["AlgebraDimension", ["IncidenceAlgebra", ["DivisorLattice", 12]]], 18);
-  const basis = ce.box(["Basis", ["IncidenceAlgebra", ["Chain", 3]]]).evaluate()
-    .json as unknown as unknown[];
+  const basis = ce.box(["Basis", ["IncidenceAlgebra", ["Chain", 3]]]).evaluate().json as unknown as unknown[];
   expect(basis.length - 1).toBe(6);
 });
 
@@ -71,10 +69,6 @@ test("containment tests whether a pair really is an interval", () => {
 });
 
 test("an unreadable poset or element leaves the call alone", () => {
-  expect(ce.box(["MoebiusFunction", ["Chain", 0], 1, 1]).evaluate().operator).toBe(
-    "MoebiusFunction",
-  );
-  expect(ce.box(["MoebiusFunction", ["DivisorLattice", 12], 5, 12]).evaluate().operator).toBe(
-    "MoebiusFunction",
-  ); // 5 is not a divisor of 12
+  expect(ce.box(["MoebiusFunction", ["Chain", 0], 1, 1]).evaluate().operator).toBe("MoebiusFunction");
+  expect(ce.box(["MoebiusFunction", ["DivisorLattice", 12], 5, 12]).evaluate().operator).toBe("MoebiusFunction"); // 5 is not a divisor of 12
 });

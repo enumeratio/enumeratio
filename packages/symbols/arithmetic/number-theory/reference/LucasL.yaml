@@ -48,14 +48,7 @@ examples:
     caption: A real index uses $L_\nu = \varphi^\nu + \cos(\pi\nu)\,\varphi^{-\nu}$
   - id: the-two-argument-lucas-polynomial-l-7-x-from-l-n
     expr: [LucasL, 7, x]
-    expected:
-      [
-        Add,
-        [Power, x, 7],
-        [Multiply, 7, [Power, x, 5]],
-        [Multiply, 14, [Power, x, 3]],
-        [Multiply, 7, x],
-      ]
+    expected: [Add, [Power, x, 7], [Multiply, 7, [Power, x, 5]], [Multiply, 14, [Power, x, 3]], [Multiply, 7, x]]
     category: Scope
     caption: The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$
   - id: the-lucas-polynomial-at-x-1-is-the-lucas-number

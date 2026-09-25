@@ -213,8 +213,7 @@ function eulerMaclaurin(s: BigCx, a: BigCx, { terms, pairs }: Plan): BigCx {
 }
 
 /** log10 |x|, or +∞ for an exact zero, which has no digits to lose. */
-const log10Abs = (x: BigDecimal): number =>
-  x.isZero() ? Infinity : Math.log10(Math.abs(x.toNumber()));
+const log10Abs = (x: BigDecimal): number => (x.isZero() ? Infinity : Math.log10(Math.abs(x.toNumber())));
 
 /**
  * ζ(s, a) to `digits` significant digits in each nonzero part, or undefined where it would

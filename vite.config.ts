@@ -1,10 +1,11 @@
 import { defineConfig } from "vite-plus";
+import { FORMAT } from "./packages/entry/src/format.ts";
 
 export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
-  fmt: {},
+  fmt: { ...FORMAT },
   lint: {
     jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
     rules: { "vite-plus/prefer-vite-plus-imports": "error" },

@@ -76,9 +76,7 @@ function leafOf(ce: ComputeEngine, node: unknown): BigDecimal | undefined {
   const text =
     typeof node === "number"
       ? String(node)
-      : typeof node === "object" &&
-          node !== null &&
-          typeof (node as { num?: unknown }).num === "string"
+      : typeof node === "object" && node !== null && typeof (node as { num?: unknown }).num === "string"
         ? (node as { num: string }).num
         : undefined;
   if (text === undefined) return undefined;
@@ -87,8 +85,7 @@ function leafOf(ce: ComputeEngine, node: unknown): BigDecimal | undefined {
 }
 
 /** Significant digits a decimal carries. */
-const digitsOf = (x: BigDecimal): number =>
-  (x.significand < 0n ? -x.significand : x.significand).toString().length;
+const digitsOf = (x: BigDecimal): number => (x.significand < 0n ? -x.significand : x.significand).toString().length;
 
 /** `json` with every inexact number leaf -- a real, or either part of a `Complex` -- rounded to
  * `d` significant digits, ties to even. A list or a symbolic result (`x + 3.14159…`) is
@@ -113,11 +110,7 @@ function hasDoubleOnly(ce: ComputeEngine, json: unknown, precision: number): boo
 
 /** `x` to `d` digits proven by its enclosure, or `undefined` when `x` has none or it can't
  * decide them within the guard's doublings. */
-function certifiedRounding(
-  ce: ComputeEngine,
-  x: BoxedExpression,
-  d: number,
-): BoxedExpression | undefined {
+function certifiedRounding(ce: ComputeEngine, x: BoxedExpression, d: number): BoxedExpression | undefined {
   for (let guard = FIRST_GUARD, doubling = 0; doubling <= MAX_DOUBLINGS; guard *= 2, doubling++) {
     const ball = enclosure(x, d + guard);
     if (ball === undefined) return undefined;
@@ -138,11 +131,7 @@ function certifiedRounding(
 /** `x` to `d` digits by Ziv's loop, or `undefined` when the loop can't vouch for them because
  * more digits are asked for than a double holds and a head in it answers with one. Leaves
  * `ce.precision` changed; the caller restores it. */
-function correctlyRounded(
-  ce: ComputeEngine,
-  x: BoxedExpression,
-  d: number,
-): BoxedExpression | undefined {
+function correctlyRounded(ce: ComputeEngine, x: BoxedExpression, d: number): BoxedExpression | undefined {
   const reading = (precision: number): BoxedExpression => {
     ce.precision = precision;
     return x.N();
@@ -173,8 +162,7 @@ function correctlyRounded(
 /** Route `N(x, d)` through Ziv's loop, and leave the working precision as it found it. */
 export function declareCorrectlyRoundedN(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("N");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   const native = operator.evaluate;
   // `N` holds its arguments, so `x` arrives unevaluated: it is evaluated numerically below, at

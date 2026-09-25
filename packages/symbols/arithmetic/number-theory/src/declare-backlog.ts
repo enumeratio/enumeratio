@@ -107,11 +107,7 @@ function eulerPolynomialCoeffs(n: number, E: readonly bigint[]): Q[] {
 /** A polynomial from its monomial coefficients, over the boxed expression `x` — built as raw
  *  arithmetic and handed to `evaluate()`, so compute-engine's own canonicalisation (dropping
  *  a zero term, collapsing ×1 and ×(−1), sorting by degree) decides the printed form. */
-function polynomialExpr(
-  ce: ComputeEngine,
-  coeffs: readonly Q[],
-  x: BoxedExpression,
-): BoxedExpression {
+function polynomialExpr(ce: ComputeEngine, coeffs: readonly Q[], x: BoxedExpression): BoxedExpression {
   const terms: BoxedExpression[] = [];
   for (let j = 0; j < coeffs.length; j++) {
     const [num, den] = coeffs[j]!;
@@ -180,12 +176,7 @@ function frobeniusNumber(values: readonly bigint[]): bigint | "infinite" | undef
 
 /** The ways to write `remaining` as a non-decreasing list of `count` non-negative pᵗʰ powers,
  *  each ≥ `minVal` — lexicographic because the outer value is chosen ascending first. */
-function powersRepresentations(
-  remaining: bigint,
-  count: number,
-  p: bigint,
-  minVal = 0n,
-): bigint[][] {
+function powersRepresentations(remaining: bigint, count: number, p: bigint, minVal = 0n): bigint[][] {
   if (count === 0) return remaining === 0n ? [[]] : [];
   const results: bigint[][] = [];
   const max = nthRoot(remaining, p);
@@ -275,8 +266,7 @@ const MERSENNE_EXPONENTS: readonly bigint[] = [
 
 export function declareBacklog(ce: ComputeEngine): void {
   ce.declare("DivisorSum", {
-    description:
-      "The sum of f(d) over the positive divisors d of n, optionally only those with cond(d) true.",
+    description: "The sum of f(d) over the positive divisors d of n, optionally only those with cond(d) true.",
     signature: "(integer, function, function?) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const n = bigIntegerAt(ops[0]);
@@ -374,8 +364,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("PerfectNumber", {
-    description:
-      "The nth perfect number, 2^(p−1)(2^p−1) for the nth known Mersenne prime exponent p.",
+    description: "The nth perfect number, 2^(p−1)(2^p−1) for the nth known Mersenne prime exponent p.",
     signature: "(integer) -> integer",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -398,22 +387,13 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("PowersRepresentations", {
-    description:
-      "The ways to write n as a sum of k non-negative pth powers, as non-decreasing lists.",
+    description: "The ways to write n as a sum of k non-negative pth powers, as non-decreasing lists.",
     signature: "(integer, integer, integer) -> list",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const n = bigIntegerAt(ops[0]);
       const k = bigIntegerAt(ops[1]);
       const p = bigIntegerAt(ops[2]);
-      if (
-        n === undefined ||
-        k === undefined ||
-        p === undefined ||
-        n < 0n ||
-        k < 0n ||
-        k > 16n ||
-        p < 1n
-      )
+      if (n === undefined || k === undefined || p === undefined || n < 0n || k < 0n || k > 16n || p < 1n)
         return undefined;
       const reps = powersRepresentations(n, Number(k), p);
       return ce.function(
@@ -441,8 +421,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("SquaresR", {
-    description:
-      "r_d(n): the number of ways to write n as an ordered sum of d squares, signs counted.",
+    description: "r_d(n): the number of ways to write n as an ordered sum of d squares, signs counted.",
     signature: "(integer, integer) -> integer",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const d = bigIntegerAt(ops[0]);
@@ -481,12 +460,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const coeffs = operandsOf(ops[0]).map(bigIntegerAt);
       const b = bigIntegerAt(ops[1]);
-      if (
-        coeffs.length === 0 ||
-        coeffs.some((c) => c === undefined || c <= 0n) ||
-        b === undefined ||
-        b < 0n
-      )
+      if (coeffs.length === 0 || coeffs.some((c) => c === undefined || c <= 0n) || b === undefined || b < 0n)
         return undefined;
       const solutions = frobeniusSolve(coeffs as bigint[], b);
       return ce.function(
@@ -502,8 +476,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("FrobeniusNumber", {
-    description:
-      "The largest integer that is not a non-negative integer combination of the given ones.",
+    description: "The largest integer that is not a non-negative integer combination of the given ones.",
     signature: "(list<integer>) -> integer",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const values = operandsOf(ops[0]).map(bigIntegerAt);

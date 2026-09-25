@@ -1,0 +1,276 @@
+no-primes-are-1:
+  epsil:
+    in: PrimePi(1)
+    out: "0"
+  tex:
+    in: \mathrm{PrimePi}(1)
+    out: "0"
+  traditional:
+    in: \pi(1)
+    out: "0"
+  fullform:
+    in: PrimePi[1]
+  wolfram:
+    in: PrimePi[1]
+    out: "0"
+    tex:
+      in: \pi (1)
+      out: "0"
+  sympy:
+    in: primepi(1)
+    out: "0"
+  sage:
+    in: prime_pi(1)
+    out: "0"
+  mathlib4:
+    in: (Nat.primeCounting 1)
+    out: "0"
+  rust:
+    in: prime_pi(n(1))
+    out: "0"
+primepi-2:
+  epsil:
+    in: PrimePi(2)
+    out: "1"
+  tex:
+    in: \mathrm{PrimePi}(2)
+    out: "1"
+  traditional:
+    in: \pi(2)
+    out: "1"
+  fullform:
+    in: PrimePi[2]
+  wolfram:
+    in: PrimePi[2]
+    out: "1"
+    tex:
+      in: \pi (2)
+      out: "1"
+  sympy:
+    in: primepi(2)
+    out: "1"
+  sage:
+    in: prime_pi(2)
+    out: "1"
+  mathlib4:
+    in: (Nat.primeCounting 2)
+    out: "1"
+  rust:
+    in: prime_pi(n(2))
+    out: "1"
+primepi-15:
+  epsil:
+    in: PrimePi(15)
+    out: "6"
+  tex:
+    in: \mathrm{PrimePi}(15)
+    out: "6"
+  traditional:
+    in: \pi(15)
+    out: "6"
+  fullform:
+    in: PrimePi[15]
+  wolfram:
+    in: PrimePi[15]
+    out: "6"
+    tex:
+      in: \pi (15)
+      out: "6"
+  sympy:
+    in: primepi(15)
+    out: "6"
+  sage:
+    in: prime_pi(15)
+    out: "6"
+  mathlib4:
+    in: (Nat.primeCounting 15)
+    out: "6"
+  rust:
+    in: prime_pi(n(15))
+    out: "6"
+primepi-100:
+  epsil:
+    in: PrimePi(100)
+    out: "25"
+  tex:
+    in: \mathrm{PrimePi}(100)
+    out: "25"
+  traditional:
+    in: \pi(100)
+    out: "25"
+  fullform:
+    in: PrimePi[100]
+  wolfram:
+    in: PrimePi[100]
+    out: "25"
+    tex:
+      in: \pi (100)
+      out: "25"
+  sympy:
+    in: primepi(100)
+    out: "25"
+  sage:
+    in: prime_pi(100)
+    out: "25"
+  mathlib4:
+    in: (Nat.primeCounting 100)
+    out: "25"
+  rust:
+    in: prime_pi(n(100))
+    out: "25"
+same-inverse-relation-viewed-from-primepi-s-side:
+  epsil:
+    in: PrimePi(NthPrime(50)) == 50
+    out: True
+  tex:
+    in: \mathrm{PrimePi}(\mathrm{NthPrime}(50))=50
+    out: \top
+  traditional:
+    in: \pi(p_{50})=50
+    out: \mathrm{True}
+  fullform:
+    in: Equal[PrimePi[Prime[50]], 50]
+  wolfram:
+    in: (PrimePi[Prime[50]] == 50)
+    out: True
+    tex:
+      in: \pi \left(p_{50}\right)=50
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: PrimePi([10, 100])
+    out: "[4, 25]"
+  tex:
+    in: \mathrm{PrimePi}(\bigl\lbrack10, 100\bigr\rbrack)
+    out: \bigl\lbrack4, 25\bigr\rbrack
+  fullform:
+    in: PrimePi[List[10, 100]]
+  wolfram:
+    in: PrimePi[List[10, 100]]
+    out: "{4, 25}"
+    tex:
+      in: \pi (\{10,100\})
+      out: \{4,25\}
+  sympy:
+    in: "[primepi(10), primepi(100)]"
+    out: "AttributeError: 'list' object has no attribute 'is_real'"
+    verdict: error
+    kind: threading
+    note: compute-engine's PrimePi is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: "[prime_pi(10), prime_pi(100)]"
+  mathlib4:
+    in: (Nat.primeCounting [10, 100])
+  rust:
+    in: prime_pi(list(vec![n(10), n(100)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's PrimePi is Listable and threads over the list; the Rust crate takes scalars only.
+rational-arguments-the-primes-up-to-7-2-are-2:
+  epsil:
+    in: PrimePi(7 / 2)
+    out: "2"
+  tex:
+    in: \mathrm{PrimePi}(\frac{7}{2})
+    out: "2"
+  traditional:
+    in: \pi(\frac{7}{2})
+    out: "2"
+  fullform:
+    in: PrimePi[Rational[7, 2]]
+  wolfram:
+    in: PrimePi[Rational[7, 2]]
+  sympy:
+    in: primepi(Rational(7, 2))
+  sage:
+    in: prime_pi((7/2))
+  mathlib4:
+    in: "(Nat.primeCounting ((7 : ℚ) / 2))"
+  rust:
+    in: prime_pi(rational(n(7), n(2)))
+real-arguments:
+  epsil:
+    in: PrimePi(15.25)
+    out: "6"
+  tex:
+    in: \mathrm{PrimePi}(15.25)
+    out: "6"
+  traditional:
+    in: \pi(15.25)
+    out: "6"
+  fullform:
+    in: PrimePi[15.25]
+  wolfram:
+    in: PrimePi[15.25]
+  sympy:
+    in: primepi(15.25)
+  sage:
+    in: prime_pi(15.25)
+  mathlib4:
+    in: (Nat.primeCounting 15.25)
+  rust:
+    in: prime_pi(x(15.25))
+the-primes-below-a-million:
+  epsil:
+    in: PrimePi(1_000_000)
+    out: 78_498
+  tex:
+    in: \mathrm{PrimePi}(1\,000\,000)
+    out: 78\,498
+  traditional:
+    in: \pi(1\,000\,000)
+    out: 78\,498
+  fullform:
+    in: PrimePi[1000000]
+  wolfram:
+    in: PrimePi[1000000]
+  sympy:
+    in: primepi(1000000)
+  sage:
+    in: prime_pi(1000000)
+  mathlib4:
+    in: (Nat.primeCounting 1000000)
+  rust:
+    in: prime_pi(n(1000000))
+listable-threads-over-a-list:
+  epsil:
+    in: PrimePi([3, 5, 17, 25])
+    out: "[2, 3, 7, 9]"
+  tex:
+    in: \mathrm{PrimePi}(\bigl\lbrack3, 5, 17, 25\bigr\rbrack)
+    out: \bigl\lbrack2, 3, 7, 9\bigr\rbrack
+  fullform:
+    in: PrimePi[List[3, 5, 17, 25]]
+  wolfram:
+    in: PrimePi[List[3, 5, 17, 25]]
+  sympy:
+    in: "[primepi(3), primepi(5), primepi(17), primepi(25)]"
+  sage:
+    in: "[prime_pi(3), prime_pi(5), prime_pi(17), prime_pi(25)]"
+  mathlib4:
+    in: (Nat.primeCounting [3, 5, 17, 25])
+  rust:
+    in: prime_pi(list(vec![n(3), n(5), n(17), n(25)]))
+no-primes-are-a-negative-number:
+  epsil:
+    in: PrimePi(-1)
+    out: "0"
+  tex:
+    in: \mathrm{PrimePi}(-1)
+    out: "0"
+  traditional:
+    in: \pi(-1)
+    out: "0"
+  fullform:
+    in: PrimePi[-1]
+  wolfram:
+    in: PrimePi[-1]
+  sympy:
+    in: primepi(-1)
+  sage:
+    in: prime_pi(-1)
+  mathlib4:
+    in: (Nat.primeCounting (-1))
+  rust:
+    in: prime_pi(n(-1))

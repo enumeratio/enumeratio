@@ -4,7 +4,7 @@ import { parseNotatio } from "@enumeratio/formats/notatio";
 import { expect, test } from "vite-plus/test";
 import { renderingOf } from "../src/symbols.ts";
 
-// `Evaluator -> "Worker"` (notatio-lit's off-thread session, design/aestimatio.md) only
+// `Evaluator -> "Worker"` (notatio-lit's off-thread session, design/computation.md) only
 // ever reaches the page as the `evaluator="worker"` attribute `renderingOf` lowers it to
 // -- and that lowering only survives a REAL engine's canonicalisation. `symbols.test.ts`'s
 // own golden corpus renders straight off `parseNotatio`'s tree, never through
@@ -40,10 +40,9 @@ test('Notebook(cells, Evaluator -> Worker) lowers to evaluator="worker" too', ()
 });
 
 test("Notebook(cells, TrackedSymbols -> All, Evaluator -> Worker) keeps both options", () => {
-  const { json, errors } = parseNotatio(
-    "Notebook([Cell(a := 5)], TrackedSymbols -> All, Evaluator -> Worker)",
-    { allow: ["Assign"] },
-  );
+  const { json, errors } = parseNotatio("Notebook([Cell(a := 5)], TrackedSymbols -> All, Evaluator -> Worker)", {
+    allow: ["Assign"],
+  });
   expect(errors).toEqual([]);
   const boxed = ce.box(json as never);
   expect(JSON.stringify(boxed.json)).not.toContain('"Error"');

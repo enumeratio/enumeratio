@@ -1,0 +1,24 @@
+name: IsCompleteGraph
+domain: Collections
+signature: IsCompleteGraph(g)
+summary: Whether a [[Graph]] is complete — every pair of vertices joined by an edge.
+signatures:
+  - call: IsCompleteGraph(g)
+    description: true iff g is simple (no self-loop, no parallel edge) and every ORDERED pair of distinct vertices is joined.
+    library: enumeratio-collections
+details:
+  - Wolfram calls this `CompleteGraphQ`; this library uses the `Is…` spelling everywhere.
+  - "A directed graph counts too, kernel-verified against Wolfram 15: CompleteGraphQ(Graph({1->2, 2->1})) is True, and CompleteGraph(3, DirectedEdges->True) (every ordered pair, both directions) is complete. An undirected edge covers BOTH ordered pairs between its endpoints; a directed edge covers only the one it points."
+examples:
+  - id: completegraph-n-is-complete
+    expr: [IsCompleteGraph, [CompleteGraph, 5]]
+    expected: True
+  - id: a-path-is-not-complete
+    expr: [IsCompleteGraph, [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]]]]
+    expected: False
+  - id: a-directed-2-cycle-is-complete
+    expr: [IsCompleteGraph, [Graph, [List, 1, 2], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1]]]]
+    expected: True
+seeAlso:
+  - CompleteGraph
+  - IsSimpleGraph

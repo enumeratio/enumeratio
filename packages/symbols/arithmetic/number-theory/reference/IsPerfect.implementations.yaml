@@ -1,0 +1,28 @@
+listable:
+  epsil:
+    in: IsPerfect([6, 28, 12])
+    out: "[True, True, False]"
+  tex:
+    in: \mathrm{IsPerfect}(\bigl\lbrack6, 28, 12\bigr\rbrack)
+    out: \bigl\lbrack\top, \top, \bot\bigr\rbrack
+  traditional:
+    in: \mathrm{IsPerfect}(\bigl\lbrack6, 28, 12\bigr\rbrack)
+    out: \bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+  fullform:
+    in: PerfectNumberQ[List[6, 28, 12]]
+  wolfram:
+    in: PerfectNumberQ[List[6, 28, 12]]
+negative-numbers-are-not-perfect:
+  epsil:
+    in: IsPerfect(-6)
+    out: False
+  tex:
+    in: \mathrm{IsPerfect}(-6)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPerfect}(-6)
+    out: \mathrm{False}
+  fullform:
+    in: PerfectNumberQ[-6]
+  wolfram:
+    in: PerfectNumberQ[-6]

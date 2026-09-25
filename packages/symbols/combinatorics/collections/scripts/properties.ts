@@ -29,10 +29,10 @@
 // Advisory, never a gate: a fresh seed each run means a red result is a finding to triage,
 // not a broken build.
 //
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts             # everything, fresh seed
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts perm        # families matching "perm"
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts perm 123456 # replay exactly
-//   QUICKCHECK_POINTS=20 vp node …/quickcheck.ts                   # more points per family
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts             # everything, fresh seed
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm        # families matching "perm"
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
+//   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
 
 import type { FamilyKernel } from "../src/families/types.ts";
 /** Counts past this are sampled but never enumerated — property 5 would not finish. */
@@ -48,6 +48,14 @@ export function random(seed: number): () => number {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4_294_967_296;
   };
+}
+
+/** A stream of its own per family (FNV-1a of `seed/key`), so what one family draws never
+ *  depends on which families ran before it — filtering the run to one head replays it. */
+export function streamFor(seed: number, key: string): () => number {
+  let h = 2166136261;
+  for (const ch of `${seed}/${key}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return random(h >>> 0);
 }
 
 export interface Failure {
@@ -108,11 +116,7 @@ export function check(entry: FamilyKernel, params: number[], rank: number): Fail
 }
 
 /** Bounds and injectivity, which are about the family rather than one point. */
-export function checkFamily(
-  entry: FamilyKernel,
-  params: number[],
-  draw: () => number,
-): Failure | undefined {
+export function checkFamily(entry: FamilyKernel, params: number[], draw: () => number): Failure | undefined {
   const total = entry.count(params);
   const fail = (property: string, detail: string): Failure => ({
     family: entry.head,
@@ -187,9 +191,7 @@ export function shrink(entry: FamilyKernel, failure: Failure): Failure {
       })();
       if (!Number.isFinite(total) || total <= 0) continue;
       const smaller =
-        best.rank >= 0
-          ? check(entry, params, Math.min(best.rank, total - 1))
-          : checkFamily(entry, params, random(1));
+        best.rank >= 0 ? check(entry, params, Math.min(best.rank, total - 1)) : checkFamily(entry, params, random(1));
       if (smaller?.property === best.property) {
         best = smaller;
         break;

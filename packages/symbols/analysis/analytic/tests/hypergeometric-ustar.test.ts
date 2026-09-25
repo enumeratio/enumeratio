@@ -22,8 +22,7 @@ const goldens: GoldenCase[] = JSON.parse(
 );
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 test("HypergeometricUStar matches mpmath.hyperu", () => {
   const off: string[] = [];

@@ -1,0 +1,27 @@
+the-one-line-word-312:
+  epsil:
+    in: OccurrencesOf132(Permutation([3, 1, 2]))
+    out: "0"
+  tex:
+    in: \mathrm{OccurrencesOf132}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    out: "0"
+  fullform:
+    in: OccurrencesOf132[Permutation[List[3, 1, 2]]]
+the-one-line-word-312-as-a-plain-list:
+  epsil:
+    in: OccurrencesOf132([3, 1, 2])
+    out: "0"
+  tex:
+    in: \mathrm{OccurrencesOf132}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "0"
+  fullform:
+    in: OccurrencesOf132[List[3, 1, 2]]
+the-one-line-word-2413:
+  epsil:
+    in: OccurrencesOf132(Permutation([2, 4, 1, 3]))
+    out: "1"
+  tex:
+    in: \mathrm{OccurrencesOf132}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
+    out: "1"
+  fullform:
+    in: OccurrencesOf132[Permutation[List[2, 4, 1, 3]]]

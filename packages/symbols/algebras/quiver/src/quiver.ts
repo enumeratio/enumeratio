@@ -60,9 +60,7 @@ export const kroneckerQuiver = (): Quiver => ({
 
 /** The adjacency matrix: entry (i,j) counts arrows from i+1 to j+1. */
 export function adjacency(q: Quiver): number[][] {
-  const matrix = Array.from({ length: q.vertices }, () =>
-    Array.from({ length: q.vertices }, () => 0),
-  );
+  const matrix = Array.from({ length: q.vertices }, () => Array.from({ length: q.vertices }, () => 0));
   for (const arrow of q.arrows) matrix[arrow.from - 1]![arrow.to - 1]! += 1;
   return matrix;
 }
@@ -138,7 +136,5 @@ export const pathAlgebraDimension = (q: Quiver): number | undefined => allPaths(
  * algebra.
  */
 export function concatenate(q: Quiver, a: Path, b: Path): Path | undefined {
-  return pathEnd(q, a) === b.start
-    ? { start: a.start, arrows: [...a.arrows, ...b.arrows] }
-    : undefined;
+  return pathEnd(q, a) === b.start ? { start: a.start, arrows: [...a.arrows, ...b.arrows] } : undefined;
 }

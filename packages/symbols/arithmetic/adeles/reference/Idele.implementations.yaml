@@ -1,0 +1,45 @@
+the-principal-idele-7-at-every-place:
+  epsil:
+    in: Idele(7)
+    out: Idele(7, 7)
+  tex:
+    in: \mathrm{Idele}(7)
+    out: \mathrm{Idele}(7, 7)
+  fullform:
+    in: Idele[7]
+7-and-its-inverse-cancel-everywhere:
+  epsil:
+    in: Idele(7) * Idele(1 / 7)
+    out: Idele(1, 1)
+  tex:
+    in: \mathrm{Idele}(7)\mathrm{Idele}(\frac{1}{7})
+    out: \mathrm{Idele}(1, 1)
+  fullform:
+    in: Times[Idele[7], Idele[Rational[1, 7]]]
+a-listed-component-carries-its-valuation-into:
+  epsil:
+    in: Idele(1, 1, [AdicNumeral(5, 15 / 7, 4)])
+    out: Idele(1, 5, [AdicNumeral(5, 54, 3)])
+  tex:
+    in: \mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(5, \frac{15}{7}, 4)\bigr\rbrack)
+    out: \mathrm{Idele}(1, 5, \bigl\lbrack\mathrm{AdicNumeral}(5, 54, 3)\bigr\rbrack)
+  fullform:
+    in: Idele[1, 1, List[AdicNumeral[5, Rational[15, 7], 4]]]
+a-unit-known-mod-2-says-nothing-at-2:
+  epsil:
+    in: Idele(1, 1, [AdicNumeral(2, 3, 1)])
+    out: Idele(1, 1, [])
+  tex:
+    in: \mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(2, 3, 1)\bigr\rbrack)
+    out: \mathrm{Idele}(1, 1, \bigl\lbrack \bigr\rbrack)
+  fullform:
+    in: Idele[1, 1, List[AdicNumeral[2, 3, 1]]]
+idele-with-a-zero-real-part:
+  epsil:
+    in: Idele(0, 1)
+    out: Idele(0, 1)
+  tex:
+    in: \mathrm{Idele}(0, 1)
+    out: \mathrm{Idele}(0, 1)
+  fullform:
+    in: Idele[0, 1]

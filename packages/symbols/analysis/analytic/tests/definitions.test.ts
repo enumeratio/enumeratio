@@ -126,9 +126,7 @@ for (const [label, expr, variable, at, point] of DERIVATIVES) {
 }
 
 test("LogGamma' is the digamma function, exactly", () => {
-  expect(box(["D", ["LogGamma", "z"], "z"]).evaluate().json).toEqual(
-    box(["PolyGamma", 0, "z"]).evaluate().json,
-  );
+  expect(box(["D", ["LogGamma", "z"], "z"]).evaluate().json).toEqual(box(["PolyGamma", 0, "z"]).evaluate().json);
 });
 
 test("a partial with no closed form stays an inert Derivative", () => {
@@ -138,11 +136,7 @@ test("a partial with no closed form stays an inert Derivative", () => {
 
 test("the stock derivative table still works", () => {
   expect(box(["D", ["Sin", "x"], "x"]).evaluate().json).toEqual(["Cos", "x"]);
-  expect(box(["D", ["Gamma", "z"], "z"]).evaluate().json).toEqual([
-    "Multiply",
-    ["Digamma", "z"],
-    ["Gamma", "z"],
-  ]);
+  expect(box(["D", ["Gamma", "z"], "z"]).evaluate().json).toEqual(["Multiply", ["Digamma", "z"], ["Gamma", "z"]]);
 });
 
 // --- Arbitrary precision -------------------------------------------------------------
@@ -166,8 +160,7 @@ const engine40 = (): ComputeEngine => {
   engine.precision = 40;
   return engine;
 };
-const box40 = (engine: ComputeEngine, expr: Expr) =>
-  engine.box(expr as unknown as Parameters<ComputeEngine["box"]>[0]);
+const box40 = (engine: ComputeEngine, expr: Expr) => engine.box(expr as unknown as Parameters<ComputeEngine["box"]>[0]);
 const at40 = (expr: Expr): unknown => box40(engine40(), expr).N().json;
 
 for (const [expr, digits] of AT_40_DIGITS) {
@@ -230,8 +223,7 @@ for (const { s, a, digits, mpmath } of PRECISE_ZETA) {
     const engine = new ComputeEngine();
     declareAnalytic(engine);
     engine.precision = digits;
-    const value = box40(engine, ["HurwitzZeta", ["Rational", ...s], ["Rational", ...a]]).N()
-      .json as { num: string };
+    const value = box40(engine, ["HurwitzZeta", ["Rational", ...s], ["Rational", ...a]]).N().json as { num: string };
     expect(relativeDifference(value.num, mpmath)).toBeLessThan(10 ** (1 - digits));
   });
 }
@@ -241,8 +233,7 @@ test("the bignum Euler–Maclaurin agrees with compute-engine's own Zeta to 40 d
   const engine = engine40();
   const half: Expr = ["Rational", 1, 2];
   const ours = box40(engine, ["HurwitzZeta", half, half]).N().bignumRe;
-  const native = box40(engine, ["Multiply", ["Subtract", ["Sqrt", 2], 1], ["Zeta", half]]).N()
-    .bignumRe;
+  const native = box40(engine, ["Multiply", ["Subtract", ["Sqrt", 2], 1], ["Zeta", half]]).N().bignumRe;
   expect(ours?.sub(native!).abs().lt(1e-38)).toBe(true);
 });
 

@@ -101,15 +101,11 @@ for call, l, h in cases:
     print(nstr(min(values), 30), nstr(max(values), 30))
 `;
 const out = (await runKernel("python3", ["-c", py], { timeoutMs: 600_000 })).trim().split("\n");
-if (out.length !== cases.length)
-  throw new Error(`mpmath gave ${out.length} images for ${cases.length} cases`);
+if (out.length !== cases.length) throw new Error(`mpmath gave ${out.length} images for ${cases.length} cases`);
 
 const goldens: ImageGolden[] = cases.map(([call, interval], k) => {
   const [least, greatest] = out[k]!.split(" ") as [string, string];
   return { call, interval, least, greatest };
 });
-writeFileSync(
-  new URL("../tests/image.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/image.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 console.log(`cases ${goldens.length}`);

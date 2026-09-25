@@ -14,9 +14,7 @@ import { declareAnalytic, enclosureOf } from "../src/index.ts";
 // mpmath's value and be a few units of that precision wide -- a rational argument is itself
 // rounded there -- and asking for more digits must narrow it.
 
-const rows = JSON.parse(
-  readFileSync(new URL("./certified.golden.json", import.meta.url), "utf8"),
-) as CertifiedGolden[];
+const rows = JSON.parse(readFileSync(new URL("./certified.golden.json", import.meta.url), "utf8")) as CertifiedGolden[];
 const goldens = rows.filter(({ head }) => head !== "pi");
 
 const ce = new ComputeEngine();
@@ -116,7 +114,5 @@ test("an argument that arrives rounded leaves the head to the agreement loop", (
   expect(enclosureOf(answer)).toBeUndefined();
   // So does a head with no certified kernel, and a certified head outside its kernel's reach.
   expect(enclosureOf(ce.box(["N", ["Sinh", 1], 30]).evaluate())).toBeUndefined();
-  expect(enclosureOf(ce.box(["N", ["PolyLog", 2, ["Rational", 3, 2]], 30]).evaluate())).toBe(
-    undefined,
-  );
+  expect(enclosureOf(ce.box(["N", ["PolyLog", 2, ["Rational", 3, 2]], 30]).evaluate())).toBe(undefined);
 });

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
-import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { getEntry, resolveHead } from "../../data/reference.ts";
+import { fragment, setFragment } from "../fragment.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
@@ -39,8 +40,7 @@ const linkify = (text?: string): string =>
   (text ?? "")
     .replace(
       /\$([^$]+)\$/g,
-      (_match, tex: string) =>
-        `<notatio-out inline format="latex" value="${escapeAttr(tex)}"></notatio-out>`,
+      (_match, tex: string) => `<notatio-out inline format="latex" value="${escapeAttr(tex)}"></notatio-out>`,
     )
     .replace(/\[\[([A-Za-z0-9]+)\]\]/g, (_match, name: string) =>
       getEntry(name) ? `<a class="ref-link" href="/reference/symbol/${name}">${name}</a>` : name,
@@ -48,8 +48,7 @@ const linkify = (text?: string): string =>
 
 // What each implementation row is, for the badge tooltip and the pointer it shows.
 const ORIGIN_TITLE: Record<string, string> = {
-  reference:
-    "the defining expression, in notatio — the specification the others are checked against",
+  reference: "the defining expression, in notatio — the specification the others are checked against",
   native: "the TypeScript that actually runs",
   compiled: "produced by a compute-engine compile target",
   component: "bottoms out in a web component — the rendered element is the value",
@@ -83,9 +82,7 @@ const onAssert = (i: number, event: Event): void => {
 
 // Known-divergence chips, one per system the example diverges from.
 const SYSTEM_LABEL: Record<string, string> = { wolfram: "Wolfram", numpy: "NumPy", sympy: "SymPy" };
-const divergences = (ex: {
-  divergence?: Record<string, string>;
-}): { system: string; label: string; note: string }[] =>
+const divergences = (ex: { divergence?: Record<string, string> }): { system: string; label: string; note: string }[] =>
   Object.entries(ex.divergence ?? {}).map(([system, note]) => ({
     system,
     label: SYSTEM_LABEL[system] ?? system,
@@ -101,11 +98,9 @@ const onDirty = (i: number, event: Event): void => {
   if (dirty[i]) delete status[i];
 };
 
-// Other systems' runs of each example, attached by entries.ts from the entry's
-// `<stem>.oracle.json` sidecar (see `@enumeratio/oracle`).
-const alternativesOf = (ex: {
-  others?: Record<string, Alternative>;
-}): Record<string, Alternative> | undefined =>
+// Other systems' runs of each example, from the head's implementations record (the loader
+// attaches them; see `@enumeratio/oracle`).
+const alternativesOf = (ex: { others?: Record<string, Alternative> }): Record<string, Alternative> | undefined =>
   ex.others && Object.keys(ex.others).length > 0 ? ex.others : undefined;
 // A row's own note, preferring the entry's authored `divergence` prose over the scan's.
 const notesOf = (ex: {
@@ -128,9 +123,6 @@ const sectionId = (category: string): string => category.toLowerCase().replace(/
 const targeted = ref("");
 const openSections = ref(new Set<string>());
 
-const HIGHLIGHT_CLASS = "ref-target-highlight";
-const HIGHLIGHT_MS = 1600;
-
 /** Open any closed `<details class="ref-section">` ancestor of `id`, so a deep link into a
  * collapsed example category still lands on visible content. */
 function openAncestorSections(id: string): void {
@@ -139,60 +131,29 @@ function openAncestorSections(id: string): void {
   if (details?.id) openSections.value.add(details.id);
 }
 
-/** Scroll the target into view and flash it -- a CSS animation that honours
- * prefers-reduced-motion (see the .ref-target-highlight rule below); the class is
- * removed after the same window either way, so the highlight is always brief. */
-function highlight(id: string): void {
-  const el = document.getElementById(id);
-  if (!el) return;
-  requestAnimationFrame(() => {
-    el.scrollIntoView({ block: "center" });
-    el.classList.add(HIGHLIGHT_CLASS);
-    setTimeout(() => el.classList.remove(HIGHLIGHT_CLASS), HIGHLIGHT_MS);
-  });
-}
-
-// Sections are scrolled to once the client-only sections exist (the browser's own hash
-// scroll runs before they render), and the same path runs again on same-page hash
-// navigation (VitePress's router doesn't reload the page for those).
-const followHash = async (): Promise<void> => {
-  const id = decodeURIComponent(location.hash.slice(1));
+// The URL's fragment (fragment.ts) decides what's targeted: a section, an example, or one
+// case of a grouped card, which that card then shows. fragment.ts outlines and scrolls to
+// it; this only makes sure it's rendered and visible.
+const followFragment = async (): Promise<void> => {
+  const id = fragment.value.target;
   targeted.value = id;
   if (id === "") return;
-  // A case of a grouped example: show that case on its card, which is what's scrolled to.
-  let card = id;
   const key = entry.value?.examples[targetedExample.value]?.group;
-  if (key !== undefined) {
-    const cases = casesOf(key);
-    activeCase[key] = cases.indexOf(targetedExample.value);
-    card = anchorOf(entry.value!.examples[cases[0]!]!);
-  }
+  if (key !== undefined) activeCase[key] = casesOf(key).indexOf(targetedExample.value);
   await nextTick();
-  openAncestorSections(card);
-  await nextTick();
-  highlight(card);
+  openAncestorSections(id);
 };
-onMounted(() => {
-  void followHash();
-  window.addEventListener("hashchange", followHash);
-});
-onBeforeUnmount(() => window.removeEventListener("hashchange", followHash));
+watch(fragment, () => void followFragment());
+onMounted(() => void followFragment());
 
 // Examples grouped into categories, keeping each example's original index so
 // assertion status stays addressable.
-const CATEGORY_ORDER = [
-  "Basic",
-  "Scope",
-  "Applications",
-  "Properties",
-  "Possible issues",
-  "Neat examples",
-];
+const CATEGORY_ORDER = ["Basic", "Scope", "Applications", "Properties", "Possible issues", "Neat examples"];
 // Examples sharing a `group` are cases of one example: a single card, where the first
 // member sits, cycling through them. `activeCase` is the shown case's position per group.
 const activeCase = reactive<Record<string, number>>({});
-// `#example/<id>` is that example; a case of a grouped card is linked by its own id, and
-// the card, which carries its first case's anchor, shows it.
+// `#example/<id>` is that example; a grouped card carries the anchor of the case it shows,
+// so a link to any case lands on the card showing it.
 const anchorOf = (ex: { id: string }): string => `example/${ex.id}`;
 const membersOf = (key: string): number[] =>
   (entry.value?.examples ?? []).flatMap((ex, i) => (ex.group === key ? [i] : []));
@@ -201,13 +162,17 @@ const targetedExample = computed((): number =>
     ? (entry.value?.examples ?? []).findIndex((ex) => anchorOf(ex) === targeted.value)
     : -1,
 );
-const shown = (ex: { hidden?: boolean }, i: number): boolean =>
+const shown = (ex: { role?: string }, i: number): boolean =>
   // Kept as data, not rendered -- unless a deep link asks for it.
-  !ex.hidden || i === targetedExample.value;
-const casesOf = (key: string): number[] =>
-  membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
+  ex.role !== "test" || i === targetedExample.value;
+const casesOf = (key: string): number[] => membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
 const cycle = (key: string, cases: readonly number[], step: number): void => {
+  const was = entry.value!.examples[cases[activeCase[key] ?? 0]!]!;
   activeCase[key] = ((activeCase[key] ?? 0) + step + cases.length) % cases.length;
+  // A card the URL names keeps naming the case it shows.
+  if (fragment.value.target === anchorOf(was)) {
+    setFragment(anchorOf(entry.value!.examples[cases[activeCase[key]]!]!));
+  }
 };
 const grouped = computed(() => {
   const list = entry.value?.examples ?? [];
@@ -245,19 +210,18 @@ const grouped = computed(() => {
     .map(([category, items]) => ({ category, items }));
 });
 // Examples kept as data (grid points, edge cases) that the page leaves out.
-const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex.hidden).length);
+const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex.role === "test").length);
 </script>
 
 <template>
   <div v-if="entry" class="reference-entry">
     <p v-if="entry.stub === 'engine'" class="ref-stub">
-      Generated from the engine's own definition: compute-engine's symbol, which we neither extend
-      nor document by hand. No examples yet — the crosswalk is the reason it has a page.
+      Generated from the engine's own definition: compute-engine's symbol, which we neither extend nor document by hand.
+      No examples yet — the crosswalk is the reason it has a page.
     </p>
     <p v-else-if="entry.stub === 'carrier'" class="ref-stub">
-      A carrier domain from <a href="/reference/domains/">the domains catalogue</a>; the signature
-      is its storage shape. What is known about it elsewhere is mostly recorded against the
-      collections that enumerate it, and says so.
+      A carrier domain from <a href="/reference/domains/">the domains catalogue</a>; the signature is its storage shape.
+      What is known about it elsewhere is mostly recorded against the collections that enumerate it, and says so.
     </p>
     <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
     <p v-html="linkify(entry.summary)"></p>
@@ -302,8 +266,8 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 
     <div v-if="grouped.length" class="ref-examples-head">
       <h2>Examples</h2>
-      <span v-if="hiddenCount" class="ref-hidden-count"
-        >{{ hiddenCount }} more kept as data, checked against the oracles</span
+      <span v-if="testCount" class="ref-hidden-count"
+        >{{ testCount }} more kept as data, checked against the oracles</span
       >
       <span class="ref-view">
         <button v-if="grouped.length > 1" @click="sectionsOpen = !sectionsOpen">
@@ -318,25 +282,16 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         class="ref-section"
         :class="{ 'is-bare': grouped.length <= 1 }"
         :id="sectionId(group.category)"
-        :open="
-          sectionsOpen ||
-          sectionId(group.category) === targeted ||
-          openSections.has(sectionId(group.category))
-        "
+        :open="sectionsOpen || sectionId(group.category) === targeted || openSections.has(sectionId(group.category))"
       >
         <summary class="ref-category">
           {{ group.category }}
-          <a
-            class="ref-anchor"
-            :href="`#${sectionId(group.category)}`"
-            :aria-label="`Link to ${group.category}`"
-            >#</a
-          >
+          <a class="ref-anchor" :href="`#${sectionId(group.category)}`" :aria-label="`Link to ${group.category}`">#</a>
         </summary>
         <div
           v-for="{ ex, i, first, key, cases } in group.items"
           :key="key ?? i"
-          :id="anchorOf(entry.examples[first]!)"
+          :id="anchorOf(ex)"
           class="ref-example"
           :class="{
             'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && !dirty[i],
@@ -365,22 +320,15 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
             @notatio-dirty="onDirty(i, $event)"
             @notatio-assert="onAssert(i, $event)"
           >
-            <span v-if="ex.aspirational" slot="aside" class="ref-planned-badge"
-              >not yet implemented</span
-            >
+            <span v-if="ex.aspirational" slot="aside" class="ref-planned-badge">not yet implemented</span>
             <ExampleAlternatives
               v-else-if="alternativesOf(ex)"
               slot="aside"
+              :anchor="anchorOf(ex)"
               :alternatives="alternativesOf(ex)!"
               :notes="notesOf(ex)"
             />
-            <span
-              v-for="d in divergences(ex)"
-              v-else
-              :key="d.system"
-              slot="aside"
-              class="ref-divergent-badge"
-            >
+            <span v-for="d in divergences(ex)" v-else :key="d.system" slot="aside" class="ref-divergent-badge">
               differs from {{ d.label }}
             </span>
           </notatio-cell>
@@ -400,21 +348,12 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         <span class="ref-badge is-primitive">primitive · {{ entry.primitive }}</span>
         <span class="ref-primitive-reason">{{ PRIMITIVE_REASON[entry.primitive] }}</span>
       </p>
-      <div
-        v-for="(impl, i) in entry.implementations ?? []"
-        :key="i"
-        class="ref-impl"
-        :data-origin="impl.origin"
-      >
+      <div v-for="(impl, i) in entry.implementations ?? []" :key="i" class="ref-impl" :data-origin="impl.origin">
         <div class="ref-impl-head">
           <span class="ref-badge ref-origin" :title="ORIGIN_TITLE[impl.origin]">
             {{ impl.origin }}
           </span>
-          <span
-            v-if="impl.environment"
-            class="ref-badge ref-env"
-            :title="ENVIRONMENT_TITLE[impl.environment]"
-          >
+          <span v-if="impl.environment" class="ref-badge ref-env" :title="ENVIRONMENT_TITLE[impl.environment]">
             {{ impl.environment }}
           </span>
           <code class="ref-impl-form">{{ impl.form }}</code>
@@ -433,11 +372,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         </ClientOnly>
         <notatio-code v-if="impl.code" :language="impl.form" :value="impl.code" />
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-        <p
-          v-if="impl.produces"
-          class="ref-impl-note"
-          v-html="`Produces ${linkify(impl.produces)}.`"
-        ></p>
+        <p v-if="impl.produces" class="ref-impl-note" v-html="`Produces ${linkify(impl.produces)}.`"></p>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
         <p v-if="impl.note" class="ref-impl-note" v-html="linkify(impl.note)"></p>
       </div>
@@ -526,27 +461,6 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 #implementation,
 .ref-example {
   scroll-margin-top: calc(var(--vp-nav-height) + 1rem);
-}
-.ref-target-highlight {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 3px;
-  border-radius: 6px;
-  animation: ref-target-fade 1.6s ease-out forwards;
-}
-@keyframes ref-target-fade {
-  from {
-    outline-color: var(--vp-c-brand-1);
-    background-color: var(--vp-c-brand-soft);
-  }
-  to {
-    outline-color: transparent;
-    background-color: transparent;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .ref-target-highlight {
-    animation: none;
-  }
 }
 .ref-section.is-bare > summary {
   display: none;

@@ -63,12 +63,8 @@ watch([source, mode], run);
 <template>
   <div class="ce-playground">
     <div class="ce-modes">
-      <button :class="{ active: mode === 'latex' }" type="button" @click="setMode('latex')">
-        LaTeX
-      </button>
-      <button :class="{ active: mode === 'mathjson' }" type="button" @click="setMode('mathjson')">
-        MathJSON
-      </button>
+      <button :class="{ active: mode === 'latex' }" type="button" @click="setMode('latex')">LaTeX</button>
+      <button :class="{ active: mode === 'mathjson' }" type="button" @click="setMode('mathjson')">MathJSON</button>
     </div>
 
     <textarea

@@ -2,15 +2,7 @@
 // engine and (for the extended n <= 7 property check) purely in JS. See map-helpers.ts for
 // shared setup.
 import { expect, test } from "vite-plus/test";
-import {
-  ALL,
-  cyclesOf,
-  foataOf,
-  leftToRightMaxima,
-  perm,
-  permutations,
-  result,
-} from "./map-helpers.ts";
+import { ALL, cyclesOf, foataOf, leftToRightMaxima, perm, permutations, result } from "./map-helpers.ts";
 
 test("Foata agrees with the cycle-rotation reading", () => {
   for (const p of ALL) {

@@ -57,8 +57,6 @@ examples:
     expected: [List, 1, [Sqrt, 2], 2, ExponentialE, 3, Pi]
     category: Scope
     caption: Exact numeric constants sort by their value
-    divergence:
-      wolfram: "Wolfram's default canonical order puts explicit numbers before symbolic ones: {1, 2, 3, Sqrt[2], E, Pi}; Sort[…, Less] gives this numeric order."
   - id: less-as-the-ordering-function-sorts-by-numeric
     expr: [Sort, [List, Pi, ExponentialE, 2, 3, 1, [Sqrt, 2]], Less]
     expected: [List, 1, [Sqrt, 2], 2, ExponentialE, 3, Pi]
@@ -70,12 +68,7 @@ examples:
     category: Scope
     caption: "A named ordering function: $Greater$ sorts in descending order"
   - id: sorting-pairs-by-their-second-element-with-a
-    expr:
-      [
-        Sort,
-        [List, [List, a, 2], [List, c, 1], [List, d, 3]],
-        [Function, [Less, [At, _1, 2], [At, _2, 2]]],
-      ]
+    expr: [Sort, [List, [List, a, 2], [List, c, 1], [List, d, 3]], [Function, [Less, [At, _1, 2], [At, _2, 2]]]]
     expected: [List, [List, c, 1], [List, a, 2], [List, d, 3]]
     category: Scope
     caption: Sorting pairs by their second element with a custom comparator

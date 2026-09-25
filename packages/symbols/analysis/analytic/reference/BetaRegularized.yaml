@@ -37,12 +37,7 @@ examples:
     category: Properties
     caption: $I_{1/2}(a, a) = 1/2$ for any a, here at $a = 10$
   - id: binomial-cdf-via-the-regularized-beta-for-x-sim
-    expr:
-      [
-        Equal,
-        [BetaRegularized, 0.7, 3, 2],
-        [Add, [Power, 0.7, 4], [Multiply, 4, 0.3, [Power, 0.7, 3]]],
-      ]
+    expr: [Equal, [BetaRegularized, 0.7, 3, 2], [Add, [Power, 0.7, 4], [Multiply, 4, 0.3, [Power, 0.7, 3]]]]
     expected: True
     category: Applications
     caption: 'Binomial CDF via the regularized beta: for $X \sim \text{Binomial}(4, 0.3)$, $P(X \leq 1) = I_{0.7}(3, 2)$'
@@ -51,8 +46,6 @@ examples:
     expected: [BetaRegularized, 2, 2, 3]
     category: Possible issues
     caption: An x outside $[0, 1]$ is left unevaluated rather than erroring or returning NaN
-    divergence:
-      wolfram: x outside [0, 1] is left unevaluated here; Wolfram continues the regularised incomplete beta function and gets 8.
   - id: threads-element-wise-over-a-list-as-wolfram-s
     expr: [BetaRegularized, 0.5, [List, 1, 2], 1]
     expected: [List, 0.5, 0.25]

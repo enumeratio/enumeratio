@@ -1,0 +1,42 @@
+randomvariate-default-seed-is-reproducible:
+  epsil:
+    in: RandomVariate(NormalDistribution(0, 1))
+    out: -0.956_162_229_384_149
+  tex:
+    in: \mathrm{RandomVariate}(\operatorname{NormalDistribution}(0, 1))
+    out: -0.956\,162\,229\,384\,149
+  fullform:
+    in: RandomVariate[NormalDistribution[0, 1]]
+  wolfram:
+    in: RandomVariate[NormalDistribution[0, 1]]
+randomvariate-n-draws:
+  epsil:
+    in: Last([SeedRandom(1), RandomVariate(UniformDistribution([0, 1]), 3)])
+    out: "[0.627_073_940_588_161_3, 0.002_735_721_180_215_478, 0.527_447_039_959_952_2]"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{RandomVariate}(\operatorname{UniformDistribution}(\bigl\lbrack0, 1\bigr\rbrack), 3)\bigr\rbrack)
+    out: \bigl\lbrack0.627\,073\,940\,588\,161\,3, 0.002\,735\,721\,180\,215\,478, 0.527\,447\,039\,959\,952\,2\bigr\rbrack
+  fullform:
+    in: Last[List[SeedRandom[1], RandomVariate[UniformDistribution[List[0, 1]], 3]]]
+  wolfram:
+    in: Last[List[SeedRandom[1], RandomVariate[UniformDistribution[List[0, 1]], 3]]]
+randomvariate-discrete-draw:
+  epsil:
+    in: Last([SeedRandom(1), RandomVariate(PoissonDistribution(4))])
+    out: "1"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{RandomVariate}(\operatorname{PoissonDistribution}(4))\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: Last[List[SeedRandom[1], RandomVariate[PoissonDistribution[4]]]]
+  wolfram:
+    in: Last[List[SeedRandom[1], RandomVariate[PoissonDistribution[4]]]]
+randomvariate-empirical-resamples-the-data:
+  epsil:
+    in: Last([SeedRandom(2), RandomVariate(EmpiricalDistribution([a, b, c]))])
+    out: c
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(2), \mathrm{RandomVariate}(\mathrm{EmpiricalDistribution}(\bigl\lbrack a, b, c\bigr\rbrack))\bigr\rbrack)
+    out: c
+  fullform:
+    in: Last[List[SeedRandom[2], RandomVariate[EmpiricalDistribution[List[a, b, c]]]]]

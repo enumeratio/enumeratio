@@ -1,0 +1,101 @@
+commonest-list-1-1-2-2-3:
+  epsil:
+    in: Commonest([1, 1, 2, 2, 3])
+    out: "[1, 2]"
+  tex:
+    in: \mathrm{Commonest}(\bigl\lbrack1, 1, 2, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack1, 2\bigr\rbrack
+  fullform:
+    in: Commonest[List[1, 1, 2, 2, 3]]
+  wolfram:
+    in: Commonest[List[1, 1, 2, 2, 3]]
+with-a-unique-mode-commonest-returns-a-single:
+  epsil:
+    in: Commonest([1, 2, 2, 3])
+    out: "[2]"
+  tex:
+    in: \mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack2\bigr\rbrack
+  fullform:
+    in: Commonest[List[1, 2, 2, 3]]
+  wolfram:
+    in: Commonest[List[1, 2, 2, 3]]
+with-a-unique-mode-commonest-c-mode-c-see-mode:
+  epsil:
+    in: First(Commonest([1, 2, 2, 3]))
+    out: "2"
+  tex:
+    in: \mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))
+    out: "2"
+  fullform:
+    in: First[Commonest[List[1, 2, 2, 3]]]
+  wolfram:
+    in: First[Commonest[List[1, 2, 2, 3]]]
+every-element-tied-for-most-frequent-symbols-and:
+  epsil:
+    in: Commonest([b, a, c, 2, a, b, 1, 2])
+    out: "[b, a, 2]"
+  tex:
+    in: \mathrm{Commonest}(\bigl\lbrack b, a, c, 2, a, b, 1, 2\bigr\rbrack)
+    out: \bigl\lbrack b, a, 2\bigr\rbrack
+  fullform:
+    in: Commonest[List[b, a, c, 2, a, b, 1, 2]]
+all-distinct-all-tie:
+  epsil:
+    in: Commonest([1, 2, 3])
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{Commonest}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Commonest[List[1, 2, 3]]
+  wolfram:
+    in: Commonest[List[1, 2, 3]]
+a-single-most-frequent-element-still-comes-back:
+  epsil:
+    in: Commonest([1, 2, 2, 3, 3, 3, 4])
+    out: "[3]"
+  tex:
+    in: \mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack3\bigr\rbrack
+  fullform:
+    in: Commonest[List[1, 2, 2, 3, 3, 3, 4]]
+  wolfram:
+    in: Commonest[List[1, 2, 2, 3, 3, 3, 4]]
+the-n-commonest-most-frequent-first:
+  epsil:
+    in: Commonest([1, 2, 2, 3, 3, 3, 4], 2)
+    out: "[3, 2]"
+  tex:
+    in: \mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack, 2)
+    out: \bigl\lbrack3, 2\bigr\rbrack
+  fullform:
+    in: Commonest[List[1, 2, 2, 3, 3, 3, 4], 2]
+  wolfram:
+    in: Commonest[List[1, 2, 2, 3, 3, 3, 4], 2]
+without-a-tie-the-single-commonest-element-is:
+  epsil:
+    in: First(Commonest([1, 2, 2, 3, 3, 3, 4])) == Mode([1, 2, 2, 3, 3, 3, 4])
+    out: True
+  tex:
+    in: \mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]], First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]]]
+    back: [Equal, [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]], [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]]]
+  wolfram:
+    in: (First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]] == First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]])
+a-frequency-tie-between-4-and-1-is-broken-by:
+  epsil:
+    in: Commonest([4, 1, 1, 4], 1)
+    out: "[4]"
+  tex:
+    in: \mathrm{Commonest}(\bigl\lbrack4, 1, 1, 4\bigr\rbrack, 1)
+    out: \bigl\lbrack4\bigr\rbrack
+  fullform:
+    in: Commonest[List[4, 1, 1, 4], 1]
+  wolfram:
+    in: Commonest[List[4, 1, 1, 4], 1]

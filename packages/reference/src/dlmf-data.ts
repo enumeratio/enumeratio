@@ -587,8 +587,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "alternative notation",
-    notation:
-      "\\mathrm{cn}(\\NVar{z}\\mathpunct{|}\\NVar{m})=\\operatorname{cn}\\left(z,\\sqrt{m}\\right)",
+    notation: "\\mathrm{cn}(\\NVar{z}\\mathpunct{|}\\NVar{m})=\\operatorname{cn}\\left(z,\\sqrt{m}\\right)",
     ref: "22.1#p5",
   },
   {
@@ -799,8 +798,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "alternative notation",
-    notation:
-      "\\mathrm{dn}(\\NVar{z}\\mathpunct{|}\\NVar{m})=\\operatorname{dn}\\left(z,\\sqrt{m}\\right)",
+    notation: "\\mathrm{dn}(\\NVar{z}\\mathpunct{|}\\NVar{m})=\\operatorname{dn}\\left(z,\\sqrt{m}\\right)",
     ref: "22.1#p5",
   },
   {
@@ -1578,8 +1576,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "idem function",
-    notation:
-      "\\operatorname{idem}\\left(\\NVar{\\chi_{1}};\\NVar{\\chi_{2},\\dots,\\chi_{n}}\\right)",
+    notation: "\\operatorname{idem}\\left(\\NVar{\\chi_{1}};\\NVar{\\chi_{2},\\dots,\\chi_{n}}\\right)",
     ref: "17.1#p3",
   },
   {
@@ -1789,8 +1786,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "alternative notation for eigenvalues of the spheroidal differential equation",
-    notation:
-      "\\lambda_{\\NVar{mn}}(\\NVar{\\gamma})=\\lambda^{m}_{n}\\left(\\gamma^{2}\\right)+%\n\\gamma^{2}",
+    notation: "\\lambda_{\\NVar{mn}}(\\NVar{\\gamma})=\\lambda^{m}_{n}\\left(\\gamma^{2}\\right)+%\n\\gamma^{2}",
     ref: "30.1#Px1.p1",
   },
   {
@@ -2070,8 +2066,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "Ferrers function of the first kind",
-    notation:
-      "\\mathsf{P}_{\\NVar{\\nu}}\\left(\\NVar{x}\\right)=\\mathsf{P}^{0}_{\\nu}\\left(x\\right)",
+    notation: "\\mathsf{P}_{\\NVar{\\nu}}\\left(\\NVar{x}\\right)=\\mathsf{P}^{0}_{\\nu}\\left(x\\right)",
     ref: "14.2#ii.p2",
   },
   {
@@ -2091,8 +2086,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "Jacobi function of matrix argument",
-    notation:
-      "P^{(\\NVar{\\gamma},\\NVar{\\delta})}_{\\NVar{\\nu}}\\left(\\NVar{\\mathbf{T}}\\right)",
+    notation: "P^{(\\NVar{\\gamma},\\NVar{\\delta})}_{\\NVar{\\nu}}\\left(\\NVar{\\mathbf{T}}\\right)",
     ref: "35.7#E2",
   },
   {
@@ -2142,8 +2136,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "associated Meixner–Pollaczek polynomial",
-    notation:
-      "{\\mathscr{P}}^{\\NVar{\\lambda}}_{\\NVar{n}}\\left(\\NVar{x};\\NVar{\\phi},\\NVar{c}\\right)",
+    notation: "{\\mathscr{P}}^{\\NVar{\\lambda}}_{\\NVar{n}}\\left(\\NVar{x};\\NVar{\\phi},\\NVar{c}\\right)",
     ref: "18.30#v.p1",
   },
   {
@@ -2196,8 +2189,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "Askey–Wilson polynomial",
-    notation:
-      "p_{\\NVar{n}}\\left(\\NVar{x};\\NVar{a},\\NVar{b},\\NVar{c},\\NVar{d}\\,|\\,\\NVar{q}\\right)",
+    notation: "p_{\\NVar{n}}\\left(\\NVar{x};\\NVar{a},\\NVar{b},\\NVar{c},\\NVar{d}\\,|\\,\\NVar{q}\\right)",
     ref: "18.28#E1",
   },
   {
@@ -2439,20 +2431,17 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "Ferrers function of the second kind",
-    notation:
-      "\\mathsf{Q}_{\\NVar{\\nu}}\\left(\\NVar{x}\\right)=\\mathsf{Q}^{0}_{\\nu}\\left(x\\right)",
+    notation: "\\mathsf{Q}_{\\NVar{\\nu}}\\left(\\NVar{x}\\right)=\\mathsf{Q}^{0}_{\\nu}\\left(x\\right)",
     ref: "14.2#ii.p2",
   },
   {
     name: "Olver’s associated Legendre function",
-    notation:
-      "\\boldsymbol{Q}_{\\NVar{\\nu}}\\left(\\NVar{z}\\right)=\\boldsymbol{Q}^{0}_{\\nu}\\left%\n(z\\right)",
+    notation: "\\boldsymbol{Q}_{\\NVar{\\nu}}\\left(\\NVar{z}\\right)=\\boldsymbol{Q}^{0}_{\\nu}\\left%\n(z\\right)",
     ref: "14.2#ii.p2",
   },
   {
     name: "conical function",
-    notation:
-      "\\widehat{\\mathsf{Q}}^{-\\NVar{\\mu}}_{\\NVar{-\\frac{1}{2}+i\\tau}}\\left(\\NVar{x}\\right)",
+    notation: "\\widehat{\\mathsf{Q}}^{-\\NVar{\\mu}}_{\\NVar{-\\frac{1}{2}+i\\tau}}\\left(\\NVar{x}\\right)",
     ref: "14.20#E2",
   },
   {
@@ -2477,8 +2466,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "Pollaczek polynomial",
-    notation:
-      "{Q}^{{(\\NVar{\\lambda})}}_{\\NVar{n}}\\left(\\NVar{x};\\NVar{a},\\NVar{b},\\NVar{c}\\right)",
+    notation: "{Q}^{{(\\NVar{\\lambda})}}_{\\NVar{n}}\\left(\\NVar{x};\\NVar{a},\\NVar{b},\\NVar{c}\\right)",
     ref: "18.35#E2_2",
   },
   {
@@ -2493,8 +2481,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "q-Hahn polynomial",
-    notation:
-      "Q_{\\NVar{n}}\\left(\\NVar{x};\\NVar{\\alpha},\\NVar{\\beta},\\NVar{N};\\NVar{q}\\right)",
+    notation: "Q_{\\NVar{n}}\\left(\\NVar{x};\\NVar{\\alpha},\\NVar{\\beta},\\NVar{N};\\NVar{q}\\right)",
     ref: "18.27#E3",
   },
   {
@@ -2544,20 +2531,17 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "multivariate hypergeometric function",
-    notation:
-      "R_{\\NVar{-a}}\\left(\\NVar{b_{1}},\\dots,\\NVar{b_{n}};\\NVar{z_{1}},\\dots,\\NVar{z_%\n{n}}\\right)",
+    notation: "R_{\\NVar{-a}}\\left(\\NVar{b_{1}},\\dots,\\NVar{b_{n}};\\NVar{z_{1}},\\dots,\\NVar{z_%\n{n}}\\right)",
     ref: "19.16#E9",
   },
   {
     name: "alternative notation for the radial spheroidal wave function",
-    notation:
-      "R_{\\NVar{mn}}^{(\\NVar{j})}(\\NVar{\\gamma},\\NVar{z})=S^{m(j)}_{n}\\left(z,\\gamma\\right)",
+    notation: "R_{\\NVar{mn}}^{(\\NVar{j})}(\\NVar{\\gamma},\\NVar{z})=S^{m(j)}_{n}\\left(z,\\gamma\\right)",
     ref: "30.1#Px1.p1",
   },
   {
     name: "alternative notation",
-    notation:
-      "R(\\NVar{a};\\NVar{\\mathbf{b}};\\NVar{\\mathbf{z}})=R_{-a}\\left(\\mathbf{b};\\mathbf%\n{z}\\right)",
+    notation: "R(\\NVar{a};\\NVar{\\mathbf{b}};\\NVar{\\mathbf{z}})=R_{-a}\\left(\\mathbf{b};\\mathbf%\n{z}\\right)",
     ref: "19.16#ii.p1",
   },
   {
@@ -2567,8 +2551,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "Racah polynomial",
-    notation:
-      "R_{\\NVar{n}}\\left(\\NVar{x};\\NVar{\\alpha},\\NVar{\\beta},\\NVar{\\gamma},\\NVar{%\n\\delta}\\right)",
+    notation: "R_{\\NVar{n}}\\left(\\NVar{x};\\NVar{\\alpha},\\NVar{\\beta},\\NVar{\\gamma},\\NVar{%\n\\delta}\\right)",
     ref: "18.25#T1.t1.r4",
   },
   {
@@ -2836,8 +2819,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "alternative notation",
-    notation:
-      "\\mathrm{sn}(\\NVar{z}\\mathpunct{|}\\NVar{m})=\\operatorname{sn}\\left(z,\\sqrt{m}\\right)",
+    notation: "\\mathrm{sn}(\\NVar{z}\\mathpunct{|}\\NVar{m})=\\operatorname{sn}\\left(z,\\sqrt{m}\\right)",
     ref: "22.1#p5",
   },
   {
@@ -2907,8 +2889,7 @@ export const dlmf: readonly DlmfNotation[] = [
   },
   {
     name: "scaled Riemann theta function",
-    notation:
-      "\\hat{\\theta}\\left(\\NVar{\\mathbf{z}}\\middle|\\NVar{\\boldsymbol{{\\Omega}}}\\right)",
+    notation: "\\hat{\\theta}\\left(\\NVar{\\mathbf{z}}\\middle|\\NVar{\\boldsymbol{{\\Omega}}}\\right)",
     ref: "21.2#E2",
   },
   {

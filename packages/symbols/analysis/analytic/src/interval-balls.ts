@@ -1,19 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { BigDecimal } from "@cortex-js/compute-engine";
-import {
-  type Ball,
-  add,
-  certify,
-  div,
-  exact,
-  ln,
-  lower,
-  magnitude,
-  mul,
-  neg,
-  sub,
-  upper,
-} from "./ball.ts";
+import { type Ball, add, certify, div, exact, ln, lower, magnitude, mul, neg, sub, upper } from "./ball.ts";
 import { barnesGBall, pi } from "./barnes-g-big.ts";
 import { atDigits } from "./bigzeta.ts";
 import { argumentBall } from "./certified.ts";
@@ -79,8 +66,7 @@ interface Differentiable {
 }
 
 /** The step k that takes x right of 0: ψ and ψ₁ are certified there, and recur to the left. */
-const shift = (x: Ball): number =>
-  lower(x).isPositive() ? 0 : Math.ceil(-lower(x).toNumber()) + 1;
+const shift = (x: Ball): number => (lower(x).isPositive() ? 0 : Math.ceil(-lower(x).toNumber()) + 1);
 
 /** ψ(x) = −γ₀(x) for x > 0 (stieltjes-big.ts); ψ(x) = ψ(x + k) − Σ_{j<k} 1/(x + j). */
 function digamma(x: Ball): Ball | undefined {
@@ -121,8 +107,7 @@ function logBarnesCurvature(x: Ball): Ball | undefined {
 }
 
 /** Φ(z, s, a) for the working precision. */
-const lerch = (z: Ball, s: Ball, a: number): Ball | undefined =>
-  lerchPhiBall(z, s, exact(a), BigDecimal.precision);
+const lerch = (z: Ball, s: Ball, a: number): Ball | undefined => lerchPhiBall(z, s, exact(a), BigDecimal.precision);
 
 const DIFFERENTIABLE: Readonly<Record<string, Differentiable>> = {
   // G′ = G·L′ and G″ = G·(L″ + L′²), L = ln G.
@@ -198,11 +183,7 @@ export function ballImage(
   h: BoxedExpression,
 ): { readonly lo: BigDecimal; readonly hi: BigDecimal } | undefined {
   const differentiable = DIFFERENTIABLE[head];
-  if (
-    differentiable === undefined ||
-    differentiable.arity !== ops.length ||
-    differentiable.argIndex !== argIndex
-  ) {
+  if (differentiable === undefined || differentiable.arity !== ops.length || differentiable.argIndex !== argIndex) {
     return undefined;
   }
   return atDigits(DIGITS, () => {
@@ -273,11 +254,7 @@ export function ballImage(
         if (reach(worst).gt(size.mul(ACCEPTED))) return undefined;
         break;
       }
-      pieces = [
-        ...pieces.filter((piece) => piece !== worst),
-        over(worst.from, cut),
-        over(cut, worst.to),
-      ];
+      pieces = [...pieces.filter((piece) => piece !== worst), over(worst.from, cut), over(cut, worst.to)];
     }
     const images = pieces.map(({ image }) => image);
     if (!images.every((image) => image !== undefined)) return undefined;
@@ -298,16 +275,9 @@ export function ballImage(
  * it opens the right way, at its vertex, where it is −α²/(4β): rounded outward, so a vertex
  * outside the side only loosens the bound, never breaks it.
  */
-function extreme(
-  slope: Ball,
-  a: BigDecimal,
-  below: BigDecimal,
-  above: BigDecimal,
-  kind: "least" | "most",
-): BigDecimal {
+function extreme(slope: Ball, a: BigDecimal, below: BigDecimal, above: BigDecimal, kind: "least" | "most"): BigDecimal {
   const beta = a.mul(BigDecimal.HALF);
-  const pick = (x: BigDecimal, y: BigDecimal) =>
-    kind === "least" ? (y.lt(x) ? y : x) : y.gt(x) ? y : x;
+  const pick = (x: BigDecimal, y: BigDecimal) => (kind === "least" ? (y.lt(x) ? y : x) : y.gt(x) ? y : x);
   const side = (alpha: BigDecimal, t: BigDecimal): BigDecimal => {
     const candidates = [BigDecimal.ZERO, alpha.mul(t).add(beta.mul(t).mul(t))];
     const opens = kind === "least" ? beta.isPositive() : beta.isNegative();
@@ -318,10 +288,7 @@ function extreme(
     return candidates.reduce(pick);
   };
   const [low, high] = [lower(slope), upper(slope)];
-  return pick(
-    side(kind === "least" ? low : high, above),
-    side(kind === "least" ? high : low, below.neg()),
-  );
+  return pick(side(kind === "least" ? low : high, above), side(kind === "least" ? high : low, below.neg()));
 }
 
 /** [from, to] as a ball, exactly: its midpoint and half-width are exact decimals. */

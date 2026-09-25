@@ -72,9 +72,7 @@ const tip = (reference: ResolvedReference): string =>
   [
     `${reference.identity} on ${reference.label}`,
     ORIGIN_TITLE[reference.origin],
-    reference.verified
-      ? VERIFIED_TITLE[reference.verified.by]?.(reference.verified.count)
-      : undefined,
+    reference.verified ? VERIFIED_TITLE[reference.verified.by]?.(reference.verified.count) : undefined,
     reference.via ? `recorded against ${reference.via}` : undefined,
     reference.relation ? RELATION_TITLE[reference.relation] : undefined,
     reference.arity !== undefined ? `for the ${reference.arity}-argument form` : undefined,
@@ -102,8 +100,7 @@ const tip = (reference: ResolvedReference): string =>
           target="_blank"
           rel="noopener noreferrer"
           ><code>{{ shortName(reference) }}</code
-          ><sup v-if="reference.arity !== undefined && !inline" class="xw-arity"
-            >/{{ reference.arity }}</sup
+          ><sup v-if="reference.arity !== undefined && !inline" class="xw-arity">/{{ reference.arity }}</sup
           ><span v-if="reference.via" class="xw-via">via {{ reference.via }}</span
           ><span
             v-if="reference.verified"
@@ -113,23 +110,13 @@ const tip = (reference: ResolvedReference): string =>
             >{{ reference.verified.disagree ? "!" : "✓" }}</span
           ><span class="xw-out" aria-hidden="true">↗</span></a
         >
-        <span
-          v-else
-          class="xw-chip is-plain"
-          :class="`is-${reference.origin}`"
-          :title="tip(reference)"
+        <span v-else class="xw-chip is-plain" :class="`is-${reference.origin}`" :title="tip(reference)"
           ><code>{{ shortName(reference) }}</code
-          ><sup v-if="reference.arity !== undefined && !inline" class="xw-arity"
-            >/{{ reference.arity }}</sup
+          ><sup v-if="reference.arity !== undefined && !inline" class="xw-arity">/{{ reference.arity }}</sup
           ><span v-if="reference.via" class="xw-via">via {{ reference.via }}</span></span
         >
       </template>
-      <button
-        v-if="group.references.length > FOLD_ABOVE"
-        class="xw-fold"
-        type="button"
-        @click="toggle(group.system)"
-      >
+      <button v-if="group.references.length > FOLD_ABOVE" class="xw-fold" type="button" @click="toggle(group.system)">
         {{ unfolded.has(group.system) ? "fold" : `${group.references.length} entries` }}
       </button>
     </span>

@@ -22,8 +22,7 @@ export type Permutation = readonly number[];
 
 export const permutationKey = (w: Permutation): string => w.join(",");
 
-export const identityPermutation = (n: number): Permutation =>
-  Array.from({ length: n }, (_, i) => i + 1);
+export const identityPermutation = (n: number): Permutation => Array.from({ length: n }, (_, i) => i + 1);
 
 /** Coxeter length: the number of inversions of `w`. */
 export function length(w: Permutation): number {
@@ -72,9 +71,7 @@ export function reducedWord(w: Permutation): number[] {
   const word: number[] = [];
   let current = w.slice();
   for (;;) {
-    const descent = current.findIndex(
-      (value, i) => i + 1 < current.length && value > current[i + 1]!,
-    );
+    const descent = current.findIndex((value, i) => i + 1 < current.length && value > current[i + 1]!);
     if (descent === -1) break;
     const i = descent + 1; // 1-indexed simple reflection
     word.unshift(i);
@@ -119,10 +116,7 @@ export function add<C>(ring: Coefficients<C>, parts: readonly Element<C>[]): Ele
   for (const part of parts) {
     for (const [key, term] of part) {
       const existing = out.get(key);
-      const coefficient =
-        existing === undefined
-          ? term.coefficient
-          : ring.add(existing.coefficient, term.coefficient);
+      const coefficient = existing === undefined ? term.coefficient : ring.add(existing.coefficient, term.coefficient);
       if (ring.isZero(coefficient)) out.delete(key);
       else out.set(key, { w: term.w, coefficient });
     }
@@ -150,12 +144,8 @@ function multiplyByGenerator<C>(ring: Coefficients<C>, i: number, element: Eleme
       // Length went down: q·T_{sw} + (q−1)·T_w. This is the deformation, and it is the
       // only place q enters.
       parts.push(
-        new Map([
-          [permutationKey(sw), { w: sw, coefficient: ring.multiply(ring.q, term.coefficient) }],
-        ]),
-        new Map([
-          [permutationKey(w), { w, coefficient: ring.multiply(ring.qMinusOne, term.coefficient) }],
-        ]),
+        new Map([[permutationKey(sw), { w: sw, coefficient: ring.multiply(ring.q, term.coefficient) }]]),
+        new Map([[permutationKey(w), { w, coefficient: ring.multiply(ring.qMinusOne, term.coefficient) }]]),
       );
     }
   }
@@ -167,11 +157,7 @@ function multiplyByGenerator<C>(ring: Coefficients<C>, i: number, element: Eleme
  * because T_u is the product of the T_{s_i} over ANY reduced word for u, which is the
  * braid relation doing its job.
  */
-export function multiplyByBasis<C>(
-  ring: Coefficients<C>,
-  u: Permutation,
-  element: Element<C>,
-): Element<C> {
+export function multiplyByBasis<C>(ring: Coefficients<C>, u: Permutation, element: Element<C>): Element<C> {
   let result = element;
   const word = reducedWord(u);
   for (let k = word.length - 1; k >= 0; k--) {

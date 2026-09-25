@@ -32,7 +32,7 @@ test("emitting fills positional and variadic templates", () => {
   expect(emit(["Sin", "Pi"], "mpmath")).toEqual({ ok: true, source: "sin(pi)" });
 });
 
-// Found by the oracle quickcheck: a Listable head (compute-engine threads it over a List
+// Found by the oracle Plausible: a Listable head (compute-engine threads it over a List
 // natively, as Wolfram does) handed its raw list to SymPy's or mpmath's scalar function,
 // which does not auto-thread — sympy's `primepi([10, 2])` raised `AttributeError: 'list'
 // object has no attribute 'is_real'` instead of comparing elementwise.
@@ -128,16 +128,7 @@ test("every system is declared, and the unwired ones are honest about it", () =>
     "mathlib4",
     "rust",
   ]);
-  expect(wiredSystems()).toEqual([
-    "wolfram",
-    "sympy",
-    "mpmath",
-    "sage",
-    "oscar",
-    "julia",
-    "mathlib4",
-    "rust",
-  ]);
+  expect(wiredSystems()).toEqual(["wolfram", "sympy", "mpmath", "sage", "oscar", "julia", "mathlib4", "rust"]);
   // Naming an unwired system is the point: a scan then reports "unmapped" for it rather
   // than silently never asking.
   for (const system of SYSTEMS) expect(system.strength.length).toBeGreaterThan(20);
@@ -175,9 +166,7 @@ test("an algebra element compares as a combination, whatever order its terms are
       ["GroupBasis(s0)", 2],
     ]),
   );
-  expect(compareCombination(ours, 'combination:{"GroupBasis(s0)":2,"GroupBasis(1)":1}')).toBe(
-    "agree",
-  );
+  expect(compareCombination(ours, 'combination:{"GroupBasis(s0)":2,"GroupBasis(1)":1}')).toBe("agree");
   expect(compareCombination(ours, 'combination:{"GroupBasis(1)":1}')).toBe("disagree");
   expect(compareCombination("x", 'combination:{"GroupBasis(1)":1}')).toBe("inconclusive");
 });

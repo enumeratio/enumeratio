@@ -10,16 +10,7 @@
 // That is the JSON scalar model with YAML's syntax, so a parsed record means exactly what its
 // JSON would.
 
-import {
-  Document,
-  isMap,
-  isSeq,
-  parse,
-  type Pair,
-  type ScalarTag,
-  type SchemaOptions,
-  visit,
-} from "yaml";
+import { Document, isMap, isSeq, parse, type Pair, type ScalarTag, type SchemaOptions, visit } from "yaml";
 
 const JSON_INT = /^-?(0|[1-9][0-9]*)$/;
 const JSON_FLOAT_LITERAL = /^-?(0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?$/;
@@ -88,9 +79,7 @@ function pairKey(path: readonly unknown[]): unknown {
   const parent = path[path.length - 1];
   if (parent == null || typeof parent !== "object" || !("key" in parent)) return undefined;
   const key = (parent as Pair).key;
-  return key !== null && typeof key === "object" && "value" in key
-    ? (key as { value: unknown }).value
-    : key;
+  return key !== null && typeof key === "object" && "value" in key ? (key as { value: unknown }).value : key;
 }
 
 /** True if `path` (a `visit` ancestry) descends from a map key in `mathJsonKeys`. */
@@ -106,12 +95,12 @@ export interface StringifyOptions {
   /**
    * Field names whose value is MathJSON: it and every array/map nested inside it are
    * rendered in flow style (`[Mod, 5, 0]`), the only thing this writer ever flow-styles.
-   * Defaults to `expr` and `expected` (`ReferenceExample`, `ReferenceImplementation`).
+   * Defaults to `expr`, `expected` and `fullform`'s `back` (the lossy round trip).
    */
   readonly mathJsonKeys?: readonly string[];
 }
 
-const DEFAULT_MATHJSON_KEYS: readonly string[] = ["expr", "expected"];
+const DEFAULT_MATHJSON_KEYS: readonly string[] = ["expr", "expected", "back"];
 
 /**
  * Stringify a value under the strict scalar schema. This is the single writer: every

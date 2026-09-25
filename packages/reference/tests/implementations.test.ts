@@ -24,9 +24,7 @@ test("the rules actually reject", () => {
           signature: "",
           summary: "",
           examples: [],
-          implementations: [
-            { origin: "native", form: "typescript", source: "packages/nope/does-not-exist.ts" },
-          ],
+          implementations: [{ origin: "native", form: "typescript", source: "packages/nope/does-not-exist.ts" }],
         },
         {
           name: "B",

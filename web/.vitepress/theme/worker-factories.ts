@@ -39,11 +39,7 @@
 // is repeated (not hoisted to a shared constant) because Vite's detection is per call
 // site, not per string value.
 
-import type {
-  SharedWorkerFactory,
-  WorkerFactory,
-  WorkerLike,
-} from "@enumeratio/aestimatio/browser";
+import type { SharedWorkerFactory, WorkerFactory, WorkerLike } from "@enumeratio/aestimatio/browser";
 
 export const createSessionWorker: WorkerFactory = () =>
   new Worker(new URL("./session-worker-entry.ts", import.meta.url), {

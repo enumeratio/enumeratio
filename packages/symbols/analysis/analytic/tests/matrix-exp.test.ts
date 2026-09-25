@@ -23,15 +23,12 @@ interface GoldenCase {
   wolfram?: number[][];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./matrix-exp.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./matrix-exp.golden.json", import.meta.url), "utf8"));
 
 const matrixExpr = (m: number[][]) => ["List", ...m.map((row) => ["List", ...row])] as const;
 
 /** Read a `List` of `List`s of numbers back out as plain JS numbers. */
-const toRows = (expr: BoxedExpression): number[][] =>
-  operandsOf(expr).map((row) => operandsOf(row).map((e) => e.re));
+const toRows = (expr: BoxedExpression): number[][] => operandsOf(expr).map((row) => operandsOf(row).map((e) => e.re));
 
 const relErr = (ours: number[][], ref: number[][]): number => {
   let max = 0;
@@ -172,9 +169,7 @@ test("MatrixExp: a skew-symmetric 2x2 generator reduces to a rotation, in Cos/Si
 });
 
 test("MatrixExp: Euler's identity for matrices -- rotation by pi is -I (#113)", () => {
-  const r = ce
-    .box(["MatrixExp", ["List", ["List", 0, ["Negate", "Pi"]], ["List", "Pi", 0]]] as never)
-    .evaluate();
+  const r = ce.box(["MatrixExp", ["List", ["List", 0, ["Negate", "Pi"]], ["List", "Pi", 0]]] as never).evaluate();
   expect(r.toString()).toBe("[[-1,0],[0,-1]]");
 });
 

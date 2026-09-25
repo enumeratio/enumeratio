@@ -48,8 +48,7 @@ function orderWithFactors(k: bigint, n: bigint): { order: bigint; factors: Facto
 }
 
 /** The least m > 0 with kᵐ ≡ 1 (mod n), or undefined unless gcd(k, n) = 1. */
-export const multiplicativeOrder = (k: bigint, n: bigint): bigint | undefined =>
-  orderWithFactors(k, n)?.order;
+export const multiplicativeOrder = (k: bigint, n: bigint): bigint | undefined => orderWithFactors(k, n)?.order;
 
 /**
  * Wolfram's `MultiplicativeOrder[k, n, {r₁, r₂, …}]`: the least m > 0 with kᵐ ≡ rᵢ (mod n)
@@ -68,13 +67,7 @@ export function discreteLog(k: bigint, n: bigint, targets: readonly bigint[]): b
     for (const [q, e] of factors) {
       const prime = q ** BigInt(e);
       const cofactor = order / prime;
-      const x = discreteLogPrimePower(
-        unitsMod(n),
-        powMod(k, cofactor, n),
-        powMod(h, cofactor, n),
-        q,
-        e,
-      );
+      const x = discreteLogPrimePower(unitsMod(n), powMod(k, cofactor, n), powMod(h, cofactor, n), q, e);
       if (x === undefined) {
         ok = false;
         break;

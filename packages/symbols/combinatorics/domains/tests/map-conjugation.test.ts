@@ -1,21 +1,11 @@
 // Shard of map.test.ts: the conjugate-of-cycle-type map, ArcRepresentation, and
 // DescentComposition. See map-helpers.ts for shared setup.
 import { expect, test } from "vite-plus/test";
-import {
-  ALL,
-  conjugateOf,
-  cycleTypeOf,
-  perm,
-  restrictedGrowthStrings,
-  result,
-} from "./map-helpers.ts";
+import { ALL, conjugateOf, cycleTypeOf, perm, restrictedGrowthStrings, result } from "./map-helpers.ts";
 
 test("ConjugateAfterCycleType is the conjugate of the cycle type", () => {
   for (const p of ALL) {
-    expect(result(["ConjugateAfterCycleType", perm(...p)]), `[${p}]`).toEqual([
-      "List",
-      ...conjugateOf(cycleTypeOf(p)),
-    ]);
+    expect(result(["ConjugateAfterCycleType", perm(...p)]), `[${p}]`).toEqual(["List", ...conjugateOf(cycleTypeOf(p))]);
   }
 });
 

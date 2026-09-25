@@ -1,0 +1,58 @@
+sawtoothwave-zero:
+  epsil:
+    in: SawtoothWave(0)
+    out: "0"
+  tex:
+    in: \mathrm{SawtoothWave}(0)
+    out: "0"
+  fullform:
+    in: SawtoothWave[0]
+  wolfram:
+    in: SawtoothWave[0]
+sawtoothwave-1-3:
+  epsil:
+    in: SawtoothWave(1 / 3)
+    out: 1 / 3
+  tex:
+    in: \mathrm{SawtoothWave}(\frac{1}{3})
+    out: \frac{1}{3}
+  fullform:
+    in: SawtoothWave[Rational[1, 3]]
+  wolfram:
+    in: SawtoothWave[Rational[1, 3]]
+sawtoothwave-negative:
+  epsil:
+    in: SawtoothWave(-1 / 4)
+    out: 3 / 4
+  tex:
+    in: \mathrm{SawtoothWave}(-\frac{1}{4})
+    out: \frac{3}{4}
+  fullform:
+    in: SawtoothWave[Rational[-1, 4]]
+  wolfram:
+    in: SawtoothWave[Rational[-1, 4]]
+sawtoothwave-periodic:
+  epsil:
+    in: SawtoothWave(1 / 3) == SawtoothWave(1 / 3 + 5)
+    out: True
+  tex:
+    in: \mathrm{SawtoothWave}(\frac{1}{3})=\mathrm{SawtoothWave}(5\frac{1}{3})
+    out: \top
+  traditional:
+    in: \mathrm{SawtoothWave}(\frac{1}{3})=\mathrm{SawtoothWave}(5\frac{1}{3})
+    out: \mathrm{True}
+  fullform:
+    in: Equal[SawtoothWave[Rational[1, 3]], SawtoothWave[Plus[Rational[1, 3], 5]]]
+  wolfram:
+    in: (SawtoothWave[Rational[1, 3]] == SawtoothWave[Plus[Rational[1, 3], 5]])
+sawtoothwave-ranged:
+  epsil:
+    in: SawtoothWave([0, 10], 1 / 2)
+    out: "5"
+  tex:
+    in: \mathrm{SawtoothWave}(\bigl\lbrack0, 10\bigr\rbrack, \frac{1}{2})
+    out: "5"
+  fullform:
+    in: SawtoothWave[List[0, 10], Rational[1, 2]]
+  wolfram:
+    in: SawtoothWave[List[0, 10], Rational[1, 2]]

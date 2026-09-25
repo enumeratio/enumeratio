@@ -9,10 +9,7 @@ import type { EvalOptions } from "./box.ts";
 // Attached to `Sum` directly rather than through `wrapOperator`: Sum is lazy, and its
 // operands hold a bound index that must not be evaluated ahead of the sum.
 
-type Evaluate = (
-  ops: ReadonlyArray<BoxedExpression>,
-  options: EvalOptions,
-) => BoxedExpression | undefined;
+type Evaluate = (ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => BoxedExpression | undefined;
 
 /** Largest n expanded; Bₙ is exact at any n, but the sum is rarely asked past this. */
 const N_MAX = 200n;
@@ -34,8 +31,7 @@ function dobinskiOrder(body: BoxedExpression, k: string): bigint | undefined {
 
 export function declareDobinski(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("Sum");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate as Evaluate | undefined;
   if (operator === undefined || native === undefined) return;
   operator.evaluate = ((ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => {
@@ -45,12 +41,7 @@ export function declareDobinski(ce: ComputeEngine): void {
       const k = symbolOf(index);
       const start = bigIntegerAt(lo);
       const n = k === undefined ? undefined : dobinskiOrder(body, k);
-      if (
-        n !== undefined &&
-        (start === 0n || start === 1n) &&
-        hi?.isFinite === false &&
-        hi.isPositive === true
-      ) {
+      if (n !== undefined && (start === 0n || start === 1n) && hi?.isFinite === false && hi.isPositive === true) {
         const sum = ce.function("Multiply", [ce.function("BellNumber", [ce.number(n)]), ce.E]);
         return options.numericApproximation ? sum.N() : sum.evaluate();
       }

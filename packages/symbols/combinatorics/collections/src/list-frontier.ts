@@ -11,11 +11,8 @@ import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
 /** Call a (possibly `Function`-headed) expression as an operator over `args` — same
  *  technique as `list-ops-wolfram.ts`'s own `invoke`, duplicated locally rather than
  *  exported to keep that file's surface unchanged. */
-const invoke = (
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  args: readonly BoxedExpression[],
-): BoxedExpression => ce.box([f, ...args] as never).evaluate();
+const invoke = (ce: ComputeEngine, f: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
+  ce.box([f, ...args] as never).evaluate();
 
 // --- Array ---------------------------------------------------------------------------------
 
@@ -57,8 +54,7 @@ const buildArray = (
         indices.map((i) => ce.number(i)),
       );
     const items: BoxedExpression[] = [];
-    for (let k = 0; k < dims[dimIndex]; k++)
-      items.push(build(dimIndex + 1, [...indices, origins[dimIndex] + k]));
+    for (let k = 0; k < dims[dimIndex]; k++) items.push(build(dimIndex + 1, [...indices, origins[dimIndex] + k]));
     return ce.function(headName, items);
   };
   return build(0, []);
@@ -135,12 +131,10 @@ const declareSparseArray = (ce: ComputeEngine): void => {
       if (rulesExpr === undefined || rulesExpr.operator !== "List") return undefined;
       const parts = operandsOf(rulesExpr).map(ruleParts);
       if (parts.some((p) => p === undefined)) return undefined;
-      const entries = (parts as { pos: BoxedExpression; val: BoxedExpression }[]).map(
-        ({ pos, val }) => ({
-          idx: posIndices(pos),
-          val,
-        }),
-      );
+      const entries = (parts as { pos: BoxedExpression; val: BoxedExpression }[]).map(({ pos, val }) => ({
+        idx: posIndices(pos),
+        val,
+      }));
       if (entries.length === 0 || entries.some((e) => e.idx === undefined)) return undefined;
       const rank = entries[0].idx!.length;
       if (entries.some((e) => e.idx!.length !== rank)) return undefined;
@@ -190,7 +184,9 @@ const mulberry32 = (seed: number): (() => number) => {
 const rngState = new WeakMap<ComputeEngine, { next: () => number }>();
 const DEFAULT_SEED = 42;
 
-const rngFor = (ce: ComputeEngine): (() => number) => {
+/** Exported so `graphs-2.ts`'s `RandomGraph` draws from the SAME per-engine seeded stream
+ *  as `RandomInteger`, rather than duplicating a PRNG. */
+export const rngFor = (ce: ComputeEngine): (() => number) => {
   let entry = rngState.get(ce);
   if (entry === undefined) {
     entry = { next: mulberry32(DEFAULT_SEED) };
@@ -265,8 +261,7 @@ const digitsOf = (ce: ComputeEngine, x: BoxedExpression): number => {
   // `.numericValue` (and `.isExact` below) live on compute-engine's boxed-number
   // interface, not the general one — same cast other packages use (see e.g.
   // analytic/src/matrix-exp.ts).
-  const numericValue = (x as Partial<{ numericValue: { decimal?: { toString(): string } } }>)
-    .numericValue;
+  const numericValue = (x as Partial<{ numericValue: { decimal?: { toString(): string } } }>).numericValue;
   const decimal = numericValue?.decimal;
   if (decimal === undefined) return ce.precision;
   const digits = decimal.toString().replace(/^-/, "").replace(".", "").replace(/^0+/, "");
@@ -276,8 +271,7 @@ const digitsOf = (ce: ComputeEngine, x: BoxedExpression): number => {
 /** Whether `x` is an exact number — `undefined` (a symbolic constant like `Pi`, with no
  *  `isExact` of its own) counts as exact, Wolfram's own convention (`Precision(Pi)` is
  *  `Infinity`). */
-const isExactNumber = (x: BoxedExpression): boolean =>
-  (x as Partial<{ isExact: boolean }>).isExact !== false;
+const isExactNumber = (x: BoxedExpression): boolean => (x as Partial<{ isExact: boolean }>).isExact !== false;
 
 /** Wolfram's `MachinePrecision` is about 15.95 decimal digits (IEEE double); a digit count
  *  at or under 15 is treated as machine-precision here. */
@@ -356,8 +350,7 @@ export function declareListFrontier(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const f = ops[0];
       if (f === undefined) return undefined;
-      if (ops.length >= 3 && ops[2] !== undefined)
-        return foldListFrom(ce, f, ops[1], operandsOf(ops[2]));
+      if (ops.length >= 3 && ops[2] !== undefined) return foldListFrom(ce, f, ops[1], operandsOf(ops[2]));
       if (ops[1] === undefined) return undefined;
       const items = operandsOf(ops[1]);
       if (items.length === 0) return ce.function("List", []);

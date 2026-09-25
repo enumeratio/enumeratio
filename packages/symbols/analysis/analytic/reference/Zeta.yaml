@@ -110,8 +110,6 @@ examples:
     expected: [Multiply, [Rational, 1, 6], [Power, Pi, 2]]
     category: Scope
     caption: '$\zeta(s, 0) = \zeta(s)$: the $n+a=0$ term is dropped, so unlike [[HurwitzZeta]] there is no pole at $a = 0$'
-    divergence:
-      wolfram: This matches Wolfram's $\mathrm{Zeta}[s, a]$; Wolfram's $\mathrm{HurwitzZeta}[s, 0]$ instead diverges (ComplexInfinity).
   - id: apery-s-constant-zeta-3-numerically
     expr: [N, [Zeta, 3]]
     expected: { num: "1.2020569031595942854" }

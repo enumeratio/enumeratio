@@ -24,13 +24,13 @@ _timings_ for the same questions, asked the same way, with no translation cost i
   rust, from `MAPPINGS`, or names the heads it is missing. `runIn` runs one process per batch
   of 40 with a per-item cap, under the `runBounded` RSS watchdog. That is the translator and
   the process discipline we need; neither times anything today.
-- **The quickcheck scripts** (`collections/scripts/quickcheck.ts`,
-  `reference/scripts/oracle-quickcheck.ts`). Both use a mulberry32 PRNG with a printed seed,
-  so a run replays exactly. `oracle-quickcheck` seeds by date so the nightly jobs draw the
+- **The Plausible scripts** (`collections/scripts/plausible.ts`,
+  `reference/scripts/oracle-plausible.ts`). Both use a mulberry32 PRNG with a printed seed,
+  so a run replays exactly. `oracle-plausible` seeds by date so the nightly jobs draw the
   same samples.
 - **The CI shape.** `nightly.yml` runs one job per ecosystem, each on its own runner: Python,
   Julia and Rust daily; Oscar, Mathlib, Sage (Docker) and Wolfram (license) weekly on their
-  own days. `quickcheck.yml` and `perf.yml` follow at 04:41 and 04:51 UTC.
+  own days. `plausible.yml` and `perf.yml` follow at 04:41 and 04:51 UTC.
 - #87 was a perf fix to statistics (read cycles and arc pairs once, shard the suites), with no
   tooling.
 
@@ -138,8 +138,7 @@ agreement.
   role: bench
   expr: [PowerMod, $a, $e, $m]
   bench:
-    sample:
-      { seed: 20260925, count: 16, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
+    sample: { seed: 20260925, count: 16, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
 ```
 
 - The seed is part of the record. Every run draws the same 16 inputs, in every system, so runs
@@ -147,15 +146,15 @@ agreement.
   (or bumping `bench.version`), because the benchmark has changed.
 - One benchmark is timed as a batch: each sample is one inner iteration, cycled round-robin.
   The report stores per-sample timings of the whole batch, not per input.
-- The drawing uses mulberry32, the same generator both quickcheck scripts use. It moves into
-  `@enumeratio/utils` rather than being copied a third time. Draws happen at **generation
+- The drawing uses mulberry32, the same generator both Plausible scripts use. It moves into
+  `@enumeratio/plausible` (design/plausible.md §3.1) rather than being copied a third time. Draws happen at **generation
   time**, and the literal inputs are written into every native script, so no PRNG runs in the
   timed region and no two languages' PRNGs have to agree.
 - `expected` for a sampled benchmark is computed by us at generation time and pinned in the
   generated plan. The oracle scans can check it like any hidden example.
 
-**The quickcheck link.** A nightly `bench-quickcheck` mode can draw a _fresh_ date-seeded
-sample, the way `oracle-quickcheck` does. Its timings are reported but never trended: they
+**The Plausible link.** A nightly `bench-plausible` mode can draw a _fresh_ date-seeded
+sample, the way `oracle-plausible` does. Its timings are reported but never trended: they
 look for performance cliffs (an input where we are 100× slower than usual), not for drift.
 Pinned-seed benchmarks are the trend line. Date-seeded ones are exploration.
 
@@ -310,7 +309,7 @@ holds:
 - **Trends over time** compare TS runs from the nightly job only, with `tools/perf`'s drift
   rule (≥1.5× and a floor, against the trailing median of at least 5 runs), and file a rolling
   `bench drift` issue labelled `nightly-fixup`. That rule already tolerates hosted-runner
-  noise. If it proves too loose, the fix is a stable machine (a self-hosted runner, or Dean's
+  noise. If it proves too loose, the fix is a stable machine (a self-hosted runner, or a maintainer's
   Mac on a schedule), not more statistics. Reports carry the fingerprint, so the viewer can
   split series by machine.
 - **Locally:** `node packages/bench/scripts/bench.ts` runs any subset on the current machine

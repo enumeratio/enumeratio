@@ -20,15 +20,13 @@ const isNumber = (v: unknown): v is number => typeof v === "number" && Number.is
 /** `[[x, y, z], ...]` triples. */
 function toPoints(data: unknown): Point3[] | undefined {
   if (!Array.isArray(data) || data.length === 0) return undefined;
-  if (!data.every((p) => Array.isArray(p) && p.length >= 3 && p.slice(0, 3).every(isNumber)))
-    return undefined;
+  if (!data.every((p) => Array.isArray(p) && p.length >= 3 && p.slice(0, 3).every(isNumber))) return undefined;
   return (data as number[][]).map(([x, y, z]) => ({ x, y, z }));
 }
 
 /** A rectangular 2-D matrix of heights. */
 function toMatrix(data: unknown): number[][] | undefined {
-  if (!Array.isArray(data) || data.length === 0 || !data.every((r) => Array.isArray(r)))
-    return undefined;
+  if (!Array.isArray(data) || data.length === 0 || !data.every((r) => Array.isArray(r))) return undefined;
   // A `null` (or any non-number) reads as a hole, not as a dropped cell, so
   // rows keep their length and the grid stays rectangular.
   const rows = (data as unknown[][]).map((r) => r.map((v) => (isNumber(v) ? v : Number.NaN)));

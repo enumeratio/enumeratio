@@ -1,0 +1,44 @@
+hypergeometric-pdf-exact:
+  epsil:
+    in: PDF(HypergeometricDistribution(20, 50, 100), 10)
+    out: 10_272_278_170 / 52_177_653_441
+  tex:
+    in: \operatorname{PDF}(\mathrm{HypergeometricDistribution}(20, 50, 100), 10)
+    out: \frac{10\,272\,278\,170}{52\,177\,653\,441}
+  fullform:
+    in: PDF[HypergeometricDistribution[20, 50, 100], 10]
+  wolfram:
+    in: PDF[HypergeometricDistribution[20, 50, 100], 10]
+hypergeometric-cdf-exact-sum:
+  epsil:
+    in: CDF(HypergeometricDistribution(3, 5, 10), 2)
+    out: 11 / 12
+  tex:
+    in: \operatorname{CDF}(\mathrm{HypergeometricDistribution}(3, 5, 10), 2)
+    out: \frac{11}{12}
+  fullform:
+    in: CDF[HypergeometricDistribution[3, 5, 10], 2]
+  wolfram:
+    in: CDF[HypergeometricDistribution[3, 5, 10], 2]
+hypergeometric-mean-exact:
+  epsil:
+    in: Mean(HypergeometricDistribution(20, 50, 100))
+    out: "10"
+  tex:
+    in: \mathrm{mean}(\mathrm{HypergeometricDistribution}(20, 50, 100))
+    out: "10"
+  fullform:
+    in: Mean[HypergeometricDistribution[20, 50, 100]]
+  wolfram:
+    in: Mean[HypergeometricDistribution[20, 50, 100]]
+hypergeometric-variance-exact:
+  epsil:
+    in: Variance(HypergeometricDistribution(20, 50, 100))
+    out: 400 / 99
+  tex:
+    in: \mathrm{Variance}(\mathrm{HypergeometricDistribution}(20, 50, 100))
+    out: \frac{400}{99}
+  fullform:
+    in: Variance[HypergeometricDistribution[20, 50, 100]]
+  wolfram:
+    in: Variance[HypergeometricDistribution[20, 50, 100]]

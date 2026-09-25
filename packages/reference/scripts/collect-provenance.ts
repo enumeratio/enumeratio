@@ -24,8 +24,7 @@ const entries = referenceEntries();
 // offline, so carry whatever the last run found rather than blanking it.
 let previous: readonly HeadRecord[] = [];
 try {
-  previous = ((await import("../src/provenance-data.ts")) as { provenance: HeadRecord[] })
-    .provenance;
+  previous = ((await import("../src/provenance-data.ts")) as { provenance: HeadRecord[] }).provenance;
 } catch {
   previous = [];
 }
@@ -67,7 +66,5 @@ for (const record of records) {
 }
 const mapped = records.filter((record) => record.elsewhere.length > 0).length;
 process.stdout.write(
-  `${records.length} heads — ${[...counts]
-    .map(([kind, n]) => `${kind} ${n}`)
-    .join(", ")}; ${mapped} known elsewhere\n`,
+  `${records.length} heads — ${[...counts].map(([kind, n]) => `${kind} ${n}`).join(", ")}; ${mapped} known elsewhere\n`,
 );

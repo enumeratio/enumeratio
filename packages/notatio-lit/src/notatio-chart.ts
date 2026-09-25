@@ -36,12 +36,7 @@ function toPoints(data: unknown): PlotPoint[] {
   if (data.every(isNumber)) return data.map((y, x) => ({ x, y }));
   if (data.every((e) => Array.isArray(e) && e.length === 2 && e.every(isNumber)))
     return (data as [number, number][]).map(([x, y]) => ({ x, y }));
-  if (
-    data.every(
-      (e) =>
-        e && typeof e === "object" && isNumber((e as PlotPoint).x) && isNumber((e as PlotPoint).y),
-    )
-  )
+  if (data.every((e) => e && typeof e === "object" && isNumber((e as PlotPoint).x) && isNumber((e as PlotPoint).y)))
     return data as PlotPoint[];
   return [];
 }
@@ -129,11 +124,7 @@ export class NotatioChart extends LitElement {
 
   protected override shouldUpdate(changed: PropertyValues): boolean {
     return (
-      changed.has("type") ||
-      changed.has("data") ||
-      changed.has("labels") ||
-      changed.has("bins") ||
-      changed.has("label")
+      changed.has("type") || changed.has("data") || changed.has("labels") || changed.has("bins") || changed.has("label")
     );
   }
 
@@ -144,9 +135,7 @@ export class NotatioChart extends LitElement {
     const title = this.label || undefined;
     const points = toPoints(data);
     const type =
-      this.type && this.type !== "auto"
-        ? this.type
-        : chooseChartType(data, { labels: labels !== undefined });
+      this.type && this.type !== "auto" ? this.type : chooseChartType(data, { labels: labels !== undefined });
     switch (type) {
       case "list":
         return linePlotSvg([{ points, style: "points" }], { title });

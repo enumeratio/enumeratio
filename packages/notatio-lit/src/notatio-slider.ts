@@ -167,11 +167,7 @@ export class NotatioSlider extends LitElement {
   }
 
   #watchView(): void {
-    if (
-      !this.autoplay ||
-      this.#inView !== undefined ||
-      typeof IntersectionObserver === "undefined"
-    ) {
+    if (!this.autoplay || this.#inView !== undefined || typeof IntersectionObserver === "undefined") {
       return;
     }
     this.#inView = new IntersectionObserver(
@@ -204,10 +200,8 @@ export class NotatioSlider extends LitElement {
       if (!event.repeat) this.#sweep.toggle();
       return;
     }
-    const forward =
-      event.key === (this.axis === "y" ? "ArrowUp" : "ArrowRight") || event.key === "PageUp";
-    const back =
-      event.key === (this.axis === "y" ? "ArrowDown" : "ArrowLeft") || event.key === "PageDown";
+    const forward = event.key === (this.axis === "y" ? "ArrowUp" : "ArrowRight") || event.key === "PageUp";
+    const back = event.key === (this.axis === "y" ? "ArrowDown" : "ArrowLeft") || event.key === "PageDown";
     if (!forward && !back) {
       if (event.key.startsWith("Arrow")) event.preventDefault(); // the other axis: nothing
       return;
@@ -215,10 +209,7 @@ export class NotatioSlider extends LitElement {
     event.preventDefault();
     this.#sweep.stop();
     this.#repeats = event.repeat ? this.#repeats + 1 : 0;
-    const gear =
-      event.key === "PageUp" || event.key === "PageDown"
-        ? "coarse"
-        : (modifierGear(event) ?? "normal");
+    const gear = event.key === "PageUp" || event.key === "PageDown" ? "coarse" : (modifierGear(event) ?? "normal");
     const { step } = gearing(this.range.step, 1, gear, this.integer);
     const steps = holdMultiplier(this.#repeats) * (forward ? 1 : -1);
     this.#commit(iterate(this._value, steps, { ...this.range, step }, this.#loop).value);
@@ -245,9 +236,7 @@ export class NotatioSlider extends LitElement {
         @keydown=${this.#onKeyDown}
         @keyup=${this.#onKeyUp}
       />${
-        this.readout
-          ? html`<span class="notatio-slider-readout">${numberLatex(this._value, step)}</span>`
-          : nothing
+        this.readout ? html`<span class="notatio-slider-readout">${numberLatex(this._value, step)}</span>` : nothing
       }${this.play ? playButton(this.#sweep) : nothing}
     </span>`;
   }

@@ -24,12 +24,7 @@ export const BSGS_LIMIT = 1n << 40n;
  * x with γˣ = h in a subgroup of prime order q, by baby-step giant-step; undefined if none, or
  * if q is past `BSGS_LIMIT`.
  */
-export function discreteLogPrimeOrder<T>(
-  group: Group<T>,
-  gamma: T,
-  h: T,
-  q: bigint,
-): bigint | undefined {
+export function discreteLogPrimeOrder<T>(group: Group<T>, gamma: T, h: T, q: bigint): bigint | undefined {
   if (group.equal(h, group.one)) return 0n;
   if (q > BSGS_LIMIT) return undefined;
   if (q <= 64n) {
@@ -61,24 +56,13 @@ export function discreteLogPrimeOrder<T>(
  * x with aˣ = h, where a has order q^s, by Pohlig–Hellman digit by digit; undefined when
  * h ∉ ⟨a⟩.
  */
-export function discreteLogPrimePower<T>(
-  group: Group<T>,
-  a: T,
-  h: T,
-  q: bigint,
-  s: number,
-): bigint | undefined {
+export function discreteLogPrimePower<T>(group: Group<T>, a: T, h: T, q: bigint, s: number): bigint | undefined {
   const gamma = group.pow(a, q ** BigInt(s - 1)); // order q
   const aInverse = group.inverse(a);
   let x = 0n;
   for (let i = 0; i < s; i++) {
     const residual = group.mul(group.pow(aInverse, x), h);
-    const digit = discreteLogPrimeOrder(
-      group,
-      gamma,
-      group.pow(residual, q ** BigInt(s - 1 - i)),
-      q,
-    );
+    const digit = discreteLogPrimeOrder(group, gamma, group.pow(residual, q ** BigInt(s - 1 - i)), q);
     if (digit === undefined) return undefined;
     x += digit * q ** BigInt(i);
   }

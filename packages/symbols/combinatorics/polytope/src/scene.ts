@@ -145,14 +145,9 @@ export function skeleton(polytope: Polytope, points: readonly ScenePoint[]): Edg
 // (`centredOn`) and turn it to face the viewer (`orientedTo`).
 
 /** Recentre on a chosen set of faces: translate their centroid to the origin. */
-export function centredOn(
-  points: readonly ScenePoint[],
-  selected: readonly ScenePoint[],
-): ScenePoint[] {
+export function centredOn(points: readonly ScenePoint[], selected: readonly ScenePoint[]): ScenePoint[] {
   if (selected.length === 0) return [...points];
-  const centre = [0, 1, 2].map(
-    (axis) => selected.reduce((sum, point) => sum + point.at[axis]!, 0) / selected.length,
-  );
+  const centre = [0, 1, 2].map((axis) => selected.reduce((sum, point) => sum + point.at[axis]!, 0) / selected.length);
   return points.map((point) => ({
     ...point,
     at: [point.at[0] - centre[0]!, point.at[1] - centre[1]!, point.at[2] - centre[2]!] as Point3,
@@ -183,11 +178,7 @@ const unit = (v: Point3): Point3 | undefined => {
  * true plane normal. The BODY has no normal at all — its tangent space is everything — and it
  * reports `undefined` rather than a fabricated direction.
  */
-export function faceNormal(
-  polytope: Polytope,
-  points: readonly ScenePoint[],
-  face: ScenePoint,
-): Point3 | undefined {
+export function faceNormal(polytope: Polytope, points: readonly ScenePoint[], face: ScenePoint): Point3 | undefined {
   const tangent = spanBasis(
     stratum(points, 0)
       .filter((vertex) => polytope.hasVertex(face.face, vertex.face))
@@ -214,9 +205,7 @@ export function rotated(points: readonly ScenePoint[], from: Point3, to: Point3)
   const sine = norm(perpendicular);
   const cosine = dot(f, t);
   const axis =
-    unit(perpendicular) ??
-    unit(cross(f, Math.abs(f[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0])) ??
-    ([0, 0, 1] as Point3);
+    unit(perpendicular) ?? unit(cross(f, Math.abs(f[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0])) ?? ([0, 0, 1] as Point3);
   const angle = sine > 1e-9 ? Math.atan2(sine, cosine) : cosine > 0 ? 0 : Math.PI;
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);

@@ -37,11 +37,7 @@ function sweepFrom(from: number): Promise<number> {
   return new Promise((resolve) => {
     const child = spawn(
       process.execPath,
-      [
-        `--max-old-space-size=${HEAP}`,
-        new URL("check-fungrim-rule.ts", import.meta.url).pathname,
-        String(from),
-      ],
+      [`--max-old-space-size=${HEAP}`, new URL("check-fungrim-rule.ts", import.meta.url).pathname, String(from)],
       { stdio: ["ignore", "pipe", "inherit"] },
     );
     let last = from - 1;
@@ -90,9 +86,7 @@ while (next < rules.length) {
 const engine = new ComputeEngine();
 declareAnalytic(engine);
 const declared = new Set(
-  [...new Set(rules.flatMap((rule) => rule.heads))].filter((head) =>
-    Boolean(engine.lookupDefinition(head)),
-  ),
+  [...new Set(rules.flatMap((rule) => rule.heads))].filter((head) => Boolean(engine.lookupDefinition(head))),
 );
 
 const tally: Record<string, number> = {};
@@ -160,9 +154,7 @@ export const fungrimFrontier: readonly {
       .map(([head, identities]) => ({ head, identities, declared: declared.has(head) }))
       .sort(
         (a, b) =>
-          Number(a.declared) - Number(b.declared) ||
-          b.identities - a.identities ||
-          a.head.localeCompare(b.head),
+          Number(a.declared) - Number(b.declared) || b.identities - a.identities || a.head.localeCompare(b.head),
       ),
     null,
     2,

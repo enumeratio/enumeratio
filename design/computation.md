@@ -1,0 +1,242 @@
+# Computation
+
+How enumeratio computes an expression, and what bounds it. A computation goes through up to
+three stages:
+
+- **Interpretation**: reading what the input means. Text (notatio, or LaTeX) is parsed into
+  MathJSON, then boxed and canonicalised by compute-engine. The result is an expression, not
+  yet an answer.
+- **Evaluation**: pushing that expression down to compute-engine and our handlers and kernels
+  for a result. Either _symbolic_, which is exact (`Binomial(5, 2)` is `10`, `Zeta(2)` is
+  `Pi^2/6`, and a head with no closed form stays as written), or _numeric_, an approximation
+  at a stated precision (`N(Zeta(3), 30)`).
+- **Compilation**: instead of evaluating, lowering the expression once to code (JavaScript,
+  GLSL, WGSL) and running that, typically many times.
+
+```
+text ──interpretation──▶ boxed expression ──evaluation──▶ result   (.evaluate(), .N())
+                                          └─compilation─▶ function (ce.compile)
+```
+
+Symbolic results only come from evaluation. Numeric ones come from either: `N` is the general
+path, and compilation is the fast one for what it covers. This matches the code's own words:
+`.evaluate()` and `N` are both evaluation, and "evaluates to" is the symbolic result. Candidate
+Latin names for the stages live in `design/branding.md`.
+
+## 1. Where the code is
+
+compute-engine parses, evaluates and compiles. We extend it, head by head:
+
+- **Handlers.** A head we declare carries an `evaluate` handler (symbolic, and `N` where the
+  head is numeric), and optionally a `compile` handler. A head compute-engine already has is
+  extended in place (`@enumeratio/boxed`'s `wrapOperator`, `widenSignature`), never
+  re-declared, so its other handlers survive. `design/upstreaming.md` tracks what should move
+  into compute-engine itself.
+- **Kernels.** The arithmetic under the handlers: bigint number theory in `residues`,
+  big-decimal kernels in `analytic` (`bigzeta.ts`, the Euler–Maclaurin sums, correctly rounded
+  `N(x, d)`), exact combinatorics in `collections`.
+- **Bounds.** `@enumeratio/aestimatio` (§5): cancellation, deadlines, isolated evaluators,
+  sessions and `VerificationTest`.
+
+## 2. Interpretation
+
+Parsing and canonicalisation. notatio is read by `parseNotatio` (a cell also allows one `:=`
+binding), LaTeX by compute-engine's parser, and either way the result is MathJSON. `ce.box`
+then canonicalises it: flattening, ordering operands, folding what is structurally trivial,
+and leaving held heads alone. Nothing is computed yet.
+
+- Canonical form is compute-engine's, and not extensible for `Multiply`; `InvisibleOperator`
+  is where we can step in.
+- InputForm is interpretation run backwards: a printer from the boxed form to notatio you can
+  retype, with the round trip enforced.
+- Interpretation happens once per input, evaluation perhaps many times, so the benchmarks box
+  each case once and keep interpretation out of the timing.
+
+## 3. Evaluation
+
+Pushing the boxed expression down to compute-engine and our handlers and kernels.
+
+### 3.1 Symbolic
+
+`.evaluate()` calls each head's handler bottom-up. A handler
+returns a result or declines (`undefined`), and a declined head stays symbolic. That's the
+right answer for a special function without a closed form at that argument, and it's how
+a wrapped native head falls through to compute-engine's own handler.
+
+Things that decide the cost here:
+
+- A declarative body (MathJSON over `_1`, `_2`) always unfolds on `evaluate()`, so special
+  functions use function handlers.
+- A shared sub-term written into a definition twice is evaluated twice. `bind` (`Apply` over a
+  `Function`) evaluates it once and substitutes, which is the only common-subexpression
+  elimination available.
+- A lazy head (`Add`, `Multiply`) sees its operands unevaluated; a wrapper that needs values
+  pays for evaluating them.
+
+### 3.2 Numeric
+
+`.N()` evaluates to a number at the engine's precision: `"machine"` (doubles) or a
+digit count (`ce.precision = 30`), which applies to every engine in the process.
+
+- Not every native head honours a digit precision: some compute in doubles whatever the
+  setting. Our kernels fill the gaps and carry their own guard digits (`analytic`'s
+  correctly rounded `N(x, d)`).
+- compute-engine's complex numbers keep only the real part in big-decimal precision, so our
+  arbitrary-precision complex kernels carry the real and imaginary parts as a pair of real
+  values, and never let them become a lossy `Complex` until the end.
+- A result is only as good as its inputs. The benchmarks' correctness gate compares a
+  digit-precision answer digit by digit for exactly this reason: a double passes a
+  double-precision check.
+
+## 4. Compilation
+
+`ce.compile(expr, { target })` lowers an expression to source for a target: JavaScript, GLSL,
+WGSL, Python/NumPy. It's for numeric functions evaluated many times: the plotters sample
+through it, and the GPU portraits run it per pixel.
+
+- **Our heads compile through `compile` handlers.** `analytic`'s `realCompile` emits a call to
+  our kernel for JavaScript (injected on the scope object) and for WGSL (the kernel is
+  prepended to the shader). A target it doesn't name falls through to compute-engine's
+  native lowering, where one exists.
+- **A handler replaces the native lowering for every input.** Compare against the native
+  lowering across the whole domain before overriding it: the first `Zeta` handler was wrong
+  far left of the strip where the native one was right.
+- **WGSL has no f64.** A compiled kernel is single precision; emulated double buys mantissa,
+  not exponent. The portraits use their own complex emitter (`emitComplexWGSL`), since the
+  WGSL target is real-scalar, and it hoists literals into uniforms so a slider move doesn't
+  rebuild the shader.
+- **Translation is not compilation.** `@enumeratio/wolfram` (MathJSON to Wolfram Language) and
+  the oracle's per-system emitters turn an expression into another system's source to compare
+  answers and timings. They produce text to run elsewhere, never a function to call here.
+
+What compilation doesn't cover (symbolic results, exact big integers, most special functions
+without a kernel) goes through §3.
+
+## 5. Bounding a computation
+
+`@enumeratio/aestimatio` decides **when** a computation runs, **how long** and **how much
+memory** it may take, **whether it is cancelled**, and **whether its answer checks out**. It
+applies to evaluation (§3). A compiled function (§4) is plain code with no
+checkpoints, so only an isolated evaluator's hard kill (§5.3) can stop it. It exists so a page,
+a notebook or a test run can put bounds on arbitrary input.
+
+Names follow Wolfram's where Wolfram has the concept (`TimeConstrained`, `MemoryConstrained`,
+`VerificationTest`, `$Aborted`, `SameTest`, `TimeConstraint`, `MemoryConstraint`, `TestID`).
+
+### 5.1 Cancellable evaluation
+
+`evaluate(ce, expr, { signal })` returns a promise over compute-engine's
+`evaluateAsync({ signal })`. An aborted signal rejects it; callers (a cell, a notebook re-run)
+abort the previous run when their input changes, so stale work stops rather than merely being
+discarded.
+
+### 5.2 Deadlines, cooperatively
+
+`TimeConstrained(expr, t, failexpr)` — `failexpr` defaults to `$Aborted`. Two routes:
+
+- **sync** `evaluate` handler: `ce.withTimeLimit({ ms, label }, …)`; a `CancellationError`
+  with `cause: "timeout"` from that span becomes `failexpr`.
+- **async** `evaluateAsync` handler: the caller's signal combined with a timeout signal.
+
+A deadline only interrupts code that looks at it. compute-engine's loops do; our bigint kernels
+did not. `@enumeratio/boxed` therefore carries a small cooperative checkpoint — a deadline stack
+set by `TimeConstrained` (and anyone else), and `checkpoint()` that throws when it has passed —
+and the long loops in `@enumeratio/residues` (Pollard–Brent rho, baby-step giant-step, root
+enumeration) call it. It lives in `boxed` so the kernels need no dependency on this package.
+
+### 5.3 Isolation, for memory
+
+JavaScript cannot cap the memory of a synchronous computation in its own process. So
+`MemoryConstrained(expr, bytes, failexpr)` is enforced only when evaluation runs in an isolated
+evaluator; in-process it stays unevaluated (said plainly, never silently ignored).
+
+- **Node** (`@enumeratio/aestimatio/node`): `evaluateIsolated(json, { memoryBytes, timeMs,
+setup })` runs one evaluation in a `worker_threads` Worker with `resourceLimits` sized from
+  the constraint — a real heap cap — and `terminate()` as the hard time kill. `setup` names a
+  module whose `configure(ce)` declares the libraries the host engine has, so the worker's
+  engine means the same things.
+- **Browser** (`@enumeratio/aestimatio/browser`): a plain `Worker`, `terminate()` for time,
+  best-effort memory only (browsers expose no per-worker cap, so this polls the page's own
+  memory instead — see `probeMemoryBytes`).
+
+Both hosts evaluate through a worker pool (`createEvaluatorPool`): a worker that finished
+cleanly is reused; one killed for time or memory, or errored, is replaced. Node keys idle
+workers by memory limit, since `resourceLimits` are fixed at spawn. `evaluateIsolated` and
+`evaluateInWorker` use a default pool.
+
+`timeMs` is tried cooperatively INSIDE the worker first (`ce.withTimeLimit` plus
+`@enumeratio/boxed`'s `withDeadline`/`checkpoint()` — the same machinery `TimeConstrained`
+uses), so a call built from compute-engine's own loops or a `checkpoint()`-ing kernel answers
+`Aborted` as an ordinary value well before anything is killed: the worker is reused, and a
+session keeps its bindings (`reset: false`). Only a tight, uncooperative loop the deadline
+never reaches still needs the host's own hard kill, fired a short grace period later. That
+grace timer only starts once the worker itself reports `"started"` (engine/`setup` ready,
+about to run this call) — a cold spawn plus `@cortex-js/compute-engine` import never counts
+against `timeMs`. A worker that never reports `"started"` at all is caught by a separate,
+much larger spawn-timeout guard instead, folded into the same `Aborted`/`reset: true`
+outcome as an ordinary hard kill.
+
+A **session** (`openSession`) keeps one worker and one engine across calls, so `:=` bindings
+survive from one evaluation to the next. A hard-killed `timeMs` still terminates the worker;
+the bindings are gone and that call's result says `reset: true`. In the browser a session
+prefers a `SharedWorker` (tabs with the same `name` share it), falling back to a dedicated
+`Worker`. A `SharedWorker` call that needs the hard kill can't safely terminate a context
+other tabs may depend on, so instead THIS tab's handle to it is poisoned (dropped) and
+replaced with a private dedicated worker running the same `setup` — that call still reports
+`reset: true`, but the shared session and its other tabs are untouched.
+
+Lessons carried from the archived async-engines design: `AbortSignal` from day one, and
+`terminate()` is the only cancel that always works against a tight loop.
+
+### 5.4 Verification
+
+`VerificationTest(input, expected, SameTest -> f, TimeConstraint -> t, MemoryConstraint -> b,
+TestID -> "…")` holds `input`, evaluates it under the constraints, compares with `expected`
+(default: structural sameness) and returns a `TestResultObject` value carrying `Outcome`
+(`"Success"`, `"Failure"`, `"Error"` — and `"Aborted"` when a constraint fired), `ActualOutput`,
+`ExpectedOutput`, `AbsoluteTimeUsed` and `TestID`. It draws as a cell with an outcome badge.
+Reference examples are, in effect, verification tests; they may be expressed this way later.
+
+### 5.5 Running our own test suites under aestimatio
+
+`runCases(cases, { setup, timeMs, memoryBytes, concurrency, pool? })` (`@enumeratio/aestimatio/node`)
+batch-evaluates independent `{ id, input }` cases (MathJSON), each on a pooled worker (§5.3's
+pool and worker.ts) under its own time/memory cap — a per-case `timeMs`/`memoryBytes`
+overrides the batch default. Each result is `{ id, outcome: "Evaluated" | "Aborted" |
+"Error", value?, ms, reason? }`: `"Evaluated"` covers a worker that answered at all,
+including a cooperative deadline's own `"Aborted"` VALUE (§5.2 — TimeConstrained returning
+`$Aborted` is a normal answer, not a failure); `"Aborted"` as an OUTCOME means the worker
+never answered — the host's hard kill or a crash (e.g. `ERR_WORKER_OUT_OF_MEMORY`); `"Error"`
+is a genuine exception from evaluation. Comparison against an expected value is left to the
+caller. Concurrency is the pool's own cap; results come back in `cases`' order regardless of
+completion order.
+
+`packages/reference/tests/entries.test.ts` runs every documented example this way: one
+`runCases` batch up front (10s / 512MB per example, concurrency 3 — generous for a real
+example, tight enough that a runaway one fails fast as `"Aborted"` instead of hanging the
+suite or growing without bound), then one `vitest` `test` per example asserting the masked
+`toEqual` against the batched result, same as before. The `setup` module is
+`packages/reference/scripts/engines.ts`'s `configure(ce)`, which declares every library the
+reference engine declares EXCEPT `@enumeratio/aestimatio` itself — the worker's own engine
+already has it (worker.ts), and redeclaring throws.
+
+`worker.ts` keeps ONE configured `ComputeEngine` per `setup` URL for a worker's whole
+lifetime (declaring a whole library set on every single message, for every case, was the
+dominant cost of running many small cases through the pool) — only the declarations survive
+across calls. Each call still runs inside its own `ce.pushScope()`/`ce.popScope()` (mirroring
+`Transcript.run`), so a `:=` or other binding one call makes is gone before the next call on
+that same (reused) worker ever sees it. A worker that gets hard-killed is destroyed outright
+and replaced, so there's never a stale engine to worry about. Sessions are unaffected — they
+already keep one engine (and its bindings) on purpose.
+
+## 6. Benchmarking
+
+`design/benchmarking.md` times these paths against the same questions in other systems. Today
+the benchmarks time evaluation, symbolic (exact cases) and numeric (machine and digit
+precision), with each case boxed once so that interpretation stays out of the timing.
+Compiled cases are the natural next addition: the same expression timed as a compiled
+function against `N`, and against the other systems' compiled paths (Julia, Rust), for the
+functions the plotters and portraits compile.
+
+Future work (`AbsoluteTiming`, `CheckAbort`, evaluation history) is in
+design/speculative/aestimatio.md.

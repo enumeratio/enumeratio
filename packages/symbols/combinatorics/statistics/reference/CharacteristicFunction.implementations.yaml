@@ -1,0 +1,29 @@
+characteristicfunction-normal:
+  epsil:
+    in: CharacteristicFunction(NormalDistribution(2, 3), t)
+    out: ExponentialE ^ (-9 / 2 * t ^ 2 + 2i * t)
+  tex:
+    in: \mathrm{CharacteristicFunction}(\operatorname{NormalDistribution}(2, 3), t)
+    out: e^{2i t-\frac{9t^2}{2}}
+  fullform:
+    in: CharacteristicFunction[NormalDistribution[2, 3], t]
+characteristicfunction-poisson:
+  epsil:
+    in: CharacteristicFunction(PoissonDistribution(2), 0)
+    out: "1"
+  tex:
+    in: \mathrm{CharacteristicFunction}(\operatorname{PoissonDistribution}(2), 0)
+    out: "1"
+  fullform:
+    in: CharacteristicFunction[PoissonDistribution[2], 0]
+  wolfram:
+    in: CharacteristicFunction[PoissonDistribution[2], 0]
+characteristicfunction-cauchy-standard:
+  epsil:
+    in: CharacteristicFunction(CauchyDistribution(0, 1), t)
+    out: ExponentialE ^ (-Abs(t))
+  tex:
+    in: \mathrm{CharacteristicFunction}(\mathrm{CauchyDistribution}(0, 1), t)
+    out: e^{-\vert t\vert}
+  fullform:
+    in: CharacteristicFunction[CauchyDistribution[0, 1], t]

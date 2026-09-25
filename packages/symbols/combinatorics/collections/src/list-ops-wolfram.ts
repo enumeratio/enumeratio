@@ -19,11 +19,8 @@ import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/b
  * at runtime (compute-engine dispatches on whatever it finds), so the cast is just working
  * around a type that's narrower than the runtime accepts.
  */
-const invoke = (
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  args: readonly BoxedExpression[],
-): BoxedExpression => ce.box([f, ...args] as never).evaluate();
+const invoke = (ce: ComputeEngine, f: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
+  ce.box([f, ...args] as never).evaluate();
 
 /** Ascending order: numeric/orderable via `isLess`/`isGreater`, lexicographic for strings. */
 const naturalCompare = (a: BoxedExpression, b: BoxedExpression): number => {
@@ -282,8 +279,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
       const sameGroup =
         test === undefined
           ? (a: BoxedExpression, b: BoxedExpression) => a.isEqual(b) === true
-          : (a: BoxedExpression, b: BoxedExpression) =>
-              symbolNameOf(invoke(ce, test, [a, b])) === "True";
+          : (a: BoxedExpression, b: BoxedExpression) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
       const groups = groupBy(items, sameGroup);
       return ce.box(["List", ...groups.map((group) => ce.box(["List", ...group]))]);
     },
@@ -316,8 +312,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
       const same =
         test === undefined
           ? (a: BoxedExpression, b: BoxedExpression) => a.isEqual(b) === true
-          : (a: BoxedExpression, b: BoxedExpression) =>
-              symbolNameOf(invoke(ce, test, [a, b])) === "True";
+          : (a: BoxedExpression, b: BoxedExpression) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
       const runs = splitRuns(items, same);
       return ce.box(["List", ...runs.map((run) => ce.box(["List", ...run]))]);
     },

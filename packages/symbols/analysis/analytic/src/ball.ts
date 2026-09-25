@@ -55,8 +55,7 @@ const HALF = BigDecimal.HALF;
 const up = (x: BigDecimal): BigDecimal => x.toPrecisionToward(RAD_DIGITS, "ceiling");
 
 /** `x ÷ y` for a nonnegative `x` and positive `y`, rounded up to a radius's digits. */
-const upDiv = (x: BigDecimal, y: BigDecimal): BigDecimal =>
-  atDigits(RAD_DIGITS, () => x.divToward(y, "ceiling"));
+const upDiv = (x: BigDecimal, y: BigDecimal): BigDecimal => atDigits(RAD_DIGITS, () => x.divToward(y, "ceiling"));
 
 /** The ball of an `exact` value rounded to the working precision, around an error `rad`. */
 function settle(exact: BigDecimal, rad: BigDecimal): Ball {
@@ -92,10 +91,7 @@ export const sub = (x: Ball, y: Ball): Ball => settle(x.mid.sub(y.mid), x.rad.ad
 
 /** `x·y`: (m + δ)(n + ε) − mn = mε + nδ + δε. */
 export const mul = (x: Ball, y: Ball): Ball =>
-  settle(
-    x.mid.mul(y.mid),
-    x.mid.abs().mul(y.rad).add(y.mid.abs().mul(x.rad)).add(x.rad.mul(y.rad)),
-  );
+  settle(x.mid.mul(y.mid), x.mid.abs().mul(y.rad).add(y.mid.abs().mul(x.rad)).add(x.rad.mul(y.rad)));
 
 /** `x/y`, for a `y` that keeps away from 0. */
 export function div(x: Ball, y: Ball): Ball {
@@ -169,8 +165,7 @@ function expExact(m: BigDecimal): Ball {
   const x = m.toNumber();
   if (!(Math.abs(x) < EXP_LIMIT)) throw new NotCertified();
   const j = x === 0 ? 0 : Math.max(0, Math.ceil(Math.log2(Math.abs(x))) + 2);
-  const digits =
-    BigDecimal.precision + Math.ceil(j * Math.log10(2) + Math.max(0, -x) * Math.LOG10E) + 4;
+  const digits = BigDecimal.precision + Math.ceil(j * Math.log10(2) + Math.max(0, -x) * Math.LOG10E) + 4;
   const bits = Math.ceil(digits * Math.log2(10)) + 8;
   const one = 1n << BigInt(bits);
   const T = fixed(m, bits - j);

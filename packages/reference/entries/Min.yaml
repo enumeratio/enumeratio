@@ -67,8 +67,7 @@ examples:
     expr: [Min, 5.56, -4.8, 7.3]
     expected: -4.8
   - id: nested-lists-are-flattened-into-the-pool
-    expr:
-      [Min, 2, 3, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]
+    expr: [Min, 2, 3, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]
     expected: [Rational, -5, 3]
     category: Scope
     caption: Nested lists are flattened into the pool
@@ -107,8 +106,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: The min of an empty list is NaN
-    divergence:
-      wolfram: Wolfram's $\mathrm{Min}[\{\}]$ is the identity element $+\infty$.
 seeAlso:
   - Max
   - Clamp

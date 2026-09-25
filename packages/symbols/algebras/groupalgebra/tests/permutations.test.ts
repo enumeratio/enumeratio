@@ -76,10 +76,7 @@ test("GroupElements(PermutationGroup(...)), with and without a position selector
     c37 = C([3, 7]),
     c169 = C([1, 6, 9]);
   const full = ["PermutationGroup", L(C([1, 9, 6], [3, 7]))] as const;
-  same(
-    ["GroupElements", full],
-    L(all, c37, c169, C([1, 6, 9], [3, 7]), C([1, 9, 6]), C([1, 9, 6], [3, 7])),
-  );
+  same(["GroupElements", full], L(all, c37, c169, C([1, 6, 9], [3, 7]), C([1, 9, 6]), C([1, 9, 6], [3, 7])));
   same(["GroupElements", full, L(1, 2, 3)], L(all, c37, c169));
   same(["GroupElements", full, L(-1)], L(C([1, 9, 6], [3, 7])));
 });

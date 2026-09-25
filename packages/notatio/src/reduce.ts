@@ -120,8 +120,7 @@ function cleaned(node: Json): Json {
 }
 
 /** The entry a choice binds: `Labeled(v, "label")` binds `v`. */
-const entryValue = (node: Json): Json =>
-  headOf(node) === "Labeled" ? (opsOf(node)[0] ?? node) : node;
+const entryValue = (node: Json): Json => (headOf(node) === "Labeled" ? (opsOf(node)[0] ?? node) : node);
 
 /** A range spec's numbers, when they are numbers. */
 function rangeOf(spec: Json | undefined): { min: number; max: number; step?: number } | undefined {
@@ -145,17 +144,11 @@ function pinned(d: Declaration): Json | undefined {
     case "ranged":
       return parts?.[0];
     case "listed":
-      return parts === undefined
-        ? "False"
-        : parts[0] === undefined
-          ? undefined
-          : entryValue(parts[0]);
+      return parts === undefined ? "False" : parts[0] === undefined ? undefined : entryValue(parts[0]);
     case "simple":
       return d.head === "Checkbox" ? "False" : undefined;
     case "interval":
-      return parts !== undefined && parts.length >= 2
-        ? (["Tuple", parts[0], parts[1]] as unknown as Json)
-        : undefined;
+      return parts !== undefined && parts.length >= 2 ? (["Tuple", parts[0], parts[1]] as unknown as Json) : undefined;
     case "planar":
       return parts?.[0];
     case "locator":
@@ -176,17 +169,13 @@ export function sampleValues(d: Declaration, n: number): Json[] | undefined {
         const count = Math.floor((max - min) / step + 1e-9) + 1;
         if (count <= n) return Array.from({ length: count }, (_, i) => number(min + i * step));
         // Too many grid points: n of them, spread evenly and kept on the grid.
-        return Array.from({ length: n }, (_, i) =>
-          number(min + Math.round(((count - 1) * i) / (n - 1)) * step),
-        );
+        return Array.from({ length: n }, (_, i) => number(min + Math.round(((count - 1) * i) / (n - 1)) * step));
       }
       if (n === 1) return [number(min)];
       return Array.from({ length: n }, (_, i) => number(min + ((max - min) * i) / (n - 1)));
     }
     case "listed":
-      return parts === undefined
-        ? ["False", "True"]
-        : parts.slice(0, n).map((p) => cleaned(entryValue(p)));
+      return parts === undefined ? ["False", "True"] : parts.slice(0, n).map((p) => cleaned(entryValue(p)));
     case "simple":
       return d.head === "Checkbox" ? ["False", "True"] : undefined;
     default:
@@ -202,9 +191,7 @@ export function caption(d: Declaration, value: Json): string {
     case "ranged":
     case "interval": {
       const range = rangeOf(d.spec);
-      return range === undefined
-        ? lhs
-        : `${lhs} (${text(number(range.min))} ≤ ${d.name} ≤ ${text(number(range.max))})`;
+      return range === undefined ? lhs : `${lhs} (${text(number(range.min))} ≤ ${d.name} ≤ ${text(number(range.max))})`;
     }
     case "listed":
       return parts === undefined
@@ -248,8 +235,7 @@ function substitute(node: Json, values: ReadonlyMap<string, Json>, unwrap = fals
   const sub = (n: Json): Json | Removed => substitute(n, values, unwrap);
   if (LAYOUT.has(head)) {
     // A control in a layout is dropped from it; a list of entries keeps its shape.
-    const prune = (entries: readonly Json[]): Json[] =>
-      entries.map(sub).filter((e): e is Json => !isRemoved(e));
+    const prune = (entries: readonly Json[]): Json[] => entries.map(sub).filter((e): e is Json => !isRemoved(e));
     const rebuilt = ops.map((op, i) => {
       const inner = tupleOf(op);
       if (inner === undefined || (head === "Labeled" && i === 1)) return sub(op);
@@ -268,10 +254,7 @@ function substitute(node: Json, values: ReadonlyMap<string, Json>, unwrap = fals
         });
         const blank = (r: Json | Removed): boolean =>
           !isRemoved(r) && (tupleOf(r)?.every((c) => strOf(c) === "") ?? false);
-        return [
-          "List",
-          ...rows.filter((r): r is Json => !isRemoved(r) && !blank(r)),
-        ] as unknown as Json;
+        return ["List", ...rows.filter((r): r is Json => !isRemoved(r) && !blank(r))] as unknown as Json;
       }
       return ["List", ...prune(inner)] as unknown as Json;
     });
@@ -335,10 +318,7 @@ function markLocator(node: Json, point: Json): { node: Json; marked: boolean } {
     const { ops, options } = optionsOf(node);
     const mark = ["Point", point] as unknown as Json;
     const epilog = options.Epilog;
-    const joined =
-      epilog === undefined
-        ? mark
-        : (["List", ...(tupleOf(epilog) ?? [epilog]), mark] as unknown as Json);
+    const joined = epilog === undefined ? mark : (["List", ...(tupleOf(epilog) ?? [epilog]), mark] as unknown as Json);
     return { node: withOptions("Plot", ops, { ...options, Epilog: joined }), marked: true };
   }
   const ops = opsOf(node);
@@ -360,9 +340,7 @@ function chooseSampled(decls: readonly Declaration[], env: Environment): Declara
   const asked = decls.find((d) => d.reading === "sample" || typeof d.reading === "number");
   if (asked !== undefined) return asked;
   if (env.static.controls !== "sample") return undefined;
-  return decls.find(
-    (d) => d.reading !== "pin" && SAMPLEABLE.has(d.kind) && sampleValues(d, 2) !== undefined,
-  );
+  return decls.find((d) => d.reading !== "pin" && SAMPLEABLE.has(d.kind) && sampleValues(d, 2) !== undefined);
 }
 
 const chunk = <T>(xs: readonly T[], n: number): T[][] =>
@@ -394,12 +372,7 @@ function staticControls(expr: Json, env: Environment): Json {
     const cells = values.map((v) => {
       const cell = settle(substitute(free, new Map([[sampled.name, v]])));
       // The label under each cell, as a figure's caption goes.
-      return [
-        "Labeled",
-        cell ?? v,
-        string(`${sampled.name} = ${text(v)}`),
-        "Bottom",
-      ] as unknown as Json;
+      return ["Labeled", cell ?? v, string(`${sampled.name} = ${text(v)}`), "Bottom"] as unknown as Json;
     });
     const list = (xs: readonly Json[]): Json => ["List", ...xs] as unknown as Json;
     body =
@@ -414,9 +387,7 @@ function staticControls(expr: Json, env: Environment): Json {
     const point = d.kind === "locator" ? pinned.get(d.name) : undefined;
     if (point !== undefined) body = markLocator(body, point).node;
   }
-  return captions.length === 0
-    ? body
-    : (["Labeled", body, string(captions.join("; ")), "Bottom"] as unknown as Json);
+  return captions.length === 0 ? body : (["Labeled", body, string(captions.join("; ")), "Bottom"] as unknown as Json);
 }
 
 const GPU_HEADS = new Set(["ComplexPlot", "ComplexPlot3D"]);

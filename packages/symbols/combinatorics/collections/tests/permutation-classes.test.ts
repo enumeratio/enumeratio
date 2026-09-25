@@ -66,9 +66,7 @@ test("SeparablePermutations count = large Schröder numbers (A006318)", () => {
   ]);
 });
 test("SimplePermutations count matches A111111", () => {
-  expect(countsOf("SimplePermutations", [[1], [2], [3], [4], [5], [6], [7]])).toEqual([
-    1, 2, 0, 2, 6, 46, 338,
-  ]);
+  expect(countsOf("SimplePermutations", [[1], [2], [3], [4], [5], [6], [7]])).toEqual([1, 2, 0, 2, 6, 46, 338]);
 });
 test("SmoothPermutations count matches A032351", () => {
   expect(countsOf("SmoothPermutations", [[0], [1], [2], [3], [4], [5], [6], [7]])).toEqual([

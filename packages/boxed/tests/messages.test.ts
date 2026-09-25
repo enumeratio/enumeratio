@@ -6,9 +6,7 @@ const ce = new ComputeEngine();
 defineMessages(ce, "F", { bad: "`1` is not `2`." });
 
 test("an emit splices its arguments into the head's template", () => {
-  const { messages } = collectMessages(ce, () =>
-    emit(ce, "F", "bad", [2, ce.box(["List", 1, 2])], "try 3"),
-  );
+  const { messages } = collectMessages(ce, () => emit(ce, "F", "bad", [2, ce.box(["List", 1, 2])], "try 3"));
   expect(messages).toEqual([
     { head: "F", code: "bad", args: ["2", "[1, 2]"], text: "2 is not [1, 2].", hint: "try 3" },
   ]);

@@ -18,9 +18,7 @@ test("every documented head's provenance matches what its entry claims", () => {
   // the head. `StirlingS1` sat documented as ours long after it was compute-engine's, and
   // only a hand probe caught it — this is that probe, for the whole catalogue.
   const wrong = ledger.filter((row) => !row.agrees);
-  expect(
-    wrong.map((row) => `${row.name}: computed ${row.provenance}, declared ${row.declared}`),
-  ).toEqual([]);
+  expect(wrong.map((row) => `${row.name}: computed ${row.provenance}, declared ${row.declared}`)).toEqual([]);
 });
 
 test("the catalogue is mostly compute-engine's, and we know which part is not", () => {
@@ -108,10 +106,7 @@ const VANILLA: MathJSON[] = [
 test("declaring our libraries changes nothing about vanilla compute-engine", () => {
   const broken = divergences(bare, ours, VANILLA);
   expect(
-    broken.map(
-      (d) =>
-        `${JSON.stringify(d.expression)}: ${JSON.stringify(d.bare)} → ${JSON.stringify(d.ours)}`,
-    ),
+    broken.map((d) => `${JSON.stringify(d.expression)}: ${JSON.stringify(d.bare)} → ${JSON.stringify(d.ours)}`),
   ).toEqual([]);
 });
 
@@ -321,14 +316,10 @@ const OVERRIDDEN = [
 ];
 
 // Evaluates the whole corpus in both engines: seconds, not the default 5s budget on a busy box.
-test(
-  "we change exactly the compute-engine heads we mean to, and no others",
-  { timeout: 60_000 },
-  () => {
-    const corpus = entries.flatMap((entry) => entry.examples.map((example) => example.expr));
-    expect(divergingHeads(bare, ours, corpus)).toEqual(OVERRIDDEN);
-  },
-);
+test("we change exactly the compute-engine heads we mean to, and no others", { timeout: 60_000 }, () => {
+  const corpus = entries.flatMap((entry) => entry.examples.map((example) => example.expr));
+  expect(divergingHeads(bare, ours, corpus)).toEqual(OVERRIDDEN);
+});
 
 test("the committed provenance data is still what the engines say", { timeout: 60_000 }, () => {
   // `src/provenance-data.ts` is generated, and generated data goes stale silently. This is
@@ -337,9 +328,7 @@ test("the committed provenance data is still what the engines say", { timeout: 6
   // means a head moved between compute-engine's and ours, which is worth noticing.
   // Coverage comes from an external kernel, so it is carried forward rather than re-derived
   // here — this check is about the offline columns, which CI can always compute.
-  expect(collect(bare, ours, entries, HEADS, provenance)).toEqual(
-    provenance.map((record) => ({ ...record })),
-  );
+  expect(collect(bare, ours, entries, HEADS, provenance)).toEqual(provenance.map((record) => ({ ...record })));
 });
 
 test("the Wolfram rename column is reflected from the transpiler, not copied", () => {
@@ -381,6 +370,11 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * NorlundB, PrimeZetaP, HypergeometricPFQ and KleinInvariantJ are the same story: all nine
  * are genuinely Wolfram's own names (BellY and NorlundB also have a mpmath/sympy analogue in
  * some form), waiting on the same coverage run to fill in `elsewhere`.
+ *
+ * UnitBox, UnitTriangle, HeavisideTheta, HeavisideLambda, HeavisidePi, Ramp, SawtoothWave,
+ * TriangleWave, SquareWave, Rescale, DiracDelta, DiscreteDelta and DiscreteShift (signals.ts)
+ * are the same story again: all thirteen are genuinely Wolfram's own names (see `HEADS` in
+ * @enumeratio/wolfram), waiting on the same coverage run to fill in `elsewhere`.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -468,6 +462,19 @@ const NOVEL = [
   "RealSign",
   "UnitStep",
   "Gudermannian",
+  "UnitBox",
+  "UnitTriangle",
+  "HeavisideTheta",
+  "HeavisideLambda",
+  "HeavisidePi",
+  "Ramp",
+  "SawtoothWave",
+  "TriangleWave",
+  "SquareWave",
+  "Rescale",
+  "DiracDelta",
+  "DiscreteDelta",
+  "DiscreteShift",
   // The Function* real-analysis property family (function-properties.ts) — genuine Wolfram
   // heads (see to-wolfram.ts HEADS), but not yet run through the oracle sweep, so `elsewhere`
   // is still empty here (see collect-provenance.ts's docstring on how it's carried forward).
@@ -664,6 +671,38 @@ const NOVEL = [
   "IsBipartiteGraph",
   "NeighborhoodGraph",
   "Subgraph",
+  // Inequality and FindInstance (@enumeratio/analytic): genuine Wolfram heads (see HEADS
+  // in @enumeratio/wolfram), waiting on the same offline-kernel-less story as the rest of
+  // this list for `elsewhere` to fill in.
+  "Inequality",
+  "FindInstance",
+  // Second wave (packages/symbols/combinatorics/collections/src/graphs-2.ts): same story --
+  // every one of these is genuinely Wolfram's own (see HEADS in @enumeratio/wolfram), this
+  // offline suite just has no kernel to confirm it.
+  "GraphDistanceMatrix",
+  "VertexEccentricity",
+  "GraphRadius",
+  "GraphDiameter",
+  "GraphCenter",
+  "GraphPeriphery",
+  "VertexIndex",
+  "VertexInDegree",
+  "VertexOutDegree",
+  "ClosenessCentrality",
+  "EigenvectorCentrality",
+  "IsPathGraph",
+  "IsAcyclicGraph",
+  "IsCompleteGraph",
+  "IsLoopFreeGraph",
+  "IsSimpleGraph",
+  "IsIsomorphicGraph",
+  "WheelGraph",
+  "CirculantGraph",
+  "TuranGraph",
+  "HararyGraph",
+  "LineGraph",
+  "AdjacencyGraph",
+  "RandomGraph",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {
@@ -700,9 +739,5 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     ].sort(),
   );
   // LerchPhi is in all three, so it has the strongest oracle coverage of anything we add.
-  expect(known.find((record) => record.name === "LerchPhi")?.elsewhere).toEqual([
-    "wolfram",
-    "sympy",
-    "mpmath",
-  ]);
+  expect(known.find((record) => record.name === "LerchPhi")?.elsewhere).toEqual(["wolfram", "sympy", "mpmath"]);
 });

@@ -113,8 +113,7 @@ for head, args, digits in cases:
     print(nstr(heads[head](*[arg(t) for t in args]), digits, min_fixed=-mp.inf, max_fixed=mp.inf))
 `;
 const out = (await runKernel("python3", ["-c", py], { timeoutMs: 300_000 })).trim().split("\n");
-if (out.length !== cases.length)
-  throw new Error(`mpmath gave ${out.length} values for ${cases.length} cases`);
+if (out.length !== cases.length) throw new Error(`mpmath gave ${out.length} values for ${cases.length} cases`);
 
 const goldens: CertifiedGolden[] = cases.map(([head, args, digits], k) => ({
   head,
@@ -122,8 +121,5 @@ const goldens: CertifiedGolden[] = cases.map(([head, args, digits], k) => ({
   mpmath: out[k]!,
   ...(digits === undefined ? {} : { digits }),
 }));
-writeFileSync(
-  new URL("../tests/certified.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/certified.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 console.log(`cases ${goldens.length}`);

@@ -86,8 +86,7 @@ export function cyclesAreValid(cycles: readonly Cycle[]): boolean {
 }
 
 /** Drop singleton (fixed-point) cycles — `Cycles`'s own canonical form. */
-export const dropFixedCycles = (cycles: readonly Cycle[]): Cycle[] =>
-  cycles.filter((cycle) => cycle.length > 1);
+export const dropFixedCycles = (cycles: readonly Cycle[]): Cycle[] => cycles.filter((cycle) => cycle.length > 1);
 
 /** The inverse permutation: reverse the mapping. */
 export function invertPermutation(sigma: readonly number[]): number[] {

@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  type EvalOptions,
-  isFiniteNum,
-  type NativeEval,
-  numberResult,
-  wantsNumber,
-} from "./box.ts";
+import { type EvalOptions, isFiniteNum, type NativeEval, numberResult, wantsNumber } from "./box.ts";
 import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
 import { add, ccos, csin, cx, type Cx, mul, scale, sub } from "./complex.ts";
 
@@ -29,24 +23,14 @@ import { add, ccos, csin, cx, type Cx, mul, scale, sub } from "./complex.ts";
  */
 function patchEllipticE(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("EllipticE");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return; // EllipticE not declared at all — nothing to patch
 
   const native: NativeEval = operator.evaluate;
   const halfPi = ce.box(["Divide", "Pi", 2]);
-  operator.evaluate = (
-    ops: readonly BoxedExpression[],
-    options: EvalOptions,
-  ): BoxedExpression | undefined => {
+  operator.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
     const [m] = ops;
-    if (
-      ops.length === 1 &&
-      m !== undefined &&
-      wantsNumber(ops, options) &&
-      isFiniteNum(m) &&
-      m.im !== 0
-    ) {
+    if (ops.length === 1 && m !== undefined && wantsNumber(ops, options) && isFiniteNum(m) && m.im !== 0) {
       return ce.box(["EllipticE", halfPi, m]).evaluate(options);
     }
     return native?.(ops, options);
@@ -102,16 +86,12 @@ function declareIncompleteE(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const [phi, m] = ops;
       if (phi === undefined || m === undefined || !wantsNumber(ops, options)) return undefined;
-      if (!isFiniteNum(phi) || !isFiniteNum(m))
-        return ce.box(["EllipticE", phi, m]).evaluate(options);
+      if (!isFiniteNum(phi) || !isFiniteNum(m)) return ce.box(["EllipticE", phi, m]).evaluate(options);
 
       const k = m.im !== 0 ? Math.round(phi.re / Math.PI) : 0;
       if (k === 0) return ce.box(["EllipticE", phi, m]).evaluate(options);
 
-      const phi0 =
-        phi.im === 0
-          ? ce.number(phi.re - k * Math.PI)
-          : ce.number(ce.complex(phi.re - k * Math.PI, phi.im));
+      const phi0 = phi.im === 0 ? ce.number(phi.re - k * Math.PI) : ce.number(ce.complex(phi.re - k * Math.PI, phi.im));
       const eComplete = ce.box(["EllipticE", m]).evaluate(options); // the patched complete form
       const eIncomplete = ce.box(["EllipticE", phi0, m]).evaluate(options); // φ0 is back in range
       return ce.box(["Add", ["Multiply", 2 * k, eComplete], eIncomplete]).evaluate(options);

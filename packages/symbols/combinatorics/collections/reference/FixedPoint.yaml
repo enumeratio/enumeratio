@@ -19,15 +19,11 @@ examples:
     expr: [FixedPoint, Cos, 0.5]
     expected: { num: "0.739085133215160641658" }
     caption: The Dottie number, the fixed point of cos
-    divergence:
-      wolfram: Wolfram iterates at machine (double) precision and reports 0.7390851332151607; this engine's default precision is 21 digits, and the two agree through the first 15 digits, diverging only in Wolfram's own machine-precision rounding beyond that.
   - id: newton-s-method-for-sqrt-2-run-to-this-engine-s
     expr: [FixedPoint, [Function, [Divide, [Add, _1, [Divide, 2, _1]], 2]], 1.5]
     expected: { num: "1.4142135623730950488016875" }
     category: Applications
     caption: Newton's method for $\sqrt{2}$, run to this engine's default precision
-    divergence:
-      wolfram: "Same precision difference as the Cos example above: Wolfram's machine-precision fixed point is 1.4142135623730951, agreeing with this one through the first 15 digits."
 seeAlso:
   - Nest
   - NestList

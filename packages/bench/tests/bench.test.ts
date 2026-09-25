@@ -84,9 +84,9 @@ describe("judge", () => {
     expect(agrees("5.37213193608040200940623225595*^-1", li3, 30)).toBe(true);
   });
   test("a call under the floor is kept but marked too-fast", () => {
-    expect(
-      judge("F/x", { value: "8", samplesNs: [100, 100, 100, 100, 100], k: 1 }, "8", "exact").status,
-    ).toBe("too-fast");
+    expect(judge("F/x", { value: "8", samplesNs: [100, 100, 100, 100, 100], k: 1 }, "8", "exact").status).toBe(
+      "too-fast",
+    );
   });
 });
 

@@ -56,13 +56,10 @@ export function profiniteOf(expr: BoxedExpression | undefined): Profinite | unde
   return r === undefined ? undefined : P.exact(r);
 }
 
-const numberOf = (ce: ComputeEngine, x: Rational): BoxedExpression =>
-  ce.number(Q.isInteger(x) ? x[0] : [x[0], x[1]]);
+const numberOf = (ce: ComputeEngine, x: Rational): BoxedExpression => ce.number(Q.isInteger(x) ? x[0] : [x[0], x[1]]);
 
 export const profiniteExpression = (ce: ComputeEngine, x: Profinite): BoxedExpression =>
-  P.isExact(x)
-    ? numberOf(ce, x.value)
-    : ce.function(PROFINITE, [numberOf(ce, x.value), numberOf(ce, x.modulus)]);
+  P.isExact(x) ? numberOf(ce, x.value) : ce.function(PROFINITE, [numberOf(ce, x.value), numberOf(ce, x.modulus)]);
 
 // ── adèles and idèles: a real part beside a finite one ──────────────────────────────
 
@@ -86,9 +83,7 @@ function adeleOf(expr: BoxedExpression): Adele | undefined {
   if (expr.operator === ADELE) {
     const [real, finite] = operandsOf(expr);
     const z = profiniteOf(finite);
-    return real === undefined || z === undefined || !isRealNumber(real)
-      ? undefined
-      : { real, finite: z };
+    return real === undefined || z === undefined || !isRealNumber(real) ? undefined : { real, finite: z };
   }
   const r = rationalAt(expr);
   return r === undefined ? undefined : { real: expr, finite: P.exact(r) };
@@ -101,8 +96,7 @@ function ideleOf(expr: BoxedExpression): Idele | undefined {
   if (expr.operator === IDELE) {
     const [real, scale, units] = operandsOf(expr);
     const s = rationalAt(scale);
-    if (real === undefined || s === undefined || Q.isZero(s) || !isRealNumber(real))
-      return undefined;
+    if (real === undefined || s === undefined || Q.isZero(s) || !isRealNumber(real)) return undefined;
     if (real.is(0)) return undefined;
     if (units === undefined) return { real, finite: { kind: "principal", value: s } };
     const components = operandsOf(units).map((u) => (u.operator === ADIC ? adicOf(u) : undefined));
@@ -111,9 +105,7 @@ function ideleOf(expr: BoxedExpression): Idele | undefined {
     return finite === undefined ? undefined : { real, finite };
   }
   const r = rationalAt(expr);
-  return r === undefined || Q.isZero(r)
-    ? undefined
-    : { real: expr, finite: { kind: "principal", value: r } };
+  return r === undefined || Q.isZero(r) ? undefined : { real: expr, finite: { kind: "principal", value: r } };
 }
 
 function adicExpression(ce: ComputeEngine, u: adic.Adic): BoxedExpression {
@@ -130,8 +122,7 @@ function ideleExpression(ce: ComputeEngine, x: Idele): BoxedExpression {
 }
 
 export function declareAdeles(ce: ComputeEngine): void {
-  const real = (head: string, ...xs: BoxedExpression[]): BoxedExpression =>
-    ce.function(head, xs).evaluate();
+  const real = (head: string, ...xs: BoxedExpression[]): BoxedExpression => ce.function(head, xs).evaluate();
 
   // ── ProfiniteNumber ───────────────────────────────────────────────────────────
 
@@ -189,19 +180,9 @@ export function declareAdeles(ce: ComputeEngine): void {
   const onlyProfinite = (ops: readonly BoxedExpression[]): boolean =>
     onProfinite(ops) && !has(ADELE)(ops) && !has(IDELE)(ops);
 
-  wrapOperator(ce, ["Add", "x", "y"], onlyProfinite, () =>
-    fold(profiniteOf, P.add, writeProfinite),
-  );
-  wrapOperator(ce, ["Multiply", "x", "y"], onlyProfinite, () =>
-    fold(profiniteOf, P.multiply, writeProfinite),
-  );
-  wrapOperator(
-    ce,
-    ["Divide", "x", "y"],
-    onlyProfinite,
-    () => fold(profiniteOf, P.divide, writeProfinite),
-    2,
-  );
+  wrapOperator(ce, ["Add", "x", "y"], onlyProfinite, () => fold(profiniteOf, P.add, writeProfinite));
+  wrapOperator(ce, ["Multiply", "x", "y"], onlyProfinite, () => fold(profiniteOf, P.multiply, writeProfinite));
+  wrapOperator(ce, ["Divide", "x", "y"], onlyProfinite, () => fold(profiniteOf, P.divide, writeProfinite), 2);
   wrapOperator(
     ce,
     ["Negate", "x"],
@@ -235,28 +216,16 @@ export function declareAdeles(ce: ComputeEngine): void {
       const z = finite(x.finite, y.finite);
       return z === undefined ? undefined : { real: real(head, x.real, y.real), finite: z };
     };
-  wrapOperator(ce, ["Add", "x", "y"], onAdele, () =>
-    fold(adeleOf, adeleStep("Add", P.add), writeAdele),
-  );
-  wrapOperator(ce, ["Multiply", "x", "y"], onAdele, () =>
-    fold(adeleOf, adeleStep("Multiply", P.multiply), writeAdele),
-  );
-  wrapOperator(
-    ce,
-    ["Divide", "x", "y"],
-    onAdele,
-    () => fold(adeleOf, adeleStep("Divide", P.divide), writeAdele),
-    2,
-  );
+  wrapOperator(ce, ["Add", "x", "y"], onAdele, () => fold(adeleOf, adeleStep("Add", P.add), writeAdele));
+  wrapOperator(ce, ["Multiply", "x", "y"], onAdele, () => fold(adeleOf, adeleStep("Multiply", P.multiply), writeAdele));
+  wrapOperator(ce, ["Divide", "x", "y"], onAdele, () => fold(adeleOf, adeleStep("Divide", P.divide), writeAdele), 2);
   wrapOperator(
     ce,
     ["Negate", "x"],
     onAdele,
     () => (ops) => {
       const x = ops[0] === undefined ? undefined : adeleOf(ops[0]);
-      return x === undefined
-        ? undefined
-        : writeAdele({ real: real("Negate", x.real), finite: P.negate(x.finite) });
+      return x === undefined ? undefined : writeAdele({ real: real("Negate", x.real), finite: P.negate(x.finite) });
     },
     1,
   );
@@ -289,16 +258,8 @@ export function declareAdeles(ce: ComputeEngine): void {
     const inverse = I.invert(y);
     return inverse === undefined ? undefined : I.multiply(x, inverse);
   };
-  wrapOperator(ce, ["Multiply", "x", "y"], onIdele, () =>
-    fold(ideleOf, ideleStep("Multiply", I.multiply), writeIdele),
-  );
-  wrapOperator(
-    ce,
-    ["Divide", "x", "y"],
-    onIdele,
-    () => fold(ideleOf, ideleStep("Divide", ideleDivide), writeIdele),
-    2,
-  );
+  wrapOperator(ce, ["Multiply", "x", "y"], onIdele, () => fold(ideleOf, ideleStep("Multiply", I.multiply), writeIdele));
+  wrapOperator(ce, ["Divide", "x", "y"], onIdele, () => fold(ideleOf, ideleStep("Divide", ideleDivide), writeIdele), 2);
   wrapOperator(
     ce,
     ["Power", "x", "y"],
@@ -363,9 +324,7 @@ export function declareAdeles(ce: ComputeEngine): void {
         if (first.operator === IDELE) {
           const x = ideleOf(first);
           const finite = x === undefined ? undefined : I.toProfinite(x.finite);
-          return finite === undefined || x === undefined
-            ? undefined
-            : writeAdele({ real: x.real, finite });
+          return finite === undefined || x === undefined ? undefined : writeAdele({ real: x.real, finite });
         }
         const r = rationalAt(first);
         return r === undefined ? undefined : writeAdele({ real: first, finite: P.exact(r) });
@@ -449,8 +408,7 @@ export function declareAdeles(ce: ComputeEngine): void {
       const image = P.toPadic(x, p);
       if (image.prec !== undefined && image.prec < 1) return undefined;
       const cap = integerAt(ops[2]);
-      const prec =
-        image.prec === undefined ? cap : cap === undefined ? image.prec : Math.min(cap, image.prec);
+      const prec = image.prec === undefined ? cap : cap === undefined ? image.prec : Math.min(cap, image.prec);
       const args = [ce.number(p), numberOf(ce, image.value)];
       if (prec !== undefined) args.push(ce.number(prec));
       return ce.function(ADIC, args).evaluate();
@@ -476,10 +434,7 @@ export function declareAdeles(ce: ComputeEngine): void {
           "List",
           m.map((row) => ce.function("List", row.map(write))),
         );
-      return ce.function("List", [
-        matrix(found.b, writeProfinite),
-        matrix(found.a, (x) => numberOf(ce, x)),
-      ]);
+      return ce.function("List", [matrix(found.b, writeProfinite), matrix(found.a, (x) => numberOf(ce, x))]);
     },
   });
 

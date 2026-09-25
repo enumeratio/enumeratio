@@ -1,0 +1,22 @@
+matches-hypergeometric1f1-1-2-0-5-gamma-2:
+  epsil:
+    in: Hypergeometric1F1Regularized(1, 2, 0.5)
+    out: 1.297_442_541_400_255_5
+  tex:
+    in: \mathrm{Hypergeometric1F1Regularized}(1, 2, 0.5)
+    out: 1.297\,442\,541\,400\,255\,5
+  fullform:
+    in: Hypergeometric1F1Regularized[1, 2, 0.5]
+  wolfram:
+    in: Hypergeometric1F1Regularized[1, 2, 0.5]
+b-1-is-a-pole-of-gamma-but-the-regularized-form:
+  epsil:
+    in: Hypergeometric1F1Regularized(1, -1, 0.7)
+    out: 0.986_738_826_660_532_9
+  tex:
+    in: \mathrm{Hypergeometric1F1Regularized}(1, -1, 0.7)
+    out: 0.986\,738\,826\,660\,532\,9
+  fullform:
+    in: Hypergeometric1F1Regularized[1, -1, 0.7]
+  wolfram:
+    in: Hypergeometric1F1Regularized[1, -1, 0.7]

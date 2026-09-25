@@ -1,0 +1,18 @@
+the-partition-4-2-1-of-7:
+  epsil:
+    in: MultiplicityOfLargestPart(IntegerPartition([4, 2, 1]))
+    out: "1"
+  tex:
+    in: \mathrm{MultiplicityOfLargestPart}(\mathrm{IntegerPartition}(\bigl\lbrack4, 2, 1\bigr\rbrack))
+    out: "1"
+  fullform:
+    in: MultiplicityOfLargestPart[IntegerPartition[List[4, 2, 1]]]
+the-partition-3-3-1-of-7:
+  epsil:
+    in: MultiplicityOfLargestPart(IntegerPartition([3, 3, 1]))
+    out: "2"
+  tex:
+    in: \mathrm{MultiplicityOfLargestPart}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
+    out: "2"
+  fullform:
+    in: MultiplicityOfLargestPart[IntegerPartition[List[3, 3, 1]]]

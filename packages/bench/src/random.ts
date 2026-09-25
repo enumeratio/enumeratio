@@ -5,7 +5,7 @@
 import type { MathJSON } from "@enumeratio/oracle/src";
 import type { Draw, Sample } from "./types.ts";
 
-/** mulberry32, as the quickcheck scripts use. */
+/** mulberry32, as the Plausible scripts use. */
 export function mulberry32(seed: number): () => number {
   let state = seed >>> 0;
   return () => {
@@ -26,9 +26,7 @@ function randomBits(next: () => number, bits: number): bigint {
 
 /** An integer as MathJSON: a number while it is exact as a double, a numeric string past that. */
 const integer = (n: bigint): MathJSON =>
-  n >= BigInt(Number.MIN_SAFE_INTEGER) && n <= BigInt(Number.MAX_SAFE_INTEGER)
-    ? Number(n)
-    : { num: n.toString() };
+  n >= BigInt(Number.MIN_SAFE_INTEGER) && n <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(n) : { num: n.toString() };
 
 export function drawOne(next: () => number, draw: Draw): MathJSON {
   switch (draw[0]) {

@@ -1,0 +1,861 @@
+sin-0:
+  epsil:
+    in: Sin(0)
+    out: "0"
+  tex:
+    in: \sin(0)
+    out: "0"
+  fullform:
+    in: Sin[0]
+  wolfram:
+    in: Sin[0]
+    out: "0"
+    tex:
+      in: \sin (0)
+      out: "0"
+  sympy:
+    in: sin(0)
+    out: "0"
+  mpmath:
+    in: sin(0)
+    out: "0.0"
+  sage:
+    in: sin(0)
+    out: "0"
+  rust:
+    in: sin(n(0))
+    out: "0.0"
+exact-value-at-a-special-angle:
+  epsil:
+    in: Sin(Pi / 6)
+    out: 1 / 2
+  tex:
+    in: \sin(\frac{\pi}{6})
+    out: \frac{1}{2}
+  fullform:
+    in: Sin[Divide[Pi, 6]]
+  wolfram:
+    in: Sin[Divide[Pi, 6]]
+    out: 1/2
+    tex:
+      in: \sin \left(\frac{\pi }{6}\right)
+      out: \frac{1}{2}
+  sympy:
+    in: sin((S(pi) / 6))
+    out: 1/2
+  sage:
+    in: sin((pi / 6))
+    out: 1/2
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(6)))
+    out: "0.49999999999999994"
+sin-pi-over-4:
+  epsil:
+    in: Sin(Pi / 4)
+    out: Sqrt(2) / 2
+  tex:
+    in: \sin(\frac{\pi}{4})
+    out: \frac{\sqrt{2}}{2}
+  fullform:
+    in: Sin[Divide[Pi, 4]]
+  wolfram:
+    in: Sin[Divide[Pi, 4]]
+    out: 1/Sqrt[2]
+    tex:
+      in: \sin \left(\frac{\pi }{4}\right)
+      out: \frac{1}{\sqrt{2}}
+  sympy:
+    in: sin((S(pi) / 4))
+    out: sqrt(2)/2
+  sage:
+    in: sin((pi / 4))
+    out: 1/2*sqrt(2)
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(4)))
+    out: "0.7071067811865475"
+sin-pi-over-3:
+  epsil:
+    in: Sin(Pi / 3)
+    out: Sqrt(3) / 2
+  tex:
+    in: \sin(\frac{\pi}{3})
+    out: \frac{\sqrt{3}}{2}
+  fullform:
+    in: Sin[Divide[Pi, 3]]
+  wolfram:
+    in: Sin[Divide[Pi, 3]]
+    out: Sqrt[3]/2
+    tex:
+      in: \sin \left(\frac{\pi }{3}\right)
+      out: \frac{\sqrt{3}}{2}
+  sympy:
+    in: sin((S(pi) / 3))
+    out: sqrt(3)/2
+  sage:
+    in: sin((pi / 3))
+    out: 1/2*sqrt(3)
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(3)))
+    out: "0.8660254037844386"
+sin-pi-over-2:
+  epsil:
+    in: Sin(Pi / 2)
+    out: "1"
+  tex:
+    in: \sin(\frac{\pi}{2})
+    out: "1"
+  fullform:
+    in: Sin[Divide[Pi, 2]]
+  wolfram:
+    in: Sin[Divide[Pi, 2]]
+    out: "1"
+    tex:
+      in: \sin \left(\frac{\pi }{2}\right)
+      out: "1"
+  sympy:
+    in: sin((S(pi) / 2))
+    out: "1"
+  sage:
+    in: sin((pi / 2))
+    out: "1"
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(2)))
+    out: "1.0"
+sin-pi:
+  epsil:
+    in: Sin(Pi)
+    out: "0"
+  tex:
+    in: \sin(\pi)
+    out: "0"
+  fullform:
+    in: Sin[Pi]
+  wolfram:
+    in: Sin[Pi]
+    out: "0"
+    tex:
+      in: \sin (\pi )
+      out: "0"
+  sympy:
+    in: sin(pi)
+    out: "0"
+  mpmath:
+    in: sin(pi)
+    out: "1.69568553207377992879174029388e-31"
+  sage:
+    in: sin(pi)
+    out: "0"
+  rust:
+    in: sin(x(std::f64::consts::PI))
+    out: "1.2246467991473532e-16"
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
+  epsil:
+    in: Sin(Pi / 6) ^ 2 + Cos(Pi / 6) ^ 2
+    out: "1"
+  tex:
+    in: \sin(\frac{\pi}{6})^2+\cos(\frac{\pi}{6})^2
+    out: "1"
+  fullform:
+    in: Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]
+  wolfram:
+    in: Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]
+    out: "1"
+    tex:
+      in: \sin ^2\left(\frac{\pi }{6}\right)+\cos ^2\left(\frac{\pi }{6}\right)
+      out: "1"
+  sympy:
+    in: ((sin((S(pi) / 6))**2) + (cos((S(pi) / 6))**2))
+    out: "1"
+  sage:
+    in: ((sin((pi / 6))^2) + (cos((pi / 6))^2))
+    out: "1"
+  rust:
+    in: (power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))
+    out: "1.0"
+odd-function-sin-x-sin-x:
+  epsil:
+    in: Sin(-(Pi / 6)) == -Sin(Pi / 6)
+    out: True
+  tex:
+    in: \sin(-\frac{\pi}{6})=-\sin(\frac{\pi}{6})
+    out: \top
+  traditional:
+    in: \sin(-\frac{\pi}{6})=-\sin(\frac{\pi}{6})
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Sin[Minus[Divide[Pi, 6]]], Minus[Sin[Divide[Pi, 6]]]]
+  wolfram:
+    in: (Sin[Minus[Divide[Pi, 6]]] == Minus[Sin[Divide[Pi, 6]]])
+    out: True
+    tex:
+      in: \sin \left(-\frac{\pi }{6}\right)=-\sin \left(\frac{\pi }{6}\right)
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(sin((-(S(pi) / 6))), (-sin((S(pi) / 6))))
+    out: True
+  sage:
+    in: bool(sin((-(pi / 6))) == (-sin((pi / 6))))
+    out: True
+  rust:
+    in: equal(sin((-((x(std::f64::consts::PI) / n(6))))), (-(sin((x(std::f64::consts::PI) / n(6))))))
+    out: "true"
+period-2-pi-adding-a-full-turn-doesn-t-change:
+  epsil:
+    in: Sin(Pi / 6 + 2Pi)
+    out: 1 / 2
+  tex:
+    in: \sin(\frac{\pi}{6}+2\pi)
+    out: \frac{1}{2}
+  fullform:
+    in: Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]
+  wolfram:
+    in: Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]
+    out: 1/2
+    tex:
+      in: \sin \left(\frac{\pi }{6}+2 \pi \right)
+      out: \frac{1}{2}
+  sympy:
+    in: sin(((S(pi) / 6) + (2 * pi)))
+    out: 1/2
+  sage:
+    in: sin(((pi / 6) + (2 * pi)))
+    out: 1/2
+  rust:
+    in: sin(((x(std::f64::consts::PI) / n(6)) + (n(2) * x(std::f64::consts::PI))))
+    out: "0.5"
+threads-element-wise-over-a-list:
+  epsil:
+    in: Sin([0, Pi / 2, Pi])
+    out: "[0, 1, 0]"
+  tex:
+    in: \sin(\bigl\lbrack0, \frac{\pi}{2}, \pi\bigr\rbrack)
+    out: \bigl\lbrack0, 1, 0\bigr\rbrack
+  fullform:
+    in: Sin[List[0, Divide[Pi, 2], Pi]]
+  wolfram:
+    in: Sin[List[0, Divide[Pi, 2], Pi]]
+    out: "{0, 1, 0}"
+    tex:
+      in: \sin \left(\left\{0,\frac{\pi }{2},\pi \right\}\right)
+      out: \{0,1,0\}
+  sympy:
+    in: "[sin(0), sin((S(pi) / 2)), sin(pi)]"
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sin threads over (or pools) the list; SymPy's takes scalars.
+  sage:
+    in: "[sin(0), sin((pi / 2)), sin(pi)]"
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sin is Listable and threads over the list; Sage's takes scalars only.
+  rust:
+    in: sin(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars.
+degrees-d-converts-a-degree-measure-to-radians:
+  epsil:
+    in: Sin(Degrees(30))
+    out: 1 / 2
+  tex:
+    in: \sin(30^{\circ})
+    out: \frac{1}{2}
+  fullform:
+    in: Sin[Times[30, Degree]]
+    back: [Sin, [Multiply, 30, Degree]]
+  wolfram:
+    in: Sin[Times[30, Degree]]
+    out: 1/2
+    tex:
+      in: \sin (30 {}^{\circ})
+      out: \frac{1}{2}
+1-radian-isn-t-a-recognized-special-angle-so:
+  epsil:
+    in: Sin(1)
+    out: Sin(1)
+  tex:
+    in: \sin(1)
+    out: \sin(1)
+  fullform:
+    in: Sin[1]
+  wolfram:
+    in: Sin[1]
+    out: Sin[1]
+    tex:
+      in: \sin (1)
+      out: \sin (1)
+  sympy:
+    in: sin(1)
+    out: sin(1)
+  mpmath:
+    in: sin(1)
+    out: "0.84147098480789650665250232163"
+  sage:
+    in: sin(1)
+    out: sin(1)
+  rust:
+    in: sin(n(1))
+    out: "0.8414709848078965"
+the-special-angle-table-reaches-past-30-45-60:
+  epsil:
+    in: Sin(Pi / 5)
+    out: Sqrt(2) / 4 * Sqrt(5 - Sqrt(5))
+  tex:
+    in: \sin(\frac{\pi}{5})
+    out: \frac{1}{4}(\sqrt{2}\sqrt{5-\sqrt{5}})
+  fullform:
+    in: Sin[Divide[Pi, 5]]
+  wolfram:
+    in: Sin[Divide[Pi, 5]]
+    out: Sqrt[5/8 - Sqrt[5]/8]
+    tex:
+      in: \sin \left(\frac{\pi }{5}\right)
+      out: \sqrt{\frac{5}{8}-\frac{\sqrt{5}}{8}}
+  sympy:
+    in: sin((S(pi) / 5))
+    out: sqrt(5/8 - sqrt(5)/8)
+  sage:
+    in: sin((pi / 5))
+    out: 1/4*sqrt(-2*sqrt(5) + 10)
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(5)))
+    out: "0.5877852522924731"
+degrees-d-converts-to-radians-so-sin-60-circ-is:
+  epsil:
+    in: Sin(Degrees(60))
+    out: Sqrt(3) / 2
+  tex:
+    in: \sin(60^{\circ})
+    out: \frac{\sqrt{3}}{2}
+  fullform:
+    in: Sin[Times[60, Degree]]
+    back: [Sin, [Multiply, 60, Degree]]
+  wolfram:
+    in: Sin[Times[60, Degree]]
+a-machine-precision-argument-evaluates:
+  epsil:
+    in: Sin(1.2)
+    out: 0.932_039_085_967_226_349_67
+  tex:
+    in: \sin(1.2)
+    out: 0.932\,039\,085\,967\,226\,349\,67
+  fullform:
+    in: Sin[1.2]
+  wolfram:
+    in: Sin[1.2]
+  sympy:
+    in: sin(1.2)
+  mpmath:
+    in: sin(1.2)
+  sage:
+    in: sin(1.2)
+  rust:
+    in: sin(x(1.2))
+n-of-an-exact-argument-gives-an-arbitrary:
+  epsil:
+    in: N(Sin(6 / 5))
+    out: 0.932_039_085_967_226_349_67
+  tex:
+    in: N(\sin(\frac{6}{5}))
+    out: 0.932\,039\,085\,967\,226\,349\,67
+  fullform:
+    in: N[Sin[Rational[6, 5]]]
+  wolfram:
+    in: N[Sin[Rational[6, 5]]]
+  sympy:
+    in: N(sin(Rational(6, 5)), 30)
+  sage:
+    in: N(sin((6/5)))
+  rust:
+    in: nf(sin(rational(n(6), n(5))))
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Sin(2.5 + i)
+    out: 0.923_490_776_043_173_1 + -0.941_504_933_270_867_2 * i
+  tex:
+    in: \sin(2.5+i)
+    out: 0.923\,490\,776\,043\,173\,1-0.941\,504\,933\,270\,867\,2i
+  fullform:
+    in: Sin[Complex[2.5, 1]]
+  wolfram:
+    in: Sin[Complex[2.5, 1]]
+  sympy:
+    in: sin((2.5 + 1*I))
+  mpmath:
+    in: sin(mpc(2.5, 1))
+  sage:
+    in: sin((2.5 + 1*I))
+threads-element-wise-over-a-matrix:
+  epsil:
+    in: Sin([[5 * (Pi / 6), 0], [3 * (Pi / 2), -(Pi / 2)]])
+    out: "[[1 / 2, 0], [-1, -1]]"
+  tex:
+    in: \sin(\bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\pi/2\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack-1, -1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Sin[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
+  wolfram:
+    in: Sin[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
+  sympy:
+    in: "[[sin((5 * (S(pi) / 6))), sin(0)], [sin((3 * (S(pi) / 2))), sin((-(S(pi) / 2)))]]"
+  sage:
+    in: "[[sin((5 * (pi / 6))), sin(0)], [sin((3 * (pi / 2))), sin((-(pi / 2)))]]"
+  rust:
+    in: sin(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4:
+  epsil:
+    in: Sin(Pi / 12)
+    out: -(Sqrt(2) / 4) + Sqrt(6) / 4
+  tex:
+    in: \sin(\frac{\pi}{12})
+    out: \frac{\sqrt{6}}{4}-\frac{\sqrt{2}}{4}
+  fullform:
+    in: Sin[Divide[Pi, 12]]
+  wolfram:
+    in: Sin[Divide[Pi, 12]]
+  sympy:
+    in: sin((S(pi) / 12))
+  sage:
+    in: sin((pi / 12))
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(12)))
+sin-pi-8-frac-sqrt-2-sqrt-2-2:
+  epsil:
+    in: Sin(Pi / 8)
+    out: 1 / 2 * Sqrt(2 - Sqrt(2))
+  tex:
+    in: \sin(\frac{\pi}{8})
+    out: \frac{\sqrt{2-\sqrt{2}}}{2}
+  fullform:
+    in: Sin[Divide[Pi, 8]]
+  wolfram:
+    in: Sin[Divide[Pi, 8]]
+  sympy:
+    in: sin((S(pi) / 8))
+  sage:
+    in: sin((pi / 8))
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(8)))
+sin-pi-10-frac-sqrt-5-1-4:
+  epsil:
+    in: Sin(Pi / 10)
+    out: -1 / 4 + Sqrt(5) / 4
+  tex:
+    in: \sin(\frac{\pi}{10})
+    out: \frac{\sqrt{5}}{4}-\frac{1}{4}
+  fullform:
+    in: Sin[Divide[Pi, 10]]
+  wolfram:
+    in: Sin[Divide[Pi, 10]]
+  sympy:
+    in: sin((S(pi) / 10))
+  sage:
+    in: sin((pi / 10))
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(10)))
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
+  epsil:
+    in: Sin(5 / 12 * Pi)
+    out: Sqrt(2) / 4 + Sqrt(6) / 4
+  tex:
+    in: \sin(\frac{5\pi}{12})
+    out: \frac{\sqrt{2}}{4}+\frac{\sqrt{6}}{4}
+  fullform:
+    in: Sin[Times[Rational[5, 12], Pi]]
+  wolfram:
+    in: Sin[Times[Rational[5, 12], Pi]]
+  sympy:
+    in: sin((Rational(5, 12) * pi))
+  sage:
+    in: sin(((5/12) * pi))
+  rust:
+    in: sin((rational(n(5), n(12)) * x(std::f64::consts::PI)))
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
+  epsil:
+    in: Sin(3 / 8 * Pi)
+    out: 1 / 2 * Sqrt(2 + Sqrt(2))
+  tex:
+    in: \sin(\frac{3\pi}{8})
+    out: \frac{\sqrt{2+\sqrt{2}}}{2}
+  fullform:
+    in: Sin[Times[Rational[3, 8], Pi]]
+  wolfram:
+    in: Sin[Times[Rational[3, 8], Pi]]
+  sympy:
+    in: sin((Rational(3, 8) * pi))
+  sage:
+    in: sin(((3/8) * pi))
+  rust:
+    in: sin((rational(n(3), n(8)) * x(std::f64::consts::PI)))
+large-rational-multiples-of-pi-are-reduced:
+  epsil:
+    in: Sin(100 / 3 * Pi)
+    out: -(Sqrt(3) / 2)
+  tex:
+    in: \sin(\frac{100\pi}{3})
+    out: -\frac{\sqrt{3}}{2}
+  fullform:
+    in: Sin[Times[Rational[100, 3], Pi]]
+  wolfram:
+    in: Sin[Times[Rational[100, 3], Pi]]
+  sympy:
+    in: sin((Rational(100, 3) * pi))
+  sage:
+    in: sin(((100/3) * pi))
+  rust:
+    in: sin((rational(n(100), n(3)) * x(std::f64::consts::PI)))
+any-integer-multiple-of-pi-is-a-zero-of-sine:
+  epsil:
+    in: Sin(1_000_001Pi)
+    out: "0"
+  tex:
+    in: \sin(1\,000\,001\pi)
+    out: "0"
+  fullform:
+    in: Sin[Times[1000001, Pi]]
+  wolfram:
+    in: Sin[Times[1000001, Pi]]
+  sympy:
+    in: sin((1000001 * pi))
+  mpmath:
+    in: sin((1000001 * pi))
+  sage:
+    in: sin((1000001 * pi))
+  rust:
+    in: sin((n(1000001) * x(std::f64::consts::PI)))
+interval-arithmetic-the-image-of-pi-6-pi-6-is:
+  epsil:
+    in: Sin(Interval(-(Pi / 6), Pi / 6))
+    out: Interval(-1 / 2, 1 / 2)
+  tex:
+    in: \sin(\mathrm{Interval}(-\frac{\pi}{6}, \frac{\pi}{6}))
+    out: \mathrm{Interval}(-\frac{1}{2}, \frac{1}{2})
+  fullform:
+    in: Sin[Interval[List[Minus[Divide[Pi, 6]], Divide[Pi, 6]]]]
+  wolfram:
+    in: Sin[Interval[List[Minus[Divide[Pi, 6]], Divide[Pi, 6]]]]
+the-image-of-the-whole-real-line-is-1-1:
+  epsil:
+    in: Sin(Interval(NegativeInfinity, PositiveInfinity))
+    out: Interval(-1, 1)
+  tex:
+    in: \sin(\mathrm{Interval}(-\infty, \infty))
+    out: \mathrm{Interval}(-1, 1)
+  fullform:
+    in: Sin[Interval[List[-Infinity, Infinity]]]
+  wolfram:
+    in: Sin[Interval[List[-Infinity, Infinity]]]
+wolfram-answers-sin-infty-with-the-range-of-its:
+  epsil:
+    in: Sin(PositiveInfinity)
+    out: Interval(-1, 1)
+  tex:
+    in: \sin(\infty)
+    out: \mathrm{Interval}(-1, 1)
+  fullform:
+    in: Sin[Infinity]
+  wolfram:
+    in: Sin[Infinity]
+uncertainty-propagation-sin-2-pm-0-01-approx-0:
+  epsil:
+    in: Sin(Around(2, 0.01))
+    out: Around(0.909_297_426_825_681_7, 0.004_161_468_365_471_424)
+  tex:
+    in: \sin(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.909\,297\,426\,825\,681\,7, 0.004\,161\,468\,365\,471\,424)
+  fullform:
+    in: Sin[Around[2, 0.01]]
+  wolfram:
+    in: Sin[Around[2, 0.01]]
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i:
+  epsil:
+    in: Sin(ImaginaryUnit * x)
+    out: i * Sinh(x)
+  tex:
+    in: \sin(i x)
+    out: i\sinh(x)
+  fullform:
+    in: Sin[Times[I, x]]
+oddness-pulls-the-sign-out-of-a-symbolic:
+  epsil:
+    in: Sin(-x)
+    out: -Sin(x)
+  tex:
+    in: \sin(-x)
+    out: -\sin(x)
+  fullform:
+    in: Sin[Minus[x]]
+a-half-period-shift-reduces-sin-x-pi-sin-x:
+  epsil:
+    in: Sin(x + Pi)
+    out: -Sin(x)
+  tex:
+    in: \sin(x+\pi)
+    out: -\sin(x)
+  fullform:
+    in: Sin[Plus[x, Pi]]
+sin-arcsin-x-x-for-every-x:
+  epsil:
+    in: Sin(Arcsin(x))
+    out: x
+  tex:
+    in: \sin(\arcsin(x))
+    out: x
+  fullform:
+    in: Sin[ArcSin[x]]
+sin-arcsin-2-2-past-the-real-domain:
+  epsil:
+    in: Sin(Arcsin(2))
+    out: "2"
+  tex:
+    in: \sin(\arcsin(2))
+    out: "2"
+  fullform:
+    in: Sin[ArcSin[2]]
+  wolfram:
+    in: Sin[ArcSin[2]]
+sin-arcsin-of-a-complex-argument:
+  epsil:
+    in: Sin(Arcsin(1 + 2i))
+    out: 1 + 2i
+  tex:
+    in: \sin(\arcsin(1+2i))
+    out: 1+2i
+  fullform:
+    in: Sin[ArcSin[Complex[1, 2]]]
+  wolfram:
+    in: Sin[ArcSin[Complex[1, 2]]]
+sin-arccos-x-sqrt-1-x-2:
+  epsil:
+    in: Sin(Arccos(x))
+    out: Sqrt(-x ^ 2 + 1)
+  tex:
+    in: \sin(\arccos(x))
+    out: \sqrt{1-x^2}
+  fullform:
+    in: Sin[ArcCos[x]]
+sin-arctan-x-frac-x-sqrt-1-x-2:
+  epsil:
+    in: Sin(Arctan(x))
+    out: x / Sqrt(x ^ 2 + 1)
+  tex:
+    in: \sin(\arctan(x))
+    out: \frac{x}{\sqrt{x^2+1}}
+  fullform:
+    in: Sin[ArcTan[x]]
+derivative-frac-d-dx-sin-x-cos-x:
+  epsil:
+    in: D(Sin(x), x)
+    out: Cos(x)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\sin(x)
+    out: \cos(x)
+  fullform:
+    in: D[Sin[x], x]
+second-derivative:
+  epsil:
+    in: D(Sin(x), x, x)
+    out: -Sin(x)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\sin(x)
+    out: -\sin(x)
+  fullform:
+    in: D[Sin[x], x, x]
+antiderivative:
+  epsil:
+    in: Integrate(Sin(x), x)
+    out: -Cos(x)
+  tex:
+    in: \int\!\sin(x)\, \mathrm{d}x
+    out: -\cos(x)
+  fullform:
+    in: Integrate[Sin[x], x]
+area-under-one-arch-int-0-pi-sin-x-dx-2:
+  epsil:
+    in: Integrate(Sin(x), (x, 0, Pi))
+    out: "2"
+  tex:
+    in: \int_{0}^{\pi}\!\sin(x)\, \mathrm{d}x
+    out: "2"
+  fullform:
+    in: Integrate[Sin[x], List[x, 0, Pi]]
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers:
+  epsil:
+    in: Integrate(Sin(x) ^ 3, x)
+    out: 1 / 3 * Cos(x) ^ 3 - Cos(x)
+  tex:
+    in: \int\!\sin(x)^3\, \mathrm{d}x
+    out: \frac{\cos(x)^3}{3}-\cos(x)
+  fullform:
+    in: Integrate[Power[Sin[x], 3], x]
+taylor-series-about-0-only-odd-powers-appear:
+  epsil:
+    in: Series(Sin(x), x, 0, 10)
+    out: |-
+      1 / 362_880 * x ^ 9 + -1 / 5_040 * x ^ 7 + 1 / 120 * x ^ 5 + -1 / 6 * x ^ 3 + x +
+      BigO(x ^ 11)
+  tex:
+    in: \operatorname{Series}(\sin(x), x, 0, 10)
+    out: x-\frac{x^3}{6}+\frac{x^5}{120}-\frac{x^7}{5\,040}+\frac{x^9}{362\,880}+O\left(x^{11}\right)
+  fullform:
+    in: Series[Sin[x], x, 0, 10]
+the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1:
+  epsil:
+    in: Limit(Sin(x) / x, 0)
+    out: "1"
+  tex:
+    in: \lim_{x\to0}\frac{\sin(x)}{x}
+    out: "1"
+  fullform:
+    in: Limit[Function[Divide[Sin[x], x], x], 0]
+double-angle-formula-via-trigexpand:
+  epsil:
+    in: TrigExpand(Sin(2x))
+    out: 2 * Sin(x) * Cos(x)
+  tex:
+    in: \mathrm{TrigExpand}(\sin(2x))
+    out: 2\sin(x)\cos(x)
+  fullform:
+    in: TrigExpand[Sin[Times[2, x]]]
+angle-addition-formula-via-trigexpand:
+  epsil:
+    in: TrigExpand(Sin(x + y))
+    out: Sin(y) * Cos(x) + Sin(x) * Cos(y)
+  tex:
+    in: \mathrm{TrigExpand}(\sin(x+y))
+    out: \sin(y)\cos(x)+\sin(x)\cos(y)
+  fullform:
+    in: TrigExpand[Sin[Plus[x, y]]]
+triple-angle-formula:
+  epsil:
+    in: TrigExpand(Sin(3x))
+    out: -Sin(x) ^ 3 + 3 * Sin(x) * Cos(x) ^ 2
+  tex:
+    in: \mathrm{TrigExpand}(\sin(3x))
+    out: 3\sin(x)\cos(x)^2-\sin(x)^3
+  fullform:
+    in: TrigExpand[Sin[Times[3, x]]]
+power-reduction-sin-2-x-frac-1-cos-2x-2:
+  epsil:
+    in: TrigReduce(Sin(x) ^ 2)
+    out: -1 / 2 * Cos(2x) + 1 / 2
+  tex:
+    in: \mathrm{TrigReduce}(\sin(x)^2)
+    out: \frac{1}{2}-\frac{\cos(2x)}{2}
+  fullform:
+    in: TrigReduce[Power[Sin[x], 2]]
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i:
+  epsil:
+    in: TrigToExp(Sin(x))
+    out: -1 / 2 * i * ExponentialE ^ (i * x) + 1 / 2 * i * ExponentialE ^ (-1 * i * x)
+  tex:
+    in: \mathrm{TrigToExp}(\sin(x))
+    out: (-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)
+  fullform:
+    in: TrigToExp[Sin[x]]
+simplify-knows-the-pythagorean-identity:
+  epsil:
+    in: Simplify(Sin(x) ^ 2 + Cos(x) ^ 2)
+    out: "1"
+  tex:
+    in: \mathrm{Simplify}(\sin(x)^2+\cos(x)^2)
+    out: "1"
+  fullform:
+    in: Simplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
+the-same-through-fullsimplify:
+  epsil:
+    in: FullSimplify(Sin(x) ^ 2 + Cos(x) ^ 2)
+    out: "1"
+  tex:
+    in: \mathrm{FullSimplify}(\sin(x)^2+\cos(x)^2)
+    out: "1"
+  fullform:
+    in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
+pi-15-has-a-radical-form-but-like-wolfram-s:
+  epsil:
+    in: Sin(Pi / 15)
+    out: Sin(1 / 15 * Pi)
+  tex:
+    in: \sin(\frac{\pi}{15})
+    out: \sin(\frac{\pi}{15})
+  fullform:
+    in: Sin[Divide[Pi, 15]]
+  wolfram:
+    in: Sin[Divide[Pi, 15]]
+  sympy:
+    in: sin((S(pi) / 15))
+  sage:
+    in: sin((pi / 15))
+  rust:
+    in: sin((x(std::f64::consts::PI) / n(15)))
+a-huge-exact-argument-is-reduced-modulo-2-pi:
+  epsil:
+    in: N(Sin(10 ^ 20))
+    out: -0.645_251_285_265_780_844_206
+  tex:
+    in: N(\sin(10^{20}))
+    out: -0.645\,251\,285\,265\,780\,844\,206
+  fullform:
+    in: N[Sin[Power[10, 20]]]
+  wolfram:
+    in: N[Sin[Power[10, 20]]]
+  sympy:
+    in: N(sin((10**20)), 30)
+  mpmath:
+    in: (sin((10**20)))
+  sage:
+    in: N(sin((10^20)))
+  rust:
+    in: nf(sin(power(n(10), n(20))))
+functionexpand-gives-the-nested-radical-form:
+  epsil:
+    in: FunctionExpand(Sin(Pi / 15))
+    out: 1 / 8 * (-Sqrt(15) + Sqrt(3) + Sqrt(10 + 2 * Sqrt(5)))
+  tex:
+    in: \mathrm{FunctionExpand}(\sin(\frac{\pi}{15}))
+    out: \frac{1}{8}(-\sqrt{15}+\sqrt{3}+\sqrt{10+2\sqrt{5}})
+  fullform:
+    in: FunctionExpand[Sin[Divide[Pi, 15]]]
+  wolfram:
+    in: FunctionExpand[Sin[Divide[Pi, 15]]]
+to-30-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Sin(1), 30)
+    out: 0.841_470_984_807_896_506_652_502_321_630
+  tex:
+    in: N(\sin(1), 30)
+    out: 0.841\,470\,984\,807\,896\,506\,653
+  fullform:
+    in: N[Sin[1], 30]
+  wolfram:
+    in: N[Sin[1], 30]
+  sympy:
+    in: N(sin(1), 30)
+  mpmath:
+    in: (sin(1))
+  sage:
+    in: N(sin(1))
+  rust:
+    in: nf(sin(n(1)))
+a-huge-24-40-argument-reduces-exactly-mod-2-pi:
+  epsil:
+    in: N(Sin(24 ^ 40))
+    out: 0.400_083_152_719_766_047_071
+  tex:
+    in: N(\sin(24^{40}))
+    out: 0.400\,083\,152\,719\,766\,047\,071
+  fullform:
+    in: N[Sin[Power[24, 40]]]
+  wolfram:
+    in: N[Sin[Power[24, 40]]]
+  sympy:
+    in: N(sin((24**40)), 30)
+  mpmath:
+    in: (sin((24**40)))
+  sage:
+    in: N(sin((24^40)))
+  rust:
+    in: nf(sin(power(n(24), n(40))))

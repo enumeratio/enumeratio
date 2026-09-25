@@ -1,0 +1,179 @@
+kroneckersymbol-17-6:
+  epsil:
+    in: KroneckerSymbol(17, 6)
+    out: "-1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(17, 6)
+    out: "-1"
+  traditional:
+    in: \left(\frac{17}{6}\right)
+    out: "-1"
+  fullform:
+    in: KroneckerSymbol[17, 6]
+  wolfram:
+    in: KroneckerSymbol[17, 6]
+    out: "-1"
+    tex:
+      in: \left(\frac{17}{6}\right)
+      out: "-1"
+kroneckersymbol-10-13:
+  epsil:
+    in: KroneckerSymbol(10, 13)
+    out: "1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(10, 13)
+    out: "1"
+  traditional:
+    in: \left(\frac{10}{13}\right)
+    out: "1"
+  fullform:
+    in: KroneckerSymbol[10, 13]
+  wolfram:
+    in: KroneckerSymbol[10, 13]
+    out: "1"
+    tex:
+      in: \left(\frac{10}{13}\right)
+      out: "1"
+0-whenever-a-1-and-n-0:
+  epsil:
+    in: KroneckerSymbol(5, 0)
+    out: "0"
+  tex:
+    in: \mathrm{KroneckerSymbol}(5, 0)
+    out: "0"
+  traditional:
+    in: \left(\frac{5}{0}\right)
+    out: "0"
+  fullform:
+    in: KroneckerSymbol[5, 0]
+  wolfram:
+    in: KroneckerSymbol[5, 0]
+    out: "0"
+    tex:
+      in: \left(\frac{5}{0}\right)
+      out: "0"
+a-1-is-the-sign-of-a-here-a-0:
+  epsil:
+    in: KroneckerSymbol(-3, -1)
+    out: "-1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(-3, -1)
+    out: "-1"
+  traditional:
+    in: \left(\frac{-3}{-1}\right)
+    out: "-1"
+  fullform:
+    in: KroneckerSymbol[-3, -1]
+  wolfram:
+    in: KroneckerSymbol[-3, -1]
+    out: "-1"
+    tex:
+      in: \left(\frac{-3}{-1}\right)
+      out: "-1"
+a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues:
+  epsil:
+    in: KroneckerSymbol(3, 2)
+    out: "-1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(3, 2)
+    out: "-1"
+  traditional:
+    in: \left(\frac{3}{2}\right)
+    out: "-1"
+  fullform:
+    in: KroneckerSymbol[3, 2]
+  wolfram:
+    in: KroneckerSymbol[3, 2]
+    out: "-1"
+    tex:
+      in: \left(\frac{3}{2}\right)
+      out: "-1"
+completely-multiplicative-in-n:
+  epsil:
+    in: KroneckerSymbol(7, 3 * 5) == KroneckerSymbol(7, 3) * KroneckerSymbol(7, 5)
+    out: True
+  tex:
+    in: \mathrm{KroneckerSymbol}(7, 3\times5)=\mathrm{KroneckerSymbol}(7, 3)\mathrm{KroneckerSymbol}(7, 5)
+    out: \top
+  traditional:
+    in: \left(\frac{7}{3\times5}\right)=\left(\frac{7}{3}\right)\left(\frac{7}{5}\right)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[KroneckerSymbol[7, Times[3, 5]], Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]]]
+  wolfram:
+    in: (KroneckerSymbol[7, Times[3, 5]] == Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]])
+    out: True
+    tex:
+      in: \left(\frac{7}{3\ 5}\right)=\left(\frac{7}{3}\right) \left(\frac{7}{5}\right)
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: KroneckerSymbol([2, 3, 5, 7, 11], 6)
+    out: "[0, 0, 1, 1, 1]"
+  tex:
+    in: \mathrm{KroneckerSymbol}(\bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack, 6)
+    out: \bigl\lbrack0, 0, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: KroneckerSymbol[List[2, 3, 5, 7, 11], 6]
+  wolfram:
+    in: KroneckerSymbol[List[2, 3, 5, 7, 11], 6]
+    out: "{0, 0, 1, 1, 1}"
+    tex:
+      in: \left(\frac{\{2,3,5,7,11\}}{6}\right)
+      out: \{0,0,1,1,1\}
+larger-arguments-10-11-1-against-the-2000th:
+  epsil:
+    in: KroneckerSymbol(10 ^ 11 + 1, NthPrime(2_000))
+    out: "-1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(10^{11}+1, \mathrm{NthPrime}(2\,000))
+    out: "-1"
+  traditional:
+    in: \left(\frac{10^{11}+1}{p_{2\,000}}\right)
+    out: "-1"
+  fullform:
+    in: KroneckerSymbol[Plus[Power[10, 11], 1], Prime[2000]]
+  wolfram:
+    in: KroneckerSymbol[Plus[Power[10, 11], 1], Prime[2000]]
+even-n-where-jacobisymbol-is-undefined-7-2-7-3-1:
+  epsil:
+    in: KroneckerSymbol(7, 6)
+    out: "1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(7, 6)
+    out: "1"
+  traditional:
+    in: \left(\frac{7}{6}\right)
+    out: "1"
+  fullform:
+    in: KroneckerSymbol[7, 6]
+  wolfram:
+    in: KroneckerSymbol[7, 6]
+the-character-mod-4-4-p-1-for-primes-p-equiv-3:
+  epsil:
+    in: KroneckerSymbol(-4, 7)
+    out: "-1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(-4, 7)
+    out: "-1"
+  traditional:
+    in: \left(\frac{-4}{7}\right)
+    out: "-1"
+  fullform:
+    in: KroneckerSymbol[-4, 7]
+  wolfram:
+    in: KroneckerSymbol[-4, 7]
+a-0-1-for-a-pm-1:
+  epsil:
+    in: KroneckerSymbol(-1, 0)
+    out: "1"
+  tex:
+    in: \mathrm{KroneckerSymbol}(-1, 0)
+    out: "1"
+  traditional:
+    in: \left(\frac{-1}{0}\right)
+    out: "1"
+  fullform:
+    in: KroneckerSymbol[-1, 0]
+  wolfram:
+    in: KroneckerSymbol[-1, 0]

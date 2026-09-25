@@ -17,11 +17,7 @@ examples:
     expected: False
     caption: One too many edges to be a tree
   - id: a-disconnected-forest-is-not-a-tree
-    expr:
-      [
-        IsTreeGraph,
-        [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]],
-      ]
+    expr: [IsTreeGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]
     expected: False
     caption: Right edge count, but two components
 seeAlso:

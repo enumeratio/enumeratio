@@ -104,12 +104,7 @@ examples:
     category: Scope
     caption: Decides the sign of an exact numeric expression and gives $2-\sqrt{2}$
   - id: z-2-z-bar-z
-    expr:
-      [
-        Equal,
-        [Power, [Abs, [Complex, 3, 4]], 2],
-        [Multiply, [Complex, 3, 4], [Conjugate, [Complex, 3, 4]]],
-      ]
+    expr: [Equal, [Power, [Abs, [Complex, 3, 4]], 2], [Multiply, [Complex, 3, 4], [Conjugate, [Complex, 3, 4]]]]
     expected: True
     category: Properties
     caption: $|z|^2 = z\bar{z}$

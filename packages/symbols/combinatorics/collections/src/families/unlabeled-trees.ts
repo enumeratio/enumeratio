@@ -119,8 +119,7 @@ function childrenRank(remaining: number, cap: number, kids: number[][]): number 
     const restCap = w - 1;
     let k = 0;
     while (idx + k < kids.length && kids[idx + k].length === w) k++;
-    for (let kk = 0; kk < k; kk++)
-      base += multichooseCount(Tw, kk) * childrenCount(rem - kk * w, restCap);
+    for (let kk = 0; kk < k; kk++) base += multichooseCount(Tw, kk) * childrenCount(rem - kk * w, restCap);
     if (k > 0) {
       const waysRest = childrenCount(rem - k * w, restCap);
       const types = kids.slice(idx, idx + k).map((seq) => RootedTreeRank(seq));

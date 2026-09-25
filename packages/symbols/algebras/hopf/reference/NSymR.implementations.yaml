@@ -1,0 +1,45 @@
+r-1-1-h-1-1-h-2:
+  epsil:
+    in: InCompleteBasis(NSymR([1, 1]))
+    out: -NSymH([2]) + NSymH([1, 1])
+  tex:
+    in: \mathrm{InCompleteBasis}(\mathrm{NSymR}(\bigl\lbrack1, 1\bigr\rbrack))
+    out: \mathrm{NSymH}(\bigl\lbrack1, 1\bigr\rbrack)-\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack)
+  traditional:
+    in: \mathrm{InCompleteBasis}(R_{(1,1)})
+    out: H_{(1,1)}-H_{(2)}
+  fullform:
+    in: InCompleteBasis[NSymR[List[1, 1]]]
+the-fundamental-basis-sums-over-refinements:
+  epsil:
+    in: InMonomialBasis(QSymF([2]))
+    out: QSymM([2]) + QSymM([1, 1])
+  tex:
+    in: \mathrm{InMonomialBasis}(\mathrm{QSymF}(\bigl\lbrack2\bigr\rbrack))
+    out: \mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack1, 1\bigr\rbrack)
+  traditional:
+    in: \mathrm{InMonomialBasis}(F_{(2)})
+    out: M_{(2)}+M_{(1,1)}
+  fullform:
+    in: InMonomialBasis[QSymF[List[2]]]
+one-signed-term:
+  epsil:
+    in: Antipode(NSymR([3]))
+    out: -NSymR([1, 1, 1])
+  tex:
+    in: \mathrm{Antipode}(\mathrm{NSymR}(\bigl\lbrack3\bigr\rbrack))
+    out: -\mathrm{NSymR}(\bigl\lbrack1, 1, 1\bigr\rbrack)
+  traditional:
+    in: S(R_{(3)})
+    out: -R_{(1,1,1)}
+  fullform:
+    in: Antipode[NSymR[List[3]]]
+self-conjugate-the-convention-is-settled-by-the:
+  epsil:
+    in: ConjugateComposition([2, 1])
+    out: "[2, 1]"
+  tex:
+    in: \mathrm{ConjugateComposition}(\bigl\lbrack2, 1\bigr\rbrack)
+    out: \bigl\lbrack2, 1\bigr\rbrack
+  fullform:
+    in: ConjugateComposition[List[2, 1]]

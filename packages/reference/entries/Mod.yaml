@@ -107,12 +107,7 @@ examples:
     category: Scope
     caption: "a Gaussian modulus: $7 + 5i = (2 + i)(4 + i) - i$"
   - id: exact-in-both-parts-past-2-53
-    expr:
-      [
-        Mod,
-        [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }],
-        [Complex, 2, 1],
-      ]
+    expr: [Mod, [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }], [Complex, 2, 1]]
     expected: 0
     category: Scope
     caption: exact in both parts past $2^{53}$
@@ -121,11 +116,7 @@ examples:
       [
         Equal,
         [Mod, [Complex, 7, 5], [Complex, 2, 1]],
-        [
-          Subtract,
-          [Complex, 7, 5],
-          [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]],
-        ],
+        [Subtract, [Complex, 7, 5], [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]]],
       ]
     expected: True
     category: Properties
@@ -135,5 +126,17 @@ examples:
     expected: [List, 1, -1]
     category: Possible issues
     caption: rounding ties to even means $1$ and $-1$ both appear as remainders mod 2
+  - id: eulers-number-mod-2-reduces-exactly
+    expr: [Mod, ExponentialE, 2]
+    expected: [Add, -2, ExponentialE]
+    category: Scope
+    caption: $e \approx 2.718$, one period past 2
+    role: test
+  - id: a-free-symbol-is-untouched
+    expr: [Mod, x, 2]
+    expected: [Mod, x, 2]
+    category: Possible issues
+    caption: A free (non-numeric) symbol is untouched — the wrapper declines
+    role: test
 seeAlso:
   - PowerMod

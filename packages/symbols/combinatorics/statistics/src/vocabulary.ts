@@ -68,14 +68,11 @@ export const atLeast = (n: number, body: MathJSON, otherwise: MathJSON = 0): Mat
   body,
 ];
 /** Guard for a definition that needs at least one position. */
-export const nonEmpty = (body: MathJSON, otherwise: MathJSON = 0): MathJSON =>
-  atLeast(1, body, otherwise);
+export const nonEmpty = (body: MathJSON, otherwise: MathJSON = 0): MathJSON => atLeast(1, body, otherwise);
 /** Guard for a definition that reads adjacent pairs. */
-export const hasPair = (body: MathJSON, otherwise: MathJSON = 0): MathJSON =>
-  atLeast(2, body, otherwise);
+export const hasPair = (body: MathJSON, otherwise: MathJSON = 0): MathJSON => atLeast(2, body, otherwise);
 /** Guard for a definition that reads a position and both its neighbours. */
-export const hasTriple = (body: MathJSON, otherwise: MathJSON = 0): MathJSON =>
-  atLeast(3, body, otherwise);
+export const hasTriple = (body: MathJSON, otherwise: MathJSON = 0): MathJSON => atLeast(3, body, otherwise);
 
 // Comparisons, named for what they mean at a position i of a sequence.
 export const here = at("i");
@@ -97,8 +94,7 @@ export const atMostValue = (a: MathJSON, b: MathJSON): MathJSON => ["LessEqual",
 
 /** The values at positions `from .. to`, as a list. `Drop`/`Most` do not evaluate on a
  *  plain List in 0.128, so slices are built by mapping over a range of indices. */
-export const slice = (from: MathJSON, to: MathJSON): MathJSON =>
-  forEach(["Range", from, to], at("j"), "j");
+export const slice = (from: MathJSON, to: MathJSON): MathJSON => forEach(["Range", from, to], at("j"), "j");
 /** The values from position `i` to the end. */
 export const fromHere: MathJSON = slice("i", length());
 /** The values up to and including position `i`. */
@@ -115,13 +111,12 @@ export const distance = (a: MathJSON, b: MathJSON): MathJSON => ["Abs", subtract
  * an earlier version of this package declared such statistics irreducible on the grounds
  * that compute-engine had no fold; it has one, and the claim was simply wrong.
  */
-export const fold = (
-  over: MathJSON,
-  initial: MathJSON,
-  step: MathJSON,
-  accumulator = "a",
-  element = "b",
-): MathJSON => ["Fold", ["Function", step, accumulator, element], initial, over];
+export const fold = (over: MathJSON, initial: MathJSON, step: MathJSON, accumulator = "a", element = "b"): MathJSON => [
+  "Fold",
+  ["Function", step, accumulator, element],
+  initial,
+  over,
+];
 /** Field `n` of a list accumulator. */
 export const carried = (n: number): MathJSON => ["At", "a", n];
 /** The element the fold is currently visiting. */

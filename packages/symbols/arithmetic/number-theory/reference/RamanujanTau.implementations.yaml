@@ -1,0 +1,55 @@
+ramanujantau-2:
+  epsil:
+    in: RamanujanTau(2)
+    out: "-24"
+  tex:
+    in: \mathrm{RamanujanTau}(2)
+    out: "-24"
+  fullform:
+    in: RamanujanTau[2]
+  wolfram:
+    in: RamanujanTau[2]
+ramanujantau-5:
+  epsil:
+    in: RamanujanTau(5)
+    out: 4_830
+  tex:
+    in: \mathrm{RamanujanTau}(5)
+    out: 4\,830
+  fullform:
+    in: RamanujanTau[5]
+  wolfram:
+    in: RamanujanTau[5]
+listable:
+  epsil:
+    in: RamanujanTau([1, 2, 3, 4, 5, 6])
+    out: "[1, -24, 252, -1_472, 4_830, -6_048]"
+  tex:
+    in: \mathrm{RamanujanTau}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)
+    out: \bigl\lbrack1, -24, 252, -1\,472, 4\,830, -6\,048\bigr\rbrack
+  fullform:
+    in: RamanujanTau[List[1, 2, 3, 4, 5, 6]]
+  wolfram:
+    in: RamanujanTau[List[1, 2, 3, 4, 5, 6]]
+ramanujantau-12:
+  epsil:
+    in: RamanujanTau(12)
+    out: -370_944
+  tex:
+    in: \mathrm{RamanujanTau}(12)
+    out: -370\,944
+  fullform:
+    in: RamanujanTau[12]
+  wolfram:
+    in: RamanujanTau[12]
+multiplicative-tau-6-tau-2-tau-3:
+  epsil:
+    in: RamanujanTau(2) * RamanujanTau(3)
+    out: -6_048
+  tex:
+    in: \mathrm{RamanujanTau}(2)\mathrm{RamanujanTau}(3)
+    out: -6\,048
+  fullform:
+    in: Times[RamanujanTau[2], RamanujanTau[3]]
+  wolfram:
+    in: Times[RamanujanTau[2], RamanujanTau[3]]

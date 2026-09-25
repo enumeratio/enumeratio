@@ -24,12 +24,7 @@ examples:
   - id: a-principal-character-drops-the-euler-factors-at
     expr: [DirichletL, 12, 1, s]
     expected:
-      [
-        Multiply,
-        [Add, [Negate, [Power, 2, [Negate, s]]], 1],
-        [Add, [Negate, [Power, 3, [Negate, s]]], 1],
-        [Zeta, s],
-      ]
+      [Multiply, [Add, [Negate, [Power, 2, [Negate, s]]], 1], [Add, [Negate, [Power, 3, [Negate, s]]], 1], [Zeta, s]]
     category: Properties
     caption: A principal character drops the Euler factors at $2$ and $3$
   - id: and-keeps-zeta-s-pole-a-non-principal-l-is
@@ -37,8 +32,6 @@ examples:
     expected: ComplexInfinity
     category: Properties
     caption: …and keeps $\zeta$'s pole; a non-principal $L$ is entire
-    divergence:
-      wolfram: We answer the pole as ComplexInfinity; Wolfram declines and leaves the call unevaluated instead.
   - id: l-0-chi-frac-35-frac-15-i-exact-from-the
     expr: [DirichletL, 5, 2, 0]
     expected: [Complex, [Rational, 3, 5], [Rational, 1, 5]]
@@ -111,11 +104,7 @@ implementations:
     expr:
       [
         Multiply,
-        [
-          Sum,
-          [Multiply, [DirichletCharacter, _k, _j, r], [HurwitzZeta, _s, [Divide, r, _k]]],
-          [Triple, r, 1, _k],
-        ],
+        [Sum, [Multiply, [DirichletCharacter, _k, _j, r], [HurwitzZeta, _s, [Divide, r, _k]]], [Triple, r, 1, _k]],
         [Power, _k, [Negate, _s]],
       ]
     note: The Hurwitz decomposition — the definition the kernel evaluates, away from s = 1.

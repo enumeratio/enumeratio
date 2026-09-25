@@ -36,8 +36,7 @@ type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
 const registries = new WeakMap<ComputeEngine, AlgebraProvider[]>();
 
 /** The providers registered on an engine, in registration order. */
-export const providersOf = (ce: ComputeEngine): readonly AlgebraProvider[] =>
-  registries.get(ce) ?? [];
+export const providersOf = (ce: ComputeEngine): readonly AlgebraProvider[] => registries.get(ce) ?? [];
 
 /**
  * Register a provider and, on first call for this engine, declare the shared heads.
@@ -69,11 +68,7 @@ function ask<T extends keyof AlgebraProvider>(
 }
 
 function declareSharedHeads(ce: ComputeEngine): void {
-  const accessor = (
-    head: string,
-    method: "basis" | "dimension" | "signature",
-    signature: string,
-  ): void => {
+  const accessor = (head: string, method: "basis" | "dimension" | "signature", signature: string): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {

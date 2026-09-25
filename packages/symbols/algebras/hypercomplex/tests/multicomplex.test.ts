@@ -92,11 +92,7 @@ test("conjugation flips every unit: the odd-grade blades negate", () => {
 test("z·conj(z) is NOT a scalar for n ≥ 2 — why the norm is a determinant", () => {
   // (a+b i_1+c i_2+d i_1i_2)·conj = (a²+b²+c²+d²) + 2(ad−bc)·i_1i_2. At (1,2,3,4):
   // 1+4+9+16 = 30 and 2(1·4 − 2·3) = −4.
-  sameLatex("(1+2i_1+3i_2+4i_1i_2)\\overline{(1+2i_1+3i_2+4i_1i_2)}", [
-    "Subtract",
-    30,
-    ["Multiply", 4, "i_1", "i_2"],
-  ]);
+  sameLatex("(1+2i_1+3i_2+4i_1i_2)\\overline{(1+2i_1+3i_2+4i_1i_2)}", ["Subtract", 30, ["Multiply", 4, "i_1", "i_2"]]);
 });
 
 // ── the algebra norm ────────────────────────────────────────────────────────────
@@ -132,11 +128,7 @@ test("the norm depends on the ambient algebra: N_{n+1} = N_n²", () => {
 // ── units, zero divisors, idempotents ───────────────────────────────────────────
 
 test("inverse round-trips, exactly", () => {
-  sameLatex("\\frac{1}{1+i_1}", [
-    "Subtract",
-    ["Rational", 1, 2],
-    ["Multiply", ["Rational", 1, 2], "i_1"],
-  ]);
+  sameLatex("\\frac{1}{1+i_1}", ["Subtract", ["Rational", 1, 2], ["Multiply", ["Rational", 1, 2], "i_1"]]);
   sameLatex("(1+i_1)(1+i_1)^{-1}", 1);
   sameLatex("(1+2i_1+3i_1i_2)(1+2i_1+3i_1i_2)^{-1}", 1);
   sameLatex("i_1^{-1}", ["Negate", "i_1"]); // 1/i = −i
@@ -150,9 +142,5 @@ test("1 + i_1i_2 is a zero divisor: norm 0, no inverse, and it annihilates", () 
 });
 
 test("(1 + i_1i_2)/2 is idempotent — the primitive idempotent of ℂ_2", () => {
-  sameLatex("\\left(\\frac{1+i_1i_2}{2}\\right)^2", [
-    "Divide",
-    ["Add", 1, ["Multiply", "i_1", "i_2"]],
-    2,
-  ]);
+  sameLatex("\\left(\\frac{1+i_1i_2}{2}\\right)^2", ["Divide", ["Add", 1, ["Multiply", "i_1", "i_2"]], 2]);
 });

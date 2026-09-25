@@ -172,9 +172,7 @@ const frontierEntryFor = (frontier: (typeof FRONTIER)[number]): string => {
           {
             expr: [
               frontier.head,
-              CARRIER_TYPES[frontier.on] === undefined
-                ? listOf(sample.list)
-                : [frontier.on, listOf(sample.list)],
+              CARRIER_TYPES[frontier.on] === undefined ? listOf(sample.list) : [frontier.on, listOf(sample.list)],
             ],
             // Aspirational: the head is NOT declared, so this is a claim about what it would
             // answer, and the test asserts the gap is still open.

@@ -37,10 +37,9 @@ test("both products are associative", () => {
     for (const a of sample) {
       for (const b of sample) {
         for (const c of sample.slice(0, 4)) {
-          expect(
-            show(algebra.product(algebra.product(a, b), c)),
-            `${algebra.name} associativity`,
-          ).toEqual(show(algebra.product(a, algebra.product(b, c))));
+          expect(show(algebra.product(algebra.product(a, b), c)), `${algebra.name} associativity`).toEqual(
+            show(algebra.product(a, algebra.product(b, c))),
+          );
         }
       }
     }
@@ -91,10 +90,9 @@ test("the bialgebra axiom: Δ(xy) = Δ(x)·Δ(y)", () => {
     const sample = [...smallBasis(1), ...smallBasis(2), ...smallBasis(3)];
     for (const a of sample) {
       for (const b of sample) {
-        expect(
-          showTensor(algebra.coproduct(algebra.product(a, b))),
-          `${algebra.name} compatibility`,
-        ).toEqual(showTensor(algebra.tensorProduct(algebra.coproduct(a), algebra.coproduct(b))));
+        expect(showTensor(algebra.coproduct(algebra.product(a, b))), `${algebra.name} compatibility`).toEqual(
+          showTensor(algebra.tensorProduct(algebra.coproduct(a), algebra.coproduct(b))),
+        );
       }
     }
   }
@@ -171,9 +169,7 @@ test("QSym is commutative and NSym is not", () => {
       expect(show(qsym.product(a, b))).toEqual(show(qsym.product(b, a)));
     }
   }
-  expect(show(nsym.product(basis([1]), basis([2])))).not.toEqual(
-    show(nsym.product(basis([2]), basis([1]))),
-  );
+  expect(show(nsym.product(basis([1]), basis([2])))).not.toEqual(show(nsym.product(basis([2]), basis([1]))));
 });
 
 test("the antipode on low degrees", () => {

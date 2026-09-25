@@ -1,0 +1,9 @@
+count-phylogenetictrees-5-105-2-cdot-5-3-a001147:
+  epsil:
+    in: Count(PhylogeneticTrees(5))
+    out: "105"
+  tex:
+    in: \mathrm{Count}(\mathrm{PhylogeneticTrees}(5))
+    out: "105"
+  fullform:
+    in: Count[PhylogeneticTrees[5]]

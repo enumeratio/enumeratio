@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { isCrosswalkSystem, SOURCES } from "@enumeratio/reference";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { fragment, setFragment } from "../fragment.ts";
 
 // Another system's run of one example: the source it was given and what came back. Same
-// vocabulary as the oracle sidecars (`OtherSystemRun`, packages/entry/src/types.ts).
+// vocabulary as the implementations records (`OtherSystemRun`, packages/entry/src/types.ts).
 export interface Alternative {
   readonly input: string;
   readonly output: string;
@@ -16,12 +17,13 @@ export interface Alternative {
 const props = defineProps<{
   alternatives: Record<string, Alternative>;
   notes?: Record<string, string>;
+  /** The example's anchor: `#<anchor>=<system>` opens that system's tab. */
+  anchor?: string;
 }>();
 
 // Tabs are narrow: the short name where the crosswalk's label is long.
 const SHORT: Record<string, string> = { wolfram: "Wolfram", sage: "Sage" };
-const label = (system: string): string =>
-  SHORT[system] ?? (isCrosswalkSystem(system) ? SOURCES[system].label : system);
+const label = (system: string): string => SHORT[system] ?? (isCrosswalkSystem(system) ? SOURCES[system].label : system);
 const MARK: Record<Alternative["verdict"], string> = {
   agree: "",
   disagree: "≠",
@@ -37,12 +39,20 @@ const TITLE: Record<Alternative["verdict"], string> = {
 
 const systems = computed(() => Object.keys(props.alternatives));
 const active = ref<string | undefined>();
+const named = (): boolean => props.anchor !== undefined && fragment.value.target === props.anchor;
+watch(
+  fragment,
+  (f) => {
+    if (named() && f.sub !== undefined && f.sub in props.alternatives) active.value = f.sub;
+  },
+  { immediate: true },
+);
 const toggle = (system: string): void => {
   active.value = active.value === system ? undefined : system;
+  // Only an example the URL already names records its tab there.
+  if (named()) setFragment(props.anchor!, active.value);
 };
-const shown = computed(() =>
-  active.value === undefined ? undefined : props.alternatives[active.value],
-);
+const shown = computed(() => (active.value === undefined ? undefined : props.alternatives[active.value]));
 </script>
 
 <template>
@@ -74,8 +84,7 @@ const shown = computed(() =>
       <p v-if="active && notes?.[active]" class="alt-note">{{ notes[active] }}</p>
       <p v-if="shown.kind === 'ours' && shown.issue" class="alt-note">
         A gap on our side, tracked in
-        <a :href="`https://github.com/enumeratio/enumeratio/issues/${shown.issue}`"
-          >#{{ shown.issue }}</a
+        <a :href="`https://github.com/enumeratio/enumeratio/issues/${shown.issue}`">#{{ shown.issue }}</a
         >.
       </p>
     </div>

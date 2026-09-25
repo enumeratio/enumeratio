@@ -1,0 +1,18 @@
+only-1-2:
+  epsil:
+    in: Ascents([3, 1, 2])
+    out: "1"
+  tex:
+    in: \mathrm{Ascents}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: Ascents[List[3, 1, 2]]
+the-identity-ascends-throughout:
+  epsil:
+    in: Ascents([1, 2, 3])
+    out: "2"
+  tex:
+    in: \mathrm{Ascents}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "2"
+  fullform:
+    in: Ascents[List[1, 2, 3]]

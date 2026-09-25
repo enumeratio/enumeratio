@@ -1,0 +1,33 @@
+rescale-list:
+  epsil:
+    in: Rescale([1, 2, 3, 4])
+    out: "[0, 1 / 3, 2 / 3, 1]"
+  tex:
+    in: \mathrm{Rescale}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack0, \frac{1}{3}, \frac{2}{3}, 1\bigr\rbrack
+  fullform:
+    in: Rescale[List[1, 2, 3, 4]]
+  wolfram:
+    in: Rescale[List[1, 2, 3, 4]]
+rescale-with-range:
+  epsil:
+    in: Rescale(5, [0, 10])
+    out: 1 / 2
+  tex:
+    in: \mathrm{Rescale}(5, \bigl\lbrack0, 10\bigr\rbrack)
+    out: \frac{1}{2}
+  fullform:
+    in: Rescale[5, List[0, 10]]
+  wolfram:
+    in: Rescale[5, List[0, 10]]
+rescale-with-target:
+  epsil:
+    in: Rescale(5, [0, 10], [100, 200])
+    out: "150"
+  tex:
+    in: \mathrm{Rescale}(5, \bigl\lbrack0, 10\bigr\rbrack, \bigl\lbrack100, 200\bigr\rbrack)
+    out: "150"
+  fullform:
+    in: Rescale[5, List[0, 10], List[100, 200]]
+  wolfram:
+    in: Rescale[5, List[0, 10], List[100, 200]]

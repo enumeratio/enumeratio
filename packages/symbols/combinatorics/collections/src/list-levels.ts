@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  integerAt,
-  operandsOf,
-  symbolNameOf,
-  widenSignature,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
 
 // Level-aware and structural list operations compute-engine doesn't answer yet: Partition's
 // multi-dimensional block form and its wraparound/padded overhangs, Flatten's infinite
@@ -46,11 +40,7 @@ const elementsUpToLevel = (expr: BoxedExpression, maxLevel: number): readonly Bo
 
 /** How many of `elements` match `test` — a plain value (exact equality, [[Count]]'s default)
  *  or a `Function` predicate, same two forms `Count` already accepts at the top level. */
-const countMatches = (
-  ce: ComputeEngine,
-  elements: readonly BoxedExpression[],
-  test: BoxedExpression,
-): number => {
+const countMatches = (ce: ComputeEngine, elements: readonly BoxedExpression[], test: BoxedExpression): number => {
   if (test.operator === "Function") {
     return elements.filter((e) => symbolNameOf(applyFn(ce, test, e)) === "True").length;
   }
@@ -120,20 +110,14 @@ const permutationOf = (levels: BoxedExpression, rank: number): number[] | undefi
   const specs = operandsOf(levels);
   if (specs.length !== rank) return undefined;
   const perm = specs.map((spec) =>
-    spec.operator === "List" && operandsOf(spec).length === 1
-      ? integerAt(operandsOf(spec)[0])
-      : undefined,
+    spec.operator === "List" && operandsOf(spec).length === 1 ? integerAt(operandsOf(spec)[0]) : undefined,
   );
   if (perm.some((p) => p === undefined || p < 1 || p > rank)) return undefined;
   const asNumbers = perm as number[];
   return new Set(asNumbers).size === rank ? asNumbers : undefined;
 };
 
-const permuteDimensions = (
-  ce: ComputeEngine,
-  list: BoxedExpression,
-  perm: readonly number[],
-): BoxedExpression => {
+const permuteDimensions = (ce: ComputeEngine, list: BoxedExpression, perm: readonly number[]): BoxedExpression => {
   const dims = shapeOf(list);
   const outDims = perm.map((p) => dims[p - 1]);
   const build = (dimIndex: number, outIndex: readonly number[]): BoxedExpression => {
@@ -279,9 +263,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
       const sizes = operandsOf(ops[1]).map((op) => integerAt(op)!);
       const scalarOffset = integerAt(ops[2]);
       const offsets =
-        scalarOffset !== undefined
-          ? sizes.map(() => scalarOffset)
-          : operandsOf(ops[2]).map((op) => integerAt(op)!);
+        scalarOffset !== undefined ? sizes.map(() => scalarOffset) : operandsOf(ops[2]).map((op) => integerAt(op)!);
       return partitionBlocks(ce, ops[0], sizes, offsets);
     },
   );
@@ -359,10 +341,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
               };
             }
           ).operator
@@ -395,10 +374,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
               };
             }
           ).operator
@@ -433,10 +409,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
               };
             }
           ).operator

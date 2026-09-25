@@ -46,11 +46,7 @@ export const wrapperHead = (head: string): WrapperHead | undefined => BY_HEAD.ge
 export const formOfHead = (head: string): string | undefined => BY_HEAD.get(head)?.form;
 
 /** The spellings a head may be written in, most specific first. */
-const spellings = (head: string): string[] => [
-  `\\operatorname{${head}}`,
-  `\\mathrm{${head}}`,
-  head,
-];
+const spellings = (head: string): string[] => [`\\operatorname{${head}}`, `\\mathrm{${head}}`, head];
 
 /** A `$…$` island can only occur in notatio, so it settles which form a source is. */
 const ISLAND = /\$[^$]*\$/;

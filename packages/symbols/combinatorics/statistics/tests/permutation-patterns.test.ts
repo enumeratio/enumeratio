@@ -4,20 +4,11 @@
 // to parallelise across workers alongside the slow cycle-structure group.
 import { expect, test } from "vite-plus/test";
 import { PERMUTATION_STATISTICS } from "../src/permutation.ts";
-import {
-  ALL,
-  checkAgainstEngine,
-  denert,
-  EXPECTED,
-  evaluate,
-  pairs,
-  permutations,
-} from "./permutation-helpers.ts";
+import { ALL, checkAgainstEngine, denert, EXPECTED, evaluate, pairs, permutations } from "./permutation-helpers.ts";
 
 test("every definition has an independent reading to check against", () => {
   // A definition nobody checks is a second implementation waiting to rot.
-  for (const definition of PERMUTATION_STATISTICS)
-    expect(EXPECTED[definition.head], definition.head).toBeDefined();
+  for (const definition of PERMUTATION_STATISTICS) expect(EXPECTED[definition.head], definition.head).toBeDefined();
 });
 
 checkAgainstEngine([
@@ -40,8 +31,7 @@ function qFactorialCoefficients(n: number): number[] {
   for (let k = 1; k <= n; k++) {
     const block = Array.from({ length: k }, () => 1); // 1 + q + ... + q^(k-1)
     const next = Array.from({ length: coefficients.length + block.length - 1 }, () => 0);
-    for (const [i, c] of coefficients.entries())
-      for (const [j, b] of block.entries()) next[i + j] += c * b;
+    for (const [i, c] of coefficients.entries()) for (const [j, b] of block.entries()) next[i + j] += c * b;
     coefficients = next;
   }
   return coefficients;

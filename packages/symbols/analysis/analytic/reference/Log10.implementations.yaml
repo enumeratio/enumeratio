@@ -1,0 +1,215 @@
+log10-1-000:
+  epsil:
+    in: Log10(1_000)
+    out: "3"
+  tex:
+    in: \log_{10}(1\,000)
+    out: "3"
+  fullform:
+    in: Log10[1000]
+  wolfram:
+    in: Log10[1000]
+    out: "3"
+    tex:
+      in: \log _{10}(1000)
+      out: "3"
+log10-1:
+  epsil:
+    in: Log10(1)
+    out: "0"
+  tex:
+    in: \log_{10}(1)
+    out: "0"
+  fullform:
+    in: Log10[1]
+  wolfram:
+    in: Log10[1]
+    out: "0"
+    tex:
+      in: \log _{10}(1)
+      out: "0"
+log10-100-000:
+  epsil:
+    in: Log10(100_000)
+    out: "5"
+  tex:
+    in: \log_{10}(100\,000)
+    out: "5"
+  fullform:
+    in: Log10[100000]
+  wolfram:
+    in: Log10[100000]
+    out: "5"
+    tex:
+      in: \log _{10}(100000)
+      out: "5"
+same-as-compute-engine-s-default-base-log:
+  epsil:
+    in: Log10(1_000) == Log(1_000)
+    out: True
+  tex:
+    in: \log_{10}(1\,000)=\log_{10}(1\,000)
+    out: \top
+  traditional:
+    in: \log_{10}(1\,000)=\log_{10}(1\,000)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Log10[1000], Log[10, 1000]]
+    back: [Equal, [Log10, 1000], [Log, 1000, 10]]
+  wolfram:
+    in: (Log10[1000] == Log[10, 1000])
+    out: True
+    tex:
+      in: \log _{10}(1000)=\log _{10}(1000)
+      out: \text{True}
+a-float-argument-folds-even-for-a-fractional:
+  epsil:
+    in: Log10(0.001)
+    out: "-3"
+  tex:
+    in: \log_{10}(0.001)
+    out: "-3"
+  fullform:
+    in: Log10[0.001]
+  wolfram:
+    in: Log10[0.001]
+    out: -3.
+    tex:
+      in: \log _{10}(0.001)
+      out: -3.
+an-exact-negative-power-of-10-folds-too-log-10:
+  epsil:
+    in: Log10(1 / 100)
+    out: "-2"
+  tex:
+    in: \log_{10}(\frac{1}{100})
+    out: "-2"
+  fullform:
+    in: Log10[Rational[1, 100]]
+  wolfram:
+    in: Log10[Rational[1, 100]]
+    out: "-2"
+    tex:
+      in: \log _{10}\left(\frac{1}{100}\right)
+      out: "-2"
+log10-1-000-000:
+  epsil:
+    in: Log10(1_000_000)
+    out: "6"
+  tex:
+    in: \log_{10}(1\,000\,000)
+    out: "6"
+  fullform:
+    in: Log10[1000000]
+  wolfram:
+    in: Log10[1000000]
+n-for-a-decimal-value:
+  epsil:
+    in: N(Log10(2))
+    out: 0.301_029_995_663_981_195_214
+  tex:
+    in: N(\log_{10}(2))
+    out: 0.301\,029\,995\,663\,981\,195\,214
+  fullform:
+    in: N[Log10[2]]
+  wolfram:
+    in: N[Log10[2]]
+a-symbolic-argument-becomes-compute-engine-s:
+  epsil:
+    in: Log10(x)
+    out: Log(x)
+  tex:
+    in: \log_{10}(x)
+    out: \log_{10}(x)
+  fullform:
+    in: Log10[x]
+  wolfram:
+    in:
+    note: Wolfram rewrites Log10[x] to Log[x]/Log[10].
+log10-5p5:
+  epsil:
+    in: Log10(5.5)
+    out: 0.740_362_689_494_243_845_536
+  tex:
+    in: \log_{10}(5.5)
+    out: 0.740\,362\,689\,494\,243\,845\,536
+  fullform:
+    in: Log10[5.5]
+  wolfram:
+    in: Log10[5.5]
+threads-element-wise-over-a-list:
+  epsil:
+    in: Log10([1, 10, 100, 1_000])
+    out: "[0, 1, 2, 3]"
+  tex:
+    in: \log_{10}(\bigl\lbrack1, 10, 100, 1\,000\bigr\rbrack)
+    out: \bigl\lbrack0, 1, 2, 3\bigr\rbrack
+  fullform:
+    in: Log10[List[1, 10, 100, 1000]]
+  wolfram:
+    in: Log10[List[1, 10, 100, 1000]]
+element-wise-over-a-matrix-including-the-exact:
+  epsil:
+    in: Log10([[1, 100], [0, 1 / 100]])
+    out: "[[0, 2], [NegativeInfinity, -2]]"
+  tex:
+    in: \log_{10}(\bigl\lbrack\bigl\lbrack1, 100\bigr\rbrack, \bigl\lbrack0, \frac{1}{100}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack0, 2\bigr\rbrack, \bigl\lbrack-\infty, -2\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Log10[List[List[1, 100], List[0, Rational[1, 100]]]]
+  wolfram:
+    in: Log10[List[List[1, 100], List[0, Rational[1, 100]]]]
+as-with-ln-the-logarithm-of-complex-infinity-is:
+  epsil:
+    in: Log10(ComplexInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \log_{10}(\tilde\infty)
+    out: \infty
+  fullform:
+    in: Log10[ComplexInfinity]
+  wolfram:
+    in: Log10[ComplexInfinity]
+interval-arithmetic-log-10-frac-13-2-log-10-3:
+  epsil:
+    in: Log10(Interval(1 / 3, 2))
+    out: Interval(Log(1 / 3, 10), Log(2, 10))
+  tex:
+    in: \log_{10}(\mathrm{Interval}(\frac{1}{3}, 2))
+    out: \mathrm{Interval}(\log_{10}(\frac{1}{3}), \log_{10}(2))
+  fullform:
+    in: Log10[Interval[List[Rational[1, 3], 2]]]
+  wolfram:
+    in: Log10[Interval[List[Rational[1, 3], 2]]]
+    note: Wolfram writes the lower end as -Log[10, 3], the same value.
+uncertainty-propagation-log-10-frac-1-101-pm-0:
+  epsil:
+    in: Log10(Around(1 / 101, 0.01))
+    out: Around(-2.004_321_373_782_642_6, 0.438_637_426_722_284_34)
+  tex:
+    in: \log_{10}(\mathrm{Around}(\frac{1}{101}, 0.01))
+    out: \mathrm{Around}(-2.004\,321\,373\,782\,642\,6, 0.438\,637\,426\,722\,284\,34)
+  fullform:
+    in: Log10[Around[Rational[1, 101], 0.01]]
+  wolfram:
+    in: Log10[Around[Rational[1, 101], 0.01]]
+derivative-frac-1-x-ln-10:
+  epsil:
+    in: D(Log10(x), x)
+    out: 1 / (x * Ln(10))
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\log_{10}(x)
+    out: \frac{1}{x\ln(10)}
+  fullform:
+    in: D[Log10[x], x]
+to-30-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Log10(7), 30)
+    out: 0.845_098_040_014_256_830_712_216_258_593
+  tex:
+    in: N(\log_{10}(7), 30)
+    out: 0.845\,098\,040\,014\,256\,830\,712
+  fullform:
+    in: N[Log10[7], 30]
+  wolfram:
+    in: N[Log10[7], 30]

@@ -98,8 +98,6 @@ examples:
     expected: 3
     category: Scope
     caption: 'a rational base: $2 \cdot 3^{-1} = 2 \cdot 5 \equiv 3 \pmod 7$'
-    divergence:
-      wolfram: Wolfram's PowerMod takes integers (and Gaussian integers) only.
   - id: gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3
     expr: [PowerMod, [Complex, 2, 1], 2, 3]
     expected: [Complex, 0, 1]
@@ -115,8 +113,6 @@ examples:
     expected: [Complex, -2, -1]
     category: Scope
     caption: $11 - 7i$ is a unit mod $7 + 4i$, so it has negative powers
-    divergence:
-      wolfram: Wolfram asks for a unit modulo the norm 65 here, not modulo $7 + 4i$, and leaves this unevaluated.
   - id: euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime
     expr: [PowerMod, 7, [Totient, 19], 19]
     expected: 1
@@ -128,8 +124,7 @@ examples:
     category: Applications
     caption: $341 = 11 \cdot 31$ passes Fermat's test to base 2 — the least pseudoprime
   - id: diffie-hellman-both-parties-reach-the-shared-key
-    expr:
-      [Equal, [PowerMod, [PowerMod, 5, 6, 23], 15, 23], [PowerMod, [PowerMod, 5, 15, 23], 6, 23]]
+    expr: [Equal, [PowerMod, [PowerMod, 5, 6, 23], 15, 23], [PowerMod, [PowerMod, 5, 15, 23], 6, 23]]
     expected: True
     category: Applications
     caption: 'Diffie–Hellman: both parties reach the shared key $5^{6 \cdot 15} \bmod 23$'
@@ -138,6 +133,27 @@ examples:
     expected: [PowerMod, 2, [Rational, 1, 2], 5]
     category: Possible issues
     caption: 2 is not a square mod 5, so there is no root
+  - id: a-square-root-of-3-mod-2-is-1-trivially
+    expr: [PowerMod, 3, [Rational, 1, 2], 2]
+    expected: 1
+    role: test
+    category: Scope
+  - id: exponent-0-base-minus-4-modulus-minus-2
+    expr: [PowerMod, -4, 0, -2]
+    expected: -1
+    role: test
+    category: Scope
+    caption: $a^0 = 1$ regardless of $a$ or $m$'s sign
+  - id: exponent-0-base-5-modulus-minus-7
+    expr: [PowerMod, 5, 0, -7]
+    expected: -6
+    role: test
+    category: Scope
+  - id: exponent-0-with-a-positive-modulus
+    expr: [PowerMod, 2, 0, 14]
+    expected: 1
+    role: test
+    category: Scope
 seeAlso:
   - Mod
   - PowerModList

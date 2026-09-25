@@ -12,15 +12,12 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   type HeadImplementations,
+  type OtherSystemRun,
   parseYaml,
   type ReferenceEntry,
-  type OtherSystemRun,
+  type SystemImplementation,
 } from "@enumeratio/entry";
-import {
-  HEAD_IMPLEMENTATIONS_SCHEMA,
-  REFERENCE_ENTRY_SCHEMA,
-  validateSchema,
-} from "@enumeratio/entry/schema";
+import { HEAD_IMPLEMENTATIONS_SCHEMA, REFERENCE_ENTRY_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
 import { isCrosswalkSystem } from "./crosswalk/sources.ts";
 
 export interface LoadedHead {
@@ -107,16 +104,13 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
         issues.push({ file: entryPath, message: `failed to parse: ${(error as Error).message}` });
         continue;
       }
-      for (const message of validateSchema(REFERENCE_ENTRY_SCHEMA, entry))
-        issues.push({ file: entryPath, message });
+      for (const message of validateSchema(REFERENCE_ENTRY_SCHEMA, entry)) issues.push({ file: entryPath, message });
 
       const implementationsPath = join(referenceDir, `${head}${IMPLEMENTATIONS_SUFFIX}`);
       let implementations: HeadImplementations | undefined;
       if (existsSync(implementationsPath)) {
         try {
-          implementations = parseYaml(
-            readFileSync(implementationsPath, "utf8"),
-          ) as HeadImplementations;
+          implementations = parseYaml(readFileSync(implementationsPath, "utf8")) as HeadImplementations;
         } catch (error) {
           issues.push({
             file: implementationsPath,
@@ -157,16 +151,25 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
 /** The repo's `packages/`, which every caller but the loader's own tests reads. */
 export const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
 
-/** Where the oracle sidecars live until they become implementations records (§8 step 6). */
-const SIDECARS = fileURLToPath(new URL("./entries/", import.meta.url));
+/** Every system's kernel version, as the last scan of it recorded (scripts/oracle-scan.ts). */
+const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
 
-/** A sidecar: kernel versions, and every system's run of an example, by head then id. */
-export type Sidecar = {
-  readonly kernels?: Readonly<Record<string, string>>;
-  readonly examples?: Readonly<
-    Record<string, Readonly<Record<string, Readonly<Record<string, OtherSystemRun>>>>>
-  >;
-};
+/** Our own forms of an example (notatio/scripts/forms.ts): rows a record keeps beside the
+ * systems', with no kernel behind them. */
+const OWN_FORMS = new Set(["epsil", "tex", "traditional", "fullform", "notatio"]);
+
+/** A record row as the page reads it: a scanned system's run of one example. */
+const runOf = (row: SystemImplementation): OtherSystemRun => ({
+  input: row.in,
+  output: row.out!,
+  verdict: row.verdict ?? "agree",
+  ...(row.kind !== undefined ? { kind: row.kind } : {}),
+  ...(row.note !== undefined ? { note: row.note } : {}),
+  ...(row.tolerance !== undefined ? { tolerance: row.tolerance } : {}),
+  ...(row.issue !== undefined ? { issue: row.issue } : {}),
+  ...(row.shown !== undefined ? { shown: row.shown } : {}),
+  ...(row.tex !== undefined ? { tex: { input: row.tex.in, output: row.tex.out } } : {}),
+});
 
 export interface ReferenceData {
   /** One entry per head, `others` attached, sorted by domain then name. A head two packages
@@ -176,17 +179,16 @@ export interface ReferenceData {
   readonly packageOf: ReadonlyMap<string, string>;
   /** Every loaded head, duplicates included, with the package directory it came from. */
   readonly heads: readonly LoadedHead[];
-  /** Every system's kernel version, as the sidecars last recorded it. */
+  /** Every system's kernel version, as the last scan of it recorded. */
   readonly kernels: Readonly<Record<string, string>>;
-  /** The raw sidecars by stem, for the scan and the golden checks. */
-  readonly sidecars: Readonly<Record<string, Sidecar>>;
 }
 
 const cache = new Map<string, ReferenceData>();
 
 /**
- * The reference data every consumer reads: the YAML, validated (a problem throws), with
- * each example's oracle runs attached as `others`.
+ * The reference data every consumer reads: the YAML, validated (a problem throws). Each
+ * example carries its implementations record's rows as the page reads them: a scanned
+ * system's run as `others`, and Wolfram's note as `divergence`.
  */
 export function referenceData(
   packagesRoot: string = PACKAGES,
@@ -198,30 +200,30 @@ export function referenceData(
   if (issues.length > 0)
     throw new Error(`reference data: ${issues.map((i) => `\n  ${i.file}: ${i.message}`).join("")}`);
 
-  const sidecars: Record<string, Sidecar> = {};
-  const runs = new Map<
-    string,
-    Readonly<Record<string, Readonly<Record<string, OtherSystemRun>>>>
-  >();
-  const kernels: Record<string, string> = {};
-  if (packagesRoot === PACKAGES && existsSync(SIDECARS))
-    for (const file of readdirSync(SIDECARS)
-      .filter((f) => f.endsWith(".oracle.json"))
-      .sort()) {
-      const sidecar = JSON.parse(readFileSync(join(SIDECARS, file), "utf8")) as Sidecar;
-      sidecars[file.slice(0, -".oracle.json".length)] = sidecar;
-      Object.assign(kernels, sidecar.kernels);
-      for (const [head, rows] of Object.entries(sidecar.examples ?? {})) runs.set(head, rows);
-    }
+  const kernels = (
+    packagesRoot === PACKAGES && existsSync(KERNELS) ? JSON.parse(readFileSync(KERNELS, "utf8")) : {}
+  ) as Record<string, string>;
 
-  const withOthers = (entry: ReferenceEntry): ReferenceEntry => {
-    const rows = runs.get(entry.name);
-    if (rows === undefined) return entry;
+  const withRecord = (h: LoadedHead): ReferenceEntry => {
+    const record = h.implementations;
+    if (record === undefined) return h.entry;
     return {
-      ...entry,
-      examples: entry.examples.map((example) => {
-        const others = rows[example.id];
-        return others === undefined ? example : { ...example, others };
+      ...h.entry,
+      examples: h.entry.examples.map((example) => {
+        const rows = record[example.id];
+        if (rows === undefined) return example;
+        const scanned = Object.entries(rows).filter(([key, row]) => !OWN_FORMS.has(key) && row.out !== undefined);
+        // A chip is Wolfram's: the one system with authored "differs from" prose. Other
+        // systems' notes explain their rows (a transpiler shape, a kernel's convention), and so
+        // does a note on a row where Wolfram errored.
+        const noted = Object.entries(rows).filter(
+          ([system, row]) => system === "wolfram" && row.note && row.verdict !== "error",
+        );
+        return {
+          ...example,
+          ...(scanned.length ? { others: Object.fromEntries(scanned.map(([s, row]) => [s, runOf(row)])) } : {}),
+          ...(noted.length ? { divergence: Object.fromEntries(noted.map(([s, row]) => [s, row.note!])) } : {}),
+        };
       }),
     };
   };
@@ -231,11 +233,11 @@ export function referenceData(
   for (const h of [...heads].sort((a, b) => rank(a).localeCompare(rank(b))))
     if (!chosen.has(h.head)) chosen.set(h.head, h);
   const entries = [...chosen.values()]
-    .map((h) => withOthers(h.entry))
+    .map(withRecord)
     .sort((a, b) => a.domain.localeCompare(b.domain) || a.name.localeCompare(b.name));
 
   const packageOf = new Map([...chosen].map(([head, h]) => [head, h.package]));
-  const data = { entries, packageOf, heads, kernels, sidecars };
+  const data = { entries, packageOf, heads, kernels };
   cache.set(packagesRoot, data);
   return data;
 }
@@ -245,8 +247,7 @@ export function referenceData(
 export function oracleAgreementsOf(
   data: ReferenceData,
 ): Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> {
-  const out: Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> =
-    {};
+  const out: Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> = {};
   for (const entry of [...data.entries].sort((a, b) => a.name.localeCompare(b.name))) {
     const tally = new Map<string, { agree: number; disagree: number }>();
     for (const example of entry.examples)
@@ -257,7 +258,9 @@ export function oracleAgreementsOf(
         if (run.verdict === "disagree") row.disagree += 1;
         tally.set(system, row);
       }
+    // By system name, so the order rows sit in a record doesn't matter.
     const rows = [...tally]
+      .sort(([a], [b]) => a.localeCompare(b))
       .filter(([system, row]) => (row.agree || row.disagree) && data.kernels[system] !== undefined)
       .map(([system, row]) => ({ system, kernel: data.kernels[system]!, ...row }));
     if (rows.length > 0) out[entry.name] = rows;
@@ -284,35 +287,6 @@ export function referenceEntries(data: ReferenceData = referenceData()): readonl
 }
 
 /** One package's own entries (by directory name), as that package's tests run them. */
-export function packageEntries(
-  pkg: string,
-  data: ReferenceData = referenceData(),
-): readonly ReferenceEntry[] {
+export function packageEntries(pkg: string, data: ReferenceData = referenceData()): readonly ReferenceEntry[] {
   return data.heads.filter((h) => h.package === pkg).map((h) => h.entry);
-}
-
-/** Which sidecar (`src/entries/<stem>.oracle.json`) holds each head's oracle rows: the domain
- * files the entries came from before the flip. Goes away with the sidecars (§8 step 6). */
-const STEMS = JSON.parse(
-  readFileSync(new URL("./entries/stems.json", import.meta.url), "utf8"),
-) as Readonly<Record<string, string>>;
-
-/** The sidecar a head without one gets: collections' own heads, and any new head. */
-export const UNFILED = "unfiled";
-
-/** The reference engine's entries, grouped by the sidecar that holds their oracle rows. */
-export function entryFiles(
-  data: ReferenceData = referenceData(),
-): { stem: string; entries: ReferenceEntry[] }[] {
-  const byStem = new Map<string, ReferenceEntry[]>();
-  const held = new Map<string, string>();
-  for (const [stem, sidecar] of Object.entries(data.sidecars))
-    for (const head of Object.keys(sidecar.examples ?? {})) held.set(head, stem);
-  for (const entry of referenceEntries(data)) {
-    const stem = STEMS[entry.name] ?? held.get(entry.name) ?? UNFILED;
-    byStem.set(stem, [...(byStem.get(stem) ?? []), entry]);
-  }
-  return [...byStem]
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([stem, entries]) => ({ stem, entries }));
 }

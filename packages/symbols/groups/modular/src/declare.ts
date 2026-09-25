@@ -46,13 +46,7 @@ import {
   reducedForms,
   rho,
 } from "./forms.ts";
-import {
-  dedekindSum,
-  linkingWithTrefoil,
-  rademacherPhi,
-  rademacherSymbol,
-  wordSymbol,
-} from "./rademacher.ts";
+import { dedekindSum, linkingWithTrefoil, rademacherPhi, rademacherSymbol, wordSymbol } from "./rademacher.ts";
 
 // Wiring the modular group to compute-engine.
 //
@@ -110,17 +104,12 @@ export function declareModular(ce: ComputeEngine): void {
       "ModularMatrix",
       m.map((x) => ce.number(x)),
     );
-  const rationalExpression = ([n, d]: readonly [number, number]): BoxedExpression =>
-    ce.box(["Rational", n, d]);
+  const rationalExpression = ([n, d]: readonly [number, number]): BoxedExpression => ce.box(["Rational", n, d]);
 
   ce.declare("ModularMatrix", { signature: "(any, any?, any?, any?) -> value" });
 
   /** A head taking a matrix (or word) and returning a value. */
-  const aboutMatrix = (
-    head: string,
-    signature: string,
-    answer: (m: Matrix) => BoxedExpression | undefined,
-  ): void => {
+  const aboutMatrix = (head: string, signature: string, answer: (m: Matrix) => BoxedExpression | undefined): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -131,11 +120,7 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   /** A head taking an LR word. */
-  const aboutWord = (
-    head: string,
-    signature: string,
-    answer: (word: string) => BoxedExpression | undefined,
-  ): void => {
+  const aboutWord = (head: string, signature: string, answer: (word: string) => BoxedExpression | undefined): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -156,9 +141,7 @@ export function declareModular(ce: ComputeEngine): void {
 
   const matrixType = ce.type("matrix");
 
-  widenSignature(ce, "Dot", "(value, value) -> value", (op) =>
-    op.type.matches(ce.type("matrix | tuple | vector")),
-  );
+  widenSignature(ce, "Dot", "(value, value) -> value", (op) => op.type.matches(ce.type("matrix | tuple | vector")));
   wrapOperator(
     ce,
     ["Dot", 1, 1],
@@ -179,10 +162,7 @@ export function declareModular(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["MatrixPower", 1, 1],
-    (ops) =>
-      isModularOperand(ops[0]!) &&
-      matrixOf(ops[0]) !== undefined &&
-      integerAt(ops[1]) !== undefined,
+    (ops) => isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined && integerAt(ops[1]) !== undefined,
     () => (ops) => {
       const m = matrixOf(ops[0])!;
       const k = integerAt(ops[1])!;
@@ -333,8 +313,7 @@ export function declareModular(ce: ComputeEngine): void {
       const varName = (varExpr as { symbol?: unknown } | undefined)?.symbol;
       const imin = integerAt(iminExpr);
       if (typeof varName !== "string" || imin === undefined) return undefined;
-      const infinite =
-        (imaxExpr as { symbol?: unknown } | undefined)?.symbol === "PositiveInfinity";
+      const infinite = (imaxExpr as { symbol?: unknown } | undefined)?.symbol === "PositiveInfinity";
       const imax = infinite ? undefined : integerAt(imaxExpr);
 
       const dependsOnVar = (expr: BoxedExpression): boolean =>
@@ -347,11 +326,7 @@ export function declareModular(ce: ComputeEngine): void {
         const f = fExpr.evaluate();
         const g = gExpr.evaluate();
         return ce
-          .box([
-            "Divide",
-            ["Add", ["Negate", g], ["Sqrt", ["Add", ["Square", g], ["Multiply", 4, f]]]],
-            2,
-          ])
+          .box(["Divide", ["Add", ["Negate", g], ["Sqrt", ["Add", ["Square", g], ["Multiply", 4, f]]]], 2])
           .evaluate();
       }
 
@@ -384,9 +359,7 @@ export function declareModular(ce: ComputeEngine): void {
   /** A folded `rational · √radical`, real and genuinely irrational (`radical` not 1). */
   const isIrrationalSurd = (expr: BoxedExpression): boolean => {
     const r = radicalOf(expr);
-    return (
-      r !== undefined && r.im === 0 && r.imRadical === 1 && r.radical > 1 && r.rational[0] !== 0
-    );
+    return r !== undefined && r.im === 0 && r.imRadical === 1 && r.radical > 1 && r.rational[0] !== 0;
   };
   /**
    * Whether `expr` is a quadratic irrational: an irrational root of a quadratic with
@@ -403,19 +376,13 @@ export function declareModular(ce: ComputeEngine): void {
     if (expr.operator === "Divide") {
       const [num, den] = operandsOf(expr);
       const denRational = bigRationalAt(den);
-      return denRational !== undefined && denRational[0] !== 0n && num !== undefined
-        ? quadraticIrrational(num)
-        : false;
+      return denRational !== undefined && denRational[0] !== 0n && num !== undefined ? quadraticIrrational(num) : false;
     }
     if (expr.operator === "Add" || expr.operator === "Multiply") {
       const ops = operandsOf(expr);
       const rationalTerms = ops.filter((o) => bigRationalAt(o) !== undefined);
       const otherTerms = ops.filter((o) => bigRationalAt(o) === undefined);
-      return (
-        otherTerms.length === 1 &&
-        rationalTerms.length === ops.length - 1 &&
-        quadraticIrrational(otherTerms[0]!)
-      );
+      return otherTerms.length === 1 && rationalTerms.length === ops.length - 1 && quadraticIrrational(otherTerms[0]!);
     }
     return false;
   };
@@ -508,9 +475,7 @@ export function declareModular(ce: ComputeEngine): void {
 
   /** `GoldenRatio` doesn't unfold under `.evaluate()` — substitute its closed form first. */
   const unfoldGoldenRatio = (expr: BoxedExpression): BoxedExpression =>
-    symbolAt(expr) === "GoldenRatio"
-      ? ce.box(["Divide", ["Add", 1, ["Sqrt", 5]], 2]).evaluate()
-      : expr;
+    symbolAt(expr) === "GoldenRatio" ? ce.box(["Divide", ["Add", 1, ["Sqrt", 5]], 2]).evaluate() : expr;
 
   /** `n` terms of `pqaExpansion`'s pre+period, cycling the period as needed. */
   const truncatedPqaTerms = (parts: QuadraticParts, n: number): BoxedExpression => {
@@ -531,8 +496,7 @@ export function declareModular(ce: ComputeEngine): void {
     // A purely periodic expansion (empty pre-period, e.g. the golden ratio) still needs an
     // a0 out front — peel the period's first term off and rotate the rest behind it, so the
     // remaining tail is still the correct periodic continuation.
-    const [leading, tail] =
-      pre.length > 0 ? [pre, period] : [[period[0]!], [...period.slice(1), period[0]!]];
+    const [leading, tail] = pre.length > 0 ? [pre, period] : [[period[0]!], [...period.slice(1), period[0]!]];
     return ce.function("List", [
       ...leading.map((t) => ce.number(t)),
       ce.function(
@@ -554,11 +518,7 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   /** `n` continued-fraction terms of `expr`, evaluated at `digits` decimal digits. */
-  const termsAtDigits = (
-    expr: BoxedExpression,
-    n: number,
-    digits: number,
-  ): bigint[] | undefined => {
+  const termsAtDigits = (expr: BoxedExpression, n: number, digits: number): bigint[] | undefined => {
     const savedPrecision = ce.precision;
     let bignum: BigDecimal | undefined;
     try {
@@ -671,8 +631,7 @@ export function declareModular(ce: ComputeEngine): void {
       const full = convergentsOf(period);
       const [hk, kk] = full[full.length - 1]!;
       const prefixConvergents = period.length > 1 ? convergentsOf(period.slice(0, -1)) : [];
-      const [hk1, kk1] =
-        prefixConvergents.length > 0 ? prefixConvergents[prefixConvergents.length - 1]! : [1n, 0n];
+      const [hk1, kk1] = prefixConvergents.length > 0 ? prefixConvergents[prefixConvergents.length - 1]! : [1n, 0n];
       // The periodic tail y is the value of [p1,...,pk, y] (itself, since it repeats), and
       // the convergent formula for that gives y = (y·h_k + h_{k-1})/(y·k_k + k_{k-1}) —
       // h_i/k_i the convergent of the first i period terms, h_0/k_0 := 1/0 by convention.
@@ -721,9 +680,7 @@ export function declareModular(ce: ComputeEngine): void {
     const name = conjugacyClassName(word);
     return name === undefined ? undefined : ce.string(name);
   });
-  aboutWord("IsPrimitiveClass", "(value) -> boolean", (word) =>
-    ce.symbol(isPrimitiveWord(word) ? "True" : "False"),
-  );
+  aboutWord("IsPrimitiveClass", "(value) -> boolean", (word) => ce.symbol(isPrimitiveWord(word) ? "True" : "False"));
   /** Every closed geodesic whose word has the given length, as a list of class names. */
   ce.declare("ModularClasses", {
     signature: "(integer, boolean?) -> list",
@@ -787,11 +744,7 @@ export function declareModular(ce: ComputeEngine): void {
   ce.declare("QuadraticForm", { signature: "(integer, integer, integer) -> value" });
 
   /** A head taking a form. */
-  const aboutForm = (
-    head: string,
-    signature: string,
-    answer: (f: Form) => BoxedExpression | undefined,
-  ): void => {
+  const aboutForm = (head: string, signature: string, answer: (f: Form) => BoxedExpression | undefined): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -817,12 +770,8 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   aboutForm("FormDiscriminant", "(value) -> integer", (f) => ce.number(formDiscriminant(f)));
-  aboutForm("IsIndefinite", "(value) -> boolean", (f) =>
-    ce.symbol(isIndefinite(f) ? "True" : "False"),
-  );
-  aboutForm("IsReducedForm", "(value) -> boolean", (f) =>
-    ce.symbol(isReduced(f) ? "True" : "False"),
-  );
+  aboutForm("IsIndefinite", "(value) -> boolean", (f) => ce.symbol(isIndefinite(f) ? "True" : "False"));
+  aboutForm("IsReducedForm", "(value) -> boolean", (f) => ce.symbol(isReduced(f) ? "True" : "False"));
   aboutForm("ReduceForm", "(value) -> value", (f) => {
     const reduced = reduceForm(f);
     return reduced === undefined ? undefined : formExpression(reduced);
@@ -858,9 +807,7 @@ export function declareModular(ce: ComputeEngine): void {
   /** The fundamental solution of t² − Du² = 4, as the pair (t, u). */
   aboutDiscriminant("PellSolution", "(integer) -> list", (d) => {
     const pell = pellSolution(d);
-    return pell === undefined
-      ? undefined
-      : ce.function("List", [ce.number(pell.t), ce.number(pell.u)]);
+    return pell === undefined ? undefined : ce.function("List", [ce.number(pell.t), ce.number(pell.u)]);
   });
 
   ce.declare("FormAction", {
@@ -878,9 +825,7 @@ export function declareModular(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const f = formOf(ops[0]);
       const [x, y] = [integerAt(ops[1]), integerAt(ops[2])];
-      return f === undefined || x === undefined || y === undefined
-        ? undefined
-        : ce.number(evaluateForm(f, x, y));
+      return f === undefined || x === undefined || y === undefined ? undefined : ce.number(evaluateForm(f, x, y));
     },
   });
 

@@ -89,10 +89,7 @@ function parseBlocks(raw: string): { intro: string; blocks: Block[] } {
     const bracketOffset = m[0].indexOf("[");
     const statusCharIndex = start + bracketOffset + 1;
 
-    let pos =
-      headingLineEnd < raw.length && raw[headingLineEnd] === "\n"
-        ? headingLineEnd + 1
-        : headingLineEnd;
+    let pos = headingLineEnd < raw.length && raw[headingLineEnd] === "\n" ? headingLineEnd + 1 : headingLineEnd;
 
     // Bullets: contiguous `- key: value` lines right after the heading.
     const bullets: Bullet[] = [];
@@ -115,8 +112,7 @@ function parseBlocks(raw: string): { intro: string; blocks: Block[] } {
     let feedbackRegion: [number, number] | undefined;
     if (fm) {
       const headingAbsEnd = pos + fm.index + fm[0].length;
-      const bodyStart =
-        headingAbsEnd < end && raw[headingAbsEnd] === "\n" ? headingAbsEnd + 1 : headingAbsEnd;
+      const bodyStart = headingAbsEnd < end && raw[headingAbsEnd] === "\n" ? headingAbsEnd + 1 : headingAbsEnd;
       feedbackRegion = [bodyStart, end];
       feedback = raw.slice(bodyStart, end).trim();
     }
@@ -184,8 +180,7 @@ export function upsertItem(raw: string, item: BacklogItem): { raw: string; item:
   if (blocks.some((b) => b.id === item.id)) {
     return applyItemPatch(raw, item.id, { status: item.status, feedback: item.feedback })!;
   }
-  const sep =
-    raw.length === 0 ? "" : raw.endsWith("\n\n") ? "" : raw.endsWith("\n") ? "\n" : "\n\n";
+  const sep = raw.length === 0 ? "" : raw.endsWith("\n\n") ? "" : raw.endsWith("\n") ? "\n" : "\n\n";
   const out = `${raw}${sep}${serializeItem(item)}`;
   const reparsed = parseBlocks(out).blocks.find((b) => b.id === item.id)!;
   return { raw: out, item: toItem(reparsed) };

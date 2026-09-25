@@ -12,9 +12,7 @@ import { ballImage, PROVEN_IMAGE_HEADS } from "../src/interval-balls.ts";
 // hold mpmath's -- with no slack at all -- and be tight to `TIGHT`, relative; and it must be
 // what the head itself answers.
 
-const goldens = JSON.parse(
-  readFileSync(new URL("./image.golden.json", import.meta.url), "utf8"),
-) as ImageGolden[];
+const goldens = JSON.parse(readFileSync(new URL("./image.golden.json", import.meta.url), "utf8")) as ImageGolden[];
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -36,10 +34,7 @@ for (const { call, interval, least, greatest } of goldens) {
     const image = ballImage(head, ops, argIndex, ce.number(interval[0]), ce.number(interval[1]));
     expect(image).toBeDefined();
     const [lo, hi] = [new BigDecimal(least), new BigDecimal(greatest)];
-    expect(
-      image!.lo.lte(lo) && hi.lte(image!.hi),
-      `${image!.lo.toString()} … ${image!.hi.toString()}`,
-    ).toBe(true);
+    expect(image!.lo.lte(lo) && hi.lte(image!.hi), `${image!.lo.toString()} … ${image!.hi.toString()}`).toBe(true);
     const size = lo.abs().gt(hi.abs()) ? lo.abs() : hi.abs();
     const slack = size.mul(TIGHT);
     expect(lo.sub(image!.lo).lte(slack) && image!.hi.sub(hi).lte(slack), "tight").toBe(true);

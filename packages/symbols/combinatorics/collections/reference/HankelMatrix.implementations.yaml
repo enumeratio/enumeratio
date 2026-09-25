@@ -1,0 +1,22 @@
+single-arg:
+  epsil:
+    in: HankelMatrix([1, 2, 3])
+    out: "[[1, 2, 3], [2, 3, 0], [3, 0, 0]]"
+  tex:
+    in: \mathrm{HankelMatrix}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 0\bigr\rbrack, \bigl\lbrack3, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: HankelMatrix[List[1, 2, 3]]
+  wolfram:
+    in: HankelMatrix[List[1, 2, 3]]
+with-last-row:
+  epsil:
+    in: HankelMatrix([1, 2, 3], [3, 4, 5])
+    out: "[[1, 2, 3], [2, 3, 4], [3, 4, 5]]"
+  tex:
+    in: \mathrm{HankelMatrix}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: HankelMatrix[List[1, 2, 3], List[3, 4, 5]]
+  wolfram:
+    in: HankelMatrix[List[1, 2, 3], List[3, 4, 5]]

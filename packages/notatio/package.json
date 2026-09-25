@@ -36,6 +36,8 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.134.0",
     "@enumeratio/braid": "workspace:*",
+    "@enumeratio/entry": "workspace:*",
+    "@enumeratio/oracle": "workspace:*",
     "@enumeratio/reference": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
     "@types/node": "catalog:",

@@ -14,8 +14,7 @@ declareNumerals(ce);
 declareNumberTheory(ce);
 declareAdeles(ce);
 
-const run = (expr: unknown): unknown =>
-  ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
 
 describe.each(Object.entries(golden))("%s", (_family, cases) => {
   test.each(cases.map((c, i) => [i, c] as const))("case %i", (_i, { input, expected }) => {

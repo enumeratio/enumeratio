@@ -1,18 +1,5 @@
 import { BigDecimal } from "@cortex-js/compute-engine";
-import {
-  type Ball,
-  add,
-  certify,
-  div,
-  exact,
-  exp,
-  lower,
-  magnitude,
-  mul,
-  neg,
-  pow,
-  upper,
-} from "./ball.ts";
+import { type Ball, add, certify, div, exact, exp, lower, magnitude, mul, neg, pow, upper } from "./ball.ts";
 import { atDigits } from "./bigzeta.ts";
 
 // Φ(z, s, a) = Σ_{n≥0} zⁿ (n+a)^(−s) for real z, s, a in compute-engine's BigDecimal, to any
@@ -35,12 +22,7 @@ const MAX_TERMS = 20_000;
 
 /** Φ(z, s, a) to `digits` significant digits, or undefined outside |z| < 1, a > 0, or
  * when the series would take more than `MAX_TERMS` terms. */
-export function lerchPhiBig(
-  z: BigDecimal,
-  s: BigDecimal,
-  a: BigDecimal,
-  digits: number,
-): BigDecimal | undefined {
+export function lerchPhiBig(z: BigDecimal, s: BigDecimal, a: BigDecimal, digits: number): BigDecimal | undefined {
   return lerchPhiBall(exact(z), exact(s), exact(a), digits)?.mid;
 }
 
@@ -70,8 +52,7 @@ export function lerchPhiBall(z: Ball, s: Ball, a: Ball, digits: number): Ball | 
 }
 
 /** log10 |x|, or −∞ for 0. */
-const log10Abs = (x: BigDecimal): number =>
-  x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber()));
+const log10Abs = (x: BigDecimal): number => (x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber())));
 
 /** The series at the working precision, with log10 of its largest term. */
 function series(
@@ -138,12 +119,7 @@ function powersOf(a: Ball, s: Ball): (n: number) => Ball {
 
 /** |t|·R/(1−R) with R = |z|·e^{growth/base} (see the header), rounded up, or undefined when
  * R is not yet below 1. */
-function tailBound(
-  term: Ball,
-  z: Ball,
-  growth: BigDecimal,
-  base: BigDecimal,
-): BigDecimal | undefined {
+function tailBound(term: Ball, z: Ball, growth: BigDecimal, base: BigDecimal): BigDecimal | undefined {
   return atDigits(20, () => {
     const ratio = upper(mul(exact(magnitude(z)), exp(div(exact(growth), exact(base)))));
     if (!ratio.lt(1)) return undefined;

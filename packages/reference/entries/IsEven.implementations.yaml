@@ -1,0 +1,160 @@
+iseven-4:
+  epsil:
+    in: IsEven(4)
+    out: True
+  tex:
+    in: \mathrm{IsEven}(4)
+    out: \top
+  traditional:
+    in: \mathrm{IsEven}(4)
+    out: \mathrm{True}
+  fullform:
+    in: EvenQ[4]
+  wolfram:
+    in: EvenQ[4]
+    out: True
+    tex:
+      in: \text{EvenQ}[4]
+      out: \text{True}
+iseven-3:
+  epsil:
+    in: IsEven(3)
+    out: False
+  tex:
+    in: \mathrm{IsEven}(3)
+    out: \bot
+  traditional:
+    in: \mathrm{IsEven}(3)
+    out: \mathrm{False}
+  fullform:
+    in: EvenQ[3]
+  wolfram:
+    in: EvenQ[3]
+    out: False
+    tex:
+      in: \text{EvenQ}[3]
+      out: \text{False}
+zero-is-even:
+  epsil:
+    in: IsEven(0)
+    out: True
+  tex:
+    in: \mathrm{IsEven}(0)
+    out: \top
+  traditional:
+    in: \mathrm{IsEven}(0)
+    out: \mathrm{True}
+  fullform:
+    in: EvenQ[0]
+  wolfram:
+    in: EvenQ[0]
+    out: True
+    tex:
+      in: \text{EvenQ}[0]
+      out: \text{True}
+negative-integers-count-too:
+  epsil:
+    in: IsEven(-4)
+    out: True
+  tex:
+    in: \mathrm{IsEven}(-4)
+    out: \top
+  traditional:
+    in: \mathrm{IsEven}(-4)
+    out: \mathrm{True}
+  fullform:
+    in: EvenQ[-4]
+  wolfram:
+    in: EvenQ[-4]
+a-non-integer-is-not-even:
+  epsil:
+    in: IsEven(2.5)
+    out: False
+  tex:
+    in: \mathrm{IsEven}(2.5)
+    out: \bot
+  traditional:
+    in: \mathrm{IsEven}(2.5)
+    out: \mathrm{False}
+  fullform:
+    in: EvenQ[2.5]
+  wolfram:
+    in: EvenQ[2.5]
+big-integers:
+  epsil:
+    in: IsEven(2 ^ 100)
+    out: True
+  tex:
+    in: \mathrm{IsEven}(2^{100})
+    out: \top
+  traditional:
+    in: \mathrm{IsEven}(2^{100})
+    out: \mathrm{True}
+  fullform:
+    in: EvenQ[Power[2, 100]]
+  wolfram:
+    in: EvenQ[Power[2, 100]]
+iseven-10-factorial:
+  epsil:
+    in: IsEven(10!)
+    out: True
+  tex:
+    in: \mathrm{IsEven}(10!)
+    out: \top
+  traditional:
+    in: \mathrm{IsEven}(10!)
+    out: \mathrm{True}
+  fullform:
+    in: EvenQ[Factorial[10]]
+  wolfram:
+    in: EvenQ[Factorial[10]]
+threads-element-wise-over-a-list:
+  epsil:
+    in: IsEven([1, 2, 3])
+    out: "[False, True, False]"
+  tex:
+    in: \mathrm{IsEven}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\bot, \top, \bot\bigr\rbrack
+  traditional:
+    in: \mathrm{IsEven}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\mathrm{False}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+  fullform:
+    in: EvenQ[List[1, 2, 3]]
+  wolfram:
+    in: EvenQ[List[1, 2, 3]]
+    note: 'EvenQ tests its argument as a whole: $\mathrm{EvenQ}[\{1, 2, 3\}]$ is False.'
+every-integer-is-exactly-one-of-odd-and-even-see:
+  epsil:
+    in: Xor(IsOdd(12), IsEven(12))
+    out: True
+  tex:
+    in: \mathrm{IsOdd}(12)\veebar\mathrm{IsEven}(12)
+    out: \top
+  traditional:
+    in: \mathrm{IsOdd}(12)\veebar\mathrm{IsEven}(12)
+    out: \mathrm{True}
+  fullform:
+    in: Xor[OddQ[12], EvenQ[12]]
+select-the-even-numbers-up-to-10:
+  epsil:
+    in: Filter(Range(10), IsEven)
+    out: "[2, 4, 6, 8, 10]"
+  tex:
+    in: \mathrm{Filter}(1..10, \mathrm{IsEven})
+    out: \bigl\lbrack2, 4, 6, 8, 10\bigr\rbrack
+  fullform:
+    in: Select[Range[10], EvenQ]
+  wolfram:
+    in: Select[Range[10], EvenQ]
+a-symbol-stays-undecided-rather-than-false:
+  epsil:
+    in: IsEven(x)
+    out: IsEven(x)
+  tex:
+    in: \mathrm{IsEven}(x)
+    out: \mathrm{IsEven}(x)
+  fullform:
+    in: EvenQ[x]
+  wolfram:
+    in:
+    note: '$\mathrm{EvenQ}[x]$ is False: EvenQ tests the literal form, not what x might be.'

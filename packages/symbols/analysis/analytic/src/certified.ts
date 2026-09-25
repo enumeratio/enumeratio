@@ -70,10 +70,7 @@ export const CERTIFIED_HEADS: readonly string[] = Object.keys(CERTIFIED);
 /** `head`'s certified kernel for `arity` arguments, or undefined when it has none: on balls
  * for them at the working precision, a ball holding its value, or undefined where the kernel
  * declines. */
-export function kernelOf(
-  head: string,
-  arity: number,
-): ((args: readonly Ball[]) => Ball | undefined) | undefined {
+export function kernelOf(head: string, arity: number): ((args: readonly Ball[]) => Ball | undefined) | undefined {
   const certified = CERTIFIED[head];
   if (certified === undefined || !certified.arities.includes(arity)) return undefined;
   return (args) => certify(() => certified.kernel(args, BigDecimal.precision));

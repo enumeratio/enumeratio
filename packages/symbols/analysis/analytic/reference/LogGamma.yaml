@@ -43,8 +43,6 @@ examples:
     expr: [LogGamma, 5]
     expected: [Add, [Multiply, 3, [Ln, 2]], [Ln, 3]]
     caption: $\ln\Gamma(5) = \ln 4! = \ln 24$, split into prime logarithms
-    divergence:
-      wolfram: Wolfram keeps a single logarithm, Log[24].
   - id: to-the-engine-s-working-precision
     expr: [LogGamma, 2.2]
     expected: { num: "0.096947466790638776492" }
@@ -77,8 +75,7 @@ examples:
     caption: 'Half-integers past $\tfrac12$: $\ln\Gamma(\tfrac32) = \ln\tfrac{\sqrt\pi}{2}$'
   - id: exact-negative-half-integers-ln-gamma-frac-32-ln
     expr: [LogGamma, [Rational, -3, 2]]
-    expected:
-      [Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]
+    expected: [Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]
     category: Scope
     caption: 'Exact negative half-integers: $\ln\Gamma(-\tfrac32) = \ln\tfrac{4\sqrt\pi}{3} - 2\pi i$'
   - id: ln-gamma-infty-infty

@@ -46,8 +46,6 @@ examples:
     expected: 1
     category: Possible issues
     caption: A vector is treated as a 1×n matrix (Wolfram rejects it)
-    divergence:
-      wolfram: "Wolfram leaves `MatrixRank[{1, 2, 3}]` unevaluated: a vector is not a matrix."
   - id: a-matrix-of-pairwise-distinct-symbols-has-full
     expr: [MatrixRank, [List, [List, a, b], [List, c, d]]]
     expected: 2
@@ -63,11 +61,7 @@ examples:
     category: Scope
     caption: "Complex entries: the second row is $i$ times the first"
   - id: exact-numeric-entries
-    expr:
-      [
-        MatrixRank,
-        [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]],
-      ]
+    expr: [MatrixRank, [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]]]
     expected: 1
     category: Scope
     caption: Exact numeric entries

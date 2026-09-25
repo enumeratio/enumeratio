@@ -1,0 +1,129 @@
+digitsum-58-127:
+  epsil:
+    in: DigitSum(58_127)
+    out: "23"
+  tex:
+    in: \mathrm{DigitSum}(58\,127)
+    out: "23"
+  fullform:
+    in: DigitSum[58127]
+  wolfram:
+    in: DigitSum[58127]
+    out: "23"
+    tex:
+      in: \text{Total}[\text{IntegerDigits}[58127]]
+      out: "23"
+in-base-2-this-is-the-number-of-set-bits:
+  epsil:
+    in: DigitSum(58_127, 2)
+    out: "9"
+  tex:
+    in: \mathrm{DigitSum}(58\,127, 2)
+    out: "9"
+  fullform:
+    in: DigitSum[58127, 2]
+  wolfram:
+    in: DigitSum[58127, 2]
+    out: "9"
+    tex:
+      in: \text{Total}[\text{IntegerDigits}[58127,2]]
+      out: "9"
+digitsum-0:
+  epsil:
+    in: DigitSum(0)
+    out: "0"
+  tex:
+    in: \mathrm{DigitSum}(0)
+    out: "0"
+  fullform:
+    in: DigitSum[0]
+  wolfram:
+    in: DigitSum[0]
+    out: "0"
+    tex:
+      in: \text{Total}[\text{IntegerDigits}[0]]
+      out: "0"
+digit-sum-n-mod-9-the-basis-of-the-classic:
+  epsil:
+    in: DigitSum(58_127) % 9 == 58_127 % 9
+    out: True
+  tex:
+    in: \mathrm{DigitSum}(58\,127)\bmod9=58\,127\bmod9
+    out: \top
+  traditional:
+    in: \mathrm{DigitSum}(58\,127)\bmod9=58\,127\bmod9
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Mod[DigitSum[58127], 9], Mod[58127, 9]]
+  wolfram:
+    in: (Mod[DigitSum[58127], 9] == Mod[58127, 9])
+    out: True
+    tex:
+      in: (\text{Total}[\text{IntegerDigits}[58127]] \bmod 9)=(58127 \bmod 9)
+      out: \text{True}
+255-ff-16-15-15:
+  epsil:
+    in: DigitSum(255, 16)
+    out: "30"
+  tex:
+    in: \mathrm{DigitSum}(255, 16)
+    out: "30"
+  fullform:
+    in: DigitSum[255, 16]
+  wolfram:
+    in: DigitSum[255, 16]
+the-sign-is-discarded:
+  epsil:
+    in: DigitSum(-123)
+    out: "6"
+  tex:
+    in: \mathrm{DigitSum}(-123)
+    out: "6"
+  fullform:
+    in: DigitSum[-123]
+  wolfram:
+    in: DigitSum[-123]
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: DigitSum([12, 345])
+    out: "[3, 12]"
+  tex:
+    in: \mathrm{DigitSum}(\bigl\lbrack12, 345\bigr\rbrack)
+    out: \bigl\lbrack3, 12\bigr\rbrack
+  fullform:
+    in: DigitSum[List[12, 345]]
+  wolfram:
+    in: DigitSum[List[12, 345]]
+digitsum-100-factorial:
+  epsil:
+    in: DigitSum(100!)
+    out: "648"
+  tex:
+    in: \mathrm{DigitSum}(100!)
+    out: "648"
+  fullform:
+    in: DigitSum[Factorial[100]]
+  wolfram:
+    in: DigitSum[Factorial[100]]
+the-digit-sum-of-2-1000:
+  epsil:
+    in: DigitSum(2 ^ 1_000)
+    out: 1_366
+  tex:
+    in: \mathrm{DigitSum}(2^{1\,000})
+    out: 1\,366
+  fullform:
+    in: DigitSum[Power[2, 1000]]
+  wolfram:
+    in: DigitSum[Power[2, 1000]]
+just-the-first-4-digits-6-3-4-5-18-not-the-full:
+  epsil:
+    in: DigitSum(6_345_354, 10, 4)
+    out: "18"
+  tex:
+    in: \mathrm{DigitSum}(6\,345\,354, 10, 4)
+    out: "18"
+  fullform:
+    in: DigitSum[6345354, 10, 4]
+  wolfram:
+    in: DigitSum[6345354, 10, 4]

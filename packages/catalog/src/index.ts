@@ -20,11 +20,4 @@ export { applicationCandidates, type Install, prepare, rawParse } from "./lazy.t
 export { ResourceRegistry } from "./registry.ts";
 export { catalogRegistry, catalogResources, ENUMERATIO } from "./resources.ts";
 export { pascal } from "./spelling.ts";
-export {
-  qualify,
-  SEPARATOR,
-  unqualify,
-  type Grade,
-  type Resource,
-  type ResourceKind,
-} from "./types.ts";
+export { qualify, SEPARATOR, unqualify, type Grade, type Resource, type ResourceKind } from "./types.ts";

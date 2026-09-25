@@ -5,8 +5,7 @@ import { declareCollections } from "../src/library.ts";
 const ce = new ComputeEngine();
 declareCollections(ce);
 
-const evalMJ = (mathjson: unknown) =>
-  ce.box(mathjson as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalMJ = (mathjson: unknown) => ce.box(mathjson as Parameters<ComputeEngine["box"]>[0]).evaluate();
 
 // ─── independent cross-checks shared by the GF/EGF tests below ────────────────────────────
 
@@ -25,11 +24,7 @@ const binomial3Term = (k: number) => evalMJ(["Binomial", k, 3]).N().re;
 
 /** The Taylor coefficients of `expr` (a function of `xName`) at 0, up to `upTo`, by repeated
  *  symbolic differentiation — independent of the closed-form construction under test. */
-function taylorCoefficients(
-  expr: ReturnType<typeof evalMJ>,
-  xName: string,
-  upTo: number,
-): number[] {
+function taylorCoefficients(expr: ReturnType<typeof evalMJ>, xName: string, upTo: number): number[] {
   const coeffs: number[] = [];
   let derivative = expr;
   let factorial = 1n;

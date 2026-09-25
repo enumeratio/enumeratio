@@ -52,11 +52,7 @@ examples:
     group: z10-idempotents
   - id: and-they-sum-to-1-splitting-z-10-via-z-10-cong-z
     expr:
-      [
-        Add,
-        [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8],
-        [HenselLift, [Subtract, [Power, x, 2], x], 6, 10, 8],
-      ]
+      [Add, [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8], [HenselLift, [Subtract, [Power, x, 2], x], 6, 10, 8]]
     expected: [AdicNumeral, 10, 1, 8]
     category: Neat examples
     caption: …and they sum to 1, splitting $\mathbf{Z}_{10}$ via $\mathbf{Z}_{10}\cong\mathbf{Z}_2\times\mathbf{Z}_5$

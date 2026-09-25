@@ -1,6 +1,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { aroundResolvers } from "./around.ts";
+import { aroundResolvers, declareAround } from "./around.ts";
 import { centeredIntervalResolvers, declareCenteredInterval } from "./centered-interval.ts";
+import { expCombineResolvers, hasTwoExpPowers } from "./exp-combine.ts";
 import { intervalResolvers } from "./interval.ts";
 import { registerTaggedHeads } from "./tagged-arithmetic.ts";
 
@@ -12,12 +13,16 @@ import { registerTaggedHeads } from "./tagged-arithmetic.ts";
 // would pay for that three times over on EVERY Add in the engine, tagged or not.
 export function declareTaggedArithmetic(ce: ComputeEngine): void {
   declareCenteredInterval(ce); // declares the CenteredInterval head itself
+  declareAround(ce);
   const interval = intervalResolvers(ce);
   const centered = centeredIntervalResolvers(ce);
   const around = aroundResolvers(ce);
+  const expCombine = expCombineResolvers(ce);
   // Every head any of the three tagged types extends — see each file's own resolver map for
   // which heads it actually handles; a head here that a given type ignores just gets
-  // `undefined` filtered out by `registerTaggedHeads`, at no extra runtime cost.
+  // `undefined` filtered out by `registerTaggedHeads`. Multiply additionally gets the
+  // exp-combine gate (e^a·e^b, see exp-combine.ts), which fires independently of any tagged
+  // operand, at no extra runtime cost to the other heads.
   registerTaggedHeads(
     ce,
     [
@@ -70,8 +75,10 @@ export function declareTaggedArithmetic(ce: ComputeEngine): void {
       "LerchPhi",
       "Multinomial",
     ],
+    { Multiply: hasTwoExpPowers },
     interval,
     centered,
     around,
+    expCombine,
   );
 }

@@ -10,9 +10,7 @@ describe("resolveReviewLink", () => {
   });
 
   test("keeps search and hash from the production host", () => {
-    expect(
-      resolveReviewLink("https://enumeratio.dev/reference/symbol/Primes?x=1#example-2"),
-    ).toEqual({
+    expect(resolveReviewLink("https://enumeratio.dev/reference/symbol/Primes?x=1#example-2")).toEqual({
       kind: "local",
       path: "/reference/symbol/Primes?x=1#example-2",
     });

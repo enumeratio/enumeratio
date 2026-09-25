@@ -1,0 +1,176 @@
+isodd-3:
+  epsil:
+    in: IsOdd(3)
+    out: True
+  tex:
+    in: \mathrm{IsOdd}(3)
+    out: \top
+  traditional:
+    in: \mathrm{IsOdd}(3)
+    out: \mathrm{True}
+  fullform:
+    in: OddQ[3]
+  wolfram:
+    in: OddQ[3]
+    out: True
+    tex:
+      in: \text{OddQ}[3]
+      out: \text{True}
+isodd-4:
+  epsil:
+    in: IsOdd(4)
+    out: False
+  tex:
+    in: \mathrm{IsOdd}(4)
+    out: \bot
+  traditional:
+    in: \mathrm{IsOdd}(4)
+    out: \mathrm{False}
+  fullform:
+    in: OddQ[4]
+  wolfram:
+    in: OddQ[4]
+    out: False
+    tex:
+      in: \text{OddQ}[4]
+      out: \text{False}
+negative-integers-count-too:
+  epsil:
+    in: IsOdd(-7)
+    out: True
+  tex:
+    in: \mathrm{IsOdd}(-7)
+    out: \top
+  traditional:
+    in: \mathrm{IsOdd}(-7)
+    out: \mathrm{True}
+  fullform:
+    in: OddQ[-7]
+  wolfram:
+    in: OddQ[-7]
+    out: True
+    tex:
+      in: \text{OddQ}[-7]
+      out: \text{True}
+isodd-0:
+  epsil:
+    in: IsOdd(0)
+    out: False
+  tex:
+    in: \mathrm{IsOdd}(0)
+    out: \bot
+  traditional:
+    in: \mathrm{IsOdd}(0)
+    out: \mathrm{False}
+  fullform:
+    in: OddQ[0]
+  wolfram:
+    in: OddQ[0]
+a-non-integer-is-not-odd:
+  epsil:
+    in: IsOdd(3.5)
+    out: False
+  tex:
+    in: \mathrm{IsOdd}(3.5)
+    out: \bot
+  traditional:
+    in: \mathrm{IsOdd}(3.5)
+    out: \mathrm{False}
+  fullform:
+    in: OddQ[3.5]
+  wolfram:
+    in: OddQ[3.5]
+isodd-1-over-3:
+  epsil:
+    in: IsOdd(1 / 3)
+    out: False
+  tex:
+    in: \mathrm{IsOdd}(\frac{1}{3})
+    out: \bot
+  traditional:
+    in: \mathrm{IsOdd}(\frac{1}{3})
+    out: \mathrm{False}
+  fullform:
+    in: OddQ[Rational[1, 3]]
+  wolfram:
+    in: OddQ[Rational[1, 3]]
+big-integers:
+  epsil:
+    in: IsOdd(2 ^ 100 + 1)
+    out: True
+  tex:
+    in: \mathrm{IsOdd}(2^{100}+1)
+    out: \top
+  traditional:
+    in: \mathrm{IsOdd}(2^{100}+1)
+    out: \mathrm{True}
+  fullform:
+    in: OddQ[Plus[Power[2, 100], 1]]
+  wolfram:
+    in: OddQ[Plus[Power[2, 100], 1]]
+pi-is-known-not-to-be-an-integer-so-it-is:
+  epsil:
+    in: IsOdd(Pi)
+    out: False
+  tex:
+    in: \mathrm{IsOdd}(\pi)
+    out: \bot
+  traditional:
+    in: \mathrm{IsOdd}(\pi)
+    out: \mathrm{False}
+  fullform:
+    in: OddQ[Pi]
+  wolfram:
+    in: OddQ[Pi]
+threads-element-wise-over-a-list:
+  epsil:
+    in: IsOdd([1, 2, 3])
+    out: "[True, False, True]"
+  tex:
+    in: \mathrm{IsOdd}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\top, \bot, \top\bigr\rbrack
+  traditional:
+    in: \mathrm{IsOdd}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
+  fullform:
+    in: OddQ[List[1, 2, 3]]
+  wolfram:
+    in: OddQ[List[1, 2, 3]]
+    note: 'OddQ tests its argument as a whole: $\mathrm{OddQ}[\{1, 2, 3\}]$ is False.'
+an-integer-is-odd-exactly-when-it-is-not-even:
+  epsil:
+    in: IsOdd(7) == !IsEven(7)
+    out: True
+  tex:
+    in: \mathrm{IsOdd}(7)=\lnot\mathrm{IsEven}(7)
+    out: \top
+  traditional:
+    in: \mathrm{IsOdd}(7)=\lnot\mathrm{IsEven}(7)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[OddQ[7], Not[EvenQ[7]]]
+  wolfram:
+    in: (OddQ[7] == Not[EvenQ[7]])
+select-the-odd-numbers-up-to-10:
+  epsil:
+    in: Filter(Range(10), IsOdd)
+    out: "[1, 3, 5, 7, 9]"
+  tex:
+    in: \mathrm{Filter}(1..10, \mathrm{IsOdd})
+    out: \bigl\lbrack1, 3, 5, 7, 9\bigr\rbrack
+  fullform:
+    in: Select[Range[10], OddQ]
+  wolfram:
+    in: Select[Range[10], OddQ]
+a-symbol-stays-undecided-rather-than-false:
+  epsil:
+    in: IsOdd(x)
+    out: IsOdd(x)
+  tex:
+    in: \mathrm{IsOdd}(x)
+    out: \mathrm{IsOdd}(x)
+  fullform:
+    in: OddQ[x]
+  wolfram:
+    in:
+    note: '$\mathrm{OddQ}[x]$ is False: OddQ tests the literal form, not what x might be.'

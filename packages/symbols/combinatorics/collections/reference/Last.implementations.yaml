@@ -1,0 +1,118 @@
+last-list-1-2-3:
+  epsil:
+    in: Last([1, 2, 3])
+    out: "3"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "3"
+  fullform:
+    in: Last[List[1, 2, 3]]
+  wolfram:
+    in: Last[List[1, 2, 3]]
+    out: "3"
+    tex:
+      in: \text{Last}[\{1,2,3\}]
+      out: "3"
+last-list-10-20-30:
+  epsil:
+    in: Last([10, 20, 30])
+    out: "30"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack10, 20, 30\bigr\rbrack)
+    out: "30"
+  fullform:
+    in: Last[List[10, 20, 30]]
+  wolfram:
+    in: Last[List[10, 20, 30]]
+    out: "30"
+    tex:
+      in: \text{Last}[\{10,20,30\}]
+      out: "30"
+last-c-at-c-1-see-at:
+  epsil:
+    in: Last([1, 2, 3]) == [1, 2, 3][-1]
+    out: True
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack1, 2, 3\bigr\rbrack)=\bigl\lbrack1, 2, 3\bigr\rbrack[-1]
+    out: \top
+  traditional:
+    in: \mathrm{Last}(\bigl\lbrack1, 2, 3\bigr\rbrack)=\bigl\lbrack1, 2, 3\bigr\rbrack[-1]
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Last[List[1, 2, 3]], Part[List[1, 2, 3], -1]]
+  wolfram:
+    in: (Last[List[1, 2, 3]] == Part[List[1, 2, 3], -1])
+    out: True
+    tex:
+      in: \text{Last}[\{1,2,3\}]=\{1,2,3\}[[-1]]
+      out: \text{True}
+a-second-argument-supplies-a-default-for-an:
+  epsil:
+    in: Last([], 99)
+    out: "99"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack \bigr\rbrack, 99)
+    out: "99"
+  fullform:
+    in: Last[List[], 99]
+  wolfram:
+    in: Last[List[], 99]
+last-list-a-b-c:
+  epsil:
+    in: Last([a, b, c])
+    out: c
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack a, b, c\bigr\rbrack)
+    out: c
+  fullform:
+    in: Last[List[a, b, c]]
+of-a-matrix-the-last-row:
+  epsil:
+    in: Last([[a, b], [c, d], [f, g]])
+    out: "[f, g]"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack f, g\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack f, g\bigr\rbrack
+  fullform:
+    in: Last[List[List[a, b], List[c, d], List[f, g]]]
+a-lazy-range-works-too:
+  epsil:
+    in: Last(Range(5, 10))
+    out: "10"
+  tex:
+    in: \mathrm{Last}(5..10)
+    out: "10"
+  fullform:
+    in: Last[Range[5, 10]]
+  wolfram:
+    in: Last[Range[5, 10]]
+any-expression-not-just-a-list-the-last-term-of:
+  epsil:
+    in: Last(a ^ 2 + b ^ 2)
+    out: b ^ 2
+  tex:
+    in: \mathrm{Last}(a^2+b^2)
+    out: b^2
+  fullform:
+    in: Last[Plus[Power[a, 2], Power[b, 2]]]
+a-default-is-ignored-when-the-collection-has-a:
+  epsil:
+    in: Last([a, b], x)
+    out: b
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack a, b\bigr\rbrack, x)
+    out: b
+  fullform:
+    in: Last[List[a, b], x]
+an-empty-collection-has-no-last-element-compute:
+  epsil:
+    in: Last([])
+    out: Missing
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack \bigr\rbrack)
+    out: \mathrm{Missing}
+  fullform:
+    in: Last[List[]]
+  wolfram:
+    in: Last[List[]]
+    note: Last of an empty list is the symbol Missing here; Wolfram leaves Last[{}] unevaluated (with a Last::nolast message).

@@ -31,8 +31,7 @@ interface RawParser {
 
 /** A parse stage that keeps `InvisibleOperator` intact, for front ends that want to decide
  *  application-versus-product themselves. */
-export const rawParse: ParseStage = (ce, latex) =>
-  (ce as unknown as RawParser).parse(latex, { canonical: false }).json;
+export const rawParse: ParseStage = (ce, latex) => (ce as unknown as RawParser).parse(latex, { canonical: false }).json;
 
 /** Install a resolved resource onto the engine. Returns false to decline, leaving the name
  *  undeclared. */

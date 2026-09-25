@@ -1,0 +1,31 @@
+name: BernoulliDistribution
+domain: Statistics
+signature: BernoulliDistribution(p)
+summary: "The Bernoulli distribution: $1$ with probability $p$, $0$ with probability $1-p$."
+signatures:
+  - call: BernoulliDistribution(p)
+    description: an inert distribution object — carries $p$, unevaluated.
+    library: enumeratio-statistics
+details:
+  - $PDF$ is $1-p$ at $0$, $p$ at $1$, and $0$ elsewhere.
+  - $CDF$ is $0$ below $0$, $1-p$ on $[0,1)$, and $1$ from $1$ on.
+  - $Mean = p$, $Variance = p(1-p)$, both exact.
+  - "[[RandomVariate]] draws a single uniform and compares it to $p$."
+examples:
+  - id: bernoulli-pdf-exact
+    expr: [PDF, [BernoulliDistribution, [Rational, 1, 3]], 1]
+    expected: [Rational, 1, 3]
+  - id: bernoulli-cdf-exact
+    expr: [CDF, [BernoulliDistribution, [Rational, 1, 3]], 0]
+    expected: [Rational, 2, 3]
+  - id: bernoulli-mean-exact
+    expr: [Mean, [BernoulliDistribution, [Rational, 1, 3]]]
+    expected: [Rational, 1, 3]
+  - id: bernoulli-variance-exact
+    expr: [Variance, [BernoulliDistribution, [Rational, 1, 3]]]
+    expected: [Rational, 2, 9]
+seeAlso:
+  - GeometricDistribution
+  - BinomialDistribution
+  - PDF
+  - CDF

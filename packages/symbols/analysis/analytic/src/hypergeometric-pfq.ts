@@ -34,21 +34,13 @@ export function declareHypergeometricPFQ(ce: ComputeEngine): void {
         return wantsNumber(ops, options) ? expr.N() : expr.evaluate();
       }
       if (upper.length === 1 && lower.length === 0) {
-        const expr = ce.function("Power", [
-          ce.function("Subtract", [ce.One, z]),
-          ce.function("Negate", [upper[0]]),
-        ]);
+        const expr = ce.function("Power", [ce.function("Subtract", [ce.One, z]), ce.function("Negate", [upper[0]])]);
         return wantsNumber(ops, options) ? expr.N() : expr.evaluate();
       }
       if (isZero(z)) return ce.One; // the series' own leading term — true for any lists
 
       if (!wantsNumber(ops, options)) return undefined;
-      if (
-        !isFiniteNum(z) ||
-        upper.some((o) => !isFiniteNum(o)) ||
-        lower.some((o) => !isFiniteNum(o))
-      )
-        return undefined;
+      if (!isFiniteNum(z) || upper.some((o) => !isFiniteNum(o)) || lower.some((o) => !isFiniteNum(o))) return undefined;
       const upperCx = upper.map((o) => cx(o.re, o.im));
       const lowerCx = lower.map((o) => cx(o.re, o.im));
       const zCx = cx(z.re, z.im);

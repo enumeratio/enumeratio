@@ -120,7 +120,7 @@ const happyCache = nthMatchCache(isHappy);
 // (the `narrow()` idiom from numeric-closed-form.ts, inlined here rather than imported -- see
 // this file's own note at the top about families not sharing kernels across the boundary).
 // `unrank` used to answer NaN past the safe prefix -- a known value, just not one `number` can
-// carry, and worse, a value that collapses every large pair to the same NaN under quickcheck's
+// carry, and worse, a value that collapses every large pair to the same NaN under Plausible's
 // JSON.stringify-based comparison (issue #90). Returning the bigint instead keeps every rank
 // exact and distinct. `valid` needs no table at all -- it checks the definition directly via
 // BigInt digit-power sums, exact for any representable input. Values from OEIS A005188
@@ -285,10 +285,7 @@ function automorphicNumbersTable(): number[] {
     let branches: [bigint, bigint] = [5n, 6n]; // the two nontrivial idempotents mod 10
     table.push(1, 5, 6); // 1 is the trivial idempotent (1^2 = 1); it never grows a new digit
     for (let k = 1; branches[0] <= limit || branches[1] <= limit; k++) {
-      const next: [bigint, bigint] = [
-        liftIdempotent(branches[0], k),
-        liftIdempotent(branches[1], k),
-      ];
+      const next: [bigint, bigint] = [liftIdempotent(branches[0], k), liftIdempotent(branches[1], k)];
       for (let i = 0; i < 2; i++) {
         if (next[i] !== branches[i] && next[i] <= limit) table.push(Number(next[i]));
       }
@@ -569,8 +566,7 @@ export const entries: FamilyKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => NARCISSISTIC_COUNT,
-    unrank: (_p, r) =>
-      r >= 0 && r < NARCISSISTIC_NUMBERS.length ? narrow(NARCISSISTIC_NUMBERS[r]) : Number.NaN,
+    unrank: (_p, r) => (r >= 0 && r < NARCISSISTIC_NUMBERS.length ? narrow(NARCISSISTIC_NUMBERS[r]) : Number.NaN),
     valid: (element) => {
       const x = toBigNarcissistic(element);
       return x !== undefined && isNarcissisticBig(x);

@@ -1,0 +1,66 @@
+8-2-3:
+  epsil:
+    in: MangoldtLambda(8)
+    out: Ln(2)
+  tex:
+    in: \mathrm{MangoldtLambda}(8)
+    out: \ln(2)
+  fullform:
+    in: MangoldtLambda[8]
+  wolfram:
+    in: MangoldtLambda[8]
+6-is-not-a-prime-power:
+  epsil:
+    in: MangoldtLambda(6)
+    out: "0"
+  tex:
+    in: \mathrm{MangoldtLambda}(6)
+    out: "0"
+  fullform:
+    in: MangoldtLambda[6]
+  wolfram:
+    in: MangoldtLambda[6]
+mangoldtlambda-7:
+  epsil:
+    in: MangoldtLambda(7)
+    out: Ln(7)
+  tex:
+    in: \mathrm{MangoldtLambda}(7)
+    out: \ln(7)
+  fullform:
+    in: MangoldtLambda[7]
+  wolfram:
+    in: MangoldtLambda[7]
+lambda-1-0:
+  epsil:
+    in: MangoldtLambda(1)
+    out: "0"
+  tex:
+    in: \mathrm{MangoldtLambda}(1)
+    out: "0"
+  fullform:
+    in: MangoldtLambda[1]
+  wolfram:
+    in: MangoldtLambda[1]
+numerically-ln-3:
+  epsil:
+    in: N(MangoldtLambda(9))
+    out: 1.098_612_288_668_109_8
+  tex:
+    in: N(\mathrm{MangoldtLambda}(9))
+    out: 1.098\,612\,288\,668\,109\,8
+  fullform:
+    in: N[MangoldtLambda[9]]
+  wolfram:
+    in: N[MangoldtLambda[9]]
+listable:
+  epsil:
+    in: MangoldtLambda([2, 4, 6, 25])
+    out: "[Ln(2), Ln(2), 0, Ln(5)]"
+  tex:
+    in: \mathrm{MangoldtLambda}(\bigl\lbrack2, 4, 6, 25\bigr\rbrack)
+    out: \bigl\lbrack\ln(2), \ln(2), 0, \ln(5)\bigr\rbrack
+  fullform:
+    in: MangoldtLambda[List[2, 4, 6, 25]]
+  wolfram:
+    in: MangoldtLambda[List[2, 4, 6, 25]]

@@ -128,11 +128,7 @@ export function parsePython(text: string): Tree | undefined {
 /** `compare`, but for a Python-family system's answer against our reduced tree, when a
  * shape difference (a tuple where we have a list) is the only thing text comparison would
  * catch as a false disagreement. `undefined` when `theirs` doesn't parse as a literal. */
-export function comparePythonStructured(
-  ours: Tree,
-  theirs: string,
-  tolerance = 1e-9,
-): Verdict | undefined {
+export function comparePythonStructured(ours: Tree, theirs: string, tolerance = 1e-9): Verdict | undefined {
   const theirsTree = parsePython(theirs);
   return theirsTree === undefined ? undefined : compareTrees(ours, theirsTree, tolerance);
 }
@@ -170,8 +166,7 @@ function basisLabel(label: MathJSON): string | undefined {
 /** A symbolic scalar factor — `delta`, `["Power", "delta", 2]` — as [symbol, exponent]. */
 function symbolPower(e: MathJSON): [string, number] | undefined {
   if (typeof e === "string" && !/^'.*'$/s.test(e)) return [e, 1];
-  if (Array.isArray(e) && e[0] === "Power" && typeof e[1] === "string" && typeof e[2] === "number")
-    return [e[1], e[2]];
+  if (Array.isArray(e) && e[0] === "Power" && typeof e[1] === "string" && typeof e[2] === "number") return [e[1], e[2]];
   return undefined;
 }
 

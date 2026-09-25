@@ -1,0 +1,44 @@
+studentt-pdf-exact:
+  epsil:
+    in: PDF(StudentTDistribution(5), 0)
+    out: Sqrt(5) * Gamma(3) / (5 * Gamma(5 / 2) * Sqrt(Pi))
+  tex:
+    in: \operatorname{PDF}(\mathrm{StudentTDistribution}(5), 0)
+    out: \frac{\sqrt{5}\Gamma(3)}{5\Gamma(\frac{5}{2})\sqrt{\pi}}
+  fullform:
+    in: PDF[StudentTDistribution[5], 0]
+  wolfram:
+    in: PDF[StudentTDistribution[5], 0]
+studentt-cdf-symmetric:
+  epsil:
+    in: CDF(StudentTDistribution(5), 0)
+    out: 1 / 2
+  tex:
+    in: \operatorname{CDF}(\mathrm{StudentTDistribution}(5), 0)
+    out: \frac{1}{2}
+  fullform:
+    in: CDF[StudentTDistribution[5], 0]
+  wolfram:
+    in: CDF[StudentTDistribution[5], 0]
+studentt-mean-exact:
+  epsil:
+    in: Mean(StudentTDistribution(5))
+    out: "0"
+  tex:
+    in: \mathrm{mean}(\mathrm{StudentTDistribution}(5))
+    out: "0"
+  fullform:
+    in: Mean[StudentTDistribution[5]]
+  wolfram:
+    in: Mean[StudentTDistribution[5]]
+studentt-variance-exact:
+  epsil:
+    in: Variance(StudentTDistribution(5))
+    out: 5 / 3
+  tex:
+    in: \mathrm{Variance}(\mathrm{StudentTDistribution}(5))
+    out: \frac{5}{3}
+  fullform:
+    in: Variance[StudentTDistribution[5]]
+  wolfram:
+    in: Variance[StudentTDistribution[5]]

@@ -1,0 +1,11 @@
+edge-count-of-k4:
+  epsil:
+    in: EdgeCount(CompleteGraph(4))
+    out: "6"
+  tex:
+    in: \mathrm{EdgeCount}(\mathrm{CompleteGraph}(4))
+    out: "6"
+  fullform:
+    in: EdgeCount[CompleteGraph[4]]
+  wolfram:
+    in: EdgeCount[CompleteGraph[4]]

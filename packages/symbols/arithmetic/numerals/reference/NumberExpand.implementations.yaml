@@ -1,0 +1,33 @@
+numberexpand-1-234:
+  epsil:
+    in: NumberExpand(1_234)
+    out: "[1_000, 200, 30, 4]"
+  tex:
+    in: \mathrm{NumberExpand}(1\,234)
+    out: \bigl\lbrack1\,000, 200, 30, 4\bigr\rbrack
+  fullform:
+    in: NumberExpand[1234]
+  wolfram:
+    in: NumberExpand[1234]
+base-2-zero-terms-kept:
+  epsil:
+    in: NumberExpand(10, 2)
+    out: "[8, 0, 2, 0]"
+  tex:
+    in: \mathrm{NumberExpand}(10, 2)
+    out: \bigl\lbrack8, 0, 2, 0\bigr\rbrack
+  fullform:
+    in: NumberExpand[10, 2]
+  wolfram:
+    in: NumberExpand[10, 2]
+every-term-carries-the-sign:
+  epsil:
+    in: NumberExpand(-123)
+    out: "[-100, -20, -3]"
+  tex:
+    in: \mathrm{NumberExpand}(-123)
+    out: \bigl\lbrack-100, -20, -3\bigr\rbrack
+  fullform:
+    in: NumberExpand[-123]
+  wolfram:
+    in: NumberExpand[-123]

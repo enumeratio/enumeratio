@@ -37,10 +37,7 @@ interface Entity {
   readonly missing?: string;
   readonly sitelinks?: { readonly enwiki?: { readonly title: string } };
   readonly claims?: Readonly<
-    Record<
-      string,
-      readonly { readonly mainsnak: { readonly datavalue?: { readonly value: unknown } } }[]
-    >
+    Record<string, readonly { readonly mainsnak: { readonly datavalue?: { readonly value: unknown } } }[]>
   >;
 }
 
@@ -82,10 +79,7 @@ const titles = [
   ...new Set(
     [
       ...Object.values(CURATED).flat(),
-      ...entries.flatMap((e) => [
-        ...(e.references ?? []),
-        ...(e.signatures ?? []).flatMap((s) => s.references ?? []),
-      ]),
+      ...entries.flatMap((e) => [...(e.references ?? []), ...(e.signatures ?? []).flatMap((s) => s.references ?? [])]),
       ...REFERENCES.map((r) => ({ system: r.system, identity: r.identity })),
     ]
       .filter((r) => r.system === "wikipedia")

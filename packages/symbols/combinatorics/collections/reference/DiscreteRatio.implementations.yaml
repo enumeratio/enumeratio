@@ -1,0 +1,18 @@
+factorial-ratio:
+  epsil:
+    in: DiscreteRatio(n!, n)
+    out: n + 1
+  tex:
+    in: \mathrm{DiscreteRatio}(n!, n)
+    out: n+1
+  fullform:
+    in: DiscreteRatio[Factorial[n], n]
+geometric-ratio:
+  epsil:
+    in: DiscreteRatio(2 ^ n, n)
+    out: "2"
+  tex:
+    in: \mathrm{DiscreteRatio}(2^{n}, n)
+    out: "2"
+  fullform:
+    in: DiscreteRatio[Power[2, n], n]

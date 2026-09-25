@@ -103,9 +103,7 @@ export class NotatioSlider2D extends LitElement {
   }
 
   get binding(): MathJsonExpression {
-    return this.complex
-      ? numberJson(this._x, this._y)
-      : (["List", this._x, this._y] as MathJsonExpression);
+    return this.complex ? numberJson(this._x, this._y) : (["List", this._x, this._y] as MathJsonExpression);
   }
 
   protected override willUpdate(changed: PropertyValues): void {
@@ -207,10 +205,7 @@ export class NotatioSlider2D extends LitElement {
         @keydown=${this.#onKeyDown}
         @keyup=${this.#onKeyUp}
       >
-        <span
-          class="notatio-pad-dot"
-          style=${`left:${fx * 100}%;top:${(1 - fy) * 100}%`}
-        ></span> </span
+        <span class="notatio-pad-dot" style=${`left:${fx * 100}%;top:${(1 - fy) * 100}%`}></span> </span
       >${this.readout ? html`<span class="notatio-slider-readout">${text}</span>` : nothing}
     </span>`;
   }

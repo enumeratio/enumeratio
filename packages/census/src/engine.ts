@@ -45,6 +45,8 @@ import { declareResidues } from "@enumeratio/residues/src";
 import {
   ALL_STATISTICS,
   declareDistributions,
+  declareDistributions2,
+  declareDistributions3,
   declareStatistics,
 } from "@enumeratio/statistics/src";
 
@@ -75,6 +77,8 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
     const domainTypes = Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
     declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes });
     declareDistributions(ce);
+    declareDistributions2(ce);
+    declareDistributions3(ce);
     declareMaps(ce, domainTypes);
     declareRestricted(ce);
     declareRestrictions(ce, RESTRICTIONS, { skipDeclared: true });

@@ -1,5 +1,5 @@
 // Browser-only isolated evaluation: a plain dedicated `Worker` running one evaluation,
-// `terminate()` as the hard time kill — design/aestimatio.md §3; a reusable pool across
+// `terminate()` as the hard time kill — design/computation.md §5.3; a reusable pool across
 // calls; and a session (preferring `SharedWorker` so tabs can join one). Kept out of
 // `./index.ts` so a Node bundle never pulls in a `Worker`/`self` entry point (mirrors
 // `./node`).
@@ -74,10 +74,7 @@ export interface SharedWorkerLike {
   readonly port: MessagePortLike;
 }
 
-export type SharedWorkerFactory = (
-  url: URL,
-  options: { name?: string; type: "module" },
-) => SharedWorkerLike;
+export type SharedWorkerFactory = (url: URL, options: { name?: string; type: "module" }) => SharedWorkerLike;
 
 export interface EvaluateInWorkerOptions {
   /** Tried cooperatively inside the worker first, then hard-killed with `terminate()`
@@ -111,9 +108,7 @@ function globalWorkerFactory(): WorkerFactory {
     }
   ).Worker;
   if (ctor === undefined) {
-    throw new Error(
-      "evaluateInWorker: no global Worker in this environment -- pass createWorker (e.g. in a test)",
-    );
+    throw new Error("evaluateInWorker: no global Worker in this environment -- pass createWorker (e.g. in a test)");
   }
   return (url, options) => new ctor(url, options);
 }
@@ -155,20 +150,14 @@ export async function probeMemoryBytes(): Promise<number | undefined> {
  * `measureMemory` (as the tests do): that asks for control of this one call's worker, so it
  * gets its own. For pooling with injected fakes, use `createEvaluatorPool({ createWorker })`.
  */
-export function evaluateInWorker(
-  json: unknown,
-  options: EvaluateInWorkerOptions = {},
-): Promise<unknown> {
+export function evaluateInWorker(json: unknown, options: EvaluateInWorkerOptions = {}): Promise<unknown> {
   if (options.createWorker !== undefined || options.measureMemory !== undefined) {
     return evaluateInWorkerOnce(json, options);
   }
   return getDefaultPool().evaluate(json, options);
 }
 
-function evaluateInWorkerOnce(
-  json: unknown,
-  options: EvaluateInWorkerOptions = {},
-): Promise<unknown> {
+function evaluateInWorkerOnce(json: unknown, options: EvaluateInWorkerOptions = {}): Promise<unknown> {
   const { timeMs, memoryBytes, setup, signal, memoryPollMs = 200 } = options;
   const spawnTimeoutMs = options.spawnTimeoutMs ?? SPAWN_TIMEOUT_MS;
   const createWorker = options.createWorker ?? globalWorkerFactory();
@@ -225,8 +214,7 @@ function evaluateInWorkerOnce(
           clearTimeout(spawnTimer);
           spawnTimer = undefined;
         }
-        if (timeMs !== undefined)
-          killTimer = setTimeout(finish, timeMs + COOPERATIVE_GRACE_MS, ABORTED);
+        if (timeMs !== undefined) killTimer = setTimeout(finish, timeMs + COOPERATIVE_GRACE_MS, ABORTED);
         return;
       }
       // No `kind` (a test fake answering directly) or `kind: "result"`: the answer.
@@ -271,8 +259,8 @@ export interface BrowserEvaluatorPool {
 const DEFAULT_POOL_KEY = "default";
 
 function defaultPoolSize(): number {
-  const hardwareConcurrency = (globalThis as { navigator?: { hardwareConcurrency?: number } })
-    .navigator?.hardwareConcurrency;
+  const hardwareConcurrency = (globalThis as { navigator?: { hardwareConcurrency?: number } }).navigator
+    ?.hardwareConcurrency;
   return Math.max(1, (hardwareConcurrency ?? 4) - 1);
 }
 
@@ -283,9 +271,7 @@ function defaultPoolSize(): number {
  * replaced (terminated, a fresh one takes its slot) — it may still be running whatever it
  * was given, and there is no way in a browser to confirm it has actually stopped.
  */
-export function createEvaluatorPool(
-  options: BrowserEvaluatorPoolOptions = {},
-): BrowserEvaluatorPool {
+export function createEvaluatorPool(options: BrowserEvaluatorPoolOptions = {}): BrowserEvaluatorPool {
   const maxSize = Math.max(1, options.size ?? defaultPoolSize());
   const createWorker = options.createWorker ?? globalWorkerFactory();
   const measureMemory = options.measureMemory ?? probeMemoryBytes;
@@ -361,10 +347,7 @@ export function createEvaluatorPool(
                 spawnTimer = undefined;
               }
               if (timeMs !== undefined) {
-                killTimer = setTimeout(
-                  () => finish(ABORTED, "replace"),
-                  timeMs + COOPERATIVE_GRACE_MS,
-                );
+                killTimer = setTimeout(() => finish(ABORTED, "replace"), timeMs + COOPERATIVE_GRACE_MS);
               }
               return;
             }
@@ -393,13 +376,11 @@ function getDefaultPool(): BrowserEvaluatorPool {
 // ---------------------------------------------------------------------------------------
 // Session: one `./browser-session-worker.ts`, one `ComputeEngine`, held across `evaluate`
 // calls. Prefers a `SharedWorker` (tabs can join the same named session); falls back to a
-// dedicated `Worker` where `SharedWorker` isn't available. See design/aestimatio.md §5.
+// dedicated `Worker` where `SharedWorker` isn't available. See design/computation.md §5.3.
 // ---------------------------------------------------------------------------------------
 
 function globalSharedWorkerFactory(): SharedWorkerFactory | undefined {
-  const ctor = (
-    globalThis as { SharedWorker?: new (url: URL, options: unknown) => SharedWorkerLike }
-  ).SharedWorker;
+  const ctor = (globalThis as { SharedWorker?: new (url: URL, options: unknown) => SharedWorkerLike }).SharedWorker;
   if (ctor === undefined) return undefined;
   return (url, options) => new ctor(url, options);
 }
@@ -446,10 +427,7 @@ export interface BrowserSessionEvaluateResult {
 }
 
 export interface BrowserSession {
-  evaluate(
-    json: unknown,
-    options?: BrowserEvaluateSessionOptions,
-  ): Promise<BrowserSessionEvaluateResult>;
+  evaluate(json: unknown, options?: BrowserEvaluateSessionOptions): Promise<BrowserSessionEvaluateResult>;
   /** Stops using the session. On a dedicated `Worker`, terminates it. On a `SharedWorker`,
    * this tab merely disconnects -- other tabs sharing it are unaffected. */
   close(): void;
@@ -477,14 +455,12 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
   const spawnTimeoutMs = options.spawnTimeoutMs ?? SPAWN_TIMEOUT_MS;
   const url = sessionWorkerUrl();
   const sharedFactory =
-    options.createSharedWorker ??
-    (options.createWorker === undefined ? globalSharedWorkerFactory() : undefined);
+    options.createSharedWorker ?? (options.createWorker === undefined ? globalSharedWorkerFactory() : undefined);
   // Resolved lazily -- and only once -- so a session that never poisons/falls back never
   // touches the global `Worker` (which throws where there isn't one, e.g. this package's
   // own tests, or a SharedWorker-only environment).
   let dedicatedFactory: WorkerFactory | undefined;
-  const getDedicatedFactory = (): WorkerFactory =>
-    (dedicatedFactory ??= options.createWorker ?? globalWorkerFactory());
+  const getDedicatedFactory = (): WorkerFactory => (dedicatedFactory ??= options.createWorker ?? globalWorkerFactory());
 
   let port: MessagePortLike;
   let dedicated = false; // true once started as (or poisoned into) the dedicated fallback
@@ -571,7 +547,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         cleanup();
         if (wasDedicated) {
           // Kill it outright (the only reliable cancel for a tight, uncooperative loop --
-          // design/aestimatio.md §3) and start fresh for the next call.
+          // design/computation.md §5.3) and start fresh for the next call.
           terminateMine?.();
           spawnDedicated();
         } else {

@@ -1,0 +1,263 @@
+n-forces-the-numeric-result-that-plain:
+  epsil:
+    in: N(Sinh(0))
+    out: "0"
+  tex:
+    in: N(\sinh(0))
+    out: "0"
+  fullform:
+    in: N[Sinh[0]]
+  wolfram:
+    in: N[Sinh[0]]
+    out: 0.
+    tex:
+      in: N[\sinh (0)]
+      out: 0.
+n-sinh-1:
+  epsil:
+    in: N(Sinh(1))
+    out: 1.175_201_193_643_801_456_88
+  tex:
+    in: N(\sinh(1))
+    out: 1.175\,201\,193\,643\,801\,456\,88
+  fullform:
+    in: N[Sinh[1]]
+  wolfram:
+    in: N[Sinh[1]]
+    out: "1.1752011936438014"
+    tex:
+      in: N[\sinh (1)]
+      out: "1.1752"
+odd-function-sinh-x-sinh-x:
+  epsil:
+    in: Sinh(-1) == -Sinh(1)
+    out: True
+  tex:
+    in: \sinh(-1)=-\sinh(1)
+    out: \top
+  traditional:
+    in: \sinh(-1)=-\sinh(1)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Sinh[Minus[1]], Minus[Sinh[1]]]
+  wolfram:
+    in: (Sinh[Minus[1]] == Minus[Sinh[1]])
+    out: True
+    tex:
+      in: \sinh (-1)=-\sinh (1)
+      out: \text{True}
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2:
+  epsil:
+    in: Sinh(1) == (Exp(1) - Exp(-1)) / 2
+    out: True
+  tex:
+    in: \sinh(1)=\frac{e^{1}-e^{-1}}{2}
+    out: \top
+  traditional:
+    in: \sinh(1)=\frac{e^{1}-e^{-1}}{2}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Sinh[1], Divide[Subtract[Exp[1], Exp[Minus[1]]], 2]]
+  wolfram:
+    in: (Sinh[1] == Divide[Subtract[Exp[1], Exp[Minus[1]]], 2])
+    out: True
+    tex:
+      in: \sinh (1)=\frac{\exp (1)-\exp (-1)}{2}
+      out: \text{True}
+stays-symbolic-even-at-0-compute-engine-doesn-t:
+  epsil:
+    in: Sinh(0)
+    out: "0"
+  tex:
+    in: \sinh(0)
+    out: "0"
+  fullform:
+    in: Sinh[0]
+  wolfram:
+    in: Sinh[0]
+    out: "0"
+    tex:
+      in: \sinh (0)
+      out: "0"
+a-float-argument-evaluates-directly-no-n-needed:
+  epsil:
+    in: Sinh(1.4)
+    out: 1.904_301_501_451_534_055_14
+  tex:
+    in: \sinh(1.4)
+    out: 1.904\,301\,501\,451\,534\,055\,14
+  fullform:
+    in: Sinh[1.4]
+  wolfram:
+    in: Sinh[1.4]
+arbitrary-precision-via-n:
+  epsil:
+    in: N(Sinh(7 / 5))
+    out: 1.904_301_501_451_534_055_14
+  tex:
+    in: N(\sinh(\frac{7}{5}))
+    out: 1.904\,301\,501\,451\,534\,055\,14
+  fullform:
+    in: N[Sinh[Rational[7, 5]]]
+  wolfram:
+    in: N[Sinh[Rational[7, 5]]]
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Sinh(2.5 + i)
+    out: 3.268_939_432_079_549 + 5.160_143_667_579_705i
+  tex:
+    in: \sinh(2.5+i)
+    out: 3.268\,939\,432\,079\,549+5.160\,143\,667\,579\,705i
+  fullform:
+    in: Sinh[Complex[2.5, 1]]
+  wolfram:
+    in: Sinh[Complex[2.5, 1]]
+sinh-i-pi-2-i-sin-pi-2-i:
+  epsil:
+    in: Sinh(ImaginaryUnit * (Pi / 2))
+    out: i
+  tex:
+    in: \sinh(\frac{i\pi}{2})
+    out: i
+  fullform:
+    in: Sinh[Times[I, Divide[Pi, 2]]]
+  wolfram:
+    in: Sinh[Times[I, Divide[Pi, 2]]]
+element-wise-over-a-matrix-of-imaginary:
+  epsil:
+    in: |-
+      Sinh([
+             [ImaginaryUnit * (1Pi / 3), -(ImaginaryUnit * (1Pi / 3))],
+             [0, -(ImaginaryUnit * (1Pi / 6))],
+           ])
+    out: "[[Sqrt(3) / 2 * i, -(Sqrt(3) / 2) * i], [0, -1 / 2 * i]]"
+  tex:
+    in: \sinh(\bigl\lbrack\bigl\lbrack\frac{i\times1\pi}{3}, -(i\times1\pi)/3\bigr\rbrack, \bigl\lbrack0, -(i\times1\pi)/6\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\frac{3^{1/2}}{2}i, -\frac{3^{1/2}}{2}i\bigr\rbrack, \bigl\lbrack0, -\frac{1}{2}i\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Sinh[List[List[Times[I, Divide[Times[1, Pi], 3]], Minus[Times[I, Divide[Times[1, Pi], 3]]]], List[0, Minus[Times[I, Divide[Times[1, Pi], 6]]]]]]
+  wolfram:
+    in: Sinh[List[List[Times[I, Divide[Times[1, Pi], 3]], Minus[Times[I, Divide[Times[1, Pi], 3]]]], List[0, Minus[Times[I, Divide[Times[1, Pi], 6]]]]]]
+interval-arithmetic-sinh-is-increasing-so-sinh-0:
+  epsil:
+    in: Sinh(Interval(0, Ln(3)))
+    out: Interval(0, 4 / 3)
+  tex:
+    in: \sinh(\mathrm{Interval}(0, \ln(3)))
+    out: \mathrm{Interval}(0, \frac{4}{3})
+  fullform:
+    in: Sinh[Interval[List[0, Log[3]]]]
+  wolfram:
+    in: Sinh[Interval[List[0, Log[3]]]]
+uncertainty-propagation-sinh-2-sqrt-3-pm-0-1:
+  epsil:
+    in: Sinh(Around(2 / Sqrt(3), 0.1))
+    out: Around(1.428_960_581_481_575_8, 0.174_411_248_015_377_8)
+  tex:
+    in: \sinh(\mathrm{Around}(\frac{2}{\sqrt{3}}, 0.1))
+    out: \mathrm{Around}(1.428\,960\,581\,481\,575\,8, 0.174\,411\,248\,015\,377\,8)
+  fullform:
+    in: Sinh[Around[Divide[2, Sqrt[3]], 0.1]]
+  wolfram:
+    in: Sinh[Around[Divide[2, Sqrt[3]], 0.1]]
+sinh-positiveinfinity:
+  epsil:
+    in: Sinh(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \sinh(\infty)
+    out: \infty
+  fullform:
+    in: Sinh[Infinity]
+  wolfram:
+    in: Sinh[Infinity]
+sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic:
+  epsil:
+    in: Sinh(Ln(2))
+    out: 3 / 4
+  tex:
+    in: \sinh(\ln(2))
+    out: \frac{3}{4}
+  fullform:
+    in: Sinh[Log[2]]
+  wolfram:
+    in: Sinh[Log[2]]
+oddness-pulls-the-sign-out-of-a-symbolic:
+  epsil:
+    in: Sinh(-x)
+    out: -Sinh(x)
+  tex:
+    in: \sinh(-x)
+    out: -\sinh(x)
+  fullform:
+    in: Sinh[Minus[x]]
+sinh-arsinh-x-x-for-every-x:
+  epsil:
+    in: Sinh(Arsinh(x))
+    out: x
+  tex:
+    in: \sinh(\mathrm{arsinh}(x))
+    out: x
+  fullform:
+    in: Sinh[ArcSinh[x]]
+sinh-arsinh-2-2-for-every-x:
+  epsil:
+    in: Sinh(Arsinh(2))
+    out: "2"
+  tex:
+    in: \sinh(\mathrm{arsinh}(2))
+    out: "2"
+  fullform:
+    in: Sinh[ArcSinh[2]]
+  wolfram:
+    in: Sinh[ArcSinh[2]]
+derivative-cosh-x:
+  epsil:
+    in: D(Sinh(x), x)
+    out: Cosh(x)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\sinh(x)
+    out: \cosh(x)
+  fullform:
+    in: D[Sinh[x], x]
+antiderivative:
+  epsil:
+    in: Integrate(Sinh(x), x)
+    out: Cosh(x)
+  tex:
+    in: \int\!\sinh(x)\, \mathrm{d}x
+    out: \cosh(x)
+  fullform:
+    in: Integrate[Sinh[x], x]
+taylor-series-about-0:
+  epsil:
+    in: Series(Sinh(x), x, 0, 5)
+    out: 1 / 120 * x ^ 5 + 1 / 6 * x ^ 3 + x + BigO(x ^ 7)
+  tex:
+    in: \operatorname{Series}(\sinh(x), x, 0, 5)
+    out: x+\frac{x^3}{6}+\frac{x^5}{120}+O\left(x^7\right)
+  fullform:
+    in: Series[Sinh[x], x, 0, 5]
+  wolfram:
+    in:
+    note: Wolfram's Series[Sinh[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).
+the-definition-sinh-x-frac-e-x-e-x-2:
+  epsil:
+    in: TrigToExp(Sinh(x))
+    out: 1 / 2 * (-ExponentialE ^ (-x) + ExponentialE ^ x)
+  tex:
+    in: \mathrm{TrigToExp}(\sinh(x))
+    out: \frac{1}{2}(e^{x}-\exp(-x))
+  fullform:
+    in: TrigToExp[Sinh[x]]
+to-30-significant-digits-not-yet-the-last-digit:
+  epsil:
+    in: N(Sinh(1), 30)
+    out: 1.175_201_193_643_801_456_882_381_850_60
+  tex:
+    in: N(\sinh(1), 30)
+    out: 1.175\,201\,193\,643\,801\,456\,88
+  fullform:
+    in: N[Sinh[1], 30]
+  wolfram:
+    in: N[Sinh[1], 30]

@@ -1,0 +1,61 @@
+2-5-7-equiv-1:
+  epsil:
+    in: GroupProduct(CyclicGroup(6), GroupBasis("\(2)"), GroupBasis("\(5)"))
+    out: GroupBasis("1")
+  tex:
+    in: \mathrm{GroupProduct}(\mathrm{CyclicGroup}(6), \mathrm{GroupBasis}(\text{2}), \mathrm{GroupBasis}(\text{5}))
+    out: \mathrm{GroupBasis}(\text{1})
+  traditional:
+    in: \mathrm{GroupProduct}(C_{6}, \mathrm{GroupBasis}(\text{2}), \mathrm{GroupBasis}(\text{5}))
+    out: \mathrm{GroupBasis}(\text{1})
+  fullform:
+    in: GroupProduct[CyclicGroup[6], GroupBasis[String[2]], GroupBasis[String[5]]]
+    back: [GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, 2]], [GroupBasis, [String, 5]]]
+  oscar:
+    in: enumeratio_product(enumeratio_cyclic(cyclic_group(PermGroup, 6), 6), EnumeratioBasis("2"), EnumeratioBasis("5"))
+    out: combination:{"GroupBasis(1)":1}
+s-2-1:
+  epsil:
+    in: GroupProduct(DihedralGroup(4), GroupBasis("\(s0)"), GroupBasis("\(s0)"))
+    out: GroupBasis("0")
+  tex:
+    in: \mathrm{GroupProduct}(\mathrm{DihedralGroup}(4), \mathrm{GroupBasis}(\text{\mathrm{s0}}), \mathrm{GroupBasis}(\text{\mathrm{s0}}))
+    out: \mathrm{GroupBasis}(\text{0})
+  traditional:
+    in: \mathrm{GroupProduct}(D_{4}, \mathrm{GroupBasis}(\text{\mathrm{s0}}), \mathrm{GroupBasis}(\text{\mathrm{s0}}))
+    out: \mathrm{GroupBasis}(\text{0})
+  fullform:
+    in: GroupProduct[DihedralGroup[4], GroupBasis[String[s0]], GroupBasis[String[s0]]]
+  oscar:
+    in: enumeratio_product(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 4), 4), EnumeratioBasis("s0"), EnumeratioBasis("s0"))
+    out: combination:{"GroupBasis(0)":1}
+d-4-8:
+  epsil:
+    in: AlgebraDimension(GroupAlgebra(DihedralGroup(4)))
+    out: "8"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{GroupAlgebra}(\mathrm{DihedralGroup}(4)))
+    out: "8"
+  traditional:
+    in: \dim(k[D_{4}])
+    out: "8"
+  fullform:
+    in: AlgebraDimension[GroupAlgebra[DihedralGroup[4]]]
+  oscar:
+    in: dim((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 4), 4)).A)
+    out: "8"
+so-k-d-4-is-not-commutative-either:
+  epsil:
+    in: GroupIsAbelian(DihedralGroup(4))
+    out: False
+  tex:
+    in: \mathrm{GroupIsAbelian}(\mathrm{DihedralGroup}(4))
+    out: \bot
+  traditional:
+    in: \mathrm{GroupIsAbelian}(D_{4})
+    out: \mathrm{False}
+  fullform:
+    in: GroupIsAbelian[DihedralGroup[4]]
+  oscar:
+    in: is_abelian((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 4), 4)).G)
+    out: "false"

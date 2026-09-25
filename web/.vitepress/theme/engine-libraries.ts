@@ -53,10 +53,7 @@ export interface EngineLibraries {
  * `browser-session-worker.ts`) and never parses LaTeX at all (see
  * `worker-engine-setup.ts`'s own comment) -- both callers handle those two on their own.
  */
-export function applyEngineLibraries(
-  apply: (fn: (ce: ComputeEngine) => void) => void,
-  libs: EngineLibraries,
-): void {
+export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) => void, libs: EngineLibraries): void {
   // Carriers first: everything below declares heads OVER these minted types, so they
   // have to exist before a signature can name one.
   const constructorFor = Object.fromEntries(libs.DOMAINS.map((d) => [d.type, d.name]));
@@ -72,9 +69,7 @@ export function applyEngineLibraries(
   apply((ce) => libs.declareCollections(ce, { permutationType: "permutation" }));
   // Collections already declares the fast permutation heads under the same names, so
   // those are skipped here — one head, one owner.
-  apply((ce) =>
-    libs.declareStatistics(ce, libs.ALL_STATISTICS, { skipDeclared: true, domainTypes }),
-  );
+  apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { skipDeclared: true, domainTypes }));
   apply((ce) => libs.declareMaps(ce, constructorFor));
   apply(libs.declareAnalytic);
   apply(libs.declareFractals);

@@ -43,9 +43,7 @@ test("compute-engine names that differ from Wolfram", () => {
   expect(toWolfram(["IsPrime", 7])).toBe("PrimeQ[7]");
   expect(toWolfram(["IsSquareFree", 10])).toBe("SquareFreeQ[10]");
   expect(toWolfram(["At", ["List", 1, 2, 3], -1])).toBe("Part[List[1, 2, 3], -1]");
-  expect(toWolfram(["SetMinus", ["List", 1, 2], ["List", 2]])).toBe(
-    "Complement[List[1, 2], List[2]]",
-  );
+  expect(toWolfram(["SetMinus", ["List", 1, 2], ["List", 2]])).toBe("Complement[List[1, 2], List[2]]");
   expect(toWolfram(["NotEqual", 1, 2])).toBe("Unequal[1, 2]");
   expect(toWolfram(["Determinant", ["List", ["List", 1, 2], ["List", 3, 4]]])).toBe(
     "Det[List[List[1, 2], List[3, 4]]]",
@@ -67,12 +65,8 @@ test("Divides(a, b) swaps to Wolfram's Divisible(n, m)", () => {
 });
 
 test("All/Any rename to AllTrue/AnyTrue; the no-predicate form is inert on both sides", () => {
-  expect(toWolfram(["All", ["List", 1, 2, 3], "Positive"])).toBe(
-    "AllTrue[List[1, 2, 3], Positive]",
-  );
-  expect(toWolfram(["Any", ["List", 1, 2, 3], "Negative"])).toBe(
-    "AnyTrue[List[1, 2, 3], Negative]",
-  );
+  expect(toWolfram(["All", ["List", 1, 2, 3], "Positive"])).toBe("AllTrue[List[1, 2, 3], Positive]");
+  expect(toWolfram(["Any", ["List", 1, 2, 3], "Negative"])).toBe("AnyTrue[List[1, 2, 3], Negative]");
 });
 
 test("Fold keeps the same (f, init, xs) order as Wolfram's Fold[f, x, list]", () => {
@@ -87,9 +81,7 @@ test("Tabulate(f, n) renames to Array; the multi-dim form reshapes dims into a l
 test("Scan(xs, f) reorders to Wolfram's no-seed FoldList[f, list]; the seeded form doesn't map", () => {
   expect(toWolfram(["Scan", ["List", 1, 2, 3], "Add"])).toBe("FoldList[Plus, List[1, 2, 3]]");
   // Seeded form: length-preserving on our side, length+1 on Wolfram's — left unmapped.
-  expect(toWolfram(["Scan", ["List", 1, 2, 3], "Add", 10])).toBe(
-    "enumeratio`Scan[List[1, 2, 3], Plus, 10]",
-  );
+  expect(toWolfram(["Scan", ["List", 1, 2, 3], "Add", 10])).toBe("enumeratio`Scan[List[1, 2, 3], Plus, 10]");
 });
 
 test("special forms: log base and n-th root", () => {
@@ -111,9 +103,7 @@ test("special forms: digits become a step, sets a sorted list, clamp a Clip rang
 test("special forms: list-fold Sum/Product versus the iterator form", () => {
   expect(toWolfram(["Sum", ["List", 1, 2, 3]])).toBe("Total[List[1, 2, 3]]");
   expect(toWolfram(["Product", ["List", 1, 2, 3]])).toBe("Apply[Times, List[1, 2, 3]]");
-  expect(toWolfram(["Sum", ["Stirling", 4, "k"], ["Tuple", "k", 0, 4]])).toBe(
-    "Sum[StirlingS2[4, k], List[k, 0, 4]]",
-  );
+  expect(toWolfram(["Sum", ["Stirling", 4, "k"], ["Tuple", "k", 0, 4]])).toBe("Sum[StirlingS2[4, k], List[k, 0, 4]]");
 });
 
 test("special forms: anonymous functions use slots", () => {
@@ -131,9 +121,7 @@ test("DigitSum is Wolfram's own head, third argument included", () => {
 });
 
 test("special forms lowered to a Wolfram expression with no head of its own", () => {
-  expect(toWolfram(["IndexOf", ["List", 1, 2, 3], 9])).toBe(
-    "First[FirstPosition[List[1, 2, 3], 9, List[0]]]",
-  );
+  expect(toWolfram(["IndexOf", ["List", 1, 2, 3], 9])).toBe("First[FirstPosition[List[1, 2, 3], 9, List[0]]]");
   expect(toWolfram(["Degrees", 30])).toBe("Times[30, Degree]");
   expect(toWolfram(["Mode", ["List", 1, 2, 2]])).toBe("First[Commonest[List[1, 2, 2]]]");
 });
@@ -155,9 +143,7 @@ test("unmapped heads fall through unchanged, and say so", () => {
 test("a head whose Wolfram name means something else emits into our context", () => {
   // Falling through by name would produce `Area[DyckPath[…]]`, which a kernel reads as the
   // area of a region — a wrong answer rather than a missing one.
-  expect(toWolfram(["Area", ["DyckPath", ["List", 1, 0]]])).toBe(
-    "enumeratio`Area[DyckPath[List[1, 0]]]",
-  );
+  expect(toWolfram(["Area", ["DyckPath", ["List", 1, 0]]])).toBe("enumeratio`Area[DyckPath[List[1, 0]]]");
   expect(toWolfram(["Composition", ["List", 2, 1]])).toBe("enumeratio`Composition[List[2, 1]]");
   // And we do not claim a kernel can answer it.
   expect(isWolframHead("Area")).toBe(false);
@@ -212,10 +198,6 @@ test("Unique(xs) renames to Wolfram's DeleteDuplicates[list]", () => {
 });
 
 test("PositionalNumerals(b) unwraps to the bare base Wolfram's IntegerDigits/FromDigits take", () => {
-  expect(toWolfram(["IntegerDigits", 2147, ["PositionalNumerals", 2]])).toBe(
-    "IntegerDigits[2147, 2]",
-  );
-  expect(toWolfram(["FromDigits", ["List", 1, 0, 1], ["PositionalNumerals", 2]])).toBe(
-    "FromDigits[List[1, 0, 1], 2]",
-  );
+  expect(toWolfram(["IntegerDigits", 2147, ["PositionalNumerals", 2]])).toBe("IntegerDigits[2147, 2]");
+  expect(toWolfram(["FromDigits", ["List", 1, 0, 1], ["PositionalNumerals", 2]])).toBe("FromDigits[List[1, 0, 1], 2]");
 });

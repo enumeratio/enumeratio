@@ -40,8 +40,6 @@ examples:
     expected: [DirichletBeta, 4]
     category: Possible issues
     caption: Even $s \ge 4$ has no closed form and stays symbolic; N() gives $0.98894\ldots$
-    divergence:
-      wolfram: Stays symbolic here; Wolfram rewrites it via $\zeta(4, 1/4)$ and $\zeta(4, 3/4)$ instead of a further-reduced number.
   - id: numeric-for-a-floating-point-argument-through-4
     expr: [DirichletBeta, 2.5]
     expected: { num: "0.948622174037054707445" }
@@ -62,12 +60,7 @@ examples:
     caption: Complex arguments, here on the critical line
   - id: threads-elementwise-over-an-array
     expr: [DirichletBeta, [List, [List, 1, -1], [List, -1, 1]]]
-    expected:
-      [
-        List,
-        [List, [Multiply, [Rational, 1, 4], Pi], 0],
-        [List, 0, [Multiply, [Rational, 1, 4], Pi]],
-      ]
+    expected: [List, [List, [Multiply, [Rational, 1, 4], Pi], 0], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]
     category: Scope
     caption: Threads elementwise over an array
   - id: beta-s-to-1-as-s-to-infty

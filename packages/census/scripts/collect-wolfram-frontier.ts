@@ -36,8 +36,7 @@ const work = mkdtempSync(join(tmpdir(), "wolfram-frontier-"));
 const out = join(work, "examples.json");
 // Wolfram lists are braces; a JSON array would read as function application and take the
 // whole script down with it.
-const wolframList = (items: readonly string[]): string =>
-  `{${items.map((item) => JSON.stringify(item)).join(", ")}}`;
+const wolframList = (items: readonly string[]): string => `{${items.map((item) => JSON.stringify(item)).join(", ")}}`;
 
 const script = `
 syms = ${wolframList(targets)};
@@ -79,8 +78,7 @@ for (const [symbol, categories] of Object.entries(examples)) {
 
 /** What our engine answers, under our own spelling — bare compute-engine plus every
  *  library we ship. */
-const answered = (): Set<string> =>
-  new Set([...bindings(new ComputeEngine()), ...bindings(fullEngine())]);
+const answered = (): Set<string> => new Set([...bindings(new ComputeEngine()), ...bindings(fullEngine())]);
 
 const ours = answered();
 /** Wolfram head → our head, for the heads we have under another name — a straight
@@ -202,6 +200,5 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = ${JSON.st
 
 writeFileSync(new URL("../src/wolfram-frontier-data.ts", import.meta.url), source);
 process.stdout.write(
-  `wolfram-frontier-data.ts — ${swept} symbols, ${exampleCount} examples; ` +
-    `${frontier.length} heads unanswered\n`,
+  `wolfram-frontier-data.ts — ${swept} symbols, ${exampleCount} examples; ` + `${frontier.length} heads unanswered\n`,
 );

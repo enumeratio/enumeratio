@@ -1,0 +1,36 @@
+name: HararyGraph
+domain: Collections
+signature: HararyGraph(k, n)
+summary: The minimum-edge k-connected graph on n vertices (Harary, 1962).
+signatures:
+  - call: HararyGraph(k, n)
+    description: EdgeCount = ceil(k n / 2), minimum vertex degree >= k.
+    library: enumeratio-collections
+details:
+  - "k even: the circulant CirculantGraph(n, {1, …, k/2}). k odd, n even: that circulant plus the n/2 diametrically-opposite edges. k odd, n odd: that circulant plus vertex 1 joined to BOTH floor(n/2)+1 and ceil(n/2)+1 (1 alone ends up with degree k + 1 -- the one vertex n*k being odd forces to take the remainder), plus i <-> i + ceil(n/2) (1-based) giving everyone else their kth edge."
+  - "Kernel-verified against Wolfram 15 for the odd/odd case: HararyGraph(3, 7) gives exactly the 7-cycle plus {1-4, 1-5, 2-6, 3-7}. The even-k and (odd-k, even-n) cases follow the standard, unambiguous Harary construction and were not separately kernel-checked."
+examples:
+  - id: harary-4-7-edge-count-and-min-degree
+    expr: [EdgeCount, [HararyGraph, 4, 7]]
+    expected: 14
+  - id: harary-3-7-exact-edges
+    expr: [EdgeList, [HararyGraph, 3, 7]]
+    expected:
+      [
+        List,
+        [UndirectedEdge, 1, 2],
+        [UndirectedEdge, 2, 3],
+        [UndirectedEdge, 3, 4],
+        [UndirectedEdge, 4, 5],
+        [UndirectedEdge, 5, 6],
+        [UndirectedEdge, 6, 7],
+        [UndirectedEdge, 7, 1],
+        [UndirectedEdge, 1, 4],
+        [UndirectedEdge, 1, 5],
+        [UndirectedEdge, 2, 6],
+        [UndirectedEdge, 3, 7],
+      ]
+    caption: The 7-cycle plus {1-4, 1-5, 2-6, 3-7} -- kernel-verified
+seeAlso:
+  - CirculantGraph
+  - IsConnectedGraph
