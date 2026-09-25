@@ -1,0 +1,36 @@
+centers-add-and-radii-add:
+  epsil:
+    in: CenteredInterval(1, 1 / 2) + CenteredInterval(2, 1 / 4)
+    out: CenteredInterval(3, 3 / 4)
+  tex:
+    in: \mathrm{CenteredInterval}(1, \frac{1}{2})+\mathrm{CenteredInterval}(2, \frac{1}{4})
+    out: \mathrm{CenteredInterval}(3, \frac{3}{4})
+  wolfram:
+    in: Plus[CenteredInterval[1, Rational[1, 2]], CenteredInterval[2, Rational[1, 4]]]
+an-exact-factor-scales-center-and-radius:
+  epsil:
+    in: 2 * CenteredInterval(2, 1 / 2)
+    out: CenteredInterval(4, 1)
+  tex:
+    in: 2\mathrm{CenteredInterval}(2, \frac{1}{2})
+    out: \mathrm{CenteredInterval}(4, 1)
+  wolfram:
+    in: Times[2, CenteredInterval[2, Rational[1, 2]]]
+converts-an-interval-to-center-radius-form:
+  epsil:
+    in: CenteredInterval(Interval(1, 3))
+    out: CenteredInterval(2, 1)
+  tex:
+    in: \mathrm{CenteredInterval}(\mathrm{Interval}(1, 3))
+    out: \mathrm{CenteredInterval}(2, 1)
+  wolfram:
+    in: CenteredInterval[Interval[List[1, 3]]]
+radii-add-under-subtraction-too:
+  epsil:
+    in: CenteredInterval(5, 1 / 4) - CenteredInterval(1, 1 / 4)
+    out: CenteredInterval(4, 1 / 2)
+  tex:
+    in: \mathrm{CenteredInterval}(5, \frac{1}{4})-\mathrm{CenteredInterval}(1, \frac{1}{4})
+    out: \mathrm{CenteredInterval}(4, \frac{1}{2})
+  wolfram:
+    in: Subtract[CenteredInterval[5, Rational[1, 4]], CenteredInterval[1, Rational[1, 4]]]

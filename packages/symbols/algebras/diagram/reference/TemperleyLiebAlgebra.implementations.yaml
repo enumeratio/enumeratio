@@ -1,4 +1,13 @@
 c-4:
+  epsil:
+    in: AlgebraDimension(TemperleyLiebAlgebra(4))
+    out: "14"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{TemperleyLiebAlgebra}(4))
+    out: "14"
+  traditional:
+    in: \dim(\mathrm{TL}_{4})
+    out: "14"
   sage:
     in: (TemperleyLiebAlgebra(4, enumeratio_delta, enumeratio_ring)).dimension()
     out: "14"
@@ -6,14 +15,38 @@ c-4:
     in: dim(EnumeratioDiagramAlgebra(:temperley_lieb, 4))
     out: "14"
 the-cup-cap-is-planar-so-it-belongs:
+  epsil:
+    in: Diagram([[1, 2], [-1, -2], [3, -3]]) in TemperleyLiebAlgebra(3)
+    out: True
+  tex:
+    in: \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{TemperleyLiebAlgebra}(3)
+    out: \top
+  traditional:
+    in: \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{TL}_{3}
+    out: \mathrm{True}
   sage:
     in: enumeratio_element(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))
     out: True
 e-1-2-delta-e-1:
+  epsil:
+    in: NonCommutativeMultiply(Diagram([[1, 2], [-1, -2]]), Diagram([[1, 2], [-1, -2]]))
+    out: delta * Diagram([[1, 2], [-1, -2]])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack))
+    out: \delta\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack)
   sage:
     in: (enumeratio_diagram([[1, 2], [-1, -2]]) * enumeratio_diagram([[1, 2], [-1, -2]]))
     out: delta*P{{-2, -1}, {1, 2}}
 the-cup-cap-and-the-identity-all-of-tl-2:
+  epsil:
+    in: Basis(TemperleyLiebAlgebra(2))
+    out: "[Diagram([[1, 2], [-1, -2]]), Diagram([[1, -1], [2, -2]])]"
+  tex:
+    in: \mathrm{Basis}(\mathrm{TemperleyLiebAlgebra}(2))
+    out: \bigl\lbrack\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+  traditional:
+    in: \mathrm{Basis}(\mathrm{TL}_{2})
+    out: \bigl\lbrack\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack)\bigr\rbrack
   sage:
     in: list((TemperleyLiebAlgebra(2, enumeratio_delta, enumeratio_ring)).basis())
     out: "[T{{-2, -1}, {1, 2}}, T{{-2, 2}, {-1, 1}}]"

@@ -1,0 +1,18 @@
+adjacency-matrix-of-k4:
+  epsil:
+    in: AdjacencyMatrix(CompleteGraph(4))
+    out: "[[0, 1, 1, 1], [1, 0, 1, 1], [1, 1, 0, 1], [1, 1, 1, 0]]"
+  tex:
+    in: \mathrm{AdjacencyMatrix}(\mathrm{CompleteGraph}(4))
+    out: \bigl\lbrack\bigl\lbrack0, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 0\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: AdjacencyMatrix[CompleteGraph[4]]
+a-directed-edge-is-asymmetric:
+  epsil:
+    in: AdjacencyMatrix(Graph([1, 2], [DirectedEdge(1, 2)]))
+    out: "[[0, 1], [0, 0]]"
+  tex:
+    in: \mathrm{AdjacencyMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2)\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: AdjacencyMatrix[Graph[List[1, 2], List[DirectedEdge[1, 2]]]]

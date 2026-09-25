@@ -1,0 +1,7 @@
+count-noncrossingpermutations-5-105:
+  epsil:
+    in: Count(NonCrossingPermutations(5))
+    out: "105"
+  tex:
+    in: \mathrm{Count}(\mathrm{NonCrossingPermutations}(5))
+    out: "105"

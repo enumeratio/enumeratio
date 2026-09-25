@@ -1,0 +1,35 @@
+sqrt-x-2-x-for-positive-x:
+  epsil:
+    in: PowerExpand(Sqrt(x ^ 2))
+    out: x
+  tex:
+    in: \mathrm{PowerExpand}(\sqrt{x^2})
+    out: x
+splits-a-logarithm-of-a-product:
+  epsil:
+    in: PowerExpand(Ln(x * y))
+    out: Ln(x) + Ln(y)
+  tex:
+    in: \mathrm{PowerExpand}(\ln(xy))
+    out: \ln(x)+\ln(y)
+pulls-out-an-exponent:
+  epsil:
+    in: PowerExpand(Ln(x ^ n))
+    out: n * Ln(x)
+  tex:
+    in: \mathrm{PowerExpand}(\ln(x^{n}))
+    out: n\ln(x)
+distributes-a-power-over-a-product:
+  epsil:
+    in: PowerExpand((a * b) ^ c)
+    out: a ^ c * b ^ c
+  tex:
+    in: \mathrm{PowerExpand}((ab)^{c})
+    out: a^{c}b^{c}
+powerexpand-sqrt-a-times-b:
+  epsil:
+    in: PowerExpand(Sqrt(a * b))
+    out: Sqrt(a) * Sqrt(b)
+  tex:
+    in: \mathrm{PowerExpand}(\sqrt{ab})
+    out: \sqrt{a}\sqrt{b}

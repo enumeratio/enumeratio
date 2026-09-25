@@ -1,4 +1,10 @@
 n-forces-the-numeric-result-that-plain:
+  epsil:
+    in: N(Tanh(0))
+    out: "0"
+  tex:
+    in: N(\tanh(0))
+    out: "0"
   wolfram:
     in: N[Tanh[0]]
     out: 0.
@@ -6,6 +12,12 @@ n-forces-the-numeric-result-that-plain:
       in: N[\tanh (0)]
       out: 0.
 n-tanh-1:
+  epsil:
+    in: N(Tanh(1))
+    out: 0.761_594_155_955_764_888_119
+  tex:
+    in: N(\tanh(1))
+    out: 0.761\,594\,155\,955\,764\,888\,119
   wolfram:
     in: N[Tanh[1]]
     out: "0.7615941559557649"
@@ -13,16 +25,159 @@ n-tanh-1:
       in: N[\tanh (1)]
       out: "0.761594"
 tanh-x-frac-sinh-x-cosh-x:
+  epsil:
+    in: Tanh(1) == Sinh(1) / Cosh(1)
+    out: True
+  tex:
+    in: \tanh(1)=\frac{\sinh(1)}{\cosh(1)}
+    out: \top
+  traditional:
+    in: \tanh(1)=\frac{\sinh(1)}{\cosh(1)}
+    out: \mathrm{True}
   wolfram:
     in: (Tanh[1] == Divide[Sinh[1], Cosh[1]])
+    back: Unreadable
     out: True
     tex:
       in: \tanh (1)=\frac{\sinh (1)}{\cosh (1)}
       out: \text{True}
 stays-symbolic-even-at-0-same-as-sinh-and-cosh:
+  epsil:
+    in: Tanh(0)
+    out: "0"
+  tex:
+    in: \tanh(0)
+    out: "0"
   wolfram:
     in: Tanh[0]
     out: "0"
     tex:
       in: \tanh (0)
       out: "0"
+a-float-argument-evaluates-directly-no-n-needed:
+  epsil:
+    in: Tanh(2.2)
+    out: 0.975_743_130_031_451_520_414
+  tex:
+    in: \tanh(2.2)
+    out: 0.975\,743\,130\,031\,451\,520\,414
+  wolfram:
+    in: Tanh[2.2]
+arbitrary-precision-via-n:
+  epsil:
+    in: N(Tanh(11 / 5))
+    out: 0.975_743_130_031_451_520_414
+  tex:
+    in: N(\tanh(\frac{11}{5}))
+    out: 0.975\,743\,130\,031\,451\,520\,414
+  wolfram:
+    in: N[Tanh[Rational[11, 5]]]
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Tanh(2.5 + i)
+    out: 1.005_548_011_895_06 + 0.012_322_138_255_828_353i
+  tex:
+    in: \tanh(2.5+i)
+    out: 1.005\,548\,011\,895\,06+0.012\,322\,138\,255\,828\,353i
+  wolfram:
+    in: Tanh[Complex[2.5, 1]]
+interval-arithmetic-tanh-is-increasing-so-tanh-0:
+  epsil:
+    in: Tanh(Interval(0, Ln(2)))
+    out: Interval(0, 3 / 5)
+  tex:
+    in: \tanh(\mathrm{Interval}(0, \ln(2)))
+    out: \mathrm{Interval}(0, \frac{3}{5})
+  wolfram:
+    in: Tanh[Interval[List[0, Log[2]]]]
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1:
+  epsil:
+    in: Tanh(Around(2 / Sqrt(3), 0.1))
+    out: Around(0.819_305_290_078_300_8, 0.032_873_884_164_971_15)
+  tex:
+    in: \tanh(\mathrm{Around}(\frac{2}{\sqrt{3}}, 0.1))
+    out: \mathrm{Around}(0.819\,305\,290\,078\,300\,8, 0.032\,873\,884\,164\,971\,15)
+  wolfram:
+    in: Tanh[Around[Divide[2, Sqrt[3]], 0.1]]
+the-horizontal-asymptote-at-infty:
+  epsil:
+    in: Tanh(PositiveInfinity)
+    out: "1"
+  tex:
+    in: \tanh(\infty)
+    out: "1"
+  wolfram:
+    in: Tanh[Infinity]
+tanh-i-pi-4-i-tan-pi-4-i:
+  epsil:
+    in: Tanh(ImaginaryUnit * (Pi / 4))
+    out: i
+  tex:
+    in: \tanh(\frac{i\pi}{4})
+    out: i
+  wolfram:
+    in: Tanh[Times[I, Divide[Pi, 4]]]
+oddness-pulls-the-sign-out-of-a-symbolic:
+  epsil:
+    in: Tanh(-x)
+    out: -Tanh(x)
+  tex:
+    in: \tanh(-x)
+    out: -\tanh(x)
+tanh-artanh-x-x-for-every-x:
+  epsil:
+    in: Tanh(Artanh(x))
+    out: x
+  tex:
+    in: \tanh(\mathrm{artanh}(x))
+    out: x
+tanh-artanh-2-2-past-the-real-domain:
+  epsil:
+    in: Tanh(Artanh(2))
+    out: "2"
+  tex:
+    in: \tanh(\mathrm{artanh}(2))
+    out: "2"
+  wolfram:
+    in: Tanh[ArcTanh[2]]
+derivative-sech-2-x:
+  epsil:
+    in: D(Tanh(x), x)
+    out: Sech(x) ^ 2
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\tanh(x)
+    out: \mathrm{sech}(x)^2
+antiderivative-ln-cosh-x:
+  epsil:
+    in: Integrate(Tanh(x), x)
+    out: Ln(Cosh(x))
+  tex:
+    in: \int\!\tanh(x)\, \mathrm{d}x
+    out: \ln(\cosh(x))
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x:
+  epsil:
+    in: TrigToExp(Tanh(x))
+    out: |-
+      (-ExponentialE ^ (-x) + ExponentialE ^ x) / (ExponentialE ^ x + ExponentialE ^
+                                                                      (-x))
+  tex:
+    in: \mathrm{TrigToExp}(\tanh(x))
+    out: \frac{e^{x}-\exp(-x)}{e^{x}+\exp(-x)}
+tanh-has-no-limit-at-complex-infinity-undefined:
+  epsil:
+    in: Tanh(ComplexInfinity)
+    out: "`NaN`"
+  tex:
+    in: \tanh(\tilde\infty)
+    out: \operatorname{NaN}
+  wolfram:
+    in: Tanh[ComplexInfinity]
+to-30-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Tanh(1), 30)
+    out: 0.761_594_155_955_764_888_119_458_282_605
+  tex:
+    in: N(\tanh(1), 30)
+    out: 0.761\,594\,155\,955\,764\,888\,119
+  wolfram:
+    in: N[Tanh[1], 30]

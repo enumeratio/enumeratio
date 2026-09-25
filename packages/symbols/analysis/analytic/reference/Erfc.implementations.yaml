@@ -1,11 +1,39 @@
 erfc-0:
+  epsil:
+    in: Erfc(0)
+    out: "1"
+  tex:
+    in: \mathrm{Erfc}(0)
+    out: "1"
+  traditional:
+    in: \operatorname{erfc}(0)
+    out: "1"
   wolfram:
     in: Erfc[0]
     out: "1"
     tex:
       in: \text{erfc}(0)
       out: "1"
+erfc-infinity:
+  epsil:
+    in: Erfc(`Infinity`)
+    out: "0"
+  tex:
+    in: \mathrm{Erfc}(\infty)
+    out: "0"
+  traditional:
+    in: \operatorname{erfc}(\infty)
+    out: "0"
 erfc-negativeinfinity:
+  epsil:
+    in: Erfc(NegativeInfinity)
+    out: "2"
+  tex:
+    in: \mathrm{Erfc}(-\infty)
+    out: "2"
+  traditional:
+    in: \operatorname{erfc}(-\infty)
+    out: "2"
   wolfram:
     in: Erfc[-Infinity]
     out: "2"
@@ -13,6 +41,15 @@ erfc-negativeinfinity:
       in: \text{erfc}(-\infty )
       out: "2"
 a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: Erfc(0.5)
+    out: 0.479_500_122_186_953_462_317
+  tex:
+    in: \mathrm{Erfc}(0.5)
+    out: 0.479\,500\,122\,186\,953\,462\,317
+  traditional:
+    in: \operatorname{erfc}(0.5)
+    out: 0.479\,500\,122\,186\,953\,462\,317
   wolfram:
     in: Erfc[0.5]
     out: "0.4795001221869535"
@@ -20,20 +57,49 @@ a-floating-point-argument-evaluates-directly-to:
       in: \text{erfc}(0.5)
       out: "0.4795"
 erfc-z-2-erfc-z-here-at-z-1:
+  epsil:
+    in: Erfc(-1) + Erfc(1) == 2
+    out: True
+  tex:
+    in: \mathrm{Erfc}(-1)+\mathrm{Erfc}(1)=2
+    out: \top
+  traditional:
+    in: \operatorname{erfc}(-1)+\operatorname{erfc}(1)=2
+    out: \mathrm{True}
   wolfram:
     in: (Plus[Erfc[-1], Erfc[1]] == 2)
+    back: Unreadable
     out: Erfc[-1] + Erfc[1] == 2
     tex:
       in: \text{erfc}(-1)+\text{erfc}(1)=2
       out: \text{erfc}(-1)+\text{erfc}(1)=2
 definition-erf-z-erfc-z-1-see-erf:
+  epsil:
+    in: Erf(2) + Erfc(2) == 1
+    out: True
+  tex:
+    in: \operatorname{erf}(2)+\mathrm{Erfc}(2)=1
+    out: \top
+  traditional:
+    in: \operatorname{erf}(2)+\operatorname{erfc}(2)=1
+    out: \mathrm{True}
   wolfram:
     in: (Plus[Erf[2], Erfc[2]] == 1)
+    back: Unreadable
     out: Erf[2] + Erfc[2] == 1
     tex:
       in: \text{erf}(2)+\text{erfc}(2)=1
       out: \text{erf}(2)+\text{erfc}(2)=1
 an-exact-integer-argument-is-left-unevaluated:
+  epsil:
+    in: Erfc(1)
+    out: Erfc(1)
+  tex:
+    in: \mathrm{Erfc}(1)
+    out: \mathrm{Erfc}(1)
+  traditional:
+    in: \operatorname{erfc}(1)
+    out: \operatorname{erfc}(1)
   wolfram:
     in: Erfc[1]
     out: Erfc[1]
@@ -41,6 +107,15 @@ an-exact-integer-argument-is-left-unevaluated:
       in: \text{erfc}(1)
       out: \text{erfc}(1)
 the-gaussian-tail-shrinks-fast-only-about-7:
+  epsil:
+    in: Erfc(3.5)
+    out: 0.000_000_743_098_372_341_412_745_524
+  tex:
+    in: \mathrm{Erfc}(3.5)
+    out: 0.000\,000\,743\,098\,372\,341\,412\,745\,524
+  traditional:
+    in: \operatorname{erfc}(3.5)
+    out: 0.000\,000\,743\,098\,372\,341\,412\,745\,524
   wolfram:
     in: Erfc[3.5]
     out: 7.43098372341413*^-7
@@ -48,9 +123,128 @@ the-gaussian-tail-shrinks-fast-only-about-7:
       in: \text{erfc}(3.5)
       out: \text{7.43098372341413$\grave{ }$*${}^{\wedge}$-7}
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: Erfc([0, 1])
+    out: "[1, Erfc(1)]"
+  tex:
+    in: \mathrm{Erfc}(\bigl\lbrack0, 1\bigr\rbrack)
+    out: \bigl\lbrack1, \mathrm{Erfc}(1)\bigr\rbrack
+  traditional:
+    in: \mathrm{Erfc}(\bigl\lbrack0, 1\bigr\rbrack)
+    out: \bigl\lbrack1, \operatorname{erfc}(1)\bigr\rbrack
   wolfram:
     in: Erfc[List[0, 1]]
     out: "{1, Erfc[1]}"
     tex:
       in: \text{erfc}(\{0,1\})
       out: \{1,\text{erfc}(1)\}
+a-machine-precision-argument:
+  epsil:
+    in: Erfc(1.5)
+    out: 0.033_894_853_524_689_272_933
+  tex:
+    in: \mathrm{Erfc}(1.5)
+    out: 0.033\,894\,853\,524\,689\,272\,933
+  traditional:
+    in: \operatorname{erfc}(1.5)
+    out: 0.033\,894\,853\,524\,689\,272\,933
+  wolfram:
+    in: Erfc[1.5]
+complex-arguments-should-evaluate-as-they-do-for:
+  epsil:
+    in: Erfc(1.5 + -1 * i)
+    out: -0.078_399_207_498_933_45 + -0.027_963_711_238_655_847 * i
+  tex:
+    in: \mathrm{Erfc}(1.5-i)
+    out: -0.078\,399\,207\,498\,933\,45-0.027\,963\,711\,238\,655\,847i
+  traditional:
+    in: \operatorname{erfc}(1.5-i)
+    out: -0.078\,399\,207\,498\,933\,45-0.027\,963\,711\,238\,655\,847i
+  wolfram:
+    in: Erfc[Complex[1.5, -1]]
+listable-threads-over-its-limits-at-pm-infty:
+  epsil:
+    in: Erfc([PositiveInfinity, NegativeInfinity])
+    out: "[0, 2]"
+  tex:
+    in: \mathrm{Erfc}(\bigl\lbrack\infty, -\infty\bigr\rbrack)
+    out: \bigl\lbrack0, 2\bigr\rbrack
+  wolfram:
+    in: Erfc[List[Infinity, -Infinity]]
+interval-arithmetic-erfc-is-decreasing-so-the:
+  epsil:
+    in: Erfc(Interval(0.2, 0.3))
+    out: Interval(0.671_373_240_540_872_6, 0.777_297_410_789_521_5)
+  tex:
+    in: \mathrm{Erfc}(\mathrm{Interval}(0.2, 0.3))
+    out: \mathrm{Interval}(0.671\,373\,240\,540\,872\,6, 0.777\,297\,410\,789\,521\,5)
+  traditional:
+    in: \operatorname{erfc}(\mathrm{Interval}(0.2, 0.3))
+    out: \mathrm{Interval}(0.671\,373\,240\,540\,872\,6, 0.777\,297\,410\,789\,521\,5)
+  wolfram:
+    in: Erfc[Interval[List[0.2, 0.3]]]
+uncertainty-propagation:
+  epsil:
+    in: Erfc(Around(2, 0.01))
+    out: Around(0.004_677_734_981_047_266, 0.000_206_669_853_540_920_54)
+  tex:
+    in: \mathrm{Erfc}(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.004\,677\,734\,981\,047\,266, 0.000\,206\,669\,853\,540\,920\,54)
+  traditional:
+    in: \operatorname{erfc}(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.004\,677\,734\,981\,047\,266, 0.000\,206\,669\,853\,540\,920\,54)
+  wolfram:
+    in: Erfc[Around[2, 0.01]]
+erfc-x-2-erfc-x-applied-symbolically:
+  epsil:
+    in: Erfc(-x)
+    out: -Erfc(x) + 2
+  tex:
+    in: \mathrm{Erfc}(-x)
+    out: 2-\mathrm{Erfc}(x)
+  traditional:
+    in: \operatorname{erfc}(-x)
+    out: 2-\operatorname{erfc}(x)
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2:
+  epsil:
+    in: D(Erfc(x), x)
+    out: -2 * ExponentialE ^ (-x ^ 2) / Sqrt(Pi)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{Erfc}(x)
+    out: -\frac{2}{e^{x^2}}/\sqrt{\pi}
+  traditional:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\operatorname{erfc}(x)
+    out: -\frac{2}{e^{x^2}}/\sqrt{\pi}
+far-in-the-tail-erfc-keeps-full-relative:
+  epsil:
+    in: Erfc(9.5)
+    out: 376_921_448_565_487_994_168e-61
+  tex:
+    in: \mathrm{Erfc}(9.5)
+    out: 376\,921\,448\,565\,487\,994\,168\cdot10^{-61}
+  traditional:
+    in: \operatorname{erfc}(9.5)
+    out: 376\,921\,448\,565\,487\,994\,168\cdot10^{-61}
+  wolfram:
+    in: Erfc[9.5]
+whereas-1-erf-9-5-cancels-to-exactly-0-in:
+  epsil:
+    in: 1 - Erf(9.5)
+    out: "0"
+  tex:
+    in: 1-\operatorname{erf}(9.5)
+    out: "0"
+  wolfram:
+    in: Subtract[1, Erf[9.5]]
+to-30-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Erfc(2), 30)
+    out: 0.004_677_734_981_047_265_837_930_743_632_75
+  tex:
+    in: N(\mathrm{Erfc}(2), 30)
+    out: 0.004\,677\,734\,981\,047\,265\,837\,93
+  traditional:
+    in: N(\operatorname{erfc}(2), 30)
+    out: 0.004\,677\,734\,981\,047\,265\,837\,93
+  wolfram:
+    in: N[Erfc[2], 30]

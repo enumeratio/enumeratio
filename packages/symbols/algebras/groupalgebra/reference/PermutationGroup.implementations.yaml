@@ -1,0 +1,36 @@
+a-cyclic-group:
+  epsil:
+    in: GroupOrder(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]))
+    out: "6"
+  tex:
+    in: \mathrm{GroupOrder}(\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 9, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack\bigr\rbrack)\bigr\rbrack))
+    out: "6"
+  traditional:
+    in: \left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 9, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack\bigr\rbrack)\bigr\rbrack)\right|
+    out: "6"
+  wolfram:
+    in: GroupOrder[PermutationGroup[List[Cycles[List[List[1, 9, 6], List[3, 7]]]]]]
+s4-from-two-generators:
+  epsil:
+    in: GroupOrder(PermutationGroup([Cycles([[1, 2, 3, 4]]), Cycles([[1, 2]])]))
+    out: "24"
+  tex:
+    in: \mathrm{GroupOrder}(\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack)\bigr\rbrack))
+    out: "24"
+  traditional:
+    in: \left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack)\bigr\rbrack)\right|
+    out: "24"
+  wolfram:
+    in: GroupOrder[PermutationGroup[List[Cycles[List[List[1, 2, 3, 4]]], Cycles[List[List[1, 2]]]]]]
+the-dihedral-group-of-the-square:
+  epsil:
+    in: GroupOrder(PermutationGroup([Cycles([[1, 2, 3, 4]]), Cycles([[1, 3]])]))
+    out: "8"
+  tex:
+    in: \mathrm{GroupOrder}(\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack\bigr\rbrack)\bigr\rbrack))
+    out: "8"
+  traditional:
+    in: \left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack\bigr\rbrack)\bigr\rbrack)\right|
+    out: "8"
+  wolfram:
+    in: GroupOrder[PermutationGroup[List[Cycles[List[List[1, 2, 3, 4]]], Cycles[List[List[1, 3]]]]]]

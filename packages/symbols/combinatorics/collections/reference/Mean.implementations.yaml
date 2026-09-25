@@ -1,4 +1,10 @@
 mean-list-1-2-3-4:
+  epsil:
+    in: Mean([1, 2, 3, 4])
+    out: 5 / 2
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \frac{5}{2}
   wolfram:
     in: Mean[List[1, 2, 3, 4]]
     out: 5/2
@@ -6,6 +12,12 @@ mean-list-1-2-3-4:
       in: \text{Mean}[\{1,2,3,4\}]
       out: \frac{5}{2}
 mean-list-2-4-4-4-5-5-7-9:
+  epsil:
+    in: Mean([2, 4, 4, 4, 5, 5, 7, 9])
+    out: "5"
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack2, 4, 4, 4, 5, 5, 7, 9\bigr\rbrack)
+    out: "5"
   wolfram:
     in: Mean[List[2, 4, 4, 4, 5, 5, 7, 9]]
     out: "5"
@@ -13,20 +25,101 @@ mean-list-2-4-4-4-5-5-7-9:
       in: \text{Mean}[\{2,4,4,4,5,5,7,9\}]
       out: "5"
 mean-is-total-divided-by-count-mean-c-frac-sum-c:
+  epsil:
+    in: Mean([1, 2, 3, 4]) == (1 + 2 + 3 + 4) / Length([1, 2, 3, 4])
+    out: True
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)=\frac{1+2+3+4}{\mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)}
+    out: \top
+  traditional:
+    in: \mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)=\frac{1+2+3+4}{\mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)}
+    out: \mathrm{True}
   wolfram:
     in: (Mean[List[1, 2, 3, 4]] == Divide[Plus[1, 2, 3, 4], Length[List[1, 2, 3, 4]]])
+    back: Unreadable
     out: True
     tex:
       in: \text{Mean}[\{1,2,3,4\}]=\frac{1+2+3+4}{\text{Length}[\{1,2,3,4\}]}
       out: \text{True}
 a-single-outlier-drags-the-mean-far-from-the:
+  epsil:
+    in: Mean([-100, 1, 1, 1, 1, 20])
+    out: -38 / 3
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack-100, 1, 1, 1, 1, 20\bigr\rbrack)
+    out: -\frac{38}{3}
   wolfram:
     in: Mean[List[-100, 1, 1, 1, 1, 20]]
     out: -38/3
     tex:
       in: \text{Mean}[\{-100,1,1,1,1,20\}]
       out: -\frac{38}{3}
+given-a-matrix-mean-is-column-wise:
+  epsil:
+    in: Mean([[1, 10], [2, 20], [3, 30]])
+    out: "[2, 20]"
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack\bigl\lbrack1, 10\bigr\rbrack, \bigl\lbrack2, 20\bigr\rbrack, \bigl\lbrack3, 30\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack2, 20\bigr\rbrack
+  wolfram:
+    in: Mean[List[List[1, 10], List[2, 20], List[3, 30]]]
+mean-list-1p21-3p4-2p15-4-1p55:
+  epsil:
+    in: Mean([1.21, 3.4, 2.15, 4, 1.55])
+    out: "2.462"
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack1.21, 3.4, 2.15, 4, 1.55\bigr\rbrack)
+    out: "2.462"
+  wolfram:
+    in: Mean[List[1.21, 3.4, 2.15, 4, 1.55]]
+exact-rationals-give-an-exact-mean:
+  epsil:
+    in: Mean([1 / 2, 1 / 3, 1 / 6])
+    out: 1 / 3
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack\frac{1}{2}, \frac{1}{3}, \frac{1}{6}\bigr\rbrack)
+    out: \frac{1}{3}
+  wolfram:
+    in: Mean[List[Rational[1, 2], Rational[1, 3], Rational[1, 6]]]
+symbolic-data-gives-an-exact-symbolic-mean-frac:
+  epsil:
+    in: Mean([a, b, c, d])
+    out: 1 / 4 * (a + b + c + d)
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack a, b, c, d\bigr\rbrack)
+    out: \frac{a+b+c+d}{4}
+exact-constants-give-an-exact-mean-frac-2-e-pi-3:
+  epsil:
+    in: Mean([Pi, ExponentialE, 2])
+    out: 1 / 3 * (2 + ExponentialE + Pi)
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack\pi, e, 2\bigr\rbrack)
+    out: \frac{2+e+\pi}{3}
+  wolfram:
+    in: Mean[List[Pi, E, 2]]
+of-a-matrix-of-symbols-the-exact-mean-of-each:
+  epsil:
+    in: Mean([[a, u], [b, v], [c, w]])
+    out: "[1 / 3 * (a + b + c), 1 / 3 * (u + v + w)]"
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack\bigl\lbrack a, u\bigr\rbrack, \bigl\lbrack b, v\bigr\rbrack, \bigl\lbrack c, w\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\frac{a+b+c}{3}, \frac{u+v+w}{3}\bigr\rbrack
+the-mean-of-a-lazy-range-exactly:
+  epsil:
+    in: Mean(Range(1, 100))
+    out: 101 / 2
+  tex:
+    in: \mathrm{mean}(1..100)
+    out: \frac{101}{2}
+  wolfram:
+    in: Mean[Range[1, 100]]
 the-mean-of-no-data-is-nan:
+  epsil:
+    in: Mean([])
+    out: "`NaN`"
+  tex:
+    in: \mathrm{mean}(\bigl\lbrack \bigr\rbrack)
+    out: \operatorname{NaN}
   wolfram:
     in: Mean[List[]]
     note: Wolfram leaves Mean[{}] unevaluated (with a Mean::rectn message).

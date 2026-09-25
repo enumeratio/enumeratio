@@ -1,0 +1,42 @@
+exp-about-a-nonzero-point:
+  epsil:
+    in: SeriesCoefficient(Exp(x), [x, 1, 2])
+    out: 1 / 2 * ExponentialE
+  tex:
+    in: \mathrm{SeriesCoefficient}(e^{x}, \bigl\lbrack x, 1, 2\bigr\rbrack)
+    out: \frac{e}{2}
+sin-about-zero:
+  epsil:
+    in: SeriesCoefficient(Sin(x), [x, 0, 5])
+    out: 1 / 120
+  tex:
+    in: \mathrm{SeriesCoefficient}(\sin(x), \bigl\lbrack x, 0, 5\bigr\rbrack)
+    out: \frac{1}{120}
+geometric-series:
+  epsil:
+    in: SeriesCoefficient(1 / (1 - x), [x, 0, 10])
+    out: "1"
+  tex:
+    in: \mathrm{SeriesCoefficient}(\frac{1}{1-x}, \bigl\lbrack x, 0, 10\bigr\rbrack)
+    out: "1"
+log-series:
+  epsil:
+    in: SeriesCoefficient(Ln(1 + x), [x, 0, 4])
+    out: -1 / 4
+  tex:
+    in: \mathrm{SeriesCoefficient}(\ln(1+x), \bigl\lbrack x, 0, 4\bigr\rbrack)
+    out: -\frac{1}{4}
+a-negative-order-laurent-coefficient-declines:
+  epsil:
+    in: SeriesCoefficient(1 / x, [x, 0, -1])
+    out: SeriesCoefficient(1 / x, [x, 0, -1])
+  tex:
+    in: \mathrm{SeriesCoefficient}(\frac{1}{x}, \bigl\lbrack x, 0, -1\bigr\rbrack)
+    out: \mathrm{SeriesCoefficient}(\frac{1}{x}, \bigl\lbrack x, 0, -1\bigr\rbrack)
+a-removable-singularity-declines:
+  epsil:
+    in: SeriesCoefficient(Sin(x) / x, [x, 0, 0])
+    out: SeriesCoefficient(Sin(x) / x, [x, 0, 0])
+  tex:
+    in: \mathrm{SeriesCoefficient}(\frac{\sin(x)}{x}, \bigl\lbrack x, 0, 0\bigr\rbrack)
+    out: \mathrm{SeriesCoefficient}(\frac{\sin(x)}{x}, \bigl\lbrack x, 0, 0\bigr\rbrack)

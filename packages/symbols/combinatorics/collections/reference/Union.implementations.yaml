@@ -1,4 +1,10 @@
 union-list-1-2-3-list-3-4:
+  epsil:
+    in: Union([1, 2, 3], [3, 4])
+    out: "{1, 2, 3, 4}"
+  tex:
+    in: \bigl\lbrack1, 2, 3\bigr\rbrack\cup\operatorname{List}(3, 4)
+    out: \lbrace1, 2, 3, 4\rbrace
   wolfram:
     in: Union[List[1, 2, 3], List[3, 4]]
     out: "{1, 2, 3, 4}"
@@ -6,6 +12,12 @@ union-list-1-2-3-list-3-4:
       in: \{1,2,3\}\cup \{3,4\}
       out: \{1,2,3,4\}
 union-list-1-2-list-2-3-list-3-4:
+  epsil:
+    in: Union([1, 2], [2, 3], [3, 4])
+    out: "{1, 2, 3, 4}"
+  tex:
+    in: \operatorname{List}(1, 2)\cup\operatorname{List}(2, 3)\cup\operatorname{List}(3, 4)
+    out: \lbrace1, 2, 3, 4\rbrace
   wolfram:
     in: Union[List[1, 2], List[2, 3], List[3, 4]]
     out: "{1, 2, 3, 4}"
@@ -13,31 +25,119 @@ union-list-1-2-list-2-3-list-3-4:
       in: \{1,2\}\cup \{2,3\}\cup \{3,4\}
       out: \{1,2,3,4\}
 union-is-commutative-argument-order-doesn-t:
+  epsil:
+    in: Union([1, 2, 3], [2, 3, 4]) == Union([2, 3, 4], [1, 2, 3])
+    out: True
+  tex:
+    in: \bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack=\bigl\lbrack2, 3, 4\bigr\rbrack\cup\bigl\lbrack1, 2, 3\bigr\rbrack
+    out: \top
+  traditional:
+    in: \bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack=\bigl\lbrack2, 3, 4\bigr\rbrack\cup\bigl\lbrack1, 2, 3\bigr\rbrack
+    out: \mathrm{True}
   wolfram:
     in: (Union[List[1, 2, 3], List[2, 3, 4]] == Union[List[2, 3, 4], List[1, 2, 3]])
+    back: Unreadable
     out: True
     tex:
       in: \{1,2,3\}\cup \{2,3,4\}=\{2,3,4\}\cup \{1,2,3\}
       out: \text{True}
 inclusion-exclusion-a-cup-b-a-b-a-cap-b-see:
+  epsil:
+    in: |-
+      Length(Union([1, 2, 3], [2, 3, 4])) == Length([1, 2, 3]) + Length([2, 3, 4]) -
+                                             Length(Intersection([1, 2, 3], [2, 3, 4]))
+    out: True
+  tex:
+    in: \mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)=(\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack))-\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)=(\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack))-\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)
+    out: \mathrm{True}
   wolfram:
     in: (Length[Union[List[1, 2, 3], List[2, 3, 4]]] == Subtract[Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])
+    back: Unreadable
     out: True
     tex:
       in: \text{Length}[\{1,2,3\}\cup \{2,3,4\}]=(\text{Length}[\{1,2,3\}]+\text{Length}[\{2,3,4\}])-\text{Length}[\{1,2,3\}\cap \{2,3,4\}]
       out: \text{True}
 combining-the-divisors-of-10-and-15-into-one-set:
+  epsil:
+    in: Union(Divisors(10), Divisors(15))
+    out: "{1, 2, 3, 5, 10, 15}"
+  tex:
+    in: \mathrm{Divisors}(10)\cup\mathrm{Divisors}(15)
+    out: \lbrace1, 2, 3, 5, 10, 15\rbrace
   wolfram:
     in: Union[Divisors[10], Divisors[15]]
     out: "{1, 2, 3, 5, 10, 15}"
     tex:
       in: \text{Divisors}[10]\cup \text{Divisors}[15]
       out: \{1,2,3,5,10,15\}
+combining-the-divisors-of-10-12-and-20-into-one:
+  epsil:
+    in: Union(Divisors(10), Divisors(12), Divisors(20))
+    out: "{1, 2, 3, 4, 5, 6, 10, 12, 20}"
+  tex:
+    in: \mathrm{Divisors}(10)\cup\mathrm{Divisors}(12)\cup\mathrm{Divisors}(20)
+    out: \lbrace1, 2, 3, 4, 5, 6, 10, 12, 20\rbrace
+  wolfram:
+    in: Union[Divisors[10], Divisors[12], Divisors[20]]
+union-list-a-b-c-list-b-c-d:
+  epsil:
+    in: Union([a, b, c], [b, c, d])
+    out: "{a, b, c, d}"
+  tex:
+    in: \bigl\lbrack a, b, c\bigr\rbrack\cup\bigl\lbrack b, c, d\bigr\rbrack
+    out: \lbrace a, b, c, d\rbrace
+a-single-list-is-de-duplicated:
+  epsil:
+    in: Union([1, 2, 1, 3, 6, 2, 2])
+    out: "{1, 2, 3, 6}"
+  tex:
+    in: \mathrm{Union}(\bigl\lbrack1, 2, 1, 3, 6, 2, 2\bigr\rbrack)
+    out: \lbrace1, 2, 3, 6\rbrace
+  wolfram:
+    in: Union[List[1, 2, 1, 3, 6, 2, 2]]
+symbolic-elements-merged-across-three-lists:
+  epsil:
+    in: Union([a, b, a, c], [d, a, f, b], [c, a])
+    out: "{a, b, c, d, f}"
+  tex:
+    in: \bigl\lbrack a, b, a, c\bigr\rbrack\cup\bigl\lbrack d, a, f, b\bigr\rbrack\cup\operatorname{List}(c, a)
+    out: \lbrace a, b, c, d, f\rbrace
 elements-can-themselves-be-lists-1-2-and-2-1:
+  epsil:
+    in: Union([[1, 2], [1, 2, 3]], [[2, 1], [1, 2]], [[3, 2, 1], [1, 2, 3]])
+    out: "{[1, 2], [1, 2, 3], [2, 1], [3, 2, 1]}"
+  tex:
+    in: \operatorname{List}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)\cup\operatorname{List}(\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)\cup\operatorname{List}(\bigl\lbrack3, 2, 1\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \lbrace\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack3, 2, 1\bigr\rbrack\rbrace
   wolfram:
     in: Union[List[List[1, 2], List[1, 2, 3]], List[List[2, 1], List[1, 2]], List[List[3, 2, 1], List[1, 2, 3]]]
     note: "Wolfram sorts the result into canonical order, shorter lists first: {{1, 2}, {2, 1}, {1, 2, 3}, {3, 2, 1}}."
 with-no-arguments-the-union-is-empty:
+  epsil:
+    in: Union()
+    out: EmptySet
+  tex:
+    in:
+    out: \emptyset
   wolfram:
     in: Union[]
     note: Union[] is the empty list {} in Wolfram.
+the-empty-set-is-the-identity-for-union-a-cup:
+  epsil:
+    in: Union({1, 2}, EmptySet)
+    out: "{1, 2}"
+  tex:
+    in: \lbrace1, 2\rbrace\cup\emptyset
+    out: \lbrace1, 2\rbrace
+counting-the-distinct-values-in-a-list-see:
+  epsil:
+    in: Length(Union([1, 2, 1, 3, 6, 2, 2]))
+    out: "4"
+  tex:
+    in: \mathrm{Length}(\mathrm{Union}(\bigl\lbrack1, 2, 1, 3, 6, 2, 2\bigr\rbrack))
+    out: "4"
+  wolfram:
+    in: Length[Union[List[1, 2, 1, 3, 6, 2, 2]]]

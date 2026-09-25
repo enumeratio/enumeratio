@@ -1,0 +1,21 @@
+petersen-is-3-regular:
+  epsil:
+    in: VertexDegree(PetersenGraph())
+    out: "[3, 3, 3, 3, 3, 3, 3, 3, 3, 3]"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{PetersenGraph}())
+    out: \bigl\lbrack3, 3, 3, 3, 3, 3, 3, 3, 3, 3\bigr\rbrack
+  wolfram:
+    in: VertexDegree[PetersenGraph[]]
+petersen-is-not-bipartite:
+  epsil:
+    in: IsBipartiteGraph(PetersenGraph())
+    out: False
+  tex:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{PetersenGraph}())
+    out: \bot
+  traditional:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{PetersenGraph}())
+    out: \mathrm{False}
+  wolfram:
+    in: BipartiteGraphQ[PetersenGraph[]]

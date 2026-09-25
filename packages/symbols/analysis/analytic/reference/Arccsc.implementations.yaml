@@ -1,4 +1,10 @@
 arccsc-1:
+  epsil:
+    in: Arccsc(1)
+    out: 1 / 2 * Pi
+  tex:
+    in: \mathrm{arccsc}(1)
+    out: \frac{\pi}{2}
   wolfram:
     in: ArcCsc[1]
     out: Pi/2
@@ -6,6 +12,12 @@ arccsc-1:
       in: \csc ^{-1}(1)
       out: \frac{\pi }{2}
 arccsc-2:
+  epsil:
+    in: Arccsc(2)
+    out: 1 / 6 * Pi
+  tex:
+    in: \mathrm{arccsc}(2)
+    out: \frac{\pi}{6}
   wolfram:
     in: ArcCsc[2]
     out: Pi/6
@@ -13,13 +25,74 @@ arccsc-2:
       in: \csc ^{-1}(2)
       out: \frac{\pi }{6}
 undoes-csc-csc-arccsc-x-x:
+  epsil:
+    in: Csc(Arccsc(2)) == 2
+    out: True
+  tex:
+    in: \csc(\mathrm{arccsc}(2))=2
+    out: \top
+  traditional:
+    in: \csc(\mathrm{arccsc}(2))=2
+    out: \mathrm{True}
   wolfram:
     in: (Csc[ArcCsc[2]] == 2)
+    back: Unreadable
     out: True
     tex:
       in: \csc \left(\csc ^{-1}(2)\right)=2
       out: \text{True}
+arccsc-sqrt-2-pi-4:
+  epsil:
+    in: Arccsc(Sqrt(2))
+    out: 1 / 4 * Pi
+  tex:
+    in: \mathrm{arccsc}(\sqrt{2})
+    out: \frac{\pi}{4}
+  wolfram:
+    in: ArcCsc[Sqrt[2]]
+an-odd-function:
+  epsil:
+    in: Arccsc(-2)
+    out: -1 / 6 * Pi
+  tex:
+    in: \mathrm{arccsc}(-2)
+    out: -\frac{\pi}{6}
+  wolfram:
+    in: ArcCsc[-2]
+inside-1-1-the-value-is-complex:
+  epsil:
+    in: Arccsc(0.5)
+    out: 1.570_796_326_794_896_6 + -1.316_957_896_924_816_6 * i
+  tex:
+    in: \mathrm{arccsc}(0.5)
+    out: 1.570\,796\,326\,794\,896\,6-1.316\,957\,896\,924\,816\,6i
+  wolfram:
+    in: ArcCsc[0.5]
+arccsc-positiveinfinity:
+  epsil:
+    in: Arccsc(PositiveInfinity)
+    out: "0"
+  tex:
+    in: \mathrm{arccsc}(\infty)
+    out: "0"
+  wolfram:
+    in: ArcCsc[Infinity]
+a-pole-arccsc-0-is-complex-infinity:
+  epsil:
+    in: Arccsc(0)
+    out: ComplexInfinity
+  tex:
+    in: \mathrm{arccsc}(0)
+    out: \tilde\infty
+  wolfram:
+    in: ArcCsc[0]
 derivative-for-real-x-1:
+  epsil:
+    in: D(Arccsc(x), x)
+    out: -1 / (Abs(x) * Sqrt(x ^ 2 - 1))
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arccsc}(x)
+    out: -(\vert x\vert\sqrt{x^2-1})^{-1}
   wolfram:
     in:
     note: Wolfram writes it as -1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.

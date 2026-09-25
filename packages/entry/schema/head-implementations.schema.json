@@ -11,6 +11,29 @@
     }
   },
   "$defs": {
+    "MathJSON": {
+      "description": "A MathJSON expression: form-agnostic compute-engine input/output.",
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MathJSON"
+          }
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
     "RenderedForm": {
       "type": "object",
       "properties": {
@@ -75,6 +98,9 @@
           "items": {
             "$ref": "#/$defs/EvaluationMessage"
           }
+        },
+        "back": {
+          "$ref": "#/$defs/MathJSON"
         }
       },
       "required": ["in"],

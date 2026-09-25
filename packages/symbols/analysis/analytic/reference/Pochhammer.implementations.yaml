@@ -1,4 +1,13 @@
 5-6-7:
+  epsil:
+    in: Pochhammer(5, 3)
+    out: "210"
+  tex:
+    in: \mathrm{Pochhammer}(5, 3)
+    out: "210"
+  traditional:
+    in: \left(5\right)_{3}
+    out: "210"
   wolfram:
     in: Pochhammer[5, 3]
     out: "210"
@@ -6,6 +15,15 @@
       in: (5)_3
       out: "210"
 an-empty-product-is-1:
+  epsil:
+    in: Pochhammer(2, 0)
+    out: "1"
+  tex:
+    in: \mathrm{Pochhammer}(2, 0)
+    out: "1"
+  traditional:
+    in: \left(2\right)_{0}
+    out: "1"
   wolfram:
     in: Pochhammer[2, 0]
     out: "1"
@@ -13,6 +31,15 @@ an-empty-product-is-1:
       in: (2)_0
       out: "1"
 1-5-equals-5:
+  epsil:
+    in: Pochhammer(1, 5)
+    out: "120"
+  tex:
+    in: \mathrm{Pochhammer}(1, 5)
+    out: "120"
+  traditional:
+    in: \left(1\right)_{5}
+    out: "120"
   wolfram:
     in: Pochhammer[1, 5]
     out: "120"
@@ -20,6 +47,15 @@ an-empty-product-is-1:
       in: (1)_5
       out: "120"
 pochhammer-3-4:
+  epsil:
+    in: Pochhammer(3, 4)
+    out: "360"
+  tex:
+    in: \mathrm{Pochhammer}(3, 4)
+    out: "360"
+  traditional:
+    in: \left(3\right)_{4}
+    out: "360"
   wolfram:
     in: Pochhammer[3, 4]
     out: "360"
@@ -27,13 +63,32 @@ pochhammer-3-4:
       in: (3)_4
       out: "360"
 1-n-n-since-the-rising-factorial-from-1-just:
+  epsil:
+    in: Pochhammer(1, 5) == 5!
+    out: True
+  tex:
+    in: \mathrm{Pochhammer}(1, 5)=5!
+    out: \top
+  traditional:
+    in: \left(1\right)_{5}=5!
+    out: \mathrm{True}
   wolfram:
     in: (Pochhammer[1, 5] == Factorial[5])
+    back: Unreadable
     out: True
     tex:
       in: (1)_5=5!
       out: \text{True}
 negative-order-gives-the-reciprocal-a-n-frac-1-a:
+  epsil:
+    in: Pochhammer(5, -2)
+    out: 1 / 12
+  tex:
+    in: \mathrm{Pochhammer}(5, -2)
+    out: \frac{1}{12}
+  traditional:
+    in: \left(5\right)_{-2}
+    out: \frac{1}{12}
   wolfram:
     in: Pochhammer[5, -2]
     out: 1/12
@@ -41,6 +96,15 @@ negative-order-gives-the-reciprocal-a-n-frac-1-a:
       in: (5)_{-2}
       out: \frac{1}{12}
 dividing-by-k-counts-multisets-binom-n-k-1-k:
+  epsil:
+    in: Pochhammer(5, 3) / 3!
+    out: "35"
+  tex:
+    in: \frac{\mathrm{Pochhammer}(5, 3)}{3!}
+    out: "35"
+  traditional:
+    in: \frac{\left(5\right)_{3}}{3!}
+    out: "35"
   wolfram:
     in: Divide[Pochhammer[5, 3], Factorial[3]]
     out: "35"
@@ -48,6 +112,15 @@ dividing-by-k-counts-multisets-binom-n-k-1-k:
       in: \frac{(5)_3}{3!}
       out: "35"
 if-a-is-a-non-positive-integer-with-a-n-the:
+  epsil:
+    in: Pochhammer(-3, 4)
+    out: "0"
+  tex:
+    in: \mathrm{Pochhammer}(-3, 4)
+    out: "0"
+  traditional:
+    in: \left(-3\right)_{4}
+    out: "0"
   wolfram:
     in: Pochhammer[-3, 4]
     out: "0"
@@ -55,17 +128,159 @@ if-a-is-a-non-positive-integer-with-a-n-the:
       in: (-3)_4
       out: "0"
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: Pochhammer([2, 3, 4], 2)
+    out: "[6, 12, 20]"
+  tex:
+    in: \mathrm{Pochhammer}(\bigl\lbrack2, 3, 4\bigr\rbrack, 2)
+    out: \bigl\lbrack6, 12, 20\bigr\rbrack
   wolfram:
     in: Pochhammer[List[2, 3, 4], 2]
     out: "{6, 12, 20}"
     tex:
       in: (\{2,3,4\})_2
       out: \{6,12,20\}
+10-11-12-13-14-15:
+  epsil:
+    in: Pochhammer(10, 6)
+    out: 3_603_600
+  tex:
+    in: \mathrm{Pochhammer}(10, 6)
+    out: 3\,603\,600
+  traditional:
+    in: \left(10\right)_{6}
+    out: 3\,603\,600
+  wolfram:
+    in: Pochhammer[10, 6]
 a-symbolic-base-with-integer-order-expands-to:
+  epsil:
+    in: Pochhammer(n, 5)
+    out: n * (n + 1) * (n + 2) * (n + 3) * (n + 4)
+  tex:
+    in: \mathrm{Pochhammer}(n, 5)
+    out: n\times(n+1)(n+2)(n+3)(n+4)
+  traditional:
+    in: \left(n\right)_{5}
+    out: n\times(n+1)(n+2)(n+3)(n+4)
   wolfram:
     in:
     note: Wolfram keeps Pochhammer[n, 5] unexpanded until FunctionExpand.
 a-negative-order-expands-to-the-reciprocal:
+  epsil:
+    in: Pochhammer(n, -5)
+    out: 1 / ((n - 1) * (n - 2) * (n - 3) * (n - 4) * (n - 5))
+  tex:
+    in: \mathrm{Pochhammer}(n, -5)
+    out: ((n-1)(n-2)(n-3)(n-4)(n-5))^{-1}
+  traditional:
+    in: \left(n\right)_{-5}
+    out: ((n-1)(n-2)(n-3)(n-4)(n-5))^{-1}
   wolfram:
     in:
     note: Wolfram keeps Pochhammer[n, -5] unexpanded until FunctionExpand.
+real-base-and-order-evaluate-as-frac-gamma-a-n:
+  epsil:
+    in: Pochhammer(2.4, 8.5)
+    out: 2_310_224.673_240_707_780_57
+  tex:
+    in: \mathrm{Pochhammer}(2.4, 8.5)
+    out: 2\,310\,224.673\,240\,707\,780\,57
+  traditional:
+    in: \left(2.4\right)_{8.5}
+    out: 2\,310\,224.673\,240\,707\,780\,57
+  wolfram:
+    in: Pochhammer[2.4, 8.5]
+a-zero-base-gives-0-for-any-positive-order:
+  epsil:
+    in: Pochhammer(0, 1_285)
+    out: "0"
+  tex:
+    in: \mathrm{Pochhammer}(0, 1\,285)
+    out: "0"
+  traditional:
+    in: \left(0\right)_{1\,285}
+    out: "0"
+  wolfram:
+    in: Pochhammer[0, 1285]
+a-rational-base-frac-12-cdot-frac-32-cdot-frac:
+  epsil:
+    in: Pochhammer(1 / 2, 3)
+    out: 15 / 8
+  tex:
+    in: \mathrm{Pochhammer}(\frac{1}{2}, 3)
+    out: \frac{15}{8}
+  traditional:
+    in: \left(\frac{1}{2}\right)_{3}
+    out: \frac{15}{8}
+  wolfram:
+    in: Pochhammer[Rational[1, 2], 3]
+a-rational-order-evaluates-through-gamma-exactly:
+  epsil:
+    in: Pochhammer(3 / 2, 1 / 2)
+    out: 2 / Sqrt(Pi)
+  tex:
+    in: \mathrm{Pochhammer}(\frac{3}{2}, \frac{1}{2})
+    out: \frac{2}{\sqrt{\pi}}
+  traditional:
+    in: \left(\frac{3}{2}\right)_{\frac{1}{2}}
+    out: \frac{2}{\sqrt{\pi}}
+  wolfram:
+    in: Pochhammer[Rational[3, 2], Rational[1, 2]]
+complex-base-and-order-evaluate-through-gamma:
+  epsil:
+    in: Pochhammer(2 + 5i, 8i)
+    out: 0.000_002_138_682_291_868_096_3 + -0.000_014_218_737_711_709_974 * i
+  tex:
+    in: \mathrm{Pochhammer}(2+5i, 8i)
+    out: 0.000\,002\,138\,682\,291\,868\,096\,3-0.000\,014\,218\,737\,711\,709\,974i
+  traditional:
+    in: \left(2+5i\right)_{8i}
+    out: 0.000\,002\,138\,682\,291\,868\,096\,3-0.000\,014\,218\,737\,711\,709\,974i
+  wolfram:
+    in: Pochhammer[Complex[2, 5], Complex[0, 8]]
+order-0-is-the-empty-product-a-0-1:
+  epsil:
+    in: Pochhammer(a, 0)
+    out: "1"
+  tex:
+    in: \mathrm{Pochhammer}(a, 0)
+    out: "1"
+  traditional:
+    in: \left(a\right)_{0}
+    out: "1"
+a-1-a:
+  epsil:
+    in: Pochhammer(a, 1)
+    out: a
+  tex:
+    in: \mathrm{Pochhammer}(a, 1)
+    out: a
+  traditional:
+    in: \left(a\right)_{1}
+    out: a
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see:
+  epsil:
+    in: Pochhammer(4, 3) == Gamma(7) / Gamma(4)
+    out: True
+  tex:
+    in: \mathrm{Pochhammer}(4, 3)=\frac{\Gamma(7)}{\Gamma(4)}
+    out: \top
+  traditional:
+    in: \left(4\right)_{3}=\frac{\Gamma(7)}{\Gamma(4)}
+    out: \mathrm{True}
+  wolfram:
+    in: (Pochhammer[4, 3] == Divide[Gamma[7], Gamma[4]])
+    back: Unreadable
+rising-and-falling-factorials-x-underline-n-1-n:
+  epsil:
+    in: FallingFactorial(5, 3) == -Pochhammer(-5, 3)
+    out: True
+  tex:
+    in: \mathrm{FallingFactorial}(5, 3)=-\mathrm{Pochhammer}(-5, 3)
+    out: \top
+  traditional:
+    in: 5^{\underline{3}}=-\left(-5\right)_{3}
+    out: \mathrm{True}
+  wolfram:
+    in: (FactorialPower[5, 3] == Times[-1, Pochhammer[-5, 3]])
+    back: Unreadable

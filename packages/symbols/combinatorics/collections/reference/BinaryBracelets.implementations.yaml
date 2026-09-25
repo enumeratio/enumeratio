@@ -1,0 +1,7 @@
+count-binarybracelets-6-13-a000029:
+  epsil:
+    in: Count(BinaryBracelets(6))
+    out: "13"
+  tex:
+    in: \mathrm{Count}(\mathrm{BinaryBracelets}(6))
+    out: "13"

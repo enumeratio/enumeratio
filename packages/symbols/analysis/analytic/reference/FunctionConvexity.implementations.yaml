@@ -1,0 +1,28 @@
+a-parabola-is-convex:
+  epsil:
+    in: FunctionConvexity(x ^ 2, x)
+    out: "1"
+  tex:
+    in: \mathrm{FunctionConvexity}(x^2, x)
+    out: "1"
+a-cubic-has-an-inflection-point:
+  epsil:
+    in: FunctionConvexity(x ^ 3, x)
+    out: Indeterminate
+  tex:
+    in: \mathrm{FunctionConvexity}(x^3, x)
+    out: \mathrm{Indeterminate}
+exp-is-always-convex:
+  epsil:
+    in: FunctionConvexity(Exp(x), x)
+    out: "1"
+  tex:
+    in: \mathrm{FunctionConvexity}(e^{x}, x)
+    out: "1"
+a-restricted-domain-answers-indeterminate:
+  epsil:
+    in: FunctionConvexity(1 / x, x)
+    out: Indeterminate
+  tex:
+    in: \mathrm{FunctionConvexity}(\frac{1}{x}, x)
+    out: \mathrm{Indeterminate}

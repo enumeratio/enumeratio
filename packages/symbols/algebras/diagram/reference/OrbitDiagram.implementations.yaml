@@ -1,8 +1,27 @@
 merging-four-points-into-one-block-1-3-3:
+  epsil:
+    in: PartitionMobius(Diagram([[1], [2], [-1], [-2]]), Diagram([[1, 2, -1, -2]]))
+    out: "-6"
+  tex:
+    in: \mathrm{PartitionMobius}(\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack-1\bigr\rbrack, \bigl\lbrack-2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2, -1, -2\bigr\rbrack\bigr\rbrack))
+    out: "-6"
   sage:
     in: enumeratio_partition_mobius(enumeratio_diagram([[1], [2], [-1], [-2]]), enumeratio_diagram([[1, 2, -1, -2]]))
     out: "-6"
+the-coarsest-partition-has-nothing-above-it:
+  epsil:
+    in: InOrbitBasis(Diagram([[1, -1]]))
+    out: OrbitDiagram([[1, -1]])
+  tex:
+    in: \mathrm{InOrbitBasis}(\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack\bigr\rbrack))
+    out: \mathrm{OrbitDiagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack\bigr\rbrack)
 the-interval-of-length-zero:
+  epsil:
+    in: PartitionMobius(Diagram([[1, -1]]), Diagram([[1, -1]]))
+    out: "1"
+  tex:
+    in: \mathrm{PartitionMobius}(\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack\bigr\rbrack))
+    out: "1"
   sage:
     in: enumeratio_partition_mobius(enumeratio_diagram([[1, -1]]), enumeratio_diagram([[1, -1]]))
     out: "1"

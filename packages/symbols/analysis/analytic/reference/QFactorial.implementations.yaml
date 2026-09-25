@@ -1,0 +1,43 @@
+1-2-2-2-3-2-1-cdot-3-cdot-7:
+  epsil:
+    in: QFactorial(3, 2)
+    out: "21"
+  tex:
+    in: \mathrm{QFactorial}(3, 2)
+    out: "21"
+  wolfram:
+    in: QFactorial[3, 2]
+qfactorial-4-2:
+  epsil:
+    in: QFactorial(4, 2)
+    out: "315"
+  tex:
+    in: \mathrm{QFactorial}(4, 2)
+    out: "315"
+  wolfram:
+    in: QFactorial[4, 2]
+qfactorial-3-1-over-2:
+  epsil:
+    in: QFactorial(3, 1 / 2)
+    out: 21 / 8
+  tex:
+    in: \mathrm{QFactorial}(3, \frac{1}{2})
+    out: \frac{21}{8}
+  wolfram:
+    in: QFactorial[3, Rational[1, 2]]
+at-q-1-it-is-the-ordinary-factorial:
+  epsil:
+    in: QFactorial(5, 1)
+    out: "120"
+  tex:
+    in: \mathrm{QFactorial}(5, 1)
+    out: "120"
+  wolfram:
+    in: QFactorial[5, 1]
+the-inversion-generating-function-of:
+  epsil:
+    in: Expand(QFactorial(3, q))
+    out: q ^ 3 + 2 * q ^ 2 + 2q + 1
+  tex:
+    in: \mathrm{Expand}(\mathrm{QFactorial}(3, q))
+    out: q^3+2q^2+2q+1

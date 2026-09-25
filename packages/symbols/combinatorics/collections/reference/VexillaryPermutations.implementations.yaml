@@ -1,0 +1,7 @@
+count-vexillarypermutations-5-103-a005802:
+  epsil:
+    in: Count(VexillaryPermutations(5))
+    out: "103"
+  tex:
+    in: \mathrm{Count}(\mathrm{VexillaryPermutations}(5))
+    out: "103"

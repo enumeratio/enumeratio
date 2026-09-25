@@ -1,0 +1,7 @@
+count-baxterpermutations-4-22-a001181:
+  epsil:
+    in: Count(BaxterPermutations(4))
+    out: "22"
+  tex:
+    in: \mathrm{Count}(\mathrm{BaxterPermutations}(4))
+    out: "22"

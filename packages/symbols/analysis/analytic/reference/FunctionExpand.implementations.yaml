@@ -1,0 +1,67 @@
+eta-s-1-2-1-s-zeta-s:
+  epsil:
+    in: FunctionExpand(DirichletEta(s))
+    out: (-2 ^ (-s + 1) + 1) * Zeta(s)
+  tex:
+    in: \mathrm{FunctionExpand}(\mathrm{DirichletEta}(s))
+    out: (1-2^{1-s})\zeta(s)
+  traditional:
+    in: \mathrm{FunctionExpand}(\eta(s))
+    out: (1-2^{1-s})\zeta(s)
+beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34:
+  epsil:
+    in: FunctionExpand(DirichletBeta(s))
+    out: (-Zeta(s, 3 / 4) + Zeta(s, 1 / 4)) * 4 ^ (-s)
+  tex:
+    in: \mathrm{FunctionExpand}(\mathrm{DirichletBeta}(s))
+    out: \frac{\zeta(s, \frac{1}{4})-\zeta(s, \frac{3}{4})}{4^{s}}
+  traditional:
+    in: \mathrm{FunctionExpand}(\beta(s))
+    out: \frac{\zeta(s, \frac{1}{4})-\zeta(s, \frac{3}{4})}{4^{s}}
+g-frac-12-in-glaisher-s-constant:
+  epsil:
+    in: FunctionExpand(BarnesG(1 / 2))
+    out: 1 / Root(Pi, 4) * Root(2, 24) * ConstGlaisher ^ (-3 / 2) * Root(ExponentialE, 8)
+  tex:
+    in: \mathrm{FunctionExpand}(\mathrm{BarnesG}(\frac{1}{2}))
+    out: \frac{\sqrt[24]{2}\sqrt{\mathrm{ConstGlaisher}}^{-3}\sqrt[8]{e}}{\sqrt[4]{\pi}}
+  traditional:
+    in: \mathrm{FunctionExpand}(G(\frac{1}{2}))
+    out: \frac{\sqrt[24]{2}\sqrt{\mathrm{ConstGlaisher}}^{-3}\sqrt[8]{e}}{\sqrt[4]{\pi}}
+  wolfram:
+    in: FunctionExpand[BarnesG[Rational[1, 2]]]
+radicals-past-the-automatic-special-angle-table:
+  epsil:
+    in: FunctionExpand(Sin(Pi / 15))
+    out: 1 / 8 * (-Sqrt(15) + Sqrt(3) + Sqrt(10 + 2 * Sqrt(5)))
+  tex:
+    in: \mathrm{FunctionExpand}(\sin(\frac{\pi}{15}))
+    out: \frac{1}{8}(-\sqrt{15}+\sqrt{3}+\sqrt{10+2\sqrt{5}})
+  wolfram:
+    in: FunctionExpand[Sin[Divide[Pi, 15]]]
+half-angle-radicals-cos-frac-pi-24-frac-12-sqrt:
+  epsil:
+    in: FunctionExpand(Cos(Pi / 24))
+    out: Sqrt(2) / 4 * Sqrt(4 + Sqrt(2) + Sqrt(6))
+  tex:
+    in: \mathrm{FunctionExpand}(\cos(\frac{\pi}{24}))
+    out: \frac{1}{4}(\sqrt{2}\sqrt{4+\sqrt{2}+\sqrt{6}})
+  wolfram:
+    in: FunctionExpand[Cos[Divide[Pi, 24]]]
+a-rising-factorial-with-an-integer-length:
+  epsil:
+    in: FunctionExpand(Pochhammer(x, 3))
+    out: x * (x + 1) * (x + 2)
+  tex:
+    in: \mathrm{FunctionExpand}(\mathrm{Pochhammer}(x, 3))
+    out: x\times(x+1)(x+2)
+  traditional:
+    in: \mathrm{FunctionExpand}(\left(x\right)_{3})
+    out: x\times(x+1)(x+2)
+binom-n2-frac-n-n-1-2:
+  epsil:
+    in: FunctionExpand(Binomial(n, 2))
+    out: n * (n - 1) / 2
+  tex:
+    in: \mathrm{FunctionExpand}(\binom{n}{2})
+    out: \frac{n\times(n-1)}{2}

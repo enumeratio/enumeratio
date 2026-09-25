@@ -1,0 +1,53 @@
+foldlist-add-0-1-2-3:
+  epsil:
+    in: FoldList(Add, 0, [1, 2, 3])
+    out: "[0, 1, 3, 6]"
+  tex:
+    in: \mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack0, 1, 3, 6\bigr\rbrack
+  wolfram:
+    in: FoldList[Plus, 0, List[1, 2, 3]]
+foldlist-add-1-2-3:
+  epsil:
+    in: FoldList(Add, [1, 2, 3])
+    out: "[1, 3, 6]"
+  tex:
+    in: \mathrm{FoldList}(\mathrm{Add}, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack1, 3, 6\bigr\rbrack
+  wolfram:
+    in: FoldList[Plus, List[1, 2, 3]]
+foldlist-multiply-1-1-2-3-4:
+  epsil:
+    in: FoldList(Multiply, 1, [1, 2, 3, 4])
+    out: "[1, 1, 2, 6, 24]"
+  tex:
+    in: \mathrm{FoldList}(\mathrm{Multiply}, 1, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack1, 1, 2, 6, 24\bigr\rbrack
+  wolfram:
+    in: FoldList[Times, 1, List[1, 2, 3, 4]]
+foldlist-length-is-one-more:
+  epsil:
+    in: Length(FoldList(Add, 0, [1, 2, 3, 4, 5])) == Length([1, 2, 3, 4, 5]) + 1
+    out: True
+  tex:
+    in: \mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1
+    out: \top
+  traditional:
+    in: \mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1
+    out: \mathrm{True}
+  wolfram:
+    in: (Length[FoldList[Plus, 0, List[1, 2, 3, 4, 5]]] == Plus[Length[List[1, 2, 3, 4, 5]], 1])
+    back: Unreadable
+foldlist-last-is-fold:
+  epsil:
+    in: Last(FoldList(Add, 0, [1, 2, 3])) == Fold(Add, 0, [1, 2, 3])
+    out: True
+  tex:
+    in: \mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \mathrm{True}
+  wolfram:
+    in: (Last[FoldList[Plus, 0, List[1, 2, 3]]] == Fold[Plus, 0, List[1, 2, 3]])
+    back: Unreadable

@@ -1,0 +1,7 @@
+already-in-gl-n-q-upper-triangular-form-b-is-the:
+  epsil:
+    in: ProfiniteDecomposition([[2, 1], [0, 3]])
+    out: "[[[1, 0], [0, 1]], [[2, 1], [0, 3]]]"
+  tex:
+    in: \mathrm{ProfiniteDecomposition}(\bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack\bigr\rbrack

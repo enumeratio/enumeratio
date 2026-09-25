@@ -1,11 +1,39 @@
 gamma-0-gamma-euler-s-constant:
+  epsil:
+    in: StieltjesGamma(0)
+    out: EulerGamma
+  tex:
+    in: \mathrm{StieltjesGamma}(0)
+    out: \gamma
+  traditional:
+    in: \gamma_{0}
+    out: \gamma
   wolfram:
     in: StieltjesGamma[0]
     out: EulerGamma
     tex:
       in: \gamma _0
       out: \gamma
+gamma-0-a-psi-a-symbolically-in-a:
+  epsil:
+    in: StieltjesGamma(0, a)
+    out: -PolyGamma(0, a)
+  tex:
+    in: \mathrm{StieltjesGamma}(0, a)
+    out: -\mathrm{PolyGamma}(0, a)
+  traditional:
+    in: \gamma_{0}(a)
+    out: -\psi^{(0)}(a)
 no-closed-form-past-gamma-0-stays-symbolic-until:
+  epsil:
+    in: StieltjesGamma(1)
+    out: StieltjesGamma(1)
+  tex:
+    in: \mathrm{StieltjesGamma}(1)
+    out: \mathrm{StieltjesGamma}(1)
+  traditional:
+    in: \gamma_{1}
+    out: \gamma_{1}
   wolfram:
     in: StieltjesGamma[1]
     out: StieltjesGamma[1]
@@ -13,6 +41,15 @@ no-closed-form-past-gamma-0-stays-symbolic-until:
       in: \gamma _1
       out: \gamma _1
 gamma-1-frac-32-numerically-a-floating-point:
+  epsil:
+    in: StieltjesGamma(1, 1.5)
+    out: 0.032_834_680_314_949_4
+  tex:
+    in: \mathrm{StieltjesGamma}(1, 1.5)
+    out: 0.032\,834\,680\,314\,949\,4
+  traditional:
+    in: \gamma_{1}(1.5)
+    out: 0.032\,834\,680\,314\,949\,4
   wolfram:
     in: StieltjesGamma[1, 1.5]
     out: "0.0328346803149491"
@@ -20,6 +57,15 @@ gamma-1-frac-32-numerically-a-floating-point:
       in: \gamma _1(1.5)
       out: "0.0328347"
 gamma-3-frac-12-0-66742:
+  epsil:
+    in: StieltjesGamma(3, 0.5)
+    out: -0.667_424_273_711_379_8
+  tex:
+    in: \mathrm{StieltjesGamma}(3, 0.5)
+    out: -0.667\,424\,273\,711\,379\,8
+  traditional:
+    in: \gamma_{3}(0.5)
+    out: -0.667\,424\,273\,711\,379\,8
   wolfram:
     in: StieltjesGamma[3, 0.5]
     out: "-0.6674242737113807"
@@ -27,6 +73,15 @@ gamma-3-frac-12-0-66742:
       in: \gamma _3(0.5)
       out: "-0.667424"
 gamma-n-a-has-poles-at-the-nonpositive-integers:
+  epsil:
+    in: StieltjesGamma(2, -1)
+    out: ComplexInfinity
+  tex:
+    in: \mathrm{StieltjesGamma}(2, -1)
+    out: \tilde\infty
+  traditional:
+    in: \gamma_{2}(-1)
+    out: \tilde\infty
   wolfram:
     in: StieltjesGamma[2, -1]
     out: ComplexInfinity
@@ -34,9 +89,135 @@ gamma-n-a-has-poles-at-the-nonpositive-integers:
       in: \gamma _2(-1)
       out: \text{ComplexInfinity}
 orders-past-30-stay-unevaluated-even-under-n-the:
+  epsil:
+    in: StieltjesGamma(40)
+    out: StieltjesGamma(40)
+  tex:
+    in: \mathrm{StieltjesGamma}(40)
+    out: \mathrm{StieltjesGamma}(40)
+  traditional:
+    in: \gamma_{40}
+    out: \gamma_{40}
   wolfram:
     in: StieltjesGamma[40]
     out: StieltjesGamma[40]
     tex:
       in: \gamma _{40}
       out: \gamma _{40}
+gamma-2-frac-32:
+  epsil:
+    in: StieltjesGamma(2, 1.5)
+    out: 0.007_958_447_383_888_047
+  tex:
+    in: \mathrm{StieltjesGamma}(2, 1.5)
+    out: 0.007\,958\,447\,383\,888\,047
+  traditional:
+    in: \gamma_{2}(1.5)
+    out: 0.007\,958\,447\,383\,888\,047
+  wolfram:
+    in: StieltjesGamma[2, 1.5]
+gamma-1-0-0728158-under-n:
+  epsil:
+    in: N(StieltjesGamma(1))
+    out: -0.072_815_845_483_676_52
+  tex:
+    in: N(\mathrm{StieltjesGamma}(1))
+    out: -0.072\,815\,845\,483\,676\,52
+  traditional:
+    in: N(\gamma_{1})
+    out: -0.072\,815\,845\,483\,676\,52
+  wolfram:
+    in: N[StieltjesGamma[1]]
+complex-a:
+  epsil:
+    in: N(StieltjesGamma(2, 1 + i))
+    out: 0.170_304_201_468_587_9 + 0.373_177_195_757_495_25i
+  tex:
+    in: N(\mathrm{StieltjesGamma}(2, 1+i))
+    out: 0.170\,304\,201\,468\,587\,9+0.373\,177\,195\,757\,495\,25i
+  traditional:
+    in: N(\gamma_{2}(1+i))
+    out: 0.170\,304\,201\,468\,587\,9+0.373\,177\,195\,757\,495\,25i
+  wolfram:
+    in: N[StieltjesGamma[2, Complex[1, 1]]]
+listable-in-the-order-n-threads-over-a-list:
+  epsil:
+    in: StieltjesGamma([1, 2, 3], 0.5)
+    out: "[-1.353_459_680_804_941_5, 0.968_864_475_220_290_7, -0.667_424_273_711_380_7]"
+  tex:
+    in: \mathrm{StieltjesGamma}(\bigl\lbrack1, 2, 3\bigr\rbrack, 0.5)
+    out: \bigl\lbrack-1.353\,459\,680\,804\,941\,5, 0.968\,864\,475\,220\,290\,7, -0.667\,424\,273\,711\,380\,7\bigr\rbrack
+  wolfram:
+    in: StieltjesGamma[List[1, 2, 3], 0.5]
+interval-arithmetic-in-a:
+  epsil:
+    in: StieltjesGamma(2, Interval(2.34, 2.35))
+    out: Interval(-0.067_241_280_355_087_15, -0.065_140_403_663_072_42)
+  tex:
+    in: \mathrm{StieltjesGamma}(2, \mathrm{Interval}(2.34, 2.35))
+    out: \mathrm{Interval}(-0.067\,241\,280\,355\,087\,15, -0.065\,140\,403\,663\,072\,42)
+  traditional:
+    in: \gamma_{2}(\mathrm{Interval}(2.34, 2.35))
+    out: \mathrm{Interval}(-0.067\,241\,280\,355\,087\,15, -0.065\,140\,403\,663\,072\,42)
+  wolfram:
+    in: StieltjesGamma[2, Interval[List[2.34, 2.35]]]
+gamma-n-1-gamma-n-the-two-argument-form-reduces:
+  epsil:
+    in: StieltjesGamma(1, 1)
+    out: StieltjesGamma(1)
+  tex:
+    in: \mathrm{StieltjesGamma}(1, 1)
+    out: \mathrm{StieltjesGamma}(1)
+  traditional:
+    in: \gamma_{1}(1)
+    out: \gamma_{1}
+  wolfram:
+    in: StieltjesGamma[1, 1]
+gamma-0-1-psi-1-gamma-polygamma-0-z-routes:
+  epsil:
+    in: StieltjesGamma(0, 1)
+    out: EulerGamma
+  tex:
+    in: \mathrm{StieltjesGamma}(0, 1)
+    out: \gamma
+  traditional:
+    in: \gamma_{0}(1)
+    out: \gamma
+  wolfram:
+    in: StieltjesGamma[0, 1]
+gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now:
+  epsil:
+    in: StieltjesGamma(0, 1 / 2)
+    out: EulerGamma + 2 * Ln(2)
+  tex:
+    in: \mathrm{StieltjesGamma}(0, \frac{1}{2})
+    out: \gamma+2\ln(2)
+  traditional:
+    in: \gamma_{0}(\frac{1}{2})
+    out: \gamma+2\ln(2)
+  wolfram:
+    in: StieltjesGamma[0, Rational[1, 2]]
+to-30-significant-digits-not-yet-the-requested:
+  epsil:
+    in: N(StieltjesGamma(1), 30)
+    out: -0.072_815_845_483_676_724_860_586_375_874_9
+  tex:
+    in: N(\mathrm{StieltjesGamma}(1), 30)
+    out: -0.072\,815\,845\,483\,676\,724\,860\,6
+  traditional:
+    in: N(\gamma_{1}, 30)
+    out: -0.072\,815\,845\,483\,676\,724\,860\,6
+  wolfram:
+    in: N[StieltjesGamma[1], 30]
+gamma-3-1-gamma-3-order-1-at-a-1-is-just-the:
+  epsil:
+    in: StieltjesGamma(3, 1)
+    out: StieltjesGamma(3)
+  tex:
+    in: \mathrm{StieltjesGamma}(3, 1)
+    out: \mathrm{StieltjesGamma}(3)
+  traditional:
+    in: \gamma_{3}(1)
+    out: \gamma_{3}
+  wolfram:
+    in: StieltjesGamma[3, 1]

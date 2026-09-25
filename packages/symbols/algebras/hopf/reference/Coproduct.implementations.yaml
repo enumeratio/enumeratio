@@ -1,0 +1,34 @@
+deconcatenation-cut-at-each-gap:
+  epsil:
+    in: Coproduct(QSymM([1, 2]))
+    out: |-
+      HopfTensor(QSymM([]), QSymM([1, 2])) + HopfTensor(QSymM([1, 2]), QSymM([])) +
+      HopfTensor(QSymM([1]), QSymM([2]))
+  tex:
+    in: \mathrm{Coproduct}(\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack))
+    out: \mathrm{HopfTensor}(\mathrm{QSymM}(\bigl\lbrack \bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack \bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack))
+  traditional:
+    in: \Delta(M_{(1,2)})
+    out: M_{\varnothing}\otimes M_{(1,2)}+M_{(1,2)}\otimes M_{\varnothing}+M_{(1)}\otimes M_{(2)}
+delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes:
+  epsil:
+    in: Coproduct(NSymH([2]))
+    out: |-
+      HopfTensor(NSymH([]), NSymH([2])) + HopfTensor(NSymH([2]), NSymH([])) +
+      HopfTensor(NSymH([1]), NSymH([1]))
+  tex:
+    in: \mathrm{Coproduct}(\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack))
+    out: \mathrm{HopfTensor}(\mathrm{NSymH}(\bigl\lbrack \bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack \bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{NSymH}(\bigl\lbrack1\bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack1\bigr\rbrack))
+  traditional:
+    in: \Delta(H_{(2)})
+    out: H_{\varnothing}\otimes H_{(2)}+H_{(2)}\otimes H_{\varnothing}+H_{(1)}\otimes H_{(1)}
+the-counit-picks-out-the-constant-term:
+  epsil:
+    in: Counit(NSymH([]))
+    out: "1"
+  tex:
+    in: \mathrm{Counit}(\mathrm{NSymH}(\bigl\lbrack \bigr\rbrack))
+    out: "1"
+  traditional:
+    in: \varepsilon(H_{\varnothing})
+    out: "1"

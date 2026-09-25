@@ -42,6 +42,10 @@ release. Add a tool name to select part of the graph. For example, run
   "notatio", never "the notatio notation". A cell is notatio plus one `:=` binding
   (`parseNotatio` with `allow: ["Assign"]`); nothing else in notatio is a statement. See
   `design/syntax-and-formats.md`.
+- In the reference data, an example's retypeable text form (its InputForm) is keyed `epsil`,
+  and `notatio` keys its component serialisation, the vdom as Vue/React markup
+  (`design/examples-as-data.md` §2, signed off). That moves the name `notatio` toward the
+  component form and away from the restricted-Epsil subset; prose elsewhere hasn't caught up.
 - Package names have not all caught up; do not rename them in passing — see
   `design/component-naming.md` for how renames wait.
 

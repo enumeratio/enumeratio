@@ -1,4 +1,10 @@
 arcsin-0:
+  epsil:
+    in: Arcsin(0)
+    out: "0"
+  tex:
+    in: \arcsin(0)
+    out: "0"
   wolfram:
     in: ArcSin[0]
     out: "0"
@@ -6,6 +12,12 @@ arcsin-0:
       in: \sin ^{-1}(0)
       out: "0"
 arcsin-1-over-2:
+  epsil:
+    in: Arcsin(1 / 2)
+    out: 1 / 6 * Pi
+  tex:
+    in: \arcsin(\frac{1}{2})
+    out: \frac{\pi}{6}
   wolfram:
     in: ArcSin[Rational[1, 2]]
     out: Pi/6
@@ -13,6 +25,12 @@ arcsin-1-over-2:
       in: \sin ^{-1}\left(\frac{1}{2}\right)
       out: \frac{\pi }{6}
 the-top-of-the-principal-range:
+  epsil:
+    in: Arcsin(1)
+    out: 1 / 2 * Pi
+  tex:
+    in: \arcsin(1)
+    out: \frac{\pi}{2}
   wolfram:
     in: ArcSin[1]
     out: Pi/2
@@ -20,6 +38,12 @@ the-top-of-the-principal-range:
       in: \sin ^{-1}(1)
       out: \frac{\pi }{2}
 arcsin-neg-1:
+  epsil:
+    in: Arcsin(-1)
+    out: -1 / 2 * Pi
+  tex:
+    in: \arcsin(-1)
+    out: -\frac{\pi}{2}
   wolfram:
     in: ArcSin[-1]
     out: -1/2*Pi
@@ -27,20 +51,46 @@ arcsin-neg-1:
       in: \sin ^{-1}(-1)
       out: -\frac{\pi }{2}
 sin-arcsin-x-x-on-the-principal-branch:
+  epsil:
+    in: Sin(Arcsin(1 / 2)) == 1 / 2
+    out: True
+  tex:
+    in: \sin(\arcsin(\frac{1}{2}))=\frac{1}{2}
+    out: \top
+  traditional:
+    in: \sin(\arcsin(\frac{1}{2}))=\frac{1}{2}
+    out: \mathrm{True}
   wolfram:
     in: (Sin[ArcSin[Rational[1, 2]]] == Rational[1, 2])
+    back: Unreadable
     out: True
     tex:
       in: \sin \left(\sin ^{-1}\left(\frac{1}{2}\right)\right)=\frac{1}{2}
       out: \text{True}
 co-function-identity-arcsin-x-arccos-x-pi-2:
+  epsil:
+    in: Arcsin(1 / 2) + Arccos(1 / 2) == Pi / 2
+    out: True
+  tex:
+    in: \arcsin(\frac{1}{2})+\arccos(\frac{1}{2})=\frac{\pi}{2}
+    out: \top
+  traditional:
+    in: \arcsin(\frac{1}{2})+\arccos(\frac{1}{2})=\frac{\pi}{2}
+    out: \mathrm{True}
   wolfram:
     in: (Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]] == Divide[Pi, 2])
+    back: Unreadable
     out: True
     tex:
       in: \sin ^{-1}\left(\frac{1}{2}\right)+\cos ^{-1}\left(\frac{1}{2}\right)=\frac{\pi }{2}
       out: \text{True}
 outside-1-1-reduces-to-the-exact-closed-form:
+  epsil:
+    in: Arcsin(2)
+    out: 1 / 2 * Pi + -1 * i * Ln(2 + Sqrt(3))
+  tex:
+    in: \arcsin(2)
+    out: \frac{\pi}{2}-i\ln(2+\sqrt{3})
   wolfram:
     in: ArcSin[2]
     out: ArcSin[2]
@@ -48,11 +98,168 @@ outside-1-1-reduces-to-the-exact-closed-form:
       in: \sin ^{-1}(2)
       out: \sin ^{-1}(2)
     note: Wolfram leaves ArcSin[2] unevaluated; its N[ArcSin[2]] is the same principal value, 1.5708 - 1.31696 I, since ArcSin[z] = -I Log[I z + Sqrt[1 - z^2]].
+a-machine-precision-argument-evaluates:
+  epsil:
+    in: Arcsin(0.4)
+    out: 0.411_516_846_067_488_019_385
+  tex:
+    in: \arcsin(0.4)
+    out: 0.411\,516\,846\,067\,488\,019\,385
+  wolfram:
+    in: ArcSin[0.4]
+outside-1-1-a-float-argument-gives-the-complex:
+  epsil:
+    in: Arcsin(1.5)
+    out: 1.570_796_326_794_896_6 + -0.962_423_650_119_206_9 * i
+  tex:
+    in: \arcsin(1.5)
+    out: 1.570\,796\,326\,794\,896\,6-0.962\,423\,650\,119\,206\,9i
+  wolfram:
+    in: ArcSin[1.5]
+arbitrary-precision-via-n:
+  epsil:
+    in: N(Arcsin(1 / 3))
+    out: 0.339_836_909_454_121_937_096
+  tex:
+    in: N(\arcsin(\frac{1}{3}))
+    out: 0.339\,836\,909\,454\,121\,937\,096
+  wolfram:
+    in: N[ArcSin[Rational[1, 3]]]
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Arcsin(2.5 + i)
+    out: 1.164_623_510_289_384_7 + 1.658_693_298_856_434_7i
+  tex:
+    in: \arcsin(2.5+i)
+    out: 1.164\,623\,510\,289\,384\,7+1.658\,693\,298\,856\,434\,7i
+  wolfram:
+    in: ArcSin[Complex[2.5, 1]]
+threads-element-wise-over-a-matrix:
+  epsil:
+    in: Arcsin([[1, 1 / Sqrt(2)], [0, 1 / Sqrt(2)]])
+    out: "[[1 / 2 * Pi, 1 / 4 * Pi], [0, 1 / 4 * Pi]]"
+  tex:
+    in: \arcsin(\bigl\lbrack\bigl\lbrack1, \frac{1}{2^{1/2}}\bigr\rbrack, \bigl\lbrack0, \frac{1}{2^{1/2}}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\frac{\pi}{2}, \frac{\pi}{4}\bigr\rbrack, \bigl\lbrack0, \frac{\pi}{4}\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: ArcSin[List[List[1, Divide[1, Sqrt[2]]], List[0, Divide[1, Sqrt[2]]]]]
+exact-inverse-of-a-special-value:
+  epsil:
+    in: Arcsin(Sqrt(2) / 2)
+    out: 1 / 4 * Pi
+  tex:
+    in: \arcsin(\frac{\sqrt{2}}{2})
+    out: \frac{\pi}{4}
+  wolfram:
+    in: ArcSin[Divide[Sqrt[2], 2]]
+arcsin-sqrt-3-over-2:
+  epsil:
+    in: Arcsin(Sqrt(3) / 2)
+    out: 1 / 3 * Pi
+  tex:
+    in: \arcsin(\frac{\sqrt{3}}{2})
+    out: \frac{\pi}{3}
+  wolfram:
+    in: ArcSin[Divide[Sqrt[3], 2]]
+recognizes-the-radical-value-sin-pi-12:
+  epsil:
+    in: Arcsin((Sqrt(6) - Sqrt(2)) / 4)
+    out: 1 / 12 * Pi
+  tex:
+    in: \arcsin(\frac{\sqrt{6}-\sqrt{2}}{4})
+    out: \frac{\pi}{12}
+  wolfram:
+    in: ArcSin[Divide[Subtract[Sqrt[6], Sqrt[2]], 4]]
+recognizes-sin-pi-10-frac-sqrt-5-1-4:
+  epsil:
+    in: Arcsin((Sqrt(5) - 1) / 4)
+    out: 1 / 10 * Pi
+  tex:
+    in: \arcsin(\frac{\sqrt{5}-1}{4})
+    out: \frac{\pi}{10}
+  wolfram:
+    in: ArcSin[Divide[Subtract[Sqrt[5], 1], 4]]
 interval-arithmetic-arcsin-frac-13-frac-12:
+  epsil:
+    in: Arcsin(Interval(-1 / 3, 1 / 2))
+    out: Interval(Arcsin(-1 / 3), 1 / 6 * Pi)
+  tex:
+    in: \arcsin(\mathrm{Interval}(-\frac{1}{3}, \frac{1}{2}))
+    out: \mathrm{Interval}(\arcsin(-\frac{1}{3}), \frac{\pi}{6})
   wolfram:
     in: ArcSin[Interval[List[Rational[-1, 3], Rational[1, 2]]]]
     note: Wolfram folds the odd argument to $-\arcsin(1/3)$; compute-engine leaves $\arcsin(-1/3)$ as is (oddness normalisation is a separate, still-aspirational rule).
+uncertainty-propagation-arcsin-0-9-pm-0-1-approx:
+  epsil:
+    in: Arcsin(Around(0.9, 0.1))
+    out: Around(1.119_769_514_998_634_2, 0.229_415_733_870_561_8)
+  tex:
+    in: \arcsin(\mathrm{Around}(0.9, 0.1))
+    out: \mathrm{Around}(1.119\,769\,514\,998\,634\,2, 0.229\,415\,733\,870\,561\,8)
+  wolfram:
+    in: ArcSin[Around[0.9, 0.1]]
+oddness-pulls-the-sign-out-of-a-symbolic:
+  epsil:
+    in: Arcsin(-x)
+    out: -Arcsin(x)
+  tex:
+    in: \arcsin(-x)
+    out: -\arcsin(x)
+derivative-frac-1-sqrt-1-x-2:
+  epsil:
+    in: D(Arcsin(x), x)
+    out: 1 / Sqrt(-x ^ 2 + 1)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\arcsin(x)
+    out: \frac{1}{\sqrt{1-x^2}}
+antiderivative:
+  epsil:
+    in: Integrate(Arcsin(x), x)
+    out: x * Arcsin(x) + Sqrt(-x ^ 2 + 1)
+  tex:
+    in: \int\!\arcsin(x)\, \mathrm{d}x
+    out: x\arcsin(x)+\sqrt{1-x^2}
 taylor-series-about-0:
+  epsil:
+    in: Series(Arcsin(x), x, 0, 5)
+    out: 3 / 40 * x ^ 5 + 1 / 6 * x ^ 3 + x + BigO(x ^ 7)
+  tex:
+    in: \operatorname{Series}(\arcsin(x), x, 0, 5)
+    out: x+\frac{x^3}{6}+\frac{3x^5}{40}+O\left(x^7\right)
   wolfram:
     in:
     note: Wolfram's Series[ArcSin[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).
+as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2:
+  epsil:
+    in: TrigToExp(Arcsin(x))
+    out: -1 * i * Ln(i * x + Sqrt(-x ^ 2 + 1))
+  tex:
+    in: \mathrm{TrigToExp}(\arcsin(x))
+    out: -i\ln(i x+\sqrt{1-x^2})
+not-simply-2-2-is-outside-the-principal-range-pi:
+  epsil:
+    in: Arcsin(Sin(2))
+    out: -2 + Pi
+  tex:
+    in: \arcsin(\sin(2))
+    out: \pi-2
+  wolfram:
+    in: ArcSin[Sin[2]]
+to-30-significant-digits-not-yet-the-last-digit:
+  epsil:
+    in: N(Arcsin(1 / 3), 30)
+    out: 0.339_836_909_454_121_937_096_392_513_392
+  tex:
+    in: N(\arcsin(\frac{1}{3}), 30)
+    out: 0.339\,836\,909\,454\,121\,937\,096
+  wolfram:
+    in: N[ArcSin[Rational[1, 3]], 30]
+arcsin-2-past-1-1-the-odd-function-mirror-of:
+  epsil:
+    in: Arcsin(-2)
+    out: -1 / 2 * Pi + i * Ln(2 + Sqrt(3))
+  tex:
+    in: \arcsin(-2)
+    out: i\ln(2+\sqrt{3})-\frac{\pi}{2}
+  wolfram:
+    in: ArcSin[-2]

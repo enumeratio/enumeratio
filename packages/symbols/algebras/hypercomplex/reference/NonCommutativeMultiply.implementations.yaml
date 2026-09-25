@@ -1,4 +1,31 @@
+the-canonical-order:
+  epsil:
+    in: NonCommutativeMultiply(e_1, e_2)
+    out: e_1 * e_2
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(e_1, e_2)
+    out: e_1e_2
+reversing-the-operands-flips-the-sign:
+  epsil:
+    in: NonCommutativeMultiply(e_2, e_1)
+    out: -(e_1 * e_2)
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(e_2, e_1)
+    out: -(e_1e_2)
+e-1e-2-2-1:
+  epsil:
+    in: NonCommutativeMultiply(e_1, e_2, e_1, e_2)
+    out: "-1"
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(e_1, e_2, e_1, e_2)
+    out: "-1"
 scalars-the-implied-identity-factor:
+  epsil:
+    in: CircleTimes(2, 3)
+    out: "6"
+  tex:
+    in: 2\otimes3
+    out: "6"
   wolfram:
     in: CircleTimes[2, 3]
     out: 2 (x) 3
@@ -8,11 +35,48 @@ scalars-the-implied-identity-factor:
     verdict: disagree
     kind: convention
     note: Our CircleTimes commits to a concrete algebra where scalars multiply as usual; Wolfram's builtin CircleTimes is inert notation with no arithmetic rules, so it leaves $2\otimes3$ displayed rather than reduced to 6.
+commuting-units-agrees-with-times:
+  epsil:
+    in: CircleTimes(i_2, i_1)
+    out: i_1 * i_2
+  tex:
+    in: i_2\otimes i_1
+    out: i_1i_2
+plain-times-declines-both-orders-arrive:
+  epsil:
+    in: e_2 * e_1
+    out: e_1 * e_2
+  tex:
+    in: e_2e_1
+    out: e_1e_2
+the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13:
+  epsil:
+    in: |-
+      NonCommutativeMultiply(
+                              1 + 2f_1 + 3f_2 + 4 * f_1 * f_2,
+                              2 - f_1 + f_2 - 3 * f_1 * f_2,
+                            )
+    out: 10 * f_1 * f_2 - 10f_1 + 9f_2 + 13
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(1+2f_1+3f_2+4f_1f_2, 2-f_1+f_2-3f_1f_2)
+    out: 10f_1f_2-10f_1+9f_2+13
 associative-nested-products-flatten:
+  epsil:
+    in: NonCommutativeMultiply(a, NonCommutativeMultiply(b, c))
+    out: a * b * c
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(a, \mathrm{NonCommutativeMultiply}(b, c))
+    out: abc
   wolfram:
     in:
     note: Wolfram flattens too but has no rules for undeclared symbols, so it keeps a**b**c unevaluated.
 undeclared-symbols-are-taken-to-commute-so-the:
+  epsil:
+    in: NonCommutativeMultiply(b, a)
+    out: a * b
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(b, a)
+    out: ab
   wolfram:
     in:
     note: Wolfram assumes nothing about undeclared symbols and leaves b**a unevaluated, in its order.

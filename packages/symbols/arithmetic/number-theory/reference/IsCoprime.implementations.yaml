@@ -1,0 +1,72 @@
+iscoprime-4-9:
+  epsil:
+    in: IsCoprime(4, 9)
+    out: True
+  tex:
+    in: \mathrm{IsCoprime}(4, 9)
+    out: \top
+  traditional:
+    in: \mathrm{IsCoprime}(4, 9)
+    out: \mathrm{True}
+  wolfram:
+    in: CoprimeQ[4, 9]
+both-are-divisible-by-3:
+  epsil:
+    in: IsCoprime(6, 9)
+    out: False
+  tex:
+    in: \mathrm{IsCoprime}(6, 9)
+    out: \bot
+  traditional:
+    in: \mathrm{IsCoprime}(6, 9)
+    out: \mathrm{False}
+  wolfram:
+    in: CoprimeQ[6, 9]
+several-arguments-every-pair-must-be-coprime:
+  epsil:
+    in: IsCoprime(2, 3, 5)
+    out: True
+  tex:
+    in: \mathrm{IsCoprime}(2, 3, 5)
+    out: \top
+  traditional:
+    in: \mathrm{IsCoprime}(2, 3, 5)
+    out: \mathrm{True}
+  wolfram:
+    in: CoprimeQ[2, 3, 5]
+pairwise-not-collectively-gcd-6-10-15-1-yet-no:
+  epsil:
+    in: IsCoprime(6, 10, 15)
+    out: False
+  tex:
+    in: \mathrm{IsCoprime}(6, 10, 15)
+    out: \bot
+  traditional:
+    in: \mathrm{IsCoprime}(6, 10, 15)
+    out: \mathrm{False}
+  wolfram:
+    in: CoprimeQ[6, 10, 15]
+gaussian-integers-2-i-and-2-i-are-non-associate:
+  epsil:
+    in: IsCoprime(2 + i, 2 + -1 * i)
+    out: True
+  tex:
+    in: \mathrm{IsCoprime}(2+i, 2-i)
+    out: \top
+  traditional:
+    in: \mathrm{IsCoprime}(2+i, 2-i)
+    out: \mathrm{True}
+  wolfram:
+    in: CoprimeQ[Complex[2, 1], Complex[2, -1]]
+listable:
+  epsil:
+    in: IsCoprime(3, [4, 6])
+    out: "[True, False]"
+  tex:
+    in: \mathrm{IsCoprime}(3, \bigl\lbrack4, 6\bigr\rbrack)
+    out: \bigl\lbrack\top, \bot\bigr\rbrack
+  traditional:
+    in: \mathrm{IsCoprime}(3, \bigl\lbrack4, 6\bigr\rbrack)
+    out: \bigl\lbrack\mathrm{True}, \mathrm{False}\bigr\rbrack
+  wolfram:
+    in: CoprimeQ[3, List[4, 6]]

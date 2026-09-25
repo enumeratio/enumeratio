@@ -1,0 +1,30 @@
+partial-sums-along-the-chain:
+  epsil:
+    in: PosetSumDown(Chain(4), [1, 2, 3, 4])
+    out: "[1, 3, 6, 10]"
+  tex:
+    in: \mathrm{PosetSumDown}(\mathrm{Chain}(4), \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack1, 3, 6, 10\bigr\rbrack
+  traditional:
+    in: \mathrm{PosetSumDown}(C_{4}, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack1, 3, 6, 10\bigr\rbrack
+and-back-again:
+  epsil:
+    in: MoebiusInvert(Chain(4), [1, 3, 6, 10])
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{MoebiusInvert}(\mathrm{Chain}(4), \bigl\lbrack1, 3, 6, 10\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  traditional:
+    in: \mathrm{MoebiusInvert}(C_{4}, \bigl\lbrack1, 3, 6, 10\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+inclusion-exclusion-round-tripped:
+  epsil:
+    in: MoebiusInvert(BooleanLattice(2), PosetSumDown(BooleanLattice(2), [5, 1, 2, 7]))
+    out: "[5, 1, 2, 7]"
+  tex:
+    in: \mathrm{MoebiusInvert}(\mathrm{BooleanLattice}(2), \mathrm{PosetSumDown}(\mathrm{BooleanLattice}(2), \bigl\lbrack5, 1, 2, 7\bigr\rbrack))
+    out: \bigl\lbrack5, 1, 2, 7\bigr\rbrack
+  traditional:
+    in: \mathrm{MoebiusInvert}(B_{2}, \mathrm{PosetSumDown}(B_{2}, \bigl\lbrack5, 1, 2, 7\bigr\rbrack))
+    out: \bigl\lbrack5, 1, 2, 7\bigr\rbrack
