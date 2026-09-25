@@ -1,0 +1,21 @@
+keeps-elements-where-sel-is-true:
+  epsil:
+    in: Pick([a, b, c], [True, False, True])
+    out: "[a, c]"
+  tex:
+    in: \mathrm{Pick}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\top, \bot, \top\bigr\rbrack)
+    out: \bigl\lbrack a, c\bigr\rbrack
+  traditional:
+    in: \mathrm{Pick}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack)
+    out: \bigl\lbrack a, c\bigr\rbrack
+  fullform:
+    in: Pick[List[a, b, c], List[True, False, True]]
+an-explicit-pattern-keeps-elements-matching:
+  epsil:
+    in: Pick([a, b, c, d], [1, 0, 1, 0], 1)
+    out: "[a, c]"
+  tex:
+    in: \mathrm{Pick}(\bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack, 1)
+    out: \bigl\lbrack a, c\bigr\rbrack
+  fullform:
+    in: Pick[List[a, b, c, d], List[1, 0, 1, 0], 1]

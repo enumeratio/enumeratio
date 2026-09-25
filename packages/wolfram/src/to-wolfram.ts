@@ -691,6 +691,25 @@ export const HEADS: Record<string, string> = {
   Circle: "Circle",
   Disk: "Disk",
   Rectangle: "Rectangle",
+
+  // Wolfram-frontier expression/pattern/string heads (@enumeratio/collections's
+  // expression-ops.ts): genuinely Wolfram's own names, waiting on a coverage run to fill in
+  // `elsewhere` — see NOVEL in packages/reference/tests/provenance.test.ts.
+  ToString: "ToString",
+  MapThread: "MapThread",
+  MatchQ: "MatchQ",
+  MapIndexed: "MapIndexed",
+  StringLength: "StringLength",
+  FreeQ: "FreeQ",
+  StringTake: "StringTake",
+  Replace: "Replace",
+  Through: "Through",
+  ToCharacterCode: "ToCharacterCode",
+  FromCharacterCode: "FromCharacterCode",
+  Level: "Level",
+  Pick: "Pick",
+  ReplacePart: "ReplacePart",
+  AssociationThread: "AssociationThread",
 };
 
 /** Wolfram heads we answer under one of our own heads, but only in a particular CALL

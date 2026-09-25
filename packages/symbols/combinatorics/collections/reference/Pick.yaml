@@ -1,0 +1,25 @@
+name: Pick
+domain: Collections
+signature: Pick(list, sel) / Pick(list, sel, patt)
+summary: Elements of list whose corresponding element of sel matches patt (default True).
+signatures:
+  - call: Pick(list, sel)
+    description: elements of list where the corresponding sel element is True
+    library: enumeratio-collections
+  - call: Pick(list, sel, patt)
+    description: elements of list where the corresponding sel element matches patt
+    library: enumeratio-collections
+details:
+  - list and sel must be the same length.
+  - Matching uses the same wildcard grammar as [[MatchQ]].
+examples:
+  - id: keeps-elements-where-sel-is-true
+    expr: [Pick, [List, a, b, c], [List, True, False, True]]
+    expected: [List, a, c]
+  - id: an-explicit-pattern-keeps-elements-matching
+    expr: [Pick, [List, a, b, c, d], [List, 1, 0, 1, 0], 1]
+    expected: [List, a, c]
+    category: Scope
+seeAlso:
+  - Level
+  - MatchQ

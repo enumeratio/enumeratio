@@ -1,0 +1,27 @@
+rewrites-the-whole-expr-matches-top-level:
+  epsil:
+    in: Replace(x + 1, Rule(_a + 1, _a * 100))
+    out: 100x
+  tex:
+    in: \mathrm{Replace}(x+1, \mathrm{Rule}(\operatorname{\_a}+1, 100\operatorname{\_a}))
+    out: 100x
+  fullform:
+    in: Replace[Plus[x, 1], Rule[Plus[_a, 1], Times[_a, 100]]]
+leaves-expr-untouched-when-only-subexpr-matches:
+  epsil:
+    in: Replace([x + 1], Rule(_a + 1, _a * 100))
+    out: "[x + 1]"
+  tex:
+    in: \mathrm{Replace}(\bigl\lbrack x+1\bigr\rbrack, \mathrm{Rule}(\operatorname{\_a}+1, 100\operatorname{\_a}))
+    out: \bigl\lbrack x+1\bigr\rbrack
+  fullform:
+    in: Replace[List[Plus[x, 1]], Rule[Plus[_a, 1], Times[_a, 100]]]
+tries-a-list-of-rules-in-order:
+  epsil:
+    in: Replace(b, [Rule(a, 1), Rule(b, 2)])
+    out: "2"
+  tex:
+    in: \mathrm{Replace}(b, \bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2)\bigr\rbrack)
+    out: "2"
+  fullform:
+    in: Replace[b, List[Rule[a, 1], Rule[b, 2]]]
