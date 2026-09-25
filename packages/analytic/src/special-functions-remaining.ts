@@ -22,15 +22,11 @@ const isImaginaryUnit = (x: BoxedExpression): boolean => x.re === 0 && x.im === 
 // arithmetic. Every wrapper here is a pre-check layered on top of whatever `evaluate`
 // already exists for its head at the time `declareSpecialFunctionsRemaining` runs (the
 // very end of `declareAnalytic`), so it composes with closed-forms-113.ts's own wrappers
-// rather than replacing them.
+// rather than replacing them. Each `wrapOperator` call's own `arity` argument filters the
+// call before the predicate runs, per #141 -- predicates below don't re-check ops.length.
 
 const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
-
-const exactly =
-  (n: number, p: (ops: readonly BoxedExpression[]) => boolean) =>
-  (ops: readonly BoxedExpression[]): boolean =>
-    ops.length === n && p(ops);
 
 export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // --- Limits at +oo: every one of these heads is monotonically unbounded (or, for
@@ -42,16 +38,18 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     wrapOperator(
       ce,
       [head, 1],
-      exactly(1, (ops) => isPositiveInfinity(ops[0])),
+      (ops) => isPositiveInfinity(ops[0]),
       () => (_ops, options) => finish(ce.symbol("PositiveInfinity"), options),
+      1,
     );
   }
   for (const head of ["DirichletEta", "DirichletBeta"] as const) {
     wrapOperator(
       ce,
       [head, 1],
-      exactly(1, (ops) => isPositiveInfinity(ops[0])),
+      (ops) => isPositiveInfinity(ops[0]),
       () => (_ops, options) => finish(ce.number(1), options),
+      1,
     );
   }
   // H_oo^(r) = zeta(r) for r > 1 (the Basel-sum generalisation); r <= 1 diverges and is
@@ -59,12 +57,13 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HarmonicNumber", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       if (!isPositiveInfinity(ops[0])) return false;
       const r = ops[1].re;
       return Number.isFinite(r) && r > 1;
-    }),
+    },
     () => (ops, options) => finish(ce.function("Zeta", [ops[1]]), options),
+    2,
   );
 
   // --- zeta(s, 1/2) = (2^s - 1) zeta(s), reached through the *Zeta* head with a second
@@ -77,10 +76,10 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Zeta", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const a = bigRationalAt(ops[1]);
       return symbolNameOf(ops[0]) === undefined && a !== undefined && a[0] === 1n && a[1] === 2n;
-    }),
+    },
     () => (ops, options) =>
       finish(
         ce.function("Multiply", [
@@ -89,6 +88,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    2,
   );
 
   // --- LerchPhi(z, 1, 1) at z = 1/2: Phi(z,1,1) = -Ln(1-z)/z generally (sum z^n/(n+1) =
@@ -98,7 +98,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["LerchPhi", 3],
-    exactly(3, (ops) => {
+    (ops) => {
       const z = bigRationalAt(ops[0]);
       return (
         z !== undefined &&
@@ -107,8 +107,9 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         bigIntegerAt(ops[1]) === 1n &&
         bigIntegerAt(ops[2]) === 1n
       );
-    }),
+    },
     () => (_ops, options) => finish(ce.function("Multiply", [2, ce.function("Ln", [2])]), options),
+    3,
   );
 
   // --- LerchPhi(-1, s, 1/2) = 2^s * DirichletBeta(s): at a = 1/2, (n+1/2)^-s = 2^s
@@ -119,11 +120,11 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["LerchPhi", 3],
-    exactly(3, (ops) => {
+    (ops) => {
       const z = bigIntegerAt(ops[0]);
       const a = bigRationalAt(ops[2]);
       return z === -1n && a !== undefined && a[0] === 1n && a[1] === 2n;
-    }),
+    },
     () => (ops, options) =>
       finish(
         ce.function("Multiply", [
@@ -132,6 +133,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    3,
   );
 
   // --- PolyLog(n, -1) = (2^(1-n) - 1) zeta(n) for a symbolic order n: Li_n(-1) =
@@ -141,7 +143,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyLog", 2],
-    exactly(2, (ops) => symbolNameOf(ops[0]) !== undefined && bigIntegerAt(ops[1]) === -1n),
+    (ops) => symbolNameOf(ops[0]) !== undefined && bigIntegerAt(ops[1]) === -1n,
     () => (ops, options) => {
       const n = ops[0];
       return finish(
@@ -155,6 +157,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         options,
       );
     },
+    2,
   );
 
   // --- PolyLog(-2, z) = z(1+z)/(1-z)^3: the standard negative-integer-order closed
@@ -162,7 +165,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyLog", 2],
-    exactly(2, (ops) => bigIntegerAt(ops[0]) === -2n),
+    (ops) => bigIntegerAt(ops[0]) === -2n,
     () => (ops, options) => {
       const z = ops[1];
       return finish(
@@ -173,6 +176,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         options,
       );
     },
+    2,
   );
 
   // --- Erf(i) = i * Erfi(1): the standard erf/erfi rotation erf(iy) = i*erfi(y),
@@ -181,9 +185,10 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Erf", 1],
-    exactly(1, (ops) => isImaginaryUnit(ops[0])),
+    (ops) => isImaginaryUnit(ops[0]),
     () => (_ops, options) =>
       finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Erfi", [1])]), options),
+    1,
   );
 
   // --- Erfc(-x) = 2 - Erfc(x): erfc is odd about erfc(0) = 1 (erfc(-x) = 1 + erf(x) =
@@ -192,11 +197,12 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Erfc", 1],
-    exactly(1, (ops) => ops[0].operator === "Negate"),
+    (ops) => ops[0].operator === "Negate",
     () => (ops, options) => {
       const x = operandsOf(ops[0])[0];
       return finish(ce.function("Subtract", [2, ce.function("Erfc", [x])]), options);
     },
+    1,
   );
 
   // --- BetaRegularized(x, a, b) at a = 1 or b = 1: the standard finite-arity closed
@@ -210,28 +216,21 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
-    exactly(
-      3,
-      (ops) => plainX(ops[0]) && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) === 1n,
-    ),
+    (ops) => plainX(ops[0]) && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) === 1n,
     () => (ops, options) => finish(ops[0], options),
+    3,
   );
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
-    exactly(
-      3,
-      (ops) => plainX(ops[0]) && bigIntegerAt(ops[2]) === 1n && bigIntegerAt(ops[1]) !== 1n,
-    ),
+    (ops) => plainX(ops[0]) && bigIntegerAt(ops[2]) === 1n && bigIntegerAt(ops[1]) !== 1n,
     () => (ops, options) => finish(ce.function("Power", [ops[0], ops[1]]), options),
+    3,
   );
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
-    exactly(
-      3,
-      (ops) => plainX(ops[0]) && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) !== 1n,
-    ),
+    (ops) => plainX(ops[0]) && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) !== 1n,
     () => (ops, options) =>
       finish(
         ce.function("Subtract", [
@@ -240,6 +239,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    3,
   );
 
   // --- Digamma / trigamma at 1/2, the last case of Gauss's digamma theorem this
@@ -254,10 +254,10 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Digamma", 1],
-    exactly(1, (ops) => {
+    (ops) => {
       const q = bigRationalAt(ops[0]);
       return q !== undefined && q[0] === 1n && q[1] === 2n;
-    }),
+    },
     () => (_ops, options) =>
       finish(
         ce.function("Subtract", [
@@ -266,19 +266,21 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    1,
   );
   wrapOperator(
     ce,
     ["PolyGamma", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const q = bigRationalAt(ops[1]);
       return bigIntegerAt(ops[0]) === 1n && q !== undefined && q[0] === 1n && q[1] === 2n;
-    }),
+    },
     () => (_ops, options) =>
       finish(
         ce.function("Multiply", [ce.function("Rational", [1, 2]), ce.function("Power", ["Pi", 2])]),
         options,
       ),
+    2,
   );
 
   // --- PolyGamma(m, n) at a positive integer order m and integer argument n:
@@ -294,11 +296,11 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyGamma", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const m = bigIntegerAt(ops[0]);
       const n = bigIntegerAt(ops[1]);
       return m !== undefined && m >= 1n && m <= 64n && n !== undefined && n > 2n && n <= 200n;
-    }),
+    },
     () => (ops, options) => {
       const m = bigIntegerAt(ops[0])!;
       const n = bigIntegerAt(ops[1])!;
@@ -313,5 +315,6 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const bracket = terms.length === 1 ? terms[0] : ce.function("Add", terms);
       return finish(ce.function("Multiply", [sign, mFactorial, bracket]), options);
     },
+    2,
   );
 }
