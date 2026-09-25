@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1217, disagree 45, inconclusive 0, error 3
+## wolfram — agree 1216, disagree 45, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                         | theirs                                                                                       |
 | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -37,7 +37,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `elementary/Arctan#7`                   | domain         | `["Error","'unexpected-argument'","'1'",["ErrorTrace",["ErrorFrame","'Arctan'",2]]]`         | `Pi/4`                                                                                       |
 | `hypercomplex/NonCommutativeMultiply#4` | convention     | `6`                                                                                          | `2 (x) 3`                                                                                    |
 | `linear-algebra/MatrixRank#8`           | domain         | `1`                                                                                          | `MatrixRank[{1, 2, 3}]`                                                                      |
-| `lists/Scan#3`                          | convention     | `true`                                                                                       | `enumeratio'Scan[{1, 2, 3}, Plus, 10] == {11, 13, 16}`                                       |
+| `lists/Scan#3`                          | convention     | `[11, 13, 16]`                                                                               | `enumeratio'Scan[{1, 2, 3}, Plus, 10]`                                                       |
 | `modular/ModularMatrix#4`               | domain         | `["ModularMatrix",1,1,1,2]`                                                                  | `"L" . "R"`                                                                                  |
 | `number-theory/ExtendedGCD#1`           | shape          | `["Tuple",1,-1,1]`                                                                           | `{1, {-1, 1}}`                                                                               |
 | `number-theory/ExtendedGCD#2`           | shape          | `["Tuple",6,-1,1]`                                                                           | `{6, {-1, 1}}`                                                                               |

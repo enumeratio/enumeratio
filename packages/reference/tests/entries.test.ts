@@ -62,6 +62,8 @@ const results = await runCases(cases, {
   setup,
   timeMs: TIME_MS,
   memoryBytes: MEMORY_BYTES,
+  // A lazy collection's `expected` is its elements, not the call.
+  materialize: true,
   concurrency: CONCURRENCY,
 });
 const resultById = new Map(results.map((result) => [result.id, result]));

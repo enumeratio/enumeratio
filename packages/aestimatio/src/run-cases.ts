@@ -34,6 +34,8 @@ export interface RunCasesOptions {
   readonly timeMs?: number;
   /** Default memory cap for a case that doesn't set its own `memoryBytes`. */
   readonly memoryBytes?: number;
+  /** Expand finite lazy collections in each result — see `EvaluateIsolatedOptions`. */
+  readonly materialize?: boolean;
   /** Max workers alive at once, when this call creates its own pool (ignored when `pool`
    * is given — that pool's own `size` governs). Default: the pool's own default
    * (`os.availableParallelism() - 1`). */
@@ -58,7 +60,7 @@ export function runCases(
   cases: readonly Case[],
   options: RunCasesOptions = {},
 ): Promise<CaseResult[]> {
-  const { setup, timeMs, memoryBytes, concurrency, pool: givenPool } = options;
+  const { setup, timeMs, memoryBytes, materialize, concurrency, pool: givenPool } = options;
   const pool = givenPool ?? createEvaluatorPool({ size: concurrency });
   const ownsPool = givenPool === undefined;
 
@@ -67,6 +69,7 @@ export function runCases(
       setup,
       timeMs: c.timeMs ?? timeMs,
       memoryBytes: c.memoryBytes ?? memoryBytes,
+      materialize,
     };
     return pool.evaluateDetailed(c.input, callOptions).then((detail) => ({
       id: c.id,
