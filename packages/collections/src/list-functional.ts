@@ -336,16 +336,36 @@ export function declareListFunctional(ce: ComputeEngine): void {
     () => (ops) => ce.number(operandsOf(ops[0]).length),
   );
 
-  wrapOperator(ce, ["First", 1, 1], isAssociation, () => (ops) => {
-    const first = operandsOf(ops[0])[0];
-    return first === undefined ? undefined : operandsOf(first)[1];
-  });
+  // 1 or 2 arguments only: `First`/`Last` were widened (see list-heads.ts) to accept a
+  // second, default-on-empty argument. Without the explicit length check here, isAssociation
+  // alone would also swallow that 2-arg form but ignore the default, always answering with
+  // the (nonexistent, on an empty association) first/last entry. The default can't just be
+  // left to the generic `native` fallback the way the plain-List case is (list-heads.ts):
+  // that fallback's non-empty branch re-invokes compute-engine's own First/Last, which
+  // rejects an Association outright (`indexed_collection` typed, not `Association`) — so
+  // the default logic is handled here instead, alongside the Association-specific read.
+  wrapOperator(
+    ce,
+    ["First", 1, 1],
+    (ops) => (ops.length === 1 || ops.length === 2) && isAssociation(ops),
+    () => (ops) => {
+      const first = operandsOf(ops[0])[0];
+      if (first !== undefined) return operandsOf(first)[1];
+      return ops.length === 2 ? ops[1] : undefined;
+    },
+  );
 
-  wrapOperator(ce, ["Last", 1, 1], isAssociation, () => (ops) => {
-    const rules = operandsOf(ops[0]);
-    const last = rules[rules.length - 1];
-    return last === undefined ? undefined : operandsOf(last)[1];
-  });
+  wrapOperator(
+    ce,
+    ["Last", 1, 1],
+    (ops) => (ops.length === 1 || ops.length === 2) && isAssociation(ops),
+    () => (ops) => {
+      const rules = operandsOf(ops[0]);
+      const last = rules[rules.length - 1];
+      if (last !== undefined) return operandsOf(last)[1];
+      return ops.length === 2 ? ops[1] : undefined;
+    },
+  );
 
   wrapOperator(
     ce,

@@ -204,6 +204,22 @@ test("First/Last on a plain List are unaffected", () => {
   expect(run(["First", ["List", 1, 2, 3]])).toEqual(1);
   expect(run(["Last", ["List", 1, 2, 3]])).toEqual(3);
 });
+// Regression: First/Last on an Association are guarded to exactly 1 argument. Before the
+// guard, `applies` only checked `ops[0]` was an Association and ignored `ops.length`, so
+// it also hijacked the widened 2-arg default-on-empty form (see list-heads.ts) — always
+// reading the (nonexistent) first/last entry instead of falling through to the layered
+// default-arg wrapper, which is the one that knows to return the default on an empty
+// collection.
+test("First(emptyAssociation, default) falls through to the default, not undefined", () => {
+  expect(run(["First", ["Association"], 99])).toEqual(99);
+});
+test("Last(emptyAssociation, default) falls through to the default, not undefined", () => {
+  expect(run(["Last", ["Association"], 99])).toEqual(99);
+});
+test("First(nonEmptyAssociation, default) still reads the first value, ignoring the default", () => {
+  const assoc = ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]];
+  expect(run(["First", assoc, 99])).toEqual("a");
+});
 test("Join on Associations keeps first-seen key order and lets a later value win", () => {
   expect(
     run([

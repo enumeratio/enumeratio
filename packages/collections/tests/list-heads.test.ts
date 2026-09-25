@@ -99,6 +99,13 @@ test("Length(atom) is 0", () => {
 test("Length(collection) is unaffected", () => {
   expect(run(["Length", ["List", 1, 2, 3, 4]])).toEqual(4);
 });
+// Regression: the rule is guarded to exactly 1 argument. Before the guard, `applies`
+// accepted any arity, so a malformed 2-arg call's native Error result was also silently
+// rewritten to 0 by this rule instead of staying an Error.
+test("Length(x, y) at the wrong arity is not answered by the atom rule", () => {
+  const result = run(["Length", 5, 6]) as readonly unknown[];
+  expect(result[0]).toEqual("Error");
+});
 
 // At(c, 0): the head symbol, matching Wolfram's Part[c, 0].
 test("At(c, 0) is the collection's head", () => {

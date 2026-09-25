@@ -143,11 +143,12 @@ export function declareListHeads(ce: ComputeEngine): void {
     () => (ops) => ce.box(["List", ...[...operandsOf(ops[0])].sort(naturalCompare)]),
   );
 
-  // Union(...): Wolfram's Union sorts; compute-engine keeps first-seen order.
+  // Union(...): Wolfram's Union sorts; compute-engine keeps first-seen order. Variadic —
+  // any non-empty call is in scope, so the guard is a floor, not an exact count.
   wrapOperator(
     ce,
     ["Union", 1],
-    () => true,
+    (ops) => ops.length >= 1,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
       return result === undefined || result.operator !== "Set"
@@ -157,11 +158,12 @@ export function declareListHeads(ce: ComputeEngine): void {
   );
 
   // Length(atom): an atom has no parts, so its length is 0 — compute-engine raises a
-  // type error instead.
+  // type error instead. Length is unary; guard explicitly so a future widening of the
+  // signature can't reach this rule with extra operands.
   wrapOperator(
     ce,
     ["Length", 1],
-    () => true,
+    (ops) => ops.length === 1,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
       return result?.operator === "Error" ? ce.Zero : result;
