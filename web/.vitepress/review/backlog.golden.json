@@ -243,5 +243,23 @@
       "pr": "#91 · misc · open PR",
       "check": "whatever"
     }
+  },
+  "serialize-with-feedback": "### [ ] Numeric sets as indexed collections {#pr86-numeric-sets-indexed}\n- link: https://enumeratio.dev/reference/symbol/Primes\n- pr: #86 · collections · open PR\n- check: What to look at and what a good answer looks like.\n- note: optional\n\n#### Feedback\n\nLooks solid overall.\n\nSecond paragraph of feedback.\n\n",
+  "serialize-empty-feedback": "### [x] Second item {#second-id}\n- link: https://enumeratio.dev/reference/symbol/Foo\n- pr: #90 · analytic · merged\n- check: check this\n\n#### Feedback\n\n",
+  "upsert-append": {
+    "raw": "# Review backlog\n\nSome intro text.\n\nMore intro, on its own paragraph.\n\n### [ ] Numeric sets as indexed collections {#pr86-numeric-sets-indexed}\n- link: https://enumeratio.dev/reference/symbol/Primes\n- pr: #86 · collections · open PR\n- check: What to look at and what a good answer looks like.\n- note: optional\n\n#### Feedback\n\nLooks solid overall.\n\nSecond paragraph of feedback.\n\n### [x] Second item {#second-id}\n- link: https://enumeratio.dev/reference/symbol/Foo\n- pr: #90 · analytic · merged\n- check: check this\n\n#### Feedback\n\n### [!] Third item {#third-id}\n- link: https://enumeratio.dev/x\n- pr: #91 · misc · open PR\n- check: whatever\n- custom: an unknown bullet key\n\n### [ ] Fourth item {#fourth-id}\n- link: https://enumeratio.dev/y\n- pr: #92 · misc · open PR\n- check: whatever else\n\n#### Feedback\n\nOne paragraph already here.\n\n### [ ] Arccos · example-19 {#adhoc-new-item}\n- link: https://enumeratio.dev/reference/symbol/Arccos#example-19\n\n#### Feedback\n\n",
+    "item": {
+      "id": "adhoc-new-item",
+      "title": "Arccos · example-19",
+      "status": "open",
+      "bullets": [
+        {
+          "key": "link",
+          "value": "https://enumeratio.dev/reference/symbol/Arccos#example-19"
+        }
+      ],
+      "feedback": "",
+      "link": "https://enumeratio.dev/reference/symbol/Arccos#example-19"
+    }
   }
 }
