@@ -110,3 +110,6 @@ export { declareElementarySpecialValues } from "./elementary-special-values.ts";
 export { declareRefineAssuming } from "./refine-assuming.ts";
 export { declarePiecewise, declarePiecewiseExpand } from "./piecewise.ts";
 export { declareSeriesCoefficient } from "./series-coefficient.ts";
+export { declareTransforms, matchLaplace, matchFourier } from "./transforms.ts";
+export { declareMeijerG } from "./meijer-g.ts";
+export { declareMeijerGReduce } from "./meijer-g-reduce.ts";

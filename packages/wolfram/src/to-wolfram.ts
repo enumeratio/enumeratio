@@ -407,6 +407,18 @@ export const HEADS: Record<string, string> = {
   CenteredInterval: "CenteredInterval",
   Around: "Around",
   HypergeometricPFQ: "HypergeometricPFQ",
+  // Same argument order both sides: LaplaceTransform[f, t, s], InverseLaplaceTransform[F, s, t].
+  LaplaceTransform: "LaplaceTransform",
+  InverseLaplaceTransform: "InverseLaplaceTransform",
+  // FourierTransform[f, t, w] / InverseFourierTransform[F, w, t]; both sides default to
+  // FourierParameters -> {0, 1}, which is all this transpiler's own heads implement.
+  FourierTransform: "FourierTransform",
+  InverseFourierTransform: "InverseFourierTransform",
+  // MeijerG[{{a..},{a..}}, {{b..},{b..}}, z] — same nested-list shape and argument order.
+  MeijerG: "MeijerG",
+  // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized
+  // 5-argument MeijerG (an extra scale parameter), ours always emits the plain 4-argument form.
+  MeijerGReduce: "MeijerGReduce",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",
