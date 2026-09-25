@@ -1,0 +1,19 @@
+name: FixedPointList
+domain: Collections
+signature: FixedPointList(f, x)
+summary: Applies a function repeatedly, collecting every value up to the fixed point.
+signatures:
+  - call: FixedPointList(f, x)
+    description: $\{x, f(x), f(f(x)), \dots\}$, stopping once two consecutive values are structurally the same — the repeated value ends the list once.
+    library: enumeratio-collections
+details:
+  - Stops on exact structural equality (Wolfram's $SameQ$), not the numeric-precision agreement [[FixedPoint]] additionally uses for an inexact sequence — adequate for exact/rational values, which is what every example here uses.
+  - Capped at 4096 applications of $f$, same as [[NestWhile]].
+examples:
+  - id: halve-and-floor-down-to-the-fixed-point
+    expr: [FixedPointList, [Function, [Floor, [Divide, _1, 2]]], 10]
+    expected: [List, 10, 5, 2, 1, 0, 0]
+    caption: halve and floor down to 0, ending with the repeated fixed point
+seeAlso:
+  - FixedPoint
+  - NestWhileList

@@ -1,0 +1,22 @@
+name: Switch
+domain: Collections
+signature: Switch(expr, form1, val1, form2, val2, ...)
+summary: Evaluates the value paired with the first form the expression matches.
+signatures:
+  - call: Switch(expr, form1, val1, form2, val2, ...)
+    description: The first $val_i$ whose $form_i$ (evaluated) $expr$ (evaluated) equals; a bare $\_$ (Blank) as a $form_i$ always matches, as a default case. Stays unevaluated if nothing matches.
+    library: enumeratio-collections
+details:
+  - Matching is structural equality only, not Wolfram's fuller pattern language — a form is either a literal value or the bare wildcard $\_$.
+examples:
+  - id: match-a-literal-form
+    expr: [Switch, 2, 1, one, 2, two, 3, three]
+    expected: two
+    caption: match a literal form
+  - id: fall-through-to-a-blank-default
+    expr: [Switch, 99, 1, one, _, other]
+    expected: other
+    caption: fall through to a Blank default
+    category: Scope
+seeAlso:
+  - Do

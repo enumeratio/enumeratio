@@ -1,0 +1,19 @@
+match-a-literal-form:
+  epsil:
+    in: Switch(2, 1, one, 2, two, 3, three)
+    out: two
+  tex:
+    in: \mathrm{Switch}(2, 1, 1, 2, 2, 3, 3)
+    out: "2"
+  fullform:
+    in: Switch[2, 1, one, 2, two, 3, three]
+fall-through-to-a-blank-default:
+  epsil:
+    in: Switch(99, 1, one, _, other)
+    out: other
+  tex:
+    in: \mathrm{Switch}(99, 1, 1, \operatorname{\_}, \mathrm{other})
+    out: \mathrm{other}
+  fullform:
+    in: Switch[99, 1, one, Slot[1], other]
+    back: [Switch, 99, 1, one, _1, other]

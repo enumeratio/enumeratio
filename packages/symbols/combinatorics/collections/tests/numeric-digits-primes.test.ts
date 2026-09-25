@@ -491,3 +491,23 @@ for (const [head, params] of Object.entries(GOLDEN_CASES)) {
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });
+
+test("KAlmostPrimes(0) is {1} and below that empty, both finite", () => {
+  const entry = byHead.get("KAlmostPrimes");
+  if (!entry) throw new Error("KAlmostPrimes missing");
+  expect(entry.count([0])).toBe(1);
+  expect(entry.unrank([0], 0)).toBe(1);
+  expect(entry.unrank([0], 1)).toBeNaN();
+  expect(entry.count([-1])).toBe(0);
+});
+
+test("PrimePairs with an odd gap is finite: one of the pair is 2", () => {
+  const entry = byHead.get("PrimePairs");
+  if (!entry) throw new Error("PrimePairs missing");
+  expect(entry.count([1])).toBe(1); // (2, 3)
+  expect(entry.unrank([1], 0)).toBe(2);
+  expect(entry.unrank([1], 1)).toBeNaN();
+  expect(entry.count([3])).toBe(1); // (2, 5)
+  expect(entry.count([7])).toBe(0); // 9 isn't prime
+  expect(entry.count([2])).toBeNaN(); // twin primes: open
+});

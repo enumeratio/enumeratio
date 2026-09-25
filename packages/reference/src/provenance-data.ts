@@ -242,6 +242,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "AbsoluteTiming",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "AbsoluteTiming",
+    elsewhere: [],
+  },
+  {
     name: "AbundantNumbers",
     provenance: "unknown",
     declared: null,
@@ -312,6 +319,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "AppendTo",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "AppendTo",
+    elsewhere: [],
+  },
+  {
     name: "ArithmeticNumbers",
     provenance: "unknown",
     declared: null,
@@ -344,6 +358,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "override",
     declared: null,
     wolframAlias: "Part",
+    elsewhere: [],
+  },
+  {
+    name: "Attributes",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Attributes",
     elsewhere: [],
   },
   {
@@ -407,6 +428,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "Catch",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Catch",
     elsewhere: [],
   },
   {
@@ -557,6 +585,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Do",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Do",
+    elsewhere: [],
+  },
+  {
     name: "DoubleFactorialNumbers",
     provenance: "unknown",
     declared: null,
@@ -568,6 +603,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "Echo",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Echo",
     elsewhere: [],
   },
   {
@@ -659,6 +701,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "override",
     declared: "enumeratio-collections",
     wolframAlias: "FixedPoint",
+    elsewhere: [],
+  },
+  {
+    name: "FixedPointList",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "FixedPointList",
     elsewhere: [],
   },
   {
@@ -1138,6 +1187,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "Module",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Module",
+    elsewhere: [],
+  },
+  {
     name: "MotzkinNumbers",
     provenance: "unknown",
     declared: null,
@@ -1177,6 +1233,20 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "NestList",
+    elsewhere: [],
+  },
+  {
+    name: "NestWhile",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "NestWhile",
+    elsewhere: [],
+  },
+  {
+    name: "NestWhileList",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "NestWhileList",
     elsewhere: [],
   },
   {
@@ -1481,6 +1551,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Reap",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Reap",
+    elsewhere: [],
+  },
+  {
     name: "RecurrenceTable",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1579,6 +1656,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "SetAttributes",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "SetAttributes",
+    elsewhere: [],
+  },
+  {
     name: "SetMinus",
     provenance: "override",
     declared: null,
@@ -1667,6 +1751,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "SortBy",
+    elsewhere: [],
+  },
+  {
+    name: "Sow",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Sow",
     elsewhere: [],
   },
   {
@@ -1810,6 +1901,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Switch",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Switch",
+    elsewhere: [],
+  },
+  {
     name: "SymmetricGroup",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1849,6 +1947,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "Through",
+    elsewhere: [],
+  },
+  {
+    name: "Throw",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Throw",
     elsewhere: [],
   },
   {
@@ -2017,6 +2122,20 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "WheelGraph",
+    elsewhere: [],
+  },
+  {
+    name: "While",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "While",
+    elsewhere: [],
+  },
+  {
+    name: "With",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "With",
     elsewhere: [],
   },
   {
