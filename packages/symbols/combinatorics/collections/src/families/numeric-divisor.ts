@@ -6,7 +6,7 @@
 // same reason numeric-sets.ts carries its own isPrime/sumProperDivisors rather than
 // importing them. isAbundant/sumProperDivisors below are literally copied from
 // numeric-sets.ts's AbundantNumbers helpers to share its predicate style, as asked.
-import type { NumberKernel } from "./types.ts";
+import type { Declared, NumberKernel } from "./types.ts";
 
 // ---- shared: memoised "nth n with predicate(n)" scan (copied from numeric-sets.ts). ----
 
@@ -307,8 +307,16 @@ const IDONEAL_NUMBERS = [
   385, 408, 462, 520, 760, 840, 1320, 1365, 1848,
 ];
 
-function tableEntry(table: readonly number[]): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
+/** A paramCount:0 scalar family known only as far as its table: an open problem (count NaN)
+ *  whose known terms end with the table. */
+function tableEntry(table: readonly number[]): Pick<NumberKernel, "unrank" | "valid" | "rank" | "declared"> {
   return {
+    declared: {
+      carrier: "Numeric",
+      params: [],
+      cost: { count: "closed", unrank: "closed", rank: "closed", valid: "closed" },
+      known: () => BigInt(table.length),
+    } satisfies Declared,
     unrank: (_p, r) => (r < table.length ? table[r] : Number.NaN),
     valid: (element) => table.includes(Number(element)),
     rank: (element) => table.indexOf(Number(element)),
@@ -429,11 +437,18 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isSquareFree),
   },
   {
+    declared: {
+      carrier: "Numeric",
+      params: [{ name: "k", role: "param", min: 0 }],
+      cost: { count: "closed", unrank: "scan", rank: "scan", valid: "polynomial" },
+    },
     head: "KFreeIntegers",
     paramCount: 1,
     kind: "scalar",
-    count: () => Number.POSITIVE_INFINITY,
-    unrank: ([k], r) => kFreeCacheFor(k).nth(r + 1),
+    // Below k = 2 every prime power is excluded, leaving {1}: finite, and a scan for its
+    // second element would never end.
+    count: ([k]) => (k < 2 ? 1 : Number.POSITIVE_INFINITY),
+    unrank: ([k], r) => (k < 2 ? (r === 0 ? 1 : Number.NaN) : kFreeCacheFor(k).nth(r + 1)),
     valid: (element, [k]) => isKFree(Number(element), k),
     rank: (element, [k]) => kFreeCacheFor(k).rankOf(Number(element)),
   },

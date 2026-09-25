@@ -64,7 +64,12 @@ for (const family of allEntries.filter((f) => f.declared !== undefined)) {
       if (typeof count === "number") {
         // ∞ can't be enumerated, and an open problem must say how far it can go.
         if (count === Number.POSITIVE_INFINITY) expect(enumerative, "infinite but enumerative").toBe(false);
-        else expect(declared.known, "count NaN needs `known`").toBeDefined();
+        // An open problem is either scanned (as far as asked) or a table with a known end.
+        else
+          expect(
+            declared.known !== undefined || declared.cost.unrank === "scan",
+            "count NaN needs `known` or a scan",
+          ).toBe(true);
       } else if (enumerative) {
         const work = (declared.work as (p: number[]) => bigint)(p);
         // The bound has to cover what's enumerated; check it wherever the count is cheap.

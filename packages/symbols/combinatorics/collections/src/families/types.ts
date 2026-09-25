@@ -55,6 +55,9 @@ export interface Declared {
   readonly work?: (p: number[]) => bigint;
   /** A scan's largest cheap rank at this size (default: the size itself). */
   readonly sized?: (p: number[], size: number) => bigint;
+  /** A sequence whose terms can repeat (Fibonacci's 1, 1): `rank` finds the first place a
+   *  term occurs, so unrank(rank(x)) = x holds but rank(unrank(r)) = r needn't. */
+  readonly repeats?: boolean;
   /** How many elements an open-problem family (count NaN) can actually produce. */
   readonly known?: (p: number[]) => bigint;
 }

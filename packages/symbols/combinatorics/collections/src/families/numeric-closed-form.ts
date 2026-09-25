@@ -14,7 +14,7 @@
 // file doesn't own. `Element(hugeValue, FactorialNumbers)` is therefore only reliable
 // within that range; direct kernel calls (as in this package's tests) can still pass a
 // bigint straight through.
-import type { NumberKernel } from "./types.ts";
+import type { Declared, NumberKernel } from "./types.ts";
 
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
 const MIN_SAFE_BIG = BigInt(Number.MIN_SAFE_INTEGER);
@@ -206,6 +206,8 @@ const primorialAt = growingSequence((_index0, prev) => {
   return prev * BigInt(candidate);
 });
 
+const CLOSED: Declared["cost"] = { count: "closed", unrank: "closed", rank: "closed", valid: "closed" };
+
 export const entries: NumberKernel[] = [
   // ---- figurate numbers: all k-gonal, P(k, n) = ((k-2)n^2 - (k-4)n)/2. ----
   quadraticFamily("TriangularNumbers", 1n, 1n, 0n, 2n), // P(3, n) = n(n+1)/2, A000217
@@ -263,6 +265,7 @@ export const entries: NumberKernel[] = [
   // ---- the constant sequence 1, 1, 1, … -- every term is 1, so `rank` picks the first
   // (0-indexed) match for the one value the family contains. ----
   {
+    declared: { carrier: "Numeric", params: [], cost: CLOSED, repeats: true },
     head: "AllOnes",
     paramCount: 0,
     kind: "scalar",
@@ -275,6 +278,8 @@ export const entries: NumberKernel[] = [
   // ---- PolygonalNumbers(k): the one-parameter selector generalizing every fixed-k family
   // above. k=4 reproduces SquareNumbers (numeric-sets.ts) termwise. ----
   {
+    // Below 3 sides the formula isn't a polygonal-number sequence (k = 0 isn't even increasing).
+    declared: { carrier: "Numeric", params: [{ name: "k", role: "param", min: 3 }], cost: CLOSED },
     head: "PolygonalNumbers",
     paramCount: 1,
     kind: "scalar",

@@ -64,6 +64,10 @@ export function sampleable(family: FamilyKernel): Sampleable | { readonly untest
 
   const draw = (rng: Rng, size: number, budget: bigint): Draw => {
     const params = drawParams(rng, size);
+    // A count that itself enumerates must not run before its bound says it can afford to.
+    if (declared?.cost.count === "enumerative" && (declared.work as (p: number[]) => bigint)(params) > budget) {
+      return { discard: "over budget" };
+    }
     let count: bigint | number;
     try {
       count = family.count(params);
@@ -79,13 +83,14 @@ export function sampleable(family: FamilyKernel): Sampleable | { readonly untest
       const rank = roll < 0.1 ? 0n : roll < 0.2 ? count - 1n : randomBelow(rng, count);
       return { address: { params, rank } };
     }
-    if (Number.isNaN(count)) {
-      const known = declared?.known?.(params);
-      if (known === undefined) return { discard: "open problem, no known prefix" };
+    const known = Number.isNaN(count) ? declared?.known?.(params) : undefined;
+    if (known !== undefined) {
+      // An open problem with a table behind it: only the prefix it can produce.
       if (known <= 0n) return { discard: "empty" };
       return { address: { params, rank: randomBelow(rng, known) } };
     }
-    // Infinite: the size bounds the rank, or the family's own `sized` for a scan.
+    // Infinite, or open but scanned (TwinPrimes): the size bounds the rank, or the family's
+    // own `sized` for a scan.
     const bound =
       declared?.sized?.(params, size) ?? BigInt(declared === undefined ? Math.min(size, UNDECLARED_SIZE) : size);
     return { address: { params, rank: randomBelow(rng, bound + 1n) } };
