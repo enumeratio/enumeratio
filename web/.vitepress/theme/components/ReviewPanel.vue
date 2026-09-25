@@ -9,7 +9,8 @@
 import { useRoute, useRouter } from "vitepress";
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import type { BacklogItem, ItemStatus } from "../../review/backlog.ts";
-import { resolveReviewLink } from "../../review/link.ts";
+import { resolveReviewLink, splitHash } from "../../review/link.ts";
+import { reviewModeOn, toggleReviewMode } from "../review/mode.ts";
 import { area, prField, prNumber, useReviewStore } from "../review/store.ts";
 
 const STATUS_GLYPH: Record<ItemStatus, string> = { open: "○", reviewed: "✓", "needs-work": "!" };
@@ -91,17 +92,99 @@ function stopResize(): void {
   resizing = false;
 }
 
+// --- Persistent highlight (requirement 1) ---------------------------------------
+// While the selected item's link targets a fragment on the CURRENT page, keep that
+// element outlined for as long as it stays selected -- not just a brief flash (see
+// ReferencePage.vue's `highlight()`, which is unrelated and still just flashes on
+// hash navigation). Cleared whenever the selection changes, the panel closes, or the
+// route changes away from the target's page.
+const HIGHLIGHT_CLASS = "review-highlight-target";
+let highlightedEl: HTMLElement | null = null;
+let highlightRaf = 0;
+
+function clearHighlight(): void {
+  if (highlightRaf) cancelAnimationFrame(highlightRaf);
+  highlightRaf = 0;
+  highlightedEl?.classList.remove(HIGHLIGHT_CLASS);
+  highlightedEl = null;
+}
+
+// The target element may not exist yet (e.g. a ClientOnly example section still
+// mounting) -- poll a few animation frames, then give up silently: a stale or
+// no-longer-valid anchor (a later `#example-N` → `#example/<id>` migration, say)
+// just means no highlight, never an error.
+function tryHighlight(id: string, attemptsLeft: number): void {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add(HIGHLIGHT_CLASS);
+    highlightedEl = el;
+    return;
+  }
+  if (attemptsLeft <= 0) return;
+  highlightRaf = requestAnimationFrame(() => tryHighlight(id, attemptsLeft - 1));
+}
+
+function updateHighlight(): void {
+  clearHighlight();
+  if (!store.isOpen.value) return;
+  const item = store.selected.value;
+  if (!item?.link) return;
+  const resolved = resolveReviewLink(item.link);
+  if (resolved.kind !== "local") return;
+  const { path, id } = splitHash(resolved.path);
+  if (!id || path !== route.path) return;
+  tryHighlight(id, 20); // ~20 frames, generous enough for ClientOnly content to mount
+}
+
+watch(
+  // `.link` too, not just `.id` -- a live reload from the file watcher (Dean editing
+  // REVIEW.md, or another tab syncing localStorage) can change the already-selected
+  // item's link in place without changing which item is selected.
+  () =>
+    [store.isOpen.value, store.selected.value?.id, store.selected.value?.link, route.path] as const,
+  () => updateHighlight(),
+  { immediate: true },
+);
+
+// --- Modifier-click to review (requirement 2) -------------------------------------
+// alt + (cmd on macOS / ctrl elsewhere) on any element with an id -- the
+// ReferencePage anchors (#example-N, #signatures, #details, #enumeration,
+// #implementation) plus any heading, which VitePress already gives an id. A plain
+// cmd/ctrl-click is deliberately left alone (adding `alt` means we never have to
+// special-case `<a href>` to preserve the browser's own open-in-new-tab gesture).
+function isReviewModifierClick(e: MouseEvent): boolean {
+  return e.altKey && (e.metaKey || e.ctrlKey);
+}
+
+function currentPageLabel(): string {
+  return document.title.split(" | ")[0]?.trim() || route.path;
+}
+
+async function onDocumentClick(e: MouseEvent): Promise<void> {
+  if (!reviewModeOn.value || !isReviewModifierClick(e)) return;
+  const target = e.target as HTMLElement | null;
+  const anchored = target?.closest("[id]") as HTMLElement | null;
+  if (!anchored?.id) return;
+  e.preventDefault();
+  e.stopPropagation();
+  store.isOpen.value = true;
+  await store.selectOrCreateAdhoc(currentPageLabel(), route.path, anchored.id);
+}
+
 onMounted(() => {
   store.init();
   if (new URLSearchParams(location.search).has("review")) store.isOpen.value = true;
   window.addEventListener("keydown", onKeydown);
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("mouseup", stopResize);
+  document.addEventListener("click", onDocumentClick, true);
 });
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", onKeydown);
   window.removeEventListener("mousemove", onMouseMove);
   window.removeEventListener("mouseup", stopResize);
+  document.removeEventListener("click", onDocumentClick, true);
+  clearHighlight();
 });
 </script>
 
@@ -130,6 +213,33 @@ onBeforeUnmount(() => {
         <div class="review-path" :title="store.path.value">{{ store.path.value }}</div>
         <button class="review-close" title="Close" @click="store.isOpen.value = false">×</button>
       </header>
+      <div class="review-toolbar">
+        <button class="review-copy" @click="store.copyFeedback">
+          {{
+            store.copyState.value === "copied"
+              ? "Copied ✓"
+              : store.copyState.value === "error"
+                ? "Copy failed"
+                : "Copy feedback"
+          }}
+        </button>
+        <button class="review-mode-toggle" title="Turn review mode off" @click="toggleReviewMode()">
+          Review mode: on
+        </button>
+      </div>
+      <details class="review-help">
+        <summary>Help</summary>
+        <p>
+          <code>?review</code> in the URL turns review mode on for this browser (persists via
+          localStorage); <code>?review=off</code> turns it off. It's on by default under
+          <code>vitepress dev</code>.
+        </p>
+        <p>
+          Alt + Cmd-click (macOS) or Alt + Ctrl-click (elsewhere) on any anchored element -- an
+          example, a heading, an implementation section -- opens this panel on its review item,
+          creating one if it doesn't exist yet.
+        </p>
+      </details>
       <div class="review-filters">
         <select v-model="store.statusFilter.value">
           <option value="all">All statuses</option>
@@ -454,5 +564,51 @@ onBeforeUnmount(() => {
   font-family: var(--vp-font-family-base);
   font-size: 0.82rem;
   line-height: 1.4;
+}
+.review-toolbar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem 0;
+}
+.review-toolbar button {
+  flex: 1;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  border-radius: 4px;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.review-help {
+  margin: 0.3rem 0.75rem 0;
+  font-size: 0.75rem;
+  color: var(--vp-c-text-2);
+}
+.review-help summary {
+  cursor: pointer;
+  color: var(--vp-c-text-3);
+}
+.review-help p {
+  margin: 0.4rem 0 0;
+  line-height: 1.4;
+}
+.review-help code {
+  font-size: 0.9em;
+}
+</style>
+
+<style>
+/* Persistent highlight (requirement 1) -- global, not scoped: the target lives
+   outside this component's DOM (a review item's link points at an id anywhere on
+   the current page). Subtle and theme-aware so it reads fine in light and dark. */
+.review-highlight-target {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+  border-radius: 6px;
+  background-color: var(--vp-c-brand-soft);
+  transition:
+    outline-color 0.15s,
+    background-color 0.15s;
 }
 </style>

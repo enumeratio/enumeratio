@@ -922,10 +922,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         id: "complex-arguments-should-evaluate-as-they-do-for",
         expr: ["Erfc", ["Complex", 1.5, -1]],
         expected: ["Complex", -0.07839920749893345, -0.027963711238655847],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Complex arguments should evaluate, as they do for [[Erf]]: $\\operatorname{erfc}(z) = 1 - \\operatorname{erf}(z)$; left unevaluated today",
+          "Complex arguments evaluate, as they do for [[Erf]]: $\\operatorname{erfc}(z) = 1 - \\operatorname{erf}(z)$",
       },
       {
         id: "listable-threads-over-its-limits-at-pm-infty",

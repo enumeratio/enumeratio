@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { resolveReviewLink } from "./link.ts";
+import { resolveReviewLink, splitHash } from "./link.ts";
 
 describe("resolveReviewLink", () => {
   test("rewrites the production host to a local path", () => {
@@ -62,6 +62,26 @@ describe("resolveReviewLink", () => {
     expect(resolveReviewLink("mailto:someone@enumeratio.dev")).toEqual({
       kind: "external",
       href: "mailto:someone@enumeratio.dev",
+    });
+  });
+});
+
+describe("splitHash", () => {
+  test("splits a path with a fragment", () => {
+    expect(splitHash("/reference/symbol/Primes#example-2")).toEqual({
+      path: "/reference/symbol/Primes",
+      id: "example-2",
+    });
+  });
+
+  test("no fragment: empty id", () => {
+    expect(splitHash("/guide/")).toEqual({ path: "/guide/", id: "" });
+  });
+
+  test("decodes the fragment (an opaque string, never parsed for shape)", () => {
+    expect(splitHash("/reference/symbol/Arccos#example%2Ffinding-42")).toEqual({
+      path: "/reference/symbol/Arccos",
+      id: "example/finding-42",
     });
   });
 });

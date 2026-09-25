@@ -131,12 +131,14 @@ for (const entry of entries) {
       const volatile = new Set(example.volatile ?? []);
       const output = masked(result.value, volatile);
       const expected = masked(example.expected, volatile);
+      // Matching means the same thing either way: equal up to `settled`'s tolerance.
+      const matched = settled(output, expected, asksForDigits(example.expr));
       if (example.aspirational) {
         // A documented capability gap: CE should NOT yet match the borrowed
         // target. If this starts matching, promote it (drop `aspirational`).
-        expect(output).not.toEqual(expected);
+        expect(matched).not.toEqual(expected);
       } else {
-        expect(settled(output, expected, asksForDigits(example.expr))).toEqual(expected);
+        expect(matched).toEqual(expected);
       }
     });
   }

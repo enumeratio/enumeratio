@@ -20,10 +20,11 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // `declare-tagged-arithmetic.ts` (see tagged-arithmetic.ts for why); `Sqrt`/`Erf` are
 // Around's alone, registered the same way for a consistent, low-overhead hook.
 //
-// `Multinomial(Around(x, dx), k)` — one of the backlog's own examples — is NOT covered:
-// `Multinomial` is declared over integers only, so there is no nearby point to take a
-// derivative at without first widening it to the Gamma-based real domain, which is out of
-// scope for `Around` itself. That example stays aspirational.
+// A head is propagated through AS ONE FUNCTION of its uncertain argument, before its own
+// definition gets to expand it: `Multinomial(Around(2, 0.01), 2)` is `(a+2)!/(a!·2!)`, and
+// pushing the `Around` through that formula term by term would count the same uncertainty in
+// the numerator and the denominator as if they were independent (the dependency problem).
+// Differentiating the whole head gives the true first-order spread, `Around(6, 0.035)`.
 
 const isAround = (e: BoxedExpression): boolean =>
   e.operator === "Around" && operandsOf(e).length === 2;
@@ -104,9 +105,8 @@ function aroundUnary(
  * — resolved via `aroundUnary`, `derivativeAt`'s symbolic/numeric-fallback derivative either
  * way. `LogGamma` is our own continuation (declared separately from compute-engine's
  * `GammaLn`, same value where both are defined — see elementary-special-values.ts); both get
- * the rule since either name might appear. `Cosh`, `Log2` and `Log10` are NOT here: an Around
- * argument to any of the three is rejected before our resolver is even reached — see
- * declare-tagged-arithmetic.ts's header comment. */
+ * the rule since either name might appear. `Log2` and `Log10` canonicalize to `Log(x, b)`,
+ * handled with the multi-argument heads below. */
 const UNARY_HEADS = [
   "Sqrt",
   "Erf",
@@ -122,6 +122,7 @@ const UNARY_HEADS = [
   "Arccos",
   "Arctan",
   "Sinh",
+  "Cosh",
   "Tanh",
   "Ln",
   "Gamma",
@@ -159,12 +160,29 @@ function aroundOverArg(
 /** `{head: the argument position an Around can occupy}` for the multi-argument heads above —
  * every other argument is taken as given (exact, fixed) in `aroundOverArg`. */
 const MULTI_ARG_HEADS: Readonly<Record<string, number>> = {
+  Log: 0,
   HarmonicNumber: 1,
   Zeta: 1,
   HurwitzZeta: 1,
   LerchPhi: 0,
   BetaRegularized: 0,
 };
+
+/** `f(…, Around(x,dx), …)` for a head whose arguments are interchangeable, so the `Around` may
+ * sit in any one slot -- `Multinomial(2, Around(2, 0.01))` as much as the other way round.
+ * One uncertain argument; with several, their correlations through the head are not known here,
+ * so this declines. */
+function aroundInAnySlot(
+  ce: ComputeEngine,
+  head: string,
+  ops: readonly BoxedExpression[],
+): BoxedExpression | undefined {
+  const slots = ops.flatMap((o, i) => (isAround(o) ? [i] : []));
+  return slots.length === 1 ? aroundOverArg(ce, head, ops, slots[0]!) : undefined;
+}
+
+/** Heads whose `Around` may sit in any argument -- see `aroundInAnySlot`. */
+const ANY_SLOT_HEADS = ["Multinomial"] as const;
 
 /** This module's resolvers, one per head it extends — see the file header. */
 export function aroundResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
@@ -191,6 +209,9 @@ export function aroundResolvers(ce: ComputeEngine): Readonly<Record<string, Reso
   }
   for (const [head, argIndex] of Object.entries(MULTI_ARG_HEADS)) {
     resolvers[head] = (ops) => aroundOverArg(ce, head, ops, argIndex);
+  }
+  for (const head of ANY_SLOT_HEADS) {
+    resolvers[head] = (ops) => aroundInAnySlot(ce, head, ops);
   }
   return resolvers;
 }

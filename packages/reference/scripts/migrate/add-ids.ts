@@ -60,9 +60,11 @@ for (const { entries } of sources) {
   for (const entry of entries) {
     const set = taken.get(entry.name) ?? new Set<string>();
     taken.set(entry.name, set);
+    // Ids already in the data stay; only examples without one get a fresh id.
+    for (const ex of entry.examples) if (ex.id) set.add(ex.id);
     idsOf.set(
       entry,
-      entry.examples.map((ex) => dedupe(baseId(ex), set)),
+      entry.examples.map((ex) => ex.id || dedupe(baseId(ex), set)),
     );
   }
 }
@@ -173,8 +175,9 @@ for (const { stem, entries } of sources) {
     // Rows in example order, so the file reads like the page.
     const pending = new Map(Object.entries(rows));
     for (const [i, ex] of entry.examples.entries()) {
-      const row = rows[JSON.stringify(ex.expr)];
+      const row = rows[ids[i]!] ?? rows[JSON.stringify(ex.expr)];
       if (row !== undefined) out[ids[i]!] = row;
+      pending.delete(ids[i]!);
       pending.delete(JSON.stringify(ex.expr));
     }
     for (const key of pending.keys())

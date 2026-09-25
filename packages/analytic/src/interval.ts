@@ -1,16 +1,36 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
+import { type BoundOrigin, outwardBound } from "./interval-bounds.ts";
+import { logShape, SHAPES, type Shape } from "./interval-shapes.ts";
 import { imageOverArg } from "./tagged-calculus.ts";
 import type { Resolver } from "./tagged-arithmetic.ts";
 
-// Interval arithmetic over compute-engine's native `Interval(a, b)` — a real set with no
-// arithmetic of its own (`Add(Interval(1,2), Interval(3,4))` is a type error out of the
-// box). This covers the arithmetic operators Wolfram's examples actually push an interval
-// through: Add, Negate (which also covers Subtract — see below), Multiply, Divide, Power
-// (integer exponents), Abs, and Sin over a sub-range of one monotonic branch. Every other
-// function stays untouched — Wolfram's own interval support is comparably narrow outside
-// the elementary functions.
+// Interval arithmetic over compute-engine's native `Interval(a, b)` -- a real set with no
+// arithmetic of its own (`Add(Interval(1,2), Interval(3,4))` is a type error out of the box).
+// A result CONTAINS every value the operation takes on its inputs (rigorous containment, as
+// Wolfram's `Interval` promises): exact where the inputs are exact, rounded outward where they
+// are not (interval-bounds.ts).
 //
+// A function's image over an interval is the least and greatest of its values at the endpoints
+// and at every critical point inside. How the critical points are found decides whether the
+// image is rigorous, so each head goes the first of these routes that applies:
+//
+// 1. Periodic heads (Sin … Csc) enumerate their critical points and poles exactly, period by
+//    period. An interval across a pole has an image in two unbounded pieces, returned as a
+//    `Union` of intervals, as Wolfram returns it.
+// 2. Heads whose shape is a textbook fact (interval-shapes.ts: monotonic, or a single minimum
+//    at a known point -- Cosh's at 0, Γ's at 1.4616…) need nothing else: exact endpoints give
+//    an exact image, inexact ones a rigorous enclosure.
+// 3. Everything else samples its derivative's sign (tagged-calculus.ts) and declines when that
+//    is ambiguous. That can miss a pair of extrema between two samples, so these heads are NOT
+//    rigorous -- `NOT_RIGOROUS` below lists them, and their reference entries say so.
+//
+// compute-engine ships a floating-point interval kernel (`@cortex-js/compute-engine/interval`)
+// that looks like it would serve for Γ, but it is not rigorous there: its `gamma` misses the
+// true value by a few ulps (Γ(2.5) falls below its lower bound), and its `gammaln` returns
+// `lo > hi` on (0, 1.4616…). Both are recorded in design/upstreaming.md §8; Γ's shape is known,
+// so route 2 covers it without the kernel.
+
 // `Subtract(a, b)` is not handled directly: compute-engine canonicalizes it to
 // `Add(a, Negate(b))` at box time, before any operator-level hook sees a `Subtract` head, so
 // a `Negate` resolver plus the generic `Add` one already covers it (and reproduces the
@@ -20,7 +40,7 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // Endpoints are kept as exact boxed expressions (not doubles), so `Interval(1, 2) +
 // Interval(3, 4)` stays `Interval(4, 6)` rather than losing exactness. `numAt` (a numeric
 // approximation) only ever decides WHICH endpoint is smaller/larger — the returned
-// expression is always the exact one, never the approximation.
+// expression is the exact one, or, when it is inexact, its outward rounding.
 //
 // Registered via tagged-arithmetic.ts's `registerTaggedHeads`, not directly: see that file
 // for why (a per-head, per-tagged-type `wrapOperator` chain cost ~4x on every Add/Multiply
@@ -40,6 +60,39 @@ const minOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
 const maxOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
   xs.reduce((a, b) => (numAt(b) > numAt(a) ? b : a));
 
+/** Unary heads with no known shape (interval-shapes.ts): their images come from
+ * sampling the derivative's sign (tagged-calculus.ts), which can miss a pair of extrema lying
+ * between two samples. */
+const NOT_RIGOROUS_UNARY = [
+  "BarnesG",
+  "LogBarnesG",
+  "DirichletEta",
+  "DirichletBeta",
+  "Zeta",
+  "CatalanNumber",
+] as const;
+
+/** `{head: the argument position an Interval can occupy}` for the multi-argument heads --
+ * every other argument is taken as given (exact, fixed) by `imageOverArg`. All of them are
+ * sampled, like `NOT_RIGOROUS_UNARY`. */
+const MULTI_ARG_IMAGE_HEADS: Readonly<Record<string, number>> = {
+  StieltjesGamma: 1,
+  HarmonicNumber: 1,
+  DirichletL: 2,
+  PolyGamma: 1,
+  PolyLog: 1,
+  GammaRegularized: 1,
+  BetaRegularized: 0,
+  Binomial: 1,
+};
+
+/** Every head whose interval image is sampled rather than guaranteed -- see the file header's
+ * fourth route. The reference entries for these say so. */
+export const NOT_RIGOROUS: readonly string[] = [
+  ...NOT_RIGOROUS_UNARY,
+  ...Object.keys(MULTI_ARG_IMAGE_HEADS),
+];
+
 /** This module's resolvers, one per head it extends — see the file header. Built once per
  * engine and merged with CenteredInterval's and Around's before a single
  * `registerTaggedHeads` call per head (see `declare-tagged-arithmetic.ts`) — never
@@ -56,6 +109,10 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     ce.function("Interval", [l, h]).evaluate();
   /** `e` as an interval, degenerate `[e, e]` if it is a plain number. */
   const asInterval = (e: BoxedExpression) => (isInterval(e) ? e : interval(e, e));
+  /** `[l, h]` with each bound made safe: exact when it is, otherwise rounded outward (see
+   * interval-bounds.ts for why an arithmetic result and a function value differ). */
+  const enclosure = (l: BoxedExpression, h: BoxedExpression, origin: BoundOrigin) =>
+    interval(outwardBound(ce, l, "lo", origin), outwardBound(ce, h, "hi", origin));
 
   const intervalNegate = (a: BoxedExpression): BoxedExpression => {
     const A = asInterval(a);
@@ -64,20 +121,20 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   const intervalAdd = (a: BoxedExpression, b: BoxedExpression): BoxedExpression => {
     const A = asInterval(a);
     const B = asInterval(b);
-    return interval(add(lo(A), lo(B)), add(hi(A), hi(B)));
+    return enclosure(add(lo(A), lo(B)), add(hi(A), hi(B)), "arithmetic");
   };
   const intervalMul = (a: BoxedExpression, b: BoxedExpression): BoxedExpression => {
     const A = asInterval(a);
     const B = asInterval(b);
     const products = [mul(lo(A), lo(B)), mul(lo(A), hi(B)), mul(hi(A), lo(B)), mul(hi(A), hi(B))];
-    return interval(minOf(products), maxOf(products));
+    return enclosure(minOf(products), maxOf(products), "arithmetic");
   };
   /** 1/I for an interval not containing 0 — decreasing on each branch, so `[1/hi, 1/lo]`
    * whichever side of 0 it's on. */
   const intervalRecip = (a: BoxedExpression): BoxedExpression | undefined => {
     const A = asInterval(a);
     if (numAt(lo(A)) <= 0 && numAt(hi(A)) >= 0) return undefined; // 0 in range: no reciprocal
-    return interval(div(ce.One, hi(A)), div(ce.One, lo(A)));
+    return enclosure(div(ce.One, hi(A)), div(ce.One, lo(A)), "arithmetic");
   };
   const intervalDiv = (a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
     const recip = intervalRecip(b);
@@ -90,10 +147,10 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     const A = asInterval(a);
     const l = lo(A);
     const h = hi(A);
-    if (n.re % 2 === 1) return interval(pow(l, n.re), pow(h, n.re));
-    if (numAt(l) >= 0) return interval(pow(l, n.re), pow(h, n.re));
-    if (numAt(h) <= 0) return interval(pow(h, n.re), pow(l, n.re));
-    return interval(0, maxOf([pow(l, n.re), pow(h, n.re)]));
+    if (n.re % 2 === 1) return enclosure(pow(l, n.re), pow(h, n.re), "arithmetic");
+    if (numAt(l) >= 0) return enclosure(pow(l, n.re), pow(h, n.re), "arithmetic");
+    if (numAt(h) <= 0) return enclosure(pow(h, n.re), pow(l, n.re), "arithmetic");
+    return enclosure(ce.Zero, maxOf([pow(l, n.re), pow(h, n.re)]), "arithmetic");
   };
   const intervalAbs = (a: BoxedExpression): BoxedExpression => {
     const A = asInterval(a);
@@ -164,17 +221,47 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     Csc: [1, 2],
   };
 
+  /** Which way a periodic head heads off to infinity just beside the pole `pole`, on the side
+   * `side` of it: the sign of its value a hair away. Near a simple pole the sign is constant on
+   * each side, so one nearby point decides it. */
+  const infinityBeside = (
+    head: string,
+    pole: BoxedExpression,
+    side: "below" | "above",
+  ): BoxedExpression => {
+    const p = numAt(pole);
+    const hair = 1e-9 * Math.max(1, Math.abs(p));
+    const value = ce.function(head, [ce.number(side === "below" ? p - hair : p + hair)]).N().re;
+    return value > 0 ? ce.PositiveInfinity : ce.NegativeInfinity;
+  };
+
+  /** `[a, b]` pieces merged where they overlap or touch, as one `Interval`, or a `Union` of
+   * disjoint ones in increasing order. */
+  const unionOf = (pieces: readonly (readonly [BoxedExpression, BoxedExpression])[]) => {
+    const sorted = [...pieces].sort((x, y) => numAt(x[0]) - numAt(y[0]));
+    const merged: [BoxedExpression, BoxedExpression][] = [];
+    for (const [a, b] of sorted) {
+      const last = merged.at(-1);
+      if (last !== undefined && numAt(a) <= numAt(last[1])) {
+        if (numAt(b) > numAt(last[1])) last[1] = b;
+      } else {
+        merged.push([a, b]);
+      }
+    }
+    const intervals = merged.map(([a, b]) => enclosure(a, b, "function"));
+    return intervals.length === 1 ? intervals[0]! : ce.function("Union", intervals);
+  };
+
   /**
    * `Sin`, `Cos`, `Tan`, `Cot`, `Sec`, `Csc` over a finite `Interval`: exact enumeration, not
    * sampling — a periodic function can oscillate arbitrarily many times across a wide interval
-   * (`Cos(Interval(-1, 4))` spans both a maximum at 0 and a minimum at π), so `imageOverArg`'s
-   * finite-sample sign check can't be trusted for these the way it can for a smooth special
-   * function over the kind of narrow range a documented example uses. Declines outright if any
-   * pole sits in `[l, h]` (Wolfram's own answer there is a `Union` of unbounded intervals, out
-   * of scope for a single-`Interval` rule) — never a bounded interval that quietly drops the
-   * unbounded piece. Otherwise the image is exactly the min/max of the two endpoints plus
-   * every critical point in range, each evaluated exactly (endpoints stay exact when the
-   * inputs are; a critical point is an exact multiple of π either way).
+   * (`Cos(Interval(-1, 4))` spans both a maximum at 0 and a minimum at π), so no finite sample
+   * of its derivative can be trusted. The interval is cut at every pole in it; on each piece
+   * the image is the min/max of its values at the piece's ends and at every critical point
+   * inside, each evaluated exactly (a critical point is an exact multiple of π), and a piece's
+   * end AT a pole runs off to the infinity the head approaches there. The pieces' images are
+   * merged: `Cot(Interval(-π/4, π/4))` is `(-∞, -1] ∪ [1, ∞)`, and `Tan(Interval(0, π))`,
+   * whose two pieces cover every real, is `Interval(-∞, ∞)`.
    */
   const periodicImage = (head: string, a: BoxedExpression): BoxedExpression | undefined => {
     const A = asInterval(a);
@@ -183,29 +270,68 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     const lNum = numAt(l);
     const hNum = numAt(h);
     if (!Number.isFinite(lNum) || !Number.isFinite(hNum)) return undefined;
-    const pole = PERIODIC_POLES[head];
-    if (pole !== undefined && pointsInRange(lNum, hNum, pole[0], pole[1]).length > 0) {
-      return undefined;
-    }
     const evaluateHeadAt = (x: BoxedExpression) => ce.function(head, [x]).evaluate();
-    const candidates = [evaluateHeadAt(l), evaluateHeadAt(h)];
+    const phase = PERIODIC_POLES[head];
+    const poles = phase === undefined ? [] : pointsInRange(lNum, hNum, phase[0], phase[1]);
     const critical = PERIODIC_CRITICAL[head];
-    if (critical !== undefined) {
-      for (const point of pointsInRange(lNum, hNum, critical[0], critical[1])) {
-        candidates.push(evaluateHeadAt(point));
+
+    // Cut [l, h] at each pole: a piece is [start, end] with either end possibly a pole.
+    const pieces: (readonly [BoxedExpression, BoxedExpression])[] = [];
+    const cuts: { at: BoxedExpression; pole: boolean }[] = [
+      { at: l, pole: false },
+      ...poles.map((at) => ({ at, pole: true })),
+      { at: h, pole: false },
+    ];
+    for (let i = 0; i + 1 < cuts.length; i++) {
+      const start = cuts[i]!;
+      const end = cuts[i + 1]!;
+      if (numAt(end.at) - numAt(start.at) <= 0) continue; // a pole sitting on an endpoint
+      const values: BoxedExpression[] = [];
+      if (start.pole) values.push(infinityBeside(head, start.at, "above"));
+      else values.push(evaluateHeadAt(start.at));
+      if (end.pole) values.push(infinityBeside(head, end.at, "below"));
+      else values.push(evaluateHeadAt(end.at));
+      if (critical !== undefined) {
+        const [s, e] = [numAt(start.at), numAt(end.at)];
+        for (const point of pointsInRange(s, e, critical[0], critical[1])) {
+          values.push(evaluateHeadAt(point));
+        }
       }
+      pieces.push([minOf(values), maxOf(values)]);
     }
-    return interval(minOf(candidates), maxOf(candidates));
+    if (pieces.length === 0) return undefined;
+    return unionOf(pieces);
+  };
+
+  /** A head of known `shape` over `[l, h]`: its values at the endpoints, plus the minimum if it
+   * lies inside -- exact whenever the endpoints are. Declines past the head's real domain. */
+  const shapedImage = (
+    shape: Shape,
+    valueAt: (x: BoxedExpression) => BoxedExpression,
+    l: BoxedExpression,
+    h: BoxedExpression,
+  ): BoxedExpression | undefined => {
+    const lNum = numAt(l);
+    const hNum = numAt(h);
+    if (Number.isNaN(lNum) || Number.isNaN(hNum) || lNum > hNum) return undefined;
+    const domain = shape.domain;
+    if (domain !== undefined) {
+      if (lNum < domain.from || hNum > domain.to) return undefined;
+      if (domain.open === true && lNum === domain.from) return undefined; // a pole at `from`
+    }
+    const [fl, fh] = [valueAt(l), valueAt(h)];
+    if (shape.kind === "increasing") return enclosure(fl, fh, "function");
+    if (shape.kind === "decreasing") return enclosure(fh, fl, "function");
+    const bottom = ce.number(shape.at);
+    const least = lNum <= shape.at && shape.at <= hNum ? valueAt(bottom) : minOf([fl, fh]);
+    return enclosure(least, maxOf([fl, fh]), "function");
   };
 
   /**
-   * `head`'s image over `ops[argIndex]` (an [[Interval]]), via `imageOverArg`'s
-   * derivative-sign-and-bisection rule — correct for a monotonic branch AND for the single
-   * interior extremum case (Γ's minimum inside [1.4, 1.5] is exactly this: the derivative
-   * flips sign, `imageOverArg` bisects on it and adds the extremum as a third candidate,
-   * rather than just sorting the two endpoints). Declines whenever the derivative isn't
-   * finite at an endpoint or the sign check doesn't resolve — never a guess past what the
-   * derivative shows.
+   * `head`'s image over `ops[argIndex]` (an [[Interval]]), by the first route in the file
+   * header that applies: a known shape or -- for the heads in
+   * `NOT_RIGOROUS` -- `imageOverArg`'s derivative-sign sampling. Declines whenever the chosen
+   * route cannot answer, never a guess past it.
    */
   const image = (
     ops: readonly BoxedExpression[],
@@ -214,8 +340,26 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   ): BoxedExpression | undefined => {
     const target = ops[argIndex];
     if (target === undefined || !isInterval(target)) return undefined;
-    const result = imageOverArg(ce, head, ops, argIndex, lo(target), hi(target));
-    return result === undefined ? undefined : interval(result.lo, result.hi);
+    const [l, h] = [lo(target), hi(target)];
+    const shape = ops.length === 1 ? SHAPES[head] : undefined;
+    if (shape !== undefined) {
+      return shapedImage(shape, (x) => ce.function(head, [x]).evaluate(), l, h);
+    }
+    const result = imageOverArg(ce, head, ops, argIndex, l, h);
+    return result === undefined ? undefined : enclosure(result.lo, result.hi, "function");
+  };
+
+  /** `Log(x, b)`, with `Log(x)` base 10 (compute-engine's reading, and what `Log10` and
+   * `Log2` canonicalize to): monotonic in `x` for any base in (0, 1) or above 1. */
+  const logImage = (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    const [x, b] = ops;
+    if (x === undefined || !isInterval(x) || ops.length > 2) return undefined;
+    const base = b ?? ce.number(10);
+    const shape = logShape(numAt(base));
+    if (shape === undefined) return undefined;
+    const valueAt = (at: BoxedExpression) =>
+      ce.function("Log", b === undefined ? [at] : [at, base]).evaluate();
+    return shapedImage(shape, valueAt, lo(x), hi(x));
   };
 
   /** `Sin`/`Cos` alone: bounded oscillation makes the image `[-1, 1]` on an infinite bound,
@@ -227,47 +371,9 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     return periodicImage(head, a);
   };
 
-  /** Unary heads whose image over an `Interval` argument is exactly `image([a], head, 0)` —
-   * every one checked against `derivativeAt` (see tagged-calculus.ts and .scratch/probe2.ts)
-   * either resolves symbolically or falls back to a numeric derivative that still correctly
-   * detects the sign flip a Γ- or ζ-shaped function can have. `Cosh`, `Log2` and `Log10` are
-   * NOT here: an Interval argument to any of the three is rejected before our resolver is
-   * even reached — see declare-tagged-arithmetic.ts's header comment. */
-  const UNARY_IMAGE_HEADS = [
-    "Arcsin",
-    "Arccos",
-    "Arctan",
-    "Sinh",
-    "Tanh",
-    "Ln",
-    "Sqrt",
-    "Gamma",
-    "GammaLn",
-    "LogGamma",
-    "Digamma",
-    "BarnesG",
-    "LogBarnesG",
-    "DirichletEta",
-    "DirichletBeta",
-    "Erf",
-    "Erfc",
-    "ErfInv",
-    "Zeta",
-    "CatalanNumber",
-  ] as const;
-
-  /** `{head: the argument position an Interval can occupy}` for the multi-argument heads —
-   * every other argument is taken as given (exact, fixed) by `imageOverArg`. */
-  const MULTI_ARG_IMAGE_HEADS: Readonly<Record<string, number>> = {
-    StieltjesGamma: 1,
-    HarmonicNumber: 1,
-    DirichletL: 2,
-    PolyGamma: 1,
-    PolyLog: 1,
-    GammaRegularized: 1,
-    BetaRegularized: 0,
-    Binomial: 1,
-  };
+  /** Unary heads whose image over an `Interval` argument is `image([a], head, 0)`: a shape
+   * from interval-shapes.ts, or else sampling (`NOT_RIGOROUS`). */
+  const UNARY_IMAGE_HEADS = [...Object.keys(SHAPES), ...NOT_RIGOROUS_UNARY] as const;
 
   const resolvers: Record<string, Resolver> = {
     Negate: (ops) =>
@@ -295,11 +401,8 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
       // extremum to find, so a direct endpoint image is exact.
       const rawA = raw[0] ?? a;
       if (rawA.isSame(ce.E) && isInterval(n)) {
-        const N = asInterval(n);
-        return interval(
-          ce.function("Exp", [lo(N)]).evaluate(),
-          ce.function("Exp", [hi(N)]).evaluate(),
-        );
+        const exp = (x: BoxedExpression) => ce.function("Exp", [x]).evaluate();
+        return shapedImage({ kind: "increasing" }, exp, lo(n), hi(n));
       }
       return undefined;
     },
@@ -331,6 +434,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
       ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
         ? periodicImage("Csc", ops[0])
         : undefined,
+    Log: logImage,
     Sign: (ops) => {
       const a = ops.length === 1 ? ops[0] : undefined;
       if (a === undefined || !isInterval(a)) return undefined;
