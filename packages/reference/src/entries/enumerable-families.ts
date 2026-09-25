@@ -1790,4 +1790,401 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "Take(SchroederNumbers, 15)" },
     seeAlso: ["Count", "At", "Element", "LittleSchroderNumbers", "CentralDelannoyNumbers"],
   },
+  // ---- divisor and multiplicative-structure numeric sets (@enumeratio/collections
+  // numeric-divisor.ts): bare integers like the numeric-set prototypes above, so `enumerate`
+  // pages a Take(...) prefix rather than the (usually infinite) family itself. Three sets --
+  // PerfectNumbers, GiugaNumbers, IdonealNumbers -- have Count = NaN: whether more members
+  // exist past the known ones is an open problem, not something a scan could resolve.
+  {
+    name: "DeficientNumbers",
+    domain: "Collections",
+    signature: "DeficientNumbers",
+    summary:
+      "The deficient numbers $1, 2, 3, 4, 5, 7, …$ -- integers whose proper divisors fall short of them -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "DeficientNumbers",
+        description: "the $n$ with $\\sigma(n) - n < n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(DeficientNumbers) = +\\infty$ -- deficient numbers include every prime -- and $At(DeficientNumbers, k)$ unranks the $k$-th by scanning forward from the last cached match.",
+      "OEIS A005100.",
+      "Membership goes through [[Element]]: $Element(7, DeficientNumbers)$ is true, $Element(12, DeficientNumbers)$ is false (abundant).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(DeficientNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers", "PerfectNumbers"],
+  },
+  {
+    name: "PerfectNumbers",
+    domain: "Collections",
+    signature: "PerfectNumbers",
+    summary:
+      "The perfect numbers $6, 28, 496, 8128, …$ -- integers equal to the sum of their proper divisors -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PerfectNumbers",
+        description: "the $n$ with $\\sigma(n) = 2n$, an indexed collection of unknown count.",
+      },
+    ],
+    details: [
+      "$Count(PerfectNumbers) = NaN$: every even perfect number is $2^{p-1}(2^p - 1)$ for a Mersenne prime exponent $p$ (Euclid–Euler), but whether any odd perfect number exists -- and so whether the family is even finite or infinite -- is open.",
+      "$At$ reads off a table of the known even perfect numbers that fit an exact JS integer ($p = 2, 3, 5, 7, 13, 17, 19$); past that table it returns unevaluated rather than scanning forever, since no predicate here could safely keep searching.",
+      "OEIS A000396. Membership goes through [[Element]]: $Element(28, PerfectNumbers)$ is true, $Element(24, PerfectNumbers)$ is false (abundant, not perfect).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PerfectNumbers, 7)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers", "SemiperfectNumbers"],
+  },
+  {
+    name: "SemiperfectNumbers",
+    domain: "Collections",
+    signature: "SemiperfectNumbers",
+    summary:
+      "The semiperfect numbers $6, 12, 18, 20, …$ -- integers equal to a sum of some subset of their proper divisors -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SemiperfectNumbers",
+        description:
+          "the $n$ with a proper-divisor subset summing to $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SemiperfectNumbers) = +\\infty$ (every perfect number is trivially semiperfect, taking the whole divisor set), and $At$ unranks the $k$-th by scanning forward, testing each candidate with a subset-sum search over its proper divisors.",
+      "OEIS A005835.",
+      "Membership goes through [[Element]]: $Element(12, SemiperfectNumbers)$ is true ($12 = 2 + 4 + 6$), $Element(70, SemiperfectNumbers)$ is false -- $70$ is abundant but [[WeirdNumbers|weird]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SemiperfectNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PerfectNumbers", "WeirdNumbers"],
+  },
+  {
+    name: "WeirdNumbers",
+    domain: "Collections",
+    signature: "WeirdNumbers",
+    summary:
+      "The weird numbers $70, 836, 4030, …$ -- abundant but not semiperfect -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "WeirdNumbers",
+        description:
+          "the abundant $n$ with no proper-divisor subset summing to $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(WeirdNumbers) = +\\infty$ (infinitely many are known to exist), and $At$ unranks the $k$-th by scanning forward, testing $\\sigma(n) - n > n$ and then a subset-sum search over $n$'s proper divisors.",
+      "OEIS A006037. $70$ is the smallest: its proper divisors $1, 2, 5, 7, 10, 14, 35$ sum past $70$ but no subset of them sums to exactly $70$.",
+      "Membership goes through [[Element]]: $Element(70, WeirdNumbers)$ is true, $Element(12, WeirdNumbers)$ is false (abundant, but semiperfect).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(WeirdNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers", "SemiperfectNumbers"],
+  },
+  {
+    name: "PracticalNumbers",
+    domain: "Collections",
+    signature: "PracticalNumbers",
+    summary:
+      "The practical numbers $1, 2, 4, 6, 8, 12, …$ -- integers whose divisors let every smaller integer be written as a distinct-divisor sum -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PracticalNumbers",
+        description:
+          "the $n$ where every $1 \\le m \\le n$ is a sum of distinct divisors of $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PracticalNumbers) = +\\infty$ (Saias 1997 confirmed they have positive density), and $At$ unranks the $k$-th by the classical criterion -- sorted divisors $d_1 = 1 < d_2 < … < d_j = n$, practical iff no $d_{i+1}$ exceeds $1 + \\sum_{l \\le i} d_l$.",
+      "OEIS A005153.",
+      "Membership goes through [[Element]]: $Element(12, PracticalNumbers)$ is true, $Element(10, PracticalNumbers)$ is false ($7$ isn't a sum of $10$'s divisors $\\{1,2,5,10\\}$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PracticalNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "ArithmeticNumbers"],
+  },
+  {
+    name: "HighlyCompositeNumbers",
+    domain: "Collections",
+    signature: "HighlyCompositeNumbers",
+    summary:
+      "The highly composite numbers $1, 2, 4, 6, 12, 24, …$ -- integers with more divisors than any smaller one -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "HighlyCompositeNumbers",
+        description:
+          "the $n$ with $\\tau(n) > \\tau(m)$ for every $m < n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(HighlyCompositeNumbers) = +\\infty$ ($n!$'s divisor count strictly increases with $n$), and $At$ unranks the $k$-th by scanning forward, keeping a running record of the largest divisor count seen so far.",
+      "Ramanujan's sequence, OEIS A002182.",
+      "Membership goes through [[Element]]: $Element(12, HighlyCompositeNumbers)$ is true ($\\tau(12) = 6$, a new record over $1..11$), $Element(18, HighlyCompositeNumbers)$ is false ($\\tau(18) = 6$, not a new record).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(HighlyCompositeNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "SuperabundantNumbers"],
+  },
+  {
+    name: "SuperabundantNumbers",
+    domain: "Collections",
+    signature: "SuperabundantNumbers",
+    summary:
+      "The superabundant numbers $1, 2, 4, 6, 12, 24, …$ -- integers whose abundancy $\\sigma(n)/n$ exceeds every smaller one's -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SuperabundantNumbers",
+        description:
+          "the $n$ with $\\sigma(n)/n > \\sigma(m)/m$ for every $m < n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SuperabundantNumbers) = +\\infty$, and $At$ unranks the $k$-th by scanning forward, comparing abundancy ratios by cross-multiplication (exact, no floating point) against a running record.",
+      "OEIS A004394. Every superabundant number is highly composite, but not conversely -- the two sequences share early terms and then diverge (e.g. $180$ is superabundant but not highly composite, and vice versa further out).",
+      "Membership goes through [[Element]]: $Element(4, SuperabundantNumbers)$ is true ($\\sigma(4)/4 = 7/4$, a new record over $1..3$), $Element(3, SuperabundantNumbers)$ is false ($\\sigma(3)/3 = 4/3 < \\sigma(2)/2 = 3/2$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SuperabundantNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "HighlyCompositeNumbers"],
+  },
+  {
+    name: "ArithmeticNumbers",
+    domain: "Collections",
+    signature: "ArithmeticNumbers",
+    summary:
+      "The arithmetic numbers $1, 3, 5, 6, 7, …$ -- integers whose divisors have an integer mean -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "ArithmeticNumbers",
+        description: "the $n$ with $\\tau(n) \\mid \\sigma(n)$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(ArithmeticNumbers) = +\\infty$ (almost all integers are arithmetic -- the exceptions have density zero), and $At$ unranks the $k$-th by scanning forward, testing $\\sigma(n) \\bmod \\tau(n) = 0$.",
+      "OEIS A003601.",
+      "Membership goes through [[Element]]: $Element(6, ArithmeticNumbers)$ is true (divisors $1,2,3,6$ average $3$), $Element(4, ArithmeticNumbers)$ is false (divisors $1,2,4$ average $7/3$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(ArithmeticNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PracticalNumbers"],
+  },
+  {
+    name: "UntouchableNumbers",
+    domain: "Collections",
+    signature: "UntouchableNumbers",
+    summary:
+      "The untouchable numbers $2, 5, 52, 88, …$ -- integers that are no number's aliquot sum -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "UntouchableNumbers",
+        description:
+          "the $n$ with $\\sigma(m) - m \\ne n$ for every $m$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(UntouchableNumbers) = +\\infty$ (Erdős), and $At$ unranks the $k$-th by scanning forward, testing each candidate $n$ against a sieve of aliquot sums $\\sigma(m) - m$ for $m$ up to $n^2$ -- large enough to catch $m = p^2$ for a prime $p$ as big as $n - 1$, which gives aliquot sum $1 + p = n$.",
+      "OEIS A005114. $1$ is excluded by convention even though it's also never an aliquot sum for $m > 1$; the sequence starts at $2$.",
+      "Membership goes through [[Element]]: $Element(5, UntouchableNumbers)$ is true, $Element(4, UntouchableNumbers)$ is false ($\\sigma(9) - 9 = 4$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(UntouchableNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers"],
+  },
+  {
+    name: "AchillesNumbers",
+    domain: "Collections",
+    signature: "AchillesNumbers",
+    summary:
+      "The Achilles numbers $72, 108, 200, 288, …$ -- powerful but not a perfect power -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "AchillesNumbers",
+        description:
+          "the powerful $n > 1$ that aren't of the form $a^k$ ($a, k \\ge 2$), an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(AchillesNumbers) = +\\infty$, and $At$ unranks the $k$-th by scanning forward, testing [[PowerfulNumbers|powerfulness]] and then [[PerfectPowerNumbers|non-perfect-power]]ness.",
+      "OEIS A052486. $72 = 2^3 \\cdot 3^2$ is the smallest: every prime factor's exponent is $\\ge 2$ (powerful), but no single base and exponent produce it (not a perfect power).",
+      "Membership goes through [[Element]]: $Element(72, AchillesNumbers)$ is true, $Element(64, AchillesNumbers)$ is false ($64 = 2^6$, a perfect power).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(AchillesNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "PowerfulNumbers", "PerfectPowerNumbers"],
+  },
+  {
+    name: "PowerfulNumbers",
+    domain: "Collections",
+    signature: "PowerfulNumbers",
+    summary:
+      "The powerful numbers $1, 4, 8, 9, 16, …$ -- integers where every prime factor appears squared or more -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PowerfulNumbers",
+        description:
+          "the $n$ whose every prime factor has exponent $\\ge 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PowerfulNumbers) = +\\infty$ (every perfect square is powerful), and $At$ unranks the $k$-th by scanning forward, testing each candidate's factorisation.",
+      "OEIS A001694. Every powerful number factors uniquely as $a^2 b^3$ for squarefree $b$.",
+      "Membership goes through [[Element]]: $Element(8, PowerfulNumbers)$ is true ($8 = 2^3$), $Element(12, PowerfulNumbers)$ is false ($12 = 2^2 \\cdot 3$, and $3$'s exponent is only $1$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PowerfulNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "SquareFreeNumbers", "PerfectPowerNumbers"],
+  },
+  {
+    name: "PerfectPowerNumbers",
+    domain: "Collections",
+    signature: "PerfectPowerNumbers",
+    summary:
+      "The perfect powers $4, 8, 9, 16, 25, …$ -- integers $a^k$ with $a \\ge 2, k \\ge 2$ -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PerfectPowerNumbers",
+        description: "the $a^k$ for integers $a \\ge 2, k \\ge 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PerfectPowerNumbers) = +\\infty$, and $At$ unranks the $k$-th by scanning forward, testing each candidate by binary search over exponents.",
+      "OEIS A075109 -- the $a \\ge 2$ convention excludes $1$, unlike A001597's $m > 0$.",
+      "Membership goes through [[Element]]: $Element(16, PerfectPowerNumbers)$ is true ($16 = 2^4 = 4^2$), $Element(1, PerfectPowerNumbers)$ is false under this convention (needs $a \\ge 2$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PerfectPowerNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PowerfulNumbers", "SquareNumbers"],
+  },
+  {
+    name: "SquareFreeNumbers",
+    domain: "Collections",
+    signature: "SquareFreeNumbers",
+    summary:
+      "The squarefree numbers $1, 2, 3, 5, 6, …$ -- integers divisible by no perfect square $> 1$ -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SquareFreeNumbers",
+        description:
+          "the $n$ with every prime factor's exponent $\\le 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SquareFreeNumbers) = +\\infty$ (density $6/\\pi^2$), and $At$ unranks the $k$-th by scanning forward, testing each candidate's factorisation.",
+      "OEIS A005117. Exactly $[[KFreeIntegers]](2)$ -- the two families are unranked identically.",
+      "Membership goes through [[Element]]: $Element(10, SquareFreeNumbers)$ is true ($10 = 2 \\cdot 5$), $Element(12, SquareFreeNumbers)$ is false ($12 = 2^2 \\cdot 3$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SquareFreeNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "KFreeIntegers", "PowerfulNumbers"],
+  },
+  {
+    name: "KFreeIntegers",
+    domain: "Collections",
+    signature: "KFreeIntegers(k)",
+    summary:
+      "The $k$-free integers -- naturals with no prime factor raised to the $k$-th power or higher -- as a lazy indexed family, one collection per $k$.",
+    signatures: [
+      {
+        call: "KFreeIntegers(k)",
+        description:
+          "the positive integers whose every prime factor has exponent $< k$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection for each $k$: $Count(KFreeIntegers(k)) = +\\infty$, and $At(KFreeIntegers(k), i)$ unranks the $i$-th by scanning forward, testing each candidate's factorisation against $k$.",
+      "$KFreeIntegers(2)$ is exactly [[SquareFreeNumbers]] (A005117); $KFreeIntegers(3)$ is the cube-free numbers, A004709.",
+      "Membership goes through [[Element]]: $Element(8, KFreeIntegers(3))$ is false ($8 = 2^3$, exponent $3 \\ge 3$), $Element(8, KFreeIntegers(4))$ is true.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(KFreeIntegers(3), 20)" },
+    seeAlso: ["Count", "At", "Element", "SquareFreeNumbers"],
+  },
+  {
+    name: "CarmichaelNumbers",
+    domain: "Collections",
+    signature: "CarmichaelNumbers",
+    summary:
+      "The Carmichael numbers $561, 1105, 1729, …$ -- composite Fermat pseudoprimes to every coprime base -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "CarmichaelNumbers",
+        description:
+          "the composite $n$ satisfying Korselt's criterion, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CarmichaelNumbers) = +\\infty$ (Alford–Granville–Pomerance, 1994), and $At$ unranks the $k$-th by scanning forward, testing Korselt's criterion -- $n$ squarefree, and $(p-1) \\mid (n-1)$ for every prime $p \\mid n$ -- which is equivalent to passing the Fermat test $a^{n-1} \\equiv 1 \\pmod n$ for every $a$ coprime to $n$.",
+      "OEIS A002997. $561 = 3 \\cdot 11 \\cdot 17$ is the smallest, found by Korselt in 1899 (four years before Carmichael's first published example).",
+      "Membership goes through [[Element]]: $Element(561, CarmichaelNumbers)$ is true, $Element(560, CarmichaelNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CarmichaelNumbers, 10)" },
+    seeAlso: ["Count", "At", "Element", "Primes"],
+  },
+  {
+    name: "GiugaNumbers",
+    domain: "Collections",
+    signature: "GiugaNumbers",
+    summary:
+      "The Giuga numbers $30, 858, 1722, 66198, …$ -- composite $n$ with $p \\mid (n/p - 1)$ for every prime $p \\mid n$ -- as an indexed collection of unknown count.",
+    signatures: [
+      {
+        call: "GiugaNumbers",
+        description:
+          "the composite $n$ satisfying Giuga's divisibility condition, an indexed collection of unknown count.",
+      },
+    ],
+    details: [
+      "$Count(GiugaNumbers) = NaN$: only a handful are known, none odd, and Giuga's conjecture (that no counterexample to Giuga's primality criterion exists, equivalently no Giuga number is a counterexample) is open -- so whether the family is finite is open too.",
+      "$At$ reads off a table of the known Giuga numbers; past that table it returns unevaluated rather than scanning forever, since no predicate here could safely keep searching.",
+      "OEIS A007850. Equivalently, $n$ is Giuga iff $\\sum_{p \\mid n} 1/p - \\prod_{p \\mid n} 1/p$ is a positive integer.",
+      "Membership goes through [[Element]]: $Element(30, GiugaNumbers)$ is true ($30 = 2 \\cdot 3 \\cdot 5$: $2 \\mid (15-1)$, $3 \\mid (10-1)$, $5 \\mid (6-1)$), $Element(6, GiugaNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(GiugaNumbers, 4)" },
+    seeAlso: ["Count", "At", "Element", "CarmichaelNumbers"],
+  },
+  {
+    name: "IdonealNumbers",
+    domain: "Collections",
+    signature: "IdonealNumbers",
+    summary:
+      "Euler's 65 numeri idonei $1, 2, 3, 4, 5, …, 1848$ -- one class per genus of discriminant $-4n$ -- as an indexed collection of unknown count.",
+    signatures: [
+      {
+        call: "IdonealNumbers",
+        description: "Euler's idoneal numbers, an indexed collection of unknown count.",
+      },
+    ],
+    details: [
+      "$Count(IdonealNumbers) = NaN$: the 65 known idoneal numbers are exhaustive assuming the generalized Riemann hypothesis; unconditionally, at most one more (necessarily $> 1848$) could exist.",
+      "$At$ reads off Euler's table of 65; past it, returns unevaluated rather than asserting a completeness the field doesn't unconditionally have.",
+      "OEIS A000926. $n$ is idoneal iff every genus of binary quadratic forms of discriminant $-4n$ contains only one class -- equivalently, $n$'s only representations $n = x^2 + m y^2$ (for each $m$ coprime to $n$) force $\\gcd(x, y) = 1$ or similar; the list traces to Euler's search for primality-testing moduli.",
+      "Membership goes through [[Element]]: $Element(120, IdonealNumbers)$ is true, $Element(11, IdonealNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(IdonealNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element"],
+  },
+  {
+    name: "LuckyNumbers",
+    domain: "Collections",
+    signature: "LuckyNumbers",
+    summary:
+      "The lucky numbers $1, 3, 7, 9, 13, …$ -- survivors of Ulam's positional sieve -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "LuckyNumbers",
+        description: "the survivors of Ulam's sieve, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(LuckyNumbers) = +\\infty$, and $At$ unranks the $k$-th by running the sieve out far enough -- start from the odd numbers, then repeatedly take the smallest surviving number past $1$ as a step and delete every step-th survivor, until enough terms remain.",
+      "OEIS A000959. Despite the name, luckiness has nothing to do with primality; the sieve's mechanics happen to leave a prime-like density behind, a coincidence number theorists still find useful for testing conjectures like a lucky-number Goldbach analogue.",
+      "Membership goes through [[Element]]: $Element(13, LuckyNumbers)$ is true, $Element(11, LuckyNumbers)$ is false ($11$ is sieved out at the step-$3$ pass).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(LuckyNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes"],
+  },
 ];
