@@ -11,7 +11,11 @@ import {
 import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareBacklog } from "./declare-backlog.ts";
-import { declareGaussian, declareIntegerExponentGaussian } from "./declare-gaussian.ts";
+import {
+  declareGaussian,
+  declareGaussianRationalGcdLcm,
+  declareIntegerExponentGaussian,
+} from "./declare-gaussian.ts";
 import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
@@ -24,6 +28,7 @@ import { rationalReconstruction } from "./reconstruct.ts";
 
 export function declareNumberTheory(ce: ComputeEngine): void {
   declareGaussian(ce);
+  declareGaussianRationalGcdLcm(ce);
   declareWidened(ce);
   declareBacklog(ce);
 

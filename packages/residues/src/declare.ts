@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/boxed";
 import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
+import { declareModExactConstant } from "./mod-exact-constant.ts";
 import {
   discreteLog,
   multiplicativeOrder,
@@ -138,4 +139,5 @@ export function declareResidues(ce: ComputeEngine): void {
   });
 
   declareIntegerMod(ce);
+  declareModExactConstant(ce);
 }
