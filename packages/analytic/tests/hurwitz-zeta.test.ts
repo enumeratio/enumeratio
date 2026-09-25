@@ -264,13 +264,19 @@ test("Zeta(s) keeps the native behaviour wherever native evaluates", () => {
   ]);
   // An exact complex stays symbolic under evaluate(), as an exact real does; N() gives a number.
   expect(ce.box(["Zeta", ["Complex", 2, 1]]).evaluate().json).toEqual(["Zeta", ["Complex", 2, 1]]);
-  expect(ce.box(["Zeta", ["Complex", 2, 1]]).N().im).toBeCloseTo(-0.4375308659196079, 14);
+  expect(ce.box(["Zeta", ["Complex", 2, 1]]).N().im).toBeCloseTo(-0.4375308659196079, 13);
   // Threads over a list, complex entries included.
-  expect(ce.box(["Zeta", ["List", 2, ["Complex", 0.5, 14]]]).evaluate().json).toEqual([
+  // Float digits past ~1e-15 differ across platforms' libm, so the complex entry is held
+  // to a tolerance rather than exactly.
+  const [head, exact, complex] = ce.box(["Zeta", ["List", 2, ["Complex", 0.5, 14]]]).evaluate()
+    .json as [string, unknown, [string, number, number]];
+  expect([head, exact, complex[0]]).toEqual([
     "List",
     ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
-    ["Complex", 0.022241142609992697, -0.10325812326645332],
+    "Complex",
   ]);
+  expect(complex[1]).toBeCloseTo(0.02224114260999359, 13);
+  expect(complex[2]).toBeCloseTo(-0.10325812326645006, 13);
 });
 
 // --- LerchPhi Φ(z, s, a) = Σ zⁿ (n+a)^(−s) -----------------------------------------
