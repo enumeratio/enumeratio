@@ -9,7 +9,7 @@ import {
 import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareBacklog } from "./declare-backlog.ts";
-import { declareGaussian } from "./declare-gaussian.ts";
+import { declareGaussian, declareIntegerExponentGaussian } from "./declare-gaussian.ts";
 import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
@@ -40,6 +40,10 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     "IsSquareFree",
     "JacobiSymbol",
     "KroneckerSymbol",
+    "LegendreSymbol",
+    "DivisorSigma",
+    "ExtendedGCD",
+    "ModularInverse",
     "Multinomial",
     "CatalanNumber",
     "Subfactorial",
@@ -109,10 +113,11 @@ export function declareNumberTheory(ce: ComputeEngine): void {
   });
 
   // Wolfram's IntegerExponent[n, b]: the largest k with bᵏ | n; b defaults to 10, n = 0 gives
-  // ∞. Integers only, as in Wolfram — a p-adic valuation of a rational is AdicValuation's.
+  // ∞. Rational integers here; ℤ[i] is declareIntegerExponentGaussian's, below, and a p-adic
+  // valuation of a rational is AdicValuation's.
   ce.declare("IntegerExponent", {
     description: "The largest k with bᵏ dividing n (b defaults to 10); ∞ for n = 0.",
-    signature: "(integer, integer?) -> integer | number",
+    signature: "(number, number?) -> integer | number",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const n = bigIntegerAt(ops[0]);
@@ -122,6 +127,8 @@ export function declareNumberTheory(ce: ComputeEngine): void {
       return ce.number(valuation(n, b)[0]);
     },
   });
+  // The Gaussian case: attached after IntegerExponent exists to declare in front of it.
+  declareIntegerExponentGaussian(ce);
 
   // Wolfram's HermiteDecomposition[m] = {u, h}: u unimodular, u·m = h in Hermite normal form.
   ce.declare("HermiteDecomposition", {

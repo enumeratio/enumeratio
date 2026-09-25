@@ -201,14 +201,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "GCD",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "GCD",
     elsewhere: ["wolfram", "sympy"],
   },
   {
     name: "LCM",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "LCM",
     elsewhere: ["wolfram", "sympy"],
@@ -313,7 +313,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "LegendreSymbol",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "JacobiSymbol",
     elsewhere: ["sympy"],

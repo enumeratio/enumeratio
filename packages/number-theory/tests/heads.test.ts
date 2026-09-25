@@ -124,3 +124,134 @@ test("IsPrime(-n) matches Wolfram's PrimeQ: True for a negative prime's associat
   // Positive n is untouched.
   expect(run(["IsPrime", 7])).toBe("True");
 });
+
+test("GCD and LCM stay exact past a double (#113 §7)", () => {
+  // compute-engine's native GCD/LCM round a big integer through a double: GCD(20!, 10^100+3)
+  // came back 163840000 and LCM a float, instead of the exact bigint answer.
+  const twentyFactorial = 2432902008176640000n;
+  const big = 10n ** 100n + 3n;
+  const gcdAll = (a: bigint, b: bigint): bigint =>
+    b === 0n ? (a < 0n ? -a : a) : gcdAll(b, a % b);
+  expect(
+    bigIntegerAt(ce.box(["GCD", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]]).evaluate()),
+  ).toBe(gcdAll(twentyFactorial, big));
+  expect(
+    bigIntegerAt(ce.box(["LCM", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]]).evaluate()),
+  ).toBe((twentyFactorial * big) / gcdAll(twentyFactorial, big));
+
+  // Brute force against a plain bigint Euclid, at a scale a double can't carry exactly.
+  const rng = (seed: number) => {
+    let s = seed;
+    return () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+  };
+  const next = rng(7);
+  for (let trial = 0; trial < 30; trial++) {
+    const a = BigInt(Math.floor(next() * 1e15)) * 10n ** 30n + BigInt(Math.floor(next() * 1e15));
+    const b = BigInt(Math.floor(next() * 1e15)) * 10n ** 30n + BigInt(Math.floor(next() * 1e15));
+    const g = gcdAll(a, b);
+    expect(bigIntegerAt(ce.box(["GCD", { num: String(a) }, { num: String(b) }]).evaluate())).toBe(
+      g,
+    );
+    expect(bigIntegerAt(ce.box(["LCM", { num: String(a) }, { num: String(b) }]).evaluate())).toBe(
+      g === 0n ? 0n : (a * b) / g < 0n ? -((a * b) / g) : (a * b) / g,
+    );
+  }
+});
+
+test("GCD and LCM thread a single list argument, but keep flattening two (#113 §1)", () => {
+  expect(run(["GCD", 12, ["List", 3, 7, 40]])).toEqual(["List", 3, 1, 4]);
+  expect(run(["LCM", 12, ["List", 3, 7, 40]])).toEqual(["List", 12, 84, 120]);
+  // Two list arguments still flatten into more arguments — the documented divergence stays.
+  expect(run(["GCD", ["List", 2, 4], ["List", 6, 8]])).toBe(2);
+});
+
+test("Quotient: real, rational and offset arguments, and threading (#113 §1, §5)", () => {
+  expect(run(["Quotient", 7.5, 2])).toBe(3);
+  expect(run(["Quotient", ["Rational", 7, 2], ["Rational", 1, 3]])).toBe(10);
+  expect(run(["Quotient", 17, 5, 3])).toBe(2);
+  expect(run(["Quotient", ["List", 10, 20, 30], 7])).toEqual(["List", 1, 2, 4]);
+  // Unchanged: plain and Gaussian integers.
+  expect(run(["Quotient", 17, 5])).toBe(3);
+  expect(run(["Quotient", ["Complex", 5, 5], 2])).toEqual(["Complex", 2, 2]);
+});
+
+test("Totient(-n) and NextPrime(-n) match Wolfram (#113 §6)", () => {
+  expect(run(["Totient", -10])).toBe(4);
+  expect(run(["Totient", 0])).toBe(0);
+  expect(run(["NextPrime", -10])).toBe(-7);
+  expect(run(["NextPrime", -2])).toBe(2);
+});
+
+test("NextPrime of a rational or real n (#113 §6)", () => {
+  expect(run(["NextPrime", ["Rational", 7, 2]])).toBe(5);
+  expect(run(["NextPrime", 100.5])).toBe(101);
+});
+
+test("IsSquareFree of a rational (#113 §6)", () => {
+  expect(run(["IsSquareFree", ["Rational", 2, 3]])).toBe("True");
+  expect(run(["IsSquareFree", ["Rational", 4, 3]])).toBe("False");
+});
+
+test("FactorInteger of a rational (#113 §6)", () => {
+  expect(run(["FactorInteger", ["Rational", 3, 8]])).toEqual([
+    "List",
+    ["Tuple", 2, -3],
+    ["Tuple", 3, 1],
+  ]);
+  expect(run(["FactorInteger", ["Rational", -3, 8]])).toEqual([
+    "List",
+    ["Tuple", -1, 1],
+    ["Tuple", 2, -3],
+    ["Tuple", 3, 1],
+  ]);
+});
+
+test("DivisorSigma with a symbolic k (#113 §4)", () => {
+  expect(run(["DivisorSigma", "k", 30])).toEqual([
+    "Add",
+    ["Power", 2, "k"],
+    ["Power", 3, "k"],
+    ["Power", 5, "k"],
+    ["Power", 6, "k"],
+    ["Power", 10, "k"],
+    ["Power", 15, "k"],
+    ["Power", 30, "k"],
+    1,
+  ]);
+});
+
+test("threads over a list: DivisorSigma (in n), LegendreSymbol, ExtendedGCD, ModularInverse (#113 §1)", () => {
+  expect(run(["DivisorSigma", 2, ["List", 1, 2, 3, 4, 5]])).toEqual(["List", 1, 5, 10, 21, 26]);
+  expect(run(["LegendreSymbol", ["List", 1, 2, 3, 4, 5, 6], 7])).toEqual([
+    "List",
+    1,
+    1,
+    -1,
+    1,
+    -1,
+    -1,
+  ]);
+  expect(run(["ExtendedGCD", 3, ["List", 5, 15]])).toEqual([
+    "List",
+    ["Tuple", 1, 2, -1],
+    ["Tuple", 3, 1, 0],
+  ]);
+  expect(run(["ModularInverse", ["List", 2, 3, 4], 11])).toEqual(["List", 6, 4, 3]);
+});
+
+test("GaussianIntegers -> True for PrimeNu, PrimeOmega, DivisorSigma, MoebiusMu, IsSquareFree, IntegerExponent (#113 §6)", () => {
+  const gaussian = ["KeyValuePair", "GaussianIntegers", "True"];
+  expect(run(["PrimeNu", ["Complex", 3, 1]])).toBe(2);
+  expect(run(["PrimeNu", 105, gaussian])).toBe(4);
+  expect(run(["PrimeOmega", ["Complex", 5, 9]])).toBe(2);
+  expect(run(["PrimeOmega", 12, gaussian])).toBe(5);
+  expect(run(["MoebiusMu", ["Complex", 5, 6]])).toBe(-1);
+  expect(run(["IsSquareFree", ["Complex", 3, 2]])).toBe("True");
+  expect(run(["IsSquareFree", 2, gaussian])).toBe("False");
+  expect(run(["DivisorSigma", 1, ["Complex", 3, 1]])).toEqual(["Complex", 6, 4]);
+  expect(run(["DivisorSigma", 2, 6, gaussian])).toEqual(["Complex", 50, 20]);
+  expect(run(["IntegerExponent", ["Complex", 0, 8], ["Complex", 1, 1]])).toBe(6);
+  // Unchanged: rational-integer reads without the option.
+  expect(run(["PrimeNu", 105])).toBe(3);
+  expect(run(["IntegerExponent", 1000])).toBe(3);
+});

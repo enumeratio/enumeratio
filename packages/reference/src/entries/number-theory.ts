@@ -106,18 +106,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["GCD", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]],
         expected: 7,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Big integers: $\\gcd(20!,\\,10^{100}+3)=7$; compute-engine loses precision on the 101-digit argument",
+        caption: "Big integers: $\\gcd(20!,\\,10^{100}+3)=7$, exact past where a double rounds",
       },
       {
         expr: ["GCD", 12, ["List", 3, 7, 40]],
         expected: ["List", 3, 1, 4],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Listable: threads over a list argument element-wise; compute-engine flattens it into more arguments instead",
+        caption: "Listable: a single list argument threads element-wise against the rest",
       },
       {
         expr: ["GCD", ["Fibonacci", 12], ["Fibonacci", 18]],
@@ -230,18 +226,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: {
           num: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000",
         },
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Big integers: compute-engine returns a float approximation instead of the exact 118-digit LCM",
+        caption: "Big integers: the exact 118-digit LCM, past where a double loses precision",
       },
       {
         expr: ["LCM", 12, ["List", 3, 7, 40]],
         expected: ["List", 12, 84, 120],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Listable: threads over a list argument element-wise; compute-engine flattens it into more arguments instead",
+        caption: "Listable: a single list argument threads element-wise against the rest",
       },
     ],
     seeAlso: ["GCD"],
@@ -290,31 +282,27 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["Quotient", 7.5, 2],
         expected: 3,
-        aspirational: true,
         category: "Scope",
-        caption: "Real arguments: $\\lfloor 7.5/2\\rfloor$; Quotient is integer-only here",
+        caption: "Real arguments: $\\lfloor 7.5/2\\rfloor$",
       },
       {
         expr: ["Quotient", ["Rational", 7, 2], ["Rational", 1, 3]],
         expected: 10,
-        aspirational: true,
         category: "Scope",
-        caption: "Rational arguments: $\\lfloor 21/2\\rfloor$; not yet",
+        caption: "Rational arguments: $\\lfloor 21/2\\rfloor$",
       },
       {
         expr: ["Quotient", 17, 5, 3],
         expected: 2,
-        aspirational: true,
         category: "Scope",
         caption:
-          "Quotient(m, n, d) is $\\lfloor (m-d)/n\\rfloor$, so $m-n\\,q$ lands in $[d, d+n)$; the offset arity is missing",
+          "Quotient(m, n, d) is $\\lfloor (m-d)/n\\rfloor$, so $m-n\\,q$ lands in $[d, d+n)$",
       },
       {
         expr: ["Quotient", ["List", 10, 20, 30], 7],
         expected: ["List", 1, 2, 4],
-        aspirational: true,
         category: "Scope",
-        caption: "Listable: threads over a list; not yet",
+        caption: "Listable: threads over a list",
       },
     ],
     seeAlso: ["Mod", "GCD"],
@@ -390,10 +378,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["Totient", -10],
         expected: 4,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Negative $n$: $\\varphi(-n)=\\varphi(n)$; compute-engine requires a positive integer",
+        caption: "Negative $n$: $\\varphi(-n)=\\varphi(n)$",
       },
       {
         expr: ["Totient", 17],
@@ -469,16 +455,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["NextPrime", ["Rational", 7, 2]],
         expected: 5,
-        aspirational: true,
         category: "Scope",
-        caption: "Rational $n$: the next prime above $7/2$; compute-engine requires an integer",
+        caption: "Rational $n$: the next prime above $7/2$",
       },
       {
         expr: ["NextPrime", 100.5],
         expected: 101,
-        aspirational: true,
         category: "Scope",
-        caption: "Real $n$; compute-engine requires an integer",
+        caption: "Real $n$: the next prime above $100.5$",
       },
       {
         expr: ["Equal", ["NextPrime", ["NthPrime", 20]], ["NthPrime", 21]],
@@ -489,10 +473,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["NextPrime", -10],
         expected: -7,
-        aspirational: true,
         category: "Possible issues",
-        caption:
-          "Negative $n$: Wolfram counts $-7$ as prime and returns it; compute-engine skips ahead to 2",
+        caption: "Negative $n$: Wolfram counts $-7$ as prime and returns it",
       },
     ],
     seeAlso: ["NthPrime", "PrimePi"],
@@ -828,9 +810,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["FactorInteger", ["Rational", 3, 8]],
         expected: ["List", ["Tuple", 2, -3], ["Tuple", 3, 1]],
-        aspirational: true,
         category: "Scope",
-        caption: "Rationals: the denominator's primes get negative exponents; not yet",
+        caption: "Rationals: the denominator's primes get negative exponents",
       },
       {
         expr: ["FactorInteger", ["Complex", 9, 12]],
@@ -913,17 +894,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["PrimeNu", ["Complex", 3, 1]],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian integers: $3+i=(1+i)(2-i)$; not yet",
+        caption: "Gaussian integers: $3+i=(1+i)(2-i)$",
       },
       {
         expr: ["PrimeNu", 105, ["KeyValuePair", "GaussianIntegers", "True"]],
         expected: 4,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors; not yet",
+        caption: "GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors",
       },
       {
         expr: ["PrimeNu", ["Range", 20]],
@@ -993,17 +971,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["PrimeOmega", ["Complex", 5, 9]],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Gaussian integers: $5+9i$ has norm $106=2\\cdot53$, so two prime factors; not yet",
+        caption: "Gaussian integers: $5+9i$ has norm $106=2\\cdot53$, so two prime factors",
       },
       {
         expr: ["PrimeOmega", 12, ["KeyValuePair", "GaussianIntegers", "True"]],
         expected: 5,
-        aspirational: true,
         category: "Scope",
-        caption: "GaussianIntegers -> True: $12=-(1+i)^4\\cdot3$; not yet",
+        caption: "GaussianIntegers -> True: $12=-(1+i)^4\\cdot3$",
       },
       {
         expr: ["PrimeOmega", ["Range", 20]],
@@ -1235,23 +1210,20 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["DivisorSigma", 1, ["Complex", 3, 1]],
         expected: ["Complex", 6, 4],
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian integers: $1+(1+i)+(1+2i)+(3+i)$, over [[Divisors]]; not yet",
+        caption: "Gaussian integers: $1+(1+i)+(1+2i)+(3+i)$, over [[Divisors]]",
       },
       {
         expr: ["DivisorSigma", 2, 6, ["KeyValuePair", "GaussianIntegers", "True"]],
         expected: ["Complex", 50, 20],
-        aspirational: true,
         category: "Scope",
-        caption: "GaussianIntegers -> True: squares of $1,1+i,2,3,3+3i,6$; not yet",
+        caption: "GaussianIntegers -> True: squares of $1,1+i,2,3,3+3i,6$",
       },
       {
         expr: ["DivisorSigma", 2, ["List", 1, 2, 3, 4, 5]],
         expected: ["List", 1, 5, 10, 21, 26],
-        aspirational: true,
         category: "Scope",
-        caption: "Listable in $n$; not yet",
+        caption: "Listable in $n$",
       },
       {
         expr: ["DivisorSigma", "k", 30],
@@ -1266,9 +1238,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
           ["Power", 30, "k"],
           1,
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Symbolic $k$ expands over the divisors; not yet",
+        caption: "Symbolic $k$ expands over the divisors",
       },
     ],
     seeAlso: ["Divisors"],
@@ -1331,9 +1302,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["MoebiusMu", ["Complex", 5, 6]],
         expected: -1,
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian integers: $5+6i$ is a Gaussian prime (norm 61); not yet",
+        caption: "Gaussian integers: $5+6i$ is a Gaussian prime (norm 61)",
       },
       {
         expr: ["MoebiusMu", ["List", 4, 10, 17, 20]],
@@ -1399,23 +1369,20 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["IsSquareFree", ["Complex", 3, 2]],
         expected: "True",
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian integers: $3+2i$ is a Gaussian prime; not yet",
+        caption: "Gaussian integers: $3+2i$ is a Gaussian prime",
       },
       {
         expr: ["IsSquareFree", 2, ["KeyValuePair", "GaussianIntegers", "True"]],
         expected: "False",
-        aspirational: true,
         category: "Scope",
-        caption: "GaussianIntegers -> True: $2=-i(1+i)^2$; not yet",
+        caption: "GaussianIntegers -> True: $2=-i(1+i)^2$",
       },
       {
         expr: ["IsSquareFree", ["Rational", 2, 3]],
         expected: "True",
-        aspirational: true,
         category: "Scope",
-        caption: "Rationals: numerator and denominator are both squarefree; not yet",
+        caption: "Rationals: numerator and denominator are both squarefree",
       },
       {
         expr: ["IsSquareFree", ["Add", ["Power", "x", 2], ["Multiply", 6, "x"], 6]],
@@ -1575,9 +1542,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["LegendreSymbol", ["List", 1, 2, 3, 4, 5, 6], 7],
         expected: ["List", 1, 1, -1, 1, -1, -1],
-        aspirational: true,
         category: "Scope",
-        caption: "Listable in $n$: the residues mod 7 are 1, 2, 4; not yet",
+        caption: "Listable in $n$: the residues mod 7 are 1, 2, 4",
       },
       {
         expr: ["LegendreSymbol", 2, 9],
@@ -1787,9 +1753,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["ExtendedGCD", 3, ["List", 5, 15]],
         expected: ["List", ["Tuple", 1, 2, -1], ["Tuple", 3, 1, 0]],
-        aspirational: true,
         category: "Scope",
-        caption: "Listable: threads over a list; not yet",
+        caption: "Listable: threads over a list",
       },
     ],
     seeAlso: ["GCD"],
@@ -1946,9 +1911,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["IntegerExponent", ["Complex", 0, 8], ["Complex", 1, 1]],
         expected: 6,
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian integers: $8i=i\\cdot(-i)^3(1+i)^6$; integers only here",
+        caption: "Gaussian integers: $8i=i\\cdot(-i)^3(1+i)^6$",
       },
       {
         expr: ["IntegerExponent", ["Factorial", 100]],
