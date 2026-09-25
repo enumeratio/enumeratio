@@ -41,6 +41,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { DOMAINS } from "@enumeratio/domains";
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
+import { NUMERAL_ALIASES } from "@enumeratio/numerals";
 import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/notatio/symbols";
 import { entries as referenceEntries } from "@enumeratio/reference";
 import { HEADS } from "@enumeratio/wolfram/src";
@@ -123,12 +124,13 @@ const PROBES: Readonly<Record<string, { call: MathJSON; expected: MathJSON }>> =
 
 /** Heads held by design: drawn for display (plots, controls, layout, graphics primitives,
  *  `Rasterize`) or carrier constructors (`PermutationCycles`), which wrap a value rather than
- *  compute one. */
+ *  compute one — plus old names kept as aliases, which the numerals tests cover. */
 const HELD_HEADS = new Set([
   ...[...VISUAL_SYMBOLS, ...CONTROL_SYMBOLS, ...LAYOUT_SYMBOLS].map((symbol) => symbol.head),
   ...GRAPHICS_HEADS,
   "Rasterize",
   ...DOMAINS.map((domain) => domain.name),
+  ...Object.keys(NUMERAL_ALIASES),
 ]);
 
 const mentions = (node: unknown, head: string): boolean =>

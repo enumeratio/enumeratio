@@ -32,10 +32,16 @@ import {
 // the BASE SLOT to accept a system, the way Wolfram's `IntegerDigits[n, MixedRadix[…]]`
 // does. An integer base still goes to the native handler untouched.
 //
-// The systems are the point: `Factoradic`, `Zeckendorf`, `BalancedRadix(3)`,
-// `NegativeRadix(2)`, `BijectiveRadix(26)`, `MixedRadix([…])`, `PrimorialRadix`,
-// `CombinatorialSystem(k)`, `ResidueSystem([…])` and `AdicNumerals(b)` are all just values
-// in that slot. `AdicNumeral` (singular) is the b-adic VALUE, with its arithmetic.
+// The systems are the point: `FactorialNumerals`, `ZeckendorfNumerals`,
+// `BalancedNumerals(3)`, `NegativeNumerals(2)`, `BijectiveNumerals(26)`,
+// `MixedRadixNumerals([…])`, `PrimorialNumerals`, `CombinatorialNumerals(k)`,
+// `ResidueNumerals([…])` and `AdicNumerals(b)` are all just values in that slot.
+// `AdicNumeral` (singular) is the b-adic VALUE, with its arithmetic.
+//
+// The heads above replace an older one-word-per-radix-flavour naming (`Factoradic`,
+// `Zeckendorf`, `BalancedRadix`, …) with a single `…Numerals` suffix. `NUMERAL_ALIASES`
+// keeps the old spellings working: each is declared to evaluate to its canonical form,
+// so existing expressions and Wolfram source keep reading (see `declareNumerals` below).
 
 type NativeEvaluate = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
 type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
@@ -50,10 +56,10 @@ function integerList(expr: BoxedExpression | undefined): number[] | undefined {
 /** Heads that name a system taking one integer argument. */
 const ONE_ARGUMENT: Record<string, (k: number) => NumeralSystem | undefined> = {
   Radix: radix,
-  BalancedRadix: balancedRadix,
-  NegativeRadix: negativeRadix,
-  BijectiveRadix: bijectiveRadix,
-  CombinatorialSystem: combinatorialSystem,
+  BalancedNumerals: balancedRadix,
+  NegativeNumerals: negativeRadix,
+  BijectiveNumerals: bijectiveRadix,
+  CombinatorialNumerals: combinatorialSystem,
 };
 
 /** Heads that name a system taking an integer and an optional precision. */
@@ -63,16 +69,36 @@ const TWO_ARGUMENT: Record<string, (k: number, prec?: number) => NumeralSystem |
 
 /** Heads that name a system taking a list of integers. */
 const LIST_ARGUMENT: Record<string, (xs: readonly number[]) => NumeralSystem | undefined> = {
-  MixedRadix: mixedRadix,
-  ResidueSystem: residueSystem,
-  Ostrowski: ostrowski,
+  MixedRadixNumerals: mixedRadix,
+  ResidueNumerals: residueSystem,
+  OstrowskiNumerals: ostrowski,
 };
 
 /** Heads that name a system on their own. */
 const NULLARY: Record<string, () => NumeralSystem> = {
-  Factoradic: factoradic,
-  PrimorialRadix: primorialRadix,
-  Zeckendorf: zeckendorf,
+  FactorialNumerals: factoradic,
+  PrimorialNumerals: primorialRadix,
+  ZeckendorfNumerals: zeckendorf,
+};
+
+/**
+ * The one-word-per-flavour spellings these heads used before every numeral system took
+ * the `…Numerals` suffix, kept working as data rather than as a second set of heads:
+ * `declareNumerals` declares each as a head that evaluates to its canonical form, and
+ * `systemOf` resolves one on read too, so a caller that never evaluates still gets an
+ * answer. `AdicNumerals` had no old spelling — it landed on the convention first.
+ */
+export const NUMERAL_ALIASES: Readonly<Record<string, string>> = {
+  Factoradic: "FactorialNumerals",
+  PrimorialRadix: "PrimorialNumerals",
+  BalancedRadix: "BalancedNumerals",
+  NegativeRadix: "NegativeNumerals",
+  BijectiveRadix: "BijectiveNumerals",
+  Zeckendorf: "ZeckendorfNumerals",
+  Ostrowski: "OstrowskiNumerals",
+  CombinatorialSystem: "CombinatorialNumerals",
+  ResidueSystem: "ResidueNumerals",
+  MixedRadix: "MixedRadixNumerals",
 };
 
 export const SYSTEM_HEADS: readonly string[] = [
@@ -82,33 +108,40 @@ export const SYSTEM_HEADS: readonly string[] = [
   ...Object.keys(NULLARY),
 ];
 
+/** An alias resolved to its canonical spelling, or `name` unchanged if it is not one. */
+const canonicalOf = (name: string): string => NUMERAL_ALIASES[name] ?? name;
+
 /**
  * Read an expression in the base slot as a numeral system. A plain integer is NOT read
  * here: it is left to compute-engine's own fixed-radix handler, so nothing this package
- * does changes what `IntegerDigits(10, 2)` already means.
+ * does changes what `IntegerDigits(10, 2)` already means. An old-spelling head is
+ * resolved to its canonical name first — normally already done by evaluation (see
+ * `declareNumerals`), but this makes `systemOf` correct even called on an unevaluated
+ * expression.
  */
 export function systemOf(expr: BoxedExpression): NumeralSystem | undefined {
   const name = symbolNameOf(expr);
-  if (name !== undefined) return NULLARY[name]?.();
+  if (name !== undefined) return NULLARY[canonicalOf(name)]?.();
   const ops = operandsOf(expr);
-  const single = ONE_ARGUMENT[expr.operator];
+  const operator = canonicalOf(expr.operator);
+  const single = ONE_ARGUMENT[operator];
   if (single !== undefined) {
     const k = integerAt(ops[0]);
     return k === undefined ? undefined : single(k);
   }
-  const two = TWO_ARGUMENT[expr.operator];
+  const two = TWO_ARGUMENT[operator];
   if (two !== undefined) {
     const k = integerAt(ops[0]);
     const prec = ops[1] === undefined ? undefined : integerAt(ops[1]);
     return k === undefined ? undefined : two(k, prec);
   }
-  const listed = LIST_ARGUMENT[expr.operator];
+  const listed = LIST_ARGUMENT[operator];
   if (listed !== undefined) {
     const xs = integerList(ops[0]);
     return xs === undefined ? undefined : listed(xs);
   }
   // A nullary system may also be written with empty parentheses.
-  return NULLARY[expr.operator]?.();
+  return NULLARY[operator]?.();
 }
 
 /** The integers a system spells, as prose: `≥ 0`, `from 0 to 23`. */
@@ -148,7 +181,7 @@ function sharedFactor(moduli: readonly number[]): [number, number, bigint] | und
 export function declareNumerals(ce: ComputeEngine): void {
   defineMessages(ce, "IntegerDigits", { nonum: "`1` has no numeral in `2`." });
   defineMessages(ce, "FromDigits", { nonum: "`1` is not a numeral in `2`." });
-  defineMessages(ce, "ResidueSystem", {
+  defineMessages(ce, "ResidueNumerals", {
     ncop: "The moduli `1` are not pairwise coprime (gcd(`2`, `3`) = `4`), so this is not a bijection.",
   });
 
@@ -164,7 +197,7 @@ export function declareNumerals(ce: ComputeEngine): void {
     ce.declare(head, {
       signature: "(list<integer>) -> value",
       // Inert still, but a residue system over moduli that share a factor is worth a word.
-      ...(head === "ResidueSystem"
+      ...(head === "ResidueNumerals"
         ? {
             evaluate: (ops: readonly BoxedExpression[]) => {
               const moduli = integerList(ops[0]);
@@ -176,6 +209,28 @@ export function declareNumerals(ce: ComputeEngine): void {
         : {}),
     });
   }
+
+  // Old spellings stay working: each evaluates to its canonical `…Numerals` form, so a
+  // system value always reads and prints under the new name (see the module comment).
+  for (const [alias, canonical] of Object.entries(NUMERAL_ALIASES)) {
+    if (canonical in NULLARY) {
+      // A bare symbol's `evaluate` is never invoked (only a call's is), so a nullary
+      // alias is normalised via `value` instead — declaring it a call as well is not
+      // possible on the same definition, but nothing in this package writes one that way.
+      ce.declare(alias, { value: ce.symbol(canonical) });
+    } else if (canonical in ONE_ARGUMENT) {
+      ce.declare(alias, {
+        signature: "(integer) -> value",
+        evaluate: (ops: readonly BoxedExpression[]) => ce.function(canonical, ops),
+      });
+    } else if (canonical in LIST_ARGUMENT) {
+      ce.declare(alias, {
+        signature: "(list<integer>) -> value",
+        evaluate: (ops: readonly BoxedExpression[]) => ce.function(canonical, ops),
+      });
+    }
+  }
+
   declareAdic(ce);
 
   /**

@@ -21,30 +21,6 @@ export interface QueuedRename {
 }
 
 export const RENAME_QUEUE: readonly QueuedRename[] = [
-  // Numeral systems: recommendation A — suffix `Numerals` so the base slot reads
-  // uniformly. `AdicNumerals` already landed on that convention. Held only because the
-  // decision is the curator's and the old names should stay as aliases.
-  ...(
-    [
-      ["Factoradic", "FactorialNumerals"],
-      ["PrimorialRadix", "PrimorialNumerals"],
-      ["BalancedRadix", "BalancedNumerals"],
-      ["NegativeRadix", "NegativeNumerals"],
-      ["BijectiveRadix", "BijectiveNumerals"],
-      ["Zeckendorf", "ZeckendorfNumerals"],
-      ["Ostrowski", "OstrowskiNumerals"],
-      ["CombinatorialSystem", "CombinatorialNumerals"],
-      ["ResidueSystem", "ResidueNumerals"],
-      ["MixedRadix", "MixedRadixNumerals"],
-    ] as const
-  ).map(([from, to]): QueuedRename => ({
-    from,
-    to,
-    why: "numeral systems take one suffix; four of these have no radix, and `Numerals` is right for all",
-    blockedBy:
-      "design/speculative/numeral-naming.md §4 needs a decision (A recommended); keep the old name as an alias",
-  })),
-
   // modular: named for the implementation rather than the mathematics. No Wolfram
   // counterpart to align against, which is why it drifted.
   {

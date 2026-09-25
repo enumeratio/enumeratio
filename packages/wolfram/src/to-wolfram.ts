@@ -250,6 +250,9 @@ export const HEADS: Record<string, string> = {
   // so they are left out of both HEADS and FOREIGN and fall through by name, harmlessly.
   Wedge: "Wedge",
   Vee: "Vee",
+  MixedRadixNumerals: "MixedRadix",
+  // The old spelling, kept as a numerals-package alias (see `NUMERAL_ALIASES`) — same
+  // head, same name as Wolfram's, so it belongs here too rather than falling through.
   MixedRadix: "MixedRadix",
   Coproduct: "Coproduct",
   SymmetricGroup: "SymmetricGroup",
