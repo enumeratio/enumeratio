@@ -1,6 +1,14 @@
 // Maps the catalog has that are NOT defined yet, with the reason — the same discipline the
 // statistics frontier uses: nothing is silently missing.
 //
+// FromPermutation left here once, reason "a catalog alias whose source collection is
+// ambiguous": the catalog dump folds map rows to bare names with an overload set (`on`), no
+// source-collection field, so which collection's "FromPermutation" this was looked
+// unrecoverable. It wasn't — `ToPermutation`'s own overload set names `IncreasingBinaryTree`
+// among its sources, and `FromPermutation`'s title ("Minimum-splitting recursion → increasing
+// binary tree") is exactly that map's inverse: the Cartesian tree on a permutation's values,
+// min-heap ordered. Defined in increasing-binary-tree.ts, declared in map.ts.
+//
 // Two entries that lived here — CyclePartition and DescentComposition — are gone. Both had
 // been written, evaluated and REMOVED rather than shipped wrong, and both came back once the
 // two rules that broke them were known: iterate over a RANGE and index (tableau.ts), and
@@ -36,12 +44,6 @@ export const UNDEFINED_MAPS: readonly UndefinedMap[] = [
     name: "PermutahedronVertex",
     from: "permutation",
     to: "finset",
-    why: "A geometric embedding rather than a combinatorial rewrite.",
-  },
-  {
-    name: "FromPermutation",
-    from: "permutation",
-    to: "permutation",
-    why: "A catalog alias whose source collection is ambiguous without the enumeratio map row it came from.",
+    why: "Not a geometric embedding this repo's carriers can hold honestly: the vertex (σ(1), …, σ(n)) — or the Loday point packages/polytope/src/permutahedron.ts already computes — is an ORDERED tuple of coordinates, and `finset` (domain-data.ts: `tuple<list<integer>, integer>`) is an unordered SET of positions, the same carrier DescentSet and PeakSet use. Reordering the coordinates gives a different vertex but the same finset, so the map would not even be injective, let alone honest. A `finset`-valued PermutahedronVertex is a type mismatch dressed as a definition, not a gap to close.",
   },
 ];

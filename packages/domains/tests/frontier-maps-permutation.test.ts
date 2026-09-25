@@ -5,13 +5,14 @@ import { declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
 import { declareMaps } from "../src/map.ts";
 
-// Three maps taken off the UNDEFINED_MAPS frontier: BinarySearchTree (permutation ->
+// Four maps taken off the UNDEFINED_MAPS frontier: BinarySearchTree (permutation ->
 // binary_tree), KnuthClassRepresentative and KrewerasComplement (both permutation ->
-// permutation). Each is checked two ways: against an independent plain-loop reference (no
-// compute-engine, so it can run out to n = 6 or 7 cheaply) for the COUNTING claims, and
-// against the actual `ce.box(...).evaluate()` path for a smaller exhaustive range, the same
-// trade tableau.test.ts makes for RSK — these expressions are nested folds and get expensive
-// fast, so the exhaustive CE check stops at n = 4.
+// permutation), and FromPermutation (permutation -> increasing_binary_tree). Each is checked
+// two ways: against an independent plain-loop reference (no compute-engine, so it can run out
+// to n = 6 or 7 cheaply) for the COUNTING claims, and against the actual `ce.box(...).evaluate()`
+// path for a smaller exhaustive range, the same trade tableau.test.ts makes for RSK — these
+// expressions are nested folds and get expensive fast, so the exhaustive CE check stops at
+// n = 4.
 
 const domainTypes = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
 const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
@@ -243,5 +244,68 @@ test("K∘K is conjugation by the long cycle, and K is a bijection of NC(n)", ()
       images.add(JSON.stringify(k));
     }
     expect(images.size, `K is injective on NC(${n})`).toBe(nc.length);
+  }
+});
+
+// ── FromPermutation ───────────────────────────────────────────────────────────────────────
+
+/** The increasing binary tree, read directly off the recursive definition: the position of
+ *  the smallest value in `p[lo..hi]` roots that range, its value's children are the trees of
+ *  the ranges before and after. Arrays are 1-indexed by VALUE, matching the encoding
+ *  increasing-binary-tree.ts builds without recursion. */
+function fromPermutationRef(p: readonly number[]): {
+  root: number;
+  left: number[];
+  right: number[];
+} {
+  const n = p.length;
+  const left = new Array<number>(n + 1).fill(0);
+  const right = new Array<number>(n + 1).fill(0);
+  const build = (lo: number, hi: number): number => {
+    if (lo > hi) return 0;
+    let mi = lo;
+    for (let k = lo + 1; k <= hi; k++) if (p[k]! < p[mi]!) mi = k;
+    const rootValue = p[mi]!;
+    left[rootValue] = build(lo, mi - 1);
+    right[rootValue] = build(mi + 1, hi);
+    return rootValue;
+  };
+  const root = build(0, n - 1);
+  return { root, left: left.slice(1), right: right.slice(1) };
+}
+
+/** The constructed value's Tuple — the single argument `IncreasingBinaryTree` wraps. */
+const tupleOf = (expr: unknown): { json: unknown }[] | undefined =>
+  (ce.box(expr as never).evaluate() as unknown as { ops?: { ops?: { json: unknown }[] }[] })
+    .ops?.[0]?.ops as { json: unknown }[] | undefined;
+
+test("FromPermutation agrees with minimum-splitting recursion, up to n = 4", () => {
+  for (const p of ALL4) {
+    const ref = fromPermutationRef(p);
+    const tuple = tupleOf(["FromPermutation", perm(...p)]);
+    expect(tuple?.[0]?.json, `root [${p}]`).toBe(ref.root);
+    expect(tuple?.[1]?.json, `left_child [${p}]`).toEqual(["List", ...ref.left]);
+    expect(tuple?.[2]?.json, `right_child [${p}]`).toEqual(["List", ...ref.right]);
+  }
+});
+
+test("FromPermutation's root is always 1", () => {
+  for (const p of ALL4) {
+    expect(tupleOf(["FromPermutation", perm(...p)])?.[0]?.json, `[${p}]`).toBe(1);
+  }
+});
+
+test("FromPermutation is typed as increasing_binary_tree", () => {
+  expect(String(ce.box(["FromPermutation", perm(2, 3, 1)] as never).evaluate().type)).toBe(
+    "increasing_binary_tree",
+  );
+});
+
+test("FromPermutation is a bijection from S_n onto the increasing binary trees on n nodes", () => {
+  // Both counted by n! — unlike BinarySearchTree (Catalan(n), many-to-one), this map's whole
+  // point is that it loses nothing: reference implementation only, out to n = 7.
+  for (let n = 1; n <= 7; n++) {
+    const images = new Set(permutations(n).map((p) => JSON.stringify(fromPermutationRef(p))));
+    expect(images.size, `n = ${n}`).toBe(permutations(n).length);
   }
 });
