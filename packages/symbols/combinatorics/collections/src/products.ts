@@ -12,7 +12,7 @@ import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/b
 // concrete once the outer index substitutes in -- can reach every level in turn).
 
 /** Whether `expr` contains the free symbol `name` anywhere in its tree. */
-function dependsOn(expr: BoxedExpression, name: string): boolean {
+export function dependsOn(expr: BoxedExpression, name: string): boolean {
   if (symbolNameOf(expr) === name) return true;
   const ops = operandsOf(expr);
   return ops.some((op) => dependsOn(op, name));
@@ -145,14 +145,14 @@ function sumOverIndex(
 }
 
 /** A single `Limits(index, lo, hi[, step])` clause, decoded. */
-interface Limits {
+export interface Limits {
   readonly index: string;
   readonly lo: BoxedExpression;
   readonly hi: BoxedExpression;
   readonly step: BoxedExpression | undefined;
 }
 
-function limitsOf(expr: BoxedExpression): Limits | undefined {
+export function limitsOf(expr: BoxedExpression): Limits | undefined {
   if (expr.operator !== "Limits" && expr.operator !== "Tuple") return undefined;
   const ops = operandsOf(expr);
   const index = ops[0] === undefined ? undefined : symbolNameOf(ops[0]);
