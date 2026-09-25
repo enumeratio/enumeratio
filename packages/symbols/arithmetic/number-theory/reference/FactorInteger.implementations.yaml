@@ -149,7 +149,7 @@ negative-numbers-carry-an-explicit-1-unit-factor:
       in: \text{FactorInteger}[-60]
       out: \left( \begin{array}{cc}  -1 & 1 \\  2 & 2 \\  3 & 1 \\  5 & 1 \\ \end{array} \right)
   sage:
-    in: list(factor(-60))
+    in: list(factor((-60)))
     out: "[(2, 2), (3, 1), (5, 1)]"
     verdict: disagree
     kind: shape
@@ -322,7 +322,7 @@ listable-threads-over-a-list:
   wolfram:
     in: FactorInteger[-1]
   sage:
-    in: list(factor(-1))
+    in: list(factor((-1)))
 a-21-digit-prime-cubed-factors-at-once:
   epsil:
     in: FactorInteger(100_000_000_000_000_000_039 ^ 3)

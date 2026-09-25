@@ -119,13 +119,13 @@ a-perfect-square-radicand-evaluates-exactly-even:
       in: \sqrt{-4}
       out: 2 i
   sympy:
-    in: sqrt(-4)
+    in: sqrt((-4))
     out: 2*I
   mpmath:
-    in: sqrt(-4)
+    in: sqrt((-4))
     out: (0.0 + 2.0j)
   sage:
-    in: sqrt(-4)
+    in: sqrt((-4))
     out: 2*I
   rust:
     in: sqrt(n(-4))
@@ -229,13 +229,13 @@ negative-but-not-a-perfect-square-stays-symbolic:
       in: \sqrt{-2}
       out: i \sqrt{2}
   sympy:
-    in: sqrt(-2)
+    in: sqrt((-2))
     out: sqrt(2)*I
   mpmath:
-    in: sqrt(-2)
+    in: sqrt((-2))
     out: (0.0 + 1.41421356237309504880168872421j)
   sage:
-    in: sqrt(-2)
+    in: sqrt((-2))
     out: sqrt(-2)
   rust:
     in: sqrt(n(-2))
@@ -259,10 +259,10 @@ a-negative-rational-still-evaluates-exactly-when:
       in: \sqrt{-\frac{4}{9}}
       out: \frac{2 i}{3}
   sympy:
-    in: sqrt(Rational(-4, 9))
+    in: sqrt(Rational((-4), 9))
     out: 2*I/3
   sage:
-    in: sqrt((-4/9))
+    in: sqrt(((-4)/9))
     out: 2/3*I
   rust:
     in: sqrt(rational(n(-4), n(9)))
@@ -283,8 +283,10 @@ an-approximate-number-gives-an-approximate-root:
     in: Sqrt[3.5]
   sympy:
     in: sqrt(3.5)
+    out: "1.87082869338697"
   mpmath:
     in: sqrt(3.5)
+    out: "1.87082869338697069279187436616"
   sage:
     in: sqrt(3.5)
   rust:
@@ -302,8 +304,10 @@ pulls-perfect-square-factors-out-of-the-radical:
     in: Sqrt[200]
   sympy:
     in: sqrt(200)
+    out: 10*sqrt(2)
   mpmath:
     in: sqrt(200)
+    out: "14.1421356237309504880168872421"
   sage:
     in: sqrt(200)
   rust:
@@ -320,11 +324,13 @@ sqrt-neg-25:
   wolfram:
     in: Sqrt[-25]
   sympy:
-    in: sqrt(-25)
+    in: sqrt((-25))
+    out: 5*I
   mpmath:
-    in: sqrt(-25)
+    in: sqrt((-25))
+    out: (0.0 + 5.0j)
   sage:
-    in: sqrt(-25)
+    in: sqrt((-25))
   rust:
     in: sqrt(n(-25))
 sqrt-8:
@@ -340,8 +346,10 @@ sqrt-8:
     in: Sqrt[8]
   sympy:
     in: sqrt(8)
+    out: 2*sqrt(2)
   mpmath:
     in: sqrt(8)
+    out: "2.82842712474619009760337744842"
   sage:
     in: sqrt(8)
   rust:
@@ -359,6 +367,7 @@ rationalizes-the-denominator:
     in: Sqrt[Rational[1, 2]]
   sympy:
     in: sqrt(Rational(1, 2))
+    out: sqrt(2)/2
   sage:
     in: sqrt((1/2))
   rust:
@@ -376,6 +385,7 @@ sqrt-12-over-5:
     in: Sqrt[Rational[12, 5]]
   sympy:
     in: sqrt(Rational(12, 5))
+    out: 2*sqrt(15)/5
   sage:
     in: sqrt((12/5))
   rust:
@@ -392,11 +402,13 @@ sqrt-neg-2p5:
   wolfram:
     in: Sqrt[-2.5]
   sympy:
-    in: sqrt(-2.5)
+    in: sqrt((-2.5))
+    out: 1.58113883008419*I
   mpmath:
-    in: sqrt(-2.5)
+    in: sqrt((-2.5))
+    out: (0.0 + 1.58113883008418966599944677222j)
   sage:
-    in: sqrt(-2.5)
+    in: sqrt((-2.5))
   rust:
     in: sqrt(x(-2.5))
 an-exact-complex-square-2-i-2-3-4i:
@@ -412,8 +424,10 @@ an-exact-complex-square-2-i-2-3-4i:
     in: Sqrt[Complex[3, 4]]
   sympy:
     in: sqrt((3 + 4*I))
+    out: 2 + I
   mpmath:
     in: sqrt(mpc(3, 4))
+    out: (2.0 + 1.0j)
   sage:
     in: sqrt((3 + 4*I))
 sqrt-positiveinfinity:
@@ -440,8 +454,10 @@ threads-element-wise-over-a-list:
     in: Sqrt[List[1, 4, 9]]
   sympy:
     in: "[sqrt(1), sqrt(4), sqrt(9)]"
+    out: "[1, 2, 3]"
   mpmath:
     in: "[sqrt(1), sqrt(4), sqrt(9)]"
+    out: "[mpf('1.0'), mpf('2.0'), mpf('3.0')]"
   sage:
     in: "[sqrt(1), sqrt(4), sqrt(9)]"
   rust:
@@ -458,9 +474,10 @@ threads-over-a-matrix-entry-by-entry-this-is-not:
   wolfram:
     in: Sqrt[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
   sympy:
-    in: "[[sqrt(Rational(1, 2)), sqrt(-1)], [sqrt(0), sqrt(Rational(1, 2))]]"
+    in: "[[sqrt(Rational(1, 2)), sqrt((-1))], [sqrt(0), sqrt(Rational(1, 2))]]"
+    out: "[[sqrt(2)/2, I], [0, sqrt(2)/2]]"
   sage:
-    in: "[[sqrt((1/2)), sqrt(-1)], [sqrt(0), sqrt((1/2))]]"
+    in: "[[sqrt((1/2)), sqrt((-1))], [sqrt(0), sqrt((1/2))]]"
   rust:
     in: sqrt(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(1), n(2))])]))
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1:
@@ -504,11 +521,13 @@ at-x-1-sqrt-x-2-1-not-1:
   wolfram:
     in: Sqrt[Power[-1, 2]]
   sympy:
-    in: sqrt((-1**2))
+    in: sqrt(((-1)**2))
+    out: "1"
   mpmath:
-    in: sqrt((-1**2))
+    in: sqrt(((-1)**2))
+    out: "1.0"
   sage:
-    in: sqrt((-1^2))
+    in: sqrt(((-1)^2))
   rust:
     in: sqrt(power(n(-1), n(2)))
 sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
@@ -523,11 +542,13 @@ sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
   wolfram:
     in: Times[Sqrt[-1], Sqrt[-1]]
   sympy:
-    in: (sqrt(-1) * sqrt(-1))
+    in: (sqrt((-1)) * sqrt((-1)))
+    out: "-1"
   mpmath:
-    in: (sqrt(-1) * sqrt(-1))
+    in: (sqrt((-1)) * sqrt((-1)))
+    out: (-1.0 + 0.0j)
   sage:
-    in: (sqrt(-1) * sqrt(-1))
+    in: (sqrt((-1)) * sqrt((-1)))
   rust:
     in: (sqrt(n(-1)) * sqrt(n(-1)))
 while-sqrt-1-1-1:
@@ -542,11 +563,13 @@ while-sqrt-1-1-1:
   wolfram:
     in: Sqrt[Times[-1, -1]]
   sympy:
-    in: sqrt((-1 * -1))
+    in: sqrt(((-1) * (-1)))
+    out: "1"
   mpmath:
-    in: sqrt((-1 * -1))
+    in: sqrt(((-1) * (-1)))
+    out: "1.0"
   sage:
-    in: sqrt((-1 * -1))
+    in: sqrt(((-1) * (-1)))
   rust:
     in: sqrt((n(-1) * n(-1)))
 to-45-significant-digits-every-one-correctly:
@@ -562,8 +585,10 @@ to-45-significant-digits-every-one-correctly:
     in: N[Sqrt[2], 45]
   sympy:
     in: N(sqrt(2), 30)
+    out: "1.41421356237309504880168872421"
   mpmath:
     in: (sqrt(2))
+    out: "1.41421356237309504880168872421"
   sage:
     in: N(sqrt(2))
   rust:

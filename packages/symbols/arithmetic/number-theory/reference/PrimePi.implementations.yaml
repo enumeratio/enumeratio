@@ -153,10 +153,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{4,25\}
   sympy:
     in: "[primepi(10), primepi(100)]"
-    out: "AttributeError: 'list' object has no attribute 'is_real'"
-    verdict: error
-    kind: threading
-    note: compute-engine's PrimePi is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[4, 25]"
   sage:
     in: "[prime_pi(10), prime_pi(100)]"
   mathlib4:
@@ -183,6 +180,7 @@ rational-arguments-the-primes-up-to-7-2-are-2:
     in: PrimePi[Rational[7, 2]]
   sympy:
     in: primepi(Rational(7, 2))
+    out: "2"
   sage:
     in: prime_pi((7/2))
   mathlib4:
@@ -205,6 +203,7 @@ real-arguments:
     in: PrimePi[15.25]
   sympy:
     in: primepi(15.25)
+    out: "6"
   sage:
     in: prime_pi(15.25)
   mathlib4:
@@ -227,6 +226,7 @@ the-primes-below-a-million:
     in: PrimePi[1000000]
   sympy:
     in: primepi(1000000)
+    out: "78498"
   sage:
     in: prime_pi(1000000)
   mathlib4:
@@ -246,6 +246,7 @@ listable-threads-over-a-list:
     in: PrimePi[List[3, 5, 17, 25]]
   sympy:
     in: "[primepi(3), primepi(5), primepi(17), primepi(25)]"
+    out: "[2, 3, 7, 9]"
   sage:
     in: "[prime_pi(3), prime_pi(5), prime_pi(17), prime_pi(25)]"
   mathlib4:
@@ -267,9 +268,10 @@ no-primes-are-a-negative-number:
   wolfram:
     in: PrimePi[-1]
   sympy:
-    in: primepi(-1)
+    in: primepi((-1))
+    out: "0"
   sage:
-    in: prime_pi(-1)
+    in: prime_pi((-1))
   mathlib4:
     in: (Nat.primeCounting (-1))
   rust:

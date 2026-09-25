@@ -129,10 +129,10 @@ zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the:
       out: \zeta \left(-3,\frac{7}{3}\right)
     note: Wolfram's $\mathrm{FunctionExpand}$ and machine-precision $N$ agree ($-7813/3240$), but its arbitrary-precision $N[\mathrm{HurwitzZeta}[-3, 7/3], 30]$ is wrong by $1/120$ (a Wolfram numeric-evaluation quirk at nonpositive-integer $s$ with rational $a$); mpmath agrees with us.
   sympy:
-    in: zeta(-3, Rational(7, 3))
+    in: zeta((-3), Rational(7, 3))
     out: -7813/3240
   sage:
-    in: hurwitz_zeta(-3, (7/3))
+    in: hurwitz_zeta((-3), (7/3))
     out: -7813/3240
 an-inexact-a-evaluates-numerically-without-n:
   epsil:
@@ -150,8 +150,10 @@ an-inexact-a-evaluates-numerically-without-n:
     in: HurwitzZeta[3, 0.2]
   sympy:
     in: zeta(3, 0.2)
+    out: zeta(3, 0.2)
   mpmath:
     in: zeta(3, 0.2)
+    out: "125.739018057217945694903993229"
   sage:
     in: hurwitz_zeta(3, 0.2)
 inside-the-critical-strip-under-n:
@@ -170,8 +172,10 @@ inside-the-critical-strip-under-n:
     in: N[HurwitzZeta[0.51, 0.87]]
   sympy:
     in: N(zeta(0.51, 0.87), 30)
+    out: "-1.32015502369495840717661394592"
   mpmath:
     in: (zeta(0.51, 0.87))
+    out: "-1.32015502369495840434831283695"
   sage:
     in: N(hurwitz_zeta(0.51, 0.87))
 a-positive-integer-a-peels-off-the-first-terms:
@@ -190,8 +194,10 @@ a-positive-integer-a-peels-off-the-first-terms:
     in: HurwitzZeta[7, 5]
   sympy:
     in: zeta(7, 5)
+    out: -36130315/35831808 + zeta(7)
   mpmath:
     in: zeta(7, 5)
+    out: "0.0000184948548452090985995617382284"
   sage:
     in: hurwitz_zeta(7, 5)
 complex-a:
@@ -210,8 +216,10 @@ complex-a:
     in: N[HurwitzZeta[2.3, Complex[8, 1]]]
   sympy:
     in: N(zeta(2.3, (8 + 1*I)), 30)
+    out: 0.0544700827321306866228092072147 - 0.00944851533647025008110366459698*I
   mpmath:
     in: (zeta(2.3, mpc(8, 1)))
+    out: (0.0544700827321306866228092072147 - 0.00944851533647025008110366459698j)
   sage:
     in: N(hurwitz_zeta(2.3, (8 + 1*I)))
 listable-threads-over-a-list-of-orders:
@@ -227,6 +235,10 @@ listable-threads-over-a-list-of-orders:
     in: HurwitzZeta[List[2, 3, 4], 0.5]
   sympy:
     in: zeta([2, 3, 4], 0.5)
+    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's HurwitzZeta is Listable and threads over the list; SymPy's zeta takes a scalar order only.
   sage:
     in: hurwitz_zeta([2, 3, 4], 0.5)
 uncertainty-in-a:
@@ -259,6 +271,7 @@ zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2:
     in: HurwitzZeta[2, Rational[1, 2]]
   sympy:
     in: zeta(2, Rational(1, 2))
+    out: zeta(2, 1/2)
   sage:
     in: hurwitz_zeta(2, (1/2))
 zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
@@ -277,6 +290,10 @@ zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
     in: HurwitzZeta[2, Rational[1, 4]]
   sympy:
     in: zeta(2, Rational(1, 4))
+    out: zeta(2, 1/4)
+    verdict: inconclusive
+    kind: unevaluated
+    note: SymPy doesn't know this closed form and leaves zeta(2, 1/4) symbolic; ours reduces it to pi^2 + 8*Catalan.
   sage:
     in: hurwitz_zeta(2, (1/4))
 zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s:
@@ -319,8 +336,10 @@ zeta-0-a-frac-12-a-holds-at-a-0-too:
     in: HurwitzZeta[0, 0]
   sympy:
     in: zeta(0, 0)
+    out: 1/2
   mpmath:
     in: zeta(0, 0)
+    out: "0.5"
   sage:
     in: hurwitz_zeta(0, 0)
 zeta-2-a-b-3-a-3:
@@ -363,6 +382,7 @@ to-30-significant-digits-not-yet-the-last-digit:
     in: N[HurwitzZeta[3, Rational[1, 3]], 30]
   sympy:
     in: N(zeta(3, Rational(1, 3)), 30)
+    out: "27.5610611997008037762278779774"
   sage:
     in: N(hurwitz_zeta(3, (1/3)))
 far-left-of-the-strip-all-40-digits-agree-with:
@@ -380,9 +400,10 @@ far-left-of-the-strip-all-40-digits-agree-with:
   wolfram:
     in: N[HurwitzZeta[Rational[-41, 2], Rational[3, 10]], 40]
   sympy:
-    in: N(zeta(Rational(-41, 2), Rational(3, 10)), 30)
+    in: N(zeta(Rational((-41), 2), Rational(3, 10)), 30)
+    out: "136.361935791831144171775099936"
   sage:
-    in: N(hurwitz_zeta((-41/2), (3/10)))
+    in: N(hurwitz_zeta(((-41)/2), (3/10)))
 left-of-the-strip-at-a-non-integer-a:
   epsil:
     in: N(HurwitzZeta(-20, 0.7))
@@ -398,11 +419,13 @@ left-of-the-strip-at-a-non-integer-a:
   wolfram:
     in: N[HurwitzZeta[-20, 0.7]]
   sympy:
-    in: N(zeta(-20, 0.7), 30)
+    in: N(zeta((-20), 0.7), 30)
+    out: "-80.0909738762537273260022629984"
   mpmath:
-    in: (zeta(-20, 0.7))
+    in: (zeta((-20), 0.7))
+    out: "-80.0909738762535840749199398913"
   sage:
-    in: N(hurwitz_zeta(-20, 0.7))
+    in: N(hurwitz_zeta((-20), 0.7))
 left-of-the-strip-at-a-non-integer-a-and-s:
   epsil:
     in: N(HurwitzZeta(-40.5, 0.4))
@@ -418,11 +441,13 @@ left-of-the-strip-at-a-non-integer-a-and-s:
   wolfram:
     in: N[HurwitzZeta[-40.5, 0.4]]
   sympy:
-    in: N(zeta(-40.5, 0.4), 30)
+    in: N(zeta((-40.5), 0.4), 30)
+    out: "7724997484091589.00000000000000"
   mpmath:
-    in: (zeta(-40.5, 0.4))
+    in: (zeta((-40.5), 0.4))
+    out: "7724997484091588.58607882278333"
   sage:
-    in: N(hurwitz_zeta(-40.5, 0.4))
+    in: N(hurwitz_zeta((-40.5), 0.4))
 a-negative-a-frac-12-5-is-real-and-so-is-the:
   epsil:
     in: N(HurwitzZeta(5, -1 / 2))
@@ -438,9 +463,10 @@ a-negative-a-frac-12-5-is-real-and-so-is-the:
   wolfram:
     in: N[HurwitzZeta[5, Rational[-1, 2]]]
   sympy:
-    in: N(zeta(5, Rational(-1, 2)), 30)
+    in: N(zeta(5, Rational((-1), 2)), 30)
+    out: "0.144760409444467716272330080168"
   sage:
-    in: N(hurwitz_zeta(5, (-1/2)))
+    in: N(hurwitz_zeta(5, ((-1)/2)))
 zeta-4-2-pi-4-90-1:
   epsil:
     in: HurwitzZeta(4, 2)
@@ -457,8 +483,10 @@ zeta-4-2-pi-4-90-1:
     in: HurwitzZeta[4, 2]
   sympy:
     in: zeta(4, 2)
+    out: -1 + pi**4/90
   mpmath:
     in: zeta(4, 2)
+    out: "0.0823232337111381915160036965412"
   sage:
     in: hurwitz_zeta(4, 2)
 n-hurwitzzeta-2-1:
@@ -693,13 +721,13 @@ n-hurwitzzeta-2-2-plus-neg-0p5-times-i:
       in: N[\zeta (2,2-0.5 i)]
       out: 0.588198\, +0.185042 i
   sympy:
-    in: N(zeta(2, (2 + -0.5*I)), 30)
+    in: N(zeta(2, (2 + (-0.5)*I)), 30)
     out: 0.588197890950061371189124653327 + 0.18504197243379084853372529811*I
   mpmath:
-    in: (zeta(2, mpc(2, -0.5)))
+    in: (zeta(2, mpc(2, (-0.5))))
     out: (0.588197890950061371189124653327 + 0.18504197243379084853372529811j)
   sage:
-    in: N(hurwitz_zeta(2, (2 + -0.5*I)))
+    in: N(hurwitz_zeta(2, (2 + (-0.5)*I)))
     out: 0.588197890950061 + 0.185041972433791*I
 n-hurwitzzeta-2-neg-0p5:
   epsil:
@@ -720,13 +748,13 @@ n-hurwitzzeta-2-neg-0p5:
       in: N[\zeta (2,-0.5)]
       out: "8.9348"
   sympy:
-    in: N(zeta(2, -0.5), 30)
+    in: N(zeta(2, (-0.5)), 30)
     out: "8.93480220054467930941724549994"
   mpmath:
-    in: (zeta(2, -0.5))
+    in: (zeta(2, (-0.5)))
     out: "8.93480220054467930941724549994"
   sage:
-    in: N(hurwitz_zeta(2, -0.5))
+    in: N(hurwitz_zeta(2, (-0.5)))
     out: "8.93480220054468"
 n-hurwitzzeta-2-neg-1p5:
   epsil:
@@ -747,13 +775,13 @@ n-hurwitzzeta-2-neg-1p5:
       in: N[\zeta (2,-1.5)]
       out: "9.37925"
   sympy:
-    in: N(zeta(2, -1.5), 30)
+    in: N(zeta(2, (-1.5)), 30)
     out: "9.37924664498912375386168994438"
   mpmath:
-    in: (zeta(2, -1.5))
+    in: (zeta(2, (-1.5)))
     out: "9.37924664498912375386168994438"
   sage:
-    in: N(hurwitz_zeta(2, -1.5))
+    in: N(hurwitz_zeta(2, (-1.5)))
     out: "9.37924664498912"
 n-hurwitzzeta-3-1:
   epsil:
@@ -987,13 +1015,13 @@ n-hurwitzzeta-3-2-plus-neg-0p5-times-i:
       in: N[\zeta (3,2-0.5 i)]
       out: 0.153694\, +0.104226 i
   sympy:
-    in: N(zeta(3, (2 + -0.5*I)), 30)
+    in: N(zeta(3, (2 + (-0.5)*I)), 30)
     out: 0.153693633730308241664189905562 + 0.10422634741373262482544551828*I
   mpmath:
-    in: (zeta(3, mpc(2, -0.5)))
+    in: (zeta(3, mpc(2, (-0.5))))
     out: (0.153693633730308241664189905562 + 0.10422634741373262482544551828j)
   sage:
-    in: N(hurwitz_zeta(3, (2 + -0.5*I)))
+    in: N(hurwitz_zeta(3, (2 + (-0.5)*I)))
     out: 0.153693633730308 + 0.104226347413733*I
 n-hurwitzzeta-3-neg-0p5:
   epsil:
@@ -1014,13 +1042,13 @@ n-hurwitzzeta-3-neg-0p5:
       in: N[\zeta (3,-0.5)]
       out: "0.414398"
   sympy:
-    in: N(zeta(3, -0.5), 30)
+    in: N(zeta(3, (-0.5)), 30)
     out: "0.414398322117159997798167130580"
   mpmath:
-    in: (zeta(3, -0.5))
+    in: (zeta(3, (-0.5)))
     out: "0.41439832211715999779816713058"
   sage:
-    in: N(hurwitz_zeta(3, -0.5))
+    in: N(hurwitz_zeta(3, (-0.5)))
     out: "0.414398322117160"
 n-hurwitzzeta-3-neg-1p5:
   epsil:
@@ -1041,13 +1069,13 @@ n-hurwitzzeta-3-neg-1p5:
       in: N[\zeta (3,-1.5)]
       out: "0.118102"
   sympy:
-    in: N(zeta(3, -1.5), 30)
+    in: N(zeta(3, (-1.5)), 30)
     out: "0.118102025820863701501870834284"
   mpmath:
-    in: (zeta(3, -1.5))
+    in: (zeta(3, (-1.5)))
     out: "0.118102025820863701501870834284"
   sage:
-    in: N(hurwitz_zeta(3, -1.5))
+    in: N(hurwitz_zeta(3, (-1.5)))
     out: "0.118102025820864"
 n-hurwitzzeta-5-1:
   epsil:
@@ -1281,13 +1309,13 @@ n-hurwitzzeta-5-2-plus-neg-0p5-times-i:
       in: N[\zeta (5,2-0.5 i)]
       out: 0.0129936\, +0.0288773 i
   sympy:
-    in: N(zeta(5, (2 + -0.5*I)), 30)
+    in: N(zeta(5, (2 + (-0.5)*I)), 30)
     out: 0.012993573083069943354546415604 + 0.0288772717953140897584058482529*I
   mpmath:
-    in: (zeta(5, mpc(2, -0.5)))
+    in: (zeta(5, mpc(2, (-0.5))))
     out: (0.012993573083069943354546415604 + 0.0288772717953140897584058482529j)
   sage:
-    in: N(hurwitz_zeta(5, (2 + -0.5*I)))
+    in: N(hurwitz_zeta(5, (2 + (-0.5)*I)))
     out: 0.0129935730830699 + 0.0288772717953141*I
 n-hurwitzzeta-5-neg-0p5:
   epsil:
@@ -1308,13 +1336,13 @@ n-hurwitzzeta-5-neg-0p5:
       in: N[\zeta (5,-0.5)]
       out: "0.14476"
   sympy:
-    in: N(zeta(5, -0.5), 30)
+    in: N(zeta(5, (-0.5)), 30)
     out: "0.144760409444467716272330080168"
   mpmath:
-    in: (zeta(5, -0.5))
+    in: (zeta(5, (-0.5)))
     out: "0.144760409444467716272330080168"
   sage:
-    in: N(hurwitz_zeta(5, -0.5))
+    in: N(hurwitz_zeta(5, (-0.5)))
     out: "0.144760409444468"
 n-hurwitzzeta-5-neg-1p5:
   epsil:
@@ -1335,13 +1363,13 @@ n-hurwitzzeta-5-neg-1p5:
       in: N[\zeta (5,-1.5)]
       out: "0.0130732"
   sympy:
-    in: N(zeta(5, -1.5), 30)
+    in: N(zeta(5, (-1.5)), 30)
     out: "0.0130731666461138068073095040364"
   mpmath:
-    in: (zeta(5, -1.5))
+    in: (zeta(5, (-1.5)))
     out: "0.0130731666461138068073095040364"
   sage:
-    in: N(hurwitz_zeta(5, -1.5))
+    in: N(hurwitz_zeta(5, (-1.5)))
     out: "0.0130731666461138"
 n-hurwitzzeta-neg-1-1:
   epsil:
@@ -1362,13 +1390,13 @@ n-hurwitzzeta-neg-1-1:
       in: N[\zeta (-1,1)]
       out: "-0.0833333"
   sympy:
-    in: N(zeta(-1, 1), 30)
+    in: N(zeta((-1), 1), 30)
     out: "-0.0833333333333333333333333333333"
   mpmath:
-    in: (zeta(-1, 1))
+    in: (zeta((-1), 1))
     out: "-0.0833333333333333333333333333333"
   sage:
-    in: N(hurwitz_zeta(-1, 1))
+    in: N(hurwitz_zeta((-1), 1))
     out: "-0.0833333333333333"
 n-hurwitzzeta-neg-1-2:
   epsil:
@@ -1389,13 +1417,13 @@ n-hurwitzzeta-neg-1-2:
       in: N[\zeta (-1,2)]
       out: "-1.08333"
   sympy:
-    in: N(zeta(-1, 2), 30)
+    in: N(zeta((-1), 2), 30)
     out: "-1.08333333333333333333333333333"
   mpmath:
-    in: (zeta(-1, 2))
+    in: (zeta((-1), 2))
     out: "-1.08333333333333333333333333333"
   sage:
-    in: N(hurwitz_zeta(-1, 2))
+    in: N(hurwitz_zeta((-1), 2))
     out: "-1.08333333333333"
 n-hurwitzzeta-neg-1-3:
   epsil:
@@ -1416,13 +1444,13 @@ n-hurwitzzeta-neg-1-3:
       in: N[\zeta (-1,3)]
       out: "-3.08333"
   sympy:
-    in: N(zeta(-1, 3), 30)
+    in: N(zeta((-1), 3), 30)
     out: "-3.08333333333333333333333333333"
   mpmath:
-    in: (zeta(-1, 3))
+    in: (zeta((-1), 3))
     out: "-3.08333333333333333333333333333"
   sage:
-    in: N(hurwitz_zeta(-1, 3))
+    in: N(hurwitz_zeta((-1), 3))
     out: "-3.08333333333333"
 n-hurwitzzeta-neg-1-0p5:
   epsil:
@@ -1443,13 +1471,13 @@ n-hurwitzzeta-neg-1-0p5:
       in: N[\zeta (-1,0.5)]
       out: "0.0416667"
   sympy:
-    in: N(zeta(-1, 0.5), 30)
+    in: N(zeta((-1), 0.5), 30)
     out: "0.0416666666666666851703837437526"
   mpmath:
-    in: (zeta(-1, 0.5))
+    in: (zeta((-1), 0.5))
     out: "0.0416666666666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-1, 0.5))
+    in: N(hurwitz_zeta((-1), 0.5))
     out: "0.0416666666666667"
 n-hurwitzzeta-neg-1-0p25:
   epsil:
@@ -1470,13 +1498,13 @@ n-hurwitzzeta-neg-1-0p25:
       in: N[\zeta (-1,0.25)]
       out: "0.0104167"
   sympy:
-    in: N(zeta(-1, 0.25), 30)
+    in: N(zeta((-1), 0.25), 30)
     out: "0.0104166666666666712925959359382"
   mpmath:
-    in: (zeta(-1, 0.25))
+    in: (zeta((-1), 0.25))
     out: "0.0104166666666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-1, 0.25))
+    in: N(hurwitz_zeta((-1), 0.25))
     out: "0.0104166666666667"
 n-hurwitzzeta-neg-1-1p3:
   epsil:
@@ -1497,13 +1525,13 @@ n-hurwitzzeta-neg-1-1p3:
       in: N[\zeta (-1,1.3)]
       out: "-0.278333"
   sympy:
-    in: N(zeta(-1, 1.3), 30)
+    in: N(zeta((-1), 1.3), 30)
     out: "-0.278333333333333432513256866514"
   mpmath:
-    in: (zeta(-1, 1.3))
+    in: (zeta((-1), 1.3))
     out: "-0.278333333333333368860470121338"
   sage:
-    in: N(hurwitz_zeta(-1, 1.3))
+    in: N(hurwitz_zeta((-1), 1.3))
     out: "-0.278333333333333"
 n-hurwitzzeta-neg-1-7-over-3:
   epsil:
@@ -1524,10 +1552,10 @@ n-hurwitzzeta-neg-1-7-over-3:
       in: N\left[\zeta \left(-1,\frac{7}{3}\right)\right]
       out: "-1.63889"
   sympy:
-    in: N(zeta(-1, Rational(7, 3)), 30)
+    in: N(zeta((-1), Rational(7, 3)), 30)
     out: "-1.63888888888888888888888888889"
   sage:
-    in: N(hurwitz_zeta(-1, (7/3)))
+    in: N(hurwitz_zeta((-1), (7/3)))
     out: "-1.63888888888889"
 n-hurwitzzeta-neg-1-1-plus-i:
   epsil:
@@ -1548,13 +1576,13 @@ n-hurwitzzeta-neg-1-1-plus-i:
       in: N[\zeta (-1,1+i)]
       out: 0.416667\, -0.5 i
   sympy:
-    in: N(zeta(-1, (1 + 1*I)), 30)
+    in: N(zeta((-1), (1 + 1*I)), 30)
     out: 0.416666666666666666666666666667 - 0.5*I
   mpmath:
-    in: (zeta(-1, mpc(1, 1)))
+    in: (zeta((-1), mpc(1, 1)))
     out: (0.416666666666666666666666666667 - 0.5j)
   sage:
-    in: N(hurwitz_zeta(-1, (1 + 1*I)))
+    in: N(hurwitz_zeta((-1), (1 + 1*I)))
     out: 0.416666666666667 - 0.500000000000000*I
 n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i:
   epsil:
@@ -1575,13 +1603,13 @@ n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i:
       in: N[\zeta (-1,2-0.5 i)]
       out: -0.958333+0.75 i
   sympy:
-    in: N(zeta(-1, (2 + -0.5*I)), 30)
+    in: N(zeta((-1), (2 + (-0.5)*I)), 30)
     out: -0.958333333333333333333333333333 + 0.75*I
   mpmath:
-    in: (zeta(-1, mpc(2, -0.5)))
+    in: (zeta((-1), mpc(2, (-0.5))))
     out: (-0.958333333333333333333333333333 + 0.75j)
   sage:
-    in: N(hurwitz_zeta(-1, (2 + -0.5*I)))
+    in: N(hurwitz_zeta((-1), (2 + (-0.5)*I)))
     out: -0.958333333333333 + 0.750000000000000*I
 n-hurwitzzeta-neg-1-neg-0p5:
   epsil:
@@ -1602,13 +1630,13 @@ n-hurwitzzeta-neg-1-neg-0p5:
       in: N[\zeta (-1,-0.5)]
       out: "-0.458333"
   sympy:
-    in: N(zeta(-1, -0.5), 30)
+    in: N(zeta((-1), (-0.5)), 30)
     out: "-0.458333333333333314829616256247"
   mpmath:
-    in: (zeta(-1, -0.5))
+    in: (zeta((-1), (-0.5)))
     out: "-0.458333333333333333333333333333"
   sage:
-    in: N(hurwitz_zeta(-1, -0.5))
+    in: N(hurwitz_zeta((-1), (-0.5)))
     out: "-0.458333333333333"
 n-hurwitzzeta-neg-1-neg-1p5:
   epsil:
@@ -1629,13 +1657,13 @@ n-hurwitzzeta-neg-1-neg-1p5:
       in: N[\zeta (-1,-1.5)]
       out: "-1.95833"
   sympy:
-    in: N(zeta(-1, -1.5), 30)
+    in: N(zeta((-1), (-1.5)), 30)
     out: "-1.95833333333333348136306995002"
   mpmath:
-    in: (zeta(-1, -1.5))
+    in: (zeta((-1), (-1.5)))
     out: "-1.95833333333333333333333333333"
   sage:
-    in: N(hurwitz_zeta(-1, -1.5))
+    in: N(hurwitz_zeta((-1), (-1.5)))
     out: "-1.95833333333333"
 n-hurwitzzeta-neg-2-1:
   epsil:
@@ -1656,13 +1684,13 @@ n-hurwitzzeta-neg-2-1:
       in: N[\zeta (-2,1)]
       out: 0.
   sympy:
-    in: N(zeta(-2, 1), 30)
+    in: N(zeta((-2), 1), 30)
     out: "0"
   mpmath:
-    in: (zeta(-2, 1))
+    in: (zeta((-2), 1))
     out: "0.0"
   sage:
-    in: N(hurwitz_zeta(-2, 1))
+    in: N(hurwitz_zeta((-2), 1))
     out: "0.000000000000000"
 n-hurwitzzeta-neg-2-2:
   epsil:
@@ -1683,13 +1711,13 @@ n-hurwitzzeta-neg-2-2:
       in: N[\zeta (-2,2)]
       out: -1.
   sympy:
-    in: N(zeta(-2, 2), 30)
+    in: N(zeta((-2), 2), 30)
     out: "-1.00000000000000000000000000000"
   mpmath:
-    in: (zeta(-2, 2))
+    in: (zeta((-2), 2))
     out: "-1.0"
   sage:
-    in: N(hurwitz_zeta(-2, 2))
+    in: N(hurwitz_zeta((-2), 2))
     out: "-1.00000000000000"
 n-hurwitzzeta-neg-2-3:
   epsil:
@@ -1710,13 +1738,13 @@ n-hurwitzzeta-neg-2-3:
       in: N[\zeta (-2,3)]
       out: -5.
   sympy:
-    in: N(zeta(-2, 3), 30)
+    in: N(zeta((-2), 3), 30)
     out: "-5.00000000000000000000000000000"
   mpmath:
-    in: (zeta(-2, 3))
+    in: (zeta((-2), 3))
     out: "-5.0"
   sage:
-    in: N(hurwitz_zeta(-2, 3))
+    in: N(hurwitz_zeta((-2), 3))
     out: "-5.00000000000000"
 n-hurwitzzeta-neg-2-0p5:
   epsil:
@@ -1737,13 +1765,13 @@ n-hurwitzzeta-neg-2-0p5:
       in: N[\zeta (-2,0.5)]
       out: 0.
   sympy:
-    in: N(zeta(-2, 0.5), 30)
+    in: N(zeta((-2), 0.5), 30)
     out: "0"
   mpmath:
-    in: (zeta(-2, 0.5))
+    in: (zeta((-2), 0.5))
     out: "0.0"
   sage:
-    in: N(hurwitz_zeta(-2, 0.5))
+    in: N(hurwitz_zeta((-2), 0.5))
     out: "0.000000000000000"
 n-hurwitzzeta-neg-2-0p25:
   epsil:
@@ -1764,13 +1792,13 @@ n-hurwitzzeta-neg-2-0p25:
       in: N[\zeta (-2,0.25)]
       out: "-0.015625"
   sympy:
-    in: N(zeta(-2, 0.25), 30)
+    in: N(zeta((-2), 0.25), 30)
     out: "-0.0156250000000000000000000000000"
   mpmath:
-    in: (zeta(-2, 0.25))
+    in: (zeta((-2), 0.25))
     out: "-0.015625"
   sage:
-    in: N(hurwitz_zeta(-2, 0.25))
+    in: N(hurwitz_zeta((-2), 0.25))
     out: "-0.0156250000000000"
 n-hurwitzzeta-neg-2-1p3:
   epsil:
@@ -1791,13 +1819,13 @@ n-hurwitzzeta-neg-2-1p3:
       in: N[\zeta (-2,1.3)]
       out: "-0.104"
   sympy:
-    in: N(zeta(-2, 1.3), 30)
+    in: N(zeta((-2), 1.3), 30)
     out: "-0.103999999999999939714889762854"
   mpmath:
-    in: (zeta(-2, 1.3))
+    in: (zeta((-2), 1.3))
     out: "-0.104000000000000024720966014987"
   sage:
-    in: N(hurwitz_zeta(-2, 1.3))
+    in: N(hurwitz_zeta((-2), 1.3))
     out: "-0.104000000000000"
 n-hurwitzzeta-neg-2-7-over-3:
   epsil:
@@ -1818,10 +1846,10 @@ n-hurwitzzeta-neg-2-7-over-3:
       in: N\left[\zeta \left(-2,\frac{7}{3}\right)\right]
       out: "-1.90123"
   sympy:
-    in: N(zeta(-2, Rational(7, 3)), 30)
+    in: N(zeta((-2), Rational(7, 3)), 30)
     out: "-1.90123456790123456790123456790"
   sage:
-    in: N(hurwitz_zeta(-2, (7/3)))
+    in: N(hurwitz_zeta((-2), (7/3)))
     out: "-1.90123456790123"
 n-hurwitzzeta-neg-2-1-plus-i:
   epsil:
@@ -1842,13 +1870,13 @@ n-hurwitzzeta-neg-2-1-plus-i:
       in: N[\zeta (-2,1+i)]
       out: 0.5\, +0.166667 i
   sympy:
-    in: N(zeta(-2, (1 + 1*I)), 30)
+    in: N(zeta((-2), (1 + 1*I)), 30)
     out: 0.5 + 0.166666666666666666666666666667*I
   mpmath:
-    in: (zeta(-2, mpc(1, 1)))
+    in: (zeta((-2), mpc(1, 1)))
     out: (0.5 + 0.166666666666666666666666666667j)
   sage:
-    in: N(hurwitz_zeta(-2, (1 + 1*I)))
+    in: N(hurwitz_zeta((-2), (1 + 1*I)))
     out: 0.500000000000000 + 0.166666666666667*I
 n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i:
   epsil:
@@ -1869,13 +1897,13 @@ n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i:
       in: N[\zeta (-2,2-0.5 i)]
       out: -0.625+1.04167 i
   sympy:
-    in: N(zeta(-2, (2 + -0.5*I)), 30)
+    in: N(zeta((-2), (2 + (-0.5)*I)), 30)
     out: -0.625 + 1.0416666666666666620407373974*I
   mpmath:
-    in: (zeta(-2, mpc(2, -0.5)))
+    in: (zeta((-2), mpc(2, (-0.5))))
     out: (-0.625 + 1.04166666666666666666666666667j)
   sage:
-    in: N(hurwitz_zeta(-2, (2 + -0.5*I)))
+    in: N(hurwitz_zeta((-2), (2 + (-0.5)*I)))
     out: -0.625000000000000 + 1.04166666666667*I
 n-hurwitzzeta-neg-2-neg-0p5:
   epsil:
@@ -1896,13 +1924,13 @@ n-hurwitzzeta-neg-2-neg-0p5:
       in: N[\zeta (-2,-0.5)]
       out: "0.25"
   sympy:
-    in: N(zeta(-2, -0.5), 30)
+    in: N(zeta((-2), (-0.5)), 30)
     out: "0.250000000000000000000000000000"
   mpmath:
-    in: (zeta(-2, -0.5))
+    in: (zeta((-2), (-0.5)))
     out: "0.25"
   sage:
-    in: N(hurwitz_zeta(-2, -0.5))
+    in: N(hurwitz_zeta((-2), (-0.5)))
     out: "0.250000000000000"
 n-hurwitzzeta-neg-2-neg-1p5:
   epsil:
@@ -1923,13 +1951,13 @@ n-hurwitzzeta-neg-2-neg-1p5:
       in: N[\zeta (-2,-1.5)]
       out: "2.5"
   sympy:
-    in: N(zeta(-2, -1.5), 30)
+    in: N(zeta((-2), (-1.5)), 30)
     out: "2.50000000000000000000000000000"
   mpmath:
-    in: (zeta(-2, -1.5))
+    in: (zeta((-2), (-1.5)))
     out: "2.5"
   sage:
-    in: N(hurwitz_zeta(-2, -1.5))
+    in: N(hurwitz_zeta((-2), (-1.5)))
     out: "2.50000000000000"
 n-hurwitzzeta-neg-3-1:
   epsil:
@@ -1950,13 +1978,13 @@ n-hurwitzzeta-neg-3-1:
       in: N[\zeta (-3,1)]
       out: "0.00833333"
   sympy:
-    in: N(zeta(-3, 1), 30)
+    in: N(zeta((-3), 1), 30)
     out: "0.00833333333333333333333333333333"
   mpmath:
-    in: (zeta(-3, 1))
+    in: (zeta((-3), 1))
     out: "0.00833333333333333333333333333333"
   sage:
-    in: N(hurwitz_zeta(-3, 1))
+    in: N(hurwitz_zeta((-3), 1))
     out: "0.00833333333333333"
 n-hurwitzzeta-neg-3-2:
   epsil:
@@ -1977,13 +2005,13 @@ n-hurwitzzeta-neg-3-2:
       in: N[\zeta (-3,2)]
       out: "-0.991667"
   sympy:
-    in: N(zeta(-3, 2), 30)
+    in: N(zeta((-3), 2), 30)
     out: "-0.991666666666666666666666666667"
   mpmath:
-    in: (zeta(-3, 2))
+    in: (zeta((-3), 2))
     out: "-0.991666666666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-3, 2))
+    in: N(hurwitz_zeta((-3), 2))
     out: "-0.991666666666667"
 n-hurwitzzeta-neg-3-3:
   epsil:
@@ -2004,13 +2032,13 @@ n-hurwitzzeta-neg-3-3:
       in: N[\zeta (-3,3)]
       out: "-8.99167"
   sympy:
-    in: N(zeta(-3, 3), 30)
+    in: N(zeta((-3), 3), 30)
     out: "-8.99166666666666666666666666667"
   mpmath:
-    in: (zeta(-3, 3))
+    in: (zeta((-3), 3))
     out: "-8.99166666666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-3, 3))
+    in: N(hurwitz_zeta((-3), 3))
     out: "-8.99166666666667"
 n-hurwitzzeta-neg-3-0p5:
   epsil:
@@ -2031,13 +2059,13 @@ n-hurwitzzeta-neg-3-0p5:
       in: N[\zeta (-3,0.5)]
       out: "-0.00729167"
   sympy:
-    in: N(zeta(-3, 0.5), 30)
+    in: N(zeta((-3), 0.5), 30)
     out: "-0.00729166666666666851703837437526"
   mpmath:
-    in: (zeta(-3, 0.5))
+    in: (zeta((-3), 0.5))
     out: "-0.00729166666666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-3, 0.5))
+    in: N(hurwitz_zeta((-3), 0.5))
     out: "-0.00729166666666667"
 n-hurwitzzeta-neg-3-0p25:
   epsil:
@@ -2058,13 +2086,13 @@ n-hurwitzzeta-neg-3-0p25:
       in: N[\zeta (-3,0.25)]
       out: "-0.000455729"
   sympy:
-    in: N(zeta(-3, 0.25), 30)
+    in: N(zeta((-3), 0.25), 30)
     out: "-0.000455729166666666782314898398454"
   mpmath:
-    in: (zeta(-3, 0.25))
+    in: (zeta((-3), 0.25))
     out: "-0.000455729166666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-3, 0.25))
+    in: N(hurwitz_zeta((-3), 0.25))
     out: "-0.000455729166666667"
 n-hurwitzzeta-neg-3-1p3:
   epsil:
@@ -2085,13 +2113,13 @@ n-hurwitzzeta-neg-3-1p3:
       in: N[\zeta (-3,1.3)]
       out: "-0.0296917"
   sympy:
-    in: N(zeta(-3, 1.3), 30)
+    in: N(zeta((-3), 1.3), 30)
     out: "-0.0296916666666667827811920687964"
   mpmath:
-    in: (zeta(-3, 1.3))
+    in: (zeta((-3), 1.3))
     out: "-0.0296916666666666805222500139886"
   sage:
-    in: N(hurwitz_zeta(-3, 1.3))
+    in: N(hurwitz_zeta((-3), 1.3))
     out: "-0.0296916666666667"
 n-hurwitzzeta-neg-3-7-over-3:
   epsil:
@@ -2112,10 +2140,10 @@ n-hurwitzzeta-neg-3-7-over-3:
       in: N\left[\zeta \left(-3,\frac{7}{3}\right)\right]
       out: "-2.41142"
   sympy:
-    in: N(zeta(-3, Rational(7, 3)), 30)
+    in: N(zeta((-3), Rational(7, 3)), 30)
     out: "-2.41141975308641975308641975309"
   sage:
-    in: N(hurwitz_zeta(-3, (7/3)))
+    in: N(hurwitz_zeta((-3), (7/3)))
     out: "-2.41141975308642"
 n-hurwitzzeta-neg-3-1-plus-i:
   epsil:
@@ -2136,13 +2164,13 @@ n-hurwitzzeta-neg-3-1-plus-i:
       in: N[\zeta (-3,1+i)]
       out: 0.00833333\, +0.5 i
   sympy:
-    in: N(zeta(-3, (1 + 1*I)), 30)
+    in: N(zeta((-3), (1 + 1*I)), 30)
     out: 0.00833333333333333333333333333333 + 0.5*I
   mpmath:
-    in: (zeta(-3, mpc(1, 1)))
+    in: (zeta((-3), mpc(1, 1)))
     out: (0.00833333333333333333333333333333 + 0.5j)
   sage:
-    in: N(hurwitz_zeta(-3, (1 + 1*I)))
+    in: N(hurwitz_zeta((-3), (1 + 1*I)))
     out: 0.00833333333333333 + 0.500000000000000*I
 n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i:
   epsil:
@@ -2163,13 +2191,13 @@ n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i:
       in: N[\zeta (-3,2-0.5 i)]
       out: -0.194792+1.3125 i
   sympy:
-    in: N(zeta(-3, (2 + -0.5*I)), 30)
+    in: N(zeta((-3), (2 + (-0.5)*I)), 30)
     out: -0.194791666666666666666666666667 + 1.3125*I
   mpmath:
-    in: (zeta(-3, mpc(2, -0.5)))
+    in: (zeta((-3), mpc(2, (-0.5))))
     out: (-0.194791666666666666666666666667 + 1.3125j)
   sage:
-    in: N(hurwitz_zeta(-3, (2 + -0.5*I)))
+    in: N(hurwitz_zeta((-3), (2 + (-0.5)*I)))
     out: -0.194791666666667 + 1.31250000000000*I
 n-hurwitzzeta-neg-3-neg-0p5:
   epsil:
@@ -2190,13 +2218,13 @@ n-hurwitzzeta-neg-3-neg-0p5:
       in: N[\zeta (-3,-0.5)]
       out: "-0.132292"
   sympy:
-    in: N(zeta(-3, -0.5), 30)
+    in: N(zeta((-3), (-0.5)), 30)
     out: "-0.132291666666666668517038374375"
   mpmath:
-    in: (zeta(-3, -0.5))
+    in: (zeta((-3), (-0.5)))
     out: "-0.132291666666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-3, -0.5))
+    in: N(hurwitz_zeta((-3), (-0.5)))
     out: "-0.132291666666667"
 n-hurwitzzeta-neg-3-neg-1p5:
   epsil:
@@ -2217,13 +2245,13 @@ n-hurwitzzeta-neg-3-neg-1p5:
       in: N[\zeta (-3,-1.5)]
       out: "-3.50729"
   sympy:
-    in: N(zeta(-3, -1.5), 30)
+    in: N(zeta((-3), (-1.5)), 30)
     out: "-3.50729166666666669627261399000"
   mpmath:
-    in: (zeta(-3, -1.5))
+    in: (zeta((-3), (-1.5)))
     out: "-3.50729166666666666666666666667"
   sage:
-    in: N(hurwitz_zeta(-3, -1.5))
+    in: N(hurwitz_zeta((-3), (-1.5)))
     out: "-3.50729166666667"
 n-hurwitzzeta-0p5-1:
   epsil:
@@ -2457,13 +2485,13 @@ n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i:
       in: N[\zeta (0.5,2-0.5 i)]
       out: -2.49147+0.398328 i
   sympy:
-    in: N(zeta(0.5, (2 + -0.5*I)), 30)
+    in: N(zeta(0.5, (2 + (-0.5)*I)), 30)
     out: -2.49147423528800970871088793501 + 0.398328078684049180502313447505*I
   mpmath:
-    in: (zeta(0.5, mpc(2, -0.5)))
+    in: (zeta(0.5, mpc(2, (-0.5))))
     out: (-2.49147423528800977873597028206 + 0.398328078684049180723217595353j)
   sage:
-    in: N(hurwitz_zeta(0.5, (2 + -0.5*I)))
+    in: N(hurwitz_zeta(0.5, (2 + (-0.5)*I)))
     out: -2.49147423528801 + 0.398328078684049*I
 n-hurwitzzeta-0p5-neg-0p5:
   epsil:
@@ -2484,13 +2512,13 @@ n-hurwitzzeta-0p5-neg-0p5:
       in: N[\zeta (0.5,-0.5)]
       out: -0.604899-1.41421 i
   sympy:
-    in: N(zeta(0.5, -0.5), 30)
+    in: N(zeta(0.5, (-0.5)), 30)
     out: -0.604898643421630355376805709966 - 1.41421356237309514547462185874*I
   mpmath:
-    in: (zeta(0.5, -0.5))
+    in: (zeta(0.5, (-0.5)))
     out: (-0.604898643421630370247265914236 - 1.41421356237309504880168872421j)
   sage:
-    in: N(hurwitz_zeta(0.5, -0.5))
+    in: N(hurwitz_zeta(0.5, (-0.5)))
     out: -0.604898643421630 - 1.41421356237310*I
 n-hurwitzzeta-0p5-neg-1p5:
   epsil:
@@ -2511,13 +2539,13 @@ n-hurwitzzeta-0p5-neg-1p5:
       in: N[\zeta (0.5,-1.5)]
       out: -0.604899-2.23071 i
   sympy:
-    in: N(zeta(0.5, -1.5), 30)
+    in: N(zeta(0.5, (-1.5)), 30)
     out: -0.604898643421630355376805709966 - 2.23071014330082117993470092188*I
   mpmath:
-    in: (zeta(0.5, -1.5))
+    in: (zeta(0.5, (-1.5)))
     out: (-0.604898643421630370247265914236 - 2.23071014330082108153411674911j)
   sage:
-    in: N(hurwitz_zeta(0.5, -1.5))
+    in: N(hurwitz_zeta(0.5, (-1.5)))
     out: -0.604898643421630 - 2.23071014330082*I
 n-hurwitzzeta-1p5-1:
   epsil:
@@ -2751,13 +2779,13 @@ n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i:
       in: N[\zeta (1.5,2-0.5 i)]
       out: 1.5566\, +0.242106 i
   sympy:
-    in: N(zeta(1.5, (2 + -0.5*I)), 30)
+    in: N(zeta(1.5, (2 + (-0.5)*I)), 30)
     out: 1.55659577776575130947378511337 + 0.242106322325134348805164563601*I
   mpmath:
-    in: (zeta(1.5, mpc(2, -0.5)))
+    in: (zeta(1.5, mpc(2, (-0.5))))
     out: (1.55659577776575138088233072771 + 0.242106322325134355126829880382j)
   sage:
-    in: N(hurwitz_zeta(1.5, (2 + -0.5*I)))
+    in: N(hurwitz_zeta(1.5, (2 + (-0.5)*I)))
     out: 1.55659577776575 + 0.242106322325134*I
 n-hurwitzzeta-1p5-neg-0p5:
   epsil:
@@ -2778,13 +2806,13 @@ n-hurwitzzeta-1p5-neg-0p5:
       in: N[\zeta (1.5,-0.5)]
       out: 4.77654\, +2.82843 i
   sympy:
-    in: N(zeta(1.5, -0.5), 30)
+    in: N(zeta(1.5, (-0.5)), 30)
     out: 4.77653794755483307454824171145 + 2.82842712474619029094924371748*I
   mpmath:
-    in: (zeta(1.5, -0.5))
+    in: (zeta(1.5, (-0.5)))
     out: (4.77653794755483324857662766936 + 2.82842712474619009760337744842j)
   sage:
-    in: N(hurwitz_zeta(1.5, -0.5))
+    in: N(hurwitz_zeta(1.5, (-0.5)))
     out: 4.77653794755483 + 2.82842712474619*I
 n-hurwitzzeta-1p5-neg-1p5:
   epsil:
@@ -2805,13 +2833,13 @@ n-hurwitzzeta-1p5-neg-1p5:
       in: N[\zeta (1.5,-1.5)]
       out: 4.77654\, +3.37276 i
   sympy:
-    in: N(zeta(1.5, -1.5), 30)
+    in: N(zeta(1.5, (-1.5)), 30)
     out: 4.77653794755483307454824171145 + 3.3727581786980076472559630929*I
   mpmath:
-    in: (zeta(1.5, -1.5))
+    in: (zeta(1.5, (-1.5)))
     out: (4.77653794755483324857662766936 + 3.37275817869800745275832946502j)
   sage:
-    in: N(hurwitz_zeta(1.5, -1.5))
+    in: N(hurwitz_zeta(1.5, (-1.5)))
     out: 4.77653794755483 + 3.37275817869801*I
 n-hurwitzzeta-2p5-1:
   epsil:
@@ -3045,13 +3073,13 @@ n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i:
       in: N[\zeta (2.5,2-0.5 i)]
       out: 0.28782\, +0.139697 i
   sympy:
-    in: N(zeta(2.5, (2 + -0.5*I)), 30)
+    in: N(zeta(2.5, (2 + (-0.5)*I)), 30)
     out: 0.287820164365366448766536677795 + 0.139696684393935705026379423543*I
   mpmath:
-    in: (zeta(2.5, mpc(2, -0.5)))
+    in: (zeta(2.5, mpc(2, (-0.5))))
     out: (0.287820164365366457612127581869 + 0.139696684393935714772328505468j)
   sage:
-    in: N(hurwitz_zeta(2.5, (2 + -0.5*I)))
+    in: N(hurwitz_zeta(2.5, (2 + (-0.5)*I)))
     out: 0.287820164365366 + 0.139696684393936*I
 n-hurwitzzeta-2p5-neg-0p5:
   epsil:
@@ -3072,13 +3100,13 @@ n-hurwitzzeta-2p5-neg-0p5:
       in: N[\zeta (2.5,-0.5)]
       out: 6.24711\, -5.65685 i
   sympy:
-    in: N(zeta(2.5, -0.5), 30)
+    in: N(zeta(2.5, (-0.5)), 30)
     out: 6.24711063456881188216129885404 - 5.65685424949238058189848743496*I
   mpmath:
-    in: (zeta(2.5, -0.5))
+    in: (zeta(2.5, (-0.5)))
     out: (6.24711063456881148528999055737 - 5.65685424949238019520675489684j)
   sage:
-    in: N(hurwitz_zeta(2.5, -0.5))
+    in: N(hurwitz_zeta(2.5, (-0.5)))
     out: 6.24711063456881 - 5.65685424949238*I
 n-hurwitzzeta-2p5-neg-1p5:
   epsil:
@@ -3099,13 +3127,13 @@ n-hurwitzzeta-2p5-neg-1p5:
       in: N[\zeta (2.5,-1.5)]
       out: 6.24711\, -6.01974 i
   sympy:
-    in: N(zeta(2.5, -1.5), 30)
+    in: N(zeta(2.5, (-1.5)), 30)
     out: 6.24711063456881188216129885404 - 6.01974161879359215276963368524*I
   mpmath:
-    in: (zeta(2.5, -1.5))
+    in: (zeta(2.5, (-1.5)))
     out: (6.24711063456881148528999055737 - 6.01974161879359176531005624124j)
   sage:
-    in: N(hurwitz_zeta(2.5, -1.5))
+    in: N(hurwitz_zeta(2.5, (-1.5)))
     out: 6.24711063456881 - 6.01974161879359*I
 n-hurwitzzeta-neg-0p5-1:
   epsil:
@@ -3126,13 +3154,13 @@ n-hurwitzzeta-neg-0p5-1:
       in: N[\zeta (-0.5,1)]
       out: -0.207886+\text{2.5458720000534374$\grave{ }$*${}^{\wedge}$-17} i
   sympy:
-    in: N(zeta(-0.5, 1), 30)
+    in: N(zeta((-0.5), 1), 30)
     out: "-0.207886224977354566734177865328"
   mpmath:
-    in: (zeta(-0.5, 1))
+    in: (zeta((-0.5), 1))
     out: "-0.207886224977354566017306725397"
   sage:
-    in: N(hurwitz_zeta(-0.5, 1))
+    in: N(hurwitz_zeta((-0.5), 1))
     out: "-0.207886224977355"
 n-hurwitzzeta-neg-0p5-2:
   epsil:
@@ -3153,13 +3181,13 @@ n-hurwitzzeta-neg-0p5-2:
       in: N[\zeta (-0.5,2)]
       out: "-1.20789"
   sympy:
-    in: N(zeta(-0.5, 2), 30)
+    in: N(zeta((-0.5), 2), 30)
     out: "-1.20788622497735456601730672540"
   mpmath:
-    in: (zeta(-0.5, 2))
+    in: (zeta((-0.5), 2))
     out: "-1.2078862249773545660173067254"
   sage:
-    in: N(hurwitz_zeta(-0.5, 2))
+    in: N(hurwitz_zeta((-0.5), 2))
     out: "-1.20788622497735"
 n-hurwitzzeta-neg-0p5-3:
   epsil:
@@ -3180,13 +3208,13 @@ n-hurwitzzeta-neg-0p5-3:
       in: N[\zeta (-0.5,3)]
       out: "-2.6221"
   sympy:
-    in: N(zeta(-0.5, 3), 30)
+    in: N(zeta((-0.5), 3), 30)
     out: "-2.62209978735044961481899544961"
   mpmath:
-    in: (zeta(-0.5, 3))
+    in: (zeta((-0.5), 3))
     out: "-2.62209978735044961481899544961"
   sage:
-    in: N(hurwitz_zeta(-0.5, 3))
+    in: N(hurwitz_zeta((-0.5), 3))
     out: "-2.62209978735045"
 n-hurwitzzeta-neg-0p5-0p5:
   epsil:
@@ -3207,13 +3235,13 @@ n-hurwitzzeta-neg-0p5-0p5:
       in: N[\zeta (-0.5,0.5)]
       out: 0.0608885\, -\text{7.456686447826932$\grave{ }$*${}^{\wedge}$-18} i
   sympy:
-    in: N(zeta(-0.5, 0.5), 30)
+    in: N(zeta((-0.5), 0.5), 30)
     out: "0.0608884655805949220885864292541"
   mpmath:
-    in: (zeta(-0.5, 0.5))
+    in: (zeta((-0.5), 0.5))
     out: "0.0608884655805949203185945049098"
   sage:
-    in: N(hurwitz_zeta(-0.5, 0.5))
+    in: N(hurwitz_zeta((-0.5), 0.5))
     out: "0.0608884655805949"
 n-hurwitzzeta-neg-0p5-0p25:
   epsil:
@@ -3234,13 +3262,13 @@ n-hurwitzzeta-neg-0p5-0p25:
       in: N[\zeta (-0.5,0.25)]
       out: "0.0903223"
   sympy:
-    in: N(zeta(-0.5, 0.25), 30)
+    in: N(zeta((-0.5), 0.25), 30)
     out: "0.0903222587612462490813669546696"
   mpmath:
-    in: (zeta(-0.5, 0.25))
+    in: (zeta((-0.5), 0.25))
     out: "0.0903222587612462438741957208084"
   sage:
-    in: N(hurwitz_zeta(-0.5, 0.25))
+    in: N(hurwitz_zeta((-0.5), 0.25))
     out: "0.0903222587612462"
 n-hurwitzzeta-neg-0p5-1p3:
   epsil:
@@ -3261,13 +3289,13 @@ n-hurwitzzeta-neg-0p5-1p3:
       in: N[\zeta (-0.5,1.3)]
       out: "-0.454364"
   sympy:
-    in: N(zeta(-0.5, 1.3), 30)
+    in: N(zeta((-0.5), 1.3), 30)
     out: "-0.454363742420250849018970029647"
   mpmath:
-    in: (zeta(-0.5, 1.3))
+    in: (zeta((-0.5), 1.3))
     out: "-0.454363742420250833180344297687"
   sage:
-    in: N(hurwitz_zeta(-0.5, 1.3))
+    in: N(hurwitz_zeta((-0.5), 1.3))
     out: "-0.454363742420251"
 n-hurwitzzeta-neg-0p5-7-over-3:
   epsil:
@@ -3288,10 +3316,10 @@ n-hurwitzzeta-neg-0p5-7-over-3:
       in: N\left[\zeta \left(-0.5,\frac{7}{3}\right)\right]
       out: "-1.6396"
   sympy:
-    in: N(zeta(-0.5, Rational(7, 3)), 30)
+    in: N(zeta((-0.5), Rational(7, 3)), 30)
     out: "-1.63960452469900834923927408468"
   sage:
-    in: N(hurwitz_zeta(-0.5, (7/3)))
+    in: N(hurwitz_zeta((-0.5), (7/3)))
     out: "-1.63960452469901"
 n-hurwitzzeta-neg-0p5-1-plus-i:
   epsil:
@@ -3312,13 +3340,13 @@ n-hurwitzzeta-neg-0p5-1-plus-i:
       in: N[\zeta (-0.5,1+i)]
       out: 0.0878459\, -0.795101 i
   sympy:
-    in: N(zeta(-0.5, (1 + 1*I)), 30)
+    in: N(zeta((-0.5), (1 + 1*I)), 30)
     out: 0.0878459278201809127336080976957 - 0.795101413593407063333942139081*I
   mpmath:
-    in: (zeta(-0.5, mpc(1, 1)))
+    in: (zeta((-0.5), mpc(1, 1)))
     out: (0.0878459278201809127336080976957 - 0.795101413593407063333942139081j)
   sage:
-    in: N(hurwitz_zeta(-0.5, (1 + 1*I)))
+    in: N(hurwitz_zeta((-0.5), (1 + 1*I)))
     out: 0.0878459278201809 - 0.795101413593407*I
 n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i:
   epsil:
@@ -3339,13 +3367,13 @@ n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i:
       in: N[\zeta (-0.5,2-0.5 i)]
       out: -1.1578+0.617711 i
   sympy:
-    in: N(zeta(-0.5, (2 + -0.5*I)), 30)
+    in: N(zeta((-0.5), (2 + (-0.5)*I)), 30)
     out: -1.15780111352733006135906634881 + 0.61771120231064835515155664325*I
   mpmath:
-    in: (zeta(-0.5, mpc(2, -0.5)))
+    in: (zeta((-0.5), mpc(2, (-0.5))))
     out: (-1.1578011135273300663916484734 + 0.617711202310648346317327100443j)
   sage:
-    in: N(hurwitz_zeta(-0.5, (2 + -0.5*I)))
+    in: N(hurwitz_zeta((-0.5), (2 + (-0.5)*I)))
     out: -1.15780111352733 + 0.617711202310648*I
 n-hurwitzzeta-neg-0p5-neg-0p5:
   epsil:
@@ -3366,13 +3394,13 @@ n-hurwitzzeta-neg-0p5-neg-0p5:
       in: N[\zeta (-0.5,-0.5)]
       out: 0.0608885\, +0.707107 i
   sympy:
-    in: N(zeta(-0.5, -0.5), 30)
+    in: N(zeta((-0.5), (-0.5)), 30)
     out: 0.0608884655805949220885864292541 + 0.707106781186547572737310929369*I
   mpmath:
-    in: (zeta(-0.5, -0.5))
+    in: (zeta((-0.5), (-0.5)))
     out: (0.0608884655805949203185945049098 + 0.707106781186547524400844362105j)
   sage:
-    in: N(hurwitz_zeta(-0.5, -0.5))
+    in: N(hurwitz_zeta((-0.5), (-0.5)))
     out: 0.0608884655805949 + 0.707106781186548*I
 n-hurwitzzeta-neg-0p5-neg-1p5:
   epsil:
@@ -3393,13 +3421,13 @@ n-hurwitzzeta-neg-0p5-neg-1p5:
       in: N[\zeta (-0.5,-1.5)]
       out: 0.0608885\, +1.93185 i
   sympy:
-    in: N(zeta(-0.5, -1.5), 30)
+    in: N(zeta((-0.5), (-1.5)), 30)
     out: 0.0608884655805949220885864292541 + 1.93185165257813662442742952408*I
   mpmath:
-    in: (zeta(-0.5, -1.5))
+    in: (zeta((-0.5), (-1.5)))
     out: (0.0608884655805949203185945049098 + 1.93185165257813657349948639946j)
   sage:
-    in: N(hurwitz_zeta(-0.5, -1.5))
+    in: N(hurwitz_zeta((-0.5), (-1.5)))
     out: 0.0608884655805949 + 1.93185165257814*I
 n-hurwitzzeta-2-plus-i-1:
   epsil:
@@ -3633,13 +3661,13 @@ n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i:
       in: N[\zeta (2+i,2-0.5 i)]
       out: 0.185393\, -0.270374 i
   sympy:
-    in: N(zeta((2 + 1*I), (2 + -0.5*I)), 30)
+    in: N(zeta((2 + 1*I), (2 + (-0.5)*I)), 30)
     out: 0.185393489012994582531484082187 - 0.270373692422873642905619648044*I
   mpmath:
-    in: (zeta(mpc(2, 1), mpc(2, -0.5)))
+    in: (zeta(mpc(2, 1), mpc(2, (-0.5))))
     out: (0.185393489012994582531484082187 - 0.270373692422873642905619648044j)
   sage:
-    in: N(hurwitz_zeta((2 + 1*I), (2 + -0.5*I)))
+    in: N(hurwitz_zeta((2 + 1*I), (2 + (-0.5)*I)))
     out: 0.185393489012995 - 0.270373692422874*I
 n-hurwitzzeta-2-plus-i-neg-0p5:
   epsil:
@@ -3660,13 +3688,13 @@ n-hurwitzzeta-2-plus-i-neg-0p5:
       in: N[\zeta (2+i,-0.5)]
       out: 74.7104\, +61.1754 i
   sympy:
-    in: N(zeta((2 + 1*I), -0.5), 30)
+    in: N(zeta((2 + 1*I), (-0.5)), 30)
     out: 74.7103827587637849705587912878 + 61.1754248066226585559344898217*I
   mpmath:
-    in: (zeta(mpc(2, 1), -0.5))
+    in: (zeta(mpc(2, 1), (-0.5)))
     out: (74.7103827587637849705587912878 + 61.1754248066226585559344898217j)
   sage:
-    in: N(hurwitz_zeta((2 + 1*I), -0.5))
+    in: N(hurwitz_zeta((2 + 1*I), (-0.5)))
     out: 74.7103827587638 + 61.1754248066227*I
 n-hurwitzzeta-2-plus-i-neg-1p5:
   epsil:
@@ -3687,13 +3715,13 @@ n-hurwitzzeta-2-plus-i-neg-1p5:
       in: N[\zeta (2+i,-1.5)]
       out: 84.1612\, +57.1186 i
   sympy:
-    in: N(zeta((2 + 1*I), -1.5), 30)
+    in: N(zeta((2 + 1*I), (-1.5)), 30)
     out: 84.161237415055409650499022448 + 57.1186433542858189025965213012*I
   mpmath:
-    in: (zeta(mpc(2, 1), -1.5))
+    in: (zeta(mpc(2, 1), (-1.5)))
     out: (84.161237415055409650499022448 + 57.1186433542858189025965213012j)
   sage:
-    in: N(hurwitz_zeta((2 + 1*I), -1.5))
+    in: N(hurwitz_zeta((2 + 1*I), (-1.5)))
     out: 84.1612374150554 + 57.1186433542858*I
 n-hurwitzzeta-0p5-plus-3i-1:
   epsil:
@@ -3927,13 +3955,13 @@ n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i:
       in: N[\zeta (0.5\, +3 i,2-0.5 i)]
       out: -0.181016+0.00931234 i
   sympy:
-    in: N(zeta((0.5 + 3*I), (2 + -0.5*I)), 30)
+    in: N(zeta((0.5 + 3*I), (2 + (-0.5)*I)), 30)
     out: -0.181016361585113888521547664823 + 0.00931234027233905636844468745039*I
   mpmath:
-    in: (zeta(mpc(0.5, 3), mpc(2, -0.5)))
+    in: (zeta(mpc(0.5, 3), mpc(2, (-0.5))))
     out: (-0.181016361585113893919828554914 + 0.00931234027233905643592733424112j)
   sage:
-    in: N(hurwitz_zeta((0.5 + 3*I), (2 + -0.5*I)))
+    in: N(hurwitz_zeta((0.5 + 3*I), (2 + (-0.5)*I)))
     out: -0.181016361585114 + 0.00931234027233906*I
 n-hurwitzzeta-0p5-plus-3i-neg-0p5:
   epsil:
@@ -3954,13 +3982,13 @@ n-hurwitzzeta-0p5-plus-3i-neg-0p5:
       in: N[\zeta (0.5\, +3 i,-0.5)]
       out: 15305.1\, +8535.09 i
   sympy:
-    in: N(zeta((0.5 + 3*I), -0.5), 30)
+    in: N(zeta((0.5 + 3*I), (-0.5)), 30)
     out: 15305.1296099250284896697849035 + 8535.09396001409550081007182598*I
   mpmath:
-    in: (zeta(mpc(0.5, 3), -0.5))
+    in: (zeta(mpc(0.5, 3), (-0.5)))
     out: (15305.1296099250289150533722914 + 8535.09396001409554952463485509j)
   sage:
-    in: N(hurwitz_zeta((0.5 + 3*I), -0.5))
+    in: N(hurwitz_zeta((0.5 + 3*I), (-0.5)))
     out: 15305.1296099250 + 8535.09396001410*I
 n-hurwitzzeta-0p5-plus-3i-neg-1p5:
   epsil:
@@ -3981,13 +4009,13 @@ n-hurwitzzeta-0p5-plus-3i-neg-1p5:
       in: N[\zeta (0.5\, +3 i,-1.5)]
       out: 5816.16\, +5023.95 i
   sympy:
-    in: N(zeta((0.5 + 3*I), -1.5), 30)
+    in: N(zeta((0.5 + 3*I), (-1.5)), 30)
     out: 5816.16316701183404802577570081 + 5023.94892708939732983708381653*I
   mpmath:
-    in: (zeta(mpc(0.5, 3), -1.5))
+    in: (zeta(mpc(0.5, 3), (-1.5)))
     out: (5816.16316701183445724052000025 + 5023.94892708939733344392613155j)
   sage:
-    in: N(hurwitz_zeta((0.5 + 3*I), -1.5))
+    in: N(hurwitz_zeta((0.5 + 3*I), (-1.5)))
     out: 5816.16316701183 + 5023.94892708940*I
 n-hurwitzzeta-neg-0p5-plus-i-1:
   epsil:
@@ -4008,13 +4036,13 @@ n-hurwitzzeta-neg-0p5-plus-i-1:
       in: N[\zeta (-0.5+i,1)]
       out: -0.000817893-0.223072 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), 1), 30)
+    in: N(zeta(((-0.5) + 1*I), 1), 30)
     out: -0.000817893132952544790574556099472 - 0.223071688697777659182719389719*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), 1))
+    in: (zeta(mpc((-0.5), 1), 1))
     out: (-0.000817893132952544793833010547814 - 0.223071688697777648274801679711j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), 1))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), 1))
     out: -0.000817893132952545 - 0.223071688697778*I
 n-hurwitzzeta-neg-0p5-plus-i-2:
   epsil:
@@ -4035,13 +4063,13 @@ n-hurwitzzeta-neg-0p5-plus-i-2:
       in: N[\zeta (-0.5+i,2)]
       out: -1.00082-0.223072 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), 2), 30)
+    in: N(zeta(((-0.5) + 1*I), 2), 30)
     out: -1.00081789313295254479383301055 - 0.223071688697777648274801679711*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), 2))
+    in: (zeta(mpc((-0.5), 1), 2))
     out: (-1.00081789313295254479383301055 - 0.223071688697777648274801679711j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), 2))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), 2))
     out: -1.00081789313295 - 0.223071688697778*I
 n-hurwitzzeta-neg-0p5-plus-i-3:
   epsil:
@@ -4062,13 +4090,13 @@ n-hurwitzzeta-neg-0p5-plus-i-3:
       in: N[\zeta (-0.5+i,3)]
       out: -2.08869+0.680556 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), 3), 30)
+    in: N(zeta(((-0.5) + 1*I), 3), 30)
     out: -2.08868598014686144983543654238 + 0.680556014096187341595372950046*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), 3))
+    in: (zeta(mpc((-0.5), 1), 3))
     out: (-2.08868598014686144983543654238 + 0.680556014096187341595372950046j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), 3))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), 3))
     out: -2.08868598014686 + 0.680556014096187*I
 n-hurwitzzeta-neg-0p5-plus-i-0p5:
   epsil:
@@ -4089,13 +4117,13 @@ n-hurwitzzeta-neg-0p5-plus-i-0p5:
       in: N[\zeta (-0.5+i,0.5)]
       out: 0.10116\, +0.101366 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), 0.5), 30)
+    in: N(zeta(((-0.5) + 1*I), 0.5), 30)
     out: 0.101159892022160746716252788246 + 0.101365867626040426219269363628*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), 0.5))
+    in: (zeta(mpc((-0.5), 1), 0.5))
     out: (0.101159892022160745948936881628 + 0.101365867626040427596922766488j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), 0.5))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), 0.5))
     out: 0.101159892022161 + 0.101365867626040*I
 n-hurwitzzeta-neg-0p5-plus-i-0p25:
   epsil:
@@ -4116,13 +4144,13 @@ n-hurwitzzeta-neg-0p5-plus-i-0p25:
       in: N[\zeta (-0.5+i,0.25)]
       out: -0.1056+0.172606 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), 0.25), 30)
+    in: N(zeta(((-0.5) + 1*I), 0.25), 30)
     out: -0.105599710390195944409441608514 + 0.172605566681920757909907138128*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), 0.25))
+    in: (zeta(mpc((-0.5), 1), 0.25))
     out: (-0.105599710390195948530837748332 + 0.172605566681920768268281062903j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), 0.25))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), 0.25))
     out: -0.105599710390196 + 0.172605566681921*I
 n-hurwitzzeta-neg-0p5-plus-i-1p3:
   epsil:
@@ -4143,13 +4171,13 @@ n-hurwitzzeta-neg-0p5-plus-i-1p3:
       in: N[\zeta (-0.5+i,1.3)]
       out: -0.243311-0.330441 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), 1.3), 30)
+    in: N(zeta(((-0.5) + 1*I), 1.3), 30)
     out: -0.243310938687762046139795302224 - 0.330441278258437387549406594189*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), 1.3))
+    in: (zeta(mpc((-0.5), 1), 1.3))
     out: (-0.243310938687762050647675111108 - 0.33044127825843736944743853138j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), 1.3))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), 1.3))
     out: -0.243310938687762 - 0.330441278258437*I
 n-hurwitzzeta-neg-0p5-plus-i-7-over-3:
   epsil:
@@ -4170,10 +4198,10 @@ n-hurwitzzeta-neg-0p5-plus-i-7-over-3:
       in: N\left[\zeta \left(-0.5+i,\frac{7}{3}\right)\right]
       out: -1.38219-0.00905631 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), Rational(7, 3)), 30)
+    in: N(zeta(((-0.5) + 1*I), Rational(7, 3)), 30)
     out: -1.38218514408713650371244848583 - 0.00905630825006344816221532599897*I
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), (7/3)))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), (7/3)))
     out: -1.38218514408714 - 0.00905630825006346*I
 n-hurwitzzeta-neg-0p5-plus-i-1-plus-i:
   epsil:
@@ -4194,13 +4222,13 @@ n-hurwitzzeta-neg-0p5-plus-i-1-plus-i:
       in: N[\zeta (-0.5+i,1+i)]
       out: 1.04096\, -1.79991 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), (1 + 1*I)), 30)
+    in: N(zeta(((-0.5) + 1*I), (1 + 1*I)), 30)
     out: 1.040957543118526317724814795 - 1.79991043233683439483901105885*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), mpc(1, 1)))
+    in: (zeta(mpc((-0.5), 1), mpc(1, 1)))
     out: (1.040957543118526317724814795 - 1.79991043233683439483901105885j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), (1 + 1*I)))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), (1 + 1*I)))
     out: 1.04095754311853 - 1.79991043233683*I
 n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5:
   epsil:
@@ -4221,13 +4249,13 @@ n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5:
       in: N[\zeta (-0.5+i,2-0.5 i)]
       out: -0.746153+0.249258 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), (2 + -0.5*I)), 30)
+    in: N(zeta(((-0.5) + 1*I), (2 + (-0.5)*I)), 30)
     out: -0.746153397257610095927304882935 + 0.249257816033080004114452776776*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), mpc(2, -0.5)))
+    in: (zeta(mpc((-0.5), 1), mpc(2, (-0.5))))
     out: (-0.746153397257610087055119910996 + 0.249257816033080015877337781507j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), (2 + -0.5*I)))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), (2 + (-0.5)*I)))
     out: -0.746153397257610 + 0.249257816033080*I
 n-hurwitzzeta-neg-0p5-plus-i-neg-0p5:
   epsil:
@@ -4248,13 +4276,13 @@ n-hurwitzzeta-neg-0p5-plus-i-neg-0p5:
       in: N[\zeta (-0.5+i,-0.5)]
       out: -10.3541+12.6884 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), -0.5), 30)
+    in: N(zeta(((-0.5) + 1*I), (-0.5)), 30)
     out: -10.3541255703876196037072077161 + 12.6883763809252592125176306581*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), -0.5))
+    in: (zeta(mpc((-0.5), 1), (-0.5)))
     out: (-10.3541255703876195123811711928 + 12.6883763809252597090705000207j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), -0.5))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), (-0.5)))
     out: -10.3541255703876 + 12.6883763809253*I
 n-hurwitzzeta-neg-0p5-plus-i-neg-1p5:
   epsil:
@@ -4275,11 +4303,11 @@ n-hurwitzzeta-neg-0p5-plus-i-neg-1p5:
       in: N[\zeta (-0.5+i,-1.5)]
       out: 0.82505\, +38.7319 i
   sympy:
-    in: N(zeta((-0.5 + 1*I), -1.5), 30)
+    in: N(zeta(((-0.5) + 1*I), (-1.5)), 30)
     out: 0.825049555351030194927375305269 + 38.7318693646863536628188739996*I
   mpmath:
-    in: (zeta(mpc(-0.5, 1), -1.5))
+    in: (zeta(mpc((-0.5), 1), (-1.5)))
     out: (0.825049555351030160086372374979 + 38.7318693646863540979116822452j)
   sage:
-    in: N(hurwitz_zeta((-0.5 + 1*I), -1.5))
+    in: N(hurwitz_zeta(((-0.5) + 1*I), (-1.5)))
     out: 0.825049555351030 + 38.7318693646864*I

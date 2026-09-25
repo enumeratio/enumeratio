@@ -137,6 +137,7 @@ bernoullib-10:
     in: BernoulliB[10]
   sympy:
     in: bernoulli(10)
+    out: 5/66
   sage:
     in: bernoulli(10)
 exact-rationals-at-any-index:
@@ -155,6 +156,7 @@ exact-rationals-at-any-index:
     in: BernoulliB[60]
   sympy:
     in: bernoulli(60)
+    out: -1215233140483755572040304994079820246041491/56786730
   sage:
     in: bernoulli(60)
 listable-b-n-threads-over-a-list-of-indices:
@@ -170,6 +172,7 @@ listable-b-n-threads-over-a-list-of-indices:
     in: BernoulliB[List[2, 4, 6]]
   sympy:
     in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
+    out: "[1/6, -1/30, 1/42]"
   sage:
     in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
 the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac:
@@ -239,9 +242,10 @@ zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see:
   wolfram:
     in: (Zeta[-3] == Minus[Divide[BernoulliB[4], 4]])
   sympy:
-    in: enumeratio_equal(zeta(-3), (-(S(bernoulli(4)) / 4)))
+    in: enumeratio_equal(zeta((-3)), (-(S(bernoulli(4)) / 4)))
+    out: True
   sage:
-    in: bool(zeta(-3) == (-(bernoulli(4) / 4)))
+    in: bool(zeta((-3)) == (-(bernoulli(4) / 4)))
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
   epsil:
     in: |-
@@ -262,6 +266,10 @@ the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
     in: Plus[Times[Binomial[5, 0], BernoulliB[0]], Times[Binomial[5, 1], BernoulliB[1]], Times[Binomial[5, 2], BernoulliB[2]], Times[Binomial[5, 3], BernoulliB[3]], Times[Binomial[5, 4], BernoulliB[4]]]
   sympy:
     in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
+    out: "5"
+    verdict: disagree
+    kind: convention
+    note: The k=1 term flips sign under SymPy's B+ convention (bernoulli(1)=+1/2) versus ours (B-, -1/2), which shifts the recurrence's total. Same root cause as the row below.
   sage:
     in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
 b-n-0-for-every-odd-n-1:
@@ -336,13 +344,13 @@ bernoulli-numbers-are-only-defined-for-n-ge-0-a:
       in: B_{-1}
       out: B_{-1}
   sympy:
-    in: bernoulli(-1)
+    in: bernoulli((-1))
     out: bernoulli(-1)
     verdict: inconclusive
     kind: undefined-form
     note: "Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated."
   sage:
-    in: bernoulli(-1)
+    in: bernoulli((-1))
     out: "OverflowError: can't convert negative value to unsigned long"
     verdict: error
     kind: undefined-form
@@ -376,10 +384,10 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \left\{-\frac{1}{2},\frac{1}{6},0\right\}
   sympy:
     in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
-    out: "AttributeError: 'list' object has no attribute 'is_zero'"
-    verdict: error
-    kind: threading
-    note: compute-engine's BernoulliB is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[1/2, 1/6, 0]"
+    verdict: disagree
+    kind: convention
+    note: SymPy's bernoulli(1) is +1/2 (the "B+" convention); ours is -1/2 (the "B-" convention), documented at the top of this head's page.
   sage:
     in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
 numerators-and-denominators-grow-quickly-b-20:

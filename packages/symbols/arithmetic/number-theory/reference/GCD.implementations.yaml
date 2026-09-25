@@ -358,6 +358,7 @@ reduce-12-18-to-lowest-terms-by-dividing-out-the:
     in: Divide[12, GCD[12, 18]]
   sympy:
     in: (S(12) / gcd(12, 18))
+    out: "2"
   sage:
     in: (12 / gcd(12, 18))
   oscar:
@@ -380,9 +381,10 @@ gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
   wolfram:
     in: GCD[Complex[-3, 2], Complex[10, 15]]
   sympy:
-    in: gcd((-3 + 2*I), (10 + 15*I))
+    in: gcd(((-3) + 2*I), (10 + 15*I))
+    out: 2 + 3*I
   sage:
-    in: gcd((-3 + 2*I), (10 + 15*I))
+    in: gcd(((-3) + 2*I), (10 + 15*I))
   oscar:
     in: gcd(ZZ(complex(-3, 2)), ZZ(complex(10, 15)))
   julia:
@@ -400,6 +402,7 @@ gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
     in: GCD[Complex[5, Rational[10, 3]], Complex[Rational[3, 2], 1]]
   sympy:
     in: gcd((5 + Rational(10, 3)*I), (Rational(3, 2) + 1*I))
+    out: 1/2 + I/3
   sage:
     in: gcd((5 + (10/3)*I), ((3/2) + 1*I))
   oscar:
@@ -419,6 +422,7 @@ big-integers-gcd-20-10-100-3-7-exact-past-where:
     in: GCD[Factorial[20], Plus[Power[10, 100], 3]]
   sympy:
     in: gcd(factorial(20), ((10**100) + 3))
+    out: "7"
   sage:
     in: gcd(factorial(20), ((10^100) + 3))
   oscar:
@@ -442,6 +446,7 @@ listable-a-single-list-argument-threads-element:
     in: GCD[12, List[3, 7, 40]]
   sympy:
     in: "[gcd(12, 3), gcd(12, 7), gcd(12, 40)]"
+    out: "[3, 1, 4]"
   sage:
     in: "[gcd(12, 3), gcd(12, 7), gcd(12, 40)]"
   oscar:
@@ -468,6 +473,7 @@ gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci:
     in: GCD[Fibonacci[12], Fibonacci[18]]
   sympy:
     in: gcd(fibonacci(12), fibonacci(18))
+    out: "8"
   sage:
     in: gcd(fibonacci(12), fibonacci(18))
   oscar:
@@ -489,6 +495,7 @@ gcd-0-0-0-by-convention:
     in: GCD[0, 0]
   sympy:
     in: gcd(0, 0)
+    out: "0"
   sage:
     in: gcd(0, 0)
   oscar:

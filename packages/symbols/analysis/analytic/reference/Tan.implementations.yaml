@@ -13,18 +13,18 @@ tan-0:
     tex:
       in: \tan (0)
       out: "0"
-  sympy:
-    in: tan(0)
-    out: "0"
-  mpmath:
-    in: tan(0)
-    out: "0.0"
   sage:
     in: tan(0)
     out: "0"
   rust:
     in: tan(n(0))
     out: "0.0"
+  mpmath:
+    in: tan(0)
+    out: "0.0"
+  sympy:
+    in: tan(0)
+    out: "0"
 tan-pi-over-6:
   epsil:
     in: Tan(Pi / 6)
@@ -40,15 +40,15 @@ tan-pi-over-6:
     tex:
       in: \tan \left(\frac{\pi }{6}\right)
       out: \frac{1}{\sqrt{3}}
-  sympy:
-    in: tan((S(pi) / 6))
-    out: sqrt(3)/3
   sage:
     in: tan((pi / 6))
     out: 1/3*sqrt(3)
   rust:
     in: tan((x(std::f64::consts::PI) / n(6)))
     out: "0.5773502691896257"
+  sympy:
+    in: tan((S(pi) / 6))
+    out: sqrt(3)/3
 tan-pi-over-4:
   epsil:
     in: Tan(Pi / 4)
@@ -64,15 +64,15 @@ tan-pi-over-4:
     tex:
       in: \tan \left(\frac{\pi }{4}\right)
       out: "1"
-  sympy:
-    in: tan((S(pi) / 4))
-    out: "1"
   sage:
     in: tan((pi / 4))
     out: "1"
   rust:
     in: tan((x(std::f64::consts::PI) / n(4)))
     out: "0.9999999999999999"
+  sympy:
+    in: tan((S(pi) / 4))
+    out: "1"
 tan-pi-over-3:
   epsil:
     in: Tan(Pi / 3)
@@ -88,15 +88,15 @@ tan-pi-over-3:
     tex:
       in: \tan \left(\frac{\pi }{3}\right)
       out: \sqrt{3}
-  sympy:
-    in: tan((S(pi) / 3))
-    out: sqrt(3)
   sage:
     in: tan((pi / 3))
     out: sqrt(3)
   rust:
     in: tan((x(std::f64::consts::PI) / n(3)))
     out: "1.7320508075688767"
+  sympy:
+    in: tan((S(pi) / 3))
+    out: sqrt(3)
 tan-x-frac-sin-x-cos-x:
   epsil:
     in: Tan(Pi / 4) == Sin(Pi / 4) / Cos(Pi / 4)
@@ -115,15 +115,15 @@ tan-x-frac-sin-x-cos-x:
     tex:
       in: \tan \left(\frac{\pi }{4}\right)=\frac{\sin \left(\frac{\pi }{4}\right)}{\cos \left(\frac{\pi }{4}\right)}
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(tan((S(pi) / 4)), (S(sin((S(pi) / 4))) / cos((S(pi) / 4))))
-    out: True
   sage:
     in: bool(tan((pi / 4)) == (sin((pi / 4)) / cos((pi / 4))))
     out: True
   rust:
     in: equal(tan((x(std::f64::consts::PI) / n(4))), (sin((x(std::f64::consts::PI) / n(4))) / cos((x(std::f64::consts::PI) / n(4)))))
     out: "true"
+  sympy:
+    in: enumeratio_equal(tan((S(pi) / 4)), (S(sin((S(pi) / 4))) / cos((S(pi) / 4))))
+    out: True
 odd-function-tan-x-tan-x:
   epsil:
     in: Tan(-(Pi / 4))
@@ -139,15 +139,15 @@ odd-function-tan-x-tan-x:
     tex:
       in: \tan \left(-\frac{\pi }{4}\right)
       out: "-1"
-  sympy:
-    in: tan((-(S(pi) / 4)))
-    out: "-1"
   sage:
     in: tan((-(pi / 4)))
     out: "-1"
   rust:
     in: tan((-((x(std::f64::consts::PI) / n(4)))))
     out: "-0.9999999999999999"
+  sympy:
+    in: tan((-(S(pi) / 4)))
+    out: "-1"
 period-pi-not-2-pi-adding-a-half-turn-doesn-t:
   epsil:
     in: Tan(Pi / 4 + Pi)
@@ -163,15 +163,15 @@ period-pi-not-2-pi-adding-a-half-turn-doesn-t:
     tex:
       in: \tan \left(\frac{\pi }{4}+\pi \right)
       out: "1"
-  sympy:
-    in: tan(((S(pi) / 4) + pi))
-    out: "1"
   sage:
     in: tan(((pi / 4) + pi))
     out: "1"
   rust:
     in: tan(((x(std::f64::consts::PI) / n(4)) + x(std::f64::consts::PI)))
     out: "0.9999999999999997"
+  sympy:
+    in: tan(((S(pi) / 4) + pi))
+    out: "1"
 threads-element-wise-over-a-list:
   epsil:
     in: Tan([0, Pi / 4])
@@ -187,12 +187,6 @@ threads-element-wise-over-a-list:
     tex:
       in: \tan \left(\left\{0,\frac{\pi }{4}\right\}\right)
       out: \{0,1\}
-  sympy:
-    in: "[tan(0), tan((S(pi) / 4))]"
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Tan threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: "[tan(0), tan((pi / 4))]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
@@ -205,6 +199,9 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Tan is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: "[tan(0), tan((S(pi) / 4))]"
+    out: "[0, 1]"
 a-pole-cos-pi-2-0-so-the-ratio-blows-up:
   epsil:
     in: Tan(Pi / 2)
@@ -220,9 +217,6 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up:
     tex:
       in: \tan \left(\frac{\pi }{2}\right)
       out: \text{ComplexInfinity}
-  sympy:
-    in: tan((S(pi) / 2))
-    out: zoo
   sage:
     in: tan((pi / 2))
     out: Infinity
@@ -235,6 +229,9 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up:
     verdict: inconclusive
     kind: undefined-form
     note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust gives 1.633123935319537e16.'
+  sympy:
+    in: tan((S(pi) / 2))
+    out: zoo
 same-rule-as-sin-and-cos-a-non-special-numeric:
   epsil:
     in: Tan(1)
@@ -250,18 +247,18 @@ same-rule-as-sin-and-cos-a-non-special-numeric:
     tex:
       in: \tan (1)
       out: \tan (1)
-  sympy:
-    in: tan(1)
-    out: tan(1)
-  mpmath:
-    in: tan(1)
-    out: "1.55740772465490223050697480746"
   sage:
     in: tan(1)
     out: tan(1)
   rust:
     in: tan(n(1))
     out: "1.5574077246549023"
+  mpmath:
+    in: tan(1)
+    out: "1.55740772465490223050697480746"
+  sympy:
+    in: tan(1)
+    out: tan(1)
 tan-30-circ-frac-sqrt-3-3-exactly:
   epsil:
     in: Tan(Degrees(30))
@@ -285,14 +282,16 @@ a-machine-precision-argument-evaluates:
     in: Tan[1.2]
   wolfram:
     in: Tan[1.2]
-  sympy:
-    in: tan(1.2)
-  mpmath:
-    in: tan(1.2)
   sage:
     in: tan(1.2)
   rust:
     in: tan(x(1.2))
+  mpmath:
+    in: tan(1.2)
+    out: "2.57215162212631859719325219168"
+  sympy:
+    in: tan(1.2)
+    out: "2.57215162212632"
 n-of-an-exact-argument-gives-an-arbitrary:
   epsil:
     in: N(Tan(6 / 5))
@@ -304,12 +303,13 @@ n-of-an-exact-argument-gives-an-arbitrary:
     in: N[Tan[Rational[6, 5]]]
   wolfram:
     in: N[Tan[Rational[6, 5]]]
-  sympy:
-    in: N(tan(Rational(6, 5)), 30)
   sage:
     in: N(tan((6/5)))
   rust:
     in: nf(tan(rational(n(6), n(5))))
+  sympy:
+    in: N(tan(Rational(6, 5)), 30)
+    out: "2.57215162212631893540999423603"
 evaluates-at-a-complex-argument:
   epsil:
     in: Tan(2.5 + i)
@@ -321,12 +321,14 @@ evaluates-at-a-complex-argument:
     in: Tan[Complex[2.5, 1]]
   wolfram:
     in: Tan[Complex[2.5, 1]]
-  sympy:
+  sage:
     in: tan((2.5 + 1*I))
   mpmath:
     in: tan(mpc(2.5, 1))
-  sage:
+    out: (-0.237013830916270580522716158056 + 0.896437917127861752050952735755j)
+  sympy:
     in: tan((2.5 + 1*I))
+    out: -0.237013830916271 + 0.896437917127862*I
 threads-element-wise-over-a-matrix:
   epsil:
     in: Tan([[5 * (Pi / 6), Pi], [Pi / 3, -Pi]])
@@ -338,12 +340,13 @@ threads-element-wise-over-a-matrix:
     in: Tan[List[List[Times[5, Divide[Pi, 6]], Pi], List[Divide[Pi, 3], Minus[Pi]]]]
   wolfram:
     in: Tan[List[List[Times[5, Divide[Pi, 6]], Pi], List[Divide[Pi, 3], Minus[Pi]]]]
-  sympy:
-    in: "[[tan((5 * (S(pi) / 6))), tan(pi)], [tan((S(pi) / 3)), tan((-pi))]]"
   sage:
     in: "[[tan((5 * (pi / 6))), tan(pi)], [tan((pi / 3)), tan((-pi))]]"
   rust:
     in: tan(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), x(std::f64::consts::PI)]), list(vec![(x(std::f64::consts::PI) / n(3)), (-(x(std::f64::consts::PI)))])]))
+  sympy:
+    in: "[[tan((5 * (S(pi) / 6))), tan(pi)], [tan((S(pi) / 3)), tan((-pi))]]"
+    out: "[[-sqrt(3)/3, 0], [sqrt(3), 0]]"
 tan-pi-8-sqrt-2-1:
   epsil:
     in: Tan(Pi / 8)
@@ -355,12 +358,13 @@ tan-pi-8-sqrt-2-1:
     in: Tan[Divide[Pi, 8]]
   wolfram:
     in: Tan[Divide[Pi, 8]]
-  sympy:
-    in: tan((S(pi) / 8))
   sage:
     in: tan((pi / 8))
   rust:
     in: tan((x(std::f64::consts::PI) / n(8)))
+  sympy:
+    in: tan((S(pi) / 8))
+    out: -1 + sqrt(2)
 tan-pi-12-2-sqrt-3:
   epsil:
     in: Tan(Pi / 12)
@@ -372,12 +376,13 @@ tan-pi-12-2-sqrt-3:
     in: Tan[Divide[Pi, 12]]
   wolfram:
     in: Tan[Divide[Pi, 12]]
-  sympy:
-    in: tan((S(pi) / 12))
   sage:
     in: tan((pi / 12))
   rust:
     in: tan((x(std::f64::consts::PI) / n(12)))
+  sympy:
+    in: tan((S(pi) / 12))
+    out: 2 - sqrt(3)
 tan-pi-5-sqrt-5-2-sqrt-5:
   epsil:
     in: Tan(Pi / 5)
@@ -389,12 +394,13 @@ tan-pi-5-sqrt-5-2-sqrt-5:
     in: Tan[Divide[Pi, 5]]
   wolfram:
     in: Tan[Divide[Pi, 5]]
-  sympy:
-    in: tan((S(pi) / 5))
   sage:
     in: tan((pi / 5))
   rust:
     in: tan((x(std::f64::consts::PI) / n(5)))
+  sympy:
+    in: tan((S(pi) / 5))
+    out: sqrt(5 - 2*sqrt(5))
 tan-pi-10-sqrt-1-2-sqrt-5:
   epsil:
     in: Tan(Pi / 10)
@@ -406,12 +412,13 @@ tan-pi-10-sqrt-1-2-sqrt-5:
     in: Tan[Divide[Pi, 10]]
   wolfram:
     in: Tan[Divide[Pi, 10]]
-  sympy:
-    in: tan((S(pi) / 10))
   sage:
     in: tan((pi / 10))
   rust:
     in: tan((x(std::f64::consts::PI) / n(10)))
+  sympy:
+    in: tan((S(pi) / 10))
+    out: sqrt(1 - 2*sqrt(5)/5)
 tan-5-pi-12-2-sqrt-3:
   epsil:
     in: Tan(5 / 12 * Pi)
@@ -423,12 +430,13 @@ tan-5-pi-12-2-sqrt-3:
     in: Tan[Times[Rational[5, 12], Pi]]
   wolfram:
     in: Tan[Times[Rational[5, 12], Pi]]
-  sympy:
-    in: tan((Rational(5, 12) * pi))
   sage:
     in: tan(((5/12) * pi))
   rust:
     in: tan((rational(n(5), n(12)) * x(std::f64::consts::PI)))
+  sympy:
+    in: tan((Rational(5, 12) * pi))
+    out: sqrt(3) + 2
 tan-3-over-4-times-pi:
   epsil:
     in: Tan(3 / 4 * Pi)
@@ -440,12 +448,13 @@ tan-3-over-4-times-pi:
     in: Tan[Times[Rational[3, 4], Pi]]
   wolfram:
     in: Tan[Times[Rational[3, 4], Pi]]
-  sympy:
-    in: tan((Rational(3, 4) * pi))
   sage:
     in: tan(((3/4) * pi))
   rust:
     in: tan((rational(n(3), n(4)) * x(std::f64::consts::PI)))
+  sympy:
+    in: tan((Rational(3, 4) * pi))
+    out: "-1"
 interval-arithmetic-the-image-of-0-pi-3-is-0:
   epsil:
     in: Tan(Interval(0, Pi / 3))
@@ -578,11 +587,13 @@ to-30-significant-digits-every-one-correctly:
     in: N[Tan[1], 30]
   wolfram:
     in: N[Tan[1], 30]
-  sympy:
-    in: N(tan(1), 30)
-  mpmath:
-    in: (tan(1))
   sage:
     in: N(tan(1))
   rust:
     in: nf(tan(n(1)))
+  mpmath:
+    in: (tan(1))
+    out: "1.55740772465490223050697480746"
+  sympy:
+    in: N(tan(1), 30)
+    out: "1.55740772465490223050697480746"

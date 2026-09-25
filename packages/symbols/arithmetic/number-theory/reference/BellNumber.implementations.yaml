@@ -230,13 +230,13 @@ a-negative-argument-is-left-unevaluated:
       in: B_{-1}
       out: B_{-1}
   sympy:
-    in: bell(-1)
+    in: bell((-1))
     out: "ValueError: a non-negative integer expected"
     verdict: error
     kind: undefined-form
     note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
   sage:
-    in: bell_number(-1)
+    in: bell_number((-1))
     out: "ArithmeticError: Bell numbers not defined for negative indices"
     verdict: error
     kind: undefined-form
@@ -270,10 +270,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{1,2,5,15\}
   sympy:
     in: "[bell(1), bell(2), bell(3), bell(4)]"
-    out: "AttributeError: 'list' object has no attribute 'is_negative'"
-    verdict: error
-    kind: threading
-    note: compute-engine's BellNumber is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[1, 2, 5, 15]"
   sage:
     in: "[bell_number(1), bell_number(2), bell_number(3), bell_number(4)]"
   oscar:
@@ -296,6 +293,7 @@ exact-for-large-n:
     in: BellB[30]
   sympy:
     in: bell(30)
+    out: "846749014511809332450147"
   sage:
     in: bell_number(30)
   oscar:
@@ -369,6 +367,7 @@ touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
     in: (Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])
   sympy:
     in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
+    out: True
   sage:
     in: bool((bell_number(9) % 7) == ((bell_number(2) + bell_number(3)) % 7))
   oscar:

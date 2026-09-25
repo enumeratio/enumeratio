@@ -290,9 +290,13 @@ catalannumber-neg-1-is-neg-1:
     in: CatalanNumber[-1]
     note: Checked against an actual Wolfram kernel (see combinatorics.oracle.json) -- CatalanNumber[-1] = -1. The alternative Gamma-ratio limit Gamma(2n+1)/(Gamma(n+1) Gamma(n+2)) -- what SymPy's and Sage's own catalan/catalan_number give -- disagrees, at -1/2; this entry follows the verified Wolfram kernel output.
   sympy:
-    in: catalan(-1)
+    in: catalan((-1))
+    out: -1/2
+    verdict: disagree
+    kind: convention
+    note: SymPy's catalan(-1) takes the Gamma-ratio limit (-1/2); we follow the verified Wolfram kernel output (-1), same as the wolfram row above.
   sage:
-    in: catalan_number(-1)
+    in: catalan_number((-1))
   julia:
     in: Combinatorics.catalannum(-1)
   mathlib4:
@@ -312,9 +316,10 @@ catalannumber-0-past-neg-1:
   wolfram:
     in: CatalanNumber[-2]
   sympy:
-    in: catalan(-2)
+    in: catalan((-2))
+    out: "0"
   sage:
-    in: catalan_number(-2)
+    in: catalan_number((-2))
   julia:
     in: Combinatorics.catalannum(-2)
   mathlib4:
@@ -334,9 +339,10 @@ catalannumber-neg-5-is-also-0:
   wolfram:
     in: CatalanNumber[-5]
   sympy:
-    in: catalan(-5)
+    in: catalan((-5))
+    out: "0"
   sage:
-    in: catalan_number(-5)
+    in: catalan_number((-5))
   julia:
     in: Combinatorics.catalannum(-5)
   mathlib4:
@@ -441,6 +447,7 @@ catalannumber-30:
     in: CatalanNumber[30]
   sympy:
     in: catalan(30)
+    out: "3814986502092304"
   sage:
     in: catalan_number(30)
   julia:
@@ -477,6 +484,7 @@ real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
     in: CatalanNumber[2.3]
   sympy:
     in: catalan(2.3)
+    out: "2.59035215401932"
   sage:
     in: catalan_number(2.3)
   julia:
@@ -499,6 +507,7 @@ complex-arguments-evaluate-through-the-same:
     in: CatalanNumber[Complex[1.2, 1]]
   sympy:
     in: catalan((1.2 + 1*I))
+    out: 0.730728624207284 + 0.569846406969343*I
   sage:
     in: catalan_number((1.2 + 1*I))
   julia:
@@ -519,6 +528,7 @@ c-1-2-frac-8-3-pi-by-analytic-continuation:
     in: CatalanNumber[Rational[1, 2]]
   sympy:
     in: catalan(Rational(1, 2))
+    out: catalan(1/2)
   sage:
     in: catalan_number((1/2))
   julia:

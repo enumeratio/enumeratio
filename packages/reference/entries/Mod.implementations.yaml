@@ -80,10 +80,10 @@ the-result-takes-the-sign-of-the-modulus:
       in: ((-7) \bmod 3)
       out: "2"
   sympy:
-    in: (-7 % 3)
+    in: ((-7) % 3)
     out: "2"
   sage:
-    in: (-7 % 3)
+    in: ((-7) % 3)
     out: "2"
   oscar:
     in: mod(-7, 3)
@@ -276,6 +276,7 @@ rationals-are-reduced-exactly:
     in: Mod[Rational[5, 2], 2]
   sympy:
     in: (Rational(5, 2) % 2)
+    out: 1/2
   sage:
     in: ((5/2) % 2)
   oscar:
@@ -299,6 +300,7 @@ rationals-are-reduced-exactly:
     in: Mod[3.14, 2]
   sympy:
     in: (3.14 % 2)
+    out: "1.1400000000000001"
   sage:
     in: (3.14 % 2)
   oscar:
@@ -322,6 +324,7 @@ an-exact-irrational-reduces-exactly-to-2-sqrt-7:
     in: Mod[Sqrt[28], 3]
   sympy:
     in: (sqrt(28) % 3)
+    out: -3 + 2*sqrt(7)
   sage:
     in: (sqrt(28) % 3)
   rust:
@@ -339,6 +342,7 @@ a-symbolic-constant-reduces-exactly-to-pi-2:
     in: Mod[Pi, 2]
   sympy:
     in: (pi % 2)
+    out: -2 + pi
   sage:
     in: (pi % 2)
   rust:
@@ -356,6 +360,7 @@ a-10-001-digit-dividend:
     in: Mod[Power[10, 10000], 10007]
   sympy:
     in: ((10**10000) % 10007)
+    out: "6333"
   sage:
     in: ((10^10000) % 10007)
   oscar:
@@ -379,6 +384,7 @@ threads-over-a-list-of-moduli:
     in: Mod[10, List[3, 4, 7]]
   sympy:
     in: "[(10 % 3), (10 % 4), (10 % 7)]"
+    out: "[1, 2, 3]"
   sage:
     in: "[(10 % 3), (10 % 4), (10 % 7)]"
   oscar:
@@ -402,6 +408,10 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: Mod[Complex[5, 3], 2]
   sympy:
     in: ((5 + 3*I) % 2)
+    out: "TypeError: Invalid comparison of non-real (1 - I)**2*(-2*I - (1 - I)**2)/2"
+    verdict: error
+    kind: domain
+    note: Python's % doesn't support a Gaussian-integer modulus; SymPy's Mod tries to compare a non-real quantity and raises. Ours implements Gaussian-integer division deliberately (see this head's Scope examples).
   sage:
     in: ((5 + 3*I) % 2)
   oscar:
@@ -421,6 +431,10 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: Mod[Complex[5, 3], Complex[1, 1]]
   sympy:
     in: ((5 + 3*I) % (1 + 1*I))
+    out: (1 + I)*(Mod((1 - I)*(5 + 3*I)/2, (1 - I)*(1 + I)/2))
+    verdict: inconclusive
+    kind: domain
+    note: Same underlying gap as the row above -- SymPy's Mod can't reduce a Gaussian-integer modulus, so it stays symbolic instead of reducing to 0.
   sage:
     in: ((5 + 3*I) % (1 + 1*I))
   oscar:
@@ -439,9 +453,10 @@ a-negative-modulus-gives-a-result-in-n-0:
   wolfram:
     in: Mod[-5, -3]
   sympy:
-    in: (-5 % -3)
+    in: ((-5) % (-3))
+    out: "-2"
   sage:
-    in: (-5 % -3)
+    in: ((-5) % (-3))
   oscar:
     in: mod(-5, -3)
   julia:
@@ -638,6 +653,7 @@ eulers-number-mod-2-reduces-exactly:
     in: Mod[E, 2]
   sympy:
     in: (E % 2)
+    out: -2 + E
   sage:
     in: (e % 2)
   rust:

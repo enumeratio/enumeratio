@@ -39,14 +39,15 @@ the-family-has-b-4-15-members-see-bellnumber:
     in: BellB[4]
   wolfram:
     in: BellB[4]
-  sympy:
-    in: bell(4)
   sage:
     in: bell_number(4)
   oscar:
     in: bell(4)
   julia:
     in: bell(4)
+  sympy:
+    in: bell(4)
+    out: "15"
 those-with-exactly-2-blocks-number-s-4-2-7-see:
   epsil:
     in: Stirling(4, 2)
@@ -61,11 +62,12 @@ those-with-exactly-2-blocks-number-s-4-2-7-see:
     in: StirlingS2[4, 2]
   wolfram:
     in: StirlingS2[4, 2]
-  sympy:
-    in: stirling(4, 2)
   sage:
     in: stirling_number2(4, 2)
   julia:
     in: Combinatorics.stirlings2(4, 2)
   mathlib4:
     in: (Nat.stirlingSecond 4 2)
+  sympy:
+    in: stirling(4, 2)
+    out: "7"

@@ -164,13 +164,13 @@ ln-1-i-pi-the-principal-value-past-the-branch:
       in: \log (-1)
       out: i \pi
   sympy:
-    in: log(-1)
+    in: log((-1))
     out: I*pi
   mpmath:
-    in: log(-1)
+    in: log((-1))
     out: (0.0 + 3.14159265358979323846264338328j)
   sage:
-    in: log(-1)
+    in: log((-1))
     out: I*pi
   rust:
     in: ln(n(-1))
@@ -191,8 +191,10 @@ a-machine-precision-argument-evaluates:
     in: Log[1.5]
   sympy:
     in: log(1.5)
+    out: "0.405465108108164"
   mpmath:
     in: log(1.5)
+    out: "0.405465108108164381978013115464"
   sage:
     in: log(1.5)
   rust:
@@ -210,8 +212,10 @@ n-for-a-decimal-value:
     in: N[Log[1000]]
   sympy:
     in: N(log(1000), 30)
+    out: "6.90775527898213705205397436405"
   mpmath:
     in: (log(1000))
+    out: "6.90775527898213705205397436405"
   sage:
     in: N(log(1000))
   rust:
@@ -229,6 +233,7 @@ arbitrary-precision-via-n:
     in: N[Log[Rational[5, 2]]]
   sympy:
     in: N(log(Rational(5, 2)), 30)
+    out: "0.916290731874155065183527211768"
   sage:
     in: N(log((5/2)))
   rust:
@@ -246,8 +251,10 @@ evaluates-at-a-complex-argument:
     in: Log[Complex[2.5, 1]]
   sympy:
     in: log((2.5 + 1*I))
+    out: 0.990500734433292 + 0.380506377112365*I
   mpmath:
     in: log(mpc(2.5, 1))
+    out: (0.990500734433291704174403894723 + 0.38050637711236488630358791681j)
   sage:
     in: log((2.5 + 1*I))
 a-negative-float-gives-the-principal-complex:
@@ -262,11 +269,13 @@ a-negative-float-gives-the-principal-complex:
   wolfram:
     in: Log[-2.5]
   sympy:
-    in: log(-2.5)
+    in: log((-2.5))
+    out: 0.916290731874155 + I*pi
   mpmath:
-    in: log(-2.5)
+    in: log((-2.5))
+    out: (0.916290731874155065183527211768 + 3.14159265358979323846264338328j)
   sage:
-    in: log(-2.5)
+    in: log((-2.5))
   rust:
     in: ln(x(-2.5))
 threads-element-wise-over-a-list:
@@ -288,8 +297,10 @@ threads-element-wise-over-a-list:
     in: Log[List[1, 2.1, 3.1, 4.1]]
   sympy:
     in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+    out: "[0, 0.741937344729377, 1.13140211149110, 1.41098697371026]"
   mpmath:
     in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+    out: "[mpf('0.0'), mpf('0.741937344729377354776816987592111'), mpf('1.13140211149110059056208963437813'), mpf('1.41098697371026203319721877687743')]"
   sage:
     in: "[log(1), log(2.1), log(3.1), log(4.1)]"
   rust:
@@ -308,8 +319,10 @@ an-integer-power-is-pulled-out-ln-1000-3-ln-10:
     note: Wolfram leaves Log[1000] as is.
   sympy:
     in: log(1000)
+    out: log(1000)
   mpmath:
     in: log(1000)
+    out: "6.90775527898213705205397436405"
   sage:
     in: log(1000)
   rust:
@@ -327,8 +340,10 @@ ln-exponentiale-pow-3:
     in: Log[Power[E, 3]]
   sympy:
     in: log((E**3))
+    out: "3"
   mpmath:
     in: log((e**3))
+    out: "3.0"
   sage:
     in: log((e^3))
   rust:
@@ -368,8 +383,10 @@ ln-i-i-pi-2-exactly:
     in: Log[I]
   sympy:
     in: log(I)
+    out: I*pi/2
   mpmath:
     in: log(mpc(0,1))
+    out: (0.0 + 1.57079632679489661923132169164j)
   sage:
     in: log(I)
 a-unit-fraction-becomes-a-negated-logarithm-ln:
@@ -385,6 +402,7 @@ a-unit-fraction-becomes-a-negated-logarithm-ln:
     in: Log[Rational[1, 2]]
   sympy:
     in: log(Rational(1, 2))
+    out: -log(2)
   sage:
     in: log((1/2))
   rust:
@@ -469,8 +487,10 @@ to-40-significant-digits-every-one-correctly:
     in: N[Log[2], 40]
   sympy:
     in: N(log(2), 30)
+    out: "0.693147180559945309417232121458"
   mpmath:
     in: (log(2))
+    out: "0.693147180559945309417232121458"
   sage:
     in: N(log(2))
   rust:
@@ -487,8 +507,9 @@ ln-frac-12-i-pi-ln-2-a-negative-rational-folded:
   wolfram:
     in: Log[Rational[-1, 2]]
   sympy:
-    in: log(Rational(-1, 2))
+    in: log(Rational((-1), 2))
+    out: -log(2) + I*pi
   sage:
-    in: log((-1/2))
+    in: log(((-1)/2))
   rust:
     in: ln(rational(n(-1), n(2)))

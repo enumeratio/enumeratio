@@ -62,6 +62,7 @@ and-back-again:
     in: ContinuedFraction[Rational[47, 17]]
   sympy:
     in: list(continued_fraction(Rational(47, 17)))
+    out: "[2, 1, 3, 4]"
   sage:
     in: list(continued_fraction((47/17)))
 the-first-20-terms-of-a-quadratic-irrational:
@@ -110,6 +111,10 @@ a-floating-point-number-read-as-the-rational-it:
     in: ContinuedFraction[3.245]
   sympy:
     in: list(continued_fraction(3.245))
+    out: "ValueError: expecting a rational or quadratic irrational, not 3.24500000000000"
+    verdict: error
+    kind: domain
+    note: SymPy's continued_fraction refuses a plain float; ours reads it as the exact rational it prints as (see the caption).
   sage:
     in: list(continued_fraction(3.245))
 negative-a-floor-for-a-0-then-positive-terms-3-1:
@@ -125,9 +130,10 @@ negative-a-floor-for-a-0-then-positive-terms-3-1:
     in: ContinuedFraction[Rational[-47, 17]]
     note: Wolfram negates every term instead, giving {-2, -1, -3, -4}.
   sympy:
-    in: list(continued_fraction(Rational(-47, 17)))
+    in: list(continued_fraction(Rational((-47), 17)))
+    out: "[-3, 4, 4]"
   sage:
-    in: list(continued_fraction((-47/17)))
+    in: list(continued_fraction(((-47)/17)))
 fromcontinuedfraction-inverts-it:
   epsil:
     in: FromContinuedFraction(ContinuedFraction(47 / 17))
@@ -161,6 +167,7 @@ a-quadratic-irrational-s-exact-expansion-is:
     in: ContinuedFraction[Sqrt[13]]
   sympy:
     in: list(continued_fraction(sqrt(13)))
+    out: "[3, [1, 1, 1, 1, 6]]"
   sage:
     in: list(continued_fraction(sqrt(13)))
 varphi-1-overline-1-purely-periodic-so-the:
@@ -176,6 +183,10 @@ varphi-1-overline-1-purely-periodic-so-the:
     in: ContinuedFraction[Divide[Plus[1, Sqrt[5]], 2]]
   sympy:
     in: list(continued_fraction((S((1 + sqrt(5))) / 2)))
+    out: "[[1]]"
+    verdict: disagree
+    kind: shape
+    note: Same period, split differently -- we write the leading term and the period separately ([1, [1]], matching [1; overline 1] as printed), SymPy folds the leading term into the period for a purely periodic value ([[1]]).
   sage:
     in: list(continued_fraction(((1 + sqrt(5)) / 2)))
 the-named-constant-unfolded-to-1-sqrt-5-2-first:
@@ -295,6 +306,7 @@ sqrt-2-is-1-overline-2:
     in: ContinuedFraction[Sqrt[2]]
   sympy:
     in: list(continued_fraction(sqrt(2)))
+    out: "[1, [2]]"
   sage:
     in: list(continued_fraction(sqrt(2)))
 25-terms-past-the-double-precision-wall:

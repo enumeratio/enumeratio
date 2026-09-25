@@ -197,10 +197,10 @@ the-mersenne-prime-2-31-1:
       in: \text{PrimeQ}\left[2^{31}-1\right]
       out: \text{True}
   sympy:
-    in: isprime(((2**31) + -1))
+    in: isprime(((2**31) + (-1)))
     out: True
   sage:
-    in: is_prime(((2^31) + -1))
+    in: is_prime(((2^31) + (-1)))
     out: True
   oscar:
     in: is_prime(ZZ(((big(2)^31) + -1)))
@@ -322,13 +322,13 @@ threads-element-wise-over-a-list:
   wolfram:
     in: PrimeQ[-7]
   sympy:
-    in: isprime(-7)
+    in: isprime((-7))
     out: False
     verdict: disagree
     kind: convention
     note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; SymPy's isprime() only accepts positive primes.
   sage:
-    in: is_prime(-7)
+    in: is_prime((-7))
   oscar:
     in: is_prime(ZZ(-7))
   julia:
@@ -420,6 +420,7 @@ isprime-5:
     in: PrimeQ[5]
   sympy:
     in: isprime(5)
+    out: True
   sage:
     in: is_prime(5)
   oscar:
@@ -446,6 +447,7 @@ large-integers-10-3000-1-is-divisible-by-10-8-1:
     in: PrimeQ[Plus[Power[10, 3000], 1]]
   sympy:
     in: isprime(((10**3000) + 1))
+    out: False
   sage:
     in: is_prime(((10^3000) + 1))
   oscar:
@@ -472,6 +474,7 @@ the-fermat-number-f-5-2-32-1-is-composite-641:
     in: PrimeQ[Plus[Power[2, 32], 1]]
   sympy:
     in: isprime(((2**32) + 1))
+    out: False
   sage:
     in: is_prime(((2^32) + 1))
   oscar:
@@ -498,6 +501,10 @@ non-integers-are-not-prime:
     in: PrimeQ[Rational[1, 2]]
   sympy:
     in: isprime(Rational(1, 2))
+    out: "ValueError: 1/2 is not an integer"
+    verdict: error
+    kind: domain
+    note: SymPy's isprime refuses a non-integer outright; ours answers False directly (see the caption).
   sage:
     in: is_prime((1/2))
   oscar:

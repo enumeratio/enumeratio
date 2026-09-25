@@ -79,7 +79,7 @@ powermod-3-2-7:
   wolfram:
     in: PowerMod[3, -2, 7]
   sage:
-    in: power_mod(3, -2, 7)
+    in: power_mod(3, (-2), 7)
   rust:
     in: powermod(n(3), n(-2), n(7))
 a-square-root-of-3-equiv-1-pmod-2:
@@ -134,7 +134,7 @@ a-negative-exponent-gives-the-modular-inverse:
       in: (2^{-1} \bmod 7)
       out: "4"
   sage:
-    in: power_mod(2, -1, 7)
+    in: power_mod(2, (-1), 7)
     out: "4"
   rust:
     in: powermod(n(2), n(-1), n(7))
@@ -209,7 +209,7 @@ no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2:
       in: (2^{-1} \bmod 4)
       out: (2^{-1} \bmod 4)
   sage:
-    in: power_mod(2, -1, 4)
+    in: power_mod(2, (-1), 4)
     out: "ZeroDivisionError: inverse of Mod(2, 4) does not exist"
     verdict: error
     kind: undefined-form
@@ -235,7 +235,7 @@ exponent-0-evaluates-even-at-a-negative-modulus:
   wolfram:
     in: PowerMod[-2, 0, -14]
   sage:
-    in: power_mod(-2, 0, -14)
+    in: power_mod((-2), 0, (-14))
   rust:
     in: powermod(n(-2), n(0), n(-14))
 a-nonzero-exponent-at-the-same-negative-modulus:
@@ -253,7 +253,7 @@ a-nonzero-exponent-at-the-same-negative-modulus:
   wolfram:
     in: PowerMod[-2, 3, -14]
   sage:
-    in: power_mod(-2, 3, -14)
+    in: power_mod((-2), 3, (-14))
   rust:
     in: powermod(n(-2), n(3), n(-14))
 a-rational-exponent-is-a-modular-root-the-least:
@@ -467,7 +467,7 @@ a-gaussian-modulus-and-an-exponent-of-10-30:
     kind: convention
     note: Wolfram asks for a unit modulo the norm 65 here, not modulo $7 + 4i$, and leaves this unevaluated.
   sage:
-    in: power_mod((11 + -7*I), -4, (7 + 4*I))
+    in: power_mod((11 + (-7)*I), (-4), (7 + 4*I))
     out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
     verdict: error
     kind: domain
@@ -604,7 +604,7 @@ exponent-0-base-minus-4-modulus-minus-2:
   wolfram:
     in: PowerMod[-4, 0, -2]
   sage:
-    in: power_mod(-4, 0, -2)
+    in: power_mod((-4), 0, (-2))
   rust:
     in: powermod(n(-4), n(0), n(-2))
 exponent-0-base-5-modulus-minus-7:
@@ -622,7 +622,7 @@ exponent-0-base-5-modulus-minus-7:
   wolfram:
     in: PowerMod[5, 0, -7]
   sage:
-    in: power_mod(5, 0, -7)
+    in: power_mod(5, 0, (-7))
   rust:
     in: powermod(n(5), n(0), n(-7))
 exponent-0-with-a-positive-modulus:

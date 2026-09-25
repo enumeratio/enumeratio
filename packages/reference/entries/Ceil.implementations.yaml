@@ -92,13 +92,13 @@ threads-element-wise-over-a-list:
       in: \lceil \{1.2,-1.2,3.7\}\rceil
       out: \{2,-1,4\}
   sympy:
-    in: ceiling([1.2, -1.2, 3.7])
+    in: ceiling([1.2, (-1.2), 3.7])
     out: "AttributeError: 'list' object has no attribute 'is_Number'"
     verdict: error
     kind: threading
     note: compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.
   sage:
-    in: ceil([1.2, -1.2, 3.7])
+    in: ceil([1.2, (-1.2), 3.7])
     out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
     verdict: error
     kind: threading
@@ -206,13 +206,13 @@ rounds-toward-infty-not-toward-0-ceil-3-7-is-3:
       in: \lceil -3.7\rceil
       out: "-3"
   sympy:
-    in: ceiling(-3.7)
+    in: ceiling((-3.7))
     out: "-3"
   mpmath:
-    in: ceil(-3.7)
+    in: ceil((-3.7))
     out: "-3.0"
   sage:
-    in: ceil(-3.7)
+    in: ceil((-3.7))
     out: "-3"
   rust:
     in: ceil(x(-3.7))
@@ -245,8 +245,10 @@ ceil-2p4:
     in: Ceiling[2.4]
   sympy:
     in: ceiling(2.4)
+    out: "3"
   mpmath:
     in: ceil(2.4)
+    out: "3.0"
   sage:
     in: ceil(2.4)
   rust:
@@ -264,8 +266,10 @@ ceil-2p6:
     in: Ceiling[2.6]
   sympy:
     in: ceiling(2.6)
+    out: "3"
   mpmath:
     in: ceil(2.6)
+    out: "3.0"
   sage:
     in: ceil(2.6)
   rust:
@@ -292,8 +296,10 @@ exact-radicals-are-decided-numerically:
     in: Ceiling[Sqrt[50]]
   sympy:
     in: ceiling(sqrt(50))
+    out: "8"
   mpmath:
     in: ceil(sqrt(50))
+    out: "8.0"
   sage:
     in: ceil(sqrt(50))
   rust:
@@ -311,8 +317,10 @@ evaluates-at-an-exact-constant-lceil-pi-rceil-4:
     in: Ceiling[Pi]
   sympy:
     in: ceiling(pi)
+    out: "4"
   mpmath:
     in: ceil(pi)
+    out: "4.0"
   sage:
     in: ceil(pi)
   rust:
@@ -362,11 +370,13 @@ rounds-the-real-and-imaginary-parts-up:
   wolfram:
     in: Ceiling[Complex[5.37, -1.3]]
   sympy:
-    in: ceiling((5.37 + -1.3*I))
+    in: ceiling((5.37 + (-1.3)*I))
+    out: 6 - I
   mpmath:
-    in: ceil(mpc(5.37, -1.3))
+    in: ceil(mpc(5.37, (-1.3)))
+    out: (6.0 - 1.0j)
   sage:
-    in: ceil((5.37 + -1.3*I))
+    in: ceil((5.37 + (-1.3)*I))
 ten-bits-are-enough-to-number-1000-items-lceil:
   epsil:
     in: Ceil(Log(1_000, 2))

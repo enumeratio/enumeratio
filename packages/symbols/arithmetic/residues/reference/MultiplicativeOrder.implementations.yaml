@@ -71,7 +71,7 @@ a-negative-base-5-equiv-2-pmod-7:
   wolfram:
     in: MultiplicativeOrder[-5, 7]
   sage:
-    in: Mod(-5, 7).multiplicative_order()
+    in: Mod((-5), 7).multiplicative_order()
 the-first-power-of-5-to-reach-3-or-11-equiv-4-5:
   epsil:
     in: MultiplicativeOrder(5, 7, [3, 11])

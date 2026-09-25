@@ -47,7 +47,7 @@ a-crossing-is-a-brauer-diagram:
   fullform:
     in: Element[Diagram[List[List[1, -2], List[2, -1], List[3, -3]]], BrauerAlgebra[3]]
   sage:
-    in: enumeratio_element(enumeratio_diagram([[1, -2], [2, -1], [3, -3]]), BrauerAlgebra(3, enumeratio_delta, enumeratio_ring))
+    in: enumeratio_element(enumeratio_diagram([[1, (-2)], [2, (-1)], [3, (-3)]]), BrauerAlgebra(3, enumeratio_delta, enumeratio_ring))
     out: True
 but-not-a-planar-one:
   epsil:
@@ -62,5 +62,5 @@ but-not-a-planar-one:
   fullform:
     in: Element[Diagram[List[List[1, -2], List[2, -1], List[3, -3]]], TemperleyLiebAlgebra[3]]
   sage:
-    in: enumeratio_element(enumeratio_diagram([[1, -2], [2, -1], [3, -3]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))
+    in: enumeratio_element(enumeratio_diagram([[1, (-2)], [2, (-1)], [3, (-3)]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))
     out: False

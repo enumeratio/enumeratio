@@ -355,10 +355,10 @@ a-negative-k-also-gives-0:
       in: \binom{5}{-1}
       out: "0"
   sympy:
-    in: binomial(5, -1)
+    in: binomial(5, (-1))
     out: "0"
   sage:
-    in: binomial(5, -1)
+    in: binomial(5, (-1))
     out: "0"
   oscar:
     in: binomial(ZZ(5), ZZ(-1))
@@ -394,10 +394,10 @@ a-negative-n-uses-the-generalized-formula-binom:
       in: \binom{-5}{2}
       out: "15"
   sympy:
-    in: binomial(-5, 2)
+    in: binomial((-5), 2)
     out: "15"
   sage:
-    in: binomial(-5, 2)
+    in: binomial((-5), 2)
     out: "15"
   oscar:
     in: binomial(ZZ(-5), ZZ(2))
@@ -434,10 +434,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{0,1,10,35,165\}
   sympy:
     in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
-    out: "TypeError: unsupported operand type(s) for -: 'list' and 'Integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Binomial is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[0, 1, 10, 35, 165]"
   sage:
     in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
   oscar:
@@ -497,6 +494,7 @@ binomial-8-4:
     in: Binomial[8, 4]
   sympy:
     in: binomial(8, 4)
+    out: "70"
   sage:
     in: binomial(8, 4)
   oscar:
@@ -546,9 +544,10 @@ real-arguments-evaluate-through-the-gamma:
   wolfram:
     in: Binomial[8.5, -4.2]
   sympy:
-    in: binomial(8.5, -4.2)
+    in: binomial(8.5, (-4.2))
+    out: "6.04992484022837e-5"
   sage:
-    in: binomial(8.5, -4.2)
+    in: binomial(8.5, (-4.2))
   oscar:
     in: binomial(ZZ(8.5), ZZ(-4.2))
   julia:
@@ -570,6 +569,7 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     in: Binomial[0.5, 3]
   sympy:
     in: binomial(0.5, 3)
+    out: "0.0625000000000000"
   sage:
     in: binomial(0.5, 3)
   oscar:
@@ -593,6 +593,7 @@ a-rational-n-with-integer-k-gives-the-exact:
     in: Binomial[Rational[1, 2], 2]
   sympy:
     in: binomial(Rational(1, 2), 2)
+    out: -1/8
   sage:
     in: binomial((1/2), 2)
   oscar:
@@ -615,9 +616,10 @@ binom-1-2-3-frac-5-16-the-central-binomial:
   wolfram:
     in: Binomial[Rational[-1, 2], 3]
   sympy:
-    in: binomial(Rational(-1, 2), 3)
+    in: binomial(Rational((-1), 2), 3)
+    out: -5/16
   sage:
-    in: binomial((-1/2), 3)
+    in: binomial(((-1)/2), 3)
   oscar:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
   julia:
@@ -648,6 +650,7 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     in: Binomial[Complex[1, 1], 5]
   sympy:
     in: binomial((1 + 1*I), 5)
+    out: -1/12 - I/12
   sage:
     in: binomial((1 + 1*I), 5)
   oscar:
@@ -666,9 +669,10 @@ complex-n-and-k-evaluate-through-the-gamma:
   wolfram:
     in: Binomial[Complex[2, 1], Complex[7, -3]]
   sympy:
-    in: binomial((2 + 1*I), (7 + -3*I))
+    in: binomial((2 + 1*I), (7 + (-3)*I))
+    out: gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))
   sage:
-    in: binomial((2 + 1*I), (7 + -3*I))
+    in: binomial((2 + 1*I), (7 + (-3)*I))
   oscar:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
   julia:
@@ -739,6 +743,7 @@ the-factorial-form-binom-n-k-frac-n-k-n-k-see:
     in: (Binomial[7, 3] == Divide[Factorial[7], Times[Factorial[3], Factorial[4]]])
   sympy:
     in: enumeratio_equal(binomial(7, 3), (S(factorial(7)) / (factorial(3) * factorial(4))))
+    out: True
   sage:
     in: bool(binomial(7, 3) == (factorial(7) / (factorial(3) * factorial(4))))
   oscar:
@@ -762,6 +767,7 @@ the-probability-of-exactly-3-heads-in-10-fair:
     in: Divide[Binomial[10, 3], Power[2, 10]]
   sympy:
     in: (S(binomial(10, 3)) / (2**10))
+    out: 15/128
   sage:
     in: (binomial(10, 3) / (2^10))
   oscar:
@@ -784,9 +790,13 @@ both-arguments-negative-integers-the-limiting:
   wolfram:
     in: Binomial[-3, -5]
   sympy:
-    in: binomial(-3, -5)
+    in: binomial((-3), (-5))
+    out: "0"
+    verdict: disagree
+    kind: convention
+    note: SymPy's binomial takes both-negative to 0; we use the limiting/reflection definition (Binomial(-3,-5) = Binomial(-3,2) = 6), documented as a deliberate choice on this example's own caption.
   sage:
-    in: binomial(-3, -5)
+    in: binomial((-3), (-5))
   oscar:
     in: binomial(ZZ(-3), ZZ(-5))
   julia:
@@ -808,6 +818,7 @@ the-central-binomial-coefficient-binom-100-50:
     in: Binomial[100, 50]
   sympy:
     in: binomial(100, 50)
+    out: "100891344545564193334812497256"
   sage:
     in: binomial(100, 50)
   oscar:

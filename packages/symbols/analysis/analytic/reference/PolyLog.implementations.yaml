@@ -38,13 +38,13 @@ li-2-1-eta-2-pi-2-12:
       in: \text{Li}_2(-1)
       out: -\frac{\pi ^2}{12}
   sympy:
-    in: polylog(2, -1)
+    in: polylog(2, (-1))
     out: -pi**2/12
   mpmath:
-    in: polylog(2, -1)
+    in: polylog(2, (-1))
     out: "-0.822467033424113218236207583323"
   sage:
-    in: polylog(2, -1)
+    in: polylog(2, (-1))
     out: -1/12*pi^2
 li-4-1-zeta-4-pi-4-90:
   epsil:
@@ -185,13 +185,13 @@ li-5-2-1-2-0-46229778-the-alternating-side-euler:
       in: \text{Li}_{2.5}(-0.5)
       out: "-0.462298"
   sympy:
-    in: polylog(2.5, -0.5)
+    in: polylog(2.5, (-0.5))
     out: "-0.462297782190063"
   mpmath:
-    in: polylog(2.5, -0.5)
+    in: polylog(2.5, (-0.5))
     out: "-0.462297782190063438189164323275"
   sage:
-    in: polylog(2.5, -0.5)
+    in: polylog(2.5, (-0.5))
     out: "-0.462297782190063"
 threads-over-a-list-of-arguments:
   epsil:
@@ -238,9 +238,6 @@ a-non-integer-order-past-z-1-is-left-unevaluated:
   sympy:
     in: polylog(2.5, 2)
     out: polylog(2.5, 2)
-    verdict: disagree
-    kind: undefined-form
-    note: SymPy leaves Li_2.5(2) unevaluated on the branch cut; ours continues to the complex value Wolfram, Sage and mpmath give.
   mpmath:
     in: polylog(2.5, 2)
     out: (2.78966033238277714404754430876 - 1.36380370053935279437171941141j)
@@ -281,8 +278,10 @@ a-machine-precision-argument:
     in: PolyLog[2, 0.9]
   sympy:
     in: polylog(2, 0.9)
+    out: polylog(2, 0.9)
   mpmath:
     in: polylog(2, 0.9)
+    out: "1.2997147230049587819795713031"
   sage:
     in: polylog(2, 0.9)
 li-0-z-z-1-z-past-the-unit-disk:
@@ -298,8 +297,10 @@ li-0-z-z-1-z-past-the-unit-disk:
     in: PolyLog[0, 5.5]
   sympy:
     in: polylog(0, 5.5)
+    out: "-1.22222222222222"
   mpmath:
     in: polylog(0, 5.5)
+    out: "-1.22222222222222222222222222222"
   sage:
     in: polylog(0, 5.5)
 li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
@@ -315,6 +316,7 @@ li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
     in: PolyLog[3, Rational[1, 2]]
   sympy:
     in: polylog(3, Rational(1, 2))
+    out: polylog(3, 1/2)
   sage:
     in: polylog(3, (1/2))
 complex-order-and-argument:
@@ -329,11 +331,13 @@ complex-order-and-argument:
   wolfram:
     in: PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]
   sympy:
-    in: polylog((0.2 + 1*I), (0.5 + -0.5*I))
+    in: polylog((0.2 + 1*I), (0.5 + (-0.5)*I))
+    out: 0.0703265205505161 - 0.563293262539874*I
   mpmath:
-    in: polylog(mpc(0.2, 1), mpc(0.5, -0.5))
+    in: polylog(mpc(0.2, 1), mpc(0.5, (-0.5)))
+    out: (0.0703265205505160488207107039144 - 0.563293262539874483087247237706j)
   sage:
-    in: polylog((0.2 + 1*I), (0.5 + -0.5*I))
+    in: polylog((0.2 + 1*I), (0.5 + (-0.5)*I))
 past-z-1-the-continuation-is-complex:
   epsil:
     in: PolyLog(2, 2.5)
@@ -347,8 +351,10 @@ past-z-1-the-continuation-is-complex:
     in: PolyLog[2, 2.5]
   sympy:
     in: polylog(2, 2.5)
+    out: polylog(2, 2.5)
   mpmath:
     in: polylog(2, 2.5)
+    out: (2.42079080656593384391365659389 - 2.87861223180826055148866875379j)
   sage:
     in: polylog(2, 2.5)
 li-3-1-eta-3-frac-34-zeta-3:
@@ -363,11 +369,13 @@ li-3-1-eta-3-frac-34-zeta-3:
   wolfram:
     in: PolyLog[3, -1]
   sympy:
-    in: polylog(3, -1)
+    in: polylog(3, (-1))
+    out: -dirichlet_eta(3)
   mpmath:
-    in: polylog(3, -1)
+    in: polylog(3, (-1))
+    out: "-0.901542677369695714049803621134"
   sage:
-    in: polylog(3, -1)
+    in: polylog(3, (-1))
 li-2-2-pi-2-4-i-pi-ln-2-exactly:
   epsil:
     in: PolyLog(2, 2)
@@ -381,8 +389,10 @@ li-2-2-pi-2-4-i-pi-ln-2-exactly:
     in: PolyLog[2, 2]
   sympy:
     in: polylog(2, 2)
+    out: pi**2/4 - I*pi*log(2)
   mpmath:
     in: polylog(2, 2)
+    out: (2.46740110027233965470862274997 - 2.17758609030360213050068889824j)
   sage:
     in: polylog(2, 2)
 li-n-1-1-2-1-n-zeta-n-for-symbolic-n:
@@ -478,6 +488,7 @@ to-30-significant-digits-not-yet-the-requested:
     in: N[PolyLog[2, Rational[1, 2]], 30]
   sympy:
     in: N(polylog(2, Rational(1, 2)), 30)
+    out: "0.582240526465012505902656320160"
   sage:
     in: N(polylog(2, (1/2)))
 n-polylog-2-0p5:
@@ -520,13 +531,13 @@ n-polylog-2-neg-0p5:
       in: N[\text{Li}_2(-0.5)]
       out: "-0.448414"
   sympy:
-    in: N(polylog(2, -0.5), 30)
+    in: N(polylog(2, (-0.5)), 30)
     out: "-0.448414206923646202443064405916"
   mpmath:
-    in: (polylog(2, -0.5))
+    in: (polylog(2, (-0.5)))
     out: "-0.448414206923646202443064405916"
   sage:
-    in: N(polylog(2, -0.5))
+    in: N(polylog(2, (-0.5)))
     out: "-0.448414206923646"
 n-polylog-2-0p25:
   epsil:
@@ -661,13 +672,13 @@ n-polylog-3-neg-0p5:
       in: N[\text{Li}_3(-0.5)]
       out: "-0.472598"
   sympy:
-    in: N(polylog(3, -0.5), 30)
+    in: N(polylog(3, (-0.5)), 30)
     out: "-0.472597844658896874618623193127"
   mpmath:
-    in: (polylog(3, -0.5))
+    in: (polylog(3, (-0.5)))
     out: "-0.472597844658896874618623193127"
   sage:
-    in: N(polylog(3, -0.5))
+    in: N(polylog(3, (-0.5)))
     out: "-0.472597844658897"
 n-polylog-3-0p25:
   epsil:
@@ -802,13 +813,13 @@ n-polylog-0p5-neg-0p5:
       in: N[\text{Li}_{0.5}(-0.5)]
       out: "-0.373752"
   sympy:
-    in: N(polylog(0.5, -0.5), 30)
+    in: N(polylog(0.5, (-0.5)), 30)
     out: "-0.373752237980973067710266377617"
   mpmath:
-    in: (polylog(0.5, -0.5))
+    in: (polylog(0.5, (-0.5)))
     out: "-0.373752237980973056447473317383"
   sage:
-    in: N(polylog(0.5, -0.5))
+    in: N(polylog(0.5, (-0.5)))
     out: "-0.373752237980973"
 n-polylog-0p5-0p25:
   epsil:
@@ -943,13 +954,13 @@ n-polylog-1p5-neg-0p5:
       in: N[\text{Li}_{1.5}(-0.5)]
       out: "-0.429887"
   sympy:
-    in: N(polylog(1.5, -0.5), 30)
+    in: N(polylog(1.5, (-0.5)), 30)
     out: "-0.429887321580579295776658454997"
   mpmath:
-    in: (polylog(1.5, -0.5))
+    in: (polylog(1.5, (-0.5)))
     out: "-0.429887321580579267782921785891"
   sage:
-    in: N(polylog(1.5, -0.5))
+    in: N(polylog(1.5, (-0.5)))
     out: "-0.429887321580579"
 n-polylog-1p5-0p25:
   epsil:
@@ -1084,13 +1095,13 @@ n-polylog-2p5-neg-0p5:
       in: N[\text{Li}_{2.5}(-0.5)]
       out: "-0.462298"
   sympy:
-    in: N(polylog(2.5, -0.5), 30)
+    in: N(polylog(2.5, (-0.5)), 30)
     out: "-0.462297782190063455409756443260"
   mpmath:
-    in: (polylog(2.5, -0.5))
+    in: (polylog(2.5, (-0.5)))
     out: "-0.462297782190063438189164323275"
   sage:
-    in: N(polylog(2.5, -0.5))
+    in: N(polylog(2.5, (-0.5)))
     out: "-0.462297782190063"
 n-polylog-2p5-0p25:
   epsil:
@@ -1201,13 +1212,13 @@ n-polylog-neg-1-0p5:
       in: N[\text{Li}_{-1}(0.5)]
       out: 2.
   sympy:
-    in: N(polylog(-1, 0.5), 30)
+    in: N(polylog((-1), 0.5), 30)
     out: "2.00000000000000000000000000000"
   mpmath:
-    in: (polylog(-1, 0.5))
+    in: (polylog((-1), 0.5))
     out: "2.0"
   sage:
-    in: N(polylog(-1, 0.5))
+    in: N(polylog((-1), 0.5))
     out: "2.00000000000000"
 n-polylog-neg-1-neg-0p5:
   epsil:
@@ -1225,13 +1236,13 @@ n-polylog-neg-1-neg-0p5:
       in: N[\text{Li}_{-1}(-0.5)]
       out: "-0.222222"
   sympy:
-    in: N(polylog(-1, -0.5), 30)
+    in: N(polylog((-1), (-0.5)), 30)
     out: "-0.222222222222222209886410837498"
   mpmath:
-    in: (polylog(-1, -0.5))
+    in: (polylog((-1), (-0.5)))
     out: "-0.222222222222222222222222222222"
   sage:
-    in: N(polylog(-1, -0.5))
+    in: N(polylog((-1), (-0.5)))
     out: "-0.222222222222222"
 n-polylog-neg-1-0p25:
   epsil:
@@ -1249,13 +1260,13 @@ n-polylog-neg-1-0p25:
       in: N[\text{Li}_{-1}(0.25)]
       out: "0.444444"
   sympy:
-    in: N(polylog(-1, 0.25), 30)
+    in: N(polylog((-1), 0.25), 30)
     out: "0.444444444444444419772821674997"
   mpmath:
-    in: (polylog(-1, 0.25))
+    in: (polylog((-1), 0.25))
     out: "0.444444444444444444444444444444"
   sage:
-    in: N(polylog(-1, 0.25))
+    in: N(polylog((-1), 0.25))
     out: "0.444444444444444"
 n-polylog-neg-1-0p9:
   epsil:
@@ -1273,13 +1284,13 @@ n-polylog-neg-1-0p9:
       in: N[\text{Li}_{-1}(0.9)]
       out: 90.
   sympy:
-    in: N(polylog(-1, 0.9), 30)
+    in: N(polylog((-1), 0.9), 30)
     out: "90.0000000000000426325641456060"
   mpmath:
-    in: (polylog(-1, 0.9))
+    in: (polylog((-1), 0.9))
     out: "90.000000000000042188474935756"
   sage:
-    in: N(polylog(-1, 0.9))
+    in: N(polylog((-1), 0.9))
     out: "90.0000000000000"
 n-polylog-neg-1-1-over-3:
   epsil:
@@ -1297,10 +1308,10 @@ n-polylog-neg-1-1-over-3:
       in: N\left[\text{Li}_{-1}\left(\frac{1}{3}\right)\right]
       out: "0.75"
   sympy:
-    in: N(polylog(-1, Rational(1, 3)), 30)
+    in: N(polylog((-1), Rational(1, 3)), 30)
     out: "0.750000000000000000000000000000"
   sage:
-    in: N(polylog(-1, (1/3)))
+    in: N(polylog((-1), (1/3)))
     out: "0.750000000000000"
 n-polylog-neg-1-0p4-plus-0p3i:
   epsil:
@@ -1318,13 +1329,13 @@ n-polylog-neg-1-0p4-plus-0p3i:
       in: N[\text{Li}_{-1}(0.4\, +0.3 i)]
       out: \text{7.07253186057507$\grave{ }$*${}^{\wedge}$-17}+1.11111 i
   sympy:
-    in: N(polylog(-1, (0.4 + 0.3*I)), 30)
+    in: N(polylog((-1), (0.4 + 0.3*I)), 30)
     out: 4.93432455388958498931841168272e-17 + 1.11111111111111121802147644539*I
   mpmath:
-    in: (polylog(-1, mpc(0.4, 0.3)))
+    in: (polylog((-1), mpc(0.4, 0.3)))
     out: (4.93432455388958498931841168272e-17 + 1.11111111111111121802147644539j)
   sage:
-    in: N(polylog(-1, (0.4 + 0.3*I)))
+    in: N(polylog((-1), (0.4 + 0.3*I)))
     out: 4.93256931339333e-17 + 1.11111111111111*I
 n-polylog-2-plus-i-0p5:
   epsil:
@@ -1366,13 +1377,13 @@ n-polylog-2-plus-i-neg-0p5:
       in: N[\text{Li}_{2+i}(-0.5)]
       out: -0.457532-0.030471 i
   sympy:
-    in: N(polylog((2 + 1*I), -0.5), 30)
+    in: N(polylog((2 + 1*I), (-0.5)), 30)
     out: -0.457531546075585227813811465511 - 0.0304710196698071139523110739928*I
   mpmath:
-    in: (polylog(mpc(2, 1), -0.5))
+    in: (polylog(mpc(2, 1), (-0.5)))
     out: (-0.457531546075585227813811465511 - 0.0304710196698071139523110739928j)
   sage:
-    in: N(polylog((2 + 1*I), -0.5))
+    in: N(polylog((2 + 1*I), (-0.5)))
     out: -0.457531546075585 - 0.0304710196698071*I
 n-polylog-2-plus-i-0p25:
   epsil:
@@ -1483,13 +1494,13 @@ n-polylog-0p5-plus-neg-1-times-i-0p5:
       in: N[\text{Li}_{0.5\, -i}(0.5)]
       out: 0.67004\, +0.233019 i
   sympy:
-    in: N(polylog((0.5 + -1*I), 0.5), 30)
+    in: N(polylog((0.5 + (-1)*I), 0.5), 30)
     out: 0.670039797076198540004554615734 + 0.233019269757713198831794443322*I
   mpmath:
-    in: (polylog(mpc(0.5, -1), 0.5))
+    in: (polylog(mpc(0.5, (-1)), 0.5))
     out: (0.670039797076198491964736827084 + 0.233019269757713193519717822826j)
   sage:
-    in: N(polylog((0.5 + -1*I), 0.5))
+    in: N(polylog((0.5 + (-1)*I), 0.5))
     out: 0.670039797076199 + 0.233019269757713*I
 n-polylog-0p5-plus-neg-1-times-i-neg-0p5:
   epsil:
@@ -1507,13 +1518,13 @@ n-polylog-0p5-plus-neg-1-times-i-neg-0p5:
       in: N[\text{Li}_{0.5\, -i}(-0.5)]
       out: -0.39131+0.0697515 i
   sympy:
-    in: N(polylog((0.5 + -1*I), -0.5), 30)
+    in: N(polylog((0.5 + (-1)*I), (-0.5)), 30)
     out: -0.391310316111742884093160910197 + 0.069751466633279121665189848045*I
   mpmath:
-    in: (polylog(mpc(0.5, -1), -0.5))
+    in: (polylog(mpc(0.5, (-1)), (-0.5)))
     out: (-0.391310316111742886237846980127 + 0.0697514666332791256486007352128j)
   sage:
-    in: N(polylog((0.5 + -1*I), -0.5))
+    in: N(polylog((0.5 + (-1)*I), (-0.5)))
     out: -0.391310316111743 + 0.0697514666332791*I
 n-polylog-0p5-plus-neg-1-times-i-0p25:
   epsil:
@@ -1531,13 +1542,13 @@ n-polylog-0p5-plus-neg-1-times-i-0p25:
       in: N[\text{Li}_{0.5\, -i}(0.25)]
       out: 0.288406\, +0.0387535 i
   sympy:
-    in: N(polylog((0.5 + -1*I), 0.25), 30)
+    in: N(polylog((0.5 + (-1)*I), 0.25), 30)
     out: 0.2884064661247057737014642953 + 0.038753470608298049016049446891*I
   mpmath:
-    in: (polylog(mpc(0.5, -1), 0.25))
+    in: (polylog(mpc(0.5, (-1)), 0.25))
     out: (0.288406466124705792101472867066 + 0.0387534706082980477463501442136j)
   sage:
-    in: N(polylog((0.5 + -1*I), 0.25))
+    in: N(polylog((0.5 + (-1)*I), 0.25))
     out: 0.288406466124706 + 0.0387534706082980*I
 n-polylog-0p5-plus-neg-1-times-i-0p9:
   epsil:
@@ -1555,13 +1566,13 @@ n-polylog-0p5-plus-neg-1-times-i-0p9:
       in: N[\text{Li}_{0.5\, -i}(0.9)]
       out: 0.580361\, +2.24226 i
   sympy:
-    in: N(polylog((0.5 + -1*I), 0.9), 30)
+    in: N(polylog((0.5 + (-1)*I), 0.9), 30)
     out: 0.580361076526938801656285704667 + 2.24226374800079719662448951567*I
   mpmath:
-    in: (polylog(mpc(0.5, -1), 0.9))
+    in: (polylog(mpc(0.5, (-1)), 0.9))
     out: (0.580361076526938810406439917663 + 2.24226374800079721450762902317j)
   sage:
-    in: N(polylog((0.5 + -1*I), 0.9))
+    in: N(polylog((0.5 + (-1)*I), 0.9))
     out: 0.580361076526939 + 2.24226374800080*I
 n-polylog-0p5-plus-neg-1-times-i-1-over-3:
   epsil:
@@ -1579,10 +1590,10 @@ n-polylog-0p5-plus-neg-1-times-i-1-over-3:
       in: N\left[\text{Li}_{0.5\, -i}\left(\frac{1}{3}\right)\right]
       out: 0.40433\, +0.0779257 i
   sympy:
-    in: N(polylog((0.5 + -1*I), Rational(1, 3)), 30)
+    in: N(polylog((0.5 + (-1)*I), Rational(1, 3)), 30)
     out: 0.404329932237944807577845015681 + 0.0779257245606425737341079708118*I
   sage:
-    in: N(polylog((0.5 + -1*I), (1/3)))
+    in: N(polylog((0.5 + (-1)*I), (1/3)))
     out: 0.404329932237945 + 0.0779257245606426*I
 n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i:
   epsil:
@@ -1600,11 +1611,86 @@ n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i:
       in: N[\text{Li}_{0.5\, -i}(0.4\, +0.3 i)]
       out: 0.246545\, +0.432157 i
   sympy:
-    in: N(polylog((0.5 + -1*I), (0.4 + 0.3*I)), 30)
+    in: N(polylog((0.5 + (-1)*I), (0.4 + 0.3*I)), 30)
     out: 0.246545234792888673380772956989 + 0.432156736424443022048791362977*I
   mpmath:
-    in: (polylog(mpc(0.5, -1), mpc(0.4, 0.3)))
+    in: (polylog(mpc(0.5, (-1)), mpc(0.4, 0.3)))
     out: (0.246545234792888672082102855752 + 0.432156736424443037899160416225j)
   sage:
-    in: N(polylog((0.5 + -1*I), (0.4 + 0.3*I)))
+    in: N(polylog((0.5 + (-1)*I), (0.4 + 0.3*I)))
     out: 0.246545234792889 + 0.432156736424443*I
+li-0-1-a-pole-of-the-rational-form:
+  epsil:
+    in: PolyLog(0, 1)
+    out: ComplexInfinity
+  tex:
+    in: \operatorname{Li}_{0}(1)
+    out: \tilde\infty
+  fullform:
+    in: PolyLog[0, 1]
+  wolfram:
+    in: PolyLog[0, 1]
+  sympy:
+    in: polylog(0, 1)
+    out: -1/2
+    verdict: inconclusive
+    kind: convention
+    note: Same as the mpmath row -- SymPy also takes zeta(0) rather than the rational form's pole.
+  mpmath:
+    in: polylog(0, 1)
+    out: "-0.5"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours treat z=1 as the pole of the rational Li_0(z)=z/(1-z) (ComplexInfinity); mpmath takes zeta(s) by analytic continuation in s at fixed z=1 instead (-1/2 here).
+  sage:
+    in: polylog(0, 1)
+li-neg-1-1-a-pole-of-the-rational-form:
+  epsil:
+    in: PolyLog(-1, 1)
+    out: ComplexInfinity
+  tex:
+    in: \operatorname{Li}_{-1}(1)
+    out: \tilde\infty
+  fullform:
+    in: PolyLog[-1, 1]
+  wolfram:
+    in: PolyLog[-1, 1]
+  sympy:
+    in: polylog((-1), 1)
+    out: -1/12
+    verdict: inconclusive
+    kind: convention
+    note: Same as the mpmath row -- SymPy also takes zeta(-1) rather than the rational form's pole.
+  mpmath:
+    in: polylog((-1), 1)
+    out: "-0.0833333333333333333333333333333"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours treat z=1 as the pole of the rational Li_-1(z)=z/(1-z)^2 (ComplexInfinity); mpmath takes zeta(-1)=-1/12 by analytic continuation in s at fixed z=1 instead.
+  sage:
+    in: polylog((-1), 1)
+li-neg-2-1-a-pole-of-the-rational-form:
+  epsil:
+    in: PolyLog(-2, 1)
+    out: ComplexInfinity
+  tex:
+    in: \operatorname{Li}_{-2}(1)
+    out: \tilde\infty
+  fullform:
+    in: PolyLog[-2, 1]
+  wolfram:
+    in: PolyLog[-2, 1]
+  sympy:
+    in: polylog((-2), 1)
+    out: "0"
+    verdict: inconclusive
+    kind: convention
+    note: Same as the mpmath row -- SymPy also takes zeta(-2) rather than the rational form's pole.
+  mpmath:
+    in: polylog((-2), 1)
+    out: "0.0"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours treat z=1 as the pole of the rational Li_-2(z) (ComplexInfinity); mpmath takes zeta(-2)=0 by analytic continuation in s at fixed z=1 instead.
+  sage:
+    in: polylog((-2), 1)

@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1417, disagree 69, inconclusive 0, error 3
+## wolfram — agree 1440, disagree 69, inconclusive 0, error 3
 
 | example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
 | ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -97,7 +97,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 1120, disagree 24, inconclusive 12, error 27
+## sympy — agree 1122, disagree 24, inconclusive 12, error 27
 
 | example                                                        | kind           | ours                                    | theirs                                                                        |
 | -------------------------------------------------------------- | -------------- | --------------------------------------- | ----------------------------------------------------------------------------- |

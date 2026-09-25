@@ -239,4 +239,4 @@ only-positive-divisors-even-for-negative-n:
   wolfram:
     in: Divisors[-6]
   sage:
-    in: divisors(-6)
+    in: divisors((-6))

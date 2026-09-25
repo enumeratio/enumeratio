@@ -91,6 +91,7 @@ integerexponent-2-pow-10-times-3-pow-4-2:
     in: IntegerExponent[Times[Power[2, 10], Power[3, 4]], 2]
   sympy:
     in: multiplicity(2, ((2**10) * (3**4)))
+    out: "10"
 composite-base-1728-2-6-3-3-so-6-3-divides-it:
   epsil:
     in: IntegerExponent(1_728, 6)
@@ -107,6 +108,7 @@ composite-base-1728-2-6-3-3-so-6-3-divides-it:
     in: IntegerExponent[1728, 6]
   sympy:
     in: multiplicity(6, 1728)
+    out: "3"
 negative-integers:
   epsil:
     in: IntegerExponent(-1_000)
@@ -148,6 +150,10 @@ gaussian-integers-8i-i-cdot-i-3-1-i-6:
     in: IntegerExponent[Complex[0, 8], Complex[1, 1]]
   sympy:
     in: multiplicity((1 + 1*I), (0 + 8*I))
+    out: "ValueError: expecting ints or fractions, got 1 + I and 8*I"
+    verdict: error
+    kind: domain
+    note: SymPy's multiplicity only takes plain integers or fractions; ours supports Gaussian-integer valuation deliberately (see this head's Scope examples).
 the-trailing-zeros-of-100:
   epsil:
     in: IntegerExponent(100!)
@@ -178,6 +184,7 @@ legendre-s-formula-lfloor-100-7-rfloor-lfloor:
     in: IntegerExponent[Factorial[100], 7]
   sympy:
     in: multiplicity(7, factorial(100))
+    out: "16"
 base-1-has-no-well-defined-p-adic-valuation-so:
   epsil:
     in: IntegerExponent(10, 1)
@@ -194,3 +201,7 @@ base-1-has-no-well-defined-p-adic-valuation-so:
     in: IntegerExponent[10, 1]
   sympy:
     in: multiplicity(1, 10)
+    out: "ValueError: factor must be > 1"
+    verdict: error
+    kind: undefined-form
+    note: Both decline at base 1 -- ours stays unevaluated (see the caption), SymPy's multiplicity raises.
