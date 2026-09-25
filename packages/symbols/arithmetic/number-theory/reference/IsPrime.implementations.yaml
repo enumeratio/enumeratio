@@ -149,7 +149,7 @@ the-mersenne-prime-2-31-1:
     in: is_prime((power(n(2), n(31)) + n(-1)))
     out: "true"
   sympy:
-    in: isprime(((2**31) + -1))
+    in: isprime(((2**31) + (-1)))
     out: True
 a-common-choice-of-prime-modulus-for-hashing:
   wolfram:
@@ -220,18 +220,18 @@ threads-element-wise-over-a-list:
     kind: threading
     note: compute-engine's IsPrime threads over (or pools) the list; SymPy's takes scalars.
 7-is-prime-its-associate-7-is-matching-wolfram-s:
-  sympy:
-    in: isprime(-7)
-    out: False
-    verdict: disagree
-    kind: convention
-    note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; SymPy's isprime() only accepts positive primes.
   rust:
     in: is_prime(n(-7))
     out: "panic: a non-negative integer"
     verdict: error
     kind: domain
     note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; the Rust crate requires a non-negative integer and declines.
+  sympy:
+    in: isprime((-7))
+    out: False
+    verdict: disagree
+    kind: convention
+    note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; SymPy's isprime() only accepts positive primes.
 a-gaussian-prime-its-norm-5-is-prime:
   wolfram:
     in: PrimeQ[Complex[2, 1]]
@@ -239,12 +239,6 @@ a-gaussian-prime-its-norm-5-is-prime:
     tex:
       in: \text{PrimeQ}[2+i]
       out: \text{True}
-  sympy:
-    in: isprime((2 + 1*I))
-    out: "ValueError: 2 + I is not an integer"
-    verdict: error
-    kind: domain
-    note: SymPy's isprime takes rational integers only; compute-engine also answers Gaussian primality.
   julia:
     in: is_prime(ZZ(complex(2, 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -260,7 +254,32 @@ a-gaussian-prime-its-norm-5-is-prime:
   sage:
     in: is_prime((2 + 1*I))
     out: True
+  sympy:
+    in: isprime((2 + 1*I))
+    out: "ValueError: 2 + I is not an integer"
+    verdict: error
+    kind: domain
+    note: SymPy's isprime takes rational integers only; compute-engine also answers Gaussian primality.
 a-symbol-stays-unevaluated:
   wolfram:
     in:
     note: "PrimeQ[x] is False: anything not explicitly a prime integer is not prime."
+isprime-5:
+  sympy:
+    in: isprime(5)
+    out: True
+large-integers-10-3000-1-is-divisible-by-10-8-1:
+  sympy:
+    in: isprime(((10**3000) + 1))
+    out: False
+the-fermat-number-f-5-2-32-1-is-composite-641:
+  sympy:
+    in: isprime(((2**32) + 1))
+    out: False
+non-integers-are-not-prime:
+  sympy:
+    in: isprime(Rational(1, 2))
+    out: "ValueError: 1/2 is not an integer"
+    verdict: error
+    kind: domain
+    note: SymPy's isprime refuses a non-integer outright; ours answers False directly (see the caption).

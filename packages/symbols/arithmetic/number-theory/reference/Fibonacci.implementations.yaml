@@ -175,7 +175,7 @@ negative-indices-are-supported-via-f-n-1-n-1-f-n:
     in: fibonacci(-5)
     out: "5"
   sympy:
-    in: fibonacci(-5)
+    in: fibonacci((-5))
     out: "5"
 consecutive-ratios-f-n-1-f-n-converge-to-the:
   wolfram:
@@ -207,11 +207,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
       in: F_{\{1,2,3,4\}}
       out: \{1,1,2,3\}
   sympy:
-    in: fibonacci([1, 2, 3, 4])
-    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Fibonacci is Listable and threads over the list; SymPy's takes scalars only.
+    in: "[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]"
+    out: "[1, 1, 2, 3]"
 they-grow-fast-f-50-already-exceeds-twelve:
   wolfram:
     in: Fibonacci[50]
@@ -234,3 +231,19 @@ they-grow-fast-f-50-already-exceeds-twelve:
   sympy:
     in: fibonacci(50)
     out: "12586269025"
+fibonacci-8:
+  sympy:
+    in: fibonacci(8)
+    out: "21"
+exact-at-any-size-f-100-has-21-digits:
+  sympy:
+    in: fibonacci(100)
+    out: "354224848179261915075"
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
+  sympy:
+    in: fibonacci(1.5)
+    out: "0.920442065259926"
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl:
+  sympy:
+    in: enumeratio_equal(fibonacci(20), (fibonacci(10) * lucas(10)))
+    out: True

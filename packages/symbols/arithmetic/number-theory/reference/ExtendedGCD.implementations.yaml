@@ -61,10 +61,10 @@ confirms-the-coefficients-above-satisfy-2x-3y:
     in: ((n(2) * n(-1)) + (n(3) * n(1)))
     out: "1"
   mpmath:
-    in: ((2 * -1) + (3 * 1))
+    in: ((2 * (-1)) + (3 * 1))
     out: "1"
   sympy:
-    in: ((2 * -1) + (3 * 1))
+    in: ((2 * (-1)) + (3 * 1))
     out: "1"
 any-number-of-arguments-folding-pairwise-6-times:
   wolfram:

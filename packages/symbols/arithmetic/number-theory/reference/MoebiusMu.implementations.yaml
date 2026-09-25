@@ -156,8 +156,16 @@ threads-element-wise-over-a-list-as-wolfram-s:
       in: \mu (\{1,2,3,4\})
       out: \{1,-1,-1,0\}
   sympy:
-    in: mobius([1, 2, 3, 4])
-    out: "AttributeError: 'list' object has no attribute 'is_integer'"
+    in: "[mobius(1), mobius(2), mobius(3), mobius(4)]"
+    out: "[1, -1, -1, 0]"
+gaussian-integers-5-6i-is-a-gaussian-prime-norm:
+  sympy:
+    in: mobius((5 + 6*I))
+    out: "TypeError: n should be an integer"
     verdict: error
-    kind: threading
-    note: compute-engine's MoebiusMu is Listable and threads over the list; SymPy's takes scalars only.
+    kind: domain
+    note: SymPy's mobius only takes a plain integer; ours extends to Gaussian integers deliberately (see this head's Scope examples).
+listable-threads-over-a-list:
+  sympy:
+    in: "[mobius(4), mobius(10), mobius(17), mobius(20)]"
+    out: "[0, 1, -1, 0]"

@@ -85,7 +85,7 @@ signs-are-discarded-before-computing-the-lcm:
     in: lcm(n(-3), n(7))
     out: "21"
   sympy:
-    in: lcm(-3, 7)
+    in: lcm((-3), 7)
     out: "21"
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd:
   wolfram:
@@ -126,12 +126,6 @@ over-the-rationals-the-lcm-of-the-numerators:
     tex:
       in: \text{lcm}(3+i,-1+3 i)
       out: 3+i
-  sympy:
-    in: lcm((3 + 1*I), (-1 + 3*I))
-    out: -1 + 3*I
-    verdict: disagree
-    kind: convention
-    note: Gaussian lcm is defined up to a unit; SymPy picks a different associate.
   julia:
     in: lcm(ZZ(complex(3, 1)), ZZ(complex(-1, 3)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -150,3 +144,31 @@ over-the-rationals-the-lcm-of-the-numerators:
     verdict: inconclusive
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sympy:
+    in: lcm((3 + 1*I), ((-1) + 3*I))
+    out: -1 + 3*I
+    verdict: disagree
+    kind: convention
+    note: Gaussian lcm is defined up to a unit; SymPy picks a different associate.
+gaussian-primes-of-norm-41-and-13-the-lcm-is-the:
+  sympy:
+    in: lcm(((-4) + 5*I), (2 + 3*I))
+    out: -23 - 2*I
+    verdict: disagree
+    kind: convention
+    note: Same as the row above -- Gaussian lcm is defined up to a unit, and SymPy picks a different associate.
+gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
+  sympy:
+    in: lcm((Rational(1, 2) + Rational(3, 5)*I), (Rational(1, 3) + 1*I))
+    out: -13 + 21*I
+    verdict: disagree
+    kind: convention
+    note: Same as the rows above -- Gaussian lcm is defined up to a unit, and SymPy picks a different associate.
+big-integers-the-exact-118-digit-lcm-past-where:
+  sympy:
+    in: lcm(factorial(20), ((10**100) + 3))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
+listable-a-single-list-argument-threads-element:
+  sympy:
+    in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
+    out: "[12, 84, 120]"

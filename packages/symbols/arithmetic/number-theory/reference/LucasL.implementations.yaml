@@ -127,7 +127,7 @@ negative-indices-are-supported-via-l-n-1-n-l-n:
     kind: domain
     note: compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only.
   sympy:
-    in: lucas(-1)
+    in: lucas((-1))
     out: "-1"
 consecutive-ratios-l-n-1-l-n-converge-to-the:
   wolfram:
@@ -153,11 +153,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
       in: L_{\{1,2,3,4\}}
       out: \{1,3,4,7\}
   sympy:
-    in: lucas([1, 2, 3, 4])
-    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's LucasL is Listable and threads over the list; SymPy's takes scalars only.
+    in: "[lucas(1), lucas(2), lucas(3), lucas(4)]"
+    out: "[1, 3, 4, 7]"
 l-30-already-tops-1-8-million-growing-at-the:
   wolfram:
     in: LucasL[30]
@@ -174,3 +171,22 @@ l-30-already-tops-1-8-million-growing-at-the:
   sympy:
     in: lucas(30)
     out: "1860498"
+exact-at-any-size:
+  sympy:
+    in: lucas(100)
+    out: "792070839848372253127"
+an-odd-negative-index-flips-the-sign-l-11-l-11:
+  sympy:
+    in: lucas((-11))
+    out: "-199"
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
+  sympy:
+    in: lucas(2.3333333333333335)
+    out: lucas(2.33333333333333)
+    verdict: inconclusive
+    kind: domain
+    note: SymPy's lucas takes an integer index only and leaves a real one symbolic; ours extends to real nu via the closed form in the caption.
+l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci:
+  sympy:
+    in: ((lucas(10)**2) - (5 * (fibonacci(10)**2)))
+    out: "4"
