@@ -468,6 +468,14 @@ export const elementary: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "To 30 significant digits, every one correctly rounded",
       },
+      {
+        id: "a-huge-24-40-argument-reduces-exactly-mod-2-pi",
+        expr: ["N", ["Sin", ["Power", 24, 40]]],
+        expected: { num: "0.400083152719766047071" },
+        category: "Scope",
+        caption:
+          "$24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\\pi$ before Sin sees it, not rounded to working precision first",
+      },
     ],
     seeAlso: ["Cos", "Tan", "Csc", "Arcsin"],
   },
@@ -768,6 +776,14 @@ export const elementary: readonly ReferenceEntry[] = [
         expected: { num: "0.540302305868139717400936607443" },
         category: "Scope",
         caption: "To 30 significant digits, every one correctly rounded",
+      },
+      {
+        id: "a-huge-10-100-argument-reduces-exactly-mod-2-pi",
+        expr: ["N", ["Cos", ["Power", 10, 100]]],
+        expected: { num: "-0.928081905074655343456" },
+        category: "Scope",
+        caption:
+          "$10^{100}$ has 101 digits; the exact argument is still reduced modulo $2\\pi$ before Cos sees it, not rounded to working precision first",
       },
     ],
     seeAlso: ["Sin", "Tan", "Sec", "Arccos"],
