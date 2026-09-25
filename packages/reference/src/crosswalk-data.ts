@@ -1229,6 +1229,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DirichletL",
   },
   {
+    name: "DiscreteRatio",
+    wolfram: "DiscreteRatio",
+  },
+  {
     name: "Divide",
     wolfram: "Divide",
   },
@@ -1659,6 +1663,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "E",
   },
   {
+    name: "ExponentialGeneratingFunction",
+    wolfram: "ExponentialGeneratingFunction",
+  },
+  {
     name: "ExtendedGCD",
     wolfram: "ExtendedGCD",
   },
@@ -1844,6 +1852,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ed65c8",
     ],
     wolfram: "Select",
+  },
+  {
+    name: "FindSequenceFunction",
+    wolfram: "FindSequenceFunction",
   },
   {
     name: "First",
@@ -2212,6 +2224,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "GatherBy",
     wolfram: "GatherBy",
+  },
+  {
+    name: "GeneratingFunction",
+    wolfram: "GeneratingFunction",
   },
   {
     name: "GeometricMean",
@@ -2965,18 +2981,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Length",
     wolfram: "Length",
-    oracle: [
-      {
-        system: "sympy",
-        call: "len($1)",
-        arity: 1,
-      },
-      {
-        system: "sage",
-        call: "len($1)",
-        arity: 1,
-      },
-    ],
   },
   {
     name: "LerchPhi",
@@ -3248,7 +3252,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     oracle: [
       {
         system: "sympy",
-        call: "Max($*,)",
+        call: "enumeratio_max($*,)",
       },
       {
         system: "sage",
@@ -3279,7 +3283,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     oracle: [
       {
         system: "sympy",
-        call: "Min($*,)",
+        call: "enumeratio_min($*,)",
       },
       {
         system: "sage",

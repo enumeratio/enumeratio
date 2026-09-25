@@ -563,6 +563,10 @@ const NOVEL = [
   "StandardTableauPairs",
   "PlanePartitions",
   "BoxedPlanePartitions",
+  "DiscreteRatio",
+  "GeneratingFunction",
+  "ExponentialGeneratingFunction",
+  "FindSequenceFunction",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {
