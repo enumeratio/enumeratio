@@ -9,7 +9,9 @@
 // true, which only happens from `?review` or the panel's own toggle. Rollup still
 // emits the chunk into `dist/` -- that's fine, it's just never requested by default.
 import DefaultTheme from "vitepress/theme";
+import { useRouter } from "vitepress";
 import { defineAsyncComponent, onMounted } from "vue";
+import { installFragment } from "./fragment.ts";
 import { initReviewMode, reviewModeOn } from "./review/mode.ts";
 
 const { Layout: Base } = DefaultTheme;
@@ -19,7 +21,11 @@ const ReviewPanel = defineAsyncComponent(() => import("./components/ReviewPanel.
 // Runs after hydration, not before -- so the SSR/prerendered markup (which always
 // sees `reviewModeOn === false`, since `initReviewMode` reads `location`) never
 // mismatches the client's first render.
-onMounted(initReviewMode);
+const router = useRouter();
+onMounted(() => {
+  initReviewMode();
+  installFragment(router);
+});
 </script>
 
 <template>
@@ -29,3 +35,13 @@ onMounted(initReviewMode);
     </template>
   </Base>
 </template>
+
+<style>
+/* The element the URL's fragment names (fragment.ts): outlined for as long as it's named. */
+.fragment-target {
+  outline: 1.5px solid var(--vp-c-brand-1);
+  outline-offset: 4px;
+  border-radius: 6px;
+  transition: outline-color 0.2s;
+}
+</style>
