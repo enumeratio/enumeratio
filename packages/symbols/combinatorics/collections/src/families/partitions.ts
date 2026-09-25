@@ -10,7 +10,7 @@
 // KPartPartitions, BoundedPartPartitions and BoxConfinedPartitions are catalogued names for
 // families ALREADY declared under other kernel heads (PartitionsIntoKParts / PartitionsMaxPart /
 // PartitionsInBox, all in ./core.ts) — see catalog-data.ts's `aliasOf` on each. No kernel here.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 import {
   PartitionsMaxPartCount,
   PartitionsMaxPartUnrank,
@@ -26,7 +26,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -139,7 +139,7 @@ function isLargestPart(parts: unknown, n: number, m: number): boolean {
   return sum(parts) === n && IsPartitionMaxPart(parts.slice(1), n - m, m);
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   ints(
     "OddPartitions",
     1,

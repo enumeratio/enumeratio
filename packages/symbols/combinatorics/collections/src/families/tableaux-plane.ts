@@ -14,7 +14,7 @@
 // filling, or a pair of tableaux) are packed as extra "rows" in the same number[][] — e.g. SkewPartitions
 // is `[lam, mu]`, SkewStandardTableaux is `[lam, mu, rowWord]` — except StandardTableauPairs, whose two
 // same-shape tableaux don't share a row count with anything else and so use kind "nested" as `[P, Q]`.
-import type { FamilyKernel } from "./types.ts";
+import type { Cost, Declared, NumberKernel, Param } from "./types.ts";
 import { Factorial, PermutationRank, PermutationUnrank } from "./kernels.ts";
 import { PartitionsP, IntegerPartitionUnrank } from "./kernels-combinatorics.ts";
 import { PartitionsQ, DistinctPartitionUnrank, DistinctPartitionRank } from "./kernels-extra.ts";
@@ -681,6 +681,23 @@ const planePart = indexedFamily<number[][]>((key) => {
   results.sort(cmpRowsShapeThenEntries);
   return results;
 });
+/** A000219 without enumerating: MacMahon's Π (1 − x^k)^(−k), through the Euler-transform
+ *  recurrence n·PL(n) = Σ_{k=1..n} σ₂(k)·PL(n−k), exact in bigint. */
+export function PlanePartitionsCount(n: number): number {
+  if (n < 0) return 0;
+  const sigma2 = (k: number): bigint => {
+    let s = 0n;
+    for (let d = 1; d <= k; d++) if (k % d === 0) s += BigInt(d * d);
+    return s;
+  };
+  const pl: bigint[] = [1n];
+  for (let m = 1; m <= n; m++) {
+    let acc = 0n;
+    for (let k = 1; k <= m; k++) acc += sigma2(k) * (pl[m - k] as bigint);
+    pl.push(acc / BigInt(m));
+  }
+  return Number(pl[n]);
+}
 export function PlanePartitionsUnrank(n: number, rank: number): number[][] {
   return planePart.unrank(String(n), rank);
 }
@@ -789,7 +806,21 @@ export function IsBoxedPlanePartitionOf(e: unknown, a: number, b: number, c: num
   return true;
 }
 
-export const entries: FamilyKernel[] = [
+const axis = (name: string): Param => ({ name, role: "axis", min: 0 });
+/** Every family here enumerates to unrank and rank (indexedFamily); `count` is its own. */
+const enumerated = (count: Cost): Declared["cost"] => ({
+  count,
+  unrank: "enumerative",
+  rank: "enumerative",
+  valid: "polynomial",
+});
+const factorialBig = (n: number): bigint => {
+  let f = 1n;
+  for (let i = 2n; i <= BigInt(n); i++) f *= i;
+  return f;
+};
+
+export const entries: NumberKernel[] = [
   {
     head: "SemistandardTableaux",
     paramCount: 2,
@@ -798,6 +829,12 @@ export const entries: FamilyKernel[] = [
     unrank: ([n, k], r) => SemistandardTableauxUnrank(n, k, r),
     valid: (e, [n, k]) => IsSemistandardTableauOf(e, n, k),
     rank: (e, [n, k]) => SemistandardTableauxRank(e as number[][], n, k),
+    declared: {
+      carrier: "SemistandardTableau",
+      params: [axis("size"), axis("max_entry")],
+      cost: enumerated("polynomial"),
+      work: ([n, k]) => BigInt(SemistandardTableauxCount(n, k)),
+    },
   },
   {
     head: "GelfandTsetlin",
@@ -807,6 +844,12 @@ export const entries: FamilyKernel[] = [
     unrank: ([n, k], r) => GelfandTsetlinUnrank(n, k, r),
     valid: (e, [n, k]) => IsGelfandTsetlinOf(e, n, k),
     rank: (e, [n, k]) => GelfandTsetlinRank(e as number[][], n, k),
+    declared: {
+      carrier: "GelfandTsetlinPattern",
+      params: [axis("n"), axis("k")],
+      cost: enumerated("closed"),
+      work: ([n, k]) => BigInt(GelfandTsetlinCount(n, k)),
+    },
   },
   {
     head: "AlternatingSignMatrices",
@@ -816,6 +859,12 @@ export const entries: FamilyKernel[] = [
     unrank: ([n], r) => AlternatingSignMatrixUnrank(n, r),
     valid: (e, [n]) => IsAlternatingSignMatrixOf(e, n),
     rank: (e, [n]) => AlternatingSignMatrixRank(e as number[][], n),
+    declared: {
+      carrier: "AlternatingSignMatrix",
+      params: [axis("size")],
+      cost: enumerated("closed"),
+      work: ([n]) => BigInt(AlternatingSignMatrixCount(n)),
+    },
   },
   {
     head: "SkewPartitions",
@@ -825,6 +874,12 @@ export const entries: FamilyKernel[] = [
     unrank: ([n], r) => SkewPartitionsUnrank(n, r),
     valid: (e, [n]) => IsSkewPartitionOf(e, n),
     rank: (e, [n]) => SkewPartitionsRank(e as [number[], number[]], n),
+    declared: {
+      carrier: "SkewPartition",
+      params: [axis("size")],
+      cost: enumerated("enumerative"),
+      work: ([n]) => 4n ** BigInt(n),
+    },
   },
   {
     head: "SkewStandardTableaux",
@@ -834,6 +889,12 @@ export const entries: FamilyKernel[] = [
     unrank: ([n], r) => SkewStandardTableauxUnrank(n, r),
     valid: (e, [n]) => IsSkewStandardTableauOf(e, n),
     rank: (e, [n]) => SkewStandardTableauxRank(e as [number[], number[], number[]], n),
+    declared: {
+      carrier: "SkewTableau",
+      params: [axis("size")],
+      cost: enumerated("enumerative"),
+      work: ([n]) => factorialBig(n) * 4n ** BigInt(n),
+    },
   },
   {
     head: "ShiftedStandardTableaux",
@@ -857,10 +918,16 @@ export const entries: FamilyKernel[] = [
     head: "PlanePartitions",
     paramCount: 1,
     kind: "blocks",
-    count: ([n]) => planePart.count(String(n)),
+    count: ([n]) => PlanePartitionsCount(n),
     unrank: ([n], r) => PlanePartitionsUnrank(n, r),
     valid: (e, [n]) => IsPlanePartitionOf(e, n),
     rank: (e, [n]) => PlanePartitionsRank(e as number[][], n),
+    declared: {
+      carrier: "PlanePartition",
+      params: [axis("size")],
+      cost: enumerated("polynomial"),
+      work: ([n]) => BigInt(PlanePartitionsCount(n)),
+    },
   },
   {
     head: "BoxedPlanePartitions",
@@ -870,5 +937,11 @@ export const entries: FamilyKernel[] = [
     unrank: ([a, b, c], r) => BoxedPlanePartitionsUnrank(a, b, c, r),
     valid: (e, [a, b, c]) => IsBoxedPlanePartitionOf(e, a, b, c),
     rank: (e, [a, b, c]) => BoxedPlanePartitionsRank(e as number[][], a, b, c),
+    declared: {
+      carrier: "PlanePartition",
+      params: [axis("a"), axis("b"), axis("c")],
+      cost: enumerated("closed"),
+      work: ([a, b, c]) => BigInt(BoxedPlanePartitionsCount(a, b, c)),
+    },
   },
 ];

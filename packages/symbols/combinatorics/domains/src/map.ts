@@ -45,7 +45,13 @@ export interface CombinatorialMap {
   readonly extra?: readonly unknown[];
   readonly summary: string;
   readonly note?: string;
+  /** What Plausible checks on every element of every family over `from` (laws.ts). Beyond
+   *  these, every map is checked to be TYPED: its result is a `to`. */
+  readonly laws?: readonly Law[];
 }
+
+/** A map's law: f∘f = id, f∘f = f, or g∘f = id for the named map g. */
+export type Law = "involution" | "idempotent" | { readonly inverse: string };
 
 const positions: MathJSON = ["Range", 1, ["Length", "_raw"]];
 const at = (index: MathJSON, of: MathJSON = "_raw"): MathJSON => ["At", of, index];
@@ -287,6 +293,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: forEach(positions, at(["Subtract", ["Add", ["Length", "_raw"], 1], "i"])),
     summary: "The word read backwards.",
+    laws: ["involution"],
   },
   {
     name: "Complement",
@@ -294,6 +301,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: forEach(positions, ["Subtract", ["Add", ["Length", "_raw"], 1], at("i")]),
     summary: "Each entry replaced by n + 1 minus itself.",
+    laws: ["involution"],
   },
   {
     name: "Inverse",
@@ -302,6 +310,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     // The inverse sends i to the POSITION of i, which is what IndexOf reads off directly.
     body: forEach(positions, ["IndexOf", "_raw", "i"]),
     summary: "The inverse permutation: position of each value.",
+    laws: ["involution"],
   },
   {
     name: "DescentSet",
@@ -348,6 +357,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     composedOf: ["Complement", "Reverse"],
     summary: "Reverse, then complement.",
     note: "A thin alias over Compose(Complement, Reverse). The catalog has the name, so we keep it — but the name is not what makes it work, and nothing stops a reader writing the composition directly.",
+    laws: ["involution"],
   },
   {
     name: "InverseAfterComplementAfterReverse",
@@ -363,6 +373,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: forEach(positions, at(["Add", ["Mod", "i", ["Length", "_raw"]], 1])),
     summary: "Rotate the word one place to the left.",
+    laws: [{ inverse: "InverseCyclicShift" }],
   },
   {
     name: "InverseCyclicShift",
@@ -373,6 +384,7 @@ export const MAPS: readonly CombinatorialMap[] = [
       at(["Add", ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]], 1]),
     ),
     summary: "Rotate the word one place to the right.",
+    laws: [{ inverse: "CyclicShift" }],
   },
   {
     name: "PeakSet",
@@ -466,6 +478,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     body: insertionReadingWord,
     summary: "The row reading word of σ's RSK insertion tableau — the canonical word of its Knuth (plactic) class.",
     note: "Two permutations are Knuth-equivalent exactly when they share an insertion tableau (Schensted), so reading that tableau back out — bottom row to top, left to right — picks one fixed representative per class. Idempotent: the representative's own insertion tableau is the same P, so applying this again changes nothing.",
+    laws: ["idempotent"],
   },
   {
     name: "KrewerasComplement",
@@ -491,6 +504,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     body: conjugacyClassRepresentative,
     summary: "The canonical permutation with the same cycle type.",
     note: "FindStat does not fix an ordering for this map. Convention used here: cycles in decreasing length, filled with consecutive integers, each cycle (a a+1 … a+len-1) written as the one-line word a+1, …, a+len-1, a.",
+    laws: ["idempotent"],
   },
   {
     name: "Foata",
