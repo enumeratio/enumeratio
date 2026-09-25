@@ -1,0 +1,17 @@
+name: HararyGraph
+domain: Collections
+signature: HararyGraph(k, n)
+summary: The minimum-edge k-connected graph on n vertices (Harary, 1962).
+signatures:
+  - call: HararyGraph(k, n)
+    description: EdgeCount = ceil(k n / 2), minimum vertex degree >= k.
+    library: enumeratio-collections
+details:
+  - "k even: the circulant CirculantGraph(n, {1, …, k/2}). k odd, n even: that circulant plus the n/2 diametrically-opposite edges. k odd, n odd: that circulant plus a documented fix-up pairing (see graphs-2.ts) -- the LEAST certain of the three cases here, kernel-unverified; cross-checked instead against the two structural invariants every Harary graph must have (edge count and minimum degree)."
+examples:
+  - id: harary-4-7-edge-count-and-min-degree
+    expr: [EdgeCount, [HararyGraph, 4, 7]]
+    expected: 14
+seeAlso:
+  - CirculantGraph
+  - IsConnectedGraph

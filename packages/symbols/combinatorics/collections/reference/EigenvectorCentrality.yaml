@@ -1,0 +1,19 @@
+name: EigenvectorCentrality
+domain: Collections
+signature: EigenvectorCentrality(g)
+summary: How well-connected each vertex of a [[Graph]] is to OTHER well-connected vertices.
+signatures:
+  - call: EigenvectorCentrality(g)
+    description: the dominant (Perron) eigenvector of g's undirected adjacency matrix, normalized so the largest entry is 1, in VertexList(g) order.
+    library: enumeratio-collections
+details:
+  - Edge direction is ignored -- built from the underlying (undirected) adjacency matrix, same convention as IsConnectedGraph.
+  - Normalized so the LARGEST entry is 1 (not unit Euclidean norm, and not summing to the vertex count) -- a documented choice, not a confirmed match to Wolfram's own normalization. Kernel-unverified.
+  - Computed by power iteration on (adjacency + identity), not the bare adjacency matrix -- a bipartite graph's spectrum is symmetric about 0, and the +1 shift is what keeps the iteration from oscillating between the two equal-magnitude extreme eigenvalues.
+examples:
+  - id: path-3-middle-vertex-is-most-central
+    expr: [EigenvectorCentrality, [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]]]]
+    expected: [List, 0.7071067811865476, 1, 0.7071067811865476]
+seeAlso:
+  - ClosenessCentrality
+  - VertexDegree

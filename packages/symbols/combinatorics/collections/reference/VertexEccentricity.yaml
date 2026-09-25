@@ -1,0 +1,25 @@
+name: VertexEccentricity
+domain: Collections
+signature: VertexEccentricity(g, v)
+summary: The greatest distance from a vertex to any other vertex of a [[Graph]].
+signatures:
+  - call: VertexEccentricity(g)
+    description: the eccentricity of every vertex, in VertexList(g) order.
+    library: enumeratio-collections
+  - call: VertexEccentricity(g, v)
+    description: just v's eccentricity.
+    library: enumeratio-collections
+details:
+  - The moment any OTHER vertex is unreachable from v, the eccentricity is PositiveInfinity -- not just the max over whatever happens to be reachable.
+  - Distances respect edge direction, same as [[GraphDistance]].
+examples:
+  - id: petersen-is-2-eccentric-everywhere
+    expr: [VertexEccentricity, [PetersenGraph], 1]
+    expected: 2
+  - id: disconnected-vertex-is-infinite
+    expr: [VertexEccentricity, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]], 1]
+    expected: PositiveInfinity
+seeAlso:
+  - GraphRadius
+  - GraphDiameter
+  - GraphCenter
