@@ -1,19 +1,29 @@
 // The Plausible contract (design/plausible.md §6): every family declares what it is — carrier,
 // params, the cost of each operation, and a work bound wherever it enumerates — so the sampler
 // derives everything from the declaration and keeps no lists of its own. Families not yet
-// declared sit on a ratchet (plausible-undeclared.json) that only ever shrinks: declaring a
-// family means deleting its line there.
+// declared sit on a ratchet (plausible-undeclared.json) that only ever shrinks: after declaring,
+// run this test with UPDATE_PLAUSIBLE_RATCHET=1.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { expect, test } from "vite-plus/test";
 import { needsBigint, sampleable } from "../scripts/sampleable.ts";
 import { allEntries } from "../src/families/index.ts";
 import type { FamilyKernel } from "../src/families/types.ts";
 
-const undeclared = new Set<string>(
-  JSON.parse(readFileSync(new URL("./plausible-undeclared.json", import.meta.url), "utf8")) as string[],
-);
+const RATCHET = new URL("./plausible-undeclared.json", import.meta.url);
+const listed = JSON.parse(readFileSync(RATCHET, "utf8")) as string[];
 const heads = new Set(allEntries.map((f) => f.head));
+
+// UPDATE_PLAUSIBLE_RATCHET=1 rewrites the ratchet after families declare (or when two
+// branches' removals meet in a merge). It only ever removes: a listed family that now
+// declares, or no longer exists. A new undeclared family still fails below.
+if (process.env["UPDATE_PLAUSIBLE_RATCHET"]) {
+  const still = listed.filter(
+    (head) => heads.has(head) && allEntries.find((f) => f.head === head)?.declared === undefined,
+  );
+  writeFileSync(RATCHET, `${JSON.stringify(still.sort(), null, 2)}\n`);
+}
+const undeclared = new Set<string>(JSON.parse(readFileSync(RATCHET, "utf8")) as string[]);
 
 test("the ratchet names exactly the undeclared families", () => {
   const stale = [...undeclared].filter((head) => !heads.has(head));
