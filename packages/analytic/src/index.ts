@@ -55,6 +55,7 @@ export { digammaFunctionZero } from "./digamma-zero.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 export { hypergeometricUStar } from "./hypergeometric-ustar.ts";
 export { declareHypergeometric } from "./hypergeometric.ts";
+export { declareKeiperLi } from "./keiper-li.ts";
 export { evaluateLegendreP } from "./legendre.ts";
 export { lerchPhi, lerchPhiReal } from "./lerch.ts";
 export { declareModular } from "./modular.ts";

@@ -2333,6 +2333,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "I",
   },
   {
+    name: "IncompleteEllipticPi",
+    fungrimEntries: ["255d81", "5f84d9", "8f4e31"],
+    wolfram: "EllipticPi",
+  },
+  {
     name: "IntegerDigits",
     wolfram: "IntegerDigits",
   },
@@ -2660,6 +2665,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Join",
     wolfram: "Join",
+  },
+  {
+    name: "KeiperLiLambda",
+    fungrimEntries: ["081205", "d8d820", "fcab61"],
   },
   {
     name: "KroneckerSymbol",

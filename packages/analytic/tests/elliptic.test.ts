@@ -5,10 +5,12 @@ import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // IncompleteEllipticF, IncompleteEllipticE — Fungrim's names for compute-engine's native
 // two-argument EllipticF(φ, m) / EllipticE(φ, m) — plus the in-place precision fix for
-// EllipticE(m) at complex modulus (design/upstreaming.md §8). Numeric evaluation is held
-// to the oracle values in elliptic.golden.json, gathered from mpmath (ellipf/ellipe) and
-// a Wolfram kernel by scripts/collect-elliptic-goldens.ts (neither is needed to run this
-// file).
+// EllipticE(m) at complex modulus (design/upstreaming.md §8). IncompleteEllipticPi(n, φ, m)
+// is a from-scratch Carlson R_F/R_J evaluator (native EllipticPi's own 3-argument
+// incomplete form NaNs at some complex φ — see the direct test below). Numeric evaluation
+// is held to the oracle values in elliptic.golden.json, gathered from mpmath
+// (ellipf/ellipe/ellippi) and a Wolfram kernel by scripts/collect-elliptic-goldens.ts
+// (neither is needed to run this file).
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -56,7 +58,7 @@ for (const [head, cases] of byHead) {
 test("the golden file covers every head", () => {
   const heads = new Set(goldens.map((g) => g.head));
   expect([...heads].sort()).toEqual(
-    ["EllipticE", "IncompleteEllipticE", "IncompleteEllipticF"].sort(),
+    ["EllipticE", "IncompleteEllipticE", "IncompleteEllipticF", "IncompleteEllipticPi"].sort(),
   );
 });
 
@@ -125,4 +127,38 @@ test("EllipticE(m) at real m is untouched by the patch — matches native Ellipt
 
 test("EllipticE(m) stays symbolic under plain evaluate at a symbolic or exact argument", () => {
   expect(ce.box(["EllipticE", "x"]).evaluate().json).toEqual(["EllipticE", "x"]);
+});
+
+test("IncompleteEllipticPi stays symbolic under plain evaluate; a float argument evaluates numerically", () => {
+  expect(ce.box(["IncompleteEllipticPi", "n", "phi", "m"]).evaluate().json).toEqual([
+    "IncompleteEllipticPi",
+    "n",
+    "phi",
+    "m",
+  ]);
+  expect(ce.box(["IncompleteEllipticPi", 0.5, 0.4, 0.3]).evaluate().re).toBeCloseTo(
+    0.4141517368244767,
+    12,
+  );
+});
+
+test("IncompleteEllipticPi computes complex φ directly via Carlson, where native EllipticPi returns NaN", () => {
+  // n = 0.2, φ = 1.2 + 0.5i, m = 0.3 is well inside Re(φ) ∈ [-π/2, π/2] (Fungrim 8f4e31's
+  // own validity region), yet compute-engine's native three-argument EllipticPi returns
+  // NaN there — a native bug, not a domain limit. Pinned against mpmath's ellippi.
+  const native = ce.box(["EllipticPi", 0.2, ["Complex", 1.2, 0.5], 0.3]).N();
+  expect(Number.isNaN(native.re)).toBe(true);
+  const v = ce.box(["IncompleteEllipticPi", 0.2, ["Complex", 1.2, 0.5], 0.3]).N();
+  expect(v.re).toBeCloseTo(1.321415376117118, 9);
+  expect(v.im).toBeCloseTo(0.7186657188751805, 9);
+});
+
+test("IncompleteEllipticPi quasi-periodicity: Π(n; φ+2π, m) = 4·Π(n,m) + Π(n; φ, m)", () => {
+  const n = 0.4;
+  const m = 0.35;
+  const phi = 0.6;
+  const shifted = ce.box(["IncompleteEllipticPi", n, phi + 2 * Math.PI, m]).N();
+  const base = ce.box(["IncompleteEllipticPi", n, phi, m]).N();
+  const complete = ce.box(["EllipticPi", n, m]).N();
+  expect(shifted.re).toBeCloseTo(4 * complete.re + base.re, 9);
 });

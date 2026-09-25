@@ -193,9 +193,12 @@ export const HEADS: Record<string, string> = {
   // Fungrim's name for LegendreP — see @enumeratio/analytic's legendre.ts.
   LegendrePolynomial: "LegendreP",
   // Fungrim's names for the incomplete Legendre elliptic integrals, same (φ, m) order —
-  // see @enumeratio/analytic's elliptic.ts.
+  // see @enumeratio/analytic's elliptic.ts. IncompleteEllipticPi's (n, φ, m) order also
+  // matches Wolfram's own three-argument EllipticPi[n, φ, m] directly, so this is a plain
+  // rename too, not a SPECIAL reordering.
   IncompleteEllipticF: "EllipticF",
   IncompleteEllipticE: "EllipticE",
+  IncompleteEllipticPi: "EllipticPi",
   // collections
   At: "Part",
   First: "First",
