@@ -48,7 +48,7 @@ const isWeaklyDecreasing = (parts: readonly number[]): boolean =>
 // gated by `inSet`; unlike distinctParts, reusing `cap` (not `cap-1`) after placing it allows
 // repeated parts. Order = largest possible next part first, which is exactly IntegerPartitions'
 // weakly-decreasing, largest-part-first order restricted to S.
-function partsInSet(inSet: (s: number) => boolean) {
+export function partsInSet(inSet: (s: number) => boolean) {
   const countMemo = new Map<string, number>();
   function count(m: number, cap: number): number {
     if (m === 0) return 1;

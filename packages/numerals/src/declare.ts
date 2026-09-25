@@ -16,7 +16,10 @@ import {
 import { gcd } from "@enumeratio/residues";
 import { declareAdic } from "./adic-declare.ts";
 import {
+  bigIntToBaseString,
   digitLength,
+  digitsOfBigInt,
+  integerOfRomanNumeral,
   integerReverse,
   numberExpand,
   type RealDigit,
@@ -324,7 +327,7 @@ export function declareNumerals(ce: ComputeEngine): void {
 
   // After the redeclarations above, which would drop the flag. Thread over a list of n, as Wolfram's do: IntegerDigits([6, 7], 2) is [[1, 1, 0], [1, 1, 1]].
   // A system in the base slot is a head, never a bare list, so it is not threaded over.
-  threadOverLists(ce, ["IntegerDigits", "DigitCount"]);
+  threadOverLists(ce, ["IntegerDigits", "DigitCount", "DigitSum"]);
 
   // Wolfram's FromDigits["1923"] and FromDigits["ff", 16]: the digits as a string, 0-9 then
   // a-z. Natively the digits have to be a list.
@@ -343,24 +346,121 @@ export function declareNumerals(ce: ComputeEngine): void {
     { min: 1, max: 2 },
   );
 
-  // Wolfram's IntegerString[n, b, len]: the digits of n padded with leading zeros, or cut down
-  // to their last `len`. Wolfram drops the sign and compute-engine keeps it, so a negative n
-  // stays unevaluated rather than take either side.
-  widenSignature(ce, "IntegerString", "(integer, integer?, integer?) -> string");
+  // FromDigits(digits, x): a symbolic base gives the polynomial digits spell in x --
+  // Horner's form, built and simplified via Add/Multiply/Power rather than hand-reduced.
+  wrapOperator(
+    ce,
+    ["FromDigits", ["List", 1, 2, 3], "x"],
+    (ops) =>
+      integerList(ops[0]) !== undefined &&
+      symbolNameOf(ops[1]) !== undefined &&
+      // Not a numeral-system name (FactorialNumerals, ZeckendorfNumerals, ...) or one of
+      // its old-spelling aliases -- those are handled by `extend`'s `systemOf` lookup.
+      systemOf(ops[1]) === undefined,
+    () => (ops) => {
+      const digits = integerList(ops[0])!;
+      const n = digits.length;
+      const terms = digits.map((d, i) =>
+        ce.function("Multiply", [
+          ce.number(d),
+          ce.function("Power", [ops[1], ce.number(n - 1 - i)]),
+        ]),
+      );
+      return ce.function("Add", terms).evaluate();
+    },
+    2,
+  );
+
+  // FromDigits(digits, base): a negative base is just the same Horner reduction --
+  // acc*base+d -- with base < 0; only the native type gate rejected it.
+  wrapOperator(
+    ce,
+    ["FromDigits", ["List", 1, 1, 0], -2],
+    (ops) => {
+      const base = bigIntegerAt(ops[1]);
+      return integerList(ops[0]) !== undefined && base !== undefined && base <= -2n;
+    },
+    () => (ops) => {
+      const digits = integerList(ops[0])!;
+      const base = bigIntegerAt(ops[1])!;
+      const value = digits.reduce((acc, d) => acc * base + BigInt(d), 0n);
+      return ce.number(value);
+    },
+    2,
+  );
+
+  // Wolfram's "Roman" pseudo-base, the reverse of RomanNumeral: FromDigits("XVII", "Roman").
+  wrapOperator(
+    ce,
+    ["FromDigits", "'XVII'", "'Roman'"],
+    (ops) => stringAt(ops[1])?.toLowerCase() === "roman",
+    () => (ops) => {
+      const text = stringAt(ops[0]);
+      const value = text === undefined ? undefined : integerOfRomanNumeral(text);
+      return value === undefined ? undefined : ce.number(value);
+    },
+    2,
+  );
+
+  // Wolfram's IntegerString[n, b] and IntegerString[n, b, len]: bigint arithmetic throughout,
+  // since the native handler goes through a double and drifts past about 15-16 significant
+  // digits (IntegerString(50!, 16) is wrong after ~13 hex digits).
+  widenSignature(
+    ce,
+    "IntegerString",
+    "(integer, any?, integer?) -> string",
+    (op) => bigIntegerAt(op) !== undefined,
+  );
   wrapOperator(
     ce,
     ["IntegerString", 5, 2],
+    (ops) =>
+      bigIntegerAt(ops[0]) !== undefined &&
+      (ops[1] === undefined || bigIntegerAt(ops[1]) !== undefined),
+    () => (ops) => {
+      const n = bigIntegerAt(ops[0])!;
+      const base = ops[1] === undefined ? 10n : bigIntegerAt(ops[1])!;
+      if (base < 2n || base > 36n) return undefined;
+      return ce.string(bigIntToBaseString(n, base));
+    },
+    { min: 1, max: 2 },
+  );
+  wrapOperator(
+    ce,
+    ["IntegerString", 5, 2, 4],
     () => true,
-    (native) => (ops, options) => {
+    () => (ops) => {
       const width = integerAt(ops[2]);
       const n = bigIntegerAt(ops[0]);
-      if (width === undefined || width < 0 || n === undefined || n < 0n) return undefined;
-      const digits = stringAt(native?.(ops.slice(0, 2), options));
-      if (digits === undefined) return undefined;
+      const base = ops[1] === undefined ? 10n : bigIntegerAt(ops[1]);
+      if (
+        width === undefined ||
+        width < 0 ||
+        n === undefined ||
+        n < 0n ||
+        base === undefined ||
+        base < 2n ||
+        base > 36n
+      ) {
+        return undefined;
+      }
+      const digits = bigIntToBaseString(n, base);
       const padded = digits.padStart(width, "0");
       return ce.string(padded.slice(padded.length - width));
     },
     3,
+  );
+  // Wolfram's "Roman" pseudo-base, the forward direction: IntegerString(1988, "Roman").
+  wrapOperator(
+    ce,
+    ["IntegerString", 1988, "'Roman'"],
+    (ops) => stringAt(ops[1])?.toLowerCase() === "roman",
+    () => (ops) => {
+      const n = integerAt(ops[0]);
+      const roman = n === undefined ? undefined : romanNumeralOf(n);
+      return roman === undefined ? undefined : ce.string(roman);
+    },
+    2,
   );
 
   // Wolfram's DigitSum[n, b, k]: the sum of the first k base-b digits (most significant
@@ -383,6 +483,42 @@ export function declareNumerals(ce: ComputeEngine): void {
       return ce.number(slice.reduce((sum, d) => sum + d, 0n));
     },
     3,
+  );
+
+  // Wolfram's DigitCount[n, b, digit, len]: a 4th argument widens the digit list to `len`
+  // places (leading zeros included) before tallying, so padding zeros count too.
+  widenSignature(ce, "DigitCount", "(integer, integer?, any?, integer?) -> any");
+  wrapOperator(
+    ce,
+    ["DigitCount", 5, 10, 0, 9],
+    () => true,
+    () => (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      const base = ops[1] === undefined ? 10n : bigIntegerAt(ops[1]);
+      const width = integerAt(ops[3]);
+      if (n === undefined || base === undefined || base < 2n || width === undefined || width < 0) {
+        return undefined;
+      }
+      const digits = digitsOfBigInt(n, base);
+      // Shorter than width: pad with leading zeros. Longer: keep only the `width`
+      // least-significant digits, as DigitSum's negative-k slice already does.
+      const padded =
+        width <= digits.length
+          ? digits.slice(digits.length - width)
+          : [...Array.from({ length: width - digits.length }, () => 0n), ...digits];
+      const countOf = (d: bigint) => padded.filter((x) => x === d).length;
+      const single = bigIntegerAt(ops[2]);
+      if (single !== undefined) return ce.number(countOf(single));
+      const list = integerList(ops[2]);
+      if (list !== undefined) {
+        return ce.function(
+          "List",
+          list.map((d) => ce.number(countOf(BigInt(d)))),
+        );
+      }
+      return undefined;
+    },
+    4,
   );
 
   /** The integers from `lo` to `hi` as a set, either end possibly unbounded. */

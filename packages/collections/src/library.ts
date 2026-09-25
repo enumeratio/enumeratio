@@ -1,9 +1,11 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
 import { declareListFunctional } from "./list-functional.ts";
 import { declareListHeads } from "./list-heads.ts";
 import { declareListOps } from "./list-ops.ts";
 import { declareListOpsWolfram } from "./list-ops-wolfram.ts";
+import { declareRoundingHeads } from "./rounding-heads.ts";
 import { declareStats, type StatsOptions } from "./stats.ts";
 
 /**
@@ -18,9 +20,11 @@ import { declareStats, type StatsOptions } from "./stats.ts";
  */
 export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
   declareFamilies(ce);
+  declareCallForms(ce);
   declareListOps(ce);
   declareListHeads(ce);
   declareListFunctional(ce);
   declareListOpsWolfram(ce);
+  declareRoundingHeads(ce);
   declareStats(ce, options);
 }

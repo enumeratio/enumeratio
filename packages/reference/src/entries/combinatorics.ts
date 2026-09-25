@@ -18,6 +18,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "Pascal's rule builds each row from the last: $\\binom{n}{k} = \\binom{n-1}{k-1} + \\binom{n-1}{k}$.",
       "Row sums give $\\sum_{k=0}^{n} \\binom{n}{k} = 2^n$.",
       "compute-engine evaluates only integer n and k: k outside $[0, n]$ gives 0 for nonnegative n, while a negative n switches to the generalized falling-factorial formula rather than the Gamma form.",
+      "A Gaussian or otherwise complex n and/or k also evaluates, through the same Gamma-function identity: exact for an integer k, numeric otherwise.",
     ],
     examples: [
       { expr: ["Binomial", 5, 2], expected: 10 },
@@ -102,9 +103,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Binomial", "n", ["Subtract", "n", 1]],
         expected: "n",
-        aspirational: true,
-        caption:
-          "$\\binom{n}{n-1}$ should reduce to $n$ for symbolic n; currently left unevaluated",
+        caption: "$\\binom{n}{n-1} = n$ for symbolic n",
       },
       {
         expr: ["Binomial", 8.5, -4.2],
@@ -142,18 +141,14 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Binomial", ["Complex", 1, 1], 5],
         expected: ["Complex", ["Rational", -1, 12], ["Rational", -1, 12]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A Gaussian-integer n: $\\binom{1+i}{5} = -\\frac{1+i}{12}$; complex arguments are left unevaluated",
+        caption: "A Gaussian-integer n: $\\binom{1+i}{5} = -\\frac{1+i}{12}$, exact",
       },
       {
         expr: ["Binomial", ["Complex", 2, 1], ["Complex", 7, -3]],
         expected: ["Complex", -75.46834738222304, 106.81526597079055],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Complex n and k should evaluate through the Gamma function; currently left unevaluated",
+        caption: "Complex n and k evaluate through the Gamma function",
       },
       {
         expr: ["Binomial", ["Rational", 1, 2], ["Interval", 0.5, 0.6]],
@@ -294,18 +289,15 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Multinomial", 2, 0.2, 5],
         expected: 34.31780351999995,
-        aspirational: true,
         category: "Scope",
         caption:
-          "Real arguments should evaluate via the Gamma function, $\\frac{\\Gamma(8.2)}{2!\\,\\Gamma(1.2)\\,5!}$; compute-engine requires integers",
+          "Real arguments evaluate via the Gamma function, $\\frac{\\Gamma(8.2)}{2!\\,\\Gamma(1.2)\\,5!}$",
       },
       {
         expr: ["Multinomial", ["Complex", 1, 1], 0.2, 4],
         expected: ["Complex", 2.894060302449624, 9.104625875691285],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Complex arguments should evaluate via the Gamma function; compute-engine requires integers",
+        caption: "Complex arguments evaluate via the Gamma function too",
       },
       {
         expr: ["Multinomial", ["Around", 2, 0.01], 2],
@@ -565,10 +557,9 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Factorial2", 2.5],
         expected: 2.407069456116044,
-        aspirational: true,
         category: "Scope",
         caption:
-          "Real arguments should use the analytic continuation $2^{(1+2x-\\cos\\pi x)/4}\\,\\pi^{(\\cos\\pi x-1)/4}\\,\\Gamma(1+\\frac{x}{2})$; currently left unevaluated",
+          "Real arguments use the analytic continuation $2^{(1+2x-\\cos\\pi x)/4}\\,\\pi^{(\\cos\\pi x-1)/4}\\,\\Gamma(1+\\frac{x}{2})$",
       },
     ],
     seeAlso: ["Factorial"],
@@ -672,18 +663,14 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["CatalanNumber", 2.3],
         expected: 2.5903521540193233,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Real arguments should evaluate as $\\frac{\\Gamma(2n+1)}{\\Gamma(n+1)\\,\\Gamma(n+2)}$; compute-engine requires an integer",
+        caption: "Real arguments evaluate as $\\frac{\\Gamma(2n+1)}{\\Gamma(n+1)\\,\\Gamma(n+2)}$",
       },
       {
         expr: ["CatalanNumber", ["Complex", 1.2, 1]],
         expected: ["Complex", 0.7307286242072839, 0.5698464069693425],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Complex arguments should evaluate through the Gamma form; compute-engine requires an integer",
+        caption: "Complex arguments evaluate through the same Gamma form",
       },
       {
         expr: ["CatalanNumber", ["Rational", 1, 2]],
@@ -815,9 +802,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Pochhammer", ["Complex", 2, 5], ["Complex", 0, 8]],
         expected: ["Complex", 2.1386822918680963e-6, -1.4218737711709974e-5],
-        aspirational: true,
         category: "Scope",
-        caption: "Complex base and order should evaluate through Gamma; currently left unevaluated",
+        caption: "Complex base and order evaluate through Gamma",
       },
       {
         expr: ["Pochhammer", "a", 0],
@@ -906,18 +892,15 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Subfactorial", 4.5],
         expected: ["Complex", 19.255831840742534, 0.15717912296461525],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Real arguments should evaluate as $\\frac{\\Gamma(n+1, -1)}{e}$ (complex off the integers); compute-engine requires an integer",
+          "Real arguments evaluate as $\\frac{\\Gamma(n+1, -1)}{e}$ (complex off the integers)",
       },
       {
         expr: ["Subfactorial", ["Complex", 1.6, 1]],
         expected: ["Complex", 0.2968304581777118, 0.2842085472519699],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Complex arguments should evaluate as $\\frac{\\Gamma(n+1, -1)}{e}$; compute-engine requires an integer",
+        caption: "Complex arguments evaluate as $\\frac{\\Gamma(n+1, -1)}{e}$ too",
       },
       {
         expr: ["Subfactorial", ["List", ["List", 2, 0], ["List", 0, 2]]],
@@ -1044,9 +1027,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["StirlingS1", 5, 6],
         expected: 0,
-        aspirational: true,
         category: "Possible issues",
-        caption: "$k > n$ should give 0; currently left unevaluated",
+        caption: "$k > n$ is 0",
       },
     ],
     seeAlso: ["Binomial", "Stirling"],
@@ -1106,9 +1088,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Stirling", ["List", 2, 4, 6], 2],
         expected: ["List", 1, 7, 31],
-        aspirational: true,
         category: "Scope",
-        caption: "Should thread over a list first argument; currently a type error",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["Equal", ["Stirling", 10, 2], ["Subtract", ["Power", 2, 9], 1]],
@@ -1152,10 +1133,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
           ["Tuple", "k", 0, 4],
         ],
         expected: 0,
-        aspirational: true,
         category: "Properties",
-        caption:
-          "Orthogonality with [[StirlingS1]]: $\\sum_k s(n, k)\\,S(k, m) = \\delta_{nm}$; stuck on $S(1, 2)$ staying unevaluated",
+        caption: "Orthogonality with [[StirlingS1]]: $\\sum_k s(n, k)\\,S(k, m) = \\delta_{nm}$",
       },
       {
         expr: ["Stirling", 10, 3],
@@ -1172,9 +1151,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Stirling", 3, 5],
         expected: 0,
-        aspirational: true,
         category: "Possible issues",
-        caption: "$k > n$ should give 0; currently left unevaluated",
+        caption: "$k > n$ is 0",
       },
     ],
     seeAlso: ["StirlingS1", "BellNumber", "SetPartitions"],
@@ -1189,6 +1167,12 @@ export const combinatorics: readonly ReferenceEntry[] = [
         call: "BellNumber(n)",
         description: "the nth Bell number $B_n$, the number of partitions of an n-element set.",
       },
+      {
+        call: "BellNumber(n, x)",
+        description:
+          "the Bell (Touchard) polynomial $B_n(x) = \\sum_k S(n,k)\\,x^k$, exact for a nonnegative integer n.",
+        library: "enumeratio-number-theory",
+      },
     ],
     details: [
       "Recurrence $B_{n+1} = \\sum_{k=0}^{n} \\binom{n}{k}\\, B_k$, built from [[Binomial]] and the lower Bell numbers.",
@@ -1196,6 +1180,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "Equals the sum of Stirling numbers of the second kind over all block counts, $B_n = \\sum_{k=0}^{n} S(n, k)$.",
       "Also arise as the nth moment of a Poisson distribution with mean 1.",
       "compute-engine requires a nonnegative integer argument; a negative n is left unevaluated.",
+      "The two-argument form $B_n(x)$ is the Bell (Touchard) polynomial; $B_n(1) = B_n$.",
     ],
     examples: [
       { expr: ["BellNumber", 0], expected: 1 },
@@ -1255,23 +1240,19 @@ export const combinatorics: readonly ReferenceEntry[] = [
           ["Multiply", 15, ["Power", "x", 2]],
           "x",
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "The two-argument form should give the Bell (Touchard) polynomial $\\sum_k S(n, k)\\,x^k$; currently an unexpected-argument error",
+          "The two-argument form gives the Bell (Touchard) polynomial $\\sum_k S(n, k)\\,x^k$",
       },
       {
         expr: ["BellNumber", 20, 0.5],
         expected: 270190131940.15192,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "The Bell polynomial at a real point, $B_{20}(0.5)$; the two-argument form is not yet supported",
+        caption: "The Bell polynomial at a real point, $B_{20}(0.5)$",
       },
       {
         expr: ["BellNumber", 5, 1],
         expected: 52,
-        aspirational: true,
         category: "Properties",
         caption: "The Bell polynomial at 1 is the Bell number: $B_n(1) = B_n$",
       },

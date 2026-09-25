@@ -103,7 +103,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Stirling",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "StirlingS2",
     elsewhere: [],
@@ -572,7 +572,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Chop",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Chop",
     elsewhere: ["wolfram", "mpmath"],
