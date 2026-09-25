@@ -32,7 +32,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::gcd(12_i64, 18_i64)",
+          "input": "gcd(n(12), n(18))",
           "output": "6",
           "verdict": "agree"
         }
@@ -64,7 +64,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::gcd(24_i64, 36_i64)",
+          "input": "gcd(n(24), n(36))",
           "output": "12",
           "verdict": "agree"
         }
@@ -117,7 +117,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::gcd(0_i64, 5_i64)",
+          "input": "gcd(n(0), n(5))",
           "output": "5",
           "verdict": "agree"
         }
@@ -166,11 +166,11 @@
           "note": "compute-engine's GCD pools the elements of list arguments; Mathlib's gcd takes scalars only."
         },
         "rust": {
-          "input": "num_integer::gcd(vec![2_i64, 4_i64], vec![6_i64, 8_i64])",
-          "output": "compile: the trait bound `Vec<i64>: Integer` is not satisfied: the trait `Integer` is not implement",
+          "input": "gcd(list(vec![n(2), n(4)]), list(vec![n(6), n(8)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"GCD\",12,18],[\"GCD\",18,12]]": {
@@ -200,7 +200,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((num_integer::gcd(12_i64, 18_i64)) == (num_integer::gcd(18_i64, 12_i64)))",
+          "input": "equal(gcd(n(12), n(18)), gcd(n(18), n(12)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -232,7 +232,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(((num_integer::gcd(12_i64, 18_i64) * num_integer::lcm(12_i64, 18_i64))) == ((12_i64 * 18_i64)))",
+          "input": "equal((gcd(n(12), n(18)) * lcm(n(12), n(18))), (n(12) * n(18)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -273,7 +273,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::lcm(4_i64, 6_i64)",
+          "input": "lcm(n(4), n(6))",
           "output": "12",
           "verdict": "agree"
         }
@@ -319,7 +319,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::lcm(0_i64, 5_i64)",
+          "input": "lcm(n(0), n(5))",
           "output": "0",
           "verdict": "agree"
         }
@@ -351,7 +351,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::lcm(-3_i64, 7_i64)",
+          "input": "lcm(n(-3), n(7))",
           "output": "21",
           "verdict": "agree"
         }
@@ -383,7 +383,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(((num_integer::gcd(27_i64, 81_i64) * num_integer::lcm(27_i64, 81_i64))) == ((27_i64 * 81_i64)))",
+          "input": "equal((gcd(n(27), n(81)) * lcm(n(27), n(81))), (n(27) * n(81)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -652,7 +652,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::StreamingSieve::prime_pi(to_usize(1_i64))",
+          "input": "prime_pi(n(1))",
           "output": "0",
           "verdict": "agree"
         }
@@ -674,7 +674,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::StreamingSieve::prime_pi(to_usize(2_i64))",
+          "input": "prime_pi(n(2))",
           "output": "1",
           "verdict": "agree"
         }
@@ -696,7 +696,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::StreamingSieve::prime_pi(to_usize(15_i64))",
+          "input": "prime_pi(n(15))",
           "output": "6",
           "verdict": "agree"
         }
@@ -718,7 +718,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::StreamingSieve::prime_pi(to_usize(100_i64))",
+          "input": "prime_pi(n(100))",
           "output": "25",
           "verdict": "agree"
         }
@@ -759,7 +759,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::is_prime(to_u64(1_i64))",
+          "input": "is_prime(n(1))",
           "output": "false",
           "verdict": "agree"
         }
@@ -791,7 +791,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::is_prime(to_u64(2_i64))",
+          "input": "is_prime(n(2))",
           "output": "true",
           "verdict": "agree"
         }
@@ -823,7 +823,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::is_prime(to_u64(13_i64))",
+          "input": "is_prime(n(13))",
           "output": "true",
           "verdict": "agree"
         }
@@ -855,7 +855,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::is_prime(to_u64(4_i64))",
+          "input": "is_prime(n(4))",
           "output": "false",
           "verdict": "agree"
         }
@@ -887,7 +887,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::is_prime(to_u64(97_i64))",
+          "input": "is_prime(n(97))",
           "output": "true",
           "verdict": "agree"
         }
@@ -921,11 +921,9 @@
           "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends IsPrime to this argument."
         },
         "rust": {
-          "input": "primal::is_prime(to_u64((f64of(2_i64).powf(f64of(31_i64)) + -1_i64)))",
-          "output": "compile: cannot add `i64` to `f64`: no implementation for `f64 + i64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "is_prime((power(n(2), n(31)) + n(-1)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",1000000007]": {
@@ -955,7 +953,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "primal::is_prime(to_u64(1000000007_i64))",
+          "input": "is_prime(n(1000000007))",
           "output": "true",
           "verdict": "agree"
         }
@@ -995,11 +993,11 @@
           "note": "compute-engine's IsPrime is Listable and threads over the list; Mathlib's takes scalars only."
         },
         "rust": {
-          "input": "primal::is_prime(to_u64(vec![1_i64, 2_i64, 3_i64, 4_i64, 5_i64, 6_i64]))",
-          "output": "compile: mismatched types: expected `i64`, found `Vec<i64>`",
+          "input": "is_prime(list(vec![n(1), n(2), n(3), n(4), n(5), n(6)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's IsPrime is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"IsPrime\",[\"Complex\",2,1]]": {
@@ -1074,11 +1072,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(((f64of(2_i64).powf(f64of(3_i64)) * f64of(3_i64).powf(f64of(2_i64)) * 5_i64)) == (360_i64))",
-          "output": "compile: cannot multiply `f64` by `i64`: no implementation for `f64 * i64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal((power(n(2), n(3)) * power(n(3), n(2)) * n(5)), n(360))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"FactorInteger\",1]": {
@@ -1658,7 +1654,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((2_i64 * -1_i64) + (3_i64 * 1_i64))",
+          "input": "((n(2) * n(-1)) + (n(3) * n(1)))",
           "output": "1",
           "verdict": "agree"
         }

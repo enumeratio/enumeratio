@@ -211,7 +211,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## rust — agree 90, disagree 9, inconclusive 0, error 36
+## rust — agree 133, disagree 7, inconclusive 1, error 26
 
 | example | kind | ours | theirs |
 | --- | --- | --- | --- |
@@ -220,51 +220,39 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `arithmetic/Sqrt#9` | unclassified | `{"re":0,"im":1.4142135623730951}` | `NaN` |
 | `combinatorics/Binomial#11` | unclassified | `0` | `1` |
 | `combinatorics/Binomial#12` | unclassified | `15` | `0` |
-| `elementary/Ln#3` | unclassified | `NegativeInfinity` | `-inf` |
 | `elementary/Ln#6` | unclassified | `{"re":0,"im":3.141592653589793}` | `NaN` |
-| `special-functions/Gamma#1` | unclassified | `ComplexInfinity` | `inf` |
-| `special-functions/Gamma#4` | unclassified | `true` | `false` |
+| `special-functions/Gamma#1` | unclassified | `ComplexInfinity` | `PositiveInfinity` |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
 | example | message |
 | --- | --- |
-| `arithmetic/Abs#6` | `compile: the trait bound 'Vec<i64>: AsF64' is not satisfied: the trait 'AsF64' is not impl` |
-| `arithmetic/Ceil#4` | `compile: the trait bound 'Vec<f64>: AsF64' is not satisfied: the trait 'AsF64' is not impl` |
-| `arithmetic/Ceil#5` | `compile: cannot add 'i64' to 'f64': no implementation for 'f64 + i64'` |
-| `arithmetic/Floor#4` | `compile: the trait bound 'Vec<f64>: AsF64' is not satisfied: the trait 'AsF64' is not impl` |
-| `arithmetic/Floor#5` | `compile: cannot add 'i64' to 'f64': no implementation for 'f64 + i64'` |
-| `arithmetic/Negate#5` | `compile: cannot apply unary operator '-' to type 'Vec<i64>': cannot apply unary operator '` |
-| `combinatorics/Binomial#8` | `compile: mismatched types: expected 'BigInt', found 'f64'` |
-| `combinatorics/Factorial#5` | `compile: mismatched types: expected 'i64', found 'Vec<i64>'` |
-| `combinatorics/Factorial#6` | `compile: cannot multiply 'i64' by 'f64': no implementation for 'i64 * f64'` |
-| `combinatorics/Factorial#7` | `compile: mismatched types: expected 'i64', found 'Ratio<BigInt>'` |
-| `combinatorics/Factorial#9` | `panic: a non-negative integer: TryFromIntError(NegOverflow)` |
-| `elementary/Exp#4` | `compile: mismatched types: expected 'f64', found 'i64'` |
-| `elementary/Exp#6` | `compile: the trait bound 'Vec<i64>: AsF64' is not satisfied: the trait 'AsF64' is not impl` |
-| `elementary/Ln#4` | `compile: mismatched types: expected 'f64', found 'i64'` |
-| `number-theory/FactorInteger#4` | `compile: cannot multiply 'f64' by 'i64': no implementation for 'f64 * i64'` |
-| `number-theory/GCD#8` | `compile: the trait bound 'Vec<i64>: Integer' is not satisfied: the trait 'Integer' is not ` |
-| `number-theory/IsPrime#6` | `compile: cannot add 'i64' to 'f64': no implementation for 'f64 + i64'` |
-| `number-theory/IsPrime#8` | `compile: mismatched types: expected 'i64', found 'Vec<i64>'` |
-| `numerals/AdicNumeral#1` | `compile: mismatched types: expected 'QAdic<EAdic>', found 'i64'` |
-| `numerals/AdicNumeral#2` | `compile: mismatched types: expected 'QAdic<EAdic>', found 'i64'` |
-| `numerals/AdicNumeral#4` | `compile: the trait bound 'QAdic<EAdic>: AsF64' is not satisfied: the trait 'AsF64' is not ` |
-| `numerals/AdicNumeral#5` | `compile: the trait bound 'QAdic<EAdic>: AsF64' is not satisfied: the trait 'AsF64' is not ` |
-| `residues/Mod#4` | `compile: the trait bound 'Vec<i64>: Integer' is not satisfied: the trait 'Integer' is not ` |
-| `residues/Mod#5` | `panic: attempt to calculate the remainder with a divisor of zero` |
-| `residues/PowerMod#10` | `compile: mismatched types: expected 'i64', found 'Ratio<BigInt>'` |
-| `residues/PowerMod#11` | `compile: mismatched types: expected 'i64', found 'Ratio<BigInt>'` |
-| `residues/PowerMod#17` | `compile: mismatched types: expected 'i64', found 'BigInt'` |
-| `residues/PowerMod#18` | `compile: mismatched types: expected 'i64', found 'Ratio<BigInt>'` |
+| `arithmetic/Abs#6` | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Ceil#4` | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Floor#4` | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Negate#5` | `panic: negating [1, -2, 3]` |
+| `combinatorics/Factorial#5` | `panic: threading: a list where the crate takes a scalar` |
+| `combinatorics/Factorial#7` | `panic: an integer, not 1/2` |
+| `combinatorics/Factorial#9` | `panic: a non-negative integer` |
+| `elementary/Cos#9` | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Exp#6` | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Sin#10` | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Tan#8` | `panic: threading: a list where the crate takes a scalar` |
+| `number-theory/GCD#8` | `panic: threading: a list where the crate takes a scalar` |
+| `number-theory/IsPrime#8` | `panic: threading: a list where the crate takes a scalar` |
+| `numerals/AdicNumeral#1` | `panic: the adic crate takes a prime base, not 10` |
+| `numerals/AdicNumeral#2` | `panic: the adic crate takes a prime base, not 10` |
+| `numerals/AdicNumeral#5` | `panic: the adic crate takes a prime base, not 10` |
+| `residues/Mod#4` | `panic: threading: a list where the crate takes a scalar` |
+| `residues/Mod#5` | `panic: attempt to divide by zero` |
+| `residues/PowerMod#10` | `panic: an integer, not 1/2` |
+| `residues/PowerMod#11` | `panic: an integer, not 2/3` |
+| `residues/PowerMod#18` | `panic: an integer, not 1/2` |
 | `residues/PowerMod#3` | `panic: negative exponentiation is not supported!` |
-| `residues/PowerMod#5` | `compile: arguments to this function are incorrect` |
 | `residues/PowerMod#6` | `panic: negative exponentiation is not supported!` |
-| `residues/PowerMod#7` | `compile: mismatched types: expected 'i64', found 'Ratio<BigInt>'` |
-| `residues/PowerMod#8` | `compile: mismatched types: expected 'i64', found 'Vec<i64>'` |
-| `residues/PowerMod#9` | `compile: cannot add 'i64' to 'f64': no implementation for 'f64 + i64'` |
-| `special-functions/Gamma#3` | `compile: the trait bound 'Vec<i64>: AsF64' is not satisfied: the trait 'AsF64' is not impl` |
-| `special-functions/Gamma#5` | `compile: cannot multiply 'i64' by 'f64': no implementation for 'i64 * f64'` |
+| `residues/PowerMod#7` | `panic: an integer, not 1/2` |
+| `residues/PowerMod#8` | `panic: threading: a list where the crate takes a scalar` |
+| `special-functions/Gamma#3` | `panic: threading: a list where the crate takes a scalar` |
 
 </details>
 

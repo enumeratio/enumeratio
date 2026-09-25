@@ -17,8 +17,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(-5_i64).abs()",
-          "output": "5.0",
+          "input": "abs(n(-5))",
+          "output": "5",
           "verdict": "agree"
         }
       },
@@ -34,8 +34,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(5_i64).abs()",
-          "output": "5.0",
+          "input": "abs(n(5))",
+          "output": "5",
           "verdict": "agree"
         }
       },
@@ -51,8 +51,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(0_i64).abs()",
-          "output": "0.0",
+          "input": "abs(n(0))",
+          "output": "0",
           "verdict": "agree"
         }
       },
@@ -68,8 +68,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(ratio(-7_i64, 2_i64)).abs()",
-          "output": "3.5",
+          "input": "abs(rational(n(-7), n(2)))",
+          "output": "7/2",
           "verdict": "agree"
         }
       },
@@ -94,11 +94,11 @@
           "note": "compute-engine's Abs is Listable and threads over the list; Sage's takes scalars only."
         },
         "rust": {
-          "input": "f64of(vec![-1_i64, 2_i64, -3_i64]).abs()",
-          "output": "compile: the trait bound `Vec<i64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "input": "abs(list(vec![n(-1), n(2), n(-3)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Abs\",-8],[\"Abs\",8]]": {
@@ -113,7 +113,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((f64of(-8_i64).abs()) == (f64of(8_i64).abs()))",
+          "input": "equal(abs(n(-8)), abs(n(8)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -137,8 +137,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of((70_i64 - 95_i64)).abs()",
-          "output": "25.0",
+          "input": "abs((n(70) - n(95)))",
+          "output": "25",
           "verdict": "agree"
         }
       }
@@ -280,7 +280,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(-(5_i64))",
+          "input": "(-(n(5)))",
           "output": "-5",
           "verdict": "agree"
         }
@@ -312,7 +312,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(-(-5_i64))",
+          "input": "(-(n(-5)))",
           "output": "5",
           "verdict": "agree"
         }
@@ -344,7 +344,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(-(0_i64))",
+          "input": "(-(n(0)))",
           "output": "0",
           "verdict": "agree"
         }
@@ -376,7 +376,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(-(ratio(3_i64, 4_i64)))",
+          "input": "(-(rational(n(3), n(4))))",
           "output": "-3/4",
           "verdict": "agree"
         }
@@ -410,11 +410,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(-(vec![1_i64, -2_i64, 3_i64]))",
-          "output": "compile: cannot apply unary operator `-` to type `Vec<i64>`: cannot apply unary operator `-`",
+          "input": "(-(list(vec![n(1), n(-2), n(3)])))",
+          "output": "panic: negating [1, -2, 3]",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Negate\",42.5]": {
@@ -444,7 +444,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(-(42.5_f64))",
+          "input": "(-(x(42.5)))",
           "output": "-42.5",
           "verdict": "agree"
         }
@@ -560,7 +560,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(16_i64).sqrt()",
+          "input": "sqrt(n(16))",
           "output": "4.0",
           "verdict": "agree"
         }
@@ -577,7 +577,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(2_i64).sqrt()",
+          "input": "sqrt(n(2))",
           "output": "1.4142135623730951",
           "verdict": "agree"
         }
@@ -594,7 +594,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(ratio(4_i64, 9_i64)).sqrt()",
+          "input": "sqrt(rational(n(4), n(9)))",
           "output": "0.6666666666666666",
           "verdict": "agree"
         }
@@ -611,7 +611,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(0_i64).sqrt()",
+          "input": "sqrt(n(0))",
           "output": "0.0",
           "verdict": "agree"
         }
@@ -630,11 +630,11 @@
           "note": "Same value 2i: the scan's N()-reduced complex leaf serializes to JSON for the text compare, which doesn't recognize Sage's '2*I' as the same number."
         },
         "rust": {
-          "input": "f64of(-4_i64).sqrt()",
+          "input": "sqrt(n(-4))",
           "output": "NaN",
           "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
         }
       },
       "[\"Equal\",[\"Square\",[\"Sqrt\",16]],16]": {
@@ -661,7 +661,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((f64of(16_i64).sqrt()) == (f64of(16_i64).powf(f64of(ratio(1_i64, 2_i64)))))",
+          "input": "equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))",
           "output": "true",
           "verdict": "agree"
         }
@@ -692,11 +692,11 @@
           "note": "Both stay symbolic; the scan's N() reduction turns our expected Sqrt(-2) into a complex float before the text compare, so it no longer matches Sage's literal 'sqrt(-2)' string."
         },
         "rust": {
-          "input": "f64of(-2_i64).sqrt()",
+          "input": "sqrt(n(-2))",
           "output": "NaN",
           "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
         }
       },
       "[\"Sqrt\",[\"Rational\",-4,9]]": {
@@ -713,11 +713,11 @@
           "note": "Same value 2i/3: the scan's N()-reduced complex leaf serializes to JSON, not the '2/3*I' notation Sage prints — a comparator spelling gap, not a numeric disagreement."
         },
         "rust": {
-          "input": "f64of(ratio(-4_i64, 9_i64)).sqrt()",
+          "input": "sqrt(rational(n(-4), n(9)))",
           "output": "NaN",
           "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
         }
       }
     },
@@ -801,8 +801,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(ratio(7_i64, 2_i64)).floor()",
-          "output": "3.0",
+          "input": "floor(rational(n(7), n(2)))",
+          "output": "3",
           "verdict": "agree"
         }
       },
@@ -818,7 +818,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(3.7_f64).floor()",
+          "input": "floor(x(3.7))",
           "output": "3.0",
           "verdict": "agree"
         }
@@ -835,8 +835,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(5_i64).floor()",
-          "output": "5.0",
+          "input": "floor(n(5))",
+          "output": "5",
           "verdict": "agree"
         }
       },
@@ -854,11 +854,11 @@
           "note": "compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only."
         },
         "rust": {
-          "input": "f64of(vec![1.2_f64, -1.2_f64, 3.7_f64]).floor()",
-          "output": "compile: the trait bound `Vec<f64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "input": "floor(list(vec![x(1.2), x(-1.2), x(3.7)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Floor is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Add\",[\"Floor\",[\"Rational\",7,2]],1],[\"Ceil\",[\"Rational\",7,2]]]": {
@@ -873,11 +873,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(((f64of(ratio(7_i64, 2_i64)).floor() + 1_i64)) == (f64of(ratio(7_i64, 2_i64)).ceil()))",
-          "output": "compile: cannot add `i64` to `f64`: no implementation for `f64 + i64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal((floor(rational(n(7), n(2))) + n(1)), ceil(rational(n(7), n(2))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Floor\",[\"Rational\",-7,2]],[\"Negate\",[\"Ceil\",[\"Rational\",7,2]]]]": {
@@ -892,7 +890,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((f64of(ratio(-7_i64, 2_i64)).floor()) == ((-(f64of(ratio(7_i64, 2_i64)).ceil()))))",
+          "input": "equal(floor(rational(n(-7), n(2))), (-(ceil(rational(n(7), n(2))))))",
           "output": "true",
           "verdict": "agree"
         }
@@ -909,8 +907,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of((f64of(17_i64) / f64of(5_i64))).floor()",
-          "output": "3.0",
+          "input": "floor((n(17) / n(5)))",
+          "output": "3",
           "verdict": "agree"
         }
       },
@@ -926,7 +924,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(-3.2_f64).floor()",
+          "input": "floor(x(-3.2))",
           "output": "-4.0",
           "verdict": "agree"
         }
@@ -952,8 +950,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(ratio(7_i64, 2_i64)).ceil()",
-          "output": "4.0",
+          "input": "ceil(rational(n(7), n(2)))",
+          "output": "4",
           "verdict": "agree"
         }
       },
@@ -969,7 +967,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(3.2_f64).ceil()",
+          "input": "ceil(x(3.2))",
           "output": "4.0",
           "verdict": "agree"
         }
@@ -986,8 +984,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(5_i64).ceil()",
-          "output": "5.0",
+          "input": "ceil(n(5))",
+          "output": "5",
           "verdict": "agree"
         }
       },
@@ -1005,11 +1003,11 @@
           "note": "compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only."
         },
         "rust": {
-          "input": "f64of(vec![1.2_f64, -1.2_f64, 3.7_f64]).ceil()",
-          "output": "compile: the trait bound `Vec<f64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "input": "ceil(list(vec![x(1.2), x(-1.2), x(3.7)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Ceil is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Ceil\",[\"Rational\",7,2]],[\"Add\",[\"Floor\",[\"Rational\",7,2]],1]]": {
@@ -1024,11 +1022,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((f64of(ratio(7_i64, 2_i64)).ceil()) == ((f64of(ratio(7_i64, 2_i64)).floor() + 1_i64)))",
-          "output": "compile: cannot add `i64` to `f64`: no implementation for `f64 + i64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Ceil\",5],[\"Floor\",5]]": {
@@ -1043,7 +1039,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((f64of(5_i64).ceil()) == (f64of(5_i64).floor()))",
+          "input": "equal(ceil(n(5)), floor(n(5)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -1060,8 +1056,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of((f64of(17_i64) / f64of(5_i64))).ceil()",
-          "output": "4.0",
+          "input": "ceil((n(17) / n(5)))",
+          "output": "4",
           "verdict": "agree"
         }
       },
@@ -1077,7 +1073,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(-3.7_f64).ceil()",
+          "input": "ceil(x(-3.7))",
           "output": "-3.0",
           "verdict": "agree"
         }

@@ -32,7 +32,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(5_i64), int(2_i64))",
+          "input": "binomial(n(5), n(2))",
           "output": "10",
           "verdict": "agree"
         }
@@ -64,7 +64,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(10_i64), int(3_i64))",
+          "input": "binomial(n(10), n(3))",
           "output": "120",
           "verdict": "agree"
         }
@@ -96,7 +96,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(4_i64), int(2_i64))",
+          "input": "binomial(n(4), n(2))",
           "output": "6",
           "verdict": "agree"
         }
@@ -128,7 +128,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(5_i64), int(0_i64))",
+          "input": "binomial(n(5), n(0))",
           "output": "1",
           "verdict": "agree"
         }
@@ -160,7 +160,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(5_i64), int(5_i64))",
+          "input": "binomial(n(5), n(5))",
           "output": "1",
           "verdict": "agree"
         }
@@ -192,7 +192,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((num_integer::binomial(int(10_i64), int(3_i64))) == (num_integer::binomial(int(10_i64), int(7_i64))))",
+          "input": "equal(binomial(n(10), n(3)), binomial(n(10), n(7)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -224,7 +224,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(((num_integer::binomial(int(9_i64), int(2_i64)) + num_integer::binomial(int(9_i64), int(3_i64)))) == (num_integer::binomial(int(10_i64), int(3_i64))))",
+          "input": "equal((binomial(n(9), n(2)) + binomial(n(9), n(3))), binomial(n(10), n(3)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -256,11 +256,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(((num_integer::binomial(int(4_i64), int(0_i64)) + num_integer::binomial(int(4_i64), int(1_i64)) + num_integer::binomial(int(4_i64), int(2_i64)) + num_integer::binomial(int(4_i64), int(3_i64)) + num_integer::binomial(int(4_i64), int(4_i64)))) == (f64of(2_i64).powf(f64of(4_i64))))",
-          "output": "compile: mismatched types: expected `BigInt`, found `f64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal((binomial(n(4), n(0)) + binomial(n(4), n(1)) + binomial(n(4), n(2)) + binomial(n(4), n(3)) + binomial(n(4), n(4))), power(n(2), n(4)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",52,5]": {
@@ -290,7 +288,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(52_i64), int(5_i64))",
+          "input": "binomial(n(52), n(5))",
           "output": "2598960",
           "verdict": "agree"
         }
@@ -322,7 +320,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(5_i64), int(7_i64))",
+          "input": "binomial(n(5), n(7))",
           "output": "0",
           "verdict": "agree"
         }
@@ -356,11 +354,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(5_i64), int(-1_i64))",
+          "input": "binomial(n(5), n(-1))",
           "output": "1",
           "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones."
         }
       },
       "[\"Binomial\",-5,2]": {
@@ -392,11 +390,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::binomial(int(-5_i64), int(2_i64))",
+          "input": "binomial(n(-5), n(2))",
           "output": "0",
           "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones."
         }
       }
     },
@@ -479,7 +477,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(5_i64))",
+          "input": "factorial(n(5))",
           "output": "120.0",
           "verdict": "agree"
         }
@@ -511,7 +509,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(6_i64))",
+          "input": "factorial(n(6))",
           "output": "720.0",
           "verdict": "agree"
         }
@@ -543,7 +541,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(0_i64))",
+          "input": "factorial(n(0))",
           "output": "1.0",
           "verdict": "agree"
         }
@@ -575,7 +573,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(10_i64))",
+          "input": "factorial(n(10))",
           "output": "3628800.0",
           "verdict": "agree"
         }
@@ -615,11 +613,11 @@
           "note": "compute-engine's Factorial is Listable and threads over the list; Oscar's takes scalars only."
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(vec![1_i64, 2_i64, 3_i64, 4_i64]))",
-          "output": "compile: mismatched types: expected `i64`, found `Vec<i64>`",
+          "input": "factorial(list(vec![n(1), n(2), n(3), n(4)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Factorial is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Factorial\",5],[\"Multiply\",5,[\"Factorial\",4]]]": {
@@ -649,11 +647,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((statrs::function::factorial::factorial(to_u64(5_i64))) == ((5_i64 * statrs::function::factorial::factorial(to_u64(4_i64)))))",
-          "output": "compile: cannot multiply `i64` by `f64`: no implementation for `i64 * f64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(factorial(n(5)), (n(5) * factorial(n(4))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Factorial\",[\"Rational\",1,2]]": {
@@ -689,11 +685,11 @@
           "note": "compute-engine extends Factorial to non-integers through Gamma; Oscar's factorial takes integers only."
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(ratio(1_i64, 2_i64)))",
-          "output": "compile: mismatched types: expected `i64`, found `Ratio<BigInt>`",
+          "input": "factorial(rational(n(1), n(2)))",
+          "output": "panic: an integer, not 1/2",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "statrs' factorial takes non-negative integers; compute-engine extends Factorial through Gamma."
         }
       },
       "[\"Factorial\",8]": {
@@ -723,7 +719,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(8_i64))",
+          "input": "factorial(n(8))",
           "output": "40320.0",
           "verdict": "agree"
         }
@@ -763,11 +759,11 @@
           "note": "Both decline: compute-engine answers \"ComplexInfinity\" and Oscar raises an error."
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(-1_i64))",
-          "output": "panic: a non-negative integer: TryFromIntError(NegOverflow)",
+          "input": "factorial(n(-1))",
+          "output": "panic: a non-negative integer",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\", and Rust gives panic: a non-negative integer."
         }
       },
       "[\"Factorial\",20]": {
@@ -797,7 +793,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::factorial::factorial(to_u64(20_i64))",
+          "input": "factorial(n(20))",
           "output": "2.43290200817664e18",
           "verdict": "agree"
         }
@@ -979,8 +975,8 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(f64of(num_integer::binomial(int((2_i64 * 5_i64)), int(5_i64))) / f64of((5_i64 + 1_i64)))",
-          "output": "42.0",
+          "input": "(binomial((n(2) * n(5)), n(5)) / (n(5) + n(1)))",
+          "output": "42",
           "verdict": "agree"
         }
       },
@@ -1011,7 +1007,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(num_integer::binomial(int(10_i64), int(5_i64)) - num_integer::binomial(int(10_i64), int(6_i64)))",
+          "input": "(binomial(n(10), n(5)) - binomial(n(10), n(6)))",
           "output": "42",
           "verdict": "agree"
         }

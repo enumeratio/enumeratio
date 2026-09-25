@@ -103,6 +103,19 @@ impl V {
 
 // ── arithmetic, promoting Int < Rat < Float ───────────────────────────────────
 
+/// Two operands as p-adics of the same prime, when either is one: a scalar is lifted.
+fn adic_pair(a: &V, b: &V) -> Option<(QAdic<EAdic>, QAdic<EAdic>)> {
+    let p = match (a, b) {
+        (Adic(x), _) | (_, Adic(x)) => u32::from(x.p()),
+        _ => return None,
+    };
+    let lift = |v: &V| match v {
+        Adic(x) => x.clone(),
+        other => QAdic::primed_from(p, other.rat()),
+    };
+    Some((lift(a), lift(b)))
+}
+
 fn arith(a: V, b: V, i: fn(BigInt, BigInt) -> V, r: fn(BigRational, BigRational) -> V, f: fn(f64, f64) -> f64) -> V {
     match (&a, &b) {
         (Int(p), Int(q)) => i(p.clone(), q.clone()),
@@ -113,8 +126,8 @@ fn arith(a: V, b: V, i: fn(BigInt, BigInt) -> V, r: fn(BigRational, BigRational)
 impl Add for V {
     type Output = V;
     fn add(self, b: V) -> V {
-        if let (Adic(p), Adic(q)) = (&self, &b) {
-            return Adic(p.clone() + q.clone());
+        if let Some((p, q)) = adic_pair(&self, &b) {
+            return Adic(p + q);
         }
         arith(self, b, |p, q| Int(p + q), |p, q| normal(p + q), |p, q| p + q)
     }
@@ -128,8 +141,8 @@ impl Sub for V {
 impl Mul for V {
     type Output = V;
     fn mul(self, b: V) -> V {
-        if let (Adic(p), Adic(q)) = (&self, &b) {
-            return Adic(p.clone() * q.clone());
+        if let Some((p, q)) = adic_pair(&self, &b) {
+            return Adic(p * q);
         }
         arith(self, b, |p, q| Int(p * q), |p, q| normal(p * q), |p, q| p * q)
     }
@@ -137,6 +150,9 @@ impl Mul for V {
 impl Div for V {
     type Output = V;
     fn div(self, b: V) -> V {
+        if let Some((p, q)) = adic_pair(&self, &b) {
+            return Adic(p / q);
+        }
         // An exact quotient, as ours: 1/3 is a rational, not 0.333….
         arith(self, b, |p, q| normal(BigRational::new(p, q)), |p, q| normal(p / q), |p, q| p / q)
     }
@@ -167,7 +183,12 @@ pub fn equal(a: V, b: V) -> V {
     Bool(match (&a, &b) {
         (Bool(p), Bool(q)) => p == q,
         (List(p), List(q)) => p.len() == q.len() && p.iter().zip(q).all(|(x, y)| matches!(equal(x.clone(), y.clone()), Bool(true))),
-        (Float(_), _) | (_, Float(_)) => a.f64() == b.f64(),
+        // A float identity holds to the scan's own tolerance, not to the last bit.
+        (Float(_), _) | (_, Float(_)) => {
+            let (p, q) = (a.f64(), b.f64());
+            (p - q).abs() <= 1e-9 * p.abs().max(q.abs()).max(1.0)
+        }
+        (Adic(p), Adic(q)) => p == q,
         _ => a.rat() == b.rat(),
     })
 }
@@ -257,6 +278,27 @@ pub fn adic_prime(v: V) -> V {
     n(u32::from(v.adic().p()) as i64)
 }
 
+/// A p-adic printed as ours is written, `["AdicNumeral",p,value]`: its exact rational value
+/// read back from the crate (the unit's `rational_value` times p^valuation).
+fn adic_mathjson(a: &QAdic<EAdic>) -> String {
+    let p = u32::from(a.p()) as i64;
+    let value = match (a.unit(), a.valuation()) {
+        (Some(u), Valuation::Finite(k)) => {
+            let r = u.rational_value().expect("an exact rational");
+            let unit = BigRational::new(BigInt::from(*r.numer()), BigInt::from(*r.denom()));
+            let scale = num_traits::pow(BigRational::from_integer(BigInt::from(p)), k.unsigned_abs() as usize);
+            if k >= 0 { unit * scale } else { unit / scale }
+        }
+        _ => BigRational::from_integer(BigInt::zero()),
+    };
+    let json = if value.is_integer() {
+        value.to_integer().to_string()
+    } else {
+        format!("[\"Rational\",{},{}]", value.numer(), value.denom())
+    };
+    format!("[\"AdicNumeral\",{p},{json}]")
+}
+
 // ── printing, and the per-item harness ────────────────────────────────────────
 
 pub trait Show {
@@ -273,7 +315,7 @@ impl Show for V {
             Float(f) => format!("{f:?}"),
             Bool(b) => b.to_string(),
             List(items) => format!("[{}]", items.iter().map(Show::show).collect::<Vec<_>>().join(", ")),
-            Adic(a) => a.to_string(),
+            Adic(a) => adic_mathjson(a),
         }
     }
 }

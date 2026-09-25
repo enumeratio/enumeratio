@@ -73,7 +73,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "($1 // $2)",
       julia: "($1 // $2)",
       mathlib4: "(($1 : ℚ) / $2)",
-      rust: "(f64of($1) / f64of($2))",
+      rust: "($1 / $2)",
     },
   },
   {
@@ -99,7 +99,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "(big($1)^$2)",
       julia: "(big($1)^$2)",
       mathlib4: "($1 ^ $2)",
-      rust: "f64of($1).powf(f64of($2))",
+      rust: "power($1, $2)",
     },
   },
   {
@@ -111,28 +111,28 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "($1 // $2)",
       julia: "($1 // $2)",
       mathlib4: "(($1 : ℚ) / $2)",
-      rust: "ratio($1, $2)",
+      rust: "rational($1, $2)",
     },
   },
   {
     head: "Sqrt",
     arity: 1,
-    emit: { sympy: "sqrt($1)", mpmath: "sqrt($1)", sage: "sqrt($1)", rust: "f64of($1).sqrt()" },
+    emit: { sympy: "sqrt($1)", mpmath: "sqrt($1)", sage: "sqrt($1)", rust: "sqrt($1)" },
   },
   {
     head: "Abs",
     arity: 1,
-    emit: { sympy: "Abs($1)", mpmath: "fabs($1)", sage: "abs($1)", rust: "f64of($1).abs()" },
+    emit: { sympy: "Abs($1)", mpmath: "fabs($1)", sage: "abs($1)", rust: "abs($1)" },
   },
   {
     head: "Exp",
     arity: 1,
-    emit: { sympy: "exp($1)", mpmath: "exp($1)", sage: "exp($1)", rust: "f64of($1).exp()" },
+    emit: { sympy: "exp($1)", mpmath: "exp($1)", sage: "exp($1)", rust: "exp($1)" },
   },
   {
     head: "Ln",
     arity: 1,
-    emit: { sympy: "log($1)", mpmath: "log($1)", sage: "log($1)", rust: "f64of($1).ln()" },
+    emit: { sympy: "log($1)", mpmath: "log($1)", sage: "log($1)", rust: "ln($1)" },
   },
   {
     head: "List",
@@ -142,7 +142,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "[$*,]",
       julia: "[$*,]",
       mathlib4: "[$*,]",
-      rust: "vec![$*,]",
+      rust: "list(vec![$*,])",
     },
   },
 
@@ -213,7 +213,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "gamma($1)",
       mpmath: "gamma($1)",
       sage: "gamma($1)",
-      rust: "statrs::function::gamma::gamma(f64of($1))",
+      rust: "gamma($1)",
     },
   },
 
@@ -228,7 +228,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "binomial(ZZ($1), ZZ($2))",
       julia: "binomial(ZZ($1), ZZ($2))",
       mathlib4: "(Nat.choose $1 $2)",
-      rust: "num_integer::binomial(int($1), int($2))",
+      rust: "binomial($1, $2)",
     },
   },
   {
@@ -241,7 +241,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "factorial(ZZ($1))",
       julia: "factorial(ZZ($1))",
       mathlib4: "(Nat.factorial $1)",
-      rust: "statrs::function::factorial::factorial(to_u64($1))",
+      rust: "factorial($1)",
     },
   },
   {
@@ -344,7 +344,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "primepi($1)",
       sage: "prime_pi($1)",
       mathlib4: "(Nat.primeCounting $1)",
-      rust: "primal::StreamingSieve::prime_pi(to_usize($1))",
+      rust: "prime_pi($1)",
     },
   },
   {
@@ -357,7 +357,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "gcd(ZZ($1), ZZ($2))",
       julia: "gcd(ZZ($1), ZZ($2))",
       mathlib4: "(Int.gcd $1 $2)",
-      rust: "num_integer::gcd($1, $2)",
+      rust: "gcd($1, $2)",
     },
   },
   {
@@ -370,13 +370,13 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "lcm(ZZ($1), ZZ($2))",
       julia: "lcm(ZZ($1), ZZ($2))",
       mathlib4: "(Int.lcm $1 $2)",
-      rust: "num_integer::lcm($1, $2)",
+      rust: "lcm($1, $2)",
     },
   },
   {
     head: "PowerMod",
     arity: 3,
-    emit: { sage: "power_mod($1, $2, $3)", rust: "int($1).modpow(&int($2), &int($3))" },
+    emit: { sage: "power_mod($1, $2, $3)", rust: "powermod($1, $2, $3)" },
     note: "Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.",
   },
   {
@@ -450,7 +450,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "($1 == $2)",
       julia: "($1 == $2)",
       mathlib4: "(decide ($1 = $2))",
-      rust: "(($1) == ($2))",
+      rust: "equal($1, $2)",
     },
     note: "The single most valuable row: a large share of documented examples are identities written as Equal.",
   },
@@ -467,7 +467,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "sin($1)",
       mpmath: "sin($1)",
       sage: "sin($1)",
-      rust: "f64of($1).sin()",
+      rust: "sin($1)",
     },
   },
   {
@@ -478,7 +478,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "cos($1)",
       mpmath: "cos($1)",
       sage: "cos($1)",
-      rust: "f64of($1).cos()",
+      rust: "cos($1)",
     },
   },
   {
@@ -489,7 +489,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "tan($1)",
       mpmath: "tan($1)",
       sage: "tan($1)",
-      rust: "f64of($1).tan()",
+      rust: "tan($1)",
     },
   },
   {
@@ -505,7 +505,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "floor($1)",
       mpmath: "floor($1)",
       sage: "floor($1)",
-      rust: "f64of($1).floor()",
+      rust: "floor($1)",
     },
   },
   {
@@ -516,7 +516,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "ceiling($1)",
       mpmath: "ceil($1)",
       sage: "ceil($1)",
-      rust: "f64of($1).ceil()",
+      rust: "ceil($1)",
     },
   },
   {
@@ -529,7 +529,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "is_prime(ZZ($1))",
       julia: "is_prime(ZZ($1))",
       mathlib4: "(decide (Nat.Prime $1))",
-      rust: "primal::is_prime(to_u64($1))",
+      rust: "is_prime($1)",
     },
   },
   {
@@ -539,7 +539,7 @@ export const MAPPINGS: readonly Mapping[] = [
       wolfram: "Prime[$1]",
       sympy: "prime($1)",
       sage: "nth_prime($1)",
-      rust: "primal::StreamingSieve::nth_prime(to_usize($1))",
+      rust: "nth_prime($1)",
     },
   },
   {
@@ -567,7 +567,7 @@ export const MAPPINGS: readonly Mapping[] = [
       oscar: "mod($1, $2)",
       julia: "mod($1, $2)",
       mathlib4: "(($1 : ℤ) % $2)",
-      rust: "num_integer::Integer::mod_floor(&($1), &($2))",
+      rust: "mod_floor($1, $2)",
     },
   },
   { head: "Length", arity: 1, emit: { wolfram: "Length[$1]", sympy: "len($1)", sage: "len($1)" } },
@@ -675,7 +675,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "AdicNumeral",
     arity: 2,
-    emit: { rust: "adic_q($1, $2)" },
+    emit: { rust: "adic($1, $2)" },
     note: "The adic crate is p-adic only: our composite bases (10-adic) have no counterpart there.",
   },
   { head: "AdicValuation", arity: 1, emit: { rust: "adic_valuation($1)" } },

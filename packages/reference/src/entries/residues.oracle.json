@@ -32,7 +32,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::Integer::mod_floor(&(17_i64), &(5_i64))",
+          "input": "mod_floor(n(17), n(5))",
           "output": "2",
           "verdict": "agree"
         }
@@ -64,7 +64,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::Integer::mod_floor(&(100_i64), &(7_i64))",
+          "input": "mod_floor(n(100), n(7))",
           "output": "2",
           "verdict": "agree"
         }
@@ -96,7 +96,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::Integer::mod_floor(&(-7_i64), &(3_i64))",
+          "input": "mod_floor(n(-7), n(3))",
           "output": "2",
           "verdict": "agree"
         }
@@ -136,11 +136,11 @@
           "note": "compute-engine's Mod is Listable and threads over the list; Mathlib's takes scalars only."
         },
         "rust": {
-          "input": "num_integer::Integer::mod_floor(&(vec![1_i64, 2_i64, 3_i64, 4_i64, 5_i64]), &(3_i64))",
-          "output": "compile: the trait bound `Vec<i64>: Integer` is not satisfied: the trait `Integer` is not implement",
+          "input": "mod_floor(list(vec![n(1), n(2), n(3), n(4), n(5)]), n(3))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Mod\",5,0]": {
@@ -178,11 +178,11 @@
           "note": "Lean defines x % 0 = x; compute-engine leaves Mod by zero undefined (NaN)."
         },
         "rust": {
-          "input": "num_integer::Integer::mod_floor(&(5_i64), &(0_i64))",
-          "output": "panic: attempt to calculate the remainder with a divisor of zero",
+          "input": "mod_floor(n(5), n(0))",
+          "output": "panic: attempt to divide by zero",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"NaN\", and Rust gives panic: attempt to divide by zero."
         }
       },
       "[\"Equal\",[\"Mod\",17,5],[\"Mod\",[\"Add\",17,[\"Multiply\",3,5]],5]]": {
@@ -212,7 +212,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((num_integer::Integer::mod_floor(&(17_i64), &(5_i64))) == (num_integer::Integer::mod_floor(&((17_i64 + (3_i64 * 5_i64))), &(5_i64))))",
+          "input": "equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -266,7 +266,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(2_i64).modpow(&int(10_i64), &int(3_i64))",
+          "input": "powermod(n(2), n(10), n(3))",
           "output": "1",
           "verdict": "agree"
         }
@@ -283,7 +283,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(3_i64).modpow(&int(50_i64), &int(11_i64))",
+          "input": "powermod(n(3), n(50), n(11))",
           "output": "1",
           "verdict": "agree"
         }
@@ -300,11 +300,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(2_i64).modpow(&int(-1_i64), &int(7_i64))",
+          "input": "powermod(n(2), n(-1), n(7))",
           "output": "panic: negative exponentiation is not supported!",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",7,13,33]": {
@@ -319,7 +319,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(7_i64).modpow(&int(13_i64), &int(33_i64))",
+          "input": "powermod(n(7), n(13), n(33))",
           "output": "13",
           "verdict": "agree"
         }
@@ -336,11 +336,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((int(2_i64).modpow(&int(10_i64), &int(3_i64))) == (num_integer::Integer::mod_floor(&(f64of(2_i64).powf(f64of(10_i64))), &(3_i64))))",
-          "output": "compile: arguments to this function are incorrect",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(powermod(n(2), n(10), n(3)), mod_floor(power(n(2), n(10)), n(3)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"PowerMod\",2,-1,4]": {
@@ -357,11 +355,11 @@
           "note": "Both decline: compute-engine answers [\"PowerMod\", 2, -1, 4] and Sage raises an error."
         },
         "rust": {
-          "input": "int(2_i64).modpow(&int(-1_i64), &int(4_i64))",
+          "input": "powermod(n(2), n(-1), n(4))",
           "output": "panic: negative exponentiation is not supported!",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",4,[\"Rational\",1,2],7]": {
@@ -378,11 +376,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(4_i64).modpow(&int(ratio(1_i64, 2_i64)), &int(7_i64))",
-          "output": "compile: mismatched types: expected `i64`, found `Ratio<BigInt>`",
+          "input": "powermod(n(4), rational(n(1), n(2)), n(7))",
+          "output": "panic: an integer, not 1/2",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",2,[\"List\",10,11,12,13,14],5]": {
@@ -399,11 +397,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(2_i64).modpow(&int(vec![10_i64, 11_i64, 12_i64, 13_i64, 14_i64]), &int(5_i64))",
-          "output": "compile: mismatched types: expected `i64`, found `Vec<i64>`",
+          "input": "powermod(n(2), list(vec![n(10), n(11), n(12), n(13), n(14)]), n(5))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's PowerMod is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"PowerMod\",[\"Add\",[\"Power\",10,300],1],7,5]": {
@@ -418,11 +416,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int((f64of(10_i64).powf(f64of(300_i64)) + 1_i64)).modpow(&int(7_i64), &int(5_i64))",
-          "output": "compile: cannot add `i64` to `f64`: no implementation for `f64 + i64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "powermod((power(n(10), n(300)) + n(1)), n(7), n(5))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"PowerMod\",3,[\"Rational\",1,2],[\"Add\",[\"Power\",10,30],57]]": {
@@ -439,11 +435,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(3_i64).modpow(&int(ratio(1_i64, 2_i64)), &int((f64of(10_i64).powf(f64of(30_i64)) + 57_i64)))",
-          "output": "compile: mismatched types: expected `i64`, found `Ratio<BigInt>`",
+          "input": "powermod(n(3), rational(n(1), n(2)), (power(n(10), n(30)) + n(57)))",
+          "output": "panic: an integer, not 1/2",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",[\"Rational\",2,3],1,7]": {
@@ -460,11 +456,11 @@
           "note": "We extend PowerMod to a rational base; Wolfram's PowerMod takes integers (and Gaussian integers) only and leaves a rational base unevaluated."
         },
         "rust": {
-          "input": "int(ratio(2_i64, 3_i64)).modpow(&int(1_i64), &int(7_i64))",
-          "output": "compile: mismatched types: expected `i64`, found `Ratio<BigInt>`",
+          "input": "powermod(rational(n(2), n(3)), n(1), n(7))",
+          "output": "panic: an integer, not 2/3",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",7,[\"Totient\",19],19]": {
@@ -491,7 +487,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(2_i64).modpow(&int(340_i64), &int(341_i64))",
+          "input": "powermod(n(2), n(340), n(341))",
           "output": "1",
           "verdict": "agree"
         }
@@ -508,11 +504,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((int(int(5_i64).modpow(&int(6_i64), &int(23_i64))).modpow(&int(15_i64), &int(23_i64))) == (int(int(5_i64).modpow(&int(15_i64), &int(23_i64))).modpow(&int(6_i64), &int(23_i64))))",
-          "output": "compile: mismatched types: expected `i64`, found `BigInt`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(powermod(powermod(n(5), n(6), n(23)), n(15), n(23)), powermod(powermod(n(5), n(15), n(23)), n(6), n(23)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"PowerMod\",2,[\"Rational\",1,2],5]": {
@@ -529,11 +523,11 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "int(2_i64).modpow(&int(ratio(1_i64, 2_i64)), &int(5_i64))",
-          "output": "compile: mismatched types: expected `i64`, found `Ratio<BigInt>`",
+          "input": "powermod(n(2), rational(n(1), n(2)), n(5))",
+          "output": "panic: an integer, not 1/2",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",[\"Complex\",2,1],2,3]": {
@@ -588,7 +582,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "num_integer::Integer::mod_floor(&(((1_i64 + 4_i64) * (1_i64 - 4_i64))), &(15_i64))",
+          "input": "mod_floor(((n(1) + n(4)) * (n(1) - n(4))), n(15))",
           "output": "0",
           "verdict": "agree"
         }

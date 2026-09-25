@@ -19,11 +19,11 @@
           "note": "The pole is ComplexInfinity here; Sage's gamma(0) spells the same pole 'Infinity' (unsigned), a different notation for the same undefined value."
         },
         "rust": {
-          "input": "statrs::function::gamma::gamma(f64of(0_i64))",
-          "output": "inf",
+          "input": "gamma(n(0))",
+          "output": "PositiveInfinity",
           "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\", and Rust gives PositiveInfinity."
         }
       },
       "[\"Gamma\",2.5]": {
@@ -38,7 +38,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::gamma::gamma(f64of(2.5_f64))",
+          "input": "gamma(x(2.5))",
           "output": "1.3293403881791408",
           "verdict": "agree"
         }
@@ -57,11 +57,11 @@
           "note": "compute-engine's Gamma is Listable and threads over the list; Sage's takes scalars only."
         },
         "rust": {
-          "input": "statrs::function::gamma::gamma(f64of(vec![0_i64, -1_i64]))",
-          "output": "compile: the trait bound `Vec<i64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "input": "gamma(list(vec![n(0), n(-1)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Gamma is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Gamma\",6],[\"Factorial\",5]]": {
@@ -76,11 +76,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((statrs::function::gamma::gamma(f64of(6_i64))) == (statrs::function::factorial::factorial(to_u64(5_i64))))",
-          "output": "false",
-          "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(gamma(n(6)), factorial(n(5)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Gamma\",6],[\"Multiply\",5,[\"Gamma\",5]]]": {
@@ -95,11 +93,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((statrs::function::gamma::gamma(f64of(6_i64))) == ((5_i64 * statrs::function::gamma::gamma(f64of(5_i64)))))",
-          "output": "compile: cannot multiply `i64` by `f64`: no implementation for `i64 * f64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(gamma(n(6)), (n(5) * gamma(n(5))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Multiply\",[\"Gamma\",[\"Rational\",1,3]],[\"Gamma\",[\"Rational\",2,3]]],[\"Divide\",\"Pi\",[\"Sin\",[\"Divide\",\"Pi\",3]]]]": {
@@ -114,6 +110,11 @@
           "verdict": "disagree",
           "kind": "convention",
           "note": "True by the reflection formula; Sage's bool(a==b) doesn't invoke that identity automatically on unevaluated symbolic Gammas and reports False instead of attempting the proof."
+        },
+        "rust": {
+          "input": "equal((gamma(rational(n(1), n(3))) * gamma(rational(n(2), n(3)))), (x(std::f64::consts::PI) / sin((x(std::f64::consts::PI) / n(3)))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Gamma\",[\"Rational\",1,2]],[\"Sqrt\",\"Pi\"]]": {
@@ -126,6 +127,11 @@
           "input": "bool(gamma((1/2)) == sqrt(pi))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(gamma(rational(n(1), n(2))), sqrt(x(std::f64::consts::PI)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Divide\",[\"Power\",\"Pi\",2],[\"Gamma\",3]],[\"Divide\",[\"Power\",\"Pi\",2],2]]": {
@@ -137,6 +143,11 @@
         "sage": {
           "input": "bool(((pi^2) / gamma(3)) == ((pi^2) / 2))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -152,7 +163,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "statrs::function::gamma::gamma(f64of(ratio(5_i64, 2_i64)))",
+          "input": "gamma(rational(n(5), n(2)))",
           "output": "1.3293403881791408",
           "verdict": "agree"
         }
@@ -166,6 +177,11 @@
         "sage": {
           "input": "bool((gamma((1/2))^2) == pi)",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))",
+          "output": "true",
           "verdict": "agree"
         }
       },

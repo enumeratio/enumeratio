@@ -17,7 +17,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(0_i64).sin()",
+          "input": "sin(n(0))",
           "output": "0.0",
           "verdict": "agree"
         }
@@ -32,6 +32,11 @@
           "input": "sin((pi / 6))",
           "output": "1/2",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "sin((x(std::f64::consts::PI) / n(6)))",
+          "output": "0.49999999999999994",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",4]]": {
@@ -43,6 +48,11 @@
         "sage": {
           "input": "sin((pi / 4))",
           "output": "1/2*sqrt(2)",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "sin((x(std::f64::consts::PI) / n(4)))",
+          "output": "0.7071067811865475",
           "verdict": "agree"
         }
       },
@@ -56,6 +66,11 @@
           "input": "sin((pi / 3))",
           "output": "1/2*sqrt(3)",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "sin((x(std::f64::consts::PI) / n(3)))",
+          "output": "0.8660254037844386",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",2]]": {
@@ -67,6 +82,11 @@
         "sage": {
           "input": "sin((pi / 2))",
           "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "sin((x(std::f64::consts::PI) / n(2)))",
+          "output": "1.0",
           "verdict": "agree"
         }
       },
@@ -80,6 +100,11 @@
           "input": "sin(pi)",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "sin(x(std::f64::consts::PI))",
+          "output": "1.2246467991473532e-16",
+          "verdict": "agree"
         }
       },
       "[\"Add\",[\"Power\",[\"Sin\",[\"Divide\",\"Pi\",6]],2],[\"Power\",[\"Cos\",[\"Divide\",\"Pi\",6]],2]]": {
@@ -91,6 +116,11 @@
         "sage": {
           "input": "((sin((pi / 6))^2) + (cos((pi / 6))^2))",
           "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))",
+          "output": "1.0",
           "verdict": "agree"
         }
       },
@@ -104,6 +134,11 @@
           "input": "bool(sin((-(pi / 6))) == (-sin((pi / 6))))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(sin((-((x(std::f64::consts::PI) / n(6))))), (-(sin((x(std::f64::consts::PI) / n(6))))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Add\",[\"Divide\",\"Pi\",6],[\"Multiply\",2,\"Pi\"]]]": {
@@ -115,6 +150,11 @@
         "sage": {
           "input": "sin(((pi / 6) + (2 * pi)))",
           "output": "1/2",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "sin(((x(std::f64::consts::PI) / n(6)) + (n(2) * x(std::f64::consts::PI))))",
+          "output": "0.5",
           "verdict": "agree"
         }
       },
@@ -130,6 +170,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Sin is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "sin(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Sin\",[\"Degrees\",30]]": {
@@ -151,7 +198,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(1_i64).sin()",
+          "input": "sin(n(1))",
           "output": "0.8414709848078965",
           "verdict": "agree"
         }
@@ -165,6 +212,11 @@
         "sage": {
           "input": "sin((pi / 5))",
           "output": "1/4*sqrt(-2*sqrt(5) + 10)",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "sin((x(std::f64::consts::PI) / n(5)))",
+          "output": "0.5877852522924731",
           "verdict": "agree"
         }
       }
@@ -182,7 +234,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(0_i64).cos()",
+          "input": "cos(n(0))",
           "output": "1.0",
           "verdict": "agree"
         }
@@ -197,6 +249,11 @@
           "input": "cos((pi / 6))",
           "output": "1/2*sqrt(3)",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "cos((x(std::f64::consts::PI) / n(6)))",
+          "output": "0.8660254037844387",
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",4]]": {
@@ -208,6 +265,11 @@
         "sage": {
           "input": "cos((pi / 4))",
           "output": "1/2*sqrt(2)",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "cos((x(std::f64::consts::PI) / n(4)))",
+          "output": "0.7071067811865476",
           "verdict": "agree"
         }
       },
@@ -221,6 +283,11 @@
           "input": "cos((pi / 3))",
           "output": "1/2",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "cos((x(std::f64::consts::PI) / n(3)))",
+          "output": "0.5000000000000001",
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",2]]": {
@@ -232,6 +299,11 @@
         "sage": {
           "input": "cos((pi / 2))",
           "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "cos((x(std::f64::consts::PI) / n(2)))",
+          "output": "6.123233995736766e-17",
           "verdict": "agree"
         }
       },
@@ -245,6 +317,11 @@
           "input": "cos(pi)",
           "output": "-1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "cos(x(std::f64::consts::PI))",
+          "output": "-1.0",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Cos\",[\"Negate\",[\"Divide\",\"Pi\",3]]],[\"Cos\",[\"Divide\",\"Pi\",3]]]": {
@@ -257,6 +334,11 @@
           "input": "bool(cos((-(pi / 3))) == cos((pi / 3)))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(cos((-((x(std::f64::consts::PI) / n(3))))), cos((x(std::f64::consts::PI) / n(3))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Cos\",[\"Divide\",\"Pi\",6]],[\"Sin\",[\"Subtract\",[\"Divide\",\"Pi\",2],[\"Divide\",\"Pi\",6]]]]": {
@@ -268,6 +350,11 @@
         "sage": {
           "input": "bool(cos((pi / 6)) == sin(((pi / 2) - (pi / 6))))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(cos((x(std::f64::consts::PI) / n(6))), sin(((x(std::f64::consts::PI) / n(2)) - (x(std::f64::consts::PI) / n(6)))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -283,6 +370,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Cos is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "cos(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Cos is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Cos\",2]": {
@@ -297,7 +391,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(2_i64).cos()",
+          "input": "cos(n(2))",
           "output": "-0.4161468365471424",
           "verdict": "agree"
         }
@@ -311,6 +405,11 @@
         "sage": {
           "input": "cos((pi / 5))",
           "output": "1/4*sqrt(5) + 1/4",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "cos((x(std::f64::consts::PI) / n(5)))",
+          "output": "0.8090169943749475",
           "verdict": "agree"
         }
       }
@@ -328,7 +427,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(0_i64).tan()",
+          "input": "tan(n(0))",
           "output": "0.0",
           "verdict": "agree"
         }
@@ -343,6 +442,11 @@
           "input": "tan((pi / 6))",
           "output": "1/3*sqrt(3)",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "tan((x(std::f64::consts::PI) / n(6)))",
+          "output": "0.5773502691896256",
+          "verdict": "agree"
         }
       },
       "[\"Tan\",[\"Divide\",\"Pi\",4]]": {
@@ -354,6 +458,11 @@
         "sage": {
           "input": "tan((pi / 4))",
           "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "tan((x(std::f64::consts::PI) / n(4)))",
+          "output": "0.9999999999999999",
           "verdict": "agree"
         }
       },
@@ -367,6 +476,11 @@
           "input": "tan((pi / 3))",
           "output": "sqrt(3)",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "tan((x(std::f64::consts::PI) / n(3)))",
+          "output": "1.7320508075688767",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Tan\",[\"Divide\",\"Pi\",4]],[\"Divide\",[\"Sin\",[\"Divide\",\"Pi\",4]],[\"Cos\",[\"Divide\",\"Pi\",4]]]]": {
@@ -378,6 +492,11 @@
         "sage": {
           "input": "bool(tan((pi / 4)) == (sin((pi / 4)) / cos((pi / 4))))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(tan((x(std::f64::consts::PI) / n(4))), (sin((x(std::f64::consts::PI) / n(4))) / cos((x(std::f64::consts::PI) / n(4)))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -391,6 +510,11 @@
           "input": "tan((-(pi / 4)))",
           "output": "-1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "tan((-((x(std::f64::consts::PI) / n(4)))))",
+          "output": "-0.9999999999999999",
+          "verdict": "agree"
         }
       },
       "[\"Tan\",[\"Add\",[\"Divide\",\"Pi\",4],\"Pi\"]]": {
@@ -402,6 +526,11 @@
         "sage": {
           "input": "tan(((pi / 4) + pi))",
           "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "tan(((x(std::f64::consts::PI) / n(4)) + x(std::f64::consts::PI)))",
+          "output": "0.9999999999999997",
           "verdict": "agree"
         }
       },
@@ -417,6 +546,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Tan is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "tan(list(vec![n(0), (x(std::f64::consts::PI) / n(4))]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Tan is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Tan\",[\"Divide\",\"Pi\",2]]": {
@@ -431,6 +567,13 @@
           "verdict": "disagree",
           "kind": "undefined-form",
           "note": "The pole at cos(pi/2)=0 is ComplexInfinity here; Sage spells the same pole 'Infinity' (unsigned), a different notation for the same undefined ratio."
+        },
+        "rust": {
+          "input": "tan((x(std::f64::consts::PI) / n(2)))",
+          "output": "1.633123935319537e16",
+          "verdict": "inconclusive",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\", and Rust gives 1.633123935319537e16."
         }
       },
       "[\"Tan\",1]": {
@@ -445,7 +588,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(1_i64).tan()",
+          "input": "tan(n(1))",
           "output": "1.557407724654902",
           "verdict": "agree"
         }
@@ -855,7 +998,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(0_i64).exp()",
+          "input": "exp(n(0))",
           "output": "1.0",
           "verdict": "agree"
         }
@@ -872,7 +1015,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(1_i64).exp()",
+          "input": "exp(n(1))",
           "output": "2.718281828459045",
           "verdict": "agree"
         }
@@ -889,11 +1032,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((f64of(f64of(5_i64).ln()).exp()) == (5_i64))",
-          "output": "compile: mismatched types: expected `f64`, found `i64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(exp(ln(n(5))), n(5))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Multiply\",[\"Exp\",2],[\"Exp\",3]],[\"Exp\",5]]": {
@@ -908,7 +1049,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "(((f64of(2_i64).exp() * f64of(3_i64).exp())) == (f64of(5_i64).exp()))",
+          "input": "equal((exp(n(2)) * exp(n(3))), exp(n(5)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -927,11 +1068,11 @@
           "note": "compute-engine's Exp is Listable and threads over the list; Sage's takes scalars only."
         },
         "rust": {
-          "input": "f64of(vec![0_i64, 1_i64]).exp()",
-          "output": "compile: the trait bound `Vec<i64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "input": "exp(list(vec![n(0), n(1)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
           "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "threading",
+          "note": "compute-engine's Exp is Listable and threads over the list; the Rust crates take scalars."
         }
       }
     },
@@ -948,7 +1089,7 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "f64of(1_i64).ln()",
+          "input": "ln(n(1))",
           "output": "0.0",
           "verdict": "agree"
         }
@@ -962,6 +1103,11 @@
         "sage": {
           "input": "log(e)",
           "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "ln(x(std::f64::consts::E))",
+          "output": "1.0",
           "verdict": "agree"
         }
       },
@@ -979,11 +1125,9 @@
           "note": "Both mean the same signed infinity; our symbol prints as 'NegativeInfinity', Sage's log(0) prints as '-Infinity' -- a spelling mismatch the text comparator can't bridge."
         },
         "rust": {
-          "input": "f64of(0_i64).ln()",
-          "output": "-inf",
-          "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "input": "ln(n(0))",
+          "output": "NegativeInfinity",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Ln\",[\"Exp\",5]],5]": {
@@ -998,11 +1142,9 @@
           "verdict": "agree"
         },
         "rust": {
-          "input": "((f64of(f64of(5_i64).exp()).ln()) == (5_i64))",
-          "output": "compile: mismatched types: expected `f64`, found `i64`",
-          "verdict": "error",
-          "kind": "unclassified",
-          "note": ""
+          "input": "equal(ln(exp(n(5))), n(5))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Add\",[\"Ln\",2],[\"Ln\",3]],[\"Ln\",6]]": {
@@ -1019,7 +1161,7 @@
           "note": "True mathematically; Sage's bool(a==b) on unevaluated symbolic logs doesn't invoke a log-identity simplification by default and reports False rather than attempting the proof."
         },
         "rust": {
-          "input": "(((f64of(2_i64).ln() + f64of(3_i64).ln())) == (f64of(6_i64).ln()))",
+          "input": "equal((ln(n(2)) + ln(n(3))), ln(n(6)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -1038,11 +1180,11 @@
           "note": "A negative real stays symbolic under plain evaluation here (N() gives i*pi); Sage's log(-1) continues straight to the exact complex value I*pi."
         },
         "rust": {
-          "input": "f64of(-1_i64).ln()",
+          "input": "ln(n(-1))",
           "output": "NaN",
           "verdict": "disagree",
-          "kind": "unclassified",
-          "note": ""
+          "kind": "domain",
+          "note": "Rust's f64 ln is real-only and gives NaN; compute-engine continues into the complex plane."
         }
       }
     },
