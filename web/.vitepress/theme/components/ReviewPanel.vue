@@ -230,9 +230,9 @@ onBeforeUnmount(() => {
       <details class="review-help">
         <summary>Help</summary>
         <p>
-          <code>?review</code> in the URL turns review mode on for this browser (persists via
-          localStorage); <code>?review=off</code> turns it off. It's on by default under
-          <code>vitepress dev</code>.
+          Review mode exists under <code>vitepress dev</code> (or a build made with
+          <code>VITE_REVIEW=1</code>), where it's on by default. <code>?review=off</code> turns it
+          off for this browser, and <code>?review</code> back on. The panel starts collapsed.
         </p>
         <p>
           Alt + Cmd-click (macOS) or Alt + Ctrl-click (elsewhere) on any anchored element -- an

@@ -1,12 +1,16 @@
-// Review mode's on/off switch. ON by default under `vitepress dev`, opt-in
-// everywhere else (prod, CF previews) -- see AGENTS.md. `?review` in the URL sets a
-// persistent localStorage flag; `?review=off` clears it. This module is small and
-// import.meta.env.DEV/localStorage-only, so it's fine to keep in the main bundle --
-// it's what Layout.vue reads to decide whether to even render the (lazy-loaded, see
-// components/ReviewPanel.vue) panel at all.
+// Review mode's on/off switch. It exists only under `vitepress dev`, or in a build made
+// with `VITE_REVIEW=1`; prod and the CF previews never show it. Where it exists it's on
+// by default, and `?review=off` / `?review` turn it off and on again for this browser
+// (a persistent localStorage flag). This module is small and localStorage-only, so it's
+// fine to keep in the main bundle -- it's what Layout.vue reads to decide whether to even
+// render the (lazy-loaded, see components/ReviewPanel.vue) panel at all.
 import { ref } from "vue";
 
 const KEY = "review-mode";
+
+/** Build-time: false in a prod build, so the panel's chunk is never even requested there. */
+export const REVIEW_AVAILABLE: boolean =
+  import.meta.env.DEV || import.meta.env["VITE_REVIEW"] === "1";
 
 function readStored(): boolean | undefined {
   try {
@@ -28,6 +32,7 @@ function persist(on: boolean): void {
 }
 
 function computeInitial(): boolean {
+  if (!REVIEW_AVAILABLE) return false;
   const params = new URLSearchParams(location.search);
   if (params.has("review")) {
     const v = params.get("review");
@@ -35,7 +40,7 @@ function computeInitial(): boolean {
     persist(on);
     return on;
   }
-  return readStored() ?? import.meta.env.DEV;
+  return readStored() ?? true;
 }
 
 /** Module-level singleton -- one flag for the whole client session, read by
@@ -50,6 +55,7 @@ export function initReviewMode(): void {
 }
 
 export function setReviewMode(on: boolean): void {
+  if (!REVIEW_AVAILABLE) return;
   persist(on);
   reviewModeOn.value = on;
 }
