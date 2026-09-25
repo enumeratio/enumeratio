@@ -134,6 +134,34 @@ test("composition restrictions agree with their kernels for n = 0..8", () => {
   }
 });
 
+const PARTITION_RESTRICTION_NAMES = new Set([
+  "OddPartitions",
+  "PrimePartition",
+  "SquarePartitions",
+  "TriangularPartitions",
+]);
+
+test("partition restrictions agree with their kernels for n = 0..8", () => {
+  // Same recipe as the generic SET differential above, but out to n = 8 — the kernel elements,
+  // as a SET, must equal Filter(IntegerPartitions(n), predicate).
+  for (const restriction of RESTRICTIONS) {
+    if (!PARTITION_RESTRICTION_NAMES.has(restriction.name)) continue;
+    if (!ce.lookupDefinition(restriction.name)) continue;
+    for (let n = 0; n <= 8; n++) {
+      const specified = [
+        "Restricted",
+        [restriction.base, n],
+        ["Function", fillPredicate(restriction.predicate, "_e", "_e"), "_e"],
+      ];
+      const kernel = [restriction.name, n];
+      expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
+      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(
+        members(kernel).sort(),
+      );
+    }
+  }
+});
+
 test("every restriction names a base collection and a carrier that exist", () => {
   for (const restriction of RESTRICTIONS) {
     expect(ce.lookupDefinition(restriction.base), restriction.base).toBeTruthy();

@@ -221,6 +221,12 @@ export const HEADS: Record<string, string> = {
   Shape: "Dimensions",
   Repeat: "ConstantArray",
   Random: "RandomReal",
+  // AllTrue/AnyTrue require a test (Wolfram's 1-arg form doesn't evaluate either), so the
+  // no-predicate form of All/Any is inert on both sides — no arity check needed here.
+  All: "AllTrue",
+  Any: "AnyTrue",
+  // Same order on both sides: Fold(f, init, xs) is Fold[f, x, list].
+  Fold: "Fold",
   // Divides(a, b) asks whether a divides b; Wolfram's Divisible(n, m) asks whether m
   // divides n — same relation, arguments swapped. See SPECIAL.
   Divides: "Divisible",
@@ -244,6 +250,9 @@ export const HEADS: Record<string, string> = {
   // so they are left out of both HEADS and FOREIGN and fall through by name, harmlessly.
   Wedge: "Wedge",
   Vee: "Vee",
+  MixedRadixNumerals: "MixedRadix",
+  // The old spelling, kept as a numerals-package alias (see `NUMERAL_ALIASES`) — same
+  // head, same name as Wolfram's, so it belongs here too rather than falling through.
   MixedRadix: "MixedRadix",
   Coproduct: "Coproduct",
   SymmetricGroup: "SymmetricGroup",
@@ -350,6 +359,16 @@ export const HEADS: Record<string, string> = {
  *  the same way it excludes a plain rename. */
 export const STRUCTURAL: Record<string, string> = {
   Total: "Sum",
+  // `Array[f, n]` is our `Tabulate(f, n)` renamed straight, but the multi-dimensional
+  // `Array[f, {n, m}]` reshapes the dims into a list (see the `Tabulate` case in SPECIAL),
+  // so it can't sit in HEADS, which maps one spelling with no shape change.
+  Array: "Tabulate",
+  // `FoldList[f, list]` (no seed) is our `Scan(list, f)` reordered — see SPECIAL. The
+  // seeded `FoldList[f, x, list]` is length+1 and has no Scan equivalent.
+  FoldList: "Scan",
+  // `Accumulate[list]` is `FoldList[Plus, list]`, our `Scan(list, Add)` — one-way (from
+  // Wolfram only; compute-engine has no `Accumulate` head to map back from).
+  Accumulate: "Scan",
 };
 
 /** The context our heads emit into when Wolfram has the name for something else.
@@ -421,6 +440,21 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // Divides(a, b) is "a divides b"; Divisible(n, m) is "n is divisible by m" — the
   // same relation with divisor and multiple swapped.
   Divides: (a) => `Divisible[${toWolfram(a[1])}, ${toWolfram(a[0])}]`,
+  // Tabulate(f, n) is Array[f, n]; Tabulate(f, n1, n2, ...) needs the dims collected into
+  // a list for Wolfram's multi-dimensional Array[f, {n1, n2, ...}].
+  Tabulate: (a) =>
+    a.length >= 3
+      ? `Array[${toWolfram(a[0])}, List[${a
+          .slice(1)
+          .map((d) => toWolfram(d))
+          .join(", ")}]]`
+      : call("Array", a),
+  // Scan(xs, f) is same-length as xs, matching Wolfram's no-seed FoldList[f, list] with
+  // the args reordered. Scan(xs, f, init) is ALSO same-length while FoldList[f, x, list]
+  // is length+1, so only the 2-arg form maps; the seeded form goes out in our context,
+  // since Wolfram's Scan is an unrelated side-effecting map.
+  Scan: (a) =>
+    a.length === 2 ? `FoldList[${toWolfram(a[1])}, ${toWolfram(a[0])}]` : call(`${CONTEXT}Scan`, a),
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */
@@ -465,7 +499,8 @@ function symbolToWolfram(s: string): string {
   if (slot) return `Slot[${slot[1] || 1}]`;
   const subscript = /^([A-Za-z][A-Za-z0-9]*)_([A-Za-z0-9]+)$/.exec(s);
   if (subscript) return `Subscript[${subscript[1]}, ${subscript[2]}]`;
-  return SYMBOLS[s] ?? s;
+  // A head passed as a value (`Scan(xs, Add)`) takes its Wolfram name too.
+  return SYMBOLS[s] ?? HEADS[s] ?? s;
 }
 
 function numberToWolfram(n: number | string): string {

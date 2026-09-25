@@ -192,6 +192,55 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   // KBoundedCompositions(n, k) is skipped — a Restriction is `(integer) -> collection`, one
   // size parameter; k isn't expressible in that shape.
+
+  // ── partitions — an IntegerPartition is also a plain list<integer>, so the same per-part
+  // predicates over `_raw` apply directly. LargestPartPartitions(n, m) is skipped for the same
+  // reason as KBoundedCompositions: m isn't expressible as a Restriction's single size parameter.
+  {
+    name: "OddPartitions",
+    base: "IntegerPartitions",
+    on: "integer_partition",
+    predicate: ["All", "_raw", ["Function", ["Equal", ["Mod", "_", 2], 1], "_"]],
+    summary: "Partitions into odd parts.",
+  },
+  {
+    name: "PrimePartition",
+    base: "IntegerPartitions",
+    on: "integer_partition",
+    predicate: ["All", "_raw", ["Function", ["IsPrime", "_"], "_"]],
+    summary: "Partitions into prime parts.",
+  },
+  {
+    name: "SquarePartitions",
+    base: "IntegerPartitions",
+    on: "integer_partition",
+    predicate: [
+      "All",
+      "_raw",
+      ["Function", ["Equal", ["Sqrt", "_"], ["Floor", ["Sqrt", "_"]]], "_"],
+    ],
+    summary: "Partitions into perfect-square parts.",
+  },
+  {
+    name: "TriangularPartitions",
+    base: "IntegerPartitions",
+    on: "integer_partition",
+    predicate: [
+      "All",
+      "_raw",
+      [
+        "Function",
+        [
+          "Equal",
+          ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]],
+          ["Floor", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]]],
+        ],
+        "_",
+      ],
+    ],
+    // 8s+1 is always odd, so an integer square root is automatically odd too — no extra check.
+    summary: "Partitions into triangular-number parts {1,3,6,10,…}.",
+  },
 ];
 
 /** Fill a predicate's wildcards BEFORE boxing.

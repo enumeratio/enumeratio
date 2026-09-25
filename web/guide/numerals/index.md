@@ -13,20 +13,24 @@ still goes to the native handler, unchanged.
 
 ## One slot, many systems
 
-| System                   | Digits                           | Notes                           |
-| ------------------------ | -------------------------------- | ------------------------------- |
-| `2`, `16`, …             | 0…b−1                            | compute-engine's own, untouched |
-| `MixedRadix([…])`        | a different bound per place      | days/hours/minutes/seconds      |
-| `Factoradic`             | place k holds at most k          | the Lehmer code                 |
-| `PrimorialRadix`         | place k below the (k+1)-th prime | factoradic with primes          |
-| `BalancedRadix(b)`       | −(b−1)/2 … (b−1)/2               | **signless negatives**          |
-| `NegativeRadix(b)`       | 0…b−1 over (−b)^k                | **signless negatives**          |
-| `BijectiveRadix(k)`      | 1…k, no zero digit               | spreadsheet columns             |
-| `Zeckendorf`             | binary over Fibonacci places     | **no two adjacent ones**        |
-| `CombinatorialSystem(k)` | a strictly decreasing k-tuple    | k-subset unranking              |
-| `ResidueSystem([…])`     | independent residues             | **no place values at all**      |
-| `Ostrowski([…])`         | digits over a continued fraction | **generalises Zeckendorf**      |
-| `AdicNumerals(b, prec?)` | base b, infinite to the LEFT     | **negatives are all nines**     |
+| System                     | Digits                           | Notes                           |
+| -------------------------- | -------------------------------- | ------------------------------- |
+| `2`, `16`, …               | 0…b−1                            | compute-engine's own, untouched |
+| `MixedRadixNumerals([…])`  | a different bound per place      | days/hours/minutes/seconds      |
+| `FactorialNumerals`        | place k holds at most k          | the Lehmer code                 |
+| `PrimorialNumerals`        | place k below the (k+1)-th prime | factoradic with primes          |
+| `BalancedNumerals(b)`      | −(b−1)/2 … (b−1)/2               | **signless negatives**          |
+| `NegativeNumerals(b)`      | 0…b−1 over (−b)^k                | **signless negatives**          |
+| `BijectiveNumerals(k)`     | 1…k, no zero digit               | spreadsheet columns             |
+| `ZeckendorfNumerals`       | binary over Fibonacci places     | **no two adjacent ones**        |
+| `CombinatorialNumerals(k)` | a strictly decreasing k-tuple    | k-subset unranking              |
+| `ResidueNumerals([…])`     | independent residues             | **no place values at all**      |
+| `OstrowskiNumerals([…])`   | digits over a continued fraction | **generalises Zeckendorf**      |
+| `AdicNumerals(b, prec?)`   | base b, infinite to the LEFT     | **negatives are all nines**     |
+
+The old names (`Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`,
+`BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`,
+`MixedRadix`) still work — each evaluates to its `…Numerals` spelling above.
 
 Four of those are not "base-b with a twist": Zeckendorf and Ostrowski constrain digits by
 a _forbidden pattern_ instead of a per-place bound, the residue system has _no place
@@ -37,8 +41,8 @@ left — and it comes with a value type and arithmetic of its own:
 
 <Story title="The base slot is a system">
 <template #description>93 784 seconds is 1 day, 2 hours, 3 minutes, 4 seconds.</template>
-<notatio-cell value="IntegerDigits(93784, MixedRadix([24, 60, 60]))" />
-<notatio-cell value="FromDigits([1, 2, 3, 4], MixedRadix([24, 60, 60]))" />
+<notatio-cell value="IntegerDigits(93784, MixedRadixNumerals([24, 60, 60]))" />
+<notatio-cell value="FromDigits([1, 2, 3, 4], MixedRadixNumerals([24, 60, 60]))" />
 <notatio-cell value="IntegerDigits(255, 16)" />
 </Story>
 
@@ -52,7 +56,7 @@ _same computation_. Pad to one digit per position and the two line up exactly:
 
 <Story title="Factoradic = Lehmer code">
 <template #description>The padded factoradic digits of 5, and the 6th permutation of four things. The code says: take item 0, then item 2 of what is left, then item 1, then the last.</template>
-<notatio-cell value="IntegerDigits(5, Factoradic, 4)" />
+<notatio-cell value="IntegerDigits(5, FactorialNumerals, 4)" />
 <notatio-cell value="SymmetricGroup(4)[6]" />
 </Story>
 
@@ -62,7 +66,7 @@ the n-th k-subset in colexicographic order.
 
 <Story title="Combinatorial system = KSubsets">
 <template #description>Digits [3,2,1] are the 0-based subset; add one to each and you get {2,3,4}, which is the 4th 3-subset.</template>
-<notatio-cell value="IntegerDigits(3, CombinatorialSystem(3))" />
+<notatio-cell value="IntegerDigits(3, CombinatorialNumerals(3))" />
 <notatio-cell value="KSubsets(5, 3)[4]" />
 </Story>
 
@@ -77,9 +81,9 @@ number is negating each digit**.
 
 <Story title="Signless">
 <template #description>5 is 9−3−1, and −5 is its digit-wise negation. Compare the last cell: fixed radix has to drop the sign.</template>
-<notatio-cell value="IntegerDigits(5, BalancedRadix(3))" />
-<notatio-cell value="IntegerDigits(-5, BalancedRadix(3))" />
-<notatio-cell value="IntegerDigits(3, NegativeRadix(2))" />
+<notatio-cell value="IntegerDigits(5, BalancedNumerals(3))" />
+<notatio-cell value="IntegerDigits(-5, BalancedNumerals(3))" />
+<notatio-cell value="IntegerDigits(3, NegativeNumerals(2))" />
 <notatio-cell value="IntegerDigits(-5, 2)" />
 </Story>
 
@@ -92,9 +96,9 @@ A string with two adjacent ones denotes nothing, and `FromDigits` says so by dec
 
 <Story title="Zeckendorf">
 <template #description>100 = 89 + 8 + 3. The last cell is not a numeral, so it is left standing.</template>
-<notatio-cell value="IntegerDigits(100, Zeckendorf)" />
-<notatio-cell value="FromDigits([1, 0, 0, 0, 0, 1, 0, 1, 0, 0], Zeckendorf)" />
-<notatio-cell value="FromDigits([1, 1], Zeckendorf)" />
+<notatio-cell value="IntegerDigits(100, ZeckendorfNumerals)" />
+<notatio-cell value="FromDigits([1, 0, 0, 0, 0, 1, 0, 1, 0, 0], ZeckendorfNumerals)" />
+<notatio-cell value="FromDigits([1, 1], ZeckendorfNumerals)" />
 </Story>
 
 ## Zeckendorf is one continued fraction's worth
@@ -117,10 +121,10 @@ package checks the two against each other rather than taking that on trust.
 
 <Story title="A continued fraction as a numeral system">
 <template #description>All quotients 1 is φ, and the digits are Zeckendorf's with one extra forced zero.</template>
-<notatio-cell value="IntegerDigits(20, Ostrowski([1, 1, 1, 1, 1, 1, 1, 1]))" />
-<notatio-cell value="IntegerDigits(20, Zeckendorf)" />
-<notatio-cell value="IntegerDigits(9, Ostrowski([2, 2, 2]))" />
-<notatio-cell value="FromDigits([1, 2, 1], Ostrowski([2, 2, 2]))" />
+<notatio-cell value="IntegerDigits(20, OstrowskiNumerals([1, 1, 1, 1, 1, 1, 1, 1]))" />
+<notatio-cell value="IntegerDigits(20, ZeckendorfNumerals)" />
+<notatio-cell value="IntegerDigits(9, OstrowskiNumerals([2, 2, 2]))" />
+<notatio-cell value="FromDigits([1, 2, 1], OstrowskiNumerals([2, 2, 2]))" />
 </Story>
 
 The last cell declines: the middle digit is already at its ceiling, so nothing below it
@@ -139,10 +143,10 @@ inconsistent.
 
 <Story title="Carry-free arithmetic">
 <template #description>23 + 41 = 64, done channel by channel: (2+2, 3+1, 2+6) reduced is (1,4,1), which reads back as 64 — no carries between channels.</template>
-<notatio-cell value="IntegerDigits(23, ResidueSystem([3, 5, 7]))" />
-<notatio-cell value="IntegerDigits(41, ResidueSystem([3, 5, 7]))" />
-<notatio-cell value="FromDigits([1, 4, 1], ResidueSystem([3, 5, 7]))" />
-<notatio-cell value="NumeralSystemShape(ResidueSystem([4, 6]))" />
+<notatio-cell value="IntegerDigits(23, ResidueNumerals([3, 5, 7]))" />
+<notatio-cell value="IntegerDigits(41, ResidueNumerals([3, 5, 7]))" />
+<notatio-cell value="FromDigits([1, 4, 1], ResidueNumerals([3, 5, 7]))" />
+<notatio-cell value="NumeralSystemShape(ResidueNumerals([4, 6]))" />
 </Story>
 
 These are the same CRT channels the [hypercomplex
@@ -168,10 +172,10 @@ are no leading-zero ambiguities. Map 1…26 to A…Z and you get the column lett
 Z, 27 is AA, 702 is ZZ, 703 is AAA. Note that there is **no numeral for zero** at all.
 
 <Story title="A, …, Z, AA, …">
-<notatio-cell value="IntegerDigits(26, BijectiveRadix(26))" />
-<notatio-cell value="IntegerDigits(27, BijectiveRadix(26))" />
-<notatio-cell value="IntegerDigits(703, BijectiveRadix(26))" />
-<notatio-cell value="IntegerDigits(0, BijectiveRadix(26))" />
+<notatio-cell value="IntegerDigits(26, BijectiveNumerals(26))" />
+<notatio-cell value="IntegerDigits(27, BijectiveNumerals(26))" />
+<notatio-cell value="IntegerDigits(703, BijectiveNumerals(26))" />
+<notatio-cell value="IntegerDigits(0, BijectiveNumerals(26))" />
 </Story>
 
 ## Things worth knowing

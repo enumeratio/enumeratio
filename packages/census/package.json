@@ -35,6 +35,7 @@
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
     "@enumeratio/quiver": "workspace:*",
+    "@enumeratio/reference": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "@enumeratio/statistics": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",

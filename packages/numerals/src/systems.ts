@@ -77,7 +77,7 @@ export function balancedRadix(b: number): NumeralSystem | undefined {
   if (!isInt(b) || b < 3 || b % 2 === 0) return undefined;
   const half = (b - 1) / 2;
   return {
-    name: `BalancedRadix(${b})`,
+    name: `BalancedNumerals(${b})`,
     shape: { bijective: true, range: ALL, digits: [-half, half] },
     toDigits: (n) => {
       if (!isInt(n)) return undefined;
@@ -106,7 +106,7 @@ export function balancedRadix(b: number): NumeralSystem | undefined {
 export function negativeRadix(b: number): NumeralSystem | undefined {
   if (!isInt(b) || b < 2) return undefined;
   return {
-    name: `NegativeRadix(${b})`,
+    name: `NegativeNumerals(${b})`,
     shape: { bijective: true, range: ALL, digits: [0, b - 1] },
     toDigits: (n) => {
       if (!isInt(n)) return undefined;
@@ -135,7 +135,7 @@ export function negativeRadix(b: number): NumeralSystem | undefined {
 export function bijectiveRadix(k: number): NumeralSystem | undefined {
   if (!isInt(k) || k < 1) return undefined;
   return {
-    name: `BijectiveRadix(${k})`,
+    name: `BijectiveNumerals(${k})`,
     shape: {
       bijective: true,
       range: NATURALS,
@@ -178,7 +178,7 @@ export function mixedRadix(bases: readonly number[]): NumeralSystem | undefined 
   const weights = bases.map((_, i) => bases.slice(i + 1).reduce((a, b) => a * b, 1));
   const total = bases.reduce((a, b) => a * b, 1);
   return {
-    name: `MixedRadix(${bases.join(",")})`,
+    name: `MixedRadixNumerals(${bases.join(",")})`,
     shape: {
       bijective: true,
       range: NATURALS,
@@ -211,7 +211,7 @@ export function mixedRadix(bases: readonly number[]): NumeralSystem | undefined 
  */
 export function factoradic(): NumeralSystem {
   return {
-    name: "Factoradic",
+    name: "FactorialNumerals",
     shape: {
       bijective: true,
       range: NATURALS,
@@ -251,7 +251,7 @@ const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 
  */
 export function primorialRadix(): NumeralSystem {
   return {
-    name: "PrimorialRadix",
+    name: "PrimorialNumerals",
     shape: {
       bijective: true,
       range: NATURALS,
@@ -305,7 +305,7 @@ function fibonacciWeights(limit: number): number[] {
  */
 export function zeckendorf(): NumeralSystem {
   return {
-    name: "Zeckendorf",
+    name: "ZeckendorfNumerals",
     shape: {
       bijective: true,
       range: NATURALS,
@@ -357,7 +357,7 @@ const binomial = (n: number, k: number): number => {
 export function combinatorialSystem(k: number): NumeralSystem | undefined {
   if (!isInt(k) || k < 1) return undefined;
   return {
-    name: `CombinatorialSystem(${k})`,
+    name: `CombinatorialNumerals(${k})`,
     shape: {
       bijective: true,
       range: NATURALS,
@@ -403,7 +403,7 @@ export function residueSystem(moduli: readonly number[]): NumeralSystem | undefi
   );
   const total = moduli.reduce((a, b) => a * b, 1);
   return {
-    name: `ResidueSystem(${moduli.join(",")})`,
+    name: `ResidueNumerals(${moduli.join(",")})`,
     shape: {
       bijective: coprime,
       range: [0n, BigInt(total - 1)],
@@ -469,7 +469,7 @@ export function ostrowski(quotients: readonly number[]): NumeralSystem | undefin
     return true;
   };
   return {
-    name: `Ostrowski([${quotients.join(", ")}])`,
+    name: `OstrowskiNumerals([${quotients.join(", ")}])`,
     shape: {
       bijective: true,
       range: [0n, BigInt(places[m]! - 1)],

@@ -646,7 +646,7 @@ export const residues: readonly ReferenceEntry[] = [
         expected: ["IntegerMod", 23, 105],
         category: "Scope",
         caption:
-          "over classes, the answer is a class — and reading `ResidueSystem([3, 5, 7])` digits back with [[FromDigits]] is the same computation",
+          "over classes, the answer is a class — and reading `ResidueNumerals([3, 5, 7])` digits back with [[FromDigits]] is the same computation",
       },
       {
         expr: ["ChineseRemainder", ["List", 1, 2], ["List", 6, 10]],

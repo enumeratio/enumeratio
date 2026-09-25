@@ -169,7 +169,7 @@ test("where the systems agree and differ on the same integers", () => {
   for (const n of [3, 42, 1234, 4999]) {
     const digits = value(["IntegerDigits", n, ["AdicNumerals", 10, 4]]) as Expr;
     const truncated = value(["FromDigits", digits, 10]) as number;
-    expect(value(["IntegerDigits", n, ["ResidueSystem", L(16, 625)]])).toEqual(
+    expect(value(["IntegerDigits", n, ["ResidueNumerals", L(16, 625)]])).toEqual(
       L(truncated % 16, truncated % 625),
     );
   }

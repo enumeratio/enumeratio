@@ -5,6 +5,7 @@ import { entries as pathsPartitions } from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
 import { entries as permutations } from "./permutations.ts";
 import { entries as compositions } from "./compositions.ts";
+import { entries as partitions } from "./partitions.ts";
 import type { FamilyKernel } from "./types.ts";
 
 export * from "./types.ts";
@@ -18,4 +19,5 @@ export const allEntries: readonly FamilyKernel[] = [
   ...tableauxTrees,
   ...permutations,
   ...compositions,
+  ...partitions,
 ];

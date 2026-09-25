@@ -7,6 +7,8 @@ import { combinatorics } from "./entries/combinatorics.ts";
 import combinatoricsOracle from "./entries/combinatorics.oracle.json" with { type: "json" };
 import { collections } from "./entries/collections.ts";
 import collectionsOracle from "./entries/collections.oracle.json" with { type: "json" };
+import { lists } from "./entries/lists.ts";
+import listsOracle from "./entries/lists.oracle.json" with { type: "json" };
 import { enumerableFamilies } from "./entries/enumerable-families.ts";
 import enumerableFamiliesOracle from "./entries/enumerable-families.oracle.json" with { type: "json" };
 import { diagramAlgebras } from "./entries/diagram.ts";
@@ -94,6 +96,7 @@ const SIDECARS: readonly OracleSidecar[] = [
   arithmeticOracle,
   combinatoricsOracle,
   collectionsOracle,
+  listsOracle,
   enumerableFamiliesOracle,
   diagramOracle,
   elementaryOracle,
@@ -127,6 +130,7 @@ export const oracleSidecars: Readonly<Record<string, OracleSidecar>> = {
   arithmetic: arithmeticOracle,
   combinatorics: combinatoricsOracle,
   collections: collectionsOracle,
+  lists: listsOracle,
   "enumerable-families": enumerableFamiliesOracle,
   diagram: diagramOracle,
   elementary: elementaryOracle,
@@ -179,6 +183,7 @@ export const entryFiles: readonly { stem: string; entries: readonly ReferenceEnt
   { stem: "modular", entries: attach(modularOracle, modular) },
   { stem: "braid", entries: attach(braidOracle, braids) },
   { stem: "collections", entries: attach(collectionsOracle, collections) },
+  { stem: "lists", entries: attach(listsOracle, lists) },
   { stem: "enumerable-families", entries: attach(enumerableFamiliesOracle, enumerableFamilies) },
 ];
 

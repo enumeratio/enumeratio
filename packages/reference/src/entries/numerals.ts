@@ -14,7 +14,7 @@ export const numerals: readonly ReferenceEntry[] = [
     domain: DOMAIN,
     signature: "IntegerDigits(n, base?, width?)",
     summary:
-      "The digits of $n$, most significant first — base 10 by default. The base slot takes a whole numeral SYSTEM, not only an integer — factoradic, Zeckendorf, Ostrowski, balanced, negative, bijective, mixed, primorial, combinatorial or residue.",
+      "The digits of $n$, most significant first — base 10 by default. The base slot takes a whole numeral SYSTEM, not only an integer — factorial, Zeckendorf, Ostrowski, balanced, negative, bijective, mixed-radix, primorial, combinatorial or residue.",
     signatures: [
       {
         call: "IntegerDigits(n)",
@@ -41,9 +41,9 @@ export const numerals: readonly ReferenceEntry[] = [
       "In a fixed base the sign of n is discarded, so negative integers give the same digits as their absolute value.",
       "IntegerDigits(0) is $\\{0\\}$ -- there's always at least one digit.",
       "The 3-argument form keeps only the len least-significant digits, truncating or zero-padding as needed.",
-      "Systems: `MixedRadix([…])`, `Factoradic`, `PrimorialRadix`, `BalancedRadix(b)`, `NegativeRadix(b)`, `BijectiveRadix(k)`, `Zeckendorf`, `Ostrowski([…])`, `CombinatorialSystem(k)`, `ResidueSystem([…])`, `AdicNumerals(b, prec?)`",
-      "`Ostrowski([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf",
-      "`BalancedRadix` and `NegativeRadix` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead",
+      "Systems: `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`",
+      "`OstrowskiNumerals([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf",
+      "`BalancedNumerals` and `NegativeNumerals` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead",
       "The factoradic digits of $n$ are the Lehmer code of the $n$-th permutation, so padding to the permutation's size makes the two line up",
       "An integer with no numeral in a system — anything past $\\prod m_i$ in a residue system, say — leaves the call standing rather than answering",
       "Bijective bases have no zero DIGIT, but zero itself is the empty numeral: that is what makes the correspondence with strings a bijection",
@@ -81,41 +81,41 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "compute-engine does not",
       },
       {
-        expr: ["IntegerDigits", 93784, ["MixedRadix", L(24, 60, 60)]],
+        expr: ["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]],
         expected: L(1, 2, 3, 4),
         caption: "93 784 seconds as days, hours, minutes, seconds",
       },
       {
-        expr: ["IntegerDigits", 5, "Factoradic", 4],
+        expr: ["IntegerDigits", 5, "FactorialNumerals", 4],
         expected: L(0, 2, 1, 0),
         caption: "the Lehmer code of the 6th permutation of four things",
         category: "Applications",
       },
       {
-        expr: ["IntegerDigits", 100, "Zeckendorf"],
+        expr: ["IntegerDigits", 100, "ZeckendorfNumerals"],
         expected: L(1, 0, 0, 0, 0, 1, 0, 1, 0, 0),
         caption: "$100 = 89 + 8 + 3$, with no two adjacent ones",
       },
       {
-        expr: ["IntegerDigits", 20, ["Ostrowski", L(1, 1, 1, 1, 1, 1, 1, 1)]],
+        expr: ["IntegerDigits", 20, ["OstrowskiNumerals", L(1, 1, 1, 1, 1, 1, 1, 1)]],
         expected: L(0, 1, 0, 1, 0, 1, 0, 0),
         caption: "the same $20 = 13 + 5 + 2$, over a continued fraction's convergents",
         category: "Scope",
       },
       {
-        expr: ["IntegerDigits", -5, ["BalancedRadix", 3]],
+        expr: ["IntegerDigits", -5, ["BalancedNumerals", 3]],
         expected: L(-1, 1, 1),
         caption: "a negative integer, with no sign",
         category: "Scope",
       },
       {
-        expr: ["IntegerDigits", 703, ["BijectiveRadix", 26]],
+        expr: ["IntegerDigits", 703, ["BijectiveNumerals", 26]],
         expected: L(1, 1, 1),
         caption: "spreadsheet column AAA",
         category: "Scope",
       },
       {
-        expr: ["IntegerDigits", 23, ["ResidueSystem", L(3, 5, 7)]],
+        expr: ["IntegerDigits", 23, ["ResidueNumerals", L(3, 5, 7)]],
         expected: L(2, 3, 2),
         caption: "independent residues — no place values",
         category: "Scope",
@@ -134,8 +134,8 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
-        expr: ["IntegerDigits", -3, "Factoradic"],
-        expected: ["IntegerDigits", -3, "Factoradic"],
+        expr: ["IntegerDigits", -3, "FactorialNumerals"],
+        expected: ["IntegerDigits", -3, "FactorialNumerals"],
         caption:
           "no numeral for a negative in a system that spells only $n \\ge 0$; the message says which integers it does spell",
         category: "Possible issues",
@@ -168,7 +168,7 @@ export const numerals: readonly ReferenceEntry[] = [
       "A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies",
       "In a residue system with moduli that are not pairwise coprime the map is not a bijection, and an inconsistent string has no value",
       "Zeckendorf is the clearest case of a system whose digits are constrained by a forbidden PATTERN rather than a per-place bound",
-      "Reading a `ResidueSystem` numeral IS the Chinese remainder theorem: the digits are the [[IntegerMod]] classes of $n$, and [[ChineseRemainder]] of those classes gives it back",
+      "Reading a `ResidueNumerals` numeral IS the Chinese remainder theorem: the digits are the [[IntegerMod]] classes of $n$, and [[ChineseRemainder]] of those classes gives it back",
       "In a fixed base, the inverse of [[IntegerDigits]]: $\\mathrm{FromDigits}(\\mathrm{IntegerDigits}(n))=n$ for $n\\ge0$.",
       "Digits need not be restricted to $0..\\mathrm{base}-1$ -- a digit $\\ge$ base simply carries into higher place values.",
       "An empty digit list has no natural value; compute-engine leaves it unevaluated rather than returning 0.",
@@ -210,24 +210,24 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "compute-engine's FromDigits only takes a list of digits",
       },
       {
-        expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadix", L(24, 60, 60)]],
+        expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadixNumerals", L(24, 60, 60)]],
         expected: 93784,
         caption: "1d 2h 3m 4s back to seconds",
       },
       {
-        expr: ["FromDigits", L(0, 2, 1, 0), "Factoradic"],
+        expr: ["FromDigits", L(0, 2, 1, 0), "FactorialNumerals"],
         expected: 5,
         caption: "a Lehmer code back to its rank",
         category: "Applications",
       },
       {
-        expr: ["FromDigits", L(2, 3, 2), ["ResidueSystem", L(3, 5, 7)]],
+        expr: ["FromDigits", L(2, 3, 2), ["ResidueNumerals", L(3, 5, 7)]],
         expected: 23,
         caption: "CRT reconstruction",
       },
       {
-        expr: ["FromDigits", L(1, 1), "Zeckendorf"],
-        expected: ["FromDigits", L(1, 1), "Zeckendorf"],
+        expr: ["FromDigits", L(1, 1), "ZeckendorfNumerals"],
+        expected: ["FromDigits", L(1, 1), "ZeckendorfNumerals"],
         caption: "two adjacent ones is not a numeral, so it denotes nothing",
         category: "Possible issues",
       },
@@ -403,7 +403,7 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
-        expr: ["NumeralSystemShape", ["ResidueSystem", L(4, 6)]],
+        expr: ["NumeralSystemShape", ["ResidueNumerals", L(4, 6)]],
         expected: [
           "Dictionary",
           ["KeyValuePair", { str: "Bijective" }, "False"],
@@ -414,7 +414,7 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "4 and 6 share a factor, so this is not a bijection",
       },
       {
-        expr: ["NumeralSystemShape", "Zeckendorf"],
+        expr: ["NumeralSystemShape", "ZeckendorfNumerals"],
         expected: [
           "Dictionary",
           ["KeyValuePair", { str: "Bijective" }, "True"],
@@ -425,7 +425,7 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
-        expr: ["NumeralSystemShape", ["BalancedRadix", 3]],
+        expr: ["NumeralSystemShape", ["BalancedNumerals", 3]],
         expected: [
           "Dictionary",
           ["KeyValuePair", { str: "Bijective" }, "True"],

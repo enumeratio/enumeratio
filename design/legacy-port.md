@@ -119,14 +119,13 @@ but it was never built. Whether to make species the backbone here is an open dec
 
 ## 4. Collections without kernels
 
-189 of 282 catalogued collections have no declared head (`!ce.lookupDefinition(name)` over
+184 of 282 catalogued collections have no declared head (`!ce.lookupDefinition(name)` over
 census's `fullEngine()`). Of those, 89 are numeric sets (primes, perfect/abundant, figurate
 families…) — none declared yet, and the first sets the pattern for unbounded collections.
-The rest, by carrier: permutation
-classes (Baxter, separable, simple, vexillary, Grassmannian…), integer-partition variants,
-binary-word families (bracelets, Stern–Brocot/Calkin–Wilf paths), plane partitions,
-tableaux (semistandard, skew, shifted, Gelfand–Tsetlin, ASMs), unlabelled/phylogenetic
-trees, and a long tail of one-offs.
+The rest, by carrier: permutation classes (Baxter, separable, simple, vexillary,
+Grassmannian…), binary-word families (bracelets, Stern–Brocot/Calkin–Wilf paths), plane
+partitions, tableaux (semistandard, skew, shifted, Gelfand–Tsetlin, ASMs),
+unlabelled/phylogenetic trees, and a long tail of one-offs.
 
 Branches with content not yet here: `claude/234-gf` (bivariate and recurrence generating-
 function programs), `auto/symmetric-group-slice2-401` (cycle notation, Coxeter-length

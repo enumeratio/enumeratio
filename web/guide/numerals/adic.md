@@ -18,7 +18,7 @@ digit for digit. Everywhere else they part ways, and this page is a tour of wher
 <notatio-cell value="IntegerDigits(42, 10)" />
 <notatio-cell value="IntegerDigits(42, AdicNumerals(10, 6))" />
 <notatio-cell value="AdicExpansion(AdicNumeral(10, 42))" />
-<notatio-cell value="IntegerDigits(42, ResidueSystem([16, 625]))" />
+<notatio-cell value="IntegerDigits(42, ResidueNumerals([16, 625]))" />
 </Story>
 
 ## Negatives: a sign, or infinitely many nines
@@ -31,11 +31,11 @@ $-3$ mod 7 is 4 — which is the same idea cut at each modulus.
 <Story title="−3, four ways">
 <template #description>Positional, balanced, adic, residue. The adic string is the one that makes −3 + 3 = 0 by ordinary column addition.</template>
 <notatio-cell value="IntegerDigits(-3, 10)" />
-<notatio-cell value="IntegerDigits(-3, BalancedRadix(3))" />
+<notatio-cell value="IntegerDigits(-3, BalancedNumerals(3))" />
 <notatio-cell value="AdicExpansion(AdicNumeral(10, -3), 8)" />
 <notatio-cell value="IntegerDigits(-3, AdicNumerals(10, 8))" />
 <notatio-cell value="FromDigits([9, 9, 9, 9, 9, 9, 9, 7], AdicNumerals(10))" />
-<notatio-cell value="IntegerDigits(-3 % 77, ResidueSystem([7, 11]))" />
+<notatio-cell value="IntegerDigits(-3 % 77, ResidueNumerals([7, 11]))" />
 </Story>
 
 `FromDigits` with `AdicNumerals` reads a digit string back as the residue **nearest
@@ -63,8 +63,8 @@ independently**, which is the modular inverse.
 <template #description>Left: 10-adic, and its check. Right: the residue system's answer is 26, because 26 × 3 = 78 ≡ 1 mod 77 — and 26 is exactly what the last two adic digits give mod 100: 67 × 3 = 201.</template>
 <notatio-cell value="AdicExpansion(AdicNumeral(10, 1 / 3), 8)" />
 <notatio-cell value="AdicNumeral(10, 1 / 3) * 3" />
-<notatio-cell value="IntegerDigits(PowerMod(3, -1, 77), ResidueSystem([7, 11]))" />
-<notatio-cell value="FromDigits([5, 4], ResidueSystem([7, 11]))" />
+<notatio-cell value="IntegerDigits(PowerMod(3, -1, 77), ResidueNumerals([7, 11]))" />
+<notatio-cell value="FromDigits([5, 4], ResidueNumerals([7, 11]))" />
 <notatio-cell value="67 * 3 % 100" />
 </Story>
 
@@ -112,7 +112,7 @@ $2^k, 5^k$ is the $10$-adic truncation with its two factors pulled apart.
 <notatio-cell value="AdicExpansion(HenselLift(x ^ 2 - x, 6, 10, 8))" />
 <notatio-cell value="HenselLift(x ^ 2 - x, 5, 10, 8) * HenselLift(x ^ 2 - x, 6, 10, 8)" />
 <notatio-cell value="HenselLift(x ^ 2 - x, 5, 10, 8) + HenselLift(x ^ 2 - x, 6, 10, 8)" />
-<notatio-cell value="IntegerDigits(12890625, ResidueSystem([256, 390625]))" />
+<notatio-cell value="IntegerDigits(12890625, ResidueNumerals([256, 390625]))" />
 </Story>
 
 ## Roots that exist nowhere else
