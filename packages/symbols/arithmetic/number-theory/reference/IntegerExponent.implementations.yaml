@@ -1,0 +1,30 @@
+2000-5-3-cdot-16:
+  wolfram:
+    in: IntegerExponent[2000, 5]
+    out: "3"
+    tex:
+      in: \text{IntegerExponent}[2000,5]
+      out: "3"
+  sympy:
+    in: multiplicity(5, 2000)
+    out: "3"
+base-10-by-default:
+  wolfram:
+    in: IntegerExponent[2000]
+    out: "3"
+    tex:
+      in: \text{IntegerExponent}[2000]
+      out: "3"
+integerexponent-0-5:
+  wolfram:
+    in: IntegerExponent[0, 5]
+    out: Infinity
+    tex:
+      in: \text{IntegerExponent}[0,5]
+      out: \infty
+  sympy:
+    in: multiplicity(5, 0)
+    out: "ValueError: no such integer exists: multiplicity of 0 is not-defined"
+    verdict: error
+    kind: domain
+    note: compute-engine answers ∞ for the multiplicity of p in 0; SymPy's multiplicity declines.

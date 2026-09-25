@@ -1,0 +1,63 @@
+integerdigits-1-234:
+  wolfram:
+    in: IntegerDigits[1234]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{IntegerDigits}[1234]
+      out: \{1,2,3,4\}
+integerdigits-2-147-2:
+  wolfram:
+    in: IntegerDigits[2147, 2]
+    out: "{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}"
+    tex:
+      in: \text{IntegerDigits}[2147,2]
+      out: \{1,0,0,0,0,1,1,0,0,0,1,1\}
+unlike-integerstring-there-s-always-at-least-one:
+  wolfram:
+    in: IntegerDigits[0]
+    out: "{0}"
+    tex:
+      in: \text{IntegerDigits}[0]
+      out: \{0\}
+the-sign-is-discarded:
+  wolfram:
+    in: IntegerDigits[-3134]
+    out: "{3, 1, 3, 4}"
+    tex:
+      in: \text{IntegerDigits}[-3134]
+      out: \{3,1,3,4\}
+the-3-argument-form-keeps-only-the-4-least:
+  wolfram:
+    in: IntegerDigits[6345354, 10, 4]
+    out: "{5, 3, 5, 4}"
+    tex:
+      in: \text{IntegerDigits}[6345354,10,4]
+      out: \{5,3,5,4\}
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: IntegerDigits[List[6, 7, 2], 2]
+    out: "{{1, 1, 0}, {1, 1, 1}, {1, 0}}"
+    tex:
+      in: \text{IntegerDigits}[\{6,7,2\},2]
+      out: \{\{1,1,0\},\{1,1,1\},\{1,0\}\}
+ordinary-base-2-as-a-system-value-same-digits-as:
+  wolfram:
+    in: IntegerDigits[2147, 2]
+    out: "{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}"
+    tex:
+      in: \text{IntegerDigits}[2147,2]
+      out: \{1,0,0,0,0,1,1,0,0,0,1,1\}
+93-784-seconds-as-days-hours-minutes-seconds:
+  wolfram:
+    in: IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{IntegerDigits}[93784,\text{MixedRadix}[\{24,60,60\}]]
+      out: \{1,2,3,4\}
+an-integer-base-is-still-the-native-handler:
+  wolfram:
+    in: IntegerDigits[255, 16]
+    out: "{15, 15}"
+    tex:
+      in: \text{IntegerDigits}[255,16]
+      out: \{15,15\}

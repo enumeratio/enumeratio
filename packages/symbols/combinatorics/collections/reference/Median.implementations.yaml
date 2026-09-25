@@ -1,0 +1,28 @@
+median-list-1-2-3-4-5:
+  wolfram:
+    in: Median[List[1, 2, 3, 4, 5]]
+    out: "3"
+    tex:
+      in: \text{Median}[\{1,2,3,4,5\}]
+      out: "3"
+median-list-1-2-3-4:
+  wolfram:
+    in: Median[List[1, 2, 3, 4]]
+    out: 5/2
+    tex:
+      in: \text{Median}[\{1,2,3,4\}]
+      out: \frac{5}{2}
+for-an-odd-length-list-the-median-is-the-middle:
+  wolfram:
+    in: (Median[List[5, 3, 1, 4, 2]] == Part[Sort[List[5, 3, 1, 4, 2]], 3])
+    out: True
+    tex:
+      in: \text{Median}[\{5,3,1,4,2\}]=\text{Sort}[\{5,3,1,4,2\}][[3]]
+      out: \text{True}
+the-same-outlier-laden-data-as-in-mean-s-example:
+  wolfram:
+    in: Median[List[-100, 1, 1, 1, 1, 20]]
+    out: "1"
+    tex:
+      in: \text{Median}[\{-100,1,1,1,1,20\}]
+      out: "1"

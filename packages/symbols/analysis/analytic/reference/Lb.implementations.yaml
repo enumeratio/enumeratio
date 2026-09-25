@@ -1,0 +1,35 @@
+lb-8:
+  wolfram:
+    in: Log2[8]
+    out: "3"
+    tex:
+      in: \log _2(8)
+      out: "3"
+lb-1:
+  wolfram:
+    in: Log2[1]
+    out: "0"
+    tex:
+      in: \log _2(1)
+      out: "0"
+lb-1-024:
+  wolfram:
+    in: Log2[1024]
+    out: "10"
+    tex:
+      in: \log _2(1024)
+      out: "10"
+identical-to-log2:
+  wolfram:
+    in: (Log2[64] == Log2[64])
+    out: True
+    tex:
+      in: \log _2(64)=\log _2(64)
+      out: \text{True}
+same-exact-negative-power-fold-as-log2-lb-frac:
+  wolfram:
+    in: Log2[Rational[1, 8]]
+    out: "-3"
+    tex:
+      in: \log _2\left(\frac{1}{8}\right)
+      out: "-3"

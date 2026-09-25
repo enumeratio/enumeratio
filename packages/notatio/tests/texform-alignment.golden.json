@@ -4031,20 +4031,6 @@
       "output": true
     }
   },
-  "CatalanNumber/a-negative-argument-is-left-unevaluated": {
-    "ours": {
-      "input": "C_{-1}",
-      "output": "C_{-1}"
-    },
-    "wolfram": {
-      "input": "C_{-1}",
-      "output": "-1"
-    },
-    "same": {
-      "input": true,
-      "output": false
-    }
-  },
   "CatalanNumber/they-grow-fast-c-15-already-passes-nine-million": {
     "ours": {
       "input": "C_{15}",

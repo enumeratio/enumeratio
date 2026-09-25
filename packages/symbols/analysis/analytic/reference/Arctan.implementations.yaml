@@ -1,0 +1,56 @@
+arctan-0:
+  wolfram:
+    in: ArcTan[0]
+    out: "0"
+    tex:
+      in: \tan ^{-1}(0)
+      out: "0"
+arctan-1:
+  wolfram:
+    in: ArcTan[1]
+    out: Pi/4
+    tex:
+      in: \tan ^{-1}(1)
+      out: \frac{\pi }{4}
+arctan-sqrt-3:
+  wolfram:
+    in: ArcTan[Sqrt[3]]
+    out: Pi/3
+    tex:
+      in: \tan ^{-1}\left(\sqrt{3}\right)
+      out: \frac{\pi }{3}
+tan-arctan-x-x:
+  wolfram:
+    in: (Tan[ArcTan[1]] == 1)
+    out: True
+    tex:
+      in: \tan \left(\tan ^{-1}(1)\right)=1
+      out: \text{True}
+the-horizontal-asymptote-as-x-to-infty:
+  wolfram:
+    in: ArcTan[Infinity]
+    out: Pi/2
+    tex:
+      in: \tan ^{-1}(\infty )
+      out: \frac{\pi }{2}
+and-as-x-to-infty:
+  wolfram:
+    in: ArcTan[-Infinity]
+    out: -1/2*Pi
+    tex:
+      in: \tan ^{-1}(-\infty )
+      out: -\frac{\pi }{2}
+compute-engine-s-arctan-takes-only-one-argument:
+  wolfram:
+    in: ArcTan[1, 1]
+    out: Pi/4
+    tex:
+      in: \tan ^{-1}(1,1)
+      out: \frac{\pi }{4}
+    verdict: disagree
+    kind: domain
+    note: compute-engine's Arctan takes one argument and rejects a second; Wolfram's ArcTan[x, y] is the two-argument arctangent (atan2), here π/4.
+gregory-s-series-about-0:
+  wolfram:
+    in:
+    note: Wolfram's Series[ArcTan[x], {x, 0, 7}] ends with O[x]^8; compute-engine skips the vanishing even term and reports O(x^9).

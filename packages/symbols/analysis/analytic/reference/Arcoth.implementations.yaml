@@ -1,0 +1,7 @@
+n-arcoth-2:
+  wolfram:
+    in: N[ArcCoth[2]]
+    out: "0.5493061443340549"
+    tex:
+      in: N\left[\coth ^{-1}(2)\right]
+      out: "0.549306"

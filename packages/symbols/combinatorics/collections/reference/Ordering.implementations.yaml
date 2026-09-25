@@ -1,0 +1,14 @@
+ordering-list-3-1-2:
+  wolfram:
+    in: Ordering[List[3, 1, 2]]
+    out: "{2, 3, 1}"
+    tex:
+      in: \text{Ordering}[\{3,1,2\}]
+      out: \{2,3,1\}
+ties-break-in-favor-of-the-earlier-position-both:
+  wolfram:
+    in: Ordering[List[2, 1, 2, 1]]
+    out: "{2, 4, 1, 3}"
+    tex:
+      in: \text{Ordering}[\{2,1,2,1\}]
+      out: \{2,4,1,3\}

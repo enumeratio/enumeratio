@@ -50,8 +50,6 @@ examples:
     expected: [Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]
     category: Scope
     caption: Derivative, for real $|x| > 1$
-    divergence:
-      wolfram: Wolfram writes it as 1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.
 seeAlso:
   - Sec
   - Arccos

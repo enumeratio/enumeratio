@@ -1,0 +1,38 @@
+l-1-chi-2-bmod-4-beta-1-pi-4-leibniz-s-series:
+  wolfram:
+    in: DirichletL[4, 2, 1]
+    out: Pi/4
+    tex:
+      in: L_{4,2}(1)
+      out: \frac{\pi }{4}
+and-keeps-zeta-s-pole-a-non-principal-l-is:
+  wolfram:
+    in: DirichletL[12, 1, 1]
+    out: DirichletL[12, 1, 1]
+    tex:
+      in: L_{12,1}(1)
+      out: L_{12,1}(1)
+    verdict: disagree
+    kind: undefined-form
+    note: We answer the pole as ComplexInfinity; Wolfram declines and leaves the call unevaluated instead.
+l-0-chi-frac-35-frac-15-i-exact-from-the:
+  wolfram:
+    in: DirichletL[5, 2, 0]
+    out: 3/5 + I/5
+    tex:
+      in: L_{5,2}(0)
+      out: \frac{3}{5}+\frac{i}{5}
+l-3-chi-2-bmod-8-11:
+  wolfram:
+    in: DirichletL[8, 2, -3]
+    out: "11"
+    tex:
+      in: L_{8,2}(-3)
+      out: "11"
+no-closed-form-at-positive-integer-s-in-general:
+  wolfram:
+    in: DirichletL[5, 2, 2]
+    out: DirichletL[5, 2, 2]
+    tex:
+      in: L_{5,2}(2)
+      out: L_{5,2}(2)

@@ -1,0 +1,25 @@
+arcsec-1:
+  wolfram:
+    in: ArcSec[1]
+    out: "0"
+    tex:
+      in: \sec ^{-1}(1)
+      out: "0"
+arcsec-2:
+  wolfram:
+    in: ArcSec[2]
+    out: Pi/3
+    tex:
+      in: \sec ^{-1}(2)
+      out: \frac{\pi }{3}
+undoes-sec-sec-arcsec-x-x:
+  wolfram:
+    in: (Sec[ArcSec[2]] == 2)
+    out: True
+    tex:
+      in: \sec \left(\sec ^{-1}(2)\right)=2
+      out: \text{True}
+derivative-for-real-x-1:
+  wolfram:
+    in:
+    note: Wolfram writes it as 1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.

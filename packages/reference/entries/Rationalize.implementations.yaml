@@ -1,0 +1,67 @@
+rationalize-0p1:
+  wolfram:
+    in: Rationalize[0.1]
+    out: 1/10
+    tex:
+      in: \text{Rationalize}[0.1]
+      out: \frac{1}{10}
+an-exact-integer-is-returned-unchanged:
+  wolfram:
+    in: Rationalize[2]
+    out: "2"
+    tex:
+      in: \text{Rationalize}[2]
+      out: "2"
+rationalize-2p5:
+  wolfram:
+    in: Rationalize[2.5]
+    out: 5/2
+    tex:
+      in: \text{Rationalize}[2.5]
+      out: \frac{5}{2}
+recognizes-a-float-that-is-to-machine-precision:
+  wolfram:
+    in: Rationalize[0.3333333333333333]
+    out: 1/3
+    tex:
+      in: \text{Rationalize}[0.333333]
+      out: \frac{1}{3}
+with-an-explicit-tolerance-recovers-a-classic:
+  wolfram:
+    in: (Rationalize[Pi, 0.01] == Rational[22, 7])
+    out: True
+    tex:
+      in: \text{Rationalize}[\pi ,0.01]=\frac{22}{7}
+      out: \text{True}
+milu-zu-chongzhi-s-5th-century-approximation-of:
+  wolfram:
+    in: Rationalize[Pi, 0.000001]
+    out: 355/113
+    tex:
+      in: \text{Rationalize}[\pi ,\text{1.$\grave{ }$*${}^{\wedge}$-6}]
+      out: \frac{355}{113}
+recovers-a-simple-fraction-from-a-decimal:
+  wolfram:
+    in: Rationalize[0.75]
+    out: 3/4
+    tex:
+      in: \text{Rationalize}[0.75]
+      out: \frac{3}{4}
+without-enough-repeating-digits-to-reach-machine:
+  wolfram:
+    in: Rationalize[0.333333]
+    out: "0.333333"
+    tex:
+      in: \text{Rationalize}[0.333333]
+      out: "0.333333"
+a-loose-tolerance-can-snap-to-something-far:
+  wolfram:
+    in: Rationalize[0.1, 0.5]
+    out: "0"
+    tex:
+      in: \text{Rationalize}[0.1,0.5]
+      out: "0"
+without-a-tolerance-a-float-with-no-simple:
+  wolfram:
+    in: Rationalize[N[Pi]]
+    note: 'Wolfram returns $\mathrm{Rationalize}[N[\pi]]$ unchanged as 3.14159: no $p/q$ lies close enough to it, relative to $1/q^2$.'

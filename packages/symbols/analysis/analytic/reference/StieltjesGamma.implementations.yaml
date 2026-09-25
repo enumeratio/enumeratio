@@ -1,0 +1,42 @@
+gamma-0-gamma-euler-s-constant:
+  wolfram:
+    in: StieltjesGamma[0]
+    out: EulerGamma
+    tex:
+      in: \gamma _0
+      out: \gamma
+no-closed-form-past-gamma-0-stays-symbolic-until:
+  wolfram:
+    in: StieltjesGamma[1]
+    out: StieltjesGamma[1]
+    tex:
+      in: \gamma _1
+      out: \gamma _1
+gamma-1-frac-32-numerically-a-floating-point:
+  wolfram:
+    in: StieltjesGamma[1, 1.5]
+    out: "0.0328346803149491"
+    tex:
+      in: \gamma _1(1.5)
+      out: "0.0328347"
+gamma-3-frac-12-0-66742:
+  wolfram:
+    in: StieltjesGamma[3, 0.5]
+    out: "-0.6674242737113807"
+    tex:
+      in: \gamma _3(0.5)
+      out: "-0.667424"
+gamma-n-a-has-poles-at-the-nonpositive-integers:
+  wolfram:
+    in: StieltjesGamma[2, -1]
+    out: ComplexInfinity
+    tex:
+      in: \gamma _2(-1)
+      out: \text{ComplexInfinity}
+orders-past-30-stay-unevaluated-even-under-n-the:
+  wolfram:
+    in: StieltjesGamma[40]
+    out: StieltjesGamma[40]
+    tex:
+      in: \gamma _{40}
+      out: \gamma _{40}

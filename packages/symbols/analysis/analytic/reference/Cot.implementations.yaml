@@ -1,0 +1,49 @@
+cot-pi-over-6:
+  wolfram:
+    in: Cot[Divide[Pi, 6]]
+    out: Sqrt[3]
+    tex:
+      in: \cot \left(\frac{\pi }{6}\right)
+      out: \sqrt{3}
+cot-pi-over-4:
+  wolfram:
+    in: Cot[Divide[Pi, 4]]
+    out: "1"
+    tex:
+      in: \cot \left(\frac{\pi }{4}\right)
+      out: "1"
+cot-pi-over-3:
+  wolfram:
+    in: Cot[Divide[Pi, 3]]
+    out: 1/Sqrt[3]
+    tex:
+      in: \cot \left(\frac{\pi }{3}\right)
+      out: \frac{1}{\sqrt{3}}
+reciprocal-of-tan-cot-x-frac-1-tan-x:
+  wolfram:
+    in: (Cot[Divide[Pi, 4]] == Divide[1, Tan[Divide[Pi, 4]]])
+    out: True
+    tex:
+      in: \cot \left(\frac{\pi }{4}\right)=\frac{1}{\tan \left(\frac{\pi }{4}\right)}
+      out: \text{True}
+pythagorean-identity-1-cot-2-x-csc-2-x:
+  wolfram:
+    in: (Plus[1, Power[Cot[Divide[Pi, 6]], 2]] == Power[Csc[Divide[Pi, 6]], 2])
+    out: True
+    tex:
+      in: 1+\cot ^2\left(\frac{\pi }{6}\right)=\csc ^2\left(\frac{\pi }{6}\right)
+      out: \text{True}
+a-pole-sin-0-0:
+  wolfram:
+    in: Cot[0]
+    out: ComplexInfinity
+    tex:
+      in: \cot (0)
+      out: \text{ComplexInfinity}
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero:
+  wolfram:
+    in: Cot[Divide[Pi, 2]]
+    out: "0"
+    tex:
+      in: \cot \left(\frac{\pi }{2}\right)
+      out: "0"

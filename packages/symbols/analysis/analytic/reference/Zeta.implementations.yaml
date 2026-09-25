@@ -1,0 +1,253 @@
+zeta-2:
+  wolfram:
+    in: Zeta[2]
+    out: Pi^2/6
+    tex:
+      in: \zeta (2)
+      out: \frac{\pi ^2}{6}
+  sage:
+    in: zeta(2)
+    out: 1/6*pi^2
+  mpmath:
+    in: zeta(2)
+    out: "1.64493406684822643647241516665"
+  sympy:
+    in: zeta(2)
+    out: pi**2/6
+zeta-4:
+  wolfram:
+    in: Zeta[4]
+    out: Pi^4/90
+    tex:
+      in: \zeta (4)
+      out: \frac{\pi ^4}{90}
+  sage:
+    in: zeta(4)
+    out: 1/90*pi^4
+  mpmath:
+    in: zeta(4)
+    out: "1.08232323371113819151600369654"
+  sympy:
+    in: zeta(4)
+    out: pi**4/90
+zeta-6:
+  wolfram:
+    in: Zeta[6]
+    out: Pi^6/945
+    tex:
+      in: \zeta (6)
+      out: \frac{\pi ^6}{945}
+  sage:
+    in: zeta(6)
+    out: 1/945*pi^6
+  mpmath:
+    in: zeta(6)
+    out: "1.01734306198444913971451792979"
+  sympy:
+    in: zeta(6)
+    out: pi**6/945
+threads-over-a-list-reducing-every-element-to:
+  wolfram:
+    in: Zeta[List[-1, -2, -3]]
+    out: "{-1/12, 0, 1/120}"
+    tex:
+      in: \zeta (\{-1,-2,-3\})
+      out: \left\{-\frac{1}{12},0,\frac{1}{120}\right\}
+  sage:
+    in: zeta([-1, -2, -3])
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Zeta is Listable and threads over the list; Sage's takes scalars only.
+  sympy:
+    in: zeta([-1, -2, -3])
+    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Zeta threads over (or pools) the list; SymPy's takes scalars.
+zeta-0-1-2:
+  wolfram:
+    in: Zeta[0]
+    out: -1/2
+    tex:
+      in: \zeta (0)
+      out: -\frac{1}{2}
+  sage:
+    in: zeta(0)
+    out: -1/2
+  mpmath:
+    in: zeta(0)
+    out: "-0.5"
+  sympy:
+    in: zeta(0)
+    out: -1/2
+trivial-zero-zeta-2n-0-for-positive-integer-n:
+  wolfram:
+    in: Zeta[-2]
+    out: "0"
+    tex:
+      in: \zeta (-2)
+      out: "0"
+  sage:
+    in: zeta(-2)
+    out: "0"
+  mpmath:
+    in: zeta(-2)
+    out: "0.0"
+  sympy:
+    in: zeta(-2)
+    out: "0"
+zeta-3-b-4-4-1-120-via-the-bernoulli-number:
+  wolfram:
+    in: Zeta[-3]
+    out: 1/120
+    tex:
+      in: \zeta (-3)
+      out: \frac{1}{120}
+  sage:
+    in: zeta(-3)
+    out: 1/120
+  mpmath:
+    in: zeta(-3)
+    out: "0.00833333333333333333333333333333"
+  sympy:
+    in: zeta(-3)
+    out: 1/120
+pole-at-s-1-the-harmonic-series-sum-1-n-diverges:
+  wolfram:
+    in: Zeta[1]
+    out: ComplexInfinity
+    tex:
+      in: \zeta (1)
+      out: \text{ComplexInfinity}
+  sage:
+    in: zeta(1)
+    out: Infinity
+    verdict: disagree
+    kind: undefined-form
+    note: The pole is ComplexInfinity here; Sage's zeta(1) spells the same pole 'Infinity', a different notation for the same divergence.
+  mpmath:
+    in: zeta(1)
+    out: "ValueError: zeta(1) pole"
+    verdict: error
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers ComplexInfinity, mpmath gives ValueError: zeta(1) pole."
+  sympy:
+    in: zeta(1)
+    out: zoo
+the-probability-that-two-random-positive:
+  wolfram:
+    in: (Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])
+    out: True
+    tex:
+      in: \frac{1}{\zeta (2)}=\frac{6}{\pi ^2}
+      out: \text{True}
+  sage:
+    in: bool((1 / zeta(2)) == (6 / (pi^2)))
+    out: True
+  sympy:
+    in: enumeratio_equal((S(1) / zeta(2)), (S(6) / (pi**2)))
+    out: True
+odd-integers-geq-3-have-no-known-closed-form:
+  wolfram:
+    in: Zeta[3]
+    out: Zeta[3]
+    tex:
+      in: \zeta (3)
+      out: \zeta (3)
+  sage:
+    in: zeta(3)
+    out: zeta(3)
+  mpmath:
+    in: zeta(3)
+    out: "1.20205690315959428539973816151"
+  sympy:
+    in: zeta(3)
+    out: zeta(3)
+the-notorious-sum-of-all-positive-integers:
+  wolfram:
+    in: Zeta[-1]
+    out: -1/12
+    tex:
+      in: \zeta (-1)
+      out: -\frac{1}{12}
+  sage:
+    in: zeta(-1)
+    out: -1/12
+  mpmath:
+    in: zeta(-1)
+    out: "-0.0833333333333333333333333333333"
+  sympy:
+    in: zeta(-1)
+    out: -1/12
+on-the-critical-line-zeta-1-2-14i-0-02224-0:
+  mpmath:
+    in: (zeta(mpc(0.5, 14)))
+    out: (0.022241142609993589246213199204 - 0.103258123266450057902363095553j)
+  sympy:
+    in: N(zeta((0.5 + 14*I)), 30)
+    out: 0.0222411426099935888300862529832 - 0.103258123266450063670873760202*I
+  wolfram:
+    in: N[Zeta[Complex[0.5, 14]]]
+    out: 0.022241142609994033 - 0.10325812326645277*I
+    tex:
+      in: N[\zeta (0.5\, +14 i)]
+      out: 0.0222411\, -0.103258 i
+two-argument-zeta-s-a-via-enumeratio-analytic:
+  wolfram:
+    in: Zeta[2, 1]
+    out: Pi^2/6
+    tex:
+      in: \zeta (2,1)
+      out: \frac{\pi ^2}{6}
+  sage:
+    in: hurwitz_zeta(2, 1)
+    out: 1/6*pi^2
+  mpmath:
+    in: zeta(2, 1)
+    out: "1.64493406684822643647241516665"
+  sympy:
+    in: zeta(2, 1)
+    out: pi**2/6
+zeta-2-2-zeta-2-1-pi-2-6-1:
+  wolfram:
+    in: Zeta[2, 2]
+    out: -1 + Pi^2/6
+    tex:
+      in: \zeta (2,2)
+      out: \frac{\pi ^2}{6}-1
+  sage:
+    in: hurwitz_zeta(2, 2)
+    out: 1/6*pi^2 - 1
+  mpmath:
+    in: zeta(2, 2)
+    out: "0.644934066848226436472415166646"
+  sympy:
+    in: zeta(2, 2)
+    out: -1 + pi**2/6
+zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so:
+  wolfram:
+    in: Zeta[2, 0]
+    out: Pi^2/6
+    tex:
+      in: \zeta (2,0)
+      out: \frac{\pi ^2}{6}
+    note: This matches Wolfram's $\mathrm{Zeta}[s, a]$; Wolfram's $\mathrm{HurwitzZeta}[s, 0]$ instead diverges (ComplexInfinity).
+  sage:
+    in: hurwitz_zeta(2, 0)
+    out: "ValueError: psi2_eval(): pole"
+    verdict: error
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; Sage's hurwitz_zeta(s, 0) is a pole.
+  mpmath:
+    in: zeta(2, 0)
+    out: "ZeroDivisionError: "
+    verdict: error
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; mpmath's zeta(s, 0) is a pole.
+  sympy:
+    in: zeta(2, 0)
+    out: nan
+    verdict: inconclusive
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; SymPy's zeta(s, 0) is a pole.

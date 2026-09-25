@@ -1,0 +1,24 @@
+scan-list-1-2-3-4-add:
+  wolfram:
+    in: FoldList[Plus, List[1, 2, 3, 4]]
+    out: "{1, 3, 6, 10}"
+    tex:
+      in: \text{FoldList}[\text{Plus},\{1,2,3,4\}]
+      out: \{1,3,6,10\}
+the-running-maximum:
+  wolfram:
+    in: FoldList[Max, List[1, 2, 3, 4]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{FoldList}[\text{Max},\{1,2,3,4\}]
+      out: \{1,2,3,4\}
+the-seeded-form-is-still-the-same-length-as-xs:
+  wolfram:
+    in: enumeratio`Scan[List[1, 2, 3], Plus, 10]
+    out: enumeratio`Scan[{1, 2, 3}, Plus, 10]
+    tex:
+      in: \text{enumeratio$\grave{ }$Scan}(\{1,2,3\},\text{Plus},10)
+      out: \text{enumeratio$\grave{ }$Scan}(\{1,2,3\},\text{Plus},10)
+    verdict: disagree
+    kind: convention
+    note: "Wolfram's seeded FoldList[f, x, list] is length+1: it prepends the seed itself."

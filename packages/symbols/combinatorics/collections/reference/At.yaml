@@ -61,8 +61,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: An out-of-range index evaluates to $NaN$ rather than raising an error
-    divergence:
-      wolfram: An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).
   - id: list-a-b-c-d-list-3
     expr: [At, [List, a, b, c, d], 3]
     expected: c

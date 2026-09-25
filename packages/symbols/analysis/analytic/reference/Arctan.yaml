@@ -40,8 +40,6 @@ examples:
     expected: [Error, "'unexpected-argument'", "'1'", [ErrorTrace, [ErrorFrame, "'Arctan'", 2]]]
     category: Possible issues
     caption: compute-engine's Arctan takes only one argument and errors on a second; the two-argument atan2 form is the separate $\mathrm{Arctan2}(x, y)$ function
-    divergence:
-      wolfram: compute-engine's Arctan takes one argument and rejects a second; Wolfram's ArcTan[x, y] is the two-argument arctangent (atan2), here π/4.
   - id: a-machine-precision-argument-evaluates
     expr: [Arctan, 0.5]
     expected: { num: "0.463647609000806116214" }
@@ -132,8 +130,6 @@ examples:
       ]
     category: Scope
     caption: Gregory's series about 0
-    divergence:
-      wolfram: Wolfram's Series[ArcTan[x], {x, 0, 7}] ends with O[x]^8; compute-engine skips the vanishing even term and reports O(x^9).
   - id: the-limit-at-infty
     expr: [Limit, [Function, [Arctan, x], x], PositiveInfinity]
     expected: [Multiply, [Rational, 1, 2], Pi]

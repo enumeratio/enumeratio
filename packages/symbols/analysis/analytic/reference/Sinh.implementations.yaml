@@ -1,0 +1,39 @@
+n-forces-the-numeric-result-that-plain:
+  wolfram:
+    in: N[Sinh[0]]
+    out: 0.
+    tex:
+      in: N[\sinh (0)]
+      out: 0.
+n-sinh-1:
+  wolfram:
+    in: N[Sinh[1]]
+    out: "1.1752011936438014"
+    tex:
+      in: N[\sinh (1)]
+      out: "1.1752"
+odd-function-sinh-x-sinh-x:
+  wolfram:
+    in: (Sinh[Minus[1]] == Minus[Sinh[1]])
+    out: True
+    tex:
+      in: \sinh (-1)=-\sinh (1)
+      out: \text{True}
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2:
+  wolfram:
+    in: (Sinh[1] == Divide[Subtract[Exp[1], Exp[Minus[1]]], 2])
+    out: True
+    tex:
+      in: \sinh (1)=\frac{\exp (1)-\exp (-1)}{2}
+      out: \text{True}
+stays-symbolic-even-at-0-compute-engine-doesn-t:
+  wolfram:
+    in: Sinh[0]
+    out: "0"
+    tex:
+      in: \sinh (0)
+      out: "0"
+taylor-series-about-0:
+  wolfram:
+    in:
+    note: Wolfram's Series[Sinh[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).

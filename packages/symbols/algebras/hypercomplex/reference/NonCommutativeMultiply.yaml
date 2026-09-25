@@ -39,8 +39,6 @@ examples:
     expected: 6
     caption: "scalars: the implied identity factor"
     category: Scope
-    divergence:
-      wolfram: Our CircleTimes commits to a concrete algebra where scalars multiply as usual; Wolfram's builtin CircleTimes is inert notation with no arithmetic rules, so it leaves $2\otimes3$ displayed rather than reduced to 6.
   - id: commuting-units-agrees-with-times
     expr: [CircleTimes, i_2, i_1]
     expected: [Multiply, i_1, i_2]
@@ -66,15 +64,11 @@ examples:
     expected: [Multiply, a, b, c]
     caption: "associative: nested products flatten"
     category: Properties
-    divergence:
-      wolfram: Wolfram flattens too but has no rules for undeclared symbols, so it keeps a**b**c unevaluated.
   - id: undeclared-symbols-are-taken-to-commute-so-the
     expr: [NonCommutativeMultiply, b, a]
     expected: [Multiply, a, b]
     caption: undeclared symbols are taken to commute, so the order is not kept
     category: Possible issues
-    divergence:
-      wolfram: Wolfram assumes nothing about undeclared symbols and leaves b**a unevaluated, in its order.
 seeAlso:
   - Norm
   - Basis

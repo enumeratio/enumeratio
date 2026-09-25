@@ -1,0 +1,42 @@
+0-whenever-n-and-m-share-a-factor:
+  wolfram:
+    in: JacobiSymbol[10, 5]
+    out: "0"
+    tex:
+      in: \left(\frac{10}{5}\right)
+      out: "0"
+3-is-not-a-quadratic-residue-mod-5-the-residues:
+  wolfram:
+    in: JacobiSymbol[3, 5]
+    out: "-1"
+    tex:
+      in: \left(\frac{3}{5}\right)
+      out: "-1"
+jacobisymbol-1-001-9-907:
+  wolfram:
+    in: JacobiSymbol[1001, 9907]
+    out: "-1"
+    tex:
+      in: \left(\frac{1001}{9907}\right)
+      out: "-1"
+by-convention-the-symbol-is-1-whenever-m-1:
+  wolfram:
+    in: JacobiSymbol[0, 1]
+    out: "1"
+    tex:
+      in: \left(\frac{0}{1}\right)
+      out: "1"
+completely-multiplicative-in-the-top-argument-a:
+  wolfram:
+    in: (Times[JacobiSymbol[3, 7], JacobiSymbol[5, 7]] == JacobiSymbol[Times[3, 5], 7])
+    out: True
+    tex:
+      in: \left(\frac{3}{7}\right) \left(\frac{5}{7}\right)=\left(\frac{3\ 5}{7}\right)
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: JacobiSymbol[List[2, 3, 5, 7, 11], 3]
+    out: "{-1, 0, -1, 1, -1}"
+    tex:
+      in: \left(\frac{\{2,3,5,7,11\}}{3}\right)
+      out: \{-1,0,-1,1,-1\}

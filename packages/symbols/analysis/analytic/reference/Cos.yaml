@@ -145,6 +145,11 @@ examples:
     expected: x
     category: Scope
     caption: $\cos(\arccos x) = x$ for every $x$
+  - id: cos-arccos-2-2-past-the-real-domain
+    expr: [Cos, [Arccos, 2]]
+    expected: 2
+    category: Scope
+    caption: $\cos(\arccos(2)) = 2$, even past $[-1, 1]$
   - id: cos-arcsin-x-sqrt-1-x-2
     expr: [Cos, [Arcsin, x]]
     expected: [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]
@@ -178,8 +183,6 @@ examples:
       ]
     category: Scope
     caption: Taylor series about 0 -- only even powers appear
-    divergence:
-      wolfram: Wolfram's Series[Cos[x], {x, 0, 6}] ends with O[x]^7; compute-engine skips the vanishing odd term and reports O(x^8).
   - id: double-angle-formula-cos-2x-cos-2-x-sin-2-x
     expr: [TrigExpand, [Cos, [Multiply, 2, x]]]
     expected: [Add, [Negate, [Power, [Sin, x], 2]], [Power, [Cos, x], 2]]

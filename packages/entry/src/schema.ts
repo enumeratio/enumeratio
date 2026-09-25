@@ -81,15 +81,6 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     category: { type: "string" },
     role: EXAMPLE_ROLE,
     aspirational: { type: "boolean" },
-    divergence: {
-      type: "object",
-      properties: {
-        wolfram: { type: "string" },
-        numpy: { type: "string" },
-        sympy: { type: "string" },
-      },
-      additionalProperties: false,
-    },
     volatile: { type: "array", items: { type: "string" } },
     hidden: { type: "boolean", description: "Deprecated: superseded by role: test." },
     group: {

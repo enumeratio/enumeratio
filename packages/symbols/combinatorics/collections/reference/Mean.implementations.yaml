@@ -1,0 +1,32 @@
+mean-list-1-2-3-4:
+  wolfram:
+    in: Mean[List[1, 2, 3, 4]]
+    out: 5/2
+    tex:
+      in: \text{Mean}[\{1,2,3,4\}]
+      out: \frac{5}{2}
+mean-list-2-4-4-4-5-5-7-9:
+  wolfram:
+    in: Mean[List[2, 4, 4, 4, 5, 5, 7, 9]]
+    out: "5"
+    tex:
+      in: \text{Mean}[\{2,4,4,4,5,5,7,9\}]
+      out: "5"
+mean-is-total-divided-by-count-mean-c-frac-sum-c:
+  wolfram:
+    in: (Mean[List[1, 2, 3, 4]] == Divide[Plus[1, 2, 3, 4], Length[List[1, 2, 3, 4]]])
+    out: True
+    tex:
+      in: \text{Mean}[\{1,2,3,4\}]=\frac{1+2+3+4}{\text{Length}[\{1,2,3,4\}]}
+      out: \text{True}
+a-single-outlier-drags-the-mean-far-from-the:
+  wolfram:
+    in: Mean[List[-100, 1, 1, 1, 1, 20]]
+    out: -38/3
+    tex:
+      in: \text{Mean}[\{-100,1,1,1,1,20\}]
+      out: -\frac{38}{3}
+the-mean-of-no-data-is-nan:
+  wolfram:
+    in: Mean[List[]]
+    note: Wolfram leaves Mean[{}] unevaluated (with a Mean::rectn message).

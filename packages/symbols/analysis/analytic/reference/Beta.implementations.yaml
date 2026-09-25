@@ -1,0 +1,63 @@
+beta-2-3:
+  wolfram:
+    in: Beta[2, 3]
+    out: 1/12
+    tex:
+      in: B(2,3)
+      out: \frac{1}{12}
+the-unit-square-case-int-0-1-1-dt-1:
+  wolfram:
+    in: Beta[1, 1]
+    out: "1"
+    tex:
+      in: B(1,1)
+      out: "1"
+beta-3-3:
+  wolfram:
+    in: Beta[3, 3]
+    out: 1/30
+    tex:
+      in: B(3,3)
+      out: \frac{1}{30}
+threads-element-wise-over-a-list-argument:
+  wolfram:
+    in: Beta[List[1, 2], 2]
+    out: "{1/2, 1/6}"
+    tex:
+      in: B(\{1,2\},2)
+      out: \left\{\frac{1}{2},\frac{1}{6}\right\}
+symmetric-b-a-b-b-b-a:
+  wolfram:
+    in: (Beta[2, 5] == Beta[5, 2])
+    out: True
+    tex:
+      in: B(2,5)=B(5,2)
+      out: \text{True}
+ties-to-binomial-b-k-1-n-k-1-frac-1-n-1-binom-n:
+  wolfram:
+    in: (Times[9, Times[Beta[4, 6], Binomial[8, 3]]] == 1)
+    out: True
+    tex:
+      in: 9 (B(4,6) \binom{8}{3})=1
+      out: \text{True}
+b-1-2-1-2-pi-underlies-the-arcsine-distribution:
+  wolfram:
+    in: Beta[0.5, 0.5]
+    out: "3.1415926535897936"
+    tex:
+      in: B(0.5,0.5)
+      out: "3.14159"
+a-nonpositive-integer-argument-is-a-pole-of-the:
+  wolfram:
+    in: Beta[-1, 2]
+    out: ComplexInfinity
+    tex:
+      in: B(-1,2)
+      out: \text{ComplexInfinity}
+half-integer-arguments-evaluate-exactly-through:
+  wolfram:
+    in: Beta[Rational[9, 2], Rational[7, 2]]
+    out: (5*Pi)/2048
+    tex:
+      in: B\left(\frac{9}{2},\frac{7}{2}\right)
+      out: \frac{5 \pi }{2048}

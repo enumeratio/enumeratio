@@ -1,0 +1,71 @@
+a-pole-of-gamma-in-log-form:
+  wolfram:
+    in: LogGamma[0]
+    out: Infinity
+    tex:
+      in: \text{log$\Gamma $}(0)
+      out: \infty
+a-floating-point-argument-evaluates-directly-to:
+  wolfram:
+    in: LogGamma[2.5]
+    out: "0.2846828704729192"
+    tex:
+      in: \text{log$\Gamma $}(2.5)
+      out: "0.284683"
+defined-as-ln-gamma-z-here-at-z-5:
+  wolfram:
+    in: (LogGamma[5] == Log[Gamma[5]])
+    out: True
+    tex:
+      in: \text{log$\Gamma $}(5)=\log (\Gamma (5))
+      out: \text{True}
+gammaln-1-ln-gamma-1-ln-1-0:
+  wolfram:
+    in: (LogGamma[1] == 0)
+    out: True
+    tex:
+      in: \text{log$\Gamma $}(1)=0
+      out: \text{True}
+inherits-gamma-s-recurrence-gammaln-z-1-gammaln:
+  wolfram:
+    in: (LogGamma[6] == Plus[LogGamma[5], Log[5]])
+    out: True
+    tex:
+      in: \text{log$\Gamma $}(6)=\text{log$\Gamma $}(5)+\log (5)
+      out: \text{True}
+gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi:
+  wolfram:
+    in: (LogGamma[Rational[1, 2]] == Times[Rational[1, 2], Log[Pi]])
+    out: True
+    tex:
+      in: \text{log$\Gamma $}\left(\frac{1}{2}\right)=\frac{1}{2} \log (\pi )
+      out: \text{True}
+used-to-get-ln-n-for-large-n-without-overflowing:
+  wolfram:
+    in: (LogGamma[11] == Log[Factorial[10]])
+    out: True
+    tex:
+      in: \text{log$\Gamma $}(11)=\log (10!)
+      out: \text{True}
+an-exact-positive-integer-now-reduces-too:
+  wolfram:
+    in: LogGamma[5]
+    out: Log[24]
+    tex:
+      in: \text{log$\Gamma $}(5)
+      out: \log (24)
+gammaln-101-is-exactly-ln-100-letting-us-reason:
+  wolfram:
+    in: (LogGamma[101] == Log[Factorial[100]])
+    out: True
+    tex:
+      in: \text{log$\Gamma $}(101)=\log (100!)
+      out: \text{True}
+at-a-pole-of-gamma-compute-engine-gives-the-real:
+  wolfram:
+    in: LogGamma[-1]
+    note: Wolfram's GammaLn[-1] is ComplexInfinity, the complex-analytic reading of a pole of Gamma.
+off-the-positive-axis-gammaln-is-the-principal:
+  wolfram:
+    in: LogGamma[-1.5]
+    note: "Wolfram's $\\mathrm{LogGamma}[-1.5] = 0.860047 - 6.28319\\,i$: its analytic continuation sits $-2\\pi i$ from the principal log here."

@@ -1,0 +1,86 @@
+round-7-over-2:
+  wolfram:
+    in: Round[Rational[7, 2]]
+    out: "4"
+    tex:
+      in: \text{Round}\left[\frac{7}{2}\right]
+      out: "4"
+round-3p5:
+  wolfram:
+    in: Round[3.5]
+    out: "4"
+    tex:
+      in: \text{Round}[3.5]
+      out: "4"
+integers-pass-through-unchanged:
+  wolfram:
+    in: Round[5]
+    out: "5"
+    tex:
+      in: \text{Round}[5]
+      out: "5"
+a-second-argument-rounds-to-that-many-decimal:
+  wolfram:
+    in: Round[3.14159, Power[10, Minus[2]]]
+    out: 157/50
+    tex:
+      in: \text{Round}\left[3.14159,10^{-2}\right]
+      out: \frac{157}{50}
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Round[List[1.5, -1.5, 2.4]]
+    out: "{2, -2, 2}"
+    tex:
+      in: \text{Round}[\{1.5,-1.5,2.4\}]
+      out: \{2,-2,2\}
+a-negative-second-argument-rounds-to-the-nearest:
+  wolfram:
+    in: (Round[1234, Power[10, Minus[-2]]] == 1200)
+    out: True
+    tex:
+      in: \text{Round}\left[1234,10^{-(-2)}\right]=1200
+      out: \text{True}
+    note: Wolfram reads the second argument as a step to round to a multiple of, so $\mathrm{Round}[1234, -2] = 1234$.
+rounding-to-0-decimal-places-matches-the-1:
+  wolfram:
+    in: (Round[3.14159, Power[10, Minus[0]]] == Round[3.14159])
+    out: True
+    tex:
+      in: \text{Round}\left[3.14159,10^{-0}\right]=\text{Round}[3.14159]
+      out: \text{True}
+    note: Wolfram treats the step literally, so $\mathrm{Round}[3.14159, 0]$ is $\mathrm{Indeterminate}$.
+rounding-a-price-to-the-nearest-cent-19-995:
+  wolfram:
+    in: Round[19.995, Power[10, Minus[2]]]
+    out: "20"
+    tex:
+      in: \text{Round}\left[19.995,10^{-2}\right]
+      out: "20"
+rounds-half-away-from-zero-not-banker-s-rounding:
+  wolfram:
+    in: Round[2.5]
+    out: "2"
+    tex:
+      in: \text{Round}[2.5]
+      out: "2"
+    verdict: disagree
+    kind: rounding-mode
+    note: Wolfram uses round-half-to-even (banker's rounding), so $\mathrm{Round}[2.5] = 2$.
+and-by-the-same-convention-2-5-rounds-to-3-not-2:
+  wolfram:
+    in: Round[-2.5]
+    out: "-2"
+    tex:
+      in: \text{Round}[-2.5]
+      out: "-2"
+    verdict: disagree
+    kind: rounding-mode
+    note: Wolfram's half-to-even gives $\mathrm{Round}[-2.5] = -2$.
+to-the-nearest-ten:
+  wolfram:
+    in: Round[226, Power[10, Minus[-1]]]
+    note: "Wolfram's second argument is the step itself: $\\mathrm{Round}[226, 10] = 230$."
+an-exact-half-rounds-away-from-zero-as-well:
+  wolfram:
+    in: Round[Rational[1, 2]]
+    note: 'Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.'

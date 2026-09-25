@@ -97,8 +97,8 @@ const onDirty = (i: number, event: Event): void => {
   if (dirty[i]) delete status[i];
 };
 
-// Other systems' runs of each example, attached by entries.ts from the entry's
-// `<stem>.oracle.json` sidecar (see `@enumeratio/oracle`).
+// Other systems' runs of each example, from the head's implementations record (the loader
+// attaches them; see `@enumeratio/oracle`).
 const alternativesOf = (ex: { others?: Record<string, Alternative> }): Record<string, Alternative> | undefined =>
   ex.others && Object.keys(ex.others).length > 0 ? ex.others : undefined;
 // A row's own note, preferring the entry's authored `divergence` prose over the scan's.

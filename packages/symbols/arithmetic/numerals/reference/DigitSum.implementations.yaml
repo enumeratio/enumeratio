@@ -1,0 +1,28 @@
+digitsum-58-127:
+  wolfram:
+    in: Total[IntegerDigits[58127]]
+    out: "23"
+    tex:
+      in: \text{Total}[\text{IntegerDigits}[58127]]
+      out: "23"
+in-base-2-this-is-the-number-of-set-bits:
+  wolfram:
+    in: Total[IntegerDigits[58127, 2]]
+    out: "9"
+    tex:
+      in: \text{Total}[\text{IntegerDigits}[58127,2]]
+      out: "9"
+digitsum-0:
+  wolfram:
+    in: Total[IntegerDigits[0]]
+    out: "0"
+    tex:
+      in: \text{Total}[\text{IntegerDigits}[0]]
+      out: "0"
+digit-sum-n-mod-9-the-basis-of-the-classic:
+  wolfram:
+    in: (Mod[Total[IntegerDigits[58127]], 9] == Mod[58127, 9])
+    out: True
+    tex:
+      in: (\text{Total}[\text{IntegerDigits}[58127]] \bmod 9)=(58127 \bmod 9)
+      out: \text{True}

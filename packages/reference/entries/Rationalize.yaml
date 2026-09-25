@@ -102,7 +102,5 @@ examples:
     expected: [Rational, 80143857, 25510582]
     category: Possible issues
     caption: Without a tolerance, a float with no simple fraction nearby still becomes a fraction with a large denominator
-    divergence:
-      wolfram: 'Wolfram returns $\mathrm{Rationalize}[N[\pi]]$ unchanged as 3.14159: no $p/q$ lies close enough to it, relative to $1/q^2$.'
 seeAlso:
   - Round

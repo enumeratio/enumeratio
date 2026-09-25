@@ -1,0 +1,25 @@
+last-list-1-2-3:
+  wolfram:
+    in: Last[List[1, 2, 3]]
+    out: "3"
+    tex:
+      in: \text{Last}[\{1,2,3\}]
+      out: "3"
+last-list-10-20-30:
+  wolfram:
+    in: Last[List[10, 20, 30]]
+    out: "30"
+    tex:
+      in: \text{Last}[\{10,20,30\}]
+      out: "30"
+last-c-at-c-1-see-at:
+  wolfram:
+    in: (Last[List[1, 2, 3]] == Part[List[1, 2, 3], -1])
+    out: True
+    tex:
+      in: \text{Last}[\{1,2,3\}]=\{1,2,3\}[[-1]]
+      out: \text{True}
+an-empty-collection-has-no-last-element-compute:
+  wolfram:
+    in: Last[List[]]
+    note: Last of an empty list is the symbol Missing here; Wolfram leaves Last[{}] unevaluated (with a Last::nolast message).

@@ -1,0 +1,4 @@
+cases-typed-pattern-not-typed-here:
+  wolfram:
+    in:
+    note: Wolfram's `_Integer` pattern only matches integers, here 2 (1 and 2).

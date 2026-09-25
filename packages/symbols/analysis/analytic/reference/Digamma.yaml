@@ -104,8 +104,6 @@ examples:
     expected: [Trigamma, x]
     category: Properties
     caption: $\psi'(x)$ is the trigamma, $\psi^{(1)}(x)$
-    divergence:
-      wolfram: Wolfram writes the derivative as $\mathrm{PolyGamma}[1, x]$; compute-engine names it `Trigamma`.
   - id: reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot
     expr: [Subtract, [Digamma, 0.7], [Digamma, 0.3]]
     expected: { num: "2.28250066850219837421" }

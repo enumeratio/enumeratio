@@ -65,6 +65,16 @@ examples:
     expected: [Negate, [Tanh, x]]
     category: Scope
     caption: 'Oddness pulls the sign out of a symbolic argument: $\tanh(-x) = -\tanh x$'
+  - id: tanh-artanh-x-x-for-every-x
+    expr: [Tanh, [Artanh, x]]
+    expected: x
+    category: Scope
+    caption: $\tanh(\operatorname{artanh} x) = x$ for every $x$
+  - id: tanh-artanh-2-2-past-the-real-domain
+    expr: [Tanh, [Artanh, 2]]
+    expected: 2
+    category: Scope
+    caption: $\tanh(\operatorname{artanh}(2)) = 2$, even past $(-1, 1)$
   - id: derivative-sech-2-x
     expr: [D, [Tanh, x], x]
     expected: [Power, [Sech, x], 2]

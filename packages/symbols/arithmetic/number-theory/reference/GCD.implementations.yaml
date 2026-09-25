@@ -1,0 +1,234 @@
+gcd-12-18:
+  wolfram:
+    in: GCD[12, 18]
+    out: "6"
+    tex:
+      in: \gcd (12,18)
+      out: "6"
+  sage:
+    in: gcd(12, 18)
+    out: "6"
+  julia:
+    in: gcd(ZZ(12), ZZ(18))
+    out: "6"
+  oscar:
+    in: gcd(ZZ(12), ZZ(18))
+    out: "6"
+  mathlib4:
+    in: (Int.gcd 12 18)
+    out: "6"
+  rust:
+    in: gcd(n(12), n(18))
+    out: "6"
+  sympy:
+    in: gcd(12, 18)
+    out: "6"
+gcd-24-36:
+  wolfram:
+    in: GCD[24, 36]
+    out: "12"
+    tex:
+      in: \gcd (24,36)
+      out: "12"
+  sage:
+    in: gcd(24, 36)
+    out: "12"
+  julia:
+    in: gcd(ZZ(24), ZZ(36))
+    out: "12"
+  oscar:
+    in: gcd(ZZ(24), ZZ(36))
+    out: "12"
+  mathlib4:
+    in: (Int.gcd 24 36)
+    out: "12"
+  rust:
+    in: gcd(n(24), n(36))
+    out: "12"
+  sympy:
+    in: gcd(24, 36)
+    out: "12"
+gcd-is-variadic-it-accepts-any-number-of:
+  wolfram:
+    in: GCD[20, 30, 45]
+    out: "5"
+    tex:
+      in: \gcd (20,30,45)
+      out: "5"
+a-single-argument-is-returned-unchanged:
+  wolfram:
+    in: GCD[4]
+    out: "4"
+    tex:
+      in: \gcd (4)
+      out: "4"
+with-no-arguments-compute-engine-returns-0-the:
+  wolfram:
+    in: GCD[]
+    out: "0"
+    tex:
+      in: \gcd ()
+      out: "0"
+0-is-absorbed-every-integer-divides-it-so-gcd-0:
+  wolfram:
+    in: GCD[0, 5]
+    out: "5"
+    tex:
+      in: \gcd (0,5)
+      out: "5"
+  sage:
+    in: gcd(0, 5)
+    out: "5"
+  julia:
+    in: gcd(ZZ(0), ZZ(5))
+    out: "5"
+  oscar:
+    in: gcd(ZZ(0), ZZ(5))
+    out: "5"
+  mathlib4:
+    in: (Int.gcd 0 5)
+    out: "5"
+  rust:
+    in: gcd(n(0), n(5))
+    out: "5"
+  sympy:
+    in: gcd(0, 5)
+    out: "5"
+signs-are-discarded-before-computing-the-gcd:
+  wolfram:
+    in: GCD[-12, 9, 57]
+    out: "3"
+    tex:
+      in: \gcd (-12,9,57)
+      out: "3"
+lists-aren-t-threaded-element-wise-they-re:
+  wolfram:
+    in: GCD[List[2, 4], List[6, 8]]
+    out: "{2, 4}"
+    tex:
+      in: \gcd (\{2,4\},\{6,8\})
+      out: \{2,4\}
+    verdict: disagree
+    kind: convention
+    note: Wolfram's GCD is Listable and threads element-wise ({gcd(2,6), gcd(4,8)}); compute-engine flattens the lists into arguments, gcd(2,4,6,8).
+  sage:
+    in: gcd([2, 4], [6, 8])
+    out: "TypeError: unable to call gcd with [2, 4]"
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD pools the elements of list arguments; Sage's gcd takes scalars only.
+  julia:
+    in: gcd(ZZ([2, 4]), ZZ([6, 8]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD pools the elements of list arguments; Nemo/Combinatorics.jl's gcd takes scalars only.
+  oscar:
+    in: gcd(ZZ([2, 4]), ZZ([6, 8]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD pools the elements of list arguments; Oscar's gcd takes scalars only.
+  mathlib4:
+    in: (Int.gcd [2, 4] [6, 8])
+    out: "Application type mismatch: The argument"
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD pools the elements of list arguments; Mathlib's gcd takes scalars only.
+  rust:
+    in: gcd(list(vec![n(2), n(4)]), list(vec![n(6), n(8)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: gcd([2, 4], [6, 8])
+    out: "AttributeError: 'int' object has no attribute 'is_commutative'"
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD threads over (or pools) the list; SymPy's takes scalars.
+commutative-gcd-a-b-gcd-b-a:
+  wolfram:
+    in: (GCD[12, 18] == GCD[18, 12])
+    out: True
+    tex:
+      in: \gcd (12,18)=\gcd (18,12)
+      out: \text{True}
+  sage:
+    in: bool(gcd(12, 18) == gcd(18, 12))
+    out: True
+  julia:
+    in: (gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))
+    out: "true"
+  oscar:
+    in: (gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))
+    out: "true"
+  mathlib4:
+    in: (decide ((Int.gcd 12 18) = (Int.gcd 18 12)))
+    out: "true"
+  rust:
+    in: equal(gcd(n(12), n(18)), gcd(n(18), n(12)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(gcd(12, 18), gcd(18, 12))
+    out: True
+gcd-a-b-cdot-lcm-a-b-ab-see-lcm:
+  wolfram:
+    in: (Times[GCD[12, 18], LCM[12, 18]] == Times[12, 18])
+    out: True
+    tex:
+      in: \gcd (12,18) \text{lcm}(12,18)=12\ 18
+      out: \text{True}
+  sage:
+    in: bool((gcd(12, 18) * lcm(12, 18)) == (12 * 18))
+    out: True
+  julia:
+    in: ((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))
+    out: "true"
+  oscar:
+    in: ((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))
+    out: "true"
+  mathlib4:
+    in: (decide (((Int.gcd 12 18) * (Int.lcm 12 18)) = (12 * 18)))
+    out: "true"
+  rust:
+    in: equal((gcd(n(12), n(18)) * lcm(n(12), n(18))), (n(12) * n(18)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((gcd(12, 18) * lcm(12, 18)), (12 * 18))
+    out: True
+over-the-rationals-the-gcd-of-the-numerators:
+  wolfram:
+    in: GCD[Rational[1, 3], Rational[2, 5], Rational[3, 7]]
+    out: 1/105
+    tex:
+      in: \gcd \left(\frac{1}{3},\frac{2}{5},\frac{3}{7}\right)
+      out: \frac{1}{105}
+gaussian-integers-the-associate-in-the-first:
+  wolfram:
+    in: GCD[Complex[3, 1], Complex[1, 3]]
+    out: 1 + I
+    tex:
+      in: \gcd (3+i,1+3 i)
+      out: 1+i
+  sympy:
+    in: gcd((3 + 1*I), (1 + 3*I))
+    out: 1 + I
+  julia:
+    in: gcd(ZZ(complex(3, 1)), ZZ(complex(1, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  oscar:
+    in: gcd(ZZ(complex(3, 1)), ZZ(complex(1, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sage:
+    in: gcd((3 + 1*I), (1 + 3*I))
+    out: "1"
+    verdict: inconclusive
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.

@@ -1,0 +1,71 @@
+5-6-7:
+  wolfram:
+    in: Pochhammer[5, 3]
+    out: "210"
+    tex:
+      in: (5)_3
+      out: "210"
+an-empty-product-is-1:
+  wolfram:
+    in: Pochhammer[2, 0]
+    out: "1"
+    tex:
+      in: (2)_0
+      out: "1"
+1-5-equals-5:
+  wolfram:
+    in: Pochhammer[1, 5]
+    out: "120"
+    tex:
+      in: (1)_5
+      out: "120"
+pochhammer-3-4:
+  wolfram:
+    in: Pochhammer[3, 4]
+    out: "360"
+    tex:
+      in: (3)_4
+      out: "360"
+1-n-n-since-the-rising-factorial-from-1-just:
+  wolfram:
+    in: (Pochhammer[1, 5] == Factorial[5])
+    out: True
+    tex:
+      in: (1)_5=5!
+      out: \text{True}
+negative-order-gives-the-reciprocal-a-n-frac-1-a:
+  wolfram:
+    in: Pochhammer[5, -2]
+    out: 1/12
+    tex:
+      in: (5)_{-2}
+      out: \frac{1}{12}
+dividing-by-k-counts-multisets-binom-n-k-1-k:
+  wolfram:
+    in: Divide[Pochhammer[5, 3], Factorial[3]]
+    out: "35"
+    tex:
+      in: \frac{(5)_3}{3!}
+      out: "35"
+if-a-is-a-non-positive-integer-with-a-n-the:
+  wolfram:
+    in: Pochhammer[-3, 4]
+    out: "0"
+    tex:
+      in: (-3)_4
+      out: "0"
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: Pochhammer[List[2, 3, 4], 2]
+    out: "{6, 12, 20}"
+    tex:
+      in: (\{2,3,4\})_2
+      out: \{6,12,20\}
+a-symbolic-base-with-integer-order-expands-to:
+  wolfram:
+    in:
+    note: Wolfram keeps Pochhammer[n, 5] unexpanded until FunctionExpand.
+a-negative-order-expands-to-the-reciprocal:
+  wolfram:
+    in:
+    note: Wolfram keeps Pochhammer[n, -5] unexpanded until FunctionExpand.

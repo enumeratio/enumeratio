@@ -1,0 +1,29 @@
+isodd-3:
+  wolfram:
+    in: OddQ[3]
+    out: True
+    tex:
+      in: \text{OddQ}[3]
+      out: \text{True}
+isodd-4:
+  wolfram:
+    in: OddQ[4]
+    out: False
+    tex:
+      in: \text{OddQ}[4]
+      out: \text{False}
+negative-integers-count-too:
+  wolfram:
+    in: OddQ[-7]
+    out: True
+    tex:
+      in: \text{OddQ}[-7]
+      out: \text{True}
+threads-element-wise-over-a-list:
+  wolfram:
+    in: OddQ[List[1, 2, 3]]
+    note: 'OddQ tests its argument as a whole: $\mathrm{OddQ}[\{1, 2, 3\}]$ is False.'
+a-symbol-stays-undecided-rather-than-false:
+  wolfram:
+    in:
+    note: '$\mathrm{OddQ}[x]$ is False: OddQ tests the literal form, not what x might be.'

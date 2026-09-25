@@ -1,0 +1,217 @@
+a-pole-of-gamma:
+  wolfram:
+    in: Gamma[0]
+    out: ComplexInfinity
+    tex:
+      in: \Gamma (0)
+      out: \text{ComplexInfinity}
+  sage:
+    in: gamma(0)
+    out: Infinity
+    verdict: disagree
+    kind: undefined-form
+    note: The pole is ComplexInfinity here; Sage's gamma(0) spells the same pole 'Infinity' (unsigned), a different notation for the same undefined value.
+  rust:
+    in: gamma(n(0))
+    out: PositiveInfinity
+    verdict: disagree
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust gives PositiveInfinity.'
+  mpmath:
+    in: gamma(0)
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers ComplexInfinity, mpmath gives ValueError: gamma function pole."
+  sympy:
+    in: gamma(0)
+    out: zoo
+a-floating-point-argument-evaluates-directly-to:
+  wolfram:
+    in: Gamma[2.5]
+    out: "1.329340388179137"
+    tex:
+      in: \Gamma (2.5)
+      out: "1.32934"
+  sage:
+    in: gamma(2.5)
+    out: "1.32934038817914"
+  rust:
+    in: gamma(x(2.5))
+    out: "1.3293403881791408"
+  mpmath:
+    in: gamma(2.5)
+    out: "1.32934038817913702047362561251"
+  sympy:
+    in: gamma(2.5)
+    out: "1.32934038817914"
+threads-over-a-list-so-poles-evaluate-concretely:
+  wolfram:
+    in: Gamma[List[0, -1]]
+    out: "{ComplexInfinity, ComplexInfinity}"
+    tex:
+      in: \Gamma (\{0,-1\})
+      out: \{\text{ComplexInfinity},\text{ComplexInfinity}\}
+  sage:
+    in: gamma([0, -1])
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Gamma is Listable and threads over the list; Sage's takes scalars only.
+  rust:
+    in: gamma(list(vec![n(0), n(-1)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Gamma is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: gamma([0, -1])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Gamma threads over (or pools) the list; SymPy's takes scalars.
+extends-the-factorial-gamma-n-1-n-so-gamma-6-5:
+  wolfram:
+    in: (Gamma[6] == Factorial[5])
+    out: True
+    tex:
+      in: \Gamma (6)=5!
+      out: \text{True}
+  sage:
+    in: bool(gamma(6) == factorial(5))
+    out: True
+  rust:
+    in: equal(gamma(n(6)), factorial(n(5)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(gamma(6), factorial(5))
+    out: True
+functional-equation-gamma-z-1-z-gamma-z-here-at:
+  wolfram:
+    in: (Gamma[6] == Times[5, Gamma[5]])
+    out: True
+    tex:
+      in: \Gamma (6)=5 \Gamma (5)
+      out: \text{True}
+  sage:
+    in: bool(gamma(6) == (5 * gamma(5)))
+    out: True
+  rust:
+    in: equal(gamma(n(6)), (n(5) * gamma(n(5))))
+    out: "true"
+  mpmath:
+    in: almosteq(gamma(6), (5 * gamma(5)), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(gamma(6), (5 * gamma(5)))
+    out: True
+reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z:
+  wolfram:
+    in: (Times[Gamma[Rational[1, 3]], Gamma[Rational[2, 3]]] == Divide[Pi, Sin[Divide[Pi, 3]]])
+    out: Gamma[1/3]*Gamma[2/3] == (2*Pi)/Sqrt[3]
+    tex:
+      in: \Gamma \left(\frac{1}{3}\right) \Gamma \left(\frac{2}{3}\right)=\frac{\pi }{\sin \left(\frac{\pi }{3}\right)}
+      out: \Gamma \left(\frac{1}{3}\right) \Gamma \left(\frac{2}{3}\right)=\frac{2 \pi }{\sqrt{3}}
+  sage:
+    in: bool((gamma((1/3)) * gamma((2/3))) == (pi / sin((pi / 3))))
+    out: False
+    verdict: disagree
+    kind: convention
+    note: True by the reflection formula; Sage's bool(a==b) doesn't invoke that identity automatically on unevaluated symbolic Gammas and reports False instead of attempting the proof.
+  rust:
+    in: equal((gamma(rational(n(1), n(3))) * gamma(rational(n(2), n(3)))), (x(std::f64::consts::PI) / sin((x(std::f64::consts::PI) / n(3)))))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((gamma(Rational(1, 3)) * gamma(Rational(2, 3))), (S(pi) / sin((S(pi) / 3))))
+    out: True
+gamma-1-2-sqrt-pi:
+  wolfram:
+    in: (Gamma[Rational[1, 2]] == Sqrt[Pi])
+    out: True
+    tex:
+      in: \Gamma \left(\frac{1}{2}\right)=\sqrt{\pi }
+      out: \text{True}
+  sage:
+    in: bool(gamma((1/2)) == sqrt(pi))
+    out: True
+  rust:
+    in: equal(gamma(rational(n(1), n(2))), sqrt(x(std::f64::consts::PI)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(gamma(Rational(1, 2)), sqrt(pi))
+    out: True
+the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2:
+  wolfram:
+    in: (Divide[Power[Pi, 2], Gamma[3]] == Divide[Power[Pi, 2], 2])
+    out: True
+    tex:
+      in: \frac{\pi ^2}{\Gamma (3)}=\frac{\pi ^2}{2}
+      out: \text{True}
+  sage:
+    in: bool(((pi^2) / gamma(3)) == ((pi^2) / 2))
+    out: True
+  rust:
+    in: equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((S((pi**2)) / gamma(3)), (S((pi**2)) / 2))
+    out: True
+squaring-the-reflection-formula-at-z-1-2:
+  wolfram:
+    in: (Power[Gamma[Rational[1, 2]], 2] == Pi)
+    out: True
+    tex:
+      in: \Gamma \left(\frac{1}{2}\right)^2=\pi
+      out: \text{True}
+  sage:
+    in: bool((gamma((1/2))^2) == pi)
+    out: True
+  rust:
+    in: equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((gamma(Rational(1, 2))**2), pi)
+    out: True
+threads-over-a-list-and-reduces-each-integer:
+  sympy:
+    in: gamma([1, 2, 3, 4, 5])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Gamma is Listable and threads over the list; SymPy's takes scalars only.
+  rust:
+    in: gamma(list(vec![n(1), n(2), n(3), n(4), n(5)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Gamma is Listable and threads over the list; the Rust crate takes scalars only.
+gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer:
+  wolfram:
+    in: Gamma[Rational[5, 2]]
+    out: (3*Sqrt[Pi])/4
+    tex:
+      in: \Gamma \left(\frac{5}{2}\right)
+      out: \frac{3 \sqrt{\pi }}{4}
+  sage:
+    in: gamma((5/2))
+    out: 3/4*sqrt(pi)
+  rust:
+    in: gamma(rational(n(5), n(2)))
+    out: "1.3293403881791408"
+  sympy:
+    in: gamma(Rational(5, 2))
+    out: 3*sqrt(pi)/4
+three-arguments-the-integral-between-two-limits:
+  wolfram:
+    in: Gamma[2.5, 0, 1.5]
+    out: "0.39882094539234453"
+    tex:
+      in: \Gamma (2.5,0,1.5)
+      out: "0.398821"
+int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3:
+  wolfram:
+    in: Gamma[2.5, 1.5, 3]
+    out: "0.5234502669154895"
+    tex:
+      in: \Gamma (2.5,1.5,3)
+      out: "0.52345"

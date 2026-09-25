@@ -1,0 +1,35 @@
+nextprime-10:
+  wolfram:
+    in: NextPrime[10]
+    out: "11"
+    tex:
+      in: \text{NextPrime}[10]
+      out: "11"
+nextprime-100:
+  wolfram:
+    in: NextPrime[100]
+    out: "101"
+    tex:
+      in: \text{NextPrime}[100]
+      out: "101"
+the-second-prime-after-10:
+  wolfram:
+    in: NextPrime[10, 2]
+    out: "13"
+    tex:
+      in: \text{NextPrime}[10,2]
+      out: "13"
+a-negative-k-walks-backward-giving-the-prime:
+  wolfram:
+    in: NextPrime[10, -1]
+    out: "7"
+    tex:
+      in: \text{NextPrime}[10,-1]
+      out: "7"
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: NextPrime[List[1, 5, 10, 15]]
+    out: "{2, 7, 11, 17}"
+    tex:
+      in: \text{NextPrime}[\{1,5,10,15\}]
+      out: \{2,7,11,17\}

@@ -1,0 +1,47 @@
+length-list-1-2-3-4:
+  wolfram:
+    in: Length[List[1, 2, 3, 4]]
+    out: "4"
+    tex:
+      in: \text{Length}[\{1,2,3,4\}]
+      out: "4"
+  sage:
+    in: len([1, 2, 3, 4])
+    out: "4"
+  sympy:
+    in: len([1, 2, 3, 4])
+    out: "4"
+length-list-1-2-3-4-5:
+  wolfram:
+    in: Length[List[1, 2, 3, 4, 5]]
+    out: "5"
+    tex:
+      in: \text{Length}[\{1,2,3,4,5\}]
+      out: "5"
+  sage:
+    in: len([1, 2, 3, 4, 5])
+    out: "5"
+  sympy:
+    in: len([1, 2, 3, 4, 5])
+    out: "5"
+works-on-any-collection-not-just-list:
+  wolfram:
+    in: Length[Union[List[1, 2, 3]]]
+    out: "3"
+    tex:
+      in: \text{Length}[\text{Union}[\{1,2,3\}]]
+      out: "3"
+length-join-a-b-length-a-length-b-see-join:
+  wolfram:
+    in: (Length[Join[List[1, 2, 3], List[4, 5]]] == Plus[Length[List[1, 2, 3]], Length[List[4, 5]]])
+    out: True
+    tex:
+      in: \text{Length}[\text{Join}[\{1,2,3\},\{4,5\}]]=\text{Length}[\{1,2,3\}]+\text{Length}[\{4,5\}]
+      out: \text{True}
+an-atom-has-no-parts-so-its-length-is-0:
+  sympy:
+    in: len(5)
+    out: "TypeError: object of type 'int' has no len()"
+    verdict: error
+    kind: domain
+    note: compute-engine's Length is defined as 0 on a non-collection atom; SymPy's len() refuses a non-collection outright.

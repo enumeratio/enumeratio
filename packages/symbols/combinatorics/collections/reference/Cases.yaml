@@ -34,8 +34,6 @@ examples:
     expected: 4
     category: Possible issues
     caption: "compute-engine's wildcards carry no type: `_Integer` is just a named wildcard, so it matches every element"
-    divergence:
-      wolfram: Wolfram's `_Integer` pattern only matches integers, here 2 (1 and 2).
 seeAlso:
   - Count
   - Select

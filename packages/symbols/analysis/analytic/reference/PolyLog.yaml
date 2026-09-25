@@ -49,8 +49,6 @@ examples:
     expected: { num: "-1.46035450880958681289" }
     category: Applications
     caption: $\operatorname{Li}_{1/2}(1) = \zeta(1/2)$ — a non-integer order, from `@enumeratio/analytic`
-    divergence:
-      wolfram: "Li_{1/2}(1): compute-engine continues in s to ζ(1/2); Wolfram treats z = 1 as the branch point for s ≤ 1 and returns ComplexInfinity."
   - id: li-1-2-1-2-0-80612672-via-the-lerch-series
     expr: [PolyLog, 0.5, 0.5]
     expected: 0.8061267230428522

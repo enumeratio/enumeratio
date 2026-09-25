@@ -1,0 +1,32 @@
+ln-g-4-ln-2:
+  wolfram:
+    in: LogBarnesG[4]
+    out: Log[2]
+    tex:
+      in: \text{logG}(4)
+      out: \log (2)
+ln-g-3-ln-1-0:
+  wolfram:
+    in: LogBarnesG[3]
+    out: "0"
+    tex:
+      in: \text{logG}(3)
+      out: "0"
+g-0-0-so-its-logarithm-is-infty:
+  wolfram:
+    in: LogBarnesG[0]
+    out: -Infinity
+    tex:
+      in: \text{logG}(0)
+      out: -\infty
+numeric-for-a-floating-point-argument:
+  wolfram:
+    in: LogBarnesG[10.5]
+    out: "42.278883636795044"
+    tex:
+      in: \text{logG}(10.5)
+      out: "42.2789"
+exact-at-the-integers-ln-g-10-ln:
+  wolfram:
+    in: LogBarnesG[10]
+    note: Wolfram keeps a single logarithm, Log[5056584744960000].

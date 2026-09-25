@@ -1,0 +1,56 @@
+erfinv-0:
+  wolfram:
+    in: InverseErf[0]
+    out: "0"
+    tex:
+      in: \text{erf}^{-1}(0)
+      out: "0"
+erfinv-1:
+  wolfram:
+    in: InverseErf[1]
+    out: Infinity
+    tex:
+      in: \text{erf}^{-1}(1)
+      out: \infty
+erfinv-neg-1:
+  wolfram:
+    in: InverseErf[-1]
+    out: -Infinity
+    tex:
+      in: \text{erf}^{-1}(-1)
+      out: -\infty
+a-floating-point-argument-evaluates-directly-to:
+  wolfram:
+    in: InverseErf[0.5]
+    out: "0.47693627620446993"
+    tex:
+      in: \text{erf}^{-1}(0.5)
+      out: "0.476936"
+inverse-of-erf-erf-erfinv-x-x-see-erf:
+  wolfram:
+    in: (Erf[InverseErf[0.5]] == 0.5)
+    out: True
+    tex:
+      in: \text{erf}\left(\text{erf}^{-1}(0.5)\right)=0.5
+      out: \text{True}
+outside-its-real-domain-1-1-compute-engine:
+  wolfram:
+    in: InverseErf[2]
+    out: InverseErf[2]
+    tex:
+      in: \text{erf}^{-1}(2)
+      out: \text{erf}^{-1}(2)
+blows-up-near-the-boundary-erfinv-0-9999-is:
+  wolfram:
+    in: InverseErf[0.9999]
+    out: "2.75106390571208"
+    tex:
+      in: \text{erf}^{-1}(0.9999)
+      out: "2.75106"
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: InverseErf[List[0, 1]]
+    out: "{0, Infinity}"
+    tex:
+      in: \text{erf}^{-1}(\{0,1\})
+      out: \{0,\infty \}

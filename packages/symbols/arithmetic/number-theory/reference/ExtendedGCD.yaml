@@ -16,27 +16,19 @@ examples:
   - id: extendedgcd-2-3
     expr: [ExtendedGCD, 2, 3]
     expected: [Tuple, 1, -1, 1]
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: extendedgcd-12-18
     expr: [ExtendedGCD, 12, 18]
     expected: [Tuple, 6, -1, 1]
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: the-modular-inverse-of-3-mod-11-is-4-since-3
     expr: [ExtendedGCD, 3, 11]
     expected: [Tuple, 1, 4, -1]
     category: Applications
     caption: The modular inverse of 3 mod 11 is 4, since $3\times4\equiv1\pmod{11}$
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: bezout-coefficients-when-a-0-0-times-0-5-times-1
     expr: [ExtendedGCD, 0, 5]
     expected: [Tuple, 5, 0, 1]
     category: Possible issues
     caption: 'Bézout coefficients when $a=0$: $0\times0+5\times1=5$'
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: confirms-the-coefficients-above-satisfy-2x-3y
     expr: [Add, [Multiply, 2, -1], [Multiply, 3, 1]]
     expected: 1
@@ -47,34 +39,24 @@ examples:
     expected: [Tuple, 3, -2, 1, 0]
     category: Scope
     caption: 'Any number of arguments: folding pairwise, $6\times(-2)+15\times1+30\times0=3=\gcd(6,15,30)$'
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, x₁, x₂, x₃), Wolfram's is {g, {x₁, x₂, x₃}}."
   - id: gaussian-integers-by-euclid-with-the-rounded
     expr: [ExtendedGCD, [Complex, 7, 2], [Complex, 3, -5]]
     expected: [Tuple, 1, [Complex, -1, -2], [Complex, -2, 2]]
     category: Scope
     caption: Gaussian integers, by Euclid with the rounded quotient
-    divergence:
-      wolfram: Bézout coefficients are not unique; in about one case in a thousand Wolfram returns another valid pair.
   - id: extendedgcd-3-5
     expr: [ExtendedGCD, 3, 5]
     expected: [Tuple, 1, 2, -1]
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: negative-arguments-12-18-6
     expr: [ExtendedGCD, -12, 18]
     expected: [Tuple, 6, 1, 1]
     category: Scope
     caption: "Negative arguments: $-12+18=6$"
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: big-integers-the-coefficients-stay-minimal-x-b
     expr: [ExtendedGCD, [Power, 2, 100], [Power, 3, 50]]
     expected: [Tuple, 1, { num: "208475958620489751737959" }, { num: "-368122879029235364752383564167" }]
     category: Scope
     caption: Big integers; the coefficients stay minimal, $|x|<b$ and $|y|<a$
-    divergence:
-      wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: three-arguments-4-cdot-4-6-cdot-4-9-1
     expr: [ExtendedGCD, 4, 6, 9]
     expected: [Tuple, 1, 4, -4, 1]

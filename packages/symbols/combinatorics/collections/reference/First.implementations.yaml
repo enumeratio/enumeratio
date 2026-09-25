@@ -1,0 +1,31 @@
+first-list-1-2-3:
+  wolfram:
+    in: First[List[1, 2, 3]]
+    out: "1"
+    tex:
+      in: \text{First}[\{1,2,3\}]
+      out: "1"
+first-list-10-20-30:
+  wolfram:
+    in: First[List[10, 20, 30]]
+    out: "10"
+    tex:
+      in: \text{First}[\{10,20,30\}]
+      out: "10"
+first-c-at-c-1-see-at:
+  wolfram:
+    in: (First[List[1, 2, 3]] == Part[List[1, 2, 3], 1])
+    out: True
+    tex:
+      in: \text{First}[\{1,2,3\}]=\{1,2,3\}[[1]]
+      out: \text{True}
+an-empty-collection-has-no-first-element-compute:
+  wolfram:
+    in: First[List[]]
+    out: First[{}]
+    tex:
+      in: \text{First}[\{\}]
+      out: \text{First}[\{\}]
+    verdict: disagree
+    kind: undefined-form
+    note: First of an empty list is the symbol Missing here; Wolfram leaves First[{}] unevaluated (with a First::nofirst message).

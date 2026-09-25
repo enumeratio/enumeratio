@@ -1,0 +1,56 @@
+subfactorial-0:
+  wolfram:
+    in: Subfactorial[0]
+    out: "1"
+    tex:
+      in: \text{Subfactorial}[0]
+      out: "1"
+a-single-object-can-t-be-deranged:
+  wolfram:
+    in: Subfactorial[1]
+    out: "0"
+    tex:
+      in: \text{Subfactorial}[1]
+      out: "0"
+subfactorial-4:
+  wolfram:
+    in: Subfactorial[4]
+    out: "9"
+    tex:
+      in: \text{Subfactorial}[4]
+      out: "9"
+subfactorial-5:
+  wolfram:
+    in: Subfactorial[5]
+    out: "44"
+    tex:
+      in: \text{Subfactorial}[5]
+      out: "44"
+recurrence-d-n-n-d-n-1-1-n:
+  wolfram:
+    in: (Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])
+    out: True
+    tex:
+      in: \text{Subfactorial}[4]=4 \text{Subfactorial}[3]+(-1)^4
+      out: \text{True}
+the-hat-check-problem-the-number-of-ways-6:
+  wolfram:
+    in: Subfactorial[6]
+    out: "265"
+    tex:
+      in: \text{Subfactorial}[6]
+      out: "265"
+a-negative-argument-is-left-unevaluated:
+  wolfram:
+    in: Subfactorial[-1]
+    out: Subfactorial[-1]
+    tex:
+      in: \text{Subfactorial}[-1]
+      out: \text{Subfactorial}[-1]
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: Subfactorial[List[1, 2, 3, 4]]
+    out: "{0, 1, 2, 9}"
+    tex:
+      in: \text{Subfactorial}[\{1,2,3,4\}]
+      out: \{0,1,2,9\}

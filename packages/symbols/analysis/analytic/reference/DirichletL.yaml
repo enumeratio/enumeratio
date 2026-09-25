@@ -32,8 +32,6 @@ examples:
     expected: ComplexInfinity
     category: Properties
     caption: …and keeps $\zeta$'s pole; a non-principal $L$ is entire
-    divergence:
-      wolfram: We answer the pole as ComplexInfinity; Wolfram declines and leaves the call unevaluated instead.
   - id: l-0-chi-frac-35-frac-15-i-exact-from-the
     expr: [DirichletL, 5, 2, 0]
     expected: [Complex, [Rational, 3, 5], [Rational, 1, 5]]

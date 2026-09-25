@@ -1,0 +1,7 @@
+unique-list-1-2-2-3-1:
+  wolfram:
+    in: DeleteDuplicates[List[1, 2, 2, 3, 1]]
+    out: "{1, 2, 3}"
+    tex:
+      in: \text{DeleteDuplicates}[\{1,2,2,3,1\}]
+      out: \{1,2,3\}

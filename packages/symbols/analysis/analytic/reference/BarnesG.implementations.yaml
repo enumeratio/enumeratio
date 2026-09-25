@@ -1,0 +1,56 @@
+g-5-0-1-2-3-12:
+  wolfram:
+    in: BarnesG[5]
+    out: "12"
+    tex:
+      in: G(5)
+      out: "12"
+g-7-34560:
+  wolfram:
+    in: BarnesG[7]
+    out: "34560"
+    tex:
+      in: G(7)
+      out: "34560"
+the-superfactorials-threaded-over-a-list:
+  wolfram:
+    in: BarnesG[List[1, 2, 3, 4, 5, 6]]
+    out: "{1, 1, 1, 2, 12, 288}"
+    tex:
+      in: G(\{1,2,3,4,5,6\})
+      out: \{1,1,1,2,12,288\}
+g-vanishes-at-the-nonpositive-integers:
+  wolfram:
+    in: BarnesG[0]
+    out: "0"
+    tex:
+      in: G(0)
+      out: "0"
+all-of-them:
+  wolfram:
+    in: BarnesG[-3]
+    out: "0"
+    tex:
+      in: G(-3)
+      out: "0"
+a-floating-point-argument-evaluates-numerically:
+  wolfram:
+    in: BarnesG[2.5]
+    out: "0.947573901083827"
+    tex:
+      in: G(2.5)
+      out: "0.947574"
+an-exact-non-integer-argument-stays-symbolic:
+  wolfram:
+    in: BarnesG[Rational[5, 2]]
+    out: (E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))
+    tex:
+      in: G\left(\frac{5}{2}\right)
+      out: \frac{\sqrt[8]{e} \pi ^{3/4}}{2^{23/24} A^{3/2}}
+    verdict: disagree
+    kind: unevaluated
+    note: An exact non-integer argument stays symbolic here; Wolfram continues to a closed form in Glaisher's constant.
+threads-elementwise-over-an-array:
+  wolfram:
+    in: BarnesG[List[List[Rational[1, 2], 1], List[1, Rational[1, 2]]]]
+    note: Wolfram also threads, but writes $G(\tfrac12)$ as its closed form $2^{1/24} e^{1/8} \pi^{-1/4} A^{-3/2}$ in Glaisher's constant.

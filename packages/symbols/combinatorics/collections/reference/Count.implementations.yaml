@@ -1,0 +1,29 @@
+count-list-1-2-2-3-2-2:
+  wolfram:
+    in: Count[List[1, 2, 2, 3, 2], 2]
+    out: "3"
+    tex:
+      in: \text{Count}[\{1,2,2,3,2\},2]
+      out: "3"
+count-list-1-2-2-3-2-4-2:
+  wolfram:
+    in: Count[List[1, 2, 2, 3, 2, 4], 2]
+    out: "3"
+    tex:
+      in: \text{Count}[\{1,2,2,3,2,4\},2]
+      out: "3"
+a-value-absent-from-the-collection-counts-as-0:
+  wolfram:
+    in: Count[List[1, 2, 3], 9]
+    out: "0"
+    tex:
+      in: \text{Count}[\{1,2,3\},9]
+      out: "0"
+count-tests-exact-equality-a-typed-pattern-like:
+  wolfram:
+    in:
+    note: Wolfram's `_Integer` pattern counts every integer element, here 2 (1 and 2).
+count-tests-exact-equality-so-a-pattern-like:
+  wolfram:
+    in:
+    note: Wolfram's `_Integer` pattern counts every integer element, here 4 (2, 1, 3, 3).
