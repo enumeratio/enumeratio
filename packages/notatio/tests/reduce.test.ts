@@ -12,7 +12,7 @@ import {
   TTY,
   WEB,
 } from "../src/environment.ts";
-import { declarations, pinValue, reduce, sampleValues } from "../src/reduce.ts";
+import { declarations, evaluateReadouts, pinValue, reduce, sampleValues } from "../src/reduce.ts";
 import { markupOf, renderingOf } from "../src/symbols.ts";
 
 // What each expression becomes in each environment: the controls pinned or sampled where
@@ -124,4 +124,15 @@ test("detectors: a pipe, a plain tty, a kitty; print, a phone, the web", () => {
     name: "web",
     theme: "dark",
   });
+});
+
+test("a static host evaluates each readout under the pins", () => {
+  const { json } = parseNotatio('Row([Slider((k, 2), (0, 5)), "squared is", Dynamic(k^2)])');
+  const pinned = reduce(json, PIPE);
+  const seen: string[] = [];
+  const out = evaluateReadouts(pinned, (e) => (seen.push(serializeNotatio(e)), 4));
+  expect(seen).toEqual(["2 ^ 2"]);
+  expect(serializeNotatio(out)).toBe(
+    'Labeled(Row(["squared is", 4]), "k = 2 (0 ≤ k ≤ 5)", Bottom)',
+  );
 });

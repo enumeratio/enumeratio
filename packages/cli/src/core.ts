@@ -17,7 +17,7 @@ import {
   ENVIRONMENTS,
   environmentNamed,
 } from "../../notatio/src/environment.ts";
-import { reduce } from "../../notatio/src/reduce.ts";
+import { evaluateReadouts, reduce } from "../../notatio/src/reduce.ts";
 import { bold, cyan, dim, red } from "./ansi.ts";
 import {
   FORM_LABEL,
@@ -133,8 +133,12 @@ export class Repl {
   /** The result as the chosen environment would have it; unreduced by default. */
   reduced(expr: BoxedExpression): BoxedExpression {
     if (this.environment === undefined || can.drive(this.environment)) return expr;
-    const out = reduce(expr.json as never, this.environment);
-    return this.session.ce.box(out as never).evaluate();
+    const { ce } = this.session;
+    const out = evaluateReadouts(
+      reduce(expr.json as never, this.environment),
+      (e) => ce.box(e as never).evaluate().json as never,
+    );
+    return ce.box(out as never).evaluate();
   }
 
   /** Style an `Out[n]= …` line (multi-line bodies start on the next line). */

@@ -28,9 +28,10 @@ import { defineControl, emitControl } from "./define.ts";
  * Otherwise the entries are separated by `|`, since commas belong to the sentence, and
  * an entry may be written `value -> label` to show one thing and bind another. An
  * entry that looks like a value is typeset; a word is set as prose. Inside a
- * `<notatio-dynamic-module>` the binding `_name` is the entry's value when it is a number or a
- * named value, and otherwise its **index**, so a toggle over words still drives the
- * rest of the document (`<notatio-when test="_size > 1">`).
+ * `<notatio-dynamic-module>` the binding `_name` is the entry's value when it is a number, a
+ * quoted string (`"several" -> several`, what `Toggler(size, ["several", …])` lowers
+ * to) or a named value, and otherwise its **index**, so a toggle over words in prose
+ * still drives the rest of the document (`<notatio-when test="_size > 1">`).
  *
  * A toggler is a `<notatio-knob>` **without an axis**, and that is the whole
  * difference: there is no direction to drag a word in, so a click steps it once, and a
