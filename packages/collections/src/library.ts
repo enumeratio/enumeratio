@@ -1,5 +1,6 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareFamilies } from "./families/declare.ts";
+import { declareListHeads } from "./list-heads.ts";
 import { declareListOps } from "./list-ops.ts";
 import { declareStats, type StatsOptions } from "./stats.ts";
 
@@ -16,5 +17,6 @@ import { declareStats, type StatsOptions } from "./stats.ts";
 export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
   declareFamilies(ce);
   declareListOps(ce);
+  declareListHeads(ce);
   declareStats(ce, options);
 }
