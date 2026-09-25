@@ -1,0 +1,28 @@
+name: GraphDistanceMatrix
+domain: Collections
+signature: GraphDistanceMatrix(g)
+summary: All-pairs shortest-path distances of a [[Graph]], as a matrix.
+signatures:
+  - call: GraphDistanceMatrix(g)
+    description: row/column order follows VertexList(g); entry (i, j) is GraphDistance(g, v_i, v_j).
+    library: enumeratio-collections
+details:
+  - Respects edge direction, same as [[GraphDistance]] itself -- row i is the distances FROM vertex i.
+  - An unreachable pair reads PositiveInfinity, matching GraphDistance on a disconnected graph.
+examples:
+  - id: a-3-cycle
+    expr: [GraphDistanceMatrix, [CycleGraph, 3]]
+    expected: [List, [List, 0, 1, 1], [List, 1, 0, 1], [List, 1, 1, 0]]
+  - id: unreachable-pair-is-infinite
+    expr: [GraphDistanceMatrix, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]
+    expected:
+      [
+        List,
+        [List, 0, 1, PositiveInfinity, PositiveInfinity],
+        [List, 1, 0, PositiveInfinity, PositiveInfinity],
+        [List, PositiveInfinity, PositiveInfinity, 0, 1],
+        [List, PositiveInfinity, PositiveInfinity, 1, 0],
+      ]
+seeAlso:
+  - GraphDistance
+  - VertexEccentricity

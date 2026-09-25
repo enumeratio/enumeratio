@@ -1,14 +1,14 @@
 randominteger-default-seed-is-reproducible:
   epsil:
-    in: RandomInteger(100)
+    in: Last([SeedRandom(42), RandomInteger(100)])
     out: "60"
   tex:
-    in: \mathrm{RandomInteger}(100)
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(42), \mathrm{RandomInteger}(100)\bigr\rbrack)
     out: "60"
   fullform:
-    in: RandomInteger[100]
+    in: Last[List[SeedRandom[42], RandomInteger[100]]]
   wolfram:
-    in: RandomInteger[100]
+    in: Last[List[SeedRandom[42], RandomInteger[100]]]
 randominteger-range-scope:
   epsil:
     in: Last([SeedRandom(1), RandomInteger([10, 20])])

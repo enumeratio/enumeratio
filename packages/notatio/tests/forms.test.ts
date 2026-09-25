@@ -18,7 +18,7 @@ test("every record pins the forms the printers and transpilers make", () => {
     .filter((h) => !isDeepStrictEqual(recordWithForms(h.entry.examples, h.implementations), h.implementations ?? {}))
     .map((h) => h.head);
   expect(stale, FIX).toEqual([]);
-});
+}, 60_000); // prints and transpiles every example: past the 5 s default on CI runners
 
 // A transpiler that stopped emitting, or a reader that stopped reading, would show here first.
 test("most examples make the trip to Wolfram and back exactly", () => {

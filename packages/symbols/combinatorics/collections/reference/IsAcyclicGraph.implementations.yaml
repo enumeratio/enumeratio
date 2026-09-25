@@ -1,0 +1,47 @@
+a-tree-is-acyclic:
+  epsil:
+    in: |-
+      IsAcyclicGraph(Graph([1, 2, 3, 4], [
+                                           UndirectedEdge(1, 2),
+                                           UndirectedEdge(2, 3),
+                                           UndirectedEdge(3, 4),
+                                         ]))
+    out: True
+  tex:
+    in: \mathrm{IsAcyclicGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
+    out: \top
+  traditional:
+    in: \mathrm{IsAcyclicGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
+    out: \mathrm{True}
+  fullform:
+    in: AcyclicGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
+  wolfram:
+    in: AcyclicGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
+a-cycle-is-not-acyclic:
+  epsil:
+    in: IsAcyclicGraph(CycleGraph(4))
+    out: False
+  tex:
+    in: \mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(4))
+    out: \bot
+  traditional:
+    in: \mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(4))
+    out: \mathrm{False}
+  fullform:
+    in: AcyclicGraphQ[CycleGraph[4]]
+  wolfram:
+    in: AcyclicGraphQ[CycleGraph[4]]
+a-directed-2-cycle-is-a-cycle:
+  epsil:
+    in: IsAcyclicGraph(Graph([1, 2], [DirectedEdge(1, 2), DirectedEdge(2, 1)]))
+    out: False
+  tex:
+    in: \mathrm{IsAcyclicGraph}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1)\bigr\rbrack))
+    out: \bot
+  traditional:
+    in: \mathrm{IsAcyclicGraph}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1)\bigr\rbrack))
+    out: \mathrm{False}
+  fullform:
+    in: AcyclicGraphQ[Graph[List[1, 2], List[DirectedEdge[1, 2], DirectedEdge[2, 1]]]]
+  wolfram:
+    in: AcyclicGraphQ[Graph[List[1, 2], List[DirectedEdge[1, 2], DirectedEdge[2, 1]]]]
