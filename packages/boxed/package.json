@@ -23,12 +23,12 @@
     "check": "vp check"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.128.0",
+    "@cortex-js/compute-engine": "^0.134.0",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.128.0"
+    "@cortex-js/compute-engine": "^0.134.0"
   }
 }

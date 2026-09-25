@@ -26,3 +26,5 @@ peerDependencyRules:
 allowBuilds:
   "@parcel/watcher": false
   esbuild: false
+minimumReleaseAgeExclude:
+  - "@cortex-js/compute-engine@0.134.0"
