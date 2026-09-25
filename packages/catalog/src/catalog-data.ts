@@ -349,6 +349,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "Bounded-Part Partitions",
     description: "Partitions of n with parts at most k.",
+    aliasOf: "PartitionsMaxPart",
   },
   {
     name: "BoxConfinedPartitions",
@@ -367,6 +368,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     title: "Box-Confined Partitions",
     description:
       "Partitions fitting in a parts×max_part box — counted by the Gaussian binomial C(parts+max_part, parts).",
+    aliasOf: "PartitionsInBox",
   },
   {
     name: "BoxedPlanePartitions",
@@ -1536,6 +1538,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "k-Part Partitions",
     description: "Partitions of n into exactly k parts.",
+    aliasOf: "PartitionsIntoKParts",
   },
   {
     name: "KSubsets",
