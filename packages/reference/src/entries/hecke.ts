@@ -28,11 +28,13 @@ export const hecke: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "length-goes-up-so-no-q-appears",
         expr: times(T(2, 1, 3), T(1, 3, 2)),
         expected: T(2, 3, 1),
         caption: "length goes up, so no $q$ appears",
       },
       {
+        id: "the-quadratic-relation-t-s-2-q-q-1-t-s",
         expr: times(T(2, 1, 3), T(2, 1, 3)),
         expected: [
           "Add",
@@ -43,18 +45,21 @@ export const hecke: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "t-st-tt-s-the-longest-element-of-s-3",
         expr: times(T(2, 1, 3), T(1, 3, 2), T(2, 1, 3)),
         expected: T(3, 2, 1),
         caption: "$T_sT_tT_s$ — the longest element of $S_3$",
         category: "Properties",
       },
       {
+        id: "and-t-tt-st-t-gives-the-same-which-is-the-braid",
         expr: times(T(1, 3, 2), T(2, 1, 3), T(1, 3, 2)),
         expected: T(3, 2, 1),
         caption: "…and $T_tT_sT_t$ gives the same, which is the braid relation",
         category: "Properties",
       },
       {
+        id: "n-the-same-basis-as-z-s-n",
         expr: ["AlgebraDimension", ["HeckeAlgebra", 4]],
         expected: 24,
         caption: "$n!$ — the same basis as $\\mathbb{Z}S_n$",
@@ -81,17 +86,20 @@ export const hecke: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "q-t-e-q-1-t-s-at-q-1-is-just-t-e",
         expr: ["HeckeSpecialize", times(T(2, 1, 3), T(2, 1, 3)), 1],
         expected: T(1, 2, 3),
         caption: "$q\\,T_e + (q-1)T_s$ at $q = 1$ is just $T_e$",
       },
       {
+        id: "at-q-2-it-stays-spread-over-two-basis-elements",
         expr: ["HeckeSpecialize", times(T(2, 1, 3), T(2, 1, 3)), 2],
         expected: ["Add", ["Multiply", 2, T(1, 2, 3)], T(2, 1, 3)],
         caption: "at $q = 2$ it stays spread over two basis elements",
         category: "Properties",
       },
       {
+        id: "the-ordinary-product-of-permutations",
         expr: ["HeckeSpecialize", times(T(2, 1, 3), T(1, 3, 2)), 1],
         expected: T(2, 3, 1),
         caption: "the ordinary product of permutations",

@@ -43,23 +43,27 @@ export const hypercomplex: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-canonical-order",
         expr: ["NonCommutativeMultiply", "e_1", "e_2"],
         expected: ["Multiply", "e_1", "e_2"],
         caption: "the canonical order",
       },
       {
+        id: "reversing-the-operands-flips-the-sign",
         expr: ["NonCommutativeMultiply", "e_2", "e_1"],
         expected: ["Negate", ["Multiply", "e_1", "e_2"]],
         caption: "reversing the operands flips the sign",
         category: "Properties",
       },
       {
+        id: "e-1e-2-2-1",
         expr: ["NonCommutativeMultiply", "e_1", "e_2", "e_1", "e_2"],
         expected: -1,
         caption: "$(e_1e_2)^2 = -1$",
         category: "Properties",
       },
       {
+        id: "scalars-the-implied-identity-factor",
         expr: ["CircleTimes", 2, 3],
         expected: 6,
         caption: "scalars: the implied identity factor",
@@ -70,18 +74,21 @@ export const hypercomplex: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "commuting-units-agrees-with-times",
         expr: ["CircleTimes", "i_2", "i_1"],
         expected: ["Multiply", "i_1", "i_2"],
         caption: "commuting units: agrees with $\\times$",
         category: "Scope",
       },
       {
+        id: "plain-times-declines-both-orders-arrive",
         expr: ["Multiply", "e_2", "e_1"],
         expected: ["Multiply", "e_1", "e_2"],
         caption: "plain $\\times$ declines: both orders arrive identical",
         category: "Possible issues",
       },
       {
+        id: "the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13",
         expr: [
           "NonCommutativeMultiply",
           ["Add", 1, ["Multiply", 2, "f_1"], ["Multiply", 3, "f_2"], ["Multiply", 4, "f_1", "f_2"]],
@@ -99,6 +106,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
         category: "Applications",
       },
       {
+        id: "associative-nested-products-flatten",
         expr: ["NonCommutativeMultiply", "a", ["NonCommutativeMultiply", "b", "c"]],
         expected: ["Multiply", "a", "b", "c"],
         caption: "associative: nested products flatten",
@@ -109,6 +117,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "undeclared-symbols-are-taken-to-commute-so-the",
         expr: ["NonCommutativeMultiply", "b", "a"],
         expected: ["Multiply", "a", "b"],
         caption: "undeclared symbols are taken to commute, so the order is not kept",
@@ -143,28 +152,33 @@ export const hypercomplex: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "3-2-4-2-the-gaussian-norm",
         expr: ["Norm", ["Add", 3, ["Multiply", 4, "i_1"]]],
         expected: 25,
         caption: "$3^2+4^2$ — the Gaussian norm",
       },
       {
+        id: "the-4-times-4-multiplication-determinant",
         expr: ["Norm", ["Add", 1, ["Multiply", 2, "i_1"], ["Multiply", 3, "i_1", "i_2"]]],
         expected: 160,
         caption: "the $4\\times 4$ multiplication determinant",
       },
       {
+        id: "split-units-give-a-2-b-2-which-is-indefinite",
         expr: ["Norm", ["Add", 3, ["Multiply", 4, "j_1"]]],
         expected: -7,
         caption: "split units give $a^2-b^2$, which is indefinite",
         category: "Properties",
       },
       {
+        id: "a-zero-divisor",
         expr: ["Norm", ["Add", 1, ["Multiply", "i_1", "i_2"]]],
         expected: 0,
         caption: "a zero divisor",
         category: "Properties",
       },
       {
+        id: "each-factor-has-norm-2-over-c-1-but-4-over-c-2",
         expr: ["Norm", ["Multiply", ["Add", 1, "i_1"], ["Add", 1, "i_2"]]],
         expected: 16,
         caption: "each factor has norm 2 over $\\mathbb{C}_1$, but 4 over $\\mathbb{C}_2$",
@@ -194,16 +208,19 @@ export const hypercomplex: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "1-i-j-k",
         expr: ["Basis", "Quaternions"],
         expected: ["List", 1, "f_1", "f_2", ["Multiply", "f_1", "f_2"]],
         caption: "$(1, i, j, k)$",
       },
       {
+        id: "the-bicomplex-basis",
         expr: ["Basis", ["MulticomplexAlgebra", 2]],
         expected: ["List", 1, "i_1", "i_2", ["Multiply", "i_1", "i_2"]],
         caption: "the bicomplex basis",
       },
       {
+        id: "an-element-from-a-coefficient-tuple",
         expr: ["Dot", ["List", 1, 2, 3, 4], ["Basis", "Quaternions"]],
         expected: [
           "Add",
@@ -237,13 +254,19 @@ export const hypercomplex: readonly ReferenceEntry[] = [
       "A $0$ entry marks a nilpotent generator — the dual and Grassmann families",
     ],
     examples: [
-      { expr: ["AlgebraSignature", "Quaternions"], expected: ["List", -1, -1] },
       {
+        id: "algebrasignature-quaternions",
+        expr: ["AlgebraSignature", "Quaternions"],
+        expected: ["List", -1, -1],
+      },
+      {
+        id: "cl-2-1",
         expr: ["AlgebraSignature", ["CliffordAlgebra", 2, 1]],
         expected: ["List", 1, 1, -1],
         caption: "$\\mathrm{Cl}(2,1)$",
       },
       {
+        id: "nilpotent",
         expr: ["AlgebraSignature", "DualNumbers"],
         expected: ["List", 0],
         caption: "nilpotent",
@@ -269,9 +292,18 @@ export const hypercomplex: readonly ReferenceEntry[] = [
       "A separate head from compute-engine's `Dimension`, which is defined for lists and matrices and is deliberately left alone",
     ],
     examples: [
-      { expr: ["AlgebraDimension", "Quaternions"], expected: 4 },
-      { expr: ["AlgebraDimension", ["CliffordAlgebra", 2, 1]], expected: 8 },
       {
+        id: "algebradimension-quaternions",
+        expr: ["AlgebraDimension", "Quaternions"],
+        expected: 4,
+      },
+      {
+        id: "algebradimension-cliffordalgebra-2-1",
+        expr: ["AlgebraDimension", ["CliffordAlgebra", 2, 1]],
+        expected: 8,
+      },
+      {
+        id: "c-4",
         expr: ["AlgebraDimension", ["MulticomplexAlgebra", 4]],
         expected: 16,
         caption: "$\\mathbb{C}_4$",
@@ -301,17 +333,20 @@ export const hypercomplex: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "ijk-1",
         expr: ["NonCommutativeMultiply", "f_1", "f_2", ["Multiply", "f_1", "f_2"]],
         expected: -1,
         caption: "$ijk = -1$",
       },
       {
+        id: "k-in-h",
         expr: ["Element", ["Multiply", "f_1", "f_2"], "Quaternions"],
         expected: "True",
         caption: "$k \\in \\mathbb{H}$",
         category: "Properties",
       },
       {
+        id: "a-multicomplex-unit-is-not-a-quaternion",
         expr: ["Element", "i_1", "Quaternions"],
         expected: "False",
         caption: "a multicomplex unit is not a quaternion",

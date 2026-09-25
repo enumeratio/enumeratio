@@ -10,6 +10,7 @@
 
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { captionId, dedupeId } from "@enumeratio/entry";
 import { declareCollections } from "@enumeratio/collections/src";
 import { ALL_STATISTICS } from "../src/all.ts";
 import { declareStatistics } from "../src/declare.ts";
@@ -127,6 +128,15 @@ function examplesFor(definition: Definition): Example[] {
 
 const json = (value: unknown): string => JSON.stringify(value);
 
+/** Ids for a head's examples, from their captions (design/examples-as-data.md §3). */
+const withIds = (examples: readonly { caption?: string }[]): unknown[] => {
+  const taken = new Set<string>();
+  return examples.map((e) => ({
+    id: dedupeId(captionId(e.caption ?? "") || "example", taken),
+    ...e,
+  }));
+};
+
 const entryFor = (definition: Definition): string => {
   const also = shadowed.get(definition.head) ?? [];
   const details = [
@@ -148,7 +158,7 @@ const entryFor = (definition: Definition): string => {
     signature: ${json(`${definition.head}(${SUBJECT_NAME[definition.on] ?? "_"})`)},
     summary: ${json(definition.summary)},
     details: ${json(details)},
-    examples: ${json(examplesFor(definition))},
+    examples: ${json(withIds(examplesFor(definition)))},
   },`;
 };
 
@@ -181,7 +191,7 @@ const frontierEntryFor = (frontier: (typeof FRONTIER)[number]): string => {
       `On the primitive frontier for \`${frontier.on}\`: ${frontier.why}`,
       `Classified \`${frontier.reason}\`. Being on this list is a claim to be justified, not a place to put anything inconvenient — see \`FRONTIER\` in @enumeratio/statistics.`,
     ])},
-    examples: ${json(examples)},
+    examples: ${json(withIds(examples))},
   },`;
 };
 

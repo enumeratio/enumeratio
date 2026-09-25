@@ -7,6 +7,7 @@
 
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { captionId, dedupeId } from "@enumeratio/entry";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
@@ -38,10 +39,21 @@ declareMaps(ce, constructorFor);
 
 const json = (value: unknown): string => JSON.stringify(value);
 
+/** Ids for a head's examples, from their captions (design/examples-as-data.md §3). */
+const withIds = (examples: readonly { caption?: string }[]): unknown[] => {
+  const taken = new Set<string>();
+  return examples.map((e) => ({
+    id: dedupeId(captionId(e.caption ?? "") || "example", taken),
+    ...e,
+  }));
+};
+
 /** The carrier name a signature reads, as the constructor spells it. */
 const carrier = (type: string): string => constructorFor[type] ?? type;
 
-function exampleFor(map: CombinatorialMap): unknown[] {
+function exampleFor(
+  map: CombinatorialMap,
+): { expr: unknown; expected: unknown; caption?: string }[] {
   const sample = SAMPLES[map.from];
   if (sample === undefined) return [];
   const subject = [carrier(map.from), sample.contents];
@@ -68,7 +80,7 @@ const entryFor = (map: CombinatorialMap): string => {
     signature: ${json(`${map.name}(${carrier(map.from)})`)},
     summary: ${json(map.summary)},
     details: ${json(details)},
-    examples: ${json(exampleFor(map))},
+    examples: ${json(withIds(exampleFor(map)))},
     ${map.composedOf === undefined ? "" : `seeAlso: ${json([...map.composedOf])},\n    `}},`;
 };
 
@@ -97,7 +109,7 @@ const frontierEntryFor = (map: (typeof UNDEFINED_MAPS)[number]): string => {
       `On the map frontier: ${map.why}`,
       "Listed in `UNDEFINED_MAPS` (@enumeratio/domains) with that reason — a claim to be justified, not a place to put anything inconvenient.",
     ])},
-    examples: ${json(examples)},
+    examples: ${json(withIds(examples))},
   },`;
 };
 

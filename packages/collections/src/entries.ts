@@ -25,8 +25,18 @@ export const entries: readonly ReferenceEntry[] = [
       "For a fixed size use [[KSubsets]]",
     ],
     examples: [
-      { expr: ["Count", ["Subsets", 4]], expected: 16, caption: "$2^4$ subsets" },
-      { expr: ["At", ["Subsets", 3], 1], expected: ["List"], caption: "the empty subset" },
+      {
+        id: "2-4-subsets",
+        expr: ["Count", ["Subsets", 4]],
+        expected: 16,
+        caption: "$2^4$ subsets",
+      },
+      {
+        id: "the-empty-subset",
+        expr: ["At", ["Subsets", 3], 1],
+        expected: ["List"],
+        caption: "the empty subset",
+      },
     ],
     seeAlso: ["KSubsets", "Multisets", "Tuples"],
   },
@@ -50,9 +60,19 @@ export const entries: readonly ReferenceEntry[] = [
       "$k = 0$ gives the single empty subset; $k > n$ gives an empty family",
     ],
     examples: [
-      { expr: ["Count", ["KSubsets", 5, 2]], expected: 10, caption: "$\\binom{5}{2}$" },
-      { expr: ["At", ["KSubsets", 5, 2], 1], expected: ["List", 1, 2] },
       {
+        id: "binom-5-2",
+        expr: ["Count", ["KSubsets", 5, 2]],
+        expected: 10,
+        caption: "$\\binom{5}{2}$",
+      },
+      {
+        id: "ksubsets-5-2-list-1",
+        expr: ["At", ["KSubsets", 5, 2], 1],
+        expected: ["List", 1, 2],
+      },
+      {
+        id: "colex-not-lex-lexicographic-order-would-give-1-4",
         // Index 3 is what separates the two orders: lexicographic would give {1,4} here.
         expr: ["At", ["KSubsets", 5, 2], 3],
         expected: ["List", 2, 3],
@@ -78,7 +98,14 @@ export const entries: readonly ReferenceEntry[] = [
       "Count is $\\binom{n + k - 1}{k}$, the number of combinations with repetition",
       "Each element is a non-decreasing length-$k$ list",
     ],
-    examples: [{ expr: ["Count", ["Multisets", 3, 2]], expected: 6, caption: "$\\binom{4}{2}$" }],
+    examples: [
+      {
+        id: "binom-4-2",
+        expr: ["Count", ["Multisets", 3, 2]],
+        expected: 6,
+        caption: "$\\binom{4}{2}$",
+      },
+    ],
     seeAlso: ["KSubsets", "Tuples"],
   },
   {
@@ -96,8 +123,17 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     details: ["Count is $n^k$", "Elements are ordered as mixed-radix (base $n$) counting"],
     examples: [
-      { expr: ["Count", ["Tuples", 2, 3]], expected: 8, caption: "$2^3$" },
-      { expr: ["At", ["Tuples", 2, 3], 1], expected: ["List", 1, 1, 1] },
+      {
+        id: "2-3",
+        expr: ["Count", ["Tuples", 2, 3]],
+        expected: 8,
+        caption: "$2^3$",
+      },
+      {
+        id: "tuples-2-3-list-1",
+        expr: ["At", ["Tuples", 2, 3], 1],
+        expected: ["List", 1, 1, 1],
+      },
     ],
     seeAlso: ["Subsets", "Multisets"],
   },
@@ -119,8 +155,14 @@ export const entries: readonly ReferenceEntry[] = [
       "Fixed-point-free permutations are [[Derangements]]; self-inverse ones are [[Involutions]]",
     ],
     examples: [
-      { expr: ["Count", ["SymmetricGroup", 4]], expected: 24, caption: "$4!$" },
       {
+        id: "4",
+        expr: ["Count", ["SymmetricGroup", 4]],
+        expected: 24,
+        caption: "$4!$",
+      },
+      {
+        id: "the-identity",
         expr: ["At", ["SymmetricGroup", 3], 1],
         expected: ["List", 1, 2, 3],
         caption: "the identity",
@@ -144,7 +186,14 @@ export const entries: readonly ReferenceEntry[] = [
       "Count is the subfactorial $!n$ (see [[Subfactorial]])",
       "A sub-family of [[SymmetricGroup]]",
     ],
-    examples: [{ expr: ["Count", ["Derangements", 4]], expected: 9, caption: "$!4$" }],
+    examples: [
+      {
+        id: "4",
+        expr: ["Count", ["Derangements", 4]],
+        expected: 9,
+        caption: "$!4$",
+      },
+    ],
     seeAlso: ["SymmetricGroup", "Involutions", "Subfactorial"],
   },
   {
@@ -164,7 +213,13 @@ export const entries: readonly ReferenceEntry[] = [
       "Count satisfies $a(n) = a(n-1) + (n-1)\\,a(n-2)$",
       "A sub-family of [[SymmetricGroup]]",
     ],
-    examples: [{ expr: ["Count", ["Involutions", 4]], expected: 10 }],
+    examples: [
+      {
+        id: "count-involutions-4",
+        expr: ["Count", ["Involutions", 4]],
+        expected: 10,
+      },
+    ],
     seeAlso: ["SymmetricGroup", "Derangements"],
   },
   {
@@ -185,8 +240,14 @@ export const entries: readonly ReferenceEntry[] = [
       "When order matters, use [[IntegerCompositions]]",
     ],
     examples: [
-      { expr: ["Count", ["IntegerPartitions", 6]], expected: 11, caption: "$p(6)$" },
       {
+        id: "p-6",
+        expr: ["Count", ["IntegerPartitions", 6]],
+        expected: 11,
+        caption: "$p(6)$",
+      },
+      {
+        id: "the-single-part-6",
         expr: ["At", ["IntegerPartitions", 6], 1],
         expected: ["List", 6],
         caption: "the single part $6$",
@@ -207,7 +268,14 @@ export const entries: readonly ReferenceEntry[] = [
       },
     ],
     details: ["Count is $2^{n-1}$ for $n \\ge 1$", "Unlike [[IntegerPartitions]], order matters"],
-    examples: [{ expr: ["Count", ["IntegerCompositions", 5]], expected: 16, caption: "$2^{4}$" }],
+    examples: [
+      {
+        id: "2-4",
+        expr: ["Count", ["IntegerCompositions", 5]],
+        expected: 16,
+        caption: "$2^{4}$",
+      },
+    ],
     seeAlso: ["IntegerPartitions"],
   },
   {
@@ -226,7 +294,14 @@ export const entries: readonly ReferenceEntry[] = [
       "Count is the Bell number $B_n$ (see [[BellNumber]])",
       "Each element is a list of blocks (a list of index lists)",
     ],
-    examples: [{ expr: ["Count", ["SetPartitions", 4]], expected: 15, caption: "$B_4$" }],
+    examples: [
+      {
+        id: "b-4",
+        expr: ["Count", ["SetPartitions", 4]],
+        expected: 15,
+        caption: "$B_4$",
+      },
+    ],
     seeAlso: ["IntegerPartitions", "BellNumber"],
   },
   {
@@ -247,8 +322,14 @@ export const entries: readonly ReferenceEntry[] = [
       "Each element is a 0/1 step sequence with every prefix having at least as many 1s as 0s",
     ],
     examples: [
-      { expr: ["Count", ["DyckPaths", 3]], expected: 5, caption: "$C_3$" },
       {
+        id: "c-3",
+        expr: ["Count", ["DyckPaths", 3]],
+        expected: 5,
+        caption: "$C_3$",
+      },
+      {
+        id: "three-ups-then-three-downs",
         expr: ["At", ["DyckPaths", 3], 1],
         expected: ["List", 1, 1, 1, 0, 0, 0],
         caption: "three ups then three downs",
@@ -272,7 +353,14 @@ export const entries: readonly ReferenceEntry[] = [
       "Count is the Catalan number $C_n$ (see [[CatalanNumber]])",
       "In bijection with [[DyckPaths]] of the same semilength",
     ],
-    examples: [{ expr: ["Count", ["BinaryTrees", 4]], expected: 14, caption: "$C_4$" }],
+    examples: [
+      {
+        id: "c-4",
+        expr: ["Count", ["BinaryTrees", 4]],
+        expected: 14,
+        caption: "$C_4$",
+      },
+    ],
     seeAlso: ["DyckPaths", "CatalanNumber"],
   },
   {
@@ -295,21 +383,34 @@ export const entries: readonly ReferenceEntry[] = [
       "Aggregates over a whole collection compose from built-ins: $\\mathrm{Sum}(\\mathrm{Map}(\\mathrm{Inversions}, \\mathrm{SymmetricGroup}(n)))$ folds the stat over the lazy family",
     ],
     examples: [
-      { expr: ["Inversions", ["List", 3, 1, 2]], expected: 2, caption: "$(3,1)$ and $(3,2)$" },
-      { expr: ["Inversions", ["List", 1, 2, 3]], expected: 0, caption: "the identity has none" },
       {
+        id: "3-1-and-3-2",
+        expr: ["Inversions", ["List", 3, 1, 2]],
+        expected: 2,
+        caption: "$(3,1)$ and $(3,2)$",
+      },
+      {
+        id: "the-identity-has-none",
+        expr: ["Inversions", ["List", 1, 2, 3]],
+        expected: 0,
+        caption: "the identity has none",
+      },
+      {
+        id: "the-reversal-attains-the-maximum-binom-4-2",
         expr: ["Inversions", ["List", 4, 3, 2, 1]],
         expected: 6,
         category: "Properties",
         caption: "the reversal attains the maximum $\\binom{4}{2}$",
       },
       {
+        id: "the-inversion-distribution-over-s-3-mapped",
         expr: ["ListFrom", ["Map", ["Function", ["Inversions", "p"], "p"], ["SymmetricGroup", 3]]],
         expected: ["List", 0, 1, 1, 2, 2, 3],
         category: "Applications",
         caption: "the inversion distribution over $S_3$, mapped across the lazy [[SymmetricGroup]]",
       },
       {
+        id: "total-inversions-over-all-of-s-4-folded-with-sum",
         expr: ["Sum", ["Map", ["Function", ["Inversions", "p"], "p"], ["SymmetricGroup", 4]]],
         expected: 72,
         category: "Applications",
@@ -336,9 +437,20 @@ export const entries: readonly ReferenceEntry[] = [
       "Complementary to [[Ascents]]: every adjacent pair is one or the other, so $\\mathrm{Descents} + \\mathrm{Ascents} = n - 1$",
     ],
     examples: [
-      { expr: ["Descents", ["List", 3, 1, 2]], expected: 1, caption: "only $3 > 1$" },
-      { expr: ["Descents", ["List", 3, 2, 1]], expected: 2, caption: "every step falls" },
       {
+        id: "only-3-1",
+        expr: ["Descents", ["List", 3, 1, 2]],
+        expected: 1,
+        caption: "only $3 > 1$",
+      },
+      {
+        id: "every-step-falls",
+        expr: ["Descents", ["List", 3, 2, 1]],
+        expected: 2,
+        caption: "every step falls",
+      },
+      {
+        id: "descents-and-ascents-partition-the-n-1-steps",
         expr: [
           "Equal",
           ["Add", ["Descents", ["List", 3, 1, 2]], ["Ascents", ["List", 3, 1, 2]]],
@@ -368,8 +480,14 @@ export const entries: readonly ReferenceEntry[] = [
       "The identity is all-ascent, the reversal all-descent",
     ],
     examples: [
-      { expr: ["Ascents", ["List", 3, 1, 2]], expected: 1, caption: "only $1 < 2$" },
       {
+        id: "only-1-2",
+        expr: ["Ascents", ["List", 3, 1, 2]],
+        expected: 1,
+        caption: "only $1 < 2$",
+      },
+      {
+        id: "the-identity-ascends-throughout",
         expr: ["Ascents", ["List", 1, 2, 3]],
         expected: 2,
         caption: "the identity ascends throughout",
@@ -410,16 +528,23 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "one-descent-at-position-1",
         expr: ["MajorIndex", ["List", 3, 1, 2]],
         expected: 1,
         caption: "one descent, at position 1",
       },
       {
+        id: "descents-at-positions-1-and-2",
         expr: ["MajorIndex", ["List", 3, 2, 1]],
         expected: 3,
         caption: "descents at positions 1 and 2",
       },
-      { expr: ["MajorIndex", ["List", 1, 2, 3]], expected: 0, caption: "no descents" },
+      {
+        id: "no-descents",
+        expr: ["MajorIndex", ["List", 1, 2, 3]],
+        expected: 0,
+        caption: "no descents",
+      },
     ],
     seeAlso: ["Inversions", "Descents", "SymmetricGroup"],
   },
@@ -440,9 +565,20 @@ export const entries: readonly ReferenceEntry[] = [
       "Averaged over $S_n$ the count is exactly $1$, independent of $n$",
     ],
     examples: [
-      { expr: ["FixedPoints", ["List", 1, 3, 2]], expected: 1, caption: "only $1$ is fixed" },
-      { expr: ["FixedPoints", ["List", 1, 2, 3]], expected: 3, caption: "the identity fixes all" },
       {
+        id: "only-1-is-fixed",
+        expr: ["FixedPoints", ["List", 1, 3, 2]],
+        expected: 1,
+        caption: "only $1$ is fixed",
+      },
+      {
+        id: "the-identity-fixes-all",
+        expr: ["FixedPoints", ["List", 1, 2, 3]],
+        expected: 3,
+        caption: "the identity fixes all",
+      },
+      {
+        id: "a-derangement-fixes-nothing",
         expr: ["FixedPoints", ["List", 2, 3, 1]],
         expected: 0,
         category: "Properties",
@@ -479,16 +615,23 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-3-cycle-1-2-3",
         expr: ["CycleCount", ["List", 2, 3, 1]],
         expected: 1,
         caption: "the 3-cycle $(1\\,2\\,3)$",
       },
       {
+        id: "three-singleton-cycles",
         expr: ["CycleCount", ["List", 1, 2, 3]],
         expected: 3,
         caption: "three singleton cycles",
       },
-      { expr: ["CycleCount", ["List", 2, 1, 3]], expected: 2, caption: "$(1\\,2)(3)$" },
+      {
+        id: "1-2-3",
+        expr: ["CycleCount", ["List", 2, 1, 3]],
+        expected: 2,
+        caption: "$(1\\,2)(3)$",
+      },
     ],
     seeAlso: ["FixedPoints", "StirlingS1", "SymmetricGroup"],
   },
@@ -509,9 +652,20 @@ export const entries: readonly ReferenceEntry[] = [
       "A fixed point is neither an excedance nor an antiexcedance, so $\\mathrm{Excedances} + \\mathrm{Antiexcedances} + \\mathrm{FixedPoints} = n$",
     ],
     examples: [
-      { expr: ["Excedances", ["List", 3, 1, 2]], expected: 1, caption: "only position 1: $3 > 1$" },
-      { expr: ["Excedances", ["List", 1, 2, 3]], expected: 0, caption: "the identity has none" },
       {
+        id: "only-position-1-3-1",
+        expr: ["Excedances", ["List", 3, 1, 2]],
+        expected: 1,
+        caption: "only position 1: $3 > 1$",
+      },
+      {
+        id: "the-identity-has-none",
+        expr: ["Excedances", ["List", 1, 2, 3]],
+        expected: 0,
+        caption: "the identity has none",
+      },
+      {
+        id: "excedances-antiexcedances-and-fixed-points",
         expr: [
           "Equal",
           [
@@ -547,16 +701,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "positions-2-and-3-1-2-and-2-3",
         expr: ["Antiexcedances", ["List", 3, 1, 2]],
         expected: 2,
         caption: "positions 2 and 3: $1 < 2$ and $2 < 3$",
       },
       {
+        id: "the-identity-has-none",
         expr: ["Antiexcedances", ["List", 1, 2, 3]],
         expected: 0,
         caption: "the identity has none",
       },
       {
+        id: "positions-3-and-4-2-3-and-1-4",
         expr: ["Antiexcedances", ["List", 4, 3, 2, 1]],
         expected: 2,
         category: "Properties",
@@ -584,17 +741,25 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "3-alone-nothing-after-tops-it",
         expr: ["Records", ["List", 3, 1, 2]],
         expected: 1,
         caption: "$3$ alone; nothing after tops it",
       },
       {
+        id: "the-identity-sets-a-new-record-everywhere",
         expr: ["Records", ["List", 1, 2, 3]],
         expected: 3,
         caption: "the identity sets a new record everywhere",
       },
-      { expr: ["Records", ["List", 2, 3, 1]], expected: 2, caption: "$2$, then $3$" },
       {
+        id: "2-then-3",
+        expr: ["Records", ["List", 2, 3, 1]],
+        expected: 2,
+        caption: "$2$, then $3$",
+      },
+      {
+        id: "the-reversal-attains-the-minimum-1",
         expr: ["Records", ["List", 4, 3, 2, 1]],
         expected: 1,
         category: "Properties",
@@ -621,16 +786,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "3-at-position-2-tops-both-neighbors",
         expr: ["Peaks", ["List", 2, 3, 1]],
         expected: 1,
         caption: "$3$ at position 2 tops both neighbors",
       },
       {
+        id: "monotone-increasing-has-no-interior-peak",
         expr: ["Peaks", ["List", 1, 2, 3]],
         expected: 0,
         caption: "monotone increasing has no interior peak",
       },
       {
+        id: "the-lone-peak-at-position-2",
         expr: ["Peaks", ["List", 1, 3, 2, 4]],
         expected: 1,
         caption: "the lone peak at position 2",
@@ -656,16 +824,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "1-dips-below-both-neighbors",
         expr: ["Valleys", ["List", 3, 1, 2]],
         expected: 1,
         caption: "$1$ dips below both neighbors",
       },
       {
+        id: "monotone-increasing-has-no-interior-valley",
         expr: ["Valleys", ["List", 1, 2, 3]],
         expected: 0,
         caption: "monotone increasing has no interior valley",
       },
       {
+        id: "the-lone-valley-at-position-3",
         expr: ["Valleys", ["List", 1, 3, 2, 4]],
         expected: 1,
         caption: "the lone valley at position 3",
@@ -691,17 +862,25 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-lone-ascent-at-position-2",
         expr: ["MinorIndex", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the lone ascent, at position 2",
       },
       {
+        id: "ascents-at-both-positions-1-2",
         expr: ["MinorIndex", ["List", 1, 2, 3]],
         expected: 3,
         caption: "ascents at both positions: $1 + 2$",
       },
-      { expr: ["MinorIndex", ["List", 3, 2, 1]], expected: 0, caption: "no ascents" },
       {
+        id: "no-ascents",
+        expr: ["MinorIndex", ["List", 3, 2, 1]],
+        expected: 0,
+        caption: "no ascents",
+      },
+      {
+        id: "major-and-minor-index-split-binom-n-2",
         expr: [
           "Equal",
           ["Add", ["MajorIndex", ["List", 3, 1, 2]], ["MinorIndex", ["List", 3, 1, 2]]],

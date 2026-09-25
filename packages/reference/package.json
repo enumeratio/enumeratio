@@ -44,6 +44,7 @@
     "@enumeratio/statistics": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
     "@types/node": "^24",
+    "ts-morph": "catalog:",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

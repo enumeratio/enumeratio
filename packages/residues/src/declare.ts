@@ -65,6 +65,12 @@ export function declareResidues(ce: ComputeEngine): void {
     signature: "(number, number, number) -> number",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+      // a⁰ ≡ 1 (mod m) whatever a and m are — Wolfram evaluates this even for the negative
+      // or zero m where PowerMod otherwise declines, because it never touches a. Route it
+      // through Mod directly rather than the native handler, which declines on m ≤ 0.
+      if (ops[1] !== undefined && bigIntegerAt(ops[1]) === 0n) {
+        return ce.function("Mod", [ce.number(1), ops[2]!]).evaluate();
+      }
       if (ops.every((op) => op.isInteger === true) && nativePowerMod !== undefined) {
         return nativePowerMod(ops, options) as BoxedExpression | undefined;
       }

@@ -1,0 +1,147 @@
+name: Perf
+
+# Advisory nightly sweep (design/roadmap.md's "profiler job in CI"). Runs each package's vitest suite,
+# one at a time so packages don't contend for the same cores, and records per-test/per-file durations
+# plus package wall time via tools/perf/src/collect.ts. History lives as JSON on a dedicated orphan
+# branch, `perf-data` — durable and `git show perf-data:history.json | jq` inspectable, no external
+# service. Hosted runners wobble ~2x run to run, so drift compares the current duration to the
+# trailing median (never a single number) and only flags a test past BOTH a ratio (1.5x) and an
+# absolute floor (200ms) — see tools/perf/src/history.ts. A drift files/reopens ONE rolling issue
+# ("perf drift", labelled `nightly-fixup`, the same routine quickcheck.yml uses); a clean run closes
+# it. Never a required check — this workflow does not gate merges.
+
+on:
+  schedule:
+    - cron: "51 4 * * *" # 04:51 UTC, after nightly.yml and quickcheck.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write # pushes the updated history.json to perf-data
+  issues: write
+
+concurrency:
+  group: perf
+  cancel-in-progress: false
+
+jobs:
+  perf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: fetch prior history from perf-data
+        run: |
+          mkdir -p tools/perf/.data
+          if git ls-remote --exit-code --heads origin perf-data >/dev/null 2>&1; then
+            git fetch origin perf-data
+            git show origin/perf-data:history.json > tools/perf/.data/history.json
+          else
+            echo '{"runs":[]}' > tools/perf/.data/history.json
+          fi
+
+      - id: collect
+        run: |
+          set -o pipefail
+          node tools/perf/src/collect.ts \
+            --history tools/perf/.data/history.json \
+            --drift-report tools/perf/.data/drift-report.json \
+            --slowest-out tools/perf/.data/slowest-files.json \
+            2>&1 | tee perf-collect.log
+          if [ -s tools/perf/.data/drift-report.json ] && [ "$(cat tools/perf/.data/drift-report.json)" != "[]" ]; then
+            echo "drifted=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "drifted=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: cpu-prof the slowest files
+        if: ${{ !cancelled() }}
+        run: node tools/perf/src/cpu-prof.ts --slowest tools/perf/.data/slowest-files.json --out-dir tools/perf/.data/cpu-profiles
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: perf-cpu-profiles-${{ github.run_id }}
+          path: tools/perf/.data/cpu-profiles
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: push history to perf-data
+        if: ${{ !cancelled() }}
+        run: |
+          git config user.name enumeratio
+          git config user.email enumeratio@users.noreply.github.com
+          history=$(mktemp)
+          cp tools/perf/.data/history.json "$history"
+          if git ls-remote --exit-code --heads origin perf-data >/dev/null 2>&1; then
+            git checkout -B perf-data origin/perf-data
+          else
+            git checkout --orphan perf-data
+            git rm -rf --quiet . || true
+          fi
+          cp "$history" history.json
+          git add history.json
+          if git diff --cached --quiet; then
+            echo "history unchanged, nothing to push"
+          else
+            git commit -m "perf: record run ${{ github.sha }}"
+            git push origin HEAD:perf-data
+          fi
+
+      - name: open/reopen the tracking issue
+        if: ${{ !cancelled() && steps.collect.outputs.drifted == 'true' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const TITLE = 'perf drift'
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            let drift = []
+            try { drift = JSON.parse(fs.readFileSync('tools/perf/.data/drift-report.json', 'utf8')) } catch {}
+            const rows = drift.slice(0, 30).map(d =>
+              `| ${d.package} | ${d.file} | ${d.test} | ${d.currentMs.toFixed(1)} | ${d.medianMs.toFixed(1)} | ×${d.ratio.toFixed(2)} | ${d.priorRuns} |`
+            ).join('\n')
+            const body = [
+              `A nightly perf run found ${drift.length} test(s) drifted past their trailing median (≥1.5× and ≥200ms). Run: ${runUrl}`,
+              ``,
+              `| package | file | test | current (ms) | median (ms) | ratio | prior runs |`,
+              `|---|---|---|---|---|---|---|`,
+              rows,
+              ``,
+              `Hosted runners vary about 2x run to run — a single drifted run is a lead to check against the trend in \`perf-data\`, not a confirmed regression. See tools/perf/README.md for how to read the history.`,
+            ].join('\n')
+            const LABELS = ['nightly-fixup']
+            try {
+              await github.rest.issues.createLabel({ ...context.repo, name: 'nightly-fixup', color: 'fbca04',
+                description: 'swept nightly by the fixup routine' })
+            } catch (e) { /* exists */ }
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue in:title "${TITLE}"`,
+            })
+            const existing = found.data.items.find(i => i.title === TITLE)
+            if (existing) {
+              if (existing.state === 'closed') {
+                await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'open' })
+              }
+              await github.rest.issues.addLabels({ ...context.repo, issue_number: existing.number, labels: LABELS })
+              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body })
+            } else {
+              await github.rest.issues.create({ ...context.repo, title: TITLE, body, labels: LABELS })
+            }
+
+      - name: close the issue on a clean run
+        if: ${{ !cancelled() && steps.collect.outputs.drifted == 'false' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const TITLE = 'perf drift'
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title "${TITLE}"`,
+            })
+            const existing = found.data.items.find(i => i.title === TITLE)
+            if (existing) {
+              const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body: `Green again — nightly perf run found no drift. ${runUrl}` })
+              await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'closed' })
+            }

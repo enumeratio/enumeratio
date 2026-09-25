@@ -36,6 +36,12 @@ export type MathJSON =
  * by the reference tests to catch capability regressions.
  */
 export interface ReferenceExample {
+  /**
+   * Stable within the head (across packages, when two document it): `^[a-z0-9]+(-[a-z0-9]+)*$`,
+   * at most 48 characters. Assigned once and kept when the caption or `expr` changes. The
+   * deep link is `#example/<id>`, tests are `<Head> example/<id>`, oracle rows key on it.
+   */
+  readonly id: string;
   readonly expr: MathJSON;
   readonly expected: MathJSON;
   readonly caption?: string;
@@ -67,8 +73,8 @@ export interface ReferenceExample {
   /**
    * Kept as data but not shown by default: an edge case or a grid point that the tests and
    * oracles run like any other example, too many or too minor to render. Hidden examples
-   * mostly live in an entry file's `<stem>.examples.json`. A deep link (`#example-N`) still
-   * shows one.
+   * mostly live in an entry file's `<stem>.examples.json`. A deep link (`#example/<id>`)
+   * still shows one.
    *
    * @deprecated Superseded by `role: "test"` (design/examples-as-data.md §5). Both are read
    * during the migration; `hidden` goes away once every example carries a `role`.
@@ -77,18 +83,11 @@ export interface ReferenceExample {
   /**
    * Cases of one example: examples sharing a `group` show as a single card, where the
    * first sits, cycling through the rest. Each case is still its own example -- its own
-   * test, oracle row and `#example-N`; the card is its first case's, and `#example-N=X`
-   * picks case X on it. For near-identical cases that demonstrate nothing over the first.
+   * test, oracle row and `#example/<id>`; the card carries its first case's anchor, and a
+   * link to any other case shows that case on it. For near-identical cases that demonstrate
+   * nothing over the first.
    */
   readonly group?: string;
-  /**
-   * A stable identity, unique within the head (design/examples-as-data.md §3): lowercase,
-   * hyphen-separated, at most 48 characters, assigned once by slugging the caption (or the
-   * InputForm when there is none) and never re-derived. Optional during the migration
-   * (step 1); step 2 makes it required and keys everything -- tests, oracle rows, page
-   * anchors -- by it instead of by array position.
-   */
-  readonly id?: string;
   /**
    * What the example is FOR (design/examples-as-data.md §5). `demo` (the default) is shown
    * on the reference page; `test` runs in the evaluation test and the scans like any other

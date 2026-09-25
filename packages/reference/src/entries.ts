@@ -52,7 +52,7 @@ import { analyticElementary } from "./entries/analytic-elementary.ts";
 import analyticElementaryOracle from "./entries/analytic-elementary.oracle.json" with { type: "json" };
 
 /** An entry file's oracle sidecar (see `scripts/oracle-scan.ts`): kernel versions, and
- * every system's run of an example, by head then by `JSON.stringify(example.expr)`. A JSON
+ * every system's run of an example, by head then by the example's `id`. A JSON
  * import's row type comes back widened to `string` fields, not `OtherSystemRun`'s literal
  * unions — the scan script is what actually constrains `verdict`/`kind`, so a cast at
  * `withOthers` closes the gap rather than fighting the importer's inferred type here. */
@@ -61,15 +61,13 @@ interface OracleSidecar {
   readonly examples?: Readonly<Record<string, Readonly<Record<string, Readonly<object>>>>>;
 }
 
-/** Attach a sidecar's `others` to each of an entry's examples, by expression key. Missing
+/** Attach a sidecar's `others` to each of an entry's examples, by id. Missing
  * sidecar rows leave `others` unset — absence just means unmapped or unscanned. */
 const withOthers = (sidecar: OracleSidecar, entry: ReferenceEntry): ReferenceEntry => {
   const forHead = sidecar.examples?.[entry.name];
   if (forHead === undefined) return entry;
   const examples: readonly ReferenceExample[] = entry.examples.map((example) => {
-    const others = forHead[JSON.stringify(example.expr)] as
-      | Readonly<Record<string, OtherSystemRun>>
-      | undefined;
+    const others = forHead[example.id] as Readonly<Record<string, OtherSystemRun>> | undefined;
     return others === undefined ? example : { ...example, others };
   });
   return { ...entry, examples };
@@ -130,6 +128,7 @@ export const oracleKernels: Readonly<Record<string, string>> = Object.assign(
 /** The raw sidecars, by stem, before `others` is attached to examples — the golden test
  * reads these directly to catch a row whose key no longer names a current example. */
 export const oracleSidecars: Readonly<Record<string, OracleSidecar>> = {
+  aestimatio: aestimatioOracle,
   arithmetic: arithmeticOracle,
   combinatorics: combinatoricsOracle,
   collections: collectionsOracle,

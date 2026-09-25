@@ -92,14 +92,14 @@ const MEMORY_BYTES = 512 * 1024 * 1024;
 // without piling up enough worker memory at once to matter.
 const CONCURRENCY = 3;
 
-const id = (entryName: string, index: number): string => `${entryName}#${index}`;
+const id = (entryName: string, exampleId: string): string => `${entryName}/${exampleId}`;
 
 // Re-evaluate every documented example, each in its own worker with its own time/memory
 // cap, and pin it to `expected`. A change in compute-engine's behaviour (or a bad example)
 // fails here instead of shipping a wrong reference page; a runaway example fails as
 // "Aborted" instead of hanging the whole suite.
 const cases = entries.flatMap((entry) =>
-  entry.examples.map((example, index) => ({ id: id(entry.name, index), input: example.expr })),
+  entry.examples.map((example) => ({ id: id(entry.name, example.id), input: example.expr })),
 );
 const results = await runCases(cases, {
   setup,
@@ -112,12 +112,12 @@ const results = await runCases(cases, {
 const resultById = new Map(results.map((result) => [result.id, result]));
 
 for (const entry of entries) {
-  for (const [index, example] of entry.examples.entries()) {
+  for (const example of entry.examples) {
     const label = example.aspirational ? " (gap)" : "";
-    test(`${entry.name} example ${index + 1}${label}`, () => {
-      const result = resultById.get(id(entry.name, index));
+    test(`${entry.name} example/${example.id}${label}`, () => {
+      const result = resultById.get(id(entry.name, example.id));
       if (result === undefined) {
-        throw new Error(`runCases: no result for ${entry.name} example ${index + 1}`);
+        throw new Error(`runCases: no result for ${entry.name} example/${example.id}`);
       }
       if (result.outcome === "Error") {
         throw new Error(`evaluation raised: ${result.reason}`);

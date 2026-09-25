@@ -31,6 +31,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-cup-cap-squared-closes-one-loop-e-1-2-delta",
         expr: [
           "NonCommutativeMultiply",
           D([
@@ -53,6 +54,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         caption: "the cup-cap squared closes one loop: $e_1^2 = \\delta e_1$",
       },
       {
+        id: "e-1e-2e-1-e-1-with-no-loop-closed",
         expr: [
           "NonCommutativeMultiply",
           D([
@@ -80,6 +82,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "blocks-come-back-in-canonical-order",
         expr: D([
           [-1, -2],
           [3, -3],
@@ -94,6 +97,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "malformed-the-point-2-is-missing-so-it-is-left",
         expr: ["Diagram", ["List", ["List", 1, -1], ["List", 2]]],
         expected: ["Diagram", ["List", ["List", 1, -1], ["List", 2]]],
         caption: "malformed — the point $-2$ is missing — so it is left alone",
@@ -127,20 +131,28 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
       "[[Element]] tests membership, which is what makes the inclusions checkable",
     ],
     examples: [
-      { expr: ["AlgebraDimension", ["PartitionAlgebra", 3]], expected: 203, caption: "$B(6)$" },
       {
+        id: "b-6",
+        expr: ["AlgebraDimension", ["PartitionAlgebra", 3]],
+        expected: 203,
+        caption: "$B(6)$",
+      },
+      {
+        id: "b-8-the-closed-form-answers-past-any-useful",
         expr: ["AlgebraDimension", ["PartitionAlgebra", 4]],
         expected: 4140,
         caption: "$B(8)$ — the closed form answers past any useful basis listing",
         category: "Scope",
       },
       {
+        id: "c-6-planarity-cuts-203-down-to-132",
         expr: ["AlgebraDimension", ["PlanarPartitionAlgebra", 3]],
         expected: 132,
         caption: "$C(6)$ — planarity cuts 203 down to 132",
         category: "Scope",
       },
       {
+        id: "a-block-of-three-is-a-partition-diagram-and",
         expr: ["Element", D([[1, 2, -1], [3, -3], [-2]]), ["PartitionAlgebra", 3]],
         expected: "True",
         caption: "a block of three is a partition diagram and nothing smaller",
@@ -169,9 +181,19 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
       "Restricting further to the PLANAR matchings gives [[TemperleyLiebAlgebra]]",
     ],
     examples: [
-      { expr: ["AlgebraDimension", ["BrauerAlgebra", 3]], expected: 15, caption: "$5!!$" },
-      { expr: ["AlgebraDimension", ["BrauerAlgebra", 4]], expected: 105 },
       {
+        id: "5",
+        expr: ["AlgebraDimension", ["BrauerAlgebra", 3]],
+        expected: 15,
+        caption: "$5!!$",
+      },
+      {
+        id: "algebradimension-braueralgebra-4",
+        expr: ["AlgebraDimension", ["BrauerAlgebra", 4]],
+        expected: 105,
+      },
+      {
+        id: "a-crossing-is-a-brauer-diagram",
         expr: [
           "Element",
           D([
@@ -186,6 +208,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "but-not-a-planar-one",
         expr: [
           "Element",
           D([
@@ -223,11 +246,13 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "c-4",
         expr: ["AlgebraDimension", ["TemperleyLiebAlgebra", 4]],
         expected: 14,
         caption: "$C(4)$",
       },
       {
+        id: "the-cup-cap-is-planar-so-it-belongs",
         expr: [
           "Element",
           D([
@@ -242,6 +267,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "e-1-2-delta-e-1",
         expr: [
           "NonCommutativeMultiply",
           D([
@@ -265,6 +291,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "the-cup-cap-and-the-identity-all-of-tl-2",
         expr: ["Basis", ["TemperleyLiebAlgebra", 2]],
         expected: [
           "List",
@@ -312,10 +339,25 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
       "`SymmetricGroupAlgebra(n)` is the group algebra of $S_n$, the diagrams that are honest bijections",
     ],
     examples: [
-      { expr: ["AlgebraDimension", ["MotzkinAlgebra", 3]], expected: 51, caption: "$M(6)$" },
-      { expr: ["AlgebraDimension", ["RookAlgebra", 3]], expected: 34 },
-      { expr: ["AlgebraDimension", ["SymmetricGroupAlgebra", 5]], expected: 120, caption: "$5!$" },
       {
+        id: "m-6",
+        expr: ["AlgebraDimension", ["MotzkinAlgebra", 3]],
+        expected: 51,
+        caption: "$M(6)$",
+      },
+      {
+        id: "algebradimension-rookalgebra-3",
+        expr: ["AlgebraDimension", ["RookAlgebra", 3]],
+        expected: 34,
+      },
+      {
+        id: "5",
+        expr: ["AlgebraDimension", ["SymmetricGroupAlgebra", 5]],
+        expected: 120,
+        caption: "$5!$",
+      },
+      {
+        id: "a-cup-cap-is-not-a-permutation",
         expr: [
           "Element",
           D([
@@ -369,6 +411,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "merging-four-points-into-one-block-1-3-3",
         expr: [
           "PartitionMobius",
           ["Diagram", ["List", ["List", 1], ["List", 2], ["List", -1], ["List", -2]]],
@@ -378,12 +421,14 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         caption: "merging four points into one block: $(-1)^3 3! $",
       },
       {
+        id: "the-coarsest-partition-has-nothing-above-it",
         expr: ["InOrbitBasis", ["Diagram", ["List", ["List", 1, -1]]]],
         expected: ["OrbitDiagram", ["List", ["List", 1, -1]]],
         caption: "the coarsest partition has nothing above it",
         category: "Properties",
       },
       {
+        id: "the-interval-of-length-zero",
         expr: [
           "PartitionMobius",
           ["Diagram", ["List", ["List", 1, -1]]],
