@@ -658,7 +658,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("LerchPhi", {
     signature: "(number, number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateLerch(ce, ops, options.numericApproximation ?? false),
+      evaluateLerch(ce, ops, wantsNumber(ops, options)),
     compile: realCompile(3, { js: "__lp", wgsl: "lerchPhi" }),
   });
 
