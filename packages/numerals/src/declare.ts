@@ -340,6 +340,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       if (digits.some((d) => Number.isNaN(d) || d >= base)) return undefined;
       return ce.number(digits.reduce((n, d) => n * BigInt(base) + BigInt(d), 0n));
     },
+    { min: 1, max: 2 },
   );
 
   // Wolfram's IntegerString[n, b, len]: the digits of n padded with leading zeros, or cut down
@@ -349,7 +350,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["IntegerString", 5, 2],
-    (ops) => ops.length === 3,
+    () => true,
     (native) => (ops, options) => {
       const width = integerAt(ops[2]);
       const n = bigIntegerAt(ops[0]);
@@ -359,6 +360,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       const padded = digits.padStart(width, "0");
       return ce.string(padded.slice(padded.length - width));
     },
+    3,
   );
 
   // Wolfram's DigitSum[n, b, k]: the sum of the first k base-b digits (most significant
@@ -368,7 +370,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["DigitSum", 5, 2],
-    (ops) => ops.length === 3,
+    () => true,
     () => (ops) => {
       const n = bigIntegerAt(ops[0]);
       const base = bigIntegerAt(ops[1]);
@@ -380,6 +382,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       const slice = k >= 0 ? digits.slice(0, k) : digits.slice(digits.length + k);
       return ce.number(slice.reduce((sum, d) => sum + d, 0n));
     },
+    3,
   );
 
   /** The integers from `lo` to `hi` as a set, either end possibly unbounded. */

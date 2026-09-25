@@ -10,6 +10,7 @@ import {
   powerMultivector,
   productIsInBladeOrder,
   productIsOrderable,
+  reachesGenerator,
   scaleMultivector,
   toExpression,
   toMultivector,
@@ -25,7 +26,8 @@ import { declareAlgebras } from "./algebra.ts";
 // that dispatches to the blade algebra only when a generator actually occurs in its
 // operands, and otherwise calls straight through. Numeric literals never reach the
 // wrapper at all (canonicalisation folds 2·3 to 6 before evaluation), so the cost on
-// ordinary expressions is one symbol walk per operator.
+// ordinary expressions is one symbol walk per operator — for Add and Multiply, only
+// through their arithmetic operands.
 //
 // Canonicalisation runs BEFORE these handlers, and for the COMMUTING families it is an
 // ally: it already collects i_1·i_1 into ["Power","i_1",2] and sorts commutative
@@ -115,6 +117,11 @@ function declareOrderedJuxtaposition(ce: ComputeEngine): void {
  */
 const hasGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(containsGenerator);
 
+/** `hasGenerator` for Add and Multiply, which run on every sum and product: a generator
+ * under a non-arithmetic head can't be read as a multivector anyway, so don't look. */
+const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean =>
+  ops.some(reachesGenerator);
+
 export function declareHypercomplex(ce: ComputeEngine): void {
   const linear = (
     ops: readonly BoxedExpression[],
@@ -128,7 +135,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Add", "x", "y"],
-    hasGenerator,
+    reachesAnyGenerator,
     () => (ops) => linear(ops, (parts) => toExpression(ce, addMultivectors(ce, parts))),
   );
 
@@ -139,7 +146,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Multiply", "x", "y"],
-    hasGenerator,
+    reachesAnyGenerator,
     () => (ops) =>
       productIsOrderable(ops)
         ? linear(ops, (parts) =>
@@ -159,19 +166,26 @@ export function declareHypercomplex(ce: ComputeEngine): void {
       linear(ops, ([mv]) =>
         mv === undefined ? undefined : toExpression(ce, scaleMultivector(ce, mv, ce.number(-1))),
       ),
+    1,
   );
 
-  wrapOperator(ce, ["Power", "x", "y"], hasGenerator, () => (ops) => {
-    const base = ops[0];
-    const exponent = ops[1];
-    if (base === undefined || exponent === undefined) return undefined;
-    if (containsGenerator(exponent)) return undefined; // i_1^{i_1} is not our business
-    if (exponent.im !== 0 || !Number.isInteger(exponent.re)) return undefined;
-    const mv = toMultivector(ce, base);
-    if (mv === undefined) return undefined;
-    const raised = powerMultivector(ce, mv, exponent.re);
-    return raised === undefined ? undefined : toExpression(ce, raised);
-  });
+  wrapOperator(
+    ce,
+    ["Power", "x", "y"],
+    hasGenerator,
+    () => (ops) => {
+      const base = ops[0];
+      const exponent = ops[1];
+      if (base === undefined || exponent === undefined) return undefined;
+      if (containsGenerator(exponent)) return undefined; // i_1^{i_1} is not our business
+      if (exponent.im !== 0 || !Number.isInteger(exponent.re)) return undefined;
+      const mv = toMultivector(ce, base);
+      if (mv === undefined) return undefined;
+      const raised = powerMultivector(ce, mv, exponent.re);
+      return raised === undefined ? undefined : toExpression(ce, raised);
+    },
+    2,
+  );
 
   wrapOperator(
     ce,
@@ -179,12 +193,12 @@ export function declareHypercomplex(ce: ComputeEngine): void {
     hasGenerator,
     () => (ops) =>
       linear(ops, (parts) => {
-        if (parts.length !== 2) return undefined;
         const inverse = invertMultivector(ce, parts[1]!);
         return inverse === undefined
           ? undefined
           : toExpression(ce, multiplyMultivectors(ce, parts[0]!, inverse));
       }),
+    2,
   );
 
   wrapOperator(
@@ -195,6 +209,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
       linear(ops, ([mv]) =>
         mv === undefined ? undefined : toExpression(ce, conjugateMultivector(ce, mv)),
       ),
+    1,
   );
 
   // Expanding a hypercomplex element IS putting it in blade normal form, which is what
@@ -214,6 +229,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
     ["Norm", "x"],
     hasGenerator,
     () => (ops) => linear(ops, ([mv]) => (mv === undefined ? undefined : normMultivector(ce, mv))),
+    1,
   );
 
   // `\overline{z}` parses to OverBar, which has no definition of its own — give it

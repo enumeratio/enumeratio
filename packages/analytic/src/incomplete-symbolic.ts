@@ -35,7 +35,7 @@ function declareIncompleteGammaClosedForms(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Gamma", 2, 1],
-    (ops) => ops.length === 2 && ((isRealInt(ops[0]) && ops[0].re === 2) || isHalf(ops[0])),
+    (ops) => (isRealInt(ops[0]) && ops[0].re === 2) || isHalf(ops[0]),
     () => (ops, options) => {
       const [s, z] = ops;
       if (isRealInt(s) && s.re === 2) {
@@ -51,6 +51,7 @@ function declareIncompleteGammaClosedForms(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
+    2,
   );
 }
 
@@ -67,7 +68,6 @@ function declareHurwitzHalfIdentity(ce: ComputeEngine): void {
     ce,
     ["HurwitzZeta", "s", 1],
     (ops) => {
-      if (ops.length !== 2) return false;
       const q = bigRationalAt(ops[1]);
       return q !== undefined && q[0] === 1n && q[1] === 2n;
     },
@@ -79,6 +79,7 @@ function declareHurwitzHalfIdentity(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
+    2,
   );
 }
 
@@ -94,7 +95,7 @@ function declareLerchToPolyLogIdentity(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["LerchPhi", "z", "s", 1],
-    (ops) => ops.length === 3 && ops[2].re === 1 && ops[2].im === 0,
+    (ops) => ops[2].re === 1 && ops[2].im === 0,
     (native) => (ops, options) => {
       const r = native?.(ops, options);
       if (!declined(r, "LerchPhi")) return r; // the existing evaluator already answered
@@ -102,6 +103,7 @@ function declareLerchToPolyLogIdentity(ce: ComputeEngine): void {
       const expr = ce.function("Divide", [ce.function("PolyLog", [s, z]), z]);
       return finish(expr, options);
     },
+    3,
   );
 }
 

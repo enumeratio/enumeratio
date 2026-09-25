@@ -87,8 +87,8 @@ const halfIntegerCall = (ops: Ops): Rational[] | undefined => {
 const ONE: Rational = [1n, 1n];
 const TWO: Rational = [2n, 1n];
 
-/** Each head as a ratio of Gammas: [numerator arguments, denominator arguments]. The
- * operands have already been counted by the head's own signature. */
+/** Each head as a ratio of Gammas: [numerator arguments, denominator arguments], over as
+ * many operands as `GAMMA_ARITY` gives it. */
 const GAMMA_RATIOS: Record<string, (x: readonly Rational[]) => [Rational[], Rational[]]> = {
   // Γ(n + 1) / (Γ(k + 1) Γ(n − k + 1))
   Binomial: (x) => {
@@ -105,6 +105,12 @@ const GAMMA_RATIOS: Record<string, (x: readonly Rational[]) => [Rational[], Rati
     const [n] = x as [Rational];
     return [[plus(times(TWO, n), ONE)], [plus(n, ONE), plus(n, TWO)]];
   },
+};
+
+const GAMMA_ARITY: Record<string, number> = {
+  Binomial: 2,
+  Beta: 2,
+  CatalanNumber: 1,
 };
 
 /**
@@ -138,6 +144,7 @@ export function declareWidened(ce: ComputeEngine): void {
         const [up, down] = ratio(halfIntegerCall(ops)!);
         return gammaRatio(ce, up, down);
       },
+      GAMMA_ARITY[head],
     );
   }
 
@@ -155,6 +162,7 @@ export function declareWidened(ce: ComputeEngine): void {
       for (let j = 2n * k - 1n; j > 1n; j -= 2n) den *= j;
       return ce.number([k % 2n === 0n ? 1n : -1n, den]);
     },
+    1,
   );
 
   // Wolfram's BernoulliB[n, x] is the Bernoulli polynomial, which is BernoulliPolynomial here.
@@ -162,8 +170,9 @@ export function declareWidened(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["BernoulliB", 1],
-    (ops) => ops.length === 2,
+    () => true,
     () => (ops) => ce.function("BernoulliPolynomial", [...ops]).evaluate(),
+    2,
   );
 
   // ψ(n) = H_{n−1} − γ, the standard digamma identity, exact at every positive integer n.
@@ -185,6 +194,7 @@ export function declareWidened(ce: ComputeEngine): void {
       ]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
+    1,
   );
 
   // Ln(−q) = Ln(q) + iπ for a positive rational q — the principal branch past the cut,
@@ -205,6 +215,7 @@ export function declareWidened(ce: ComputeEngine): void {
       ]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
+    1,
   );
 
   // Arcsin(x) past the real domain [−1, 1]: sign(x)·(π/2 − i·ln(|x| + √(x² − 1))), the
@@ -233,5 +244,6 @@ export function declareWidened(ce: ComputeEngine): void {
       const expr = negative ? ce.function("Negate", [principal]) : principal;
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
+    1,
   );
 }

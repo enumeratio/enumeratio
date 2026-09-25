@@ -76,17 +76,19 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["First", 1, 1],
-    (ops) => ops.length === 2,
+    () => true,
     (native) => (ops, options) =>
       operandsOf(ops[0]).length === 0 ? ops[1] : native?.([ops[0]], options),
+    2,
   );
   widenSignature(ce, "Last", "(indexed_collection<any>, any?) -> any");
   wrapOperator(
     ce,
     ["Last", 1, 1],
-    (ops) => ops.length === 2,
+    () => true,
     (native) => (ops, options) =>
       operandsOf(ops[0]).length === 0 ? ops[1] : native?.([ops[0]], options),
+    2,
   );
 
   // Ordering(c, n): the first n indices of the full ordering, rather than only the whole
@@ -95,12 +97,13 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Ordering", 1, 1],
-    (ops) => ops.length === 2 && integerAt(ops[1]) !== undefined,
+    (ops) => integerAt(ops[1]) !== undefined,
     (native) => (ops, options) => {
       const n = integerAt(ops[1])!;
       const full = native?.([ops[0]], options);
       return full === undefined ? undefined : ce.box(["List", ...operandsOf(full).slice(0, n)]);
     },
+    2,
   );
 
   // Mean/Median thread column-wise over a matrix (a list of equal-length rows), reusing
@@ -109,9 +112,10 @@ export function declareListHeads(ce: ComputeEngine): void {
     wrapOperator(
       ce,
       [head, 1],
-      (ops) => ops.length === 1 && isMatrixLike(ops[0]),
+      (ops) => isMatrixLike(ops[0]),
       (native) => (ops, options) =>
         threadOverColumns(ce, (columnOps) => native?.(columnOps, options))(ops[0]),
+      1,
     );
   }
 
@@ -125,8 +129,9 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Clamp", 1],
-    (ops) => ops.length === 1,
+    () => true,
     (native) => (ops, options) => native?.([ops[0], ce.number(-1), ce.number(1)], options),
+    1,
   );
 
   // Sort(strings): compute-engine's Sort only orders numbers, leaving a list of strings
@@ -136,11 +141,11 @@ export function declareListHeads(ce: ComputeEngine): void {
     ce,
     ["Sort", 1],
     (ops) =>
-      ops.length === 1 &&
       ops[0].operator === "List" &&
       operandsOf(ops[0]).length > 0 &&
       operandsOf(ops[0]).every((element) => stringAt(element) !== undefined),
     () => (ops) => ce.box(["List", ...[...operandsOf(ops[0])].sort(naturalCompare)]),
+    1,
   );
 
   // Union(...): Wolfram's Union sorts; compute-engine keeps first-seen order. Variadic —
@@ -148,13 +153,14 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Union", 1],
-    (ops) => ops.length >= 1,
+    () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
       return result === undefined || result.operator !== "Set"
         ? result
         : ce.box(["Set", ...[...operandsOf(result)].sort(naturalCompare)]);
     },
+    { min: 1 },
   );
 
   // Length(atom): an atom has no parts, so its length is 0 — compute-engine raises a
@@ -163,19 +169,21 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Length", 1],
-    (ops) => ops.length === 1,
+    () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
       return result?.operator === "Error" ? ce.Zero : result;
     },
+    1,
   );
 
   // At(c, 0): Wolfram's Part[c, 0] gives the head of c; compute-engine gives NaN.
   wrapOperator(
     ce,
     ["At", 1, 1],
-    (ops) => ops.length === 2 && integerAt(ops[1]) === 0,
+    (ops) => integerAt(ops[1]) === 0,
     () => (ops) => ce.symbol(ops[0].operator),
+    2,
   );
 
   // Partition(c, n): drop the ragged remainder when the length isn't a multiple of n,
@@ -183,7 +191,7 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Partition", 1, 1],
-    (ops) => ops.length === 2,
+    () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
       if (result === undefined || result.operator !== "List") return result;
@@ -193,6 +201,7 @@ export function declareListHeads(ce: ComputeEngine): void {
       const lastLength = operandsOf(chunks[chunks.length - 1]).length;
       return lastLength === n ? result : ce.box(["List", ...chunks.slice(0, -1)]);
     },
+    2,
   );
 
   // Join(a, b, …, n): a trailing integer is a level, not an element to append —
@@ -274,7 +283,7 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Position", 1, 1],
-    (ops) => ops.length === 2 && ops[1].operator !== "Function",
+    (ops) => ops[1].operator !== "Function",
     () => (ops) => {
       const items = operandsOf(ops[0]);
       const value = ops[1];
@@ -283,5 +292,6 @@ export function declareListHeads(ce: ComputeEngine): void {
         .filter((position): position is BoxedExpression => position !== undefined);
       return ce.box(["List", ...positions]);
     },
+    2,
   );
 }

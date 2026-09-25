@@ -73,29 +73,41 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     return gaussianPowerModList(a, exponent[0], exponent[1], m);
   };
 
-  wrapOperator(ce, ["PowerModList", "a", "b", "m"], inGaussian, () => (ops) => {
-    const found = gaussianRoots(ops);
-    return found === undefined
-      ? undefined
-      : ce.function(
-          "List",
-          found.map((z) => gaussianExpression(ce, z)),
-        );
-  });
+  wrapOperator(
+    ce,
+    ["PowerModList", "a", "b", "m"],
+    inGaussian,
+    () => (ops) => {
+      const found = gaussianRoots(ops);
+      return found === undefined
+        ? undefined
+        : ce.function(
+            "List",
+            found.map((z) => gaussianExpression(ce, z)),
+          );
+    },
+    3,
+  );
 
-  wrapOperator(ce, ["PowerMod", "a", "b", "m"], inGaussian, () => (ops) => {
-    const [z, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
-    const exponent = bigRationalAt(ops[1]);
-    if (z === undefined || m === undefined || exponent === undefined) return undefined;
-    if (exponent[1] === 1n) {
-      const value = gaussianPowerMod(z, exponent[0], m);
-      return value === undefined ? undefined : gaussianExpression(ce, value);
-    }
-    const found = gaussianRoots(ops);
-    return found === undefined || found.length === 0
-      ? undefined
-      : gaussianExpression(ce, found[0]!);
-  });
+  wrapOperator(
+    ce,
+    ["PowerMod", "a", "b", "m"],
+    inGaussian,
+    () => (ops) => {
+      const [z, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
+      const exponent = bigRationalAt(ops[1]);
+      if (z === undefined || m === undefined || exponent === undefined) return undefined;
+      if (exponent[1] === 1n) {
+        const value = gaussianPowerMod(z, exponent[0], m);
+        return value === undefined ? undefined : gaussianExpression(ce, value);
+      }
+      const found = gaussianRoots(ops);
+      return found === undefined || found.length === 0
+        ? undefined
+        : gaussianExpression(ce, found[0]!);
+    },
+    3,
+  );
 
   ce.declare("RationalReconstruction", {
     description:

@@ -162,14 +162,12 @@ export function declareModular(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Dot", 1, 1],
-    (ops) =>
-      ops.length === 2 &&
-      ops.some(isModularOperand) &&
-      ops.every((op) => matrixOf(op) !== undefined),
+    (ops) => ops.some(isModularOperand) && ops.every((op) => matrixOf(op) !== undefined),
     () => (ops) => {
       const [m, n] = ops.map(matrixOf) as [Matrix, Matrix];
       return matrixExpression(multiply(m, n));
     },
+    2,
   );
 
   widenSignature(
@@ -182,7 +180,6 @@ export function declareModular(ce: ComputeEngine): void {
     ce,
     ["MatrixPower", 1, 1],
     (ops) =>
-      ops.length === 2 &&
       isModularOperand(ops[0]!) &&
       matrixOf(ops[0]) !== undefined &&
       integerAt(ops[1]) !== undefined,
@@ -192,17 +189,19 @@ export function declareModular(ce: ComputeEngine): void {
       const result = power(m, k);
       return result === undefined ? undefined : matrixExpression(result);
     },
+    2,
   );
 
   widenSignature(ce, "Inverse", "(value) -> value", (op) => op.type.matches(matrixType));
   wrapOperator(
     ce,
     ["Inverse", 1],
-    (ops) => ops.length === 1 && isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined,
+    (ops) => isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined,
     () => (ops) => {
       const inverse = invert(matrixOf(ops[0])!);
       return inverse === undefined ? undefined : matrixExpression(inverse);
     },
+    1,
   );
 
   aboutMatrix("ModularTrace", "(value) -> integer", (m) => ce.number(trace(m)));
@@ -645,13 +644,14 @@ export function declareModular(ce: ComputeEngine): void {
             terms.map((t) => ce.number(t)),
           );
     },
+    { min: 1, max: 2 },
   );
 
   wrapOperator(
     ce,
     ["FromContinuedFraction", 1],
     (ops) => {
-      if (ops.length !== 1 || ops[0]?.operator !== "List") return false;
+      if (ops[0]?.operator !== "List") return false;
       const items = operandsOf(ops[0]);
       if (items.length < 2) return false;
       const last = items[items.length - 1]!;
@@ -711,6 +711,7 @@ export function declareModular(ce: ComputeEngine): void {
         ])
         .evaluate();
     },
+    1,
   );
 
   // ── the flow: conjugacy classes, and the Rademacher symbol ──────────────────
