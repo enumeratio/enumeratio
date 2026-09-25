@@ -63,6 +63,8 @@ export { multiZetaValue } from "./multizeta.ts";
 export { digamma, polygamma, polygammaReal } from "./polygamma.ts";
 export { polyLog, polyLogReal } from "./polylog.ts";
 export { evaluateRisingFactorial } from "./rising-factorial.ts";
+export { declareQSeries } from "./q-series.ts";
+export { declareRiemannSiegel } from "./riemann-siegel.ts";
 export { landauFunction } from "./sloane-a.ts";
 export { zetaWGSL } from "./shader.ts";
 export { stieltjesGamma, stieltjesGammaReal } from "./stieltjes.ts";

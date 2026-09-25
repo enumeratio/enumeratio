@@ -33,6 +33,8 @@ import { declareDigammaFunctionZero } from "./digamma-zero.ts";
 import { declareHypergeometricUStar } from "./hypergeometric-ustar.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
+import { declareQSeries } from "./q-series.ts";
+import { declareRiemannSiegel } from "./riemann-siegel.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -527,6 +529,9 @@ function evaluateLerch(
  * heads `BesselJZero`, `DigammaFunctionZero`, `MultiZetaValue`, `SloaneA` and
  * `HypergeometricUStar` (bessel-zeros.ts, digamma-zero.ts, multizeta.ts,
  * sloane-a.ts, hypergeometric-ustar.ts); and, in matrix-exp.ts, `MatrixExp`.
+ *
+ * Also, in q-series.ts, the q-analogues `QPochhammer`, `QFactorial`, `QBinomial`;
+ * and, in riemann-siegel.ts, `RiemannSiegelTheta`, `RiemannSiegelZ`, `RiemannZetaZero`.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -633,4 +638,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareSloaneA(ce);
   declareHypergeometricUStar(ce);
   declareMatrixExp(ce);
+  declareQSeries(ce);
+  declareRiemannSiegel(ce);
 }
