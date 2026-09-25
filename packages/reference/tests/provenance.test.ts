@@ -133,6 +133,10 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `Rationalize` (threads over a list or a symbolic expression, `threading-113.ts`) and
  * `FromContinuedFraction` (a list of plain symbols builds the nested fraction,
  * `closed-forms-113.ts`) — each additive the same way, native for anything not exact.
+ * #113 also adds `GCD` and `LCM`: every plain-integer call now goes through bigints (the
+ * native pair round a big argument through a double — `GCD(20!, 10^100+3)` came back
+ * 163840000 instead of 7 — so this is a correction, not only an addition), plus threading a
+ * single list argument against the rest (`declare-widened.ts`, number-theory).
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -179,6 +183,7 @@ const OVERRIDDEN = [
   "Floor",
   "FromContinuedFraction",
   "FromDigits",
+  "GCD",
   "Gamma",
   "GammaLn",
   "GammaRegularized",
@@ -191,8 +196,10 @@ const OVERRIDDEN = [
   "IsSquareFree",
   "JacobiSymbol",
   "Join",
+  "LCM",
   "LambertW",
   "Last",
+  "LegendreSymbol",
   "Length",
   "Ln",
   "LucasL",

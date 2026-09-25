@@ -199,7 +199,9 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["ChineseRemainder", "x", "y"],
-    (ops) => ops.every(isIntegerMod),
+    // `ops.every` is vacuously true on an empty call — guard the arity explicitly rather
+    // than let a zero-argument ChineseRemainder() slip through as "every IntegerMod".
+    (ops) => ops.length > 0 && ops.every(isIntegerMod),
     () => (ops) => {
       const xs = ops.map(integerModOf);
       if (!xs.every((x) => x !== undefined)) return undefined;

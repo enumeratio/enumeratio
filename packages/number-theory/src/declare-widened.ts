@@ -1,6 +1,14 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, widenSignature, wrapOperator } from "@enumeratio/boxed";
-import { extendedGcd } from "@enumeratio/residues";
+import {
+  bigIntegerAt,
+  bigRationalAt,
+  mayBeInteger,
+  operandsOf,
+  symbolNameOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/boxed";
+import { extendedGcd, factorInteger, isPrime } from "@enumeratio/residues";
 
 // compute-engine's integer functions, widened to the arguments Wolfram also answers and the
 // native handler leaves unevaluated or rejects: φ(0), σ of a negative order, the GCD and LCM
@@ -22,12 +30,21 @@ const properRationals = (ops: Ops): (readonly [bigint, bigint])[] | undefined =>
 };
 
 export function declareWidened(ce: ComputeEngine): void {
-  // Wolfram's EulerPhi[0] is 0; compute-engine asks for a positive integer.
+  // Wolfram's EulerPhi[0] is 0, and EulerPhi[-n] = EulerPhi[n]; compute-engine asks for a
+  // positive integer, so both a zero and a negative n need widening past it.
+  widenSignature(ce, "Totient", "(number) -> integer", mayBeInteger);
   wrapOperator(
     ce,
     ["Totient", 1],
-    (ops) => bigIntegerAt(ops[0]) === 0n,
-    () => () => ce.Zero,
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return n !== undefined && n <= 0n;
+    },
+    () => (ops) => {
+      const n = bigIntegerAt(ops[0])!;
+      if (n === 0n) return ce.Zero;
+      return ce.function("Totient", [ce.number(-n)]).evaluate();
+    },
   );
 
   // σₖ(n) for k < 0 is σ₋ₖ(n) / n⁻ᵏ — the sum of 1/dᵏ over the divisors d of n.
@@ -49,6 +66,76 @@ export function declareWidened(ce: ComputeEngine): void {
     },
   );
 
+  // Wolfram counts a negative prime: NextPrime(n) for n < -2 is -p, the negation of the
+  // largest prime p < -n. compute-engine's native handler only knows positive primes and
+  // skips straight ahead to 2.
+  widenSignature(ce, "NextPrime", "(number, number?) -> integer", mayBeInteger);
+  wrapOperator(
+    ce,
+    ["NextPrime", 1, 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return ops.length === 1 && n !== undefined && n < -2n;
+    },
+    () => (ops) => {
+      const n = bigIntegerAt(ops[0])!;
+      for (let p = -n - 1n; p >= 2n; p--) if (isPrime(p)) return ce.number(-p);
+      return ce.number(2);
+    },
+  );
+
+  // NextPrime of a non-integer real or rational n: the smallest prime past ⌈n⌉ — a strictly
+  // greater integer, since n is not one itself. compute-engine's native handler requires an
+  // integer.
+  wrapOperator(
+    ce,
+    ["NextPrime", 1, 1],
+    (ops) => {
+      if (ops.length !== 1 || bigIntegerAt(ops[0]) !== undefined) return false;
+      const q = bigRationalAt(ops[0]);
+      return (q !== undefined && q[1] !== 1n) || Number.isFinite(ops[0]?.re);
+    },
+    () => (ops) => {
+      const q = bigRationalAt(ops[0]);
+      let ceil: bigint;
+      if (q !== undefined) {
+        const [num, den] = q;
+        const floor = (num - (((num % den) + den) % den)) / den;
+        ceil = floor + 1n;
+      } else {
+        ceil = BigInt(Math.ceil(ops[0]!.re!));
+      }
+      for (let p = ceil < 2n ? 2n : ceil; ; p++) if (isPrime(p)) return ce.number(p);
+    },
+  );
+
+  // DivisorSigma with a symbolic k: the symbolic sum of dᵏ over the divisors of n — n must
+  // still be a concrete positive integer to enumerate the divisors at all.
+  wrapOperator(
+    ce,
+    ["DivisorSigma", 1, 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[1]);
+      return (
+        ops.length === 2 &&
+        n !== undefined &&
+        n > 0n &&
+        bigIntegerAt(ops[0]) === undefined &&
+        symbolNameOf(ops[0]!) !== undefined
+      );
+    },
+    () => (ops) => {
+      const divisors = operandsOf(ce.function("Divisors", [ops[1]!]).evaluate());
+      if (divisors.length === 0) return undefined;
+      return ce
+        .function(
+          "Add",
+          divisors.map((d) => ce.function("Power", [d, ops[0]!])),
+        )
+        .evaluate();
+    },
+  );
+
   // Over the rationals: gcd(p/q, …) = gcd(p, …)/lcm(q, …), and lcm(p/q, …) = lcm(p, …)/gcd(q, …) —
   // the largest rational whose integer multiples include all of them, and the smallest
   // positive one that is an integer multiple of each.
@@ -65,6 +152,100 @@ export function declareWidened(ce: ComputeEngine): void {
         const num = rationals.map(([p]) => p).reduce(onNumerators);
         const den = rationals.map(([, q]) => q).reduce(onDenominators);
         return ce.number([num, den]);
+      },
+    );
+  }
+
+  // compute-engine's native GCD/LCM round a big integer through a double past ~2⁵³, giving a
+  // wrong answer rather than an error: GCD(20!, 10¹⁰⁰+3) comes back 163840000 (right answer 7),
+  // and LCM the same pair as a float. Every plain-integer call goes through bigints instead —
+  // exact at every size, and unchanged from the native answer wherever that was already right.
+  for (const [head, fold] of [
+    ["GCD", gcd],
+    ["LCM", lcm],
+  ] as const) {
+    wrapOperator(
+      ce,
+      [head, 1, 1],
+      (ops) => ops.length > 0 && ops.every((op) => bigIntegerAt(op) !== undefined),
+      () => (ops) => ce.number(ops.map((op) => bigIntegerAt(op)!).reduce(fold)),
+    );
+  }
+
+  // IsSquareFree of a rational: numerator and denominator both squarefree — compute-engine's
+  // native handler asks for an integer.
+  const isSquareFreeInteger = (n: bigint): boolean | undefined => {
+    const abs = n < 0n ? -n : n;
+    if (abs <= 1n) return true;
+    const factors = factorInteger(abs);
+    return factors === undefined ? undefined : factors.every(([, e]) => e === 1);
+  };
+  wrapOperator(
+    ce,
+    ["IsSquareFree", 1],
+    (ops) => {
+      const q = bigRationalAt(ops[0]);
+      return q !== undefined && q[1] !== 1n;
+    },
+    () => (ops) => {
+      const [num, den] = bigRationalAt(ops[0])!;
+      const squareFree = isSquareFreeInteger(num) && isSquareFreeInteger(den);
+      return ce.symbol(squareFree ? "True" : "False");
+    },
+  );
+
+  // FactorInteger of a rational p/q: the prime factors of p, and of q with their exponents
+  // negated, merged — a prime cannot appear in both once p/q is reduced. compute-engine's
+  // native handler asks for an integer.
+  wrapOperator(
+    ce,
+    ["FactorInteger", 1],
+    (ops) => {
+      const q = bigRationalAt(ops[0]);
+      return q !== undefined && q[1] !== 1n;
+    },
+    () => (ops) => {
+      const [num, den] = bigRationalAt(ops[0])!;
+      const numFactors = factorInteger(abs(num));
+      const denFactors = factorInteger(den);
+      if (numFactors === undefined || denFactors === undefined) return undefined;
+      const sign: [bigint, number][] = num < 0n ? [[-1n, 1]] : [];
+      const merged = [
+        ...sign,
+        ...numFactors,
+        ...denFactors.map(([p, e]) => [p, -e] as [bigint, number]),
+      ].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+      return ce.function(
+        "List",
+        merged.map(([p, e]) => ce.function("Tuple", [ce.number(p), ce.number(e)])),
+      );
+    },
+  );
+
+  // Wolfram's Listable GCD/LCM broadcasts a single list argument against the rest, held
+  // fixed: GCD(12, {3,7,40}) is {3,1,4}. `threadOverLists` doesn't fit — it only widens a
+  // head that otherwise rejects or ignores a list, and GCD/LCM already answer one by
+  // flattening it into more arguments (kept, elsewhere, as a documented divergence); this
+  // only takes over the one-list-argument shape, which nothing else already answers.
+  for (const head of ["GCD", "LCM"] as const) {
+    wrapOperator(
+      ce,
+      [head, 1, 1],
+      (ops) => ops.length > 1 && ops.filter((op) => op.operator === "List").length === 1,
+      () => (ops) => {
+        const index = ops.findIndex((op) => op.operator === "List");
+        const items = operandsOf(ops[index]!);
+        return ce.function(
+          "List",
+          items.map((item) =>
+            ce
+              .function(
+                head,
+                ops.map((op, i) => (i === index ? item : op)),
+              )
+              .evaluate(),
+          ),
+        );
       },
     );
   }
