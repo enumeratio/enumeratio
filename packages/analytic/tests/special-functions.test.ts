@@ -280,7 +280,7 @@ test("H_z = ψ(z+1) + γ off the integers (Wolfram values)", () => {
 
 test("HarmonicNumber(z, r) = ζ(r) − ζ(r, z+1) off the integers (Wolfram values)", () => {
   expect(num(["HarmonicNumber", ["Rational", 1, 2], 2])).toBeCloseTo(0.7101318663035469, 13);
-  expect(num(["HarmonicNumber", 5, ["Rational", 1, 2]])).toBeCloseTo(3.2316706458761312, 12);
+  expect(num(["HarmonicNumber", 5, ["Rational", 1, 2]])).toBeCloseTo(3.231670645876131, 12);
 });
 
 test("complex z (mpmath/Wolfram agree via golden), and a float argument evaluates under plain evaluate()", () => {
@@ -400,11 +400,24 @@ test("Γ(1, z) = e^{−z}, so Γ(1, 0, z) collapses to 1 − e^{−z} (Wolfram's
   expect(num(["Gamma", 1, 0, 2.0])).toBeCloseTo(1 - Math.exp(-2), 14);
 });
 
-test("a three-argument call that cannot reduce keeps its own form", () => {
-  // Γ(2, 0, z): Wolfram leaves this as Gamma[2, 0, z] too — the difference of two
-  // unevaluated calls would be worse than the call itself.
-  exactJson(["Gamma", 2, 0, "z"], ["Gamma", 2, 0, "z"]);
+test("a three-argument call at a symbolic order keeps its own form", () => {
   exactJson(["Gamma", "s", 0, "z"], ["Gamma", "s", 0, "z"]);
+});
+
+test("#113: an integer-order three-argument call now reduces both halves (γ(2,z) = 1 − (1+z)e⁻ᶻ)", () => {
+  // Γ(2, 0, z) = Γ(2, 0) − Γ(2, z) = 1 − (1+z)e⁻ᶻ, matching Wolfram's
+  // FunctionExpand[Gamma[2, 0, z]] — this used to be `Gamma(2, 0, "z")` unevaluated
+  // (neither 2-argument half reduced on its own); closing Γ(n, x)'s own closed form
+  // for the #113 threading item (packages/analytic/src/closed-forms-113.ts) means
+  // the 3-argument call, built from that same 2-argument operator, reduces too.
+  exactJson(
+    ["Gamma", 2, 0, "z"],
+    [
+      "Add",
+      ["Negate", ["Multiply", ["Add", "z", 1], ["Power", "ExponentialE", ["Negate", "z"]]]],
+      1,
+    ],
+  );
 });
 
 test("Q(s, z) = Γ(s, z)/Γ(s) covers the complex arguments the native handler declines", () => {

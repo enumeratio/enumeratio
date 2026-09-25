@@ -1,0 +1,216 @@
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { operandsOf } from "@enumeratio/boxed";
+import { expect, test } from "vite-plus/test";
+import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+
+// #113: threading gaps (§1) and exact closed forms (§3) for HurwitzZeta, GammaLn, Gamma
+// and GammaRegularized (two-argument), Analytic's HarmonicNumber / StieltjesGamma /
+// DirichletCharacter / DirichletL, and Rationalize. Every non-obvious identity here was
+// checked against `wolframscript` before being wired up (see threading-113.ts and
+// closed-forms-113.ts for the derivations); `toEqual` pins the exact symbolic form, since
+// these are meant to reduce, not just evaluate numerically close.
+
+const ce = new ComputeEngine();
+declareAnalytic(ce);
+
+const evalOf = (expr: unknown) => ce.box(expr as never).evaluate().json;
+
+test("threading: GammaLn over a list reduces each integer entry", () => {
+  expect(evalOf(["GammaLn", ["List", 1, 2, 3]])).toEqual(["List", 0, 0, ["Ln", 2]]);
+  // and the bare scalar call now matches, consistent with Wolfram's LogGamma[5] = Log[24]
+  // (compute-engine's own Ln canonicalizes 24 = 2³·3 into 3·ln2 + ln3, same value)
+  expect(evalOf(["GammaLn", 5])).toEqual(["Add", ["Multiply", 3, ["Ln", 2]], ["Ln", 3]]);
+});
+
+test("threading: HurwitzZeta over a list of orders, including a float a", () => {
+  const r = ce.box(["HurwitzZeta", ["List", 2, 3, 4], 0.5]).N();
+  const want = [4.934802200544679, 8.41439832211716, 16.234848505667074];
+  operandsOf(r).forEach((el, i) => expect(el.re).toBeCloseTo(want[i], 9));
+});
+
+test("threading: StieltjesGamma over a list of orders (in n)", () => {
+  const r = ce.box(["StieltjesGamma", ["List", 1, 2, 3], 0.5]).N();
+  const want = [-1.3534596808049415, 0.9688644752202907, -0.6674242737113807];
+  operandsOf(r).forEach((el, i) => expect(el.re).toBeCloseTo(want[i], 9));
+});
+
+test("threading: DirichletCharacter over a list of n", () => {
+  expect(evalOf(["DirichletCharacter", 3, 2, ["List", 1, 2, 3, 4, 5]])).toEqual([
+    "List",
+    1,
+    -1,
+    0,
+    1,
+    -1,
+  ]);
+});
+
+test("threading: DirichletL over a list of s (in s)", () => {
+  expect(evalOf(["DirichletL", 1, 1, ["List", 1, 2, 3, 4]])).toEqual([
+    "List",
+    "ComplexInfinity",
+    ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
+    ["Zeta", 3],
+    ["Multiply", ["Rational", 1, 90], ["Power", "Pi", 4]],
+  ]);
+});
+
+test("threading: HarmonicNumber over a list, and over a matrix of orders", () => {
+  expect(evalOf(["HarmonicNumber", ["List", 2, 3, 5, 7, 11]])).toEqual([
+    "List",
+    ["Rational", 3, 2],
+    ["Rational", 11, 6],
+    ["Rational", 137, 60],
+    ["Rational", 363, 140],
+    ["Rational", 83711, 27720],
+  ]);
+});
+
+test("threading: Rationalize over a list, and inside an expression", () => {
+  expect(evalOf(["Rationalize", ["List", 0.5, 0.25, 0.2]])).toEqual([
+    "List",
+    ["Rational", 1, 2],
+    ["Rational", 1, 4],
+    ["Rational", 1, 5],
+  ]);
+  expect(evalOf(["Rationalize", ["Add", 1.2, ["Multiply", 6.7, "x"]]])).toEqual([
+    "Add",
+    ["Multiply", ["Rational", 67, 10], "x"],
+    ["Rational", 6, 5],
+  ]);
+  // a bare exact real (not a list, not symbolic) is untouched -- still the single-real path
+  expect(evalOf(["Rationalize", 2.5])).toEqual(["Rational", 5, 2]);
+});
+
+test("threading: Gamma and GammaRegularized thread over a matrix, and every entry reduces", () => {
+  expect(
+    evalOf([
+      "Gamma",
+      2,
+      ["List", ["List", ["Rational", 7, 2], 0], ["List", 0, ["Rational", 13, 2]]],
+    ]),
+  ).toEqual([
+    "List",
+    ["List", ["Divide", 9, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 7, 2]]]], 1],
+    ["List", 1, ["Divide", 15, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 13, 2]]]]],
+  ]);
+  const gr = ce.box(["GammaRegularized", 2, ["List", ["List", 3.5, 0], ["List", 0, 6.5]]]).N();
+  const [row0, row1] = operandsOf(gr).map(operandsOf);
+  expect(row0[0].re).toBeCloseTo(0.13588822540043324, 9);
+  expect(row0[1].re).toBe(1);
+  expect(row1[0].re).toBe(1);
+  expect(row1[1].re).toBeCloseTo(0.011275793947331794, 9);
+});
+
+test("closed form: HurwitzZeta(2, 1/2) = π²/2 and HurwitzZeta(2, 1/4) = π² + 8G", () => {
+  expect(evalOf(["HurwitzZeta", 2, ["Rational", 1, 2]])).toEqual([
+    "Multiply",
+    ["Rational", 1, 2],
+    ["Power", "Pi", 2],
+  ]);
+  expect(evalOf(["HurwitzZeta", 2, ["Rational", 1, 4]])).toEqual([
+    "Add",
+    ["Multiply", 8, "Catalan"],
+    ["Power", "Pi", 2],
+  ]);
+  // symbolic s is a different (unassigned) item and must stay untouched
+  expect(evalOf(["HurwitzZeta", "s", ["Rational", 1, 2]])).toEqual([
+    "HurwitzZeta",
+    "s",
+    ["Rational", 1, 2],
+  ]);
+});
+
+test("closed form: Li3(1/2) and Li2(2)", () => {
+  const li3 = ce
+    .box(["PolyLog", 3, ["Rational", 1, 2]])
+    .evaluate()
+    .N().re;
+  expect(li3).toBeCloseTo(0.5372131936080402, 12);
+  const li2 = ce.box(["PolyLog", 2, 2]).evaluate().N();
+  expect(li2.re).toBeCloseTo(Math.PI ** 2 / 4, 12);
+  expect(li2.im).toBeCloseTo(-Math.PI * Math.log(2), 12);
+});
+
+test("closed form: Gauss's digamma theorem at 1/4 and 1/3", () => {
+  expect(
+    ce
+      .box(["Digamma", ["Rational", 1, 4]])
+      .evaluate()
+      .N().re,
+  ).toBeCloseTo(-4.227453533376265, 12);
+  expect(
+    ce
+      .box(["Digamma", ["Rational", 1, 3]])
+      .evaluate()
+      .N().re,
+  ).toBeCloseTo(-3.132033780020806, 12);
+});
+
+test("closed form: trigamma at 1/4 is π² + 8G", () => {
+  const g = 0.915965594177219015; // Catalan's constant, double precision
+  expect(
+    ce
+      .box(["PolyGamma", 1, ["Rational", 1, 4]])
+      .evaluate()
+      .N().re,
+  ).toBeCloseTo(Math.PI ** 2 + 8 * g, 9);
+});
+
+test("closed form: I_1/2(2,3) = 11/16 via BetaRegularized", () => {
+  expect(evalOf(["BetaRegularized", ["Rational", 1, 2], 2, 3])).toEqual(["Rational", 11, 16]);
+});
+
+test("closed form: LogGamma at exact half-integers, positive and negative", () => {
+  expect(evalOf(["LogGamma", ["Rational", 3, 2]])).toEqual([
+    "Ln",
+    ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"]],
+  ]);
+  expect(evalOf(["LogGamma", ["Rational", -3, 2]])).toEqual([
+    "Add",
+    ["Multiply", ["Complex", 0, -2], "Pi"],
+    ["Ln", ["Multiply", ["Rational", 4, 3], ["Sqrt", "Pi"]]],
+  ]);
+});
+
+test("closed form: StieltjesGamma(0, 1) = γ, and γₙ(1) = γₙ", () => {
+  expect(evalOf(["StieltjesGamma", 0, 1])).toEqual("EulerGamma");
+  expect(evalOf(["StieltjesGamma", 3, 1])).toEqual(["StieltjesGamma", 3]);
+});
+
+test("closed form: DirichletL(3, 2, 1) = π/(3√3)", () => {
+  expect(evalOf(["DirichletL", 3, 2, 1])).toEqual(["Multiply", ["Divide", ["Sqrt", 3], 9], "Pi"]);
+  // and a non-real / even character at s=1 is left alone (not this identity's territory)
+  expect(evalOf(["DirichletL", 4, 2, 1])).toEqual(["Multiply", ["Rational", 1, 4], "Pi"]);
+});
+
+test("closed form: HarmonicNumber(1/2) and HarmonicNumber(1/4)", () => {
+  expect(evalOf(["HarmonicNumber", ["Rational", 1, 2]])).toEqual([
+    "Add",
+    2,
+    ["Multiply", -2, ["Ln", 2]],
+  ]);
+  expect(evalOf(["HarmonicNumber", ["Rational", 1, 4]])).toEqual([
+    "Add",
+    4,
+    ["Multiply", -3, ["Ln", 2]],
+    ["Multiply", ["Rational", -1, 2], "Pi"],
+  ]);
+});
+
+test("closed form: FromContinuedFraction of plain symbols builds the nested fraction", () => {
+  expect(evalOf(["FromContinuedFraction", ["List", "a", "b", "c"]])).toEqual([
+    "Add",
+    "a",
+    ["Divide", 1, ["Add", "b", ["Divide", 1, "c"]]],
+  ]);
+  // a periodic tail (nested List) is a different, unrelated item and must stay untouched
+  expect(evalOf(["FromContinuedFraction", ["List", 1, ["List", 2]]])).toEqual([
+    "FromContinuedFraction",
+    ["List", 1, ["List", 2]],
+  ]);
+});
+
+test("closed form: Mod(√28, 3) = 2√7 − 3", () => {
+  expect(evalOf(["Mod", ["Sqrt", 28], 3])).toEqual(["Add", -3, ["Multiply", 2, ["Sqrt", 7]]]);
+});

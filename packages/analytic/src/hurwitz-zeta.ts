@@ -55,6 +55,8 @@ import { declareHyperfactorial } from "./hyperfactorial.ts";
 import { declareKeiperLi } from "./keiper-li.ts";
 import { declareQSeries } from "./q-series.ts";
 import { declareRiemannSiegel } from "./riemann-siegel.ts";
+import { declareThreading113 } from "./threading-113.ts";
+import { declareClosedForms113 } from "./closed-forms-113.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -686,4 +688,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareKeiperLi(ce);
   declareQSeries(ce);
   declareRiemannSiegel(ce);
+  declareThreading113(ce);
+  declareClosedForms113(ce);
 }
