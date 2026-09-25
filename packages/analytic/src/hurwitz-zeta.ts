@@ -34,6 +34,15 @@ import { declareHypergeometricU, declareHypergeometricUStar } from "./hypergeome
 import { declareHypergeometric } from "./hypergeometric.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
+import { declareInterval } from "./interval.ts";
+import { declareCenteredInterval } from "./centered-interval.ts";
+import { declareAround } from "./around.ts";
+import { declareComplexExpand } from "./complex-expand.ts";
+import { declareExpToTrig } from "./exp-to-trig.ts";
+import { declarePowerExpand } from "./power-expand.ts";
+import { declareFunctionExpand } from "./function-expand.ts";
+import { declareFullSimplify } from "./full-simplify.ts";
+import { declareMatrixFunction } from "./matrix-function.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -531,6 +540,11 @@ function evaluateLerch(
  * `Hypergeometric0F1Regularized`, `Hypergeometric1F1Regularized`,
  * `Hypergeometric2F1Regularized` and `Hypergeometric3F2Regularized` in
  * hypergeometric.ts; and, in matrix-exp.ts, `MatrixExp`.
+ *
+ * Also: interval and uncertainty arithmetic — `Interval` (extended in place; interval.ts),
+ * `CenteredInterval` (centered-interval.ts) and `Around` (around.ts) — the transformers
+ * `ComplexExpand`, `ExpToTrig`, `PowerExpand`, `FunctionExpand` and `FullSimplify` (each in
+ * its own file), and `MatrixFunction` (matrix-function.ts, reusing `MatrixExp`).
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -639,4 +653,13 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareHypergeometricU(ce);
   declareHypergeometric(ce);
   declareMatrixExp(ce);
+  declareInterval(ce);
+  declareCenteredInterval(ce);
+  declareAround(ce);
+  declareComplexExpand(ce);
+  declareExpToTrig(ce);
+  declarePowerExpand(ce);
+  declareFunctionExpand(ce);
+  declareFullSimplify(ce);
+  declareMatrixFunction(ce);
 }

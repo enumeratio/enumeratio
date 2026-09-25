@@ -166,10 +166,9 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Interval", ["Negate", ["Divide", "Pi", 6]], ["Divide", "Pi", 6]]],
         expected: ["Interval", ["Rational", -1, 2], ["Rational", 1, 2]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Interval arithmetic: the image of $[-\\pi/6, \\pi/6]$ is $[-\\tfrac12, \\tfrac12]$; Sin does not yet accept an Interval (it errors on the set argument)",
+          "Interval arithmetic: the image of $[-\\pi/6, \\pi/6]$ is $[-\\tfrac12, \\tfrac12]$",
       },
       {
         expr: ["Sin", ["Interval", "NegativeInfinity", "PositiveInfinity"]],
@@ -357,9 +356,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["FullSimplify", ["Add", ["Power", ["Sin", "x"], 2], ["Power", ["Cos", "x"], 2]]],
         expected: 1,
-        aspirational: true,
         category: "Properties",
-        caption: "The same through FullSimplify, which is not yet a head",
+        caption: "The same through [[FullSimplify]]",
       },
       {
         expr: ["Sin", ["Divide", "Pi", 15]],
@@ -378,19 +376,18 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["FunctionExpand", ["Sin", ["Divide", "Pi", 15]]],
         expected: [
-          "Divide",
+          "Multiply",
+          ["Rational", 1, 8],
           [
             "Add",
-            ["Sqrt", ["Add", 10, ["Multiply", 2, ["Sqrt", 5]]]],
             ["Negate", ["Sqrt", 15]],
             ["Sqrt", 3],
+            ["Sqrt", ["Add", 10, ["Multiply", 2, ["Sqrt", 5]]]],
           ],
-          8,
         ],
-        aspirational: true,
         category: "Neat examples",
         caption:
-          "FunctionExpand should give the nested-radical form $\\frac{\\sqrt{10+2\\sqrt5} - \\sqrt{15} + \\sqrt3}{8}$; FunctionExpand is not yet a head",
+          "[[FunctionExpand]] gives the nested-radical form $\\frac{\\sqrt{10+2\\sqrt5} - \\sqrt{15} + \\sqrt3}{8}$",
       },
     ],
     seeAlso: ["Cos", "Tan", "Csc", "Arcsin"],
@@ -2780,10 +2777,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Exp", ["Around", 2, 0.01]],
         expected: ["Around", 7.38905609893065, 0.0738905609893065],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $e^{2 \\pm 0.01} \\approx 7.389 \\pm 0.074$; Around is not yet a head",
+        caption: "Uncertainty propagation: $e^{2 \\pm 0.01} \\approx 7.389 \\pm 0.074$",
       },
       {
         expr: ["D", ["Exp", "x"], "x"],
@@ -2836,11 +2831,9 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["ExpToTrig", ["Exp", ["Multiply", "ImaginaryUnit", "x"]]],
-        expected: ["Add", ["Cos", "x"], ["Multiply", ["Complex", 0, 1], ["Sin", "x"]]],
-        aspirational: true,
+        expected: ["Add", ["Multiply", ["Complex", 0, 1], ["Sin", "x"]], ["Cos", "x"]],
         category: "Properties",
-        caption:
-          "Euler's formula $e^{ix} = \\cos x + i\\sin x$ via ExpToTrig, which is not yet a head",
+        caption: "Euler's formula $e^{ix} = \\cos x + i\\sin x$ via [[ExpToTrig]]",
       },
     ],
     seeAlso: ["Ln", "Log", "Sinh", "MatrixExp"],
@@ -2996,10 +2989,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["PowerExpand", ["Ln", ["Multiply", "x", "y"]]],
         expected: ["Add", ["Ln", "x"], ["Ln", "y"]],
-        aspirational: true,
         category: "Properties",
-        caption:
-          "PowerExpand splits a logarithm of a product, assuming positive factors; PowerExpand is not yet a head",
+        caption: "[[PowerExpand]] splits a logarithm of a product, assuming positive factors",
       },
     ],
     seeAlso: ["Exp", "Log", "Log2"],
