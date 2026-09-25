@@ -5,6 +5,7 @@ import { defineConfig } from "vitepress";
 import { generate } from "@enumeratio/notatio/generate";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
+import { reviewModePlugin } from "./review/plugin.ts";
 
 // The symbols as Vue components are generated here, before the theme is bundled, so
 // `@enumeratio/notatio`'s `src/vue-generated.ts` exists for the theme to register.
@@ -65,13 +66,24 @@ const speculative =
     : [];
 
 export default defineConfig({
-  vite: { resolve: { alias: srcAliases } },
+  vite: {
+    resolve: { alias: srcAliases },
+    // Review mode: a dev-server-only REST API over a markdown backlog file, for
+    // working through shipped features. `apply: "serve"` on the plugin itself
+    // keeps it out of `vitepress build`/`preview`; gating it here too means the
+    // route never even gets registered outside `vitepress dev`.
+    // The repo's `vite` specifier resolves to vite-plus-core (see pnpm-workspace.yaml),
+    // while vitepress's `plugins` field types against its own nested real `vite` --
+    // two structurally-identical but nominally distinct `Plugin` types.
+    plugins: dev ? ([reviewModePlugin(webDir)] as never) : [],
+  },
   title: "enumeratio",
   description:
     "enumeratio: a family of mathematical symbol definitions on the Cortex compute-engine and Epsil, collections first. notatio: the notebook and explorer around it.",
   lang: "en-US",
   cleanUrls: true,
-  srcExclude: dev ? [] : ["speculative/**"],
+  // `/review` (review mode) is dev-only, same as `/speculative`.
+  srcExclude: dev ? [] : ["speculative/**", "review/**"],
   // Dynamic reference routes carry their name in params; use it as the page title
   // (the raw markdown H1 is `{{ $params.name }}`, which VitePress can't read).
   transformPageData(pageData: { params?: { name?: string }; title?: string }) {

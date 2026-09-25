@@ -1,0 +1,247 @@
+{
+  "parse": {
+    "intro": "# Review backlog\n\nSome intro text.\n\nMore intro, on its own paragraph.\n\n",
+    "items": [
+      {
+        "id": "pr86-numeric-sets-indexed",
+        "title": "Numeric sets as indexed collections",
+        "status": "open",
+        "bullets": [
+          {
+            "key": "link",
+            "value": "https://enumeratio.dev/reference/symbol/Primes"
+          },
+          {
+            "key": "pr",
+            "value": "#86 · collections · open PR"
+          },
+          {
+            "key": "check",
+            "value": "What to look at and what a good answer looks like."
+          },
+          {
+            "key": "note",
+            "value": "optional"
+          }
+        ],
+        "feedback": "Looks solid overall.\n\nSecond paragraph of feedback.",
+        "link": "https://enumeratio.dev/reference/symbol/Primes",
+        "pr": "#86 · collections · open PR",
+        "check": "What to look at and what a good answer looks like.",
+        "note": "optional"
+      },
+      {
+        "id": "second-id",
+        "title": "Second item",
+        "status": "reviewed",
+        "bullets": [
+          {
+            "key": "link",
+            "value": "https://enumeratio.dev/reference/symbol/Foo"
+          },
+          {
+            "key": "pr",
+            "value": "#90 · analytic · merged"
+          },
+          {
+            "key": "check",
+            "value": "check this"
+          }
+        ],
+        "feedback": "",
+        "link": "https://enumeratio.dev/reference/symbol/Foo",
+        "pr": "#90 · analytic · merged",
+        "check": "check this"
+      },
+      {
+        "id": "third-id",
+        "title": "Third item",
+        "status": "needs-work",
+        "bullets": [
+          {
+            "key": "link",
+            "value": "https://enumeratio.dev/x"
+          },
+          {
+            "key": "pr",
+            "value": "#91 · misc · open PR"
+          },
+          {
+            "key": "check",
+            "value": "whatever"
+          },
+          {
+            "key": "custom",
+            "value": "an unknown bullet key"
+          }
+        ],
+        "feedback": "",
+        "link": "https://enumeratio.dev/x",
+        "pr": "#91 · misc · open PR",
+        "check": "whatever"
+      },
+      {
+        "id": "fourth-id",
+        "title": "Fourth item",
+        "status": "open",
+        "bullets": [
+          {
+            "key": "link",
+            "value": "https://enumeratio.dev/y"
+          },
+          {
+            "key": "pr",
+            "value": "#92 · misc · open PR"
+          },
+          {
+            "key": "check",
+            "value": "whatever else"
+          }
+        ],
+        "feedback": "One paragraph already here.",
+        "link": "https://enumeratio.dev/y",
+        "pr": "#92 · misc · open PR",
+        "check": "whatever else"
+      }
+    ]
+  },
+  "status-change": {
+    "raw": "# Review backlog\n\nSome intro text.\n\nMore intro, on its own paragraph.\n\n### [x] Numeric sets as indexed collections {#pr86-numeric-sets-indexed}\n- link: https://enumeratio.dev/reference/symbol/Primes\n- pr: #86 · collections · open PR\n- check: What to look at and what a good answer looks like.\n- note: optional\n\n#### Feedback\n\nLooks solid overall.\n\nSecond paragraph of feedback.\n\n### [x] Second item {#second-id}\n- link: https://enumeratio.dev/reference/symbol/Foo\n- pr: #90 · analytic · merged\n- check: check this\n\n#### Feedback\n\n### [!] Third item {#third-id}\n- link: https://enumeratio.dev/x\n- pr: #91 · misc · open PR\n- check: whatever\n- custom: an unknown bullet key\n\n### [ ] Fourth item {#fourth-id}\n- link: https://enumeratio.dev/y\n- pr: #92 · misc · open PR\n- check: whatever else\n\n#### Feedback\n\nOne paragraph already here.\n",
+    "item": {
+      "id": "pr86-numeric-sets-indexed",
+      "title": "Numeric sets as indexed collections",
+      "status": "reviewed",
+      "bullets": [
+        {
+          "key": "link",
+          "value": "https://enumeratio.dev/reference/symbol/Primes"
+        },
+        {
+          "key": "pr",
+          "value": "#86 · collections · open PR"
+        },
+        {
+          "key": "check",
+          "value": "What to look at and what a good answer looks like."
+        },
+        {
+          "key": "note",
+          "value": "optional"
+        }
+      ],
+      "feedback": "Looks solid overall.\n\nSecond paragraph of feedback.",
+      "link": "https://enumeratio.dev/reference/symbol/Primes",
+      "pr": "#86 · collections · open PR",
+      "check": "What to look at and what a good answer looks like.",
+      "note": "optional"
+    }
+  },
+  "feedback-empty-to-text": {
+    "raw": "# Review backlog\n\nSome intro text.\n\nMore intro, on its own paragraph.\n\n### [ ] Numeric sets as indexed collections {#pr86-numeric-sets-indexed}\n- link: https://enumeratio.dev/reference/symbol/Primes\n- pr: #86 · collections · open PR\n- check: What to look at and what a good answer looks like.\n- note: optional\n\n#### Feedback\n\nLooks solid overall.\n\nSecond paragraph of feedback.\n\n### [x] Second item {#second-id}\n- link: https://enumeratio.dev/reference/symbol/Foo\n- pr: #90 · analytic · merged\n- check: check this\n\n#### Feedback\n\nNice work, ship it.\n\n### [!] Third item {#third-id}\n- link: https://enumeratio.dev/x\n- pr: #91 · misc · open PR\n- check: whatever\n- custom: an unknown bullet key\n\n### [ ] Fourth item {#fourth-id}\n- link: https://enumeratio.dev/y\n- pr: #92 · misc · open PR\n- check: whatever else\n\n#### Feedback\n\nOne paragraph already here.\n",
+    "item": {
+      "id": "second-id",
+      "title": "Second item",
+      "status": "reviewed",
+      "bullets": [
+        {
+          "key": "link",
+          "value": "https://enumeratio.dev/reference/symbol/Foo"
+        },
+        {
+          "key": "pr",
+          "value": "#90 · analytic · merged"
+        },
+        {
+          "key": "check",
+          "value": "check this"
+        }
+      ],
+      "feedback": "Nice work, ship it.",
+      "link": "https://enumeratio.dev/reference/symbol/Foo",
+      "pr": "#90 · analytic · merged",
+      "check": "check this"
+    }
+  },
+  "feedback-text-to-text": {
+    "raw": "# Review backlog\n\nSome intro text.\n\nMore intro, on its own paragraph.\n\n### [ ] Numeric sets as indexed collections {#pr86-numeric-sets-indexed}\n- link: https://enumeratio.dev/reference/symbol/Primes\n- pr: #86 · collections · open PR\n- check: What to look at and what a good answer looks like.\n- note: optional\n\n#### Feedback\n\nLooks solid overall.\n\nSecond paragraph of feedback.\n\n### [x] Second item {#second-id}\n- link: https://enumeratio.dev/reference/symbol/Foo\n- pr: #90 · analytic · merged\n- check: check this\n\n#### Feedback\n\n### [!] Third item {#third-id}\n- link: https://enumeratio.dev/x\n- pr: #91 · misc · open PR\n- check: whatever\n- custom: an unknown bullet key\n\n### [ ] Fourth item {#fourth-id}\n- link: https://enumeratio.dev/y\n- pr: #92 · misc · open PR\n- check: whatever else\n\n#### Feedback\n\nReplaced entirely.\n\n",
+    "item": {
+      "id": "fourth-id",
+      "title": "Fourth item",
+      "status": "open",
+      "bullets": [
+        {
+          "key": "link",
+          "value": "https://enumeratio.dev/y"
+        },
+        {
+          "key": "pr",
+          "value": "#92 · misc · open PR"
+        },
+        {
+          "key": "check",
+          "value": "whatever else"
+        }
+      ],
+      "feedback": "Replaced entirely.",
+      "link": "https://enumeratio.dev/y",
+      "pr": "#92 · misc · open PR",
+      "check": "whatever else"
+    }
+  },
+  "feedback-multi-paragraph": {
+    "raw": "# Review backlog\n\nSome intro text.\n\nMore intro, on its own paragraph.\n\n### [ ] Numeric sets as indexed collections {#pr86-numeric-sets-indexed}\n- link: https://enumeratio.dev/reference/symbol/Primes\n- pr: #86 · collections · open PR\n- check: What to look at and what a good answer looks like.\n- note: optional\n\n#### Feedback\n\nLooks solid overall.\n\nSecond paragraph of feedback.\n\n### [x] Second item {#second-id}\n- link: https://enumeratio.dev/reference/symbol/Foo\n- pr: #90 · analytic · merged\n- check: check this\n\n#### Feedback\n\n### [!] Third item {#third-id}\n- link: https://enumeratio.dev/x\n- pr: #91 · misc · open PR\n- check: whatever\n- custom: an unknown bullet key\n\n### [ ] Fourth item {#fourth-id}\n- link: https://enumeratio.dev/y\n- pr: #92 · misc · open PR\n- check: whatever else\n\n#### Feedback\n\nFirst paragraph.\n\nSecond paragraph.\n\nThird.\n\n",
+    "item": {
+      "id": "fourth-id",
+      "title": "Fourth item",
+      "status": "open",
+      "bullets": [
+        {
+          "key": "link",
+          "value": "https://enumeratio.dev/y"
+        },
+        {
+          "key": "pr",
+          "value": "#92 · misc · open PR"
+        },
+        {
+          "key": "check",
+          "value": "whatever else"
+        }
+      ],
+      "feedback": "First paragraph.\n\nSecond paragraph.\n\nThird.",
+      "link": "https://enumeratio.dev/y",
+      "pr": "#92 · misc · open PR",
+      "check": "whatever else"
+    }
+  },
+  "feedback-inserted": {
+    "raw": "# Review backlog\n\nSome intro text.\n\nMore intro, on its own paragraph.\n\n### [ ] Numeric sets as indexed collections {#pr86-numeric-sets-indexed}\n- link: https://enumeratio.dev/reference/symbol/Primes\n- pr: #86 · collections · open PR\n- check: What to look at and what a good answer looks like.\n- note: optional\n\n#### Feedback\n\nLooks solid overall.\n\nSecond paragraph of feedback.\n\n### [x] Second item {#second-id}\n- link: https://enumeratio.dev/reference/symbol/Foo\n- pr: #90 · analytic · merged\n- check: check this\n\n#### Feedback\n\n### [!] Third item {#third-id}\n- link: https://enumeratio.dev/x\n- pr: #91 · misc · open PR\n- check: whatever\n- custom: an unknown bullet key\n\n#### Feedback\n\nNow reviewed.\n\n\n### [ ] Fourth item {#fourth-id}\n- link: https://enumeratio.dev/y\n- pr: #92 · misc · open PR\n- check: whatever else\n\n#### Feedback\n\nOne paragraph already here.\n",
+    "item": {
+      "id": "third-id",
+      "title": "Third item",
+      "status": "needs-work",
+      "bullets": [
+        {
+          "key": "link",
+          "value": "https://enumeratio.dev/x"
+        },
+        {
+          "key": "pr",
+          "value": "#91 · misc · open PR"
+        },
+        {
+          "key": "check",
+          "value": "whatever"
+        },
+        {
+          "key": "custom",
+          "value": "an unknown bullet key"
+        }
+      ],
+      "feedback": "Now reviewed.",
+      "link": "https://enumeratio.dev/x",
+      "pr": "#91 · misc · open PR",
+      "check": "whatever"
+    }
+  }
+}
