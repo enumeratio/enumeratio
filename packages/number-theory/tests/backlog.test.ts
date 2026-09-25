@@ -89,6 +89,13 @@ test("MangoldtLambda: 0 off the prime powers, ln p on them", () => {
   }
 });
 
+test("N(MangoldtLambda(n)) re-derives a numeric double, not the still-exact Ln(p)", () => {
+  expect(ce.box(["N", ["MangoldtLambda", 9]] as never).evaluate().re).toBeCloseTo(Math.log(3), 10);
+  expect(ce.box(["N", ["MangoldtLambda", 6]] as never).evaluate().json).toBe(0);
+  // The plain (non-N) form still comes back exact.
+  expect(run(["MangoldtLambda", 9])).toEqual(["Ln", 3]);
+});
+
 test("MersennePrimeExponent and PerfectNumber: the table gives 2^(p-1)(2^p-1)", () => {
   const table = [2n, 3n, 5n, 7n, 13n];
   for (const [i, p] of table.entries()) {

@@ -389,6 +389,40 @@ export function declareNumerals(ce: ComputeEngine): void {
     2,
   );
 
+  // FromDigits({digits, exponent}): the single-argument pair shape RealDigits gives back —
+  // {1,4,1,5}, 1 reads as 1.415, base 10 (RealDigits' own default base, since no base is
+  // given here). value = (digits as a base-10 integer) · 10^(exponent − len(digits)); the
+  // exponent counts digits BEFORE the point, so len(digits) − exponent of them trail after
+  // it. Disjoint from the plain digits-list forms above by shape alone: `ops[0]` there is a
+  // flat list of integers, `integerList` on it fails the moment it hits the nested digits
+  // list this pair carries as its own first element.
+  wrapOperator(
+    ce,
+    ["FromDigits", ["List", ["List", 1, 4, 1, 5], 1]],
+    (ops) => {
+      if (ops.length !== 1 || ops[0]?.operator !== "List") return false;
+      const parts = operandsOf(ops[0]);
+      return (
+        parts.length === 2 &&
+        integerList(parts[0]) !== undefined &&
+        integerAt(parts[1]) !== undefined
+      );
+    },
+    () => (ops) => {
+      const [digitsExpr, exponentExpr] = operandsOf(ops[0]!);
+      const digits = integerList(digitsExpr)!;
+      const exponent = integerAt(exponentExpr)!;
+      const base = 10n;
+      const mantissa = digits.reduce((acc, d) => acc * base + BigInt(d), 0n);
+      const shift = exponent - digits.length;
+      return shift >= 0
+        ? ce.number(mantissa * base ** BigInt(shift))
+        : ce
+            .function("Rational", [ce.number(mantissa), ce.number(base ** BigInt(-shift))])
+            .evaluate();
+    },
+  );
+
   // Wolfram's "Roman" pseudo-base, the reverse of RomanNumeral: FromDigits("XVII", "Roman").
   wrapOperator(
     ce,

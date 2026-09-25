@@ -60,3 +60,29 @@ test("IntegerString(n, 16) for a huge n round-trips through FromDigits", () => {
   const requoted = `'${hex.replace(/^'|'$/g, "")}'`;
   expect(value(["FromDigits", requoted, 16])).toEqual(big);
 });
+
+// FromDigits({digits, exponent}): the single-arg pair shape RealDigits itself returns.
+test("FromDigits reads a {digits, exponent} pair, the shape RealDigits gives (#113)", () => {
+  expect(value(["FromDigits", ["List", ["List", 1, 4, 1, 5], 1]])).toEqual(["Rational", 283, 200]);
+  // exponent >= digit count: no fractional part, an exact integer.
+  expect(value(["FromDigits", ["List", ["List", 1, 2, 3], 3]])).toBe(123);
+  expect(value(["FromDigits", ["List", ["List", 1, 2, 3], 5]])).toBe(12300);
+  // Round-trips through RealDigits itself, for exact rationals with a TERMINATING base-10
+  // expansion -- a repeating one (like 22/7) nests its periodic tail as its own inner
+  // list, which this wrapper (by design) doesn't try to read back.
+  for (const [n, d] of [
+    [283, 200],
+    [1, 8],
+    [7, 25],
+  ] as const) {
+    const digitsPair = ce.box(["RealDigits", ["Rational", n, d]] as never).evaluate();
+    expect(ce.box(["FromDigits", digitsPair.json] as never).evaluate().json).toEqual([
+      "Rational",
+      n,
+      d,
+    ]);
+  }
+  // A flat digit list (no exponent pairing) is untouched -- this wrapper only fires on
+  // the nested {digits, exponent} shape.
+  expect(value(["FromDigits", ["List", 5, 1, 2, 8]])).toBe(5128);
+});

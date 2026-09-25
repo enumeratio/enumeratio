@@ -99,9 +99,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["GCD", ["Complex", 5, ["Rational", 10, 3]], ["Complex", ["Rational", 3, 2], 1]],
         expected: ["Complex", ["Rational", 1, 2], ["Rational", 1, 3]],
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian rationals: $\\gcd(15+10i,\\,3+2i)/\\operatorname{lcm}(3,2)$; not yet",
+        caption: "Gaussian rationals: $\\gcd(15+10i,\\,3+2i)/\\operatorname{lcm}(3,2)$",
       },
       {
         expr: ["GCD", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]],
@@ -217,9 +216,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
           ["Complex", ["Rational", 1, 3], 1],
         ],
         expected: ["Complex", 21, 13],
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian rationals: $\\operatorname{lcm}(5+6i,\\,1+3i)/\\gcd(10,3)$; not yet",
+        caption: "Gaussian rationals: $\\operatorname{lcm}(5+6i,\\,1+3i)/\\gcd(10,3)$",
       },
       {
         expr: ["LCM", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]],
@@ -1203,9 +1201,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["DivisorSigma", ["Rational", 1, 2], 12],
         expected: ["Add", 3, ["Sqrt", 2], ["Sqrt", 6], ["Multiply", 3, ["Sqrt", 3]]],
-        aspirational: true,
         category: "Scope",
-        caption: "Rational $k$: the square roots of the divisors of 12, summed; not yet",
+        caption: "Rational $k$: the square roots of the divisors of 12, summed",
       },
       {
         expr: ["DivisorSigma", 1, ["Complex", 3, 1]],
@@ -1327,6 +1324,16 @@ export const numberTheory: readonly ReferenceEntry[] = [
     summary: "Tests whether n has no repeated prime factors.",
     signatures: [
       { call: "IsSquareFree(n)", description: "tests whether $n$ has no repeated prime factor." },
+      {
+        call: "IsSquareFree(f)",
+        description: "for a polynomial $f$, whether it has no repeated irreducible factor.",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "IsSquareFree(f, x)",
+        description: "whether $f$ has no repeated factor as a polynomial in $x$ alone.",
+        library: "enumeratio-number-theory",
+      },
     ],
     details: [
       "An integer is squarefree if it is divisible by no perfect square other than 1.",
@@ -1387,9 +1394,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["IsSquareFree", ["Add", ["Power", "x", 2], ["Multiply", 6, "x"], 6]],
         expected: "True",
-        aspirational: true,
         category: "Scope",
-        caption: "Polynomials: $x^2+6x+6$ has no repeated factor; not yet",
+        caption:
+          "Polynomials: $x^2+6x+6$ has no repeated factor -- decided by $\\gcd(f, f')$ via [[D]] and compute-engine's own PolynomialGCD",
       },
       {
         expr: [
@@ -1397,23 +1404,20 @@ export const numberTheory: readonly ReferenceEntry[] = [
           ["Subtract", ["Power", "x", 3], ["Multiply", ["Power", "x", 2], "y"]],
         ],
         expected: "False",
-        aspirational: true,
         category: "Scope",
-        caption: "Multivariate: $x^3-x^2y=x^2(x-y)$; not yet",
+        caption: "Multivariate: $x^3-x^2y=x^2(x-y)$, a repeated factor of $x$",
       },
       {
         expr: ["IsSquareFree", ["Multiply", "x", ["Power", "y", 2]], "x"],
         expected: "True",
-        aspirational: true,
         category: "Scope",
-        caption: "Squarefree as a polynomial in $x$ alone; the variable argument is missing",
+        caption: "Squarefree as a polynomial in $x$ alone -- $y$ is just a coefficient here",
       },
       {
         expr: ["IsSquareFree", ["Multiply", "x", ["Power", "y", 2]], "y"],
         expected: "False",
-        aspirational: true,
         category: "Scope",
-        caption: "…but not in $y$; the variable argument is missing",
+        caption: "…but not in $y$ alone: $y$ appears squared",
       },
     ],
     seeAlso: ["MoebiusMu", "FactorInteger"],
@@ -2271,10 +2275,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["MangoldtLambda", 9]],
         expected: 1.0986122886681098,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Numerically, $\\ln3$ — not yet: `N` does not re-derive a numeric result from a custom-declared head's evaluated `Ln(3)`; `N(Ln(3))` itself works fine",
+        caption: "Numerically, $\\ln3$",
       },
       {
         expr: ["MangoldtLambda", ["List", 2, 4, 6, 25]],

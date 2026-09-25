@@ -113,6 +113,24 @@ test("ChineseRemainder and MultiplicativeOrder take IntegerMod values", () => {
   expect(run(["MultiplicativeOrder", ["IntegerMod", 2, 7]])).toBe(3);
 });
 
+test("Mod of a bare symbolic constant reduces exactly (#113)", () => {
+  expect(run(["Mod", "Pi", 2])).toEqual(["Add", -2, "Pi"]);
+  // Cross-check numerically: the exact symbolic result and a double both land in [0, 2).
+  const exact = ce
+    .box(["Mod", "Pi", 2] as never)
+    .evaluate()
+    .N().re;
+  expect(exact).toBeCloseTo(Math.PI - 2, 10);
+  expect(exact).toBeGreaterThanOrEqual(0);
+  expect(exact).toBeLessThan(2);
+
+  // ExponentialE mod 2: e ≈ 2.718, one period past 2.
+  expect(run(["Mod", "ExponentialE", 2])).toEqual(["Add", -2, "ExponentialE"]);
+
+  // A free (non-numeric) symbol is untouched — the wrapper declines.
+  expect(run(["Mod", "x", 2])).toEqual(["Mod", "x", 2]);
+});
+
 test("IntegerModRing is ℤ/m as a finite collection", () => {
   expect(run(["QuotientRing", "Integers", 5])).toEqual(["IntegerModRing", 5]);
   expect(ce.parse("\\mathbb{Z}/6\\mathbb{Z}").evaluate().json).toEqual(["IntegerModRing", 6]);

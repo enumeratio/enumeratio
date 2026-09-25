@@ -45,6 +45,28 @@ test("Gaussian integers reach the integer heads, as in Wolfram", () => {
   ]);
 });
 
+test("GCD and LCM of Gaussian rationals: gcd(p1,p2)/lcm(q1,q2), lcm(p1,p2)/gcd(q1,q2) (#113)", () => {
+  const c = (re: unknown, im: unknown) => ["Complex", re, im];
+  const r = (n: number, d: number) => ["Rational", n, d];
+
+  // gcd(15+10i, 3+2i)/lcm(3,2): 15+10i = 5(3+2i), so gcd(15+10i,3+2i) = 3+2i up to unit,
+  // and lcm(3,2) = 6 -- (3+2i)/6 = 1/2 + i/3.
+  expect(run(["GCD", c(5, r(10, 3)), c(r(3, 2), 1)])).toEqual(c(r(1, 2), r(1, 3)));
+
+  // lcm(5+6i, 1+3i)/gcd(10,3): 5+6i and 1+3i are coprime in ℤ[i], so their lcm is their
+  // product's first-quadrant associate 21+13i, and gcd(10,3) = 1.
+  expect(run(["LCM", c(r(1, 2), r(3, 5)), c(r(1, 3), 1)])).toEqual(c(21, 13));
+
+  // A bare Rational operand (im = 0) stays consistent with the plain-rational identity:
+  // gcd(1,2)/lcm(3,5) = 1/15.
+  expect(run(["GCD", r(1, 3), r(2, 5)])).toEqual(r(1, 15));
+
+  // A pure Gaussian-integer call is untouched -- it still answers through the earlier,
+  // integer-only wrapper (this one declines: every denominator is already 1).
+  expect(run(["GCD", c(3, 1), c(1, 3)])).toEqual(c(1, 1));
+  expect(run(["LCM", c(3, 1), c(-1, 3)])).toEqual(c(3, 1));
+});
+
 test("FactorInteger and Divisors over the integers, as in Wolfram", () => {
   expect(run(["FactorInteger", -12])).toEqual([
     "List",
@@ -192,6 +214,25 @@ test("IsSquareFree of a rational (#113 §6)", () => {
   expect(run(["IsSquareFree", ["Rational", 4, 3]])).toBe("False");
 });
 
+test("IsSquareFree of a polynomial: gcd(f, f') via D and PolynomialGCD (#113)", () => {
+  // Univariate: x^2 + 6x + 6, discriminant 36-24=12 != 0, no repeated root.
+  expect(run(["IsSquareFree", ["Add", ["Power", "x", 2], ["Multiply", 6, "x"], 6]])).toBe("True");
+  // A genuine repeated root: (x-1)^2 = x^2 - 2x + 1.
+  expect(run(["IsSquareFree", ["Add", ["Power", "x", 2], ["Multiply", -2, "x"], 1]])).toBe("False");
+
+  // Multivariate: x^3 - x^2*y = x^2*(x - y), a repeated factor of x.
+  expect(
+    run(["IsSquareFree", ["Subtract", ["Power", "x", 3], ["Multiply", ["Power", "x", 2], "y"]]]),
+  ).toBe("False");
+  // x^3 - y^3 = (x-y)(x^2+xy+y^2), no repeated factor.
+  expect(run(["IsSquareFree", ["Subtract", ["Power", "x", 3], ["Power", "y", 3]]])).toBe("True");
+
+  // With an explicit variable: x*y^2 is squarefree as a polynomial in x alone (y is just
+  // a coefficient), but not in y alone (y appears squared).
+  expect(run(["IsSquareFree", ["Multiply", "x", ["Power", "y", 2]], "x"])).toBe("True");
+  expect(run(["IsSquareFree", ["Multiply", "x", ["Power", "y", 2]], "y"])).toBe("False");
+});
+
 test("FactorInteger of a rational (#113 §6)", () => {
   expect(run(["FactorInteger", ["Rational", 3, 8]])).toEqual([
     "List",
@@ -218,6 +259,28 @@ test("DivisorSigma with a symbolic k (#113 §4)", () => {
     ["Power", 30, "k"],
     1,
   ]);
+});
+
+test("DivisorSigma with a non-integer rational k: exact radical sum (#113)", () => {
+  // Divisors of 12: 1, 2, 3, 4, 6, 12. sqrt of each: 1, √2, √3, 2, √6, 2√3.
+  // Summed: 3 + √2 + √6 + 3√3.
+  expect(run(["DivisorSigma", ["Rational", 1, 2], 12])).toEqual([
+    "Add",
+    3,
+    ["Sqrt", 2],
+    ["Sqrt", 6],
+    ["Multiply", 3, ["Sqrt", 3]],
+  ]);
+  // Cross-check numerically against a brute-force double-precision sum.
+  const bruteForce = [1, 2, 3, 4, 6, 12].reduce((sum, d) => sum + Math.sqrt(d), 0);
+  const n = ce
+    .box(["DivisorSigma", ["Rational", 1, 2], 12] as never)
+    .evaluate()
+    .N().re;
+  expect(n).toBeCloseTo(bruteForce, 10);
+
+  // An integer k is untouched: this wrapper only fires for a non-integer rational.
+  expect(run(["DivisorSigma", 2, 20])).toBe(546);
 });
 
 test("threads over a list: DivisorSigma (in n), LegendreSymbol, ExtendedGCD, ModularInverse (#113 §1)", () => {
