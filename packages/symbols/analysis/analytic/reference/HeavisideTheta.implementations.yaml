@@ -5,6 +5,8 @@ heavisidetheta-negative:
   tex:
     in: \mathrm{HeavisideTheta}(-1)
     out: "0"
+  fullform:
+    in: HeavisideTheta[-1]
   wolfram:
     in: HeavisideTheta[-1]
 heavisidetheta-positive:
@@ -14,6 +16,8 @@ heavisidetheta-positive:
   tex:
     in: \mathrm{HeavisideTheta}(1)
     out: "1"
+  fullform:
+    in: HeavisideTheta[1]
   wolfram:
     in: HeavisideTheta[1]
 heavisidetheta-zero-unevaluated:
@@ -23,6 +27,8 @@ heavisidetheta-zero-unevaluated:
   tex:
     in: \mathrm{HeavisideTheta}(0)
     out: \mathrm{HeavisideTheta}(0)
+  fullform:
+    in: HeavisideTheta[0]
   wolfram:
     in: HeavisideTheta[0]
 heavisidetheta-product-both-positive:
@@ -32,6 +38,8 @@ heavisidetheta-product-both-positive:
   tex:
     in: \mathrm{HeavisideTheta}(1, 2)
     out: "1"
+  fullform:
+    in: HeavisideTheta[1, 2]
   wolfram:
     in: HeavisideTheta[1, 2]
 heavisidetheta-product-one-negative:
@@ -41,6 +49,8 @@ heavisidetheta-product-one-negative:
   tex:
     in: \mathrm{HeavisideTheta}(1, -1)
     out: "0"
+  fullform:
+    in: HeavisideTheta[1, -1]
   wolfram:
     in: HeavisideTheta[1, -1]
 heavisidetheta-derivative:
@@ -50,3 +60,5 @@ heavisidetheta-derivative:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{HeavisideTheta}(x)
     out: \mathrm{DiracDelta}(x)
+  fullform:
+    in: D[HeavisideTheta[x], x]

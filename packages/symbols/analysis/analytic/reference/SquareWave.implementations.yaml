@@ -5,6 +5,8 @@ squarewave-zero:
   tex:
     in: \mathrm{SquareWave}(0)
     out: "1"
+  fullform:
+    in: SquareWave[0]
   wolfram:
     in: SquareWave[0]
 squarewave-half:
@@ -14,6 +16,8 @@ squarewave-half:
   tex:
     in: \mathrm{SquareWave}(\frac{1}{2})
     out: "-1"
+  fullform:
+    in: SquareWave[Rational[1, 2]]
   wolfram:
     in: SquareWave[Rational[1, 2]]
 squarewave-neg-quarter:
@@ -23,6 +27,8 @@ squarewave-neg-quarter:
   tex:
     in: \mathrm{SquareWave}(-\frac{1}{4})
     out: "-1"
+  fullform:
+    in: SquareWave[Rational[-1, 4]]
   wolfram:
     in: SquareWave[Rational[-1, 4]]
 squarewave-periodic:
@@ -35,9 +41,10 @@ squarewave-periodic:
   traditional:
     in: \mathrm{SquareWave}(\frac{1}{4})=\mathrm{SquareWave}(2\frac{1}{4})
     out: \mathrm{True}
+  fullform:
+    in: Equal[SquareWave[Rational[1, 4]], SquareWave[Plus[Rational[1, 4], 2]]]
   wolfram:
     in: (SquareWave[Rational[1, 4]] == SquareWave[Plus[Rational[1, 4], 2]])
-    back: Unreadable
 squarewave-ranged:
   epsil:
     in: SquareWave([0, 10], 0)
@@ -45,5 +52,7 @@ squarewave-ranged:
   tex:
     in: \mathrm{SquareWave}(\bigl\lbrack0, 10\bigr\rbrack, 0)
     out: "10"
+  fullform:
+    in: SquareWave[List[0, 10], 0]
   wolfram:
     in: SquareWave[List[0, 10], 0]

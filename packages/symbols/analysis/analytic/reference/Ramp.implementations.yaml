@@ -5,6 +5,8 @@ ramp-negative:
   tex:
     in: \mathrm{Ramp}(-2)
     out: "0"
+  fullform:
+    in: Ramp[-2]
   wolfram:
     in: Ramp[-2]
 ramp-positive:
@@ -14,6 +16,8 @@ ramp-positive:
   tex:
     in: \mathrm{Ramp}(3)
     out: "3"
+  fullform:
+    in: Ramp[3]
   wolfram:
     in: Ramp[3]
 ramp-zero:
@@ -23,6 +27,8 @@ ramp-zero:
   tex:
     in: \mathrm{Ramp}(0)
     out: "0"
+  fullform:
+    in: Ramp[0]
   wolfram:
     in: Ramp[0]
 ramp-equals-x-times-unitstep:
@@ -35,9 +41,10 @@ ramp-equals-x-times-unitstep:
   traditional:
     in: \mathrm{Ramp}(5)=5\mathrm{UnitStep}(5)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Ramp[5], Times[5, UnitStep[5]]]
   wolfram:
     in: (Ramp[5] == Times[5, UnitStep[5]])
-    back: Unreadable
 ramp-derivative:
   epsil:
     in: D(Ramp(x), x)
@@ -45,3 +52,5 @@ ramp-derivative:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{Ramp}(x)
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack0, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, \mathrm{Indeterminate})
+  fullform:
+    in: D[Ramp[x], x]

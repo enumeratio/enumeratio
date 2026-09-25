@@ -5,6 +5,8 @@ unitbox-inside-the-box:
   tex:
     in: \mathrm{UnitBox}(0)
     out: "1"
+  fullform:
+    in: UnitBox[0]
   wolfram:
     in: UnitBox[0]
 unitbox-boundary-1-2:
@@ -14,6 +16,8 @@ unitbox-boundary-1-2:
   tex:
     in: \mathrm{UnitBox}(\frac{1}{2})
     out: "1"
+  fullform:
+    in: UnitBox[Rational[1, 2]]
   wolfram:
     in: UnitBox[Rational[1, 2]]
 unitbox-boundary-neg-1-2:
@@ -23,6 +27,8 @@ unitbox-boundary-neg-1-2:
   tex:
     in: \mathrm{UnitBox}(-\frac{1}{2})
     out: "1"
+  fullform:
+    in: UnitBox[Rational[-1, 2]]
   wolfram:
     in: UnitBox[Rational[-1, 2]]
 unitbox-outside-the-box:
@@ -32,6 +38,8 @@ unitbox-outside-the-box:
   tex:
     in: \mathrm{UnitBox}(1)
     out: "0"
+  fullform:
+    in: UnitBox[1]
   wolfram:
     in: UnitBox[1]
 unitbox-product-of-two-boxes:
@@ -41,6 +49,8 @@ unitbox-product-of-two-boxes:
   tex:
     in: \mathrm{UnitBox}(0, 0)
     out: "1"
+  fullform:
+    in: UnitBox[0, 0]
   wolfram:
     in: UnitBox[0, 0]
 unitbox-derivative-away-from-the-jump:
@@ -50,3 +60,5 @@ unitbox-derivative-away-from-the-jump:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{UnitBox}(x)
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{Indeterminate}, x=1/2\lor x=-1/2\bigr\rbrack\bigr\rbrack, 0)
+  fullform:
+    in: D[UnitBox[x], x]

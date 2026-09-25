@@ -5,6 +5,8 @@ heavisidepi-inside:
   tex:
     in: \mathrm{HeavisidePi}(0)
     out: "1"
+  fullform:
+    in: HeavisidePi[0]
   wolfram:
     in: HeavisidePi[0]
 heavisidepi-boundary-unevaluated:
@@ -14,6 +16,8 @@ heavisidepi-boundary-unevaluated:
   tex:
     in: \mathrm{HeavisidePi}(\frac{1}{2})
     out: \mathrm{HeavisidePi}(\frac{1}{2})
+  fullform:
+    in: HeavisidePi[Rational[1, 2]]
   wolfram:
     in: HeavisidePi[Rational[1, 2]]
 heavisidepi-neg-boundary-unevaluated:
@@ -23,6 +27,8 @@ heavisidepi-neg-boundary-unevaluated:
   tex:
     in: \mathrm{HeavisidePi}(-\frac{1}{2})
     out: \mathrm{HeavisidePi}(-\frac{1}{2})
+  fullform:
+    in: HeavisidePi[Rational[-1, 2]]
   wolfram:
     in: HeavisidePi[Rational[-1, 2]]
 heavisidepi-outside:
@@ -32,5 +38,7 @@ heavisidepi-outside:
   tex:
     in: \mathrm{HeavisidePi}(1)
     out: "0"
+  fullform:
+    in: HeavisidePi[1]
   wolfram:
     in: HeavisidePi[1]
