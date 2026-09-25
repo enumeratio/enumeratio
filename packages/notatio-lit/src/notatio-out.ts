@@ -77,6 +77,26 @@ function substitute(expr: unknown, bindings: ReadonlyMap<string, unknown>): unkn
 /** A `<notatio-dynamic-module>` that can hand out its shared evaluation scope. */
 interface TranscriptHost extends Element {
   transcriptFor(engine: ComputeEngine): Transcript;
+  /**
+   * `Evaluator` (design/aestimatio.md, `notatio-dynamic-module.ts`): `"Local"`
+   * (default, or absent) evaluates in-page as today; `"Worker"` routes a cell's
+   * evaluation to the module's `aestimatio` session instead (`evaluateRemote`,
+   * below). Optional so a plain `TranscriptHost` (no `Evaluator` support at all)
+   * still satisfies this interface.
+   */
+  readonly evaluatorKind?: "Local" | "Worker";
+  /**
+   * Runs `json` in the module's worker session rather than this page's engine --
+   * only present, and only called, when `evaluatorKind` is `"Worker"`. `signal`
+   * aborts THIS call (the module's "stop" control / Escape); the worker itself may
+   * keep running in the background (design/aestimatio.md §3's own limit on what an
+   * abort can promise). `reset: true` means the session was hard-killed and
+   * restarted -- earlier bindings are gone, surfaced by the module itself.
+   */
+  evaluateRemote?(
+    json: unknown,
+    options?: { signal?: AbortSignal },
+  ): Promise<{ value: unknown; reset: boolean }>;
 }
 
 /**
@@ -369,6 +389,12 @@ export class NotatioOut extends LitElement {
       void this.#recompute();
     }
     if (changed.has("env") && changed.get("env") !== undefined) this.#visualize();
+    // Escape stops a running Worker-evaluator call (`stop()`) -- only listened for
+    // while actually busy, and only matters when there is something to abort.
+    if (changed.has("busy")) {
+      if (this.busy) globalThis.document?.addEventListener("keydown", this.#onKeydown);
+      else globalThis.document?.removeEventListener("keydown", this.#onKeydown);
+    }
   }
 
   async #evaluate(): Promise<{ latex: string; json: unknown; messages: readonly Message[] }> {
@@ -398,6 +424,31 @@ export class NotatioOut extends LitElement {
     const transcript = host?.transcriptFor(engine);
     const parseText = (): BoxedExpression =>
       this.format === "latex" ? engine.parse(source, form) : engine.box(this.#json(engine), form);
+
+    // `Evaluator -> "Worker"`: this cell's own evaluation happens off-thread, in the
+    // module's aestimatio session -- not inside `transcript.run()` (that scope is a
+    // LOCAL engine's; the worker holds its own persistent one, per
+    // design/aestimatio.md). Only parsing and the result's re-boxing (for typesetting)
+    // touch the local scope. Messages (`collectMessages`) don't cross the worker
+    // boundary yet -- deferred, see this package's PR description.
+    if (transcript && this.evaluate && host?.evaluatorKind === "Worker" && host.evaluateRemote) {
+      const input =
+        this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
+      const boxed = transcript.run(() => parseText());
+      this.#abort = new AbortController();
+      let resultJson: unknown;
+      try {
+        ({ value: resultJson } = await host.evaluateRemote(boxed.json, {
+          signal: this.#abort.signal,
+        }));
+      } finally {
+        this.#abort = undefined;
+      }
+      const value = transcript.run(() => engine.box(resultJson as never));
+      this.#historyN = transcript.record(input, boxed, value);
+      return { latex: latexOf(engine, value), json: value.json, messages: [] };
+    }
+
     const { value: result, messages } = collectMessages(engine, () => {
       if (transcript && this.evaluate) {
         // `InString(n)` reads back what the reader typed. Read the JSON *before* boxing:
@@ -527,6 +578,27 @@ export class NotatioOut extends LitElement {
       return undefined;
     }
   }
+
+  // Set only while a Worker-evaluator call is in flight (see `#evaluate`'s worker
+  // branch) -- `stop()`/Escape abort it. `undefined` outside that call, or in local
+  // evaluation, where there is nothing to abort.
+  #abort: AbortController | undefined;
+
+  /**
+   * Stop the in-flight Worker-evaluator call, if any -- the busy row's own stop
+   * control and Escape (`#onKeydown`) both call this. Aborts THIS call only
+   * (`BrowserSession.evaluate`'s own contract, `@enumeratio/aestimatio/browser`): the
+   * worker may keep running in the background rather than actually halting -- a
+   * module `time-constraint` is what turns an uncooperative loop into a hard-killed,
+   * reset session (`notatio-dynamic-module.ts`'s own comment).
+   */
+  stop(): void {
+    this.#abort?.abort();
+  }
+
+  #onKeydown = (event: KeyboardEvent): void => {
+    if (event.key === "Escape") this.stop();
+  };
 
   #runs = 0;
 
@@ -723,6 +795,7 @@ export class NotatioOut extends LitElement {
   override disconnectedCallback(): void {
     this.#unwatch();
     globalThis.document?.removeEventListener("pointerdown", this.#onDocPointerDown);
+    globalThis.document?.removeEventListener("keydown", this.#onKeydown);
     clearTimeout(this.#closeTimer);
     super.disconnectedCallback();
   }
@@ -982,9 +1055,23 @@ export class NotatioOut extends LitElement {
   #content(): unknown {
     // Nothing to show yet: say so, rather than an empty row.
     if (this.busy && !this._markup && !this._visual) {
+      // Only a Worker evaluation can actually be interrupted (`stop()`) -- a local
+      // one runs synchronously on this thread and would only get an ignored click.
+      const stoppable = transcriptHostOf(this)?.evaluatorKind === "Worker";
       return html`<span class="notatio-pending" role="status" aria-label="evaluating"
-        ><span></span><span></span><span></span
-      ></span>`;
+        ><span></span><span></span><span></span>${
+          stoppable
+            ? html`<button
+                type="button"
+                class="notatio-stop"
+                title="Stop (Esc)"
+                @click=${() => this.stop()}
+              >
+                ■
+              </button>`
+            : ""
+        }</span
+      >`;
     }
     if (CODE_FORMS.has(this.form)) {
       return this.#code(this._code[this.form as CodeForm] ?? "", FORM_LANG[this.form]!);

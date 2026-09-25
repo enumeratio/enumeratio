@@ -19,6 +19,7 @@
     "check": "vp check"
   },
   "dependencies": {
+    "@enumeratio/aestimatio": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/boxed": "workspace:*",
     "@enumeratio/cli": "workspace:*",

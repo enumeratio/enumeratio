@@ -159,6 +159,16 @@ export default {
           if (ric) ric(kick, { timeout: 2000 });
           else setTimeout(kick, 0);
         });
+      // Points an `Evaluator -> "Worker"` `<notatio-dynamic-module>` at the module
+      // whose `configure(ce)` declares this page's own libraries into its
+      // `@enumeratio/aestimatio/browser` session -- `notatio-dynamic-module.ts`'s own
+      // `#openSession` reads this the same way `loadEngine` reads
+      // `__notatioEngineReady` above. A `URL` (not a bare specifier) so the worker's
+      // own `import(setup)` -- running in a different module graph -- can resolve it.
+      (globalThis as { __notatioWorkerSetup?: string }).__notatioWorkerSetup = new URL(
+        "./worker-engine-setup.ts",
+        import.meta.url,
+      ).href;
     }
   },
 };
