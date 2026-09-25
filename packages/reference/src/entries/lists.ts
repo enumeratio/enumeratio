@@ -11,6 +11,11 @@ export const lists: readonly ReferenceEntry[] = [
         call: "All(xs, predicate)",
         description: "$True$ if $predicate$ holds for every element of $xs$, else $False$.",
       },
+      {
+        call: "All(xs, predicate, level)",
+        description: "the elements at exactly `level` tested instead of the top-level ones.",
+        library: "enumeratio-collections",
+      },
     ],
     examples: [
       {
@@ -50,10 +55,8 @@ export const lists: readonly ReferenceEntry[] = [
           2,
         ],
         expected: "True",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A level argument should test the elements at depth 2 of a nested list; not yet supported",
+        caption: "A level argument tests the elements at depth 2 of a nested list",
       },
       {
         expr: ["All", ["List"], "IsEven"],
@@ -73,6 +76,11 @@ export const lists: readonly ReferenceEntry[] = [
       {
         call: "Any(xs, predicate)",
         description: "$True$ if $predicate$ holds for at least one element of $xs$, else $False$.",
+      },
+      {
+        call: "Any(xs, predicate, level)",
+        description: "the elements at exactly `level` tested instead of the top-level ones.",
+        library: "enumeratio-collections",
       },
     ],
     examples: [
@@ -108,10 +116,8 @@ export const lists: readonly ReferenceEntry[] = [
           2,
         ],
         expected: "True",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A level argument should test the elements at depth 2 of a nested list; not yet supported",
+        caption: "A level argument tests the elements at depth 2 of a nested list",
       },
       {
         expr: ["Any", ["List"], "IsEven"],

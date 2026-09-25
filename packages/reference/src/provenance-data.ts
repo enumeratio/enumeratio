@@ -1733,6 +1733,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "FirstPosition",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "FirstPosition",
+    elsewhere: [],
+  },
+  {
     name: "Position",
     provenance: "override",
     declared: "enumeratio-collections",
@@ -1762,7 +1769,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Count",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Count",
     elsewhere: ["wolfram"],
@@ -1776,7 +1783,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Flatten",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Flatten",
     elsewhere: ["wolfram", "sympy"],
@@ -1972,14 +1979,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "All",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "AllTrue",
     elsewhere: [],
   },
   {
     name: "Any",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "AnyTrue",
     elsewhere: [],
