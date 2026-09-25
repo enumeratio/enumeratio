@@ -671,6 +671,33 @@ const NOVEL = [
   "IsBipartiteGraph",
   "NeighborhoodGraph",
   "Subgraph",
+  // Second wave (packages/symbols/combinatorics/collections/src/graphs-2.ts): same story --
+  // every one of these is genuinely Wolfram's own (see HEADS in @enumeratio/wolfram), this
+  // offline suite just has no kernel to confirm it.
+  "GraphDistanceMatrix",
+  "VertexEccentricity",
+  "GraphRadius",
+  "GraphDiameter",
+  "GraphCenter",
+  "GraphPeriphery",
+  "VertexIndex",
+  "VertexInDegree",
+  "VertexOutDegree",
+  "ClosenessCentrality",
+  "EigenvectorCentrality",
+  "IsPathGraph",
+  "IsAcyclicGraph",
+  "IsCompleteGraph",
+  "IsLoopFreeGraph",
+  "IsSimpleGraph",
+  "IsIsomorphicGraph",
+  "WheelGraph",
+  "CirculantGraph",
+  "TuranGraph",
+  "HararyGraph",
+  "LineGraph",
+  "AdjacencyGraph",
+  "RandomGraph",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

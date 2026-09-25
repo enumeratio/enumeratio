@@ -582,6 +582,34 @@ export const HEADS: Record<string, string> = {
   NeighborhoodGraph: "NeighborhoodGraph",
   Subgraph: "Subgraph",
 
+  // Second wave (packages/symbols/combinatorics/collections/src/graphs-2.ts): distance
+  // measures, more `Is…`-for-`…Q` predicates, and a few more named/random constructors.
+  // Same plain-rename story as the block above -- every one of these is Wolfram's own name.
+  GraphDistanceMatrix: "GraphDistanceMatrix",
+  VertexEccentricity: "VertexEccentricity",
+  GraphRadius: "GraphRadius",
+  GraphDiameter: "GraphDiameter",
+  GraphCenter: "GraphCenter",
+  GraphPeriphery: "GraphPeriphery",
+  VertexIndex: "VertexIndex",
+  VertexInDegree: "VertexInDegree",
+  VertexOutDegree: "VertexOutDegree",
+  ClosenessCentrality: "ClosenessCentrality",
+  EigenvectorCentrality: "EigenvectorCentrality",
+  IsPathGraph: "PathGraphQ",
+  IsAcyclicGraph: "AcyclicGraphQ",
+  IsCompleteGraph: "CompleteGraphQ",
+  IsLoopFreeGraph: "LoopFreeGraphQ",
+  IsSimpleGraph: "SimpleGraphQ",
+  IsIsomorphicGraph: "IsomorphicGraphQ",
+  WheelGraph: "WheelGraph",
+  CirculantGraph: "CirculantGraph",
+  TuranGraph: "TuranGraph",
+  HararyGraph: "HararyGraph",
+  LineGraph: "LineGraph",
+  AdjacencyGraph: "AdjacencyGraph",
+  RandomGraph: "RandomGraph",
+
   // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
   //
   // Deliberately Wolfram-named: "Wolfram's `Plot`, `Histogram`, `Manipulate` print as

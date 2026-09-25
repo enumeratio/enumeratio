@@ -1,0 +1,22 @@
+single-offset-is-2-regular:
+  epsil:
+    in: VertexDegree(CirculantGraph(8, 2), 1)
+    out: "2"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{CirculantGraph}(8, 2), 1)
+    out: "2"
+  fullform:
+    in: VertexDegree[CirculantGraph[8, 2], 1]
+  wolfram:
+    in: VertexDegree[CirculantGraph[8, 2], 1]
+two-offsets-union:
+  epsil:
+    in: EdgeCount(CirculantGraph(10, [1, 3]))
+    out: "20"
+  tex:
+    in: \mathrm{EdgeCount}(\mathrm{CirculantGraph}(10, \bigl\lbrack1, 3\bigr\rbrack))
+    out: "20"
+  fullform:
+    in: EdgeCount[CirculantGraph[10, List[1, 3]]]
+  wolfram:
+    in: EdgeCount[CirculantGraph[10, List[1, 3]]]
