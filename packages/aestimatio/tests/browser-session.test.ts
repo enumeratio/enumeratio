@@ -126,6 +126,30 @@ test("openSession (dedicated-Worker fallback) replaces a worker that never repor
   session.close();
 });
 
+test("the spawn-timeout guard fires even with no timeMs at all", async () => {
+  // A call with no `timeMs` used to leave `spawnTimer` unarmed entirely (`if (timeMs
+  // !== undefined) spawnTimer = ...`), so a worker/port that never started -- a bad
+  // script, a SharedWorker whose module failed to load -- hung the caller forever.
+  // The guard against "never started" is unconditional now; only the COOPERATIVE
+  // kill margin (`killTimer`, armed from "started") is about `timeMs`.
+  const workers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    spawnTimeoutMs: 5,
+    createWorker: () => {
+      const fake = fakeWorker({ autoStart: false });
+      workers.push(fake);
+      return fake.worker;
+    },
+  });
+
+  const killed = session.evaluate(["Add", 1, 1]);
+  await expect(killed).resolves.toEqual({ value: "Aborted", reset: true });
+  expect(workers[0]!.terminatedCount()).toBe(1);
+  expect(workers).toHaveLength(2);
+
+  session.close();
+});
+
 test("openSession over a SharedWorker sends the handshake and evaluates over its port", async () => {
   const fake = fakePort();
   const session = openSession({

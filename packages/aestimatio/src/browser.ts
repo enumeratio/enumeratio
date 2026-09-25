@@ -596,7 +596,13 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
       }
       signal?.addEventListener("abort", onAbort);
 
-      if (timeMs !== undefined) spawnTimer = setTimeout(kill, spawnTimeoutMs);
+      // Unconditional -- a worker/port that never reports "started" at all (a bad
+      // script, a SharedWorker whose module failed to load, ...) has to be caught
+      // whether or not the caller asked for a `timeMs` deadline on the computation
+      // itself; those are two different guards (see SPAWN_TIMEOUT_MS's own comment).
+      // Gating this behind `timeMs !== undefined` left a call with no deadline at all
+      // hanging forever against a session that never actually started.
+      spawnTimer = setTimeout(kill, spawnTimeoutMs);
 
       currentPort.postMessage({ id, json, timeMs });
     });

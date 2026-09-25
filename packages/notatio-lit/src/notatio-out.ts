@@ -14,6 +14,7 @@ import { ensureStyles } from "./styles.ts";
 import { visualMarkup } from "./visual.ts";
 import {
   collectErrors,
+  debug,
   deepEqual,
   type Environment,
   environmentNamed,
@@ -24,6 +25,12 @@ import {
   type Transcript,
   watchPageEnvironment,
 } from "@enumeratio/notatio";
+
+// `localStorage["notatio:debug"] = "out"` -- see @enumeratio/notatio's debug.ts. Used to
+// make an `Evaluator -> "Worker"` cell's routing visible: a Worker-mode cell that never
+// logs `worker-evaluate` is silently running locally instead (see the guard right after
+// the worker branch, below).
+const log = debug("out");
 
 type Format = "latex" | "mathjson" | "notatio";
 type Status = "" | "ok" | "mismatch" | "error";
@@ -433,6 +440,7 @@ export class NotatioOut extends LitElement {
     // touch the local scope. Messages (`collectMessages`) don't cross the worker
     // boundary yet -- deferred, see this package's PR description.
     if (transcript && this.evaluate && host?.evaluatorKind === "Worker" && host.evaluateRemote) {
+      log("worker-evaluate", this.value);
       const input =
         this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
       const boxed = transcript.run(() => parseText());
@@ -448,6 +456,20 @@ export class NotatioOut extends LitElement {
       const value = transcript.run(() => engine.box(resultJson as never));
       this.#historyN = transcript.record(input, boxed, value);
       return { latex: latexOf(engine, value), json: value.json, messages: [] };
+    }
+    // A host in Worker mode but missing `evaluateRemote` would otherwise fall through to
+    // the LOCAL evaluation below without a trace -- exactly the failure mode that let
+    // `Notebook(cells, Evaluator -> Worker)` silently run every cell on the page's own
+    // thread (a `Notebook`-signature bug, since fixed in `@enumeratio/formats`; see
+    // `packages/notatio/tests/dynamic-module-evaluator.test.ts`). `evaluateRemote` is
+    // always defined on `NotatioDynamicModule`, so this only fires for a non-conforming
+    // host (e.g. a test double) -- loud on purpose.
+    if (transcript && this.evaluate && host?.evaluatorKind === "Worker") {
+      log("worker-evaluate: host has no evaluateRemote -- falling back to LOCAL", host);
+      console.error(
+        'notatio-out: Evaluator -> "Worker" host has no evaluateRemote(); evaluating locally instead',
+        host,
+      );
     }
 
     const { value: result, messages } = collectMessages(engine, () => {

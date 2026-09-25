@@ -38,6 +38,20 @@ function parseEvaluator(attr: string): Evaluator {
 type WorkerSetupGate = { __notatioWorkerSetup?: string };
 
 /**
+ * How long `stop()` waits for the worker's own answer to arrive on its own before
+ * giving up and hard-killing the session. `@enumeratio/aestimatio/browser`'s session
+ * has no channel to tell an ALREADY-DISPATCHED, no-deadline call to check a cooperative
+ * stop -- that only happens for a call started with its own `timeMs` (`TimeConstraint`,
+ * below). So this is the closest honest approximation of "cooperative, then hard kill":
+ * a short, fixed wait for a race the in-flight call might still win (it was nearly done
+ * anyway), and a real `session.close()` + respawn if not -- the only reliable way to stop
+ * a tight, uncooperative loop (design/aestimatio.md §3). Aborting the call *without* this
+ * (`BrowserSession.evaluate`'s own `signal`) only abandons it -- the worker keeps
+ * computing in the background, and a later cell queues behind it on the same session.
+ */
+const STOP_GRACE_MS = 300;
+
+/**
  * `<notatio-dynamic-module>` -- a **reactive document**, after Bret Victor's
  * [Tangle](http://worrydream.com/Tangle/): prose whose numbers you can grab, and whose
  * other numbers follow.
@@ -92,11 +106,12 @@ export class NotatioDynamicModule extends LitElement {
      * this one module (a test, or a page with more than one library set). */
     workerSetup: { type: String, attribute: "worker-setup" },
     /**
-     * `TimeConstraint`, in ms -- Wolfram's own option name (`aestimatio`'s
-     * `TimeConstrained`/`evaluateIsolated` already use it): tried cooperatively
-     * first, then hard-kills and restarts the session (design/aestimatio.md §2-3).
-     * Unset (the default) means no deadline at all -- a `Worker` evaluator without
-     * one can still be interrupted by the "stop" control, just never automatically.
+     * `TimeConstraint`, in SECONDS -- Wolfram's own option name and unit
+     * (`VerificationTest`'s `TimeConstraint` is seconds too, unlike aestimatio's own
+     * internal `timeMs`): tried cooperatively first, then hard-kills and restarts the
+     * session (design/aestimatio.md §2-3). Unset (the default, `0`) means no deadline
+     * at all -- a `Worker` evaluator without one can still be interrupted by the
+     * "stop" control, just never automatically.
      */
     timeConstraint: { type: Number, attribute: "time-constraint" },
   };
@@ -144,17 +159,61 @@ export class NotatioDynamicModule extends LitElement {
    * on the first call, and kept for the module's lifetime (or until a hard kill
    * replaces it, or `disconnectedCallback` closes it) so `:=` bindings persist across
    * cells the way a plain transcript's local scope does.
+   *
+   * `options.signal` is THIS call's own stop request (a cell's "stop" control, or
+   * Escape) -- deliberately NOT forwarded straight to `BrowserSession.evaluate`'s own
+   * `signal`, which only abandons the call locally and leaves the worker running it in
+   * the background (see `STOP_GRACE_MS`'s own comment). Instead, an abort here starts a
+   * short race: the underlying call still wins if it lands within the grace, otherwise
+   * the session is hard-killed and respawned, same outcome (and notice) as a
+   * `TimeConstraint` deadline's own hard kill.
    */
   evaluateRemote(
     json: unknown,
     options: { signal?: AbortSignal } = {},
   ): Promise<{ value: unknown; reset: boolean }> {
-    this.#session ??= this.#openSession();
-    const timeMs = this.timeConstraint > 0 ? this.timeConstraint : undefined;
-    return this.#session.evaluate(json, { timeMs, signal: options.signal }).then((result) => {
+    const session = (this.#session ??= this.#openSession());
+    // Wolfram's own unit (`TimeConstraint`, `VerificationTest`) is seconds; aestimatio's
+    // session API wants ms.
+    const timeMs = this.timeConstraint > 0 ? this.timeConstraint * 1000 : undefined;
+    const call = session.evaluate(json, { timeMs }).then((result) => {
       if (result.reset) this.#onSessionReset();
       else this.#clearSessionResetNotice();
       return result;
+    });
+    const { signal } = options;
+    if (!signal) return call;
+    return new Promise((resolve, reject) => {
+      let settled = false;
+      let graceTimer: ReturnType<typeof setTimeout> | undefined;
+      const finish = (fn: () => void): void => {
+        if (settled) return;
+        settled = true;
+        if (graceTimer !== undefined) clearTimeout(graceTimer);
+        signal.removeEventListener("abort", onAbort);
+        fn();
+      };
+      const onAbort = (): void => {
+        graceTimer = setTimeout(() => {
+          // Nothing landed within the grace -- the only reliable way to stop an
+          // uncooperative loop with no deadline of its own (design/aestimatio.md §3).
+          // This tab's bindings are gone either way; other calls already queued behind
+          // this one on the session are abandoned along with it.
+          finish(() => {
+            if (this.#session === session) {
+              session.close();
+              this.#session = undefined;
+            }
+            this.#onSessionReset();
+            resolve({ value: "Aborted", reset: true });
+          });
+        }, STOP_GRACE_MS);
+      };
+      signal.addEventListener("abort", onAbort);
+      call.then(
+        (result) => finish(() => resolve(result)),
+        (error: unknown) => finish(() => reject(error)),
+      );
     });
   }
 

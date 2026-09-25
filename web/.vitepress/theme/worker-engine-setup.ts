@@ -4,7 +4,9 @@
 // declares into the PAGE's own engine, minus `@enumeratio/aestimatio` itself -- the
 // session's engine already has it (`browser-session-worker.ts` calls
 // `declareAestimatio` before importing `setup`, same as `packages/reference/scripts/
-// engines.ts`'s own `configure` does for the Node isolated evaluator).
+// engines.ts`'s own `configure` does for the Node isolated evaluator). The declare
+// ORDER and OPTIONS themselves live in `./engine-libraries.ts`, shared with
+// `./index.mts`, so the two library sets can't drift apart.
 //
 // Unlike `./index.mts`, this declares synchronously and eagerly, with static
 // (not dynamic) imports: `openSession`'s `setup` contract calls `mod.configure(ce)`
@@ -18,10 +20,6 @@
 // parsed its input against the PAGE's own engine before sending it over -- see
 // `notatio-out.ts`'s worker branch), so the worker's engine is never asked to parse
 // LaTeX and needs no notation configured, only the heads themselves.
-//
-// Kept in sync BY HAND with `./index.mts`'s own declare list -- there is no single
-// source both a Vue app's `enhanceApp` and a plain worker script can share without
-// pulling Vue into the worker, so a library added to one belongs in the other too.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles";
@@ -43,32 +41,32 @@ import { declareNumerals } from "@enumeratio/numerals";
 import { declareQuiver } from "@enumeratio/quiver";
 import { declareResidues } from "@enumeratio/residues";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
+import { applyEngineLibraries } from "./engine-libraries.ts";
 
 export function configure(ce: ComputeEngine): void {
-  // Carriers first -- everything below declares heads OVER these minted types.
-  const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
-  const domainTypes = Object.fromEntries(
-    DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),
-  );
-  declareDomains(ce);
-  declareCollections(ce, { permutationType: "permutation" });
-  declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes });
-  declareMaps(ce, constructorFor);
-  declareAnalytic(ce);
-  declareFractals(ce);
-  declareGraphics(ce);
-  declareHypercomplex(ce);
-  declareGeometric(ce);
-  declareDiagrams(ce);
-  declareResidues(ce);
-  declareNumerals(ce);
-  declareHecke(ce);
-  declareIncidence(ce);
-  declareQuiver(ce);
-  declareHopf(ce);
-  declareGroupAlgebra(ce);
-  declareModular(ce);
-  declareNumberTheory(ce);
-  declareAdeles(ce);
-  declareBraid(ce);
+  applyEngineLibraries((fn) => fn(ce), {
+    declareCollections,
+    declareStatistics,
+    ALL_STATISTICS,
+    declareDomains,
+    declareMaps,
+    DOMAINS,
+    declareAnalytic,
+    declareFractals,
+    declareGraphics,
+    declareHypercomplex,
+    declareGeometric,
+    declareDiagrams,
+    declareResidues,
+    declareNumerals,
+    declareHecke,
+    declareIncidence,
+    declareQuiver,
+    declareHopf,
+    declareGroupAlgebra,
+    declareModular,
+    declareNumberTheory,
+    declareAdeles,
+    declareBraid,
+  });
 }
