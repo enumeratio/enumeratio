@@ -4,23 +4,66 @@ import { runCases } from "@enumeratio/aestimatio/src/node";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/index.ts";
 
-/** `output` with each float that is within 1e-12 (relative) of `expected`'s replaced by it:
- * the last digits of a float differ between platforms (ARM against x86), and that is not a
- * change in behaviour. Integers, `{num}` digits of different length and every structure still
- * have to match exactly. */
-const settled = (output: unknown, expected: unknown): unknown => {
-  const float = (x: unknown): number | undefined =>
-    typeof x === "number" && !Number.isInteger(x)
-      ? x
-      : typeof x === "object" && x !== null && typeof (x as { num?: unknown }).num === "string"
-        ? Number((x as { num: string }).num)
-        : undefined;
-  const [a, b] = [float(output), float(expected)];
-  if (a !== undefined && b !== undefined && Number.isFinite(a) && Number.isFinite(b)) {
-    return Math.abs(a - b) <= 1e-12 * Math.max(1, Math.abs(a), Math.abs(b)) ? expected : output;
+/** A `{num}` literal's digit string, or `undefined` for anything else. */
+const numOf = (x: unknown): string | undefined =>
+  typeof x === "object" && x !== null && typeof (x as { num?: unknown }).num === "string"
+    ? (x as { num: string }).num
+    : undefined;
+
+/** A number's decimal digits, whether it came as a `{num}` literal or a plain double. */
+const decimalOf = (x: unknown): string | undefined =>
+  typeof x === "number" ? String(x) : numOf(x);
+
+/** A decimal string reduced to sign, significant digits and exponent, so that `"0.50"`,
+ * `"5e-1"` and `".5"` compare equal while any difference in a significant digit does not. */
+const canonicalDecimal = (num: string): string => {
+  const [mantissa = "", exponent = "0"] = num.toLowerCase().split("e");
+  const negative = mantissa.startsWith("-");
+  const [whole = "", fraction = ""] = mantissa.replace(/^[-+]/, "").split(".");
+  const digits = `${whole}${fraction}`;
+  const leading = digits.length - digits.replace(/^0+/, "").length;
+  const significant = digits.replace(/^0+/, "").replace(/0+$/, "");
+  if (significant === "") return "0";
+  const power = Number(exponent) + whole.length - leading;
+  return `${negative ? "-" : ""}0.${significant}e${power}`;
+};
+
+/** An example that asks for digits: `N(x, d)`. Its answer is a promise about every digit it
+ * shows, so it is compared digit for digit (see `settled`). */
+const asksForDigits = (expr: unknown): boolean =>
+  Array.isArray(expr) && expr[0] === "N" && expr.length === 3;
+
+/**
+ * `output` with each number that matches `expected`'s replaced by it.
+ *
+ * - `exact`, for an `N(x, d)` example: every significant digit must match, the last one
+ *   included, and a double where `d` digits were asked for fails. Those digits come from
+ *   compute-engine's decimal arithmetic, which is the same on every platform.
+ * - Otherwise a float within 1e-12 (relative) matches: the last digits of a double differ
+ *   between platforms (ARM against x86), and that is not a change in behaviour.
+ *
+ * Integers and every structure have to match exactly either way.
+ */
+const settled = (output: unknown, expected: unknown, exact: boolean): unknown => {
+  if (exact) {
+    const [a, b] = [decimalOf(output), decimalOf(expected)];
+    if (a !== undefined && b !== undefined) {
+      return canonicalDecimal(a) === canonicalDecimal(b) ? expected : output;
+    }
+  } else {
+    const float = (x: unknown): number | undefined =>
+      typeof x === "number" && !Number.isInteger(x)
+        ? x
+        : numOf(x) === undefined
+          ? undefined
+          : Number(numOf(x));
+    const [a, b] = [float(output), float(expected)];
+    if (a !== undefined && b !== undefined && Number.isFinite(a) && Number.isFinite(b)) {
+      return Math.abs(a - b) <= 1e-12 * Math.max(1, Math.abs(a), Math.abs(b)) ? expected : output;
+    }
   }
   if (Array.isArray(output) && Array.isArray(expected) && output.length === expected.length) {
-    return output.map((item, i) => settled(item, expected[i]));
+    return output.map((item, i) => settled(item, expected[i], exact));
   }
   return output;
 };
@@ -93,7 +136,7 @@ for (const entry of entries) {
         // target. If this starts matching, promote it (drop `aspirational`).
         expect(output).not.toEqual(expected);
       } else {
-        expect(settled(output, expected)).toEqual(expected);
+        expect(settled(output, expected, asksForDigits(example.expr))).toEqual(expected);
       }
     });
   }
