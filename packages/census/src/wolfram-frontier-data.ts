@@ -345,10 +345,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 19,
   },
   {
-    head: "GraphDistanceMatrix",
-    uses: 19,
-  },
-  {
     head: "Highlighted",
     uses: 19,
   },
@@ -362,10 +358,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Pause",
-    uses: 19,
-  },
-  {
-    head: "VertexIndex",
     uses: 19,
   },
   {
@@ -426,10 +418,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Cylinder",
-    uses: 16,
-  },
-  {
-    head: "GraphCenter",
     uses: 16,
   },
   {
@@ -565,10 +553,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 12,
   },
   {
-    head: "RandomGraph",
-    uses: 12,
-  },
-  {
     head: "SetAttributes",
     uses: 12,
   },
@@ -701,10 +685,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "VertexEccentricity",
-    uses: 10,
-  },
-  {
     head: "AggregateRows",
     uses: 9,
   },
@@ -789,10 +769,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 9,
   },
   {
-    head: "WheelGraph",
-    uses: 9,
-  },
-  {
     head: "While",
     uses: 9,
   },
@@ -825,23 +801,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 8,
   },
   {
-    head: "GraphDiameter",
-    uses: 8,
-  },
-  {
-    head: "GraphPeriphery",
-    uses: 8,
-  },
-  {
-    head: "GraphRadius",
-    uses: 8,
-  },
-  {
     head: "Item",
-    uses: 8,
-  },
-  {
-    head: "LineGraph",
     uses: 8,
   },
   {
@@ -925,10 +885,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "ClosenessCentrality",
-    uses: 7,
-  },
-  {
     head: "ComplexListPlot",
     uses: 7,
   },
@@ -942,10 +898,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Eigensystem",
-    uses: 7,
-  },
-  {
-    head: "EigenvectorCentrality",
     uses: 7,
   },
   {
@@ -1006,10 +958,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "NMinimize",
-    uses: 7,
-  },
-  {
-    head: "PathGraphQ",
     uses: 7,
   },
   {
@@ -1289,14 +1237,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "AcyclicGraphQ",
-    uses: 4,
-  },
-  {
-    head: "AdjacencyGraph",
-    uses: 4,
-  },
-  {
     head: "Antisymmetric",
     uses: 4,
   },
@@ -1406,10 +1346,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "GroupMultiplicationTable",
-    uses: 4,
-  },
-  {
-    head: "HararyGraph",
     uses: 4,
   },
   {
@@ -1545,14 +1481,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "VertexInDegree",
-    uses: 4,
-  },
-  {
-    head: "VertexOutDegree",
-    uses: 4,
-  },
-  {
     head: "AbsoluteDashing",
     uses: 3,
   },
@@ -1585,10 +1513,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "CirculantGraph",
-    uses: 3,
-  },
-  {
     head: "ClearSystemCache",
     uses: 3,
   },
@@ -1598,10 +1522,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Compile",
-    uses: 3,
-  },
-  {
-    head: "CompleteGraphQ",
     uses: 3,
   },
   {
@@ -1701,10 +1621,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "IsomorphicGraphQ",
-    uses: 3,
-  },
-  {
     head: "KaiserWindow",
     uses: 3,
   },
@@ -1738,10 +1654,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LocationEquivalenceTest",
-    uses: 3,
-  },
-  {
-    head: "LoopFreeGraphQ",
     uses: 3,
   },
   {
@@ -1841,10 +1753,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "SimpleGraphQ",
-    uses: 3,
-  },
-  {
     head: "Sound",
     uses: 3,
   },
@@ -1890,10 +1798,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "TreeForm",
-    uses: 3,
-  },
-  {
-    head: "TuranGraph",
     uses: 3,
   },
   {

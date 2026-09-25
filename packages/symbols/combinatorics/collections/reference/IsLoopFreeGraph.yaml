@@ -1,0 +1,19 @@
+name: IsLoopFreeGraph
+domain: Collections
+signature: IsLoopFreeGraph(g)
+summary: Whether a [[Graph]] has no self-loop.
+signatures:
+  - call: IsLoopFreeGraph(g)
+    description: true iff no edge of g joins a vertex to itself.
+    library: enumeratio-collections
+details:
+  - Wolfram calls this `LoopFreeGraphQ`; this library uses the `Is…` spelling everywhere.
+examples:
+  - id: no-self-loop
+    expr: [IsLoopFreeGraph, [Graph, [List, [UndirectedEdge, 1, 2]]]]
+    expected: True
+  - id: a-self-loop
+    expr: [IsLoopFreeGraph, [Graph, [List, [UndirectedEdge, 1, 1]]]]
+    expected: False
+seeAlso:
+  - IsSimpleGraph
