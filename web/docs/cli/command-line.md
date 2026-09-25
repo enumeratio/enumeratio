@@ -9,7 +9,7 @@ your own (e.g. `-f wolfram "x^2 + 1"`).
 <notatio-terminal mode="cli"></notatio-terminal>
 
 For the interactive session (persistent state, `In[n]`/`Out[n]`, `:plot`), see the
-[REPL playground](/playground/repl); for the full reference, the [CLI docs](/cli/).
+[live REPL](/docs/cli/repl); for the full reference, the [CLI docs](/docs/cli/).
 
 Text on stdout is going somewhere that cannot move a slider, so a result with controls in
 it is **reduced** — try `"Manipulate(a^2 + b, (a, 0, 1), ((b, 2), 0, 3))"`, or

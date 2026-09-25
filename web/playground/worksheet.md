@@ -131,9 +131,9 @@ is read back as a centre and a distance.
   planes — and an opaque field hides whatever is beneath it, so only the topmost is
   drawn at all.
 - **No history, no ordinals.** Every cell is defined by its name and recomputed from its
-  dependencies, so cells can be reordered freely. That is the whole difference from
-  [`<notatio-notebook>`](/playground/notebook), which keeps an `In[n]`/`Out[n]` transcript
-  you can refer back to.
+  dependencies, so cells can be reordered freely — the same schedule as
+  [`<notatio-notebook>`](/playground/notebook), which is this without the screen. A
+  transcript you can refer back to by `Out(n)` is the [notebook](/notebook/), still to come.
 - **Bindings are scoped to the sheet.** Two sheets on a page, both using `x`, do not see
   each other — and neither sees the variables the surrounding prose uses.
 - `screen` places the view: `auto` (default) puts it beside the cells and drops it below
