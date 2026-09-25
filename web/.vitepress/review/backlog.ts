@@ -159,6 +159,39 @@ export function parseBacklog(raw: string): Backlog {
 }
 
 /**
+ * Render a whole item as a fresh `### [ ] Title {#id}` block, bullets in source
+ * order, then a `#### Feedback` section -- the same shape `applyItemPatch` expects
+ * to find, so a block written by this and one hand-authored in REVIEW.md round-trip
+ * identically through `parseBacklog`. Used to append brand-new (ad-hoc) items and to
+ * build the "Copy feedback" clipboard payload.
+ */
+export function serializeItem(item: BacklogItem): string {
+  const heading = `### [${STATUS_TO_CHAR[item.status]}] ${item.title} {#${item.id}}\n`;
+  const bulletLines = item.bullets.map((b) => `- ${b.key}: ${b.value}\n`).join("");
+  const feedback = item.feedback.trim();
+  const feedbackSection = `\n#### Feedback\n${feedback ? `\n${feedback}\n\n` : "\n"}`;
+  return heading + bulletLines + feedbackSection;
+}
+
+/**
+ * Patch an existing item, or append a brand-new one (an ad-hoc item created from a
+ * modifier-click) if `item.id` isn't in the file yet. Existing items are still
+ * touched surgically via `applyItemPatch`; only a genuinely new id causes an append,
+ * and that append never rewrites anything already in the file.
+ */
+export function upsertItem(raw: string, item: BacklogItem): { raw: string; item: BacklogItem } {
+  const { blocks } = parseBlocks(raw);
+  if (blocks.some((b) => b.id === item.id)) {
+    return applyItemPatch(raw, item.id, { status: item.status, feedback: item.feedback })!;
+  }
+  const sep =
+    raw.length === 0 ? "" : raw.endsWith("\n\n") ? "" : raw.endsWith("\n") ? "\n" : "\n\n";
+  const out = `${raw}${sep}${serializeItem(item)}`;
+  const reparsed = parseBlocks(out).blocks.find((b) => b.id === item.id)!;
+  return { raw: out, item: toItem(reparsed) };
+}
+
+/**
  * Apply a patch (status and/or feedback) to one item, identified by id.
  * Returns the rewritten raw text and the item's fresh state, or `undefined`
  * if no item with that id exists (callers should treat that as a 409: the

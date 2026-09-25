@@ -4,8 +4,21 @@
 // Persists open/closed and the selected item id to localStorage (wrapped in
 // try/catch: private browsing, quota, blocked storage all fail silently here).
 import { computed, ref, watch } from "vue";
+import { buildAdhocItem } from "../../review/adhoc.ts";
 import type { BacklogItem, ItemStatus } from "../../review/backlog.ts";
-import { type BacklogSource, httpBacklogSource } from "./source.ts";
+import { serializeItem } from "../../review/backlog.ts";
+import { resolveReviewLink, splitHash } from "../../review/link.ts";
+import { fileSource } from "./fileSource.ts";
+import { isLocalhost } from "./mode.ts";
+import { localStorageSource } from "./localStorageSource.ts";
+import type { BacklogSource } from "./source.ts";
+
+/** Localhost gets the file-backed source (REVIEW.md through the dev plugin, with a
+ * localStorage write-behind cache); everywhere else is localStorage only -- see
+ * AGENTS.md's persistence requirement. */
+function pickSource(): BacklogSource {
+  return isLocalhost() ? fileSource : localStorageSource;
+}
 
 const OPEN_KEY = "review-panel:open";
 const SELECTED_KEY = "review-panel:selected";
@@ -42,7 +55,7 @@ export function area(item: BacklogItem): string {
 }
 export { prField };
 
-export function createReviewStore(source: BacklogSource = httpBacklogSource) {
+export function createReviewStore(source: BacklogSource = pickSource()) {
   const path = ref("");
   const items = ref<BacklogItem[]>([]);
   const loaded = ref(false);
@@ -145,7 +158,7 @@ export function createReviewStore(source: BacklogSource = httpBacklogSource) {
     }
     saveState.value = "saving";
     try {
-      const updated = await source.save(item.id, { feedback: draft.value });
+      const updated = await source.save({ ...item, feedback: draft.value });
       const idx = items.value.findIndex((i) => i.id === updated.id);
       if (idx !== -1) items.value[idx] = updated;
       saveState.value = "saved";
@@ -160,12 +173,64 @@ export function createReviewStore(source: BacklogSource = httpBacklogSource) {
     const previous = item.status;
     item.status = status; // optimistic
     try {
-      const updated = await source.save(item.id, { status });
+      const updated = await source.save({ ...item, status });
       const idx = items.value.findIndex((i) => i.id === updated.id);
       if (idx !== -1) items.value[idx] = updated;
     } catch {
       item.status = previous;
     }
+  }
+
+  /** Find an existing item whose link targets this page path + anchor id, resolved
+   * through link.ts exactly like the sidebar itself resolves links -- so a
+   * modifier-click on an already-reviewed element reopens that item instead of
+   * creating a duplicate. */
+  function findByTarget(path: string, anchorId: string): BacklogItem | undefined {
+    return items.value.find((i) => {
+      if (!i.link) return false;
+      const resolved = resolveReviewLink(i.link);
+      if (resolved.kind !== "local") return false;
+      const { path: p, id } = splitHash(resolved.path);
+      return p === path && id === anchorId;
+    });
+  }
+
+  /** Modifier-click entry point (see ReviewPanel.vue): reuse a matching item, or
+   * create a fresh ad-hoc one keyed on page path + anchor id (an opaque string --
+   * never parsed for shape, see adhoc.ts) and select it. */
+  async function selectOrCreateAdhoc(
+    pageLabel: string,
+    path: string,
+    anchorId: string,
+  ): Promise<void> {
+    const existing = findByTarget(path, anchorId);
+    if (existing) {
+      selectItem(existing.id);
+      return;
+    }
+    const item = buildAdhocItem(pageLabel, path, anchorId);
+    const created = await source.createItem(item);
+    items.value.push(created);
+    selectItem(created.id);
+  }
+
+  const copyState = ref<"idle" | "copied" | "error">("idle");
+  let copyTimer: ReturnType<typeof setTimeout> | undefined;
+
+  /** All items with feedback -- including ad-hoc ones -- as REVIEW.md-compatible
+   * markdown (the same `###` / `#### Feedback` shape the serializer produces for the
+   * real file), so it can be pasted back in by hand. */
+  async function copyFeedback(): Promise<void> {
+    const withFeedback = items.value.filter((i) => i.feedback.trim().length > 0);
+    const markdown = withFeedback.map(serializeItem).join("\n");
+    try {
+      await navigator.clipboard.writeText(markdown);
+      copyState.value = "copied";
+    } catch {
+      copyState.value = "error";
+    }
+    if (copyTimer) clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => (copyState.value = "idle"), 1800);
   }
 
   let unsubscribe: (() => void) | undefined;
@@ -204,6 +269,10 @@ export function createReviewStore(source: BacklogSource = httpBacklogSource) {
     scheduleSave,
     flushSave,
     setStatus,
+    findByTarget,
+    selectOrCreateAdhoc,
+    copyState,
+    copyFeedback,
     init,
     dispose,
   };

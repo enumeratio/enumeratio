@@ -42,3 +42,15 @@ export function resolveReviewLink(link: string): ResolvedReviewLink {
   }
   return { kind: "external", href: link };
 }
+
+/**
+ * Split a resolved local path's fragment off, for callers (the persistent-highlight
+ * watcher) that need the page path and the target element's id separately. The id is
+ * returned decoded and without its leading `#`; it's treated as an opaque string, the
+ * same as everywhere else in review mode -- never parsed for shape.
+ */
+export function splitHash(path: string): { path: string; id: string } {
+  const i = path.indexOf("#");
+  if (i === -1) return { path, id: "" };
+  return { path: path.slice(0, i), id: decodeURIComponent(path.slice(i + 1)) };
+}

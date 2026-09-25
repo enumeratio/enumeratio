@@ -8,7 +8,15 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Plugin, ViteDevServer } from "vite";
-import { applyItemPatch, type ItemPatch, parseBacklog } from "./backlog.ts";
+import {
+  applyItemPatch,
+  type BacklogItem,
+  type Bullet,
+  type ItemPatch,
+  type ItemStatus,
+  parseBacklog,
+  upsertItem,
+} from "./backlog.ts";
 
 /**
  * `<git common dir>/lanes/REVIEW.md`, resolved from `webDir` so every worktree
@@ -78,24 +86,44 @@ export function reviewModePlugin(webDir: string): Plugin {
           return;
         }
         void (async () => {
-          let payload: { id?: string } & ItemPatch;
+          // `title` + `bullets` present means "create if missing" (an ad-hoc item from
+          // a modifier-click, see ReviewPanel.vue) -- otherwise this is a plain patch
+          // to an item that must already exist. Either way we re-read the file fresh
+          // right before writing, so a change from Dean's own editing in the UI, or
+          // from hand-editing REVIEW.md, is never clobbered.
+          let payload: { id?: string; title?: string; bullets?: Bullet[] } & ItemPatch;
           try {
             payload = JSON.parse((await readBody(req)) || "{}");
           } catch {
             sendJson(res, 400, { error: "invalid JSON body" });
             return;
           }
-          const { id, status, feedback } = payload;
+          const { id, title, bullets, status, feedback } = payload;
           if (!id) {
             sendJson(res, 400, { error: "missing id" });
             return;
           }
-          if (!existsSync(reviewPath)) {
+          const raw = existsSync(reviewPath) ? readFileSync(reviewPath, "utf8") : "";
+
+          let result: { raw: string; item: BacklogItem } | undefined;
+          if (title !== undefined && bullets !== undefined) {
+            const item: BacklogItem = {
+              id,
+              title,
+              status: (status as ItemStatus) ?? "open",
+              bullets,
+              feedback: feedback ?? "",
+            };
+            const known = new Set(["link", "pr", "check", "note"]);
+            for (const b of bullets)
+              if (known.has(b.key)) (item as unknown as Record<string, string>)[b.key] = b.value;
+            result = upsertItem(raw, item);
+          } else if (!existsSync(reviewPath)) {
             sendJson(res, 409, { error: "backlog file not found", path: reviewPath });
             return;
+          } else {
+            result = applyItemPatch(raw, id, { status, feedback });
           }
-          const raw = readFileSync(reviewPath, "utf8");
-          const result = applyItemPatch(raw, id, { status, feedback });
           if (!result) {
             sendJson(res, 409, { error: `item ${id} not found`, path: reviewPath });
             return;
