@@ -14,6 +14,7 @@
       "import": "./dist/index.mjs"
     },
     "./src": "./src/index.ts",
+    "./sampleable": "./scripts/sampleable.ts",
     "./package.json": "./package.json"
   },
   "scripts": {

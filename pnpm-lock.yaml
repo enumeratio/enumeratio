@@ -1024,6 +1024,9 @@ importers:
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../../../entry
+      '@enumeratio/plausible':
+        specifier: workspace:*
+        version: link:../../../plausible
       '@enumeratio/statistics':
         specifier: workspace:*
         version: link:../statistics
