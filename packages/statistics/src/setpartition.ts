@@ -18,6 +18,7 @@ import {
   length,
   less,
   nonEmpty,
+  or,
   positions,
   subtract,
   sumOver,
@@ -105,6 +106,9 @@ const pairFlags = (i: MathJSON, j: MathJSON): MathJSON => {
 };
 const isCrossing = (i: MathJSON, j: MathJSON): MathJSON => at(1, pairFlags(i, j));
 const isNesting = (i: MathJSON, j: MathJSON): MathJSON => at(2, pairFlags(i, j));
+/** 1 if (i, j) is crossing or nesting, reading pairFlags once instead of twice. */
+const bothFlagsAt = (i: MathJSON, j: MathJSON): MathJSON =>
+  bind("flags", pairFlags(i, j), ["If", or(at(1, "flags"), at(2, "flags")), 1, 0]);
 
 /** Guard for a definition that reads a PAIR of arcs — needs at least two. */
 const hasArcPair = (body: MathJSON): MathJSON => ["If", less(arcCount, 2), 0, body];
@@ -120,9 +124,16 @@ const nestingPairs: MathJSON = sumOver(
   count(laterArcs, isNesting("i", "j"), "j"),
   "i",
 );
+// Crossing and nesting are mutually exclusive per pair, so the total is how many pairs are
+// either — one pass with bothFlagsAt, rather than the crossing and nesting loops separately.
+const crossingOrNestingPairs: MathJSON = sumOver(
+  upTo(arcCount),
+  sumOver(laterArcs, bothFlagsAt("i", "j"), "j"),
+  "i",
+);
 const crossings: MathJSON = withArcs(hasArcPair(crossingPairs));
 const nestings: MathJSON = withArcs(hasArcPair(nestingPairs));
-const crossingsAndNestings: MathJSON = withArcs(hasArcPair(add(crossingPairs, nestingPairs)));
+const crossingsAndNestings: MathJSON = withArcs(hasArcPair(crossingOrNestingPairs));
 
 export const SET_PARTITION_STATISTICS: readonly Definition[] = [
   stat("Blocks", "The number of blocks.", ["Length", "_x"]),
