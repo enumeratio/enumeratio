@@ -38,7 +38,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: pnpm -r --filter '!@enumeratio/web' run test
+      # Sibling packages resolve through prebuilt dist/ (built in setup), so topological order buys
+      # nothing here — run unordered with concurrency capped to the runner's 4 vCPUs.
+      - run: pnpm -r --no-sort --workspace-concurrency=4 --filter '!@enumeratio/web' run test
 
   # Every build of every commit goes up as a Cloudflare Pages preview at <sha7>.enumeratio.pages.dev — PR pushes
   # and main alike (production is GitHub Pages, pages.yml). Direct upload of the artifact `build` made: no second
