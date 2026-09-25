@@ -23,6 +23,10 @@ examples:
   - id: round-3p5
     expr: [Round, 3.5]
     expected: 4
+  - id: round-3p7
+    expr: [Round, 3.7]
+    expected: 4
+    role: test
   - id: integers-pass-through-unchanged
     expr: [Round, 5]
     expected: 5

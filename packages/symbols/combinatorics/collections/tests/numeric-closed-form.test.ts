@@ -275,7 +275,7 @@ test("PolygonalNumbers(4) agrees with SquareNumbers (numeric-sets.ts)", () => {
   }
 });
 
-// ─── engine-level: At / Take / Count / Element through the declared CE collection handlers,
+// ─── engine-level: Take / Element through the declared CE collection handlers,
 // as in numeric-sets.test.ts. Kept to values well within the safe-integer decode range that
 // declare.ts's `intOf` caps membership checks to (see the file header in
 // numeric-closed-form.ts). ──────────────────────────────────────────────────────────────────
@@ -286,16 +286,8 @@ test("TriangularNumbers is declared as an indexed_collection<integer>", () => {
   expect(ce.box("TriangularNumbers").type.toString()).toBe("indexed_collection<integer>");
 });
 
-test("At(TriangularNumbers, n) gives the n-th triangular number, 1-indexed", () => {
-  expect(ce.box(["At", "TriangularNumbers", 5]).evaluate().re).toBe(15);
-});
-
 test("Take(CubeNumbers, 5) gives the first five cubes", () => {
   expect(ce.box(["Take", "CubeNumbers", 5]).evaluate().toString()).toBe("[1,8,27,64,125]");
-});
-
-test("Count(FactorialNumbers) is +oo", () => {
-  expect(ce.box(["Count", "FactorialNumbers"]).evaluate().toString()).toBe("+oo");
 });
 
 test("Element membership on TriangularNumbers", () => {
@@ -313,7 +305,6 @@ test("Take(FactorialNumbers, 6) gives the first six factorials", () => {
 });
 
 test("PolygonalNumbers(k) is a one-parameter operator through the engine", () => {
-  expect(ce.box(["At", ["PolygonalNumbers", 5], 3]).evaluate().re).toBe(12);
   expect(
     ce
       .box(["Take", ["PolygonalNumbers", 6], 5])

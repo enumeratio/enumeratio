@@ -20,3 +20,14 @@ an-isolated-vertex-needs-the-explicit-form:
     in: VertexList[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2]]]]
   wolfram:
     in: VertexList[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2]]]]
+the-1-arg-form-is-not-normalized-to-2-arg:
+  epsil:
+    in: Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)])
+    out: Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)])
+  tex:
+    in: \mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack)
+    out: \mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack)
+  fullform:
+    in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]]]
+  wolfram:
+    in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]]]

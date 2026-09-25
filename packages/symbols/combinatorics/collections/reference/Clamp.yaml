@@ -76,6 +76,11 @@ examples:
     expected: 10
     category: Scope
     caption: Wolfram's $\mathrm{Clip}[x, \{min, max\}, \{v_{min}, v_{max}\}]$ returns replacement values outside the range -- here 10 above it
+  - id: clamp-neg5-0-3-neg1-10-returns-the-lower
+    expr: [Clamp, -5, 0, 3, -1, 10]
+    expected: -1
+    role: test
+    caption: Returns the lower replacement value below the range
 seeAlso:
   - Min
   - Max

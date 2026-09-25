@@ -28,6 +28,17 @@ round-3p5:
     tex:
       in: \text{Round}[3.5]
       out: "4"
+round-3p7:
+  epsil:
+    in: Round(3.7)
+    out: "4"
+  tex:
+    in: \mathrm{round}(3.7)
+    out: "4"
+  fullform:
+    in: Round[3.7]
+  wolfram:
+    in: Round[3.7]
 integers-pass-through-unchanged:
   epsil:
     in: Round(5)

@@ -166,3 +166,14 @@ wolfram-s-clip-x-min-max-v-min-v-max-returns:
     in: Clip[5, 0, 3, -1, 10]
   wolfram:
     in: Clip[5, 0, 3, -1, 10]
+clamp-neg5-0-3-neg1-10-returns-the-lower:
+  epsil:
+    in: Clamp(-5, 0, 3, -1, 10)
+    out: "-1"
+  tex:
+    in: \mathrm{Clamp}(-5, 0, 3, -1, 10)
+    out: "-1"
+  fullform:
+    in: Clip[-5, 0, 3, -1, 10]
+  wolfram:
+    in: Clip[-5, 0, 3, -1, 10]

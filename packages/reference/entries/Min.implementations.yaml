@@ -343,3 +343,18 @@ the-min-of-an-empty-list-is-nan:
     in: enumeratio_min([])
   sage:
     in: enumeratio_min([])
+min-min-folds-into-a-normal-call:
+  epsil:
+    in: Min(Min(), 5)
+    out: "5"
+  tex:
+    in: \min(\min(), 5)
+    out: "5"
+  fullform:
+    in: Min[Min[], 5]
+  wolfram:
+    in: Min[Min[], 5]
+  sympy:
+    in: enumeratio_min(enumeratio_min(), 5)
+  sage:
+    in: enumeratio_min(enumeratio_min(), 5)

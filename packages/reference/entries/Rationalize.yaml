@@ -102,5 +102,15 @@ examples:
     expected: [Rational, 80143857, 25510582]
     category: Possible issues
     caption: Without a tolerance, a float with no simple fraction nearby still becomes a fraction with a large denominator
+  - id: a-zero-tolerance-still-returns-an-exact-integer
+    expr: [Rationalize, 2, 0]
+    expected: 2
+    role: test
+    caption: A zero tolerance still returns an exact integer unchanged
+  - id: a-tolerance-still-routes-to-search-not-the-exact
+    expr: [Rationalize, 0.1, 0.01]
+    expected: [Rational, 1, 10]
+    role: test
+    caption: With a nonzero tolerance, still routes to a tolerance search rather than the exact dyadic form
 seeAlso:
   - Round
