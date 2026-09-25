@@ -88,23 +88,13 @@ export const lists: readonly ReferenceEntry[] = [
       },
     ],
     examples: [
-      // Wrapped in Equal: Tabulate evaluates to a lazy collection, whose .json stays the
-      // call until it is materialised. Equal compares the elements.
       {
-        expr: [
-          "Equal",
-          ["Tabulate", ["Function", ["Power", "_1", 2]], 5],
-          ["List", 1, 4, 9, 16, 25],
-        ],
-        expected: "True",
+        expr: ["Tabulate", ["Function", ["Power", "_1", 2]], 5],
+        expected: ["List", 1, 4, 9, 16, 25],
       },
       {
-        expr: [
-          "Equal",
-          ["Tabulate", ["Function", ["Multiply", "_1", "_2"]], 2, 2],
-          ["List", ["List", 1, 2], ["List", 2, 4]],
-        ],
-        expected: "True",
+        expr: ["Tabulate", ["Function", ["Multiply", "_1", "_2"]], 2, 2],
+        expected: ["List", ["List", 1, 2], ["List", 2, 4]],
         category: "Scope",
         caption: "The multi-dimensional form: a rectangular grid, indexed from 1",
       },
@@ -128,20 +118,19 @@ export const lists: readonly ReferenceEntry[] = [
       },
     ],
     examples: [
-      // Wrapped in Equal: Scan is lazy too (see Tabulate).
       {
-        expr: ["Equal", ["Scan", ["List", 1, 2, 3, 4], "Add"], ["List", 1, 3, 6, 10]],
-        expected: "True",
+        expr: ["Scan", ["List", 1, 2, 3, 4], "Add"],
+        expected: ["List", 1, 3, 6, 10],
       },
       {
-        expr: ["Equal", ["Scan", ["List", 1, 2, 3, 4], "Max"], ["List", 1, 2, 3, 4]],
-        expected: "True",
+        expr: ["Scan", ["List", 1, 2, 3, 4], "Max"],
+        expected: ["List", 1, 2, 3, 4],
         category: "Scope",
         caption: "The running maximum",
       },
       {
-        expr: ["Equal", ["Scan", ["List", 1, 2, 3], "Add", 10], ["List", 11, 13, 16]],
-        expected: "True",
+        expr: ["Scan", ["List", 1, 2, 3], "Add", 10],
+        expected: ["List", 11, 13, 16],
         category: "Possible issues",
         caption:
           "The seeded form is still the same length as $xs$ — the seed isn't an output element",

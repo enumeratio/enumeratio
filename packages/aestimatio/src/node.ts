@@ -89,6 +89,9 @@ export interface EvaluateIsolatedOptions {
   readonly timeMs?: number;
   /** Module URL whose `configure(ce)` declares the libraries the host engine has. */
   readonly setup?: string;
+  /** Expand a finite lazy collection in the result into its elements (compute-engine's
+   * `materialization` evaluate option). */
+  readonly materialize?: boolean;
 }
 
 /** How one `evaluateDetailed` call came back — `evaluate()`'s richer sibling, distinguishing
@@ -157,7 +160,7 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
     json: unknown,
     callOptions: EvaluateIsolatedOptions = {},
   ): Promise<EvaluateDetail> {
-    const { memoryBytes, timeMs, setup } = callOptions;
+    const { memoryBytes, timeMs, setup, materialize } = callOptions;
     const key = memoryKeyOf(memoryBytes);
     const start = performance.now();
     const ms = (): number => performance.now() - start;
@@ -239,7 +242,7 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
             );
           }
           worker.ref();
-          worker.postMessage({ id, json, setup, timeMs });
+          worker.postMessage({ id, json, setup, timeMs, materialize });
         }),
     );
   }

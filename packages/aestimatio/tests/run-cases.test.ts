@@ -29,6 +29,14 @@ test("runCases returns results in the same order as the input, regardless of com
   expect(results[2]).toMatchObject({ id: "fast-2", outcome: "Evaluated", value: 4 });
 });
 
+test("materialize expands a lazy collection into its elements; without it the call stays", async () => {
+  const cases = [{ id: "range", input: ["Range", 1, 3] }];
+  const [lazy] = await runCases(cases);
+  const [expanded] = await runCases(cases, { materialize: true });
+  expect(lazy?.value).toEqual(["Range", 1, 3]);
+  expect(expanded?.value).toEqual(["List", 1, 2, 3]);
+});
+
 test("a per-case timeout stops only that case cooperatively, not the others in the batch", async () => {
   const results = await runCases(
     [

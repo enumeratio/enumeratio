@@ -648,7 +648,7 @@ export const collections: readonly ReferenceEntry[] = [
     details: [
       "$Append(c, x) = Join(c, \\{x\\})$. See [[Join]].",
       "Appending a list nests it as a single element rather than splicing its contents in — use [[Join]] to splice.",
-      "compute-engine currently only supports $List$.",
+      "Works on a set as well as a list.",
     ],
     examples: [
       {
@@ -671,9 +671,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Append", ["Set", 1, 2, 3], 4],
         expected: ["Set", 1, 2, 3, 4],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine currently only supports $List$",
+        caption: "A set as well as a list",
       },
     ],
     seeAlso: ["Join"],

@@ -202,6 +202,7 @@ const ours = await runCases(
     setup: new URL("./engines.ts", import.meta.url).href,
     timeMs: 2_000,
     memoryBytes: 256 * 1024 * 1024,
+    materialize: true,
     concurrency: 3,
   },
 );
