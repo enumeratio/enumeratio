@@ -355,3 +355,22 @@ test("LerchPhi compile handler emits a real kernel call (JS + WGSL) and runs", (
   const v = g({ z: 0.5, __lp: lerchPhiReal });
   expect(Math.abs(v - lerchPhiReal(0.5, 2, 1))).toBeLessThan(1e-12);
 });
+
+// --- Found by the oracle quickcheck (mpmath and Wolfram agree) ---------------------
+
+test("a negative real base's phase is exact: ζ(1.5, −10⁻¹²) keeps the real part ζ(1.5)", () => {
+  // (−10⁻¹²)^(−1.5) is 10¹⁸·i, purely imaginary; a floating cos(−1.5π) leaked ~−184 into Re.
+  const z = hurwitzZeta({ re: 1.5, im: 0 }, { re: -1e-12, im: 0 });
+  expect(z.re).toBeCloseTo(2.612375348685488, 9);
+  // …and a real ζ(5, −½) comes back real, not with a stray −2e−14 i.
+  expect(hurwitzZeta({ re: 5, im: 0 }, { re: -0.5, im: 0 }).im).toBe(0);
+});
+
+test("LerchPhi past |z| = 1 stays unevaluated rather than claiming a pole", () => {
+  const input = ["N", ["LerchPhi", 2.809, 2, 2]] as const;
+  expect(ce.box(input).evaluate().json).toEqual(["LerchPhi", 2.809, 2, 2]);
+});
+
+test("Φ(0, s, a) = a^(−s)", () => {
+  sameExact(["LerchPhi", 0, 2, 3], ["Rational", 1, 9]);
+});

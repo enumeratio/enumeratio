@@ -49,3 +49,21 @@ export const cpow = (z: Cx, w: Cx): Cx => {
   if (z.im === 0 && z.re > 0 && w.im === 0) return { re: Math.pow(z.re, w.re), im: 0 };
   return cexp(mul(w, clog(z)));
 };
+
+/** cos(πx), exact (0 or ±1) at multiples of ½ — where Math.cos(Math.PI·x) is off by ~1e−16. */
+export function cosPi(x: number): number {
+  const r = ((x % 2) + 2) % 2; // [0, 2)
+  if (r === 0) return 1;
+  if (r === 0.5 || r === 1.5) return 0;
+  if (r === 1) return -1;
+  return Math.cos(Math.PI * r);
+}
+
+/** sin(πx), exact (0 or ±1) at multiples of ½. */
+export function sinPi(x: number): number {
+  const r = ((x % 2) + 2) % 2;
+  if (r === 0 || r === 1) return 0;
+  if (r === 0.5) return 1;
+  if (r === 1.5) return -1;
+  return Math.sin(Math.PI * r);
+}

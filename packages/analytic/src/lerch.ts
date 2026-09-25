@@ -1,4 +1,4 @@
-import { type Cx } from "./complex.ts";
+import { cosPi, type Cx, sinPi } from "./complex.ts";
 import { hurwitzZeta } from "./hurwitz-zeta.ts";
 
 // Lerch transcendent Φ(z, s, a) = Σ_{n≥0} zⁿ (n+a)^(−s), by direct summation.
@@ -6,7 +6,8 @@ import { hurwitzZeta } from "./hurwitz-zeta.ts";
 // (Liₛ(z) = z·Φ(z, s, 1)). For |z| < 1 the zⁿ factor gives geometric convergence,
 // so the series is summed to full double precision. z = 1 is delegated to the
 // Hurwitz kernel; |z| > 1 needs analytic continuation the series can't provide and
-// returns NaN (Wolfram continues there — a documented divergence).
+// returns NaN, for the plots; the LerchPhi head stays unevaluated there instead
+// (Wolfram continues there — a documented divergence).
 //
 // Real z < 0 is summed by the van Wijngaarden Euler transform instead: there the
 // series alternates and, on the |z| = 1 rim (z = −1: the Dirichlet eta/beta family,
@@ -22,6 +23,15 @@ function cpowInto(zr: number, zi: number, wr: number, wi: number): void {
   if (zi === 0 && zr > 0 && wi === 0) {
     _pr = Math.pow(zr, wr);
     _pi = 0;
+    return;
+  }
+  // A negative real base to a real power: |z|^w · e^{iπw}, with the phase exact at
+  // half-integers. cos(−1.5π) in floating point is −1.8e−16, not 0, and next to a huge
+  // |z|^w (a tiny |z| to a negative power) that leaked hundreds into the real part.
+  if (zi === 0 && zr < 0 && wi === 0) {
+    const m = Math.pow(-zr, wr);
+    _pr = m * cosPi(wr);
+    _pi = m * sinPi(wr);
     return;
   }
   const logr = 0.5 * Math.log(zr * zr + zi * zi);
