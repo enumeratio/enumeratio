@@ -868,9 +868,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Sort", ["List"]],
         expected: ["List"],
-        aspirational: true,
         category: "Possible issues",
-        caption: "The empty list sorts to itself; compute-engine leaves $Sort(\\{\\})$ unevaluated",
+        caption: "The empty list sorts to itself",
       },
     ],
     seeAlso: ["Ordering"],
@@ -1860,17 +1859,15 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Mean", ["List", "a", "b", "c", "d"]],
         expected: ["Multiply", ["Rational", 1, 4], ["Add", "a", "b", "c", "d"]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Symbolic data: $\\frac{a+b+c+d}{4}$; compute-engine's Mean needs numbers — not yet",
+        caption: "Symbolic data gives an exact symbolic mean: $\\frac{a+b+c+d}{4}$",
       },
       {
         expr: ["Mean", ["List", "Pi", "ExponentialE", 2]],
         expected: ["Multiply", ["Rational", 1, 3], ["Add", 2, "ExponentialE", "Pi"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Exact constants give an exact mean $\\frac{2+e+\\pi}{3}$; not yet",
+        caption:
+          "Exact constants give an exact mean $\\frac{2+e+\\pi}{3}$, not a numeric approximation",
       },
       {
         expr: ["Mean", ["List", ["List", "a", "u"], ["List", "b", "v"], ["List", "c", "w"]]],
@@ -1879,9 +1876,8 @@ export const collections: readonly ReferenceEntry[] = [
           ["Multiply", ["Rational", 1, 3], ["Add", "a", "b", "c"]],
           ["Multiply", ["Rational", 1, 3], ["Add", "u", "v", "w"]],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Of a matrix, the mean of each column; not yet",
+        caption: "Of a matrix of symbols, the exact mean of each column",
       },
       {
         expr: ["Mean", ["Range", 1, 100]],
@@ -1971,10 +1967,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Median", ["List", "Pi", "ExponentialE", 2]],
         expected: "ExponentialE",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Exact constants are ordered by value, putting $e$ in the middle; compute-engine's Median needs explicit numbers — not yet",
+        caption: "Exact constants are ordered by value, putting $e$ in the middle",
       },
       {
         expr: ["Median", ["Range", 1, 100]],
@@ -2054,6 +2048,12 @@ export const collections: readonly ReferenceEntry[] = [
           "every element tied for the highest frequency, in the order first encountered.",
         library: "enumeratio-collections",
       },
+      {
+        call: "Commonest(collection, n)",
+        description:
+          "the $n$ commonest elements, most frequent first, ties broken by first appearance.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Wolfram's answer to a tied [[Mode]]: where Mode picks one, Commonest returns every value tied for the highest frequency.",
@@ -2092,9 +2092,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Commonest", ["List", 1, 2, 2, 3, 3, 3, 4], 2],
         expected: ["List", 3, 2],
-        aspirational: true,
         category: "Scope",
-        caption: "The $n$ commonest, most frequent first; the count argument is not taken yet",
+        caption: "The $n$ commonest, most frequent first",
       },
       {
         expr: [
@@ -2811,12 +2810,13 @@ export const collections: readonly ReferenceEntry[] = [
       {
         call: "UpTo(n)",
         description:
-          "at most $n$ — never an error for asking for more than a collection holds. Never evaluated on its own — read by [[Partition]] and [[Ordering]].",
+          "at most $n$ — never an error for asking for more than a collection holds. Never evaluated on its own — read by [[Take]], [[Partition]] and [[Ordering]].",
         library: "enumeratio-collections",
       },
     ],
     details: [
       "Never reduces by itself: a count specification other heads read, not a value.",
+      "In [[Take]], takes at most n elements with no error when fewer are available.",
       "In [[Partition]], allows a shorter final chunk instead of dropping the ragged remainder.",
       "In [[Ordering]], the same clamping a plain integer count already gives — at most n positions, fewer if the collection is shorter.",
     ],
@@ -2824,15 +2824,12 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Take", ["List", 1, 2, 3], ["UpTo", 5]],
         expected: ["List", 1, 2, 3],
-        aspirational: true,
-        caption:
-          "Asking for up to 5 of 3 elements should take all 3, with no error; compute-engine's Take has no override hook this library can safely use, so this is not yet met",
+        caption: "Asking for up to 5 of 3 elements takes all 3, with no error",
       },
       {
         expr: ["Take", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 2]],
         expected: ["List", 1, 2],
-        aspirational: true,
-        caption: "When enough elements are available, exactly n should be taken; not yet, same gap",
+        caption: "When enough elements are available, exactly n is taken",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 4]],
