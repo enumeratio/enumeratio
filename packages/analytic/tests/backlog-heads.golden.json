@@ -1,0 +1,261 @@
+[
+  {
+    "head": "ExpIntegralE",
+    "args": [1, 1.5],
+    "label": "E_1(1.5)",
+    "tol": 1e-9,
+    "wolfram": [0.10001958240663263, 0]
+  },
+  {
+    "head": "ExpIntegralE",
+    "args": [2, 1.5],
+    "label": "E_2(1.5)",
+    "tol": 1e-9,
+    "wolfram": [0.0731007865384809, 0]
+  },
+  {
+    "head": "ExpIntegralE",
+    "args": [0.5, 2.5],
+    "label": "E_0.5(2.5)",
+    "tol": 1e-9,
+    "wolfram": [0.02841429970928976, 0]
+  },
+  {
+    "head": "ExpIntegralE",
+    "args": [3, 2],
+    "label": "E_3(2)",
+    "tol": 1e-9,
+    "wolfram": [0.03013337979781589, 0]
+  },
+  {
+    "head": "ExpIntegralE",
+    "args": [1.5, 3.2],
+    "label": "E_1.5(3.2)",
+    "tol": 1e-9,
+    "wolfram": [0.009156991428870985, 0]
+  },
+  {
+    "head": "LambertW",
+    "args": [-0.14, -3],
+    "label": "W_-3(-0.14)",
+    "tol": 1e-9,
+    "wolfram": [-4.645279174278859, -13.812745325218817]
+  },
+  {
+    "head": "LambertW",
+    "args": [5, 2],
+    "label": "W_2(5)",
+    "tol": 1e-9,
+    "wolfram": [-0.7840863392558513, 10.923920160375756]
+  },
+  {
+    "head": "LambertW",
+    "args": [-1, 1],
+    "label": "W_1(-1)",
+    "tol": 1e-9,
+    "wolfram": [-2.062277729598284, 7.588631178472513]
+  },
+  {
+    "head": "LambertW",
+    "args": [10, 5],
+    "label": "W_5(10)",
+    "tol": 1e-9,
+    "wolfram": [-1.0928795829909042, 29.808483249094696]
+  },
+  {
+    "head": "LambertW",
+    "args": [["Complex", 1, 2], 3],
+    "label": "W_3(1+2i)",
+    "tol": 1e-9,
+    "wolfram": [-2.1072075066264553, 18.27108543113687]
+  },
+  {
+    "head": "InverseErfc",
+    "args": [0.5],
+    "label": "erfcInv(0.5)",
+    "tol": 1e-9,
+    "wolfram": [0.47693627620446993, 0]
+  },
+  {
+    "head": "InverseErfc",
+    "args": [0.01],
+    "label": "erfcInv(0.01)",
+    "tol": 1e-9,
+    "wolfram": [1.8213863677184499, 0]
+  },
+  {
+    "head": "InverseErfc",
+    "args": [1.7],
+    "label": "erfcInv(1.7)",
+    "tol": 1e-9,
+    "wolfram": [-0.732869077959217, 0]
+  },
+  {
+    "head": "InverseErfc",
+    "args": [0.001],
+    "label": "erfcInv(0.001)",
+    "tol": 1e-9,
+    "wolfram": [2.3267537655135246, 0]
+  },
+  {
+    "head": "InverseGammaRegularized",
+    "args": [2, 0.5],
+    "label": "Qinv(2,0.5)",
+    "tol": 1e-9,
+    "wolfram": [1.6783469900166612, 0]
+  },
+  {
+    "head": "InverseGammaRegularized",
+    "args": [2.5, 0.3],
+    "label": "Qinv(2.5,0.3)",
+    "tol": 1e-9,
+    "wolfram": [3.0322149920774524, 0]
+  },
+  {
+    "head": "InverseGammaRegularized",
+    "args": [5, 0.1],
+    "label": "Qinv(5,0.1)",
+    "tol": 1e-9,
+    "wolfram": [7.99358958605263, 0]
+  },
+  {
+    "head": "InverseGammaRegularized",
+    "args": [0.5, 0.9],
+    "label": "Qinv(0.5,0.9)",
+    "tol": 1e-9,
+    "wolfram": [0.007895387046715613, 0]
+  },
+  {
+    "head": "InverseBetaRegularized",
+    "args": [0.5, 2, 3],
+    "label": "Iinv(0.5,2,3)",
+    "tol": 1e-9,
+    "wolfram": [0.3857275681323897, 0]
+  },
+  {
+    "head": "InverseBetaRegularized",
+    "args": [0.3, 2.5, 1.5],
+    "label": "Iinv(0.3,2.5,1.5)",
+    "tol": 1e-9,
+    "wolfram": [0.5094974124283412, 0]
+  },
+  {
+    "head": "InverseBetaRegularized",
+    "args": [0.7, 4, 2],
+    "label": "Iinv(0.7,4,2)",
+    "tol": 1e-9,
+    "wolfram": [0.7819730842367751, 0]
+  },
+  {
+    "head": "BellY",
+    "args": [5, 3, ["List", 1, 2, 3]],
+    "label": "BellY(5,3,[1,2,3])",
+    "tol": 1e-9,
+    "wolfram": [90, 0]
+  },
+  {
+    "head": "BellY",
+    "args": [6, 2, ["List", 2, 3, 5, 7, 11]],
+    "label": "BellY(6,2,[2,3,5,7,11])",
+    "tol": 1e-9,
+    "wolfram": [697, 0]
+  },
+  {
+    "head": "BellY",
+    "args": [7, 4, ["List", 1, 1, 2, 5]],
+    "label": "BellY(7,4,[1,1,2,5])",
+    "tol": 1e-9,
+    "wolfram": [700, 0]
+  },
+  {
+    "head": "NorlundB",
+    "args": [6, 4],
+    "label": "NorlundB(6,4)",
+    "tol": 1e-9,
+    "wolfram": [5.261904761904762, 0]
+  },
+  {
+    "head": "NorlundB",
+    "args": [5, 3],
+    "label": "NorlundB(5,3)",
+    "tol": 1e-9,
+    "wolfram": [-0.75, 0]
+  },
+  {
+    "head": "NorlundB",
+    "args": [7, 2],
+    "label": "NorlundB(7,2)",
+    "tol": 1e-9,
+    "wolfram": [-0.16666666666666666, 0]
+  },
+  {
+    "head": "PrimeZetaP",
+    "args": [2],
+    "label": "P(2)",
+    "tol": 1e-9,
+    "wolfram": [0.4522474200410655, 0]
+  },
+  {
+    "head": "PrimeZetaP",
+    "args": [3],
+    "label": "P(3)",
+    "tol": 1e-9,
+    "wolfram": [0.17476263929944352, 0]
+  },
+  {
+    "head": "PrimeZetaP",
+    "args": [4],
+    "label": "P(4)",
+    "tol": 1e-9,
+    "wolfram": [0.07699313976424685, 0]
+  },
+  {
+    "head": "PrimeZetaP",
+    "args": [2.5],
+    "label": "P(2.5)",
+    "tol": 1e-9,
+    "wolfram": [0.2736807379932342, 0]
+  },
+  {
+    "head": "HypergeometricPFQ",
+    "args": [["List", 1, 1], ["List", 2], 0.5],
+    "label": "pFq([1,1];[2];0.5)",
+    "tol": 1e-9,
+    "wolfram": [1.38629436111989, 0]
+  },
+  {
+    "head": "HypergeometricPFQ",
+    "args": [["List", 1, 2, 3], ["List", 4, 5], 0.5],
+    "label": "pFq([1,2,3];[4,5];0.5)",
+    "tol": 1e-9,
+    "wolfram": [1.1898747542564232, 0]
+  },
+  {
+    "head": "HypergeometricPFQ",
+    "args": [["List", 2, 3], ["List", 5], 0.3],
+    "label": "pFq([2,3];[5];0.3)",
+    "tol": 1e-9,
+    "wolfram": [1.5109117821595697, 0]
+  },
+  {
+    "head": "KleinInvariantJ",
+    "args": [["Complex", 0, 1]],
+    "label": "J(0+1i)",
+    "tol": 1e-8,
+    "wolfram": [1, 0]
+  },
+  {
+    "head": "KleinInvariantJ",
+    "args": [["Complex", 0, 2]],
+    "label": "J(0+2i)",
+    "tol": 1e-8,
+    "wolfram": [166.375, 0]
+  },
+  {
+    "head": "KleinInvariantJ",
+    "args": [["Complex", 1, 2]],
+    "label": "J(1+2i)",
+    "tol": 1e-8,
+    "wolfram": [166.375, 0]
+  }
+]
