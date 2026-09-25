@@ -36,6 +36,7 @@
     "@enumeratio/statistics": "workspace:*"
   },
   "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/domains": "workspace:*",
     "vitepress": "^1.6.4",
     "vue": "^3.5.42"

@@ -111,6 +111,21 @@ exactly what the ordinal-reference rejection above is about.
 <notatio-out format="notatio" value="DynamicModule([Cell(a := 1), Cell(a := 2)], TrackedSymbols -> All)" />
 </Story>
 
+### Worker evaluator
+
+`Evaluator -> "Worker"` -- Wolfram's own option name for `Dynamic`'s kernel choice --
+runs a `DynamicModule`'s cells off this page's own thread, in an
+`@enumeratio/aestimatio/browser` session: one worker holding the module's bindings, so
+`a := 5` then `a^2` still read each other back, just not on the thread that has to keep
+the page responsive. A cell shows the usual pending dots while its call is out, plus a
+stop control (or Escape) that aborts it.
+
+<Story
+  title="A slow cell doesn't block the page">
+<template #description>The second cell adds up two million terms one at a time -- several seconds of real work, off this thread. Scroll or click elsewhere while it runs: the page keeps responding. Stop it with the ■ button or Escape.</template>
+<notatio-out format="notatio" value="Notebook([Cell(a := 5), Cell(Sum(k, (k, 1, 2 * 10^6)))], Evaluator -> Worker)" />
+</Story>
+
 ## As a Vue component
 
 `<Cell>` is the same element behind a Vue component named for the symbol, whose props
