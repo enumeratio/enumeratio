@@ -1,0 +1,25 @@
+name: RecurrenceTable
+domain: Collections
+signature: RecurrenceTable(eqns, a, {n, nmin, nmax})
+summary: A table of the values of a sequence defined by a recurrence equation and initial conditions.
+signatures:
+  - call: RecurrenceTable(eqns, a, {n, nmin, nmax})
+    description: '$a(nmin), \dots, a(nmax)$, given $eqns$: one general recurrence equation over $a$ plus its initial conditions.'
+    library: enumeratio-collections
+details:
+  - $eqns$ mixes literal-index equations (initial conditions, $a(1) = 7$) with exactly one general equation whose index mentions $n$ ($a(n+1) = 3\,a(n)$, or plainly $a(n) = a(n-1) + a(n-2)$) — only a single recurrence order is supported, not a piecewise definition.
+  - '$a$ never needs to be declared as a head: it is read directly out of $eqns$ and resolved by walking the recurrence, not by evaluating $a(n)$ as an ordinary compute-engine call.'
+  - See [[LinearRecurrence]] for the constant-coefficient case without writing out the equations.
+examples:
+  - id: a-geometric-sequence
+    expr: [RecurrenceTable, [List, [Equal, [a, [Add, n, 1]], [Multiply, 3, [a, n]]], [Equal, [a, 1], 7]], a, [List, n, 1, 5]]
+    expected: [List, 7, 21, 63, 189, 567]
+    caption: a geometric sequence
+  - id: the-fibonacci-recurrence
+    expr: [RecurrenceTable, [List, [Equal, [a, n], [Add, [a, [Subtract, n, 1]], [a, [Subtract, n, 2]]]], [Equal, [a, 1], 1], [Equal, [a, 2], 1]], a, [List, n, 1, 10]]
+    expected: [List, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+    category: Scope
+    caption: the Fibonacci recurrence
+seeAlso:
+  - LinearRecurrence
+  - Fibonacci

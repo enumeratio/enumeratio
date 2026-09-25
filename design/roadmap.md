@@ -18,7 +18,7 @@ answer is interesting, why not.
 | `reference/src/fungrim-verified-data.ts` `fungrimFrontier` | heads whose Fungrim identities our engine cannot evaluate, ranked by how many identities each holds up             |
 | `census/src/head-map-audit-data.ts` `HEAD_MAP_AUDIT`       | the `HarmonicNumber` shape, generalized: every mapped head the engine doesn't declare or doesn't actually evaluate |
 | `census/src/rename-queue.ts` `RENAME_QUEUE`                | heads still declared under a spelling we have decided against, with what blocks each                               |
-| `reference/src/entries/*.ts` `aspirational: true`          | examples we document but don't yet produce ("not yet implemented"), triaged in issue #92                           |
+| `<package>/reference/*.yaml` `aspirational: true`          | examples we document but don't yet produce ("not yet implemented"), triaged in issue #92                           |
 
 The Wolfram frontier is the one to open first when the question is "what should this system
 be able to do that it can't". It is derived from ~10,000 documentation examples, so it is

@@ -1,0 +1,52 @@
+name: IncompleteEllipticPi
+domain: Special functions
+signature: IncompleteEllipticPi(n, phi, m)
+summary: The incomplete Legendre elliptic integral of the third kind, $\Pi(n;\varphi,m) = \int_0^\varphi \dfrac{d\theta}{(1-n\sin^2\theta)\sqrt{1-m\sin^2\theta}}$, in Wolfram/mpmath's $(n,\varphi,m)$ order with $m=k^2$.
+signatures:
+  - call: IncompleteEllipticPi(n, phi, m)
+    description: the incomplete elliptic integral of the third kind, characteristic n, amplitude φ, parameter m.
+    library: '@enumeratio/analytic'
+details:
+  - $m = k^2$, the same convention [[EllipticE]] / [[EllipticF]] use — not the elliptic modulus k itself.
+  - '$\varphi = \pi/2$ is the complete integral: $\Pi(n;\pi/2,m) = $ [[EllipticPi]]$(n,m)$.'
+  - Built from Carlson's symmetric $R_F$/$R_J$ (DLMF 19.25.14) rather than delegating to compute-engine's native three-argument EllipticPi, which returns NaN for some complex φ inside its own stated domain.
+  - 'Quasi-periodic: $\Pi(n;\varphi+k\pi,m) = 2k\,\Pi(n,m) + \Pi(n;\varphi,m)$ for integer k, so any φ reduces to $[-\pi/2,\pi/2]$ before the Carlson evaluation.'
+  - Numeric only — a symbolic or exact argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly, same as [[EllipticE]] and [[EllipticF]].
+examples:
+  - id: pi-n-0-m-0
+    expr: [IncompleteEllipticPi, 0.5, 0, 0.3]
+    expected: 0
+    caption: Π(n; 0, m) = 0
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [IncompleteEllipticPi, 0.5, 0.4, 0.3]]
+    expected: 0.41415173682447676
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: n-0-reduces-to-the-incomplete-elliptic-integral
+    expr: [N, [IncompleteEllipticPi, 0, 0.4, 0.3]]
+    expected: 0.40316499194713934
+    category: Properties
+    caption: n = 0 reduces to the incomplete elliptic integral of the first kind, IncompleteEllipticF(φ, m)
+  - id: a-complex-amplitude-phi-where-native-ellipticpi
+    expr: [N, [IncompleteEllipticPi, 0.2, [Complex, 1.2, 0.5], 0.3]]
+    expected: [Complex, 1.321415376117118, 0.7186657188751806]
+    category: Scope
+    caption: A complex amplitude φ, where native EllipticPi returns NaN even though φ is inside its own stated domain
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [IncompleteEllipticPi, n, phi, m]
+    expected: [IncompleteEllipticPi, n, phi, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+  - id: all-three-arguments-complex-matches-mpmath-s
+    expr: [N, [IncompleteEllipticPi, [Complex, 1.17, 0.45], [Complex, 1.17, 0.45], [Complex, 1.17, 0.45]]]
+    expected: [Complex, 0.34301406182773686, 1.0786856693549958]
+    category: Scope
+    caption: All three arguments complex — matches mpmath's <code>ellippi</code>
+  - id: characteristic-n-1
+    expr: [N, [IncompleteEllipticPi, 0.3, 1.1, 0.4]]
+    expected: 1.3238008150474936
+    category: Scope
+    caption: Characteristic $n > 1$
+seeAlso:
+  - EllipticPi
+  - EllipticE
+  - EllipticF

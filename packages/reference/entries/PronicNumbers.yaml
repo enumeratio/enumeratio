@@ -1,0 +1,20 @@
+name: PronicNumbers
+domain: Collections
+signature: PronicNumbers
+summary: The pronic (oblong) numbers $2, 6, 12, 20, …$ — $n(n+1)$ — twice a triangular number.
+signatures:
+  - call: PronicNumbers
+    description: $n(n+1)$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(PronicNumbers) = +\infty$, and $At(PronicNumbers, k) = k(k+1)$ unranks in closed form -- $At(PronicNumbers, 5) = 30$.'
+  - 'OEIS A002378, whose offset differs from ours: A002378 opens $a(0) = 0$; this collection starts at $n=1$, so $At(PronicNumbers, 1) = 2$ and the value $0$ is not a member.'
+  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(30, PronicNumbers)$ is true, $Element(29, PronicNumbers)$ is false. $PronicNumbers(k) = 2 \cdot TriangularNumbers(k)$.
+examples: []
+enumerate:
+  expr: Take(PronicNumbers, 20)
+seeAlso:
+  - TriangularNumbers
+  - SquareNumbers
+  - Count
+  - At
+  - Element

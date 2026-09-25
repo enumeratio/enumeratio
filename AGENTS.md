@@ -45,6 +45,17 @@ release. Add a tool name to select part of the graph. For example, run
 - Package names have not all caught up; do not rename them in passing — see
   `design/component-naming.md` for how renames wait.
 
+## Reference entries
+
+- Each head's entry is `reference/<Head>.yaml` in the package that declares it
+  (`packages/reference/entries/` for compute-engine's own heads). Every example has an `id`:
+  lowercase words joined by `-`, unique within the head, kept when the example is edited.
+- The YAML is read and written only through `@enumeratio/entry`'s `parseYaml`/`stringifyYaml`.
+- Until the consumers move onto the loader (`design/examples-as-data.md` §8 step 5),
+  `packages/reference/src/entries/*.ts` and the packages' `src/entries.ts` are shims generated
+  from the YAML. After editing YAML, run `node packages/reference/scripts/migrate/shims.ts`.
+  For a new head, write its YAML, then run `shims.ts --add <shim.ts> <path/to/Head.yaml>`.
+
 ## Git hygiene
 
 - **Never commit conflict markers** — the `<<<<<<<` / `=======` / `>>>>>>>` lines a
@@ -92,8 +103,8 @@ release. Add a tool name to select part of the graph. For example, run
   classified example explains goes to a rolling `oracle quickcheck findings: <ecosystem>` issue
   for triage. Weekly it rescans the Oscar, Mathlib, Sage (in Docker, with the adeles and
   adic goldens) and Wolfram lanes the same way and follows every crosswalk link. Examples
-  too many to render (grid points, edge cases) are still data: `hidden` examples in an
-  entry file's `<stem>.examples.json`, tested and scanned like the rest. A lane fails when a row's verdict, classification or input
+  too many to render (grid points, edge cases) are still data: `hidden` examples in the
+  head's YAML, tested and scanned like the rest. A lane fails when a row's verdict, classification or input
   changes, not on a float's printed digits. Wolfram runs on an on-demand license, the
   `WOLFRAMSCRIPT_ENTITLEMENTID` secret, and skips without it. The nightly-fixup routine
   (06:15 UTC) reads these runs, files `CI failure: <workflow> › <job>` issues, and opens fix

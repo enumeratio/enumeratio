@@ -1,0 +1,36 @@
+name: NestList
+domain: Collections
+signature: NestList(f, x, n)
+summary: The list of x, f(x), f(f(x)), ... up to n applications of f.
+signatures:
+  - call: NestList(f, x, n)
+    description: $x$ followed by every intermediate value up to $Nest(f, x, n)$, $n + 1$ entries in all.
+    library: enumeratio-collections
+details:
+  - See [[Nest]] for just the final value.
+examples:
+  - id: nestlist-f-x-3
+    expr: [NestList, f, x, 3]
+    expected: [List, x, [f, x], [f, [f, x]], [f, [f, [f, x]]]]
+  - id: powers-of-2
+    expr: [NestList, [Function, [Multiply, 2, _1]], 1, 5]
+    expected: [List, 1, 2, 4, 8, 16, 32]
+    caption: Powers of 2
+  - id: 3-is-a-primitive-root-mod-7-its-powers-visit
+    expr: [NestList, [Function, [Mod, [Multiply, 3, _1], 7]], 1, 6]
+    expected: [List, 1, 3, 2, 6, 4, 5, 1]
+    category: Applications
+    caption: '3 is a primitive root mod 7: its powers visit every nonzero residue'
+  - id: newton-iterates-converging-to-sqrt-2
+    expr: [NestList, [Function, [Divide, [Add, _1, [Divide, 2, _1]], 2]], 1, 3]
+    expected: [List, 1, [Rational, 3, 2], [Rational, 17, 12], [Rational, 577, 408]]
+    category: Applications
+    caption: Newton iterates converging to $\sqrt{2}$
+  - id: zero-steps-just-the-seed
+    expr: [NestList, f, x, 0]
+    expected: [List, x]
+    category: Scope
+    caption: 'Zero steps: just the seed'
+seeAlso:
+  - Nest
+  - FixedPoint

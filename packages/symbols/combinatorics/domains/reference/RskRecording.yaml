@@ -1,0 +1,12 @@
+name: RskRecording
+domain: Combinatorial maps
+signature: RskRecording(Permutation)
+summary: The recording tableau of the RSK correspondence, as a row word.
+details:
+  - Takes a `Permutation` and returns a `StandardTableau` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Records WHERE each insertion landed. The insertion logic is untouched — comparing row lengths before and after says which row grew, which is less work than instrumenting the bumping to report it.
+examples:
+  - id: the-one-line-word-231
+    expr: [RskRecording, [Permutation, [List, 2, 3, 1]]]
+    expected: [StandardTableau, [List, 1, 2, 3]]
+    caption: the one-line word $231$

@@ -1,0 +1,103 @@
+name: CatalanNumber
+domain: Combinatorics
+signature: CatalanNumber(n)
+summary: The nth Catalan number $C_n$, counting balanced bracket sequences, binary trees, polygon triangulations, and many other structures of size n.
+signatures:
+  - call: CatalanNumber(n)
+    description: the nth Catalan number $C_n$.
+details:
+  - The Catalan numbers have the closed form $C_n = \frac{1}{n+1}\binom{2n}{n}$.
+  - They satisfy the recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$ with $C_0 = 1$.
+  - $C_n$ is the number of monotonic lattice paths from one corner of an $n \times n$ grid to the opposite corner that stay below the diagonal.
+  - compute-engine defines $C_n$ on nonnegative integers; extension to real and complex arguments through the [[Binomial]] gamma-function form is not yet supported.
+examples:
+  - id: catalannumber-0
+    expr: [CatalanNumber, 0]
+    expected: 1
+  - id: catalannumber-1
+    expr: [CatalanNumber, 1]
+    expected: 1
+  - id: catalannumber-5
+    expr: [CatalanNumber, 5]
+    expected: 42
+  - id: catalannumber-10
+    expr: [CatalanNumber, 10]
+    expected: 16796
+  - id: closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n
+    expr: [Divide, [Binomial, [Multiply, 2, 5], 5], [Add, 5, 1]]
+    expected: 42
+    category: Properties
+    caption: Closed form $C_n = \frac{1}{n+1}\binom{2n}{n}$, here at $n = 5$
+  - id: equivalently-c-n-binom-2n-n-binom-2n-n-1
+    expr: [Subtract, [Binomial, 10, 5], [Binomial, 10, 6]]
+    expected: 42
+    category: Properties
+    caption: Equivalently $C_n = \binom{2n}{n} - \binom{2n}{n+1}$
+  - id: the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2
+    expr: [Divide, [CatalanNumber, 6], [CatalanNumber, 5]]
+    expected: [Rational, 22, 7]
+    category: Properties
+    caption: The consecutive ratio is $\frac{C_{n+1}}{C_n} = \frac{2(2n+1)}{n+2}$
+  - id: the-5-ways-to-balance-3-pairs-of-parentheses
+    expr: [CatalanNumber, 3]
+    expected: 5
+    category: Applications
+    caption: The 5 ways to balance 3 pairs of parentheses
+  - id: the-14-triangulations-of-a-hexagon-and-the-14
+    expr: [CatalanNumber, 4]
+    expected: 14
+    category: Applications
+    caption: The 14 triangulations of a hexagon, and the 14 binary trees with 4 leaves. See [[Binomial]]
+  - id: a-negative-argument-is-left-unevaluated
+    expr: [CatalanNumber, -1]
+    expected: [CatalanNumber, -1]
+    category: Possible issues
+    caption: A negative argument is left unevaluated
+    divergence:
+      wolfram: A negative index is left unevaluated here; Wolfram extends CatalanNumber through Gamma and gives C(-1) = -1.
+  - id: they-grow-fast-c-15-already-passes-nine-million
+    expr: [CatalanNumber, 15]
+    expected: 9694845
+    category: Neat examples
+    caption: 'They grow fast: $C_{15}$ already passes nine million'
+  - id: threads-element-wise-over-a-list-as-wolfram-s
+    expr: [CatalanNumber, [List, 1, 2, 3, 4]]
+    expected: [List, 1, 2, 5, 14]
+    category: Scope
+    caption: Threads element-wise over a list, as Wolfram's Listable heads do
+  - id: half-integer-arguments-evaluate-exactly-through
+    expr: [CatalanNumber, [Rational, 5, 2]]
+    expected: [Divide, 1024, [Multiply, 105, Pi]]
+    category: Scope
+    caption: Half-integer arguments evaluate exactly through $C_n = \frac{\Gamma(2n+1)}{\Gamma(n+1)\,\Gamma(n+2)}$
+  - id: catalannumber-30
+    expr: [CatalanNumber, 30]
+    expected: 3814986502092304
+  - id: segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i
+    expr: [Equal, [CatalanNumber, 4], [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]]]
+    expected: True
+    category: Properties
+    caption: Segner's recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$, here at $n = 3$
+  - id: real-arguments-evaluate-as-frac-gamma-2n-1-gamma
+    expr: [CatalanNumber, 2.3]
+    expected: 2.5903521540193233
+    category: Scope
+    caption: Real arguments evaluate as $\frac{\Gamma(2n+1)}{\Gamma(n+1)\,\Gamma(n+2)}$
+  - id: complex-arguments-evaluate-through-the-same
+    expr: [CatalanNumber, [Complex, 1.2, 1]]
+    expected: [Complex, 0.7307286242072839, 0.5698464069693425]
+    category: Scope
+    caption: Complex arguments evaluate through the same Gamma form
+  - id: c-1-2-frac-8-3-pi-by-analytic-continuation
+    expr: [CatalanNumber, [Rational, 1, 2]]
+    expected: [Divide, 8, [Multiply, 3, Pi]]
+    category: Scope
+    caption: $C_{1/2} = \frac{8}{3\pi}$ by analytic continuation
+  - id: an-interval-argument-should-give-an-enclosing
+    expr: [CatalanNumber, [Interval, 0.5, 0.6]]
+    expected: [Interval, 0.8488263631567751, 0.8625409688734523]
+    category: Scope
+    caption: An Interval argument gives an enclosing Interval
+seeAlso:
+  - Binomial
+  - BellNumber

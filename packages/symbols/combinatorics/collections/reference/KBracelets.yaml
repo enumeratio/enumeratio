@@ -1,0 +1,31 @@
+name: KBracelets
+domain: Collections
+signature: KBracelets(n, k)
+summary: Words of length $n$ over a $k$-letter alphabet up to rotation and reflection — bracelets over $k$ colours, a lazy indexed family.
+signatures:
+  - call: KBracelets(n, k)
+    library: enumeratio-collections
+    description: the bracelets of $n$ beads, each one of $k$ colours.
+details:
+  - A lazy indexed collection; generalises [[BinaryBracelets]] from $k=2$ to any alphabet size, by the same Burnside sum over $D_n$.
+  - Each element is the lexicographically-least word in its rotation-and-reflection orbit, over letters $0,…,k-1$.
+  - $At$ unranks over these canonical words in ascending lexicographic order.
+examples:
+  - id: count-kbracelets-4-3-21-bracelets-of-length-4
+    expr: [Count, [KBracelets, 4, 3]]
+    expected: 21
+    category: Basic
+    caption: '$Count(KBracelets(4, 3)) = 21$: bracelets of length 4 over a 3-letter alphabet'
+  - id: kbracelets-n-2-agrees-with-binarybracelets-n
+    expr: [Equal, [Count, [KBracelets, 5, 2]], [Count, [BinaryBracelets, 5]]]
+    expected: True
+    category: Properties
+    caption: $KBracelets(n, 2)$ agrees with [[BinaryBracelets]]$(n)$ — same Burnside sum over $D_n$
+enumerate:
+  expr: KBracelets(4, 3)
+  columns: Descents, Ascents
+seeAlso:
+  - BinaryBracelets
+  - Totient
+  - Count
+  - At

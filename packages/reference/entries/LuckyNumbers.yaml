@@ -1,0 +1,19 @@
+name: LuckyNumbers
+domain: Collections
+signature: LuckyNumbers
+summary: The lucky numbers $1, 3, 7, 9, 13, …$ -- survivors of Ulam's positional sieve -- as a lazy indexed collection.
+signatures:
+  - call: LuckyNumbers
+    description: the survivors of Ulam's sieve, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(LuckyNumbers) = +\infty$, and $At$ unranks the $k$-th by running the sieve out far enough -- start from the odd numbers, then repeatedly take the smallest surviving number past $1$ as a step and delete every step-th survivor, until enough terms remain.'
+  - OEIS A000959. Despite the name, luckiness has nothing to do with primality; the sieve's mechanics happen to leave a prime-like density behind, a coincidence number theorists still find useful for testing conjectures like a lucky-number Goldbach analogue.
+  - 'Membership goes through [[Element]]: $Element(13, LuckyNumbers)$ is true, $Element(11, LuckyNumbers)$ is false ($11$ is sieved out at the step-$3$ pass).'
+examples: []
+enumerate:
+  expr: Take(LuckyNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - Primes

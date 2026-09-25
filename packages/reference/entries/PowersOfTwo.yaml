@@ -1,0 +1,21 @@
+name: PowersOfTwo
+domain: Collections
+signature: PowersOfTwo
+summary: The powers of two $1, 2, 4, 8, …$ — subsets of an $n$-set; row-sums of Pascal's triangle.
+signatures:
+  - call: PowersOfTwo
+    description: $2^{n-1}$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(PowersOfTwo) = +\infty$, and $At(PowersOfTwo, k) = 2^{k-1}$ unranks in closed form, exact for every $k$ -- $At(PowersOfTwo, 60)$ is exact past $2^{53}$, not a rounded double.'
+  - OEIS A000079.
+  - Membership goes through [[Element]] by the bit trick $x \mathbin{\&} (x-1) = 0$ -- $Element(64, PowersOfTwo)$ is true, $Element(48, PowersOfTwo)$ is false.
+  - $Count(Subsets(n)) = At(PowersOfTwo, n+1)$; see [[Subsets]].
+examples: []
+enumerate:
+  expr: Take(PowersOfTwo, 20)
+seeAlso:
+  - Subsets
+  - FactorialNumbers
+  - Count
+  - At
+  - Element

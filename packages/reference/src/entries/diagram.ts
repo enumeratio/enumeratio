@@ -1,17 +1,22 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Reference entries for @enumeratio/diagram. `Basis`, `AlgebraDimension`, `Element` and
-// the ordered product are documented under the hypercomplex entries — they are shared
-// heads — so what is documented here is the carrier and the seven constructors.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const DOMAIN = "Diagram algebras";
-
-const D = (blocks: number[][]) => ["Diagram", ["List", ...blocks.map((b) => ["List", ...b])]];
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/algebras/diagram/reference/Diagram.yaml",
+  "packages/symbols/algebras/diagram/reference/PartitionAlgebra.yaml",
+  "packages/symbols/algebras/diagram/reference/BrauerAlgebra.yaml",
+  "packages/symbols/algebras/diagram/reference/TemperleyLiebAlgebra.yaml",
+  "packages/symbols/algebras/diagram/reference/MotzkinAlgebra.yaml",
+  "packages/symbols/algebras/diagram/reference/OrbitDiagram.yaml",
+];
 
 export const diagramAlgebras: readonly ReferenceEntry[] = [
   {
     name: "Diagram",
-    domain: DOMAIN,
+    domain: "Diagram algebras",
     signature: "Diagram(blocks)",
     summary:
       "A diagram: a set partition of $2n$ points, a top row $1…n$ and a bottom row $1'…n'$, written as blocks of signed labels. The basis element of every algebra below.",
@@ -34,65 +39,28 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         id: "the-cup-cap-squared-closes-one-loop-e-1-2-delta",
         expr: [
           "NonCommutativeMultiply",
-          D([
-            [1, 2],
-            [-1, -2],
-          ]),
-          D([
-            [1, 2],
-            [-1, -2],
-          ]),
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2]]],
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2]]],
         ],
-        expected: [
-          "Multiply",
-          "delta",
-          D([
-            [1, 2],
-            [-1, -2],
-          ]),
-        ],
+        expected: ["Multiply", "delta", ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2]]]],
         caption: "the cup-cap squared closes one loop: $e_1^2 = \\delta e_1$",
       },
       {
         id: "e-1e-2e-1-e-1-with-no-loop-closed",
         expr: [
           "NonCommutativeMultiply",
-          D([
-            [1, 2],
-            [-1, -2],
-            [3, -3],
-          ]),
-          D([
-            [2, 3],
-            [-2, -3],
-            [1, -1],
-          ]),
-          D([
-            [1, 2],
-            [-1, -2],
-            [3, -3],
-          ]),
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2], ["List", 3, -3]]],
+          ["Diagram", ["List", ["List", 2, 3], ["List", -2, -3], ["List", 1, -1]]],
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2], ["List", 3, -3]]],
         ],
-        expected: D([
-          [1, 2],
-          [3, -3],
-          [-1, -2],
-        ]),
+        expected: ["Diagram", ["List", ["List", 1, 2], ["List", 3, -3], ["List", -1, -2]]],
         caption: "$e_1e_2e_1 = e_1$, with no loop closed",
         category: "Properties",
       },
       {
         id: "blocks-come-back-in-canonical-order",
-        expr: D([
-          [-1, -2],
-          [3, -3],
-          [1, 2],
-        ]),
-        expected: D([
-          [1, 2],
-          [3, -3],
-          [-1, -2],
-        ]),
+        expr: ["Diagram", ["List", ["List", -1, -2], ["List", 3, -3], ["List", 1, 2]]],
+        expected: ["Diagram", ["List", ["List", 1, 2], ["List", 3, -3], ["List", -1, -2]]],
         caption: "blocks come back in canonical order",
         category: "Properties",
       },
@@ -108,7 +76,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "PartitionAlgebra",
-    domain: DOMAIN,
+    domain: "Diagram algebras",
     signature: "PartitionAlgebra(n)",
     summary:
       "$P_n(\\delta)$: every set partition of $2n$ points. The largest of the family — all the others are subalgebras cut out by admitting fewer diagrams. Dimension $B(2n)$, the Bell numbers.",
@@ -153,7 +121,11 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
       },
       {
         id: "a-block-of-three-is-a-partition-diagram-and",
-        expr: ["Element", D([[1, 2, -1], [3, -3], [-2]]), ["PartitionAlgebra", 3]],
+        expr: [
+          "Element",
+          ["Diagram", ["List", ["List", 1, 2, -1], ["List", 3, -3], ["List", -2]]],
+          ["PartitionAlgebra", 3],
+        ],
         expected: "True",
         caption: "a block of three is a partition diagram and nothing smaller",
         category: "Properties",
@@ -163,7 +135,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "BrauerAlgebra",
-    domain: DOMAIN,
+    domain: "Diagram algebras",
     signature: "BrauerAlgebra(n)",
     summary:
       "$B_n(\\delta)$: the diagrams that are perfect matchings — every point paired with exactly one other. Dimension $(2n-1)!!$.",
@@ -181,12 +153,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
       "Restricting further to the PLANAR matchings gives [[TemperleyLiebAlgebra]]",
     ],
     examples: [
-      {
-        id: "5",
-        expr: ["AlgebraDimension", ["BrauerAlgebra", 3]],
-        expected: 15,
-        caption: "$5!!$",
-      },
+      { id: "5", expr: ["AlgebraDimension", ["BrauerAlgebra", 3]], expected: 15, caption: "$5!!$" },
       {
         id: "algebradimension-braueralgebra-4",
         expr: ["AlgebraDimension", ["BrauerAlgebra", 4]],
@@ -196,11 +163,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         id: "a-crossing-is-a-brauer-diagram",
         expr: [
           "Element",
-          D([
-            [1, -2],
-            [2, -1],
-            [3, -3],
-          ]),
+          ["Diagram", ["List", ["List", 1, -2], ["List", 2, -1], ["List", 3, -3]]],
           ["BrauerAlgebra", 3],
         ],
         expected: "True",
@@ -211,11 +174,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         id: "but-not-a-planar-one",
         expr: [
           "Element",
-          D([
-            [1, -2],
-            [2, -1],
-            [3, -3],
-          ]),
+          ["Diagram", ["List", ["List", 1, -2], ["List", 2, -1], ["List", 3, -3]]],
           ["TemperleyLiebAlgebra", 3],
         ],
         expected: "False",
@@ -227,7 +186,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "TemperleyLiebAlgebra",
-    domain: DOMAIN,
+    domain: "Diagram algebras",
     signature: "TemperleyLiebAlgebra(n)",
     summary:
       "$TL_n(\\delta)$: the PLANAR perfect matchings — the diagrams you can draw in a rectangle without crossings. Dimension $C(n)$, the Catalan numbers.",
@@ -255,11 +214,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         id: "the-cup-cap-is-planar-so-it-belongs",
         expr: [
           "Element",
-          D([
-            [1, 2],
-            [-1, -2],
-            [3, -3],
-          ]),
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2], ["List", 3, -3]]],
           ["TemperleyLiebAlgebra", 3],
         ],
         expected: "True",
@@ -270,23 +225,10 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         id: "e-1-2-delta-e-1",
         expr: [
           "NonCommutativeMultiply",
-          D([
-            [1, 2],
-            [-1, -2],
-          ]),
-          D([
-            [1, 2],
-            [-1, -2],
-          ]),
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2]]],
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2]]],
         ],
-        expected: [
-          "Multiply",
-          "delta",
-          D([
-            [1, 2],
-            [-1, -2],
-          ]),
-        ],
+        expected: ["Multiply", "delta", ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2]]]],
         caption: "$e_1^2 = \\delta e_1$",
         category: "Properties",
       },
@@ -295,14 +237,8 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         expr: ["Basis", ["TemperleyLiebAlgebra", 2]],
         expected: [
           "List",
-          D([
-            [1, 2],
-            [-1, -2],
-          ]),
-          D([
-            [1, -1],
-            [2, -2],
-          ]),
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2]]],
+          ["Diagram", ["List", ["List", 1, -1], ["List", 2, -2]]],
         ],
         caption: "the cup-cap and the identity — all of $TL_2$",
       },
@@ -311,7 +247,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "MotzkinAlgebra",
-    domain: DOMAIN,
+    domain: "Diagram algebras",
     signature: "MotzkinAlgebra(n)",
     summary:
       "$M_n(\\delta)$: the planar diagrams whose blocks have size at most two — so points may also be left unpaired. Dimension $M(2n)$, the Motzkin numbers.",
@@ -360,11 +296,7 @@ export const diagramAlgebras: readonly ReferenceEntry[] = [
         id: "a-cup-cap-is-not-a-permutation",
         expr: [
           "Element",
-          D([
-            [1, 2],
-            [-1, -2],
-            [3, -3],
-          ]),
+          ["Diagram", ["List", ["List", 1, 2], ["List", -1, -2], ["List", 3, -3]]],
           ["SymmetricGroupAlgebra", 3],
         ],
         expected: "False",

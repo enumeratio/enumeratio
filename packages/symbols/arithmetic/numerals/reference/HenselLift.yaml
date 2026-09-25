@@ -1,0 +1,56 @@
+name: HenselLift
+domain: Numeral systems
+signature: HenselLift(f, seed, b, prec?)
+summary: The $b$-adic root of a polynomial that reduces to `seed` mod $b$, by Newton's iteration — Hensel's lemma made to run. `AdicSqrt` is the special case $f = x^2 − a$.
+signatures:
+  - call: HenselLift(f, seed, b, prec?)
+    description: needs $f(seed) ≡ 0$ and $f'(seed)$ a unit mod $b$; $f$ in one free variable
+    library: enumeratio-numerals
+  - call: AdicSqrt(x, prec?)
+    description: a square root in $\mathbb{Z}_p$, prime $p$; declines when there is none
+    library: enumeratio-numerals
+details:
+  - Each Newton step doubles the number of correct digits, so 20 digits take five steps
+  - 'The result is capped at `prec` (default 20): a root found this way is known modulo $b^{prec}$ and nothing more, which is where capped values come from'
+  - A root with $f'(seed) ≡ 0$ is not simple and does not lift this way — $x^3 − x$ from 1 in $\mathbb{Z}_2$ declines
+  - "Composite $b$ works when $f'(seed)$ is coprime to $b$, and that is how the non-rational elements of $\\mathbb{Z}_{10}$ appear: $x^2 − x$ from 5 lifts to the idempotent $…890625$"
+  - "Square roots: an odd prime needs $x$ to be a quadratic residue mod $p$; $p = 2$ needs $x ≡ 1 \\pmod 8$ and starts the iteration one level up, since $f'(a) = 2a$ is not a unit"
+examples:
+  - id: sqrt-2-in-z-7-from-3-2-2-pmod-7
+    expr: [HenselLift, [Subtract, [Power, x, 2], 2], 3, 7, 6]
+    expected: [AdicNumeral, 7, 38181, 6]
+    caption: $\sqrt{2}$ in $\mathbb{Z}_7$, from $3^2 ≡ 2 \pmod 7$
+  - id: and-squaring-it-gives-2-back-to-the-same
+    expr: [Power, [AdicSqrt, [AdicNumeral, 7, 2], 6], 2]
+    expected: [AdicNumeral, 7, 2, 6]
+    caption: and squaring it gives 2 back, to the same precision
+  - id: a-10-adic-idempotent-e-2-e-and-e-0-1
+    expr: [AdicExpansion, [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8]]
+    expected: "'…12890625 + O(10^8)'"
+    caption: 'a 10-adic idempotent: $e^2 = e$, and $e ≠ 0, 1$'
+    category: Applications
+  - id: 3-is-not-a-square-mod-7-so-it-has-no-7-adic
+    expr: [AdicSqrt, [AdicNumeral, 7, 3]]
+    expected: [AdicSqrt, [AdicNumeral, 7, 3]]
+    caption: 3 is not a square mod 7, so it has no 7-adic square root
+    category: Possible issues
+  - id: declines-at-a-non-simple-root-f-1-2-is-not-a
+    expr: [HenselLift, [Subtract, [Power, x, 3], x], 1, 2, 6]
+    expected: [HenselLift, [Add, [Power, x, 3], [Negate, x]], 1, 2, 6]
+    category: Possible issues
+    caption: "Declines at a non-simple root: $f'(1)=2$ is not a unit mod 2, so Newton's step can't lift"
+  - id: the-two-roots-of-x-2-x-lifted-in-z-10-are
+    expr: [Multiply, [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8], [HenselLift, [Subtract, [Power, x, 2], x], 6, 10, 8]]
+    expected: [AdicNumeral, 10, 0, 8]
+    category: Neat examples
+    caption: 'The two roots of $x^2=x$ lifted in $\mathbf{Z}_{10}$ are orthogonal idempotents: their product is 0'
+    group: z10-idempotents
+  - id: and-they-sum-to-1-splitting-z-10-via-z-10-cong-z
+    expr: [Add, [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8], [HenselLift, [Subtract, [Power, x, 2], x], 6, 10, 8]]
+    expected: [AdicNumeral, 10, 1, 8]
+    category: Neat examples
+    caption: …and they sum to 1, splitting $\mathbf{Z}_{10}$ via $\mathbf{Z}_{10}\cong\mathbf{Z}_2\times\mathbf{Z}_5$
+    group: z10-idempotents
+seeAlso:
+  - AdicNumeral
+  - AdicExpansion

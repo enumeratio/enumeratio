@@ -1,0 +1,37 @@
+name: GeometricMean
+domain: Collections
+signature: GeometricMean(collection)
+summary: The n-th root of the product of n values.
+signatures:
+  - call: GeometricMean(collection)
+    description: $\sqrt[n]{x_1 x_2 \cdots x_n}$ for the $n$ elements of $collection$.
+    library: enumeratio-collections
+details:
+  - See [[HarmonicMean]] and [[Mean]] for the other Pythagorean means.
+examples:
+  - id: sqrt-2-cdot-8-4
+    expr: [GeometricMean, [List, 2, 8]]
+    expected: 4
+    caption: $\sqrt{2 \cdot 8} = 4$
+  - id: sqrt-3-1-cdot-2-cdot-4-2
+    expr: [GeometricMean, [List, 1, 2, 4]]
+    expected: 2
+    caption: $\sqrt[3]{1 \cdot 2 \cdot 4} = 2$
+  - id: an-exact-irrational-result
+    expr: [GeometricMean, [List, 2, 3]]
+    expected: [Sqrt, 6]
+    category: Scope
+    caption: An exact irrational result
+  - id: sqrt-3-6
+    expr: [GeometricMean, [List, 1, 2, 3]]
+    expected: [Root, 6, 3]
+    category: Scope
+    caption: $\sqrt[3]{6}$
+  - id: symbolic-data
+    expr: [GeometricMean, [List, a, b]]
+    expected: [Sqrt, [Multiply, a, b]]
+    category: Scope
+    caption: Symbolic data
+seeAlso:
+  - HarmonicMean
+  - Mean

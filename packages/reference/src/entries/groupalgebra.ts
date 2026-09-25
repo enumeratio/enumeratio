@@ -1,22 +1,19 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "Group algebras";
-const G = (label: string): MathJSON => ["GroupBasis", ["String", label]];
-const Z = (n: number): MathJSON => ["CyclicGroup", n];
-const D = (n: number): MathJSON => ["DihedralGroup", n];
-/**
- * A basis element as it comes BACK from evaluation: compute-engine renders a string
- * literal in single quotes, and adds inner double quotes for a non-numeric label.
- */
-const evaluated = (label: string): MathJSON => [
-  "GroupBasis",
-  /^\d+$/.test(label) ? `'${label}'` : `'"${label}"'`,
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/algebras/groupalgebra/reference/GroupBasis.yaml",
+  "packages/symbols/algebras/groupalgebra/reference/ClassSum.yaml",
+  "packages/symbols/algebras/groupalgebra/reference/ConjugacyClasses.yaml",
 ];
 
 export const groupAlgebras: readonly ReferenceEntry[] = [
   {
     name: "GroupBasis",
-    domain: DOMAIN,
+    domain: "Group algebras",
     signature: "GroupBasis(label)",
     summary:
       "A basis element of the group algebra $k[G]$, named by its group element's label. The product is the group's own multiplication, extended bilinearly.",
@@ -42,26 +39,36 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "2-5-7-equiv-1",
-        expr: ["GroupProduct", Z(6), G("2"), G("5")],
-        expected: evaluated("1"),
+        expr: [
+          "GroupProduct",
+          ["CyclicGroup", 6],
+          ["GroupBasis", ["String", "2"]],
+          ["GroupBasis", ["String", "5"]],
+        ],
+        expected: ["GroupBasis", "'1'"],
         caption: "$2 + 5 = 7 \\equiv 1$",
       },
       {
         id: "s-2-1",
-        expr: ["GroupProduct", D(4), G("s0"), G("s0")],
-        expected: evaluated("0"),
+        expr: [
+          "GroupProduct",
+          ["DihedralGroup", 4],
+          ["GroupBasis", ["String", "s0"]],
+          ["GroupBasis", ["String", "s0"]],
+        ],
+        expected: ["GroupBasis", "'0'"],
         caption: "$s^2 = 1$",
         category: "Properties",
       },
       {
         id: "d-4-8",
-        expr: ["AlgebraDimension", ["GroupAlgebra", D(4)]],
+        expr: ["AlgebraDimension", ["GroupAlgebra", ["DihedralGroup", 4]]],
         expected: 8,
         caption: "$|D_4| = 8$",
       },
       {
         id: "so-k-d-4-is-not-commutative-either",
-        expr: ["GroupIsAbelian", D(4)],
+        expr: ["GroupIsAbelian", ["DihedralGroup", 4]],
         expected: "False",
         caption: "so $k[D_4]$ is not commutative either",
         category: "Properties",
@@ -71,7 +78,7 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "ClassSum",
-    domain: DOMAIN,
+    domain: "Group algebras",
     signature: "ClassSum(group, k)",
     summary:
       "The $k$-th class sum: add up one conjugacy class. Class sums are the basis of the CENTRE of $k[G]$ — a commutative subalgebra of a usually non-commutative algebra.",
@@ -96,27 +103,27 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "the-identity-s-class-is-a-singleton",
-        expr: ["ClassSum", D(3), 1],
-        expected: evaluated("0"),
+        expr: ["ClassSum", ["DihedralGroup", 3], 1],
+        expected: ["GroupBasis", "'0'"],
         caption: "the identity's class is a singleton",
       },
       {
         id: "class-sums-are-central",
-        expr: ["IsCentral", D(3), ["ClassSum", D(3), 2]],
+        expr: ["IsCentral", ["DihedralGroup", 3], ["ClassSum", ["DihedralGroup", 3], 2]],
         expected: "True",
         caption: "class sums are central",
         category: "Properties",
       },
       {
         id: "a-lone-reflection-is-not",
-        expr: ["IsCentral", D(3), G("s0")],
+        expr: ["IsCentral", ["DihedralGroup", 3], ["GroupBasis", ["String", "s0"]]],
         expected: "False",
         caption: "a lone reflection is not",
         category: "Properties",
       },
       {
         id: "in-an-abelian-group-everything-is-central",
-        expr: ["IsCentral", Z(6), G("3")],
+        expr: ["IsCentral", ["CyclicGroup", 6], ["GroupBasis", ["String", "3"]]],
         expected: "True",
         caption: "in an abelian group everything is central",
         category: "Scope",
@@ -126,7 +133,7 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "ConjugacyClasses",
-    domain: DOMAIN,
+    domain: "Group algebras",
     signature: "ConjugacyClasses(group)",
     summary:
       "The conjugacy classes of a finite group — the orbits of $g \\mapsto xgx^{-1}$. Their number is the dimension of the centre of $k[G]$.",
@@ -151,26 +158,26 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "abelian-one-class-per-element",
-        expr: ["GroupCentreDimension", Z(6)],
+        expr: ["GroupCentreDimension", ["CyclicGroup", 6]],
         expected: 6,
         caption: "abelian: one class per element",
       },
       {
         id: "d-3-cong-s-3",
-        expr: ["GroupCentreDimension", D(3)],
+        expr: ["GroupCentreDimension", ["DihedralGroup", 3]],
         expected: 3,
         caption: "$D_3 \\cong S_3$",
       },
       {
         id: "4-6-2",
-        expr: ["GroupCentreDimension", D(4)],
+        expr: ["GroupCentreDimension", ["DihedralGroup", 4]],
         expected: 5,
         caption: "$(4+6)/2$",
         category: "Properties",
       },
       {
         id: "direct-products-work-too",
-        expr: ["GroupOrder", ["GroupDirectProduct", Z(2), Z(3)]],
+        expr: ["GroupOrder", ["GroupDirectProduct", ["CyclicGroup", 2], ["CyclicGroup", 3]]],
         expected: 6,
         caption: "direct products work too",
         category: "Scope",

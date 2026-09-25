@@ -1,0 +1,52 @@
+name: Mode
+domain: Collections
+signature: Mode(collection)
+summary: The most frequently occurring element of the collection.
+signatures:
+  - call: Mode(collection)
+    description: the most frequently occurring element.
+details:
+  - 'The mode occurs exactly as many times as the highest frequency in the collection: $Count(c, Mode(c))$ gives that frequency. See [[Count]].'
+  - When several elements share the highest frequency, Mode returns just one. See [[Commonest]] for every tied value.
+  - See [[Mean]] and [[Median]] for other measures of central tendency.
+examples:
+  - id: mode-list-1-2-2-3
+    expr: [Mode, [List, 1, 2, 2, 3]]
+    expected: 2
+  - id: the-mode-occurs-exactly-as-many-times-as-the
+    expr: [Equal, [Count, [List, 1, 2, 2, 3], [Mode, [List, 1, 2, 2, 3]]], 2]
+    expected: True
+    category: Properties
+    caption: The mode occurs exactly as many times as the highest frequency in the collection. See [[Count]]
+  - id: with-a-tie-for-most-frequent-mode-returns-just
+    expr: [Mode, [List, 1, 1, 2, 2, 3]]
+    expected: 1
+    category: Possible issues
+    caption: With a tie for most frequent, Mode returns just one; see [[Commonest]] for every tied value
+    divergence:
+      wolfram: Wolfram's Commonest returns every tied mode, [1, 2], here.
+  - id: mode-list-1-2-3-3-2-3
+    expr: [Mode, [List, 1, 2, 3, 3, 2, 3]]
+    expected: 3
+  - id: exact-rationals
+    expr: [Mode, [List, [Rational, 1, 2], 1, [Rational, 1, 2]]]
+    expected: [Rational, 1, 2]
+    category: Scope
+    caption: Exact rationals
+  - id: symbols-and-numbers-mixed-three-way-tie-wolfram
+    expr: [Mode, [List, b, a, c, 2, a, b, 1, 2]]
+    expected: [List, b, a, 2]
+    aspirational: true
+    category: Scope
+    caption: "Symbols and numbers mixed, three-way tie: Wolfram's $Commonest$ lists $b$, $a$, $2$ in order of first appearance; compute-engine's Mode needs numbers"
+  - id: empty-data-has-no-mode-compute-engine-returns
+    expr: [Mode, [List]]
+    expected: NaN
+    category: Possible issues
+    caption: Empty data has no mode; compute-engine returns $NaN$
+    divergence:
+      wolfram: Wolfram's Commonest[{}] is the empty list {}.
+seeAlso:
+  - Mean
+  - Median
+  - Commonest

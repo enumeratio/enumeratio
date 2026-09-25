@@ -1,0 +1,36 @@
+name: CubeRoot
+domain: Elementary functions
+signature: CubeRoot(x)
+summary: The real cube root of x.
+signatures:
+  - call: CubeRoot(x)
+    description: the real cube root of x.
+    library: '@enumeratio/analytic'
+details:
+  - Real-valued even at a negative x -- $\sqrt[3]{-27} = -3$, not a complex principal root. The same real branch as [[Root]]$(x, 3)$; CubeRoot is the named special case.
+  - Threads over a list, element-wise.
+  - An exact non-perfect-cube argument (like $\sqrt[3]{2}$) stays symbolic under plain evaluation; a floating-point argument, or N(), gives a decimal.
+  - A concretely complex argument is outside CubeRoot's real domain and is left unevaluated.
+examples:
+  - id: the-cube-root-of-a-perfect-cube
+    expr: [CubeRoot, 8]
+    expected: 2
+    caption: The cube root of a perfect cube
+  - id: the-real-root-of-a-negative-number-not-a-complex
+    expr: [CubeRoot, -27]
+    expected: -3
+    caption: The real root of a negative number, not a complex one
+  - id: at-a-non-perfect-cube-n-forces-the-numeric
+    expr: [N, [CubeRoot, 2]]
+    expected: 1.2599210498948732
+    caption: At a non-perfect cube, N() forces the numeric branch (plain evaluation stays exact and symbolic)
+  - id: threads-element-wise-over-a-list
+    expr: [CubeRoot, [List, -8, 27]]
+    expected: [List, -2, 3]
+    category: Scope
+    caption: Threads element-wise over a list
+  - id: the-same-as-root-with-index-3
+    expr: [Equal, [CubeRoot, -64], [Root, -64, 3]]
+    expected: True
+    category: Properties
+    caption: The same as [[Root]] with index 3

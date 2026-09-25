@@ -1,0 +1,1611 @@
+name: LerchPhi
+domain: Special functions
+signature: LerchPhi(z, s, a)
+summary: The Lerch transcendent $\Phi(z, s, a) = \sum_{n=0}^{\infty} \dfrac{z^n}{(n+a)^s}$ — a common generalization of the polylogarithm and the Hurwitz zeta. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: LerchPhi(z, s, a)
+    description: the Lerch transcendent $\Phi(z, s, a)$.
+    library: '@enumeratio/analytic'
+details:
+  - 'At $z = 1$ it is the Hurwitz zeta: $\Phi(1, s, a) = \zeta(s, a)$, so $\Phi(1, s, 1) = \zeta(s)$. See [[HurwitzZeta]].'
+  - 'It carries the polylogarithm: $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ — e.g. $\operatorname{Li}_2(1/2) = \tfrac12\Phi(1/2, 2, 1) = \pi^2/12 - (\ln 2)^2/2$.'
+  - 'At $z = -1$ it is the Dirichlet eta: $\Phi(-1, s, 1) = \eta(s) = \sum_{n\ge1} (-1)^{n-1} n^{-s} = (1 - 2^{1-s})\zeta(s)$, so $\Phi(-1, 1, 1) = \ln 2$.'
+  - "And the Dirichlet beta / Catalan's constant: $\\Phi(-1, 2, \\tfrac12) = 4\\beta(2) = 4G = 3.6638\\ldots$"
+  - $\Phi(z, 0, a) = 1/(1 - z)$ — the geometric series (and its continuation), independent of $a$, for all $z \ne 1$.
+  - 'Convergence: the series converges for $|z| < 1$ (any $s$, $a$), and on $|z| = 1$ only for $\operatorname{Re}(s) > 1$; elsewhere it is defined by analytic continuation in $z$.'
+  - Poles at $a = 0, -1, -2, \ldots$, from the singular $(n+a) = 0$ term, as for [[HurwitzZeta]].
+  - Numeric evaluation sums the series directly for $|z| < 1$ (geometric convergence), routes $z = 1$ through the Euler–Maclaurin Hurwitz kernel, and sums real $z < 0$ (the $z = -1$ rim included) by a van Wijngaarden Euler transform, so the alternating $\eta(s)$ and Catalan cases reach machine precision. Past $|z| = 1$ it is continued by the Hermite-type integral representation, $\Phi = \tfrac{1}{2a^s} + z^{-a}(-\ln z)^{s-1}\Gamma(1-s, -a\ln z) - 2\int_0^\infty \frac{\sin(t\ln z - s\arctan(t/a))}{(a^2+t^2)^{s/2}(e^{2\pi t}-1)}\,dt$, with other $a$ shifted by $\Phi(z, s, a) = a^{-s} + z\Phi(z, s, a+1)$; on the cut, real $z > 1$, it takes the side below, as mpmath and Wolfram do. Where the terms cancel below double precision, or the incomplete gamma can't be trusted (near the negative real axis past $|x| \approx 20$), it stays unevaluated rather than guess.
+examples:
+  - id: phi-1-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary
+    expr: [LerchPhi, 1, 2, 1]
+    expected: [Multiply, [Rational, 1, 6], [Power, Pi, 2]]
+    caption: $\Phi(1, 2, 1) = \zeta(2) = \pi^2/6$ — reduces to the ordinary zeta
+  - id: phi-1-2-2-zeta-2-2-pi-2-6-1
+    expr: [LerchPhi, 1, 2, 2]
+    expected: [Add, -1, [Multiply, [Rational, 1, 6], [Power, Pi, 2]]]
+    caption: $\Phi(1, 2, 2) = \zeta(2, 2) = \pi^2/6 - 1$
+  - id: phi-1-4-1-zeta-4-pi-4-90
+    expr: [LerchPhi, 1, 4, 1]
+    expected: [Multiply, [Rational, 1, 90], [Power, Pi, 4]]
+    category: Properties
+    caption: $\Phi(1, 4, 1) = \zeta(4) = \pi^4/90$
+  - id: phi-1-1-1-zeta-1-1-12
+    expr: [LerchPhi, 1, -1, 1]
+    expected: [Rational, -1, 12]
+    category: Properties
+    caption: $\Phi(1, -1, 1) = \zeta(-1) = -1/12$
+    divergence:
+      wolfram: At z = 1 compute-engine continues in s, giving ζ(-1) = -1/12; Wolfram's LerchPhi does not regularise the divergent series at z = 1 and returns ComplexInfinity (though its Zeta[-1] does).
+  - id: phi-1-s-a-zeta-s-a-for-symbolic-s-a
+    expr: [LerchPhi, 1, s, a]
+    expected: [HurwitzZeta, s, a]
+    category: Properties
+    caption: $\Phi(1, s, a) = \zeta(s, a)$ for symbolic $s$, $a$
+  - id: phi-z-0-a-1-1-z-independent-of-a
+    expr: [LerchPhi, z, 0, a]
+    expected: [Divide, 1, [Add, [Negate, z], 1]]
+    category: Properties
+    caption: $\Phi(z, 0, a) = 1/(1 - z)$, independent of $a$
+  - id: past-the-unit-disk-by-the-integral
+    expr: [N, [LerchPhi, [Complex, 1, 2], [Complex, 3, -1], [Complex, 4, 2]]]
+    expected: [Complex, 0.002025009957012008, 0.0033278975368131974]
+    category: Scope
+    caption: 'past the unit disk, by the integral representation (mpmath: 0.00202500995700991 + 0.00332789753681356i)'
+    divergence:
+      wolfram: Wolfram's machine-precision N drifts from the sixth digit here (0.00202501519…); N[LerchPhi[1 + 2 I, 3 - I, 4 + 2 I], 30] agrees with this value, as do mpmath and SymPy.
+  - id: phi-2-0-7-1-1-2-1-the-s-0-closed-form-holds-past
+    expr: [LerchPhi, 2, 0, 7]
+    expected: -1
+    category: Properties
+    caption: '$\Phi(2, 0, 7) = 1/(1 - 2) = -1$: the $s = 0$ closed form holds past the unit disk'
+  - id: phi-1-3-1-zeta-3-apery-s-constant
+    expr: [Equal, [LerchPhi, 1, 3, 1], [Zeta, 3]]
+    expected: True
+    category: Applications
+    caption: $\Phi(1, 3, 1) = \zeta(3)$, Apéry's constant
+  - id: phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via
+    expr: [Equal, [LerchPhi, -1, 2, 1], [Divide, [Power, Pi, 2], 12]]
+    expected: True
+    category: Applications
+    caption: $\Phi(-1, 2, 1) = \eta(2) = \pi^2/12$ — the alternating rim, via the Euler transform
+  - id: inexact-arguments-should-evaluate-numerically
+    expr: [LerchPhi, 0.5, 2, 3.5]
+    expected: 0.11938622686982046
+    aspirational: true
+    caption: Inexact arguments should evaluate numerically without N(); left unevaluated today
+  - id: s-0-far-outside-the-unit-disk-1-1-49-5
+    expr: [LerchPhi, 49.5, 0, 2]
+    expected: {num: '-0.0206185567010309278351'}
+    category: Scope
+    caption: '$s = 0$ far outside the unit disk: $1/(1 - 49.5)$'
+  - id: z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z
+    expr: [LerchPhi, 7.5, 1, 2]
+    expected: [Complex, -0.16660981647825052, -0.05585053606381855]
+    aspirational: true
+    category: Scope
+    caption: '$|z| > 1$ by analytic continuation: $\Phi(z, 1, 2) = (-\ln(1-z) - z)/z^2$ at $z = 7.5$; left unevaluated today'
+  - id: uncertainty-in-z
+    expr: [LerchPhi, [Around, 0.5, 0.01], 1, 2]
+    expected: [Around, 0.7725887222397811, 0.00909645111040875]
+    category: Scope
+    caption: Uncertainty in $z$
+  - id: phi-0-s-a-a-s-only-the-n-0-term-survives
+    expr: [LerchPhi, 0, s, a]
+    expected: [Power, a, [Negate, s]]
+    category: Properties
+    caption: '$\Phi(0, s, a) = a^{-s}$: only the $n = 0$ term survives'
+  - id: phi-z-s-1-li-s-z-z-symbolically-see-polylog
+    expr: [LerchPhi, z, s, 1]
+    expected: [Divide, [PolyLog, s, z], z]
+    category: Properties
+    caption: $\Phi(z, s, 1) = \operatorname{Li}_s(z)/z$ symbolically. See [[PolyLog]]
+  - id: phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1
+    expr: [LerchPhi, z, 1, 1]
+    expected: [Divide, [Negate, [Ln, [Add, [Negate, z], 1]]], z]
+    category: Properties
+    caption: $\Phi(z, 1, 1) = -\ln(1-z)/z$ -- the $s = 1$ instance, through $\operatorname{Li}_1(z) = -\ln(1-z)$
+  - id: phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through
+    expr: [LerchPhi, 1, 2, [Rational, 1, 4]]
+    expected: [Add, [Multiply, 8, Catalan], [Power, Pi, 2]]
+    category: Properties
+    caption: $\Phi(1, 2, 1/4) = \zeta(2, 1/4) = \pi^2 + 8G$, through HurwitzZeta's own closed form at that argument
+  - id: phi-1-1-1-eta-1-ln-2-the-alternating-harmonic
+    expr: [LerchPhi, -1, 1, 1]
+    expected: [Ln, 2]
+    category: Properties
+    caption: $\Phi(-1, 1, 1) = \eta(1) = \ln 2$, the alternating harmonic series -- via $\Phi(z,1,1) = -\ln(1-z)/z$
+  - id: phi-1-2-1-1-2-ln-2
+    expr: [LerchPhi, [Rational, 1, 2], 1, 1]
+    expected: [Multiply, 2, [Ln, 2]]
+    category: Properties
+    caption: $\Phi(1/2, 1, 1) = 2\ln 2$
+  - id: phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and
+    expr: [LerchPhi, -1, 2, [Rational, 1, 2]]
+    expected: [Multiply, 4, Catalan]
+    category: Properties
+    caption: $\Phi(-1, 2, 1/2) = 4G$, via $\Phi(-1, s, 1/2) = 2^s\beta(s)$ and $\beta(2) = G$
+  - id: though-n-gets-4g-3-66386
+    expr: [N, [LerchPhi, -1, 2, [Rational, 1, 2]]]
+    expected: 3.663862376708875
+    category: Properties
+    caption: ...though N() gets $4G = 3.66386\ldots$
+  - id: to-30-significant-digits-not-yet-the-requested
+    expr: [N, [LerchPhi, [Rational, 1, 2], 2, [Rational, 1, 3]], 30]
+    expected: {num: '9.34347465937593951855554965804'}
+    aspirational: true
+    category: Scope
+    caption: To 30 significant digits; not yet -- the requested precision is ignored and a double comes back
+  - id: phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet
+    expr: [LerchPhi, -1, 3, [Rational, 1, 2]]
+    expected: [Multiply, [Rational, 1, 4], [Power, Pi, 3]]
+    category: Properties
+    caption: $\Phi(-1, 3, \tfrac12) = 8\beta(3) = \pi^3/4$ — the Dirichlet beta at 3, in closed form
+  - id: past-z-1-it-is-continued-on-the-cut-real-z-1-it
+    expr: [N, [LerchPhi, 2.809, 2, 2]]
+    expected: [Complex, -0.05658770197322309, -0.4112203779716625]
+    category: Scope
+    caption: Past $|z| = 1$ it is continued; on the cut, real $z > 1$, it takes the side below, as mpmath and Wolfram do
+  - id: where-the-continuation-s-terms-cancel-below
+    expr: [N, [LerchPhi, 10, 10, 10]]
+    expected: [LerchPhi, 10, 10, 10]
+    category: Possible issues
+    caption: Where the continuation's terms cancel below double precision it stays unevaluated rather than guess
+  - id: phi-1-2-2-1-2-li-2-1-2
+    expr: [N, [LerchPhi, [Rational, 1, 2], 2, 1]]
+    expected: 1.164481052930025
+    category: Applications
+    caption: $\Phi(1/2, 2, 1) = 2\operatorname{Li}_2(1/2)$
+  - id: phi-1-3-1-eta-3-frac-34-zeta-3
+    expr: [Equal, [LerchPhi, -1, 3, 1], [Multiply, [Rational, 3, 4], [Zeta, 3]]]
+    expected: True
+    category: Properties
+    caption: $\Phi(-1, 3, 1) = \eta(3) = \tfrac34\zeta(3)$
+  - hidden: true
+    id: n-lerchphi-0p5-2-1
+    expr: [N, [LerchPhi, 0.5, 2, 1]]
+    expected: 1.164481052930025
+  - hidden: true
+    id: n-lerchphi-0p5-2-2
+    expr: [N, [LerchPhi, 0.5, 2, 2]]
+    expected: 0.32896210586004987
+  - hidden: true
+    id: n-lerchphi-0p5-2-0p5
+    expr: [N, [LerchPhi, 0.5, 2, 0.5]]
+    expected: 4.277145500580949
+  - hidden: true
+    id: n-lerchphi-0p5-2-5-over-2
+    expr: [N, [LerchPhi, 0.5, 2, [Rational, 5, 2]]]
+    expected: 0.21969311343491027
+  - hidden: true
+    id: n-lerchphi-0p5-3-1
+    expr: [N, [LerchPhi, 0.5, 3, 1]]
+    expected: 1.0744263872160806
+  - hidden: true
+    id: n-lerchphi-0p5-3-2
+    expr: [N, [LerchPhi, 0.5, 3, 2]]
+    expected: 0.14885277443216077
+  - hidden: true
+    id: n-lerchphi-0p5-3-0p5
+    expr: [N, [LerchPhi, 0.5, 3, 0.5]]
+    expected: 8.168022726140352
+  - hidden: true
+    id: n-lerchphi-0p5-3-5-over-2
+    expr: [N, [LerchPhi, 0.5, 3, [Rational, 5, 2]]]
+    expected: 0.07949831196880995
+  - hidden: true
+    id: n-lerchphi-0p5-0p5-1
+    expr: [N, [LerchPhi, 0.5, 0.5, 1]]
+    expected: 1.6122534460857043
+  - hidden: true
+    id: n-lerchphi-0p5-0p5-2
+    expr: [N, [LerchPhi, 0.5, 0.5, 2]]
+    expected: 1.224506892171409
+  - hidden: true
+    id: n-lerchphi-0p5-0p5-0p5
+    expr: [N, [LerchPhi, 0.5, 0.5, 0.5]]
+    expected: 2.1017124624893513
+  - hidden: true
+    id: n-lerchphi-0p5-0p5-5-over-2
+    expr: [N, [LerchPhi, 0.5, 0.5, [Rational, 5, 2]]]
+    expected: 1.1170024386095752
+  - hidden: true
+    id: n-lerchphi-0p5-neg-1-1
+    expr: [N, [LerchPhi, 0.5, -1, 1]]
+    expected: 3.9999999999999996
+  - hidden: true
+    id: n-lerchphi-0p5-neg-1-2
+    expr: [N, [LerchPhi, 0.5, -1, 2]]
+    expected: 5.999999999999999
+  - hidden: true
+    id: n-lerchphi-0p5-neg-1-0p5
+    expr: [N, [LerchPhi, 0.5, -1, 0.5]]
+    expected: 2.999999999999999
+  - hidden: true
+    id: n-lerchphi-0p5-neg-1-5-over-2
+    expr: [N, [LerchPhi, 0.5, -1, [Rational, 5, 2]]]
+    expected: 7.000000000000001
+  - hidden: true
+    id: n-lerchphi-0p5-2-plus-i-1
+    expr: [N, [LerchPhi, 0.5, [Complex, 2, 1], 1]]
+    expected: [Complex, 1.109707090706641, -0.1160991235833943]
+  - hidden: true
+    id: n-lerchphi-0p5-2-plus-i-2
+    expr: [N, [LerchPhi, 0.5, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.21941418141328126, -0.23219824716678855]
+  - hidden: true
+    id: n-lerchphi-0p5-2-plus-i-0p5
+    expr: [N, [LerchPhi, 0.5, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.308545670420987, 2.422109611421262]
+  - hidden: true
+    id: n-lerchphi-0p5-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, 0.5, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.10954333858083394, -0.18432313114256382]
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-1
+    expr: [N, [LerchPhi, -0.5, 2, 1]]
+    expected: 0.8968284138472924
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-2
+    expr: [N, [LerchPhi, -0.5, 2, 2]]
+    expected: 0.20634317230541518
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-0p5
+    expr: [N, [LerchPhi, -0.5, 2, 0.5]]
+    expected: 3.809896676518156
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-5-over-2
+    expr: [N, [LerchPhi, -0.5, 2, [Rational, 5, 2]]]
+    expected: 0.12847559496151303
+  - hidden: true
+    id: n-lerchphi-neg-0p5-3-1
+    expr: [N, [LerchPhi, -0.5, 3, 1]]
+    expected: 0.9451956893177937
+  - hidden: true
+    id: n-lerchphi-neg-0p5-3-2
+    expr: [N, [LerchPhi, -0.5, 3, 2]]
+    expected: 0.10960862136441252
+  - hidden: true
+    id: n-lerchphi-neg-0p5-3-0p5
+    expr: [N, [LerchPhi, -0.5, 3, 0.5]]
+    expected: 7.86547751435338
+  - hidden: true
+    id: n-lerchphi-neg-0p5-3-5-over-2
+    expr: [N, [LerchPhi, -0.5, 3, [Rational, 5, 2]]]
+    expected: 0.05450265000611885
+  - hidden: true
+    id: n-lerchphi-neg-0p5-0p5-1
+    expr: [N, [LerchPhi, -0.5, 0.5, 1]]
+    expected: 0.747504475961946
+  - hidden: true
+    id: n-lerchphi-neg-0p5-0p5-2
+    expr: [N, [LerchPhi, -0.5, 0.5, 2]]
+    expected: 0.504991048076108
+  - hidden: true
+    id: n-lerchphi-neg-0p5-0p5-0p5
+    expr: [N, [LerchPhi, -0.5, 0.5, 0.5]]
+    expected: 1.1175876689096338
+  - hidden: true
+    id: n-lerchphi-neg-0p5-0p5-5-over-2
+    expr: [N, [LerchPhi, -0.5, 0.5, [Rational, 5, 2]]]
+    expected: 0.4464895880016085
+  - hidden: true
+    id: n-lerchphi-neg-0p5-neg-1-1
+    expr: [N, [LerchPhi, -0.5, -1, 1]]
+    expected: 0.4444444444444444
+  - hidden: true
+    id: n-lerchphi-neg-0p5-neg-1-2
+    expr: [N, [LerchPhi, -0.5, -1, 2]]
+    expected: 1.1111111111111112
+  - hidden: true
+    id: n-lerchphi-neg-0p5-neg-1-0p5
+    expr: [N, [LerchPhi, -0.5, -1, 0.5]]
+    expected: 0.11111111111111112
+  - hidden: true
+    id: n-lerchphi-neg-0p5-neg-1-5-over-2
+    expr: [N, [LerchPhi, -0.5, -1, [Rational, 5, 2]]]
+    expected: 1.4444444444444444
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-plus-i-1
+    expr: [N, [LerchPhi, -0.5, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.9150630921511704, 0.06094203933961422]
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-plus-i-2
+    expr: [N, [LerchPhi, -0.5, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.16987381569765908, -0.12188407867922844]
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-plus-i-0p5
+    expr: [N, [LerchPhi, -0.5, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 2.8941852028913377, 2.619141408581271]
+  - hidden: true
+    id: n-lerchphi-neg-0p5-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, -0.5, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.085735311021356, -0.09743363088361238]
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-1
+    expr: [N, [LerchPhi, -0.9, 2, 1]]
+    expected: 0.8357368657969574
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-2
+    expr: [N, [LerchPhi, -0.9, 2, 2]]
+    expected: 0.18251459355893632
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-0p5
+    expr: [N, [LerchPhi, -0.9, 2, 0.5]]
+    expected: 3.6905224756933044
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-5-over-2
+    expr: [N, [LerchPhi, -0.9, 2, [Rational, 5, 2]]]
+    expected: 0.11175614283124172
+  - hidden: true
+    id: n-lerchphi-neg-0p9-3-1
+    expr: [N, [LerchPhi, -0.9, 3, 1]]
+    expected: 0.9095980017159597
+  - hidden: true
+    id: n-lerchphi-neg-0p9-3-2
+    expr: [N, [LerchPhi, -0.9, 3, 2]]
+    expected: 0.10044666476004464
+  - hidden: true
+    id: n-lerchphi-neg-0p9-3-0p5
+    expr: [N, [LerchPhi, -0.9, 3, 0.5]]
+    expected: 7.773051219077413
+  - hidden: true
+    id: n-lerchphi-neg-0p9-3-5-over-2
+    expr: [N, [LerchPhi, -0.9, 3, [Rational, 5, 2]]]
+    expected: 0.04903442684454213
+  - hidden: true
+    id: n-lerchphi-neg-0p9-0p5-1
+    expr: [N, [LerchPhi, -0.9, 0.5, 1]]
+    expected: 0.6283621649540584
+  - hidden: true
+    id: n-lerchphi-neg-0p9-0p5-2
+    expr: [N, [LerchPhi, -0.9, 0.5, 2]]
+    expected: 0.4129309278288239
+  - hidden: true
+    id: n-lerchphi-neg-0p9-0p5-0p5
+    expr: [N, [LerchPhi, -0.9, 0.5, 0.5]]
+    expected: 0.9731467834139055
+  - hidden: true
+    id: n-lerchphi-neg-0p9-0p5-5-over-2
+    expr: [N, [LerchPhi, -0.9, 0.5, [Rational, 5, 2]]]
+    expected: 0.3626915356490913
+  - hidden: true
+    id: n-lerchphi-neg-0p9-neg-1-1
+    expr: [N, [LerchPhi, -0.9, -1, 1]]
+    expected: 0.2770083102493077
+  - hidden: true
+    id: n-lerchphi-neg-0p9-neg-1-2
+    expr: [N, [LerchPhi, -0.9, -1, 2]]
+    expected: 0.8033240997229912
+  - hidden: true
+    id: n-lerchphi-neg-0p9-neg-1-0p5
+    expr: [N, [LerchPhi, -0.9, -1, 0.5]]
+    expected: 0.013850415512466406
+  - hidden: true
+    id: n-lerchphi-neg-0p9-neg-1-5-over-2
+    expr: [N, [LerchPhi, -0.9, -1, [Rational, 5, 2]]]
+    expected: 1.066481994459834
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-plus-i-1
+    expr: [N, [LerchPhi, -0.9, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.8600491653137049, 0.0920345747015262]
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-plus-i-2
+    expr: [N, [LerchPhi, -0.9, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.15550092742921656, -0.10226063855725133]
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-plus-i-0p5
+    expr: [N, [LerchPhi, -0.9, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 2.7726319509159323, 2.6469930917510727]
+  - hidden: true
+    id: n-lerchphi-neg-0p9-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, -0.9, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.07807896300721556, -0.08225986838173878]
+  - hidden: true
+    id: n-lerchphi-neg-1-2-1
+    expr: [N, [LerchPhi, -1, 2, 1]]
+    expected: 0.8224670334241132
+  - hidden: true
+    id: n-lerchphi-neg-1-2-2
+    expr: [N, [LerchPhi, -1, 2, 2]]
+    expected: 0.1775329665758868
+  - hidden: true
+    id: n-lerchphi-neg-1-2-0p5
+    expr: [N, [LerchPhi, -1, 2, 0.5]]
+    expected: 3.663862376708875
+  - hidden: true
+    id: n-lerchphi-neg-1-2-5-over-2
+    expr: [N, [LerchPhi, -1, 2, [Rational, 5, 2]]]
+    expected: 0.10830682115332053
+  - hidden: true
+    id: n-lerchphi-neg-1-3-1
+    expr: [N, [LerchPhi, -1, 3, 1]]
+    expected: 0.9015426773696955
+  - hidden: true
+    id: n-lerchphi-neg-1-3-2
+    expr: [N, [LerchPhi, -1, 3, 2]]
+    expected: 0.09845732263030428
+  - hidden: true
+    id: n-lerchphi-neg-1-3-0p5
+    expr: [N, [LerchPhi, -1, 3, 0.5]]
+    expected: 7.751569170074954
+  - hidden: true
+    id: n-lerchphi-neg-1-3-5-over-2
+    expr: [N, [LerchPhi, -1, 3, [Rational, 5, 2]]]
+    expected: 0.047865466371251345
+  - hidden: true
+    id: n-lerchphi-neg-1-0p5-1
+    expr: [N, [LerchPhi, -1, 0.5, 1]]
+    expected: 0.6048986434216302
+  - hidden: true
+    id: n-lerchphi-neg-1-0p5-2
+    expr: [N, [LerchPhi, -1, 0.5, 2]]
+    expected: 0.3951013565783697
+  - hidden: true
+    id: n-lerchphi-neg-1-0p5-0p5
+    expr: [N, [LerchPhi, -1, 0.5, 0.5]]
+    expected: 0.9442583142382002
+  - hidden: true
+    id: n-lerchphi-neg-1-0p5-5-over-2
+    expr: [N, [LerchPhi, -1, 0.5, [Rational, 5, 2]]]
+    expected: 0.3465413327928312
+  - hidden: true
+    id: n-lerchphi-neg-1-neg-1-1
+    expr: [N, [LerchPhi, -1, -1, 1]]
+    expected: 0.25
+  - hidden: true
+    id: n-lerchphi-neg-1-neg-1-2
+    expr: [N, [LerchPhi, -1, -1, 2]]
+    expected: 0.75
+  - hidden: true
+    id: n-lerchphi-neg-1-neg-1-0p5
+    expr: [N, [LerchPhi, -1, -1, 0.5]]
+    expected: 0
+  - hidden: true
+    id: n-lerchphi-neg-1-neg-1-5-over-2
+    expr: [N, [LerchPhi, -1, -1, [Rational, 5, 2]]]
+    expected: 1
+  - hidden: true
+    id: n-lerchphi-neg-1-2-plus-i-1
+    expr: [N, [LerchPhi, -1, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.847689164837414, 0.0982683895700162]
+  - hidden: true
+    id: n-lerchphi-neg-1-2-plus-i-2
+    expr: [N, [LerchPhi, -1, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.15231083516258656, -0.0982683895700162]
+  - hidden: true
+    id: n-lerchphi-neg-1-2-plus-i-0p5
+    expr: [N, [LerchPhi, -1, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 2.7449197230143425, 2.6519729447382763]
+  - hidden: true
+    id: n-lerchphi-neg-1-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, -1, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.07637257819822992, -0.07918158261153377]
+  - hidden: true
+    id: n-lerchphi-0p25-2-1
+    expr: [N, [LerchPhi, 0.25, 2, 1]]
+    expected: 1.07061055633093
+  - hidden: true
+    id: n-lerchphi-0p25-2-2
+    expr: [N, [LerchPhi, 0.25, 2, 2]]
+    expected: 0.2824422253237217
+  - hidden: true
+    id: n-lerchphi-0p25-2-0p5
+    expr: [N, [LerchPhi, 0.25, 2, 0.5]]
+    expected: 4.122618933554635
+  - hidden: true
+    id: n-lerchphi-0p25-2-5-over-2
+    expr: [N, [LerchPhi, 0.25, 2, [Rational, 5, 2]]]
+    expected: 0.18412515909637958
+  - hidden: true
+    id: n-lerchphi-0p25-3-1
+    expr: [N, [LerchPhi, 0.25, 3, 1]]
+    expected: 1.033845583186293
+  - hidden: true
+    id: n-lerchphi-0p25-3-2
+    expr: [N, [LerchPhi, 0.25, 3, 2]]
+    expected: 0.13538233274517286
+  - hidden: true
+    id: n-lerchphi-0p25-3-0p5
+    expr: [N, [LerchPhi, 0.25, 3, 0.5]]
+    expected: 8.078488306135496
+  - hidden: true
+    id: n-lerchphi-0p25-3-5-over-2
+    expr: [N, [LerchPhi, 0.25, 3, [Rational, 5, 2]]]
+    expected: 0.07062771298276051
+  - hidden: true
+    id: n-lerchphi-0p25-0p5-1
+    expr: [N, [LerchPhi, 0.25, 0.5, 1]]
+    expected: 1.2229397215971856
+  - hidden: true
+    id: n-lerchphi-0p25-0p5-2
+    expr: [N, [LerchPhi, 0.25, 0.5, 2]]
+    expected: 0.8917588863887423
+  - hidden: true
+    id: n-lerchphi-0p25-0p5-0p5
+    expr: [N, [LerchPhi, 0.25, 0.5, 0.5]]
+    expected: 1.6686008286385703
+  - hidden: true
+    id: n-lerchphi-0p25-0p5-5-over-2
+    expr: [N, [LerchPhi, 0.25, 0.5, [Rational, 5, 2]]]
+    expected: 0.8042099365366978
+  - hidden: true
+    id: n-lerchphi-0p25-neg-1-1
+    expr: [N, [LerchPhi, 0.25, -1, 1]]
+    expected: 1.7777777777777777
+  - hidden: true
+    id: n-lerchphi-0p25-neg-1-2
+    expr: [N, [LerchPhi, 0.25, -1, 2]]
+    expected: 3.111111111111111
+  - hidden: true
+    id: n-lerchphi-0p25-neg-1-0p5
+    expr: [N, [LerchPhi, 0.25, -1, 0.5]]
+    expected: 1.111111111111111
+  - hidden: true
+    id: n-lerchphi-0p25-neg-1-5-over-2
+    expr: [N, [LerchPhi, 0.25, -1, [Rational, 5, 2]]]
+    expected: 3.7777777777777777
+  - hidden: true
+    id: n-lerchphi-0p25-2-plus-i-1
+    expr: [N, [LerchPhi, 0.25, [Complex, 2, 1], 1]]
+    expected: [Complex, 1.051400732108945, -0.047267887677210255]
+  - hidden: true
+    id: n-lerchphi-0p25-2-plus-i-2
+    expr: [N, [LerchPhi, 0.25, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.20560292843577851, -0.18907155070884102]
+  - hidden: true
+    id: n-lerchphi-0p25-2-plus-i-0p5
+    expr: [N, [LerchPhi, 0.25, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.185550463844432, 2.502641530788986]
+  - hidden: true
+    id: n-lerchphi-0p25-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, 0.25, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.10388389165758391, -0.15001950306775721]
+  - hidden: true
+    id: n-lerchphi-0p9-2-1
+    expr: [N, [LerchPhi, 0.9, 2, 1]]
+    expected: 1.4441274700055085
+  - hidden: true
+    id: n-lerchphi-0p9-2-2
+    expr: [N, [LerchPhi, 0.9, 2, 2]]
+    expected: 0.4934749666727882
+  - hidden: true
+    id: n-lerchphi-0p9-2-0p5
+    expr: [N, [LerchPhi, 0.9, 2, 0.5]]
+    expected: 4.686783273082932
+  - hidden: true
+    id: n-lerchphi-0p9-2-5-over-2
+    expr: [N, [LerchPhi, 0.9, 2, [Rational, 5, 2]]]
+    expected: 0.35405342355917346
+  - hidden: true
+    id: n-lerchphi-0p9-3-1
+    expr: [N, [LerchPhi, 0.9, 3, 1]]
+    expected: 1.166287722429376
+  - hidden: true
+    id: n-lerchphi-0p9-3-2
+    expr: [N, [LerchPhi, 0.9, 3, 2]]
+    expected: 0.18476413603264163
+  - hidden: true
+    id: n-lerchphi-0p9-3-0p5
+    expr: [N, [LerchPhi, 0.9, 3, 0.5]]
+    expected: 8.351549851360646
+  - hidden: true
+    id: n-lerchphi-0p9-3-5-over-2
+    expr: [N, [LerchPhi, 0.9, 3, [Rational, 5, 2]]]
+    expected: 0.10479405517776089
+  - hidden: true
+    id: n-lerchphi-0p9-0p5-1
+    expr: [N, [LerchPhi, 0.9, 0.5, 1]]
+    expected: 4.468833808303737
+  - hidden: true
+    id: n-lerchphi-0p9-0p5-2
+    expr: [N, [LerchPhi, 0.9, 0.5, 2]]
+    expected: 3.8542597870041466
+  - hidden: true
+    id: n-lerchphi-0p9-0p5-0p5
+    expr: [N, [LerchPhi, 0.9, 0.5, 0.5]]
+    expected: 5.11163624496335
+  - hidden: true
+    id: n-lerchphi-0p9-0p5-5-over-2
+    expr: [N, [LerchPhi, 0.9, 0.5, [Rational, 5, 2]]]
+    expected: 3.6575009379695027
+  - hidden: true
+    id: n-lerchphi-0p9-neg-1-1
+    expr: [N, [LerchPhi, 0.9, -1, 1]]
+    expected: 100.00000000000001
+  - hidden: true
+    id: n-lerchphi-0p9-neg-1-2
+    expr: [N, [LerchPhi, 0.9, -1, 2]]
+    expected: 110.00000000000004
+  - hidden: true
+    id: n-lerchphi-0p9-neg-1-0p5
+    expr: [N, [LerchPhi, 0.9, -1, 0.5]]
+    expected: 94.99999999999994
+  - hidden: true
+    id: n-lerchphi-0p9-neg-1-5-over-2
+    expr: [N, [LerchPhi, 0.9, -1, [Rational, 5, 2]]]
+    expected: 114.99999999999989
+  - hidden: true
+    id: n-lerchphi-0p9-2-plus-i-1
+    expr: [N, [LerchPhi, 0.9, [Complex, 2, 1], 1]]
+    expected: [Complex, 1.1929287758657432, -0.340556246338811]
+  - hidden: true
+    id: n-lerchphi-0p9-2-plus-i-2
+    expr: [N, [LerchPhi, 0.9, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.21436530651749217, -0.37839582926534593]
+  - hidden: true
+    id: n-lerchphi-0p9-2-plus-i-0p5
+    expr: [N, [LerchPhi, 0.9, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.516191661909127, 2.1522546812749304]
+  - hidden: true
+    id: n-lerchphi-0p9-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, 0.9, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.08847955787338069, -0.30347153591834614]
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-1
+    expr: [N, [LerchPhi, [Rational, 1, 3], 2, 1]]
+    expected: 1.0986396899311905
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], 2, 2]]
+    expected: 0.29591906979357147
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-0p5
+    expr: [N, [LerchPhi, [Rational, 1, 3], 2, 0.5]]
+    expected: 4.1697385430143274
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-5-over-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], 2, [Rational, 5, 2]]]
+    expected: 0.19431355379560278
+  - hidden: true
+    id: n-lerchphi-1-over-3-3-1
+    expr: [N, [LerchPhi, [Rational, 1, 3], 3, 1]]
+    expected: 1.0464835834645199
+  - hidden: true
+    id: n-lerchphi-1-over-3-3-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], 3, 2]]
+    expected: 0.1394507503935607
+  - hidden: true
+    id: n-lerchphi-1-over-3-3-0p5
+    expr: [N, [LerchPhi, [Rational, 1, 3], 3, 0.5]]
+    expected: 8.106907002058708
+  - hidden: true
+    id: n-lerchphi-1-over-3-3-5-over-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], 3, [Rational, 5, 2]]]
+    expected: 0.07327412963951402
+  - hidden: true
+    id: n-lerchphi-1-over-3-0p5-1
+    expr: [N, [LerchPhi, [Rational, 1, 3], 0.5, 1]]
+    expected: 1.3263265058420264
+  - hidden: true
+    id: n-lerchphi-1-over-3-0p5-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], 0.5, 2]]
+    expected: 0.9789795175260793
+  - hidden: true
+    id: n-lerchphi-1-over-3-0p5-0p5
+    expr: [N, [LerchPhi, [Rational, 1, 3], 0.5, 0.5]]
+    expected: 1.7848050437257632
+  - hidden: true
+    id: n-lerchphi-1-over-3-0p5-5-over-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], 0.5, [Rational, 5, 2]]]
+    expected: 0.8858335893908359
+  - hidden: true
+    id: n-lerchphi-1-over-3-neg-1-1
+    expr: [N, [LerchPhi, [Rational, 1, 3], -1, 1]]
+    expected: 2.2499999999999996
+  - hidden: true
+    id: n-lerchphi-1-over-3-neg-1-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], -1, 2]]
+    expected: 3.749999999999999
+  - hidden: true
+    id: n-lerchphi-1-over-3-neg-1-0p5
+    expr: [N, [LerchPhi, [Rational, 1, 3], -1, 0.5]]
+    expected: 1.4999999999999993
+  - hidden: true
+    id: n-lerchphi-1-over-3-neg-1-5-over-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], -1, [Rational, 5, 2]]]
+    expected: 4.499999999999998
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-plus-i-1
+    expr: [N, [LerchPhi, [Rational, 1, 3], [Complex, 2, 1], 1]]
+    expected: [Complex, 1.0700836686021413, -0.06715638695388616]
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-plus-i-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], [Complex, 2, 1], 2]]
+    expected: [Complex, 0.21025100580642178, -0.20146916086165853]
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-plus-i-0p5
+    expr: [N, [LerchPhi, [Rational, 1, 3], [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.224867422277603, 2.4796489989745893]
+  - hidden: true
+    id: n-lerchphi-1-over-3-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, [Rational, 1, 3], [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.10598096947609492, -0.15983669023372948]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-1
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 2, 1]]
+    expected: [Complex, 1.101836588740841, 0.10988045400413204]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 2, 2]]
+    expected: [Complex, 0.2947950867903031, 0.05360481991760274]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-0p5
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 2, 0.5]]
+    expected: [Complex, 4.181499243636333, 0.18243256267398936]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 2, [Rational, 5, 2]]]
+    expected: [Complex, 0.19270908242970575, 0.04070070796466971]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-3-1
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 3, 1]]
+    expected: [Complex, 1.0513066923524608, 0.04842457707035532]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-3-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 3, 2]]
+    expected: [Complex, 0.14020020024836358, 0.015911292489615658]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-3-0p5
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 3, 0.5]]
+    expected: [Complex, 8.121165761843056, 0.10727030391186324]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-3-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.073549546211705, 0.010421770459496018]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-0p5-1
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 0.5, 1]]
+    expected: [Complex, 1.2614091369882543, 0.41542878530844146]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-0p5-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 0.5, 2]]
+    expected: [Complex, 0.9167691615513381, 0.3509950921076001]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-0p5-0p5
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 0.5, 0.5]]
+    expected: [Complex, 1.7197286399191298, 0.46600764369924813]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-0p5-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], 0.5, [Rational, 5, 2]]]
+    expected: [Complex, 0.8252517091723104, 0.3285465602796576]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-neg-1-1
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], -1, 1]]
+    expected: [Complex, 1.333333333333333, 1.777777777777778]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-neg-1-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], -1, 2]]
+    expected: [Complex, 2.6666666666666674, 2.4444444444444424]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-neg-1-0p5
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], -1, 0.5]]
+    expected: [Complex, 0.6666666666666666, 1.4444444444444442]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-neg-1-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], -1, [Rational, 5, 2]]]
+    expected: [Complex, 3.3333333333333357, 2.7777777777777777]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-plus-i-1
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], [Complex, 2, 1], 1]]
+    expected: [Complex, 1.1600967534137019, 0.006328927692369448]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-plus-i-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], [Complex, 2, 1], 2]]
+    expected: [Complex, 0.26374951869276536, -0.18198981978865053]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-plus-i-0p5
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.339347509082892, 2.6332805602247045]
+  - hidden: true
+    id: n-lerchphi-0p4-plus-0p3i-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.4, 0.3], [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.1481488486383597, -0.15027197224093877]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-1
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 2, 1]]
+    expected: [Complex, 0.9167986759971546, 0.09467911486749002]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 2, 2]]
+    expected: [Complex, 0.2126469253958784, 0.03881449276816393]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-0p5
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 2, 0.5]]
+    expected: [Complex, 3.853772051558024, 0.17804143862927913]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-5-over-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 2, [Rational, 5, 2]]]
+    expected: [Complex, 0.13250323092790586, 0.027686339466071092]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-3-1
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 3, 1]]
+    expected: [Complex, 0.9591056061308406, 0.05206380477361099]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-3-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 3, 2]]
+    expected: [Complex, 0.11264770749280406, 0.014200163242636779]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-3-0p5
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 3, 0.5]]
+    expected: [Complex, 7.904718153248676, 0.12990910279935847]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-3-5-over-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.05618154725455815, 0.008653632327637262]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-0p5-1
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 0.5, 1]]
+    expected: [Complex, 0.7637974549105832, 0.20811582103519083]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-0p5-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 0.5, 2]]
+    expected: [Complex, 0.514466688365942, 0.16372507715926807]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-0p5-0p5
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 0.5, 0.5]]
+    expected: [Complex, 1.1415267933539475, 0.24801149986829354]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-0p5-5-over-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], 0.5, [Rational, 5, 2]]]
+    expected: [Complex, 0.45423083336681386, 0.14979712865953326]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-neg-1-1
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], -1, 1]]
+    expected: [Complex, 0.38261239239026473, 0.3454139653523225]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-neg-1-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], -1, 2]]
+    expected: [Complex, 1.052715485173771, 0.6031459241152096]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-neg-1-0p5
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], -1, 0.5]]
+    expected: [Complex, 0.04756084599851221, 0.2165479859708789]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-neg-1-5-over-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], -1, [Rational, 5, 2]]]
+    expected: [Complex, 1.3877670315655222, 0.7320119034966522]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-1
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], [Complex, 2, 1], 1]]
+    expected: [Complex, 0.9897846074295557, 0.1356287740983361]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], [Complex, 2, 1], 2]]
+    expected: [Complex, 0.20846766123618007, -0.10464981160081954]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-0p5
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], [Complex, 2, 1], 0.5]]
+    expected: [Complex, 2.9969942562474174, 2.7925848156947644]
+  - hidden: true
+    id: n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, [Complex, -0.3, 0.5], [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.11446511663271236, -0.08926367800980035]
+  - hidden: true
+    id: n-lerchphi-2-2-1
+    expr: [N, [LerchPhi, 2, 2, 1]]
+    expected: [Complex, 1.2337005501361697, -1.0887930451518009]
+  - hidden: true
+    id: n-lerchphi-2-2-2
+    expr: [N, [LerchPhi, 2, 2, 2]]
+    expected: [Complex, 0.11685027506808499, -0.5443965225759004]
+  - hidden: true
+    id: n-lerchphi-2-2-0p5
+    expr: [N, [LerchPhi, 2, 2, 0.5]]
+    expected: [Complex, 4.840291449348404, -1.5397858910711786]
+  - hidden: true
+    id: n-lerchphi-2-2-5-over-2
+    expr: [N, [LerchPhi, 2, 2, [Rational, 5, 2]]]
+    expected: [Complex, -0.012149359885121095, -0.3849464727677946]
+  - hidden: true
+    id: n-lerchphi-2-2-neg-2p5
+    expr: [N, [LerchPhi, 2, 2, -2.5]]
+    expected: [Complex, 55.771220483676125, -12.318287128569425]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-2-3-1
+    expr: [N, [LerchPhi, 2, 3, 1]]
+    expected: [Complex, 1.381035953114462, -0.37734691473012405]
+  - hidden: true
+    id: n-lerchphi-2-3-2
+    expr: [N, [LerchPhi, 2, 3, 2]]
+    expected: [Complex, 0.19051797655723104, -0.188673457365062]
+  - hidden: true
+    id: n-lerchphi-2-3-0p5
+    expr: [N, [LerchPhi, 2, 3, 0.5]]
+    expected: [Complex, 8.921391406560604, -0.5336491245309852]
+  - hidden: true
+    id: n-lerchphi-2-3-5-over-2
+    expr: [N, [LerchPhi, 2, 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.08219970349200281, -0.13341228113274625]
+  - hidden: true
+    id: n-lerchphi-2-3-neg-2p5
+    expr: [N, [LerchPhi, 2, 3, -2.5]]
+    expected: [Complex, 38.71453865989224, -4.269192996247894]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-2-0p5-1
+    expr: [N, [LerchPhi, 2, 0.5, 1]]
+    expected: [Complex, -0.8050307649337429, -1.064467019431226]
+  - hidden: true
+    id: n-lerchphi-2-0p5-2
+    expr: [N, [LerchPhi, 2, 0.5, 2]]
+    expected: [Complex, -0.9025153824668717, -0.5322335097156131]
+  - hidden: true
+    id: n-lerchphi-2-0p5-0p5
+    expr: [N, [LerchPhi, 2, 0.5, 0.5]]
+    expected: [Complex, -0.3953858882319452, -1.505383695578505]
+  - hidden: true
+    id: n-lerchphi-2-0p5-5-over-2
+    expr: [N, [LerchPhi, 2, 0.5, [Rational, 5, 2]]]
+    expected: [Complex, -0.8606481531151232, -0.3763459238946262]
+  - hidden: true
+    id: n-lerchphi-2-0p5-neg-2p5
+    expr: [N, [LerchPhi, 2, 0.5, -2.5]]
+    expected: [Complex, -3.1630871058555616, -19.965372508009548]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-2-2-plus-i-1
+    expr: [N, [LerchPhi, 2, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.7821035196383173, -0.5898143877850942]
+  - hidden: true
+    id: n-lerchphi-2-2-plus-i-2
+    expr: [N, [LerchPhi, 2, [Complex, 2, 1], 2]]
+    expected: [Complex, -0.10894824018084143, -0.2949071938925471]
+  - hidden: true
+    id: n-lerchphi-2-2-plus-i-0p5
+    expr: [N, [LerchPhi, 2, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.2663465887755483, 1.5814239980763576]
+  - hidden: true
+    id: n-lerchphi-2-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, 2, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, -0.15685648448997386, -0.15595056574690955]
+  - hidden: true
+    id: n-lerchphi-2-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, 2, [Complex, 2, 1], -2.5]]
+    expected: [Complex, 332.0979843736517, 238.17654980358446]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-2-2-1
+    expr: [N, [LerchPhi, -2, 2, 1]]
+    expected: 0.7183731834418394
+  - hidden: true
+    id: n-lerchphi-neg-2-2-2
+    expr: [N, [LerchPhi, -2, 2, 2]]
+    expected: 0.1408134082790773
+  - hidden: true
+    id: n-lerchphi-neg-2-2-0p5
+    expr: [N, [LerchPhi, -2, 2, 0.5]]
+    expected: 3.444734229330254
+  - hidden: true
+    id: n-lerchphi-neg-2-2-5-over-2
+    expr: [N, [LerchPhi, -2, 2, [Rational, 5, 2]]]
+    expected: 0.08340577955479463
+  - hidden: true
+    id: n-lerchphi-neg-2-2-neg-2p5
+    expr: [N, [LerchPhi, -2, 2, -2.5]]
+    expected: -12.286762723530918
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-2-3-1
+    expr: [N, [LerchPhi, -2, 3, 1]]
+    expected: 0.8341416819832855
+  - hidden: true
+    id: n-lerchphi-neg-2-3-2
+    expr: [N, [LerchPhi, -2, 3, 2]]
+    expected: 0.0829291590083558
+  - hidden: true
+    id: n-lerchphi-neg-2-3-0p5
+    expr: [N, [LerchPhi, -2, 3, 0.5]]
+    expected: 7.563284617347448
+  - hidden: true
+    id: n-lerchphi-neg-2-3-5-over-2
+    expr: [N, [LerchPhi, -2, 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.038969302485020396, 1.1518563880485999e-14]
+  - hidden: true
+    id: n-lerchphi-neg-2-3-neg-2p5
+    expr: [N, [LerchPhi, -2, 3, -2.5]]
+    expected: -91.97768434618699
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-2-0p5-1
+    expr: [N, [LerchPhi, -2, 0.5, 1]]
+    expected: 0.4456443557760612
+  - hidden: true
+    id: n-lerchphi-neg-2-0p5-2
+    expr: [N, [LerchPhi, -2, 0.5, 2]]
+    expected: 0.2771778221119692
+  - hidden: true
+    id: n-lerchphi-neg-2-0p5-0p5
+    expr: [N, [LerchPhi, -2, 0.5, 0.5]]
+    expected: 0.7431924320288376
+  - hidden: true
+    id: n-lerchphi-neg-2-0p5-5-over-2
+    expr: [N, [LerchPhi, -2, 0.5, [Rational, 5, 2]]]
+    expected: [Complex, 0.24049300787788896, 2.3564483697668948e-14]
+  - hidden: true
+    id: n-lerchphi-neg-2-0p5-neg-2p5
+    expr: [N, [LerchPhi, -2, 0.5, -2.5]]
+    expected: [Complex, -5.9455394562307005, -4.656316619670605]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-2-2-plus-i-1
+    expr: [N, [LerchPhi, -2, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.7462766702233421, 0.14040868638941306]
+  - hidden: true
+    id: n-lerchphi-neg-2-2-plus-i-2
+    expr: [N, [LerchPhi, -2, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.12686166488833184, -0.07020434319469351]
+  - hidden: true
+    id: n-lerchphi-neg-2-2-plus-i-0p5
+    expr: [N, [LerchPhi, -2, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 2.511183002874043, 2.6760511428484537]
+  - hidden: true
+    id: n-lerchphi-neg-2-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, -2, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.06276107967435696, -0.05760320164903357]
+  - hidden: true
+    id: n-lerchphi-neg-2-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, -2, [Complex, 2, 1], -2.5]]
+    expected: [Complex, 248.07432901528844, 220.3438744855333]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-3-2-1
+    expr: [N, [LerchPhi, 3, 2, 1]]
+    expected: [Complex, 0.7733934744376991, -1.150464098407734]
+  - hidden: true
+    id: n-lerchphi-3-2-2
+    expr: [N, [LerchPhi, 3, 2, 2]]
+    expected: [Complex, -0.07553550852076699, -0.383488032802578]
+  - hidden: true
+    id: n-lerchphi-3-2-0p5
+    expr: [N, [LerchPhi, 3, 2, 0.5]]
+    expected: [Complex, 4.3083059100926135, -1.9926622707261163]
+  - hidden: true
+    id: n-lerchphi-3-2-5-over-2
+    expr: [N, [LerchPhi, 3, 2, [Rational, 5, 2]]]
+    expected: [Complex, -0.11389193591563543, -0.22140691896956835]
+  - hidden: true
+    id: n-lerchphi-3-2-neg-2p5
+    expr: [N, [LerchPhi, 3, 2, -2.5]]
+    expected: [Complex, 153.81759290583392, -53.80188130960513]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-3-3-1
+    expr: [N, [LerchPhi, 3, 3, 1]]
+    expected: [Complex, 1.2473741980802437, -0.6319569980911071]
+  - hidden: true
+    id: n-lerchphi-3-3-2
+    expr: [N, [LerchPhi, 3, 3, 2]]
+    expected: [Complex, 0.08245806602674785, -0.21065233269703562]
+  - hidden: true
+    id: n-lerchphi-3-3-0p5
+    expr: [N, [LerchPhi, 3, 3, 0.5]]
+    expected: [Complex, 8.962435484818293, -1.0945816288925054]
+  - hidden: true
+    id: n-lerchphi-3-3-5-over-2
+    expr: [N, [LerchPhi, 3, 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.008171843992156041, -0.12162018098805609]
+  - hidden: true
+    id: n-lerchphi-3-3-neg-2p5
+    expr: [N, [LerchPhi, 3, 3, -2.5]]
+    expected: [Complex, 169.03286920120505, -29.553703980097676]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-3-0p5-1
+    expr: [N, [LerchPhi, 3, 0.5, 1]]
+    expected: [Complex, -0.5673384497546599, -0.5636784807928212]
+  - hidden: true
+    id: n-lerchphi-3-0p5-2
+    expr: [N, [LerchPhi, 3, 0.5, 2]]
+    expected: [Complex, -0.5224461499182197, -0.1878928269309404]
+  - hidden: true
+    id: n-lerchphi-3-0p5-0p5
+    expr: [N, [LerchPhi, 3, 0.5, 0.5]]
+    expected: [Complex, -0.3058884181277133, -0.976319767866404]
+  - hidden: true
+    id: n-lerchphi-3-0p5-5-over-2
+    expr: [N, [LerchPhi, 3, 0.5, [Rational, 5, 2]]]
+    expected: [Complex, -0.4632879692537757, -0.10847997420737818]
+  - hidden: true
+    id: n-lerchphi-3-0p5-neg-2p5
+    expr: [N, [LerchPhi, 3, 0.5, -2.5]]
+    expected: [Complex, -8.258987289448257, -42.17050106856762]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-3-2-plus-i-1
+    expr: [N, [LerchPhi, 3, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.6014155729908605, -0.5726915889959038]
+  - hidden: true
+    id: n-lerchphi-3-2-plus-i-2
+    expr: [N, [LerchPhi, 3, [Complex, 2, 1], 2]]
+    expected: [Complex, -0.1328614756697132, -0.19089719633196794]
+  - hidden: true
+    id: n-lerchphi-3-2-plus-i-0p5
+    expr: [N, [LerchPhi, 3, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.074330146279176, 1.3820906569318172]
+  - hidden: true
+    id: n-lerchphi-3-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, 3, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, -0.1364278712328939, -0.07198068689298973]
+  - hidden: true
+    id: n-lerchphi-3-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, 3, [Complex, 2, 1], -2.5]]
+    expected: [Complex, 754.4393998220863, 554.5049540922392]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1p5-2-1
+    expr: [N, [LerchPhi, 1.5, 2, 1]]
+    expected: [Complex, 1.582930180181653, -0.8492041366130668]
+  - hidden: true
+    id: n-lerchphi-1p5-2-2
+    expr: [N, [LerchPhi, 1.5, 2, 2]]
+    expected: [Complex, 0.38862012012110225, -0.5661360910753779]
+  - hidden: true
+    id: n-lerchphi-1p5-2-0p5
+    expr: [N, [LerchPhi, 1.5, 2, 0.5]]
+    expected: [Complex, 5.118490668726073, -1.040058411081376]
+  - hidden: true
+    id: n-lerchphi-1p5-2-5-over-2
+    expr: [N, [LerchPhi, 1.5, 2, [Rational, 5, 2]]]
+    expected: [Complex, 0.20081066758195837, -0.46224818270283363]
+  - hidden: true
+    id: n-lerchphi-1p5-2-neg-2p5
+    expr: [N, [LerchPhi, 1.5, 2, -2.5]]
+    expected: [Complex, 27.101572673617163, -3.5101971373996417]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1p5-3-1
+    expr: [N, [LerchPhi, 1.5, 3, 1]]
+    expected: [Complex, 1.37391833821352, -0.1721613235288588]
+  - hidden: true
+    id: n-lerchphi-1p5-3-2
+    expr: [N, [LerchPhi, 1.5, 3, 2]]
+    expected: [Complex, 0.249278892142347, -0.11477421568590583]
+  - hidden: true
+    id: n-lerchphi-1p5-3-0p5
+    expr: [N, [LerchPhi, 1.5, 3, 0.5]]
+    expected: [Complex, 8.758392281291254, -0.2108536980439579]
+  - hidden: true
+    id: n-lerchphi-1p5-3-5-over-2
+    expr: [N, [LerchPhi, 1.5, 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.13953237193191523, -0.09371275468620348]
+  - hidden: true
+    id: n-lerchphi-1p5-3-neg-2p5
+    expr: [N, [LerchPhi, 1.5, 3, -2.5]]
+    expected: [Complex, 11.051129504913542, -0.7116312308983647]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1p5-0p5-1
+    expr: [N, [LerchPhi, 1.5, 0.5, 1]]
+    expected: [Complex, -1.0310938016261064, -1.8556964357740158]
+  - hidden: true
+    id: n-lerchphi-1p5-0p5-2
+    expr: [N, [LerchPhi, 1.5, 0.5, 2]]
+    expected: [Complex, -1.354062534417405, -1.237130957182677]
+  - hidden: true
+    id: n-lerchphi-1p5-0p5-0p5
+    expr: [N, [LerchPhi, 1.5, 0.5, 0.5]]
+    expected: [Complex, -0.4727012388667624, -2.272754692573877]
+  - hidden: true
+    id: n-lerchphi-1p5-0p5-5-over-2
+    expr: [N, [LerchPhi, 1.5, 0.5, [Rational, 5, 2]]]
+    expected: [Complex, -1.382959854502865, -1.0101131966995007]
+  - hidden: true
+    id: n-lerchphi-1p5-0p5-neg-2p5
+    expr: [N, [LerchPhi, 1.5, 0.5, -2.5]]
+    expected: [Complex, -1.5953666811753227, -12.709728006201562]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1p5-2-plus-i-1
+    expr: [N, [LerchPhi, 1.5, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.9288306730423472, -0.5652075721936586]
+  - hidden: true
+    id: n-lerchphi-1p5-2-plus-i-2
+    expr: [N, [LerchPhi, 1.5, [Complex, 2, 1], 2]]
+    expected: [Complex, -0.04744621797176859, -0.37680504812910587]
+  - hidden: true
+    id: n-lerchphi-1p5-2-plus-i-0p5
+    expr: [N, [LerchPhi, 1.5, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.383048389778828, 1.7479834843533375]
+  - hidden: true
+    id: n-lerchphi-1p5-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, 1.5, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, -0.13623106961632314, -0.24217666122590845]
+  - hidden: true
+    id: n-lerchphi-1p5-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, 1.5, [Complex, 2, 1], -2.5]]
+    expected: [Complex, 188.05452580732162, 129.95094730887928]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-1
+    expr: [N, [LerchPhi, -1.5, 2, 1]]
+    expected: 0.7649204402503819
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-2
+    expr: [N, [LerchPhi, -1.5, 2, 2]]
+    expected: 0.1567197064997453
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-0p5
+    expr: [N, [LerchPhi, -1.5, 2, 0.5]]
+    expected: 3.54500455887494
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-5-over-2
+    expr: [N, [LerchPhi, -1.5, 2, [Rational, 5, 2]]]
+    expected: 0.09407610024072302
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-neg-2p5
+    expr: [N, [LerchPhi, -1.5, 2, -2.5]]
+    expected: -3.4710570528695897
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-3-1
+    expr: [N, [LerchPhi, -1.5, 3, 1]]
+    expected: 0.8652249667708318
+  - hidden: true
+    id: n-lerchphi-neg-1p5-3-2
+    expr: [N, [LerchPhi, -1.5, 3, 2]]
+    expected: 0.08985002215277751
+  - hidden: true
+    id: n-lerchphi-neg-1p5-3-0p5
+    expr: [N, [LerchPhi, -1.5, 3, 0.5]]
+    expected: 7.6520443679635575
+  - hidden: true
+    id: n-lerchphi-neg-1p5-3-5-over-2
+    expr: [N, [LerchPhi, -1.5, 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.042883916625780595, 1.6178031136959703e-14]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-3-neg-2p5
+    expr: [N, [LerchPhi, -1.5, 3, -2.5]]
+    expected: -43.44520529743256
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-0p5-1
+    expr: [N, [LerchPhi, -1.5, 0.5, 1]]
+    expected: 0.5118021812475761
+  - hidden: true
+    id: n-lerchphi-neg-1p5-0p5-2
+    expr: [N, [LerchPhi, -1.5, 0.5, 2]]
+    expected: 0.32546521250162286
+  - hidden: true
+    id: n-lerchphi-neg-1p5-0p5-0p5
+    expr: [N, [LerchPhi, -1.5, 0.5, 0.5]]
+    expected: 0.827894231949178
+  - hidden: true
+    id: n-lerchphi-neg-1p5-0p5-5-over-2
+    expr: [N, [LerchPhi, -1.5, 0.5, [Rational, 5, 2]]]
+    expected: [Complex, 0.2837446848744865, -5.362377208939506e-14]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-0p5-neg-2p5
+    expr: [N, [LerchPhi, -1.5, 0.5, -2.5]]
+    expected: [Complex, -2.794143032828476, -2.589691175981552]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-plus-i-1
+    expr: [N, [LerchPhi, -1.5, [Complex, 2, 1], 1]]
+    expected: [Complex, 0.7925489657221488, 0.12307454646952756]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-plus-i-2
+    expr: [N, [LerchPhi, -1.5, [Complex, 2, 1], 2]]
+    expected: [Complex, 0.1383006895185598, -0.08204969764636073]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-plus-i-0p5
+    expr: [N, [LerchPhi, -1.5, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 2.61930607559321, 2.668732631457893]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, -1.5, [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.0688725160431137, -0.06670071419538852]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, -1.5, [Complex, 2, 1], -2.5]]
+    expected: [Complex, 139.4440155178161, 127.21487477502689]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-1
+    expr: [N, [LerchPhi, [Complex, 1, 2], 2, 1]]
+    expected: [Complex, 0.8171642289751408, 0.4383195138244752]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], 2, 2]]
+    expected: [Complex, 0.13876065132481796, 0.16079821117483864]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-0p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], 2, 0.5]]
+    expected: [Complex, 3.7921142608467866, 0.8560748069785533]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-5-over-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], 2, [Rational, 5, 2]]]
+    expected: [Complex, 0.07302936892606517, 0.10831051920486563]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], 2, -2.5]]
+    expected: [Complex, -51.39666281091311, -0.11216250956877438]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-3-1
+    expr: [N, [LerchPhi, [Complex, 1, 2], 3, 1]]
+    expected: [Complex, 0.9605393291259245, 0.2620237606132513]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-3-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], 3, 2]]
+    expected: [Complex, 0.09691737007048522, 0.06818902047228032]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-3-0p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], 3, 0.5]]
+    expected: [Complex, 8.006976954441546, 0.6457371392370688]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-3-5-over-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.04322144848568627, 0.039913749099422996]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-3-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], 3, -2.5]]
+    expected: [Complex, -63.14556851667916, -55.70965503308343]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-0p5-1
+    expr: [N, [LerchPhi, [Complex, 1, 2], 0.5, 1]]
+    expected: [Complex, 0.2518733705484473, 0.5942372440727618]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-0p5-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], 0.5, 2]]
+    expected: [Complex, 0.08806957173879393, 0.41809810059517377]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-0p5-0p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], 0.5, 0.5]]
+    expected: [Complex, 0.5773820436149282, 0.7684091077547665]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-0p5-5-over-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], 0.5, [Rational, 5, 2]]]
+    expected: [Complex, 0.060065923306197685, 0.368282582441825]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-0p5-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], 0.5, -2.5]]
+    expected: [Complex, 2.475463147093155, -6.813575698374405]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-plus-i-1
+    expr: [N, [LerchPhi, [Complex, 1, 2], [Complex, 2, 1], 1]]
+    expected: [Complex, 1.1260285363129376, 0.6413553659592582]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-plus-i-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], [Complex, 2, 1], 2]]
+    expected: [Complex, 0.28174785364629107, 0.0778596586666771]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-plus-i-0p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.192905834798345, 3.7884971130059952]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, [Complex, 1, 2], [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.17175237042929112, 0.031954991049997425]
+  - hidden: true
+    id: n-lerchphi-1-plus-2i-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 1, 2], [Complex, 2, 1], -2.5]]
+    expected: [Complex, -457.91134140962885, 71.22772232965785]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-1
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 2, 1]]
+    expected: [Complex, 0.7446897666774631, 0.09767689334428908]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 2, 2]]
+    expected: [Complex, 0.14788992102402837, 0.033475351786492316]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-0p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 2, 0.5]]
+    expected: [Complex, 3.510343411490998, 0.20933833108241673]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-5-over-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 2, [Rational, 5, 2]]]
+    expected: [Complex, 0.08772363908006542, 0.022451843102527576]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-neg-2p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 2, -2.5]]
+    expected: [Complex, 7.2387742675368125, 8.864424682985405]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-3-1
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 3, 1]]
+    expected: [Complex, 0.8553387457226991, 0.06489298901815407]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-3-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 3, 2]]
+    expected: [Complex, 0.08673380628741796, 0.01456054484617424]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-3-0p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 3, 0.5]]
+    expected: [Complex, 7.631459552290882, 0.18381299382141847]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-3-5-over-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.04093064173669238, 0.008246898188157391]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-3-neg-2p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 3, -2.5]]
+    expected: [Complex, -2.0910882737014767, 67.79138574742537]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-0p5-1
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 0.5, 1]]
+    expected: [Complex, 0.46553880567110584, 0.13821464441436376]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-0p5-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 0.5, 2]]
+    expected: [Complex, 0.2892019802792986, 0.10065822390995441]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-0p5-0p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 0.5, 0.5]]
+    expected: [Complex, 0.773036344755627, 0.17710899785683046]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-0p5-5-over-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 0.5, [Rational, 5, 2]]]
+    expected: [Complex, 0.2506624678277473, 0.09007985632981672]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], 0.5, -2.5]]
+    expected: [Complex, -3.574854956018253, 3.468728991325334]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-plus-i-1
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], [Complex, 2, 1], 1]]
+    expected: [Complex, 0.8125648486721178, 0.23356370470540438]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-plus-i-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], [Complex, 2, 1], 2]]
+    expected: [Complex, 0.15837428667606818, -0.050126278686223436]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], [Complex, 2, 1], 0.5]]
+    expected: [Complex, 2.6030184823997615, 2.911418398487827]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.08535910853571303, -0.04777757995380055]
+  - hidden: true
+    id: n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, [Complex, -1.5, 1], [Complex, 2, 1], -2.5]]
+    expected: [Complex, 244.75788905917892, -108.8372736947882]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-1
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 2, 1]]
+    expected: [Complex, 1.0512753535586392, 0.35234019825173524]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 2, 2]]
+    expected: [Complex, 0.24698376639549866, 0.16256851061973257]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-0p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 2, 0.5]]
+    expected: [Complex, 4.157406968302781, 0.5964288969053857]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 2, [Rational, 5, 2]]]
+    expected: [Complex, 0.15055546795563676, 0.11982927618077492]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 2, -2.5]]
+    expected: [Complex, -6.713683691062509, 9.459163380965968]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-3-1
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 3, 1]]
+    expected: [Complex, 1.0600183930694895, 0.16372732384786165]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-3-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 3, 2]]
+    expected: [Complex, 0.13473745235770138, 0.05307952090741297]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-3-0p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 3, 0.5]]
+    expected: [Complex, 8.176233084955843, 0.35863779701452814]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-3-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 3, [Rational, 5, 2]]]
+    expected: [Complex, 0.06790730062055826, 0.034208132622012555]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-3-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 3, -2.5]]
+    expected: [Complex, -11.007681973911316, -4.132179140120582]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-0p5-1
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 0.5, 1]]
+    expected: [Complex, 0.6468487828189053, 0.9042982627040883]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-0p5-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 0.5, 2]]
+    expected: [Complex, 0.3664465259922781, 0.7181204866387976]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-0p5-0p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 0.5, 0.5]]
+    expected: [Complex, 1.0703168525560947, 1.058323277527613]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-0p5-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 0.5, [Rational, 5, 2]]]
+    expected: [Complex, 0.3021697628691992, 0.6567535519940397]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-0p5-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], 0.5, -2.5]]
+    expected: [Complex, 0.18135576554179678, -1.4915088888884338]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-plus-i-1
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], [Complex, 2, 1], 1]]
+    expected: [Complex, 1.3623883910300945, 0.28623973226309374]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-plus-i-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], [Complex, 2, 1], 2]]
+    expected: [Complex, 0.3776044633523171, -0.06700535594248992]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-plus-i-0p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], [Complex, 2, 1], 0.5]]
+    expected: [Complex, 3.6223281025197807, 3.1374223913038595]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-plus-i-5-over-2
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], [Complex, 2, 1], [Rational, 5, 2]]]
+    expected: [Complex, 0.2377088936515321, -0.07033177818547647]
+  - hidden: true
+    id: n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5
+    expr: [N, [LerchPhi, [Complex, 0.8, 0.9], [Complex, 2, 1], -2.5]]
+    expected: [Complex, -92.1275927724354, 93.92654608335769]
+    divergence:
+      wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+implementations:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [Sum, [Multiply, [Power, _z, n], [Exp, [Multiply, [Negate, _s], [Ln, [Add, n, _a]]]]], [Triple, n, 0, Infinity]]
+    note: The defining series, converging for |z| < 1 (and for |z| = 1 with Re(s) > 1); ζ(s, a) is its z = 1 edge and Li_s(z) its a = 1 slice.
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/lerch.ts
+    note: The direct series, which covers |z| ≤ 1; z = 1 hands off to HurwitzZeta and inherits its closed forms.
+  - origin: compiled
+    form: wgsl
+    environment: gpu
+    source: packages/symbols/analysis/analytic/src/shader.ts:zetaWGSL
+    produces: a colour per pixel — complex Φ, domain-coloured
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: LerchPhi[z, s, a]; mpmath.lerchphi(z, s, a).
+seeAlso:
+  - HurwitzZeta
+  - Zeta
+  - Gamma
+  - PolyLog

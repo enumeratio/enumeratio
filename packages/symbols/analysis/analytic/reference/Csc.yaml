@@ -1,0 +1,97 @@
+name: Csc
+domain: Elementary functions
+signature: Csc(x)
+summary: Cosecant, the reciprocal of [[Sin]].
+signatures:
+  - call: Csc(x)
+    description: the cosecant of x, $\frac{1}{\sin(x)}$.
+details:
+  - $\csc(x) = \frac{1}{\sin(x)}$.
+  - Odd function, period $2\pi$, same as [[Sin]].
+  - Undefined wherever $\sin(x) = 0$, the same poles as [[Cot]].
+examples:
+  - id: csc-pi-over-6
+    expr: [Csc, [Divide, Pi, 6]]
+    expected: 2
+  - id: csc-pi-over-4
+    expr: [Csc, [Divide, Pi, 4]]
+    expected: [Sqrt, 2]
+  - id: csc-pi-over-2
+    expr: [Csc, [Divide, Pi, 2]]
+    expected: 1
+  - id: reciprocal-of-sin-csc-x-frac-1-sin-x
+    expr: [Equal, [Csc, [Divide, Pi, 6]], [Divide, 1, [Sin, [Divide, Pi, 6]]]]
+    expected: True
+    category: Properties
+    caption: 'Reciprocal of [[Sin]]: $\csc(x) = \frac{1}{\sin(x)}$'
+  - id: a-pole-sin-0-0
+    expr: [Csc, 0]
+    expected: ComplexInfinity
+    category: Possible issues
+    caption: 'A pole: $\sin(0) = 0$'
+  - id: csc-60-circ-frac-2-sqrt-3-3-exactly
+    expr: [Csc, [Degrees, 60]]
+    expected: [Multiply, [Rational, 2, 3], [Sqrt, 3]]
+    caption: $\csc 60^\circ = \frac{2\sqrt3}{3}$, exactly
+  - id: a-machine-precision-argument-evaluates
+    expr: [Csc, 1.2]
+    expected: {num: '1.07291637770989722871'}
+    caption: A machine-precision argument evaluates numerically
+  - id: n-of-an-exact-argument-gives-an-arbitrary
+    expr: [N, [Csc, [Rational, 6, 5]]]
+    expected: {num: '1.07291637770989722871'}
+    category: Scope
+    caption: N(...) of an exact argument gives an arbitrary-precision value
+  - id: evaluates-at-a-complex-argument
+    expr: [Csc, [Complex, 2.5, 1]]
+    expected: [Complex, 0.5309655776211742, 0.5413229061900025]
+    category: Scope
+    caption: Evaluates at a complex argument
+  - id: threads-element-wise-over-a-matrix-with
+    expr: [Csc, [List, [List, [Divide, Pi, 3], Pi], [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 2]]]]]
+    expected: [List, [List, [Multiply, [Rational, 2, 3], [Sqrt, 3]], ComplexInfinity], [List, 2, -1]]
+    category: Scope
+    caption: Threads element-wise over a matrix, with ComplexInfinity at the pole $\pi$
+  - id: csc-pi-12-sqrt-6-sqrt-2
+    expr: [Csc, [Divide, Pi, 12]]
+    expected: [Add, [Sqrt, 2], [Sqrt, 6]]
+    category: Scope
+    caption: $\csc(\pi/12) = \sqrt6 + \sqrt2$
+  - id: csc-pi-10-1-sqrt-5
+    expr: [Csc, [Divide, Pi, 10]]
+    expected: [Add, 1, [Sqrt, 5]]
+    category: Scope
+    caption: $\csc(\pi/10) = 1 + \sqrt5$
+  - id: csc-pi-over-5
+    expr: [Csc, [Divide, Pi, 5]]
+    expected: [Multiply, [Divide, [Sqrt, 10], 5], [Sqrt, [Add, 5, [Sqrt, 5]]]]
+    category: Scope
+  - id: interval-arithmetic-the-image-of-pi-6-pi-3-is
+    expr: [Csc, [Interval, [Divide, Pi, 6], [Divide, Pi, 3]]]
+    expected: [Interval, [Multiply, [Rational, 2, 3], [Sqrt, 3]], 2]
+    category: Scope
+    caption: 'Interval arithmetic: the image of $[\pi/6, \pi/3]$ is $[\tfrac{2}{\sqrt3}, 2]$'
+  - id: uncertainty-propagation-csc-2-pm-0-01-approx-1
+    expr: [Csc, [Around, 2, 0.01]]
+    expected: [Around, 1.0997501702946164, 0.00503308973344342]
+    category: Scope
+    caption: 'Uncertainty propagation: $\csc(2 \pm 0.01) \approx 1.0998 \pm 0.0050$'
+  - id: oddness-pulls-the-sign-out-of-a-symbolic
+    expr: [Csc, [Negate, x]]
+    expected: [Negate, [Csc, x]]
+    category: Scope
+    caption: 'Oddness pulls the sign out of a symbolic argument: $\csc(-x) = -\csc x$'
+  - id: derivative-csc-x-cot-x
+    expr: [D, [Csc, x], x]
+    expected: [Negate, [Multiply, [Csc, x], [Cot, x]]]
+    category: Scope
+    caption: 'Derivative: $-\csc x \cot x$'
+  - id: antiderivative-ln-csc-x-cot-x
+    expr: [Integrate, [Csc, x], x]
+    expected: [Negate, [Ln, [Abs, [Add, [Csc, x], [Cot, x]]]]]
+    category: Scope
+    caption: 'Antiderivative: $-\ln|\csc x + \cot x|$'
+seeAlso:
+  - Sin
+  - Sec
+  - Cot

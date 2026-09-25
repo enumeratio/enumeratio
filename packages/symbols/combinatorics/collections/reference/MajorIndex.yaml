@@ -1,0 +1,38 @@
+name: MajorIndex
+domain: Permutation statistics
+signature: MajorIndex(p)
+implementations:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [If, [Less, [Length, _p], 2], 0, [Sum, [Filter, [Range, 1, [Subtract, [Length, _p], 1]], [Function, [Greater, [At, _p, i], [At, _p, [Add, i, 1]]], i]]]]
+    note: Checked against the implementation over every permutation of 1..6.
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/combinatorics/collections/src/stats.ts:majorIndex
+summary: 'The major index of $p$: the sum of the descent positions $\sum_{p_i > p_{i+1}} i$.'
+signatures:
+  - call: MajorIndex(p)
+    description: the major index of a one-line permutation $p$
+    library: enumeratio-collections
+details:
+  - Introduced by MacMahon, who proved it equidistributed with [[Inversions]] over $S_n$
+  - Both are Mahonian, so their common generating function is the q-factorial $[n]_q!$
+examples:
+  - id: one-descent-at-position-1
+    expr: [MajorIndex, [List, 3, 1, 2]]
+    expected: 1
+    caption: one descent, at position 1
+  - id: descents-at-positions-1-and-2
+    expr: [MajorIndex, [List, 3, 2, 1]]
+    expected: 3
+    caption: descents at positions 1 and 2
+  - id: no-descents
+    expr: [MajorIndex, [List, 1, 2, 3]]
+    expected: 0
+    caption: no descents
+seeAlso:
+  - Inversions
+  - Descents
+  - SymmetricGroup

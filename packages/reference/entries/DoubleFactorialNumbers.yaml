@@ -1,0 +1,20 @@
+name: DoubleFactorialNumbers
+domain: Collections
+signature: DoubleFactorialNumbers
+summary: The odd double factorials $1, 3, 15, 105, …$ — $(2n-1)!!$ — perfect matchings of $K_{2n}$.
+signatures:
+  - call: DoubleFactorialNumbers
+    description: $(2n-1)!!$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(DoubleFactorialNumbers) = +\infty$, and $At(DoubleFactorialNumbers, k) = (2k-1)!!$, computed exactly over arbitrary-precision integers -- $At(DoubleFactorialNumbers, 5) = 945$.'
+  - 'OEIS A001147, whose offset differs from ours the same way as [[FactorialNumbers]]: A001147 opens with the duplicate $a(0) = a(1) = 1$; this collection starts at $n=1$ without repeating it.'
+  - Membership goes through [[Element]] by growing the sequence forward until it reaches or passes the candidate -- $Element(945, DoubleFactorialNumbers)$ is true, $Element(900, DoubleFactorialNumbers)$ is false.
+examples: []
+enumerate:
+  expr: Take(DoubleFactorialNumbers, 20)
+seeAlso:
+  - FactorialNumbers
+  - PhylogeneticTrees
+  - Count
+  - At
+  - Element

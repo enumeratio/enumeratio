@@ -1,0 +1,113 @@
+name: StieltjesGamma
+domain: Special functions
+signature: StieltjesGamma(n)
+summary: 'The Stieltjes constants $\gamma_n$, the coefficients of the Laurent expansion of $\zeta(s)$ at $s = 1$: $\zeta(s) = \dfrac{1}{s-1} + \sum_{n\ge0} \dfrac{(-1)^n}{n!}\gamma_n (s-1)^n$; with a second argument, the generalized $\gamma_n(a)$ for [[HurwitzZeta]]. Provided by `@enumeratio/analytic`.'
+signatures:
+  - call: StieltjesGamma(n)
+    description: the $n$-th Stieltjes constant $\gamma_n$.
+    library: '@enumeratio/analytic'
+  - call: StieltjesGamma(n, a)
+    description: the generalized Stieltjes constant $\gamma_n(a)$, from the expansion of $\zeta(s, a)$ at $s = 1$.
+    library: '@enumeratio/analytic'
+details:
+  - $\gamma_0 = \gamma = 0.5772\ldots$ is Euler's constant; $\gamma_1 = -0.0728158\ldots$, $\gamma_2 = -0.0096903\ldots$. They have no closed forms beyond $\gamma_0$.
+  - $\gamma_n = \lim_{m\to\infty}\left(\sum_{k=1}^m \dfrac{\ln^n k}{k} - \dfrac{\ln^{n+1} m}{n+1}\right)$; for $n = 0$ this is the definition of Euler's constant.
+  - 'Generalized: $\zeta(s, a) = \dfrac{1}{s-1} + \sum_n \dfrac{(-1)^n}{n!}\gamma_n(a)(s-1)^n$, so $\gamma_n(1) = \gamma_n$ and $\gamma_0(a) = -\psi(a)$, the negated digamma. Shift: $\gamma_n(a+1) = \gamma_n(a) - \ln^n(a)/a$. Poles at $a = 0, -1, -2, \dots$.'
+  - Same normalisation as Wolfram's $\mathrm{StieltjesGamma}[n, a]$ and mpmath's `stieltjes(n, a)`. Complex $a$ supported.
+  - 'Numerically, Euler–Maclaurin on $\ln^n(x)/x$. In double precision the partial sum and the subtracted $\ln^{n+1}$ term cancel more and more with $n$: about $10^{-12}$ relative through $n = 15$, $10^{-10}$ at $n = 20$, $10^{-8}$ at $n = 30$ — and orders past 30 are left unevaluated rather than returned wrong.'
+examples:
+  - id: gamma-0-gamma-euler-s-constant
+    expr: [StieltjesGamma, 0]
+    expected: EulerGamma
+    caption: $\gamma_0 = \gamma$, Euler's constant
+  - id: gamma-0-a-psi-a-symbolically-in-a
+    expr: [StieltjesGamma, 0, a]
+    expected: [Negate, [PolyGamma, 0, a]]
+    category: Properties
+    caption: $\gamma_0(a) = -\psi(a)$, symbolically in $a$
+  - id: no-closed-form-past-gamma-0-stays-symbolic-until
+    expr: [StieltjesGamma, 1]
+    expected: [StieltjesGamma, 1]
+    caption: No closed form past $\gamma_0$ — stays symbolic until N(), which gives $-0.0728158\ldots$
+  - id: gamma-1-frac-32-numerically-a-floating-point
+    expr: [StieltjesGamma, 1, 1.5]
+    expected: 0.0328346803149494
+    caption: $\gamma_1(\tfrac32)$ numerically — a floating-point argument asks for a number
+  - id: gamma-3-frac-12-0-66742
+    expr: [StieltjesGamma, 3, 0.5]
+    expected: -0.6674242737113798
+    caption: $\gamma_3(\tfrac12) = -0.66742\ldots$
+  - id: gamma-n-a-has-poles-at-the-nonpositive-integers
+    expr: [StieltjesGamma, 2, -1]
+    expected: ComplexInfinity
+    category: Possible issues
+    caption: $\gamma_n(a)$ has poles at the nonpositive integers, like $\zeta(s, a)$
+  - id: orders-past-30-stay-unevaluated-even-under-n-the
+    expr: [StieltjesGamma, 40]
+    expected: [StieltjesGamma, 40]
+    category: Possible issues
+    caption: 'Orders past 30 stay unevaluated even under N(): the double-precision kernel cannot be trusted there'
+  - id: gamma-2-frac-32
+    expr: [StieltjesGamma, 2, 1.5]
+    expected: 0.007958447383888047
+    caption: $\gamma_2(\tfrac32)$
+  - id: gamma-1-0-0728158-under-n
+    expr: [N, [StieltjesGamma, 1]]
+    expected: -0.07281584548367652
+    caption: $\gamma_1 = -0.0728158\ldots$ under N()
+  - id: complex-a
+    expr: [N, [StieltjesGamma, 2, [Complex, 1, 1]]]
+    expected: [Complex, 0.1703042014685879, 0.37317719575749525]
+    category: Scope
+    caption: Complex $a$
+  - id: listable-in-the-order-n-threads-over-a-list
+    expr: [StieltjesGamma, [List, 1, 2, 3], 0.5]
+    expected: [List, -1.3534596808049415, 0.9688644752202907, -0.6674242737113807]
+    category: Scope
+    caption: 'Listable in the order $n$: threads over a list'
+  - id: interval-arithmetic-in-a
+    expr: [StieltjesGamma, 2, [Interval, 2.34, 2.35]]
+    expected: [Interval, -0.06724128035508715, -0.06514040366307242]
+    category: Scope
+    caption: Interval arithmetic in $a$
+  - id: gamma-n-1-gamma-n-the-two-argument-form-reduces
+    expr: [StieltjesGamma, 1, 1]
+    expected: [StieltjesGamma, 1]
+    category: Properties
+    caption: '$\gamma_n(1) = \gamma_n$: the two-argument form reduces to it'
+  - id: gamma-0-1-psi-1-gamma-polygamma-0-z-routes
+    expr: [StieltjesGamma, 0, 1]
+    expected: EulerGamma
+    category: Properties
+    caption: $\gamma_0(1) = -\psi(1) = \gamma$ -- PolyGamma(0, z) routes through Digamma(z) (#113), which has $\psi(1) = -\gamma$ exactly
+  - id: gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now
+    expr: [StieltjesGamma, 0, [Rational, 1, 2]]
+    expected: [Add, EulerGamma, [Multiply, 2, [Ln, 2]]]
+    category: Properties
+    caption: $\gamma_0(\tfrac12) = -\psi(\tfrac12) = \gamma + 2\ln 2$, now that $\psi(\tfrac12)$ itself has a closed form
+  - id: to-30-significant-digits-not-yet-the-requested
+    expr: [N, [StieltjesGamma, 1], 30]
+    expected: {num: '-0.0728158454836767248605863758749'}
+    aspirational: true
+    category: Scope
+    caption: To 30 significant digits; not yet -- the requested precision is ignored and a double comes back
+  - id: gamma-3-1-gamma-3-order-1-at-a-1-is-just-the
+    expr: [StieltjesGamma, 3, 1]
+    expected: [StieltjesGamma, 3]
+    category: Properties
+    caption: $\gamma_3(1) = \gamma_3$ — order 1 at $a=1$ is just the ordinary Stieltjes constant.
+primitive: numeric
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/stieltjes.ts
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: StieltjesGamma[n, a]; mpmath.stieltjes(n, a).
+seeAlso:
+  - Zeta
+  - HurwitzZeta
+  - EulerGamma
+  - Digamma

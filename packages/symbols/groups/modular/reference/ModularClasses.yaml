@@ -1,0 +1,42 @@
+name: ModularClasses
+domain: The modular group
+signature: ModularClasses(length, primitive?)
+summary: Every hyperbolic conjugacy class whose $LR$ word has the given length — equivalently, every closed geodesic of that symbolic period on the modular surface. Conjugation rotates the word, so the classes are binary NECKLACES.
+signatures:
+  - call: ModularClasses(length)
+    description: the classes, each named by the least rotation of its word
+    library: enumeratio-modular
+  - call: ModularClasses(length, True)
+    description: only the primitive ones — not a repeat of a shorter geodesic
+    library: enumeratio-modular
+  - call: ModularClass(word)
+    description: the canonical name of one class
+    library: enumeratio-modular
+details:
+  - 'Conjugating by the first letter rotates the word: $x^{-1}(xw)x = wx$'
+  - The count is $\frac1n\sum_{d\mid n}\varphi(d)2^{n/d} - 2$ — binary necklaces, less the two constant ones, which are parabolic
+  - The primitive classes are the aperiodic necklaces, counted by $\frac1n\sum_{d\mid n}\mu(d)2^{n/d}$ — Lyndon words
+  - Word length is the SYMBOLIC period; the geodesic's length is $2\,\mathrm{arccosh}(|\mathrm{tr}|/2)$, and the two orderings differ
+examples:
+  - id: four-closed-geodesics-of-symbolic-length-4
+    expr: [ModularClasses, 4]
+    expected: [List, "'LLLR'", "'LLRR'", "'LRLR'", "'LRRR'"]
+    caption: four closed geodesics of symbolic length 4
+  - id: the-same-geodesic-entered-elsewhere
+    expr: [ModularClass, "'LRL'"]
+    expected: "'LLR'"
+    caption: the same geodesic, entered elsewhere
+    category: Properties
+  - id: lrlr-is-lr-traversed-twice
+    expr: [IsPrimitiveClass, "'LRLR'"]
+    expected: False
+    caption: $LRLR$ is $LR$ traversed twice
+    category: Properties
+  - id: same-word-length-as-lllr-different-geodesic
+    expr: [ModularTrace, "'LRLR'"]
+    expected: 7
+    caption: same word length as $LLLR$, different geodesic length
+    category: Scope
+seeAlso:
+  - RademacherSymbol
+  - ModularWord

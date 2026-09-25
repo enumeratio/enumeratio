@@ -1,0 +1,86 @@
+name: VerificationTest
+domain: Controlling evaluation
+signature: VerificationTest(input, expected)
+summary: Evaluates input and compares it with expected, returning a TestResultObject.
+signatures:
+  - call: VerificationTest(input)
+    description: Success whenever input evaluates without erroring or aborting.
+    library: enumeratio-aestimatio
+  - call: VerificationTest(input, expected)
+    description: compares against expected by structural sameness (SameTest's default).
+    library: enumeratio-aestimatio
+  - call: VerificationTest(input, expected, SameTest -> f, TimeConstraint -> t, MemoryConstraint -> b, TestID -> "…")
+    description: options as trailing rules, Wolfram's OptionsPattern way.
+    library: enumeratio-aestimatio
+details:
+  - 'Held: input does not evaluate until the constraints (TimeConstraint, MemoryConstraint) are in place around it.'
+  - Outcome is one of "Success", "Failure", "Error" (input raised, or a constraint was requested this process cannot honor) or "Aborted" (TimeConstraint fired).
+  - MemoryConstraint in-process reports Error rather than silently skipping the check — real enforcement needs the isolated evaluator, where it comes from the worker's own resourceLimits.
+  - TestResultObject's operands are rules — Outcome, Input, ExpectedOutput, ActualOutput, AbsoluteTimeUsed (seconds, rounded to the millisecond), and TestID when given — the same rule spelling @enumeratio/boxed's optionsOf/ruleOf read elsewhere in this codebase.
+examples:
+  - id: input-matches-expected
+    expr: [VerificationTest, [Add, 2, 3], 5]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Success'"], [Tuple, "'Input'", 5], [Tuple, "'ExpectedOutput'", 5], [Tuple, "'ActualOutput'", 5], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    caption: input matches expected
+    volatile:
+      - AbsoluteTimeUsed
+    divergence:
+      wolfram: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.
+  - id: input-evaluates-but-does-not-match-expected
+    expr: [VerificationTest, [Add, 2, 3], 6]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Failure'"], [Tuple, "'Input'", 5], [Tuple, "'ExpectedOutput'", 6], [Tuple, "'ActualOutput'", 5], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    caption: input evaluates but does not match expected
+    volatile:
+      - AbsoluteTimeUsed
+    divergence:
+      wolfram: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.
+  - id: memoryconstraint-in-process-is-an-error-not-a
+    expr: [VerificationTest, [Add, 2, 3], 5, [KeyValuePair, MemoryConstraint, 1000000]]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Error'"], [Tuple, "'Input'", 5], [Tuple, "'ExpectedOutput'", 5], [Tuple, "'ActualOutput'", Missing], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    category: Possible issues
+    caption: MemoryConstraint in-process is an Error, not a silently-ignored option
+    volatile:
+      - AbsoluteTimeUsed
+  - id: one-argument-a-predicate-that-evaluates-to-true
+    expr: [VerificationTest, [Greater, 2, 1]]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Success'"], [Tuple, "'Input'", [Less, 1, 2]], [Tuple, "'ExpectedOutput'", Missing], [Tuple, "'ActualOutput'", True], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    caption: 'one argument: a predicate that evaluates to True'
+    volatile:
+      - AbsoluteTimeUsed
+  - id: one-argument-succeeds-whenever-input-evaluates
+    expr: [VerificationTest, [Add, 1, 1]]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Success'"], [Tuple, "'Input'", 2], [Tuple, "'ExpectedOutput'", Missing], [Tuple, "'ActualOutput'", 2], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    caption: one argument succeeds whenever input evaluates without an error
+    category: Possible issues
+    volatile:
+      - AbsoluteTimeUsed
+    divergence:
+      wolfram: Wolfram's one-argument form tests that input evaluates to True, so VerificationTest[1 + 1] is a Failure there.
+  - id: a-symbolic-computation-checked-against-its
+    expr: [VerificationTest, [Expand, [Power, [Add, x, 1], 2]], [Add, [Power, x, 2], [Multiply, 2, x], 1]]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Success'"], [Tuple, "'Input'", [Expand, [Power, [Add, x, 1], 2]]], [Tuple, "'ExpectedOutput'", [Add, [Power, x, 2], [Multiply, 2, x], 1]], [Tuple, "'ActualOutput'", [Add, [Power, x, 2], [Multiply, 2, x], 1]], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    caption: a symbolic computation checked against its expected form
+    category: Scope
+    volatile:
+      - AbsoluteTimeUsed
+  - id: a-testid-is-carried-into-the-result
+    expr: [VerificationTest, [Divide, 1, 0], ComplexInfinity, [KeyValuePair, TestID, "'pole'"]]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Success'"], [Tuple, "'Input'", ComplexInfinity], [Tuple, "'ExpectedOutput'", ComplexInfinity], [Tuple, "'ActualOutput'", ComplexInfinity], [Tuple, "'AbsoluteTimeUsed'", 0], [Tuple, "'TestID'", "'pole'"]]
+    caption: a TestID is carried into the result
+    category: Scope
+    volatile:
+      - AbsoluteTimeUsed
+  - id: the-default-comparison-is-structural
+    expr: [VerificationTest, [Add, [Power, x, 2], [Multiply, 2, x], 1], [Power, [Add, x, 1], 2]]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Failure'"], [Tuple, "'Input'", [Add, [Power, x, 2], [Multiply, 2, x], 1]], [Tuple, "'ExpectedOutput'", [Power, [Add, x, 1], 2]], [Tuple, "'ActualOutput'", [Add, [Power, x, 2], [Multiply, 2, x], 1]], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    caption: 'the default comparison is structural: mathematically equal but differently written is a Failure'
+    category: Possible issues
+    volatile:
+      - AbsoluteTimeUsed
+  - id: a-sametest-with-a-tolerance-22-7-3-14-0-01
+    expr: [VerificationTest, [Divide, 22, 7], 3.14, [KeyValuePair, SameTest, [Function, [Less, [Abs, [Subtract, a, b]], 0.01], a, b]]]
+    expected: [TestResultObject, [Tuple, "'Outcome'", "'Success'"], [Tuple, "'Input'", [Rational, 22, 7]], [Tuple, "'ExpectedOutput'", 3.14], [Tuple, "'ActualOutput'", [Rational, 22, 7]], [Tuple, "'AbsoluteTimeUsed'", 0]]
+    caption: 'a SameTest with a tolerance: $|22/7 - 3.14| < 0.01$ passes'
+    category: Scope
+    volatile:
+      - AbsoluteTimeUsed

@@ -1,0 +1,35 @@
+name: BellY
+domain: Special functions
+signature: BellY(n, k, xs)
+summary: The partial (incomplete) Bell polynomial $B_{n,k}(x_1, x_2, \dots)$, by its textbook recurrence — built entirely from bigint binomial coefficients and compute-engine's own Add/Multiply, so it works the same for numeric or symbolic $x_i$.
+signatures:
+  - call: BellY(n, k, xs)
+    description: $B_{n,k}(x_1, \dots, x_{n-k+1})$, from the list `xs`.
+    library: '@enumeratio/analytic'
+details:
+  - "Comtet's recurrence: $B_{n,k} = \\sum_{i=1}^{n-k+1} \\binom{n-1}{i-1} x_i B_{n-i,k-1}$, with $B_{0,0}=1$."
+  - All-ones arguments give the Stirling numbers of the second kind; $x_j = j!$ gives the (unsigned) Lah numbers — both checked directly against Wolfram's `BellY`.
+  - "`xs` must have exactly $n-k+1$ elements, matching Wolfram's own arity requirement."
+examples:
+  - id: belly-4-2-list-x1-x2-x3
+    expr: [BellY, 4, 2, [List, x1, x2, x3]]
+    expected: [Add, [Multiply, 3, [Power, x2, 2]], [Multiply, 4, x1, x3]]
+  - id: all-ones-arguments-give-stirling-6-2
+    expr: [BellY, 6, 2, [List, 1, 1, 1, 1, 1]]
+    expected: 31
+    category: Properties
+    caption: All-ones arguments give Stirling(6, 2)
+  - id: x-j-j-gives-the-lah-number-l-4-2
+    expr: [BellY, 4, 2, [List, 1, 2, 6]]
+    expected: 36
+    category: Properties
+    caption: $x_j = j!$ gives the Lah number L(4, 2)
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/bell-y.ts
+seeAlso:
+  - BellNumber
+  - StirlingS2

@@ -1,0 +1,30 @@
+name: SemistandardTableaux
+domain: Collections
+signature: SemistandardTableaux(size, max_entry)
+summary: Semistandard Young tableaux of $n$ cells with entries in $\{1, …, k\}$, summed over every shape $\lambda \vdash n$, as a lazy indexed family.
+signatures:
+  - call: SemistandardTableaux(size, max_entry)
+    library: enumeratio-collections
+    description: the SSYT of `size` cells over every partition shape, entries from 1 to `max_entry`.
+details:
+  - A lazy indexed collection; the count is the hook-content formula $s_\lambda(1^k) = \prod_{(r,c) \in \lambda} \frac{k + c - r}{hook(r,c)}$, summed over every shape $\lambda \vdash n$ — exact and closed-form.
+  - "Each element is the filling's rows: weakly increasing left to right, strictly increasing top to bottom — semistandard, not standard, so entries may repeat within a row (unlike a standard Young tableau)."
+  - 'Unranked in shape-then-entries order: by row-length shape first, then the flattened filling.'
+examples:
+  - id: count-semistandardtableaux-4-3-39-every-ssyt-of
+    expr: [Count, [SemistandardTableaux, 4, 3]]
+    expected: 39
+    category: Basic
+    caption: '$Count(SemistandardTableaux(4, 3)) = 39$: every SSYT of 4 cells with entries in $\{1,2,3\}$, summed over shape'
+  - id: the-first-ssyt-of-3-cells-with-entries-in-1-2-as
+    expr: [At, [SemistandardTableaux, 3, 2], 1]
+    expected: [List, [List, 1, 1], [List, 2]]
+    category: Scope
+    caption: The first SSYT of 3 cells with entries in $\{1, 2\}$, as a list of rows
+enumerate:
+  expr: SemistandardTableaux(4, 3)
+  columns: Length
+seeAlso:
+  - IntegerPartitions
+  - Count
+  - At

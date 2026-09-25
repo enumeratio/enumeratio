@@ -1,0 +1,43 @@
+name: ModularWord
+domain: The modular group
+signature: ModularWord(matrix)
+summary: The unique positive word in $L$ and $R$ of a matrix in $\mathrm{PSL}(2,\mathbb{Z})$ with non-negative entries — which is also its path down the Stern–Brocot tree.
+signatures:
+  - call: ModularWord(matrix)
+    description: the positive $LR$ word
+    library: enumeratio-modular
+  - call: ModularMatrix(a, b, c, d)
+    description: a matrix; every head here also accepts the word in its place
+    library: enumeratio-modular
+  - call: ModularSTWord(matrix)
+    description: the alternating $S$/$T$ factorisation, as its list of $T$-exponents
+    library: enumeratio-modular
+details:
+  - $L = \begin{pmatrix}1&0\\1&1\end{pmatrix}$ and $R = \begin{pmatrix}1&1\\0&1\end{pmatrix}$ generate the positive cone
+  - 'The peel never searches: $R$ comes off when $a \ge c$ and $b \ge d$, $L$ when $c \ge a$ and $d \ge b$, and both at once would force determinant $0$'
+  - '`ModularKind` sorts by $|\mathrm{tr}|$ against $2$ — elliptic, parabolic, hyperbolic'
+  - A positive word is hyperbolic exactly when it uses both letters; all-$L$ and all-$R$ are parabolic
+  - 'Rebuilding from an $S$/$T$ word can return $-M$: that sign is the $\pm I$ that $\mathrm{PSL}$ quotients out'
+examples:
+  - id: the-shortest-geodesic
+    expr: [ModularWord, [ModularMatrix, 1, 1, 1, 2]]
+    expected: "'LR'"
+    caption: the shortest geodesic
+  - id: a-word-evaluates-as-its-matrix
+    expr: [ModularTrace, "'LRLR'"]
+    expected: 7
+    caption: a word evaluates as its matrix
+  - id: t-5-fixes-a-cusp
+    expr: [ModularKind, [ModularMatrix, 1, 5, 0, 1]]
+    expected: "'Parabolic'"
+    caption: $T^5$ fixes a cusp
+    category: Properties
+  - id: the-s-t-exponents-are-a-continued-fraction
+    expr: [ModularSTWord, [ModularMatrix, 1, 5, 0, 1]]
+    expected: [List, 5]
+    caption: the $S$/$T$ exponents are a continued fraction
+    category: Scope
+seeAlso:
+  - ContinuedFraction
+  - ModularClasses
+  - RademacherSymbol

@@ -1,0 +1,23 @@
+name: Ascents
+domain: Permutation statistics
+signature: Ascents(p)
+summary: 'The number of ascents of $p$: positions $i$ with $p_i < p_{i+1}$.'
+signatures:
+  - call: Ascents(p)
+    description: the ascent count of a one-line permutation $p$
+    library: enumeratio-collections
+details:
+  - 'Complementary to [[Descents]]: $\mathrm{Ascents} + \mathrm{Descents} = n - 1$'
+  - The identity is all-ascent, the reversal all-descent
+examples:
+  - id: only-1-2
+    expr: [Ascents, [List, 3, 1, 2]]
+    expected: 1
+    caption: only $1 < 2$
+  - id: the-identity-ascends-throughout
+    expr: [Ascents, [List, 1, 2, 3]]
+    expected: 2
+    caption: the identity ascends throughout
+seeAlso:
+  - Descents
+  - SymmetricGroup

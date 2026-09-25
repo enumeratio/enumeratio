@@ -1,0 +1,202 @@
+name: Cos
+domain: Elementary functions
+signature: Cos(x)
+summary: The cosine of x, in radians.
+signatures:
+  - call: Cos(x)
+    description: the cosine of x, in radians.
+details:
+  - 'Even function: $\cos(-x) = \cos(x)$.'
+  - Period $2\pi$.
+  - 'Reciprocal of [[Sec]]: $\cos(x) = \frac{1}{\sec(x)}$.'
+  - 'Co-function with [[Sin]]: $\cos(x) = \sin(\pi/2 - x)$.'
+examples:
+  - id: cos-0
+    expr: [Cos, 0]
+    expected: 1
+  - id: cos-pi-over-6
+    expr: [Cos, [Divide, Pi, 6]]
+    expected: [Divide, [Sqrt, 3], 2]
+  - id: cos-pi-over-4
+    expr: [Cos, [Divide, Pi, 4]]
+    expected: [Divide, [Sqrt, 2], 2]
+  - id: cos-pi-over-3
+    expr: [Cos, [Divide, Pi, 3]]
+    expected: [Rational, 1, 2]
+  - id: cos-pi-over-2
+    expr: [Cos, [Divide, Pi, 2]]
+    expected: 0
+  - id: cos-pi
+    expr: [Cos, Pi]
+    expected: -1
+  - id: even-function-cos-x-cos-x
+    expr: [Equal, [Cos, [Negate, [Divide, Pi, 3]]], [Cos, [Divide, Pi, 3]]]
+    expected: True
+    category: Properties
+    caption: 'Even function: $\cos(-x) = \cos(x)$'
+  - id: co-function-identity-cos-x-sin-pi-2-x
+    expr: [Equal, [Cos, [Divide, Pi, 6]], [Sin, [Subtract, [Divide, Pi, 2], [Divide, Pi, 6]]]]
+    expected: True
+    category: Properties
+    caption: 'Co-function identity: $\cos x = \sin(\pi/2 - x)$'
+  - id: threads-element-wise-over-a-list
+    expr: [Cos, [List, 0, [Divide, Pi, 2], Pi]]
+    expected: [List, 1, 0, -1]
+    category: Applications
+    caption: Threads element-wise over a list
+  - id: as-with-sin-a-non-special-numeric-argument-stays
+    expr: [Cos, 2]
+    expected: [Cos, 2]
+    category: Possible issues
+    caption: As with [[Sin]], a non-special numeric argument stays symbolic unless it's already a float
+  - id: cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden
+    expr: [Cos, [Divide, Pi, 5]]
+    expected: [Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4]]
+    category: Neat examples
+    caption: $\cos(\pi/5) = \frac{1+\sqrt5}{4}$, related to the golden ratio
+  - id: cos-30-circ-exactly
+    expr: [Cos, [Degrees, 30]]
+    expected: [Divide, [Sqrt, 3], 2]
+    caption: $\cos 30^\circ$, exactly
+  - id: a-machine-precision-argument-evaluates
+    expr: [Cos, 1.2]
+    expected: {num: '0.362357754476673577638'}
+    caption: A machine-precision argument evaluates numerically
+  - id: n-of-an-exact-argument-gives-an-arbitrary
+    expr: [N, [Cos, [Rational, 6, 5]]]
+    expected: {num: '0.362357754476673577638'}
+    category: Scope
+    caption: N(...) of an exact argument gives an arbitrary-precision value
+  - id: evaluates-at-a-complex-argument
+    expr: [Cos, [Complex, 2.5, 1]]
+    expected: [Complex, -1.236229198856342, -0.7033251781135347]
+    category: Scope
+    caption: Evaluates at a complex argument
+  - id: threads-element-wise-over-a-matrix
+    expr: [Cos, [List, [List, [Multiply, 5, [Divide, Pi, 6]], 0], [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 2]]]]]
+    expected: [List, [List, [Negate, [Divide, [Sqrt, 3], 2]], 1], [List, 0, 0]]
+    category: Scope
+    caption: Threads element-wise over a matrix
+  - id: cos-pi-12-frac-sqrt-6-sqrt-2-4
+    expr: [Cos, [Divide, Pi, 12]]
+    expected: [Add, [Divide, [Sqrt, 2], 4], [Divide, [Sqrt, 6], 4]]
+    category: Scope
+    caption: $\cos(\pi/12) = \frac{\sqrt6 + \sqrt2}{4}$
+  - id: cos-pi-8-frac-sqrt-2-sqrt-2-2
+    expr: [Cos, [Divide, Pi, 8]]
+    expected: [Multiply, [Rational, 1, 2], [Sqrt, [Add, 2, [Sqrt, 2]]]]
+    category: Scope
+    caption: $\cos(\pi/8) = \frac{\sqrt{2+\sqrt2}}{2}$
+  - id: cos-pi-10-frac-sqrt-10-2-sqrt-5-4
+    expr: [Cos, [Divide, Pi, 10]]
+    expected: [Multiply, [Divide, [Sqrt, 2], 4], [Sqrt, [Add, 5, [Sqrt, 5]]]]
+    category: Scope
+    caption: $\cos(\pi/10) = \frac{\sqrt{10+2\sqrt5}}{4}$
+  - id: cos-2-pi-5-frac-sqrt-5-1-4
+    expr: [Cos, [Multiply, [Rational, 2, 5], Pi]]
+    expected: [Add, [Rational, -1, 4], [Divide, [Sqrt, 5], 4]]
+    category: Scope
+    caption: $\cos(2\pi/5) = \frac{\sqrt5 - 1}{4}$
+  - id: cos-3-pi-5-frac-1-sqrt-5-4
+    expr: [Cos, [Multiply, [Rational, 3, 5], Pi]]
+    expected: [Add, [Rational, 1, 4], [Negate, [Divide, [Sqrt, 5], 4]]]
+    category: Scope
+    caption: $\cos(3\pi/5) = \frac{1 - \sqrt5}{4}$
+  - id: reduced-into-the-first-quadrant-by-symmetry
+    expr: [Cos, [Multiply, [Rational, 11, 6], Pi]]
+    expected: [Divide, [Sqrt, 3], 2]
+    category: Scope
+    caption: Reduced into the first quadrant by symmetry
+  - id: interval-arithmetic-the-image-of-pi-3-pi-2-is-0
+    expr: [Cos, [Interval, [Divide, Pi, 3], [Divide, Pi, 2]]]
+    expected: [Interval, 0, [Rational, 1, 2]]
+    category: Scope
+    caption: 'Interval arithmetic: the image of $[\pi/3, \pi/2]$ is $[0, \tfrac12]$'
+  - id: uncertainty-propagation-cos-2-pm-0-01-approx-0
+    expr: [Cos, [Around, 2, 0.01]]
+    expected: [Around, -0.4161468365471424, 0.009092974268256816]
+    category: Scope
+    caption: 'Uncertainty propagation: $\cos(2 \pm 0.01) \approx -0.4161 \pm 0.0091$'
+  - id: cos-infty-should-be-the-oscillation-range-1-1
+    expr: [Cos, PositiveInfinity]
+    expected: [Interval, -1, 1]
+    aspirational: true
+    category: Scope
+    caption: $\cos(\infty)$ should be the oscillation range $[-1, 1]$; compute-engine returns a type error
+  - id: an-imaginary-argument-rewrites-to-cosh-cos-ix
+    expr: [Cos, [Multiply, ImaginaryUnit, x]]
+    expected: [Cosh, x]
+    category: Scope
+    caption: 'An imaginary argument rewrites to [[Cosh]]: $\cos(ix) = \cosh x$'
+  - id: evenness-drops-the-sign-of-a-symbolic-argument
+    expr: [Cos, [Negate, x]]
+    expected: [Cos, x]
+    category: Scope
+    caption: 'Evenness drops the sign of a symbolic argument: $\cos(-x) = \cos x$'
+  - id: cos-arccos-x-x-for-every-x
+    expr: [Cos, [Arccos, x]]
+    expected: x
+    category: Scope
+    caption: $\cos(\arccos x) = x$ for every $x$
+  - id: cos-arcsin-x-sqrt-1-x-2
+    expr: [Cos, [Arcsin, x]]
+    expected: [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]
+    category: Scope
+    caption: $\cos(\arcsin x) = \sqrt{1 - x^2}$
+  - id: cos-arctan-x-frac-1-sqrt-1-x-2
+    expr: [Cos, [Arctan, x]]
+    expected: [Divide, 1, [Sqrt, [Add, [Power, x, 2], 1]]]
+    category: Scope
+    caption: $\cos(\arctan x) = \frac{1}{\sqrt{1 + x^2}}$
+  - id: derivative-sin-x
+    expr: [D, [Cos, x], x]
+    expected: [Negate, [Sin, x]]
+    category: Scope
+    caption: 'Derivative: $-\sin x$'
+  - id: antiderivative
+    expr: [Integrate, [Cos, x], x]
+    expected: [Sin, x]
+    category: Scope
+    caption: Antiderivative
+  - id: taylor-series-about-0-only-even-powers-appear
+    expr: [Series, [Cos, x], x, 0, 6]
+    expected: [Add, [Multiply, [Rational, -1, 720], [Power, x, 6]], [Multiply, [Rational, 1, 24], [Power, x, 4]], [Multiply, [Rational, -1, 2], [Power, x, 2]], [BigO, [Power, x, 8]], 1]
+    category: Scope
+    caption: Taylor series about 0 -- only even powers appear
+    divergence:
+      wolfram: Wolfram's Series[Cos[x], {x, 0, 6}] ends with O[x]^7; compute-engine skips the vanishing odd term and reports O(x^8).
+  - id: double-angle-formula-cos-2x-cos-2-x-sin-2-x
+    expr: [TrigExpand, [Cos, [Multiply, 2, x]]]
+    expected: [Add, [Negate, [Power, [Sin, x], 2]], [Power, [Cos, x], 2]]
+    category: Properties
+    caption: 'Double-angle formula: $\cos 2x = \cos^2 x - \sin^2 x$'
+  - id: angle-addition-formula
+    expr: [TrigExpand, [Cos, [Add, x, y]]]
+    expected: [Add, [Multiply, [Cos, x], [Cos, y]], [Negate, [Multiply, [Sin, x], [Sin, y]]]]
+    category: Properties
+    caption: Angle-addition formula
+  - id: power-reduction-cos-2-x-frac-1-cos-2x-2
+    expr: [TrigReduce, [Power, [Cos, x], 2]]
+    expected: [Add, [Multiply, [Rational, 1, 2], [Cos, [Multiply, 2, x]]], [Rational, 1, 2]]
+    category: Properties
+    caption: 'Power reduction: $\cos^2 x = \frac{1 + \cos 2x}{2}$'
+  - id: euler-s-formula-cos-x-frac-e-ix-e-ix-2
+    expr: [TrigToExp, [Cos, x]]
+    expected: [Multiply, [Rational, 1, 2], [Add, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]]]
+    category: Properties
+    caption: "Euler's formula: $\\cos x = \\frac{e^{ix} + e^{-ix}}{2}$"
+  - id: pi-24-is-past-the-automatic-special-angle-table
+    expr: [Cos, [Multiply, [Rational, 1, 24], Pi]]
+    expected: [Cos, [Multiply, [Rational, 1, 24], Pi]]
+    category: Possible issues
+    caption: $\pi/24$ is past the automatic special-angle table (as in Wolfram), so this stays symbolic
+  - id: to-30-significant-digits-every-one-correctly
+    expr: [N, [Cos, 1], 30]
+    expected: {num: '0.540302305868139717400936607443'}
+    category: Scope
+    caption: To 30 significant digits, every one correctly rounded
+seeAlso:
+  - Sin
+  - Tan
+  - Sec
+  - Arccos

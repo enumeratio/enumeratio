@@ -1,0 +1,45 @@
+name: LorenzBraid
+domain: Braids and knots
+signature: LorenzBraid(word)
+summary: The braid a closed geodesic of the modular flow draws. By Ghys's theorem the modular knots are exactly the periodic orbits of the Lorenz attractor, and those have a purely combinatorial positive braid.
+signatures:
+  - call: LorenzBraid(word)
+    description: the positive permutation braid of the orbit
+    library: enumeratio-braid
+  - call: LorenzPermutation(word)
+    description: how the flow permutes the orbit's branch-line points
+    library: enumeratio-braid
+  - call: TripNumber(word)
+    description: the count of $LR$ corners — the braid index of the link
+    library: enumeratio-braid
+details:
+  - The word's cyclic rotations name the orbit's points; both branches of the template preserve orientation, so they are ordered lexicographically with $L < R$
+  - The flow sends each rotation to the next, and the positive permutation braid of that permutation is the Lorenz braid
+  - Trip number $1$ means braid index $1$, which means the unknot — so $L^pR^q$ draws the UNKNOT, not $T(p,q)$
+  - When the permutation is a rotation $i \mapsto i+k$ on $n$ points the knot is $T(k, n-k)$; those words are the Christoffel words
+  - The shortest geodesic drawing a trefoil is $LLRLR$, of symbolic length 5
+  - A repeated word traverses one geodesic several times and has no well-defined point order, so it is refused
+examples:
+  - id: the-shortest-knotted-geodesic-draws-a-trefoil
+    expr: [AlexanderPolynomial, "'LLRLR'"]
+    expected: [Add, [Power, t, 2], [Negate, t], 1]
+    caption: the shortest knotted geodesic draws a trefoil
+  - id: braid-index-2
+    expr: [TripNumber, "'LLRLR'"]
+    expected: 2
+    caption: braid index 2
+    category: Properties
+  - id: one-hump-each-way-is-unknotted-however-long
+    expr: [AlexanderPolynomial, "'LLLRRRR'"]
+    expected: 1
+    caption: one hump each way is unknotted, however long
+    category: Properties
+  - id: a-rotation-by-2-on-5-points-hence-t-2-3
+    expr: [LorenzPermutation, "'LLRLR'"]
+    expected: [List, 3, 4, 5, 1, 2]
+    caption: a rotation by 2 on 5 points — hence $T(2,3)$
+    category: Scope
+seeAlso:
+  - Braid
+  - AlexanderPolynomial
+  - ModularClasses

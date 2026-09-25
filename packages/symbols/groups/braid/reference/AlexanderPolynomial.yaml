@@ -1,0 +1,83 @@
+name: AlexanderPolynomial
+domain: Braids and knots
+signature: AlexanderPolynomial(knot)
+summary: The Alexander polynomial of a knot, computed from the reduced Burau representation over $\mathbb{Z}[t,t^{-1}]$ and returned as an ordinary expression in $t$. Takes the knot however it is named — as $T(p,q)$, as a braid it closes from, or as a modular word.
+signatures:
+  - call: AlexanderPolynomial(knot)
+    description: $\Delta(t)$, normalised to start at $t^0$
+    library: enumeratio-braid
+  - call: TorusKnot(p, q)
+    description: $T(p,q)$ as a knot — the closed form, with no braid involved
+    library: enumeratio-braid
+  - call: TwistKnot(n)
+    description: the twist knot with $n$ half-twists past its clasp — another closed form
+    library: enumeratio-braid
+  - call: PretzelKnot(p, q, r)
+    description: $P(p,q,r)$ as a knot, for odd $p,q,r$ — closed form, no braid at all
+    library: enumeratio-braid
+  - call: FigureEightKnot()
+    description: TwistKnot(1) under its own name
+    library: enumeratio-braid
+  - call: BurauMatrix(braid)
+    description: the reduced Burau matrix itself
+    library: enumeratio-braid
+  - call: SeifertGenus(knot)
+    description: $(p-1)(q-1)/2$ for $T(p,q)$, $1$ for a twist or pretzel knot, else a POSITIVE braid's $(c-s+1)/2$
+    library: enumeratio-braid
+details:
+  - $\Delta(t) \doteq \det(\psi(\beta) - I)\cdot(1-t)/(1-t^n)$, for $\psi$ the reduced Burau representation
+  - $\Delta$ is only defined up to $\pm t^k$, so results are normalised — lowest term at $t^0$ with a positive coefficient
+  - $\Delta_{T(p,q)}(t) = (t^{pq}-1)(t-1)/((t^p-1)(t^q-1))$, which is the oracle the Burau computation is checked against
+  - $\Delta_{TwistKnot(n)}(t) = nt^2 - (2n+1)t + n$; $n=1$ is the figure-eight and $n=-1$ is the trefoil
+  - $\Delta_{P(p,q,r)}(t) = \tfrac14[(pq+qr+rp)(t-2+t^{-1}) + (t+2+t^{-1})]$, for odd $p,q,r$
+  - A twist or pretzel knot is genus 1 always — the underlying Seifert surface has two disks joined by two or three bands, and adding a twist lengthens a band rather than adding one
+  - 'The determinant uses Bareiss elimination: every intermediate is a minor, so each division is exact over $\mathbb{Z}[t,t^{-1}]$'
+  - "Bennequin: on a POSITIVE braid, Seifert's algorithm is already optimal, so the genus formula holds — on a mixed braid it does not"
+  - No braid-word family in $n$ or $(p,q,r)$ is known for twist or pretzel knots in general, so `JonesPolynomial` and `KnotCurve` decline there except at the figure-eight and the trefoil, which carry the specific braid this package already had for them
+examples:
+  - id: the-trefoil
+    expr: [AlexanderPolynomial, [Braid, 2, [List, 1, 1, 1]]]
+    expected: [Add, [Power, t, 2], [Negate, t], 1]
+    caption: the trefoil
+  - id: the-figure-eight-knot
+    expr: [AlexanderPolynomial, [BraidPower, [Braid, 3, [List, 1, -2]], 2]]
+    expected: [Add, [Power, t, 2], [Multiply, -3, t], 1]
+    caption: the figure-eight knot
+  - id: and-under-its-own-name-twistknot-1
+    expr: [AlexanderPolynomial, [FigureEightKnot]]
+    expected: [Add, [Power, t, 2], [Multiply, -3, t], 1]
+    caption: …and under its own name, TwistKnot(1)
+    category: Scope
+  - id: the-stevedore-knot-61-two-half-twists
+    expr: [AlexanderPolynomial, [TwistKnot, 2]]
+    expected: [Add, [Multiply, 2, [Power, t, 2]], [Multiply, -5, t], 2]
+    caption: the Stevedore knot, 6₁ — two half-twists
+    category: Scope
+  - id: p-1-1-1-is-the-unknot
+    expr: [AlexanderPolynomial, [PretzelKnot, 1, 1, -1]]
+    expected: 1
+    caption: P(1,1,-1) is the unknot
+    category: Scope
+  - id: 3-1-4-1-2
+    expr: [SeifertGenus, [TorusBraid, 3, 4]]
+    expected: 3
+    caption: $(3-1)(4-1)/2$
+    category: Properties
+  - id: a-twist-knot-s-genus-does-not-grow-with-the
+    expr: [SeifertGenus, [TwistKnot, 5]]
+    expected: 1
+    caption: a twist knot's genus does not grow with the twist count
+    category: Properties
+  - id: a-mixed-braid-has-no-bennequin-genus-so-the-call
+    expr: [SeifertGenus, [Braid, 3, [List, 1, -2]]]
+    expected: [SeifertGenus, [Braid, 3, [List, 1, -2]]]
+    caption: a mixed braid has no Bennequin genus, so the call is left alone
+    category: Possible issues
+  - id: an-even-band-is-not-this-family-so-the-call-is
+    expr: [SeifertGenus, [PretzelKnot, 2, 1, 1]]
+    expected: [SeifertGenus, [PretzelKnot, 2, 1, 1]]
+    caption: an even band is not this family, so the call is left alone
+    category: Possible issues
+seeAlso:
+  - Braid
+  - LorenzBraid

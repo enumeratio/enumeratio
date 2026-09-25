@@ -1,0 +1,49 @@
+name: Any
+domain: Collections
+signature: Any(xs, predicate)
+summary: Whether some element of a collection satisfies a predicate.
+signatures:
+  - call: Any(xs, predicate)
+    description: $True$ if $predicate$ holds for at least one element of $xs$, else $False$.
+  - call: Any(xs, predicate, level)
+    description: the elements at exactly `level` tested instead of the top-level ones.
+    library: enumeratio-collections
+examples:
+  - id: any-list-1-3-5-function-1-mod-2-eq-0
+    expr: [Any, [List, 1, 3, 5], [Function, [Equal, [Mod, _1, 2], 0]]]
+    expected: False
+  - id: any-list-1-3-6-function-1-mod-2-eq-0
+    expr: [Any, [List, 1, 3, 6], [Function, [Equal, [Mod, _1, 2], 0]]]
+    expected: True
+  - id: a-named-predicate
+    expr: [Any, [List, 4, 6, 7], IsPrime]
+    expected: True
+    caption: A named predicate
+  - id: any-list-1-2-3-function-1-gt-2
+    expr: [Any, [List, 1, 2, 3], [Function, [Greater, _1, 2]]]
+    expected: True
+  - id: without-a-predicate-tests-the-elements
+    expr: [Any, [List, False, True]]
+    expected: True
+    category: Scope
+    caption: Without a predicate, tests the elements themselves
+    divergence:
+      wolfram: AnyTrue needs a test; $\mathrm{AnyTrue}[\{False, True\}]$ stays unevaluated.
+  - id: a-level-argument-tests-the-elements-at-depth-2
+    expr: [Any, [List, [List, 1, 2], [List, 3, -4]], [Function, [Less, _1, 0]], 2]
+    expected: True
+    category: Scope
+    caption: A level argument tests the elements at depth 2 of a nested list
+  - id: always-false-on-an-empty-list
+    expr: [Any, [List], IsEven]
+    expected: False
+    category: Properties
+    caption: Always false on an empty list
+  - id: some-element-passes-exactly-when-not-every
+    expr: [Equal, [Any, [List, 1, 3, 5], IsEven], [Not, [All, [List, 1, 3, 5], IsOdd]]]
+    expected: True
+    category: Properties
+    caption: Some element passes exactly when not every element fails. See [[All]]
+seeAlso:
+  - All
+  - NoneTrue

@@ -1,0 +1,30 @@
+name: QuiverCompose
+domain: Path algebras
+signature: QuiverCompose(quiver, p, q)
+summary: Concatenate two paths — or zero, when $q$ does not start where $p$ ends. Most products in a path algebra are zero, and that is the structure rather than a failure.
+signatures:
+  - call: QuiverCompose(quiver, p, q)
+    description: $p$ then $q$, or 0
+    library: enumeratio-quiver
+details:
+  - Associative, and the trivial paths act as local identities
+  - Zero is an honest answer here — it is returned as 0, not left symbolic
+  - The quiver is an argument because a path carries no reference to its own quiver
+examples:
+  - id: 1-to-2-then-2-to-3
+    expr: [QuiverCompose, [LinearQuiver, 4], [QuiverPath, 1, [List, 0]], [QuiverPath, 2, [List, 1]]]
+    expected: [QuiverPath, 1, [List, 0, 1]]
+    caption: $1\to2$ then $2\to3$
+  - id: the-ends-do-not-meet
+    expr: [QuiverCompose, [LinearQuiver, 4], [QuiverPath, 2, [List, 1]], [QuiverPath, 1, [List, 0]]]
+    expected: 0
+    caption: the ends do not meet
+    category: Properties
+  - id: a-trivial-path-is-a-local-identity
+    expr: [QuiverCompose, [LinearQuiver, 4], [QuiverPath, 1, [List]], [QuiverPath, 1, [List, 0]]]
+    expected: [QuiverPath, 1, [List, 0]]
+    caption: a trivial path is a local identity
+    category: Properties
+seeAlso:
+  - QuiverPath
+  - QuiverIsAcyclic

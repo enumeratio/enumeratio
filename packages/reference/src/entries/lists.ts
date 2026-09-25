@@ -1,4 +1,19 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
+
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/combinatorics/collections/reference/All.yaml",
+  "packages/symbols/combinatorics/collections/reference/Any.yaml",
+  "packages/symbols/combinatorics/collections/reference/NoneTrue.yaml",
+  "packages/reference/entries/Fold.yaml",
+  "packages/symbols/combinatorics/collections/reference/Tabulate.yaml",
+  "packages/reference/entries/Scan.yaml",
+  "packages/reference/entries/Contains.yaml",
+  "packages/symbols/combinatorics/collections/reference/Unique.yaml",
+];
 
 export const lists: readonly ReferenceEntry[] = [
   {
@@ -328,10 +343,7 @@ export const lists: readonly ReferenceEntry[] = [
     signature: "Tabulate(f, n)",
     summary: "The list of $f$ applied to each index from 1 to $n$ (or a rectangular grid of them).",
     signatures: [
-      {
-        call: "Tabulate(f, n)",
-        description: "$[f(1), f(2), \\ldots, f(n)]$.",
-      },
+      { call: "Tabulate(f, n)", description: "$[f(1), f(2), \\ldots, f(n)]$." },
       {
         call: "Tabulate(f, n, m, …)",
         description:
@@ -526,16 +538,8 @@ export const lists: readonly ReferenceEntry[] = [
       },
     ],
     examples: [
-      {
-        id: "contains-list-1-2-3-2",
-        expr: ["Contains", ["List", 1, 2, 3], 2],
-        expected: "True",
-      },
-      {
-        id: "contains-list-1-2-3-5",
-        expr: ["Contains", ["List", 1, 2, 3], 5],
-        expected: "False",
-      },
+      { id: "contains-list-1-2-3-2", expr: ["Contains", ["List", 1, 2, 3], 2], expected: "True" },
+      { id: "contains-list-1-2-3-5", expr: ["Contains", ["List", 1, 2, 3], 5], expected: "False" },
       {
         id: "contains-list-1-3-4-1-2-2",
         expr: ["Contains", ["List", 1, 3, 4, 1, 2], 2],
@@ -636,12 +640,7 @@ export const lists: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Elements can themselves be lists",
       },
-      {
-        id: "unique-list",
-        expr: ["Unique", ["List"]],
-        expected: ["List"],
-        category: "Scope",
-      },
+      { id: "unique-list", expr: ["Unique", ["List"]], expected: ["List"], category: "Scope" },
       {
         id: "a-second-argument-says-when-two-elements-count",
         expr: [

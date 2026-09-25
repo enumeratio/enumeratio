@@ -1,0 +1,59 @@
+name: IntegerPartitions
+domain: Collections
+signature: IntegerPartitions(n)
+summary: The partitions of $n$ into positive parts, as a lazy indexed family.
+signatures:
+  - call: IntegerPartitions(n)
+    description: every way to write $n$ as a sum of positive parts, order-insensitive.
+    library: enumeratio-collections
+  - call: IntegerPartitions(n, k)
+    description: the partitions of $n$ into at most $k$ parts.
+    library: enumeratio-collections
+  - call: IntegerPartitions(n, {k})
+    description: the partitions of $n$ into exactly $k$ parts.
+    library: enumeratio-collections
+  - call: IntegerPartitions(n, All, parts)
+    description: the partitions of $n$ using only parts drawn from the given list.
+    library: enumeratio-collections
+details:
+  - A lazy indexed collection, unranked in reverse-lexicographic order; the count is the partition number $p(n)$ — $p(8) = 22$ — with no elementary closed form.
+  - Each element is the part list in weakly decreasing order; drawn as a Ferrers diagram, its statistics (Length, LargestPart, DurfeeSquare, …) live in $@enumeratio/statistics$.
+  - Conjugation (transposing the diagram) is an involution; the self-conjugate partitions of $n$ equal the partitions of $n$ into distinct odd parts.
+examples:
+  - id: the-partitions-of-8-into-at-most-3-parts
+    expr: [IntegerPartitions, 8, 3]
+    expected: [List, [List, 8], [List, 7, 1], [List, 6, 2], [List, 6, 1, 1], [List, 5, 3], [List, 5, 2, 1], [List, 4, 4], [List, 4, 3, 1], [List, 4, 2, 2], [List, 3, 3, 2]]
+    caption: The partitions of 8 into at most 3 parts
+  - id: exactly-3-parts
+    expr: [IntegerPartitions, 8, [List, 3]]
+    expected: [List, [List, 6, 1, 1], [List, 5, 2, 1], [List, 4, 3, 1], [List, 4, 2, 2], [List, 3, 3, 2]]
+    category: Scope
+    caption: Exactly 3 parts
+  - id: parts-restricted-to-1-2-5
+    expr: [IntegerPartitions, 8, All, [List, 1, 2, 5]]
+    expected: [List, [List, 5, 2, 1], [List, 5, 1, 1, 1], [List, 2, 2, 2, 2], [List, 2, 2, 2, 1, 1], [List, 2, 2, 1, 1, 1, 1], [List, 2, 1, 1, 1, 1, 1, 1], [List, 1, 1, 1, 1, 1, 1, 1, 1]]
+    category: Scope
+    caption: Parts restricted to $\{1, 2, 5\}$
+  - id: the-family-has-p-8-22-members-compute-engine-s
+    expr: [NPartition, 8]
+    expected: 22
+    category: Properties
+    caption: The family has $p(8) = 22$ members, compute-engine's NPartition
+  - id: the-ways-to-make-change-for-a-dollar-from-1-5-10
+    expr: [Count, [IntegerPartitions, 100, All, [List, 1, 5, 10, 25, 50]]]
+    expected: 292
+    category: Applications
+    caption: The ways to make change for a dollar from 1, 5, 10, 25 and 50 cent coins
+  - id: euler-partitions-into-odd-parts-are-as-many-as
+    expr: [Count, [IntegerPartitions, 10, All, [List, 1, 3, 5, 7, 9]]]
+    expected: 10
+    category: Neat examples
+    caption: 'Euler: partitions into odd parts are as many as partitions into distinct parts, $q(10) = 10$. See [[DistinctPartitions]]'
+enumerate:
+  expr: IntegerPartitions(8)
+  columns: Length, LargestPart, DistinctParts, DurfeeSquare
+  glyph: partition
+seeAlso:
+  - Count
+  - At
+  - Length

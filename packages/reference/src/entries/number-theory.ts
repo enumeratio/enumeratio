@@ -1,4 +1,49 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
+
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/arithmetic/number-theory/reference/GCD.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/LCM.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/Quotient.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/Totient.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/NextPrime.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/NthPrime.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/PrimePi.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/IsPrime.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/FactorInteger.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/PrimeNu.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/PrimeOmega.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/Divisors.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/DivisorSigma.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/MoebiusMu.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/IsSquareFree.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/JacobiSymbol.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/LegendreSymbol.yaml",
+  "packages/symbols/groups/modular/reference/KroneckerSymbol.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/ExtendedGCD.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/RationalReconstruction.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/IntegerExponent.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/HermiteDecomposition.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/CarmichaelLambda.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/DivisorSum.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/IsCoprime.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/IsPerfect.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/IsPrimePower.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/LiouvilleLambda.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/MangoldtLambda.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/MersennePrimeExponent.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/PartitionsQ.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/PerfectNumber.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/PowersRepresentations.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/RamanujanTau.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/SquaresR.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/EulerE.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/FrobeniusSolve.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/FrobeniusNumber.yaml",
+];
 
 export const numberTheory: readonly ReferenceEntry[] = [
   {
@@ -17,16 +62,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Extends to rationals: $\\gcd(p_1/q_1, \\dots) = \\gcd(p_1, \\dots)/\\operatorname{lcm}(q_1, \\dots)$.",
     ],
     examples: [
-      {
-        id: "gcd-12-18",
-        expr: ["GCD", 12, 18],
-        expected: 6,
-      },
-      {
-        id: "gcd-24-36",
-        expr: ["GCD", 24, 36],
-        expected: 12,
-      },
+      { id: "gcd-12-18", expr: ["GCD", 12, 18], expected: 6 },
+      { id: "gcd-24-36", expr: ["GCD", 24, 36], expected: 12 },
       {
         id: "gcd-is-variadic-it-accepts-any-number-of",
         expr: ["GCD", 20, 30, 45],
@@ -101,11 +138,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Gaussian integers: the associate in the first quadrant",
       },
-      {
-        id: "gcd-2-6-10",
-        expr: ["GCD", 2, 6, 10],
-        expected: 2,
-      },
+      { id: "gcd-2-6-10", expr: ["GCD", 2, 6, 10], expected: 2 },
       {
         id: "reduce-12-18-to-lowest-terms-by-dividing-out-the",
         expr: ["Divide", 12, ["GCD", 12, 18]],
@@ -181,11 +214,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Extends to rationals: $\\operatorname{lcm}(p_1/q_1, \\dots) = \\operatorname{lcm}(p_1, \\dots)/\\gcd(q_1, \\dots)$.",
     ],
     examples: [
-      {
-        id: "lcm-4-6",
-        expr: ["LCM", 4, 6],
-        expected: 12,
-      },
+      { id: "lcm-4-6", expr: ["LCM", 4, 6], expected: 12 },
       {
         id: "lcm-is-variadic-it-accepts-any-number-of",
         expr: ["LCM", 4, 6, 10],
@@ -235,11 +264,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "$-1 + 3i = i(3 + i)$: associates share their multiples",
       },
-      {
-        id: "lcm-2-3-5",
-        expr: ["LCM", 2, 3, 5],
-        expected: 30,
-      },
+      { id: "lcm-2-3-5", expr: ["LCM", 2, 3, 5], expected: 30 },
       {
         id: "the-smallest-number-divisible-by-each-of-1",
         expr: ["LCM", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -312,11 +337,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "compute-engine has no Quotient; this follows Wolfram's.",
     ],
     examples: [
-      {
-        id: "quotient-17-5",
-        expr: ["Quotient", 17, 5],
-        expected: 3,
-      },
+      { id: "quotient-17-5", expr: ["Quotient", 17, 5], expected: 3 },
       {
         id: "the-floor-not-truncation",
         expr: ["Quotient", -7, 2],
@@ -401,21 +422,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "$\\varphi(0) = 0$, as in Wolfram; a list argument is threaded over element-wise.",
     ],
     examples: [
-      {
-        id: "totient-12",
-        expr: ["Totient", 12],
-        expected: 4,
-      },
-      {
-        id: "totient-36",
-        expr: ["Totient", 36],
-        expected: 12,
-      },
-      {
-        id: "totient-1",
-        expr: ["Totient", 1],
-        expected: 1,
-      },
+      { id: "totient-12", expr: ["Totient", 12], expected: 4 },
+      { id: "totient-36", expr: ["Totient", 36], expected: 12 },
+      { id: "totient-1", expr: ["Totient", 1], expected: 1 },
       {
         id: "rsa-key-setup-varphi-17-times-23-16-times-22-352",
         expr: ["Totient", 391],
@@ -460,11 +469,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
-      {
-        id: "totient-10",
-        expr: ["Totient", 10],
-        expected: 4,
-      },
+      { id: "totient-10", expr: ["Totient", 10], expected: 4 },
       {
         id: "large-integers-varphi-50",
         expr: ["Totient", ["Factorial", 50]],
@@ -523,16 +528,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Threads element-wise over a list, as Wolfram's Listable heads do.",
     ],
     examples: [
-      {
-        id: "nextprime-10",
-        expr: ["NextPrime", 10],
-        expected: 11,
-      },
-      {
-        id: "nextprime-100",
-        expr: ["NextPrime", 100],
-        expected: 101,
-      },
+      { id: "nextprime-10", expr: ["NextPrime", 10], expected: 11 },
+      { id: "nextprime-100", expr: ["NextPrime", 100], expected: 101 },
       {
         id: "the-second-prime-after-10",
         expr: ["NextPrime", 10, 2],
@@ -553,11 +550,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
-      {
-        id: "nextprime-6",
-        expr: ["NextPrime", 6],
-        expected: 7,
-      },
+      { id: "nextprime-6", expr: ["NextPrime", 6], expected: 7 },
       {
         id: "the-second-prime-after-50",
         expr: ["NextPrime", 50, 2],
@@ -631,16 +624,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: 2,
         caption: "The first prime is 2",
       },
-      {
-        id: "nthprime-10",
-        expr: ["NthPrime", 10],
-        expected: 29,
-      },
-      {
-        id: "nthprime-100",
-        expr: ["NthPrime", 100],
-        expected: 541,
-      },
+      { id: "nthprime-10", expr: ["NthPrime", 10], expected: 29 },
+      { id: "nthprime-100", expr: ["NthPrime", 100], expected: 541 },
       {
         id: "the-1000th-prime",
         expr: ["NthPrime", 1000],
@@ -699,27 +684,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Threads element-wise over a list, as Wolfram's Listable heads do.",
     ],
     examples: [
-      {
-        id: "no-primes-are-1",
-        expr: ["PrimePi", 1],
-        expected: 0,
-        caption: "No primes are ≤ 1",
-      },
-      {
-        id: "primepi-2",
-        expr: ["PrimePi", 2],
-        expected: 1,
-      },
-      {
-        id: "primepi-15",
-        expr: ["PrimePi", 15],
-        expected: 6,
-      },
-      {
-        id: "primepi-100",
-        expr: ["PrimePi", 100],
-        expected: 25,
-      },
+      { id: "no-primes-are-1", expr: ["PrimePi", 1], expected: 0, caption: "No primes are ≤ 1" },
+      { id: "primepi-2", expr: ["PrimePi", 2], expected: 1 },
+      { id: "primepi-15", expr: ["PrimePi", 15], expected: 6 },
+      { id: "primepi-100", expr: ["PrimePi", 100], expected: 25 },
       {
         id: "same-inverse-relation-viewed-from-primepi-s-side",
         expr: ["Equal", ["PrimePi", ["NthPrime", 50]], 50],
@@ -805,21 +773,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: "True",
         caption: "2 is the only even prime",
       },
-      {
-        id: "isprime-13",
-        expr: ["IsPrime", 13],
-        expected: "True",
-      },
-      {
-        id: "isprime-4",
-        expr: ["IsPrime", 4],
-        expected: "False",
-      },
-      {
-        id: "isprime-97",
-        expr: ["IsPrime", 97],
-        expected: "True",
-      },
+      { id: "isprime-13", expr: ["IsPrime", 13], expected: "True" },
+      { id: "isprime-4", expr: ["IsPrime", 4], expected: "False" },
+      { id: "isprime-97", expr: ["IsPrime", 97], expected: "True" },
       {
         id: "the-mersenne-prime-2-31-1",
         expr: ["IsPrime", ["Add", ["Power", 2, 31], -1]],
@@ -872,11 +828,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Properties",
         caption: "an odd prime stays prime in $\\mathbb{Z}[i]$ exactly when $p \\equiv 3 \\pmod 4$",
       },
-      {
-        id: "isprime-5",
-        expr: ["IsPrime", 5],
-        expected: "True",
-      },
+      { id: "isprime-5", expr: ["IsPrime", 5], expected: "True" },
       {
         id: "large-integers-10-3000-1-is-divisible-by-10-8-1",
         expr: ["IsPrime", ["Add", ["Power", 10, 3000], 1]],
@@ -1102,16 +1054,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Always $\\nu(n)\\le\\Omega(n)$, with equality exactly when $n$ is squarefree. See [[PrimeOmega]].",
     ],
     examples: [
-      {
-        id: "primenu-24",
-        expr: ["PrimeNu", 24],
-        expected: 2,
-      },
-      {
-        id: "primenu-360",
-        expr: ["PrimeNu", 360],
-        expected: 3,
-      },
+      { id: "primenu-24", expr: ["PrimeNu", 24], expected: 2 },
+      { id: "primenu-360", expr: ["PrimeNu", 360], expected: 3 },
       {
         id: "32-2-5-has-just-one-distinct-prime-factor",
         expr: ["PrimeNu", 32],
@@ -1140,11 +1084,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
-      {
-        id: "primenu-105",
-        expr: ["PrimeNu", 105],
-        expected: 3,
-      },
+      { id: "primenu-105", expr: ["PrimeNu", 105], expected: 3 },
       {
         id: "large-integers-the-15-primes-up-to-50-divide-50",
         expr: ["PrimeNu", ["Factorial", 50]],
@@ -1194,16 +1134,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "$\\Omega(n)=\\nu(n)$ exactly when $n$ is squarefree; otherwise $\\Omega(n)>\\nu(n)$.",
     ],
     examples: [
-      {
-        id: "primeomega-30",
-        expr: ["PrimeOmega", 30],
-        expected: 3,
-      },
-      {
-        id: "primeomega-360",
-        expr: ["PrimeOmega", 360],
-        expected: 6,
-      },
+      { id: "primeomega-30", expr: ["PrimeOmega", 30], expected: 3 },
+      { id: "primeomega-360", expr: ["PrimeOmega", 360], expected: 6 },
       {
         id: "1-has-no-prime-factors",
         expr: ["PrimeOmega", 1],
@@ -1237,11 +1169,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
-      {
-        id: "primeomega-12",
-        expr: ["PrimeOmega", 12],
-        expected: 3,
-      },
+      { id: "primeomega-12", expr: ["PrimeOmega", 12], expected: 3 },
       {
         id: "large-integers",
         expr: ["PrimeOmega", ["Factorial", 30]],
@@ -1299,11 +1227,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expr: ["Divisors", 1729],
         expected: ["List", 1, 7, 13, 19, 91, 133, 247, 1729],
       },
-      {
-        id: "divisors-20",
-        expr: ["Divisors", 20],
-        expected: ["List", 1, 2, 4, 5, 10, 20],
-      },
+      { id: "divisors-20", expr: ["Divisors", 20], expected: ["List", 1, 2, 4, 5, 10, 20] },
       {
         id: "1-has-exactly-one-divisor-itself",
         expr: ["Divisors", 1],
@@ -1383,11 +1307,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "$13 = (2 + 3i)(3 - 2i)$ splits, so it gains two divisors",
       },
-      {
-        id: "divisors-6",
-        expr: ["Divisors", 6],
-        expected: ["List", 1, 2, 3, 6],
-      },
+      { id: "divisors-6", expr: ["Divisors", 6], expected: ["List", 1, 2, 3, 6] },
       {
         id: "6-4i-i-1-i-2-3-2i",
         expr: ["Divisors", ["Complex", 6, 4]],
@@ -1455,11 +1375,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: 42,
         caption: "k = 1 gives the sum of divisors",
       },
-      {
-        id: "divisorsigma-2-20",
-        expr: ["DivisorSigma", 2, 20],
-        expected: 546,
-      },
+      { id: "divisorsigma-2-20", expr: ["DivisorSigma", 2, 20], expected: 546 },
       {
         id: "6-is-a-perfect-number-sigma-1-6-2-times-6",
         expr: ["DivisorSigma", 1, 6],
@@ -1501,11 +1417,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         caption:
           "A negative order sums reciprocal powers: $\\sigma_{-1}(6) = 1 + \\frac12 + \\frac13 + \\frac16 = 2$",
       },
-      {
-        id: "divisorsigma-2-6",
-        expr: ["DivisorSigma", 2, 6],
-        expected: 50,
-      },
+      { id: "divisorsigma-2-6", expr: ["DivisorSigma", 2, 6], expected: 50 },
       {
         id: "large-integers",
         expr: ["DivisorSigma", 2, ["Power", 10, 30]],
@@ -1583,16 +1495,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "$\\mu$ is only defined on positive integers; compute-engine leaves $n\\le0$ unevaluated.",
     ],
     examples: [
-      {
-        id: "moebiusmu-1",
-        expr: ["MoebiusMu", 1],
-        expected: 1,
-      },
-      {
-        id: "moebiusmu-11",
-        expr: ["MoebiusMu", 11],
-        expected: -1,
-      },
+      { id: "moebiusmu-1", expr: ["MoebiusMu", 1], expected: 1 },
+      { id: "moebiusmu-11", expr: ["MoebiusMu", 11], expected: -1 },
       {
         id: "12-22-3-is-not-squarefree",
         expr: ["MoebiusMu", 12],
@@ -1685,21 +1589,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Returns False unless $n$ is provably squarefree.",
     ],
     examples: [
-      {
-        id: "issquarefree-10",
-        expr: ["IsSquareFree", 10],
-        expected: "True",
-      },
-      {
-        id: "issquarefree-4",
-        expr: ["IsSquareFree", 4],
-        expected: "False",
-      },
-      {
-        id: "issquarefree-12",
-        expr: ["IsSquareFree", 12],
-        expected: "False",
-      },
+      { id: "issquarefree-10", expr: ["IsSquareFree", 10], expected: "True" },
+      { id: "issquarefree-4", expr: ["IsSquareFree", 4], expected: "False" },
+      { id: "issquarefree-12", expr: ["IsSquareFree", 12], expected: "False" },
       {
         id: "every-prime-is-squarefree",
         expr: ["IsSquareFree", 17],
@@ -1731,11 +1623,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
             "We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.",
         },
       },
-      {
-        id: "issquarefree-20",
-        expr: ["IsSquareFree", 20],
-        expected: "False",
-      },
+      { id: "issquarefree-20", expr: ["IsSquareFree", 20], expected: "False" },
       {
         id: "gaussian-integers-3-2i-is-a-gaussian-prime",
         expr: ["IsSquareFree", ["Complex", 3, 2]],
@@ -1823,11 +1711,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: -1,
         caption: "3 is not a quadratic residue mod 5 (the residues are 1 and 4)",
       },
-      {
-        id: "jacobisymbol-1-001-9-907",
-        expr: ["JacobiSymbol", 1001, 9907],
-        expected: -1,
-      },
+      { id: "jacobisymbol-1-001-9-907", expr: ["JacobiSymbol", 1001, 9907], expected: -1 },
       {
         id: "by-convention-the-symbol-is-1-whenever-m-1",
         expr: ["JacobiSymbol", 0, 1],
@@ -1972,16 +1856,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Bignum-safe: both arguments may exceed the double-precision range.",
     ],
     examples: [
-      {
-        id: "kroneckersymbol-17-6",
-        expr: ["KroneckerSymbol", 17, 6],
-        expected: -1,
-      },
-      {
-        id: "kroneckersymbol-10-13",
-        expr: ["KroneckerSymbol", 10, 13],
-        expected: 1,
-      },
+      { id: "kroneckersymbol-17-6", expr: ["KroneckerSymbol", 17, 6], expected: -1 },
+      { id: "kroneckersymbol-10-13", expr: ["KroneckerSymbol", 10, 13], expected: 1 },
       {
         id: "0-whenever-a-1-and-n-0",
         expr: ["KroneckerSymbol", 5, 0],
@@ -2305,11 +2181,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         description: "the multiplicity of $b$ in $n$",
         library: "enumeratio-number-theory",
       },
-      {
-        call: "IntegerExponent(n)",
-        description: "base 10",
-        library: "enumeratio-number-theory",
-      },
+      { call: "IntegerExponent(n)", description: "base 10", library: "enumeratio-number-theory" },
     ],
     details: [
       "Integers only: a rational's $p$-adic valuation is [[AdicValuation]]'s, over [[AdicNumeral]].",
@@ -2474,9 +2346,6 @@ export const numberTheory: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["ProfiniteDecomposition", "ExtendedGCD"],
   },
-  // ── the Wolfram-sweep backlog (design/symbols.md §4, issue #113) — heads carried here from
-  // packages/reference/src/backlog.json, each verified against a brute-force cross-check
-  // (packages/symbols/arithmetic/number-theory/tests/backlog.test.ts) rather than just the worked examples below.
   {
     name: "CarmichaelLambda",
     domain: "Number theory",
@@ -2592,11 +2461,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Wolfram's `CoprimeQ`.",
     ],
     examples: [
-      {
-        id: "iscoprime-4-9",
-        expr: ["IsCoprime", 4, 9],
-        expected: "True",
-      },
+      { id: "iscoprime-4-9", expr: ["IsCoprime", 4, 9], expected: "True" },
       {
         id: "both-are-divisible-by-3",
         expr: ["IsCoprime", 6, 9],
@@ -2676,12 +2541,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
     ],
     details: ["$1=p^0$ does not count: it has no prime base.", "Wolfram's `PrimePowerQ`."],
     examples: [
-      {
-        id: "8-2-3",
-        expr: ["IsPrimePower", 8],
-        expected: "True",
-        caption: "$8=2^3$",
-      },
+      { id: "8-2-3", expr: ["IsPrimePower", 8], expected: "True", caption: "$8=2^3$" },
       {
         id: "12-2-2-cdot-3-has-two-distinct-primes",
         expr: ["IsPrimePower", 12],
@@ -2735,22 +2595,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "$\\sum_{d\\mid n}\\lambda(d)$ is 1 when $n$ is a perfect square and 0 otherwise.",
     ],
     examples: [
-      {
-        id: "omega-12-3",
-        expr: ["LiouvilleLambda", 12],
-        expected: -1,
-        caption: "$\\Omega(12)=3$",
-      },
-      {
-        id: "liouvillelambda-10",
-        expr: ["LiouvilleLambda", 10],
-        expected: 1,
-      },
-      {
-        id: "liouvillelambda-1",
-        expr: ["LiouvilleLambda", 1],
-        expected: 1,
-      },
+      { id: "omega-12-3", expr: ["LiouvilleLambda", 12], expected: -1, caption: "$\\Omega(12)=3$" },
+      { id: "liouvillelambda-10", expr: ["LiouvilleLambda", 10], expected: 1 },
+      { id: "liouvillelambda-1", expr: ["LiouvilleLambda", 1], expected: 1 },
       {
         id: "listable",
         expr: ["LiouvilleLambda", ["Range", 10]],
@@ -2785,23 +2632,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "$\\sum_{d\\mid n}\\Lambda(d)=\\ln n$; central to the prime-counting proofs (Chebyshev's $\\psi$ and $\\theta$ functions).",
     ],
     examples: [
-      {
-        id: "8-2-3",
-        expr: ["MangoldtLambda", 8],
-        expected: ["Ln", 2],
-        caption: "$8=2^3$",
-      },
+      { id: "8-2-3", expr: ["MangoldtLambda", 8], expected: ["Ln", 2], caption: "$8=2^3$" },
       {
         id: "6-is-not-a-prime-power",
         expr: ["MangoldtLambda", 6],
         expected: 0,
         caption: "6 is not a prime power",
       },
-      {
-        id: "mangoldtlambda-7",
-        expr: ["MangoldtLambda", 7],
-        expected: ["Ln", 7],
-      },
+      { id: "mangoldtlambda-7", expr: ["MangoldtLambda", 7], expected: ["Ln", 7] },
       {
         id: "lambda-1-0",
         expr: ["MangoldtLambda", 1],
@@ -2843,21 +2681,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Feeds [[PerfectNumber]]: the $n$th even perfect number is $2^{p-1}(2^p-1)$.",
     ],
     examples: [
-      {
-        id: "mersenneprimeexponent-1",
-        expr: ["MersennePrimeExponent", 1],
-        expected: 2,
-      },
-      {
-        id: "mersenneprimeexponent-5",
-        expr: ["MersennePrimeExponent", 5],
-        expected: 13,
-      },
-      {
-        id: "mersenneprimeexponent-10",
-        expr: ["MersennePrimeExponent", 10],
-        expected: 89,
-      },
+      { id: "mersenneprimeexponent-1", expr: ["MersennePrimeExponent", 1], expected: 2 },
+      { id: "mersenneprimeexponent-5", expr: ["MersennePrimeExponent", 5], expected: 13 },
+      { id: "mersenneprimeexponent-10", expr: ["MersennePrimeExponent", 10], expected: 89 },
       {
         id: "listable",
         expr: ["MersennePrimeExponent", ["List", 1, 2, 3, 4, 5, 6]],
@@ -2957,21 +2783,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Every even perfect number has this form (Euclid–Euler); whether an odd one exists is open. From the same table as [[MersennePrimeExponent]], so it stays unevaluated past it.",
     ],
     examples: [
-      {
-        id: "perfectnumber-1",
-        expr: ["PerfectNumber", 1],
-        expected: 6,
-      },
-      {
-        id: "perfectnumber-3",
-        expr: ["PerfectNumber", 3],
-        expected: 496,
-      },
-      {
-        id: "perfectnumber-5",
-        expr: ["PerfectNumber", 5],
-        expected: 33550336,
-      },
+      { id: "perfectnumber-1", expr: ["PerfectNumber", 1], expected: 6 },
+      { id: "perfectnumber-3", expr: ["PerfectNumber", 3], expected: 496 },
+      { id: "perfectnumber-5", expr: ["PerfectNumber", 5], expected: 33550336 },
       {
         id: "listable",
         expr: ["PerfectNumber", ["List", 1, 2, 3, 4]],
@@ -3042,16 +2856,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Computed by truncated power-series multiplication of $\\prod(1-q^k)^{24}$, exactly, not from a closed form.",
     ],
     examples: [
-      {
-        id: "ramanujantau-2",
-        expr: ["RamanujanTau", 2],
-        expected: -24,
-      },
-      {
-        id: "ramanujantau-5",
-        expr: ["RamanujanTau", 5],
-        expected: 4830,
-      },
+      { id: "ramanujantau-2", expr: ["RamanujanTau", 2], expected: -24 },
+      { id: "ramanujantau-5", expr: ["RamanujanTau", 5], expected: 4830 },
       {
         id: "listable",
         expr: ["RamanujanTau", ["List", 1, 2, 3, 4, 5, 6]],
@@ -3059,12 +2865,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Listable",
       },
-      {
-        id: "ramanujantau-12",
-        expr: ["RamanujanTau", 12],
-        expected: -370944,
-        category: "Scope",
-      },
+      { id: "ramanujantau-12", expr: ["RamanujanTau", 12], expected: -370944, category: "Scope" },
       {
         id: "multiplicative-tau-6-tau-2-tau-3",
         expr: ["Multiply", ["RamanujanTau", 2], ["RamanujanTau", 3]],
@@ -3098,23 +2899,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: 8,
         caption: "$(\\pm1)^2+(\\pm2)^2$ in either order",
       },
-      {
-        id: "squaresr-2-25",
-        expr: ["SquaresR", 2, 25],
-        expected: 12,
-      },
+      { id: "squaresr-2-25", expr: ["SquaresR", 2, 25], expected: 12 },
       {
         id: "no-n-equiv-3-pmod-4-is-a-sum-of-two-squares",
         expr: ["SquaresR", 2, 3],
         expected: 0,
         caption: "No $n\\equiv3\\pmod4$ is a sum of two squares",
       },
-      {
-        id: "squaresr-3-6",
-        expr: ["SquaresR", 3, 6],
-        expected: 24,
-        category: "Scope",
-      },
+      { id: "squaresr-3-6", expr: ["SquaresR", 3, 6], expected: 24, category: "Scope" },
       {
         id: "jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n",
         expr: ["SquaresR", 4, 10],
@@ -3122,12 +2914,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Properties",
         caption: "Jacobi: $r_4(n)=8\\sigma_1(n)$ for $4\\nmid n$",
       },
-      {
-        id: "squaresr-8-3",
-        expr: ["SquaresR", 8, 3],
-        expected: 448,
-        category: "Scope",
-      },
+      { id: "squaresr-8-3", expr: ["SquaresR", 8, 3], expected: 448, category: "Scope" },
     ],
     seeAlso: ["PowersRepresentations", "DivisorSigma"],
   },
@@ -3154,16 +2941,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Not to be confused with [[BernoulliB]] or [[EulerGamma]].",
     ],
     examples: [
-      {
-        id: "eulere-10",
-        expr: ["EulerE", 10],
-        expected: -50521,
-      },
-      {
-        id: "eulere-8",
-        expr: ["EulerE", 8],
-        expected: 1385,
-      },
+      { id: "eulere-10", expr: ["EulerE", 10], expected: -50521 },
+      { id: "eulere-8", expr: ["EulerE", 8], expected: 1385 },
       {
         id: "listable-odd-indices-vanish",
         expr: ["EulerE", ["List", 0, 1, 2, 3, 4]],
@@ -3267,11 +3046,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: 43,
         caption: "The McNugget number",
       },
-      {
-        id: "frobeniusnumber-list-3-5",
-        expr: ["FrobeniusNumber", ["List", 3, 5]],
-        expected: 7,
-      },
+      { id: "frobeniusnumber-list-3-5", expr: ["FrobeniusNumber", ["List", 3, 5]], expected: 7 },
       {
         id: "two-generators-ab-a-b",
         expr: ["FrobeniusNumber", ["List", 4, 7]],
