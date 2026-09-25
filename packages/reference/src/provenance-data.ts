@@ -397,7 +397,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Sign",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Sign",
     elsewhere: ["wolfram", "sympy", "mpmath"],
@@ -418,7 +418,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Sqrt",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Sqrt",
     elsewhere: ["wolfram", "sympy", "mpmath"],
@@ -509,14 +509,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Cos",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Cos",
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
     name: "Tan",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Tan",
     elsewhere: ["wolfram", "sympy", "mpmath"],
@@ -530,14 +530,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Sec",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Sec",
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
     name: "Csc",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Csc",
     elsewhere: ["wolfram", "sympy", "mpmath"],
@@ -558,7 +558,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Arctan",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "ArcTan",
     elsewhere: [],
@@ -628,7 +628,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Exp",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Exp",
     elsewhere: ["wolfram", "sympy", "mpmath"],

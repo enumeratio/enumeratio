@@ -158,10 +158,9 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Binomial", ["Rational", 1, 2], ["Interval", 0.5, 0.6]],
         expected: ["Interval", 0.9281455538507054, 1],
-        aspirational: true,
         category: "Scope",
         caption:
-          "An Interval argument should give an enclosing Interval; [[Binomial]] rejects an Interval with a type error",
+          "Interval arithmetic in $k$: $\\binom{1/2}{k}$ is decreasing here, so the endpoints swap",
       },
       {
         expr: [

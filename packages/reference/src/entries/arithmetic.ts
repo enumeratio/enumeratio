@@ -247,10 +247,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Sign", ["Interval", 1, 3]],
         expected: 1,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An [[Interval]] of positive numbers should have sign 1; compute-engine leaves it unevaluated",
+        caption: "An [[Interval]] entirely above 0 has sign 1",
       },
       {
         expr: ["Sign", ["Subtract", ["Sqrt", 2], 2]],
@@ -506,10 +504,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Sqrt", ["Interval", 1, 8]],
         expected: ["Interval", 1, ["Multiply", 2, ["Sqrt", 2]]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "An [[Interval]] should map to $[1, 2\\sqrt{2}]$; compute-engine's Sqrt rejects a set argument",
+          "Interval arithmetic: $\\sqrt{}$ is increasing, so $\\sqrt{[1,8]} = [1, 2\\sqrt2]$",
       },
       {
         expr: ["Power", ["Sqrt", "x"], 2],
@@ -1456,10 +1453,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Max", ["Interval", 1, 3], ["Interval", -3, 5]],
         expected: ["Interval", 1, 5],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "The max of two [[Interval]]s should be the interval of possible maxima, $[1, 5]$; compute-engine collapses it to the number 5",
+        caption: "The max of two [[Interval]]s is the interval of possible maxima, $[1, 5]$",
       },
       {
         expr: ["Max", "x", "x"],
@@ -1574,10 +1569,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Min", ["Interval", 1, 3], ["Interval", -3, 5]],
         expected: ["Interval", -3, 3],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "The min of two [[Interval]]s should be the interval of possible minima, $[-3, 3]$; compute-engine collapses it to the number -3",
+        caption: "The min of two [[Interval]]s is the interval of possible minima, $[-3, 3]$",
       },
       {
         expr: ["Min", "x", "x"],

@@ -39,8 +39,21 @@ function hasTaggedOperand(ops: readonly BoxedExpression[]): boolean {
   return false;
 }
 
-/** One head's handling of already-evaluated operands; `undefined` means "not mine". */
-export type Resolver = (ops: readonly BoxedExpression[]) => BoxedExpression | undefined;
+/**
+ * One head's handling of already-evaluated operands; `undefined` means "not mine". `raw` is
+ * the pre-numericization operands (`options.expression.ops`, when the driver provides one) —
+ * under `N()`, `ops` has already had an exact base like `ExponentialE` turned into a double
+ * (see `EvaluateHandlerOptions.expression`'s own doc comment), which is invisible in `ops`
+ * itself. A resolver that needs to tell "was this argument exactly E" apart from "is this
+ * argument approximately 2.71828" — Around's `E^Around(x, dx)` rule, `N(Exp(Around(0,
+ * 0.1)))` — reads `raw` instead. Falls back to `ops` when the driver doesn't supply one, or
+ * when `raw` and `ops` disagree in length (an associative flatten, a dropped operand — see
+ * the same doc comment), so it is never indexed on a mismatched shape.
+ */
+export type Resolver = (
+  ops: readonly BoxedExpression[],
+  raw: readonly BoxedExpression[],
+) => BoxedExpression | undefined;
 
 /**
  * Register a single evaluate hook for `head` that tries each resolver in turn once an
@@ -60,8 +73,13 @@ export function registerTaggedHead(
   operator.evaluate = (ops, options) => {
     if (!hasTaggedOperand(ops)) return native?.(ops, options);
     const values = ops.map((op) => op.evaluate());
+    // `operandsOf`, not `.expression.ops` directly: `.ops` lives on compute-engine's narrowed
+    // FunctionInterface, which the `Expression` union type doesn't expose a typed route to
+    // (see @enumeratio/boxed's own note on `operandsOf`).
+    const rawOps = operandsOf(options.expression);
+    const raw = rawOps.length === values.length ? rawOps : values;
     for (const resolve of resolvers) {
-      const result = resolve(values);
+      const result = resolve(values, raw);
       if (result !== undefined) return result;
     }
     return native?.(ops, options);
