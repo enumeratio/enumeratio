@@ -26,6 +26,12 @@ examples:
     expr: [SeriesCoefficient, [Ln, [Add, 1, x]], [List, x, 0, 4]]
     expected: [Rational, -1, 4]
     caption: $[x^4]\, \ln(1+x) = -\frac{1}{4}$
+  - role: test
+    id: a-puiseux-half-integer-order-declines
+    expr: [SeriesCoefficient, [Sqrt, x], [List, x, 0, [Rational, 1, 2]]]
+    expected: [SeriesCoefficient, [Sqrt, x], [List, x, 0, [Rational, 1, 2]]]
+    category: Possible issues
+    caption: a half-integer order is a Puiseux coefficient, past what the derivative formula covers — declined, not guessed
   - id: a-negative-order-laurent-coefficient-declines
     expr: [SeriesCoefficient, [Divide, 1, x], [List, x, 0, -1]]
     expected: [SeriesCoefficient, [Divide, 1, x], [List, x, 0, -1]]

@@ -409,6 +409,17 @@ uncertainty-propagation-e-2-pm-0-01-approx-7-389:
     in: Exp[Around[2, 0.01]]
   wolfram:
     in: Exp[Around[2, 0.01]]
+around-0-still-fires-the-e-base-power-rule:
+  epsil:
+    in: N(Exp(Around(0, 0.1)))
+    out: Around(1, 0.1)
+  tex:
+    in: N(\exp(\mathrm{Around}(0, 0.1)))
+    out: \mathrm{Around}(1, 0.1)
+  fullform:
+    in: N[Exp[Around[0, 0.1]]]
+  wolfram:
+    in: N[Exp[Around[0, 0.1]]]
 its-own-derivative:
   epsil:
     in: D(Exp(x), x)
