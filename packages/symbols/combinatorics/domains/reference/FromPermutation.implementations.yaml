@@ -5,3 +5,5 @@ the-one-line-word-231:
   tex:
     in: \mathrm{FromPermutation}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
     out: \mathrm{IncreasingBinaryTree}((1,\bigl\lbrack2, 0, 0\bigr\rbrack,\bigl\lbrack0, 3, 0\bigr\rbrack))
+  fullform:
+    in: FromPermutation[Permutation[List[2, 3, 1]]]

@@ -5,6 +5,8 @@ accumulate-1-2-3-4:
   tex:
     in: \mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack1, 3, 6, 10\bigr\rbrack
+  fullform:
+    in: Accumulate[List[1, 2, 3, 4]]
   wolfram:
     in: Accumulate[List[1, 2, 3, 4]]
 accumulate-empty:
@@ -14,6 +16,8 @@ accumulate-empty:
   tex:
     in: \mathrm{Accumulate}(\bigl\lbrack \bigr\rbrack)
     out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: Accumulate[List[]]
   wolfram:
     in: Accumulate[List[]]
 accumulate-last-is-total:
@@ -26,6 +30,7 @@ accumulate-last-is-total:
   traditional:
     in: \mathrm{Last}(\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=1+2+3+4+5
     out: \mathrm{True}
+  fullform:
+    in: Equal[Last[Accumulate[List[1, 2, 3, 4, 5]]], Plus[1, 2, 3, 4, 5]]
   wolfram:
     in: (Last[Accumulate[List[1, 2, 3, 4, 5]]] == Plus[1, 2, 3, 4, 5])
-    back: Unreadable

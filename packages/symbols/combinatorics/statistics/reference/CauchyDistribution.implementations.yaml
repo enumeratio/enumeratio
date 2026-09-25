@@ -5,6 +5,8 @@ cauchy-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{CauchyDistribution}(0, 1), 0)
     out: \frac{1}{\pi}
+  fullform:
+    in: PDF[CauchyDistribution[0, 1], 0]
   wolfram:
     in: PDF[CauchyDistribution[0, 1], 0]
 cauchy-mean-indeterminate:
@@ -14,6 +16,8 @@ cauchy-mean-indeterminate:
   tex:
     in: \mathrm{mean}(\mathrm{CauchyDistribution}(0, 1))
     out: \mathrm{Indeterminate}
+  fullform:
+    in: Mean[CauchyDistribution[0, 1]]
   wolfram:
     in: Mean[CauchyDistribution[0, 1]]
 cauchy-default-is-standard:
@@ -23,5 +27,7 @@ cauchy-default-is-standard:
   tex:
     in: \mathrm{CauchyDistribution}()
     out: \mathrm{CauchyDistribution}(0, 1)
+  fullform:
+    in: CauchyDistribution[]
   wolfram:
     in: CauchyDistribution[]

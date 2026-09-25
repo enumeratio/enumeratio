@@ -8,6 +8,8 @@ beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15:
   traditional:
     in: \beta(1)
     out: \frac{\pi}{4}
+  fullform:
+    in: DirichletBeta[1]
   wolfram:
     in: DirichletBeta[1]
     out: Pi/4
@@ -24,6 +26,8 @@ beta-2-g-catalan-s-constant:
   traditional:
     in: \beta(2)
     out: \mathrm{Catalan}
+  fullform:
+    in: DirichletBeta[2]
   wolfram:
     in: DirichletBeta[2]
     out: Catalan
@@ -40,6 +44,8 @@ beta-3-pi-3-32:
   traditional:
     in: \beta(3)
     out: \frac{\pi^3}{32}
+  fullform:
+    in: DirichletBeta[3]
   wolfram:
     in: DirichletBeta[3]
     out: Pi^3/32
@@ -56,6 +62,8 @@ beta-7-61-pi-7-184320-the-61-is-the-euler-number:
   traditional:
     in: \beta(7)
     out: \frac{61\pi^7}{184\,320}
+  fullform:
+    in: DirichletBeta[7]
   wolfram:
     in: DirichletBeta[7]
     out: (61*Pi^7)/184320
@@ -69,6 +77,8 @@ beta-2k-e-2k-2-and-beta-2k-1-0:
   tex:
     in: \mathrm{DirichletBeta}(\bigl\lbrack0, -1, -2, -3, -4\bigr\rbrack)
     out: \bigl\lbrack\frac{1}{2}, 0, -\frac{1}{2}, 0, \frac{5}{2}\bigr\rbrack
+  fullform:
+    in: DirichletBeta[List[0, -1, -2, -3, -4]]
   wolfram:
     in: DirichletBeta[List[0, -1, -2, -3, -4]]
     out: "{1/2, 0, -1/2, 0, 5/2}"
@@ -85,6 +95,8 @@ even-s-ge-4-has-no-closed-form-and-stays:
   traditional:
     in: \beta(4)
     out: \beta(4)
+  fullform:
+    in: DirichletBeta[4]
   wolfram:
     in: DirichletBeta[4]
     out: (Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16
@@ -104,6 +116,8 @@ numeric-for-a-floating-point-argument-through-4:
   traditional:
     in: \beta(2.5)
     out: 0.948\,622\,174\,037\,054\,707\,445
+  fullform:
+    in: DirichletBeta[2.5]
   wolfram:
     in: DirichletBeta[2.5]
     out: "0.948622174037055"
@@ -120,6 +134,8 @@ a-symbolic-argument-stays-symbolic:
   traditional:
     in: \beta(s)
     out: \beta(s)
+  fullform:
+    in: DirichletBeta[s]
 beta-5-5-pi-5-1536:
   epsil:
     in: DirichletBeta(5)
@@ -130,6 +146,8 @@ beta-5-5-pi-5-1536:
   traditional:
     in: \beta(5)
     out: \frac{5\pi^5}{1\,536}
+  fullform:
+    in: DirichletBeta[5]
   wolfram:
     in: DirichletBeta[5]
 complex-arguments-here-on-the-critical-line:
@@ -142,6 +160,8 @@ complex-arguments-here-on-the-critical-line:
   traditional:
     in: \beta(0.5+14i)
     out: 1.537\,115\,438\,440\,316+1.343\,451\,426\,867\,757\,3i
+  fullform:
+    in: DirichletBeta[Complex[0.5, 14]]
   wolfram:
     in: DirichletBeta[Complex[0.5, 14]]
 threads-elementwise-over-an-array:
@@ -151,6 +171,8 @@ threads-elementwise-over-an-array:
   tex:
     in: \mathrm{DirichletBeta}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack-1, 1\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack\frac{\pi}{4}, 0\bigr\rbrack, \bigl\lbrack0, \frac{\pi}{4}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: DirichletBeta[List[List[1, -1], List[-1, 1]]]
   wolfram:
     in: DirichletBeta[List[List[1, -1], List[-1, 1]]]
 beta-s-to-1-as-s-to-infty:
@@ -163,6 +185,8 @@ beta-s-to-1-as-s-to-infty:
   traditional:
     in: \beta(\infty)
     out: "1"
+  fullform:
+    in: DirichletBeta[Infinity]
   wolfram:
     in: DirichletBeta[Infinity]
 uncertainty-propagation-beta-2-pm-0-01-g-pm-0:
@@ -175,6 +199,8 @@ uncertainty-propagation-beta-2-pm-0-01-g-pm-0:
   traditional:
     in: \beta(\mathrm{Around}(2, 0.01))
     out: \mathrm{Around}(0.915\,965\,594\,177\,219, 0.000\,815\,807\,361\,165\,928)
+  fullform:
+    in: DirichletBeta[Around[2, 0.01]]
   wolfram:
     in: DirichletBeta[Around[2, 0.01]]
 to-exactly-40-significant-digits-not-yet-85-come:
@@ -187,5 +213,7 @@ to-exactly-40-significant-digits-not-yet-85-come:
   traditional:
     in: N(\beta(2), 40)
     out: 0.915\,965\,594\,177\,219\,015\,055
+  fullform:
+    in: N[DirichletBeta[2], 40]
   wolfram:
     in: N[DirichletBeta[2], 40]

@@ -5,6 +5,8 @@ only-position-1-3-1:
   tex:
     in: \mathrm{Excedances}(\bigl\lbrack3, 1, 2\bigr\rbrack)
     out: "1"
+  fullform:
+    in: Excedances[List[3, 1, 2]]
 the-identity-has-none:
   epsil:
     in: Excedances([1, 2, 3])
@@ -12,6 +14,8 @@ the-identity-has-none:
   tex:
     in: \mathrm{Excedances}(\bigl\lbrack1, 2, 3\bigr\rbrack)
     out: "0"
+  fullform:
+    in: Excedances[List[1, 2, 3]]
 excedances-antiexcedances-and-fixed-points:
   epsil:
     in: Excedances([2, 3, 1]) + Antiexcedances([2, 3, 1]) + FixedPoints([2, 3, 1]) == 3
@@ -22,3 +26,5 @@ excedances-antiexcedances-and-fixed-points:
   traditional:
     in: \mathrm{Excedances}(\bigl\lbrack2, 3, 1\bigr\rbrack)+\mathrm{Antiexcedances}(\bigl\lbrack2, 3, 1\bigr\rbrack)+\mathrm{FixedPoints}(\bigl\lbrack2, 3, 1\bigr\rbrack)=3
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Excedances[List[2, 3, 1]], Antiexcedances[List[2, 3, 1]], FixedPoints[List[2, 3, 1]]], 3]

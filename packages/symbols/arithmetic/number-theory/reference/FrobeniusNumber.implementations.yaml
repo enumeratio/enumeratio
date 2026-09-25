@@ -5,6 +5,8 @@ the-mcnugget-number:
   tex:
     in: \mathrm{FrobeniusNumber}(\bigl\lbrack6, 9, 20\bigr\rbrack)
     out: "43"
+  fullform:
+    in: FrobeniusNumber[List[6, 9, 20]]
   wolfram:
     in: FrobeniusNumber[List[6, 9, 20]]
 frobeniusnumber-list-3-5:
@@ -14,6 +16,8 @@ frobeniusnumber-list-3-5:
   tex:
     in: \mathrm{FrobeniusNumber}(\bigl\lbrack3, 5\bigr\rbrack)
     out: "7"
+  fullform:
+    in: FrobeniusNumber[List[3, 5]]
   wolfram:
     in: FrobeniusNumber[List[3, 5]]
 two-generators-ab-a-b:
@@ -23,6 +27,8 @@ two-generators-ab-a-b:
   tex:
     in: \mathrm{FrobeniusNumber}(\bigl\lbrack4, 7\bigr\rbrack)
     out: "17"
+  fullform:
+    in: FrobeniusNumber[List[4, 7]]
   wolfram:
     in: FrobeniusNumber[List[4, 7]]
 frobeniusnumber-list-12-16-20-27:
@@ -32,6 +38,8 @@ frobeniusnumber-list-12-16-20-27:
   tex:
     in: \mathrm{FrobeniusNumber}(\bigl\lbrack12, 16, 20, 27\bigr\rbrack)
     out: "89"
+  fullform:
+    in: FrobeniusNumber[List[12, 16, 20, 27]]
   wolfram:
     in: FrobeniusNumber[List[12, 16, 20, 27]]
 not-coprime-infinitely-many-numbers-are:
@@ -41,5 +49,7 @@ not-coprime-infinitely-many-numbers-are:
   tex:
     in: \mathrm{FrobeniusNumber}(\bigl\lbrack2, 4\bigr\rbrack)
     out: \infty
+  fullform:
+    in: FrobeniusNumber[List[2, 4]]
   wolfram:
     in: FrobeniusNumber[List[2, 4]]

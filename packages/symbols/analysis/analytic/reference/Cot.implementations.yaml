@@ -5,6 +5,8 @@ cot-pi-over-6:
   tex:
     in: \cot(\frac{\pi}{6})
     out: \sqrt{3}
+  fullform:
+    in: Cot[Divide[Pi, 6]]
   wolfram:
     in: Cot[Divide[Pi, 6]]
     out: Sqrt[3]
@@ -18,6 +20,8 @@ cot-pi-over-4:
   tex:
     in: \cot(\frac{\pi}{4})
     out: "1"
+  fullform:
+    in: Cot[Divide[Pi, 4]]
   wolfram:
     in: Cot[Divide[Pi, 4]]
     out: "1"
@@ -31,6 +35,8 @@ cot-pi-over-3:
   tex:
     in: \cot(\frac{\pi}{3})
     out: \frac{\sqrt{3}}{3}
+  fullform:
+    in: Cot[Divide[Pi, 3]]
   wolfram:
     in: Cot[Divide[Pi, 3]]
     out: 1/Sqrt[3]
@@ -47,9 +53,10 @@ reciprocal-of-tan-cot-x-frac-1-tan-x:
   traditional:
     in: \cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi}{4})}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Cot[Divide[Pi, 4]], Divide[1, Tan[Divide[Pi, 4]]]]
   wolfram:
     in: (Cot[Divide[Pi, 4]] == Divide[1, Tan[Divide[Pi, 4]]])
-    back: Unreadable
     out: True
     tex:
       in: \cot \left(\frac{\pi }{4}\right)=\frac{1}{\tan \left(\frac{\pi }{4}\right)}
@@ -64,9 +71,10 @@ pythagorean-identity-1-cot-2-x-csc-2-x:
   traditional:
     in: 1+\cot(\pi/6)^2=\csc(\pi/6)^2
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[1, Power[Cot[Divide[Pi, 6]], 2]], Power[Csc[Divide[Pi, 6]], 2]]
   wolfram:
     in: (Plus[1, Power[Cot[Divide[Pi, 6]], 2]] == Power[Csc[Divide[Pi, 6]], 2])
-    back: Unreadable
     out: True
     tex:
       in: 1+\cot ^2\left(\frac{\pi }{6}\right)=\csc ^2\left(\frac{\pi }{6}\right)
@@ -78,6 +86,8 @@ a-pole-sin-0-0:
   tex:
     in: \cot(0)
     out: \tilde\infty
+  fullform:
+    in: Cot[0]
   wolfram:
     in: Cot[0]
     out: ComplexInfinity
@@ -91,6 +101,8 @@ not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero:
   tex:
     in: \cot(\frac{\pi}{2})
     out: "0"
+  fullform:
+    in: Cot[Divide[Pi, 2]]
   wolfram:
     in: Cot[Divide[Pi, 2]]
     out: "0"
@@ -104,9 +116,11 @@ cot-60-circ-frac-sqrt-3-3-exactly:
   tex:
     in: \cot(60^{\circ})
     out: \frac{\sqrt{3}}{3}
-  wolfram:
+  fullform:
     in: Cot[Times[60, Degree]]
     back: [Cot, [Multiply, 60, Degree]]
+  wolfram:
+    in: Cot[Times[60, Degree]]
 a-machine-precision-argument-evaluates:
   epsil:
     in: Cot(1.2)
@@ -114,6 +128,8 @@ a-machine-precision-argument-evaluates:
   tex:
     in: \cot(1.2)
     out: 0.388\,779\,569\,368\,204\,911\,634
+  fullform:
+    in: Cot[1.2]
   wolfram:
     in: Cot[1.2]
 n-of-an-exact-argument-gives-an-arbitrary:
@@ -123,6 +139,8 @@ n-of-an-exact-argument-gives-an-arbitrary:
   tex:
     in: N(\cot(\frac{6}{5}))
     out: 0.388\,779\,569\,368\,204\,911\,634
+  fullform:
+    in: N[Cot[Rational[6, 5]]]
   wolfram:
     in: N[Cot[Rational[6, 5]]]
 evaluates-at-a-complex-argument:
@@ -132,6 +150,8 @@ evaluates-at-a-complex-argument:
   tex:
     in: \cot(2.5+i)
     out: -0.275\,669\,121\,229\,899\,45-1.042\,640\,642\,094\,421\,6i
+  fullform:
+    in: Cot[Complex[2.5, 1]]
   wolfram:
     in: Cot[Complex[2.5, 1]]
 threads-element-wise-over-a-matrix:
@@ -141,6 +161,8 @@ threads-element-wise-over-a-matrix:
   tex:
     in: \cot(\bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, \frac{\pi}{2}\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\pi/6\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack-\sqrt{3}, 0\bigr\rbrack, \bigl\lbrack0, -\sqrt{3}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Cot[List[List[Times[5, Divide[Pi, 6]], Divide[Pi, 2]], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 6]]]]]
   wolfram:
     in: Cot[List[List[Times[5, Divide[Pi, 6]], Divide[Pi, 2]], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 6]]]]]
 cot-pi-8-1-sqrt-2:
@@ -150,6 +172,8 @@ cot-pi-8-1-sqrt-2:
   tex:
     in: \cot(\frac{\pi}{8})
     out: 1+\sqrt{2}
+  fullform:
+    in: Cot[Divide[Pi, 8]]
   wolfram:
     in: Cot[Divide[Pi, 8]]
 cot-pi-12-2-sqrt-3:
@@ -159,6 +183,8 @@ cot-pi-12-2-sqrt-3:
   tex:
     in: \cot(\frac{\pi}{12})
     out: 2+\sqrt{3}
+  fullform:
+    in: Cot[Divide[Pi, 12]]
   wolfram:
     in: Cot[Divide[Pi, 12]]
 cot-pi-over-5:
@@ -168,6 +194,8 @@ cot-pi-over-5:
   tex:
     in: \cot(\frac{\pi}{5})
     out: \frac{1}{5}(\sqrt{5}\sqrt{5+2\sqrt{5}})
+  fullform:
+    in: Cot[Divide[Pi, 5]]
   wolfram:
     in: Cot[Divide[Pi, 5]]
 an-interval-straddling-the-pole-at-0-maps-to-two:
@@ -177,6 +205,8 @@ an-interval-straddling-the-pole-at-0-maps-to-two:
   tex:
     in: \cot(\mathrm{Interval}(-\frac{\pi}{4}, \frac{\pi}{4}))
     out: \lbrack-\infty, -1\rbrack\cup\lbrack1, \infty\rbrack
+  fullform:
+    in: Cot[Interval[List[Minus[Divide[Pi, 4]], Divide[Pi, 4]]]]
   wolfram:
     in: Cot[Interval[List[Minus[Divide[Pi, 4]], Divide[Pi, 4]]]]
 uncertainty-propagation-near-a-pole-grows-fast:
@@ -186,6 +216,8 @@ uncertainty-propagation-near-a-pole-grows-fast:
   tex:
     in: \cot(\mathrm{Around}(3, 0.01))
     out: \mathrm{Around}(-7.015\,252\,551\,434\,534, 0.502\,137\,683\,604\,087\,3)
+  fullform:
+    in: Cot[Around[3, 0.01]]
   wolfram:
     in: Cot[Around[3, 0.01]]
 oddness-pulls-the-sign-out-of-a-symbolic:
@@ -195,6 +227,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
   tex:
     in: \cot(-x)
     out: -\cot(x)
+  fullform:
+    in: Cot[Minus[x]]
 derivative-csc-2-x:
   epsil:
     in: D(Cot(x), x)
@@ -202,6 +236,8 @@ derivative-csc-2-x:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\cot(x)
     out: -\csc(x)^2
+  fullform:
+    in: D[Cot[x], x]
 antiderivative-ln-sin-x:
   epsil:
     in: Integrate(Cot(x), x)
@@ -209,3 +245,5 @@ antiderivative-ln-sin-x:
   tex:
     in: \int\!\cot(x)\, \mathrm{d}x
     out: \ln(\vert\sin(x)\vert)
+  fullform:
+    in: Integrate[Cot[x], x]

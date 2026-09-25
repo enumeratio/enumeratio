@@ -1,8 +1,9 @@
 // How we write each reference example, as data (design/examples-as-data.md §2): the rows of
 // its implementations record that no kernel is needed for. Our own forms -- `epsil`, the
 // InputForm you can retype; `tex`, our TeX serialisation; `traditional`, the TraditionalForm
-// TeX where it differs -- and, for every other system, the `in` our transpiler emits. For
-// Wolfram, `back` records what that `in` reads back as, where the trip loses something.
+// TeX where it differs; `fullform`, the Wolfram FullForm @enumeratio/wolfram writes, with
+// `back` wherever it doesn't read back as the example -- and, for every other system, the `in`
+// the oracle scan sends it.
 //
 // scripts/collect-forms.ts writes these into the records (`UPDATE_FORMS=1`), and
 // tests/forms.test.ts fails when a printer or transpiler no longer produces what's pinned.
@@ -12,7 +13,7 @@ import type { ExampleImplementations, HeadImplementations, MathJSON, SystemImple
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
-import { fromWolfram } from "@enumeratio/wolfram";
+import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
 import { traditionalLatexOf } from "../src/traditional.ts";
 
@@ -43,26 +44,30 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
   ];
   if (traditional[0] !== undefined && (traditional[0] !== tex[0] || traditional[1] !== tex[1]))
     out.traditional = { in: traditional[0], ...(traditional[1] === undefined ? {} : { out: traditional[1] }) };
+  // FullForm, as @enumeratio/wolfram writes it, and what it reads back as where the trip loses
+  // something: the converter pair's round trip, over every example.
+  const full = attempt(() => toWolfram(expr as never));
+  if (full !== undefined) {
+    // A float too big for a double reads back as Infinity, which JSON can't hold.
+    const read = attempt(() =>
+      JSON.stringify(fromWolfram(full), (_k, v: unknown) =>
+        typeof v === "number" && !Number.isFinite(v) ? { num: String(v) } : v,
+      ),
+    );
+    const back = read === JSON.stringify(expr) ? undefined : read === undefined ? "Unreadable" : JSON.parse(read);
+    out.fullform = { in: full, ...(back === undefined ? {} : { back: back as MathJSON }) };
+  }
+  // What the oracle scan sends each system: `emit` adds the mappings and the comparison
+  // shapes (an equality as `a == b`) the scan compares by.
   for (const { name } of SYSTEMS) {
     const emitted = emit(expr, name as System);
-    if (!emitted.ok) continue;
-    let back: MathJSON | undefined;
-    if (name === "wolfram") {
-      // A float too big for a double reads back as Infinity, which JSON can't hold.
-      const read = attempt(() =>
-        JSON.stringify(fromWolfram(emitted.source), (_k, v: unknown) =>
-          typeof v === "number" && !Number.isFinite(v) ? { num: String(v) } : v,
-        ),
-      );
-      if (read !== JSON.stringify(expr)) back = read === undefined ? "Unreadable" : (JSON.parse(read) as MathJSON);
-    }
-    out[name] = { in: emitted.source, ...(back === undefined ? {} : { back }) };
+    if (emitted.ok) out[name] = { in: emitted.source };
   }
   return out;
 }
 
-/** The fields of a row `formsOf` owns: an own form's whole row, a system's `in` and `back`. */
-export const OWN_FORMS = ["epsil", "tex", "traditional"] as const;
+/** The fields of a row `formsOf` owns: an own form's whole row, and a system's `in`. */
+export const OWN_FORMS = ["epsil", "tex", "traditional", "fullform"] as const;
 
 /** `record`'s rows for one example with the forms replaced and a kernel's answers kept. */
 export function withForms(

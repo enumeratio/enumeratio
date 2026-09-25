@@ -5,6 +5,8 @@ length-list-1-2-3-4:
   tex:
     in: \mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: "4"
+  fullform:
+    in: Length[List[1, 2, 3, 4]]
   wolfram:
     in: Length[List[1, 2, 3, 4]]
     out: "4"
@@ -24,6 +26,8 @@ length-list-1-2-3-4-5:
   tex:
     in: \mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)
     out: "5"
+  fullform:
+    in: Length[List[1, 2, 3, 4, 5]]
   wolfram:
     in: Length[List[1, 2, 3, 4, 5]]
     out: "5"
@@ -43,9 +47,11 @@ works-on-any-collection-not-just-list:
   tex:
     in: \mathrm{Length}(\lbrace1, 2, 3\rbrace)
     out: "3"
-  wolfram:
+  fullform:
     in: Length[Union[List[1, 2, 3]]]
     back: [Length, [Union, [List, 1, 2, 3]]]
+  wolfram:
+    in: Length[Union[List[1, 2, 3]]]
     out: "3"
     tex:
       in: \text{Length}[\text{Union}[\{1,2,3\}]]
@@ -60,9 +66,10 @@ length-join-a-b-length-a-length-b-see-join:
   traditional:
     in: \mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Length[Join[List[1, 2, 3], List[4, 5]]], Plus[Length[List[1, 2, 3]], Length[List[4, 5]]]]
   wolfram:
     in: (Length[Join[List[1, 2, 3], List[4, 5]]] == Plus[Length[List[1, 2, 3]], Length[List[4, 5]]])
-    back: Unreadable
     out: True
     tex:
       in: \text{Length}[\text{Join}[\{1,2,3\},\{4,5\}]]=\text{Length}[\{1,2,3\}]+\text{Length}[\{4,5\}]
@@ -74,6 +81,8 @@ an-atom-has-no-parts-so-its-length-is-0:
   tex:
     in: \mathrm{Length}(5)
     out: "0"
+  fullform:
+    in: Length[5]
   wolfram:
     in: Length[5]
   sympy:
@@ -91,6 +100,8 @@ length-list-a-b-c-d:
   tex:
     in: \mathrm{Length}(\bigl\lbrack a, b, c, d\bigr\rbrack)
     out: "4"
+  fullform:
+    in: Length[List[a, b, c, d]]
 the-empty-list-has-length-0:
   epsil:
     in: Length([])
@@ -98,6 +109,8 @@ the-empty-list-has-length-0:
   tex:
     in: \mathrm{Length}(\bigl\lbrack \bigr\rbrack)
     out: "0"
+  fullform:
+    in: Length[List[]]
   wolfram:
     in: Length[List[]]
   sympy:
@@ -111,6 +124,8 @@ of-a-matrix-the-number-of-rows:
   tex:
     in: \mathrm{Length}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack)
     out: "3"
+  fullform:
+    in: Length[List[List[1, 2], List[3, 4], List[5, 6]]]
   wolfram:
     in: Length[List[List[1, 2], List[3, 4], List[5, 6]]]
   sympy:
@@ -124,9 +139,11 @@ a-set-holds-each-element-once-so-a-repeated:
   tex:
     in: \mathrm{Length}(\lbrace1, 1, 2\rbrace)
     out: "2"
-  wolfram:
+  fullform:
     in: Length[Union[List[1, 1, 2]]]
     back: [Length, [Union, [List, 1, 1, 2]]]
+  wolfram:
+    in: Length[Union[List[1, 1, 2]]]
 any-expression-the-number-of-terms-in-a-sum:
   epsil:
     in: Length(a + b + c + d)
@@ -134,6 +151,8 @@ any-expression-the-number-of-terms-in-a-sum:
   tex:
     in: \mathrm{Length}(a+b+c+d)
     out: "4"
+  fullform:
+    in: Length[Plus[a, b, c, d]]
 the-number-of-arguments-of-a-call-counting-only:
   epsil:
     in: Length(f(g(x, y), z))
@@ -141,6 +160,8 @@ the-number-of-arguments-of-a-call-counting-only:
   tex:
     in: \mathrm{Length}(f(g(x, y), z))
     out: "2"
+  fullform:
+    in: Length[f[g[x, y], z]]
 a-symbol-such-as-pi-is-an-atom-of-length-0:
   epsil:
     in: Length(Pi)
@@ -148,6 +169,8 @@ a-symbol-such-as-pi-is-an-atom-of-length-0:
   tex:
     in: \mathrm{Length}(\pi)
     out: "0"
+  fullform:
+    in: Length[Pi]
   wolfram:
     in: Length[Pi]
   sympy:
@@ -161,5 +184,7 @@ a-lazy-range-is-counted-without-being:
   tex:
     in: \mathrm{Length}(1..20)
     out: "20"
+  fullform:
+    in: Length[Range[1, 20]]
   wolfram:
     in: Length[Range[1, 20]]

@@ -8,6 +8,8 @@ the-shortest-geodesic:
   traditional:
     in: \mathrm{ModularWord}(\begin{pmatrix}1&1\\1&2\end{pmatrix})
     out: \text{LR}
+  fullform:
+    in: ModularWord[ModularMatrix[1, 1, 1, 2]]
 a-word-evaluates-as-its-matrix:
   epsil:
     in: ModularTrace("LRLR")
@@ -15,6 +17,8 @@ a-word-evaluates-as-its-matrix:
   tex:
     in: \mathrm{ModularTrace}(\text{LRLR})
     out: "7"
+  fullform:
+    in: ModularTrace["LRLR"]
 t-5-fixes-a-cusp:
   epsil:
     in: ModularKind(ModularMatrix(1, 5, 0, 1))
@@ -25,6 +29,8 @@ t-5-fixes-a-cusp:
   traditional:
     in: \mathrm{ModularKind}(\begin{pmatrix}1&5\\0&1\end{pmatrix})
     out: \text{Parabolic}
+  fullform:
+    in: ModularKind[ModularMatrix[1, 5, 0, 1]]
 the-s-t-exponents-are-a-continued-fraction:
   epsil:
     in: ModularSTWord(ModularMatrix(1, 5, 0, 1))
@@ -35,3 +41,5 @@ the-s-t-exponents-are-a-continued-fraction:
   traditional:
     in: \mathrm{ModularSTWord}(\begin{pmatrix}1&5\\0&1\end{pmatrix})
     out: \bigl\lbrack5\bigr\rbrack
+  fullform:
+    in: ModularSTWord[ModularMatrix[1, 5, 0, 1]]

@@ -5,6 +5,8 @@ single-letter:
   tex:
     in: \mathrm{LetterNumber}(\text{d})
     out: "4"
+  fullform:
+    in: LetterNumber["d"]
   wolfram:
     in: LetterNumber["d"]
 string:
@@ -14,5 +16,7 @@ string:
   tex:
     in: \mathrm{LetterNumber}(\text{cab})
     out: \bigl\lbrack3, 1, 2\bigr\rbrack
+  fullform:
+    in: LetterNumber["cab"]
   wolfram:
     in: LetterNumber["cab"]

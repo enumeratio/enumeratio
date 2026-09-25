@@ -5,6 +5,8 @@ sort-list-3-1-2:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)
     out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Sort[List[3, 1, 2]]
   wolfram:
     in: Sort[List[3, 1, 2]]
     out: "{1, 2, 3}"
@@ -18,6 +20,8 @@ sort-list-4-2-5-1-3:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack4, 2, 5, 1, 3\bigr\rbrack)
     out: \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack
+  fullform:
+    in: Sort[List[4, 2, 5, 1, 3]]
   wolfram:
     in: Sort[List[4, 2, 5, 1, 3]]
     out: "{1, 2, 3, 4, 5}"
@@ -34,9 +38,10 @@ sort-is-idempotent-sorting-an-already-sorted:
   traditional:
     in: \mathrm{Sort}(\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sort[Sort[List[3, 1, 2]]], Sort[List[3, 1, 2]]]
   wolfram:
     in: (Sort[Sort[List[3, 1, 2]]] == Sort[List[3, 1, 2]])
-    back: Unreadable
     out: True
     tex:
       in: \text{Sort}[\text{Sort}[\{3,1,2\}]]=\text{Sort}[\{3,1,2\}]
@@ -51,9 +56,10 @@ sort-c-at-c-ordering-c-see-ordering-and-at:
   traditional:
     in: \mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\bigl\lbrack3, 1, 2\bigr\rbrack[\mathrm{Ordering}(\bigl\lbrack3, 1, 2\bigr\rbrack)]
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sort[List[3, 1, 2]], Part[List[3, 1, 2], Ordering[List[3, 1, 2]]]]
   wolfram:
     in: (Sort[List[3, 1, 2]] == Part[List[3, 1, 2], Ordering[List[3, 1, 2]]])
-    back: Unreadable
     out: True
     tex:
       in: \text{Sort}[\{3,1,2\}]=\{3,1,2\}[[\text{Ordering}[\{3,1,2\}]]]
@@ -65,6 +71,8 @@ a-custom-comparator-sorts-in-a-different-order:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt\operatorname{\_2})
     out: \bigl\lbrack3, 2, 1\bigr\rbrack
+  fullform:
+    in: Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]
   wolfram:
     in: Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]
     out: "{3, 2, 1}"
@@ -78,6 +86,8 @@ a-list-of-strings-sorts-lexicographically:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack\mathrm{banana}, \mathrm{apple}, \mathrm{cherry}\bigr\rbrack)
     out: \bigl\lbrack\mathrm{apple}, \mathrm{banana}, \mathrm{cherry}\bigr\rbrack
+  fullform:
+    in: Sort[List[banana, apple, cherry]]
 symbols-sort-alphabetically:
   epsil:
     in: Sort([d, b, c, a])
@@ -85,6 +95,8 @@ symbols-sort-alphabetically:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack d, b, c, a\bigr\rbrack)
     out: \bigl\lbrack a, b, c, d\bigr\rbrack
+  fullform:
+    in: Sort[List[d, b, c, a]]
 integers-rationals-and-floats-together-sort-by:
   epsil:
     in: Sort([3 / 2, 1, 0.5, -2])
@@ -92,6 +104,8 @@ integers-rationals-and-floats-together-sort-by:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack\frac{3}{2}, 1, 0.5, -2\bigr\rbrack)
     out: \bigl\lbrack-2, 0.5, 1, \frac{3}{2}\bigr\rbrack
+  fullform:
+    in: Sort[List[Rational[3, 2], 1, 0.5, -2]]
   wolfram:
     in: Sort[List[Rational[3, 2], 1, 0.5, -2]]
 exact-numeric-constants-sort-by-their-value:
@@ -101,6 +115,8 @@ exact-numeric-constants-sort-by-their-value:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack\pi, e, 2, 3, 1, \sqrt{2}\bigr\rbrack)
     out: \bigl\lbrack1, \sqrt{2}, 2, e, 3, \pi\bigr\rbrack
+  fullform:
+    in: Sort[List[Pi, E, 2, 3, 1, Sqrt[2]]]
   wolfram:
     in: Sort[List[Pi, E, 2, 3, 1, Sqrt[2]]]
     note: "Wolfram's default canonical order puts explicit numbers before symbolic ones: {1, 2, 3, Sqrt[2], E, Pi}; Sort[…, Less] gives this numeric order."
@@ -111,6 +127,8 @@ less-as-the-ordering-function-sorts-by-numeric:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack\pi, e, 2, 3, 1, \sqrt{2}\bigr\rbrack, \mathrm{Less})
     out: \bigl\lbrack1, \sqrt{2}, 2, e, 3, \pi\bigr\rbrack
+  fullform:
+    in: Sort[List[Pi, E, 2, 3, 1, Sqrt[2]], Less]
   wolfram:
     in: Sort[List[Pi, E, 2, 3, 1, Sqrt[2]], Less]
 a-named-ordering-function-greater-sorts-in:
@@ -120,6 +138,8 @@ a-named-ordering-function-greater-sorts-in:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack4, 1, 3, 2, 2\bigr\rbrack, \mathrm{Greater})
     out: \bigl\lbrack4, 3, 2, 2, 1\bigr\rbrack
+  fullform:
+    in: Sort[List[4, 1, 3, 2, 2], Greater]
   wolfram:
     in: Sort[List[4, 1, 3, 2, 2], Greater]
 sorting-pairs-by-their-second-element-with-a:
@@ -129,6 +149,8 @@ sorting-pairs-by-their-second-element-with-a:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack\bigl\lbrack a, 2\bigr\rbrack, \bigl\lbrack c, 1\bigr\rbrack, \bigl\lbrack d, 3\bigr\rbrack\bigr\rbrack, ()\mapsto\operatorname{\_1}[2]\lt\operatorname{\_2}[2])
     out: \bigl\lbrack\bigl\lbrack c, 1\bigr\rbrack, \bigl\lbrack a, 2\bigr\rbrack, \bigl\lbrack d, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]
 sorts-the-arguments-of-any-head-not-just-a-list:
   epsil:
     in: Sort(f(b, a, c))
@@ -136,6 +158,8 @@ sorts-the-arguments-of-any-head-not-just-a-list:
   tex:
     in: \mathrm{Sort}(f(b, a, c))
     out: f(a, b, c)
+  fullform:
+    in: Sort[f[b, a, c]]
 the-result-doesn-t-depend-on-the-input-order:
   epsil:
     in: Sort(Reverse([3, 1, 2])) == Sort([3, 1, 2])
@@ -146,9 +170,10 @@ the-result-doesn-t-depend-on-the-input-order:
   traditional:
     in: \mathrm{Sort}(\mathrm{Reverse}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sort[Reverse[List[3, 1, 2]]], Sort[List[3, 1, 2]]]
   wolfram:
     in: (Sort[Reverse[List[3, 1, 2]]] == Sort[List[3, 1, 2]])
-    back: Unreadable
 the-empty-list-sorts-to-itself:
   epsil:
     in: Sort([])
@@ -156,5 +181,7 @@ the-empty-list-sorts-to-itself:
   tex:
     in: \mathrm{Sort}(\bigl\lbrack \bigr\rbrack)
     out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: Sort[List[]]
   wolfram:
     in: Sort[List[]]

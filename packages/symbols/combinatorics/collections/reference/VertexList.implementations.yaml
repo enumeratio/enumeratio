@@ -5,5 +5,7 @@ vertices-of-a-path:
   tex:
     in: \mathrm{VertexList}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(3, 1), \mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))
     out: \bigl\lbrack3, 1, 2\bigr\rbrack
+  fullform:
+    in: VertexList[Graph[List[UndirectedEdge[3, 1], UndirectedEdge[1, 2]]]]
   wolfram:
     in: VertexList[Graph[List[UndirectedEdge[3, 1], UndirectedEdge[1, 2]]]]

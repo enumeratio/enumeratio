@@ -8,6 +8,8 @@ primenu-24:
   traditional:
     in: \omega(24)
     out: "2"
+  fullform:
+    in: PrimeNu[24]
   wolfram:
     in: PrimeNu[24]
     out: "2"
@@ -24,6 +26,8 @@ primenu-360:
   traditional:
     in: \omega(360)
     out: "3"
+  fullform:
+    in: PrimeNu[360]
   wolfram:
     in: PrimeNu[360]
     out: "3"
@@ -40,6 +44,8 @@ primenu-360:
   traditional:
     in: \omega(32)
     out: "1"
+  fullform:
+    in: PrimeNu[32]
   wolfram:
     in: PrimeNu[32]
     out: "1"
@@ -56,6 +62,8 @@ primenu-360:
   traditional:
     in: \omega(1)
     out: "0"
+  fullform:
+    in: PrimeNu[1]
   wolfram:
     in: PrimeNu[1]
     out: "0"
@@ -72,9 +80,10 @@ primenu-n-is-the-length-of-factorinteger-n:
   traditional:
     in: \omega(50)=\mathrm{Length}(\mathrm{FactorInteger}(50))
     out: \mathrm{True}
+  fullform:
+    in: Equal[PrimeNu[50], Length[FactorInteger[50]]]
   wolfram:
     in: (PrimeNu[50] == Length[FactorInteger[50]])
-    back: Unreadable
     out: True
     tex:
       in: \nu (50)=\text{Length}[\text{FactorInteger}[50]]
@@ -86,6 +95,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{PrimeNu}(\bigl\lbrack4, 28, 180\bigr\rbrack)
     out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: PrimeNu[List[4, 28, 180]]
   wolfram:
     in: PrimeNu[List[4, 28, 180]]
     out: "{1, 2, 3}"
@@ -102,6 +113,8 @@ primenu-105:
   traditional:
     in: \omega(105)
     out: "3"
+  fullform:
+    in: PrimeNu[105]
   wolfram:
     in: PrimeNu[105]
 large-integers-the-15-primes-up-to-50-divide-50:
@@ -114,6 +127,8 @@ large-integers-the-15-primes-up-to-50-divide-50:
   traditional:
     in: \omega(50!)
     out: "15"
+  fullform:
+    in: PrimeNu[Factorial[50]]
   wolfram:
     in: PrimeNu[Factorial[50]]
 gaussian-integers-3-i-1-i-2-i:
@@ -126,6 +141,8 @@ gaussian-integers-3-i-1-i-2-i:
   traditional:
     in: \omega(3+i)
     out: "2"
+  fullform:
+    in: PrimeNu[Complex[3, 1]]
   wolfram:
     in: PrimeNu[Complex[3, 1]]
 gaussianintegers-true-5-splits-so-105-has-4:
@@ -138,6 +155,8 @@ gaussianintegers-true-5-splits-so-105-has-4:
   traditional:
     in: \mathrm{PrimeNu}(105, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: "4"
+  fullform:
+    in: PrimeNu[105, KeyValuePair[GaussianIntegers, True]]
 listable-over-a-range:
   epsil:
     in: PrimeNu(Range(20))
@@ -148,5 +167,7 @@ listable-over-a-range:
   traditional:
     in: \omega(1..20)
     out: \bigl\lbrack0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2\bigr\rbrack
+  fullform:
+    in: PrimeNu[Range[20]]
   wolfram:
     in: PrimeNu[Range[20]]

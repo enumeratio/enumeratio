@@ -5,6 +5,8 @@ maxwell-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{MaxwellDistribution}(1), 2)
     out: \frac{4\sqrt{2}}{e^{2}\sqrt{\pi}}
+  fullform:
+    in: PDF[MaxwellDistribution[1], 2]
   wolfram:
     in: PDF[MaxwellDistribution[1], 2]
 maxwell-cdf-exact:
@@ -17,6 +19,8 @@ maxwell-cdf-exact:
   traditional:
     in: \operatorname{CDF}(\mathrm{MaxwellDistribution}(1), 2)
     out: 1-Q(\frac{3}{2}, 2)
+  fullform:
+    in: CDF[MaxwellDistribution[1], 2]
   wolfram:
     in: CDF[MaxwellDistribution[1], 2]
 maxwell-mean-exact:
@@ -26,6 +30,8 @@ maxwell-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{MaxwellDistribution}(1))
     out: \frac{2\sqrt{2}}{\sqrt{\pi}}
+  fullform:
+    in: Mean[MaxwellDistribution[1]]
   wolfram:
     in: Mean[MaxwellDistribution[1]]
 maxwell-variance-exact:
@@ -35,5 +41,7 @@ maxwell-variance-exact:
   tex:
     in: \mathrm{Variance}(\mathrm{MaxwellDistribution}(1))
     out: \frac{3\pi-8}{\pi}
+  fullform:
+    in: Variance[MaxwellDistribution[1]]
   wolfram:
     in: Variance[MaxwellDistribution[1]]

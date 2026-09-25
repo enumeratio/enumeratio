@@ -8,6 +8,8 @@ listable:
   traditional:
     in: \mathrm{IsPerfect}(\bigl\lbrack6, 28, 12\bigr\rbrack)
     out: \bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+  fullform:
+    in: PerfectNumberQ[List[6, 28, 12]]
   wolfram:
     in: PerfectNumberQ[List[6, 28, 12]]
 negative-numbers-are-not-perfect:
@@ -20,5 +22,7 @@ negative-numbers-are-not-perfect:
   traditional:
     in: \mathrm{IsPerfect}(-6)
     out: \mathrm{False}
+  fullform:
+    in: PerfectNumberQ[-6]
   wolfram:
     in: PerfectNumberQ[-6]

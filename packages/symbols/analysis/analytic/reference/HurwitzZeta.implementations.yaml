@@ -8,6 +8,8 @@ zeta-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary:
   traditional:
     in: \zeta(2, 1)
     out: \frac{\pi^2}{6}
+  fullform:
+    in: HurwitzZeta[2, 1]
   wolfram:
     in: HurwitzZeta[2, 1]
     out: Pi^2/6
@@ -33,6 +35,8 @@ zeta-2-2-pi-2-6-1:
   traditional:
     in: \zeta(2, 2)
     out: \frac{\pi^2}{6}-1
+  fullform:
+    in: HurwitzZeta[2, 2]
   wolfram:
     in: HurwitzZeta[2, 2]
     out: -1 + Pi^2/6
@@ -58,6 +62,8 @@ zeta-0-a-frac-12-a-exact-and-symbolic-in-a:
   traditional:
     in: \zeta(0, a)
     out: \frac{1}{2}-a
+  fullform:
+    in: HurwitzZeta[0, a]
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1:
   epsil:
     in: HurwitzZeta(-1, a)
@@ -68,6 +74,8 @@ zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1:
   traditional:
     in: \zeta(-1, a)
     out: -\frac{1}{2}(a^2-a+\frac{1}{6})
+  fullform:
+    in: HurwitzZeta[-1, a]
 pole-at-s-1-for-every-a:
   epsil:
     in: HurwitzZeta(1, 3)
@@ -78,6 +86,8 @@ pole-at-s-1-for-every-a:
   traditional:
     in: \zeta(1, 3)
     out: \tilde\infty
+  fullform:
+    in: HurwitzZeta[1, 3]
   wolfram:
     in: HurwitzZeta[1, 3]
     out: ComplexInfinity
@@ -109,6 +119,8 @@ zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the:
   traditional:
     in: \zeta(-3, \frac{7}{3})
     out: -\frac{7\,813}{3\,240}
+  fullform:
+    in: HurwitzZeta[-3, Rational[7, 3]]
   wolfram:
     in: HurwitzZeta[-3, Rational[7, 3]]
     out: HurwitzZeta[-3, 7/3]
@@ -132,6 +144,8 @@ an-inexact-a-evaluates-numerically-without-n:
   traditional:
     in: \zeta(3, 0.2)
     out: 125.739\,018\,057\,217\,95
+  fullform:
+    in: HurwitzZeta[3, 0.2]
   wolfram:
     in: HurwitzZeta[3, 0.2]
   sympy:
@@ -150,6 +164,8 @@ inside-the-critical-strip-under-n:
   traditional:
     in: N(\zeta(0.51, 0.87))
     out: -1.320\,155\,023\,694\,958\,375\,51
+  fullform:
+    in: N[HurwitzZeta[0.51, 0.87]]
   wolfram:
     in: N[HurwitzZeta[0.51, 0.87]]
   sympy:
@@ -168,6 +184,8 @@ a-positive-integer-a-peels-off-the-first-terms:
   traditional:
     in: \zeta(7, 5)
     out: \zeta(7)-\frac{36\,130\,315}{35\,831\,808}
+  fullform:
+    in: HurwitzZeta[7, 5]
   wolfram:
     in: HurwitzZeta[7, 5]
   sympy:
@@ -186,6 +204,8 @@ complex-a:
   traditional:
     in: N(\zeta(2.3, 8+i))
     out: 0.054\,470\,082\,732\,130\,67-0.009\,448\,515\,336\,470\,249i
+  fullform:
+    in: N[HurwitzZeta[2.3, Complex[8, 1]]]
   wolfram:
     in: N[HurwitzZeta[2.3, Complex[8, 1]]]
   sympy:
@@ -201,6 +221,8 @@ listable-threads-over-a-list-of-orders:
   tex:
     in: \mathrm{HurwitzZeta}(\bigl\lbrack2, 3, 4\bigr\rbrack, 0.5)
     out: \bigl\lbrack4.934\,802\,200\,544\,679, 8.414\,398\,322\,117\,16, 16.234\,848\,505\,667\,074\bigr\rbrack
+  fullform:
+    in: HurwitzZeta[List[2, 3, 4], 0.5]
   wolfram:
     in: HurwitzZeta[List[2, 3, 4], 0.5]
   sympy:
@@ -217,6 +239,8 @@ uncertainty-in-a:
   traditional:
     in: \zeta(2, \mathrm{Around}(0.5, 0.01))
     out: \mathrm{Around}(4.934\,802\,200\,544\,679, 0.168\,287\,966\,442\,343\,2)
+  fullform:
+    in: HurwitzZeta[2, Around[0.5, 0.01]]
   wolfram:
     in: HurwitzZeta[2, Around[0.5, 0.01]]
 zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2:
@@ -229,6 +253,8 @@ zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2:
   traditional:
     in: \zeta(2, \frac{1}{2})
     out: \frac{\pi^2}{2}
+  fullform:
+    in: HurwitzZeta[2, Rational[1, 2]]
   wolfram:
     in: HurwitzZeta[2, Rational[1, 2]]
   sympy:
@@ -245,6 +271,8 @@ zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
   traditional:
     in: \zeta(2, \frac{1}{4})
     out: 8\mathrm{Catalan}+\pi^2
+  fullform:
+    in: HurwitzZeta[2, Rational[1, 4]]
   wolfram:
     in: HurwitzZeta[2, Rational[1, 4]]
   sympy:
@@ -261,6 +289,8 @@ zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s:
   traditional:
     in: \zeta(s, \frac{1}{2})
     out: (2^{s}-1)\zeta(s)
+  fullform:
+    in: HurwitzZeta[s, Rational[1, 2]]
 zeta-s-1-zeta-s-for-symbolic-s:
   epsil:
     in: HurwitzZeta(s, 1)
@@ -271,6 +301,8 @@ zeta-s-1-zeta-s-for-symbolic-s:
   traditional:
     in: \zeta(s, 1)
     out: \zeta(s)
+  fullform:
+    in: HurwitzZeta[s, 1]
 zeta-0-a-frac-12-a-holds-at-a-0-too:
   epsil:
     in: HurwitzZeta(0, 0)
@@ -281,6 +313,8 @@ zeta-0-a-frac-12-a-holds-at-a-0-too:
   traditional:
     in: \zeta(0, 0)
     out: \frac{1}{2}
+  fullform:
+    in: HurwitzZeta[0, 0]
   wolfram:
     in: HurwitzZeta[0, 0]
   sympy:
@@ -299,6 +333,8 @@ zeta-2-a-b-3-a-3:
   traditional:
     in: \zeta(-2, a)
     out: -\frac{1}{3}(a^3-\frac{3a^2}{2}+\frac{a}{2})
+  fullform:
+    in: HurwitzZeta[-2, a]
 partial-a-zeta-s-a-s-zeta-s-1-a:
   epsil:
     in: D(HurwitzZeta(s, a), a)
@@ -309,6 +345,8 @@ partial-a-zeta-s-a-s-zeta-s-1-a:
   traditional:
     in: \frac{\mathrm{d}}{\mathrm{d}a}\zeta(s, a)
     out: -(s\zeta(s+1, a))
+  fullform:
+    in: D[HurwitzZeta[s, a], a]
 to-30-significant-digits-not-yet-the-last-digit:
   epsil:
     in: N(HurwitzZeta(3, 1 / 3), 30)
@@ -319,6 +357,8 @@ to-30-significant-digits-not-yet-the-last-digit:
   traditional:
     in: N(\zeta(3, \frac{1}{3}), 30)
     out: 27.561\,061\,199\,700\,803\,776\,2
+  fullform:
+    in: N[HurwitzZeta[3, Rational[1, 3]], 30]
   wolfram:
     in: N[HurwitzZeta[3, Rational[1, 3]], 30]
   sympy:
@@ -335,6 +375,8 @@ far-left-of-the-strip-all-40-digits-agree-with:
   traditional:
     in: N(\zeta(-\frac{41}{2}, \frac{3}{10}), 40)
     out: 136.361\,935\,791\,831\,144\,172
+  fullform:
+    in: N[HurwitzZeta[Rational[-41, 2], Rational[3, 10]], 40]
   wolfram:
     in: N[HurwitzZeta[Rational[-41, 2], Rational[3, 10]], 40]
   sympy:
@@ -351,6 +393,8 @@ left-of-the-strip-at-a-non-integer-a:
   traditional:
     in: N(\zeta(-20, 0.7))
     out: -80.090\,973\,876\,253\,591\,336\,3
+  fullform:
+    in: N[HurwitzZeta[-20, 0.7]]
   wolfram:
     in: N[HurwitzZeta[-20, 0.7]]
   sympy:
@@ -369,6 +413,8 @@ left-of-the-strip-at-a-non-integer-a-and-s:
   traditional:
     in: N(\zeta(-40.5, 0.4))
     out: 7\,724\,997\,484\,091\,588.756\,78
+  fullform:
+    in: N[HurwitzZeta[-40.5, 0.4]]
   wolfram:
     in: N[HurwitzZeta[-40.5, 0.4]]
   sympy:
@@ -387,6 +433,8 @@ a-negative-a-frac-12-5-is-real-and-so-is-the:
   traditional:
     in: N(\zeta(5, -\frac{1}{2}))
     out: 0.144\,760\,409\,444\,467\,716\,272
+  fullform:
+    in: N[HurwitzZeta[5, Rational[-1, 2]]]
   wolfram:
     in: N[HurwitzZeta[5, Rational[-1, 2]]]
   sympy:
@@ -403,6 +451,8 @@ zeta-4-2-pi-4-90-1:
   traditional:
     in: \zeta(4, 2)
     out: \frac{\pi^4}{90}-1
+  fullform:
+    in: HurwitzZeta[4, 2]
   wolfram:
     in: HurwitzZeta[4, 2]
   sympy:
@@ -421,6 +471,8 @@ n-hurwitzzeta-2-1:
   traditional:
     in: N(\zeta(2, 1))
     out: 1.644\,934\,066\,848\,226\,436\,47
+  fullform:
+    in: N[HurwitzZeta[2, 1]]
   wolfram:
     in: N[HurwitzZeta[2, 1]]
     out: "1.6449340668482262"
@@ -446,6 +498,8 @@ n-hurwitzzeta-2-2:
   traditional:
     in: N(\zeta(2, 2))
     out: 0.644\,934\,066\,848\,226\,436\,47
+  fullform:
+    in: N[HurwitzZeta[2, 2]]
   wolfram:
     in: N[HurwitzZeta[2, 2]]
     out: "0.6449340668482262"
@@ -471,6 +525,8 @@ n-hurwitzzeta-2-3:
   traditional:
     in: N(\zeta(2, 3))
     out: 0.394\,934\,066\,848\,226\,436\,47
+  fullform:
+    in: N[HurwitzZeta[2, 3]]
   wolfram:
     in: N[HurwitzZeta[2, 3]]
     out: "0.3949340668482262"
@@ -496,6 +552,8 @@ n-hurwitzzeta-2-0p5:
   traditional:
     in: N(\zeta(2, 0.5))
     out: 4.934\,802\,200\,544\,679\,309\,42
+  fullform:
+    in: N[HurwitzZeta[2, 0.5]]
   wolfram:
     in: N[HurwitzZeta[2, 0.5]]
     out: "4.934802200544678"
@@ -521,6 +579,8 @@ n-hurwitzzeta-2-0p25:
   traditional:
     in: N(\zeta(2, 0.25))
     out: 17.197\,329\,154\,507\,110\,739\,3
+  fullform:
+    in: N[HurwitzZeta[2, 0.25]]
   wolfram:
     in: N[HurwitzZeta[2, 0.25]]
     out: "17.19732915450711"
@@ -546,6 +606,8 @@ n-hurwitzzeta-2-1p3:
   traditional:
     in: N(\zeta(2, 1.3))
     out: 1.134\,253\,434\,996\,619\,354\,36
+  fullform:
+    in: N[HurwitzZeta[2, 1.3]]
   wolfram:
     in: N[HurwitzZeta[2, 1.3]]
     out: "1.1342534349966196"
@@ -571,6 +633,8 @@ n-hurwitzzeta-2-7-over-3:
   traditional:
     in: N(\zeta(2, \frac{7}{3}))
     out: 0.533\,097\,125\,427\,094\,081\,793
+  fullform:
+    in: N[HurwitzZeta[2, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[2, Rational[7, 3]]]
     out: "0.5330971254270939"
@@ -593,6 +657,8 @@ n-hurwitzzeta-2-1-plus-i:
   traditional:
     in: N(\zeta(2, 1+i))
     out: 0.463\,000\,096\,622\,763\,76-0.794\,233\,542\,759\,319i
+  fullform:
+    in: N[HurwitzZeta[2, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[2, Complex[1, 1]]]
     out: 0.46300009662276376 - 0.7942335427593189*I
@@ -618,6 +684,8 @@ n-hurwitzzeta-2-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(2, 2-0.5i))
     out: 0.588\,197\,890\,950\,061\,5+0.185\,041\,972\,433\,790\,86i
+  fullform:
+    in: N[HurwitzZeta[2, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[2, Complex[2, -0.5]]]
     out: 0.5881978909500614 + 0.18504197243379084*I
@@ -643,6 +711,8 @@ n-hurwitzzeta-2-neg-0p5:
   traditional:
     in: N(\zeta(2, -0.5))
     out: 8.934\,802\,200\,544\,679
+  fullform:
+    in: N[HurwitzZeta[2, -0.5]]
   wolfram:
     in: N[HurwitzZeta[2, -0.5]]
     out: "8.934802200544679"
@@ -668,6 +738,8 @@ n-hurwitzzeta-2-neg-1p5:
   traditional:
     in: N(\zeta(2, -1.5))
     out: 9.379\,246\,644\,989\,124
+  fullform:
+    in: N[HurwitzZeta[2, -1.5]]
   wolfram:
     in: N[HurwitzZeta[2, -1.5]]
     out: "9.379246644989125"
@@ -693,6 +765,8 @@ n-hurwitzzeta-3-1:
   traditional:
     in: N(\zeta(3, 1))
     out: 1.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[HurwitzZeta[3, 1]]
   wolfram:
     in: N[HurwitzZeta[3, 1]]
     out: "1.2020569031595942"
@@ -718,6 +792,8 @@ n-hurwitzzeta-3-2:
   traditional:
     in: N(\zeta(3, 2))
     out: 0.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[HurwitzZeta[3, 2]]
   wolfram:
     in: N[HurwitzZeta[3, 2]]
     out: "0.20205690315959424"
@@ -743,6 +819,8 @@ n-hurwitzzeta-3-3:
   traditional:
     in: N(\zeta(3, 3))
     out: 0.077\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[HurwitzZeta[3, 3]]
   wolfram:
     in: N[HurwitzZeta[3, 3]]
     out: "0.07705690315959429"
@@ -768,6 +846,8 @@ n-hurwitzzeta-3-0p5:
   traditional:
     in: N(\zeta(3, 0.5))
     out: 8.414\,398\,322\,117\,159\,997\,8
+  fullform:
+    in: N[HurwitzZeta[3, 0.5]]
   wolfram:
     in: N[HurwitzZeta[3, 0.5]]
     out: "8.41439832211716"
@@ -793,6 +873,8 @@ n-hurwitzzeta-3-0p25:
   traditional:
     in: N(\zeta(3, 0.25))
     out: 64.663\,869\,968\,768\,460\,166\,5
+  fullform:
+    in: N[HurwitzZeta[3, 0.25]]
   wolfram:
     in: N[HurwitzZeta[3, 0.25]]
     out: "64.66386996876845"
@@ -818,6 +900,8 @@ n-hurwitzzeta-3-1p3:
   traditional:
     in: N(\zeta(3, 1.3))
     out: 0.599\,231\,257\,325\,978\,296\,35
+  fullform:
+    in: N[HurwitzZeta[3, 1.3]]
   wolfram:
     in: N[HurwitzZeta[3, 1.3]]
     out: "0.5992312573259785"
@@ -843,6 +927,8 @@ n-hurwitzzeta-3-7-over-3:
   traditional:
     in: N(\zeta(3, \frac{7}{3}))
     out: 0.139\,186\,199\,700\,803\,776\,228
+  fullform:
+    in: N[HurwitzZeta[3, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[3, Rational[7, 3]]]
     out: "0.13918619970080365"
@@ -865,6 +951,8 @@ n-hurwitzzeta-3-1-plus-i:
   traditional:
     in: N(\zeta(3, 1+i))
     out: -0.184\,276\,465\,793\,967\,61-0.383\,326\,425\,172\,533\,3i
+  fullform:
+    in: N[HurwitzZeta[3, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[3, Complex[1, 1]]]
     out: -0.1842764657939676 - 0.38332642517253307*I
@@ -890,6 +978,8 @@ n-hurwitzzeta-3-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(3, 2-0.5i))
     out: 0.153\,693\,633\,730\,308\,25+0.104\,226\,347\,413\,732\,64i
+  fullform:
+    in: N[HurwitzZeta[3, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[3, Complex[2, -0.5]]]
     out: 0.15369363373030823 + 0.10422634741373263*I
@@ -915,6 +1005,8 @@ n-hurwitzzeta-3-neg-0p5:
   traditional:
     in: N(\zeta(3, -0.5))
     out: 0.414\,398\,322\,117\,16
+  fullform:
+    in: N[HurwitzZeta[3, -0.5]]
   wolfram:
     in: N[HurwitzZeta[3, -0.5]]
     out: "0.41439832211716043"
@@ -940,6 +1032,8 @@ n-hurwitzzeta-3-neg-1p5:
   traditional:
     in: N(\zeta(3, -1.5))
     out: 0.118\,102\,025\,820\,863\,7
+  fullform:
+    in: N[HurwitzZeta[3, -1.5]]
   wolfram:
     in: N[HurwitzZeta[3, -1.5]]
     out: "0.11810202582086375"
@@ -965,6 +1059,8 @@ n-hurwitzzeta-5-1:
   traditional:
     in: N(\zeta(5, 1))
     out: 1.036\,927\,755\,143\,369\,926\,33
+  fullform:
+    in: N[HurwitzZeta[5, 1]]
   wolfram:
     in: N[HurwitzZeta[5, 1]]
     out: "1.03692775514337"
@@ -990,6 +1086,8 @@ n-hurwitzzeta-5-2:
   traditional:
     in: N(\zeta(5, 2))
     out: 0.036\,927\,755\,143\,369\,926\,33
+  fullform:
+    in: N[HurwitzZeta[5, 2]]
   wolfram:
     in: N[HurwitzZeta[5, 2]]
     out: "0.03692775514336999"
@@ -1015,6 +1113,8 @@ n-hurwitzzeta-5-3:
   traditional:
     in: N(\zeta(5, 3))
     out: 0.005\,677\,755\,143\,369\,926\,33
+  fullform:
+    in: N[HurwitzZeta[5, 3]]
   wolfram:
     in: N[HurwitzZeta[5, 3]]
     out: "0.005677755143369927"
@@ -1040,6 +1140,8 @@ n-hurwitzzeta-5-0p5:
   traditional:
     in: N(\zeta(5, 0.5))
     out: 32.144\,760\,409\,444\,467\,716\,3
+  fullform:
+    in: N[HurwitzZeta[5, 0.5]]
   wolfram:
     in: N[HurwitzZeta[5, 0.5]]
     out: "32.14476040944447"
@@ -1065,6 +1167,8 @@ n-hurwitzzeta-5-0p25:
   traditional:
     in: N(\zeta(5, 0.25))
     out: 1\,024.348\,974\,526\,580\,572\,23
+  fullform:
+    in: N[HurwitzZeta[5, 0.25]]
   wolfram:
     in: N[HurwitzZeta[5, 0.25]]
     out: "1024.3489745265804"
@@ -1090,6 +1194,8 @@ n-hurwitzzeta-5-1p3:
   traditional:
     in: N(\zeta(5, 1.3))
     out: 0.288\,556\,067\,518\,526\,559\,52
+  fullform:
+    in: N[HurwitzZeta[5, 1.3]]
   wolfram:
     in: N[HurwitzZeta[5, 1.3]]
     out: "0.2885560675185258"
@@ -1115,6 +1221,8 @@ n-hurwitzzeta-5-7-over-3:
   traditional:
     in: N(\zeta(5, \frac{7}{3}))
     out: 0.017\,985\,276\,918\,875\,062\,236\,9
+  fullform:
+    in: N[HurwitzZeta[5, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[5, Rational[7, 3]]]
     out: "0.017985276918875106"
@@ -1137,6 +1245,8 @@ n-hurwitzzeta-5-1-plus-i:
   traditional:
     in: N(\zeta(5, 1+i))
     out: -0.136\,646\,173\,710\,168\,74+0.107\,525\,502\,140\,081\,97i
+  fullform:
+    in: N[HurwitzZeta[5, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[5, Complex[1, 1]]]
     out: -0.1366461737101687 + 0.10752550214008202*I
@@ -1162,6 +1272,8 @@ n-hurwitzzeta-5-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(5, 2-0.5i))
     out: 0.012\,993\,573\,083\,069\,943+0.028\,877\,271\,795\,314\,092i
+  fullform:
+    in: N[HurwitzZeta[5, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[5, Complex[2, -0.5]]]
     out: 0.012993573083069943 + 0.028877271795314092*I
@@ -1187,6 +1299,8 @@ n-hurwitzzeta-5-neg-0p5:
   traditional:
     in: N(\zeta(5, -0.5))
     out: 0.144\,760\,409\,444\,467\,716\,272
+  fullform:
+    in: N[HurwitzZeta[5, -0.5]]
   wolfram:
     in: N[HurwitzZeta[5, -0.5]]
     out: "0.14476040944447052"
@@ -1212,6 +1326,8 @@ n-hurwitzzeta-5-neg-1p5:
   traditional:
     in: N(\zeta(5, -1.5))
     out: 0.013\,073\,166\,646\,113\,806\,807\,3
+  fullform:
+    in: N[HurwitzZeta[5, -1.5]]
   wolfram:
     in: N[HurwitzZeta[5, -1.5]]
     out: "0.013073166646113405"
@@ -1237,6 +1353,8 @@ n-hurwitzzeta-neg-1-1:
   traditional:
     in: N(\zeta(-1, 1))
     out: -0.08\overline{3}
+  fullform:
+    in: N[HurwitzZeta[-1, 1]]
   wolfram:
     in: N[HurwitzZeta[-1, 1]]
     out: "-0.08333333333333333"
@@ -1262,6 +1380,8 @@ n-hurwitzzeta-neg-1-2:
   traditional:
     in: N(\zeta(-1, 2))
     out: -1.08\overline{3}
+  fullform:
+    in: N[HurwitzZeta[-1, 2]]
   wolfram:
     in: N[HurwitzZeta[-1, 2]]
     out: "-1.0833333333333333"
@@ -1287,6 +1407,8 @@ n-hurwitzzeta-neg-1-3:
   traditional:
     in: N(\zeta(-1, 3))
     out: -3.08\overline{3}
+  fullform:
+    in: N[HurwitzZeta[-1, 3]]
   wolfram:
     in: N[HurwitzZeta[-1, 3]]
     out: "-3.0833333333333335"
@@ -1312,6 +1434,8 @@ n-hurwitzzeta-neg-1-0p5:
   traditional:
     in: N(\zeta(-1, 0.5))
     out: 0.041\overline{6}
+  fullform:
+    in: N[HurwitzZeta[-1, 0.5]]
   wolfram:
     in: N[HurwitzZeta[-1, 0.5]]
     out: "0.041666666666666664"
@@ -1337,6 +1461,8 @@ n-hurwitzzeta-neg-1-0p25:
   traditional:
     in: N(\zeta(-1, 0.25))
     out: 0.010\,41\overline{6}
+  fullform:
+    in: N[HurwitzZeta[-1, 0.25]]
   wolfram:
     in: N[HurwitzZeta[-1, 0.25]]
     out: "0.010416666666666671"
@@ -1362,6 +1488,8 @@ n-hurwitzzeta-neg-1-1p3:
   traditional:
     in: N(\zeta(-1, 1.3))
     out: -0.278\overline{3}
+  fullform:
+    in: N[HurwitzZeta[-1, 1.3]]
   wolfram:
     in: N[HurwitzZeta[-1, 1.3]]
     out: "-0.27833333333333293"
@@ -1387,6 +1515,8 @@ n-hurwitzzeta-neg-1-7-over-3:
   traditional:
     in: N(\zeta(-1, \frac{7}{3}))
     out: -1.63\overline{8}
+  fullform:
+    in: N[HurwitzZeta[-1, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[-1, Rational[7, 3]]]
     out: "-1.638888888888889"
@@ -1409,6 +1539,8 @@ n-hurwitzzeta-neg-1-1-plus-i:
   traditional:
     in: N(\zeta(-1, 1+i))
     out: 0.41\overline{6}-0.5i
+  fullform:
+    in: N[HurwitzZeta[-1, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[-1, Complex[1, 1]]]
     out: 0.4166666666666669 - 0.5*I
@@ -1434,6 +1566,8 @@ n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(-1, 2-0.5i))
     out: -0.958\,333\,333\,333\,333\,35+0.75i
+  fullform:
+    in: N[HurwitzZeta[-1, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[-1, Complex[2, -0.5]]]
     out: -0.9583333333333328 + 0.7499999999999998*I
@@ -1459,6 +1593,8 @@ n-hurwitzzeta-neg-1-neg-0p5:
   traditional:
     in: N(\zeta(-1, -0.5))
     out: -0.458\overline{3}
+  fullform:
+    in: N[HurwitzZeta[-1, -0.5]]
   wolfram:
     in: N[HurwitzZeta[-1, -0.5]]
     out: "-0.4583333333333333"
@@ -1484,6 +1620,8 @@ n-hurwitzzeta-neg-1-neg-1p5:
   traditional:
     in: N(\zeta(-1, -1.5))
     out: -1.958\overline{3}
+  fullform:
+    in: N[HurwitzZeta[-1, -1.5]]
   wolfram:
     in: N[HurwitzZeta[-1, -1.5]]
     out: "-1.9583333333333333"
@@ -1509,6 +1647,8 @@ n-hurwitzzeta-neg-2-1:
   traditional:
     in: N(\zeta(-2, 1))
     out: "0"
+  fullform:
+    in: N[HurwitzZeta[-2, 1]]
   wolfram:
     in: N[HurwitzZeta[-2, 1]]
     out: 0.
@@ -1534,6 +1674,8 @@ n-hurwitzzeta-neg-2-2:
   traditional:
     in: N(\zeta(-2, 2))
     out: "-1"
+  fullform:
+    in: N[HurwitzZeta[-2, 2]]
   wolfram:
     in: N[HurwitzZeta[-2, 2]]
     out: -1.
@@ -1559,6 +1701,8 @@ n-hurwitzzeta-neg-2-3:
   traditional:
     in: N(\zeta(-2, 3))
     out: "-5"
+  fullform:
+    in: N[HurwitzZeta[-2, 3]]
   wolfram:
     in: N[HurwitzZeta[-2, 3]]
     out: -5.
@@ -1584,6 +1728,8 @@ n-hurwitzzeta-neg-2-0p5:
   traditional:
     in: N(\zeta(-2, 0.5))
     out: "0"
+  fullform:
+    in: N[HurwitzZeta[-2, 0.5]]
   wolfram:
     in: N[HurwitzZeta[-2, 0.5]]
     out: 0.
@@ -1609,6 +1755,8 @@ n-hurwitzzeta-neg-2-0p25:
   traditional:
     in: N(\zeta(-2, 0.25))
     out: -0.015\,625
+  fullform:
+    in: N[HurwitzZeta[-2, 0.25]]
   wolfram:
     in: N[HurwitzZeta[-2, 0.25]]
     out: "-0.015625"
@@ -1634,6 +1782,8 @@ n-hurwitzzeta-neg-2-1p3:
   traditional:
     in: N(\zeta(-2, 1.3))
     out: "-0.104"
+  fullform:
+    in: N[HurwitzZeta[-2, 1.3]]
   wolfram:
     in: N[HurwitzZeta[-2, 1.3]]
     out: "-0.1039999999999992"
@@ -1659,6 +1809,8 @@ n-hurwitzzeta-neg-2-7-over-3:
   traditional:
     in: N(\zeta(-2, \frac{7}{3}))
     out: -1.901\,234\,567\,901\,234\,567\,87
+  fullform:
+    in: N[HurwitzZeta[-2, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[-2, Rational[7, 3]]]
     out: "-1.9012345679012352"
@@ -1681,6 +1833,8 @@ n-hurwitzzeta-neg-2-1-plus-i:
   traditional:
     in: N(\zeta(-2, 1+i))
     out: 0.5+0.166\,666\,666\,666\,666\,66i
+  fullform:
+    in: N[HurwitzZeta[-2, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[-2, Complex[1, 1]]]
     out: 0.5 + 0.16666666666666682*I
@@ -1706,6 +1860,8 @@ n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(-2, 2-0.5i))
     out: -0.624\overline{9}+1.041\,666\,666\,666\,666\,3i
+  fullform:
+    in: N[HurwitzZeta[-2, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[-2, Complex[2, -0.5]]]
     out: -0.6249999999999989 + 1.0416666666666659*I
@@ -1731,6 +1887,8 @@ n-hurwitzzeta-neg-2-neg-0p5:
   traditional:
     in: N(\zeta(-2, -0.5))
     out: "0.25"
+  fullform:
+    in: N[HurwitzZeta[-2, -0.5]]
   wolfram:
     in: N[HurwitzZeta[-2, -0.5]]
     out: "0.25"
@@ -1756,6 +1914,8 @@ n-hurwitzzeta-neg-2-neg-1p5:
   traditional:
     in: N(\zeta(-2, -1.5))
     out: "2.5"
+  fullform:
+    in: N[HurwitzZeta[-2, -1.5]]
   wolfram:
     in: N[HurwitzZeta[-2, -1.5]]
     out: "2.5"
@@ -1781,6 +1941,8 @@ n-hurwitzzeta-neg-3-1:
   traditional:
     in: N(\zeta(-3, 1))
     out: 0.008\overline{3}
+  fullform:
+    in: N[HurwitzZeta[-3, 1]]
   wolfram:
     in: N[HurwitzZeta[-3, 1]]
     out: "0.008333333333333333"
@@ -1806,6 +1968,8 @@ n-hurwitzzeta-neg-3-2:
   traditional:
     in: N(\zeta(-3, 2))
     out: -0.991\overline{6}
+  fullform:
+    in: N[HurwitzZeta[-3, 2]]
   wolfram:
     in: N[HurwitzZeta[-3, 2]]
     out: "-0.9916666666666667"
@@ -1831,6 +1995,8 @@ n-hurwitzzeta-neg-3-3:
   traditional:
     in: N(\zeta(-3, 3))
     out: -8.991\overline{6}
+  fullform:
+    in: N[HurwitzZeta[-3, 3]]
   wolfram:
     in: N[HurwitzZeta[-3, 3]]
     out: "-8.991666666666667"
@@ -1856,6 +2022,8 @@ n-hurwitzzeta-neg-3-0p5:
   traditional:
     in: N(\zeta(-3, 0.5))
     out: -0.007\,291\overline{6}
+  fullform:
+    in: N[HurwitzZeta[-3, 0.5]]
   wolfram:
     in: N[HurwitzZeta[-3, 0.5]]
     out: "-0.007291666666666667"
@@ -1881,6 +2049,8 @@ n-hurwitzzeta-neg-3-0p25:
   traditional:
     in: N(\zeta(-3, 0.25))
     out: -0.000\,455\,729\,166\,666\,666\,666\,675
+  fullform:
+    in: N[HurwitzZeta[-3, 0.25]]
   wolfram:
     in: N[HurwitzZeta[-3, 0.25]]
     out: "-0.00045572916666664076"
@@ -1906,6 +2076,8 @@ n-hurwitzzeta-neg-3-1p3:
   traditional:
     in: N(\zeta(-3, 1.3))
     out: -0.029\,691\,666\,666\,666\,666\,666\,7
+  fullform:
+    in: N[HurwitzZeta[-3, 1.3]]
   wolfram:
     in: N[HurwitzZeta[-3, 1.3]]
     out: "-0.029691666666665784"
@@ -1931,6 +2103,8 @@ n-hurwitzzeta-neg-3-7-over-3:
   traditional:
     in: N(\zeta(-3, \frac{7}{3}))
     out: -2.411\,419\,753\,086\,419\,753\,1
+  fullform:
+    in: N[HurwitzZeta[-3, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[-3, Rational[7, 3]]]
     out: "-2.4114197530864208"
@@ -1953,6 +2127,8 @@ n-hurwitzzeta-neg-3-1-plus-i:
   traditional:
     in: N(\zeta(-3, 1+i))
     out: 0.008\overline{3}+0.5i
+  fullform:
+    in: N[HurwitzZeta[-3, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[-3, Complex[1, 1]]]
     out: 0.008333333333333559 + 0.5*I
@@ -1978,6 +2154,8 @@ n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(-3, 2-0.5i))
     out: -0.194\,791\,666\,666\,666\,175+1.312\,499\,999\,999\,999\,6i
+  fullform:
+    in: N[HurwitzZeta[-3, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[-3, Complex[2, -0.5]]]
     out: -0.19479166666666578 + 1.3124999999999987*I
@@ -2003,6 +2181,8 @@ n-hurwitzzeta-neg-3-neg-0p5:
   traditional:
     in: N(\zeta(-3, -0.5))
     out: -0.132\,291\,666\,666\,666\,666\,667
+  fullform:
+    in: N[HurwitzZeta[-3, -0.5]]
   wolfram:
     in: N[HurwitzZeta[-3, -0.5]]
     out: "-0.13229166666666667"
@@ -2028,6 +2208,8 @@ n-hurwitzzeta-neg-3-neg-1p5:
   traditional:
     in: N(\zeta(-3, -1.5))
     out: -3.507\,291\,666\,666\,666\,666\,67
+  fullform:
+    in: N[HurwitzZeta[-3, -1.5]]
   wolfram:
     in: N[HurwitzZeta[-3, -1.5]]
     out: "-3.5072916666666667"
@@ -2053,6 +2235,8 @@ n-hurwitzzeta-0p5-1:
   traditional:
     in: N(\zeta(0.5, 1))
     out: -1.460\,354\,508\,809\,586\,812\,89
+  fullform:
+    in: N[HurwitzZeta[0.5, 1]]
   wolfram:
     in: N[HurwitzZeta[0.5, 1]]
     out: "-1.460354508809588"
@@ -2078,6 +2262,8 @@ n-hurwitzzeta-0p5-2:
   traditional:
     in: N(\zeta(0.5, 2))
     out: -2.460\,354\,508\,809\,586\,812\,89
+  fullform:
+    in: N[HurwitzZeta[0.5, 2]]
   wolfram:
     in: N[HurwitzZeta[0.5, 2]]
     out: "-2.4603545088095875"
@@ -2103,6 +2289,8 @@ n-hurwitzzeta-0p5-3:
   traditional:
     in: N(\zeta(0.5, 3))
     out: -3.167\,461\,289\,996\,134\,337\,29
+  fullform:
+    in: N[HurwitzZeta[0.5, 3]]
   wolfram:
     in: N[HurwitzZeta[0.5, 3]]
     out: "-3.1674612899961354"
@@ -2128,6 +2316,8 @@ n-hurwitzzeta-0p5-0p5:
   traditional:
     in: N(\zeta(0.5, 0.5))
     out: -0.604\,898\,643\,421\,630\,370\,25
+  fullform:
+    in: N[HurwitzZeta[0.5, 0.5]]
   wolfram:
     in: N[HurwitzZeta[0.5, 0.5]]
     out: "-0.6048986434216284"
@@ -2153,6 +2343,8 @@ n-hurwitzzeta-0p5-0p25:
   traditional:
     in: N(\zeta(0.5, 0.25))
     out: 0.239\,963\,524\,495\,630\,955\,345
+  fullform:
+    in: N[HurwitzZeta[0.5, 0.25]]
   wolfram:
     in: N[HurwitzZeta[0.5, 0.25]]
     out: "0.23996352449563305"
@@ -2178,6 +2370,8 @@ n-hurwitzzeta-0p5-1p3:
   traditional:
     in: N(\zeta(0.5, 1.3))
     out: -1.814\,589\,078\,040\,583\,901\,17
+  fullform:
+    in: N[HurwitzZeta[0.5, 1.3]]
   wolfram:
     in: N[HurwitzZeta[0.5, 1.3]]
     out: "-1.8145890780405844"
@@ -2203,6 +2397,8 @@ n-hurwitzzeta-0p5-7-over-3:
   traditional:
     in: N(\zeta(0.5, \frac{7}{3}))
     out: -2.716\,159\,539\,287\,537\,659\,38
+  fullform:
+    in: N[HurwitzZeta[0.5, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[0.5, Rational[7, 3]]]
     out: "-2.7161595392875393"
@@ -2225,6 +2421,8 @@ n-hurwitzzeta-0p5-1-plus-i:
   traditional:
     in: N(\zeta(0.5, 1+i))
     out: -1.798\,813\,744\,486\,485\,1-1.093\,576\,875\,721\,108i
+  fullform:
+    in: N[HurwitzZeta[0.5, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[0.5, Complex[1, 1]]]
     out: -1.7988137444864873 - 1.0935768757211082*I
@@ -2250,6 +2448,8 @@ n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(0.5, 2-0.5i))
     out: -2.491\,474\,235\,288\,009\,7+0.398\,328\,078\,684\,049\,24i
+  fullform:
+    in: N[HurwitzZeta[0.5, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[0.5, Complex[2, -0.5]]]
     out: -2.4914742352880093 + 0.39832807868404924*I
@@ -2275,6 +2475,8 @@ n-hurwitzzeta-0p5-neg-0p5:
   traditional:
     in: N(\zeta(0.5, -0.5))
     out: -0.604\,898\,643\,421\,629\,9-1.414\,213\,562\,373\,095i
+  fullform:
+    in: N[HurwitzZeta[0.5, -0.5]]
   wolfram:
     in: N[HurwitzZeta[0.5, -0.5]]
     out: -0.604898643421629 - 1.4142135623730951*I
@@ -2300,6 +2502,8 @@ n-hurwitzzeta-0p5-neg-1p5:
   traditional:
     in: N(\zeta(0.5, -1.5))
     out: -0.604\,898\,643\,421\,629\,9-2.230\,710\,143\,300\,821i
+  fullform:
+    in: N[HurwitzZeta[0.5, -1.5]]
   wolfram:
     in: N[HurwitzZeta[0.5, -1.5]]
     out: -0.6048986434216298 - 2.230710143300821*I
@@ -2325,6 +2529,8 @@ n-hurwitzzeta-1p5-1:
   traditional:
     in: N(\zeta(1.5, 1))
     out: 2.612\,375\,348\,685\,488\,343\,35
+  fullform:
+    in: N[HurwitzZeta[1.5, 1]]
   wolfram:
     in: N[HurwitzZeta[1.5, 1]]
     out: "2.612375348685488"
@@ -2350,6 +2556,8 @@ n-hurwitzzeta-1p5-2:
   traditional:
     in: N(\zeta(1.5, 2))
     out: 1.612\,375\,348\,685\,488\,343\,35
+  fullform:
+    in: N[HurwitzZeta[1.5, 2]]
   wolfram:
     in: N[HurwitzZeta[1.5, 2]]
     out: "1.6123753486854886"
@@ -2375,6 +2583,8 @@ n-hurwitzzeta-1p5-3:
   traditional:
     in: N(\zeta(1.5, 3))
     out: 1.258\,821\,958\,092\,214\,581\,15
+  fullform:
+    in: N[HurwitzZeta[1.5, 3]]
   wolfram:
     in: N[HurwitzZeta[1.5, 3]]
     out: "1.2588219580922146"
@@ -2400,6 +2610,8 @@ n-hurwitzzeta-1p5-0p5:
   traditional:
     in: N(\zeta(1.5, 0.5))
     out: 4.776\,537\,947\,554\,833\,248\,57
+  fullform:
+    in: N[HurwitzZeta[1.5, 0.5]]
   wolfram:
     in: N[HurwitzZeta[1.5, 0.5]]
     out: "4.776537947554832"
@@ -2425,6 +2637,8 @@ n-hurwitzzeta-1p5-0p25:
   traditional:
     in: N(\zeta(1.5, 0.25))
     out: 10.213\,055\,360\,466\,600\,738\,9
+  fullform:
+    in: N[HurwitzZeta[1.5, 0.25]]
   wolfram:
     in: N[HurwitzZeta[1.5, 0.25]]
     out: "10.2130553604666"
@@ -2450,6 +2664,8 @@ n-hurwitzzeta-1p5-1p3:
   traditional:
     in: N(\zeta(1.5, 1.3))
     out: 2.151\,955\,476\,957\,877\,364\,69
+  fullform:
+    in: N[HurwitzZeta[1.5, 1.3]]
   wolfram:
     in: N[HurwitzZeta[1.5, 1.3]]
     out: "2.1519554769578777"
@@ -2475,6 +2691,8 @@ n-hurwitzzeta-1p5-7-over-3:
   traditional:
     in: N(\zeta(1.5, \frac{7}{3}))
     out: 1.464\,254\,249\,199\,488\,108\,37
+  fullform:
+    in: N[HurwitzZeta[1.5, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[1.5, Rational[7, 3]]]
     out: "1.4642542491994879"
@@ -2497,6 +2715,8 @@ n-hurwitzzeta-1p5-1-plus-i:
   traditional:
     in: N(\zeta(1.5, 1+i))
     out: 1.650\,934\,751\,949\,365-0.967\,357\,065\,698\,767\,9i
+  fullform:
+    in: N[HurwitzZeta[1.5, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[1.5, Complex[1, 1]]]
     out: 1.6509347519493651 - 0.9673570656987678*I
@@ -2522,6 +2742,8 @@ n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(1.5, 2-0.5i))
     out: 1.556\,595\,777\,765\,751\,3+0.242\,106\,322\,325\,134\,4i
+  fullform:
+    in: N[HurwitzZeta[1.5, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[1.5, Complex[2, -0.5]]]
     out: 1.5565957777657513 + 0.24210632232513432*I
@@ -2547,6 +2769,8 @@ n-hurwitzzeta-1p5-neg-0p5:
   traditional:
     in: N(\zeta(1.5, -0.5))
     out: 4.776\,537\,947\,554\,832+2.828\,427\,124\,746\,19i
+  fullform:
+    in: N[HurwitzZeta[1.5, -0.5]]
   wolfram:
     in: N[HurwitzZeta[1.5, -0.5]]
     out: 4.776537947554832 + 2.8284271247461903*I
@@ -2572,6 +2796,8 @@ n-hurwitzzeta-1p5-neg-1p5:
   traditional:
     in: N(\zeta(1.5, -1.5))
     out: 4.776\,537\,947\,554\,832+3.372\,758\,178\,698\,007i
+  fullform:
+    in: N[HurwitzZeta[1.5, -1.5]]
   wolfram:
     in: N[HurwitzZeta[1.5, -1.5]]
     out: 4.776537947554832 + 3.3727581786980076*I
@@ -2597,6 +2823,8 @@ n-hurwitzzeta-2p5-1:
   traditional:
     in: N(\zeta(2.5, 1))
     out: 1.341\,487\,257\,250\,917\,179\,76
+  fullform:
+    in: N[HurwitzZeta[2.5, 1]]
   wolfram:
     in: N[HurwitzZeta[2.5, 1]]
     out: "1.3414872572509173"
@@ -2622,6 +2850,8 @@ n-hurwitzzeta-2p5-2:
   traditional:
     in: N(\zeta(2.5, 2))
     out: 0.341\,487\,257\,250\,917\,179\,76
+  fullform:
+    in: N[HurwitzZeta[2.5, 2]]
   wolfram:
     in: N[HurwitzZeta[2.5, 2]]
     out: "0.34148725725091716"
@@ -2647,6 +2877,8 @@ n-hurwitzzeta-2p5-3:
   traditional:
     in: N(\zeta(2.5, 3))
     out: 0.164\,710\,561\,954\,280\,298\,66
+  fullform:
+    in: N[HurwitzZeta[2.5, 3]]
   wolfram:
     in: N[HurwitzZeta[2.5, 3]]
     out: "0.1647105619542803"
@@ -2672,6 +2904,8 @@ n-hurwitzzeta-2p5-0p5:
   traditional:
     in: N(\zeta(2.5, 0.5))
     out: 6.247\,110\,634\,568\,811\,485\,29
+  fullform:
+    in: N[HurwitzZeta[2.5, 0.5]]
   wolfram:
     in: N[HurwitzZeta[2.5, 0.5]]
     out: "6.24711063456881"
@@ -2697,6 +2931,8 @@ n-hurwitzzeta-2p5-0p25:
   traditional:
     in: N(\zeta(2.5, 0.25))
     out: 32.847\,451\,954\,697\,685\,862\,7
+  fullform:
+    in: N[HurwitzZeta[2.5, 0.25]]
   wolfram:
     in: N[HurwitzZeta[2.5, 0.25]]
     out: "32.84745195469769"
@@ -2722,6 +2958,8 @@ n-hurwitzzeta-2p5-1p3:
   traditional:
     in: N(\zeta(2.5, 1.3))
     out: 0.783\,218\,553\,908\,237\,343\,364
+  fullform:
+    in: N[HurwitzZeta[2.5, 1.3]]
   wolfram:
     in: N[HurwitzZeta[2.5, 1.3]]
     out: "0.7832185539082374"
@@ -2747,6 +2985,8 @@ n-hurwitzzeta-2p5-7-over-3:
   traditional:
     in: N(\zeta(2.5, \frac{7}{3}))
     out: 0.257\,447\,605\,150\,205\,592\,649
+  fullform:
+    in: N[HurwitzZeta[2.5, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[2.5, Rational[7, 3]]]
     out: "0.2574476051502054"
@@ -2769,6 +3009,8 @@ n-hurwitzzeta-2p5-1-plus-i:
   traditional:
     in: N(\zeta(2.5, 1+i))
     out: 0.018\,739\,837\,095\,718\,206-0.589\,547\,708\,338\,161\,3i
+  fullform:
+    in: N[HurwitzZeta[2.5, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[2.5, Complex[1, 1]]]
     out: 0.01873983709571817 - 0.5895477083381615*I
@@ -2794,6 +3036,8 @@ n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(2.5, 2-0.5i))
     out: 0.287\,820\,164\,365\,366\,45+0.139\,696\,684\,393\,935\,65i
+  fullform:
+    in: N[HurwitzZeta[2.5, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[2.5, Complex[2, -0.5]]]
     out: 0.28782016436536645 + 0.1396966843939357*I
@@ -2819,6 +3063,8 @@ n-hurwitzzeta-2p5-neg-0p5:
   traditional:
     in: N(\zeta(2.5, -0.5))
     out: 6.247\,110\,634\,568\,814\,5-5.656\,854\,249\,492\,38i
+  fullform:
+    in: N[HurwitzZeta[2.5, -0.5]]
   wolfram:
     in: N[HurwitzZeta[2.5, -0.5]]
     out: 6.24711063456881 - 5.656854249492381*I
@@ -2844,6 +3090,8 @@ n-hurwitzzeta-2p5-neg-1p5:
   traditional:
     in: N(\zeta(2.5, -1.5))
     out: 6.247\,110\,634\,568\,814\,5-6.019\,741\,618\,793\,591i
+  fullform:
+    in: N[HurwitzZeta[2.5, -1.5]]
   wolfram:
     in: N[HurwitzZeta[2.5, -1.5]]
     out: 6.24711063456881 - 6.019741618793592*I
@@ -2869,6 +3117,8 @@ n-hurwitzzeta-neg-0p5-1:
   traditional:
     in: N(\zeta(-0.5, 1))
     out: -0.207\,886\,224\,977\,354\,566\,017
+  fullform:
+    in: N[HurwitzZeta[-0.5, 1]]
   wolfram:
     in: N[HurwitzZeta[-0.5, 1]]
     out: -0.20788622497735454 + 2.5458720000534374*^-17*I
@@ -2894,6 +3144,8 @@ n-hurwitzzeta-neg-0p5-2:
   traditional:
     in: N(\zeta(-0.5, 2))
     out: -1.207\,886\,224\,977\,354\,566\,02
+  fullform:
+    in: N[HurwitzZeta[-0.5, 2]]
   wolfram:
     in: N[HurwitzZeta[-0.5, 2]]
     out: "-1.2078862249773599"
@@ -2919,6 +3171,8 @@ n-hurwitzzeta-neg-0p5-3:
   traditional:
     in: N(\zeta(-0.5, 3))
     out: -2.622\,099\,787\,350\,449\,614\,82
+  fullform:
+    in: N[HurwitzZeta[-0.5, 3]]
   wolfram:
     in: N[HurwitzZeta[-0.5, 3]]
     out: "-2.622099787350421"
@@ -2944,6 +3198,8 @@ n-hurwitzzeta-neg-0p5-0p5:
   traditional:
     in: N(\zeta(-0.5, 0.5))
     out: 0.060\,888\,465\,580\,594\,919\,998\,8
+  fullform:
+    in: N[HurwitzZeta[-0.5, 0.5]]
   wolfram:
     in: N[HurwitzZeta[-0.5, 0.5]]
     out: 0.0608884655805949 - 7.456686447826932*^-18*I
@@ -2969,6 +3225,8 @@ n-hurwitzzeta-neg-0p5-0p25:
   traditional:
     in: N(\zeta(-0.5, 0.25))
     out: 0.090\,322\,258\,761\,246\,243\,978\,7
+  fullform:
+    in: N[HurwitzZeta[-0.5, 0.25]]
   wolfram:
     in: N[HurwitzZeta[-0.5, 0.25]]
     out: "0.09032225876124604"
@@ -2994,6 +3252,8 @@ n-hurwitzzeta-neg-0p5-1p3:
   traditional:
     in: N(\zeta(-0.5, 1.3))
     out: -0.454\,363\,742\,420\,250\,792\,944
+  fullform:
+    in: N[HurwitzZeta[-0.5, 1.3]]
   wolfram:
     in: N[HurwitzZeta[-0.5, 1.3]]
     out: "-0.4543637424202832"
@@ -3019,6 +3279,8 @@ n-hurwitzzeta-neg-0p5-7-over-3:
   traditional:
     in: N(\zeta(-0.5, \frac{7}{3}))
     out: -1.639\,604\,524\,699\,008\,349\,52
+  fullform:
+    in: N[HurwitzZeta[-0.5, Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[-0.5, Rational[7, 3]]]
     out: "-1.6396045246990028"
@@ -3041,6 +3303,8 @@ n-hurwitzzeta-neg-0p5-1-plus-i:
   traditional:
     in: N(\zeta(-0.5, 1+i))
     out: 0.087\,845\,927\,820\,186\,56-0.795\,101\,413\,593\,405\,8i
+  fullform:
+    in: N[HurwitzZeta[-0.5, Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[-0.5, Complex[1, 1]]]
     out: 0.08784592782017546 - 0.795101413593408*I
@@ -3066,6 +3330,8 @@ n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(-0.5, 2-0.5i))
     out: -1.157\,801\,113\,527\,324\,3+0.617\,711\,202\,310\,647\,9i
+  fullform:
+    in: N[HurwitzZeta[-0.5, Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[-0.5, Complex[2, -0.5]]]
     out: -1.1578011135273203 + 0.6177112023106479*I
@@ -3091,6 +3357,8 @@ n-hurwitzzeta-neg-0p5-neg-0p5:
   traditional:
     in: N(\zeta(-0.5, -0.5))
     out: 0.060\,888\,465\,580\,597\,545+0.707\,106\,781\,186\,547\,5i
+  fullform:
+    in: N[HurwitzZeta[-0.5, -0.5]]
   wolfram:
     in: N[HurwitzZeta[-0.5, -0.5]]
     out: 0.06088846558059494 + 0.7071067811865476*I
@@ -3116,6 +3384,8 @@ n-hurwitzzeta-neg-0p5-neg-1p5:
   traditional:
     in: N(\zeta(-0.5, -1.5))
     out: 0.060\,888\,465\,580\,597\,545+1.931\,851\,652\,578\,136\,4i
+  fullform:
+    in: N[HurwitzZeta[-0.5, -1.5]]
   wolfram:
     in: N[HurwitzZeta[-0.5, -1.5]]
     out: 0.06088846558059502 + 1.9318516525781364*I
@@ -3141,6 +3411,8 @@ n-hurwitzzeta-2-plus-i-1:
   traditional:
     in: N(\zeta(2+i, 1))
     out: 1.150\,355\,703\,254\,902\,6-0.437\,530\,865\,919\,607\,9i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], 1]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], 1]]
     out: 1.1503557032549028 - 0.4375308659196078*I
@@ -3166,6 +3438,8 @@ n-hurwitzzeta-2-plus-i-2:
   traditional:
     in: N(\zeta(2+i, 2))
     out: 0.150\,355\,703\,254\,902\,6-0.437\,530\,865\,919\,607\,9i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], 2]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], 2]]
     out: 0.15035570325490277 - 0.4375308659196078*I
@@ -3191,6 +3465,8 @@ n-hurwitzzeta-2-plus-i-3:
   traditional:
     in: N(\zeta(2+i, 3))
     out: -0.041\,954\,022\,086\,090\,365-0.277\,790\,546\,841\,199\,2i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], 3]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], 3]]
     out: -0.04195402208609035 - 0.27779054684119925*I
@@ -3216,6 +3492,8 @@ n-hurwitzzeta-2-plus-i-0p5:
   traditional:
     in: N(\zeta(2+i, 0.5))
     out: 3.507\,498\,848\,201\,83+2.031\,398\,808\,933\,987i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], 0.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], 0.5]]
     out: 3.5074988482018306 + 2.0313988089339876*I
@@ -3241,6 +3519,8 @@ n-hurwitzzeta-2-plus-i-0p25:
   traditional:
     in: N(\zeta(2+i, 0.25))
     out: 3.634\,220\,798\,824\,735+15.195\,370\,185\,570\,54i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], 0.25]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], 0.25]]
     out: 3.6342207988247357 + 15.19537018557054*I
@@ -3266,6 +3546,8 @@ n-hurwitzzeta-2-plus-i-1p3:
   traditional:
     in: N(\zeta(2+i, 1.3))
     out: 0.634\,178\,650\,268\,899\,9-0.536\,110\,383\,539\,212\,5i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], 1.3]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], 1.3]]
     out: 0.6341786502689004 - 0.5361103835392125*I
@@ -3291,6 +3573,8 @@ n-hurwitzzeta-2-plus-i-7-over-3:
   traditional:
     in: N(\zeta(2+i, \frac{7}{3}))
     out: 0.055\,133\,389\,636\,795\,21-0.376\,862\,655\,048\,367\,3i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], Rational[7, 3]]]
     out: 0.05513338963679509 - 0.3768626550483671*I
@@ -3313,6 +3597,8 @@ n-hurwitzzeta-2-plus-i-1-plus-i:
   traditional:
     in: N(\zeta(2+i, 1+i))
     out: -0.635\,304\,343\,440\,011\,7-1.658\,848\,643\,605\,894\,5i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], Complex[1, 1]]]
     out: -0.6353043434400119 - 1.658848643605895*I
@@ -3338,6 +3624,8 @@ n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(2+i, 2-0.5i))
     out: 0.185\,393\,489\,012\,994\,57-0.270\,373\,692\,422\,873\,57i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], Complex[2, -0.5]]]
     out: 0.18539348901299454 - 0.2703736924228736*I
@@ -3363,6 +3651,8 @@ n-hurwitzzeta-2-plus-i-neg-0p5:
   traditional:
     in: N(\zeta(2+i, -0.5))
     out: 74.710\,382\,758\,763\,76+61.175\,424\,806\,622\,686i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], -0.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], -0.5]]
     out: 74.71038275876376 + 61.17542480662269*I
@@ -3388,6 +3678,8 @@ n-hurwitzzeta-2-plus-i-neg-1p5:
   traditional:
     in: N(\zeta(2+i, -1.5))
     out: 84.161\,237\,415\,055\,38+57.118\,643\,354\,285\,85i
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], -1.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[2, 1], -1.5]]
     out: 84.1612374150554 + 57.118643354285865*I
@@ -3413,6 +3705,8 @@ n-hurwitzzeta-0p5-plus-3i-1:
   traditional:
     in: N(\zeta(0.5+3i, 1))
     out: 0.532\,736\,670\,974\,232\,4-0.078\,896\,513\,425\,832\,66i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], 1]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], 1]]
     out: 0.5327366709742328 - 0.07889651342583304*I
@@ -3438,6 +3732,8 @@ n-hurwitzzeta-0p5-plus-3i-2:
   traditional:
     in: N(\zeta(0.5+3i, 2))
     out: -0.467\,263\,329\,025\,767\,45-0.078\,896\,513\,425\,832\,66i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], 2]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], 2]]
     out: -0.46726332902576745 - 0.07889651342583304*I
@@ -3463,6 +3759,8 @@ n-hurwitzzeta-0p5-plus-3i-3:
   traditional:
     in: N(\zeta(0.5+3i, 3))
     out: -0.122\,906\,273\,682\,167\,75+0.538\,694\,142\,619\,970\,2i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], 3]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], 3]]
     out: -0.12290627368216751 + 0.5386941426199696*I
@@ -3488,6 +3786,8 @@ n-hurwitzzeta-0p5-plus-3i-0p5:
   traditional:
     in: N(\zeta(0.5+3i, 0.5))
     out: -0.802\,188\,434\,581\,936\,7+0.791\,260\,035\,759\,494\,3i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], 0.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], 0.5]]
     out: -0.8021884345819376 + 0.7912600357594936*I
@@ -3513,6 +3813,8 @@ n-hurwitzzeta-0p5-plus-3i-0p25:
   traditional:
     in: N(\zeta(0.5+3i, 0.25))
     out: -0.821\,315\,995\,611\,799\,2-2.117\,913\,546\,901\,069i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], 0.25]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], 0.25]]
     out: -0.8213159956117984 - 2.117913546901069*I
@@ -3538,6 +3840,8 @@ n-hurwitzzeta-0p5-plus-3i-1p3:
   traditional:
     in: N(\zeta(0.5+3i, 1.3))
     out: 0.157\,370\,174\,830\,998\,36-0.442\,640\,214\,770\,041\,1i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], 1.3]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], 1.3]]
     out: 0.15737017483099963 - 0.44264021477004356*I
@@ -3563,6 +3867,8 @@ n-hurwitzzeta-0p5-plus-3i-7-over-3:
   traditional:
     in: N(\zeta(0.5+3i, \frac{7}{3}))
     out: -0.453\,727\,021\,657\,171\,05+0.204\,440\,194\,003\,099\,37i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], Rational[7, 3]]]
     out: -0.4537270216571716 + 0.20444019400309918*I
@@ -3585,6 +3891,8 @@ n-hurwitzzeta-0p5-plus-3i-1-plus-i:
   traditional:
     in: N(\zeta(0.5+3i, 1+i))
     out: -1.417\,301\,505\,929\,129\,4-8.335\,643\,562\,213\,376i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], Complex[1, 1]]]
     out: -1.4173015059291316 - 8.335643562213374*I
@@ -3610,6 +3918,8 @@ n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\zeta(0.5+3i, 2-0.5i))
     out: -0.181\,016\,361\,585\,113\,64+0.009\,312\,340\,272\,338\,617i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], Complex[2, -0.5]]]
     out: -0.181016361585114 + 0.009312340272340373*I
@@ -3635,6 +3945,8 @@ n-hurwitzzeta-0p5-plus-3i-neg-0p5:
   traditional:
     in: N(\zeta(0.5+3i, -0.5))
     out: 15\,305.129\,609\,925\,008+8\,535.093\,960\,014\,086i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], -0.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], -0.5]]
     out: 15305.129609925008 + 8535.093960014085*I
@@ -3660,6 +3972,8 @@ n-hurwitzzeta-0p5-plus-3i-neg-1p5:
   traditional:
     in: N(\zeta(0.5+3i, -1.5))
     out: 5\,816.163\,167\,011\,819+5\,023.948\,927\,089\,383i
+  fullform:
+    in: N[HurwitzZeta[Complex[0.5, 3], -1.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[0.5, 3], -1.5]]
     out: 5816.163167011819 + 5023.948927089384*I
@@ -3685,6 +3999,8 @@ n-hurwitzzeta-neg-0p5-plus-i-1:
   traditional:
     in: N(\zeta(-0.5+i, 1))
     out: -0.000\,817\,893\,132\,952\,607\,3-0.223\,071\,688\,697\,779\,1i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], 1]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], 1]]
     out: -0.0008178931329526073 - 0.22307168869777871*I
@@ -3710,6 +4026,8 @@ n-hurwitzzeta-neg-0p5-plus-i-2:
   traditional:
     in: N(\zeta(-0.5+i, 2))
     out: -1.000\,817\,893\,132\,952\,6-0.223\,071\,688\,697\,779\,1i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], 2]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], 2]]
     out: -1.0008178931329337 - 0.2230716886977918*I
@@ -3735,6 +4053,8 @@ n-hurwitzzeta-neg-0p5-plus-i-3:
   traditional:
     in: N(\zeta(-0.5+i, 3))
     out: -2.088\,685\,980\,146\,861\,4+0.680\,556\,014\,096\,185\,7i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], 3]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], 3]]
     out: -2.0886859801468476 + 0.6805560140961993*I
@@ -3760,6 +4080,8 @@ n-hurwitzzeta-neg-0p5-plus-i-0p5:
   traditional:
     in: N(\zeta(-0.5+i, 0.5))
     out: 0.101\,159\,892\,022\,168\,85+0.101\,365\,867\,626\,050\,52i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], 0.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], 0.5]]
     out: 0.10115989202216126 + 0.10136586762604087*I
@@ -3785,6 +4107,8 @@ n-hurwitzzeta-neg-0p5-plus-i-0p25:
   traditional:
     in: N(\zeta(-0.5+i, 0.25))
     out: -0.105\,599\,710\,390\,193\,72+0.172\,605\,566\,681\,918\,07i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], 0.25]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], 0.25]]
     out: -0.10559971039018182 + 0.17260556668192967*I
@@ -3810,6 +4134,8 @@ n-hurwitzzeta-neg-0p5-plus-i-1p3:
   traditional:
     in: N(\zeta(-0.5+i, 1.3))
     out: -0.243\,310\,938\,687\,756\,58-0.330\,441\,278\,258\,429\,45i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], 1.3]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], 1.3]]
     out: -0.24331093868772538 - 0.3304412782584411*I
@@ -3835,6 +4161,8 @@ n-hurwitzzeta-neg-0p5-plus-i-7-over-3:
   traditional:
     in: N(\zeta(-0.5+i, \frac{7}{3}))
     out: -1.382\,185\,144\,087\,135\,3-0.009\,056\,308\,250\,057\,337i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], Rational[7, 3]]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], Rational[7, 3]]]
     out: -1.3821851440871595 - 0.009056308250075838*I
@@ -3857,6 +4185,8 @@ n-hurwitzzeta-neg-0p5-plus-i-1-plus-i:
   traditional:
     in: N(\zeta(-0.5+i, 1+i))
     out: 1.040\,957\,543\,118\,520\,7-1.799\,910\,432\,336\,835\,6i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], Complex[1, 1]]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], Complex[1, 1]]]
     out: 1.040957543118516 - 1.7999104323368245*I
@@ -3882,6 +4212,8 @@ n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5:
   traditional:
     in: N(\zeta(-0.5+i, 2-0.5i))
     out: -0.746\,153\,397\,257\,609\,8+0.249\,257\,816\,033\,066\,35i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], Complex[2, -0.5]]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], Complex[2, -0.5]]]
     out: -0.7461533972576151 + 0.24925781603309924*I
@@ -3907,6 +4239,8 @@ n-hurwitzzeta-neg-0p5-plus-i-neg-0p5:
   traditional:
     in: N(\zeta(-0.5+i, -0.5))
     out: -10.354\,125\,570\,387\,61+12.688\,376\,380\,925\,272i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], -0.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], -0.5]]
     out: -10.354125570387618 + 12.68837638092526*I
@@ -3932,6 +4266,8 @@ n-hurwitzzeta-neg-0p5-plus-i-neg-1p5:
   traditional:
     in: N(\zeta(-0.5+i, -1.5))
     out: 0.825\,049\,555\,351\,038\,5+38.731\,869\,364\,686\,36i
+  fullform:
+    in: N[HurwitzZeta[Complex[-0.5, 1], -1.5]]
   wolfram:
     in: N[HurwitzZeta[Complex[-0.5, 1], -1.5]]
     out: 0.8250495553510326 + 38.73186936468635*I

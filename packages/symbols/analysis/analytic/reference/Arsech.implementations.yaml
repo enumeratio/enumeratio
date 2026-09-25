@@ -5,6 +5,8 @@ n-arsech-1-over-2:
   tex:
     in: N(\mathrm{arsech}(\frac{1}{2}))
     out: 1.316\,957\,896\,924\,816\,708\,63
+  fullform:
+    in: N[ArcSech[Rational[1, 2]]]
   wolfram:
     in: N[ArcSech[Rational[1, 2]]]
     out: "1.3169578969248166"
@@ -18,6 +20,8 @@ arsech-1-0-exactly:
   tex:
     in: \mathrm{arsech}(1)
     out: "0"
+  fullform:
+    in: ArcSech[1]
   wolfram:
     in: ArcSech[1]
 a-logarithmic-singularity-at-0:
@@ -27,6 +31,8 @@ a-logarithmic-singularity-at-0:
   tex:
     in: \mathrm{arsech}(0)
     out: \infty
+  fullform:
+    in: ArcSech[0]
   wolfram:
     in: ArcSech[0]
 a-float-argument-evaluates-directly:
@@ -36,6 +42,8 @@ a-float-argument-evaluates-directly:
   tex:
     in: \mathrm{arsech}(0.25)
     out: 2.063\,437\,068\,895\,560\,546\,73
+  fullform:
+    in: ArcSech[0.25]
   wolfram:
     in: ArcSech[0.25]
 past-1-the-value-is-imaginary-arsech-2-arcosh:
@@ -45,6 +53,8 @@ past-1-the-value-is-imaginary-arsech-2-arcosh:
   tex:
     in: \mathrm{arsech}(2)
     out: (\frac{1}{3}i)\pi
+  fullform:
+    in: ArcSech[2]
   wolfram:
     in: ArcSech[2]
 derivative-frac-1-x-sqrt-1-x-2:
@@ -54,3 +64,5 @@ derivative-frac-1-x-sqrt-1-x-2:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arsech}(x)
     out: -(x\sqrt{1-x^2})^{-1}
+  fullform:
+    in: D[ArcSech[x], x]

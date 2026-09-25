@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{QFactorial}(3, 2)
     out: "21"
+  fullform:
+    in: QFactorial[3, 2]
   wolfram:
     in: QFactorial[3, 2]
 qfactorial-4-2:
@@ -14,6 +16,8 @@ qfactorial-4-2:
   tex:
     in: \mathrm{QFactorial}(4, 2)
     out: "315"
+  fullform:
+    in: QFactorial[4, 2]
   wolfram:
     in: QFactorial[4, 2]
 qfactorial-3-1-over-2:
@@ -23,6 +27,8 @@ qfactorial-3-1-over-2:
   tex:
     in: \mathrm{QFactorial}(3, \frac{1}{2})
     out: \frac{21}{8}
+  fullform:
+    in: QFactorial[3, Rational[1, 2]]
   wolfram:
     in: QFactorial[3, Rational[1, 2]]
 at-q-1-it-is-the-ordinary-factorial:
@@ -32,6 +38,8 @@ at-q-1-it-is-the-ordinary-factorial:
   tex:
     in: \mathrm{QFactorial}(5, 1)
     out: "120"
+  fullform:
+    in: QFactorial[5, 1]
   wolfram:
     in: QFactorial[5, 1]
 the-inversion-generating-function-of:
@@ -41,3 +49,5 @@ the-inversion-generating-function-of:
   tex:
     in: \mathrm{Expand}(\mathrm{QFactorial}(3, q))
     out: q^3+2q^2+2q+1
+  fullform:
+    in: Expand[QFactorial[3, q]]

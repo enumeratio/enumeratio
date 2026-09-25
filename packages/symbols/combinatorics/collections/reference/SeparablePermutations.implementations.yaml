@@ -5,3 +5,5 @@ count-separablepermutations-5-90-the-large:
   tex:
     in: \mathrm{Count}(\mathrm{SeparablePermutations}(5))
     out: "90"
+  fullform:
+    in: Count[SeparablePermutations[5]]

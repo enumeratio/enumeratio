@@ -5,3 +5,5 @@ the-partition-1-3-mid-2-as-a-plain-list:
   tex:
     in: \mathrm{BlockSizeSpan}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack)
     out: "1"
+  fullform:
+    in: BlockSizeSpan[List[List[1, 3], List[2]]]

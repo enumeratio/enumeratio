@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{Records}(\bigl\lbrack3, 1, 2\bigr\rbrack)
     out: "1"
+  fullform:
+    in: Records[List[3, 1, 2]]
 the-identity-sets-a-new-record-everywhere:
   epsil:
     in: Records([1, 2, 3])
@@ -12,6 +14,8 @@ the-identity-sets-a-new-record-everywhere:
   tex:
     in: \mathrm{Records}(\bigl\lbrack1, 2, 3\bigr\rbrack)
     out: "3"
+  fullform:
+    in: Records[List[1, 2, 3]]
 2-then-3:
   epsil:
     in: Records([2, 3, 1])
@@ -19,6 +23,8 @@ the-identity-sets-a-new-record-everywhere:
   tex:
     in: \mathrm{Records}(\bigl\lbrack2, 3, 1\bigr\rbrack)
     out: "2"
+  fullform:
+    in: Records[List[2, 3, 1]]
 the-reversal-attains-the-minimum-1:
   epsil:
     in: Records([4, 3, 2, 1])
@@ -26,3 +32,5 @@ the-reversal-attains-the-minimum-1:
   tex:
     in: \mathrm{Records}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack)
     out: "1"
+  fullform:
+    in: Records[List[4, 3, 2, 1]]

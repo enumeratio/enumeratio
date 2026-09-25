@@ -5,6 +5,8 @@ a-geometric-sequence:
   tex:
     in: \mathrm{RecurrenceTable}(\begin{cases}a(n+1)=3a(n)\\a(1)=7\end{cases}, a, \bigl\lbrack n, 1, 5\bigr\rbrack)
     out: \bigl\lbrack7, 21, 63, 189, 567\bigr\rbrack
+  fullform:
+    in: RecurrenceTable[List[Equal[a[Plus[n, 1]], Times[3, a[n]]], Equal[a[1], 7]], a, List[n, 1, 5]]
 the-fibonacci-recurrence:
   epsil:
     in: |-
@@ -17,3 +19,5 @@ the-fibonacci-recurrence:
   tex:
     in: \mathrm{RecurrenceTable}(\begin{cases}a(n)=a(n-1)+a(n-2)\\a(1)=1\\a(2)=1\end{cases}, a, \bigl\lbrack n, 1, 10\bigr\rbrack)
     out: \bigl\lbrack1, 1, 2, 3, 5, 8, 13, 21, 34, 55\bigr\rbrack
+  fullform:
+    in: RecurrenceTable[List[Equal[a[n], Plus[a[Subtract[n, 1]], a[Subtract[n, 2]]]], Equal[a[1], 1], Equal[a[2], 1]], a, List[n, 1, 10]]

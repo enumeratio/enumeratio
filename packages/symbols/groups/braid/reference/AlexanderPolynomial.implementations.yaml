@@ -8,6 +8,8 @@ the-trefoil:
   traditional:
     in: \Delta_{\sigma_{1}^{3}}(t)
     out: t^2-t+1
+  fullform:
+    in: AlexanderPolynomial[Braid[2, List[1, 1, 1]]]
 the-figure-eight-knot:
   epsil:
     in: AlexanderPolynomial(BraidPower(Braid(3, [1, -2]), 2))
@@ -18,6 +20,8 @@ the-figure-eight-knot:
   traditional:
     in: \Delta_{\left(\sigma_{1}\sigma_{2}^{-1}\right)^{2}}(t)
     out: t^2-3t+1
+  fullform:
+    in: AlexanderPolynomial[BraidPower[Braid[3, List[1, -2]], 2]]
 and-under-its-own-name-twistknot-1:
   epsil:
     in: AlexanderPolynomial(FigureEightKnot())
@@ -28,6 +32,8 @@ and-under-its-own-name-twistknot-1:
   traditional:
     in: \Delta_{\mathrm{FigureEightKnot}()}(t)
     out: t^2-3t+1
+  fullform:
+    in: AlexanderPolynomial[FigureEightKnot[]]
 the-stevedore-knot-61-two-half-twists:
   epsil:
     in: AlexanderPolynomial(TwistKnot(2))
@@ -38,6 +44,8 @@ the-stevedore-knot-61-two-half-twists:
   traditional:
     in: \Delta_{\mathrm{TwistKnot}(2)}(t)
     out: 2t^2-5t+2
+  fullform:
+    in: AlexanderPolynomial[TwistKnot[2]]
 p-1-1-1-is-the-unknot:
   epsil:
     in: AlexanderPolynomial(PretzelKnot(1, 1, -1))
@@ -48,6 +56,8 @@ p-1-1-1-is-the-unknot:
   traditional:
     in: \Delta_{P(1, 1, -1)}(t)
     out: "1"
+  fullform:
+    in: AlexanderPolynomial[PretzelKnot[1, 1, -1]]
 3-1-4-1-2:
   epsil:
     in: SeifertGenus(TorusBraid(3, 4))
@@ -58,6 +68,8 @@ p-1-1-1-is-the-unknot:
   traditional:
     in: g(T_{3,4})
     out: "3"
+  fullform:
+    in: SeifertGenus[TorusBraid[3, 4]]
 a-twist-knot-s-genus-does-not-grow-with-the:
   epsil:
     in: SeifertGenus(TwistKnot(5))
@@ -68,6 +80,8 @@ a-twist-knot-s-genus-does-not-grow-with-the:
   traditional:
     in: g(\mathrm{TwistKnot}(5))
     out: "1"
+  fullform:
+    in: SeifertGenus[TwistKnot[5]]
 a-mixed-braid-has-no-bennequin-genus-so-the-call:
   epsil:
     in: SeifertGenus(Braid(3, [1, -2]))
@@ -78,6 +92,8 @@ a-mixed-braid-has-no-bennequin-genus-so-the-call:
   traditional:
     in: g(\sigma_{1}\sigma_{2}^{-1})
     out: g(\sigma_{1}\sigma_{2}^{-1})
+  fullform:
+    in: SeifertGenus[Braid[3, List[1, -2]]]
 an-even-band-is-not-this-family-so-the-call-is:
   epsil:
     in: SeifertGenus(PretzelKnot(2, 1, 1))
@@ -88,3 +104,5 @@ an-even-band-is-not-this-family-so-the-call-is:
   traditional:
     in: g(P(2, 1, 1))
     out: g(P(2, 1, 1))
+  fullform:
+    in: SeifertGenus[PretzelKnot[2, 1, 1]]

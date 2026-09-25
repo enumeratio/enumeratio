@@ -5,6 +5,8 @@ exp-0:
   tex:
     in: e^{0}
     out: "1"
+  fullform:
+    in: Exp[0]
   wolfram:
     in: Exp[0]
     out: "1"
@@ -30,6 +32,8 @@ stays-the-exact-constant-rather-than:
   tex:
     in: e^{1}
     out: e
+  fullform:
+    in: Exp[1]
   wolfram:
     in: Exp[1]
     out: E
@@ -55,6 +59,8 @@ compute-engine-represents-exp-x-as-e-x-once-the:
   tex:
     in: e^{x}
     out: e^{x}
+  fullform:
+    in: Exp[x]
 inverse-of-ln-e-ln-x-x:
   epsil:
     in: Exp(Ln(5)) == 5
@@ -65,9 +71,10 @@ inverse-of-ln-e-ln-x-x:
   traditional:
     in: \exp(\ln(5))=5
     out: \mathrm{True}
+  fullform:
+    in: Equal[Exp[Log[5]], 5]
   wolfram:
     in: (Exp[Log[5]] == 5)
-    back: Unreadable
     out: True
     tex:
       in: \exp (\log (5))=5
@@ -94,9 +101,10 @@ e-a-e-b-e-a-b:
   traditional:
     in: e^{2}e^{3}=e^{5}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Times[Exp[2], Exp[3]], Exp[5]]
   wolfram:
     in: (Times[Exp[2], Exp[3]] == Exp[5])
-    back: Unreadable
     out: True
     tex:
       in: \exp (2) \exp (3)=\exp (5)
@@ -120,6 +128,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \exp\bigl\lbrack0, 1\bigr\rbrack
     out: \bigl\lbrack1, e\bigr\rbrack
+  fullform:
+    in: Exp[List[0, 1]]
   wolfram:
     in: Exp[List[0, 1]]
     out: "{1, E}"
@@ -153,6 +163,8 @@ broadcasts-element-wise-giving-begin-pmatrix-1-e:
   tex:
     in: \exp\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack
     out: \bigl\lbrack\bigl\lbrack1, e\bigr\rbrack, \bigl\lbracke, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Exp[List[List[0, 1], List[1, 0]]]
   wolfram:
     in: Exp[List[List[0, 1], List[1, 0]]]
     note: Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.
@@ -179,6 +191,8 @@ a-machine-precision-argument-evaluates:
   tex:
     in: e^{3.4}
     out: 29.964\,100\,047\,397\,013\,348\,2
+  fullform:
+    in: Exp[3.4]
   wolfram:
     in: Exp[3.4]
   sympy:
@@ -196,6 +210,8 @@ arbitrary-precision-via-n:
   tex:
     in: N(\exp(\frac{8}{5}))
     out: 4.953\,032\,424\,395\,114\,803\,65
+  fullform:
+    in: N[Exp[Rational[8, 5]]]
   wolfram:
     in: N[Exp[Rational[8, 5]]]
   sympy:
@@ -211,6 +227,8 @@ evaluates-at-a-complex-argument:
   tex:
     in: \exp(2.5+i)
     out: 6.582\,229\,578\,192\,772\,984\,4+10.251\,215\,190\,529\,404i
+  fullform:
+    in: Exp[Complex[2.5, 1]]
   wolfram:
     in: Exp[Complex[2.5, 1]]
   sympy:
@@ -226,6 +244,8 @@ euler-s-identity-e-i-pi-1:
   tex:
     in: \exp(i\pi)
     out: "-1"
+  fullform:
+    in: Exp[Times[I, Pi]]
   wolfram:
     in: Exp[Times[I, Pi]]
   sympy:
@@ -241,6 +261,8 @@ exp-imaginaryunit-times-pi-over-2:
   tex:
     in: \exp(\frac{i\pi}{2})
     out: i
+  fullform:
+    in: Exp[Times[I, Divide[Pi, 2]]]
   wolfram:
     in: Exp[Times[I, Divide[Pi, 2]]]
   sympy:
@@ -254,6 +276,8 @@ a-special-imaginary-argument-folds-through-e-i:
   tex:
     in: \exp(\frac{i\pi}{5})
     out: \frac{1}{4}+\frac{\sqrt{5}}{4}+(\frac{\sqrt{2}}{4}i)\sqrt{5-\sqrt{5}}
+  fullform:
+    in: Exp[Times[I, Divide[Pi, 5]]]
   wolfram:
     in: Exp[Times[I, Divide[Pi, 5]]]
     note: Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.
@@ -268,6 +292,8 @@ exp-ln-2:
   tex:
     in: \exp(\ln(2))
     out: "2"
+  fullform:
+    in: Exp[Log[2]]
   wolfram:
     in: Exp[Log[2]]
   sympy:
@@ -285,6 +311,8 @@ inverse-of-ln-symbolically:
   tex:
     in: \exp(\ln(x))
     out: x
+  fullform:
+    in: Exp[Log[x]]
 exp-ln-of-a-complex-argument-is-that-argument:
   epsil:
     in: Exp(Ln(1 + 2i))
@@ -292,6 +320,8 @@ exp-ln-of-a-complex-argument-is-that-argument:
   tex:
     in: \exp(\ln(1+2i))
     out: 1+2i
+  fullform:
+    in: Exp[Log[Complex[1, 2]]]
   wolfram:
     in: Exp[Log[Complex[1, 2]]]
   sympy:
@@ -307,6 +337,8 @@ exp-ln-of-a-negative-real-is-left-unevaluated:
   tex:
     in: \exp(\ln(-2))
     out: e^{i\pi+\ln(2)}
+  fullform:
+    in: Exp[Log[-2]]
   wolfram:
     in: Exp[Log[-2]]
     note: Wolfram folds Exp[Log[-2]] to -2 (and native compute-engine does too, checked against a bare engine with nothing declared) -- this package's own Ln(-q) = Ln(q) + i*pi rule (widened.ts, a deliberate, documented choice, see Ln.yaml) evaluates the negative-real Ln away before Exp's native e^(ln z) = z fold ever sees a literal Ln node to recognize, since Exp(z) canonicalizes straight to Power(ExponentialE, z) inside compute-engine's own box() step without ever consulting a customizable canonical hook (confirmed by patching Power's canonical and evaluate directly and observing neither intercepts in time). N(Exp(Ln(-2))) is unaffected, still -2.
@@ -325,6 +357,8 @@ exp-negativeinfinity:
   tex:
     in: e^{-\infty}
     out: "0"
+  fullform:
+    in: Exp[-Infinity]
   wolfram:
     in: Exp[-Infinity]
 exp-positiveinfinity:
@@ -334,6 +368,8 @@ exp-positiveinfinity:
   tex:
     in: e^{\infty}
     out: \infty
+  fullform:
+    in: Exp[Infinity]
   wolfram:
     in: Exp[Infinity]
 element-wise-over-a-matrix-not-the-matrix:
@@ -343,6 +379,8 @@ element-wise-over-a-matrix-not-the-matrix:
   tex:
     in: \exp\bigl\lbrack\bigl\lbrack1, \frac{i\pi}{2}\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
     out: \bigl\lbrack\bigl\lbracke, i\bigr\rbrack, \bigl\lbrack1, e\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Exp[List[List[1, Times[I, Divide[Pi, 2]]], List[0, 1]]]
   wolfram:
     in: Exp[List[List[1, Times[I, Divide[Pi, 2]]], List[0, 1]]]
   sympy:
@@ -356,6 +394,8 @@ interval-arithmetic-exp-1-ln-2-e-1-2:
   tex:
     in: \exp(\mathrm{Interval}(-1, \ln(2)))
     out: \mathrm{Interval}(\frac{1}{e}, 2)
+  fullform:
+    in: Exp[Interval[List[-1, Log[2]]]]
   wolfram:
     in: Exp[Interval[List[-1, Log[2]]]]
 uncertainty-propagation-e-2-pm-0-01-approx-7-389:
@@ -365,6 +405,8 @@ uncertainty-propagation-e-2-pm-0-01-approx-7-389:
   tex:
     in: \exp(\mathrm{Around}(2, 0.01))
     out: \mathrm{Around}(7.389\,056\,098\,930\,65, 0.073\,890\,560\,989\,306\,5)
+  fullform:
+    in: Exp[Around[2, 0.01]]
   wolfram:
     in: Exp[Around[2, 0.01]]
 its-own-derivative:
@@ -374,6 +416,8 @@ its-own-derivative:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}e^{x}
     out: e^{x}
+  fullform:
+    in: D[Exp[x], x]
 its-own-antiderivative:
   epsil:
     in: Integrate(Exp(x), x)
@@ -381,6 +425,8 @@ its-own-antiderivative:
   tex:
     in: \int\!e^{x}\, \mathrm{d}x
     out: e^{x}
+  fullform:
+    in: Integrate[Exp[x], x]
 taylor-series-about-0:
   epsil:
     in: Series(Exp(x), x, 0, 4)
@@ -388,6 +434,8 @@ taylor-series-about-0:
   tex:
     in: \operatorname{Series}(e^{x}, x, 0, 4)
     out: 1+x+\frac{x^2}{2}+\frac{x^3}{6}+\frac{x^4}{24}+O\left(x^5\right)
+  fullform:
+    in: Series[Exp[x], x, 0, 4]
 e-as-the-limit-lim-x-to-infty-1-1-x-x:
   epsil:
     in: Limit((1 + 1 / x) ^ x, PositiveInfinity)
@@ -395,6 +443,8 @@ e-as-the-limit-lim-x-to-infty-1-1-x-x:
   tex:
     in: \lim_{x\to\infty}(1+\frac{1}{x})^{x}
     out: e
+  fullform:
+    in: Limit[Function[Power[Plus[1, Divide[1, x]], x], x], Infinity]
 lim-x-to-0-frac-e-x-1-x-1:
   epsil:
     in: Limit((Exp(x) - 1) / x, 0)
@@ -402,6 +452,8 @@ lim-x-to-0-frac-e-x-1-x-1:
   tex:
     in: \lim_{x\to0}\frac{e^{x}-1}{x}
     out: "1"
+  fullform:
+    in: Limit[Function[Divide[Subtract[Exp[x], 1], x], x], 0]
 a-product-of-exponentials-should-combine-e-x-e-y:
   epsil:
     in: Exp(x) * Exp(y)
@@ -409,6 +461,8 @@ a-product-of-exponentials-should-combine-e-x-e-y:
   tex:
     in: e^{x}e^{y}
     out: e^{x+y}
+  fullform:
+    in: Times[Exp[x], Exp[y]]
 euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
   epsil:
     in: ExpToTrig(Exp(ImaginaryUnit * x))
@@ -416,6 +470,8 @@ euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
   tex:
     in: \mathrm{ExpToTrig}(\exp(i x))
     out: i\sin(x)+\cos(x)
+  fullform:
+    in: ExpToTrig[Exp[Times[I, x]]]
 to-50-significant-digits-every-one-correctly:
   epsil:
     in: N(Exp(1), 50)
@@ -423,6 +479,8 @@ to-50-significant-digits-every-one-correctly:
   tex:
     in: N(e^{1}, 50)
     out: 2.718\,281\,828\,459\,045\,235\,36
+  fullform:
+    in: N[Exp[1], 50]
   wolfram:
     in: N[Exp[1], 50]
   sympy:

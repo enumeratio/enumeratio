@@ -5,6 +5,8 @@ erlang-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{ErlangDistribution}(3, 2), 1)
     out: \frac{8}{\Gamma(3)e^{2}}
+  fullform:
+    in: PDF[ErlangDistribution[3, 2], 1]
   wolfram:
     in: PDF[ErlangDistribution[3, 2], 1]
 erlang-cdf-exact:
@@ -14,6 +16,8 @@ erlang-cdf-exact:
   tex:
     in: \operatorname{CDF}(\mathrm{ErlangDistribution}(3, 2), 1)
     out: 1-\frac{5}{e^{2}}
+  fullform:
+    in: CDF[ErlangDistribution[3, 2], 1]
   wolfram:
     in: CDF[ErlangDistribution[3, 2], 1]
 erlang-mean-exact:
@@ -23,6 +27,8 @@ erlang-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{ErlangDistribution}(3, 2))
     out: \frac{3}{2}
+  fullform:
+    in: Mean[ErlangDistribution[3, 2]]
   wolfram:
     in: Mean[ErlangDistribution[3, 2]]
 erlang-variance-exact:
@@ -32,5 +38,7 @@ erlang-variance-exact:
   tex:
     in: \mathrm{Variance}(\mathrm{ErlangDistribution}(3, 2))
     out: \frac{3}{4}
+  fullform:
+    in: Variance[ErlangDistribution[3, 2]]
   wolfram:
     in: Variance[ErlangDistribution[3, 2]]

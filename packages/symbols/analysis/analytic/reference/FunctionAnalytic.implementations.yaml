@@ -8,6 +8,8 @@ polynomials-are-entire:
   traditional:
     in: \mathrm{FunctionAnalytic}(x^2, x)
     out: \mathrm{True}
+  fullform:
+    in: FunctionAnalytic[Power[x, 2], x]
 a-pole-anywhere-in-the-plane-disqualifies-it:
   epsil:
     in: FunctionAnalytic(1 / x, x)
@@ -18,6 +20,8 @@ a-pole-anywhere-in-the-plane-disqualifies-it:
   traditional:
     in: \mathrm{FunctionAnalytic}(\frac{1}{x}, x)
     out: \mathrm{False}
+  fullform:
+    in: FunctionAnalytic[Divide[1, x], x]
 sqrt-has-a-branch-point:
   epsil:
     in: FunctionAnalytic(Sqrt(x), x)
@@ -28,6 +32,8 @@ sqrt-has-a-branch-point:
   traditional:
     in: \mathrm{FunctionAnalytic}(\sqrt{x}, x)
     out: \mathrm{False}
+  fullform:
+    in: FunctionAnalytic[Sqrt[x], x]
 sine-is-entire:
   epsil:
     in: FunctionAnalytic(Sin(x), x)
@@ -38,3 +44,5 @@ sine-is-entire:
   traditional:
     in: \mathrm{FunctionAnalytic}(\sin(x), x)
     out: \mathrm{True}
+  fullform:
+    in: FunctionAnalytic[Sin[x], x]

@@ -5,6 +5,8 @@ halfnormal-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{HalfNormalDistribution}(1), 1)
     out: \frac{\sqrt{2}}{\sqrt{e\pi}}
+  fullform:
+    in: PDF[HalfNormalDistribution[1], 1]
   wolfram:
     in: PDF[HalfNormalDistribution[1], 1]
 halfnormal-cdf-exact:
@@ -14,6 +16,8 @@ halfnormal-cdf-exact:
   tex:
     in: \operatorname{CDF}(\mathrm{HalfNormalDistribution}(1), 1)
     out: \operatorname{erf}(\frac{\sqrt{2}}{2})
+  fullform:
+    in: CDF[HalfNormalDistribution[1], 1]
   wolfram:
     in: CDF[HalfNormalDistribution[1], 1]
 halfnormal-mean-exact:
@@ -23,6 +27,8 @@ halfnormal-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{HalfNormalDistribution}(1))
     out: \sqrt{\frac{2}{\pi}}
+  fullform:
+    in: Mean[HalfNormalDistribution[1]]
   wolfram:
     in: Mean[HalfNormalDistribution[1]]
 halfnormal-variance-exact:
@@ -32,5 +38,7 @@ halfnormal-variance-exact:
   tex:
     in: \mathrm{Variance}(\mathrm{HalfNormalDistribution}(1))
     out: \frac{\pi-2}{\pi}
+  fullform:
+    in: Variance[HalfNormalDistribution[1]]
   wolfram:
     in: Variance[HalfNormalDistribution[1]]

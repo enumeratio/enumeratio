@@ -8,6 +8,8 @@ moebiusmu-1:
   traditional:
     in: \mu(1)
     out: "1"
+  fullform:
+    in: MoebiusMu[1]
   wolfram:
     in: MoebiusMu[1]
     out: "1"
@@ -39,6 +41,8 @@ moebiusmu-11:
   traditional:
     in: \mu(11)
     out: "-1"
+  fullform:
+    in: MoebiusMu[11]
   wolfram:
     in: MoebiusMu[11]
     out: "-1"
@@ -70,6 +74,8 @@ moebiusmu-11:
   traditional:
     in: \mu(12)
     out: "0"
+  fullform:
+    in: MoebiusMu[12]
   wolfram:
     in: MoebiusMu[12]
     out: "0"
@@ -101,6 +107,8 @@ moebiusmu-11:
   traditional:
     in: \mu(10)
     out: "1"
+  fullform:
+    in: MoebiusMu[10]
   wolfram:
     in: MoebiusMu[10]
     out: "1"
@@ -134,6 +142,8 @@ sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind:
   traditional:
     in: \mu(1)+\mu(2)+\mu(3)+\mu(4)+\mu(6)+\mu(12)
     out: "0"
+  fullform:
+    in: Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]
   wolfram:
     in: Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]
     out: "0"
@@ -165,6 +175,8 @@ mu-is-only-defined-for-positive-integers-compute:
   traditional:
     in: \mu(0)
     out: \mu(0)
+  fullform:
+    in: MoebiusMu[0]
   wolfram:
     in: MoebiusMu[0]
     out: "0"
@@ -211,6 +223,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{MoebiusMu}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack1, -1, -1, 0\bigr\rbrack
+  fullform:
+    in: MoebiusMu[List[1, 2, 3, 4]]
   wolfram:
     in: MoebiusMu[List[1, 2, 3, 4]]
     out: "{1, -1, -1, 0}"
@@ -241,6 +255,8 @@ gaussian-integers-5-6i-is-a-gaussian-prime-norm:
   traditional:
     in: \mu(5+6i)
     out: "-1"
+  fullform:
+    in: MoebiusMu[Complex[5, 6]]
   wolfram:
     in: MoebiusMu[Complex[5, 6]]
   sympy:
@@ -258,6 +274,8 @@ listable-threads-over-a-list:
   tex:
     in: \mathrm{MoebiusMu}(\bigl\lbrack4, 10, 17, 20\bigr\rbrack)
     out: \bigl\lbrack0, 1, -1, 0\bigr\rbrack
+  fullform:
+    in: MoebiusMu[List[4, 10, 17, 20]]
   wolfram:
     in: MoebiusMu[List[4, 10, 17, 20]]
   sympy:
@@ -280,5 +298,7 @@ listable-over-a-range:
   traditional:
     in: \mu(1..20)
     out: \bigl\lbrack1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0\bigr\rbrack
+  fullform:
+    in: MoebiusMu[Range[20]]
   wolfram:
     in: MoebiusMu[Range[20]]

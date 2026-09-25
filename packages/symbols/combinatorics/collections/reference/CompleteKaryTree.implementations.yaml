@@ -5,6 +5,8 @@ a-3-level-binary-tree-has-7-vertices:
   tex:
     in: \mathrm{VertexCount}(\mathrm{CompleteKaryTree}(3, 2))
     out: "7"
+  fullform:
+    in: VertexCount[CompleteKaryTree[3, 2]]
   wolfram:
     in: VertexCount[CompleteKaryTree[3, 2]]
 a-single-level-tree-is-one-vertex:
@@ -14,6 +16,8 @@ a-single-level-tree-is-one-vertex:
   tex:
     in: \mathrm{VertexCount}(\mathrm{CompleteKaryTree}(1, 2))
     out: "1"
+  fullform:
+    in: VertexCount[CompleteKaryTree[1, 2]]
   wolfram:
     in: VertexCount[CompleteKaryTree[1, 2]]
 a-3-level-binary-tree-is-a-tree:
@@ -26,6 +30,8 @@ a-3-level-binary-tree-is-a-tree:
   traditional:
     in: \mathrm{IsTreeGraph}(\mathrm{CompleteKaryTree}(3, 2))
     out: \mathrm{True}
+  fullform:
+    in: TreeGraphQ[CompleteKaryTree[3, 2]]
   wolfram:
     in: TreeGraphQ[CompleteKaryTree[3, 2]]
 root-degree-of-a-ternary-tree:
@@ -35,5 +41,7 @@ root-degree-of-a-ternary-tree:
   tex:
     in: \mathrm{VertexDegree}(\mathrm{CompleteKaryTree}(3, 3), 1)
     out: "3"
+  fullform:
+    in: VertexDegree[CompleteKaryTree[3, 3], 1]
   wolfram:
     in: VertexDegree[CompleteKaryTree[3, 3], 1]

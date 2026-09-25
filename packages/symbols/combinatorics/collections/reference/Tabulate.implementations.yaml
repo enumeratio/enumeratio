@@ -5,9 +5,11 @@ tabulate-function-1-pow-2-5:
   tex:
     in: \mathrm{Tabulate}(()\mapsto\operatorname{\_1}^2, 5)
     out: \bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack
-  wolfram:
+  fullform:
     in: Array[Function[Power[Slot[1], 2]], 5]
     back: [Array, [Function, [Power, _1, 2]], 5]
+  wolfram:
+    in: Array[Function[Power[Slot[1], 2]], 5]
     out: "{1, 4, 9, 16, 25}"
     tex:
       in: \text{Array}\left[\text{$\#$1}^2\&,5\right]
@@ -19,9 +21,11 @@ the-multi-dimensional-form-a-rectangular-grid:
   tex:
     in: \mathrm{Tabulate}(()\mapsto\operatorname{\_1}\operatorname{\_2}, 2, 2)
     out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack
-  wolfram:
+  fullform:
     in: Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]
     back: [Array, [Function, [Multiply, _1, _2]], [List, 2, 2]]
+  wolfram:
+    in: Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]
     out: "{{1, 2}, {2, 4}}"
     tex:
       in: \text{Array}[\text{$\#$1} \text{$\#$2}\&,\{2,2\}]
@@ -33,6 +37,9 @@ a-symbolic-function-shows-the-indices:
   tex:
     in: \mathrm{Tabulate}(f, 3)
     out: \bigl\lbrack f(1), f(2), f(3)\bigr\rbrack
+  fullform:
+    in: Array[f, 3]
+    back: [Array, f, 3]
 a-2-3-grid:
   epsil:
     in: Tabulate(f, 2, 3)
@@ -40,6 +47,9 @@ a-2-3-grid:
   tex:
     in: \mathrm{Tabulate}(f, 2, 3)
     out: \bigl\lbrack\bigl\lbrack f(1, 1), f(1, 2), f(1, 3)\bigr\rbrack, \bigl\lbrack f(2, 1), f(2, 2), f(2, 3)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Array[f, List[2, 3]]
+    back: [Array, f, [List, 2, 3]]
 tabulate-add-2-2:
   epsil:
     in: Tabulate(Add, 2, 2)
@@ -47,9 +57,11 @@ tabulate-add-2-2:
   tex:
     in: \mathrm{Tabulate}(\mathrm{Add}, 2, 2)
     out: \bigl\lbrack\bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
-  wolfram:
+  fullform:
     in: Array[Plus, List[2, 2]]
     back: [Array, Add, [List, 2, 2]]
+  wolfram:
+    in: Array[Plus, List[2, 2]]
 three-dimensions-give-a-2-2-2-array:
   epsil:
     in: Tabulate(f, 2, 2, 2)
@@ -61,6 +73,9 @@ three-dimensions-give-a-2-2-2-array:
   tex:
     in: \mathrm{Tabulate}(f, 2, 2, 2)
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack f(1, 1, 1), f(1, 1, 2)\bigr\rbrack, \bigl\lbrack f(1, 2, 1), f(1, 2, 2)\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack f(2, 1, 1), f(2, 1, 2)\bigr\rbrack, \bigl\lbrack f(2, 2, 1), f(2, 2, 2)\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Array[f, List[2, 2, 2]]
+    back: [Array, f, [List, 2, 2, 2]]
 length-0-gives-the-empty-list:
   epsil:
     in: Tabulate(f, 0)
@@ -68,6 +83,9 @@ length-0-gives-the-empty-list:
   tex:
     in: \mathrm{Tabulate}(f, 0)
     out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: Array[f, 0]
+    back: [Array, f, 0]
 the-3-3-hilbert-matrix-1-i-j-1:
   epsil:
     in: Tabulate(Function(1 / (_1 + _2 - 1)), 3, 3)
@@ -75,9 +93,11 @@ the-3-3-hilbert-matrix-1-i-j-1:
   tex:
     in: \mathrm{Tabulate}(()\mapsto\frac{1}{(\operatorname{\_1}+\operatorname{\_2})-1}, 3, 3)
     out: \bigl\lbrack\bigl\lbrack1, \frac{1}{2}, \frac{1}{3}\bigr\rbrack, \bigl\lbrack\frac{1}{2}, \frac{1}{3}, \frac{1}{4}\bigr\rbrack, \bigl\lbrack\frac{1}{3}, \frac{1}{4}, \frac{1}{5}\bigr\rbrack\bigr\rbrack
-  wolfram:
+  fullform:
     in: Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]
     back: [Array, [Function, [Divide, 1, [Subtract, [Add, _1, _2], 1]]], [List, 3, 3]]
+  wolfram:
+    in: Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]
 the-3-3-identity-matrix:
   epsil:
     in: Tabulate(Function(1 if _1 == _2 else 0), 3, 3)
@@ -85,6 +105,9 @@ the-3-3-identity-matrix:
   tex:
     in: \mathrm{Tabulate}(()\mapsto\text{if }\operatorname{\_1}=\operatorname{\_2}\text{ then }1\text{ else }0, 3, 3)
     out: \bigl\lbrack\bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Array[Function[If[Equal[Slot[1], Slot[2]], 1, 0]], List[3, 3]]
+    back: [Array, [Function, [If, [Equal, _1, _2], 1, 0]], [List, 3, 3]]
 pascal-s-triangle-as-a-lower-triangular-matrix:
   epsil:
     in: Tabulate(Binomial, 3, 3)
@@ -92,6 +115,8 @@ pascal-s-triangle-as-a-lower-triangular-matrix:
   tex:
     in: \mathrm{Tabulate}(\mathrm{Binomial}, 3, 3)
     out: \bigl\lbrack\bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack2, 1, 0\bigr\rbrack, \bigl\lbrack3, 3, 1\bigr\rbrack\bigr\rbrack
-  wolfram:
+  fullform:
     in: Array[Binomial, List[3, 3]]
     back: [Array, Binomial, [List, 3, 3]]
+  wolfram:
+    in: Array[Binomial, List[3, 3]]

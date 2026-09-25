@@ -5,6 +5,8 @@ pm-1-2-pm-2-2-in-either-order:
   tex:
     in: \mathrm{SquaresR}(2, 5)
     out: "8"
+  fullform:
+    in: SquaresR[2, 5]
   wolfram:
     in: SquaresR[2, 5]
 squaresr-2-25:
@@ -14,6 +16,8 @@ squaresr-2-25:
   tex:
     in: \mathrm{SquaresR}(2, 25)
     out: "12"
+  fullform:
+    in: SquaresR[2, 25]
   wolfram:
     in: SquaresR[2, 25]
 no-n-equiv-3-pmod-4-is-a-sum-of-two-squares:
@@ -23,6 +27,8 @@ no-n-equiv-3-pmod-4-is-a-sum-of-two-squares:
   tex:
     in: \mathrm{SquaresR}(2, 3)
     out: "0"
+  fullform:
+    in: SquaresR[2, 3]
   wolfram:
     in: SquaresR[2, 3]
 squaresr-3-6:
@@ -32,6 +38,8 @@ squaresr-3-6:
   tex:
     in: \mathrm{SquaresR}(3, 6)
     out: "24"
+  fullform:
+    in: SquaresR[3, 6]
   wolfram:
     in: SquaresR[3, 6]
 jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n:
@@ -41,6 +49,8 @@ jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n:
   tex:
     in: \mathrm{SquaresR}(4, 10)
     out: "144"
+  fullform:
+    in: SquaresR[4, 10]
   wolfram:
     in: SquaresR[4, 10]
 squaresr-8-3:
@@ -50,5 +60,7 @@ squaresr-8-3:
   tex:
     in: \mathrm{SquaresR}(8, 3)
     out: "448"
+  fullform:
+    in: SquaresR[8, 3]
   wolfram:
     in: SquaresR[8, 3]

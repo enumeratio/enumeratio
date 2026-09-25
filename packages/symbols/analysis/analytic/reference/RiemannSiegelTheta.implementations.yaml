@@ -5,6 +5,8 @@ riemannsiegeltheta-1p5:
   tex:
     in: \mathrm{RiemannSiegelTheta}(1.5)
     out: -2.198\,190\,857\,379\,41
+  fullform:
+    in: RiemannSiegelTheta[1.5]
   wolfram:
     in: RiemannSiegelTheta[1.5]
 n-riemannsiegeltheta-10:
@@ -14,6 +16,8 @@ n-riemannsiegeltheta-10:
   tex:
     in: N(\mathrm{RiemannSiegelTheta}(10))
     out: -3.067\,074\,396\,289\,895\,4
+  fullform:
+    in: N[RiemannSiegelTheta[10]]
   wolfram:
     in: N[RiemannSiegelTheta[10]]
 riemannsiegeltheta-0:
@@ -23,5 +27,7 @@ riemannsiegeltheta-0:
   tex:
     in: \mathrm{RiemannSiegelTheta}(0)
     out: "0"
+  fullform:
+    in: RiemannSiegelTheta[0]
   wolfram:
     in: RiemannSiegelTheta[0]

@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{HarmonicMean}(\bigl\lbrack1, 2, 4\bigr\rbrack)
     out: \frac{12}{7}
+  fullform:
+    in: HarmonicMean[List[1, 2, 4]]
   wolfram:
     in: HarmonicMean[List[1, 2, 4]]
 frac-12-5:
@@ -14,6 +16,8 @@ frac-12-5:
   tex:
     in: \mathrm{HarmonicMean}(\bigl\lbrack2, 3\bigr\rbrack)
     out: \frac{12}{5}
+  fullform:
+    in: HarmonicMean[List[2, 3]]
   wolfram:
     in: HarmonicMean[List[2, 3]]
 driving-equal-distances-at-40-and-60-averages-48:
@@ -23,6 +27,8 @@ driving-equal-distances-at-40-and-60-averages-48:
   tex:
     in: \mathrm{HarmonicMean}(\bigl\lbrack40, 60\bigr\rbrack)
     out: "48"
+  fullform:
+    in: HarmonicMean[List[40, 60]]
   wolfram:
     in: HarmonicMean[List[40, 60]]
 equal-values-are-their-own-harmonic-mean:
@@ -32,5 +38,7 @@ equal-values-are-their-own-harmonic-mean:
   tex:
     in: \mathrm{HarmonicMean}(\bigl\lbrack5, 5, 5\bigr\rbrack)
     out: "5"
+  fullform:
+    in: HarmonicMean[List[5, 5, 5]]
   wolfram:
     in: HarmonicMean[List[5, 5, 5]]

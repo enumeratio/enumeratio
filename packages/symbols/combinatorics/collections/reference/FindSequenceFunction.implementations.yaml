@@ -5,6 +5,8 @@ geometric:
   tex:
     in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 2, 4, 8, 16\bigr\rbrack, n)
     out: 2^{n}
+  fullform:
+    in: FindSequenceFunction[List[1, 2, 4, 8, 16], n]
 polynomial:
   epsil:
     in: FindSequenceFunction([1, 4, 9, 16, 25], n)
@@ -12,6 +14,8 @@ polynomial:
   tex:
     in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack, n)
     out: n^2+2n+1
+  fullform:
+    in: FindSequenceFunction[List[1, 4, 9, 16, 25], n]
 catalan-numbers:
   epsil:
     in: FindSequenceFunction([1, 1, 2, 5, 14, 42, 132], n)
@@ -22,6 +26,8 @@ catalan-numbers:
   traditional:
     in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 5, 14, 42, 132\bigr\rbrack, n)
     out: C_{n}
+  fullform:
+    in: FindSequenceFunction[List[1, 1, 2, 5, 14, 42, 132], n]
 factorial:
   epsil:
     in: FindSequenceFunction([1, 1, 2, 6, 24, 120], n)
@@ -29,3 +35,5 @@ factorial:
   tex:
     in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 6, 24, 120\bigr\rbrack, n)
     out: n!
+  fullform:
+    in: FindSequenceFunction[List[1, 1, 2, 6, 24, 120], n]

@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{Count}(\mathrm{SymmetricGroup}(4))
     out: "24"
+  fullform:
+    in: Count[SymmetricGroup[4]]
   wolfram:
     in: Count[SymmetricGroup[4]]
 the-identity:
@@ -14,5 +16,7 @@ the-identity:
   tex:
     in: \mathrm{SymmetricGroup}(3)[1]
     out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Part[SymmetricGroup[3], 1]
   wolfram:
     in: Part[SymmetricGroup[3], 1]

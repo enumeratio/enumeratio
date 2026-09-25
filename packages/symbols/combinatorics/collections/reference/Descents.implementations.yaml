@@ -5,6 +5,8 @@ only-3-1:
   tex:
     in: \mathrm{Descents}(\bigl\lbrack3, 1, 2\bigr\rbrack)
     out: "1"
+  fullform:
+    in: Descents[List[3, 1, 2]]
 every-step-falls:
   epsil:
     in: Descents([3, 2, 1])
@@ -12,6 +14,8 @@ every-step-falls:
   tex:
     in: \mathrm{Descents}(\bigl\lbrack3, 2, 1\bigr\rbrack)
     out: "2"
+  fullform:
+    in: Descents[List[3, 2, 1]]
 descents-and-ascents-partition-the-n-1-steps:
   epsil:
     in: Descents([3, 1, 2]) + Ascents([3, 1, 2]) == 2
@@ -22,3 +26,5 @@ descents-and-ascents-partition-the-n-1-steps:
   traditional:
     in: \mathrm{Descents}(\bigl\lbrack3, 1, 2\bigr\rbrack)+\mathrm{Ascents}(\bigl\lbrack3, 1, 2\bigr\rbrack)=2
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Descents[List[3, 1, 2]], Ascents[List[3, 1, 2]]], 2]

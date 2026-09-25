@@ -5,6 +5,8 @@ extendedgcd-2-3:
   tex:
     in: \mathrm{ExtendedGCD}(2, 3)
     out: (1,-1,1)
+  fullform:
+    in: ExtendedGCD[2, 3]
   wolfram:
     in: ExtendedGCD[2, 3]
     out: "{1, {-1, 1}}"
@@ -21,6 +23,8 @@ extendedgcd-12-18:
   tex:
     in: \mathrm{ExtendedGCD}(12, 18)
     out: (6,-1,1)
+  fullform:
+    in: ExtendedGCD[12, 18]
   wolfram:
     in: ExtendedGCD[12, 18]
     out: "{6, {-1, 1}}"
@@ -37,6 +41,8 @@ the-modular-inverse-of-3-mod-11-is-4-since-3:
   tex:
     in: \mathrm{ExtendedGCD}(3, 11)
     out: (1,4,-1)
+  fullform:
+    in: ExtendedGCD[3, 11]
   wolfram:
     in: ExtendedGCD[3, 11]
     out: "{1, {4, -1}}"
@@ -53,6 +59,8 @@ bezout-coefficients-when-a-0-0-times-0-5-times-1:
   tex:
     in: \mathrm{ExtendedGCD}(0, 5)
     out: (5,0,1)
+  fullform:
+    in: ExtendedGCD[0, 5]
   wolfram:
     in: ExtendedGCD[0, 5]
     out: "{5, {0, 1}}"
@@ -69,6 +77,8 @@ confirms-the-coefficients-above-satisfy-2x-3y:
   tex:
     in: -2\times1+3\times1
     out: "1"
+  fullform:
+    in: Plus[Times[2, -1], Times[3, 1]]
   wolfram:
     in: Plus[Times[2, -1], Times[3, 1]]
     out: "1"
@@ -103,6 +113,8 @@ any-number-of-arguments-folding-pairwise-6-times:
   tex:
     in: \mathrm{ExtendedGCD}(6, 15, 30)
     out: (3,-2,1,0)
+  fullform:
+    in: ExtendedGCD[6, 15, 30]
   wolfram:
     in: ExtendedGCD[6, 15, 30]
     note: "Same values: ours is the flat Tuple (g, x₁, x₂, x₃), Wolfram's is {g, {x₁, x₂, x₃}}."
@@ -113,6 +125,8 @@ gaussian-integers-by-euclid-with-the-rounded:
   tex:
     in: \mathrm{ExtendedGCD}(7+2i, 3-5i)
     out: (1,-1-2i,-2+2i )
+  fullform:
+    in: ExtendedGCD[Complex[7, 2], Complex[3, -5]]
   wolfram:
     in: ExtendedGCD[Complex[7, 2], Complex[3, -5]]
     out: "{1, {-1 - 2*I, -2 + 2*I}}"
@@ -129,6 +143,8 @@ extendedgcd-3-5:
   tex:
     in: \mathrm{ExtendedGCD}(3, 5)
     out: (1,2,-1)
+  fullform:
+    in: ExtendedGCD[3, 5]
   wolfram:
     in: ExtendedGCD[3, 5]
     note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
@@ -139,6 +155,8 @@ negative-arguments-12-18-6:
   tex:
     in: \mathrm{ExtendedGCD}(-12, 18)
     out: (6,1,1)
+  fullform:
+    in: ExtendedGCD[-12, 18]
   wolfram:
     in: ExtendedGCD[-12, 18]
     note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
@@ -149,6 +167,8 @@ big-integers-the-coefficients-stay-minimal-x-b:
   tex:
     in: \mathrm{ExtendedGCD}(2^{100}, 3^{50})
     out: (1,208\,475\,958\,620\,489\,751\,737\,959,-368\,122\,879\,029\,235\,364\,752\,383\,564\,167)
+  fullform:
+    in: ExtendedGCD[Power[2, 100], Power[3, 50]]
   wolfram:
     in: ExtendedGCD[Power[2, 100], Power[3, 50]]
     note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
@@ -159,6 +179,8 @@ three-arguments-4-cdot-4-6-cdot-4-9-1:
   tex:
     in: \mathrm{ExtendedGCD}(4, 6, 9)
     out: (1,4,-4,1)
+  fullform:
+    in: ExtendedGCD[4, 6, 9]
   wolfram:
     in: ExtendedGCD[4, 6, 9]
 listable-threads-over-a-list:
@@ -168,5 +190,7 @@ listable-threads-over-a-list:
   tex:
     in: \mathrm{ExtendedGCD}(3, \bigl\lbrack5, 15\bigr\rbrack)
     out: \bigl\lbrack(1,2,-1), (3,1,0)\bigr\rbrack
+  fullform:
+    in: ExtendedGCD[3, List[5, 15]]
   wolfram:
     in: ExtendedGCD[3, List[5, 15]]

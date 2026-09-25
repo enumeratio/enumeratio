@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{Count}(\mathrm{Subsets}(4))
     out: "16"
+  fullform:
+    in: Count[Subsets[4]]
   wolfram:
     in: Count[Subsets[4]]
 the-empty-subset:
@@ -14,5 +16,7 @@ the-empty-subset:
   tex:
     in: \mathrm{Subsets}(3)[1]
     out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: Part[Subsets[3], 1]
   wolfram:
     in: Part[Subsets[3], 1]

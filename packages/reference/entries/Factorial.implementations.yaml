@@ -5,6 +5,8 @@
   tex:
     in: 5!
     out: "120"
+  fullform:
+    in: Factorial[5]
   wolfram:
     in: Factorial[5]
     out: "120"
@@ -36,6 +38,8 @@
   tex:
     in: 6!
     out: "720"
+  fullform:
+    in: Factorial[6]
   wolfram:
     in: Factorial[6]
     out: "720"
@@ -67,6 +71,8 @@ the-empty-product-is-1-by-convention:
   tex:
     in: 0!
     out: "1"
+  fullform:
+    in: Factorial[0]
   wolfram:
     in: Factorial[0]
     out: "1"
@@ -98,6 +104,8 @@ the-empty-product-is-1-by-convention:
   tex:
     in: 10!
     out: 3\,628\,800
+  fullform:
+    in: Factorial[10]
   wolfram:
     in: Factorial[10]
     out: "3628800"
@@ -129,6 +137,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \bigl\lbrack1, 2, 3, 4\bigr\rbrack!
     out: \bigl\lbrack1, 2, 6, 24\bigr\rbrack
+  fullform:
+    in: Factorial[List[1, 2, 3, 4]]
   wolfram:
     in: Factorial[List[1, 2, 3, 4]]
     out: "{1, 2, 6, 24}"
@@ -181,9 +191,10 @@ recurrence-n-n-n-1:
   traditional:
     in: 5!=5\times4!
     out: \mathrm{True}
+  fullform:
+    in: Equal[Factorial[5], Times[5, Factorial[4]]]
   wolfram:
     in: (Factorial[5] == Times[5, Factorial[4]])
-    back: Unreadable
     out: True
     tex:
       in: 5!=5 4!
@@ -213,6 +224,8 @@ extends-to-non-integers-via-the-gamma-function:
   tex:
     in: (\frac{1}{2})!
     out: 0.886\,226\,925\,452\,758\,6
+  fullform:
+    in: Factorial[Rational[1, 2]]
   wolfram:
     in: Factorial[Rational[1, 2]]
     out: Sqrt[Pi]/2
@@ -256,6 +269,8 @@ the-number-of-ways-to-arrange-8-distinct-books:
   tex:
     in: 8!
     out: 40\,320
+  fullform:
+    in: Factorial[8]
   wolfram:
     in: Factorial[8]
     out: "40320"
@@ -287,6 +302,8 @@ negative-integers-are-poles-of-the-gamma:
   tex:
     in: (-1)!
     out: \tilde\infty
+  fullform:
+    in: Factorial[-1]
   wolfram:
     in: Factorial[-1]
     out: ComplexInfinity
@@ -333,6 +350,8 @@ factorials-grow-fast-20-already-exceeds-2-times:
   tex:
     in: 20!
     out: 2\,432\,902\,008\,176\,640\,000
+  fullform:
+    in: Factorial[20]
   wolfram:
     in: Factorial[20]
     out: "2432902008176640000"
@@ -364,6 +383,8 @@ frac-n-n-1-simplifies-to-n-under-simplify-plain:
   tex:
     in: \mathrm{Simplify}(\frac{n!}{(n-1)!})
     out: n
+  fullform:
+    in: Simplify[Divide[Factorial[n], Factorial[Subtract[n, 1]]]]
 real-arguments-evaluate-as-gamma-n-1:
   epsil:
     in: 3.5!
@@ -371,6 +392,8 @@ real-arguments-evaluate-as-gamma-n-1:
   tex:
     in: 3.5!
     out: 11.631\,728\,396\,567\,457
+  fullform:
+    in: Factorial[3.5]
   wolfram:
     in: Factorial[3.5]
   sympy:
@@ -392,6 +415,8 @@ negative-non-integers-are-defined-too-2-5-gamma:
   tex:
     in: (-2.5)!
     out: 2.363\,271\,801\,207\,353
+  fullform:
+    in: Factorial[-2.5]
   wolfram:
     in: Factorial[-2.5]
   sympy:
@@ -413,6 +438,8 @@ complex-arguments-1-i-gamma-2-i:
   tex:
     in: (1+i)!
     out: 0.652\,965\,496\,420\,167\,4+0.343\,065\,839\,816\,546\,3i
+  fullform:
+    in: Factorial[Complex[1, 1]]
   wolfram:
     in: Factorial[Complex[1, 1]]
   sympy:
@@ -430,6 +457,8 @@ frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
   tex:
     in: (-\frac{1}{2})!
     out: 1.772\,453\,850\,905\,515\,9
+  fullform:
+    in: Factorial[Rational[-1, 2]]
   wolfram:
     in: Factorial[Rational[-1, 2]]
     note: Wolfram returns the exact Sqrt[Pi].
@@ -452,6 +481,8 @@ infty-infty:
   tex:
     in: \infty!
     out: \infty
+  fullform:
+    in: Factorial[Infinity]
   wolfram:
     in: Factorial[Infinity]
 n-gamma-n-1-see-gamma:
@@ -464,9 +495,10 @@ n-gamma-n-1-see-gamma:
   traditional:
     in: 5!=\Gamma(6)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Factorial[5], Gamma[6]]
   wolfram:
     in: (Factorial[5] == Gamma[6])
-    back: Unreadable
   sympy:
     in: enumeratio_equal(factorial(5), gamma(6))
   sage:
@@ -480,6 +512,8 @@ the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e:
   tex:
     in: \sum_{k=0}^{\infty}\frac{1}{k!}
     out: e
+  fullform:
+    in: Sum[Divide[1, Factorial[k]], List[k, 0, Infinity]]
   wolfram:
     in: Sum[Divide[1, Factorial[k]], List[k, 0, Infinity]]
 30-has-33-digits-and-ends-in-seven-zeros:
@@ -489,6 +523,8 @@ the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e:
   tex:
     in: 30!
     out: 265\,252\,859\,812\,191\,058\,636\,308\,480\,000\,000
+  fullform:
+    in: Factorial[30]
   wolfram:
     in: Factorial[30]
   sympy:

@@ -156,7 +156,7 @@ const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
 
 /** Our own forms of an example (notatio/scripts/forms.ts): rows a record keeps beside the
  * systems', with no kernel behind them. */
-const OWN_FORMS = new Set(["epsil", "tex", "traditional", "notatio"]);
+const OWN_FORMS = new Set(["epsil", "tex", "traditional", "fullform", "notatio"]);
 
 /** A record row as the page reads it: a scanned system's run of one example. */
 const runOf = (row: SystemImplementation): OtherSystemRun => ({

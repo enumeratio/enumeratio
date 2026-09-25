@@ -5,6 +5,8 @@ adjacency-matrix-of-k4:
   tex:
     in: \mathrm{AdjacencyMatrix}(\mathrm{CompleteGraph}(4))
     out: \bigl\lbrack\bigl\lbrack0, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: AdjacencyMatrix[CompleteGraph[4]]
   wolfram:
     in: AdjacencyMatrix[CompleteGraph[4]]
 a-directed-edge-is-asymmetric:
@@ -14,5 +16,7 @@ a-directed-edge-is-asymmetric:
   tex:
     in: \mathrm{AdjacencyMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2)\bigr\rbrack))
     out: \bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: AdjacencyMatrix[Graph[List[1, 2], List[DirectedEdge[1, 2]]]]
   wolfram:
     in: AdjacencyMatrix[Graph[List[1, 2], List[DirectedEdge[1, 2]]]]

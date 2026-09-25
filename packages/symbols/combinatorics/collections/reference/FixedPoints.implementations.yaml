@@ -5,6 +5,8 @@ only-1-is-fixed:
   tex:
     in: \mathrm{FixedPoints}(\bigl\lbrack1, 3, 2\bigr\rbrack)
     out: "1"
+  fullform:
+    in: FixedPoints[List[1, 3, 2]]
 the-identity-fixes-all:
   epsil:
     in: FixedPoints([1, 2, 3])
@@ -12,6 +14,8 @@ the-identity-fixes-all:
   tex:
     in: \mathrm{FixedPoints}(\bigl\lbrack1, 2, 3\bigr\rbrack)
     out: "3"
+  fullform:
+    in: FixedPoints[List[1, 2, 3]]
 a-derangement-fixes-nothing:
   epsil:
     in: FixedPoints([2, 3, 1])
@@ -19,3 +23,5 @@ a-derangement-fixes-nothing:
   tex:
     in: \mathrm{FixedPoints}(\bigl\lbrack2, 3, 1\bigr\rbrack)
     out: "0"
+  fullform:
+    in: FixedPoints[List[2, 3, 1]]

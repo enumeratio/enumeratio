@@ -5,3 +5,5 @@ the-first-20-terms-oeis-a010060:
   tex:
     in: \mathrm{Take}(\mathrm{ThueMorseNumbers}, 20)
     out: \bigl\lbrack0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1\bigr\rbrack
+  fullform:
+    in: Take[ThueMorseNumbers, 20]

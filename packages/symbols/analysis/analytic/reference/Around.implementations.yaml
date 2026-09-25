@@ -5,6 +5,8 @@ independent-uncertainties-add-in-quadrature:
   tex:
     in: \mathrm{Around}(1, 0.1)+\mathrm{Around}(2, 0.2)
     out: \mathrm{Around}(3, 0.223\,606\,797\,749\,979)
+  fullform:
+    in: Plus[Around[1, 0.1], Around[2, 0.2]]
   wolfram:
     in: Plus[Around[1, 0.1], Around[2, 0.2]]
 scaling-scales-the-uncertainty:
@@ -14,6 +16,8 @@ scaling-scales-the-uncertainty:
   tex:
     in: 3\mathrm{Around}(2, 0.1)
     out: \mathrm{Around}(6, 0.3)
+  fullform:
+    in: Times[3, Around[2, 0.1]]
   wolfram:
     in: Times[3, Around[2, 0.1]]
 through-a-function-f-x-delta-x:
@@ -23,6 +27,8 @@ through-a-function-f-x-delta-x:
   tex:
     in: \mathrm{Around}(2, 0.1)^2
     out: \mathrm{Around}(4, 0.4)
+  fullform:
+    in: Power[Around[2, 0.1], 2]
   wolfram:
     in: Power[Around[2, 0.1], 2]
 sqrt-around-4-0p4:
@@ -32,6 +38,8 @@ sqrt-around-4-0p4:
   tex:
     in: \sqrt{\mathrm{Around}(4, 0.4)}
     out: \mathrm{Around}(2, 0.1)
+  fullform:
+    in: Sqrt[Around[4, 0.4]]
   wolfram:
     in: Sqrt[Around[4, 0.4]]
 independent-uncertainties-add-in-quadrature-2:
@@ -41,6 +49,8 @@ independent-uncertainties-add-in-quadrature-2:
   tex:
     in: \mathrm{Around}(2, 0.01)+\mathrm{Around}(3, 0.02)
     out: \mathrm{Around}(5, 0.022\,360\,679\,774\,997\,897)
+  fullform:
+    in: Plus[Around[2, 0.01], Around[3, 0.02]]
   wolfram:
     in: Plus[Around[2, 0.01], Around[3, 0.02]]
 3-times-around-2-0p01:
@@ -50,6 +60,8 @@ independent-uncertainties-add-in-quadrature-2:
   tex:
     in: 3\mathrm{Around}(2, 0.01)
     out: \mathrm{Around}(6, 0.03)
+  fullform:
+    in: Times[3, Around[2, 0.01]]
   wolfram:
     in: Times[3, Around[2, 0.01]]
 through-a-function-f-2-3-5-not-yet-multinomial:
@@ -62,6 +74,8 @@ through-a-function-f-2-3-5-not-yet-multinomial:
   traditional:
     in: \binom{\mathrm{Around}(2, 0.01)+2}{\mathrm{Around}(2, 0.01),2}
     out: \mathrm{Around}(6, 0.035)
+  fullform:
+    in: Multinomial[Around[2, 0.01], 2]
   wolfram:
     in: Multinomial[Around[2, 0.01], 2]
 independent-uncertainties-add-in-quadrature-sqrt:
@@ -71,6 +85,8 @@ independent-uncertainties-add-in-quadrature-sqrt:
   tex:
     in: \mathrm{Around}(5, 0.1)+\mathrm{Around}(3, 0.2)
     out: \mathrm{Around}(8, 0.223\,606\,797\,749\,979)
+  fullform:
+    in: Plus[Around[5, 0.1], Around[3, 0.2]]
   wolfram:
     in: Plus[Around[5, 0.1], Around[3, 0.2]]
 relative-uncertainties-combine-6-sqrt-0-1-2-2-0:
@@ -80,6 +96,8 @@ relative-uncertainties-combine-6-sqrt-0-1-2-2-0:
   tex:
     in: \mathrm{Around}(2, 0.1)\mathrm{Around}(3, 0.2)
     out: \mathrm{Around}(6, 0.5)
+  fullform:
+    in: Times[Around[2, 0.1], Around[3, 0.2]]
   wolfram:
     in: Times[Around[2, 0.1], Around[3, 0.2]]
 a-power-scales-the-uncertainty-by-the-derivative:
@@ -89,6 +107,8 @@ a-power-scales-the-uncertainty-by-the-derivative:
   tex:
     in: \mathrm{Around}(3, 0.1)^2
     out: \mathrm{Around}(9, 0.600\,000\,000\,000\,000\,1)
+  fullform:
+    in: Power[Around[3, 0.1], 2]
   wolfram:
     in: Power[Around[3, 0.1], 2]
 frac-0-2-2-sqrt-4:
@@ -98,6 +118,8 @@ frac-0-2-2-sqrt-4:
   tex:
     in: \sqrt{\mathrm{Around}(4, 0.2)}
     out: \mathrm{Around}(2, 0.05)
+  fullform:
+    in: Sqrt[Around[4, 0.2]]
   wolfram:
     in: Sqrt[Around[4, 0.2]]
 an-exact-factor-scales-the-uncertainty:
@@ -107,6 +129,8 @@ an-exact-factor-scales-the-uncertainty:
   tex:
     in: 10\mathrm{Around}(1.5, 0.02)
     out: \mathrm{Around}(15, 0.2)
+  fullform:
+    in: Times[10, Around[1.5, 0.02]]
   wolfram:
     in: Times[10, Around[1.5, 0.02]]
 through-an-elementary-function-delta-cdot-e-2:
@@ -116,6 +140,8 @@ through-an-elementary-function-delta-cdot-e-2:
   tex:
     in: \exp(\mathrm{Around}(2, 0.01))
     out: \mathrm{Around}(7.389\,056\,098\,930\,65, 0.073\,890\,560\,989\,306\,5)
+  fullform:
+    in: Exp[Around[2, 0.01]]
   wolfram:
     in: Exp[Around[2, 0.01]]
 through-a-special-function-with-its-derivative:
@@ -125,6 +151,8 @@ through-a-special-function-with-its-derivative:
   tex:
     in: \operatorname{erf}(\mathrm{Around}(2, 0.01))
     out: \mathrm{Around}(0.995\,322\,265\,018\,952\,7, 0.000\,206\,669\,853\,540\,920\,54)
+  fullform:
+    in: Erf[Around[2, 0.01]]
   wolfram:
     in: Erf[Around[2, 0.01]]
 first-order-propagation-the-uncertainty-scales:
@@ -134,6 +162,8 @@ first-order-propagation-the-uncertainty-scales:
   tex:
     in: N(\sin(\mathrm{Around}(1, 0.1)))
     out: \mathrm{Around}(0.841\,470\,984\,807\,896\,5, 0.054\,030\,230\,586\,813\,98)
+  fullform:
+    in: N[Sin[Around[1, 0.1]]]
   wolfram:
     in: N[Sin[Around[1, 0.1]]]
 ln-around-2-0p01:
@@ -143,5 +173,7 @@ ln-around-2-0p01:
   tex:
     in: \ln(\mathrm{Around}(2, 0.01))
     out: \mathrm{Around}(0.693\,147\,180\,559\,945\,3, 0.005)
+  fullform:
+    in: Log[Around[2, 0.01]]
   wolfram:
     in: Log[Around[2, 0.01]]

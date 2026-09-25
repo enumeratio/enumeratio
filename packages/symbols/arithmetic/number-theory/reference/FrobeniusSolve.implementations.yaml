@@ -5,6 +5,8 @@ frobeniussolve-list-2-3-7:
   tex:
     in: \mathrm{FrobeniusSolve}(\bigl\lbrack2, 3\bigr\rbrack, 7)
     out: \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FrobeniusSolve[List[2, 3], 7]
   wolfram:
     in: FrobeniusSolve[List[2, 3], 7]
 frobeniussolve-list-2-3-5-10:
@@ -14,6 +16,8 @@ frobeniussolve-list-2-3-5-10:
   tex:
     in: \mathrm{FrobeniusSolve}(\bigl\lbrack2, 3, 5\bigr\rbrack, 10)
     out: \bigl\lbrack\bigl\lbrack0, 0, 2\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 0\bigr\rbrack, \bigl\lbrack5, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FrobeniusSolve[List[2, 3, 5], 10]
   wolfram:
     in: FrobeniusSolve[List[2, 3, 5], 10]
 frobeniussolve-list-12-16-20-27-117:
@@ -23,6 +27,8 @@ frobeniussolve-list-12-16-20-27-117:
   tex:
     in: \mathrm{FrobeniusSolve}(\bigl\lbrack12, 16, 20, 27\bigr\rbrack, 117)
     out: \bigl\lbrack\bigl\lbrack0, 1, 1, 3\bigr\rbrack, \bigl\lbrack3, 0, 0, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FrobeniusSolve[List[12, 16, 20, 27], 117]
   wolfram:
     in: FrobeniusSolve[List[12, 16, 20, 27], 117]
 43-is-the-frobenius-number-of-6-9-20-so-it-has:
@@ -32,5 +38,7 @@ frobeniussolve-list-12-16-20-27-117:
   tex:
     in: \mathrm{FrobeniusSolve}(\bigl\lbrack6, 9, 20\bigr\rbrack, 43)
     out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: FrobeniusSolve[List[6, 9, 20], 43]
   wolfram:
     in: FrobeniusSolve[List[6, 9, 20], 43]

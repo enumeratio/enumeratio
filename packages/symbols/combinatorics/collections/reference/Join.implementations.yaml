@@ -5,6 +5,8 @@ join-list-1-2-list-3-4:
   tex:
     in: \mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)
     out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Join[List[1, 2], List[3, 4]]
   wolfram:
     in: Join[List[1, 2], List[3, 4]]
     out: "{1, 2, 3, 4}"
@@ -18,6 +20,8 @@ join-list-1-2-list-3-4-list-5:
   tex:
     in: \mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5\bigr\rbrack)
     out: \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack
+  fullform:
+    in: Join[List[1, 2], List[3, 4], List[5]]
   wolfram:
     in: Join[List[1, 2], List[3, 4], List[5]]
     out: "{1, 2, 3, 4, 5}"
@@ -34,9 +38,10 @@ join-a-b-flatten-a-b-1-see-flatten:
   traditional:
     in: \mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)=\mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 1)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Join[List[1, 2], List[3, 4]], Flatten[List[List[1, 2], List[3, 4]], 1]]
   wolfram:
     in: (Join[List[1, 2], List[3, 4]] == Flatten[List[List[1, 2], List[3, 4]], 1])
-    back: Unreadable
     out: True
     tex:
       in: \text{Join}[\{1,2\},\{3,4\}]=\text{Flatten}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right),1\right]
@@ -48,6 +53,8 @@ a-trailing-integer-argument-joins-at-that-level:
   tex:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack1, 2, 5, 6\bigr\rbrack, \bigl\lbrack3, 4, 7, 8\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Join[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]], 2]
   wolfram:
     in: Join[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]], 2]
 join-list-a-b-c-list-x-y-list-u-v-w:
@@ -57,6 +64,8 @@ join-list-a-b-c-list-x-y-list-u-v-w:
   tex:
     in: \mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack u, v, w\bigr\rbrack)
     out: \bigl\lbrack a, b, c, x, y, u, v, w\bigr\rbrack
+  fullform:
+    in: Join[List[a, b, c], List[x, y], List[u, v, w]]
 joining-matrices-stacks-their-rows:
   epsil:
     in: Join([[a, b], [c, d]], [[1, 2], [3, 4]])
@@ -64,6 +73,8 @@ joining-matrices-stacks-their-rows:
   tex:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]]]
 sets-as-well-as-lists-as-long-as-all-arguments:
   epsil:
     in: Join({1, 2}, {3})
@@ -71,9 +82,11 @@ sets-as-well-as-lists-as-long-as-all-arguments:
   tex:
     in: \mathrm{Join}(\lbrace1, 2\rbrace, \lbrace3\rbrace)
     out: \lbrace1, 2, 3\rbrace
-  wolfram:
+  fullform:
     in: Join[Union[List[1, 2]], Union[List[3]]]
     back: [Join, [Union, [List, 1, 2]], [Union, [List, 3]]]
+  wolfram:
+    in: Join[Union[List[1, 2]], Union[List[3]]]
 a-lazy-range-is-spliced-in:
   epsil:
     in: Join([1, 2], Range(3, 5))
@@ -81,6 +94,8 @@ a-lazy-range-is-spliced-in:
   tex:
     in: \mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, 3..5)
     out: \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack
+  fullform:
+    in: Join[List[1, 2], Range[3, 5]]
   wolfram:
     in: Join[List[1, 2], Range[3, 5]]
 with-no-arguments-the-empty-list:
@@ -90,6 +105,8 @@ with-no-arguments-the-empty-list:
   tex:
     in: \mathrm{Join}()
     out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: Join[]
   wolfram:
     in: Join[]
 at-level-2-matrices-are-joined-side-by-side:
@@ -99,6 +116,8 @@ at-level-2-matrices-are-joined-side-by-side:
   tex:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack a, b, 1, 2\bigr\rbrack, \bigl\lbrack c, d, 3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]], 2]
 ragged-rows-join-at-level-2-too:
   epsil:
     in: Join([[1], [5, 6]], [[2, 3], [7]], [[4], [8]], 2)
@@ -106,6 +125,8 @@ ragged-rows-join-at-level-2-too:
   tex:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack7\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack4\bigr\rbrack, \bigl\lbrack8\bigr\rbrack\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack5, 6, 7, 8\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Join[List[List[1], List[5, 6]], List[List[2, 3], List[7]], List[List[4], List[8]], 2]
   wolfram:
     in: Join[List[List[1], List[5, 6]], List[List[2, 3], List[7]], List[List[4], List[8]], 2]
 a-row-missing-from-the-shorter-array-simply-isn:
@@ -115,6 +136,8 @@ a-row-missing-from-the-shorter-array-simply-isn:
   tex:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack x\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Join[List[List[x]], List[List[1, 2], List[3, 4]], 2]
 any-head-as-long-as-all-the-arguments-share-it:
   epsil:
     in: Join(f(a), f(b))
@@ -122,6 +145,8 @@ any-head-as-long-as-all-the-arguments-share-it:
   tex:
     in: \mathrm{Join}(f(a), f(b))
     out: f(a, b)
+  fullform:
+    in: Join[f[a], f[b]]
 join-is-associative:
   epsil:
     in: |-
@@ -136,3 +161,5 @@ join-is-associative:
   traditional:
     in: \mathrm{Join}(\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack), \bigl\lbrack u, v, w\bigr\rbrack)=\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{Join}(\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack u, v, w\bigr\rbrack))
     out: \mathrm{True}
+  fullform:
+    in: Equal[Join[Join[List[a, b, c], List[x, y]], List[u, v, w]], Join[List[a, b, c], Join[List[x, y], List[u, v, w]]]]

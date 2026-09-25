@@ -5,6 +5,8 @@ sqrt-16:
   tex:
     in: \sqrt{16}
     out: "4"
+  fullform:
+    in: Sqrt[16]
   wolfram:
     in: Sqrt[16]
     out: "4"
@@ -30,6 +32,8 @@ stays-symbolic-when-the-radicand-isn-t-a-perfect:
   tex:
     in: \sqrt{2}
     out: \sqrt{2}
+  fullform:
+    in: Sqrt[2]
   wolfram:
     in: Sqrt[2]
     out: Sqrt[2]
@@ -55,6 +59,8 @@ sqrt-4-over-9:
   tex:
     in: \sqrt{\frac{4}{9}}
     out: \frac{2}{3}
+  fullform:
+    in: Sqrt[Rational[4, 9]]
   wolfram:
     in: Sqrt[Rational[4, 9]]
     out: 2/3
@@ -77,6 +83,8 @@ sqrt-0:
   tex:
     in: \sqrt{0}
     out: "0"
+  fullform:
+    in: Sqrt[0]
   wolfram:
     in: Sqrt[0]
     out: "0"
@@ -102,6 +110,8 @@ a-perfect-square-radicand-evaluates-exactly-even:
   tex:
     in: \sqrt{-4}
     out: 2i
+  fullform:
+    in: Sqrt[-4]
   wolfram:
     in: Sqrt[-4]
     out: 2*I
@@ -133,9 +143,11 @@ sqrt-x-2-x-for-a-perfect-square-see-square:
   traditional:
     in: \sqrt{16}^2=16
     out: \mathrm{True}
+  fullform:
+    in: Equal[Power[Sqrt[16], 2], 16]
+    back: [Equal, [Power, [Sqrt, 16], 2], 16]
   wolfram:
     in: ((Sqrt[16])^2 == 16)
-    back: Unreadable
     out: True
     tex:
       in: \sqrt{16}^2=16
@@ -159,9 +171,10 @@ sqrt-x-x-1-2:
   traditional:
     in: \sqrt{16}=\sqrt{16}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sqrt[16], Power[16, Rational[1, 2]]]
   wolfram:
     in: (Sqrt[16] == Power[16, Rational[1, 2]])
-    back: Unreadable
     out: True
     tex:
       in: \sqrt{16}=16^{\frac{1}{2}}
@@ -182,9 +195,11 @@ the-pythagorean-hypotenuse-of-a-3-4-5-triangle:
   tex:
     in: \sqrt{3^2+4^2}
     out: "5"
+  fullform:
+    in: Sqrt[Plus[Power[3, 2], Power[4, 2]]]
+    back: [Sqrt, [Add, [Power, 3, 2], [Power, 4, 2]]]
   wolfram:
     in: Sqrt[Plus[(3)^2, (4)^2]]
-    back: Unreadable
     out: "5"
     tex:
       in: \sqrt{3^2+4^2}
@@ -205,6 +220,8 @@ negative-but-not-a-perfect-square-stays-symbolic:
   tex:
     in: \sqrt{-2}
     out: \sqrt{-2}
+  fullform:
+    in: Sqrt[-2]
   wolfram:
     in: Sqrt[-2]
     out: I*Sqrt[2]
@@ -233,6 +250,8 @@ a-negative-rational-still-evaluates-exactly-when:
   tex:
     in: \sqrt{-\frac{4}{9}}
     out: \frac{2}{3}i
+  fullform:
+    in: Sqrt[Rational[-4, 9]]
   wolfram:
     in: Sqrt[Rational[-4, 9]]
     out: (2*I)/3
@@ -258,6 +277,8 @@ an-approximate-number-gives-an-approximate-root:
   tex:
     in: \sqrt{3.5}
     out: 1.870\,828\,693\,386\,970\,692\,79
+  fullform:
+    in: Sqrt[3.5]
   wolfram:
     in: Sqrt[3.5]
   sympy:
@@ -275,6 +296,8 @@ pulls-perfect-square-factors-out-of-the-radical:
   tex:
     in: \sqrt{200}
     out: 10\sqrt{2}
+  fullform:
+    in: Sqrt[200]
   wolfram:
     in: Sqrt[200]
   sympy:
@@ -292,6 +315,8 @@ sqrt-neg-25:
   tex:
     in: \sqrt{-25}
     out: 5i
+  fullform:
+    in: Sqrt[-25]
   wolfram:
     in: Sqrt[-25]
   sympy:
@@ -309,6 +334,8 @@ sqrt-8:
   tex:
     in: \sqrt{8}
     out: 2\sqrt{2}
+  fullform:
+    in: Sqrt[8]
   wolfram:
     in: Sqrt[8]
   sympy:
@@ -326,6 +353,8 @@ rationalizes-the-denominator:
   tex:
     in: \sqrt{\frac{1}{2}}
     out: \frac{\sqrt{2}}{2}
+  fullform:
+    in: Sqrt[Rational[1, 2]]
   wolfram:
     in: Sqrt[Rational[1, 2]]
   sympy:
@@ -341,6 +370,8 @@ sqrt-12-over-5:
   tex:
     in: \sqrt{\frac{12}{5}}
     out: \frac{2\sqrt{15}}{5}
+  fullform:
+    in: Sqrt[Rational[12, 5]]
   wolfram:
     in: Sqrt[Rational[12, 5]]
   sympy:
@@ -356,6 +387,8 @@ sqrt-neg-2p5:
   tex:
     in: \sqrt{-2.5}
     out: 1.581\,138\,830\,084\,189\,8i
+  fullform:
+    in: Sqrt[-2.5]
   wolfram:
     in: Sqrt[-2.5]
   sympy:
@@ -373,6 +406,8 @@ an-exact-complex-square-2-i-2-3-4i:
   tex:
     in: \sqrt{3+4i}
     out: 2+i
+  fullform:
+    in: Sqrt[Complex[3, 4]]
   wolfram:
     in: Sqrt[Complex[3, 4]]
   sympy:
@@ -388,6 +423,8 @@ sqrt-positiveinfinity:
   tex:
     in: \sqrt{\infty}
     out: \infty
+  fullform:
+    in: Sqrt[Infinity]
   wolfram:
     in: Sqrt[Infinity]
 threads-element-wise-over-a-list:
@@ -397,6 +434,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \sqrt{\bigl\lbrack1, 4, 9\bigr\rbrack}
     out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Sqrt[List[1, 4, 9]]
   wolfram:
     in: Sqrt[List[1, 4, 9]]
   sympy:
@@ -414,6 +453,8 @@ threads-over-a-matrix-entry-by-entry-this-is-not:
   tex:
     in: \sqrt{\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack}
     out: \bigl\lbrack\bigl\lbrack\frac{\sqrt{2}}{2}, i\bigr\rbrack, \bigl\lbrack0, \frac{\sqrt{2}}{2}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Sqrt[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
   wolfram:
     in: Sqrt[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
   sympy:
@@ -429,6 +470,8 @@ interval-arithmetic-sqrt-is-increasing-so-sqrt-1:
   tex:
     in: \sqrt{\mathrm{Interval}(1, 8)}
     out: \mathrm{Interval}(1, 2\sqrt{2})
+  fullform:
+    in: Sqrt[Interval[List[1, 8]]]
   wolfram:
     in: Sqrt[Interval[List[1, 8]]]
 sqrt-x-2-x-for-every-x:
@@ -438,6 +481,8 @@ sqrt-x-2-x-for-every-x:
   tex:
     in: \sqrt{x}^2
     out: x
+  fullform:
+    in: Power[Sqrt[x], 2]
 sqrt-x-2-is-not-simplified-to-x-which-would-be:
   epsil:
     in: Sqrt(x ^ 2)
@@ -445,6 +490,8 @@ sqrt-x-2-is-not-simplified-to-x-which-would-be:
   tex:
     in: \sqrt{x^2}
     out: \sqrt{x^2}
+  fullform:
+    in: Sqrt[Power[x, 2]]
 at-x-1-sqrt-x-2-1-not-1:
   epsil:
     in: Sqrt((-1) ^ 2)
@@ -452,6 +499,8 @@ at-x-1-sqrt-x-2-1-not-1:
   tex:
     in: \sqrt{(-1)^2}
     out: "1"
+  fullform:
+    in: Sqrt[Power[-1, 2]]
   wolfram:
     in: Sqrt[Power[-1, 2]]
   sympy:
@@ -469,6 +518,8 @@ sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
   tex:
     in: \sqrt{-1}\sqrt{-1}
     out: "-1"
+  fullform:
+    in: Times[Sqrt[-1], Sqrt[-1]]
   wolfram:
     in: Times[Sqrt[-1], Sqrt[-1]]
   sympy:
@@ -486,6 +537,8 @@ while-sqrt-1-1-1:
   tex:
     in: \sqrt{1}
     out: "1"
+  fullform:
+    in: Sqrt[Times[-1, -1]]
   wolfram:
     in: Sqrt[Times[-1, -1]]
   sympy:
@@ -503,6 +556,8 @@ to-45-significant-digits-every-one-correctly:
   tex:
     in: N(\sqrt{2}, 45)
     out: 1.414\,213\,562\,373\,095\,048\,8
+  fullform:
+    in: N[Sqrt[2], 45]
   wolfram:
     in: N[Sqrt[2], 45]
   sympy:

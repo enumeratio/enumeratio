@@ -8,6 +8,8 @@ from-vertex-1-along-two-arrows:
   traditional:
     in: \mathrm{QuiverPathEnd}(\vec{A}_{4}, \mathrm{QuiverPath}(1, \bigl\lbrack0, 1\bigr\rbrack))
     out: "3"
+  fullform:
+    in: QuiverPathEnd[LinearQuiver[4], QuiverPath[1, List[0, 1]]]
 arrow-1-starts-at-vertex-2-so-this-is-not-a-path:
   epsil:
     in: QuiverPath(1, [1]) in PathAlgebra(LinearQuiver(4))
@@ -18,6 +20,8 @@ arrow-1-starts-at-vertex-2-so-this-is-not-a-path:
   traditional:
     in: \mathrm{QuiverPath}(1, \bigl\lbrack1\bigr\rbrack)\in k\vec{A}_{4}
     out: \mathrm{False}
+  fullform:
+    in: Element[QuiverPath[1, List[1]], PathAlgebra[LinearQuiver[4]]]
 the-kronecker-quiver-two-trivial-paths-and-two:
   epsil:
     in: AlgebraDimension(PathAlgebra(Quiver(2, [[1, 2], [1, 2]])))
@@ -28,3 +32,5 @@ the-kronecker-quiver-two-trivial-paths-and-two:
   traditional:
     in: \dim(k\mathrm{Quiver}(2, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack))
     out: "4"
+  fullform:
+    in: AlgebraDimension[PathAlgebra[Quiver[2, List[List[1, 2], List[1, 2]]]]]

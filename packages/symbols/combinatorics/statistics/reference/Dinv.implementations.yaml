@@ -5,6 +5,8 @@ the-step-word-uuddud:
   tex:
     in: \mathrm{Dinv}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
     out: "2"
+  fullform:
+    in: Dinv[DyckPath[List[1, 1, 0, 0, 1, 0]]]
 the-step-word-uduudd:
   epsil:
     in: Dinv(DyckPath([1, 0, 1, 1, 0, 0]))
@@ -12,3 +14,5 @@ the-step-word-uduudd:
   tex:
     in: \mathrm{Dinv}(\mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
     out: "1"
+  fullform:
+    in: Dinv[DyckPath[List[1, 0, 1, 1, 0, 0]]]

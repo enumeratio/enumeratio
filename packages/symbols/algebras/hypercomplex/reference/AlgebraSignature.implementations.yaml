@@ -5,6 +5,8 @@ algebrasignature-quaternions:
   tex:
     in: \mathrm{AlgebraSignature}(\mathrm{Quaternions})
     out: \bigl\lbrack-1, -1\bigr\rbrack
+  fullform:
+    in: AlgebraSignature[Quaternions]
 cl-2-1:
   epsil:
     in: AlgebraSignature(CliffordAlgebra(2, 1))
@@ -15,6 +17,8 @@ cl-2-1:
   traditional:
     in: \mathrm{AlgebraSignature}(\operatorname{Cl}_{2,1}(\mathbb{R}))
     out: \bigl\lbrack1, 1, -1\bigr\rbrack
+  fullform:
+    in: AlgebraSignature[CliffordAlgebra[2, 1]]
 nilpotent:
   epsil:
     in: AlgebraSignature(DualNumbers)
@@ -22,3 +26,5 @@ nilpotent:
   tex:
     in: \mathrm{AlgebraSignature}(\mathrm{DualNumbers})
     out: \bigl\lbrack0\bigr\rbrack
+  fullform:
+    in: AlgebraSignature[DualNumbers]

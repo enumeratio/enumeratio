@@ -5,6 +5,8 @@ partition-list-1-2-3-4-5-6-2:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 2]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6], 2]
     out: "{{1, 2}, {3, 4}, {5, 6}}"
@@ -18,6 +20,8 @@ a-third-offset-argument-produces-overlapping:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 3, 1)
     out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1]
     out: "{{1, 2, 3}, {2, 3, 4}, {3, 4, 5}, {4, 5, 6}}"
@@ -31,6 +35,8 @@ a-third-offset-argument-produces-overlapping:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5], 2]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5], 2]
 windows-of-3-with-offset-2-share-one-element:
@@ -40,6 +46,8 @@ windows-of-3-with-offset-2-share-one-element:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7\bigr\rbrack, 3, 2)
     out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack5, 6, 7\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6, 7], 3, 2]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6, 7], 3, 2]
 an-offset-larger-than-the-size-skips-elements:
@@ -49,6 +57,8 @@ an-offset-larger-than-the-size-skips-elements:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7\bigr\rbrack, 2, 3)
     out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6, 7], 2, 3]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6, 7], 2, 3]
 a-list-of-sizes-cuts-a-matrix-into-overlapping-2:
@@ -62,6 +72,8 @@ a-list-of-sizes-cuts-a-matrix-into-overlapping-2:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack\bigl\lbrack11, 12, 13\bigr\rbrack, \bigl\lbrack21, 22, 23\bigr\rbrack, \bigl\lbrack31, 32, 33\bigr\rbrack\bigr\rbrack, \bigl\lbrack2, 2\bigr\rbrack, 1)
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack11, 12\bigr\rbrack, \bigl\lbrack21, 22\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack12, 13\bigr\rbrack, \bigl\lbrack22, 23\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack21, 22\bigr\rbrack, \bigl\lbrack31, 32\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack22, 23\bigr\rbrack, \bigl\lbrack32, 33\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[List[11, 12, 13], List[21, 22, 23], List[31, 32, 33]], List[2, 2], 1]
   wolfram:
     in: Partition[List[List[11, 12, 13], List[21, 22, 23], List[31, 32, 33]], List[2, 2], 1]
 upto-4-allows-a-shorter-final-chunk-unlike-a:
@@ -71,6 +83,8 @@ upto-4-allows-a-shorter-final-chunk-unlike-a:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \mathrm{UpTo}(4))
     out: \bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], UpTo[4]]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6], UpTo[4]]
 overhangs-1-1-wrap-cyclically-until-the-last:
@@ -88,6 +102,8 @@ overhangs-1-1-wrap-cyclically-until-the-last:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 5, 1, \bigl\lbrack1, 1\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \bigl\lbrack2, 3, 4, 5, 6\bigr\rbrack, \bigl\lbrack3, 4, 5, 6, 1\bigr\rbrack, \bigl\lbrack4, 5, 6, 1, 2\bigr\rbrack, \bigl\lbrack5, 6, 1, 2, 3\bigr\rbrack, \bigl\lbrack6, 1, 2, 3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 5, 1, List[1, 1]]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6], 5, 1, List[1, 1]]
 overhangs-1-1-the-first-window-ends-at-the-first:
@@ -109,6 +125,8 @@ overhangs-1-1-the-first-window-ends-at-the-first:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 5, 1, \bigl\lbrack-1, 1\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack3, 4, 5, 6, 1\bigr\rbrack, \bigl\lbrack4, 5, 6, 1, 2\bigr\rbrack, \bigl\lbrack5, 6, 1, 2, 3\bigr\rbrack, \bigl\lbrack6, 1, 2, 3, 4\bigr\rbrack, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \bigl\lbrack2, 3, 4, 5, 6\bigr\rbrack, \bigl\lbrack3, 4, 5, 6, 1\bigr\rbrack, \bigl\lbrack4, 5, 6, 1, 2\bigr\rbrack, \bigl\lbrack5, 6, 1, 2, 3\bigr\rbrack, \bigl\lbrack6, 1, 2, 3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 5, 1, List[-1, 1]]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6], 5, 1, List[-1, 1]]
 a-padding-element-fills-the-overhang-instead-of:
@@ -118,6 +136,8 @@ a-padding-element-fills-the-overhang-instead-of:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 3, 1, \bigl\lbrack1, 1\bigr\rbrack, x)
     out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack5, 6, x\bigr\rbrack, \bigl\lbrack6, x, x\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[1, 1], x]
 padding-on-the-left-with-overhangs-1-1:
   epsil:
     in: Partition([1, 2, 3, 4, 5, 6], 3, 1, [-1, -1], x)
@@ -125,6 +145,8 @@ padding-on-the-left-with-overhangs-1-1:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 3, 1, \bigl\lbrack-1, -1\bigr\rbrack, x)
     out: \bigl\lbrack\bigl\lbrack x, x, 1\bigr\rbrack, \bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, -1], x]
 padding-on-both-sides-with-overhangs-1-1:
   epsil:
     in: Partition([1, 2, 3, 4, 5, 6], 3, 1, [-1, 1], x)
@@ -142,6 +164,8 @@ padding-on-both-sides-with-overhangs-1-1:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 3, 1, \bigl\lbrack-1, 1\bigr\rbrack, x)
     out: \bigl\lbrack\bigl\lbrack x, x, 1\bigr\rbrack, \bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack5, 6, x\bigr\rbrack, \bigl\lbrack6, x, x\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, 1], x]
 reshaping-a-list-of-9-into-a-3-times-3-matrix:
   epsil:
     in: Partition([1, 2, 3, 4, 5, 6, 7, 8, 9], 3)
@@ -149,5 +173,7 @@ reshaping-a-list-of-9-into-a-3-times-3-matrix:
   tex:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7, 8, 9\bigr\rbrack, 3)
     out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6, 7, 8, 9], 3]
   wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6, 7, 8, 9], 3]

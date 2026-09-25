@@ -5,6 +5,8 @@ sin-0:
   tex:
     in: \sin(0)
     out: "0"
+  fullform:
+    in: Sin[0]
   wolfram:
     in: Sin[0]
     out: "0"
@@ -30,6 +32,8 @@ exact-value-at-a-special-angle:
   tex:
     in: \sin(\frac{\pi}{6})
     out: \frac{1}{2}
+  fullform:
+    in: Sin[Divide[Pi, 6]]
   wolfram:
     in: Sin[Divide[Pi, 6]]
     out: 1/2
@@ -52,6 +56,8 @@ sin-pi-over-4:
   tex:
     in: \sin(\frac{\pi}{4})
     out: \frac{\sqrt{2}}{2}
+  fullform:
+    in: Sin[Divide[Pi, 4]]
   wolfram:
     in: Sin[Divide[Pi, 4]]
     out: 1/Sqrt[2]
@@ -74,6 +80,8 @@ sin-pi-over-3:
   tex:
     in: \sin(\frac{\pi}{3})
     out: \frac{\sqrt{3}}{2}
+  fullform:
+    in: Sin[Divide[Pi, 3]]
   wolfram:
     in: Sin[Divide[Pi, 3]]
     out: Sqrt[3]/2
@@ -96,6 +104,8 @@ sin-pi-over-2:
   tex:
     in: \sin(\frac{\pi}{2})
     out: "1"
+  fullform:
+    in: Sin[Divide[Pi, 2]]
   wolfram:
     in: Sin[Divide[Pi, 2]]
     out: "1"
@@ -118,6 +128,8 @@ sin-pi:
   tex:
     in: \sin(\pi)
     out: "0"
+  fullform:
+    in: Sin[Pi]
   wolfram:
     in: Sin[Pi]
     out: "0"
@@ -143,6 +155,8 @@ pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
   tex:
     in: \sin(\frac{\pi}{6})^2+\cos(\frac{\pi}{6})^2
     out: "1"
+  fullform:
+    in: Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]
   wolfram:
     in: Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]
     out: "1"
@@ -168,9 +182,10 @@ odd-function-sin-x-sin-x:
   traditional:
     in: \sin(-\frac{\pi}{6})=-\sin(\frac{\pi}{6})
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sin[Minus[Divide[Pi, 6]]], Minus[Sin[Divide[Pi, 6]]]]
   wolfram:
     in: (Sin[Minus[Divide[Pi, 6]]] == Minus[Sin[Divide[Pi, 6]]])
-    back: Unreadable
     out: True
     tex:
       in: \sin \left(-\frac{\pi }{6}\right)=-\sin \left(\frac{\pi }{6}\right)
@@ -191,6 +206,8 @@ period-2-pi-adding-a-full-turn-doesn-t-change:
   tex:
     in: \sin(\frac{\pi}{6}+2\pi)
     out: \frac{1}{2}
+  fullform:
+    in: Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]
   wolfram:
     in: Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]
     out: 1/2
@@ -213,6 +230,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \sin(\bigl\lbrack0, \frac{\pi}{2}, \pi\bigr\rbrack)
     out: \bigl\lbrack0, 1, 0\bigr\rbrack
+  fullform:
+    in: Sin[List[0, Divide[Pi, 2], Pi]]
   wolfram:
     in: Sin[List[0, Divide[Pi, 2], Pi]]
     out: "{0, 1, 0}"
@@ -244,9 +263,11 @@ degrees-d-converts-a-degree-measure-to-radians:
   tex:
     in: \sin(30^{\circ})
     out: \frac{1}{2}
-  wolfram:
+  fullform:
     in: Sin[Times[30, Degree]]
     back: [Sin, [Multiply, 30, Degree]]
+  wolfram:
+    in: Sin[Times[30, Degree]]
     out: 1/2
     tex:
       in: \sin (30 {}^{\circ})
@@ -258,6 +279,8 @@ degrees-d-converts-a-degree-measure-to-radians:
   tex:
     in: \sin(1)
     out: \sin(1)
+  fullform:
+    in: Sin[1]
   wolfram:
     in: Sin[1]
     out: Sin[1]
@@ -283,6 +306,8 @@ the-special-angle-table-reaches-past-30-45-60:
   tex:
     in: \sin(\frac{\pi}{5})
     out: \frac{1}{4}(\sqrt{2}\sqrt{5-\sqrt{5}})
+  fullform:
+    in: Sin[Divide[Pi, 5]]
   wolfram:
     in: Sin[Divide[Pi, 5]]
     out: Sqrt[5/8 - Sqrt[5]/8]
@@ -305,9 +330,11 @@ degrees-d-converts-to-radians-so-sin-60-circ-is:
   tex:
     in: \sin(60^{\circ})
     out: \frac{\sqrt{3}}{2}
-  wolfram:
+  fullform:
     in: Sin[Times[60, Degree]]
     back: [Sin, [Multiply, 60, Degree]]
+  wolfram:
+    in: Sin[Times[60, Degree]]
 a-machine-precision-argument-evaluates:
   epsil:
     in: Sin(1.2)
@@ -315,6 +342,8 @@ a-machine-precision-argument-evaluates:
   tex:
     in: \sin(1.2)
     out: 0.932\,039\,085\,967\,226\,349\,67
+  fullform:
+    in: Sin[1.2]
   wolfram:
     in: Sin[1.2]
   sympy:
@@ -332,6 +361,8 @@ n-of-an-exact-argument-gives-an-arbitrary:
   tex:
     in: N(\sin(\frac{6}{5}))
     out: 0.932\,039\,085\,967\,226\,349\,67
+  fullform:
+    in: N[Sin[Rational[6, 5]]]
   wolfram:
     in: N[Sin[Rational[6, 5]]]
   sympy:
@@ -347,6 +378,8 @@ evaluates-at-a-complex-argument:
   tex:
     in: \sin(2.5+i)
     out: 0.923\,490\,776\,043\,173\,1-0.941\,504\,933\,270\,867\,2i
+  fullform:
+    in: Sin[Complex[2.5, 1]]
   wolfram:
     in: Sin[Complex[2.5, 1]]
   sympy:
@@ -362,6 +395,8 @@ threads-element-wise-over-a-matrix:
   tex:
     in: \sin(\bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\pi/2\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack-1, -1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Sin[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
   wolfram:
     in: Sin[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
   sympy:
@@ -377,6 +412,8 @@ exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4:
   tex:
     in: \sin(\frac{\pi}{12})
     out: \frac{\sqrt{6}}{4}-\frac{\sqrt{2}}{4}
+  fullform:
+    in: Sin[Divide[Pi, 12]]
   wolfram:
     in: Sin[Divide[Pi, 12]]
   sympy:
@@ -392,6 +429,8 @@ sin-pi-8-frac-sqrt-2-sqrt-2-2:
   tex:
     in: \sin(\frac{\pi}{8})
     out: \frac{\sqrt{2-\sqrt{2}}}{2}
+  fullform:
+    in: Sin[Divide[Pi, 8]]
   wolfram:
     in: Sin[Divide[Pi, 8]]
   sympy:
@@ -407,6 +446,8 @@ sin-pi-10-frac-sqrt-5-1-4:
   tex:
     in: \sin(\frac{\pi}{10})
     out: \frac{\sqrt{5}}{4}-\frac{1}{4}
+  fullform:
+    in: Sin[Divide[Pi, 10]]
   wolfram:
     in: Sin[Divide[Pi, 10]]
   sympy:
@@ -422,6 +463,8 @@ sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
   tex:
     in: \sin(\frac{5\pi}{12})
     out: \frac{\sqrt{2}}{4}+\frac{\sqrt{6}}{4}
+  fullform:
+    in: Sin[Times[Rational[5, 12], Pi]]
   wolfram:
     in: Sin[Times[Rational[5, 12], Pi]]
   sympy:
@@ -437,6 +480,8 @@ sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
   tex:
     in: \sin(\frac{3\pi}{8})
     out: \frac{\sqrt{2+\sqrt{2}}}{2}
+  fullform:
+    in: Sin[Times[Rational[3, 8], Pi]]
   wolfram:
     in: Sin[Times[Rational[3, 8], Pi]]
   sympy:
@@ -452,6 +497,8 @@ large-rational-multiples-of-pi-are-reduced:
   tex:
     in: \sin(\frac{100\pi}{3})
     out: -\frac{\sqrt{3}}{2}
+  fullform:
+    in: Sin[Times[Rational[100, 3], Pi]]
   wolfram:
     in: Sin[Times[Rational[100, 3], Pi]]
   sympy:
@@ -467,6 +514,8 @@ any-integer-multiple-of-pi-is-a-zero-of-sine:
   tex:
     in: \sin(1\,000\,001\pi)
     out: "0"
+  fullform:
+    in: Sin[Times[1000001, Pi]]
   wolfram:
     in: Sin[Times[1000001, Pi]]
   sympy:
@@ -484,6 +533,8 @@ interval-arithmetic-the-image-of-pi-6-pi-6-is:
   tex:
     in: \sin(\mathrm{Interval}(-\frac{\pi}{6}, \frac{\pi}{6}))
     out: \mathrm{Interval}(-\frac{1}{2}, \frac{1}{2})
+  fullform:
+    in: Sin[Interval[List[Minus[Divide[Pi, 6]], Divide[Pi, 6]]]]
   wolfram:
     in: Sin[Interval[List[Minus[Divide[Pi, 6]], Divide[Pi, 6]]]]
 the-image-of-the-whole-real-line-is-1-1:
@@ -493,6 +544,8 @@ the-image-of-the-whole-real-line-is-1-1:
   tex:
     in: \sin(\mathrm{Interval}(-\infty, \infty))
     out: \mathrm{Interval}(-1, 1)
+  fullform:
+    in: Sin[Interval[List[-Infinity, Infinity]]]
   wolfram:
     in: Sin[Interval[List[-Infinity, Infinity]]]
 wolfram-answers-sin-infty-with-the-range-of-its:
@@ -502,6 +555,8 @@ wolfram-answers-sin-infty-with-the-range-of-its:
   tex:
     in: \sin(\infty)
     out: \mathrm{Interval}(-1, 1)
+  fullform:
+    in: Sin[Infinity]
   wolfram:
     in: Sin[Infinity]
 uncertainty-propagation-sin-2-pm-0-01-approx-0:
@@ -511,6 +566,8 @@ uncertainty-propagation-sin-2-pm-0-01-approx-0:
   tex:
     in: \sin(\mathrm{Around}(2, 0.01))
     out: \mathrm{Around}(0.909\,297\,426\,825\,681\,7, 0.004\,161\,468\,365\,471\,424)
+  fullform:
+    in: Sin[Around[2, 0.01]]
   wolfram:
     in: Sin[Around[2, 0.01]]
 an-imaginary-argument-rewrites-to-sinh-sin-ix-i:
@@ -520,6 +577,8 @@ an-imaginary-argument-rewrites-to-sinh-sin-ix-i:
   tex:
     in: \sin(i x)
     out: i\sinh(x)
+  fullform:
+    in: Sin[Times[I, x]]
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Sin(-x)
@@ -527,6 +586,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
   tex:
     in: \sin(-x)
     out: -\sin(x)
+  fullform:
+    in: Sin[Minus[x]]
 a-half-period-shift-reduces-sin-x-pi-sin-x:
   epsil:
     in: Sin(x + Pi)
@@ -534,6 +595,8 @@ a-half-period-shift-reduces-sin-x-pi-sin-x:
   tex:
     in: \sin(x+\pi)
     out: -\sin(x)
+  fullform:
+    in: Sin[Plus[x, Pi]]
 sin-arcsin-x-x-for-every-x:
   epsil:
     in: Sin(Arcsin(x))
@@ -541,6 +604,8 @@ sin-arcsin-x-x-for-every-x:
   tex:
     in: \sin(\arcsin(x))
     out: x
+  fullform:
+    in: Sin[ArcSin[x]]
 sin-arcsin-2-2-past-the-real-domain:
   epsil:
     in: Sin(Arcsin(2))
@@ -548,6 +613,8 @@ sin-arcsin-2-2-past-the-real-domain:
   tex:
     in: \sin(\arcsin(2))
     out: "2"
+  fullform:
+    in: Sin[ArcSin[2]]
   wolfram:
     in: Sin[ArcSin[2]]
 sin-arcsin-of-a-complex-argument:
@@ -557,6 +624,8 @@ sin-arcsin-of-a-complex-argument:
   tex:
     in: \sin(\arcsin(1+2i))
     out: 1+2i
+  fullform:
+    in: Sin[ArcSin[Complex[1, 2]]]
   wolfram:
     in: Sin[ArcSin[Complex[1, 2]]]
 sin-arccos-x-sqrt-1-x-2:
@@ -566,6 +635,8 @@ sin-arccos-x-sqrt-1-x-2:
   tex:
     in: \sin(\arccos(x))
     out: \sqrt{1-x^2}
+  fullform:
+    in: Sin[ArcCos[x]]
 sin-arctan-x-frac-x-sqrt-1-x-2:
   epsil:
     in: Sin(Arctan(x))
@@ -573,6 +644,8 @@ sin-arctan-x-frac-x-sqrt-1-x-2:
   tex:
     in: \sin(\arctan(x))
     out: \frac{x}{\sqrt{x^2+1}}
+  fullform:
+    in: Sin[ArcTan[x]]
 derivative-frac-d-dx-sin-x-cos-x:
   epsil:
     in: D(Sin(x), x)
@@ -580,6 +653,8 @@ derivative-frac-d-dx-sin-x-cos-x:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\sin(x)
     out: \cos(x)
+  fullform:
+    in: D[Sin[x], x]
 second-derivative:
   epsil:
     in: D(Sin(x), x, x)
@@ -587,6 +662,8 @@ second-derivative:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\sin(x)
     out: -\sin(x)
+  fullform:
+    in: D[Sin[x], x, x]
 antiderivative:
   epsil:
     in: Integrate(Sin(x), x)
@@ -594,6 +671,8 @@ antiderivative:
   tex:
     in: \int\!\sin(x)\, \mathrm{d}x
     out: -\cos(x)
+  fullform:
+    in: Integrate[Sin[x], x]
 area-under-one-arch-int-0-pi-sin-x-dx-2:
   epsil:
     in: Integrate(Sin(x), (x, 0, Pi))
@@ -601,6 +680,8 @@ area-under-one-arch-int-0-pi-sin-x-dx-2:
   tex:
     in: \int_{0}^{\pi}\!\sin(x)\, \mathrm{d}x
     out: "2"
+  fullform:
+    in: Integrate[Sin[x], List[x, 0, Pi]]
 int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers:
   epsil:
     in: Integrate(Sin(x) ^ 3, x)
@@ -608,6 +689,8 @@ int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers:
   tex:
     in: \int\!\sin(x)^3\, \mathrm{d}x
     out: \frac{\cos(x)^3}{3}-\cos(x)
+  fullform:
+    in: Integrate[Power[Sin[x], 3], x]
 taylor-series-about-0-only-odd-powers-appear:
   epsil:
     in: Series(Sin(x), x, 0, 10)
@@ -617,6 +700,8 @@ taylor-series-about-0-only-odd-powers-appear:
   tex:
     in: \operatorname{Series}(\sin(x), x, 0, 10)
     out: x-\frac{x^3}{6}+\frac{x^5}{120}-\frac{x^7}{5\,040}+\frac{x^9}{362\,880}+O\left(x^{11}\right)
+  fullform:
+    in: Series[Sin[x], x, 0, 10]
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1:
   epsil:
     in: Limit(Sin(x) / x, 0)
@@ -624,6 +709,8 @@ the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1:
   tex:
     in: \lim_{x\to0}\frac{\sin(x)}{x}
     out: "1"
+  fullform:
+    in: Limit[Function[Divide[Sin[x], x], x], 0]
 double-angle-formula-via-trigexpand:
   epsil:
     in: TrigExpand(Sin(2x))
@@ -631,6 +718,8 @@ double-angle-formula-via-trigexpand:
   tex:
     in: \mathrm{TrigExpand}(\sin(2x))
     out: 2\sin(x)\cos(x)
+  fullform:
+    in: TrigExpand[Sin[Times[2, x]]]
 angle-addition-formula-via-trigexpand:
   epsil:
     in: TrigExpand(Sin(x + y))
@@ -638,6 +727,8 @@ angle-addition-formula-via-trigexpand:
   tex:
     in: \mathrm{TrigExpand}(\sin(x+y))
     out: \sin(y)\cos(x)+\sin(x)\cos(y)
+  fullform:
+    in: TrigExpand[Sin[Plus[x, y]]]
 triple-angle-formula:
   epsil:
     in: TrigExpand(Sin(3x))
@@ -645,6 +736,8 @@ triple-angle-formula:
   tex:
     in: \mathrm{TrigExpand}(\sin(3x))
     out: 3\sin(x)\cos(x)^2-\sin(x)^3
+  fullform:
+    in: TrigExpand[Sin[Times[3, x]]]
 power-reduction-sin-2-x-frac-1-cos-2x-2:
   epsil:
     in: TrigReduce(Sin(x) ^ 2)
@@ -652,6 +745,8 @@ power-reduction-sin-2-x-frac-1-cos-2x-2:
   tex:
     in: \mathrm{TrigReduce}(\sin(x)^2)
     out: \frac{1}{2}-\frac{\cos(2x)}{2}
+  fullform:
+    in: TrigReduce[Power[Sin[x], 2]]
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i:
   epsil:
     in: TrigToExp(Sin(x))
@@ -659,6 +754,8 @@ euler-s-formula-sin-x-frac-e-ix-e-ix-2i:
   tex:
     in: \mathrm{TrigToExp}(\sin(x))
     out: (-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)
+  fullform:
+    in: TrigToExp[Sin[x]]
 simplify-knows-the-pythagorean-identity:
   epsil:
     in: Simplify(Sin(x) ^ 2 + Cos(x) ^ 2)
@@ -666,6 +763,8 @@ simplify-knows-the-pythagorean-identity:
   tex:
     in: \mathrm{Simplify}(\sin(x)^2+\cos(x)^2)
     out: "1"
+  fullform:
+    in: Simplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
 the-same-through-fullsimplify:
   epsil:
     in: FullSimplify(Sin(x) ^ 2 + Cos(x) ^ 2)
@@ -673,6 +772,8 @@ the-same-through-fullsimplify:
   tex:
     in: \mathrm{FullSimplify}(\sin(x)^2+\cos(x)^2)
     out: "1"
+  fullform:
+    in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
 pi-15-has-a-radical-form-but-like-wolfram-s:
   epsil:
     in: Sin(Pi / 15)
@@ -680,6 +781,8 @@ pi-15-has-a-radical-form-but-like-wolfram-s:
   tex:
     in: \sin(\frac{\pi}{15})
     out: \sin(\frac{\pi}{15})
+  fullform:
+    in: Sin[Divide[Pi, 15]]
   wolfram:
     in: Sin[Divide[Pi, 15]]
   sympy:
@@ -695,6 +798,8 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
   tex:
     in: N(\sin(10^{20}))
     out: -0.645\,251\,285\,265\,780\,844\,206
+  fullform:
+    in: N[Sin[Power[10, 20]]]
   wolfram:
     in: N[Sin[Power[10, 20]]]
   sympy:
@@ -712,6 +817,8 @@ functionexpand-gives-the-nested-radical-form:
   tex:
     in: \mathrm{FunctionExpand}(\sin(\frac{\pi}{15}))
     out: \frac{1}{8}(-\sqrt{15}+\sqrt{3}+\sqrt{10+2\sqrt{5}})
+  fullform:
+    in: FunctionExpand[Sin[Divide[Pi, 15]]]
   wolfram:
     in: FunctionExpand[Sin[Divide[Pi, 15]]]
 to-30-significant-digits-every-one-correctly:
@@ -721,6 +828,8 @@ to-30-significant-digits-every-one-correctly:
   tex:
     in: N(\sin(1), 30)
     out: 0.841\,470\,984\,807\,896\,506\,653
+  fullform:
+    in: N[Sin[1], 30]
   wolfram:
     in: N[Sin[1], 30]
   sympy:
@@ -738,6 +847,8 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
   tex:
     in: N(\sin(24^{40}))
     out: 0.400\,083\,152\,719\,766\,047\,071
+  fullform:
+    in: N[Sin[Power[24, 40]]]
   wolfram:
     in: N[Sin[Power[24, 40]]]
   sympy:

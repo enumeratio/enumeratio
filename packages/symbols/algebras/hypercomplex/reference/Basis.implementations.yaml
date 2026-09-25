@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{Basis}(\mathrm{Quaternions})
     out: \bigl\lbrack1, f_1, f_2, f_1f_2\bigr\rbrack
+  fullform:
+    in: Basis[Quaternions]
 the-bicomplex-basis:
   epsil:
     in: Basis(MulticomplexAlgebra(2))
@@ -15,6 +17,8 @@ the-bicomplex-basis:
   traditional:
     in: \mathrm{Basis}(\mathbb{C}_{2})
     out: \bigl\lbrack1, i_1, i_2, i_1i_2\bigr\rbrack
+  fullform:
+    in: Basis[MulticomplexAlgebra[2]]
 an-element-from-a-coefficient-tuple:
   epsil:
     in: Dot([1, 2, 3, 4], Basis(Quaternions))
@@ -22,3 +26,5 @@ an-element-from-a-coefficient-tuple:
   tex:
     in: \mathrm{Dot}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{Basis}(\mathrm{Quaternions}))
     out: 4f_1f_2+2f_1+3f_2+1
+  fullform:
+    in: Dot[List[1, 2, 3, 4], Basis[Quaternions]]

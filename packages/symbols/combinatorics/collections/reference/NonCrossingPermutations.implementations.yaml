@@ -5,3 +5,5 @@ count-noncrossingpermutations-5-105:
   tex:
     in: \mathrm{Count}(\mathrm{NonCrossingPermutations}(5))
     out: "105"
+  fullform:
+    in: Count[NonCrossingPermutations[5]]

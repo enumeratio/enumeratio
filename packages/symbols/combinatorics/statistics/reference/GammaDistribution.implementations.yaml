@@ -5,6 +5,8 @@ gamma-distribution-one-argument-defaults-scale:
   tex:
     in: \mathrm{GammaDistribution}(2)
     out: \mathrm{GammaDistribution}(2, 1)
+  fullform:
+    in: GammaDistribution[2]
   wolfram:
     in: GammaDistribution[2]
 gamma-pdf-exact:
@@ -14,6 +16,8 @@ gamma-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{GammaDistribution}(2, 2), 3)
     out: (3)(4\Gamma(2)\exp(\frac{3}{2}))^{-1}
+  fullform:
+    in: PDF[GammaDistribution[2, 2], 3]
   wolfram:
     in: PDF[GammaDistribution[2, 2], 3]
 gamma-cdf-exact:
@@ -23,6 +27,8 @@ gamma-cdf-exact:
   tex:
     in: \operatorname{CDF}(\mathrm{GammaDistribution}(2, 2), 3)
     out: 1-(5)(2\exp(\frac{3}{2}))^{-1}
+  fullform:
+    in: CDF[GammaDistribution[2, 2], 3]
   wolfram:
     in: CDF[GammaDistribution[2, 2], 3]
 gamma-mean-exact:
@@ -32,6 +38,8 @@ gamma-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{GammaDistribution}(2, 2))
     out: "4"
+  fullform:
+    in: Mean[GammaDistribution[2, 2]]
   wolfram:
     in: Mean[GammaDistribution[2, 2]]
 gamma-variance-exact:
@@ -41,6 +49,8 @@ gamma-variance-exact:
   tex:
     in: \mathrm{Variance}(\mathrm{GammaDistribution}(2, 2))
     out: "8"
+  fullform:
+    in: Variance[GammaDistribution[2, 2]]
   wolfram:
     in: Variance[GammaDistribution[2, 2]]
 gamma-cdf-clamps-below-support:
@@ -50,5 +60,7 @@ gamma-cdf-clamps-below-support:
   tex:
     in: N(\operatorname{CDF}(\mathrm{GammaDistribution}(2, 2), -1))
     out: "0"
+  fullform:
+    in: N[CDF[GammaDistribution[2, 2], -1]]
   wolfram:
     in: N[CDF[GammaDistribution[2, 2], -1]]

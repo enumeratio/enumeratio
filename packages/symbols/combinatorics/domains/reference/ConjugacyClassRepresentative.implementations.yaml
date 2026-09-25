@@ -5,3 +5,5 @@ the-one-line-word-231:
   tex:
     in: \mathrm{ConjugacyClassRepresentative}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
     out: \mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+  fullform:
+    in: ConjugacyClassRepresentative[Permutation[List[2, 3, 1]]]
