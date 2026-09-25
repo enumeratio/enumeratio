@@ -44,11 +44,11 @@ for (const d of readdirSync(pkgsDir, { withFileTypes: true })) {
   }
 }
 
-// speculative/ (repo root, gitignored): open design, rendered by `vitepress dev` only. It is
+// design/speculative/ (gitignored): open design, rendered by `vitepress dev` only. It is
 // linked into the site as web/speculative (also gitignored) and left out of builds.
 const dev = process.argv.includes("dev");
 const webDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const speculativeDir = resolve(webDir, "../speculative");
+const speculativeDir = resolve(webDir, "../design/speculative");
 const speculativeLink = resolve(webDir, "speculative");
 if (dev && existsSync(speculativeDir) && !existsSync(speculativeLink)) {
   symlinkSync(speculativeDir, speculativeLink, "dir");

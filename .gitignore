@@ -45,5 +45,5 @@ catalog-dump.json
 *.timestamp-*.mjs
 
 # open design, dev-only (web/.vitepress/config.mts)
-/speculative/
+/design/speculative/
 /web/speculative
