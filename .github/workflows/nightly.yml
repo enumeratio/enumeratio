@@ -55,8 +55,6 @@ jobs:
       - uses: julia-actions/cache@v2
       - run: node packages/oracle/scripts/setup.ts julia
       - run: node packages/reference/scripts/oracle-scan.ts julia
-      # The scan writes JSON.stringify output; the committed files are formatted.
-      - run: pnpm exec vp fmt packages/reference/src/entries packages/reference/golden/oracle
       - name: julia rows match the committed sidecars
         run: |
           if ! git diff --quiet -- packages/reference; then
