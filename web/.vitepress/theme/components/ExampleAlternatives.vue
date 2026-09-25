@@ -3,7 +3,7 @@ import { isCrosswalkSystem, SOURCES } from "@enumeratio/reference";
 import { computed, ref } from "vue";
 
 // Another system's run of one example: the source it was given and what came back. Same
-// vocabulary as the oracle sidecars (`OtherSystemRun`, packages/entry/src/types.ts).
+// vocabulary as the implementations records (`OtherSystemRun`, packages/entry/src/types.ts).
 export interface Alternative {
   readonly input: string;
   readonly output: string;

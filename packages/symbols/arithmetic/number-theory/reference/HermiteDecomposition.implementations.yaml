@@ -1,0 +1,7 @@
+hermitedecomposition-list-list-0-neg-3-list-2-0:
+  wolfram:
+    in: HermiteDecomposition[List[List[0, -3], List[2, 0]]]
+    out: "{{{0, 1}, {-1, 0}}, {{2, 0}, {0, 3}}}"
+    tex:
+      in: \text{HermiteDecomposition}\left[\left( \begin{array}{cc}  0 & -3 \\  2 & 0 \\ \end{array} \right)\right]
+      out: \left( \begin{array}{cc}  \{0,1\} & \{-1,0\} \\  \{2,0\} & \{0,3\} \\ \end{array} \right)

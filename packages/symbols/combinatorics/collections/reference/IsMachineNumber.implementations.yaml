@@ -1,0 +1,4 @@
+ismachinenumber-extended-precision:
+  wolfram:
+    in: MachineNumberQ[3.141592653589793]
+    note: Wolfram's MachineNumberQ agrees here, but tracks precision as a tag rather than counting written digits.

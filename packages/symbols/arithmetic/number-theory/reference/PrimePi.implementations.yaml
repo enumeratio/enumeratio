@@ -1,0 +1,102 @@
+no-primes-are-1:
+  wolfram:
+    in: PrimePi[1]
+    out: "0"
+    tex:
+      in: \pi (1)
+      out: "0"
+  sage:
+    in: prime_pi(1)
+    out: "0"
+  mathlib4:
+    in: (Nat.primeCounting 1)
+    out: "0"
+  rust:
+    in: prime_pi(n(1))
+    out: "0"
+  sympy:
+    in: primepi(1)
+    out: "0"
+primepi-2:
+  wolfram:
+    in: PrimePi[2]
+    out: "1"
+    tex:
+      in: \pi (2)
+      out: "1"
+  sage:
+    in: prime_pi(2)
+    out: "1"
+  mathlib4:
+    in: (Nat.primeCounting 2)
+    out: "1"
+  rust:
+    in: prime_pi(n(2))
+    out: "1"
+  sympy:
+    in: primepi(2)
+    out: "1"
+primepi-15:
+  wolfram:
+    in: PrimePi[15]
+    out: "6"
+    tex:
+      in: \pi (15)
+      out: "6"
+  sage:
+    in: prime_pi(15)
+    out: "6"
+  mathlib4:
+    in: (Nat.primeCounting 15)
+    out: "6"
+  rust:
+    in: prime_pi(n(15))
+    out: "6"
+  sympy:
+    in: primepi(15)
+    out: "6"
+primepi-100:
+  wolfram:
+    in: PrimePi[100]
+    out: "25"
+    tex:
+      in: \pi (100)
+      out: "25"
+  sage:
+    in: prime_pi(100)
+    out: "25"
+  mathlib4:
+    in: (Nat.primeCounting 100)
+    out: "25"
+  rust:
+    in: prime_pi(n(100))
+    out: "25"
+  sympy:
+    in: primepi(100)
+    out: "25"
+same-inverse-relation-viewed-from-primepi-s-side:
+  wolfram:
+    in: (PrimePi[Prime[50]] == 50)
+    out: True
+    tex:
+      in: \pi \left(p_{50}\right)=50
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: PrimePi[List[10, 100]]
+    out: "{4, 25}"
+    tex:
+      in: \pi (\{10,100\})
+      out: \{4,25\}
+  sympy:
+    in: primepi([10, 100])
+    out: "AttributeError: 'list' object has no attribute 'is_real'"
+    verdict: error
+    kind: threading
+    note: compute-engine's PrimePi is Listable and threads over the list; SymPy's takes scalars only.
+  rust:
+    in: prime_pi(list(vec![n(10), n(100)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's PrimePi is Listable and threads over the list; the Rust crate takes scalars only.

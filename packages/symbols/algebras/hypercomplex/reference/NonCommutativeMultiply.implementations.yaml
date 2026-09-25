@@ -1,0 +1,18 @@
+scalars-the-implied-identity-factor:
+  wolfram:
+    in: CircleTimes[2, 3]
+    out: 2 (x) 3
+    tex:
+      in: 2\otimes 3
+      out: 2\otimes 3
+    verdict: disagree
+    kind: convention
+    note: Our CircleTimes commits to a concrete algebra where scalars multiply as usual; Wolfram's builtin CircleTimes is inert notation with no arithmetic rules, so it leaves $2\otimes3$ displayed rather than reduced to 6.
+associative-nested-products-flatten:
+  wolfram:
+    in:
+    note: Wolfram flattens too but has no rules for undeclared symbols, so it keeps a**b**c unevaluated.
+undeclared-symbols-are-taken-to-commute-so-the:
+  wolfram:
+    in:
+    note: Wolfram assumes nothing about undeclared symbols and leaves b**a unevaluated, in its order.

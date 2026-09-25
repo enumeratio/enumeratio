@@ -44,8 +44,6 @@ examples:
     expected: [GammaRegularized, 2.5, -1]
     category: Possible issues
     caption: A non-integer order combined with negative z falls outside the real domain; compute-engine leaves it symbolic rather than erroring or returning NaN
-    divergence:
-      wolfram: A non-integer order with negative z is left symbolic here (real domain only); Wolfram continues into the complex plane.
   - id: three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma
     expr: [GammaRegularized, 2.5, 0, 1.5]
     expected: 0.30001416412137194

@@ -1,0 +1,324 @@
+17-mod-5:
+  wolfram:
+    in: Mod[17, 5]
+    out: "2"
+    tex:
+      in: (17 \bmod 5)
+      out: "2"
+  sage:
+    in: (17 % 5)
+    out: "2"
+  julia:
+    in: mod(17, 5)
+    out: "2"
+  oscar:
+    in: mod(17, 5)
+    out: "2"
+  mathlib4:
+    in: "((17 : ℤ) % 5)"
+    out: "2"
+  rust:
+    in: mod_floor(n(17), n(5))
+    out: "2"
+  sympy:
+    in: (17 % 5)
+    out: "2"
+100-mod-7:
+  wolfram:
+    in: Mod[100, 7]
+    out: "2"
+    tex:
+      in: (100 \bmod 7)
+      out: "2"
+  sage:
+    in: (100 % 7)
+    out: "2"
+  julia:
+    in: mod(100, 7)
+    out: "2"
+  oscar:
+    in: mod(100, 7)
+    out: "2"
+  mathlib4:
+    in: "((100 : ℤ) % 7)"
+    out: "2"
+  rust:
+    in: mod_floor(n(100), n(7))
+    out: "2"
+  sympy:
+    in: (100 % 7)
+    out: "2"
+the-result-takes-the-sign-of-the-modulus:
+  wolfram:
+    in: Mod[-7, 3]
+    out: "2"
+    tex:
+      in: ((-7) \bmod 3)
+      out: "2"
+  sage:
+    in: (-7 % 3)
+    out: "2"
+  julia:
+    in: mod(-7, 3)
+    out: "2"
+  oscar:
+    in: mod(-7, 3)
+    out: "2"
+  mathlib4:
+    in: "(((-7) : ℤ) % 3)"
+    out: "2"
+  rust:
+    in: mod_floor(n(-7), n(3))
+    out: "2"
+  sympy:
+    in: (-7 % 3)
+    out: "2"
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Mod[List[1, 2, 3, 4, 5], 3]
+    out: "{1, 2, 0, 1, 2}"
+    tex:
+      in: (\{1,2,3,4,5\} \bmod 3)
+      out: \{1,2,0,1,2\}
+  sage:
+    in: ([1, 2, 3, 4, 5] % 3)
+    out: "TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; Sage's takes scalars only.
+  julia:
+    in: mod([1, 2, 3, 4, 5], 3)
+    out: "MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function `mod` exists, but no meth"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.
+  oscar:
+    in: mod([1, 2, 3, 4, 5], 3)
+    out: "MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function `mod` exists, but no meth"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; Oscar's takes scalars only.
+  mathlib4:
+    in: "(([1, 2, 3, 4, 5] : ℤ) % 3)"
+    out: Type mismatch
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; Mathlib's takes scalars only.
+  rust:
+    in: mod_floor(list(vec![n(1), n(2), n(3), n(4), n(5)]), n(3))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: ([1, 2, 3, 4, 5] % 3)
+    out: "TypeError: unsupported operand type(s) for %: 'list' and 'int'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod threads over (or pools) the list; SymPy's takes scalars.
+division-by-a-0-modulus-yields-nan-rather-than:
+  wolfram:
+    in: Mod[5, 0]
+    out: Indeterminate
+    tex:
+      in: (5 \bmod 0)
+      out: \text{Indeterminate}
+  sage:
+    in: (5 % 0)
+    out: "ZeroDivisionError: Integer modulo by zero"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" and Sage raises an error.'
+  julia:
+    in: mod(5, 0)
+    out: "DivideError: integer division error"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" and Nemo/Combinatorics.jl raises an error.'
+  oscar:
+    in: mod(5, 0)
+    out: "DivideError: integer division error"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" and Oscar raises an error.'
+  mathlib4:
+    in: "((5 : ℤ) % 0)"
+    out: "5"
+    verdict: inconclusive
+    kind: convention
+    note: Lean defines x % 0 = x; compute-engine leaves Mod by zero undefined (NaN).
+  rust:
+    in: mod_floor(n(5), n(0))
+    out: "panic: attempt to divide by zero"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN", and Rust gives panic: attempt to divide by zero.'
+  sympy:
+    in: (5 % 0)
+    out: "ZeroDivisionError: integer modulo by zero"
+    verdict: error
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers NaN, SymPy gives ZeroDivisionError: integer modulo by zer."
+periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer:
+  wolfram:
+    in: (Mod[17, 5] == Mod[Plus[17, Times[3, 5]], 5])
+    out: True
+    tex:
+      in: (17 \bmod 5)=((17+3\ 5) \bmod 5)
+      out: \text{True}
+  sage:
+    in: bool((17 % 5) == ((17 + (3 * 5)) % 5))
+    out: True
+  julia:
+    in: (mod(17, 5) == mod((17 + (3 * 5)), 5))
+    out: "true"
+  oscar:
+    in: (mod(17, 5) == mod((17 + (3 * 5)), 5))
+    out: "true"
+  mathlib4:
+    in: "(decide (((17 : ℤ) % 5) = (((17 + (3 * 5)) : ℤ) % 5)))"
+    out: "true"
+  rust:
+    in: equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((17 % 5), ((17 + (3 * 5)) % 5))
+    out: True
+a-third-argument-offsets-the-range-the-result:
+  wolfram:
+    in: Mod[17, 5, 1]
+    out: "2"
+    tex:
+      in: \text{Mod}[17,5,1]
+      out: "2"
+gaussian-integers-the-quotient-rounds-so-each:
+  wolfram:
+    in: Mod[Complex[7, 5], 3]
+    out: 1 - I
+    tex:
+      in: ((7+5 i) \bmod 3)
+      out: 1-i
+  sympy:
+    in: ((7 + 5*I) % 3)
+    out: Mod(1 + 5*I, 3)
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
+  julia:
+    in: mod(complex(7, 5), 3)
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  oscar:
+    in: mod(complex(7, 5), 3)
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sage:
+    in: ((7 + 5*I) % 3)
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+a-gaussian-modulus-7-5i-2-i-4-i-i:
+  wolfram:
+    in: Mod[Complex[7, 5], Complex[2, 1]]
+    out: -I
+    tex:
+      in: ((7+5 i) \bmod (2+i))
+      out: -i
+  sympy:
+    in: ((7 + 5*I) % (2 + 1*I))
+    out: Mod(7 + 5*I, 2 + I)
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
+  julia:
+    in: mod(complex(7, 5), complex(2, 1))
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  oscar:
+    in: mod(complex(7, 5), complex(2, 1))
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sage:
+    in: ((7 + 5*I) % (2 + 1*I))
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+exact-in-both-parts-past-2-53:
+  wolfram:
+    in: Mod[Complex[100000000000000000001, 9007199254740993], Complex[2, 1]]
+    out: "0"
+    tex:
+      in: ((100000000000000000001+9007199254740993 i) \bmod (2+i))
+      out: "0"
+  sympy:
+    in: ((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))
+    out: (2 + I)*(Mod((2 - I)*(100000000000000000001 + 9007199254740993*I)/5, (2 - I)*(2 + I)/5))
+    verdict: inconclusive
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
+  julia:
+    in: mod(complex(100000000000000000001, 9007199254740993), complex(2, 1))
+    out: "MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function `mod` exists, "
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  oscar:
+    in: mod(complex(100000000000000000001, 9007199254740993), complex(2, 1))
+    out: "MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function `mod` exists, "
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sage:
+    in: ((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+the-remainder-of-quotient:
+  wolfram:
+    in: (Mod[Complex[7, 5], Complex[2, 1]] == Subtract[Complex[7, 5], Times[Complex[2, 1], Quotient[Complex[7, 5], Complex[2, 1]]]])
+    out: True
+    tex:
+      in: ((7+5 i) \bmod (2+i))=(7+5 i)-(2+i) \text{Quotient}[7+5 i,2+i]
+      out: \text{True}
+rounding-ties-to-even-means-1-and-1-both-appear:
+  wolfram:
+    in: List[Mod[Complex[1, 2], 2], Mod[Complex[3, 2], 2]]
+    out: "{1, -1}"
+    tex:
+      in: \{((1+2 i) \bmod 2),((3+2 i) \bmod 2)\}
+      out: \{1,-1\}
+  sympy:
+    in: "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]"
+    out: "[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]"
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
+  julia:
+    in: "[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]"
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  oscar:
+    in: "[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]"
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sage:
+    in: "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]"
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.

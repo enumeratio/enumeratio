@@ -1,0 +1,42 @@
+primenu-24:
+  wolfram:
+    in: PrimeNu[24]
+    out: "2"
+    tex:
+      in: \nu (24)
+      out: "2"
+primenu-360:
+  wolfram:
+    in: PrimeNu[360]
+    out: "3"
+    tex:
+      in: \nu (360)
+      out: "3"
+32-2-5-has-just-one-distinct-prime-factor:
+  wolfram:
+    in: PrimeNu[32]
+    out: "1"
+    tex:
+      in: \nu (32)
+      out: "1"
+1-has-no-prime-factors:
+  wolfram:
+    in: PrimeNu[1]
+    out: "0"
+    tex:
+      in: \nu (1)
+      out: "0"
+primenu-n-is-the-length-of-factorinteger-n:
+  wolfram:
+    in: (PrimeNu[50] == Length[FactorInteger[50]])
+    out: True
+    tex:
+      in: \nu (50)=\text{Length}[\text{FactorInteger}[50]]
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: PrimeNu[List[4, 28, 180]]
+    out: "{1, 2, 3}"
+    tex:
+      in: \nu (\{4,28,180\})
+      out: \{1,2,3\}

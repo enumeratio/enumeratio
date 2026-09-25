@@ -1,0 +1,49 @@
+eta-1-ln-2-the-alternating-harmonic-series:
+  wolfram:
+    in: DirichletEta[1]
+    out: Log[2]
+    tex:
+      in: \eta (1)
+      out: \log (2)
+eta-2-pi-2-12:
+  wolfram:
+    in: DirichletEta[2]
+    out: Pi^2/12
+    tex:
+      in: \eta (2)
+      out: \frac{\pi ^2}{12}
+eta-3-frac-34-zeta-3-no-closed-form-beyond-apery:
+  wolfram:
+    in: DirichletEta[3]
+    out: (3*Zeta[3])/4
+    tex:
+      in: \eta (3)
+      out: \frac{3 \zeta (3)}{4}
+nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1:
+  wolfram:
+    in: DirichletEta[List[0, -1, -2, -3]]
+    out: "{1/2, 1/4, 0, -1/8}"
+    tex:
+      in: \eta (\{0,-1,-2,-3\})
+      out: \left\{\frac{1}{2},\frac{1}{4},0,-\frac{1}{8}\right\}
+on-the-critical-line-through-1-2-1-s-zeta-s-so:
+  wolfram:
+    in: DirichletEta[0.5]
+    out: "0.604898643421631"
+    tex:
+      in: \eta (0.5)
+      out: "0.604899"
+an-exact-non-integer-argument-stays-symbolic:
+  wolfram:
+    in: DirichletEta[Rational[1, 2]]
+    out: (1 - Sqrt[2])*Zeta[1/2]
+    tex:
+      in: \eta \left(\frac{1}{2}\right)
+      out: \left(1-\sqrt{2}\right) \zeta \left(\frac{1}{2}\right)
+    verdict: disagree
+    kind: unevaluated
+    note: An exact non-integer argument stays symbolic here; Wolfram rewrites it as $(1-\sqrt2)\zeta(1/2)$ instead.
+threads-elementwise-over-an-array:
+  wolfram:
+    in: DirichletEta[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
+    note: Wolfram also threads, but rewrites $\eta(\tfrac12)$ as $(1-\sqrt2)\zeta(\tfrac12)$.

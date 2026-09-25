@@ -1,0 +1,35 @@
+csc-pi-over-6:
+  wolfram:
+    in: Csc[Divide[Pi, 6]]
+    out: "2"
+    tex:
+      in: \csc \left(\frac{\pi }{6}\right)
+      out: "2"
+csc-pi-over-4:
+  wolfram:
+    in: Csc[Divide[Pi, 4]]
+    out: Sqrt[2]
+    tex:
+      in: \csc \left(\frac{\pi }{4}\right)
+      out: \sqrt{2}
+csc-pi-over-2:
+  wolfram:
+    in: Csc[Divide[Pi, 2]]
+    out: "1"
+    tex:
+      in: \csc \left(\frac{\pi }{2}\right)
+      out: "1"
+reciprocal-of-sin-csc-x-frac-1-sin-x:
+  wolfram:
+    in: (Csc[Divide[Pi, 6]] == Divide[1, Sin[Divide[Pi, 6]]])
+    out: True
+    tex:
+      in: \csc \left(\frac{\pi }{6}\right)=\frac{1}{\sin \left(\frac{\pi }{6}\right)}
+      out: \text{True}
+a-pole-sin-0-0:
+  wolfram:
+    in: Csc[0]
+    out: ComplexInfinity
+    tex:
+      in: \csc (0)
+      out: \text{ComplexInfinity}

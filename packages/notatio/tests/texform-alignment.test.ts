@@ -2,16 +2,16 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { portableTeX } from "@enumeratio/formats/tex";
-import { entryFiles as filesOf } from "@enumeratio/reference/node";
+import { referenceEntries } from "@enumeratio/reference/node";
 import { fromWolframTeX, HEADS } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
 import { traditionalLatexOf } from "../src/traditional.ts";
 
-const entryFiles = filesOf();
+const entries = referenceEntries();
 
 // Our TeXForm beside Wolfram's, for every reference example the oracle ran through Wolfram
-// (its `TeXForm` rides on the sidecar row). Not an assertion that they agree -- a record of
+// (its `TeXForm` rides on the implementations row). Not an assertion that they agree -- a record of
 // where they do, so a change on either side shows up as a golden diff to review. Regenerate
 // with `UPDATE_TEXFORM=1 vp test`; Wolfram's side refreshes with the oracle scan. Wolfram's TeX
 // is recorded as it printed, and compared in notatio's spelling (`fromWolframTeX`).
@@ -51,7 +51,7 @@ const shown = (tex: string): string =>
 /** How we write each head we have no notation for -- the TeX before `(x)` -- so Wolfram's
  *  `\text{Round}[x]` reads as our `\mathrm{round}(x)`. */
 const heads = new Map(
-  [...new Set([...Object.keys(HEADS), ...entryFiles.flatMap((f) => f.entries.map((e) => e.name))])]
+  [...new Set([...Object.keys(HEADS), ...entries.map((e) => e.name)])]
     .map((name) => [name, /^(\\(?:mathrm|operatorname)\{[^{}]+\})\(x\)$/.exec(ours([name, "x"]))?.[1]])
     .filter((entry): entry is [string, string] => entry[1] !== undefined),
 );
@@ -66,7 +66,7 @@ interface Row {
 }
 
 const rows: Record<string, Row> = {};
-for (const { entries } of entryFiles) {
+{
   for (const entry of entries) {
     entry.examples.forEach((example) => {
       const wolfram = example.others?.wolfram?.tex;

@@ -1,0 +1,22 @@
+mode-list-1-2-2-3:
+  wolfram:
+    in: First[Commonest[List[1, 2, 2, 3]]]
+    out: "2"
+    tex:
+      in: \text{First}[\text{Commonest}[\{1,2,2,3\}]]
+      out: "2"
+the-mode-occurs-exactly-as-many-times-as-the:
+  wolfram:
+    in: (Count[List[1, 2, 2, 3], First[Commonest[List[1, 2, 2, 3]]]] == 2)
+    out: True
+    tex:
+      in: \text{Count}[\{1,2,2,3\},\text{First}[\text{Commonest}[\{1,2,2,3\}]]]=2
+      out: \text{True}
+with-a-tie-for-most-frequent-mode-returns-just:
+  wolfram:
+    in: First[Commonest[List[1, 1, 2, 2, 3]]]
+    note: Wolfram's Commonest returns every tied mode, [1, 2], here.
+empty-data-has-no-mode-compute-engine-returns:
+  wolfram:
+    in: First[Commonest[List[]]]
+    note: Wolfram's Commonest[{}] is the empty list {}.

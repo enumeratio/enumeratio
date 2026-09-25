@@ -1,0 +1,153 @@
+floor-7-over-2:
+  wolfram:
+    in: Floor[Rational[7, 2]]
+    out: "3"
+    tex:
+      in: \left\lfloor \frac{7}{2}\right\rfloor
+      out: "3"
+  sage:
+    in: floor((7/2))
+    out: "3"
+  rust:
+    in: floor(rational(n(7), n(2)))
+    out: "3"
+  sympy:
+    in: floor(Rational(7, 2))
+    out: "3"
+floor-3p7:
+  wolfram:
+    in: Floor[3.7]
+    out: "3"
+    tex:
+      in: \lfloor 3.7\rfloor
+      out: "3"
+  sage:
+    in: floor(3.7)
+    out: "3"
+  rust:
+    in: floor(x(3.7))
+    out: "3.0"
+  mpmath:
+    in: floor(3.7)
+    out: "3.0"
+  sympy:
+    in: floor(3.7)
+    out: "3"
+integers-pass-through-unchanged:
+  wolfram:
+    in: Floor[5]
+    out: "5"
+    tex:
+      in: \lfloor 5\rfloor
+      out: "5"
+  sage:
+    in: floor(5)
+    out: "5"
+  rust:
+    in: floor(n(5))
+    out: "5"
+  mpmath:
+    in: floor(5)
+    out: "5.0"
+  sympy:
+    in: floor(5)
+    out: "5"
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Floor[List[1.2, -1.2, 3.7]]
+    out: "{1, -2, 3}"
+    tex:
+      in: \lfloor \{1.2,-1.2,3.7\}\rfloor
+      out: \{1,-2,3\}
+  sage:
+    in: floor([1.2, -1.2, 3.7])
+    out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
+    verdict: error
+    kind: threading
+    note: compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only.
+  rust:
+    in: floor(list(vec![x(1.2), x(-1.2), x(3.7)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Floor is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: floor([1.2, -1.2, 3.7])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Floor threads over (or pools) the list; SymPy's takes scalars.
+for-a-non-integer-x-lceil-x-rceil-lfloor-x:
+  wolfram:
+    in: (Plus[Floor[Rational[7, 2]], 1] == Ceiling[Rational[7, 2]])
+    out: True
+    tex:
+      in: \left\lfloor \frac{7}{2}\right\rfloor +1=\left\lceil \frac{7}{2}\right\rceil
+      out: \text{True}
+  sage:
+    in: bool((floor((7/2)) + 1) == ceil((7/2)))
+    out: True
+  rust:
+    in: equal((floor(rational(n(7), n(2))) + n(1)), ceil(rational(n(7), n(2))))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((floor(Rational(7, 2)) + 1), ceiling(Rational(7, 2)))
+    out: True
+lfloor-x-rfloor-lceil-x-rceil:
+  wolfram:
+    in: (Floor[Rational[-7, 2]] == Minus[Ceiling[Rational[7, 2]]])
+    out: True
+    tex:
+      in: \left\lfloor -\frac{7}{2}\right\rfloor =-\left\lceil \frac{7}{2}\right\rceil
+      out: \text{True}
+  sage:
+    in: bool(floor((-7/2)) == (-ceil((7/2))))
+    out: True
+  rust:
+    in: equal(floor(rational(n(-7), n(2))), (-(ceil(rational(n(7), n(2))))))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(floor(Rational(-7, 2)), (-ceiling(Rational(7, 2))))
+    out: True
+how-many-full-5-item-packs-fit-in-17-items:
+  wolfram:
+    in: Floor[Divide[17, 5]]
+    out: "3"
+    tex:
+      in: \left\lfloor \frac{17}{5}\right\rfloor
+      out: "3"
+  sage:
+    in: floor((17 / 5))
+    out: "3"
+  rust:
+    in: floor((n(17) / n(5)))
+    out: "3"
+  sympy:
+    in: floor((S(17) / 5))
+    out: "3"
+rounds-toward-infty-not-toward-0-floor-3-2-is-4:
+  wolfram:
+    in: Floor[-3.2]
+    out: "-4"
+    tex:
+      in: \lfloor -3.2\rfloor
+      out: "-4"
+  sage:
+    in: floor(-3.2)
+    out: "-4"
+  rust:
+    in: floor(x(-3.2))
+    out: "-4.0"
+  mpmath:
+    in: floor(-3.2)
+    out: "-4.0"
+  sympy:
+    in: floor(-3.2)
+    out: "-4"
+infinities-pass-through-unchanged:
+  wolfram:
+    in: Floor[-Infinity]
+    out: -Infinity
+    tex:
+      in: \lfloor -\infty \rfloor
+      out: -\infty

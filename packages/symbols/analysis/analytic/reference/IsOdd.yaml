@@ -43,8 +43,6 @@ examples:
     expected: [List, True, False, True]
     category: Scope
     caption: Threads element-wise over a list
-    divergence:
-      wolfram: 'OddQ tests its argument as a whole: $\mathrm{OddQ}[\{1, 2, 3\}]$ is False.'
   - id: an-integer-is-odd-exactly-when-it-is-not-even
     expr: [Equal, [IsOdd, 7], [Not, [IsEven, 7]]]
     expected: True
@@ -60,7 +58,5 @@ examples:
     expected: [IsOdd, x]
     category: Possible issues
     caption: A symbol stays undecided rather than False
-    divergence:
-      wolfram: '$\mathrm{OddQ}[x]$ is False: OddQ tests the literal form, not what x might be.'
 seeAlso:
   - IsEven

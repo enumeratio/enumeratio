@@ -1,0 +1,4 @@
+sparsearray-normal-is-identity:
+  wolfram:
+    in:
+    note: Wolfram's SparseArray keeps a distinct sparse representation until Normal densifies it.

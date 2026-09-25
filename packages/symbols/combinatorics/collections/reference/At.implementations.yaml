@@ -1,0 +1,31 @@
+list-1-2-3-4-list-2:
+  wolfram:
+    in: Part[List[1, 2, 3, 4], 2]
+    out: "2"
+    tex:
+      in: \{1,2,3,4\}[[2]]
+      out: "2"
+list-1-2-3-4-list-neg-1:
+  wolfram:
+    in: Part[List[1, 2, 3, 4], -1]
+    out: "4"
+    tex:
+      in: \{1,2,3,4\}[[-1]]
+      out: "4"
+chaining-at-reaches-into-nested-collections-like:
+  wolfram:
+    in: Part[Part[List[List[1, 2], List[3, 4]], 2], 1]
+    out: "3"
+    tex:
+      in: \left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)[[2]][[1]]
+      out: "3"
+an-out-of-range-index-evaluates-to-nan-rather:
+  wolfram:
+    in: Part[List[1, 2, 3], 10]
+    out: "{1, 2, 3}[[10]]"
+    tex:
+      in: \{1,2,3\}[[10]]
+      out: \{1,2,3\}[[10]]
+    verdict: disagree
+    kind: undefined-form
+    note: An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).

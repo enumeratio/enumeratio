@@ -1,0 +1,56 @@
+k-0-gives-the-number-of-divisors:
+  wolfram:
+    in: DivisorSigma[0, 20]
+    out: "6"
+    tex:
+      in: \sigma _0(20)
+      out: "6"
+k-1-gives-the-sum-of-divisors:
+  wolfram:
+    in: DivisorSigma[1, 20]
+    out: "42"
+    tex:
+      in: \sigma _1(20)
+      out: "42"
+divisorsigma-2-20:
+  wolfram:
+    in: DivisorSigma[2, 20]
+    out: "546"
+    tex:
+      in: \sigma _2(20)
+      out: "546"
+6-is-a-perfect-number-sigma-1-6-2-times-6:
+  wolfram:
+    in: DivisorSigma[1, 6]
+    out: "12"
+    tex:
+      in: \sigma _1(6)
+      out: "12"
+28-is-the-next-perfect-number-sigma-1-28-2-times:
+  wolfram:
+    in: DivisorSigma[1, 28]
+    out: "56"
+    tex:
+      in: \sigma _1(28)
+      out: "56"
+multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n:
+  wolfram:
+    in: (Times[DivisorSigma[1, 9], DivisorSigma[1, 8]] == DivisorSigma[1, 72])
+    out: True
+    tex:
+      in: \sigma _1(9) \sigma _1(8)=\sigma _1(72)
+      out: \text{True}
+the-trivial-base-case:
+  wolfram:
+    in: DivisorSigma[1, 1]
+    out: "1"
+    tex:
+      in: \sigma _1(1)
+      out: "1"
+a-negative-order-sums-reciprocal-powers-sigma-1:
+  wolfram:
+    in: DivisorSigma[-1, 6]
+    out: "2"
+    tex:
+      in: \sigma _{-1}(6)
+      out: "2"

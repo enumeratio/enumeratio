@@ -1,0 +1,178 @@
+"5":
+  wolfram:
+    in: Minus[-5]
+    out: "5"
+    tex:
+      in: -(-5)
+      out: "5"
+  sage:
+    in: (--5)
+    out: "5"
+  julia:
+    in: (-(-5))
+    out: "5"
+  mathlib4:
+    in: (-((-5)))
+    out: "5"
+  oscar:
+    in: (-(-5))
+    out: "5"
+  rust:
+    in: (-(n(-5)))
+    out: "5"
+  mpmath:
+    in: (--5)
+    out: "5"
+  sympy:
+    in: (--5)
+    out: "5"
+neg-5:
+  wolfram:
+    in: Minus[5]
+    out: "-5"
+    tex:
+      in: "-5"
+      out: "-5"
+  sage:
+    in: (-5)
+    out: "-5"
+  julia:
+    in: (-(5))
+    out: "-5"
+  mathlib4:
+    in: (-(5))
+    out: "-5"
+  oscar:
+    in: (-(5))
+    out: "-5"
+  rust:
+    in: (-(n(5)))
+    out: "-5"
+  mpmath:
+    in: (-5)
+    out: "-5"
+  sympy:
+    in: (-5)
+    out: "-5"
+its-own-negation:
+  wolfram:
+    in: Minus[0]
+    out: "0"
+    tex:
+      in: "-0"
+      out: "0"
+  sage:
+    in: (-0)
+    out: "0"
+  julia:
+    in: (-(0))
+    out: "0"
+  mathlib4:
+    in: (-(0))
+    out: "0"
+  oscar:
+    in: (-(0))
+    out: "0"
+  rust:
+    in: (-(n(0)))
+    out: "0"
+  mpmath:
+    in: (-0)
+    out: "0"
+  sympy:
+    in: (-0)
+    out: "0"
+neg-3-over-4:
+  wolfram:
+    in: Minus[Rational[3, 4]]
+    out: -3/4
+    tex:
+      in: -\frac{3}{4}
+      out: -\frac{3}{4}
+  sage:
+    in: (-(3/4))
+    out: -3/4
+  julia:
+    in: (-((3 // 4)))
+    out: "-0.75"
+  mathlib4:
+    in: "(-(((3 : ℚ) / 4)))"
+    out: -3/4
+  oscar:
+    in: (-((3 // 4)))
+    out: "-0.75"
+  rust:
+    in: (-(rational(n(3), n(4))))
+    out: -3/4
+  sympy:
+    in: (-Rational(3, 4))
+    out: -3/4
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Minus[List[1, -2, 3]]
+    out: "{-1, 2, -3}"
+    tex:
+      in: -\{1,-2,3\}
+      out: \{-1,2,-3\}
+  sage:
+    in: (-[1, -2, 3])
+    out: "TypeError: bad operand type for unary -: 'list'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Negate is Listable and threads over the list; Sage's takes scalars only.
+  julia:
+    in: (-([1, -2, 3]))
+    out: "[-1, 2, -3]"
+  mathlib4:
+    in: (-([1, (-2), 3]))
+    out: "[-1, 2, -3]"
+  oscar:
+    in: (-([1, -2, 3]))
+    out: "[-1, 2, -3]"
+  rust:
+    in: (-(list(vec![n(1), n(-2), n(3)])))
+    out: "panic: negating [1, -2, 3]"
+    verdict: error
+    kind: threading
+    note: compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: (-[1, -2, 3])
+    out: "TypeError: bad operand type for unary -: 'list'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars.
+recording-a-42-50-charge-as-a-negative-balance:
+  wolfram:
+    in: Minus[42.5]
+    out: "-42.5"
+    tex:
+      in: "-42.5"
+      out: "-42.5"
+  sage:
+    in: (-42.5)
+    out: "-42.5000000000000"
+  julia:
+    in: (-(42.5))
+    out: "-42.5"
+  mathlib4:
+    in: (-(42.5))
+    out: "-42.500000"
+  oscar:
+    in: (-(42.5))
+    out: "-42.5"
+  rust:
+    in: (-(x(42.5)))
+    out: "-42.5"
+  mpmath:
+    in: (-42.5)
+    out: "-42.5"
+  sympy:
+    in: (-42.5)
+    out: "-42.5"
+flips-signed-infinities-too:
+  wolfram:
+    in: Minus[Infinity]
+    out: -Infinity
+    tex:
+      in: -\infty
+      out: -\infty

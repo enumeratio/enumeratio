@@ -1,0 +1,60 @@
+primitiverootlist-7:
+  sage:
+    in: enumeratio_primitive_root_list(7)
+    out: "[3, 5]"
+  wolfram:
+    in: PrimitiveRootList[7]
+    out: "{3, 5}"
+    tex:
+      in: \text{PrimitiveRootList}[7]
+      out: \{3,5\}
+18-2-cdot-3-2-is-of-the-form-2p-k:
+  sage:
+    in: enumeratio_primitive_root_list(18)
+    out: "[5, 11]"
+  wolfram:
+    in: PrimitiveRootList[18]
+    out: "{5, 11}"
+    tex:
+      in: \text{PrimitiveRootList}[18]
+      out: \{5,11\}
+length-primitiverootlist-1-009:
+  sage:
+    in: len(enumeratio_primitive_root_list(1009))
+    out: "288"
+  wolfram:
+    in: Length[PrimitiveRootList[1009]]
+    out: "288"
+    tex:
+      in: \text{Length}[\text{PrimitiveRootList}[1009]]
+      out: "288"
+there-are-varphi-varphi-n-of-them:
+  sage:
+    in: bool(len(enumeratio_primitive_root_list(1009)) == euler_phi(euler_phi(1009)))
+    out: True
+  wolfram:
+    in: (Length[PrimitiveRootList[1009]] == EulerPhi[EulerPhi[1009]])
+    out: True
+    tex:
+      in: \text{Length}[\text{PrimitiveRootList}[1009]]=\phi (\phi (1009))
+      out: \text{True}
+z-8-times-cong-c-2-times-c-2-is-not-cyclic:
+  sage:
+    in: enumeratio_primitive_root_list(8)
+    out: "[]"
+  wolfram:
+    in: PrimitiveRootList[8]
+    out: "{}"
+    tex:
+      in: \text{PrimitiveRootList}[8]
+      out: \{\}
+past-100-000-roots-the-list-is-not-built-but-its:
+  sage:
+    in: len(enumeratio_primitive_root_list(1000003))
+    out: "333332"
+  wolfram:
+    in: Length[PrimitiveRootList[1000003]]
+    out: "333332"
+    tex:
+      in: \text{Length}[\text{PrimitiveRootList}[1000003]]
+      out: "333332"

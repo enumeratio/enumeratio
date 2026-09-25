@@ -1,0 +1,42 @@
+h-10-frac-7381-2520:
+  wolfram:
+    in: HarmonicNumber[10]
+    out: 7381/2520
+    tex:
+      in: H_{10}
+      out: \frac{7381}{2520}
+h-0-0-the-empty-sum:
+  wolfram:
+    in: HarmonicNumber[0]
+    out: "0"
+    tex:
+      in: H_0
+      out: "0"
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still:
+  wolfram:
+    in: HarmonicNumber[5, -1]
+    out: "15"
+    tex:
+      in: H_5^{(-1)}
+      out: "15"
+a-floating-point-argument-evaluates-via-psi-z-1:
+  wolfram:
+    in: HarmonicNumber[2.5]
+    out: "1.680372305546776"
+    tex:
+      in: H_{2.5}
+      out: "1.68037"
+no-sum-below-n-0:
+  wolfram:
+    in: HarmonicNumber[-3]
+    out: ComplexInfinity
+    tex:
+      in: H_{-3}
+      out: \text{ComplexInfinity}
+a-non-integer-order-stays-symbolic-under-plain:
+  wolfram:
+    in: HarmonicNumber[5, Rational[1, 2]]
+    out: HarmonicNumber[5, 1/2]
+    tex:
+      in: H_5^{\left(\frac{1}{2}\right)}
+      out: H_5^{\left(\frac{1}{2}\right)}

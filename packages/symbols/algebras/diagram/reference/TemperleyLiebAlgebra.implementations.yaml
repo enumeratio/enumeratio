@@ -1,0 +1,19 @@
+c-4:
+  sage:
+    in: (TemperleyLiebAlgebra(4, enumeratio_delta, enumeratio_ring)).dimension()
+    out: "14"
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:temperley_lieb, 4))
+    out: "14"
+the-cup-cap-is-planar-so-it-belongs:
+  sage:
+    in: enumeratio_element(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))
+    out: True
+e-1-2-delta-e-1:
+  sage:
+    in: (enumeratio_diagram([[1, 2], [-1, -2]]) * enumeratio_diagram([[1, 2], [-1, -2]]))
+    out: delta*P{{-2, -1}, {1, 2}}
+the-cup-cap-and-the-identity-all-of-tl-2:
+  sage:
+    in: list((TemperleyLiebAlgebra(2, enumeratio_delta, enumeratio_ring)).basis())
+    out: "[T{{-2, -1}, {1, 2}}, T{{-2, 2}, {-1, 1}}]"

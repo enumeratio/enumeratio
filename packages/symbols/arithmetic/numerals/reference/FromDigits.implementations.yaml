@@ -1,0 +1,59 @@
+fromdigits-list-5-1-2-8:
+  wolfram:
+    in: FromDigits[List[5, 1, 2, 8]]
+    out: "5128"
+    tex:
+      in: \text{FromDigits}[\{5,1,2,8\}]
+      out: "5128"
+fromdigits-list-1-0-1-1-0-1-1-2:
+  wolfram:
+    in: FromDigits[List[1, 0, 1, 1, 0, 1, 1], 2]
+    out: "91"
+    tex:
+      in: \text{FromDigits}[\{1,0,1,1,0,1,1\},2]
+      out: "91"
+fromdigits-inverts-integerdigits:
+  wolfram:
+    in: (FromDigits[IntegerDigits[58127]] == 58127)
+    out: True
+    tex:
+      in: \text{FromDigits}[\text{IntegerDigits}[58127]]=58127
+      out: \text{True}
+digits-the-base-carry-into-higher-place-values-7:
+  wolfram:
+    in: FromDigits[List[7, 11, 0, 0, 0, 122]]
+    out: "810122"
+    tex:
+      in: \text{FromDigits}[\{7,11,0,0,0,122\}]
+      out: "810122"
+an-empty-digit-list-is-left-unevaluated-rather:
+  wolfram:
+    in: FromDigits[List[]]
+    out: "0"
+    tex:
+      in: \text{FromDigits}[\{\}]
+      out: "0"
+    verdict: disagree
+    kind: domain
+    note: An empty digit list is left unevaluated here; Wolfram reads it as 0.
+the-digits-can-be-given-as-a-string-0-9-then-a-z:
+  wolfram:
+    in: FromDigits["1923"]
+    out: "1923"
+    tex:
+      in: \text{FromDigits}[1923]
+      out: "1923"
+ordinary-base-2-as-a-system-value:
+  wolfram:
+    in: FromDigits[List[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1], 2]
+    out: "2147"
+    tex:
+      in: \text{FromDigits}[\{1,0,0,0,0,1,1,0,0,0,1,1\},2]
+      out: "2147"
+1d-2h-3m-4s-back-to-seconds:
+  wolfram:
+    in: FromDigits[List[1, 2, 3, 4], MixedRadix[List[24, 60, 60]]]
+    out: "93784"
+    tex:
+      in: \text{FromDigits}[\{1,2,3,4\},\text{MixedRadix}[\{24,60,60\}]]
+      out: "93784"

@@ -1,0 +1,24 @@
+input-matches-expected:
+  wolfram:
+    in: VerificationTest[Plus[2, 3], 5]
+    out: TestObject[<|"Outcome" -> "Success", "Input" -> HoldForm[2 + 3], "ExpectedOutput" -> HoldForm[5], "ActualOutput" -> HoldForm[5]|>]
+    tex:
+      in: \text{VerificationTest}[2+3,5]
+      out: \text{TestObject}[\unicode{f113}\text{Outcome}\to \text{Success},\text{Input}\to 2+3,\text{ExpectedOutput}\to 5,\text{ActualOutput}\to 5\unicode{f114}]
+    verdict: disagree
+    kind: convention
+    note: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.
+input-evaluates-but-does-not-match-expected:
+  wolfram:
+    in: VerificationTest[Plus[2, 3], 6]
+    out: TestObject[<|"Outcome" -> "Failure", "Input" -> HoldForm[2 + 3], "ExpectedOutput" -> HoldForm[6], "ActualOutput" -> HoldForm[5]|>]
+    tex:
+      in: \text{VerificationTest}[2+3,6]
+      out: \text{TestObject}[\unicode{f113}\text{Outcome}\to \text{Failure},\text{Input}\to 2+3,\text{ExpectedOutput}\to 6,\text{ActualOutput}\to 5\unicode{f114}]
+    verdict: disagree
+    kind: convention
+    note: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.
+one-argument-succeeds-whenever-input-evaluates:
+  wolfram:
+    in: VerificationTest[Plus[1, 1]]
+    note: Wolfram's one-argument form tests that input evaluates to True, so VerificationTest[1 + 1] is a Failure there.

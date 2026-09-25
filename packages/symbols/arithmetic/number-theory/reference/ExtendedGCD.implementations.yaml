@@ -1,0 +1,94 @@
+extendedgcd-2-3:
+  wolfram:
+    in: ExtendedGCD[2, 3]
+    out: "{1, {-1, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[2,3]
+      out: \{1,\{-1,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+extendedgcd-12-18:
+  wolfram:
+    in: ExtendedGCD[12, 18]
+    out: "{6, {-1, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[12,18]
+      out: \{6,\{-1,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+the-modular-inverse-of-3-mod-11-is-4-since-3:
+  wolfram:
+    in: ExtendedGCD[3, 11]
+    out: "{1, {4, -1}}"
+    tex:
+      in: \text{ExtendedGCD}[3,11]
+      out: \{1,\{4,-1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+bezout-coefficients-when-a-0-0-times-0-5-times-1:
+  wolfram:
+    in: ExtendedGCD[0, 5]
+    out: "{5, {0, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[0,5]
+      out: \{5,\{0,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+confirms-the-coefficients-above-satisfy-2x-3y:
+  wolfram:
+    in: Plus[Times[2, -1], Times[3, 1]]
+    out: "1"
+    tex:
+      in: 2 (-1)+3\ 1
+      out: "1"
+  sage:
+    in: ((2 * -1) + (3 * 1))
+    out: "1"
+  julia:
+    in: ((2 * -1) + (3 * 1))
+    out: "1"
+  oscar:
+    in: ((2 * -1) + (3 * 1))
+    out: "1"
+  mathlib4:
+    in: ((2 * (-1)) + (3 * 1))
+    out: "1"
+  rust:
+    in: ((n(2) * n(-1)) + (n(3) * n(1)))
+    out: "1"
+  mpmath:
+    in: ((2 * -1) + (3 * 1))
+    out: "1"
+  sympy:
+    in: ((2 * -1) + (3 * 1))
+    out: "1"
+any-number-of-arguments-folding-pairwise-6-times:
+  wolfram:
+    in: ExtendedGCD[6, 15, 30]
+    note: "Same values: ours is the flat Tuple (g, x₁, x₂, x₃), Wolfram's is {g, {x₁, x₂, x₃}}."
+gaussian-integers-by-euclid-with-the-rounded:
+  wolfram:
+    in: ExtendedGCD[Complex[7, 2], Complex[3, -5]]
+    out: "{1, {-1 - 2*I, -2 + 2*I}}"
+    tex:
+      in: \text{ExtendedGCD}[7+2 i,3-5 i]
+      out: \{1,\{-1-2 i,-2+2 i\}\}
+    verdict: disagree
+    kind: shape
+    note: Bézout coefficients are not unique; in about one case in a thousand Wolfram returns another valid pair.
+extendedgcd-3-5:
+  wolfram:
+    in: ExtendedGCD[3, 5]
+    note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+negative-arguments-12-18-6:
+  wolfram:
+    in: ExtendedGCD[-12, 18]
+    note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+big-integers-the-coefficients-stay-minimal-x-b:
+  wolfram:
+    in: ExtendedGCD[Power[2, 100], Power[3, 50]]
+    note: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."

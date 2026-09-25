@@ -1,0 +1,177 @@
+bellnumber-0:
+  wolfram:
+    in: BellB[0]
+    out: "1"
+    tex:
+      in: B_0
+      out: "1"
+  sage:
+    in: bell_number(0)
+    out: "1"
+  julia:
+    in: bell(0)
+    out: "1"
+  oscar:
+    in: bell(0)
+    out: "1"
+  sympy:
+    in: bell(0)
+    out: "1"
+bellnumber-1:
+  wolfram:
+    in: BellB[1]
+    out: "1"
+    tex:
+      in: B_1
+      out: "1"
+  sage:
+    in: bell_number(1)
+    out: "1"
+  julia:
+    in: bell(1)
+    out: "1"
+  oscar:
+    in: bell(1)
+    out: "1"
+  sympy:
+    in: bell(1)
+    out: "1"
+bellnumber-3:
+  wolfram:
+    in: BellB[3]
+    out: "5"
+    tex:
+      in: B_3
+      out: "5"
+  sage:
+    in: bell_number(3)
+    out: "5"
+  julia:
+    in: bell(3)
+    out: "5"
+  oscar:
+    in: bell(3)
+    out: "5"
+  sympy:
+    in: bell(3)
+    out: "5"
+bellnumber-5:
+  wolfram:
+    in: BellB[5]
+    out: "52"
+    tex:
+      in: B_5
+      out: "52"
+  sage:
+    in: bell_number(5)
+    out: "52"
+  julia:
+    in: bell(5)
+    out: "52"
+  oscar:
+    in: bell(5)
+    out: "52"
+  sympy:
+    in: bell(5)
+    out: "52"
+bellnumber-10:
+  wolfram:
+    in: BellB[10]
+    out: "115975"
+    tex:
+      in: B_{10}
+      out: "115975"
+  sage:
+    in: bell_number(10)
+    out: "115975"
+  julia:
+    in: bell(10)
+    out: "115975"
+  oscar:
+    in: bell(10)
+    out: "115975"
+  sympy:
+    in: bell(10)
+    out: "115975"
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
+  wolfram:
+    in: (BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])
+    out: True
+    tex:
+      in: B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4
+      out: \text{True}
+  sage:
+    in: bool(bell_number(5) == ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))
+    out: True
+  julia:
+    in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
+    out: "true"
+  oscar:
+    in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(bell(5), ((binomial(4, 0) * bell(0)) + (binomial(4, 1) * bell(1)) + (binomial(4, 2) * bell(2)) + (binomial(4, 3) * bell(3)) + (binomial(4, 4) * bell(4))))
+    out: True
+the-number-of-ways-to-partition-a-4-element-set:
+  wolfram:
+    in: BellB[4]
+    out: "15"
+    tex:
+      in: B_4
+      out: "15"
+  sage:
+    in: bell_number(4)
+    out: "15"
+  julia:
+    in: bell(4)
+    out: "15"
+  oscar:
+    in: bell(4)
+    out: "15"
+  sympy:
+    in: bell(4)
+    out: "15"
+a-negative-argument-is-left-unevaluated:
+  wolfram:
+    in: BellB[-1]
+    out: BellB[-1]
+    tex:
+      in: B_{-1}
+      out: B_{-1}
+  sage:
+    in: bell_number(-1)
+    out: "ArithmeticError: Bell numbers not defined for negative indices"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BellNumber", -1] and Sage raises an error.'
+  julia:
+    in: bell(-1)
+    out: "DomainError with -1: Argument must be non-negative"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BellNumber", -1] and Nemo/Combinatorics.jl raises an error.'
+  oscar:
+    in: bell(-1)
+    out: "DomainError with -1: Argument must be non-negative"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BellNumber", -1] and Oscar raises an error.'
+  sympy:
+    in: bell(-1)
+    out: "ValueError: a non-negative integer expected"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: BellB[List[1, 2, 3, 4]]
+    out: "{1, 2, 5, 15}"
+    tex:
+      in: B_{\{1,2,3,4\}}
+      out: \{1,2,5,15\}
+  sympy:
+    in: bell([1, 2, 3, 4])
+    out: "AttributeError: 'list' object has no attribute 'is_negative'"
+    verdict: error
+    kind: threading
+    note: compute-engine's BellNumber is Listable and threads over the list; SymPy's takes scalars only.

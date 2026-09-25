@@ -1,0 +1,176 @@
+lucasl-0:
+  wolfram:
+    in: LucasL[0]
+    out: "2"
+    tex:
+      in: L_0
+      out: "2"
+  sage:
+    in: lucas_number2(0, 1, -1)
+    out: "2"
+  julia:
+    in: Combinatorics.lucasnum(0)
+    out: "2"
+  sympy:
+    in: lucas(0)
+    out: "2"
+lucasl-1:
+  wolfram:
+    in: LucasL[1]
+    out: "1"
+    tex:
+      in: L_1
+      out: "1"
+  sage:
+    in: lucas_number2(1, 1, -1)
+    out: "1"
+  julia:
+    in: Combinatorics.lucasnum(1)
+    out: "1"
+  sympy:
+    in: lucas(1)
+    out: "1"
+lucasl-5:
+  wolfram:
+    in: LucasL[5]
+    out: "11"
+    tex:
+      in: L_5
+      out: "11"
+  sage:
+    in: lucas_number2(5, 1, -1)
+    out: "11"
+  julia:
+    in: Combinatorics.lucasnum(5)
+    out: "11"
+  sympy:
+    in: lucas(5)
+    out: "11"
+lucasl-10:
+  wolfram:
+    in: LucasL[10]
+    out: "123"
+    tex:
+      in: L_{10}
+      out: "123"
+  sage:
+    in: lucas_number2(10, 1, -1)
+    out: "123"
+  julia:
+    in: Combinatorics.lucasnum(10)
+    out: "123"
+  sympy:
+    in: lucas(10)
+    out: "123"
+l-n-f-n-1-f-n-1-here-at-n-6:
+  wolfram:
+    in: (LucasL[6] == Plus[Fibonacci[5], Fibonacci[7]])
+    out: True
+    tex:
+      in: L_6=F_5+F_7
+      out: \text{True}
+  sage:
+    in: bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))
+    out: True
+  julia:
+    in: (Combinatorics.lucasnum(6) == (fibonacci(5) + fibonacci(7)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(lucas(6), (fibonacci(5) + fibonacci(7)))
+    out: True
+conversely-f-n-frac-l-n-1-l-n-1-5:
+  wolfram:
+    in: (Fibonacci[6] == Divide[Plus[LucasL[5], LucasL[7]], 5])
+    out: True
+    tex:
+      in: F_6=\frac{L_5+L_7}{5}
+      out: \text{True}
+  sage:
+    in: bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))
+    out: True
+  julia:
+    in: (fibonacci(6) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(fibonacci(6), (S((lucas(5) + lucas(7))) / 5))
+    out: True
+a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n:
+  wolfram:
+    in: Subtract[Times[LucasL[4], LucasL[6]], Power[LucasL[5], 2]]
+    out: "5"
+    tex:
+      in: L_4 L_6-\left(L_5\right){}^2
+      out: "5"
+  sage:
+    in: ((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - (lucas_number2(5, 1, -1)^2))
+    out: "5"
+  julia:
+    in: ((Combinatorics.lucasnum(4) * Combinatorics.lucasnum(6)) - (big(Combinatorics.lucasnum(5))^2))
+    out: "5"
+  sympy:
+    in: ((lucas(4) * lucas(6)) - (lucas(5)**2))
+    out: "5"
+negative-indices-are-supported-via-l-n-1-n-l-n:
+  wolfram:
+    in: LucasL[-1]
+    out: "-1"
+    tex:
+      in: L_{-1}
+      out: "-1"
+  sage:
+    in: lucas_number2(-1, 1, -1)
+    out: "-1"
+  julia:
+    in: Combinatorics.lucasnum(-1)
+    out: "DomainError with -1: n must be nonnegative"
+    verdict: error
+    kind: domain
+    note: compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only.
+  sympy:
+    in: lucas(-1)
+    out: "-1"
+consecutive-ratios-l-n-1-l-n-converge-to-the:
+  wolfram:
+    in: Divide[LucasL[15], LucasL[14]]
+    out: 1364/843
+    tex:
+      in: \frac{L_{15}}{L_{14}}
+      out: \frac{1364}{843}
+  sage:
+    in: (lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))
+    out: 1364/843
+  julia:
+    in: (Combinatorics.lucasnum(15) // Combinatorics.lucasnum(14))
+    out: "1.6180308422301304"
+  sympy:
+    in: (S(lucas(15)) / lucas(14))
+    out: 1364/843
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: LucasL[List[1, 2, 3, 4]]
+    out: "{1, 3, 4, 7}"
+    tex:
+      in: L_{\{1,2,3,4\}}
+      out: \{1,3,4,7\}
+  sympy:
+    in: lucas([1, 2, 3, 4])
+    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's LucasL is Listable and threads over the list; SymPy's takes scalars only.
+l-30-already-tops-1-8-million-growing-at-the:
+  wolfram:
+    in: LucasL[30]
+    out: "1860498"
+    tex:
+      in: L_{30}
+      out: "1860498"
+  sage:
+    in: lucas_number2(30, 1, -1)
+    out: "1860498"
+  julia:
+    in: Combinatorics.lucasnum(30)
+    out: "1860498"
+  sympy:
+    in: lucas(30)
+    out: "1860498"

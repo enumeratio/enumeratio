@@ -1,0 +1,28 @@
+n-forces-the-numeric-result-that-plain:
+  wolfram:
+    in: N[Tanh[0]]
+    out: 0.
+    tex:
+      in: N[\tanh (0)]
+      out: 0.
+n-tanh-1:
+  wolfram:
+    in: N[Tanh[1]]
+    out: "0.7615941559557649"
+    tex:
+      in: N[\tanh (1)]
+      out: "0.761594"
+tanh-x-frac-sinh-x-cosh-x:
+  wolfram:
+    in: (Tanh[1] == Divide[Sinh[1], Cosh[1]])
+    out: True
+    tex:
+      in: \tanh (1)=\frac{\sinh (1)}{\cosh (1)}
+      out: \text{True}
+stays-symbolic-even-at-0-same-as-sinh-and-cosh:
+  wolfram:
+    in: Tanh[0]
+    out: "0"
+    tex:
+      in: \tanh (0)
+      out: "0"

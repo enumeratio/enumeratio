@@ -1,0 +1,21 @@
+join-list-1-2-list-3-4:
+  wolfram:
+    in: Join[List[1, 2], List[3, 4]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{Join}[\{1,2\},\{3,4\}]
+      out: \{1,2,3,4\}
+join-list-1-2-list-3-4-list-5:
+  wolfram:
+    in: Join[List[1, 2], List[3, 4], List[5]]
+    out: "{1, 2, 3, 4, 5}"
+    tex:
+      in: \text{Join}[\{1,2\},\{3,4\},\{5\}]
+      out: \{1,2,3,4,5\}
+join-a-b-flatten-a-b-1-see-flatten:
+  wolfram:
+    in: (Join[List[1, 2], List[3, 4]] == Flatten[List[List[1, 2], List[3, 4]], 1])
+    out: True
+    tex:
+      in: \text{Join}[\{1,2\},\{3,4\}]=\text{Flatten}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right),1\right]
+      out: \text{True}

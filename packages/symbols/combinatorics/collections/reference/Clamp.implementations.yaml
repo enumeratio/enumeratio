@@ -1,0 +1,42 @@
+clamp-5-0-3:
+  wolfram:
+    in: Clip[5, List[0, 3]]
+    out: "3"
+    tex:
+      in: \text{Clip}[5,\{0,3\}]
+      out: "3"
+clamp-neg-1-0-3:
+  wolfram:
+    in: Clip[-1, List[0, 3]]
+    out: "0"
+    tex:
+      in: \text{Clip}[-1,\{0,3\}]
+      out: "0"
+values-already-inside-the-range-pass-through:
+  wolfram:
+    in: Clip[2, List[0, 3]]
+    out: "2"
+    tex:
+      in: \text{Clip}[2,\{0,3\}]
+      out: "2"
+idempotent-clamping-an-already-clamped-value:
+  wolfram:
+    in: (Clip[Clip[5, List[0, 3]], List[0, 3]] == Clip[5, List[0, 3]])
+    out: True
+    tex:
+      in: \text{Clip}[\text{Clip}[5,\{0,3\}],\{0,3\}]=\text{Clip}[5,\{0,3\}]
+      out: \text{True}
+capping-a-percentage-like-value-at-100:
+  wolfram:
+    in: Clip[112, List[0, 100]]
+    out: "100"
+    tex:
+      in: \text{Clip}[112,\{0,100\}]
+      out: "100"
+no-validation-that-lower-upper-with-the-bounds:
+  wolfram:
+    in: Clip[5, List[3, 0]]
+    out: "0"
+    tex:
+      in: \text{Clip}[5,\{3,0\}]
+      out: "0"

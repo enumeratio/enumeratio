@@ -41,8 +41,6 @@ examples:
     expected: [List, [List, 1, ExponentialE], [List, ExponentialE, 1]]
     category: Scope
     caption: Broadcasts element-wise, giving $\begin{pmatrix}1 & e\\ e & 1\end{pmatrix}$ -- NOT the matrix exponential $\begin{pmatrix}\cosh 1 & \sinh 1\\ \sinh 1 & \cosh 1\end{pmatrix}$, which is [[MatrixExp]]
-    divergence:
-      wolfram: Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.
   - id: a-machine-precision-argument-evaluates
     expr: [Exp, 3.4]
     expected: { num: "29.9641000473970133482" }
@@ -77,8 +75,6 @@ examples:
       ]
     category: Scope
     caption: A special imaginary argument folds through $e^{i\theta} = \cos\theta + i\sin\theta$
-    divergence:
-      wolfram: Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.
   - id: exp-ln-2
     expr: [Exp, [Ln, 2]]
     expected: 2
@@ -98,8 +94,6 @@ examples:
     expected: [Power, ExponentialE, [Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 2]]]
     category: Possible issues
     caption: $e^{\ln(-2)}$ is left as $e^{i\pi + \ln 2}$ rather than folding to $-2$
-    divergence:
-      wolfram: Wolfram folds Exp[Log[-2]] to -2 (and native compute-engine does too, checked against a bare engine with nothing declared) -- this package's own Ln(-q) = Ln(q) + i*pi rule (widened.ts, a deliberate, documented choice, see Ln.yaml) evaluates the negative-real Ln away before Exp's native e^(ln z) = z fold ever sees a literal Ln node to recognize, since Exp(z) canonicalizes straight to Power(ExponentialE, z) inside compute-engine's own box() step without ever consulting a customizable canonical hook (confirmed by patching Power's canonical and evaluate directly and observing neither intercepts in time). N(Exp(Ln(-2))) is unaffected, still -2.
   - id: exp-negativeinfinity
     expr: [Exp, NegativeInfinity]
     expected: 0

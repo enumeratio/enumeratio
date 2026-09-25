@@ -1,0 +1,28 @@
+flatten-list-list-1-2-list-3-4:
+  wolfram:
+    in: Flatten[List[List[1, 2], List[3, 4]]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{Flatten}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]
+      out: \{1,2,3,4\}
+flatten-list-list-1-list-2-3-list-4:
+  wolfram:
+    in: Flatten[List[List[1, List[2, 3]], List[4]]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{Flatten}[\{\{1,\{2,3\}\},\{4\}\}]
+      out: \{1,2,3,4\}
+a-depth-argument-limits-flattening-to-just-that:
+  wolfram:
+    in: Flatten[List[List[1, 2], List[3, List[4]]], 1]
+    out: "{1, 2, 3, {4}}"
+    tex:
+      in: \text{Flatten}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & \{4\} \\ \end{array} \right),1\right]
+      out: \{1,2,3,\{4\}\}
+flatten-undoes-partition-chunking-and-re:
+  wolfram:
+    in: (Flatten[Partition[List[1, 2, 3, 4, 5, 6], 2]] == List[1, 2, 3, 4, 5, 6])
+    out: True
+    tex:
+      in: \text{Flatten}[\text{Partition}[\{1,2,3,4,5,6\},2]]=\{1,2,3,4,5,6\}
+      out: \text{True}

@@ -21,10 +21,10 @@
 import { appendFileSync, writeFileSync } from "node:fs";
 import { runCases } from "@enumeratio/aestimatio/src/node";
 import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
-import { entryFiles as filesOf } from "../src/node.ts";
+import { referenceEntries } from "../src/node.ts";
 import { verdictOf } from "./oracle-verdict.ts";
 
-const entryFiles = filesOf();
+const entries = referenceEntries();
 
 const args = process.argv.slice(2);
 const option = (name: string): string | undefined => {
@@ -162,17 +162,15 @@ interface Sample {
   readonly expr: MathJSON;
 }
 
-const templates: Template[] = entryFiles.flatMap(({ entries }) =>
-  entries.flatMap((entry) =>
-    entry.examples
-      .filter((example) => example.aspirational !== true && example.volatile === undefined)
-      .filter((example) => systems.some((system) => emit(example.expr as MathJSON, system).ok))
-      .map((example) => ({
-        id: `${entry.name}/${example.id}`,
-        expr: example.expr as MathJSON,
-        others: (example.others ?? {}) as Template["others"],
-      })),
-  ),
+const templates: Template[] = entries.flatMap((entry) =>
+  entry.examples
+    .filter((example) => example.aspirational !== true && example.volatile === undefined)
+    .filter((example) => systems.some((system) => emit(example.expr as MathJSON, system).ok))
+    .map((example) => ({
+      id: `${entry.name}/${example.id}`,
+      expr: example.expr as MathJSON,
+      others: (example.others ?? {}) as Template["others"],
+    })),
 );
 
 const samples: Sample[] = [];

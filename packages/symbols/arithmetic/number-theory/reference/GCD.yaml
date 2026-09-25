@@ -47,8 +47,6 @@ examples:
     expected: 2
     category: Possible issues
     caption: Lists aren't threaded element-wise; they're flattened into extra arguments, so this equals $\gcd(2,4,6,8)$
-    divergence:
-      wolfram: Wolfram's GCD is Listable and threads element-wise ({gcd(2,6), gcd(4,8)}); compute-engine flattens the lists into arguments, gcd(2,4,6,8).
   - id: commutative-gcd-a-b-gcd-b-a
     expr: [Equal, [GCD, 12, 18], [GCD, 18, 12]]
     expected: True

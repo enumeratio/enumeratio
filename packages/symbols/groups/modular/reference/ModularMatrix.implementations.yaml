@@ -1,0 +1,10 @@
+words-multiply-their-matrices:
+  wolfram:
+    in: Dot["L", "R"]
+    out: '"L" . "R"'
+    tex:
+      in: \text{L}.\text{R}
+      out: \text{L}.\text{R}
+    verdict: disagree
+    kind: domain
+    note: Wolfram has no word spelling for a modular-group element; its Dot leaves two strings unevaluated.

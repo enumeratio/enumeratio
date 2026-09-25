@@ -1,0 +1,14 @@
+tabulate-function-1-pow-2-5:
+  wolfram:
+    in: Array[Function[Power[Slot[1], 2]], 5]
+    out: "{1, 4, 9, 16, 25}"
+    tex:
+      in: \text{Array}\left[\text{$\#$1}^2\&,5\right]
+      out: \{1,4,9,16,25\}
+the-multi-dimensional-form-a-rectangular-grid:
+  wolfram:
+    in: Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]
+    out: "{{1, 2}, {2, 4}}"
+    tex:
+      in: \text{Array}[\text{$\#$1} \text{$\#$2}\&,\{2,2\}]
+      out: \left( \begin{array}{cc}  1 & 2 \\  2 & 4 \\ \end{array} \right)

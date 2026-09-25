@@ -1,0 +1,152 @@
+lcm-4-6:
+  wolfram:
+    in: LCM[4, 6]
+    out: "12"
+    tex:
+      in: \text{lcm}(4,6)
+      out: "12"
+  sage:
+    in: lcm(4, 6)
+    out: "12"
+  julia:
+    in: lcm(ZZ(4), ZZ(6))
+    out: "12"
+  oscar:
+    in: lcm(ZZ(4), ZZ(6))
+    out: "12"
+  mathlib4:
+    in: (Int.lcm 4 6)
+    out: "12"
+  rust:
+    in: lcm(n(4), n(6))
+    out: "12"
+  sympy:
+    in: lcm(4, 6)
+    out: "12"
+lcm-is-variadic-it-accepts-any-number-of:
+  wolfram:
+    in: LCM[4, 6, 10]
+    out: "60"
+    tex:
+      in: \text{lcm}(4,6,10)
+      out: "60"
+a-single-argument-is-returned-unchanged:
+  wolfram:
+    in: LCM[5]
+    out: "5"
+    tex:
+      in: \text{lcm}(5)
+      out: "5"
+0-absorbs-the-lcm-with-0-is-0:
+  wolfram:
+    in: LCM[0, 5]
+    out: "0"
+    tex:
+      in: \text{lcm}(0,5)
+      out: "0"
+  sage:
+    in: lcm(0, 5)
+    out: "0"
+  julia:
+    in: lcm(ZZ(0), ZZ(5))
+    out: "0"
+  oscar:
+    in: lcm(ZZ(0), ZZ(5))
+    out: "0"
+  mathlib4:
+    in: (Int.lcm 0 5)
+    out: "0"
+  rust:
+    in: lcm(n(0), n(5))
+    out: "0"
+  sympy:
+    in: lcm(0, 5)
+    out: "0"
+signs-are-discarded-before-computing-the-lcm:
+  wolfram:
+    in: LCM[-3, 7]
+    out: "21"
+    tex:
+      in: \text{lcm}(-3,7)
+      out: "21"
+  sage:
+    in: lcm(-3, 7)
+    out: "21"
+  julia:
+    in: lcm(ZZ(-3), ZZ(7))
+    out: "21"
+  oscar:
+    in: lcm(ZZ(-3), ZZ(7))
+    out: "21"
+  mathlib4:
+    in: (Int.lcm (-3) 7)
+    out: "21"
+  rust:
+    in: lcm(n(-3), n(7))
+    out: "21"
+  sympy:
+    in: lcm(-3, 7)
+    out: "21"
+gcd-a-b-cdot-lcm-a-b-ab-see-gcd:
+  wolfram:
+    in: (Times[GCD[27, 81], LCM[27, 81]] == Times[27, 81])
+    out: True
+    tex:
+      in: \gcd (27,81) \text{lcm}(27,81)=27\ 81
+      out: \text{True}
+  sage:
+    in: bool((gcd(27, 81) * lcm(27, 81)) == (27 * 81))
+    out: True
+  julia:
+    in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
+    out: "true"
+  oscar:
+    in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
+    out: "true"
+  mathlib4:
+    in: (decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))
+    out: "true"
+  rust:
+    in: equal((gcd(n(27), n(81)) * lcm(n(27), n(81))), (n(27) * n(81)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((gcd(27, 81) * lcm(27, 81)), (27 * 81))
+    out: True
+over-the-rationals-the-lcm-of-the-numerators:
+  wolfram:
+    in: LCM[Rational[1, 3], Rational[2, 5], Rational[3, 7]]
+    out: "6"
+    tex:
+      in: \text{lcm}\left(\frac{1}{3},\frac{2}{5},\frac{3}{7}\right)
+      out: "6"
+1-3i-i-3-i-associates-share-their-multiples:
+  wolfram:
+    in: LCM[Complex[3, 1], Complex[-1, 3]]
+    out: 3 + I
+    tex:
+      in: \text{lcm}(3+i,-1+3 i)
+      out: 3+i
+  sympy:
+    in: lcm((3 + 1*I), (-1 + 3*I))
+    out: -1 + 3*I
+    verdict: disagree
+    kind: convention
+    note: Gaussian lcm is defined up to a unit; SymPy picks a different associate.
+  julia:
+    in: lcm(ZZ(complex(3, 1)), ZZ(complex(-1, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  oscar:
+    in: lcm(ZZ(complex(3, 1)), ZZ(complex(-1, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sage:
+    in: lcm((3 + 1*I), (-1 + 3*I))
+    out: "1"
+    verdict: inconclusive
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.

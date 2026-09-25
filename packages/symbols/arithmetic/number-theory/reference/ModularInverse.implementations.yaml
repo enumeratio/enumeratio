@@ -1,0 +1,49 @@
+3-cdot-5-15-equiv-1:
+  sage:
+    in: inverse_mod(3, 7)
+    out: "5"
+  wolfram:
+    in: ModularInverse[3, 7]
+    out: "5"
+    tex:
+      in: \text{ModularInverse}[3,7]
+      out: "5"
+2-i-6-4i-8-14i-equiv-1-pmod-7:
+  wolfram:
+    in: ModularInverse[Complex[2, 1], 7]
+    out: 6 + 4*I
+    tex:
+      in: \text{ModularInverse}[2+i,7]
+      out: 6+4 i
+  sage:
+    in: inverse_mod((2 + 1*I), 7)
+    out: -3*I - 1
+    verdict: disagree
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+modularinverse-11-plus-neg-7-times-i-7-plus-4i:
+  wolfram:
+    in: ModularInverse[Complex[11, -7], Complex[7, 4]]
+    out: -1 + 2*I
+    tex:
+      in: \text{ModularInverse}[11-7 i,7+4 i]
+      out: -1+2 i
+  sage:
+    in: inverse_mod((11 + -7*I), (7 + 4*I))
+    out: "28"
+    verdict: inconclusive
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+gcd-2-4-2-no-inverse:
+  sage:
+    in: inverse_mod(2, 4)
+    out: "ZeroDivisionError: inverse of Mod(2, 4) does not exist"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["ModularInverse", 2, 4] and Sage raises an error.'
+  wolfram:
+    in: ModularInverse[2, 4]
+    out: ModularInverse[2, 4]
+    tex:
+      in: \text{ModularInverse}[2,4]
+      out: \text{ModularInverse}[2,4]

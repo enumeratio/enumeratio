@@ -1,0 +1,18 @@
+all-list-2-4-6-function-1-mod-2-eq-0:
+  wolfram:
+    in: AllTrue[List[2, 4, 6], Function[(Mod[Slot[1], 2] == 0)]]
+    out: True
+    tex:
+      in: \text{AllTrue}[\{2,4,6\},(\text{$\#$1} \bmod 2)=0\&]
+      out: \text{True}
+all-list-2-4-5-function-1-mod-2-eq-0:
+  wolfram:
+    in: AllTrue[List[2, 4, 5], Function[(Mod[Slot[1], 2] == 0)]]
+    out: False
+    tex:
+      in: \text{AllTrue}[\{2,4,5\},(\text{$\#$1} \bmod 2)=0\&]
+      out: \text{False}
+without-a-predicate-tests-the-elements:
+  wolfram:
+    in: AllTrue[List[True, True]]
+    note: AllTrue needs a test; $\mathrm{AllTrue}[\{True, True\}]$ stays unevaluated.

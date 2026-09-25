@@ -1,0 +1,130 @@
+factorinteger-360:
+  wolfram:
+    in: FactorInteger[360]
+    out: "{{2, 3}, {3, 2}, {5, 1}}"
+    tex:
+      in: \text{FactorInteger}[360]
+      out: \left( \begin{array}{cc}  2 & 3 \\  3 & 2 \\  5 & 1 \\ \end{array} \right)
+  sage:
+    in: list(factor(360))
+    out: "[(2, 3), (3, 2), (5, 1)]"
+factorinteger-84:
+  wolfram:
+    in: FactorInteger[84]
+    out: "{{2, 2}, {3, 1}, {7, 1}}"
+    tex:
+      in: \text{FactorInteger}[84]
+      out: \left( \begin{array}{cc}  2 & 2 \\  3 & 1 \\  7 & 1 \\ \end{array} \right)
+  sage:
+    in: list(factor(84))
+    out: "[(2, 2), (3, 1), (7, 1)]"
+the-hardy-ramanujan-taxicab-number-7-times-13:
+  wolfram:
+    in: FactorInteger[1729]
+    out: "{{7, 1}, {13, 1}, {19, 1}}"
+    tex:
+      in: \text{FactorInteger}[1729]
+      out: \left( \begin{array}{cc}  7 & 1 \\  13 & 1 \\  19 & 1 \\ \end{array} \right)
+  sage:
+    in: list(factor(1729))
+    out: "[(7, 1), (13, 1), (19, 1)]"
+multiplying-the-p-e-factors-back-together:
+  wolfram:
+    in: (Times[Power[2, 3], Power[3, 2], 5] == 360)
+    out: True
+    tex:
+      in: 2^3 3^2 5=360
+      out: \text{True}
+  sage:
+    in: bool(((2^3) * (3^2) * 5) == 360)
+    out: True
+  julia:
+    in: (((big(2)^3) * (big(3)^2) * 5) == 360)
+    out: "true"
+  oscar:
+    in: (((big(2)^3) * (big(3)^2) * 5) == 360)
+    out: "true"
+  mathlib4:
+    in: (decide (((2 ^ 3) * (3 ^ 2) * 5) = 360))
+    out: "true"
+  rust:
+    in: equal((power(n(2), n(3)) * power(n(3), n(2)) * n(5)), n(360))
+    out: "true"
+  mpmath:
+    in: almosteq(((2**3) * (3**2) * 5), 360, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(((2**3) * (3**2) * 5), 360)
+    out: True
+compute-engine-returns-the-trivial-factor-1-1:
+  wolfram:
+    in: FactorInteger[1]
+    out: "{{1, 1}}"
+    tex:
+      in: \text{FactorInteger}[1]
+      out: \left( \begin{array}{cc}  1 & 1 \\ \end{array} \right)
+  sage:
+    in: list(factor(1))
+    out: "[]"
+    verdict: disagree
+    kind: shape
+    note: Sage's factor() leaves out the unit — factor(1) is the empty product and factor(-60) has no (-1, 1) term — where FactorInteger lists it explicitly, as Wolfram does.
+0-is-represented-as-0-1:
+  wolfram:
+    in: FactorInteger[0]
+    out: "{{0, 1}}"
+    tex:
+      in: \text{FactorInteger}[0]
+      out: \left( \begin{array}{cc}  0 & 1 \\ \end{array} \right)
+  sage:
+    in: list(factor(0))
+    out: "ArithmeticError: factorization of 0 is not defined"
+    verdict: error
+    kind: domain
+    note: compute-engine factors 0 as {{0, 1}}, as Wolfram does; Sage declines to factor 0.
+negative-numbers-carry-an-explicit-1-unit-factor:
+  wolfram:
+    in: FactorInteger[-60]
+    out: "{{-1, 1}, {2, 2}, {3, 1}, {5, 1}}"
+    tex:
+      in: \text{FactorInteger}[-60]
+      out: \left( \begin{array}{cc}  -1 & 1 \\  2 & 2 \\  3 & 1 \\  5 & 1 \\ \end{array} \right)
+  sage:
+    in: list(factor(-60))
+    out: "[(2, 2), (3, 1), (5, 1)]"
+    verdict: disagree
+    kind: shape
+    note: Sage's factor() leaves out the unit — factor(1) is the empty product and factor(-60) has no (-1, 1) term — where FactorInteger lists it explicitly, as Wolfram does.
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: FactorInteger[List[12, 18]]
+    out: "{{{2, 2}, {3, 1}}, {{2, 1}, {3, 2}}}"
+    tex:
+      in: \text{FactorInteger}[\{12,18\}]
+      out: \left( \begin{array}{cc}  \{2,2\} & \{3,1\} \\  \{2,1\} & \{3,2\} \\ \end{array} \right)
+3-4i-2-i-2:
+  wolfram:
+    in: FactorInteger[Complex[3, 4]]
+    out: "{{2 + I, 2}}"
+    tex:
+      in: \text{FactorInteger}[3+4 i]
+      out: \left( \begin{array}{cc}  2+i & 2 \\ \end{array} \right)
+  sage:
+    in: list(factor((3 + 4*I)))
+    out: "[(2*I - 1, 2)]"
+    verdict: disagree
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so FactorInteger over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+a-21-digit-gaussian-integer-through-its-norm:
+  wolfram:
+    in: FactorInteger[Complex[100000000000000000039, 100000000000000000129]]
+    out: "{{-I, 1}, {1 + I, 1}, {99 + 34*I, 1}, {1538 + 213*I, 1}, {277789996706096 + 549000467740335*I, 1}}"
+    tex:
+      in: \text{FactorInteger}[100000000000000000039+100000000000000000129 i]
+      out: \left( \begin{array}{cc}  -i & 1 \\  1+i & 1 \\  99+34 i & 1 \\  1538+213 i & 1 \\  277789996706096+549000467740335 i & 1 \\ \end{array} \right)
+  sage:
+    in: list(factor((100000000000000000039 + 100000000000000000129*I)))
+    out: "[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)]"
+    verdict: disagree
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so FactorInteger over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.

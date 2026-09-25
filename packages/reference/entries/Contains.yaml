@@ -44,8 +44,6 @@ examples:
     expected: True
     category: Possible issues
     caption: An exact and an approximate number with the same value match
-    divergence:
-      wolfram: 'MemberQ compares structurally: $\mathrm{MemberQ}[\{1/2\}, 0.5]$ is False.'
   - id: a-lazy-range-is-searched-without-being
     expr: [Contains, [Range, 100], 50]
     expected: True

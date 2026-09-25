@@ -183,8 +183,6 @@ examples:
       ]
     category: Scope
     caption: Taylor series about 0 -- only even powers appear
-    divergence:
-      wolfram: Wolfram's Series[Cos[x], {x, 0, 6}] ends with O[x]^7; compute-engine skips the vanishing odd term and reports O(x^8).
   - id: double-angle-formula-cos-2x-cos-2-x-sin-2-x
     expr: [TrigExpand, [Cos, [Multiply, 2, x]]]
     expected: [Add, [Negate, [Power, [Sin, x], 2]], [Power, [Cos, x], 2]]
