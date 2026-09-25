@@ -1,7 +1,7 @@
 name: CircularPrimes
 domain: Collections
 signature: CircularPrimes
-summary: 'The circular primes $2, 3, 5, 7, 11, 13, 17, 31, …$: primes whose every base-10 digit rotation is also prime.'
+summary: "The circular primes $2, 3, 5, 7, 11, 13, 17, 31, …$: primes whose every base-10 digit rotation is also prime."
 signatures:
   - call: CircularPrimes
     description: the prime $p$ (no digit 0) with every cyclic rotation of its decimal digits also prime, an indexed collection of open infinitude.

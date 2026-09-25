@@ -67,7 +67,17 @@ examples:
     divergence:
       wolfram: Wolfram's `_Integer` pattern counts every integer element, here 4 (2, 1, 3, 3).
   - id: the-counts-of-the-distinct-values-add-up-to-the
-    expr: [Equal, [Add, [Count, [List, 1, 2, 2, 3, 3, 3], 1], [Count, [List, 1, 2, 2, 3, 3, 3], 2], [Count, [List, 1, 2, 2, 3, 3, 3], 3]], [Length, [List, 1, 2, 2, 3, 3, 3]]]
+    expr:
+      [
+        Equal,
+        [
+          Add,
+          [Count, [List, 1, 2, 2, 3, 3, 3], 1],
+          [Count, [List, 1, 2, 2, 3, 3, 3], 2],
+          [Count, [List, 1, 2, 2, 3, 3, 3], 3],
+        ],
+        [Length, [List, 1, 2, 2, 3, 3, 3]],
+      ]
     expected: True
     category: Properties
     caption: The counts of the distinct values add up to the [[Length]]

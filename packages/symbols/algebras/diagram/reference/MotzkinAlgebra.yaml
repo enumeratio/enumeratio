@@ -14,9 +14,9 @@ signatures:
     library: enumeratio-diagram
 details:
   - Dimension $M(2n)$ = 2, 9, 51, 323 — the Motzkin numbers, which count the same paths with a flat step that Catalan counts without
-  - 'Contains [[TemperleyLiebAlgebra]]: dropping the requirement that every point be paired is exactly what turns Catalan into Motzkin'
+  - "Contains [[TemperleyLiebAlgebra]]: dropping the requirement that every point be paired is exactly what turns Catalan into Motzkin"
   - '`RookAlgebra(n)` counts $\sum_k \binom{n}{k}^2 k!$ — the partial permutations, i.e. the placements of non-attacking rooks'
-  - '`SymmetricGroupAlgebra(n)` is the group algebra of $S_n$, the diagrams that are honest bijections'
+  - "`SymmetricGroupAlgebra(n)` is the group algebra of $S_n$, the diagrams that are honest bijections"
 examples:
   - id: m-6
     expr: [AlgebraDimension, [MotzkinAlgebra, 3]]
@@ -25,12 +25,17 @@ examples:
   - id: algebradimension-rookalgebra-3
     expr: [AlgebraDimension, [RookAlgebra, 3]]
     expected: 34
-  - id: '5'
+  - id: "5"
     expr: [AlgebraDimension, [SymmetricGroupAlgebra, 5]]
     expected: 120
     caption: $5!$
   - id: a-cup-cap-is-not-a-permutation
-    expr: [Element, [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]], [SymmetricGroupAlgebra, 3]]
+    expr:
+      [
+        Element,
+        [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]],
+        [SymmetricGroupAlgebra, 3],
+      ]
     expected: False
     caption: a cup-cap is not a permutation
     category: Properties

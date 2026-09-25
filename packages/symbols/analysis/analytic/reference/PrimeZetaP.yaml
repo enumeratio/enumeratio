@@ -5,7 +5,7 @@ summary: The prime zeta function $P(s) = \sum_p p^{-s}$, the sum over primes. Co
 signatures:
   - call: PrimeZetaP(s)
     description: $P(s)$, for $\operatorname{Re}(s) > 1$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Reuses this package's own `Zeta` (already extended to complex arguments) rather than a fresh prime-summation kernel; $\ln\zeta(ks) \to 0$ geometrically as $k$ grows, so the sum settles in a few dozen terms at double precision.
   - The identity only converges for $\operatorname{Re}(s) > 1$; outside that region (including the pole at $s=1$) this declines rather than attempting an analytic continuation it hasn't proven.

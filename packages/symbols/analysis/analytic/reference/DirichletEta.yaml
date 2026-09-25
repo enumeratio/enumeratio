@@ -5,7 +5,7 @@ summary: The Dirichlet eta function $\eta(s) = \sum_{n\ge1} (-1)^{n-1} n^{-s} = 
 signatures:
   - call: DirichletEta(s)
     description: the Dirichlet eta function $\eta(s)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "$\\eta(s) = (1 - 2^{1-s})\\zeta(s)$: the alternating series converges for $\\operatorname{Re}(s) > 0$, and the factor cancels $\\zeta$'s pole, so $\\eta$ is entire with $\\eta(1) = \\ln 2$."
   - "Integer values follow from [[Zeta]]'s: $\\eta(2) = \\pi^2/12$, $\\eta(0) = \\tfrac12$, $\\eta(-1) = \\tfrac14$, and $\\eta(3) = \\tfrac34\\zeta(3)$ stays in terms of $\\zeta(3)$."
@@ -31,7 +31,7 @@ examples:
     caption: 'Nonpositive integers: $\eta(-n) = (2^{n+1} - 1)\,B_{n+1}/(n+1)$, rational'
   - id: on-the-critical-line-through-1-2-1-s-zeta-s-so
     expr: [DirichletEta, 0.5]
-    expected: {num: '0.604898643421630370245'}
+    expected: { num: "0.604898643421630370245" }
     caption: On the critical line — through $(1 - 2^{1-s})\zeta(s)$, so it carries the engine's working precision
   - id: an-exact-non-integer-argument-stays-symbolic
     expr: [DirichletEta, [Rational, 1, 2]]
@@ -42,7 +42,7 @@ examples:
       wolfram: An exact non-integer argument stays symbolic here; Wolfram rewrites it as $(1-\sqrt2)\zeta(1/2)$ instead.
   - id: numeric-for-a-floating-point-argument
     expr: [DirichletEta, 1.5]
-    expected: {num: '0.765147024625407945367'}
+    expected: { num: "0.765147024625407945367" }
     caption: Numeric for a floating-point argument
   - id: eta-4-frac-78-zeta-4-7-pi-4-720
     expr: [DirichletEta, 4]
@@ -56,7 +56,12 @@ examples:
     caption: Complex arguments
   - id: threads-elementwise-over-an-array
     expr: [DirichletEta, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
-    expected: [List, [List, [DirichletEta, [Rational, 1, 2]], [Rational, 1, 4]], [List, [Rational, 1, 2], [DirichletEta, [Rational, 1, 2]]]]
+    expected:
+      [
+        List,
+        [List, [DirichletEta, [Rational, 1, 2]], [Rational, 1, 4]],
+        [List, [Rational, 1, 2], [DirichletEta, [Rational, 1, 2]]],
+      ]
     category: Scope
     caption: Threads elementwise over an array
     divergence:
@@ -84,7 +89,7 @@ examples:
     aspirational: true
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [DirichletEta, [Rational, 1, 2]], 30]
-    expected: {num: '0.604898643421630370247265914236'}
+    expected: { num: "0.604898643421630370247265914236" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
 implementations:

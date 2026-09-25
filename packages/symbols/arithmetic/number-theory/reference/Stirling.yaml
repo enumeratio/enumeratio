@@ -1,7 +1,7 @@
 name: Stirling
 domain: Combinatorics
 signature: Stirling(n, k)
-summary: 'The Stirling number of the second kind $S(n, k)$: the number of ways to partition an n-set into k non-empty blocks'
+summary: "The Stirling number of the second kind $S(n, k)$: the number of ways to partition an n-set into k non-empty blocks"
 signatures:
   - call: Stirling(n, k)
     description: the number of partitions of an $n$-set into $k$ blocks
@@ -21,12 +21,12 @@ examples:
     expr: [Stirling, 5, 1]
     expected: 1
     category: Properties
-    caption: 'One block means one partition: $S(n, 1) = 1$'
+    caption: "One block means one partition: $S(n, 1) = 1$"
   - id: singletons-only-s-n-n-1
     expr: [Stirling, 5, 5]
     expected: 1
     category: Properties
-    caption: 'Singletons only: $S(n, n) = 1$'
+    caption: "Singletons only: $S(n, n) = 1$"
   - id: row-sums-give-the-bell-numbers
     expr: [Equal, [Sum, [Stirling, 4, k], [Tuple, k, 0, 4]], [BellNumber, 4]]
     expected: True
@@ -54,14 +54,27 @@ examples:
     expr: [Equal, [Stirling, 10, 2], [Subtract, [Power, 2, 9], 1]]
     expected: True
     category: Properties
-    caption: 'Two blocks: $S(n, 2) = 2^{n-1} - 1$'
+    caption: "Two blocks: $S(n, 2) = 2^{n-1} - 1$"
   - id: s-n-n-1-binom-n-2-one-block-is-a-pair
     expr: [Equal, [Stirling, 6, 5], [Binomial, 6, 2]]
     expected: True
     category: Properties
     caption: '$S(n, n-1) = \binom{n}{2}$: one block is a pair'
   - id: explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j
-    expr: [Equal, [Stirling, 6, 3], [Divide, [Sum, [Multiply, [Power, -1, [Subtract, 3, j]], [Binomial, 3, j], [Power, j, 6]], [Tuple, j, 0, 3]], [Factorial, 3]]]
+    expr:
+      [
+        Equal,
+        [Stirling, 6, 3],
+        [
+          Divide,
+          [
+            Sum,
+            [Multiply, [Power, -1, [Subtract, 3, j]], [Binomial, 3, j], [Power, j, 6]],
+            [Tuple, j, 0, 3],
+          ],
+          [Factorial, 3],
+        ],
+      ]
     expected: True
     category: Properties
     caption: Explicit formula $S(n, k) = \frac{1}{k!}\sum_j (-1)^{k-j}\binom{k}{j} j^n$
@@ -79,7 +92,7 @@ examples:
     expr: [Stirling, 5, 0]
     expected: 0
     category: Possible issues
-    caption: 'No blocks for a non-empty set: $S(n, 0) = 0$ for $n > 0$'
+    caption: "No blocks for a non-empty set: $S(n, 0) = 0$ for $n > 0$"
   - id: k-n-is-0
     expr: [Stirling, 3, 5]
     expected: 0

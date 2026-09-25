@@ -23,9 +23,14 @@ details:
   - The map onto the symmetric group's centraliser algebra kills $x_\lambda$ exactly when $\lambda$ has more blocks than $\delta$ — a statement with no clean form in the diagram basis
 examples:
   - id: merging-four-points-into-one-block-1-3-3
-    expr: [PartitionMobius, [Diagram, [List, [List, 1], [List, 2], [List, -1], [List, -2]]], [Diagram, [List, [List, 1, 2, -1, -2]]]]
+    expr:
+      [
+        PartitionMobius,
+        [Diagram, [List, [List, 1], [List, 2], [List, -1], [List, -2]]],
+        [Diagram, [List, [List, 1, 2, -1, -2]]],
+      ]
     expected: -6
-    caption: 'merging four points into one block: $(-1)^3 3! $'
+    caption: "merging four points into one block: $(-1)^3 3! $"
   - id: the-coarsest-partition-has-nothing-above-it
     expr: [InOrbitBasis, [Diagram, [List, [List, 1, -1]]]]
     expected: [OrbitDiagram, [List, [List, 1, -1]]]

@@ -14,10 +14,10 @@ signatures:
     description: sliding windows whose overhang past either end of the collection wraps around cyclically, or — with a trailing `pad` — is filled with `pad` instead.
     library: enumeratio-collections
 details:
-  - '[[Flatten]] undoes Partition: chunking and re-flattening recovers the original list — when the length divides evenly.'
+  - "[[Flatten]] undoes Partition: chunking and re-flattening recovers the original list — when the length divides evenly."
   - With $d < n$, windows overlap; the two-argument form is equivalent to $d = n$, giving non-overlapping chunks.
   - A ragged remainder, shorter than $n$, is dropped rather than kept as a partial chunk.
-  - 'A list of sizes generalizes chunking to a rank-k array: each dimension gets its own window size (and, optionally, its own offset).'
+  - "A list of sizes generalizes chunking to a rank-k array: each dimension gets its own window size (and, optionally, its own offset)."
   - The overhang pair $\{k_L, k_R\}$ pins where the first window starts and the last one ends, each counted from the near end of the collection — 1-based, negative counting from the far end of the WINDOW instead. Without a padding element, an overhang past either end wraps around cyclically.
 examples:
   - id: partition-list-1-2-3-4-5-6-2
@@ -44,38 +44,100 @@ examples:
     category: Scope
     caption: An offset larger than the size skips elements between chunks
   - id: a-list-of-sizes-cuts-a-matrix-into-overlapping-2
-    expr: [Partition, [List, [List, 11, 12, 13], [List, 21, 22, 23], [List, 31, 32, 33]], [List, 2, 2], 1]
-    expected: [List, [List, [List, [List, 11, 12], [List, 21, 22]], [List, [List, 12, 13], [List, 22, 23]]], [List, [List, [List, 21, 22], [List, 31, 32]], [List, [List, 22, 23], [List, 32, 33]]]]
+    expr:
+      [
+        Partition,
+        [List, [List, 11, 12, 13], [List, 21, 22, 23], [List, 31, 32, 33]],
+        [List, 2, 2],
+        1,
+      ]
+    expected:
+      [
+        List,
+        [List, [List, [List, 11, 12], [List, 21, 22]], [List, [List, 12, 13], [List, 22, 23]]],
+        [List, [List, [List, 21, 22], [List, 31, 32]], [List, [List, 22, 23], [List, 32, 33]]],
+      ]
     category: Scope
     caption: A list of sizes cuts a matrix into overlapping $2 \times 2$ blocks
   - id: upto-4-allows-a-shorter-final-chunk-unlike-a
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], [UpTo, 4]]
     expected: [List, [List, 1, 2, 3, 4], [List, 5, 6]]
     category: Scope
-    caption: '[[UpTo]](4) allows a shorter final chunk, unlike a plain integer count'
+    caption: "[[UpTo]](4) allows a shorter final chunk, unlike a plain integer count"
   - id: overhangs-1-1-wrap-cyclically-until-the-last
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 5, 1, [List, 1, 1]]
-    expected: [List, [List, 1, 2, 3, 4, 5], [List, 2, 3, 4, 5, 6], [List, 3, 4, 5, 6, 1], [List, 4, 5, 6, 1, 2], [List, 5, 6, 1, 2, 3], [List, 6, 1, 2, 3, 4]]
+    expected:
+      [
+        List,
+        [List, 1, 2, 3, 4, 5],
+        [List, 2, 3, 4, 5, 6],
+        [List, 3, 4, 5, 6, 1],
+        [List, 4, 5, 6, 1, 2],
+        [List, 5, 6, 1, 2, 3],
+        [List, 6, 1, 2, 3, 4],
+      ]
     category: Scope
     caption: Overhangs $\{1, 1\}$ wrap cyclically until the last window starts at the last element
   - id: overhangs-1-1-the-first-window-ends-at-the-first
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 5, 1, [List, -1, 1]]
-    expected: [List, [List, 3, 4, 5, 6, 1], [List, 4, 5, 6, 1, 2], [List, 5, 6, 1, 2, 3], [List, 6, 1, 2, 3, 4], [List, 1, 2, 3, 4, 5], [List, 2, 3, 4, 5, 6], [List, 3, 4, 5, 6, 1], [List, 4, 5, 6, 1, 2], [List, 5, 6, 1, 2, 3], [List, 6, 1, 2, 3, 4]]
+    expected:
+      [
+        List,
+        [List, 3, 4, 5, 6, 1],
+        [List, 4, 5, 6, 1, 2],
+        [List, 5, 6, 1, 2, 3],
+        [List, 6, 1, 2, 3, 4],
+        [List, 1, 2, 3, 4, 5],
+        [List, 2, 3, 4, 5, 6],
+        [List, 3, 4, 5, 6, 1],
+        [List, 4, 5, 6, 1, 2],
+        [List, 5, 6, 1, 2, 3],
+        [List, 6, 1, 2, 3, 4],
+      ]
     category: Scope
     caption: 'Overhangs $\{-1, 1\}$: the first window ends at the first element, the last starts at the last'
   - id: a-padding-element-fills-the-overhang-instead-of
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 3, 1, [List, 1, 1], x]
-    expected: [List, [List, 1, 2, 3], [List, 2, 3, 4], [List, 3, 4, 5], [List, 4, 5, 6], [List, 5, 6, x], [List, 6, x, x]]
+    expected:
+      [
+        List,
+        [List, 1, 2, 3],
+        [List, 2, 3, 4],
+        [List, 3, 4, 5],
+        [List, 4, 5, 6],
+        [List, 5, 6, x],
+        [List, 6, x, x],
+      ]
     category: Scope
     caption: A padding element fills the overhang instead of wrapping around
   - id: padding-on-the-left-with-overhangs-1-1
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 3, 1, [List, -1, -1], x]
-    expected: [List, [List, x, x, 1], [List, x, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4], [List, 3, 4, 5], [List, 4, 5, 6]]
+    expected:
+      [
+        List,
+        [List, x, x, 1],
+        [List, x, 1, 2],
+        [List, 1, 2, 3],
+        [List, 2, 3, 4],
+        [List, 3, 4, 5],
+        [List, 4, 5, 6],
+      ]
     category: Scope
     caption: Padding on the left, with overhangs $\{-1, -1\}$
   - id: padding-on-both-sides-with-overhangs-1-1
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 3, 1, [List, -1, 1], x]
-    expected: [List, [List, x, x, 1], [List, x, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4], [List, 3, 4, 5], [List, 4, 5, 6], [List, 5, 6, x], [List, 6, x, x]]
+    expected:
+      [
+        List,
+        [List, x, x, 1],
+        [List, x, 1, 2],
+        [List, 1, 2, 3],
+        [List, 2, 3, 4],
+        [List, 3, 4, 5],
+        [List, 4, 5, 6],
+        [List, 5, 6, x],
+        [List, 6, x, x],
+      ]
     category: Scope
     caption: Padding on both sides, with overhangs $\{-1, 1\}$
   - id: reshaping-a-list-of-9-into-a-3-times-3-matrix

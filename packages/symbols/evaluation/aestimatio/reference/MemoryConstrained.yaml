@@ -9,7 +9,7 @@ signatures:
 details:
   - JavaScript cannot cap the memory a synchronous, in-process computation uses. In-process, MemoryConstrained therefore stays unevaluated rather than pretending to enforce a bound it cannot — silently ignoring the constraint would be worse than saying so plainly.
   - "The bound is real inside @enumeratio/aestimatio/node's evaluateIsolated: the worker's own resourceLimits.maxOldGenerationSizeMb, a heap cap the runtime itself enforces."
-  - 'Held: expr and failexpr are not evaluated in-process, since there is nothing here to run them under.'
+  - "Held: expr and failexpr are not evaluated in-process, since there is nothing here to run them under."
 examples:
   - id: in-process-the-call-simply-does-not-reduce-see
     expr: [MemoryConstrained, [Add, 1, 2], 1000000]
@@ -20,7 +20,7 @@ examples:
   - id: a-failexpr-does-not-change-that-in-process-there
     expr: [MemoryConstrained, [Add, 1, 2], 1000000, -1]
     expected: [MemoryConstrained, [Add, 1, 2], 1000000, -1]
-    caption: 'A failexpr does not change that: in-process there is no cap to exceed'
+    caption: "A failexpr does not change that: in-process there is no cap to exceed"
     category: Scope
     divergence:
       wolfram: Wolfram evaluates to 3, returning failexpr only if the cap is exceeded.

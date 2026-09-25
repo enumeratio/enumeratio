@@ -1,7 +1,7 @@
 name: Sign
 domain: Arithmetic
 signature: Sign(x)
-summary: 'The sign of x: -1, 0, or 1 for negative, zero, or positive x.'
+summary: "The sign of x: -1, 0, or 1 for negative, zero, or positive x."
 signatures:
   - call: Sign(x)
     description: -1, 0, or 1 for negative, zero, or positive real x; $z/|z|$ for complex z.
@@ -60,7 +60,7 @@ examples:
     expected: 1
   - id: a-complex-number-with-approximate-parts
     expr: [Sign, [Complex, 1.4, 2.3]]
-    expected: [Complex, {num: '0.5199469468957452168102'}, 0.8541985556144385]
+    expected: [Complex, { num: "0.5199469468957452168102" }, 0.8541985556144385]
     caption: A complex number with approximate parts
   - id: an-exact-complex-argument-comes-back-exact-sign
     expr: [Sign, [Complex, 1, 1]]

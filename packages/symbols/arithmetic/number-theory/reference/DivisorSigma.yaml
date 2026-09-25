@@ -52,7 +52,7 @@ examples:
     expected: 50
   - id: large-integers
     expr: [DivisorSigma, 2, [Power, 10, 30]]
-    expected: {num: '1388888888888888888587721618754026546109040824596043713112451'}
+    expected: { num: "1388888888888888888587721618754026546109040824596043713112451" }
     category: Scope
     caption: Large integers
   - id: negative-k-1-frac-14-frac-1-25-frac-1-100
@@ -64,17 +64,17 @@ examples:
     expr: [DivisorSigma, [Rational, 1, 2], 12]
     expected: [Add, 3, [Sqrt, 2], [Sqrt, 6], [Multiply, 3, [Sqrt, 3]]]
     category: Scope
-    caption: 'Rational $k$: the square roots of the divisors of 12, summed'
+    caption: "Rational $k$: the square roots of the divisors of 12, summed"
   - id: gaussian-integers-1-1-i-1-2i-3-i-over-divisors
     expr: [DivisorSigma, 1, [Complex, 3, 1]]
     expected: [Complex, 6, 4]
     category: Scope
-    caption: 'Gaussian integers: $1+(1+i)+(1+2i)+(3+i)$, over [[Divisors]]'
+    caption: "Gaussian integers: $1+(1+i)+(1+2i)+(3+i)$, over [[Divisors]]"
   - id: gaussianintegers-true-squares-of-1-1-i-2-3-3-3i
     expr: [DivisorSigma, 2, 6, [KeyValuePair, GaussianIntegers, True]]
     expected: [Complex, 50, 20]
     category: Scope
-    caption: 'GaussianIntegers -> True: squares of $1,1+i,2,3,3+3i,6$'
+    caption: "GaussianIntegers -> True: squares of $1,1+i,2,3,3+3i,6$"
   - id: listable-in-n
     expr: [DivisorSigma, 2, [List, 1, 2, 3, 4, 5]]
     expected: [List, 1, 5, 10, 21, 26]
@@ -82,7 +82,18 @@ examples:
     caption: Listable in $n$
   - id: symbolic-k-expands-over-the-divisors
     expr: [DivisorSigma, k, 30]
-    expected: [Add, [Power, 2, k], [Power, 3, k], [Power, 5, k], [Power, 6, k], [Power, 10, k], [Power, 15, k], [Power, 30, k], 1]
+    expected:
+      [
+        Add,
+        [Power, 2, k],
+        [Power, 3, k],
+        [Power, 5, k],
+        [Power, 6, k],
+        [Power, 10, k],
+        [Power, 15, k],
+        [Power, 30, k],
+        1,
+      ]
     category: Scope
     caption: Symbolic $k$ expands over the divisors
 seeAlso:

@@ -20,7 +20,7 @@ examples:
     expr: [NestList, [Function, [Mod, [Multiply, 3, _1], 7]], 1, 6]
     expected: [List, 1, 3, 2, 6, 4, 5, 1]
     category: Applications
-    caption: '3 is a primitive root mod 7: its powers visit every nonzero residue'
+    caption: "3 is a primitive root mod 7: its powers visit every nonzero residue"
   - id: newton-iterates-converging-to-sqrt-2
     expr: [NestList, [Function, [Divide, [Add, _1, [Divide, 2, _1]], 2]], 1, 3]
     expected: [List, 1, [Rational, 3, 2], [Rational, 17, 12], [Rational, 577, 408]]
@@ -30,7 +30,7 @@ examples:
     expr: [NestList, f, x, 0]
     expected: [List, x]
     category: Scope
-    caption: 'Zero steps: just the seed'
+    caption: "Zero steps: just the seed"
 seeAlso:
   - Nest
   - FixedPoint

@@ -1,7 +1,7 @@
 name: Valleys
 domain: Permutation statistics
 signature: Valleys(p)
-summary: 'The number of valleys of $p$: interior positions $i$ with $p_{i-1} > p_i < p_{i+1}$.'
+summary: "The number of valleys of $p$: interior positions $i$ with $p_{i-1} > p_i < p_{i+1}$."
 signatures:
   - call: Valleys(p)
     description: the valley count of a one-line permutation $p$

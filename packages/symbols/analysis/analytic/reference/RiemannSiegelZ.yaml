@@ -5,7 +5,7 @@ summary: The Riemann–Siegel function $Z(t) = e^{i\vartheta(t)}\zeta(\tfrac12 +
 signatures:
   - call: RiemannSiegelZ(t)
     description: the Riemann–Siegel Z-function.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/symbols/analysis/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.
   - Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].

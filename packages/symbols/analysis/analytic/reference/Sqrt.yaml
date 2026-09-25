@@ -48,7 +48,7 @@ examples:
     expr: [Sqrt, -2]
     expected: [Sqrt, -2]
     category: Possible issues
-    caption: 'Negative but not a perfect square: stays symbolic rather than reducing to an exact complex value'
+    caption: "Negative but not a perfect square: stays symbolic rather than reducing to an exact complex value"
   - id: a-negative-rational-still-evaluates-exactly-when
     expr: [Sqrt, [Rational, -4, 9]]
     expected: [Complex, 0, [Rational, 2, 3]]
@@ -56,7 +56,7 @@ examples:
     caption: A negative rational still evaluates exactly when both numerator and denominator are perfect squares
   - id: an-approximate-number-gives-an-approximate-root
     expr: [Sqrt, 3.5]
-    expected: {num: '1.87082869338697069279'}
+    expected: { num: "1.87082869338697069279" }
     caption: An approximate number gives an approximate root
   - id: pulls-perfect-square-factors-out-of-the-radical
     expr: [Sqrt, 200]
@@ -86,7 +86,7 @@ examples:
     expr: [Sqrt, [Complex, 3, 4]]
     expected: [Complex, 2, 1]
     category: Scope
-    caption: 'An exact complex square: $(2+i)^2 = 3+4i$'
+    caption: "An exact complex square: $(2+i)^2 = 3+4i$"
   - id: sqrt-positiveinfinity
     expr: [Sqrt, PositiveInfinity]
     expected: PositiveInfinity
@@ -98,7 +98,8 @@ examples:
     caption: Threads element-wise over a list
   - id: threads-over-a-matrix-entry-by-entry-this-is-not
     expr: [Sqrt, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
-    expected: [List, [List, [Divide, [Sqrt, 2], 2], [Complex, 0, 1]], [List, 0, [Divide, [Sqrt, 2], 2]]]
+    expected:
+      [List, [List, [Divide, [Sqrt, 2], 2], [Complex, 0, 1]], [List, 0, [Divide, [Sqrt, 2], 2]]]
     category: Scope
     caption: Threads over a matrix entry by entry -- this is not the matrix square root
   - id: interval-arithmetic-sqrt-is-increasing-so-sqrt-1
@@ -133,7 +134,7 @@ examples:
     caption: ...while $\sqrt{(-1)(-1)} = 1$
   - id: to-45-significant-digits-every-one-correctly
     expr: [N, [Sqrt, 2], 45]
-    expected: {num: '1.41421356237309504880168872420969807856967188'}
+    expected: { num: "1.41421356237309504880168872420969807856967188" }
     category: Scope
     caption: To 45 significant digits, every one correctly rounded
 seeAlso:

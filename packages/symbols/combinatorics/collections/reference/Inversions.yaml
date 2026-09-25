@@ -1,7 +1,7 @@
 name: Inversions
 domain: Permutation statistics
 signature: Inversions(p)
-summary: 'The number of inversions of a permutation $p$: pairs $i < j$ with $p_i > p_j$ (its Kendall-tau distance from the identity).'
+summary: "The number of inversions of a permutation $p$: pairs $i < j$ with $p_i > p_j$ (its Kendall-tau distance from the identity)."
 signatures:
   - call: Inversions(p)
     description: the inversion count of a one-line permutation $p$

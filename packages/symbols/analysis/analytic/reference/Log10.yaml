@@ -38,7 +38,7 @@ examples:
     expected: 6
   - id: n-for-a-decimal-value
     expr: [N, [Log10, 2]]
-    expected: {num: '0.301029995663981195214'}
+    expected: { num: "0.301029995663981195214" }
     caption: N(...) for a decimal value
   - id: a-symbolic-argument-becomes-compute-engine-s
     expr: [Log10, x]
@@ -49,7 +49,7 @@ examples:
       wolfram: Wolfram rewrites Log10[x] to Log[x]/Log[10].
   - id: log10-5p5
     expr: [Log10, 5.5]
-    expected: {num: '0.740362689494243845536'}
+    expected: { num: "0.740362689494243845536" }
     category: Scope
   - id: threads-element-wise-over-a-list
     expr: [Log10, [List, 1, 10, 100, 1000]]
@@ -85,7 +85,7 @@ examples:
     caption: 'Derivative: $\frac{1}{x\ln 10}$'
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Log10, 7], 30]
-    expected: {num: '0.845098040014256830712216258593'}
+    expected: { num: "0.845098040014256830712216258593" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

@@ -19,7 +19,7 @@ signatures:
     description: an $n_1 \times \cdots \times n_k$ array of draws.
     library: enumeratio-collections
 details:
-  - 'Seeded, not free-running: call [[SeedRandom]](seed) first for a reproducible sequence. Without it, a fixed default seed is used, so even a bare `RandomInteger` call is reproducible run to run — two fresh evaluations draw the same value.'
+  - "Seeded, not free-running: call [[SeedRandom]](seed) first for a reproducible sequence. Without it, a fixed default seed is used, so even a bare `RandomInteger` call is reproducible run to run — two fresh evaluations draw the same value."
   - The generator is our own (a small deterministic PRNG), not Wolfram's — the same seed draws a different sequence from Wolfram's. Only the shape and range of the answer are guaranteed to match.
   - A worked example that both seeds and draws needs the two calls in one expression; `Last(List(SeedRandom(n), RandomInteger(…)))` runs `SeedRandom` for its effect and keeps the draw.
 examples:

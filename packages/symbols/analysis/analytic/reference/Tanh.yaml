@@ -16,7 +16,7 @@ examples:
     caption: N(...) forces the numeric result that plain evaluation withholds
   - id: n-tanh-1
     expr: [N, [Tanh, 1]]
-    expected: {num: '0.761594155955764888119'}
+    expected: { num: "0.761594155955764888119" }
   - id: tanh-x-frac-sinh-x-cosh-x
     expr: [Equal, [Tanh, 1], [Divide, [Sinh, 1], [Cosh, 1]]]
     expected: True
@@ -29,11 +29,11 @@ examples:
     caption: Stays symbolic even at 0, same as [[Sinh]] and [[Cosh]]; wrap in N(...) as above
   - id: a-float-argument-evaluates-directly-no-n-needed
     expr: [Tanh, 2.2]
-    expected: {num: '0.975743130031451520414'}
+    expected: { num: "0.975743130031451520414" }
     caption: A float argument evaluates directly, no N(...) needed
   - id: arbitrary-precision-via-n
     expr: [N, [Tanh, [Rational, 11, 5]]]
-    expected: {num: '0.975743130031451520414'}
+    expected: { num: "0.975743130031451520414" }
     category: Scope
     caption: Arbitrary precision via N(...)
   - id: evaluates-at-a-complex-argument
@@ -78,7 +78,12 @@ examples:
     caption: 'Antiderivative: $\ln\cosh x$'
   - id: in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x
     expr: [TrigToExp, [Tanh, x]]
-    expected: [Divide, [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]
+    expected:
+      [
+        Divide,
+        [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]],
+        [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]],
+      ]
     category: Properties
     caption: 'In exponentials: $\tanh x = \frac{e^x - e^{-x}}{e^x + e^{-x}}$'
   - id: tanh-has-no-limit-at-complex-infinity-undefined
@@ -88,7 +93,7 @@ examples:
     caption: '$\tanh$ has no limit at complex infinity, undefined from any direction: NaN'
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Tanh, 1], 30]
-    expected: {num: '0.761594155955764888119458282605'}
+    expected: { num: "0.761594155955764888119458282605" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

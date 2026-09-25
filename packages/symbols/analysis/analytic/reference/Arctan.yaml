@@ -44,11 +44,11 @@ examples:
       wolfram: compute-engine's Arctan takes one argument and rejects a second; Wolfram's ArcTan[x, y] is the two-argument arctangent (atan2), here π/4.
   - id: a-machine-precision-argument-evaluates
     expr: [Arctan, 0.5]
-    expected: {num: '0.463647609000806116214'}
+    expected: { num: "0.463647609000806116214" }
     caption: A machine-precision argument evaluates numerically
   - id: arbitrary-precision-via-n
     expr: [N, [Arctan, [Rational, 1, 2]]]
-    expected: {num: '0.463647609000806116214'}
+    expected: { num: "0.463647609000806116214" }
     category: Scope
     caption: Arbitrary precision via N(...)
   - id: evaluates-at-a-complex-argument
@@ -63,7 +63,7 @@ examples:
     caption: "Wolfram's two-argument ArcTan[x, y] is compute-engine's $\\mathrm{Arctan2}(y, x)$: the angle of the point $(-1, -1)$ is $-3\\pi/4$"
   - id: arctan2-takes-y-first-the-angle-of-the-point-0-5
     expr: [Arctan2, 2, 0.5]
-    expected: {num: '1.32581766366803246506'}
+    expected: { num: "1.32581766366803246506" }
     category: Scope
     caption: 'Arctan2 takes $y$ first: the angle of the point $(0.5, 2)$ is $\arctan 4 \approx 1.3258$, evaluated numerically for the float input'
   - id: arctan-2-sqrt-3-5-pi-12
@@ -91,7 +91,12 @@ examples:
     category: Scope
   - id: threads-element-wise-over-a-matrix
     expr: [Arctan, [List, [List, 0, 1], [List, -1, [Sqrt, 3]]]]
-    expected: [List, [List, 0, [Multiply, [Rational, 1, 4], Pi]], [List, [Multiply, [Rational, -1, 4], Pi], [Multiply, [Rational, 1, 3], Pi]]]
+    expected:
+      [
+        List,
+        [List, 0, [Multiply, [Rational, 1, 4], Pi]],
+        [List, [Multiply, [Rational, -1, 4], Pi], [Multiply, [Rational, 1, 3], Pi]],
+      ]
     category: Scope
     caption: Threads element-wise over a matrix
   - id: interval-arithmetic-arctan-1-3-frac-pi-4-arctan
@@ -111,12 +116,25 @@ examples:
     caption: 'Derivative: $\frac{1}{1 + x^2}$'
   - id: antiderivative
     expr: [Integrate, [Arctan, x], x]
-    expected: [Add, [Multiply, x, [Arctan, x]], [Multiply, [Rational, -1, 2], [Ln, [Add, [Power, x, 2], 1]]]]
+    expected:
+      [
+        Add,
+        [Multiply, x, [Arctan, x]],
+        [Multiply, [Rational, -1, 2], [Ln, [Add, [Power, x, 2], 1]]],
+      ]
     category: Scope
     caption: Antiderivative
   - id: gregory-s-series-about-0
     expr: [Series, [Arctan, x], x, 0, 7]
-    expected: [Add, [Multiply, [Rational, -1, 7], [Power, x, 7]], [Multiply, [Rational, 1, 5], [Power, x, 5]], [Multiply, [Rational, -1, 3], [Power, x, 3]], x, [BigO, [Power, x, 9]]]
+    expected:
+      [
+        Add,
+        [Multiply, [Rational, -1, 7], [Power, x, 7]],
+        [Multiply, [Rational, 1, 5], [Power, x, 5]],
+        [Multiply, [Rational, -1, 3], [Power, x, 3]],
+        x,
+        [BigO, [Power, x, 9]],
+      ]
     category: Scope
     caption: Gregory's series about 0
     divergence:
@@ -128,7 +146,12 @@ examples:
     caption: The limit at $+\infty$
   - id: as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2
     expr: [TrigToExp, [Arctan, x]]
-    expected: [Add, [Multiply, [Complex, 0, [Rational, -1, 2]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]], [Multiply, [Complex, 0, [Rational, 1, 2]], [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]]]
+    expected:
+      [
+        Add,
+        [Multiply, [Complex, 0, [Rational, -1, 2]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]],
+        [Multiply, [Complex, 0, [Rational, 1, 2]], [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]],
+      ]
     category: Properties
     caption: 'As logarithms: $\arctan x = \tfrac{i}{2}\ln(1 - ix) - \tfrac{i}{2}\ln(1 + ix)$'
   - id: euler-s-machin-like-identity-arctan-frac-12
@@ -145,7 +168,7 @@ examples:
     caption: Machin's formula $4\arctan\tfrac15 - \arctan\tfrac1{239} = \tfrac{\pi}{4}$; not combined
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Arctan, [Rational, 1, 2]], 30]
-    expected: {num: '0.463647609000806116214256231461'}
+    expected: { num: "0.463647609000806116214256231461" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

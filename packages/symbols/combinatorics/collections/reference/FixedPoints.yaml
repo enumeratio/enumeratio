@@ -1,7 +1,7 @@
 name: FixedPoints
 domain: Permutation statistics
 signature: FixedPoints(p)
-summary: 'The number of fixed points of $p$: positions $i$ with $p_i = i$.'
+summary: "The number of fixed points of $p$: positions $i$ with $p_i = i$."
 signatures:
   - call: FixedPoints(p)
     description: the fixed-point count of a one-line permutation $p$

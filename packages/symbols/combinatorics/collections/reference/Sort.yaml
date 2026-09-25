@@ -11,7 +11,7 @@ signatures:
     description: the operands of any expression, sorted in place — not just a collection's.
     library: enumeratio-collections
 details:
-  - 'Idempotent: sorting an already-sorted collection changes nothing.'
+  - "Idempotent: sorting an already-sorted collection changes nothing."
   - $Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]].
   - Orders numbers numerically, strings lexicographically, and symbols alphabetically by name.
   - The comparator form `Sort(list, p)` takes a predicate `p` reporting whether a pair is already in order.
@@ -27,7 +27,7 @@ examples:
     expr: [Equal, [Sort, [Sort, [List, 3, 1, 2]]], [Sort, [List, 3, 1, 2]]]
     expected: True
     category: Properties
-    caption: '$Sort$ is idempotent: sorting an already-sorted collection changes nothing'
+    caption: "$Sort$ is idempotent: sorting an already-sorted collection changes nothing"
   - id: sort-c-at-c-ordering-c-see-ordering-and-at
     expr: [Equal, [Sort, [List, 3, 1, 2]], [At, [List, 3, 1, 2], [Ordering, [List, 3, 1, 2]]]]
     expected: True
@@ -68,9 +68,14 @@ examples:
     expr: [Sort, [List, 4, 1, 3, 2, 2], Greater]
     expected: [List, 4, 3, 2, 2, 1]
     category: Scope
-    caption: 'A named ordering function: $Greater$ sorts in descending order'
+    caption: "A named ordering function: $Greater$ sorts in descending order"
   - id: sorting-pairs-by-their-second-element-with-a
-    expr: [Sort, [List, [List, a, 2], [List, c, 1], [List, d, 3]], [Function, [Less, [At, _1, 2], [At, _2, 2]]]]
+    expr:
+      [
+        Sort,
+        [List, [List, a, 2], [List, c, 1], [List, d, 3]],
+        [Function, [Less, [At, _1, 2], [At, _2, 2]]],
+      ]
     expected: [List, [List, c, 1], [List, a, 2], [List, d, 3]]
     category: Scope
     caption: Sorting pairs by their second element with a custom comparator

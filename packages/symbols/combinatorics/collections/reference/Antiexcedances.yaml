@@ -1,19 +1,19 @@
 name: Antiexcedances
 domain: Permutation statistics
 signature: Antiexcedances(p)
-summary: 'The number of antiexcedances of $p$: positions $i$ with $p_i < i$.'
+summary: "The number of antiexcedances of $p$: positions $i$ with $p_i < i$."
 signatures:
   - call: Antiexcedances(p)
     description: the antiexcedance count of a one-line permutation $p$
     library: enumeratio-collections
 details:
-  - 'Equidistributed with [[Excedances]] over $S_n$: inverting a permutation swaps its excedance and antiexcedance counts'
+  - "Equidistributed with [[Excedances]] over $S_n$: inverting a permutation swaps its excedance and antiexcedance counts"
   - Never counts a fixed point, same as [[Excedances]]
 examples:
   - id: positions-2-and-3-1-2-and-2-3
     expr: [Antiexcedances, [List, 3, 1, 2]]
     expected: 2
-    caption: 'positions 2 and 3: $1 < 2$ and $2 < 3$'
+    caption: "positions 2 and 3: $1 < 2$ and $2 < 3$"
   - id: the-identity-has-none
     expr: [Antiexcedances, [List, 1, 2, 3]]
     expected: 0
@@ -22,7 +22,7 @@ examples:
     expr: [Antiexcedances, [List, 4, 3, 2, 1]]
     expected: 2
     category: Properties
-    caption: 'positions 3 and 4: $2 < 3$ and $1 < 4$'
+    caption: "positions 3 and 4: $2 < 3$ and $1 < 4$"
 seeAlso:
   - Excedances
   - Descents

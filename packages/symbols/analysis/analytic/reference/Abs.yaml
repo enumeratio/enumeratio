@@ -1,7 +1,7 @@
 name: Abs
 domain: Arithmetic
 signature: Abs(x)
-summary: 'The absolute value or magnitude of x: $|x|$, its distance from 0.'
+summary: "The absolute value or magnitude of x: $|x|$, its distance from 0."
 signatures:
   - call: Abs(x)
     description: the absolute value $|x|$ of a real x, or the modulus of a complex number.
@@ -37,7 +37,7 @@ examples:
     expr: [Equal, [Abs, -8], [Abs, 8]]
     expected: True
     category: Properties
-    caption: 'Even function: $|-x| = |x|$'
+    caption: "Even function: $|-x| = |x|$"
   - id: triangle-inequality-a-b-le-a-b
     expr: [LessEqual, [Abs, [Add, 3, -8]], [Add, [Abs, 3], [Abs, -8]]]
     expected: True
@@ -58,7 +58,7 @@ examples:
     expected: 2.5
   - id: the-modulus-of-a-complex-number-with-approximate
     expr: [Abs, [Complex, 1.4, 2.3]]
-    expected: {num: '2.69258240356725201563'}
+    expected: { num: "2.69258240356725201563" }
     caption: The modulus of a complex number with approximate parts
   - id: threads-over-a-matrix-entry-by-entry
     expr: [Abs, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]
@@ -104,12 +104,22 @@ examples:
     category: Scope
     caption: Decides the sign of an exact numeric expression and gives $2-\sqrt{2}$
   - id: z-2-z-bar-z
-    expr: [Equal, [Power, [Abs, [Complex, 3, 4]], 2], [Multiply, [Complex, 3, 4], [Conjugate, [Complex, 3, 4]]]]
+    expr:
+      [
+        Equal,
+        [Power, [Abs, [Complex, 3, 4]], 2],
+        [Multiply, [Complex, 3, 4], [Conjugate, [Complex, 3, 4]]],
+      ]
     expected: True
     category: Properties
     caption: $|z|^2 = z\bar{z}$
   - id: multiplicative-ab-a-b
-    expr: [Equal, [Abs, [Multiply, [Complex, 1, 2], [Complex, 3, -1]]], [Multiply, [Abs, [Complex, 1, 2]], [Abs, [Complex, 3, -1]]]]
+    expr:
+      [
+        Equal,
+        [Abs, [Multiply, [Complex, 1, 2], [Complex, 3, -1]]],
+        [Multiply, [Abs, [Complex, 1, 2]], [Abs, [Complex, 3, -1]]],
+      ]
     expected: True
     category: Properties
     caption: 'Multiplicative: $|ab| = |a|\,|b|$'

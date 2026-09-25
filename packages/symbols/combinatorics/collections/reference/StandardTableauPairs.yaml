@@ -15,7 +15,7 @@ examples:
     expr: [Count, [StandardTableauPairs, 4]]
     expected: 24
     category: Basic
-    caption: '$Count(StandardTableauPairs(4)) = 4! = 24$: RSK is a bijection with permutations'
+    caption: "$Count(StandardTableauPairs(4)) = 4! = 24$: RSK is a bijection with permutations"
 enumerate:
   expr: StandardTableauPairs(4)
 seeAlso:

@@ -19,11 +19,25 @@ details:
 examples:
   - id: the-set-partitions-of-an-explicit-list-in-the
     expr: [SetPartitions, [List, a, b, c]]
-    expected: [List, [List, [List, a, b, c]], [List, [List, a, b], [List, c]], [List, [List, a, c], [List, b]], [List, [List, a], [List, b, c]], [List, [List, a], [List, b], [List, c]]]
+    expected:
+      [
+        List,
+        [List, [List, a, b, c]],
+        [List, [List, a, b], [List, c]],
+        [List, [List, a, c], [List, b]],
+        [List, [List, a], [List, b, c]],
+        [List, [List, a], [List, b], [List, c]],
+      ]
     caption: The set partitions of an explicit list, in the family's own RGS order
   - id: exactly-2-blocks
     expr: [SetPartitions, 3, 2]
-    expected: [List, [List, [List, 1, 2], [List, 3]], [List, [List, 1, 3], [List, 2]], [List, [List, 1], [List, 2, 3]]]
+    expected:
+      [
+        List,
+        [List, [List, 1, 2], [List, 3]],
+        [List, [List, 1, 3], [List, 2]],
+        [List, [List, 1], [List, 2, 3]],
+      ]
     category: Scope
     caption: Exactly 2 blocks
   - id: the-partitions-of-a-4-set-into-2-blocks-number-s

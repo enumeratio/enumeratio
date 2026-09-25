@@ -8,7 +8,7 @@ signatures:
 examples:
   - id: n-arcsch-2
     expr: [N, [Arcsch, 2]]
-    expected: {num: '0.481211825059603447495'}
+    expected: { num: "0.481211825059603447495" }
   - id: a-pole-at-0
     expr: [Arcsch, 0]
     expected: ComplexInfinity
@@ -20,7 +20,7 @@ examples:
     category: Scope
   - id: a-float-argument-evaluates-directly
     expr: [Arcsch, 1.5]
-    expected: {num: '0.625145117250416687636'}
+    expected: { num: "0.625145117250416687636" }
     category: Scope
     caption: A float argument evaluates directly
   - id: as-a-logarithm-arcsch-1-ln-1-sqrt-2

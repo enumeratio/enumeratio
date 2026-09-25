@@ -5,7 +5,7 @@ summary: 'The $j$-th Dirichlet character modulo $k$ evaluated at $n$: a complete
 signatures:
   - call: DirichletCharacter(k, j, n)
     description: the character $\chi_j \bmod k$ at $n$, for $1 \le j \le \varphi(k)$; $j = 1$ is the principal character.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - There are exactly $\varphi(k)$ characters mod $k$ — the dual group of $(\mathbb{Z}/k)^\times$ — and each is determined by its values on a set of generators. $\chi_1$, the principal character, is 1 on the units and 0 elsewhere.
   - 'Every value is a root of unity of order dividing $\varphi(k)$, or 0: $\chi_j(mn) = \chi_j(m)\chi_j(n)$ always, and $\sum_{n=1}^{k}\chi_j(n) = 0$ for $j \ne 1$.'

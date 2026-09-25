@@ -1,7 +1,7 @@
 name: Ascents
 domain: Permutation statistics
 signature: Ascents(p)
-summary: 'The number of ascents of $p$: positions $i$ with $p_i < p_{i+1}$.'
+summary: "The number of ascents of $p$: positions $i$ with $p_i < p_{i+1}$."
 signatures:
   - call: Ascents(p)
     description: the ascent count of a one-line permutation $p$

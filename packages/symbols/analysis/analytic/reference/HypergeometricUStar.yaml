@@ -5,7 +5,7 @@ summary: The regularized Tricomi confluent hypergeometric function $U^*(a,b,z) =
 signatures:
   - call: HypergeometricUStar(a, b, z)
     description: $z^a$ times Tricomi's confluent hypergeometric $U(a,b,z)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "compute-engine declares `HypergeometricU` but does not evaluate it numerically (a symbolic stub only), so $U$ itself is supplied here via Kummer's connection formula in terms of the entire confluent hypergeometric $M = {}_1F_1$: $U(a,b,z) = \\tfrac{\\Gamma(1-b)}{\\Gamma(a-b+1)}M(a,b,z) + \\tfrac{\\Gamma(b-1)}{\\Gamma(a)}z^{1-b}M(a-b+1,2-b,z)$."
   - $1/\Gamma$ is taken directly (zero at the nonpositive integers) rather than as a raw division, so the formula stays finite exactly where $a-b+1$ or $a$ lands on one of $\Gamma$'s poles — not an edge case Fungrim's own identities avoid.

@@ -4,7 +4,7 @@ signature: StackSortable(p)
 summary: 1 when p avoids the pattern 231, 0 otherwise — exactly the stack-sortable permutations.
 details:
   - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - 'Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.'
+  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
 examples:
   - id: the-one-line-word-312
     expr: [StackSortable, [Permutation, [List, 3, 1, 2]]]

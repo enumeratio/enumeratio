@@ -36,9 +36,9 @@ examples:
     expected: 21
   - id: exact-at-any-size-f-100-has-21-digits
     expr: [Fibonacci, 100]
-    expected: {num: '354224848179261915075'}
+    expected: { num: "354224848179261915075" }
     category: Scope
-    caption: 'Exact at any size: $F_{100}$ has 21 digits'
+    caption: "Exact at any size: $F_{100}$ has 21 digits"
   - id: a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu
     expr: [Fibonacci, 1.5]
     expected: 0.920442065259926
@@ -58,12 +58,12 @@ examples:
     expr: [Fibonacci, 1, 0]
     expected: 1
     category: Scope
-    caption: 'Special value of the Fibonacci polynomial: $F_1(0) = 1$'
+    caption: "Special value of the Fibonacci polynomial: $F_1(0) = 1$"
   - id: special-value-of-the-fibonacci-polynomial-f-0-0
     expr: [Fibonacci, 0, 0]
     expected: 0
     category: Scope
-    caption: 'Special value of the Fibonacci polynomial: $F_0(0) = 0$'
+    caption: "Special value of the Fibonacci polynomial: $F_0(0) = 0$"
   - id: f-3-x-x-2-1-threads-element-wise-over-a-matrix
     expr: [Fibonacci, 3, [List, [List, -1, 0], [List, 0, 5]]]
     expected: [List, [List, 2, 1], [List, 1, 26]]
@@ -118,6 +118,6 @@ examples:
     expr: [Fibonacci, 50]
     expected: 12586269025
     category: Neat examples
-    caption: 'They grow fast: $F_{50}$ already exceeds twelve billion'
+    caption: "They grow fast: $F_{50}$ already exceeds twelve billion"
 seeAlso:
   - LucasL

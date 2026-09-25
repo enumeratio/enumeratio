@@ -16,7 +16,7 @@ examples:
   - id: repeated-squaring-2-2-2-2
     expr: [Nest, [Function, [Power, _1, 2]], 2, 3]
     expected: 256
-    caption: 'Repeated squaring: $((2^2)^2)^2$'
+    caption: "Repeated squaring: $((2^2)^2)^2$"
   - id: zero-applications-leave-x-alone
     expr: [Nest, f, x, 0]
     expected: x

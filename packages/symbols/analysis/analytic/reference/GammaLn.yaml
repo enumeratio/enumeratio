@@ -19,7 +19,7 @@ examples:
     caption: A pole of Gamma, in log form
   - id: a-floating-point-argument-evaluates-directly-to
     expr: [GammaLn, 2.5]
-    expected: {num: '0.284682870472919159632'}
+    expected: { num: "0.284682870472919159632" }
     caption: A floating-point argument evaluates directly to a high-precision decimal
   - id: defined-as-ln-gamma-z-here-at-z-5
     expr: [Equal, [GammaLn, 5], [Ln, [Gamma, 5]]]
@@ -65,7 +65,7 @@ examples:
     caption: At a pole of Gamma, compute-engine gives the real log-magnitude's divergence, PositiveInfinity, rather than treating GammaLn as complex-analytic
   - id: ln-gamma-100-5-where-gamma-100-5-itself-is-about
     expr: [GammaLn, 100.5]
-    expected: {num: '361.435540467777621555'}
+    expected: { num: "361.435540467777621555" }
     caption: $\ln\Gamma(100.5)$, where $\Gamma(100.5)$ itself is about $10^{157}$
   - id: complex-arguments-here-the-principal-ln-gamma-z
     expr: [GammaLn, [Complex, 2.5, 3]]
@@ -73,8 +73,8 @@ examples:
     category: Scope
     caption: Complex arguments; here the principal $\ln\Gamma(z)$ and Wolfram's $\mathrm{LogGamma}$ agree, as the imaginary part stays inside $(-\pi, \pi]$
   - id: a-huge-inexact-argument-should-still-evaluate
-    expr: [GammaLn, {num: '1e1000'}]
-    expected: {num: '2.30158509299404568402e+1003'}
+    expr: [GammaLn, { num: "1e1000" }]
+    expected: { num: "2.30158509299404568402e+1003" }
     aspirational: true
     category: Scope
     caption: "A huge inexact argument should still evaluate (Stirling's series): $\\ln\\Gamma(10^{1000}) \\approx 2.3016 \\times 10^{1003}$; left unevaluated today"
@@ -95,14 +95,14 @@ examples:
     caption: The derivative of $\ln\Gamma$ is the digamma function. See [[Digamma]]
   - id: off-the-positive-axis-gammaln-is-the-principal
     expr: [GammaLn, -1.5]
-    expected: {num: '0.860047015376481014511'}
+    expected: { num: "0.860047015376481014511" }
     category: Possible issues
     caption: 'Off the positive axis GammaLn is the principal $\ln\Gamma(z)$: at $z = -3/2$, where $\Gamma > 0$, that is real. See [[LogGamma]] for the continuation'
     divergence:
       wolfram: "Wolfram's $\\mathrm{LogGamma}[-1.5] = 0.860047 - 6.28319\\,i$: its analytic continuation sits $-2\\pi i$ from the principal log here."
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [GammaLn, [Rational, 1, 3]], 30]
-    expected: {num: '0.985420646927767069187174036978'}
+    expected: { num: "0.985420646927767069187174036978" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
 seeAlso:

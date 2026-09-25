@@ -6,7 +6,7 @@ signatures:
   - call: LCM(a, b, …)
     description: least common multiple of two or more integers.
 details:
-  - 'Also called the smallest common multiple: the smallest positive integer that is a multiple of every argument.'
+  - "Also called the smallest common multiple: the smallest positive integer that is a multiple of every argument."
   - Paired with [[GCD]] by $\gcd(a,b)\cdot\operatorname{lcm}(a,b)=ab$.
   - compute-engine discards signs before computing, so $\operatorname{lcm}(-a,b)=\operatorname{lcm}(a,b)$.
   - '$\operatorname{lcm}(0,n)=0$: 0 absorbs, since 0 is a multiple of everything but nothing else divides back into it.'
@@ -18,7 +18,7 @@ examples:
   - id: lcm-is-variadic-it-accepts-any-number-of
     expr: [LCM, 4, 6, 10]
     expected: 60
-    caption: 'LCM is variadic: it accepts any number of arguments'
+    caption: "LCM is variadic: it accepts any number of arguments"
   - id: a-single-argument-is-returned-unchanged
     expr: [LCM, 5]
     expected: 5
@@ -28,7 +28,7 @@ examples:
     expr: [LCM, 0, 5]
     expected: 0
     category: Possible issues
-    caption: '0 absorbs: the LCM with 0 is 0'
+    caption: "0 absorbs: the LCM with 0 is 0"
   - id: signs-are-discarded-before-computing-the-lcm
     expr: [LCM, -3, 7]
     expected: 21
@@ -43,12 +43,12 @@ examples:
     expr: [LCM, [Rational, 1, 3], [Rational, 2, 5], [Rational, 3, 7]]
     expected: 6
     category: Scope
-    caption: 'Over the rationals: the lcm of the numerators over the gcd of the denominators — the smallest positive rational that is an integer multiple of each'
+    caption: "Over the rationals: the lcm of the numerators over the gcd of the denominators — the smallest positive rational that is an integer multiple of each"
   - id: 1-3i-i-3-i-associates-share-their-multiples
     expr: [LCM, [Complex, 3, 1], [Complex, -1, 3]]
     expected: [Complex, 3, 1]
     category: Scope
-    caption: '$-1 + 3i = i(3 + i)$: associates share their multiples'
+    caption: "$-1 + 3i = i(3 + i)$: associates share their multiples"
   - id: lcm-2-3-5
     expr: [LCM, 2, 3, 5]
     expected: 30
@@ -66,7 +66,7 @@ examples:
     expr: [LCM, [Complex, -4, 5], [Complex, 2, 3]]
     expected: [Complex, 23, 2]
     category: Scope
-    caption: 'Gaussian primes of norm 41 and 13: the LCM is the first-quadrant associate of their product'
+    caption: "Gaussian primes of norm 41 and 13: the LCM is the first-quadrant associate of their product"
   - id: gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3
     expr: [LCM, [Complex, [Rational, 1, 2], [Rational, 3, 5]], [Complex, [Rational, 1, 3], 1]]
     expected: [Complex, 21, 13]
@@ -74,13 +74,16 @@ examples:
     caption: 'Gaussian rationals: $\operatorname{lcm}(5+6i,\,1+3i)/\gcd(10,3)$'
   - id: big-integers-the-exact-118-digit-lcm-past-where
     expr: [LCM, [Factorial, 20], [Add, [Power, 10, 100], 3]]
-    expected: {num: '3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000'}
+    expected:
+      {
+        num: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000",
+      }
     category: Scope
-    caption: 'Big integers: the exact 118-digit LCM, past where a double loses precision'
+    caption: "Big integers: the exact 118-digit LCM, past where a double loses precision"
   - id: listable-a-single-list-argument-threads-element
     expr: [LCM, 12, [List, 3, 7, 40]]
     expected: [List, 12, 84, 120]
     category: Scope
-    caption: 'Listable: a single list argument threads element-wise against the rest'
+    caption: "Listable: a single list argument threads element-wise against the rest"
 seeAlso:
   - GCD

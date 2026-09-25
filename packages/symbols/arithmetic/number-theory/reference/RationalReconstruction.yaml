@@ -26,26 +26,49 @@ examples:
   - id: explicit-bounds-denominators-of-1-only
     expr: [RationalReconstruction, 5, 11, 5, 1]
     expected: 5
-    caption: 'explicit bounds: denominators of 1 only'
+    caption: "explicit bounds: denominators of 1 only"
     category: Scope
   - id: rationalreconstruction-list-6-9-10-11
     expr: [RationalReconstruction, [List, 6, 9, 10], 11]
     expected: [List, [Rational, 1, 2], -2, -1]
     category: Scope
   - id: the-harmonic-number-h-20-back-from-its-image-mod
-    expr: [RationalReconstruction, [PowerMod, [Rational, 55835135, 15519504], 1, [Subtract, [Power, 2, 61], 1]], [Subtract, [Power, 2, 61], 1]]
+    expr:
+      [
+        RationalReconstruction,
+        [PowerMod, [Rational, 55835135, 15519504], 1, [Subtract, [Power, 2, 61], 1]],
+        [Subtract, [Power, 2, 61], 1],
+      ]
     expected: [Rational, 55835135, 15519504]
     caption: the harmonic number $H_{20}$, back from its image mod $2^{61} - 1$
     category: Scope
   - id: one-word-size-prime-is-not-enough-for-h-20-2nd-m
-    expr: [RationalReconstruction, [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007], 1000000007]
+    expr:
+      [
+        RationalReconstruction,
+        [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007],
+        1000000007,
+      ]
     expected: [RationalReconstruction, 301316272, 1000000007]
     caption: 'one word-size prime is not enough for $H_{20}$: $2ND < m$ needs $m$ past $1.7 \cdot 10^{15}$'
     category: Applications
   - id: multi-modular-arithmetic-glue-two-images-with
-    expr: [RationalReconstruction, [ChineseRemainder, [List, [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007], [PowerMod, [Rational, 55835135, 15519504], 1, 1000000009]], [List, 1000000007, 1000000009]], [Multiply, 1000000007, 1000000009]]
+    expr:
+      [
+        RationalReconstruction,
+        [
+          ChineseRemainder,
+          [
+            List,
+            [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007],
+            [PowerMod, [Rational, 55835135, 15519504], 1, 1000000009],
+          ],
+          [List, 1000000007, 1000000009],
+        ],
+        [Multiply, 1000000007, 1000000009],
+      ]
     expected: [Rational, 55835135, 15519504]
-    caption: 'multi-modular arithmetic: glue two images with [[ChineseRemainder]], and the product modulus is large enough'
+    caption: "multi-modular arithmetic: glue two images with [[ChineseRemainder]], and the product modulus is large enough"
     category: Applications
   - id: mod-11-the-bounds-are-n-d-le-2-and-no-such
     expr: [RationalReconstruction, 3, 11]

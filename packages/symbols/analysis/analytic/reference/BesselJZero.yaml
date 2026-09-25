@@ -5,7 +5,7 @@ summary: The $k$-th positive zero of the Bessel function $J_\nu$, for real $\nu 
 signatures:
   - call: BesselJZero(nu, k)
     description: the $k$-th positive zero of $J_\nu$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - compute-engine's native `BesselJ` only evaluates numerically at integer order, so the zero-finder here carries its own real $J_\nu$ series (term-ratio, stable for the double-precision range zero-finding needs) rather than depending on it — which matters for exactly the half-integer orders Fungrim's identities use.
   - McMahon's asymptotic expansion seeds a bracket around the $k$-th zero, then bisection (with a few closing Newton steps) converges it.
@@ -24,7 +24,15 @@ examples:
     expected: 8.653727912911013
     caption: the third zero of $J_0$
   - id: tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first
-    expr: [Chop, [Subtract, [Tan, [N, [BesselJZero, [Rational, 3, 2], 1]]], [N, [BesselJZero, [Rational, 3, 2], 1]]]]
+    expr:
+      [
+        Chop,
+        [
+          Subtract,
+          [Tan, [N, [BesselJZero, [Rational, 3, 2], 1]]],
+          [N, [BesselJZero, [Rational, 3, 2], 1]],
+        ],
+      ]
     expected: 0
     category: Properties
     caption: $\tan(j_{3/2,1}) = j_{3/2,1}$ — the sinc function's first turning point

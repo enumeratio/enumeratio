@@ -7,20 +7,20 @@ signatures:
     description: the real $r$ beside the finite part $z$ (a [[ProfiniteNumber]])
     library: enumeratio-adeles
   - call: Adele(q)
-    description: 'the principal adèle of a rational $q$: $q$ at the real place and every finite one'
+    description: "the principal adèle of a rational $q$: $q$ at the real place and every finite one"
     library: enumeratio-adeles
   - call: Adele(idele)
     description: the underlying adèle of an [[Idele]]
     library: enumeratio-adeles
 details:
   - The real part is any closed-form real constant compute-engine can evaluate numerically, not only a rational.
-  - '`Add`, `Multiply`, `Negate`, `Divide`, `Power`, `Equal`, `NotEqual` thread over an adèle, real part and finite part separately.'
+  - "`Add`, `Multiply`, `Negate`, `Divide`, `Power`, `Equal`, `NotEqual` thread over an adèle, real part and finite part separately."
   - An [[Idele]] is an adèle together with the extra data an idèle carries (a finite set of distinguished units); `Adele(idele)` forgets that and keeps only the value.
 examples:
   - id: the-principal-adele-5-at-every-place
     expr: [Adele, 5]
     expected: [Adele, 5, 5]
-    caption: 'the principal adèle: 5 at every place'
+    caption: "the principal adèle: 5 at every place"
   - id: adele-2-profinitenumber-1-6-times-3
     expr: [Multiply, [Adele, 2, [ProfiniteNumber, 1, 6]], 3]
     expected: [Adele, 6, [ProfiniteNumber, 3, 18]]
