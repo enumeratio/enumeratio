@@ -911,5 +911,42 @@
       ]
     },
     "markup": "<notatio-dynamic-module><notatio-slider name=\"k\" min=\"0\" max=\"5\" appearance=\"Labeled\"></notatio-slider></notatio-dynamic-module>"
+  },
+  "TestResultObject(KeyValuePair(\"Outcome\", \"Success\"), KeyValuePair(\"Input\", 1 + 1), KeyValuePair(\"ActualOutput\", 2), KeyValuePair(\"AbsoluteTimeUsed\", 0))": {
+    "rendering": {
+      "tag": "notatio-test-result-object",
+      "attributes": {
+        "outcome": "Success",
+        "input": "1 + 1",
+        "actual": "2",
+        "time": "0"
+      }
+    },
+    "markup": "<notatio-test-result-object outcome=\"Success\" input=\"1 + 1\" actual=\"2\" time=\"0\"></notatio-test-result-object>"
+  },
+  "TestResultObject(KeyValuePair(\"Outcome\", \"Failure\"), KeyValuePair(\"Input\", 1 + 1), KeyValuePair(\"ExpectedOutput\", 3), KeyValuePair(\"ActualOutput\", 2), KeyValuePair(\"AbsoluteTimeUsed\", 0), KeyValuePair(\"TestID\", \"adds\"))": {
+    "rendering": {
+      "tag": "notatio-test-result-object",
+      "attributes": {
+        "outcome": "Failure",
+        "input": "1 + 1",
+        "expected": "3",
+        "actual": "2",
+        "time": "0",
+        "test-id": "adds"
+      }
+    },
+    "markup": "<notatio-test-result-object outcome=\"Failure\" input=\"1 + 1\" expected=\"3\" actual=\"2\" time=\"0\" test-id=\"adds\"></notatio-test-result-object>"
+  },
+  "TestResultObject(KeyValuePair(\"Outcome\", \"Aborted\"), KeyValuePair(\"Input\", FactorInteger(n)), KeyValuePair(\"ExpectedOutput\", Missing), KeyValuePair(\"AbsoluteTimeUsed\", 0.05))": {
+    "rendering": {
+      "tag": "notatio-test-result-object",
+      "attributes": {
+        "outcome": "Aborted",
+        "input": "FactorInteger(n)",
+        "time": "0.05"
+      }
+    },
+    "markup": "<notatio-test-result-object outcome=\"Aborted\" input=\"FactorInteger(n)\" time=\"0.05\"></notatio-test-result-object>"
   }
 }

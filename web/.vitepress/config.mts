@@ -137,6 +137,7 @@ export default defineConfig({
           { text: "Input", link: "/playground/in" },
           { text: "Output", link: "/playground/out" },
           { text: "Cell", link: "/playground/cell" },
+          { text: "Verification", link: "/playground/verification" },
           { text: "Figure (glyphs)", link: "/playground/figure" },
           { text: "Plot", link: "/playground/plot" },
           { text: "Plot 3D", link: "/playground/plot-3d" },
