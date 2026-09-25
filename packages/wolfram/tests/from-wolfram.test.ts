@@ -97,14 +97,11 @@ test("Fold keeps the same (f, init, xs) order", () => {
   expect(fromWolfram("Fold[Plus, 0, {1, 2, 3}]")).toEqual(["Fold", "Add", 0, ["List", 1, 2, 3]]);
 });
 
-test("Array is our Tabulate; multi-dim spreads the {n, m} list into separate args", () => {
-  expect(fromWolfram("Array[f, 3]")).toEqual(["Tabulate", "f", 3]);
-  expect(fromWolfram("Array[f, {2, 3}]")).toEqual(["Tabulate", "f", 2, 3]);
-});
-
-test("FoldList (no seed) is our Scan, reordered; Accumulate is Scan with Add", () => {
-  expect(fromWolfram("FoldList[Plus, {1, 2, 3}]")).toEqual(["Scan", ["List", 1, 2, 3], "Add"]);
-  expect(fromWolfram("Accumulate[{1, 2, 3}]")).toEqual(["Scan", ["List", 1, 2, 3], "Add"]);
+test("Array, FoldList and Accumulate are straight renames of our own heads", () => {
+  expect(fromWolfram("Array[f, 3]")).toEqual(["Array", "f", 3]);
+  expect(fromWolfram("Array[f, {2, 3}]")).toEqual(["Array", "f", ["List", 2, 3]]);
+  expect(fromWolfram("FoldList[Plus, {1, 2, 3}]")).toEqual(["FoldList", "Add", ["List", 1, 2, 3]]);
+  expect(fromWolfram("Accumulate[{1, 2, 3}]")).toEqual(["Accumulate", ["List", 1, 2, 3]]);
 });
 
 test("nested expressions", () => {
