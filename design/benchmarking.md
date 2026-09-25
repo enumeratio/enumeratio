@@ -270,7 +270,10 @@ system.
 5. **Interleave** when several systems run on one machine: the runner goes benchmark by
    benchmark, round-robin across systems (TS, Python, Julia, Rust, TS, …), rather than system
    by system. Noise that lasts a few seconds then lands on every system alike, instead of all
-   landing on one of them.
+   landing on one of them. The price is that every kernel stays resident for the whole run:
+   Julia and Oscar take several GB between them. So only CI interleaves (its runner is the
+   job's alone); a local run goes one system at a time. The first all-systems local run pushed
+   the shared dev machine 18 GB into swap.
 
 **The headline statistic is the median.** Min is reported too. Wolfram's own `RepeatedTiming`
 and pyperf both lean central rather than toward the minimum, and on a shared runner the median
@@ -310,9 +313,11 @@ holds:
   noise. If it proves too loose, the fix is a stable machine (a self-hosted runner, or Dean's
   Mac on a schedule), not more statistics. Reports carry the fingerprint, so the viewer can
   split series by machine.
-- **Locally:** `vp run bench` runs any subset on the current machine and writes the same
-  report under `.scratch/bench/`. The viewer loads a local report too. A local run of the full
-  catalogue takes the `HEAVY` lock.
+- **Locally:** `node packages/bench/scripts/bench.ts` runs any subset on the current machine
+  and writes the same report under `.scratch/bench/`. The viewer loads a local report too
+  (`?data=`). A local run of the full catalogue takes the `HEAVY` lock, runs one system at a
+  time, and won't start with more than 8 GB of swap in use. Every harness runs in its own
+  process group under the oracle's RSS watchdog (`ORACLE_MEMORY_MB`).
 
 Instruction counts (Cachegrind or CodSpeed) would steady our own trend line, but V8's JIT under
 Valgrind is slow and skewed, and nothing else in the comparison can join. So not now.
