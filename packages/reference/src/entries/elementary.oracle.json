@@ -15,6 +15,11 @@
           "input": "sin(0)",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(0_i64).sin()",
+          "output": "0.0",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",6]]": {
@@ -144,6 +149,11 @@
           "input": "sin(1)",
           "output": "sin(1)",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(1_i64).sin()",
+          "output": "0.8414709848078965",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",5]]": {
@@ -169,6 +179,11 @@
         "sage": {
           "input": "cos(0)",
           "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(0_i64).cos()",
+          "output": "1.0",
           "verdict": "agree"
         }
       },
@@ -280,6 +295,11 @@
           "input": "cos(2)",
           "output": "cos(2)",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(2_i64).cos()",
+          "output": "-0.4161468365471424",
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",5]]": {
@@ -305,6 +325,11 @@
         "sage": {
           "input": "tan(0)",
           "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(0_i64).tan()",
+          "output": "0.0",
           "verdict": "agree"
         }
       },
@@ -417,6 +442,11 @@
         "sage": {
           "input": "tan(1)",
           "output": "tan(1)",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(1_i64).tan()",
+          "output": "1.557407724654902",
           "verdict": "agree"
         }
       }
@@ -823,6 +853,11 @@
           "input": "exp(0)",
           "output": "1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(0_i64).exp()",
+          "output": "1.0",
+          "verdict": "agree"
         }
       },
       "[\"Exp\",1]": {
@@ -834,6 +869,11 @@
         "sage": {
           "input": "exp(1)",
           "output": "e",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(1_i64).exp()",
+          "output": "2.718281828459045",
           "verdict": "agree"
         }
       },
@@ -847,6 +887,13 @@
           "input": "bool(exp(log(5)) == 5)",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "((f64of(f64of(5_i64).ln()).exp()) == (5_i64))",
+          "output": "compile: mismatched types: expected `f64`, found `i64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Multiply\",[\"Exp\",2],[\"Exp\",3]],[\"Exp\",5]]": {
@@ -858,6 +905,11 @@
         "sage": {
           "input": "bool((exp(2) * exp(3)) == exp(5))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(((f64of(2_i64).exp() * f64of(3_i64).exp())) == (f64of(5_i64).exp()))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -873,6 +925,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Exp is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "f64of(vec![0_i64, 1_i64]).exp()",
+          "output": "compile: the trait bound `Vec<i64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       }
     },
@@ -886,6 +945,11 @@
         "sage": {
           "input": "log(1)",
           "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(1_i64).ln()",
+          "output": "0.0",
           "verdict": "agree"
         }
       },
@@ -913,6 +977,13 @@
           "verdict": "disagree",
           "kind": "shape",
           "note": "Both mean the same signed infinity; our symbol prints as 'NegativeInfinity', Sage's log(0) prints as '-Infinity' -- a spelling mismatch the text comparator can't bridge."
+        },
+        "rust": {
+          "input": "f64of(0_i64).ln()",
+          "output": "-inf",
+          "verdict": "disagree",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Ln\",[\"Exp\",5]],5]": {
@@ -925,6 +996,13 @@
           "input": "bool(log(exp(5)) == 5)",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "((f64of(f64of(5_i64).exp()).ln()) == (5_i64))",
+          "output": "compile: mismatched types: expected `f64`, found `i64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Add\",[\"Ln\",2],[\"Ln\",3]],[\"Ln\",6]]": {
@@ -939,6 +1017,11 @@
           "verdict": "disagree",
           "kind": "convention",
           "note": "True mathematically; Sage's bool(a==b) on unevaluated symbolic logs doesn't invoke a log-identity simplification by default and reports False rather than attempting the proof."
+        },
+        "rust": {
+          "input": "(((f64of(2_i64).ln() + f64of(3_i64).ln())) == (f64of(6_i64).ln()))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Ln\",-1]": {
@@ -953,6 +1036,13 @@
           "verdict": "disagree",
           "kind": "unevaluated",
           "note": "A negative real stays symbolic under plain evaluation here (N() gives i*pi); Sage's log(-1) continues straight to the exact complex value I*pi."
+        },
+        "rust": {
+          "input": "f64of(-1_i64).ln()",
+          "output": "NaN",
+          "verdict": "disagree",
+          "kind": "unclassified",
+          "note": ""
         }
       }
     },

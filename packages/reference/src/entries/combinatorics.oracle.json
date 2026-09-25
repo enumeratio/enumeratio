@@ -30,6 +30,11 @@
           "input": "binomial(ZZ(5), ZZ(2))",
           "output": "10",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(5_i64), int(2_i64))",
+          "output": "10",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",10,3]": {
@@ -55,6 +60,11 @@
         },
         "oscar": {
           "input": "binomial(ZZ(10), ZZ(3))",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(10_i64), int(3_i64))",
           "output": "120",
           "verdict": "agree"
         }
@@ -84,6 +94,11 @@
           "input": "binomial(ZZ(4), ZZ(2))",
           "output": "6",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(4_i64), int(2_i64))",
+          "output": "6",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",5,0]": {
@@ -109,6 +124,11 @@
         },
         "oscar": {
           "input": "binomial(ZZ(5), ZZ(0))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(5_i64), int(0_i64))",
           "output": "1",
           "verdict": "agree"
         }
@@ -138,6 +158,11 @@
           "input": "binomial(ZZ(5), ZZ(5))",
           "output": "1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(5_i64), int(5_i64))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Binomial\",10,3],[\"Binomial\",10,7]]": {
@@ -163,6 +188,11 @@
         },
         "oscar": {
           "input": "(binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "((num_integer::binomial(int(10_i64), int(3_i64))) == (num_integer::binomial(int(10_i64), int(7_i64))))",
           "output": "true",
           "verdict": "agree"
         }
@@ -192,6 +222,11 @@
           "input": "((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(((num_integer::binomial(int(9_i64), int(2_i64)) + num_integer::binomial(int(9_i64), int(3_i64)))) == (num_integer::binomial(int(10_i64), int(3_i64))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Add\",[\"Binomial\",4,0],[\"Binomial\",4,1],[\"Binomial\",4,2],[\"Binomial\",4,3],[\"Binomial\",4,4]],[\"Power\",2,4]]": {
@@ -219,6 +254,13 @@
           "input": "((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))",
           "output": "true",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(((num_integer::binomial(int(4_i64), int(0_i64)) + num_integer::binomial(int(4_i64), int(1_i64)) + num_integer::binomial(int(4_i64), int(2_i64)) + num_integer::binomial(int(4_i64), int(3_i64)) + num_integer::binomial(int(4_i64), int(4_i64)))) == (f64of(2_i64).powf(f64of(4_i64))))",
+          "output": "compile: mismatched types: expected `BigInt`, found `f64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Binomial\",52,5]": {
@@ -246,6 +288,11 @@
           "input": "binomial(ZZ(52), ZZ(5))",
           "output": "2598960",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(52_i64), int(5_i64))",
+          "output": "2598960",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",5,7]": {
@@ -271,6 +318,11 @@
         },
         "oscar": {
           "input": "binomial(ZZ(5), ZZ(7))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(5_i64), int(7_i64))",
           "output": "0",
           "verdict": "agree"
         }
@@ -302,6 +354,13 @@
           "input": "binomial(ZZ(5), ZZ(-1))",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(5_i64), int(-1_i64))",
+          "output": "1",
+          "verdict": "disagree",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Binomial\",-5,2]": {
@@ -331,6 +390,13 @@
           "input": "binomial(ZZ(-5), ZZ(2))",
           "output": "15",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "num_integer::binomial(int(-5_i64), int(2_i64))",
+          "output": "0",
+          "verdict": "disagree",
+          "kind": "unclassified",
+          "note": ""
         }
       }
     },
@@ -411,6 +477,11 @@
           "input": "factorial(ZZ(5))",
           "output": "120",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(5_i64))",
+          "output": "120.0",
+          "verdict": "agree"
         }
       },
       "[\"Factorial\",6]": {
@@ -437,6 +508,11 @@
         "oscar": {
           "input": "factorial(ZZ(6))",
           "output": "720",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(6_i64))",
+          "output": "720.0",
           "verdict": "agree"
         }
       },
@@ -465,6 +541,11 @@
           "input": "factorial(ZZ(0))",
           "output": "1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(0_i64))",
+          "output": "1.0",
+          "verdict": "agree"
         }
       },
       "[\"Factorial\",10]": {
@@ -491,6 +572,11 @@
         "oscar": {
           "input": "factorial(ZZ(10))",
           "output": "3628800",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(10_i64))",
+          "output": "3628800.0",
           "verdict": "agree"
         }
       },
@@ -527,6 +613,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Factorial is Listable and threads over the list; Oscar's takes scalars only."
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(vec![1_i64, 2_i64, 3_i64, 4_i64]))",
+          "output": "compile: mismatched types: expected `i64`, found `Vec<i64>`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Factorial\",5],[\"Multiply\",5,[\"Factorial\",4]]]": {
@@ -554,6 +647,13 @@
           "input": "(factorial(ZZ(5)) == (5 * factorial(ZZ(4))))",
           "output": "true",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "((statrs::function::factorial::factorial(to_u64(5_i64))) == ((5_i64 * statrs::function::factorial::factorial(to_u64(4_i64)))))",
+          "output": "compile: cannot multiply `i64` by `f64`: no implementation for `i64 * f64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Factorial\",[\"Rational\",1,2]]": {
@@ -587,6 +687,13 @@
           "verdict": "error",
           "kind": "domain",
           "note": "compute-engine extends Factorial to non-integers through Gamma; Oscar's factorial takes integers only."
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(ratio(1_i64, 2_i64)))",
+          "output": "compile: mismatched types: expected `i64`, found `Ratio<BigInt>`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Factorial\",8]": {
@@ -613,6 +720,11 @@
         "oscar": {
           "input": "factorial(ZZ(8))",
           "output": "40320",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(8_i64))",
+          "output": "40320.0",
           "verdict": "agree"
         }
       },
@@ -649,6 +761,13 @@
           "verdict": "error",
           "kind": "undefined-form",
           "note": "Both decline: compute-engine answers \"ComplexInfinity\" and Oscar raises an error."
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(-1_i64))",
+          "output": "panic: a non-negative integer: TryFromIntError(NegOverflow)",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Factorial\",20]": {
@@ -675,6 +794,11 @@
         "oscar": {
           "input": "factorial(ZZ(20))",
           "output": "2432902008176640000",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "statrs::function::factorial::factorial(to_u64(20_i64))",
+          "output": "2.43290200817664e18",
           "verdict": "agree"
         }
       }
@@ -853,6 +977,11 @@
           "input": "(binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))",
           "output": "42.0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(f64of(num_integer::binomial(int((2_i64 * 5_i64)), int(5_i64))) / f64of((5_i64 + 1_i64)))",
+          "output": "42.0",
+          "verdict": "agree"
         }
       },
       "[\"Subtract\",[\"Binomial\",10,5],[\"Binomial\",10,6]]": {
@@ -878,6 +1007,11 @@
         },
         "oscar": {
           "input": "(binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(num_integer::binomial(int(10_i64), int(5_i64)) - num_integer::binomial(int(10_i64), int(6_i64)))",
           "output": "42",
           "verdict": "agree"
         }

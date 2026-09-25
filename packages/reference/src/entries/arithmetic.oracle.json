@@ -15,6 +15,11 @@
           "input": "abs(-5)",
           "output": "5",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(-5_i64).abs()",
+          "output": "5.0",
+          "verdict": "agree"
         }
       },
       "[\"Abs\",5]": {
@@ -26,6 +31,11 @@
         "sage": {
           "input": "abs(5)",
           "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(5_i64).abs()",
+          "output": "5.0",
           "verdict": "agree"
         }
       },
@@ -39,6 +49,11 @@
           "input": "abs(0)",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(0_i64).abs()",
+          "output": "0.0",
+          "verdict": "agree"
         }
       },
       "[\"Abs\",[\"Rational\",-7,2]]": {
@@ -50,6 +65,11 @@
         "sage": {
           "input": "abs((-7/2))",
           "output": "7/2",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(ratio(-7_i64, 2_i64)).abs()",
+          "output": "3.5",
           "verdict": "agree"
         }
       },
@@ -72,6 +92,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Abs is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "f64of(vec![-1_i64, 2_i64, -3_i64]).abs()",
+          "output": "compile: the trait bound `Vec<i64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Abs\",-8],[\"Abs\",8]]": {
@@ -83,6 +110,11 @@
         "sage": {
           "input": "bool(abs(-8) == abs(8))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "((f64of(-8_i64).abs()) == (f64of(8_i64).abs()))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -102,6 +134,11 @@
         "sage": {
           "input": "abs((70 - 95))",
           "output": "25",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of((70_i64 - 95_i64)).abs()",
+          "output": "25.0",
           "verdict": "agree"
         }
       }
@@ -241,6 +278,11 @@
           "input": "(-(5))",
           "output": "-5",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(5_i64))",
+          "output": "-5",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",-5]": {
@@ -266,6 +308,11 @@
         },
         "oscar": {
           "input": "(-(-5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(-5_i64))",
           "output": "5",
           "verdict": "agree"
         }
@@ -295,6 +342,11 @@
           "input": "(-(0))",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(0_i64))",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",[\"Rational\",3,4]]": {
@@ -321,6 +373,11 @@
         "oscar": {
           "input": "(-((3 // 4)))",
           "output": "-0.75",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(ratio(3_i64, 4_i64)))",
+          "output": "-3/4",
           "verdict": "agree"
         }
       },
@@ -351,6 +408,13 @@
           "input": "(-([1, -2, 3]))",
           "output": "[-1, 2, -3]",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(vec![1_i64, -2_i64, 3_i64]))",
+          "output": "compile: cannot apply unary operator `-` to type `Vec<i64>`: cannot apply unary operator `-`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Negate\",42.5]": {
@@ -376,6 +440,11 @@
         },
         "oscar": {
           "input": "(-(42.5))",
+          "output": "-42.5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(42.5_f64))",
           "output": "-42.5",
           "verdict": "agree"
         }
@@ -489,6 +558,11 @@
           "input": "sqrt(16)",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(16_i64).sqrt()",
+          "output": "4.0",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",2]": {
@@ -500,6 +574,11 @@
         "sage": {
           "input": "sqrt(2)",
           "output": "sqrt(2)",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(2_i64).sqrt()",
+          "output": "1.4142135623730951",
           "verdict": "agree"
         }
       },
@@ -513,6 +592,11 @@
           "input": "sqrt((4/9))",
           "output": "2/3",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(ratio(4_i64, 9_i64)).sqrt()",
+          "output": "0.6666666666666666",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",0]": {
@@ -524,6 +608,11 @@
         "sage": {
           "input": "sqrt(0)",
           "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(0_i64).sqrt()",
+          "output": "0.0",
           "verdict": "agree"
         }
       },
@@ -539,6 +628,13 @@
           "verdict": "disagree",
           "kind": "shape",
           "note": "Same value 2i: the scan's N()-reduced complex leaf serializes to JSON for the text compare, which doesn't recognize Sage's '2*I' as the same number."
+        },
+        "rust": {
+          "input": "f64of(-4_i64).sqrt()",
+          "output": "NaN",
+          "verdict": "disagree",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Square\",[\"Sqrt\",16]],16]": {
@@ -562,6 +658,11 @@
         "sage": {
           "input": "bool(sqrt(16) == (16^(1/2)))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "((f64of(16_i64).sqrt()) == (f64of(16_i64).powf(f64of(ratio(1_i64, 2_i64)))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -589,6 +690,13 @@
           "verdict": "disagree",
           "kind": "shape",
           "note": "Both stay symbolic; the scan's N() reduction turns our expected Sqrt(-2) into a complex float before the text compare, so it no longer matches Sage's literal 'sqrt(-2)' string."
+        },
+        "rust": {
+          "input": "f64of(-2_i64).sqrt()",
+          "output": "NaN",
+          "verdict": "disagree",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Sqrt\",[\"Rational\",-4,9]]": {
@@ -603,6 +711,13 @@
           "verdict": "disagree",
           "kind": "shape",
           "note": "Same value 2i/3: the scan's N()-reduced complex leaf serializes to JSON, not the '2/3*I' notation Sage prints — a comparator spelling gap, not a numeric disagreement."
+        },
+        "rust": {
+          "input": "f64of(ratio(-4_i64, 9_i64)).sqrt()",
+          "output": "NaN",
+          "verdict": "disagree",
+          "kind": "unclassified",
+          "note": ""
         }
       }
     },
@@ -684,6 +799,11 @@
           "input": "floor((7/2))",
           "output": "3",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(ratio(7_i64, 2_i64)).floor()",
+          "output": "3.0",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",3.7]": {
@@ -696,6 +816,11 @@
           "input": "floor(3.7)",
           "output": "3",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(3.7_f64).floor()",
+          "output": "3.0",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",5]": {
@@ -707,6 +832,11 @@
         "sage": {
           "input": "floor(5)",
           "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(5_i64).floor()",
+          "output": "5.0",
           "verdict": "agree"
         }
       },
@@ -722,6 +852,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "f64of(vec![1.2_f64, -1.2_f64, 3.7_f64]).floor()",
+          "output": "compile: the trait bound `Vec<f64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Add\",[\"Floor\",[\"Rational\",7,2]],1],[\"Ceil\",[\"Rational\",7,2]]]": {
@@ -734,6 +871,13 @@
           "input": "bool((floor((7/2)) + 1) == ceil((7/2)))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(((f64of(ratio(7_i64, 2_i64)).floor() + 1_i64)) == (f64of(ratio(7_i64, 2_i64)).ceil()))",
+          "output": "compile: cannot add `i64` to `f64`: no implementation for `f64 + i64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Floor\",[\"Rational\",-7,2]],[\"Negate\",[\"Ceil\",[\"Rational\",7,2]]]]": {
@@ -745,6 +889,11 @@
         "sage": {
           "input": "bool(floor((-7/2)) == (-ceil((7/2))))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "((f64of(ratio(-7_i64, 2_i64)).floor()) == ((-(f64of(ratio(7_i64, 2_i64)).ceil()))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -758,6 +907,11 @@
           "input": "floor((17 / 5))",
           "output": "3",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of((f64of(17_i64) / f64of(5_i64))).floor()",
+          "output": "3.0",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",-3.2]": {
@@ -769,6 +923,11 @@
         "sage": {
           "input": "floor(-3.2)",
           "output": "-4",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(-3.2_f64).floor()",
+          "output": "-4.0",
           "verdict": "agree"
         }
       },
@@ -791,6 +950,11 @@
           "input": "ceil((7/2))",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(ratio(7_i64, 2_i64)).ceil()",
+          "output": "4.0",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",3.2]": {
@@ -803,6 +967,11 @@
           "input": "ceil(3.2)",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(3.2_f64).ceil()",
+          "output": "4.0",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",5]": {
@@ -814,6 +983,11 @@
         "sage": {
           "input": "ceil(5)",
           "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(5_i64).ceil()",
+          "output": "5.0",
           "verdict": "agree"
         }
       },
@@ -829,6 +1003,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "f64of(vec![1.2_f64, -1.2_f64, 3.7_f64]).ceil()",
+          "output": "compile: the trait bound `Vec<f64>: AsF64` is not satisfied: the trait `AsF64` is not implemented f",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Ceil\",[\"Rational\",7,2]],[\"Add\",[\"Floor\",[\"Rational\",7,2]],1]]": {
@@ -841,6 +1022,13 @@
           "input": "bool(ceil((7/2)) == (floor((7/2)) + 1))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "((f64of(ratio(7_i64, 2_i64)).ceil()) == ((f64of(ratio(7_i64, 2_i64)).floor() + 1_i64)))",
+          "output": "compile: cannot add `i64` to `f64`: no implementation for `f64 + i64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
         }
       },
       "[\"Equal\",[\"Ceil\",5],[\"Floor\",5]]": {
@@ -852,6 +1040,11 @@
         "sage": {
           "input": "bool(ceil(5) == floor(5))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "((f64of(5_i64).ceil()) == (f64of(5_i64).floor()))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -865,6 +1058,11 @@
           "input": "ceil((17 / 5))",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of((f64of(17_i64) / f64of(5_i64))).ceil()",
+          "output": "4.0",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",-3.7]": {
@@ -876,6 +1074,11 @@
         "sage": {
           "input": "ceil(-3.7)",
           "output": "-3",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "f64of(-3.7_f64).ceil()",
+          "output": "-3.0",
           "verdict": "agree"
         }
       },

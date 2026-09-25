@@ -2,7 +2,7 @@
 // memory watchdog. Installs are the heaviest thing the oracles do (Oscar precompiles
 // dozens of packages; mathlib's cache unpacks ~5 GB), so they never run in parallel.
 //
-//   node packages/oracle/scripts/setup.ts            # julia, oscar, mathlib4
+//   node packages/oracle/scripts/setup.ts            # julia, oscar, rust, mathlib4
 //   node packages/oracle/scripts/setup.ts julia      # just one
 
 import { fileURLToPath } from "node:url";
@@ -11,6 +11,12 @@ import { juliaFlags, runBounded } from "../src/index.ts";
 const STEPS: Record<string, () => [string, string[], { cwd?: string; env?: NodeJS.ProcessEnv }]> = {
   julia: () => ["julia", [...juliaFlags("julia"), "-e", INSTANTIATE], { env: ONE_AT_A_TIME }],
   oscar: () => ["julia", [...juliaFlags("oscar"), "-e", INSTANTIATE], { env: ONE_AT_A_TIME }],
+  // Fetches and builds the pinned crates once, so a scan batch only compiles its main.rs.
+  rust: () => [
+    "cargo",
+    ["build", "--quiet"],
+    { cwd: fileURLToPath(new URL("../rust", import.meta.url)) },
+  ],
   mathlib4: () => [
     "lake",
     ["exe", "cache", "get"],

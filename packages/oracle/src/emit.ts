@@ -64,6 +64,8 @@ export function emit(expr: MathJSON, system: System): Emitted {
     if (typeof node === "number") {
       if (system === "wolfram") return toWolfram(node);
       // Lean reads `f -1` as `f - 1`.
+      // Rust infers i32 from a bare integer literal; the templates want i64.
+      if (system === "rust") return Number.isInteger(node) ? `${node}_i64` : `${node}_f64`;
       return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
     }
     if (typeof node === "boolean") return node ? "True" : "False";

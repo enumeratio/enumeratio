@@ -244,6 +244,56 @@ async function runLean(sources: readonly string[]): Promise<Result[]> {
   return results;
 }
 
+/** Rust: every item of the batch as one closure in `rust/src/main.rs`, built once in the
+ * `rust/` crate and run. A panic costs its own item (`prelude::item` catches it); a compile
+ * error would cost the whole batch, so an item rustc rejects is answered with its error and
+ * the rest rebuilt without it. */
+async function runRust(sources: readonly string[]): Promise<Result[]> {
+  const crate = local("rust");
+  const header = [
+    "#![allow(unused_parens, unused_imports)]",
+    "mod prelude;",
+    "use prelude::*;",
+    "fn main() {",
+  ];
+  const results: Result[] = failAll(sources.length, "no output");
+  const live = new Set(sources.map((_, i) => i));
+  for (let attempt = 0; attempt < sources.length + 1 && live.size > 0; attempt++) {
+    const order = [...live];
+    const lines = order.map((i) => `    item(${i + 1}, || ${sources[i]});`);
+    writeFileSync(join(crate, "src", "main.rs"), [...header, ...lines, "}", ""].join("\n"));
+    const build = await runBounded("cargo", ["build", "--quiet", "--message-format=short"], {
+      cwd: crate,
+      timeoutMs: 900_000,
+    });
+    if (build.killed !== undefined)
+      return failAll(sources.length, `cargo: killed (${build.killed})`);
+    if (build.code !== 0) {
+      const rejected = new Map<number, string>();
+      for (const match of build.stderr.matchAll(
+        /src\/main\.rs:(\d+):\d+: error(?:\[\w+\])?: (.*)/g,
+      )) {
+        const at = order[Number(match[1]) - header.length - 1];
+        if (at !== undefined && !rejected.has(at))
+          rejected.set(at, `compile: ${(match[2] as string).slice(0, 90)}`);
+      }
+      if (rejected.size === 0)
+        return failAll(sources.length, `cargo: ${build.stderr.slice(0, 120)}`);
+      for (const [i, error] of rejected) {
+        results[i] = { error };
+        live.delete(i);
+      }
+      continue;
+    }
+    const run = await transcript(join(crate, "target", "debug", "enumeratio-oracle"), [], {});
+    if (!("out" in run)) return failAll(sources.length, run.reason);
+    const got = collect(run.out, sources.length);
+    for (const i of live) results[i] = got[i] as Result;
+    break;
+  }
+  return results;
+}
+
 /** Pull `<<n>>value` lines out of a transcript, tolerating anything else the kernel prints. */
 function collect(output: string, count: number): Result[] {
   const results: Result[] = failAll(count, "no output");
@@ -424,5 +474,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
       return runJulia(sources, "julia", "Nemo, Combinatorics");
     case "mathlib4":
       return runLean(sources);
+    case "rust":
+      return runRust(sources);
   }
 }

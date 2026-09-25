@@ -199,6 +199,67 @@
           "verdict": "agree"
         }
       }
+    },
+    "AdicNumeral": {
+      "[\"Multiply\",[\"AdicNumeral\",10,[\"Rational\",1,3]],3]": {
+        "rust": {
+          "input": "(adic_q(10_i64, ratio(1_i64, 3_i64)) * 3_i64)",
+          "output": "compile: mismatched types: expected `QAdic<EAdic>`, found `i64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
+        }
+      },
+      "[\"Add\",[\"AdicNumeral\",10,-1],1]": {
+        "rust": {
+          "input": "(adic_q(10_i64, -1_i64) + 1_i64)",
+          "output": "compile: mismatched types: expected `QAdic<EAdic>`, found `i64`",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
+        }
+      },
+      "[\"Divide\",[\"AdicNumeral\",5,3],5]": {
+        "rust": {
+          "input": "(f64of(adic_q(5_i64, 3_i64)) / f64of(5_i64))",
+          "output": "compile: the trait bound `QAdic<EAdic>: AsF64` is not satisfied: the trait `AsF64` is not implement",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
+        }
+      },
+      "[\"Divide\",[\"AdicNumeral\",10,3],2]": {
+        "rust": {
+          "input": "(f64of(adic_q(10_i64, 3_i64)) / f64of(2_i64))",
+          "output": "compile: the trait bound `QAdic<EAdic>: AsF64` is not satisfied: the trait `AsF64` is not implement",
+          "verdict": "error",
+          "kind": "unclassified",
+          "note": ""
+        }
+      }
+    },
+    "AdicValuation": {
+      "[\"AdicValuation\",[\"AdicNumeral\",5,75]]": {
+        "rust": {
+          "input": "adic_valuation(adic_q(5_i64, 75_i64))",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"AdicNorm\",[\"AdicNumeral\",5,75]]": {
+        "rust": {
+          "input": "adic_norm(adic_q(5_i64, 75_i64))",
+          "output": "1/25",
+          "verdict": "agree"
+        }
+      },
+      "[\"AdicValuation\",[\"AdicNumeral\",5,[\"Rational\",3,25]]]": {
+        "rust": {
+          "input": "adic_valuation(adic_q(5_i64, ratio(3_i64, 25_i64)))",
+          "output": "-2",
+          "verdict": "agree"
+        }
+      }
     }
   }
 }
