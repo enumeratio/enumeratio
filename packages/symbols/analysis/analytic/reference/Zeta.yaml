@@ -180,7 +180,7 @@ examples:
     caption: $\zeta(2, 1/2) = 3\zeta(2) = \pi^2/2$
   - id: interval-arithmetic-zeta-is-decreasing-on-1
     expr: [Zeta, [Interval, 1.1, 1.2]]
-    expected: [Interval, 5.591582441177752, 10.584448464950801]
+    expected: [Interval, 5.59158244117775, 10.584448464950812]
     category: Scope
     caption: 'Interval arithmetic: $\zeta$ is decreasing on $(1, \infty)$'
   - id: uncertainty-in-a-propagated-with-partial-a-zeta

@@ -67,16 +67,27 @@ const CERTIFIED: Readonly<Record<string, Certified>> = {
 /** The heads `enclosure` can certify, for their reference entries and tests. */
 export const CERTIFIED_HEADS: readonly string[] = Object.keys(CERTIFIED);
 
+/** `head`'s certified kernel for `arity` arguments, or undefined when it has none: on balls
+ * for them at the working precision, a ball holding its value, or undefined where the kernel
+ * declines. */
+export function kernelOf(
+  head: string,
+  arity: number,
+): ((args: readonly Ball[]) => Ball | undefined) | undefined {
+  const certified = CERTIFIED[head];
+  if (certified === undefined || !certified.arities.includes(arity)) return undefined;
+  return (args) => certify(() => certified.kernel(args, BigDecimal.precision));
+}
+
 /** A ball holding `x`'s value, about `digits` digits wide, or undefined when `x` is not a
  * certified head on exact arguments, or its kernel declines them. */
 export function enclosure(x: BoxedExpression, digits: number): Ball | undefined {
-  const certified = CERTIFIED[x.operator];
   const ops = operandsOf(x);
-  if (certified === undefined || !certified.arities.includes(ops.length)) return undefined;
+  const kernel = kernelOf(x.operator, ops.length);
+  if (kernel === undefined) return undefined;
   return atDigits(digits, () => {
     const args = ops.map(argumentBall);
-    if (!args.every((arg) => arg !== undefined)) return undefined;
-    return certify(() => certified.kernel(args, digits));
+    return args.every((arg) => arg !== undefined) ? kernel(args) : undefined;
   });
 }
 
@@ -85,7 +96,7 @@ const DECIMAL = /^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i;
 
 /** An exact argument's ball at the working precision -- radius 0 for an integer or a decimal,
  * the division's rounding for a rational -- or undefined for anything else. */
-function argumentBall(e: BoxedExpression): Ball | undefined {
+export function argumentBall(e: BoxedExpression): Ball | undefined {
   const json = e.json as unknown;
   const digits =
     typeof json === "number"

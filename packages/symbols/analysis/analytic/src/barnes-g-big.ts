@@ -82,7 +82,7 @@ function eulerGamma(): Ball {
 
 /** π at the working precision: BigDecimal's literal, rounded, so within a unit of its last
  * digit. */
-function pi(): Ball {
+export function pi(): Ball {
   const digits = BigDecimal.precision;
   return { mid: BigDecimal.PI, rad: new BigDecimal(`1e-${digits - 1}`) };
 }

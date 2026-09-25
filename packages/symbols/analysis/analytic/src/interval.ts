@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
+import { ballImage } from "./interval-balls.ts";
 import { type BoundOrigin, outwardBound } from "./interval-bounds.ts";
 import { logShape, SHAPES, type Shape } from "./interval-shapes.ts";
 import { imageOverArg } from "./tagged-calculus.ts";
@@ -21,7 +22,11 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // 2. Heads whose shape is a textbook fact (interval-shapes.ts: monotonic, or a single minimum
 //    at a known point -- Cosh's at 0, Γ's at 1.4616…) need nothing else: exact endpoints give
 //    an exact image, inexact ones a rigorous enclosure.
-// 3. Everything else samples its derivative's sign (tagged-calculus.ts) and declines when that
+// 3. Heads whose value and derivative have certified kernels (interval-balls.ts: BarnesG and
+//    LogBarnesG, PolyLog in z) prove their image by branch and bound over balls, at exact
+//    arguments and endpoints: monotonic pieces give their ends' values, and the mean-value form
+//    closes in on an extremum. Where those kernels can't cover the interval, sampling takes over.
+// 4. Everything else samples its derivative's sign (tagged-calculus.ts) and declines when that
 //    is ambiguous. That can miss a pair of extrema between two samples, so these heads are NOT
 //    rigorous -- `NOT_RIGOROUS` below lists them, and their reference entries say so.
 //
@@ -60,9 +65,10 @@ const minOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
 const maxOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
   xs.reduce((a, b) => (numAt(b) > numAt(a) ? b : a));
 
-/** Unary heads with no known shape (interval-shapes.ts): their images come from
- * sampling the derivative's sign (tagged-calculus.ts), which can miss a pair of extrema lying
- * between two samples. */
+/** Unary heads with no known shape (interval-shapes.ts), or one known on part of the axis only
+ * (Zeta, right of its pole): their images come from sampling the derivative's sign
+ * (tagged-calculus.ts), which can miss a pair of extrema lying between two samples -- except
+ * where the third route proves them (BarnesG, LogBarnesG). */
 const NOT_RIGOROUS_UNARY = [
   "BarnesG",
   "LogBarnesG",
@@ -74,7 +80,7 @@ const NOT_RIGOROUS_UNARY = [
 
 /** `{head: the argument position an Interval can occupy}` for the multi-argument heads --
  * every other argument is taken as given (exact, fixed) by `imageOverArg`. All of them are
- * sampled, like `NOT_RIGOROUS_UNARY`. */
+ * sampled, like `NOT_RIGOROUS_UNARY` -- PolyLog only where the third route declines. */
 const MULTI_ARG_IMAGE_HEADS: Readonly<Record<string, number>> = {
   StieltjesGamma: 1,
   HarmonicNumber: 1,
@@ -86,8 +92,9 @@ const MULTI_ARG_IMAGE_HEADS: Readonly<Record<string, number>> = {
   Binomial: 1,
 };
 
-/** Every head whose interval image is sampled rather than guaranteed -- see the file header's
- * fourth route. The reference entries for these say so. */
+/** Every head whose interval image is, or may be, sampled rather than guaranteed -- see the file
+ * header's fourth route. BarnesG, LogBarnesG and PolyLog are sampled only where the third
+ * route's proof declines, Zeta only left of its pole. The reference entries say so. */
 export const NOT_RIGOROUS: readonly string[] = [
   ...NOT_RIGOROUS_UNARY,
   ...Object.keys(MULTI_ARG_IMAGE_HEADS),
@@ -329,9 +336,9 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
 
   /**
    * `head`'s image over `ops[argIndex]` (an [[Interval]]), by the first route in the file
-   * header that applies: a known shape or -- for the heads in
-   * `NOT_RIGOROUS` -- `imageOverArg`'s derivative-sign sampling. Declines whenever the chosen
-   * route cannot answer, never a guess past it.
+   * header that answers: a known shape, a proof over balls, or -- for the heads in
+   * `NOT_RIGOROUS` only -- `imageOverArg`'s derivative-sign sampling. Declines when none does,
+   * never a guess past them.
    */
   const image = (
     ops: readonly BoxedExpression[],
@@ -343,8 +350,15 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
     const [l, h] = [lo(target), hi(target)];
     const shape = ops.length === 1 ? SHAPES[head] : undefined;
     if (shape !== undefined) {
-      return shapedImage(shape, (x) => ce.function(head, [x]).evaluate(), l, h);
+      const shaped = shapedImage(shape, (x) => ce.function(head, [x]).evaluate(), l, h);
+      if (shaped !== undefined) return shaped;
     }
+    const proven = ballImage(head, ops, argIndex, l, h);
+    if (proven !== undefined) {
+      // Already rigorous and rounded outward: not to be stepped out again.
+      return interval(ce.box({ num: proven.lo.toString() }), ce.box({ num: proven.hi.toString() }));
+    }
+    if (!NOT_RIGOROUS.includes(head)) return undefined;
     const result = imageOverArg(ce, head, ops, argIndex, l, h);
     return result === undefined ? undefined : enclosure(result.lo, result.hi, "function");
   };
@@ -373,7 +387,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
 
   /** Unary heads whose image over an `Interval` argument is `image([a], head, 0)`: a shape
    * from interval-shapes.ts, or else sampling (`NOT_RIGOROUS`). */
-  const UNARY_IMAGE_HEADS = [...Object.keys(SHAPES), ...NOT_RIGOROUS_UNARY] as const;
+  const UNARY_IMAGE_HEADS = [...new Set([...Object.keys(SHAPES), ...NOT_RIGOROUS_UNARY])];
 
   const resolvers: Record<string, Resolver> = {
     Negate: (ops) =>

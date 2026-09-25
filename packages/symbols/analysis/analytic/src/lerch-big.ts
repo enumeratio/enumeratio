@@ -33,7 +33,7 @@ const GUARD_DIGITS = 10;
 /** Past this many terms (|z| close to 1) the series is too slow to be worth it. */
 const MAX_TERMS = 20_000;
 
-/** Φ(z, s, a) to `digits` significant digits, or undefined outside 0 < |z| < 1, a > 0, or
+/** Φ(z, s, a) to `digits` significant digits, or undefined outside |z| < 1, a > 0, or
  * when the series would take more than `MAX_TERMS` terms. */
 export function lerchPhiBig(
   z: BigDecimal,
@@ -47,8 +47,9 @@ export function lerchPhiBig(
 /** A ball holding Φ(z, s, a) for every z, s and a in theirs, about `digits` significant
  * digits wide, or undefined where `lerchPhiBig` is. */
 export function lerchPhiBall(z: Ball, s: Ball, a: Ball, digits: number): Ball | undefined {
-  if (z.mid.isZero() || !magnitude(z).lt(1) || !lower(a).isPositive()) return undefined;
-  const zd = Math.abs(z.mid.toNumber());
+  if (!magnitude(z).lt(1) || !lower(a).isPositive()) return undefined;
+  // The ball's largest |z|, which sets how fast the terms fall -- for a point, |z| itself.
+  const zd = magnitude(z).toNumber();
   const sd = s.mid.toNumber();
   const ad = a.mid.toNumber();
   // Enough terms, estimated in doubles, to size the loop's cap before paying for any of them.
@@ -82,15 +83,14 @@ function series(
   ad: number,
   working: number,
 ): { readonly sum: Ball; readonly largest: number } | undefined {
-  const negS = neg(s);
+  const powers = powersOf(a, s);
   // max(0, −s) at the ball's most negative s, for the ratio bound.
   const growth = BigDecimal.ZERO.gt(lower(s)) ? lower(s).neg() : BigDecimal.ZERO;
   let sum = exact(0);
   let largest = -Infinity;
   let zPower = exact(1); // zⁿ
   for (let n = 0; n < MAX_TERMS; n++) {
-    const base = add(a, exact(n));
-    const term = mul(zPower, pow(base, negS));
+    const term = mul(zPower, powers(n));
     sum = add(sum, term);
     largest = Math.max(largest, log10Abs(term.mid));
     // Estimate the tail in doubles first, and pay for its bound only once the estimate says
@@ -108,6 +108,32 @@ function series(
     zPower = mul(zPower, z);
   }
   return undefined;
+}
+
+/** Series held for the powers they have cached, the most recent last. */
+const POWER_SERIES = 8;
+
+const powerCache = new Map<string, Ball[]>();
+
+/** n ↦ (n+a)^{−s} at the working precision. For an exact a and s the powers are cached: an
+ * Interval image (interval-balls.ts) sums the same series hundreds of times over different
+ * z, and Ziv's loop twice, and the powers are what cost -- each a logarithm and an
+ * exponential for a non-integer s. */
+function powersOf(a: Ball, s: Ball): (n: number) => Ball {
+  const negS = neg(s);
+  const power = (n: number): Ball => pow(add(a, exact(n)), negS);
+  if (!a.rad.isZero() || !s.rad.isZero()) return power;
+  const key = `${BigDecimal.precision} ${a.mid.toString()} ${s.mid.toString()}`;
+  let cached = powerCache.get(key);
+  if (cached === undefined) {
+    cached = [];
+    if (powerCache.size >= POWER_SERIES) powerCache.delete(powerCache.keys().next().value!);
+  } else {
+    powerCache.delete(key);
+  }
+  powerCache.set(key, cached);
+  const series = cached;
+  return (n) => (series[n] ??= power(n));
 }
 
 /** |t|·R/(1−R) with R = |z|·e^{growth/base} (see the header), rounded up, or undefined when

@@ -15,7 +15,7 @@ details:
   - The dilogarithm $\operatorname{Li}_2$ has the special values $\operatorname{Li}_2(1) = \pi^2/6$, $\operatorname{Li}_2(-1) = -\pi^2/12$, and $\operatorname{Li}_2(\tfrac12) = \pi^2/12 - (\ln 2)^2/2$.
   - 'Convergence: the series converges for $|z| < 1$, and on $|z| = 1$ for $\operatorname{Re}(s) > 1$. Outside the disk the function continues analytically, with a branch cut along $[1, \infty)$ — so $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ is complex.'
   - Integer orders (including the continuation past $|z| = 1$) are compute-engine's own. `@enumeratio/analytic` adds non-integer and complex $s$ by summing the Lerch series, which reaches $|z| \leq 1$ only; outside that disk a non-integer order is left unevaluated rather than guessed.
-  - 'Certified digits: for exact real $s$ and $z$ (integers, rationals or decimals) with $0 < |z| < 1$, $\mathrm{N}(\operatorname{Li}_s(z), d)$ is proven, not just agreed on. The Lerch series is summed in ball arithmetic with its tail bounded, and the d digits are those both ends of the enclosure round to. See [[N]].'
+  - 'Certified digits: for exact real $s$ and $z$ (integers, rationals or decimals) with $|z| < 1$, $\mathrm{N}(\operatorname{Li}_s(z), d)$ is proven, not just agreed on. The Lerch series is summed in ball arithmetic with its tail bounded, and the d digits are those both ends of the enclosure round to. See [[N]].'
   - As with the other numeric heads, an exact argument stays symbolic under plain evaluation — pair with N(), or pass an inexact argument.
 examples:
   - id: li-2-1-zeta-2-pi-2-6
@@ -133,9 +133,9 @@ examples:
     caption: $\operatorname{Li}_{-2}(z) = z(1+z)/(1-z)^3$
   - id: interval-arithmetic
     expr: [PolyLog, 2, [Interval, 0.7, 0.8]]
-    expected: [Interval, 0.8893776242860387, 1.0747946000082484]
+    expected: [Interval, 0.889377624286038, 1.07479460000825]
     category: Scope
-    caption: Interval arithmetic
+    caption: "Interval arithmetic in $z$, proven: $\\operatorname{Li}_2'(z) = \\Phi(z, 1, 1)$ keeps one sign, so the image is the values at the ends, rounded outward"
   - id: three-arguments-the-nielsen-generalized
     expr: [PolyLog, 1, 2, 1]
     expected: [Zeta, 3]
