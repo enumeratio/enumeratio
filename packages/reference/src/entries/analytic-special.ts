@@ -7,7 +7,7 @@ import type { ReferenceEntry } from "../types.ts";
 // with their L-functions. Every `expected` was
 // produced by evaluating `expr` with compute-engine 0.128.0 plus `declareAnalytic`; the
 // reference tests re-evaluate and pin it. Numeric values are validated against mpmath and
-// a Wolfram kernel in `packages/analytic/tests/special-functions.golden.json`.
+// a Wolfram kernel in `packages/symbols/analysis/analytic/tests/special-functions.golden.json`.
 //
 // As with the zeta entries: plain evaluation reduces only where an exact closed form
 // exists; everything else stays symbolic until N() or a floating-point argument.
@@ -184,7 +184,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/barnes-g.ts",
+        source: "packages/symbols/analysis/analytic/src/barnes-g.ts",
         note: "exp of the LogBarnesG kernel; exact superfactorials at the integers come from the head.",
       },
       {
@@ -338,7 +338,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/barnes-g.ts",
+        source: "packages/symbols/analysis/analytic/src/barnes-g.ts",
       },
     ],
     seeAlso: ["BarnesG", "LogGamma", "Gamma"],
@@ -518,7 +518,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/loggamma.ts",
+        source: "packages/symbols/analysis/analytic/src/loggamma.ts",
       },
       {
         origin: "mapped",
@@ -610,7 +610,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/clausen.ts",
+        source: "packages/symbols/analysis/analytic/src/clausen.ts",
       },
       {
         origin: "mapped",
@@ -773,7 +773,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet.ts",
       },
       {
         origin: "mapped",
@@ -921,7 +921,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet.ts",
       },
       {
         origin: "mapped",
@@ -1090,7 +1090,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/stieltjes.ts",
+        source: "packages/symbols/analysis/analytic/src/stieltjes.ts",
       },
       {
         origin: "mapped",
@@ -1189,7 +1189,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet-l.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet-l.ts",
         note: "A discrete logarithm against the cyclic decomposition — an algorithm over mutable state, not a tree.",
       },
       {
@@ -1366,7 +1366,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet-l.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet-l.ts",
       },
       {
         origin: "mapped",
@@ -1598,7 +1598,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/harmonic.ts",
+        source: "packages/symbols/analysis/analytic/src/harmonic.ts",
       },
       {
         origin: "mapped",
@@ -1667,7 +1667,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/bessel-zeros.ts",
+        source: "packages/symbols/analysis/analytic/src/bessel-zeros.ts",
       },
       {
         origin: "mapped",
@@ -1754,7 +1754,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/digamma-zero.ts",
+        source: "packages/symbols/analysis/analytic/src/digamma-zero.ts",
       },
       {
         origin: "mapped",
@@ -1820,7 +1820,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/multizeta.ts",
+        source: "packages/symbols/analysis/analytic/src/multizeta.ts",
       },
     ],
     seeAlso: ["Zeta", "HurwitzZeta"],
@@ -1879,7 +1879,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric-ustar.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric-ustar.ts",
       },
       {
         origin: "mapped",
@@ -1998,7 +1998,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/sloane-a.ts",
+        source: "packages/symbols/analysis/analytic/src/sloane-a.ts",
       },
     ],
     seeAlso: ["Fibonacci", "BellNumber", "BernoulliB"],
@@ -2055,7 +2055,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/q-series.ts",
+        source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "finite n: exact boxed Multiply/Subtract/Power, evaluated in place. Infinite n: a capped product until |q^k| underflows.",
       },
       {
@@ -2130,7 +2130,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/q-series.ts",
+        source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "product of q-integers, built at canonicalization time (not evaluate) so Expand sees the tree to open up.",
       },
       {
@@ -2201,7 +2201,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/q-series.ts",
+        source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "the Pascal-like recurrence, built at canonicalization time so Expand sees the tree.",
       },
       {
@@ -2227,7 +2227,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
     ],
     details: [
-      "Reuses the existing log-gamma continuation ([[LogGamma]], `packages/analytic/src/loggamma.ts`) rather than deriving one — $\\vartheta$ is just its imaginary part on the $\\operatorname{Re} = \\tfrac14$ line, minus the linear term.",
+      "Reuses the existing log-gamma continuation ([[LogGamma]], `packages/symbols/analysis/analytic/src/loggamma.ts`) rather than deriving one — $\\vartheta$ is just its imaginary part on the $\\operatorname{Re} = \\tfrac14$ line, minus the linear term.",
       "Real $t$ only; a complex argument stays symbolic. $\\vartheta(0) = 0$ exactly (no `N()` needed) since $\\ln\\Gamma(\\tfrac14)$ is real.",
       "Numeric otherwise: `N()`, or an inexact $t$, is required to reduce.",
     ],
@@ -2255,7 +2255,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/riemann-siegel.ts",
+        source: "packages/symbols/analysis/analytic/src/riemann-siegel.ts",
         note: "built directly on the LogGamma kernel; no new zeta or gamma evaluation of its own.",
       },
       {
@@ -2281,7 +2281,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
     ],
     details: [
-      "Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.",
+      "Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/symbols/analysis/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.",
       "Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].",
       "The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.",
     ],
@@ -2310,7 +2310,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/riemann-siegel.ts",
+        source: "packages/symbols/analysis/analytic/src/riemann-siegel.ts",
       },
       {
         origin: "mapped",
@@ -2364,7 +2364,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/riemann-siegel.ts",
+        source: "packages/symbols/analysis/analytic/src/riemann-siegel.ts",
         note: "sign-change scan of RiemannSiegelZ + bisection; see the file header for the range this covers.",
       },
       {
@@ -2414,7 +2414,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2476,7 +2476,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2524,7 +2524,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2581,7 +2581,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2631,7 +2631,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2682,7 +2682,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric-ustar.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric-ustar.ts",
       },
       {
         origin: "mapped",
@@ -2724,7 +2724,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/khinchin.ts",
+        source: "packages/symbols/analysis/analytic/src/khinchin.ts",
       },
     ],
   },
@@ -2788,7 +2788,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hyperfactorial.ts",
+        source: "packages/symbols/analysis/analytic/src/hyperfactorial.ts",
       },
     ],
     seeAlso: ["BarnesG"],
@@ -2858,7 +2858,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/exp-integral-e.ts",
+        source: "packages/symbols/analysis/analytic/src/exp-integral-e.ts",
         note: "z^(n-1)·Γ(1-n, z), with the n = 0 and z = 0 removable cases handled ahead of it.",
       },
     ],
@@ -2950,7 +2950,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/lambert-w.ts",
+        source: "packages/symbols/analysis/analytic/src/lambert-w.ts",
         note: "Halley's iteration in the complex plane for k ∉ {0, -1}; structural pattern matching for the exact cases.",
       },
     ],
@@ -3045,7 +3045,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/inverse-erfc.ts",
+        source: "packages/symbols/analysis/analytic/src/inverse-erfc.ts",
       },
     ],
     seeAlso: ["Erfc"],
@@ -3114,7 +3114,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/inverse-regularized.ts",
+        source: "packages/symbols/analysis/analytic/src/inverse-regularized.ts",
         note: "Safeguarded Newton/bisection against native GammaRegularized.",
       },
     ],
@@ -3188,7 +3188,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/inverse-regularized.ts",
+        source: "packages/symbols/analysis/analytic/src/inverse-regularized.ts",
         note: "Safeguarded Newton/bisection against native BetaRegularized.",
       },
     ],
@@ -3239,7 +3239,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/bell-y.ts",
+        source: "packages/symbols/analysis/analytic/src/bell-y.ts",
       },
     ],
     seeAlso: ["BellNumber", "StirlingS2"],
@@ -3292,7 +3292,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/norlund.ts",
+        source: "packages/symbols/analysis/analytic/src/norlund.ts",
       },
     ],
     seeAlso: ["BernoulliB"],
@@ -3340,7 +3340,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/prime-zeta.ts",
+        source: "packages/symbols/analysis/analytic/src/prime-zeta.ts",
       },
     ],
     seeAlso: ["Zeta"],
@@ -3404,7 +3404,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric-pfq.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric-pfq.ts",
       },
     ],
     seeAlso: ["Hypergeometric0F1", "Hypergeometric2F1Regularized", "Hypergeometric3F2Regularized"],
@@ -3467,7 +3467,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/modular.ts",
+        source: "packages/symbols/analysis/analytic/src/modular.ts",
         note: "j(τ)/1728, delegating entirely to ModularJ.",
       },
     ],

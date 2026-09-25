@@ -1,6 +1,7 @@
 packages:
   - web
   - packages/*
+  - packages/symbols/*/*
   - tools/*
 
 catalogMode: prefer

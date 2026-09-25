@@ -52,9 +52,12 @@ const sources: Source[] = [
         ? Object.fromEntries(Object.entries(extra).map(([h, xs]) => [h, xs.length]))
         : undefined,
   })),
-  { file: "packages/collections/src/entries.ts", entries: collectionsEntries },
-  { file: "packages/statistics/src/entries.ts", entries: statisticsEntries },
-  { file: "packages/domains/src/entries.ts", entries: domainsEntries },
+  {
+    file: "packages/symbols/combinatorics/collections/src/entries.ts",
+    entries: collectionsEntries,
+  },
+  { file: "packages/symbols/combinatorics/statistics/src/entries.ts", entries: statisticsEntries },
+  { file: "packages/symbols/combinatorics/domains/src/entries.ts", entries: domainsEntries },
 ];
 
 // Ids, in the site's order, one id space per head across every source.
