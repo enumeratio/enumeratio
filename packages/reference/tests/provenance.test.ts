@@ -239,6 +239,7 @@ const OVERRIDDEN = [
   "PrimeNu",
   "PrimeOmega",
   "PrimePi",
+  "Product",
   "QuotientRing",
   "Rank",
   "Rationalize",

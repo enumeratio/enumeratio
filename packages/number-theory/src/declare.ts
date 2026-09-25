@@ -220,6 +220,19 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     2,
   );
 
+  // Binomial(n, n) -> 1 for symbolic n: choosing every one of n items is always 1 way,
+  // recognised the same way as Binomial(n, n-1) above -- by value, so it also fires once
+  // k arrives pre-simplified to something that just happens to equal n.
+  wrapOperator(
+    ce,
+    ["Binomial", "n", "n"],
+    (ops) =>
+      ops.length === 2 &&
+      integerAt(ops[0]) === undefined &&
+      sub(ops[0], ops[1]).evaluate().isSame(ce.Zero),
+    () => () => ce.One,
+  );
+
   // Binomial, CatalanNumber, Pochhammer, Multinomial, Factorial2 and Subfactorial through
   // the Gamma function, for real and complex arguments the native integer-only (or,
   // for Binomial/Pochhammer, real-only) declarations reject. Gamma is itself native and
@@ -245,9 +258,17 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   widenSignature(ce, "CatalanNumber", "(any) -> any", isExact);
   widenSignature(ce, "Subfactorial", "(any) -> any", isExact);
   widenSignature(ce, "Factorial2", "(any) -> any", isExact);
-  // At least one argument, as the native declaration already requires -- Multinomial() with
-  // none stays unevaluated rather than fold to the empty product.
-  widenSignature(ce, "Multinomial", "(any, any*) -> any", isExact);
+  // Now zero-or-more arguments: Multinomial() is the empty product, 1, same convention as
+  // Factorial(0) -- see the wrapOperator right below, which answers that specific call.
+  widenSignature(ce, "Multinomial", "(any*) -> any", isExact);
+
+  // Multinomial() -- the empty product, by the same convention as Factorial(0) = 1.
+  wrapOperator(
+    ce,
+    ["Multinomial"],
+    (ops) => ops.length === 0,
+    () => () => ce.One,
+  );
 
   wrapOperator(
     ce,
@@ -286,6 +307,27 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       return div(gamma(add(a, n)), gamma(a)).N();
     },
     2,
+  );
+
+  // Pochhammer with a rational (or otherwise exact, non-integer) real order: the same
+  // Gamma identity as the complex case above, but kept EXACT via `.evaluate()` rather
+  // than forced to `.N()` -- Gamma is already exact at the integers and half-integers,
+  // so (3/2)_(1/2) = Γ(2)/Γ(3/2) comes back as 2/√π rather than a decimal. A nonnegative
+  // integer order is excluded -- that's the falling-factorial product above, kept exact
+  // without going through Gamma at all.
+  wrapOperator(
+    ce,
+    ["Pochhammer", ["Rational", 3, 2], ["Rational", 1, 2]],
+    (ops) => {
+      if (ops.length !== 2 || isNonReal(ops[0]) || isNonReal(ops[1])) return false;
+      const nInt = integerAt(ops[1]);
+      if (nInt !== undefined && nInt >= 0) return false;
+      return isExact(ops[0]) && isExact(ops[1]);
+    },
+    () => (ops) => {
+      const [a, n] = ops;
+      return div(gamma(add(a, n)), gamma(a)).evaluate();
+    },
   );
 
   wrapOperator(
@@ -433,6 +475,32 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       return n === 0 ? prev : curr;
     },
     2,
+  );
+
+  // Fibonacci(nu, x) at a real (non-integer, or negative-integer) order nu: the
+  // two-variable Binet formula. t^2 - x*t - 1 = 0 has roots r, -1/r with
+  // r = (x + sqrt(x^2+4))/2; since (-1/r)^nu = cos(pi*nu) * r^-nu for real nu (the same
+  // branch choice the single-argument Fibonacci(nu) rule above makes),
+  // F_nu(x) = (r^nu - cos(pi*nu) * r^-nu) / sqrt(x^2+4). At x = 1 this is exactly the
+  // single-argument formula above (r = phi, sqrt(x^2+4) = sqrt(5)).
+  wrapOperator(
+    ce,
+    ["Fibonacci", 5.8, 3],
+    (ops) => {
+      if (ops.length !== 2 || isProfinite(ops[0]) || !notMatrix(ops[1])) return false;
+      const n = integerAt(ops[0]);
+      return n === undefined || n < 0;
+    },
+    () => (ops) => {
+      const [nu, x] = ops;
+      const discriminant = ce.function("Sqrt", [add(mul(x, x), 4)]);
+      const root = div(add(x, discriminant), 2);
+      const otherTerm = mul(
+        ce.function("Cos", [mul(ce.symbol("Pi"), nu)]),
+        ce.function("Power", [root, ce.function("Negate", [nu])]),
+      );
+      return div(sub(ce.function("Power", [root, nu]), otherTerm), discriminant).N();
+    },
   );
 
   wrapOperator(
