@@ -659,10 +659,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erf", ["Around", 2, 0.01]],
         expected: ["Around", 0.9953222650189527, 0.00020666985354092054],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation, with slope $\\frac{2}{\\sqrt\\pi}e^{-4}$; `Around` is not declared",
+        caption: "Uncertainty propagation, with slope $\\frac{2}{\\sqrt\\pi}e^{-4}$",
       },
       {
         expr: ["Multiply", 0.5, ["Add", 1, ["Erf", ["Divide", 1.96, ["Sqrt", 2]]]]],

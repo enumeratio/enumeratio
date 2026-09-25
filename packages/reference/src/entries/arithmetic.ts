@@ -113,10 +113,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Abs", ["Interval", -3, 5]],
         expected: ["Interval", 0, 5],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An [[Interval]] should map to the interval of absolute values, $[0, 5]$; compute-engine's Abs does no interval arithmetic yet",
+        caption: "An [[Interval]] maps to the interval of absolute values, $[0, 5]$",
       },
       {
         expr: ["Abs", ["Subtract", ["Sqrt", 2], 2]],
