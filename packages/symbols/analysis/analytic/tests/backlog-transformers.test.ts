@@ -2,10 +2,9 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
-// The backlog transformers and interval/uncertainty arithmetic landed in lane B-18. What's
-// left here is Add/Multiply/Power/Subtract over Interval/CenteredInterval/Around: these
-// core arithmetic heads carry no reference entry of their own to pin an example on, so their
-// cases stay direct toEqual assertions against the exact MathJSON.
+// Add/Multiply/Power/Subtract over Interval, CenteredInterval and Around. These core
+// arithmetic heads have no reference entry to pin an example on, so their cases are direct
+// toEqual assertions against the exact MathJSON.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -35,9 +34,7 @@ test("CenteredInterval: centers and radii add under Add/Subtract, a scalar scale
 test("Around: quadrature for Add/Power, and Multinomial's integer-only domain declines it", () => {
   expect(json(["Add", ["Around", 1, 0.1], ["Around", 2, 0.2]])).toEqual(["Around", 3, 0.223606797749979]);
   expect(json(["Power", ["Around", 2, 0.1], 2])).toEqual(["Around", 4, 0.4]);
-  // Multinomial's domain is integer-only: no derivative to propagate through, so it stays put
-  // in the plain engine this test builds -- @enumeratio/number-theory's own Multinomial does
-  // carry an Around-aware extension (see its reference entry), just not one this package wires
-  // in on its own.
+  // Multinomial's domain is integer-only, so this engine leaves it put; number-theory's own
+  // Multinomial propagates Around.
   expect(json(["Multinomial", ["Around", 2, 0.01], 2])).toEqual(["Multinomial", ["Around", 2, 0.01], 2]);
 });

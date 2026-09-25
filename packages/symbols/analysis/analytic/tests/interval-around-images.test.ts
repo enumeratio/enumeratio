@@ -3,8 +3,7 @@ import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // enumeratio/enumeratio#113 §2: images of an Interval, and first-order Around propagation.
-// What's left here is what has no reference entry of its own to pin it: a decline case, and
-// Gamma/Binomial (deferred to a later wave). See tagged-calculus.ts for the shared
+// Here: a decline case, and Gamma/Binomial, which have no examples for this yet. See tagged-calculus.ts for the shared
 // derivative-sign-and-bisection rule both directions of this file share.
 
 const ce = new ComputeEngine();

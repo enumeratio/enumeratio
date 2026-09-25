@@ -119,7 +119,7 @@ examples:
     caption: 'Uncertainty propagation: $e^{2 \pm 0.01} \approx 7.389 \pm 0.074$'
   - role: test
     id: around-0-still-fires-the-e-base-power-rule
-    expr: [Exp, [Around, 0, 0.1]]
+    expr: [N, [Exp, [Around, 0, 0.1]]]
     expected: [Around, 1, 0.1]
     category: Scope
     caption: N() decimalizes [[ExponentialE]] before the Power resolver's $e$-base check runs, but the rule still fires

@@ -3,7 +3,7 @@ import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // LaplaceTransform — see transforms.ts for the rule table and its scope, and each head's
-// reference/*.yaml for the pinned closed forms. What's left here needs an assumption on a
+// reference/*.yaml for the pinned closed forms. These need an assumption on a
 // free symbol (`ce.assume`), which a reference example can't carry, or only checks which
 // operator a declined call is left under.
 
