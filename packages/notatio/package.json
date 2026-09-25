@@ -10,6 +10,7 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
+    "./conventional-latex": "./dist/conventional-latex.mjs",
     "./generate": "./dist/generate.mjs",
     "./react": "./dist/react.mjs",
     "./reflect": "./dist/reflect.mjs",
@@ -19,7 +20,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node --experimental-strip-types src/generate.ts && vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts src/vue.ts src/react.ts src/generate.ts",
+    "build": "node --experimental-strip-types src/generate.ts && vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts src/vue.ts src/react.ts src/generate.ts src/conventional-latex.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check",

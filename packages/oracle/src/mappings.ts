@@ -492,6 +492,105 @@ export const MAPPINGS: readonly Mapping[] = [
     },
   },
   { head: "Length", arity: 1, emit: { wolfram: "Length[$1]", sympy: "len($1)", sage: "len($1)" } },
+
+  // ── groups and group algebras: Oscar, through oscar/preamble.jl ──────────────
+  // A group comes back labelled as ours (packages/groupalgebra), so element-level heads can
+  // name elements the way our examples do.
+  {
+    head: "CyclicGroup",
+    arity: 1,
+    emit: { oscar: "enumeratio_cyclic(cyclic_group(PermGroup, $1), $1)" },
+  },
+  {
+    head: "DihedralGroup",
+    arity: 1,
+    emit: { oscar: "enumeratio_dihedral(dihedral_group(PermGroup, 2 * $1), $1)" },
+    note: "Our DihedralGroup(n) is the symmetries of an n-gon; Oscar and GAP index dihedral groups by order, so it is dihedral_group(2n) there.",
+  },
+  { head: "GroupDirectProduct", arity: 2, emit: { oscar: "enumeratio_direct_product($1, $2)" } },
+  { head: "GroupOrder", arity: 1, emit: { oscar: "order(($1).G)" } },
+  { head: "GroupIsAbelian", arity: 1, emit: { oscar: "is_abelian(($1).G)" } },
+  {
+    head: "GroupCentreDimension",
+    arity: 1,
+    emit: { oscar: "number_of_conjugacy_classes(($1).G)" },
+  },
+  { head: "GroupAlgebra", arity: 1, emit: { oscar: "($1).A" } },
+  { head: "AlgebraDimension", arity: 1, emit: { oscar: "dim($1)", sage: "($1).dimension()" } },
+  { head: "GroupBasis", arity: 1, emit: { oscar: "EnumeratioBasis($1)" } },
+  { head: "GroupProduct", arity: 3, emit: { oscar: "enumeratio_product($1, $2, $3)" } },
+  {
+    head: "ClassSum",
+    arity: 2,
+    emit: { oscar: "enumeratio_class_sum($1, $2)" },
+    note: "Classes are numbered in our order, by each class's smallest element; Oscar's conjugacy_classes order differs, so the helper re-sorts.",
+  },
+  { head: "IsCentral", arity: 2, emit: { oscar: "enumeratio_is_central($1, $2)" } },
+
+  // ── diagram algebras: Sage in full over ZZ[delta]; Oscar by dimension formula ─
+  { head: "Diagram", arity: 1, emit: { sage: "enumeratio_diagram($1)" } },
+  { head: "NonCommutativeMultiply", emit: { sage: "($**)" } },
+  {
+    head: "PartitionAlgebra",
+    arity: 1,
+    emit: {
+      sage: "PartitionAlgebra($1, enumeratio_delta, enumeratio_ring)",
+      oscar: "EnumeratioDiagramAlgebra(:partition, $1)",
+    },
+    note: "Oscar has no diagram algebras; its row checks the dimension against the closed form (oscar/preamble.jl), not against a second implementation.",
+  },
+  {
+    head: "PlanarPartitionAlgebra",
+    arity: 1,
+    emit: {
+      sage: "PlanarAlgebra($1, enumeratio_delta, enumeratio_ring)",
+      oscar: "EnumeratioDiagramAlgebra(:planar, $1)",
+    },
+  },
+  {
+    head: "BrauerAlgebra",
+    arity: 1,
+    emit: {
+      sage: "BrauerAlgebra($1, enumeratio_delta, enumeratio_ring)",
+      oscar: "EnumeratioDiagramAlgebra(:brauer, $1)",
+    },
+  },
+  {
+    head: "TemperleyLiebAlgebra",
+    arity: 1,
+    emit: {
+      sage: "TemperleyLiebAlgebra($1, enumeratio_delta, enumeratio_ring)",
+      oscar: "EnumeratioDiagramAlgebra(:temperley_lieb, $1)",
+    },
+  },
+  {
+    head: "MotzkinAlgebra",
+    arity: 1,
+    emit: { oscar: "EnumeratioDiagramAlgebra(:motzkin, $1)" },
+    note: "Sage has no Motzkin algebra.",
+  },
+  {
+    head: "RookAlgebra",
+    arity: 1,
+    emit: { oscar: "EnumeratioDiagramAlgebra(:rook, $1)" },
+    note: "Sage has no rook algebra.",
+  },
+  {
+    head: "SymmetricGroupAlgebra",
+    arity: 1,
+    emit: {
+      sage: "SymmetricGroupAlgebra(QQ, $1)",
+      oscar: "group_algebra(QQ, symmetric_group($1))",
+    },
+  },
+  { head: "Element", arity: 2, emit: { sage: "enumeratio_element($1, $2)" } },
+  { head: "Basis", arity: 1, emit: { sage: "list(($1).basis())" } },
+  {
+    head: "PartitionMobius",
+    arity: 2,
+    emit: { sage: "enumeratio_partition_mobius($1, $2)" },
+    note: "Sage's posets.SetPartitions, on the 2k points relabelled 1…2k: finer below coarser.",
+  },
 ];
 
 /** The mapping that applies to a head at a given arity, preferring the arity-specific one. */

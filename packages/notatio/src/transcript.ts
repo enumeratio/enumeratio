@@ -32,6 +32,20 @@ export interface TranscriptEntry {
   readonly value: BoxedExpression;
 }
 
+/** `new Transcript(engine, options)`'s options. */
+export interface TranscriptOptions {
+  /**
+   * `Out`/`In`/`InString`/`%` and `In[n]`/`Out[n]` line numbers -- on by default. A
+   * reactive `DynamicModule` (`TrackedSymbols` set) turns this off: cells can be
+   * understood in any order there, so a position-keyed history would be misleading, and
+   * `tracked-symbols.ts`'s own schedule already rejects an ordinal reference outright.
+   * `record` becomes a no-op (returns `undefined`, so a caller's line-number label stays
+   * unset) and `Out`/`In`/`InString` are never declared -- referencing one is simply an
+   * undefined symbol, consistent with the rejection.
+   */
+  readonly history?: boolean;
+}
+
 /**
  * One transcript's shared scope and history. `Out`, `In` and `InString` are declared into
  * the scope itself, so they read this instance's history for as long as the scope is
@@ -43,11 +57,13 @@ export class Transcript {
   readonly history: TranscriptEntry[] = [];
   readonly #engine: ComputeEngine;
   readonly #scope: Scope;
+  readonly #history: boolean;
 
-  constructor(engine: ComputeEngine) {
+  constructor(engine: ComputeEngine, options: TranscriptOptions = {}) {
     this.#engine = engine;
+    this.#history = options.history ?? true;
     this.#scope = engine.createScope({});
-    this.run(() => this.#declareHistory());
+    if (this.#history) this.run(() => this.#declareHistory());
   }
 
   #declareHistory(): void {
@@ -104,8 +120,12 @@ export class Transcript {
     });
   }
 
-  /** Record an evaluated cell as the next `In[n]` / `Out[n]`, and return its line number. */
-  record(input: string, raw: BoxedExpression, value: BoxedExpression): number {
+  /**
+   * Record an evaluated cell as the next `In[n]` / `Out[n]`, and return its line number
+   * -- or `undefined`, doing nothing, when this transcript was built with `history: false`.
+   */
+  record(input: string, raw: BoxedExpression, value: BoxedExpression): number | undefined {
+    if (!this.#history) return undefined;
     const n = this.history.length + 1;
     this.history.push({ n, input, raw, value });
     return n;

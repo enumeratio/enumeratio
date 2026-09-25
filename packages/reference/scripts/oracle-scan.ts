@@ -28,6 +28,8 @@ import { isDeepStrictEqual } from "node:util";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compare,
+  compareCombination,
+  compareCombinations,
   comparePythonStructured,
   compareTrees,
   emit,
@@ -211,6 +213,10 @@ for (const system of systems) {
           : verdicts.includes("agree")
             ? "agree"
             : (verdicts[0] as Verdict);
+    } else if (theirs.startsWith("combination:")) {
+      verdict = compareCombination(row.item.expected, theirs);
+    } else if (theirs.startsWith("combinations:")) {
+      verdict = compareCombinations(row.item.expected, theirs);
     } else {
       verdict = compare(show(row.item.expected), theirs, tolerance);
       if (verdict === "disagree") {
@@ -263,6 +269,7 @@ interface OtherRow {
   readonly kind?: string;
   readonly note?: string;
   readonly tolerance?: number;
+  readonly issue?: number;
 }
 type Sidecar = {
   kernels: Record<string, string>;
@@ -341,6 +348,7 @@ for (const system of systems) {
             : {
                 kind: same ? (prior?.kind ?? "unclassified") : "unclassified",
                 note: same ? (prior?.note ?? "") : "",
+                ...(same && prior?.issue !== undefined ? { issue: prior.issue } : {}),
               }),
           ...(prior?.tolerance === undefined
             ? {}

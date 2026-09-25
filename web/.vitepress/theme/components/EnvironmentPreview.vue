@@ -8,13 +8,16 @@
 // `#<card>=<env>` links to a card opened on an environment; picking one writes it.
 import {
   browserEnvironment,
+  can,
   ENVIRONMENTS,
   type Environment,
+  evaluateReadouts,
+  loadEngine,
   mediaSignals,
   reduce,
 } from "@enumeratio/notatio";
 import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 
 const props = defineProps<{ expr: string; env?: string }>();
 
@@ -27,10 +30,17 @@ const environment = computed<Environment>(() => {
   return ENVIRONMENTS.find((e) => e.name === chosen.value) ?? ENVIRONMENTS[0]!;
 });
 
+const engine = shallowRef<Awaited<ReturnType<typeof loadEngine>>>();
 const parsed = computed(() => parseNotatio(source.value));
-const reduced = computed(() =>
-  parsed.value.errors.length === 0 ? reduce(parsed.value.json, environment.value) : undefined,
-);
+// With no engine at view time a readout is the value it had when the page was made.
+const reduced = computed(() => {
+  if (parsed.value.errors.length > 0) return undefined;
+  const out = reduce(parsed.value.json, environment.value);
+  const ce = engine.value;
+  return ce === undefined || can.drive(environment.value)
+    ? out
+    : evaluateReadouts(out, (e) => ce.box(e).evaluate().json);
+});
 const notatio = computed(() =>
   reduced.value === undefined ? "" : serializeNotatio(reduced.value),
 );
@@ -60,6 +70,7 @@ const onMedia = (e: MediaQueryListEvent): void => {
   printing.value = e.matches;
 };
 onMounted(() => {
+  void loadEngine().then((ce) => (engine.value = ce));
   media = window.matchMedia("print");
   printing.value = mediaSignals((q) => window.matchMedia(q)).print === true;
   media.addEventListener("change", onMedia);

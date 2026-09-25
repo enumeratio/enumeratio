@@ -1,0 +1,7 @@
+{
+  "serialize [\"LCM\",4,6]": "\\operatorname{lcm}(4, 6)",
+  "serialize [\"MatrixRank\",\"A\"]": "\\operatorname{rank}(A)",
+  "serialize [\"Erf\",\"x\"]": "\\operatorname{erf}(x)",
+  "serialize [\"Zeta\",3]": "\\zeta(3)",
+  "GCD serialize": "\\gcd(4, 6)"
+}

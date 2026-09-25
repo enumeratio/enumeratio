@@ -241,7 +241,7 @@
   },
   "web: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "notatio": "Toggler(size, [\"a few\", \"several\", \"many\"])",
-    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"a few|several|many\"></notatio-toggler></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> several|&quot;many&quot; -> many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "print: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "notatio": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
@@ -249,7 +249,7 @@
   },
   "tty: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "notatio": "Toggler(size, [\"a few\", \"several\", \"many\"])",
-    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"a few|several|many\"></notatio-toggler></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> several|&quot;many&quot; -> many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "pipe: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "notatio": "Labeled(\"a few\", \"size = a few (a few | several | many)\", Bottom)",
@@ -257,11 +257,11 @@
   },
   "compact: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "notatio": "Toggler(size, [\"a few\", \"several\", \"many\"])",
-    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"a few|several|many\"></notatio-toggler></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> several|&quot;many&quot; -> many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "web: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "notatio": "Row([\n      Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]),\n      size,\n    ])",
-    "markup": "<notatio-dynamic-module><notatio-row><notatio-toggler name=\"size\" value=\"several\" values=\"a few|&quot;several&quot; -> some|many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-row><notatio-toggler name=\"size\" value=\"&quot;several&quot;\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> some|&quot;many&quot; -> many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "print: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "notatio": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
@@ -269,7 +269,7 @@
   },
   "tty: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "notatio": "Row([\n      Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]),\n      size,\n    ])",
-    "markup": "<notatio-dynamic-module><notatio-row><notatio-toggler name=\"size\" value=\"several\" values=\"a few|&quot;several&quot; -> some|many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-row><notatio-toggler name=\"size\" value=\"&quot;several&quot;\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> some|&quot;many&quot; -> many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "pipe: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "notatio": "Labeled(\"several\", \"size = several (a few | some | many)\", Bottom)",
@@ -277,7 +277,7 @@
   },
   "compact: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "notatio": "Column([Toggler(\n                 (size, \"several\"),\n                 [\"a few\", Labeled(\"several\", \"some\"), \"many\"],\n               ), size])",
-    "markup": "<notatio-dynamic-module><notatio-column><notatio-toggler name=\"size\" value=\"several\" values=\"a few|&quot;several&quot; -> some|many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-column><notatio-toggler name=\"size\" value=\"&quot;several&quot;\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> some|&quot;many&quot; -> many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "web: Animator(t, (0, 1, 0.25))": {
     "notatio": "Animator(t, (0, 1, 0.25))",

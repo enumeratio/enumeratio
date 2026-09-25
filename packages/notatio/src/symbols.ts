@@ -409,6 +409,28 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       return ops[0] === undefined ? [] : [slotted(ops[0], names)];
     },
   },
+  {
+    // `TestResultObject(KeyValuePair("Outcome", …), …)` -- `VerificationTest`'s return
+    // value (`@enumeratio/aestimatio`). Every operand is a `KeyValuePair`, so
+    // `optionsOf` (called generically in `render`, below) treats the whole thing as
+    // OPTIONS, not positional operands -- this symbol has no `attributes(ops)` of its
+    // own, only the option map. `Outcome`/`Input`/`TestID` need no override: their
+    // default kebab-cased attribute (`outcome`, `input`, `test-id`) is already right,
+    // and the default option text (a string bare, else notatio) is already what the
+    // component wants. `ExpectedOutput`/`ActualOutput` rename to `expected`/`actual`
+    // and drop the `Missing` sentinel `declare.ts` fills the gap with; `time` is
+    // Wolfram's `AbsoluteTiming`-style name for `AbsoluteTimeUsed`.
+    head: "TestResultObject",
+    tag: "notatio-test-result-object",
+    attributes: () => ({}),
+    options: {
+      ExpectedOutput: (value): Record<string, string> =>
+        symOf(value) === "Missing" ? {} : { expected: notatio(value) },
+      ActualOutput: (value): Record<string, string> =>
+        symOf(value) === "Missing" ? {} : { actual: notatio(value) },
+      AbsoluteTimeUsed: (value): Record<string, string> => ({ time: notatio(value) }),
+    },
+  },
 ];
 
 function vectorField(ops: readonly Json[]): Record<string, string> {
@@ -475,7 +497,9 @@ function entryOf(node: Json): string {
         ? notatio(value)
         : `${notatio(value)} -> ${text}`;
   }
-  return strOf(node) ?? notatio(node);
+  // A string binds as the string it is, and shows as its words.
+  const text = strOf(node);
+  return text === undefined ? notatio(node) : `${notatio(node)} -> ${text}`;
 }
 
 /** A list of entries as the `|`-separated `values` attribute. */
@@ -654,24 +678,48 @@ const formId = (value: Json): string | undefined => {
 const dynamicModuleChildren = (ops: readonly Json[]): Json[] =>
   ops[0] === undefined ? [] : (tupleOf(ops[0]) ?? [ops[0]]);
 
+/**
+ * `TrackedSymbols -> All | Automatic | True | {a, b}` -- Wolfram's option name for the
+ * capability that makes a `DynamicModule` reactive (design/rendering-environments.md's
+ * companion, `tracked-symbols.ts`): every cell that reads a changed tracked symbol
+ * re-evaluates, transitively, instead of the module staying a plain top-to-bottom
+ * transcript. Normalised to one attribute, `tracked-symbols`, so the element parses it
+ * without walking notatio again: `"all"` for `All`/`Automatic`/`True`, else a
+ * comma-joined symbol list. `False` (or the option simply absent) leaves the attribute
+ * unset -- the default, non-reactive configuration.
+ */
+const trackedSymbolsOption = (value: Json): Record<string, string> => {
+  const sym = symOf(value);
+  if (sym === "All" || sym === "Automatic" || sym === "True") return { "tracked-symbols": "all" };
+  if (sym === "False") return {};
+  const names = tupleOf(value)
+    ?.map((v) => symOf(v))
+    .filter((n): n is string => n !== undefined);
+  return names && names.length > 0 ? { "tracked-symbols": names.join(",") } : {};
+};
+
 export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   {
     // `DynamicModule(body)` -- an explicit scope over its subtree. The bindings live in
-    // the controls inside it, so it takes no arguments of its own.
+    // the controls inside it, so it takes no arguments of its own; `TrackedSymbols` is
+    // its one option.
     head: "DynamicModule",
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
     children: dynamicModuleChildren,
+    options: { TrackedSymbols: trackedSymbolsOption },
   },
   {
     // `Notebook(cells)` -- Wolfram's name for the transcript configuration: a
     // `DynamicModule` whose body is a `List` of `Cell`s, evaluated in document order in
-    // one shared scope. Same tag, same lowering; the element tells the two apart by
-    // what is actually inside it (`notatio-cell` children), not by which head named it.
+    // one shared scope. Same tag, same lowering (`TrackedSymbols` included); the element
+    // tells the two apart by what is actually inside it (`notatio-cell` children) and
+    // whether `tracked-symbols` is set, not by which head named it.
     head: "Notebook",
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
     children: dynamicModuleChildren,
+    options: { TrackedSymbols: trackedSymbolsOption },
   },
   {
     // `Cell(expr)`: an In/Out pair -- the held expression as the input, its value as the

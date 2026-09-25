@@ -93,38 +93,76 @@ export function discreteLog(k: bigint, n: bigint, targets: readonly bigint[]): b
 /** The most primitive roots `primitiveRootList` will list. */
 export const MAX_PRIMITIVE_ROOTS = 100_000;
 
-/**
- * Every primitive root of n, ascending: the generators of (ℤ/n)*, which is cyclic exactly
- * for n = 1, 2, 4, p^e and 2p^e. Empty otherwise; undefined when n cannot be factored or
- * there would be more than `MAX_PRIMITIVE_ROOTS` of them (there are φ(φ(n))).
- */
-export function primitiveRootList(n: bigint): bigint[] | undefined {
+/** What (ℤ/n)* needs known before its generators can be listed or counted. */
+interface Cyclic {
+  readonly n: bigint;
+  readonly phi: bigint;
+  readonly isGenerator: (g: bigint) => boolean;
+  /** φ(φ(n)): how many generators there are. */
+  readonly count: bigint;
+}
+
+/** (ℤ/n)* is cyclic exactly for n = 1, 2, 4, p^e and 2p^e: its shape, "none" when it is
+ * not cyclic, undefined when n (or φ(n)) cannot be factored. */
+function cyclicUnits(n: bigint): Cyclic | "none" | undefined {
   if (n < 1n) return undefined;
-  if (n <= 2n) return [n - 1n];
-  if (n === 4n) return [3n];
+  if (n <= 4n && n !== 3n) {
+    const only = n === 4n ? 3n : n - 1n;
+    return { n, phi: n === 4n ? 2n : 1n, isGenerator: (g) => g === only, count: 1n };
+  }
   const factors = factorInteger(n);
   if (factors === undefined) return undefined;
   const odd = factors.filter(([p]) => p !== 2n);
   const twos = factors.find(([p]) => p === 2n)?.[1] ?? 0;
-  if (odd.length !== 1 || twos > 1) return [];
+  if (odd.length !== 1 || twos > 1) return "none";
   const phi = carmichaelOf(factors); // = φ(n) here, the group being cyclic
   const phiFactors = factorInteger(phi);
   if (phiFactors === undefined) return undefined;
   const isGenerator = (g: bigint): boolean =>
     gcd(g, n) === 1n && phiFactors.every(([q]) => powMod(g, phi / q, n) !== 1n);
+  const count = phiFactors.reduce((t, [q, e]) => t * (q - 1n) * q ** BigInt(e - 1), 1n);
+  return { n, phi, isGenerator, count };
+}
+
+/** How many primitive roots n has, φ(φ(n)) or 0, without listing them. */
+export function primitiveRootCount(n: bigint): bigint | undefined {
+  const units = cyclicUnits(n);
+  return units === "none" ? 0n : units?.count;
+}
+
+/** The primitive roots of n in ascending order, found lazily by scanning 1 … n − 1. */
+export function* primitiveRoots(n: bigint): Generator<bigint> {
+  const units = cyclicUnits(n);
+  if (units === undefined || units === "none") return;
+  for (let g = 0n; g < n; g++) {
+    if (units.isGenerator(g)) yield g;
+    checkpoint();
+  }
+}
+
+/**
+ * Every primitive root of n, ascending: the generators of (ℤ/n)*. Empty when that group is
+ * not cyclic; undefined when n cannot be factored or there would be more than
+ * `MAX_PRIMITIVE_ROOTS` of them. `primitiveRootCount` and `primitiveRoots` answer the
+ * count and a prefix of any size without building the list.
+ */
+export function primitiveRootList(n: bigint): bigint[] | undefined {
+  const units = cyclicUnits(n);
+  if (units === undefined) return undefined;
+  if (units === "none") return [];
+  if (units.count > BigInt(MAX_PRIMITIVE_ROOTS)) return undefined;
+  if (n <= 4n) return [...primitiveRoots(n)];
   let g = 2n;
-  while (!isGenerator(g)) {
+  while (!units.isGenerator(g)) {
     g++;
     checkpoint();
   }
   // The rest are gᵏ for k coprime to φ(n): φ(φ(n)) of them.
-  const count = phiFactors.reduce((t, [q, e]) => t * (q - 1n) * q ** BigInt(e - 1), 1n);
-  if (count > BigInt(MAX_PRIMITIVE_ROOTS)) return undefined;
   const roots: bigint[] = [];
   let power = 1n;
-  for (let k = 1n; k <= phi; k++) {
+  for (let k = 1n; k <= units.phi; k++) {
     power = (power * g) % n;
-    if (gcd(k, phi) === 1n) roots.push(power);
+    if (gcd(k, units.phi) === 1n) roots.push(power);
   }
   return roots.sort((x, y) => (x < y ? -1 : x > y ? 1 : 0));
 }

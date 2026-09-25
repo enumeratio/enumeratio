@@ -78,6 +78,39 @@ binding. `Notebook(cells)` is Wolfram's own name for the same configuration.
 <notatio-out format="notatio" value="Notebook([Cell(3 + 4), Cell(Out(1) * 2), Cell(InString(1))])" />
 </Story>
 
+### Reactive
+
+`TrackedSymbols` -- Wolfram's own option name -- turns a `DynamicModule` from a
+transcript into a reactive module: `All` (or `Automatic`, or `True`) tracks every
+symbol a cell assigns; a list of symbols tracks only those. Order stops mattering --
+`Cell(b := a + 1)` before `Cell(a := 5)` is fine, since the graph is built from what
+each cell assigns and reads, not from where it sits. Two cells assigning the same name
+is an error on both (never last-writer-wins), a cycle is an error on every cell in it,
+and a cell-number reference (`Out(n)`, `%`) is rejected outright -- position means
+nothing once cells can be understood in any order.
+
+Labels drop the `[n]` here too -- `In`/`Out`, not `In[n]`/`Out[n]`: a reactive module's
+cells can be read in any order, so a position-keyed label would be misleading, and it is
+exactly what the ordinal-reference rejection above is about.
+
+<Story
+  title="Order doesn't matter">
+<template #description>The middle cell reads <code>a</code>, defined by the cell after it -- and gets the right answer on load, not just after an edit.</template>
+<notatio-out format="notatio" value="DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)" />
+</Story>
+
+<Story
+  title="Editing an upstream cell">
+<template #description>Change the 5 in the middle cell and commit (Enter or blur) -- the first and third cells update on their own, without being touched.</template>
+<notatio-out format="notatio" value="DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)" />
+</Story>
+
+<Story
+  title="A duplicate definition">
+<template #description>Both cells assign <code>a</code> -- a reactive module rejects that as ambiguous rather than picking a winner (shown here as a dashed outline on each; hover for the message).</template>
+<notatio-out format="notatio" value="DynamicModule([Cell(a := 1), Cell(a := 2)], TrackedSymbols -> All)" />
+</Story>
+
 ## As a Vue component
 
 `<Cell>` is the same element behind a Vue component named for the symbol, whose props

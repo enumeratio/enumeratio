@@ -184,3 +184,8 @@ test("a choice list may label its entries with an arrow, and binds by value", ()
   expect(choiceBinding(choices[3], 3)).toBe("k"); // labelled: the value named
   expect(choiceBinding(undefined, 4)).toBe(4);
 });
+
+test("a quoted choice binds as the string it is", () => {
+  const [several] = parseChoices('"several" -> several');
+  expect(choiceBinding(several, 1)).toEqual({ str: "several" });
+});

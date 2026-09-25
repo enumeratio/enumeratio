@@ -157,6 +157,14 @@ notatio-in math-field::part(menu-toggle) { display: none; }
 .notatio-out-label { color: var(--vp-c-brand-1, #b3355a); }
 .notatio-error { color: var(--vp-c-danger-1, #c0392b); font-family: var(--notatio-mono, monospace); }
 
+/* A reactive dynamic module (TrackedSymbols) flags a cell its schedule rejects -- a
+   duplicate definition, a cycle, an ordinal reference -- with this attribute; the
+   message itself is the cell's title attribute. */
+notatio-cell[data-reactive-error] {
+  outline: 1px dashed var(--vp-c-danger-1, #c0392b);
+  outline-offset: 2px;
+}
+
 .notatio-render { display: inline-block; }
 
 .notatio-form-src {
@@ -192,6 +200,16 @@ notatio-in math-field::part(menu-toggle) { display: none; }
   cursor: pointer;
 }
 .notatio-reset:hover { color: var(--vp-c-brand-1, #3451b2); }
+/* Inside a transcript, an edit sits pending until Enter/blur commits it -- dim the
+   now-stale Out (reusing notatio-out's own [busy] dimming) and hint that it's waiting. */
+notatio-cell[pending] .notatio-row:last-of-type notatio-out .notatio-render { opacity: 0.5; }
+.notatio-uncommitted-hint {
+  flex: 0 0 auto;
+  margin-left: 0.5rem;
+  color: var(--vp-c-text-3, #aaa);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
 /* slot="aside" children (badges, alternatives), relocated here in light DOM;
    hidden while the cell is dirty, since they describe the original value. Wraps,
    so a panel like ExampleAlternatives' can drop to a full-width row below. */

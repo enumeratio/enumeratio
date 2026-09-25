@@ -164,6 +164,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "AlgebraDimension",
+    oracle: [
+      {
+        system: "oscar",
+        call: "dim($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "And",
     wolfram: "And",
   },
@@ -318,6 +328,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f50c74",
     ],
     wolfram: "BarnesG",
+  },
+  {
+    name: "Basis",
+    oracle: [
+      {
+        system: "sage",
+        call: "list(($1).basis())",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "BellNumber",
@@ -541,6 +561,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "BrauerAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "BrauerAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:brauer, $1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "CatalanConstant",
     wolfram: "Catalan",
   },
@@ -594,6 +629,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Chop",
     wolfram: "Chop",
+  },
+  {
+    name: "ClassSum",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_class_sum($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "Complex",
@@ -947,6 +992,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Det",
   },
   {
+    name: "Diagram",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_diagram($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "Digamma",
     fungrimEntries: [
       "00c02a",
@@ -1113,6 +1168,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e60fd4",
       "f0f53b",
       "feb95e",
+    ],
+  },
+  {
+    name: "Element",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_element($1, $2)",
+        arity: 2,
+      },
     ],
   },
   {
@@ -1885,6 +1950,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "GreaterEqual",
     wolfram: "GreaterEqual",
+  },
+  {
+    name: "GroupBasis",
+    oracle: [
+      {
+        system: "oscar",
+        call: "EnumeratioBasis($1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "HarmonicNumber",
@@ -2704,6 +2779,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MatrixRank",
+    wolfram: "MatrixRank",
+  },
+  {
     name: "Max",
     fungrimEntries: ["47d430", "632d1c", "bfe28b"],
     wolfram: "Max",
@@ -2804,6 +2883,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Most",
   },
   {
+    name: "MotzkinAlgebra",
+    oracle: [
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:motzkin, $1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "Multinomial",
     wolfram: "Multinomial",
   },
@@ -2873,6 +2962,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Partition",
     wolfram: "Partition",
+  },
+  {
+    name: "PartitionAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "PartitionAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:partition, $1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Pi",
@@ -3060,6 +3164,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Range",
     wolfram: "Range",
+  },
+  {
+    name: "Rank",
+    wolfram: "ArrayDepth",
   },
   {
     name: "Rational",
@@ -3552,6 +3660,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Tanh",
   },
   {
+    name: "TemperleyLiebAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "TemperleyLiebAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:temperley_lieb, $1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "TimeConstrained",
     wolfram: "TimeConstrained",
   },
@@ -3598,6 +3721,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "Transpose",
+    wolfram: "Transpose",
   },
   {
     name: "True",

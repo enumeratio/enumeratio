@@ -12,4 +12,6 @@ export default defineConfig({
     options: { typeAware: true, typeCheck: true },
   },
   fmt: {},
+  // exhaustive permutation-class round-trips reach thousands of elements at n=7–8
+  test: { testTimeout: 30_000 },
 });

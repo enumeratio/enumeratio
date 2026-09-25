@@ -613,6 +613,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Rank",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "ArrayDepth",
+    elsewhere: [],
+  },
+  {
+    name: "MatrixRank",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "MatrixRank",
+    elsewhere: [],
+  },
+  {
     name: "Gamma",
     provenance: "override",
     declared: null,

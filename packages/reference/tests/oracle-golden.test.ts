@@ -34,6 +34,10 @@ test("every row that is not an agreement is classified, with a note", () => {
             expect(row.tolerance, label).toBeLessThan(1);
             expect((row.note ?? "").length, label).toBeGreaterThan(20);
           }
+          // Ours means the other system is right, which is only acceptable with an issue open.
+          if (row.kind === "ours")
+            expect(Number.isInteger(row.issue) && row.issue! > 0, label).toBe(true);
+          else expect(row.issue, label).toBeUndefined();
           if (row.verdict === "agree") continue;
           expect(row.kind, label).not.toBe("unclassified");
           expect(Object.keys(DIVERGENCE_KINDS), label).toContain(row.kind);

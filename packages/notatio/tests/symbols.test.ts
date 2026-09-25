@@ -54,6 +54,9 @@ const CORPUS = [
   // to its own child, in document order -- one shared scope, not one child per module.
   "DynamicModule([Cell(1 + 1), Cell(2 + 2)])",
   "Notebook([Cell(1 + 1), Cell(2 + 2)])",
+  // Reactive: `TrackedSymbols` lowers to one attribute, `all` or a symbol list.
+  "DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)",
+  "DynamicModule([Cell(a := 5)], TrackedSymbols -> [a, b])",
   // The controls: a variable, or a variable with its start; a range or a list; and the
   // scope that binds them when anything else reads the variable.
   "Slider(k, (0, 5))",
@@ -86,6 +89,12 @@ const CORPUS = [
   "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))",
   'Plot(Sin(x), (x, 0, 10), [PlotLabel -> "sine", GridLines -> True], PlotLabel -> "no")',
   'Slider(k, (0, 5), Appearance -> "Labeled")',
+  // TestResultObject (@enumeratio/aestimatio's VerificationTest): a Success with an
+  // actual output, a Failure that also carries the expected value, and an Error/Aborted
+  // that has no ActualOutput to show.
+  'TestResultObject(KeyValuePair("Outcome", "Success"), KeyValuePair("Input", 1 + 1), KeyValuePair("ActualOutput", 2), KeyValuePair("AbsoluteTimeUsed", 0))',
+  'TestResultObject(KeyValuePair("Outcome", "Failure"), KeyValuePair("Input", 1 + 1), KeyValuePair("ExpectedOutput", 3), KeyValuePair("ActualOutput", 2), KeyValuePair("AbsoluteTimeUsed", 0), KeyValuePair("TestID", "adds"))',
+  'TestResultObject(KeyValuePair("Outcome", "Aborted"), KeyValuePair("Input", FactorInteger(n)), KeyValuePair("ExpectedOutput", Missing), KeyValuePair("AbsoluteTimeUsed", 0.05))',
 ];
 
 const GOLDEN = fileURLToPath(new URL("./symbols.golden.json", import.meta.url));

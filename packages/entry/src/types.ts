@@ -16,6 +16,8 @@ export interface OtherSystemRun {
   readonly note?: string;
   /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
   readonly tolerance?: number;
+  /** `ours` only: the GitHub issue tracking the gap. */
+  readonly issue?: number;
 }
 
 /** A MathJSON expression (form-agnostic compute-engine input/output). */

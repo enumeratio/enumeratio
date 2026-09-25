@@ -13,7 +13,10 @@ export { SYSTEMS, type System, type SystemSpec, wiredSystems } from "./systems.t
 export {
   asNumber,
   compare,
+  compareCombination,
+  compareCombinations,
   comparePythonStructured,
+  linearCombination,
   normalise,
   parsePython,
   type Verdict,

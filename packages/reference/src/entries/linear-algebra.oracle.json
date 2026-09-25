@@ -1,0 +1,105 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "Rank": {
+      "[\"Rank\",5]": {
+        "wolfram": {
+          "input": "ArrayDepth[5]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Rank\",[\"List\",1,2,3]]": {
+        "wolfram": {
+          "input": "ArrayDepth[List[1, 2, 3]]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Rank\",[\"List\",[\"List\",1,0],[\"List\",0,1]]]": {
+        "wolfram": {
+          "input": "ArrayDepth[List[List[1, 0], List[0, 1]]]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"Rank\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]]": {
+        "wolfram": {
+          "input": "ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]",
+          "output": "3",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Rank\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]],[\"Length\",[\"Shape\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]]]]": {
+        "wolfram": {
+          "input": "(ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]] == Length[Dimensions[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Rank\",[\"List\",[\"List\",1,2],[\"List\",2,4]]]": {
+        "wolfram": {
+          "input": "ArrayDepth[List[List[1, 2], List[2, 4]]]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      }
+    },
+    "MatrixRank": {
+      "[\"MatrixRank\",[\"List\",[\"List\",1,0],[\"List\",0,1]]]": {
+        "wolfram": {
+          "input": "MatrixRank[List[List[1, 0], List[0, 1]]]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"MatrixRank\",[\"List\",[\"List\",1,2],[\"List\",2,4]]]": {
+        "wolfram": {
+          "input": "MatrixRank[List[List[1, 2], List[2, 4]]]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]]": {
+        "wolfram": {
+          "input": "MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",2,4,6]]]": {
+        "wolfram": {
+          "input": "MatrixRank[List[List[1, 2, 3], List[2, 4, 6]]]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"MatrixRank\",[\"List\",[\"List\",0,0],[\"List\",0,0]]]": {
+        "wolfram": {
+          "input": "MatrixRank[List[List[0, 0], List[0, 0]]]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]],[\"MatrixRank\",[\"Transpose\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]]]]": {
+        "wolfram": {
+          "input": "(MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]] == MatrixRank[Transpose[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"MatrixRank\",[\"List\",1,2,3]]": {
+        "wolfram": {
+          "input": "MatrixRank[List[1, 2, 3]]",
+          "output": "MatrixRank[{1, 2, 3}]",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "Wolfram declines a vector (not a matrix); compute-engine reads it as 1×n."
+        }
+      }
+    }
+  }
+}

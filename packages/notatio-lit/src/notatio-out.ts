@@ -83,8 +83,12 @@ interface TranscriptHost extends Element {
  * The nearest ancestor `<notatio-dynamic-module>`, if this Out sits inside one -- the way
  * a forced `env` is read from `closest("[env]")` (`#visualize`, below). A cell outside any
  * module evaluates exactly as it does today: no scope, no history, no `%`/`Out(n)`.
+ *
+ * Exported so `<notatio-cell>` can ask the same question: inside a transcript, Wolfram
+ * evaluates a cell only on Shift+Enter, so the cell defers handing a new value to its Out
+ * until the editor commits, rather than on every keystroke.
  */
-function transcriptHostOf(el: Element): TranscriptHost | undefined {
+export function transcriptHostOf(el: Element): TranscriptHost | undefined {
   const host = el.closest("notatio-dynamic-module");
   return host && typeof (host as Partial<TranscriptHost>).transcriptFor === "function"
     ? (host as TranscriptHost)
@@ -618,6 +622,17 @@ export class NotatioOut extends LitElement {
   /** This line's `In[n]`/`Out[n]` number, when the last evaluation ran in a transcript. */
   get historyN(): number | undefined {
     return this.#historyN;
+  }
+
+  /**
+   * Force a fresh evaluation even though none of `value`/`format`/… changed -- for a
+   * host whose shared scope changed under this Out rather than its own props (a
+   * reactive `DynamicModule`'s downstream cell, re-run after an upstream one commits;
+   * `reactive-module.ts` is the caller). `willUpdate`'s own dirty-check would otherwise
+   * see nothing to do.
+   */
+  revalidate(): Promise<void> {
+    return this.#recompute();
   }
 
   #status(): unknown {

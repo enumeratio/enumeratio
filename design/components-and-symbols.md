@@ -216,8 +216,6 @@ up its parents (`NotatioAnimator extends NotatioSlider`).
 - **Hints for the family heads.** `Chart(data, "pie")` names the member; anything richer
   — an axis mapping, a bin count — has no notatio spelling beyond the attributes, which
   is the argument-conventions question again.
-- **A React mirror.** The generator is one template away from emitting `.tsx`; nothing
-  needs it yet.
 - **Other renderers.** The terminal (`notatio-terminal`'s host side) could draw a `Plot`
   head through `@enumeratio/raster` the way it already draws glyphs — the same
   `renderingOf` map with a different set of components behind the tags.

@@ -4,10 +4,11 @@
 // No Node builtins, no file I/O, no rendering — the graphic side of :plot/:glyph
 // is returned as structured data and drawn by whichever adapter runs the core.
 
-import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/collections";
 import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
+import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
 
 export type Syntax = "latex" | "mathjson" | "wolfram" | "epsil";
@@ -197,7 +198,9 @@ export class Session {
   private counter = 0;
 
   constructor(defaults: SessionDefaults = {}) {
-    this.ce = new ComputeEngine();
+    this.ce = new ComputeEngine({
+      latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
+    });
     // Carriers first: everything below declares heads OVER these minted types, so they have
     // to exist before a signature can name one.
     declareDomains(this.ce);

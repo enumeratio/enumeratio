@@ -31,6 +31,8 @@ export const DIVERGENCE_KINDS = {
   threading: "threaded over a list here, scalars only there",
   /** The other system hit the scan's time or memory cap, so said nothing either way. */
   resource: "the other system ran out of time or memory",
+  /** The other system is right and this is a gap or bug here; the row names its issue. */
+  ours: "a gap or bug here, tracked by an issue",
   /** Not yet reviewed — a scan adds these and a person replaces them. */
   unclassified: "not yet reviewed",
 } as const;
