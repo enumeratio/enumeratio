@@ -117,4 +117,135 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     },
     seeAlso: ["BellNumber", "Stirling", "Count", "At"],
   },
+  {
+    name: "BinaryBracelets",
+    domain: "Collections",
+    signature: "BinaryBracelets(n)",
+    summary:
+      "Binary strings of length $n$ up to rotation AND reflection — the dihedral-group orbits of $\\{0,1\\}^n$, a lazy indexed family.",
+    signatures: [
+      {
+        call: "BinaryBracelets(n)",
+        description: "the bracelets of $n$ black-or-white beads on a necklace that can flip.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count follows Burnside's lemma over the dihedral group $D_n$ — a rotation sum shared with binary necklaces, plus a reflection sum that splits on the parity of $n$ (OEIS A000029). See [[Totient]], used in the rotation sum.",
+      "Each element is the lexicographically-least word in its rotation-and-reflection orbit; that canonical word's 1-count is an invariant of the whole orbit.",
+      "$At$ unranks over these canonical words in ascending lexicographic order.",
+    ],
+    examples: [],
+    enumerate: { expr: "BinaryBracelets(6)", columns: "Descents, Ascents" },
+    seeAlso: ["KBracelets", "Totient", "Count", "At"],
+  },
+  {
+    name: "KBracelets",
+    domain: "Collections",
+    signature: "KBracelets(n, k)",
+    summary:
+      "Words of length $n$ over a $k$-letter alphabet up to rotation and reflection — bracelets over $k$ colours, a lazy indexed family.",
+    signatures: [
+      {
+        call: "KBracelets(n, k)",
+        description: "the bracelets of $n$ beads, each one of $k$ colours.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; generalises [[BinaryBracelets]] from $k=2$ to any alphabet size, by the same Burnside sum over $D_n$.",
+      "Each element is the lexicographically-least word in its rotation-and-reflection orbit, over letters $0,…,k-1$.",
+      "$At$ unranks over these canonical words in ascending lexicographic order.",
+    ],
+    examples: [],
+    enumerate: { expr: "KBracelets(4, 3)", columns: "Descents, Ascents" },
+    seeAlso: ["BinaryBracelets", "Totient", "Count", "At"],
+  },
+  {
+    name: "TriStrings",
+    domain: "Collections",
+    signature: "TriStrings(n)",
+    summary:
+      "Binary strings of length $n$ with no run of 3 consecutive 1s, a lazy indexed family counted by the tribonacci recurrence.",
+    signatures: [
+      {
+        call: "TriStrings(n)",
+        description: "the length-$n$ binary strings avoiding three 1s in a row.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count $T(n)$ satisfies $T(n)=T(n-1)+T(n-2)+T(n-3)$ with $T(0)=1$, $T(1)=2$, $T(2)=4$ — a tribonacci-style recurrence (OEIS A000073, shifted).",
+      "Each element is the bit string itself, as a list of 0s and 1s.",
+      "$At$ unranks via the same combinatorial-number-system walk as the other binary-word families: at each position, the number of valid completions with a leading 0 sizes the block that sorts first.",
+    ],
+    examples: [],
+    enumerate: { expr: "TriStrings(6)", columns: "Descents, Ascents" },
+    seeAlso: ["PrimitiveBinaryStrings", "Count", "At"],
+  },
+  {
+    name: "PrimitiveBinaryStrings",
+    domain: "Collections",
+    signature: "PrimitiveBinaryStrings(n)",
+    summary:
+      "Aperiodic binary strings of length $n$ — words with no proper period — a lazy indexed family (OEIS A027375).",
+    signatures: [
+      {
+        call: "PrimitiveBinaryStrings(n)",
+        description:
+          "the length-$n$ binary strings that are not themselves a shorter word repeated.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count is $\\sum_{d\\mid n}\\mu(d)\\,2^{n/d}$, the un-normalised sum inside the binary Lyndon-word count. See [[MoebiusMu]].",
+      "Every primitive word's $n$ rotations are pairwise distinct and together form the orbit of exactly one length-$n$ Lyndon word, so the family is the union of every such orbit.",
+      "Each element is the bit string itself; $At$ unranks over the rotations of the binary Lyndon words, sorted ascending lexicographically.",
+    ],
+    examples: [],
+    enumerate: { expr: "PrimitiveBinaryStrings(6)", columns: "Descents, Ascents" },
+    seeAlso: ["TriStrings", "MoebiusMu", "Count", "At"],
+  },
+  {
+    name: "TernaryGrayCodes",
+    domain: "Collections",
+    signature: "TernaryGrayCodes(n)",
+    summary:
+      "Length-$n$ words over $\\{0,1,2\\}$ in base-3 reflected Gray code order, where consecutive words differ by $\\pm1$ in exactly one digit.",
+    signatures: [
+      {
+        call: "TernaryGrayCodes(n)",
+        description: "the $3^n$ base-3 digit strings of length $n$, Gray-code ordered.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count is the closed form $3^n$, but the ORDER is the point — it is the standard reflected-Gray-code recursion (each digit's block traversed forward or reversed in turn), not lexicographic.",
+      "Each element is the digit string itself, as a list over $\\{0,1,2\\}$.",
+      "$At$ unranks directly into that Gray-code order, so consecutive indices always differ in exactly one digit, by exactly 1.",
+    ],
+    examples: [],
+    enumerate: { expr: "TernaryGrayCodes(4)", columns: "Descents, Ascents" },
+    seeAlso: ["Count", "At"],
+  },
+  {
+    name: "StirlingPermutations",
+    domain: "Collections",
+    signature: "StirlingPermutations(n)",
+    summary:
+      "Permutations of the multiset $\\{1,1,2,2,…,n,n\\}$ where everything between the two copies of $i$ exceeds $i$, a lazy indexed family of $(2n-1)!!$.",
+    signatures: [
+      {
+        call: "StirlingPermutations(n)",
+        description:
+          "the $(2n-1)!!$ permutations of $\\{1,1,…,n,n\\}$ with that betweenness property.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count is the double factorial $(2n-1)!!$. See [[Factorial2]].",
+      "Built by inserting the pair $(k,k)$, for $k=2,…,n$ increasing, into any of the $2(k-1)+1$ gaps of a Stirling permutation of order $k-1$ — every gap is valid because a later pair always carries a larger label.",
+      "Each element is the length-$2n$ word itself; $At$ unranks the per-$k$ gap choices as mixed-radix digits (radix $2k-1$ at level $k$), combined by the standard Horner scheme.",
+    ],
+    examples: [],
+    enumerate: {
+      expr: "StirlingPermutations(4)",
+      columns: "Descents, Ascents, MajorIndex, Inversions",
+    },
+    seeAlso: ["Factorial2", "Count", "At"],
+  },
 ];
