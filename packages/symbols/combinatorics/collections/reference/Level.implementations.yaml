@@ -1,0 +1,55 @@
+level-expr-1-gives-the-top-level-operands:
+  epsil:
+    in: Level([1, [2, 3], 4], 1)
+    out: "[1, [2, 3], 4]"
+  tex:
+    in: \mathrm{Level}(\bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack, 4\bigr\rbrack, 1)
+    out: \bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack, 4\bigr\rbrack
+  fullform:
+    in: Level[List[1, List[2, 3], 4], 1]
+  wolfram:
+    in: Level[List[1, List[2, 3], 4], 1]
+level-expr-0-is-just-expr-itself:
+  epsil:
+    in: Level([1, [2, 3]], [0])
+    out: "[[1, [2, 3]]]"
+  tex:
+    in: \mathrm{Level}(\bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack, \bigl\lbrack0\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Level[List[1, List[2, 3]], List[0]]
+  wolfram:
+    in: Level[List[1, List[2, 3]], List[0]]
+level-expr-2-gives-levels-1-and-2-together:
+  epsil:
+    in: Level([1, [2, 3], 4], 2)
+    out: "[1, [2, 3], 2, 3, 4]"
+  tex:
+    in: \mathrm{Level}(\bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack, 4\bigr\rbrack, 2)
+    out: \bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Level[List[1, List[2, 3], 4], 2]
+  wolfram:
+    in: Level[List[1, List[2, 3], 4], 2]
+level-expr-1-gives-every-leaf:
+  epsil:
+    in: Level([1, [2, 3], 4], [-1])
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{Level}(\bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack, 4\bigr\rbrack, \bigl\lbrack-1\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Level[List[1, List[2, 3], 4], List[-1]]
+  wolfram:
+    in: Level[List[1, List[2, 3], 4], List[-1]]
+level-expr-infinity-reaches-every-level:
+  epsil:
+    in: Level([1, [2, [3]]], PositiveInfinity)
+    out: "[1, [2, [3]], 2, [3], 3]"
+  tex:
+    in: \mathrm{Level}(\bigl\lbrack1, \bigl\lbrack2, \bigl\lbrack3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \infty)
+    out: \bigl\lbrack1, \bigl\lbrack2, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, 2, \bigl\lbrack3\bigr\rbrack, 3\bigr\rbrack
+  fullform:
+    in: Level[List[1, List[2, List[3]]], Infinity]
+  wolfram:
+    in: Level[List[1, List[2, List[3]]], Infinity]

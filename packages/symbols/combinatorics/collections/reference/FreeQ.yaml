@@ -1,0 +1,27 @@
+name: FreeQ
+domain: Collections
+signature: FreeQ(expr, pattern)
+summary: Whether pattern matches nowhere in expr — itself, or any subexpression, at any depth.
+signatures:
+  - call: FreeQ(expr, pattern)
+    description: True unless pattern matches expr or some subexpression
+    library: enumeratio-collections
+details:
+  - Searches the WHOLE tree, not just the top level — that's the difference from [[MatchQ]], which only checks expr itself.
+  - Uses the same wildcard grammar as [[MatchQ]] — see its reference entry for what's supported.
+examples:
+  - id: x-occurs-in-x-2-plus-1
+    expr: [FreeQ, [Add, [Power, x, 2], 1], x]
+    expected: False
+  - id: y-never-occurs
+    expr: [FreeQ, [Add, [Power, x, 2], 1], y]
+    expected: True
+    category: Scope
+  - id: looks-inside-subexpressions-not-just-top-level
+    expr: [FreeQ, [List, [List, a, b]], b]
+    expected: False
+    category: Scope
+    caption: b is found two levels deep
+seeAlso:
+  - MatchQ
+  - Level
