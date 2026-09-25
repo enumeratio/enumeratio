@@ -86,6 +86,8 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
       if (typeof index !== "number") return undefined;
       const p = params(c);
       const total = family.count(p);
+      // No last element to count back from when the count is unknown.
+      if (index < 0 && Number.isNaN(total)) return undefined;
       const i = index < 0 ? total + index + 1 : index;
       return i < 1 || i > total ? undefined : element(p, i - 1);
     },

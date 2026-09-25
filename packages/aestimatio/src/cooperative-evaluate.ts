@@ -14,6 +14,9 @@ import { DeadlineExceededError, withDeadline } from "@enumeratio/boxed";
 /** MathJSON for `declareAestimatio`'s `Aborted` symbol -- see ./declare.ts's own comment. */
 const ABORTED = "Aborted";
 
+/** Most elements a materialized result is expanded to in full. */
+const MATERIALIZE_LIMIT = 10_000;
+
 /** True for the timeout `CancellationError` compute-engine's own spans raise, or ours. */
 const isTimeout = (e: unknown): boolean =>
   (e instanceof CancellationError && e.cause === "timeout") || e instanceof DeadlineExceededError;
@@ -43,14 +46,17 @@ export function evaluateCooperatively(
   // the elided display form (five elements, a placeholder, five more), so
   // `Length(Range(1, 20))` counted the eleven items of the display and gave 11. On the
   // result, too, `true` elides past ten elements (`Range(1, 20)` comes back as five, a
-  // `ContinuationPlaceholder`, five), so a known count is passed as the element budget.
+  // `ContinuationPlaceholder`, five), so a known count is passed as the element budget --
+  // up to MATERIALIZE_LIMIT; past that the elided form stands.
   const run = (): BoxedExpression => {
     const result = boxed.evaluate();
     if (!materialize || !result.isLazyCollection) return result;
     const count = result.count;
-    return result.evaluate({
-      materialization: count !== undefined && Number.isFinite(count) ? Math.max(count, 1) : true,
-    });
+    const budget =
+      count !== undefined && Number.isFinite(count) && count <= MATERIALIZE_LIMIT
+        ? Math.max(count, 1)
+        : true;
+    return result.evaluate({ materialization: budget });
   };
   // compute-engine's `N(x, d)` leaves `ce.precision` at `d` once it returns, so every later
   // evaluation on the same engine -- the next case in a pooled worker, the next notebook
