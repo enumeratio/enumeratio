@@ -170,3 +170,4 @@ export {
   type Message,
   messageLine,
 } from "./messages.ts";
+export { POWER_LATEX } from "./latex.ts";

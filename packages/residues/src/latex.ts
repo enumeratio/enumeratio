@@ -1,10 +1,6 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine";
-import {
-  LATEX_DICTIONARY,
-  type LatexDictionaryEntry,
-  type Parser,
-  type Serializer,
-} from "@cortex-js/compute-engine/latex-syntax";
+import type { LatexDictionaryEntry, Parser } from "@cortex-js/compute-engine/latex-syntax";
+import { POWER_LATEX } from "@enumeratio/boxed";
 import { INTEGER_MOD, INTEGER_MOD_RING } from "./integer-mod-declare.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
@@ -17,9 +13,10 @@ import { INTEGER_MOD, INTEGER_MOD_RING } from "./integer-mod-declare.ts";
 //   \mathbb{Z}/m\mathbb{Z} IntegerModRing(m) -- written here; it parses to CE's
 //                          QuotientRing(Integers, m), which evaluates to it
 //
-// `Power` is here too: compute-engine parenthesises a base from a fixed list of heads, so
-// `(3 \pmod{7})^6` would print as `3\pmod{7}^{6}`. The entry replaces the native one by
-// name -- a host merging these must drop the default entry for a name it redefines.
+// `Power` is here too (boxed's `POWER_LATEX`): compute-engine parenthesises a base from a
+// fixed list of heads, so `(3 \pmod{7})^6` would print as `3\pmod{7}^{6}`. The entry
+// replaces the native one by name -- a host merging these must drop the default entry for a
+// name it redefines.
 
 // compute-engine's own infix `\pmod`, just under the relations (245), so `a + b \pmod{n}`
 // takes the whole sum. `a \equiv b \pmod{n}` never reaches it: `\equiv` reads its
@@ -29,10 +26,6 @@ const RELATION_PRECEDENCE = 245;
 
 const operand = (expr: MathJsonExpression, i: number): MathJsonExpression | null =>
   Array.isArray(expr) ? ((expr[i] as MathJsonExpression | undefined) ?? null) : null;
-
-type SerializeHandler = (serializer: Serializer, expr: MathJsonExpression) => string;
-const nativePower = LATEX_DICTIONARY.find((e) => e.name === "Power");
-const nativePowerSerialize = nativePower?.serialize as SerializeHandler;
 
 export const RESIDUES_LATEX: readonly Partial<LatexDictionaryEntry>[] = [
   {
@@ -52,17 +45,7 @@ export const RESIDUES_LATEX: readonly Partial<LatexDictionaryEntry>[] = [
     serialize: (serializer, expr) =>
       `${serializer.wrap(operand(expr, 1), RELATION_PRECEDENCE)}\\pmod{${serializer.serialize(operand(expr, 2))}}`,
   },
-  {
-    ...nativePower,
-    name: "Power",
-    serialize: (serializer: Serializer, expr: MathJsonExpression) => {
-      const base = operand(expr, 1);
-      if (Array.isArray(base) && base[0] === INTEGER_MOD) {
-        return `\\left(${serializer.serialize(base)}\\right)^{${serializer.serialize(operand(expr, 2))}}`;
-      }
-      return nativePowerSerialize(serializer, expr);
-    },
-  } as Partial<LatexDictionaryEntry>,
+  POWER_LATEX,
   {
     name: INTEGER_MOD_RING,
     serialize: (serializer, expr) =>

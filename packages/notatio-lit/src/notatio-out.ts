@@ -3,6 +3,7 @@ import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engi
 import { collectMessages, type Message } from "@enumeratio/boxed";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
 import { toMathML } from "@enumeratio/formats/mathml";
+import { portableTeX } from "@enumeratio/formats/tex";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
@@ -1001,7 +1002,7 @@ export class NotatioOut extends LitElement {
       case "full":
         return this.#code(this._json, FORM_LANG.full!);
       case "tex":
-        return this.#code(this._latex, FORM_LANG.tex!);
+        return this.#code(portableTeX(this._latex), FORM_LANG.tex!);
       case "asciimath":
         return this.#code(this._ascii, FORM_LANG.asciimath!);
       case "mathml":

@@ -431,6 +431,17 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // Times-apply. With an iterator the names agree and `Tuple` becomes `{k, a, b}`.
   Sum: (a) => (a.length === 1 ? `Total[${toWolfram(a[0])}]` : call("Sum", a)),
   Product: (a) => (a.length === 1 ? `Apply[Times, ${toWolfram(a[0])}]` : call("Product", a)),
+  // A definite integral's `Limits(x, a, b)` is Wolfram's iterator `{x, a, b}`.
+  Integrate: (a) =>
+    call(
+      "Integrate",
+      a.map((it) => (Array.isArray(it) && it[0] === "Limits" ? ["List", ...it.slice(1)] : it)),
+    ),
+  // Wolfram's interval is closed and takes its bounds as a list: `Interval[{a, b}]`.
+  Interval: (a) =>
+    a.length === 2 && !a.some((b) => Array.isArray(b) && b[0] === "Open")
+      ? `Interval[${call("List", a)}]`
+      : call("Interval", a),
   // IndexOf returns 0 when absent; FirstPosition returns Missing unless given a default.
   IndexOf: (a) => `First[FirstPosition[${toWolfram(a[0])}, ${toWolfram(a[1])}, List[0]]]`,
   // No DigitSum in Wolfram: sum the digit list, in whatever base was given.
