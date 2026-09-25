@@ -21,9 +21,9 @@ export interface QueuedRename {
 }
 
 export const RENAME_QUEUE: readonly QueuedRename[] = [
-  // Numeral systems: design/numeral-naming.md §4, recommendation A — suffix `Numerals` so the
-  // base slot reads uniformly. `AdicNumerals` already landed on that convention. Held only
-  // because the decision is the curator's and the old names should stay as aliases.
+  // Numeral systems: recommendation A — suffix `Numerals` so the base slot reads
+  // uniformly. `AdicNumerals` already landed on that convention. Held only because the
+  // decision is the curator's and the old names should stay as aliases.
   ...(
     [
       ["Factoradic", "FactorialNumerals"],
@@ -42,11 +42,11 @@ export const RENAME_QUEUE: readonly QueuedRename[] = [
     to,
     why: "numeral systems take one suffix; four of these have no radix, and `Numerals` is right for all",
     blockedBy:
-      "numeral-naming.md §4 needs a decision (A recommended); keep the old name as an alias",
+      "speculative/numeral-naming.md §4 needs a decision (A recommended); keep the old name as an alias",
   })),
 
   // modular: named for the implementation rather than the mathematics. No Wolfram
-  // counterpart to align against, which is why it drifted (design/symbols.md §5).
+  // counterpart to align against, which is why it drifted.
   {
     from: "FormRho",
     to: "FormCycleStep",

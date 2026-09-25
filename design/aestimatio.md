@@ -42,8 +42,8 @@ setup })` runs one evaluation in a `worker_threads` Worker with `resourceLimits`
   the constraint — a real heap cap — and `terminate()` as the hard time kill. `setup` names a
   module whose `configure(ce)` declares the libraries the host engine has, so the worker's
   engine means the same things.
-- **Browser** (next PR): a plain `Worker`, `terminate()` for time, best-effort memory only
-  (browsers expose no per-worker cap). A `SharedWorker` session can come later.
+- **Browser** (`@enumeratio/aestimatio/browser`): a plain `Worker`, `terminate()` for time,
+  best-effort memory only (browsers expose no per-worker cap).
 
 Lessons carried from the archived async-engines design: `AbortSignal` from day one, and
 `terminate()` is the only cancel that always works against a tight loop.
@@ -57,9 +57,5 @@ TestID -> "…")` holds `input`, evaluates it under the constraints, compares wi
 `ExpectedOutput`, `AbsoluteTimeUsed` and `TestID`. It draws as a cell with an outcome badge.
 Reference examples are, in effect, verification tests; they may be expressed this way later.
 
-## 5. Later
-
-- The browser worker; a session (`SharedWorker`) that holds a notebook's engine across tabs.
-- Running our own test suites inside a notatio evaluation process — per-test time and memory
-  constraints, as the oracle scans already are (roadmap).
-- `AbsoluteTiming`, `CheckAbort`, and evaluation history (`In`/`Out`) where a notebook needs it.
+Future work (a `SharedWorker` session, running our own test suites under aestimatio,
+`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to speculative/aestimatio.md.

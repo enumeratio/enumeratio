@@ -65,7 +65,7 @@ anything that lands there next as unproven, not impossible. The maps frontier ho
 Work that needs no thinking, only a quiet moment. Each design doc's `Status:` line is the
 authority; these are the ones currently parked:
 
-- [numeral-naming.md](./numeral-naming.md) — **needs a decision**, not execution.
+- Numeral system renames — **needs a decision**, not execution; see speculative/numeral-naming.md.
 - [knots.md](./knots.md) — the value landed, the table did not.
 
 ## 3. The old repo
@@ -78,10 +78,10 @@ without kernels, and guides.
 
 Ideas with a shape but no plan, recorded where they came up rather than collected here:
 
-- **Numerals as polynomial-like domains** — [symbols.md §5](./symbols.md).
+- **Numerals as polynomial-like domains** — see speculative/symbols.md.
 - **`modular` wants normalising** — 34 heads, several named for the implementation rather than
   the mathematics, and no Wolfram counterpart to align against —
-  [symbols.md §5](./symbols.md).
+  see speculative/symbols.md.
 - **Upstreaming** — what compute-engine would have to change for our heads to be droppable
   into it: [upstreaming.md](./upstreaming.md). [§8](./upstreaming.md) is what is ready to
   send today, each with its reproduction.
@@ -93,7 +93,7 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
 
 - **Run our own test suites under aestimatio** — a notatio/aestimatio evaluation process,
   per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped
-  today ([aestimatio.md](./aestimatio.md) §5).
+  today (see speculative/aestimatio.md).
 
 ## 5. What this file is not
 

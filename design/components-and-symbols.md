@@ -1,6 +1,8 @@
 # Design: components and symbols
 
-Status: **proposal**, with one worked example. The idea: a symbol and its component are
+Status: **landed** (renames, heads, argument map, wrapper generator, `Chart` family head,
+controls — all shipped 2026-09-15; §5–§6a below). Open questions moved to
+speculative/components-and-symbols.md. The idea: a symbol and its component are
 the same thing seen from two ends. `<Cell>` in a markdown page is the symbol `Cell` as a
 Vue component; `Histogram(data)` in a cell is the same symbol as an expression; the web
 component is how either one gets drawn. Companion to
@@ -99,12 +101,6 @@ controls). What it gives:
   rewrite to a `Plot` head rather than component-internal logic.
 - **A `Manipulate` written as an expression** — a value the REPL can hold, the CLI can
   print, a page can render, with the element as its rendering.
-- **Other renderers.** A tree of `Cell`, `Plot`, `Manipulate`, `Histogram` is a small
-  interface description, and nothing about it is the DOM's. The same tree could render
-  in a terminal (the REPL already has `notatio-terminal`'s host side) or natively on
-  mobile, with a different set of components behind the same symbols. An experiment, not
-  a plan — but it only works if the symbols are the interface, which is the alignment
-  argument again.
 - **Fewer symbols.** Once a component is a symbol, every component that exists without
   one is a question: which symbol should it be? `notatio-worksheet`, `notatio-figure`,
   `notatio-code`, `notatio-terminal` (component-naming §4, "represents no single
@@ -199,23 +195,3 @@ symbol -- `Slider`, `VerticalSlider`, `Animator`, `Slider2D`, `IntervalSlider`,
 The Vue wrappers follow for free: `<Slider>`, `<SetterBar>`, `<Row>`, … are generated
 from the element sources like the rest, and the reference follows a class's attributes
 up its parents (`NotatioAnimator extends NotatioSlider`).
-
-## 7. Open questions
-
-- **Argument conventions.** Wolfram's `{x, 0, 10}` iterator is our `(x, 0, 10)` tuple
-  (InputForm already prints `Integrate` bounds that way); options (`PlotRange -> …`) have
-  no notatio spelling yet — Epsil's `a -> b` is a `KeyValuePair`, not Wolfram's `Rule`,
-  and the elements take attributes. Whether a `Plot` head takes options as trailing pairs
-  or as a settings record is the same question the worksheet's `\mathsf{…}` settings
-  namespace answered one way.
-- **Which symbol for the symbol-less components.** `Cell` is Wolfram's (a notebook
-  cell), so `notatio-cell` is aligned after all and the wrapper is rightly `<Cell>`.
-  `notatio-worksheet` has no Wolfram name; `Notebook` is taken by our notebook.
-  `notatio-figure`'s eleven glyphs are the hardest case — a `Figure(kind, …)` family
-  head is the §4 answer, if the glyphs are worth a symbol at all.
-- **Hints for the family heads.** `Chart(data, "pie")` names the member; anything richer
-  — an axis mapping, a bin count — has no notatio spelling beyond the attributes, which
-  is the argument-conventions question again.
-- **Other renderers.** The terminal (`notatio-terminal`'s host side) could draw a `Plot`
-  head through `@enumeratio/raster` the way it already draws glyphs — the same
-  `renderingOf` map with a different set of components behind the tags.
