@@ -158,10 +158,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Multiply", 1000001, "Pi"]],
         expected: 0,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Any integer multiple of $\\pi$ is a zero of sine; the special-angle table misses a large integer multiple, so this stays symbolic",
+        caption: "Any integer multiple of $\\pi$ is a zero of sine, however large",
       },
       {
         expr: ["Sin", ["Interval", ["Negate", ["Divide", "Pi", 6]], ["Divide", "Pi", 6]]],
@@ -197,25 +195,20 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Multiply", "ImaginaryUnit", "x"]],
         expected: ["Multiply", ["Complex", 0, 1], ["Sinh", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An imaginary argument should rewrite to [[Sinh]]: $\\sin(ix) = i\\sinh x$; left as is",
+        caption: "An imaginary argument rewrites to [[Sinh]]: $\\sin(ix) = i\\sinh x$",
       },
       {
         expr: ["Sin", ["Negate", "x"]],
         expected: ["Negate", ["Sin", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Oddness should pull the sign out of a symbolic argument, $\\sin(-x) = -\\sin x$; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\sin(-x) = -\\sin x$",
       },
       {
         expr: ["Sin", ["Add", "x", "Pi"]],
         expected: ["Negate", ["Sin", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "A half-period shift should reduce: $\\sin(x + \\pi) = -\\sin x$; left as is",
+        caption: "A half-period shift reduces: $\\sin(x + \\pi) = -\\sin x$",
       },
       {
         expr: ["Sin", ["Arcsin", "x"]],
@@ -227,9 +220,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Arccos", "x"]],
         expected: ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\sin(\\arccos x) = \\sqrt{1 - x^2}$; not yet simplified",
+        caption: "$\\sin(\\arccos x) = \\sqrt{1 - x^2}$",
       },
       {
         expr: ["Sin", ["Arctan", "x"]],
@@ -1489,11 +1481,10 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Arcsin", ["Sin", 2]],
-        expected: ["Subtract", "Pi", 2],
-        aspirational: true,
+        expected: ["Add", -2, "Pi"],
         category: "Possible issues",
         caption:
-          "Not simply 2: $2$ is outside the principal range $[-\\pi/2, \\pi/2]$, so $\\arcsin(\\sin 2) = \\pi - 2$; left symbolic",
+          "Not simply 2: $2$ is outside the principal range $[-\\pi/2, \\pi/2]$, so $\\arcsin(\\sin 2) = \\pi - 2$",
       },
     ],
     seeAlso: ["Sin", "Arccos", "Arctan"],
@@ -1890,8 +1881,7 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arccot", 1],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
-        aspirational: true,
-        caption: "Should fold to $\\pi/4$ exactly, as [[Arctan]] does at 1; stays symbolic",
+        caption: "Folds to $\\pi/4$ exactly, as [[Arctan]] does at 1",
       },
       {
         expr: ["Arccot", 0.5],
@@ -1901,24 +1891,21 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arccot", 0],
         expected: ["Multiply", ["Rational", 1, 2], "Pi"],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\operatorname{arccot} 0 = \\pi/2$; stays symbolic",
+        caption: "$\\operatorname{arccot} 0 = \\pi/2$",
       },
       {
         expr: ["Arccot", ["Sqrt", 3]],
         expected: ["Multiply", ["Rational", 1, 6], "Pi"],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\operatorname{arccot}\\sqrt3 = \\pi/6$; stays symbolic",
+        caption: "$\\operatorname{arccot}\\sqrt3 = \\pi/6$",
       },
       {
         expr: ["Arccot", -1],
         expected: ["Multiply", ["Rational", -1, 4], "Pi"],
-        aspirational: true,
         category: "Scope",
         caption:
-          "With Wolfram's convention $\\operatorname{arccot} x = \\arctan(1/x)$ this is $-\\pi/4$ (an odd function, discontinuous at 0); stays symbolic",
+          "With Wolfram's convention $\\operatorname{arccot} x = \\arctan(1/x)$ this is $-\\pi/4$ (an odd function, discontinuous at 0)",
       },
       { expr: ["Arccot", "PositiveInfinity"], expected: 0, category: "Scope" },
       {
@@ -1967,9 +1954,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arccsc", 0],
         expected: "ComplexInfinity",
-        aspirational: true,
         category: "Scope",
-        caption: "A pole: $\\operatorname{arccsc} 0$ is complex infinity; stays symbolic",
+        caption: "A pole: $\\operatorname{arccsc} 0$ is complex infinity",
       },
       {
         expr: ["D", ["Arccsc", "x"], "x"],
@@ -2029,9 +2015,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arcsec", 0],
         expected: "ComplexInfinity",
-        aspirational: true,
         category: "Scope",
-        caption: "A pole: $\\operatorname{arcsec} 0$ is complex infinity; stays symbolic",
+        caption: "A pole: $\\operatorname{arcsec} 0$ is complex infinity",
       },
       {
         expr: ["D", ["Arcsec", "x"], "x"],
@@ -2110,9 +2095,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sinh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]],
         expected: ["Complex", 0, 1],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\sinh(i\\pi/2) = i\\sin(\\pi/2) = i$; stays symbolic",
+        caption: "$\\sinh(i\\pi/2) = i\\sin(\\pi/2) = i$",
       },
       {
         expr: [
@@ -2283,9 +2267,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Cosh", ["Multiply", "ImaginaryUnit", "Pi"]],
         expected: -1,
-        aspirational: true,
         category: "Scope",
-        caption: "$\\cosh(i\\pi) = \\cos\\pi = -1$; stays symbolic",
+        caption: "$\\cosh(i\\pi) = \\cos\\pi = -1$",
       },
       {
         expr: [
@@ -2441,9 +2424,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Tanh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 4]]],
         expected: ["Complex", 0, 1],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\tanh(i\\pi/4) = i\\tan(\\pi/4) = i$; stays symbolic",
+        caption: "$\\tanh(i\\pi/4) = i\\tan(\\pi/4) = i$",
       },
       {
         expr: ["Tanh", ["Negate", "x"]],
@@ -2940,9 +2922,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Ln", "ImaginaryUnit"],
         expected: ["Multiply", ["Complex", 0, ["Rational", 1, 2]], "Pi"],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\ln i = i\\pi/2$ exactly; stays symbolic",
+        caption: "$\\ln i = i\\pi/2$ exactly",
       },
       {
         expr: ["Ln", ["Rational", 1, 2]],
