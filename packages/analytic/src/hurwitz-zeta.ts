@@ -64,6 +64,9 @@ import { declareQSeries } from "./q-series.ts";
 import { declareRiemannSiegel } from "./riemann-siegel.ts";
 import { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
 import { declareGeneralizedSpecial } from "./generalized-special.ts";
+import { declareConstantRounding } from "./constant-rounding.ts";
+import { declareTrigNormalisation } from "./trig-normalisation.ts";
+import { declareElementarySpecialValues } from "./elementary-special-values.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -709,4 +712,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareRiemannSiegel(ce);
   declareIncompleteSymbolic(ce);
   declareGeneralizedSpecial(ce);
+  declareConstantRounding(ce);
+  declareTrigNormalisation(ce);
+  declareElementarySpecialValues(ce);
 }
