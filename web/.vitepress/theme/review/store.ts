@@ -20,7 +20,6 @@ function pickSource(): BacklogSource {
   return isLocalhost() ? fileSource : localStorageSource;
 }
 
-const OPEN_KEY = "review-panel:open";
 const SELECTED_KEY = "review-panel:selected";
 
 function readLocal(key: string): string | null {
@@ -61,9 +60,9 @@ export function createReviewStore(source: BacklogSource = pickSource()) {
   const loaded = ref(false);
   const loadError = ref("");
 
-  const isOpen = ref(readLocal(OPEN_KEY) === "1");
+  // Collapsed on every page load; `/review` and `?review` open it explicitly.
+  const isOpen = ref(false);
   const selectedId = ref<string | null>(readLocal(SELECTED_KEY));
-  watch(isOpen, (v) => writeLocal(OPEN_KEY, v ? "1" : null));
   watch(selectedId, (v) => writeLocal(SELECTED_KEY, v));
 
   const statusFilter = ref<"all" | ItemStatus>("all");
