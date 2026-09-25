@@ -1,0 +1,22 @@
+sow-feeds-the-nearest-reap:
+  epsil:
+    in: Reap(Sow(5))
+    out: "[5, [[5]]]"
+  tex:
+    in: \mathrm{Reap}(\mathrm{Sow}(5))
+    out: \bigl\lbrack5, \bigl\lbrack\bigl\lbrack5\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Reap[Sow[5]]
+  wolfram:
+    in: Reap[Sow[5]]
+sow-outside-any-reap-is-a-no-op:
+  epsil:
+    in: Sow(7)
+    out: "7"
+  tex:
+    in: \mathrm{Sow}(7)
+    out: "7"
+  fullform:
+    in: Sow[7]
+  wolfram:
+    in: Sow[7]

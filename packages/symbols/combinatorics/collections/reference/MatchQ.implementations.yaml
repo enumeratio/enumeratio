@@ -1,0 +1,36 @@
+add-of-two-wildcards-matches-an-add:
+  epsil:
+    in: MatchQ(x + 1, _a + _b)
+    out: True
+  tex:
+    in: \mathrm{MatchQ}(x+1, \operatorname{\_a}+\operatorname{\_b})
+    out: \top
+  traditional:
+    in: \mathrm{MatchQ}(x+1, \operatorname{\_a}+\operatorname{\_b})
+    out: \mathrm{True}
+  fullform:
+    in: MatchQ[Plus[x, 1], Plus[_a, _b]]
+a-product-does-not-match-an-add-pattern:
+  epsil:
+    in: MatchQ(x * y, _a + _b)
+    out: False
+  tex:
+    in: \mathrm{MatchQ}(xy, \operatorname{\_a}+\operatorname{\_b})
+    out: \bot
+  traditional:
+    in: \mathrm{MatchQ}(xy, \operatorname{\_a}+\operatorname{\_b})
+    out: \mathrm{False}
+  fullform:
+    in: MatchQ[Times[x, y], Plus[_a, _b]]
+a-sequence-wildcard-matches-the-rest-of-a-list:
+  epsil:
+    in: MatchQ([1, 2, 3], [_a, __rest])
+    out: True
+  tex:
+    in: \mathrm{MatchQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\operatorname{\_a}, \operatorname{\_\_rest}\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{MatchQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\operatorname{\_a}, \operatorname{\_\_rest}\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: MatchQ[List[1, 2, 3], List[_a, __rest]]

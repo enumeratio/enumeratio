@@ -684,3 +684,110 @@ zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
     in: (zeta(-1, -2))
   sage:
     in: N(hurwitz_zeta(-1, -2))
+zeta-symbolic-s-under-n-stays-symbolic:
+  epsil:
+    in: N(Zeta(s))
+    out: Zeta(s)
+  tex:
+    in: N(\zeta(s))
+    out: \zeta(s)
+  fullform:
+    in: N[Zeta[s]]
+zeta-half-stays-symbolic-until-n:
+  epsil:
+    in: Zeta(1 / 2)
+    out: Zeta(1 / 2)
+  tex:
+    in: \zeta(\frac{1}{2})
+    out: \zeta(\frac{1}{2})
+  fullform:
+    in: Zeta[Rational[1, 2]]
+  wolfram:
+    in: Zeta[Rational[1, 2]]
+  sympy:
+    in: zeta(Rational(1, 2))
+  sage:
+    in: zeta((1/2))
+zeta-complex-argument-stays-symbolic-until-n:
+  epsil:
+    in: Zeta(2 + i)
+    out: Zeta(2 + i)
+  tex:
+    in: \zeta(2+i)
+    out: \zeta(2+i)
+  fullform:
+    in: Zeta[Complex[2, 1]]
+  wolfram:
+    in: Zeta[Complex[2, 1]]
+  sympy:
+    in: zeta((2 + 1*I))
+  mpmath:
+    in: zeta(mpc(2, 1))
+  sage:
+    in: zeta((2 + 1*I))
+n-zeta-complex-2-plus-i:
+  epsil:
+    in: N(Zeta(2 + i))
+    out: 1.150_355_703_254_902_8 + -0.437_530_865_919_607_9 * i
+  tex:
+    in: N(\zeta(2+i))
+    out: 1.150\,355\,703\,254\,902\,8-0.437\,530\,865\,919\,607\,9i
+  fullform:
+    in: N[Zeta[Complex[2, 1]]]
+  wolfram:
+    in: N[Zeta[Complex[2, 1]]]
+  sympy:
+    in: N(zeta((2 + 1*I)), 30)
+  mpmath:
+    in: (zeta(mpc(2, 1)))
+  sage:
+    in: N(zeta((2 + 1*I)))
+zeta-threads-over-mixed-exact-and-inexact-list:
+  epsil:
+    in: Zeta([2, 0.5 + 14i])
+    out: "[1 / 6 * Pi ^ 2, 0.022_241_142_609_993_59 + -0.103_258_123_266_450_06 * i]"
+  tex:
+    in: \zeta(\bigl\lbrack2, 0.5+14i\bigr\rbrack)
+    out: \bigl\lbrack\frac{\pi^2}{6}, 0.022\,241\,142\,609\,993\,59-0.103\,258\,123\,266\,450\,06i\bigr\rbrack
+  fullform:
+    in: Zeta[List[2, Complex[0.5, 14]]]
+  wolfram:
+    in: Zeta[List[2, Complex[0.5, 14]]]
+  sympy:
+    in: zeta([2, (0.5 + 14*I)])
+  sage:
+    in: zeta([2, (0.5 + 14*I)])
+zeta-3-0-drops-pole-term-like-s-2:
+  epsil:
+    in: Zeta(3, 0)
+    out: Zeta(3)
+  tex:
+    in: \zeta(3, 0)
+    out: \zeta(3)
+  fullform:
+    in: Zeta[3, 0]
+  wolfram:
+    in: Zeta[3, 0]
+  sympy:
+    in: zeta(3, 0)
+  mpmath:
+    in: zeta(3, 0)
+  sage:
+    in: hurwitz_zeta(3, 0)
+zeta-2-neg-2-stays-finite-unlike-hurwitzzeta:
+  epsil:
+    in: N(Zeta(2, -2))
+    out: 2.894_934_066_848_226_436_47
+  tex:
+    in: N(\zeta(2, -2))
+    out: 2.894\,934\,066\,848\,226\,436\,47
+  fullform:
+    in: N[Zeta[2, -2]]
+  wolfram:
+    in: N[Zeta[2, -2]]
+  sympy:
+    in: N(zeta(2, -2), 30)
+  mpmath:
+    in: (zeta(2, -2))
+  sage:
+    in: N(hurwitz_zeta(2, -2))

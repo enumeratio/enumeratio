@@ -124,6 +124,15 @@ examples:
     expected: 2718
     category: Applications
     caption: The first four digits of $e$
+  - role: test
+    id: floor-2p7
+    expr: [Floor, 2.7]
+    expected: 2
+  - role: test
+    id: floor-add-x-1-a-free-variable-is-untouched
+    expr: [Floor, [Add, x, 1]]
+    expected: [Floor, [Add, x, 1]]
+    caption: A free variable added to an integer is still untouched
 seeAlso:
   - Ceil
   - Round

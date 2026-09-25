@@ -1,0 +1,18 @@
+a-local-counter:
+  epsil:
+    in: Module([i == 0], i := i + 1)
+    out: "1"
+  tex:
+    in: \mathrm{Module}(\bigl\lbrack i=0\bigr\rbrack, i\coloneq i+1)
+    out: "1"
+  fullform:
+    in: Module[List[Equal[i, 0]], Assign[i, Plus[i, 1]]]
+locals-do-not-leak-or-clobber:
+  epsil:
+    in: "[Module([n == 10], n + 1), Module([n == 20], n + 1)]"
+    out: "[11, 21]"
+  tex:
+    in: \bigl\lbrack\mathrm{Module}(\bigl\lbrack n=10\bigr\rbrack, n+1), \mathrm{Module}(\bigl\lbrack n=20\bigr\rbrack, n+1)\bigr\rbrack
+    out: \bigl\lbrack11, 21\bigr\rbrack
+  fullform:
+    in: List[Module[List[Equal[n, 10]], Plus[n, 1]], Module[List[Equal[n, 20]], Plus[n, 1]]]

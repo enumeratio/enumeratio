@@ -1,0 +1,45 @@
+name: TruncatedDistribution
+domain: Statistics
+signature: TruncatedDistribution({a, b}, dist)
+summary: $dist$ restricted to $[a,b]$ (continuous) or $(a,b]$ (discrete), renormalized.
+signatures:
+  - call: TruncatedDistribution({a, b}, dist)
+    description: restricts dist to [a, b] (continuous) or (a, b] (discrete), renormalized.
+    library: enumeratio-statistics
+details:
+  - $Z = CDF(dist,b) - CDF(dist,a)$; $PDF(x) = PDF(dist,x)/Z$ inside the support, $0$ outside.
+  - A continuous base's support is the CLOSED interval $[a,b]$; a DISCRETE base's support is the right-HALF-OPEN interval $(a,b]$ — Wolfram's own convention (e.g. `TruncatedDistribution[{2,5}, PoissonDistribution[3]]` has support $\{3,4,5\}$, not $\{2,...,5\}$). Both share the same normalizer $Z$, since $CDF(x) = P(X \le x)$ either way.
+  - $CDF(x) = (CDF(dist,x) - CDF(dist,a))/Z$ for $x$ in range, clamped to $0$ below and $1$ above.
+  - "$Mean$ is exact only where the base has a closed-form partial expectation this package knows: [[UniformDistribution]] (trivially — the truncated uniform IS $Uniform(a,b)$), [[NormalDistribution]] (the standard truncated-normal-mean identity), `ExponentialDistribution` (compute-engine native, via the memoryless shift identity). Any other base's $Mean$ stays unevaluated."
+  - Variance is not implemented for this head (out of scope for this batch) — stays unevaluated.
+examples:
+  - id: truncated-uniform-pdf
+    expr:
+      [
+        PDF,
+        [TruncatedDistribution, [List, [Rational, 1, 4], [Rational, 3, 4]], [UniformDistribution, 0, 1]],
+        [Rational, 1, 2],
+      ]
+    expected: 2
+  - id: truncated-uniform-pdf-outside
+    expr:
+      [
+        PDF,
+        [TruncatedDistribution, [List, [Rational, 1, 4], [Rational, 3, 4]], [UniformDistribution, 0, 1]],
+        [Rational, 1, 10],
+      ]
+    expected: 0
+  - id: truncated-uniform-mean
+    expr: [Mean, [TruncatedDistribution, [List, [Rational, 1, 4], [Rational, 3, 4]], [UniformDistribution, 0, 1]]]
+    expected: [Rational, 1, 2]
+  - id: truncated-normal-mean-symmetric
+    expr: [Mean, [TruncatedDistribution, [List, -1, 1], [NormalDistribution, 0, 1]]]
+    expected: 0
+  - id: truncated-discrete-half-open-excludes-lower
+    expr: [PDF, [TruncatedDistribution, [List, 1, 4], [PoissonDistribution, 2]], 1]
+    expected: 0
+seeAlso:
+  - MixtureDistribution
+  - PDF
+  - CDF
+  - Mean

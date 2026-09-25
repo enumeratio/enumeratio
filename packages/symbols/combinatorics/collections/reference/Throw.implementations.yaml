@@ -1,0 +1,18 @@
+throw-aborts-to-the-nearest-catch:
+  epsil:
+    in: Catch(Throw(abandoned))
+    out: abandoned
+  tex:
+    in: \mathrm{Catch}(\mathrm{Throw}(\mathrm{abandoned}))
+    out: \mathrm{abandoned}
+  fullform:
+    in: Catch[Throw[abandoned]]
+a-tag-mismatch-propagates-past-a-catch:
+  epsil:
+    in: Catch(Catch(Throw(deep, x), y), x)
+    out: deep
+  tex:
+    in: \mathrm{Catch}(\mathrm{Catch}(\mathrm{Throw}(\mathrm{deep}, x), y), x)
+    out: \mathrm{deep}
+  fullform:
+    in: Catch[Catch[Throw[deep, x], y], x]

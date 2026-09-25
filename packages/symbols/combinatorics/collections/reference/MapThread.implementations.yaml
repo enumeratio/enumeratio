@@ -1,0 +1,29 @@
+applies-f-across-corresponding-elements:
+  epsil:
+    in: MapThread(f, [[a, b], [c, d]])
+    out: "[f(a, c), f(b, d)]"
+  tex:
+    in: \mathrm{MapThread}(f, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack f(a, c), f(b, d)\bigr\rbrack
+  fullform:
+    in: MapThread[f, List[List[a, b], List[c, d]]]
+add-rows-agrees-with-add-computed-pairwise:
+  epsil:
+    in: MapThread(Add, [[1, 2, 3], [10, 20, 30]])
+    out: "[11, 22, 33]"
+  tex:
+    in: \mathrm{MapThread}(\mathrm{Add}, \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack10, 20, 30\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack11, 22, 33\bigr\rbrack
+  fullform:
+    in: MapThread[Plus, List[List[1, 2, 3], List[10, 20, 30]]]
+  wolfram:
+    in: MapThread[Plus, List[List[1, 2, 3], List[10, 20, 30]]]
+rejects-ragged-rows:
+  epsil:
+    in: MapThread(f, [[1, 2], [3]])
+    out: MapThread(f, [[1, 2], [3]])
+  tex:
+    in: \mathrm{MapThread}(f, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)
+    out: \mathrm{MapThread}(f, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)
+  fullform:
+    in: MapThread[f, List[List[1, 2], List[3]]]

@@ -1,0 +1,11 @@
+adds-attributes:
+  epsil:
+    in: Attributes(Add)
+    out: "[Flat, HoldAll, Listable, Orderless]"
+  tex:
+    in: \mathrm{Attributes}(\mathrm{Add})
+    out: \bigl\lbrack\mathrm{Flat}, \mathrm{HoldAll}, \mathrm{Listable}, \mathrm{Orderless}\bigr\rbrack
+  fullform:
+    in: Attributes[Plus]
+  wolfram:
+    in: Attributes[Plus]

@@ -1,0 +1,20 @@
+name: Attributes
+domain: Collections
+signature: Attributes(f)
+summary: The Wolfram-named properties compute-engine tracks for a head's operator.
+signatures:
+  - call: Attributes(f)
+    description: The subset of $\{Flat, HoldAll, Listable, Orderless\}$ $f$'s operator definition carries, alphabetically.
+    library: enumeratio-collections
+details:
+  - "Maps compute-engine's own operator flags to the closest genuine Wolfram attribute name, and no further: $associative \\to Flat$, $lazy \\to HoldAll$, $broadcastable \\to Listable$, $commutative \\to Orderless$."
+  - "Compute-engine's `idempotent` and `involution` flags are deliberately excluded: real algebraic properties it tracks for pattern matching, but not Wolfram `Attributes` names — Wolfram has no such entries, so reporting them would claim a fact that doesn't exist."
+  - '`HoldAll` for `lazy` is an approximation: compute-engine''s `lazy` means "operands arrive unevaluated", the effect of Wolfram''s `HoldAll` without distinguishing it from `HoldFirst`/`HoldRest`/`HoldAllComplete`.'
+  - An undeclared or non-operator symbol reads as no attributes.
+examples:
+  - id: adds-attributes
+    expr: [Attributes, Add]
+    expected: [List, Flat, HoldAll, Listable, Orderless]
+    caption: Add is Flat, HoldAll, Listable and Orderless on this engine
+seeAlso:
+  - SetAttributes

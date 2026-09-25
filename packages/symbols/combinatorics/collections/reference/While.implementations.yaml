@@ -1,0 +1,9 @@
+count-up-to-a-limit:
+  epsil:
+    in: "[n := 0, While(n < 5, n := n + 1), n]"
+    out: "[0, 5]"
+  tex:
+    in: \bigl\lbrack n\coloneq0, \mathrm{While}(n\lt5, n\coloneq n+1), n\bigr\rbrack
+    out: \bigl\lbrack0, 5\bigr\rbrack
+  fullform:
+    in: List[Assign[n, 0], While[Less[n, 5], Assign[n, Plus[n, 1]]], n]
