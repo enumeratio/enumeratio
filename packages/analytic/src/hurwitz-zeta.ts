@@ -16,6 +16,7 @@ import { add, cexp, clog, cosPi, cpow, cx, type Cx, mul, scale, sinPi } from "./
 import { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "./bigzeta.ts";
 import { logGamma } from "./loggamma.ts";
 import { lerchPhi } from "./lerch.ts";
+import { lerchContinued } from "./lerch-continuation.ts";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
@@ -464,9 +465,22 @@ function evaluateLerch(
   if (isRealInt(s) && s.re === 0) {
     return finish(box(["Divide", 1, ["Subtract", 1, z.json as unknown as Json]]));
   }
-  // Past |z| = 1 the series needs a continuation we don't have: stay unevaluated. (The
-  // kernel's NaN used to come back as ComplexInfinity — a pole that isn't there.)
-  if (numeric && isFiniteNum(z) && Math.hypot(z.re, z.im) > 1) return undefined;
+  // Past |z| = 1 the series stops converging: continue by the integral representation
+  // (lerch-continuation.ts), with compute-engine's own upper incomplete Γ. Where that can't
+  // be trusted to double precision, stay unevaluated rather than guess.
+  if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a) && Math.hypot(z.re, z.im) > 1) {
+    const upperGamma = (sigma: Cx, x: Cx): Cx | undefined => {
+      const v = ce.box(["Gamma", ["Complex", sigma.re, sigma.im], ["Complex", x.re, x.im]]).N();
+      return isFiniteNum(v) ? { re: v.re, im: v.im } : undefined;
+    };
+    const continued = lerchContinued(
+      { re: z.re, im: z.im },
+      { re: s.re, im: s.im },
+      { re: a.re, im: a.im },
+      upperGamma,
+    );
+    return continued === undefined ? undefined : numberResult(ce, continued);
+  }
   if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a)) {
     return numberResult(
       ce,
