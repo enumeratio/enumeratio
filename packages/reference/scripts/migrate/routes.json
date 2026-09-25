@@ -379,6 +379,11 @@
     "why": "override; changed by @enumeratio/analytic, @enumeratio/collections",
     "dir": "packages/reference"
   },
+  "arithmetic/N": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
   "arithmetic/Round": {
     "package": "@enumeratio/analytic",
     "why": "override; only it changes the answers",

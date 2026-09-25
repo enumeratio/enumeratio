@@ -18,7 +18,9 @@ import { evaluateCongruentMod } from "./congruent-mod.ts";
 import { evaluateHarmonicNumber } from "./harmonic.ts";
 import { evaluateLegendreP } from "./legendre.ts";
 import { logGamma } from "./loggamma.ts";
-import { atEnginePrecision } from "./precise.ts";
+import { atEnginePrecision, bigRealOperand, bigResult } from "./precise.ts";
+import { barnesGBig } from "./barnes-g-big.ts";
+import { stieltjesGammaBig } from "./stieltjes-big.ts";
 import { evaluateRisingFactorial } from "./rising-factorial.ts";
 import { evaluateFallingFactorial } from "./falling-factorial.ts";
 import { evaluateXGCD } from "./xgcd.ts";
@@ -97,6 +99,14 @@ function evaluateBarnesG(ce: ComputeEngine, z: BoxedExpression, numeric: boolean
   if (isRealInt(z)) {
     const g = bigint(superfactorial(z.re));
     return finish(box(ce, log ? ["Ln", g] : g), numeric);
+  }
+  if (numeric) {
+    // A real z past a double's digits: the arbitrary-precision kernel (barnes-g-big.ts). Its
+    // logarithm only for z > 0: on the negative axis Wolfram's LogBarnesG continuation carries
+    // an imaginary part of 2πk that ln G alone does not.
+    const x = bigRealOperand(ce, z);
+    const g = x === undefined || (log && !x.isPositive()) ? undefined : barnesGBig(x, ce.precision);
+    if (g !== undefined) return bigResult(ce, log ? g.ln() : g);
   }
   if (numeric && isFiniteNum(z)) {
     const v = cx(z.re, z.im);
@@ -230,6 +240,12 @@ function evaluateStieltjes(
     }
   }
   if (n.re > STIELTJES_MAX_ORDER) return undefined;
+  if (numeric) {
+    // A real a past a double's digits: the arbitrary-precision kernel (stieltjes-big.ts).
+    const x = bigRealOperand(ce, a ?? ce.One);
+    const g = x === undefined ? undefined : stieltjesGammaBig(n.re, x, ce.precision);
+    if (g !== undefined) return bigResult(ce, g);
+  }
   const av = a === undefined ? cx(1) : cx(a.re, a.im);
   if (numeric && Number.isFinite(av.re) && Number.isFinite(av.im)) {
     return numberResult(ce, stieltjesGamma(n.re, av));

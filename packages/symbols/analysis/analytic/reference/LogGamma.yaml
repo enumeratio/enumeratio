@@ -98,9 +98,8 @@ examples:
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [LogGamma, [Rational, 1, 3]], 30]
     expected: {num: '0.985420646927767069187174036978'}
-    aspirational: true
     category: Scope
-    caption: To 30 significant digits; not yet -- the last digit is not correctly rounded
+    caption: To 30 significant digits, the last one correctly rounded
 implementations:
   - origin: reference
     form: notatio

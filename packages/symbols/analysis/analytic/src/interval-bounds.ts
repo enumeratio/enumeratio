@@ -20,11 +20,10 @@ import { operandsOf } from "@enumeratio/boxed";
 // How far depends on the digits it was computed from. `N()` evaluates at compute-engine's
 // working precision (21 digits by default), and for every head that honours it the result is
 // good to far better than a double's half-ulp -- so rounding it to a double and stepping ONE
-// ulp outward is a true bound. A head whose `N()` ignores the precision and hands back a
-// double (`BarnesG`, `PolyLog`, `LerchPhi`, `StieltjesGamma` -- the heads pinned as aspirational
-// in the reference's `N(x, d)` examples) is only as good as its own double evaluation, so it
-// steps `DOUBLE_SOURCE_ULPS` outward instead: a margin, not a proof, which is why those heads
-// are listed as not rigorous (see interval.ts).
+// ulp outward is a true bound. A value that comes back as a bare double -- a head evaluated on
+// a double kernel, as every complex result is (compute-engine holds a complex number as two
+// doubles) -- is only as good as that kernel, so it steps `DOUBLE_SOURCE_ULPS` outward
+// instead: a margin, not a proof.
 
 /** Outward steps for a bound computed as a bare double rather than at working precision. */
 const DOUBLE_SOURCE_ULPS = 8;

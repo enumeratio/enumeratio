@@ -63,6 +63,16 @@ examples:
     expected: [PowerMod, 2, -1, 4]
     category: Possible issues
     caption: No inverse exists when $\gcd(a,m)\neq1$ (here $\gcd(2,4)=2$), so the call is left unevaluated
+  - id: exponent-0-evaluates-even-at-a-negative-modulus
+    expr: [PowerMod, -2, 0, -14]
+    expected: -13
+    category: Scope
+    caption: $a^0 = 1$ regardless of $a$ or $m$'s sign, so this is $\mathrm{Mod}(1, -14)$ even though $m<0$
+  - id: a-nonzero-exponent-at-the-same-negative-modulus
+    expr: [PowerMod, -2, 3, -14]
+    expected: [PowerMod, -2, 3, -14]
+    category: Possible issues
+    caption: A nonzero exponent with a negative modulus still declines, as in Wolfram, unlike the exponent-0 case above
   - id: a-rational-exponent-is-a-modular-root-the-least
     expr: [PowerMod, 4, [Rational, 1, 2], 7]
     expected: 2

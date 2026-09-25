@@ -113,10 +113,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 27,
   },
   {
-    head: "Cycles",
-    uses: 26,
-  },
-  {
     head: "Assuming",
     uses: 25,
   },
@@ -135,10 +131,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "PiecewiseExpand",
     uses: 23,
-  },
-  {
-    head: "Permute",
-    uses: 22,
   },
   {
     head: "ToString",
@@ -174,10 +166,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "MeijerGReduce",
-    uses: 17,
-  },
-  {
-    head: "PermutationGroup",
     uses: 17,
   },
   {
@@ -509,10 +497,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "GroupGenerators",
-    uses: 5,
-  },
-  {
     head: "HistogramDistribution",
     uses: 5,
   },
@@ -794,10 +778,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InverseJacobiCS",
-    uses: 3,
-  },
-  {
-    head: "InversePermutation",
     uses: 3,
   },
   {
@@ -1420,13 +1400,6 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "GammaRegularized[2, {{7/2, 0}, {0, 13/2}}]",
     "GammaRegularized[1, {-Infinity, Infinity}]",
   ],
-  GroupElements: [
-    "GroupElements[PermutationGroup[{Cycles[{{1, 9, 6}, {3, 7}}]}]]",
-    "GroupElements[PermutationGroup[{Cycles[{{1, 9, 6}, {3, 7}}]}], {1, 2, 3}]",
-    "GroupElements[PermutationGroup[{Cycles[{{1, 9, 6}, {3, 7}}]}], {-1}]",
-    "GroupElements[group, Range[10]]",
-  ],
-  GroupOrder: ["GroupOrder[DihedralGroup[100]]"],
   HarmonicNumber: [
     "HarmonicNumber[0.8, 3]",
     "HarmonicNumber[E, 1.]",
@@ -1753,14 +1726,6 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "Partition[{a, b, c, d, e, f}, 3, 1, {-1, -1}, pad]",
     "Partition[{a, b, c, d, e, f}, 3, 1, {-1, 1}, pad]",
     "Partition[{a, b, c, d, e, f}, 4, 1, {-1, 1}, {pad, dap}]",
-  ],
-  PermutationCycles: [
-    "PermutationCycles[{2, 5, 3, 6, 1, 8, 7, 9, 4, 10}]",
-    "PermutationCycles[{1, 2, 3, 4, 5}]",
-    "PermutationCycles[{6, 3, 2, 5, 4, 1}]",
-    "PermutationCycles[{2, 5, 3, 6, 1, 8, 7, 9, 4, 10}, head]",
-    "PermutationCycles[{1, 2, 3, 4, 5}, Identity]",
-    "PermutationCycles[Cycles[{{1, 3, 5}, {2, 4, 6}}]]",
   ],
   Pochhammer: [
     "Pochhammer[10, 6]",
