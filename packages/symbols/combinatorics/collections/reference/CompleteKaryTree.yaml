@@ -1,0 +1,33 @@
+name: CompleteKaryTree
+domain: Collections
+signature: CompleteKaryTree(levels, k)
+summary: The full (perfect) $k$-ary tree of the given depth — every level completely filled.
+signatures:
+  - call: CompleteKaryTree(levels)
+    description: binary ($k = 2$); `levels` is a LEVEL count, not a vertex count.
+    library: enumeratio-collections
+  - call: CompleteKaryTree(levels, k)
+    description: $n = (k^{\text{levels}} - 1) / (k - 1)$ vertices, 1-indexed heap layout — vertex $i$'s children are $k(i-1)+2, \dots, k(i-1)+k+1$.
+    library: enumeratio-collections
+    arity: 2
+details:
+  - "`levels` counts LEVELS, not vertices (kernel-verified): `CompleteKaryTree(1, 2)` is a single vertex, `CompleteKaryTree(3, 2)` has 7."
+examples:
+  - id: a-3-level-binary-tree-has-7-vertices
+    expr: [VertexCount, [CompleteKaryTree, 3, 2]]
+    expected: 7
+    caption: 1 + 2 + 4 = 7
+  - id: a-single-level-tree-is-one-vertex
+    expr: [VertexCount, [CompleteKaryTree, 1, 2]]
+    expected: 1
+  - id: a-3-level-binary-tree-is-a-tree
+    expr: [IsTreeGraph, [CompleteKaryTree, 3, 2]]
+    expected: True
+    caption: A complete k-ary tree is always a tree ($n - 1$ edges, connected)
+  - id: root-degree-of-a-ternary-tree
+    expr: [VertexDegree, [CompleteKaryTree, 3, 3], 1]
+    expected: 3
+    caption: The root of a 3-level ternary tree has 3 children
+seeAlso:
+  - StarGraph
+  - IsTreeGraph

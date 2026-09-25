@@ -26,6 +26,7 @@ import { declareHugeArguments } from "./huge-arguments.ts";
 import { declareHyperbolicExact } from "./hyperbolic-exact.ts";
 import { declareSimplifyIdentities } from "./simplify-identities.ts";
 import { declareTrigInfinity } from "./trig-infinity.ts";
+import { declareTrigPowerIntegrals } from "./trig-power-integrals.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
 import { evaluatePolyLog } from "./polylog.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "./precise.ts";
@@ -783,6 +784,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareSimplifyIdentities(ce);
   declareTrigInfinity(ce);
   declareDobinski(ce);
+  declareTrigPowerIntegrals(ce);
   declareHugeArguments(ce);
   declareCorrectlyRoundedN(ce);
 }

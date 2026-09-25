@@ -1,0 +1,16 @@
+name: StarGraph
+domain: Collections
+signature: StarGraph(n)
+summary: The star graph on $n$ vertices — one centre joined to $n - 1$ leaves.
+signatures:
+  - call: StarGraph(n)
+    description: vertex 1 is the centre, joined to vertices $2, \dots, n$.
+    library: enumeratio-collections
+examples:
+  - id: centre-degree-of-a-6-vertex-star
+    expr: [VertexDegree, [StarGraph, 6], 1]
+    expected: 5
+    caption: The centre of a 6-vertex star has degree 5
+seeAlso:
+  - PathGraph
+  - CompleteKaryTree
