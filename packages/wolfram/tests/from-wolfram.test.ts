@@ -23,6 +23,15 @@ test("symbols, with the reverse of the SYMBOLS map", () => {
   expect(fromWolfram("Indeterminate")).toBe("NaN");
 });
 
+test("True/False round-trip as MathJSON symbol strings, not JS booleans", () => {
+  expect(fromWolfram("True")).toBe("True");
+  expect(fromWolfram("False")).toBe("False");
+  // An option value, as this codebase writes truth values elsewhere (see
+  // number-theory's GaussianIntegers option, e.g. IsPrime(5, GaussianIntegers -> True)).
+  const expr: MathJson = ["IsPrime", 5, ["KeyValuePair", "GaussianIntegers", "True"]];
+  expect(fromWolfram(toWolfram(expr))).toEqual(expr);
+});
+
 test("FullForm's DirectedInfinity spellings", () => {
   expect(fromWolfram("DirectedInfinity[1]")).toBe("PositiveInfinity");
   expect(fromWolfram("DirectedInfinity[-1]")).toBe("NegativeInfinity");
