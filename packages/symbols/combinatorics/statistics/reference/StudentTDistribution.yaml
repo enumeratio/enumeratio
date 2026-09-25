@@ -15,12 +15,7 @@ details:
 examples:
   - id: studentt-pdf-exact
     expr: [PDF, [StudentTDistribution, 5], 0]
-    expected:
-      [
-        Divide,
-        [Multiply, [Sqrt, 5], [Gamma, 3]],
-        [Multiply, 5, [Gamma, [Rational, 5, 2]], [Sqrt, Pi]],
-      ]
+    expected: [Divide, [Multiply, [Sqrt, 5], [Gamma, 3]], [Multiply, 5, [Gamma, [Rational, 5, 2]], [Sqrt, Pi]]]
   - id: studentt-mean-exact
     expr: [Mean, [StudentTDistribution, 5]]
     expected: 0

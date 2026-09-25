@@ -30,8 +30,7 @@ import { finish, gammaSample, list2, normal01, numAt, uniform01 } from "./distri
 const If = (ce: ComputeEngine, cond: BoxedExpression, a: BoxedExpression, b: BoxedExpression) =>
   ce.function("If", [cond, a, b]);
 
-const lt = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) =>
-  ce.function("Less", [a, b]);
+const lt = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Less", [a, b]);
 
 /** Clamp a CDF branch to 0 below `lower` — the same pre-`finish`-the-branch idiom
  *  `distributions.ts`'s Beta/Gamma CDF use: `If` is lazy, so the in-range branch has to
@@ -46,12 +45,9 @@ const clampBelow = (
 
 const mul = (ce: ComputeEngine, ...xs: BoxedExpression[]) => ce.function("Multiply", xs);
 const add = (ce: ComputeEngine, ...xs: BoxedExpression[]) => ce.function("Add", xs);
-const sub = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) =>
-  ce.function("Subtract", [a, b]);
-const div = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) =>
-  ce.function("Divide", [a, b]);
-const pow = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) =>
-  ce.function("Power", [a, b]);
+const sub = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Subtract", [a, b]);
+const div = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Divide", [a, b]);
+const pow = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Power", [a, b]);
 const neg = (ce: ComputeEngine, a: BoxedExpression) => ce.function("Negate", [a]);
 const exp = (ce: ComputeEngine, a: BoxedExpression) => ce.function("Exp", [a]);
 
@@ -71,9 +67,7 @@ const two = (dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefi
   const ops = operandsOf(dist);
   return ops.length === 2 ? [ops[0], ops[1]] : undefined;
 };
-const three = (
-  dist: BoxedExpression,
-): [BoxedExpression, BoxedExpression, BoxedExpression] | undefined => {
+const three = (dist: BoxedExpression): [BoxedExpression, BoxedExpression, BoxedExpression] | undefined => {
   const ops = operandsOf(dist);
   return ops.length === 3 ? [ops[0], ops[1], ops[2]] : undefined;
 };
@@ -176,10 +170,7 @@ const pdfOf2 = (
       const [mu, sigma] = params;
       // PDF(x) = PDF(NormalDistribution(mu,sigma), Log(x)) / x — delegates to compute-engine's
       // native Normal PDF instead of writing out the Gaussian by hand.
-      const normalPdf = ce.function("PDF", [
-        ce.function("NormalDistribution", [mu, sigma]),
-        ce.function("Log", [x]),
-      ]);
+      const normalPdf = ce.function("PDF", [ce.function("NormalDistribution", [mu, sigma]), ce.function("Log", [x])]);
       return finish(div(ce, normalPdf, x), options);
     }
     case "NegativeBinomialDistribution": {
@@ -199,11 +190,7 @@ const pdfOf2 = (
       if (params === undefined) return undefined;
       const [a, b] = params;
       const z = div(ce, sub(ce, x, a), b);
-      const expr = div(
-        ce,
-        ce.One,
-        mul(ce, ce.symbol("Pi"), b, add(ce, ce.One, pow(ce, z, ce.number(2)))),
-      );
+      const expr = div(ce, ce.One, mul(ce, ce.symbol("Pi"), b, add(ce, ce.One, pow(ce, z, ce.number(2)))));
       return finish(expr, options);
     }
     case "StudentTDistribution": {
@@ -213,11 +200,7 @@ const pdfOf2 = (
       const coeff = div(
         ce,
         ce.function("Gamma", [div(ce, add(ce, nu, ce.One), ce.number(2))]),
-        mul(
-          ce,
-          ce.function("Sqrt", [mul(ce, nu, ce.symbol("Pi"))]),
-          ce.function("Gamma", [div(ce, nu, ce.number(2))]),
-        ),
+        mul(ce, ce.function("Sqrt", [mul(ce, nu, ce.symbol("Pi"))]), ce.function("Gamma", [div(ce, nu, ce.number(2))])),
       );
       const base = add(ce, ce.One, div(ce, pow(ce, x, ce.number(2)), nu));
       const expo = neg(ce, div(ce, add(ce, nu, ce.One), ce.number(2)));
@@ -253,11 +236,7 @@ const pdfOf2 = (
       const [n, nsucc, ntot] = params;
       const expr = div(
         ce,
-        mul(
-          ce,
-          ce.function("Binomial", [nsucc, x]),
-          ce.function("Binomial", [sub(ce, ntot, nsucc), sub(ce, n, x)]),
-        ),
+        mul(ce, ce.function("Binomial", [nsucc, x]), ce.function("Binomial", [sub(ce, ntot, nsucc), sub(ce, n, x)])),
         ce.function("Binomial", [ntot, n]),
       );
       return finish(expr, options);
@@ -295,12 +274,7 @@ const pdfOf2 = (
       const [n, lambda] = params;
       const expr = div(
         ce,
-        mul(
-          ce,
-          pow(ce, lambda, n),
-          pow(ce, x, sub(ce, n, ce.One)),
-          exp(ce, neg(ce, mul(ce, lambda, x))),
-        ),
+        mul(ce, pow(ce, lambda, n), pow(ce, x, sub(ce, n, ce.One)), exp(ce, neg(ce, mul(ce, lambda, x)))),
         ce.function("Gamma", [n]),
       );
       return finish(expr, options);
@@ -329,13 +303,7 @@ const pdfOf2 = (
         ce,
         ce.function("Sqrt", [div(ce, ce.number(2), ce.symbol("Pi"))]),
         theta,
-        exp(
-          ce,
-          neg(
-            ce,
-            div(ce, mul(ce, pow(ce, x, ce.number(2)), pow(ce, theta, ce.number(2))), ce.number(2)),
-          ),
-        ),
+        exp(ce, neg(ce, div(ce, mul(ce, pow(ce, x, ce.number(2)), pow(ce, theta, ce.number(2))), ce.number(2)))),
       );
       return finish(expr, options);
     }
@@ -407,11 +375,7 @@ const cdfOf2 = (
         options,
       );
       const falling = finish(
-        sub(
-          ce,
-          ce.One,
-          div(ce, pow(ce, sub(ce, b, x), ce.number(2)), mul(ce, sub(ce, b, a), sub(ce, b, c))),
-        ),
+        sub(ce, ce.One, div(ce, pow(ce, sub(ce, b, x), ce.number(2)), mul(ce, sub(ce, b, a), sub(ce, b, c)))),
         options,
       );
       return finish(If(ce, lt(ce, x, c), rising, falling), options);
@@ -428,10 +392,7 @@ const cdfOf2 = (
       if (params === undefined) return undefined;
       const [mu, sigma] = params;
       // Delegates to native Normal CDF, same trick as the PDF above.
-      const expr = ce.function("CDF", [
-        ce.function("NormalDistribution", [mu, sigma]),
-        ce.function("Log", [x]),
-      ]);
+      const expr = ce.function("CDF", [ce.function("NormalDistribution", [mu, sigma]), ce.function("Log", [x])]);
       return finish(expr, options);
     }
     case "NegativeBinomialDistribution": {
@@ -469,13 +430,7 @@ const cdfOf2 = (
       const inRange = sub(
         ce,
         ce.One,
-        exp(
-          ce,
-          neg(
-            ce,
-            div(ce, pow(ce, x, ce.number(2)), mul(ce, ce.number(2), pow(ce, sigma, ce.number(2)))),
-          ),
-        ),
+        exp(ce, neg(ce, div(ce, pow(ce, x, ce.number(2)), mul(ce, ce.number(2), pow(ce, sigma, ce.number(2)))))),
       );
       return clampBelow(ce, x, ce.Zero, inRange, options);
     }
@@ -490,11 +445,7 @@ const cdfOf2 = (
       const params = two(dist);
       if (params === undefined) return undefined;
       const [mu, beta] = params;
-      const expr = div(
-        ce,
-        ce.One,
-        add(ce, ce.One, exp(ce, neg(ce, div(ce, sub(ce, x, mu), beta)))),
-      );
+      const expr = div(ce, ce.One, add(ce, ce.One, exp(ce, neg(ce, div(ce, sub(ce, x, mu), beta)))));
       return finish(expr, options);
     }
     case "ErlangDistribution": {
@@ -508,20 +459,14 @@ const cdfOf2 = (
       const params = one(dist);
       if (params === undefined) return undefined;
       const [k] = params;
-      const inRange = gammaP(
-        ce,
-        div(ce, k, ce.number(2)),
-        div(ce, pow(ce, x, ce.number(2)), ce.number(2)),
-      );
+      const inRange = gammaP(ce, div(ce, k, ce.number(2)), div(ce, pow(ce, x, ce.number(2)), ce.number(2)));
       return clampBelow(ce, x, ce.Zero, inRange, options);
     }
     case "HalfNormalDistribution": {
       const params = one(dist);
       if (params === undefined) return undefined;
       const [theta] = params;
-      const inRange = ce.function("Erf", [
-        div(ce, mul(ce, x, theta), ce.function("Sqrt", [ce.number(2)])),
-      ]);
+      const inRange = ce.function("Erf", [div(ce, mul(ce, x, theta), ce.function("Sqrt", [ce.number(2)]))]);
       return clampBelow(ce, x, ce.Zero, inRange, options);
     }
     case "MaxwellDistribution": {
@@ -586,10 +531,7 @@ const meanOf2 = (
       const params = two(dist);
       if (params === undefined) return undefined;
       const [mu, sigma] = params;
-      return finish(
-        exp(ce, add(ce, mu, div(ce, pow(ce, sigma, ce.number(2)), ce.number(2)))),
-        options,
-      );
+      return finish(exp(ce, add(ce, mu, div(ce, pow(ce, sigma, ce.number(2)), ce.number(2)))), options);
     }
     case "NegativeBinomialDistribution": {
       const params = two(dist);
@@ -608,10 +550,7 @@ const meanOf2 = (
       const params = two(dist);
       if (params === undefined) return undefined;
       const [alpha, beta] = params;
-      return finish(
-        mul(ce, beta, ce.function("Gamma", [add(ce, ce.One, div(ce, ce.One, alpha))])),
-        options,
-      );
+      return finish(mul(ce, beta, ce.function("Gamma", [add(ce, ce.One, div(ce, ce.One, alpha))])), options);
     }
     case "LaplaceDistribution": {
       const params = two(dist);
@@ -628,10 +567,7 @@ const meanOf2 = (
       const params = one(dist);
       if (params === undefined) return undefined;
       const [sigma] = params;
-      return finish(
-        mul(ce, sigma, ce.function("Sqrt", [div(ce, ce.symbol("Pi"), ce.number(2))])),
-        options,
-      );
+      return finish(mul(ce, sigma, ce.function("Sqrt", [div(ce, ce.symbol("Pi"), ce.number(2))])), options);
     }
     case "ParetoDistribution": {
       const params = two(dist);
@@ -671,10 +607,7 @@ const meanOf2 = (
       const params = one(dist);
       if (params === undefined) return undefined;
       const [theta] = params;
-      return finish(
-        div(ce, ce.function("Sqrt", [div(ce, ce.number(2), ce.symbol("Pi"))]), theta),
-        options,
-      );
+      return finish(div(ce, ce.function("Sqrt", [div(ce, ce.number(2), ce.symbol("Pi"))]), theta), options);
     }
     case "MaxwellDistribution": {
       const params = one(dist);
@@ -738,11 +671,7 @@ const varianceOf2 = (
       if (params === undefined) return undefined;
       const [mu, sigma] = params;
       const s2 = pow(ce, sigma, ce.number(2));
-      const expr = mul(
-        ce,
-        sub(ce, exp(ce, s2), ce.One),
-        exp(ce, add(ce, mul(ce, ce.number(2), mu), s2)),
-      );
+      const expr = mul(ce, sub(ce, exp(ce, s2), ce.One), exp(ce, add(ce, mul(ce, ce.number(2), mu), s2)));
       return finish(expr, options);
     }
     case "NegativeBinomialDistribution": {
@@ -780,24 +709,14 @@ const varianceOf2 = (
       if (params === undefined) return undefined;
       const [n, nsucc, ntot] = params;
       const frac = div(ce, nsucc, ntot);
-      const expr = mul(
-        ce,
-        n,
-        frac,
-        sub(ce, ce.One, frac),
-        div(ce, sub(ce, ntot, n), sub(ce, ntot, ce.One)),
-      );
+      const expr = mul(ce, n, frac, sub(ce, ce.One, frac), div(ce, sub(ce, ntot, n), sub(ce, ntot, ce.One)));
       return finish(expr, options);
     }
     case "RayleighDistribution": {
       const params = one(dist);
       if (params === undefined) return undefined;
       const [sigma] = params;
-      const expr = mul(
-        ce,
-        div(ce, sub(ce, ce.number(4), ce.symbol("Pi")), ce.number(2)),
-        pow(ce, sigma, ce.number(2)),
-      );
+      const expr = mul(ce, div(ce, sub(ce, ce.number(4), ce.symbol("Pi")), ce.number(2)), pow(ce, sigma, ce.number(2)));
       return finish(expr, options);
     }
     case "ParetoDistribution": {
@@ -816,11 +735,7 @@ const varianceOf2 = (
       const params = two(dist);
       if (params === undefined) return undefined;
       const [, beta] = params;
-      const expr = mul(
-        ce,
-        pow(ce, beta, ce.number(2)),
-        div(ce, pow(ce, ce.symbol("Pi"), ce.number(2)), ce.number(3)),
-      );
+      const expr = mul(ce, pow(ce, beta, ce.number(2)), div(ce, pow(ce, ce.symbol("Pi"), ce.number(2)), ce.number(3)));
       return finish(expr, options);
     }
     case "ErlangDistribution": {
@@ -888,8 +803,7 @@ const KINDS2 = new Set([
   "MaxwellDistribution",
 ]);
 
-const geometricSample = (ce: ComputeEngine, p: number): number =>
-  Math.floor(Math.log(uniform01(ce)) / Math.log(1 - p));
+const geometricSample = (ce: ComputeEngine, p: number): number => Math.floor(Math.log(uniform01(ce)) / Math.log(1 - p));
 
 const drawOne2 = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | undefined => {
   switch (dist.operator) {
@@ -919,9 +833,7 @@ const drawOne2 = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | u
       const c = numAt(params.c);
       const u = uniform01(ce);
       const fc = (c - a) / (b - a);
-      return ce.number(
-        u < fc ? a + Math.sqrt(u * (b - a) * (c - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - c)),
-      );
+      return ce.number(u < fc ? a + Math.sqrt(u * (b - a) * (c - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - c)));
     }
     case "ChiSquareDistribution": {
       const params = one(dist);
@@ -1058,8 +970,7 @@ function declareConstructors2(ce: ComputeEngine): void {
     // Wolfram's `CauchyDistribution[]` (no args) is the standard Cauchy(0, 1) — same
     // zero-argument default idiom as `distributions.ts`'s `extendUniformDistribution`.
     const definition = ce.lookupDefinition("CauchyDistribution");
-    const operator =
-      definition !== undefined && "operator" in definition ? definition.operator : undefined;
+    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
     if (operator !== undefined) {
       (operator as { canonical?: unknown }).canonical = (ops: readonly BoxedExpression[]) =>
         ops.length === 0 ? ce.function("CauchyDistribution", [ce.Zero, ce.One]) : undefined;
@@ -1117,8 +1028,7 @@ function extendStats2(ce: ComputeEngine): void {
     (ops) => KINDS2.has(ops[0]?.operator ?? ""),
     (native) => (ops, options) => {
       const dist = ops[0];
-      if (ops.length === 1 || ops[1] === undefined)
-        return drawOne2(ce, dist) ?? native?.(ops, options);
+      if (ops.length === 1 || ops[1] === undefined) return drawOne2(ce, dist) ?? native?.(ops, options);
       const n = integerAt(ops[1]);
       if (n === undefined || n < 0) return native?.(ops, options);
       const draws: BoxedExpression[] = [];
@@ -1153,8 +1063,7 @@ const hazardOf = (
   dist: BoxedExpression,
   x: BoxedExpression,
   options: EvaluateOptions,
-): BoxedExpression =>
-  finish(div(ce, ce.function("PDF", [dist, x]), survivalOf(ce, dist, x, options)), options);
+): BoxedExpression => finish(div(ce, ce.function("PDF", [dist, x]), survivalOf(ce, dist, x, options)), options);
 
 /** Raw moment `E[X^r]` — exact for r = 0, 1, 2 via Mean/Variance (`E[X^2] = Var + Mean^2`);
  *  r >= 3 needs a distribution-specific formula this generic layer doesn't have, so it stays
@@ -1228,11 +1137,7 @@ const cumulantOf = (
  *  Wolfram, which answers several of these symbolically — so this is honest about being an
  *  approximation, not a second (unexercised) code path pretending to be exact. Generic over
  *  every distribution this engine's `CDF` can evaluate numerically, old or new. */
-const inverseCdfNumeric = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  q: number,
-): number | undefined => {
+const inverseCdfNumeric = (ce: ComputeEngine, dist: BoxedExpression, q: number): number | undefined => {
   if (!(q > 0 && q < 1)) return undefined;
   const cdfAt = (v: number): number | undefined => {
     const result = ce.function("CDF", [dist, ce.number(v)]).N();

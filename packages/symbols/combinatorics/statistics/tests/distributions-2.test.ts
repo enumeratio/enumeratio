@@ -74,15 +74,13 @@ describe("InverseCDF: CDF(InverseCDF(dist, q)) = q", () => {
 describe("discrete PDFs sum to 1 over their (finite or truncated) support", () => {
   test("DiscreteUniformDistribution({1, 6})", () => {
     let total = 0;
-    for (let k = 1; k <= 6; k++)
-      total += N(["PDF", ["DiscreteUniformDistribution", ["List", 1, 6]], k]);
+    for (let k = 1; k <= 6; k++) total += N(["PDF", ["DiscreteUniformDistribution", ["List", 1, 6]], k]);
     expect(total).toBeCloseTo(1, 10);
   });
 
   test("HypergeometricDistribution(20, 50, 100)", () => {
     let total = 0;
-    for (let k = 0; k <= 20; k++)
-      total += N(["PDF", ["HypergeometricDistribution", 20, 50, 100], k]);
+    for (let k = 0; k <= 20; k++) total += N(["PDF", ["HypergeometricDistribution", 20, 50, 100], k]);
     expect(total).toBeCloseTo(1, 8);
   });
 
@@ -94,8 +92,7 @@ describe("discrete PDFs sum to 1 over their (finite or truncated) support", () =
 
   test("GeometricDistribution(1/4), truncated to the first 200 terms", () => {
     let total = 0;
-    for (let k = 0; k < 200; k++)
-      total += N(["PDF", ["GeometricDistribution", ["Rational", 1, 4]], k]);
+    for (let k = 0; k < 200; k++) total += N(["PDF", ["GeometricDistribution", ["Rational", 1, 4]], k]);
     expect(total).toBeCloseTo(1, 6);
   });
 });
