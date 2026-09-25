@@ -1,0 +1,33 @@
+name: TriangularDistribution
+domain: Statistics
+signature: TriangularDistribution({a, b})
+summary: The triangular distribution on $[a,b]$ with mode $c$ (defaulting to the midpoint).
+signatures:
+  - call: TriangularDistribution({a, b})
+    description: mode defaults to the midpoint $(a+b)/2$.
+    library: enumeratio-statistics
+  - call: TriangularDistribution({a, b}, c)
+    description: mode given explicitly.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = 2(x-a)/((b-a)(c-a))$ for $x < c$, $2(b-x)/((b-a)(b-c))$ otherwise — no boundary clamp against $a$ or $b$ (a documented divergence).
+  - $CDF$ is the corresponding piecewise quadratic.
+  - $Mean = (a+b+c)/3$, $Variance = (a^2+b^2+c^2-ab-ac-bc)/18$, both exact.
+  - "[[RandomVariate]] samples via inverse transform."
+examples:
+  - id: triangular-pdf-exact
+    expr: [PDF, [TriangularDistribution, [List, 0, 1]], [Rational, 1, 4]]
+    expected: 1
+  - id: triangular-cdf-exact
+    expr: [CDF, [TriangularDistribution, [List, 0, 1]], [Rational, 1, 4]]
+    expected: [Rational, 1, 8]
+  - id: triangular-mean-exact
+    expr: [Mean, [TriangularDistribution, [List, 0, 1]]]
+    expected: [Rational, 1, 2]
+  - id: triangular-variance-exact
+    expr: [Variance, [TriangularDistribution, [List, 0, 1]]]
+    expected: [Rational, 1, 24]
+seeAlso:
+  - DiscreteUniformDistribution
+  - PDF
+  - CDF

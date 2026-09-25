@@ -1,0 +1,27 @@
+name: HypergeometricDistribution
+domain: Statistics
+signature: HypergeometricDistribution(n, nsucc, ntotal)
+summary: "The hypergeometric distribution: $n$ draws without replacement from a population of $ntotal$ with $nsucc$ successes."
+signatures:
+  - call: HypergeometricDistribution(n, nsucc, ntotal)
+    description: an inert distribution object — carries $n, nsucc, ntotal$, unevaluated.
+    library: enumeratio-statistics
+details:
+  - $PDF(k) = \binom{nsucc}{k}\binom{ntotal-nsucc}{n-k} \big/ \binom{ntotal}{n}$, exact.
+  - $CDF$ has no coded closed form — left unevaluated (see [[CauchyDistribution]] for the three-distribution list this applies to).
+  - $Mean = n \cdot nsucc/ntotal$, $Variance = n\dfrac{nsucc}{ntotal}\left(1-\dfrac{nsucc}{ntotal}\right)\dfrac{ntotal-n}{ntotal-1}$, both exact.
+  - "[[RandomVariate]] samples via sequential without-replacement Bernoulli draws (exact, not an approximation)."
+examples:
+  - id: hypergeometric-pdf-exact
+    expr: [PDF, [HypergeometricDistribution, 20, 50, 100], 10]
+    expected: [Rational, 10272278170, 52177653441]
+    caption: Cross-checked against wolframscript's N[PDF[HypergeometricDistribution[20, 50, 100], 10]]
+  - id: hypergeometric-mean-exact
+    expr: [Mean, [HypergeometricDistribution, 20, 50, 100]]
+    expected: 10
+  - id: hypergeometric-variance-exact
+    expr: [Variance, [HypergeometricDistribution, 20, 50, 100]]
+    expected: [Rational, 400, 99]
+seeAlso:
+  - BinomialDistribution
+  - PDF
