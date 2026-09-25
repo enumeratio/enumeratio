@@ -9,6 +9,17 @@ studentt-pdf-exact:
     in: PDF[StudentTDistribution[5], 0]
   wolfram:
     in: PDF[StudentTDistribution[5], 0]
+studentt-cdf-symmetric:
+  epsil:
+    in: CDF(StudentTDistribution(5), 0)
+    out: 1 / 2
+  tex:
+    in: \operatorname{CDF}(\mathrm{StudentTDistribution}(5), 0)
+    out: \frac{1}{2}
+  fullform:
+    in: CDF[StudentTDistribution[5], 0]
+  wolfram:
+    in: CDF[StudentTDistribution[5], 0]
 studentt-mean-exact:
   epsil:
     in: Mean(StudentTDistribution(5))

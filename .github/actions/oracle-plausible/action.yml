@@ -1,4 +1,4 @@
-name: Oracle quickcheck
+name: Oracle Plausible
 description: Sample new examples from the documented ones (seeded by the date), run them through one ecosystem's oracle lanes, and keep one rolling tracking issue of what's new.
 
 inputs:
@@ -19,13 +19,13 @@ runs:
       shell: bash
       run: |
         set +e
-        node packages/reference/scripts/oracle-quickcheck.ts ${{ inputs.systems }} --samples ${{ inputs.samples }} --strict > quickcheck.md
+        node packages/reference/scripts/oracle-plausible.ts ${{ inputs.systems }} --samples ${{ inputs.samples }} --strict > plausible.md
         echo "code=$?" >> "$GITHUB_OUTPUT"
     # Findings are for triage, not a red nightly: they collect in one issue per ecosystem, which
     # the nightly-fixup routine sweeps. Each run's findings replace the last run's in a comment.
     - uses: actions/github-script@v7
       env:
-        TITLE: "oracle quickcheck findings: ${{ inputs.ecosystem }}"
+        TITLE: "oracle Plausible findings: ${{ inputs.ecosystem }}"
         CODE: ${{ steps.run.outputs.code }}
       with:
         script: |
@@ -44,9 +44,9 @@ runs:
             return
           }
           let report = ''
-          try { report = fs.readFileSync('quickcheck.md', 'utf8') } catch {}
+          try { report = fs.readFileSync('plausible.md', 'utf8') } catch {}
           const body = [
-            `The nightly oracle quickcheck sampled new examples and found answers that differ in a way no classified example covers. Triage each family: fix ours, fix the mapping, or add the case as a classified (hidden) example. Replay locally with the seed below.`,
+            `The nightly oracle Plausible sampled new examples and found answers that differ in a way no classified example covers. Triage each family: fix ours, fix the mapping, or add the case as a classified (hidden) example. Replay locally with the seed below.`,
             ``,
             `Run: ${runUrl}`,
             ``,

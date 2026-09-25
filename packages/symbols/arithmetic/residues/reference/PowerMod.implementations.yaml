@@ -571,3 +571,75 @@ diffie-hellman-both-parties-reach-the-shared-key:
     verdict: error
     kind: domain
     note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
+a-square-root-of-3-mod-2-is-1-trivially:
+  epsil:
+    in: PowerMod(3, 1 / 2, 2)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(3, \frac{1}{2}, 2)
+    out: "1"
+  traditional:
+    in: \left(\sqrt{3}\bmod 2\right)
+    out: "1"
+  fullform:
+    in: PowerMod[3, Rational[1, 2], 2]
+  wolfram:
+    in: PowerMod[3, Rational[1, 2], 2]
+  sage:
+    in: power_mod(3, (1/2), 2)
+  rust:
+    in: powermod(n(3), rational(n(1), n(2)), n(2))
+exponent-0-base-minus-4-modulus-minus-2:
+  epsil:
+    in: PowerMod(-4, 0, -2)
+    out: "-1"
+  tex:
+    in: \mathrm{PowerMod}(-4, 0, -2)
+    out: "-1"
+  traditional:
+    in: \left((-4)^0\bmod -2\right)
+    out: "-1"
+  fullform:
+    in: PowerMod[-4, 0, -2]
+  wolfram:
+    in: PowerMod[-4, 0, -2]
+  sage:
+    in: power_mod(-4, 0, -2)
+  rust:
+    in: powermod(n(-4), n(0), n(-2))
+exponent-0-base-5-modulus-minus-7:
+  epsil:
+    in: PowerMod(5, 0, -7)
+    out: "-6"
+  tex:
+    in: \mathrm{PowerMod}(5, 0, -7)
+    out: "-6"
+  traditional:
+    in: \left(5^0\bmod -7\right)
+    out: "-6"
+  fullform:
+    in: PowerMod[5, 0, -7]
+  wolfram:
+    in: PowerMod[5, 0, -7]
+  sage:
+    in: power_mod(5, 0, -7)
+  rust:
+    in: powermod(n(5), n(0), n(-7))
+exponent-0-with-a-positive-modulus:
+  epsil:
+    in: PowerMod(2, 0, 14)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(2, 0, 14)
+    out: "1"
+  traditional:
+    in: \left(2^0\bmod 14\right)
+    out: "1"
+  fullform:
+    in: PowerMod[2, 0, 14]
+  wolfram:
+    in: PowerMod[2, 0, 14]
+  sage:
+    in: power_mod(2, 0, 14)
+  rust:
+    in: powermod(n(2), n(0), n(14))

@@ -9,6 +9,17 @@ cauchy-pdf-exact:
     in: PDF[CauchyDistribution[0, 1], 0]
   wolfram:
     in: PDF[CauchyDistribution[0, 1], 0]
+cauchy-cdf-exact:
+  epsil:
+    in: CDF(CauchyDistribution(0, 1), 1)
+    out: 3 / 4
+  tex:
+    in: \operatorname{CDF}(\mathrm{CauchyDistribution}(0, 1), 1)
+    out: \frac{3}{4}
+  fullform:
+    in: CDF[CauchyDistribution[0, 1], 1]
+  wolfram:
+    in: CDF[CauchyDistribution[0, 1], 1]
 cauchy-mean-indeterminate:
   epsil:
     in: Mean(CauchyDistribution(0, 1))

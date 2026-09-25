@@ -607,3 +607,77 @@ a-square-root-of-i-in-z-i-7-the-field-of-49:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerModList over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+cube-roots-of-8-modulo-13:
+  epsil:
+    in: PowerModList(8, 1 / 3, 13)
+    out: "[2, 5, 6]"
+  tex:
+    in: \mathrm{PowerModList}(8, \frac{1}{3}, 13)
+    out: \bigl\lbrack2, 5, 6\bigr\rbrack
+  fullform:
+    in: PowerModList[8, Rational[1, 3], 13]
+  wolfram:
+    in: PowerModList[8, Rational[1, 3], 13]
+  sage:
+    in: enumeratio_power_mod_list(8, (1/3), 13)
+an-integer-exponent-mod-100-not-1000:
+  epsil:
+    in: PowerModList(2, 10, 100)
+    out: "[24]"
+  tex:
+    in: \mathrm{PowerModList}(2, 10, 100)
+    out: \bigl\lbrack24\bigr\rbrack
+  fullform:
+    in: PowerModList[2, 10, 100]
+  wolfram:
+    in: PowerModList[2, 10, 100]
+  sage:
+    in: enumeratio_power_mod_list(2, 10, 100)
+no-cube-root-of-4-modulo-13:
+  epsil:
+    in: PowerModList(2, 2 / 3, 13)
+    out: "[]"
+  tex:
+    in: \mathrm{PowerModList}(2, \frac{2}{3}, 13)
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: PowerModList[2, Rational[2, 3], 13]
+  wolfram:
+    in: PowerModList[2, Rational[2, 3], 13]
+  sage:
+    in: enumeratio_power_mod_list(2, (2/3), 13)
+a-rational-base-with-integer-exponent-1:
+  epsil:
+    in: PowerModList(2 / 3, 1, 7)
+    out: "[3]"
+  tex:
+    in: \mathrm{PowerModList}(\frac{2}{3}, 1, 7)
+    out: \bigl\lbrack3\bigr\rbrack
+  fullform:
+    in: PowerModList[Rational[2, 3], 1, 7]
+  wolfram:
+    in: PowerModList[Rational[2, 3], 1, 7]
+  sage:
+    in: enumeratio_power_mod_list((2/3), 1, 7)
+threads-over-a-shorter-list-of-bases:
+  epsil:
+    in: PowerModList([1, 4], 1 / 2, 5)
+    out: "[[1, 4], [2, 3]]"
+  tex:
+    in: \mathrm{PowerModList}(\bigl\lbrack1, 4\bigr\rbrack, \frac{1}{2}, 5)
+    out: \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: PowerModList[List[1, 4], Rational[1, 2], 5]
+  wolfram:
+    in: PowerModList[List[1, 4], Rational[1, 2], 5]
+  sage:
+    in: enumeratio_power_mod_list([1, 4], (1/2), 5)
+a-symbolic-modulus-stays-unevaluated:
+  epsil:
+    in: PowerModList(1, 1 / 2, m)
+    out: PowerModList(1, 1 / 2, m)
+  tex:
+    in: \mathrm{PowerModList}(1, \frac{1}{2}, m)
+    out: \mathrm{PowerModList}(1, \frac{1}{2}, m)
+  fullform:
+    in: PowerModList[1, Rational[1, 2], m]

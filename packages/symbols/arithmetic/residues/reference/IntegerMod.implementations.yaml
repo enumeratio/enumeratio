@@ -79,3 +79,93 @@ odd-mod-4-and-even-mod-6-at-once-no-such-class:
     out: \mathrm{ChineseRemainder}(\mathrm{IntegerMod}(1, 4), \mathrm{IntegerMod}(2, 6))
   fullform:
     in: ChineseRemainder[IntegerMod[1, 4], IntegerMod[2, 6]]
+integermod-negative-1-7:
+  epsil:
+    in: IntegerMod(-1, 7)
+    out: IntegerMod(6, 7)
+  tex:
+    in: \mathrm{IntegerMod}(-1, 7)
+    out: \mathrm{IntegerMod}(6, 7)
+  fullform:
+    in: IntegerMod[-1, 7]
+a-non-unit-denominator-mod-4-stays-unevaluated:
+  epsil:
+    in: IntegerMod(1 / 2, 4)
+    out: IntegerMod(1 / 2, 4)
+  tex:
+    in: \mathrm{IntegerMod}(\frac{1}{2}, 4)
+    out: \mathrm{IntegerMod}(\frac{1}{2}, 4)
+  fullform:
+    in: IntegerMod[Rational[1, 2], 4]
+adding-two-classes-mod-7:
+  epsil:
+    in: IntegerMod(5, 7) + IntegerMod(4, 7)
+    out: IntegerMod(2, 7)
+  tex:
+    in: \mathrm{IntegerMod}(5, 7)+\mathrm{IntegerMod}(4, 7)
+    out: \mathrm{IntegerMod}(2, 7)
+  fullform:
+    in: Plus[IntegerMod[5, 7], IntegerMod[4, 7]]
+adding-a-plain-integer-to-a-class:
+  epsil:
+    in: IntegerMod(5, 7) + 3
+    out: IntegerMod(1, 7)
+  tex:
+    in: \mathrm{IntegerMod}(5, 7)+3
+    out: \mathrm{IntegerMod}(1, 7)
+  fullform:
+    in: Plus[IntegerMod[5, 7], 3]
+subtracting-two-classes-mod-7:
+  epsil:
+    in: IntegerMod(2, 7) - IntegerMod(5, 7)
+    out: IntegerMod(4, 7)
+  tex:
+    in: \mathrm{IntegerMod}(2, 7)-\mathrm{IntegerMod}(5, 7)
+    out: \mathrm{IntegerMod}(4, 7)
+  fullform:
+    in: Subtract[IntegerMod[2, 7], IntegerMod[5, 7]]
+multiplying-two-classes-mod-7:
+  epsil:
+    in: IntegerMod(3, 7) * IntegerMod(5, 7)
+    out: IntegerMod(1, 7)
+  tex:
+    in: \mathrm{IntegerMod}(3, 7)\mathrm{IntegerMod}(5, 7)
+    out: \mathrm{IntegerMod}(1, 7)
+  fullform:
+    in: Times[IntegerMod[3, 7], IntegerMod[5, 7]]
+power-with-exponent-negative-1-is-the-inverse:
+  epsil:
+    in: IntegerMod(3, 7) ^ -1
+    out: IntegerMod(5, 7)
+  tex:
+    in: \frac{1}{\mathrm{IntegerMod}(3, 7)}
+    out: \mathrm{IntegerMod}(5, 7)
+  fullform:
+    in: Power[IntegerMod[3, 7], -1]
+negating-a-class-mod-7:
+  epsil:
+    in: -IntegerMod(3, 7)
+    out: IntegerMod(4, 7)
+  tex:
+    in: -\mathrm{IntegerMod}(3, 7)
+    out: \mathrm{IntegerMod}(4, 7)
+  fullform:
+    in: Minus[IntegerMod[3, 7]]
+power-with-negative-exponent-of-a-non-unit:
+  epsil:
+    in: IntegerMod(2, 4) ^ -1
+    out: 1 / IntegerMod(2, 4)
+  tex:
+    in: \frac{1}{\mathrm{IntegerMod}(2, 4)}
+    out: \frac{1}{\mathrm{IntegerMod}(2, 4)}
+  fullform:
+    in: Power[IntegerMod[2, 4], -1]
+chineseremainder-integermod-1-4-integermod-3-6:
+  epsil:
+    in: ChineseRemainder(IntegerMod(1, 4), IntegerMod(3, 6))
+    out: IntegerMod(9, 12)
+  tex:
+    in: \mathrm{ChineseRemainder}(\mathrm{IntegerMod}(1, 4), \mathrm{IntegerMod}(3, 6))
+    out: \mathrm{IntegerMod}(9, 12)
+  fullform:
+    in: ChineseRemainder[IntegerMod[1, 4], IntegerMod[3, 6]]
