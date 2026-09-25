@@ -139,10 +139,11 @@ function declareVerificationTest(ce: ComputeEngine): void {
         sameTestExpr === undefined
           ? undefined
           : (actual: BoxedExpression, expectedValue: BoxedExpression): boolean => {
-              const applied = ce.function("Apply", [
-                sameTestExpr,
-                ce.function("List", [actual, expectedValue]),
-              ]);
+              // compute-engine's `Apply(f, a, b)` treats each trailing operand as its own
+              // positional argument — unlike Wolfram's `f @@ {a, b}` — so the two values go
+              // in directly rather than wrapped in a `List` (which `Apply` would instead pass
+              // through as a single argument).
+              const applied = ce.function("Apply", [sameTestExpr, actual, expectedValue]);
               return symbolNameOf(applied.evaluate()) === "True";
             };
 

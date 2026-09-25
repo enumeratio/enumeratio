@@ -214,6 +214,7 @@ const OVERRIDDEN = [
   "Ln",
   "LucasL",
   "MatrixPower",
+  "MatrixRank",
   "Max",
   "Mean",
   "Median",
@@ -239,6 +240,7 @@ const OVERRIDDEN = [
   "PrimeOmega",
   "PrimePi",
   "QuotientRing",
+  "Rank",
   "Rationalize",
   "Round",
   "Sin",
@@ -437,6 +439,10 @@ const NOVEL = [
   "Braid",
   "AlexanderPolynomial",
   "JonesPolynomial",
+  // Prepend exists in Wolfram (crosswalk-data.ts has the alias), but that isn't confirmed
+  // by an external kernel here -- collect-coverage.ts's "elsewhere" column needs
+  // wolframscript/sympy/mpmath, which this offline pass doesn't have.
+  "Prepend",
   "Commonest",
   "Nest",
   "NestList",
