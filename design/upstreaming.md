@@ -534,6 +534,15 @@ wrong — and native `EllipticE(φ, m)` for φ outside [−π/2, π/2] inherits 
 quasi-periodic reduction (DLMF 19.2.10). Patched in place locally
 (`packages/analytic/src/elliptic.ts`); `verify-fungrim.ts` reproduces it.
 
+**`N(x, d)` never gives the working precision back.** On a fresh engine `ce.precision` is
+21; after `ce.box(["N", ["Sinh", 1], 30]).evaluate()` it is 30, and everything evaluated
+afterwards runs at 30 digits — `1 - Erf(9.5)` stops cancelling to 0, `Gamma(200.5)` grows
+digits. It is §3.9's ambient precision leaking: `N` implements its precision argument by
+setting the engine's, and never restores it. Wolfram's `N[x, d]` leaves `$MachinePrecision`
+alone. The fix is a save and restore around the `N` handler; until then
+`packages/aestimatio/src/cooperative-evaluate.ts` restores it after each evaluation, which is
+what made the reference tests order-independent again (seen in 0.134).
+
 **`Hypergeometric2F1` is off by 5.2e-6 relative at complex argument** — Fungrim 16d2e1 at
 m = 1.17 + 0.45i, against mpmath's `hyp2f1`.
 

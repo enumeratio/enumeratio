@@ -48,6 +48,12 @@ export function evaluateCooperatively(
       ? result.evaluate({ materialization: true })
       : result;
   };
+  // compute-engine's `N(x, d)` leaves `ce.precision` at `d` once it returns, so every later
+  // evaluation on the same engine -- the next case in a pooled worker, the next notebook
+  // cell -- would silently run at `d` digits. Wolfram's `N[x, d]` never changes the working
+  // precision; restoring it here keeps each evaluation to its own. (Restored only after
+  // `.json`, which reads the precision to print a decimal.)
+  const precision = ce.precision;
   try {
     const result =
       timeMs === undefined
@@ -59,5 +65,7 @@ export function evaluateCooperatively(
   } catch (e) {
     if (timeMs !== undefined && isTimeout(e)) return { ok: true, json: ABORTED };
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  } finally {
+    ce.precision = precision;
   }
 }

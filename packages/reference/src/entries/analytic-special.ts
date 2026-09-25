@@ -133,6 +133,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Properties",
         caption: "The hyperfactorial $H(n) = \\Gamma(n+1)^n / G(n+1)$: here $120^5/288 = H(5)$",
       },
+      {
+        expr: ["N", ["BarnesG", ["Rational", 1, 2]], 30],
+        expected: { num: "0.603244281209446206191429224535" },
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
+      },
     ],
     implementations: [
       {
@@ -416,6 +424,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Uncertainty propagation, with $\\psi(1.2)$ as the slope",
       },
+      {
+        expr: ["N", ["LogGamma", ["Rational", 1, 3]], 30],
+        expected: { num: "0.985420646927767069187174036978" },
+        aspirational: true,
+        category: "Scope",
+        caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+      },
     ],
     implementations: [
       {
@@ -642,6 +657,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Rewriting in terms of [[Zeta]]: $\\eta(s) = (1 - 2^{1-s})\\zeta(s)$ — needs a `FunctionExpand` head",
         aspirational: true,
       },
+      {
+        expr: ["N", ["DirichletEta", ["Rational", 1, 2]], 30],
+        expected: { num: "0.604898643421630370247265914236" },
+        aspirational: true,
+        category: "Scope",
+        caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+      },
     ],
     implementations: [
       {
@@ -769,6 +791,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Around", 0.915965594177219, 0.000815807361165928],
         category: "Scope",
         caption: "Uncertainty propagation: $\\beta(2 \\pm 0.01) = G \\pm 0.00082$",
+      },
+      {
+        expr: ["N", ["DirichletBeta", 2], 40],
+        expected: { num: "0.9159655941772190150546035149323841107741" },
+        aspirational: true,
+        category: "Scope",
+        caption: "To exactly 40 significant digits; not yet -- 85 come back (the first 40 right)",
       },
     ],
     implementations: [
@@ -907,6 +936,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Properties",
         caption:
           "$\\gamma_0(\\tfrac12) = -\\psi(\\tfrac12) = \\gamma + 2\\ln 2$, now that $\\psi(\\tfrac12)$ itself has a closed form",
+      },
+      {
+        expr: ["N", ["StieltjesGamma", 1], 30],
+        expected: { num: "-0.0728158454836767248605863758749" },
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
       },
     ],
     // \u03b3\u2099(a) IS a Laurent coefficient of \u03b6(s, a) at s = 1, so its definition is a limit of an
@@ -1339,6 +1376,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Around", 1.1455164340491326, 0.0008799826466981091],
         category: "Scope",
         caption: "Uncertainty propagation in the order",
+      },
+      {
+        expr: ["N", ["HarmonicNumber", ["Rational", 1, 2]], 30],
+        expected: { num: "0.613705638880109381165535757084" },
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "To exactly 30 significant digits; not yet -- 31 come back, and the last of the first 30 is not correctly rounded",
       },
     ],
     implementations: [

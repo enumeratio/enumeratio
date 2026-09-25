@@ -542,6 +542,12 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "...while $\\sqrt{(-1)(-1)} = 1$",
       },
+      {
+        expr: ["N", ["Sqrt", 2], 45],
+        expected: { num: "1.41421356237309504880168872420969807856967188" },
+        category: "Scope",
+        caption: "To 45 significant digits, every one correctly rounded",
+      },
     ],
     seeAlso: ["Root", "Square"],
   },

@@ -44,6 +44,19 @@ test("materialize expands only the result: an argument is counted whole, not as 
   expect(counted?.value).toBe(20);
 });
 
+test("N(x, d) in one case leaves the working precision alone for the next", async () => {
+  // One worker, so both cases share an engine: compute-engine's own `N(x, d)` leaves
+  // `ce.precision` at `d`, and `1 - Erf(9.5)` only cancels to 0 at the default precision.
+  const [, next] = await runCases(
+    [
+      { id: "high", input: ["N", ["Sinh", 1], 50] },
+      { id: "next", input: ["Subtract", 1, ["Erf", 9.5]] },
+    ],
+    { concurrency: 1 },
+  );
+  expect(next?.value).toBe(0);
+});
+
 test("a per-case timeout stops only that case cooperatively, not the others in the batch", async () => {
   const results = await runCases(
     [
