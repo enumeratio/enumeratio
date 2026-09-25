@@ -1,0 +1,36 @@
+posetelements-divisorlattice-12:
+  epsil:
+    in: PosetElements(DivisorLattice(12))
+    out: "[1, 2, 3, 4, 6, 12]"
+  tex:
+    in: \mathrm{PosetElements}(\mathrm{DivisorLattice}(12))
+    out: \bigl\lbrack1, 2, 3, 4, 6, 12\bigr\rbrack
+  traditional:
+    in: \mathrm{PosetElements}(D_{12})
+    out: \bigl\lbrack1, 2, 3, 4, 6, 12\bigr\rbrack
+  fullform:
+    in: PosetElements[DivisorLattice[12]]
+posetelements-chain-4:
+  epsil:
+    in: PosetElements(Chain(4))
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{PosetElements}(\mathrm{Chain}(4))
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  traditional:
+    in: \mathrm{PosetElements}(C_{4})
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: PosetElements[Chain[4]]
+3-3-intervals:
+  epsil:
+    in: AlgebraDimension(IncidenceAlgebra(BooleanLattice(3)))
+    out: "27"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{IncidenceAlgebra}(\mathrm{BooleanLattice}(3)))
+    out: "27"
+  traditional:
+    in: \dim(I(B_{3}))
+    out: "27"
+  fullform:
+    in: AlgebraDimension[IncidenceAlgebra[BooleanLattice[3]]]

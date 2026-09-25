@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: CyclePartition(Permutation([2, 3, 1]))
+    out: SetPartition([1, 1, 1])
+  tex:
+    in: \mathrm{CyclePartition}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{SetPartition}(\bigl\lbrack1, 1, 1\bigr\rbrack)
+  fullform:
+    in: CyclePartition[Permutation[List[2, 3, 1]]]

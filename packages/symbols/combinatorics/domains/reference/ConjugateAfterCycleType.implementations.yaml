@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: ConjugateAfterCycleType(Permutation([2, 3, 1]))
+    out: IntegerPartition([1, 1, 1])
+  tex:
+    in: \mathrm{ConjugateAfterCycleType}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1\bigr\rbrack)
+  fullform:
+    in: ConjugateAfterCycleType[Permutation[List[2, 3, 1]]]

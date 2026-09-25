@@ -1,0 +1,84 @@
+8-2-3:
+  epsil:
+    in: IsPrimePower(8)
+    out: True
+  tex:
+    in: \mathrm{IsPrimePower}(8)
+    out: \top
+  traditional:
+    in: \mathrm{IsPrimePower}(8)
+    out: \mathrm{True}
+  fullform:
+    in: PrimePowerQ[8]
+  wolfram:
+    in: PrimePowerQ[8]
+12-2-2-cdot-3-has-two-distinct-primes:
+  epsil:
+    in: IsPrimePower(12)
+    out: False
+  tex:
+    in: \mathrm{IsPrimePower}(12)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrimePower}(12)
+    out: \mathrm{False}
+  fullform:
+    in: PrimePowerQ[12]
+  wolfram:
+    in: PrimePowerQ[12]
+a-prime-is-its-own-first-power:
+  epsil:
+    in: IsPrimePower(7)
+    out: True
+  tex:
+    in: \mathrm{IsPrimePower}(7)
+    out: \top
+  traditional:
+    in: \mathrm{IsPrimePower}(7)
+    out: \mathrm{True}
+  fullform:
+    in: PrimePowerQ[7]
+  wolfram:
+    in: PrimePowerQ[7]
+1-is-p-0-which-does-not-count:
+  epsil:
+    in: IsPrimePower(1)
+    out: False
+  tex:
+    in: \mathrm{IsPrimePower}(1)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrimePower}(1)
+    out: \mathrm{False}
+  fullform:
+    in: PrimePowerQ[1]
+  wolfram:
+    in: PrimePowerQ[1]
+listable:
+  epsil:
+    in: IsPrimePower([2, 4, 6, 9, 10, 16])
+    out: "[True, True, False, True, False, True]"
+  tex:
+    in: \mathrm{IsPrimePower}(\bigl\lbrack2, 4, 6, 9, 10, 16\bigr\rbrack)
+    out: \bigl\lbrack\top, \top, \bot, \top, \bot, \top\bigr\rbrack
+  traditional:
+    in: \mathrm{IsPrimePower}(\bigl\lbrack2, 4, 6, 9, 10, 16\bigr\rbrack)
+    out: \bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
+  fullform:
+    in: PrimePowerQ[List[2, 4, 6, 9, 10, 16]]
+  wolfram:
+    in: PrimePowerQ[List[2, 4, 6, 9, 10, 16]]
+large-integers:
+  epsil:
+    in: IsPrimePower(3 ^ 40)
+    out: True
+  tex:
+    in: \mathrm{IsPrimePower}(3^{40})
+    out: \top
+  traditional:
+    in: \mathrm{IsPrimePower}(3^{40})
+    out: \mathrm{True}
+  fullform:
+    in: PrimePowerQ[Power[3, 40]]
+  wolfram:
+    in: PrimePowerQ[Power[3, 40]]

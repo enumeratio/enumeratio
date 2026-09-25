@@ -1,0 +1,18 @@
+discreteshift-one-step:
+  epsil:
+    in: DiscreteShift(a(n), n)
+    out: a(n + 1)
+  tex:
+    in: \mathrm{DiscreteShift}(a(n), n)
+    out: a(n+1)
+  fullform:
+    in: DiscreteShift[a[n], n]
+discreteshift-h-step:
+  epsil:
+    in: DiscreteShift(a(n), [n, 2])
+    out: a(n + 2)
+  tex:
+    in: \mathrm{DiscreteShift}(a(n), \bigl\lbrack n, 2\bigr\rbrack)
+    out: a(n+2)
+  fullform:
+    in: DiscreteShift[a[n], List[n, 2]]

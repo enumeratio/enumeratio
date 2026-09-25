@@ -1,0 +1,42 @@
+symbolic-falling:
+  epsil:
+    in: FactorialPower(x, 3)
+    out: FactorialPower(x, 3)
+  tex:
+    in: \mathrm{FactorialPower}(x, 3)
+    out: \mathrm{FactorialPower}(x, 3)
+  fullform:
+    in: FactorialPower[x, 3]
+    back: [FallingFactorial, x, 3]
+numeric:
+  epsil:
+    in: FactorialPower(5, 3)
+    out: "60"
+  tex:
+    in: \mathrm{FactorialPower}(5, 3)
+    out: "60"
+  fullform:
+    in: FactorialPower[5, 3]
+    back: [FallingFactorial, 5, 3]
+  wolfram:
+    in: FactorialPower[5, 3]
+step:
+  epsil:
+    in: FactorialPower(x, 2, h)
+    out: FactorialPower(x, 2, h)
+  tex:
+    in: \mathrm{FactorialPower}(x, 2, h)
+    out: \mathrm{FactorialPower}(x, 2, h)
+  fullform:
+    in: FactorialPower[x, 2, h]
+    back: [FallingFactorial, x, 2, h]
+zero:
+  epsil:
+    in: FactorialPower(x, 0)
+    out: "1"
+  tex:
+    in: \mathrm{FactorialPower}(x, 0)
+    out: "1"
+  fullform:
+    in: FactorialPower[x, 0]
+    back: [FallingFactorial, x, 0]

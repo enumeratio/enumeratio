@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: KnuthClassRepresentative(Permutation([2, 3, 1]))
+    out: Permutation([2, 1, 3])
+  tex:
+    in: \mathrm{KnuthClassRepresentative}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Permutation}(\bigl\lbrack2, 1, 3\bigr\rbrack)
+  fullform:
+    in: KnuthClassRepresentative[Permutation[List[2, 3, 1]]]

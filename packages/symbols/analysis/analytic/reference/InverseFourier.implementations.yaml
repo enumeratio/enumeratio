@@ -1,21 +1,61 @@
 inverse-dft-of-1-2-3-4:
+  epsil:
+    in: InverseFourier([1, 2, 3, 4])
+    out: "[5, -1 + i, -1, -1 + -1 * i]"
+  tex:
+    in: \mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack5, -1+i, -1, -1-i\bigr\rbrack
+  fullform:
+    in: InverseFourier[List[1, 2, 3, 4]]
   wolfram:
-    in: "InverseFourier[{1, 2, 3, 4}]"
+    in: InverseFourier[List[1, 2, 3, 4]]
     out: "{5. + 0.*I, -1. + 1.*I, -1. + 0.*I, -1. - 1.*I}"
 round-trips-through-fourier:
+  epsil:
+    in: Fourier(InverseFourier([1, 2, 3, 4]))
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{Fourier}(\mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack))
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Fourier[InverseFourier[List[1, 2, 3, 4]]]
   wolfram:
-    in: "Fourier[InverseFourier[{1, 2, 3, 4}]]"
+    in: Fourier[InverseFourier[List[1, 2, 3, 4]]]
     out: "{1., 2., 3., 4.}"
 a-2x2-matrix:
+  epsil:
+    in: InverseFourier([[5, -1], [-2, 0]])
+    out: "[[1, 2], [3, 4]]"
+  tex:
+    in: \mathrm{InverseFourier}(\bigl\lbrack\bigl\lbrack5, -1\bigr\rbrack, \bigl\lbrack-2, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: InverseFourier[List[List[5, -1], List[-2, 0]]]
   wolfram:
-    in: "InverseFourier[{{5, -1}, {-2, 0}}]"
+    in: InverseFourier[List[List[5, -1], List[-2, 0]]]
     out: "{{1., 2.}, {3., 4.}}"
 a-custom-fourierparameters:
+  epsil:
+    in: InverseFourier([1, 2, 3, 4], FourierParameters -> [1, -1])
+    out: "[2.5, -0.5 + -0.5 * i, -0.5, -0.5 + 0.5i]"
+  tex:
+    in: \mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{FourierParameters}, \bigl\lbrack1, -1\bigr\rbrack))
+    out: \bigl\lbrack2.5, -0.5-0.5i, -0.5, -0.5+0.5i\bigr\rbrack
+  fullform:
+    in: InverseFourier[List[1, 2, 3, 4], KeyValuePair[FourierParameters, List[1, -1]]]
   wolfram:
-    in: "InverseFourier[{1, 2, 3, 4}, FourierParameters -> {1, -1}]"
+    in: InverseFourier[{1, 2, 3, 4}, FourierParameters -> {1, -1}]
     out: "{2.5 + 0.*I, -0.5 - 0.5*I, -0.5 + 0.*I, -0.5 + 0.5*I}"
 declines-a-symbolic-list:
+  epsil:
+    in: InverseFourier([a, b])
+    out: InverseFourier([a, b])
+  tex:
+    in: \mathrm{InverseFourier}(\bigl\lbrack a, b\bigr\rbrack)
+    out: \mathrm{InverseFourier}(\bigl\lbrack a, b\bigr\rbrack)
+  fullform:
+    in: InverseFourier[List[a, b]]
   wolfram:
-    in: "InverseFourier[{a, b}]"
-    out: "InverseFourier[{a, b}]"
-    note: "Wolfram raises `Fourier::fftl` and returns the call unevaluated -- the same decline we make."
+    in: InverseFourier[{a, b}]
+    out: InverseFourier[{a, b}]
+    note: Wolfram raises `Fourier::fftl` and returns the call unevaluated -- the same decline we make.

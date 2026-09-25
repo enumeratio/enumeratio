@@ -1,4 +1,13 @@
 indexof-list-1-2-3-2:
+  epsil:
+    in: IndexOf([1, 2, 3], 2)
+    out: "2"
+  tex:
+    in: \mathrm{IndexOf}(\bigl\lbrack1, 2, 3\bigr\rbrack, 2)
+    out: "2"
+  fullform:
+    in: First[FirstPosition[List[1, 2, 3], 2, List[0]]]
+    back: [First, [FirstPosition, [List, 1, 2, 3], 2, [List, 0]]]
   wolfram:
     in: First[FirstPosition[List[1, 2, 3], 2, List[0]]]
     out: "2"
@@ -6,6 +15,15 @@ indexof-list-1-2-3-2:
       in: \text{First}[\text{FirstPosition}[\{1,2,3\},2,\{0\}]]
       out: "2"
 0-signals-that-the-value-isn-t-present-since-0:
+  epsil:
+    in: IndexOf([1, 2, 3], 9)
+    out: "0"
+  tex:
+    in: \mathrm{IndexOf}(\bigl\lbrack1, 2, 3\bigr\rbrack, 9)
+    out: "0"
+  fullform:
+    in: First[FirstPosition[List[1, 2, 3], 9, List[0]]]
+    back: [First, [FirstPosition, [List, 1, 2, 3], 9, [List, 0]]]
   wolfram:
     in: First[FirstPosition[List[1, 2, 3], 9, List[0]]]
     out: "0"
@@ -13,6 +31,18 @@ indexof-list-1-2-3-2:
       in: \text{First}[\text{FirstPosition}[\{1,2,3\},9,\{0\}]]
       out: "0"
 at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at:
+  epsil:
+    in: "[10, 20, 30][IndexOf([10, 20, 30], 20)] == 20"
+    out: True
+  tex:
+    in: \bigl\lbrack10, 20, 30\bigr\rbrack[\mathrm{IndexOf}(\bigl\lbrack10, 20, 30\bigr\rbrack, 20)]=20
+    out: \top
+  traditional:
+    in: \bigl\lbrack10, 20, 30\bigr\rbrack[\mathrm{IndexOf}(\bigl\lbrack10, 20, 30\bigr\rbrack, 20)]=20
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Part[List[10, 20, 30], First[FirstPosition[List[10, 20, 30], 20, List[0]]]], 20]
+    back: [Equal, [At, [List, 10, 20, 30], [First, [FirstPosition, [List, 10, 20, 30], 20, [List, 0]]]], 20]
   wolfram:
     in: (Part[List[10, 20, 30], First[FirstPosition[List[10, 20, 30], 20, List[0]]]] == 20)
     out: True
@@ -20,10 +50,50 @@ at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at:
       in: \{10,20,30\}[[\text{First}[\text{FirstPosition}[\{10,20,30\},20,\{0\}]]]]=20
       out: \text{True}
 indexof-reports-only-the-first-occurrence-see:
+  epsil:
+    in: IndexOf([1, 2, 3, 2], 2)
+    out: "2"
+  tex:
+    in: \mathrm{IndexOf}(\bigl\lbrack1, 2, 3, 2\bigr\rbrack, 2)
+    out: "2"
+  fullform:
+    in: First[FirstPosition[List[1, 2, 3, 2], 2, List[0]]]
+    back: [First, [FirstPosition, [List, 1, 2, 3, 2], 2, [List, 0]]]
   wolfram:
     in: First[FirstPosition[List[1, 2, 3, 2], 2, List[0]]]
     note: Wolfram's Position gives every occurrence, [[2], [4]]; IndexOf keeps only the first.
+only-the-first-of-several-occurrences-is:
+  epsil:
+    in: IndexOf([a, b, a, a, b, c, b], b)
+    out: "2"
+  tex:
+    in: \mathrm{IndexOf}(\bigl\lbrack a, b, a, a, b, c, b\bigr\rbrack, b)
+    out: "2"
+  fullform:
+    in: First[FirstPosition[List[a, b, a, a, b, c, b], b, List[0]]]
+    back: [First, [FirstPosition, [List, a, b, a, a, b, c, b], b, [List, 0]]]
+the-value-can-itself-be-a-list:
+  epsil:
+    in: IndexOf([[1, 2], [3, 4]], [3, 4])
+    out: "2"
+  tex:
+    in: \mathrm{IndexOf}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)
+    out: "2"
+  fullform:
+    in: First[FirstPosition[List[List[1, 2], List[3, 4]], List[3, 4], List[0]]]
+    back: [First, [FirstPosition, [List, [List, 1, 2], [List, 3, 4]], [List, 3, 4], [List, 0]]]
+  wolfram:
+    in: First[FirstPosition[List[List[1, 2], List[3, 4]], List[3, 4], List[0]]]
 indexof-stays-at-the-top-level-where-this-value:
+  epsil:
+    in: IndexOf([[a, a, b], [b, a, a], [a, b, a]], b)
+    out: "0"
+  tex:
+    in: \mathrm{IndexOf}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, \bigl\lbrack b, a, a\bigr\rbrack, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b)
+    out: "0"
+  fullform:
+    in: First[FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b, List[0]]]
+    back: [First, [FirstPosition, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b, [List, 0]]]
   wolfram:
     in:
     note: Wolfram's $FirstPosition$ searches every level and gives $\{1, 3\}$; see [[FirstPosition]].

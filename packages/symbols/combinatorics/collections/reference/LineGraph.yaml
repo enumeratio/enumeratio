@@ -1,0 +1,17 @@
+name: LineGraph
+domain: Collections
+signature: LineGraph(g)
+summary: The graph whose vertices are the edges of g, joined when the original edges share an endpoint.
+signatures:
+  - call: LineGraph(g)
+    description: one vertex per edge of g (numbered 1..EdgeCount(g), in EdgeList order), UNDIRECTED regardless of g's own edge directions.
+    library: enumeratio-collections
+details:
+  - EdgeCount(LineGraph(g)) = sum over v of C(VertexDegree(v), 2) for a simple g -- every pair of edges sharing vertex v contributes one line-graph edge.
+examples:
+  - id: line-graph-of-a-triangle-is-a-triangle
+    expr: [EdgeCount, [LineGraph, [CompleteGraph, 3]]]
+    expected: 3
+seeAlso:
+  - VertexDegree
+  - AdjacencyGraph

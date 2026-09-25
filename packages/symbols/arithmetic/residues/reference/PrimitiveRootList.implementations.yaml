@@ -1,60 +1,212 @@
 primitiverootlist-7:
-  sage:
-    in: enumeratio_primitive_root_list(7)
+  epsil:
+    in: PrimitiveRootList(7)
     out: "[3, 5]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(7)
+    out: \bigl\lbrack3, 5\bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[7]
   wolfram:
     in: PrimitiveRootList[7]
     out: "{3, 5}"
     tex:
       in: \text{PrimitiveRootList}[7]
       out: \{3,5\}
-18-2-cdot-3-2-is-of-the-form-2p-k:
   sage:
-    in: enumeratio_primitive_root_list(18)
+    in: enumeratio_primitive_root_list(7)
+    out: "[3, 5]"
+10-2-cdot-5-is-of-the-form-2p:
+  epsil:
+    in: PrimitiveRootList(10)
+    out: "[3, 7]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(10)
+    out: \bigl\lbrack3, 7\bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[10]
+  wolfram:
+    in: PrimitiveRootList[10]
+  sage:
+    in: enumeratio_primitive_root_list(10)
+an-odd-prime-power-varphi-varphi-25-8-generators:
+  epsil:
+    in: PrimitiveRootList(25)
+    out: "[2, 3, 8, 12, 13, 17, 22, 23]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(25)
+    out: \bigl\lbrack2, 3, 8, 12, 13, 17, 22, 23\bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[25]
+  wolfram:
+    in: PrimitiveRootList[25]
+  sage:
+    in: enumeratio_primitive_root_list(25)
+n-4-is-one-of-the-small-cyclic-cases:
+  epsil:
+    in: PrimitiveRootList(4)
+    out: "[3]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(4)
+    out: \bigl\lbrack3\bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[4]
+  wolfram:
+    in: PrimitiveRootList[4]
+  sage:
+    in: enumeratio_primitive_root_list(4)
+threads-over-a-list:
+  epsil:
+    in: PrimitiveRootList([9, 11])
+    out: "[[2, 5], [2, 6, 7, 8]]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(\bigl\lbrack9, 11\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack2, 6, 7, 8\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[List[9, 11]]
+  wolfram:
+    in: PrimitiveRootList[List[9, 11]]
+  sage:
+    in: enumeratio_primitive_root_list([9, 11])
+z-12-times-cong-c-2-times-c-2-is-not-cyclic:
+  epsil:
+    in: PrimitiveRootList(12)
+    out: "[]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(12)
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[12]
+  wolfram:
+    in: PrimitiveRootList[12]
+  sage:
+    in: enumeratio_primitive_root_list(12)
+18-2-cdot-3-2-is-of-the-form-2p-k:
+  epsil:
+    in: PrimitiveRootList(18)
     out: "[5, 11]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(18)
+    out: \bigl\lbrack5, 11\bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[18]
   wolfram:
     in: PrimitiveRootList[18]
     out: "{5, 11}"
     tex:
       in: \text{PrimitiveRootList}[18]
       out: \{5,11\}
-length-primitiverootlist-1-009:
   sage:
-    in: len(enumeratio_primitive_root_list(1009))
+    in: enumeratio_primitive_root_list(18)
+    out: "[5, 11]"
+length-primitiverootlist-1-009:
+  epsil:
+    in: Length(PrimitiveRootList(1_009))
     out: "288"
+  tex:
+    in: \mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))
+    out: "288"
+  fullform:
+    in: Length[PrimitiveRootList[1009]]
   wolfram:
     in: Length[PrimitiveRootList[1009]]
     out: "288"
     tex:
       in: \text{Length}[\text{PrimitiveRootList}[1009]]
       out: "288"
-there-are-varphi-varphi-n-of-them:
   sage:
-    in: bool(len(enumeratio_primitive_root_list(1009)) == euler_phi(euler_phi(1009)))
+    in: (len(enumeratio_primitive_root_list(1009)) if hasattr(enumeratio_primitive_root_list(1009), '__len__') else 0)
+    out: "288"
+there-are-varphi-varphi-n-of-them:
+  epsil:
+    in: Length(PrimitiveRootList(1_009)) == Totient(Totient(1_009))
     out: True
+  tex:
+    in: \mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{Totient}(\mathrm{Totient}(1\,009))
+    out: \top
+  traditional:
+    in: \mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))=\varphi(\varphi(1\,009))
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Length[PrimitiveRootList[1009]], EulerPhi[EulerPhi[1009]]]
   wolfram:
     in: (Length[PrimitiveRootList[1009]] == EulerPhi[EulerPhi[1009]])
     out: True
     tex:
       in: \text{Length}[\text{PrimitiveRootList}[1009]]=\phi (\phi (1009))
       out: \text{True}
-z-8-times-cong-c-2-times-c-2-is-not-cyclic:
   sage:
-    in: enumeratio_primitive_root_list(8)
+    in: bool((len(enumeratio_primitive_root_list(1009)) if hasattr(enumeratio_primitive_root_list(1009), '__len__') else 0) == euler_phi(euler_phi(1009)))
+    out: True
+the-first-is-primitiveroot:
+  epsil:
+    in: First(PrimitiveRootList(1_009)) == PrimitiveRoot(1_009)
+    out: True
+  tex:
+    in: \mathrm{First}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{PrimitiveRoot}(1\,009)
+    out: \top
+  traditional:
+    in: \mathrm{First}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{PrimitiveRoot}(1\,009)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[First[PrimitiveRootList[1009]], PrimitiveRoot[1009]]
+z-8-times-cong-c-2-times-c-2-is-not-cyclic:
+  epsil:
+    in: PrimitiveRootList(8)
     out: "[]"
+  tex:
+    in: \mathrm{PrimitiveRootList}(8)
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: PrimitiveRootList[8]
   wolfram:
     in: PrimitiveRootList[8]
     out: "{}"
     tex:
       in: \text{PrimitiveRootList}[8]
       out: \{\}
-past-100-000-roots-the-list-is-not-built-but-its:
   sage:
-    in: len(enumeratio_primitive_root_list(1000003))
-    out: "333332"
+    in: enumeratio_primitive_root_list(8)
+    out: "[]"
+past-100-000-roots-the-list-is-not-built-but-its:
+  epsil:
+    in: Length(PrimitiveRootList(1_000_003))
+    out: 333_332
+  tex:
+    in: \mathrm{Length}(\mathrm{PrimitiveRootList}(1\,000\,003))
+    out: 333\,332
+  fullform:
+    in: Length[PrimitiveRootList[1000003]]
   wolfram:
     in: Length[PrimitiveRootList[1000003]]
     out: "333332"
     tex:
       in: \text{Length}[\text{PrimitiveRootList}[1000003]]
       out: "333332"
+  sage:
+    in: (len(enumeratio_primitive_root_list(1000003)) if hasattr(enumeratio_primitive_root_list(1000003), '__len__') else 0)
+    out: "333332"
+past-the-cap-primitiverootlist-itself-stays:
+  epsil:
+    in: PrimitiveRootList(1_000_003)
+    out: PrimitiveRootList(1_000_003)
+  tex:
+    in: \mathrm{PrimitiveRootList}(1\,000\,003)
+    out: \mathrm{PrimitiveRootList}(1\,000\,003)
+  fullform:
+    in: PrimitiveRootList[1000003]
+  wolfram:
+    in: PrimitiveRootList[1000003]
+  sage:
+    in: enumeratio_primitive_root_list(1000003)
+the-first-element-still-answers-past-the-cap:
+  epsil:
+    in: PrimitiveRootList(1_000_003)[1]
+    out: "2"
+  tex:
+    in: \mathrm{PrimitiveRootList}(1\,000\,003)[1]
+    out: "2"
+  fullform:
+    in: Part[PrimitiveRootList[1000003], 1]
+  wolfram:
+    in: Part[PrimitiveRootList[1000003], 1]

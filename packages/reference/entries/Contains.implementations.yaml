@@ -1,4 +1,15 @@
 contains-list-1-2-3-2:
+  epsil:
+    in: Contains([1, 2, 3], 2)
+    out: True
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack1, 2, 3\bigr\rbrack, 2)
+    out: \top
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack1, 2, 3\bigr\rbrack, 2)
+    out: \mathrm{True}
+  fullform:
+    in: MemberQ[List[1, 2, 3], 2]
   wolfram:
     in: MemberQ[List[1, 2, 3], 2]
     out: True
@@ -6,13 +17,127 @@ contains-list-1-2-3-2:
       in: \text{MemberQ}[\{1,2,3\},2]
       out: \text{True}
 contains-list-1-2-3-5:
+  epsil:
+    in: Contains([1, 2, 3], 5)
+    out: False
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5)
+    out: \bot
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5)
+    out: \mathrm{False}
+  fullform:
+    in: MemberQ[List[1, 2, 3], 5]
   wolfram:
     in: MemberQ[List[1, 2, 3], 5]
     out: False
     tex:
       in: \text{MemberQ}[\{1,2,3\},5]
       out: \text{False}
+contains-list-1-3-4-1-2-2:
+  epsil:
+    in: Contains([1, 3, 4, 1, 2], 2)
+    out: True
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack1, 3, 4, 1, 2\bigr\rbrack, 2)
+    out: \top
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack1, 3, 4, 1, 2\bigr\rbrack, 2)
+    out: \mathrm{True}
+  fullform:
+    in: MemberQ[List[1, 3, 4, 1, 2], 2]
+  wolfram:
+    in: MemberQ[List[1, 3, 4, 1, 2], 2]
+nothing-is-in-the-empty-list:
+  epsil:
+    in: Contains([], x)
+    out: False
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack \bigr\rbrack, x)
+    out: \bot
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack \bigr\rbrack, x)
+    out: \mathrm{False}
+  fullform:
+    in: MemberQ[List[], x]
+symbolic-elements:
+  epsil:
+    in: Contains([x ^ 2, y ^ 2], x ^ 2)
+    out: True
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack x^2, y^2\bigr\rbrack, x^2)
+    out: \top
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack x^2, y^2\bigr\rbrack, x^2)
+    out: \mathrm{True}
+  fullform:
+    in: MemberQ[List[Power[x, 2], Power[y, 2]], Power[x, 2]]
+elements-can-themselves-be-lists:
+  epsil:
+    in: Contains([[1, 2], [3, 4]], [1, 2])
+    out: True
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: MemberQ[List[List[1, 2], List[3, 4]], List[1, 2]]
+  wolfram:
+    in: MemberQ[List[List[1, 2], List[3, 4]], List[1, 2]]
+only-the-top-level-elements-are-searched:
+  epsil:
+    in: Contains([[1, 2], [3, 4]], 1)
+    out: False
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 1)
+    out: \bot
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 1)
+    out: \mathrm{False}
+  fullform:
+    in: MemberQ[List[List[1, 2], List[3, 4]], 1]
+  wolfram:
+    in: MemberQ[List[List[1, 2], List[3, 4]], 1]
+compared-after-canonical-ordering-so-b-a-matches:
+  epsil:
+    in: Contains([a + b], b + a)
+    out: True
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack a+b\bigr\rbrack, b+a)
+    out: \top
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack a+b\bigr\rbrack, b+a)
+    out: \mathrm{True}
+  fullform:
+    in: MemberQ[List[Plus[a, b]], Plus[b, a]]
 an-exact-and-an-approximate-number-with-the-same:
+  epsil:
+    in: Contains([1 / 2], 0.5)
+    out: True
+  tex:
+    in: \mathrm{Contains}(\bigl\lbrack\frac{1}{2}\bigr\rbrack, 0.5)
+    out: \top
+  traditional:
+    in: \mathrm{Contains}(\bigl\lbrack\frac{1}{2}\bigr\rbrack, 0.5)
+    out: \mathrm{True}
+  fullform:
+    in: MemberQ[List[Rational[1, 2]], 0.5]
   wolfram:
     in: MemberQ[List[Rational[1, 2]], 0.5]
     note: 'MemberQ compares structurally: $\mathrm{MemberQ}[\{1/2\}, 0.5]$ is False.'
+a-lazy-range-is-searched-without-being:
+  epsil:
+    in: Contains(Range(100), 50)
+    out: True
+  tex:
+    in: \mathrm{Contains}(1..100, 50)
+    out: \top
+  traditional:
+    in: \mathrm{Contains}(1..100, 50)
+    out: \mathrm{True}
+  fullform:
+    in: MemberQ[Range[100], 50]
+  wolfram:
+    in: MemberQ[Range[100], 50]

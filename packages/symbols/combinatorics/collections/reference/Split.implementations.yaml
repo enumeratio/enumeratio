@@ -1,0 +1,42 @@
+runs-not-groups-the-two-runs-of-1-stay-apart:
+  epsil:
+    in: Split([1, 1, 2, 2, 2, 3, 1, 1])
+    out: "[[1, 1], [2, 2, 2], [3], [1, 1]]"
+  tex:
+    in: \mathrm{Split}(\bigl\lbrack1, 1, 2, 2, 2, 3, 1, 1\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Split[List[1, 1, 2, 2, 2, 3, 1, 1]]
+  wolfram:
+    in: Split[List[1, 1, 2, 2, 2, 3, 1, 1]]
+symbolic-elements:
+  epsil:
+    in: Split([a, a, b, b, b, a])
+    out: "[[a, a], [b, b, b], [a]]"
+  tex:
+    in: \mathrm{Split}(\bigl\lbrack a, a, b, b, b, a\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack a, a\bigr\rbrack, \bigl\lbrack b, b, b\bigr\rbrack, \bigl\lbrack a\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Split[List[a, a, b, b, b, a]]
+a-test-between-neighbours-split-into-increasing:
+  epsil:
+    in: Split([1, 2, 3, 5, 4, 6], Less)
+    out: "[[1, 2, 3, 5], [4, 6]]"
+  tex:
+    in: \mathrm{Split}(\bigl\lbrack1, 2, 3, 5, 4, 6\bigr\rbrack, \mathrm{Less})
+    out: \bigl\lbrack\bigl\lbrack1, 2, 3, 5\bigr\rbrack, \bigl\lbrack4, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Split[List[1, 2, 3, 5, 4, 6], Less]
+  wolfram:
+    in: Split[List[1, 2, 3, 5, 4, 6], Less]
+the-empty-list:
+  epsil:
+    in: Split([])
+    out: "[]"
+  tex:
+    in: \mathrm{Split}(\bigl\lbrack \bigr\rbrack)
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: Split[List[]]
+  wolfram:
+    in: Split[List[]]

@@ -1,0 +1,9 @@
+2-4:
+  epsil:
+    in: Count(IntegerCompositions(5))
+    out: "16"
+  tex:
+    in: \mathrm{Count}(\mathrm{IntegerCompositions}(5))
+    out: "16"
+  fullform:
+    in: Count[IntegerCompositions[5]]

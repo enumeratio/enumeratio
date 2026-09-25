@@ -22,6 +22,19 @@ examples:
     expr: [Multiply, [Idele, 7], [Idele, [Rational, 1, 7]]]
     expected: [Idele, 1, 1]
     caption: 7 and its inverse cancel everywhere
+  - id: a-listed-component-carries-its-valuation-into
+    expr: [Idele, 1, 1, [List, [AdicNumeral, 5, [Rational, 15, 7], 4]]]
+    expected: [Idele, 1, 5, [List, [AdicNumeral, 5, 54, 3]]]
+    caption: a listed component carries its valuation into the scale
+    category: Scope
+  - id: a-unit-known-mod-2-says-nothing-at-2
+    expr: [Idele, 1, 1, [List, [AdicNumeral, 2, 3, 1]]]
+    expected: [Idele, 1, 1, [List]]
+    caption: at 2 a unit known mod 2 says nothing
+    category: Possible issues
+  - id: idele-with-a-zero-real-part
+    expr: [Idele, 0, 1]
+    expected: [Idele, 0, 1]
 seeAlso:
   - Adele
   - ProfiniteNumber

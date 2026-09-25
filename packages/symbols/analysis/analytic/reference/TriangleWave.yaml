@@ -1,0 +1,43 @@
+name: TriangleWave
+domain: Elementary functions
+signature: TriangleWave(x)
+summary: "The triangle wave: period 1, default range {-1, 1}, sine-like phase (0 at x = 0, peak at x = 1/4)."
+signatures:
+  - call: TriangleWave(x)
+    description: a triangular approximation to sin(2*Pi*x) -- 0 at x = 0, 1 at x = 1/4, 0 at x = 1/2, -1 at x = 3/4.
+    library: "@enumeratio/analytic"
+  - call: TriangleWave({min, max}, x)
+    description: the triangle wave rescaled to vary from min to max, unit period.
+    library: "@enumeratio/analytic"
+    arity: 2
+details:
+  - Default range is {-1, 1} with a sine-like phase, NOT the [0, 1] tent [[UnitTriangle]]/[[HeavisideLambda]] use -- TriangleWave(0) = 0, not 1.
+  - Continuous everywhere, including at the peak and trough.
+  - The range form takes the range FIRST, x second -- TriangleWave({min, max}, x) -- matching [[SawtoothWave]] and [[SquareWave]].
+examples:
+  - id: trianglewave-zero
+    expr: [TriangleWave, 0]
+    expected: 0
+    caption: Zero-crossing at x = 0, unlike [[UnitTriangle]]'s peak there
+  - id: trianglewave-quarter-peak
+    expr: [TriangleWave, [Rational, 1, 4]]
+    expected: 1
+    caption: The peak, at the quarter period
+  - id: trianglewave-half
+    expr: [TriangleWave, [Rational, 1, 2]]
+    expected: 0
+    caption: Zero-crossing again at the half period
+  - id: trianglewave-three-quarters-trough
+    expr: [TriangleWave, [Rational, 3, 4]]
+    expected: -1
+    caption: The trough, at the three-quarter period
+  - id: trianglewave-periodic
+    expr: [Equal, [TriangleWave, [Rational, 1, 4]], [TriangleWave, [Add, [Rational, 1, 4], 3]]]
+    expected: True
+    category: Properties
+    caption: Period 1
+  - id: trianglewave-ranged
+    expr: [TriangleWave, [List, 0, 10], [Rational, 1, 2]]
+    expected: 5
+    category: Scope
+    caption: Rescaled to a {min, max} range -- the range's midpoint at the half period

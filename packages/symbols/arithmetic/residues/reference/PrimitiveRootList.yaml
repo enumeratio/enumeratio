@@ -69,6 +69,17 @@ examples:
     expected: 333332
     caption: past 100 000 roots the list is not built, but its length is still $\varphi(\varphi(n))$
     category: Possible issues
+  - id: past-the-cap-primitiverootlist-itself-stays
+    expr: [PrimitiveRootList, 1000003]
+    expected: [PrimitiveRootList, 1000003]
+    category: Possible issues
+    caption: Past the listing cap the head stays unevaluated
+    role: test
+  - id: the-first-element-still-answers-past-the-cap
+    expr: [At, [PrimitiveRootList, 1000003], 1]
+    expected: 2
+    category: Possible issues
+    role: test
 seeAlso:
   - PrimitiveRoot
   - MultiplicativeOrder

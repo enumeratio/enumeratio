@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: CyclicShift(Permutation([2, 3, 1]))
+    out: Permutation([3, 1, 2])
+  tex:
+    in: \mathrm{CyclicShift}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+  fullform:
+    in: CyclicShift[Permutation[List[2, 3, 1]]]

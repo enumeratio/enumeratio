@@ -1,0 +1,89 @@
+n-pi-30:
+  epsil:
+    in: N(Pi, 30)
+    out: 3.141_592_653_589_793_238_462_643_383_28
+  tex:
+    in: N(\pi, 30)
+    out: 3.141\,592\,653\,589\,793\,238\,46
+  fullform:
+    in: N[Pi, 30]
+  wolfram:
+    in: N[Pi, 30]
+  sympy:
+    in: N(pi, 30)
+  mpmath:
+    in: (pi)
+  sage:
+    in: N(pi)
+  rust:
+    in: nf(x(std::f64::consts::PI))
+the-last-digit-correctly-rounded-computing-at-30:
+  epsil:
+    in: N(Sinh(1), 30)
+    out: 1.175_201_193_643_801_456_882_381_850_60
+  tex:
+    in: N(\sinh(1), 30)
+    out: 1.175\,201\,193\,643\,801\,456\,88
+  fullform:
+    in: N[Sinh[1], 30]
+  wolfram:
+    in: N[Sinh[1], 30]
+a-list-number-by-number:
+  epsil:
+    in: N([Pi, ExponentialE, Sqrt(2)], 5)
+    out: "[3.141_6, 2.718_3, 1.414_2]"
+  tex:
+    in: N(\bigl\lbrack\pi, e, \sqrt{2}\bigr\rbrack, 5)
+    out: \bigl\lbrack3.141\,6, 2.718\,3, 1.414\,2\bigr\rbrack
+  fullform:
+    in: N[List[Pi, E, Sqrt[2]], 5]
+  wolfram:
+    in: N[List[Pi, E, Sqrt[2]], 5]
+  sympy:
+    in: N([pi, E, sqrt(2)], 30)
+  sage:
+    in: N([pi, e, sqrt(2)])
+  rust:
+    in: nf(list(vec![x(std::f64::consts::PI), x(std::f64::consts::E), sqrt(n(2))]))
+an-exact-tie-rounds-to-the-even-digit-0-125:
+  epsil:
+    in: N(1 / 8, 2)
+    out: "0.12"
+  tex:
+    in: N(\frac{1}{8}, 2)
+    out: "0.12"
+  fullform:
+    in: N[Rational[1, 8], 2]
+  wolfram:
+    in: N[Rational[1, 8], 2]
+  sympy:
+    in: N(Rational(1, 8), 30)
+  sage:
+    in: N((1/8))
+  oscar:
+    in: ((1 // 8))
+  julia:
+    in: ((1 // 8))
+  rust:
+    in: nf(rational(n(1), n(8)))
+and-0-375-to-0-38:
+  epsil:
+    in: N(3 / 8, 2)
+    out: "0.38"
+  tex:
+    in: N(\frac{3}{8}, 2)
+    out: "0.38"
+  fullform:
+    in: N[Rational[3, 8], 2]
+  wolfram:
+    in: N[Rational[3, 8], 2]
+  sympy:
+    in: N(Rational(3, 8), 30)
+  sage:
+    in: N((3/8))
+  oscar:
+    in: ((3 // 8))
+  julia:
+    in: ((3 // 8))
+  rust:
+    in: nf(rational(n(3), n(8)))

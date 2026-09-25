@@ -1,0 +1,9 @@
+count-skewstandardtableaux-3-24-standard:
+  epsil:
+    in: Count(SkewStandardTableaux(3))
+    out: "24"
+  tex:
+    in: \mathrm{Count}(\mathrm{SkewStandardTableaux}(3))
+    out: "24"
+  fullform:
+    in: Count[SkewStandardTableaux[3]]

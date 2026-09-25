@@ -1,120 +1,373 @@
 bernoullib-0:
+  epsil:
+    in: BernoulliB(0)
+    out: "1"
+  tex:
+    in: \mathrm{BernoulliB}(0)
+    out: "1"
+  traditional:
+    in: B_{0}
+    out: "1"
+  fullform:
+    in: BernoulliB[0]
   wolfram:
     in: BernoulliB[0]
     out: "1"
     tex:
       in: B_0
       out: "1"
-  sage:
-    in: bernoulli(0)
-    out: "1"
   sympy:
     in: bernoulli(0)
     out: "1"
+  sage:
+    in: bernoulli(0)
+    out: "1"
 bernoullib-1:
+  epsil:
+    in: BernoulliB(1)
+    out: -1 / 2
+  tex:
+    in: \mathrm{BernoulliB}(1)
+    out: -\frac{1}{2}
+  traditional:
+    in: B_{1}
+    out: -\frac{1}{2}
+  fullform:
+    in: BernoulliB[1]
   wolfram:
     in: BernoulliB[1]
     out: -1/2
     tex:
       in: B_1
       out: -\frac{1}{2}
-  sage:
-    in: bernoulli(1)
-    out: -1/2
   sympy:
     in: bernoulli(1)
     out: 1/2
     verdict: disagree
     kind: convention
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does.
+  sage:
+    in: bernoulli(1)
+    out: -1/2
 bernoullib-2:
+  epsil:
+    in: BernoulliB(2)
+    out: 1 / 6
+  tex:
+    in: \mathrm{BernoulliB}(2)
+    out: \frac{1}{6}
+  traditional:
+    in: B_{2}
+    out: \frac{1}{6}
+  fullform:
+    in: BernoulliB[2]
   wolfram:
     in: BernoulliB[2]
     out: 1/6
     tex:
       in: B_2
       out: \frac{1}{6}
-  sage:
-    in: bernoulli(2)
-    out: 1/6
   sympy:
     in: bernoulli(2)
     out: 1/6
+  sage:
+    in: bernoulli(2)
+    out: 1/6
 bernoullib-4:
+  epsil:
+    in: BernoulliB(4)
+    out: -1 / 30
+  tex:
+    in: \mathrm{BernoulliB}(4)
+    out: -\frac{1}{30}
+  traditional:
+    in: B_{4}
+    out: -\frac{1}{30}
+  fullform:
+    in: BernoulliB[4]
   wolfram:
     in: BernoulliB[4]
     out: -1/30
     tex:
       in: B_4
       out: -\frac{1}{30}
-  sage:
-    in: bernoulli(4)
-    out: -1/30
   sympy:
     in: bernoulli(4)
     out: -1/30
+  sage:
+    in: bernoulli(4)
+    out: -1/30
 bernoullib-12:
+  epsil:
+    in: BernoulliB(12)
+    out: -691 / 2_730
+  tex:
+    in: \mathrm{BernoulliB}(12)
+    out: -\frac{691}{2\,730}
+  traditional:
+    in: B_{12}
+    out: -\frac{691}{2\,730}
+  fullform:
+    in: BernoulliB[12]
   wolfram:
     in: BernoulliB[12]
     out: -691/2730
     tex:
       in: B_{12}
       out: -\frac{691}{2730}
-  sage:
-    in: bernoulli(12)
-    out: -691/2730
   sympy:
     in: bernoulli(12)
     out: -691/2730
+  sage:
+    in: bernoulli(12)
+    out: -691/2730
+bernoullib-10:
+  epsil:
+    in: BernoulliB(10)
+    out: 5 / 66
+  tex:
+    in: \mathrm{BernoulliB}(10)
+    out: \frac{5}{66}
+  traditional:
+    in: B_{10}
+    out: \frac{5}{66}
+  fullform:
+    in: BernoulliB[10]
+  wolfram:
+    in: BernoulliB[10]
+  sympy:
+    in: bernoulli(10)
+  sage:
+    in: bernoulli(10)
+exact-rationals-at-any-index:
+  epsil:
+    in: BernoulliB(60)
+    out: -1_215_233_140_483_755_572_040_304_994_079_820_246_041_491 / 56_786_730
+  tex:
+    in: \mathrm{BernoulliB}(60)
+    out: -\frac{1\,215\,233\,140\,483\,755\,572\,040\,304\,994\,079\,820\,246\,041\,491}{56\,786\,730}
+  traditional:
+    in: B_{60}
+    out: -\frac{1\,215\,233\,140\,483\,755\,572\,040\,304\,994\,079\,820\,246\,041\,491}{56\,786\,730}
+  fullform:
+    in: BernoulliB[60]
+  wolfram:
+    in: BernoulliB[60]
+  sympy:
+    in: bernoulli(60)
+  sage:
+    in: bernoulli(60)
+listable-b-n-threads-over-a-list-of-indices:
+  epsil:
+    in: BernoulliB([2, 4, 6])
+    out: "[1 / 6, -1 / 30, 1 / 42]"
+  tex:
+    in: \mathrm{BernoulliB}(\bigl\lbrack2, 4, 6\bigr\rbrack)
+    out: \bigl\lbrack\frac{1}{6}, -\frac{1}{30}, \frac{1}{42}\bigr\rbrack
+  fullform:
+    in: BernoulliB[List[2, 4, 6]]
+  wolfram:
+    in: BernoulliB[List[2, 4, 6]]
+  sympy:
+    in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
+  sage:
+    in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
+the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac:
+  epsil:
+    in: BernoulliB(4, x)
+    out: x ^ 4 - 2 * x ^ 3 + x ^ 2 + -1 / 30
+  tex:
+    in: \mathrm{BernoulliB}(4, x)
+    out: x^4-2x^3+x^2-\frac{1}{30}
+  traditional:
+    in: B_{4}(x)
+    out: x^4-2x^3+x^2-\frac{1}{30}
+  fullform:
+    in: BernoulliB[4, x]
+the-bernoulli-polynomial-at-a-rational-point-b-2:
+  epsil:
+    in: BernoulliB(2, 1 / 2)
+    out: -1 / 12
+  tex:
+    in: \mathrm{BernoulliB}(2, \frac{1}{2})
+    out: -\frac{1}{12}
+  traditional:
+    in: B_{2}(\frac{1}{2})
+    out: -\frac{1}{12}
+  fullform:
+    in: BernoulliB[2, Rational[1, 2]]
+  wolfram:
+    in: BernoulliB[2, Rational[1, 2]]
+b-1-1-frac-12-is-the-other-convention-for-b-1:
+  epsil:
+    in: BernoulliB(1, 1)
+    out: 1 / 2
+  tex:
+    in: \mathrm{BernoulliB}(1, 1)
+    out: \frac{1}{2}
+  traditional:
+    in: B_{1}(1)
+    out: \frac{1}{2}
+  fullform:
+    in: BernoulliB[1, 1]
+  wolfram:
+    in: BernoulliB[1, 1]
+von-staudt-clausen-the-denominator-of-b-2n-is:
+  epsil:
+    in: Denominator(BernoulliB(12))
+    out: 2_730
+  tex:
+    in: \mathrm{Denominator}(\mathrm{BernoulliB}(12))
+    out: 2\,730
+  traditional:
+    in: \mathrm{Denominator}(B_{12})
+    out: 2\,730
+  fullform:
+    in: Denominator[BernoulliB[12]]
+zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see:
+  epsil:
+    in: Zeta(-3) == -(BernoulliB(4) / 4)
+    out: True
+  tex:
+    in: \zeta(-3)=-\frac{\mathrm{BernoulliB}(4)}{4}
+    out: \top
+  traditional:
+    in: \zeta(-3)=-\frac{B_{4}}{4}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Zeta[-3], Minus[Divide[BernoulliB[4], 4]]]
+  wolfram:
+    in: (Zeta[-3] == Minus[Divide[BernoulliB[4], 4]])
+  sympy:
+    in: enumeratio_equal(zeta(-3), (-(S(bernoulli(4)) / 4)))
+  sage:
+    in: bool(zeta(-3) == (-(bernoulli(4) / 4)))
+the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
+  epsil:
+    in: |-
+      Binomial(5, 0) * BernoulliB(0) + Binomial(5, 1) * BernoulliB(1) + Binomial(5, 2) *
+                                                                        BernoulliB(2) + Binomial(5, 3) *
+                                                                           BernoulliB(3) + Binomial(5, 4) *
+                                                                              BernoulliB(4)
+    out: "0"
+  tex:
+    in: \binom{5}{0}\mathrm{BernoulliB}(0)+\binom{5}{1}\mathrm{BernoulliB}(1)+\binom{5}{2}\mathrm{BernoulliB}(2)+\binom{5}{3}\mathrm{BernoulliB}(3)+\binom{5}{4}\mathrm{BernoulliB}(4)
+    out: "0"
+  traditional:
+    in: \binom{5}{0}B_{0}+\binom{5}{1}B_{1}+\binom{5}{2}B_{2}+\binom{5}{3}B_{3}+\binom{5}{4}B_{4}
+    out: "0"
+  fullform:
+    in: Plus[Times[Binomial[5, 0], BernoulliB[0]], Times[Binomial[5, 1], BernoulliB[1]], Times[Binomial[5, 2], BernoulliB[2]], Times[Binomial[5, 3], BernoulliB[3]], Times[Binomial[5, 4], BernoulliB[4]]]
+  wolfram:
+    in: Plus[Times[Binomial[5, 0], BernoulliB[0]], Times[Binomial[5, 1], BernoulliB[1]], Times[Binomial[5, 2], BernoulliB[2]], Times[Binomial[5, 3], BernoulliB[3]], Times[Binomial[5, 4], BernoulliB[4]]]
+  sympy:
+    in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
+  sage:
+    in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
 b-n-0-for-every-odd-n-1:
+  epsil:
+    in: BernoulliB(5) == 0
+    out: True
+  tex:
+    in: \mathrm{BernoulliB}(5)=0
+    out: \top
+  traditional:
+    in: B_{5}=0
+    out: \mathrm{True}
+  fullform:
+    in: Equal[BernoulliB[5], 0]
   wolfram:
     in: (BernoulliB[5] == 0)
     out: True
     tex:
       in: B_5=0
       out: \text{True}
-  sage:
-    in: bool(bernoulli(5) == 0)
-    out: True
   sympy:
     in: enumeratio_equal(bernoulli(5), 0)
     out: True
+  sage:
+    in: bool(bernoulli(5) == 0)
+    out: True
 faulhaber-s-formula-recovers-sum-k-0-4-k-2-30:
+  epsil:
+    in: |-
+      (Binomial(3, 0) * BernoulliB(0) * 5 ^ 3 + Binomial(3, 1) * BernoulliB(1) * 5 ^ 2 +
+       Binomial(3, 2) * BernoulliB(2) * 5 ^ 1) / 3
+    out: "30"
+  tex:
+    in: \frac{1}{3}(\binom{3}{0}\mathrm{BernoulliB}(0)\times5^3+\binom{3}{1}\mathrm{BernoulliB}(1)\times5^2+\binom{3}{2}\mathrm{BernoulliB}(2)\times5^1)
+    out: "30"
+  traditional:
+    in: \frac{1}{3}(\binom{3}{0}B_{0}\times5^3+\binom{3}{1}B_{1}\times5^2+\binom{3}{2}B_{2}\times5^1)
+    out: "30"
+  fullform:
+    in: Divide[Plus[Times[Binomial[3, 0], BernoulliB[0], Power[5, 3]], Times[Binomial[3, 1], BernoulliB[1], Power[5, 2]], Times[Binomial[3, 2], BernoulliB[2], Power[5, 1]]], 3]
   wolfram:
     in: Divide[Plus[Times[Binomial[3, 0], BernoulliB[0], Power[5, 3]], Times[Binomial[3, 1], BernoulliB[1], Power[5, 2]], Times[Binomial[3, 2], BernoulliB[2], Power[5, 1]]], 3]
     out: "30"
     tex:
       in: \frac{\binom{3}{0} B_0 5^3+\binom{3}{1} B_1 5^2+\binom{3}{2} B_2 5^1}{3}
       out: "30"
-  sage:
-    in: (((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)
-    out: "30"
   sympy:
     in: (S(((binomial(3, 0) * bernoulli(0) * (5**3)) + (binomial(3, 1) * bernoulli(1) * (5**2)) + (binomial(3, 2) * bernoulli(2) * (5**1)))) / 3)
     out: "55"
     verdict: disagree
     kind: convention
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does.
+  sage:
+    in: (((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)
+    out: "30"
 bernoulli-numbers-are-only-defined-for-n-ge-0-a:
+  epsil:
+    in: BernoulliB(-1)
+    out: BernoulliB(-1)
+  tex:
+    in: \mathrm{BernoulliB}(-1)
+    out: \mathrm{BernoulliB}(-1)
+  traditional:
+    in: B_{-1}
+    out: B_{-1}
+  fullform:
+    in: BernoulliB[-1]
   wolfram:
     in: BernoulliB[-1]
     out: BernoulliB[-1]
     tex:
       in: B_{-1}
       out: B_{-1}
-  sage:
-    in: bernoulli(-1)
-    out: "OverflowError: can't convert negative value to unsigned long"
-    verdict: error
-    kind: undefined-form
-    note: 'Both decline: compute-engine answers ["BernoulliB", -1] and Sage raises an error.'
   sympy:
     in: bernoulli(-1)
     out: bernoulli(-1)
     verdict: inconclusive
     kind: undefined-form
     note: "Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated."
+  sage:
+    in: bernoulli(-1)
+    out: "OverflowError: can't convert negative value to unsigned long"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BernoulliB", -1] and Sage raises an error.'
+with-a-second-argument-the-bernoulli-polynomial:
+  epsil:
+    in: BernoulliB(1, x)
+    out: x + -1 / 2
+  tex:
+    in: \mathrm{BernoulliB}(1, x)
+    out: x-\frac{1}{2}
+  traditional:
+    in: B_{1}(x)
+    out: x-\frac{1}{2}
+  fullform:
+    in: BernoulliB[1, x]
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: BernoulliB([1, 2, 3])
+    out: "[-1 / 2, 1 / 6, 0]"
+  tex:
+    in: \mathrm{BernoulliB}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack-\frac{1}{2}, \frac{1}{6}, 0\bigr\rbrack
+  fullform:
+    in: BernoulliB[List[1, 2, 3]]
   wolfram:
     in: BernoulliB[List[1, 2, 3]]
     out: "{-1/2, 1/6, 0}"
@@ -122,21 +375,34 @@ threads-element-wise-over-a-list-as-wolfram-s:
       in: B_{\{1,2,3\}}
       out: \left\{-\frac{1}{2},\frac{1}{6},0\right\}
   sympy:
-    in: bernoulli([1, 2, 3])
+    in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
     out: "AttributeError: 'list' object has no attribute 'is_zero'"
     verdict: error
     kind: threading
     note: compute-engine's BernoulliB is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
 numerators-and-denominators-grow-quickly-b-20:
+  epsil:
+    in: BernoulliB(20)
+    out: -174_611 / 330
+  tex:
+    in: \mathrm{BernoulliB}(20)
+    out: -\frac{174\,611}{330}
+  traditional:
+    in: B_{20}
+    out: -\frac{174\,611}{330}
+  fullform:
+    in: BernoulliB[20]
   wolfram:
     in: BernoulliB[20]
     out: -174611/330
     tex:
       in: B_{20}
       out: -\frac{174611}{330}
-  sage:
+  sympy:
     in: bernoulli(20)
     out: -174611/330
-  sympy:
+  sage:
     in: bernoulli(20)
     out: -174611/330

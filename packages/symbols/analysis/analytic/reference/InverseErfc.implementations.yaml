@@ -1,0 +1,101 @@
+erfc-1-1-2-erf-1-1-2:
+  epsil:
+    in: InverseErfc(0.5)
+    out: 0.476_936_276_204_469_9
+  tex:
+    in: \mathrm{InverseErfc}(0.5)
+    out: 0.476\,936\,276\,204\,469\,9
+  fullform:
+    in: InverseErfc[0.5]
+  wolfram:
+    in: InverseErfc[0.5]
+erfc-1-1-0:
+  epsil:
+    in: InverseErfc(1)
+    out: "0"
+  tex:
+    in: \mathrm{InverseErfc}(1)
+    out: "0"
+  fullform:
+    in: InverseErfc[1]
+  wolfram:
+    in: InverseErfc[1]
+erfc-1-0-infty:
+  epsil:
+    in: InverseErfc(0)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{InverseErfc}(0)
+    out: \infty
+  fullform:
+    in: InverseErfc[0]
+  wolfram:
+    in: InverseErfc[0]
+erfc-1-2-infty:
+  epsil:
+    in: InverseErfc(2)
+    out: NegativeInfinity
+  tex:
+    in: \mathrm{InverseErfc}(2)
+    out: -\infty
+  fullform:
+    in: InverseErfc[2]
+  wolfram:
+    in: InverseErfc[2]
+arguments-in-1-2-give-negative-values:
+  epsil:
+    in: InverseErfc(1.5)
+    out: -0.476_936_276_204_469_9
+  tex:
+    in: \mathrm{InverseErfc}(1.5)
+    out: -0.476\,936\,276\,204\,469\,9
+  fullform:
+    in: InverseErfc[1.5]
+  wolfram:
+    in: InverseErfc[1.5]
+listable:
+  epsil:
+    in: InverseErfc([0, 1])
+    out: "[PositiveInfinity, 0]"
+  tex:
+    in: \mathrm{InverseErfc}(\bigl\lbrack0, 1\bigr\rbrack)
+    out: \bigl\lbrack\infty, 0\bigr\rbrack
+  fullform:
+    in: InverseErfc[List[0, 1]]
+  wolfram:
+    in: InverseErfc[List[0, 1]]
+sqrt-2-times-this-2-5758-is-the-two-sided-99:
+  epsil:
+    in: InverseErfc(0.01)
+    out: 1.821_386_367_718_449_6
+  tex:
+    in: \mathrm{InverseErfc}(0.01)
+    out: 1.821\,386\,367\,718\,449\,6
+  fullform:
+    in: InverseErfc[0.01]
+  wolfram:
+    in: InverseErfc[0.01]
+deep-in-the-tail-it-keeps-full-precision-where:
+  epsil:
+    in: InverseErfc(e-10)
+    out: 4.572_824_967_389_485
+  tex:
+    in: \mathrm{InverseErfc}(10^{-10})
+    out: 4.572\,824\,967\,389\,485
+  fullform:
+    in: InverseErfc[1*^-10]
+    back: [InverseErfc, 1e-10]
+  wolfram:
+    in: InverseErfc[1*^-10]
+erfc-erfc-1-x-x:
+  epsil:
+    in: Erfc(InverseErfc(x))
+    out: x
+  tex:
+    in: \mathrm{Erfc}(\mathrm{InverseErfc}(x))
+    out: x
+  traditional:
+    in: \operatorname{erfc}(\mathrm{InverseErfc}(x))
+    out: x
+  fullform:
+    in: Erfc[InverseErfc[x]]

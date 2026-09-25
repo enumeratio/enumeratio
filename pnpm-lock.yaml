@@ -409,6 +409,12 @@ importers:
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../symbols/groups/braid
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
       '@enumeratio/reference':
         specifier: workspace:*
         version: link:../reference

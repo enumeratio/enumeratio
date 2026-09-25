@@ -1,0 +1,26 @@
+petersen-is-2-eccentric-everywhere:
+  epsil:
+    in: VertexEccentricity(PetersenGraph(), 1)
+    out: "2"
+  tex:
+    in: \mathrm{VertexEccentricity}(\mathrm{PetersenGraph}(), 1)
+    out: "2"
+  fullform:
+    in: VertexEccentricity[PetersenGraph[], 1]
+  wolfram:
+    in: VertexEccentricity[PetersenGraph[], 1]
+disconnected-vertex-is-infinite:
+  epsil:
+    in: |-
+      VertexEccentricity(Graph([1, 2, 3, 4], [
+                                               UndirectedEdge(1, 2),
+                                               UndirectedEdge(3, 4),
+                                             ]), 1)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{VertexEccentricity}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack), 1)
+    out: \infty
+  fullform:
+    in: VertexEccentricity[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]], 1]
+  wolfram:
+    in: VertexEccentricity[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]], 1]

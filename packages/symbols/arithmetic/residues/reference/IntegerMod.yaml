@@ -56,6 +56,56 @@ examples:
     expected: [ChineseRemainder, [IntegerMod, 1, 4], [IntegerMod, 2, 6]]
     caption: "odd mod 4 and even mod 6 at once: no such class"
     category: Possible issues
+  - id: integermod-negative-1-7
+    expr: [IntegerMod, -1, 7]
+    expected: [IntegerMod, 6, 7]
+    role: test
+  - id: a-non-unit-denominator-mod-4-stays-unevaluated
+    expr: [IntegerMod, [Rational, 1, 2], 4]
+    expected: [IntegerMod, [Rational, 1, 2], 4]
+    role: test
+    category: Possible issues
+  - id: adding-two-classes-mod-7
+    expr: [Add, [IntegerMod, 5, 7], [IntegerMod, 4, 7]]
+    expected: [IntegerMod, 2, 7]
+    role: test
+    category: Scope
+  - id: adding-a-plain-integer-to-a-class
+    expr: [Add, [IntegerMod, 5, 7], 3]
+    expected: [IntegerMod, 1, 7]
+    role: test
+    category: Scope
+  - id: subtracting-two-classes-mod-7
+    expr: [Subtract, [IntegerMod, 2, 7], [IntegerMod, 5, 7]]
+    expected: [IntegerMod, 4, 7]
+    role: test
+    category: Scope
+  - id: multiplying-two-classes-mod-7
+    expr: [Multiply, [IntegerMod, 3, 7], [IntegerMod, 5, 7]]
+    expected: [IntegerMod, 1, 7]
+    role: test
+    category: Scope
+  - id: power-with-exponent-negative-1-is-the-inverse
+    expr: [Power, [IntegerMod, 3, 7], -1]
+    expected: [IntegerMod, 5, 7]
+    role: test
+    category: Scope
+  - id: negating-a-class-mod-7
+    expr: [Negate, [IntegerMod, 3, 7]]
+    expected: [IntegerMod, 4, 7]
+    role: test
+    category: Scope
+  - id: power-with-negative-exponent-of-a-non-unit
+    expr: [Power, [IntegerMod, 2, 4], -1]
+    expected: [Divide, 1, [IntegerMod, 2, 4]]
+    role: test
+    category: Possible issues
+    caption: 2 is not a unit mod 4, so the negative power stays as a `Divide`
+  - id: chineseremainder-integermod-1-4-integermod-3-6
+    expr: [ChineseRemainder, [IntegerMod, 1, 4], [IntegerMod, 3, 6]]
+    expected: [IntegerMod, 9, 12]
+    role: test
+    category: Applications
 seeAlso:
   - IntegerModRing
   - Mod

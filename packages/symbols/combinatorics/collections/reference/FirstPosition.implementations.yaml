@@ -1,0 +1,27 @@
+the-first-occurrence-of-b-nested-inside-the:
+  epsil:
+    in: FirstPosition([[a, a, b], [b, a, a], [a, b, a]], b)
+    out: "[1, 3]"
+  tex:
+    in: \mathrm{FirstPosition}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, \bigl\lbrack b, a, a\bigr\rbrack, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b)
+    out: \bigl\lbrack1, 3\bigr\rbrack
+  fullform:
+    in: FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
+the-empty-list-when-the-value-isn-t-found:
+  epsil:
+    in: FirstPosition([a, [a, c]], b)
+    out: "[]"
+  tex:
+    in: \mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, c\bigr\rbrack\bigr\rbrack, b)
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: FirstPosition[List[a, List[a, c]], b]
+a-match-nested-inside-an-earlier-sublist-beats-a:
+  epsil:
+    in: FirstPosition([a, [a, b], b], b)
+    out: "[2, 2]"
+  tex:
+    in: \mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, b\bigr\rbrack, b\bigr\rbrack, b)
+    out: \bigl\lbrack2, 2\bigr\rbrack
+  fullform:
+    in: FirstPosition[List[a, List[a, b], b], b]

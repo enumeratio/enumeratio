@@ -1,0 +1,31 @@
+name: HeavisideLambda
+domain: Elementary functions
+signature: HeavisideLambda(x)
+summary: "The Heaviside-family triangle function: 1 - |x| for -1 <= x <= 1, 0 otherwise."
+signatures:
+  - call: HeavisideLambda(x)
+    description: max(1 - |x|, 0).
+    library: "@enumeratio/analytic"
+details:
+  - Continuous everywhere, so HeavisideLambda(±1) = 0 falls out of the formula, no special case.
+  - The same function as [[UnitTriangle]] -- Wolfram gives it a second name for the Heaviside/Dirac generalized-function family it belongs to (it is HeavisideTheta convolved with itself).
+examples:
+  - id: heavisidelambda-peak
+    expr: [HeavisideLambda, 0]
+    expected: 1
+  - id: heavisidelambda-endpoint
+    expr: [HeavisideLambda, 1]
+    expected: 0
+    caption: Zero at the endpoint
+  - id: heavisidelambda-neg-endpoint
+    expr: [HeavisideLambda, -1]
+    expected: 0
+  - id: heavisidelambda-outside
+    expr: [HeavisideLambda, 2]
+    expected: 0
+    category: Scope
+  - id: heavisidelambda-1-4
+    expr: [HeavisideLambda, [Rational, 1, 4]]
+    expected: [Rational, 3, 4]
+    category: Scope
+    caption: Exact rational input, exact rational output

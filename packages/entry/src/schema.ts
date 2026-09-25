@@ -82,7 +82,6 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     role: EXAMPLE_ROLE,
     aspirational: { type: "boolean" },
     volatile: { type: "array", items: { type: "string" } },
-    hidden: { type: "boolean", description: "Deprecated: superseded by role: test." },
     group: {
       type: "string",
       description: "Cases of one example: those sharing a group show as one cycling card.",
@@ -220,6 +219,7 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
     issue: { type: "integer" },
     tolerance: { type: "number" },
     messages: { type: "array", items: { $ref: "#/$defs/EvaluationMessage" } },
+    back: { $ref: "#/$defs/MathJSON" },
   },
   required: ["in"],
   additionalProperties: false,
@@ -242,6 +242,7 @@ export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
     additionalProperties: { $ref: "#/$defs/SystemImplementation" },
   },
   $defs: {
+    MathJSON: MATHJSON,
     RenderedForm: RENDERED_FORM,
     EvaluationMessage: EVALUATION_MESSAGE,
     SystemImplementation: SYSTEM_IMPLEMENTATION,

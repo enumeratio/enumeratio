@@ -18,6 +18,7 @@ import {
 } from "@enumeratio/notatio";
 import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
 import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import { fragment, setFragment } from "../fragment.ts";
 
 const props = defineProps<{ expr: string; env?: string }>();
 
@@ -48,20 +49,21 @@ const textOnly = computed(() => environment.value.surface.every((s) => s === "te
 const card = ref<HTMLElement>();
 const story = (): HTMLElement | null | undefined => card.value?.closest<HTMLElement>(".story[id]");
 
-/** Open on the environment the hash names for this card, and bring the card into view. */
-const followHash = (): void => {
+/** Open on the environment the fragment names for this card (fragment.ts scrolls to it). */
+const follow = (): void => {
   const id = story()?.id;
-  const [target, env] = decodeURIComponent(location.hash.slice(1)).split("=");
-  if (id === undefined || target !== id || !ENVIRONMENTS.some((e) => e.name === env)) return;
-  chosen.value = env!;
-  story()?.scrollIntoView();
+  const { target, sub } = fragment.value;
+  if (id === undefined || target !== id || !ENVIRONMENTS.some((e) => e.name === sub)) return;
+  chosen.value = sub!;
 };
 const pick = (): void => {
   const id = story()?.id;
-  if (id) history.replaceState(history.state, "", `#${id}=${chosen.value}`);
+  // Only a card the URL already names records its environment there.
+  if (id !== undefined && fragment.value.target === id) setFragment(id, chosen.value);
 };
 // The card mounts inside ClientOnly, after this component does.
-watch(card, (el) => el && followHash());
+watch(card, (el) => el && follow());
+watch(fragment, follow);
 
 let media: MediaQueryList | undefined;
 const onMedia = (e: MediaQueryListEvent): void => {
@@ -72,11 +74,9 @@ onMounted(() => {
   media = window.matchMedia("print");
   printing.value = mediaSignals((q) => window.matchMedia(q)).print === true;
   media.addEventListener("change", onMedia);
-  window.addEventListener("hashchange", followHash);
 });
 onUnmounted(() => {
   media?.removeEventListener("change", onMedia);
-  window.removeEventListener("hashchange", followHash);
 });
 </script>
 

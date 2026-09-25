@@ -1,0 +1,11 @@
+vertex-count-of-k4:
+  epsil:
+    in: VertexCount(CompleteGraph(4))
+    out: "4"
+  tex:
+    in: \mathrm{VertexCount}(\mathrm{CompleteGraph}(4))
+    out: "4"
+  fullform:
+    in: VertexCount[CompleteGraph[4]]
+  wolfram:
+    in: VertexCount[CompleteGraph[4]]

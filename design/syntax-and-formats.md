@@ -3,8 +3,10 @@
 How notatio — the interface — reads input and renders output, across the notebook, the
 REPL, the command line, and the host. The language underneath is Epsil, compute-engine's
 own; enumeratio's symbols are declared into it, and `notatio` is also the name of the
-subset of Epsil the interface reads and writes (below). Split out of the compute-host doc so the surface-syntax decisions live in
-one place. Some of this is **implemented**; the rest is direction.
+subset of Epsil the interface reads and writes (below). In the reference data that text form
+is keyed `epsil`, and `notatio` keys the component serialisation (design/examples-as-data.md
+§2); the name is moving that way. Split out of the compute-host doc so the surface-syntax
+decisions live in one place. Some of this is **implemented**; the rest is direction.
 
 ## Input syntax — Epsil is the default (implemented)
 

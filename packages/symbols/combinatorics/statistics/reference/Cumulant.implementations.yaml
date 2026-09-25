@@ -1,0 +1,22 @@
+cumulant-order-1-is-mean:
+  epsil:
+    in: Cumulant(ChiSquareDistribution(3), 1)
+    out: "3"
+  tex:
+    in: \mathrm{Cumulant}(\mathrm{ChiSquareDistribution}(3), 1)
+    out: "3"
+  fullform:
+    in: Cumulant[ChiSquareDistribution[3], 1]
+  wolfram:
+    in: Cumulant[ChiSquareDistribution[3], 1]
+cumulant-order-2-is-variance:
+  epsil:
+    in: Cumulant(ChiSquareDistribution(3), 2)
+    out: "6"
+  tex:
+    in: \mathrm{Cumulant}(\mathrm{ChiSquareDistribution}(3), 2)
+    out: "6"
+  fullform:
+    in: Cumulant[ChiSquareDistribution[3], 2]
+  wolfram:
+    in: Cumulant[ChiSquareDistribution[3], 2]

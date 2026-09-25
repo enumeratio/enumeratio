@@ -22,8 +22,16 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the id check reads the base commit
       - uses: ./.github/actions/setup
       - run: pnpm exec vp check
+      - name: example ids aren't renamed silently
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: node .github/scripts/example-ids.ts
       - run: pnpm --filter @enumeratio/web run test
       - run: pnpm --filter @enumeratio/web run build
       - uses: actions/upload-artifact@v4

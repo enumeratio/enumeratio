@@ -1,0 +1,36 @@
+exp:
+  epsil:
+    in: MeijerGReduce(ExponentialE ^ x, x)
+    out: MeijerG([[], []], [[0], []], -x)
+  tex:
+    in: \mathrm{MeijerGReduce}(e^{x}, x)
+    out: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack \bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0\bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, -x)
+  fullform:
+    in: MeijerGReduce[Power[E, x], x]
+sin:
+  epsil:
+    in: MeijerGReduce(Sin(x), x)
+    out: MeijerG([[], []], [[1 / 2], [0]], 1 / 4 * x ^ 2) * Sqrt(Pi)
+  tex:
+    in: \mathrm{MeijerGReduce}(\sin(x), x)
+    out: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack \bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\frac{1}{2}\bigr\rbrack, \bigl\lbrack0\bigr\rbrack\bigr\rbrack, \frac{x^2}{4})\sqrt{\pi}
+  fullform:
+    in: MeijerGReduce[Sin[x], x]
+log1p:
+  epsil:
+    in: MeijerGReduce(Ln(1 + x), x)
+    out: MeijerG([[1, 1], []], [[1], [0]], x)
+  tex:
+    in: \mathrm{MeijerGReduce}(\ln(1+x), x)
+    out: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack0\bigr\rbrack\bigr\rbrack, x)
+  fullform:
+    in: MeijerGReduce[Log[Plus[1, x]], x]
+bessel-j:
+  epsil:
+    in: MeijerGReduce(BesselJ(n, x), x)
+    out: MeijerG([[], []], [[1 / 2 * n], [-1 / 2 * n]], 1 / 4 * x ^ 2)
+  tex:
+    in: \mathrm{MeijerGReduce}(\operatorname{J}_{n}(x), x)
+    out: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack \bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\frac{n}{2}\bigr\rbrack, \bigl\lbrack-\frac{n}{2}\bigr\rbrack\bigr\rbrack, \frac{x^2}{4})
+  fullform:
+    in: MeijerGReduce[BesselJ[n, x], x]

@@ -1,0 +1,58 @@
+beta-pdf-exact:
+  epsil:
+    in: PDF(BetaDistribution(2, 3), 1 / 2)
+    out: 3 / 2
+  tex:
+    in: \operatorname{PDF}(\mathrm{BetaDistribution}(2, 3), \frac{1}{2})
+    out: \frac{3}{2}
+  fullform:
+    in: PDF[BetaDistribution[2, 3], Rational[1, 2]]
+  wolfram:
+    in: PDF[BetaDistribution[2, 3], Rational[1, 2]]
+beta-cdf-exact:
+  epsil:
+    in: CDF(BetaDistribution(2, 3), 1 / 2)
+    out: BetaRegularized(1 / 2, 2, 3)
+  tex:
+    in: \operatorname{CDF}(\mathrm{BetaDistribution}(2, 3), \frac{1}{2})
+    out: \operatorname{BetaRegularized}(\frac{1}{2}, 2, 3)
+  traditional:
+    in: \operatorname{CDF}(\mathrm{BetaDistribution}(2, 3), \frac{1}{2})
+    out: I_{\frac{1}{2}}(2, 3)
+  fullform:
+    in: CDF[BetaDistribution[2, 3], Rational[1, 2]]
+  wolfram:
+    in: CDF[BetaDistribution[2, 3], Rational[1, 2]]
+beta-mean-exact:
+  epsil:
+    in: Mean(BetaDistribution(2, 3))
+    out: 2 / 5
+  tex:
+    in: \mathrm{mean}(\mathrm{BetaDistribution}(2, 3))
+    out: \frac{2}{5}
+  fullform:
+    in: Mean[BetaDistribution[2, 3]]
+  wolfram:
+    in: Mean[BetaDistribution[2, 3]]
+beta-variance-exact:
+  epsil:
+    in: Variance(BetaDistribution(2, 3))
+    out: 1 / 25
+  tex:
+    in: \mathrm{Variance}(\mathrm{BetaDistribution}(2, 3))
+    out: \frac{1}{25}
+  fullform:
+    in: Variance[BetaDistribution[2, 3]]
+  wolfram:
+    in: Variance[BetaDistribution[2, 3]]
+beta-cdf-clamps-below-support:
+  epsil:
+    in: N(CDF(BetaDistribution(2, 3), -1))
+    out: "0"
+  tex:
+    in: N(\operatorname{CDF}(\mathrm{BetaDistribution}(2, 3), -1))
+    out: "0"
+  fullform:
+    in: N[CDF[BetaDistribution[2, 3], -1]]
+  wolfram:
+    in: N[CDF[BetaDistribution[2, 3], -1]]

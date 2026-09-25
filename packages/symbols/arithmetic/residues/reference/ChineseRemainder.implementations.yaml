@@ -1,4 +1,12 @@
 chineseremainder-list-3-4-list-4-5:
+  epsil:
+    in: ChineseRemainder([3, 4], [4, 5])
+    out: "19"
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)
+    out: "19"
+  fullform:
+    in: ChineseRemainder[List[3, 4], List[4, 5]]
   wolfram:
     in: ChineseRemainder[List[3, 4], List[4, 5]]
     out: "19"
@@ -6,20 +14,102 @@ chineseremainder-list-3-4-list-4-5:
       in: \text{ChineseRemainder}[\{3,4\},\{4,5\}]
       out: "19"
 chineseremainder-list-2-3-5-list-3-5-7:
+  epsil:
+    in: ChineseRemainder([2, 3, 5], [3, 5, 7])
+    out: "68"
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack2, 3, 5\bigr\rbrack, \bigl\lbrack3, 5, 7\bigr\rbrack)
+    out: "68"
+  fullform:
+    in: ChineseRemainder[List[2, 3, 5], List[3, 5, 7]]
   wolfram:
     in: ChineseRemainder[List[2, 3, 5], List[3, 5, 7]]
     out: "68"
     tex:
       in: \text{ChineseRemainder}[\{2,3,5\},\{3,5,7\}]
       out: "68"
+five-congruences-unique-modulo-7-cdot-11-cdot-13:
+  epsil:
+    in: ChineseRemainder([1, 2, 3, 4, 5], [7, 11, 13, 17, 19])
+    out: 180_391
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \bigl\lbrack7, 11, 13, 17, 19\bigr\rbrack)
+    out: 180\,391
+  fullform:
+    in: ChineseRemainder[List[1, 2, 3, 4, 5], List[7, 11, 13, 17, 19]]
+  wolfram:
+    in: ChineseRemainder[List[1, 2, 3, 4, 5], List[7, 11, 13, 17, 19]]
+moduli-sharing-a-factor-with-remainders-that:
+  epsil:
+    in: ChineseRemainder([1, 3], [4, 6])
+    out: "9"
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack4, 6\bigr\rbrack)
+    out: "9"
+  fullform:
+    in: ChineseRemainder[List[1, 3], List[4, 6]]
+  wolfram:
+    in: ChineseRemainder[List[1, 3], List[4, 6]]
+recover-123456-bmod-1001-from-its-residues-mod-7:
+  epsil:
+    in: ChineseRemainder(123_456 % [7, 11, 13], [7, 11, 13])
+    out: "333"
+  tex:
+    in: \mathrm{ChineseRemainder}(123\,456\bmod\bigl\lbrack7, 11, 13\bigr\rbrack, \bigl\lbrack7, 11, 13\bigr\rbrack)
+    out: "333"
+  fullform:
+    in: ChineseRemainder[Mod[123456, List[7, 11, 13]], List[7, 11, 13]]
+  wolfram:
+    in: ChineseRemainder[Mod[123456, List[7, 11, 13]], List[7, 11, 13]]
+the-least-solution-ge-200-52-2-cdot-105:
+  epsil:
+    in: ChineseRemainder([1, 2, 3], [3, 5, 7], 200)
+    out: "262"
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack3, 5, 7\bigr\rbrack, 200)
+    out: "262"
+  fullform:
+    in: ChineseRemainder[List[1, 2, 3], List[3, 5, 7], 200]
+  wolfram:
+    in: ChineseRemainder[List[1, 2, 3], List[3, 5, 7], 200]
 verifies-the-solution-satisfies-both-congruences:
+  epsil:
+    in: |-
+      ChineseRemainder([3, 4], [4, 5]) % 4 == 3 && ChineseRemainder([3, 4], [4, 5]) %
+                                                   5 == 4
+    out: True
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod4=3\land\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod5=4
+    out: \top
+  traditional:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod4=3\land\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod5=4
+    out: \mathrm{True}
+  fullform:
+    in: And[Equal[Mod[ChineseRemainder[List[3, 4], List[4, 5]], 4], 3], Equal[Mod[ChineseRemainder[List[3, 4], List[4, 5]], 5], 4]]
   wolfram:
     in: And[(Mod[ChineseRemainder[List[3, 4], List[4, 5]], 4] == 3), (Mod[ChineseRemainder[List[3, 4], List[4, 5]], 5] == 4)]
     out: True
     tex:
       in: (\text{ChineseRemainder}[\{3,4\},\{4,5\}] \bmod 4)=3\land (\text{ChineseRemainder}[\{3,4\},\{4,5\}] \bmod 5)=4
       out: \text{True}
+over-classes-the-answer-is-a-class-and-reading:
+  epsil:
+    in: ChineseRemainder(IntegerMod(2, 3), IntegerMod(3, 5), IntegerMod(2, 7))
+    out: IntegerMod(23, 105)
+  tex:
+    in: \mathrm{ChineseRemainder}(\mathrm{IntegerMod}(2, 3), \mathrm{IntegerMod}(3, 5), \mathrm{IntegerMod}(2, 7))
+    out: \mathrm{IntegerMod}(23, 105)
+  fullform:
+    in: ChineseRemainder[IntegerMod[2, 3], IntegerMod[3, 5], IntegerMod[2, 7]]
 no-solution-exists-when-the-remainders-are:
+  epsil:
+    in: ChineseRemainder([1, 2], [6, 10])
+    out: ChineseRemainder([1, 2], [6, 10])
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack6, 10\bigr\rbrack)
+    out: \mathrm{ChineseRemainder}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack6, 10\bigr\rbrack)
+  fullform:
+    in: ChineseRemainder[List[1, 2], List[6, 10]]
   wolfram:
     in: ChineseRemainder[List[1, 2], List[6, 10]]
     out: ChineseRemainder[{1, 2}, {6, 10}]
@@ -27,6 +117,14 @@ no-solution-exists-when-the-remainders-are:
       in: \text{ChineseRemainder}[\{1,2\},\{6,10\}]
       out: \text{ChineseRemainder}[\{1,2\},\{6,10\}]
 a-third-argument-asks-for-the-smallest-solution:
+  epsil:
+    in: ChineseRemainder([1, 2], [3, 5], 100)
+    out: "112"
+  tex:
+    in: \mathrm{ChineseRemainder}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 5\bigr\rbrack, 100)
+    out: "112"
+  fullform:
+    in: ChineseRemainder[List[1, 2], List[3, 5], 100]
   wolfram:
     in: ChineseRemainder[List[1, 2], List[3, 5], 100]
     out: "112"

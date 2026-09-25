@@ -1,7 +1,75 @@
 n-arcoth-2:
+  epsil:
+    in: N(Arcoth(2))
+    out: 0.549_306_144_334_054_845_7
+  tex:
+    in: N(\mathrm{arcoth}(2))
+    out: 0.549\,306\,144\,334\,054\,845\,7
+  fullform:
+    in: N[ArcCoth[2]]
   wolfram:
     in: N[ArcCoth[2]]
     out: "0.5493061443340549"
     tex:
       in: N\left[\coth ^{-1}(2)\right]
       out: "0.549306"
+a-logarithmic-singularity-at-1:
+  epsil:
+    in: Arcoth(1)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{arcoth}(1)
+    out: \infty
+  fullform:
+    in: ArcCoth[1]
+  wolfram:
+    in: ArcCoth[1]
+arcoth-positiveinfinity:
+  epsil:
+    in: Arcoth(PositiveInfinity)
+    out: "0"
+  tex:
+    in: \mathrm{arcoth}(\infty)
+    out: "0"
+  fullform:
+    in: ArcCoth[Infinity]
+  wolfram:
+    in: ArcCoth[Infinity]
+a-float-argument-evaluates-directly:
+  epsil:
+    in: Arcoth(3.5)
+    out: 0.293_893_332_451_059_504_095
+  tex:
+    in: \mathrm{arcoth}(3.5)
+    out: 0.293\,893\,332\,451\,059\,504\,095
+  fullform:
+    in: ArcCoth[3.5]
+  wolfram:
+    in: ArcCoth[3.5]
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1:
+  epsil:
+    in: TrigToExp(Arcoth(2))
+    out: 1 / 2 * Ln(3)
+  tex:
+    in: \mathrm{TrigToExp}(\mathrm{arcoth}(2))
+    out: \frac{\ln(3)}{2}
+  fullform:
+    in: TrigToExp[ArcCoth[2]]
+oddness-pulls-the-sign-out-of-a-symbolic:
+  epsil:
+    in: Arcoth(-x)
+    out: -Arcoth(x)
+  tex:
+    in: \mathrm{arcoth}(-x)
+    out: -\mathrm{arcoth}(x)
+  fullform:
+    in: ArcCoth[Minus[x]]
+derivative-frac-1-1-x-2:
+  epsil:
+    in: D(Arcoth(x), x)
+    out: 1 / (-x ^ 2 + 1)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arcoth}(x)
+    out: \frac{1}{1-x^2}
+  fullform:
+    in: D[ArcCoth[x], x]

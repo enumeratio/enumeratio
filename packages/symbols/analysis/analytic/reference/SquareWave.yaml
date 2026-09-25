@@ -1,0 +1,38 @@
+name: SquareWave
+domain: Elementary functions
+signature: SquareWave(x)
+summary: "The square wave: period 1, default range {-1, 1}, value 1 on [0, 1/2) and -1 on [1/2, 1) of each period."
+signatures:
+  - call: SquareWave(x)
+    description: 1 for x - floor(x) in [0, 1/2), -1 for x - floor(x) in [1/2, 1).
+    library: "@enumeratio/analytic"
+  - call: SquareWave({min, max}, x)
+    description: the square wave rescaled to vary between min and max, unit period.
+    library: "@enumeratio/analytic"
+    arity: 2
+details:
+  - SquareWave(0) = 1 -- the half-open convention puts the period's left edge in the high half.
+  - Default range is {-1, 1}, not {0, 1} -- SquareWave(1/2) = -1.
+  - The range form takes the range FIRST, x second -- SquareWave({min, max}, x) -- matching [[SawtoothWave]] and [[TriangleWave]].
+examples:
+  - id: squarewave-zero
+    expr: [SquareWave, 0]
+    expected: 1
+    caption: SquareWave(0) = 1
+  - id: squarewave-half
+    expr: [SquareWave, [Rational, 1, 2]]
+    expected: -1
+    caption: The high half is half-open, and the default range is {-1, 1}
+  - id: squarewave-neg-quarter
+    expr: [SquareWave, [Rational, -1, 4]]
+    expected: -1
+  - id: squarewave-periodic
+    expr: [Equal, [SquareWave, [Rational, 1, 4]], [SquareWave, [Add, [Rational, 1, 4], 2]]]
+    expected: True
+    category: Properties
+    caption: Period 1
+  - id: squarewave-ranged
+    expr: [SquareWave, [List, 0, 10], 0]
+    expected: 10
+    category: Scope
+    caption: Rescaled to a {min, max} range

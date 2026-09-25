@@ -91,6 +91,7 @@ import { declareMeijerGReduce } from "./meijer-g-reduce.ts";
 import { declareFourierTransform } from "./fourier-transform.ts";
 import { declareFourierSeries } from "./fourier-series.ts";
 import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
+import { declareSignals } from "./signals.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -773,4 +774,5 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareFourierTransform(ce);
   declareFourierSeries(ce);
   declareCorrectlyRoundedN(ce);
+  declareSignals(ce);
 }

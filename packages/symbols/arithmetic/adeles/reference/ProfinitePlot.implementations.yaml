@@ -1,0 +1,26 @@
+the-identity-function-an-anti-diagonal-of-filled:
+  epsil:
+    in: ProfinitePlot(x, x, 3)
+    out: |-
+      ArrayPlot([
+                  [0, 0, 0, 0, 0, 1],
+                  [0, 0, 0, 0, 1, 0],
+                  [0, 0, 0, 1, 0, 0],
+                  [0, 0, 1, 0, 0, 0],
+                  [0, 1, 0, 0, 0, 0],
+                  [1, 0, 0, 0, 0, 0],
+                ])
+  tex:
+    in: \mathrm{ProfinitePlot}(x, x, 3)
+    out: \mathrm{ArrayPlot}(\bigl\lbrack\bigl\lbrack0, 0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 0, 0\bigr\rbrack\bigr\rbrack)
+  fullform:
+    in: ProfinitePlot[x, x, 3]
+k-capped-at-6-a-larger-precision-refuses:
+  epsil:
+    in: ProfinitePlot(x, x, 9)
+    out: ProfinitePlot(x, x, 9)
+  tex:
+    in: \mathrm{ProfinitePlot}(x, x, 9)
+    out: \mathrm{ProfinitePlot}(x, x, 9)
+  fullform:
+    in: ProfinitePlot[x, x, 9]

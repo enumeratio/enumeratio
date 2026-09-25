@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
-import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { getEntry, resolveHead } from "../../data/reference.ts";
+import { fragment, setFragment } from "../fragment.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
@@ -122,9 +123,6 @@ const sectionId = (category: string): string => category.toLowerCase().replace(/
 const targeted = ref("");
 const openSections = ref(new Set<string>());
 
-const HIGHLIGHT_CLASS = "ref-target-highlight";
-const HIGHLIGHT_MS = 1600;
-
 /** Open any closed `<details class="ref-section">` ancestor of `id`, so a deep link into a
  * collapsed example category still lands on visible content. */
 function openAncestorSections(id: string): void {
@@ -133,44 +131,20 @@ function openAncestorSections(id: string): void {
   if (details?.id) openSections.value.add(details.id);
 }
 
-/** Scroll the target into view and flash it -- a CSS animation that honours
- * prefers-reduced-motion (see the .ref-target-highlight rule below); the class is
- * removed after the same window either way, so the highlight is always brief. */
-function highlight(id: string): void {
-  const el = document.getElementById(id);
-  if (!el) return;
-  requestAnimationFrame(() => {
-    el.scrollIntoView({ block: "center" });
-    el.classList.add(HIGHLIGHT_CLASS);
-    setTimeout(() => el.classList.remove(HIGHLIGHT_CLASS), HIGHLIGHT_MS);
-  });
-}
-
-// Sections are scrolled to once the client-only sections exist (the browser's own hash
-// scroll runs before they render), and the same path runs again on same-page hash
-// navigation (VitePress's router doesn't reload the page for those).
-const followHash = async (): Promise<void> => {
-  const id = decodeURIComponent(location.hash.slice(1));
+// The URL's fragment (fragment.ts) decides what's targeted: a section, an example, or one
+// case of a grouped card, which that card then shows. fragment.ts outlines and scrolls to
+// it; this only makes sure it's rendered and visible.
+const followFragment = async (): Promise<void> => {
+  const id = fragment.value.target;
   targeted.value = id;
   if (id === "") return;
-  // A case of a grouped example: show that case on its card, which is what's scrolled to.
-  let card = id;
   const key = entry.value?.examples[targetedExample.value]?.group;
-  if (key !== undefined) {
-    const cases = casesOf(key);
-    activeCase[key] = cases.indexOf(targetedExample.value);
-    card = anchorOf(entry.value!.examples[cases[0]!]!);
-  }
+  if (key !== undefined) activeCase[key] = casesOf(key).indexOf(targetedExample.value);
   await nextTick();
-  openAncestorSections(card);
-  await nextTick();
-  highlight(card);
+  openAncestorSections(id);
 };
-onMounted(() => {
-  void followHash();
-  window.addEventListener("hashchange", followHash);
-});
-onBeforeUnmount(() => window.removeEventListener("hashchange", followHash));
+watch(fragment, () => void followFragment());
+onMounted(() => void followFragment());
 
 // Examples grouped into categories, keeping each example's original index so
 // assertion status stays addressable.
@@ -178,8 +152,8 @@ const CATEGORY_ORDER = ["Basic", "Scope", "Applications", "Properties", "Possibl
 // Examples sharing a `group` are cases of one example: a single card, where the first
 // member sits, cycling through them. `activeCase` is the shown case's position per group.
 const activeCase = reactive<Record<string, number>>({});
-// `#example/<id>` is that example; a case of a grouped card is linked by its own id, and
-// the card, which carries its first case's anchor, shows it.
+// `#example/<id>` is that example; a grouped card carries the anchor of the case it shows,
+// so a link to any case lands on the card showing it.
 const anchorOf = (ex: { id: string }): string => `example/${ex.id}`;
 const membersOf = (key: string): number[] =>
   (entry.value?.examples ?? []).flatMap((ex, i) => (ex.group === key ? [i] : []));
@@ -188,12 +162,17 @@ const targetedExample = computed((): number =>
     ? (entry.value?.examples ?? []).findIndex((ex) => anchorOf(ex) === targeted.value)
     : -1,
 );
-const shown = (ex: { hidden?: boolean }, i: number): boolean =>
+const shown = (ex: { role?: string }, i: number): boolean =>
   // Kept as data, not rendered -- unless a deep link asks for it.
-  !ex.hidden || i === targetedExample.value;
+  ex.role !== "test" || i === targetedExample.value;
 const casesOf = (key: string): number[] => membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
 const cycle = (key: string, cases: readonly number[], step: number): void => {
+  const was = entry.value!.examples[cases[activeCase[key] ?? 0]!]!;
   activeCase[key] = ((activeCase[key] ?? 0) + step + cases.length) % cases.length;
+  // A card the URL names keeps naming the case it shows.
+  if (fragment.value.target === anchorOf(was)) {
+    setFragment(anchorOf(entry.value!.examples[cases[activeCase[key]]!]!));
+  }
 };
 const grouped = computed(() => {
   const list = entry.value?.examples ?? [];
@@ -231,7 +210,7 @@ const grouped = computed(() => {
     .map(([category, items]) => ({ category, items }));
 });
 // Examples kept as data (grid points, edge cases) that the page leaves out.
-const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex.hidden).length);
+const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex.role === "test").length);
 </script>
 
 <template>
@@ -287,8 +266,8 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 
     <div v-if="grouped.length" class="ref-examples-head">
       <h2>Examples</h2>
-      <span v-if="hiddenCount" class="ref-hidden-count"
-        >{{ hiddenCount }} more kept as data, checked against the oracles</span
+      <span v-if="testCount" class="ref-hidden-count"
+        >{{ testCount }} more kept as data, checked against the oracles</span
       >
       <span class="ref-view">
         <button v-if="grouped.length > 1" @click="sectionsOpen = !sectionsOpen">
@@ -312,7 +291,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         <div
           v-for="{ ex, i, first, key, cases } in group.items"
           :key="key ?? i"
-          :id="anchorOf(entry.examples[first]!)"
+          :id="anchorOf(ex)"
           class="ref-example"
           :class="{
             'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && !dirty[i],
@@ -345,6 +324,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
             <ExampleAlternatives
               v-else-if="alternativesOf(ex)"
               slot="aside"
+              :anchor="anchorOf(ex)"
               :alternatives="alternativesOf(ex)!"
               :notes="notesOf(ex)"
             />
@@ -481,27 +461,6 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 #implementation,
 .ref-example {
   scroll-margin-top: calc(var(--vp-nav-height) + 1rem);
-}
-.ref-target-highlight {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 3px;
-  border-radius: 6px;
-  animation: ref-target-fade 1.6s ease-out forwards;
-}
-@keyframes ref-target-fade {
-  from {
-    outline-color: var(--vp-c-brand-1);
-    background-color: var(--vp-c-brand-soft);
-  }
-  to {
-    outline-color: transparent;
-    background-color: transparent;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .ref-target-highlight {
-    animation: none;
-  }
 }
 .ref-section.is-bare > summary {
   display: none;

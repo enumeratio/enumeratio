@@ -1,0 +1,71 @@
+the-set-partitions-of-an-explicit-list-in-the:
+  epsil:
+    in: SetPartitions([a, b, c])
+    out: "[[[a, b, c]], [[a, b], [c]], [[a, c], [b]], [[a], [b, c]], [[a], [b], [c]]]"
+  tex:
+    in: \mathrm{SetPartitions}(\bigl\lbrack a, b, c\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a, c\bigr\rbrack, \bigl\lbrack b\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a\bigr\rbrack, \bigl\lbrack b, c\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a\bigr\rbrack, \bigl\lbrack b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: SetPartitions[List[a, b, c]]
+exactly-2-blocks:
+  epsil:
+    in: SetPartitions(3, 2)
+    out: "[[[1, 2], [3]], [[1, 3], [2]], [[1], [2, 3]]]"
+  tex:
+    in: \mathrm{SetPartitions}(3, 2)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: SetPartitions[3, 2]
+the-partitions-of-a-4-set-into-2-blocks-number-s:
+  epsil:
+    in: Count(SetPartitions(4, 2))
+    out: "7"
+  tex:
+    in: \mathrm{Count}(\mathrm{SetPartitions}(4, 2))
+    out: "7"
+  fullform:
+    in: Count[SetPartitions[4, 2]]
+the-family-has-b-4-15-members-see-bellnumber:
+  epsil:
+    in: BellNumber(4)
+    out: "15"
+  tex:
+    in: \mathrm{BellNumber}(4)
+    out: "15"
+  traditional:
+    in: B_{4}
+    out: "15"
+  fullform:
+    in: BellB[4]
+  wolfram:
+    in: BellB[4]
+  sympy:
+    in: bell(4)
+  sage:
+    in: bell_number(4)
+  oscar:
+    in: bell(4)
+  julia:
+    in: bell(4)
+those-with-exactly-2-blocks-number-s-4-2-7-see:
+  epsil:
+    in: Stirling(4, 2)
+    out: "7"
+  tex:
+    in: \mathrm{Stirling}(4, 2)
+    out: "7"
+  traditional:
+    in: \left\lbrace\begin{matrix}4\\2\end{matrix}\right\rbrace
+    out: "7"
+  fullform:
+    in: StirlingS2[4, 2]
+  wolfram:
+    in: StirlingS2[4, 2]
+  sympy:
+    in: stirling(4, 2)
+  sage:
+    in: stirling_number2(4, 2)
+  julia:
+    in: Combinatorics.stirlings2(4, 2)
+  mathlib4:
+    in: (Nat.stirlingSecond 4 2)

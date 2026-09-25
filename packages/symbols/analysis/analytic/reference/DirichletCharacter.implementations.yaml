@@ -1,4 +1,15 @@
 the-nontrivial-character-mod-4-chi-2-3-1-this-is:
+  epsil:
+    in: DirichletCharacter(4, 2, 3)
+    out: "-1"
+  tex:
+    in: \mathrm{DirichletCharacter}(4, 2, 3)
+    out: "-1"
+  traditional:
+    in: \chi_{4,2}(3)
+    out: "-1"
+  fullform:
+    in: DirichletCharacter[4, 2, 3]
   wolfram:
     in: DirichletCharacter[4, 2, 3]
     out: "-1"
@@ -6,6 +17,17 @@ the-nontrivial-character-mod-4-chi-2-3-1-this-is:
       in: \chi _{4,2}(3)
       out: "-1"
 chi-2-2-i-mod-5-2-is-a-primitive-root-so-it:
+  epsil:
+    in: DirichletCharacter(5, 2, 2)
+    out: i
+  tex:
+    in: \mathrm{DirichletCharacter}(5, 2, 2)
+    out: i
+  traditional:
+    in: \chi_{5,2}(2)
+    out: i
+  fullform:
+    in: DirichletCharacter[5, 2, 2]
   wolfram:
     in: DirichletCharacter[5, 2, 2]
     out: I
@@ -13,6 +35,17 @@ chi-2-2-i-mod-5-2-is-a-primitive-root-so-it:
       in: \chi _{5,2}(2)
       out: i
 a-character-vanishes-where-gcd-n-k-1:
+  epsil:
+    in: DirichletCharacter(5, 2, 5)
+    out: "0"
+  tex:
+    in: \mathrm{DirichletCharacter}(5, 2, 5)
+    out: "0"
+  traditional:
+    in: \chi_{5,2}(5)
+    out: "0"
+  fullform:
+    in: DirichletCharacter[5, 2, 5]
   wolfram:
     in: DirichletCharacter[5, 2, 5]
     out: "0"
@@ -20,6 +53,17 @@ a-character-vanishes-where-gcd-n-k-1:
       in: \chi _{5,2}(5)
       out: "0"
 chi-3-mod-5-is-the-quadratic-character-its:
+  epsil:
+    in: DirichletCharacter(5, 3, 2)
+    out: "-1"
+  tex:
+    in: \mathrm{DirichletCharacter}(5, 3, 2)
+    out: "-1"
+  traditional:
+    in: \chi_{5,3}(2)
+    out: "-1"
+  fullform:
+    in: DirichletCharacter[5, 3, 2]
   wolfram:
     in: DirichletCharacter[5, 3, 2]
     out: "-1"
@@ -27,6 +71,17 @@ chi-3-mod-5-is-the-quadratic-character-its:
       in: \chi _{5,3}(2)
       out: "-1"
 the-trivial-character-mod-1-is-1-everywhere-its:
+  epsil:
+    in: DirichletCharacter(1, 1, 7)
+    out: "1"
+  tex:
+    in: \mathrm{DirichletCharacter}(1, 1, 7)
+    out: "1"
+  traditional:
+    in: \chi_{1,1}(7)
+    out: "1"
+  fullform:
+    in: DirichletCharacter[1, 1, 7]
   wolfram:
     in: DirichletCharacter[1, 1, 7]
     out: "1"
@@ -34,9 +89,45 @@ the-trivial-character-mod-1-is-1-everywhere-its:
       in: \chi _{1,1}(7)
       out: "1"
 j-must-be-at-most-varphi-k-4-out-of-range-names:
+  epsil:
+    in: DirichletCharacter(5, 9, 2)
+    out: DirichletCharacter(5, 9, 2)
+  tex:
+    in: \mathrm{DirichletCharacter}(5, 9, 2)
+    out: \mathrm{DirichletCharacter}(5, 9, 2)
+  traditional:
+    in: \chi_{5,9}(2)
+    out: \chi_{5,9}(2)
+  fullform:
+    in: DirichletCharacter[5, 9, 2]
   wolfram:
     in: DirichletCharacter[5, 9, 2]
     out: DirichletCharacter[5, 9, 2]
     tex:
       in: \chi _{5,9}(2)
       out: \chi _{5,9}(2)
+values-are-roots-of-unity-3-generates-z-7-times:
+  epsil:
+    in: DirichletCharacter(7, 3, 3)
+    out: -1 / 2 + Sqrt(3) / 2 * i
+  tex:
+    in: \mathrm{DirichletCharacter}(7, 3, 3)
+    out: \frac{\sqrt{3}}{2}i-\frac{1}{2}
+  traditional:
+    in: \chi_{7,3}(3)
+    out: \frac{\sqrt{3}}{2}i-\frac{1}{2}
+  fullform:
+    in: DirichletCharacter[7, 3, 3]
+  wolfram:
+    in: DirichletCharacter[7, 3, 3]
+listable-in-n-the-nontrivial-character-mod-3:
+  epsil:
+    in: DirichletCharacter(3, 2, [1, 2, 3, 4, 5])
+    out: "[1, -1, 0, 1, -1]"
+  tex:
+    in: \mathrm{DirichletCharacter}(3, 2, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)
+    out: \bigl\lbrack1, -1, 0, 1, -1\bigr\rbrack
+  fullform:
+    in: DirichletCharacter[3, 2, List[1, 2, 3, 4, 5]]
+  wolfram:
+    in: DirichletCharacter[3, 2, List[1, 2, 3, 4, 5]]

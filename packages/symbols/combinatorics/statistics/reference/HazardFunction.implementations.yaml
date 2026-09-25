@@ -1,0 +1,11 @@
+hazardfunction-rayleigh:
+  epsil:
+    in: HazardFunction(RayleighDistribution(3), 2)
+    out: 2 / 9
+  tex:
+    in: \mathrm{HazardFunction}(\mathrm{RayleighDistribution}(3), 2)
+    out: \frac{2}{9}
+  fullform:
+    in: HazardFunction[RayleighDistribution[3], 2]
+  wolfram:
+    in: HazardFunction[RayleighDistribution[3], 2]
