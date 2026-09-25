@@ -311,6 +311,10 @@ export const arithmetic: readonly ReferenceEntry[] = [
         expr: ["Root", -8, 3],
         expected: -2,
         caption: "Odd roots of a negative number stay real",
+        divergence: {
+          wolfram:
+            "Wolfram's $(-8)^{1/3}$ is the principal complex root, $1 + \\sqrt{3}\\,i$; its real root is $\\mathrm{Surd}[-8, 3] = -2$.",
+        },
       },
       {
         expr: ["Root", 2, 3],

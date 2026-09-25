@@ -31,6 +31,54 @@ const byValue = (a: Tree, b: Tree): number =>
 export const symbolic = (expr: MathJSON): string =>
   typeof expr === "string" ? expr : JSON.stringify(expr);
 
+/** Named constants a numeric value may mention, as `fromWolfram` spells them. */
+const CONSTANTS = new Set([
+  "Pi",
+  "ExponentialE",
+  "ImaginaryUnit",
+  "GoldenRatio",
+  "EulerGamma",
+  "CatalanConstant",
+]);
+
+/** Heads that only build a number from numbers. */
+const ARITHMETIC = new Set([
+  "Rational",
+  "Complex",
+  "Add",
+  "Subtract",
+  "Negate",
+  "Multiply",
+  "Divide",
+  "Power",
+  "Sqrt",
+  "Root",
+  "N",
+]);
+
+/**
+ * Whether `expr` is a numeric value: numbers and named constants under arithmetic.
+ * `MatrixRank[{1, 2, 3}]` is not, however the arguments look — it is a call the other
+ * system declined.
+ */
+export const isNumericValue = (expr: MathJSON): boolean => {
+  if (typeof expr === "number") return true;
+  if (typeof expr === "string") return CONSTANTS.has(expr);
+  if (!Array.isArray(expr) || typeof expr[0] !== "string" || !ARITHMETIC.has(expr[0])) {
+    return false;
+  }
+  return expr.length > 1 && expr.slice(1).every(isNumericValue);
+};
+
+/**
+ * Gate an evaluator to numeric values, leaving anything else as its symbolic text — for
+ * another system's answer, which our engine must not evaluate on that system's behalf.
+ */
+export const valuesOnly =
+  (evaluate: (expr: MathJSON) => Leaf) =>
+  (expr: MathJSON): Leaf =>
+    isNumericValue(expr) ? evaluate(expr) : symbolic(expr);
+
 /**
  * Reduce `expr` to a comparable tree. `evaluate` turns a non-sequence node into a leaf —
  * a number when it has one, else its symbolic text (`symbolic` is a fine fallback).

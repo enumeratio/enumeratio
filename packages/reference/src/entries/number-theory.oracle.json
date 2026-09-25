@@ -1578,22 +1578,22 @@
     "LegendreSymbol": {
       "[\"LegendreSymbol\",2,7]": {
         "wolfram": {
-          "input": "LegendreSymbol[2, 7]",
-          "output": "LegendreSymbol[2, 7]",
+          "input": "JacobiSymbol[2, 7]",
+          "output": "1",
           "verdict": "agree"
         }
       },
       "[\"LegendreSymbol\",3,7]": {
         "wolfram": {
-          "input": "LegendreSymbol[3, 7]",
-          "output": "LegendreSymbol[3, 7]",
+          "input": "JacobiSymbol[3, 7]",
+          "output": "-1",
           "verdict": "agree"
         }
       },
       "[\"LegendreSymbol\",14,7]": {
         "wolfram": {
-          "input": "LegendreSymbol[14, 7]",
-          "output": "LegendreSymbol[14, 7]",
+          "input": "JacobiSymbol[14, 7]",
+          "output": "0",
           "verdict": "agree"
         }
       }
