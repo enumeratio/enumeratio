@@ -58,7 +58,14 @@ export interface Failure {
   readonly detail: string;
 }
 
-const key = (value: unknown): string => JSON.stringify(value);
+// JSON.stringify has no bigint support at all -- it throws rather than coerces, unlike its
+// NaN -> null silent lossy conversion (which is what let NarcissisticNumbers' large terms,
+// back when unrank answered NaN for them, collide under this very key() and misreport as an
+// injectivity failure; see issue #90). The replacer tags a bigint as a distinguishable string
+// so families with exact large-integer elements (NarcissisticNumbers, FactorialNumbers, …)
+// get checked instead of crashing the sampler.
+const key = (value: unknown): string =>
+  JSON.stringify(value, (_k, v) => (typeof v === "bigint" ? `${v.toString()}n` : v));
 
 /** Every property, at one sampled point. Returns the first that fails. */
 export function check(entry: FamilyKernel, params: number[], rank: number): Failure | undefined {
