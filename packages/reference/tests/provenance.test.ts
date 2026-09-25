@@ -375,11 +375,36 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * TriangleWave, SquareWave, Rescale, DiracDelta, DiscreteDelta and DiscreteShift (signals.ts)
  * are the same story again: all thirteen are genuinely Wolfram's own names (see `HEADS` in
  * @enumeratio/wolfram), waiting on the same coverage run to fill in `elsewhere`.
+ *
+ * With, Module, Reap, Sow, Do, Switch, While, NestWhile, NestWhileList, FixedPointList,
+ * Throw, Catch, Echo, AbsoluteTiming, Attributes, SetAttributes and AppendTo (control.ts) are
+ * the same story once more: all seventeen are genuinely Wolfram's own control/scoping heads
+ * (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
+ * `elsewhere`.
  */
 const NOVEL = [
   "TimeConstrained",
   "MemoryConstrained",
   "VerificationTest",
+  // control.ts: genuinely Wolfram's own control/scoping heads, waiting on a coverage run
+  // with a Wolfram kernel to fill in `elsewhere` -- see the module doc above.
+  "With",
+  "Module",
+  "Reap",
+  "Sow",
+  "Do",
+  "Switch",
+  "While",
+  "NestWhile",
+  "NestWhileList",
+  "FixedPointList",
+  "Throw",
+  "Catch",
+  "Echo",
+  "AbsoluteTiming",
+  "Attributes",
+  "SetAttributes",
+  "AppendTo",
   "IntegerMod",
   "IntegerModRing",
   "RationalReconstruction",
@@ -453,6 +478,10 @@ const NOVEL = [
   "InverseLaplaceTransform",
   "FourierTransform",
   "InverseFourierTransform",
+  "Fourier",
+  "InverseFourier",
+  "FourierSeries",
+  "FourierCoefficient",
   "MeijerG",
   "MeijerGReduce",
   "CubeRoot",
@@ -703,6 +732,24 @@ const NOVEL = [
   "LineGraph",
   "AdjacencyGraph",
   "RandomGraph",
+  // The Wolfram-frontier expression/pattern/string heads (expression-ops.ts): all fifteen
+  // are genuinely Wolfram's own names (see HEADS in @enumeratio/wolfram), waiting on the
+  // same coverage run to fill in `elsewhere`.
+  "ToString",
+  "MapThread",
+  "MatchQ",
+  "MapIndexed",
+  "StringLength",
+  "FreeQ",
+  "StringTake",
+  "Replace",
+  "Through",
+  "ToCharacterCode",
+  "FromCharacterCode",
+  "Level",
+  "Pick",
+  "ReplacePart",
+  "AssociationThread",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

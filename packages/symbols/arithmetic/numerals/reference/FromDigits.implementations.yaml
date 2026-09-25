@@ -242,6 +242,15 @@ crt-reconstruction:
     out: "23"
   fullform:
     in: FromDigits[List[2, 3, 2], ResidueNumerals[List[3, 5, 7]]]
+zeckendorf-100-89-8-3-back-through-fromdigits:
+  epsil:
+    in: FromDigits([1, 0, 0, 0, 0, 1, 0, 1, 0, 0], ZeckendorfNumerals)
+    out: "100"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 0, 0, 0, 0, 1, 0, 1, 0, 0\bigr\rbrack, \mathrm{ZeckendorfNumerals})
+    out: "100"
+  fullform:
+    in: FromDigits[List[1, 0, 0, 0, 0, 1, 0, 1, 0, 0], ZeckendorfNumerals]
 two-adjacent-ones-is-not-a-numeral-so-it-denotes:
   epsil:
     in: FromDigits([1, 1], ZeckendorfNumerals)
@@ -251,3 +260,136 @@ two-adjacent-ones-is-not-a-numeral-so-it-denotes:
     out: \mathrm{FromDigits}(\bigl\lbrack1, 1\bigr\rbrack, \mathrm{ZeckendorfNumerals})
   fullform:
     in: FromDigits[List[1, 1], ZeckendorfNumerals]
+a-factoradic-lehmer-code-back-to-463:
+  epsil:
+    in: FromDigits([3, 4, 1, 0, 1, 0], FactorialNumerals)
+    out: "463"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack3, 4, 1, 0, 1, 0\bigr\rbrack, \mathrm{FactorialNumerals})
+    out: "463"
+  fullform:
+    in: FromDigits[List[3, 4, 1, 0, 1, 0], FactorialNumerals]
+balanced-ternary-1-1-1-back-to-5:
+  epsil:
+    in: FromDigits([1, -1, -1], BalancedNumerals(3))
+    out: "5"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, -1, -1\bigr\rbrack, \mathrm{BalancedNumerals}(3))
+    out: "5"
+  fullform:
+    in: FromDigits[List[1, -1, -1], BalancedNumerals[3]]
+combinatorial-base-3-3-2-1-back-to-3:
+  epsil:
+    in: FromDigits([3, 2, 1], CombinatorialNumerals(3))
+    out: "3"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack3, 2, 1\bigr\rbrack, \mathrm{CombinatorialNumerals}(3))
+    out: "3"
+  fullform:
+    in: FromDigits[List[3, 2, 1], CombinatorialNumerals[3]]
+ostrowski-golden-digits-back-to-12:
+  epsil:
+    in: |-
+      FromDigits(
+                  [0, 0, 1, 0, 1, 0, 1, 0],
+                  OstrowskiNumerals([1, 1, 1, 1, 1, 1, 1, 1]),
+                )
+    out: "12"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack0, 0, 1, 0, 1, 0, 1, 0\bigr\rbrack, \mathrm{OstrowskiNumerals}(\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack))
+    out: "12"
+  fullform:
+    in: FromDigits[List[0, 0, 1, 0, 1, 0, 1, 0], OstrowskiNumerals[List[1, 1, 1, 1, 1, 1, 1, 1]]]
+ostrowski-declines-a-string-past-its-ceiling:
+  epsil:
+    in: FromDigits([1, 2, 1], OstrowskiNumerals([2, 2, 2]))
+    out: FromDigits([1, 2, 1], OstrowskiNumerals([2, 2, 2]))
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 2, 1\bigr\rbrack, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+    out: \mathrm{FromDigits}(\bigl\lbrack1, 2, 1\bigr\rbrack, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+  fullform:
+    in: FromDigits[List[1, 2, 1], OstrowskiNumerals[List[2, 2, 2]]]
+non-coprime-residues-an-inconsistent-string:
+  epsil:
+    in: FromDigits([1, 2], ResidueNumerals([4, 6]))
+    out: FromDigits([1, 2], ResidueNumerals([4, 6]))
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 2\bigr\rbrack, \mathrm{ResidueNumerals}(\bigl\lbrack4, 6\bigr\rbrack))
+    out: \mathrm{FromDigits}(\bigl\lbrack1, 2\bigr\rbrack, \mathrm{ResidueNumerals}(\bigl\lbrack4, 6\bigr\rbrack))
+  fullform:
+    in: FromDigits[List[1, 2], ResidueNumerals[List[4, 6]]]
+bijective-base-26-the-empty-numeral-is-zero:
+  epsil:
+    in: FromDigits([], BijectiveNumerals(26))
+    out: "0"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack \bigr\rbrack, \mathrm{BijectiveNumerals}(26))
+    out: "0"
+  fullform:
+    in: FromDigits[List[], BijectiveNumerals[26]]
+a-malformed-roman-numeral-declines:
+  epsil:
+    in: FromDigits("IIII", "Roman")
+    out: FromDigits("IIII", "Roman")
+  tex:
+    in: \mathrm{FromDigits}(\text{IIII}, \text{Roman})
+    out: \mathrm{FromDigits}(\text{IIII}, \text{Roman})
+  fullform:
+    in: FromDigits["IIII", "Roman"]
+  wolfram:
+    in: FromDigits["IIII", "Roman"]
+the-horner-reduction-in-base-5:
+  epsil:
+    in: FromDigits([1, 2, 3], 5)
+    out: "38"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5)
+    out: "38"
+  fullform:
+    in: FromDigits[List[1, 2, 3], 5]
+  wolfram:
+    in: FromDigits[List[1, 2, 3], 5]
+a-negative-base-minus-3-1-0-1:
+  epsil:
+    in: FromDigits([1, 0, 1], -3)
+    out: "10"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 0, 1\bigr\rbrack, -3)
+    out: "10"
+  fullform:
+    in: FromDigits[List[1, 0, 1], -3]
+  wolfram:
+    in: FromDigits[List[1, 0, 1], -3]
+a-negative-base-minus-4-3-2-1:
+  epsil:
+    in: FromDigits([3, 2, 1], -4)
+    out: "41"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack3, 2, 1\bigr\rbrack, -4)
+    out: "41"
+  fullform:
+    in: FromDigits[List[3, 2, 1], -4]
+  wolfram:
+    in: FromDigits[List[3, 2, 1], -4]
+a-digits-exponent-pair-exponent-3-is-an-exact:
+  epsil:
+    in: FromDigits([[1, 2, 3], 3])
+    out: "123"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, 3\bigr\rbrack)
+    out: "123"
+  fullform:
+    in: FromDigits[List[List[1, 2, 3], 3]]
+  wolfram:
+    in: FromDigits[List[List[1, 2, 3], 3]]
+a-digits-exponent-pair-exponent-5-is-12-300:
+  epsil:
+    in: FromDigits([[1, 2, 3], 5])
+    out: 12_300
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, 5\bigr\rbrack)
+    out: 12\,300
+  fullform:
+    in: FromDigits[List[List[1, 2, 3], 5]]
+  wolfram:
+    in: FromDigits[List[List[1, 2, 3], 5]]

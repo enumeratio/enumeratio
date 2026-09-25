@@ -461,6 +461,226 @@ zeta-4-2-pi-4-90-1:
     in: zeta(4, 2)
   sage:
     in: hurwitz_zeta(4, 2)
+zeta-0-a-exact-at-a-3:
+  epsil:
+    in: HurwitzZeta(0, 3)
+    out: -5 / 2
+  tex:
+    in: \mathrm{HurwitzZeta}(0, 3)
+    out: -\frac{5}{2}
+  traditional:
+    in: \zeta(0, 3)
+    out: -\frac{5}{2}
+  fullform:
+    in: HurwitzZeta[0, 3]
+  wolfram:
+    in: HurwitzZeta[0, 3]
+  sympy:
+    in: zeta(0, 3)
+  mpmath:
+    in: zeta(0, 3)
+  sage:
+    in: hurwitz_zeta(0, 3)
+zeta-0-a-exact-at-a-5-over-2:
+  epsil:
+    in: HurwitzZeta(0, 5 / 2)
+    out: "-2"
+  tex:
+    in: \mathrm{HurwitzZeta}(0, \frac{5}{2})
+    out: "-2"
+  traditional:
+    in: \zeta(0, \frac{5}{2})
+    out: "-2"
+  fullform:
+    in: HurwitzZeta[0, Rational[5, 2]]
+  wolfram:
+    in: HurwitzZeta[0, Rational[5, 2]]
+  sympy:
+    in: zeta(0, Rational(5, 2))
+  sage:
+    in: hurwitz_zeta(0, (5/2))
+zeta-neg-1-a-exact-at-a-3:
+  epsil:
+    in: HurwitzZeta(-1, 3)
+    out: -37 / 12
+  tex:
+    in: \mathrm{HurwitzZeta}(-1, 3)
+    out: -\frac{37}{12}
+  traditional:
+    in: \zeta(-1, 3)
+    out: -\frac{37}{12}
+  fullform:
+    in: HurwitzZeta[-1, 3]
+  wolfram:
+    in: HurwitzZeta[-1, 3]
+  sympy:
+    in: zeta(-1, 3)
+  mpmath:
+    in: zeta(-1, 3)
+  sage:
+    in: hurwitz_zeta(-1, 3)
+zeta-neg-1-a-exact-at-a-5-over-2:
+  epsil:
+    in: HurwitzZeta(-1, 5 / 2)
+    out: -47 / 24
+  tex:
+    in: \mathrm{HurwitzZeta}(-1, \frac{5}{2})
+    out: -\frac{47}{24}
+  traditional:
+    in: \zeta(-1, \frac{5}{2})
+    out: -\frac{47}{24}
+  fullform:
+    in: HurwitzZeta[-1, Rational[5, 2]]
+  wolfram:
+    in: HurwitzZeta[-1, Rational[5, 2]]
+  sympy:
+    in: zeta(-1, Rational(5, 2))
+  sage:
+    in: hurwitz_zeta(-1, (5/2))
+zeta-neg-1-a-exact-at-a-7-over-3:
+  epsil:
+    in: HurwitzZeta(-1, 7 / 3)
+    out: -59 / 36
+  tex:
+    in: \mathrm{HurwitzZeta}(-1, \frac{7}{3})
+    out: -\frac{59}{36}
+  traditional:
+    in: \zeta(-1, \frac{7}{3})
+    out: -\frac{59}{36}
+  fullform:
+    in: HurwitzZeta[-1, Rational[7, 3]]
+  wolfram:
+    in: HurwitzZeta[-1, Rational[7, 3]]
+  sympy:
+    in: zeta(-1, Rational(7, 3))
+  sage:
+    in: hurwitz_zeta(-1, (7/3))
+zeta-neg-2-a-exact-at-a-5-over-2:
+  epsil:
+    in: HurwitzZeta(-2, 5 / 2)
+    out: -5 / 2
+  tex:
+    in: \mathrm{HurwitzZeta}(-2, \frac{5}{2})
+    out: -\frac{5}{2}
+  traditional:
+    in: \zeta(-2, \frac{5}{2})
+    out: -\frac{5}{2}
+  fullform:
+    in: HurwitzZeta[-2, Rational[5, 2]]
+  wolfram:
+    in: HurwitzZeta[-2, Rational[5, 2]]
+  sympy:
+    in: zeta(-2, Rational(5, 2))
+  sage:
+    in: hurwitz_zeta(-2, (5/2))
+zeta-neg-3-a-exact-at-a-5-over-2:
+  epsil:
+    in: HurwitzZeta(-3, 5 / 2)
+    out: -3_367 / 960
+  tex:
+    in: \mathrm{HurwitzZeta}(-3, \frac{5}{2})
+    out: -\frac{3\,367}{960}
+  traditional:
+    in: \zeta(-3, \frac{5}{2})
+    out: -\frac{3\,367}{960}
+  fullform:
+    in: HurwitzZeta[-3, Rational[5, 2]]
+  wolfram:
+    in: HurwitzZeta[-3, Rational[5, 2]]
+  sympy:
+    in: zeta(-3, Rational(5, 2))
+  sage:
+    in: hurwitz_zeta(-3, (5/2))
+zeta-neg-4-a-exact-at-a-5-over-2:
+  epsil:
+    in: HurwitzZeta(-4, 5 / 2)
+    out: -41 / 8
+  tex:
+    in: \mathrm{HurwitzZeta}(-4, \frac{5}{2})
+    out: -\frac{41}{8}
+  traditional:
+    in: \zeta(-4, \frac{5}{2})
+    out: -\frac{41}{8}
+  fullform:
+    in: HurwitzZeta[-4, Rational[5, 2]]
+  wolfram:
+    in: HurwitzZeta[-4, Rational[5, 2]]
+  sympy:
+    in: zeta(-4, Rational(5, 2))
+  sage:
+    in: hurwitz_zeta(-4, (5/2))
+pole-at-s-1-for-symbolic-a:
+  epsil:
+    in: HurwitzZeta(1, a)
+    out: ComplexInfinity
+  tex:
+    in: \mathrm{HurwitzZeta}(1, a)
+    out: \tilde\infty
+  traditional:
+    in: \zeta(1, a)
+    out: \tilde\infty
+  fullform:
+    in: HurwitzZeta[1, a]
+pole-at-a-neg-2-re-s-positive:
+  epsil:
+    in: N(HurwitzZeta(2, -2))
+    out: ComplexInfinity
+  tex:
+    in: N(\mathrm{HurwitzZeta}(2, -2))
+    out: \tilde\infty
+  traditional:
+    in: N(\zeta(2, -2))
+    out: \tilde\infty
+  fullform:
+    in: N[HurwitzZeta[2, -2]]
+  wolfram:
+    in: N[HurwitzZeta[2, -2]]
+  sympy:
+    in: N(zeta(2, -2), 30)
+  mpmath:
+    in: (zeta(2, -2))
+  sage:
+    in: N(hurwitz_zeta(2, -2))
+pole-at-a-neg-1-inexact-s:
+  epsil:
+    in: N(HurwitzZeta(0.158, -1))
+    out: ComplexInfinity
+  tex:
+    in: N(\mathrm{HurwitzZeta}(0.158, -1))
+    out: \tilde\infty
+  traditional:
+    in: N(\zeta(0.158, -1))
+    out: \tilde\infty
+  fullform:
+    in: N[HurwitzZeta[0.158, -1]]
+  wolfram:
+    in: N[HurwitzZeta[0.158, -1]]
+  sympy:
+    in: N(zeta(0.158, -1), 30)
+  mpmath:
+    in: (zeta(0.158, -1))
+  sage:
+    in: N(hurwitz_zeta(0.158, -1))
+pole-at-a-0-re-s-positive:
+  epsil:
+    in: N(HurwitzZeta(3, 0))
+    out: ComplexInfinity
+  tex:
+    in: N(\mathrm{HurwitzZeta}(3, 0))
+    out: \tilde\infty
+  traditional:
+    in: N(\zeta(3, 0))
+    out: \tilde\infty
+  fullform:
+    in: N[HurwitzZeta[3, 0]]
+  wolfram:
+    in: N[HurwitzZeta[3, 0]]
+  sympy:
+    in: N(zeta(3, 0), 30)
+  mpmath:
+    in: (zeta(3, 0))
+  sage:
+    in: N(hurwitz_zeta(3, 0))
 n-hurwitzzeta-2-1:
   epsil:
     in: N(HurwitzZeta(2, 1))

@@ -9,36 +9,15 @@ const run = (expr: unknown) => runExpr(expr).json;
 
 // Nest / NestList
 
-test("Nest applies f n times", () => {
-  expect(run(["Nest", "f", "x", 3])).toEqual(["f", ["f", ["f", "x"]]]);
-});
-test("Nest(f, x, 0) leaves x alone", () => {
-  expect(run(["Nest", "f", "x", 0])).toEqual("x");
-});
 test("Nest agrees with the last entry of NestList", () => {
   const fn = ["Function", ["Multiply", 2, "_1"]];
   const nested = run(["Nest", fn, 1, 6]);
   const list = run(["NestList", fn, 1, 6]) as readonly unknown[];
   expect(nested).toEqual(list[list.length - 1]);
 });
-test("NestList has n + 1 entries, the first being the seed", () => {
-  expect(run(["NestList", "f", "x", 3])).toEqual([
-    "List",
-    "x",
-    ["f", "x"],
-    ["f", ["f", "x"]],
-    ["f", ["f", ["f", "x"]]],
-  ]);
-});
-test("NestList(f, x, 0) is just the seed", () => {
-  expect(run(["NestList", "f", "x", 0])).toEqual(["List", "x"]);
-});
 
 // FixedPoint
 
-test("FixedPoint halves and floors down to 0", () => {
-  expect(run(["FixedPoint", ["Function", ["Floor", ["Divide", "_1", 2]]], 100])).toEqual(0);
-});
 test("FixedPoint is idempotent once reached: one more f does nothing", () => {
   const fn = ["Function", ["Floor", ["Divide", "_1", 2]]];
   const fixed = run(["FixedPoint", fn, 100]);
@@ -99,16 +78,6 @@ test("LinearRecurrence({start, end}) is a slice of the full sequence", () => {
     ...full.slice(3, 7),
   ]);
 });
-test("LinearRecurrence stays exact over rationals", () => {
-  expect(run(["LinearRecurrence", ["List", ["Rational", 1, 2]], ["List", 4], 5])).toEqual([
-    "List",
-    4,
-    2,
-    1,
-    ["Rational", 1, 2],
-    ["Rational", 1, 4],
-  ]);
-});
 
 // RecurrenceTable: cross-checked against LinearRecurrence for the same Fibonacci recurrence.
 test("RecurrenceTable agrees with LinearRecurrence on the Fibonacci recurrence", () => {
@@ -125,16 +94,6 @@ test("RecurrenceTable agrees with LinearRecurrence on the Fibonacci recurrence",
     ["List", "n", 1, 10],
   ]);
   expect(viaTable).toEqual(viaLinear);
-});
-test("RecurrenceTable handles a shifted-index equation (a(n+1) = ...)", () => {
-  expect(
-    run([
-      "RecurrenceTable",
-      ["List", ["Equal", ["a", ["Add", "n", 1]], ["Multiply", 3, ["a", "n"]]], ["Equal", ["a", 1], 7]],
-      "a",
-      ["List", "n", 1, 5],
-    ]),
-  ).toEqual(["List", 7, 21, 63, 189, 567]);
 });
 test("RecurrenceTable can start past the initial conditions", () => {
   const full = run([
@@ -170,65 +129,11 @@ test("Outer(f, xs, ys) agrees with applying f to every pair by hand", () => {
   const byHand = ["List", ...xs.map((x) => ["List", ...ys.map((y) => run(["Multiply", x, y]))])];
   expect(outer).toEqual(byHand);
 });
-test("Outer produces a matrix of the right shape", () => {
-  expect(run(["Outer", "Add", ["List", 1, 2], ["List", 10, 20, 30]])).toEqual([
-    "List",
-    ["List", 11, 21, 31],
-    ["List", 12, 22, 32],
-  ]);
-});
-
-// Association
-test("Length/First/Last on an Association read its values, not its rules", () => {
-  const assoc = ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"], ["Rule", 3, "c"]];
-  expect(run(["Length", assoc])).toEqual(3);
-  expect(run(["First", assoc])).toEqual("a");
-  expect(run(["Last", assoc])).toEqual("c");
-});
-test("First/Last on a plain List are unaffected", () => {
-  expect(run(["First", ["List", 1, 2, 3]])).toEqual(1);
-  expect(run(["Last", ["List", 1, 2, 3]])).toEqual(3);
-});
-// Regression: First/Last on an Association are guarded to exactly 1 argument. Before the
-// guard, `applies` only checked `ops[0]` was an Association and ignored `ops.length`, so
-// it also hijacked the widened 2-arg default-on-empty form (see list-heads.ts) — always
-// reading the (nonexistent) first/last entry instead of falling through to the layered
-// default-arg wrapper, which is the one that knows to return the default on an empty
-// collection.
-test("First(emptyAssociation, default) falls through to the default, not undefined", () => {
-  expect(run(["First", ["Association"], 99])).toEqual(99);
-});
-test("Last(emptyAssociation, default) falls through to the default, not undefined", () => {
-  expect(run(["Last", ["Association"], 99])).toEqual(99);
-});
-test("First(nonEmptyAssociation, default) still reads the first value, ignoring the default", () => {
-  const assoc = ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]];
-  expect(run(["First", assoc, 99])).toEqual("a");
-});
-test("Join on Associations keeps first-seen key order and lets a later value win", () => {
-  expect(
-    run(["Join", ["Association", ["Rule", "a", "b"]], ["Association", ["Rule", "c", "d"], ["Rule", "a", "f"]]]),
-  ).toEqual(["Association", ["Rule", "a", "f"], ["Rule", "c", "d"]]);
-});
-test("Sort on an Association orders by value", () => {
-  expect(run(["Sort", ["Association", ["Rule", "a", 4], ["Rule", "b", 1], ["Rule", "c", 3]]])).toEqual([
-    "Association",
-    ["Rule", "b", 1],
-    ["Rule", "c", 3],
-    ["Rule", "a", 4],
-  ]);
-});
 
 // GeometricMean / HarmonicMean
-test("GeometricMean of n equal values is that value", () => {
-  expect(run(["GeometricMean", ["List", 7, 7, 7]])).toEqual(7);
-});
 test("GeometricMean squared equals the product, for two values", () => {
   const gm = run(["GeometricMean", ["List", 2, 3]]);
   expect(run(["Equal", ["Power", gm, 2], 6])).toEqual("True");
-});
-test("HarmonicMean of n equal values is that value", () => {
-  expect(run(["HarmonicMean", ["List", 5, 5, 5]])).toEqual(5);
 });
 test("HarmonicMean is the reciprocal of the mean of the reciprocals", () => {
   const list = ["List", 1, 2, 4];

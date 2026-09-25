@@ -236,3 +236,101 @@ interval-arithmetic-in-s-decreasing-here:
     in: DirichletL[5, 1, Interval[List[1.23, 1.24]]]
   wolfram:
     in: DirichletL[5, 1, Interval[List[1.23, 1.24]]]
+l-3-chi-2-bmod-4-beta-3:
+  epsil:
+    in: DirichletL(4, 2, 3)
+    out: 1 / 32 * Pi ^ 3
+  tex:
+    in: \mathrm{DirichletL}(4, 2, 3)
+    out: \frac{\pi^3}{32}
+  traditional:
+    in: L(3, \chi_{4,2})
+    out: \frac{\pi^3}{32}
+  fullform:
+    in: DirichletL[4, 2, 3]
+  wolfram:
+    in: DirichletL[4, 2, 3]
+l-neg-2-chi-2-bmod-3-neg-2-over-9:
+  epsil:
+    in: DirichletL(3, 2, -2)
+    out: -2 / 9
+  tex:
+    in: \mathrm{DirichletL}(3, 2, -2)
+    out: -\frac{2}{9}
+  traditional:
+    in: L(-2, \chi_{3,2})
+    out: -\frac{2}{9}
+  fullform:
+    in: DirichletL[3, 2, -2]
+  wolfram:
+    in: DirichletL[3, 2, -2]
+l-neg-1-chi-2-bmod-5-0:
+  epsil:
+    in: DirichletL(5, 2, -1)
+    out: "0"
+  tex:
+    in: \mathrm{DirichletL}(5, 2, -1)
+    out: "0"
+  traditional:
+    in: L(-1, \chi_{5,2})
+    out: "0"
+  fullform:
+    in: DirichletL[5, 2, -1]
+  wolfram:
+    in: DirichletL[5, 2, -1]
+l-neg-1-chi-2-bmod-8-neg-1:
+  epsil:
+    in: DirichletL(8, 2, -1)
+    out: "-1"
+  tex:
+    in: \mathrm{DirichletL}(8, 2, -1)
+    out: "-1"
+  traditional:
+    in: L(-1, \chi_{8,2})
+    out: "-1"
+  fullform:
+    in: DirichletL[8, 2, -1]
+  wolfram:
+    in: DirichletL[8, 2, -1]
+l-neg-3-chi-3-bmod-5-2:
+  epsil:
+    in: DirichletL(5, 3, -3)
+    out: "2"
+  tex:
+    in: \mathrm{DirichletL}(5, 3, -3)
+    out: "2"
+  traditional:
+    in: L(-3, \chi_{5,3})
+    out: "2"
+  fullform:
+    in: DirichletL[5, 3, -3]
+  wolfram:
+    in: DirichletL[5, 3, -3]
+n-dirichletl-5-2-2-critical-strip:
+  epsil:
+    in: N(DirichletL(5, 2, 2))
+    out: 0.958_716_122_716_883_2 + 0.145_565_876_785_089_5i
+  tex:
+    in: N(\mathrm{DirichletL}(5, 2, 2))
+    out: 0.958\,716\,122\,716\,883\,2+0.145\,565\,876\,785\,089\,5i
+  traditional:
+    in: N(L(2, \chi_{5,2}))
+    out: 0.958\,716\,122\,716\,883\,2+0.145\,565\,876\,785\,089\,5i
+  fullform:
+    in: N[DirichletL[5, 2, 2]]
+  wolfram:
+    in: N[DirichletL[5, 2, 2]]
+n-dirichletl-4-2-1p0001-near-the-removable-point:
+  epsil:
+    in: N(DirichletL(4, 2, 1.000_1))
+    out: 0.785_417_452_758_435_172_836
+  tex:
+    in: N(\mathrm{DirichletL}(4, 2, 1.000\,1))
+    out: 0.785\,417\,452\,758\,435\,172\,836
+  traditional:
+    in: N(L(1.000\,1, \chi_{4,2}))
+    out: 0.785\,417\,452\,758\,435\,172\,836
+  fullform:
+    in: N[DirichletL[4, 2, 1.0001]]
+  wolfram:
+    in: N[DirichletL[4, 2, 1.0001]]

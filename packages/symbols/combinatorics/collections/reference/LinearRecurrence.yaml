@@ -42,6 +42,10 @@ examples:
     expected: [List, 5, 8, 13, 21]
     category: Scope
     caption: terms 5 through 8
+  - id: linearrecurrence-stays-exact-over-rationals
+    expr: [LinearRecurrence, [List, [Rational, 1, 2]], [List, 4], 5]
+    expected: [List, 4, 2, 1, [Rational, 1, 2], [Rational, 1, 4]]
+    role: test
 seeAlso:
   - RecurrenceTable
   - Fibonacci

@@ -67,5 +67,33 @@ examples:
     expected: [List, [Tuple, 1, 2, -1], [Tuple, 3, 1, 0]]
     category: Scope
     caption: "Listable: threads over a list"
+  - role: test
+    id: gaussian-integer-and-a-plain-integer
+    expr: [ExtendedGCD, [Complex, 3, 1], 5]
+    expected: [Tuple, [Complex, 1, 2], 2, -1]
+    category: Scope
+    caption: A Gaussian integer and a plain integer
+  - role: test
+    id: extendedgcd-6-4
+    expr: [ExtendedGCD, 6, 4]
+    expected: [Tuple, 2, 1, -1]
+  - role: test
+    id: a-real-two-argument-case-stays-unevaluated
+    expr: [ExtendedGCD, 2.5, 3]
+    expected: [ExtendedGCD, 2.5, 3]
+    category: Possible issues
+    caption: A real two-argument case stays unevaluated
+  - role: test
+    id: a-gaussian-third-argument-past-two-declines
+    expr: [ExtendedGCD, [Complex, 3, 1], 5, 2]
+    expected: [ExtendedGCD, [Complex, 3, 1], 5, 2]
+    category: Possible issues
+    caption: A Gaussian third argument past two declines -- the widening only reaches two arguments
+  - role: test
+    id: a-real-argument-past-two-also-declines
+    expr: [ExtendedGCD, 2.5, 3, 4]
+    expected: [ExtendedGCD, 2.5, 3, 4]
+    category: Possible issues
+    caption: A real argument past two also declines
 seeAlso:
   - GCD

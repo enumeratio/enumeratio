@@ -55,6 +55,11 @@ examples:
     expr: [N, [StieltjesGamma, 1]]
     expected: -0.07281584548367652
     caption: $\gamma_1 = -0.0728158\ldots$ under N()
+  - role: test
+    id: gamma-2-0-00969036-under-n
+    expr: [N, [StieltjesGamma, 2]]
+    expected: { num: "-0.00969036319287231848453" }
+    caption: $\gamma_2 = -0.0096903\ldots$ under N()
   - id: complex-a
     expr: [N, [StieltjesGamma, 2, [Complex, 1, 1]]]
     expected: [Complex, 0.1703042014685879, 0.37317719575749525]

@@ -31,6 +31,15 @@ examples:
     expected: [Multiply, [Rational, -3, 4], [Zeta, 3]]
     category: Properties
     caption: $\mathrm{Cl}_3(\pi) = -\eta(3) = -\tfrac34\zeta(3)$
+  - role: test
+    id: cl-2-0-0
+    expr: [ClausenCl, 2, 0]
+    expected: 0
+  - role: test
+    id: cl-3-pi-2-frac-3-32-zeta-3
+    expr: [ClausenCl, 3, [Divide, Pi, 2]]
+    expected: [Multiply, [Rational, -3, 32], [Zeta, 3]]
+    caption: $\mathrm{Cl}_3(\pi/2) = -2^{-3}\eta(3) = -\tfrac{3}{32}\zeta(3)$
   - id: cl-4-pi-2-beta-4-which-has-no-closed-form-of-its
     expr: [ClausenCl, 4, [Divide, Pi, 2]]
     expected: [DirichletBeta, 4]

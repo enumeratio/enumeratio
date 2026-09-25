@@ -74,5 +74,9 @@ examples:
     expected: 20
     category: Scope
     caption: A lazy [[Range]] is counted without being materialised
+  - id: length-of-association-counts-values
+    expr: [Length, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]
+    expected: 3
+    role: test
 seeAlso:
   - Count

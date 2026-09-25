@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1417, disagree 69, inconclusive 0, error 3
+## wolfram — agree 1440, disagree 69, inconclusive 0, error 3
 
 | example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
 | ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -281,12 +281,13 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## julia — agree 161, disagree 7, inconclusive 0, error 48
+## julia — agree 166, disagree 8, inconclusive 0, error 49
 
 | example                                                    | kind          | ours      | theirs   |
 | ---------------------------------------------------------- | ------------- | --------- | -------- |
 | `Binomial/both-arguments-negative-integers-the-limiting`   | convention    | `6`       | `0`      |
 | `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s` | convention    | `true`    | `false`  |
+| `IsPrime/isprime-neg-2-is-true`                            | convention    | `true`    | `false`  |
 | `N/an-exact-tie-rounds-to-the-even-digit-0-125`            | rounding-mode | `0.12`    | `0.125`  |
 | `N/and-0-375-to-0-38`                                      | rounding-mode | `0.38`    | `0.375`  |
 | `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9`                   | convention    | `-362880` | `362880` |
@@ -327,6 +328,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `IsPrime/a-gaussian-prime-its-norm-5-is-prime`                   | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `IsPrime/non-integers-are-not-prime`                             | `AssertionError: denominator(x) == 1`                                                        |
 | `IsPrime/threads-element-wise-over-a-list`                       | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `IsPrime/threads-element-wise-over-a-short-list`                 | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `LCM/1-3i-i-3-i-associates-share-their-multiples`                | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `LCM/gaussian-primes-of-norm-41-and-13-the-lcm-is-the`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `LCM/gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3`                  | `MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type ` |

@@ -1,0 +1,27 @@
+pairs-keys-with-values-two-argument-form:
+  epsil:
+    in: AssociationThread([a, b], [1, 2])
+    out: Association(Rule(a, 1), Rule(b, 2))
+  tex:
+    in: \mathrm{AssociationThread}(\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)
+    out: \mathrm{Association}(\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2))
+  fullform:
+    in: AssociationThread[List[a, b], List[1, 2]]
+accepts-the-one-argument-rule-keys-values-form:
+  epsil:
+    in: AssociationThread(Rule([a, b], [1, 2]))
+    out: Association(Rule(a, 1), Rule(b, 2))
+  tex:
+    in: \mathrm{AssociationThread}(\mathrm{Rule}(\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack))
+    out: \mathrm{Association}(\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2))
+  fullform:
+    in: AssociationThread[Rule[List[a, b], List[1, 2]]]
+length-on-the-result-agrees-with-association:
+  epsil:
+    in: Length(AssociationThread([a, b, c], [1, 2, 3]))
+    out: "3"
+  tex:
+    in: \mathrm{Length}(\mathrm{AssociationThread}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack))
+    out: "3"
+  fullform:
+    in: Length[AssociationThread[List[a, b, c], List[1, 2, 3]]]

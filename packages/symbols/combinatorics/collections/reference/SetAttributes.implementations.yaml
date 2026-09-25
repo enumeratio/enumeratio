@@ -1,0 +1,9 @@
+turn-on-orderless:
+  epsil:
+    in: "[SetAttributes(HarmonicMean, Orderless), Attributes(HarmonicMean)]"
+    out: "[[Orderless]]"
+  tex:
+    in: \bigl\lbrack\mathrm{SetAttributes}(\mathrm{HarmonicMean}, \mathrm{Orderless}), \mathrm{Attributes}(\mathrm{HarmonicMean})\bigr\rbrack
+    out: \bigl\lbrack\bigl\lbrack\mathrm{Orderless}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]

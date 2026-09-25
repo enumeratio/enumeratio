@@ -1,0 +1,18 @@
+sum-one-to-five:
+  epsil:
+    in: "[total := 0, Do(total := total + i, [i, 1, 5]), total]"
+    out: "[0, 15]"
+  tex:
+    in: \bigl\lbrack\mathrm{total}\coloneq0, \mathrm{Do}(\mathrm{total}\coloneq\mathrm{total}+i, \bigl\lbrack i, 1, 5\bigr\rbrack), \mathrm{total}\bigr\rbrack
+    out: \bigl\lbrack0, 15\bigr\rbrack
+  fullform:
+    in: List[Assign[total, 0], Do[Assign[total, Plus[total, i]], List[i, 1, 5]], total]
+repeat-with-no-loop-variable:
+  epsil:
+    in: "[count := 0, Do(count := count + 1, 4), count]"
+    out: "[0, 4]"
+  tex:
+    in: \bigl\lbrack\mathrm{count}\coloneq0, \mathrm{Do}(\mathrm{count}\coloneq\mathrm{count}+1, 4), \mathrm{count}\bigr\rbrack
+    out: \bigl\lbrack0, 4\bigr\rbrack
+  fullform:
+    in: List[Assign[count, 0], Do[Assign[count, Plus[count, 1]], 4], count]

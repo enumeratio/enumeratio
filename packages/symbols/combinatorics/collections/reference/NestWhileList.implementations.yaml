@@ -1,0 +1,11 @@
+halve-while-even-collecting-every-step:
+  epsil:
+    in: NestWhileList(Function(_1 / 2), 96, Function(_1 % 2 == 0))
+    out: "[96, 48, 24, 12, 6, 3]"
+  tex:
+    in: \mathrm{NestWhileList}(()\mapsto\frac{\operatorname{\_1}}{2}, 96, ()\mapsto\operatorname{\_1}\bmod2=0)
+    out: \bigl\lbrack96, 48, 24, 12, 6, 3\bigr\rbrack
+  fullform:
+    in: NestWhileList[Function[Divide[Slot[1], 2]], 96, Function[Equal[Mod[Slot[1], 2], 0]]]
+  wolfram:
+    in: NestWhileList[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]

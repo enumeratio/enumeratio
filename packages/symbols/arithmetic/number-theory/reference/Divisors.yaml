@@ -105,6 +105,29 @@ examples:
     expected: [List, 1, 2, 3, 6]
     category: Possible issues
     caption: Only positive divisors, even for negative $n$
+  - role: test
+    id: divisors-neg-12
+    expr: [Divisors, -12]
+    expected: [List, 1, 2, 3, 4, 6, 12]
+    category: Possible issues
+  - role: test
+    id: divisors-0-stays-unevaluated
+    expr: [Divisors, 0]
+    expected: [Divisors, 0]
+    category: Possible issues
+    caption: 0 stays unevaluated
+  - role: test
+    id: a-non-integer-stays-unevaluated
+    expr: [Divisors, [Rational, 5, 2]]
+    expected: [Divisors, [Rational, 5, 2]]
+    category: Possible issues
+    caption: A non-integer stays unevaluated
+  - role: test
+    id: 5-in-the-gaussian-integers
+    expr: [Divisors, 5, [KeyValuePair, GaussianIntegers, True]]
+    expected: [List, 1, [Complex, 1, 2], [Complex, 2, 1], 5]
+    category: Scope
+    caption: 5 in the Gaussian integers
 seeAlso:
   - FactorInteger
   - DivisorSigma

@@ -37,3 +37,24 @@ same-word-length-as-lllr-different-geodesic:
     out: "7"
   fullform:
     in: ModularTrace["LRLR"]
+the-same-geodesic-yet-again:
+  epsil:
+    in: ModularClass("RLL")
+    out: '"LLR"'
+  tex:
+    in: \mathrm{ModularClass}(\text{RLL})
+    out: \text{LLR}
+  fullform:
+    in: ModularClass["RLL"]
+lrr-is-primitive:
+  epsil:
+    in: IsPrimitiveClass("LRR")
+    out: True
+  tex:
+    in: \mathrm{IsPrimitiveClass}(\text{LRR})
+    out: \top
+  traditional:
+    in: \mathrm{IsPrimitiveClass}(\text{LRR})
+    out: \mathrm{True}
+  fullform:
+    in: IsPrimitiveClass["LRR"]

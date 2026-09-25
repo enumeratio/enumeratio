@@ -91,6 +91,11 @@ examples:
     expected: [Rational, 3, 4]
     category: Scope
     caption: $\sinh(\ln 2) = \frac{2 - 1/2}{2} = \tfrac34$
+  - id: a-real-symbolic-argument-is-untouched
+    expr: [Sinh, x]
+    expected: [Sinh, x]
+    category: Scope
+    caption: A real symbolic argument is untouched
   - id: oddness-pulls-the-sign-out-of-a-symbolic
     expr: [Sinh, [Negate, x]]
     expected: [Negate, [Sinh, x]]
@@ -139,6 +144,11 @@ examples:
     expected: { num: "1.17520119364380145688238185060" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
+  - id: n-decimalizes-sinh-i-pi-2-not-just-the-exact
+    expr: [N, [Sinh, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]]
+    expected: [Complex, 0, 1]
+    category: Scope
+    caption: N(...) decimalizes $\sinh(i\pi/2)$, not just the exact $i$ form
 seeAlso:
   - Cosh
   - Tanh

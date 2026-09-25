@@ -1,0 +1,11 @@
+the-value-half-is-deterministic:
+  epsil:
+    in: AbsoluteTiming(1 + 2)[2]
+    out: "3"
+  tex:
+    in: \mathrm{AbsoluteTiming}(1+2)[2]
+    out: "3"
+  fullform:
+    in: Part[AbsoluteTiming[Plus[1, 2]], 2]
+  wolfram:
+    in: Part[AbsoluteTiming[Plus[1, 2]], 2]

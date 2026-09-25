@@ -78,6 +78,15 @@ examples:
     expected: { num: "0.9159655941772190150546035149323841107741" }
     category: Scope
     caption: To exactly 40 significant digits, as many as asked for
+  - role: test
+    id: beta-neg-6-e-6-2
+    expr: [DirichletBeta, -6]
+    expected: [Rational, -61, 2]
+    caption: $\beta(-6) = E_6/2 = -61/2$
+  - role: test
+    id: n-dirichletbeta-4
+    expr: [N, [DirichletBeta, 4]]
+    expected: { num: "0.988944551741105336109" }
 implementations:
   - origin: reference
     form: notatio

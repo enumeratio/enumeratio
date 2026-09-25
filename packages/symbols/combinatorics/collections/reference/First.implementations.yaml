@@ -122,3 +122,43 @@ a-default-is-ignored-when-the-collection-has-a:
     out: a
   fullform:
     in: First[List[a, b], x]
+first-default-ignored-when-nonempty:
+  epsil:
+    in: First([1, 2, 3], 99)
+    out: "1"
+  tex:
+    in: \mathrm{First}(\bigl\lbrack1, 2, 3\bigr\rbrack, 99)
+    out: "1"
+  fullform:
+    in: First[List[1, 2, 3], 99]
+  wolfram:
+    in: First[List[1, 2, 3], 99]
+first-of-association-is-first-value:
+  epsil:
+    in: First(Association(Rule(1, a), Rule(2, b), Rule(3, c)))
+    out: a
+  tex:
+    in: \mathrm{First}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b), \mathrm{Rule}(3, c)))
+    out: a
+  fullform:
+    in: First[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+first-of-empty-association-falls-through:
+  epsil:
+    in: First(Association(), 99)
+    out: "99"
+  tex:
+    in: \mathrm{First}(\mathrm{Association}(), 99)
+    out: "99"
+  fullform:
+    in: First[Association[], 99]
+  wolfram:
+    in: First[Association[], 99]
+first-of-nonempty-association-ignores-default:
+  epsil:
+    in: First(Association(Rule(1, a), Rule(2, b)), 99)
+    out: a
+  tex:
+    in: \mathrm{First}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)), 99)
+    out: a
+  fullform:
+    in: First[Association[Rule[1, a], Rule[2, b]], 99]

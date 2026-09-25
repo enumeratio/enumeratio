@@ -46,6 +46,30 @@ cl-3-pi-eta-3-frac-34-zeta-3:
     out: -\frac{3\zeta(3)}{4}
   fullform:
     in: ClausenCl[3, Pi]
+cl-2-0-0:
+  epsil:
+    in: ClausenCl(2, 0)
+    out: "0"
+  tex:
+    in: \mathrm{ClausenCl}(2, 0)
+    out: "0"
+  traditional:
+    in: \operatorname{Cl}_{2}(0)
+    out: "0"
+  fullform:
+    in: ClausenCl[2, 0]
+cl-3-pi-2-frac-3-32-zeta-3:
+  epsil:
+    in: ClausenCl(3, Pi / 2)
+    out: -3 / 32 * Zeta(3)
+  tex:
+    in: \mathrm{ClausenCl}(3, \frac{\pi}{2})
+    out: -\frac{3\zeta(3)}{32}
+  traditional:
+    in: \operatorname{Cl}_{3}(\frac{\pi}{2})
+    out: -\frac{3\zeta(3)}{32}
+  fullform:
+    in: ClausenCl[3, Divide[Pi, 2]]
 cl-4-pi-2-beta-4-which-has-no-closed-form-of-its:
   epsil:
     in: ClausenCl(4, Pi / 2)
