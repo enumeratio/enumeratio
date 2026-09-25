@@ -1,4 +1,9 @@
-import { openSession, type BrowserSession } from "@enumeratio/aestimatio/browser";
+import {
+  openSession,
+  type BrowserSession,
+  type SharedWorkerFactory,
+  type WorkerFactory,
+} from "@enumeratio/aestimatio/browser";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { CONTROL_EVENT, Transcript, type TrackedSymbols } from "@enumeratio/notatio";
 import { LitElement, nothing } from "lit";
@@ -36,6 +41,31 @@ function parseEvaluator(attr: string): Evaluator {
  * `declareCollections`, …) to mean the same thing. A module with no such host set
  * still opens a session, just with no libraries beyond aestimatio's own. */
 type WorkerSetupGate = { __notatioWorkerSetup?: string };
+
+/** The `createWorker`/`createSharedWorker` factories a page builds around a literal,
+ * Vite-bundleable `new Worker(new URL(...))` (`web/.vitepress/theme/worker-factories.ts`'s
+ * own comment explains why a library can't do this itself) -- set once by the host, same
+ * gate pattern as `WorkerSetupGate`. Without it, `openSession` falls back to computing
+ * the worker's own URL, which is fine for a dev server serving raw source on request but
+ * 404s ("Failed to fetch a worker script") once a production build never emitted that
+ * file as an asset. */
+type WorkerFactoriesGate = {
+  __notatioWorkerFactories?: {
+    readonly createWorker?: WorkerFactory;
+    readonly createSharedWorker?: SharedWorkerFactory;
+  };
+};
+
+/** Thrown by `evaluateRemote` when a session's worker (and its one respawned retry)
+ * both failed to ever start -- `notatio-out.ts`'s worker branch catches exactly this and
+ * evaluates that one cell locally instead of showing `$Aborted` for a failure that was
+ * never the reader's doing. */
+export class WorkerUnavailableError extends Error {
+  constructor() {
+    super('Evaluator -> "Worker": no worker could be started for this session');
+    this.name = "WorkerUnavailableError";
+  }
+}
 
 /**
  * How long `stop()` waits for the worker's own answer to arrive on its own before
@@ -126,6 +156,12 @@ export class NotatioDynamicModule extends LitElement {
   #transcript: Transcript | undefined;
   #reactive: ReactiveModule | undefined;
   #session: BrowserSession | undefined;
+  // Set once no worker could be started for this module at all (both the original
+  // attempt and its one respawned retry failed) -- `evaluatorKind` then reports
+  // `"Local"` for every LATER cell too, so a page that can't run workers at all (no
+  // `Worker`/`SharedWorker` support, a CSP that blocks them, ...) settles into running
+  // normally instead of retrying forever, cell after cell.
+  #workerUnavailable = false;
 
   constructor() {
     super();
@@ -137,20 +173,28 @@ export class NotatioDynamicModule extends LitElement {
     ensureStyles();
   }
 
-  /** `"Worker"` once `Evaluator -> "Worker"` is set; `"Local"` (the default)
-   * otherwise. `notatio-out.ts`'s `TranscriptHost` reads this to decide whether a
-   * cell's evaluation belongs on this thread or in `#session`. */
+  /** `"Worker"` once `Evaluator -> "Worker"` is set AND a worker has actually managed
+   * to start at least once; `"Local"` otherwise (the default, or once
+   * `#workerUnavailable` gives up for good). `notatio-out.ts`'s `TranscriptHost` reads
+   * this to decide whether a cell's evaluation belongs on this thread or in
+   * `#session`. */
   get evaluatorKind(): Evaluator {
+    if (this.#workerUnavailable) return "Local";
     return parseEvaluator(this.evaluator);
   }
 
   #openSession(): BrowserSession {
     const setup =
       this.workerSetup || (globalThis as WorkerSetupGate).__notatioWorkerSetup || undefined;
+    const factories = (globalThis as WorkerFactoriesGate).__notatioWorkerFactories;
     // Not `name`d: each module instance gets its own private session rather than
     // joining a page-wide `SharedWorker` -- two `Evaluator -> "Worker"` modules on
     // one page are unrelated scopes, same as two plain transcripts are.
-    return openSession({ setup });
+    return openSession({
+      setup,
+      createWorker: factories?.createWorker,
+      createSharedWorker: factories?.createSharedWorker,
+    });
   }
 
   /**
@@ -176,13 +220,37 @@ export class NotatioDynamicModule extends LitElement {
     // Wolfram's own unit (`TimeConstraint`, `VerificationTest`) is seconds; aestimatio's
     // session API wants ms.
     const timeMs = this.timeConstraint > 0 ? this.timeConstraint * 1000 : undefined;
-    const call = session.evaluate(json, { timeMs }).then((result) => {
-      if (result.reset) this.#onSessionReset();
-      else this.#clearSessionResetNotice();
-      return result;
-    });
+    const attempt = (): Promise<{ value: unknown; reset: boolean }> =>
+      session.evaluate(json, { timeMs });
+
+    // `reset: true` here is never a user-requested stop (that path is the `signal`
+    // branch below, which resolves its own `Aborted` directly) -- it's the session's
+    // OWN worker/port failing to ever start, or an uncooperative deadline hard-killing
+    // it. Either way `openSession` has already respawned a fresh worker by the time
+    // this promise settles, so give THIS call one more try on it before reporting
+    // anything to the reader as `$Aborted` -- a worker that merely needed a second
+    // attempt is not the same failure as one the reader actually asked to stop.
+    const runWithRetry = async (): Promise<{ value: unknown; reset: boolean }> => {
+      const first = await attempt();
+      if (!first.reset) {
+        this.#clearSessionResetNotice();
+        return first;
+      }
+      const second = await attempt();
+      if (!second.reset) {
+        this.#clearSessionResetNotice();
+        return second;
+      }
+      // Both the original worker/port and its replacement failed -- no more retries.
+      // `notatio-out.ts`'s worker branch catches this and evaluates the cell locally
+      // instead; `evaluatorKind` reports `"Local"` from here on so later cells don't
+      // each retry the same dead end.
+      this.#onWorkerUnavailable();
+      throw new WorkerUnavailableError();
+    };
+
     const { signal } = options;
-    if (!signal) return call;
+    if (!signal) return runWithRetry();
     return new Promise((resolve, reject) => {
       let settled = false;
       let graceTimer: ReturnType<typeof setTimeout> | undefined;
@@ -198,7 +266,8 @@ export class NotatioDynamicModule extends LitElement {
           // Nothing landed within the grace -- the only reliable way to stop an
           // uncooperative loop with no deadline of its own (design/aestimatio.md §3).
           // This tab's bindings are gone either way; other calls already queued behind
-          // this one on the session are abandoned along with it.
+          // this one on the session are abandoned along with it. This IS a genuine
+          // user-requested stop, so `$Aborted` is the right answer -- no retry.
           finish(() => {
             if (this.#session === session) {
               session.close();
@@ -210,11 +279,30 @@ export class NotatioDynamicModule extends LitElement {
         }, STOP_GRACE_MS);
       };
       signal.addEventListener("abort", onAbort);
-      call.then(
+      runWithRetry().then(
         (result) => finish(() => resolve(result)),
         (error: unknown) => finish(() => reject(error)),
       );
     });
+  }
+
+  /**
+   * Neither the session's own worker nor its one respawned retry ever started --
+   * distinct from `#onSessionReset` (a deadline that DID start a worker, then had to
+   * hard-kill it): there is nothing a "re-run cells" notice would fix here, since
+   * nothing about this reader's session is ever going to work. `evaluatorKind` reports
+   * `"Local"` from here on (this method's own caller, `evaluateRemote`, still throws
+   * for THIS call so `notatio-out.ts` can fall back for it specifically).
+   */
+  #onWorkerUnavailable(): void {
+    this.#workerUnavailable = true;
+    this.#clearSessionResetNotice();
+    if (this.querySelector(":scope > .notatio-worker-unavailable")) return;
+    const banner = document.createElement("div");
+    banner.className = "notatio-worker-reset notatio-worker-unavailable";
+    banner.setAttribute("role", "status");
+    banner.textContent = "Worker unavailable — evaluating locally instead.";
+    this.prepend(banner);
   }
 
   /**
