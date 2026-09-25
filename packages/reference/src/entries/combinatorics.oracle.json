@@ -504,6 +504,28 @@
           "output": "15",
           "verdict": "agree"
         }
+      },
+      "[\"Binomial\",[\"List\",2,3,5,7,11],3]": {
+        "wolfram": {
+          "input": "Binomial[List[2, 3, 5, 7, 11], 3]",
+          "output": "{0, 1, 10, 35, 165}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\binom{\\{2,3,5,7,11\\}}{3}",
+            "output": "\\{0,1,10,35,165\\}"
+          }
+        }
+      },
+      "[\"Binomial\",[\"Rational\",9,2],[\"Rational\",7,2]]": {
+        "wolfram": {
+          "input": "Binomial[Rational[9, 2], Rational[7, 2]]",
+          "output": "9/2",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\binom{\\frac{9}{2}}{\\frac{7}{2}}",
+            "output": "\\frac{9}{2}"
+          }
+        }
       }
     },
     "Multinomial": {
@@ -581,6 +603,17 @@
           "tex": {
             "input": "(5;5)",
             "output": "1"
+          }
+        }
+      },
+      "[\"Multinomial\",[\"List\",2,3,5],3]": {
+        "wolfram": {
+          "input": "Multinomial[List[2, 3, 5], 3]",
+          "output": "{10, 20, 56}",
+          "verdict": "agree",
+          "tex": {
+            "input": "(\\{2,3,5\\}+3;\\{2,3,5\\},3)",
+            "output": "\\{10,20,56\\}"
           }
         }
       }
@@ -1117,6 +1150,17 @@
             "output": "2027025"
           }
         }
+      },
+      "[\"Factorial2\",-1]": {
+        "wolfram": {
+          "input": "Factorial2[-1]",
+          "output": "1",
+          "verdict": "agree",
+          "tex": {
+            "input": "(-1)\\text{!!}",
+            "output": "1"
+          }
+        }
       }
     },
     "CatalanNumber": {
@@ -1490,6 +1534,28 @@
           "output": "9694845",
           "verdict": "agree"
         }
+      },
+      "[\"CatalanNumber\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "CatalanNumber[List[1, 2, 3, 4]]",
+          "output": "{1, 2, 5, 14}",
+          "verdict": "agree",
+          "tex": {
+            "input": "C_{\\{1,2,3,4\\}}",
+            "output": "\\{1,2,5,14\\}"
+          }
+        }
+      },
+      "[\"CatalanNumber\",[\"Rational\",5,2]]": {
+        "wolfram": {
+          "input": "CatalanNumber[Rational[5, 2]]",
+          "output": "1024/(105*Pi)",
+          "verdict": "agree",
+          "tex": {
+            "input": "C_{\\frac{5}{2}}",
+            "output": "\\frac{1024}{105 \\pi }"
+          }
+        }
       }
     },
     "Pochhammer": {
@@ -1580,6 +1646,17 @@
             "output": "0"
           }
         }
+      },
+      "[\"Pochhammer\",[\"List\",2,3,4],2]": {
+        "wolfram": {
+          "input": "Pochhammer[List[2, 3, 4], 2]",
+          "output": "{6, 12, 20}",
+          "verdict": "agree",
+          "tex": {
+            "input": "(\\{2,3,4\\})_2",
+            "output": "\\{6,12,20\\}"
+          }
+        }
       }
     },
     "Subfactorial": {
@@ -1657,6 +1734,17 @@
           "tex": {
             "input": "\\text{Subfactorial}[-1]",
             "output": "\\text{Subfactorial}[-1]"
+          }
+        }
+      },
+      "[\"Subfactorial\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Subfactorial[List[1, 2, 3, 4]]",
+          "output": "{0, 1, 2, 9}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Subfactorial}[\\{1,2,3,4\\}]",
+            "output": "\\{0,1,2,9\\}"
           }
         }
       }
@@ -1865,6 +1953,17 @@
           "verdict": "disagree",
           "kind": "convention",
           "note": "Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram."
+        }
+      },
+      "[\"StirlingS1\",[\"List\",2,4,6],2]": {
+        "wolfram": {
+          "input": "StirlingS1[List[2, 4, 6], 2]",
+          "output": "{1, 11, 274}",
+          "verdict": "agree",
+          "tex": {
+            "input": "S_{\\{2,4,6\\}}^{(2)}",
+            "output": "\\{1,11,274\\}"
+          }
         }
       }
     },
@@ -2291,6 +2390,17 @@
           "verdict": "error",
           "kind": "undefined-form",
           "note": "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
+        }
+      },
+      "[\"BellNumber\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "BellB[List[1, 2, 3, 4]]",
+          "output": "{1, 2, 5, 15}",
+          "verdict": "agree",
+          "tex": {
+            "input": "B_{\\{1,2,3,4\\}}",
+            "output": "\\{1,2,5,15\\}"
+          }
         }
       }
     }

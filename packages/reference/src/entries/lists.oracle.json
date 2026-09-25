@@ -136,6 +136,43 @@
           }
         }
       }
+    },
+    "Contains": {
+      "[\"Contains\",[\"List\",1,2,3],2]": {
+        "wolfram": {
+          "input": "MemberQ[List[1, 2, 3], 2]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MemberQ}[\\{1,2,3\\},2]",
+            "output": "\\text{True}"
+          }
+        }
+      },
+      "[\"Contains\",[\"List\",1,2,3],5]": {
+        "wolfram": {
+          "input": "MemberQ[List[1, 2, 3], 5]",
+          "output": "False",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MemberQ}[\\{1,2,3\\},5]",
+            "output": "\\text{False}"
+          }
+        }
+      }
+    },
+    "Unique": {
+      "[\"Unique\",[\"List\",1,2,2,3,1]]": {
+        "wolfram": {
+          "input": "DeleteDuplicates[List[1, 2, 2, 3, 1]]",
+          "output": "{1, 2, 3}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{DeleteDuplicates}[\\{1,2,2,3,1\\}]",
+            "output": "\\{1,2,3\\}"
+          }
+        }
+      }
     }
   }
 }

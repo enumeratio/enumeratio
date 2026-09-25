@@ -441,6 +441,17 @@
           "kind": "domain",
           "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
+      },
+      "[\"Mod\",17,5,1]": {
+        "wolfram": {
+          "input": "Mod[17, 5, 1]",
+          "output": "2",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Mod}[17,5,1]",
+            "output": "2"
+          }
+        }
       }
     },
     "PowerMod": {
@@ -1442,6 +1453,17 @@
           "tex": {
             "input": "\\text{ChineseRemainder}[\\{1,2\\},\\{6,10\\}]",
             "output": "\\text{ChineseRemainder}[\\{1,2\\},\\{6,10\\}]"
+          }
+        }
+      },
+      "[\"ChineseRemainder\",[\"List\",1,2],[\"List\",3,5],100]": {
+        "wolfram": {
+          "input": "ChineseRemainder[List[1, 2], List[3, 5], 100]",
+          "output": "112",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ChineseRemainder}[\\{1,2\\},\\{3,5\\},100]",
+            "output": "112"
           }
         }
       }

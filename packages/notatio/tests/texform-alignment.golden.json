@@ -223,6 +223,34 @@
       "output": true
     }
   },
+  "combinatorics/Binomial#13": {
+    "ours": {
+      "input": "\\binom{\\bigl\\lbrack2, 3, 5, 7, 11\\bigr\\rbrack}{3}",
+      "output": "\\bigl\\lbrack0, 1, 10, 35, 165\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\binom{\\{2,3,5,7,11\\}}{3}",
+      "output": "\\{0,1,10,35,165\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "combinatorics/Binomial#14": {
+    "ours": {
+      "input": "\\binom{\\frac{9}{2}}{\\frac{7}{2}}",
+      "output": "\\frac{9}{2}"
+    },
+    "wolfram": {
+      "input": "\\binom{\\frac{9}{2}}{\\frac{7}{2}}",
+      "output": "\\frac{9}{2}"
+    },
+    "same": {
+      "input": true,
+      "output": true
+    }
+  },
   "combinatorics/Multinomial#1": {
     "ours": {
       "input": "\\binom{4}{1,2,1}",
@@ -319,6 +347,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "combinatorics/Multinomial#8": {
+    "ours": {
+      "input": "\\mathrm{Multinomial}(\\bigl\\lbrack2, 3, 5\\bigr\\rbrack, 3)",
+      "output": "\\bigl\\lbrack10, 20, 56\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "(\\{2,3,5\\}+3;\\{2,3,5\\},3)",
+      "output": "\\{10,20,56\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "combinatorics/Factorial#1": {
@@ -573,6 +615,20 @@
       "output": true
     }
   },
+  "combinatorics/Factorial2#9": {
+    "ours": {
+      "input": "(-1)!!",
+      "output": "1"
+    },
+    "wolfram": {
+      "input": "(-1)\\text{!!}",
+      "output": "1"
+    },
+    "same": {
+      "input": true,
+      "output": true
+    }
+  },
   "combinatorics/CatalanNumber#1": {
     "ours": {
       "input": "C_{0}",
@@ -727,6 +783,34 @@
       "output": true
     }
   },
+  "combinatorics/CatalanNumber#12": {
+    "ours": {
+      "input": "\\mathrm{CatalanNumber}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, 2, 5, 14\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "C_{\\{1,2,3,4\\}}",
+      "output": "\\{1,2,5,14\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "combinatorics/CatalanNumber#13": {
+    "ours": {
+      "input": "C_{\\frac{5}{2}}",
+      "output": "\\frac{1\\,024}{105\\pi}"
+    },
+    "wolfram": {
+      "input": "C_{\\frac{5}{2}}",
+      "output": "\\frac{1024}{105 \\pi }"
+    },
+    "same": {
+      "input": true,
+      "output": true
+    }
+  },
   "combinatorics/Pochhammer#1": {
     "ours": {
       "input": "\\left(5\\right)_{3}",
@@ -839,6 +923,20 @@
       "output": true
     }
   },
+  "combinatorics/Pochhammer#9": {
+    "ours": {
+      "input": "\\mathrm{Pochhammer}(\\bigl\\lbrack2, 3, 4\\bigr\\rbrack, 2)",
+      "output": "\\bigl\\lbrack6, 12, 20\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "(\\{2,3,4\\})_2",
+      "output": "\\{6,12,20\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "combinatorics/Subfactorial#1": {
     "ours": {
       "input": "{!}0",
@@ -931,6 +1029,20 @@
     "wolfram": {
       "input": "\\text{Subfactorial}[-1]",
       "output": "\\text{Subfactorial}[-1]"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "combinatorics/Subfactorial#8": {
+    "ours": {
+      "input": "\\mathrm{Subfactorial}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack0, 1, 2, 9\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{Subfactorial}[\\{1,2,3,4\\}]",
+      "output": "\\{0,1,2,9\\}"
     },
     "same": {
       "input": false,
@@ -1047,6 +1159,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "combinatorics/StirlingS1#9": {
+    "ours": {
+      "input": "\\mathrm{StirlingS1}(\\bigl\\lbrack2, 4, 6\\bigr\\rbrack, 2)",
+      "output": "\\bigl\\lbrack1, 11, 274\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "S_{\\{2,4,6\\}}^{(2)}",
+      "output": "\\{1,11,274\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "combinatorics/Stirling#1": {
@@ -1245,6 +1371,20 @@
       "output": true
     }
   },
+  "combinatorics/BellNumber#9": {
+    "ours": {
+      "input": "\\mathrm{BellNumber}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, 2, 5, 15\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "B_{\\{1,2,3,4\\}}",
+      "output": "\\{1,2,5,15\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "sequences/Fibonacci#1": {
     "ours": {
       "input": "F_{0}",
@@ -1369,6 +1509,20 @@
     "same": {
       "input": true,
       "output": true
+    }
+  },
+  "sequences/Fibonacci#10": {
+    "ours": {
+      "input": "\\mathrm{Fibonacci}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, 1, 2, 3\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "F_{\\{1,2,3,4\\}}",
+      "output": "\\{1,1,2,3\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "sequences/Fibonacci#11": {
@@ -1511,6 +1665,20 @@
       "output": true
     }
   },
+  "sequences/LucasL#10": {
+    "ours": {
+      "input": "\\mathrm{LucasL}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, 3, 4, 7\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "L_{\\{1,2,3,4\\}}",
+      "output": "\\{1,3,4,7\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "sequences/LucasL#11": {
     "ours": {
       "input": "L_{30}",
@@ -1637,6 +1805,20 @@
       "output": true
     }
   },
+  "sequences/BernoulliB#10": {
+    "ours": {
+      "input": "\\mathrm{BernoulliB}(\\bigl\\lbrack1, 2, 3\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack-\\frac{1}{2}, \\frac{1}{6}, 0\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "B_{\\{1,2,3\\}}",
+      "output": "\\left\\{-\\frac{1}{2},\\frac{1}{6},0\\right\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "sequences/BernoulliB#11": {
     "ours": {
       "input": "B_{20}",
@@ -1729,6 +1911,20 @@
     "wolfram": {
       "input": "(17 \\bmod 5)=((17+3\\ 5) \\bmod 5)",
       "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "residues/Mod#7": {
+    "ours": {
+      "input": "",
+      "output": "2"
+    },
+    "wolfram": {
+      "input": "\\text{Mod}[17,5,1]",
+      "output": "2"
     },
     "same": {
       "input": false,
@@ -2547,6 +2743,20 @@
       "output": false
     }
   },
+  "residues/ChineseRemainder#6": {
+    "ours": {
+      "input": "\\mathrm{ChineseRemainder}(\\bigl\\lbrack1, 2\\bigr\\rbrack, \\bigl\\lbrack3, 5\\bigr\\rbrack, 100)",
+      "output": "112"
+    },
+    "wolfram": {
+      "input": "\\text{ChineseRemainder}[\\{1,2\\},\\{3,5\\},100]",
+      "output": "112"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
   "residues/MultiplicativeOrder#1": {
     "ours": {
       "input": "\\operatorname{ord}_{8}(5)",
@@ -2897,6 +3107,20 @@
       "output": true
     }
   },
+  "number-theory/GCD#11": {
+    "ours": {
+      "input": "\\gcd(\\frac{1}{3}, \\frac{2}{5}, \\frac{3}{7})",
+      "output": "\\frac{1}{105}"
+    },
+    "wolfram": {
+      "input": "\\gcd \\left(\\frac{1}{3},\\frac{2}{5},\\frac{3}{7}\\right)",
+      "output": "\\frac{1}{105}"
+    },
+    "same": {
+      "input": true,
+      "output": true
+    }
+  },
   "number-theory/GCD#12": {
     "ours": {
       "input": "\\gcd(3+i, 1+3i)",
@@ -2992,6 +3216,20 @@
     },
     "same": {
       "input": false,
+      "output": true
+    }
+  },
+  "number-theory/LCM#7": {
+    "ours": {
+      "input": "\\operatorname{lcm}(\\frac{1}{3}, \\frac{2}{5}, \\frac{3}{7})",
+      "output": "6"
+    },
+    "wolfram": {
+      "input": "\\text{lcm}\\left(\\frac{1}{3},\\frac{2}{5},\\frac{3}{7}\\right)",
+      "output": "6"
+    },
+    "same": {
+      "input": true,
       "output": true
     }
   },
@@ -3149,6 +3387,34 @@
       "output": true
     }
   },
+  "number-theory/Totient#7": {
+    "ours": {
+      "input": "\\varphi(0)",
+      "output": "0"
+    },
+    "wolfram": {
+      "input": "\\phi (0)",
+      "output": "0"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "number-theory/Totient#8": {
+    "ours": {
+      "input": "\\mathrm{Totient}(\\bigl\\lbrack2, 4, 6\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, 2, 2\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\phi (\\{2,4,6\\})",
+      "output": "\\{1,2,2\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "number-theory/NextPrime#1": {
     "ours": {
       "input": "\\mathrm{NextPrime}(10)",
@@ -3203,6 +3469,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "number-theory/NextPrime#5": {
+    "ours": {
+      "input": "\\mathrm{NextPrime}(\\bigl\\lbrack1, 5, 10, 15\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack2, 7, 11, 17\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{NextPrime}[\\{1,5,10,15\\}]",
+      "output": "\\{2,7,11,17\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "number-theory/NthPrime#1": {
@@ -3289,6 +3569,20 @@
       "output": true
     }
   },
+  "number-theory/NthPrime#7": {
+    "ours": {
+      "input": "\\mathrm{NthPrime}(\\bigl\\lbrack1, 3, 4, 10\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack2, 5, 7, 29\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "p_{\\{1,3,4,10\\}}",
+      "output": "\\{2,5,7,29\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "number-theory/PrimePi#1": {
     "ours": {
       "input": "\\pi(1)",
@@ -3357,6 +3651,20 @@
     "same": {
       "input": true,
       "output": true
+    }
+  },
+  "number-theory/PrimePi#6": {
+    "ours": {
+      "input": "\\mathrm{PrimePi}(\\bigl\\lbrack10, 100\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack4, 25\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\pi (\\{10,100\\})",
+      "output": "\\{4,25\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "number-theory/IsPrime#1": {
@@ -3583,6 +3891,20 @@
       "output": false
     }
   },
+  "number-theory/FactorInteger#8": {
+    "ours": {
+      "input": "\\mathrm{FactorInteger}(\\bigl\\lbrack12, 18\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack\\bigl\\lbrack(2,2), (3,1)\\bigr\\rbrack, \\bigl\\lbrack(2,1), (3,2)\\bigr\\rbrack\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{FactorInteger}[\\{12,18\\}]",
+      "output": "\\left( \\begin{array}{cc}  \\{2,2\\} & \\{3,1\\} \\\\  \\{2,1\\} & \\{3,2\\} \\\\ \\end{array} \\right)"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "number-theory/FactorInteger#10": {
     "ours": {
       "input": "\\mathrm{FactorInteger}(3+4i)",
@@ -3681,6 +4003,20 @@
       "output": true
     }
   },
+  "number-theory/PrimeNu#6": {
+    "ours": {
+      "input": "\\mathrm{PrimeNu}(\\bigl\\lbrack4, 28, 180\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, 2, 3\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\nu (\\{4,28,180\\})",
+      "output": "\\{1,2,3\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "number-theory/PrimeOmega#1": {
     "ours": {
       "input": "\\Omega(30)",
@@ -3749,6 +4085,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "number-theory/PrimeOmega#6": {
+    "ours": {
+      "input": "\\mathrm{PrimeOmega}(\\bigl\\lbrack4, 12, 24\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack2, 3, 4\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\Omega (\\{4,12,24\\})",
+      "output": "\\{2,3,4\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "number-theory/Divisors#1": {
@@ -3833,6 +4183,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "number-theory/Divisors#7": {
+    "ours": {
+      "input": "\\mathrm{Divisors}(\\bigl\\lbrack4, 6\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack\\bigl\\lbrack1, 2, 4\\bigr\\rbrack, \\bigl\\lbrack1, 2, 3, 6\\bigr\\rbrack\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{Divisors}[\\{4,6\\}]",
+      "output": "\\{\\{1,2,4\\},\\{1,2,3,6\\}\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "number-theory/Divisors#8": {
@@ -3947,6 +4311,20 @@
       "output": true
     }
   },
+  "number-theory/DivisorSigma#8": {
+    "ours": {
+      "input": "\\sigma_{-1}(6)",
+      "output": "2"
+    },
+    "wolfram": {
+      "input": "\\sigma _{-1}(6)",
+      "output": "2"
+    },
+    "same": {
+      "input": true,
+      "output": true
+    }
+  },
   "number-theory/MoebiusMu#1": {
     "ours": {
       "input": "\\mu(1)",
@@ -4028,6 +4406,20 @@
     },
     "same": {
       "input": true,
+      "output": false
+    }
+  },
+  "number-theory/MoebiusMu#7": {
+    "ours": {
+      "input": "\\mathrm{MoebiusMu}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, -1, -1, 0\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\mu (\\{1,2,3,4\\})",
+      "output": "\\{1,-1,-1,0\\}"
+    },
+    "same": {
+      "input": false,
       "output": false
     }
   },
@@ -4115,6 +4507,20 @@
       "output": true
     }
   },
+  "number-theory/IsSquareFree#7": {
+    "ours": {
+      "input": "\\mathrm{IsSquareFree}(\\bigl\\lbrack10, 4, 12\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack\\mathrm{True}, \\mathrm{False}, \\mathrm{False}\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{SquareFreeQ}[\\{10,4,12\\}]",
+      "output": "\\text{SquareFreeQ}[\\{10,4,12\\}]"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "number-theory/JacobiSymbol#1": {
     "ours": {
       "input": "\\left(\\frac{10}{5}\\right)",
@@ -4183,6 +4589,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "number-theory/JacobiSymbol#6": {
+    "ours": {
+      "input": "\\mathrm{JacobiSymbol}(\\bigl\\lbrack2, 3, 5, 7, 11\\bigr\\rbrack, 3)",
+      "output": "\\bigl\\lbrack-1, 0, -1, 1, -1\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\left(\\frac{\\{2,3,5,7,11\\}}{3}\\right)",
+      "output": "\\{-1,0,-1,1,-1\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "number-theory/LegendreSymbol#1": {
@@ -4309,6 +4729,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "number-theory/KroneckerSymbol#7": {
+    "ours": {
+      "input": "\\mathrm{KroneckerSymbol}(\\bigl\\lbrack2, 3, 5, 7, 11\\bigr\\rbrack, 6)",
+      "output": "\\bigl\\lbrack0, 0, 1, 1, 1\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\left(\\frac{\\{2,3,5,7,11\\}}{6}\\right)",
+      "output": "\\{0,0,1,1,1\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "number-theory/ExtendedGCD#1": {
@@ -6145,6 +6579,90 @@
       "output": true
     }
   },
+  "arithmetic/IsOdd#1": {
+    "ours": {
+      "input": "\\mathrm{IsOdd}(3)",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\text{OddQ}[3]",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "arithmetic/IsOdd#2": {
+    "ours": {
+      "input": "\\mathrm{IsOdd}(4)",
+      "output": "\\mathrm{False}"
+    },
+    "wolfram": {
+      "input": "\\text{OddQ}[4]",
+      "output": "\\text{False}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "arithmetic/IsOdd#3": {
+    "ours": {
+      "input": "\\mathrm{IsOdd}(-7)",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\text{OddQ}[-7]",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "arithmetic/IsEven#1": {
+    "ours": {
+      "input": "\\mathrm{IsEven}(4)",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\text{EvenQ}[4]",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "arithmetic/IsEven#2": {
+    "ours": {
+      "input": "\\mathrm{IsEven}(3)",
+      "output": "\\mathrm{False}"
+    },
+    "wolfram": {
+      "input": "\\text{EvenQ}[3]",
+      "output": "\\text{False}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "arithmetic/IsEven#3": {
+    "ours": {
+      "input": "\\mathrm{IsEven}(0)",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\text{EvenQ}[0]",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
   "elementary/Sin#1": {
     "ours": {
       "input": "\\sin(0)",
@@ -7181,6 +7699,118 @@
       "output": false
     }
   },
+  "elementary/Arccot#1": {
+    "ours": {
+      "input": "N(\\mathrm{arcctg}(1))",
+      "output": "0.785\\,398\\,163\\,397\\,448\\,309\\,616"
+    },
+    "wolfram": {
+      "input": "N\\left[\\frac{\\pi }{2}-\\tan ^{-1}(1)\\right]",
+      "output": "0.785398"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "elementary/Arccot#2": {
+    "ours": {
+      "input": "\\cot(\\mathrm{arcctg}(1))=1",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\cot \\left(\\frac{\\pi }{2}-\\tan ^{-1}(1)\\right)=1",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "elementary/Arccsc#1": {
+    "ours": {
+      "input": "\\mathrm{arccsc}(1)",
+      "output": "\\frac{\\pi}{2}"
+    },
+    "wolfram": {
+      "input": "\\csc ^{-1}(1)",
+      "output": "\\frac{\\pi }{2}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "elementary/Arccsc#2": {
+    "ours": {
+      "input": "\\mathrm{arccsc}(2)",
+      "output": "\\frac{\\pi}{6}"
+    },
+    "wolfram": {
+      "input": "\\csc ^{-1}(2)",
+      "output": "\\frac{\\pi }{6}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "elementary/Arccsc#3": {
+    "ours": {
+      "input": "\\csc(\\mathrm{arccsc}(2))=2",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\csc \\left(\\csc ^{-1}(2)\\right)=2",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "elementary/Arcsec#1": {
+    "ours": {
+      "input": "\\mathrm{arcsec}(1)",
+      "output": "0"
+    },
+    "wolfram": {
+      "input": "\\sec ^{-1}(1)",
+      "output": "0"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "elementary/Arcsec#2": {
+    "ours": {
+      "input": "\\mathrm{arcsec}(2)",
+      "output": "\\frac{\\pi}{3}"
+    },
+    "wolfram": {
+      "input": "\\sec ^{-1}(2)",
+      "output": "\\frac{\\pi }{3}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "elementary/Arcsec#3": {
+    "ours": {
+      "input": "\\sec(\\mathrm{arcsec}(2))=2",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\sec \\left(\\sec ^{-1}(2)\\right)=2",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
   "elementary/Sinh#1": {
     "ours": {
       "input": "N(\\sinh(0))",
@@ -7374,6 +8004,48 @@
     },
     "same": {
       "input": true,
+      "output": false
+    }
+  },
+  "elementary/Arcoth#1": {
+    "ours": {
+      "input": "N(\\mathrm{arcoth}(2))",
+      "output": "0.549\\,306\\,144\\,334\\,054\\,845\\,7"
+    },
+    "wolfram": {
+      "input": "N\\left[\\coth ^{-1}(2)\\right]",
+      "output": "0.549306"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "elementary/Arcsch#1": {
+    "ours": {
+      "input": "N(\\mathrm{arcsch}(2))",
+      "output": "0.481\\,211\\,825\\,059\\,603\\,447\\,495"
+    },
+    "wolfram": {
+      "input": "N\\left[\\text{csch}^{-1}(2)\\right]",
+      "output": "0.481212"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "elementary/Arsech#1": {
+    "ours": {
+      "input": "N(\\mathrm{arsech}(\\frac{1}{2}))",
+      "output": "1.316\\,957\\,896\\,924\\,816\\,708\\,63"
+    },
+    "wolfram": {
+      "input": "N\\left[\\text{sech}^{-1}\\left(\\frac{1}{2}\\right)\\right]",
+      "output": "1.31696"
+    },
+    "same": {
+      "input": false,
       "output": false
     }
   },
@@ -8497,6 +9169,20 @@
       "output": false
     }
   },
+  "special-functions/Beta#9": {
+    "ours": {
+      "input": "\\mathrm{B}(\\frac{9}{2}, \\frac{7}{2})",
+      "output": "\\frac{5\\pi}{2\\,048}"
+    },
+    "wolfram": {
+      "input": "B\\left(\\frac{9}{2},\\frac{7}{2}\\right)",
+      "output": "\\frac{5 \\pi }{2048}"
+    },
+    "same": {
+      "input": true,
+      "output": true
+    }
+  },
   "special-functions/Erf#1": {
     "ours": {
       "input": "\\operatorname{erf}(0)",
@@ -8609,6 +9295,20 @@
       "output": false
     }
   },
+  "special-functions/Erf#10": {
+    "ours": {
+      "input": "\\operatorname{erf}(\\bigl\\lbrack0, 1\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack0, \\operatorname{erf}(1)\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{erf}(\\{0,1\\})",
+      "output": "\\{0,\\text{erf}(1)\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "special-functions/Erfc#1": {
     "ours": {
       "input": "\\operatorname{erfc}(0)",
@@ -8707,6 +9407,20 @@
       "output": false
     }
   },
+  "special-functions/Erfc#9": {
+    "ours": {
+      "input": "\\mathrm{Erfc}(\\bigl\\lbrack0, 1\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, \\operatorname{erfc}(1)\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{erfc}(\\{0,1\\})",
+      "output": "\\{1,\\text{erfc}(1)\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "special-functions/ErfInv#1": {
     "ours": {
       "input": "\\operatorname{erf}^{-1}(0)",
@@ -8802,6 +9516,20 @@
     },
     "same": {
       "input": true,
+      "output": false
+    }
+  },
+  "special-functions/ErfInv#8": {
+    "ours": {
+      "input": "\\mathrm{ErfInv}(\\bigl\\lbrack0, 1\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack0, \\infty\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{erf}^{-1}(\\{0,1\\})",
+      "output": "\\{0,\\infty \\}"
+    },
+    "same": {
+      "input": false,
       "output": false
     }
   },
@@ -10922,7 +11650,7 @@
   "special-functions/HurwitzZeta#139": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 1))",
-      "output": "-0.000\\,817\\,893\\,132\\,949\\,537\\,1-0.223\\,071\\,688\\,697\\,770\\,91i"
+      "output": "-0.000\\,817\\,893\\,132\\,952\\,607\\,3-0.223\\,071\\,688\\,697\\,779\\,1i"
     },
     "wolfram": {
       "input": "N[\\zeta (-0.5+i,1)]",
@@ -10936,7 +11664,7 @@
   "special-functions/HurwitzZeta#140": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 2))",
-      "output": "-1.000\\,817\\,893\\,132\\,949\\,7-0.223\\,071\\,688\\,697\\,770\\,91i"
+      "output": "-1.000\\,817\\,893\\,132\\,952\\,6-0.223\\,071\\,688\\,697\\,779\\,1i"
     },
     "wolfram": {
       "input": "N[\\zeta (-0.5+i,2)]",
@@ -10950,7 +11678,7 @@
   "special-functions/HurwitzZeta#141": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 3))",
-      "output": "-2.088\\,685\\,980\\,146\\,858+0.680\\,556\\,014\\,096\\,194\\,4i"
+      "output": "-2.088\\,685\\,980\\,146\\,861\\,4+0.680\\,556\\,014\\,096\\,185\\,7i"
     },
     "wolfram": {
       "input": "N[\\zeta (-0.5+i,3)]",
@@ -11131,6 +11859,20 @@
   },
   "special-functions/LerchPhi#7": {
     "ours": {
+      "input": "N(\\Phi(1+2i, 3-i, 4+2i))",
+      "output": "0.002\\,025\\,009\\,957\\,012\\,008+0.003\\,327\\,897\\,536\\,813\\,197\\,4i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,3-i,4+2 i)]",
+      "output": "0.00202502\\, +0.0033279 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#8": {
+    "ours": {
       "input": "\\Phi(2, 0, 7)",
       "output": "-1"
     },
@@ -11143,7 +11885,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#8": {
+  "special-functions/LerchPhi#9": {
     "ours": {
       "input": "\\Phi(1, 3, 1)=\\zeta(3)",
       "output": "\\mathrm{True}"
@@ -11157,7 +11899,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#9": {
+  "special-functions/LerchPhi#10": {
     "ours": {
       "input": "\\Phi(-1, 2, 1)=\\frac{\\pi^2}{12}",
       "output": "\\mathrm{True}"
@@ -11171,7 +11913,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#10": {
+  "special-functions/LerchPhi#11": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, 1))",
       "output": "1.164\\,481\\,052\\,930\\,025"
@@ -11185,7 +11927,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#11": {
+  "special-functions/LerchPhi#12": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, 2))",
       "output": "0.328\\,962\\,105\\,860\\,049\\,87"
@@ -11199,7 +11941,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#12": {
+  "special-functions/LerchPhi#13": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, 0.5))",
       "output": "4.277\\,145\\,500\\,580\\,949"
@@ -11213,7 +11955,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#13": {
+  "special-functions/LerchPhi#14": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, \\frac{5}{2}))",
       "output": "0.219\\,693\\,113\\,434\\,910\\,27"
@@ -11227,7 +11969,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#14": {
+  "special-functions/LerchPhi#15": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, 1))",
       "output": "1.074\\,426\\,387\\,216\\,080\\,6"
@@ -11241,7 +11983,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#15": {
+  "special-functions/LerchPhi#16": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, 2))",
       "output": "0.148\\,852\\,774\\,432\\,160\\,77"
@@ -11255,7 +11997,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#16": {
+  "special-functions/LerchPhi#17": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, 0.5))",
       "output": "8.168\\,022\\,726\\,140\\,352"
@@ -11269,7 +12011,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#17": {
+  "special-functions/LerchPhi#18": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, \\frac{5}{2}))",
       "output": "0.079\\,498\\,311\\,968\\,809\\,95"
@@ -11283,7 +12025,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#18": {
+  "special-functions/LerchPhi#19": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, 1))",
       "output": "1.612\\,253\\,446\\,085\\,704\\,3"
@@ -11297,7 +12039,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#19": {
+  "special-functions/LerchPhi#20": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, 2))",
       "output": "1.224\\,506\\,892\\,171\\,409"
@@ -11311,7 +12053,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#20": {
+  "special-functions/LerchPhi#21": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, 0.5))",
       "output": "2.101\\,712\\,462\\,489\\,351\\,3"
@@ -11325,7 +12067,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#21": {
+  "special-functions/LerchPhi#22": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, \\frac{5}{2}))",
       "output": "1.117\\,002\\,438\\,609\\,575\\,2"
@@ -11339,7 +12081,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#22": {
+  "special-functions/LerchPhi#23": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, 1))",
       "output": "3.999\\,999\\,999\\,999\\,999\\,6"
@@ -11353,7 +12095,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#23": {
+  "special-functions/LerchPhi#24": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, 2))",
       "output": "5.999\\,999\\,999\\,999\\,999"
@@ -11367,7 +12109,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#24": {
+  "special-functions/LerchPhi#25": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, 0.5))",
       "output": "2.999\\,999\\,999\\,999\\,999"
@@ -11381,7 +12123,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#25": {
+  "special-functions/LerchPhi#26": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, \\frac{5}{2}))",
       "output": "7.000\\,000\\,000\\,000\\,001"
@@ -11395,7 +12137,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#26": {
+  "special-functions/LerchPhi#27": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, 1))",
       "output": "1.109\\,707\\,090\\,706\\,641-0.116\\,099\\,123\\,583\\,394\\,3i"
@@ -11409,7 +12151,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#27": {
+  "special-functions/LerchPhi#28": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, 2))",
       "output": "0.219\\,414\\,181\\,413\\,281\\,26-0.232\\,198\\,247\\,166\\,788\\,55i"
@@ -11423,7 +12165,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#28": {
+  "special-functions/LerchPhi#29": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, 0.5))",
       "output": "3.308\\,545\\,670\\,420\\,987+2.422\\,109\\,611\\,421\\,262i"
@@ -11437,7 +12179,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#29": {
+  "special-functions/LerchPhi#30": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, \\frac{5}{2}))",
       "output": "0.109\\,543\\,338\\,580\\,833\\,94-0.184\\,323\\,131\\,142\\,563\\,82i"
@@ -11451,7 +12193,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#30": {
+  "special-functions/LerchPhi#31": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, 1))",
       "output": "0.896\\,828\\,413\\,847\\,292\\,4"
@@ -11465,7 +12207,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#31": {
+  "special-functions/LerchPhi#32": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, 2))",
       "output": "0.206\\,343\\,172\\,305\\,415\\,18"
@@ -11479,7 +12221,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#32": {
+  "special-functions/LerchPhi#33": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, 0.5))",
       "output": "3.809\\,896\\,676\\,518\\,156"
@@ -11493,7 +12235,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#33": {
+  "special-functions/LerchPhi#34": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, \\frac{5}{2}))",
       "output": "0.128\\,475\\,594\\,961\\,513\\,03"
@@ -11507,7 +12249,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#34": {
+  "special-functions/LerchPhi#35": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, 1))",
       "output": "0.945\\,195\\,689\\,317\\,793\\,7"
@@ -11521,7 +12263,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#35": {
+  "special-functions/LerchPhi#36": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, 2))",
       "output": "0.109\\,608\\,621\\,364\\,412\\,52"
@@ -11535,7 +12277,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#36": {
+  "special-functions/LerchPhi#37": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, 0.5))",
       "output": "7.865\\,477\\,514\\,353\\,38"
@@ -11549,7 +12291,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#37": {
+  "special-functions/LerchPhi#38": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, \\frac{5}{2}))",
       "output": "0.054\\,502\\,650\\,006\\,118\\,85"
@@ -11563,7 +12305,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#38": {
+  "special-functions/LerchPhi#39": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, 1))",
       "output": "0.747\\,504\\,475\\,961\\,946"
@@ -11577,7 +12319,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#39": {
+  "special-functions/LerchPhi#40": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, 2))",
       "output": "0.504\\,991\\,048\\,076\\,108"
@@ -11591,7 +12333,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#40": {
+  "special-functions/LerchPhi#41": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, 0.5))",
       "output": "1.117\\,587\\,668\\,909\\,633\\,8"
@@ -11605,7 +12347,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#41": {
+  "special-functions/LerchPhi#42": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, \\frac{5}{2}))",
       "output": "0.446\\,489\\,588\\,001\\,608\\,5"
@@ -11619,7 +12361,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#42": {
+  "special-functions/LerchPhi#43": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, 1))",
       "output": "0.444\\,444\\,444\\,444\\,444\\,4"
@@ -11633,7 +12375,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#43": {
+  "special-functions/LerchPhi#44": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, 2))",
       "output": "1.111\\,111\\,111\\,111\\,111\\,2"
@@ -11647,7 +12389,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#44": {
+  "special-functions/LerchPhi#45": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, 0.5))",
       "output": "0.\\overline{1}"
@@ -11661,7 +12403,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#45": {
+  "special-functions/LerchPhi#46": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, \\frac{5}{2}))",
       "output": "1.444\\,444\\,444\\,444\\,444\\,4"
@@ -11675,7 +12417,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#46": {
+  "special-functions/LerchPhi#47": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, 1))",
       "output": "0.915\\,063\\,092\\,151\\,170\\,4+0.060\\,942\\,039\\,339\\,614\\,22i"
@@ -11689,7 +12431,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#47": {
+  "special-functions/LerchPhi#48": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, 2))",
       "output": "0.169\\,873\\,815\\,697\\,659\\,08-0.121\\,884\\,078\\,679\\,228\\,44i"
@@ -11703,7 +12445,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#48": {
+  "special-functions/LerchPhi#49": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, 0.5))",
       "output": "2.894\\,185\\,202\\,891\\,337\\,7+2.619\\,141\\,408\\,581\\,271i"
@@ -11717,7 +12459,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#49": {
+  "special-functions/LerchPhi#50": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, \\frac{5}{2}))",
       "output": "0.085\\,735\\,311\\,021\\,356-0.097\\,433\\,630\\,883\\,612\\,38i"
@@ -11731,7 +12473,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#50": {
+  "special-functions/LerchPhi#51": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, 1))",
       "output": "0.835\\,736\\,865\\,796\\,957\\,4"
@@ -11745,7 +12487,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#51": {
+  "special-functions/LerchPhi#52": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, 2))",
       "output": "0.182\\,514\\,593\\,558\\,936\\,32"
@@ -11759,7 +12501,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#52": {
+  "special-functions/LerchPhi#53": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, 0.5))",
       "output": "3.690\\,522\\,475\\,693\\,304\\,4"
@@ -11773,7 +12515,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#53": {
+  "special-functions/LerchPhi#54": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, \\frac{5}{2}))",
       "output": "0.111\\,756\\,142\\,831\\,241\\,72"
@@ -11787,7 +12529,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#54": {
+  "special-functions/LerchPhi#55": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, 1))",
       "output": "0.909\\,598\\,001\\,715\\,959\\,7"
@@ -11801,7 +12543,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#55": {
+  "special-functions/LerchPhi#56": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, 2))",
       "output": "0.100\\,446\\,664\\,760\\,044\\,64"
@@ -11815,7 +12557,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#56": {
+  "special-functions/LerchPhi#57": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, 0.5))",
       "output": "7.773\\,051\\,219\\,077\\,413"
@@ -11829,7 +12571,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#57": {
+  "special-functions/LerchPhi#58": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, \\frac{5}{2}))",
       "output": "0.049\\,034\\,426\\,844\\,542\\,13"
@@ -11843,7 +12585,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#58": {
+  "special-functions/LerchPhi#59": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, 1))",
       "output": "0.628\\,362\\,164\\,954\\,058\\,4"
@@ -11857,7 +12599,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#59": {
+  "special-functions/LerchPhi#60": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, 2))",
       "output": "0.412\\,930\\,927\\,828\\,823\\,9"
@@ -11871,7 +12613,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#60": {
+  "special-functions/LerchPhi#61": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, 0.5))",
       "output": "0.973\\,146\\,783\\,413\\,905\\,5"
@@ -11885,7 +12627,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#61": {
+  "special-functions/LerchPhi#62": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, \\frac{5}{2}))",
       "output": "0.362\\,691\\,535\\,649\\,091\\,3"
@@ -11899,7 +12641,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#62": {
+  "special-functions/LerchPhi#63": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, 1))",
       "output": "0.277\\,008\\,310\\,249\\,307\\,7"
@@ -11913,7 +12655,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#63": {
+  "special-functions/LerchPhi#64": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, 2))",
       "output": "0.803\\,324\\,099\\,722\\,991\\,2"
@@ -11927,7 +12669,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#64": {
+  "special-functions/LerchPhi#65": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, 0.5))",
       "output": "0.013\\,850\\,415\\,512\\,466\\,406"
@@ -11941,7 +12683,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#65": {
+  "special-functions/LerchPhi#66": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, \\frac{5}{2}))",
       "output": "1.066\\,481\\,994\\,459\\,834"
@@ -11955,7 +12697,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#66": {
+  "special-functions/LerchPhi#67": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, 1))",
       "output": "0.860\\,049\\,165\\,313\\,704\\,9+0.092\\,034\\,574\\,701\\,526\\,2i"
@@ -11969,7 +12711,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#67": {
+  "special-functions/LerchPhi#68": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, 2))",
       "output": "0.155\\,500\\,927\\,429\\,216\\,56-0.102\\,260\\,638\\,557\\,251\\,33i"
@@ -11983,7 +12725,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#68": {
+  "special-functions/LerchPhi#69": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, 0.5))",
       "output": "2.772\\,631\\,950\\,915\\,932\\,3+2.646\\,993\\,091\\,751\\,072\\,7i"
@@ -11997,7 +12739,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#69": {
+  "special-functions/LerchPhi#70": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, \\frac{5}{2}))",
       "output": "0.078\\,078\\,963\\,007\\,215\\,56-0.082\\,259\\,868\\,381\\,738\\,78i"
@@ -12011,7 +12753,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#70": {
+  "special-functions/LerchPhi#71": {
     "ours": {
       "input": "N(\\Phi(-1, 2, 1))",
       "output": "0.822\\,467\\,033\\,424\\,113\\,2"
@@ -12025,7 +12767,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#71": {
+  "special-functions/LerchPhi#72": {
     "ours": {
       "input": "N(\\Phi(-1, 2, 2))",
       "output": "0.177\\,532\\,966\\,575\\,886\\,8"
@@ -12039,7 +12781,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#72": {
+  "special-functions/LerchPhi#73": {
     "ours": {
       "input": "N(\\Phi(-1, 2, 0.5))",
       "output": "3.663\\,862\\,376\\,708\\,875"
@@ -12053,7 +12795,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#73": {
+  "special-functions/LerchPhi#74": {
     "ours": {
       "input": "N(\\Phi(-1, 2, \\frac{5}{2}))",
       "output": "0.108\\,306\\,821\\,153\\,320\\,53"
@@ -12067,7 +12809,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#74": {
+  "special-functions/LerchPhi#75": {
     "ours": {
       "input": "N(\\Phi(-1, 3, 1))",
       "output": "0.901\\,542\\,677\\,369\\,695\\,5"
@@ -12081,7 +12823,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#75": {
+  "special-functions/LerchPhi#76": {
     "ours": {
       "input": "N(\\Phi(-1, 3, 2))",
       "output": "0.098\\,457\\,322\\,630\\,304\\,28"
@@ -12095,7 +12837,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#76": {
+  "special-functions/LerchPhi#77": {
     "ours": {
       "input": "N(\\Phi(-1, 3, 0.5))",
       "output": "7.751\\,569\\,170\\,074\\,954"
@@ -12109,7 +12851,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#77": {
+  "special-functions/LerchPhi#78": {
     "ours": {
       "input": "N(\\Phi(-1, 3, \\frac{5}{2}))",
       "output": "0.047\\,865\\,466\\,371\\,251\\,345"
@@ -12123,7 +12865,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#78": {
+  "special-functions/LerchPhi#79": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, 1))",
       "output": "0.604\\,898\\,643\\,421\\,630\\,2"
@@ -12137,7 +12879,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#79": {
+  "special-functions/LerchPhi#80": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, 2))",
       "output": "0.395\\,101\\,356\\,578\\,369\\,7"
@@ -12151,7 +12893,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#80": {
+  "special-functions/LerchPhi#81": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, 0.5))",
       "output": "0.944\\,258\\,314\\,238\\,200\\,2"
@@ -12165,7 +12907,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#81": {
+  "special-functions/LerchPhi#82": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, \\frac{5}{2}))",
       "output": "0.346\\,541\\,332\\,792\\,831\\,2"
@@ -12179,7 +12921,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#82": {
+  "special-functions/LerchPhi#83": {
     "ours": {
       "input": "N(\\Phi(-1, -1, 1))",
       "output": "0.25"
@@ -12193,7 +12935,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#83": {
+  "special-functions/LerchPhi#84": {
     "ours": {
       "input": "N(\\Phi(-1, -1, 2))",
       "output": "0.75"
@@ -12207,7 +12949,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#84": {
+  "special-functions/LerchPhi#85": {
     "ours": {
       "input": "N(\\Phi(-1, -1, 0.5))",
       "output": "0"
@@ -12221,7 +12963,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#85": {
+  "special-functions/LerchPhi#86": {
     "ours": {
       "input": "N(\\Phi(-1, -1, \\frac{5}{2}))",
       "output": "1"
@@ -12235,7 +12977,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#86": {
+  "special-functions/LerchPhi#87": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, 1))",
       "output": "0.847\\,689\\,164\\,837\\,414+0.098\\,268\\,389\\,570\\,016\\,2i"
@@ -12249,7 +12991,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#87": {
+  "special-functions/LerchPhi#88": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, 2))",
       "output": "0.152\\,310\\,835\\,162\\,586\\,56-0.098\\,268\\,389\\,570\\,016\\,2i"
@@ -12263,7 +13005,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#88": {
+  "special-functions/LerchPhi#89": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, 0.5))",
       "output": "2.744\\,919\\,723\\,014\\,342\\,5+2.651\\,972\\,944\\,738\\,276\\,3i"
@@ -12277,7 +13019,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#89": {
+  "special-functions/LerchPhi#90": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, \\frac{5}{2}))",
       "output": "0.076\\,372\\,578\\,198\\,229\\,92-0.079\\,181\\,582\\,611\\,533\\,77i"
@@ -12291,7 +13033,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#90": {
+  "special-functions/LerchPhi#91": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, 1))",
       "output": "1.070\\,610\\,556\\,330\\,93"
@@ -12305,7 +13047,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#91": {
+  "special-functions/LerchPhi#92": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, 2))",
       "output": "0.282\\,442\\,225\\,323\\,721\\,7"
@@ -12319,7 +13061,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#92": {
+  "special-functions/LerchPhi#93": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, 0.5))",
       "output": "4.122\\,618\\,933\\,554\\,635"
@@ -12333,7 +13075,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#93": {
+  "special-functions/LerchPhi#94": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, \\frac{5}{2}))",
       "output": "0.184\\,125\\,159\\,096\\,379\\,58"
@@ -12347,7 +13089,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#94": {
+  "special-functions/LerchPhi#95": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, 1))",
       "output": "1.033\\,845\\,583\\,186\\,293"
@@ -12361,7 +13103,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#95": {
+  "special-functions/LerchPhi#96": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, 2))",
       "output": "0.135\\,382\\,332\\,745\\,172\\,86"
@@ -12375,7 +13117,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#96": {
+  "special-functions/LerchPhi#97": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, 0.5))",
       "output": "8.078\\,488\\,306\\,135\\,496"
@@ -12389,7 +13131,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#97": {
+  "special-functions/LerchPhi#98": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, \\frac{5}{2}))",
       "output": "0.070\\,627\\,712\\,982\\,760\\,51"
@@ -12403,7 +13145,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#98": {
+  "special-functions/LerchPhi#99": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, 1))",
       "output": "1.222\\,939\\,721\\,597\\,185\\,6"
@@ -12417,7 +13159,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#99": {
+  "special-functions/LerchPhi#100": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, 2))",
       "output": "0.891\\,758\\,886\\,388\\,742\\,3"
@@ -12431,7 +13173,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#100": {
+  "special-functions/LerchPhi#101": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, 0.5))",
       "output": "1.668\\,600\\,828\\,638\\,570\\,3"
@@ -12445,7 +13187,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#101": {
+  "special-functions/LerchPhi#102": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, \\frac{5}{2}))",
       "output": "0.804\\,209\\,936\\,536\\,697\\,8"
@@ -12459,7 +13201,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#102": {
+  "special-functions/LerchPhi#103": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, 1))",
       "output": "1.777\\,777\\,777\\,777\\,777\\,7"
@@ -12473,7 +13215,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#103": {
+  "special-functions/LerchPhi#104": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, 2))",
       "output": "3.111\\,111\\,111\\,111\\,111"
@@ -12487,7 +13229,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#104": {
+  "special-functions/LerchPhi#105": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, 0.5))",
       "output": "1.111\\,111\\,111\\,111\\,111"
@@ -12501,7 +13243,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#105": {
+  "special-functions/LerchPhi#106": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, \\frac{5}{2}))",
       "output": "3.777\\,777\\,777\\,777\\,777\\,7"
@@ -12515,7 +13257,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#106": {
+  "special-functions/LerchPhi#107": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, 1))",
       "output": "1.051\\,400\\,732\\,108\\,945-0.047\\,267\\,887\\,677\\,210\\,255i"
@@ -12529,7 +13271,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#107": {
+  "special-functions/LerchPhi#108": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, 2))",
       "output": "0.205\\,602\\,928\\,435\\,778\\,51-0.189\\,071\\,550\\,708\\,841\\,02i"
@@ -12543,7 +13285,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#108": {
+  "special-functions/LerchPhi#109": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, 0.5))",
       "output": "3.185\\,550\\,463\\,844\\,432+2.502\\,641\\,530\\,788\\,986i"
@@ -12557,7 +13299,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#109": {
+  "special-functions/LerchPhi#110": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, \\frac{5}{2}))",
       "output": "0.103\\,883\\,891\\,657\\,583\\,91-0.150\\,019\\,503\\,067\\,757\\,21i"
@@ -12571,7 +13313,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#110": {
+  "special-functions/LerchPhi#111": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, 1))",
       "output": "1.444\\,127\\,470\\,005\\,508\\,5"
@@ -12585,7 +13327,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#111": {
+  "special-functions/LerchPhi#112": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, 2))",
       "output": "0.493\\,474\\,966\\,672\\,788\\,2"
@@ -12599,7 +13341,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#112": {
+  "special-functions/LerchPhi#113": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, 0.5))",
       "output": "4.686\\,783\\,273\\,082\\,932"
@@ -12613,7 +13355,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#113": {
+  "special-functions/LerchPhi#114": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, \\frac{5}{2}))",
       "output": "0.354\\,053\\,423\\,559\\,173\\,46"
@@ -12627,7 +13369,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#114": {
+  "special-functions/LerchPhi#115": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, 1))",
       "output": "1.166\\,287\\,722\\,429\\,376"
@@ -12641,7 +13383,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#115": {
+  "special-functions/LerchPhi#116": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, 2))",
       "output": "0.184\\,764\\,136\\,032\\,641\\,63"
@@ -12655,7 +13397,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#116": {
+  "special-functions/LerchPhi#117": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, 0.5))",
       "output": "8.351\\,549\\,851\\,360\\,646"
@@ -12669,7 +13411,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#117": {
+  "special-functions/LerchPhi#118": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, \\frac{5}{2}))",
       "output": "0.104\\,794\\,055\\,177\\,760\\,89"
@@ -12683,7 +13425,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#118": {
+  "special-functions/LerchPhi#119": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, 1))",
       "output": "4.468\\,833\\,808\\,303\\,737"
@@ -12697,7 +13439,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#119": {
+  "special-functions/LerchPhi#120": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, 2))",
       "output": "3.854\\,259\\,787\\,004\\,146\\,6"
@@ -12711,7 +13453,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#120": {
+  "special-functions/LerchPhi#121": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, 0.5))",
       "output": "5.111\\,636\\,244\\,963\\,35"
@@ -12725,7 +13467,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#121": {
+  "special-functions/LerchPhi#122": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, \\frac{5}{2}))",
       "output": "3.657\\,500\\,937\\,969\\,502\\,7"
@@ -12739,7 +13481,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#122": {
+  "special-functions/LerchPhi#123": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, 1))",
       "output": "100.000\\,000\\,000\\,000\\,01"
@@ -12753,7 +13495,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#123": {
+  "special-functions/LerchPhi#124": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, 2))",
       "output": "110.000\\,000\\,000\\,000\\,04"
@@ -12767,7 +13509,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#124": {
+  "special-functions/LerchPhi#125": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, 0.5))",
       "output": "94.999\\,999\\,999\\,999\\,94"
@@ -12781,7 +13523,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#125": {
+  "special-functions/LerchPhi#126": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, \\frac{5}{2}))",
       "output": "114.999\\,999\\,999\\,999\\,89"
@@ -12795,7 +13537,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#126": {
+  "special-functions/LerchPhi#127": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, 1))",
       "output": "1.192\\,928\\,775\\,865\\,743\\,2-0.340\\,556\\,246\\,338\\,811i"
@@ -12809,7 +13551,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#127": {
+  "special-functions/LerchPhi#128": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, 2))",
       "output": "0.214\\,365\\,306\\,517\\,492\\,17-0.378\\,395\\,829\\,265\\,345\\,93i"
@@ -12823,7 +13565,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#128": {
+  "special-functions/LerchPhi#129": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, 0.5))",
       "output": "3.516\\,191\\,661\\,909\\,127+2.152\\,254\\,681\\,274\\,930\\,4i"
@@ -12837,7 +13579,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#129": {
+  "special-functions/LerchPhi#130": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, \\frac{5}{2}))",
       "output": "0.088\\,479\\,557\\,873\\,380\\,69-0.303\\,471\\,535\\,918\\,346\\,14i"
@@ -12851,7 +13593,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#130": {
+  "special-functions/LerchPhi#131": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, 1))",
       "output": "1.098\\,639\\,689\\,931\\,190\\,5"
@@ -12865,7 +13607,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#131": {
+  "special-functions/LerchPhi#132": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, 2))",
       "output": "0.295\\,919\\,069\\,793\\,571\\,47"
@@ -12879,7 +13621,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#132": {
+  "special-functions/LerchPhi#133": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, 0.5))",
       "output": "4.169\\,738\\,543\\,014\\,327\\,4"
@@ -12893,7 +13635,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#133": {
+  "special-functions/LerchPhi#134": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, \\frac{5}{2}))",
       "output": "0.194\\,313\\,553\\,795\\,602\\,78"
@@ -12907,7 +13649,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#134": {
+  "special-functions/LerchPhi#135": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, 1))",
       "output": "1.046\\,483\\,583\\,464\\,519\\,9"
@@ -12921,7 +13663,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#135": {
+  "special-functions/LerchPhi#136": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, 2))",
       "output": "0.139\\,450\\,750\\,393\\,560\\,7"
@@ -12935,7 +13677,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#136": {
+  "special-functions/LerchPhi#137": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, 0.5))",
       "output": "8.106\\,907\\,002\\,058\\,708"
@@ -12949,7 +13691,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#137": {
+  "special-functions/LerchPhi#138": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, \\frac{5}{2}))",
       "output": "0.073\\,274\\,129\\,639\\,514\\,02"
@@ -12963,7 +13705,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#138": {
+  "special-functions/LerchPhi#139": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, 1))",
       "output": "1.326\\,326\\,505\\,842\\,026\\,4"
@@ -12977,7 +13719,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#139": {
+  "special-functions/LerchPhi#140": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, 2))",
       "output": "0.978\\,979\\,517\\,526\\,079\\,3"
@@ -12991,7 +13733,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#140": {
+  "special-functions/LerchPhi#141": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, 0.5))",
       "output": "1.784\\,805\\,043\\,725\\,763\\,2"
@@ -13005,7 +13747,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#141": {
+  "special-functions/LerchPhi#142": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, \\frac{5}{2}))",
       "output": "0.885\\,833\\,589\\,390\\,835\\,9"
@@ -13019,7 +13761,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#142": {
+  "special-functions/LerchPhi#143": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, 1))",
       "output": "2.249\\,999\\,999\\,999\\,999\\,6"
@@ -13033,7 +13775,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#143": {
+  "special-functions/LerchPhi#144": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, 2))",
       "output": "3.749\\,999\\,999\\,999\\,999"
@@ -13047,7 +13789,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#144": {
+  "special-functions/LerchPhi#145": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, 0.5))",
       "output": "1.499\\,999\\,999\\,999\\,999\\,3"
@@ -13061,7 +13803,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#145": {
+  "special-functions/LerchPhi#146": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, \\frac{5}{2}))",
       "output": "4.499\\,999\\,999\\,999\\,998"
@@ -13075,7 +13817,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#146": {
+  "special-functions/LerchPhi#147": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, 1))",
       "output": "1.070\\,083\\,668\\,602\\,141\\,3-0.067\\,156\\,386\\,953\\,886\\,16i"
@@ -13089,7 +13831,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#147": {
+  "special-functions/LerchPhi#148": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, 2))",
       "output": "0.210\\,251\\,005\\,806\\,421\\,78-0.201\\,469\\,160\\,861\\,658\\,53i"
@@ -13103,7 +13845,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#148": {
+  "special-functions/LerchPhi#149": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, 0.5))",
       "output": "3.224\\,867\\,422\\,277\\,603+2.479\\,648\\,998\\,974\\,589\\,3i"
@@ -13117,7 +13859,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#149": {
+  "special-functions/LerchPhi#150": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, \\frac{5}{2}))",
       "output": "0.105\\,980\\,969\\,476\\,094\\,92-0.159\\,836\\,690\\,233\\,729\\,48i"
@@ -13131,7 +13873,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#150": {
+  "special-functions/LerchPhi#151": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, 1))",
       "output": "1.101\\,836\\,588\\,740\\,841+0.109\\,880\\,454\\,004\\,132\\,04i"
@@ -13145,7 +13887,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#151": {
+  "special-functions/LerchPhi#152": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, 2))",
       "output": "0.294\\,795\\,086\\,790\\,303\\,1+0.053\\,604\\,819\\,917\\,602\\,74i"
@@ -13159,7 +13901,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#152": {
+  "special-functions/LerchPhi#153": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, 0.5))",
       "output": "4.181\\,499\\,243\\,636\\,333+0.182\\,432\\,562\\,673\\,989\\,36i"
@@ -13173,7 +13915,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#153": {
+  "special-functions/LerchPhi#154": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, \\frac{5}{2}))",
       "output": "0.192\\,709\\,082\\,429\\,705\\,75+0.040\\,700\\,707\\,964\\,669\\,71i"
@@ -13187,7 +13929,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#154": {
+  "special-functions/LerchPhi#155": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, 1))",
       "output": "1.051\\,306\\,692\\,352\\,460\\,8+0.048\\,424\\,577\\,070\\,355\\,32i"
@@ -13201,7 +13943,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#155": {
+  "special-functions/LerchPhi#156": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, 2))",
       "output": "0.140\\,200\\,200\\,248\\,363\\,58+0.015\\,911\\,292\\,489\\,615\\,658i"
@@ -13215,7 +13957,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#156": {
+  "special-functions/LerchPhi#157": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, 0.5))",
       "output": "8.121\\,165\\,761\\,843\\,056+0.107\\,270\\,303\\,911\\,863\\,24i"
@@ -13229,7 +13971,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#157": {
+  "special-functions/LerchPhi#158": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, \\frac{5}{2}))",
       "output": "0.073\\,549\\,546\\,211\\,705+0.010\\,421\\,770\\,459\\,496\\,018i"
@@ -13243,7 +13985,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#158": {
+  "special-functions/LerchPhi#159": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, 1))",
       "output": "1.261\\,409\\,136\\,988\\,254\\,3+0.415\\,428\\,785\\,308\\,441\\,46i"
@@ -13257,7 +13999,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#159": {
+  "special-functions/LerchPhi#160": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, 2))",
       "output": "0.916\\,769\\,161\\,551\\,338\\,1+0.350\\,995\\,092\\,107\\,600\\,1i"
@@ -13271,7 +14013,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#160": {
+  "special-functions/LerchPhi#161": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, 0.5))",
       "output": "1.719\\,728\\,639\\,919\\,129\\,8+0.466\\,007\\,643\\,699\\,248\\,13i"
@@ -13285,7 +14027,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#161": {
+  "special-functions/LerchPhi#162": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, \\frac{5}{2}))",
       "output": "0.825\\,251\\,709\\,172\\,310\\,4+0.328\\,546\\,560\\,279\\,657\\,6i"
@@ -13299,7 +14041,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#162": {
+  "special-functions/LerchPhi#163": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, 1))",
       "output": "1.333\\,333\\,333\\,333\\,333+1.777\\,777\\,777\\,777\\,778i"
@@ -13313,7 +14055,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#163": {
+  "special-functions/LerchPhi#164": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, 2))",
       "output": "2.666\\,666\\,666\\,666\\,667\\,4+2.444\\,444\\,444\\,444\\,442\\,4i"
@@ -13327,7 +14069,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#164": {
+  "special-functions/LerchPhi#165": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, 0.5))",
       "output": "0.666\\,666\\,666\\,666\\,666\\,6+1.444\\,444\\,444\\,444\\,444\\,2i"
@@ -13341,7 +14083,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#165": {
+  "special-functions/LerchPhi#166": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, \\frac{5}{2}))",
       "output": "3.333\\,333\\,333\\,333\\,335\\,7+2.777\\,777\\,777\\,777\\,777\\,7i"
@@ -13355,7 +14097,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#166": {
+  "special-functions/LerchPhi#167": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, 1))",
       "output": "1.160\\,096\\,753\\,413\\,701\\,9+0.006\\,328\\,927\\,692\\,369\\,448i"
@@ -13369,7 +14111,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#167": {
+  "special-functions/LerchPhi#168": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, 2))",
       "output": "0.263\\,749\\,518\\,692\\,765\\,36-0.181\\,989\\,819\\,788\\,650\\,53i"
@@ -13383,7 +14125,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#168": {
+  "special-functions/LerchPhi#169": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, 0.5))",
       "output": "3.339\\,347\\,509\\,082\\,892+2.633\\,280\\,560\\,224\\,704\\,5i"
@@ -13397,7 +14139,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#169": {
+  "special-functions/LerchPhi#170": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, \\frac{5}{2}))",
       "output": "0.148\\,148\\,848\\,638\\,359\\,7-0.150\\,271\\,972\\,240\\,938\\,77i"
@@ -13411,7 +14153,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#170": {
+  "special-functions/LerchPhi#171": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, 1))",
       "output": "0.916\\,798\\,675\\,997\\,154\\,6+0.094\\,679\\,114\\,867\\,490\\,02i"
@@ -13425,7 +14167,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#171": {
+  "special-functions/LerchPhi#172": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, 2))",
       "output": "0.212\\,646\\,925\\,395\\,878\\,4+0.038\\,814\\,492\\,768\\,163\\,93i"
@@ -13439,7 +14181,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#172": {
+  "special-functions/LerchPhi#173": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, 0.5))",
       "output": "3.853\\,772\\,051\\,558\\,024+0.178\\,041\\,438\\,629\\,279\\,13i"
@@ -13453,7 +14195,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#173": {
+  "special-functions/LerchPhi#174": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, \\frac{5}{2}))",
       "output": "0.132\\,503\\,230\\,927\\,905\\,86+0.027\\,686\\,339\\,466\\,071\\,092i"
@@ -13467,7 +14209,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#174": {
+  "special-functions/LerchPhi#175": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, 1))",
       "output": "0.959\\,105\\,606\\,130\\,840\\,6+0.052\\,063\\,804\\,773\\,610\\,99i"
@@ -13481,7 +14223,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#175": {
+  "special-functions/LerchPhi#176": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, 2))",
       "output": "0.112\\,647\\,707\\,492\\,804\\,06+0.014\\,200\\,163\\,242\\,636\\,779i"
@@ -13495,7 +14237,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#176": {
+  "special-functions/LerchPhi#177": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, 0.5))",
       "output": "7.904\\,718\\,153\\,248\\,676+0.129\\,909\\,102\\,799\\,358\\,47i"
@@ -13509,7 +14251,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#177": {
+  "special-functions/LerchPhi#178": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, \\frac{5}{2}))",
       "output": "0.056\\,181\\,547\\,254\\,558\\,15+0.008\\,653\\,632\\,327\\,637\\,262i"
@@ -13523,7 +14265,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#178": {
+  "special-functions/LerchPhi#179": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, 1))",
       "output": "0.763\\,797\\,454\\,910\\,583\\,2+0.208\\,115\\,821\\,035\\,190\\,83i"
@@ -13537,7 +14279,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#179": {
+  "special-functions/LerchPhi#180": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, 2))",
       "output": "0.514\\,466\\,688\\,365\\,942+0.163\\,725\\,077\\,159\\,268\\,07i"
@@ -13551,7 +14293,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#180": {
+  "special-functions/LerchPhi#181": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, 0.5))",
       "output": "1.141\\,526\\,793\\,353\\,947\\,5+0.248\\,011\\,499\\,868\\,293\\,54i"
@@ -13565,7 +14307,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#181": {
+  "special-functions/LerchPhi#182": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, \\frac{5}{2}))",
       "output": "0.454\\,230\\,833\\,366\\,813\\,86+0.149\\,797\\,128\\,659\\,533\\,26i"
@@ -13579,7 +14321,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#182": {
+  "special-functions/LerchPhi#183": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, 1))",
       "output": "0.382\\,612\\,392\\,390\\,264\\,73+0.345\\,413\\,965\\,352\\,322\\,5i"
@@ -13593,7 +14335,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#183": {
+  "special-functions/LerchPhi#184": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, 2))",
       "output": "1.052\\,715\\,485\\,173\\,771+0.603\\,145\\,924\\,115\\,209\\,6i"
@@ -13607,7 +14349,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#184": {
+  "special-functions/LerchPhi#185": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, 0.5))",
       "output": "0.047\\,560\\,845\\,998\\,512\\,21+0.216\\,547\\,985\\,970\\,878\\,9i"
@@ -13621,7 +14363,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#185": {
+  "special-functions/LerchPhi#186": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, \\frac{5}{2}))",
       "output": "1.387\\,767\\,031\\,565\\,522\\,2+0.732\\,011\\,903\\,496\\,652\\,2i"
@@ -13635,7 +14377,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#186": {
+  "special-functions/LerchPhi#187": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, 1))",
       "output": "0.989\\,784\\,607\\,429\\,555\\,7+0.135\\,628\\,774\\,098\\,336\\,1i"
@@ -13649,7 +14391,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#187": {
+  "special-functions/LerchPhi#188": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, 2))",
       "output": "0.208\\,467\\,661\\,236\\,180\\,07-0.104\\,649\\,811\\,600\\,819\\,54i"
@@ -13663,7 +14405,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#188": {
+  "special-functions/LerchPhi#189": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, 0.5))",
       "output": "2.996\\,994\\,256\\,247\\,417\\,4+2.792\\,584\\,815\\,694\\,764\\,4i"
@@ -13677,7 +14419,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#189": {
+  "special-functions/LerchPhi#190": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, \\frac{5}{2}))",
       "output": "0.114\\,465\\,116\\,632\\,712\\,36-0.089\\,263\\,678\\,009\\,800\\,35i"
@@ -13685,6 +14427,2246 @@
     "wolfram": {
       "input": "N\\left[\\Phi \\left(-0.3+0.5 i,2+i,\\frac{5}{2}\\right)\\right]",
       "output": "0.114465\\, -0.0892637 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#191": {
+    "ours": {
+      "input": "N(\\Phi(2, 2, 1))",
+      "output": "1.233\\,700\\,550\\,136\\,169\\,7-1.088\\,793\\,045\\,151\\,800\\,9i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2,1)]",
+      "output": "1.2337\\, -1.08879 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#192": {
+    "ours": {
+      "input": "N(\\Phi(2, 2, 2))",
+      "output": "0.116\\,850\\,275\\,068\\,084\\,99-0.544\\,396\\,522\\,575\\,900\\,4i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2,2)]",
+      "output": "0.11685\\, -0.544397 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#193": {
+    "ours": {
+      "input": "N(\\Phi(2, 2, 0.5))",
+      "output": "4.840\\,291\\,449\\,348\\,404-1.539\\,785\\,891\\,071\\,178\\,6i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2,0.5)]",
+      "output": "4.84029\\, -1.53979 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#194": {
+    "ours": {
+      "input": "N(\\Phi(2, 2, \\frac{5}{2}))",
+      "output": "-0.012\\,149\\,359\\,885\\,121\\,095-0.384\\,946\\,472\\,767\\,794\\,6i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(2,2,\\frac{5}{2}\\right)\\right]",
+      "output": "-0.0121494-0.384946 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#195": {
+    "ours": {
+      "input": "N(\\Phi(2, 2, -2.5))",
+      "output": "55.771\\,220\\,483\\,676\\,125-12.318\\,287\\,128\\,569\\,425i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2,-2.5)]",
+      "output": "55.7712\\, -12.3183 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#196": {
+    "ours": {
+      "input": "N(\\Phi(2, 3, 1))",
+      "output": "1.381\\,035\\,953\\,114\\,462-0.377\\,346\\,914\\,730\\,124\\,05i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,3,1)]",
+      "output": "1.38104\\, -0.377347 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#197": {
+    "ours": {
+      "input": "N(\\Phi(2, 3, 2))",
+      "output": "0.190\\,517\\,976\\,557\\,231\\,04-0.188\\,673\\,457\\,365\\,062i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,3,2)]",
+      "output": "0.190518\\, -0.188673 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#198": {
+    "ours": {
+      "input": "N(\\Phi(2, 3, 0.5))",
+      "output": "8.921\\,391\\,406\\,560\\,604-0.533\\,649\\,124\\,530\\,985\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,3,0.5)]",
+      "output": "8.92139\\, -0.533649 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#199": {
+    "ours": {
+      "input": "N(\\Phi(2, 3, \\frac{5}{2}))",
+      "output": "0.082\\,199\\,703\\,492\\,002\\,81-0.133\\,412\\,281\\,132\\,746\\,25i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(2,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0821997\\, -0.133412 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#200": {
+    "ours": {
+      "input": "N(\\Phi(2, 3, -2.5))",
+      "output": "38.714\\,538\\,659\\,892\\,24-4.269\\,192\\,996\\,247\\,894i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,3,-2.5)]",
+      "output": "104.028\\, -4.26919 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#201": {
+    "ours": {
+      "input": "N(\\Phi(2, 0.5, 1))",
+      "output": "-0.805\\,030\\,764\\,933\\,742\\,9-1.064\\,467\\,019\\,431\\,226i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,0.5,1)]",
+      "output": "-0.805031-1.06447 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#202": {
+    "ours": {
+      "input": "N(\\Phi(2, 0.5, 2))",
+      "output": "-0.902\\,515\\,382\\,466\\,871\\,7-0.532\\,233\\,509\\,715\\,613\\,1i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,0.5,2)]",
+      "output": "-0.902515-0.532234 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#203": {
+    "ours": {
+      "input": "N(\\Phi(2, 0.5, 0.5))",
+      "output": "-0.395\\,385\\,888\\,231\\,945\\,2-1.505\\,383\\,695\\,578\\,505i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,0.5,0.5)]",
+      "output": "-0.395386-1.50538 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#204": {
+    "ours": {
+      "input": "N(\\Phi(2, 0.5, \\frac{5}{2}))",
+      "output": "-0.860\\,648\\,153\\,115\\,123\\,2-0.376\\,345\\,923\\,894\\,626\\,2i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(2,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "-0.860648-0.376346 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#205": {
+    "ours": {
+      "input": "N(\\Phi(2, 0.5, -2.5))",
+      "output": "-3.163\\,087\\,105\\,855\\,561\\,6-19.965\\,372\\,508\\,009\\,548i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,0.5,-2.5)]",
+      "output": "4.75922\\, -12.0431 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#206": {
+    "ours": {
+      "input": "N(\\Phi(2, 2+i, 1))",
+      "output": "0.782\\,103\\,519\\,638\\,317\\,3-0.589\\,814\\,387\\,785\\,094\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2+i,1)]",
+      "output": "0.782104\\, -0.589814 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#207": {
+    "ours": {
+      "input": "N(\\Phi(2, 2+i, 2))",
+      "output": "-0.108\\,948\\,240\\,180\\,841\\,43-0.294\\,907\\,193\\,892\\,547\\,1i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2+i,2)]",
+      "output": "-0.108948-0.294907 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#208": {
+    "ours": {
+      "input": "N(\\Phi(2, 2+i, 0.5))",
+      "output": "3.266\\,346\\,588\\,775\\,548\\,3+1.581\\,423\\,998\\,076\\,357\\,6i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2+i,0.5)]",
+      "output": "3.26635\\, +1.58142 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#209": {
+    "ours": {
+      "input": "N(\\Phi(2, 2+i, \\frac{5}{2}))",
+      "output": "-0.156\\,856\\,484\\,489\\,973\\,86-0.155\\,950\\,565\\,746\\,909\\,55i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(2,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "-0.156856-0.155951 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#210": {
+    "ours": {
+      "input": "N(\\Phi(2, 2+i, -2.5))",
+      "output": "332.097\\,984\\,373\\,651\\,7+238.176\\,549\\,803\\,584\\,46i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (2,2+i,-2.5)]",
+      "output": "39.3528\\, +22.3972 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#211": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2, 1))",
+      "output": "0.718\\,373\\,183\\,441\\,839\\,4"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2,1)]",
+      "output": "0.718373"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#212": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2, 2))",
+      "output": "0.140\\,813\\,408\\,279\\,077\\,3"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2,2)]",
+      "output": "0.140813"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#213": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2, 0.5))",
+      "output": "3.444\\,734\\,229\\,330\\,254"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2,0.5)]",
+      "output": "3.44473\\, -\\text{2.0380094546286109$\\grave{ }$*${}^{\\wedge}$-16} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#214": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2, \\frac{5}{2}))",
+      "output": "0.083\\,405\\,779\\,554\\,794\\,63"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-2,2,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0834058\\, -\\text{5.095023636571527$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#215": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2, -2.5))",
+      "output": "-12.286\\,762\\,723\\,530\\,918"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2,-2.5)]",
+      "output": "-12.2868+\\text{1.6304075637028887$\\grave{ }$*${}^{\\wedge}$-15} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#216": {
+    "ours": {
+      "input": "N(\\Phi(-2, 3, 1))",
+      "output": "0.834\\,141\\,681\\,983\\,285\\,5"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,3,1)]",
+      "output": "0.834142"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#217": {
+    "ours": {
+      "input": "N(\\Phi(-2, 3, 2))",
+      "output": "0.082\\,929\\,159\\,008\\,355\\,8"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,3,2)]",
+      "output": "0.0829292"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#218": {
+    "ours": {
+      "input": "N(\\Phi(-2, 3, 0.5))",
+      "output": "7.563\\,284\\,617\\,347\\,448"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,3,0.5)]",
+      "output": "7.56328\\, +\\text{1.3824347500011768$\\grave{ }$*${}^{\\wedge}$-15} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#219": {
+    "ours": {
+      "input": "N(\\Phi(-2, 3, \\frac{5}{2}))",
+      "output": "0.038\\,969\\,302\\,485\\,020\\,396+11\\,518\\,563\\,880\\,485\\,999\\cdot10^{-30}i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-2,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0389693\\, +\\text{3.456086875002942$\\grave{ }$*${}^{\\wedge}$-16} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#220": {
+    "ours": {
+      "input": "N(\\Phi(-2, 3, -2.5))",
+      "output": "-91.977\\,684\\,346\\,186\\,99"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,3,-2.5)]",
+      "output": "-29.0349-\\text{1.1059478000009414$\\grave{ }$*${}^{\\wedge}$-14} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#221": {
+    "ours": {
+      "input": "N(\\Phi(-2, 0.5, 1))",
+      "output": "0.445\\,644\\,355\\,776\\,061\\,2"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,0.5,1)]",
+      "output": "0.445644\\, -\\text{4.163336342344337$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#222": {
+    "ours": {
+      "input": "N(\\Phi(-2, 0.5, 2))",
+      "output": "0.277\\,177\\,822\\,111\\,969\\,2"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,0.5,2)]",
+      "output": "0.277178\\, +\\text{5.68356755158503$\\grave{ }$*${}^{\\wedge}$-18} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#223": {
+    "ours": {
+      "input": "N(\\Phi(-2, 0.5, 0.5))",
+      "output": "0.743\\,192\\,432\\,028\\,837\\,6"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,0.5,0.5)]",
+      "output": "0.743192\\, -\\text{2.4228238315063152$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#224": {
+    "ours": {
+      "input": "N(\\Phi(-2, 0.5, \\frac{5}{2}))",
+      "output": "0.240\\,493\\,007\\,877\\,888\\,96+23\\,564\\,483\\,697\\,668\\,948\\cdot10^{-30}i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-2,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "0.240493\\, -\\text{6.057059578765788$\\grave{ }$*${}^{\\wedge}$-18} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#225": {
+    "ours": {
+      "input": "N(\\Phi(-2, 0.5, -2.5))",
+      "output": "-5.945\\,539\\,456\\,230\\,700\\,5-4.656\\,316\\,619\\,670\\,605i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,0.5,-2.5)]",
+      "output": "-1.28922+\\text{1.9382590652050522$\\grave{ }$*${}^{\\wedge}$-16} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#226": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2+i, 1))",
+      "output": "0.746\\,276\\,670\\,223\\,342\\,1+0.140\\,408\\,686\\,389\\,413\\,06i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2+i,1)]",
+      "output": "0.746277\\, +0.140409 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#227": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2+i, 2))",
+      "output": "0.126\\,861\\,664\\,888\\,331\\,84-0.070\\,204\\,343\\,194\\,693\\,51i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2+i,2)]",
+      "output": "0.126862\\, -0.0702043 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#228": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2+i, 0.5))",
+      "output": "2.511\\,183\\,002\\,874\\,043+2.676\\,051\\,142\\,848\\,453\\,7i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2+i,0.5)]",
+      "output": "2.51118\\, +2.67605 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#229": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2+i, \\frac{5}{2}))",
+      "output": "0.062\\,761\\,079\\,674\\,356\\,96-0.057\\,603\\,201\\,649\\,033\\,57i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-2,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0627611\\, -0.0576032 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#230": {
+    "ours": {
+      "input": "N(\\Phi(-2, 2+i, -2.5))",
+      "output": "248.074\\,329\\,015\\,288\\,44+220.343\\,874\\,485\\,533\\,3i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-2,2+i,-2.5)]",
+      "output": "-8.50106-10.9613 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#231": {
+    "ours": {
+      "input": "N(\\Phi(3, 2, 1))",
+      "output": "0.773\\,393\\,474\\,437\\,699\\,1-1.150\\,464\\,098\\,407\\,734i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2,1)]",
+      "output": "0.773393\\, -1.15046 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#232": {
+    "ours": {
+      "input": "N(\\Phi(3, 2, 2))",
+      "output": "-0.075\\,535\\,508\\,520\\,766\\,99-0.383\\,488\\,032\\,802\\,578i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2,2)]",
+      "output": "-0.0755355-0.383488 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#233": {
+    "ours": {
+      "input": "N(\\Phi(3, 2, 0.5))",
+      "output": "4.308\\,305\\,910\\,092\\,613\\,5-1.992\\,662\\,270\\,726\\,116\\,3i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2,0.5)]",
+      "output": "4.30831\\, -1.99266 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#234": {
+    "ours": {
+      "input": "N(\\Phi(3, 2, \\frac{5}{2}))",
+      "output": "-0.113\\,891\\,935\\,915\\,635\\,43-0.221\\,406\\,918\\,969\\,568\\,35i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(3,2,\\frac{5}{2}\\right)\\right]",
+      "output": "-0.113892-0.221407 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#235": {
+    "ours": {
+      "input": "N(\\Phi(3, 2, -2.5))",
+      "output": "153.817\\,592\\,905\\,833\\,92-53.801\\,881\\,309\\,605\\,13i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2,-2.5)]",
+      "output": "153.818\\, -53.8019 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#236": {
+    "ours": {
+      "input": "N(\\Phi(3, 3, 1))",
+      "output": "1.247\\,374\\,198\\,080\\,243\\,7-0.631\\,956\\,998\\,091\\,107\\,1i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,3,1)]",
+      "output": "1.24737\\, -0.631957 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#237": {
+    "ours": {
+      "input": "N(\\Phi(3, 3, 2))",
+      "output": "0.082\\,458\\,066\\,026\\,747\\,85-0.210\\,652\\,332\\,697\\,035\\,62i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,3,2)]",
+      "output": "0.0824581\\, -0.210652 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#238": {
+    "ours": {
+      "input": "N(\\Phi(3, 3, 0.5))",
+      "output": "8.962\\,435\\,484\\,818\\,293-1.094\\,581\\,628\\,892\\,505\\,4i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,3,0.5)]",
+      "output": "8.96244\\, -1.09458 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#239": {
+    "ours": {
+      "input": "N(\\Phi(3, 3, \\frac{5}{2}))",
+      "output": "0.008\\,171\\,843\\,992\\,156\\,041-0.121\\,620\\,180\\,988\\,056\\,09i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(3,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.00817184\\, -0.12162 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#240": {
+    "ours": {
+      "input": "N(\\Phi(3, 3, -2.5))",
+      "output": "169.032\\,869\\,201\\,205\\,05-29.553\\,703\\,980\\,097\\,676i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,3,-2.5)]",
+      "output": "314.939\\, -29.5537 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#241": {
+    "ours": {
+      "input": "N(\\Phi(3, 0.5, 1))",
+      "output": "-0.567\\,338\\,449\\,754\\,659\\,9-0.563\\,678\\,480\\,792\\,821\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,0.5,1)]",
+      "output": "-0.567338-0.563678 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#242": {
+    "ours": {
+      "input": "N(\\Phi(3, 0.5, 2))",
+      "output": "-0.522\\,446\\,149\\,918\\,219\\,7-0.187\\,892\\,826\\,930\\,940\\,4i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,0.5,2)]",
+      "output": "-0.522446-0.187893 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#243": {
+    "ours": {
+      "input": "N(\\Phi(3, 0.5, 0.5))",
+      "output": "-0.305\\,888\\,418\\,127\\,713\\,3-0.976\\,319\\,767\\,866\\,404i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,0.5,0.5)]",
+      "output": "-0.305888-0.97632 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#244": {
+    "ours": {
+      "input": "N(\\Phi(3, 0.5, \\frac{5}{2}))",
+      "output": "-0.463\\,287\\,969\\,253\\,775\\,7-0.108\\,479\\,974\\,207\\,378\\,18i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(3,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "-0.463288-0.10848 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#245": {
+    "ours": {
+      "input": "N(\\Phi(3, 0.5, -2.5))",
+      "output": "-8.258\\,987\\,289\\,448\\,257-42.170\\,501\\,068\\,567\\,62i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,0.5,-2.5)]",
+      "output": "7.55088\\, -26.3606 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#246": {
+    "ours": {
+      "input": "N(\\Phi(3, 2+i, 1))",
+      "output": "0.601\\,415\\,572\\,990\\,860\\,5-0.572\\,691\\,588\\,995\\,903\\,8i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2+i,1)]",
+      "output": "0.601416\\, -0.572692 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#247": {
+    "ours": {
+      "input": "N(\\Phi(3, 2+i, 2))",
+      "output": "-0.132\\,861\\,475\\,669\\,713\\,2-0.190\\,897\\,196\\,331\\,967\\,94i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2+i,2)]",
+      "output": "-0.132861-0.190897 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#248": {
+    "ours": {
+      "input": "N(\\Phi(3, 2+i, 0.5))",
+      "output": "3.074\\,330\\,146\\,279\\,176+1.382\\,090\\,656\\,931\\,817\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2+i,0.5)]",
+      "output": "3.07433\\, +1.38209 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#249": {
+    "ours": {
+      "input": "N(\\Phi(3, 2+i, \\frac{5}{2}))",
+      "output": "-0.136\\,427\\,871\\,232\\,893\\,9-0.071\\,980\\,686\\,892\\,989\\,73i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(3,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "-0.136428-0.0719807 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#250": {
+    "ours": {
+      "input": "N(\\Phi(3, 2+i, -2.5))",
+      "output": "754.439\\,399\\,822\\,086\\,3+554.504\\,954\\,092\\,239\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (3,2+i,-2.5)]",
+      "output": "112.022\\, +59.6662 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#251": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2, 1))",
+      "output": "1.582\\,930\\,180\\,181\\,653-0.849\\,204\\,136\\,613\\,066\\,8i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2,1)]",
+      "output": "1.58293\\, -0.849204 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#252": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2, 2))",
+      "output": "0.388\\,620\\,120\\,121\\,102\\,25-0.566\\,136\\,091\\,075\\,377\\,9i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2,2)]",
+      "output": "0.38862\\, -0.566136 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#253": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2, 0.5))",
+      "output": "5.118\\,490\\,668\\,726\\,073-1.040\\,058\\,411\\,081\\,376i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2,0.5)]",
+      "output": "5.11849\\, -1.04006 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#254": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2, \\frac{5}{2}))",
+      "output": "0.200\\,810\\,667\\,581\\,958\\,37-0.462\\,248\\,182\\,702\\,833\\,63i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1.5,2,\\frac{5}{2}\\right)\\right]",
+      "output": "0.200811\\, -0.462248 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#255": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2, -2.5))",
+      "output": "27.101\\,572\\,673\\,617\\,163-3.510\\,197\\,137\\,399\\,641\\,7i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2,-2.5)]",
+      "output": "27.1016\\, -3.5102 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#256": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 3, 1))",
+      "output": "1.373\\,918\\,338\\,213\\,52-0.172\\,161\\,323\\,528\\,858\\,8i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,3,1)]",
+      "output": "1.37392\\, -0.172161 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#257": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 3, 2))",
+      "output": "0.249\\,278\\,892\\,142\\,347-0.114\\,774\\,215\\,685\\,905\\,83i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,3,2)]",
+      "output": "0.249279\\, -0.114774 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#258": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 3, 0.5))",
+      "output": "8.758\\,392\\,281\\,291\\,254-0.210\\,853\\,698\\,043\\,957\\,9i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,3,0.5)]",
+      "output": "8.75839\\, -0.210854 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#259": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 3, \\frac{5}{2}))",
+      "output": "0.139\\,532\\,371\\,931\\,915\\,23-0.093\\,712\\,754\\,686\\,203\\,48i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1.5,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.139532\\, -0.0937128 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#260": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 3, -2.5))",
+      "output": "11.051\\,129\\,504\\,913\\,542-0.711\\,631\\,230\\,898\\,364\\,7i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,3,-2.5)]",
+      "output": "48.068\\, -0.711631 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#261": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 0.5, 1))",
+      "output": "-1.031\\,093\\,801\\,626\\,106\\,4-1.855\\,696\\,435\\,774\\,015\\,8i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,0.5,1)]",
+      "output": "-1.03109-1.8557 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#262": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 0.5, 2))",
+      "output": "-1.354\\,062\\,534\\,417\\,405-1.237\\,130\\,957\\,182\\,677i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,0.5,2)]",
+      "output": "-1.35406-1.23713 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#263": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 0.5, 0.5))",
+      "output": "-0.472\\,701\\,238\\,866\\,762\\,4-2.272\\,754\\,692\\,573\\,877i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,0.5,0.5)]",
+      "output": "-0.472701-2.27275 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#264": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 0.5, \\frac{5}{2}))",
+      "output": "-1.382\\,959\\,854\\,502\\,865-1.010\\,113\\,196\\,699\\,500\\,7i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1.5,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "-1.38296-1.01011 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#265": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 0.5, -2.5))",
+      "output": "-1.595\\,366\\,681\\,175\\,322\\,7-12.709\\,728\\,006\\,201\\,562i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,0.5,-2.5)]",
+      "output": "3.44381\\, -7.67055 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#266": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2+i, 1))",
+      "output": "0.928\\,830\\,673\\,042\\,347\\,2-0.565\\,207\\,572\\,193\\,658\\,6i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2+i,1)]",
+      "output": "0.928831\\, -0.565208 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#267": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2+i, 2))",
+      "output": "-0.047\\,446\\,217\\,971\\,768\\,59-0.376\\,805\\,048\\,129\\,105\\,87i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2+i,2)]",
+      "output": "-0.0474462-0.376805 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#268": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2+i, 0.5))",
+      "output": "3.383\\,048\\,389\\,778\\,828+1.747\\,983\\,484\\,353\\,337\\,5i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2+i,0.5)]",
+      "output": "3.38305\\, +1.74798 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#269": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2+i, \\frac{5}{2}))",
+      "output": "-0.136\\,231\\,069\\,616\\,323\\,14-0.242\\,176\\,661\\,225\\,908\\,45i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1.5,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "-0.136231-0.242177 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#270": {
+    "ours": {
+      "input": "N(\\Phi(1.5, 2+i, -2.5))",
+      "output": "188.054\\,525\\,807\\,321\\,62+129.950\\,947\\,308\\,879\\,28i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1.5,2+i,-2.5)]",
+      "output": "19.051\\, +11.2602 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#271": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2, 1))",
+      "output": "0.764\\,920\\,440\\,250\\,381\\,9"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2,1)]",
+      "output": "0.76492"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#272": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2, 2))",
+      "output": "0.156\\,719\\,706\\,499\\,745\\,3"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2,2)]",
+      "output": "0.15672\\, +\\text{5.721258238267586$\\grave{ }$*${}^{\\wedge}$-16} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#273": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2, 0.5))",
+      "output": "3.545\\,004\\,558\\,874\\,94"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2,0.5)]",
+      "output": "3.545\\, -\\text{5.748616730151821$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#274": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2, \\frac{5}{2}))",
+      "output": "0.094\\,076\\,100\\,240\\,723\\,02"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5,2,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0940761\\, -\\text{2.5549407689563645$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#275": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2, -2.5))",
+      "output": "-3.471\\,057\\,052\\,869\\,589\\,7"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2,-2.5)]",
+      "output": "-3.47106+\\text{1.9401581464262396$\\grave{ }$*${}^{\\wedge}$-16} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#276": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 3, 1))",
+      "output": "0.865\\,224\\,966\\,770\\,831\\,8"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,3,1)]",
+      "output": "0.865225"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#277": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 3, 2))",
+      "output": "0.089\\,850\\,022\\,152\\,777\\,51"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,3,2)]",
+      "output": "0.08985\\, +\\text{2.6738770253614813$\\grave{ }$*${}^{\\wedge}$-16} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#278": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 3, 0.5))",
+      "output": "7.652\\,044\\,367\\,963\\,557\\,5"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,3,0.5)]",
+      "output": "7.65204\\, +\\text{1.513727336795356$\\grave{ }$*${}^{\\wedge}$-15} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#279": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 3, \\frac{5}{2}))",
+      "output": "0.042\\,883\\,916\\,625\\,780\\,595+16\\,178\\,031\\,136\\,959\\,703\\cdot10^{-30}i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0428839\\, +\\text{6.727677052423805$\\grave{ }$*${}^{\\wedge}$-16} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#280": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 3, -2.5))",
+      "output": "-43.445\\,205\\,297\\,432\\,56"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,3,-2.5)]",
+      "output": "-8.20609-\\text{5.108829761684327$\\grave{ }$*${}^{\\wedge}$-15} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#281": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 0.5, 1))",
+      "output": "0.511\\,802\\,181\\,247\\,576\\,1"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,0.5,1)]",
+      "output": "0.511802\\, -\\text{3.700743415417188$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#282": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 0.5, 2))",
+      "output": "0.325\\,465\\,212\\,501\\,622\\,86"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,0.5,2)]",
+      "output": "0.325465\\, +\\text{1.9987578825705452$\\grave{ }$*${}^{\\wedge}$-18} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#283": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 0.5, 0.5))",
+      "output": "0.827\\,894\\,231\\,949\\,178"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,0.5,0.5)]",
+      "output": "0.827894\\, +\\text{1.134070298867023$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#284": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 0.5, \\frac{5}{2}))",
+      "output": "0.283\\,744\\,684\\,874\\,486\\,5-5\\,362\\,377\\,208\\,939\\,506\\cdot10^{-29}i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "0.283745\\, +\\text{5.040312439408991$\\grave{ }$*${}^{\\wedge}$-18} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#285": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 0.5, -2.5))",
+      "output": "-2.794\\,143\\,032\\,828\\,476-2.589\\,691\\,175\\,981\\,552i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,0.5,-2.5)]",
+      "output": "-0.204452-\\text{3.827487258676203$\\grave{ }$*${}^{\\wedge}$-17} i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#286": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2+i, 1))",
+      "output": "0.792\\,548\\,965\\,722\\,148\\,8+0.123\\,074\\,546\\,469\\,527\\,56i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2+i,1)]",
+      "output": "0.792549\\, +0.123075 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#287": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2+i, 2))",
+      "output": "0.138\\,300\\,689\\,518\\,559\\,8-0.082\\,049\\,697\\,646\\,360\\,73i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2+i,2)]",
+      "output": "0.138301\\, -0.0820497 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#288": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2+i, 0.5))",
+      "output": "2.619\\,306\\,075\\,593\\,21+2.668\\,732\\,631\\,457\\,893i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2+i,0.5)]",
+      "output": "2.61931\\, +2.66873 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#289": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2+i, \\frac{5}{2}))",
+      "output": "0.068\\,872\\,516\\,043\\,113\\,7-0.066\\,700\\,714\\,195\\,388\\,52i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0688725\\, -0.0667007 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#290": {
+    "ours": {
+      "input": "N(\\Phi(-1.5, 2+i, -2.5))",
+      "output": "139.444\\,015\\,517\\,816\\,1+127.214\\,874\\,775\\,026\\,89i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5,2+i,-2.5)]",
+      "output": "-2.43222-3.12029 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#291": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2, 1))",
+      "output": "0.817\\,164\\,228\\,975\\,140\\,8+0.438\\,319\\,513\\,824\\,475\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2,1)]",
+      "output": "0.817164\\, +0.43832 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#292": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2, 2))",
+      "output": "0.138\\,760\\,651\\,324\\,817\\,96+0.160\\,798\\,211\\,174\\,838\\,64i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2,2)]",
+      "output": "0.138761\\, +0.160798 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#293": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2, 0.5))",
+      "output": "3.792\\,114\\,260\\,846\\,786\\,6+0.856\\,074\\,806\\,978\\,553\\,3i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2,0.5)]",
+      "output": "3.79211\\, +0.856075 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#294": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2, \\frac{5}{2}))",
+      "output": "0.073\\,029\\,368\\,926\\,065\\,17+0.108\\,310\\,519\\,204\\,865\\,63i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1+2 i,2,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0730294\\, +0.108311 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#295": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2, -2.5))",
+      "output": "-51.396\\,662\\,810\\,913\\,11-0.112\\,162\\,509\\,568\\,774\\,38i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2,-2.5)]",
+      "output": "-51.3967-0.112163 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#296": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 3, 1))",
+      "output": "0.960\\,539\\,329\\,125\\,924\\,5+0.262\\,023\\,760\\,613\\,251\\,3i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,3,1)]",
+      "output": "0.960539\\, +0.262024 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#297": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 3, 2))",
+      "output": "0.096\\,917\\,370\\,070\\,485\\,22+0.068\\,189\\,020\\,472\\,280\\,32i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,3,2)]",
+      "output": "0.0969174\\, +0.068189 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#298": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 3, 0.5))",
+      "output": "8.006\\,976\\,954\\,441\\,546+0.645\\,737\\,139\\,237\\,068\\,8i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,3,0.5)]",
+      "output": "8.00698\\, +0.645737 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#299": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 3, \\frac{5}{2}))",
+      "output": "0.043\\,221\\,448\\,485\\,686\\,27+0.039\\,913\\,749\\,099\\,422\\,996i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1+2 i,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0432214\\, +0.0399137 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#300": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 3, -2.5))",
+      "output": "-63.145\\,568\\,516\\,679\\,16-55.709\\,655\\,033\\,083\\,43i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,3,-2.5)]",
+      "output": "-110.425+9.47553 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#301": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 0.5, 1))",
+      "output": "0.251\\,873\\,370\\,548\\,447\\,3+0.594\\,237\\,244\\,072\\,761\\,8i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,0.5,1)]",
+      "output": "0.251873\\, +0.594237 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#302": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 0.5, 2))",
+      "output": "0.088\\,069\\,571\\,738\\,793\\,93+0.418\\,098\\,100\\,595\\,173\\,77i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,0.5,2)]",
+      "output": "0.0880696\\, +0.418098 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#303": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 0.5, 0.5))",
+      "output": "0.577\\,382\\,043\\,614\\,928\\,2+0.768\\,409\\,107\\,754\\,766\\,5i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,0.5,0.5)]",
+      "output": "0.577382\\, +0.768409 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#304": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 0.5, \\frac{5}{2}))",
+      "output": "0.060\\,065\\,923\\,306\\,197\\,685+0.368\\,282\\,582\\,441\\,825i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1+2 i,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0600659\\, +0.368283 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#305": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 0.5, -2.5))",
+      "output": "2.475\\,463\\,147\\,093\\,155-6.813\\,575\\,698\\,374\\,405i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,0.5,-2.5)]",
+      "output": "-7.60807-2.31742 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#306": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2+i, 1))",
+      "output": "1.126\\,028\\,536\\,312\\,937\\,6+0.641\\,355\\,365\\,959\\,258\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2+i,1)]",
+      "output": "1.12603\\, +0.641355 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#307": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2+i, 2))",
+      "output": "0.281\\,747\\,853\\,646\\,291\\,07+0.077\\,859\\,658\\,666\\,677\\,1i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2+i,2)]",
+      "output": "0.281748\\, +0.0778597 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#308": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2+i, 0.5))",
+      "output": "3.192\\,905\\,834\\,798\\,345+3.788\\,497\\,113\\,005\\,995\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2+i,0.5)]",
+      "output": "3.19291\\, +3.7885 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#309": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2+i, \\frac{5}{2}))",
+      "output": "0.171\\,752\\,370\\,429\\,291\\,12+0.031\\,954\\,991\\,049\\,997\\,425i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(1+2 i,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "0.171752\\, +0.031955 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#310": {
+    "ours": {
+      "input": "N(\\Phi(1+2i, 2+i, -2.5))",
+      "output": "-457.911\\,341\\,409\\,628\\,85+71.227\\,722\\,329\\,657\\,85i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (1+2 i,2+i,-2.5)]",
+      "output": "-46.1428-42.9044 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#311": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2, 1))",
+      "output": "0.744\\,689\\,766\\,677\\,463\\,1+0.097\\,676\\,893\\,344\\,289\\,08i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2,1)]",
+      "output": "0.74469\\, +0.0976769 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#312": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2, 2))",
+      "output": "0.147\\,889\\,921\\,024\\,028\\,37+0.033\\,475\\,351\\,786\\,492\\,316i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2,2)]",
+      "output": "0.14789\\, +0.0334754 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#313": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2, 0.5))",
+      "output": "3.510\\,343\\,411\\,490\\,998+0.209\\,338\\,331\\,082\\,416\\,73i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2,0.5)]",
+      "output": "3.51034\\, +0.209338 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#314": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2, \\frac{5}{2}))",
+      "output": "0.087\\,723\\,639\\,080\\,065\\,42+0.022\\,451\\,843\\,102\\,527\\,576i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5+i,2,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0877236\\, +0.0224518 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#315": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2, -2.5))",
+      "output": "7.238\\,774\\,267\\,536\\,812\\,5+8.864\\,424\\,682\\,985\\,405i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2,-2.5)]",
+      "output": "7.23877\\, +8.86442 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#316": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 3, 1))",
+      "output": "0.855\\,338\\,745\\,722\\,699\\,1+0.064\\,892\\,989\\,018\\,154\\,07i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,3,1)]",
+      "output": "0.855339\\, +0.064893 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#317": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 3, 2))",
+      "output": "0.086\\,733\\,806\\,287\\,417\\,96+0.014\\,560\\,544\\,846\\,174\\,24i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,3,2)]",
+      "output": "0.0867338\\, +0.0145605 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#318": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 3, 0.5))",
+      "output": "7.631\\,459\\,552\\,290\\,882+0.183\\,812\\,993\\,821\\,418\\,47i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,3,0.5)]",
+      "output": "7.63146\\, +0.183813 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#319": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 3, \\frac{5}{2}))",
+      "output": "0.040\\,930\\,641\\,736\\,692\\,38+0.008\\,246\\,898\\,188\\,157\\,391i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5+i,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0409306\\, +0.0082469 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#320": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 3, -2.5))",
+      "output": "-2.091\\,088\\,273\\,701\\,476\\,7+67.791\\,385\\,747\\,425\\,37i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,3,-2.5)]",
+      "output": "17.148\\, +20.384 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#321": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 0.5, 1))",
+      "output": "0.465\\,538\\,805\\,671\\,105\\,84+0.138\\,214\\,644\\,414\\,363\\,76i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,0.5,1)]",
+      "output": "0.465539\\, +0.138215 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#322": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 0.5, 2))",
+      "output": "0.289\\,201\\,980\\,279\\,298\\,6+0.100\\,658\\,223\\,909\\,954\\,41i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,0.5,2)]",
+      "output": "0.289202\\, +0.100658 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#323": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 0.5, 0.5))",
+      "output": "0.773\\,036\\,344\\,755\\,627+0.177\\,108\\,997\\,856\\,830\\,46i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,0.5,0.5)]",
+      "output": "0.773036\\, +0.177109 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#324": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 0.5, \\frac{5}{2}))",
+      "output": "0.250\\,662\\,467\\,827\\,747\\,3+0.090\\,079\\,856\\,329\\,816\\,72i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5+i,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "0.250662\\, +0.0900799 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#325": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 0.5, -2.5))",
+      "output": "-3.574\\,854\\,956\\,018\\,253+3.468\\,728\\,991\\,325\\,334i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,0.5,-2.5)]",
+      "output": "1.02677\\, +1.21806 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#326": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2+i, 1))",
+      "output": "0.812\\,564\\,848\\,672\\,117\\,8+0.233\\,563\\,704\\,705\\,404\\,38i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2+i,1)]",
+      "output": "0.812565\\, +0.233564 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#327": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2+i, 2))",
+      "output": "0.158\\,374\\,286\\,676\\,068\\,18-0.050\\,126\\,278\\,686\\,223\\,436i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2+i,2)]",
+      "output": "0.158374\\, -0.0501263 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#328": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2+i, 0.5))",
+      "output": "2.603\\,018\\,482\\,399\\,761\\,5+2.911\\,418\\,398\\,487\\,827i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2+i,0.5)]",
+      "output": "2.60302\\, +2.91142 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#329": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2+i, \\frac{5}{2}))",
+      "output": "0.085\\,359\\,108\\,535\\,713\\,03-0.047\\,777\\,579\\,953\\,800\\,55i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(-1.5+i,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0853591\\, -0.0477776 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#330": {
+    "ours": {
+      "input": "N(\\Phi(-1.5+i, 2+i, -2.5))",
+      "output": "244.757\\,889\\,059\\,178\\,92-108.837\\,273\\,694\\,788\\,2i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (-1.5+i,2+i,-2.5)]",
+      "output": "-2.63843+12.7511 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#331": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2, 1))",
+      "output": "1.051\\,275\\,353\\,558\\,639\\,2+0.352\\,340\\,198\\,251\\,735\\,24i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2,1)]",
+      "output": "1.05128\\, +0.35234 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#332": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2, 2))",
+      "output": "0.246\\,983\\,766\\,395\\,498\\,66+0.162\\,568\\,510\\,619\\,732\\,57i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2,2)]",
+      "output": "0.246984\\, +0.162569 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#333": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2, 0.5))",
+      "output": "4.157\\,406\\,968\\,302\\,781+0.596\\,428\\,896\\,905\\,385\\,7i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2,0.5)]",
+      "output": "4.15741\\, +0.596429 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#334": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2, \\frac{5}{2}))",
+      "output": "0.150\\,555\\,467\\,955\\,636\\,76+0.119\\,829\\,276\\,180\\,774\\,92i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,2,\\frac{5}{2}\\right)\\right]",
+      "output": "0.150555\\, +0.119829 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#335": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2, -2.5))",
+      "output": "-6.713\\,683\\,691\\,062\\,509+9.459\\,163\\,380\\,965\\,968i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2,-2.5)]",
+      "output": "-6.71368+9.45916 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#336": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 3, 1))",
+      "output": "1.060\\,018\\,393\\,069\\,489\\,5+0.163\\,727\\,323\\,847\\,861\\,65i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,3,1)]",
+      "output": "1.06002\\, +0.163727 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#337": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 3, 2))",
+      "output": "0.134\\,737\\,452\\,357\\,701\\,38+0.053\\,079\\,520\\,907\\,412\\,97i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,3,2)]",
+      "output": "0.134737\\, +0.0530795 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#338": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 3, 0.5))",
+      "output": "8.176\\,233\\,084\\,955\\,843+0.358\\,637\\,797\\,014\\,528\\,14i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,3,0.5)]",
+      "output": "8.17623\\, +0.358638 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#339": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 3, \\frac{5}{2}))",
+      "output": "0.067\\,907\\,300\\,620\\,558\\,26+0.034\\,208\\,132\\,622\\,012\\,555i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,3,\\frac{5}{2}\\right)\\right]",
+      "output": "0.0679073\\, +0.0342081 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#340": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 3, -2.5))",
+      "output": "-11.007\\,681\\,973\\,911\\,316-4.132\\,179\\,140\\,120\\,582i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,3,-2.5)]",
+      "output": "-13.1256+19.4412 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#341": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 0.5, 1))",
+      "output": "0.646\\,848\\,782\\,818\\,905\\,3+0.904\\,298\\,262\\,704\\,088\\,3i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,0.5,1)]",
+      "output": "0.646849\\, +0.904298 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#342": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 0.5, 2))",
+      "output": "0.366\\,446\\,525\\,992\\,278\\,1+0.718\\,120\\,486\\,638\\,797\\,6i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,0.5,2)]",
+      "output": "0.366447\\, +0.71812 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#343": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 0.5, 0.5))",
+      "output": "1.070\\,316\\,852\\,556\\,094\\,7+1.058\\,323\\,277\\,527\\,613i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,0.5,0.5)]",
+      "output": "1.07032\\, +1.05832 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#344": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 0.5, \\frac{5}{2}))",
+      "output": "0.302\\,169\\,762\\,869\\,199\\,2+0.656\\,753\\,551\\,994\\,039\\,7i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,0.5,\\frac{5}{2}\\right)\\right]",
+      "output": "0.30217\\, +0.656754 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#345": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 0.5, -2.5))",
+      "output": "0.181\\,355\\,765\\,541\\,796\\,78-1.491\\,508\\,888\\,888\\,433\\,8i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,0.5,-2.5)]",
+      "output": "-1.54472+2.32504 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#346": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2+i, 1))",
+      "output": "1.362\\,388\\,391\\,030\\,094\\,5+0.286\\,239\\,732\\,263\\,093\\,74i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2+i,1)]",
+      "output": "1.36239\\, +0.28624 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#347": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2+i, 2))",
+      "output": "0.377\\,604\\,463\\,352\\,317\\,1-0.067\\,005\\,355\\,942\\,489\\,92i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2+i,2)]",
+      "output": "0.377604\\, -0.0670054 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#348": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2+i, 0.5))",
+      "output": "3.622\\,328\\,102\\,519\\,780\\,7+3.137\\,422\\,391\\,303\\,859\\,5i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2+i,0.5)]",
+      "output": "3.62233\\, +3.13742 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#349": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2+i, \\frac{5}{2}))",
+      "output": "0.237\\,708\\,893\\,651\\,532\\,1-0.070\\,331\\,778\\,185\\,476\\,47i"
+    },
+    "wolfram": {
+      "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,2+i,\\frac{5}{2}\\right)\\right]",
+      "output": "0.237709\\, -0.0703318 i"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "special-functions/LerchPhi#350": {
+    "ours": {
+      "input": "N(\\Phi(0.8+0.9i, 2+i, -2.5))",
+      "output": "-92.127\\,592\\,772\\,435\\,4+93.926\\,546\\,083\\,357\\,69i"
+    },
+    "wolfram": {
+      "input": "N[\\Phi (0.8\\, +0.9 i,2+i,-2.5)]",
+      "output": "-11.9431+3.22262 i"
     },
     "same": {
       "input": false,
@@ -15315,6 +18297,20 @@
       "output": false
     }
   },
+  "special-functions/GammaRegularized#9": {
+    "ours": {
+      "input": "\\operatorname{GammaRegularized}(\\bigl\\lbrack1, 2\\bigr\\rbrack, 1)",
+      "output": "\\bigl\\lbrack\\frac{1}{e}, \\frac{2}{e}\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "Q(\\{1,2\\},1)",
+      "output": "\\left\\{\\frac{1}{e},\\frac{2}{e}\\right\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "special-functions/BetaRegularized#1": {
     "ours": {
       "input": "I_{0}(2, 3)",
@@ -15424,6 +18420,20 @@
     },
     "same": {
       "input": true,
+      "output": false
+    }
+  },
+  "special-functions/BetaRegularized#9": {
+    "ours": {
+      "input": "\\operatorname{BetaRegularized}(0.5, \\bigl\\lbrack1, 2\\bigr\\rbrack, 1)",
+      "output": "\\bigl\\lbrack0.5, 0.25\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "I_{0.5}(\\{1,2\\},1)",
+      "output": "\\{0.5,0.25\\}"
+    },
+    "same": {
+      "input": false,
       "output": false
     }
   },
@@ -16253,6 +19263,34 @@
       "output": false
     }
   },
+  "numerals/IntegerDigits#6": {
+    "ours": {
+      "input": "\\mathrm{IntegerDigits}(\\bigl\\lbrack6, 7, 2\\bigr\\rbrack, 2)",
+      "output": "\\bigl\\lbrack\\bigl\\lbrack1, 1, 0\\bigr\\rbrack, \\bigl\\lbrack1, 1, 1\\bigr\\rbrack, \\bigl\\lbrack1, 0\\bigr\\rbrack\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{IntegerDigits}[\\{6,7,2\\},2]",
+      "output": "\\{\\{1,1,0\\},\\{1,1,1\\},\\{1,0\\}\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "numerals/IntegerDigits#7": {
+    "ours": {
+      "input": "\\mathrm{IntegerDigits}(2\\,147, \\mathrm{PositionalNumerals}(2))",
+      "output": "\\bigl\\lbrack1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{IntegerDigits}[2147,2]",
+      "output": "\\{1,0,0,0,0,1,1,0,0,0,1,1\\}"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "numerals/IntegerDigits#8": {
     "ours": {
       "input": "\\mathrm{IntegerDigits}(93\\,784, \\mathrm{MixedRadixNumerals}(\\bigl\\lbrack24, 60, 60\\bigr\\rbrack))",
@@ -16351,6 +19389,34 @@
       "output": false
     }
   },
+  "numerals/FromDigits#6": {
+    "ours": {
+      "input": "\\mathrm{FromDigits}(\\text{1923})",
+      "output": "1\\,923"
+    },
+    "wolfram": {
+      "input": "\\text{FromDigits}[1923]",
+      "output": "1923"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "numerals/FromDigits#7": {
+    "ours": {
+      "input": "\\mathrm{FromDigits}(\\bigl\\lbrack1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1\\bigr\\rbrack, \\mathrm{PositionalNumerals}(2))",
+      "output": "2\\,147"
+    },
+    "wolfram": {
+      "input": "\\text{FromDigits}[\\{1,0,0,0,0,1,1,0,0,0,1,1\\},2]",
+      "output": "2147"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
   "numerals/FromDigits#8": {
     "ours": {
       "input": "\\mathrm{FromDigits}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack, \\mathrm{MixedRadixNumerals}(\\bigl\\lbrack24, 60, 60\\bigr\\rbrack))",
@@ -16435,6 +19501,20 @@
       "output": false
     }
   },
+  "numerals/IntegerString#6": {
+    "ours": {
+      "input": "\\mathrm{IntegerString}(5, 2, 8)",
+      "output": "101"
+    },
+    "wolfram": {
+      "input": "\\text{IntegerString}[5,2,8]",
+      "output": "00000101"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
   "numerals/DigitCount#1": {
     "ours": {
       "input": "\\mathrm{DigitCount}(2\\,147)",
@@ -16489,6 +19569,20 @@
     "same": {
       "input": false,
       "output": true
+    }
+  },
+  "numerals/DigitCount#5": {
+    "ours": {
+      "input": "\\mathrm{DigitCount}(\\bigl\\lbrack23, 45\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack\\bigl\\lbrack0, 1, 1, 0, 0, 0, 0, 0, 0, 0\\bigr\\rbrack, \\bigl\\lbrack0, 0, 0, 1, 1, 0, 0, 0, 0, 0\\bigr\\rbrack\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{DigitCount}[\\{23,45\\}]",
+      "output": "\\left( \\begin{array}{cccccccccc}  0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\  0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\\\ \\end{array} \\right)"
+    },
+    "same": {
+      "input": false,
+      "output": false
     }
   },
   "numerals/DigitSum#1": {
@@ -17731,6 +20825,48 @@
     "wolfram": {
       "input": "\\text{enumeratio$\\grave{ }$Scan}(\\{1,2,3\\},\\text{Plus},10)",
       "output": "\\text{enumeratio$\\grave{ }$Scan}(\\{1,2,3\\},\\text{Plus},10)"
+    },
+    "same": {
+      "input": false,
+      "output": false
+    }
+  },
+  "lists/Contains#1": {
+    "ours": {
+      "input": "\\mathrm{Contains}(\\bigl\\lbrack1, 2, 3\\bigr\\rbrack, 2)",
+      "output": "\\mathrm{True}"
+    },
+    "wolfram": {
+      "input": "\\text{MemberQ}[\\{1,2,3\\},2]",
+      "output": "\\text{True}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "lists/Contains#2": {
+    "ours": {
+      "input": "\\mathrm{Contains}(\\bigl\\lbrack1, 2, 3\\bigr\\rbrack, 5)",
+      "output": "\\mathrm{False}"
+    },
+    "wolfram": {
+      "input": "\\text{MemberQ}[\\{1,2,3\\},5]",
+      "output": "\\text{False}"
+    },
+    "same": {
+      "input": false,
+      "output": true
+    }
+  },
+  "lists/Unique#1": {
+    "ours": {
+      "input": "\\mathrm{Unique}(\\bigl\\lbrack1, 2, 2, 3, 1\\bigr\\rbrack)",
+      "output": "\\bigl\\lbrack1, 2, 3\\bigr\\rbrack"
+    },
+    "wolfram": {
+      "input": "\\text{DeleteDuplicates}[\\{1,2,2,3,1\\}]",
+      "output": "\\{1,2,3\\}"
     },
     "same": {
       "input": false,

@@ -2180,6 +2180,139 @@
           }
         }
       }
+    },
+    "Arccot": {
+      "[\"N\",[\"Arccot\",1]]": {
+        "wolfram": {
+          "input": "N[Subtract[Divide[Pi, 2], ArcTan[1]]]",
+          "output": "0.7853981633974483",
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\frac{\\pi }{2}-\\tan ^{-1}(1)\\right]",
+            "output": "0.785398"
+          }
+        }
+      },
+      "[\"Equal\",[\"Cot\",[\"Arccot\",1]],1]": {
+        "wolfram": {
+          "input": "(Cot[Subtract[Divide[Pi, 2], ArcTan[1]]] == 1)",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cot \\left(\\frac{\\pi }{2}-\\tan ^{-1}(1)\\right)=1",
+            "output": "\\text{True}"
+          }
+        }
+      }
+    },
+    "Arccsc": {
+      "[\"Arccsc\",1]": {
+        "wolfram": {
+          "input": "ArcCsc[1]",
+          "output": "Pi/2",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc ^{-1}(1)",
+            "output": "\\frac{\\pi }{2}"
+          }
+        }
+      },
+      "[\"Arccsc\",2]": {
+        "wolfram": {
+          "input": "ArcCsc[2]",
+          "output": "Pi/6",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc ^{-1}(2)",
+            "output": "\\frac{\\pi }{6}"
+          }
+        }
+      },
+      "[\"Equal\",[\"Csc\",[\"Arccsc\",2]],2]": {
+        "wolfram": {
+          "input": "(Csc[ArcCsc[2]] == 2)",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc \\left(\\csc ^{-1}(2)\\right)=2",
+            "output": "\\text{True}"
+          }
+        }
+      }
+    },
+    "Arcsec": {
+      "[\"Arcsec\",1]": {
+        "wolfram": {
+          "input": "ArcSec[1]",
+          "output": "0",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec ^{-1}(1)",
+            "output": "0"
+          }
+        }
+      },
+      "[\"Arcsec\",2]": {
+        "wolfram": {
+          "input": "ArcSec[2]",
+          "output": "Pi/3",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec ^{-1}(2)",
+            "output": "\\frac{\\pi }{3}"
+          }
+        }
+      },
+      "[\"Equal\",[\"Sec\",[\"Arcsec\",2]],2]": {
+        "wolfram": {
+          "input": "(Sec[ArcSec[2]] == 2)",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec \\left(\\sec ^{-1}(2)\\right)=2",
+            "output": "\\text{True}"
+          }
+        }
+      }
+    },
+    "Arcoth": {
+      "[\"N\",[\"Arcoth\",2]]": {
+        "wolfram": {
+          "input": "N[ArcCoth[2]]",
+          "output": "0.5493061443340549",
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\coth ^{-1}(2)\\right]",
+            "output": "0.549306"
+          }
+        }
+      }
+    },
+    "Arcsch": {
+      "[\"N\",[\"Arcsch\",2]]": {
+        "wolfram": {
+          "input": "N[ArcCsch[2]]",
+          "output": "0.48121182505960347",
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\text{csch}^{-1}(2)\\right]",
+            "output": "0.481212"
+          }
+        }
+      }
+    },
+    "Arsech": {
+      "[\"N\",[\"Arsech\",[\"Rational\",1,2]]]": {
+        "wolfram": {
+          "input": "N[ArcSech[Rational[1, 2]]]",
+          "output": "1.3169578969248166",
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\text{sech}^{-1}\\left(\\frac{1}{2}\\right)\\right]",
+            "output": "1.31696"
+          }
+        }
+      }
     }
   }
 }

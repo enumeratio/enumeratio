@@ -366,6 +366,17 @@
           "output": "12586269025",
           "verdict": "agree"
         }
+      },
+      "[\"Fibonacci\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Fibonacci[List[1, 2, 3, 4]]",
+          "output": "{1, 1, 2, 3}",
+          "verdict": "agree",
+          "tex": {
+            "input": "F_{\\{1,2,3,4\\}}",
+            "output": "\\{1,1,2,3\\}"
+          }
+        }
       }
     },
     "LucasL": {
@@ -630,6 +641,17 @@
           "output": "1860498",
           "verdict": "agree"
         }
+      },
+      "[\"LucasL\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "LucasL[List[1, 2, 3, 4]]",
+          "output": "{1, 3, 4, 7}",
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{\\{1,2,3,4\\}}",
+            "output": "\\{1,3,4,7\\}"
+          }
+        }
       }
     },
     "BernoulliB": {
@@ -828,6 +850,17 @@
           "input": "bernoulli(20)",
           "output": "-174611/330",
           "verdict": "agree"
+        }
+      },
+      "[\"BernoulliB\",[\"List\",1,2,3]]": {
+        "wolfram": {
+          "input": "BernoulliB[List[1, 2, 3]]",
+          "output": "{-1/2, 1/6, 0}",
+          "verdict": "agree",
+          "tex": {
+            "input": "B_{\\{1,2,3\\}}",
+            "output": "\\left\\{-\\frac{1}{2},\\frac{1}{6},0\\right\\}"
+          }
         }
       }
     }

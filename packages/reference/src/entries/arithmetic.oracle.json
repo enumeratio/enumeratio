@@ -2592,6 +2592,76 @@
           "note": "compute-engine's Min threads over (or pools) the list; SymPy's takes scalars."
         }
       }
+    },
+    "IsOdd": {
+      "[\"IsOdd\",3]": {
+        "wolfram": {
+          "input": "OddQ[3]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{OddQ}[3]",
+            "output": "\\text{True}"
+          }
+        }
+      },
+      "[\"IsOdd\",4]": {
+        "wolfram": {
+          "input": "OddQ[4]",
+          "output": "False",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{OddQ}[4]",
+            "output": "\\text{False}"
+          }
+        }
+      },
+      "[\"IsOdd\",-7]": {
+        "wolfram": {
+          "input": "OddQ[-7]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{OddQ}[-7]",
+            "output": "\\text{True}"
+          }
+        }
+      }
+    },
+    "IsEven": {
+      "[\"IsEven\",4]": {
+        "wolfram": {
+          "input": "EvenQ[4]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{EvenQ}[4]",
+            "output": "\\text{True}"
+          }
+        }
+      },
+      "[\"IsEven\",3]": {
+        "wolfram": {
+          "input": "EvenQ[3]",
+          "output": "False",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{EvenQ}[3]",
+            "output": "\\text{False}"
+          }
+        }
+      },
+      "[\"IsEven\",0]": {
+        "wolfram": {
+          "input": "EvenQ[0]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{EvenQ}[0]",
+            "output": "\\text{True}"
+          }
+        }
+      }
     }
   }
 }

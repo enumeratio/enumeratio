@@ -81,6 +81,28 @@
             "output": "\\{5,3,5,4\\}"
           }
         }
+      },
+      "[\"IntegerDigits\",[\"List\",6,7,2],2]": {
+        "wolfram": {
+          "input": "IntegerDigits[List[6, 7, 2], 2]",
+          "output": "{{1, 1, 0}, {1, 1, 1}, {1, 0}}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[\\{6,7,2\\},2]",
+            "output": "\\{\\{1,1,0\\},\\{1,1,1\\},\\{1,0\\}\\}"
+          }
+        }
+      },
+      "[\"IntegerDigits\",2147,[\"PositionalNumerals\",2]]": {
+        "wolfram": {
+          "input": "IntegerDigits[2147, 2]",
+          "output": "{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[2147,2]",
+            "output": "\\{1,0,0,0,0,1,1,0,0,0,1,1\\}"
+          }
+        }
       }
     },
     "FromDigits": {
@@ -151,6 +173,28 @@
             "output": "0"
           }
         }
+      },
+      "[\"FromDigits\",\"'1923'\"]": {
+        "wolfram": {
+          "input": "FromDigits[\"1923\"]",
+          "output": "1923",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FromDigits}[1923]",
+            "output": "1923"
+          }
+        }
+      },
+      "[\"FromDigits\",[\"List\",1,0,0,0,0,1,1,0,0,0,1,1],[\"PositionalNumerals\",2]]": {
+        "wolfram": {
+          "input": "FromDigits[List[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1], 2]",
+          "output": "2147",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FromDigits}[\\{1,0,0,0,0,1,1,0,0,0,1,1\\},2]",
+            "output": "2147"
+          }
+        }
       }
     },
     "IntegerString": {
@@ -210,6 +254,17 @@
             "output": "42"
           }
         }
+      },
+      "[\"IntegerString\",5,2,8]": {
+        "wolfram": {
+          "input": "IntegerString[5, 2, 8]",
+          "output": "\"00000101\"",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerString}[5,2,8]",
+            "output": "00000101"
+          }
+        }
       }
     },
     "DigitCount": {
@@ -254,6 +309,17 @@
           "tex": {
             "input": "\\text{DigitCount}[122000,10,0]",
             "output": "3"
+          }
+        }
+      },
+      "[\"DigitCount\",[\"List\",23,45]]": {
+        "wolfram": {
+          "input": "DigitCount[List[23, 45]]",
+          "output": "{{0, 1, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 0, 0, 0, 0, 0}}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{DigitCount}[\\{23,45\\}]",
+            "output": "\\left( \\begin{array}{cccccccccc}  0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\  0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\\\ \\end{array} \\right)"
           }
         }
       }

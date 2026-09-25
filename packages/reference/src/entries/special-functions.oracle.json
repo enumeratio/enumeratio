@@ -506,6 +506,17 @@
             "output": "\\text{ComplexInfinity}"
           }
         }
+      },
+      "[\"Beta\",[\"Rational\",9,2],[\"Rational\",7,2]]": {
+        "wolfram": {
+          "input": "Beta[Rational[9, 2], Rational[7, 2]]",
+          "output": "(5*Pi)/2048",
+          "verdict": "agree",
+          "tex": {
+            "input": "B\\left(\\frac{9}{2},\\frac{7}{2}\\right)",
+            "output": "\\frac{5 \\pi }{2048}"
+          }
+        }
       }
     },
     "Erf": {
@@ -596,6 +607,17 @@
             "output": "0.999999"
           }
         }
+      },
+      "[\"Erf\",[\"List\",0,1]]": {
+        "wolfram": {
+          "input": "Erf[List[0, 1]]",
+          "output": "{0, Erf[1]}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{erf}(\\{0,1\\})",
+            "output": "\\{0,\\text{erf}(1)\\}"
+          }
+        }
       }
     },
     "Erfc": {
@@ -675,6 +697,17 @@
             "output": "\\text{7.43098372341413$\\grave{ }$*${}^{\\wedge}$-7}"
           }
         }
+      },
+      "[\"Erfc\",[\"List\",0,1]]": {
+        "wolfram": {
+          "input": "Erfc[List[0, 1]]",
+          "output": "{1, Erfc[1]}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{erfc}(\\{0,1\\})",
+            "output": "\\{1,\\text{erfc}(1)\\}"
+          }
+        }
       }
     },
     "ErfInv": {
@@ -752,6 +785,17 @@
           "tex": {
             "input": "\\text{erf}^{-1}(0.9999)",
             "output": "2.75106"
+          }
+        }
+      },
+      "[\"ErfInv\",[\"List\",0,1]]": {
+        "wolfram": {
+          "input": "InverseErf[List[0, 1]]",
+          "output": "{0, Infinity}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{erf}^{-1}(\\{0,1\\})",
+            "output": "\\{0,\\infty \\}"
           }
         }
       }
@@ -8544,7 +8588,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 2, 1]]",
           "output": "1.2337005501361697 - 1.088793045151801*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,2,1)]",
+            "output": "1.2337\\, -1.08879 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,2,2]]": {
@@ -8561,7 +8609,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 2, 2]]",
           "output": "0.11685027506808487 - 0.5443965225759005*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,2,2)]",
+            "output": "0.11685\\, -0.544397 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,2,0.5]]": {
@@ -8578,7 +8630,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 2, 0.5]]",
           "output": "4.840291449348403 - 1.5397858910711801*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,2,0.5)]",
+            "output": "4.84029\\, -1.53979 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,2,-2.5]]": {
@@ -8595,7 +8651,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 2, -2.5]]",
           "output": "55.77122048367611 - 12.318287128569441*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,2,-2.5)]",
+            "output": "55.7712\\, -12.3183 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,3,1]]": {
@@ -8612,7 +8672,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 3, 1]]",
           "output": "1.3810359531144623 - 0.3773469147301234*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,3,1)]",
+            "output": "1.38104\\, -0.377347 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,3,2]]": {
@@ -8629,7 +8693,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 3, 2]]",
           "output": "0.19051797655723113 - 0.1886734573650617*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,3,2)]",
+            "output": "0.190518\\, -0.188673 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,3,0.5]]": {
@@ -8646,7 +8714,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 3, 0.5]]",
           "output": "8.921391406560598 - 0.5336491245309867*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,3,0.5)]",
+            "output": "8.92139\\, -0.533649 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,3,-2.5]]": {
@@ -8665,7 +8737,11 @@
           "output": "104.02772384507739 - 4.269192996247893*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (2,3,-2.5)]",
+            "output": "104.028\\, -4.26919 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,0.5,1]]": {
@@ -8682,7 +8758,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 0.5, 1]]",
           "output": "-0.8050307649337431 - 1.0644670194312265*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,0.5,1)]",
+            "output": "-0.805031-1.06447 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,0.5,2]]": {
@@ -8699,7 +8779,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 0.5, 2]]",
           "output": "-0.9025153824668711 - 0.532233509715613*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,0.5,2)]",
+            "output": "-0.902515-0.532234 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,0.5,0.5]]": {
@@ -8716,7 +8800,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 0.5, 0.5]]",
           "output": "-0.39538588823194476 - 1.5053836955785047*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,0.5,0.5)]",
+            "output": "-0.395386-1.50538 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,0.5,-2.5]]": {
@@ -8735,7 +8823,11 @@
           "output": "4.75921583752595 - 12.043069564628038*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (2,0.5,-2.5)]",
+            "output": "4.75922\\, -12.0431 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,[\"Complex\",2,1],1]]": {
@@ -8752,7 +8844,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, Complex[2, 1], 1]]",
           "output": "0.7821035196370021 - 0.5898143877849428*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,2+i,1)]",
+            "output": "0.782104\\, -0.589814 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,[\"Complex\",2,1],2]]": {
@@ -8769,7 +8865,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, Complex[2, 1], 2]]",
           "output": "-0.10894824018083943 - 0.2949071938925386*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,2+i,2)]",
+            "output": "-0.108948-0.294907 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,[\"Complex\",2,1],0.5]]": {
@@ -8786,7 +8886,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, Complex[2, 1], 0.5]]",
           "output": "3.2663465887755443 + 1.5814239980763367*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (2,2+i,0.5)]",
+            "output": "3.26635\\, +1.58142 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,[\"Complex\",2,1],-2.5]]": {
@@ -8805,7 +8909,11 @@
           "output": "39.35281478642287 + 22.39721772102415*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (2,2+i,-2.5)]",
+            "output": "39.3528\\, +22.3972 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,2,1]]": {
@@ -8822,7 +8930,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 2, 1]]",
           "output": "0.7183731834418405",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,2,1)]",
+            "output": "0.718373"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,2,2]]": {
@@ -8839,7 +8951,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 2, 2]]",
           "output": "0.14081340827907973",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,2,2)]",
+            "output": "0.140813"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,2,0.5]]": {
@@ -8856,7 +8972,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 2, 0.5]]",
           "output": "3.4447342293302547 - 2.0380094546286109*^-16*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,2,0.5)]",
+            "output": "3.44473\\, -\\text{2.0380094546286109$\\grave{ }$*${}^{\\wedge}$-16} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,2,-2.5]]": {
@@ -8873,7 +8993,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 2, -2.5]]",
           "output": "-12.286762723530927 + 1.6304075637028887*^-15*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,2,-2.5)]",
+            "output": "-12.2868+\\text{1.6304075637028887$\\grave{ }$*${}^{\\wedge}$-15} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,3,1]]": {
@@ -8890,7 +9014,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 3, 1]]",
           "output": "0.8341416819832856",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,3,1)]",
+            "output": "0.834142"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,3,2]]": {
@@ -8907,7 +9035,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 3, 2]]",
           "output": "0.08292915900835718",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,3,2)]",
+            "output": "0.0829292"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,3,0.5]]": {
@@ -8924,7 +9056,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 3, 0.5]]",
           "output": "7.563284617347448 + 1.3824347500011768*^-15*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,3,0.5)]",
+            "output": "7.56328\\, +\\text{1.3824347500011768$\\grave{ }$*${}^{\\wedge}$-15} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,3,-2.5]]": {
@@ -8943,7 +9079,11 @@
           "output": "-29.034869531372177 - 1.1059478000009414*^-14*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-2,3,-2.5)]",
+            "output": "-29.0349-\\text{1.1059478000009414$\\grave{ }$*${}^{\\wedge}$-14} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,0.5,1]]": {
@@ -8960,7 +9100,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 0.5, 1]]",
           "output": "0.4456443557760621 - 4.163336342344337*^-17*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,0.5,1)]",
+            "output": "0.445644\\, -\\text{4.163336342344337$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,0.5,2]]": {
@@ -8977,7 +9121,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 0.5, 2]]",
           "output": "0.2771778221119691 + 5.68356755158503*^-18*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,0.5,2)]",
+            "output": "0.277178\\, +\\text{5.68356755158503$\\grave{ }$*${}^{\\wedge}$-18} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,0.5,0.5]]": {
@@ -8994,7 +9142,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 0.5, 0.5]]",
           "output": "0.7431924320288356 - 2.4228238315063152*^-17*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,0.5,0.5)]",
+            "output": "0.743192\\, -\\text{2.4228238315063152$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,0.5,-2.5]]": {
@@ -9013,7 +9165,11 @@
           "output": "-1.2892228365600795 + 1.9382590652050522*^-16*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-2,0.5,-2.5)]",
+            "output": "-1.28922+\\text{1.9382590652050522$\\grave{ }$*${}^{\\wedge}$-16} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,[\"Complex\",2,1],1]]": {
@@ -9030,7 +9186,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, Complex[2, 1], 1]]",
           "output": "0.7462766702242207 + 0.14040868638886603*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,2+i,1)]",
+            "output": "0.746277\\, +0.140409 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,[\"Complex\",2,1],2]]": {
@@ -9047,7 +9207,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, Complex[2, 1], 2]]",
           "output": "0.1268616648883305 - 0.0702043431947064*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,2+i,2)]",
+            "output": "0.126862\\, -0.0702043 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,[\"Complex\",2,1],0.5]]": {
@@ -9064,7 +9228,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, Complex[2, 1], 0.5]]",
           "output": "2.51118300287403 + 2.6760511428484572*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-2,2+i,0.5)]",
+            "output": "2.51118\\, +2.67605 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,[\"Complex\",2,1],-2.5]]": {
@@ -9083,7 +9251,11 @@
           "output": "-8.501055789332833 - 10.961345717993117*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-2,2+i,-2.5)]",
+            "output": "-8.50106-10.9613 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,2,1]]": {
@@ -9100,7 +9272,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 2, 1]]",
           "output": "0.7733934744376993 - 1.1504640984077343*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,2,1)]",
+            "output": "0.773393\\, -1.15046 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,2,2]]": {
@@ -9117,7 +9293,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 2, 2]]",
           "output": "-0.07553550852076688 - 0.3834880328025781*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,2,2)]",
+            "output": "-0.0755355-0.383488 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,2,0.5]]": {
@@ -9134,7 +9314,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 2, 0.5]]",
           "output": "4.308305910092614 - 1.9926622707261177*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,2,0.5)]",
+            "output": "4.30831\\, -1.99266 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,2,-2.5]]": {
@@ -9151,7 +9335,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 2, -2.5]]",
           "output": "153.81759290583392 - 53.80188130960518*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,2,-2.5)]",
+            "output": "153.818\\, -53.8019 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,3,1]]": {
@@ -9168,7 +9356,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 3, 1]]",
           "output": "1.2473741980802437 - 0.6319569980911073*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,3,1)]",
+            "output": "1.24737\\, -0.631957 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,3,2]]": {
@@ -9185,7 +9377,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 3, 2]]",
           "output": "0.0824580660267479 - 0.21065233269703576*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,3,2)]",
+            "output": "0.0824581\\, -0.210652 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,3,0.5]]": {
@@ -9202,7 +9398,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 3, 0.5]]",
           "output": "8.962435484818286 - 1.0945816288925072*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,3,0.5)]",
+            "output": "8.96244\\, -1.09458 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,3,-2.5]]": {
@@ -9221,7 +9421,11 @@
           "output": "314.9386469789826 - 29.553703980097694*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (3,3,-2.5)]",
+            "output": "314.939\\, -29.5537 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,0.5,1]]": {
@@ -9238,7 +9442,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 0.5, 1]]",
           "output": "-0.5673384497546596 - 0.5636784807928212*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,0.5,1)]",
+            "output": "-0.567338-0.563678 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,0.5,2]]": {
@@ -9255,7 +9463,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 0.5, 2]]",
           "output": "-0.5224461499182197 - 0.18789282693094045*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,0.5,2)]",
+            "output": "-0.522446-0.187893 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,0.5,0.5]]": {
@@ -9272,7 +9484,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 0.5, 0.5]]",
           "output": "-0.305888418127714 - 0.976319767866404*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,0.5,0.5)]",
+            "output": "-0.305888-0.97632 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,0.5,-2.5]]": {
@@ -9291,7 +9507,11 @@
           "output": "7.550880046726434 - 26.360633732392905*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (3,0.5,-2.5)]",
+            "output": "7.55088\\, -26.3606 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,[\"Complex\",2,1],1]]": {
@@ -9308,7 +9528,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, Complex[2, 1], 1]]",
           "output": "0.6014155729902452 - 0.5726915889959069*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,2+i,1)]",
+            "output": "0.601416\\, -0.572692 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,[\"Complex\",2,1],2]]": {
@@ -9325,7 +9549,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, Complex[2, 1], 2]]",
           "output": "-0.13286147566971163 - 0.1908971963319649*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,2+i,2)]",
+            "output": "-0.132861-0.190897 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,[\"Complex\",2,1],0.5]]": {
@@ -9342,7 +9570,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, Complex[2, 1], 0.5]]",
           "output": "3.07433014627917 + 1.3820906569318034*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (3,2+i,0.5)]",
+            "output": "3.07433\\, +1.38209 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,[\"Complex\",2,1],-2.5]]": {
@@ -9361,7 +9593,11 @@
           "output": "112.02214251367533 + 59.66618957774957*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (3,2+i,-2.5)]",
+            "output": "112.022\\, +59.6662 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,2,1]]": {
@@ -9378,7 +9614,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 2, 1]]",
           "output": "1.582930180181653 - 0.8492041366130669*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,2,1)]",
+            "output": "1.58293\\, -0.849204 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,2,2]]": {
@@ -9395,7 +9635,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 2, 2]]",
           "output": "0.38862012012110325 - 0.5661360910753768*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,2,2)]",
+            "output": "0.38862\\, -0.566136 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,2,0.5]]": {
@@ -9412,7 +9656,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 2, 0.5]]",
           "output": "5.118490668726073 - 1.040058411081378*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,2,0.5)]",
+            "output": "5.11849\\, -1.04006 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,2,-2.5]]": {
@@ -9429,7 +9677,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 2, -2.5]]",
           "output": "27.101572673617163 - 3.5101971373996506*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,2,-2.5)]",
+            "output": "27.1016\\, -3.5102 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,3,1]]": {
@@ -9446,7 +9698,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 3, 1]]",
           "output": "1.3739183382135203 - 0.17216132352885852*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,3,1)]",
+            "output": "1.37392\\, -0.172161 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,3,2]]": {
@@ -9463,7 +9719,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 3, 2]]",
           "output": "0.24927889214235632 - 0.11477421568590564*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,3,2)]",
+            "output": "0.249279\\, -0.114774 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,3,0.5]]": {
@@ -9480,7 +9740,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 3, 0.5]]",
           "output": "8.75839228129124 - 0.21085369804395912*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,3,0.5)]",
+            "output": "8.75839\\, -0.210854 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,3,-2.5]]": {
@@ -9499,7 +9763,11 @@
           "output": "48.068018393802376 - 0.711631230898362*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (1.5,3,-2.5)]",
+            "output": "48.068\\, -0.711631 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,0.5,1]]": {
@@ -9516,7 +9784,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 0.5, 1]]",
           "output": "-1.0310938016261078 - 1.8556964357740162*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,0.5,1)]",
+            "output": "-1.03109-1.8557 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,0.5,2]]": {
@@ -9533,7 +9805,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 0.5, 2]]",
           "output": "-1.3540625344174047 - 1.2371309571826772*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,0.5,2)]",
+            "output": "-1.35406-1.23713 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,0.5,0.5]]": {
@@ -9550,7 +9826,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 0.5, 0.5]]",
           "output": "-0.4727012388667613 - 2.2727546925738773*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,0.5,0.5)]",
+            "output": "-0.472701-2.27275 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,0.5,-2.5]]": {
@@ -9569,7 +9849,11 @@
           "output": "3.44381423758941 - 7.6705470874368356*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (1.5,0.5,-2.5)]",
+            "output": "3.44381\\, -7.67055 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,[\"Complex\",2,1],1]]": {
@@ -9586,7 +9870,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, Complex[2, 1], 1]]",
           "output": "0.9288306730428874 - 0.5652075721952401*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,2+i,1)]",
+            "output": "0.928831\\, -0.565208 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,[\"Complex\",2,1],2]]": {
@@ -9603,7 +9891,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, Complex[2, 1], 2]]",
           "output": "-0.04744621797176318 - 0.37680504812909255*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,2+i,2)]",
+            "output": "-0.0474462-0.376805 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,[\"Complex\",2,1],0.5]]": {
@@ -9620,7 +9912,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, Complex[2, 1], 0.5]]",
           "output": "3.3830483897788204 + 1.7479834843533162*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1.5,2+i,0.5)]",
+            "output": "3.38305\\, +1.74798 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,[\"Complex\",2,1],-2.5]]": {
@@ -9639,7 +9935,11 @@
           "output": "19.05095385185434 + 11.260195772958092*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (1.5,2+i,-2.5)]",
+            "output": "19.051\\, +11.2602 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,2,1]]": {
@@ -9656,7 +9956,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 2, 1]]",
           "output": "0.7649204402503804",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2,1)]",
+            "output": "0.76492"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,2,2]]": {
@@ -9673,7 +9977,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 2, 2]]",
           "output": "0.1567197064997469 + 5.721258238267586*^-16*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2,2)]",
+            "output": "0.15672\\, +\\text{5.721258238267586$\\grave{ }$*${}^{\\wedge}$-16} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,2,0.5]]": {
@@ -9690,7 +9998,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 2, 0.5]]",
           "output": "3.545004558874938 - 5.748616730151821*^-17*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2,0.5)]",
+            "output": "3.545\\, -\\text{5.748616730151821$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,2,-2.5]]": {
@@ -9707,7 +10019,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 2, -2.5]]",
           "output": "-3.4710570528695808 + 1.9401581464262396*^-16*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2,-2.5)]",
+            "output": "-3.47106+\\text{1.9401581464262396$\\grave{ }$*${}^{\\wedge}$-16} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,3,1]]": {
@@ -9724,7 +10040,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 3, 1]]",
           "output": "0.8652249667708333",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,3,1)]",
+            "output": "0.865225"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,3,2]]": {
@@ -9741,7 +10061,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 3, 2]]",
           "output": "0.0898500221527776 + 2.6738770253614813*^-16*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,3,2)]",
+            "output": "0.08985\\, +\\text{2.6738770253614813$\\grave{ }$*${}^{\\wedge}$-16} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,3,0.5]]": {
@@ -9758,7 +10082,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 3, 0.5]]",
           "output": "7.652044367963561 + 1.513727336795356*^-15*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,3,0.5)]",
+            "output": "7.65204\\, +\\text{1.513727336795356$\\grave{ }$*${}^{\\wedge}$-15} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,3,-2.5]]": {
@@ -9777,7 +10105,11 @@
           "output": "-8.206094186321462 - 5.108829761684327*^-15*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-1.5,3,-2.5)]",
+            "output": "-8.20609-\\text{5.108829761684327$\\grave{ }$*${}^{\\wedge}$-15} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,0.5,1]]": {
@@ -9794,7 +10126,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 0.5, 1]]",
           "output": "0.5118021812475765 - 3.700743415417188*^-17*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,0.5,1)]",
+            "output": "0.511802\\, -\\text{3.700743415417188$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,0.5,2]]": {
@@ -9811,7 +10147,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 0.5, 2]]",
           "output": "0.3254652125016162 + 1.9987578825705452*^-18*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,0.5,2)]",
+            "output": "0.325465\\, +\\text{1.9987578825705452$\\grave{ }$*${}^{\\wedge}$-18} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,0.5,0.5]]": {
@@ -9828,7 +10168,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 0.5, 0.5]]",
           "output": "0.8278942319491788 + 1.134070298867023*^-17*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,0.5,0.5)]",
+            "output": "0.827894\\, +\\text{1.134070298867023$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,0.5,-2.5]]": {
@@ -9847,7 +10191,11 @@
           "output": "-0.2044518568469269 - 3.827487258676203*^-17*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-1.5,0.5,-2.5)]",
+            "output": "-0.204452-\\text{3.827487258676203$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,[\"Complex\",2,1],1]]": {
@@ -9864,7 +10212,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, Complex[2, 1], 1]]",
           "output": "0.7925489657208953 + 0.1230745464694305*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2+i,1)]",
+            "output": "0.792549\\, +0.123075 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,[\"Complex\",2,1],2]]": {
@@ -9881,7 +10233,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, Complex[2, 1], 2]]",
           "output": "0.13830068951857172 - 0.08204969764635209*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2+i,2)]",
+            "output": "0.138301\\, -0.0820497 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,[\"Complex\",2,1],0.5]]": {
@@ -9898,7 +10254,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, Complex[2, 1], 0.5]]",
           "output": "2.619306075593197 + 2.6687326314578925*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2+i,0.5)]",
+            "output": "2.61931\\, +2.66873 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,[\"Complex\",2,1],-2.5]]": {
@@ -9917,7 +10277,11 @@
           "output": "-2.4322178506955483 - 3.1202928516189257*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-1.5,2+i,-2.5)]",
+            "output": "-2.43222-3.12029 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],2,1]]": {
@@ -9934,7 +10298,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 2, 1]]",
           "output": "0.8171642289751408 + 0.4383195138244753*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2,1)]",
+            "output": "0.817164\\, +0.43832 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],2,2]]": {
@@ -9951,7 +10319,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 2, 2]]",
           "output": "0.1387606513248183 + 0.16079821117483872*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2,2)]",
+            "output": "0.138761\\, +0.160798 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],2,0.5]]": {
@@ -9968,7 +10340,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 2, 0.5]]",
           "output": "3.7921142608467884 + 0.8560748069785487*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2,0.5)]",
+            "output": "3.79211\\, +0.856075 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],2,-2.5]]": {
@@ -9985,7 +10361,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 2, -2.5]]",
           "output": "-51.39666281091313 - 0.11216250956872287*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2,-2.5)]",
+            "output": "-51.3967-0.112163 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],3,1]]": {
@@ -10002,7 +10382,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 3, 1]]",
           "output": "0.9605393291259242 + 0.26202376061325094*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,3,1)]",
+            "output": "0.960539\\, +0.262024 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],3,2]]": {
@@ -10019,7 +10403,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 3, 2]]",
           "output": "0.09691737007048523 + 0.06818902047228051*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,3,2)]",
+            "output": "0.0969174\\, +0.068189 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],3,0.5]]": {
@@ -10036,7 +10424,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 3, 0.5]]",
           "output": "8.006976954441555 + 0.6457371392370719*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,3,0.5)]",
+            "output": "8.00698\\, +0.645737 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],3,-2.5]]": {
@@ -10055,7 +10447,11 @@
           "output": "-110.42497592408667 + 9.475530152101694*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,3,-2.5)]",
+            "output": "-110.425+9.47553 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],0.5,1]]": {
@@ -10072,7 +10468,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 0.5, 1]]",
           "output": "0.2518733705484466 + 0.5942372440727623*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,0.5,1)]",
+            "output": "0.251873\\, +0.594237 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],0.5,2]]": {
@@ -10089,7 +10489,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 0.5, 2]]",
           "output": "0.0880695717387942 + 0.41809810059517355*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,0.5,2)]",
+            "output": "0.0880696\\, +0.418098 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],0.5,0.5]]": {
@@ -10106,7 +10510,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 0.5, 0.5]]",
           "output": "0.5773820436149286 + 0.7684091077547667*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,0.5,0.5)]",
+            "output": "0.577382\\, +0.768409 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],0.5,-2.5]]": {
@@ -10125,7 +10533,11 @@
           "output": "-7.608072838412566 - 2.3174168611844586*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,0.5,-2.5)]",
+            "output": "-7.60807-2.31742 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],[\"Complex\",2,1],1]]": {
@@ -10142,7 +10554,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], Complex[2, 1], 1]]",
           "output": "1.1260285363141571 + 0.6413553659598815*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2+i,1)]",
+            "output": "1.12603\\, +0.641355 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],[\"Complex\",2,1],2]]": {
@@ -10159,7 +10575,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], Complex[2, 1], 2]]",
           "output": "0.2817478536462949 + 0.07785965866667141*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2+i,2)]",
+            "output": "0.281748\\, +0.0778597 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],[\"Complex\",2,1],0.5]]": {
@@ -10176,7 +10596,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], Complex[2, 1], 0.5]]",
           "output": "3.1929058347983257 + 3.7884971130059726*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2+i,0.5)]",
+            "output": "3.19291\\, +3.7885 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],[\"Complex\",2,1],-2.5]]": {
@@ -10195,7 +10619,11 @@
           "output": "-46.142787156209735 - 42.90442114783229*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,2+i,-2.5)]",
+            "output": "-46.1428-42.9044 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],2,1]]": {
@@ -10212,7 +10640,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 2, 1]]",
           "output": "0.744689766677463 + 0.09767689334428953*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2,1)]",
+            "output": "0.74469\\, +0.0976769 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],2,2]]": {
@@ -10229,7 +10661,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 2, 2]]",
           "output": "0.14788992102403 + 0.03347535178649232*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2,2)]",
+            "output": "0.14789\\, +0.0334754 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],2,0.5]]": {
@@ -10246,7 +10682,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 2, 0.5]]",
           "output": "3.510343411491001 + 0.20933833108241506*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2,0.5)]",
+            "output": "3.51034\\, +0.209338 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],2,-2.5]]": {
@@ -10263,7 +10703,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 2, -2.5]]",
           "output": "7.238774267536822 + 8.864424682985417*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2,-2.5)]",
+            "output": "7.23877\\, +8.86442 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],3,1]]": {
@@ -10280,7 +10724,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 3, 1]]",
           "output": "0.8553387457226986 + 0.0648929890181541*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,3,1)]",
+            "output": "0.855339\\, +0.064893 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],3,2]]": {
@@ -10297,7 +10745,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 3, 2]]",
           "output": "0.08673380628741625 + 0.014560544846175878*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,3,2)]",
+            "output": "0.0867338\\, +0.0145605 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],3,0.5]]": {
@@ -10314,7 +10766,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 3, 0.5]]",
           "output": "7.631459552290881 + 0.1838129938214179*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,3,0.5)]",
+            "output": "7.63146\\, +0.183813 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],3,-2.5]]": {
@@ -10333,7 +10789,11 @@
           "output": "17.14802283740964 + 20.383978340017954*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,3,-2.5)]",
+            "output": "17.148\\, +20.384 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],0.5,1]]": {
@@ -10350,7 +10810,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 0.5, 1]]",
           "output": "0.4655388056711063 + 0.13821464441436465*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,0.5,1)]",
+            "output": "0.465539\\, +0.138215 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],0.5,2]]": {
@@ -10367,7 +10831,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 0.5, 2]]",
           "output": "0.2892019802792936 + 0.1006582239099534*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,0.5,2)]",
+            "output": "0.289202\\, +0.100658 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],0.5,0.5]]": {
@@ -10384,7 +10852,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 0.5, 0.5]]",
           "output": "0.7730363447556265 + 0.17710899785682885*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,0.5,0.5)]",
+            "output": "0.773036\\, +0.177109 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],0.5,-2.5]]": {
@@ -10403,7 +10875,11 @@
           "output": "1.02676676378177 + 1.218062498742225*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,0.5,-2.5)]",
+            "output": "1.02677\\, +1.21806 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],[\"Complex\",2,1],1]]": {
@@ -10420,7 +10896,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 1]]",
           "output": "0.8125648486732331 + 0.2335637047053423*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2+i,1)]",
+            "output": "0.812565\\, +0.233564 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],[\"Complex\",2,1],2]]": {
@@ -10437,7 +10917,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 2]]",
           "output": "0.15837428667606762 - 0.05012627868621951*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2+i,2)]",
+            "output": "0.158374\\, -0.0501263 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],[\"Complex\",2,1],0.5]]": {
@@ -10454,7 +10938,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 0.5]]",
           "output": "2.6030184823997473 + 2.9114183984878212*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2+i,0.5)]",
+            "output": "2.60302\\, +2.91142 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],[\"Complex\",2,1],-2.5]]": {
@@ -10473,7 +10961,11 @@
           "output": "-2.6384307117707664 + 12.751078290666381*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (-1.5+i,2+i,-2.5)]",
+            "output": "-2.63843+12.7511 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],2,1]]": {
@@ -10490,7 +10982,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 2, 1]]",
           "output": "1.0512753535586397 + 0.3523401982517351*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2,1)]",
+            "output": "1.05128\\, +0.35234 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],2,2]]": {
@@ -10507,7 +11003,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 2, 2]]",
           "output": "0.24698376639549652 + 0.16256851061973213*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2,2)]",
+            "output": "0.246984\\, +0.162569 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],2,0.5]]": {
@@ -10524,7 +11024,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 2, 0.5]]",
           "output": "4.15740696830278 + 0.5964288969053877*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2,0.5)]",
+            "output": "4.15741\\, +0.596429 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],2,-2.5]]": {
@@ -10541,7 +11045,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 2, -2.5]]",
           "output": "-6.713683691062508 + 9.459163380965965*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2,-2.5)]",
+            "output": "-6.71368+9.45916 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],3,1]]": {
@@ -10558,7 +11066,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 3, 1]]",
           "output": "1.0600183930694893 + 0.16372732384786187*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,3,1)]",
+            "output": "1.06002\\, +0.163727 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],3,2]]": {
@@ -10575,7 +11087,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 3, 2]]",
           "output": "0.13473745235769796 + 0.053079520907414544*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,3,2)]",
+            "output": "0.134737\\, +0.0530795 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],3,0.5]]": {
@@ -10592,7 +11108,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 3, 0.5]]",
           "output": "8.176233084955848 + 0.358637797014532*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,3,0.5)]",
+            "output": "8.17623\\, +0.358638 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],3,-2.5]]": {
@@ -10611,7 +11131,11 @@
           "output": "-13.125607899837256 + 19.441154193212753*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,3,-2.5)]",
+            "output": "-13.1256+19.4412 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],0.5,1]]": {
@@ -10628,7 +11152,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 0.5, 1]]",
           "output": "0.6468487828189047 + 0.9042982627040894*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,0.5,1)]",
+            "output": "0.646849\\, +0.904298 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],0.5,2]]": {
@@ -10645,7 +11173,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 0.5, 2]]",
           "output": "0.36644652599227817 + 0.7181204866387976*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,0.5,2)]",
+            "output": "0.366447\\, +0.71812 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],0.5,0.5]]": {
@@ -10662,7 +11194,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 0.5, 0.5]]",
           "output": "1.0703168525560955 + 1.0583232775276143*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,0.5,0.5)]",
+            "output": "1.07032\\, +1.05832 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],0.5,-2.5]]": {
@@ -10681,7 +11217,11 @@
           "output": "-1.5447221959379853 + 2.3250420549362065*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,0.5,-2.5)]",
+            "output": "-1.54472+2.32504 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],[\"Complex\",2,1],1]]": {
@@ -10698,7 +11238,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 1]]",
           "output": "1.362388391030724 + 0.2862397322626977*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2+i,1)]",
+            "output": "1.36239\\, +0.28624 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],[\"Complex\",2,1],2]]": {
@@ -10715,7 +11259,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 2]]",
           "output": "0.3776044633523324 - 0.06700535594249588*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2+i,2)]",
+            "output": "0.377604\\, -0.0670054 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],[\"Complex\",2,1],0.5]]": {
@@ -10732,7 +11280,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 0.5]]",
           "output": "3.6223281025197647 + 3.1374223913038373*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2+i,0.5)]",
+            "output": "3.62233\\, +3.13742 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],[\"Complex\",2,1],-2.5]]": {
@@ -10751,7 +11303,11 @@
           "output": "-11.9430502347019 + 3.2226235505187835*I",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+          "note": "For a + k < 0, Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.",
+          "tex": {
+            "input": "N[\\Phi (0.8\\, +0.9 i,2+i,-2.5)]",
+            "output": "-11.9431+3.22262 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,2,[\"Rational\",5,2]]]": {
@@ -10763,7 +11319,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 2, Rational[5, 2]]]",
           "output": "-0.012149359885121669 - 0.38494647276779503*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(2,2,\\frac{5}{2}\\right)\\right]",
+            "output": "-0.0121494-0.384946 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,3,[\"Rational\",5,2]]]": {
@@ -10775,7 +11335,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 3, Rational[5, 2]]]",
           "output": "0.08219970349200167 - 0.13341228113274667*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(2,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0821997\\, -0.133412 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,0.5,[\"Rational\",5,2]]]": {
@@ -10787,7 +11351,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, 0.5, Rational[5, 2]]]",
           "output": "-0.8606481531151231 - 0.3763459238946262*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(2,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "-0.860648-0.376346 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",2,[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -10799,7 +11367,11 @@
         "wolfram": {
           "input": "N[LerchPhi[2, Complex[2, 1], Rational[5, 2]]]",
           "output": "-0.1568564844899748 - 0.1559505657469148*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(2,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "-0.156856-0.155951 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,2,[\"Rational\",5,2]]]": {
@@ -10811,7 +11383,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 2, Rational[5, 2]]]",
           "output": "0.0834057795547859 - 5.095023636571527*^-17*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-2,2,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0834058\\, -\\text{5.095023636571527$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,3,[\"Rational\",5,2]]]": {
@@ -10823,7 +11399,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 3, Rational[5, 2]]]",
           "output": "0.03896930248501018 + 3.456086875002942*^-16*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-2,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0389693\\, +\\text{3.456086875002942$\\grave{ }$*${}^{\\wedge}$-16} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,0.5,[\"Rational\",5,2]]]": {
@@ -10835,7 +11415,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, 0.5, Rational[5, 2]]]",
           "output": "0.24049300787779812 - 6.057059578765788*^-18*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-2,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "0.240493\\, -\\text{6.057059578765788$\\grave{ }$*${}^{\\wedge}$-18} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-2,[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -10847,7 +11431,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-2, Complex[2, 1], Rational[5, 2]]]",
           "output": "0.06276107967442413 - 0.05760320164915622*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-2,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0627611\\, -0.0576032 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,2,[\"Rational\",5,2]]]": {
@@ -10859,7 +11447,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 2, Rational[5, 2]]]",
           "output": "-0.1138919359156354 - 0.22140691896956863*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(3,2,\\frac{5}{2}\\right)\\right]",
+            "output": "-0.113892-0.221407 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,3,[\"Rational\",5,2]]]": {
@@ -10871,7 +11463,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 3, Rational[5, 2]]]",
           "output": "0.008171843992155203 - 0.12162018098805635*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(3,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.00817184\\, -0.12162 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,0.5,[\"Rational\",5,2]]]": {
@@ -10883,7 +11479,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, 0.5, Rational[5, 2]]]",
           "output": "-0.4632879692537763 - 0.1084799742073782*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(3,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "-0.463288-0.10848 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",3,[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -10895,7 +11495,11 @@
         "wolfram": {
           "input": "N[LerchPhi[3, Complex[2, 1], Rational[5, 2]]]",
           "output": "-0.13642787123289463 - 0.07198068689299125*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(3,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "-0.136428-0.0719807 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,2,[\"Rational\",5,2]]]": {
@@ -10907,7 +11511,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 2, Rational[5, 2]]]",
           "output": "0.2008106675819583 - 0.46224818270283463*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1.5,2,\\frac{5}{2}\\right)\\right]",
+            "output": "0.200811\\, -0.462248 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,3,[\"Rational\",5,2]]]": {
@@ -10919,7 +11527,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 3, Rational[5, 2]]]",
           "output": "0.13953237193190896 - 0.09371275468620405*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1.5,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.139532\\, -0.0937128 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,0.5,[\"Rational\",5,2]]]": {
@@ -10931,7 +11543,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, 0.5, Rational[5, 2]]]",
           "output": "-1.3829598545028647 - 1.010113196699501*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1.5,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "-1.38296-1.01011 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",1.5,[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -10943,7 +11559,11 @@
         "wolfram": {
           "input": "N[LerchPhi[1.5, Complex[2, 1], Rational[5, 2]]]",
           "output": "-0.13623106961632636 - 0.24217666122591808*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1.5,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "-0.136231-0.242177 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,2,[\"Rational\",5,2]]]": {
@@ -10955,7 +11575,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 2, Rational[5, 2]]]",
           "output": "0.09407610024071308 - 2.5549407689563645*^-17*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5,2,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0940761\\, -\\text{2.5549407689563645$\\grave{ }$*${}^{\\wedge}$-17} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,3,[\"Rational\",5,2]]]": {
@@ -10967,7 +11591,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 3, Rational[5, 2]]]",
           "output": "0.04288391662578029 + 6.727677052423805*^-16*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0428839\\, +\\text{6.727677052423805$\\grave{ }$*${}^{\\wedge}$-16} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,0.5,[\"Rational\",5,2]]]": {
@@ -10979,7 +11607,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, 0.5, Rational[5, 2]]]",
           "output": "0.28374468487452115 + 5.040312439408991*^-18*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "0.283745\\, +\\text{5.040312439408991$\\grave{ }$*${}^{\\wedge}$-18} i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",-1.5,[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -10991,7 +11623,11 @@
         "wolfram": {
           "input": "N[LerchPhi[-1.5, Complex[2, 1], Rational[5, 2]]]",
           "output": "0.06887251604309992 - 0.06670071419535716*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0688725\\, -0.0667007 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],2,[\"Rational\",5,2]]]": {
@@ -11003,7 +11639,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 2, Rational[5, 2]]]",
           "output": "0.07302936892606432 + 0.10831051920486583*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1+2 i,2,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0730294\\, +0.108311 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],3,[\"Rational\",5,2]]]": {
@@ -11015,7 +11655,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 3, Rational[5, 2]]]",
           "output": "0.04322144848568559 + 0.03991374909942102*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1+2 i,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0432214\\, +0.0399137 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],0.5,[\"Rational\",5,2]]]": {
@@ -11027,7 +11671,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], 0.5, Rational[5, 2]]]",
           "output": "0.06006592330619742 + 0.36828258244182505*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1+2 i,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0600659\\, +0.368283 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -11039,7 +11687,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[1, 2], Complex[2, 1], Rational[5, 2]]]",
           "output": "0.1717523704292899 + 0.03195499105000332*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(1+2 i,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "0.171752\\, +0.031955 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],2,[\"Rational\",5,2]]]": {
@@ -11051,7 +11703,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 2, Rational[5, 2]]]",
           "output": "0.08772363908006367 + 0.022451843102529324*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5+i,2,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0877236\\, +0.0224518 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],3,[\"Rational\",5,2]]]": {
@@ -11063,7 +11719,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 3, Rational[5, 2]]]",
           "output": "0.04093064173669038 + 0.008246898188154227*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5+i,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0409306\\, +0.0082469 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],0.5,[\"Rational\",5,2]]]": {
@@ -11075,7 +11735,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], 0.5, Rational[5, 2]]]",
           "output": "0.2506624678277247 + 0.09007985632982152*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5+i,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "0.250662\\, +0.0900799 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",-1.5,1],[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -11087,7 +11751,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], Rational[5, 2]]]",
           "output": "0.08535910853571833 - 0.047777579953797944*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(-1.5+i,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0853591\\, -0.0477776 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],2,[\"Rational\",5,2]]]": {
@@ -11099,7 +11767,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 2, Rational[5, 2]]]",
           "output": "0.15055546795563854 + 0.11982927618077534*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,2,\\frac{5}{2}\\right)\\right]",
+            "output": "0.150555\\, +0.119829 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],3,[\"Rational\",5,2]]]": {
@@ -11111,7 +11783,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 3, Rational[5, 2]]]",
           "output": "0.06790730062056038 + 0.034208132622009495*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,3,\\frac{5}{2}\\right)\\right]",
+            "output": "0.0679073\\, +0.0342081 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],0.5,[\"Rational\",5,2]]]": {
@@ -11123,7 +11799,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], 0.5, Rational[5, 2]]]",
           "output": "0.3021697628691996 + 0.6567535519940392*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,0.5,\\frac{5}{2}\\right)\\right]",
+            "output": "0.30217\\, +0.656754 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",0.8,0.9],[\"Complex\",2,1],[\"Rational\",5,2]]]": {
@@ -11135,7 +11815,11 @@
         "wolfram": {
           "input": "N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], Rational[5, 2]]]",
           "output": "0.2377088936515187 - 0.07033177818546382*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N\\left[\\Phi \\left(0.8\\, +0.9 i,2+i,\\frac{5}{2}\\right)\\right]",
+            "output": "0.237709\\, -0.0703318 i"
+          }
         }
       },
       "[\"N\",[\"LerchPhi\",[\"Complex\",1,2],[\"Complex\",3,-1],[\"Complex\",4,2]]]": {
@@ -11154,7 +11838,11 @@
           "output": "0.0020250151909632203 + 0.003327898913888968*I",
           "verdict": "disagree",
           "kind": "precision",
-          "note": "Wolfram's machine-precision N is off from the sixth digit here; N[…, 30] gives 0.00202500995700990860… + 0.00332789753681355880…·I, which ours, mpmath and SymPy match."
+          "note": "Wolfram's machine-precision N is off from the sixth digit here; N[…, 30] gives 0.00202500995700990860… + 0.00332789753681355880…·I, which ours, mpmath and SymPy match.",
+          "tex": {
+            "input": "N[\\Phi (1+2 i,3-i,4+2 i)]",
+            "output": "0.00202502\\, +0.0033279 i"
+          }
         }
       }
     },
@@ -13842,6 +14530,17 @@
             "output": "0.98526"
           }
         }
+      },
+      "[\"GammaRegularized\",[\"List\",1,2],1]": {
+        "wolfram": {
+          "input": "GammaRegularized[List[1, 2], 1]",
+          "output": "{E^(-1), 2/E}",
+          "verdict": "agree",
+          "tex": {
+            "input": "Q(\\{1,2\\},1)",
+            "output": "\\left\\{\\frac{1}{e},\\frac{2}{e}\\right\\}"
+          }
+        }
       }
     },
     "BetaRegularized": {
@@ -13932,6 +14631,17 @@
           "tex": {
             "input": "I_2(2,3)",
             "output": "8"
+          }
+        }
+      },
+      "[\"BetaRegularized\",0.5,[\"List\",1,2],1]": {
+        "wolfram": {
+          "input": "BetaRegularized[0.5, List[1, 2], 1]",
+          "output": "{0.5, 0.25}",
+          "verdict": "agree",
+          "tex": {
+            "input": "I_{0.5}(\\{1,2\\},1)",
+            "output": "\\{0.5,0.25\\}"
           }
         }
       }
