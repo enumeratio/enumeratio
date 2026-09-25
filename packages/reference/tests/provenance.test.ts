@@ -27,8 +27,11 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Not pinned exactly — it moves as the catalogue grows — but every head lands somewhere,
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
-  // Trails the actual count: heads move to extension as we widen them.
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(30);
+  // Interval/CenteredInterval/Around now genuinely diverge bare compute-engine's Sin, Cos,
+  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), moving them
+  // from "compute-engine" to "override" — the threshold tracks that, well below the current
+  // count so it still catches a real regression.
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(25);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -159,6 +162,7 @@ const OVERRIDDEN = [
   "Arccsc",
   "Arcsec",
   "Arcsin",
+  "Arctan",
   "At",
   "BellNumber",
   "BernoulliB",
@@ -172,7 +176,9 @@ const OVERRIDDEN = [
   "Chop",
   "Clamp",
   "ContinuedFraction",
+  "Cos",
   "Cosh",
+  "Csc",
   "Digamma",
   "DigitCount",
   "DigitSum",
@@ -184,6 +190,7 @@ const OVERRIDDEN = [
   "Erf",
   "ErfInv",
   "Erfc",
+  "Exp",
   "ExtendedGCD",
   "FactorInteger",
   "Factorial2",
@@ -244,9 +251,12 @@ const OVERRIDDEN = [
   "Rank",
   "Rationalize",
   "Round",
+  "Sec",
+  "Sign",
   "Sin",
   "Sinh",
   "Sort",
+  "Sqrt",
   "Stirling",
   "StirlingS1",
   "Subfactorial",
@@ -255,6 +265,7 @@ const OVERRIDDEN = [
   // that used to stay unevaluated (S(1, 2), past the k > n boundary); Sum is the corpus
   // expression's own outer head, the same reason Add is here.
   "Sum",
+  "Tan",
   "Tanh",
   "Totient",
   "Union",

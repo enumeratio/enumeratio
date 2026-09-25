@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
+import { derivativeAt } from "./tagged-calculus.ts";
 import type { Resolver } from "./tagged-arithmetic.ts";
 
 // Around(x, dx) — Wolfram's number-with-uncertainty, propagated to first order: `f(Around(x,
@@ -81,37 +82,115 @@ function aroundExpBase(ce: ComputeEngine, x: BoxedExpression): BoxedExpression {
   return around(ce, value, value * numOf(deltaOf(X)));
 }
 
-/** `f(Around(x, dx))` for a unary `head` with a compute-engine-known symbolic derivative:
- * `Around(f(x), |f'(x)|·dx)`, `f'` taken via `D` and evaluated numerically at the center. */
-function aroundUnary(ce: ComputeEngine, head: string, a: BoxedExpression): BoxedExpression {
+/** `f(Around(x, dx))` for a unary `head`: `Around(f(x), |f'(x)|·dx)`. `f'` comes from
+ * `derivativeAt` — compute-engine's own `D` where that resolves (BarnesG, Gamma, Erf, the
+ * trig and hyperbolic families), a central difference where it doesn't (DirichletEta,
+ * DirichletBeta, ErfInv — checked in `.scratch/probe2.ts`, not guessed). */
+function aroundUnary(
+  ce: ComputeEngine,
+  head: string,
+  a: BoxedExpression,
+): BoxedExpression | undefined {
   const A = asAround(ce, a);
   const c = numOf(centerOf(A));
+  const derivative = derivativeAt(ce, head, [ce.number(c)], 0, c);
+  if (derivative === undefined) return undefined;
   const value = numOf(ce.function(head, [ce.number(c)]));
-  const derivative = ce
-    .function("D", [ce.function(head, [ce.symbol("_around_t")]), ce.symbol("_around_t")])
-    .evaluate()
-    .subs({ _around_t: c })
-    .N().re;
+  if (!Number.isFinite(value)) return undefined;
   return around(ce, value, Math.abs(derivative) * numOf(deltaOf(A)));
 }
 
-const UNARY_HEADS = ["Sqrt", "Erf"] as const;
+/** Every head examples push a lone `Around` through as its ONLY argument (`f(Around(x,dx))`)
+ * — resolved via `aroundUnary`, `derivativeAt`'s symbolic/numeric-fallback derivative either
+ * way. `LogGamma` is our own continuation (declared separately from compute-engine's
+ * `GammaLn`, same value where both are defined — see elementary-special-values.ts); both get
+ * the rule since either name might appear. `Cosh`, `Log2` and `Log10` are NOT here: an Around
+ * argument to any of the three is rejected before our resolver is even reached — see
+ * declare-tagged-arithmetic.ts's header comment. */
+const UNARY_HEADS = [
+  "Sqrt",
+  "Erf",
+  "Erfc",
+  "ErfInv",
+  "Sin",
+  "Cos",
+  "Tan",
+  "Cot",
+  "Sec",
+  "Csc",
+  "Arcsin",
+  "Arccos",
+  "Arctan",
+  "Sinh",
+  "Tanh",
+  "Ln",
+  "Gamma",
+  "GammaLn",
+  "LogGamma",
+  "Digamma",
+  "BarnesG",
+  "LogBarnesG",
+  "DirichletEta",
+  "DirichletBeta",
+] as const;
+
+/** `f(…, Around(x,dx), …)` at a fixed argument position `argIndex`, every OTHER argument
+ * exact/fixed — the shape `HarmonicNumber(order, Around(a, da))`, `Zeta(s, Around(a, da))`,
+ * `LerchPhi(Around(z, dz), s, a)` and `BetaRegularized(Around(x, dx), a, b)` all share.
+ * `derivativeAt` differentiates `head` in that one position with the rest held fixed. */
+function aroundOverArg(
+  ce: ComputeEngine,
+  head: string,
+  ops: readonly BoxedExpression[],
+  argIndex: number,
+): BoxedExpression | undefined {
+  const target = ops[argIndex];
+  if (target === undefined || !isAround(target)) return undefined;
+  const A = asAround(ce, target);
+  const c = numOf(centerOf(A));
+  const fixed = ops.map((o, i) => (i === argIndex ? ce.number(c) : o));
+  const derivative = derivativeAt(ce, head, fixed, argIndex, c);
+  if (derivative === undefined) return undefined;
+  const value = ce.function(head, fixed).N().re;
+  if (!Number.isFinite(value)) return undefined;
+  return around(ce, value, Math.abs(derivative) * numOf(deltaOf(A)));
+}
+
+/** `{head: the argument position an Around can occupy}` for the multi-argument heads above —
+ * every other argument is taken as given (exact, fixed) in `aroundOverArg`. */
+const MULTI_ARG_HEADS: Readonly<Record<string, number>> = {
+  HarmonicNumber: 1,
+  Zeta: 1,
+  HurwitzZeta: 1,
+  LerchPhi: 0,
+  BetaRegularized: 0,
+};
 
 /** This module's resolvers, one per head it extends — see the file header. */
 export function aroundResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
   const resolvers: Record<string, Resolver> = {
     Add: (ops) => (ops.some(isAround) ? aroundAdd(ce, ops) : undefined),
     Multiply: (ops) => (ops.some(isAround) ? aroundMultiply(ce, ops) : undefined),
-    Power: ([a, n]) => {
+    Power: (ops, raw) => {
+      if (ops.length !== 2) return undefined;
+      const [a, n] = ops;
+      const rawA = raw[0];
       if (a === undefined || n === undefined) return undefined;
       if (isAround(a)) return aroundPower(ce, a, n);
-      if (a.isSame(ce.E) && isAround(n)) return aroundExpBase(ce, n);
+      // `raw` (pre-numericization) catches `E^Around(x,dx)` even under N(), where `a` itself
+      // has already been decimalized (see tagged-arithmetic.ts's Resolver doc).
+      if ((rawA ?? a).isSame(ce.E) && isAround(n)) return aroundExpBase(ce, n);
       return undefined;
     },
   };
   for (const head of UNARY_HEADS) {
-    resolvers[head] = ([a]) =>
-      a !== undefined && isAround(a) ? aroundUnary(ce, head, a) : undefined;
+    resolvers[head] = (ops) =>
+      ops.length === 1 && ops[0] !== undefined && isAround(ops[0])
+        ? aroundUnary(ce, head, ops[0])
+        : undefined;
+  }
+  for (const [head, argIndex] of Object.entries(MULTI_ARG_HEADS)) {
+    resolvers[head] = (ops) => aroundOverArg(ce, head, ops, argIndex);
   }
   return resolvers;
 }
