@@ -73,6 +73,28 @@ function eccentricities(model: GraphModel): Map<string, number | undefined> {
   return out;
 }
 
+// ─── in/out degree (kernel-verified: undirected edges are ignored on a MIXED graph) ───────
+
+/** `VertexInDegree`/`VertexOutDegree`: kernel-verified against Wolfram 15 that on a graph
+ *  with at least one DIRECTED edge, undirected edges contribute NOTHING to either measure —
+ *  only directed edges count, each toward exactly the one endpoint it actually touches
+ *  (`Graph({1->2, 2<->3, 3->1})` gives in-degree `{1,1,0}`, out-degree `{1,0,1}`: the
+ *  undirected `2<->3` edge is invisible to both). On a graph with NO directed edge at all,
+ *  both fall back to `VertexDegree` instead (every edge counts, same as
+ *  `degrees()`) — kernel-unverified for that fallback case specifically, but it is the only
+ *  reading consistent with `VertexInDegree = VertexOutDegree = VertexDegree` holding for a
+ *  purely undirected graph. */
+function directionalDegrees(model: GraphModel, direction: "in" | "out"): Map<string, number> {
+  if (!model.edges.some((e) => e.directed)) return degrees(model);
+  const deg = new Map<string, number>(model.order.map((v) => [v, 0]));
+  for (const e of model.edges) {
+    if (!e.directed) continue;
+    const v = direction === "in" ? e.b : e.a;
+    deg.set(v, (deg.get(v) ?? 0) + 1);
+  }
+  return deg;
+}
+
 // ─── acyclicity (shared by IsAcyclicGraph and IsPathGraph/IsTreeGraph-style checks) ────────
 
 /** Whether the graph (directed edges respected, undirected edges bidirectional) contains a
@@ -156,6 +178,26 @@ const isSimple = (model: GraphModel): boolean => {
   const sigs = edgeSignatures(model);
   return new Set(sigs).size === sigs.length;
 };
+
+/** Whether every ORDERED pair of distinct vertices is joined — kernel-verified against
+ *  Wolfram 15 to include directed graphs: `CompleteGraphQ[Graph[{1->2,2->1}]]` is `True`,
+ *  and `CompleteGraph[3, DirectedEdges->True]` (6 directed edges, both directions between
+ *  every pair) is complete. An undirected edge covers BOTH ordered pairs between its
+ *  endpoints; a directed edge covers only the one it points. */
+function isCompleteGraph(model: GraphModel): boolean {
+  if (!isSimple(model)) return false;
+  const covered = new Set<string>();
+  for (const e of model.edges) {
+    covered.add(`${e.a}\u0000${e.b}`);
+    if (!e.directed) covered.add(`${e.b}\u0000${e.a}`);
+  }
+  for (const u of model.order) {
+    for (const v of model.order) {
+      if (u !== v && !covered.has(`${u}\u0000${v}`)) return false;
+    }
+  }
+  return true;
+}
 
 // ─── isomorphism (brute force — small graphs only) ─────────────────────────────────────────
 
@@ -285,12 +327,14 @@ function turanGraph(ce: ComputeEngine, n: number, r: number): BoxedExpression | 
  *  degree exactly `k`.
  *  `k` odd (`= 2r + 1`), `n` even: that circulant plus the `n/2` "diameter" edges `i <-> i +
  *  n/2` — one extra edge per vertex, degree `2r + 1`.
- *  `k` odd, `n` odd: that circulant plus edges `i <-> i + (n+1)/2` for `i = 0, …, (n-3)/2`,
- *  plus one closing edge `(n-1)/2 <-> n-1` — the textbook fix-up for the one vertex the
- *  even-offset scheme above would otherwise miss (all 0-based internally, kernel-unverified
- *  against a live kernel — the report flags this as the least certain construction here;
- *  cross-checked instead against the two structural invariants every Harary graph must
- *  have: `EdgeCount = ceil(k n / 2)` and minimum degree `>= k`). */
+ *  `k` odd, `n` odd: that circulant plus vertex `0` joined to BOTH `floor(n/2)` and
+ *  `ceil(n/2)` (it alone ends up with degree `k + 1` — the one vertex `n * k` being odd
+ *  forces to take the remainder), plus `i <-> i + ceil(n/2)` for `i = 1, …, (n-3)/2` giving
+ *  everyone else their `k`th edge. Kernel-verified against Wolfram 15:
+ *  `HararyGraph(3, 7)` gives exactly the 7-cycle plus `{1-4, 1-5, 2-6, 3-7}` (1-based),
+ *  matching this construction (0-based here: circulant offset 1, plus `0-3`, `0-4`, `1-5`,
+ *  `2-6`). The even-`k` and (odd-`k`, even-`n`) cases are the standard, unambiguous Harary
+ *  construction and were not separately kernel-checked. */
 function hararyGraph(ce: ComputeEngine, k: number, n: number): BoxedExpression | undefined {
   if (!Number.isSafeInteger(k) || !Number.isSafeInteger(n) || k < 1 || n < k + 1) return undefined;
   const r = Math.floor(k / 2);
@@ -310,9 +354,10 @@ function hararyGraph(ce: ComputeEngine, k: number, n: number): BoxedExpression |
     if (n % 2 === 0) {
       for (let i = 0; i < n / 2; i++) add(i, i + n / 2);
     } else {
-      const half = (n + 1) / 2;
-      for (let i = 0; i <= (n - 3) / 2; i++) add(i, (i + half) % n);
-      add((n - 1) / 2, n - 1);
+      const half = (n + 1) / 2; // ceil(n / 2)
+      add(0, (n - 1) / 2); // floor(n / 2)
+      add(0, half);
+      for (let i = 1; i <= (n - 3) / 2; i++) add(i, i + half);
     }
   }
   return integerGraph(ce, n, edges);
@@ -448,9 +493,9 @@ function closenessCentrality(
 
 /** `EigenvectorCentrality(g)`: the dominant eigenvector of the UNDIRECTED adjacency matrix
  *  (direction ignored, matching `IsConnectedGraph`'s underlying-graph convention), via power
- *  iteration, normalized so the LARGEST entry is `1`. That normalization (rather than unit
- *  Euclidean norm, or summing to `n`) is a documented choice, not a confirmed match to
- *  Wolfram's own — kernel-unverified, see the report. Power iteration needs a connected
+ *  iteration, normalized so the entries SUM to `1` — kernel-verified against Wolfram 15
+ *  (`PathGraph[{1,2,3,4}]` -> `{0.190983, 0.309017, 0.309017, 0.190983}`, `StarGraph[4]` ->
+ *  `{0.366025, 0.211325, 0.211325, 0.211325}`). Power iteration needs a connected
  *  graph for a unique answer; run globally here regardless, which is well-defined but not
  *  guaranteed meaningful across disconnected components.
  *
@@ -492,8 +537,8 @@ function eigenvectorCentrality(ce: ComputeEngine, model: GraphModel): BoxedExpre
     }
     x = next.map((v) => v / norm);
   }
-  const max = Math.max(...x.map(Math.abs), 0);
-  const scaled = max === 0 ? x : x.map((v) => v / max);
+  const total = x.reduce((acc, v) => acc + v, 0);
+  const scaled = total === 0 ? x : x.map((v) => v / total);
   return listOf(
     ce,
     scaled.map((v) => ce.number(v)),
@@ -604,11 +649,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
       if (g === undefined) return undefined;
-      const inDeg = new Map<string, number>(g.order.map((v) => [v, 0]));
-      for (const e of g.edges) {
-        inDeg.set(e.b, (inDeg.get(e.b) ?? 0) + 1);
-        if (!e.directed) inDeg.set(e.a, (inDeg.get(e.a) ?? 0) + 1);
-      }
+      const inDeg = directionalDegrees(g, "in");
       if (ops[1] === undefined)
         return listOf(
           ce,
@@ -624,11 +665,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
       if (g === undefined) return undefined;
-      const outDeg = new Map<string, number>(g.order.map((v) => [v, 0]));
-      for (const e of g.edges) {
-        outDeg.set(e.a, (outDeg.get(e.a) ?? 0) + 1);
-        if (!e.directed) outDeg.set(e.b, (outDeg.get(e.b) ?? 0) + 1);
-      }
+      const outDeg = directionalDegrees(g, "out");
       if (ops[1] === undefined)
         return listOf(
           ce,
@@ -693,10 +730,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
-      if (g === undefined) return undefined;
-      if (g.edges.some((e) => e.directed) || !isSimple(g)) return ce.False;
-      const n = g.order.length;
-      return g.edges.length === (n * (n - 1)) / 2 ? ce.True : ce.False;
+      return g === undefined ? undefined : isCompleteGraph(g) ? ce.True : ce.False;
     },
   });
 
