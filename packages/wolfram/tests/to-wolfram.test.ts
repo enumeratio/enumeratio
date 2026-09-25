@@ -166,12 +166,30 @@ test("extension heads Wolfram shares are vouched for, not passed through", () =>
 });
 
 test("the reciprocal inverse trig/hyperbolic heads rename straight to Wolfram's Arc*/ArcC*", () => {
-  expect(toWolfram(["Arccot", 1])).toBe("ArcCot[1]");
   expect(toWolfram(["Arccsc", 2])).toBe("ArcCsc[2]");
   expect(toWolfram(["Arcsec", 2])).toBe("ArcSec[2]");
   expect(toWolfram(["Arcoth", 2])).toBe("ArcCoth[2]");
   expect(toWolfram(["Arcsch", 2])).toBe("ArcCsch[2]");
   expect(toWolfram(["Arsech", ["Rational", 1, 2]])).toBe("ArcSech[Rational[1, 2]]");
+});
+
+// A negative argument for each: Wolfram's principal range agrees with compute-engine's for
+// all five straight renames, but NOT for Arccot (see the next test) — this is the check
+// that would have caught that one before it shipped.
+test("the reciprocal inverse trig/hyperbolic renames hold at a negative argument", () => {
+  expect(toWolfram(["Arccsc", -2])).toBe("ArcCsc[-2]");
+  expect(toWolfram(["Arcsec", -2])).toBe("ArcSec[-2]");
+  expect(toWolfram(["Arcoth", -2])).toBe("ArcCoth[-2]");
+  expect(toWolfram(["Arcsch", -2])).toBe("ArcCsch[-2]");
+});
+
+test("Arccot is NOT a straight rename to ArcCot — the principal ranges disagree at negative x", () => {
+  // compute-engine's Arccot has range (0, π); Wolfram's ArcCot has range (-π/2, π/2], so
+  // Arccot(-1) = 3π/4 but ArcCot[-1] = -π/4 — a straight rename would silently misanswer.
+  // Pi/2 - ArcTan[x] matches compute-engine's range everywhere, so that's what's emitted.
+  expect(toWolfram(["Arccot", 1])).toBe("Subtract[Divide[Pi, 2], ArcTan[1]]");
+  expect(toWolfram(["Arccot", -1])).toBe("Subtract[Divide[Pi, 2], ArcTan[-1]]");
+  expect(isWolframHead("Arccot")).toBe(true);
 });
 
 test("IsOdd/IsEven rename to OddQ/EvenQ", () => {

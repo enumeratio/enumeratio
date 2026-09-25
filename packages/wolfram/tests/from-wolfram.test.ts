@@ -51,7 +51,7 @@ test("Head[args], with the reverse of the HEADS map", () => {
     ["List", ["List", 1, 2], ["List", 3, 4]],
   ]);
   // EvenQ used to fall through unchanged here; now that IsEven: "EvenQ" is in HEADS, a
-  // head passed as a value reverses to its compute-engine name too (see the ArcCot etc.
+  // head passed as a value reverses to its compute-engine name too (see the ArcCsc etc.
   // and IsOdd/IsEven tests below).
   expect(fromWolfram("Select[List[1, 2, 3], EvenQ]")).toEqual([
     "Filter",
@@ -226,13 +226,16 @@ test("iterator and interval shapes land in compute-engine's", () => {
   expect(toWolfram(["Interval", 0, 1])).toBe("Interval[List[0, 1]]");
 });
 
-test("ArcCot/ArcCsc/ArcSec/ArcCoth/ArcCsch/ArcSech rename back to Arccot/Arccsc/Arcsec/Arcoth/Arcsch/Arsech", () => {
-  expect(fromWolfram("ArcCot[1]")).toEqual(["Arccot", 1]);
+test("ArcCsc/ArcSec/ArcCoth/ArcCsch/ArcSech rename back to Arccsc/Arcsec/Arcoth/Arcsch/Arsech", () => {
   expect(fromWolfram("ArcCsc[2]")).toEqual(["Arccsc", 2]);
   expect(fromWolfram("ArcSec[2]")).toEqual(["Arcsec", 2]);
   expect(fromWolfram("ArcCoth[2]")).toEqual(["Arcoth", 2]);
   expect(fromWolfram("ArcCsch[2]")).toEqual(["Arcsch", 2]);
   expect(fromWolfram("ArcSech[Rational[1, 2]]")).toEqual(["Arsech", ["Rational", 1, 2]]);
+});
+
+test("ArcCot does NOT rename back to Arccot — the principal ranges disagree, so it passes through", () => {
+  expect(fromWolfram("ArcCot[-1]")).toEqual(["ArcCot", -1]);
 });
 
 test("OddQ/EvenQ rename back to IsOdd/IsEven", () => {
