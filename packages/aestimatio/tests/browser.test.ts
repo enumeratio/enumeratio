@@ -4,12 +4,19 @@
 import { expect, test } from "vite-plus/test";
 import { evaluateInWorker, type WorkerLike } from "../src/browser.ts";
 
-/** A fake `Worker`: records what was posted, and lets a test drive its lifecycle. */
-function fakeWorker() {
+/** A fake `Worker`: records what was posted, and lets a test drive its lifecycle.
+ * Auto-fires a `"started"` reply for every posted message (unless `autoStart` is false)
+ * -- simulating an already-warm worker, so `timeMs` tests exercise the small post-start
+ * kill margin rather than the (much larger, separately tested) spawn-timeout guard. */
+function fakeWorker(options: { autoStart?: boolean } = {}) {
+  const autoStart = options.autoStart ?? true;
   const posted: unknown[] = [];
   let terminated = 0;
   const worker: WorkerLike = {
-    postMessage: (message) => posted.push(message),
+    postMessage: (message) => {
+      posted.push(message);
+      if (autoStart) worker.onmessage?.({ data: { kind: "started" } });
+    },
     terminate: () => {
       terminated++;
     },

@@ -96,19 +96,30 @@ test("runCases reuses workers from a pool passed in rather than closing it", asy
   }
 });
 
-/** A fake `worker_threads.Worker` that never responds -- stands in for a tight,
- * uncooperative loop the cooperative deadline can't reach, so the host's own hard-kill
- * path is exercised deterministically and fast (mirrors ./pool.test.ts and
- * ./session.test.ts's own fakes for the same scenario). */
+/** A fake `worker_threads.Worker` that reports "started" (so the real `timeMs` kill
+ * timer arms) but never answers -- stands in for a tight, uncooperative loop the
+ * cooperative deadline can't reach, so the host's own hard-kill path is exercised
+ * deterministically and fast rather than waiting out the (much larger) spawn-timeout
+ * guard (mirrors ./pool.test.ts and ./session.test.ts's own fakes for the same
+ * scenario). */
 function fakeHangingWorker(): NodeWorkerLike {
+  const listeners = new Map<string, Set<(...args: unknown[]) => void>>();
+  const on = (event: string, listener: (...args: unknown[]) => void): void => {
+    let set = listeners.get(event);
+    if (set === undefined) listeners.set(event, (set = new Set()));
+    set.add(listener);
+  };
   return {
-    postMessage: () => {},
+    postMessage: (message) => {
+      const { id } = message as { id: number };
+      for (const l of listeners.get("message") ?? []) l({ id, kind: "started" });
+    },
     terminate: () => {},
     unref: () => {},
     ref: () => {},
-    on: () => {},
-    once: () => {},
-    off: () => {},
+    on,
+    once: on,
+    off: (event, listener) => listeners.get(event)?.delete(listener),
   };
 }
 
