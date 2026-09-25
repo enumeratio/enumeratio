@@ -1,5 +1,5 @@
 // Collect mpmath values for ζ(s, a) at 40 and 80 digits — real s left of Re(s) = 0 and
-// non-integer a, where the Euler–Maclaurin in src/precise.ts cancels most of its digits —
+// non-integer a, where Euler–Maclaurin (src/bigzeta.ts) cancels most of its digits —
 // and write them to tests/precise-zeta.golden.json. The test suite holds N() at that
 // precision to them, so `vp test` doesn't need mpmath; this script does.
 //

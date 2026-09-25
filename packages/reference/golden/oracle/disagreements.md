@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1216, disagree 45, inconclusive 0, error 3
+## wolfram — agree 1217, disagree 45, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                         | theirs                                                                                       |
 | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
