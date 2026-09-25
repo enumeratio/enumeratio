@@ -234,10 +234,14 @@ notatio-notebook { display: block; }
 }
 .notatio-notebook .nb-cell:hover { background: var(--vp-c-bg-soft, #f6f6f7); }
 .notatio-notebook .nb-cell:hover { border-left-color: var(--vp-c-divider, #e2e2e2); }
-.nb-in { display: flex; align-items: baseline; gap: 0.6rem; }
+/* Each row is the ordinal gutter, the unified cell (its own In/Out stacked), and a
+   remove button -- the cell owns everything past the gutter now. */
+.notatio-notebook .nb-cell { display: flex; align-items: flex-start; gap: 0.6rem; }
+.notatio-notebook .nb-cell notatio-cell { flex: 1 1 auto; min-width: 0; }
 .nb-ordinal {
   flex: 0 0 auto;
   min-width: 1.4rem;
+  margin-top: 0.3rem;
   text-align: right;
   font-family: var(--notatio-mono, ui-monospace, monospace);
   font-size: 0.72rem;
@@ -245,7 +249,6 @@ notatio-notebook { display: block; }
   user-select: none;
   cursor: default;
 }
-.nb-in notatio-in { flex: 1 1 auto; }
 /* Reactive drag-to-reorder: the ordinal is the grab handle; the drop target
    shows an inset line at its top edge (the dragged cell inserts before it). */
 .nb-handle { cursor: grab; }
@@ -254,6 +257,7 @@ notatio-notebook { display: block; }
 .nb-cell.nb-drop-before { box-shadow: inset 0 2px 0 0 var(--vp-c-brand-1, #b3355a); }
 .nb-remove {
   flex: 0 0 auto;
+  margin-top: 0.3rem;
   padding: 0 0.35rem;
   border: 0;
   background: none;
@@ -265,20 +269,6 @@ notatio-notebook { display: block; }
 }
 .notatio-notebook .nb-cell:hover .nb-remove { opacity: 1; }
 .nb-remove:hover { color: var(--vp-c-danger-1, #c0392b); }
-/* The output/binding line, indented under the input to sit past the ordinal. */
-.nb-out {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  margin: 0.2rem 0 0 2rem;
-  min-height: 1.2em;
-}
-.nb-bind {
-  font-family: var(--notatio-mono, ui-monospace, monospace);
-  font-size: 0.85rem;
-  color: var(--vp-c-brand-1, #b3355a);
-  user-select: none;
-}
 /* <notatio-code>: a small source box with a language tag. */
 notatio-code { display: inline-block; vertical-align: middle; max-width: 100%; }
 .notatio-code {
