@@ -257,10 +257,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 16,
   },
   {
-    head: "RealDigits",
-    uses: 16,
-  },
-  {
     head: "RootReduce",
     uses: 16,
   },
@@ -761,10 +757,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "IntegerReverse",
-    uses: 4,
-  },
-  {
     head: "JacobiCD",
     uses: 4,
   },
@@ -862,10 +854,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "CentralMoment",
-    uses: 3,
-  },
-  {
-    head: "ContinuedFractionK",
     uses: 3,
   },
   {

@@ -1,12 +1,14 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
+  bigRationalAt,
   integerAt,
   operandsOf,
   stringAt,
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
+import { continuedFractionKOf, convergentsOf } from "./convergents.ts";
 import { kroneckerSymbol } from "./kronecker.ts";
 import {
   areFareyNeighbours,
@@ -280,6 +282,141 @@ export function declareModular(ce: ComputeEngine): void {
       }
       const [p, q, r, t] = parts;
       return ce.symbol(areFareyNeighbours(p, q, r, t) ? "True" : "False");
+    },
+  });
+
+  // ── Convergents, ContinuedFractionK, IsQuadraticIrrational ──────────────────
+
+  /** A bigint `[numerator, denominator]`, built the way `Rational` reduces automatically. */
+  const bigRationalExpression = ([n, d]: readonly [bigint, bigint]): BoxedExpression =>
+    ce.box(["Rational", ce.number(n), ce.number(d)]);
+
+  ce.declare("Convergents", {
+    signature: "(value, integer?) -> list",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      // A bare list is read as the terms of a continued fraction directly; anything
+      // else goes through compute-engine's own `ContinuedFraction` first — exact for a
+      // rational, or `n` terms of one for anything it can evaluate numerically.
+      const termsExpr =
+        ops.length === 1 && ops[0]?.operator === "List"
+          ? ops[0]
+          : ops.length === 1
+            ? ce.function("ContinuedFraction", [ops[0]!]).evaluate()
+            : ops.length === 2
+              ? ce.function("ContinuedFraction", [ops[0]!, ops[1]!]).evaluate()
+              : undefined;
+      if (termsExpr === undefined || termsExpr.operator !== "List") return undefined;
+      const terms = operandsOf(termsExpr).map(bigIntegerAt);
+      if (terms.length === 0 || !terms.every((t): t is bigint => t !== undefined)) {
+        return undefined;
+      }
+      return ce.function("List", convergentsOf(terms).map(bigRationalExpression));
+    },
+  });
+
+  ce.declare("ContinuedFractionK", {
+    signature: "(any, any, tuple) -> value",
+    lazy: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const [fExpr, gExpr, iterExpr] = ops;
+      if (fExpr === undefined || gExpr === undefined || iterExpr?.operator !== "Tuple") {
+        return undefined;
+      }
+      const [varExpr, iminExpr, imaxExpr] = operandsOf(iterExpr);
+      const varName = (varExpr as { symbol?: unknown } | undefined)?.symbol;
+      const imin = integerAt(iminExpr);
+      if (typeof varName !== "string" || imin === undefined) return undefined;
+      const infinite =
+        (imaxExpr as { symbol?: unknown } | undefined)?.symbol === "PositiveInfinity";
+      const imax = infinite ? undefined : integerAt(imaxExpr);
+
+      const dependsOnVar = (expr: BoxedExpression): boolean =>
+        (expr as { symbol?: unknown }).symbol === varName || operandsOf(expr).some(dependsOnVar);
+
+      if (infinite) {
+        // Only the constant case has a closed form: x = f/(g + x) solves the quadratic
+        // x² + g·x − f = 0, whose positive root is the periodic infinite fraction's value.
+        if (dependsOnVar(fExpr) || dependsOnVar(gExpr)) return undefined;
+        const f = fExpr.evaluate();
+        const g = gExpr.evaluate();
+        return ce
+          .box([
+            "Divide",
+            ["Add", ["Negate", g], ["Sqrt", ["Add", ["Square", g], ["Multiply", 4, f]]]],
+            2,
+          ])
+          .evaluate();
+      }
+
+      if (imax === undefined || imax < imin) return undefined;
+      const terms: (readonly [readonly [bigint, bigint], readonly [bigint, bigint]])[] = [];
+      for (let i = imin; i <= imax; i++) {
+        const fi = bigRationalAt(fExpr.subs({ [varName]: i }).evaluate());
+        const gi = bigRationalAt(gExpr.subs({ [varName]: i }).evaluate());
+        if (fi === undefined || gi === undefined) return undefined;
+        terms.push([fi, gi]);
+      }
+      const result = continuedFractionKOf(terms);
+      return result === undefined ? undefined : bigRationalExpression(result);
+    },
+  });
+
+  // compute-engine folds a numeric surd like `Sqrt(2)` or `3·Sqrt(2)` straight into an
+  // EXACT numeric value rather than keeping a `Sqrt`/`Multiply` function node — its
+  // `.operator` reads "Real", and `.json` is the only place the `Sqrt` shape survives.
+  // `.numericValue` is where the fold is readable back out: `rational * √radical`, with
+  // `radical` kept squarefree, so `radical > 1` is exactly "genuinely irrational surd".
+  interface ExactRadical {
+    readonly im: number;
+    readonly rational: readonly [number, number];
+    readonly radical: number;
+    readonly imRadical: number;
+  }
+  const radicalOf = (expr: BoxedExpression): ExactRadical | undefined =>
+    (expr as { numericValue?: unknown }).numericValue as ExactRadical | undefined;
+  /** A folded `rational · √radical`, real and genuinely irrational (`radical` not 1). */
+  const isIrrationalSurd = (expr: BoxedExpression): boolean => {
+    const r = radicalOf(expr);
+    return (
+      r !== undefined && r.im === 0 && r.imRadical === 1 && r.radical > 1 && r.rational[0] !== 0
+    );
+  };
+  /**
+   * Whether `expr` is a quadratic irrational: an irrational root of a quadratic with
+   * integer coefficients — equivalently, a rational affine combination with exactly one
+   * irrational `Sqrt` term, at any rational scale: `Sqrt(n)`, `3·Sqrt(2)`, `1 + Sqrt(5)`,
+   * `(1 + Sqrt(5))/2`, `1 − Sqrt(3)`. A rational is excluded (not irrational); anything
+   * else (another algebraic degree, a transcendental constant, an unrecognised shape)
+   * reads as `False`, not "unknown" — same as Wolfram's `…Q` predicates.
+   */
+  const quadraticIrrational = (expr: BoxedExpression): boolean => {
+    if (isIrrationalSurd(expr)) return true;
+    if (bigRationalAt(expr) !== undefined) return false;
+    if (expr.operator === "Negate") return quadraticIrrational(operandsOf(expr)[0]!);
+    if (expr.operator === "Divide") {
+      const [num, den] = operandsOf(expr);
+      const denRational = bigRationalAt(den);
+      return denRational !== undefined && denRational[0] !== 0n && num !== undefined
+        ? quadraticIrrational(num)
+        : false;
+    }
+    if (expr.operator === "Add" || expr.operator === "Multiply") {
+      const ops = operandsOf(expr);
+      const rationalTerms = ops.filter((o) => bigRationalAt(o) !== undefined);
+      const otherTerms = ops.filter((o) => bigRationalAt(o) === undefined);
+      return (
+        otherTerms.length === 1 &&
+        rationalTerms.length === ops.length - 1 &&
+        quadraticIrrational(otherTerms[0]!)
+      );
+    }
+    return false;
+  };
+  ce.declare("IsQuadraticIrrational", {
+    signature: "(value) -> boolean",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const x = ops[0];
+      return x === undefined ? undefined : ce.symbol(quadraticIrrational(x) ? "True" : "False");
     },
   });
 

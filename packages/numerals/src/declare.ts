@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
+  bigRationalAt,
   defineMessages,
   emit,
   formatArgument,
@@ -14,6 +15,14 @@ import {
 } from "@enumeratio/boxed";
 import { gcd } from "@enumeratio/residues";
 import { declareAdic } from "./adic-declare.ts";
+import {
+  digitLength,
+  integerReverse,
+  numberExpand,
+  type RealDigit,
+  realDigitsOfRational,
+  romanNumeralOf,
+} from "./digits.ts";
 import {
   adicNumerals,
   balancedRadix,
@@ -412,6 +421,122 @@ export function declareNumerals(ce: ComputeEngine): void {
         "Dictionary",
         fields.map(([key, value]) => ce.function("KeyValuePair", [ce.string(key), value])),
       );
+    },
+  });
+
+  // ── digit heads: IntegerLength, IntegerReverse, NumberExpand, RealDigits,
+  // RomanNumeral ─────────────────────────────────────────────────────────────
+
+  /** A base argument, defaulting to 10 when omitted. */
+  const baseArg = (expr: BoxedExpression | undefined): bigint =>
+    (expr === undefined ? undefined : bigIntegerAt(expr)) ?? 10n;
+
+  ce.declare("IntegerLength", {
+    signature: "(integer, integer?) -> integer",
+    broadcastable: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const n = bigIntegerAt(ops[0]);
+      const base = baseArg(ops[1]);
+      if (n === undefined || base < 2n) return undefined;
+      return ce.number(digitLength(n, base));
+    },
+  });
+
+  ce.declare("IntegerReverse", {
+    signature: "(integer, integer?, integer?) -> integer",
+    broadcastable: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const n = bigIntegerAt(ops[0]);
+      const base = baseArg(ops[1]);
+      const width = ops[2] === undefined ? undefined : integerAt(ops[2]);
+      if (n === undefined || base < 2n || (ops[2] !== undefined && width === undefined)) {
+        return undefined;
+      }
+      return ce.number(integerReverse(n, base, width));
+    },
+  });
+
+  ce.declare("NumberExpand", {
+    signature: "(integer, integer?, integer?) -> list",
+    broadcastable: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const n = bigIntegerAt(ops[0]);
+      const base = baseArg(ops[1]);
+      const width = ops[2] === undefined ? undefined : integerAt(ops[2]);
+      if (n === undefined || base < 2n || (ops[2] !== undefined && width === undefined)) {
+        return undefined;
+      }
+      return ce.function(
+        "List",
+        numberExpand(n, base, width).map((term) => ce.number(term)),
+      );
+    },
+  });
+
+  ce.declare("RomanNumeral", {
+    signature: "(integer) -> string",
+    broadcastable: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const n = integerAt(ops[0]);
+      const roman = n === undefined ? undefined : romanNumeralOf(n);
+      return roman === undefined ? undefined : ce.string(roman);
+    },
+  });
+
+  /** `RealDigits`' `{{digits...}, exponent}`, a periodic tail nested as its own list. */
+  const realDigitsExpr = (digits: readonly RealDigit[], exponent: number): BoxedExpression =>
+    ce.function("List", [
+      ce.function(
+        "List",
+        digits.map((d) =>
+          Array.isArray(d)
+            ? ce.function(
+                "List",
+                d.map((x) => ce.number(x)),
+              )
+            : ce.number(d as bigint),
+        ),
+      ),
+      ce.number(exponent),
+    ]);
+
+  // Extra significant digits computed beyond `len`, so what's handed back is TRUNCATED
+  // rather than rounded at the boundary the caller asked for.
+  const REAL_DIGITS_GUARD = 15;
+
+  ce.declare("RealDigits", {
+    signature: "(value, integer?, integer?) -> list",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const base = baseArg(ops[1]);
+      const len = ops[2] === undefined ? undefined : integerAt(ops[2]);
+      if (base < 2n) return undefined;
+
+      // An exact rational (integers included) gets its exact repeating-block expansion,
+      // regardless of base — this is the case that must never be merely approximate.
+      const rational = bigRationalAt(ops[0]);
+      if (rational !== undefined) {
+        const { digits, exponent } = realDigitsOfRational(rational[0], rational[1], base);
+        return realDigitsExpr(digits, exponent);
+      }
+
+      // Anything else (Pi, a Sqrt, a named constant, ...) needs a numeric approximation,
+      // `len` digits of it — only in base 10, which is what the guarded bignum precision
+      // below is computed in.
+      if (base !== 10n || len === undefined || len < 1) return undefined;
+      const savedPrecision = ce.precision;
+      try {
+        ce.precision = len + REAL_DIGITS_GUARD;
+        const big = ops[0].N().bignumRe;
+        if (big === undefined || big.isNaN() || !big.isFinite()) return undefined;
+        const magnitude = big.significand < 0n ? -big.significand : big.significand;
+        const digitsStr = magnitude.toString();
+        if (digitsStr === "0") return undefined;
+        const exponent = big.exponent + digitsStr.length;
+        const digits = Array.from(digitsStr.slice(0, len), (c) => BigInt(c));
+        return realDigitsExpr(digits, exponent);
+      } finally {
+        ce.precision = savedPrecision;
+      }
     },
   });
 }

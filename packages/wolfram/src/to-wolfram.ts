@@ -173,6 +173,16 @@ export const HEADS: Record<string, string> = {
   IntegerString: "IntegerString",
   DigitCount: "DigitCount",
   ContinuedFraction: "ContinuedFraction",
+  IntegerLength: "IntegerLength",
+  IntegerReverse: "IntegerReverse",
+  NumberExpand: "NumberExpand",
+  RealDigits: "RealDigits",
+  RomanNumeral: "RomanNumeral",
+  ContinuedFractionK: "ContinuedFractionK",
+  Convergents: "Convergents",
+  // Wolfram's own spelling is `QuadraticIrrationalQ`; ours follows compute-engine's `Is…`
+  // convention instead (see the backlog note on naming).
+  IsQuadraticIrrational: "QuadraticIrrationalQ",
   // special functions
   Gamma: "Gamma",
   GammaLn: "LogGamma",
