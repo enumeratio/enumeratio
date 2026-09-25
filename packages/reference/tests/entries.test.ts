@@ -51,6 +51,16 @@ declareAdeles(ce);
 // …and the braid groups.
 declareBraid(ce);
 
+/** Blank the values of rules keyed by one of `keys`, wherever they sit in the tree. */
+const masked = (node: unknown, keys: ReadonlySet<string>): unknown => {
+  if (!Array.isArray(node)) return node;
+  const key = typeof node[1] === "string" ? node[1].replace(/^'|'$/g, "") : undefined;
+  if ((node[0] === "Tuple" || node[0] === "KeyValuePair") && key !== undefined && keys.has(key)) {
+    return [node[0], node[1], "…"];
+  }
+  return node.map((child) => masked(child, keys));
+};
+
 // Re-evaluate every documented example and pin it to `expected`. A change in
 // compute-engine's behaviour (or a bad example) fails here instead of shipping
 // a wrong reference page.
@@ -59,13 +69,15 @@ for (const entry of entries) {
     const label = example.aspirational ? " (gap)" : "";
     test(`${entry.name} example ${index + 1}${label}`, () => {
       const input = example.expr as unknown as Parameters<ComputeEngine["box"]>[0];
-      const output = ce.box(input).evaluate().json;
+      const volatile = new Set(example.volatile ?? []);
+      const output = masked(ce.box(input).evaluate().json, volatile);
+      const expected = masked(example.expected, volatile);
       if (example.aspirational) {
         // A documented capability gap: CE should NOT yet match the borrowed
         // target. If this starts matching, promote it (drop `aspirational`).
-        expect(output).not.toEqual(example.expected);
+        expect(output).not.toEqual(expected);
       } else {
-        expect(output).toEqual(example.expected);
+        expect(output).toEqual(expected);
       }
     });
   }
