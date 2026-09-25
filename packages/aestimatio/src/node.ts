@@ -10,6 +10,32 @@ import { createPool } from "./pool.ts";
 /** MathJSON for `declareAestimatio`'s `Aborted` symbol (Wolfram's `$Aborted` — see declare.ts). */
 const ABORTED = "Aborted";
 
+/**
+ * The worker is asked to stop cooperatively at `timeMs` first (`./cooperative-evaluate.ts`,
+ * via `ce.withTimeLimit`/`checkpoint()`) — a call's own hard kill only fires this much
+ * later than its `"started"` message (see `WorkerResponse`'s own comment in `./worker.ts`),
+ * giving the cooperative deadline a chance to land first. When it does, the worker answers
+ * normally (reused; a session keeps its bindings); the hard kill only ever catches a tight,
+ * uncooperative loop the cooperative deadline couldn't reach.
+ *
+ * Small on purpose: it only has to cover the round trip AFTER the worker is already
+ * running — spawn and `@cortex-js/compute-engine` import time is excluded, since the
+ * hard-kill timer isn't armed until `"started"` arrives. See `SPAWN_TIMEOUT_MS` for the
+ * (separate, much larger) guard against a worker that never gets that far at all.
+ */
+const COOPERATIVE_GRACE_MS = 200;
+
+/**
+ * Guards a worker that never reports `"started"` at all -- crashed or hung during its own
+ * spin-up or `@cortex-js/compute-engine`/`setup` import, before it could even begin timing
+ * `timeMs`. Generous (measured cold start is ~150-200ms locally; a loaded CI runner can be
+ * much slower) because firing it early would replace a worker that was simply slow to
+ * start, not stuck. Treated the same as a hard kill once it does fire (`Aborted` /
+ * `reset: true`) -- from the caller's side, a worker that never came up and one that ran
+ * too long are equally "no real answer, and now a fresh worker is backing this".
+ */
+const SPAWN_TIMEOUT_MS = 10_000;
+
 function workerUrl(name: string): URL {
   // Loading `./<name>.ts` when this module is still its TypeScript source (tests run
   // against `../src/node.ts` before a build) and `./<name>.mjs` once packed — the built
@@ -48,13 +74,18 @@ export interface EvaluatorPoolOptions {
   readonly size?: number;
   /** Injectable for tests; defaults to spawning a real `worker_threads.Worker`. */
   readonly createWorker?: NodeWorkerFactory;
+  /** Overrides `SPAWN_TIMEOUT_MS` -- for tests that want to exercise the spawn-timeout
+   * path without a real multi-second wait. */
+  readonly spawnTimeoutMs?: number;
 }
 
 export interface EvaluateIsolatedOptions {
   /** Sized into the worker's `resourceLimits.maxOldGenerationSizeMb` — a real heap cap.
    * Workers are keyed by this (rounded) limit, since `resourceLimits` are fixed at spawn. */
   readonly memoryBytes?: number;
-  /** Hard-killed with `terminate()` after this many milliseconds. */
+  /** Tried cooperatively inside the worker first, then hard-killed with `terminate()`
+   * `COOPERATIVE_GRACE_MS` past this if that didn't stop it — see
+   * `./cooperative-evaluate.ts`. */
   readonly timeMs?: number;
   /** Module URL whose `configure(ce)` declares the libraries the host engine has. */
   readonly setup?: string;
@@ -88,6 +119,7 @@ function memoryKeyOf(memoryBytes: number | undefined): string {
 export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): EvaluatorPool {
   const maxSize = Math.max(1, options.size ?? availableParallelism() - 1);
   const createWorker = options.createWorker ?? defaultWorkerFactory;
+  const spawnTimeoutMs = options.spawnTimeoutMs ?? SPAWN_TIMEOUT_MS;
   const url = workerUrl("worker");
   let nextId = 0;
 
@@ -112,10 +144,18 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
         new Promise<unknown>((resolve) => {
           const id = nextId++;
           let settled = false;
-          let timer: ReturnType<typeof setTimeout> | undefined;
+          // Guards a worker that never reports "started" (see SPAWN_TIMEOUT_MS). Armed
+          // immediately, cleared once "started" arrives -- only ever set when `timeMs` is,
+          // since without a deadline there's nothing for either timer to race against.
+          let spawnTimer: ReturnType<typeof setTimeout> | undefined;
+          // The real deadline enforcement: armed only once "started" tells us the worker
+          // is actually running THIS call, so cold spawn/import time is never counted
+          // against it (COOPERATIVE_GRACE_MS's own comment).
+          let killTimer: ReturnType<typeof setTimeout> | undefined;
 
           const cleanup = (): void => {
-            if (timer !== undefined) clearTimeout(timer);
+            if (spawnTimer !== undefined) clearTimeout(spawnTimer);
+            if (killTimer !== undefined) clearTimeout(killTimer);
             worker.off("message", onMessage);
             worker.off("error", onError);
             worker.off("exit", onExit);
@@ -129,8 +169,27 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
             resolve(value);
           };
           const onMessage = (message: unknown): void => {
-            const m = message as { id: number; ok: boolean; json?: unknown };
+            const m = message as {
+              id: number;
+              kind?: "started" | "result";
+              ok?: boolean;
+              json?: unknown;
+            };
             if (m.id !== id) return; // a stale reply from a request this call gave up on
+            if (m.kind === "started") {
+              if (spawnTimer !== undefined) {
+                clearTimeout(spawnTimer);
+                spawnTimer = undefined;
+              }
+              if (timeMs !== undefined) {
+                killTimer = setTimeout(
+                  () => finish(ABORTED, "replace"),
+                  timeMs + COOPERATIVE_GRACE_MS,
+                );
+              }
+              return;
+            }
+            // No `kind` (a test fake answering directly) or `kind: "result"`: the answer.
             finish(m.ok ? m.json : ABORTED, "reused");
           };
           // Covers ERR_WORKER_OUT_OF_MEMORY and any other in-worker crash.
@@ -140,9 +199,11 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
           worker.on("message", onMessage);
           worker.once("error", onError);
           worker.once("exit", onExit);
-          if (timeMs !== undefined) timer = setTimeout(() => finish(ABORTED, "replace"), timeMs);
+          if (timeMs !== undefined) {
+            spawnTimer = setTimeout(() => finish(ABORTED, "replace"), spawnTimeoutMs);
+          }
           worker.ref();
-          worker.postMessage({ id, json, setup });
+          worker.postMessage({ id, json, setup, timeMs });
         }),
     );
   }
@@ -180,15 +241,29 @@ export function evaluateIsolated(
 // for a notebook evaluating off the caller's own thread. See design/aestimatio.md §5.
 // ---------------------------------------------------------------------------------------
 
+export type NodeSessionWorkerFactory = (
+  url: URL,
+  options: { workerData?: unknown },
+) => NodeWorkerLike;
+
 export interface SessionOptions {
   /** Module URL whose `configure(ce)` declares the libraries the session's engine has.
    * Applied once, when the session (or its post-reset replacement worker) starts. */
   readonly setup?: string;
+  /** Injectable for tests; defaults to spawning a real `worker_threads.Worker`. */
+  readonly createWorker?: NodeSessionWorkerFactory;
+  /** Overrides `SPAWN_TIMEOUT_MS` -- for tests that want to exercise the spawn-timeout
+   * path without a real multi-second wait. */
+  readonly spawnTimeoutMs?: number;
 }
 
 export interface EvaluateSessionOptions {
-  /** Hard-killed with `terminate()` after this many milliseconds — see `Session`'s own
-   * comment on what that does to the session's state. */
+  /** Tried cooperatively inside the worker first (`./cooperative-evaluate.ts`) — a call
+   * that stops that way keeps the session's bindings. The hard-kill timer (`terminate()`)
+   * only arms once the worker confirms it has started THIS call, `COOPERATIVE_GRACE_MS`
+   * past that; a worker that never starts at all is caught by the separate, longer
+   * `SPAWN_TIMEOUT_MS` guard instead. Either kind of kill has the same effect: see
+   * `Session`'s own comment on what it does to the session's state. */
   readonly timeMs?: number;
   /** Aborting rejects this call; unlike `timeMs`, it does not touch the worker — another
    * call, or the session itself, may still be using it. */
@@ -223,9 +298,11 @@ export interface Session {
  */
 export function openSession(options: SessionOptions = {}): Session {
   const { setup } = options;
+  const spawnTimeoutMs = options.spawnTimeoutMs ?? SPAWN_TIMEOUT_MS;
   const url = workerUrl("session-worker");
-  const spawn = (): NodeWorkerLike =>
-    new Worker(url, { workerData: { setup } }) as unknown as NodeWorkerLike;
+  const createWorker: NodeSessionWorkerFactory =
+    options.createWorker ?? ((u, o) => new Worker(u, o) as unknown as NodeWorkerLike);
+  const spawn = (): NodeWorkerLike => createWorker(url, { workerData: { setup } });
   let worker: NodeWorkerLike = spawn();
   let nextId = 0;
   let closed = false;
@@ -239,10 +316,12 @@ export function openSession(options: SessionOptions = {}): Session {
     const id = nextId++;
     return new Promise((resolve, reject) => {
       let settled = false;
-      let timer: ReturnType<typeof setTimeout> | undefined;
+      let spawnTimer: ReturnType<typeof setTimeout> | undefined;
+      let killTimer: ReturnType<typeof setTimeout> | undefined;
 
       const cleanup = (): void => {
-        if (timer !== undefined) clearTimeout(timer);
+        if (spawnTimer !== undefined) clearTimeout(spawnTimer);
+        if (killTimer !== undefined) clearTimeout(killTimer);
         worker.off("message", onMessage);
         signal?.removeEventListener("abort", onAbort);
       };
@@ -252,9 +331,30 @@ export function openSession(options: SessionOptions = {}): Session {
         cleanup();
         reject(new DOMException("The evaluate() call was aborted.", "AbortError"));
       };
+      const kill = (): void => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        void worker.terminate();
+        worker = spawn();
+        resolve({ value: ABORTED, reset: true });
+      };
       const onMessage = (message: unknown): void => {
-        const m = message as { id: number; ok: boolean; json?: unknown };
+        const m = message as {
+          id: number;
+          kind?: "started" | "result";
+          ok?: boolean;
+          json?: unknown;
+        };
         if (m.id !== id || settled) return;
+        if (m.kind === "started") {
+          if (spawnTimer !== undefined) {
+            clearTimeout(spawnTimer);
+            spawnTimer = undefined;
+          }
+          if (timeMs !== undefined) killTimer = setTimeout(kill, timeMs + COOPERATIVE_GRACE_MS);
+          return;
+        }
         settled = true;
         cleanup();
         resolve({ value: m.ok ? m.json : ABORTED, reset: false });
@@ -267,18 +367,10 @@ export function openSession(options: SessionOptions = {}): Session {
       }
       signal?.addEventListener("abort", onAbort);
 
-      if (timeMs !== undefined) {
-        timer = setTimeout(() => {
-          if (settled) return;
-          settled = true;
-          cleanup();
-          void worker.terminate();
-          worker = spawn();
-          resolve({ value: ABORTED, reset: true });
-        }, timeMs);
-      }
+      // Guards a worker that never reports "started" at all -- see SPAWN_TIMEOUT_MS.
+      if (timeMs !== undefined) spawnTimer = setTimeout(kill, spawnTimeoutMs);
 
-      worker.postMessage({ id, json });
+      worker.postMessage({ id, json, timeMs });
     });
   }
 

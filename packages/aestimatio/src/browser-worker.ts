@@ -3,16 +3,25 @@
 // `./index.ts` (see that file's own comment on `./node`/`./worker` for the same reason).
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 import { declareAestimatio } from "./declare.ts";
 
 interface WorkerRequest {
   readonly json: unknown;
   /** Module URL whose `configure(ce)` declares the libraries the host engine has. */
   readonly setup?: string;
+  /** The host's `timeMs`, tried cooperatively here first — see ./cooperative-evaluate.ts. */
+  readonly timeMs?: number;
 }
 
 interface WorkerResponse {
-  readonly ok: boolean;
+  /** `"started"`: engine construction and `setup` import are done and
+   * `evaluateCooperatively` is about to run — the host arms its hard-kill timer from
+   * here, not from when it sent the request, so a slow spawn/import never eats into the
+   * deadline it wasn't given a chance to see (see browser.ts's own comment). `"result"`:
+   * the actual answer. */
+  readonly kind: "started" | "result";
+  readonly ok?: boolean;
   readonly json?: unknown;
   readonly error?: string;
 }
@@ -29,7 +38,7 @@ interface WorkerScope {
 const scope = globalThis as unknown as WorkerScope;
 
 async function handle(request: WorkerRequest): Promise<void> {
-  const { json, setup } = request;
+  const { json, setup, timeMs } = request;
   const ce = new ComputeEngine();
   // The worker's engine must mean the same things the caller's does.
   declareAestimatio(ce);
@@ -39,12 +48,11 @@ async function handle(request: WorkerRequest): Promise<void> {
     };
     mod.configure(ce);
   }
-  try {
-    const result = ce.box(json as never).evaluate();
-    scope.postMessage({ ok: true, json: result.json });
-  } catch (e) {
-    scope.postMessage({ ok: false, error: e instanceof Error ? e.message : String(e) });
-  }
+  scope.postMessage({ kind: "started" } satisfies WorkerResponse);
+  scope.postMessage({
+    kind: "result",
+    ...evaluateCooperatively(ce, json, timeMs),
+  } satisfies WorkerResponse);
 }
 
 scope.addEventListener("message", (event) => {

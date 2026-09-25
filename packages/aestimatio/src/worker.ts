@@ -9,6 +9,7 @@
 
 import { parentPort } from "node:worker_threads";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 import { declareAestimatio } from "./declare.ts";
 
 interface WorkerRequest {
@@ -16,17 +17,27 @@ interface WorkerRequest {
   readonly json: unknown;
   /** Module URL whose `configure(ce)` declares the libraries the host engine has. */
   readonly setup?: string;
+  /** The host's `timeMs`, evaluated cooperatively here first — see
+   * ./cooperative-evaluate.ts. The host's own hard kill fires only if THIS deadline
+   * doesn't stop the call in time, and only starting once it sees this call's `"started"`
+   * (node.ts's own comment on why). */
+  readonly timeMs?: number;
 }
 
 interface WorkerResponse {
   readonly id: number;
-  readonly ok: boolean;
+  /** `"started"`: engine construction and `setup` import for THIS call are done and
+   * `evaluateCooperatively` is about to run — the host arms its hard-kill timer from
+   * here, not from when it sent the request, so a slow spawn/import never eats into the
+   * deadline it wasn't given a chance to see. `"result"`: the actual answer. */
+  readonly kind: "started" | "result";
+  readonly ok?: boolean;
   readonly json?: unknown;
   readonly error?: string;
 }
 
 async function handle(request: WorkerRequest): Promise<void> {
-  const { id, json, setup } = request;
+  const { id, json, setup, timeMs } = request;
   const ce = new ComputeEngine();
   // The worker's engine must mean the same things the caller's does.
   declareAestimatio(ce);
@@ -34,14 +45,12 @@ async function handle(request: WorkerRequest): Promise<void> {
     const mod = (await import(setup)) as { configure: (ce: ComputeEngine) => void };
     mod.configure(ce);
   }
-  const respond = (partial: Omit<WorkerResponse, "id">): void =>
-    parentPort?.postMessage({ id, ...partial });
-  try {
-    const result = ce.box(json as never).evaluate();
-    respond({ ok: true, json: result.json });
-  } catch (e) {
-    respond({ ok: false, error: e instanceof Error ? e.message : String(e) });
-  }
+  parentPort?.postMessage({ id, kind: "started" } satisfies WorkerResponse);
+  parentPort?.postMessage({
+    id,
+    kind: "result",
+    ...evaluateCooperatively(ce, json, timeMs),
+  } satisfies WorkerResponse);
 }
 
 parentPort?.on("message", (request: WorkerRequest) => {

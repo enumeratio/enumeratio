@@ -51,10 +51,26 @@ cleanly is reused; one killed for time or memory, or errored, is replaced. Node 
 workers by memory limit, since `resourceLimits` are fixed at spawn. `evaluateIsolated` and
 `evaluateInWorker` use a default pool.
 
+`timeMs` is tried cooperatively INSIDE the worker first (`ce.withTimeLimit` plus
+`@enumeratio/boxed`'s `withDeadline`/`checkpoint()` — the same machinery `TimeConstrained`
+uses), so a call built from compute-engine's own loops or a `checkpoint()`-ing kernel answers
+`Aborted` as an ordinary value well before anything is killed: the worker is reused, and a
+session keeps its bindings (`reset: false`). Only a tight, uncooperative loop the deadline
+never reaches still needs the host's own hard kill, fired a short grace period later. That
+grace timer only starts once the worker itself reports `"started"` (engine/`setup` ready,
+about to run this call) — a cold spawn plus `@cortex-js/compute-engine` import never counts
+against `timeMs`. A worker that never reports `"started"` at all is caught by a separate,
+much larger spawn-timeout guard instead, folded into the same `Aborted`/`reset: true`
+outcome as an ordinary hard kill.
+
 A **session** (`openSession`) keeps one worker and one engine across calls, so `:=` bindings
-survive from one evaluation to the next. A `timeMs` kill still terminates the worker; the
-bindings are gone and that call's result says `reset: true`. In the browser a session prefers
-a `SharedWorker` (tabs with the same `name` share it), falling back to a dedicated `Worker`.
+survive from one evaluation to the next. A hard-killed `timeMs` still terminates the worker;
+the bindings are gone and that call's result says `reset: true`. In the browser a session
+prefers a `SharedWorker` (tabs with the same `name` share it), falling back to a dedicated
+`Worker`. A `SharedWorker` call that needs the hard kill can't safely terminate a context
+other tabs may depend on, so instead THIS tab's handle to it is poisoned (dropped) and
+replaced with a private dedicated worker running the same `setup` — that call still reports
+`reset: true`, but the shared session and its other tabs are untouched.
 
 Lessons carried from the archived async-engines design: `AbortSignal` from day one, and
 `terminate()` is the only cancel that always works against a tight loop.
