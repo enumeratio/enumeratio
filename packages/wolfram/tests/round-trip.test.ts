@@ -43,6 +43,17 @@ const LOSSY = new Set([
   "LogGamma",
   // PositionalNumerals(b) lowers to the bare base b, a system value with no head to reverse.
   "PositionalNumerals",
+  // Mod[m, n, d] reads back as d + Mod(m - d, n) (see `applyHead` in from-wolfram.ts).
+  "Mod",
+  // The 1-arg PolyGamma is our Digamma, so that is what the reverse map recovers.
+  "PolyGamma",
+  // Lowered to ProductLog / HypergeometricPFQRegularized, one-way (see SPECIAL in to-wolfram.ts).
+  "LambertW",
+  "Hypergeometric3F2Regularized",
+  // MixedRadix shares its Wolfram spelling with MixedRadixNumerals, which wins the reverse map.
+  "MixedRadix",
+  // Tuple shares List with List, which wins the reverse map.
+  "Tuple",
 ]);
 
 /** The head of the innermost call that came back different — the one whose lowering lost. */
