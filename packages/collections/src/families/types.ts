@@ -9,6 +9,7 @@ import { integerAt } from "@enumeratio/boxed";
 //   "ints"   -> number[]     (words, parts, subsets, step sequences)
 //   "blocks" -> number[][]   (set partitions, matchings)
 //   "nested" -> NestedTree   (recursively nested trees; leaf = a number)
+//   "scalar" -> number       (a single integer; a term of a numeric sequence/set)
 
 /** A leaf is a number (0 for trees, a label for groupings). */
 export type NestedTree = number | NestedTree[];
@@ -19,13 +20,15 @@ export interface Boxed {
   readonly ops?: readonly Boxed[];
 }
 
-type Element = number[] | number[][] | NestedTree;
+type Element = number[] | number[][] | NestedTree | number;
 
-/** A pure combinatorial family: closed-form count + rank/unrank/valid kernels. */
+/** A pure combinatorial family: closed-form count + rank/unrank/valid kernels.
+ *  `paramCount: 0` is a value (`Primes`), otherwise an operator (`SmoothNumbers(k)`);
+ *  `p` is the (possibly empty) parameter tuple. */
 export interface FamilyKernel {
   readonly head: string;
-  readonly paramCount: 1 | 2;
-  readonly kind: "ints" | "blocks" | "nested";
+  readonly paramCount: 0 | 1 | 2;
+  readonly kind: "ints" | "blocks" | "nested" | "scalar";
   readonly count: (p: number[]) => number;
   readonly unrank: (p: number[], r: number) => Element;
   readonly rank: (element: unknown, p: number[]) => number;
