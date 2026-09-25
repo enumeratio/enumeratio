@@ -1,0 +1,11 @@
+echo-returns-its-argument:
+  epsil:
+    in: Echo(42)
+    out: "42"
+  tex:
+    in: \mathrm{Echo}(42)
+    out: "42"
+  fullform:
+    in: Echo[42]
+  wolfram:
+    in: Echo[42]

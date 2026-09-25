@@ -49,10 +49,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 159,
   },
   {
-    head: "With",
-    uses: 157,
-  },
-  {
     head: "RGBColor",
     uses: 151,
   },
@@ -83,10 +79,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Scaled",
     uses: 93,
-  },
-  {
-    head: "Module",
-    uses: 90,
   },
   {
     head: "Callout",
@@ -123,10 +115,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "DifferenceRootReduce",
     uses: 45,
-  },
-  {
-    head: "AbsoluteTiming",
-    uses: 43,
   },
   {
     head: "ParametricPlot3D",
@@ -201,20 +189,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 30,
   },
   {
-    head: "Reap",
-    uses: 30,
-  },
-  {
-    head: "Sow",
-    uses: 30,
-  },
-  {
     head: "RegionPlot",
     uses: 28,
-  },
-  {
-    head: "Echo",
-    uses: 27,
   },
   {
     head: "FractionBox",
@@ -273,16 +249,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 23,
   },
   {
-    head: "Do",
-    uses: 22,
-  },
-  {
     head: "EstimatedDistribution",
     uses: 22,
-  },
-  {
-    head: "Attributes",
-    uses: 21,
   },
   {
     head: "FindInstance",
@@ -302,10 +270,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Minimize",
-    uses: 21,
-  },
-  {
-    head: "Switch",
     uses: 21,
   },
   {
@@ -350,10 +314,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LightDarkSwitched",
-    uses: 19,
-  },
-  {
-    head: "NestWhile",
     uses: 19,
   },
   {
@@ -550,10 +510,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "PolygonalNumber",
-    uses: 12,
-  },
-  {
-    head: "SetAttributes",
     uses: 12,
   },
   {
@@ -766,10 +722,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "VectorQ",
-    uses: 9,
-  },
-  {
-    head: "While",
     uses: 9,
   },
   {
@@ -1013,10 +965,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 6,
   },
   {
-    head: "FixedPointList",
-    uses: 6,
-  },
-  {
     head: "HermiteH",
     uses: 6,
   },
@@ -1050,10 +998,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Names",
-    uses: 6,
-  },
-  {
-    head: "NestWhileList",
     uses: 6,
   },
   {
@@ -1107,10 +1051,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "VandermondeMatrix",
     uses: 6,
-  },
-  {
-    head: "AppendTo",
-    uses: 5,
   },
   {
     head: "AssociationThread",
@@ -1782,10 +1722,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "TensorTranspose",
-    uses: 3,
-  },
-  {
-    head: "Throw",
     uses: 3,
   },
   {

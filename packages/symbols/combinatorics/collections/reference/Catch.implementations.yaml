@@ -1,0 +1,20 @@
+no-throw-evaluates-normally:
+  epsil:
+    in: Catch(1 + 2)
+    out: "3"
+  tex:
+    in: \mathrm{Catch}(1+2)
+    out: "3"
+  fullform:
+    in: Catch[Plus[1, 2]]
+  wolfram:
+    in: Catch[Plus[1, 2]]
+tag-matched-catch-recovers-the-value:
+  epsil:
+    in: Catch(Throw(ok, done), done)
+    out: ok
+  tex:
+    in: \mathrm{Catch}(\mathrm{Throw}(\mathrm{ok}, \mathrm{done}), \mathrm{done})
+    out: \mathrm{ok}
+  fullform:
+    in: Catch[Throw[ok, done], done]
