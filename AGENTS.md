@@ -86,7 +86,11 @@ release. Add a tool name to select part of the graph. For example, run
   rolling issue, `quickcheck sampling regression`, labelled `nightly-fixup`. `nightly.yml`
   rescans the light oracle lanes against the committed sidecars nightly, one job per
   ecosystem: Python (mpmath, SymPy), Julia (Nemo, Combinatorics.jl) and Rust (num, primal,
-  statrs, adic). Weekly it rescans the Oscar, Mathlib, Sage (in Docker, with the adeles and
+  statrs, adic). Each also runs the oracle quickcheck (`reference/scripts/oracle-quickcheck.ts`):
+  samples resampled from the documented examples toward the edges of each domain, seeded by the
+  date so every job draws the same ones, checked against that ecosystem's lanes; what no
+  classified example explains goes to a rolling `oracle quickcheck findings: <ecosystem>` issue
+  for triage. Weekly it rescans the Oscar, Mathlib, Sage (in Docker, with the adeles and
   adic goldens) and Wolfram lanes the same way and follows every crosswalk link. Examples
   too many to render (grid points, edge cases) are still data: `hidden` examples in an
   entry file's `<stem>.examples.json`, tested and scanned like the rest. A lane fails when a row's verdict, classification or input
