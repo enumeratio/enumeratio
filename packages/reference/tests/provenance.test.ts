@@ -228,6 +228,7 @@ const NOVEL = [
   "Idele",
   "ProfiniteDecomposition",
   "ProfinitePlot",
+  "MatrixExp",
   "ClausenCl",
   "BesselJZero",
   "DigammaFunctionZero",

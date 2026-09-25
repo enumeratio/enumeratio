@@ -57,6 +57,7 @@ export { hypergeometricUStar } from "./hypergeometric-ustar.ts";
 export { evaluateLegendreP } from "./legendre.ts";
 export { lerchPhi, lerchPhiReal } from "./lerch.ts";
 export { declareModular } from "./modular.ts";
+export { declareMatrixExp, evaluateMatrixExp } from "./matrix-exp.ts";
 export { logGamma, logGammaReal } from "./loggamma.ts";
 export { multiZetaValue } from "./multizeta.ts";
 export { digamma, polygamma, polygammaReal } from "./polygamma.ts";
