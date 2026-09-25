@@ -27,13 +27,15 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Not pinned exactly — it moves as the catalogue grows — but every head lands somewhere,
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
+  // Trails the actual count: heads move to extension (or override) as we widen them.
   // Interval/CenteredInterval/Around now genuinely diverge bare compute-engine's Sin, Cos,
-  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), and
+  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2);
   // All/Any/Count/Flatten now genuinely diverge it too (level arguments, infinite depth,
-  // dimension permutation, any-head nesting — #113 §7), moving them all from
-  // "compute-engine" to "override" — the threshold tracks that, well below the current
-  // count so it still catches a real regression.
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(20);
+  // dimension permutation, any-head nesting — #113 §7); and #113's elementary backlog
+  // (elementary-remaining.ts) moved Cos/Tan/Cot/Sec/Csc/Arccos/Arctan/Arcoth/Arcsch/Arsech/
+  // Log2/Log10/Lb/TrigToExp there as well. The threshold tracks the combined drop, well
+  // below the current count so it still catches a real regression.
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(10);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -150,6 +152,17 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `BellNumber`'s own Touchard-polynomial form), `IntegerString`'s bigint arithmetic, and
  * `FromDigits`'s symbolic/negative base and Roman-numeral reading -- all in number-theory,
  * numerals or collections, additive in the same way: native for anything not ours.
+ * Issue #113's elementary backlog (`elementary-remaining.ts`) adds `Cos`/`Tan`/`Cot`/`Sec`/
+ * `Csc`/`Arccos`/`Arctan`/`Arcoth`/`Arcsch` for the same additive shapes `Sin`/`Sinh`/
+ * `Cosh`/`Tanh`/`Arccot`/`Arccsc`/`Arcsec` are already here for (parity, an imaginary
+ * argument, an inverse composition, a special value), `Arsech` for its value at 1 and past
+ * its real branch point, and `TrigToExp` for the logarithmic form of `Arcsin`/`Arctan`/
+ * `Arcoth`/`Arcsch` (it already had one for `Sin`/`Cos`/`Tan`/`Sinh`/`Cosh`/`Tanh`, none of
+ * which needed adding here since compute-engine's own `TrigToExp` already handled them).
+ * `Log2`/`Log10`/`Lb` (which canonicalize to `Log` at box time) are here for folding an
+ * exact rational power of the base below 1, in either direction (`Log2(1/8) = -3`) --
+ * `Log` itself picks up the same fold for an explicit non-default base -- and for
+ * `ComplexInfinity` going to `+Infinity`, the same convention `Ln` already had.
  * The #113 list-stats sweep (`list-stats.ts`) adds `Tabulate` at three or more dimensions,
  * or a literal 0 in any dimension (materialized directly rather than left truncated or
  * unevaluated), and `Unique`'s second-argument sameness test — both additive, native for
@@ -172,11 +185,15 @@ const OVERRIDDEN = [
   "Add",
   "All",
   "Any",
+  "Arccos",
   "Arccot",
   "Arccsc",
+  "Arcoth",
+  "Arcsch",
   "Arcsec",
   "Arcsin",
   "Arctan",
+  "Arsech",
   "At",
   "BellNumber",
   "BernoulliB",
@@ -192,6 +209,7 @@ const OVERRIDDEN = [
   "ContinuedFraction",
   "Cos",
   "Cosh",
+  "Cot",
   "Count",
   "Csc",
   "Digamma",
@@ -232,9 +250,12 @@ const OVERRIDDEN = [
   "LCM",
   "LambertW",
   "Last",
+  "Lb",
   "LegendreSymbol",
   "Length",
   "Ln",
+  "Log10",
+  "Log2",
   "LucasL",
   "MatrixPower",
   "MatrixRank",
@@ -285,6 +306,7 @@ const OVERRIDDEN = [
   "Tan",
   "Tanh",
   "Totient",
+  "TrigToExp",
   "Union",
   "Unique",
   "Zeta",
