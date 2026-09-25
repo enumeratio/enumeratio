@@ -53,6 +53,12 @@ export const sources: readonly string[] = [
   "packages/reference/entries/Interval.yaml",
   "packages/symbols/analysis/analytic/reference/CenteredInterval.yaml",
   "packages/symbols/analysis/analytic/reference/Around.yaml",
+  "packages/symbols/analysis/analytic/reference/LaplaceTransform.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseLaplaceTransform.yaml",
+  "packages/symbols/analysis/analytic/reference/FourierTransform.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseFourierTransform.yaml",
+  "packages/symbols/analysis/analytic/reference/MeijerG.yaml",
+  "packages/symbols/analysis/analytic/reference/MeijerGReduce.yaml",
 ];
 
 export const analyticSpecial: readonly ReferenceEntry[] = [
@@ -4274,5 +4280,388 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["Interval", "CenteredInterval"],
+  },
+  {
+    name: "LaplaceTransform",
+    domain: "Transforms",
+    signature: "LaplaceTransform(f, t, s)",
+    summary:
+      "The one-sided Laplace transform $F(s) = \\int_0^\\infty f(t) e^{-st}\\,dt$, as a rule table over the standard pairs (powers, exponentials, trig/hyperbolic, the unit step, the impulse) plus linearity and the first shifting theorem.",
+    signatures: [
+      {
+        call: "LaplaceTransform(f, t, s)",
+        description: "$F(s) = \\int_0^\\infty f(t) e^{-st}\\,dt$, for `f` a function of `t`.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Covered: $t^n$ ($n$ a concrete real $> -1$), $e^{at}$, $\\sin(at)$, $\\cos(at)$, $\\sinh(at)$, $\\cosh(at)$, `UnitStep(t - a)` and `DiracDelta(t - a)` (sign of `a` determined via `isPositive`/`isNegative`, declined if unknown), sums (linearity), a constant factor, and the first shifting theorem — an `Exp(a t)` factor multiplying an otherwise-transformable piece shifts $s \\to s - a$ in that piece's transform, covering $t^n e^{at}$, $e^{at}\\sin(bt)$, etc.",
+      "Declined: an opaque function `f(t)` (Wolfram itself only expands the derivative/second-shifting theorems symbolically, which would mean synthesizing `f(0)` or a self-referential `LaplaceTransform[f[t],t,s]` for an arbitrary `f`); a product of two independently-transformable pieces outside the shifting-theorem shape (e.g. $t^2 \\sin(t)$); `UnitStep`/`DiracDelta` at $a = 0$ or an undetermined-sign `a`; any exponent not linear in `t`.",
+    ],
+    examples: [
+      {
+        id: "t-cubed",
+        expr: ["LaplaceTransform", ["Power", "t", 3], "t", "s"],
+        expected: ["Divide", 6, ["Power", "s", 4]],
+        caption: "$\\mathcal{L}\\{t^3\\} = 6/s^4$",
+      },
+      {
+        id: "exp-at",
+        expr: ["LaplaceTransform", ["Power", "ExponentialE", ["Multiply", 2, "t"]], "t", "s"],
+        expected: ["Divide", 1, ["Add", "s", -2]],
+        caption: "$\\mathcal{L}\\{e^{2t}\\} = 1/(s-2)$",
+      },
+      {
+        id: "sin-at",
+        expr: ["LaplaceTransform", ["Sin", ["Multiply", 3, "t"]], "t", "s"],
+        expected: ["Divide", 3, ["Add", ["Power", "s", 2], 9]],
+        caption: "$\\mathcal{L}\\{\\sin(3t)\\} = 3/(s^2+9)$",
+      },
+      {
+        id: "t-cubed-exp-shift",
+        expr: [
+          "LaplaceTransform",
+          ["Multiply", ["Power", "ExponentialE", ["Multiply", 2, "t"]], ["Power", "t", 3]],
+          "t",
+          "s",
+        ],
+        expected: ["Divide", 6, ["Power", ["Add", "s", -2], 4]],
+        category: "Scope",
+        caption: "first shifting theorem — $\\mathcal{L}\\{t^3 e^{2t}\\} = 6/(s-2)^4$",
+      },
+      {
+        id: "exp-sin-shift",
+        expr: [
+          "LaplaceTransform",
+          [
+            "Multiply",
+            ["Power", "ExponentialE", ["Multiply", 2, "t"]],
+            ["Sin", ["Multiply", 3, "t"]],
+          ],
+          "t",
+          "s",
+        ],
+        expected: ["Divide", 3, ["Add", ["Power", ["Add", "s", -2], 2], 9]],
+        category: "Scope",
+        caption: "$\\mathcal{L}\\{e^{2t}\\sin(3t)\\} = 3/((s-2)^2+9)$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/symbols/analysis/analytic/src/transforms.ts",
+      },
+    ],
+    seeAlso: ["InverseLaplaceTransform", "FourierTransform"],
+  },
+  {
+    name: "InverseLaplaceTransform",
+    domain: "Transforms",
+    signature: "InverseLaplaceTransform(F, s, t)",
+    summary:
+      "The inverse Laplace transform, as a small dictionary of common images ($s^{-n}$, $1/(s-a)$, $s/(s^2 \\pm a^2)$, $a/(s^2 \\pm a^2)$) plus linearity — not a general residue calculus.",
+    signatures: [
+      {
+        call: "InverseLaplaceTransform(F, s, t)",
+        description:
+          "$f(t)$ such that $\\mathcal{L}\\{f\\}(s) = F(s)$, read off a fixed table of images.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Covered: $s^{-n}$ ($n$ a positive integer) $\\to t^{n-1}/(n-1)!$; $1/(s-a) \\to e^{at}$; $s/(s^2+a^2) \\to \\cos(at)$; $a/(s^2+a^2) \\to \\sin(at)$; $s/(s^2-a^2) \\to \\cosh(at)$; $a/(s^2-a^2) \\to \\sinh(at)$; sums and a constant factor.",
+      "Declined: anything outside that table — a general rational function of `s` (partial-fraction decomposition is not attempted), a non-positive or non-integer power of `s`, an image that doesn't depend on `s` at all.",
+    ],
+    examples: [
+      {
+        id: "one-over-s-squared",
+        expr: ["InverseLaplaceTransform", ["Power", "s", -2], "s", "t"],
+        expected: "t",
+        caption: "$\\mathcal{L}^{-1}\\{1/s^2\\} = t$",
+      },
+      {
+        id: "one-over-s-minus-a",
+        expr: ["InverseLaplaceTransform", ["Power", ["Add", "s", ["Negate", "a"]], -1], "s", "t"],
+        expected: ["Power", "ExponentialE", ["Multiply", "a", "t"]],
+        caption: "$\\mathcal{L}^{-1}\\{1/(s-a)\\} = e^{at}$",
+      },
+      {
+        id: "s-over-s-squared-plus-a-squared",
+        expr: [
+          "InverseLaplaceTransform",
+          ["Divide", "s", ["Add", ["Power", "s", 2], ["Power", "a", 2]]],
+          "s",
+          "t",
+        ],
+        expected: ["Cos", ["Multiply", "a", "t"]],
+        caption: "$\\mathcal{L}^{-1}\\{s/(s^2+a^2)\\} = \\cos(at)$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/symbols/analysis/analytic/src/transforms.ts",
+      },
+    ],
+    seeAlso: ["LaplaceTransform", "InverseFourierTransform"],
+  },
+  {
+    name: "FourierTransform",
+    domain: "Transforms",
+    signature: "FourierTransform(f, t, w)",
+    summary:
+      "The Fourier transform under Wolfram's default convention ($\\mathrm{FourierParameters} \\to \\{0, 1\\}$) — $F(w) = \\frac{1}{\\sqrt{2\\pi}}\\int_{-\\infty}^\\infty f(t) e^{iwt}\\,dt$ — as a rule table over the standard pairs plus linearity and the modulation (shift) theorem.",
+    signatures: [
+      {
+        call: "FourierTransform(f, t, w)",
+        description:
+          "$F(w) = \\frac{1}{\\sqrt{2\\pi}}\\int_{-\\infty}^\\infty f(t) e^{iwt}\\,dt$, Wolfram's default `FourierParameters -> {0, 1}`.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Covered: `DiracDelta(t - a)`, `UnitStep(t)`, $\\sin(at)$, $\\cos(at)$, the Gaussian $e^{-at^2}$ ($\\mathrm{Re}(a) > 0$, checked via `isPositive`), $e^{-a|t|}$ ($a > 0$), a constant, sums (linearity), a constant factor, and the modulation theorem — an $e^{iat}$ factor shifts $w \\to w + a$ in the rest's transform, covering $e^{iat}$ alone ($\\to \\sqrt{2\\pi}\\,\\delta(w+a)$) and further products with the table above.",
+      "Declined: an opaque function; `UnitStep(t - a)` for $a \\neq 0$ (only the unshifted `UnitStep(t)` is covered — `DiracDelta(t - a)` for any `a` is covered, since its transform is just a phase); a product of two independently-transformable pieces outside the modulation shape; any `FourierParameters` other than the default (a 4th argument is declined outright).",
+    ],
+    examples: [
+      {
+        id: "dirac-delta-at-origin",
+        expr: ["FourierTransform", ["DiracDelta", "t"], "t", "w"],
+        expected: ["Sqrt", ["Divide", 1, ["Multiply", 2, "Pi"]]],
+        caption: "$\\mathcal{F}\\{\\delta(t)\\} = 1/\\sqrt{2\\pi}$",
+      },
+      {
+        id: "gaussian",
+        expr: [
+          "FourierTransform",
+          ["Power", "ExponentialE", ["Negate", ["Power", "t", 2]]],
+          "t",
+          "w",
+        ],
+        expected: [
+          "Multiply",
+          ["Divide", ["Sqrt", 2], 2],
+          ["Power", "ExponentialE", ["Multiply", ["Rational", -1, 4], ["Power", "w", 2]]],
+        ],
+        caption:
+          "$\\mathcal{F}\\{e^{-t^2}\\} = \\frac{1}{\\sqrt{2}}e^{-w^2/4}$ ($a = 1 > 0$, checked via `isPositive`)",
+      },
+      {
+        id: "cosine",
+        expr: ["FourierTransform", ["Cos", ["Multiply", "a", "t"]], "t", "w"],
+        expected: [
+          "Multiply",
+          ["Divide", ["Sqrt", 2], 2],
+          ["Add", ["DiracDelta", ["Add", "a", "w"]], ["DiracDelta", ["Add", ["Negate", "a"], "w"]]],
+          ["Sqrt", "Pi"],
+        ],
+        caption: "$\\mathcal{F}\\{\\cos(at)\\} = \\sqrt{\\pi/2}\\,(\\delta(w-a)+\\delta(w+a))$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/symbols/analysis/analytic/src/transforms.ts",
+      },
+    ],
+    seeAlso: ["InverseFourierTransform", "LaplaceTransform"],
+  },
+  {
+    name: "InverseFourierTransform",
+    domain: "Transforms",
+    signature: "InverseFourierTransform(F, w, t)",
+    summary:
+      "The inverse Fourier transform under Wolfram's default convention — the two closed forms it documents unconditionally ($\\delta(w) \\to 1/\\sqrt{2\\pi}$ and a constant $\\to$ a scaled constant), nothing more.",
+    signatures: [
+      {
+        call: "InverseFourierTransform(F, w, t)",
+        description: "$f(t)$ such that $\\mathcal{F}\\{f\\}(w) = F(w)$, for the two forms below.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Covered: `DiracDelta(w)` $\\to 1/\\sqrt{2\\pi}$, and a `w`-free constant $c \\to c\\sqrt{2\\pi}$ (the inverse of `FourierTransform`'s own constant rule).",
+      "Declined: everything else — no rational-function or trig table the way `InverseLaplaceTransform` has one, since the corresponding `FourierTransform` images are themselves distributional (a sum of `DiracDelta`s) rather than an algebraic shape to invert termwise here.",
+    ],
+    examples: [
+      {
+        id: "dirac-delta",
+        expr: ["InverseFourierTransform", ["DiracDelta", "w"], "w", "t"],
+        expected: ["Sqrt", ["Divide", 1, ["Multiply", 2, "Pi"]]],
+        caption: "$\\mathcal{F}^{-1}\\{\\delta(w)\\} = 1/\\sqrt{2\\pi}$",
+      },
+      {
+        id: "constant",
+        expr: ["InverseFourierTransform", 1, "w", "t"],
+        expected: ["Sqrt", ["Multiply", 2, "Pi"]],
+        caption: "$\\mathcal{F}^{-1}\\{1\\} = \\sqrt{2\\pi}$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/symbols/analysis/analytic/src/transforms.ts",
+      },
+    ],
+    seeAlso: ["FourierTransform", "InverseLaplaceTransform"],
+  },
+  {
+    name: "MeijerG",
+    domain: "Special functions",
+    signature: "MeijerG({{a1, ..}, {a2, ..}}, {{b1, ..}, {b2, ..}}, z)",
+    summary:
+      "The Meijer G-function $G^{m,n}_{p,q}$, evaluated numerically via its reduction to a finite sum of ordinary ${}_pF_q$ series (DLMF 16.17.2), reusing this package's `pfqSeries`.",
+    signatures: [
+      {
+        call: "MeijerG({{a1, .., an}, {a(n+1), .., ap}}, {{b1, .., bm}, {b(m+1), .., bq}}, z)",
+        description:
+          "$G^{m,n}_{p,q}\\left(z \\,\\middle|\\, \\begin{matrix}a_1,\\ldots,a_p\\\\b_1,\\ldots,b_q\\end{matrix}\\right)$, numerically.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Numeric only (like this package's `Hypergeometric0F1` and friends — always declines for a symbolic `z` or parameter, never returns a symbolic closed form). Requires $m \\ge 1$ and $p \\le q$, so every term's ${}_pF_q$ has upper-count $\\le$ lower-count $+ 1$, the shape `pfqSeries` already handles (entire, or convergent only inside the unit disc).",
+      "Declined: $p > q$; $m = 0$; two of the $b_h$ ($h \\le m$) congruent mod 1 (a non-simple pole — the log-case formula this does not implement); a Γ-argument in the prefactor landing on a non-positive integer (a further degeneracy); non-numeric operands.",
+      "Verified against wolframscript's own `MeijerG` at several parameter sets, including the plain-exponential case ($m{=}1,n{=}0,p{=}0,q{=}1$) and cases with both $a$- and $b$-parameters.",
+    ],
+    examples: [
+      {
+        id: "exponential-case",
+        expr: ["MeijerG", ["List", ["List"], ["List"]], ["List", ["List", 0], ["List"]], 0.6],
+        expected: 0.5488116360940265,
+        caption: "$G^{1,0}_{0,1}(z \\mid {}; 0) = e^{-z}$",
+      },
+      {
+        id: "mixed-a-and-b",
+        expr: [
+          "MeijerG",
+          ["List", ["List", 0.7], ["List"]],
+          ["List", ["List", 0.3], ["List"]],
+          0.4,
+        ],
+        expected: 0.9244681281245863,
+        category: "Scope",
+        caption: "a case with both an $a$- and a $b$-parameter",
+      },
+      {
+        id: "two-b-terms",
+        expr: [
+          "MeijerG",
+          ["List", ["List"], ["List"]],
+          ["List", ["List", 0, ["Rational", 1, 2]], ["List"]],
+          1.3,
+        ],
+        expected: 0.18123044018827628,
+        category: "Scope",
+        caption: "$m = 2$, two poles summed",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/symbols/analysis/analytic/src/meijer-g.ts",
+      },
+    ],
+    seeAlso: ["MeijerGReduce", "HypergeometricPFQ"],
+  },
+  {
+    name: "MeijerGReduce",
+    domain: "Special functions",
+    signature: "MeijerGReduce(expr, x)",
+    summary:
+      "Rewrites a handful of elementary and special functions into MeijerG form, using identities that hold for the whole operand (not just a linear argument), so each is unconditional.",
+    signatures: [
+      {
+        call: "MeijerGReduce(expr, x)",
+        description:
+          "`expr` (a function of `x`) rewritten as a `MeijerG` call, for the heads below.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Covered: $e^g \\to G^{1,0}_{0,1}(-g \\mid {}; 0)$, $\\sin(g) \\to \\sqrt{\\pi}\\,G^{1,0}_{0,2}(g^2/4 \\mid {}; 1/2, 0)$, $\\cos(g) \\to \\sqrt{\\pi}\\,G^{1,0}_{0,2}(g^2/4 \\mid {}; 0, 1/2)$, $\\ln(1+g) \\to G^{1,2}_{2,2}(g \\mid 1,1; 1,0)$, and $J_n(g) \\to G^{1,0}_{0,2}(g^2/4 \\mid {}; n/2, -n/2)$ — for any `g` (and, for the Bessel case, any `n`), since each identity holds for the operand as a whole rather than requiring a linear argument.",
+      "Emits the plain 4-argument `MeijerG` form. Wolfram's own `MeijerGReduce` often prefers a generalized 5-argument `MeijerG[…, z, r]` with $r \\neq 1$ to keep the argument free of an explicit square root; both are correct, and what's verified here is that ours round-trips numerically through this package's own `MeijerG` evaluator, not that it matches Wolfram's textual form.",
+      "A shifted or scaled argument (`sin(2x)`, `e^{x+1}`, `log(1+x^2)`, `BesselJ(n, 3x)`, …) is still covered — each identity holds for the operand `g` as a whole, not just a linear one. Declined: a bare `log(x)` (no `1 + x` shift — none of the identities above apply), any other head, and an `expr` that doesn't depend on `x`.",
+    ],
+    examples: [
+      {
+        id: "exp",
+        expr: ["MeijerGReduce", ["Power", "ExponentialE", "x"], "x"],
+        expected: [
+          "MeijerG",
+          ["List", ["List"], ["List"]],
+          ["List", ["List", 0], ["List"]],
+          ["Negate", "x"],
+        ],
+        caption: "$e^{x} = G^{1,0}_{0,1}(-x \\mid {}; 0)$",
+      },
+      {
+        id: "sin",
+        expr: ["MeijerGReduce", ["Sin", "x"], "x"],
+        expected: [
+          "Multiply",
+          [
+            "MeijerG",
+            ["List", ["List"], ["List"]],
+            ["List", ["List", ["Rational", 1, 2]], ["List", 0]],
+            ["Multiply", ["Rational", 1, 4], ["Power", "x", 2]],
+          ],
+          ["Sqrt", "Pi"],
+        ],
+        caption: "$\\sin(x) = \\sqrt{\\pi}\\,G^{1,0}_{0,2}(x^2/4 \\mid {}; 1/2, 0)$",
+      },
+      {
+        id: "log1p",
+        expr: ["MeijerGReduce", ["Ln", ["Add", 1, "x"]], "x"],
+        expected: [
+          "MeijerG",
+          ["List", ["List", 1, 1], ["List"]],
+          ["List", ["List", 1], ["List", 0]],
+          "x",
+        ],
+        caption: "$\\ln(1+x) = G^{1,2}_{2,2}(x \\mid 1,1; 1,0)$",
+      },
+      {
+        id: "bessel-j",
+        expr: ["MeijerGReduce", ["BesselJ", "n", "x"], "x"],
+        expected: [
+          "MeijerG",
+          ["List", ["List"], ["List"]],
+          [
+            "List",
+            ["List", ["Multiply", ["Rational", 1, 2], "n"]],
+            ["List", ["Multiply", ["Rational", -1, 2], "n"]],
+          ],
+          ["Multiply", ["Rational", 1, 4], ["Power", "x", 2]],
+        ],
+        category: "Scope",
+        caption: "$J_n(x) = G^{1,0}_{0,2}(x^2/4 \\mid {}; n/2, -n/2)$, symbolic order $n$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/symbols/analysis/analytic/src/meijer-g-reduce.ts",
+      },
+    ],
+    seeAlso: ["MeijerG"],
   },
 ];

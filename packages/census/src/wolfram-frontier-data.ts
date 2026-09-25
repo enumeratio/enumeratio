@@ -149,10 +149,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 24,
   },
   {
-    head: "LaplaceTransform",
-    uses: 23,
-  },
-  {
     head: "PiecewiseExpand",
     uses: 23,
   },
@@ -178,10 +174,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Activate",
-    uses: 20,
-  },
-  {
-    head: "FourierTransform",
     uses: 20,
   },
   {
@@ -225,10 +217,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 17,
   },
   {
-    head: "MeijerGReduce",
-    uses: 17,
-  },
-  {
     head: "PermutationGroup",
     uses: 17,
   },
@@ -242,10 +230,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "FindInstance",
-    uses: 16,
-  },
-  {
-    head: "MeijerG",
     uses: 16,
   },
   {

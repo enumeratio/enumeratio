@@ -99,3 +99,6 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./wgsl-complex.ts"
 export { declareConstantRounding } from "./constant-rounding.ts";
 export { declareTrigNormalisation } from "./trig-normalisation.ts";
 export { declareElementarySpecialValues } from "./elementary-special-values.ts";
+export { declareTransforms, matchLaplace, matchFourier } from "./transforms.ts";
+export { declareMeijerG } from "./meijer-g.ts";
+export { declareMeijerGReduce } from "./meijer-g-reduce.ts";

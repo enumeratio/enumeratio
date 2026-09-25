@@ -1,0 +1,33 @@
+name: FourierTransform
+domain: Transforms
+signature: FourierTransform(f, t, w)
+summary: The Fourier transform under Wolfram's default convention ($\mathrm{FourierParameters} \to \{0, 1\}$) — $F(w) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(t) e^{iwt}\,dt$ — as a rule table over the standard pairs plus linearity and the modulation (shift) theorem.
+signatures:
+  - call: FourierTransform(f, t, w)
+    description: $F(w) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(t) e^{iwt}\,dt$, Wolfram's default `FourierParameters -> {0, 1}`.
+    library: '@enumeratio/analytic'
+details:
+  - "Covered: `DiracDelta(t - a)`, `UnitStep(t)`, $\\sin(at)$, $\\cos(at)$, the Gaussian $e^{-at^2}$ ($\\mathrm{Re}(a) > 0$, checked via `isPositive`), $e^{-a|t|}$ ($a > 0$), a constant, sums (linearity), a constant factor, and the modulation theorem — an $e^{iat}$ factor shifts $w \\to w + a$ in the rest's transform, covering $e^{iat}$ alone ($\\to \\sqrt{2\\pi}\\,\\delta(w+a)$) and further products with the table above."
+  - 'Declined: an opaque function; `UnitStep(t - a)` for $a \neq 0$ (only the unshifted `UnitStep(t)` is covered — `DiracDelta(t - a)` for any `a` is covered, since its transform is just a phase); a product of two independently-transformable pieces outside the modulation shape; any `FourierParameters` other than the default (a 4th argument is declined outright).'
+examples:
+  - id: dirac-delta-at-origin
+    expr: [FourierTransform, [DiracDelta, t], t, w]
+    expected: [Sqrt, [Divide, 1, [Multiply, 2, Pi]]]
+    caption: $\mathcal{F}\{\delta(t)\} = 1/\sqrt{2\pi}$
+  - id: gaussian
+    expr: [FourierTransform, [Power, ExponentialE, [Negate, [Power, t, 2]]], t, w]
+    expected: [Multiply, [Divide, [Sqrt, 2], 2], [Power, ExponentialE, [Multiply, [Rational, -1, 4], [Power, w, 2]]]]
+    caption: $\mathcal{F}\{e^{-t^2}\} = \frac{1}{\sqrt{2}}e^{-w^2/4}$ ($a = 1 > 0$, checked via `isPositive`)
+  - id: cosine
+    expr: [FourierTransform, [Cos, [Multiply, a, t]], t, w]
+    expected: [Multiply, [Divide, [Sqrt, 2], 2], [Add, [DiracDelta, [Add, a, w]], [DiracDelta, [Add, [Negate, a], w]]], [Sqrt, Pi]]
+    caption: $\mathcal{F}\{\cos(at)\} = \sqrt{\pi/2}\,(\delta(w-a)+\delta(w+a))$
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/transforms.ts
+seeAlso:
+  - InverseFourierTransform
+  - LaplaceTransform
