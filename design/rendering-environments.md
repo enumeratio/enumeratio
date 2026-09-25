@@ -273,7 +273,8 @@ be useful:
   Manipulate parameter (`VisualSymbol.control` says what kind it is); `pinValue` /
   `sampleValues` / `caption` are the per-kind readings; the rewrite pins all but one,
   samples that one into a `Grid` (a `Row` for an `Animator`), keeps a `Dynamic` for the
-  renderer to evaluate, rasterizes a GPU plot, stacks a `Row` in a narrow column. The
+  renderer to evaluate (a host that evaluates itself folds each one with
+  `evaluateReadouts` -- the CLI, the environment previews), rasterizes a GPU plot, stacks a `Row` in a narrow column. The
   captions are `Labeled(…, "k = 2 (0 ≤ k ≤ 5)", Bottom)` -- a third argument the
   `Labeled` symbol now honours. Goldens: `tests/reduce.golden.json`, every corpus line
   under every preset.

@@ -497,7 +497,9 @@ function entryOf(node: Json): string {
         ? notatio(value)
         : `${notatio(value)} -> ${text}`;
   }
-  return strOf(node) ?? notatio(node);
+  // A string binds as the string it is, and shows as its words.
+  const text = strOf(node);
+  return text === undefined ? notatio(node) : `${notatio(node)} -> ${text}`;
 }
 
 /** A list of entries as the `|`-separated `values` attribute. */

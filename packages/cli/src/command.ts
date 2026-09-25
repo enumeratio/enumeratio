@@ -13,7 +13,7 @@ import {
   environmentNamed,
   PIPE,
 } from "../../notatio/src/environment.ts";
-import { reduce } from "../../notatio/src/reduce.ts";
+import { evaluateReadouts, reduce } from "../../notatio/src/reduce.ts";
 import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.ts";
 import { formatsTable } from "./core.ts";
 import {
@@ -121,7 +121,10 @@ export function evaluateCommand(req: EvalRequest, defaults: SessionDefaults = {}
     }
     if (req.environment !== undefined && !can.drive(req.environment) && req.evaluate !== false) {
       // Only a result with something to reduce is re-evaluated; the rest stays as evaluated.
-      const reduced = reduce(expr.json as never, req.environment);
+      const reduced = evaluateReadouts(
+        reduce(expr.json as never, req.environment),
+        (e) => session.ce.box(e as never).evaluate().json as never,
+      );
       if (JSON.stringify(reduced) !== JSON.stringify(expr.json)) {
         expr = session.ce.box(reduced as never).evaluate();
       }

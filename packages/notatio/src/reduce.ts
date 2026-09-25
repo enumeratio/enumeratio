@@ -295,6 +295,19 @@ function substitute(node: Json, values: ReadonlyMap<string, Json>, unwrap = fals
 }
 
 /**
+ * Every `Dynamic(e)` as `e` evaluated -- a readout with no engine behind it at view time
+ * is the value it had when the page was made. `evaluate` is the host's engine; reduce
+ * stays pure, so a host that evaluates applies this after it (a static reading only).
+ */
+export function evaluateReadouts(node: Json, evaluate: (expr: Json) => Json): Json {
+  const head = headOf(node);
+  if (head === undefined || HELD_HEADS.has(head)) return node;
+  const ops = opsOf(node);
+  if (head === "Dynamic") return ops[0] === undefined ? node : evaluate(ops[0]);
+  return [head, ...ops.map((op) => evaluateReadouts(op, evaluate))] as unknown as Json;
+}
+
+/**
  * The expression with its controls taken out and their variables set to `values` -- what
  * a host that drives the controls itself (a TUI) shows for one state of them. A
  * variable with no value keeps its symbol.

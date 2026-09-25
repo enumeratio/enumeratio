@@ -632,12 +632,12 @@
           "tag": "notatio-toggler",
           "attributes": {
             "name": "size",
-            "values": "a few|several|many"
+            "values": "\"a few\" -> a few|\"several\" -> several|\"many\" -> many"
           }
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"a few|several|many\"></notatio-toggler></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> several|&quot;many&quot; -> many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "PopupMenu(n, [4, 5, 6, 8])": {
     "rendering": {
