@@ -29,6 +29,16 @@ export const sources: readonly string[] = [
   "packages/symbols/combinatorics/collections/reference/Peaks.yaml",
   "packages/symbols/combinatorics/collections/reference/Valleys.yaml",
   "packages/symbols/combinatorics/collections/reference/MinorIndex.yaml",
+  "packages/symbols/combinatorics/collections/reference/Array.yaml",
+  "packages/symbols/combinatorics/collections/reference/Accumulate.yaml",
+  "packages/symbols/combinatorics/collections/reference/FoldList.yaml",
+  "packages/symbols/combinatorics/collections/reference/Cases.yaml",
+  "packages/symbols/combinatorics/collections/reference/SparseArray.yaml",
+  "packages/symbols/combinatorics/collections/reference/RandomInteger.yaml",
+  "packages/symbols/combinatorics/collections/reference/SeedRandom.yaml",
+  "packages/symbols/combinatorics/collections/reference/IsNumeric.yaml",
+  "packages/symbols/combinatorics/collections/reference/IsMachineNumber.yaml",
+  "packages/symbols/combinatorics/collections/reference/Precision.yaml",
 ];
 
 export const entries: readonly ReferenceEntry[] = [
@@ -871,5 +881,528 @@ export const entries: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["MajorIndex", "Descents", "SymmetricGroup"],
+  },
+  {
+    name: "Array",
+    domain: "Collections",
+    signature: "Array(f, n)",
+    summary: "f applied over every point of an n-dimensional index range.",
+    signatures: [
+      {
+        call: "Array(f, n)",
+        description: "$\\{f(1), \\ldots, f(n)\\}$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Array(f, {n1, …, nk})",
+        description:
+          "the $n_1 \\times \\cdots \\times n_k$ array with $f$ applied to every index tuple.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Array(f, n, r)",
+        description: "like $Array(f, n)$, but the index range starts at $r$ instead of 1.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Array(f, {n1, …, nk}, {r1, …, rk})",
+        description:
+          "like the multi-dimensional form, with each dimension's index range starting at its own origin.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Array(f, n, r, h)",
+        description: "like $Array(f, n, r)$, wrapped in $h$ at every level instead of $List$.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "The scalar forms of $n$ and $r$ are shorthand for $\\{n\\}$ and every dimension sharing origin $r$.",
+      "See [[Tabulate]] for a lazy array read without materialising it.",
+    ],
+    examples: [
+      {
+        id: "array-f-5",
+        expr: ["Array", "f", 5],
+        expected: ["List", ["f", 1], ["f", 2], ["f", 3], ["f", 4], ["f", 5]],
+      },
+      {
+        id: "array-f-2-2",
+        expr: ["Array", "f", ["List", 2, 2]],
+        expected: ["List", ["List", ["f", 1, 1], ["f", 1, 2]], ["List", ["f", 2, 1], ["f", 2, 2]]],
+        category: "Scope",
+        caption: "A list of dimensions builds a multi-dimensional array",
+      },
+      {
+        id: "array-f-3-0",
+        expr: ["Array", "f", 3, 0],
+        expected: ["List", ["f", 0], ["f", 1], ["f", 2]],
+        category: "Scope",
+        caption: "A third argument pins where the index range starts",
+      },
+      {
+        id: "array-f-3-1-g",
+        expr: ["Array", "f", 3, 1, "g"],
+        expected: ["g", ["f", 1], ["f", 2], ["f", 3]],
+        category: "Scope",
+        caption: "A fourth argument wraps the result in that head instead of List",
+      },
+      {
+        id: "array-squares",
+        expr: ["Array", ["Function", ["Power", "_1", 2]], 5],
+        expected: ["List", 1, 4, 9, 16, 25],
+      },
+    ],
+    seeAlso: ["Tabulate"],
+  },
+  {
+    name: "Accumulate",
+    domain: "Collections",
+    signature: "Accumulate(list)",
+    summary: "The running sums of a list.",
+    signatures: [
+      {
+        call: "Accumulate(list)",
+        description: "$\\{a_1, a_1+a_2, a_1+a_2+a_3, \\ldots\\}$.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "The first element is kept as-is; each later element is the sum of everything up to and including it.",
+      "Equivalent to $FoldList(Add, list)$ — see [[FoldList]].",
+    ],
+    examples: [
+      {
+        id: "accumulate-1-2-3-4",
+        expr: ["Accumulate", ["List", 1, 2, 3, 4]],
+        expected: ["List", 1, 3, 6, 10],
+      },
+      {
+        id: "accumulate-empty",
+        expr: ["Accumulate", ["List"]],
+        expected: ["List"],
+        category: "Scope",
+        caption: "The running sum of the empty list is empty",
+      },
+      {
+        id: "accumulate-last-is-total",
+        expr: ["Equal", ["Last", ["Accumulate", ["List", 1, 2, 3, 4, 5]]], ["Add", 1, 2, 3, 4, 5]],
+        expected: "True",
+        category: "Properties",
+        caption: "The last element is the sum of the whole list",
+      },
+    ],
+    seeAlso: ["FoldList"],
+  },
+  {
+    name: "FoldList",
+    domain: "Collections",
+    signature: "FoldList(f, x0, list)",
+    summary: "Every intermediate result of folding f over a list.",
+    signatures: [
+      {
+        call: "FoldList(f, x0, list)",
+        description:
+          "$\\{x_0, f(x_0,a_1), f(f(x_0,a_1),a_2), \\ldots\\}$ — one longer than $list$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "FoldList(f, list)",
+        description:
+          "like the 3-argument form, using the first element of $list$ as $x_0$ and folding over the rest.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "The last element equals [[Fold]]($f$, $x_0$, $list$).",
+      "See [[Accumulate]] for the common case $f = Add$.",
+    ],
+    examples: [
+      {
+        id: "foldlist-add-0-1-2-3",
+        expr: ["FoldList", "Add", 0, ["List", 1, 2, 3]],
+        expected: ["List", 0, 1, 3, 6],
+      },
+      {
+        id: "foldlist-add-1-2-3",
+        expr: ["FoldList", "Add", ["List", 1, 2, 3]],
+        expected: ["List", 1, 3, 6],
+        category: "Scope",
+        caption: "With no seed, the first element of the list is the seed",
+      },
+      {
+        id: "foldlist-multiply-1-1-2-3-4",
+        expr: ["FoldList", "Multiply", 1, ["List", 1, 2, 3, 4]],
+        expected: ["List", 1, 1, 2, 6, 24],
+        category: "Scope",
+        caption: "Running products, via Multiply instead of Add",
+      },
+      {
+        id: "foldlist-length-is-one-more",
+        expr: [
+          "Equal",
+          ["Length", ["FoldList", "Add", 0, ["List", 1, 2, 3, 4, 5]]],
+          ["Add", ["Length", ["List", 1, 2, 3, 4, 5]], 1],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "One longer than the input list",
+      },
+      {
+        id: "foldlist-last-is-fold",
+        expr: [
+          "Equal",
+          ["Last", ["FoldList", "Add", 0, ["List", 1, 2, 3]]],
+          ["Fold", "Add", 0, ["List", 1, 2, 3]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "The last element is what Fold alone would give",
+      },
+    ],
+    seeAlso: ["Fold", "Accumulate"],
+  },
+  {
+    name: "Cases",
+    domain: "Collections",
+    signature: "Cases(collection, pattern)",
+    summary: "The elements of a collection matching a pattern.",
+    signatures: [
+      {
+        call: "Cases(collection, pattern)",
+        description: "every element of $collection$ that matches $pattern$, in order.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Matches compute-engine's own wildcards: a bare `_` (or named, `_a`) matches any single element, `__`/`___` match one-or-more/zero-or-more within a structural pattern, and a pattern built from a head applied to wildcards (e.g. $List(\\_a)$) matches that structure.",
+      "A plain value (no wildcard) matches by exact equality, same as [[Count]].",
+      "Only the top level of the collection is searched.",
+    ],
+    examples: [
+      {
+        id: "cases-wildcard-keeps-everything",
+        expr: ["Cases", ["List", 1, "a", 2, "b"], "_"],
+        expected: ["List", 1, "a", 2, "b"],
+      },
+      {
+        id: "cases-literal-value",
+        expr: ["Cases", ["List", 1, 2, 1, 3, 1], 1],
+        expected: ["List", 1, 1, 1],
+        category: "Scope",
+        caption: "A plain value keeps only the elements equal to it",
+      },
+      {
+        id: "cases-structural-pattern",
+        expr: ["Cases", ["List", ["List", 1], 2, ["List", 3]], ["List", "_a"]],
+        expected: ["List", ["List", 1], ["List", 3]],
+        category: "Scope",
+        caption: "A structural pattern keeps elements shaped like it",
+      },
+      {
+        id: "cases-count-agree-on-length",
+        expr: [
+          "Equal",
+          ["Length", ["Cases", ["List", 1, 2, 1, 3, 1], 1]],
+          ["Count", ["List", 1, 2, 1, 3, 1], 1],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "For a plain value, Cases and Count agree on how many",
+      },
+      {
+        id: "cases-typed-pattern-not-typed-here",
+        expr: ["Length", ["Cases", ["List", 1, "a", 2, "b"], "_Integer"]],
+        expected: 4,
+        category: "Possible issues",
+        caption:
+          "compute-engine's wildcards carry no type: `_Integer` is just a named wildcard, so it matches every element",
+        divergence: {
+          wolfram: "Wolfram's `_Integer` pattern only matches integers, here 2 (1 and 2).",
+        },
+      },
+    ],
+    seeAlso: ["Count", "Select"],
+  },
+  {
+    name: "SparseArray",
+    domain: "Collections",
+    signature: "SparseArray(rules, dims, default)",
+    summary: "A dense array built from position → value rules.",
+    signatures: [
+      {
+        call: "SparseArray(rules)",
+        description:
+          "a dense array whose dimensions are the largest index seen on each axis, elsewhere 0.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "SparseArray(rules, dims)",
+        description: "like the 1-argument form, with the dimensions given explicitly.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "SparseArray(rules, dims, default)",
+        description:
+          "like the 2-argument form, with positions not covered by `rules` filled with `default` instead of 0.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Each rule is $pos \\to value$: $pos$ is a plain integer for a vector, or a list of integers for a matrix or higher-rank array.",
+      "No distinct sparse storage type is kept — the result densifies immediately into an ordinary nested list, so `Normal` of it is unchanged, and it is not practical for arrays too large to materialise.",
+    ],
+    examples: [
+      {
+        id: "sparsearray-vector",
+        expr: ["SparseArray", ["List", ["Rule", 1, "x"], ["Rule", 3, "y"]], 4],
+        expected: ["List", "x", 0, "y", 0],
+      },
+      {
+        id: "sparsearray-infers-dims",
+        expr: ["SparseArray", ["List", ["Rule", ["List", 1, 1], 5], ["Rule", ["List", 2, 2], 7]]],
+        expected: ["List", ["List", 5, 0], ["List", 0, 7]],
+        category: "Scope",
+        caption: "With no dims given, they're the largest index seen per axis",
+      },
+      {
+        id: "sparsearray-custom-default",
+        expr: ["SparseArray", ["List", ["Rule", 2, 9]], 3, -1],
+        expected: ["List", -1, 9, -1],
+        category: "Scope",
+        caption: "A third argument fills the gaps instead of 0",
+      },
+      {
+        id: "sparsearray-normal-is-identity",
+        expr: ["Normal", ["SparseArray", ["List", ["Rule", 1, "a"]], 2]],
+        expected: ["List", "a", 0],
+        category: "Possible issues",
+        caption: "Normal is a no-op here — SparseArray already returns a plain dense list",
+        divergence: {
+          wolfram:
+            "Wolfram's SparseArray keeps a distinct sparse representation until Normal densifies it.",
+        },
+      },
+    ],
+  },
+  {
+    name: "RandomInteger",
+    domain: "Collections",
+    signature: "RandomInteger(range, n)",
+    summary: "A uniform random integer, or a list (or array) of them.",
+    signatures: [
+      {
+        call: "RandomInteger()",
+        description: "$0$ or $1$, each with probability $1/2$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "RandomInteger(max)",
+        description: "uniform in $\\{0, \\ldots, max\\}$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "RandomInteger({min, max})",
+        description: "uniform in $\\{min, \\ldots, max\\}$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "RandomInteger(range, n)",
+        description: "a list of $n$ draws from `range` (either form above).",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "RandomInteger(range, {n1, …, nk})",
+        description: "an $n_1 \\times \\cdots \\times n_k$ array of draws.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Seeded, not free-running: call [[SeedRandom]](seed) first for a reproducible sequence. Without it, a fixed default seed is used, so even a bare `RandomInteger` call is reproducible run to run — two fresh evaluations draw the same value.",
+      "The generator is our own (a small deterministic PRNG), not Wolfram's — the same seed draws a different sequence from Wolfram's. Only the shape and range of the answer are guaranteed to match.",
+      "A worked example that both seeds and draws needs the two calls in one expression; `Last(List(SeedRandom(n), RandomInteger(…)))` runs `SeedRandom` for its effect and keeps the draw.",
+    ],
+    examples: [
+      {
+        id: "randominteger-default-seed-is-reproducible",
+        expr: ["RandomInteger", 100],
+        expected: 60,
+        caption: "With no SeedRandom call, a fixed default seed still makes this reproducible",
+      },
+      {
+        id: "randominteger-range-scope",
+        expr: ["Last", ["List", ["SeedRandom", 1], ["RandomInteger", ["List", 10, 20]]]],
+        expected: 16,
+        category: "Scope",
+        caption: "A {min, max} range, after seeding",
+      },
+      {
+        id: "randominteger-list-of-draws",
+        expr: ["Length", ["Last", ["List", ["SeedRandom", 2], ["RandomInteger", 6, 10]]]],
+        expected: 10,
+        category: "Scope",
+        caption: "A count argument draws that many values",
+      },
+      {
+        id: "randominteger-array-shape",
+        expr: [
+          "Shape",
+          ["Last", ["List", ["SeedRandom", 3], ["RandomInteger", 1, ["List", 2, 3]]]],
+        ],
+        expected: ["Tuple", 2, 3],
+        category: "Scope",
+        caption: "A dimension list draws a nested array of that shape",
+      },
+    ],
+    seeAlso: ["SeedRandom"],
+  },
+  {
+    name: "SeedRandom",
+    domain: "Collections",
+    signature: "SeedRandom(seed)",
+    summary: "Reseeds the random generator RandomInteger draws from.",
+    signatures: [
+      {
+        call: "SeedRandom(seed)",
+        description: "reseeds the generator; returns `Nothing`.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "One generator per engine instance: [[RandomInteger]] draws from it, and the same seed always starts the same sequence.",
+      "Our generator is our own (a small deterministic PRNG), not Wolfram's Mersenne-twister-based one — a shared seed value does not draw the same numbers as Wolfram would.",
+    ],
+    examples: [
+      { id: "seedrandom-returns-nothing", expr: ["SeedRandom", 7], expected: "Nothing" },
+      {
+        id: "seedrandom-pins-the-next-draw",
+        expr: ["Last", ["List", ["SeedRandom", 7], ["RandomInteger", 100]]],
+        expected: 1,
+        category: "Scope",
+        caption: "Seeding pins the next RandomInteger draw",
+      },
+    ],
+    seeAlso: ["RandomInteger"],
+  },
+  {
+    name: "IsNumeric",
+    domain: "Collections",
+    signature: "IsNumeric(expr)",
+    summary: "Whether expr denotes a definite numeric quantity, without evaluating it.",
+    signatures: [
+      {
+        call: "IsNumeric(expr)",
+        description:
+          "$True$ for a number literal or an expression built from numeric literals and constants like $\\pi$, $False$ otherwise.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Wolfram spells this `NumericQ`; renamed to the `Is…` convention used across compute-engine predicates.",
+      "A plain symbol with no numeric value (like `x`) is not numeric, even though it could later be assigned one.",
+    ],
+    examples: [
+      { id: "isnumeric-pi", expr: ["IsNumeric", "Pi"], expected: "True" },
+      {
+        id: "isnumeric-plain-symbol",
+        expr: ["IsNumeric", "x"],
+        expected: "False",
+        category: "Scope",
+        caption: "A plain symbol carries no definite numeric value",
+      },
+      {
+        id: "isnumeric-sqrt-2",
+        expr: ["IsNumeric", ["Sqrt", 2]],
+        expected: "True",
+        category: "Scope",
+        caption: "Built from numeric literals and a known numeric function",
+      },
+      { id: "isnumeric-literal", expr: ["IsNumeric", 5], expected: "True" },
+    ],
+    seeAlso: ["IsMachineNumber", "Precision"],
+  },
+  {
+    name: "IsMachineNumber",
+    domain: "Collections",
+    signature: "IsMachineNumber(expr)",
+    summary: "Whether expr is an ordinary (not extended-precision) inexact number.",
+    signatures: [
+      {
+        call: "IsMachineNumber(expr)",
+        description:
+          "$True$ for an inexact number carrying at most 15 significant decimal digits, $False$ otherwise (including every exact number).",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Wolfram spells this `MachineNumberQ`; renamed to the `Is…` convention used across compute-engine predicates.",
+      'Compute engine keeps no separate "machine" number representation — every inexact value is a decimal carrying as many digits as it was given — so this is approximated by digit count against Wolfram\'s ~15.95-digit `MachinePrecision`, documented as a divergence.',
+    ],
+    examples: [
+      { id: "ismachinenumber-ordinary-float", expr: ["IsMachineNumber", 2.5], expected: "True" },
+      {
+        id: "ismachinenumber-exact-integer",
+        expr: ["IsMachineNumber", 2],
+        expected: "False",
+        category: "Scope",
+        caption: "Exact numbers are never machine numbers",
+      },
+      {
+        id: "ismachinenumber-extended-precision",
+        expr: ["IsMachineNumber", 3.141592653589793],
+        expected: "False",
+        category: "Possible issues",
+        caption:
+          "A literal with more digits than a double can hold rounds to about 16 — over the machine-precision cutoff",
+        divergence: {
+          wolfram:
+            "Wolfram's MachineNumberQ agrees here, but tracks precision as a tag rather than counting written digits.",
+        },
+      },
+    ],
+    seeAlso: ["IsNumeric", "Precision"],
+  },
+  {
+    name: "Precision",
+    domain: "Collections",
+    signature: "Precision(expr)",
+    summary: "How many significant decimal digits a number carries.",
+    signatures: [
+      {
+        call: "Precision(expr)",
+        description:
+          "$PositiveInfinity$ for an exact number, otherwise its significant decimal digit count.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Exact numbers (integers, rationals, radicals, symbolic constants like $\\pi$) carry infinite precision, Wolfram's own convention.",
+      "For an inexact number, this counts the digits actually written — `2.5` has 2, and a literal with more digits than a double can represent is rounded to about 16.",
+    ],
+    examples: [
+      { id: "precision-exact-integer", expr: ["Precision", 2], expected: "PositiveInfinity" },
+      {
+        id: "precision-rational",
+        expr: ["Precision", ["Rational", 1, 3]],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "An exact rational also carries infinite precision",
+      },
+      {
+        id: "precision-inexact-literal",
+        expr: ["Precision", 2.5],
+        expected: 2,
+        category: "Scope",
+        caption: "An inexact literal's precision is its written digit count",
+      },
+      {
+        id: "precision-extended",
+        expr: ["Precision", 3.141592653589793],
+        expected: 16,
+        category: "Scope",
+        caption: "A literal with more digits than a double can hold rounds to about 16 of them",
+      },
+    ],
+    seeAlso: ["IsMachineNumber", "IsNumeric"],
   },
 ];

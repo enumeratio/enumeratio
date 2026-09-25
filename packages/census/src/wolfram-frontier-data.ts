@@ -53,10 +53,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 68,
   },
   {
-    head: "Array",
-    uses: 64,
-  },
-  {
     head: "FunctionInjective",
     uses: 64,
   },
@@ -81,15 +77,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 55,
   },
   {
-    head: "RandomInteger",
-    uses: 52,
-  },
-  {
     head: "Graphics",
-    uses: 47,
-  },
-  {
-    head: "SparseArray",
     uses: 47,
   },
   {
@@ -113,10 +101,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 37,
   },
   {
-    head: "Accumulate",
-    uses: 33,
-  },
-  {
     head: "Directive",
     uses: 30,
   },
@@ -130,10 +114,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Assuming",
-    uses: 25,
-  },
-  {
-    head: "Cases",
     uses: 25,
   },
   {
@@ -179,22 +159,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Fourier",
     uses: 18,
-  },
-  {
-    head: "MachineNumberQ",
-    uses: 18,
-  },
-  {
-    head: "NumericQ",
-    uses: 18,
-  },
-  {
-    head: "Precision",
-    uses: 18,
-  },
-  {
-    head: "AllTrue",
-    uses: 17,
   },
   {
     head: "InputForm",
@@ -325,10 +289,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "SeedRandom",
-    uses: 10,
-  },
-  {
     head: "BooleanConvert",
     uses: 9,
   },
@@ -338,10 +298,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "FactorialPower",
-    uses: 9,
-  },
-  {
-    head: "FoldList",
     uses: 9,
   },
   {

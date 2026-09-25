@@ -281,6 +281,16 @@ export const HEADS: Record<string, string> = {
   PadLeft: "PadLeft",
   PadRight: "PadRight",
   NoneTrue: "NoneTrue",
+  Array: "Array",
+  Accumulate: "Accumulate",
+  FoldList: "FoldList",
+  Cases: "Cases",
+  SparseArray: "SparseArray",
+  RandomInteger: "RandomInteger",
+  SeedRandom: "SeedRandom",
+  IsNumeric: "NumericQ",
+  IsMachineNumber: "MachineNumberQ",
+  Precision: "Precision",
   Variance: "Variance",
   StandardDeviation: "StandardDeviation",
   Determinant: "Det",
@@ -493,16 +503,6 @@ export const HEADS: Record<string, string> = {
  *  the same way it excludes a plain rename. */
 export const STRUCTURAL: Record<string, string> = {
   Total: "Sum",
-  // `Array[f, n]` is our `Tabulate(f, n)` renamed straight, but the multi-dimensional
-  // `Array[f, {n, m}]` reshapes the dims into a list (see the `Tabulate` case in SPECIAL),
-  // so it can't sit in HEADS, which maps one spelling with no shape change.
-  Array: "Tabulate",
-  // `FoldList[f, list]` (no seed) is our `Scan(list, f)` reordered — see SPECIAL. The
-  // seeded `FoldList[f, x, list]` is length+1 and has no Scan equivalent.
-  FoldList: "Scan",
-  // `Accumulate[list]` is `FoldList[Plus, list]`, our `Scan(list, Add)` — one-way (from
-  // Wolfram only; compute-engine has no `Accumulate` head to map back from).
-  Accumulate: "Scan",
 };
 
 /** The context our heads emit into when Wolfram has the name for something else.

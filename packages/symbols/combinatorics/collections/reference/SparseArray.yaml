@@ -1,0 +1,38 @@
+name: SparseArray
+domain: Collections
+signature: SparseArray(rules, dims, default)
+summary: A dense array built from position → value rules.
+signatures:
+  - call: SparseArray(rules)
+    description: a dense array whose dimensions are the largest index seen on each axis, elsewhere 0.
+    library: enumeratio-collections
+  - call: SparseArray(rules, dims)
+    description: like the 1-argument form, with the dimensions given explicitly.
+    library: enumeratio-collections
+  - call: SparseArray(rules, dims, default)
+    description: like the 2-argument form, with positions not covered by `rules` filled with `default` instead of 0.
+    library: enumeratio-collections
+details:
+  - 'Each rule is $pos \to value$: $pos$ is a plain integer for a vector, or a list of integers for a matrix or higher-rank array.'
+  - No distinct sparse storage type is kept — the result densifies immediately into an ordinary nested list, so `Normal` of it is unchanged, and it is not practical for arrays too large to materialise.
+examples:
+  - id: sparsearray-vector
+    expr: [SparseArray, [List, [Rule, 1, x], [Rule, 3, y]], 4]
+    expected: [List, x, 0, y, 0]
+  - id: sparsearray-infers-dims
+    expr: [SparseArray, [List, [Rule, [List, 1, 1], 5], [Rule, [List, 2, 2], 7]]]
+    expected: [List, [List, 5, 0], [List, 0, 7]]
+    category: Scope
+    caption: With no dims given, they're the largest index seen per axis
+  - id: sparsearray-custom-default
+    expr: [SparseArray, [List, [Rule, 2, 9]], 3, -1]
+    expected: [List, -1, 9, -1]
+    category: Scope
+    caption: A third argument fills the gaps instead of 0
+  - id: sparsearray-normal-is-identity
+    expr: [Normal, [SparseArray, [List, [Rule, 1, a]], 2]]
+    expected: [List, a, 0]
+    category: Possible issues
+    caption: Normal is a no-op here — SparseArray already returns a plain dense list
+    divergence:
+      wolfram: Wolfram's SparseArray keeps a distinct sparse representation until Normal densifies it.
