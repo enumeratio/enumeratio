@@ -12,12 +12,19 @@ import { type EvalOptions, wantsNumber } from "./box.ts";
 //  - 2×2 m: the Cayley–Hamilton closed form
 //      e^M = e^{tr/2} [ cosh(Δ/2) I + (sinh(Δ/2)/Δ)(2M − tr·I) ],  Δ² = tr² − 4·det,
 //    taking the Δ → 0 limit (sinh(Δ/2)/Δ → 1/2) at a repeated eigenvalue — which also
-//    covers every 2×2 nilpotent m (Δ = 0, tr = 2λ).
+//    covers every 2×2 nilpotent m (Δ = 0, tr = 2λ). When Δ² is provably negative (a
+//    rotation generator: purely imaginary eigenvalues), Δ = i·w for real w = √(−Δ²), and
+//    cosh(Δ/2) = cos(w/2), sinh(Δ/2)/Δ = sin(w/2)/w — the same formula, written so it
+//    never needs `Cosh`/`Sinh` of an imaginary argument to reduce on its own (#113).
 //  - nilpotent m of any size, when every entry is exact: the series I + N + N²/2! + … +
 //    N^(k−1)/(k−1)! terminates once Nᵏ = 0, which happens by k = n at the latest.
 // Otherwise numeric only, and only under N(): scaling-and-squaring — halve the matrix by
 // a power of two until its (∞-)norm is small, Taylor-sum the scaled matrix (which converges
 // fast there), then square the result back up.
+//
+// MatrixExp(m, v) applies e^m to the vector v: computed as MatrixExp(m) times v (whatever
+// path above answers m's exponential), not a matrix-free Krylov method — Wolfram's own
+// documented call form, same value either way (#113).
 
 export type BMatrix = readonly (readonly BoxedExpression[])[];
 
@@ -85,17 +92,35 @@ function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
   const halfTrace = ce.function("Divide", [trace, 2]).evaluate();
   const expHalfTrace = ce.function("Exp", [halfTrace]).evaluate();
   const degenerate = discSq.isSame(0);
+  // Purely imaginary eigenvalues (Δ² < 0, provably): write Δ = i·w for real w = √(−Δ²)
+  // ourselves, rather than leaving it to Cosh/Sinh of an imaginary argument to notice —
+  // they don't. cosh(i·w/2) = cos(w/2); sinh(i·w/2)/(i·w) = sin(w/2)/w.
+  const rotation = !degenerate && discSq.isNegative === true;
+  const halfW = rotation
+    ? ce
+        .function("Divide", [ce.function("Sqrt", [ce.function("Negate", [discSq])]).simplify(), 2])
+        .evaluate()
+    : undefined;
   const cosh = degenerate
     ? ce.One
-    : ce.function("Cosh", [ce.function("Divide", [ce.function("Sqrt", [discSq]), 2])]).evaluate();
+    : rotation && halfW !== undefined
+      ? ce.function("Cos", [halfW]).evaluate()
+      : ce.function("Cosh", [ce.function("Divide", [ce.function("Sqrt", [discSq]), 2])]).evaluate();
   const coeff = degenerate
     ? ce.box(["Rational", 1, 2])
-    : ce
-        .function("Divide", [
-          ce.function("Sinh", [ce.function("Divide", [ce.function("Sqrt", [discSq]), 2])]),
-          ce.function("Sqrt", [discSq]),
-        ])
-        .evaluate();
+    : rotation && halfW !== undefined
+      ? ce
+          .function("Divide", [
+            ce.function("Sin", [halfW]).evaluate(),
+            ce.function("Multiply", [2, halfW]).evaluate(),
+          ])
+          .evaluate()
+      : ce
+          .function("Divide", [
+            ce.function("Sinh", [ce.function("Divide", [ce.function("Sqrt", [discSq]), 2])]),
+            ce.function("Sqrt", [discSq]),
+          ])
+          .evaluate();
 
   const entry = (i: number, j: number): BoxedExpression => {
     const aij = rows[i][j];
@@ -267,6 +292,32 @@ function nMatrixToExpr(ce: ComputeEngine, m: NMatrix, n: number): BoxedExpressio
   return listOf(ce, rows);
 }
 
+/** e^m · v: MatrixExp(m), applied — via whichever of the paths above answers m's
+ * exponential — then multiplied against the vector v. `undefined` if v isn't a length-n
+ * list, or m's exponential itself doesn't reduce (the numeric fallback still needs N()). */
+function expTimesVector(
+  ce: ComputeEngine,
+  m: BoxedExpression,
+  v: BoxedExpression,
+  n: number,
+  options: EvalOptions,
+  numeric: boolean,
+): BoxedExpression | undefined {
+  const vEntries = operandsOf(v);
+  if (vEntries.length !== n) return undefined;
+  const innerOptions: EvalOptions = numeric ? { ...options, numericApproximation: true } : options;
+  const expM = evaluateMatrixExp(ce, [m], innerOptions);
+  if (expM === undefined) return undefined;
+  const expRows = rowsOf(expM);
+  const finish = (e: BoxedExpression): BoxedExpression => (numeric ? e.N() : e);
+  const result: BoxedExpression[] = [];
+  for (let i = 0; i < n; i++) {
+    const terms = vEntries.map((vj, j) => ce.function("Multiply", [expRows[i][j], vj]));
+    result.push(finish(ce.function("Add", terms).evaluate()));
+  }
+  return ce.function("List", result);
+}
+
 export function evaluateMatrixExp(
   ce: ComputeEngine,
   ops: readonly BoxedExpression[],
@@ -281,6 +332,14 @@ export function evaluateMatrixExp(
   // An exact result (diagonal / 2×2 / nilpotent) still needs N() applied when the caller
   // asked for a number — its pieces (Cosh, Sqrt, …) don't collapse to floats on their own.
   const numeric = wantsNumber(ops, options);
+
+  // MatrixExp(m, v): e^m·v, without requiring the caller to separately form e^m — see the
+  // file header. Handled before the single-matrix cases below, which this delegates to.
+  if (ops.length >= 2) {
+    const v = ops[1];
+    return v === undefined ? undefined : expTimesVector(ce, m, v, n, options, numeric);
+  }
+
   const finish = (e: BoxedExpression): BoxedExpression => (numeric ? e.N() : e);
 
   if (isDiagonal(rows, n)) return finish(expDiagonal(ce, rows, n));
@@ -298,7 +357,7 @@ export function evaluateMatrixExp(
 
 export function declareMatrixExp(ce: ComputeEngine): void {
   ce.declare("MatrixExp", {
-    signature: "(matrix) -> matrix",
+    signature: "(matrix, list<number>?) -> matrix | list<number>",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
       evaluateMatrixExp(ce, ops, options),
   });
