@@ -5,6 +5,8 @@ realsign-neg-3:
   tex:
     in: \mathrm{RealSign}(-3)
     out: "-1"
+  fullform:
+    in: RealSign[-3]
   wolfram:
     in: RealSign[-3]
 realsign-0:
@@ -14,6 +16,8 @@ realsign-0:
   tex:
     in: \mathrm{RealSign}(0)
     out: "0"
+  fullform:
+    in: RealSign[0]
   wolfram:
     in: RealSign[0]
 realsign-2p5:
@@ -23,6 +27,8 @@ realsign-2p5:
   tex:
     in: \mathrm{RealSign}(2.5)
     out: "1"
+  fullform:
+    in: RealSign[2.5]
   wolfram:
     in: RealSign[2.5]
 threads-element-wise-over-a-list:
@@ -32,6 +38,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \mathrm{RealSign}(\bigl\lbrack-2, 0, 5\bigr\rbrack)
     out: \bigl\lbrack-1, 0, 1\bigr\rbrack
+  fullform:
+    in: RealSign[List[-2, 0, 5]]
   wolfram:
     in: RealSign[List[-2, 0, 5]]
 decides-the-sign-of-an-exact-numeric-expression:
@@ -41,5 +49,7 @@ decides-the-sign-of-an-exact-numeric-expression:
   tex:
     in: \mathrm{RealSign}(\sqrt{2}-2)
     out: "-1"
+  fullform:
+    in: RealSign[Subtract[Sqrt[2], 2]]
   wolfram:
     in: RealSign[Subtract[Sqrt[2], 2]]

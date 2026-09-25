@@ -5,6 +5,8 @@ the-repeating-block-of-1-7-0-overline-142857:
   tex:
     in: \mathrm{RealDigits}(\frac{1}{7})
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 4, 2, 8, 5, 7\bigr\rbrack\bigr\rbrack, 0\bigr\rbrack
+  fullform:
+    in: RealDigits[Rational[1, 7]]
   wolfram:
     in: RealDigits[Rational[1, 7]]
 19-7-2-overline-714285-one-digit-before-the:
@@ -14,6 +16,8 @@ the-repeating-block-of-1-7-0-overline-142857:
   tex:
     in: \mathrm{RealDigits}(\frac{19}{7})
     out: \bigl\lbrack\bigl\lbrack2, \bigl\lbrack7, 1, 4, 2, 8, 5\bigr\rbrack\bigr\rbrack, 1\bigr\rbrack
+  fullform:
+    in: RealDigits[Rational[19, 7]]
   wolfram:
     in: RealDigits[Rational[19, 7]]
 a-terminating-rational:
@@ -23,6 +27,8 @@ a-terminating-rational:
   tex:
     in: \mathrm{RealDigits}(\frac{5}{4})
     out: \bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, 1\bigr\rbrack
+  fullform:
+    in: RealDigits[Rational[5, 4]]
   wolfram:
     in: RealDigits[Rational[5, 4]]
 1-8-0-001-2:
@@ -32,6 +38,8 @@ a-terminating-rational:
   tex:
     in: \mathrm{RealDigits}(\frac{1}{8}, 2)
     out: \bigl\lbrack\bigl\lbrack1\bigr\rbrack, -2\bigr\rbrack
+  fullform:
+    in: RealDigits[Rational[1, 8], 2]
   wolfram:
     in: RealDigits[Rational[1, 8], 2]
 the-first-10-digits-of-pi-truncated-not-rounded:
@@ -41,6 +49,8 @@ the-first-10-digits-of-pi-truncated-not-rounded:
   tex:
     in: \mathrm{RealDigits}(\pi, 10, 10)
     out: \bigl\lbrack\bigl\lbrack3, 1, 4, 1, 5, 9, 2, 6, 5, 3\bigr\rbrack, 1\bigr\rbrack
+  fullform:
+    in: RealDigits[Pi, 10, 10]
   wolfram:
     in: RealDigits[Pi, 10, 10]
 realdigits-sqrt-2-10-5:
@@ -50,6 +60,8 @@ realdigits-sqrt-2-10-5:
   tex:
     in: \mathrm{RealDigits}(\sqrt{2}, 10, 5)
     out: \bigl\lbrack\bigl\lbrack1, 4, 1, 4, 2\bigr\rbrack, 1\bigr\rbrack
+  fullform:
+    in: RealDigits[Sqrt[2], 10, 5]
   wolfram:
     in: RealDigits[Sqrt[2], 10, 5]
 realdigits-exponentiale-10-5:
@@ -59,6 +71,8 @@ realdigits-exponentiale-10-5:
   tex:
     in: \mathrm{RealDigits}(e, 10, 5)
     out: \bigl\lbrack\bigl\lbrack2, 7, 1, 8, 2\bigr\rbrack, 1\bigr\rbrack
+  fullform:
+    in: RealDigits[E, 10, 5]
   wolfram:
     in: RealDigits[E, 10, 5]
 an-integer-six-digits-before-the-point:
@@ -68,5 +82,7 @@ an-integer-six-digits-before-the-point:
   tex:
     in: \mathrm{RealDigits}(123\,456)
     out: \bigl\lbrack\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 6\bigr\rbrack
+  fullform:
+    in: RealDigits[123456]
   wolfram:
     in: RealDigits[123456]

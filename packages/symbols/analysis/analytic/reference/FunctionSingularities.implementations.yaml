@@ -5,6 +5,8 @@ a-pole-at-the-origin:
   tex:
     in: \mathrm{FunctionSingularities}(\frac{1}{x}, x)
     out: x=0
+  fullform:
+    in: FunctionSingularities[Divide[1, x], x]
 sqrt-is-singular-at-its-own-boundary:
   epsil:
     in: FunctionSingularities(Sqrt(x), x)
@@ -12,6 +14,8 @@ sqrt-is-singular-at-its-own-boundary:
   tex:
     in: \mathrm{FunctionSingularities}(\sqrt{x}, x)
     out: x\le0
+  fullform:
+    in: FunctionSingularities[Sqrt[x], x]
 a-polynomial-has-no-singularities:
   epsil:
     in: FunctionSingularities(x ^ 2, x)
@@ -22,6 +26,8 @@ a-polynomial-has-no-singularities:
   traditional:
     in: \mathrm{FunctionSingularities}(x^2, x)
     out: \mathrm{False}
+  fullform:
+    in: FunctionSingularities[Power[x, 2], x]
 log-s-branch-cut:
   epsil:
     in: FunctionSingularities(Ln(x), x)
@@ -29,3 +35,5 @@ log-s-branch-cut:
   tex:
     in: \mathrm{FunctionSingularities}(\ln(x), x)
     out: x\le0
+  fullform:
+    in: FunctionSingularities[Log[x], x]

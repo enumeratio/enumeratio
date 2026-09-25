@@ -8,6 +8,8 @@
   traditional:
     in: \mathrm{IsPrime}(1)
     out: \mathrm{False}
+  fullform:
+    in: PrimeQ[1]
   wolfram:
     in: PrimeQ[1]
     out: False
@@ -42,6 +44,8 @@
   traditional:
     in: \mathrm{IsPrime}(2)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[2]
   wolfram:
     in: PrimeQ[2]
     out: True
@@ -76,6 +80,8 @@ isprime-13:
   traditional:
     in: \mathrm{IsPrime}(13)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[13]
   wolfram:
     in: PrimeQ[13]
     out: True
@@ -110,6 +116,8 @@ isprime-4:
   traditional:
     in: \mathrm{IsPrime}(4)
     out: \mathrm{False}
+  fullform:
+    in: PrimeQ[4]
   wolfram:
     in: PrimeQ[4]
     out: False
@@ -144,6 +152,8 @@ isprime-97:
   traditional:
     in: \mathrm{IsPrime}(97)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[97]
   wolfram:
     in: PrimeQ[97]
     out: True
@@ -178,6 +188,8 @@ the-mersenne-prime-2-31-1:
   traditional:
     in: \mathrm{IsPrime}(2^{31}-1)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[Plus[Power[2, 31], -1]]
   wolfram:
     in: PrimeQ[Plus[Power[2, 31], -1]]
     out: True
@@ -215,6 +227,8 @@ a-common-choice-of-prime-modulus-for-hashing:
   traditional:
     in: \mathrm{IsPrime}(1\,000\,000\,007)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[1000000007]
   wolfram:
     in: PrimeQ[1000000007]
     out: True
@@ -249,6 +263,8 @@ threads-element-wise-over-a-list:
   traditional:
     in: \mathrm{IsPrime}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)
     out: \bigl\lbrack\mathrm{False}, \mathrm{True}, \mathrm{True}, \mathrm{False}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+  fullform:
+    in: PrimeQ[List[1, 2, 3, 4, 5, 6]]
   wolfram:
     in: PrimeQ[List[1, 2, 3, 4, 5, 6]]
     out: "{False, True, True, False, True, False}"
@@ -301,6 +317,8 @@ threads-element-wise-over-a-list:
   traditional:
     in: \mathrm{IsPrime}(-7)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[-7]
   wolfram:
     in: PrimeQ[-7]
   sympy:
@@ -333,6 +351,8 @@ a-gaussian-prime-its-norm-5-is-prime:
   traditional:
     in: \mathrm{IsPrime}(2+i)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[Complex[2, 1]]
   wolfram:
     in: PrimeQ[Complex[2, 1]]
     out: True
@@ -370,6 +390,8 @@ a-gaussian-prime-its-norm-5-is-prime:
   traditional:
     in: \mathrm{IsPrime}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \mathrm{False}
+  fullform:
+    in: PrimeQ[5, KeyValuePair[GaussianIntegers, True]]
 an-odd-prime-stays-prime-in-z-i-exactly-when-p:
   epsil:
     in: IsPrime([2, 3, 5, 7, 11, 13], GaussianIntegers -> True)
@@ -380,6 +402,8 @@ an-odd-prime-stays-prime-in-z-i-exactly-when-p:
   traditional:
     in: \mathrm{IsPrime}(\bigl\lbrack2, 3, 5, 7, 11, 13\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \bigl\lbrack\mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+  fullform:
+    in: PrimeQ[List[2, 3, 5, 7, 11, 13], KeyValuePair[GaussianIntegers, True]]
 isprime-5:
   epsil:
     in: IsPrime(5)
@@ -390,6 +414,8 @@ isprime-5:
   traditional:
     in: \mathrm{IsPrime}(5)
     out: \mathrm{True}
+  fullform:
+    in: PrimeQ[5]
   wolfram:
     in: PrimeQ[5]
   sympy:
@@ -414,6 +440,8 @@ large-integers-10-3000-1-is-divisible-by-10-8-1:
   traditional:
     in: \mathrm{IsPrime}(10^{3\,000}+1)
     out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Plus[Power[10, 3000], 1]]
   wolfram:
     in: PrimeQ[Plus[Power[10, 3000], 1]]
   sympy:
@@ -438,6 +466,8 @@ the-fermat-number-f-5-2-32-1-is-composite-641:
   traditional:
     in: \mathrm{IsPrime}(2^{32}+1)
     out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Plus[Power[2, 32], 1]]
   wolfram:
     in: PrimeQ[Plus[Power[2, 32], 1]]
   sympy:
@@ -462,6 +492,8 @@ non-integers-are-not-prime:
   traditional:
     in: \mathrm{IsPrime}(\frac{1}{2})
     out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Rational[1, 2]]
   wolfram:
     in: PrimeQ[Rational[1, 2]]
   sympy:
@@ -483,6 +515,8 @@ a-symbol-stays-unevaluated:
   tex:
     in: \mathrm{IsPrime}(x)
     out: \mathrm{IsPrime}(x)
+  fullform:
+    in: PrimeQ[x]
   wolfram:
     in:
     note: "PrimeQ[x] is False: anything not explicitly a prime integer is not prime."

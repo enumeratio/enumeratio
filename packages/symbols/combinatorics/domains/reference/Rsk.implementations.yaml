@@ -5,3 +5,5 @@ the-one-line-word-231:
   tex:
     in: \mathrm{Rsk}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
     out: \mathrm{StandardTableauPair}((\mathrm{StandardTableau}(\bigl\lbrack1, 3, 2\bigr\rbrack),\mathrm{StandardTableau}(\bigl\lbrack1, 2, 3\bigr\rbrack)))
+  fullform:
+    in: Rsk[Permutation[List[2, 3, 1]]]

@@ -5,6 +5,8 @@ negative-cube-root:
   tex:
     in: \mathrm{Surd}(-8, 3)
     out: "-2"
+  fullform:
+    in: Surd[-8, 3]
   wolfram:
     in: Surd[-8, 3]
 nonnegative-base:
@@ -14,5 +16,7 @@ nonnegative-base:
   tex:
     in: \mathrm{Surd}(8, 3)
     out: "2"
+  fullform:
+    in: Surd[8, 3]
   wolfram:
     in: Surd[8, 3]

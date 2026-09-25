@@ -5,3 +5,5 @@ count-involutions-4:
   tex:
     in: \mathrm{Count}(\mathrm{Involutions}(4))
     out: "10"
+  fullform:
+    in: Count[Involutions[4]]

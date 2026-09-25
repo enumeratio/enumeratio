@@ -8,6 +8,8 @@ no-primes-are-1:
   traditional:
     in: \pi(1)
     out: "0"
+  fullform:
+    in: PrimePi[1]
   wolfram:
     in: PrimePi[1]
     out: "0"
@@ -36,6 +38,8 @@ primepi-2:
   traditional:
     in: \pi(2)
     out: "1"
+  fullform:
+    in: PrimePi[2]
   wolfram:
     in: PrimePi[2]
     out: "1"
@@ -64,6 +68,8 @@ primepi-15:
   traditional:
     in: \pi(15)
     out: "6"
+  fullform:
+    in: PrimePi[15]
   wolfram:
     in: PrimePi[15]
     out: "6"
@@ -92,6 +98,8 @@ primepi-100:
   traditional:
     in: \pi(100)
     out: "25"
+  fullform:
+    in: PrimePi[100]
   wolfram:
     in: PrimePi[100]
     out: "25"
@@ -120,9 +128,10 @@ same-inverse-relation-viewed-from-primepi-s-side:
   traditional:
     in: \pi(p_{50})=50
     out: \mathrm{True}
+  fullform:
+    in: Equal[PrimePi[Prime[50]], 50]
   wolfram:
     in: (PrimePi[Prime[50]] == 50)
-    back: Unreadable
     out: True
     tex:
       in: \pi \left(p_{50}\right)=50
@@ -134,6 +143,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{PrimePi}(\bigl\lbrack10, 100\bigr\rbrack)
     out: \bigl\lbrack4, 25\bigr\rbrack
+  fullform:
+    in: PrimePi[List[10, 100]]
   wolfram:
     in: PrimePi[List[10, 100]]
     out: "{4, 25}"
@@ -166,6 +177,8 @@ rational-arguments-the-primes-up-to-7-2-are-2:
   traditional:
     in: \pi(\frac{7}{2})
     out: "2"
+  fullform:
+    in: PrimePi[Rational[7, 2]]
   wolfram:
     in: PrimePi[Rational[7, 2]]
   sympy:
@@ -186,6 +199,8 @@ real-arguments:
   traditional:
     in: \pi(15.25)
     out: "6"
+  fullform:
+    in: PrimePi[15.25]
   wolfram:
     in: PrimePi[15.25]
   sympy:
@@ -206,6 +221,8 @@ the-primes-below-a-million:
   traditional:
     in: \pi(1\,000\,000)
     out: 78\,498
+  fullform:
+    in: PrimePi[1000000]
   wolfram:
     in: PrimePi[1000000]
   sympy:
@@ -223,6 +240,8 @@ listable-threads-over-a-list:
   tex:
     in: \mathrm{PrimePi}(\bigl\lbrack3, 5, 17, 25\bigr\rbrack)
     out: \bigl\lbrack2, 3, 7, 9\bigr\rbrack
+  fullform:
+    in: PrimePi[List[3, 5, 17, 25]]
   wolfram:
     in: PrimePi[List[3, 5, 17, 25]]
   sympy:
@@ -243,6 +262,8 @@ no-primes-are-a-negative-number:
   traditional:
     in: \pi(-1)
     out: "0"
+  fullform:
+    in: PrimePi[-1]
   wolfram:
     in: PrimePi[-1]
   sympy:

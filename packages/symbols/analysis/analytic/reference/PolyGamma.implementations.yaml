@@ -8,9 +8,10 @@ psi-1-zeta-2-pi-2-6:
   traditional:
     in: \psi^{(1)}(1)=\zeta(2)
     out: \mathrm{True}
+  fullform:
+    in: Equal[PolyGamma[1, 1], Zeta[2]]
   wolfram:
     in: (PolyGamma[1, 1] == Zeta[2])
-    back: Unreadable
     out: True
     tex:
       in: \psi ^{(1)}(1)=\zeta (2)
@@ -34,9 +35,10 @@ psi-1-2-zeta-3-apery-s-constant-doubled-and:
   traditional:
     in: \psi^{(2)}(1)=-2\zeta(3)
     out: \mathrm{True}
+  fullform:
+    in: Equal[PolyGamma[2, 1], Times[-2, Zeta[3]]]
   wolfram:
     in: (PolyGamma[2, 1] == Times[-2, Zeta[3]])
-    back: Unreadable
     out: PolyGamma[2, 1] == -2*Zeta[3]
     tex:
       in: \psi ^{(2)}(1)=-2 \zeta (3)
@@ -60,9 +62,10 @@ psi-1-2-pi-2-2:
   traditional:
     in: \psi^{(1)}(\frac{1}{2})=\frac{\pi^2}{2}
     out: \mathrm{True}
+  fullform:
+    in: Equal[PolyGamma[1, Rational[1, 2]], Divide[Power[Pi, 2], 2]]
   wolfram:
     in: (PolyGamma[1, Rational[1, 2]] == Divide[Power[Pi, 2], 2])
-    back: Unreadable
     out: True
     tex:
       in: \psi ^{(1)}\left(\frac{1}{2}\right)=\frac{\pi ^2}{2}
@@ -83,9 +86,10 @@ recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2:
   traditional:
     in: \psi^{(1)}(1)-\psi^{(1)}(2)=1
     out: \mathrm{True}
+  fullform:
+    in: Equal[Subtract[PolyGamma[1, 1], PolyGamma[1, 2]], 1]
   wolfram:
     in: (Subtract[PolyGamma[1, 1], PolyGamma[1, 2]] == 1)
-    back: Unreadable
     out: True
     tex:
       in: \psi ^{(1)}(1)-\psi ^{(1)}(2)=1
@@ -109,6 +113,8 @@ an-inexact-argument-evaluates-to-a-decimal-psi-1:
   traditional:
     in: \psi^{(1)}(0.5)
     out: 4.934\,802\,200\,544\,679\,309\,42
+  fullform:
+    in: PolyGamma[1, 0.5]
   wolfram:
     in: PolyGamma[1, 0.5]
     out: "4.934802200544679"
@@ -134,6 +140,8 @@ a-pole-of-gamma-still-a-pole-after:
   traditional:
     in: \psi^{(1)}(0)
     out: \tilde\infty
+  fullform:
+    in: PolyGamma[1, 0]
   wolfram:
     in: PolyGamma[1, 0]
     out: ComplexInfinity
@@ -165,6 +173,8 @@ psi-1-i-0-46300-0-79423-i-complex-argument-from:
   traditional:
     in: N(\psi^{(1)}(1+i))
     out: 0.463\,000\,096\,622\,763\,76-0.794\,233\,542\,759\,319i
+  fullform:
+    in: N[PolyGamma[1, Complex[1, 1]]]
   wolfram:
     in: N[PolyGamma[1, Complex[1, 1]]]
     out: 0.46300009662276376 - 0.7942335427593189*I
@@ -190,6 +200,8 @@ threads-over-a-list-each-element-exact-so-each:
   traditional:
     in: \mathrm{PolyGamma}(1, \bigl\lbrack1, 2\bigr\rbrack)
     out: \bigl\lbrack\psi^{(1)}(1), \psi^{(1)}(2)\bigr\rbrack
+  fullform:
+    in: PolyGamma[1, List[1, 2]]
   wolfram:
     in: PolyGamma[1, List[1, 2]]
     out: "{Pi^2/6, -1 + Pi^2/6}"
@@ -218,6 +230,8 @@ an-exact-integer-argument-is-left-unevaluated:
   traditional:
     in: \psi^{(1)}(1)
     out: \psi^{(1)}(1)
+  fullform:
+    in: PolyGamma[1, 1]
   wolfram:
     in: PolyGamma[1, 1]
     out: Pi^2/6
@@ -240,9 +254,11 @@ one-argument-is-the-digamma-psi-5-h-4-gamma-frac:
   tex:
     in: \mathrm{PolyGamma}(5)
     out: \frac{25}{12}-\gamma
-  wolfram:
+  fullform:
     in: PolyGamma[5]
     back: [Digamma, 5]
+  wolfram:
+    in: PolyGamma[5]
 psi-3-5-pi-4-15-22369-3456:
   epsil:
     in: PolyGamma(3, 5)
@@ -253,6 +269,8 @@ psi-3-5-pi-4-15-22369-3456:
   traditional:
     in: \psi^{(3)}(5)
     out: \frac{1}{17\,280}(1\,152\pi^4-111\,845)
+  fullform:
+    in: PolyGamma[3, 5]
   wolfram:
     in: PolyGamma[3, 5]
   sympy:
@@ -271,6 +289,8 @@ numerically:
   traditional:
     in: N(\psi^{(3)}(5))
     out: 0.021\,427\,828\,192\,755\,075\,021\,9
+  fullform:
+    in: N[PolyGamma[3, 5]]
   wolfram:
     in: N[PolyGamma[3, 5]]
   sympy:
@@ -289,6 +309,8 @@ psi-1-2-14-zeta-3:
   traditional:
     in: \psi^{(2)}(0.5)
     out: -16.828\,796\,644\,234\,319\,995\,6
+  fullform:
+    in: PolyGamma[2, 0.5]
   wolfram:
     in: PolyGamma[2, 0.5]
   sympy:
@@ -304,9 +326,11 @@ one-argument-digamma-at-a-machine-precision:
   tex:
     in: \mathrm{PolyGamma}(100.5)
     out: 4.605\,174\,352\,581\,845
-  wolfram:
+  fullform:
     in: PolyGamma[100.5]
     back: [Digamma, 100.5]
+  wolfram:
+    in: PolyGamma[100.5]
 one-argument-digamma-at-a-complex-point:
   epsil:
     in: PolyGamma(2.5 + 3i)
@@ -314,9 +338,11 @@ one-argument-digamma-at-a-complex-point:
   tex:
     in: \mathrm{PolyGamma}(2.5+3i)
     out: 1.281\,273\,919\,066\,231\,4+0.979\,805\,315\,344\,559\,6i
-  wolfram:
+  fullform:
     in: PolyGamma[Complex[2.5, 3]]
     back: [Digamma, [Complex, 2.5, 3]]
+  wolfram:
+    in: PolyGamma[Complex[2.5, 3]]
 complex-argument-integer-order:
   epsil:
     in: PolyGamma(1, 2.5 + 3i)
@@ -327,6 +353,8 @@ complex-argument-integer-order:
   traditional:
     in: \psi^{(1)}(2.5+3i)
     out: 0.155\,597\,888\,471\,945\,53-0.230\,379\,553\,082\,323\,5i
+  fullform:
+    in: PolyGamma[1, Complex[2.5, 3]]
   wolfram:
     in: PolyGamma[1, Complex[2.5, 3]]
   sympy:
@@ -345,6 +373,8 @@ between-poles-psi-1-2-pi-2-2-4:
   traditional:
     in: \psi^{(1)}(-0.5)
     out: 8.934\,802\,200\,544\,679\,309\,42
+  fullform:
+    in: PolyGamma[1, -0.5]
   wolfram:
     in: PolyGamma[1, -0.5]
   sympy:
@@ -363,6 +393,8 @@ psi-infty-0:
   traditional:
     in: \psi^{(1)}(\infty)
     out: "0"
+  fullform:
+    in: PolyGamma[1, Infinity]
   wolfram:
     in: PolyGamma[1, Infinity]
 interval-arithmetic-the-trigamma-is-decreasing:
@@ -375,6 +407,8 @@ interval-arithmetic-the-trigamma-is-decreasing:
   traditional:
     in: \psi^{(1)}(\mathrm{Interval}(3.45, 3.46))
     out: \mathrm{Interval}(0.334\,742\,897\,540\,441\,2, 0.335\,857\,280\,611\,811\,7)
+  fullform:
+    in: PolyGamma[1, Interval[List[3.45, 3.46]]]
   wolfram:
     in: PolyGamma[1, Interval[List[3.45, 3.46]]]
 psi-0-1-gamma-polygamma-0-z-routes-through:
@@ -387,6 +421,8 @@ psi-0-1-gamma-polygamma-0-z-routes-through:
   traditional:
     in: \psi^{(0)}(1)
     out: -\gamma
+  fullform:
+    in: PolyGamma[0, 1]
   wolfram:
     in: PolyGamma[0, 1]
   sympy:
@@ -405,6 +441,8 @@ psi-1-2-gamma-2-ln-2:
   traditional:
     in: \psi^{(0)}(\frac{1}{2})
     out: -2\ln(2)-\gamma
+  fullform:
+    in: PolyGamma[0, Rational[1, 2]]
   wolfram:
     in: PolyGamma[0, Rational[1, 2]]
   sympy:
@@ -421,6 +459,8 @@ psi-1-2-pi-2-2-in-closed-form:
   traditional:
     in: \psi^{(1)}(\frac{1}{2})
     out: \frac{\pi^2}{2}
+  fullform:
+    in: PolyGamma[1, Rational[1, 2]]
   wolfram:
     in: PolyGamma[1, Rational[1, 2]]
   sympy:
@@ -437,6 +477,8 @@ psi-1-4-pi-2-8g:
   traditional:
     in: \psi^{(1)}(\frac{1}{4})
     out: 8\mathrm{Catalan}+\pi^2
+  fullform:
+    in: PolyGamma[1, Rational[1, 4]]
   wolfram:
     in: PolyGamma[1, Rational[1, 4]]
   sympy:
@@ -453,6 +495,8 @@ frac-d-dx-psi-n-x-psi-n-1-x:
   traditional:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\psi^{(n)}(x)
     out: \psi^{(n+1)}(x)
+  fullform:
+    in: D[PolyGamma[n, x], x]
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(PolyGamma(1, 1 / 3), 30)
@@ -463,6 +507,8 @@ to-30-significant-digits-every-one-correctly:
   traditional:
     in: N(\psi^{(1)}(\frac{1}{3}), 30)
     out: 10.095\,597\,125\,427\,094\,081\,8
+  fullform:
+    in: N[PolyGamma[1, Rational[1, 3]], 30]
   wolfram:
     in: N[PolyGamma[1, Rational[1, 3]], 30]
   sympy:
@@ -479,6 +525,8 @@ to-25-significant-digits-not-yet-only-the-first:
   traditional:
     in: N(\psi^{(3)}(5), 25)
     out: 0.021\,427\,828\,192\,755\,075\,021\,9
+  fullform:
+    in: N[PolyGamma[3, 5], 25]
   wolfram:
     in: N[PolyGamma[3, 5], 25]
   sympy:
@@ -497,6 +545,8 @@ n-polygamma-1-1:
   traditional:
     in: N(\psi^{(1)}(1))
     out: 1.644\,934\,066\,848\,226\,436\,47
+  fullform:
+    in: N[PolyGamma[1, 1]]
   wolfram:
     in: N[PolyGamma[1, 1]]
     out: "1.6449340668482262"
@@ -522,6 +572,8 @@ n-polygamma-1-2:
   traditional:
     in: N(\psi^{(1)}(2))
     out: 0.644\,934\,066\,848\,226\,436\,472
+  fullform:
+    in: N[PolyGamma[1, 2]]
   wolfram:
     in: N[PolyGamma[1, 2]]
     out: "0.6449340668482262"
@@ -547,6 +599,8 @@ n-polygamma-1-0p5:
   traditional:
     in: N(\psi^{(1)}(0.5))
     out: 4.934\,802\,200\,544\,679\,309\,42
+  fullform:
+    in: N[PolyGamma[1, 0.5]]
   wolfram:
     in: N[PolyGamma[1, 0.5]]
     out: "4.934802200544679"
@@ -572,6 +626,8 @@ n-polygamma-1-1p3:
   traditional:
     in: N(\psi^{(1)}(1.3))
     out: 1.134\,253\,434\,996\,619\,354\,36
+  fullform:
+    in: N[PolyGamma[1, 1.3]]
   wolfram:
     in: N[PolyGamma[1, 1.3]]
     out: "1.1342534349966191"
@@ -597,6 +653,8 @@ n-polygamma-1-7-over-3:
   traditional:
     in: N(\psi^{(1)}(\frac{7}{3}))
     out: 0.533\,097\,125\,427\,094\,081\,793
+  fullform:
+    in: N[PolyGamma[1, Rational[7, 3]]]
   wolfram:
     in: N[PolyGamma[1, Rational[7, 3]]]
     out: "0.5330971254270943"
@@ -619,6 +677,8 @@ n-polygamma-1-1-plus-i:
   traditional:
     in: N(\psi^{(1)}(1+i))
     out: 0.463\,000\,096\,622\,763\,76-0.794\,233\,542\,759\,319i
+  fullform:
+    in: N[PolyGamma[1, Complex[1, 1]]]
   wolfram:
     in: N[PolyGamma[1, Complex[1, 1]]]
     out: 0.46300009662276376 - 0.7942335427593189*I
@@ -644,6 +704,8 @@ n-polygamma-1-0p5-plus-0p3i:
   traditional:
     in: N(\psi^{(1)}(0.5+0.3i))
     out: 2.259\,034\,075\,905\,333\,3-2.828\,996\,786\,115\,696\,6i
+  fullform:
+    in: N[PolyGamma[1, Complex[0.5, 0.3]]]
   wolfram:
     in: N[PolyGamma[1, Complex[0.5, 0.3]]]
     out: 2.259034075905334 - 2.8289967861156957*I
@@ -669,6 +731,8 @@ n-polygamma-1-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\psi^{(1)}(2-0.5i))
     out: 0.588\,197\,890\,950\,061\,5+0.185\,041\,972\,433\,790\,86i
+  fullform:
+    in: N[PolyGamma[1, Complex[2, -0.5]]]
   wolfram:
     in: N[PolyGamma[1, Complex[2, -0.5]]]
     out: 0.5881978909500614 + 0.18504197243379084*I
@@ -694,6 +758,8 @@ n-polygamma-2-1:
   traditional:
     in: N(\psi^{(2)}(1))
     out: -2.404\,113\,806\,319\,188\,570\,8
+  fullform:
+    in: N[PolyGamma[2, 1]]
   wolfram:
     in: N[PolyGamma[2, 1]]
     out: "-2.4041138063191885"
@@ -719,6 +785,8 @@ n-polygamma-2-2:
   traditional:
     in: N(\psi^{(2)}(2))
     out: -0.404\,113\,806\,319\,188\,570\,799
+  fullform:
+    in: N[PolyGamma[2, 2]]
   wolfram:
     in: N[PolyGamma[2, 2]]
     out: "-0.4041138063191886"
@@ -744,6 +812,8 @@ n-polygamma-2-0p5:
   traditional:
     in: N(\psi^{(2)}(0.5))
     out: -16.828\,796\,644\,234\,319\,995\,6
+  fullform:
+    in: N[PolyGamma[2, 0.5]]
   wolfram:
     in: N[PolyGamma[2, 0.5]]
     out: "-16.82879664423432"
@@ -769,6 +839,8 @@ n-polygamma-2-1p3:
   traditional:
     in: N(\psi^{(2)}(1.3))
     out: -1.198\,462\,514\,651\,956\,592\,7
+  fullform:
+    in: N[PolyGamma[2, 1.3]]
   wolfram:
     in: N[PolyGamma[2, 1.3]]
     out: "-1.198462514651957"
@@ -794,6 +866,8 @@ n-polygamma-2-7-over-3:
   traditional:
     in: N(\psi^{(2)}(\frac{7}{3}))
     out: -0.278\,372\,399\,401\,607\,552\,457
+  fullform:
+    in: N[PolyGamma[2, Rational[7, 3]]]
   wolfram:
     in: N[PolyGamma[2, Rational[7, 3]]]
     out: "-0.2783723994016073"
@@ -816,6 +890,8 @@ n-polygamma-2-1-plus-i:
   traditional:
     in: N(\psi^{(2)}(1+i))
     out: 0.368\,552\,931\,587\,935\,23+0.766\,652\,850\,345\,066\,6i
+  fullform:
+    in: N[PolyGamma[2, Complex[1, 1]]]
   wolfram:
     in: N[PolyGamma[2, Complex[1, 1]]]
     out: 0.3685529315879352 + 0.7666528503450661*I
@@ -841,6 +917,8 @@ n-polygamma-2-0p5-plus-0p3i:
   traditional:
     in: N(\psi^{(2)}(0.5+0.3i))
     out: -0.177\,259\,899\,890\,065\,55+10.451\,822\,205\,943\,445i
+  fullform:
+    in: N[PolyGamma[2, Complex[0.5, 0.3]]]
   wolfram:
     in: N[PolyGamma[2, Complex[0.5, 0.3]]]
     out: -0.17725989989006735 + 10.45182220594345*I
@@ -866,6 +944,8 @@ n-polygamma-2-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\psi^{(2)}(2-0.5i))
     out: -0.307\,387\,267\,460\,616\,5-0.208\,452\,694\,827\,465\,28i
+  fullform:
+    in: N[PolyGamma[2, Complex[2, -0.5]]]
   wolfram:
     in: N[PolyGamma[2, Complex[2, -0.5]]]
     out: -0.30738726746061645 - 0.20845269482746526*I
@@ -891,6 +971,8 @@ n-polygamma-3-1:
   traditional:
     in: N(\psi^{(3)}(1))
     out: 6.493\,939\,402\,266\,829\,149\,1
+  fullform:
+    in: N[PolyGamma[3, 1]]
   wolfram:
     in: N[PolyGamma[3, 1]]
     out: "6.493939402266829"
@@ -916,6 +998,8 @@ n-polygamma-3-2:
   traditional:
     in: N(\psi^{(3)}(2))
     out: 0.493\,939\,402\,266\,829\,149\,096
+  fullform:
+    in: N[PolyGamma[3, 2]]
   wolfram:
     in: N[PolyGamma[3, 2]]
     out: "0.49393940226682886"
@@ -941,6 +1025,8 @@ n-polygamma-3-0p5:
   traditional:
     in: N(\psi^{(3)}(0.5))
     out: 97.409\,091\,034\,002\,437\,236\,4
+  fullform:
+    in: N[PolyGamma[3, 0.5]]
   wolfram:
     in: N[PolyGamma[3, 0.5]]
     out: "97.40909103400247"
@@ -966,6 +1052,8 @@ n-polygamma-3-1p3:
   traditional:
     in: N(\psi^{(3)}(1.3))
     out: 2.401\,023\,914\,308\,926\,618\,56
+  fullform:
+    in: N[PolyGamma[3, 1.3]]
   wolfram:
     in: N[PolyGamma[3, 1.3]]
     out: "2.401023914308922"
@@ -991,6 +1079,8 @@ n-polygamma-3-7-over-3:
   traditional:
     in: N(\psi^{(3)}(\frac{7}{3}))
     out: 0.285\,379\,043\,814\,241\,755\,772
+  fullform:
+    in: N[PolyGamma[3, Rational[7, 3]]]
   wolfram:
     in: N[PolyGamma[3, Rational[7, 3]]]
     out: "0.2853790438142423"
@@ -1013,6 +1103,8 @@ n-polygamma-3-1-plus-i:
   traditional:
     in: N(\psi^{(3)}(1+i))
     out: -1.522\,874\,448\,953\,496\,4-0.317\,286\,578\,661\,960\,86i
+  fullform:
+    in: N[PolyGamma[3, Complex[1, 1]]]
   wolfram:
     in: N[PolyGamma[3, Complex[1, 1]]]
     out: -1.522874448953496 - 0.31728657866196064*I
@@ -1038,6 +1130,8 @@ n-polygamma-3-0p5-plus-0p3i:
   traditional:
     in: N(\psi^{(3)}(0.5+0.3i))
     out: -27.944\,271\,157\,846\,87-43.969\,408\,839\,814\,47i
+  fullform:
+    in: N[PolyGamma[3, Complex[0.5, 0.3]]]
   wolfram:
     in: N[PolyGamma[3, Complex[0.5, 0.3]]]
     out: -27.944271157846867 - 43.96940883981448*I
@@ -1063,6 +1157,8 @@ n-polygamma-3-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\psi^{(3)}(2-0.5i))
     out: 0.280\,334\,830\,853\,447\,74+0.336\,488\,835\,908\,065\,05i
+  fullform:
+    in: N[PolyGamma[3, Complex[2, -0.5]]]
   wolfram:
     in: N[PolyGamma[3, Complex[2, -0.5]]]
     out: 0.28033483085344774 + 0.3364888359080649*I
@@ -1088,6 +1184,8 @@ n-polygamma-5-1:
   traditional:
     in: N(\psi^{(5)}(1))
     out: 122.081\,167\,438\,133\,896\,766
+  fullform:
+    in: N[PolyGamma[5, 1]]
   wolfram:
     in: N[PolyGamma[5, 1]]
     out: "122.08116743813385"
@@ -1113,6 +1211,8 @@ n-polygamma-5-2:
   traditional:
     in: N(\psi^{(5)}(2))
     out: 2.081\,167\,438\,133\,896\,765\,74
+  fullform:
+    in: N[PolyGamma[5, 2]]
   wolfram:
     in: N[PolyGamma[5, 2]]
     out: "2.081167438133855"
@@ -1138,6 +1238,8 @@ n-polygamma-5-0p5:
   traditional:
     in: N(\psi^{(5)}(0.5))
     out: 7\,691.113\,548\,602\,435\,496\,24
+  fullform:
+    in: N[PolyGamma[5, 0.5]]
   wolfram:
     in: N[PolyGamma[5, 0.5]]
     out: "7691.113548602435"
@@ -1163,6 +1265,8 @@ n-polygamma-5-1p3:
   traditional:
     in: N(\psi^{(5)}(1.3))
     out: 25.792\,601\,280\,613\,050\,537\,9
+  fullform:
+    in: N[PolyGamma[5, 1.3]]
   wolfram:
     in: N[PolyGamma[5, 1.3]]
     out: "25.792601280612967"
@@ -1188,6 +1292,8 @@ n-polygamma-5-7-over-3:
   traditional:
     in: N(\psi^{(5)}(\frac{7}{3}))
     out: 0.857\,814\,321\,602\,379\,528\,571
+  fullform:
+    in: N[PolyGamma[5, Rational[7, 3]]]
   wolfram:
     in: N[PolyGamma[5, Rational[7, 3]]]
     out: "0.857814321602382"
@@ -1210,6 +1316,8 @@ n-polygamma-5-1-plus-i:
   traditional:
     in: N(\psi^{(5)}(1+i))
     out: -0.933\,084\,836\,284\,871\,8+14.515\,852\,291\,904\,068i
+  fullform:
+    in: N[PolyGamma[5, Complex[1, 1]]]
   wolfram:
     in: N[PolyGamma[5, Complex[1, 1]]]
     out: -0.9330848362848687 + 14.515852291904064*I
@@ -1235,6 +1343,8 @@ n-polygamma-5-0p5-plus-0p3i:
   traditional:
     in: N(\psi^{(5)}(0.5+0.3i))
     out: -3\,033.627\,950\,298\,733+298.588\,513\,636\,672\,4i
+  fullform:
+    in: N[PolyGamma[5, Complex[0.5, 0.3]]]
   wolfram:
     in: N[PolyGamma[5, Complex[0.5, 0.3]]]
     out: -3033.6279502987354 + 298.58851363667134*I
@@ -1260,6 +1370,8 @@ n-polygamma-5-2-plus-neg-0p5-times-i:
   traditional:
     in: N(\psi^{(5)}(2-0.5i))
     out: 0.271\,324\,699\,533\,158\,96+1.707\,196\,409\,284\,704\,3i
+  fullform:
+    in: N[PolyGamma[5, Complex[2, -0.5]]]
   wolfram:
     in: N[PolyGamma[5, Complex[2, -0.5]]]
     out: 0.27132469953315896 + 1.7071964092847038*I

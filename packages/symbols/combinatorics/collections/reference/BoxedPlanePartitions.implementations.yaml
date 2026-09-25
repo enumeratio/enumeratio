@@ -5,6 +5,8 @@ count-boxedplanepartitions-2-2-2-20-macmahon-s:
   tex:
     in: \mathrm{Count}(\mathrm{BoxedPlanePartitions}(2, 2, 2))
     out: "20"
+  fullform:
+    in: Count[BoxedPlanePartitions[2, 2, 2]]
 a-degenerate-1-times-1-times-n-box-count-n-1:
   epsil:
     in: Count(BoxedPlanePartitions(1, 1, 4))
@@ -12,3 +14,5 @@ a-degenerate-1-times-1-times-n-box-count-n-1:
   tex:
     in: \mathrm{Count}(\mathrm{BoxedPlanePartitions}(1, 1, 4))
     out: "5"
+  fullform:
+    in: Count[BoxedPlanePartitions[1, 1, 4]]

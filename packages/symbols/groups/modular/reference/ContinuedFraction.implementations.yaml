@@ -5,6 +5,8 @@ pi-s-famous-convergent:
   tex:
     in: \mathrm{ContinuedFraction}(\frac{355}{113})
     out: \bigl\lbrack3, 7, 16\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Rational[355, 113]]
   wolfram:
     in: ContinuedFraction[Rational[355, 113]]
     out: "{3, 7, 16}"
@@ -24,6 +26,8 @@ pi-s-famous-convergent:
   tex:
     in: \mathrm{SternBrocotPath}(5, 3)
     out: \text{RLR}
+  fullform:
+    in: SternBrocotPath[5, 3]
 and-back-again:
   epsil:
     in: FromSternBrocotPath("RLR")
@@ -31,6 +35,8 @@ and-back-again:
   tex:
     in: \mathrm{FromSternBrocotPath}(\text{RLR})
     out: \frac{5}{3}
+  fullform:
+    in: FromSternBrocotPath["RLR"]
 1-cdot-2-3-cdot-1-1:
   epsil:
     in: FareyNeighbours(1, 3, 1, 2)
@@ -41,6 +47,8 @@ and-back-again:
   traditional:
     in: \mathrm{FareyNeighbours}(1, 3, 1, 2)
     out: \mathrm{True}
+  fullform:
+    in: FareyNeighbours[1, 3, 1, 2]
 47-17-2-1-1-1-3-1-4:
   epsil:
     in: ContinuedFraction(47 / 17)
@@ -48,6 +56,8 @@ and-back-again:
   tex:
     in: \mathrm{ContinuedFraction}(\frac{47}{17})
     out: \bigl\lbrack2, 1, 3, 4\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Rational[47, 17]]
   wolfram:
     in: ContinuedFraction[Rational[47, 17]]
   sympy:
@@ -61,6 +71,8 @@ the-first-20-terms-of-a-quadratic-irrational:
   tex:
     in: \mathrm{ContinuedFraction}(\sqrt{13}, 20)
     out: \bigl\lbrack3, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Sqrt[13], 20]
   wolfram:
     in: ContinuedFraction[Sqrt[13], 20]
 e-s-pattern-1-2k-1:
@@ -70,6 +82,8 @@ e-s-pattern-1-2k-1:
   tex:
     in: \mathrm{ContinuedFraction}(e, 10)
     out: \bigl\lbrack2, 1, 2, 1, 1, 4, 1, 1, 6, 1\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[E, 10]
   wolfram:
     in: ContinuedFraction[E, 10]
 any-constant-compute-engine-can-evaluate:
@@ -79,6 +93,8 @@ any-constant-compute-engine-can-evaluate:
   tex:
     in: \mathrm{ContinuedFraction}(\gamma, 10)
     out: \bigl\lbrack0, 1, 1, 2, 1, 2, 1, 4, 3, 13\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[EulerGamma, 10]
   wolfram:
     in: ContinuedFraction[EulerGamma, 10]
 a-floating-point-number-read-as-the-rational-it:
@@ -88,6 +104,8 @@ a-floating-point-number-read-as-the-rational-it:
   tex:
     in: \mathrm{ContinuedFraction}(3.245)
     out: \bigl\lbrack3, 4, 12, 4\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[3.245]
   wolfram:
     in: ContinuedFraction[3.245]
   sympy:
@@ -101,6 +119,8 @@ negative-a-floor-for-a-0-then-positive-terms-3-1:
   tex:
     in: \mathrm{ContinuedFraction}(-\frac{47}{17})
     out: \bigl\lbrack-3, 4, 4\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Rational[-47, 17]]
   wolfram:
     in: ContinuedFraction[Rational[-47, 17]]
     note: Wolfram negates every term instead, giving {-2, -1, -3, -4}.
@@ -115,6 +135,8 @@ fromcontinuedfraction-inverts-it:
   tex:
     in: \mathrm{FromContinuedFraction}(\mathrm{ContinuedFraction}(\frac{47}{17}))
     out: \frac{47}{17}
+  fullform:
+    in: FromContinuedFraction[ContinuedFraction[Rational[47, 17]]]
 20-terms-of-pi-past-the-13-term-double-precision:
   epsil:
     in: ContinuedFraction(Pi, 20)
@@ -122,6 +144,8 @@ fromcontinuedfraction-inverts-it:
   tex:
     in: \mathrm{ContinuedFraction}(\pi, 20)
     out: \bigl\lbrack3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Pi, 20]
   wolfram:
     in: ContinuedFraction[Pi, 20]
 a-quadratic-irrational-s-exact-expansion-is:
@@ -131,6 +155,8 @@ a-quadratic-irrational-s-exact-expansion-is:
   tex:
     in: \mathrm{ContinuedFraction}(\sqrt{13})
     out: \bigl\lbrack3, \bigl\lbrack1, 1, 1, 1, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Sqrt[13]]
   wolfram:
     in: ContinuedFraction[Sqrt[13]]
   sympy:
@@ -144,6 +170,8 @@ varphi-1-overline-1-purely-periodic-so-the:
   tex:
     in: \mathrm{ContinuedFraction}(\frac{1+\sqrt{5}}{2})
     out: \bigl\lbrack1, \bigl\lbrack1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Divide[Plus[1, Sqrt[5]], 2]]
   wolfram:
     in: ContinuedFraction[Divide[Plus[1, Sqrt[5]], 2]]
   sympy:
@@ -157,6 +185,8 @@ the-named-constant-unfolded-to-1-sqrt-5-2-first:
   tex:
     in: \mathrm{ContinuedFraction}(\varphi, 10)
     out: \bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[GoldenRatio, 10]
   wolfram:
     in: ContinuedFraction[GoldenRatio, 10]
 a-sum-of-surds-still-a-quadratic-irrational:
@@ -166,6 +196,8 @@ a-sum-of-surds-still-a-quadratic-irrational:
   tex:
     in: \mathrm{ContinuedFraction}(1+\sqrt{2}, 5)
     out: \bigl\lbrack2, 2, 2, 2, 2\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Plus[1, Sqrt[2]], 5]
   wolfram:
     in: ContinuedFraction[Plus[1, Sqrt[2]], 5]
 a-cube-root-algebraic-degree-3-not-periodic-so-a:
@@ -175,6 +207,8 @@ a-cube-root-algebraic-degree-3-not-periodic-so-a:
   tex:
     in: \mathrm{ContinuedFraction}(\sqrt[3]{2}, 10)
     out: \bigl\lbrack1, 3, 1, 5, 1, 1, 4, 1, 1, 8\bigr\rbrack
+  fullform:
+    in: ContinuedFraction[Power[2, Rational[1, 3]], 10]
   wolfram:
     in: ContinuedFraction[Power[2, Rational[1, 3]], 10]
 a-periodic-tail-rebuilds-the-quadratic:
@@ -184,6 +218,8 @@ a-periodic-tail-rebuilds-the-quadratic:
   tex:
     in: \mathrm{FromContinuedFraction}(\bigl\lbrack3, \bigl\lbrack1, 1, 1, 1, 6\bigr\rbrack\bigr\rbrack)
     out: \sqrt{13}
+  fullform:
+    in: FromContinuedFraction[List[3, List[1, 1, 1, 1, 6]]]
 1-overline-2-sqrt-2:
   epsil:
     in: FromContinuedFraction([1, [2]])
@@ -191,6 +227,8 @@ a-periodic-tail-rebuilds-the-quadratic:
   tex:
     in: \mathrm{FromContinuedFraction}(\bigl\lbrack1, \bigl\lbrack2\bigr\rbrack\bigr\rbrack)
     out: \sqrt{2}
+  fullform:
+    in: FromContinuedFraction[List[1, List[2]]]
 symbolic-terms-build-the-nested-fraction-left:
   epsil:
     in: FromContinuedFraction([a, b, c])
@@ -198,6 +236,8 @@ symbolic-terms-build-the-nested-fraction-left:
   tex:
     in: \mathrm{FromContinuedFraction}(\bigl\lbrack a, b, c\bigr\rbrack)
     out: a+\frac{1}{b+\frac{1}{c}}
+  fullform:
+    in: FromContinuedFraction[List[a, b, c]]
   wolfram:
     in:
     note: Wolfram's own FromContinuedFraction[{a,b,c}] combines it into the single ratio (a + (1+ab)c)/(1+bc); we leave the nested a + 1/(b + 1/c) form, matching what a reader would write down term by term.

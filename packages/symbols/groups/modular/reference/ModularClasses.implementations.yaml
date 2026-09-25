@@ -5,6 +5,8 @@ four-closed-geodesics-of-symbolic-length-4:
   tex:
     in: \mathrm{ModularClasses}(4)
     out: \bigl\lbrack\text{LLLR}, \text{LLRR}, \text{LRLR}, \text{LRRR}\bigr\rbrack
+  fullform:
+    in: ModularClasses[4]
 the-same-geodesic-entered-elsewhere:
   epsil:
     in: ModularClass("LRL")
@@ -12,6 +14,8 @@ the-same-geodesic-entered-elsewhere:
   tex:
     in: \mathrm{ModularClass}(\text{LRL})
     out: \text{LLR}
+  fullform:
+    in: ModularClass["LRL"]
 lrlr-is-lr-traversed-twice:
   epsil:
     in: IsPrimitiveClass("LRLR")
@@ -22,6 +26,8 @@ lrlr-is-lr-traversed-twice:
   traditional:
     in: \mathrm{IsPrimitiveClass}(\text{LRLR})
     out: \mathrm{False}
+  fullform:
+    in: IsPrimitiveClass["LRLR"]
 same-word-length-as-lllr-different-geodesic:
   epsil:
     in: ModularTrace("LRLR")
@@ -29,3 +35,5 @@ same-word-length-as-lllr-different-geodesic:
   tex:
     in: \mathrm{ModularTrace}(\text{LRLR})
     out: "7"
+  fullform:
+    in: ModularTrace["LRLR"]

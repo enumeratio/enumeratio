@@ -8,6 +8,8 @@ a-star-is-a-tree:
   traditional:
     in: \mathrm{IsTreeGraph}(\mathrm{StarGraph}(5))
     out: \mathrm{True}
+  fullform:
+    in: TreeGraphQ[StarGraph[5]]
   wolfram:
     in: TreeGraphQ[StarGraph[5]]
 a-cycle-is-not-a-tree:
@@ -20,6 +22,8 @@ a-cycle-is-not-a-tree:
   traditional:
     in: \mathrm{IsTreeGraph}(\mathrm{CycleGraph}(4))
     out: \mathrm{False}
+  fullform:
+    in: TreeGraphQ[CycleGraph[4]]
   wolfram:
     in: TreeGraphQ[CycleGraph[4]]
 a-disconnected-forest-is-not-a-tree:
@@ -32,5 +36,7 @@ a-disconnected-forest-is-not-a-tree:
   traditional:
     in: \mathrm{IsTreeGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
     out: \mathrm{False}
+  fullform:
+    in: TreeGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]
   wolfram:
     in: TreeGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]

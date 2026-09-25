@@ -5,6 +5,8 @@ a-generic-point-checked-against-mpmath-s-hyperu:
   tex:
     in: \mathrm{HypergeometricU}(1, 2.5, 3)
     out: 0.382\,340\,662\,490\,315\,6
+  fullform:
+    in: HypergeometricU[1, 2.5, 3]
   wolfram:
     in: HypergeometricU[1, 2.5, 3]
 integer-b-stays-symbolic-the-connection-formula:
@@ -14,5 +16,7 @@ integer-b-stays-symbolic-the-connection-formula:
   tex:
     in: \mathrm{HypergeometricU}(1, 2, 3)
     out: \mathrm{HypergeometricU}(1, 2, 3)
+  fullform:
+    in: HypergeometricU[1, 2, 3]
   wolfram:
     in: HypergeometricU[1, 2, 3]

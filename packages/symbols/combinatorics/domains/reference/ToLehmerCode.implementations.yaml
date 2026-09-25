@@ -5,3 +5,5 @@ the-one-line-word-231:
   tex:
     in: \mathrm{ToLehmerCode}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
     out: \mathrm{SubexcedantSeq}(\bigl\lbrack1, 1, 0\bigr\rbrack)
+  fullform:
+    in: ToLehmerCode[Permutation[List[2, 3, 1]]]

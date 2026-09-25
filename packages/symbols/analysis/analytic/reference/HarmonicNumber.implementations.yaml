@@ -8,6 +8,8 @@ h-10-frac-7381-2520:
   traditional:
     in: H_{10}
     out: \frac{7\,381}{2\,520}
+  fullform:
+    in: HarmonicNumber[10]
   wolfram:
     in: HarmonicNumber[10]
     out: 7381/2520
@@ -24,6 +26,8 @@ h-0-0-the-empty-sum:
   traditional:
     in: H_{0}
     out: "0"
+  fullform:
+    in: HarmonicNumber[0]
   wolfram:
     in: HarmonicNumber[0]
     out: "0"
@@ -40,6 +44,8 @@ h-5-1-sum-k-1-5-k-15-a-negative-order-is-still:
   traditional:
     in: H_{5}^{(-1)}
     out: "15"
+  fullform:
+    in: HarmonicNumber[5, -1]
   wolfram:
     in: HarmonicNumber[5, -1]
     out: "15"
@@ -56,6 +62,8 @@ a-floating-point-argument-evaluates-via-psi-z-1:
   traditional:
     in: H_{2.5}
     out: 1.680\,372\,305\,546\,776\,047\,84
+  fullform:
+    in: HarmonicNumber[2.5]
   wolfram:
     in: HarmonicNumber[2.5]
     out: "1.680372305546776"
@@ -72,6 +80,8 @@ no-sum-below-n-0:
   traditional:
     in: H_{-3}
     out: \tilde\infty
+  fullform:
+    in: HarmonicNumber[-3]
   wolfram:
     in: HarmonicNumber[-3]
     out: ComplexInfinity
@@ -88,6 +98,8 @@ a-non-integer-order-stays-symbolic-under-plain:
   traditional:
     in: H_{5}^{(\frac{1}{2})}
     out: H_{5}^{(\frac{1}{2})}
+  fullform:
+    in: HarmonicNumber[5, Rational[1, 2]]
   wolfram:
     in: HarmonicNumber[5, Rational[1, 2]]
     out: HarmonicNumber[5, 1/2]
@@ -104,6 +116,8 @@ h-10-2-sum-k-1-10-k-2-exact:
   traditional:
     in: H_{10}^{(2)}
     out: \frac{1\,968\,329}{1\,270\,080}
+  fullform:
+    in: HarmonicNumber[10, 2]
   wolfram:
     in: HarmonicNumber[10, 2]
 non-integer-arguments-via-psi-z-1-gamma:
@@ -116,6 +130,8 @@ non-integer-arguments-via-psi-z-1-gamma:
   traditional:
     in: H_{0.33}
     out: 0.441\,523\,646\,937\,363\,528\,111
+  fullform:
+    in: HarmonicNumber[0.33]
   wolfram:
     in: HarmonicNumber[0.33]
 the-generalized-form-off-the-integers-via-zeta-r:
@@ -128,6 +144,8 @@ the-generalized-form-off-the-integers-via-zeta-r:
   traditional:
     in: H_{0.8}^{(3)}
     out: 0.940\,124\,048\,948\,776\,980\,484
+  fullform:
+    in: HarmonicNumber[0.8, 3]
   wolfram:
     in: HarmonicNumber[0.8, 3]
 complex-arguments:
@@ -140,6 +158,8 @@ complex-arguments:
   traditional:
     in: H_{1.5+2i}
     out: 1.617\,049\,423\,074\,486\,3+0.780\,197\,135\,729\,858\,8i
+  fullform:
+    in: HarmonicNumber[Complex[1.5, 2]]
   wolfram:
     in: HarmonicNumber[Complex[1.5, 2]]
 order-r-1-off-the-integers-is-plain-h-z-h-e-1:
@@ -152,6 +172,8 @@ order-r-1-off-the-integers-is-plain-h-z-h-e-1:
   traditional:
     in: N(H_{e}^{(1)})
     out: 1.750\,021\,380\,536\,541\,7
+  fullform:
+    in: N[HarmonicNumber[E, 1]]
   wolfram:
     in: N[HarmonicNumber[E, 1]]
 listable-threads-over-a-list:
@@ -161,6 +183,8 @@ listable-threads-over-a-list:
   tex:
     in: \mathrm{HarmonicNumber}(\bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack)
     out: \bigl\lbrack\frac{3}{2}, \frac{11}{6}, \frac{137}{60}, \frac{363}{140}, \frac{83\,711}{27\,720}\bigr\rbrack
+  fullform:
+    in: HarmonicNumber[List[2, 3, 5, 7, 11]]
   wolfram:
     in: HarmonicNumber[List[2, 3, 5, 7, 11]]
 threads-elementwise-over-an-array-of-orders-and:
@@ -170,6 +194,8 @@ threads-elementwise-over-an-array-of-orders-and:
   tex:
     in: \mathrm{HarmonicNumber}(2, \bigl\lbrack\bigl\lbrack\frac{1}{2}, 2\bigr\rbrack, \bigl\lbrack2, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack1+\frac{\sqrt{2}}{2}, \frac{5}{4}\bigr\rbrack, \bigl\lbrack\frac{5}{4}, 1+\frac{\sqrt{2}}{2}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: HarmonicNumber[2, List[List[Rational[1, 2], 2], List[2, Rational[1, 2]]]]
   wolfram:
     in: HarmonicNumber[2, List[List[Rational[1, 2], 2], List[2, Rational[1, 2]]]]
 h-1-2-2-2-ln-2-exact-at-rational-arguments-by:
@@ -182,6 +208,8 @@ h-1-2-2-2-ln-2-exact-at-rational-arguments-by:
   traditional:
     in: H_{\frac{1}{2}}
     out: 2-2\ln(2)
+  fullform:
+    in: HarmonicNumber[Rational[1, 2]]
   wolfram:
     in: HarmonicNumber[Rational[1, 2]]
 h-1-4-4-frac-pi-2-3-ln-2:
@@ -194,6 +222,8 @@ h-1-4-4-frac-pi-2-3-ln-2:
   traditional:
     in: H_{\frac{1}{4}}
     out: 4-3\ln(2)-\frac{\pi}{2}
+  fullform:
+    in: HarmonicNumber[Rational[1, 4]]
   wolfram:
     in: HarmonicNumber[Rational[1, 4]]
 symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays:
@@ -206,6 +236,8 @@ symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays:
   traditional:
     in: H_{n}^{(-1)}
     out: \frac{n^2}{2}+\frac{n}{2}
+  fullform:
+    in: HarmonicNumber[n, -1]
 the-harmonic-series-diverges:
   epsil:
     in: HarmonicNumber(PositiveInfinity)
@@ -216,6 +248,8 @@ the-harmonic-series-diverges:
   traditional:
     in: H_{\infty}
     out: \infty
+  fullform:
+    in: HarmonicNumber[Infinity]
   wolfram:
     in: HarmonicNumber[Infinity]
 h-infty-r-zeta-r-for-r-1-the-basel-sum:
@@ -228,6 +262,8 @@ h-infty-r-zeta-r-for-r-1-the-basel-sum:
   traditional:
     in: H_{\infty}^{(2)}
     out: \frac{\pi^2}{6}
+  fullform:
+    in: HarmonicNumber[Infinity, 2]
   wolfram:
     in: HarmonicNumber[Infinity, 2]
 interval-arithmetic-in-the-order:
@@ -240,6 +276,8 @@ interval-arithmetic-in-the-order:
   traditional:
     in: H_{0.2}^{(\mathrm{Interval}(2.1, 2.2))}
     out: \mathrm{Interval}(0.386\,346\,941\,184\,175\,9, 0.395\,092\,392\,240\,286\,8)
+  fullform:
+    in: HarmonicNumber[0.2, Interval[List[2.1, 2.2]]]
   wolfram:
     in: HarmonicNumber[0.2, Interval[List[2.1, 2.2]]]
 uncertainty-propagation-in-the-order:
@@ -252,6 +290,8 @@ uncertainty-propagation-in-the-order:
   traditional:
     in: H_{\frac{3}{2}}^{(\mathrm{Around}(2.1, 0.01))}
     out: \mathrm{Around}(1.145\,516\,434\,049\,132\,6, 0.000\,879\,982\,646\,698\,109\,1)
+  fullform:
+    in: HarmonicNumber[Rational[3, 2], Around[2.1, 0.01]]
   wolfram:
     in: HarmonicNumber[Rational[3, 2], Around[2.1, 0.01]]
 to-exactly-30-significant-digits-not-yet-31-come:
@@ -264,6 +304,8 @@ to-exactly-30-significant-digits-not-yet-31-come:
   traditional:
     in: N(H_{\frac{1}{2}}, 30)
     out: 0.613\,705\,638\,880\,109\,381\,166
+  fullform:
+    in: N[HarmonicNumber[Rational[1, 2]], 30]
   wolfram:
     in: N[HarmonicNumber[Rational[1, 2]], 30]
 order-1-gives-h-z-itself-not-the-zeta-1-pole:
@@ -276,6 +318,8 @@ order-1-gives-h-z-itself-not-the-zeta-1-pole:
   traditional:
     in: N(H_{2.5}^{(1)})
     out: 1.680\,372\,305\,546\,776\,047\,84
+  fullform:
+    in: N[HarmonicNumber[2.5, 1]]
   wolfram:
     in: N[HarmonicNumber[2.5, 1]]
 at-an-integer-order-1-agrees-exactly-with-the:
@@ -288,5 +332,7 @@ at-an-integer-order-1-agrees-exactly-with-the:
   traditional:
     in: H_{10}^{(1)}
     out: \frac{7\,381}{2\,520}
+  fullform:
+    in: HarmonicNumber[10, 1]
   wolfram:
     in: HarmonicNumber[10, 1]

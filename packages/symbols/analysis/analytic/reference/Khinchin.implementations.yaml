@@ -5,5 +5,7 @@ khinchin-s-constant:
   tex:
     in: N(\mathrm{Khinchin})
     out: 2.685\,452\,001\,065\,306\,2
+  fullform:
+    in: N[Khinchin]
   wolfram:
     in: N[Khinchin]

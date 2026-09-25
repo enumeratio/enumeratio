@@ -5,3 +5,5 @@ count-noncrossingtrees-5-273-binom-15-5-11:
   tex:
     in: \mathrm{Count}(\mathrm{NonCrossingTrees}(5))
     out: "273"
+  fullform:
+    in: Count[NonCrossingTrees[5]]

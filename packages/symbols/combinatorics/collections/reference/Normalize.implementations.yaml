@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{Normalize}(\bigl\lbrack3, 4\bigr\rbrack)
     out: \bigl\lbrack\frac{3}{5}, \frac{4}{5}\bigr\rbrack
+  fullform:
+    in: Normalize[List[3, 4]]
   wolfram:
     in: Normalize[List[3, 4]]
 zero-vector:
@@ -14,5 +16,7 @@ zero-vector:
   tex:
     in: \mathrm{Normalize}(\bigl\lbrack0, 0\bigr\rbrack)
     out: \bigl\lbrack0, 0\bigr\rbrack
+  fullform:
+    in: Normalize[List[0, 0]]
   wolfram:
     in: Normalize[List[0, 0]]

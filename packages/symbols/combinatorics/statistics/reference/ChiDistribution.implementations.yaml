@@ -5,6 +5,8 @@ chi-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{ChiDistribution}(3), 1)
     out: (\sqrt{2})(2\Gamma(\frac{3}{2})\sqrt{e})^{-1}
+  fullform:
+    in: PDF[ChiDistribution[3], 1]
   wolfram:
     in: PDF[ChiDistribution[3], 1]
 chi-cdf-exact:
@@ -17,6 +19,8 @@ chi-cdf-exact:
   traditional:
     in: \operatorname{CDF}(\mathrm{ChiDistribution}(3), 1)
     out: 1-Q(\frac{3}{2}, \frac{1}{2})
+  fullform:
+    in: CDF[ChiDistribution[3], 1]
   wolfram:
     in: CDF[ChiDistribution[3], 1]
 chi-mean-exact:
@@ -26,5 +30,7 @@ chi-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{ChiDistribution}(3))
     out: \frac{\sqrt{2}\Gamma(2)}{\Gamma(\frac{3}{2})}
+  fullform:
+    in: Mean[ChiDistribution[3]]
   wolfram:
     in: Mean[ChiDistribution[3]]

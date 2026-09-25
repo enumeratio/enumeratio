@@ -8,6 +8,8 @@ the-identity-s-class-is-a-singleton:
   traditional:
     in: \mathrm{ClassSum}(D_{3}, 1)
     out: \mathrm{GroupBasis}(\text{0})
+  fullform:
+    in: ClassSum[DihedralGroup[3], 1]
   oscar:
     in: enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 1)
     out: combination:{"GroupBasis(0)":1}
@@ -21,6 +23,8 @@ class-sums-are-central:
   traditional:
     in: \mathrm{IsCentral}(D_{3}, \mathrm{ClassSum}(D_{3}, 2))
     out: \mathrm{True}
+  fullform:
+    in: IsCentral[DihedralGroup[3], ClassSum[DihedralGroup[3], 2]]
   oscar:
     in: enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 2))
     out: "true"
@@ -34,6 +38,8 @@ a-lone-reflection-is-not:
   traditional:
     in: \mathrm{IsCentral}(D_{3}, \mathrm{GroupBasis}(\text{\mathrm{s0}}))
     out: \mathrm{False}
+  fullform:
+    in: IsCentral[DihedralGroup[3], GroupBasis[String[s0]]]
   oscar:
     in: enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), EnumeratioBasis("s0"))
     out: "false"
@@ -47,6 +53,9 @@ in-an-abelian-group-everything-is-central:
   traditional:
     in: \mathrm{IsCentral}(C_{6}, \mathrm{GroupBasis}(\text{3}))
     out: \mathrm{True}
+  fullform:
+    in: IsCentral[CyclicGroup[6], GroupBasis[String[3]]]
+    back: [IsCentral, [CyclicGroup, 6], [GroupBasis, [String, 3]]]
   oscar:
     in: enumeratio_is_central(enumeratio_cyclic(cyclic_group(PermGroup, 6), 6), EnumeratioBasis("3"))
     out: "true"

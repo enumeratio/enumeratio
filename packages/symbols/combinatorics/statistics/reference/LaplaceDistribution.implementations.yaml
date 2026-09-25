@@ -5,6 +5,8 @@ laplace-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}), 0)
     out: "1"
+  fullform:
+    in: PDF[LaplaceDistribution[0, Rational[1, 2]], 0]
   wolfram:
     in: PDF[LaplaceDistribution[0, Rational[1, 2]], 0]
 laplace-cdf-exact:
@@ -14,6 +16,8 @@ laplace-cdf-exact:
   tex:
     in: \operatorname{CDF}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}), 0)
     out: \frac{1}{2}
+  fullform:
+    in: CDF[LaplaceDistribution[0, Rational[1, 2]], 0]
   wolfram:
     in: CDF[LaplaceDistribution[0, Rational[1, 2]], 0]
 laplace-mean-exact:
@@ -23,6 +27,8 @@ laplace-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}))
     out: "0"
+  fullform:
+    in: Mean[LaplaceDistribution[0, Rational[1, 2]]]
   wolfram:
     in: Mean[LaplaceDistribution[0, Rational[1, 2]]]
 laplace-variance-exact:
@@ -32,5 +38,7 @@ laplace-variance-exact:
   tex:
     in: \mathrm{Variance}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}))
     out: \frac{1}{2}
+  fullform:
+    in: Variance[LaplaceDistribution[0, Rational[1, 2]]]
   wolfram:
     in: Variance[LaplaceDistribution[0, Rational[1, 2]]]

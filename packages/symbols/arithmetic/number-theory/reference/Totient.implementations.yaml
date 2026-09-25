@@ -8,6 +8,8 @@ totient-12:
   traditional:
     in: \varphi(12)
     out: "4"
+  fullform:
+    in: EulerPhi[12]
   wolfram:
     in: EulerPhi[12]
     out: "4"
@@ -39,6 +41,8 @@ totient-36:
   traditional:
     in: \varphi(36)
     out: "12"
+  fullform:
+    in: EulerPhi[36]
   wolfram:
     in: EulerPhi[36]
     out: "12"
@@ -70,6 +74,8 @@ totient-1:
   traditional:
     in: \varphi(1)
     out: "1"
+  fullform:
+    in: EulerPhi[1]
   wolfram:
     in: EulerPhi[1]
     out: "1"
@@ -101,6 +107,8 @@ rsa-key-setup-varphi-17-times-23-16-times-22-352:
   traditional:
     in: \varphi(391)
     out: "352"
+  fullform:
+    in: EulerPhi[391]
   wolfram:
     in: EulerPhi[391]
     out: "352"
@@ -132,6 +140,8 @@ sum-d-mid-n-varphi-d-n-checked-over-the-divisors:
   traditional:
     in: \varphi(1)+\varphi(2)+\varphi(3)+\varphi(4)+\varphi(6)+\varphi(12)
     out: "12"
+  fullform:
+    in: Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]
   wolfram:
     in: Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]
     out: "12"
@@ -163,9 +173,10 @@ multiplicative-varphi-mn-varphi-m-varphi-n-when:
   traditional:
     in: \varphi(12)=\varphi(4)\varphi(3)
     out: \mathrm{True}
+  fullform:
+    in: Equal[EulerPhi[12], Times[EulerPhi[4], EulerPhi[3]]]
   wolfram:
     in: (EulerPhi[12] == Times[EulerPhi[4], EulerPhi[3]])
-    back: Unreadable
     out: True
     tex:
       in: \phi (12)=\phi (4) \phi (3)
@@ -195,6 +206,8 @@ varphi-0-0-as-in-wolfram:
   traditional:
     in: \varphi(0)
     out: "0"
+  fullform:
+    in: EulerPhi[0]
   wolfram:
     in: EulerPhi[0]
     out: "0"
@@ -222,6 +235,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{Totient}(\bigl\lbrack2, 4, 6\bigr\rbrack)
     out: \bigl\lbrack1, 2, 2\bigr\rbrack
+  fullform:
+    in: EulerPhi[List[2, 4, 6]]
   wolfram:
     in: EulerPhi[List[2, 4, 6]]
     out: "{1, 2, 2}"
@@ -252,6 +267,8 @@ totient-10:
   traditional:
     in: \varphi(10)
     out: "4"
+  fullform:
+    in: EulerPhi[10]
   wolfram:
     in: EulerPhi[10]
   sympy:
@@ -274,6 +291,8 @@ large-integers-varphi-50:
   traditional:
     in: \varphi(50!)
     out: 4\,218\,559\,200\,885\,839\,042\,679\,312\,107\,816\,703\,841\,788\,854\,953\,574\,400\,000\,000\,000\,000
+  fullform:
+    in: EulerPhi[Factorial[50]]
   wolfram:
     in: EulerPhi[Factorial[50]]
   sympy:
@@ -296,6 +315,8 @@ negative-n-varphi-n-varphi-n:
   traditional:
     in: \varphi(-10)
     out: "4"
+  fullform:
+    in: EulerPhi[-10]
   wolfram:
     in: EulerPhi[-10]
   sympy:
@@ -318,6 +339,8 @@ varphi-p-p-1-for-a-prime-p:
   traditional:
     in: \varphi(17)
     out: "16"
+  fullform:
+    in: EulerPhi[17]
   wolfram:
     in: EulerPhi[17]
   sympy:
@@ -340,6 +363,8 @@ varphi-p-k-p-k-1-p-1-3-3-cdot-2-54:
   traditional:
     in: \varphi(81)
     out: "54"
+  fullform:
+    in: EulerPhi[81]
   wolfram:
     in: EulerPhi[81]
   sympy:
@@ -362,6 +387,8 @@ euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when:
   traditional:
     in: \left(7^{\varphi(10)}\bmod 10\right)
     out: "1"
+  fullform:
+    in: PowerMod[7, EulerPhi[10], 10]
   wolfram:
     in: PowerMod[7, EulerPhi[10], 10]
   sage:

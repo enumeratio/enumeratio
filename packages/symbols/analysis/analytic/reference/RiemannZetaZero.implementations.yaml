@@ -5,6 +5,8 @@ the-first-nontrivial-zero-frac-12-14-1347-i:
   tex:
     in: N(\mathrm{RiemannZetaZero}(1))
     out: 0.5+14.134\,725\,141\,734\,693i
+  fullform:
+    in: N[ZetaZero[1]]
   wolfram:
     in: N[ZetaZero[1]]
 n-riemannzetazero-2:
@@ -14,6 +16,8 @@ n-riemannzetazero-2:
   tex:
     in: N(\mathrm{RiemannZetaZero}(2))
     out: 0.5+21.022\,039\,638\,771\,556i
+  fullform:
+    in: N[ZetaZero[2]]
   wolfram:
     in: N[ZetaZero[2]]
 n-riemannzetazero-10:
@@ -23,5 +27,7 @@ n-riemannzetazero-10:
   tex:
     in: N(\mathrm{RiemannZetaZero}(10))
     out: 0.5+49.773\,832\,477\,672\,3i
+  fullform:
+    in: N[ZetaZero[10]]
   wolfram:
     in: N[ZetaZero[10]]

@@ -5,6 +5,8 @@ weibull-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{WeibullDistribution}(2, 5), 4)
     out: (8)(25\exp(\frac{16}{25}))^{-1}
+  fullform:
+    in: PDF[WeibullDistribution[2, 5], 4]
   wolfram:
     in: PDF[WeibullDistribution[2, 5], 4]
 weibull-cdf-exact:
@@ -14,6 +16,8 @@ weibull-cdf-exact:
   tex:
     in: \operatorname{CDF}(\mathrm{WeibullDistribution}(2, 5), 4)
     out: 1-\exp(-\frac{16}{25})
+  fullform:
+    in: CDF[WeibullDistribution[2, 5], 4]
   wolfram:
     in: CDF[WeibullDistribution[2, 5], 4]
 weibull-mean-exact:
@@ -23,5 +27,7 @@ weibull-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{WeibullDistribution}(2, 5))
     out: 5\Gamma(\frac{3}{2})
+  fullform:
+    in: Mean[WeibullDistribution[2, 5]]
   wolfram:
     in: Mean[WeibullDistribution[2, 5]]

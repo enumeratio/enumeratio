@@ -5,6 +5,8 @@ at-a-1-it-is-the-bernoulli-number-b-2:
   tex:
     in: \mathrm{NorlundB}(2, 1)
     out: \frac{1}{6}
+  fullform:
+    in: NorlundB[2, 1]
   wolfram:
     in: NorlundB[2, 1]
 norlundb-4-1:
@@ -14,6 +16,8 @@ norlundb-4-1:
   tex:
     in: \mathrm{NorlundB}(4, 1)
     out: -\frac{1}{30}
+  fullform:
+    in: NorlundB[4, 1]
   wolfram:
     in: NorlundB[4, 1]
 norlundb-2-2:
@@ -23,6 +27,8 @@ norlundb-2-2:
   tex:
     in: \mathrm{NorlundB}(2, 2)
     out: \frac{5}{6}
+  fullform:
+    in: NorlundB[2, 2]
   wolfram:
     in: NorlundB[2, 2]
 norlundb-3-2:
@@ -32,6 +38,8 @@ norlundb-3-2:
   tex:
     in: \mathrm{NorlundB}(3, 2)
     out: -\frac{1}{2}
+  fullform:
+    in: NorlundB[3, 2]
   wolfram:
     in: NorlundB[3, 2]
 a-polynomial-in-a:
@@ -41,3 +49,5 @@ a-polynomial-in-a:
   tex:
     in: \mathrm{NorlundB}(1, a)
     out: -\frac{a}{2}
+  fullform:
+    in: NorlundB[1, a]

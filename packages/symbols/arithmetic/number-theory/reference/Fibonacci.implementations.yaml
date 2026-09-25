@@ -8,6 +8,8 @@ fibonacci-0:
   traditional:
     in: F_{0}
     out: "0"
+  fullform:
+    in: Fibonacci[0]
   wolfram:
     in: Fibonacci[0]
     out: "0"
@@ -39,6 +41,8 @@ fibonacci-1:
   traditional:
     in: F_{1}
     out: "1"
+  fullform:
+    in: Fibonacci[1]
   wolfram:
     in: Fibonacci[1]
     out: "1"
@@ -70,6 +74,8 @@ fibonacci-10:
   traditional:
     in: F_{10}
     out: "55"
+  fullform:
+    in: Fibonacci[10]
   wolfram:
     in: Fibonacci[10]
     out: "55"
@@ -101,6 +107,8 @@ fibonacci-20:
   traditional:
     in: F_{20}
     out: 6\,765
+  fullform:
+    in: Fibonacci[20]
   wolfram:
     in: Fibonacci[20]
     out: "6765"
@@ -132,6 +140,8 @@ fibonacci-8:
   traditional:
     in: F_{8}
     out: "21"
+  fullform:
+    in: Fibonacci[8]
   wolfram:
     in: Fibonacci[8]
   sympy:
@@ -154,6 +164,8 @@ exact-at-any-size-f-100-has-21-digits:
   traditional:
     in: F_{100}
     out: 354\,224\,848\,179\,261\,915\,075
+  fullform:
+    in: Fibonacci[100]
   wolfram:
     in: Fibonacci[100]
   sympy:
@@ -176,6 +188,8 @@ a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
   traditional:
     in: F_{1.5}
     out: 0.920\,442\,065\,259\,926
+  fullform:
+    in: Fibonacci[1.5]
   wolfram:
     in: Fibonacci[1.5]
   sympy:
@@ -198,6 +212,8 @@ the-two-argument-fibonacci-polynomial-f-7-x-from:
   traditional:
     in: F_{7}(x)
     out: x^6+5x^4+6x^2+1
+  fullform:
+    in: Fibonacci[7, x]
 the-fibonacci-polynomial-at-a-real-order-and:
   epsil:
     in: Fibonacci(5.8, 3)
@@ -208,6 +224,8 @@ the-fibonacci-polynomial-at-a-real-order-and:
   traditional:
     in: F_{5.8}(3)
     out: 283.482\,730\,832\,949\,9
+  fullform:
+    in: Fibonacci[5.8, 3]
   wolfram:
     in: Fibonacci[5.8, 3]
 special-value-of-the-fibonacci-polynomial-f-1-0:
@@ -220,6 +238,8 @@ special-value-of-the-fibonacci-polynomial-f-1-0:
   traditional:
     in: F_{1}(0)
     out: "1"
+  fullform:
+    in: Fibonacci[1, 0]
   wolfram:
     in: Fibonacci[1, 0]
 special-value-of-the-fibonacci-polynomial-f-0-0:
@@ -232,6 +252,8 @@ special-value-of-the-fibonacci-polynomial-f-0-0:
   traditional:
     in: F_{0}(0)
     out: "0"
+  fullform:
+    in: Fibonacci[0, 0]
   wolfram:
     in: Fibonacci[0, 0]
 f-3-x-x-2-1-threads-element-wise-over-a-matrix:
@@ -241,6 +263,8 @@ f-3-x-x-2-1-threads-element-wise-over-a-matrix:
   tex:
     in: \mathrm{Fibonacci}(3, \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 5\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1, 26\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Fibonacci[3, List[List[-1, 0], List[0, 5]]]
   wolfram:
     in: Fibonacci[3, List[List[-1, 0], List[0, 5]]]
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143:
@@ -253,6 +277,8 @@ sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143:
   traditional:
     in: \sum_{k=1}^{10}F_{k}
     out: "143"
+  fullform:
+    in: Sum[Fibonacci[k], List[k, 1, 10]]
   wolfram:
     in: Sum[Fibonacci[k], List[k, 1, 10]]
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl:
@@ -265,9 +291,10 @@ the-doubling-identity-f-2n-f-n-l-n-see-lucasl:
   traditional:
     in: F_{20}=F_{10}L_{10}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Fibonacci[20], Times[Fibonacci[10], LucasL[10]]]
   wolfram:
     in: (Fibonacci[20] == Times[Fibonacci[10], LucasL[10]])
-    back: Unreadable
   sympy:
     in: enumeratio_equal(fibonacci(20), (fibonacci(10) * lucas(10)))
   sage:
@@ -284,6 +311,8 @@ f-1000-has-209-digits-see-integerdigits:
   traditional:
     in: \mathrm{Length}(\mathrm{IntegerDigits}(F_{1\,000}))
     out: "209"
+  fullform:
+    in: Length[IntegerDigits[Fibonacci[1000]]]
   wolfram:
     in: Length[IntegerDigits[Fibonacci[1000]]]
 the-defining-recurrence-f-10-f-9-f-8:
@@ -296,9 +325,10 @@ the-defining-recurrence-f-10-f-9-f-8:
   traditional:
     in: F_{10}=F_{9}+F_{8}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Fibonacci[10], Plus[Fibonacci[9], Fibonacci[8]]]
   wolfram:
     in: (Fibonacci[10] == Plus[Fibonacci[9], Fibonacci[8]])
-    back: Unreadable
     out: True
     tex:
       in: F_{10}=F_9+F_8
@@ -328,6 +358,8 @@ cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at:
   traditional:
     in: F_{5}F_{7}-F_{6}^2
     out: "1"
+  fullform:
+    in: Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]
   wolfram:
     in: Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]
     out: "1"
@@ -359,9 +391,10 @@ gcd-f-12-f-18-f-gcd-12-18:
   traditional:
     in: \gcd(F_{12}, F_{18})=F_{\gcd(12, 18)}
     out: \mathrm{True}
+  fullform:
+    in: Equal[GCD[Fibonacci[12], Fibonacci[18]], Fibonacci[GCD[12, 18]]]
   wolfram:
     in: (GCD[Fibonacci[12], Fibonacci[18]] == Fibonacci[GCD[12, 18]])
-    back: Unreadable
     out: True
     tex:
       in: \gcd \left(F_{12},F_{18}\right)=F_{\gcd (12,18)}
@@ -391,6 +424,8 @@ negative-indices-are-supported-via-f-n-1-n-1-f-n:
   traditional:
     in: F_{-5}
     out: "5"
+  fullform:
+    in: Fibonacci[-5]
   wolfram:
     in: Fibonacci[-5]
     out: "5"
@@ -425,6 +460,8 @@ consecutive-ratios-f-n-1-f-n-converge-to-the:
   traditional:
     in: \frac{F_{20}}{F_{19}}
     out: \frac{6\,765}{4\,181}
+  fullform:
+    in: Divide[Fibonacci[20], Fibonacci[19]]
   wolfram:
     in: Divide[Fibonacci[20], Fibonacci[19]]
     out: 6765/4181
@@ -453,6 +490,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{Fibonacci}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack1, 1, 2, 3\bigr\rbrack
+  fullform:
+    in: Fibonacci[List[1, 2, 3, 4]]
   wolfram:
     in: Fibonacci[List[1, 2, 3, 4]]
     out: "{1, 1, 2, 3}"
@@ -483,6 +522,8 @@ they-grow-fast-f-50-already-exceeds-twelve:
   traditional:
     in: F_{50}
     out: 12\,586\,269\,025
+  fullform:
+    in: Fibonacci[50]
   wolfram:
     in: Fibonacci[50]
     out: "12586269025"

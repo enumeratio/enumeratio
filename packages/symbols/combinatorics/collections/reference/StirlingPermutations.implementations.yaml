@@ -5,6 +5,8 @@ count-stirlingpermutations-4-105-7-a001147:
   tex:
     in: \mathrm{Count}(\mathrm{StirlingPermutations}(4))
     out: "105"
+  fullform:
+    in: Count[StirlingPermutations[4]]
 count-stirlingpermutations-n-2n-1-see-factorial2:
   epsil:
     in: Count(StirlingPermutations(4)) == Factorial2(7)
@@ -15,3 +17,5 @@ count-stirlingpermutations-n-2n-1-see-factorial2:
   traditional:
     in: \mathrm{Count}(\mathrm{StirlingPermutations}(4))=7!!
     out: \mathrm{True}
+  fullform:
+    in: Equal[Count[StirlingPermutations[4]], Factorial2[7]]

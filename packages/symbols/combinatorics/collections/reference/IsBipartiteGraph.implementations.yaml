@@ -8,6 +8,8 @@ even-cycle-is-bipartite:
   traditional:
     in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))
     out: \mathrm{True}
+  fullform:
+    in: BipartiteGraphQ[CycleGraph[6]]
   wolfram:
     in: BipartiteGraphQ[CycleGraph[6]]
 odd-cycle-is-not:
@@ -20,6 +22,8 @@ odd-cycle-is-not:
   traditional:
     in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))
     out: \mathrm{False}
+  fullform:
+    in: BipartiteGraphQ[CycleGraph[5]]
   wolfram:
     in: BipartiteGraphQ[CycleGraph[5]]
 a-self-loop-is-never-bipartite:
@@ -32,5 +36,7 @@ a-self-loop-is-never-bipartite:
   traditional:
     in: \mathrm{IsBipartiteGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 1)\bigr\rbrack))
     out: \mathrm{False}
+  fullform:
+    in: BipartiteGraphQ[Graph[List[UndirectedEdge[1, 1]]]]
   wolfram:
     in: BipartiteGraphQ[Graph[List[UndirectedEdge[1, 1]]]]

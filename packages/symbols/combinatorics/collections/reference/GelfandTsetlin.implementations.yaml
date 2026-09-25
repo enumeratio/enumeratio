@@ -5,3 +5,5 @@ count-gelfandtsetlin-3-2-35-gelfand-tsetlin:
   tex:
     in: \mathrm{Count}(\mathrm{GelfandTsetlin}(3, 2))
     out: "35"
+  fullform:
+    in: Count[GelfandTsetlin[3, 2]]

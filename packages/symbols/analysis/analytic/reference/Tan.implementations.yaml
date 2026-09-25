@@ -5,6 +5,8 @@ tan-0:
   tex:
     in: \tan(0)
     out: "0"
+  fullform:
+    in: Tan[0]
   wolfram:
     in: Tan[0]
     out: "0"
@@ -30,6 +32,8 @@ tan-pi-over-6:
   tex:
     in: \tan(\frac{\pi}{6})
     out: \frac{\sqrt{3}}{3}
+  fullform:
+    in: Tan[Divide[Pi, 6]]
   wolfram:
     in: Tan[Divide[Pi, 6]]
     out: 1/Sqrt[3]
@@ -52,6 +56,8 @@ tan-pi-over-4:
   tex:
     in: \tan(\frac{\pi}{4})
     out: "1"
+  fullform:
+    in: Tan[Divide[Pi, 4]]
   wolfram:
     in: Tan[Divide[Pi, 4]]
     out: "1"
@@ -74,6 +80,8 @@ tan-pi-over-3:
   tex:
     in: \tan(\frac{\pi}{3})
     out: \sqrt{3}
+  fullform:
+    in: Tan[Divide[Pi, 3]]
   wolfram:
     in: Tan[Divide[Pi, 3]]
     out: Sqrt[3]
@@ -99,9 +107,10 @@ tan-x-frac-sin-x-cos-x:
   traditional:
     in: \tan(\frac{\pi}{4})=\frac{\sin(\frac{\pi}{4})}{\cos(\frac{\pi}{4})}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Tan[Divide[Pi, 4]], Divide[Sin[Divide[Pi, 4]], Cos[Divide[Pi, 4]]]]
   wolfram:
     in: (Tan[Divide[Pi, 4]] == Divide[Sin[Divide[Pi, 4]], Cos[Divide[Pi, 4]]])
-    back: Unreadable
     out: True
     tex:
       in: \tan \left(\frac{\pi }{4}\right)=\frac{\sin \left(\frac{\pi }{4}\right)}{\cos \left(\frac{\pi }{4}\right)}
@@ -122,6 +131,8 @@ odd-function-tan-x-tan-x:
   tex:
     in: \tan(-\frac{\pi}{4})
     out: "-1"
+  fullform:
+    in: Tan[Minus[Divide[Pi, 4]]]
   wolfram:
     in: Tan[Minus[Divide[Pi, 4]]]
     out: "-1"
@@ -144,6 +155,8 @@ period-pi-not-2-pi-adding-a-half-turn-doesn-t:
   tex:
     in: \tan(\frac{\pi}{4}+\pi)
     out: "1"
+  fullform:
+    in: Tan[Plus[Divide[Pi, 4], Pi]]
   wolfram:
     in: Tan[Plus[Divide[Pi, 4], Pi]]
     out: "1"
@@ -166,6 +179,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \tan(\bigl\lbrack0, \frac{\pi}{4}\bigr\rbrack)
     out: \bigl\lbrack0, 1\bigr\rbrack
+  fullform:
+    in: Tan[List[0, Divide[Pi, 4]]]
   wolfram:
     in: Tan[List[0, Divide[Pi, 4]]]
     out: "{0, 1}"
@@ -197,6 +212,8 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up:
   tex:
     in: \tan(\frac{\pi}{2})
     out: \tilde\infty
+  fullform:
+    in: Tan[Divide[Pi, 2]]
   wolfram:
     in: Tan[Divide[Pi, 2]]
     out: ComplexInfinity
@@ -225,6 +242,8 @@ same-rule-as-sin-and-cos-a-non-special-numeric:
   tex:
     in: \tan(1)
     out: \tan(1)
+  fullform:
+    in: Tan[1]
   wolfram:
     in: Tan[1]
     out: Tan[1]
@@ -250,9 +269,11 @@ tan-30-circ-frac-sqrt-3-3-exactly:
   tex:
     in: \tan(30^{\circ})
     out: \frac{\sqrt{3}}{3}
-  wolfram:
+  fullform:
     in: Tan[Times[30, Degree]]
     back: [Tan, [Multiply, 30, Degree]]
+  wolfram:
+    in: Tan[Times[30, Degree]]
 a-machine-precision-argument-evaluates:
   epsil:
     in: Tan(1.2)
@@ -260,6 +281,8 @@ a-machine-precision-argument-evaluates:
   tex:
     in: \tan(1.2)
     out: 2.572\,151\,622\,126\,318\,935\,41
+  fullform:
+    in: Tan[1.2]
   wolfram:
     in: Tan[1.2]
   sympy:
@@ -277,6 +300,8 @@ n-of-an-exact-argument-gives-an-arbitrary:
   tex:
     in: N(\tan(\frac{6}{5}))
     out: 2.572\,151\,622\,126\,318\,935\,41
+  fullform:
+    in: N[Tan[Rational[6, 5]]]
   wolfram:
     in: N[Tan[Rational[6, 5]]]
   sympy:
@@ -292,6 +317,8 @@ evaluates-at-a-complex-argument:
   tex:
     in: \tan(2.5+i)
     out: -0.237\,013\,830\,916\,270\,57+0.896\,437\,917\,127\,861\,7i
+  fullform:
+    in: Tan[Complex[2.5, 1]]
   wolfram:
     in: Tan[Complex[2.5, 1]]
   sympy:
@@ -307,6 +334,8 @@ threads-element-wise-over-a-matrix:
   tex:
     in: \tan(\bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, \pi\bigr\rbrack, \bigl\lbrack\frac{\pi}{3}, -\pi\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack-\frac{3^{1/2}}{3}, 0\bigr\rbrack, \bigl\lbrack\sqrt{3}, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Tan[List[List[Times[5, Divide[Pi, 6]], Pi], List[Divide[Pi, 3], Minus[Pi]]]]
   wolfram:
     in: Tan[List[List[Times[5, Divide[Pi, 6]], Pi], List[Divide[Pi, 3], Minus[Pi]]]]
   sympy:
@@ -322,6 +351,8 @@ tan-pi-8-sqrt-2-1:
   tex:
     in: \tan(\frac{\pi}{8})
     out: \sqrt{2}-1
+  fullform:
+    in: Tan[Divide[Pi, 8]]
   wolfram:
     in: Tan[Divide[Pi, 8]]
   sympy:
@@ -337,6 +368,8 @@ tan-pi-12-2-sqrt-3:
   tex:
     in: \tan(\frac{\pi}{12})
     out: 2-\sqrt{3}
+  fullform:
+    in: Tan[Divide[Pi, 12]]
   wolfram:
     in: Tan[Divide[Pi, 12]]
   sympy:
@@ -352,6 +385,8 @@ tan-pi-5-sqrt-5-2-sqrt-5:
   tex:
     in: \tan(\frac{\pi}{5})
     out: \sqrt{5-2\sqrt{5}}
+  fullform:
+    in: Tan[Divide[Pi, 5]]
   wolfram:
     in: Tan[Divide[Pi, 5]]
   sympy:
@@ -367,6 +402,8 @@ tan-pi-10-sqrt-1-2-sqrt-5:
   tex:
     in: \tan(\frac{\pi}{10})
     out: \frac{1}{5}(\sqrt{5}\sqrt{5-2\sqrt{5}})
+  fullform:
+    in: Tan[Divide[Pi, 10]]
   wolfram:
     in: Tan[Divide[Pi, 10]]
   sympy:
@@ -382,6 +419,8 @@ tan-5-pi-12-2-sqrt-3:
   tex:
     in: \tan(\frac{5\pi}{12})
     out: 2+\sqrt{3}
+  fullform:
+    in: Tan[Times[Rational[5, 12], Pi]]
   wolfram:
     in: Tan[Times[Rational[5, 12], Pi]]
   sympy:
@@ -397,6 +436,8 @@ tan-3-over-4-times-pi:
   tex:
     in: \tan(\frac{3\pi}{4})
     out: "-1"
+  fullform:
+    in: Tan[Times[Rational[3, 4], Pi]]
   wolfram:
     in: Tan[Times[Rational[3, 4], Pi]]
   sympy:
@@ -412,6 +453,8 @@ interval-arithmetic-the-image-of-0-pi-3-is-0:
   tex:
     in: \tan(\mathrm{Interval}(0, \frac{\pi}{3}))
     out: \mathrm{Interval}(0, \sqrt{3})
+  fullform:
+    in: Tan[Interval[List[0, Divide[Pi, 3]]]]
   wolfram:
     in: Tan[Interval[List[0, Divide[Pi, 3]]]]
 uncertainty-propagation-tan-2-pm-0-02-approx-2:
@@ -421,6 +464,8 @@ uncertainty-propagation-tan-2-pm-0-02-approx-2:
   tex:
     in: \tan(\mathrm{Around}(2, 0.02))
     out: \mathrm{Around}(-2.185\,039\,863\,261\,519, 0.115\,487\,984\,080\,838\,35)
+  fullform:
+    in: Tan[Around[2, 0.02]]
   wolfram:
     in: Tan[Around[2, 0.02]]
 tan-ix-i-tanh-x:
@@ -430,6 +475,8 @@ tan-ix-i-tanh-x:
   tex:
     in: \tan(i x)
     out: i\tanh(x)
+  fullform:
+    in: Tan[Times[I, x]]
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Tan(-x)
@@ -437,6 +484,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
   tex:
     in: \tan(-x)
     out: -\tan(x)
+  fullform:
+    in: Tan[Minus[x]]
 tan-arctan-x-x-for-every-x:
   epsil:
     in: Tan(Arctan(x))
@@ -444,6 +493,8 @@ tan-arctan-x-x-for-every-x:
   tex:
     in: \tan(\arctan(x))
     out: x
+  fullform:
+    in: Tan[ArcTan[x]]
 tan-arctan-2-2-for-every-x:
   epsil:
     in: Tan(Arctan(2))
@@ -451,6 +502,8 @@ tan-arctan-2-2-for-every-x:
   tex:
     in: \tan(\arctan(2))
     out: "2"
+  fullform:
+    in: Tan[ArcTan[2]]
   wolfram:
     in: Tan[ArcTan[2]]
 tan-arcsin-x-frac-x-sqrt-1-x-2:
@@ -460,6 +513,8 @@ tan-arcsin-x-frac-x-sqrt-1-x-2:
   tex:
     in: \tan(\arcsin(x))
     out: \frac{x}{\sqrt{1-x^2}}
+  fullform:
+    in: Tan[ArcSin[x]]
 derivative-sec-2-x:
   epsil:
     in: D(Tan(x), x)
@@ -467,6 +522,8 @@ derivative-sec-2-x:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\tan(x)
     out: \sec(x)^2
+  fullform:
+    in: D[Tan[x], x]
 antiderivative-ln-sec-x:
   epsil:
     in: Integrate(Tan(x), x)
@@ -474,6 +531,8 @@ antiderivative-ln-sec-x:
   tex:
     in: \int\!\tan(x)\, \mathrm{d}x
     out: \ln(\vert\sec(x)\vert)
+  fullform:
+    in: Integrate[Tan[x], x]
 taylor-series-about-0:
   epsil:
     in: Series(Tan(x), x, 0, 7)
@@ -481,6 +540,8 @@ taylor-series-about-0:
   tex:
     in: \operatorname{Series}(\tan(x), x, 0, 7)
     out: x+\frac{x^3}{3}+\frac{2x^5}{15}+\frac{17x^7}{315}+O\left(x^9\right)
+  fullform:
+    in: Series[Tan[x], x, 0, 7]
   wolfram:
     in:
     note: Wolfram's Series[Tan[x], {x, 0, 7}] ends with O[x]^8; compute-engine skips the vanishing even term and reports O(x^9).
@@ -491,6 +552,8 @@ sin-x-cos-x-should-simplify-to-tan-x-simplify:
   tex:
     in: \mathrm{Simplify}(\frac{\sin(x)}{\cos(x)})
     out: \tan(x)
+  fullform:
+    in: Simplify[Divide[Sin[x], Cos[x]]]
 rewritten-in-exponentials:
   epsil:
     in: TrigToExp(Tan(x))
@@ -502,6 +565,8 @@ rewritten-in-exponentials:
   tex:
     in: \mathrm{TrigToExp}(\tan(x))
     out: -\frac{i(\exp(i x)-\exp(-i x))}{\exp(i x)+\exp(-i x)}
+  fullform:
+    in: TrigToExp[Tan[x]]
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(Tan(1), 30)
@@ -509,6 +574,8 @@ to-30-significant-digits-every-one-correctly:
   tex:
     in: N(\tan(1), 30)
     out: 1.557\,407\,724\,654\,902\,230\,51
+  fullform:
+    in: N[Tan[1], 30]
   wolfram:
     in: N[Tan[1], 30]
   sympy:
