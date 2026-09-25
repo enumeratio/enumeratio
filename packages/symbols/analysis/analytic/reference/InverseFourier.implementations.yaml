@@ -1,0 +1,21 @@
+inverse-dft-of-1-2-3-4:
+  wolfram:
+    in: "InverseFourier[{1, 2, 3, 4}]"
+    out: "{5. + 0.*I, -1. + 1.*I, -1. + 0.*I, -1. - 1.*I}"
+round-trips-through-fourier:
+  wolfram:
+    in: "Fourier[InverseFourier[{1, 2, 3, 4}]]"
+    out: "{1., 2., 3., 4.}"
+a-2x2-matrix:
+  wolfram:
+    in: "InverseFourier[{{5, -1}, {-2, 0}}]"
+    out: "{{1., 2.}, {3., 4.}}"
+a-custom-fourierparameters:
+  wolfram:
+    in: "InverseFourier[{1, 2, 3, 4}, FourierParameters -> {1, -1}]"
+    out: "{2.5 + 0.*I, -0.5 - 0.5*I, -0.5 + 0.*I, -0.5 + 0.5*I}"
+declines-a-symbolic-list:
+  wolfram:
+    in: "InverseFourier[{a, b}]"
+    out: "InverseFourier[{a, b}]"
+    note: "Wolfram raises `Fourier::fftl` and returns the call unevaluated -- the same decline we make."

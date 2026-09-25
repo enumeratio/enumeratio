@@ -469,6 +469,15 @@ export const HEADS: Record<string, string> = {
   // FourierParameters -> {0, 1}, which is all this transpiler's own heads implement.
   FourierTransform: "FourierTransform",
   InverseFourierTransform: "InverseFourierTransform",
+  // Fourier[list] / InverseFourier[list]: same argument order, same default
+  // FourierParameters -> {0, 1}, and an optional trailing FourierParameters rule both
+  // sides read the same way.
+  Fourier: "Fourier",
+  InverseFourier: "InverseFourier",
+  // FourierSeries[f, x, n] / FourierCoefficient[f, x, n]: same order, both always on
+  // [-Pi, Pi] (no period argument on either side).
+  FourierSeries: "FourierSeries",
+  FourierCoefficient: "FourierCoefficient",
   // MeijerG[{{a..},{a..}}, {{b..},{b..}}, z] — same nested-list shape and argument order.
   MeijerG: "MeijerG",
   // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized

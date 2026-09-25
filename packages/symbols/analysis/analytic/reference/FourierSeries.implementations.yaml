@@ -1,0 +1,21 @@
+order-2-series-of-x:
+  wolfram:
+    in: "FourierSeries[x, x, 2]"
+    out: "I/E^(I*x) - I*E^(I*x) - I/2/E^((2*I)*x) + I/2*E^((2*I)*x)"
+order-3-series-of-sin-is-itself:
+  wolfram:
+    in: "FourierSeries[Sin[x], x, 3]"
+    out: "I/2/E^(I*x) - I/2*E^(I*x)"
+cos-squared-a-sin-cos-polynomial:
+  wolfram:
+    in: "FourierSeries[Cos[x]^2, x, 2]"
+    out: "1/2 + 1/(4*E^((2*I)*x)) + E^((2*I)*x)/4"
+order-0-series-of-x-squared-is-its-average:
+  wolfram:
+    in: "FourierSeries[x^2, x, 0]"
+    out: "Pi^2/3"
+declines-a-mixed-polynomial-trig-product:
+  wolfram:
+    in: "FourierSeries[x*Cos[x], x, 1]"
+    out: "(-1/4*I)/E^(I*x) + I/4*E^(I*x)"
+    note: "Wolfram has a closed form for a polynomial-times-trig product like this (a standard integration-by-parts case); we decline it on purpose -- it falls outside the curated atom list in FourierCoefficient.ts, not a correctness issue. Not marked as a disagreement: the free variable `x` means the automated oracle scan cannot check this pair by re-evaluating it numerically."

@@ -88,6 +88,8 @@ import { declareFunctionProperties } from "./function-properties.ts";
 import { declareTransforms } from "./transforms.ts";
 import { declareMeijerG } from "./meijer-g.ts";
 import { declareMeijerGReduce } from "./meijer-g-reduce.ts";
+import { declareFourierTransform } from "./fourier-transform.ts";
+import { declareFourierSeries } from "./fourier-series.ts";
 import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
@@ -768,5 +770,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareTrigPowerIntegrals(ce);
   declareHugeArguments(ce);
   declareInverseCompositions(ce);
+  declareFourierTransform(ce);
+  declareFourierSeries(ce);
   declareCorrectlyRoundedN(ce);
 }

@@ -261,10 +261,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 24,
   },
   {
-    head: "Fourier",
-    uses: 24,
-  },
-  {
     head: "MapThread",
     uses: 24,
   },
@@ -290,10 +286,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "FindInstance",
-    uses: 21,
-  },
-  {
-    head: "FourierSeries",
     uses: 21,
   },
   {

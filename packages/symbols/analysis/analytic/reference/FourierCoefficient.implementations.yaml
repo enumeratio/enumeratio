@@ -1,0 +1,35 @@
+c-2-of-x:
+  wolfram:
+    in: "FourierCoefficient[x, x, 2]"
+    out: "I/2"
+c-2-of-cos-squared:
+  wolfram:
+    in: "FourierCoefficient[Cos[x]^2, x, 2]"
+    out: "1/4"
+c-0-of-x-squared-is-the-average:
+  wolfram:
+    in: "FourierCoefficient[x^2, x, 0]"
+    out: "Pi^2/3"
+c-0-of-abs-x:
+  wolfram:
+    in: "FourierCoefficient[Abs[x], x, 0]"
+    out: "Pi/2"
+c-1-of-abs-x:
+  wolfram:
+    in: "FourierCoefficient[Abs[x], x, 1]"
+    out: "-2/Pi"
+    note: "Checked against an independent numeric quadrature in addition to Wolfram: `Integrate[Abs[x]*Exp[-I*x], {x, -Pi, Pi}]` on its own (ours and Wolfram's FourierCoefficient both agree here) evaluates to -2 in compute-engine, but the correct value -- confirmed by direct numeric integration -- is -4, so compute-engine's own `Integrate` cannot be trusted for this shape and this head does not call it."
+c-1-of-exp-x:
+  wolfram:
+    in: "FourierCoefficient[Exp[x], x, 1]"
+    out: "((-1/2 - I/2)*Sinh[Pi])/Pi"
+declines-a-symbolic-order:
+  wolfram:
+    in: "FourierCoefficient[x, x, n]"
+    out: "Piecewise[{{0, n == 0}}, (I*(-1)^n)/n]"
+    note: "Wolfram gives a general Piecewise formula for symbolic n; deriving that closed form is materially more work than any single atom here, so a symbolic order is declined rather than attempted. Not marked as a disagreement: the free variables `x` and `n` mean the automated oracle scan cannot check this pair by re-evaluating it numerically."
+declines-tan-x-no-closed-form-here:
+  wolfram:
+    in: "FourierCoefficient[Tan[x], x, 1]"
+    out: "0"
+    note: "Wolfram formally returns 0 by symmetry, but tan(x) has poles at ±Pi/2, inside [-Pi, Pi] -- the defining integral does not actually converge there, so we decline rather than trust the formal symmetry argument over an undefined integral. Not marked as a disagreement: the free variable `x` means the automated oracle scan cannot check this pair by re-evaluating it numerically."

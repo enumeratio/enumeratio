@@ -537,6 +537,30 @@
       "disagree": 0
     }
   ],
+  "Fourier": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 5,
+      "disagree": 0
+    }
+  ],
+  "FourierCoefficient": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
+      "disagree": 0
+    }
+  ],
+  "FourierSeries": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 5,
+      "disagree": 0
+    }
+  ],
   "FromDigits": [
     {
       "system": "wolfram",
@@ -657,6 +681,14 @@
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 6,
       "disagree": 1
+    }
+  ],
+  "InverseFourier": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 5,
+      "disagree": 0
     }
   ],
   "IsEven": [
