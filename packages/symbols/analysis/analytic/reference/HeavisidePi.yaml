@@ -1,0 +1,25 @@
+name: HeavisidePi
+domain: Elementary functions
+signature: HeavisidePi(x)
+summary: "The Heaviside-family rectangular pulse: 1 for |x| < 1/2, unevaluated at x = ±1/2, 0 for |x| > 1/2."
+signatures:
+  - call: HeavisidePi(x)
+    description: 1 inside (-1/2, 1/2), 0 outside [-1/2, 1/2], and unevaluated (stays symbolic) exactly at x = ±1/2.
+    library: "@enumeratio/analytic"
+details:
+  - The same rectangular pulse as [[UnitBox]], but the boundary is left open rather than given the value 1/2 -- the two heads exist for the two conventions.
+examples:
+  - id: heavisidepi-inside
+    expr: [HeavisidePi, 0]
+    expected: 1
+  - id: heavisidepi-boundary-unevaluated
+    expr: [HeavisidePi, [Rational, 1, 2]]
+    expected: [HeavisidePi, [Rational, 1, 2]]
+    caption: Unevaluated at the boundary -- unlike [[UnitBox]]
+  - id: heavisidepi-neg-boundary-unevaluated
+    expr: [HeavisidePi, [Rational, -1, 2]]
+    expected: [HeavisidePi, [Rational, -1, 2]]
+  - id: heavisidepi-outside
+    expr: [HeavisidePi, 1]
+    expected: 0
+    category: Scope

@@ -1,0 +1,31 @@
+name: Ramp
+domain: Elementary functions
+signature: Ramp(x)
+summary: "The ramp function: x for x >= 0, 0 for x < 0."
+signatures:
+  - call: Ramp(x)
+    description: max(x, 0).
+    library: "@enumeratio/analytic"
+details:
+  - Ramp(x) = x * UnitStep(x) -- continuous, so Ramp(0) = 0 needs no special case.
+  - D(Ramp(x), x) = UnitStep(x) -- the x * DiracDelta(x) term the product rule would otherwise contribute is 0 everywhere.
+examples:
+  - id: ramp-negative
+    expr: [Ramp, -2]
+    expected: 0
+  - id: ramp-positive
+    expr: [Ramp, 3]
+    expected: 3
+  - id: ramp-zero
+    expr: [Ramp, 0]
+    expected: 0
+  - id: ramp-equals-x-times-unitstep
+    expr: [Equal, [Ramp, 5], [Multiply, 5, [UnitStep, 5]]]
+    expected: True
+    category: Properties
+    caption: Ramp(x) = x * [[UnitStep]](x)
+  - id: ramp-derivative
+    expr: [D, [Ramp, x], x]
+    expected: [UnitStep, x]
+    category: Properties
+    caption: Derivative is [[UnitStep]]

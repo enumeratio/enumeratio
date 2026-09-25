@@ -1,0 +1,71 @@
+[
+  { "label": "UnitBox(0)", "expr": ["UnitBox", 0], "expected": 1 },
+  { "label": "UnitBox(1/2)", "expr": ["UnitBox", ["Rational", 1, 2]], "expected": ["Rational", 1, 2] },
+  { "label": "UnitBox(-1/2)", "expr": ["UnitBox", ["Rational", -1, 2]], "expected": ["Rational", 1, 2] },
+  { "label": "UnitBox(1)", "expr": ["UnitBox", 1], "expected": 0 },
+  { "label": "UnitBox(0,0)", "expr": ["UnitBox", 0, 0], "expected": 1 },
+  { "label": "UnitBox(0,1/2)", "expr": ["UnitBox", 0, ["Rational", 1, 2]], "expected": ["Rational", 1, 2] },
+
+  { "label": "UnitTriangle(0)", "expr": ["UnitTriangle", 0], "expected": 1 },
+  { "label": "UnitTriangle(1)", "expr": ["UnitTriangle", 1], "expected": 0 },
+  { "label": "UnitTriangle(-1)", "expr": ["UnitTriangle", -1], "expected": 0 },
+  { "label": "UnitTriangle(2)", "expr": ["UnitTriangle", 2], "expected": 0 },
+  { "label": "UnitTriangle(1/3)", "expr": ["UnitTriangle", ["Rational", 1, 3]], "expected": ["Rational", 2, 3] },
+
+  { "label": "HeavisideLambda(0)", "expr": ["HeavisideLambda", 0], "expected": 1 },
+  { "label": "HeavisideLambda(1)", "expr": ["HeavisideLambda", 1], "expected": 0 },
+  { "label": "HeavisideLambda(-1)", "expr": ["HeavisideLambda", -1], "expected": 0 },
+  { "label": "HeavisideLambda(1/4)", "expr": ["HeavisideLambda", ["Rational", 1, 4]], "expected": ["Rational", 3, 4] },
+
+  { "label": "HeavisideTheta(-1)", "expr": ["HeavisideTheta", -1], "expected": 0 },
+  { "label": "HeavisideTheta(1)", "expr": ["HeavisideTheta", 1], "expected": 1 },
+  { "label": "HeavisideTheta(1,2)", "expr": ["HeavisideTheta", 1, 2], "expected": 1 },
+  { "label": "HeavisideTheta(1,-1)", "expr": ["HeavisideTheta", 1, -1], "expected": 0 },
+
+  { "label": "HeavisidePi(0)", "expr": ["HeavisidePi", 0], "expected": 1 },
+  { "label": "HeavisidePi(1)", "expr": ["HeavisidePi", 1], "expected": 0 },
+
+  { "label": "Ramp(-2)", "expr": ["Ramp", -2], "expected": 0 },
+  { "label": "Ramp(3)", "expr": ["Ramp", 3], "expected": 3 },
+  { "label": "Ramp(0)", "expr": ["Ramp", 0], "expected": 0 },
+
+  { "label": "SawtoothWave(0)", "expr": ["SawtoothWave", 0], "expected": 0 },
+  { "label": "SawtoothWave(1/3)", "expr": ["SawtoothWave", ["Rational", 1, 3]], "expected": ["Rational", 1, 3] },
+  { "label": "SawtoothWave(-1/4)", "expr": ["SawtoothWave", ["Rational", -1, 4]], "expected": ["Rational", 3, 4] },
+  { "label": "SawtoothWave({0,10},1/2)", "expr": ["SawtoothWave", ["List", 0, 10], ["Rational", 1, 2]], "expected": 5 },
+
+  { "label": "TriangleWave(0)", "expr": ["TriangleWave", 0], "expected": 0 },
+  { "label": "TriangleWave(1/4)", "expr": ["TriangleWave", ["Rational", 1, 4]], "expected": ["Rational", 1, 2] },
+  { "label": "TriangleWave(1/2)", "expr": ["TriangleWave", ["Rational", 1, 2]], "expected": 1 },
+  {
+    "label": "TriangleWave({0,10},1/2)",
+    "expr": ["TriangleWave", ["List", 0, 10], ["Rational", 1, 2]],
+    "expected": 10
+  },
+
+  { "label": "SquareWave(0)", "expr": ["SquareWave", 0], "expected": 1 },
+  { "label": "SquareWave(1/2)", "expr": ["SquareWave", ["Rational", 1, 2]], "expected": 0 },
+  { "label": "SquareWave(3/4)", "expr": ["SquareWave", ["Rational", 3, 4]], "expected": 0 },
+  { "label": "SquareWave({0,10},0)", "expr": ["SquareWave", ["List", 0, 10], 0], "expected": 10 },
+
+  {
+    "label": "Rescale([1,2,3,4])",
+    "expr": ["Rescale", ["List", 1, 2, 3, 4]],
+    "expected": ["List", 0, ["Rational", 1, 3], ["Rational", 2, 3], 1]
+  },
+  { "label": "Rescale(5,{0,10})", "expr": ["Rescale", 5, ["List", 0, 10]], "expected": ["Rational", 1, 2] },
+  {
+    "label": "Rescale(5,{0,10},{100,200})",
+    "expr": ["Rescale", 5, ["List", 0, 10], ["List", 100, 200]],
+    "expected": 150
+  },
+
+  { "label": "DiracDelta(2)", "expr": ["DiracDelta", 2], "expected": 0 },
+  { "label": "DiracDelta(-3)", "expr": ["DiracDelta", -3], "expected": 0 },
+  { "label": "DiracDelta(0,1)", "expr": ["DiracDelta", 0, 1], "expected": 0 },
+
+  { "label": "DiscreteDelta(0)", "expr": ["DiscreteDelta", 0], "expected": 1 },
+  { "label": "DiscreteDelta(1)", "expr": ["DiscreteDelta", 1], "expected": 0 },
+  { "label": "DiscreteDelta(0,0)", "expr": ["DiscreteDelta", 0, 0], "expected": 1 },
+  { "label": "DiscreteDelta(1,0)", "expr": ["DiscreteDelta", 1, 0], "expected": 0 }
+]
