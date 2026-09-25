@@ -87,3 +87,26 @@ export function declareHypergeometricUStar(ce: ComputeEngine): void {
     },
   });
 }
+
+// HypergeometricU(a, b, z) — Tricomi's confluent hypergeometric itself, U*'s z^{-a} factor
+// undone. compute-engine 0.128 references the head only inside `identities.ts` (the rewrite
+// rule fungrim:c8fcc7 that relates it to `HypergeometricUStar`) but never actually declares it
+// as an operator — `ce.lookupDefinition("HypergeometricU")` is `undefined`, so there is nothing
+// to widen with `wrapOperator`; it is declared outright here, the same way `HypergeometricUStar`
+// above is, reusing `tricomiU` directly rather than dividing `HypergeometricUStar` by z^a (which
+// would reintroduce the branch-cut/pole bookkeeping `tricomiU` already does correctly).
+export function declareHypergeometricU(ce: ComputeEngine): void {
+  ce.declare("HypergeometricU", {
+    signature: "(number, number, number) -> number",
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      const [a, b, z] = ops;
+      if (a === undefined || b === undefined || z === undefined) return undefined;
+      if (!isFiniteNum(a) || !isFiniteNum(b) || !isFiniteNum(z)) return undefined;
+      if (z.re === 0 && z.im === 0) return undefined; // pole/branch point
+      if (!wantsNumber(ops, options)) return undefined;
+      const r = tricomiU(toCx(a), toCx(b), toCx(z));
+      if (r === undefined) return undefined;
+      return numberResult(ce, r);
+    },
+  });
+}

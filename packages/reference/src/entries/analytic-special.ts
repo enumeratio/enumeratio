@@ -1993,4 +1993,287 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["RiemannSiegelZ", "Zeta"],
   },
+  {
+    name: "Hypergeometric0F1",
+    domain: "Special functions",
+    signature: "Hypergeometric0F1(b, z)",
+    summary:
+      "The confluent hypergeometric limit function ${}_0F_1(b; z) = \\sum_{k\\ge0} z^k / ((b)_k\\,k!)$ — entire in $z$, related to the Bessel functions. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric0F1(b, z)",
+        description: "${}_0F_1(b; z)$, by its defining series.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine 0.128 does not declare this head at all — no `Hypergeometric1F1`-style native to extend — so it is supplied here directly, by the term-ratio recurrence (Fungrim's own `Hypergeometric0F1` identities relate it to `AiryAi`, `Sin` and `Sinc`).",
+      "Poles at $b$ a nonpositive integer $0, -1, -2, \\dots$ stay symbolic; see [[Hypergeometric0F1Regularized]] for the entire version.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric0F1", 2, 0.5],
+        expected: 1.271723456312137,
+        caption: "a generic point, checked against mpmath's `hyp0f1`",
+      },
+      {
+        expr: ["Hypergeometric0F1", 0, 0.5],
+        expected: ["Hypergeometric0F1", 0, 0.5],
+        category: "Possible issues",
+        caption: "$b = 0$ is a pole — stays symbolic",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric0F1[b,z]; mpmath.hyp0f1(b,z).",
+      },
+    ],
+    seeAlso: ["Hypergeometric0F1Regularized", "BesselJ"],
+  },
+  {
+    name: "Hypergeometric0F1Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric0F1Regularized(b, z)",
+    summary:
+      "The regularized confluent hypergeometric limit function ${}_0F_1(b; z) / \\Gamma(b)$ — entire in both $b$ and $z$, unlike [[Hypergeometric0F1]] itself. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric0F1Regularized(b, z)",
+        description: "${}_0F_1(b; z) / \\Gamma(b)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Computed by its own series $\\sum_{k\\ge0} z^k / (\\Gamma(b+k)\\,k!)$ rather than dividing `Hypergeometric0F1` by `Gamma(b)`: at $b$ a nonpositive integer, `Gamma(b)` is itself a pole, and $1/\\Gamma$ is taken directly (zero there, by the standard convention) so the sum stays finite exactly where the naive division would not.",
+      "Entire in $z$ too ($p \\le q$ for this series), so — unlike [[Hypergeometric2F1Regularized]] — never declines on $z$.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric0F1Regularized", 2, 0.5],
+        expected: 1.2717234563121365,
+        caption: "matches Hypergeometric0F1(2, 0.5) / Gamma(2) = Hypergeometric0F1(2, 0.5)",
+      },
+      {
+        expr: ["Hypergeometric0F1Regularized", -1, 0.5],
+        expected: 0.1471797367221067,
+        caption: "$b = -1$ is a pole of $\\Gamma$, but the regularized form is finite there",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric0F1Regularized[b,z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric0F1", "BesselJ"],
+  },
+  {
+    name: "Hypergeometric1F1Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric1F1Regularized(a, b, z)",
+    summary:
+      "The regularized Kummer confluent hypergeometric function ${}_1F_1(a,b;z) / \\Gamma(b)$ — entire in $b$ and $z$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric1F1Regularized(a, b, z)",
+        description: "${}_1F_1(a,b;z) / \\Gamma(b)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine declares `Hypergeometric1F1` itself (real and complex $z$) but not this regularized form. Computed by the same $1/\\Gamma$-per-term series as [[Hypergeometric0F1Regularized]], so it stays finite at $b$ a nonpositive integer rather than dividing by `Gamma(b)`'s pole there.",
+      "Entire in $z$ ($p = q$ for this series), so never declines on $z$.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric1F1Regularized", 1, 2, 0.5],
+        expected: 1.2974425414002555,
+        caption: "matches Hypergeometric1F1(1, 2, 0.5) / Gamma(2)",
+      },
+      {
+        expr: ["Hypergeometric1F1Regularized", 1, -1, 0.7],
+        expected: 0.9867388266605329,
+        caption: "$b = -1$ is a pole of $\\Gamma$, but the regularized form is finite there",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric1F1Regularized[a,b,z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric2F1Regularized", "HypergeometricU"],
+  },
+  {
+    name: "Hypergeometric2F1Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric2F1Regularized(a, b, c, z)",
+    summary:
+      "The regularized Gauss hypergeometric function ${}_2F_1(a,b,c;z) / \\Gamma(c)$ (fungrim:fe6e74) — entire in $c$; only converges for $|z| < 1$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric2F1Regularized(a, b, c, z)",
+        description: "${}_2F_1(a,b,c;z) / \\Gamma(c)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Computed by the $1/\\Gamma$-per-term series ($p = q + 1$ here), so it stays finite at $c$ a nonpositive integer rather than dividing `Hypergeometric2F1` by `Gamma(c)`'s pole there.",
+      "The series only converges for $|z| < 1$; outside the unit disc this stays symbolic rather than answering with a guessed analytic continuation. Several of Fungrim's own identities for this head (e.g. fungrim:90ac58) rewrite to a different argument first — that rewrite belongs in the identity layer, not here.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric2F1Regularized", 1, 1, 2, 0.5],
+        expected: 1.3862943611198895,
+        caption: "matches Hypergeometric2F1(1, 1, 2, 0.5) / Gamma(2)",
+      },
+      {
+        expr: ["Hypergeometric2F1Regularized", 1, 1, 2, 1.5],
+        expected: ["Hypergeometric2F1Regularized", 1, 1, 2, 1.5],
+        category: "Possible issues",
+        caption: "$|z| \\ge 1$ stays symbolic — no continuation past the unit disc",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric2F1Regularized[a,b,c,z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric3F2Regularized", "Hypergeometric1F1Regularized"],
+  },
+  {
+    name: "Hypergeometric3F2Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, z)",
+    summary:
+      "The regularized generalized hypergeometric function ${}_3F_2(a_1,a_2,a_3;b_1,b_2;z) / (\\Gamma(b_1)\\Gamma(b_2))$ — entire in $b_1, b_2$; only converges for $|z| < 1$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, z)",
+        description: "${}_3F_2(a_1,a_2,a_3;b_1,b_2;z) / (\\Gamma(b_1)\\Gamma(b_2))$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine has no `Hypergeometric3F2` at all, regularized or otherwise. Computed directly by the $1/\\Gamma$-per-term series ($p = q + 1$ here), finite at either $b_1$ or $b_2$ a nonpositive integer.",
+      "The series only converges for $|z| < 1$; outside the unit disc this stays symbolic. Fungrim's own identities for this head (e.g. the Chebyshev derivative formulas, fungrim:6582c4 / fungrim:e1797b) are unconstrained in their own argument, so not every instance evaluates.",
+      "Wolfram has no dedicated 3,2 head; it maps to the generic `HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]`.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 0.5],
+        expected: 0.5507754140499144,
+        caption: "a generic point inside the unit disc",
+      },
+      {
+        expr: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 1.2],
+        expected: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 1.2],
+        category: "Possible issues",
+        caption: "$|z| \\ge 1$ stays symbolic — no continuation past the unit disc",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric2F1Regularized"],
+  },
+  {
+    name: "HypergeometricU",
+    domain: "Special functions",
+    signature: "HypergeometricU(a, b, z)",
+    summary:
+      "Tricomi's confluent hypergeometric function $U(a,b,z)$, for $b$ not an integer — see [[HypergeometricUStar]] for the $z^a$-regularized form Fungrim builds most of its identities from. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "HypergeometricU(a, b, z)",
+        description: "Tricomi's confluent hypergeometric $U(a,b,z)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine 0.128 references this head only inside its identity rules (relating it to `HypergeometricUStar`) but never actually declares it as an operator, so there was nothing to extend — it is declared directly here, reusing the same Kummer connection-formula kernel as `HypergeometricUStar`.",
+      "$b$ at (or very near) an integer is declined, for the same reason `HypergeometricUStar` declines there: the connection formula's $\\Gamma(1-b)$ and $\\Gamma(b-1)$ blow up, and the log-case limit that resolves it is not implemented.",
+      "$U(a,b,z) \\cdot z^a$ equals `HypergeometricUStar(a,b,z)` exactly (fungrim:c8fcc7), which is how this is cross-checked.",
+    ],
+    examples: [
+      {
+        expr: ["HypergeometricU", 1, 2.5, 3],
+        expected: 0.3823406624903156,
+        caption: "a generic point, checked against mpmath's `hyperu`",
+      },
+      {
+        expr: ["HypergeometricU", 1, 2, 3],
+        expected: ["HypergeometricU", 1, 2, 3],
+        category: "Possible issues",
+        caption:
+          "integer $b$ stays symbolic — the connection formula's log-case limit is not implemented",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric-ustar.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "HypergeometricU[a,b,z]; mpmath.hyperu(a,b,z).",
+      },
+    ],
+    seeAlso: ["HypergeometricUStar", "Hypergeometric1F1Regularized"],
+  },
 ];
