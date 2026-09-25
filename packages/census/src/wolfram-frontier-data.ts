@@ -421,10 +421,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 17,
   },
   {
-    head: "CharacteristicFunction",
-    uses: 16,
-  },
-  {
     head: "Cylinder",
     uses: 16,
   },
@@ -1446,10 +1442,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Matrices",
-    uses: 4,
-  },
-  {
-    head: "MomentGeneratingFunction",
     uses: 4,
   },
   {

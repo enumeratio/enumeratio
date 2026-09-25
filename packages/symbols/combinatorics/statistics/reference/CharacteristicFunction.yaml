@@ -1,0 +1,27 @@
+name: CharacteristicFunction
+domain: Statistics
+signature: CharacteristicFunction(dist, t)
+summary: The characteristic function $\varphi(t) = E[e^{itX}]$ of $dist$.
+signatures:
+  - call: CharacteristicFunction(dist, t)
+    description: a per-distribution closed form for a scoped subset of the distributions this package declares — see details. Every other distribution stays unevaluated.
+    library: enumeratio-statistics
+details:
+  - "Declared for: [[NormalDistribution]], [[UniformDistribution]], [[DiscreteUniformDistribution]], [[BernoulliDistribution]], [[BinomialDistribution]], [[GeometricDistribution]], [[NegativeBinomialDistribution]], [[PoissonDistribution]], [[GammaDistribution]], [[ChiSquareDistribution]], [[ErlangDistribution]], [[LaplaceDistribution]], [[CauchyDistribution]] (CF only — its [[MomentGeneratingFunction]] does not exist), and [[LogisticDistribution]]."
+  - Every distribution NOT in that list (Beta, StudentT, Weibull, LogNormal, Rayleigh, Pareto, Chi, HalfNormal, Maxwell, Triangular, Hypergeometric, Binormal, Empirical) is left undeclared here rather than faked — most need a special function (confluent hypergeometric, Bessel K) this package doesn't carry.
+  - $\varphi(0) = 1$ always; the uniform/discrete-uniform/logistic formulas special-case $t=0$ to avoid a removable $0/0$.
+examples:
+  - id: characteristicfunction-normal
+    expr: [CharacteristicFunction, [NormalDistribution, 2, 3], t]
+    expected: [Power, ExponentialE, [Add, [Multiply, [Rational, -9, 2], [Power, t, 2]], [Multiply, [Complex, 0, 2], t]]]
+  - id: characteristicfunction-poisson
+    expr: [CharacteristicFunction, [PoissonDistribution, 2], 0]
+    expected: 1
+  - id: characteristicfunction-cauchy-standard
+    expr: [CharacteristicFunction, [CauchyDistribution, 0, 1], t]
+    expected: [Power, ExponentialE, [Negate, [Abs, t]]]
+seeAlso:
+  - MomentGeneratingFunction
+  - PDF
+  - Moment
+  - Cumulant
