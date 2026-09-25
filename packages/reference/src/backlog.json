@@ -119,7 +119,7 @@
   "Association": {
     "wolfram": "Association",
     "summary": "A keyed collection of rules key -> value; compute-engine's Dictionary is the nearest head, and the list heads would need to accept it.",
-    "signature": "Association(k1 -> v1, …)",
+    "signature": "Association(k1 -> v1, \u2026)",
     "home": "collections",
     "neededBy": ["Append", "Count", "First", "Join", "Last", "Length", "Ordering", "Sort"],
     "examples": [
@@ -210,7 +210,7 @@
   },
   "CenteredInterval": {
     "wolfram": "CenteredInterval",
-    "summary": "A ball c ± r with rigorous (outward-rounded) arithmetic; the complex-capable sibling of Interval.",
+    "summary": "A ball c \u00b1 r with rigorous (outward-rounded) arithmetic; the complex-capable sibling of Interval.",
     "signature": "CenteredInterval(c, r)",
     "home": "analytic",
     "neededBy": [
@@ -698,7 +698,7 @@
   },
   "FrobeniusSolve": {
     "wolfram": "FrobeniusSolve",
-    "summary": "All non-negative integer solutions x of a·x = b, lexicographically.",
+    "summary": "All non-negative integer solutions x of a\u00b7x = b, lexicographically.",
     "signature": "FrobeniusSolve(a, b)",
     "home": "number-theory",
     "neededBy": ["FrobeniusNumber"],
@@ -1463,7 +1463,7 @@
   "IsCoprime": {
     "wolfram": "CoprimeQ",
     "summary": "Tests whether integers are pairwise relatively prime.",
-    "signature": "IsCoprime(a, b, …)",
+    "signature": "IsCoprime(a, b, \u2026)",
     "home": "number-theory",
     "neededBy": ["GCD"],
     "examples": [
@@ -1566,7 +1566,7 @@
   },
   "IsQuadraticIrrational": {
     "wolfram": "QuadraticIrrationalQ",
-    "summary": "True when x is an irrational root of a quadratic with integer coefficients — exactly the numbers with an eventually periodic continued fraction.",
+    "summary": "True when x is an irrational root of a quadratic with integer coefficients \u2014 exactly the numbers with an eventually periodic continued fraction.",
     "signature": "IsQuadraticIrrational(x)",
     "home": "modular",
     "neededBy": ["ContinuedFraction"],
@@ -1966,7 +1966,7 @@
   },
   "NorlundB": {
     "wolfram": "NorlundB",
-    "summary": "The Nörlund polynomial B_n^(a), from the generating function (t/(e^t - 1))^a.",
+    "summary": "The N\u00f6rlund polynomial B_n^(a), from the generating function (t/(e^t - 1))^a.",
     "signature": "NorlundB(n, a)",
     "home": "analytic",
     "neededBy": [],
@@ -2291,116 +2291,6 @@
       }
     ]
   },
-  "QBinomial": {
-    "wolfram": "QBinomial",
-    "summary": "The Gaussian (q-)binomial coefficient.",
-    "signature": "QBinomial(n, k, q)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["QBinomial", 4, 2, 2],
-        "expected": 35,
-        "caption": "$\\frac{(2^4-1)(2^3-1)}{(2^2-1)(2-1)}$"
-      },
-      {
-        "expr": ["Expand", ["QBinomial", 4, 2, "q"]],
-        "expected": [
-          "Add",
-          ["Power", "q", 4],
-          ["Power", "q", 3],
-          ["Multiply", 2, ["Power", "q", 2]],
-          "q",
-          1
-        ],
-        "category": "Scope",
-        "caption": "A polynomial in q whose coefficients count partitions in a 2 × 2 box"
-      },
-      {
-        "expr": ["QBinomial", 6, 3, 1],
-        "expected": 20,
-        "category": "Properties",
-        "caption": "At q = 1 it is Binomial(6, 3)"
-      },
-      {
-        "expr": ["QBinomial", 5, 2, 3],
-        "expected": 1210,
-        "category": "Applications",
-        "caption": "The number of 2-dimensional subspaces of $\\mathbb{F}_3^5$"
-      }
-    ]
-  },
-  "QFactorial": {
-    "wolfram": "QFactorial",
-    "summary": "The q-factorial [n]_q! = (1)(1+q)(1+q+q^2)...(1+q+...+q^(n-1)).",
-    "signature": "QFactorial(n, q)",
-    "home": "analytic",
-    "neededBy": ["SymmetricGroup"],
-    "examples": [
-      {
-        "expr": ["QFactorial", 3, 2],
-        "expected": 21,
-        "caption": "$1 \\cdot 3 \\cdot 7$"
-      },
-      {
-        "expr": ["QFactorial", 4, 2],
-        "expected": 315
-      },
-      {
-        "expr": ["QFactorial", 3, ["Rational", 1, 2]],
-        "expected": ["Rational", 21, 8],
-        "category": "Scope"
-      },
-      {
-        "expr": ["QFactorial", 5, 1],
-        "expected": 120,
-        "category": "Properties",
-        "caption": "At q = 1 it is the ordinary factorial"
-      },
-      {
-        "expr": ["Expand", ["QFactorial", 3, "q"]],
-        "expected": [
-          "Add",
-          ["Power", "q", 3],
-          ["Multiply", 2, ["Power", "q", 2]],
-          ["Multiply", 2, "q"],
-          1
-        ],
-        "category": "Applications",
-        "caption": "The inversion generating function of SymmetricGroup(3): $\\sum_\\pi q^{inv(\\pi)}$"
-      }
-    ]
-  },
-  "QPochhammer": {
-    "wolfram": "QPochhammer",
-    "summary": "The q-Pochhammer symbol (a; q)_n = (1 - a)(1 - a q)...(1 - a q^(n-1)).",
-    "signature": "QPochhammer(a, q, n)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["QPochhammer", 2, 3, 3],
-        "expected": -85,
-        "caption": "$(1-2)(1-6)(1-18)$"
-      },
-      {
-        "expr": ["QPochhammer", ["Rational", 1, 2], ["Rational", 1, 2], 3],
-        "expected": ["Rational", 21, 64]
-      },
-      {
-        "expr": ["QPochhammer", "a", "q", 0],
-        "expected": 1,
-        "category": "Properties",
-        "caption": "The empty product"
-      },
-      {
-        "expr": ["QPochhammer", 0.5, 0.5, "PositiveInfinity"],
-        "expected": 0.2887880950866024,
-        "category": "Scope",
-        "caption": "The infinite product, Euler's function at 1/2"
-      }
-    ]
-  },
   "RamanujanTau": {
     "wolfram": "RamanujanTau",
     "summary": "Ramanujan's tau function: the coefficients of the discriminant modular form q prod (1 - q^n)^24.",
@@ -2597,74 +2487,6 @@
         "expected": ["List", 1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
         "category": "Scope",
         "caption": "the Fibonacci recurrence"
-      }
-    ]
-  },
-  "RiemannSiegelTheta": {
-    "wolfram": "RiemannSiegelTheta",
-    "summary": "The Riemann–Siegel theta function $\\vartheta(t) = \\operatorname{Im}\\ln\\Gamma(\\tfrac14 + \\tfrac{it}{2}) - \\tfrac{t}{2}\\ln\\pi$.",
-    "signature": "RiemannSiegelTheta(t)",
-    "home": "analytic",
-    "neededBy": ["Zeta"],
-    "examples": [
-      {
-        "expr": ["RiemannSiegelTheta", 1.5],
-        "expected": -2.19819085737941
-      },
-      {
-        "expr": ["N", ["RiemannSiegelTheta", 10]],
-        "expected": -3.0670743962898954
-      },
-      {
-        "expr": ["RiemannSiegelTheta", 0],
-        "expected": 0,
-        "category": "Properties"
-      }
-    ]
-  },
-  "RiemannSiegelZ": {
-    "wolfram": "RiemannSiegelZ",
-    "summary": "The Riemann–Siegel function $Z(t) = e^{i\\vartheta(t)}\\zeta(\\tfrac12 + it)$, real for real $t$.",
-    "signature": "RiemannSiegelZ(t)",
-    "home": "analytic",
-    "neededBy": ["Zeta"],
-    "examples": [
-      {
-        "expr": ["RiemannSiegelZ", 1.5],
-        "expected": -0.595568336782887
-      },
-      {
-        "expr": ["RiemannSiegelZ", 20.5],
-        "expected": 0.5993287025147513
-      },
-      {
-        "expr": ["N", ["RiemannSiegelZ", 0]],
-        "expected": -1.4603545088095868,
-        "category": "Properties",
-        "caption": "$Z(0) = \\zeta(1/2)$"
-      }
-    ]
-  },
-  "RiemannZetaZero": {
-    "wolfram": "ZetaZero",
-    "summary": "The k-th nontrivial zero of the Riemann zeta function on the critical line (compute-engine's Fungrim identity table already spells it `RiemannZetaZero`).",
-    "signature": "RiemannZetaZero(k)",
-    "home": "analytic",
-    "neededBy": ["Zeta"],
-    "examples": [
-      {
-        "expr": ["N", ["RiemannZetaZero", 1]],
-        "expected": ["Complex", 0.5, 14.134725141734693],
-        "caption": "The first nontrivial zero, $\\tfrac12 + 14.1347\\ldots i$"
-      },
-      {
-        "expr": ["N", ["RiemannZetaZero", 2]],
-        "expected": ["Complex", 0.5, 21.022039638771556]
-      },
-      {
-        "expr": ["N", ["RiemannZetaZero", 10]],
-        "expected": ["Complex", 0.5, 49.7738324776723],
-        "category": "Scope"
       }
     ]
   },

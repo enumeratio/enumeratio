@@ -3398,6 +3398,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Product",
   },
   {
+    name: "QBinomial",
+    wolfram: "QBinomial",
+  },
+  {
+    name: "QFactorial",
+    wolfram: "QFactorial",
+  },
+  {
+    name: "QPochhammer",
+    wolfram: "QPochhammer",
+  },
+  {
     name: "Quotient",
     wolfram: "Quotient",
   },
@@ -3483,6 +3495,19 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Reverse",
     wolfram: "Reverse",
+  },
+  {
+    name: "RiemannSiegelTheta",
+    wolfram: "RiemannSiegelTheta",
+  },
+  {
+    name: "RiemannSiegelZ",
+    wolfram: "RiemannSiegelZ",
+  },
+  {
+    name: "RiemannZetaZero",
+    fungrimEntries: ["60c2ec"],
+    wolfram: "ZetaZero",
   },
   {
     name: "Round",
