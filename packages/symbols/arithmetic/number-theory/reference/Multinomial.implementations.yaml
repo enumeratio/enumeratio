@@ -121,6 +121,15 @@ a-single-argument-is-always-1-there-s-only-one:
     tex:
       in: (5;5)
       out: "1"
+a-single-symbolic-argument-is-also-1:
+  epsil:
+    in: Multinomial(n)
+    out: "1"
+  tex:
+    in: \mathrm{Multinomial}(n)
+    out: "1"
+  fullform:
+    in: Multinomial[n]
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: Multinomial([2, 3, 5], 3)

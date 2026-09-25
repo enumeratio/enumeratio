@@ -68,6 +68,20 @@ examples:
     expected: [IntegerExponent, 10, 1]
     category: Possible issues
     caption: Base 1 has no well-defined $p$-adic valuation, so the call stays unevaluated
+  - role: test
+    id: integerexponent-1000-base-10
+    expr: [IntegerExponent, 1000]
+    expected: 3
+  - role: test
+    id: negative-integers-base-2
+    expr: [IntegerExponent, -24, 2]
+    expected: 3
+    category: Scope
+    caption: Negative integers, base 2
+  - role: test
+    id: integerexponent-1024-base-4
+    expr: [IntegerExponent, 1024, 4]
+    expected: 5
 seeAlso:
   - AdicValuation
   - FactorInteger

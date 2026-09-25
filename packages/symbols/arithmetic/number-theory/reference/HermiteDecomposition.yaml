@@ -37,6 +37,17 @@ examples:
     expected: [List, [List, [List, 1, 0], [List, -2, 1]], [List, [List, 1, 2], [List, 0, 0]]]
     category: Possible issues
     caption: "Singular: $h$ gains a zero row, and $u$ is no longer unique"
+  - role: test
+    id: another-3-times-3-full-rank-case
+    expr: [HermiteDecomposition, [List, [List, 2, 3, 5], [List, 7, 11, 13], [List, 17, 19, 23]]]
+    expected:
+      [
+        List,
+        [List, [List, 11, -3, 0], [List, 47, -11, -1], [List, 54, -13, -1]],
+        [List, [List, 1, 0, 16], [List, 0, 1, 69], [List, 0, 0, 78]],
+      ]
+    category: Scope
+    caption: Another $3\times3$, full-rank case
 seeAlso:
   - ProfiniteDecomposition
   - ExtendedGCD

@@ -180,6 +180,12 @@ examples:
     expected: [List, [Complex, -2, -1], [Complex, 2, 1]]
     category: Scope
     caption: $10^{20} + 39$ is inert, so its residue field is $\mathbb{F}_{p^2}$ with $p$ of 21 digits
+  - role: test
+    id: a-gaussian-base-and-a-plain-modulus
+    expr: [PowerModList, [Complex, 2, 1], [Rational, 1, 2], 5]
+    expected: [List, [Complex, -1, 2], [Complex, 1, -2]]
+    category: Scope
+    caption: A Gaussian base and a plain modulus
 seeAlso:
   - PowerMod
   - ModularInverse
