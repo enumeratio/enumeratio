@@ -185,3 +185,12 @@ the-empty-list-sorts-to-itself:
     in: Sort[List[]]
   wolfram:
     in: Sort[List[]]
+sort-association-orders-by-value:
+  epsil:
+    in: Sort(Association(Rule(a, 4), Rule(b, 1), Rule(c, 3)))
+    out: Association(Rule(b, 1), Rule(c, 3), Rule(a, 4))
+  tex:
+    in: \mathrm{Sort}(\mathrm{Association}(\mathrm{Rule}(a, 4), \mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3)))
+    out: \mathrm{Association}(\mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3), \mathrm{Rule}(a, 4))
+  fullform:
+    in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]

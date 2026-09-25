@@ -51,3 +51,14 @@ symbolic-data:
     out: \sqrt{ab}
   fullform:
     in: GeometricMean[List[a, b]]
+geometricmean-of-equal-values:
+  epsil:
+    in: GeometricMean([7, 7, 7])
+    out: "7"
+  tex:
+    in: \mathrm{GeometricMean}(\bigl\lbrack7, 7, 7\bigr\rbrack)
+    out: "7"
+  fullform:
+    in: GeometricMean[List[7, 7, 7]]
+  wolfram:
+    in: GeometricMean[List[7, 7, 7]]

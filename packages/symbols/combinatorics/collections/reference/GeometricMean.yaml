@@ -32,6 +32,10 @@ examples:
     expected: [Sqrt, [Multiply, a, b]]
     category: Scope
     caption: Symbolic data
+  - id: geometricmean-of-equal-values
+    expr: [GeometricMean, [List, 7, 7, 7]]
+    expected: 7
+    role: test
 seeAlso:
   - HarmonicMean
   - Mean

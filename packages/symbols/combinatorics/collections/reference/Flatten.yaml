@@ -159,5 +159,9 @@ examples:
     expected: 6
     category: Properties
     caption: Flattening an $m \times n$ matrix gives $mn$ elements. See [[Length]]
+  - id: flatten-single-level-non-list-unaffected
+    expr: [Flatten, [f, a, b]]
+    expected: [f, a, b]
+    role: test
 seeAlso:
   - Join

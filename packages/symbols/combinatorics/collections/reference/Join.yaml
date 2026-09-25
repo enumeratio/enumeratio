@@ -83,6 +83,18 @@ examples:
     expected: True
     category: Properties
     caption: $Join$ is associative
+  - id: join-tolerates-shorter-array-second
+    expr: [Join, [List, [List, 1, 2], [List, 3, 4]], [List, [List, x]], 2]
+    expected: [List, [List, 1, 2, x], [List, 3, 4]]
+    role: test
+  - id: join-splices-any-shared-head
+    expr: [Join, [f, a], [f, b], [f, c]]
+    expected: [f, a, b, c]
+    role: test
+  - id: join-associations-first-seen-order
+    expr: [Join, [Association, [Rule, a, b]], [Association, [Rule, c, d], [Rule, a, f]]]
+    expected: [Association, [Rule, a, f], [Rule, c, d]]
+    role: test
 seeAlso:
   - Flatten
   - Append
