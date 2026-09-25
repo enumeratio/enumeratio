@@ -5,6 +5,8 @@ n-pi-30:
   tex:
     in: N(\pi, 30)
     out: 3.141\,592\,653\,589\,793\,238\,46
+  fullform:
+    in: N[Pi, 30]
   wolfram:
     in: N[Pi, 30]
   sympy:
@@ -22,6 +24,8 @@ the-last-digit-correctly-rounded-computing-at-30:
   tex:
     in: N(\sinh(1), 30)
     out: 1.175\,201\,193\,643\,801\,456\,88
+  fullform:
+    in: N[Sinh[1], 30]
   wolfram:
     in: N[Sinh[1], 30]
 a-list-number-by-number:
@@ -31,6 +35,8 @@ a-list-number-by-number:
   tex:
     in: N(\bigl\lbrack\pi, e, \sqrt{2}\bigr\rbrack, 5)
     out: \bigl\lbrack3.141\,6, 2.718\,3, 1.414\,2\bigr\rbrack
+  fullform:
+    in: N[List[Pi, E, Sqrt[2]], 5]
   wolfram:
     in: N[List[Pi, E, Sqrt[2]], 5]
   sympy:
@@ -46,6 +52,8 @@ an-exact-tie-rounds-to-the-even-digit-0-125:
   tex:
     in: N(\frac{1}{8}, 2)
     out: "0.12"
+  fullform:
+    in: N[Rational[1, 8], 2]
   wolfram:
     in: N[Rational[1, 8], 2]
   sympy:
@@ -65,6 +73,8 @@ and-0-375-to-0-38:
   tex:
     in: N(\frac{3}{8}, 2)
     out: "0.38"
+  fullform:
+    in: N[Rational[3, 8], 2]
   wolfram:
     in: N[Rational[3, 8], 2]
   sympy:

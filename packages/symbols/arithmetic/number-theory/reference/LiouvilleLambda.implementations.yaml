@@ -5,6 +5,8 @@ omega-12-3:
   tex:
     in: \mathrm{LiouvilleLambda}(12)
     out: "-1"
+  fullform:
+    in: LiouvilleLambda[12]
   wolfram:
     in: LiouvilleLambda[12]
 liouvillelambda-10:
@@ -14,6 +16,8 @@ liouvillelambda-10:
   tex:
     in: \mathrm{LiouvilleLambda}(10)
     out: "1"
+  fullform:
+    in: LiouvilleLambda[10]
   wolfram:
     in: LiouvilleLambda[10]
 liouvillelambda-1:
@@ -23,6 +27,8 @@ liouvillelambda-1:
   tex:
     in: \mathrm{LiouvilleLambda}(1)
     out: "1"
+  fullform:
+    in: LiouvilleLambda[1]
   wolfram:
     in: LiouvilleLambda[1]
 listable:
@@ -32,6 +38,8 @@ listable:
   tex:
     in: \mathrm{LiouvilleLambda}(1..10)
     out: \bigl\lbrack1, -1, -1, 1, -1, 1, -1, -1, 1, 1\bigr\rbrack
+  fullform:
+    in: LiouvilleLambda[Range[10]]
   wolfram:
     in: LiouvilleLambda[Range[10]]
 lambda-n-1-omega-n-see-primeomega:
@@ -44,6 +52,7 @@ lambda-n-1-omega-n-see-primeomega:
   traditional:
     in: \mathrm{LiouvilleLambda}(360)=(-1)^{\Omega(360)}
     out: \mathrm{True}
+  fullform:
+    in: Equal[LiouvilleLambda[360], Power[-1, PrimeOmega[360]]]
   wolfram:
     in: (LiouvilleLambda[360] == Power[-1, PrimeOmega[360]])
-    back: Unreadable

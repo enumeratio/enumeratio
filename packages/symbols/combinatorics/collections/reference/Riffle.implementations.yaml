@@ -5,6 +5,8 @@ x-between-consecutive-elements:
   tex:
     in: \mathrm{Riffle}(\bigl\lbrack a, b, c\bigr\rbrack, x)
     out: \bigl\lbrack a, x, b, x, c\bigr\rbrack
+  fullform:
+    in: Riffle[List[a, b, c], x]
 interleave-two-lists-of-the-same-length:
   epsil:
     in: Riffle([a, b, c], [x, y, z])
@@ -12,6 +14,8 @@ interleave-two-lists-of-the-same-length:
   tex:
     in: \mathrm{Riffle}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack)
     out: \bigl\lbrack a, x, b, y, c, z\bigr\rbrack
+  fullform:
+    in: Riffle[List[a, b, c], List[x, y, z]]
 a-list-one-shorter-goes-strictly-between-the:
   epsil:
     in: Riffle([a, b, c], [x, y])
@@ -19,6 +23,8 @@ a-list-one-shorter-goes-strictly-between-the:
   tex:
     in: \mathrm{Riffle}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack)
     out: \bigl\lbrack a, x, b, y, c\bigr\rbrack
+  fullform:
+    in: Riffle[List[a, b, c], List[x, y]]
 every-3rd-element-of-the-result-is-x:
   epsil:
     in: Riffle([1, 2, 3, 4, 5, 6, 7], x, 3)
@@ -26,6 +32,8 @@ every-3rd-element-of-the-result-is-x:
   tex:
     in: \mathrm{Riffle}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7\bigr\rbrack, x, 3)
     out: \bigl\lbrack1, 2, x, 3, 4, x, 5, 6, x, 7\bigr\rbrack
+  fullform:
+    in: Riffle[List[1, 2, 3, 4, 5, 6, 7], x, 3]
 a-single-element-has-nothing-to-separate:
   epsil:
     in: Riffle([a], x)
@@ -33,3 +41,5 @@ a-single-element-has-nothing-to-separate:
   tex:
     in: \mathrm{Riffle}(\bigl\lbrack a\bigr\rbrack, x)
     out: \bigl\lbrack a\bigr\rbrack
+  fullform:
+    in: Riffle[List[a], x]

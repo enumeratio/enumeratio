@@ -5,6 +5,8 @@ e-1-3-2-gamma-0-3-2:
   tex:
     in: \mathrm{ExpIntegralE}(1, 1.5)
     out: 0.100\,019\,582\,406\,632\,65
+  fullform:
+    in: ExpIntegralE[1, 1.5]
   wolfram:
     in: ExpIntegralE[1, 1.5]
 expintegrale-2-1p5:
@@ -14,6 +16,8 @@ expintegrale-2-1p5:
   tex:
     in: \mathrm{ExpIntegralE}(2, 1.5)
     out: 0.073\,100\,786\,538\,480\,84
+  fullform:
+    in: ExpIntegralE[2, 1.5]
   wolfram:
     in: ExpIntegralE[2, 1.5]
 non-integer-order:
@@ -23,6 +27,8 @@ non-integer-order:
   tex:
     in: \mathrm{ExpIntegralE}(0.5, 2.5)
     out: 0.028\,414\,299\,709\,289\,756
+  fullform:
+    in: ExpIntegralE[0.5, 2.5]
   wolfram:
     in: ExpIntegralE[0.5, 2.5]
 exact-arguments-under-n:
@@ -32,6 +38,8 @@ exact-arguments-under-n:
   tex:
     in: N(\mathrm{ExpIntegralE}(1, 1))
     out: 0.219\,383\,934\,395\,520\,29
+  fullform:
+    in: N[ExpIntegralE[1, 1]]
   wolfram:
     in: N[ExpIntegralE[1, 1]]
 e-n-0-1-n-1-for-n-1:
@@ -41,6 +49,8 @@ e-n-0-1-n-1-for-n-1:
   tex:
     in: \mathrm{ExpIntegralE}(2, 0)
     out: "1"
+  fullform:
+    in: ExpIntegralE[2, 0]
   wolfram:
     in: ExpIntegralE[2, 0]
 e-0-x-e-x-x:
@@ -50,3 +60,5 @@ e-0-x-e-x-x:
   tex:
     in: \mathrm{ExpIntegralE}(0, x)
     out: \frac{\exp(-x)}{x}
+  fullform:
+    in: ExpIntegralE[0, x]

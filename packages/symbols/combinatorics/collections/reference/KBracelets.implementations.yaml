@@ -5,6 +5,8 @@ count-kbracelets-4-3-21-bracelets-of-length-4:
   tex:
     in: \mathrm{Count}(\mathrm{KBracelets}(4, 3))
     out: "21"
+  fullform:
+    in: Count[KBracelets[4, 3]]
 kbracelets-n-2-agrees-with-binarybracelets-n:
   epsil:
     in: Count(KBracelets(5, 2)) == Count(BinaryBracelets(5))
@@ -15,3 +17,5 @@ kbracelets-n-2-agrees-with-binarybracelets-n:
   traditional:
     in: \mathrm{Count}(\mathrm{KBracelets}(5, 2))=\mathrm{Count}(\mathrm{BinaryBracelets}(5))
     out: \mathrm{True}
+  fullform:
+    in: Equal[Count[KBracelets[5, 2]], Count[BinaryBracelets[5]]]

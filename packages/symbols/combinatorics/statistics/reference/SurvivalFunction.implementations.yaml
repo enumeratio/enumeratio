@@ -8,5 +8,7 @@ survivalfunction-chisquare:
   traditional:
     in: \mathrm{SurvivalFunction}(\mathrm{ChiSquareDistribution}(3), 2)
     out: Q(\frac{3}{2}, 1)
+  fullform:
+    in: SurvivalFunction[ChiSquareDistribution[3], 2]
   wolfram:
     in: SurvivalFunction[ChiSquareDistribution[3], 2]

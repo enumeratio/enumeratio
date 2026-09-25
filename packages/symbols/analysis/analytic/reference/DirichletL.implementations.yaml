@@ -8,6 +8,8 @@ modulus-1-the-riemann-zeta-function-itself:
   traditional:
     in: L(s, \chi_{1,1})
     out: \zeta(s)
+  fullform:
+    in: DirichletL[1, 1, s]
 l-1-chi-2-bmod-4-beta-1-pi-4-leibniz-s-series:
   epsil:
     in: DirichletL(4, 2, 1)
@@ -18,6 +20,8 @@ l-1-chi-2-bmod-4-beta-1-pi-4-leibniz-s-series:
   traditional:
     in: L(1, \chi_{4,2})
     out: \frac{\pi}{4}
+  fullform:
+    in: DirichletL[4, 2, 1]
   wolfram:
     in: DirichletL[4, 2, 1]
     out: Pi/4
@@ -34,6 +38,8 @@ a-principal-character-drops-the-euler-factors-at:
   traditional:
     in: L(s, \chi_{12,1})
     out: (1-2^{-s})(1-3^{-s})\zeta(s)
+  fullform:
+    in: DirichletL[12, 1, s]
 and-keeps-zeta-s-pole-a-non-principal-l-is:
   epsil:
     in: DirichletL(12, 1, 1)
@@ -44,6 +50,8 @@ and-keeps-zeta-s-pole-a-non-principal-l-is:
   traditional:
     in: L(1, \chi_{12,1})
     out: \tilde\infty
+  fullform:
+    in: DirichletL[12, 1, 1]
   wolfram:
     in: DirichletL[12, 1, 1]
     out: DirichletL[12, 1, 1]
@@ -63,6 +71,8 @@ l-0-chi-frac-35-frac-15-i-exact-from-the:
   traditional:
     in: L(0, \chi_{5,2})
     out: \frac{3}{5}+\frac{1}{5}i
+  fullform:
+    in: DirichletL[5, 2, 0]
   wolfram:
     in: DirichletL[5, 2, 0]
     out: 3/5 + I/5
@@ -79,6 +89,8 @@ l-3-chi-2-bmod-8-11:
   traditional:
     in: L(-3, \chi_{8,2})
     out: "11"
+  fullform:
+    in: DirichletL[8, 2, -3]
   wolfram:
     in: DirichletL[8, 2, -3]
     out: "11"
@@ -95,6 +107,8 @@ no-closed-form-at-positive-integer-s-in-general:
   traditional:
     in: L(2, \chi_{5,2})
     out: L(2, \chi_{5,2})
+  fullform:
+    in: DirichletL[5, 2, 2]
   wolfram:
     in: DirichletL[5, 2, 2]
     out: DirichletL[5, 2, 2]
@@ -111,6 +125,8 @@ l-2-chi-1-bmod-1-zeta-2-pi-2-6:
   traditional:
     in: L(2, \chi_{1,1})
     out: \frac{\pi^2}{6}
+  fullform:
+    in: DirichletL[1, 1, 2]
   wolfram:
     in: DirichletL[1, 1, 2]
 numeric-for-a-floating-point-argument:
@@ -123,6 +139,8 @@ numeric-for-a-floating-point-argument:
   traditional:
     in: L(1.5, \chi_{3,2})
     out: 0.703\,968\,244\,868\,732\,9
+  fullform:
+    in: DirichletL[3, 2, 1.5]
   wolfram:
     in: DirichletL[3, 2, 1.5]
 complex-s-l-s-chi-1-bmod-2-1-2-s-zeta-s-at-s-1-i:
@@ -135,6 +153,8 @@ complex-s-l-s-chi-1-bmod-2-1-2-s-zeta-s-at-s-1-i:
   traditional:
     in: N(L(1+i, \chi_{2,1}))
     out: 0.654\,358\,917\,407\,233\,1-0.384\,376\,350\,214\,799\,6i
+  fullform:
+    in: N[DirichletL[2, 1, Complex[1, 1]]]
   wolfram:
     in: N[DirichletL[2, 1, Complex[1, 1]]]
 the-principal-character-mod-2-removes-the-euler:
@@ -147,6 +167,8 @@ the-principal-character-mod-2-removes-the-euler:
   traditional:
     in: L(s, \chi_{2,1})
     out: (1-2^{-s})\zeta(s)
+  fullform:
+    in: DirichletL[2, 1, s]
 l-2-chi-2-bmod-4-beta-2-g:
   epsil:
     in: DirichletL(4, 2, 2)
@@ -157,6 +179,8 @@ l-2-chi-2-bmod-4-beta-2-g:
   traditional:
     in: L(2, \chi_{4,2})
     out: \mathrm{Catalan}
+  fullform:
+    in: DirichletL[4, 2, 2]
   wolfram:
     in: DirichletL[4, 2, 2]
 l-0-chi-3-frac-13-the-class-number-formula-s-2h:
@@ -169,6 +193,8 @@ l-0-chi-3-frac-13-the-class-number-formula-s-2h:
   traditional:
     in: L(0, \chi_{3,2})
     out: \frac{1}{3}
+  fullform:
+    in: DirichletL[3, 2, 0]
   wolfram:
     in: DirichletL[3, 2, 0]
 l-1-chi-3-pi-3-sqrt-3-s-1-for-a-real-quadratic:
@@ -181,6 +207,8 @@ l-1-chi-3-pi-3-sqrt-3-s-1-for-a-real-quadratic:
   traditional:
     in: L(1, \chi_{3,2})
     out: \frac{\sqrt{3}\pi}{9}
+  fullform:
+    in: DirichletL[3, 2, 1]
   wolfram:
     in: DirichletL[3, 2, 1]
 listable-in-s-threads-over-a-list:
@@ -190,6 +218,8 @@ listable-in-s-threads-over-a-list:
   tex:
     in: \mathrm{DirichletL}(1, 1, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack\tilde\infty, \frac{\pi^2}{6}, \zeta(3), \frac{\pi^4}{90}\bigr\rbrack
+  fullform:
+    in: DirichletL[1, 1, List[1, 2, 3, 4]]
   wolfram:
     in: DirichletL[1, 1, List[1, 2, 3, 4]]
 interval-arithmetic-in-s-decreasing-here:
@@ -202,5 +232,7 @@ interval-arithmetic-in-s-decreasing-here:
   traditional:
     in: L(\mathrm{Interval}(1.23, 1.24), \chi_{5,1})
     out: \mathrm{Interval}(4.113\,958\,567\,039\,058, 4.258\,988\,950\,108\,49)
+  fullform:
+    in: DirichletL[5, 1, Interval[List[1.23, 1.24]]]
   wolfram:
     in: DirichletL[5, 1, Interval[List[1.23, 1.24]]]

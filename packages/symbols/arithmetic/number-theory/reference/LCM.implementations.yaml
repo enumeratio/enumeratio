@@ -5,6 +5,8 @@ lcm-4-6:
   tex:
     in: \operatorname{lcm}(4, 6)
     out: "12"
+  fullform:
+    in: LCM[4, 6]
   wolfram:
     in: LCM[4, 6]
     out: "12"
@@ -36,6 +38,8 @@ lcm-is-variadic-it-accepts-any-number-of:
   tex:
     in: \operatorname{lcm}(4, 6, 10)
     out: "60"
+  fullform:
+    in: LCM[4, 6, 10]
   wolfram:
     in: LCM[4, 6, 10]
     out: "60"
@@ -49,6 +53,8 @@ a-single-argument-is-returned-unchanged:
   tex:
     in: \operatorname{lcm}(5)
     out: "5"
+  fullform:
+    in: LCM[5]
   wolfram:
     in: LCM[5]
     out: "5"
@@ -62,6 +68,8 @@ a-single-argument-is-returned-unchanged:
   tex:
     in: \operatorname{lcm}(0, 5)
     out: "0"
+  fullform:
+    in: LCM[0, 5]
   wolfram:
     in: LCM[0, 5]
     out: "0"
@@ -93,6 +101,8 @@ signs-are-discarded-before-computing-the-lcm:
   tex:
     in: \operatorname{lcm}(-3, 7)
     out: "21"
+  fullform:
+    in: LCM[-3, 7]
   wolfram:
     in: LCM[-3, 7]
     out: "21"
@@ -127,9 +137,10 @@ gcd-a-b-cdot-lcm-a-b-ab-see-gcd:
   traditional:
     in: \gcd(27, 81)\operatorname{lcm}(27, 81)=27\times81
     out: \mathrm{True}
+  fullform:
+    in: Equal[Times[GCD[27, 81], LCM[27, 81]], Times[27, 81]]
   wolfram:
     in: (Times[GCD[27, 81], LCM[27, 81]] == Times[27, 81])
-    back: Unreadable
     out: True
     tex:
       in: \gcd (27,81) \text{lcm}(27,81)=27\ 81
@@ -159,6 +170,8 @@ over-the-rationals-the-lcm-of-the-numerators:
   tex:
     in: \operatorname{lcm}(\frac{1}{3}, \frac{2}{5}, \frac{3}{7})
     out: "6"
+  fullform:
+    in: LCM[Rational[1, 3], Rational[2, 5], Rational[3, 7]]
   wolfram:
     in: LCM[Rational[1, 3], Rational[2, 5], Rational[3, 7]]
     out: "6"
@@ -172,6 +185,8 @@ over-the-rationals-the-lcm-of-the-numerators:
   tex:
     in: \operatorname{lcm}(3+i, -1+3i)
     out: 3+i
+  fullform:
+    in: LCM[Complex[3, 1], Complex[-1, 3]]
   wolfram:
     in: LCM[Complex[3, 1], Complex[-1, 3]]
     out: 3 + I
@@ -209,6 +224,8 @@ lcm-2-3-5:
   tex:
     in: \operatorname{lcm}(2, 3, 5)
     out: "30"
+  fullform:
+    in: LCM[2, 3, 5]
   wolfram:
     in: LCM[2, 3, 5]
 the-smallest-number-divisible-by-each-of-1:
@@ -218,6 +235,8 @@ the-smallest-number-divisible-by-each-of-1:
   tex:
     in: \operatorname{lcm}(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     out: 2\,520
+  fullform:
+    in: LCM[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   wolfram:
     in: LCM[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 negative-integers:
@@ -227,6 +246,8 @@ negative-integers:
   tex:
     in: \operatorname{lcm}(3, -5, 7)
     out: "105"
+  fullform:
+    in: LCM[3, -5, 7]
   wolfram:
     in: LCM[3, -5, 7]
 gaussian-primes-of-norm-41-and-13-the-lcm-is-the:
@@ -236,6 +257,8 @@ gaussian-primes-of-norm-41-and-13-the-lcm-is-the:
   tex:
     in: \operatorname{lcm}(-4+5i, 2+3i)
     out: 23+2i
+  fullform:
+    in: LCM[Complex[-4, 5], Complex[2, 3]]
   wolfram:
     in: LCM[Complex[-4, 5], Complex[2, 3]]
   sympy:
@@ -253,6 +276,8 @@ gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
   tex:
     in: \operatorname{lcm}(\frac{1}{2}+\frac{3}{5}i, \frac{1}{3}+i)
     out: 21+13i
+  fullform:
+    in: LCM[Complex[Rational[1, 2], Rational[3, 5]], Complex[Rational[1, 3], 1]]
   wolfram:
     in: LCM[Complex[Rational[1, 2], Rational[3, 5]], Complex[Rational[1, 3], 1]]
   sympy:
@@ -270,6 +295,8 @@ big-integers-the-exact-118-digit-lcm-past-where:
   tex:
     in: \operatorname{lcm}(20!, 10^{100}+3)
     out: 3\,475\,574\,297\,395\,200\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,001\,042\,672\,289\,218\,560\,000
+  fullform:
+    in: LCM[Factorial[20], Plus[Power[10, 100], 3]]
   wolfram:
     in: LCM[Factorial[20], Plus[Power[10, 100], 3]]
   sympy:
@@ -291,6 +318,8 @@ listable-a-single-list-argument-threads-element:
   tex:
     in: \operatorname{lcm}(12, \bigl\lbrack3, 7, 40\bigr\rbrack)
     out: \bigl\lbrack12, 84, 120\bigr\rbrack
+  fullform:
+    in: LCM[12, List[3, 7, 40]]
   wolfram:
     in: LCM[12, List[3, 7, 40]]
   sympy:

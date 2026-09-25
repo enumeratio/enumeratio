@@ -8,9 +8,11 @@
   traditional:
     in: \left(\frac{2}{7}\right)
     out: "1"
-  wolfram:
+  fullform:
     in: JacobiSymbol[2, 7]
     back: [JacobiSymbol, 2, 7]
+  wolfram:
+    in: JacobiSymbol[2, 7]
     out: "1"
     tex:
       in: \left(\frac{2}{7}\right)
@@ -25,9 +27,11 @@
   traditional:
     in: \left(\frac{3}{7}\right)
     out: "-1"
-  wolfram:
+  fullform:
     in: JacobiSymbol[3, 7]
     back: [JacobiSymbol, 3, 7]
+  wolfram:
+    in: JacobiSymbol[3, 7]
     out: "-1"
     tex:
       in: \left(\frac{3}{7}\right)
@@ -42,9 +46,11 @@
   traditional:
     in: \left(\frac{14}{7}\right)
     out: "0"
-  wolfram:
+  fullform:
     in: JacobiSymbol[14, 7]
     back: [JacobiSymbol, 14, 7]
+  wolfram:
+    in: JacobiSymbol[14, 7]
     out: "0"
     tex:
       in: \left(\frac{14}{7}\right)
@@ -59,9 +65,11 @@
   traditional:
     in: \left(\frac{-1}{13}\right)
     out: "1"
-  wolfram:
+  fullform:
     in: JacobiSymbol[-1, 13]
     back: [JacobiSymbol, -1, 13]
+  wolfram:
+    in: JacobiSymbol[-1, 13]
 euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here:
   epsil:
     in: LegendreSymbol(3, 7) == PowerMod(3, 3, 7) - 7
@@ -72,9 +80,11 @@ euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here:
   traditional:
     in: \left(\frac{3}{7}\right)=\left(3^3\bmod 7\right)-7
     out: \mathrm{True}
+  fullform:
+    in: Equal[JacobiSymbol[3, 7], Subtract[PowerMod[3, 3, 7], 7]]
+    back: [Equal, [JacobiSymbol, 3, 7], [Subtract, [PowerMod, 3, 3, 7], 7]]
   wolfram:
     in: (JacobiSymbol[3, 7] == Subtract[PowerMod[3, 3, 7], 7])
-    back: Unreadable
 listable-in-n-the-residues-mod-7-are-1-2-4:
   epsil:
     in: LegendreSymbol([1, 2, 3, 4, 5, 6], 7)
@@ -82,9 +92,11 @@ listable-in-n-the-residues-mod-7-are-1-2-4:
   tex:
     in: \mathrm{LegendreSymbol}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 7)
     out: \bigl\lbrack1, 1, -1, 1, -1, -1\bigr\rbrack
-  wolfram:
+  fullform:
     in: JacobiSymbol[List[1, 2, 3, 4, 5, 6], 7]
     back: [JacobiSymbol, [List, 1, 2, 3, 4, 5, 6], 7]
+  wolfram:
+    in: JacobiSymbol[List[1, 2, 3, 4, 5, 6], 7]
 9-is-not-prime-so-the-call-stays-symbolic-see:
   epsil:
     in: LegendreSymbol(2, 9)
@@ -95,6 +107,8 @@ listable-in-n-the-residues-mod-7-are-1-2-4:
   traditional:
     in: \left(\frac{2}{9}\right)
     out: \left(\frac{2}{9}\right)
-  wolfram:
+  fullform:
     in: JacobiSymbol[2, 9]
     back: [JacobiSymbol, 2, 9]
+  wolfram:
+    in: JacobiSymbol[2, 9]

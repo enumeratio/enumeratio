@@ -5,3 +5,5 @@
   tex:
     in: \mathrm{Count}(\mathrm{IntegerCompositions}(5))
     out: "16"
+  fullform:
+    in: Count[IntegerCompositions[5]]

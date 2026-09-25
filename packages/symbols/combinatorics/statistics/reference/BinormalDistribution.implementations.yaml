@@ -5,6 +5,8 @@ binormal-pdf-rho-only-form:
   tex:
     in: \operatorname{PDF}(\mathrm{BinormalDistribution}(\frac{1}{2}), \bigl\lbrack0, 0\bigr\rbrack)
     out: \frac{\sqrt{3}}{3\pi}
+  fullform:
+    in: PDF[BinormalDistribution[Rational[1, 2]], List[0, 0]]
   wolfram:
     in: PDF[BinormalDistribution[Rational[1, 2]], List[0, 0]]
 binormal-mean-is-the-mean-vector:
@@ -14,6 +16,8 @@ binormal-mean-is-the-mean-vector:
   tex:
     in: \mathrm{mean}(\mathrm{BinormalDistribution}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack, \frac{1}{2}))
     out: \bigl\lbrack1, 2\bigr\rbrack
+  fullform:
+    in: Mean[BinormalDistribution[List[1, 2], List[1, 1], Rational[1, 2]]]
   wolfram:
     in: Mean[BinormalDistribution[List[1, 2], List[1, 1], Rational[1, 2]]]
 binormal-variance-is-the-covariance-matrix:
@@ -23,6 +27,8 @@ binormal-variance-is-the-covariance-matrix:
   tex:
     in: \mathrm{Variance}(\mathrm{BinormalDistribution}(\frac{1}{2}))
     out: \bigl\lbrack\bigl\lbrack1, \frac{1}{2}\bigr\rbrack, \bigl\lbrack\frac{1}{2}, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Variance[BinormalDistribution[Rational[1, 2]]]
   wolfram:
     in: Variance[BinormalDistribution[Rational[1, 2]]]
 binormal-cdf-has-no-closed-form:
@@ -32,5 +38,7 @@ binormal-cdf-has-no-closed-form:
   tex:
     in: \operatorname{CDF}(\mathrm{BinormalDistribution}(\frac{1}{2}), \bigl\lbrack0, 0\bigr\rbrack)
     out: \operatorname{CDF}(\mathrm{BinormalDistribution}(\frac{1}{2}), \bigl\lbrack0, 0\bigr\rbrack)
+  fullform:
+    in: CDF[BinormalDistribution[Rational[1, 2]], List[0, 0]]
   wolfram:
     in: CDF[BinormalDistribution[Rational[1, 2]], List[0, 0]]

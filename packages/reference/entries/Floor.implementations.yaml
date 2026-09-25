@@ -5,6 +5,8 @@ floor-7-over-2:
   tex:
     in: \lfloor\frac{7}{2}\rfloor
     out: "3"
+  fullform:
+    in: Floor[Rational[7, 2]]
   wolfram:
     in: Floor[Rational[7, 2]]
     out: "3"
@@ -27,6 +29,8 @@ floor-3p7:
   tex:
     in: \lfloor3.7\rfloor
     out: "3"
+  fullform:
+    in: Floor[3.7]
   wolfram:
     in: Floor[3.7]
     out: "3"
@@ -52,6 +56,8 @@ integers-pass-through-unchanged:
   tex:
     in: \lfloor5\rfloor
     out: "5"
+  fullform:
+    in: Floor[5]
   wolfram:
     in: Floor[5]
     out: "5"
@@ -77,6 +83,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \lfloor\bigl\lbrack1.2, -1.2, 3.7\bigr\rbrack\rfloor
     out: \bigl\lbrack1, -2, 3\bigr\rbrack
+  fullform:
+    in: Floor[List[1.2, -1.2, 3.7]]
   wolfram:
     in: Floor[List[1.2, -1.2, 3.7]]
     out: "{1, -2, 3}"
@@ -111,9 +119,10 @@ for-a-non-integer-x-lceil-x-rceil-lfloor-x:
   traditional:
     in: \lfloor\frac{7}{2}\rfloor+1=\lceil\frac{7}{2}\rceil
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Floor[Rational[7, 2]], 1], Ceiling[Rational[7, 2]]]
   wolfram:
     in: (Plus[Floor[Rational[7, 2]], 1] == Ceiling[Rational[7, 2]])
-    back: Unreadable
     out: True
     tex:
       in: \left\lfloor \frac{7}{2}\right\rfloor +1=\left\lceil \frac{7}{2}\right\rceil
@@ -137,9 +146,10 @@ lfloor-x-rfloor-lceil-x-rceil:
   traditional:
     in: \lfloor-\frac{7}{2}\rfloor=-\lceil\frac{7}{2}\rceil
     out: \mathrm{True}
+  fullform:
+    in: Equal[Floor[Rational[-7, 2]], Minus[Ceiling[Rational[7, 2]]]]
   wolfram:
     in: (Floor[Rational[-7, 2]] == Minus[Ceiling[Rational[7, 2]]])
-    back: Unreadable
     out: True
     tex:
       in: \left\lfloor -\frac{7}{2}\right\rfloor =-\left\lceil \frac{7}{2}\right\rceil
@@ -160,6 +170,8 @@ how-many-full-5-item-packs-fit-in-17-items:
   tex:
     in: \lfloor\frac{17}{5}\rfloor
     out: "3"
+  fullform:
+    in: Floor[Divide[17, 5]]
   wolfram:
     in: Floor[Divide[17, 5]]
     out: "3"
@@ -182,6 +194,8 @@ rounds-toward-infty-not-toward-0-floor-3-2-is-4:
   tex:
     in: \lfloor-3.2\rfloor
     out: "-4"
+  fullform:
+    in: Floor[-3.2]
   wolfram:
     in: Floor[-3.2]
     out: "-4"
@@ -207,6 +221,8 @@ infinities-pass-through-unchanged:
   tex:
     in: \lfloor-\infty\rfloor
     out: -\infty
+  fullform:
+    in: Floor[-Infinity]
   wolfram:
     in: Floor[-Infinity]
     out: -Infinity
@@ -220,6 +236,8 @@ floor-2p4:
   tex:
     in: \lfloor2.4\rfloor
     out: "2"
+  fullform:
+    in: Floor[2.4]
   wolfram:
     in: Floor[2.4]
   sympy:
@@ -237,6 +255,8 @@ floor-2p6:
   tex:
     in: \lfloor2.6\rfloor
     out: "2"
+  fullform:
+    in: Floor[2.6]
   wolfram:
     in: Floor[2.6]
   sympy:
@@ -254,6 +274,8 @@ stays-symbolic:
   tex:
     in: \lfloor x\rfloor
     out: \lfloor x\rfloor
+  fullform:
+    in: Floor[x]
 exact-radicals-are-decided-numerically:
   epsil:
     in: Floor(Sqrt(50))
@@ -261,6 +283,8 @@ exact-radicals-are-decided-numerically:
   tex:
     in: \lfloor\sqrt{50}\rfloor
     out: "7"
+  fullform:
+    in: Floor[Sqrt[50]]
   wolfram:
     in: Floor[Sqrt[50]]
   sympy:
@@ -278,6 +302,8 @@ evaluates-at-an-exact-constant-lfloor-pi-rfloor:
   tex:
     in: \lfloor\pi\rfloor
     out: "3"
+  fullform:
+    in: Floor[Pi]
   wolfram:
     in: Floor[Pi]
   sympy:
@@ -295,6 +321,8 @@ and-at-its-negative-lfloor-pi-rfloor-4:
   tex:
     in: \lfloor-\pi\rfloor
     out: "-4"
+  fullform:
+    in: Floor[Minus[Pi]]
   wolfram:
     in: Floor[Minus[Pi]]
   sympy:
@@ -312,6 +340,8 @@ a-second-argument-floors-to-a-multiple-of-it-the:
   tex:
     in: \lfloor226\rfloor
     out: "220"
+  fullform:
+    in: Floor[226, 10]
   wolfram:
     in: Floor[226, 10]
 the-step-needn-t-be-an-integer-3-5-cdot-lfloor:
@@ -321,6 +351,8 @@ the-step-needn-t-be-an-integer-3-5-cdot-lfloor:
   tex:
     in: \lfloor-10.3\rfloor
     out: "-10.5"
+  fullform:
+    in: Floor[-10.3, 3.5]
   wolfram:
     in: Floor[-10.3, 3.5]
 nor-rational-2-pi-e-approx-3-57-floors-to-the:
@@ -330,6 +362,8 @@ nor-rational-2-pi-e-approx-3-57-floors-to-the:
   tex:
     in: \lfloor2\pi-e\rfloor
     out: \frac{5}{2}
+  fullform:
+    in: Floor[Subtract[Times[2, Pi], E], Rational[5, 4]]
   wolfram:
     in: Floor[Subtract[Times[2, Pi], E], Rational[5, 4]]
 floors-the-real-and-imaginary-parts-separately:
@@ -339,6 +373,8 @@ floors-the-real-and-imaginary-parts-separately:
   tex:
     in: \lfloor5.37-1.3i\rfloor
     out: 5-2i
+  fullform:
+    in: Floor[Complex[5.37, -1.3]]
   wolfram:
     in: Floor[Complex[5.37, -1.3]]
   sympy:
@@ -354,6 +390,8 @@ idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor:
   tex:
     in: \lfloor\lfloor x\rfloor\rfloor
     out: \lfloor x\rfloor
+  fullform:
+    in: Floor[Floor[x]]
 legendre-s-formula-100-ends-in-lfloor-100-5:
   epsil:
     in: Floor(100 / 5) + Floor(100 / 25)
@@ -361,6 +399,8 @@ legendre-s-formula-100-ends-in-lfloor-100-5:
   tex:
     in: \lfloor\frac{100}{5}\rfloor+\lfloor\frac{100}{25}\rfloor
     out: "24"
+  fullform:
+    in: Plus[Floor[Divide[100, 5]], Floor[Divide[100, 25]]]
   wolfram:
     in: Plus[Floor[Divide[100, 5]], Floor[Divide[100, 25]]]
   sympy:
@@ -376,9 +416,11 @@ the-number-of-decimal-digits-of-n-is-lfloor-log:
   tex:
     in: \lfloor\log_{10}(12\,345)\rfloor+1
     out: "5"
-  wolfram:
+  fullform:
     in: Plus[Floor[Log[10, 12345]], 1]
     back: [Add, [Floor, [Log, 12345, 10]], 1]
+  wolfram:
+    in: Plus[Floor[Log[10, 12345]], 1]
 the-first-four-digits-of-e:
   epsil:
     in: Floor(1_000 * ExponentialE)
@@ -386,6 +428,8 @@ the-first-four-digits-of-e:
   tex:
     in: \lfloor1\,000e\rfloor
     out: 2\,718
+  fullform:
+    in: Floor[Times[1000, E]]
   wolfram:
     in: Floor[Times[1000, E]]
   sympy:

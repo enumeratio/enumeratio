@@ -8,6 +8,8 @@ ismachinenumber-ordinary-float:
   traditional:
     in: \mathrm{IsMachineNumber}(2.5)
     out: \mathrm{True}
+  fullform:
+    in: MachineNumberQ[2.5]
   wolfram:
     in: MachineNumberQ[2.5]
 ismachinenumber-exact-integer:
@@ -20,6 +22,8 @@ ismachinenumber-exact-integer:
   traditional:
     in: \mathrm{IsMachineNumber}(2)
     out: \mathrm{False}
+  fullform:
+    in: MachineNumberQ[2]
   wolfram:
     in: MachineNumberQ[2]
 ismachinenumber-extended-precision:
@@ -32,6 +36,8 @@ ismachinenumber-extended-precision:
   traditional:
     in: \mathrm{IsMachineNumber}(3.141\,592\,653\,589\,793)
     out: \mathrm{False}
+  fullform:
+    in: MachineNumberQ[3.141592653589793]
   wolfram:
     in: MachineNumberQ[3.141592653589793]
     note: Wolfram's MachineNumberQ agrees here, but tracks precision as a tag rather than counting written digits.

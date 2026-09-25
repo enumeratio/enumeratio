@@ -5,6 +5,8 @@ petersen-is-3-regular:
   tex:
     in: \mathrm{VertexDegree}(\mathrm{PetersenGraph}())
     out: \bigl\lbrack3, 3, 3, 3, 3, 3, 3, 3, 3, 3\bigr\rbrack
+  fullform:
+    in: VertexDegree[PetersenGraph[]]
   wolfram:
     in: VertexDegree[PetersenGraph[]]
 petersen-is-not-bipartite:
@@ -17,5 +19,7 @@ petersen-is-not-bipartite:
   traditional:
     in: \mathrm{IsBipartiteGraph}(\mathrm{PetersenGraph}())
     out: \mathrm{False}
+  fullform:
+    in: BipartiteGraphQ[PetersenGraph[]]
   wolfram:
     in: BipartiteGraphQ[PetersenGraph[]]

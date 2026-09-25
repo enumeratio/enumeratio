@@ -5,6 +5,8 @@ matches-hypergeometric2f1-1-1-2-0-5-gamma-2:
   tex:
     in: \mathrm{Hypergeometric2F1Regularized}(1, 1, 2, 0.5)
     out: 1.386\,294\,361\,119\,889\,5
+  fullform:
+    in: Hypergeometric2F1Regularized[1, 1, 2, 0.5]
   wolfram:
     in: Hypergeometric2F1Regularized[1, 1, 2, 0.5]
 z-ge-1-stays-symbolic-no-continuation-past-the:
@@ -14,6 +16,8 @@ z-ge-1-stays-symbolic-no-continuation-past-the:
   tex:
     in: \mathrm{Hypergeometric2F1Regularized}(1, 1, 2, 1.5)
     out: \mathrm{Hypergeometric2F1Regularized}(1, 1, 2, 1.5)
+  fullform:
+    in: Hypergeometric2F1Regularized[1, 1, 2, 1.5]
   wolfram:
     in: Hypergeometric2F1Regularized[1, 1, 2, 1.5]
 stays-finite-at-a-nonpositive-integer-lower:
@@ -23,5 +27,7 @@ stays-finite-at-a-nonpositive-integer-lower:
   tex:
     in: N(\mathrm{Hypergeometric2F1Regularized}(1, 1, -1, 0.3))
     out: 0.524\,781\,341\,107\,871\,2
+  fullform:
+    in: N[Hypergeometric2F1Regularized[1, 1, -1, 0.3]]
   wolfram:
     in: N[Hypergeometric2F1Regularized[1, 1, -1, 0.3]]

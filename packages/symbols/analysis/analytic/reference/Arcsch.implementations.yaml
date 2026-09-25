@@ -5,6 +5,8 @@ n-arcsch-2:
   tex:
     in: N(\mathrm{arcsch}(2))
     out: 0.481\,211\,825\,059\,603\,447\,495
+  fullform:
+    in: N[ArcCsch[2]]
   wolfram:
     in: N[ArcCsch[2]]
     out: "0.48121182505960347"
@@ -18,6 +20,8 @@ a-pole-at-0:
   tex:
     in: \mathrm{arcsch}(0)
     out: \tilde\infty
+  fullform:
+    in: ArcCsch[0]
   wolfram:
     in: ArcCsch[0]
 arcsch-positiveinfinity:
@@ -27,6 +31,8 @@ arcsch-positiveinfinity:
   tex:
     in: \mathrm{arcsch}(\infty)
     out: "0"
+  fullform:
+    in: ArcCsch[Infinity]
   wolfram:
     in: ArcCsch[Infinity]
 a-float-argument-evaluates-directly:
@@ -36,6 +42,8 @@ a-float-argument-evaluates-directly:
   tex:
     in: \mathrm{arcsch}(1.5)
     out: 0.625\,145\,117\,250\,416\,687\,636
+  fullform:
+    in: ArcCsch[1.5]
   wolfram:
     in: ArcCsch[1.5]
 as-a-logarithm-arcsch-1-ln-1-sqrt-2:
@@ -45,6 +53,8 @@ as-a-logarithm-arcsch-1-ln-1-sqrt-2:
   tex:
     in: \mathrm{TrigToExp}(\mathrm{arcsch}(1))
     out: \ln(1+\sqrt{2})
+  fullform:
+    in: TrigToExp[ArcCsch[1]]
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Arcsch(-x)
@@ -52,6 +62,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
   tex:
     in: \mathrm{arcsch}(-x)
     out: -\mathrm{arcsch}(x)
+  fullform:
+    in: ArcCsch[Minus[x]]
 derivative-for-real-x-ne-0:
   epsil:
     in: D(Arcsch(x), x)
@@ -59,6 +71,8 @@ derivative-for-real-x-ne-0:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arcsch}(x)
     out: -(\vert x\vert\sqrt{x^2+1})^{-1}
+  fullform:
+    in: D[ArcCsch[x], x]
   wolfram:
     in:
     note: Wolfram writes it as -1/(x^2 Sqrt[1 + 1/x^2]).

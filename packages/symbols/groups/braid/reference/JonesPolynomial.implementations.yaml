@@ -8,6 +8,8 @@ the-right-handed-trefoil:
   traditional:
     in: V_{\sigma_{1}^{3}}(t)
     out: -\frac{1}{t^4}+\frac{1}{t}+\frac{1}{t^3}
+  fullform:
+    in: JonesPolynomial[Braid[2, List[1, 1, 1]]]
 not-yet-an-invariant:
   epsil:
     in: KauffmanBracket(Braid(2, [1]))
@@ -18,6 +20,8 @@ not-yet-an-invariant:
   traditional:
     in: \langle \sigma_{1}\rangle
     out: -A^3
+  fullform:
+    in: KauffmanBracket[Braid[2, List[1]]]
 and-the-writhe-correction-fixes-it:
   epsil:
     in: BracketInvariant(Braid(2, [1]))
@@ -28,6 +32,8 @@ and-the-writhe-correction-fixes-it:
   traditional:
     in: \mathrm{BracketInvariant}(\sigma_{1})
     out: "1"
+  fullform:
+    in: BracketInvariant[Braid[2, List[1]]]
 the-shortest-knotted-modular-geodesic-by-yet:
   epsil:
     in: JonesPolynomial("LLRLR")
@@ -38,6 +44,8 @@ the-shortest-knotted-modular-geodesic-by-yet:
   traditional:
     in: V_{\text{LLRLR}}(t)
     out: -\frac{1}{t^4}+\frac{1}{t}+\frac{1}{t^3}
+  fullform:
+    in: JonesPolynomial["LLRLR"]
 the-figure-eight-through-the-braid-it-carries-as:
   epsil:
     in: JonesPolynomial(FigureEightKnot())
@@ -48,3 +56,5 @@ the-figure-eight-through-the-braid-it-carries-as:
   traditional:
     in: V_{\mathrm{FigureEightKnot}()}(t)
     out: t^2-t-\frac{1}{t}+\frac{1}{t^2}+1
+  fullform:
+    in: JonesPolynomial[FigureEightKnot[]]

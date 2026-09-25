@@ -5,6 +5,8 @@ zeta-2:
   tex:
     in: \zeta(2)
     out: \frac{\pi^2}{6}
+  fullform:
+    in: Zeta[2]
   wolfram:
     in: Zeta[2]
     out: Pi^2/6
@@ -27,6 +29,8 @@ zeta-4:
   tex:
     in: \zeta(4)
     out: \frac{\pi^4}{90}
+  fullform:
+    in: Zeta[4]
   wolfram:
     in: Zeta[4]
     out: Pi^4/90
@@ -49,6 +53,8 @@ zeta-6:
   tex:
     in: \zeta(6)
     out: \frac{\pi^6}{945}
+  fullform:
+    in: Zeta[6]
   wolfram:
     in: Zeta[6]
     out: Pi^6/945
@@ -71,6 +77,8 @@ threads-over-a-list-reducing-every-element-to:
   tex:
     in: \zeta(\bigl\lbrack-1, -2, -3\bigr\rbrack)
     out: \bigl\lbrack-\frac{1}{12}, 0, \frac{1}{120}\bigr\rbrack
+  fullform:
+    in: Zeta[List[-1, -2, -3]]
   wolfram:
     in: Zeta[List[-1, -2, -3]]
     out: "{-1/12, 0, 1/120}"
@@ -96,6 +104,8 @@ zeta-0-1-2:
   tex:
     in: \zeta(0)
     out: -\frac{1}{2}
+  fullform:
+    in: Zeta[0]
   wolfram:
     in: Zeta[0]
     out: -1/2
@@ -118,6 +128,8 @@ trivial-zero-zeta-2n-0-for-positive-integer-n:
   tex:
     in: \zeta(-2)
     out: "0"
+  fullform:
+    in: Zeta[-2]
   wolfram:
     in: Zeta[-2]
     out: "0"
@@ -140,6 +152,8 @@ zeta-3-b-4-4-1-120-via-the-bernoulli-number:
   tex:
     in: \zeta(-3)
     out: \frac{1}{120}
+  fullform:
+    in: Zeta[-3]
   wolfram:
     in: Zeta[-3]
     out: 1/120
@@ -162,6 +176,8 @@ pole-at-s-1-the-harmonic-series-sum-1-n-diverges:
   tex:
     in: \zeta(1)
     out: \tilde\infty
+  fullform:
+    in: Zeta[1]
   wolfram:
     in: Zeta[1]
     out: ComplexInfinity
@@ -193,9 +209,10 @@ the-probability-that-two-random-positive:
   traditional:
     in: \frac{1}{\zeta(2)}=\frac{6}{\pi^2}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Divide[1, Zeta[2]], Divide[6, Power[Pi, 2]]]
   wolfram:
     in: (Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])
-    back: Unreadable
     out: True
     tex:
       in: \frac{1}{\zeta (2)}=\frac{6}{\pi ^2}
@@ -213,6 +230,8 @@ odd-integers-geq-3-have-no-known-closed-form:
   tex:
     in: \zeta(3)
     out: \zeta(3)
+  fullform:
+    in: Zeta[3]
   wolfram:
     in: Zeta[3]
     out: Zeta[3]
@@ -235,6 +254,8 @@ the-notorious-sum-of-all-positive-integers:
   tex:
     in: \zeta(-1)
     out: -\frac{1}{12}
+  fullform:
+    in: Zeta[-1]
   wolfram:
     in: Zeta[-1]
     out: -1/12
@@ -257,6 +278,8 @@ on-the-critical-line-zeta-1-2-14i-0-02224-0:
   tex:
     in: N(\zeta(0.5+14i))
     out: 0.022\,241\,142\,609\,993\,59-0.103\,258\,123\,266\,450\,06i
+  fullform:
+    in: N[Zeta[Complex[0.5, 14]]]
   wolfram:
     in: N[Zeta[Complex[0.5, 14]]]
     out: 0.022241142609994033 - 0.10325812326645277*I
@@ -278,6 +301,8 @@ two-argument-zeta-s-a-via-enumeratio-analytic:
   tex:
     in: \zeta(2, 1)
     out: \frac{\pi^2}{6}
+  fullform:
+    in: Zeta[2, 1]
   wolfram:
     in: Zeta[2, 1]
     out: Pi^2/6
@@ -300,6 +325,8 @@ zeta-2-2-zeta-2-1-pi-2-6-1:
   tex:
     in: \zeta(2, 2)
     out: \frac{\pi^2}{6}-1
+  fullform:
+    in: Zeta[2, 2]
   wolfram:
     in: Zeta[2, 2]
     out: -1 + Pi^2/6
@@ -322,6 +349,8 @@ zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so:
   tex:
     in: \zeta(2, 0)
     out: \frac{\pi^2}{6}
+  fullform:
+    in: Zeta[2, 0]
   wolfram:
     in: Zeta[2, 0]
     out: Pi^2/6
@@ -354,6 +383,8 @@ apery-s-constant-zeta-3-numerically:
   tex:
     in: N(\zeta(3))
     out: 1.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[Zeta[3]]
   wolfram:
     in: N[Zeta[3]]
   sympy:
@@ -369,6 +400,8 @@ a-machine-precision-argument:
   tex:
     in: \zeta(1.5)
     out: 2.612\,375\,348\,685\,488\,343\,35
+  fullform:
+    in: Zeta[1.5]
   wolfram:
     in: Zeta[1.5]
   sympy:
@@ -384,6 +417,8 @@ zeta-8-pi-8-9450:
   tex:
     in: \zeta(8)
     out: \frac{\pi^8}{9\,450}
+  fullform:
+    in: Zeta[8]
   wolfram:
     in: Zeta[8]
   sympy:
@@ -399,6 +434,8 @@ zeta-5-b-6-6-1-252:
   tex:
     in: \zeta(-5)
     out: -\frac{1}{252}
+  fullform:
+    in: Zeta[-5]
   wolfram:
     in: Zeta[-5]
   sympy:
@@ -414,6 +451,8 @@ arbitrary-real-arguments:
   tex:
     in: \zeta(5.211\,111\,111\,111\,111)
     out: 1.031\,391\,796\,934\,384\,998\,39
+  fullform:
+    in: Zeta[5.211111111111111]
   wolfram:
     in: Zeta[5.211111111111111]
   sympy:
@@ -429,6 +468,8 @@ left-of-the-critical-strip-via-the-functional:
   tex:
     in: \zeta(-4.5)
     out: -0.003\,091\,669\,247\,215\,833\,844\,82
+  fullform:
+    in: Zeta[-4.5]
   wolfram:
     in: Zeta[-4.5]
   sympy:
@@ -444,6 +485,8 @@ complex-s-under-n:
   tex:
     in: N(\zeta(2-5i))
     out: 0.850\,962\,943\,624\,262\,8-0.098\,996\,946\,134\,831\,25i
+  fullform:
+    in: N[Zeta[Complex[2, -5]]]
   wolfram:
     in: N[Zeta[Complex[2, -5]]]
   sympy:
@@ -459,6 +502,8 @@ zeta-infty-1-only-the-n-1-term-survives:
   tex:
     in: \zeta(\infty)
     out: "1"
+  fullform:
+    in: Zeta[Infinity]
   wolfram:
     in: Zeta[Infinity]
 two-arguments-at-a-nonpositive-integer-s-zeta-1:
@@ -468,6 +513,8 @@ two-arguments-at-a-nonpositive-integer-s-zeta-1:
   tex:
     in: \zeta(-1, 5)
     out: -\frac{121}{12}
+  fullform:
+    in: Zeta[-1, 5]
   wolfram:
     in: Zeta[-1, 5]
   sympy:
@@ -483,6 +530,8 @@ two-arguments-inexact:
   tex:
     in: \zeta(-1.5, 5)
     out: -17.050\,064\,749\,342\,655\,014\,1
+  fullform:
+    in: Zeta[-1.5, 5]
   wolfram:
     in: Zeta[-1.5, 5]
   sympy:
@@ -498,6 +547,8 @@ two-complex-arguments-under-n-to-ten-digits:
   tex:
     in: N(\zeta(-1.5+i, 2.5-i), 10)
     out: 0.018\,486\,809\,19+1.675\,533\,784i
+  fullform:
+    in: N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]
   wolfram:
     in: N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]
   sympy:
@@ -513,6 +564,8 @@ which-with-inexact-complex-arguments-should:
   tex:
     in: \zeta(-1.5+i, 2.5-i)
     out: 0.018\,486\,809\,193\,810\,65+1.675\,533\,784\,301\,766i
+  fullform:
+    in: Zeta[Complex[-1.5, 1], Complex[2.5, -1]]
   wolfram:
     in: Zeta[Complex[-1.5, 1], Complex[2.5, -1]]
   sympy:
@@ -528,6 +581,8 @@ zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of:
   tex:
     in: \zeta(20, \frac{1}{2})
     out: \frac{221\,930\,581\pi^{20}}{1\,856\,156\,927\,625}
+  fullform:
+    in: Zeta[20, Rational[1, 2]]
   wolfram:
     in: Zeta[20, Rational[1, 2]]
   sympy:
@@ -541,6 +596,8 @@ zeta-2-1-2-3-zeta-2-pi-2-2:
   tex:
     in: \zeta(2, \frac{1}{2})
     out: \frac{\pi^2}{2}
+  fullform:
+    in: Zeta[2, Rational[1, 2]]
   wolfram:
     in: Zeta[2, Rational[1, 2]]
   sympy:
@@ -554,6 +611,8 @@ interval-arithmetic-zeta-is-decreasing-on-1:
   tex:
     in: \zeta(\mathrm{Interval}(1.1, 1.2))
     out: \mathrm{Interval}(5.591\,582\,441\,177\,752, 10.584\,448\,464\,950\,801)
+  fullform:
+    in: Zeta[Interval[List[1.1, 1.2]]]
   wolfram:
     in: Zeta[Interval[List[1.1, 1.2]]]
 uncertainty-in-a-propagated-with-partial-a-zeta:
@@ -563,6 +622,8 @@ uncertainty-in-a-propagated-with-partial-a-zeta:
   tex:
     in: \zeta(\frac{1}{2}, \mathrm{Around}(0.5, 0.01))
     out: \mathrm{Around}(-0.604\,898\,643\,421\,630\,4, 0.023\,882\,689\,737\,774\,167)
+  fullform:
+    in: Zeta[Rational[1, 2], Around[0.5, 0.01]]
   wolfram:
     in: Zeta[Rational[1, 2], Around[0.5, 0.01]]
 zeta-s-1-zeta-s-for-symbolic-s:
@@ -572,6 +633,8 @@ zeta-s-1-zeta-s-for-symbolic-s:
   tex:
     in: \zeta(s, 1)
     out: \zeta(s)
+  fullform:
+    in: Zeta[s, 1]
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Zeta(3), 40)
@@ -579,6 +642,8 @@ to-40-significant-digits-every-one-correctly:
   tex:
     in: N(\zeta(3), 40)
     out: 1.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[Zeta[3], 40]
   wolfram:
     in: N[Zeta[3], 40]
   sympy:
@@ -594,6 +659,8 @@ zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s:
   tex:
     in: N(\zeta(3, -\frac{1}{2}))
     out: 16.414\,398\,322\,117\,159\,997\,8
+  fullform:
+    in: N[Zeta[3, Rational[-1, 2]]]
   wolfram:
     in: N[Zeta[3, Rational[-1, 2]]]
   sympy:
@@ -607,6 +674,8 @@ zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
   tex:
     in: N(\zeta(-1, -2))
     out: 2.91\overline{6}
+  fullform:
+    in: N[Zeta[-1, -2]]
   wolfram:
     in: N[Zeta[-1, -2]]
   sympy:

@@ -5,6 +5,8 @@
   tex:
     in: 7!!
     out: "105"
+  fullform:
+    in: Factorial2[7]
   wolfram:
     in: Factorial2[7]
     out: "105"
@@ -18,6 +20,8 @@
   tex:
     in: 8!!
     out: "384"
+  fullform:
+    in: Factorial2[8]
   wolfram:
     in: Factorial2[8]
     out: "384"
@@ -31,6 +35,8 @@ factorial2-10:
   tex:
     in: 10!!
     out: 3\,840
+  fullform:
+    in: Factorial2[10]
   wolfram:
     in: Factorial2[10]
     out: "3840"
@@ -44,6 +50,8 @@ factorial2-0:
   tex:
     in: 0!!
     out: "1"
+  fullform:
+    in: Factorial2[0]
   wolfram:
     in: Factorial2[0]
     out: "1"
@@ -60,9 +68,10 @@ splits-an-ordinary-factorial-into-even-and-odd:
   traditional:
     in: 8!=8!!\times7!!
     out: \mathrm{True}
+  fullform:
+    in: Equal[Factorial[8], Times[Factorial2[8], Factorial2[7]]]
   wolfram:
     in: (Factorial[8] == Times[Factorial2[8], Factorial2[7]])
-    back: Unreadable
     out: True
     tex:
       in: 8!=8\text{!!} 7\text{!!}
@@ -74,6 +83,8 @@ the-number-of-ways-to-pair-up-10-people-into-5:
   tex:
     in: 9!!
     out: "945"
+  fullform:
+    in: Factorial2[9]
   wolfram:
     in: Factorial2[9]
     out: "945"
@@ -87,6 +98,8 @@ negative-even-arguments-hit-a-pole-in-the:
   tex:
     in: (-2)!!
     out: \operatorname{NaN}
+  fullform:
+    in: Factorial2[-2]
   wolfram:
     in: Factorial2[-2]
     out: ComplexInfinity
@@ -103,6 +116,8 @@ negative-even-arguments-hit-a-pole-in-the:
   tex:
     in: 15!!
     out: 2\,027\,025
+  fullform:
+    in: Factorial2[15]
   wolfram:
     in: Factorial2[15]
     out: "2027025"
@@ -116,6 +131,8 @@ the-recurrence-n-n-cdot-n-2-run-downwards:
   tex:
     in: (-1)!!
     out: "1"
+  fullform:
+    in: Factorial2[-1]
   wolfram:
     in: Factorial2[-1]
     out: "1"
@@ -129,6 +146,8 @@ factorial2-20:
   tex:
     in: 20!!
     out: 3\,715\,891\,200
+  fullform:
+    in: Factorial2[20]
   wolfram:
     in: Factorial2[20]
 threads-element-wise-over-a-list:
@@ -138,6 +157,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack!!
     out: \bigl\lbrack1, 2, 3, 8, 15\bigr\rbrack
+  fullform:
+    in: Factorial2[List[1, 2, 3, 4, 5]]
   wolfram:
     in: Factorial2[List[1, 2, 3, 4, 5]]
 even-double-factorials-2n-2-n-n:
@@ -150,9 +171,10 @@ even-double-factorials-2n-2-n-n:
   traditional:
     in: 10!!=2^5\times5!
     out: \mathrm{True}
+  fullform:
+    in: Equal[Factorial2[10], Times[Power[2, 5], Factorial[5]]]
   wolfram:
     in: (Factorial2[10] == Times[Power[2, 5], Factorial[5]])
-    back: Unreadable
 odd-double-factorials-2n-1-frac-2n-2-n-n:
   epsil:
     in: Factorial2(9) == 10! / (2 ^ 5 * 5!)
@@ -163,9 +185,10 @@ odd-double-factorials-2n-1-frac-2n-2-n-n:
   traditional:
     in: 9!!=(10!)(2^5\times5!)^{-1}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Factorial2[9], Divide[Factorial[10], Times[Power[2, 5], Factorial[5]]]]
   wolfram:
     in: (Factorial2[9] == Divide[Factorial[10], Times[Power[2, 5], Factorial[5]]])
-    back: Unreadable
 negative-odd-integers-follow-the-recurrence:
   epsil:
     in: Factorial2(-3)
@@ -173,6 +196,8 @@ negative-odd-integers-follow-the-recurrence:
   tex:
     in: (-3)!!
     out: "-1"
+  fullform:
+    in: Factorial2[-3]
   wolfram:
     in: Factorial2[-3]
 5-frac-1-3-by-the-backward-recurrence:
@@ -182,6 +207,8 @@ negative-odd-integers-follow-the-recurrence:
   tex:
     in: (-5)!!
     out: \frac{1}{3}
+  fullform:
+    in: Factorial2[-5]
   wolfram:
     in: Factorial2[-5]
 real-arguments-use-the-analytic-continuation-2-1:
@@ -191,5 +218,7 @@ real-arguments-use-the-analytic-continuation-2-1:
   tex:
     in: 2.5!!
     out: 2.407\,069\,456\,116\,044
+  fullform:
+    in: Factorial2[2.5]
   wolfram:
     in: Factorial2[2.5]

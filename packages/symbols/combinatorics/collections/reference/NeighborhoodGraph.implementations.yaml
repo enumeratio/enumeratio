@@ -5,6 +5,8 @@ immediate-neighbours-on-a-path:
   tex:
     in: \mathrm{VertexList}(\mathrm{NeighborhoodGraph}(\mathrm{PathGraph}(7), 4))
     out: \bigl\lbrack3, 4, 5\bigr\rbrack
+  fullform:
+    in: VertexList[NeighborhoodGraph[enumeratio`PathGraph[7], 4]]
 radius-2:
   epsil:
     in: VertexList(NeighborhoodGraph(PathGraph(7), 4, 2))
@@ -12,3 +14,5 @@ radius-2:
   tex:
     in: \mathrm{VertexList}(\mathrm{NeighborhoodGraph}(\mathrm{PathGraph}(7), 4, 2))
     out: \bigl\lbrack2, 3, 4, 5, 6\bigr\rbrack
+  fullform:
+    in: VertexList[NeighborhoodGraph[enumeratio`PathGraph[7], 4, 2]]

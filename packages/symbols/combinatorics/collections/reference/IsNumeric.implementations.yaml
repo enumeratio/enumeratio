@@ -8,6 +8,8 @@ isnumeric-pi:
   traditional:
     in: \mathrm{IsNumeric}(\pi)
     out: \mathrm{True}
+  fullform:
+    in: NumericQ[Pi]
   wolfram:
     in: NumericQ[Pi]
 isnumeric-plain-symbol:
@@ -20,6 +22,8 @@ isnumeric-plain-symbol:
   traditional:
     in: \mathrm{IsNumeric}(x)
     out: \mathrm{False}
+  fullform:
+    in: NumericQ[x]
 isnumeric-sqrt-2:
   epsil:
     in: IsNumeric(Sqrt(2))
@@ -30,6 +34,8 @@ isnumeric-sqrt-2:
   traditional:
     in: \mathrm{IsNumeric}(\sqrt{2})
     out: \mathrm{True}
+  fullform:
+    in: NumericQ[Sqrt[2]]
   wolfram:
     in: NumericQ[Sqrt[2]]
 isnumeric-literal:
@@ -42,5 +48,7 @@ isnumeric-literal:
   traditional:
     in: \mathrm{IsNumeric}(5)
     out: \mathrm{True}
+  fullform:
+    in: NumericQ[5]
   wolfram:
     in: NumericQ[5]

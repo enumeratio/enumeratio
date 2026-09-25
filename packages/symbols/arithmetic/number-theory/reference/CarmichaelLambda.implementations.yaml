@@ -5,6 +5,8 @@ listable:
   tex:
     in: \mathrm{CarmichaelLambda}(\bigl\lbrack8, 15\bigr\rbrack)
     out: \bigl\lbrack2, 4\bigr\rbrack
+  fullform:
+    in: CarmichaelLambda[List[8, 15]]
   wolfram:
     in: CarmichaelLambda[List[8, 15]]
 negative-n-lambda-n-lambda-n:
@@ -17,6 +19,8 @@ negative-n-lambda-n-lambda-n:
   traditional:
     in: \lambda(-100)
     out: "20"
+  fullform:
+    in: CarmichaelLambda[-100]
   wolfram:
     in: CarmichaelLambda[-100]
 listable-over-a-range:
@@ -29,5 +33,7 @@ listable-over-a-range:
   traditional:
     in: \lambda(1..10)
     out: \bigl\lbrack1, 1, 2, 2, 4, 2, 6, 2, 6, 4\bigr\rbrack
+  fullform:
+    in: CarmichaelLambda[Range[10]]
   wolfram:
     in: CarmichaelLambda[Range[10]]

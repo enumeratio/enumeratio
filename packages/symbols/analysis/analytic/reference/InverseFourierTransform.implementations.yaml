@@ -5,6 +5,8 @@ dirac-delta:
   tex:
     in: \mathrm{InverseFourierTransform}(\mathrm{DiracDelta}(w), w, t)
     out: \sqrt{\frac{1}{2\pi}}
+  fullform:
+    in: InverseFourierTransform[DiracDelta[w], w, t]
 constant:
   epsil:
     in: InverseFourierTransform(1, w, t)
@@ -12,3 +14,5 @@ constant:
   tex:
     in: \mathrm{InverseFourierTransform}(1, w, t)
     out: \sqrt{2\pi}
+  fullform:
+    in: InverseFourierTransform[1, w, t]

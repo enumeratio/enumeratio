@@ -5,6 +5,8 @@ min-3-1-4-1-5:
   tex:
     in: \min(3, 1, 4, 1, 5)
     out: "1"
+  fullform:
+    in: Min[3, 1, 4, 1, 5]
   wolfram:
     in: Min[3, 1, 4, 1, 5]
     out: "1"
@@ -24,6 +26,8 @@ also-accepts-a-single-list-argument:
   tex:
     in: \min(\bigl\lbrack3, 1, 4\bigr\rbrack)
     out: "1"
+  fullform:
+    in: Min[List[3, 1, 4]]
   wolfram:
     in: Min[List[3, 1, 4]]
     out: "1"
@@ -46,6 +50,8 @@ min-neg-1-neg-5:
   tex:
     in: \min(-1, -5)
     out: "-5"
+  fullform:
+    in: Min[-1, -5]
   wolfram:
     in: Min[-1, -5]
     out: "-5"
@@ -65,6 +71,8 @@ a-single-argument-is-returned-unchanged:
   tex:
     in: \min(3)
     out: "3"
+  fullform:
+    in: Min[3]
   wolfram:
     in: Min[3]
     out: "3"
@@ -87,9 +95,10 @@ commutative-order-doesn-t-matter:
   traditional:
     in: \min(3, 7)=\min(7, 3)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Min[3, 7], Min[7, 3]]
   wolfram:
     in: (Min[3, 7] == Min[7, 3])
-    back: Unreadable
     out: True
     tex:
       in: \min (3,7)=\min (7,3)
@@ -110,9 +119,10 @@ min-a-b-max-a-b-a-b-see-max:
   traditional:
     in: \min(4, 9)+\max(4, 9)=4+9
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Min[4, 9], Max[4, 9]], Plus[4, 9]]
   wolfram:
     in: (Plus[Min[4, 9], Max[4, 9]] == Plus[4, 9])
-    back: Unreadable
     out: True
     tex:
       in: \min (4,9)+\max (4,9)=4+9
@@ -130,6 +140,8 @@ the-day-s-low-from-the-same-hourly-readings-see:
   tex:
     in: \min(68, 72, 65, 80, 74)
     out: "65"
+  fullform:
+    in: Min[68, 72, 65, 80, 74]
   wolfram:
     in: Min[68, 72, 65, 80, 74]
     out: "65"
@@ -149,6 +161,8 @@ infinities-participate-directly-in-the:
   tex:
     in: \min(-\infty, 3)
     out: -\infty
+  fullform:
+    in: Min[-Infinity, 3]
   wolfram:
     in: Min[-Infinity, 3]
     out: -Infinity
@@ -162,6 +176,8 @@ multiple-arguments-lists-included-are-flattened:
   tex:
     in: \min(\bigl\lbrack3, 1\bigr\rbrack, 0)
     out: "0"
+  fullform:
+    in: Min[List[3, 1], 0]
   wolfram:
     in: Min[List[3, 1], 0]
     out: "0"
@@ -184,6 +200,8 @@ min-9-2:
   tex:
     in: \min(9, 2)
     out: "2"
+  fullform:
+    in: Min[9, 2]
   wolfram:
     in: Min[9, 2]
   sympy:
@@ -197,6 +215,8 @@ min-list-4-1-7-2:
   tex:
     in: \min(\bigl\lbrack4, 1, 7, 2\bigr\rbrack)
     out: "1"
+  fullform:
+    in: Min[List[4, 1, 7, 2]]
   wolfram:
     in: Min[List[4, 1, 7, 2]]
   sympy:
@@ -210,6 +230,8 @@ min-5p56-neg-4p8-7p3:
   tex:
     in: \min(5.56, -4.8, 7.3)
     out: "-4.8"
+  fullform:
+    in: Min[5.56, -4.8, 7.3]
   wolfram:
     in: Min[5.56, -4.8, 7.3]
   sympy:
@@ -223,6 +245,8 @@ nested-lists-are-flattened-into-the-pool:
   tex:
     in: \min(2, 3, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
     out: -\frac{5}{3}
+  fullform:
+    in: Min[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   wolfram:
     in: Min[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   sympy:
@@ -236,6 +260,8 @@ exact-numbers-are-compared-numerically:
   tex:
     in: \min(\sqrt{2}, \frac{3}{2})
     out: \sqrt{2}
+  fullform:
+    in: Min[Sqrt[2], Rational[3, 2]]
   wolfram:
     in: Min[Sqrt[2], Rational[3, 2]]
   sympy:
@@ -249,6 +275,8 @@ the-numeric-arguments-collapse-to-their-minimum:
   tex:
     in: \min(3, x, 5)
     out: \min(3, x)
+  fullform:
+    in: Min[3, x, 5]
 compares-exact-constants-numerically-min-e-pi-5:
   epsil:
     in: Min([ExponentialE, Pi, 5])
@@ -256,6 +284,8 @@ compares-exact-constants-numerically-min-e-pi-5:
   tex:
     in: \min(\bigl\lbracke, \pi, 5\bigr\rbrack)
     out: e
+  fullform:
+    in: Min[List[E, Pi, 5]]
   wolfram:
     in: Min[List[E, Pi, 5]]
   sympy:
@@ -269,6 +299,8 @@ the-min-of-two-intervals-is-the-interval-of:
   tex:
     in: \min(\mathrm{Interval}(1, 3), \mathrm{Interval}(-3, 5))
     out: \mathrm{Interval}(-3, 3)
+  fullform:
+    in: Min[Interval[List[1, 3]], Interval[List[-3, 5]]]
   wolfram:
     in: Min[Interval[List[1, 3]], Interval[List[-3, 5]]]
 idempotent-min-x-x-x:
@@ -278,6 +310,8 @@ idempotent-min-x-x-x:
   tex:
     in: \min(x, x)
     out: x
+  fullform:
+    in: Min[x, x]
 with-no-arguments-it-returns-the-identity:
   epsil:
     in: Min()
@@ -285,6 +319,8 @@ with-no-arguments-it-returns-the-identity:
   tex:
     in: \min()
     out: \infty
+  fullform:
+    in: Min[]
   wolfram:
     in: Min[]
   sympy:
@@ -298,6 +334,8 @@ the-min-of-an-empty-list-is-nan:
   tex:
     in: \min(\bigl\lbrack \bigr\rbrack)
     out: \operatorname{NaN}
+  fullform:
+    in: Min[List[]]
   wolfram:
     in: Min[List[]]
     note: Wolfram's $\mathrm{Min}[\{\}]$ is the identity element $+\infty$.

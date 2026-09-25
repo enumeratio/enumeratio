@@ -291,8 +291,9 @@ export interface SystemImplementation {
   /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
   readonly tolerance?: number;
   readonly messages?: readonly EvaluationMessage[];
-  /** Wolfram only: what `in` reads back as, where the trip loses something (a head with no
-   * Wolfram of its own to reverse from). Absent when it reads back as the example's `expr`. */
+  /** `fullform` only: what `in` reads back as through @enumeratio/wolfram, where the trip loses
+   * something (a head with no Wolfram of its own to reverse from). Absent when it reads back as
+   * the example's `expr`. */
   readonly back?: MathJSON;
 }
 

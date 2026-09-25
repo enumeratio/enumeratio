@@ -5,6 +5,8 @@ values-not-near-zero-pass-through-unchanged:
   tex:
     in: \mathrm{chop}(1.2)
     out: "1.2"
+  fullform:
+    in: Chop[1.2]
   wolfram:
     in: Chop[1.2]
     out: "1.2"
@@ -18,6 +20,8 @@ values-smaller-than-about-10-10-collapse-to:
   tex:
     in: \mathrm{chop}(10^{-11})
     out: "0"
+  fullform:
+    in: Chop[1*^-11]
   wolfram:
     in: Chop[1*^-11]
     out: 1/100000000000
@@ -31,6 +35,8 @@ negative-values-chop-the-same-way:
   tex:
     in: \mathrm{chop}(-10^{-11})
     out: "0"
+  fullform:
+    in: Chop[-1*^-11]
   wolfram:
     in: Chop[-1*^-11]
     out: -1/100000000000
@@ -44,6 +50,8 @@ chops-the-real-and-imaginary-parts-independently:
   tex:
     in: \mathrm{chop}(10^{-12}+3i)
     out: 3i
+  fullform:
+    in: Chop[Complex[1*^-12, 3]]
   wolfram:
     in: Chop[Complex[1*^-12, 3]]
     out: 1/1000000000000 + 3*I
@@ -57,6 +65,8 @@ cleans-up-the-floating-point-residue-from:
   tex:
     in: \mathrm{chop}(3N(\frac{1}{3})-1)
     out: "0"
+  fullform:
+    in: Chop[Subtract[Times[3, N[Divide[1, 3]]], 1]]
   wolfram:
     in: Chop[Subtract[Times[3, N[Divide[1, 3]]], 1]]
     out: "0"
@@ -70,6 +80,8 @@ only-the-value-s-own-magnitude-matters-this:
   tex:
     in: \mathrm{chop}(1+10^{-12})
     out: 1.000\,000\,000\,001
+  fullform:
+    in: Chop[Plus[1, 1*^-12]]
   wolfram:
     in: Chop[Plus[1, 1*^-12]]
     out: 1000000000001/1000000000000
@@ -83,6 +95,8 @@ a-hard-cutoff-at-about-10-10-a-value-just-above:
   tex:
     in: \mathrm{chop}(10\,000\,000\,001\cdot10^{-20})
     out: 10\,000\,000\,001\cdot10^{-20}
+  fullform:
+    in: Chop[1.0000000001*^-10]
   wolfram:
     in: Chop[1.0000000001*^-10]
     out: 1.0000000001*^-10
@@ -96,6 +110,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \mathrm{chop}(\bigl\lbrack1.2, 10^{-11}, 3.5\bigr\rbrack)
     out: \bigl\lbrack1.2, 0, 3.5\bigr\rbrack
+  fullform:
+    in: Chop[List[1.2, 1*^-11, 3.5]]
   wolfram:
     in: Chop[List[1.2, 1*^-11, 3.5]]
 a-negligible-imaginary-part-is-dropped-leaving-a:
@@ -105,6 +121,8 @@ a-negligible-imaginary-part-is-dropped-leaving-a:
   tex:
     in: \mathrm{chop}(1+10^{-14}i)
     out: "1"
+  fullform:
+    in: Chop[Plus[1, Complex[0, 1*^-14]]]
   wolfram:
     in: Chop[Plus[1, Complex[0, 1*^-14]]]
 stays-symbolic:
@@ -114,6 +132,8 @@ stays-symbolic:
   tex:
     in: \mathrm{chop}(x)
     out: \mathrm{chop}(x)
+  fullform:
+    in: Chop[x]
 exact-numbers-not-near-zero-pass-through:
   epsil:
     in: Chop(1 / 3)
@@ -121,6 +141,8 @@ exact-numbers-not-near-zero-pass-through:
   tex:
     in: \mathrm{chop}(\frac{1}{3})
     out: \frac{1}{3}
+  fullform:
+    in: Chop[Rational[1, 3]]
   wolfram:
     in: Chop[Rational[1, 3]]
 a-second-argument-sets-the-tolerance-here:
@@ -130,6 +152,8 @@ a-second-argument-sets-the-tolerance-here:
   tex:
     in: \mathrm{chop}(0.001, 0.01)
     out: "0"
+  fullform:
+    in: Chop[0.001, 0.01]
   wolfram:
     in: Chop[0.001, 0.01]
 and-a-tighter-tolerance-keeps-a-value-the:
@@ -139,6 +163,8 @@ and-a-tighter-tolerance-keeps-a-value-the:
   tex:
     in: \mathrm{chop}(10^{-15}, 10^{-20})
     out: 10^{-15}
+  fullform:
+    in: Chop[1*^-15, 1*^-20]
   wolfram:
     in: Chop[1*^-15, 1*^-20]
 an-exact-small-number-is-chopped-too:
@@ -148,6 +174,8 @@ an-exact-small-number-is-chopped-too:
   tex:
     in: \mathrm{chop}(\frac{1}{100\,000\,000\,000\,000\,000\,000})
     out: "0"
+  fullform:
+    in: Chop[Power[10, -20]]
   wolfram:
     in: Chop[Power[10, -20]]
     note: "Wolfram's Chop only touches approximate numbers: $\\mathrm{Chop}[10^{-20}]$ stays $1/10^{20}$."

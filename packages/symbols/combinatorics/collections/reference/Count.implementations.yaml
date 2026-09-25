@@ -5,6 +5,8 @@ count-list-1-2-2-3-2-2:
   tex:
     in: \mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 2\bigr\rbrack, 2)
     out: "3"
+  fullform:
+    in: Count[List[1, 2, 2, 3, 2], 2]
   wolfram:
     in: Count[List[1, 2, 2, 3, 2], 2]
     out: "3"
@@ -18,6 +20,8 @@ count-list-1-2-2-3-2-4-2:
   tex:
     in: \mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 2, 4\bigr\rbrack, 2)
     out: "3"
+  fullform:
+    in: Count[List[1, 2, 2, 3, 2, 4], 2]
   wolfram:
     in: Count[List[1, 2, 2, 3, 2, 4], 2]
     out: "3"
@@ -31,6 +35,8 @@ a-value-absent-from-the-collection-counts-as-0:
   tex:
     in: \mathrm{Count}(\bigl\lbrack1, 2, 3\bigr\rbrack, 9)
     out: "0"
+  fullform:
+    in: Count[List[1, 2, 3], 9]
   wolfram:
     in: Count[List[1, 2, 3], 9]
     out: "0"
@@ -44,6 +50,8 @@ count-tests-exact-equality-a-typed-pattern-like:
   tex:
     in: \mathrm{Count}(\bigl\lbrack1, a, 2, b\bigr\rbrack, \operatorname{\_Integer})
     out: "0"
+  fullform:
+    in: Count[List[1, a, 2, b], _Integer]
   wolfram:
     in:
     note: Wolfram's `_Integer` pattern counts every integer element, here 2 (1 and 2).
@@ -54,6 +62,8 @@ count-list-a-b-a-a-b-c-b-b:
   tex:
     in: \mathrm{Count}(\bigl\lbrack a, b, a, a, b, c, b\bigr\rbrack, b)
     out: "3"
+  fullform:
+    in: Count[List[a, b, a, a, b, c, b], b]
 the-value-can-itself-be-a-list:
   epsil:
     in: Count([[1, 2], [1, 2], 3], [1, 2])
@@ -61,6 +71,8 @@ the-value-can-itself-be-a-list:
   tex:
     in: \mathrm{Count}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack, 3\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)
     out: "2"
+  fullform:
+    in: Count[List[List[1, 2], List[1, 2], 3], List[1, 2]]
   wolfram:
     in: Count[List[List[1, 2], List[1, 2], 3], List[1, 2]]
 a-predicate-counts-the-elements-satisfying-it:
@@ -70,6 +82,8 @@ a-predicate-counts-the-elements-satisfying-it:
   tex:
     in: \mathrm{Count}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt2)
     out: "2"
+  fullform:
+    in: Count[List[1, 2, 3, 4], Function[Greater[Slot[1], 2]]]
   wolfram:
     in: Count[List[1, 2, 3, 4], Function[Greater[Slot[1], 2]]]
 only-top-level-elements-are-compared-by-default:
@@ -79,6 +93,8 @@ only-top-level-elements-are-compared-by-default:
   tex:
     in: \mathrm{Count}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, b, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b)
     out: "1"
+  fullform:
+    in: Count[List[List[a, a, b], b, List[a, b, a]], b]
 a-bare-level-spec-counts-matches-down-through:
   epsil:
     in: Count([[a, a, b], b, [a, b, a]], b, 2)
@@ -86,6 +102,8 @@ a-bare-level-spec-counts-matches-down-through:
   tex:
     in: \mathrm{Count}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, b, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b, 2)
     out: "3"
+  fullform:
+    in: Count[List[List[a, a, b], b, List[a, b, a]], b, 2]
 2-counts-matches-at-level-2-only:
   epsil:
     in: Count([[a, a, b], b, [a, b, a]], b, [2])
@@ -93,6 +111,8 @@ a-bare-level-spec-counts-matches-down-through:
   tex:
     in: \mathrm{Count}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, b, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b, \bigl\lbrack2\bigr\rbrack)
     out: "2"
+  fullform:
+    in: Count[List[List[a, a, b], b, List[a, b, a]], b, List[2]]
 count-tests-exact-equality-so-a-pattern-like:
   epsil:
     in: Count([a, 2, a, a, 1, c, b, 3, 3], _Integer)
@@ -100,6 +120,8 @@ count-tests-exact-equality-so-a-pattern-like:
   tex:
     in: \mathrm{Count}(\bigl\lbrack a, 2, a, a, 1, c, b, 3, 3\bigr\rbrack, \operatorname{\_Integer})
     out: "0"
+  fullform:
+    in: Count[List[a, 2, a, a, 1, c, b, 3, 3], _Integer]
   wolfram:
     in:
     note: Wolfram's `_Integer` pattern counts every integer element, here 4 (2, 1, 3, 3).
@@ -122,6 +144,7 @@ the-counts-of-the-distinct-values-add-up-to-the:
   traditional:
     in: \mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 1)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 2)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 3)=\mathrm{Length}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Count[List[1, 2, 2, 3, 3, 3], 1], Count[List[1, 2, 2, 3, 3, 3], 2], Count[List[1, 2, 2, 3, 3, 3], 3]], Length[List[1, 2, 2, 3, 3, 3]]]
   wolfram:
     in: (Plus[Count[List[1, 2, 2, 3, 3, 3], 1], Count[List[1, 2, 2, 3, 3, 3], 2], Count[List[1, 2, 2, 3, 3, 3], 3]] == Length[List[1, 2, 2, 3, 3, 3]])
-    back: Unreadable

@@ -5,6 +5,8 @@ a-5-vertex-path:
   tex:
     in: \mathrm{VertexDegree}(\mathrm{PathGraph}(5))
     out: \bigl\lbrack1, 2, 2, 2, 1\bigr\rbrack
+  fullform:
+    in: VertexDegree[enumeratio`PathGraph[5]]
 a-path-along-named-vertices:
   epsil:
     in: PathGraph([a, b, c])
@@ -12,3 +14,5 @@ a-path-along-named-vertices:
   tex:
     in: \mathrm{PathGraph}(\bigl\lbrack a, b, c\bigr\rbrack)
     out: \mathrm{Graph}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(a, b), \mathrm{UndirectedEdge}(b, c)\bigr\rbrack)
+  fullform:
+    in: enumeratio`PathGraph[List[a, b, c]]

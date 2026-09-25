@@ -14,6 +14,8 @@
   traditional:
     in: \mathrm{NumeralSystemShape}(\mathrm{ResidueNumerals}(\bigl\lbrack4, 6\bigr\rbrack))
     out: \mathrm{Dictionary}(\mathrm{KeyValuePair}(\text{Bijective}, \mathrm{False}), \mathrm{KeyValuePair}(\text{Integers}, 0..23), \mathrm{KeyValuePair}(\text{Digits}, \bigl\lbrack0..3, 0..5\bigr\rbrack), \mathrm{KeyValuePair}(\text{Width}, 2))
+  fullform:
+    in: NumeralSystemShape[ResidueNumerals[List[4, 6]]]
 numeralsystemshape-zeckendorfnumerals:
   epsil:
     in: NumeralSystemShape(ZeckendorfNumerals)
@@ -30,6 +32,8 @@ numeralsystemshape-zeckendorfnumerals:
   traditional:
     in: \mathrm{NumeralSystemShape}(\mathrm{ZeckendorfNumerals})
     out: \mathrm{Dictionary}(\mathrm{KeyValuePair}(\text{Bijective}, \mathrm{True}), \mathrm{KeyValuePair}(\text{Integers}, \mathbb{N}), \mathrm{KeyValuePair}(\text{Digits}, 0..1), \mathrm{KeyValuePair}(\text{Rule}, \text{no two adjacent ones}))
+  fullform:
+    in: NumeralSystemShape[ZeckendorfNumerals]
 ordinary-base-2-in-the-same-shape-every-other:
   epsil:
     in: NumeralSystemShape(PositionalNumerals(2))
@@ -45,6 +49,9 @@ ordinary-base-2-in-the-same-shape-every-other:
   traditional:
     in: \mathrm{NumeralSystemShape}(\mathrm{PositionalNumerals}(2))
     out: \mathrm{Dictionary}(\mathrm{KeyValuePair}(\text{Bijective}, \mathrm{True}), \mathrm{KeyValuePair}(\text{Integers}, \mathbb{N}), \mathrm{KeyValuePair}(\text{Digits}, 0..1))
+  fullform:
+    in: NumeralSystemShape[2]
+    back: [NumeralSystemShape, 2]
 every-integer-negatives-included-with-no-sign:
   epsil:
     in: NumeralSystemShape(BalancedNumerals(3))
@@ -55,3 +62,5 @@ every-integer-negatives-included-with-no-sign:
   traditional:
     in: \mathrm{NumeralSystemShape}(\mathrm{BalancedNumerals}(3))
     out: \mathrm{Dictionary}(\mathrm{KeyValuePair}(\text{Bijective}, \mathrm{True}), \mathrm{KeyValuePair}(\text{Integers}, \mathbb{Z}), \mathrm{KeyValuePair}(\text{Digits}, (-1)..1))
+  fullform:
+    in: NumeralSystemShape[BalancedNumerals[3]]

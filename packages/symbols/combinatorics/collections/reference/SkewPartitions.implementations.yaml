@@ -5,6 +5,8 @@ count-skewpartitions-4-28-pairs-lambda-mu-with:
   tex:
     in: \mathrm{Count}(\mathrm{SkewPartitions}(4))
     out: "28"
+  fullform:
+    in: Count[SkewPartitions[4]]
 the-first-skew-shape-of-size-3-as-an-outer-inner:
   epsil:
     in: SkewPartitions(3)[1]
@@ -12,3 +14,5 @@ the-first-skew-shape-of-size-3-as-an-outer-inner:
   tex:
     in: \mathrm{SkewPartitions}(3)[1]
     out: \bigl\lbrack\bigl\lbrack1, 1, 1\bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Part[SkewPartitions[3], 1]

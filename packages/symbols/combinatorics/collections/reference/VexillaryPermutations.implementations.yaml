@@ -5,3 +5,5 @@ count-vexillarypermutations-5-103-a005802:
   tex:
     in: \mathrm{Count}(\mathrm{VexillaryPermutations}(5))
     out: "103"
+  fullform:
+    in: Count[VexillaryPermutations[5]]

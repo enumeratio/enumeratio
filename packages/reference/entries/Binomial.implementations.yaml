@@ -5,6 +5,8 @@ binomial-5-2:
   tex:
     in: \binom{5}{2}
     out: "10"
+  fullform:
+    in: Binomial[5, 2]
   wolfram:
     in: Binomial[5, 2]
     out: "10"
@@ -36,6 +38,8 @@ binomial-10-3:
   tex:
     in: \binom{10}{3}
     out: "120"
+  fullform:
+    in: Binomial[10, 3]
   wolfram:
     in: Binomial[10, 3]
     out: "120"
@@ -67,6 +71,8 @@ binomial-4-2:
   tex:
     in: \binom{4}{2}
     out: "6"
+  fullform:
+    in: Binomial[4, 2]
   wolfram:
     in: Binomial[4, 2]
     out: "6"
@@ -98,6 +104,8 @@ choosing-none-of-n-is-always-1-way:
   tex:
     in: \binom{5}{0}
     out: "1"
+  fullform:
+    in: Binomial[5, 0]
   wolfram:
     in: Binomial[5, 0]
     out: "1"
@@ -129,6 +137,8 @@ choosing-all-of-n-is-always-1-way:
   tex:
     in: \binom{5}{5}
     out: "1"
+  fullform:
+    in: Binomial[5, 5]
   wolfram:
     in: Binomial[5, 5]
     out: "1"
@@ -163,9 +173,10 @@ symmetry-binom-n-k-binom-n-n-k:
   traditional:
     in: \binom{10}{3}=\binom{10}{7}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Binomial[10, 3], Binomial[10, 7]]
   wolfram:
     in: (Binomial[10, 3] == Binomial[10, 7])
-    back: Unreadable
     out: True
     tex:
       in: \binom{10}{3}=\binom{10}{7}
@@ -198,9 +209,10 @@ pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n:
   traditional:
     in: \binom{9}{2}+\binom{9}{3}=\binom{10}{3}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Binomial[9, 2], Binomial[9, 3]], Binomial[10, 3]]
   wolfram:
     in: (Plus[Binomial[9, 2], Binomial[9, 3]] == Binomial[10, 3])
-    back: Unreadable
     out: True
     tex:
       in: \binom{9}{2}+\binom{9}{3}=\binom{10}{3}
@@ -235,9 +247,10 @@ row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4:
   traditional:
     in: \binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Binomial[4, 0], Binomial[4, 1], Binomial[4, 2], Binomial[4, 3], Binomial[4, 4]], Power[2, 4]]
   wolfram:
     in: (Plus[Binomial[4, 0], Binomial[4, 1], Binomial[4, 2], Binomial[4, 3], Binomial[4, 4]] == Power[2, 4])
-    back: Unreadable
     out: True
     tex:
       in: \binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4
@@ -267,6 +280,8 @@ the-number-of-distinct-5-card-hands-dealt-from-a:
   tex:
     in: \binom{52}{5}
     out: 2\,598\,960
+  fullform:
+    in: Binomial[52, 5]
   wolfram:
     in: Binomial[52, 5]
     out: "2598960"
@@ -298,6 +313,8 @@ choosing-more-elements-than-available-k-n-gives:
   tex:
     in: \binom{5}{7}
     out: "0"
+  fullform:
+    in: Binomial[5, 7]
   wolfram:
     in: Binomial[5, 7]
     out: "0"
@@ -329,6 +346,8 @@ a-negative-k-also-gives-0:
   tex:
     in: \binom{5}{-1}
     out: "0"
+  fullform:
+    in: Binomial[5, -1]
   wolfram:
     in: Binomial[5, -1]
     out: "0"
@@ -366,6 +385,8 @@ a-negative-n-uses-the-generalized-formula-binom:
   tex:
     in: \binom{-5}{2}
     out: "15"
+  fullform:
+    in: Binomial[-5, 2]
   wolfram:
     in: Binomial[-5, 2]
     out: "15"
@@ -403,6 +424,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \binom{\bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack}{3}
     out: \bigl\lbrack0, 1, 10, 35, 165\bigr\rbrack
+  fullform:
+    in: Binomial[List[2, 3, 5, 7, 11], 3]
   wolfram:
     in: Binomial[List[2, 3, 5, 7, 11], 3]
     out: "{0, 1, 10, 35, 165}"
@@ -436,6 +459,8 @@ half-integer-arguments-evaluate-exactly-through:
   tex:
     in: \binom{\frac{9}{2}}{\frac{7}{2}}
     out: \frac{9}{2}
+  fullform:
+    in: Binomial[Rational[9, 2], Rational[7, 2]]
   wolfram:
     in: Binomial[Rational[9, 2], Rational[7, 2]]
     out: 9/2
@@ -466,6 +491,8 @@ binomial-8-4:
   tex:
     in: \binom{8}{4}
     out: "70"
+  fullform:
+    in: Binomial[8, 4]
   wolfram:
     in: Binomial[8, 4]
   sympy:
@@ -487,6 +514,8 @@ symbolic-n-binom-n-0-1-for-any-n:
   tex:
     in: \binom{n}{0}
     out: "1"
+  fullform:
+    in: Binomial[n, 0]
 symbolic-n-binom-n-1-n:
   epsil:
     in: Binomial(n, 1)
@@ -494,6 +523,8 @@ symbolic-n-binom-n-1-n:
   tex:
     in: \binom{n}{1}
     out: n
+  fullform:
+    in: Binomial[n, 1]
 binom-n-n-1-n-for-symbolic-n:
   epsil:
     in: Binomial(n, n - 1)
@@ -501,6 +532,8 @@ binom-n-n-1-n-for-symbolic-n:
   tex:
     in: \binom{n}{n-1}
     out: n
+  fullform:
+    in: Binomial[n, Subtract[n, 1]]
 real-arguments-evaluate-through-the-gamma:
   epsil:
     in: Binomial(8.5, -4.2)
@@ -508,6 +541,8 @@ real-arguments-evaluate-through-the-gamma:
   tex:
     in: \binom{8.5}{-4.2}
     out: 0.000\,060\,499\,248\,402\,283\,480\,067\,6
+  fullform:
+    in: Binomial[8.5, -4.2]
   wolfram:
     in: Binomial[8.5, -4.2]
   sympy:
@@ -529,6 +564,8 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
   tex:
     in: \binom{0.5}{3}
     out: 0.062\,5
+  fullform:
+    in: Binomial[0.5, 3]
   wolfram:
     in: Binomial[0.5, 3]
   sympy:
@@ -550,6 +587,8 @@ a-rational-n-with-integer-k-gives-the-exact:
   tex:
     in: \binom{\frac{1}{2}}{2}
     out: -\frac{1}{8}
+  fullform:
+    in: Binomial[Rational[1, 2], 2]
   wolfram:
     in: Binomial[Rational[1, 2], 2]
   sympy:
@@ -571,6 +610,8 @@ binom-1-2-3-frac-5-16-the-central-binomial:
   tex:
     in: \binom{-\frac{1}{2}}{3}
     out: -\frac{5}{16}
+  fullform:
+    in: Binomial[Rational[-1, 2], 3]
   wolfram:
     in: Binomial[Rational[-1, 2], 3]
   sympy:
@@ -592,6 +633,8 @@ binom-n-n-1-for-symbolic-n:
   tex:
     in: \binom{n}{n}
     out: "1"
+  fullform:
+    in: Binomial[n, n]
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
   epsil:
     in: Binomial(1 + i, 5)
@@ -599,6 +642,8 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
   tex:
     in: \binom{1+i}{5}
     out: -\frac{1}{12}-\frac{1}{12}i
+  fullform:
+    in: Binomial[Complex[1, 1], 5]
   wolfram:
     in: Binomial[Complex[1, 1], 5]
   sympy:
@@ -616,6 +661,8 @@ complex-n-and-k-evaluate-through-the-gamma:
   tex:
     in: \binom{2+i}{7-3i}
     out: -75.468\,347\,382\,223\,04+106.815\,265\,970\,790\,55i
+  fullform:
+    in: Binomial[Complex[2, 1], Complex[7, -3]]
   wolfram:
     in: Binomial[Complex[2, 1], Complex[7, -3]]
   sympy:
@@ -633,6 +680,8 @@ interval-arithmetic-in-k-binom-1-2-k-is:
   tex:
     in: \binom{\frac{1}{2}}{\mathrm{Interval}(0.5, 0.6)}
     out: \mathrm{Interval}(0.928\,145\,553\,850\,705\,4, 1)
+  fullform:
+    in: Binomial[Rational[1, 2], Interval[List[0.5, 0.6]]]
   wolfram:
     in: Binomial[Rational[1, 2], Interval[List[0.5, 0.6]]]
 sum-of-squares-along-a-row-sum-k-binom-n-k-2:
@@ -645,9 +694,10 @@ sum-of-squares-along-a-row-sum-k-binom-n-k-2:
   traditional:
     in: \sum_{k=0}^6\binom{6}{k}^2=\binom{12}{6}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sum[Power[Binomial[6, k], 2], List[k, 0, 6]], Binomial[12, 6]]
   wolfram:
     in: (Sum[Power[Binomial[6, k], 2], List[k, 0, 6]] == Binomial[12, 6])
-    back: Unreadable
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r:
   epsil:
     in: Sum(Binomial(5, k) * Binomial(4, 3 - k), (k, 0, 3)) == Binomial(9, 3)
@@ -658,9 +708,10 @@ vandermonde-s-identity-sum-k-binom-m-k-binom-n-r:
   traditional:
     in: \sum_{k=0}^3\binom{5}{k}\binom{4}{3-k}=\binom{9}{3}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sum[Times[Binomial[5, k], Binomial[4, Subtract[3, k]]], List[k, 0, 3]], Binomial[9, 3]]
   wolfram:
     in: (Sum[Times[Binomial[5, k], Binomial[4, Subtract[3, k]]], List[k, 0, 3]] == Binomial[9, 3])
-    back: Unreadable
 the-alternating-row-sum-vanishes-sum-k-1-k-binom:
   epsil:
     in: Sum((-1) ^ k * Binomial(6, k), (k, 0, 6))
@@ -668,6 +719,8 @@ the-alternating-row-sum-vanishes-sum-k-1-k-binom:
   tex:
     in: \sum_{k=0}^6(-1)^{k}\binom{6}{k}
     out: "0"
+  fullform:
+    in: Sum[Times[Power[-1, k], Binomial[6, k]], List[k, 0, 6]]
   wolfram:
     in: Sum[Times[Power[-1, k], Binomial[6, k]], List[k, 0, 6]]
 the-factorial-form-binom-n-k-frac-n-k-n-k-see:
@@ -680,9 +733,10 @@ the-factorial-form-binom-n-k-frac-n-k-n-k-see:
   traditional:
     in: \binom{7}{3}=\frac{7!}{3!\times4!}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Binomial[7, 3], Divide[Factorial[7], Times[Factorial[3], Factorial[4]]]]
   wolfram:
     in: (Binomial[7, 3] == Divide[Factorial[7], Times[Factorial[3], Factorial[4]]])
-    back: Unreadable
   sympy:
     in: enumeratio_equal(binomial(7, 3), (S(factorial(7)) / (factorial(3) * factorial(4))))
   sage:
@@ -702,6 +756,8 @@ the-probability-of-exactly-3-heads-in-10-fair:
   tex:
     in: \frac{\binom{10}{3}}{2^{10}}
     out: \frac{15}{128}
+  fullform:
+    in: Divide[Binomial[10, 3], Power[2, 10]]
   wolfram:
     in: Divide[Binomial[10, 3], Power[2, 10]]
   sympy:
@@ -723,6 +779,8 @@ both-arguments-negative-integers-the-limiting:
   tex:
     in: \binom{-3}{-5}
     out: "6"
+  fullform:
+    in: Binomial[-3, -5]
   wolfram:
     in: Binomial[-3, -5]
   sympy:
@@ -744,6 +802,8 @@ the-central-binomial-coefficient-binom-100-50:
   tex:
     in: \binom{100}{50}
     out: 100\,891\,344\,545\,564\,193\,334\,812\,497\,256
+  fullform:
+    in: Binomial[100, 50]
   wolfram:
     in: Binomial[100, 50]
   sympy:

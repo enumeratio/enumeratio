@@ -5,3 +5,5 @@ b-4:
   tex:
     in: \mathrm{Count}(\mathrm{SetPartitions}(4))
     out: "15"
+  fullform:
+    in: Count[SetPartitions[4]]

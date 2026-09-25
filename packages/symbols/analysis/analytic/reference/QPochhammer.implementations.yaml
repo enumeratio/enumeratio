@@ -5,6 +5,8 @@
   tex:
     in: \mathrm{QPochhammer}(2, 3, 3)
     out: "-85"
+  fullform:
+    in: QPochhammer[2, 3, 3]
   wolfram:
     in: QPochhammer[2, 3, 3]
 exact-rational-arithmetic-no-n-needed:
@@ -14,6 +16,8 @@ exact-rational-arithmetic-no-n-needed:
   tex:
     in: \mathrm{QPochhammer}(\frac{1}{2}, \frac{1}{2}, 3)
     out: \frac{21}{64}
+  fullform:
+    in: QPochhammer[Rational[1, 2], Rational[1, 2], 3]
   wolfram:
     in: QPochhammer[Rational[1, 2], Rational[1, 2], 3]
 the-empty-product:
@@ -23,6 +27,8 @@ the-empty-product:
   tex:
     in: \mathrm{QPochhammer}(a, q, 0)
     out: "1"
+  fullform:
+    in: QPochhammer[a, q, 0]
 the-infinite-product-euler-s-function-at-q-frac:
   epsil:
     in: QPochhammer(0.5, 0.5, PositiveInfinity)
@@ -30,5 +36,7 @@ the-infinite-product-euler-s-function-at-q-frac:
   tex:
     in: \mathrm{QPochhammer}(0.5, 0.5, \infty)
     out: 0.288\,788\,095\,086\,602\,4
+  fullform:
+    in: QPochhammer[0.5, 0.5, Infinity]
   wolfram:
     in: QPochhammer[0.5, 0.5, Infinity]

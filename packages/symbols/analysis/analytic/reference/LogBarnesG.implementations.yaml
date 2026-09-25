@@ -8,6 +8,8 @@ ln-g-4-ln-2:
   traditional:
     in: \log G(4)
     out: \ln(2)
+  fullform:
+    in: LogBarnesG[4]
   wolfram:
     in: LogBarnesG[4]
     out: Log[2]
@@ -24,6 +26,8 @@ ln-g-3-ln-1-0:
   traditional:
     in: \log G(3)
     out: "0"
+  fullform:
+    in: LogBarnesG[3]
   wolfram:
     in: LogBarnesG[3]
     out: "0"
@@ -40,6 +44,8 @@ g-0-0-so-its-logarithm-is-infty:
   traditional:
     in: \log G(0)
     out: -\infty
+  fullform:
+    in: LogBarnesG[0]
   wolfram:
     in: LogBarnesG[0]
     out: -Infinity
@@ -56,6 +62,8 @@ numeric-for-a-floating-point-argument:
   traditional:
     in: \log G(10.5)
     out: 42.278\,883\,636\,795\,2
+  fullform:
+    in: LogBarnesG[10.5]
   wolfram:
     in: LogBarnesG[10.5]
     out: "42.278883636795044"
@@ -72,6 +80,8 @@ ln-g-frac-12:
   traditional:
     in: \log G(0.5)
     out: -0.505\,433\,054\,489\,458\,3
+  fullform:
+    in: LogBarnesG[0.5]
   wolfram:
     in: LogBarnesG[0.5]
 ln-g-0-7-negative-since-g-1-on-0-1:
@@ -84,6 +94,8 @@ ln-g-0-7-negative-since-g-1-on-0-1:
   traditional:
     in: \log G(0.7)
     out: -0.214\,589\,897\,075\,086\,36
+  fullform:
+    in: LogBarnesG[0.7]
   wolfram:
     in: LogBarnesG[0.7]
 complex-arguments:
@@ -96,6 +108,8 @@ complex-arguments:
   traditional:
     in: \log G(1.7+i)
     out: 0.121\,378\,662\,628\,899\,29-0.313\,561\,761\,336\,856\,65i
+  fullform:
+    in: LogBarnesG[Complex[1.7, 1]]
   wolfram:
     in: LogBarnesG[Complex[1.7, 1]]
 threads-elementwise-over-an-array-infty-at-the:
@@ -105,6 +119,8 @@ threads-elementwise-over-an-array-infty-at-the:
   tex:
     in: \mathrm{LogBarnesG}(\bigl\lbrack\bigl\lbrack4, -1\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack\ln(2), -\infty\bigr\rbrack, \bigl\lbrack-\infty, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: LogBarnesG[List[List[4, -1], List[0, 3]]]
   wolfram:
     in: LogBarnesG[List[List[4, -1], List[0, 3]]]
 exact-at-the-integers-ln-g-10-ln:
@@ -117,6 +133,8 @@ exact-at-the-integers-ln-g-10-ln:
   traditional:
     in: \log G(10)
     out: 2\ln(14)+3\ln(10)+9\ln(3)+18\ln(2)+\ln(5)
+  fullform:
+    in: LogBarnesG[10]
   wolfram:
     in: LogBarnesG[10]
     note: Wolfram keeps a single logarithm, Log[5056584744960000].
@@ -130,6 +148,8 @@ the-continuation-not-ln-of-the-value-g-2-5-0-yet:
   traditional:
     in: \log G(-2.5)
     out: -2.574\,748\,476\,852\,846\,6+18.849\,555\,921\,538\,76i
+  fullform:
+    in: LogBarnesG[-2.5]
   wolfram:
     in: LogBarnesG[-2.5]
 huge-arguments-straight-from-the-asymptotic:
@@ -142,6 +162,8 @@ huge-arguments-straight-from-the-asymptotic:
   traditional:
     in: N(\log G(10^{1\,000}))
     out: 115\,054\,254\,649\,702\,284\,201\cdot10^{1983}
+  fullform:
+    in: N[LogBarnesG[Power[10, 1000]]]
   wolfram:
     in: N[LogBarnesG[Power[10, 1000]]]
 interval-arithmetic-over-an-increasing-stretch:
@@ -154,6 +176,8 @@ interval-arithmetic-over-an-increasing-stretch:
   traditional:
     in: \log G(\mathrm{Interval}(0.111, 0.112))
     out: \mathrm{Interval}(-2.106\,284\,277\,112\,393, -2.096\,646\,198\,881\,469)
+  fullform:
+    in: LogBarnesG[Interval[List[0.111, 0.112]]]
   wolfram:
     in: LogBarnesG[Interval[List[0.111, 0.112]]]
 uncertainty-propagation-through-ln-g:
@@ -166,6 +190,8 @@ uncertainty-propagation-through-ln-g:
   traditional:
     in: \log G(\mathrm{Around}(1.2, 0.01))
     out: \mathrm{Around}(0.056\,208\,855\,599\,105\,68, 0.001\,611\,305\,538\,862\,350\,7)
+  fullform:
+    in: LogBarnesG[Around[1.2, 0.01]]
   wolfram:
     in: LogBarnesG[Around[1.2, 0.01]]
 ln-g-infty-infty:
@@ -178,5 +204,7 @@ ln-g-infty-infty:
   traditional:
     in: \log G(\infty)
     out: \infty
+  fullform:
+    in: LogBarnesG[Infinity]
   wolfram:
     in: LogBarnesG[Infinity]

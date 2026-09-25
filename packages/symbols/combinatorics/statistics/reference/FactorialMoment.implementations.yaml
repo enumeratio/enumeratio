@@ -5,5 +5,7 @@ factorialmoment-order-2:
   tex:
     in: \mathrm{FactorialMoment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)
     out: "18"
+  fullform:
+    in: FactorialMoment[GeometricDistribution[Rational[1, 4]], 2]
   wolfram:
     in: FactorialMoment[GeometricDistribution[Rational[1, 4]], 2]

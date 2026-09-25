@@ -5,6 +5,8 @@ mersenneprimeexponent-1:
   tex:
     in: \mathrm{MersennePrimeExponent}(1)
     out: "2"
+  fullform:
+    in: MersennePrimeExponent[1]
   wolfram:
     in: MersennePrimeExponent[1]
 mersenneprimeexponent-5:
@@ -14,6 +16,8 @@ mersenneprimeexponent-5:
   tex:
     in: \mathrm{MersennePrimeExponent}(5)
     out: "13"
+  fullform:
+    in: MersennePrimeExponent[5]
   wolfram:
     in: MersennePrimeExponent[5]
 mersenneprimeexponent-10:
@@ -23,6 +27,8 @@ mersenneprimeexponent-10:
   tex:
     in: \mathrm{MersennePrimeExponent}(10)
     out: "89"
+  fullform:
+    in: MersennePrimeExponent[10]
   wolfram:
     in: MersennePrimeExponent[10]
 listable:
@@ -32,6 +38,8 @@ listable:
   tex:
     in: \mathrm{MersennePrimeExponent}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)
     out: \bigl\lbrack2, 3, 5, 7, 13, 17\bigr\rbrack
+  fullform:
+    in: MersennePrimeExponent[List[1, 2, 3, 4, 5, 6]]
   wolfram:
     in: MersennePrimeExponent[List[1, 2, 3, 4, 5, 6]]
 past-the-known-table-of-mersenne-prime-exponents:
@@ -41,5 +49,7 @@ past-the-known-table-of-mersenne-prime-exponents:
   tex:
     in: \mathrm{MersennePrimeExponent}(1\,000)
     out: \mathrm{MersennePrimeExponent}(1\,000)
+  fullform:
+    in: MersennePrimeExponent[1000]
   wolfram:
     in: MersennePrimeExponent[1000]

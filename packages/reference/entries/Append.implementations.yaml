@@ -5,6 +5,8 @@ append-list-1-2-3-4:
   tex:
     in: \mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, 4)
     out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Append[List[1, 2, 3], 4]
   wolfram:
     in: Append[List[1, 2, 3], 4]
     out: "{1, 2, 3, 4}"
@@ -21,9 +23,10 @@ append-c-x-join-c-x-see-join:
   traditional:
     in: \mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, 4)=\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Append[List[1, 2, 3], 4], Join[List[1, 2, 3], List[4]]]
   wolfram:
     in: (Append[List[1, 2, 3], 4] == Join[List[1, 2, 3], List[4]])
-    back: Unreadable
     out: True
     tex:
       in: \text{Append}[\{1,2,3\},4]=\text{Join}[\{1,2,3\},\{4\}]
@@ -35,6 +38,8 @@ appending-a-list-nests-it-as-a-single-element:
   tex:
     in: \mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack9\bigr\rbrack)
     out: \bigl\lbrack1, 2, 3, \bigl\lbrack9\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Append[List[1, 2, 3], List[9]]
   wolfram:
     in: Append[List[1, 2, 3], List[9]]
     out: "{1, 2, 3, {9}}"
@@ -48,9 +53,11 @@ a-set-as-well-as-a-list:
   tex:
     in: \mathrm{Append}(\lbrace1, 2, 3\rbrace, 4)
     out: \lbrace1, 2, 3, 4\rbrace
-  wolfram:
+  fullform:
     in: Append[Union[List[1, 2, 3]], 4]
     back: [Append, [Union, [List, 1, 2, 3]], 4]
+  wolfram:
+    in: Append[Union[List[1, 2, 3]], 4]
     out: "{1, 2, 3, 4}"
     tex:
       in: \text{Append}[\text{Union}[\{1,2,3\}],4]
@@ -62,6 +69,8 @@ append-list-a-b-c-d-x:
   tex:
     in: \mathrm{Append}(\bigl\lbrack a, b, c, d\bigr\rbrack, x)
     out: \bigl\lbrack a, b, c, d, x\bigr\rbrack
+  fullform:
+    in: Append[List[a, b, c, d], x]
 onto-the-empty-list:
   epsil:
     in: Append([], x)
@@ -69,6 +78,8 @@ onto-the-empty-list:
   tex:
     in: \mathrm{Append}(\bigl\lbrack \bigr\rbrack, x)
     out: \bigl\lbrack x\bigr\rbrack
+  fullform:
+    in: Append[List[], x]
 a-lazy-range-is-materialised-first:
   epsil:
     in: Append(Range(1, 3), 4)
@@ -76,6 +87,8 @@ a-lazy-range-is-materialised-first:
   tex:
     in: \mathrm{Append}(1..3, 4)
     out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Append[Range[1, 3], 4]
   wolfram:
     in: Append[Range[1, 3], 4]
 any-head-not-just-a-list:
@@ -85,6 +98,8 @@ any-head-not-just-a-list:
   tex:
     in: \mathrm{Append}(f(a, b), c)
     out: f(a, b, c)
+  fullform:
+    in: Append[f[a, b], c]
 adding-a-row-to-a-matrix:
   epsil:
     in: Append([[1, 2], [3, 4]], [5, 6])
@@ -92,6 +107,8 @@ adding-a-row-to-a-matrix:
   tex:
     in: \mathrm{Append}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Append[List[List[1, 2], List[3, 4]], List[5, 6]]
   wolfram:
     in: Append[List[List[1, 2], List[3, 4]], List[5, 6]]
 appending-adds-exactly-one-element-see-length:
@@ -104,6 +121,7 @@ appending-adds-exactly-one-element-see-length:
   traditional:
     in: \mathrm{Length}(\mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, 4))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+1
     out: \mathrm{True}
+  fullform:
+    in: Equal[Length[Append[List[1, 2, 3], 4]], Plus[Length[List[1, 2, 3]], 1]]
   wolfram:
     in: (Length[Append[List[1, 2, 3], 4]] == Plus[Length[List[1, 2, 3]], 1])
-    back: Unreadable

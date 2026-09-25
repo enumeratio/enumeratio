@@ -8,6 +8,8 @@ algebradimension-quaternions:
   traditional:
     in: \dim(\mathrm{Quaternions})
     out: "4"
+  fullform:
+    in: AlgebraDimension[Quaternions]
 algebradimension-cliffordalgebra-2-1:
   epsil:
     in: AlgebraDimension(CliffordAlgebra(2, 1))
@@ -18,6 +20,8 @@ algebradimension-cliffordalgebra-2-1:
   traditional:
     in: \dim(\operatorname{Cl}_{2,1}(\mathbb{R}))
     out: "8"
+  fullform:
+    in: AlgebraDimension[CliffordAlgebra[2, 1]]
 c-4:
   epsil:
     in: AlgebraDimension(MulticomplexAlgebra(4))
@@ -28,3 +32,5 @@ c-4:
   traditional:
     in: \dim(\mathbb{C}_{4})
     out: "16"
+  fullform:
+    in: AlgebraDimension[MulticomplexAlgebra[4]]

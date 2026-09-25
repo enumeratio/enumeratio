@@ -5,6 +5,8 @@ distance-along-a-path-graph:
   tex:
     in: \mathrm{GraphDistance}(\mathrm{PathGraph}(5), 1, 5)
     out: "4"
+  fullform:
+    in: GraphDistance[enumeratio`PathGraph[5], 1, 5]
 unreachable-is-infinite:
   epsil:
     in: |-
@@ -17,5 +19,7 @@ unreachable-is-infinite:
   tex:
     in: \mathrm{GraphDistance}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack), 4, 1)
     out: \infty
+  fullform:
+    in: GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], UndirectedEdge[3, 4]]], 4, 1]
   wolfram:
     in: GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], UndirectedEdge[3, 4]]], 4, 1]

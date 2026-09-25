@@ -8,6 +8,8 @@ erfinv-0:
   traditional:
     in: \operatorname{erf}^{-1}(0)
     out: "0"
+  fullform:
+    in: InverseErf[0]
   wolfram:
     in: InverseErf[0]
     out: "0"
@@ -24,6 +26,8 @@ erfinv-1:
   traditional:
     in: \operatorname{erf}^{-1}(1)
     out: \infty
+  fullform:
+    in: InverseErf[1]
   wolfram:
     in: InverseErf[1]
     out: Infinity
@@ -40,6 +44,8 @@ erfinv-neg-1:
   traditional:
     in: \operatorname{erf}^{-1}(-1)
     out: -\infty
+  fullform:
+    in: InverseErf[-1]
   wolfram:
     in: InverseErf[-1]
     out: -Infinity
@@ -56,6 +62,8 @@ a-floating-point-argument-evaluates-directly-to:
   traditional:
     in: \operatorname{erf}^{-1}(0.5)
     out: 0.476\,936\,276\,204\,469\,873\,381
+  fullform:
+    in: InverseErf[0.5]
   wolfram:
     in: InverseErf[0.5]
     out: "0.47693627620446993"
@@ -72,9 +80,10 @@ inverse-of-erf-erf-erfinv-x-x-see-erf:
   traditional:
     in: \operatorname{erf}(\operatorname{erf}^{-1}(0.5))=0.5
     out: \mathrm{True}
+  fullform:
+    in: Equal[Erf[InverseErf[0.5]], 0.5]
   wolfram:
     in: (Erf[InverseErf[0.5]] == 0.5)
-    back: Unreadable
     out: True
     tex:
       in: \text{erf}\left(\text{erf}^{-1}(0.5)\right)=0.5
@@ -89,6 +98,8 @@ outside-its-real-domain-1-1-compute-engine:
   traditional:
     in: \operatorname{erf}^{-1}(2)
     out: \operatorname{erf}^{-1}(2)
+  fullform:
+    in: InverseErf[2]
   wolfram:
     in: InverseErf[2]
     out: InverseErf[2]
@@ -105,6 +116,8 @@ blows-up-near-the-boundary-erfinv-0-9999-is:
   traditional:
     in: \operatorname{erf}^{-1}(0.999\,9)
     out: 2.751\,063\,905\,712\,060\,796\,15
+  fullform:
+    in: InverseErf[0.9999]
   wolfram:
     in: InverseErf[0.9999]
     out: "2.75106390571208"
@@ -118,6 +131,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{ErfInv}(\bigl\lbrack0, 1\bigr\rbrack)
     out: \bigl\lbrack0, \infty\bigr\rbrack
+  fullform:
+    in: InverseErf[List[0, 1]]
   wolfram:
     in: InverseErf[List[0, 1]]
     out: "{0, Infinity}"
@@ -134,6 +149,8 @@ a-machine-precision-argument:
   traditional:
     in: \operatorname{erf}^{-1}(0.6)
     out: 0.595\,116\,081\,449\,994\,850\,019
+  fullform:
+    in: InverseErf[0.6]
   wolfram:
     in: InverseErf[0.6]
 two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x:
@@ -143,6 +160,8 @@ two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x:
   tex:
     in: \mathrm{ErfInv}(0.4, 0.2)
     out: 0.631\,775\,903\,055\,006\,3
+  fullform:
+    in: InverseErf[0.4, 0.2]
   wolfram:
     in: InverseErf[0.4, 0.2]
 interval-arithmetic-the-inverse-is-increasing-so:
@@ -155,6 +174,8 @@ interval-arithmetic-the-inverse-is-increasing-so:
   traditional:
     in: \operatorname{erf}^{-1}(\mathrm{Interval}(0.5, 0.6))
     out: \mathrm{Interval}(0.476\,936\,276\,204\,469\,9, 0.595\,116\,081\,449\,994\,8)
+  fullform:
+    in: InverseErf[Interval[List[0.5, 0.6]]]
   wolfram:
     in: InverseErf[Interval[List[0.5, 0.6]]]
 uncertainty-propagation:
@@ -167,6 +188,8 @@ uncertainty-propagation:
   traditional:
     in: \operatorname{erf}^{-1}(\mathrm{Around}(0.5, 0.01))
     out: \mathrm{Around}(0.476\,936\,276\,204\,469\,9, 0.011\,125\,848\,189\,719\,498)
+  fullform:
+    in: InverseErf[Around[0.5, 0.01]]
   wolfram:
     in: InverseErf[Around[0.5, 0.01]]
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0:
@@ -179,6 +202,8 @@ the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0:
   traditional:
     in: \sqrt{2}\operatorname{erf}^{-1}(0.95)
     out: 1.959\,963\,984\,540\,054\,235\,53
+  fullform:
+    in: Times[Sqrt[2], InverseErf[0.95]]
   wolfram:
     in: Times[Sqrt[2], InverseErf[0.95]]
 odd-erfinv-x-erfinv-x-applied-symbolically:
@@ -191,6 +216,8 @@ odd-erfinv-x-erfinv-x-applied-symbolically:
   traditional:
     in: \operatorname{erf}^{-1}(-x)
     out: -\operatorname{erf}^{-1}(x)
+  fullform:
+    in: InverseErf[Minus[x]]
 frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2:
   epsil:
     in: D(ErfInv(x), x)
@@ -201,6 +228,8 @@ frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2:
   traditional:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\operatorname{erf}^{-1}(x)
     out: \frac{1}{2}(\exp({\operatorname{erf}^{-1}(x)}^2)\sqrt{\pi})
+  fullform:
+    in: D[InverseErf[x], x]
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(ErfInv(1 / 2), 30)
@@ -211,5 +240,7 @@ to-30-significant-digits-every-one-correctly:
   traditional:
     in: N(\operatorname{erf}^{-1}(\frac{1}{2}), 30)
     out: 0.476\,936\,276\,204\,469\,873\,381
+  fullform:
+    in: N[InverseErf[Rational[1, 2]], 30]
   wolfram:
     in: N[InverseErf[Rational[1, 2]], 30]

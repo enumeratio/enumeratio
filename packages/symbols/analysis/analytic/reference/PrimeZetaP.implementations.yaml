@@ -5,6 +5,8 @@ sum-p-1-p-2:
   tex:
     in: N(\mathrm{PrimeZetaP}(2))
     out: 0.452\,247\,420\,041\,065\,5
+  fullform:
+    in: N[PrimeZetaP[2]]
   wolfram:
     in: N[PrimeZetaP[2]]
 n-primezetap-3:
@@ -14,6 +16,8 @@ n-primezetap-3:
   tex:
     in: N(\mathrm{PrimeZetaP}(3))
     out: 0.174\,762\,639\,299\,443\,55
+  fullform:
+    in: N[PrimeZetaP[3]]
   wolfram:
     in: N[PrimeZetaP[3]]
 primezetap-2p5:
@@ -23,5 +27,7 @@ primezetap-2p5:
   tex:
     in: \mathrm{PrimeZetaP}(2.5)
     out: 0.273\,680\,737\,993\,234
+  fullform:
+    in: PrimeZetaP[2.5]
   wolfram:
     in: PrimeZetaP[2.5]

@@ -8,6 +8,8 @@ bellnumber-0:
   traditional:
     in: B_{0}
     out: "1"
+  fullform:
+    in: BellB[0]
   wolfram:
     in: BellB[0]
     out: "1"
@@ -36,6 +38,8 @@ bellnumber-1:
   traditional:
     in: B_{1}
     out: "1"
+  fullform:
+    in: BellB[1]
   wolfram:
     in: BellB[1]
     out: "1"
@@ -64,6 +68,8 @@ bellnumber-3:
   traditional:
     in: B_{3}
     out: "5"
+  fullform:
+    in: BellB[3]
   wolfram:
     in: BellB[3]
     out: "5"
@@ -92,6 +98,8 @@ bellnumber-5:
   traditional:
     in: B_{5}
     out: "52"
+  fullform:
+    in: BellB[5]
   wolfram:
     in: BellB[5]
     out: "52"
@@ -120,6 +128,8 @@ bellnumber-10:
   traditional:
     in: B_{10}
     out: 115\,975
+  fullform:
+    in: BellB[10]
   wolfram:
     in: BellB[10]
     out: "115975"
@@ -151,9 +161,10 @@ recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
   traditional:
     in: B_{5}=\binom{4}{0}B_{0}+\binom{4}{1}B_{1}+\binom{4}{2}B_{2}+\binom{4}{3}B_{3}+\binom{4}{4}B_{4}
     out: \mathrm{True}
+  fullform:
+    in: Equal[BellB[5], Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]]]
   wolfram:
     in: (BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])
-    back: Unreadable
     out: True
     tex:
       in: B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4
@@ -180,6 +191,8 @@ the-number-of-ways-to-partition-a-4-element-set:
   traditional:
     in: B_{4}
     out: "15"
+  fullform:
+    in: BellB[4]
   wolfram:
     in: BellB[4]
     out: "15"
@@ -208,6 +221,8 @@ a-negative-argument-is-left-unevaluated:
   traditional:
     in: B_{-1}
     out: B_{-1}
+  fullform:
+    in: BellB[-1]
   wolfram:
     in: BellB[-1]
     out: BellB[-1]
@@ -245,6 +260,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{BellNumber}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack1, 2, 5, 15\bigr\rbrack
+  fullform:
+    in: BellB[List[1, 2, 3, 4]]
   wolfram:
     in: BellB[List[1, 2, 3, 4]]
     out: "{1, 2, 5, 15}"
@@ -273,6 +290,8 @@ exact-for-large-n:
   traditional:
     in: B_{30}
     out: 846\,749\,014\,511\,809\,332\,450\,147
+  fullform:
+    in: BellB[30]
   wolfram:
     in: BellB[30]
   sympy:
@@ -293,6 +312,8 @@ the-two-argument-form-gives-the-bell-touchard:
   traditional:
     in: B_{5}(x)
     out: x^5+10x^4+25x^3+15x^2+x
+  fullform:
+    in: BellB[5, x]
 the-bell-polynomial-at-a-real-point-b-20-0-5:
   epsil:
     in: BellNumber(20, 0.5)
@@ -303,6 +324,8 @@ the-bell-polynomial-at-a-real-point-b-20-0-5:
   traditional:
     in: B_{20}(0.5)
     out: 270\,190\,131\,940.151\,92
+  fullform:
+    in: BellB[20, 0.5]
   wolfram:
     in: BellB[20, 0.5]
 the-bell-polynomial-at-1-is-the-bell-number-b-n:
@@ -315,6 +338,8 @@ the-bell-polynomial-at-1-is-the-bell-number-b-n:
   traditional:
     in: B_{5}(1)
     out: "52"
+  fullform:
+    in: BellB[5, 1]
   wolfram:
     in: BellB[5, 1]
 dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac:
@@ -324,6 +349,8 @@ dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac:
   tex:
     in: \frac{1}{e}(\sum_{k=0}^{\infty}\frac{k^5}{k!})
     out: "52"
+  fullform:
+    in: Divide[Sum[Divide[Power[k, 5], Factorial[k]], List[k, 0, Infinity]], E]
   wolfram:
     in: Divide[Sum[Divide[Power[k, 5], Factorial[k]], List[k, 0, Infinity]], E]
 touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
@@ -336,9 +363,10 @@ touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
   traditional:
     in: B_{9}\bmod7=(B_{2}+B_{3})\bmod7
     out: \mathrm{True}
+  fullform:
+    in: Equal[Mod[BellB[9], 7], Mod[Plus[BellB[2], BellB[3]], 7]]
   wolfram:
     in: (Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])
-    back: Unreadable
   sympy:
     in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
   sage:

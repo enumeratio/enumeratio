@@ -5,5 +5,7 @@ an-edge-between-1-and-2:
   tex:
     in: \mathrm{UndirectedEdge}(1, 2)
     out: \mathrm{UndirectedEdge}(1, 2)
+  fullform:
+    in: UndirectedEdge[1, 2]
   wolfram:
     in: UndirectedEdge[1, 2]

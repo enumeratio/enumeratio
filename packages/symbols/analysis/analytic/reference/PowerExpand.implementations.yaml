@@ -5,6 +5,8 @@ sqrt-x-2-x-for-positive-x:
   tex:
     in: \mathrm{PowerExpand}(\sqrt{x^2})
     out: x
+  fullform:
+    in: PowerExpand[Sqrt[Power[x, 2]]]
 splits-a-logarithm-of-a-product:
   epsil:
     in: PowerExpand(Ln(x * y))
@@ -12,6 +14,8 @@ splits-a-logarithm-of-a-product:
   tex:
     in: \mathrm{PowerExpand}(\ln(xy))
     out: \ln(x)+\ln(y)
+  fullform:
+    in: PowerExpand[Log[Times[x, y]]]
 pulls-out-an-exponent:
   epsil:
     in: PowerExpand(Ln(x ^ n))
@@ -19,6 +23,8 @@ pulls-out-an-exponent:
   tex:
     in: \mathrm{PowerExpand}(\ln(x^{n}))
     out: n\ln(x)
+  fullform:
+    in: PowerExpand[Log[Power[x, n]]]
 distributes-a-power-over-a-product:
   epsil:
     in: PowerExpand((a * b) ^ c)
@@ -26,6 +32,8 @@ distributes-a-power-over-a-product:
   tex:
     in: \mathrm{PowerExpand}((ab)^{c})
     out: a^{c}b^{c}
+  fullform:
+    in: PowerExpand[Power[Times[a, b], c]]
 powerexpand-sqrt-a-times-b:
   epsil:
     in: PowerExpand(Sqrt(a * b))
@@ -33,3 +41,5 @@ powerexpand-sqrt-a-times-b:
   tex:
     in: \mathrm{PowerExpand}(\sqrt{ab})
     out: \sqrt{a}\sqrt{b}
+  fullform:
+    in: PowerExpand[Sqrt[Times[a, b]]]

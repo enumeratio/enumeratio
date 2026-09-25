@@ -5,9 +5,11 @@ a-generic-point-inside-the-unit-disc:
   tex:
     in: \mathrm{Hypergeometric3F2Regularized}(1, 1, 1, 2, 3, 0.5)
     out: 0.550\,775\,414\,049\,914\,4
-  wolfram:
+  fullform:
     in: HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 0.5]
     back: [HypergeometricPFQRegularized, [List, 1, 1, 1], [List, 2, 3], 0.5]
+  wolfram:
+    in: HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 0.5]
 z-ge-1-stays-symbolic-no-continuation-past-the:
   epsil:
     in: Hypergeometric3F2Regularized(1, 1, 1, 2, 3, 1.2)
@@ -15,6 +17,8 @@ z-ge-1-stays-symbolic-no-continuation-past-the:
   tex:
     in: \mathrm{Hypergeometric3F2Regularized}(1, 1, 1, 2, 3, 1.2)
     out: \mathrm{Hypergeometric3F2Regularized}(1, 1, 1, 2, 3, 1.2)
-  wolfram:
+  fullform:
     in: HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 1.2]
     back: [HypergeometricPFQRegularized, [List, 1, 1, 1], [List, 2, 3], 1.2]
+  wolfram:
+    in: HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 1.2]

@@ -8,6 +8,8 @@ the-quasi-shuffle-overlap-term-included:
   traditional:
     in: \mathrm{NonCommutativeMultiply}(M_{(1)}, M_{(1)})
     out: 2M_{(1,1)}+M_{(2)}
+  fullform:
+    in: NonCommutativeMultiply[QSymM[List[1]], QSymM[List[1]]]
 two-interleavings-and-one-overlap:
   epsil:
     in: NonCommutativeMultiply(QSymM([1]), QSymM([2]))
@@ -18,6 +20,8 @@ two-interleavings-and-one-overlap:
   traditional:
     in: \mathrm{NonCommutativeMultiply}(M_{(1)}, M_{(2)})
     out: M_{(3)}+M_{(1,2)}+M_{(2,1)}
+  fullform:
+    in: NonCommutativeMultiply[QSymM[List[1]], QSymM[List[2]]]
 nsym-just-concatenates:
   epsil:
     in: NonCommutativeMultiply(NSymH([2]), NSymH([1, 3]))
@@ -28,6 +32,8 @@ nsym-just-concatenates:
   traditional:
     in: \mathrm{NonCommutativeMultiply}(H_{(2)}, H_{(1,3)})
     out: H_{(2,1,3)}
+  fullform:
+    in: NonCommutativeMultiply[NSymH[List[2]], NSymH[List[1, 3]]]
 2-4-compositions-of-5:
   epsil:
     in: AlgebraDimension(QSymAlgebra(5))
@@ -38,3 +44,5 @@ nsym-just-concatenates:
   traditional:
     in: \dim(\mathrm{QSymAlgebra}(5))
     out: "16"
+  fullform:
+    in: AlgebraDimension[QSymAlgebra[5]]

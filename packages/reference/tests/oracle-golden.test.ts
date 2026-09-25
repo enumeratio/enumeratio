@@ -8,7 +8,7 @@ import { referenceData, referenceEntries } from "../src/node.ts";
 // and a Wolfram row's `in` is what we'd still emit today.
 
 const data = referenceData();
-const OWN_FORMS = new Set(["epsil", "tex", "traditional", "notatio"]);
+const OWN_FORMS = new Set(["epsil", "tex", "traditional", "fullform", "notatio"]);
 const entries = referenceEntries(data);
 // The record the site shows for each head: the one beside the entry it chose.
 const records = data.heads.filter((h) => h.implementations && data.packageOf.get(h.head) === h.package);

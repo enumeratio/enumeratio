@@ -5,3 +5,5 @@ the-one-line-word-231:
   tex:
     in: \mathrm{PeakSet}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
     out: \mathrm{Finset}((\bigl\lbrack2\bigr\rbrack,3))
+  fullform:
+    in: PeakSet[Permutation[List[2, 3, 1]]]

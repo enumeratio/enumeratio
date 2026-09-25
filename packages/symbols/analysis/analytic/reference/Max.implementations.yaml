@@ -5,6 +5,8 @@ max-3-1-4-1-5:
   tex:
     in: \max(3, 1, 4, 1, 5)
     out: "5"
+  fullform:
+    in: Max[3, 1, 4, 1, 5]
   wolfram:
     in: Max[3, 1, 4, 1, 5]
     out: "5"
@@ -24,6 +26,8 @@ also-accepts-a-single-list-argument:
   tex:
     in: \max(\bigl\lbrack3, 1, 4\bigr\rbrack)
     out: "4"
+  fullform:
+    in: Max[List[3, 1, 4]]
   wolfram:
     in: Max[List[3, 1, 4]]
     out: "4"
@@ -46,6 +50,8 @@ max-neg-1-neg-5:
   tex:
     in: \max(-1, -5)
     out: "-1"
+  fullform:
+    in: Max[-1, -5]
   wolfram:
     in: Max[-1, -5]
     out: "-1"
@@ -65,6 +71,8 @@ a-single-argument-is-returned-unchanged:
   tex:
     in: \max(3)
     out: "3"
+  fullform:
+    in: Max[3]
   wolfram:
     in: Max[3]
     out: "3"
@@ -87,9 +95,10 @@ commutative-order-doesn-t-matter:
   traditional:
     in: \max(3, 7)=\max(7, 3)
     out: \mathrm{True}
+  fullform:
+    in: Equal[Max[3, 7], Max[7, 3]]
   wolfram:
     in: (Max[3, 7] == Max[7, 3])
-    back: Unreadable
     out: True
     tex:
       in: \max (3,7)=\max (7,3)
@@ -110,9 +119,10 @@ multiple-list-arguments-are-flattened-into-one:
   traditional:
     in: \max(\bigl\lbrack3, 1, 4\bigr\rbrack, \bigl\lbrack9, 2\bigr\rbrack)=9
     out: \mathrm{True}
+  fullform:
+    in: Equal[Max[List[3, 1, 4], List[9, 2]], 9]
   wolfram:
     in: (Max[List[3, 1, 4], List[9, 2]] == 9)
-    back: Unreadable
     out: True
     tex:
       in: \max (\{3,1,4\},\{9,2\})=9
@@ -133,6 +143,8 @@ the-day-s-high-from-a-handful-of-hourly-readings:
   tex:
     in: \max(68, 72, 65, 80, 74)
     out: "80"
+  fullform:
+    in: Max[68, 72, 65, 80, 74]
   wolfram:
     in: Max[68, 72, 65, 80, 74]
     out: "80"
@@ -152,6 +164,8 @@ with-no-arguments-compute-engine-returns-nan:
   tex:
     in: \max()
     out: \operatorname{NaN}
+  fullform:
+    in: Max[]
   wolfram:
     in: Max[]
     out: -Infinity
@@ -180,6 +194,8 @@ nan-poisons-the-result-overriding-every-other:
   tex:
     in: \max(\operatorname{NaN}, 3)
     out: \operatorname{NaN}
+  fullform:
+    in: Max[Indeterminate, 3]
   wolfram:
     in: Max[Indeterminate, 3]
     out: Indeterminate
@@ -193,6 +209,8 @@ max-9-2:
   tex:
     in: \max(9, 2)
     out: "9"
+  fullform:
+    in: Max[9, 2]
   wolfram:
     in: Max[9, 2]
   sympy:
@@ -206,6 +224,8 @@ max-list-4-1-7-2:
   tex:
     in: \max(\bigl\lbrack4, 1, 7, 2\bigr\rbrack)
     out: "7"
+  fullform:
+    in: Max[List[4, 1, 7, 2]]
   wolfram:
     in: Max[List[4, 1, 7, 2]]
   sympy:
@@ -219,6 +239,8 @@ max-5p56-neg-4p8-7p3:
   tex:
     in: \max(5.56, -4.8, 7.3)
     out: "7.3"
+  fullform:
+    in: Max[5.56, -4.8, 7.3]
   wolfram:
     in: Max[5.56, -4.8, 7.3]
   sympy:
@@ -232,6 +254,8 @@ nested-lists-are-flattened-into-the-pool:
   tex:
     in: \max(2, 3, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
     out: "3"
+  fullform:
+    in: Max[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   wolfram:
     in: Max[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   sympy:
@@ -245,6 +269,8 @@ exact-numbers-are-compared-numerically:
   tex:
     in: \max(\sqrt{2}, \frac{3}{2})
     out: \frac{3}{2}
+  fullform:
+    in: Max[Sqrt[2], Rational[3, 2]]
   wolfram:
     in: Max[Sqrt[2], Rational[3, 2]]
   sympy:
@@ -258,6 +284,8 @@ max-1-positiveinfinity:
   tex:
     in: \max(1, \infty)
     out: \infty
+  fullform:
+    in: Max[1, Infinity]
   wolfram:
     in: Max[1, Infinity]
 the-numeric-arguments-collapse-to-their-maximum:
@@ -267,6 +295,8 @@ the-numeric-arguments-collapse-to-their-maximum:
   tex:
     in: \max(3, x, 5)
     out: \max(5, x)
+  fullform:
+    in: Max[3, x, 5]
 compares-exact-constants-numerically-max-e-pi-2:
   epsil:
     in: Max([ExponentialE, Pi, 2])
@@ -274,6 +304,8 @@ compares-exact-constants-numerically-max-e-pi-2:
   tex:
     in: \max(\bigl\lbracke, \pi, 2\bigr\rbrack)
     out: \pi
+  fullform:
+    in: Max[List[E, Pi, 2]]
   wolfram:
     in: Max[List[E, Pi, 2]]
   sympy:
@@ -287,6 +319,8 @@ the-max-of-two-intervals-is-the-interval-of:
   tex:
     in: \max(\mathrm{Interval}(1, 3), \mathrm{Interval}(-3, 5))
     out: \mathrm{Interval}(1, 5)
+  fullform:
+    in: Max[Interval[List[1, 3]], Interval[List[-3, 5]]]
   wolfram:
     in: Max[Interval[List[1, 3]], Interval[List[-3, 5]]]
 idempotent-max-x-x-x:
@@ -296,6 +330,8 @@ idempotent-max-x-x-x:
   tex:
     in: \max(x, x)
     out: x
+  fullform:
+    in: Max[x, x]
 the-max-of-an-empty-list-is-nan-too:
   epsil:
     in: Max([])
@@ -303,6 +339,8 @@ the-max-of-an-empty-list-is-nan-too:
   tex:
     in: \max(\bigl\lbrack \bigr\rbrack)
     out: \operatorname{NaN}
+  fullform:
+    in: Max[List[]]
   wolfram:
     in: Max[List[]]
     note: Wolfram's $\mathrm{Max}[\{\}]$ is the identity element $-\infty$.

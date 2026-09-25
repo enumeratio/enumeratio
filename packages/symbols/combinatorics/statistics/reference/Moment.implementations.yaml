@@ -5,6 +5,8 @@ moment-order-0:
   tex:
     in: \mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 0)
     out: "1"
+  fullform:
+    in: Moment[GeometricDistribution[Rational[1, 4]], 0]
   wolfram:
     in: Moment[GeometricDistribution[Rational[1, 4]], 0]
 moment-order-1-is-mean:
@@ -14,6 +16,8 @@ moment-order-1-is-mean:
   tex:
     in: \mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 1)
     out: "3"
+  fullform:
+    in: Moment[GeometricDistribution[Rational[1, 4]], 1]
   wolfram:
     in: Moment[GeometricDistribution[Rational[1, 4]], 1]
 moment-order-2:
@@ -23,6 +27,8 @@ moment-order-2:
   tex:
     in: \mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)
     out: "21"
+  fullform:
+    in: Moment[GeometricDistribution[Rational[1, 4]], 2]
   wolfram:
     in: Moment[GeometricDistribution[Rational[1, 4]], 2]
 moment-order-3-unevaluated:
@@ -32,5 +38,7 @@ moment-order-3-unevaluated:
   tex:
     in: \mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 3)
     out: \mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 3)
+  fullform:
+    in: Moment[GeometricDistribution[Rational[1, 4]], 3]
   wolfram:
     in: Moment[GeometricDistribution[Rational[1, 4]], 3]

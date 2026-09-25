@@ -5,6 +5,8 @@ j-3-2-1-4-4934-also-the-first-positive-root-of:
   tex:
     in: N(\mathrm{BesselJZero}(\frac{3}{2}, 1))
     out: 4.493\,409\,457\,909\,064
+  fullform:
+    in: N[BesselJZero[Rational[3, 2], 1]]
   wolfram:
     in: N[BesselJZero[Rational[3, 2], 1]]
 j-0-1-2-4048:
@@ -14,6 +16,8 @@ j-0-1-2-4048:
   tex:
     in: N(\mathrm{BesselJZero}(0, 1))
     out: 2.404\,825\,557\,695\,773
+  fullform:
+    in: N[BesselJZero[0, 1]]
   wolfram:
     in: N[BesselJZero[0, 1]]
 the-third-zero-of-j-0:
@@ -23,6 +27,8 @@ the-third-zero-of-j-0:
   tex:
     in: N(\mathrm{BesselJZero}(0, 3))
     out: 8.653\,727\,912\,911\,013
+  fullform:
+    in: N[BesselJZero[0, 3]]
   wolfram:
     in: N[BesselJZero[0, 3]]
 tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first:
@@ -32,5 +38,7 @@ tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first:
   tex:
     in: \mathrm{chop}(\tan(N(\mathrm{BesselJZero}(3/2, 1)))-N(\mathrm{BesselJZero}(3/2, 1)))
     out: "0"
+  fullform:
+    in: Chop[Subtract[Tan[N[BesselJZero[Rational[3, 2], 1]]], N[BesselJZero[Rational[3, 2], 1]]]]
   wolfram:
     in: Chop[Subtract[Tan[N[BesselJZero[Rational[3, 2], 1]]], N[BesselJZero[Rational[3, 2], 1]]]]

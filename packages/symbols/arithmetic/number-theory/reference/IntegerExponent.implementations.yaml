@@ -8,6 +8,8 @@
   traditional:
     in: v_{5}(2\,000)
     out: "3"
+  fullform:
+    in: IntegerExponent[2000, 5]
   wolfram:
     in: IntegerExponent[2000, 5]
     out: "3"
@@ -27,6 +29,8 @@ base-10-by-default:
   traditional:
     in: v_{10}(2\,000)
     out: "3"
+  fullform:
+    in: IntegerExponent[2000]
   wolfram:
     in: IntegerExponent[2000]
     out: "3"
@@ -43,6 +47,8 @@ integerexponent-0-5:
   traditional:
     in: v_{5}(0)
     out: \infty
+  fullform:
+    in: IntegerExponent[0, 5]
   wolfram:
     in: IntegerExponent[0, 5]
     out: Infinity
@@ -65,6 +71,8 @@ trailing-zeros-in-base-10:
   traditional:
     in: v_{10}(1\,230\,000)
     out: "4"
+  fullform:
+    in: IntegerExponent[1230000]
   wolfram:
     in: IntegerExponent[1230000]
 integerexponent-2-pow-10-times-3-pow-4-2:
@@ -77,6 +85,8 @@ integerexponent-2-pow-10-times-3-pow-4-2:
   traditional:
     in: v_{2}(2^{10}\times3^4)
     out: "10"
+  fullform:
+    in: IntegerExponent[Times[Power[2, 10], Power[3, 4]], 2]
   wolfram:
     in: IntegerExponent[Times[Power[2, 10], Power[3, 4]], 2]
   sympy:
@@ -91,6 +101,8 @@ composite-base-1728-2-6-3-3-so-6-3-divides-it:
   traditional:
     in: v_{6}(1\,728)
     out: "3"
+  fullform:
+    in: IntegerExponent[1728, 6]
   wolfram:
     in: IntegerExponent[1728, 6]
   sympy:
@@ -105,6 +117,8 @@ negative-integers:
   traditional:
     in: v_{10}(-1\,000)
     out: "3"
+  fullform:
+    in: IntegerExponent[-1000]
   wolfram:
     in: IntegerExponent[-1000]
 threads-over-a-list:
@@ -114,6 +128,8 @@ threads-over-a-list:
   tex:
     in: \mathrm{IntegerExponent}(\bigl\lbrack10, 100, 1\,000\bigr\rbrack)
     out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: IntegerExponent[List[10, 100, 1000]]
   wolfram:
     in: IntegerExponent[List[10, 100, 1000]]
 gaussian-integers-8i-i-cdot-i-3-1-i-6:
@@ -126,6 +142,8 @@ gaussian-integers-8i-i-cdot-i-3-1-i-6:
   traditional:
     in: v_{1+i}(8i)
     out: "6"
+  fullform:
+    in: IntegerExponent[Complex[0, 8], Complex[1, 1]]
   wolfram:
     in: IntegerExponent[Complex[0, 8], Complex[1, 1]]
   sympy:
@@ -140,6 +158,8 @@ the-trailing-zeros-of-100:
   traditional:
     in: v_{10}(100!)
     out: "24"
+  fullform:
+    in: IntegerExponent[Factorial[100]]
   wolfram:
     in: IntegerExponent[Factorial[100]]
 legendre-s-formula-lfloor-100-7-rfloor-lfloor:
@@ -152,6 +172,8 @@ legendre-s-formula-lfloor-100-7-rfloor-lfloor:
   traditional:
     in: v_{7}(100!)
     out: "16"
+  fullform:
+    in: IntegerExponent[Factorial[100], 7]
   wolfram:
     in: IntegerExponent[Factorial[100], 7]
   sympy:
@@ -166,6 +188,8 @@ base-1-has-no-well-defined-p-adic-valuation-so:
   traditional:
     in: v_{1}(10)
     out: v_{1}(10)
+  fullform:
+    in: IntegerExponent[10, 1]
   wolfram:
     in: IntegerExponent[10, 1]
   sympy:

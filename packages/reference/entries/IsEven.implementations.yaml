@@ -8,6 +8,8 @@ iseven-4:
   traditional:
     in: \mathrm{IsEven}(4)
     out: \mathrm{True}
+  fullform:
+    in: EvenQ[4]
   wolfram:
     in: EvenQ[4]
     out: True
@@ -24,6 +26,8 @@ iseven-3:
   traditional:
     in: \mathrm{IsEven}(3)
     out: \mathrm{False}
+  fullform:
+    in: EvenQ[3]
   wolfram:
     in: EvenQ[3]
     out: False
@@ -40,6 +44,8 @@ zero-is-even:
   traditional:
     in: \mathrm{IsEven}(0)
     out: \mathrm{True}
+  fullform:
+    in: EvenQ[0]
   wolfram:
     in: EvenQ[0]
     out: True
@@ -56,6 +62,8 @@ negative-integers-count-too:
   traditional:
     in: \mathrm{IsEven}(-4)
     out: \mathrm{True}
+  fullform:
+    in: EvenQ[-4]
   wolfram:
     in: EvenQ[-4]
 a-non-integer-is-not-even:
@@ -68,6 +76,8 @@ a-non-integer-is-not-even:
   traditional:
     in: \mathrm{IsEven}(2.5)
     out: \mathrm{False}
+  fullform:
+    in: EvenQ[2.5]
   wolfram:
     in: EvenQ[2.5]
 big-integers:
@@ -80,6 +90,8 @@ big-integers:
   traditional:
     in: \mathrm{IsEven}(2^{100})
     out: \mathrm{True}
+  fullform:
+    in: EvenQ[Power[2, 100]]
   wolfram:
     in: EvenQ[Power[2, 100]]
 iseven-10-factorial:
@@ -92,6 +104,8 @@ iseven-10-factorial:
   traditional:
     in: \mathrm{IsEven}(10!)
     out: \mathrm{True}
+  fullform:
+    in: EvenQ[Factorial[10]]
   wolfram:
     in: EvenQ[Factorial[10]]
 threads-element-wise-over-a-list:
@@ -104,6 +118,8 @@ threads-element-wise-over-a-list:
   traditional:
     in: \mathrm{IsEven}(\bigl\lbrack1, 2, 3\bigr\rbrack)
     out: \bigl\lbrack\mathrm{False}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+  fullform:
+    in: EvenQ[List[1, 2, 3]]
   wolfram:
     in: EvenQ[List[1, 2, 3]]
     note: 'EvenQ tests its argument as a whole: $\mathrm{EvenQ}[\{1, 2, 3\}]$ is False.'
@@ -117,6 +133,8 @@ every-integer-is-exactly-one-of-odd-and-even-see:
   traditional:
     in: \mathrm{IsOdd}(12)\veebar\mathrm{IsEven}(12)
     out: \mathrm{True}
+  fullform:
+    in: Xor[OddQ[12], EvenQ[12]]
 select-the-even-numbers-up-to-10:
   epsil:
     in: Filter(Range(10), IsEven)
@@ -124,6 +142,8 @@ select-the-even-numbers-up-to-10:
   tex:
     in: \mathrm{Filter}(1..10, \mathrm{IsEven})
     out: \bigl\lbrack2, 4, 6, 8, 10\bigr\rbrack
+  fullform:
+    in: Select[Range[10], EvenQ]
   wolfram:
     in: Select[Range[10], EvenQ]
 a-symbol-stays-undecided-rather-than-false:
@@ -133,6 +153,8 @@ a-symbol-stays-undecided-rather-than-false:
   tex:
     in: \mathrm{IsEven}(x)
     out: \mathrm{IsEven}(x)
+  fullform:
+    in: EvenQ[x]
   wolfram:
     in:
     note: '$\mathrm{EvenQ}[x]$ is False: EvenQ tests the literal form, not what x might be.'

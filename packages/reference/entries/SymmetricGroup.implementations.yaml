@@ -8,6 +8,8 @@ the-order-of-s-5-is-5:
   traditional:
     in: \left|\mathrm{SymmetricGroup}(5)\right|
     out: "120"
+  fullform:
+    in: GroupOrder[SymmetricGroup[5]]
   wolfram:
     in: GroupOrder[SymmetricGroup[5]]
 s-10-10:
@@ -20,6 +22,8 @@ s-10-10:
   traditional:
     in: \left|\mathrm{SymmetricGroup}(10)\right|
     out: 3\,628\,800
+  fullform:
+    in: GroupOrder[SymmetricGroup[10]]
   wolfram:
     in: GroupOrder[SymmetricGroup[10]]
 the-one-line-words-are-compute-engine-s:
@@ -29,3 +33,5 @@ the-one-line-words-are-compute-engine-s:
   tex:
     in: \mathrm{Length}(\mathrm{Permutations}(\bigl\lbrack1, 2, 3\bigr\rbrack))
     out: "6"
+  fullform:
+    in: Length[Permutations[List[1, 2, 3]]]

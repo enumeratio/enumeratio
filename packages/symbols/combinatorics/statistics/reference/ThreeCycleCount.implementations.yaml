@@ -5,6 +5,8 @@ the-one-line-word-312:
   tex:
     in: \mathrm{ThreeCycleCount}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
     out: "1"
+  fullform:
+    in: ThreeCycleCount[Permutation[List[3, 1, 2]]]
 the-one-line-word-2413:
   epsil:
     in: ThreeCycleCount(Permutation([2, 4, 1, 3]))
@@ -12,3 +14,5 @@ the-one-line-word-2413:
   tex:
     in: \mathrm{ThreeCycleCount}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
     out: "0"
+  fullform:
+    in: ThreeCycleCount[Permutation[List[2, 4, 1, 3]]]
