@@ -84,6 +84,16 @@ examples:
     expected: x
     category: Scope
     caption: Inverse of [[Ln]] symbolically
+  - id: exp-ln-of-a-complex-argument-is-that-argument
+    expr: [Exp, [Ln, [Complex, 1, 2]]]
+    expected: [Complex, 1, 2]
+    category: Scope
+    caption: $e^{\ln(1+2i)} = 1+2i$ -- compute-engine's native $e^{\ln z} = z$ fold holds for complex z too
+  - id: exp-ln-of-a-negative-real-is-left-unevaluated
+    expr: [Exp, [Ln, -2]]
+    expected: [Power, ExponentialE, [Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 2]]]
+    category: Possible issues
+    caption: $e^{\ln(-2)}$ is left as $e^{i\pi + \ln 2}$ rather than folding to $-2$
   - id: exp-negativeinfinity
     expr: [Exp, NegativeInfinity]
     expected: 0

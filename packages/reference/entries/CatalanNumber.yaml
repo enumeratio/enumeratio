@@ -9,7 +9,7 @@ details:
   - The Catalan numbers have the closed form $C_n = \frac{1}{n+1}\binom{2n}{n}$.
   - They satisfy the recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$ with $C_0 = 1$.
   - $C_n$ is the number of monotonic lattice paths from one corner of an $n \times n$ grid to the opposite corner that stay below the diagonal.
-  - compute-engine defines $C_n$ on nonnegative integers; extension to real and complex arguments through the [[Binomial]] gamma-function form is not yet supported.
+  - compute-engine extends $C_n$ to real and complex arguments through the [[Binomial]] gamma-function form $C_n = \Gamma(2n+1)/(\Gamma(n+1)\,\Gamma(n+2))$. At a negative integer it instead follows Wolfram's own $C_n = \binom{2n}{n} - \binom{2n}{n+1}$ with $\binom{n}{k} = 0$ for a negative integer $k$, giving $C_{-1} = -1$ and $C_n = 0$ for every integer $n \le -2$ (the smooth Gamma-ratio limit disagrees at $n=-1$, giving $-\tfrac12$ -- see the divergence note on that example).
 examples:
   - id: catalannumber-0
     expr: [CatalanNumber, 0]
@@ -48,11 +48,20 @@ examples:
     expected: 14
     category: Applications
     caption: The 14 triangulations of a hexagon, and the 14 binary trees with 4 leaves. See [[Binomial]]
-  - id: a-negative-argument-is-left-unevaluated
+  - id: catalannumber-neg-1-is-neg-1
     expr: [CatalanNumber, -1]
-    expected: [CatalanNumber, -1]
-    category: Possible issues
-    caption: A negative argument is left unevaluated
+    expected: -1
+    category: Scope
+    caption: $C_{-1} = -1$, from $\binom{2n}{n} - \binom{2n}{n+1}$ at $n=-1$ ($\binom{-2}{-1} - \binom{-2}{0} = 0 - 1$)
+  - id: catalannumber-0-past-neg-1
+    expr: [CatalanNumber, -2]
+    expected: 0
+    category: Scope
+    caption: $C_n = 0$ for every integer $n \le -2$ -- both $\binom{2n}{n}$ and $\binom{2n}{n+1}$ have a negative lower index there
+  - id: catalannumber-neg-5-is-also-0
+    expr: [CatalanNumber, -5]
+    expected: 0
+    category: Scope
   - id: they-grow-fast-c-15-already-passes-nine-million
     expr: [CatalanNumber, 15]
     expected: 9694845

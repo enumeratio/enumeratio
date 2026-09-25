@@ -181,40 +181,10 @@ the-14-triangulations-of-a-hexagon-and-the-14:
   sympy:
     in: catalan(4)
     out: "14"
-a-negative-argument-is-left-unevaluated:
+catalannumber-neg-1-is-neg-1:
   wolfram:
     in: CatalanNumber[-1]
-    out: "-1"
-    tex:
-      in: C_{-1}
-      out: "-1"
-    verdict: disagree
-    kind: domain
-    note: A negative index is left unevaluated here; Wolfram extends CatalanNumber through Gamma and gives C(-1) = -1.
-  sage:
-    in: catalan_number(-1)
-    out: -1/2
-    verdict: inconclusive
-    kind: domain
-    note: Sage continues Catalan numbers through the Gamma function (C(-1) = -1/2); compute-engine's stays unevaluated off the naturals.
-  julia:
-    in: Combinatorics.catalannum(-1)
-    out: "DomainError with -1: n must be nonnegative"
-    verdict: error
-    kind: undefined-form
-    note: 'Both decline: compute-engine answers ["CatalanNumber", -1] and Nemo/Combinatorics.jl raises an error.'
-  mathlib4:
-    in: (catalan (-1))
-    out: failed to synthesize instance of type class
-    verdict: error
-    kind: domain
-    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends CatalanNumber to this argument.
-  sympy:
-    in: catalan(-1)
-    out: -1/2
-    verdict: inconclusive
-    kind: domain
-    note: SymPy extends CatalanNumber here (-1/2); compute-engine leaves it unevaluated.
+    note: Checked against an actual Wolfram kernel (see combinatorics.oracle.json) -- CatalanNumber[-1] = -1. The alternative Gamma-ratio limit Gamma(2n+1)/(Gamma(n+1) Gamma(n+2)) -- what SymPy's and Sage's own catalan/catalan_number give -- disagrees, at -1/2; this entry follows the verified Wolfram kernel output.
 they-grow-fast-c-15-already-passes-nine-million:
   wolfram:
     in: CatalanNumber[15]

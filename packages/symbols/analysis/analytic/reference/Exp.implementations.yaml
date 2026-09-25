@@ -119,3 +119,7 @@ a-special-imaginary-argument-folds-through-e-i:
   wolfram:
     in: Exp[Times[I, Divide[Pi, 5]]]
     note: Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.
+exp-ln-of-a-negative-real-is-left-unevaluated:
+  wolfram:
+    in: Exp[Log[-2]]
+    note: Wolfram folds Exp[Log[-2]] to -2 (and native compute-engine does too, checked against a bare engine with nothing declared) -- this package's own Ln(-q) = Ln(q) + i*pi rule (widened.ts, a deliberate, documented choice, see Ln.yaml) evaluates the negative-real Ln away before Exp's native e^(ln z) = z fold ever sees a literal Ln node to recognize, since Exp(z) canonicalizes straight to Power(ExponentialE, z) inside compute-engine's own box() step without ever consulting a customizable canonical hook (confirmed by patching Power's canonical and evaluate directly and observing neither intercepts in time). N(Exp(Ln(-2))) is unaffected, still -2.

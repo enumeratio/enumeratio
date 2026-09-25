@@ -5,7 +5,7 @@
 //
 //   node packages/reference/scripts/migrate/split-sidecars.ts
 
-import { readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { OtherSystemRun, ReferenceEntry, SystemImplementation } from "@enumeratio/entry";
@@ -38,7 +38,9 @@ const noteOf = (prose: string | undefined, note: string | undefined): string | u
   prose?.trim() || note?.trim() || undefined;
 
 const { heads, issues } = loadReferenceData(PACKAGES);
-if (issues.length > 0) throw new Error(JSON.stringify(issues));
+// The `divergence` this moves is what the schema now refuses; anything else is a real problem.
+const real = issues.filter((i) => !i.message.endsWith('unexpected property "divergence"'));
+if (real.length > 0) throw new Error(JSON.stringify(real));
 // A head two packages document keeps its rows with the copy the site shows.
 const chosen = new Map<string, (typeof heads)[number]>();
 for (const h of [...heads].sort((a, b) =>
@@ -53,10 +55,19 @@ let prosed = 0;
 for (const h of heads) {
   const isChosen = chosen.get(h.head) === h;
   const rows = isChosen ? (rowsOf.get(h.head) ?? {}) : {};
-  const record: Record<string, Record<string, SystemImplementation>> = {};
+  // A head whose rows aren't in a sidecar being split keeps the record it has.
+  const record: Record<string, Record<string, SystemImplementation>> = isChosen && !rowsOf.has(h.head)
+    ? structuredClone((h.implementations ?? {}) as never)
+    : {};
   const examples = h.entry.examples.map((example) => {
-    const byId: Record<string, SystemImplementation> = {};
-    const prose = example.divergence as Record<string, string> | undefined;
+    const byId: Record<string, SystemImplementation> = { ...record[example.id] };
+    // The prose: in the entry, or already moved onto the record's notes by an earlier run.
+    const moved = Object.fromEntries(
+      Object.entries(h.implementations?.[example.id] ?? {}).flatMap(([system, row]) =>
+        row.note ? [[system, row.note]] : [],
+      ),
+    );
+    const prose = { ...moved, ...(example.divergence as Record<string, string> | undefined) };
     for (const [system, run] of Object.entries(rows[example.id] ?? {})) {
       const note = noteOf(prose?.[system], run.note);
       byId[system] = {
@@ -77,7 +88,9 @@ for (const h of heads) {
       const out = emit(example.expr as never, system as never);
       byId[system] = { in: out.ok ? out.source : "", note };
     }
-    if (prose) prosed++;
+    for (const [system, note] of Object.entries(prose ?? {}))
+      if (byId[system] && !byId[system]!.note) byId[system] = { ...byId[system]!, note };
+    if (example.divergence) prosed++;
     if (Object.keys(byId).length > 0) record[example.id] = byId;
     const { divergence: _moved, ...rest } = example;
     return rest;
@@ -90,9 +103,11 @@ for (const h of heads) {
   }
 }
 
+const KERNELS = `${ROOT}packages/oracle/kernels.json`;
+const known = existsSync(KERNELS) ? (JSON.parse(readFileSync(KERNELS, "utf8")) as Record<string, string>) : {};
 writeFileSync(
-  `${ROOT}packages/oracle/kernels.json`,
-  `${JSON.stringify(Object.fromEntries(Object.entries(kernels).sort()), null, 2)}\n`,
+  KERNELS,
+  `${JSON.stringify(Object.fromEntries(Object.entries({ ...known, ...kernels }).sort()), null, 2)}\n`,
 );
 for (const file of readdirSync(SIDECARS)) rmSync(join(SIDECARS, file));
 rmSync(SIDECARS, { recursive: true, force: true });
