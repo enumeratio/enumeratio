@@ -377,6 +377,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Association",
   },
   {
+    name: "Assuming",
+    wolfram: "Assuming",
+  },
+  {
     name: "At",
     wolfram: "Part",
   },
@@ -586,6 +590,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "BetaRegularized",
     wolfram: "BetaRegularized",
+  },
+  {
+    name: "BigO",
+    wolfram: "O",
   },
   {
     name: "Binomial",
@@ -1938,6 +1946,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FoldList",
   },
   {
+    name: "FourierTransform",
+    wolfram: "FourierTransform",
+  },
+  {
     name: "FractionalPart",
     wolfram: "FractionalPart",
   },
@@ -2604,8 +2616,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "InverseErfc",
   },
   {
+    name: "InverseFourierTransform",
+    wolfram: "InverseFourierTransform",
+  },
+  {
     name: "InverseGammaRegularized",
     wolfram: "InverseGammaRegularized",
+  },
+  {
+    name: "InverseLaplaceTransform",
+    wolfram: "InverseLaplaceTransform",
   },
   {
     name: "InversePermutation",
@@ -3018,6 +3038,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "LaplaceTransform",
+    wolfram: "LaplaceTransform",
+  },
+  {
     name: "Last",
     wolfram: "Last",
   },
@@ -3320,6 +3344,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Median",
   },
   {
+    name: "MeijerG",
+    wolfram: "MeijerG",
+  },
+  {
+    name: "MeijerGReduce",
+    wolfram: "MeijerGReduce",
+  },
+  {
     name: "MemoryConstrained",
     wolfram: "MemoryConstrained",
   },
@@ -3592,6 +3624,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Pi",
     wolfram: "Pi",
+  },
+  {
+    name: "Piecewise",
+    wolfram: "Piecewise",
+  },
+  {
+    name: "PiecewiseExpand",
+    wolfram: "PiecewiseExpand",
   },
   {
     name: "Pochhammer",
@@ -3922,6 +3962,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RecurrenceTable",
   },
   {
+    name: "Refine",
+    wolfram: "Refine",
+  },
+  {
     name: "Repeat",
     wolfram: "ConstantArray",
   },
@@ -3969,6 +4013,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "SeedRandom",
     wolfram: "SeedRandom",
+  },
+  {
+    name: "SeriesCoefficient",
+    wolfram: "SeriesCoefficient",
   },
   {
     name: "SetMinus",
