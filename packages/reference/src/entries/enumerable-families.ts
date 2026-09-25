@@ -1,13 +1,130 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// The enumerable combinatorial families: heads that name a finite indexed collection.
-// Each has a closed-form `Count` and an `At` that unranks, so the page can enumerate it
-// with `<notatio-collection-table>` without ever materialising the whole family. The
-// families are provided by @enumeratio/collections, which the reference test does not
-// load (it would cycle: collections depends on the reference), so these entries demonstrate
-// through the live `enumerate` table. Their `examples` hold only what the reference engine
-// can pin — counting identities in compute-engine heads — and the Wolfram call forms the
-// families do not take yet (list arguments, size and part restrictions), as gaps.
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/reference/entries/Subsets.yaml",
+  "packages/reference/entries/SymmetricGroup.yaml",
+  "packages/reference/entries/IntegerPartitions.yaml",
+  "packages/reference/entries/DyckPaths.yaml",
+  "packages/reference/entries/SetPartitions.yaml",
+  "packages/reference/entries/Primes.yaml",
+  "packages/reference/entries/SquareNumbers.yaml",
+  "packages/reference/entries/AbundantNumbers.yaml",
+  "packages/reference/entries/SmoothNumbers.yaml",
+  "packages/symbols/combinatorics/collections/reference/RootedUnlabeledTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/UnlabeledFreeTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/PhylogeneticTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/NonCrossingTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/BinaryBracelets.yaml",
+  "packages/symbols/combinatorics/collections/reference/KBracelets.yaml",
+  "packages/symbols/combinatorics/collections/reference/TriStrings.yaml",
+  "packages/symbols/combinatorics/collections/reference/PrimitiveBinaryStrings.yaml",
+  "packages/symbols/combinatorics/collections/reference/TernaryGrayCodes.yaml",
+  "packages/symbols/combinatorics/collections/reference/StirlingPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/BaxterPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/BooleanPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/GrassmannianPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/CograssmannianPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/NonCrossingPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SeparablePermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SimplePermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SmoothPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/VexillaryPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SemistandardTableaux.yaml",
+  "packages/symbols/combinatorics/collections/reference/GelfandTsetlin.yaml",
+  "packages/symbols/combinatorics/collections/reference/AlternatingSignMatrices.yaml",
+  "packages/symbols/combinatorics/collections/reference/SkewPartitions.yaml",
+  "packages/symbols/combinatorics/collections/reference/SkewStandardTableaux.yaml",
+  "packages/symbols/combinatorics/collections/reference/ShiftedStandardTableaux.yaml",
+  "packages/symbols/combinatorics/collections/reference/StandardTableauPairs.yaml",
+  "packages/symbols/combinatorics/collections/reference/PlanePartitions.yaml",
+  "packages/symbols/combinatorics/collections/reference/BoxedPlanePartitions.yaml",
+  "packages/reference/entries/TriangularNumbers.yaml",
+  "packages/reference/entries/PentagonalNumbers.yaml",
+  "packages/reference/entries/HexagonalNumbers.yaml",
+  "packages/reference/entries/HeptagonalNumbers.yaml",
+  "packages/reference/entries/OctagonalNumbers.yaml",
+  "packages/reference/entries/PolygonalNumbers.yaml",
+  "packages/reference/entries/CenteredTriangularNumbers.yaml",
+  "packages/reference/entries/CenteredSquareNumbers.yaml",
+  "packages/reference/entries/CenteredHexagonalNumbers.yaml",
+  "packages/reference/entries/StarNumbers.yaml",
+  "packages/reference/entries/PronicNumbers.yaml",
+  "packages/reference/entries/CubeNumbers.yaml",
+  "packages/reference/entries/TetrahedralNumbers.yaml",
+  "packages/reference/entries/PentatopeNumbers.yaml",
+  "packages/reference/entries/SquarePyramidalNumbers.yaml",
+  "packages/reference/entries/PowersOfTwo.yaml",
+  "packages/reference/entries/FactorialNumbers.yaml",
+  "packages/reference/entries/DoubleFactorialNumbers.yaml",
+  "packages/reference/entries/PrimorialNumbers.yaml",
+  "packages/reference/entries/AllOnes.yaml",
+  "packages/reference/entries/FibonacciNumbers.yaml",
+  "packages/reference/entries/LucasNumbers.yaml",
+  "packages/reference/entries/JacobsthalNumbers.yaml",
+  "packages/reference/entries/PellNumbers.yaml",
+  "packages/reference/entries/TribonacciNumbers.yaml",
+  "packages/reference/entries/PadovanSequence.yaml",
+  "packages/reference/entries/PerrinSequence.yaml",
+  "packages/reference/entries/SternDiatomicSequence.yaml",
+  "packages/reference/entries/ThueMorseNumbers.yaml",
+  "packages/reference/entries/CatalanNumbers.yaml",
+  "packages/reference/entries/BellNumbers.yaml",
+  "packages/reference/entries/FubiniNumbers.yaml",
+  "packages/reference/entries/MotzkinNumbers.yaml",
+  "packages/reference/entries/PartitionNumbers.yaml",
+  "packages/reference/entries/CentralDelannoyNumbers.yaml",
+  "packages/reference/entries/LittleSchroderNumbers.yaml",
+  "packages/reference/entries/SchroederNumbers.yaml",
+  "packages/reference/entries/DeficientNumbers.yaml",
+  "packages/reference/entries/PerfectNumbers.yaml",
+  "packages/reference/entries/SemiperfectNumbers.yaml",
+  "packages/reference/entries/WeirdNumbers.yaml",
+  "packages/reference/entries/PracticalNumbers.yaml",
+  "packages/reference/entries/HighlyCompositeNumbers.yaml",
+  "packages/reference/entries/SuperabundantNumbers.yaml",
+  "packages/reference/entries/ArithmeticNumbers.yaml",
+  "packages/reference/entries/UntouchableNumbers.yaml",
+  "packages/reference/entries/AchillesNumbers.yaml",
+  "packages/reference/entries/PowerfulNumbers.yaml",
+  "packages/reference/entries/PerfectPowerNumbers.yaml",
+  "packages/reference/entries/SquareFreeNumbers.yaml",
+  "packages/reference/entries/KFreeIntegers.yaml",
+  "packages/reference/entries/CarmichaelNumbers.yaml",
+  "packages/reference/entries/GiugaNumbers.yaml",
+  "packages/reference/entries/IdonealNumbers.yaml",
+  "packages/reference/entries/LuckyNumbers.yaml",
+  "packages/reference/entries/HarshadNumbers.yaml",
+  "packages/reference/entries/HappyNumbers.yaml",
+  "packages/reference/entries/NarcissisticNumbers.yaml",
+  "packages/reference/entries/AutomorphicNumbers.yaml",
+  "packages/reference/entries/KaprekarNumbers.yaml",
+  "packages/reference/entries/EvilNumbers.yaml",
+  "packages/reference/entries/OdiousNumbers.yaml",
+  "packages/reference/entries/PerniciousNumbers.yaml",
+  "packages/reference/entries/SmithNumbers.yaml",
+  "packages/reference/entries/SemiprimeNumbers.yaml",
+  "packages/reference/entries/SquarefreeSemiprimes.yaml",
+  "packages/reference/entries/SphenicNumbers.yaml",
+  "packages/reference/entries/PrimePowerNumbers.yaml",
+  "packages/reference/entries/KAlmostPrimes.yaml",
+  "packages/reference/entries/RoughNumbers.yaml",
+  "packages/reference/entries/TwinPrimes.yaml",
+  "packages/reference/entries/CousinPrimes.yaml",
+  "packages/reference/entries/SexyPrimes.yaml",
+  "packages/reference/entries/SophieGermainPrimes.yaml",
+  "packages/reference/entries/SafePrimes.yaml",
+  "packages/reference/entries/PrimePairs.yaml",
+  "packages/reference/entries/PalindromicPrimes.yaml",
+  "packages/reference/entries/CircularPrimes.yaml",
+  "packages/reference/entries/EmirpPrimes.yaml",
+  "packages/reference/entries/MersennePrimes.yaml",
+  "packages/reference/entries/FibonacciPrimes.yaml",
+];
+
 export const enumerableFamilies: readonly ReferenceEntry[] = [
   {
     name: "Subsets",
@@ -49,6 +166,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-documented-subsets-collection-form-listed-in",
         expr: ["Subsets", ["List", "a", "b", "c"]],
         expected: [
           "List",
@@ -66,30 +184,35 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         divergence: { wolfram: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …" },
       },
       {
+        id: "a-size-bound-the-subsets-with-at-most-2-elements",
         expr: ["Count", ["Subsets", 4, 2]],
         expected: 11,
         category: "Scope",
         caption: "A size bound: the subsets with at most 2 elements, $1 + 4 + 6$",
       },
       {
+        id: "an-exact-size-2-binom-4-2-subsets",
         expr: ["Count", ["Subsets", 4, ["List", 2]]],
         expected: 6,
         category: "Scope",
         caption: "An exact size $\\{2\\}$: $\\binom{4}{2}$ subsets",
       },
       {
+        id: "a-size-range-0-5-2-the-even-size-subsets-2-4-of",
         expr: ["Count", ["Subsets", 5, ["List", 0, 5, 2]]],
         expected: 16,
         category: "Scope",
         caption: "A size range $\\{0, 5, 2\\}$, the even-size subsets, $2^{4}$ of them",
       },
       {
+        id: "a-set-of-n-elements-has-2-n-subsets-count",
         expr: ["Length", ["Subsets", ["Range", 1, 10]]],
         expected: 1024,
         category: "Properties",
         caption: "A set of $n$ elements has $2^n$ subsets: $Count(Subsets(list)) = 2^n$",
       },
       {
+        id: "counting-by-size-sum-k-binom-n-k-2-n-subsets-of",
         expr: ["Sum", ["Binomial", 5, "k"], ["Tuple", "k", 0, 5]],
         expected: 32,
         category: "Properties",
@@ -119,17 +242,20 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-order-of-s-5-is-5",
         expr: ["GroupOrder", ["SymmetricGroup", 5]],
         expected: 120,
         caption: "The order of $S_5$ is $5!$",
       },
       {
+        id: "s-10-10",
         expr: ["GroupOrder", ["SymmetricGroup", 10]],
         expected: 3628800,
         category: "Scope",
         caption: "$|S_{10}| = 10!$",
       },
       {
+        id: "the-one-line-words-are-compute-engine-s",
         expr: ["Length", ["Permutations", ["List", 1, 2, 3]]],
         expected: 6,
         category: "Properties",
@@ -178,6 +304,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partitions-of-8-into-at-most-3-parts",
         expr: ["IntegerPartitions", 8, 3],
         expected: [
           "List",
@@ -195,6 +322,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         caption: "The partitions of 8 into at most 3 parts",
       },
       {
+        id: "exactly-3-parts",
         expr: ["IntegerPartitions", 8, ["List", 3]],
         expected: [
           "List",
@@ -208,6 +336,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         caption: "Exactly 3 parts",
       },
       {
+        id: "parts-restricted-to-1-2-5",
         expr: ["IntegerPartitions", 8, "All", ["List", 1, 2, 5]],
         expected: [
           "List",
@@ -223,18 +352,21 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         caption: "Parts restricted to $\\{1, 2, 5\\}$",
       },
       {
+        id: "the-family-has-p-8-22-members-compute-engine-s",
         expr: ["NPartition", 8],
         expected: 22,
         category: "Properties",
         caption: "The family has $p(8) = 22$ members, compute-engine's NPartition",
       },
       {
+        id: "the-ways-to-make-change-for-a-dollar-from-1-5-10",
         expr: ["Count", ["IntegerPartitions", 100, "All", ["List", 1, 5, 10, 25, 50]]],
         expected: 292,
         category: "Applications",
         caption: "The ways to make change for a dollar from 1, 5, 10, 25 and 50 cent coins",
       },
       {
+        id: "euler-partitions-into-odd-parts-are-as-many-as",
         expr: ["Count", ["IntegerPartitions", 10, "All", ["List", 1, 3, 5, 7, 9]]],
         expected: 10,
         category: "Neat examples",
@@ -301,6 +433,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-set-partitions-of-an-explicit-list-in-the",
         expr: ["SetPartitions", ["List", "a", "b", "c"]],
         expected: [
           "List",
@@ -313,6 +446,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         caption: "The set partitions of an explicit list, in the family's own RGS order",
       },
       {
+        id: "exactly-2-blocks",
         expr: ["SetPartitions", 3, 2],
         expected: [
           "List",
@@ -324,18 +458,21 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         caption: "Exactly 2 blocks",
       },
       {
+        id: "the-partitions-of-a-4-set-into-2-blocks-number-s",
         expr: ["Count", ["SetPartitions", 4, 2]],
         expected: 7,
         category: "Scope",
         caption: "The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$",
       },
       {
+        id: "the-family-has-b-4-15-members-see-bellnumber",
         expr: ["BellNumber", 4],
         expected: 15,
         category: "Properties",
         caption: "The family has $B_4 = 15$ members. See [[BellNumber]]",
       },
       {
+        id: "those-with-exactly-2-blocks-number-s-4-2-7-see",
         expr: ["Stirling", 4, 2],
         expected: 7,
         category: "Properties",
@@ -349,11 +486,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     },
     seeAlso: ["BellNumber", "Stirling", "Count", "At"],
   },
-  // ---- numeric-set prototypes (@enumeratio/collections numeric-sets.ts spike): bare
-  // integers, not lists, so no glyph fits and Count is genuinely infinite -- see each
-  // entry's details. `enumerate` needs a finite collection (`<notatio-collection-table>`
-  // rejects an infinite `Count`), so these page a `Take(...)` prefix instead of the family
-  // itself.
   {
     name: "Primes",
     domain: "Collections",
@@ -461,6 +593,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-rootedunlabeledtrees-6-20-a000081",
         expr: ["Count", ["RootedUnlabeledTrees", 6]],
         expected: 20,
         category: "Basic",
@@ -490,6 +623,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-unlabeledfreetrees-7-11-a000055",
         expr: ["Count", ["UnlabeledFreeTrees", 7]],
         expected: 11,
         category: "Basic",
@@ -520,6 +654,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-phylogenetictrees-5-105-2-cdot-5-3-a001147",
         expr: ["Count", ["PhylogeneticTrees", 5]],
         expected: 105,
         category: "Basic",
@@ -550,6 +685,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-noncrossingtrees-5-273-binom-15-5-11",
         expr: ["Count", ["NonCrossingTrees", 5]],
         expected: 273,
         category: "Basic",
@@ -579,6 +715,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-binarybracelets-6-13-a000029",
         expr: ["Count", ["BinaryBracelets", 6]],
         expected: 13,
         category: "Basic",
@@ -608,12 +745,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-kbracelets-4-3-21-bracelets-of-length-4",
         expr: ["Count", ["KBracelets", 4, 3]],
         expected: 21,
         category: "Basic",
         caption: "$Count(KBracelets(4, 3)) = 21$: bracelets of length 4 over a 3-letter alphabet",
       },
       {
+        id: "kbracelets-n-2-agrees-with-binarybracelets-n",
         expr: ["Equal", ["Count", ["KBracelets", 5, 2]], ["Count", ["BinaryBracelets", 5]]],
         expected: "True",
         category: "Properties",
@@ -644,6 +783,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-tristrings-6-44-binary-strings-of-length-6",
         expr: ["Count", ["TriStrings", 6]],
         expected: 44,
         category: "Basic",
@@ -675,6 +815,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-primitivebinarystrings-6-54-a027375",
         expr: ["Count", ["PrimitiveBinaryStrings", 6]],
         expected: 54,
         category: "Basic",
@@ -705,6 +846,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-ternarygraycodes-4-3-4-81",
         expr: ["Count", ["TernaryGrayCodes", 4]],
         expected: 81,
         category: "Basic",
@@ -735,12 +877,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-stirlingpermutations-4-105-7-a001147",
         expr: ["Count", ["StirlingPermutations", 4]],
         expected: 105,
         category: "Basic",
         caption: "$Count(StirlingPermutations(4)) = 105 = 7!!$, A001147",
       },
       {
+        id: "count-stirlingpermutations-n-2n-1-see-factorial2",
         expr: ["Equal", ["Count", ["StirlingPermutations", 4]], ["Factorial2", 7]],
         expected: "True",
         category: "Properties",
@@ -773,6 +917,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-baxterpermutations-4-22-a001181",
         expr: ["Count", ["BaxterPermutations", 4]],
         expected: 22,
         category: "Basic",
@@ -806,6 +951,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-booleanpermutations-5-f-6-8-see-fibonacci",
         expr: ["Count", ["BooleanPermutations", 5]],
         expected: 8,
         category: "Basic",
@@ -839,12 +985,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-grassmannianpermutations-5-2-5-5-27",
         expr: ["Count", ["GrassmannianPermutations", 5]],
         expected: 27,
         category: "Basic",
         caption: "$Count(GrassmannianPermutations(5)) = 2^5 - 5 = 27$, A000325",
       },
       {
+        id: "grassmannian-and-cograssmannian-permutations",
         expr: [
           "Equal",
           ["Count", ["GrassmannianPermutations", 5]],
@@ -883,6 +1031,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-cograssmannianpermutations-5-2-5-5-27",
         expr: ["Count", ["CograssmannianPermutations", 5]],
         expected: 27,
         category: "Basic",
@@ -917,6 +1066,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-noncrossingpermutations-5-105",
         expr: ["Count", ["NonCrossingPermutations", 5]],
         expected: 105,
         category: "Basic",
@@ -950,6 +1100,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-separablepermutations-5-90-the-large",
         expr: ["Count", ["SeparablePermutations", 5]],
         expected: 90,
         category: "Basic",
@@ -983,6 +1134,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-simplepermutations-5-6-a111111",
         expr: ["Count", ["SimplePermutations", 5]],
         expected: 6,
         category: "Basic",
@@ -1016,6 +1168,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-smoothpermutations-5-88-a032351",
         expr: ["Count", ["SmoothPermutations", 5]],
         expected: 88,
         category: "Basic",
@@ -1049,6 +1202,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-vexillarypermutations-5-103-a005802",
         expr: ["Count", ["VexillaryPermutations", 5]],
         expected: 103,
         category: "Basic",
@@ -1083,6 +1237,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-semistandardtableaux-4-3-39-every-ssyt-of",
         expr: ["Count", ["SemistandardTableaux", 4, 3]],
         expected: 39,
         category: "Basic",
@@ -1090,6 +1245,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           "$Count(SemistandardTableaux(4, 3)) = 39$: every SSYT of 4 cells with entries in $\\{1,2,3\\}$, summed over shape",
       },
       {
+        id: "the-first-ssyt-of-3-cells-with-entries-in-1-2-as",
         expr: ["At", ["SemistandardTableaux", 3, 2], 1],
         expected: ["List", ["List", 1, 1], ["List", 2]],
         category: "Scope",
@@ -1120,6 +1276,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-gelfandtsetlin-3-2-35-gelfand-tsetlin",
         expr: ["Count", ["GelfandTsetlin", 3, 2]],
         expected: 35,
         category: "Basic",
@@ -1150,6 +1307,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-alternatingsignmatrices-4-42-the-asm",
         expr: ["Count", ["AlternatingSignMatrices", 4]],
         expected: 42,
         category: "Basic",
@@ -1180,6 +1338,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-skewpartitions-4-28-pairs-lambda-mu-with",
         expr: ["Count", ["SkewPartitions", 4]],
         expected: 28,
         category: "Basic",
@@ -1187,6 +1346,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           "$Count(SkewPartitions(4)) = 28$: pairs $(\\lambda, \\mu)$ with $\\mu \\subseteq \\lambda$ and $|\\lambda| - |\\mu| = 4$",
       },
       {
+        id: "the-first-skew-shape-of-size-3-as-an-outer-inner",
         expr: ["At", ["SkewPartitions", 3], 1],
         expected: ["List", ["List", 1, 1, 1], ["List"]],
         category: "Scope",
@@ -1217,6 +1377,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-skewstandardtableaux-3-24-standard",
         expr: ["Count", ["SkewStandardTableaux", 3]],
         expected: 24,
         category: "Basic",
@@ -1248,6 +1409,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-shiftedstandardtableaux-5-6-standard",
         expr: ["Count", ["ShiftedStandardTableaux", 5]],
         expected: 6,
         category: "Basic",
@@ -1279,6 +1441,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-standardtableaupairs-4-4-24-rsk-is-a",
         expr: ["Count", ["StandardTableauPairs", 4]],
         expected: 24,
         category: "Basic",
@@ -1308,6 +1471,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-planepartitions-4-13-a000219",
         expr: ["Count", ["PlanePartitions", 4]],
         expected: 13,
         category: "Basic",
@@ -1337,12 +1501,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "count-boxedplanepartitions-2-2-2-20-macmahon-s",
         expr: ["Count", ["BoxedPlanePartitions", 2, 2, 2]],
         expected: 20,
         category: "Basic",
         caption: "$Count(BoxedPlanePartitions(2,2,2)) = 20$, MacMahon's box formula",
       },
       {
+        id: "a-degenerate-1-times-1-times-n-box-count-n-1",
         expr: ["Count", ["BoxedPlanePartitions", 1, 1, 4]],
         expected: 5,
         category: "Scope",
@@ -1352,11 +1518,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "BoxedPlanePartitions(2, 2, 2)" },
     seeAlso: ["PlanePartitions", "Count", "At"],
   },
-  // ---- closed-form numeric sets (@enumeratio/collections numeric-closed-form.ts): every
-  // element is f(n) for a fixed polynomial or product formula, n = 1, 2, 3, ... -- bare
-  // integers like the numeric-set prototypes above, so Count is +oo and `enumerate` pages a
-  // `Take(...)` prefix rather than the family itself. See each entry for the OEIS number and
-  // where its offset differs from ours (we always start `At(S, 1)` at n=1).
   {
     name: "TriangularNumbers",
     domain: "Collections",
@@ -1633,10 +1794,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     summary:
       "The square pyramidal numbers $1, 5, 14, 30, …$ — $n(n+1)(2n+1)/6$ — stacked squares, partial sums of the square numbers.",
     signatures: [
-      {
-        call: "SquarePyramidalNumbers",
-        description: "$n(n+1)(2n+1)/6$ for $n = 1, 2, 3, …$.",
-      },
+      { call: "SquarePyramidalNumbers", description: "$n(n+1)(2n+1)/6$ for $n = 1, 2, 3, …$." },
     ],
     details: [
       "A lazy indexed collection: $Count(SquarePyramidalNumbers) = +\\infty$, and $At(SquarePyramidalNumbers, k) = k(k+1)(2k+1)/6$ unranks in closed form -- $At(SquarePyramidalNumbers, 5) = 55$.",
@@ -1915,6 +2073,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-first-20-terms-oeis-a010060",
         expr: ["Take", "ThueMorseNumbers", 20],
         expected: ["List", 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1],
         caption: "The first 20 terms, OEIS A010060",
@@ -2091,11 +2250,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "Take(SchroederNumbers, 15)" },
     seeAlso: ["Count", "At", "Element", "LittleSchroderNumbers", "CentralDelannoyNumbers"],
   },
-  // ---- divisor and multiplicative-structure numeric sets (@enumeratio/collections
-  // numeric-divisor.ts): bare integers like the numeric-set prototypes above, so `enumerate`
-  // pages a Take(...) prefix rather than the (usually infinite) family itself. Three sets --
-  // PerfectNumbers, GiugaNumbers, IdonealNumbers -- have Count = NaN: whether more members
-  // exist past the known ones is an open problem, not something a scan could resolve.
   {
     name: "DeficientNumbers",
     domain: "Collections",
@@ -2488,12 +2642,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "Take(LuckyNumbers, 20)" },
     seeAlso: ["Count", "At", "Element", "Primes"],
   },
-  // ---- digit-structure, bit-structure and prime-structure numeric sets
-  // (@enumeratio/collections numeric-digits-primes.ts): the numeric-set-prototype pattern
-  // above, extended. Count is +oo for every set here known infinite by an elementary
-  // argument, NaN where infinitude itself is an open conjecture (the twin-prime conjecture
-  // and its kin), and the proven-exact 88 for NarcissisticNumbers -- the one set here that's
-  // PROVEN finite. ----
   {
     name: "HarshadNumbers",
     domain: "Collections",
@@ -2557,6 +2705,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "narcissistic-armstrong-numbers-are-proven-finite",
         expr: ["Count", "NarcissisticNumbers"],
         expected: 88,
         category: "Properties",
@@ -2846,6 +2995,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-first-20-lesser-twin-primes-oeis-a001359",
         expr: ["Take", "TwinPrimes", 20],
         expected: [
           "List",
@@ -2873,6 +3023,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         caption: "The first 20 lesser twin primes, OEIS A001359",
       },
       {
+        id: "count-twinprimes-is-unknown-but-the-first-20",
         expr: ["Count", ["Take", "TwinPrimes", 20]],
         expected: 20,
         caption:
@@ -2902,6 +3053,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-first-20-lesser-cousin-primes-oeis-a023200",
         expr: ["Take", "CousinPrimes", 20],
         expected: [
           "List",
@@ -2952,6 +3104,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-first-20-lesser-sexy-primes-oeis-a023201",
         expr: ["Take", "SexyPrimes", 20],
         expected: [
           "List",

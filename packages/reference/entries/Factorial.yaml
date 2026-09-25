@@ -1,0 +1,108 @@
+name: Factorial
+domain: Combinatorics
+signature: Factorial(n)
+summary: The product of the positive integers up to n, written n!.
+signatures:
+  - call: Factorial(n)
+    description: $n!$, the product of the integers from 1 to n.
+details:
+  - $0! = 1$ by convention, the empty product.
+  - 'Recurrence: $n! = n\,(n-1)!$.'
+  - Extends to non-integers via the Gamma function, $n! = \Gamma(n+1)$, so half-integer factorials involve $\sqrt{\pi}$.
+  - Grows faster than any exponential; Stirling's approximation $n! \sim \sqrt{2\pi n}\,(n/e)^n$ describes the asymptotics.
+  - compute-engine returns ComplexInfinity at negative integers, the poles of Gamma, rather than leaving the expression unevaluated.
+examples:
+  - id: 5-factorial
+    expr: [Factorial, 5]
+    expected: 120
+  - id: 6-factorial
+    expr: [Factorial, 6]
+    expected: 720
+  - id: the-empty-product-is-1-by-convention
+    expr: [Factorial, 0]
+    expected: 1
+    caption: The empty product is 1 by convention
+  - id: 10-factorial
+    expr: [Factorial, 10]
+    expected: 3628800
+  - id: threads-element-wise-over-a-list
+    expr: [Factorial, [List, 1, 2, 3, 4]]
+    expected: [List, 1, 2, 6, 24]
+    caption: Threads element-wise over a list
+  - id: recurrence-n-n-n-1
+    expr: [Equal, [Factorial, 5], [Multiply, 5, [Factorial, 4]]]
+    expected: True
+    category: Properties
+    caption: 'Recurrence: $n! = n\,(n-1)!$'
+  - id: extends-to-non-integers-via-the-gamma-function
+    expr: [Factorial, [Rational, 1, 2]]
+    expected: 0.8862269254527586
+    category: Properties
+    caption: 'Extends to non-integers via the Gamma function: $\left(\frac12\right)! = \Gamma\!\left(\frac32\right) = \frac{\sqrt{\pi}}{2}$'
+  - id: the-number-of-ways-to-arrange-8-distinct-books
+    expr: [Factorial, 8]
+    expected: 40320
+    category: Applications
+    caption: The number of ways to arrange 8 distinct books on a shelf
+  - id: negative-integers-are-poles-of-the-gamma
+    expr: [Factorial, -1]
+    expected: ComplexInfinity
+    category: Possible issues
+    caption: Negative integers are poles of the Gamma function, so this returns ComplexInfinity rather than staying unevaluated
+  - id: factorials-grow-fast-20-already-exceeds-2-times
+    expr: [Factorial, 20]
+    expected: {num: '2432902008176640000'}
+    category: Neat examples
+    caption: 'Factorials grow fast: $20!$ already exceeds $2 \times 10^{18}$'
+  - id: frac-n-n-1-simplifies-to-n-under-simplify-plain
+    expr: [Simplify, [Divide, [Factorial, n], [Factorial, [Subtract, n, 1]]]]
+    expected: n
+    category: Scope
+    caption: $\frac{n!}{(n-1)!}$ simplifies to $n$ under Simplify; plain evaluation leaves the ratio as it stands
+  - id: real-arguments-evaluate-as-gamma-n-1
+    expr: [Factorial, 3.5]
+    expected: 11.631728396567457
+    category: Scope
+    caption: Real arguments evaluate as $\Gamma(n+1)$
+  - id: negative-non-integers-are-defined-too-2-5-gamma
+    expr: [Factorial, -2.5]
+    expected: 2.363271801207353
+    category: Scope
+    caption: 'Negative non-integers are defined too: $(-2.5)! = \Gamma(-1.5)$'
+  - id: complex-arguments-1-i-gamma-2-i
+    expr: [Factorial, [Complex, 1, 1]]
+    expected: [Complex, 0.6529654964201674, 0.3430658398165463]
+    category: Scope
+    caption: 'Complex arguments: $(1+i)! = \Gamma(2+i)$'
+  - id: frac-12-gamma-frac-12-sqrt-pi-returned-as-a
+    expr: [Factorial, [Rational, -1, 2]]
+    expected: 1.7724538509055159
+    category: Scope
+    caption: $\left(-\frac12\right)! = \Gamma\!\left(\frac12\right) = \sqrt{\pi}$, returned as a float
+    divergence:
+      wolfram: Wolfram returns the exact Sqrt[Pi].
+  - id: infty-infty
+    expr: [Factorial, PositiveInfinity]
+    expected: PositiveInfinity
+    category: Scope
+    caption: $\infty! = \infty$
+  - id: n-gamma-n-1-see-gamma
+    expr: [Equal, [Factorial, 5], [Gamma, 6]]
+    expected: True
+    category: Properties
+    caption: $n! = \Gamma(n+1)$. See [[Gamma]]
+  - id: the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e
+    expr: [Sum, [Divide, 1, [Factorial, k]], [Tuple, k, 0, PositiveInfinity]]
+    expected: ExponentialE
+    category: Properties
+    caption: 'The reciprocals sum to $e$: $\sum_{k \ge 0} \frac{1}{k!} = e$'
+  - id: 30-has-33-digits-and-ends-in-seven-zeros
+    expr: [Factorial, 30]
+    expected: {num: '26525285981219105863630848e+7'}
+    category: Neat examples
+    caption: $30!$ has 33 digits and ends in seven zeros
+seeAlso:
+  - Binomial
+  - Factorial2
+  - Subfactorial
+  - Pochhammer

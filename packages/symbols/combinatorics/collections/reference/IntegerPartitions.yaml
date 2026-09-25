@@ -1,0 +1,24 @@
+name: IntegerPartitions
+domain: Combinatorial collections
+signature: IntegerPartitions(n)
+summary: The partitions of the integer $n$ into unordered positive parts.
+signatures:
+  - call: IntegerPartitions(n)
+    description: the partitions of $n$ into positive parts
+    library: enumeratio-collections
+details:
+  - Count is the partition function $p(n)$
+  - Each element is a weakly decreasing list of parts summing to $n$
+  - When order matters, use [[IntegerCompositions]]
+examples:
+  - id: p-6
+    expr: [Count, [IntegerPartitions, 6]]
+    expected: 11
+    caption: $p(6)$
+  - id: the-single-part-6
+    expr: [At, [IntegerPartitions, 6], 1]
+    expected: [List, 6]
+    caption: the single part $6$
+seeAlso:
+  - IntegerCompositions
+  - SetPartitions

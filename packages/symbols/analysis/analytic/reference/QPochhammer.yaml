@@ -1,0 +1,45 @@
+name: QPochhammer
+domain: Special functions
+signature: QPochhammer(a, q, n)
+summary: The q-Pochhammer symbol $(a; q)_n = \prod_{k=0}^{n-1} (1 - a q^k)$, for a nonnegative integer $n$ or $n = \infty$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: QPochhammer(a, q, n)
+    description: the q-Pochhammer symbol $(a; q)_n$.
+    library: '@enumeratio/analytic'
+details:
+  - Finite $n \ge 0$ builds the product from exact boxed arithmetic — an exact rational $a$ or $q$ stays exact, and $n = 0$ gives the empty product, 1, even for symbolic $a$ and $q$.
+  - $n = \infty$ is Euler's infinite product, numeric-only and only where it converges ($|q| < 1$); it stays symbolic for exact operands (use `N()`) and for $|q| \ge 1$.
+  - Negative or symbolic $n$ is not implemented and stays symbolic — Wolfram's extension to negative $n$ via $(a;q)_{-n} = 1/\prod_{k=1}^n(1 - a q^{-k})$ is not carried here.
+examples:
+  - id: 1-2-1-6-1-18-85
+    expr: [QPochhammer, 2, 3, 3]
+    expected: -85
+    caption: $(1-2)(1-6)(1-18) = -85$
+  - id: exact-rational-arithmetic-no-n-needed
+    expr: [QPochhammer, [Rational, 1, 2], [Rational, 1, 2], 3]
+    expected: [Rational, 21, 64]
+    caption: Exact rational arithmetic, no `N()` needed
+  - id: the-empty-product
+    expr: [QPochhammer, a, q, 0]
+    expected: 1
+    category: Properties
+    caption: The empty product
+  - id: the-infinite-product-euler-s-function-at-q-frac
+    expr: [QPochhammer, 0.5, 0.5, PositiveInfinity]
+    expected: 0.2887880950866024
+    category: Scope
+    caption: The infinite product, Euler's function at $q = \tfrac12$
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/q-series.ts
+    note: 'finite n: exact boxed Multiply/Subtract/Power, evaluated in place. Infinite n: a capped product until |q^k| underflows.'
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: QPochhammer[a, q, n]; mpmath.qp(a, q, n).
+seeAlso:
+  - QFactorial
+  - QBinomial

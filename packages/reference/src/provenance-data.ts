@@ -557,13 +557,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["mpmath"],
   },
   {
-    name: "N",
-    provenance: "override",
-    declared: null,
-    wolframAlias: "N",
-    elsewhere: [],
-  },
-  {
     name: "Round",
     provenance: "override",
     declared: null,
@@ -617,6 +610,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "compute-engine",
     declared: null,
     wolframAlias: "EvenQ",
+    elsewhere: [],
+  },
+  {
+    name: "N",
+    provenance: "override",
+    declared: null,
+    wolframAlias: "N",
     elsewhere: [],
   },
   {

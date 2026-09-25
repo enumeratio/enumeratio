@@ -1,0 +1,38 @@
+name: Riffle
+domain: Collections
+signature: Riffle(list, x)
+summary: Interleave a separator (or a second list) between the elements of a list.
+signatures:
+  - call: Riffle(list, x)
+    description: $x$ between every consecutive pair of elements; if $x$ is itself a $List$, its elements are used in turn (and, once list and x run the same length, a trailing one too).
+    library: enumeratio-collections
+  - call: Riffle(list, x, n)
+    description: a separator every $n$ elements, rather than between every pair.
+    library: enumeratio-collections
+examples:
+  - id: x-between-consecutive-elements
+    expr: [Riffle, [List, a, b, c], x]
+    expected: [List, a, x, b, x, c]
+    caption: $x$ between consecutive elements
+  - id: interleave-two-lists-of-the-same-length
+    expr: [Riffle, [List, a, b, c], [List, x, y, z]]
+    expected: [List, a, x, b, y, c, z]
+    caption: Interleave two lists of the same length
+  - id: a-list-one-shorter-goes-strictly-between-the
+    expr: [Riffle, [List, a, b, c], [List, x, y]]
+    expected: [List, a, x, b, y, c]
+    category: Scope
+    caption: A list one shorter goes strictly between the elements
+  - id: every-3rd-element-of-the-result-is-x
+    expr: [Riffle, [List, 1, 2, 3, 4, 5, 6, 7], x, 3]
+    expected: [List, 1, 2, x, 3, 4, x, 5, 6, x, 7]
+    category: Scope
+    caption: Every 3rd element of the result is x
+  - id: a-single-element-has-nothing-to-separate
+    expr: [Riffle, [List, a], x]
+    expected: [List, a]
+    category: Scope
+    caption: A single element has nothing to separate
+seeAlso:
+  - Join
+  - Partition

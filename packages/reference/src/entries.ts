@@ -45,14 +45,13 @@ import { sequences } from "./entries/sequences.ts";
 import sequencesOracle from "./entries/sequences.oracle.json" with { type: "json" };
 import { specialFunctions } from "./entries/special-functions.ts";
 import specialFunctionsOracle from "./entries/special-functions.oracle.json" with { type: "json" };
-import specialFunctionsExamples from "./entries/special-functions.examples.json" with { type: "json" };
 import { analyticSpecial } from "./entries/analytic-special.ts";
 import analyticSpecialOracle from "./entries/analytic-special.oracle.json" with { type: "json" };
 import { analyticElementary } from "./entries/analytic-elementary.ts";
 import analyticElementaryOracle from "./entries/analytic-elementary.oracle.json" with { type: "json" };
 
 /** An entry file's oracle sidecar (see `scripts/oracle-scan.ts`): kernel versions, and
- * every system's run of an example, by head then by `JSON.stringify(example.expr)`. A JSON
+ * every system's run of an example, by head then by the example's `id`. A JSON
  * import's row type comes back widened to `string` fields, not `OtherSystemRun`'s literal
  * unions — the scan script is what actually constrains `verdict`/`kind`, so a cast at
  * `withOthers` closes the gap rather than fighting the importer's inferred type here. */
@@ -61,33 +60,17 @@ interface OracleSidecar {
   readonly examples?: Readonly<Record<string, Readonly<Record<string, Readonly<object>>>>>;
 }
 
-/** Attach a sidecar's `others` to each of an entry's examples, by expression key. Missing
+/** Attach a sidecar's `others` to each of an entry's examples, by id. Missing
  * sidecar rows leave `others` unset — absence just means unmapped or unscanned. */
 const withOthers = (sidecar: OracleSidecar, entry: ReferenceEntry): ReferenceEntry => {
   const forHead = sidecar.examples?.[entry.name];
   if (forHead === undefined) return entry;
   const examples: readonly ReferenceExample[] = entry.examples.map((example) => {
-    const others = forHead[JSON.stringify(example.expr)] as
-      | Readonly<Record<string, OtherSystemRun>>
-      | undefined;
+    const others = forHead[example.id] as Readonly<Record<string, OtherSystemRun>> | undefined;
     return others === undefined ? example : { ...example, others };
   });
   return { ...entry, examples };
 };
-
-/** More examples for an entry file's heads, kept as data in `<stem>.examples.json` (see
- * `scripts/collect-examples.ts`): appended after the authored ones, hidden unless they say
- * otherwise. */
-const withExamples = (
-  entries: readonly ReferenceEntry[],
-  data: Readonly<Record<string, readonly object[]>>,
-): readonly ReferenceEntry[] =>
-  entries.map((entry) => {
-    const more = (data[entry.name] ?? []) as readonly ReferenceExample[];
-    return more.length === 0
-      ? entry
-      : { ...entry, examples: [...entry.examples, ...more.map((e) => ({ hidden: true, ...e }))] };
-  });
 
 const attach = (
   sidecar: OracleSidecar,
@@ -130,6 +113,7 @@ export const oracleKernels: Readonly<Record<string, string>> = Object.assign(
 /** The raw sidecars, by stem, before `others` is attached to examples — the golden test
  * reads these directly to catch a row whose key no longer names a current example. */
 export const oracleSidecars: Readonly<Record<string, OracleSidecar>> = {
+  aestimatio: aestimatioOracle,
   arithmetic: arithmeticOracle,
   combinatorics: combinatoricsOracle,
   collections: collectionsOracle,
@@ -170,10 +154,7 @@ export const entryFiles: readonly { stem: string; entries: readonly ReferenceEnt
   { stem: "linear-algebra", entries: attach(linearAlgebraOracle, linearAlgebra) },
   {
     stem: "special-functions",
-    entries: attach(
-      specialFunctionsOracle,
-      withExamples(specialFunctions, specialFunctionsExamples),
-    ),
+    entries: attach(specialFunctionsOracle, specialFunctions),
   },
   { stem: "analytic-special", entries: attach(analyticSpecialOracle, analyticSpecial) },
   {

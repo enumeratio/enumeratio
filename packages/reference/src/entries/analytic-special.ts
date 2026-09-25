@@ -1,18 +1,59 @@
-import { DEFINITIONS } from "@enumeratio/analytic/definitions";
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// The special functions `@enumeratio/analytic` adds beyond the zeta family: the Barnes
-// G-function and its logarithm, the log-gamma continuation, the Clausen functions, the
-// Dirichlet eta and beta functions, the Stieltjes constants, and the Dirichlet characters
-// with their L-functions. Every `expected` was
-// produced by evaluating `expr` with compute-engine 0.128.0 plus `declareAnalytic`; the
-// reference tests re-evaluate and pin it. Numeric values are validated against mpmath and
-// a Wolfram kernel in `packages/analytic/tests/special-functions.golden.json`.
-//
-// As with the zeta entries: plain evaluation reduces only where an exact closed form
-// exists; everything else stays symbolic until N() or a floating-point argument.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const LIBRARY = "@enumeratio/analytic";
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/analysis/analytic/reference/BarnesG.yaml",
+  "packages/symbols/analysis/analytic/reference/LogBarnesG.yaml",
+  "packages/symbols/analysis/analytic/reference/LogGamma.yaml",
+  "packages/symbols/analysis/analytic/reference/ClausenCl.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletEta.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletBeta.yaml",
+  "packages/symbols/analysis/analytic/reference/StieltjesGamma.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletCharacter.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletL.yaml",
+  "packages/symbols/analysis/analytic/reference/HarmonicNumber.yaml",
+  "packages/symbols/analysis/analytic/reference/BesselJZero.yaml",
+  "packages/symbols/analysis/analytic/reference/DigammaFunctionZero.yaml",
+  "packages/symbols/analysis/analytic/reference/MultiZetaValue.yaml",
+  "packages/symbols/analysis/analytic/reference/HypergeometricUStar.yaml",
+  "packages/symbols/analysis/analytic/reference/SloaneA.yaml",
+  "packages/symbols/analysis/analytic/reference/QPochhammer.yaml",
+  "packages/symbols/analysis/analytic/reference/QFactorial.yaml",
+  "packages/symbols/analysis/analytic/reference/QBinomial.yaml",
+  "packages/symbols/analysis/analytic/reference/RiemannSiegelTheta.yaml",
+  "packages/symbols/analysis/analytic/reference/RiemannSiegelZ.yaml",
+  "packages/symbols/analysis/analytic/reference/RiemannZetaZero.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric0F1.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric0F1Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric1F1Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric2F1Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric3F2Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/HypergeometricU.yaml",
+  "packages/symbols/analysis/analytic/reference/Khinchin.yaml",
+  "packages/symbols/analysis/analytic/reference/Hyperfactorial.yaml",
+  "packages/symbols/analysis/analytic/reference/ExpIntegralE.yaml",
+  "packages/symbols/analysis/analytic/reference/LambertW.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseErfc.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseGammaRegularized.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseBetaRegularized.yaml",
+  "packages/symbols/analysis/analytic/reference/BellY.yaml",
+  "packages/symbols/analysis/analytic/reference/NorlundB.yaml",
+  "packages/symbols/analysis/analytic/reference/PrimeZetaP.yaml",
+  "packages/symbols/analysis/analytic/reference/HypergeometricPFQ.yaml",
+  "packages/symbols/analysis/analytic/reference/KleinInvariantJ.yaml",
+  "packages/symbols/analysis/analytic/reference/ComplexExpand.yaml",
+  "packages/symbols/analysis/analytic/reference/ExpToTrig.yaml",
+  "packages/symbols/analysis/analytic/reference/FunctionExpand.yaml",
+  "packages/symbols/analysis/analytic/reference/PowerExpand.yaml",
+  "packages/symbols/analysis/analytic/reference/FullSimplify.yaml",
+  "packages/symbols/analysis/analytic/reference/MatrixFunction.yaml",
+  "packages/reference/entries/Interval.yaml",
+  "packages/symbols/analysis/analytic/reference/CenteredInterval.yaml",
+  "packages/symbols/analysis/analytic/reference/Around.yaml",
+];
 
 export const analyticSpecial: readonly ReferenceEntry[] = [
   {
@@ -22,7 +63,11 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     summary:
       "The Barnes G-function $G(z)$, the double-gamma function satisfying $G(z+1) = \\Gamma(z)\\,G(z)$ with $G(1) = 1$ — so $G(n) = \\prod_{k=0}^{n-2} k!$, the superfactorial, at positive integers. Provided by `@enumeratio/analytic`.",
     signatures: [
-      { call: "BarnesG(z)", description: "the Barnes G-function $G(z)$.", library: LIBRARY },
+      {
+        call: "BarnesG(z)",
+        description: "the Barnes G-function $G(z)$.",
+        library: "@enumeratio/analytic",
+      },
     ],
     details: [
       "Functional equation $G(z+1) = \\Gamma(z)\\,G(z)$, the analogue of $\\Gamma(z+1) = z\\,\\Gamma(z)$ one level up; see [[Gamma]].",
@@ -32,31 +77,41 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "The value itself overflows a double past $|z| \\approx 60$ (G(60) $\\approx 4.6\\times10^{1971}$); use [[LogBarnesG]] there, or stay exact at integers.",
     ],
     examples: [
-      { expr: ["BarnesG", 5], expected: 12, caption: "$G(5) = 0!\\,1!\\,2!\\,3! = 12$" },
-      { expr: ["BarnesG", 7], expected: 34560, caption: "$G(7) = 34560$" },
       {
+        id: "g-5-0-1-2-3-12",
+        expr: ["BarnesG", 5],
+        expected: 12,
+        caption: "$G(5) = 0!\\,1!\\,2!\\,3! = 12$",
+      },
+      { id: "g-7-34560", expr: ["BarnesG", 7], expected: 34560, caption: "$G(7) = 34560$" },
+      {
+        id: "the-superfactorials-threaded-over-a-list",
         expr: ["BarnesG", ["List", 1, 2, 3, 4, 5, 6]],
         expected: ["List", 1, 1, 1, 2, 12, 288],
         caption: "The superfactorials, threaded over a list",
       },
       {
+        id: "g-vanishes-at-the-nonpositive-integers",
         expr: ["BarnesG", 0],
         expected: 0,
         category: "Properties",
         caption: "$G$ vanishes at the nonpositive integers",
       },
       {
+        id: "all-of-them",
         expr: ["BarnesG", -3],
         expected: 0,
         category: "Properties",
         caption: "…all of them",
       },
       {
+        id: "a-floating-point-argument-evaluates-numerically",
         expr: ["BarnesG", 2.5],
         expected: 0.9475739010840627,
         caption: "A floating-point argument evaluates numerically",
       },
       {
+        id: "an-exact-non-integer-argument-stays-symbolic",
         expr: ["BarnesG", ["Rational", 5, 2]],
         expected: ["BarnesG", ["Rational", 5, 2]],
         category: "Possible issues",
@@ -68,29 +123,34 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "g-10-prod-k-0-8-k-exact",
         expr: ["BarnesG", 10],
         expected: 5056584744960000,
         caption: "$G(10) = \\prod_{k=0}^{8} k!$, exact",
       },
-      { expr: ["BarnesG", 3], expected: 1, caption: "$G(3) = 0!\\,1! = 1$" },
+      { id: "g-3-0-1-1", expr: ["BarnesG", 3], expected: 1, caption: "$G(3) = 0!\\,1! = 1$" },
       {
+        id: "g-frac-12-to-machine-precision",
         expr: ["BarnesG", 0.5],
         expected: 0.6032442812095893,
         caption: "$G(\\tfrac12)$ to machine precision",
       },
       {
+        id: "complex-arguments",
         expr: ["BarnesG", ["Complex", 1.3, 1]],
         expected: ["Complex", 1.4446139350503153, -0.2985488252115687],
         category: "Scope",
         caption: "Complex arguments",
       },
       {
+        id: "negative-non-integer-arguments-between-the-zeros",
         expr: ["BarnesG", -2.5],
         expected: 0.07617297965688405,
         category: "Scope",
         caption: "Negative non-integer arguments, between the zeros",
       },
       {
+        id: "threads-elementwise-over-an-array",
         expr: [
           "BarnesG",
           ["List", ["List", ["Rational", 1, 2], 1], ["List", 1, ["Rational", 1, 2]]],
@@ -108,12 +168,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "g-infty-infty",
         expr: ["BarnesG", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
         caption: "$G(\\infty) = \\infty$",
       },
       {
+        id: "interval-arithmetic-g-is-increasing-on-1-17-1-18",
         expr: ["BarnesG", ["Interval", 1.17, 1.18]],
         expected: ["Interval", 1.0522163286861943, 1.054193606435691],
         category: "Scope",
@@ -121,6 +183,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Interval arithmetic: $G$ is increasing on $[1.17, 1.18]$, so the image is the interval of the endpoint values",
       },
       {
+        id: "uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm",
         expr: ["BarnesG", ["Around", 2.1, 0.01]],
         expected: ["Around", 0.9847727243540465, 0.001449505695943639],
         category: "Scope",
@@ -128,12 +191,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Uncertainty propagation: $G(2.1 \\pm 0.01) = 0.98477 \\pm 0.00145$, to first order in $G'$",
       },
       {
+        id: "the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here",
         expr: ["Divide", ["Power", ["Gamma", 6], 5], ["BarnesG", 6]],
         expected: 86400000,
         category: "Properties",
         caption: "The hyperfactorial $H(n) = \\Gamma(n+1)^n / G(n+1)$: here $120^5/288 = H(5)$",
       },
       {
+        id: "to-30-significant-digits-not-yet-the-requested",
         expr: ["N", ["BarnesG", ["Rational", 1, 2]], 30],
         expected: { num: "0.603244281209446206191429224535" },
         category: "Scope",
@@ -145,14 +210,38 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.BarnesG,
+        expr: [
+          "Exp",
+          [
+            "Add",
+            ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Ln", ["Multiply", 2, "Pi"]]], 2],
+            [
+              "Negate",
+              ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Add", ["Subtract", "_z", 1], 1]], 2],
+            ],
+            [
+              "Negate",
+              ["Divide", ["Multiply", "EulerGamma", ["Power", ["Subtract", "_z", 1], 2]], 2],
+            ],
+            [
+              "Sum",
+              [
+                "Add",
+                ["Multiply", "k", ["Ln", ["Add", 1, ["Divide", ["Subtract", "_z", 1], "k"]]]],
+                ["Divide", ["Power", ["Subtract", "_z", 1], 2], ["Multiply", 2, "k"]],
+                ["Negate", ["Subtract", "_z", 1]],
+              ],
+              ["Triple", "k", 1, "Infinity"],
+            ],
+          ],
+        ],
         note: "G = exp(ln G) over the Weierstrass series of [[LogBarnesG]]; see there for what it costs to evaluate.",
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/barnes-g.ts",
+        source: "packages/symbols/analysis/analytic/src/barnes-g.ts",
         note: "exp of the LogBarnesG kernel; exact superfactorials at the integers come from the head.",
       },
       {
@@ -174,7 +263,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "LogBarnesG(z)",
         description: "the log-Barnes function $\\ln G(z)$, analytically continued.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -184,36 +273,52 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "$-\\infty$ at the nonpositive integers, where $G$ vanishes.",
     ],
     examples: [
-      { expr: ["LogBarnesG", 4], expected: ["Ln", 2], caption: "$\\ln G(4) = \\ln 2$" },
-      { expr: ["LogBarnesG", 3], expected: 0, caption: "$\\ln G(3) = \\ln 1 = 0$" },
       {
+        id: "ln-g-4-ln-2",
+        expr: ["LogBarnesG", 4],
+        expected: ["Ln", 2],
+        caption: "$\\ln G(4) = \\ln 2$",
+      },
+      {
+        id: "ln-g-3-ln-1-0",
+        expr: ["LogBarnesG", 3],
+        expected: 0,
+        caption: "$\\ln G(3) = \\ln 1 = 0$",
+      },
+      {
+        id: "g-0-0-so-its-logarithm-is-infty",
         expr: ["LogBarnesG", 0],
         expected: "NegativeInfinity",
         category: "Properties",
         caption: "$G(0) = 0$, so its logarithm is $-\\infty$",
       },
       {
+        id: "numeric-for-a-floating-point-argument",
         expr: ["LogBarnesG", 10.5],
         expected: 42.2788836367952,
         caption: "Numeric for a floating-point argument",
       },
       {
+        id: "ln-g-frac-12",
         expr: ["LogBarnesG", 0.5],
         expected: -0.5054330544894583,
         caption: "$\\ln G(\\tfrac12)$",
       },
       {
+        id: "ln-g-0-7-negative-since-g-1-on-0-1",
         expr: ["LogBarnesG", 0.7],
         expected: -0.21458989707508636,
         caption: "$\\ln G(0.7)$ — negative, since $G < 1$ on $(0, 1)$",
       },
       {
+        id: "complex-arguments",
         expr: ["LogBarnesG", ["Complex", 1.7, 1]],
         expected: ["Complex", 0.12137866262889929, -0.31356176133685665],
         category: "Scope",
         caption: "Complex arguments",
       },
       {
+        id: "threads-elementwise-over-an-array-infty-at-the",
         expr: ["LogBarnesG", ["List", ["List", 4, -1], ["List", 0, 3]]],
         expected: [
           "List",
@@ -224,6 +329,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Threads elementwise over an array: $-\\infty$ at the zeros of $G$",
       },
       {
+        id: "exact-at-the-integers-ln-g-10-ln",
         expr: ["LogBarnesG", 10],
         expected: [
           "Add",
@@ -239,6 +345,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         divergence: { wolfram: "Wolfram keeps a single logarithm, Log[5056584744960000]." },
       },
       {
+        id: "the-continuation-not-ln-of-the-value-g-2-5-0-yet",
         expr: ["LogBarnesG", -2.5],
         expected: ["Complex", -2.5747484768528466, 18.84955592153876],
         category: "Possible issues",
@@ -246,6 +353,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "The continuation, not $\\ln$ of the value: $G(-2.5) > 0$, yet the imaginary part is $6\\pi$",
       },
       {
+        id: "huge-arguments-straight-from-the-asymptotic",
         expr: ["N", ["LogBarnesG", ["Power", 10, 1000]]],
         expected: { num: "1.15054254649702284200899572734e2003" },
         category: "Scope",
@@ -254,18 +362,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         aspirational: true,
       },
       {
+        id: "interval-arithmetic-over-an-increasing-stretch",
         expr: ["LogBarnesG", ["Interval", 0.111, 0.112]],
         expected: ["Interval", -2.106284277112393, -2.096646198881469],
         category: "Scope",
         caption: "Interval arithmetic over an increasing stretch",
       },
       {
+        id: "uncertainty-propagation-through-ln-g",
         expr: ["LogBarnesG", ["Around", 1.2, 0.01]],
         expected: ["Around", 0.05620885559910568, 0.0016113055388623507],
         category: "Scope",
         caption: "Uncertainty propagation through $\\ln G$",
       },
       {
+        id: "ln-g-infty-infty",
         expr: ["LogBarnesG", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
@@ -277,14 +388,35 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.LogBarnesG,
-        note: "The Weierstrass product in logarithms. Its terms are O(w\u00b3/k\u00b2), so it converges \u2014 slowly: a few hundred terms for a dozen digits, against the kernel's asymptotic series.",
+        expr: [
+          "Add",
+          ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Ln", ["Multiply", 2, "Pi"]]], 2],
+          [
+            "Negate",
+            ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Add", ["Subtract", "_z", 1], 1]], 2],
+          ],
+          [
+            "Negate",
+            ["Divide", ["Multiply", "EulerGamma", ["Power", ["Subtract", "_z", 1], 2]], 2],
+          ],
+          [
+            "Sum",
+            [
+              "Add",
+              ["Multiply", "k", ["Ln", ["Add", 1, ["Divide", ["Subtract", "_z", 1], "k"]]]],
+              ["Divide", ["Power", ["Subtract", "_z", 1], 2], ["Multiply", 2, "k"]],
+              ["Negate", ["Subtract", "_z", 1]],
+            ],
+            ["Triple", "k", 1, "Infinity"],
+          ],
+        ],
+        note: "The Weierstrass product in logarithms. Its terms are O(w³/k²), so it converges — slowly: a few hundred terms for a dozen digits, against the kernel's asymptotic series.",
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/barnes-g.ts",
+        source: "packages/symbols/analysis/analytic/src/barnes-g.ts",
       },
     ],
     seeAlso: ["BarnesG", "LogGamma", "Gamma"],
@@ -299,7 +431,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "LogGamma(z)",
         description: "the log-gamma function $\\ln\\Gamma(z)$, analytically continued.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -310,12 +442,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "ln-gamma-3-ln-2-ln-2",
         expr: ["LogGamma", 3],
         expected: ["Ln", 2],
         caption: "$\\ln\\Gamma(3) = \\ln 2! = \\ln 2$",
       },
-      { expr: ["LogGamma", 1], expected: 0, caption: "$\\ln\\Gamma(1) = 0$" },
+      { id: "ln-gamma-1-0", expr: ["LogGamma", 1], expected: 0, caption: "$\\ln\\Gamma(1) = 0$" },
       {
+        id: "ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac",
         expr: ["LogGamma", ["Rational", 1, 2]],
         expected: ["Multiply", ["Rational", 1, 2], ["Ln", "Pi"]],
         category: "Properties",
@@ -323,18 +457,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\ln\\Gamma(\\tfrac12) = \\tfrac12 \\ln\\pi$, from $\\Gamma(\\tfrac12) = \\sqrt\\pi$",
       },
       {
+        id: "a-pole-of-gamma",
         expr: ["LogGamma", 0],
         expected: "PositiveInfinity",
         category: "Properties",
         caption: "A pole of $\\Gamma$",
       },
       {
+        id: "ln-gamma-2-5-ln-1-3293-to-the-engine-s-working",
         expr: ["LogGamma", 2.5],
         expected: { num: "0.284682870472919159632" },
         caption:
           "$\\ln\\Gamma(2.5) = \\ln 1.3293\\ldots$ — to the engine's working precision, not a double: right of the imaginary axis this goes through compute-engine's own [[GammaLn]]",
       },
       {
+        id: "off-the-positive-axis-this-is-the-continuation",
         expr: ["LogGamma", ["Complex", -2.5, 1.5]],
         expected: ["Complex", -3.7175134511917847, -7.713065525834191],
         category: "Possible issues",
@@ -342,24 +479,28 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Off the positive axis this is the continuation: $\\ln(\\Gamma(-2.5+1.5i))$ with a principal log has imaginary part $-1.4299$, a full $2\\pi$ away",
       },
       {
+        id: "ln-gamma-5-ln-4-ln-24-split-into-prime",
         expr: ["LogGamma", 5],
         expected: ["Add", ["Multiply", 3, ["Ln", 2]], ["Ln", 3]],
         caption: "$\\ln\\Gamma(5) = \\ln 4! = \\ln 24$, split into prime logarithms",
         divergence: { wolfram: "Wolfram keeps a single logarithm, Log[24]." },
       },
       {
+        id: "to-the-engine-s-working-precision",
         expr: ["LogGamma", 2.2],
         expected: { num: "0.096947466790638776492" },
         category: "Scope",
         caption: "To the engine's working precision",
       },
       {
+        id: "complex-arguments",
         expr: ["LogGamma", ["Complex", 2.5, 3]],
         expected: ["Complex", -1.4709546103488336, 2.822615638260796],
         category: "Scope",
         caption: "Complex arguments",
       },
       {
+        id: "threads-elementwise-over-an-array",
         expr: [
           "LogGamma",
           ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]],
@@ -373,6 +514,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Threads elementwise over an array",
       },
       {
+        id: "on-the-negative-axis-gamma-frac-32-frac-43-sqrt",
         expr: ["LogGamma", -1.5],
         expected: ["Complex", 0.8600470153764732, -6.283185307179586],
         category: "Properties",
@@ -380,6 +522,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "On the negative axis: $\\Gamma(-\\tfrac32) = \\tfrac43\\sqrt\\pi > 0$, but the continuation carries $-2\\pi i$",
       },
       {
+        id: "half-integers-past-frac-12-ln-gamma-frac-32-ln",
         expr: ["LogGamma", ["Rational", 3, 2]],
         expected: ["Ln", ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"]]],
         category: "Properties",
@@ -387,6 +530,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Half-integers past $\\tfrac12$: $\\ln\\Gamma(\\tfrac32) = \\ln\\tfrac{\\sqrt\\pi}{2}$",
       },
       {
+        id: "exact-negative-half-integers-ln-gamma-frac-32-ln",
         expr: ["LogGamma", ["Rational", -3, 2]],
         expected: [
           "Add",
@@ -398,12 +542,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Exact negative half-integers: $\\ln\\Gamma(-\\tfrac32) = \\ln\\tfrac{4\\sqrt\\pi}{3} - 2\\pi i$",
       },
       {
+        id: "ln-gamma-infty-infty",
         expr: ["LogGamma", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
         caption: "$\\ln\\Gamma(\\infty) = \\infty$",
       },
       {
+        id: "huge-arguments-ln-gamma-10-300-approx-6-898",
         expr: ["N", ["LogGamma", ["Power", 10, 300]]],
         expected: 6.897755278982137e302,
         category: "Scope",
@@ -411,18 +557,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Huge arguments: $\\ln\\Gamma(10^{300}) \\approx 6.898\\times10^{302}$, from Stirling's series directly rather than through $\\Gamma(10^{300})$ itself, which overflows a double long before its log would -- a magnitude that fits a double, so it comes back as one rather than the engine's bignum (this is the fallback kernel, not compute-engine's own arithmetic)",
       },
       {
+        id: "interval-arithmetic-decreasing-here-so-the",
         expr: ["LogGamma", ["Interval", 0.41, 0.42]],
         expected: ["Interval", 0.7468637271280142, 0.7714224633947468],
         category: "Scope",
         caption: "Interval arithmetic: decreasing here, so the endpoints swap",
       },
       {
+        id: "uncertainty-propagation-with-psi-1-2-as-the",
         expr: ["LogGamma", ["Around", 1.2, 0.01]],
         expected: ["Around", -0.08537409000331585, 0.002890398965921883],
         category: "Scope",
         caption: "Uncertainty propagation, with $\\psi(1.2)$ as the slope",
       },
       {
+        id: "to-30-significant-digits-not-yet-the-last-digit",
         expr: ["N", ["LogGamma", ["Rational", 1, 3]], 30],
         expected: { num: "0.985420646927767069187174036978" },
         category: "Scope",
@@ -434,14 +583,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.LogGamma,
-        note: "The continuation pinned by ln\u0393(1) = 0 and (ln\u0393)\u2032 = \u03c8 \u2014 which is what makes it the continuation and not Ln(Gamma(z)), whose branch differs off the positive axis.",
+        expr: ["Integrate", ["PolyGamma", 0, "t"], ["Triple", "t", 1, "_z"]],
+        note: "The continuation pinned by lnΓ(1) = 0 and (lnΓ)′ = ψ — which is what makes it the continuation and not Ln(Gamma(z)), whose branch differs off the positive axis.",
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/loggamma.ts",
+        source: "packages/symbols/analysis/analytic/src/loggamma.ts",
       },
       {
         origin: "mapped",
@@ -463,7 +612,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "ClausenCl(n, θ)",
         description:
           "the Clausen function $\\mathrm{Cl}_n(\\theta)$ of integer order $n \\ge 1$ and real $\\theta$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -475,39 +624,46 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "cl-2-pi-2-g-catalan-s-constant",
         expr: ["ClausenCl", 2, ["Divide", "Pi", 2]],
         expected: "Catalan",
         caption: "$\\mathrm{Cl}_2(\\pi/2) = G$, Catalan's constant",
       },
       {
+        id: "odd-orders-are-cosine-series-cl-3-0-zeta-3",
         expr: ["ClausenCl", 3, 0],
         expected: ["Zeta", 3],
         caption: "Odd orders are cosine series: $\\mathrm{Cl}_3(0) = \\zeta(3)$",
       },
       {
+        id: "cl-2-pi-0-the-sine-series-vanishes-at-multiples",
         expr: ["ClausenCl", 2, "Pi"],
         expected: 0,
         category: "Properties",
         caption: "$\\mathrm{Cl}_2(\\pi) = 0$: the sine series vanishes at multiples of $\\pi$",
       },
       {
+        id: "cl-3-pi-eta-3-frac-34-zeta-3",
         expr: ["ClausenCl", 3, "Pi"],
         expected: ["Multiply", ["Rational", -3, 4], ["Zeta", 3]],
         category: "Properties",
         caption: "$\\mathrm{Cl}_3(\\pi) = -\\eta(3) = -\\tfrac34\\zeta(3)$",
       },
       {
+        id: "cl-4-pi-2-beta-4-which-has-no-closed-form-of-its",
         expr: ["ClausenCl", 4, ["Divide", "Pi", 2]],
         expected: ["DirichletBeta", 4],
         category: "Properties",
         caption: "$\\mathrm{Cl}_4(\\pi/2) = \\beta(4)$, which has no closed form of its own",
       },
       {
+        id: "cl-2-pi-3-1-01494-the-maximum-of-cl-2",
         expr: ["ClausenCl", 2, 1.0471975511965976],
         expected: 1.0149416064096533,
         caption: "$\\mathrm{Cl}_2(\\pi/3) = 1.01494\\ldots$, the maximum of $\\mathrm{Cl}_2$",
       },
       {
+        id: "cl-1-theta-ln-2-sin-theta-2-diverges-at-theta-0",
         expr: ["ClausenCl", 1, 0],
         expected: "PositiveInfinity",
         category: "Possible issues",
@@ -519,14 +675,20 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.ClausenCl,
-        note: "Cl_n cuts Li_n(e^{i\u03b8}) in two by parity: the even orders are the sine series (its imaginary part), the odd orders the cosine series (its real part).",
+        expr: [
+          "Which",
+          ["IsEven", "_n"],
+          ["Im", ["PolyLog", "_n", ["Exp", ["Multiply", "ImaginaryUnit", "_theta"]]]],
+          "True",
+          ["Re", ["PolyLog", "_n", ["Exp", ["Multiply", "ImaginaryUnit", "_theta"]]]],
+        ],
+        note: "Cl_n cuts Li_n(e^{iθ}) in two by parity: the even orders are the sine series (its imaginary part), the odd orders the cosine series (its real part).",
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/clausen.ts",
+        source: "packages/symbols/analysis/analytic/src/clausen.ts",
       },
       {
         origin: "mapped",
@@ -547,7 +709,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DirichletEta(s)",
         description: "the Dirichlet eta function $\\eta(s)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -558,33 +720,39 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "eta-1-ln-2-the-alternating-harmonic-series",
         expr: ["DirichletEta", 1],
         expected: ["Ln", 2],
         caption: "$\\eta(1) = \\ln 2$ — the alternating harmonic series",
       },
       {
+        id: "eta-2-pi-2-12",
         expr: ["DirichletEta", 2],
         expected: ["Multiply", ["Rational", 1, 12], ["Power", "Pi", 2]],
         caption: "$\\eta(2) = \\pi^2/12$",
       },
       {
+        id: "eta-3-frac-34-zeta-3-no-closed-form-beyond-apery",
         expr: ["DirichletEta", 3],
         expected: ["Multiply", ["Rational", 3, 4], ["Zeta", 3]],
         caption: "$\\eta(3) = \\tfrac34\\zeta(3)$ — no closed form beyond Apéry's constant",
       },
       {
+        id: "nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1",
         expr: ["DirichletEta", ["List", 0, -1, -2, -3]],
         expected: ["List", ["Rational", 1, 2], ["Rational", 1, 4], 0, ["Rational", -1, 8]],
         category: "Properties",
         caption: "Nonpositive integers: $\\eta(-n) = (2^{n+1} - 1)\\,B_{n+1}/(n+1)$, rational",
       },
       {
+        id: "on-the-critical-line-through-1-2-1-s-zeta-s-so",
         expr: ["DirichletEta", 0.5],
         expected: { num: "0.604898643421630370245" },
         caption:
           "On the critical line — through $(1 - 2^{1-s})\\zeta(s)$, so it carries the engine's working precision",
       },
       {
+        id: "an-exact-non-integer-argument-stays-symbolic",
         expr: ["DirichletEta", ["Rational", 1, 2]],
         expected: ["DirichletEta", ["Rational", 1, 2]],
         category: "Possible issues",
@@ -595,23 +763,27 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "numeric-for-a-floating-point-argument",
         expr: ["DirichletEta", 1.5],
         expected: { num: "0.765147024625407945367" },
         caption: "Numeric for a floating-point argument",
       },
       {
+        id: "eta-4-frac-78-zeta-4-7-pi-4-720",
         expr: ["DirichletEta", 4],
         expected: ["Multiply", ["Rational", 7, 720], ["Power", "Pi", 4]],
         category: "Properties",
         caption: "$\\eta(4) = \\tfrac78\\zeta(4) = 7\\pi^4/720$",
       },
       {
+        id: "complex-arguments",
         expr: ["DirichletEta", ["Complex", 3.5, 2.5]],
         expected: ["Complex", 1.0001097278046978, 0.07812891204148316],
         category: "Scope",
         caption: "Complex arguments",
       },
       {
+        id: "threads-elementwise-over-an-array",
         expr: [
           "DirichletEta",
           ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]],
@@ -629,24 +801,28 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "eta-s-to-1-as-s-to-infty",
         expr: ["DirichletEta", "PositiveInfinity"],
         expected: 1,
         category: "Scope",
         caption: "$\\eta(s) \\to 1$ as $s \\to \\infty$",
       },
       {
+        id: "interval-arithmetic-over-an-increasing-stretch",
         expr: ["DirichletEta", ["Interval", 1.5, 1.6]],
         expected: ["Interval", 0.7651470246254078, 0.7777227266611288],
         category: "Scope",
         caption: "Interval arithmetic over an increasing stretch",
       },
       {
+        id: "uncertainty-propagation-eta-2-pm-0-01-0-82247-pm",
         expr: ["DirichletEta", ["Around", 2, 0.01]],
         expected: ["Around", 0.8224670334241132, 0.001013165781635045],
         category: "Scope",
         caption: "Uncertainty propagation: $\\eta(2 \\pm 0.01) = 0.82247 \\pm 0.00101$",
       },
       {
+        id: "rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s",
         expr: ["FunctionExpand", ["DirichletEta", "s"]],
         expected: ["Multiply", ["Subtract", 1, ["Power", 2, ["Subtract", 1, "s"]]], ["Zeta", "s"]],
         category: "Properties",
@@ -655,6 +831,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         aspirational: true,
       },
       {
+        id: "to-30-significant-digits-not-yet-the-last-digit",
         expr: ["N", ["DirichletEta", ["Rational", 1, 2]], 30],
         expected: { num: "0.604898643421630370247265914236" },
         category: "Scope",
@@ -666,14 +843,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.DirichletEta,
+        expr: ["Multiply", ["Subtract", 1, ["Power", 2, ["Subtract", 1, "_s"]]], ["Zeta", "_s"]],
         note: "The defining identity — except at s = 1, where the native kernel sums the alternating series instead.",
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet.ts",
       },
       {
         origin: "mapped",
@@ -694,7 +871,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DirichletBeta(s)",
         description: "the Dirichlet beta function $\\beta(s)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -706,33 +883,39 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15",
         expr: ["DirichletBeta", 1],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
         caption: "$\\beta(1) = \\pi/4$: Leibniz's series $1 - \\tfrac13 + \\tfrac15 - \\cdots$",
       },
       {
+        id: "beta-2-g-catalan-s-constant",
         expr: ["DirichletBeta", 2],
         expected: "Catalan",
         caption: "$\\beta(2) = G$, Catalan's constant",
       },
       {
+        id: "beta-3-pi-3-32",
         expr: ["DirichletBeta", 3],
         expected: ["Multiply", ["Rational", 1, 32], ["Power", "Pi", 3]],
         caption: "$\\beta(3) = \\pi^3/32$",
       },
       {
+        id: "beta-7-61-pi-7-184320-the-61-is-the-euler-number",
         expr: ["DirichletBeta", 7],
         expected: ["Multiply", ["Rational", 61, 184320], ["Power", "Pi", 7]],
         category: "Properties",
         caption: "$\\beta(7) = 61\\pi^7/184320$ — the $61$ is the Euler number $|E_6|$",
       },
       {
+        id: "beta-2k-e-2k-2-and-beta-2k-1-0",
         expr: ["DirichletBeta", ["List", 0, -1, -2, -3, -4]],
         expected: ["List", ["Rational", 1, 2], 0, ["Rational", -1, 2], 0, ["Rational", 5, 2]],
         category: "Properties",
         caption: "$\\beta(-2k) = E_{2k}/2$ and $\\beta(-(2k+1)) = 0$",
       },
       {
+        id: "even-s-ge-4-has-no-closed-form-and-stays",
         expr: ["DirichletBeta", 4],
         expected: ["DirichletBeta", 4],
         category: "Possible issues",
@@ -744,29 +927,34 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "numeric-for-a-floating-point-argument-through-4",
         expr: ["DirichletBeta", 2.5],
         expected: { num: "0.948622174037054707445" },
         caption:
           "Numeric for a floating-point argument — through $4^{-s}(\\zeta(s,\\tfrac14) - \\zeta(s,\\tfrac34))$, so it answers to the engine's working precision rather than a double's",
       },
       {
+        id: "a-symbolic-argument-stays-symbolic",
         expr: ["DirichletBeta", "s"],
         expected: ["DirichletBeta", "s"],
         caption: "A symbolic argument stays symbolic",
       },
       {
+        id: "beta-5-5-pi-5-1536",
         expr: ["DirichletBeta", 5],
         expected: ["Multiply", ["Rational", 5, 1536], ["Power", "Pi", 5]],
         category: "Properties",
         caption: "$\\beta(5) = 5\\pi^5/1536$",
       },
       {
+        id: "complex-arguments-here-on-the-critical-line",
         expr: ["DirichletBeta", ["Complex", 0.5, 14]],
         expected: ["Complex", 1.537115438440316, 1.3434514268677573],
         category: "Scope",
         caption: "Complex arguments, here on the critical line",
       },
       {
+        id: "threads-elementwise-over-an-array",
         expr: ["DirichletBeta", ["List", ["List", 1, -1], ["List", -1, 1]]],
         expected: [
           "List",
@@ -777,18 +965,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Threads elementwise over an array",
       },
       {
+        id: "beta-s-to-1-as-s-to-infty",
         expr: ["DirichletBeta", "PositiveInfinity"],
         expected: 1,
         category: "Scope",
         caption: "$\\beta(s) \\to 1$ as $s \\to \\infty$",
       },
       {
+        id: "uncertainty-propagation-beta-2-pm-0-01-g-pm-0",
         expr: ["DirichletBeta", ["Around", 2, 0.01]],
         expected: ["Around", 0.915965594177219, 0.000815807361165928],
         category: "Scope",
         caption: "Uncertainty propagation: $\\beta(2 \\pm 0.01) = G \\pm 0.00082$",
       },
       {
+        id: "to-exactly-40-significant-digits-not-yet-85-come",
         expr: ["N", ["DirichletBeta", 2], 40],
         expected: { num: "0.9159655941772190150546035149323841107741" },
         category: "Scope",
@@ -800,13 +991,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.DirichletBeta,
+        expr: [
+          "Multiply",
+          ["Power", 4, ["Negate", "_s"]],
+          [
+            "Subtract",
+            ["HurwitzZeta", "_s", ["Rational", 1, 4]],
+            ["HurwitzZeta", "_s", ["Rational", 3, 4]],
+          ],
+        ],
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet.ts",
       },
       {
         origin: "mapped",
@@ -827,13 +1026,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "StieltjesGamma(n)",
         description: "the $n$-th Stieltjes constant $\\gamma_n$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "StieltjesGamma(n, a)",
         description:
           "the generalized Stieltjes constant $\\gamma_n(a)$, from the expansion of $\\zeta(s, a)$ at $s = 1$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -845,39 +1044,46 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "gamma-0-gamma-euler-s-constant",
         expr: ["StieltjesGamma", 0],
         expected: "EulerGamma",
         caption: "$\\gamma_0 = \\gamma$, Euler's constant",
       },
       {
+        id: "gamma-0-a-psi-a-symbolically-in-a",
         expr: ["StieltjesGamma", 0, "a"],
         expected: ["Negate", ["PolyGamma", 0, "a"]],
         category: "Properties",
         caption: "$\\gamma_0(a) = -\\psi(a)$, symbolically in $a$",
       },
       {
+        id: "no-closed-form-past-gamma-0-stays-symbolic-until",
         expr: ["StieltjesGamma", 1],
         expected: ["StieltjesGamma", 1],
         caption:
           "No closed form past $\\gamma_0$ — stays symbolic until N(), which gives $-0.0728158\\ldots$",
       },
       {
+        id: "gamma-1-frac-32-numerically-a-floating-point",
         expr: ["StieltjesGamma", 1, 1.5],
         expected: 0.0328346803149494,
         caption: "$\\gamma_1(\\tfrac32)$ numerically — a floating-point argument asks for a number",
       },
       {
+        id: "gamma-3-frac-12-0-66742",
         expr: ["StieltjesGamma", 3, 0.5],
         expected: -0.6674242737113798,
         caption: "$\\gamma_3(\\tfrac12) = -0.66742\\ldots$",
       },
       {
+        id: "gamma-n-a-has-poles-at-the-nonpositive-integers",
         expr: ["StieltjesGamma", 2, -1],
         expected: "ComplexInfinity",
         category: "Possible issues",
         caption: "$\\gamma_n(a)$ has poles at the nonpositive integers, like $\\zeta(s, a)$",
       },
       {
+        id: "orders-past-30-stay-unevaluated-even-under-n-the",
         expr: ["StieltjesGamma", 40],
         expected: ["StieltjesGamma", 40],
         category: "Possible issues",
@@ -885,40 +1091,47 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Orders past 30 stay unevaluated even under N(): the double-precision kernel cannot be trusted there",
       },
       {
+        id: "gamma-2-frac-32",
         expr: ["StieltjesGamma", 2, 1.5],
         expected: 0.007958447383888047,
         caption: "$\\gamma_2(\\tfrac32)$",
       },
       {
+        id: "gamma-1-0-0728158-under-n",
         expr: ["N", ["StieltjesGamma", 1]],
         expected: -0.07281584548367652,
         caption: "$\\gamma_1 = -0.0728158\\ldots$ under N()",
       },
       {
+        id: "complex-a",
         expr: ["N", ["StieltjesGamma", 2, ["Complex", 1, 1]]],
         expected: ["Complex", 0.1703042014685879, 0.37317719575749525],
         category: "Scope",
         caption: "Complex $a$",
       },
       {
+        id: "listable-in-the-order-n-threads-over-a-list",
         expr: ["StieltjesGamma", ["List", 1, 2, 3], 0.5],
         expected: ["List", -1.3534596808049415, 0.9688644752202907, -0.6674242737113807],
         category: "Scope",
         caption: "Listable in the order $n$: threads over a list",
       },
       {
+        id: "interval-arithmetic-in-a",
         expr: ["StieltjesGamma", 2, ["Interval", 2.34, 2.35]],
         expected: ["Interval", -0.06724128035508715, -0.06514040366307242],
         category: "Scope",
         caption: "Interval arithmetic in $a$",
       },
       {
+        id: "gamma-n-1-gamma-n-the-two-argument-form-reduces",
         expr: ["StieltjesGamma", 1, 1],
         expected: ["StieltjesGamma", 1],
         category: "Properties",
         caption: "$\\gamma_n(1) = \\gamma_n$: the two-argument form reduces to it",
       },
       {
+        id: "gamma-0-1-psi-1-gamma-polygamma-0-z-routes",
         expr: ["StieltjesGamma", 0, 1],
         expected: "EulerGamma",
         category: "Properties",
@@ -926,6 +1139,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\gamma_0(1) = -\\psi(1) = \\gamma$ -- PolyGamma(0, z) routes through Digamma(z) (#113), which has $\\psi(1) = -\\gamma$ exactly",
       },
       {
+        id: "gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now",
         expr: ["StieltjesGamma", 0, ["Rational", 1, 2]],
         expected: ["Add", "EulerGamma", ["Multiply", 2, ["Ln", 2]]],
         category: "Properties",
@@ -933,12 +1147,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\gamma_0(\\tfrac12) = -\\psi(\\tfrac12) = \\gamma + 2\\ln 2$, now that $\\psi(\\tfrac12)$ itself has a closed form",
       },
       {
+        id: "to-30-significant-digits-not-yet-the-requested",
         expr: ["N", ["StieltjesGamma", 1], 30],
         expected: { num: "-0.0728158454836767248605863758749" },
         category: "Scope",
         caption: "To 30 significant digits, past a double's reach",
       },
       {
+        id: "gamma-3-1-gamma-3-order-1-at-a-1-is-just-the",
         expr: ["StieltjesGamma", 3, 1],
         expected: ["StieltjesGamma", 3],
         category: "Properties",
@@ -946,17 +1162,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\gamma_3(1) = \\gamma_3$ — order 1 at $a=1$ is just the ordinary Stieltjes constant.",
       },
     ],
-    // \u03b3\u2099(a) IS a Laurent coefficient of \u03b6(s, a) at s = 1, so its definition is a limit of an
-    // n-th derivative \u2014 and compute-engine cannot take it: the head collapses to the pole at
-    // s = 1 before `Limit` sees a limit, and the partial-sum form converges too slowly to
-    // extrapolate. Only \u03b3\u2080(a) = \u2212\u03c8(a) reduces, which the head already does.
     primitive: "numeric",
     implementations: [
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/stieltjes.ts",
+        source: "packages/symbols/analysis/analytic/src/stieltjes.ts",
       },
       {
         origin: "mapped",
@@ -978,7 +1190,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "DirichletCharacter(k, j, n)",
         description:
           "the character $\\chi_j \\bmod k$ at $n$, for $1 \\le j \\le \\varphi(k)$; $j = 1$ is the principal character.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -990,24 +1202,28 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-nontrivial-character-mod-4-chi-2-3-1-this-is",
         expr: ["DirichletCharacter", 4, 2, 3],
         expected: -1,
         caption:
           "The nontrivial character mod 4: $\\chi_2(3) = -1$ (this is the one behind [[DirichletBeta]])",
       },
       {
+        id: "chi-2-2-i-mod-5-2-is-a-primitive-root-so-it",
         expr: ["DirichletCharacter", 5, 2, 2],
         expected: ["Complex", 0, 1],
         caption:
           "$\\chi_2(2) = i$ mod 5 — 2 is a primitive root, so it takes the generating fourth root of unity",
       },
       {
+        id: "a-character-vanishes-where-gcd-n-k-1",
         expr: ["DirichletCharacter", 5, 2, 5],
         expected: 0,
         category: "Properties",
         caption: "A character vanishes where $\\gcd(n, k) > 1$",
       },
       {
+        id: "chi-3-mod-5-is-the-quadratic-character-its",
         expr: ["DirichletCharacter", 5, 3, 2],
         expected: -1,
         category: "Properties",
@@ -1015,12 +1231,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\chi_3$ mod 5 is the quadratic character: its period is $1, -1, -1, 1, 0$, the Legendre symbol $\\left(\\tfrac{n}{5}\\right)$",
       },
       {
+        id: "the-trivial-character-mod-1-is-1-everywhere-its",
         expr: ["DirichletCharacter", 1, 1, 7],
         expected: 1,
         category: "Properties",
         caption: "The trivial character mod 1 is 1 everywhere — its L-function is $\\zeta$",
       },
       {
+        id: "j-must-be-at-most-varphi-k-4-out-of-range-names",
         expr: ["DirichletCharacter", 5, 9, 2],
         expected: ["DirichletCharacter", 5, 9, 2],
         category: "Possible issues",
@@ -1028,6 +1246,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$j$ must be at most $\\varphi(k) = 4$; out of range names no character and stays unevaluated",
       },
       {
+        id: "values-are-roots-of-unity-3-generates-z-7-times",
         expr: ["DirichletCharacter", 7, 3, 3],
         expected: ["Add", ["Rational", -1, 2], ["Complex", 0, ["Divide", ["Sqrt", 3], 2]]],
         category: "Scope",
@@ -1035,6 +1254,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Values are roots of unity: 3 generates $(\\mathbb{Z}/7)^\\times$, and $\\chi_3(3) = e^{2\\pi i/3}$",
       },
       {
+        id: "listable-in-n-the-nontrivial-character-mod-3",
         expr: ["DirichletCharacter", 3, 2, ["List", 1, 2, 3, 4, 5]],
         expected: ["List", 1, -1, 0, 1, -1],
         category: "Scope",
@@ -1047,7 +1267,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet-l.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet-l.ts",
         note: "A discrete logarithm against the cyclic decomposition — an algorithm over mutable state, not a tree.",
       },
       {
@@ -1069,7 +1289,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DirichletL(k, j, s)",
         description: "the L-function of [[DirichletCharacter]] $\\chi_j \\bmod k$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1081,16 +1301,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "modulus-1-the-riemann-zeta-function-itself",
         expr: ["DirichletL", 1, 1, "s"],
         expected: ["Zeta", "s"],
         caption: "Modulus 1: the Riemann zeta function itself",
       },
       {
+        id: "l-1-chi-2-bmod-4-beta-1-pi-4-leibniz-s-series",
         expr: ["DirichletL", 4, 2, 1],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
         caption: "$L(1, \\chi_2 \\bmod 4) = \\beta(1) = \\pi/4$ — Leibniz's series",
       },
       {
+        id: "a-principal-character-drops-the-euler-factors-at",
         expr: ["DirichletL", 12, 1, "s"],
         expected: [
           "Multiply",
@@ -1102,6 +1325,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "A principal character drops the Euler factors at $2$ and $3$",
       },
       {
+        id: "and-keeps-zeta-s-pole-a-non-principal-l-is",
         expr: ["DirichletL", 12, 1, 1],
         expected: "ComplexInfinity",
         category: "Properties",
@@ -1112,6 +1336,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "l-0-chi-frac-35-frac-15-i-exact-from-the",
         expr: ["DirichletL", 5, 2, 0],
         expected: ["Complex", ["Rational", 3, 5], ["Rational", 1, 5]],
         category: "Properties",
@@ -1119,12 +1344,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$L(0, \\chi) = \\tfrac35 + \\tfrac15 i$ — exact, from the generalized Bernoulli numbers",
       },
       {
+        id: "l-3-chi-2-bmod-8-11",
         expr: ["DirichletL", 8, 2, -3],
         expected: 11,
         category: "Properties",
         caption: "$L(-3, \\chi_2 \\bmod 8) = 11$",
       },
       {
+        id: "no-closed-form-at-positive-integer-s-in-general",
         expr: ["DirichletL", 5, 2, 2],
         expected: ["DirichletL", 5, 2, 2],
         category: "Possible issues",
@@ -1132,22 +1359,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "No closed form at positive integer $s$ in general, so this stays symbolic; N() gives $0.95872 + 0.14557i$",
       },
       {
+        id: "l-2-chi-1-bmod-1-zeta-2-pi-2-6",
         expr: ["DirichletL", 1, 1, 2],
         expected: ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
         caption: "$L(2, \\chi_1 \\bmod 1) = \\zeta(2) = \\pi^2/6$",
       },
       {
+        id: "numeric-for-a-floating-point-argument",
         expr: ["DirichletL", 3, 2, 1.5],
         expected: 0.7039682448687329,
         caption: "Numeric for a floating-point argument",
       },
       {
+        id: "complex-s-l-s-chi-1-bmod-2-1-2-s-zeta-s-at-s-1-i",
         expr: ["N", ["DirichletL", 2, 1, ["Complex", 1, 1]]],
         expected: ["Complex", 0.6543589174072331, -0.3843763502147996],
         category: "Scope",
         caption: "Complex $s$: $L(s, \\chi_1 \\bmod 2) = (1 - 2^{-s})\\zeta(s)$ at $s = 1 + i$",
       },
       {
+        id: "the-principal-character-mod-2-removes-the-euler",
         expr: ["DirichletL", 2, 1, "s"],
         expected: [
           "Multiply",
@@ -1158,12 +1389,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "The principal character mod 2 removes the Euler factor at 2",
       },
       {
+        id: "l-2-chi-2-bmod-4-beta-2-g",
         expr: ["DirichletL", 4, 2, 2],
         expected: "Catalan",
         category: "Properties",
         caption: "$L(2, \\chi_2 \\bmod 4) = \\beta(2) = G$",
       },
       {
+        id: "l-0-chi-3-frac-13-the-class-number-formula-s-2h",
         expr: ["DirichletL", 3, 2, 0],
         expected: ["Rational", 1, 3],
         category: "Properties",
@@ -1171,6 +1404,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$L(0, \\chi_{-3}) = \\tfrac13$ — the class number formula's $2h/w$ for $\\mathbb{Q}(\\sqrt{-3})$",
       },
       {
+        id: "l-1-chi-3-pi-3-sqrt-3-s-1-for-a-real-quadratic",
         expr: ["DirichletL", 3, 2, 1],
         expected: ["Multiply", ["Divide", ["Sqrt", 3], 9], "Pi"],
         category: "Properties",
@@ -1178,6 +1412,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$L(1, \\chi_{-3}) = \\pi/(3\\sqrt3)$: $s = 1$ for a real (quadratic) odd character has a closed form, from the Fourier expansion of $\\sum \\chi(n)/n$",
       },
       {
+        id: "listable-in-s-threads-over-a-list",
         expr: ["DirichletL", 1, 1, ["List", 1, 2, 3, 4]],
         expected: [
           "List",
@@ -1190,6 +1425,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Listable in $s$: threads over a list",
       },
       {
+        id: "interval-arithmetic-in-s-decreasing-here",
         expr: ["DirichletL", 5, 1, ["Interval", 1.23, 1.24]],
         expected: ["Interval", 4.113958567039058, 4.25898895010849],
         category: "Scope",
@@ -1201,14 +1437,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.DirichletL,
+        expr: [
+          "Multiply",
+          [
+            "Sum",
+            [
+              "Multiply",
+              ["DirichletCharacter", "_k", "_j", "r"],
+              ["HurwitzZeta", "_s", ["Divide", "r", "_k"]],
+            ],
+            ["Triple", "r", 1, "_k"],
+          ],
+          ["Power", "_k", ["Negate", "_s"]],
+        ],
         note: "The Hurwitz decomposition — the definition the kernel evaluates, away from s = 1.",
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/dirichlet-l.ts",
+        source: "packages/symbols/analysis/analytic/src/dirichlet-l.ts",
       },
       {
         origin: "mapped",
@@ -1229,12 +1477,12 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "HarmonicNumber(n)",
         description: "the harmonic number $H_n = \\sum_{k=1}^n 1/k$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "HarmonicNumber(n, r)",
         description: "the generalized harmonic number $H_n^{(r)} = \\sum_{k=1}^n k^{-r}$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1247,28 +1495,38 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "h-10-frac-7381-2520",
         expr: ["HarmonicNumber", 10],
         expected: ["Rational", 7381, 2520],
         caption: "$H_{10} = \\tfrac{7381}{2520}$",
       },
-      { expr: ["HarmonicNumber", 0], expected: 0, caption: "$H_0 = 0$, the empty sum" },
       {
+        id: "h-0-0-the-empty-sum",
+        expr: ["HarmonicNumber", 0],
+        expected: 0,
+        caption: "$H_0 = 0$, the empty sum",
+      },
+      {
+        id: "h-5-1-sum-k-1-5-k-15-a-negative-order-is-still",
         expr: ["HarmonicNumber", 5, -1],
         expected: 15,
         caption: "$H_5^{(-1)} = \\sum_{k=1}^5 k = 15$ — a negative order is still exact",
       },
       {
+        id: "a-floating-point-argument-evaluates-via-psi-z-1",
         expr: ["HarmonicNumber", 2.5],
         expected: { num: "1.680372305546776047837" },
         caption: "A floating-point argument evaluates via $\\psi(z+1) + \\gamma$",
       },
       {
+        id: "no-sum-below-n-0",
         expr: ["HarmonicNumber", -3],
         expected: "ComplexInfinity",
         category: "Properties",
         caption: "No sum below $n = 0$",
       },
       {
+        id: "a-non-integer-order-stays-symbolic-under-plain",
         expr: ["HarmonicNumber", 5, ["Rational", 1, 2]],
         expected: ["HarmonicNumber", 5, ["Rational", 1, 2]],
         category: "Possible issues",
@@ -1276,29 +1534,34 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "A non-integer order stays symbolic under plain evaluation, even at an exact $n$; N() gives $3.23167\\ldots$",
       },
       {
+        id: "h-10-2-sum-k-1-10-k-2-exact",
         expr: ["HarmonicNumber", 10, 2],
         expected: ["Rational", 1968329, 1270080],
         caption: "$H_{10}^{(2)} = \\sum_{k=1}^{10} k^{-2}$, exact",
       },
       {
+        id: "non-integer-arguments-via-psi-z-1-gamma",
         expr: ["HarmonicNumber", 0.33],
         expected: { num: "0.441523646937363528111" },
         category: "Scope",
         caption: "Non-integer arguments via $\\psi(z+1) + \\gamma$",
       },
       {
+        id: "the-generalized-form-off-the-integers-via-zeta-r",
         expr: ["HarmonicNumber", 0.8, 3],
         expected: { num: "0.940124048948776980484" },
         category: "Scope",
         caption: "The generalized form off the integers, via $\\zeta(r) - \\zeta(r, z+1)$",
       },
       {
+        id: "complex-arguments",
         expr: ["HarmonicNumber", ["Complex", 1.5, 2]],
         expected: ["Complex", 1.6170494230744863, 0.7801971357298588],
         category: "Scope",
         caption: "Complex arguments",
       },
       {
+        id: "order-r-1-off-the-integers-is-plain-h-z-h-e-1",
         expr: ["N", ["HarmonicNumber", "ExponentialE", 1]],
         expected: 1.7500213805365417,
         category: "Scope",
@@ -1306,6 +1569,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Order $r = 1$ off the integers is plain $H_z$: $H_e = 1.75002\\ldots$ — routed to the one-argument form directly rather than through $\\zeta(1) - \\zeta(1, z+1)$, which is a pole at every $z$",
       },
       {
+        id: "listable-threads-over-a-list",
         expr: ["HarmonicNumber", ["List", 2, 3, 5, 7, 11]],
         expected: [
           "List",
@@ -1319,6 +1583,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Listable: threads over a list",
       },
       {
+        id: "threads-elementwise-over-an-array-of-orders-and",
         expr: [
           "HarmonicNumber",
           2,
@@ -1335,18 +1600,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         aspirational: true,
       },
       {
+        id: "h-1-2-2-2-ln-2-exact-at-rational-arguments-by",
         expr: ["HarmonicNumber", ["Rational", 1, 2]],
         expected: ["Add", 2, ["Multiply", -2, ["Ln", 2]]],
         category: "Properties",
         caption: "$H_{1/2} = 2 - 2\\ln 2$: exact at rational arguments by Gauss's digamma theorem",
       },
       {
+        id: "h-1-4-4-frac-pi-2-3-ln-2",
         expr: ["HarmonicNumber", ["Rational", 1, 4]],
         expected: ["Add", 4, ["Multiply", -3, ["Ln", 2]], ["Multiply", ["Rational", -1, 2], "Pi"]],
         category: "Properties",
         caption: "$H_{1/4} = 4 - \\tfrac{\\pi}{2} - 3\\ln 2$",
       },
       {
+        id: "symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays",
         expr: ["HarmonicNumber", "n", -1],
         expected: ["Multiply", ["Rational", 1, 2], "n", ["Add", "n", 1]],
         category: "Properties",
@@ -1354,36 +1622,42 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         aspirational: true,
       },
       {
+        id: "the-harmonic-series-diverges",
         expr: ["HarmonicNumber", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Properties",
         caption: "The harmonic series diverges",
       },
       {
+        id: "h-infty-r-zeta-r-for-r-1-the-basel-sum",
         expr: ["HarmonicNumber", "PositiveInfinity", 2],
         expected: ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
         category: "Properties",
         caption: "$H_\\infty^{(r)} = \\zeta(r)$ for $r > 1$: the Basel sum",
       },
       {
+        id: "interval-arithmetic-in-the-order",
         expr: ["HarmonicNumber", 0.2, ["Interval", 2.1, 2.2]],
         expected: ["Interval", 0.3863469411841759, 0.3950923922402868],
         category: "Scope",
         caption: "Interval arithmetic in the order",
       },
       {
+        id: "uncertainty-propagation-in-the-order",
         expr: ["HarmonicNumber", ["Rational", 3, 2], ["Around", 2.1, 0.01]],
         expected: ["Around", 1.1455164340491326, 0.0008799826466981091],
         category: "Scope",
         caption: "Uncertainty propagation in the order",
       },
       {
+        id: "to-exactly-30-significant-digits-not-yet-31-come",
         expr: ["N", ["HarmonicNumber", ["Rational", 1, 2]], 30],
         expected: { num: "0.613705638880109381165535757084" },
         category: "Scope",
         caption: "To exactly 30 significant digits, the last one correctly rounded",
       },
       {
+        id: "order-1-gives-h-z-itself-not-the-zeta-1-pole",
         expr: ["N", ["HarmonicNumber", 2.5, 1]],
         expected: { num: "1.680372305546776047837" },
         category: "Scope",
@@ -1392,6 +1666,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "harmonic-order-one",
       },
       {
+        id: "at-an-integer-order-1-agrees-exactly-with-the",
         expr: ["HarmonicNumber", 10, 1],
         expected: ["Rational", 7381, 2520],
         category: "Scope",
@@ -1404,14 +1679,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.HarmonicNumber,
+        expr: ["Add", ["PolyGamma", 0, ["Add", "_z", 1]], "EulerGamma"],
         note: "The one-argument digamma identity; exact at the integers too (ψ(n+1) + γ = Hₙ), so it doubles as the oracle at both.",
       },
       {
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/harmonic.ts",
+        source: "packages/symbols/analysis/analytic/src/harmonic.ts",
       },
       {
         origin: "mapped",
@@ -1432,7 +1707,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "BesselJZero(nu, k)",
         description: "the $k$-th positive zero of $J_\\nu$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1442,21 +1717,25 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "j-3-2-1-4-4934-also-the-first-positive-root-of",
         expr: ["N", ["BesselJZero", ["Rational", 3, 2], 1]],
         expected: 4.493409457909064,
         caption: "$j_{3/2,1} = 4.4934\\ldots$ — also the first positive root of $\\tan x = x$",
       },
       {
+        id: "j-0-1-2-4048",
         expr: ["N", ["BesselJZero", 0, 1]],
         expected: 2.404825557695773,
         caption: "$j_{0,1} = 2.4048\\ldots$",
       },
       {
+        id: "the-third-zero-of-j-0",
         expr: ["N", ["BesselJZero", 0, 3]],
         expected: 8.653727912911013,
         caption: "the third zero of $J_0$",
       },
       {
+        id: "tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first",
         expr: [
           "Chop",
           [
@@ -1476,7 +1755,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/bessel-zeros.ts",
+        source: "packages/symbols/analysis/analytic/src/bessel-zeros.ts",
       },
       {
         origin: "mapped",
@@ -1497,7 +1776,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DigammaFunctionZero(n)",
         description: "the $n$-th real zero of $\\psi$, $n \\ge 0$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1506,22 +1785,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-digamma-function-s-positive-real-zero",
         expr: ["N", ["DigammaFunctionZero", 0]],
         expected: 1.4616321449683622,
         caption: "the digamma function's positive real zero",
       },
       {
+        id: "the-zero-in-1-0",
         expr: ["N", ["DigammaFunctionZero", 1]],
         expected: -0.5040830082644554,
         caption: "the zero in $(-1, 0)$",
       },
       {
+        id: "psi-vanishes-exactly-there-by-construction",
         expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 2]]]],
         expected: 0,
         category: "Properties",
         caption: "$\\psi$ vanishes exactly there, by construction",
       },
       {
+        id: "psi-x-n-0-exactly-at-digamma-s-own-claimed-zero",
         expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 0]]]],
         expected: 0,
         category: "Properties",
@@ -1529,6 +1812,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "digamma-vanishes",
       },
       {
+        id: "psi-x-n-0-at-n-1",
         expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 1]]]],
         expected: 0,
         category: "Properties",
@@ -1536,6 +1820,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "digamma-vanishes",
       },
       {
+        id: "psi-x-n-0-at-n-3",
         expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 3]]]],
         expected: 0,
         category: "Properties",
@@ -1543,6 +1828,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "digamma-vanishes",
       },
       {
+        id: "psi-x-n-0-at-n-4",
         expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 4]]]],
         expected: 0,
         category: "Properties",
@@ -1556,7 +1842,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/digamma-zero.ts",
+        source: "packages/symbols/analysis/analytic/src/digamma-zero.ts",
       },
       {
         origin: "mapped",
@@ -1577,7 +1863,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "MultiZetaValue(s1, s2)",
         description: "the depth-2 Euler sum $\\zeta(s_1, s_2)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1587,22 +1873,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "zeta-2-2-frac-34-zeta-4",
         expr: ["N", ["MultiZetaValue", 2, 2]],
         expected: 0.8117424252833536,
         caption: "$\\zeta(2,2) = \\tfrac34\\zeta(4)$",
       },
       {
+        id: "zeta-3-3-frac-12-zeta-3-2-zeta-6",
         expr: ["N", ["MultiZetaValue", 3, 3]],
         expected: 0.2137988682245925,
         caption: "$\\zeta(3,3) = \\tfrac12(\\zeta(3)^2-\\zeta(6))$",
       },
       {
+        id: "s-1-2-stays-symbolic-outside-the-depth-2-both",
         expr: ["MultiZetaValue", 1, 2],
         expected: ["MultiZetaValue", 1, 2],
         category: "Possible issues",
         caption: "$s_1 < 2$ stays symbolic — outside the depth-2, both-weights-$\\ge2$ scope",
       },
       {
+        id: "zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact",
         expr: [
           "Chop",
           ["Subtract", ["N", ["MultiZetaValue", 2, 2]], ["Multiply", 0.75, ["N", ["Zeta", 4]]]],
@@ -1618,7 +1908,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/multizeta.ts",
+        source: "packages/symbols/analysis/analytic/src/multizeta.ts",
       },
     ],
     seeAlso: ["Zeta", "HurwitzZeta"],
@@ -1633,7 +1923,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "HypergeometricUStar(a, b, z)",
         description: "$z^a$ times Tricomi's confluent hypergeometric $U(a,b,z)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1644,6 +1934,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "u-frac-12-frac-32-2-1",
         expr: [
           "Chop",
           [
@@ -1656,11 +1947,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "$U^*(\\tfrac12,\\tfrac32,2) = 1$",
       },
       {
-        expr: ["HypergeometricUStar", 1.3, 2.7, 4.0],
+        id: "a-generic-point-checked-against-mpmath-s-hyperu",
+        expr: ["HypergeometricUStar", 1.3, 2.7, 4],
         expected: 1.1137052905867906,
         caption: "a generic point, checked against mpmath's `hyperu`",
       },
       {
+        id: "integer-b-stays-symbolic-the-connection-formula",
         expr: ["HypergeometricUStar", 1, 2, 3],
         expected: ["HypergeometricUStar", 1, 2, 3],
         category: "Possible issues",
@@ -1674,7 +1967,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric-ustar.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric-ustar.ts",
       },
       {
         origin: "mapped",
@@ -1695,7 +1988,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "SloaneA(id, n)",
         description: "the $n$-th term of OEIS sequence `id`.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1704,22 +1997,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "a000045-is-the-fibonacci-numbers-the-10th-is-55",
         expr: ["SloaneA", "'A000045'", 10],
         expected: 55,
         caption: "A000045 is the Fibonacci numbers: the 10th is 55",
       },
       {
+        id: "a000793-landau-s-function-g-10-30",
         expr: ["SloaneA", "'A000793'", 10],
         expected: 30,
         caption: "A000793, Landau's function: $g(10) = 30$",
       },
       {
+        id: "an-oeis-id-outside-the-declared-alias-table",
         expr: ["SloaneA", "'A060691'", 5],
         expected: ["SloaneA", "'A060691'", 5],
         category: "Possible issues",
         caption: "An OEIS id outside the declared alias table stays symbolic",
       },
       {
+        id: "a000040-5-11-the-5th-prime",
         expr: ["SloaneA", "'A000040'", 5],
         expected: 11,
         category: "Scope",
@@ -1727,6 +2024,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "oeis-lookup",
       },
       {
+        id: "a000041-10-42-the-number-of-partitions-of-10",
         expr: ["SloaneA", "'A000041'", 10],
         expected: 42,
         category: "Scope",
@@ -1734,6 +2032,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "oeis-lookup",
       },
       {
+        id: "a000110-5-52-the-5th-bell-number",
         expr: ["SloaneA", "'A000110'", 5],
         expected: 52,
         category: "Scope",
@@ -1741,6 +2040,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "oeis-lookup",
       },
       {
+        id: "a000142-5-120-5",
         expr: ["SloaneA", "'A000142'", 5],
         expected: 120,
         category: "Scope",
@@ -1748,6 +2048,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "oeis-lookup",
       },
       {
+        id: "a000720-20-8-pi-20-the-prime-counting-function",
         expr: ["SloaneA", "'A000720'", 20],
         expected: 8,
         category: "Scope",
@@ -1755,6 +2056,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "oeis-lookup",
       },
       {
+        id: "a027641-12-691-b-12-s-numerator",
         expr: ["SloaneA", "'A027641'", 12],
         expected: -691,
         category: "Scope",
@@ -1762,6 +2064,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "bernoulli-fraction",
       },
       {
+        id: "a027642-12-2730-b-12-s-denominator",
         expr: ["SloaneA", "'A027642'", 12],
         expected: 2730,
         category: "Scope",
@@ -1769,6 +2072,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         group: "bernoulli-fraction",
       },
       {
+        id: "a000793-15-105-landau-s-function-g-15",
         expr: ["SloaneA", "'A000793'", 15],
         expected: 105,
         category: "Scope",
@@ -1782,7 +2086,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/sloane-a.ts",
+        source: "packages/symbols/analysis/analytic/src/sloane-a.ts",
       },
     ],
     seeAlso: ["Fibonacci", "BellNumber", "BernoulliB"],
@@ -1797,7 +2101,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "QPochhammer(a, q, n)",
         description: "the q-Pochhammer symbol $(a; q)_n$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1807,22 +2111,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "1-2-1-6-1-18-85",
         expr: ["QPochhammer", 2, 3, 3],
         expected: -85,
         caption: "$(1-2)(1-6)(1-18) = -85$",
       },
       {
+        id: "exact-rational-arithmetic-no-n-needed",
         expr: ["QPochhammer", ["Rational", 1, 2], ["Rational", 1, 2], 3],
         expected: ["Rational", 21, 64],
         caption: "Exact rational arithmetic, no `N()` needed",
       },
       {
+        id: "the-empty-product",
         expr: ["QPochhammer", "a", "q", 0],
         expected: 1,
         category: "Properties",
         caption: "The empty product",
       },
       {
+        id: "the-infinite-product-euler-s-function-at-q-frac",
         expr: ["QPochhammer", 0.5, 0.5, "PositiveInfinity"],
         expected: 0.2887880950866024,
         category: "Scope",
@@ -1835,7 +2143,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/q-series.ts",
+        source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "finite n: exact boxed Multiply/Subtract/Power, evaluated in place. Infinite n: a capped product until |q^k| underflows.",
       },
       {
@@ -1857,7 +2165,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "QFactorial(n, q)",
         description: "the q-factorial $[n]_q!$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1866,23 +2174,27 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "1-2-2-2-3-2-1-cdot-3-cdot-7",
         expr: ["QFactorial", 3, 2],
         expected: 21,
         caption: "$[1]_2 [2]_2 [3]_2 = 1 \\cdot 3 \\cdot 7$",
       },
-      { expr: ["QFactorial", 4, 2], expected: 315 },
+      { id: "qfactorial-4-2", expr: ["QFactorial", 4, 2], expected: 315 },
       {
+        id: "qfactorial-3-1-over-2",
         expr: ["QFactorial", 3, ["Rational", 1, 2]],
         expected: ["Rational", 21, 8],
         category: "Scope",
       },
       {
+        id: "at-q-1-it-is-the-ordinary-factorial",
         expr: ["QFactorial", 5, 1],
         expected: 120,
         category: "Properties",
         caption: "At $q = 1$ it is the ordinary factorial",
       },
       {
+        id: "the-inversion-generating-function-of",
         expr: ["Expand", ["QFactorial", 3, "q"]],
         expected: [
           "Add",
@@ -1902,15 +2214,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/q-series.ts",
+        source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "product of q-integers, built at canonicalization time (not evaluate) so Expand sees the tree to open up.",
       },
-      {
-        origin: "mapped",
-        form: "wolfram",
-        environment: "external",
-        note: "QFactorial[n, q].",
-      },
+      { origin: "mapped", form: "wolfram", environment: "external", note: "QFactorial[n, q]." },
     ],
     seeAlso: ["QPochhammer", "QBinomial", "Factorial"],
   },
@@ -1924,7 +2231,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "QBinomial(n, k, q)",
         description: "the Gaussian binomial coefficient $\\binom{n}{k}_q$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1933,11 +2240,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "frac-2-4-1-2-3-1-2-2-1-2-1-35",
         expr: ["QBinomial", 4, 2, 2],
         expected: 35,
         caption: "$\\frac{(2^4-1)(2^3-1)}{(2^2-1)(2-1)} = 35$",
       },
       {
+        id: "a-polynomial-in-q-whose-coefficients-count",
         expr: ["Expand", ["QBinomial", 4, 2, "q"]],
         expected: [
           "Add",
@@ -1951,12 +2260,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "A polynomial in q whose coefficients count partitions in a 2 × 2 box",
       },
       {
+        id: "at-q-1-it-is-binomial-6-3",
         expr: ["QBinomial", 6, 3, 1],
         expected: 20,
         category: "Properties",
         caption: "At q = 1 it is Binomial(6, 3)",
       },
       {
+        id: "the-number-of-2-dimensional-subspaces-of-f-3-5",
         expr: ["QBinomial", 5, 2, 3],
         expected: 1210,
         category: "Applications",
@@ -1969,15 +2280,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/q-series.ts",
+        source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "the Pascal-like recurrence, built at canonicalization time so Expand sees the tree.",
       },
-      {
-        origin: "mapped",
-        form: "wolfram",
-        environment: "external",
-        note: "QBinomial[n, k, q].",
-      },
+      { origin: "mapped", form: "wolfram", environment: "external", note: "QBinomial[n, k, q]." },
     ],
     seeAlso: ["QPochhammer", "QFactorial", "Binomial"],
   },
@@ -1991,18 +2297,27 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "RiemannSiegelTheta(t)",
         description: "the Riemann–Siegel theta function $\\vartheta(t)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
-      "Reuses the existing log-gamma continuation ([[LogGamma]], `packages/analytic/src/loggamma.ts`) rather than deriving one — $\\vartheta$ is just its imaginary part on the $\\operatorname{Re} = \\tfrac14$ line, minus the linear term.",
+      "Reuses the existing log-gamma continuation ([[LogGamma]], `packages/symbols/analysis/analytic/src/loggamma.ts`) rather than deriving one — $\\vartheta$ is just its imaginary part on the $\\operatorname{Re} = \\tfrac14$ line, minus the linear term.",
       "Real $t$ only; a complex argument stays symbolic. $\\vartheta(0) = 0$ exactly (no `N()` needed) since $\\ln\\Gamma(\\tfrac14)$ is real.",
       "Numeric otherwise: `N()`, or an inexact $t$, is required to reduce.",
     ],
     examples: [
-      { expr: ["RiemannSiegelTheta", 1.5], expected: -2.19819085737941 },
-      { expr: ["N", ["RiemannSiegelTheta", 10]], expected: -3.0670743962898954 },
       {
+        id: "riemannsiegeltheta-1p5",
+        expr: ["RiemannSiegelTheta", 1.5],
+        expected: -2.19819085737941,
+      },
+      {
+        id: "n-riemannsiegeltheta-10",
+        expr: ["N", ["RiemannSiegelTheta", 10]],
+        expected: -3.0670743962898954,
+      },
+      {
+        id: "riemannsiegeltheta-0",
         expr: ["RiemannSiegelTheta", 0],
         expected: 0,
         category: "Properties",
@@ -2014,7 +2329,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/riemann-siegel.ts",
+        source: "packages/symbols/analysis/analytic/src/riemann-siegel.ts",
         note: "built directly on the LogGamma kernel; no new zeta or gamma evaluation of its own.",
       },
       {
@@ -2036,18 +2351,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "RiemannSiegelZ(t)",
         description: "the Riemann–Siegel Z-function.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
-      "Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.",
+      "Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/symbols/analysis/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.",
       "Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].",
       "The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.",
     ],
     examples: [
-      { expr: ["RiemannSiegelZ", 1.5], expected: -0.595568336782887 },
-      { expr: ["RiemannSiegelZ", 20.5], expected: 0.5993287025147513 },
+      { id: "riemannsiegelz-1p5", expr: ["RiemannSiegelZ", 1.5], expected: -0.595568336782887 },
+      { id: "riemannsiegelz-20p5", expr: ["RiemannSiegelZ", 20.5], expected: 0.5993287025147513 },
       {
+        id: "z-0-zeta-1-2",
         expr: ["N", ["RiemannSiegelZ", 0]],
         expected: -1.4603545088095868,
         category: "Properties",
@@ -2060,7 +2376,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/riemann-siegel.ts",
+        source: "packages/symbols/analysis/analytic/src/riemann-siegel.ts",
       },
       {
         origin: "mapped",
@@ -2081,7 +2397,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "RiemannZetaZero(k)",
         description: "the k-th nontrivial zero, $\\tfrac12 + i t_k$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2091,15 +2407,18 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-first-nontrivial-zero-frac-12-14-1347-i",
         expr: ["N", ["RiemannZetaZero", 1]],
         expected: ["Complex", 0.5, 14.134725141734693],
         caption: "The first nontrivial zero, $\\tfrac12 + 14.1347\\ldots i$",
       },
       {
+        id: "n-riemannzetazero-2",
         expr: ["N", ["RiemannZetaZero", 2]],
         expected: ["Complex", 0.5, 21.022039638771556],
       },
       {
+        id: "n-riemannzetazero-10",
         expr: ["N", ["RiemannZetaZero", 10]],
         expected: ["Complex", 0.5, 49.7738324776723],
         category: "Scope",
@@ -2111,7 +2430,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/riemann-siegel.ts",
+        source: "packages/symbols/analysis/analytic/src/riemann-siegel.ts",
         note: "sign-change scan of RiemannSiegelZ + bisection; see the file header for the range this covers.",
       },
       {
@@ -2133,7 +2452,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric0F1(b, z)",
         description: "${}_0F_1(b; z)$, by its defining series.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2142,11 +2461,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "a-generic-point-checked-against-mpmath-s-hyp0f1",
         expr: ["Hypergeometric0F1", 2, 0.5],
         expected: 1.271723456312137,
         caption: "a generic point, checked against mpmath's `hyp0f1`",
       },
       {
+        id: "b-0-is-a-pole-stays-symbolic",
         expr: ["Hypergeometric0F1", 0, 0.5],
         expected: ["Hypergeometric0F1", 0, 0.5],
         category: "Possible issues",
@@ -2159,7 +2480,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2180,7 +2501,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric0F1Regularized(b, z)",
         description: "${}_0F_1(b; z) / \\Gamma(b)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2189,22 +2510,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "matches-hypergeometric0f1-2-0-5-gamma-2",
         expr: ["Hypergeometric0F1Regularized", 2, 0.5],
         expected: 1.2717234563121365,
         caption: "matches Hypergeometric0F1(2, 0.5) / Gamma(2) = Hypergeometric0F1(2, 0.5)",
       },
       {
+        id: "b-1-is-a-pole-of-gamma-but-the-regularized-form",
         expr: ["Hypergeometric0F1Regularized", -1, 0.5],
         expected: 0.1471797367221067,
         caption: "$b = -1$ is a pole of $\\Gamma$, but the regularized form is finite there",
       },
       {
+        id: "at-the-pole-b-1-under-n",
         expr: ["N", ["Hypergeometric0F1Regularized", -1, 2]],
         expected: 3.7150355604584364,
         category: "Basic",
         caption: "At the pole $b = -1$ under N",
       },
       {
+        id: "exact-arguments-stay-unevaluated-n-gives-the",
         expr: ["Hypergeometric0F1Regularized", -1, 2],
         expected: ["Hypergeometric0F1Regularized", -1, 2],
         category: "Possible issues",
@@ -2217,7 +2542,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2238,7 +2563,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric1F1Regularized(a, b, z)",
         description: "${}_1F_1(a,b;z) / \\Gamma(b)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2247,11 +2572,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "matches-hypergeometric1f1-1-2-0-5-gamma-2",
         expr: ["Hypergeometric1F1Regularized", 1, 2, 0.5],
         expected: 1.2974425414002555,
         caption: "matches Hypergeometric1F1(1, 2, 0.5) / Gamma(2)",
       },
       {
+        id: "b-1-is-a-pole-of-gamma-but-the-regularized-form",
         expr: ["Hypergeometric1F1Regularized", 1, -1, 0.7],
         expected: 0.9867388266605329,
         caption: "$b = -1$ is a pole of $\\Gamma$, but the regularized form is finite there",
@@ -2263,7 +2590,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2284,7 +2611,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric2F1Regularized(a, b, c, z)",
         description: "${}_2F_1(a,b,c;z) / \\Gamma(c)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2293,17 +2620,20 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "matches-hypergeometric2f1-1-1-2-0-5-gamma-2",
         expr: ["Hypergeometric2F1Regularized", 1, 1, 2, 0.5],
         expected: 1.3862943611198895,
         caption: "matches Hypergeometric2F1(1, 1, 2, 0.5) / Gamma(2)",
       },
       {
+        id: "z-ge-1-stays-symbolic-no-continuation-past-the",
         expr: ["Hypergeometric2F1Regularized", 1, 1, 2, 1.5],
         expected: ["Hypergeometric2F1Regularized", 1, 1, 2, 1.5],
         category: "Possible issues",
         caption: "$|z| \\ge 1$ stays symbolic — no continuation past the unit disc",
       },
       {
+        id: "stays-finite-at-a-nonpositive-integer-lower",
         expr: ["N", ["Hypergeometric2F1Regularized", 1, 1, -1, 0.3]],
         expected: 0.5247813411078712,
         category: "Properties",
@@ -2317,7 +2647,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2338,7 +2668,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, z)",
         description: "${}_3F_2(a_1,a_2,a_3;b_1,b_2;z) / (\\Gamma(b_1)\\Gamma(b_2))$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2348,11 +2678,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "a-generic-point-inside-the-unit-disc",
         expr: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 0.5],
         expected: 0.5507754140499144,
         caption: "a generic point inside the unit disc",
       },
       {
+        id: "z-ge-1-stays-symbolic-no-continuation-past-the",
         expr: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 1.2],
         expected: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 1.2],
         category: "Possible issues",
@@ -2365,7 +2697,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric.ts",
       },
       {
         origin: "mapped",
@@ -2386,7 +2718,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "HypergeometricU(a, b, z)",
         description: "Tricomi's confluent hypergeometric $U(a,b,z)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2396,11 +2728,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "a-generic-point-checked-against-mpmath-s-hyperu",
         expr: ["HypergeometricU", 1, 2.5, 3],
         expected: 0.3823406624903156,
         caption: "a generic point, checked against mpmath's `hyperu`",
       },
       {
+        id: "integer-b-stays-symbolic-the-connection-formula",
         expr: ["HypergeometricU", 1, 2, 3],
         expected: ["HypergeometricU", 1, 2, 3],
         category: "Possible issues",
@@ -2414,7 +2748,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric-ustar.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric-ustar.ts",
       },
       {
         origin: "mapped",
@@ -2435,7 +2769,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Khinchin",
         description: "Khinchin's constant, a new mathematical-constant symbol.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2443,7 +2777,12 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "A symbol, like [[ConstGlaisher]]: prints as itself under plain evaluation, and resolves to a decimal only under N().",
     ],
     examples: [
-      { expr: ["N", "Khinchin"], expected: 2.6854520010653062, caption: "Khinchin's constant" },
+      {
+        id: "khinchin-s-constant",
+        expr: ["N", "Khinchin"],
+        expected: 2.6854520010653062,
+        caption: "Khinchin's constant",
+      },
     ],
     primitive: "numeric",
     implementations: [
@@ -2451,7 +2790,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/khinchin.ts",
+        source: "packages/symbols/analysis/analytic/src/khinchin.ts",
       },
     ],
   },
@@ -2465,7 +2804,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hyperfactorial(n)",
         description: "the hyperfactorial of n.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2475,21 +2814,34 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "Real, nonnegative domain only: BarnesG's zeros at the nonpositive integers give the continuation poles there, and no reference example calls for a negative or complex argument.",
     ],
     examples: [
-      { expr: ["Hyperfactorial", 4], expected: 27648, caption: "$1^1\\,2^2\\,3^3\\,4^4$" },
-      { expr: ["Hyperfactorial", 0], expected: 1, caption: "The empty product" },
       {
+        id: "1-1-2-2-3-3-4-4",
+        expr: ["Hyperfactorial", 4],
+        expected: 27648,
+        caption: "$1^1\\,2^2\\,3^3\\,4^4$",
+      },
+      {
+        id: "the-empty-product",
+        expr: ["Hyperfactorial", 0],
+        expected: 1,
+        caption: "The empty product",
+      },
+      {
+        id: "listable",
         expr: ["Hyperfactorial", ["List", 1, 2, 3, 4, 5, 6]],
         expected: ["List", 1, 4, 108, 27648, 86400000, 4031078400000],
         category: "Scope",
         caption: "Listable",
       },
       {
+        id: "continued-off-the-integers",
         expr: ["Hyperfactorial", 0.5],
         expected: 0.8804492351734234,
         category: "Scope",
         caption: "Continued off the integers",
       },
       {
+        id: "h-10-well-past-double-range-exact-bigint",
         expr: ["Hyperfactorial", 10],
         expected: { num: "215779412229418562091680268288e+15" },
         category: "Scope",
@@ -2502,7 +2854,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hyperfactorial.ts",
+        source: "packages/symbols/analysis/analytic/src/hyperfactorial.ts",
       },
     ],
     seeAlso: ["BarnesG"],
@@ -2517,7 +2869,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "ExpIntegralE(n, z)",
         description: "$E_n(z)$, for any order $n$ (real, complex, or non-integer).",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2527,30 +2879,35 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "e-1-3-2-gamma-0-3-2",
         expr: ["ExpIntegralE", 1, 1.5],
         expected: 0.10001958240663265,
         caption: "$E_1(3/2) = \\Gamma(0, 3/2)$",
       },
-      { expr: ["ExpIntegralE", 2, 1.5], expected: 0.07310078653848084 },
+      { id: "expintegrale-2-1p5", expr: ["ExpIntegralE", 2, 1.5], expected: 0.07310078653848084 },
       {
+        id: "non-integer-order",
         expr: ["ExpIntegralE", 0.5, 2.5],
         expected: 0.028414299709289756,
         category: "Scope",
         caption: "Non-integer order",
       },
       {
+        id: "exact-arguments-under-n",
         expr: ["N", ["ExpIntegralE", 1, 1]],
         expected: 0.21938393439552029,
         category: "Scope",
         caption: "Exact arguments under N()",
       },
       {
+        id: "e-n-0-1-n-1-for-n-1",
         expr: ["ExpIntegralE", 2, 0],
         expected: 1,
         category: "Properties",
         caption: "$E_n(0) = 1/(n-1)$ for $n > 1$",
       },
       {
+        id: "e-0-x-e-x-x",
         expr: ["ExpIntegralE", 0, "x"],
         expected: ["Divide", ["Power", "ExponentialE", ["Negate", "x"]], "x"],
         category: "Properties",
@@ -2563,7 +2920,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/exp-integral-e.ts",
+        source: "packages/symbols/analysis/analytic/src/exp-integral-e.ts",
         note: "z^(n-1)·Γ(1-n, z), with the n = 0 and z = 0 removable cases handled ahead of it.",
       },
     ],
@@ -2579,13 +2936,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "LambertW(z)",
         description: "the principal branch $W_0(z)$ — native, extended with exact values.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "LambertW(z, k)",
         description:
           "the $k$-th branch $W_k(z)$, by Halley's iteration from the standard log-log seed (Corless et al. 1996). $k=0$ and $k=-1$ stay on compute-engine's own native handler.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2594,33 +2951,43 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "Every other branch is solved by Halley's method in the complex plane; checked against `wolframscript`'s `N[ProductLog[k, z], 16]` at several points (real and complex $z$, several $k$) to full double precision.",
     ],
     examples: [
-      { expr: ["LambertW", 0], expected: 0 },
-      { expr: ["LambertW", "ExponentialE"], expected: 1, caption: "$1 \\cdot e^1 = e$" },
+      { id: "lambertw-0", expr: ["LambertW", 0], expected: 0 },
       {
+        id: "1-cdot-e-1-e",
+        expr: ["LambertW", "ExponentialE"],
+        expected: 1,
+        caption: "$1 \\cdot e^1 = e$",
+      },
+      {
+        id: "the-branch-point-1-e",
         expr: ["LambertW", ["Negate", ["Divide", 1, "ExponentialE"]]],
         expected: -1,
         category: "Scope",
         caption: "The branch point $-1/e$",
       },
       {
+        id: "2e-2-w-e-w-at-w-2",
         expr: ["LambertW", ["Multiply", 2, ["Power", "ExponentialE", 2]]],
         expected: 2,
         category: "Scope",
         caption: "$2e^2 = w e^w$ at $w = 2$",
       },
       {
+        id: "ln-2-cdot-e-ln-2-frac-ln-2-2",
         expr: ["LambertW", ["Negate", ["Divide", ["Ln", 2], 2]]],
         expected: ["Negate", ["Ln", 2]],
         category: "Scope",
         caption: "$-\\ln 2 \\cdot e^{-\\ln 2} = -\\tfrac{\\ln 2}{2}$",
       },
       {
+        id: "a-branch-other-than-0-or-1-checked-against-n",
         expr: ["N", ["LambertW", -0.14, -3]],
         expected: ["Complex", -4.645279174278859, -13.812745325218817],
         category: "Scope",
         caption: "A branch other than 0 or -1, checked against `N[ProductLog[-3, -0.14], 16]`",
       },
       {
+        id: "the-branch-k-1-written-in-compute-engine-s-z-k",
         expr: ["N", ["LambertW", 1, 1]],
         expected: ["Complex", -1.5339133197935744, 4.375185153061898],
         category: "Scope",
@@ -2628,6 +2995,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "The branch $k = 1$, written in compute-engine's $(z, k)$ order — Wolfram's <code>ProductLog[1, 1]</code>",
       },
       {
+        id: "the-real-branch-k-1-on-1-e-z-0",
         expr: ["N", ["LambertW", -0.2, -1]],
         expected: { num: "-2.54264135777352642429" },
         category: "Scope",
@@ -2640,7 +3008,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/lambert-w.ts",
+        source: "packages/symbols/analysis/analytic/src/lambert-w.ts",
         note: "Halley's iteration in the complex plane for k ∉ {0, -1}; structural pattern matching for the exact cases.",
       },
     ],
@@ -2656,7 +3024,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "InverseErfc(s)",
         description: "solves $\\operatorname{erfc}(y) = s$ for $y$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2666,36 +3034,47 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "erfc-1-1-2-erf-1-1-2",
         expr: ["InverseErfc", 0.5],
         expected: 0.4769362762044699,
         caption: "$\\operatorname{erfc}^{-1}(1/2) = \\operatorname{erf}^{-1}(1/2)$",
       },
-      { expr: ["InverseErfc", 1], expected: 0, caption: "$\\operatorname{erfc}^{-1}(1) = 0$" },
       {
+        id: "erfc-1-1-0",
+        expr: ["InverseErfc", 1],
+        expected: 0,
+        caption: "$\\operatorname{erfc}^{-1}(1) = 0$",
+      },
+      {
+        id: "erfc-1-0-infty",
         expr: ["InverseErfc", 0],
         expected: "PositiveInfinity",
         category: "Scope",
         caption: "$\\operatorname{erfc}^{-1}(0) = \\infty$",
       },
       {
+        id: "erfc-1-2-infty",
         expr: ["InverseErfc", 2],
         expected: "NegativeInfinity",
         category: "Scope",
         caption: "$\\operatorname{erfc}^{-1}(2) = -\\infty$",
       },
       {
+        id: "arguments-in-1-2-give-negative-values",
         expr: ["InverseErfc", 1.5],
         expected: -0.4769362762044699,
         category: "Scope",
         caption: "Arguments in $(1, 2)$ give negative values",
       },
       {
+        id: "listable",
         expr: ["InverseErfc", ["List", 0, 1]],
         expected: ["List", "PositiveInfinity", 0],
         category: "Scope",
         caption: "Listable",
       },
       {
+        id: "sqrt-2-times-this-2-5758-is-the-two-sided-99",
         expr: ["InverseErfc", 0.01],
         expected: 1.8213863677184496,
         category: "Applications",
@@ -2703,6 +3082,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\sqrt2$ times this, $2.5758\\ldots$, is the two-sided 99% normal critical value",
       },
       {
+        id: "deep-in-the-tail-it-keeps-full-precision-where",
         expr: ["InverseErfc", { num: "1e-10" }],
         expected: 4.572824967389485,
         category: "Possible issues",
@@ -2710,6 +3090,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Deep in the tail it keeps full precision, where $\\operatorname{erf}^{-1}(1 - s)$ would lose it",
       },
       {
+        id: "erfc-erfc-1-x-x",
         expr: ["Erfc", ["InverseErfc", "x"]],
         expected: "x",
         category: "Properties",
@@ -2722,7 +3103,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/inverse-erfc.ts",
+        source: "packages/symbols/analysis/analytic/src/inverse-erfc.ts",
       },
     ],
     seeAlso: ["Erfc"],
@@ -2737,7 +3118,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "InverseGammaRegularized(a, s)",
         description: "solves $s = Q(a, z)$ for $z$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2747,29 +3128,38 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "q-1-z-e-z-so-the-inverse-at-1-2-is-ln-2",
         expr: ["InverseGammaRegularized", 1, 0.5],
         expected: 0.6931471805599453,
         caption: "$Q(1, z) = e^{-z}$, so the inverse at $1/2$ is $\\ln 2$",
       },
       {
+        id: "the-median-of-the-gamma-2-1-distribution",
         expr: ["InverseGammaRegularized", 2, 0.5],
         expected: 1.6783469900166608,
         caption: "The median of the Gamma(2, 1) distribution",
       },
-      { expr: ["InverseGammaRegularized", 2.5, 0.3], expected: 3.032214992077453 },
       {
+        id: "inversegammaregularized-2p5-0p3",
+        expr: ["InverseGammaRegularized", 2.5, 0.3],
+        expected: 3.032214992077453,
+      },
+      {
+        id: "q-a-0-1",
         expr: ["InverseGammaRegularized", "a", 1],
         expected: 0,
         category: "Properties",
         caption: "$Q(a, 0) = 1$",
       },
       {
+        id: "q-a-infty-0",
         expr: ["InverseGammaRegularized", "a", 0],
         expected: "PositiveInfinity",
         category: "Properties",
         caption: "$Q(a, \\infty) = 0$",
       },
       {
+        id: "order-1-inverts-e-z",
         expr: ["InverseGammaRegularized", 1, "s"],
         expected: ["Negate", ["Ln", "s"]],
         category: "Properties",
@@ -2782,7 +3172,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/inverse-regularized.ts",
+        source: "packages/symbols/analysis/analytic/src/inverse-regularized.ts",
         note: "Safeguarded Newton/bisection against native GammaRegularized.",
       },
     ],
@@ -2798,7 +3188,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "InverseBetaRegularized(s, a, b)",
         description: "solves $s = I_x(a, b)$ for $x$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2807,30 +3197,48 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-median-of-beta-2-3",
         expr: ["InverseBetaRegularized", 0.5, 2, 3],
         expected: 0.3857275681323895,
         caption: "The median of Beta(2, 3)",
       },
-      { expr: ["InverseBetaRegularized", 0.3, 2.5, 1.5], expected: 0.5094974124283413 },
       {
+        id: "inversebetaregularized-0p3-2p5-1p5",
+        expr: ["InverseBetaRegularized", 0.3, 2.5, 1.5],
+        expected: 0.5094974124283413,
+      },
+      {
+        id: "i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2",
         expr: ["InverseBetaRegularized", 0.25, 2, 1],
         expected: 0.5,
         caption: "$I_x(2, 1) = x^2$, so the inverse at $1/4$ is $1/2$",
       },
       {
+        id: "i-x-1-1-x-is-its-own-inverse",
         expr: ["InverseBetaRegularized", "s", 1, 1],
         expected: "s",
         category: "Properties",
         caption: "$I_x(1, 1) = x$ is its own inverse",
       },
       {
+        id: "i-x-a-1-x-a-inverts-to-s-1-a",
         expr: ["InverseBetaRegularized", "s", "a", 1],
         expected: ["Power", "s", ["Divide", 1, "a"]],
         category: "Properties",
         caption: "$I_x(a, 1) = x^a$ inverts to $s^{1/a}$",
       },
-      { expr: ["InverseBetaRegularized", 0, 2, 3], expected: 0, category: "Properties" },
-      { expr: ["InverseBetaRegularized", 1, 2, 3], expected: 1, category: "Properties" },
+      {
+        id: "inversebetaregularized-0-2-3",
+        expr: ["InverseBetaRegularized", 0, 2, 3],
+        expected: 0,
+        category: "Properties",
+      },
+      {
+        id: "inversebetaregularized-1-2-3",
+        expr: ["InverseBetaRegularized", 1, 2, 3],
+        expected: 1,
+        category: "Properties",
+      },
     ],
     primitive: "kernel",
     implementations: [
@@ -2838,7 +3246,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/inverse-regularized.ts",
+        source: "packages/symbols/analysis/analytic/src/inverse-regularized.ts",
         note: "Safeguarded Newton/bisection against native BetaRegularized.",
       },
     ],
@@ -2854,7 +3262,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "BellY(n, k, xs)",
         description: "$B_{n,k}(x_1, \\dots, x_{n-k+1})$, from the list `xs`.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2864,16 +3272,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "belly-4-2-list-x1-x2-x3",
         expr: ["BellY", 4, 2, ["List", "x1", "x2", "x3"]],
         expected: ["Add", ["Multiply", 3, ["Power", "x2", 2]], ["Multiply", 4, "x1", "x3"]],
       },
       {
+        id: "all-ones-arguments-give-stirling-6-2",
         expr: ["BellY", 6, 2, ["List", 1, 1, 1, 1, 1]],
         expected: 31,
         category: "Properties",
         caption: "All-ones arguments give Stirling(6, 2)",
       },
       {
+        id: "x-j-j-gives-the-lah-number-l-4-2",
         expr: ["BellY", 4, 2, ["List", 1, 2, 6]],
         expected: 36,
         category: "Properties",
@@ -2886,7 +3297,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/bell-y.ts",
+        source: "packages/symbols/analysis/analytic/src/bell-y.ts",
       },
     ],
     seeAlso: ["BellNumber", "StirlingS2"],
@@ -2897,7 +3308,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     signature: "NorlundB(n, a)",
     summary:
       "The Nörlund polynomial $B_n^{(a)}$, from the generating function $(t/(e^t-1))^a$. At $a=1$ it is the ordinary Bernoulli number; in general, an exact polynomial in $a$ with bigint-rational coefficients, from a power-series log/exp of the Bernoulli EGF.",
-    signatures: [{ call: "NorlundB(n, a)", description: "$B_n^{(a)}$, exact.", library: LIBRARY }],
+    signatures: [
+      {
+        call: "NorlundB(n, a)",
+        description: "$B_n^{(a)}$, exact.",
+        library: "@enumeratio/analytic",
+      },
+    ],
     details: [
       "Computed by logging the EGF $t/(e^t-1) = \\sum B_k t^k/k!$ into a power series $g(t)$ (the standard power-series-logarithm recurrence), then exponentiating $a \\cdot g(t)$ back — a genuine polynomial identity in $a$, since each convolution step contributes one more factor of $a$. Every step is exact bigint-rational arithmetic; no float is involved until $a$ itself is one.",
       "At a symbolic $a$, returns the polynomial as a MathJSON expression in $a$; at a concrete rational $a$, an exact rational number; at a float $a$, a float.",
@@ -2905,14 +3322,16 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "at-a-1-it-is-the-bernoulli-number-b-2",
         expr: ["NorlundB", 2, 1],
         expected: ["Rational", 1, 6],
         caption: "At a = 1 it is the Bernoulli number $B_2$",
       },
-      { expr: ["NorlundB", 4, 1], expected: ["Rational", -1, 30] },
-      { expr: ["NorlundB", 2, 2], expected: ["Rational", 5, 6] },
-      { expr: ["NorlundB", 3, 2], expected: ["Rational", -1, 2] },
+      { id: "norlundb-4-1", expr: ["NorlundB", 4, 1], expected: ["Rational", -1, 30] },
+      { id: "norlundb-2-2", expr: ["NorlundB", 2, 2], expected: ["Rational", 5, 6] },
+      { id: "norlundb-3-2", expr: ["NorlundB", 3, 2], expected: ["Rational", -1, 2] },
       {
+        id: "a-polynomial-in-a",
         expr: ["NorlundB", 1, "a"],
         expected: ["Multiply", ["Rational", -1, 2], "a"],
         category: "Scope",
@@ -2925,7 +3344,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/norlund.ts",
+        source: "packages/symbols/analysis/analytic/src/norlund.ts",
       },
     ],
     seeAlso: ["BernoulliB"],
@@ -2940,7 +3359,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "PrimeZetaP(s)",
         description: "$P(s)$, for $\\operatorname{Re}(s) > 1$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2949,9 +3368,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "Checked against `wolframscript`'s `N[PrimeZetaP[s], 17]` at several points, matching to ~15 significant digits.",
     ],
     examples: [
-      { expr: ["N", ["PrimeZetaP", 2]], expected: 0.4522474200410655, caption: "$\\sum_p 1/p^2$" },
-      { expr: ["N", ["PrimeZetaP", 3]], expected: 0.17476263929944355 },
-      { expr: ["PrimeZetaP", 2.5], expected: 0.273680737993234, category: "Scope" },
+      {
+        id: "sum-p-1-p-2",
+        expr: ["N", ["PrimeZetaP", 2]],
+        expected: 0.4522474200410655,
+        caption: "$\\sum_p 1/p^2$",
+      },
+      { id: "n-primezetap-3", expr: ["N", ["PrimeZetaP", 3]], expected: 0.17476263929944355 },
+      {
+        id: "primezetap-2p5",
+        expr: ["PrimeZetaP", 2.5],
+        expected: 0.273680737993234,
+        category: "Scope",
+      },
     ],
     primitive: "kernel",
     implementations: [
@@ -2959,7 +3388,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/prime-zeta.ts",
+        source: "packages/symbols/analysis/analytic/src/prime-zeta.ts",
       },
     ],
     seeAlso: ["Zeta"],
@@ -2975,7 +3404,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "HypergeometricPFQ(a, b, z)",
         description:
           "${}_pF_q(a; b; z)$, for parameter lists `a` (length $p$) and `b` (length $q$).",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2984,28 +3413,33 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "2f-1-1-1-2-z-ln-1-z-z-here-2-ln-2",
         expr: ["HypergeometricPFQ", ["List", 1, 1], ["List", 2], 0.5],
         expected: 1.3862943611198906,
         caption: "${}_2F_1(1, 1; 2; z) = -\\ln(1-z)/z$, here $2\\ln 2$",
       },
       {
+        id: "1f-1-1-2-z-e-z-1-z",
         expr: ["HypergeometricPFQ", ["List", 1], ["List", 2], 0.5],
         expected: 1.2974425414002564,
         caption: "${}_1F_1(1; 2; z) = (e^z - 1)/z$",
       },
       {
+        id: "3f-2",
         expr: ["HypergeometricPFQ", ["List", 1, 2, 3], ["List", 4, 5], 0.5],
         expected: 1.189874754256423,
         category: "Scope",
         caption: "${}_3F_2$",
       },
       {
+        id: "0f-0-z-e-z",
         expr: ["HypergeometricPFQ", ["List"], ["List"], "z"],
         expected: ["Power", "ExponentialE", "z"],
         category: "Properties",
         caption: "${}_0F_0(;;z) = e^z$",
       },
       {
+        id: "1f-0-a-z-1-z-a",
         expr: ["HypergeometricPFQ", ["List", "a"], ["List"], "z"],
         expected: ["Power", ["Add", ["Negate", "z"], 1], ["Negate", "a"]],
         category: "Properties",
@@ -3018,7 +3452,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/hypergeometric-pfq.ts",
+        source: "packages/symbols/analysis/analytic/src/hypergeometric-pfq.ts",
       },
     ],
     seeAlso: ["Hypergeometric0F1", "Hypergeometric2F1Regularized", "Hypergeometric3F2Regularized"],
@@ -3033,7 +3467,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "KleinInvariantJ(tau)",
         description: "$J(\\tau) = j(\\tau)/1728$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3042,22 +3476,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "j-i-1",
         expr: ["N", ["KleinInvariantJ", ["Complex", 0, 1]]],
         expected: 1,
         caption: "$J(i) = 1$",
       },
       {
+        id: "j-2i-66-3-1728-1331-8",
         expr: ["N", ["KleinInvariantJ", ["Complex", 0, 2]]],
         expected: 166.375,
         caption: "$J(2i) = 66^3/1728 = 1331/8$",
       },
       {
+        id: "exact-at-the-elliptic-point-i",
         expr: ["KleinInvariantJ", ["Complex", 0, 1]],
         expected: 1,
         category: "Scope",
         caption: "Exact at the elliptic point $i$",
       },
       {
+        id: "heegner-number-163-j-bigl-frac-1-i-sqrt-163-2",
         expr: [
           "N",
           [
@@ -3077,7 +3515,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "native",
         form: "typescript",
         environment: "engine",
-        source: "packages/analytic/src/modular.ts",
+        source: "packages/symbols/analysis/analytic/src/modular.ts",
         note: "j(τ)/1728, delegating entirely to ModularJ.",
       },
     ],
@@ -3093,7 +3531,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "ComplexExpand(expr)",
         description: "`expr`, rewritten as `Re + i·Im` with its symbols assumed real.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3102,6 +3540,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y",
         expr: ["ComplexExpand", ["Sin", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]]]],
         expected: [
           "Add",
@@ -3111,6 +3550,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "$\\sin(x + iy) = \\sin x\\cosh y + i\\cos x\\sinh y$",
       },
       {
+        id: "polar-form-of-a-complex-exponential",
         expr: ["ComplexExpand", ["Exp", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]]]],
         expected: [
           "Add",
@@ -3120,6 +3560,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Polar form of a complex exponential",
       },
       {
+        id: "complexexpand-x-plus-imaginaryunit-times-y-pow-2",
         expr: ["ComplexExpand", ["Power", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]], 2]],
         expected: [
           "Add",
@@ -3130,11 +3571,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "complexexpand-abs-x-plus-imaginaryunit-times-y",
         expr: ["ComplexExpand", ["Abs", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]]]],
         expected: ["Sqrt", ["Add", ["Power", "x", 2], ["Power", "y", 2]]],
         category: "Scope",
       },
       {
+        id: "wolfram-leaves-e-i-pi-5-alone-until-asked-this",
         expr: ["ComplexExpand", ["Exp", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 5]]]],
         expected: [
           "Add",
@@ -3164,7 +3607,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "ExpToTrig(expr)",
         description:
           "`expr` with each `Exp` rewritten via Euler's formula or its hyperbolic analogue.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3172,22 +3615,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "euler-s-formula",
         expr: ["ExpToTrig", ["Exp", ["Multiply", "ImaginaryUnit", "x"]]],
         expected: ["Add", ["Multiply", ["Complex", 0, 1], ["Sin", "x"]], ["Cos", "x"]],
         caption: "Euler's formula",
       },
       {
+        id: "a-real-exponential-splits-into-hyperbolic-parts",
         expr: ["ExpToTrig", ["Exp", "x"]],
         expected: ["Add", ["Sinh", "x"], ["Cosh", "x"]],
         caption: "A real exponential splits into hyperbolic parts",
       },
       {
+        id: "recognizes-cosh",
         expr: ["ExpToTrig", ["Divide", ["Add", ["Exp", "x"], ["Exp", ["Negate", "x"]]], 2]],
         expected: ["Cosh", "x"],
         category: "Scope",
         caption: "Recognizes [[Cosh]]",
       },
       {
+        id: "recognizes-sin",
         expr: [
           "ExpToTrig",
           [
@@ -3217,7 +3664,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "FunctionExpand(expr)",
         description: "`expr` with a handful of named special-function identities applied.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3227,6 +3674,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "eta-s-1-2-1-s-zeta-s",
         expr: ["FunctionExpand", ["DirichletEta", "s"]],
         expected: [
           "Multiply",
@@ -3236,6 +3684,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "$\\eta(s) = (1 - 2^{1-s})\\zeta(s)$",
       },
       {
+        id: "beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34",
         expr: ["FunctionExpand", ["DirichletBeta", "s"]],
         expected: [
           "Multiply",
@@ -3245,6 +3694,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "$\\beta(s) = 4^{-s}(\\zeta(s, \\tfrac14) - \\zeta(s, \\tfrac34))$",
       },
       {
+        id: "g-frac-12-in-glaisher-s-constant",
         expr: ["FunctionExpand", ["BarnesG", ["Rational", 1, 2]]],
         expected: [
           "Multiply",
@@ -3256,6 +3706,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "$G(\\tfrac12)$ in Glaisher's constant",
       },
       {
+        id: "radicals-past-the-automatic-special-angle-table",
         expr: ["FunctionExpand", ["Sin", ["Divide", "Pi", 15]]],
         expected: [
           "Multiply",
@@ -3270,6 +3721,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Radicals past the automatic special-angle table",
       },
       {
+        id: "half-angle-radicals-cos-frac-pi-24-frac-12-sqrt",
         expr: ["FunctionExpand", ["Cos", ["Divide", "Pi", 24]]],
         expected: [
           "Multiply",
@@ -3280,12 +3732,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Half-angle radicals: $\\cos\\frac{\\pi}{24} = \\tfrac12\\sqrt{2 + \\tfrac{\\sqrt2 + \\sqrt6}{2}}$",
       },
       {
+        id: "a-rising-factorial-with-an-integer-length",
         expr: ["FunctionExpand", ["Pochhammer", "x", 3]],
         expected: ["Multiply", "x", ["Add", "x", 1], ["Add", "x", 2]],
         category: "Scope",
         caption: "A rising factorial with an integer length becomes a polynomial",
       },
       {
+        id: "binom-n2-frac-n-n-1-2",
         expr: ["FunctionExpand", ["Binomial", "n", 2]],
         expected: ["Divide", ["Multiply", "n", ["Subtract", "n", 1]], 2],
         category: "Scope",
@@ -3304,7 +3758,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "PowerExpand(expr)",
         description: "`expr` with Ln and Power distributed over products, assuming positivity.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3313,28 +3767,33 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "sqrt-x-2-x-for-positive-x",
         expr: ["PowerExpand", ["Sqrt", ["Power", "x", 2]]],
         expected: "x",
         caption: "$\\sqrt{x^2} = x$ for positive $x$",
       },
       {
+        id: "splits-a-logarithm-of-a-product",
         expr: ["PowerExpand", ["Ln", ["Multiply", "x", "y"]]],
         expected: ["Add", ["Ln", "x"], ["Ln", "y"]],
         caption: "Splits a logarithm of a product",
       },
       {
+        id: "pulls-out-an-exponent",
         expr: ["PowerExpand", ["Ln", ["Power", "x", "n"]]],
         expected: ["Multiply", "n", ["Ln", "x"]],
         category: "Scope",
         caption: "Pulls out an exponent",
       },
       {
+        id: "distributes-a-power-over-a-product",
         expr: ["PowerExpand", ["Power", ["Multiply", "a", "b"], "c"]],
         expected: ["Multiply", ["Power", "a", "c"], ["Power", "b", "c"]],
         category: "Scope",
         caption: "Distributes a power over a product",
       },
       {
+        id: "powerexpand-sqrt-a-times-b",
         expr: ["PowerExpand", ["Sqrt", ["Multiply", "a", "b"]]],
         expected: ["Multiply", ["Sqrt", "a"], ["Sqrt", "b"]],
         category: "Scope",
@@ -3352,7 +3811,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "FullSimplify(expr)",
         description: "compute-engine's own `simplify()`, plus a few extra targeted passes.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3362,28 +3821,33 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-pythagorean-identity",
         expr: ["FullSimplify", ["Add", ["Power", ["Sin", "x"], 2], ["Power", ["Cos", "x"], 2]]],
         expected: 1,
         caption: "The Pythagorean identity",
       },
       {
+        id: "recognizes-the-definition-of-sinh",
         expr: ["FullSimplify", ["Divide", ["Subtract", ["Exp", "x"], ["Exp", ["Negate", "x"]]], 2]],
         expected: ["Sinh", "x"],
         caption: "Recognizes the definition of [[Sinh]]",
       },
       {
+        id: "folds-the-double-angle-product",
         expr: ["FullSimplify", ["Multiply", 2, ["Sin", "x"], ["Cos", "x"]]],
         expected: ["Sin", ["Multiply", 2, "x"]],
         category: "Scope",
         caption: "Folds the double-angle product",
       },
       {
+        id: "the-functional-equation-of-gamma",
         expr: ["FullSimplify", ["Divide", ["Gamma", ["Add", "x", 1]], ["Gamma", "x"]]],
         expected: "x",
         category: "Scope",
         caption: "The functional equation of [[Gamma]]",
       },
       {
+        id: "denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3",
         expr: [
           "FullSimplify",
           [
@@ -3397,6 +3861,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Denests $\\sqrt{5 + 2\\sqrt6} = \\sqrt2 + \\sqrt3$",
       },
       {
+        id: "the-hyperbolic-pythagorean-identity",
         expr: [
           "FullSimplify",
           ["Subtract", ["Power", ["Cosh", "x"], 2], ["Power", ["Sinh", "x"], 2]],
@@ -3418,7 +3883,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "MatrixFunction(f, m)",
         description: "f applied to the square matrix m, via its eigendecomposition.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3427,22 +3892,26 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-principal-square-root-of-a-diagonal-matrix",
         expr: ["MatrixFunction", "Sqrt", ["List", ["List", 4, 0], ["List", 0, 9]]],
         expected: ["List", ["List", 2, 0], ["List", 0, 3]],
         caption: "The principal square root of a diagonal matrix",
       },
       {
+        id: "on-a-diagonal-matrix-f-acts-on-the-diagonal",
         expr: ["MatrixFunction", "f", ["List", ["List", "a", 0], ["List", 0, "b"]]],
         expected: ["List", ["List", ["f", "a"], 0], ["List", 0, ["f", "b"]]],
         caption: "On a diagonal matrix, f acts on the diagonal",
       },
       {
+        id: "with-exp-it-is-matrixexp",
         expr: ["MatrixFunction", "Exp", ["List", ["List", 0, 0], ["List", 0, 0]]],
         expected: ["List", ["List", 1, 0], ["List", 0, 1]],
         category: "Properties",
         caption: "With Exp it is [[MatrixExp]]",
       },
       {
+        id: "a-polynomial-f-agrees-with-the-matrix-power",
         expr: [
           "MatrixFunction",
           ["Function", ["Power", "_1", 2]],
@@ -3453,6 +3922,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "A polynomial f agrees with the matrix power",
       },
       {
+        id: "matrixfunction-cos-list-list-0-0-list-0-0",
         expr: ["MatrixFunction", "Cos", ["List", ["List", 0, 0], ["List", 0, 0]]],
         expected: ["List", ["List", 1, 0], ["List", 0, 1]],
         category: "Scope",
@@ -3482,16 +3952,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "endpoints-add",
         expr: ["Add", ["Interval", 1, 2], ["Interval", 3, 4]],
         expected: ["Interval", 4, 6],
         caption: "Endpoints add",
       },
       {
+        id: "decimal-arithmetic-is-exact-so-nothing-needs",
         expr: ["Add", ["Interval", 1.4, 1.5], 1],
         expected: ["Interval", 2.4, 2.5],
         caption: "Decimal arithmetic is exact, so nothing needs rounding",
       },
       {
+        id: "at-an-inexact-endpoint-the-value-is-rounded",
         expr: ["Sin", ["Interval", 1.4, 1.5]],
         expected: ["Interval", 0.98544972998846, 0.9974949866040546],
         category: "Scope",
@@ -3499,6 +3972,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "At an inexact endpoint the value is rounded outward: $\\sin 1.4 = 0.98544972998846018\\ldots$ lies inside",
       },
       {
+        id: "gamma-s-minimum-at-1-4616-lies-inside-so-it-is",
         expr: ["Gamma", ["Interval", 1, 2]],
         expected: ["Interval", 0.8856031944108886, 1],
         category: "Scope",
@@ -3506,29 +3980,34 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\Gamma$'s minimum at $1.4616\\ldots$ lies inside, so it is the lower bound, rounded down; the upper bound, $\\Gamma(1) = \\Gamma(2) = 1$, stays exact",
       },
       {
+        id: "across-the-pole-at-pi-2-the-two-pieces-cover",
         expr: ["Tan", ["Interval", 0, "Pi"]],
         expected: ["Interval", "NegativeInfinity", "PositiveInfinity"],
         category: "Scope",
         caption: "Across the pole at $\\pi/2$ the two pieces cover every real, so they merge",
       },
       {
+        id: "a-product-takes-the-extreme-endpoint-products",
         expr: ["Multiply", ["Interval", 1, 2], ["Interval", -1, 3]],
         expected: ["Interval", -2, 6],
         caption: "A product takes the extreme endpoint products",
       },
       {
+        id: "reciprocal-of-an-interval-not-containing-0",
         expr: ["Divide", 1, ["Interval", 2, 4]],
         expected: ["Interval", ["Rational", 1, 4], ["Rational", 1, 2]],
         category: "Scope",
         caption: "Reciprocal of an interval not containing 0",
       },
       {
+        id: "an-even-power-of-an-interval-straddling-0-starts",
         expr: ["Power", ["Interval", -1, 2], 2],
         expected: ["Interval", 0, 4],
         category: "Scope",
         caption: "An even power of an interval straddling 0 starts at 0, not at 1",
       },
       {
+        id: "the-dependency-problem-interval-arithmetic-doesn",
         expr: ["Subtract", ["Interval", 1, 2], ["Interval", 1, 2]],
         expected: ["Interval", -1, 1],
         category: "Scope",
@@ -3536,18 +4015,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "The dependency problem: interval arithmetic doesn't know both operands are the same quantity",
       },
       {
+        id: "through-an-elementary-function",
         expr: ["Sin", ["Interval", ["Negate", ["Divide", "Pi", 6]], ["Divide", "Pi", 6]]],
         expected: ["Interval", ["Rational", -1, 2], ["Rational", 1, 2]],
         category: "Scope",
         caption: "Through an elementary function",
       },
       {
+        id: "the-absolute-value-of-an-interval-straddling-0",
         expr: ["Abs", ["Interval", -3, 2]],
         expected: ["Interval", 0, 3],
         category: "Scope",
         caption: "The absolute value of an interval straddling 0",
       },
       {
+        id: "a-periodic-head-over-an-interval-that-contains-a",
         expr: ["Cos", ["Interval", -1, 4]],
         expected: ["Interval", -1, 1],
         category: "Scope",
@@ -3555,34 +4037,40 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "A periodic head over an interval that contains a full swing covers its whole range",
       },
       {
+        id: "an-interior-maximum-at-pi-2-becomes-the-upper",
         expr: ["Sin", ["Interval", 1, 2]],
         expected: ["Interval", ["Sin", 1], 1],
         category: "Scope",
         caption: "An interior maximum at $\\pi/2$ becomes the upper end",
       },
       {
+        id: "gamma-dips-to-its-minimum-0-8856-inside-0-5-3",
         expr: ["N", ["Gamma", ["Interval", 0.5, 3]]],
         expected: ["Interval", { num: "0.885603194410888805432" }, 2],
         category: "Scope",
         caption: "$\\Gamma$ dips to its minimum $0.8856\\ldots$ inside $[0.5, 3]$",
       },
       {
+        id: "zeta-is-decreasing-on-2-3-so-the-ends-swap",
         expr: ["Zeta", ["Interval", 2, 3]],
         expected: ["Interval", ["Zeta", 3], ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]],
         category: "Scope",
         caption: "$\\zeta$ is decreasing on $[2, 3]$, so the ends swap",
       },
       {
+        id: "arctan-interval-neg-1-3",
         expr: ["Arctan", ["Interval", -1, 3]],
         expected: ["Interval", ["Multiply", ["Rational", -1, 4], "Pi"], ["Arctan", 3]],
         category: "Scope",
       },
       {
+        id: "exp-interval-neg-1-ln-2",
         expr: ["Exp", ["Interval", -1, ["Ln", 2]]],
         expected: ["Interval", ["Divide", 1, "ExponentialE"], 2],
         category: "Scope",
       },
       {
+        id: "max-interval-1-3-interval-neg-3-5",
         expr: ["Max", ["Interval", 1, 3], ["Interval", -3, 5]],
         expected: ["Interval", 1, 5],
         category: "Scope",
@@ -3600,12 +4088,12 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "CenteredInterval(c, r)",
         description: "the ball of radius r centered at c.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "CenteredInterval(interval)",
         description: "an [[Interval]] converted to center-radius form.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3615,6 +4103,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "centers-add-and-radii-add",
         expr: [
           "Add",
           ["CenteredInterval", 1, ["Rational", 1, 2]],
@@ -3624,17 +4113,20 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption: "Centers add and radii add",
       },
       {
+        id: "an-exact-factor-scales-center-and-radius",
         expr: ["Multiply", 2, ["CenteredInterval", 2, ["Rational", 1, 2]]],
         expected: ["CenteredInterval", 4, 1],
         caption: "An exact factor scales center and radius",
       },
       {
+        id: "converts-an-interval-to-center-radius-form",
         expr: ["CenteredInterval", ["Interval", 1, 3]],
         expected: ["CenteredInterval", 2, 1],
         category: "Scope",
         caption: "Converts an [[Interval]] to center-radius form",
       },
       {
+        id: "radii-add-under-subtraction-too",
         expr: [
           "Subtract",
           ["CenteredInterval", 5, ["Rational", 1, 4]],
@@ -3658,7 +4150,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "Around(x, dx)",
         description:
           "x with uncertainty dx, propagated as Around(f(x), |f′(x)|·dx) through a function f.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3668,36 +4160,43 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "independent-uncertainties-add-in-quadrature",
         expr: ["Add", ["Around", 1, 0.1], ["Around", 2, 0.2]],
         expected: ["Around", 3, 0.223606797749979],
         caption: "Independent uncertainties add in quadrature",
       },
       {
+        id: "scaling-scales-the-uncertainty",
         expr: ["Multiply", 3, ["Around", 2, 0.1]],
         expected: ["Around", 6, 0.3],
         caption: "Scaling scales the uncertainty",
       },
       {
+        id: "through-a-function-f-x-delta-x",
         expr: ["Power", ["Around", 2, 0.1], 2],
         expected: ["Around", 4, 0.4],
         category: "Scope",
         caption: "Through a function: $|f'(x)|\\,\\delta x$",
       },
       {
+        id: "sqrt-around-4-0p4",
         expr: ["Sqrt", ["Around", 4, 0.4]],
         expected: ["Around", 2, 0.1],
         category: "Scope",
       },
       {
+        id: "independent-uncertainties-add-in-quadrature-2",
         expr: ["Add", ["Around", 2, 0.01], ["Around", 3, 0.02]],
         expected: ["Around", 5, 0.022360679774997897],
         caption: "Independent uncertainties add in quadrature",
       },
       {
+        id: "3-times-around-2-0p01",
         expr: ["Multiply", 3, ["Around", 2, 0.01]],
         expected: ["Around", 6, 0.03],
       },
       {
+        id: "through-a-function-f-2-3-5-not-yet-multinomial",
         expr: ["Multinomial", ["Around", 2, 0.01], 2],
         expected: ["Around", 6, 0.035],
         category: "Scope",
@@ -3705,52 +4204,61 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "Through a function, to first order: $f'(2) = 3.5$, so $\\mathrm{Multinomial}(2 \\pm 0.01, 2) = 6 \\pm 0.035$",
       },
       {
+        id: "independent-uncertainties-add-in-quadrature-sqrt",
         expr: ["Add", ["Around", 5, 0.1], ["Around", 3, 0.2]],
         expected: ["Around", 8, 0.223606797749979],
         caption: "Independent uncertainties add in quadrature: $\\sqrt{0.1^2 + 0.2^2}$",
       },
       {
+        id: "relative-uncertainties-combine-6-sqrt-0-1-2-2-0",
         expr: ["Multiply", ["Around", 2, 0.1], ["Around", 3, 0.2]],
         expected: ["Around", 6, 0.5],
         caption: "Relative uncertainties combine: $6\\sqrt{(0.1/2)^2 + (0.2/3)^2} = 0.5$",
       },
       {
+        id: "a-power-scales-the-uncertainty-by-the-derivative",
         expr: ["Power", ["Around", 3, 0.1], 2],
         expected: ["Around", 9, 0.6000000000000001],
         category: "Scope",
         caption: "A power scales the uncertainty by the derivative, $2 \\cdot 3 \\cdot 0.1$",
       },
       {
+        id: "frac-0-2-2-sqrt-4",
         expr: ["Sqrt", ["Around", 4, 0.2]],
         expected: ["Around", 2, 0.05],
         category: "Scope",
         caption: "$\\frac{0.2}{2\\sqrt4}$",
       },
       {
+        id: "an-exact-factor-scales-the-uncertainty",
         expr: ["Multiply", 10, ["Around", 1.5, 0.02]],
         expected: ["Around", 15, 0.2],
         category: "Scope",
         caption: "An exact factor scales the uncertainty",
       },
       {
+        id: "through-an-elementary-function-delta-cdot-e-2",
         expr: ["Exp", ["Around", 2, 0.01]],
         expected: ["Around", 7.38905609893065, 0.0738905609893065],
         category: "Scope",
         caption: "Through an elementary function: $\\delta \\cdot e^2$",
       },
       {
+        id: "through-a-special-function-with-its-derivative",
         expr: ["Erf", ["Around", 2, 0.01]],
         expected: ["Around", 0.9953222650189527, 0.00020666985354092054],
         category: "Scope",
         caption: "Through a special function, with its derivative as slope",
       },
       {
+        id: "first-order-propagation-the-uncertainty-scales",
         expr: ["N", ["Sin", ["Around", 1, 0.1]]],
         expected: ["Around", 0.8414709848078965, 0.05403023058681398],
         category: "Scope",
         caption: "First-order propagation: the uncertainty scales by $|\\cos 1|$",
       },
       {
+        id: "ln-around-2-0p01",
         expr: ["Ln", ["Around", 2, 0.01]],
         expected: ["Around", 0.6931471805599453, 0.005],
         category: "Scope",

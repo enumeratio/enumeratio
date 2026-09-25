@@ -532,7 +532,7 @@ engine (0.128 through 0.134) gives 1.3175424991022906 − 0.12054516008271643i; 
 1; m). The two-argument `EllipticE(π/2, m)` is right, so only the one-argument reduction is
 wrong — and native `EllipticE(φ, m)` for φ outside [−π/2, π/2] inherits it through its
 quasi-periodic reduction (DLMF 19.2.10). Patched in place locally
-(`packages/analytic/src/elliptic.ts`); `verify-fungrim.ts` reproduces it.
+(`packages/symbols/analysis/analytic/src/elliptic.ts`); `verify-fungrim.ts` reproduces it.
 
 **`N(x, d)` never gives the working precision back.** On a fresh engine `ce.precision` is
 21; after `ce.box(["N", ["Sinh", 1], 30]).evaluate()` it is 30, and everything evaluated
@@ -540,12 +540,12 @@ afterwards runs at 30 digits — `1 - Erf(9.5)` stops cancelling to 0, `Gamma(20
 digits. It is §3.9's ambient precision leaking: `N` implements its precision argument by
 setting the engine's, and never restores it. Wolfram's `N[x, d]` leaves `$MachinePrecision`
 alone. The fix is a save and restore around the `N` handler, which
-`packages/analytic/src/correctly-rounded.ts` now does for every engine that declares
-`@enumeratio/analytic`; `packages/aestimatio/src/cooperative-evaluate.ts` still restores it after
-each evaluation, as a backstop (seen in 0.134). The same handler evaluates at exactly `d` digits
-and returns them as they come, so the last digit can be off by one and some heads return more
-digits than asked for; the correctly-rounded replacement evaluates twice, at more digits, and
-rounds (Ziv's loop).
+`packages/symbols/analysis/analytic/src/correctly-rounded.ts` now does for every engine that
+declares `@enumeratio/analytic`; `packages/symbols/evaluation/aestimatio/src/cooperative-evaluate.ts`
+still restores it after each evaluation, as a backstop (seen in 0.134). The same handler
+evaluates at exactly `d` digits and returns them as they come, so the last digit can be off by
+one and some heads return more digits than asked for; the correctly-rounded replacement
+evaluates twice, at more digits, and rounds (Ziv's loop).
 
 **The interval kernel's Γ is not rigorous.** `@cortex-js/compute-engine/interval` promises
 outward-rounded enclosures, and two of its Γ functions break that. `gamma({lo: 2.5, hi: 2.5})`
@@ -553,9 +553,9 @@ is `[1.3293403881791377, 1.3293403881791381]`, but Γ(2.5) = 1.32934038817913702
 lower bound; 1.4, 1.82 and 3.7 miss by a few ulps the same way, so the approximation's error
 exceeds the one ulp the kernel rounds out by. And `gammaln` evaluates its endpoints as though
 ln Γ were increasing everywhere: `gammaln({lo: 0.41, hi: 0.42})` returns `lo = 0.7714 > hi =
-0.7469`, on (0, 1.4616…) where ln Γ decreases. `packages/analytic/src/interval.ts` uses neither
+0.7469`, on (0, 1.4616…) where ln Γ decreases. `packages/symbols/analysis/analytic/src/interval.ts` uses neither
 -- Γ's shape is known, so it takes the image from its endpoints and its minimum -- and the
-strict containment test in `packages/analytic/tests/interval-containment.test.ts` is what
+strict containment test in `packages/symbols/analysis/analytic/tests/interval-containment.test.ts` is what
 caught both (seen in 0.134).
 
 **`Hypergeometric2F1` is off by 5.2e-6 relative at complex argument** — Fungrim 16d2e1 at

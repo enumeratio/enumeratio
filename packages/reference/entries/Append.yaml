@@ -1,0 +1,64 @@
+name: Append
+domain: Collections
+signature: Append(collection, value)
+summary: The collection with value added as its last element.
+signatures:
+  - call: Append(collection, value)
+    description: the collection with `value` added as its last element.
+  - call: Append(expr, value)
+    description: '`value` added as the last operand of any expression, not just a collection.'
+    library: enumeratio-collections
+details:
+  - $Append(c, x) = Join(c, \{x\})$. See [[Join]].
+  - Appending a list nests it as a single element rather than splicing its contents in — use [[Join]] to splice.
+  - Works on a set as well as a list, and on the operands of any expression.
+examples:
+  - id: append-list-1-2-3-4
+    expr: [Append, [List, 1, 2, 3], 4]
+    expected: [List, 1, 2, 3, 4]
+  - id: append-c-x-join-c-x-see-join
+    expr: [Equal, [Append, [List, 1, 2, 3], 4], [Join, [List, 1, 2, 3], [List, 4]]]
+    expected: True
+    category: Properties
+    caption: $Append(c, x) = Join(c, \{x\})$. See [[Join]]
+  - id: appending-a-list-nests-it-as-a-single-element
+    expr: [Append, [List, 1, 2, 3], [List, 9]]
+    expected: [List, 1, 2, 3, [List, 9]]
+    category: Possible issues
+    caption: Appending a list nests it as a single element rather than splicing its contents in
+  - id: a-set-as-well-as-a-list
+    expr: [Append, [Set, 1, 2, 3], 4]
+    expected: [Set, 1, 2, 3, 4]
+    category: Scope
+    caption: A set as well as a list
+  - id: append-list-a-b-c-d-x
+    expr: [Append, [List, a, b, c, d], x]
+    expected: [List, a, b, c, d, x]
+  - id: onto-the-empty-list
+    expr: [Append, [List], x]
+    expected: [List, x]
+    category: Scope
+    caption: Onto the empty list
+  - id: a-lazy-range-is-materialised-first
+    expr: [Append, [Range, 1, 3], 4]
+    expected: [List, 1, 2, 3, 4]
+    category: Scope
+    caption: A lazy [[Range]] is materialised first
+  - id: any-head-not-just-a-list
+    expr: [Append, [f, a, b], c]
+    expected: [f, a, b, c]
+    category: Scope
+    caption: Any head, not just a list
+  - id: adding-a-row-to-a-matrix
+    expr: [Append, [List, [List, 1, 2], [List, 3, 4]], [List, 5, 6]]
+    expected: [List, [List, 1, 2], [List, 3, 4], [List, 5, 6]]
+    category: Applications
+    caption: Adding a row to a matrix
+  - id: appending-adds-exactly-one-element-see-length
+    expr: [Equal, [Length, [Append, [List, 1, 2, 3], 4]], [Add, [Length, [List, 1, 2, 3]], 1]]
+    expected: True
+    category: Properties
+    caption: Appending adds exactly one element. See [[Length]]
+seeAlso:
+  - Join
+  - Prepend

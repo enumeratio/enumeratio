@@ -123,7 +123,7 @@ const sectionsOpen = ref(true);
 /** A section's anchor: `Possible issues` → `#possible-issues`. */
 const sectionId = (category: string): string => category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 // A linked section opens even under "close all" (`targeted`), and any other section that
-// merely happens to contain the current deep-link target -- an `example-N` anchor, say --
+// merely happens to contain the current deep-link target -- an `example/<id>` anchor, say --
 // opens too (`openSections`), without forcing every section open.
 const targeted = ref("");
 const openSections = ref(new Set<string>());
@@ -165,7 +165,7 @@ const followHash = async (): Promise<void> => {
   if (key !== undefined) {
     const cases = casesOf(key);
     activeCase[key] = cases.indexOf(targetedExample.value);
-    card = `example-${cases[0]! + 1}`;
+    card = anchorOf(entry.value!.examples[cases[0]!]!);
   }
   await nextTick();
   openAncestorSections(card);
@@ -191,19 +191,16 @@ const CATEGORY_ORDER = [
 // Examples sharing a `group` are cases of one example: a single card, where the first
 // member sits, cycling through them. `activeCase` is the shown case's position per group.
 const activeCase = reactive<Record<string, number>>({});
-// `#example-N` is example N; `#example-N=X` is case X of the card example N heads (the
-// `target=choice` form EnvironmentPreview reads too). Every case keeps its own `#example-N`.
+// `#example/<id>` is that example; a case of a grouped card is linked by its own id, and
+// the card, which carries its first case's anchor, shows it.
+const anchorOf = (ex: { id: string }): string => `example/${ex.id}`;
 const membersOf = (key: string): number[] =>
   (entry.value?.examples ?? []).flatMap((ex, i) => (ex.group === key ? [i] : []));
-const targetedExample = computed((): number => {
-  const m = /^example-(\d+)(?:=(\d+))?$/.exec(targeted.value);
-  if (!m) return -1;
-  const n = Number(m[1]) - 1;
-  const key = entry.value?.examples[n]?.group;
-  if (m[2] === undefined || key === undefined) return n;
-  const members = membersOf(key);
-  return members[members.indexOf(n) + Number(m[2]) - 1] ?? -1;
-});
+const targetedExample = computed((): number =>
+  targeted.value.startsWith("example/")
+    ? (entry.value?.examples ?? []).findIndex((ex) => anchorOf(ex) === targeted.value)
+    : -1,
+);
 const shown = (ex: { hidden?: boolean }, i: number): boolean =>
   // Kept as data, not rendered -- unless a deep link asks for it.
   !ex.hidden || i === targetedExample.value;
@@ -339,7 +336,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         <div
           v-for="{ ex, i, first, key, cases } in group.items"
           :key="key ?? i"
-          :id="`example-${first + 1}`"
+          :id="anchorOf(entry.examples[first]!)"
           class="ref-example"
           :class="{
             'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && !dirty[i],
@@ -521,7 +518,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 .ref-section {
   scroll-margin-top: calc(var(--vp-nav-height) + 1rem);
 }
-/* Deep-link targets (example-N, signatures, details, enumeration, implementation):
+/* Deep-link targets (example/<id>, signatures, details, enumeration, implementation):
    space for the fixed nav bar, and a brief flash when landed on via hash. */
 #signatures,
 #details,

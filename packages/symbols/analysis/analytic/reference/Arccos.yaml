@@ -1,0 +1,106 @@
+name: Arccos
+domain: Elementary functions
+signature: Arccos(x)
+summary: Arccosine, the inverse of [[Cos]] restricted to $[0, \pi]$.
+signatures:
+  - call: Arccos(x)
+    description: the principal value $y \in [0, \pi]$ with $\cos(y) = x$.
+details:
+  - Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
+  - 'Co-function with [[Arcsin]]: $\arccos(x) = \pi/2 - \arcsin(x)$.'
+  - 'Undoes [[Cos]] on its principal branch: $\cos(\arccos(x)) = x$ for $x \in [-1, 1]$.'
+examples:
+  - id: arccos-1
+    expr: [Arccos, 1]
+    expected: 0
+  - id: arccos-1-over-2
+    expr: [Arccos, [Rational, 1, 2]]
+    expected: [Multiply, [Rational, 1, 3], Pi]
+  - id: arccos-0
+    expr: [Arccos, 0]
+    expected: [Multiply, [Rational, 1, 2], Pi]
+  - id: the-top-of-the-principal-range
+    expr: [Arccos, -1]
+    expected: Pi
+    caption: The top of the principal range
+  - id: cos-arccos-x-x-on-the-principal-branch
+    expr: [Equal, [Cos, [Arccos, [Rational, 1, 2]]], [Rational, 1, 2]]
+    expected: True
+    category: Properties
+    caption: $\cos(\arccos(x)) = x$ on the principal branch
+  - id: outside-1-1-this-stays-symbolic-same-as-arcsin-n
+    expr: [Arccos, 2]
+    expected: [Arccos, 2]
+    category: Possible issues
+    caption: Outside $[-1, 1]$ this stays symbolic, same as [[Arcsin]]; N(...) gives a complex approximation
+  - id: a-machine-precision-argument-evaluates
+    expr: [Arccos, 0.4]
+    expected: {num: '1.15927948072740859985'}
+    caption: A machine-precision argument evaluates numerically
+  - id: outside-1-1-the-value-is-purely-imaginary
+    expr: [Arccos, 1.5]
+    expected: [Complex, 0, 0.9624236501192069]
+    caption: Outside $[-1, 1]$ the value is purely imaginary
+  - id: arbitrary-precision-via-n
+    expr: [N, [Arccos, [Rational, 1, 3]]]
+    expected: {num: '1.23095941734077468214'}
+    category: Scope
+    caption: Arbitrary precision via N(...)
+  - id: evaluates-at-a-complex-argument
+    expr: [Arccos, [Complex, 2.5, 1]]
+    expected: [Complex, 0.40617281650551185, -1.6586932988564347]
+    category: Scope
+    caption: Evaluates at a complex argument
+  - id: threads-element-wise-over-a-matrix
+    expr: [Arccos, [List, [List, 1, [Divide, 1, [Sqrt, 2]]], [List, 0, [Divide, 1, [Sqrt, 2]]]]]
+    expected: [List, [List, 0, [Multiply, [Rational, 1, 4], Pi]], [List, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Rational, 1, 4], Pi]]]
+    category: Scope
+    caption: Threads element-wise over a matrix
+  - id: exact-inverse-of-a-special-value
+    expr: [Arccos, [Divide, [Sqrt, 3], 2]]
+    expected: [Multiply, [Rational, 1, 6], Pi]
+    category: Scope
+    caption: Exact inverse of a special value
+  - id: arccos-neg-sqrt-2-over-2
+    expr: [Arccos, [Negate, [Divide, [Sqrt, 2], 2]]]
+    expected: [Multiply, [Rational, 3, 4], Pi]
+    category: Scope
+  - id: recognizes-cos-pi-5-frac-1-sqrt-5-4
+    expr: [Arccos, [Divide, [Add, 1, [Sqrt, 5]], 4]]
+    expected: [Multiply, [Rational, 1, 5], Pi]
+    category: Scope
+    caption: Recognizes $\cos(\pi/5) = \frac{1 + \sqrt5}{4}$
+  - id: interval-arithmetic-decreasing-so-arccos-frac-13
+    expr: [Arccos, [Interval, [Rational, 1, 3], [Rational, 1, 2]]]
+    expected: [Interval, [Multiply, [Rational, 1, 3], Pi], [Arccos, [Rational, 1, 3]]]
+    category: Scope
+    caption: 'Interval arithmetic: decreasing, so $\arccos[\tfrac13, \tfrac12] = [\tfrac{\pi}{3}, \arccos\tfrac13]$'
+  - id: uncertainty-propagation-arccos-0-9-pm-0-1-approx
+    expr: [Arccos, [Around, 0.9, 0.1]]
+    expected: [Around, 0.45102681179626236, 0.2294157338705618]
+    category: Scope
+    caption: 'Uncertainty propagation: $\arccos(0.9 \pm 0.1) \approx 0.451 \pm 0.229$'
+  - id: derivative-frac-1-sqrt-1-x-2
+    expr: [D, [Arccos, x], x]
+    expected: [Divide, -1, [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]
+    category: Scope
+    caption: 'Derivative: $-\frac{1}{\sqrt{1 - x^2}}$'
+  - id: antiderivative
+    expr: [Integrate, [Arccos, x], x]
+    expected: [Add, [Multiply, x, [Arccos, x]], [Negate, [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]]
+    category: Scope
+    caption: Antiderivative
+  - id: reflection-arccos-x-pi-arccos-x
+    expr: [Arccos, [Negate, x]]
+    expected: [Add, [Negate, [Arccos, x]], Pi]
+    category: Properties
+    caption: 'Reflection: $\arccos(-x) = \pi - \arccos x$'
+  - id: not-simply-4-4-is-outside-the-principal-range-0
+    expr: [Arccos, [Cos, 4]]
+    expected: [Add, -4, [Multiply, 2, Pi]]
+    category: Scope
+    caption: 'Not simply 4: $4$ is outside the principal range $[0, \pi]$, so $\arccos(\cos 4) = 2\pi - 4$'
+seeAlso:
+  - Cos
+  - Arcsin
+  - Arctan

@@ -1,0 +1,111 @@
+name: GammaLn
+domain: Special functions
+signature: GammaLn(z)
+summary: The natural logarithm of $\Gamma(z)$, avoiding the overflow of computing [[Gamma]] directly for large z.
+signatures:
+  - call: GammaLn(z)
+    description: $\ln \Gamma(z)$, useful where $\Gamma(z)$ itself would overflow.
+details:
+  - 'Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.'
+  - Called gammaln in MATLAB and SciPy, lgamma in C's math library.
+  - "Inherits Gamma's recurrence in log form: $\\operatorname{GammaLn}(z+1) = \\operatorname{GammaLn}(z) + \\ln z$."
+  - $\operatorname{GammaLn}(1/2) = \frac{1}{2}\ln \pi$, from $\Gamma(1/2) = \sqrt{\pi}$.
+  - Diverges to $+\infty$ at the nonpositive integers, the poles of Gamma -- the log of a diverging magnitude, rather than the ComplexInfinity that [[Gamma]] itself returns there.
+  - "It is $\\ln(\\Gamma(z))$ with a PRINCIPAL logarithm, which for complex $z$ is not the same function as Wolfram's $\\mathrm{LogGamma}$: the two differ by multiples of $2\\pi i$ off the positive axis. [[LogGamma]] is that continuation, and the one to use where continuity in $z$ matters."
+examples:
+  - id: a-pole-of-gamma-in-log-form
+    expr: [GammaLn, 0]
+    expected: PositiveInfinity
+    caption: A pole of Gamma, in log form
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [GammaLn, 2.5]
+    expected: {num: '0.284682870472919159632'}
+    caption: A floating-point argument evaluates directly to a high-precision decimal
+  - id: defined-as-ln-gamma-z-here-at-z-5
+    expr: [Equal, [GammaLn, 5], [Ln, [Gamma, 5]]]
+    expected: True
+    category: Properties
+    caption: Defined as $\ln \Gamma(z)$, here at $z = 5$
+  - id: gammaln-1-ln-gamma-1-ln-1-0
+    expr: [Equal, [GammaLn, 1], 0]
+    expected: True
+    category: Properties
+    caption: $\operatorname{GammaLn}(1) = \ln \Gamma(1) = \ln 1 = 0$
+  - id: inherits-gamma-s-recurrence-gammaln-z-1-gammaln
+    expr: [Equal, [GammaLn, 6], [Add, [GammaLn, 5], [Ln, 5]]]
+    expected: True
+    category: Properties
+    caption: "Inherits Gamma's recurrence: $\\operatorname{GammaLn}(z+1) = \\operatorname{GammaLn}(z) + \\ln z$"
+  - id: gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi
+    expr: [Equal, [GammaLn, [Rational, 1, 2]], [Multiply, [Rational, 1, 2], [Ln, Pi]]]
+    expected: True
+    category: Properties
+    caption: $\operatorname{GammaLn}(1/2) = \frac12 \ln \pi$, from $\Gamma(1/2) = \sqrt{\pi}$
+  - id: used-to-get-ln-n-for-large-n-without-overflowing
+    expr: [Equal, [GammaLn, 11], [Ln, [Factorial, 10]]]
+    expected: True
+    category: Applications
+    caption: 'Used to get $\ln(n!)$ for large n without overflowing float64: $\ln(10!) = \operatorname{GammaLn}(11)$'
+  - id: an-exact-positive-integer-now-reduces-too
+    expr: [GammaLn, 5]
+    expected: [Add, [Multiply, 3, [Ln, 2]], [Ln, 3]]
+    category: Properties
+    caption: An exact positive integer now reduces too, matching Wolfram's LogGamma[5] = Log[24] ($\ln 24 = 3\ln 2 + \ln 3$, compute-engine's own factored form for $\ln$ of a composite)
+  - id: gammaln-101-is-exactly-ln-100-letting-us-reason
+    expr: [Equal, [GammaLn, 101], [Ln, [Factorial, 100]]]
+    expected: True
+    category: Neat examples
+    caption: $\operatorname{GammaLn}(101)$ is exactly $\ln(100!)$, letting us reason about the size of the 158-digit number $100!$ without computing it
+  - id: at-a-pole-of-gamma-compute-engine-gives-the-real
+    expr: [GammaLn, -1]
+    expected: PositiveInfinity
+    category: Scope
+    divergence:
+      wolfram: Wolfram's GammaLn[-1] is ComplexInfinity, the complex-analytic reading of a pole of Gamma.
+    caption: At a pole of Gamma, compute-engine gives the real log-magnitude's divergence, PositiveInfinity, rather than treating GammaLn as complex-analytic
+  - id: ln-gamma-100-5-where-gamma-100-5-itself-is-about
+    expr: [GammaLn, 100.5]
+    expected: {num: '361.435540467777621555'}
+    caption: $\ln\Gamma(100.5)$, where $\Gamma(100.5)$ itself is about $10^{157}$
+  - id: complex-arguments-here-the-principal-ln-gamma-z
+    expr: [GammaLn, [Complex, 2.5, 3]]
+    expected: [Complex, -1.4709546103488425, 2.8226156382608]
+    category: Scope
+    caption: Complex arguments; here the principal $\ln\Gamma(z)$ and Wolfram's $\mathrm{LogGamma}$ agree, as the imaginary part stays inside $(-\pi, \pi]$
+  - id: a-huge-inexact-argument-should-still-evaluate
+    expr: [GammaLn, {num: '1e1000'}]
+    expected: {num: '2.30158509299404568402e+1003'}
+    aspirational: true
+    category: Scope
+    caption: "A huge inexact argument should still evaluate (Stirling's series): $\\ln\\Gamma(10^{1000}) \\approx 2.3016 \\times 10^{1003}$; left unevaluated today"
+  - id: threads-over-a-list-and-the-integer-points
+    expr: [GammaLn, [List, 1, 2, 3]]
+    expected: [List, 0, 0, [Ln, 2]]
+    category: Scope
+    caption: Threads over a list, and the integer points reduce to $\ln((n-1)!)$, matching Wolfram's LogGamma[5] = Log[24]
+  - id: uncertainty-propagation-through-ln-gamma-with
+    expr: [GammaLn, [Around, 1.2, 0.01]]
+    expected: [Around, -0.08537409000331583, 0.002890398965921884]
+    category: Scope
+    caption: Uncertainty propagation through $\ln\Gamma$, with slope $\psi(1.2)$
+  - id: the-derivative-of-ln-gamma-is-the-digamma
+    expr: [D, [GammaLn, x], x]
+    expected: [Digamma, x]
+    category: Properties
+    caption: The derivative of $\ln\Gamma$ is the digamma function. See [[Digamma]]
+  - id: off-the-positive-axis-gammaln-is-the-principal
+    expr: [GammaLn, -1.5]
+    expected: {num: '0.860047015376481014511'}
+    category: Possible issues
+    caption: 'Off the positive axis GammaLn is the principal $\ln\Gamma(z)$: at $z = -3/2$, where $\Gamma > 0$, that is real. See [[LogGamma]] for the continuation'
+    divergence:
+      wolfram: "Wolfram's $\\mathrm{LogGamma}[-1.5] = 0.860047 - 6.28319\\,i$: its analytic continuation sits $-2\\pi i$ from the principal log here."
+  - id: to-30-significant-digits-not-yet-the-last-digit
+    expr: [N, [GammaLn, [Rational, 1, 3]], 30]
+    expected: {num: '0.985420646927767069187174036978'}
+    category: Scope
+    caption: To 30 significant digits, the last one correctly rounded
+seeAlso:
+  - Gamma
+  - LogGamma
+  - Digamma

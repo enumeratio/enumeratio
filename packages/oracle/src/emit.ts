@@ -5,7 +5,7 @@
 // that counts those is a work queue rather than a verdict.
 
 import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
-import { mappingFor } from "./mappings.ts";
+import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import type { System } from "./systems.ts";
 
 export type MathJSON =
@@ -123,13 +123,49 @@ export function emit(expr: MathJSON, system: System): Emitted {
     }
   };
 
+  /**
+   * Rebuild `node`'s `List` nesting as Python list literals, applying `template` (with
+   * `others` filled into every position but `threadArg`) at each leaf — the manual
+   * Listable thread `threadArg` asks for on a Python-family system.
+   */
+  const threadOver = (
+    node: MathJSON,
+    template: string,
+    others: readonly string[],
+    threadArg: number,
+  ): string => {
+    if (isCall(node) && node[0] === "List") {
+      return `[${node
+        .slice(1)
+        .map((el) => threadOver(el, template, others, threadArg))
+        .join(", ")}]`;
+    }
+    const parts = [...others];
+    parts.splice(threadArg - 1, 0, walk(node));
+    return fill(template, parts);
+  };
+
   const walkCall = (head: string, operands: readonly MathJSON[]): string => {
     // `["String", "s0"]` spells a string, not the symbol s0.
     if (head === "String" && operands.length === 1 && typeof operands[0] === "string")
       return JSON.stringify(operands[0]);
     const mapping = mappingFor(head, operands.length);
     const template = mapping?.emit[system];
-    if (template !== undefined) return fill(template, operands.map(walk));
+    if (template !== undefined) {
+      const threadArg = mapping?.threadArg;
+      const threaded = threadArg !== undefined ? operands[threadArg - 1] : undefined;
+      if (
+        threadArg !== undefined &&
+        threaded !== undefined &&
+        THREADS_MANUALLY.includes(system) &&
+        isCall(threaded) &&
+        threaded[0] === "List"
+      ) {
+        const others = operands.filter((_op, i) => i !== threadArg - 1).map((op) => walk(op));
+        return threadOver(threaded, template, others, threadArg);
+      }
+      return fill(template, operands.map(walk));
+    }
     // Wolfram has a whole transpiler behind it; a signature row here only overrides it.
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare
     // symbol through verbatim, so handing them back as symbols yields the head's shape.

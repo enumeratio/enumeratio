@@ -1,14 +1,20 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "Hopf algebras";
-const H = (...parts: number[]): MathJSON => ["NSymH", ["List", ...parts]];
-const M = (...parts: number[]): MathJSON => ["QSymM", ["List", ...parts]];
-const times = (...parts: MathJSON[]): MathJSON => ["NonCommutativeMultiply", ...parts];
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/algebras/hopf/reference/QSymM.yaml",
+  "packages/symbols/algebras/hopf/reference/Coproduct.yaml",
+  "packages/symbols/algebras/hopf/reference/Antipode.yaml",
+  "packages/symbols/algebras/hopf/reference/NSymR.yaml",
+];
 
 export const hopf: readonly ReferenceEntry[] = [
   {
     name: "QSymM",
-    domain: DOMAIN,
+    domain: "Hopf algebras",
     signature: "QSymM(composition)",
     summary:
       "The monomial basis $M_\\alpha$ of the quasi-symmetric functions, indexed by a composition. The product is the quasi-shuffle, which may ADD two leading parts as well as interleave them.",
@@ -33,22 +39,31 @@ export const hopf: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
-        expr: times(M(1), M(1)),
-        expected: ["Add", ["Multiply", 2, M(1, 1)], M(2)],
+        id: "the-quasi-shuffle-overlap-term-included",
+        expr: ["NonCommutativeMultiply", ["QSymM", ["List", 1]], ["QSymM", ["List", 1]]],
+        expected: ["Add", ["Multiply", 2, ["QSymM", ["List", 1, 1]]], ["QSymM", ["List", 2]]],
         caption: "the quasi-shuffle, overlap term included",
       },
       {
-        expr: times(M(1), M(2)),
-        expected: ["Add", M(3), M(1, 2), M(2, 1)],
+        id: "two-interleavings-and-one-overlap",
+        expr: ["NonCommutativeMultiply", ["QSymM", ["List", 1]], ["QSymM", ["List", 2]]],
+        expected: [
+          "Add",
+          ["QSymM", ["List", 3]],
+          ["QSymM", ["List", 1, 2]],
+          ["QSymM", ["List", 2, 1]],
+        ],
         caption: "two interleavings and one overlap",
       },
       {
-        expr: times(H(2), H(1, 3)),
-        expected: H(2, 1, 3),
+        id: "nsym-just-concatenates",
+        expr: ["NonCommutativeMultiply", ["NSymH", ["List", 2]], ["NSymH", ["List", 1, 3]]],
+        expected: ["NSymH", ["List", 2, 1, 3]],
         caption: "NSym just concatenates",
         category: "Scope",
       },
       {
+        id: "2-4-compositions-of-5",
         expr: ["AlgebraDimension", ["QSymAlgebra", 5]],
         expected: 16,
         caption: "$2^4$ compositions of 5",
@@ -59,7 +74,7 @@ export const hopf: readonly ReferenceEntry[] = [
   },
   {
     name: "Coproduct",
-    domain: DOMAIN,
+    domain: "Hopf algebras",
     signature: "Coproduct(element)",
     summary:
       "The coproduct $\\Delta$: takes one element to a sum of `HopfTensor` pairs. Deconcatenation for QSym; the multiplicative extension of splitting a part for NSym.",
@@ -79,27 +94,30 @@ export const hopf: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
-        expr: ["Coproduct", M(1, 2)],
+        id: "deconcatenation-cut-at-each-gap",
+        expr: ["Coproduct", ["QSymM", ["List", 1, 2]]],
         expected: [
           "Add",
-          ["HopfTensor", M(), M(1, 2)],
-          ["HopfTensor", M(1, 2), M()],
-          ["HopfTensor", M(1), M(2)],
+          ["HopfTensor", ["QSymM", ["List"]], ["QSymM", ["List", 1, 2]]],
+          ["HopfTensor", ["QSymM", ["List", 1, 2]], ["QSymM", ["List"]]],
+          ["HopfTensor", ["QSymM", ["List", 1]], ["QSymM", ["List", 2]]],
         ],
         caption: "deconcatenation: cut at each gap",
       },
       {
-        expr: ["Coproduct", H(2)],
+        id: "delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes",
+        expr: ["Coproduct", ["NSymH", ["List", 2]]],
         expected: [
           "Add",
-          ["HopfTensor", H(), H(2)],
-          ["HopfTensor", H(2), H()],
-          ["HopfTensor", H(1), H(1)],
+          ["HopfTensor", ["NSymH", ["List"]], ["NSymH", ["List", 2]]],
+          ["HopfTensor", ["NSymH", ["List", 2]], ["NSymH", ["List"]]],
+          ["HopfTensor", ["NSymH", ["List", 1]], ["NSymH", ["List", 1]]],
         ],
         caption: "$\\Delta(H_2) = 1\\otimes H_2 + H_1\\otimes H_1 + H_2\\otimes 1$",
       },
       {
-        expr: ["Counit", H()],
+        id: "the-counit-picks-out-the-constant-term",
+        expr: ["Counit", ["NSymH", ["List"]]],
         expected: 1,
         caption: "the counit picks out the constant term",
         category: "Properties",
@@ -109,32 +127,36 @@ export const hopf: readonly ReferenceEntry[] = [
   },
   {
     name: "Antipode",
-    domain: DOMAIN,
+    domain: "Hopf algebras",
     signature: "Antipode(element)",
     summary:
       "The antipode $S$, the last piece of a Hopf algebra: the unique map with $m(S \\otimes \\mathrm{id})\\Delta = \\eta\\varepsilon$.",
-    signatures: [
-      {
-        call: "Antipode(element)",
-        description: "$S(x)$",
-        library: "enumeratio-hopf",
-      },
-    ],
+    signatures: [{ call: "Antipode(element)", description: "$S(x)$", library: "enumeratio-hopf" }],
     details: [
       "On a graded connected Hopf algebra the axiom DETERMINES $S$: splitting off the two trivial terms of $\\Delta$ gives $S(x) = -x - \\sum S(x')x''$, and the left factor's degree strictly drops, so the recursion terminates",
       "Computed that way and then verified by running the axiom, rather than trusted",
       "On a commutative Hopf algebra $S$ is an involution, so $S^2 = \\mathrm{id}$ on QSym",
     ],
     examples: [
-      { expr: ["Antipode", M(1)], expected: ["Negate", M(1)], caption: "$S(M_1) = -M_1$" },
       {
-        expr: ["Antipode", ["Antipode", M(1, 2)]],
-        expected: M(1, 2),
+        id: "s-m-1-m-1",
+        expr: ["Antipode", ["QSymM", ["List", 1]]],
+        expected: ["Negate", ["QSymM", ["List", 1]]],
+        caption: "$S(M_1) = -M_1$",
+      },
+      {
+        id: "s-2-id-since-qsym-is-commutative",
+        expr: ["Antipode", ["Antipode", ["QSymM", ["List", 1, 2]]]],
+        expected: ["QSymM", ["List", 1, 2]],
         caption: "$S^2 = \\mathrm{id}$, since QSym is commutative",
         category: "Properties",
       },
       {
-        expr: ["HopfDegree", times(M(1), M(2))],
+        id: "the-product-is-homogeneous-so-degrees-add",
+        expr: [
+          "HopfDegree",
+          ["NonCommutativeMultiply", ["QSymM", ["List", 1]], ["QSymM", ["List", 2]]],
+        ],
         expected: 3,
         caption: "the product is homogeneous, so degrees add",
         category: "Properties",
@@ -185,23 +207,26 @@ export const hopf: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "r-1-1-h-1-1-h-2",
         expr: ["InCompleteBasis", ["NSymR", ["List", 1, 1]]],
-        // Canonical Add order leads with the negated term.
         expected: ["Add", ["Negate", ["NSymH", ["List", 2]]], ["NSymH", ["List", 1, 1]]],
         caption: "$R_{(1,1)} = H_{(1,1)} - H_{(2)}$",
       },
       {
+        id: "the-fundamental-basis-sums-over-refinements",
         expr: ["InMonomialBasis", ["QSymF", ["List", 2]]],
         expected: ["Add", ["QSymM", ["List", 2]], ["QSymM", ["List", 1, 1]]],
         caption: "the fundamental basis sums over refinements",
       },
       {
+        id: "one-signed-term",
         expr: ["Antipode", ["NSymR", ["List", 3]]],
         expected: ["Negate", ["NSymR", ["List", 1, 1, 1]]],
         caption: "one signed term",
         category: "Properties",
       },
       {
+        id: "self-conjugate-the-convention-is-settled-by-the",
         expr: ["ConjugateComposition", ["List", 2, 1]],
         expected: ["List", 2, 1],
         caption: "self-conjugate — the convention is settled by the antipode, not by taste",

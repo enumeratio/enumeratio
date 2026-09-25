@@ -1,0 +1,20 @@
+name: PalindromicPrimes
+domain: Collections
+signature: PalindromicPrimes
+summary: 'The palindromic primes $2, 3, 5, 7, 11, 101, …$: primes that read the same forwards and backwards in base 10.'
+signatures:
+  - call: PalindromicPrimes
+    description: the prime $p$ whose decimal digits are a palindrome, an indexed collection of open infinitude.
+details:
+  - A lazy indexed collection; whether there are infinitely many (beyond the trivial even-length exclusion -- every palindrome with an even digit count past 11 is divisible by 11) is open, so $Count(PalindromicPrimes) = NaN$. OEIS A002385.
+  - $At(PalindromicPrimes, k)$ unranks by scanning forward, testing primality and digit-palindromy -- $At(PalindromicPrimes, 6) = 101$.
+  - 'Membership goes through [[Element]]: $Element(101, PalindromicPrimes)$ is true, $Element(103, PalindromicPrimes)$ is false ($103 \ne 301$).'
+examples: []
+enumerate:
+  expr: Take(PalindromicPrimes, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - CircularPrimes
+  - EmirpPrimes

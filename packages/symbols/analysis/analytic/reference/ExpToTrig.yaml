@@ -1,0 +1,32 @@
+name: ExpToTrig
+domain: Transformations
+signature: ExpToTrig(expr)
+summary: Rewrite every exponential in `expr` as circular or hyperbolic functions -- the inverse of TrigToExp. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: ExpToTrig(expr)
+    description: "`expr` with each `Exp` rewritten via Euler's formula or its hyperbolic analogue."
+    library: '@enumeratio/analytic'
+details:
+  - Rewrites `Exp(ix)` to `cos(x) + i·sin(x)` and a real `Exp(x)` to `cosh(x) + sinh(x)` everywhere in the tree, then simplifies. A combination that cancels back down to a single Cosh/Sinh/Sin -- the Scope examples -- falls out of that simplification pass; there is no separate 'recognize this shape' rule.
+examples:
+  - id: euler-s-formula
+    expr: [ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]
+    expected: [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]
+    caption: Euler's formula
+  - id: a-real-exponential-splits-into-hyperbolic-parts
+    expr: [ExpToTrig, [Exp, x]]
+    expected: [Add, [Sinh, x], [Cosh, x]]
+    caption: A real exponential splits into hyperbolic parts
+  - id: recognizes-cosh
+    expr: [ExpToTrig, [Divide, [Add, [Exp, x], [Exp, [Negate, x]]], 2]]
+    expected: [Cosh, x]
+    category: Scope
+    caption: Recognizes [[Cosh]]
+  - id: recognizes-sin
+    expr: [ExpToTrig, [Divide, [Subtract, [Exp, [Multiply, ImaginaryUnit, x]], [Exp, [Negate, [Multiply, ImaginaryUnit, x]]]], [Multiply, 2, ImaginaryUnit]]]
+    expected: [Sin, x]
+    category: Scope
+    caption: Recognizes [[Sin]]
+seeAlso:
+  - ComplexExpand
+  - TrigToExp

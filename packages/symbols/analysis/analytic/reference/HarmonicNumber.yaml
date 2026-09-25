@@ -1,0 +1,152 @@
+name: HarmonicNumber
+domain: Special functions
+signature: HarmonicNumber(n)
+summary: The harmonic number $H_n = \sum_{k=1}^n \tfrac1k$, exact at a non-negative integer $n$; with a second argument, the generalized $H_n^{(r)} = \sum_{k=1}^n k^{-r}$. Continued off the integers by $H_z = \psi(z+1) + \gamma$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: HarmonicNumber(n)
+    description: the harmonic number $H_n = \sum_{k=1}^n 1/k$.
+    library: '@enumeratio/analytic'
+  - call: HarmonicNumber(n, r)
+    description: the generalized harmonic number $H_n^{(r)} = \sum_{k=1}^n k^{-r}$.
+    library: '@enumeratio/analytic'
+details:
+  - 'At a non-negative integer $n$ (and an integer $r$ of either sign, in the two-argument form) the sum is exact: $H_0 = 0$, $H_1 = 1$, $H_2 = \tfrac32$, $H_{10} = \tfrac{7381}{2520}$.'
+  - Continued off the lattice by the standard digamma identity $H_z = \psi(z+1) + \gamma$ ([[PolyGamma]], [[EulerGamma]]) and its generalization $H_z^{(r)} = \zeta(r) - \zeta(r, z+1)$ ([[Zeta]], [[HurwitzZeta]]) — both reduce to the same exact values at the integers, so there is one formula, not a case split.
+  - "Order $r = 1$ is the one place that generalization can't be used directly: $\\zeta(1)$ is itself a pole, at every $z$, even though $H_z^{(1)} = H_z$ is perfectly finite. HarmonicNumber(z, 1) is routed straight to the one-argument $\\psi(z+1) + \\gamma$ instead."
+  - 'Negative integer $n$ has no sum and is a pole: $H_{-1} = H_{-2} = \cdots = \mathrm{ComplexInfinity}$, in both the one- and two-argument forms — matching Wolfram, which does not extend the sum by the continuation there.'
+  - Complex $z$ and complex/non-integer $r$ are supported numerically, via [[PolyGamma]]'s digamma ($r$ absent) and [[HurwitzZeta]] ($r$ present).
+  - A non-integer $r$ (or non-integer $z$ with $r$ present) stays symbolic under plain evaluation even at an otherwise-exact $n$ — the sum $\sum k^{-r}$ has no rational value there — and only reduces under N() or a floating-point argument, the same gate every head in this package uses.
+examples:
+  - id: h-10-frac-7381-2520
+    expr: [HarmonicNumber, 10]
+    expected: [Rational, 7381, 2520]
+    caption: $H_{10} = \tfrac{7381}{2520}$
+  - id: h-0-0-the-empty-sum
+    expr: [HarmonicNumber, 0]
+    expected: 0
+    caption: $H_0 = 0$, the empty sum
+  - id: h-5-1-sum-k-1-5-k-15-a-negative-order-is-still
+    expr: [HarmonicNumber, 5, -1]
+    expected: 15
+    caption: $H_5^{(-1)} = \sum_{k=1}^5 k = 15$ — a negative order is still exact
+  - id: a-floating-point-argument-evaluates-via-psi-z-1
+    expr: [HarmonicNumber, 2.5]
+    expected: {num: '1.680372305546776047837'}
+    caption: A floating-point argument evaluates via $\psi(z+1) + \gamma$
+  - id: no-sum-below-n-0
+    expr: [HarmonicNumber, -3]
+    expected: ComplexInfinity
+    category: Properties
+    caption: No sum below $n = 0$
+  - id: a-non-integer-order-stays-symbolic-under-plain
+    expr: [HarmonicNumber, 5, [Rational, 1, 2]]
+    expected: [HarmonicNumber, 5, [Rational, 1, 2]]
+    category: Possible issues
+    caption: A non-integer order stays symbolic under plain evaluation, even at an exact $n$; N() gives $3.23167\ldots$
+  - id: h-10-2-sum-k-1-10-k-2-exact
+    expr: [HarmonicNumber, 10, 2]
+    expected: [Rational, 1968329, 1270080]
+    caption: $H_{10}^{(2)} = \sum_{k=1}^{10} k^{-2}$, exact
+  - id: non-integer-arguments-via-psi-z-1-gamma
+    expr: [HarmonicNumber, 0.33]
+    expected: {num: '0.441523646937363528111'}
+    category: Scope
+    caption: Non-integer arguments via $\psi(z+1) + \gamma$
+  - id: the-generalized-form-off-the-integers-via-zeta-r
+    expr: [HarmonicNumber, 0.8, 3]
+    expected: {num: '0.940124048948776980484'}
+    category: Scope
+    caption: The generalized form off the integers, via $\zeta(r) - \zeta(r, z+1)$
+  - id: complex-arguments
+    expr: [HarmonicNumber, [Complex, 1.5, 2]]
+    expected: [Complex, 1.6170494230744863, 0.7801971357298588]
+    category: Scope
+    caption: Complex arguments
+  - id: order-r-1-off-the-integers-is-plain-h-z-h-e-1
+    expr: [N, [HarmonicNumber, ExponentialE, 1]]
+    expected: 1.7500213805365417
+    category: Scope
+    caption: 'Order $r = 1$ off the integers is plain $H_z$: $H_e = 1.75002\ldots$ — routed to the one-argument form directly rather than through $\zeta(1) - \zeta(1, z+1)$, which is a pole at every $z$'
+  - id: listable-threads-over-a-list
+    expr: [HarmonicNumber, [List, 2, 3, 5, 7, 11]]
+    expected: [List, [Rational, 3, 2], [Rational, 11, 6], [Rational, 137, 60], [Rational, 363, 140], [Rational, 83711, 27720]]
+    category: Scope
+    caption: 'Listable: threads over a list'
+  - id: threads-elementwise-over-an-array-of-orders-and
+    expr: [HarmonicNumber, 2, [List, [List, [Rational, 1, 2], 2], [List, 2, [Rational, 1, 2]]]]
+    expected: [List, [List, [Add, 1, [Divide, 1, [Sqrt, 2]]], [Rational, 5, 4]], [List, [Rational, 5, 4], [Add, 1, [Divide, 1, [Sqrt, 2]]]]]
+    category: Scope
+    caption: Threads elementwise over an array of orders, and $H_2^{(1/2)} = 1 + 1/\sqrt2$ is a finite sum; not yet
+    aspirational: true
+  - id: h-1-2-2-2-ln-2-exact-at-rational-arguments-by
+    expr: [HarmonicNumber, [Rational, 1, 2]]
+    expected: [Add, 2, [Multiply, -2, [Ln, 2]]]
+    category: Properties
+    caption: "$H_{1/2} = 2 - 2\\ln 2$: exact at rational arguments by Gauss's digamma theorem"
+  - id: h-1-4-4-frac-pi-2-3-ln-2
+    expr: [HarmonicNumber, [Rational, 1, 4]]
+    expected: [Add, 4, [Multiply, -3, [Ln, 2]], [Multiply, [Rational, -1, 2], Pi]]
+    category: Properties
+    caption: $H_{1/4} = 4 - \tfrac{\pi}{2} - 3\ln 2$
+  - id: symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays
+    expr: [HarmonicNumber, n, -1]
+    expected: [Multiply, [Rational, 1, 2], n, [Add, n, 1]]
+    category: Properties
+    caption: 'Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum; stays symbolic'
+    aspirational: true
+  - id: the-harmonic-series-diverges
+    expr: [HarmonicNumber, PositiveInfinity]
+    expected: PositiveInfinity
+    category: Properties
+    caption: The harmonic series diverges
+  - id: h-infty-r-zeta-r-for-r-1-the-basel-sum
+    expr: [HarmonicNumber, PositiveInfinity, 2]
+    expected: [Multiply, [Rational, 1, 6], [Power, Pi, 2]]
+    category: Properties
+    caption: '$H_\infty^{(r)} = \zeta(r)$ for $r > 1$: the Basel sum'
+  - id: interval-arithmetic-in-the-order
+    expr: [HarmonicNumber, 0.2, [Interval, 2.1, 2.2]]
+    expected: [Interval, 0.3863469411841759, 0.3950923922402868]
+    category: Scope
+    caption: Interval arithmetic in the order
+  - id: uncertainty-propagation-in-the-order
+    expr: [HarmonicNumber, [Rational, 3, 2], [Around, 2.1, 0.01]]
+    expected: [Around, 1.1455164340491326, 0.0008799826466981091]
+    category: Scope
+    caption: Uncertainty propagation in the order
+  - id: to-exactly-30-significant-digits-not-yet-31-come
+    expr: [N, [HarmonicNumber, [Rational, 1, 2]], 30]
+    expected: {num: '0.613705638880109381165535757084'}
+    category: Scope
+    caption: To exactly 30 significant digits, the last one correctly rounded
+  - id: order-1-gives-h-z-itself-not-the-zeta-1-pole
+    expr: [N, [HarmonicNumber, 2.5, 1]]
+    expected: {num: '1.680372305546776047837'}
+    category: Scope
+    caption: Order 1 gives $H_z$ itself, not the $\zeta(1)$ pole another order's formula would hit.
+    group: harmonic-order-one
+  - id: at-an-integer-order-1-agrees-exactly-with-the
+    expr: [HarmonicNumber, 10, 1]
+    expected: [Rational, 7381, 2520]
+    category: Scope
+    caption: At an integer, order 1 agrees exactly with the one-argument $H_{10}$.
+    group: harmonic-order-one
+implementations:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [Add, [PolyGamma, 0, [Add, _z, 1]], EulerGamma]
+    note: The one-argument digamma identity; exact at the integers too (ψ(n+1) + γ = Hₙ), so it doubles as the oracle at both.
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/harmonic.ts
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: HarmonicNumber[n] / HarmonicNumber[n, r]; mpmath.harmonic(n) (one-argument only — mpmath has no generalized order).
+seeAlso:
+  - PolyGamma
+  - EulerGamma
+  - Zeta
+  - HurwitzZeta

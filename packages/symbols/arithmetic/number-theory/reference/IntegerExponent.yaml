@@ -1,0 +1,73 @@
+name: IntegerExponent
+domain: Number theory
+signature: IntegerExponent(n, b?)
+summary: The largest $k$ with $b^k \mid n$ — the $b$-adic valuation of $n$ as an integer.
+signatures:
+  - call: IntegerExponent(n, b)
+    description: the multiplicity of $b$ in $n$
+    library: enumeratio-number-theory
+  - call: IntegerExponent(n)
+    description: base 10
+    library: enumeratio-number-theory
+details:
+  - "Integers only: a rational's $p$-adic valuation is [[AdicValuation]]'s, over [[AdicNumeral]]."
+  - $n = 0$ has every power of $b$ as a divisor, so `IntegerExponent(0, b)` is `PositiveInfinity`.
+  - $b$ need not be prime — `IntegerExponent(n, 6)` is the largest $k$ with $6^k \mid n$, not the 2-adic or 3-adic valuation.
+examples:
+  - id: 2000-5-3-cdot-16
+    expr: [IntegerExponent, 2000, 5]
+    expected: 3
+    caption: $2000 = 5^3 \cdot 16$
+  - id: base-10-by-default
+    expr: [IntegerExponent, 2000]
+    expected: 3
+    caption: base 10 by default
+  - id: integerexponent-0-5
+    expr: [IntegerExponent, 0, 5]
+    expected: PositiveInfinity
+    category: Possible issues
+  - id: trailing-zeros-in-base-10
+    expr: [IntegerExponent, 1230000]
+    expected: 4
+    caption: trailing zeros in base 10
+  - id: integerexponent-2-pow-10-times-3-pow-4-2
+    expr: [IntegerExponent, [Multiply, [Power, 2, 10], [Power, 3, 4]], 2]
+    expected: 10
+  - id: composite-base-1728-2-6-3-3-so-6-3-divides-it
+    expr: [IntegerExponent, 1728, 6]
+    expected: 3
+    category: Scope
+    caption: 'Composite base: $1728=2^6 3^3$, so $6^3$ divides it but $6^4$ does not'
+  - id: negative-integers
+    expr: [IntegerExponent, -1000]
+    expected: 3
+    category: Scope
+    caption: Negative integers
+  - id: threads-over-a-list
+    expr: [IntegerExponent, [List, 10, 100, 1000]]
+    expected: [List, 1, 2, 3]
+    category: Scope
+    caption: Threads over a list
+  - id: gaussian-integers-8i-i-cdot-i-3-1-i-6
+    expr: [IntegerExponent, [Complex, 0, 8], [Complex, 1, 1]]
+    expected: 6
+    category: Scope
+    caption: 'Gaussian integers: $8i=i\cdot(-i)^3(1+i)^6$'
+  - id: the-trailing-zeros-of-100
+    expr: [IntegerExponent, [Factorial, 100]]
+    expected: 24
+    category: Applications
+    caption: The trailing zeros of $100!$
+  - id: legendre-s-formula-lfloor-100-7-rfloor-lfloor
+    expr: [IntegerExponent, [Factorial, 100], 7]
+    expected: 16
+    category: Properties
+    caption: "Legendre's formula: $\\lfloor100/7\\rfloor+\\lfloor100/49\\rfloor=16$"
+  - id: base-1-has-no-well-defined-p-adic-valuation-so
+    expr: [IntegerExponent, 10, 1]
+    expected: [IntegerExponent, 10, 1]
+    category: Possible issues
+    caption: Base 1 has no well-defined $p$-adic valuation, so the call stays unevaluated
+seeAlso:
+  - AdicValuation
+  - FactorInteger

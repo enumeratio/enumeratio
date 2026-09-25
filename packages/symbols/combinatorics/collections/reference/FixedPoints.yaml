@@ -1,0 +1,29 @@
+name: FixedPoints
+domain: Permutation statistics
+signature: FixedPoints(p)
+summary: 'The number of fixed points of $p$: positions $i$ with $p_i = i$.'
+signatures:
+  - call: FixedPoints(p)
+    description: the fixed-point count of a one-line permutation $p$
+    library: enumeratio-collections
+details:
+  - A permutation with no fixed points is a derangement (see [[Derangements]])
+  - Averaged over $S_n$ the count is exactly $1$, independent of $n$
+examples:
+  - id: only-1-is-fixed
+    expr: [FixedPoints, [List, 1, 3, 2]]
+    expected: 1
+    caption: only $1$ is fixed
+  - id: the-identity-fixes-all
+    expr: [FixedPoints, [List, 1, 2, 3]]
+    expected: 3
+    caption: the identity fixes all
+  - id: a-derangement-fixes-nothing
+    expr: [FixedPoints, [List, 2, 3, 1]]
+    expected: 0
+    category: Properties
+    caption: a derangement fixes nothing
+seeAlso:
+  - Derangements
+  - CycleCount
+  - SymmetricGroup

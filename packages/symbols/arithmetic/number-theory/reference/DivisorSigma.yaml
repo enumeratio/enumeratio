@@ -1,0 +1,89 @@
+name: DivisorSigma
+domain: Number theory
+signature: DivisorSigma(k, n)
+summary: The sum of the kth powers of the divisors of n.
+signatures:
+  - call: DivisorSigma(k, n)
+    description: sum of the $k$th powers of the divisors of $n$.
+details:
+  - $k=0$ gives the divisor count $d(n)$; $k=1$ gives the ordinary sum of divisors.
+  - 'Multiplicative: $\sigma_k(mn)=\sigma_k(m)\sigma_k(n)$ whenever $\gcd(m,n)=1$.'
+  - A perfect number $n$ satisfies $\sigma_1(n)=2n$, as with 6 and 28.
+  - 'A negative order sums reciprocal powers: $\sigma_{-k}(n) = \sigma_k(n)/n^k$.'
+examples:
+  - id: k-0-gives-the-number-of-divisors
+    expr: [DivisorSigma, 0, 20]
+    expected: 6
+    caption: k = 0 gives the number of divisors
+  - id: k-1-gives-the-sum-of-divisors
+    expr: [DivisorSigma, 1, 20]
+    expected: 42
+    caption: k = 1 gives the sum of divisors
+  - id: divisorsigma-2-20
+    expr: [DivisorSigma, 2, 20]
+    expected: 546
+  - id: 6-is-a-perfect-number-sigma-1-6-2-times-6
+    expr: [DivisorSigma, 1, 6]
+    expected: 12
+    category: Applications
+    caption: '6 is a perfect number: $\sigma_1(6)=2\times6$'
+  - id: 28-is-the-next-perfect-number-sigma-1-28-2-times
+    expr: [DivisorSigma, 1, 28]
+    expected: 56
+    category: Applications
+    caption: '28 is the next perfect number: $\sigma_1(28)=2\times28$'
+  - id: multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n
+    expr: [Equal, [Multiply, [DivisorSigma, 1, 9], [DivisorSigma, 1, 8]], [DivisorSigma, 1, 72]]
+    expected: True
+    category: Properties
+    caption: 'Multiplicative: $\sigma_1(mn)=\sigma_1(m)\sigma_1(n)$ when $\gcd(m,n)=1$, here for $9$ and $8$'
+  - id: the-trivial-base-case
+    expr: [DivisorSigma, 1, 1]
+    expected: 1
+    category: Possible issues
+    caption: The trivial base case
+  - id: a-negative-order-sums-reciprocal-powers-sigma-1
+    expr: [DivisorSigma, -1, 6]
+    expected: 2
+    category: Scope
+    caption: 'A negative order sums reciprocal powers: $\sigma_{-1}(6) = 1 + \frac12 + \frac13 + \frac16 = 2$'
+  - id: divisorsigma-2-6
+    expr: [DivisorSigma, 2, 6]
+    expected: 50
+  - id: large-integers
+    expr: [DivisorSigma, 2, [Power, 10, 30]]
+    expected: {num: '1388888888888888888587721618754026546109040824596043713112451'}
+    category: Scope
+    caption: Large integers
+  - id: negative-k-1-frac-14-frac-1-25-frac-1-100
+    expr: [DivisorSigma, -2, 10]
+    expected: [Rational, 13, 10]
+    category: Scope
+    caption: 'Negative $k$: $1+\tfrac14+\tfrac1{25}+\tfrac1{100}$'
+  - id: rational-k-the-square-roots-of-the-divisors-of
+    expr: [DivisorSigma, [Rational, 1, 2], 12]
+    expected: [Add, 3, [Sqrt, 2], [Sqrt, 6], [Multiply, 3, [Sqrt, 3]]]
+    category: Scope
+    caption: 'Rational $k$: the square roots of the divisors of 12, summed'
+  - id: gaussian-integers-1-1-i-1-2i-3-i-over-divisors
+    expr: [DivisorSigma, 1, [Complex, 3, 1]]
+    expected: [Complex, 6, 4]
+    category: Scope
+    caption: 'Gaussian integers: $1+(1+i)+(1+2i)+(3+i)$, over [[Divisors]]'
+  - id: gaussianintegers-true-squares-of-1-1-i-2-3-3-3i
+    expr: [DivisorSigma, 2, 6, [KeyValuePair, GaussianIntegers, True]]
+    expected: [Complex, 50, 20]
+    category: Scope
+    caption: 'GaussianIntegers -> True: squares of $1,1+i,2,3,3+3i,6$'
+  - id: listable-in-n
+    expr: [DivisorSigma, 2, [List, 1, 2, 3, 4, 5]]
+    expected: [List, 1, 5, 10, 21, 26]
+    category: Scope
+    caption: Listable in $n$
+  - id: symbolic-k-expands-over-the-divisors
+    expr: [DivisorSigma, k, 30]
+    expected: [Add, [Power, 2, k], [Power, 3, k], [Power, 5, k], [Power, 6, k], [Power, 10, k], [Power, 15, k], [Power, 30, k], 1]
+    category: Scope
+    caption: Symbolic $k$ expands over the divisors
+seeAlso:
+  - Divisors

@@ -1,0 +1,44 @@
+name: Arcoth
+domain: Elementary functions
+signature: Arcoth(x)
+summary: Inverse hyperbolic cotangent, the inverse of Coth.
+signatures:
+  - call: Arcoth(x)
+    description: the value $y$ with $\coth(y) = x$.
+details:
+  - Stays symbolic at plain evaluation, same as [[Arsinh]]-family functions; wrap in N(...).
+examples:
+  - id: n-arcoth-2
+    expr: [N, [Arcoth, 2]]
+    expected: {num: '0.5493061443340548457'}
+  - id: a-logarithmic-singularity-at-1
+    expr: [Arcoth, 1]
+    expected: PositiveInfinity
+    category: Scope
+    caption: A logarithmic singularity at 1
+  - id: arcoth-positiveinfinity
+    expr: [Arcoth, PositiveInfinity]
+    expected: 0
+    category: Scope
+  - id: a-float-argument-evaluates-directly
+    expr: [Arcoth, 3.5]
+    expected: {num: '0.293893332451059504095'}
+    category: Scope
+    caption: A float argument evaluates directly
+  - id: as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1
+    expr: [TrigToExp, [Arcoth, 2]]
+    expected: [Multiply, [Rational, 1, 2], [Ln, 3]]
+    category: Scope
+    caption: As a logarithm, $\operatorname{arcoth} 2 = \tfrac12\ln\frac{2+1}{2-1} = \tfrac12\ln 3$
+  - id: oddness-pulls-the-sign-out-of-a-symbolic
+    expr: [Arcoth, [Negate, x]]
+    expected: [Negate, [Arcoth, x]]
+    category: Scope
+    caption: 'Oddness pulls the sign out of a symbolic argument: $\operatorname{arcoth}(-x) = -\operatorname{arcoth} x$'
+  - id: derivative-frac-1-1-x-2
+    expr: [D, [Arcoth, x], x]
+    expected: [Divide, 1, [Add, [Negate, [Power, x, 2]], 1]]
+    category: Scope
+    caption: 'Derivative: $\frac{1}{1 - x^2}$'
+seeAlso:
+  - Artanh

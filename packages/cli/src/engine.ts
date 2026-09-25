@@ -183,7 +183,7 @@ const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(
  * Carrier name to minted type, for the statistics. SetPartition is held back: domains treats
  * a set_partition as a restricted growth string while every set-partition definition works in
  * BLOCKS, so typing those heads over the carrier would be a wrong answer rather than a type
- * error. See `packages/statistics/scripts/carriers.ts`.
+ * error. See `packages/symbols/combinatorics/statistics/scripts/carriers.ts`.
  */
 const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(
   DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),

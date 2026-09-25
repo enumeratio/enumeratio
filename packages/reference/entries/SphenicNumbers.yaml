@@ -1,0 +1,20 @@
+name: SphenicNumbers
+domain: Collections
+signature: SphenicNumbers
+summary: 'The sphenic numbers $30, 42, 66, 70, 78, …$: products of three DISTINCT primes ($\tau=8$, $\mu=-1$).'
+signatures:
+  - call: SphenicNumbers
+    description: the $n = pqr$ for distinct primes $p, q, r$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(SphenicNumbers) = +\infty$. OEIS A007304.'
+  - $At(SphenicNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SphenicNumbers, 1) = 30$ ($2\times3\times5$).
+  - 'Membership goes through [[Element]]: $Element(30, SphenicNumbers)$ is true, $Element(60, SphenicNumbers)$ is false ($2^2\times3\times5$, a repeated factor).'
+examples: []
+enumerate:
+  expr: Take(SphenicNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - SquarefreeSemiprimes
+  - KAlmostPrimes

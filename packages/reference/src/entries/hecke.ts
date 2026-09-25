@@ -1,13 +1,18 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "Hecke algebras";
-const T = (...w: number[]): MathJSON => ["HeckeT", ["List", ...w]];
-const times = (...parts: MathJSON[]): MathJSON => ["NonCommutativeMultiply", ...parts];
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/algebras/hecke/reference/HeckeT.yaml",
+  "packages/symbols/algebras/hecke/reference/HeckeSpecialize.yaml",
+];
 
 export const hecke: readonly ReferenceEntry[] = [
   {
     name: "HeckeT",
-    domain: DOMAIN,
+    domain: "Hecke algebras",
     signature: "HeckeT(permutation)",
     summary:
       "The basis element $T_w$ of the Iwahori–Hecke algebra $H_n(q)$, indexed by a permutation in one-line notation. Multiplication is the $q$-deformation of the symmetric group's.",
@@ -28,33 +33,56 @@ export const hecke: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
-        expr: times(T(2, 1, 3), T(1, 3, 2)),
-        expected: T(2, 3, 1),
+        id: "length-goes-up-so-no-q-appears",
+        expr: [
+          "NonCommutativeMultiply",
+          ["HeckeT", ["List", 2, 1, 3]],
+          ["HeckeT", ["List", 1, 3, 2]],
+        ],
+        expected: ["HeckeT", ["List", 2, 3, 1]],
         caption: "length goes up, so no $q$ appears",
       },
       {
-        expr: times(T(2, 1, 3), T(2, 1, 3)),
+        id: "the-quadratic-relation-t-s-2-q-q-1-t-s",
+        expr: [
+          "NonCommutativeMultiply",
+          ["HeckeT", ["List", 2, 1, 3]],
+          ["HeckeT", ["List", 2, 1, 3]],
+        ],
         expected: [
           "Add",
-          ["Multiply", "q", T(1, 2, 3)],
-          ["Multiply", ["Add", "q", -1], T(2, 1, 3)],
+          ["Multiply", "q", ["HeckeT", ["List", 1, 2, 3]]],
+          ["Multiply", ["Add", "q", -1], ["HeckeT", ["List", 2, 1, 3]]],
         ],
         caption: "the quadratic relation $T_s^2 = q + (q-1)T_s$",
         category: "Properties",
       },
       {
-        expr: times(T(2, 1, 3), T(1, 3, 2), T(2, 1, 3)),
-        expected: T(3, 2, 1),
+        id: "t-st-tt-s-the-longest-element-of-s-3",
+        expr: [
+          "NonCommutativeMultiply",
+          ["HeckeT", ["List", 2, 1, 3]],
+          ["HeckeT", ["List", 1, 3, 2]],
+          ["HeckeT", ["List", 2, 1, 3]],
+        ],
+        expected: ["HeckeT", ["List", 3, 2, 1]],
         caption: "$T_sT_tT_s$ — the longest element of $S_3$",
         category: "Properties",
       },
       {
-        expr: times(T(1, 3, 2), T(2, 1, 3), T(1, 3, 2)),
-        expected: T(3, 2, 1),
+        id: "and-t-tt-st-t-gives-the-same-which-is-the-braid",
+        expr: [
+          "NonCommutativeMultiply",
+          ["HeckeT", ["List", 1, 3, 2]],
+          ["HeckeT", ["List", 2, 1, 3]],
+          ["HeckeT", ["List", 1, 3, 2]],
+        ],
+        expected: ["HeckeT", ["List", 3, 2, 1]],
         caption: "…and $T_tT_sT_t$ gives the same, which is the braid relation",
         category: "Properties",
       },
       {
+        id: "n-the-same-basis-as-z-s-n",
         expr: ["AlgebraDimension", ["HeckeAlgebra", 4]],
         expected: 24,
         caption: "$n!$ — the same basis as $\\mathbb{Z}S_n$",
@@ -64,7 +92,7 @@ export const hecke: readonly ReferenceEntry[] = [
   },
   {
     name: "HeckeSpecialize",
-    domain: DOMAIN,
+    domain: "Hecke algebras",
     signature: "HeckeSpecialize(element, q)",
     summary:
       "Substitute a value for the deformation parameter. At $q = 1$ the algebra collapses to the group algebra of $S_n$ — which is what makes 'deformation' the right word.",
@@ -81,19 +109,38 @@ export const hecke: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
-        expr: ["HeckeSpecialize", times(T(2, 1, 3), T(2, 1, 3)), 1],
-        expected: T(1, 2, 3),
+        id: "q-t-e-q-1-t-s-at-q-1-is-just-t-e",
+        expr: [
+          "HeckeSpecialize",
+          ["NonCommutativeMultiply", ["HeckeT", ["List", 2, 1, 3]], ["HeckeT", ["List", 2, 1, 3]]],
+          1,
+        ],
+        expected: ["HeckeT", ["List", 1, 2, 3]],
         caption: "$q\\,T_e + (q-1)T_s$ at $q = 1$ is just $T_e$",
       },
       {
-        expr: ["HeckeSpecialize", times(T(2, 1, 3), T(2, 1, 3)), 2],
-        expected: ["Add", ["Multiply", 2, T(1, 2, 3)], T(2, 1, 3)],
+        id: "at-q-2-it-stays-spread-over-two-basis-elements",
+        expr: [
+          "HeckeSpecialize",
+          ["NonCommutativeMultiply", ["HeckeT", ["List", 2, 1, 3]], ["HeckeT", ["List", 2, 1, 3]]],
+          2,
+        ],
+        expected: [
+          "Add",
+          ["Multiply", 2, ["HeckeT", ["List", 1, 2, 3]]],
+          ["HeckeT", ["List", 2, 1, 3]],
+        ],
         caption: "at $q = 2$ it stays spread over two basis elements",
         category: "Properties",
       },
       {
-        expr: ["HeckeSpecialize", times(T(2, 1, 3), T(1, 3, 2)), 1],
-        expected: T(2, 3, 1),
+        id: "the-ordinary-product-of-permutations",
+        expr: [
+          "HeckeSpecialize",
+          ["NonCommutativeMultiply", ["HeckeT", ["List", 2, 1, 3]], ["HeckeT", ["List", 1, 3, 2]]],
+          1,
+        ],
+        expected: ["HeckeT", ["List", 2, 3, 1]],
         caption: "the ordinary product of permutations",
         category: "Applications",
       },

@@ -1,0 +1,41 @@
+name: Inversions
+domain: Permutation statistics
+signature: Inversions(p)
+summary: 'The number of inversions of a permutation $p$: pairs $i < j$ with $p_i > p_j$ (its Kendall-tau distance from the identity).'
+signatures:
+  - call: Inversions(p)
+    description: the inversion count of a one-line permutation $p$
+    library: enumeratio-collections
+details:
+  - Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)
+  - Generating function over $S_n$ is the q-factorial $[n]_q! = \prod_{i=1}^{n} \frac{1 - q^i}{1 - q}$
+  - Equidistributed with [[MajorIndex]] on $S_n$ (MacMahon), so both are Mahonian statistics
+  - 'Aggregates over a whole collection compose from built-ins: $\mathrm{Sum}(\mathrm{Map}(\mathrm{Inversions}, \mathrm{SymmetricGroup}(n)))$ folds the stat over the lazy family'
+examples:
+  - id: 3-1-and-3-2
+    expr: [Inversions, [List, 3, 1, 2]]
+    expected: 2
+    caption: $(3,1)$ and $(3,2)$
+  - id: the-identity-has-none
+    expr: [Inversions, [List, 1, 2, 3]]
+    expected: 0
+    caption: the identity has none
+  - id: the-reversal-attains-the-maximum-binom-4-2
+    expr: [Inversions, [List, 4, 3, 2, 1]]
+    expected: 6
+    category: Properties
+    caption: the reversal attains the maximum $\binom{4}{2}$
+  - id: the-inversion-distribution-over-s-3-mapped
+    expr: [ListFrom, [Map, [Function, [Inversions, p], p], [SymmetricGroup, 3]]]
+    expected: [List, 0, 1, 1, 2, 2, 3]
+    category: Applications
+    caption: the inversion distribution over $S_3$, mapped across the lazy [[SymmetricGroup]]
+  - id: total-inversions-over-all-of-s-4-folded-with-sum
+    expr: [Sum, [Map, [Function, [Inversions, p], p], [SymmetricGroup, 4]]]
+    expected: 72
+    category: Applications
+    caption: 'total inversions over all of $S_4$, folded with $\mathrm{Sum}$: $\frac{n!}{2}\binom{n}{2} = 72$'
+seeAlso:
+  - MajorIndex
+  - Descents
+  - SymmetricGroup

@@ -1,0 +1,48 @@
+name: FunctionExpand
+domain: Transformations
+signature: FunctionExpand(expr)
+summary: Rewrite special functions in `expr` in terms of more elementary or better-known ones. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: FunctionExpand(expr)
+    description: '`expr` with a handful of named special-function identities applied.'
+    library: '@enumeratio/analytic'
+details:
+  - "Not a general special-function identity engine: DirichletEta and DirichletBeta rewrite in terms of the (Hurwitz) zeta this package already declares, BarnesG(½) in Glaisher's constant, and two special angles (Sin(π/15), Cos(π/24)) past compute-engine's automatic table -- each is a named identity, not a derivation."
+  - The two special angles are pinned lookups at exactly those arguments, not a general nested-radical solver for an arbitrary rational multiple of π.
+  - "Pochhammer(x, 3) and Binomial(n, 2) need no rule here: compute-engine's own evaluator already expands a concrete nonnegative integer length into the product before FunctionExpand runs."
+examples:
+  - id: eta-s-1-2-1-s-zeta-s
+    expr: [FunctionExpand, [DirichletEta, s]]
+    expected: [Multiply, [Add, [Negate, [Power, 2, [Add, [Negate, s], 1]]], 1], [Zeta, s]]
+    caption: $\eta(s) = (1 - 2^{1-s})\zeta(s)$
+  - id: beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34
+    expr: [FunctionExpand, [DirichletBeta, s]]
+    expected: [Multiply, [Add, [Negate, [Zeta, s, [Rational, 3, 4]]], [Zeta, s, [Rational, 1, 4]]], [Power, 4, [Negate, s]]]
+    caption: $\beta(s) = 4^{-s}(\zeta(s, \tfrac14) - \zeta(s, \tfrac34))$
+  - id: g-frac-12-in-glaisher-s-constant
+    expr: [FunctionExpand, [BarnesG, [Rational, 1, 2]]]
+    expected: [Multiply, [Divide, 1, [Root, Pi, 4]], [Root, 2, 24], [Power, ConstGlaisher, [Rational, -3, 2]], [Root, ExponentialE, 8]]
+    caption: $G(\tfrac12)$ in Glaisher's constant
+  - id: radicals-past-the-automatic-special-angle-table
+    expr: [FunctionExpand, [Sin, [Divide, Pi, 15]]]
+    expected: [Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]
+    caption: Radicals past the automatic special-angle table
+  - id: half-angle-radicals-cos-frac-pi-24-frac-12-sqrt
+    expr: [FunctionExpand, [Cos, [Divide, Pi, 24]]]
+    expected: [Multiply, [Divide, [Sqrt, 2], 4], [Sqrt, [Add, 4, [Sqrt, 2], [Sqrt, 6]]]]
+    caption: 'Half-angle radicals: $\cos\frac{\pi}{24} = \tfrac12\sqrt{2 + \tfrac{\sqrt2 + \sqrt6}{2}}$'
+  - id: a-rising-factorial-with-an-integer-length
+    expr: [FunctionExpand, [Pochhammer, x, 3]]
+    expected: [Multiply, x, [Add, x, 1], [Add, x, 2]]
+    category: Scope
+    caption: A rising factorial with an integer length becomes a polynomial
+  - id: binom-n2-frac-n-n-1-2
+    expr: [FunctionExpand, [Binomial, n, 2]]
+    expected: [Divide, [Multiply, n, [Subtract, n, 1]], 2]
+    category: Scope
+    caption: $\binom n2 = \frac{n(n-1)}{2}$
+seeAlso:
+  - FullSimplify
+  - DirichletEta
+  - DirichletBeta
+  - BarnesG

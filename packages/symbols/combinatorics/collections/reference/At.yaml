@@ -1,0 +1,139 @@
+name: At
+domain: Collections
+signature: At(collection, index)
+summary: The element at the given position; a negative index counts from the end.
+signatures:
+  - call: At(collection, index)
+    description: the element at `index`; a negative index counts from the end.
+  - call: At(collection, [i1, i2, …])
+    description: the elements at several positions at once.
+  - call: At(collection, Range(start, end))
+    description: a contiguous slice selected by a [[Range]].
+  - call: At(collection, Span(i, j, step))
+    description: a contiguous (or stepped) slice selected by a [[Span]], negative step included.
+    library: enumeratio-collections
+  - call: At(matrix, rows, columns)
+    description: the submatrix at the given rows and columns; `rows` (or `columns`) as `All` takes every row (or column).
+    library: enumeratio-collections
+  - call: At(expr, index)
+    description: a part of ANY expression, not just a collection's — the second term of a sum, say.
+    library: enumeratio-collections
+details:
+  - 'Negative indices count from the end: $At(c, -1)$ is the last element. See [[Last]].'
+  - Chaining reaches into nested collections, like indexing a matrix row then column.
+  - An out-of-range index evaluates to $NaN$ rather than raising an error.
+  - Index 0 is the collection's own head, matching Wolfram's Part[c, 0] — compute-engine gave $NaN$ before.
+  - Positional element access, 1-based; negative indices count from the end.
+  - Two index lists at the row and column positions extract a submatrix; a $Span$ takes a contiguous (optionally stepped or reversed) slice.
+  - Works on the operands of any expression, not just a collection's — Wolfram's Part reaches into any head.
+examples:
+  - id: list-1-2-3-4-list-2
+    expr: [At, [List, 1, 2, 3, 4], 2]
+    expected: 2
+  - id: list-1-2-3-4-list-neg-1
+    expr: [At, [List, 1, 2, 3, 4], -1]
+    expected: 4
+  - id: list-a-b-c-d-list-neg-2
+    expr: [At, [List, a, b, c, d], -2]
+    expected: c
+  - id: chaining-at-reaches-into-nested-collections-like
+    expr: [At, [At, [List, [List, 1, 2], [List, 3, 4]], 2], 1]
+    expected: 3
+    category: Applications
+    caption: Chaining $At$ reaches into nested collections, like indexing a matrix row then column
+  - id: a-list-of-indices-selects-several-elements-at
+    expr: [At, [List, a, b, c, d], [List, 1, 3]]
+    expected: [List, a, c]
+    category: Scope
+    caption: A list of indices selects several elements at once
+  - id: a-range-also-works-as-an-index-list-extracting-a
+    expr: [At, [List, a, b, c, d, e], [Range, 2, 4]]
+    expected: [List, b, c, d]
+    category: Scope
+    caption: A [[Range]] also works as an index list, extracting a contiguous slice
+  - id: index-0-is-the-collection-s-own-head-matching
+    expr: [At, [List, 1, 2, 3], 0]
+    expected: List
+    category: Scope
+    caption: Index 0 is the collection's own head, matching Wolfram's Part[c, 0]
+  - id: an-out-of-range-index-evaluates-to-nan-rather
+    expr: [At, [List, 1, 2, 3], 10]
+    expected: NaN
+    category: Possible issues
+    caption: An out-of-range index evaluates to $NaN$ rather than raising an error
+    divergence:
+      wolfram: An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).
+  - id: list-a-b-c-d-list-3
+    expr: [At, [List, a, b, c, d], 3]
+    expected: c
+  - id: several-indices-reach-into-successive-levels-row
+    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], 2, 3]
+    expected: 6
+    category: Scope
+    caption: 'Several indices reach into successive levels: row 2, column 3'
+  - id: negative-indices-work-at-every-level
+    expr: [At, [List, [List, 1, 2], [List, 3, 4]], -1, -1]
+    expected: 4
+    category: Scope
+    caption: Negative indices work at every level
+  - id: negative-indices-inside-an-index-list
+    expr: [At, [List, a, b, c, d, f], [List, -1, -2]]
+    expected: [List, f, d]
+    category: Scope
+    caption: Negative indices inside an index list
+  - id: a-stepped-range-takes-every-other-element
+    expr: [At, [List, a, b, c, d, f], [Range, 1, 5, 2]]
+    expected: [List, a, c, f]
+    category: Scope
+    caption: A stepped [[Range]] takes every other element
+  - id: negative-bounds-count-from-the-end-the-last
+    expr: [At, [List, a, b, c, d, f], [Range, -3, -1]]
+    expected: [List, c, d, f]
+    category: Scope
+    caption: 'Negative bounds count from the end: the last three elements'
+  - id: a-lazy-range-is-indexed-directly
+    expr: [At, [Range, 5, 10], 2]
+    expected: 6
+    category: Scope
+    caption: A lazy [[Range]] is indexed directly
+  - id: all-at-the-first-level-should-take-a-whole
+    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], All, 2]
+    expected: [List, 2, 5]
+    aspirational: true
+    category: Scope
+    caption: $All$ at the first level should take a whole column; the bare symbol $All$ collides with compute-engine's own boolean-reducer head of the same name, which the engine tries to invoke while boxing this call, before our override ever sees it — not yet
+  - id: index-lists-at-two-levels-extract-a-submatrix
+    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [List, 1, 3], [List, 2, 3]]
+    expected: [List, [List, 2, 3], [List, 8, 9]]
+    category: Scope
+    caption: Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3)
+  - id: a-span-2-4-in-wolfram-takes-a-contiguous-slice
+    expr: [At, [List, a, b, c, d, f], [Span, 2, 4]]
+    expected: [List, b, c, d]
+    category: Scope
+    caption: A [[Span]] ($2;;4$ in Wolfram) takes a contiguous slice
+  - id: a-stepped-span-1-1-2-takes-every-other-element
+    expr: [At, [List, a, b, c, d, f], [Span, 1, -1, 2]]
+    expected: [List, a, c, f]
+    category: Scope
+    caption: A stepped [[Span]] ($1;;-1;;2$) takes every other element up to the end
+  - id: a-negative-step-1-1-1-walks-backwards-reversing
+    expr: [At, [List, a, b, c, d, f], [Span, -1, 1, -1]]
+    expected: [List, f, d, c, b, a]
+    category: Scope
+    caption: A negative step ($-1;;1;;-1$) walks backwards, reversing the list
+  - id: negative-bounds-the-last-two-elements
+    expr: [At, [List, a, b, c, d, f], [Span, -2, -1]]
+    expected: [List, d, f]
+    category: Scope
+    caption: 'Negative bounds: the last two elements'
+  - id: parts-of-any-expression-not-just-lists-the
+    expr: [At, [Add, a, b, c], 2]
+    expected: b
+    category: Scope
+    caption: 'Parts of any expression, not just lists: the second term of a sum'
+seeAlso:
+  - First
+  - Last
+  - IndexOf
+  - Span

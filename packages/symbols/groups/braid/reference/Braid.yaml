@@ -1,0 +1,47 @@
+name: Braid
+domain: Braids and knots
+signature: Braid(strands, word)
+summary: "A braid in Artin's presentation: $n$ strands and a word whose letter $k$ means $\\sigma_k$ and $-k$ means $\\sigma_k^{-1}$. Closing it up names a link — and by Alexander's theorem, every link."
+signatures:
+  - call: Braid(strands, word)
+    description: the braid
+    library: enumeratio-braid
+  - call: BraidPermutation(braid)
+    description: the image in the symmetric group — forget which strand went over
+    library: enumeratio-braid
+  - call: BraidWrithe(braid)
+    description: the exponent sum, i.e. the abelianisation $B_n \to \mathbb{Z}$
+    library: enumeratio-braid
+  - call: TorusBraid(p, q)
+    description: $(\sigma_1\cdots\sigma_{p-1})^q$, whose closure is $T(p,q)$
+    library: enumeratio-braid
+details:
+  - 'Relations: $\sigma_i\sigma_j = \sigma_j\sigma_i$ for $|i-j| \ge 2$, and $\sigma_i\sigma_{i+1}\sigma_i = \sigma_{i+1}\sigma_i\sigma_{i+1}$'
+  - Adding $\sigma_i^2 = 1$ gives the symmetric group, which is why $B_n$ surjects onto $S_n$
+  - Two different words can name the same braid; nothing here solves the word problem, so only invariants are computed
+  - "`BraidComponents` counts the permutation's cycles — the closure is a knot exactly when it is an $n$-cycle"
+  - An $LR$ word from the modular group is accepted anywhere a braid is, via its Lorenz braid
+examples:
+  - id: sigma1sigma2-cycles-the-three-strands
+    expr: [BraidPermutation, [Braid, 3, [List, 1, 2]]]
+    expected: [List, 2, 3, 1]
+    caption: σ₁σ₂ cycles the three strands
+  - id: the-hopf-link
+    expr: [BraidComponents, [Braid, 2, [List, 1, 1]]]
+    expected: 2
+    caption: the Hopf link
+    category: Properties
+  - id: t-2-q-is-a-knot-for-odd-q
+    expr: [BraidIsKnot, [TorusBraid, 2, 5]]
+    expected: True
+    caption: $T(2,q)$ is a knot for odd $q$
+    category: Properties
+  - id: two-positive-crossings-and-one-negative
+    expr: [BraidWrithe, [Braid, 3, [List, 1, -2, 1]]]
+    expected: 1
+    caption: two positive crossings and one negative
+    category: Scope
+seeAlso:
+  - AlexanderPolynomial
+  - LorenzBraid
+  - SeifertGenus

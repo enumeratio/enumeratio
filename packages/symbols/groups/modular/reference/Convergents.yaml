@@ -1,0 +1,40 @@
+name: Convergents
+domain: The modular group
+signature: Convergents(list) / Convergents(x, n)
+summary: The successive convergents $p_k/q_k$ of a continued fraction, given as its list of terms or as the number itself.
+signatures:
+  - call: Convergents(list)
+    description: the convergents of a term list, such as one `ContinuedFraction` returns
+    library: enumeratio-modular
+  - call: Convergents(x)
+    description: every convergent of a rational $x$ — the last one is $x$ itself
+    library: enumeratio-modular
+  - call: Convergents(x, n)
+    description: the first $n$ convergents of $x$, via `ContinuedFraction(x, n)`
+    library: enumeratio-modular
+details:
+  - The two-term recurrence $p_k = a_k p_{k-1} + p_{k-2}$, $q_k = a_k q_{k-1} + q_{k-2}$, seeded $p_{-1}=1, p_{-2}=0, q_{-1}=0, q_{-2}=1$ — the same recurrence [[ModularMatrix]] multiplication runs, one $T^{a_k}S$ at a time
+  - Every convergent is in lowest terms, and each is a better rational approximation of $x$ than any fraction with a smaller denominator
+  - '`Convergents(x)` (no `n`) needs a RATIONAL $x$, since `ContinuedFraction(x)` alone does; an irrational needs `Convergents(x, n)`'
+examples:
+  - id: from-a-list-of-terms
+    expr: [Convergents, [List, 3, 7, 15, 1]]
+    expected: [List, 3, [Rational, 22, 7], [Rational, 333, 106], [Rational, 355, 113]]
+    caption: from a list of terms
+  - id: the-first-five-convergents-of-pi
+    expr: [Convergents, Pi, 5]
+    expected: [List, 3, [Rational, 22, 7], [Rational, 333, 106], [Rational, 355, 113], [Rational, 103993, 33102]]
+    caption: the first five convergents of $\pi$
+  - id: a-rational-the-last-convergent-is-the-number
+    expr: [Convergents, [Rational, 47, 17]]
+    expected: [List, 2, 3, [Rational, 11, 4], [Rational, 47, 17]]
+    category: Scope
+    caption: 'a rational: the last convergent is the number itself'
+  - id: convergents-of-sqrt-2-solve-pell-s-equations-p-2
+    expr: [Convergents, [Sqrt, 2], 5]
+    expected: [List, 1, [Rational, 3, 2], [Rational, 7, 5], [Rational, 17, 12], [Rational, 41, 29]]
+    category: Applications
+    caption: convergents of $\sqrt2$ solve Pell's equations $p^2 - 2q^2 = \pm1$
+seeAlso:
+  - ContinuedFraction
+  - ContinuedFractionK

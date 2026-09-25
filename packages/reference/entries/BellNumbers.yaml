@@ -1,0 +1,20 @@
+name: BellNumbers
+domain: Collections
+signature: BellNumbers
+summary: The Bell numbers $1, 1, 2, 5, 15, 52, …$ as a lazy indexed collection.
+signatures:
+  - call: BellNumbers
+    description: The number of set partitions of an $n$-set, an infinite indexed collection.
+details:
+  - "A lazy indexed collection: $Count(BellNumbers) = +\\infty$, and $At(BellNumbers, k)$ unranks $B_{k-1}$ exactly via a memoised Bell (Aitken's) triangle, bigint throughout -- $At(BellNumbers, 5) = B_4 = 15$."
+  - 'OEIS A000110, starting exactly at its offset-0 term: $1, 1, 2, 5, 15, 52, 203, …$; $B_{25}$ already exceeds $2^{53}$.'
+  - 'Membership goes through [[Element]]: $Element(15, BellNumbers)$ is true, $Element(10, BellNumbers)$ is false.'
+examples: []
+enumerate:
+  expr: Take(BellNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - FubiniNumbers
+  - PartitionNumbers

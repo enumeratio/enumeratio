@@ -1,0 +1,37 @@
+name: MatrixFunction
+domain: Linear algebra
+signature: MatrixFunction(f, m)
+summary: A scalar function f extended to a square matrix m, via its eigendecomposition. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: MatrixFunction(f, m)
+    description: f applied to the square matrix m, via its eigendecomposition.
+    library: '@enumeratio/analytic'
+details:
+  - "Exact where the structure gives one: a diagonal m (any size, including symbolic entries) reduces to elementwise f down the diagonal; f = Exp reduces to [[MatrixExp]] for any m; a 2×2 m otherwise reduces to Lagrange's formula at its two eigenvalues, with the Jordan-block limit f(λ)·I + f′(λ)·(M − λI) (f′ via compute-engine's own D) when they coincide."
+  - 'No general n×n closed form past that: a non-diagonal matrix larger than 2×2 needs a numerical-linear-algebra kernel (Parlett recurrence or a Schur form), which this does not implement -- those calls stay symbolic.'
+examples:
+  - id: the-principal-square-root-of-a-diagonal-matrix
+    expr: [MatrixFunction, Sqrt, [List, [List, 4, 0], [List, 0, 9]]]
+    expected: [List, [List, 2, 0], [List, 0, 3]]
+    caption: The principal square root of a diagonal matrix
+  - id: on-a-diagonal-matrix-f-acts-on-the-diagonal
+    expr: [MatrixFunction, f, [List, [List, a, 0], [List, 0, b]]]
+    expected: [List, [List, [f, a], 0], [List, 0, [f, b]]]
+    caption: On a diagonal matrix, f acts on the diagonal
+  - id: with-exp-it-is-matrixexp
+    expr: [MatrixFunction, Exp, [List, [List, 0, 0], [List, 0, 0]]]
+    expected: [List, [List, 1, 0], [List, 0, 1]]
+    category: Properties
+    caption: With Exp it is [[MatrixExp]]
+  - id: a-polynomial-f-agrees-with-the-matrix-power
+    expr: [MatrixFunction, [Function, [Power, _1, 2]], [List, [List, 1, 1], [List, 0, 1]]]
+    expected: [List, [List, 1, 2], [List, 0, 1]]
+    category: Properties
+    caption: A polynomial f agrees with the matrix power
+  - id: matrixfunction-cos-list-list-0-0-list-0-0
+    expr: [MatrixFunction, Cos, [List, [List, 0, 0], [List, 0, 0]]]
+    expected: [List, [List, 1, 0], [List, 0, 1]]
+    category: Scope
+seeAlso:
+  - MatrixExp
+  - MatrixPower

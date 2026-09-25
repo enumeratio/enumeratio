@@ -1,0 +1,82 @@
+name: DigitCount
+domain: Numeral systems
+signature: DigitCount(n, base?)
+summary: Counts of each digit (1 through 9, then 0) occurring in n, base 10 by default.
+signatures:
+  - call: DigitCount(n)
+    description: counts of each digit 1-9 then 0, base 10.
+  - call: DigitCount(n, base)
+    description: counts of each digit in the given base, highest digit value first.
+  - call: DigitCount(n, base, digit)
+    description: count of just one digit value.
+  - call: DigitCount(n, base, digit(s), width)
+    description: counted over exactly `width` digits, padded or truncated to fit.
+    library: enumeratio-numerals
+details:
+  - Equivalent to tallying [[IntegerDigits]](n, base) bucket by bucket.
+  - The default base-10 form orders counts 1 through 9, then 0 last.
+  - The 3-argument form isolates the count of a single digit value.
+  - Trailing zeros count individually -- 122000 has three trailing 0 digits, not a single "trailing zeros" tally.
+examples:
+  - id: digitcount-2-147
+    expr: [DigitCount, 2147]
+    expected: [List, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0]
+  - id: in-base-2-counts-of-digit-1-then-digit-0
+    expr: [DigitCount, 2147, 2]
+    expected: [List, 5, 7]
+    caption: In base 2, counts of digit 1 then digit 0
+  - id: the-3-argument-form-isolates-a-single-digit-s
+    expr: [DigitCount, 2147, 10, 1]
+    expected: 1
+    category: Applications
+    caption: The 3-argument form isolates a single digit's count
+  - id: three-trailing-zeros-not-four-122000-has-digits
+    expr: [DigitCount, 122000, 10, 0]
+    expected: 3
+    category: Possible issues
+    caption: 'Three trailing zeros, not four: $122000$ has digits $1,2,2,0,0,0$'
+  - id: 2147-100001100011-2-has-five-1-bits
+    expr: [DigitCount, 2147, 2, 1]
+    expected: 5
+    caption: $2147 = 100001100011_2$ has five 1 bits
+  - id: digitcount-122-000
+    expr: [DigitCount, 122000]
+    expected: [List, 1, 2, 0, 0, 0, 0, 0, 0, 0, 3]
+  - id: an-explicit-base-10-is-the-default
+    expr: [DigitCount, 122000, 10]
+    expected: [List, 1, 2, 0, 0, 0, 0, 0, 0, 0, 3]
+    category: Scope
+    caption: an explicit base 10 is the default
+  - id: the-digits-of-100-30-of-them-zeros
+    expr: [DigitCount, [Factorial, 100]]
+    expected: [List, 15, 19, 10, 10, 14, 19, 7, 14, 20, 30]
+    category: Scope
+    caption: the digits of $100!$, 30 of them zeros
+  - id: a-width-counts-padding-zeros-too-000122000-has
+    expr: [DigitCount, 122000, 10, 0, 9]
+    expected: 6
+    category: Scope
+    caption: 'a width counts padding zeros too: $000122000$ has six'
+  - id: a-list-of-digit-values-gives-one-count-each
+    expr: [DigitCount, 242442422, 3, [List, 1, 2]]
+    expected: [List, 6, 7]
+    category: Scope
+    caption: a list of digit values gives one count each
+  - id: counts-over-the-12-least-significant-base-3
+    expr: [DigitCount, 242442422, 3, [List, 1, 2], 12]
+    expected: [List, 4, 4]
+    category: Scope
+    caption: counts over the 12 least-significant base-3 digits
+  - id: 0-has-one-digit-a-zero
+    expr: [DigitCount, 0]
+    expected: [List, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    category: Possible issues
+    caption: 0 has one digit, a zero
+  - id: threads-element-wise-over-a-list-as-wolfram-s
+    expr: [DigitCount, [List, 23, 45]]
+    expected: [List, [List, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0], [List, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0]]
+    category: Scope
+    caption: Threads element-wise over a list, as Wolfram's Listable heads do
+seeAlso:
+  - IntegerDigits
+  - DigitSum

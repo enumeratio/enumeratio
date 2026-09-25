@@ -1,0 +1,107 @@
+name: Cot
+domain: Elementary functions
+signature: Cot(x)
+summary: Cotangent, the reciprocal of [[Tan]].
+signatures:
+  - call: Cot(x)
+    description: the cotangent of x, $\frac{1}{\tan(x)}$.
+details:
+  - $\cot(x) = \frac{\cos(x)}{\sin(x)} = \frac{1}{\tan(x)}$.
+  - Period $\pi$, same as [[Tan]].
+  - Undefined wherever $\sin(x) = 0$, i.e. at multiples of $\pi$ -- not the same poles as [[Tan]].
+examples:
+  - id: cot-pi-over-6
+    expr: [Cot, [Divide, Pi, 6]]
+    expected: [Sqrt, 3]
+  - id: cot-pi-over-4
+    expr: [Cot, [Divide, Pi, 4]]
+    expected: 1
+  - id: cot-pi-over-3
+    expr: [Cot, [Divide, Pi, 3]]
+    expected: [Divide, [Sqrt, 3], 3]
+  - id: reciprocal-of-tan-cot-x-frac-1-tan-x
+    expr: [Equal, [Cot, [Divide, Pi, 4]], [Divide, 1, [Tan, [Divide, Pi, 4]]]]
+    expected: True
+    category: Properties
+    caption: 'Reciprocal of [[Tan]]: $\cot(x) = \frac{1}{\tan(x)}$'
+  - id: pythagorean-identity-1-cot-2-x-csc-2-x
+    expr: [Equal, [Add, 1, [Power, [Cot, [Divide, Pi, 6]], 2]], [Power, [Csc, [Divide, Pi, 6]], 2]]
+    expected: True
+    category: Properties
+    caption: 'Pythagorean identity: $1 + \cot^2 x = \csc^2 x$'
+  - id: a-pole-sin-0-0
+    expr: [Cot, 0]
+    expected: ComplexInfinity
+    category: Possible issues
+    caption: 'A pole: $\sin(0) = 0$'
+  - id: not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero
+    expr: [Cot, [Divide, Pi, 2]]
+    expected: 0
+    category: Possible issues
+    caption: Not a pole here -- [[Tan]]'s pole at $\pi/2$ is [[Cot]]'s zero instead
+  - id: cot-60-circ-frac-sqrt-3-3-exactly
+    expr: [Cot, [Degrees, 60]]
+    expected: [Divide, [Sqrt, 3], 3]
+    caption: $\cot 60^\circ = \frac{\sqrt3}{3}$, exactly
+  - id: a-machine-precision-argument-evaluates
+    expr: [Cot, 1.2]
+    expected: {num: '0.388779569368204911634'}
+    caption: A machine-precision argument evaluates numerically
+  - id: n-of-an-exact-argument-gives-an-arbitrary
+    expr: [N, [Cot, [Rational, 6, 5]]]
+    expected: {num: '0.388779569368204911634'}
+    category: Scope
+    caption: N(...) of an exact argument gives an arbitrary-precision value
+  - id: evaluates-at-a-complex-argument
+    expr: [Cot, [Complex, 2.5, 1]]
+    expected: [Complex, -0.27566912122989945, -1.0426406420944216]
+    category: Scope
+    caption: Evaluates at a complex argument
+  - id: threads-element-wise-over-a-matrix
+    expr: [Cot, [List, [List, [Multiply, 5, [Divide, Pi, 6]], [Divide, Pi, 2]], [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 6]]]]]
+    expected: [List, [List, [Negate, [Sqrt, 3]], 0], [List, 0, [Negate, [Sqrt, 3]]]]
+    category: Scope
+    caption: Threads element-wise over a matrix
+  - id: cot-pi-8-1-sqrt-2
+    expr: [Cot, [Divide, Pi, 8]]
+    expected: [Add, 1, [Sqrt, 2]]
+    category: Scope
+    caption: $\cot(\pi/8) = 1 + \sqrt2$
+  - id: cot-pi-12-2-sqrt-3
+    expr: [Cot, [Divide, Pi, 12]]
+    expected: [Add, 2, [Sqrt, 3]]
+    category: Scope
+    caption: $\cot(\pi/12) = 2 + \sqrt3$
+  - id: cot-pi-over-5
+    expr: [Cot, [Divide, Pi, 5]]
+    expected: [Multiply, [Divide, [Sqrt, 5], 5], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 5]]]]]
+    category: Scope
+  - id: an-interval-straddling-the-pole-at-0-maps-to-two
+    expr: [Cot, [Interval, [Negate, [Divide, Pi, 4]], [Divide, Pi, 4]]]
+    expected: [Union, [Interval, NegativeInfinity, -1], [Interval, 1, PositiveInfinity]]
+    category: Scope
+    caption: 'Across the pole at 0 the image comes in two unbounded pieces: $\cot[-\tfrac\pi4, \tfrac\pi4] = (-\infty, -1] \cup [1, \infty)$, a [[Union]] of intervals'
+  - id: uncertainty-propagation-near-a-pole-grows-fast
+    expr: [Cot, [Around, 3, 0.01]]
+    expected: [Around, -7.015252551434534, 0.5021376836040873]
+    category: Scope
+    caption: 'Uncertainty propagation near a pole grows fast: $\cot(3 \pm 0.01) \approx -7.02 \pm 0.50$'
+  - id: oddness-pulls-the-sign-out-of-a-symbolic
+    expr: [Cot, [Negate, x]]
+    expected: [Negate, [Cot, x]]
+    category: Scope
+    caption: 'Oddness pulls the sign out of a symbolic argument: $\cot(-x) = -\cot x$'
+  - id: derivative-csc-2-x
+    expr: [D, [Cot, x], x]
+    expected: [Negate, [Power, [Csc, x], 2]]
+    category: Scope
+    caption: 'Derivative: $-\csc^2 x$'
+  - id: antiderivative-ln-sin-x
+    expr: [Integrate, [Cot, x], x]
+    expected: [Ln, [Abs, [Sin, x]]]
+    category: Scope
+    caption: 'Antiderivative: $\ln|\sin x|$'
+seeAlso:
+  - Tan
+  - Sin
+  - Cos

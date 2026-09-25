@@ -1,0 +1,30 @@
+name: Antipode
+domain: Hopf algebras
+signature: Antipode(element)
+summary: 'The antipode $S$, the last piece of a Hopf algebra: the unique map with $m(S \otimes \mathrm{id})\Delta = \eta\varepsilon$.'
+signatures:
+  - call: Antipode(element)
+    description: $S(x)$
+    library: enumeratio-hopf
+details:
+  - "On a graded connected Hopf algebra the axiom DETERMINES $S$: splitting off the two trivial terms of $\\Delta$ gives $S(x) = -x - \\sum S(x')x''$, and the left factor's degree strictly drops, so the recursion terminates"
+  - Computed that way and then verified by running the axiom, rather than trusted
+  - On a commutative Hopf algebra $S$ is an involution, so $S^2 = \mathrm{id}$ on QSym
+examples:
+  - id: s-m-1-m-1
+    expr: [Antipode, [QSymM, [List, 1]]]
+    expected: [Negate, [QSymM, [List, 1]]]
+    caption: $S(M_1) = -M_1$
+  - id: s-2-id-since-qsym-is-commutative
+    expr: [Antipode, [Antipode, [QSymM, [List, 1, 2]]]]
+    expected: [QSymM, [List, 1, 2]]
+    caption: $S^2 = \mathrm{id}$, since QSym is commutative
+    category: Properties
+  - id: the-product-is-homogeneous-so-degrees-add
+    expr: [HopfDegree, [NonCommutativeMultiply, [QSymM, [List, 1]], [QSymM, [List, 2]]]]
+    expected: 3
+    caption: the product is homogeneous, so degrees add
+    category: Properties
+seeAlso:
+  - Coproduct
+  - QSymM

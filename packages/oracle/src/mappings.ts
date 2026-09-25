@@ -21,9 +21,22 @@ export interface Mapping {
   readonly arity?: number;
   /** Source template per system, `$n` for the n-th operand. */
   readonly emit: Partial<Record<System, string>>;
+  /**
+   * 1-based operand this head threads over (Wolfram's Listable), for the Python-family
+   * systems (sympy, mpmath, sage) whose plain function call does not auto-thread a Python
+   * list the way compute-engine and Wolfram do. When that operand's raw expression is a
+   * `List` — arbitrarily nested — emit rebuilds the same nesting as Python list literals,
+   * applying the template to each leaf, instead of handing the whole list to the scalar
+   * function (which fails: e.g. sympy's `primepi([10, 2])` raises `AttributeError`).
+   */
+  readonly threadArg?: number;
   /** A convention difference worth remembering when a scan disagrees. */
   readonly note?: string;
 }
+
+/** Python-family systems whose function calls need `threadArg`'s help — everyone else
+ * (Wolfram, Julia's broadcast, …) already threads a Listable head natively. */
+export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage"];
 
 export const MAPPINGS: readonly Mapping[] = [
   // ── arithmetic and structure ────────────────────────────────────────────────
@@ -79,6 +92,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Negate",
     arity: 1,
+    threadArg: 1,
     emit: {
       sympy: "(-$1)",
       mpmath: "(-$1)",
@@ -117,21 +131,25 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Sqrt",
     arity: 1,
+    threadArg: 1,
     emit: { sympy: "sqrt($1)", mpmath: "sqrt($1)", sage: "sqrt($1)", rust: "sqrt($1)" },
   },
   {
     head: "Abs",
     arity: 1,
+    threadArg: 1,
     emit: { sympy: "Abs($1)", mpmath: "fabs($1)", sage: "abs($1)", rust: "abs($1)" },
   },
   {
     head: "Exp",
     arity: 1,
+    threadArg: 1,
     emit: { sympy: "exp($1)", mpmath: "exp($1)", sage: "exp($1)", rust: "exp($1)" },
   },
   {
     head: "Ln",
     arity: 1,
+    threadArg: 1,
     emit: { sympy: "log($1)", mpmath: "log($1)", sage: "log($1)", rust: "ln($1)" },
   },
   {
@@ -247,6 +265,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Gamma",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "Gamma[$1]",
       sympy: "gamma($1)",
@@ -260,6 +279,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Binomial",
     arity: 2,
+    threadArg: 1,
     emit: {
       wolfram: "Binomial[$1, $2]",
       sympy: "binomial($1, $2)",
@@ -269,6 +289,7 @@ export const MAPPINGS: readonly Mapping[] = [
       mathlib4: "(Nat.choose $1 $2)",
       rust: "binomial($1, $2)",
     },
+    note: "Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.",
   },
   {
     head: "Factorial",
@@ -286,6 +307,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Fibonacci",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "Fibonacci[$1]",
       sympy: "fibonacci($1)",
@@ -298,6 +320,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "LucasL",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "LucasL[$1]",
       sympy: "lucas($1)",
@@ -319,6 +342,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "BellNumber",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "BellB[$1]",
       sympy: "bell($1)",
@@ -354,6 +378,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Totient",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "EulerPhi[$1]",
       sympy: "totient($1)",
@@ -366,6 +391,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "MoebiusMu",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "MoebiusMu[$1]",
       sympy: "mobius($1)",
@@ -378,6 +404,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "PrimePi",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "PrimePi[$1]",
       sympy: "primepi($1)",
@@ -389,6 +416,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "GCD",
     arity: 2,
+    threadArg: 2,
     emit: {
       wolfram: "GCD[$1, $2]",
       sympy: "gcd($1, $2)",
@@ -402,6 +430,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "LCM",
     arity: 2,
+    threadArg: 2,
     emit: {
       wolfram: "LCM[$1, $2]",
       sympy: "lcm($1, $2)",
@@ -501,6 +530,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Sin",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "Sin[$1]",
       sympy: "sin($1)",
@@ -512,6 +542,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Cos",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "Cos[$1]",
       sympy: "cos($1)",
@@ -523,6 +554,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Tan",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "Tan[$1]",
       sympy: "tan($1)",
@@ -534,6 +566,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "Sign",
     arity: 1,
+    threadArg: 1,
     emit: { wolfram: "Sign[$1]", sympy: "sign($1)", mpmath: "sign($1)", sage: "sign($1)" },
   },
   {
@@ -584,21 +617,23 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "BernoulliB",
     arity: 1,
+    threadArg: 1,
     emit: { wolfram: "BernoulliB[$1]", sympy: "bernoulli($1)", sage: "bernoulli($1)" },
   },
   {
     head: "Max",
-    emit: { wolfram: "Max[$*,]", sympy: "Max($*,)", sage: "enumeratio_max($*,)" },
-    note: "Wolfram (and our Max) flattens nested lists into one pool; Sage's builtin max() on a list of lists compares them lexicographically instead, so it is routed through a flattening helper (run.ts's SAGE_PREAMBLE).",
+    emit: { wolfram: "Max[$*,]", sympy: "enumeratio_max($*,)", sage: "enumeratio_max($*,)" },
+    note: "Wolfram (and our Max) flattens nested lists into one pool; bare SymPy Max()/Sage max() on a list (or a list of lists) either raise or compare lexicographically instead, so both go through a flattening helper (run.ts's SYMPY_PREAMBLE / SAGE_PREAMBLE).",
   },
   {
     head: "Min",
-    emit: { wolfram: "Min[$*,]", sympy: "Min($*,)", sage: "enumeratio_min($*,)" },
+    emit: { wolfram: "Min[$*,]", sympy: "enumeratio_min($*,)", sage: "enumeratio_min($*,)" },
     note: "Same flattening as Max.",
   },
   {
     head: "Mod",
     arity: 2,
+    threadArg: 2,
     emit: {
       wolfram: "Mod[$1, $2]",
       sympy: "($1 % $2)",
@@ -609,10 +644,19 @@ export const MAPPINGS: readonly Mapping[] = [
       rust: "mod_floor($1, $2)",
     },
   },
-  { head: "Length", arity: 1, emit: { wolfram: "Length[$1]", sympy: "len($1)", sage: "len($1)" } },
+  {
+    head: "Length",
+    arity: 1,
+    emit: {
+      wolfram: "Length[$1]",
+      sympy: "(len($1) if hasattr($1, '__len__') else 0)",
+      sage: "(len($1) if hasattr($1, '__len__') else 0)",
+    },
+    note: "Wolfram's Length of an atom (not a list) is 0, not an error, matching ours; a bare len() raises on a non-list, so it is guarded.",
+  },
 
   // ── groups and group algebras: Oscar, through oscar/preamble.jl ──────────────
-  // A group comes back labelled as ours (packages/groupalgebra), so element-level heads can
+  // A group comes back labelled as ours (packages/symbols/algebras/groupalgebra), so element-level heads can
   // name elements the way our examples do.
   {
     head: "CyclicGroup",

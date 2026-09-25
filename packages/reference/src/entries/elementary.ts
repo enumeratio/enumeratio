@@ -1,7 +1,36 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Every `expected` was produced by evaluating `expr` with compute-engine 0.128.0
-// (the reference tests re-evaluate and pin it). See sibling domain files.
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/analysis/analytic/reference/Sin.yaml",
+  "packages/symbols/analysis/analytic/reference/Cos.yaml",
+  "packages/symbols/analysis/analytic/reference/Tan.yaml",
+  "packages/symbols/analysis/analytic/reference/Cot.yaml",
+  "packages/symbols/analysis/analytic/reference/Sec.yaml",
+  "packages/symbols/analysis/analytic/reference/Csc.yaml",
+  "packages/symbols/analysis/analytic/reference/Arcsin.yaml",
+  "packages/symbols/analysis/analytic/reference/Arccos.yaml",
+  "packages/symbols/analysis/analytic/reference/Arctan.yaml",
+  "packages/symbols/analysis/analytic/reference/Arccot.yaml",
+  "packages/symbols/analysis/analytic/reference/Arccsc.yaml",
+  "packages/symbols/analysis/analytic/reference/Arcsec.yaml",
+  "packages/symbols/analysis/analytic/reference/Sinh.yaml",
+  "packages/symbols/analysis/analytic/reference/Cosh.yaml",
+  "packages/symbols/analysis/analytic/reference/Tanh.yaml",
+  "packages/symbols/analysis/analytic/reference/Arcoth.yaml",
+  "packages/symbols/analysis/analytic/reference/Arcsch.yaml",
+  "packages/symbols/analysis/analytic/reference/Arsech.yaml",
+  "packages/symbols/analysis/analytic/reference/Exp.yaml",
+  "packages/symbols/analysis/analytic/reference/Ln.yaml",
+  "packages/reference/entries/Log.yaml",
+  "packages/symbols/analysis/analytic/reference/Log2.yaml",
+  "packages/symbols/analysis/analytic/reference/Log10.yaml",
+  "packages/symbols/analysis/analytic/reference/Lb.yaml",
+];
+
 export const elementary: readonly ReferenceEntry[] = [
   {
     name: "Sin",
@@ -17,17 +46,27 @@ export const elementary: readonly ReferenceEntry[] = [
       "A numeric argument that isn't a recognized special angle, and isn't already floating-point, is left symbolic; pass a float or wrap in N(...) for a numeric approximation.",
     ],
     examples: [
-      { expr: ["Sin", 0], expected: 0 },
+      { id: "sin-0", expr: ["Sin", 0], expected: 0 },
       {
+        id: "exact-value-at-a-special-angle",
         expr: ["Sin", ["Divide", "Pi", 6]],
         expected: ["Rational", 1, 2],
         caption: "Exact value at a special angle",
       },
-      { expr: ["Sin", ["Divide", "Pi", 4]], expected: ["Divide", ["Sqrt", 2], 2] },
-      { expr: ["Sin", ["Divide", "Pi", 3]], expected: ["Divide", ["Sqrt", 3], 2] },
-      { expr: ["Sin", ["Divide", "Pi", 2]], expected: 1 },
-      { expr: ["Sin", "Pi"], expected: 0 },
       {
+        id: "sin-pi-over-4",
+        expr: ["Sin", ["Divide", "Pi", 4]],
+        expected: ["Divide", ["Sqrt", 2], 2],
+      },
+      {
+        id: "sin-pi-over-3",
+        expr: ["Sin", ["Divide", "Pi", 3]],
+        expected: ["Divide", ["Sqrt", 3], 2],
+      },
+      { id: "sin-pi-over-2", expr: ["Sin", ["Divide", "Pi", 2]], expected: 1 },
+      { id: "sin-pi", expr: ["Sin", "Pi"], expected: 0 },
+      {
+        id: "pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x",
         expr: [
           "Add",
           ["Power", ["Sin", ["Divide", "Pi", 6]], 2],
@@ -38,6 +77,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Pythagorean identity $\\sin^2 x + \\cos^2 x = 1$, here at $x = \\pi/6$",
       },
       {
+        id: "odd-function-sin-x-sin-x",
         expr: [
           "Equal",
           ["Sin", ["Negate", ["Divide", "Pi", 6]]],
@@ -48,18 +88,21 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Odd function: $\\sin(-x) = -\\sin(x)$",
       },
       {
+        id: "period-2-pi-adding-a-full-turn-doesn-t-change",
         expr: ["Sin", ["Add", ["Divide", "Pi", 6], ["Multiply", 2, "Pi"]]],
         expected: ["Rational", 1, 2],
         category: "Properties",
         caption: "Period $2\\pi$: adding a full turn doesn't change the value",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["Sin", ["List", 0, ["Divide", "Pi", 2], "Pi"]],
         expected: ["List", 0, 1, 0],
         category: "Applications",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "degrees-d-converts-a-degree-measure-to-radians",
         expr: ["Sin", ["Degrees", 30]],
         expected: ["Rational", 1, 2],
         category: "Applications",
@@ -67,13 +110,15 @@ export const elementary: readonly ReferenceEntry[] = [
           "Degrees(d) converts a degree measure to radians, so familiar degree angles still evaluate exactly",
       },
       {
+        id: "1-radian-isn-t-a-recognized-special-angle-so",
         expr: ["Sin", 1],
         expected: ["Sin", 1],
         category: "Possible issues",
         caption:
-          "1 radian isn't a recognized special angle, so this stays symbolic; wrap in N(...) or pass 1.0 for \u2248 0.841",
+          "1 radian isn't a recognized special angle, so this stays symbolic; wrap in N(...) or pass 1.0 for ≈ 0.841",
       },
       {
+        id: "the-special-angle-table-reaches-past-30-45-60",
         expr: ["Sin", ["Divide", "Pi", 5]],
         expected: [
           "Multiply",
@@ -85,28 +130,33 @@ export const elementary: readonly ReferenceEntry[] = [
           "The special-angle table reaches past 30-45-60: $\\sin(\\pi/5)$ comes out as a nested radical",
       },
       {
+        id: "degrees-d-converts-to-radians-so-sin-60-circ-is",
         expr: ["Sin", ["Degrees", 60]],
         expected: ["Divide", ["Sqrt", 3], 2],
         caption: "Degrees(d) converts to radians, so $\\sin 60^\\circ$ is exact",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Sin", 1.2],
         expected: { num: "0.93203908596722634967" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "n-of-an-exact-argument-gives-an-arbitrary",
         expr: ["N", ["Sin", ["Rational", 6, 5]]],
         expected: { num: "0.93203908596722634967" },
         category: "Scope",
         caption: "N(...) of an exact argument gives an arbitrary-precision value",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Sin", ["Complex", 2.5, 1]],
         expected: ["Complex", 0.9234907760431731, -0.9415049332708672],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: [
           "Sin",
           [
@@ -120,48 +170,56 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4",
         expr: ["Sin", ["Divide", "Pi", 12]],
         expected: ["Add", ["Negate", ["Divide", ["Sqrt", 2], 4]], ["Divide", ["Sqrt", 6], 4]],
         category: "Scope",
         caption: "Exact value at $\\pi/12$: $\\frac{\\sqrt6 - \\sqrt2}{4}$",
       },
       {
+        id: "sin-pi-8-frac-sqrt-2-sqrt-2-2",
         expr: ["Sin", ["Divide", "Pi", 8]],
         expected: ["Multiply", ["Rational", 1, 2], ["Sqrt", ["Add", 2, ["Negate", ["Sqrt", 2]]]]],
         category: "Scope",
         caption: "$\\sin(\\pi/8) = \\frac{\\sqrt{2-\\sqrt2}}{2}$",
       },
       {
+        id: "sin-pi-10-frac-sqrt-5-1-4",
         expr: ["Sin", ["Divide", "Pi", 10]],
         expected: ["Add", ["Rational", -1, 4], ["Divide", ["Sqrt", 5], 4]],
         category: "Scope",
         caption: "$\\sin(\\pi/10) = \\frac{\\sqrt5 - 1}{4}$",
       },
       {
+        id: "sin-5-pi-12-frac-sqrt-6-sqrt-2-4",
         expr: ["Sin", ["Multiply", ["Rational", 5, 12], "Pi"]],
         expected: ["Add", ["Divide", ["Sqrt", 2], 4], ["Divide", ["Sqrt", 6], 4]],
         category: "Scope",
         caption: "$\\sin(5\\pi/12) = \\frac{\\sqrt6 + \\sqrt2}{4}$",
       },
       {
+        id: "sin-3-pi-8-frac-sqrt-2-sqrt-2-2",
         expr: ["Sin", ["Multiply", ["Rational", 3, 8], "Pi"]],
         expected: ["Multiply", ["Rational", 1, 2], ["Sqrt", ["Add", 2, ["Sqrt", 2]]]],
         category: "Scope",
         caption: "$\\sin(3\\pi/8) = \\frac{\\sqrt{2+\\sqrt2}}{2}$",
       },
       {
+        id: "large-rational-multiples-of-pi-are-reduced",
         expr: ["Sin", ["Multiply", ["Rational", 100, 3], "Pi"]],
         expected: ["Negate", ["Divide", ["Sqrt", 3], 2]],
         category: "Scope",
         caption: "Large rational multiples of $\\pi$ are reduced modulo the period first",
       },
       {
+        id: "any-integer-multiple-of-pi-is-a-zero-of-sine",
         expr: ["Sin", ["Multiply", 1000001, "Pi"]],
         expected: 0,
         category: "Scope",
         caption: "Any integer multiple of $\\pi$ is a zero of sine, however large",
       },
       {
+        id: "interval-arithmetic-the-image-of-pi-6-pi-6-is",
         expr: ["Sin", ["Interval", ["Negate", ["Divide", "Pi", 6]], ["Divide", "Pi", 6]]],
         expected: ["Interval", ["Rational", -1, 2], ["Rational", 1, 2]],
         category: "Scope",
@@ -169,12 +227,14 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: the image of $[-\\pi/6, \\pi/6]$ is $[-\\tfrac12, \\tfrac12]$",
       },
       {
+        id: "the-image-of-the-whole-real-line-is-1-1",
         expr: ["Sin", ["Interval", "NegativeInfinity", "PositiveInfinity"]],
         expected: ["Interval", -1, 1],
         category: "Scope",
         caption: "The image of the whole real line is $[-1, 1]$",
       },
       {
+        id: "wolfram-answers-sin-infty-with-the-range-of-its",
         expr: ["Sin", "PositiveInfinity"],
         expected: ["Interval", -1, 1],
         aspirational: true,
@@ -183,6 +243,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Wolfram answers $\\sin(\\infty)$ with the range of its oscillation, $[-1, 1]$; compute-engine returns a type error",
       },
       {
+        id: "uncertainty-propagation-sin-2-pm-0-01-approx-0",
         expr: ["Sin", ["Around", 2, 0.01]],
         expected: ["Around", 0.9092974268256817, 0.004161468365471424],
         category: "Scope",
@@ -190,66 +251,77 @@ export const elementary: readonly ReferenceEntry[] = [
           "Uncertainty propagation: $\\sin(2 \\pm 0.01) \\approx 0.9093 \\pm 0.0042$ to first order",
       },
       {
+        id: "an-imaginary-argument-rewrites-to-sinh-sin-ix-i",
         expr: ["Sin", ["Multiply", "ImaginaryUnit", "x"]],
         expected: ["Multiply", ["Complex", 0, 1], ["Sinh", "x"]],
         category: "Scope",
         caption: "An imaginary argument rewrites to [[Sinh]]: $\\sin(ix) = i\\sinh x$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Sin", ["Negate", "x"]],
         expected: ["Negate", ["Sin", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\sin(-x) = -\\sin x$",
       },
       {
+        id: "a-half-period-shift-reduces-sin-x-pi-sin-x",
         expr: ["Sin", ["Add", "x", "Pi"]],
         expected: ["Negate", ["Sin", "x"]],
         category: "Scope",
         caption: "A half-period shift reduces: $\\sin(x + \\pi) = -\\sin x$",
       },
       {
+        id: "sin-arcsin-x-x-for-every-x",
         expr: ["Sin", ["Arcsin", "x"]],
         expected: "x",
         category: "Scope",
         caption: "$\\sin(\\arcsin x) = x$ for every $x$",
       },
       {
+        id: "sin-arccos-x-sqrt-1-x-2",
         expr: ["Sin", ["Arccos", "x"]],
         expected: ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]],
         category: "Scope",
         caption: "$\\sin(\\arccos x) = \\sqrt{1 - x^2}$",
       },
       {
+        id: "sin-arctan-x-frac-x-sqrt-1-x-2",
         expr: ["Sin", ["Arctan", "x"]],
         expected: ["Divide", "x", ["Sqrt", ["Add", ["Power", "x", 2], 1]]],
         category: "Scope",
         caption: "$\\sin(\\arctan x) = \\frac{x}{\\sqrt{1 + x^2}}$",
       },
       {
+        id: "derivative-frac-d-dx-sin-x-cos-x",
         expr: ["D", ["Sin", "x"], "x"],
         expected: ["Cos", "x"],
         category: "Scope",
         caption: "Derivative: $\\frac{d}{dx}\\sin x = \\cos x$",
       },
       {
+        id: "second-derivative",
         expr: ["D", ["Sin", "x"], "x", "x"],
         expected: ["Negate", ["Sin", "x"]],
         category: "Scope",
         caption: "Second derivative",
       },
       {
+        id: "antiderivative",
         expr: ["Integrate", ["Sin", "x"], "x"],
         expected: ["Negate", ["Cos", "x"]],
         category: "Scope",
         caption: "Antiderivative",
       },
       {
+        id: "area-under-one-arch-int-0-pi-sin-x-dx-2",
         expr: ["Integrate", ["Sin", "x"], ["Limits", "x", 0, "Pi"]],
         expected: 2,
         category: "Scope",
         caption: "Area under one arch: $\\int_0^\\pi \\sin x\\,dx = 2$",
       },
       {
+        id: "int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers",
         expr: ["Integrate", ["Power", ["Sin", "x"], 3], "x"],
         expected: [
           "Add",
@@ -262,6 +334,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "$\\int \\sin^3 x\\,dx = -\\cos x + \\tfrac13\\cos^3 x$; odd powers of sine are not yet integrated",
       },
       {
+        id: "taylor-series-about-0-only-odd-powers-appear",
         expr: ["Series", ["Sin", "x"], "x", 0, 10],
         expected: [
           "Add",
@@ -276,18 +349,21 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Taylor series about 0 -- only odd powers appear",
       },
       {
+        id: "the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1",
         expr: ["Limit", ["Function", ["Divide", ["Sin", "x"], "x"], "x"], 0],
         expected: 1,
         category: "Scope",
         caption: "The fundamental limit $\\lim_{x\\to0} \\frac{\\sin x}{x} = 1$",
       },
       {
+        id: "double-angle-formula-via-trigexpand",
         expr: ["TrigExpand", ["Sin", ["Multiply", 2, "x"]]],
         expected: ["Multiply", 2, ["Sin", "x"], ["Cos", "x"]],
         category: "Properties",
         caption: "Double-angle formula via TrigExpand",
       },
       {
+        id: "angle-addition-formula-via-trigexpand",
         expr: ["TrigExpand", ["Sin", ["Add", "x", "y"]]],
         expected: [
           "Add",
@@ -298,6 +374,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Angle-addition formula via TrigExpand",
       },
       {
+        id: "triple-angle-formula",
         expr: ["TrigExpand", ["Sin", ["Multiply", 3, "x"]]],
         expected: [
           "Add",
@@ -308,6 +385,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Triple-angle formula",
       },
       {
+        id: "power-reduction-sin-2-x-frac-1-cos-2x-2",
         expr: ["TrigReduce", ["Power", ["Sin", "x"], 2]],
         expected: [
           "Add",
@@ -318,6 +396,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Power reduction: $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$",
       },
       {
+        id: "euler-s-formula-sin-x-frac-e-ix-e-ix-2i",
         expr: ["TrigToExp", ["Sin", "x"]],
         expected: [
           "Add",
@@ -336,18 +415,21 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Euler's formula: $\\sin x = \\frac{e^{ix} - e^{-ix}}{2i}$",
       },
       {
+        id: "simplify-knows-the-pythagorean-identity",
         expr: ["Simplify", ["Add", ["Power", ["Sin", "x"], 2], ["Power", ["Cos", "x"], 2]]],
         expected: 1,
         category: "Properties",
         caption: "Simplify knows the Pythagorean identity symbolically",
       },
       {
+        id: "the-same-through-fullsimplify",
         expr: ["FullSimplify", ["Add", ["Power", ["Sin", "x"], 2], ["Power", ["Cos", "x"], 2]]],
         expected: 1,
         category: "Properties",
         caption: "The same through [[FullSimplify]]",
       },
       {
+        id: "pi-15-has-a-radical-form-but-like-wolfram-s",
         expr: ["Sin", ["Divide", "Pi", 15]],
         expected: ["Sin", ["Multiply", ["Rational", 1, 15], "Pi"]],
         category: "Possible issues",
@@ -355,6 +437,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "$\\pi/15$ has a radical form, but like Wolfram's automatic evaluation the table stops short of it -- see FunctionExpand below",
       },
       {
+        id: "a-huge-exact-argument-is-reduced-modulo-2-pi",
         expr: ["N", ["Sin", ["Power", 10, 20]]],
         expected: { num: "-0.645251285265780844206" },
         category: "Possible issues",
@@ -362,6 +445,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "A huge exact argument is reduced modulo $2\\pi$ with enough working precision to get the digits right",
       },
       {
+        id: "functionexpand-gives-the-nested-radical-form",
         expr: ["FunctionExpand", ["Sin", ["Divide", "Pi", 15]]],
         expected: [
           "Multiply",
@@ -378,6 +462,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "[[FunctionExpand]] gives the nested-radical form $\\frac{\\sqrt{10+2\\sqrt5} - \\sqrt{15} + \\sqrt3}{8}$",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Sin", 1], 30],
         expected: { num: "0.841470984807896506652502321630" },
         category: "Scope",
@@ -399,19 +484,29 @@ export const elementary: readonly ReferenceEntry[] = [
       "Co-function with [[Sin]]: $\\cos(x) = \\sin(\\pi/2 - x)$.",
     ],
     examples: [
-      { expr: ["Cos", 0], expected: 1 },
-      { expr: ["Cos", ["Divide", "Pi", 6]], expected: ["Divide", ["Sqrt", 3], 2] },
-      { expr: ["Cos", ["Divide", "Pi", 4]], expected: ["Divide", ["Sqrt", 2], 2] },
-      { expr: ["Cos", ["Divide", "Pi", 3]], expected: ["Rational", 1, 2] },
-      { expr: ["Cos", ["Divide", "Pi", 2]], expected: 0 },
-      { expr: ["Cos", "Pi"], expected: -1 },
+      { id: "cos-0", expr: ["Cos", 0], expected: 1 },
       {
+        id: "cos-pi-over-6",
+        expr: ["Cos", ["Divide", "Pi", 6]],
+        expected: ["Divide", ["Sqrt", 3], 2],
+      },
+      {
+        id: "cos-pi-over-4",
+        expr: ["Cos", ["Divide", "Pi", 4]],
+        expected: ["Divide", ["Sqrt", 2], 2],
+      },
+      { id: "cos-pi-over-3", expr: ["Cos", ["Divide", "Pi", 3]], expected: ["Rational", 1, 2] },
+      { id: "cos-pi-over-2", expr: ["Cos", ["Divide", "Pi", 2]], expected: 0 },
+      { id: "cos-pi", expr: ["Cos", "Pi"], expected: -1 },
+      {
+        id: "even-function-cos-x-cos-x",
         expr: ["Equal", ["Cos", ["Negate", ["Divide", "Pi", 3]]], ["Cos", ["Divide", "Pi", 3]]],
         expected: "True",
         category: "Properties",
         caption: "Even function: $\\cos(-x) = \\cos(x)$",
       },
       {
+        id: "co-function-identity-cos-x-sin-pi-2-x",
         expr: [
           "Equal",
           ["Cos", ["Divide", "Pi", 6]],
@@ -422,12 +517,14 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Co-function identity: $\\cos x = \\sin(\\pi/2 - x)$",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["Cos", ["List", 0, ["Divide", "Pi", 2], "Pi"]],
         expected: ["List", 1, 0, -1],
         category: "Applications",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "as-with-sin-a-non-special-numeric-argument-stays",
         expr: ["Cos", 2],
         expected: ["Cos", 2],
         category: "Possible issues",
@@ -435,34 +532,40 @@ export const elementary: readonly ReferenceEntry[] = [
           "As with [[Sin]], a non-special numeric argument stays symbolic unless it's already a float",
       },
       {
+        id: "cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden",
         expr: ["Cos", ["Divide", "Pi", 5]],
         expected: ["Add", ["Rational", 1, 4], ["Divide", ["Sqrt", 5], 4]],
         category: "Neat examples",
         caption: "$\\cos(\\pi/5) = \\frac{1+\\sqrt5}{4}$, related to the golden ratio",
       },
       {
+        id: "cos-30-circ-exactly",
         expr: ["Cos", ["Degrees", 30]],
         expected: ["Divide", ["Sqrt", 3], 2],
         caption: "$\\cos 30^\\circ$, exactly",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Cos", 1.2],
         expected: { num: "0.362357754476673577638" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "n-of-an-exact-argument-gives-an-arbitrary",
         expr: ["N", ["Cos", ["Rational", 6, 5]]],
         expected: { num: "0.362357754476673577638" },
         category: "Scope",
         caption: "N(...) of an exact argument gives an arbitrary-precision value",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Cos", ["Complex", 2.5, 1]],
         expected: ["Complex", -1.236229198856342, -0.7033251781135347],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: [
           "Cos",
           [
@@ -476,54 +579,63 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "cos-pi-12-frac-sqrt-6-sqrt-2-4",
         expr: ["Cos", ["Divide", "Pi", 12]],
         expected: ["Add", ["Divide", ["Sqrt", 2], 4], ["Divide", ["Sqrt", 6], 4]],
         category: "Scope",
         caption: "$\\cos(\\pi/12) = \\frac{\\sqrt6 + \\sqrt2}{4}$",
       },
       {
+        id: "cos-pi-8-frac-sqrt-2-sqrt-2-2",
         expr: ["Cos", ["Divide", "Pi", 8]],
         expected: ["Multiply", ["Rational", 1, 2], ["Sqrt", ["Add", 2, ["Sqrt", 2]]]],
         category: "Scope",
         caption: "$\\cos(\\pi/8) = \\frac{\\sqrt{2+\\sqrt2}}{2}$",
       },
       {
+        id: "cos-pi-10-frac-sqrt-10-2-sqrt-5-4",
         expr: ["Cos", ["Divide", "Pi", 10]],
         expected: ["Multiply", ["Divide", ["Sqrt", 2], 4], ["Sqrt", ["Add", 5, ["Sqrt", 5]]]],
         category: "Scope",
         caption: "$\\cos(\\pi/10) = \\frac{\\sqrt{10+2\\sqrt5}}{4}$",
       },
       {
+        id: "cos-2-pi-5-frac-sqrt-5-1-4",
         expr: ["Cos", ["Multiply", ["Rational", 2, 5], "Pi"]],
         expected: ["Add", ["Rational", -1, 4], ["Divide", ["Sqrt", 5], 4]],
         category: "Scope",
         caption: "$\\cos(2\\pi/5) = \\frac{\\sqrt5 - 1}{4}$",
       },
       {
+        id: "cos-3-pi-5-frac-1-sqrt-5-4",
         expr: ["Cos", ["Multiply", ["Rational", 3, 5], "Pi"]],
         expected: ["Add", ["Rational", 1, 4], ["Negate", ["Divide", ["Sqrt", 5], 4]]],
         category: "Scope",
         caption: "$\\cos(3\\pi/5) = \\frac{1 - \\sqrt5}{4}$",
       },
       {
+        id: "reduced-into-the-first-quadrant-by-symmetry",
         expr: ["Cos", ["Multiply", ["Rational", 11, 6], "Pi"]],
         expected: ["Divide", ["Sqrt", 3], 2],
         category: "Scope",
         caption: "Reduced into the first quadrant by symmetry",
       },
       {
+        id: "interval-arithmetic-the-image-of-pi-3-pi-2-is-0",
         expr: ["Cos", ["Interval", ["Divide", "Pi", 3], ["Divide", "Pi", 2]]],
         expected: ["Interval", 0, ["Rational", 1, 2]],
         category: "Scope",
         caption: "Interval arithmetic: the image of $[\\pi/3, \\pi/2]$ is $[0, \\tfrac12]$",
       },
       {
+        id: "uncertainty-propagation-cos-2-pm-0-01-approx-0",
         expr: ["Cos", ["Around", 2, 0.01]],
         expected: ["Around", -0.4161468365471424, 0.009092974268256816],
         category: "Scope",
         caption: "Uncertainty propagation: $\\cos(2 \\pm 0.01) \\approx -0.4161 \\pm 0.0091$",
       },
       {
+        id: "cos-infty-should-be-the-oscillation-range-1-1",
         expr: ["Cos", "PositiveInfinity"],
         expected: ["Interval", -1, 1],
         aspirational: true,
@@ -532,48 +644,56 @@ export const elementary: readonly ReferenceEntry[] = [
           "$\\cos(\\infty)$ should be the oscillation range $[-1, 1]$; compute-engine returns a type error",
       },
       {
+        id: "an-imaginary-argument-rewrites-to-cosh-cos-ix",
         expr: ["Cos", ["Multiply", "ImaginaryUnit", "x"]],
         expected: ["Cosh", "x"],
         category: "Scope",
         caption: "An imaginary argument rewrites to [[Cosh]]: $\\cos(ix) = \\cosh x$",
       },
       {
+        id: "evenness-drops-the-sign-of-a-symbolic-argument",
         expr: ["Cos", ["Negate", "x"]],
         expected: ["Cos", "x"],
         category: "Scope",
         caption: "Evenness drops the sign of a symbolic argument: $\\cos(-x) = \\cos x$",
       },
       {
+        id: "cos-arccos-x-x-for-every-x",
         expr: ["Cos", ["Arccos", "x"]],
         expected: "x",
         category: "Scope",
         caption: "$\\cos(\\arccos x) = x$ for every $x$",
       },
       {
+        id: "cos-arcsin-x-sqrt-1-x-2",
         expr: ["Cos", ["Arcsin", "x"]],
         expected: ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]],
         category: "Scope",
         caption: "$\\cos(\\arcsin x) = \\sqrt{1 - x^2}$",
       },
       {
+        id: "cos-arctan-x-frac-1-sqrt-1-x-2",
         expr: ["Cos", ["Arctan", "x"]],
         expected: ["Divide", 1, ["Sqrt", ["Add", ["Power", "x", 2], 1]]],
         category: "Scope",
         caption: "$\\cos(\\arctan x) = \\frac{1}{\\sqrt{1 + x^2}}$",
       },
       {
+        id: "derivative-sin-x",
         expr: ["D", ["Cos", "x"], "x"],
         expected: ["Negate", ["Sin", "x"]],
         category: "Scope",
         caption: "Derivative: $-\\sin x$",
       },
       {
+        id: "antiderivative",
         expr: ["Integrate", ["Cos", "x"], "x"],
         expected: ["Sin", "x"],
         category: "Scope",
         caption: "Antiderivative",
       },
       {
+        id: "taylor-series-about-0-only-even-powers-appear",
         expr: ["Series", ["Cos", "x"], "x", 0, 6],
         expected: [
           "Add",
@@ -591,12 +711,14 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "double-angle-formula-cos-2x-cos-2-x-sin-2-x",
         expr: ["TrigExpand", ["Cos", ["Multiply", 2, "x"]]],
         expected: ["Add", ["Negate", ["Power", ["Sin", "x"], 2]], ["Power", ["Cos", "x"], 2]],
         category: "Properties",
         caption: "Double-angle formula: $\\cos 2x = \\cos^2 x - \\sin^2 x$",
       },
       {
+        id: "angle-addition-formula",
         expr: ["TrigExpand", ["Cos", ["Add", "x", "y"]]],
         expected: [
           "Add",
@@ -607,6 +729,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Angle-addition formula",
       },
       {
+        id: "power-reduction-cos-2-x-frac-1-cos-2x-2",
         expr: ["TrigReduce", ["Power", ["Cos", "x"], 2]],
         expected: [
           "Add",
@@ -617,6 +740,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Power reduction: $\\cos^2 x = \\frac{1 + \\cos 2x}{2}$",
       },
       {
+        id: "euler-s-formula-cos-x-frac-e-ix-e-ix-2",
         expr: ["TrigToExp", ["Cos", "x"]],
         expected: [
           "Multiply",
@@ -631,6 +755,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Euler's formula: $\\cos x = \\frac{e^{ix} + e^{-ix}}{2}$",
       },
       {
+        id: "pi-24-is-past-the-automatic-special-angle-table",
         expr: ["Cos", ["Multiply", ["Rational", 1, 24], "Pi"]],
         expected: ["Cos", ["Multiply", ["Rational", 1, 24], "Pi"]],
         category: "Possible issues",
@@ -638,6 +763,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "$\\pi/24$ is past the automatic special-angle table (as in Wolfram), so this stays symbolic",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Cos", 1], 30],
         expected: { num: "0.540302305868139717400936607443" },
         category: "Scope",
@@ -659,11 +785,16 @@ export const elementary: readonly ReferenceEntry[] = [
       "Undefined wherever $\\cos(x) = 0$, i.e. at odd multiples of $\\pi/2$; compute-engine returns ComplexInfinity there rather than an error.",
     ],
     examples: [
-      { expr: ["Tan", 0], expected: 0 },
-      { expr: ["Tan", ["Divide", "Pi", 6]], expected: ["Divide", ["Sqrt", 3], 3] },
-      { expr: ["Tan", ["Divide", "Pi", 4]], expected: 1 },
-      { expr: ["Tan", ["Divide", "Pi", 3]], expected: ["Sqrt", 3] },
+      { id: "tan-0", expr: ["Tan", 0], expected: 0 },
       {
+        id: "tan-pi-over-6",
+        expr: ["Tan", ["Divide", "Pi", 6]],
+        expected: ["Divide", ["Sqrt", 3], 3],
+      },
+      { id: "tan-pi-over-4", expr: ["Tan", ["Divide", "Pi", 4]], expected: 1 },
+      { id: "tan-pi-over-3", expr: ["Tan", ["Divide", "Pi", 3]], expected: ["Sqrt", 3] },
+      {
+        id: "tan-x-frac-sin-x-cos-x",
         expr: [
           "Equal",
           ["Tan", ["Divide", "Pi", 4]],
@@ -674,58 +805,68 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "$\\tan(x) = \\frac{\\sin(x)}{\\cos(x)}$",
       },
       {
+        id: "odd-function-tan-x-tan-x",
         expr: ["Tan", ["Negate", ["Divide", "Pi", 4]]],
         expected: -1,
         category: "Properties",
         caption: "Odd function: $\\tan(-x) = -\\tan(x)$",
       },
       {
+        id: "period-pi-not-2-pi-adding-a-half-turn-doesn-t",
         expr: ["Tan", ["Add", ["Divide", "Pi", 4], "Pi"]],
         expected: 1,
         category: "Properties",
         caption: "Period $\\pi$, not $2\\pi$: adding a half turn doesn't change the value",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["Tan", ["List", 0, ["Divide", "Pi", 4]]],
         expected: ["List", 0, 1],
         category: "Applications",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "a-pole-cos-pi-2-0-so-the-ratio-blows-up",
         expr: ["Tan", ["Divide", "Pi", 2]],
         expected: "ComplexInfinity",
         category: "Possible issues",
         caption: "A pole: $\\cos(\\pi/2) = 0$, so the ratio blows up",
       },
       {
+        id: "same-rule-as-sin-and-cos-a-non-special-numeric",
         expr: ["Tan", 1],
         expected: ["Tan", 1],
         category: "Possible issues",
         caption: "Same rule as [[Sin]] and [[Cos]]: a non-special numeric argument stays symbolic",
       },
       {
+        id: "tan-30-circ-frac-sqrt-3-3-exactly",
         expr: ["Tan", ["Degrees", 30]],
         expected: ["Divide", ["Sqrt", 3], 3],
         caption: "$\\tan 30^\\circ = \\frac{\\sqrt3}{3}$, exactly",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Tan", 1.2],
         expected: { num: "2.57215162212631893541" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "n-of-an-exact-argument-gives-an-arbitrary",
         expr: ["N", ["Tan", ["Rational", 6, 5]]],
         expected: { num: "2.57215162212631893541" },
         category: "Scope",
         caption: "N(...) of an exact argument gives an arbitrary-precision value",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Tan", ["Complex", 2.5, 1]],
         expected: ["Complex", -0.23701383091627057, 0.8964379171278617],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: [
           "Tan",
           [
@@ -743,24 +884,28 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "tan-pi-8-sqrt-2-1",
         expr: ["Tan", ["Divide", "Pi", 8]],
         expected: ["Add", -1, ["Sqrt", 2]],
         category: "Scope",
         caption: "$\\tan(\\pi/8) = \\sqrt2 - 1$",
       },
       {
+        id: "tan-pi-12-2-sqrt-3",
         expr: ["Tan", ["Divide", "Pi", 12]],
         expected: ["Add", 2, ["Negate", ["Sqrt", 3]]],
         category: "Scope",
         caption: "$\\tan(\\pi/12) = 2 - \\sqrt3$",
       },
       {
+        id: "tan-pi-5-sqrt-5-2-sqrt-5",
         expr: ["Tan", ["Divide", "Pi", 5]],
         expected: ["Sqrt", ["Add", 5, ["Multiply", -2, ["Sqrt", 5]]]],
         category: "Scope",
         caption: "$\\tan(\\pi/5) = \\sqrt{5 - 2\\sqrt5}$",
       },
       {
+        id: "tan-pi-10-sqrt-1-2-sqrt-5",
         expr: ["Tan", ["Divide", "Pi", 10]],
         expected: [
           "Multiply",
@@ -771,61 +916,76 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "$\\tan(\\pi/10) = \\sqrt{1 - 2/\\sqrt5}$",
       },
       {
+        id: "tan-5-pi-12-2-sqrt-3",
         expr: ["Tan", ["Multiply", ["Rational", 5, 12], "Pi"]],
         expected: ["Add", 2, ["Sqrt", 3]],
         category: "Scope",
         caption: "$\\tan(5\\pi/12) = 2 + \\sqrt3$",
       },
-      { expr: ["Tan", ["Multiply", ["Rational", 3, 4], "Pi"]], expected: -1, category: "Scope" },
       {
+        id: "tan-3-over-4-times-pi",
+        expr: ["Tan", ["Multiply", ["Rational", 3, 4], "Pi"]],
+        expected: -1,
+        category: "Scope",
+      },
+      {
+        id: "interval-arithmetic-the-image-of-0-pi-3-is-0",
         expr: ["Tan", ["Interval", 0, ["Divide", "Pi", 3]]],
         expected: ["Interval", 0, ["Sqrt", 3]],
         category: "Scope",
         caption: "Interval arithmetic: the image of $[0, \\pi/3]$ is $[0, \\sqrt3]$",
       },
       {
+        id: "uncertainty-propagation-tan-2-pm-0-02-approx-2",
         expr: ["Tan", ["Around", 2, 0.02]],
         expected: ["Around", -2.185039863261519, 0.11548798408083835],
         category: "Scope",
         caption: "Uncertainty propagation: $\\tan(2 \\pm 0.02) \\approx -2.185 \\pm 0.115$",
       },
       {
+        id: "tan-ix-i-tanh-x",
         expr: ["Tan", ["Multiply", "ImaginaryUnit", "x"]],
         expected: ["Multiply", ["Complex", 0, 1], ["Tanh", "x"]],
         category: "Scope",
         caption: "$\\tan(ix) = i\\tanh x$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Tan", ["Negate", "x"]],
         expected: ["Negate", ["Tan", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\tan(-x) = -\\tan x$",
       },
       {
+        id: "tan-arctan-x-x-for-every-x",
         expr: ["Tan", ["Arctan", "x"]],
         expected: "x",
         category: "Scope",
         caption: "$\\tan(\\arctan x) = x$ for every $x$",
       },
       {
+        id: "tan-arcsin-x-frac-x-sqrt-1-x-2",
         expr: ["Tan", ["Arcsin", "x"]],
         expected: ["Divide", "x", ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]]],
         category: "Scope",
         caption: "$\\tan(\\arcsin x) = \\frac{x}{\\sqrt{1 - x^2}}$",
       },
       {
+        id: "derivative-sec-2-x",
         expr: ["D", ["Tan", "x"], "x"],
         expected: ["Power", ["Sec", "x"], 2],
         category: "Scope",
         caption: "Derivative: $\\sec^2 x$",
       },
       {
+        id: "antiderivative-ln-sec-x",
         expr: ["Integrate", ["Tan", "x"], "x"],
         expected: ["Ln", ["Abs", ["Sec", "x"]]],
         category: "Scope",
         caption: "Antiderivative: $\\ln|\\sec x|$",
       },
       {
+        id: "taylor-series-about-0",
         expr: ["Series", ["Tan", "x"], "x", 0, 7],
         expected: [
           "Add",
@@ -843,6 +1003,7 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "sin-x-cos-x-should-simplify-to-tan-x-simplify",
         expr: ["Simplify", ["Divide", ["Sin", "x"], ["Cos", "x"]]],
         expected: ["Tan", "x"],
         aspirational: true,
@@ -850,6 +1011,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "$\\sin x / \\cos x$ should simplify to $\\tan x$; Simplify leaves the quotient",
       },
       {
+        id: "rewritten-in-exponentials",
         expr: ["TrigToExp", ["Tan", "x"]],
         expected: [
           "Multiply",
@@ -872,6 +1034,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Rewritten in exponentials",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Tan", 1], 30],
         expected: { num: "1.55740772465490223050697480746" },
         category: "Scope",
@@ -892,16 +1055,22 @@ export const elementary: readonly ReferenceEntry[] = [
       "Undefined wherever $\\sin(x) = 0$, i.e. at multiples of $\\pi$ -- not the same poles as [[Tan]].",
     ],
     examples: [
-      { expr: ["Cot", ["Divide", "Pi", 6]], expected: ["Sqrt", 3] },
-      { expr: ["Cot", ["Divide", "Pi", 4]], expected: 1 },
-      { expr: ["Cot", ["Divide", "Pi", 3]], expected: ["Divide", ["Sqrt", 3], 3] },
+      { id: "cot-pi-over-6", expr: ["Cot", ["Divide", "Pi", 6]], expected: ["Sqrt", 3] },
+      { id: "cot-pi-over-4", expr: ["Cot", ["Divide", "Pi", 4]], expected: 1 },
       {
+        id: "cot-pi-over-3",
+        expr: ["Cot", ["Divide", "Pi", 3]],
+        expected: ["Divide", ["Sqrt", 3], 3],
+      },
+      {
+        id: "reciprocal-of-tan-cot-x-frac-1-tan-x",
         expr: ["Equal", ["Cot", ["Divide", "Pi", 4]], ["Divide", 1, ["Tan", ["Divide", "Pi", 4]]]],
         expected: "True",
         category: "Properties",
         caption: "Reciprocal of [[Tan]]: $\\cot(x) = \\frac{1}{\\tan(x)}$",
       },
       {
+        id: "pythagorean-identity-1-cot-2-x-csc-2-x",
         expr: [
           "Equal",
           ["Add", 1, ["Power", ["Cot", ["Divide", "Pi", 6]], 2]],
@@ -912,40 +1081,47 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Pythagorean identity: $1 + \\cot^2 x = \\csc^2 x$",
       },
       {
+        id: "a-pole-sin-0-0",
         expr: ["Cot", 0],
         expected: "ComplexInfinity",
         category: "Possible issues",
         caption: "A pole: $\\sin(0) = 0$",
       },
       {
+        id: "not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero",
         expr: ["Cot", ["Divide", "Pi", 2]],
         expected: 0,
         category: "Possible issues",
         caption: "Not a pole here -- [[Tan]]'s pole at $\\pi/2$ is [[Cot]]'s zero instead",
       },
       {
+        id: "cot-60-circ-frac-sqrt-3-3-exactly",
         expr: ["Cot", ["Degrees", 60]],
         expected: ["Divide", ["Sqrt", 3], 3],
         caption: "$\\cot 60^\\circ = \\frac{\\sqrt3}{3}$, exactly",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Cot", 1.2],
         expected: { num: "0.388779569368204911634" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "n-of-an-exact-argument-gives-an-arbitrary",
         expr: ["N", ["Cot", ["Rational", 6, 5]]],
         expected: { num: "0.388779569368204911634" },
         category: "Scope",
         caption: "N(...) of an exact argument gives an arbitrary-precision value",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Cot", ["Complex", 2.5, 1]],
         expected: ["Complex", -0.27566912122989945, -1.0426406420944216],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: [
           "Cot",
           [
@@ -963,18 +1139,21 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "cot-pi-8-1-sqrt-2",
         expr: ["Cot", ["Divide", "Pi", 8]],
         expected: ["Add", 1, ["Sqrt", 2]],
         category: "Scope",
         caption: "$\\cot(\\pi/8) = 1 + \\sqrt2$",
       },
       {
+        id: "cot-pi-12-2-sqrt-3",
         expr: ["Cot", ["Divide", "Pi", 12]],
         expected: ["Add", 2, ["Sqrt", 3]],
         category: "Scope",
         caption: "$\\cot(\\pi/12) = 2 + \\sqrt3$",
       },
       {
+        id: "cot-pi-over-5",
         expr: ["Cot", ["Divide", "Pi", 5]],
         expected: [
           "Multiply",
@@ -984,6 +1163,7 @@ export const elementary: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "an-interval-straddling-the-pole-at-0-maps-to-two",
         expr: ["Cot", ["Interval", ["Negate", ["Divide", "Pi", 4]], ["Divide", "Pi", 4]]],
         expected: [
           "Union",
@@ -995,6 +1175,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Across the pole at 0 the image comes in two unbounded pieces: $\\cot[-\\tfrac\\pi4, \\tfrac\\pi4] = (-\\infty, -1] \\cup [1, \\infty)$, a [[Union]] of intervals",
       },
       {
+        id: "uncertainty-propagation-near-a-pole-grows-fast",
         expr: ["Cot", ["Around", 3, 0.01]],
         expected: ["Around", -7.015252551434534, 0.5021376836040873],
         category: "Scope",
@@ -1002,18 +1183,21 @@ export const elementary: readonly ReferenceEntry[] = [
           "Uncertainty propagation near a pole grows fast: $\\cot(3 \\pm 0.01) \\approx -7.02 \\pm 0.50$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Cot", ["Negate", "x"]],
         expected: ["Negate", ["Cot", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\cot(-x) = -\\cot x$",
       },
       {
+        id: "derivative-csc-2-x",
         expr: ["D", ["Cot", "x"], "x"],
         expected: ["Negate", ["Power", ["Csc", "x"], 2]],
         category: "Scope",
         caption: "Derivative: $-\\csc^2 x$",
       },
       {
+        id: "antiderivative-ln-sin-x",
         expr: ["Integrate", ["Cot", "x"], "x"],
         expected: ["Ln", ["Abs", ["Sin", "x"]]],
         category: "Scope",
@@ -1034,17 +1218,19 @@ export const elementary: readonly ReferenceEntry[] = [
       "Undefined wherever $\\cos(x) = 0$, the same poles as [[Tan]].",
     ],
     examples: [
-      { expr: ["Sec", 0], expected: 1 },
-      { expr: ["Sec", ["Divide", "Pi", 4]], expected: ["Sqrt", 2] },
-      { expr: ["Sec", ["Divide", "Pi", 3]], expected: 2 },
-      { expr: ["Sec", "Pi"], expected: -1 },
+      { id: "sec-0", expr: ["Sec", 0], expected: 1 },
+      { id: "sec-pi-over-4", expr: ["Sec", ["Divide", "Pi", 4]], expected: ["Sqrt", 2] },
+      { id: "sec-pi-over-3", expr: ["Sec", ["Divide", "Pi", 3]], expected: 2 },
+      { id: "sec-pi", expr: ["Sec", "Pi"], expected: -1 },
       {
+        id: "reciprocal-of-cos-sec-x-frac-1-cos-x",
         expr: ["Equal", ["Sec", ["Divide", "Pi", 3]], ["Divide", 1, ["Cos", ["Divide", "Pi", 3]]]],
         expected: "True",
         category: "Properties",
         caption: "Reciprocal of [[Cos]]: $\\sec(x) = \\frac{1}{\\cos(x)}$",
       },
       {
+        id: "pythagorean-identity-1-tan-2-x-sec-2-x",
         expr: [
           "Equal",
           ["Add", 1, ["Power", ["Tan", ["Divide", "Pi", 6]], 2]],
@@ -1055,34 +1241,40 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Pythagorean identity: $1 + \\tan^2 x = \\sec^2 x$",
       },
       {
+        id: "a-pole-cos-pi-2-0",
         expr: ["Sec", ["Divide", "Pi", 2]],
         expected: "ComplexInfinity",
         category: "Possible issues",
         caption: "A pole: $\\cos(\\pi/2) = 0$",
       },
       {
+        id: "sec-30-circ-frac-2-sqrt-3-3-exactly",
         expr: ["Sec", ["Degrees", 30]],
         expected: ["Multiply", ["Rational", 2, 3], ["Sqrt", 3]],
         caption: "$\\sec 30^\\circ = \\frac{2\\sqrt3}{3}$, exactly",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Sec", 1.2],
         expected: { num: "2.75970360133240645689" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "n-of-an-exact-argument-gives-an-arbitrary",
         expr: ["N", ["Sec", ["Rational", 6, 5]]],
         expected: { num: "2.75970360133240645689" },
         category: "Scope",
         caption: "N(...) of an exact argument gives an arbitrary-precision value",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Sec", ["Complex", 2.5, 1]],
         expected: ["Complex", -0.6111085641552316, 0.34767666071049597],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: [
           "Sec",
           [
@@ -1100,24 +1292,28 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "sec-pi-12-sqrt-6-sqrt-2",
         expr: ["Sec", ["Divide", "Pi", 12]],
         expected: ["Add", ["Negate", ["Sqrt", 2]], ["Sqrt", 6]],
         category: "Scope",
         caption: "$\\sec(\\pi/12) = \\sqrt6 - \\sqrt2$",
       },
       {
+        id: "sec-pi-5-sqrt-5-1",
         expr: ["Sec", ["Divide", "Pi", 5]],
         expected: ["Add", -1, ["Sqrt", 5]],
         category: "Scope",
         caption: "$\\sec(\\pi/5) = \\sqrt5 - 1$",
       },
       {
+        id: "sec-pi-8-sqrt-4-2-sqrt-2",
         expr: ["Sec", ["Divide", "Pi", 8]],
         expected: ["Sqrt", ["Add", 4, ["Multiply", -2, ["Sqrt", 2]]]],
         category: "Scope",
         caption: "$\\sec(\\pi/8) = \\sqrt{4 - 2\\sqrt2}$",
       },
       {
+        id: "interval-arithmetic-the-image-of-pi-6-pi-3-is",
         expr: ["Sec", ["Interval", ["Divide", "Pi", 6], ["Divide", "Pi", 3]]],
         expected: ["Interval", ["Multiply", ["Rational", 2, 3], ["Sqrt", 3]], 2],
         category: "Scope",
@@ -1125,24 +1321,28 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: the image of $[\\pi/6, \\pi/3]$ is $[\\tfrac{2}{\\sqrt3}, 2]$",
       },
       {
+        id: "uncertainty-propagation-sec-2-pm-0-01-approx-2",
         expr: ["Sec", ["Around", 2, 0.01]],
         expected: ["Around", -2.402997961722381, 0.052506463376995806],
         category: "Scope",
         caption: "Uncertainty propagation: $\\sec(2 \\pm 0.01) \\approx -2.403 \\pm 0.053$",
       },
       {
+        id: "evenness-drops-the-sign-of-a-symbolic-argument",
         expr: ["Sec", ["Negate", "x"]],
         expected: ["Sec", "x"],
         category: "Scope",
         caption: "Evenness drops the sign of a symbolic argument: $\\sec(-x) = \\sec x$",
       },
       {
+        id: "derivative-sec-x-tan-x",
         expr: ["D", ["Sec", "x"], "x"],
         expected: ["Multiply", ["Tan", "x"], ["Sec", "x"]],
         category: "Scope",
         caption: "Derivative: $\\sec x \\tan x$",
       },
       {
+        id: "antiderivative-ln-sec-x-tan-x",
         expr: ["Integrate", ["Sec", "x"], "x"],
         expected: ["Ln", ["Abs", ["Add", ["Tan", "x"], ["Sec", "x"]]]],
         category: "Scope",
@@ -1163,44 +1363,51 @@ export const elementary: readonly ReferenceEntry[] = [
       "Undefined wherever $\\sin(x) = 0$, the same poles as [[Cot]].",
     ],
     examples: [
-      { expr: ["Csc", ["Divide", "Pi", 6]], expected: 2 },
-      { expr: ["Csc", ["Divide", "Pi", 4]], expected: ["Sqrt", 2] },
-      { expr: ["Csc", ["Divide", "Pi", 2]], expected: 1 },
+      { id: "csc-pi-over-6", expr: ["Csc", ["Divide", "Pi", 6]], expected: 2 },
+      { id: "csc-pi-over-4", expr: ["Csc", ["Divide", "Pi", 4]], expected: ["Sqrt", 2] },
+      { id: "csc-pi-over-2", expr: ["Csc", ["Divide", "Pi", 2]], expected: 1 },
       {
+        id: "reciprocal-of-sin-csc-x-frac-1-sin-x",
         expr: ["Equal", ["Csc", ["Divide", "Pi", 6]], ["Divide", 1, ["Sin", ["Divide", "Pi", 6]]]],
         expected: "True",
         category: "Properties",
         caption: "Reciprocal of [[Sin]]: $\\csc(x) = \\frac{1}{\\sin(x)}$",
       },
       {
+        id: "a-pole-sin-0-0",
         expr: ["Csc", 0],
         expected: "ComplexInfinity",
         category: "Possible issues",
         caption: "A pole: $\\sin(0) = 0$",
       },
       {
+        id: "csc-60-circ-frac-2-sqrt-3-3-exactly",
         expr: ["Csc", ["Degrees", 60]],
         expected: ["Multiply", ["Rational", 2, 3], ["Sqrt", 3]],
         caption: "$\\csc 60^\\circ = \\frac{2\\sqrt3}{3}$, exactly",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Csc", 1.2],
         expected: { num: "1.07291637770989722871" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "n-of-an-exact-argument-gives-an-arbitrary",
         expr: ["N", ["Csc", ["Rational", 6, 5]]],
         expected: { num: "1.07291637770989722871" },
         category: "Scope",
         caption: "N(...) of an exact argument gives an arbitrary-precision value",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Csc", ["Complex", 2.5, 1]],
         expected: ["Complex", 0.5309655776211742, 0.5413229061900025],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix-with",
         expr: [
           "Csc",
           [
@@ -1218,23 +1425,27 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix, with ComplexInfinity at the pole $\\pi$",
       },
       {
+        id: "csc-pi-12-sqrt-6-sqrt-2",
         expr: ["Csc", ["Divide", "Pi", 12]],
         expected: ["Add", ["Sqrt", 2], ["Sqrt", 6]],
         category: "Scope",
         caption: "$\\csc(\\pi/12) = \\sqrt6 + \\sqrt2$",
       },
       {
+        id: "csc-pi-10-1-sqrt-5",
         expr: ["Csc", ["Divide", "Pi", 10]],
         expected: ["Add", 1, ["Sqrt", 5]],
         category: "Scope",
         caption: "$\\csc(\\pi/10) = 1 + \\sqrt5$",
       },
       {
+        id: "csc-pi-over-5",
         expr: ["Csc", ["Divide", "Pi", 5]],
         expected: ["Multiply", ["Divide", ["Sqrt", 10], 5], ["Sqrt", ["Add", 5, ["Sqrt", 5]]]],
         category: "Scope",
       },
       {
+        id: "interval-arithmetic-the-image-of-pi-6-pi-3-is",
         expr: ["Csc", ["Interval", ["Divide", "Pi", 6], ["Divide", "Pi", 3]]],
         expected: ["Interval", ["Multiply", ["Rational", 2, 3], ["Sqrt", 3]], 2],
         category: "Scope",
@@ -1242,24 +1453,28 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: the image of $[\\pi/6, \\pi/3]$ is $[\\tfrac{2}{\\sqrt3}, 2]$",
       },
       {
+        id: "uncertainty-propagation-csc-2-pm-0-01-approx-1",
         expr: ["Csc", ["Around", 2, 0.01]],
         expected: ["Around", 1.0997501702946164, 0.00503308973344342],
         category: "Scope",
         caption: "Uncertainty propagation: $\\csc(2 \\pm 0.01) \\approx 1.0998 \\pm 0.0050$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Csc", ["Negate", "x"]],
         expected: ["Negate", ["Csc", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\csc(-x) = -\\csc x$",
       },
       {
+        id: "derivative-csc-x-cot-x",
         expr: ["D", ["Csc", "x"], "x"],
         expected: ["Negate", ["Multiply", ["Csc", "x"], ["Cot", "x"]]],
         category: "Scope",
         caption: "Derivative: $-\\csc x \\cot x$",
       },
       {
+        id: "antiderivative-ln-csc-x-cot-x",
         expr: ["Integrate", ["Csc", "x"], "x"],
         expected: ["Negate", ["Ln", ["Abs", ["Add", ["Csc", "x"], ["Cot", "x"]]]]],
         category: "Scope",
@@ -1287,21 +1502,32 @@ export const elementary: readonly ReferenceEntry[] = [
       "Past $[-1, 1]$, a rational $x$ reduces to the exact closed form $\\operatorname{sign}(x)\\left(\\frac{\\pi}{2} - i\\ln(|x|+\\sqrt{x^2-1})\\right)$ (`@enumeratio/analytic`) -- the same branch compute-engine's own N(Arcsin(x)) already takes.",
     ],
     examples: [
-      { expr: ["Arcsin", 0], expected: 0 },
-      { expr: ["Arcsin", ["Rational", 1, 2]], expected: ["Multiply", ["Rational", 1, 6], "Pi"] },
+      { id: "arcsin-0", expr: ["Arcsin", 0], expected: 0 },
       {
+        id: "arcsin-1-over-2",
+        expr: ["Arcsin", ["Rational", 1, 2]],
+        expected: ["Multiply", ["Rational", 1, 6], "Pi"],
+      },
+      {
+        id: "the-top-of-the-principal-range",
         expr: ["Arcsin", 1],
         expected: ["Multiply", ["Rational", 1, 2], "Pi"],
         caption: "The top of the principal range",
       },
-      { expr: ["Arcsin", -1], expected: ["Multiply", ["Rational", -1, 2], "Pi"] },
       {
+        id: "arcsin-neg-1",
+        expr: ["Arcsin", -1],
+        expected: ["Multiply", ["Rational", -1, 2], "Pi"],
+      },
+      {
+        id: "sin-arcsin-x-x-on-the-principal-branch",
         expr: ["Equal", ["Sin", ["Arcsin", ["Rational", 1, 2]]], ["Rational", 1, 2]],
         expected: "True",
         category: "Properties",
         caption: "$\\sin(\\arcsin(x)) = x$ on the principal branch",
       },
       {
+        id: "co-function-identity-arcsin-x-arccos-x-pi-2",
         expr: [
           "Equal",
           ["Add", ["Arcsin", ["Rational", 1, 2]], ["Arccos", ["Rational", 1, 2]]],
@@ -1312,6 +1538,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Co-function identity: $\\arcsin(x) + \\arccos(x) = \\pi/2$",
       },
       {
+        id: "outside-1-1-reduces-to-the-exact-closed-form",
         expr: ["Arcsin", 2],
         expected: [
           "Add",
@@ -1327,28 +1554,33 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Arcsin", 0.4],
         expected: { num: "0.411516846067488019385" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "outside-1-1-a-float-argument-gives-the-complex",
         expr: ["Arcsin", 1.5],
         expected: ["Complex", 1.5707963267948966, -0.9624236501192069],
         caption: "Outside $[-1, 1]$ a float argument gives the complex principal value",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Arcsin", ["Rational", 1, 3]]],
         expected: { num: "0.339836909454121937096" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Arcsin", ["Complex", 2.5, 1]],
         expected: ["Complex", 1.1646235102893847, 1.6586932988564347],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: [
           "Arcsin",
           [
@@ -1366,29 +1598,34 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "exact-inverse-of-a-special-value",
         expr: ["Arcsin", ["Divide", ["Sqrt", 2], 2]],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
         category: "Scope",
         caption: "Exact inverse of a special value",
       },
       {
+        id: "arcsin-sqrt-3-over-2",
         expr: ["Arcsin", ["Divide", ["Sqrt", 3], 2]],
         expected: ["Multiply", ["Rational", 1, 3], "Pi"],
         category: "Scope",
       },
       {
+        id: "recognizes-the-radical-value-sin-pi-12",
         expr: ["Arcsin", ["Divide", ["Subtract", ["Sqrt", 6], ["Sqrt", 2]], 4]],
         expected: ["Multiply", ["Rational", 1, 12], "Pi"],
         category: "Scope",
         caption: "Recognizes the radical value $\\sin(\\pi/12)$",
       },
       {
+        id: "recognizes-sin-pi-10-frac-sqrt-5-1-4",
         expr: ["Arcsin", ["Divide", ["Subtract", ["Sqrt", 5], 1], 4]],
         expected: ["Multiply", ["Rational", 1, 10], "Pi"],
         category: "Scope",
         caption: "Recognizes $\\sin(\\pi/10) = \\frac{\\sqrt5 - 1}{4}$",
       },
       {
+        id: "interval-arithmetic-arcsin-frac-13-frac-12",
         expr: ["Arcsin", ["Interval", ["Rational", -1, 3], ["Rational", 1, 2]]],
         expected: [
           "Interval",
@@ -1404,24 +1641,28 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "uncertainty-propagation-arcsin-0-9-pm-0-1-approx",
         expr: ["Arcsin", ["Around", 0.9, 0.1]],
         expected: ["Around", 1.1197695149986342, 0.2294157338705618],
         category: "Scope",
         caption: "Uncertainty propagation: $\\arcsin(0.9 \\pm 0.1) \\approx 1.120 \\pm 0.229$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Arcsin", ["Negate", "x"]],
         expected: ["Negate", ["Arcsin", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\arcsin(-x) = -\\arcsin x$",
       },
       {
+        id: "derivative-frac-1-sqrt-1-x-2",
         expr: ["D", ["Arcsin", "x"], "x"],
         expected: ["Divide", 1, ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]]],
         category: "Scope",
         caption: "Derivative: $\\frac{1}{\\sqrt{1 - x^2}}$",
       },
       {
+        id: "antiderivative",
         expr: ["Integrate", ["Arcsin", "x"], "x"],
         expected: [
           "Add",
@@ -1432,6 +1673,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Antiderivative",
       },
       {
+        id: "taylor-series-about-0",
         expr: ["Series", ["Arcsin", "x"], "x", 0, 5],
         expected: [
           "Add",
@@ -1448,6 +1690,7 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2",
         expr: ["TrigToExp", ["Arcsin", "x"]],
         expected: [
           "Multiply",
@@ -1465,6 +1708,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "As a logarithm: $\\arcsin x = -i\\ln(ix + \\sqrt{1 - x^2})$",
       },
       {
+        id: "not-simply-2-2-is-outside-the-principal-range-pi",
         expr: ["Arcsin", ["Sin", 2]],
         expected: ["Add", -2, "Pi"],
         category: "Possible issues",
@@ -1472,12 +1716,14 @@ export const elementary: readonly ReferenceEntry[] = [
           "Not simply 2: $2$ is outside the principal range $[-\\pi/2, \\pi/2]$, so $\\arcsin(\\sin 2) = \\pi - 2$",
       },
       {
+        id: "to-30-significant-digits-not-yet-the-last-digit",
         expr: ["N", ["Arcsin", ["Rational", 1, 3]], 30],
         expected: { num: "0.339836909454121937096392513392" },
         category: "Scope",
         caption: "To 30 significant digits, the last one correctly rounded",
       },
       {
+        id: "arcsin-2-past-1-1-the-odd-function-mirror-of",
         expr: ["Arcsin", -2],
         expected: [
           "Add",
@@ -1507,17 +1753,28 @@ export const elementary: readonly ReferenceEntry[] = [
       "Undoes [[Cos]] on its principal branch: $\\cos(\\arccos(x)) = x$ for $x \\in [-1, 1]$.",
     ],
     examples: [
-      { expr: ["Arccos", 1], expected: 0 },
-      { expr: ["Arccos", ["Rational", 1, 2]], expected: ["Multiply", ["Rational", 1, 3], "Pi"] },
-      { expr: ["Arccos", 0], expected: ["Multiply", ["Rational", 1, 2], "Pi"] },
-      { expr: ["Arccos", -1], expected: "Pi", caption: "The top of the principal range" },
+      { id: "arccos-1", expr: ["Arccos", 1], expected: 0 },
       {
+        id: "arccos-1-over-2",
+        expr: ["Arccos", ["Rational", 1, 2]],
+        expected: ["Multiply", ["Rational", 1, 3], "Pi"],
+      },
+      { id: "arccos-0", expr: ["Arccos", 0], expected: ["Multiply", ["Rational", 1, 2], "Pi"] },
+      {
+        id: "the-top-of-the-principal-range",
+        expr: ["Arccos", -1],
+        expected: "Pi",
+        caption: "The top of the principal range",
+      },
+      {
+        id: "cos-arccos-x-x-on-the-principal-branch",
         expr: ["Equal", ["Cos", ["Arccos", ["Rational", 1, 2]]], ["Rational", 1, 2]],
         expected: "True",
         category: "Properties",
         caption: "$\\cos(\\arccos(x)) = x$ on the principal branch",
       },
       {
+        id: "outside-1-1-this-stays-symbolic-same-as-arcsin-n",
         expr: ["Arccos", 2],
         expected: ["Arccos", 2],
         category: "Possible issues",
@@ -1525,28 +1782,33 @@ export const elementary: readonly ReferenceEntry[] = [
           "Outside $[-1, 1]$ this stays symbolic, same as [[Arcsin]]; N(...) gives a complex approximation",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Arccos", 0.4],
         expected: { num: "1.15927948072740859985" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "outside-1-1-the-value-is-purely-imaginary",
         expr: ["Arccos", 1.5],
         expected: ["Complex", 0, 0.9624236501192069],
         caption: "Outside $[-1, 1]$ the value is purely imaginary",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Arccos", ["Rational", 1, 3]]],
         expected: { num: "1.23095941734077468214" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Arccos", ["Complex", 2.5, 1]],
         expected: ["Complex", 0.40617281650551185, -1.6586932988564347],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: [
           "Arccos",
           [
@@ -1564,23 +1826,27 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "exact-inverse-of-a-special-value",
         expr: ["Arccos", ["Divide", ["Sqrt", 3], 2]],
         expected: ["Multiply", ["Rational", 1, 6], "Pi"],
         category: "Scope",
         caption: "Exact inverse of a special value",
       },
       {
+        id: "arccos-neg-sqrt-2-over-2",
         expr: ["Arccos", ["Negate", ["Divide", ["Sqrt", 2], 2]]],
         expected: ["Multiply", ["Rational", 3, 4], "Pi"],
         category: "Scope",
       },
       {
+        id: "recognizes-cos-pi-5-frac-1-sqrt-5-4",
         expr: ["Arccos", ["Divide", ["Add", 1, ["Sqrt", 5]], 4]],
         expected: ["Multiply", ["Rational", 1, 5], "Pi"],
         category: "Scope",
         caption: "Recognizes $\\cos(\\pi/5) = \\frac{1 + \\sqrt5}{4}$",
       },
       {
+        id: "interval-arithmetic-decreasing-so-arccos-frac-13",
         expr: ["Arccos", ["Interval", ["Rational", 1, 3], ["Rational", 1, 2]]],
         expected: [
           "Interval",
@@ -1592,18 +1858,21 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: decreasing, so $\\arccos[\\tfrac13, \\tfrac12] = [\\tfrac{\\pi}{3}, \\arccos\\tfrac13]$",
       },
       {
+        id: "uncertainty-propagation-arccos-0-9-pm-0-1-approx",
         expr: ["Arccos", ["Around", 0.9, 0.1]],
         expected: ["Around", 0.45102681179626236, 0.2294157338705618],
         category: "Scope",
         caption: "Uncertainty propagation: $\\arccos(0.9 \\pm 0.1) \\approx 0.451 \\pm 0.229$",
       },
       {
+        id: "derivative-frac-1-sqrt-1-x-2",
         expr: ["D", ["Arccos", "x"], "x"],
         expected: ["Divide", -1, ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]]],
         category: "Scope",
         caption: "Derivative: $-\\frac{1}{\\sqrt{1 - x^2}}$",
       },
       {
+        id: "antiderivative",
         expr: ["Integrate", ["Arccos", "x"], "x"],
         expected: [
           "Add",
@@ -1614,12 +1883,14 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Antiderivative",
       },
       {
+        id: "reflection-arccos-x-pi-arccos-x",
         expr: ["Arccos", ["Negate", "x"]],
         expected: ["Add", ["Negate", ["Arccos", "x"]], "Pi"],
         category: "Properties",
         caption: "Reflection: $\\arccos(-x) = \\pi - \\arccos x$",
       },
       {
+        id: "not-simply-4-4-is-outside-the-principal-range-0",
         expr: ["Arccos", ["Cos", 4]],
         expected: ["Add", -4, ["Multiply", 2, "Pi"]],
         category: "Scope",
@@ -1647,28 +1918,36 @@ export const elementary: readonly ReferenceEntry[] = [
       "The two-argument atan2 form is a separate compute-engine function, $\\mathrm{Arctan2}(x, y)$, rather than an overload of Arctan.",
     ],
     examples: [
-      { expr: ["Arctan", 0], expected: 0 },
-      { expr: ["Arctan", 1], expected: ["Multiply", ["Rational", 1, 4], "Pi"] },
-      { expr: ["Arctan", ["Sqrt", 3]], expected: ["Multiply", ["Rational", 1, 3], "Pi"] },
+      { id: "arctan-0", expr: ["Arctan", 0], expected: 0 },
+      { id: "arctan-1", expr: ["Arctan", 1], expected: ["Multiply", ["Rational", 1, 4], "Pi"] },
       {
+        id: "arctan-sqrt-3",
+        expr: ["Arctan", ["Sqrt", 3]],
+        expected: ["Multiply", ["Rational", 1, 3], "Pi"],
+      },
+      {
+        id: "tan-arctan-x-x",
         expr: ["Equal", ["Tan", ["Arctan", 1]], 1],
         expected: "True",
         category: "Properties",
         caption: "$\\tan(\\arctan(x)) = x$",
       },
       {
+        id: "the-horizontal-asymptote-as-x-to-infty",
         expr: ["Arctan", "PositiveInfinity"],
         expected: ["Multiply", ["Rational", 1, 2], "Pi"],
         category: "Neat examples",
         caption: "The horizontal asymptote as $x \\to +\\infty$",
       },
       {
+        id: "and-as-x-to-infty",
         expr: ["Arctan", "NegativeInfinity"],
         expected: ["Multiply", ["Rational", -1, 2], "Pi"],
         category: "Neat examples",
         caption: "And as $x \\to -\\infty$",
       },
       {
+        id: "compute-engine-s-arctan-takes-only-one-argument",
         expr: ["Arctan", 1, 1],
         expected: [
           "Error",
@@ -1685,23 +1964,27 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Arctan", 0.5],
         expected: { num: "0.463647609000806116214" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Arctan", ["Rational", 1, 2]]],
         expected: { num: "0.463647609000806116214" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Arctan", ["Complex", 2.5, 1]],
         expected: ["Complex", 1.2334258556831204, 0.12367406045902679],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "wolfram-s-two-argument-arctan-x-y-is-compute",
         expr: ["Arctan2", -1, -1],
         expected: ["Multiply", ["Rational", -3, 4], "Pi"],
         category: "Scope",
@@ -1709,6 +1992,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Wolfram's two-argument ArcTan[x, y] is compute-engine's $\\mathrm{Arctan2}(y, x)$: the angle of the point $(-1, -1)$ is $-3\\pi/4$",
       },
       {
+        id: "arctan2-takes-y-first-the-angle-of-the-point-0-5",
         expr: ["Arctan2", 2, 0.5],
         expected: { num: "1.32581766366803246506" },
         category: "Scope",
@@ -1716,34 +2000,40 @@ export const elementary: readonly ReferenceEntry[] = [
           "Arctan2 takes $y$ first: the angle of the point $(0.5, 2)$ is $\\arctan 4 \\approx 1.3258$, evaluated numerically for the float input",
       },
       {
+        id: "arctan-2-sqrt-3-5-pi-12",
         expr: ["Arctan", ["Add", 2, ["Sqrt", 3]]],
         expected: ["Multiply", ["Rational", 5, 12], "Pi"],
         category: "Scope",
         caption: "$\\arctan(2 + \\sqrt3) = 5\\pi/12$",
       },
       {
+        id: "arctan-2-sqrt-3-pi-12",
         expr: ["Arctan", ["Subtract", 2, ["Sqrt", 3]]],
         expected: ["Multiply", ["Rational", 1, 12], "Pi"],
         category: "Scope",
         caption: "$\\arctan(2 - \\sqrt3) = \\pi/12$",
       },
       {
+        id: "arctan-sqrt-2-1-pi-8",
         expr: ["Arctan", ["Subtract", ["Sqrt", 2], 1]],
         expected: ["Multiply", ["Rational", 1, 8], "Pi"],
         category: "Scope",
         caption: "$\\arctan(\\sqrt2 - 1) = \\pi/8$",
       },
       {
+        id: "arctan-1-over-sqrt-3",
         expr: ["Arctan", ["Divide", 1, ["Sqrt", 3]]],
         expected: ["Multiply", ["Rational", 1, 6], "Pi"],
         category: "Scope",
       },
       {
+        id: "arctan-neg-1",
         expr: ["Arctan", -1],
         expected: ["Multiply", ["Rational", -1, 4], "Pi"],
         category: "Scope",
       },
       {
+        id: "threads-element-wise-over-a-matrix",
         expr: ["Arctan", ["List", ["List", 0, 1], ["List", -1, ["Sqrt", 3]]]],
         expected: [
           "List",
@@ -1754,24 +2044,28 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a matrix",
       },
       {
+        id: "interval-arithmetic-arctan-1-3-frac-pi-4-arctan",
         expr: ["Arctan", ["Interval", -1, 3]],
         expected: ["Interval", ["Multiply", ["Rational", -1, 4], "Pi"], ["Arctan", 3]],
         category: "Scope",
         caption: "Interval arithmetic: $\\arctan[-1, 3] = [-\\tfrac{\\pi}{4}, \\arctan 3]$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Arctan", ["Negate", "x"]],
         expected: ["Negate", ["Arctan", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\arctan(-x) = -\\arctan x$",
       },
       {
+        id: "derivative-frac-1-1-x-2",
         expr: ["D", ["Arctan", "x"], "x"],
         expected: ["Divide", 1, ["Add", ["Power", "x", 2], 1]],
         category: "Scope",
         caption: "Derivative: $\\frac{1}{1 + x^2}$",
       },
       {
+        id: "antiderivative",
         expr: ["Integrate", ["Arctan", "x"], "x"],
         expected: [
           "Add",
@@ -1782,6 +2076,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Antiderivative",
       },
       {
+        id: "gregory-s-series-about-0",
         expr: ["Series", ["Arctan", "x"], "x", 0, 7],
         expected: [
           "Add",
@@ -1799,12 +2094,14 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "the-limit-at-infty",
         expr: ["Limit", ["Function", ["Arctan", "x"], "x"], "PositiveInfinity"],
         expected: ["Multiply", ["Rational", 1, 2], "Pi"],
         category: "Scope",
         caption: "The limit at $+\\infty$",
       },
       {
+        id: "as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2",
         expr: ["TrigToExp", ["Arctan", "x"]],
         expected: [
           "Add",
@@ -1824,6 +2121,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "As logarithms: $\\arctan x = \\tfrac{i}{2}\\ln(1 - ix) - \\tfrac{i}{2}\\ln(1 + ix)$",
       },
       {
+        id: "euler-s-machin-like-identity-arctan-frac-12",
         expr: ["Add", ["Arctan", ["Rational", 1, 2]], ["Arctan", ["Rational", 1, 3]]],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
         aspirational: true,
@@ -1832,6 +2130,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Euler's Machin-like identity $\\arctan\\tfrac12 + \\arctan\\tfrac13 = \\tfrac{\\pi}{4}$; the sum is not combined",
       },
       {
+        id: "machin-s-formula-4-arctan-frac-15-arctan-frac-1",
         expr: [
           "Subtract",
           ["Multiply", 4, ["Arctan", ["Rational", 1, 5]]],
@@ -1844,6 +2143,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Machin's formula $4\\arctan\\tfrac15 - \\arctan\\tfrac1{239} = \\tfrac{\\pi}{4}$; not combined",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Arctan", ["Rational", 1, 2]], 30],
         expected: { num: "0.463647609000806116214256231461" },
         category: "Scope",
@@ -1863,39 +2163,46 @@ export const elementary: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "pi-4-numerically-n-forces-the-fold-plain",
         expr: ["N", ["Arccot", 1]],
         expected: { num: "0.785398163397448309616" },
         caption: "$\\pi/4$, numerically -- N(...) forces the fold plain evaluation withholds",
       },
       {
+        id: "undoes-cot-cot-arccot-x-x",
         expr: ["Equal", ["Cot", ["Arccot", 1]], 1],
         expected: "True",
         category: "Properties",
         caption: "Undoes [[Cot]]: $\\cot(\\text{arccot}(x)) = x$",
       },
       {
+        id: "folds-to-pi-4-exactly-as-arctan-does-at-1",
         expr: ["Arccot", 1],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
         caption: "Folds to $\\pi/4$ exactly, as [[Arctan]] does at 1",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Arccot", 0.5],
         expected: { num: "1.10714871779409050302" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "arccot-0-pi-2",
         expr: ["Arccot", 0],
         expected: ["Multiply", ["Rational", 1, 2], "Pi"],
         category: "Scope",
         caption: "$\\operatorname{arccot} 0 = \\pi/2$",
       },
       {
+        id: "arccot-sqrt-3-pi-6",
         expr: ["Arccot", ["Sqrt", 3]],
         expected: ["Multiply", ["Rational", 1, 6], "Pi"],
         category: "Scope",
         caption: "$\\operatorname{arccot}\\sqrt3 = \\pi/6$",
       },
       {
+        id: "arccot-1-3-pi-4-on-compute-engine-s-range-0-pi",
         expr: ["Arccot", -1],
         expected: ["Multiply", ["Rational", 3, 4], "Pi"],
         category: "Scope",
@@ -1905,14 +2212,21 @@ export const elementary: readonly ReferenceEntry[] = [
           wolfram: "Wolfram's ArcCot[x] = ArcTan[1/x] on (-π/2, π/2], so ArcCot[-1] = -π/4.",
         },
       },
-      { expr: ["Arccot", "PositiveInfinity"], expected: 0, category: "Scope" },
       {
+        id: "arccot-positiveinfinity",
+        expr: ["Arccot", "PositiveInfinity"],
+        expected: 0,
+        category: "Scope",
+      },
+      {
+        id: "derivative-frac-1-1-x-2",
         expr: ["D", ["Arccot", "x"], "x"],
         expected: ["Divide", -1, ["Add", ["Power", "x", 2], 1]],
         category: "Scope",
         caption: "Derivative: $-\\frac{1}{1 + x^2}$",
       },
       {
+        id: "arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored",
         expr: ["Arccot", ["Negate", ["Sqrt", 3]]],
         expected: ["Multiply", ["Rational", 5, 6], "Pi"],
         category: "Scope",
@@ -1929,40 +2243,51 @@ export const elementary: readonly ReferenceEntry[] = [
     summary: "Arccosecant, the inverse of [[Csc]].",
     signatures: [{ call: "Arccsc(x)", description: "the value $y$ with $\\csc(y) = x$." }],
     examples: [
-      { expr: ["Arccsc", 1], expected: ["Multiply", ["Rational", 1, 2], "Pi"] },
-      { expr: ["Arccsc", 2], expected: ["Multiply", ["Rational", 1, 6], "Pi"] },
+      { id: "arccsc-1", expr: ["Arccsc", 1], expected: ["Multiply", ["Rational", 1, 2], "Pi"] },
+      { id: "arccsc-2", expr: ["Arccsc", 2], expected: ["Multiply", ["Rational", 1, 6], "Pi"] },
       {
+        id: "undoes-csc-csc-arccsc-x-x",
         expr: ["Equal", ["Csc", ["Arccsc", 2]], 2],
         expected: "True",
         category: "Properties",
         caption: "Undoes [[Csc]]: $\\csc(\\text{arccsc}(x)) = x$",
       },
       {
+        id: "arccsc-sqrt-2-pi-4",
         expr: ["Arccsc", ["Sqrt", 2]],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
         category: "Scope",
         caption: "$\\operatorname{arccsc}\\sqrt2 = \\pi/4$",
       },
       {
+        id: "an-odd-function",
         expr: ["Arccsc", -2],
         expected: ["Multiply", ["Rational", -1, 6], "Pi"],
         category: "Scope",
         caption: "An odd function",
       },
       {
+        id: "inside-1-1-the-value-is-complex",
         expr: ["Arccsc", 0.5],
         expected: ["Complex", 1.5707963267948966, -1.3169578969248166],
         category: "Scope",
         caption: "Inside $(-1, 1)$ the value is complex",
       },
-      { expr: ["Arccsc", "PositiveInfinity"], expected: 0, category: "Scope" },
       {
+        id: "arccsc-positiveinfinity",
+        expr: ["Arccsc", "PositiveInfinity"],
+        expected: 0,
+        category: "Scope",
+      },
+      {
+        id: "a-pole-arccsc-0-is-complex-infinity",
         expr: ["Arccsc", 0],
         expected: "ComplexInfinity",
         category: "Scope",
         caption: "A pole: $\\operatorname{arccsc} 0$ is complex infinity",
       },
       {
+        id: "derivative-for-real-x-1",
         expr: ["D", ["Arccsc", "x"], "x"],
         expected: [
           "Divide",
@@ -1985,45 +2310,52 @@ export const elementary: readonly ReferenceEntry[] = [
     summary: "Arcsecant, the inverse of [[Sec]].",
     signatures: [{ call: "Arcsec(x)", description: "the value $y$ with $\\sec(y) = x$." }],
     examples: [
-      { expr: ["Arcsec", 1], expected: 0 },
-      { expr: ["Arcsec", 2], expected: ["Multiply", ["Rational", 1, 3], "Pi"] },
+      { id: "arcsec-1", expr: ["Arcsec", 1], expected: 0 },
+      { id: "arcsec-2", expr: ["Arcsec", 2], expected: ["Multiply", ["Rational", 1, 3], "Pi"] },
       {
+        id: "undoes-sec-sec-arcsec-x-x",
         expr: ["Equal", ["Sec", ["Arcsec", 2]], 2],
         expected: "True",
         category: "Properties",
         caption: "Undoes [[Sec]]: $\\sec(\\text{arcsec}(x)) = x$",
       },
       {
+        id: "arcsec-sqrt-2-pi-4",
         expr: ["Arcsec", ["Sqrt", 2]],
         expected: ["Multiply", ["Rational", 1, 4], "Pi"],
         category: "Scope",
         caption: "$\\operatorname{arcsec}\\sqrt2 = \\pi/4$",
       },
-      { expr: ["Arcsec", -1], expected: "Pi", category: "Scope" },
+      { id: "arcsec-neg-1", expr: ["Arcsec", -1], expected: "Pi", category: "Scope" },
       {
+        id: "arcsec-2-2-pi-3",
         expr: ["Arcsec", -2],
         expected: ["Multiply", ["Rational", 2, 3], "Pi"],
         category: "Scope",
         caption: "$\\operatorname{arcsec}(-2) = 2\\pi/3$",
       },
       {
+        id: "inside-1-1-the-value-is-purely-imaginary",
         expr: ["Arcsec", 0.5],
         expected: ["Complex", 0, 1.3169578969248166],
         category: "Scope",
         caption: "Inside $(-1, 1)$ the value is purely imaginary",
       },
       {
+        id: "arcsec-positiveinfinity",
         expr: ["Arcsec", "PositiveInfinity"],
         expected: ["Multiply", ["Rational", 1, 2], "Pi"],
         category: "Scope",
       },
       {
+        id: "a-pole-arcsec-0-is-complex-infinity",
         expr: ["Arcsec", 0],
         expected: "ComplexInfinity",
         category: "Scope",
         caption: "A pole: $\\operatorname{arcsec} 0$ is complex infinity",
       },
       {
+        id: "derivative-for-real-x-1",
         expr: ["D", ["Arcsec", "x"], "x"],
         expected: [
           "Divide",
@@ -2052,18 +2384,21 @@ export const elementary: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "n-forces-the-numeric-result-that-plain",
         expr: ["N", ["Sinh", 0]],
         expected: 0,
         caption: "N(...) forces the numeric result that plain evaluation withholds",
       },
-      { expr: ["N", ["Sinh", 1]], expected: { num: "1.17520119364380145688" } },
+      { id: "n-sinh-1", expr: ["N", ["Sinh", 1]], expected: { num: "1.17520119364380145688" } },
       {
+        id: "odd-function-sinh-x-sinh-x",
         expr: ["Equal", ["Sinh", ["Negate", 1]], ["Negate", ["Sinh", 1]]],
         expected: "True",
         category: "Properties",
         caption: "Odd function: $\\sinh(-x) = -\\sinh(x)$",
       },
       {
+        id: "definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2",
         expr: [
           "Equal",
           ["Sinh", 1],
@@ -2074,6 +2409,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Definition in terms of [[Exp]]: $\\sinh(x) = \\frac{e^x - e^{-x}}{2}$",
       },
       {
+        id: "stays-symbolic-even-at-0-compute-engine-doesn-t",
         expr: ["Sinh", 0],
         expected: ["Sinh", 0],
         category: "Possible issues",
@@ -2081,29 +2417,34 @@ export const elementary: readonly ReferenceEntry[] = [
           "Stays symbolic even at 0 -- compute-engine doesn't fold hyperbolic functions to exact values the way it does [[Sin]]/[[Cos]]; wrap in N(...) as above",
       },
       {
+        id: "a-float-argument-evaluates-directly-no-n-needed",
         expr: ["Sinh", 1.4],
         expected: { num: "1.90430150145153405514" },
         caption: "A float argument evaluates directly, no N(...) needed",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Sinh", ["Rational", 7, 5]]],
         expected: { num: "1.90430150145153405514" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Sinh", ["Complex", 2.5, 1]],
         expected: ["Complex", 3.268939432079549, 5.160143667579705],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "sinh-i-pi-2-i-sin-pi-2-i",
         expr: ["Sinh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]],
         expected: ["Complex", 0, 1],
         category: "Scope",
         caption: "$\\sinh(i\\pi/2) = i\\sin(\\pi/2) = i$",
       },
       {
+        id: "element-wise-over-a-matrix-of-imaginary",
         expr: [
           "Sinh",
           [
@@ -2135,6 +2476,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Element-wise over a matrix of imaginary multiples of $\\pi$, which should fold through $\\sinh(ix) = i\\sin x$; stays symbolic",
       },
       {
+        id: "interval-arithmetic-sinh-is-increasing-so-sinh-0",
         expr: ["Sinh", ["Interval", 0, ["Ln", 3]]],
         expected: ["Interval", ["Sinh", 0], ["Sinh", ["Ln", 3]]],
         category: "Scope",
@@ -2142,13 +2484,20 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: $\\sinh$ is increasing, so $\\sinh[0, \\ln 3]$ is the interval of the endpoint values -- $\\sinh(0)$ and $\\sinh(\\ln 3) = \\tfrac43$ don't reduce further here, since neither is folded to an exact value on its own (see the special-value examples above)",
       },
       {
+        id: "uncertainty-propagation-sinh-2-sqrt-3-pm-0-1",
         expr: ["Sinh", ["Around", ["Divide", 2, ["Sqrt", 3]], 0.1]],
         expected: ["Around", 1.4289605814815758, 0.1744112480153778],
         category: "Scope",
         caption: "Uncertainty propagation: $\\sinh(2/\\sqrt3 \\pm 0.1) \\approx 1.429 \\pm 0.174$",
       },
-      { expr: ["Sinh", "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
       {
+        id: "sinh-positiveinfinity",
+        expr: ["Sinh", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+      },
+      {
+        id: "sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic",
         expr: ["Sinh", ["Ln", 2]],
         expected: ["Rational", 3, 4],
         aspirational: true,
@@ -2156,30 +2505,35 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "$\\sinh(\\ln 2) = \\frac{2 - 1/2}{2} = \\tfrac34$; stays symbolic",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Sinh", ["Negate", "x"]],
         expected: ["Negate", ["Sinh", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\sinh(-x) = -\\sinh x$",
       },
       {
+        id: "sinh-arsinh-x-x-for-every-x",
         expr: ["Sinh", ["Arsinh", "x"]],
         expected: "x",
         category: "Scope",
         caption: "$\\sinh(\\operatorname{arsinh} x) = x$ for every $x$",
       },
       {
+        id: "derivative-cosh-x",
         expr: ["D", ["Sinh", "x"], "x"],
         expected: ["Cosh", "x"],
         category: "Scope",
         caption: "Derivative: $\\cosh x$",
       },
       {
+        id: "antiderivative",
         expr: ["Integrate", ["Sinh", "x"], "x"],
         expected: ["Cosh", "x"],
         category: "Scope",
         caption: "Antiderivative",
       },
       {
+        id: "taylor-series-about-0",
         expr: ["Series", ["Sinh", "x"], "x", 0, 5],
         expected: [
           "Add",
@@ -2196,6 +2550,7 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "the-definition-sinh-x-frac-e-x-e-x-2",
         expr: ["TrigToExp", ["Sinh", "x"]],
         expected: [
           "Multiply",
@@ -2210,6 +2565,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "The definition $\\sinh x = \\frac{e^x - e^{-x}}{2}$",
       },
       {
+        id: "to-30-significant-digits-not-yet-the-last-digit",
         expr: ["N", ["Sinh", 1], 30],
         expected: { num: "1.17520119364380145688238185060" },
         category: "Scope",
@@ -2231,53 +2587,62 @@ export const elementary: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "n-forces-the-numeric-result-that-plain",
         expr: ["N", ["Cosh", 0]],
         expected: 1,
         caption: "N(...) forces the numeric result that plain evaluation withholds",
       },
-      { expr: ["N", ["Cosh", 1]], expected: { num: "1.54308063481524377848" } },
+      { id: "n-cosh-1", expr: ["N", ["Cosh", 1]], expected: { num: "1.54308063481524377848" } },
       {
+        id: "even-function-cosh-x-cosh-x",
         expr: ["Equal", ["Cosh", ["Negate", 1]], ["Cosh", 1]],
         expected: "True",
         category: "Properties",
         caption: "Even function: $\\cosh(-x) = \\cosh(x)$",
       },
       {
+        id: "hyperbolic-pythagorean-identity-cosh-2-x-sinh-2",
         expr: ["Equal", ["Subtract", ["Power", ["Cosh", 1], 2], ["Power", ["Sinh", 1], 2]], 1],
         expected: "True",
         category: "Properties",
         caption: "Hyperbolic Pythagorean identity: $\\cosh^2 x - \\sinh^2 x = 1$",
       },
       {
+        id: "stays-symbolic-even-at-0-same-as-sinh-wrap-in-n",
         expr: ["Cosh", 0],
         expected: ["Cosh", 0],
         category: "Possible issues",
         caption: "Stays symbolic even at 0, same as [[Sinh]]; wrap in N(...) as above",
       },
       {
+        id: "a-float-argument-evaluates-directly-no-n-needed",
         expr: ["Cosh", 1.2],
         expected: { num: "1.81065556732437479309" },
         caption: "A float argument evaluates directly, no N(...) needed",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Cosh", ["Rational", 6, 5]]],
         expected: { num: "1.81065556732437479309" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Cosh", ["Complex", 2.5, 1]],
         expected: ["Complex", 3.3132901461132245, 5.091071522949698],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "cosh-i-pi-cos-pi-1",
         expr: ["Cosh", ["Multiply", "ImaginaryUnit", "Pi"]],
         expected: -1,
         category: "Scope",
         caption: "$\\cosh(i\\pi) = \\cos\\pi = -1$",
       },
       {
+        id: "element-wise-over-a-matrix-of-imaginary",
         expr: [
           "Cosh",
           [
@@ -2305,6 +2670,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Element-wise over a matrix of imaginary multiples of $\\pi$, which should fold through $\\cosh(ix) = \\cos x$; stays symbolic",
       },
       {
+        id: "interval-arithmetic-cosh-0-ln-3-1-frac-53-not",
         expr: ["Cosh", ["Interval", 0, ["Ln", 3]]],
         expected: ["Interval", 1, ["Rational", 5, 3]],
         aspirational: true,
@@ -2313,32 +2679,42 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: $\\cosh[0, \\ln 3] = [1, \\tfrac53]$, the minimum at 0 included; the image comes back as $[\\cosh 0, \\cosh(\\ln 3)]$, since neither value folds on its own yet (see the $\\cosh 0$ example)",
       },
       {
+        id: "uncertainty-propagation-cosh-2-sqrt-3-pm-0-1",
         expr: ["Cosh", ["Around", ["Divide", 2, ["Sqrt", 3]], 0.1]],
         expected: ["Around", 1.744112480153778, 0.14289605814815756],
         category: "Scope",
         caption:
           "Uncertainty propagation, to first order: $\\cosh(2/\\sqrt3 \\pm 0.1) \\approx 1.744 \\pm 0.143$",
       },
-      { expr: ["Cosh", "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
       {
+        id: "cosh-positiveinfinity",
+        expr: ["Cosh", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+      },
+      {
+        id: "evenness-drops-the-sign-of-a-symbolic-argument",
         expr: ["Cosh", ["Negate", "x"]],
         expected: ["Cosh", "x"],
         category: "Scope",
         caption: "Evenness drops the sign of a symbolic argument: $\\cosh(-x) = \\cosh x$",
       },
       {
+        id: "derivative-sinh-x",
         expr: ["D", ["Cosh", "x"], "x"],
         expected: ["Sinh", "x"],
         category: "Scope",
         caption: "Derivative: $\\sinh x$",
       },
       {
+        id: "antiderivative",
         expr: ["Integrate", ["Cosh", "x"], "x"],
         expected: ["Sinh", "x"],
         category: "Scope",
         caption: "Antiderivative",
       },
       {
+        id: "the-definition-cosh-x-frac-e-x-e-x-2",
         expr: ["TrigToExp", ["Cosh", "x"]],
         expected: [
           "Multiply",
@@ -2349,6 +2725,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "The definition $\\cosh x = \\frac{e^x + e^{-x}}{2}$",
       },
       {
+        id: "cosh-2-x-sinh-2-x-should-simplify-to-1",
         expr: ["Simplify", ["Subtract", ["Power", ["Cosh", "x"], 2], ["Power", ["Sinh", "x"], 2]]],
         expected: 1,
         aspirational: true,
@@ -2357,6 +2734,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "$\\cosh^2 x - \\sinh^2 x$ should simplify to 1 symbolically, as the circular identity does; left as is",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Cosh", 1], 30],
         expected: { num: "1.54308063481524377847790562076" },
         category: "Scope",
@@ -2378,41 +2756,48 @@ export const elementary: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "n-forces-the-numeric-result-that-plain",
         expr: ["N", ["Tanh", 0]],
         expected: 0,
         caption: "N(...) forces the numeric result that plain evaluation withholds",
       },
-      { expr: ["N", ["Tanh", 1]], expected: { num: "0.761594155955764888119" } },
+      { id: "n-tanh-1", expr: ["N", ["Tanh", 1]], expected: { num: "0.761594155955764888119" } },
       {
+        id: "tanh-x-frac-sinh-x-cosh-x",
         expr: ["Equal", ["Tanh", 1], ["Divide", ["Sinh", 1], ["Cosh", 1]]],
         expected: "True",
         category: "Properties",
         caption: "$\\tanh(x) = \\frac{\\sinh(x)}{\\cosh(x)}$",
       },
       {
+        id: "stays-symbolic-even-at-0-same-as-sinh-and-cosh",
         expr: ["Tanh", 0],
         expected: ["Tanh", 0],
         category: "Possible issues",
         caption: "Stays symbolic even at 0, same as [[Sinh]] and [[Cosh]]; wrap in N(...) as above",
       },
       {
+        id: "a-float-argument-evaluates-directly-no-n-needed",
         expr: ["Tanh", 2.2],
         expected: { num: "0.975743130031451520414" },
         caption: "A float argument evaluates directly, no N(...) needed",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Tanh", ["Rational", 11, 5]]],
         expected: { num: "0.975743130031451520414" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Tanh", ["Complex", 2.5, 1]],
         expected: ["Complex", 1.00554801189506, 0.012322138255828353],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "interval-arithmetic-tanh-is-increasing-so-tanh-0",
         expr: ["Tanh", ["Interval", 0, ["Ln", 2]]],
         expected: ["Interval", ["Tanh", 0], ["Tanh", ["Ln", 2]]],
         category: "Scope",
@@ -2420,42 +2805,49 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: $\\tanh$ is increasing, so $\\tanh[0, \\ln 2]$ is the interval of the endpoint values -- $\\tanh(0)$ and $\\tanh(\\ln 2) = \\tfrac35$ don't reduce further here on their own",
       },
       {
+        id: "uncertainty-propagation-tanh-2-sqrt-3-pm-0-1",
         expr: ["Tanh", ["Around", ["Divide", 2, ["Sqrt", 3]], 0.1]],
         expected: ["Around", 0.8193052900783008, 0.03287388416497115],
         category: "Scope",
         caption: "Uncertainty propagation: $\\tanh(2/\\sqrt3 \\pm 0.1) \\approx 0.819 \\pm 0.033$",
       },
       {
+        id: "the-horizontal-asymptote-at-infty",
         expr: ["Tanh", "PositiveInfinity"],
         expected: 1,
         category: "Scope",
         caption: "The horizontal asymptote at $+\\infty$",
       },
       {
+        id: "tanh-i-pi-4-i-tan-pi-4-i",
         expr: ["Tanh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 4]]],
         expected: ["Complex", 0, 1],
         category: "Scope",
         caption: "$\\tanh(i\\pi/4) = i\\tan(\\pi/4) = i$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Tanh", ["Negate", "x"]],
         expected: ["Negate", ["Tanh", "x"]],
         category: "Scope",
         caption: "Oddness pulls the sign out of a symbolic argument: $\\tanh(-x) = -\\tanh x$",
       },
       {
+        id: "derivative-sech-2-x",
         expr: ["D", ["Tanh", "x"], "x"],
         expected: ["Power", ["Sech", "x"], 2],
         category: "Scope",
         caption: "Derivative: $\\operatorname{sech}^2 x$",
       },
       {
+        id: "antiderivative-ln-cosh-x",
         expr: ["Integrate", ["Tanh", "x"], "x"],
         expected: ["Ln", ["Cosh", "x"]],
         category: "Scope",
         caption: "Antiderivative: $\\ln\\cosh x$",
       },
       {
+        id: "in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x",
         expr: ["TrigToExp", ["Tanh", "x"]],
         expected: [
           "Divide",
@@ -2470,12 +2862,14 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "In exponentials: $\\tanh x = \\frac{e^x - e^{-x}}{e^x + e^{-x}}$",
       },
       {
+        id: "tanh-has-no-limit-at-complex-infinity-undefined",
         expr: ["Tanh", "ComplexInfinity"],
         expected: "NaN",
         category: "Scope",
         caption: "$\\tanh$ has no limit at complex infinity, undefined from any direction: NaN",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Tanh", 1], 30],
         expected: { num: "0.761594155955764888119458282605" },
         category: "Scope",
@@ -2494,24 +2888,29 @@ export const elementary: readonly ReferenceEntry[] = [
       "Stays symbolic at plain evaluation, same as [[Arsinh]]-family functions; wrap in N(...).",
     ],
     examples: [
+      { id: "n-arcoth-2", expr: ["N", ["Arcoth", 2]], expected: { num: "0.5493061443340548457" } },
       {
-        expr: ["N", ["Arcoth", 2]],
-        expected: { num: "0.5493061443340548457" },
-      },
-      {
+        id: "a-logarithmic-singularity-at-1",
         expr: ["Arcoth", 1],
         expected: "PositiveInfinity",
         category: "Scope",
         caption: "A logarithmic singularity at 1",
       },
-      { expr: ["Arcoth", "PositiveInfinity"], expected: 0, category: "Scope" },
       {
+        id: "arcoth-positiveinfinity",
+        expr: ["Arcoth", "PositiveInfinity"],
+        expected: 0,
+        category: "Scope",
+      },
+      {
+        id: "a-float-argument-evaluates-directly",
         expr: ["Arcoth", 3.5],
         expected: { num: "0.293893332451059504095" },
         category: "Scope",
         caption: "A float argument evaluates directly",
       },
       {
+        id: "as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1",
         expr: ["TrigToExp", ["Arcoth", 2]],
         expected: ["Multiply", ["Rational", 1, 2], ["Ln", 3]],
         category: "Scope",
@@ -2519,6 +2918,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "As a logarithm, $\\operatorname{arcoth} 2 = \\tfrac12\\ln\\frac{2+1}{2-1} = \\tfrac12\\ln 3$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Arcoth", ["Negate", "x"]],
         expected: ["Negate", ["Arcoth", "x"]],
         category: "Scope",
@@ -2526,6 +2926,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Oddness pulls the sign out of a symbolic argument: $\\operatorname{arcoth}(-x) = -\\operatorname{arcoth} x$",
       },
       {
+        id: "derivative-frac-1-1-x-2",
         expr: ["D", ["Arcoth", "x"], "x"],
         expected: ["Divide", 1, ["Add", ["Negate", ["Power", "x", 2]], 1]],
         category: "Scope",
@@ -2544,29 +2945,39 @@ export const elementary: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "n-arcsch-2",
         expr: ["N", ["Arcsch", 2]],
         expected: { num: "0.481211825059603447495" },
       },
       {
+        id: "a-pole-at-0",
         expr: ["Arcsch", 0],
         expected: "ComplexInfinity",
         category: "Scope",
         caption: "A pole at 0",
       },
-      { expr: ["Arcsch", "PositiveInfinity"], expected: 0, category: "Scope" },
       {
+        id: "arcsch-positiveinfinity",
+        expr: ["Arcsch", "PositiveInfinity"],
+        expected: 0,
+        category: "Scope",
+      },
+      {
+        id: "a-float-argument-evaluates-directly",
         expr: ["Arcsch", 1.5],
         expected: { num: "0.625145117250416687636" },
         category: "Scope",
         caption: "A float argument evaluates directly",
       },
       {
+        id: "as-a-logarithm-arcsch-1-ln-1-sqrt-2",
         expr: ["TrigToExp", ["Arcsch", 1]],
         expected: ["Ln", ["Add", 1, ["Sqrt", 2]]],
         category: "Scope",
         caption: "As a logarithm, $\\operatorname{arcsch} 1 = \\ln(1 + \\sqrt2)$",
       },
       {
+        id: "oddness-pulls-the-sign-out-of-a-symbolic",
         expr: ["Arcsch", ["Negate", "x"]],
         expected: ["Negate", ["Arcsch", "x"]],
         category: "Scope",
@@ -2574,6 +2985,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Oddness pulls the sign out of a symbolic argument: $\\operatorname{arcsch}(-x) = -\\operatorname{arcsch} x$",
       },
       {
+        id: "derivative-for-real-x-ne-0",
         expr: ["D", ["Arcsch", "x"], "x"],
         expected: [
           "Divide",
@@ -2597,28 +3009,33 @@ export const elementary: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "n-arsech-1-over-2",
         expr: ["N", ["Arsech", ["Rational", 1, 2]]],
         expected: { num: "1.31695789692481670863" },
       },
       {
+        id: "arsech-1-0-exactly",
         expr: ["Arsech", 1],
         expected: 0,
         category: "Scope",
         caption: "$\\operatorname{arsech} 1 = 0$ exactly",
       },
       {
+        id: "a-logarithmic-singularity-at-0",
         expr: ["Arsech", 0],
         expected: "PositiveInfinity",
         category: "Scope",
         caption: "A logarithmic singularity at 0",
       },
       {
+        id: "a-float-argument-evaluates-directly",
         expr: ["Arsech", 0.25],
         expected: { num: "2.06343706889556054673" },
         category: "Scope",
         caption: "A float argument evaluates directly",
       },
       {
+        id: "past-1-the-value-is-imaginary-arsech-2-arcosh",
         expr: ["Arsech", 2],
         expected: ["Multiply", ["Complex", 0, ["Rational", 1, 3]], "Pi"],
         category: "Scope",
@@ -2626,6 +3043,7 @@ export const elementary: readonly ReferenceEntry[] = [
           "Past 1 the value is imaginary: $\\operatorname{arsech} 2 = \\operatorname{arcosh}\\tfrac12 = i\\pi/3$",
       },
       {
+        id: "derivative-frac-1-x-sqrt-1-x-2",
         expr: ["D", ["Arsech", "x"], "x"],
         expected: [
           "Divide",
@@ -2650,36 +3068,42 @@ export const elementary: readonly ReferenceEntry[] = [
       "Applied to a matrix (or any nested list) it broadcasts element-wise, same as Wolfram's Exp -- this is NOT the matrix exponential, which is [[MatrixExp]].",
     ],
     examples: [
-      { expr: ["Exp", 0], expected: 1 },
+      { id: "exp-0", expr: ["Exp", 0], expected: 1 },
       {
+        id: "stays-the-exact-constant-rather-than",
         expr: ["Exp", 1],
         expected: "ExponentialE",
         caption: "Stays the exact constant rather than decimalizing",
       },
       {
+        id: "compute-engine-represents-exp-x-as-e-x-once-the",
         expr: ["Exp", "x"],
         expected: ["Power", "ExponentialE", "x"],
         caption: "compute-engine represents Exp(x) as $e^x$ once the argument is symbolic",
       },
       {
+        id: "inverse-of-ln-e-ln-x-x",
         expr: ["Equal", ["Exp", ["Ln", 5]], 5],
         expected: "True",
         category: "Properties",
         caption: "Inverse of [[Ln]]: $e^{\\ln x} = x$",
       },
       {
+        id: "e-a-e-b-e-a-b",
         expr: ["Equal", ["Multiply", ["Exp", 2], ["Exp", 3]], ["Exp", 5]],
         expected: "True",
         category: "Properties",
         caption: "$e^a \\, e^b = e^{a+b}$",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["Exp", ["List", 0, 1]],
         expected: ["List", 1, "ExponentialE"],
         category: "Applications",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "broadcasts-element-wise-giving-begin-pmatrix-1-e",
         expr: ["Exp", ["List", ["List", 0, 1], ["List", 1, 0]]],
         expected: ["List", ["List", 1, "ExponentialE"], ["List", "ExponentialE", 1]],
         category: "Scope",
@@ -2691,34 +3115,40 @@ export const elementary: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Exp", 3.4],
         expected: { num: "29.9641000473970133482" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Exp", ["Rational", 8, 5]]],
         expected: { num: "4.95303242439511480365" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Exp", ["Complex", 2.5, 1]],
         expected: ["Complex", { num: "6.5822295781927729844" }, 10.251215190529404],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "euler-s-identity-e-i-pi-1",
         expr: ["Exp", ["Multiply", "ImaginaryUnit", "Pi"]],
         expected: -1,
         category: "Scope",
         caption: "Euler's identity $e^{i\\pi} = -1$",
       },
       {
+        id: "exp-imaginaryunit-times-pi-over-2",
         expr: ["Exp", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]],
         expected: ["Complex", 0, 1],
         category: "Scope",
       },
       {
+        id: "a-special-imaginary-argument-folds-through-e-i",
         expr: ["Exp", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 5]]],
         expected: [
           "Add",
@@ -2738,16 +3168,28 @@ export const elementary: readonly ReferenceEntry[] = [
             "Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.",
         },
       },
-      { expr: ["Exp", ["Ln", 2]], expected: 2, category: "Scope" },
+      { id: "exp-ln-2", expr: ["Exp", ["Ln", 2]], expected: 2, category: "Scope" },
       {
+        id: "inverse-of-ln-symbolically",
         expr: ["Exp", ["Ln", "x"]],
         expected: "x",
         category: "Scope",
         caption: "Inverse of [[Ln]] symbolically",
       },
-      { expr: ["Exp", "NegativeInfinity"], expected: 0, category: "Scope" },
-      { expr: ["Exp", "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
       {
+        id: "exp-negativeinfinity",
+        expr: ["Exp", "NegativeInfinity"],
+        expected: 0,
+        category: "Scope",
+      },
+      {
+        id: "exp-positiveinfinity",
+        expr: ["Exp", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+      },
+      {
+        id: "element-wise-over-a-matrix-not-the-matrix",
         expr: [
           "Exp",
           ["List", ["List", 1, ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]], ["List", 0, 1]],
@@ -2761,30 +3203,35 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Element-wise over a matrix (not the matrix exponential -- see above)",
       },
       {
+        id: "interval-arithmetic-exp-1-ln-2-e-1-2",
         expr: ["Exp", ["Interval", -1, ["Ln", 2]]],
         expected: ["Interval", ["Divide", 1, "ExponentialE"], 2],
         category: "Scope",
         caption: "Interval arithmetic: $\\exp[-1, \\ln 2] = [e^{-1}, 2]$",
       },
       {
+        id: "uncertainty-propagation-e-2-pm-0-01-approx-7-389",
         expr: ["Exp", ["Around", 2, 0.01]],
         expected: ["Around", 7.38905609893065, 0.0738905609893065],
         category: "Scope",
         caption: "Uncertainty propagation: $e^{2 \\pm 0.01} \\approx 7.389 \\pm 0.074$",
       },
       {
+        id: "its-own-derivative",
         expr: ["D", ["Exp", "x"], "x"],
         expected: ["Power", "ExponentialE", "x"],
         category: "Scope",
         caption: "Its own derivative",
       },
       {
+        id: "its-own-antiderivative",
         expr: ["Integrate", ["Exp", "x"], "x"],
         expected: ["Power", "ExponentialE", "x"],
         category: "Scope",
         caption: "Its own antiderivative",
       },
       {
+        id: "taylor-series-about-0",
         expr: ["Series", ["Exp", "x"], "x", 0, 4],
         expected: [
           "Add",
@@ -2799,6 +3246,7 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Taylor series about 0",
       },
       {
+        id: "e-as-the-limit-lim-x-to-infty-1-1-x-x",
         expr: [
           "Limit",
           ["Function", ["Power", ["Add", 1, ["Divide", 1, "x"]], "x"], "x"],
@@ -2809,12 +3257,14 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "$e$ as the limit $\\lim_{x\\to\\infty}(1 + 1/x)^x$",
       },
       {
+        id: "lim-x-to-0-frac-e-x-1-x-1",
         expr: ["Limit", ["Function", ["Divide", ["Subtract", ["Exp", "x"], 1], "x"], "x"], 0],
         expected: 1,
         category: "Properties",
         caption: "$\\lim_{x\\to0}\\frac{e^x - 1}{x} = 1$",
       },
       {
+        id: "a-product-of-exponentials-should-combine-e-x-e-y",
         expr: ["Multiply", ["Exp", "x"], ["Exp", "y"]],
         expected: ["Power", "ExponentialE", ["Add", "x", "y"]],
         aspirational: true,
@@ -2822,12 +3272,14 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "A product of exponentials should combine: $e^x e^y = e^{x+y}$; left as a product",
       },
       {
+        id: "euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig",
         expr: ["ExpToTrig", ["Exp", ["Multiply", "ImaginaryUnit", "x"]]],
         expected: ["Add", ["Multiply", ["Complex", 0, 1], ["Sin", "x"]], ["Cos", "x"]],
         category: "Properties",
         caption: "Euler's formula $e^{ix} = \\cos x + i\\sin x$ via [[ExpToTrig]]",
       },
       {
+        id: "to-50-significant-digits-every-one-correctly",
         expr: ["N", ["Exp", 1], 50],
         expected: { num: "2.7182818284590452353602874713526624977572470937000" },
         category: "Scope",
@@ -2848,22 +3300,25 @@ export const elementary: readonly ReferenceEntry[] = [
       "$\\ln(0) = -\\infty$. A negative real argument reduces to the principal value $\\ln(-q) = \\ln(q) + i\\pi$ for a positive rational $q$ (`@enumeratio/analytic`); compute-engine's own plain evaluation would otherwise leave it symbolic.",
     ],
     examples: [
-      { expr: ["Ln", 1], expected: 0 },
-      { expr: ["Ln", "ExponentialE"], expected: 1 },
-      { expr: ["Ln", 0], expected: "NegativeInfinity" },
+      { id: "ln-1", expr: ["Ln", 1], expected: 0 },
+      { id: "ln-exponentiale", expr: ["Ln", "ExponentialE"], expected: 1 },
+      { id: "ln-0", expr: ["Ln", 0], expected: "NegativeInfinity" },
       {
+        id: "inverse-of-exp-ln-e-x-x",
         expr: ["Equal", ["Ln", ["Exp", 5]], 5],
         expected: "True",
         category: "Properties",
         caption: "Inverse of [[Exp]]: $\\ln(e^x) = x$",
       },
       {
+        id: "product-rule-ln-ab-ln-a-ln-b",
         expr: ["Equal", ["Add", ["Ln", 2], ["Ln", 3]], ["Ln", 6]],
         expected: "True",
         category: "Properties",
         caption: "Product rule: $\\ln(ab) = \\ln a + \\ln b$",
       },
       {
+        id: "ln-1-i-pi-the-principal-value-past-the-branch",
         expr: ["Ln", -1],
         expected: ["Multiply", ["Complex", 0, 1], "Pi"],
         category: "Scope",
@@ -2871,35 +3326,41 @@ export const elementary: readonly ReferenceEntry[] = [
           "$\\mathrm{Ln}(-1) = i\\pi$, the principal value past the branch cut, overriding compute-engine's plain policy of leaving a negative-real Ln symbolic",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Ln", 1.5],
         expected: { num: "0.405465108108164381978" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "n-for-a-decimal-value",
         expr: ["N", ["Ln", 1000]],
         expected: { num: "6.90775527898213705205" },
         category: "Scope",
         caption: "N(...) for a decimal value",
       },
       {
+        id: "arbitrary-precision-via-n",
         expr: ["N", ["Ln", ["Rational", 5, 2]]],
         expected: { num: "0.916290731874155065184" },
         category: "Scope",
         caption: "Arbitrary precision via N(...)",
       },
       {
+        id: "evaluates-at-a-complex-argument",
         expr: ["Ln", ["Complex", 2.5, 1]],
         expected: ["Complex", { num: "0.990500734433291704176" }, 0.3805063771123649],
         category: "Scope",
         caption: "Evaluates at a complex argument",
       },
       {
+        id: "a-negative-float-gives-the-principal-complex",
         expr: ["Ln", -2.5],
         expected: ["Complex", { num: "0.916290731874155065184" }, 3.141592653589793],
         category: "Scope",
         caption: "A negative float gives the principal complex value",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["Ln", ["List", 1, 2.1, 3.1, 4.1]],
         expected: [
           "List",
@@ -2912,15 +3373,27 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads element-wise over a list",
       },
       {
+        id: "an-integer-power-is-pulled-out-ln-1000-3-ln-10",
         expr: ["Ln", 1000],
         expected: ["Multiply", 3, ["Ln", 10]],
         category: "Scope",
         caption: "An integer power is pulled out: $\\ln 1000 = 3\\ln 10$",
         divergence: { wolfram: "Wolfram leaves Log[1000] as is." },
       },
-      { expr: ["Ln", ["Power", "ExponentialE", 3]], expected: 3, category: "Scope" },
-      { expr: ["Ln", "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
       {
+        id: "ln-exponentiale-pow-3",
+        expr: ["Ln", ["Power", "ExponentialE", 3]],
+        expected: 3,
+        category: "Scope",
+      },
+      {
+        id: "ln-positiveinfinity",
+        expr: ["Ln", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+      },
+      {
+        id: "ln-z-to-infty-and-its-real-part-goes-to-infty-ln",
         expr: ["Ln", "ComplexInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
@@ -2928,18 +3401,21 @@ export const elementary: readonly ReferenceEntry[] = [
           "$|\\ln z| \\to \\infty$ and its real part goes to $+\\infty$: $\\ln(\\tilde\\infty) = +\\infty$",
       },
       {
+        id: "ln-i-i-pi-2-exactly",
         expr: ["Ln", "ImaginaryUnit"],
         expected: ["Multiply", ["Complex", 0, ["Rational", 1, 2]], "Pi"],
         category: "Scope",
         caption: "$\\ln i = i\\pi/2$ exactly",
       },
       {
+        id: "a-unit-fraction-becomes-a-negated-logarithm-ln",
         expr: ["Ln", ["Rational", 1, 2]],
         expected: ["Negate", ["Ln", 2]],
         category: "Scope",
         caption: "A unit fraction becomes a negated logarithm: $\\ln\\tfrac12 = -\\ln 2$",
       },
       {
+        id: "interval-arithmetic-ln-is-increasing-so-ln-frac",
         expr: ["Ln", ["Interval", ["Rational", 1, 3], "ExponentialE"]],
         expected: ["Interval", ["Negate", ["Ln", 3]], 1],
         category: "Scope",
@@ -2947,25 +3423,29 @@ export const elementary: readonly ReferenceEntry[] = [
           "Interval arithmetic: $\\ln$ is increasing, so $\\ln[\\tfrac13, e]$ is the interval of the endpoint values -- $\\ln(1/3)$ folds to $-\\ln 3$ (see the unit-fraction example above)",
       },
       {
+        id: "uncertainty-propagation-ln-2-pm-0-01-approx-0",
         expr: ["Ln", ["Around", 2, 0.01]],
         expected: ["Around", 0.6931471805599453, 0.005],
         category: "Scope",
         caption: "Uncertainty propagation: $\\ln(2 \\pm 0.01) \\approx 0.693 \\pm 0.005$",
       },
-      { expr: ["Ln", ["Exp", "x"]], expected: "x", category: "Scope" },
+      { id: "ln-exp-x", expr: ["Ln", ["Exp", "x"]], expected: "x", category: "Scope" },
       {
+        id: "derivative-1-x",
         expr: ["D", ["Ln", "x"], "x"],
         expected: ["Divide", 1, "x"],
         category: "Scope",
         caption: "Derivative: $1/x$",
       },
       {
+        id: "antiderivative-x-ln-x-x",
         expr: ["Integrate", ["Ln", "x"], "x"],
         expected: ["Add", ["Negate", "x"], ["Multiply", "x", ["Ln", "x"]]],
         category: "Scope",
         caption: "Antiderivative: $x\\ln x - x$",
       },
       {
+        id: "mercator-series-for-ln-1-x",
         expr: ["Series", ["Ln", ["Add", 1, "x"]], "x", 0, 4],
         expected: [
           "Add",
@@ -2979,18 +3459,21 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Mercator series for $\\ln(1 + x)$",
       },
       {
+        id: "powerexpand-splits-a-logarithm-of-a-product",
         expr: ["PowerExpand", ["Ln", ["Multiply", "x", "y"]]],
         expected: ["Add", ["Ln", "x"], ["Ln", "y"]],
         category: "Properties",
         caption: "[[PowerExpand]] splits a logarithm of a product, assuming positive factors",
       },
       {
+        id: "to-40-significant-digits-every-one-correctly",
         expr: ["N", ["Ln", 2], 40],
         expected: { num: "0.6931471805599453094172321214581765680755" },
         category: "Scope",
         caption: "To 40 significant digits, every one correctly rounded",
       },
       {
+        id: "ln-frac-12-i-pi-ln-2-a-negative-rational-folded",
         expr: ["Ln", ["Rational", -1, 2]],
         expected: ["Add", ["Multiply", ["Complex", 0, 1], "Pi"], ["Negate", ["Ln", 2]]],
         category: "Scope",
@@ -3015,34 +3498,49 @@ export const elementary: readonly ReferenceEntry[] = [
       "Product rule: $\\log_b(xy) = \\log_b(x) + \\log_b(y)$. Power rule: $\\log_b(x^k) = k \\log_b(x)$.",
     ],
     examples: [
-      { expr: ["Log", 100], expected: 2, caption: "Default base is 10" },
-      { expr: ["Log", 100, 10], expected: 2, caption: "Same result written with an explicit base" },
-      { expr: ["Log", 8, 2], expected: 3, caption: "Base 2 via the explicit second argument" },
+      { id: "default-base-is-10", expr: ["Log", 100], expected: 2, caption: "Default base is 10" },
       {
+        id: "same-result-written-with-an-explicit-base",
+        expr: ["Log", 100, 10],
+        expected: 2,
+        caption: "Same result written with an explicit base",
+      },
+      {
+        id: "base-2-via-the-explicit-second-argument",
+        expr: ["Log", 8, 2],
+        expected: 3,
+        caption: "Base 2 via the explicit second argument",
+      },
+      {
+        id: "confirms-the-default-base-is-10",
         expr: ["Equal", ["Log", 100], ["Log", 100, 10]],
         expected: "True",
         category: "Properties",
         caption: "Confirms the default base is 10",
       },
       {
+        id: "product-rule-log-b-xy-log-b-x-log-b-y",
         expr: ["Equal", ["Log", ["Multiply", 8, 4], 2], ["Add", ["Log", 8, 2], ["Log", 4, 2]]],
         expected: "True",
         category: "Properties",
         caption: "Product rule: $\\log_b(xy) = \\log_b(x) + \\log_b(y)$",
       },
       {
+        id: "power-rule-log-b-x-k-k-log-b-x",
         expr: ["Equal", ["Log", ["Power", 2, 5], 2], ["Multiply", 5, ["Log", 2, 2]]],
         expected: "True",
         category: "Properties",
         caption: "Power rule: $\\log_b(x^k) = k \\log_b(x)$",
       },
       {
+        id: "log-10-0-infty",
         expr: ["Log", 0],
         expected: "NegativeInfinity",
         category: "Possible issues",
         caption: "$\\log_{10}(0) = -\\infty$",
       },
       {
+        id: "a-negative-argument-stays-symbolic-with-the",
         expr: ["Log", -5],
         expected: ["Log", -5, 10],
         category: "Possible issues",
@@ -3050,19 +3548,22 @@ export const elementary: readonly ReferenceEntry[] = [
           "A negative argument stays symbolic, with the default base filled in; wrap in N(...) for the complex value",
       },
       {
+        id: "log-3-1-5-at-machine-precision",
         expr: ["Log", 1.5, 3],
         expected: { num: "0.3690702464285425629" },
         category: "Scope",
         caption: "$\\log_3 1.5$ at machine precision",
       },
-      { expr: ["Log", 9, 3], expected: 2, category: "Scope" },
+      { id: "log-9-3", expr: ["Log", 9, 3], expected: 2, category: "Scope" },
       {
+        id: "threads-over-a-list-of-values",
         expr: ["Log", ["List", 2, 4, 8], 2],
         expected: ["List", 1, 2, 3],
         category: "Scope",
         caption: "Threads over a list of values",
       },
       {
+        id: "threads-over-a-list-of-bases",
         expr: ["Log", 2.5, ["List", 2, "ExponentialE", 10]],
         expected: [
           "List",
@@ -3074,12 +3575,14 @@ export const elementary: readonly ReferenceEntry[] = [
         caption: "Threads over a list of bases",
       },
       {
+        id: "derivative-in-base-3-frac-1-x-ln-3",
         expr: ["D", ["Log", "x", 3], "x"],
         expected: ["Divide", 1, ["Multiply", "x", ["Ln", 3]]],
         category: "Scope",
         caption: "Derivative in base 3: $\\frac{1}{x\\ln 3}$",
       },
       {
+        id: "log-2-frac-18-3-an-exact-negative-power-of-the",
         expr: ["Log", ["Rational", 1, 8], 2],
         expected: -3,
         category: "Scope",
@@ -3099,34 +3602,39 @@ export const elementary: readonly ReferenceEntry[] = [
       "Folds exactly for an integer power of 2 in either direction -- positive ($1024 \\to 10$) or negative ($1/8 \\to -3$).",
     ],
     examples: [
-      { expr: ["Log2", 8], expected: 3 },
-      { expr: ["Log2", 1], expected: 0 },
-      { expr: ["Log2", 1024], expected: 10 },
+      { id: "log2-8", expr: ["Log2", 8], expected: 3 },
+      { id: "log2-1", expr: ["Log2", 1], expected: 0 },
+      { id: "log2-1-024", expr: ["Log2", 1024], expected: 10 },
       {
+        id: "same-as-log-z-2",
         expr: ["Equal", ["Log2", 8], ["Log", 8, 2]],
         expected: "True",
         category: "Properties",
         caption: "Same as Log(z, 2)",
       },
       {
+        id: "a-float-argument-folds-even-for-a-fractional",
         expr: ["Log2", 0.5],
         expected: -1,
         category: "Applications",
         caption: "A float argument folds even for a fractional power of 2",
       },
       {
+        id: "an-exact-negative-power-of-2-folds-too-log-2",
         expr: ["Log2", ["Rational", 1, 8]],
         expected: -3,
         category: "Scope",
         caption: "An exact negative power of 2 folds too: $\\log_2 \\tfrac18 = -3$",
       },
-      { expr: ["Log2", ["Power", 2, 10]], expected: 10 },
+      { id: "log2-2-pow-10", expr: ["Log2", ["Power", 2, 10]], expected: 10 },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Log2", 1.4142],
         expected: { num: "0.499986164421874256467" },
         caption: "A machine-precision argument evaluates numerically",
       },
       {
+        id: "a-symbolic-argument-becomes-the-two-argument-log",
         expr: ["Log2", "x"],
         expected: ["Log", "x", 2],
         category: "Scope",
@@ -3134,36 +3642,44 @@ export const elementary: readonly ReferenceEntry[] = [
         divergence: { wolfram: "Wolfram rewrites Log2[x] to Log[x]/Log[2]." },
       },
       {
+        id: "an-integer-power-is-pulled-out-2-log-2-3",
         expr: ["Log2", 9],
         expected: ["Multiply", 2, ["Log", 3, 2]],
         category: "Scope",
         caption: "An integer power is pulled out: $2\\log_2 3$",
         divergence: { wolfram: "Wolfram's Log2[9] gives Log[9]/Log[2]." },
       },
-      { expr: ["N", ["Log2", 9]], expected: { num: "3.16992500144231236291" }, category: "Scope" },
-      { expr: ["Log2", 0], expected: "NegativeInfinity", category: "Scope" },
       {
+        id: "n-log2-9",
+        expr: ["N", ["Log2", 9]],
+        expected: { num: "3.16992500144231236291" },
+        category: "Scope",
+      },
+      { id: "log2-0", expr: ["Log2", 0], expected: "NegativeInfinity", category: "Scope" },
+      {
+        id: "as-with-ln-the-logarithm-of-complex-infinity-is",
         expr: ["Log2", "ComplexInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
         caption: "As with [[Ln]], the logarithm of complex infinity is $+\\infty$",
       },
       {
+        id: "element-wise-over-a-matrix-including-the-exact",
         expr: ["Log2", ["List", ["List", 2, 1], ["List", 0, ["Rational", 1, 2]]]],
         expected: ["List", ["List", 1, 0], ["List", "NegativeInfinity", -1]],
         category: "Scope",
         caption: "Element-wise over a matrix, including the exact $\\tfrac12$ entry",
       },
       {
+        id: "interval-arithmetic-log-2-frac-13-2-log-2-3-1",
         expr: ["Log2", ["Interval", ["Rational", 1, 3], 2]],
         expected: ["Interval", ["Log", ["Rational", 1, 3], 2], 1],
         category: "Scope",
         caption: "Interval arithmetic: $\\log_2[\\tfrac13, 2] = [\\log_2 \\tfrac13, 1]$",
-        divergence: {
-          wolfram: "Wolfram writes the lower end as -Log[2, 3], the same value.",
-        },
+        divergence: { wolfram: "Wolfram writes the lower end as -Log[2, 3], the same value." },
       },
       {
+        id: "uncertainty-propagation-log-2-frac-15-pm-0-01",
         expr: ["Log2", ["Around", ["Rational", 1, 5], 0.01]],
         expected: ["Around", -2.321928094887362, 0.07213475204444818],
         category: "Scope",
@@ -3171,12 +3687,14 @@ export const elementary: readonly ReferenceEntry[] = [
           "Uncertainty propagation, to first order: $\\log_2(\\tfrac15 \\pm 0.01) \\approx -2.322 \\pm 0.072$",
       },
       {
+        id: "derivative-frac-1-x-ln-2",
         expr: ["D", ["Log2", "x"], "x"],
         expected: ["Divide", 1, ["Multiply", "x", ["Ln", 2]]],
         category: "Scope",
         caption: "Derivative: $\\frac{1}{x\\ln 2}$",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Log2", 3], 30],
         expected: { num: "1.58496250072115618145373894395" },
         category: "Scope",
@@ -3196,70 +3714,83 @@ export const elementary: readonly ReferenceEntry[] = [
       "Same exact-power-of-the-base fold in either direction as [[Log2]].",
     ],
     examples: [
-      { expr: ["Log10", 1000], expected: 3 },
-      { expr: ["Log10", 1], expected: 0 },
-      { expr: ["Log10", 100000], expected: 5 },
+      { id: "log10-1-000", expr: ["Log10", 1000], expected: 3 },
+      { id: "log10-1", expr: ["Log10", 1], expected: 0 },
+      { id: "log10-100-000", expr: ["Log10", 100000], expected: 5 },
       {
+        id: "same-as-compute-engine-s-default-base-log",
         expr: ["Equal", ["Log10", 1000], ["Log", 1000]],
         expected: "True",
         category: "Properties",
         caption: "Same as compute-engine's default-base [[Log]]",
       },
       {
+        id: "a-float-argument-folds-even-for-a-fractional",
         expr: ["Log10", 0.001],
         expected: -3,
         category: "Applications",
         caption: "A float argument folds even for a fractional power of 10",
       },
       {
+        id: "an-exact-negative-power-of-10-folds-too-log-10",
         expr: ["Log10", ["Rational", 1, 100]],
         expected: -2,
         category: "Scope",
         caption: "An exact negative power of 10 folds too: $\\log_{10} \\tfrac1{100} = -2$",
       },
-      { expr: ["Log10", 1000000], expected: 6 },
+      { id: "log10-1-000-000", expr: ["Log10", 1000000], expected: 6 },
       {
+        id: "n-for-a-decimal-value",
         expr: ["N", ["Log10", 2]],
         expected: { num: "0.301029995663981195214" },
         caption: "N(...) for a decimal value",
       },
       {
+        id: "a-symbolic-argument-becomes-compute-engine-s",
         expr: ["Log10", "x"],
         expected: ["Log", "x"],
         category: "Scope",
         caption: "A symbolic argument becomes compute-engine's default-base [[Log]]",
         divergence: { wolfram: "Wolfram rewrites Log10[x] to Log[x]/Log[10]." },
       },
-      { expr: ["Log10", 5.5], expected: { num: "0.740362689494243845536" }, category: "Scope" },
       {
+        id: "log10-5p5",
+        expr: ["Log10", 5.5],
+        expected: { num: "0.740362689494243845536" },
+        category: "Scope",
+      },
+      {
+        id: "threads-element-wise-over-a-list",
         expr: ["Log10", ["List", 1, 10, 100, 1000]],
         expected: ["List", 0, 1, 2, 3],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "element-wise-over-a-matrix-including-the-exact",
         expr: ["Log10", ["List", ["List", 1, 100], ["List", 0, ["Rational", 1, 100]]]],
         expected: ["List", ["List", 0, 2], ["List", "NegativeInfinity", -2]],
         category: "Scope",
         caption: "Element-wise over a matrix, including the exact $\\tfrac1{100}$ entry",
       },
       {
+        id: "as-with-ln-the-logarithm-of-complex-infinity-is",
         expr: ["Log10", "ComplexInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
         caption: "As with [[Ln]], the logarithm of complex infinity is $+\\infty$",
       },
       {
+        id: "interval-arithmetic-log-10-frac-13-2-log-10-3",
         expr: ["Log10", ["Interval", ["Rational", 1, 3], 2]],
         expected: ["Interval", ["Log", ["Rational", 1, 3], 10], ["Log", 2, 10]],
         category: "Scope",
         caption:
           "Interval arithmetic: $\\log_{10}[\\tfrac13, 2] = [\\log_{10} \\tfrac13, \\log_{10} 2]$",
-        divergence: {
-          wolfram: "Wolfram writes the lower end as -Log[10, 3], the same value.",
-        },
+        divergence: { wolfram: "Wolfram writes the lower end as -Log[10, 3], the same value." },
       },
       {
+        id: "uncertainty-propagation-log-10-frac-1-101-pm-0",
         expr: ["Log10", ["Around", ["Rational", 1, 101], 0.01]],
         expected: ["Around", -2.0043213737826426, 0.43863742672228434],
         category: "Scope",
@@ -3267,12 +3798,14 @@ export const elementary: readonly ReferenceEntry[] = [
           "Uncertainty propagation, to first order: $\\log_{10}(\\tfrac1{101} \\pm 0.01) \\approx -2.00 \\pm 0.44$",
       },
       {
+        id: "derivative-frac-1-x-ln-10",
         expr: ["D", ["Log10", "x"], "x"],
         expected: ["Divide", 1, ["Multiply", "x", ["Ln", 10]]],
         category: "Scope",
         caption: "Derivative: $\\frac{1}{x\\ln 10}$",
       },
       {
+        id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Log10", 7], 30],
         expected: { num: "0.845098040014256830712216258593" },
         category: "Scope",
@@ -3292,35 +3825,40 @@ export const elementary: readonly ReferenceEntry[] = [
       "$\\mathrm{Lb}$ is the binary logarithm, identical to [[Log2]].",
     ],
     examples: [
-      { expr: ["Lb", 8], expected: 3 },
-      { expr: ["Lb", 1], expected: 0 },
-      { expr: ["Lb", 1024], expected: 10 },
+      { id: "lb-8", expr: ["Lb", 8], expected: 3 },
+      { id: "lb-1", expr: ["Lb", 1], expected: 0 },
+      { id: "lb-1-024", expr: ["Lb", 1024], expected: 10 },
       {
+        id: "identical-to-log2",
         expr: ["Equal", ["Lb", 64], ["Log2", 64]],
         expected: "True",
         category: "Properties",
         caption: "Identical to [[Log2]]",
       },
       {
+        id: "same-exact-negative-power-fold-as-log2-lb-frac",
         expr: ["Lb", ["Rational", 1, 8]],
         expected: -3,
         category: "Scope",
         caption: "Same exact negative power fold as [[Log2]]: $\\operatorname{lb}\\tfrac18 = -3$",
       },
       {
+        id: "a-machine-precision-argument-evaluates",
         expr: ["Lb", 1.4142],
         expected: { num: "0.499986164421874256467" },
         caption: "A machine-precision argument evaluates numerically",
       },
-      { expr: ["Lb", ["Power", 2, 10]], expected: 10 },
-      { expr: ["Lb", 0], expected: "NegativeInfinity", category: "Scope" },
+      { id: "lb-2-pow-10", expr: ["Lb", ["Power", 2, 10]], expected: 10 },
+      { id: "lb-0", expr: ["Lb", 0], expected: "NegativeInfinity", category: "Scope" },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["Lb", ["List", 1, 2, 4, 8]],
         expected: ["List", 0, 1, 2, 3],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "same-as-log2-the-logarithm-of-complex-infinity",
         expr: ["Lb", "ComplexInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",

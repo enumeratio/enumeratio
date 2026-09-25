@@ -1,0 +1,38 @@
+name: RiemannSiegelTheta
+domain: Special functions
+signature: RiemannSiegelTheta(t)
+summary: The Riemann–Siegel theta function $\vartheta(t) = \operatorname{Im}\ln\Gamma(\tfrac14 + \tfrac{it}{2}) - \tfrac{t}{2}\ln\pi$, for real $t$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: RiemannSiegelTheta(t)
+    description: the Riemann–Siegel theta function $\vartheta(t)$.
+    library: '@enumeratio/analytic'
+details:
+  - Reuses the existing log-gamma continuation ([[LogGamma]], `packages/symbols/analysis/analytic/src/loggamma.ts`) rather than deriving one — $\vartheta$ is just its imaginary part on the $\operatorname{Re} = \tfrac14$ line, minus the linear term.
+  - Real $t$ only; a complex argument stays symbolic. $\vartheta(0) = 0$ exactly (no `N()` needed) since $\ln\Gamma(\tfrac14)$ is real.
+  - 'Numeric otherwise: `N()`, or an inexact $t$, is required to reduce.'
+examples:
+  - id: riemannsiegeltheta-1p5
+    expr: [RiemannSiegelTheta, 1.5]
+    expected: -2.19819085737941
+  - id: n-riemannsiegeltheta-10
+    expr: [N, [RiemannSiegelTheta, 10]]
+    expected: -3.0670743962898954
+  - id: riemannsiegeltheta-0
+    expr: [RiemannSiegelTheta, 0]
+    expected: 0
+    category: Properties
+primitive: numeric
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/riemann-siegel.ts
+    note: built directly on the LogGamma kernel; no new zeta or gamma evaluation of its own.
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: RiemannSiegelTheta[t]; mpmath.siegeltheta(t).
+seeAlso:
+  - RiemannSiegelZ
+  - Zeta
+  - LogGamma

@@ -1,0 +1,32 @@
+name: Coproduct
+domain: Hopf algebras
+signature: Coproduct(element)
+summary: 'The coproduct $\Delta$: takes one element to a sum of `HopfTensor` pairs. Deconcatenation for QSym; the multiplicative extension of splitting a part for NSym.'
+signatures:
+  - call: Coproduct(element)
+    description: $\Delta(x)$, as a sum of tensor pairs
+    library: enumeratio-hopf
+details:
+  - This is what makes these Hopf algebras rather than merely algebras — the product puts things together, the coproduct pulls them apart
+  - The two are tied by the bialgebra axiom $\Delta(xy) = \Delta(x)\Delta(y)$, checked across every pair of basis elements up to degree 3 in both algebras
+  - Both coproducts are coassociative
+  - Tensor pairs use `HopfTensor(left, right)`, NOT `CircleTimes` — that head is already the shared ordered product
+  - "Graded: the two halves' degrees sum to the degree of the input"
+examples:
+  - id: deconcatenation-cut-at-each-gap
+    expr: [Coproduct, [QSymM, [List, 1, 2]]]
+    expected: [Add, [HopfTensor, [QSymM, [List]], [QSymM, [List, 1, 2]]], [HopfTensor, [QSymM, [List, 1, 2]], [QSymM, [List]]], [HopfTensor, [QSymM, [List, 1]], [QSymM, [List, 2]]]]
+    caption: 'deconcatenation: cut at each gap'
+  - id: delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes
+    expr: [Coproduct, [NSymH, [List, 2]]]
+    expected: [Add, [HopfTensor, [NSymH, [List]], [NSymH, [List, 2]]], [HopfTensor, [NSymH, [List, 2]], [NSymH, [List]]], [HopfTensor, [NSymH, [List, 1]], [NSymH, [List, 1]]]]
+    caption: $\Delta(H_2) = 1\otimes H_2 + H_1\otimes H_1 + H_2\otimes 1$
+  - id: the-counit-picks-out-the-constant-term
+    expr: [Counit, [NSymH, [List]]]
+    expected: 1
+    caption: the counit picks out the constant term
+    category: Properties
+seeAlso:
+  - QSymM
+  - Antipode
+  - Counit

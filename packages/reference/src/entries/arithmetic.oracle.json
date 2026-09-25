@@ -5,7 +5,7 @@
   },
   "examples": {
     "Abs": {
-      "[\"Abs\",-5]": {
+      "abs-neg-5": {
         "wolfram": {
           "input": "Abs[-5]",
           "output": "5",
@@ -36,7 +36,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Abs\",5]": {
+      "abs-5": {
         "wolfram": {
           "input": "Abs[5]",
           "output": "5",
@@ -67,7 +67,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Abs\",0]": {
+      "0-is-the-only-value-with-x-0": {
         "wolfram": {
           "input": "Abs[0]",
           "output": "0",
@@ -98,7 +98,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Abs\",[\"Rational\",-7,2]]": {
+      "abs-neg-7-over-2": {
         "wolfram": {
           "input": "Abs[Rational[-7, 2]]",
           "output": "7/2",
@@ -124,7 +124,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Abs\",[\"Complex\",3,4]]": {
+      "the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4": {
         "wolfram": {
           "input": "Abs[Complex[3, 4]]",
           "output": "5",
@@ -150,7 +150,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Abs\",[\"List\",-1,2,-3]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Abs[List[-1, 2, -3]]",
           "output": "{1, 2, 3}",
@@ -182,7 +182,7 @@
           "note": "compute-engine's Abs threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Equal\",[\"Abs\",-8],[\"Abs\",8]]": {
+      "even-function-x-x": {
         "wolfram": {
           "input": "(Abs[-8] == Abs[8])",
           "output": "True",
@@ -213,7 +213,7 @@
           "verdict": "agree"
         }
       },
-      "[\"LessEqual\",[\"Abs\",[\"Add\",3,-8]],[\"Add\",[\"Abs\",3],[\"Abs\",-8]]]": {
+      "triangle-inequality-a-b-le-a-b": {
         "wolfram": {
           "input": "LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]",
           "output": "True",
@@ -224,7 +224,7 @@
           }
         }
       },
-      "[\"Abs\",[\"Subtract\",70,95]]": {
+      "the-gap-between-two-temperatures-70-and-95": {
         "wolfram": {
           "input": "Abs[Subtract[70, 95]]",
           "output": "25",
@@ -257,7 +257,7 @@
       }
     },
     "Sign": {
-      "[\"Sign\",-3]": {
+      "sign-neg-3": {
         "wolfram": {
           "input": "Sign[-3]",
           "output": "-1",
@@ -283,7 +283,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sign\",3]": {
+      "sign-3": {
         "wolfram": {
           "input": "Sign[3]",
           "output": "1",
@@ -309,7 +309,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sign\",0]": {
+      "zero-is-its-own-sign": {
         "wolfram": {
           "input": "Sign[0]",
           "output": "0",
@@ -335,7 +335,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sign\",[\"Rational\",-1,2]]": {
+      "sign-neg-1-over-2": {
         "wolfram": {
           "input": "Sign[Rational[-1, 2]]",
           "output": "-1",
@@ -356,7 +356,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sign\",[\"Complex\",3,4]]": {
+      "the-unit-complex-number-pointing-the-same": {
         "wolfram": {
           "input": "Sign[Complex[3, 4]]",
           "output": "3/5 + (4*I)/5",
@@ -384,7 +384,7 @@
           "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Sign over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
-      "[\"Sign\",[\"List\",-3,0,7]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Sign[List[-3, 0, 7]]",
           "output": "{-1, 0, 1}",
@@ -409,7 +409,7 @@
           "note": "compute-engine's Sign threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Equal\",[\"Sign\",[\"Complex\",3,4]],[\"Divide\",[\"Complex\",3,4],[\"Abs\",[\"Complex\",3,4]]]]": {
+      "sign-z-z-z-see-abs": {
         "wolfram": {
           "input": "(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])",
           "output": "True",
@@ -430,7 +430,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Multiply\",-5,[\"Sign\",-5]],[\"Abs\",-5]]": {
+      "x-cdot-sign-x-x-here-at-x-5": {
         "wolfram": {
           "input": "(Times[-5, Sign[-5]] == Abs[-5])",
           "output": "True",
@@ -456,7 +456,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sign\",[\"Subtract\",70,95]]": {
+      "tells-you-the-temperature-dropped-but-not-by-how": {
         "wolfram": {
           "input": "Sign[Subtract[70, 95]]",
           "output": "-1",
@@ -482,7 +482,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sign\",\"NaN\"]": {
+      "nan-propagates-rather-than-being-treated-as-0": {
         "wolfram": {
           "input": "Sign[Indeterminate]",
           "output": "Indeterminate",
@@ -495,53 +495,7 @@
       }
     },
     "Negate": {
-      "[\"Negate\",5]": {
-        "wolfram": {
-          "input": "Minus[5]",
-          "output": "-5",
-          "verdict": "agree",
-          "tex": {
-            "input": "-5",
-            "output": "-5"
-          }
-        },
-        "sage": {
-          "input": "(-5)",
-          "output": "-5",
-          "verdict": "agree"
-        },
-        "julia": {
-          "input": "(-(5))",
-          "output": "-5",
-          "verdict": "agree"
-        },
-        "mathlib4": {
-          "input": "(-(5))",
-          "output": "-5",
-          "verdict": "agree"
-        },
-        "oscar": {
-          "input": "(-(5))",
-          "output": "-5",
-          "verdict": "agree"
-        },
-        "rust": {
-          "input": "(-(n(5)))",
-          "output": "-5",
-          "verdict": "agree"
-        },
-        "mpmath": {
-          "input": "(-5)",
-          "output": "-5",
-          "verdict": "agree"
-        },
-        "sympy": {
-          "input": "(-5)",
-          "output": "-5",
-          "verdict": "agree"
-        }
-      },
-      "[\"Negate\",-5]": {
+      "5": {
         "wolfram": {
           "input": "Minus[-5]",
           "output": "5",
@@ -587,7 +541,53 @@
           "verdict": "agree"
         }
       },
-      "[\"Negate\",0]": {
+      "neg-5": {
+        "wolfram": {
+          "input": "Minus[5]",
+          "output": "-5",
+          "verdict": "agree",
+          "tex": {
+            "input": "-5",
+            "output": "-5"
+          }
+        },
+        "sage": {
+          "input": "(-5)",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(-(5))",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(-(5))",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(-(5))",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(n(5)))",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(-5)",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(-5)",
+          "output": "-5",
+          "verdict": "agree"
+        }
+      },
+      "its-own-negation": {
         "wolfram": {
           "input": "Minus[0]",
           "output": "0",
@@ -633,7 +633,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Negate\",[\"Rational\",3,4]]": {
+      "neg-3-over-4": {
         "wolfram": {
           "input": "Minus[Rational[3, 4]]",
           "output": "-3/4",
@@ -674,7 +674,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Negate\",[\"List\",1,-2,3]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Minus[List[1, -2, 3]]",
           "output": "{-1, 2, -3}",
@@ -721,7 +721,7 @@
           "note": "compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Negate\",42.5]": {
+      "recording-a-42-50-charge-as-a-negative-balance": {
         "wolfram": {
           "input": "Minus[42.5]",
           "output": "-42.5",
@@ -767,7 +767,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Negate\",\"PositiveInfinity\"]": {
+      "flips-signed-infinities-too": {
         "wolfram": {
           "input": "Minus[Infinity]",
           "output": "-Infinity",
@@ -780,7 +780,7 @@
       }
     },
     "Square": {
-      "[\"Square\",5]": {
+      "square-5": {
         "wolfram": {
           "input": "(5)^2",
           "output": "25",
@@ -806,7 +806,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Square\",-5]": {
+      "same-result-for-x-and-x": {
         "wolfram": {
           "input": "(-5)^2",
           "output": "25",
@@ -832,7 +832,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Square\",[\"Rational\",2,3]]": {
+      "square-2-over-3": {
         "wolfram": {
           "input": "(Rational[2, 3])^2",
           "output": "4/9",
@@ -853,7 +853,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Square\",[\"List\",2,3,-4]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "(List[2, 3, -4])^2",
           "output": "{4, 9, 16}",
@@ -878,7 +878,7 @@
           "note": "compute-engine's Square threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Equal\",[\"Square\",-5],[\"Square\",5]]": {
+      "even-function-x-2-x-2": {
         "wolfram": {
           "input": "((-5)^2 == (5)^2)",
           "output": "True",
@@ -904,7 +904,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Square\",[\"Complex\",1,1]],[\"Complex\",0,2]]": {
+      "1-i-2-2i-squaring-a-complex-number-needn-t-stay": {
         "wolfram": {
           "input": "((Complex[1, 1])^2 == Complex[0, 2])",
           "output": "True",
@@ -930,7 +930,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Square\",3]": {
+      "the-area-of-a-3-3-square-tile": {
         "wolfram": {
           "input": "(3)^2",
           "output": "9",
@@ -956,7 +956,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Square\",\"PositiveInfinity\"]": {
+      "infinity-squared-stays-infinite-rather-than": {
         "wolfram": {
           "input": "(Infinity)^2",
           "output": "Infinity",
@@ -969,7 +969,7 @@
       }
     },
     "Sqrt": {
-      "[\"Sqrt\",16]": {
+      "sqrt-16": {
         "wolfram": {
           "input": "Sqrt[16]",
           "output": "4",
@@ -1000,7 +1000,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sqrt\",2]": {
+      "stays-symbolic-when-the-radicand-isn-t-a-perfect": {
         "wolfram": {
           "input": "Sqrt[2]",
           "output": "Sqrt[2]",
@@ -1031,7 +1031,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sqrt\",[\"Rational\",4,9]]": {
+      "sqrt-4-over-9": {
         "wolfram": {
           "input": "Sqrt[Rational[4, 9]]",
           "output": "2/3",
@@ -1057,7 +1057,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sqrt\",0]": {
+      "sqrt-0": {
         "wolfram": {
           "input": "Sqrt[0]",
           "output": "0",
@@ -1088,7 +1088,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sqrt\",-4]": {
+      "a-perfect-square-radicand-evaluates-exactly-even": {
         "wolfram": {
           "input": "Sqrt[-4]",
           "output": "2*I",
@@ -1121,7 +1121,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Square\",[\"Sqrt\",16]],16]": {
+      "sqrt-x-2-x-for-a-perfect-square-see-square": {
         "wolfram": {
           "input": "((Sqrt[16])^2 == 16)",
           "output": "True",
@@ -1147,7 +1147,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Sqrt\",16],[\"Power\",16,[\"Rational\",1,2]]]": {
+      "sqrt-x-x-1-2": {
         "wolfram": {
           "input": "(Sqrt[16] == Power[16, Rational[1, 2]])",
           "output": "True",
@@ -1173,7 +1173,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sqrt\",[\"Add\",[\"Square\",3],[\"Square\",4]]]": {
+      "the-pythagorean-hypotenuse-of-a-3-4-5-triangle": {
         "wolfram": {
           "input": "Sqrt[Plus[(3)^2, (4)^2]]",
           "output": "5",
@@ -1199,7 +1199,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sqrt\",-2]": {
+      "negative-but-not-a-perfect-square-stays-symbolic": {
         "wolfram": {
           "input": "Sqrt[-2]",
           "output": "I*Sqrt[2]",
@@ -1232,7 +1232,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sqrt\",[\"Rational\",-4,9]]": {
+      "a-negative-rational-still-evaluates-exactly-when": {
         "wolfram": {
           "input": "Sqrt[Rational[-4, 9]]",
           "output": "(2*I)/3",
@@ -1262,7 +1262,7 @@
       }
     },
     "Root": {
-      "[\"Root\",27,3]": {
+      "the-cube-root-of-27": {
         "wolfram": {
           "input": "Power[27, Divide[1, 3]]",
           "output": "3",
@@ -1273,7 +1273,7 @@
           }
         }
       },
-      "[\"Root\",16,4]": {
+      "root-16-4": {
         "wolfram": {
           "input": "Power[16, Divide[1, 4]]",
           "output": "2",
@@ -1284,7 +1284,7 @@
           }
         }
       },
-      "[\"Root\",-8,3]": {
+      "odd-roots-of-a-negative-number-stay-real": {
         "wolfram": {
           "input": "Power[-8, Divide[1, 3]]",
           "output": "2*(-1)^(1/3)",
@@ -1297,7 +1297,7 @@
           }
         }
       },
-      "[\"Root\",2,3]": {
+      "stays-symbolic-when-x-isn-t-a-perfect-power": {
         "wolfram": {
           "input": "Power[2, Divide[1, 3]]",
           "output": "2^(1/3)",
@@ -1308,7 +1308,7 @@
           }
         }
       },
-      "[\"Root\",16,-2]": {
+      "a-negative-index-gives-the-reciprocal-root-x-1-n": {
         "wolfram": {
           "input": "Power[16, Divide[1, -2]]",
           "output": "1/4",
@@ -1319,7 +1319,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Power\",[\"Root\",8,3],3],8]": {
+      "sqrt-n-x-n-x-for-a-perfect-nth-power": {
         "wolfram": {
           "input": "(Power[Power[8, Divide[1, 3]], 3] == 8)",
           "output": "True",
@@ -1330,7 +1330,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Root\",16,2],[\"Sqrt\",16]]": {
+      "root-x-2-agrees-with-sqrt": {
         "wolfram": {
           "input": "(Power[16, Divide[1, 2]] == Sqrt[16])",
           "output": "True",
@@ -1341,7 +1341,7 @@
           }
         }
       },
-      "[\"Root\",1000,3]": {
+      "the-edge-length-of-a-cube-with-volume-1000": {
         "wolfram": {
           "input": "Power[1000, Divide[1, 3]]",
           "output": "10",
@@ -1352,7 +1352,7 @@
           }
         }
       },
-      "[\"Root\",-8,2]": {
+      "an-even-root-of-a-negative-non-perfect-power": {
         "wolfram": {
           "input": "Power[-8, Divide[1, 2]]",
           "output": "(2*I)*Sqrt[2]",
@@ -1365,7 +1365,7 @@
       }
     },
     "Floor": {
-      "[\"Floor\",[\"Rational\",7,2]]": {
+      "floor-7-over-2": {
         "wolfram": {
           "input": "Floor[Rational[7, 2]]",
           "output": "3",
@@ -1391,7 +1391,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Floor\",3.7]": {
+      "floor-3p7": {
         "wolfram": {
           "input": "Floor[3.7]",
           "output": "3",
@@ -1422,7 +1422,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Floor\",5]": {
+      "integers-pass-through-unchanged": {
         "wolfram": {
           "input": "Floor[5]",
           "output": "5",
@@ -1453,7 +1453,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Floor\",[\"List\",1.2,-1.2,3.7]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Floor[List[1.2, -1.2, 3.7]]",
           "output": "{1, -2, 3}",
@@ -1485,7 +1485,7 @@
           "note": "compute-engine's Floor threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Equal\",[\"Add\",[\"Floor\",[\"Rational\",7,2]],1],[\"Ceil\",[\"Rational\",7,2]]]": {
+      "for-a-non-integer-x-lceil-x-rceil-lfloor-x": {
         "wolfram": {
           "input": "(Plus[Floor[Rational[7, 2]], 1] == Ceiling[Rational[7, 2]])",
           "output": "True",
@@ -1511,7 +1511,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Floor\",[\"Rational\",-7,2]],[\"Negate\",[\"Ceil\",[\"Rational\",7,2]]]]": {
+      "lfloor-x-rfloor-lceil-x-rceil": {
         "wolfram": {
           "input": "(Floor[Rational[-7, 2]] == Minus[Ceiling[Rational[7, 2]]])",
           "output": "True",
@@ -1537,7 +1537,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Floor\",[\"Divide\",17,5]]": {
+      "how-many-full-5-item-packs-fit-in-17-items": {
         "wolfram": {
           "input": "Floor[Divide[17, 5]]",
           "output": "3",
@@ -1563,7 +1563,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Floor\",-3.2]": {
+      "rounds-toward-infty-not-toward-0-floor-3-2-is-4": {
         "wolfram": {
           "input": "Floor[-3.2]",
           "output": "-4",
@@ -1594,7 +1594,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Floor\",\"NegativeInfinity\"]": {
+      "infinities-pass-through-unchanged": {
         "wolfram": {
           "input": "Floor[-Infinity]",
           "output": "-Infinity",
@@ -1607,7 +1607,7 @@
       }
     },
     "Ceil": {
-      "[\"Ceil\",[\"Rational\",7,2]]": {
+      "ceil-7-over-2": {
         "wolfram": {
           "input": "Ceiling[Rational[7, 2]]",
           "output": "4",
@@ -1633,7 +1633,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ceil\",3.2]": {
+      "ceil-3p2": {
         "wolfram": {
           "input": "Ceiling[3.2]",
           "output": "4",
@@ -1664,7 +1664,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ceil\",5]": {
+      "integers-pass-through-unchanged": {
         "wolfram": {
           "input": "Ceiling[5]",
           "output": "5",
@@ -1695,7 +1695,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ceil\",[\"List\",1.2,-1.2,3.7]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Ceiling[List[1.2, -1.2, 3.7]]",
           "output": "{2, -1, 4}",
@@ -1727,7 +1727,7 @@
           "note": "compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Equal\",[\"Ceil\",[\"Rational\",7,2]],[\"Add\",[\"Floor\",[\"Rational\",7,2]],1]]": {
+      "lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer": {
         "wolfram": {
           "input": "(Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])",
           "output": "True",
@@ -1753,7 +1753,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Ceil\",5],[\"Floor\",5]]": {
+      "floor-and-ceil-agree-exactly-on-integers": {
         "wolfram": {
           "input": "(Ceiling[5] == Floor[5])",
           "output": "True",
@@ -1784,7 +1784,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ceil\",[\"Divide\",17,5]]": {
+      "how-many-5-seat-vans-are-needed-to-carry-17": {
         "wolfram": {
           "input": "Ceiling[Divide[17, 5]]",
           "output": "4",
@@ -1810,7 +1810,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ceil\",-3.7]": {
+      "rounds-toward-infty-not-toward-0-ceil-3-7-is-3": {
         "wolfram": {
           "input": "Ceiling[-3.7]",
           "output": "-3",
@@ -1841,7 +1841,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ceil\",\"NaN\"]": {
+      "nan-propagates-rather-than-erroring": {
         "wolfram": {
           "input": "Ceiling[Indeterminate]",
           "output": "Indeterminate",
@@ -1854,7 +1854,7 @@
       }
     },
     "Round": {
-      "[\"Round\",[\"Rational\",7,2]]": {
+      "round-7-over-2": {
         "wolfram": {
           "input": "Round[Rational[7, 2]]",
           "output": "4",
@@ -1865,7 +1865,7 @@
           }
         }
       },
-      "[\"Round\",3.5]": {
+      "round-3p5": {
         "wolfram": {
           "input": "Round[3.5]",
           "output": "4",
@@ -1876,7 +1876,7 @@
           }
         }
       },
-      "[\"Round\",5]": {
+      "integers-pass-through-unchanged": {
         "wolfram": {
           "input": "Round[5]",
           "output": "5",
@@ -1887,7 +1887,7 @@
           }
         }
       },
-      "[\"Round\",3.14159,2]": {
+      "a-second-argument-rounds-to-that-many-decimal": {
         "wolfram": {
           "input": "Round[3.14159, Power[10, Minus[2]]]",
           "output": "157/50",
@@ -1898,7 +1898,7 @@
           }
         }
       },
-      "[\"Round\",[\"List\",1.5,-1.5,2.4]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Round[List[1.5, -1.5, 2.4]]",
           "output": "{2, -2, 2}",
@@ -1909,7 +1909,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Round\",1234,-2],1200]": {
+      "a-negative-second-argument-rounds-to-the-nearest": {
         "wolfram": {
           "input": "(Round[1234, Power[10, Minus[-2]]] == 1200)",
           "output": "True",
@@ -1920,7 +1920,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Round\",3.14159,0],[\"Round\",3.14159]]": {
+      "rounding-to-0-decimal-places-matches-the-1": {
         "wolfram": {
           "input": "(Round[3.14159, Power[10, Minus[0]]] == Round[3.14159])",
           "output": "True",
@@ -1931,7 +1931,7 @@
           }
         }
       },
-      "[\"Round\",19.995,2]": {
+      "rounding-a-price-to-the-nearest-cent-19-995": {
         "wolfram": {
           "input": "Round[19.995, Power[10, Minus[2]]]",
           "output": "20",
@@ -1942,7 +1942,7 @@
           }
         }
       },
-      "[\"Round\",2.5]": {
+      "rounds-half-away-from-zero-not-banker-s-rounding": {
         "wolfram": {
           "input": "Round[2.5]",
           "output": "2",
@@ -1955,7 +1955,7 @@
           }
         }
       },
-      "[\"Round\",-2.5]": {
+      "and-by-the-same-convention-2-5-rounds-to-3-not-2": {
         "wolfram": {
           "input": "Round[-2.5]",
           "output": "-2",
@@ -1970,7 +1970,7 @@
       }
     },
     "Clamp": {
-      "[\"Clamp\",5,0,3]": {
+      "clamp-5-0-3": {
         "wolfram": {
           "input": "Clip[5, List[0, 3]]",
           "output": "3",
@@ -1981,7 +1981,7 @@
           }
         }
       },
-      "[\"Clamp\",-1,0,3]": {
+      "clamp-neg-1-0-3": {
         "wolfram": {
           "input": "Clip[-1, List[0, 3]]",
           "output": "0",
@@ -1992,7 +1992,7 @@
           }
         }
       },
-      "[\"Clamp\",2,0,3]": {
+      "values-already-inside-the-range-pass-through": {
         "wolfram": {
           "input": "Clip[2, List[0, 3]]",
           "output": "2",
@@ -2003,7 +2003,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Clamp\",[\"Clamp\",5,0,3],0,3],[\"Clamp\",5,0,3]]": {
+      "idempotent-clamping-an-already-clamped-value": {
         "wolfram": {
           "input": "(Clip[Clip[5, List[0, 3]], List[0, 3]] == Clip[5, List[0, 3]])",
           "output": "True",
@@ -2014,7 +2014,7 @@
           }
         }
       },
-      "[\"Clamp\",112,0,100]": {
+      "capping-a-percentage-like-value-at-100": {
         "wolfram": {
           "input": "Clip[112, List[0, 100]]",
           "output": "100",
@@ -2025,7 +2025,7 @@
           }
         }
       },
-      "[\"Clamp\",5,3,0]": {
+      "no-validation-that-lower-upper-with-the-bounds": {
         "wolfram": {
           "input": "Clip[5, List[3, 0]]",
           "output": "0",
@@ -2038,7 +2038,7 @@
       }
     },
     "Chop": {
-      "[\"Chop\",1.2]": {
+      "values-not-near-zero-pass-through-unchanged": {
         "wolfram": {
           "input": "Chop[1.2]",
           "output": "1.2",
@@ -2049,7 +2049,7 @@
           }
         }
       },
-      "[\"Chop\",1e-11]": {
+      "values-smaller-than-about-10-10-collapse-to": {
         "wolfram": {
           "input": "Chop[1*^-11]",
           "output": "1/100000000000",
@@ -2060,7 +2060,7 @@
           }
         }
       },
-      "[\"Chop\",-1e-11]": {
+      "negative-values-chop-the-same-way": {
         "wolfram": {
           "input": "Chop[-1*^-11]",
           "output": "-1/100000000000",
@@ -2071,7 +2071,7 @@
           }
         }
       },
-      "[\"Chop\",[\"Complex\",1e-12,3]]": {
+      "chops-the-real-and-imaginary-parts-independently": {
         "wolfram": {
           "input": "Chop[Complex[1*^-12, 3]]",
           "output": "1/1000000000000 + 3*I",
@@ -2082,7 +2082,7 @@
           }
         }
       },
-      "[\"Chop\",[\"Subtract\",[\"Multiply\",3,[\"N\",[\"Divide\",1,3]]],1]]": {
+      "cleans-up-the-floating-point-residue-from": {
         "wolfram": {
           "input": "Chop[Subtract[Times[3, N[Divide[1, 3]]], 1]]",
           "output": "0",
@@ -2093,7 +2093,7 @@
           }
         }
       },
-      "[\"Chop\",[\"Add\",1,1e-12]]": {
+      "only-the-value-s-own-magnitude-matters-this": {
         "wolfram": {
           "input": "Chop[Plus[1, 1*^-12]]",
           "output": "1000000000001/1000000000000",
@@ -2104,7 +2104,7 @@
           }
         }
       },
-      "[\"Chop\",1.0000000001e-10]": {
+      "a-hard-cutoff-at-about-10-10-a-value-just-above": {
         "wolfram": {
           "input": "Chop[1.0000000001*^-10]",
           "output": "1.0000000001*^-10",
@@ -2117,7 +2117,7 @@
       }
     },
     "Rationalize": {
-      "[\"Rationalize\",0.1]": {
+      "rationalize-0p1": {
         "wolfram": {
           "input": "Rationalize[0.1]",
           "output": "1/10",
@@ -2128,7 +2128,7 @@
           }
         }
       },
-      "[\"Rationalize\",2]": {
+      "an-exact-integer-is-returned-unchanged": {
         "wolfram": {
           "input": "Rationalize[2]",
           "output": "2",
@@ -2139,7 +2139,7 @@
           }
         }
       },
-      "[\"Rationalize\",2.5]": {
+      "rationalize-2p5": {
         "wolfram": {
           "input": "Rationalize[2.5]",
           "output": "5/2",
@@ -2150,7 +2150,7 @@
           }
         }
       },
-      "[\"Rationalize\",0.3333333333333333]": {
+      "recognizes-a-float-that-is-to-machine-precision": {
         "wolfram": {
           "input": "Rationalize[0.3333333333333333]",
           "output": "1/3",
@@ -2161,7 +2161,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Rationalize\",\"Pi\",0.01],[\"Rational\",22,7]]": {
+      "with-an-explicit-tolerance-recovers-a-classic": {
         "wolfram": {
           "input": "(Rationalize[Pi, 0.01] == Rational[22, 7])",
           "output": "True",
@@ -2172,7 +2172,7 @@
           }
         }
       },
-      "[\"Rationalize\",\"Pi\",0.000001]": {
+      "milu-zu-chongzhi-s-5th-century-approximation-of": {
         "wolfram": {
           "input": "Rationalize[Pi, 0.000001]",
           "output": "355/113",
@@ -2183,7 +2183,7 @@
           }
         }
       },
-      "[\"Rationalize\",0.75]": {
+      "recovers-a-simple-fraction-from-a-decimal": {
         "wolfram": {
           "input": "Rationalize[0.75]",
           "output": "3/4",
@@ -2194,7 +2194,7 @@
           }
         }
       },
-      "[\"Rationalize\",0.333333]": {
+      "without-enough-repeating-digits-to-reach-machine": {
         "wolfram": {
           "input": "Rationalize[0.333333]",
           "output": "0.333333",
@@ -2205,7 +2205,7 @@
           }
         }
       },
-      "[\"Rationalize\",0.1,0.5]": {
+      "a-loose-tolerance-can-snap-to-something-far": {
         "wolfram": {
           "input": "Rationalize[0.1, 0.5]",
           "output": "0",
@@ -2218,7 +2218,7 @@
       }
     },
     "Max": {
-      "[\"Max\",3,1,4,1,5]": {
+      "max-3-1-4-1-5": {
         "wolfram": {
           "input": "Max[3, 1, 4, 1, 5]",
           "output": "5",
@@ -2239,7 +2239,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Max\",[\"List\",3,1,4]]": {
+      "also-accepts-a-single-list-argument": {
         "wolfram": {
           "input": "Max[List[3, 1, 4]]",
           "output": "4",
@@ -2262,7 +2262,7 @@
           "note": "compute-engine's Max threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Max\",-1,-5]": {
+      "max-neg-1-neg-5": {
         "wolfram": {
           "input": "Max[-1, -5]",
           "output": "-1",
@@ -2283,7 +2283,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Max\",3]": {
+      "a-single-argument-is-returned-unchanged": {
         "wolfram": {
           "input": "Max[3]",
           "output": "3",
@@ -2304,7 +2304,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Max\",3,7],[\"Max\",7,3]]": {
+      "commutative-order-doesn-t-matter": {
         "wolfram": {
           "input": "(Max[3, 7] == Max[7, 3])",
           "output": "True",
@@ -2325,7 +2325,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Max\",[\"List\",3,1,4],[\"List\",9,2]],9]": {
+      "multiple-list-arguments-are-flattened-into-one": {
         "wolfram": {
           "input": "(Max[List[3, 1, 4], List[9, 2]] == 9)",
           "output": "True",
@@ -2348,7 +2348,7 @@
           "note": "compute-engine's Max threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Max\",68,72,65,80,74]": {
+      "the-day-s-high-from-a-handful-of-hourly-readings": {
         "wolfram": {
           "input": "Max[68, 72, 65, 80, 74]",
           "output": "80",
@@ -2369,7 +2369,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Max\"]": {
+      "with-no-arguments-compute-engine-returns-nan": {
         "wolfram": {
           "input": "Max[]",
           "output": "-Infinity",
@@ -2396,7 +2396,7 @@
           "note": "The maximum of nothing: SymPy answers −∞, compute-engine NaN."
         }
       },
-      "[\"Max\",\"NaN\",3]": {
+      "nan-poisons-the-result-overriding-every-other": {
         "wolfram": {
           "input": "Max[Indeterminate, 3]",
           "output": "Indeterminate",
@@ -2409,7 +2409,7 @@
       }
     },
     "Min": {
-      "[\"Min\",3,1,4,1,5]": {
+      "min-3-1-4-1-5": {
         "wolfram": {
           "input": "Min[3, 1, 4, 1, 5]",
           "output": "1",
@@ -2430,7 +2430,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Min\",[\"List\",3,1,4]]": {
+      "also-accepts-a-single-list-argument": {
         "wolfram": {
           "input": "Min[List[3, 1, 4]]",
           "output": "1",
@@ -2453,7 +2453,7 @@
           "note": "compute-engine's Min threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Min\",-1,-5]": {
+      "min-neg-1-neg-5": {
         "wolfram": {
           "input": "Min[-1, -5]",
           "output": "-5",
@@ -2474,7 +2474,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Min\",3]": {
+      "a-single-argument-is-returned-unchanged": {
         "wolfram": {
           "input": "Min[3]",
           "output": "3",
@@ -2495,7 +2495,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Min\",3,7],[\"Min\",7,3]]": {
+      "commutative-order-doesn-t-matter": {
         "wolfram": {
           "input": "(Min[3, 7] == Min[7, 3])",
           "output": "True",
@@ -2516,7 +2516,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Add\",[\"Min\",4,9],[\"Max\",4,9]],[\"Add\",4,9]]": {
+      "min-a-b-max-a-b-a-b-see-max": {
         "wolfram": {
           "input": "(Plus[Min[4, 9], Max[4, 9]] == Plus[4, 9])",
           "output": "True",
@@ -2537,7 +2537,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Min\",68,72,65,80,74]": {
+      "the-day-s-low-from-the-same-hourly-readings-see": {
         "wolfram": {
           "input": "Min[68, 72, 65, 80, 74]",
           "output": "65",
@@ -2558,7 +2558,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Min\",\"NegativeInfinity\",3]": {
+      "infinities-participate-directly-in-the": {
         "wolfram": {
           "input": "Min[-Infinity, 3]",
           "output": "-Infinity",
@@ -2569,7 +2569,7 @@
           }
         }
       },
-      "[\"Min\",[\"List\",3,1],0]": {
+      "multiple-arguments-lists-included-are-flattened": {
         "wolfram": {
           "input": "Min[List[3, 1], 0]",
           "output": "0",
@@ -2594,7 +2594,7 @@
       }
     },
     "IsOdd": {
-      "[\"IsOdd\",3]": {
+      "isodd-3": {
         "wolfram": {
           "input": "OddQ[3]",
           "output": "True",
@@ -2605,7 +2605,7 @@
           }
         }
       },
-      "[\"IsOdd\",4]": {
+      "isodd-4": {
         "wolfram": {
           "input": "OddQ[4]",
           "output": "False",
@@ -2616,7 +2616,7 @@
           }
         }
       },
-      "[\"IsOdd\",-7]": {
+      "negative-integers-count-too": {
         "wolfram": {
           "input": "OddQ[-7]",
           "output": "True",
@@ -2629,7 +2629,7 @@
       }
     },
     "IsEven": {
-      "[\"IsEven\",4]": {
+      "iseven-4": {
         "wolfram": {
           "input": "EvenQ[4]",
           "output": "True",
@@ -2640,7 +2640,7 @@
           }
         }
       },
-      "[\"IsEven\",3]": {
+      "iseven-3": {
         "wolfram": {
           "input": "EvenQ[3]",
           "output": "False",
@@ -2651,7 +2651,7 @@
           }
         }
       },
-      "[\"IsEven\",0]": {
+      "zero-is-even": {
         "wolfram": {
           "input": "EvenQ[0]",
           "output": "True",

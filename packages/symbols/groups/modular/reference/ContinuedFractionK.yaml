@@ -1,0 +1,28 @@
+name: ContinuedFractionK
+domain: The modular group
+signature: ContinuedFractionK(f, g, (i, imin, imax))
+summary: The continued fraction $f_1/(g_1 + f_2/(g_2 + \cdots))$ over an index range, finite or infinite.
+signatures:
+  - call: ContinuedFractionK(f, g, (i, imin, imax))
+    description: the finite continued fraction, exact, for `imin ≤ i ≤ imax`
+    library: enumeratio-modular
+  - call: ContinuedFractionK(f, g, (i, imin, PositiveInfinity))
+    description: the infinite fraction, when $f$ and $g$ do not depend on $i$
+    library: enumeratio-modular
+details:
+  - 'The iterator is written the same way `Sum` and `Product` write theirs: `Tuple(i, imin, imax)`'
+  - 'The finite fraction is built right to left: $f_{imax}/g_{imax}$ first, then each $f_i/(g_i + \text{that})$ down to $i = imin$'
+  - "The infinite case is solved algebraically, not truncated: constant $f, g$ make $x = f/(g+x)$, whose positive root $x = (-g + \\sqrt{g^2+4f})/2$ is the fraction's value — an $f$ or $g$ that depends on $i$ has no such closed form here, and the call stays unevaluated"
+examples:
+  - id: cfrac-1-1-cfrac-1-2-cfrac-1-3-cfrac-1-4-cfrac-15
+    expr: [ContinuedFractionK, 1, k, [Tuple, k, 1, 5]]
+    expected: [Rational, 157, 225]
+    caption: $\cfrac{1}{1 + \cfrac{1}{2 + \cfrac{1}{3 + \cfrac{1}{4 + \cfrac15}}}}$
+  - id: the-infinite-all-ones-fraction-is-1-varphi-sqrt
+    expr: [ContinuedFractionK, 1, 1, [Tuple, k, 1, PositiveInfinity]]
+    expected: [Multiply, [Rational, 1, 2], [Add, -1, [Sqrt, 5]]]
+    category: Scope
+    caption: the infinite all-ones fraction is $1/\varphi$ — $(\sqrt5 - 1)/2$
+seeAlso:
+  - Convergents
+  - ContinuedFraction

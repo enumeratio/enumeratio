@@ -64,7 +64,7 @@ which works per cell, not per column or per policy.
 
 ## 2. Polytopes
 
-`packages/polytope` has the permutahedron, associahedron, cross-polytope, simplex and
+`packages/symbols/combinatorics/polytope` has the permutahedron, associahedron, cross-polytope, simplex and
 hypercube, and `<notatio-polytope>` covers what the old WebGL figure did (face selection,
 face labels from a representation). Left:
 
@@ -146,4 +146,4 @@ order), `auto/notebook-exact-irrationals` (exact algebraic irrationals in output
 - **Open issues** — `issues.json` has about a hundred open, roughly half Postgres
   infrastructure. The rest track the design pages above plus sampled non-enumerable
   collections (`real_numbers`, `complex_numbers`). The multicomplex tower issue is done
-  (`packages/hypercomplex`).
+  (`packages/symbols/algebras/hypercomplex`).

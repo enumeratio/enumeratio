@@ -1,0 +1,20 @@
+name: LittleSchroderNumbers
+domain: Collections
+signature: LittleSchroderNumbers
+summary: The little Schröder numbers (super-Catalan numbers) $1, 1, 3, 11, 45, 197, …$ as a lazy indexed collection.
+signatures:
+  - call: LittleSchroderNumbers
+    description: $s_n$, counting dissections of a convex polygon, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(LittleSchroderNumbers) = +\infty$, and $At(LittleSchroderNumbers, k)$ unranks term $k-1$ via $(n+1)s(n) = (6n-3)s(n-1) - (n-2)s(n-2)$, $s_0 = s_1 = 1$, bigint throughout -- $At(LittleSchroderNumbers, 1) = s_0 = 1$.'
+  - 'OEIS A001003, starting exactly at its offset-0 term: $1, 1, 3, 11, 45, 197, 903, …$.'
+  - "Membership goes through [[Element]]: $Element(11, LittleSchroderNumbers)$ is true, $Element(6, LittleSchroderNumbers)$ is false. See [[SchroederNumbers]] -- $s_n$ is exactly half $SchroederNumbers$'s term for $n \\ge 1$."
+examples: []
+enumerate:
+  expr: Take(LittleSchroderNumbers, 15)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - SchroederNumbers
+  - CatalanNumbers

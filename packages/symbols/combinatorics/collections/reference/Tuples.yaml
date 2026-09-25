@@ -1,0 +1,22 @@
+name: Tuples
+domain: Combinatorial collections
+signature: Tuples(n, k)
+summary: 'The k-tuples over $\{1, \dots, n\}$: all $n^k$ ordered selections with repetition.'
+signatures:
+  - call: Tuples(n, k)
+    description: the $n^k$ length-$k$ tuples
+    library: enumeratio-collections
+details:
+  - Count is $n^k$
+  - Elements are ordered as mixed-radix (base $n$) counting
+examples:
+  - id: 2-3
+    expr: [Count, [Tuples, 2, 3]]
+    expected: 8
+    caption: $2^3$
+  - id: tuples-2-3-list-1
+    expr: [At, [Tuples, 2, 3], 1]
+    expected: [List, 1, 1, 1]
+seeAlso:
+  - Subsets
+  - Multisets

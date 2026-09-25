@@ -1,0 +1,20 @@
+name: Derangements
+domain: Combinatorial collections
+signature: Derangements(n)
+summary: The permutations of $\{1, \dots, n\}$ with no fixed point.
+signatures:
+  - call: Derangements(n)
+    description: the fixed-point-free permutations of $n$ elements
+    library: enumeratio-collections
+details:
+  - Count is the subfactorial $!n$ (see [[Subfactorial]])
+  - A sub-family of [[SymmetricGroup]]
+examples:
+  - id: '4'
+    expr: [Count, [Derangements, 4]]
+    expected: 9
+    caption: $!4$
+seeAlso:
+  - SymmetricGroup
+  - Involutions
+  - Subfactorial

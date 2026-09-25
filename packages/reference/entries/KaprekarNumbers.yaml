@@ -1,0 +1,19 @@
+name: KaprekarNumbers
+domain: Collections
+signature: KaprekarNumbers
+summary: 'The Kaprekar numbers $1, 9, 45, 55, 99, 297, …$: $n$ whose square splits into a left and a (nonzero) right part that sum back to $n$.'
+signatures:
+  - call: KaprekarNumbers
+    description: the $n$ for which some split of $n^2$'s decimal digits sums back to $n$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(KaprekarNumbers) = +\infty$ -- every repunit-of-nines $10^k - 1$ qualifies, since $(10^k-1)^2$ splits at position $k$ into $10^k - 2$ and the last $k$ digits, summing to $10^k - 1$. OEIS A006886.'
+  - $At(KaprekarNumbers, k)$ unranks by scanning forward from the last cached match, trying every split position (the split isn't always at $n$'s own digit count -- $4879^2 = 23804641$ splits as $238 + 4641$, not $2380+4641$) -- $At(KaprekarNumbers, 3) = 45$ ($45^2=2025 \to 20+25$).
+  - 'Membership goes through [[Element]]: $Element(297, KaprekarNumbers)$ is true ($297^2=88209 \to 88+209=297$), $Element(298, KaprekarNumbers)$ is false.'
+examples: []
+enumerate:
+  expr: Take(KaprekarNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - NarcissisticNumbers

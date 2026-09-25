@@ -5,7 +5,7 @@
   },
   "examples": {
     "All": {
-      "[\"All\",[\"List\",2,4,6],[\"Function\",[\"Equal\",[\"Mod\",\"_1\",2],0]]]": {
+      "all-list-2-4-6-function-1-mod-2-eq-0": {
         "wolfram": {
           "input": "AllTrue[List[2, 4, 6], Function[(Mod[Slot[1], 2] == 0)]]",
           "output": "True",
@@ -16,7 +16,7 @@
           }
         }
       },
-      "[\"All\",[\"List\",2,4,5],[\"Function\",[\"Equal\",[\"Mod\",\"_1\",2],0]]]": {
+      "all-list-2-4-5-function-1-mod-2-eq-0": {
         "wolfram": {
           "input": "AllTrue[List[2, 4, 5], Function[(Mod[Slot[1], 2] == 0)]]",
           "output": "False",
@@ -29,7 +29,7 @@
       }
     },
     "Any": {
-      "[\"Any\",[\"List\",1,3,5],[\"Function\",[\"Equal\",[\"Mod\",\"_1\",2],0]]]": {
+      "any-list-1-3-5-function-1-mod-2-eq-0": {
         "wolfram": {
           "input": "AnyTrue[List[1, 3, 5], Function[(Mod[Slot[1], 2] == 0)]]",
           "output": "False",
@@ -40,7 +40,7 @@
           }
         }
       },
-      "[\"Any\",[\"List\",1,3,6],[\"Function\",[\"Equal\",[\"Mod\",\"_1\",2],0]]]": {
+      "any-list-1-3-6-function-1-mod-2-eq-0": {
         "wolfram": {
           "input": "AnyTrue[List[1, 3, 6], Function[(Mod[Slot[1], 2] == 0)]]",
           "output": "True",
@@ -53,7 +53,7 @@
       }
     },
     "Tabulate": {
-      "[\"Tabulate\",[\"Function\",[\"Power\",\"_1\",2]],5]": {
+      "tabulate-function-1-pow-2-5": {
         "wolfram": {
           "input": "Array[Function[Power[Slot[1], 2]], 5]",
           "output": "{1, 4, 9, 16, 25}",
@@ -64,7 +64,7 @@
           }
         }
       },
-      "[\"Tabulate\",[\"Function\",[\"Multiply\",\"_1\",\"_2\"]],2,2]": {
+      "the-multi-dimensional-form-a-rectangular-grid": {
         "wolfram": {
           "input": "Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]",
           "output": "{{1, 2}, {2, 4}}",
@@ -77,7 +77,7 @@
       }
     },
     "Fold": {
-      "[\"Fold\",\"Add\",0,[\"List\",1,2,3,4]]": {
+      "fold-add-0-list-1-2-3-4": {
         "wolfram": {
           "input": "Fold[Plus, 0, List[1, 2, 3, 4]]",
           "output": "10",
@@ -88,7 +88,7 @@
           }
         }
       },
-      "[\"Fold\",\"Multiply\",1,[\"List\",1,2,3,4]]": {
+      "fold-multiply-1-list-1-2-3-4": {
         "wolfram": {
           "input": "Fold[Times, 1, List[1, 2, 3, 4]]",
           "output": "24",
@@ -101,7 +101,7 @@
       }
     },
     "Scan": {
-      "[\"Scan\",[\"List\",1,2,3,4],\"Add\"]": {
+      "scan-list-1-2-3-4-add": {
         "wolfram": {
           "input": "FoldList[Plus, List[1, 2, 3, 4]]",
           "output": "{1, 3, 6, 10}",
@@ -112,7 +112,7 @@
           }
         }
       },
-      "[\"Scan\",[\"List\",1,2,3,4],\"Max\"]": {
+      "the-running-maximum": {
         "wolfram": {
           "input": "FoldList[Max, List[1, 2, 3, 4]]",
           "output": "{1, 2, 3, 4}",
@@ -123,7 +123,7 @@
           }
         }
       },
-      "[\"Scan\",[\"List\",1,2,3],\"Add\",10]": {
+      "the-seeded-form-is-still-the-same-length-as-xs": {
         "wolfram": {
           "input": "enumeratio`Scan[List[1, 2, 3], Plus, 10]",
           "output": "enumeratio`Scan[{1, 2, 3}, Plus, 10]",
@@ -138,7 +138,7 @@
       }
     },
     "Contains": {
-      "[\"Contains\",[\"List\",1,2,3],2]": {
+      "contains-list-1-2-3-2": {
         "wolfram": {
           "input": "MemberQ[List[1, 2, 3], 2]",
           "output": "True",
@@ -149,7 +149,7 @@
           }
         }
       },
-      "[\"Contains\",[\"List\",1,2,3],5]": {
+      "contains-list-1-2-3-5": {
         "wolfram": {
           "input": "MemberQ[List[1, 2, 3], 5]",
           "output": "False",
@@ -162,7 +162,7 @@
       }
     },
     "Unique": {
-      "[\"Unique\",[\"List\",1,2,2,3,1]]": {
+      "unique-list-1-2-2-3-1": {
         "wolfram": {
           "input": "DeleteDuplicates[List[1, 2, 2, 3, 1]]",
           "output": "{1, 2, 3}",

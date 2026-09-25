@@ -101,15 +101,15 @@ Resolving a name and being able to evaluate it are different things. The numbers
 stale within weeks, so this section says where each one lives rather than restating it;
 a test pins each, and `design/roadmap.md` §1 is the index of the lists.
 
-- **Carriers**: all 86 declared as domains (`packages/domains/src/domain-data.ts`).
+- **Carriers**: all 86 declared as domains (`packages/symbols/combinatorics/domains/src/domain-data.ts`).
 - **Statistics**: every catalog statistic on the four covered carriers (Permutation,
   IntegerPartition, DyckPath, SetPartition) is defined, native, or a cardinality —
-  `packages/statistics/tests/coverage.test.ts` refuses anything else, and the frontier
+  `packages/symbols/combinatorics/statistics/tests/coverage.test.ts` refuses anything else, and the frontier
   (`src/frontier.ts`) is **empty** as of September 2026. The other carriers are not claimed.
-- **Maps**: `packages/domains/src/map.ts` defines them; `src/frontier-maps.ts` lists the two
+- **Maps**: `packages/symbols/combinatorics/domains/src/map.ts` defines them; `src/frontier-maps.ts` lists the two
   the catalog has that are not built, with the reason.
 - **Collections**: the tail — a few dozen of the catalog's 280 have kernels
-  (`packages/collections`). This is the number that matters for sequencing.
+  (`packages/symbols/combinatorics/collections`). This is the number that matters for sequencing.
 
 A resolver that resolves 280 collection names and can evaluate a fraction of them is still
 worth having, because resolution carries the carrier, the grade axes, the title and the
@@ -463,7 +463,7 @@ statistics — 242 names, most a fold over an element's structure, most with an 
 oracle in enumeratio to check against.
 
 **Started there** (history — the statistics package has since absorbed this and grown past
-it, see §6.4). `packages/collections/src/definitions.ts` defines eleven permutation
+it, see §6.4). `packages/symbols/combinatorics/collections/src/definitions.ts` defines eleven permutation
 statistics as expressions over the wildcard `_p`, and `tests/definitions.test.ts` checks each
 against the fast loop over every permutation of 1..6 — roughly 9,600 agreements. All eleven
 reduce to the same small vocabulary: `Count`, `Filter`, `Map`, `Sum`, `Range`, `Length`,

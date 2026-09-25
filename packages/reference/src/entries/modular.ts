@@ -1,15 +1,25 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "The modular group";
-/** A MathJSON string literal — also the form these heads hand back. */
-const W = (word: string): MathJSON => `'${word}'`;
-const M = (a: number, b: number, c: number, d: number): MathJSON => ["ModularMatrix", a, b, c, d];
-const F = (a: number, b: number, c: number): MathJSON => ["QuadraticForm", a, b, c];
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/groups/modular/reference/ModularMatrix.yaml",
+  "packages/symbols/groups/modular/reference/ModularWord.yaml",
+  "packages/symbols/groups/modular/reference/ContinuedFraction.yaml",
+  "packages/symbols/groups/modular/reference/Convergents.yaml",
+  "packages/symbols/groups/modular/reference/ContinuedFractionK.yaml",
+  "packages/symbols/groups/modular/reference/IsQuadraticIrrational.yaml",
+  "packages/symbols/groups/modular/reference/ModularClasses.yaml",
+  "packages/symbols/groups/modular/reference/RademacherSymbol.yaml",
+  "packages/symbols/groups/modular/reference/FormClassNumber.yaml",
+];
 
 export const modular: readonly ReferenceEntry[] = [
   {
     name: "ModularMatrix",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ModularMatrix(a, b, c, d)",
     summary:
       "An element of $\\mathrm{PSL}(2,\\mathbb{Z})$ — or an $LR$ word standing for one. Wolfram has no dedicated modular-group heads: elements multiply, invert and raise to a power exactly like any other integer matrix, via `Dot`, `Inverse` and `MatrixPower` — which is why those are widened in place to recognise a `ModularMatrix` or a word, rather than declared afresh.",
@@ -33,23 +43,27 @@ export const modular: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
-        expr: ["Dot", M(1, 1, 0, 1), M(1, 0, 1, 1)],
-        expected: M(2, 1, 1, 1),
+        id: "the-group-product",
+        expr: ["Dot", ["ModularMatrix", 1, 1, 0, 1], ["ModularMatrix", 1, 0, 1, 1]],
+        expected: ["ModularMatrix", 2, 1, 1, 1],
         caption: "the group product",
       },
       {
-        expr: ["Inverse", M(1, 1, 0, 1)],
-        expected: M(1, -1, 0, 1),
+        id: "no-division-needed-at-determinant-1",
+        expr: ["Inverse", ["ModularMatrix", 1, 1, 0, 1]],
+        expected: ["ModularMatrix", 1, -1, 0, 1],
         caption: "no division needed at determinant 1",
       },
       {
-        expr: ["MatrixPower", M(1, 1, 0, 1), 5],
-        expected: M(1, 5, 0, 1),
+        id: "t-5",
+        expr: ["MatrixPower", ["ModularMatrix", 1, 1, 0, 1], 5],
+        expected: ["ModularMatrix", 1, 5, 0, 1],
         caption: "$T^5$",
       },
       {
-        expr: ["Dot", W("L"), W("R")],
-        expected: M(1, 1, 1, 2),
+        id: "words-multiply-their-matrices",
+        expr: ["Dot", "'L'", "'R'"],
+        expected: ["ModularMatrix", 1, 1, 1, 2],
         caption: "words multiply their matrices",
         category: "Scope",
         divergence: {
@@ -58,30 +72,35 @@ export const modular: readonly ReferenceEntry[] = [
         },
       },
       {
-        expr: ["Inverse", W("L")],
-        expected: M(1, 0, -1, 1),
+        id: "the-inverse-of-a-word",
+        expr: ["Inverse", "'L'"],
+        expected: ["ModularMatrix", 1, 0, -1, 1],
         caption: "the inverse of a word",
         category: "Scope",
       },
       {
-        expr: ["MatrixPower", W("R"), 3],
-        expected: M(1, 3, 0, 1),
+        id: "r-3",
+        expr: ["MatrixPower", "'R'", 3],
+        expected: ["ModularMatrix", 1, 3, 0, 1],
         caption: "$R^3$",
         category: "Scope",
       },
       {
-        expr: ["MatrixPower", M(1, 1, 1, 2), -2],
-        expected: M(5, -3, -3, 2),
+        id: "negative-powers-are-powers-of-the-inverse",
+        expr: ["MatrixPower", ["ModularMatrix", 1, 1, 1, 2], -2],
+        expected: ["ModularMatrix", 5, -3, -3, 2],
         caption: "negative powers are powers of the inverse",
         category: "Scope",
       },
       {
-        expr: ["MatrixPower", M(1, 1, 0, 1), 0],
-        expected: M(1, 0, 0, 1),
+        id: "the-zeroth-power-is-the-identity",
+        expr: ["MatrixPower", ["ModularMatrix", 1, 1, 0, 1], 0],
+        expected: ["ModularMatrix", 1, 0, 0, 1],
         caption: "the zeroth power is the identity",
         category: "Properties",
       },
       {
+        id: "a-plain-integer-matrix-goes-to-compute-engine-s",
         expr: ["MatrixPower", ["List", ["List", 1, 1], ["List", 1, 0]], 10],
         expected: ["List", ["List", 89, 55], ["List", 55, 34]],
         caption:
@@ -93,7 +112,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ModularWord",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ModularWord(matrix)",
     summary:
       "The unique positive word in $L$ and $R$ of a matrix in $\\mathrm{PSL}(2,\\mathbb{Z})$ with non-negative entries — which is also its path down the Stern–Brocot tree.",
@@ -122,20 +141,28 @@ export const modular: readonly ReferenceEntry[] = [
       "Rebuilding from an $S$/$T$ word can return $-M$: that sign is the $\\pm I$ that $\\mathrm{PSL}$ quotients out",
     ],
     examples: [
-      { expr: ["ModularWord", M(1, 1, 1, 2)], expected: W("LR"), caption: "the shortest geodesic" },
       {
-        expr: ["ModularTrace", W("LRLR")],
+        id: "the-shortest-geodesic",
+        expr: ["ModularWord", ["ModularMatrix", 1, 1, 1, 2]],
+        expected: "'LR'",
+        caption: "the shortest geodesic",
+      },
+      {
+        id: "a-word-evaluates-as-its-matrix",
+        expr: ["ModularTrace", "'LRLR'"],
         expected: 7,
         caption: "a word evaluates as its matrix",
       },
       {
-        expr: ["ModularKind", M(1, 5, 0, 1)],
-        expected: W("Parabolic"),
+        id: "t-5-fixes-a-cusp",
+        expr: ["ModularKind", ["ModularMatrix", 1, 5, 0, 1]],
+        expected: "'Parabolic'",
         caption: "$T^5$ fixes a cusp",
         category: "Properties",
       },
       {
-        expr: ["ModularSTWord", M(1, 5, 0, 1)],
+        id: "the-s-t-exponents-are-a-continued-fraction",
+        expr: ["ModularSTWord", ["ModularMatrix", 1, 5, 0, 1]],
         expected: ["List", 5],
         caption: "the $S$/$T$ exponents are a continued fraction",
         category: "Scope",
@@ -145,7 +172,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ContinuedFraction",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ContinuedFraction(x)",
     summary:
       "The regular continued fraction $[a_0; a_1, a_2, \\dots]$ of $p/q$. Its partial quotients are the run lengths of the rational's Stern–Brocot path, and the $T$-exponents of its matrix — one object under three names.",
@@ -195,101 +222,116 @@ export const modular: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "pi-s-famous-convergent",
         expr: ["ContinuedFraction", ["Rational", 355, 113]],
         expected: ["List", 3, 7, 16],
         caption: "$\\pi$'s famous convergent",
       },
       {
+        id: "5-3-1-1-2",
         expr: ["SternBrocotPath", 5, 3],
-        expected: W("RLR"),
+        expected: "'RLR'",
         caption: "$5/3 = [1; 1, 2]$",
       },
       {
-        expr: ["FromSternBrocotPath", W("RLR")],
+        id: "and-back-again",
+        expr: ["FromSternBrocotPath", "'RLR'"],
         expected: ["Rational", 5, 3],
         caption: "and back again",
         category: "Properties",
       },
       {
+        id: "1-cdot-2-3-cdot-1-1",
         expr: ["FareyNeighbours", 1, 3, 1, 2],
         expected: "True",
         caption: "$1\\cdot2 - 3\\cdot1 = -1$",
         category: "Properties",
       },
       {
+        id: "47-17-2-1-1-1-3-1-4",
         expr: ["ContinuedFraction", ["Rational", 47, 17]],
         expected: ["List", 2, 1, 3, 4],
         caption: "$47/17 = 2 + 1/(1 + 1/(3 + 1/4))$",
       },
       {
+        id: "the-first-20-terms-of-a-quadratic-irrational",
         expr: ["ContinuedFraction", ["Sqrt", 13], 20],
         expected: ["List", 3, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1],
         caption: "the first 20 terms of a quadratic irrational — periodic after $a_0$",
       },
       {
+        id: "e-s-pattern-1-2k-1",
         expr: ["ContinuedFraction", "ExponentialE", 10],
         expected: ["List", 2, 1, 2, 1, 1, 4, 1, 1, 6, 1],
         caption: "$e$'s pattern $1, 2k, 1$",
         category: "Scope",
       },
       {
+        id: "any-constant-compute-engine-can-evaluate",
         expr: ["ContinuedFraction", "EulerGamma", 10],
         expected: ["List", 0, 1, 1, 2, 1, 2, 1, 4, 3, 13],
         caption: "any constant compute-engine can evaluate numerically",
         category: "Scope",
       },
       {
+        id: "a-floating-point-number-read-as-the-rational-it",
         expr: ["ContinuedFraction", 3.245],
         expected: ["List", 3, 4, 12, 4],
         caption: "a floating-point number, read as the rational it prints as, $649/200$",
         category: "Scope",
       },
       {
+        id: "negative-a-floor-for-a-0-then-positive-terms-3-1",
         expr: ["ContinuedFraction", ["Rational", -47, 17]],
         expected: ["List", -3, 4, 4],
         caption: "negative: a floor for $a_0$, then positive terms — $-3 + 1/(4 + 1/4)$",
         category: "Possible issues",
-        divergence: {
-          wolfram: "Wolfram negates every term instead, giving {-2, -1, -3, -4}.",
-        },
+        divergence: { wolfram: "Wolfram negates every term instead, giving {-2, -1, -3, -4}." },
       },
       {
+        id: "fromcontinuedfraction-inverts-it",
         expr: ["FromContinuedFraction", ["ContinuedFraction", ["Rational", 47, 17]]],
         expected: ["Rational", 47, 17],
         caption: "`FromContinuedFraction` inverts it",
         category: "Properties",
       },
       {
+        id: "20-terms-of-pi-past-the-13-term-double-precision",
         expr: ["ContinuedFraction", "Pi", 20],
         expected: ["List", 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2],
         caption:
           "20 terms of $\\pi$, past the 13-term double-precision wall — certified BigDecimal",
       },
       {
+        id: "a-quadratic-irrational-s-exact-expansion-is",
         expr: ["ContinuedFraction", ["Sqrt", 13]],
         expected: ["List", 3, ["List", 1, 1, 1, 1, 6]],
         caption:
           "a quadratic irrational's exact expansion is eventually periodic, written with the period as a nested list",
       },
       {
+        id: "varphi-1-overline-1-purely-periodic-so-the",
         expr: ["ContinuedFraction", ["Divide", ["Add", 1, ["Sqrt", 5]], 2]],
         expected: ["List", 1, ["List", 1]],
         caption: "$\\varphi = [1; \\overline{1}]$ — purely periodic, so the period is all there is",
         category: "Scope",
       },
       {
+        id: "the-named-constant-unfolded-to-1-sqrt-5-2-first",
         expr: ["ContinuedFraction", "GoldenRatio", 10],
         expected: ["List", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         caption: "the named constant, unfolded to $(1+\\sqrt5)/2$ first",
         category: "Scope",
       },
       {
+        id: "a-sum-of-surds-still-a-quadratic-irrational",
         expr: ["ContinuedFraction", ["Add", 1, ["Sqrt", 2]], 5],
         expected: ["List", 2, 2, 2, 2, 2],
         caption: "a sum of surds — still a quadratic irrational, exact via PQa",
         category: "Scope",
       },
       {
+        id: "a-cube-root-algebraic-degree-3-not-periodic-so-a",
         expr: ["ContinuedFraction", ["Power", 2, ["Rational", 1, 3]], 10],
         expected: ["List", 1, 3, 1, 5, 1, 1, 4, 1, 1, 8],
         caption:
@@ -297,18 +339,21 @@ export const modular: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "a-periodic-tail-rebuilds-the-quadratic",
         expr: ["FromContinuedFraction", ["List", 3, ["List", 1, 1, 1, 1, 6]]],
         expected: ["Sqrt", 13],
         caption: "a periodic tail rebuilds the quadratic irrational",
         category: "Properties",
       },
       {
+        id: "1-overline-2-sqrt-2",
         expr: ["FromContinuedFraction", ["List", 1, ["List", 2]]],
         expected: ["Sqrt", 2],
         caption: "$[1; \\overline{2}] = \\sqrt2$",
         category: "Properties",
       },
       {
+        id: "symbolic-terms-build-the-nested-fraction-left",
         expr: ["FromContinuedFraction", ["List", "a", "b", "c"]],
         expected: ["Add", "a", ["Divide", 1, ["Add", "b", ["Divide", 1, "c"]]]],
         caption: "symbolic terms build the nested fraction, left uncombined",
@@ -323,7 +368,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "Convergents",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "Convergents(list) / Convergents(x, n)",
     summary:
       "The successive convergents $p_k/q_k$ of a continued fraction, given as its list of terms or as the number itself.",
@@ -351,11 +396,13 @@ export const modular: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "from-a-list-of-terms",
         expr: ["Convergents", ["List", 3, 7, 15, 1]],
         expected: ["List", 3, ["Rational", 22, 7], ["Rational", 333, 106], ["Rational", 355, 113]],
         caption: "from a list of terms",
       },
       {
+        id: "the-first-five-convergents-of-pi",
         expr: ["Convergents", "Pi", 5],
         expected: [
           "List",
@@ -368,12 +415,14 @@ export const modular: readonly ReferenceEntry[] = [
         caption: "the first five convergents of $\\pi$",
       },
       {
+        id: "a-rational-the-last-convergent-is-the-number",
         expr: ["Convergents", ["Rational", 47, 17]],
         expected: ["List", 2, 3, ["Rational", 11, 4], ["Rational", 47, 17]],
         category: "Scope",
         caption: "a rational: the last convergent is the number itself",
       },
       {
+        id: "convergents-of-sqrt-2-solve-pell-s-equations-p-2",
         expr: ["Convergents", ["Sqrt", 2], 5],
         expected: [
           "List",
@@ -391,7 +440,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ContinuedFractionK",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ContinuedFractionK(f, g, (i, imin, imax))",
     summary:
       "The continued fraction $f_1/(g_1 + f_2/(g_2 + \\cdots))$ over an index range, finite or infinite.",
@@ -414,11 +463,13 @@ export const modular: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "cfrac-1-1-cfrac-1-2-cfrac-1-3-cfrac-1-4-cfrac-15",
         expr: ["ContinuedFractionK", 1, "k", ["Tuple", "k", 1, 5]],
         expected: ["Rational", 157, 225],
         caption: "$\\cfrac{1}{1 + \\cfrac{1}{2 + \\cfrac{1}{3 + \\cfrac{1}{4 + \\cfrac15}}}}$",
       },
       {
+        id: "the-infinite-all-ones-fraction-is-1-varphi-sqrt",
         expr: ["ContinuedFractionK", 1, 1, ["Tuple", "k", 1, "PositiveInfinity"]],
         expected: ["Multiply", ["Rational", 1, 2], ["Add", -1, ["Sqrt", 5]]],
         category: "Scope",
@@ -429,7 +480,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "IsQuadraticIrrational",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "IsQuadraticIrrational(x)",
     summary:
       "True when $x$ is an irrational root of a quadratic with integer coefficients — exactly the numbers with an eventually periodic continued fraction.",
@@ -447,24 +498,32 @@ export const modular: readonly ReferenceEntry[] = [
       "Every quadratic irrational's continued fraction is eventually periodic (Lagrange's theorem), and conversely — see [[ContinuedFraction]]",
     ],
     examples: [
-      { expr: ["IsQuadraticIrrational", ["Sqrt", 2]], expected: "True" },
       {
+        id: "isquadraticirrational-sqrt-2",
+        expr: ["IsQuadraticIrrational", ["Sqrt", 2]],
+        expected: "True",
+      },
+      {
+        id: "the-golden-ratio",
         expr: ["IsQuadraticIrrational", ["Divide", ["Add", 1, ["Sqrt", 5]], 2]],
         expected: "True",
         caption: "the golden ratio",
       },
       {
+        id: "a-cube-root-is-algebraic-of-degree-3",
         expr: ["IsQuadraticIrrational", ["Power", 2, ["Rational", 1, 3]]],
         expected: "False",
         caption: "a cube root is algebraic of degree 3",
       },
       {
+        id: "a-rational-is-not-irrational",
         expr: ["IsQuadraticIrrational", ["Rational", 3, 4]],
         expected: "False",
         category: "Possible issues",
         caption: "a rational is not irrational",
       },
       {
+        id: "transcendental",
         expr: ["IsQuadraticIrrational", "Pi"],
         expected: "False",
         category: "Scope",
@@ -475,7 +534,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ModularClasses",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ModularClasses(length, primitive?)",
     summary:
       "Every hyperbolic conjugacy class whose $LR$ word has the given length — equivalently, every closed geodesic of that symbolic period on the modular surface. Conjugation rotates the word, so the classes are binary NECKLACES.",
@@ -504,24 +563,28 @@ export const modular: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "four-closed-geodesics-of-symbolic-length-4",
         expr: ["ModularClasses", 4],
-        expected: ["List", W("LLLR"), W("LLRR"), W("LRLR"), W("LRRR")],
+        expected: ["List", "'LLLR'", "'LLRR'", "'LRLR'", "'LRRR'"],
         caption: "four closed geodesics of symbolic length 4",
       },
       {
-        expr: ["ModularClass", W("LRL")],
-        expected: W("LLR"),
+        id: "the-same-geodesic-entered-elsewhere",
+        expr: ["ModularClass", "'LRL'"],
+        expected: "'LLR'",
         caption: "the same geodesic, entered elsewhere",
         category: "Properties",
       },
       {
-        expr: ["IsPrimitiveClass", W("LRLR")],
+        id: "lrlr-is-lr-traversed-twice",
+        expr: ["IsPrimitiveClass", "'LRLR'"],
         expected: "False",
         caption: "$LRLR$ is $LR$ traversed twice",
         category: "Properties",
       },
       {
-        expr: ["ModularTrace", W("LRLR")],
+        id: "same-word-length-as-lllr-different-geodesic",
+        expr: ["ModularTrace", "'LRLR'"],
         expected: 7,
         caption: "same word length as $LLLR$, different geodesic length",
         category: "Scope",
@@ -531,7 +594,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "RademacherSymbol",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "RademacherSymbol(matrix)",
     summary:
       "The Rademacher symbol $\\Psi$ of a hyperbolic element. By Ghys's theorem it is the linking number of the element's modular knot with the trefoil — and it is also just the number of $R$'s minus the number of $L$'s in its word.",
@@ -566,24 +629,28 @@ export const modular: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
-        expr: ["RademacherSymbol", W("LRRRR")],
+        id: "four-rights-one-left",
+        expr: ["RademacherSymbol", "'LRRRR'"],
         expected: 3,
         caption: "four rights, one left",
       },
       {
-        expr: ["LinkingWithTrefoil", W("LLRR")],
+        id: "turning-equally-both-ways-gives-linking-number",
+        expr: ["LinkingWithTrefoil", "'LLRR'"],
         expected: 0,
         caption: "turning equally both ways gives linking number zero",
         category: "Properties",
       },
       {
+        id: "the-arithmetic-side",
         expr: ["DedekindSum", 4, 3],
         expected: ["Rational", 1, 18],
         caption: "the arithmetic side",
         category: "Scope",
       },
       {
-        expr: ["RademacherPhi", M(1, 7, 0, 1)],
+        id: "phi-on-t-n-just-counts",
+        expr: ["RademacherPhi", ["ModularMatrix", 1, 7, 0, 1]],
         expected: 7,
         caption: "$\\Phi$ on $T^n$ just counts",
         category: "Scope",
@@ -593,7 +660,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "FormClassNumber",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "FormClassNumber(discriminant)",
     summary:
       "How many classes of indefinite binary quadratic forms a discriminant has. A class is not one reduced form but a CYCLE of them, and that cycle is a periodic continued fraction — which is to say, a closed geodesic.",
@@ -634,25 +701,32 @@ export const modular: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "four-classes-of-discriminant-60",
         expr: ["FormClassNumber", 60],
         expected: 4,
         caption: "four classes of discriminant 60",
       },
       {
-        expr: ["FormDiscriminant", ["FormAction", F(1, 1, -1), M(1, 1, 0, 1)]],
+        id: "the-action-preserves-the-discriminant",
+        expr: [
+          "FormDiscriminant",
+          ["FormAction", ["QuadraticForm", 1, 1, -1], ["ModularMatrix", 1, 1, 0, 1]],
+        ],
         expected: 5,
         caption: "the action preserves the discriminant",
         category: "Properties",
       },
       {
+        id: "3-2-5-cdot-1-2-4",
         expr: ["PellSolution", 5],
         expected: ["List", 3, 1],
         caption: "$3^2 - 5\\cdot 1^2 = 4$",
         category: "Properties",
       },
       {
-        expr: ["ModularWord", ["FormAutomorph", F(1, 1, -1)]],
-        expected: W("LR"),
+        id: "the-class-read-back-as-a-geodesic",
+        expr: ["ModularWord", ["FormAutomorph", ["QuadraticForm", 1, 1, -1]]],
+        expected: "'LR'",
         caption: "the class, read back as a geodesic",
         category: "Applications",
       },

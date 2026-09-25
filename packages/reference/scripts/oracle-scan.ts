@@ -22,6 +22,7 @@
 //   vp node packages/reference/scripts/oracle-scan.ts                    # everything wired
 //   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
+//   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
 
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
@@ -58,17 +59,19 @@ const headFilter = headIndex >= 0 ? args[headIndex + 1] : undefined;
 const requested = args.filter(
   (argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head",
 );
-const systems = (requested.length > 0 ? requested : wiredSystems()) as System[];
+// `--digest` scans nothing: it rebuilds `disagreements.md` from the committed sidecars.
+const digestOnly = args.includes("--digest");
+const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
 
 const cases: Case[] = entryFiles.flatMap(({ stem, entries }) =>
   entries.flatMap((entry) =>
     entry.examples
       .filter((example) => example.aspirational !== true)
-      .map((example, index) => ({
-        id: `${stem}/${entry.name}#${index + 1}`,
+      .map((example) => ({
+        id: `${entry.name}/${example.id}`,
         stem,
         head: entry.name,
-        key: JSON.stringify(example.expr),
+        key: example.id,
         expr: example.expr as MathJSON,
         expected: example.expected as MathJSON,
       }))
@@ -170,15 +173,16 @@ for (const missing of Object.values(missingBySystem)) {
 }
 const queue = [...cost].sort((a, b) => b[1] - a[1]).slice(0, 30);
 
-writeFileSync(
-  new URL("../golden/oracle/report.json", import.meta.url),
-  `${JSON.stringify({ generated: new Date().toISOString(), systems, report, queue }, null, 2)}\n`,
-);
+if (!digestOnly)
+  writeFileSync(
+    new URL("../golden/oracle/report.json", import.meta.url),
+    `${JSON.stringify({ generated: new Date().toISOString(), systems, report, queue }, null, 2)}\n`,
+  );
 
 // ── the per-entry-file sidecars ──────────────────────────────────────────────────
 //
 // One `<stem>.oracle.json` beside each entries/<stem>.ts, keyed by head then by the
-// example's `JSON.stringify(expr)` — the shape `entries.ts` reads back and the page looks
+// example's `id` — the shape `entries.ts` reads back and the page looks
 // examples up by. Scanning a system replaces only that system's rows for the heads touched
 // this run (every head, unless `--head` narrowed it), keeping every other system's rows and
 // dropping stale rows for examples that no longer exist.
@@ -322,9 +326,9 @@ const exampleAt = new Map(
     entries.flatMap((entry) =>
       entry.examples
         .filter((example) => example.aspirational !== true)
-        .map((example, index) => [
-          `${stem}\0${entry.name}\0${JSON.stringify(example.expr)}`,
-          { id: `${stem}/${entry.name}#${index + 1}`, expected: example.expected as MathJSON },
+        .map((example) => [
+          `${stem}\0${entry.name}\0${example.id}`,
+          { id: `${entry.name}/${example.id}`, expected: example.expected as MathJSON },
         ]),
     ),
   ),

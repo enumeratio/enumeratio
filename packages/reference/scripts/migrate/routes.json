@@ -1,0 +1,2032 @@
+{
+  "aestimatio/TimeConstrained": {
+    "package": "@enumeratio/aestimatio",
+    "why": "declared enumeratio-aestimatio",
+    "dir": "packages/symbols/evaluation/aestimatio"
+  },
+  "aestimatio/MemoryConstrained": {
+    "package": "@enumeratio/aestimatio",
+    "why": "declared enumeratio-aestimatio",
+    "dir": "packages/symbols/evaluation/aestimatio"
+  },
+  "aestimatio/VerificationTest": {
+    "package": "@enumeratio/aestimatio",
+    "why": "declared enumeratio-aestimatio",
+    "dir": "packages/symbols/evaluation/aestimatio"
+  },
+  "combinatorics/Binomial": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/analytic, @enumeratio/number-theory",
+    "dir": "packages/reference"
+  },
+  "combinatorics/Multinomial": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "combinatorics/Factorial": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "combinatorics/Factorial2": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/analytic, @enumeratio/number-theory",
+    "dir": "packages/reference"
+  },
+  "combinatorics/CatalanNumber": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by none alone",
+    "dir": "packages/reference"
+  },
+  "combinatorics/Pochhammer": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "combinatorics/Subfactorial": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "combinatorics/StirlingS1": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "combinatorics/Stirling": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "combinatorics/BellNumber": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "sequences/Fibonacci": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "sequences/LucasL": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "sequences/BernoulliB": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "residues/Mod": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/residues, @enumeratio/number-theory",
+    "dir": "packages/reference"
+  },
+  "residues/PowerMod": {
+    "package": "@enumeratio/residues",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/residues"
+  },
+  "residues/PowerModList": {
+    "package": "@enumeratio/residues",
+    "why": "declared enumeratio-residues",
+    "dir": "packages/symbols/arithmetic/residues"
+  },
+  "residues/ModularInverse": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "residues/ChineseRemainder": {
+    "package": "@enumeratio/residues",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/residues"
+  },
+  "residues/MultiplicativeOrder": {
+    "package": "@enumeratio/residues",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/residues"
+  },
+  "residues/PrimitiveRootList": {
+    "package": "@enumeratio/residues",
+    "why": "declared enumeratio-residues",
+    "dir": "packages/symbols/arithmetic/residues"
+  },
+  "residues/IntegerMod": {
+    "package": "@enumeratio/residues",
+    "why": "declared enumeratio-residues",
+    "dir": "packages/symbols/arithmetic/residues"
+  },
+  "residues/IntegerModRing": {
+    "package": "@enumeratio/residues",
+    "why": "declared enumeratio-residues",
+    "dir": "packages/symbols/arithmetic/residues"
+  },
+  "number-theory/GCD": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/LCM": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/Quotient": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/Totient": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/NextPrime": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/NthPrime": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/PrimePi": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/IsPrime": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/FactorInteger": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/PrimeNu": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/PrimeOmega": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/Divisors": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/DivisorSigma": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/MoebiusMu": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/IsSquareFree": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/JacobiSymbol": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/LegendreSymbol": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/KroneckerSymbol": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "number-theory/ExtendedGCD": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/RationalReconstruction": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/IntegerExponent": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/HermiteDecomposition": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/CarmichaelLambda": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/DivisorSum": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/IsCoprime": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/IsPerfect": {
+    "package": "@enumeratio/number-theory",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/IsPrimePower": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/LiouvilleLambda": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/MangoldtLambda": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/MersennePrimeExponent": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/PartitionsQ": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/PerfectNumber": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/PowersRepresentations": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/RamanujanTau": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/SquaresR": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/EulerE": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/FrobeniusSolve": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "number-theory/FrobeniusNumber": {
+    "package": "@enumeratio/number-theory",
+    "why": "declared enumeratio-number-theory",
+    "dir": "packages/symbols/arithmetic/number-theory"
+  },
+  "adeles/ProfiniteNumber": {
+    "package": "@enumeratio/adeles",
+    "why": "declared enumeratio-adeles",
+    "dir": "packages/symbols/arithmetic/adeles"
+  },
+  "adeles/Adele": {
+    "package": "@enumeratio/adeles",
+    "why": "declared enumeratio-adeles",
+    "dir": "packages/symbols/arithmetic/adeles"
+  },
+  "adeles/Idele": {
+    "package": "@enumeratio/adeles",
+    "why": "declared enumeratio-adeles",
+    "dir": "packages/symbols/arithmetic/adeles"
+  },
+  "adeles/ProfiniteDecomposition": {
+    "package": "@enumeratio/adeles",
+    "why": "declared enumeratio-adeles",
+    "dir": "packages/symbols/arithmetic/adeles"
+  },
+  "adeles/ProfinitePlot": {
+    "package": "@enumeratio/adeles",
+    "why": "declared enumeratio-adeles",
+    "dir": "packages/symbols/arithmetic/adeles"
+  },
+  "arithmetic/Abs": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "arithmetic/Sign": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "arithmetic/Negate": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "arithmetic/Square": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "arithmetic/Sqrt": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "arithmetic/Root": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "arithmetic/Floor": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/analytic, @enumeratio/collections",
+    "dir": "packages/reference"
+  },
+  "arithmetic/Ceil": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/analytic, @enumeratio/collections",
+    "dir": "packages/reference"
+  },
+  "arithmetic/N": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "arithmetic/Round": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "arithmetic/Clamp": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "arithmetic/Chop": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "arithmetic/Rationalize": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/analytic, @enumeratio/collections",
+    "dir": "packages/reference"
+  },
+  "arithmetic/Max": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "arithmetic/Min": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/analytic, @enumeratio/collections",
+    "dir": "packages/reference"
+  },
+  "arithmetic/IsOdd": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "arithmetic/IsEven": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "elementary/Sin": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Cos": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Tan": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Cot": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Sec": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Csc": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arcsin": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arccos": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arctan": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arccot": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arccsc": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arcsec": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Sinh": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Cosh": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Tanh": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arcoth": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arcsch": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Arsech": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Exp": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Ln": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Log": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "elementary/Log2": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Log10": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "elementary/Lb": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "linear-algebra/Rank": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "linear-algebra/MatrixRank": {
+    "package": "@enumeratio/reference",
+    "why": "override; changed by @enumeratio/analytic, @enumeratio/collections",
+    "dir": "packages/reference"
+  },
+  "linear-algebra/MatrixExp": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/Gamma": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/GammaLn": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/Beta": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/Erf": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/Erfc": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/ErfInv": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/Zeta": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/HurwitzZeta": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/LerchPhi": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/PolyLog": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/PolyGamma": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/Digamma": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/GammaRegularized": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/BetaRegularized": {
+    "package": "@enumeratio/analytic",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/IncompleteEllipticPi": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "special-functions/KeiperLiLambda": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/BarnesG": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/LogBarnesG": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/LogGamma": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/ClausenCl": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/DirichletEta": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/DirichletBeta": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/StieltjesGamma": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/DirichletCharacter": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/DirichletL": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/HarmonicNumber": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/BesselJZero": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/DigammaFunctionZero": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/MultiZetaValue": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/HypergeometricUStar": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/SloaneA": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/QPochhammer": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/QFactorial": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/QBinomial": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/RiemannSiegelTheta": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/RiemannSiegelZ": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/RiemannZetaZero": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Hypergeometric0F1": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Hypergeometric0F1Regularized": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Hypergeometric1F1Regularized": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Hypergeometric2F1Regularized": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Hypergeometric3F2Regularized": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/HypergeometricU": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Khinchin": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Hyperfactorial": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/ExpIntegralE": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/LambertW": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/InverseErfc": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/InverseGammaRegularized": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/InverseBetaRegularized": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/BellY": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/NorlundB": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/PrimeZetaP": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/HypergeometricPFQ": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/KleinInvariantJ": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/ComplexExpand": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/ExpToTrig": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/FunctionExpand": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/PowerExpand": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/FullSimplify": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/MatrixFunction": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Interval": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "analytic-special/CenteredInterval": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-special/Around": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-elementary/CubeRoot": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-elementary/IntegerPart": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-elementary/FractionalPart": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-elementary/RealAbs": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-elementary/RealSign": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-elementary/UnitStep": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "analytic-elementary/Gudermannian": {
+    "package": "@enumeratio/analytic",
+    "why": "declared enumeratio-analytic",
+    "dir": "packages/symbols/analysis/analytic"
+  },
+  "hypercomplex/NonCommutativeMultiply": {
+    "package": "@enumeratio/hypercomplex",
+    "why": "declared enumeratio-hypercomplex",
+    "dir": "packages/symbols/algebras/hypercomplex"
+  },
+  "hypercomplex/Norm": {
+    "package": "@enumeratio/hypercomplex",
+    "why": "declared enumeratio-hypercomplex",
+    "dir": "packages/symbols/algebras/hypercomplex"
+  },
+  "hypercomplex/Basis": {
+    "package": "@enumeratio/hypercomplex",
+    "why": "declared enumeratio-hypercomplex",
+    "dir": "packages/symbols/algebras/hypercomplex"
+  },
+  "hypercomplex/AlgebraSignature": {
+    "package": "@enumeratio/hypercomplex",
+    "why": "declared enumeratio-hypercomplex",
+    "dir": "packages/symbols/algebras/hypercomplex"
+  },
+  "hypercomplex/AlgebraDimension": {
+    "package": "@enumeratio/hypercomplex",
+    "why": "declared enumeratio-hypercomplex",
+    "dir": "packages/symbols/algebras/hypercomplex"
+  },
+  "hypercomplex/Quaternions": {
+    "package": "@enumeratio/hypercomplex",
+    "why": "declared enumeratio-hypercomplex",
+    "dir": "packages/symbols/algebras/hypercomplex"
+  },
+  "diagram/Diagram": {
+    "package": "@enumeratio/diagram",
+    "why": "declared enumeratio-diagram",
+    "dir": "packages/symbols/algebras/diagram"
+  },
+  "diagram/PartitionAlgebra": {
+    "package": "@enumeratio/diagram",
+    "why": "declared enumeratio-diagram",
+    "dir": "packages/symbols/algebras/diagram"
+  },
+  "diagram/BrauerAlgebra": {
+    "package": "@enumeratio/diagram",
+    "why": "declared enumeratio-diagram",
+    "dir": "packages/symbols/algebras/diagram"
+  },
+  "diagram/TemperleyLiebAlgebra": {
+    "package": "@enumeratio/diagram",
+    "why": "declared enumeratio-diagram",
+    "dir": "packages/symbols/algebras/diagram"
+  },
+  "diagram/MotzkinAlgebra": {
+    "package": "@enumeratio/diagram",
+    "why": "declared enumeratio-diagram",
+    "dir": "packages/symbols/algebras/diagram"
+  },
+  "diagram/OrbitDiagram": {
+    "package": "@enumeratio/diagram",
+    "why": "declared enumeratio-diagram",
+    "dir": "packages/symbols/algebras/diagram"
+  },
+  "numerals/IntegerDigits": {
+    "package": "@enumeratio/numerals",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/FromDigits": {
+    "package": "@enumeratio/numerals",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/IntegerString": {
+    "package": "@enumeratio/numerals",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/DigitCount": {
+    "package": "@enumeratio/numerals",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/DigitSum": {
+    "package": "@enumeratio/numerals",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/NumeralSystemShape": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/IntegerLength": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/IntegerReverse": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/NumberExpand": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/RomanNumeral": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/RealDigits": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/AdicNumeral": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/AdicExpansion": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/AdicValuation": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "numerals/HenselLift": {
+    "package": "@enumeratio/numerals",
+    "why": "declared enumeratio-numerals",
+    "dir": "packages/symbols/arithmetic/numerals"
+  },
+  "hecke/HeckeT": {
+    "package": "@enumeratio/hecke",
+    "why": "declared enumeratio-hecke",
+    "dir": "packages/symbols/algebras/hecke"
+  },
+  "hecke/HeckeSpecialize": {
+    "package": "@enumeratio/hecke",
+    "why": "declared enumeratio-hecke",
+    "dir": "packages/symbols/algebras/hecke"
+  },
+  "incidence/MoebiusFunction": {
+    "package": "@enumeratio/incidence",
+    "why": "declared enumeratio-incidence",
+    "dir": "packages/symbols/algebras/incidence"
+  },
+  "incidence/MoebiusInvert": {
+    "package": "@enumeratio/incidence",
+    "why": "declared enumeratio-incidence",
+    "dir": "packages/symbols/algebras/incidence"
+  },
+  "incidence/PosetElements": {
+    "package": "@enumeratio/incidence",
+    "why": "declared enumeratio-incidence",
+    "dir": "packages/symbols/algebras/incidence"
+  },
+  "quiver/QuiverPath": {
+    "package": "@enumeratio/quiver",
+    "why": "declared enumeratio-quiver",
+    "dir": "packages/symbols/algebras/quiver"
+  },
+  "quiver/QuiverCompose": {
+    "package": "@enumeratio/quiver",
+    "why": "declared enumeratio-quiver",
+    "dir": "packages/symbols/algebras/quiver"
+  },
+  "quiver/QuiverIsAcyclic": {
+    "package": "@enumeratio/quiver",
+    "why": "declared enumeratio-quiver",
+    "dir": "packages/symbols/algebras/quiver"
+  },
+  "hopf/QSymM": {
+    "package": "@enumeratio/hopf",
+    "why": "declared enumeratio-hopf",
+    "dir": "packages/symbols/algebras/hopf"
+  },
+  "hopf/Coproduct": {
+    "package": "@enumeratio/hopf",
+    "why": "declared enumeratio-hopf",
+    "dir": "packages/symbols/algebras/hopf"
+  },
+  "hopf/Antipode": {
+    "package": "@enumeratio/hopf",
+    "why": "declared enumeratio-hopf",
+    "dir": "packages/symbols/algebras/hopf"
+  },
+  "hopf/NSymR": {
+    "package": "@enumeratio/hopf",
+    "why": "declared enumeratio-hopf",
+    "dir": "packages/symbols/algebras/hopf"
+  },
+  "groupalgebra/GroupBasis": {
+    "package": "@enumeratio/groupalgebra",
+    "why": "declared enumeratio-groupalgebra",
+    "dir": "packages/symbols/algebras/groupalgebra"
+  },
+  "groupalgebra/ClassSum": {
+    "package": "@enumeratio/groupalgebra",
+    "why": "declared enumeratio-groupalgebra",
+    "dir": "packages/symbols/algebras/groupalgebra"
+  },
+  "groupalgebra/ConjugacyClasses": {
+    "package": "@enumeratio/groupalgebra",
+    "why": "declared enumeratio-groupalgebra",
+    "dir": "packages/symbols/algebras/groupalgebra"
+  },
+  "modular/ModularMatrix": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/ModularWord": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/ContinuedFraction": {
+    "package": "@enumeratio/modular",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/Convergents": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/ContinuedFractionK": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/IsQuadraticIrrational": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/ModularClasses": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/RademacherSymbol": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "modular/FormClassNumber": {
+    "package": "@enumeratio/modular",
+    "why": "declared enumeratio-modular",
+    "dir": "packages/symbols/groups/modular"
+  },
+  "braid/Braid": {
+    "package": "@enumeratio/braid",
+    "why": "declared enumeratio-braid",
+    "dir": "packages/symbols/groups/braid"
+  },
+  "braid/AlexanderPolynomial": {
+    "package": "@enumeratio/braid",
+    "why": "declared enumeratio-braid",
+    "dir": "packages/symbols/groups/braid"
+  },
+  "braid/LorenzBraid": {
+    "package": "@enumeratio/braid",
+    "why": "declared enumeratio-braid",
+    "dir": "packages/symbols/groups/braid"
+  },
+  "braid/JonesPolynomial": {
+    "package": "@enumeratio/braid",
+    "why": "declared enumeratio-braid",
+    "dir": "packages/symbols/groups/braid"
+  },
+  "collections/Union": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Intersection": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "collections/SetMinus": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "collections/First": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Last": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/At": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/IndexOf": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "collections/FirstPosition": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Position": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Sort": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Ordering": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Length": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Count": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Join": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Flatten": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Append": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "collections/Prepend": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Partition": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Mean": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Median": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Mode": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "collections/Commonest": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Product": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Nest": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/NestList": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/FixedPoint": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Outer": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/LinearRecurrence": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/RecurrenceTable": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Association": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/GeometricMean": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/HarmonicMean": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Span": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/UpTo": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Riffle": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Gather": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/GatherBy": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/Split": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/SplitBy": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/SortBy": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/PadLeft": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "collections/PadRight": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "lists/All": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "lists/Any": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "lists/NoneTrue": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "lists/Fold": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "lists/Tabulate": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "lists/Scan": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "lists/Contains": {
+    "package": "@enumeratio/reference",
+    "why": "compute-engine",
+    "dir": "packages/reference"
+  },
+  "lists/Unique": {
+    "package": "@enumeratio/collections",
+    "why": "override; only it changes the answers",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/Subsets": {
+    "package": "@enumeratio/reference",
+    "why": "hand",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SymmetricGroup": {
+    "package": "@enumeratio/reference",
+    "why": "hand",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/IntegerPartitions": {
+    "package": "@enumeratio/reference",
+    "why": "hand",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/DyckPaths": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SetPartitions": {
+    "package": "@enumeratio/reference",
+    "why": "hand",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/Primes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SquareNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/AbundantNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SmoothNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/RootedUnlabeledTrees": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/UnlabeledFreeTrees": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/PhylogeneticTrees": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/NonCrossingTrees": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/BinaryBracelets": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/KBracelets": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/TriStrings": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/PrimitiveBinaryStrings": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/TernaryGrayCodes": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/StirlingPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/BaxterPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/BooleanPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/GrassmannianPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/CograssmannianPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/NonCrossingPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/SeparablePermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/SimplePermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/SmoothPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/VexillaryPermutations": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/SemistandardTableaux": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/GelfandTsetlin": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/AlternatingSignMatrices": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/SkewPartitions": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/SkewStandardTableaux": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/ShiftedStandardTableaux": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/StandardTableauPairs": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/PlanePartitions": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/BoxedPlanePartitions": {
+    "package": "@enumeratio/collections",
+    "why": "declared enumeratio-collections",
+    "dir": "packages/symbols/combinatorics/collections"
+  },
+  "enumerable-families/TriangularNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PentagonalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/HexagonalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/HeptagonalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/OctagonalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PolygonalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CenteredTriangularNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CenteredSquareNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CenteredHexagonalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/StarNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PronicNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CubeNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/TetrahedralNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PentatopeNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SquarePyramidalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PowersOfTwo": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/FactorialNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/DoubleFactorialNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PrimorialNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/AllOnes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/FibonacciNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/LucasNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/JacobsthalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PellNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/TribonacciNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PadovanSequence": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PerrinSequence": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SternDiatomicSequence": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/ThueMorseNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CatalanNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/BellNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/FubiniNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/MotzkinNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PartitionNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CentralDelannoyNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/LittleSchroderNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SchroederNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/DeficientNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PerfectNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SemiperfectNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/WeirdNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PracticalNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/HighlyCompositeNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SuperabundantNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/ArithmeticNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/UntouchableNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/AchillesNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PowerfulNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PerfectPowerNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SquareFreeNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/KFreeIntegers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CarmichaelNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/GiugaNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/IdonealNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/LuckyNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/HarshadNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/HappyNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/NarcissisticNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/AutomorphicNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/KaprekarNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/EvilNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/OdiousNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PerniciousNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SmithNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SemiprimeNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SquarefreeSemiprimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SphenicNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PrimePowerNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/KAlmostPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/RoughNumbers": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/TwinPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CousinPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SexyPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SophieGermainPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/SafePrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PrimePairs": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/PalindromicPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/CircularPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/EmirpPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/MersennePrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  },
+  "enumerable-families/FibonacciPrimes": {
+    "package": "@enumeratio/reference",
+    "why": "unknown",
+    "dir": "packages/reference"
+  }
+}

@@ -1,0 +1,20 @@
+name: CubeNumbers
+domain: Collections
+signature: CubeNumbers
+summary: The perfect cubes $1, 8, 27, 64, …$ — $n^3$.
+signatures:
+  - call: CubeNumbers
+    description: $n^3$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(CubeNumbers) = +\infty$, and $At(CubeNumbers, k) = k^3$ unranks in closed form -- $At(CubeNumbers, 5) = 125$.'
+  - OEIS A000578.
+  - Membership goes through [[Element]] by bisecting the monotone formula $n \mapsto n^3$ for its exact integer cube root -- $Element(125, CubeNumbers)$ is true, $Element(126, CubeNumbers)$ is false.
+examples: []
+enumerate:
+  expr: Take(CubeNumbers, 20)
+seeAlso:
+  - SquareNumbers
+  - TetrahedralNumbers
+  - Count
+  - At
+  - Element

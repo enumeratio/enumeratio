@@ -1,0 +1,73 @@
+name: Ordering
+domain: Collections
+signature: Ordering(collection)
+summary: The permutation of indices that would sort the collection into increasing order.
+signatures:
+  - call: Ordering(collection)
+    description: the permutation of indices that sorts the collection into increasing order.
+  - call: Ordering(collection, n)
+    description: just the first `n` indices of the full ordering; a negative `n` takes the last `|n|` (the largest elements); `{m, n}` takes positions `m` through `n` of the full ordering; `UpTo(n)` caps at `n` without erroring on a shorter collection.
+    library: enumeratio-collections
+  - call: Ordering(collection, All, Greater)
+    description: every index, ordered descending rather than ascending.
+    library: enumeratio-collections
+details:
+  - "$c[[Ordering(c)]] = Sort(c)$: applying the permutation at those positions recovers [[Sort]]'s result."
+  - Ties break in favor of earlier position, i.e. it's a stable ordering.
+  - Symbols order alphabetically by name, matching Wolfram's canonical ordering.
+  - A second argument $n$ takes just the first $n$ indices of the full ordering; see the signatures above for the negative-count, $\{m, n\}$, and $UpTo$ forms.
+examples:
+  - id: ordering-list-3-1-2
+    expr: [Ordering, [List, 3, 1, 2]]
+    expected: [List, 2, 3, 1]
+  - id: ties-break-in-favor-of-the-earlier-position-both
+    expr: [Ordering, [List, 2, 1, 2, 1]]
+    expected: [List, 2, 4, 1, 3]
+    category: Scope
+    caption: 'Ties break in favor of the earlier position: both 1s come before both 2s'
+  - id: a-second-argument-takes-just-the-first-n-indices
+    expr: [Ordering, [List, 2, 6, 1, 9, 1, 2, 3], 4]
+    expected: [List, 3, 5, 1, 6]
+    category: Scope
+    caption: A second argument takes just the first n indices of the full ordering
+  - id: ordering-list-2-6-1-9-1-2-3
+    expr: [Ordering, [List, 2, 6, 1, 9, 1, 2, 3]]
+    expected: [List, 3, 5, 1, 6, 7, 2, 4]
+  - id: symbols-order-alphabetically
+    expr: [Ordering, [List, c, a, b]]
+    expected: [List, 2, 3, 1]
+    category: Scope
+    caption: Symbols order alphabetically
+  - id: a-negative-count-gives-the-positions-of-the
+    expr: [Ordering, [List, 2, 6, 1, 9, 1, 2, 3], -1]
+    expected: [List, 4]
+    category: Scope
+    caption: A negative count gives the positions of the largest elements
+  - id: a-m-n-spec-takes-the-4th-through-the-last
+    expr: [Ordering, [List, 2, 6, 1, 9, 1, 2, 3], [List, 4, -1]]
+    expected: [List, 6, 7, 2, 4]
+    category: Scope
+    caption: A $\{m, n\}$ spec takes the 4th through the last entries of the ordering
+  - id: a-third-argument-orders-by-a-custom-test-here
+    expr: [Ordering, [List, 2, 6, 1, 9, 3], All, Greater]
+    expected: [List, 4, 2, 5, 1, 3]
+    category: Scope
+    caption: A third argument orders by a custom test, here descending
+  - id: upto-6-asks-for-at-most-6-positions-so-a-5
+    expr: [Ordering, [List, 2, 6, 1, 9, 2], [UpTo, 6]]
+    expected: [List, 3, 1, 5, 2, 4]
+    category: Scope
+    caption: '[[UpTo]](6) asks for at most 6 positions, so a 5-element list gives all 5'
+  - id: on-a-permutation-ordering-is-the-inverse-so
+    expr: [Ordering, [Ordering, [List, 3, 1, 2]]]
+    expected: [List, 3, 1, 2]
+    category: Properties
+    caption: On a permutation, $Ordering$ is the inverse, so applying it twice recovers the permutation
+  - id: the-position-of-the-smallest-element-see-first
+    expr: [First, [Ordering, [List, 2, 6, 1, 9, 1, 2, 3]]]
+    expected: 3
+    category: Applications
+    caption: The position of the smallest element. See [[First]]
+seeAlso:
+  - Sort
+  - UpTo

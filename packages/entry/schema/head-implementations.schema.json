@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enumeratio.dev/schema/head-implementations.schema.json",
+  "title": "HeadImplementations",
+  "description": "One compute-engine head's reference/<Head>.implementations.yaml: every example's own forms and each external system's rendering and answer, keyed by example id.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "additionalProperties": {
+      "$ref": "#/$defs/SystemImplementation"
+    }
+  },
+  "$defs": {
+    "RenderedForm": {
+      "type": "object",
+      "properties": {
+        "in": {
+          "type": "string"
+        },
+        "out": {
+          "type": "string"
+        }
+      },
+      "required": ["in", "out"],
+      "additionalProperties": false
+    },
+    "EvaluationMessage": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": ["warning", "error"]
+        }
+      },
+      "required": ["code", "text"],
+      "additionalProperties": false
+    },
+    "SystemImplementation": {
+      "type": "object",
+      "properties": {
+        "in": {
+          "type": "string"
+        },
+        "out": {
+          "type": "string"
+        },
+        "tex": {
+          "$ref": "#/$defs/RenderedForm"
+        },
+        "verdict": {
+          "enum": ["agree", "disagree", "inconclusive", "error"]
+        },
+        "kind": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "issue": {
+          "type": "integer"
+        },
+        "tolerance": {
+          "type": "number"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvaluationMessage"
+          }
+        }
+      },
+      "required": ["in"],
+      "additionalProperties": false
+    }
+  }
+}

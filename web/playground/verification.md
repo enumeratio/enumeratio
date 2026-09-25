@@ -51,7 +51,7 @@ memory, not the worker's alone, so it is a guardrail, not the real per-process c
 `evaluateIsolated` gets from `worker_threads`' `resourceLimits`.
 
 Wiring a live demo into this page (spinning up an actual `Worker` from the docs
-bundle) is deferred past this PR — see `packages/aestimatio/tests/browser.test.ts`
+bundle) is deferred past this PR — see `packages/symbols/evaluation/aestimatio/tests/browser.test.ts`
 for `evaluateInWorker`'s host-side logic instead, exercised with a fake `Worker` so it
 runs without a browser at all: a normal resolution, a `timeMs` kill, a `signal` abort,
 and a `memoryBytes` bound tripped by an injected `measureMemory`.

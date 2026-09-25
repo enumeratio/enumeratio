@@ -1,0 +1,21 @@
+name: PentatopeNumbers
+domain: Collections
+signature: PentatopeNumbers
+summary: The pentatope numbers $1, 5, 15, 35, …$ — $\binom{n+3}{4}$ — the 4-simplex figurate numbers.
+signatures:
+  - call: PentatopeNumbers
+    description: $\binom{n+3}{4}$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(PentatopeNumbers) = +\infty$, and $At(PentatopeNumbers, k) = \binom{k+3}{4}$ unranks in closed form -- $At(PentatopeNumbers, 5) = 70$.'
+  - OEIS A000332.
+  - Membership goes through [[Element]] by bisecting the monotone quartic for its exact root -- $Element(70, PentatopeNumbers)$ is true, $Element(71, PentatopeNumbers)$ is false.
+  - $PentatopeNumbers(n) = \sum_{i=1}^n TetrahedralNumbers(i)$, one dimension up from [[TetrahedralNumbers]].
+examples: []
+enumerate:
+  expr: Take(PentatopeNumbers, 20)
+seeAlso:
+  - TetrahedralNumbers
+  - Binomial
+  - Count
+  - At
+  - Element

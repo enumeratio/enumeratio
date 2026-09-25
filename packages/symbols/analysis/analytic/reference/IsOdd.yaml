@@ -1,0 +1,66 @@
+name: IsOdd
+domain: Arithmetic
+signature: IsOdd(n)
+summary: Whether n is an odd integer.
+signatures:
+  - call: IsOdd(n)
+    description: $True$ if $n$ is an odd integer, else $False$.
+examples:
+  - id: isodd-3
+    expr: [IsOdd, 3]
+    expected: True
+  - id: isodd-4
+    expr: [IsOdd, 4]
+    expected: False
+  - id: negative-integers-count-too
+    expr: [IsOdd, -7]
+    expected: True
+    caption: Negative integers count too
+  - id: isodd-0
+    expr: [IsOdd, 0]
+    expected: False
+  - id: a-non-integer-is-not-odd
+    expr: [IsOdd, 3.5]
+    expected: False
+    category: Scope
+    caption: A non-integer is not odd
+  - id: isodd-1-over-3
+    expr: [IsOdd, [Rational, 1, 3]]
+    expected: False
+    category: Scope
+  - id: big-integers
+    expr: [IsOdd, [Add, [Power, 2, 100], 1]]
+    expected: True
+    category: Scope
+    caption: Big integers
+  - id: pi-is-known-not-to-be-an-integer-so-it-is
+    expr: [IsOdd, Pi]
+    expected: False
+    category: Scope
+    caption: $\pi$ is known not to be an integer, so it is decided False
+  - id: threads-element-wise-over-a-list
+    expr: [IsOdd, [List, 1, 2, 3]]
+    expected: [List, True, False, True]
+    category: Scope
+    caption: Threads element-wise over a list
+    divergence:
+      wolfram: 'OddQ tests its argument as a whole: $\mathrm{OddQ}[\{1, 2, 3\}]$ is False.'
+  - id: an-integer-is-odd-exactly-when-it-is-not-even
+    expr: [Equal, [IsOdd, 7], [Not, [IsEven, 7]]]
+    expected: True
+    category: Properties
+    caption: An integer is odd exactly when it is not even. See [[IsEven]]
+  - id: select-the-odd-numbers-up-to-10
+    expr: [Filter, [Range, 10], IsOdd]
+    expected: [List, 1, 3, 5, 7, 9]
+    category: Applications
+    caption: Select the odd numbers up to 10
+  - id: a-symbol-stays-undecided-rather-than-false
+    expr: [IsOdd, x]
+    expected: [IsOdd, x]
+    category: Possible issues
+    caption: A symbol stays undecided rather than False
+    divergence:
+      wolfram: '$\mathrm{OddQ}[x]$ is False: OddQ tests the literal form, not what x might be.'
+seeAlso:
+  - IsEven

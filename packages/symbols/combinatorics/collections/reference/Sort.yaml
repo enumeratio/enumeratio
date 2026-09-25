@@ -1,0 +1,93 @@
+name: Sort
+domain: Collections
+signature: Sort(collection)
+summary: The elements of the collection in increasing order.
+signatures:
+  - call: Sort(collection)
+    description: the elements in increasing numeric order.
+  - call: Sort(collection, comparator)
+    description: sorted by a custom [[Function]] comparator, e.g. descending order.
+  - call: Sort(expr)
+    description: the operands of any expression, sorted in place — not just a collection's.
+    library: enumeratio-collections
+details:
+  - 'Idempotent: sorting an already-sorted collection changes nothing.'
+  - $Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]].
+  - Orders numbers numerically, strings lexicographically, and symbols alphabetically by name.
+  - The comparator form `Sort(list, p)` takes a predicate `p` reporting whether a pair is already in order.
+  - Works on the operands of any expression, not just a collection's elements.
+examples:
+  - id: sort-list-3-1-2
+    expr: [Sort, [List, 3, 1, 2]]
+    expected: [List, 1, 2, 3]
+  - id: sort-list-4-2-5-1-3
+    expr: [Sort, [List, 4, 2, 5, 1, 3]]
+    expected: [List, 1, 2, 3, 4, 5]
+  - id: sort-is-idempotent-sorting-an-already-sorted
+    expr: [Equal, [Sort, [Sort, [List, 3, 1, 2]]], [Sort, [List, 3, 1, 2]]]
+    expected: True
+    category: Properties
+    caption: '$Sort$ is idempotent: sorting an already-sorted collection changes nothing'
+  - id: sort-c-at-c-ordering-c-see-ordering-and-at
+    expr: [Equal, [Sort, [List, 3, 1, 2]], [At, [List, 3, 1, 2], [Ordering, [List, 3, 1, 2]]]]
+    expected: True
+    category: Properties
+    caption: $Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]]
+  - id: a-custom-comparator-sorts-in-a-different-order
+    expr: [Sort, [List, 3, 1, 2], [Function, [Greater, _1, _2]]]
+    expected: [List, 3, 2, 1]
+    category: Scope
+    caption: A custom comparator sorts in a different order, here descending
+  - id: a-list-of-strings-sorts-lexicographically
+    expr: [Sort, [List, banana, apple, cherry]]
+    expected: [List, apple, banana, cherry]
+    category: Scope
+    caption: A list of strings sorts lexicographically
+  - id: symbols-sort-alphabetically
+    expr: [Sort, [List, d, b, c, a]]
+    expected: [List, a, b, c, d]
+    caption: Symbols sort alphabetically
+  - id: integers-rationals-and-floats-together-sort-by
+    expr: [Sort, [List, [Rational, 3, 2], 1, 0.5, -2]]
+    expected: [List, -2, 0.5, 1, [Rational, 3, 2]]
+    category: Scope
+    caption: Integers, rationals and floats together sort by value
+  - id: exact-numeric-constants-sort-by-their-value
+    expr: [Sort, [List, Pi, ExponentialE, 2, 3, 1, [Sqrt, 2]]]
+    expected: [List, 1, [Sqrt, 2], 2, ExponentialE, 3, Pi]
+    category: Scope
+    caption: Exact numeric constants sort by their value
+    divergence:
+      wolfram: "Wolfram's default canonical order puts explicit numbers before symbolic ones: {1, 2, 3, Sqrt[2], E, Pi}; Sort[…, Less] gives this numeric order."
+  - id: less-as-the-ordering-function-sorts-by-numeric
+    expr: [Sort, [List, Pi, ExponentialE, 2, 3, 1, [Sqrt, 2]], Less]
+    expected: [List, 1, [Sqrt, 2], 2, ExponentialE, 3, Pi]
+    category: Scope
+    caption: $Less$ as the ordering function sorts by numeric value
+  - id: a-named-ordering-function-greater-sorts-in
+    expr: [Sort, [List, 4, 1, 3, 2, 2], Greater]
+    expected: [List, 4, 3, 2, 2, 1]
+    category: Scope
+    caption: 'A named ordering function: $Greater$ sorts in descending order'
+  - id: sorting-pairs-by-their-second-element-with-a
+    expr: [Sort, [List, [List, a, 2], [List, c, 1], [List, d, 3]], [Function, [Less, [At, _1, 2], [At, _2, 2]]]]
+    expected: [List, [List, c, 1], [List, a, 2], [List, d, 3]]
+    category: Scope
+    caption: Sorting pairs by their second element with a custom comparator
+  - id: sorts-the-arguments-of-any-head-not-just-a-list
+    expr: [Sort, [f, b, a, c]]
+    expected: [f, a, b, c]
+    category: Scope
+    caption: Sorts the arguments of any head, not just a list
+  - id: the-result-doesn-t-depend-on-the-input-order
+    expr: [Equal, [Sort, [Reverse, [List, 3, 1, 2]]], [Sort, [List, 3, 1, 2]]]
+    expected: True
+    category: Properties
+    caption: The result doesn't depend on the input order
+  - id: the-empty-list-sorts-to-itself
+    expr: [Sort, [List]]
+    expected: [List]
+    category: Possible issues
+    caption: The empty list sorts to itself
+seeAlso:
+  - Ordering

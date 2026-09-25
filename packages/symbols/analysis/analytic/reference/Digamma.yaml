@@ -1,0 +1,129 @@
+name: Digamma
+domain: Special functions
+signature: Digamma(z)
+summary: The digamma function $\psi(z) = \dfrac{d}{dz}\ln\Gamma(z)$, the logarithmic derivative of [[Gamma]].
+signatures:
+  - call: Digamma(z)
+    description: the digamma function $\psi(z) = \Gamma'(z)/\Gamma(z)$.
+details:
+  - 'Digamma is the order-zero polygamma: $\psi(z) = \psi^{(0)}(z)$. The higher derivatives are [[PolyGamma]].'
+  - $\psi(1) = -\gamma$, the negative Euler-Mascheroni constant.
+  - "Recurrence inherited from Gamma's functional equation: $\\psi(z+1) = \\psi(z) + 1/z$."
+  - $\psi(1/2) = -\gamma - 2\ln 2$.
+  - Poles at the nonpositive integers, the same poles as [[Gamma]].
+  - compute-engine's plain evaluation would otherwise leave Digamma at an exact integer argument symbolic except at the poles; `@enumeratio/analytic` overrides it at every positive integer via $\psi(n) = H_{n-1} - \gamma$, reusing [[HarmonicNumber]]. A rational, non-integer argument, or N(), still goes through the numeric path.
+examples:
+  - id: a-pole-of-gamma-shared-by-its-log-derivative
+    expr: [Digamma, 0]
+    expected: ComplexInfinity
+    caption: A pole of Gamma, shared by its log-derivative
+  - id: digamma-neg-1
+    expr: [Digamma, -1]
+    expected: ComplexInfinity
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [Digamma, 0.5]
+    expected: {num: '-1.96351002602142347944'}
+    caption: A floating-point argument evaluates directly to a high-precision decimal
+  - id: psi-1-gamma
+    expr: [Equal, [Add, [Digamma, 1], EulerGamma], 0]
+    expected: True
+    category: Properties
+    caption: $\psi(1) = -\gamma$
+  - id: recurrence-psi-z-1-psi-z-1-z-here-at-z-1
+    expr: [Equal, [Digamma, 2], [Add, [Digamma, 1], 1]]
+    expected: True
+    category: Properties
+    caption: 'Recurrence: $\psi(z+1) = \psi(z) + 1/z$, here at $z = 1$'
+  - id: psi-1-2-gamma-2-ln-2
+    expr: [Equal, [Add, [Digamma, [Rational, 1, 2]], EulerGamma, [Multiply, 2, [Ln, 2]]], 0]
+    expected: True
+    category: Properties
+    caption: $\psi(1/2) = -\gamma - 2\ln 2$
+  - id: harmonic-numbers-via-digamma-psi-n-1-gamma-h-n
+    expr: [Equal, [Add, [Digamma, 6], EulerGamma], [Add, 1, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 4], [Rational, 1, 5]]]
+    expected: True
+    category: Applications
+    caption: 'Harmonic numbers via Digamma: $\psi(n+1) + \gamma = H_n$, here $H_5$ at $n=5$'
+  - id: between-the-poles-at-0-and-1-psi-is-still-finite
+    expr: [Digamma, -0.5]
+    expected: {num: '0.036489973978576520559'}
+    category: Neat examples
+    caption: 'Between the poles at 0 and -1, $\psi$ is still finite: $\psi(-1/2) \approx 0.036$'
+  - id: threads-over-a-list-reducing-each-positive
+    expr: [Digamma, [List, 1, 2, 3]]
+    expected: [List, [Negate, EulerGamma], [Add, 1, [Negate, EulerGamma]], [Add, [Rational, 3, 2], [Negate, EulerGamma]]]
+    category: Scope
+    caption: Threads over a list, reducing each positive-integer element to its closed form in $\gamma$
+  - id: a-machine-precision-argument
+    expr: [Digamma, 100.5]
+    expected: {num: '4.60517435258184521187'}
+    caption: A machine-precision argument
+  - id: psi-5-h-4-gamma-frac-25-12-gamma
+    expr: [Digamma, 5]
+    expected: [Add, [Rational, 25, 12], [Negate, EulerGamma]]
+    caption: $\psi(5) = H_4 - \gamma = \frac{25}{12} - \gamma$
+  - id: complex-arguments-should-evaluate-as-psi-m-does
+    expr: [Digamma, [Complex, 2.5, 3]]
+    expected: [Complex, 1.2812739190662314, 0.9798053153445596]
+    aspirational: true
+    category: Scope
+    caption: Complex arguments should evaluate, as $\psi^{(m)}$ does for $m \geq 1$ (see [[PolyGamma]]); left unevaluated today
+  - id: psi-infty-infty-growing-like-ln-z
+    expr: [Digamma, PositiveInfinity]
+    expected: PositiveInfinity
+    category: Scope
+    caption: $\psi(\infty) = \infty$, growing like $\ln z$
+  - id: gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln
+    expr: [Digamma, [Rational, 1, 4]]
+    expected: [Add, [Multiply, -3, [Ln, 2]], [Multiply, [Rational, -1, 2], Pi], [Negate, EulerGamma]]
+    category: Scope
+    caption: "Gauss's digamma theorem: $\\psi(1/4) = -\\gamma - \\pi/2 - 3\\ln 2$"
+  - id: psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3
+    expr: [Digamma, [Rational, 1, 3]]
+    expected: [Add, [Multiply, [Rational, -3, 2], [Ln, 3]], [Multiply, [Negate, [Divide, [Sqrt, 3], 6]], Pi], [Negate, EulerGamma]]
+    category: Scope
+    caption: $\psi(1/3) = -\gamma - \frac{\pi}{2\sqrt3} - \frac32\ln 3$
+  - id: interval-arithmetic-psi-is-increasing-on-0-infty
+    expr: [Digamma, [Interval, 1.23, 1.24]]
+    expected: [Interval, -0.2516694306961001, -0.2394936791259368]
+    category: Scope
+    caption: 'Interval arithmetic: $\psi$ is increasing on $(0, \infty)$'
+  - id: psi-x-is-the-trigamma-psi-1-x
+    expr: [D, [Digamma, x], x]
+    expected: [Trigamma, x]
+    category: Properties
+    caption: $\psi'(x)$ is the trigamma, $\psi^{(1)}(x)$
+    divergence:
+      wolfram: Wolfram writes the derivative as $\mathrm{PolyGamma}[1, x]$; compute-engine names it `Trigamma`.
+  - id: reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot
+    expr: [Subtract, [Digamma, 0.7], [Digamma, 0.3]]
+    expected: {num: '2.28250066850219837421'}
+    category: Properties
+    caption: 'Reflection: $\psi(1-x) - \psi(x) = \pi\cot(\pi x)$, here $\pi\cot(0.3\pi) = 2.2825\ldots$'
+  - id: to-30-significant-digits-every-one-correctly
+    expr: [N, [Digamma, [Rational, 1, 3]], 30]
+    expected: {num: '-3.13203378002080632299641907429'}
+    category: Scope
+    caption: To 30 significant digits, every one correctly rounded
+  - id: psi-1-gamma-2
+    expr: [Digamma, 1]
+    expected: [Negate, EulerGamma]
+    category: Properties
+    caption: $\psi(1) = -\gamma$.
+    group: digamma-integer-recurrence
+  - id: psi-2-1-gamma-from-psi-n-1-psi-n-1-n
+    expr: [Digamma, 2]
+    expected: [Add, 1, [Negate, EulerGamma]]
+    category: Properties
+    caption: $\psi(2) = 1-\gamma$, from $\psi(n+1)=\psi(n)+1/n$.
+    group: digamma-integer-recurrence
+  - id: psi-3-frac-3-2-gamma
+    expr: [Digamma, 3]
+    expected: [Add, [Rational, 3, 2], [Negate, EulerGamma]]
+    category: Properties
+    caption: $\psi(3) = \tfrac{3}{2}-\gamma$.
+    group: digamma-integer-recurrence
+seeAlso:
+  - Gamma
+  - Zeta
+  - GammaLn

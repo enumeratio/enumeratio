@@ -1,0 +1,19 @@
+name: PracticalNumbers
+domain: Collections
+signature: PracticalNumbers
+summary: The practical numbers $1, 2, 4, 6, 8, 12, …$ -- integers whose divisors let every smaller integer be written as a distinct-divisor sum -- as a lazy indexed collection.
+signatures:
+  - call: PracticalNumbers
+    description: the $n$ where every $1 \le m \le n$ is a sum of distinct divisors of $n$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(PracticalNumbers) = +\infty$ (Saias 1997 confirmed they have positive density), and $At$ unranks the $k$-th by the classical criterion -- sorted divisors $d_1 = 1 < d_2 < … < d_j = n$, practical iff no $d_{i+1}$ exceeds $1 + \sum_{l \le i} d_l$.'
+  - OEIS A005153.
+  - "Membership goes through [[Element]]: $Element(12, PracticalNumbers)$ is true, $Element(10, PracticalNumbers)$ is false ($7$ isn't a sum of $10$'s divisors $\\{1,2,5,10\\}$)."
+examples: []
+enumerate:
+  expr: Take(PracticalNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - ArithmeticNumbers
