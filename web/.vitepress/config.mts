@@ -5,6 +5,7 @@ import { defineConfig } from "vitepress";
 import { generate } from "@enumeratio/notatio/generate";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
+import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
 // The symbols as Vue components are generated here, before the theme is bundled, so
@@ -18,9 +19,17 @@ generate("vue");
 // matching src/*.ts; exports that already point at src are used as-is.
 const pkgsDir = resolve(dirname(fileURLToPath(import.meta.url)), "../../packages");
 const srcAliases: { find: RegExp; replacement: string }[] = [];
-for (const d of readdirSync(pkgsDir, { withFileTypes: true })) {
-  const manifest = resolve(pkgsDir, d.name, "package.json");
-  if (!d.isDirectory() || !existsSync(manifest)) continue;
+// Symbol packages sit a level deeper, under packages/symbols/<group>/.
+const packageDirs = readdirSync(pkgsDir).flatMap((name) =>
+  name === "symbols"
+    ? readdirSync(resolve(pkgsDir, name)).flatMap((group) =>
+        readdirSync(resolve(pkgsDir, name, group)).map((pkg) => `${name}/${group}/${pkg}`),
+      )
+    : [name],
+);
+for (const dir of packageDirs) {
+  const manifest = resolve(pkgsDir, dir, "package.json");
+  if (!existsSync(manifest)) continue;
   const pkg = JSON.parse(readFileSync(manifest, "utf8")) as {
     name?: string;
     exports?: Record<string, unknown>;
@@ -35,7 +44,7 @@ for (const d of readdirSync(pkgsDir, { withFileTypes: true })) {
         ? target
         : undefined;
     if (!srcRel) continue;
-    const abs = resolve(pkgsDir, d.name, srcRel);
+    const abs = resolve(pkgsDir, dir, srcRel);
     if (!existsSync(abs)) continue;
     const spec = sub === "." ? pkg.name : pkg.name + sub.slice(1);
     srcAliases.push({
@@ -75,7 +84,9 @@ export default defineConfig({
     // The repo's `vite` specifier resolves to vite-plus-core (see pnpm-workspace.yaml),
     // while vitepress's `plugins` field types against its own nested real `vite` --
     // two structurally-identical but nominally distinct `Plugin` types.
-    plugins: dev ? ([reviewModePlugin(webDir)] as never) : [],
+    plugins: (dev
+      ? [reviewModePlugin(webDir), referenceDataPlugin()]
+      : [referenceDataPlugin()]) as never,
   },
   title: "enumeratio",
   description:

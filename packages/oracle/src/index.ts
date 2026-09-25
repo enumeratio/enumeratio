@@ -1,6 +1,6 @@
 export { emit, type Emitted, type MathJSON, unmappedHeads } from "./emit.ts";
 export { MAPPINGS, type Mapping, mappedHeads, mappingFor } from "./mappings.ts";
-export { type Result, juliaFlags, runIn } from "./run.ts";
+export { juliaFlags, type Prelude, preludeFor, type Result, runIn } from "./run.ts";
 export {
   type Bounds,
   type BoundedResult,

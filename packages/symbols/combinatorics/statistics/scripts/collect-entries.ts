@@ -1,4 +1,4 @@
-// Generate `reference/*.yaml` (and its shim, `src/entries.ts`) — one reference entry per declared statistic, plus one per
+// Generate `reference/*.yaml` — one reference entry per declared statistic, plus one per
 // frontier signature. The definitions already carry a head, a carrier and a summary; what
 // they cannot carry is a worked example, so this script evaluates each definition against a
 // couple of fixed inputs per carrier and writes the results out inline.
@@ -9,6 +9,8 @@
 //   vp node packages/symbols/combinatorics/statistics/scripts/collect-entries.ts
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { ReferenceEntry } from "@enumeratio/entry";
+import { writeEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
 import { declareCollections } from "@enumeratio/collections/src";
 import { ALL_STATISTICS } from "../src/all.ts";
@@ -211,10 +213,11 @@ ${body}
 `;
 
 // The module text is evaluated into one YAML per entry, and src/entries.ts is its shim.
-// A computed specifier, so this package's type build doesn't pull reference's scripts in.
-const shims = new URL("../../../../reference/scripts/migrate/shims.ts", import.meta.url).href;
-const { writeGeneratedEntries } = (await import(shims)) as {
-  writeGeneratedEntries: (packageDir: string, moduleText: string) => Promise<void>;
+// The entries are built as object-literal text; evaluated here, each becomes one YAML.
+const moduleBody = file.slice(file.indexOf("export const entries"));
+const js = moduleBody.replace(/: readonly ReferenceEntry\[\]/, "");
+const { entries } = (await import(`data:text/javascript,${encodeURIComponent(js)}`)) as {
+  entries: ReferenceEntry[];
 };
-await writeGeneratedEntries("packages/symbols/combinatorics/statistics", file);
+writeEntries(new URL("../reference/", import.meta.url), entries);
 process.stdout.write(`wrote ${owner.size + FRONTIER.length} entries\n`);

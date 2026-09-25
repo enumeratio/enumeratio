@@ -1,0 +1,40 @@
+# Special functions, at machine precision and at a digit count. Answers with more digits than
+# a double holds are MathJSON numeric strings, `{ num: "…" }`, so YAML never rounds them.
+# Inputs to a digit-precision case must be exact in binary and decimal alike (3.5, 1/2, not
+# 0.3): mpmath reads a float's binary value, Wolfram its decimal digits, and at 30 digits
+# the two inputs would differ.
+
+Zeta:
+  # Not ζ(3): mpmath and Wolfram answer that from a stored constant.
+  - id: zeta-3p5-to-30-digits
+    role: bench
+    expr: [Zeta, 3.5]
+    expected: { num: "1.12673386731705664642781249186" }
+    bench:
+      tags: [special-functions]
+      precision: 30
+PolyLog:
+  - id: polylog-3-one-half-to-30-digits
+    role: bench
+    expr: [PolyLog, 3, [Rational, 1, 2]]
+    expected: { num: "0.537213193608040200940623225595" }
+    bench:
+      tags: [special-functions]
+      source: Arb paper (arXiv:1611.02831)
+      precision: 30
+HurwitzZeta:
+  - id: hurwitz-zeta-machine
+    role: bench
+    expr: [HurwitzZeta, 2.5, 0.3]
+    expected: 21.0692392022477
+    bench:
+      tags: [special-functions]
+      precision: machine
+Gamma:
+  - id: gamma-random-reals-machine
+    role: bench
+    expr: [Gamma, $x]
+    bench:
+      tags: [special-functions]
+      precision: machine
+      sample: { seed: 20260925, count: 16, draw: { x: [real, 0.5, 50] } }

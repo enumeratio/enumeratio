@@ -1,15 +1,12 @@
-// Step 4 of design/examples-as-data.md §8: the entries become YAML, one file per head in
-// the package that declares it (routes.json, from route.ts), and every entries module
-// becomes a generated shim over that YAML (shims.ts).
-//
-//   node packages/reference/scripts/migrate/port-ts.ts --write
-//       The flip itself: evaluate every entries module, write its heads' YAML, write the shims.
+// Step 4 of design/examples-as-data.md §8 turned the TS entries into YAML, one file per head
+// in the package that declares it (routes.json, from route.ts). What's left here is the
+// replay, for a branch that still carries entries edits made to the TS before the flip:
 //
 //   node packages/reference/scripts/migrate/port-ts.ts --replay <base> <lane>
 //       For a lane caught mid-flight: its entries edits were made to the TS before the flip.
 //       Evaluates each TS entries file as it was at <base> (the merge base) and at <lane>
-//       (the lane's own commit), and writes YAML only for heads the lane changed, then
-//       regenerates the shims. Run it after merging main, on the merged tree.
+//       (the lane's own commit), and writes YAML only for heads the lane changed. Run it after
+//       merging main, on the merged tree.
 //
 // Evaluating the modules, not parsing them, is what flattens the computed values (`DOMAIN`
 // constants, helpers, spreads, analytic's DEFINITIONS) into plain data.
@@ -20,7 +17,47 @@ import { dirname } from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { type ReferenceEntry, stringifyYaml } from "@enumeratio/entry";
 import routes from "./routes.json" with { type: "json" };
-import { dataDir, ROOT, SHIMS, sourcesOf, writeShims } from "./shims.ts";
+import { fileURLToPath } from "node:url";
+
+const ROOT = fileURLToPath(new URL("../../../../", import.meta.url));
+
+/** The entries modules before the flip: path, and the name their entries were exported under. */
+export const SHIMS: readonly { readonly path: string; readonly name: string }[] = [
+  ...[
+    ["aestimatio", "aestimatio"],
+    ["combinatorics", "combinatorics"],
+    ["sequences", "sequences"],
+    ["residues", "residues"],
+    ["number-theory", "numberTheory"],
+    ["adeles", "adeles"],
+    ["arithmetic", "arithmetic"],
+    ["elementary", "elementary"],
+    ["linear-algebra", "linearAlgebra"],
+    ["special-functions", "specialFunctions"],
+    ["analytic-special", "analyticSpecial"],
+    ["analytic-elementary", "analyticElementary"],
+    ["hypercomplex", "hypercomplex"],
+    ["diagram", "diagramAlgebras"],
+    ["numerals", "numerals"],
+    ["hecke", "hecke"],
+    ["incidence", "incidence"],
+    ["quiver", "quiverAlgebras"],
+    ["hopf", "hopf"],
+    ["groupalgebra", "groupAlgebras"],
+    ["modular", "modular"],
+    ["braid", "braids"],
+    ["collections", "collections"],
+    ["lists", "lists"],
+    ["enumerable-families", "enumerableFamilies"],
+  ].map(([stem, name]) => ({ path: `packages/reference/src/entries/${stem}.ts`, name: name! })),
+  { path: "packages/symbols/combinatorics/collections/src/entries.ts", name: "entries" },
+  { path: "packages/symbols/combinatorics/statistics/src/entries.ts", name: "entries" },
+  { path: "packages/symbols/combinatorics/domains/src/entries.ts", name: "entries" },
+];
+
+/** Where a package's YAML lives: `<package>/reference/`, or reference's own `entries/`. */
+export const dataDir = (packageDir: string): string =>
+  packageDir === "packages/reference" ? "packages/reference/entries" : `${packageDir}/reference`;
 
 const PACKAGE_DIRS: Readonly<Record<string, string>> = {
   "packages/symbols/combinatorics/collections/src/entries.ts":
@@ -112,25 +149,7 @@ const writeYaml = (path: string, entry: ReferenceEntry): void => {
 };
 
 const args = process.argv.slice(2);
-if (args[0] === "--write") {
-  const shims: { path: string; name: string; sources: string[] }[] = [];
-  const written = new Set<string>();
-  for (const shim of SHIMS) {
-    const entries = await entriesAt(shim.path, shim.name);
-    const sources: string[] = [];
-    for (const entry of entries) {
-      const path = yamlPath(shim.path, entry.name);
-      if (written.has(path)) throw new Error(`${path}: two entries route here`);
-      written.add(path);
-      writeYaml(path, plain(entry, `${shim.path} ${entry.name}`));
-      sources.push(path);
-    }
-    shims.push({ ...shim, sources });
-  }
-  writeShims(shims);
-  rmSync(`${ROOT}${EXAMPLES_JSON}`);
-  console.log(`${written.size} YAML files, ${shims.length} shims`);
-} else if (args[0] === "--replay" && args.length === 3) {
+if (args[0] === "--replay" && args.length === 3) {
   const [, base, lane] = args as [string, string, string];
   const changed = execFileSync("git", ["diff", "--name-only", base, lane], {
     cwd: ROOT,
@@ -143,19 +162,16 @@ if (args[0] === "--write") {
       (stemOf(shim.path) === "special-functions" && changed.includes(EXAMPLES_JSON));
     if (!touched) continue;
     const before = new Map((await entriesAt(shim.path, shim.name, base)).map((e) => [e.name, e]));
-    const current = sourcesOf(shim.path);
     for (const entry of await entriesAt(shim.path, shim.name, lane)) {
       if (isDeepStrictEqual(before.get(entry.name), entry)) continue;
       const path = yamlPath(shim.path, entry.name);
       writeYaml(path, plain(entry, `${shim.path} ${entry.name}`));
-      if (!current.includes(path)) current.push(path);
       replayed++;
       console.log(`  ${path}`);
     }
-    writeShims([{ ...shim, sources: current }]);
   }
   console.log(`${replayed} heads replayed into YAML`);
 } else {
-  console.error("usage: port-ts.ts --write | --replay <base> <lane>");
+  console.error("usage: port-ts.ts --replay <base> <lane>");
   process.exitCode = 1;
 }

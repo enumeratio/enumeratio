@@ -6,7 +6,7 @@ export default defineConfig({
   },
   fmt: {
     // Reference records have one writer, @enumeratio/entry's stringifyYaml, and a test that
-    // every file is its output (packages/reference/tests/shims.test.ts).
+    // every file is its output (packages/reference/tests/yaml.test.ts).
     ignorePatterns: ["packages/**/reference/*.yaml", "packages/reference/entries/*.yaml"],
   },
   lint: {

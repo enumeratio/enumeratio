@@ -77,6 +77,12 @@ describe("judge", () => {
     expect(agrees("12345678901234567891", "12345678901234567890", "exact")).toBe(false);
     expect(agrees("0.30000000000000004", "0.3", "machine")).toBe(true);
   });
+  test("a digit precision is checked to its digits, not through a double", () => {
+    const li3 = "0.537213193608040200940623225595";
+    expect(agrees("0.5372131936080403", li3, 30)).toBe(false);
+    expect(agrees("0.53721319360804020094062322559", li3, 30)).toBe(true);
+    expect(agrees("5.37213193608040200940623225595*^-1", li3, 30)).toBe(true);
+  });
   test("a call under the floor is kept but marked too-fast", () => {
     expect(
       judge("F/x", { value: "8", samplesNs: [100, 100, 100, 100, 100], k: 1 }, "8", "exact").status,

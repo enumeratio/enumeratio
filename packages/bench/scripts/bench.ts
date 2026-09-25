@@ -13,7 +13,8 @@ import { parseArgs } from "node:util";
 import { concretise, loadCatalogue } from "../src/catalogue.ts";
 import { buildPlan, SYSTEMS } from "../src/plan.ts";
 import { report, runInfo, systemInfo } from "../src/report.ts";
-import { HARNESSES, runPlan } from "../src/run.ts";
+import { HARNESSES } from "../src/registry.ts";
+import { runPlan } from "../src/run.ts";
 import type { BenchSystem } from "../src/types.ts";
 
 const { values } = parseArgs({
@@ -46,15 +47,18 @@ if (values.plan) {
 
 const ms = (ns: number | undefined): string =>
   ns === undefined ? "" : `${(ns / 1e6).toFixed(3)} ms`;
-const results = await runPlan(plan, planPath, systems, (system, r) =>
-  console.log(
-    `${system.padEnd(8)} ${r.name.padEnd(48)} ${r.status.padEnd(11)} ${ms(r.median)} ${r.reason ?? ""}`,
-  ),
+const versions = new Map<BenchSystem, string>();
+const results = await runPlan(
+  plan,
+  systems,
+  (system, r) =>
+    console.log(
+      `${system.padEnd(8)} ${r.name.padEnd(48)} ${r.status.padEnd(11)} ${ms(r.median)} ${r.reason ?? ""}`,
+    ),
+  (system, version) => versions.set(system, version),
 );
 for (const [system, list] of results) {
-  writeFileSync(
-    join(dir, `${system}.json`),
-    `${JSON.stringify(report(run, systemInfo(system), list))}\n`,
-  );
+  const info = systemInfo(system, versions.get(system));
+  writeFileSync(join(dir, `${system}.json`), `${JSON.stringify(report(run, info, list))}\n`);
 }
 console.log(dir);

@@ -12,7 +12,7 @@ signatures:
 details:
   - A negative integer n inverts the product -- FactorialPower(x, -m, h) = 1 / ((x+h)(x+2h)…(x+mh)).
   - A non-integer n (step h = 1 only) generalizes via Gamma(x+1)/Gamma(x-n+1).
-  - "A symbolic x is left unevaluated -- Wolfram itself only opens the product via FunctionExpand, not by default."
+  - A symbolic x is left unevaluated -- Wolfram itself only opens the product via FunctionExpand, not by default.
 examples:
   - id: symbolic-falling
     expr: [FactorialPower, x, 3]

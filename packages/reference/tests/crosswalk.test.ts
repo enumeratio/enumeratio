@@ -1,10 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
 import { CARRIERS, COLLECTIONS, MAPS, REFERENCES, STATS } from "@enumeratio/catalog/src";
-import { entries as collectionEntries } from "@enumeratio/collections/reference";
-import { entries as domainEntries } from "@enumeratio/domains/reference";
 import { DOMAINS } from "@enumeratio/domains/src";
-import { entries as statisticEntries } from "@enumeratio/statistics/reference";
 import { MAPPINGS } from "@enumeratio/oracle/src";
 import { HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
 import { expect, test } from "vite-plus/test";
@@ -32,7 +29,12 @@ import { fungrimVerified } from "../src/fungrim-verified-data.ts";
 import { KNOWN_CAUSES } from "../src/crosswalk/fungrim.ts";
 import { oeis } from "../src/oeis-data.ts";
 import { engineSymbols as engineData } from "../src/engine-symbols-data.ts";
-import { entries } from "../src/entries.ts";
+import { packageEntries, referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
+const collectionEntries = packageEntries("collections");
+const statisticEntries = packageEntries("statistics");
+const domainEntries = packageEntries("domains");
 import { fungrimSymbols } from "../src/fungrim-symbols-data.ts";
 import { crosswalk, engineSymbols } from "../scripts/crosswalk.ts";
 

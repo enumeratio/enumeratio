@@ -5,7 +5,9 @@ import { expect, test } from "vite-plus/test";
 import { CARRIER_TYPES, declareCarriers } from "../scripts/carriers.ts";
 import { ALL_STATISTICS } from "../src/all.ts";
 import { declareStatistics } from "../src/declare.ts";
-import { entries } from "../src/entries.ts";
+import { readEntries } from "@enumeratio/entry/node";
+
+const entries = readEntries(new URL("../reference/", import.meta.url));
 
 // The order both engines use: carriers, collections (which owns the fast permutation heads),
 // then the definitions with `skipDeclared`. A statistic is a function OF a carrier, so that

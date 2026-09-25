@@ -2,11 +2,13 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { portableTeX } from "@enumeratio/formats/tex";
-import { entryFiles } from "@enumeratio/reference";
+import { entryFiles as filesOf } from "@enumeratio/reference/node";
 import { fromWolframTeX, HEADS } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
 import { traditionalLatexOf } from "../src/traditional.ts";
+
+const entryFiles = filesOf();
 
 // Our TeXForm beside Wolfram's, for every reference example the oracle ran through Wolfram
 // (its `TeXForm` rides on the sidecar row). Not an assertion that they agree -- a record of
@@ -68,13 +70,13 @@ interface Row {
 }
 
 const rows: Record<string, Row> = {};
-for (const { stem, entries } of entryFiles) {
+for (const { entries } of entryFiles) {
   for (const entry of entries) {
-    entry.examples.forEach((example, index) => {
+    entry.examples.forEach((example) => {
       const wolfram = example.others?.wolfram?.tex;
       if (wolfram === undefined) return;
       const mine = { input: ours(example.expr), output: ours(example.expected) };
-      rows[`${stem}/${entry.name}#${index + 1}`] = {
+      rows[`${entry.name}/${example.id}`] = {
         ours: mine,
         wolfram,
         same: {

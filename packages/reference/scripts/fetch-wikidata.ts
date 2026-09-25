@@ -15,7 +15,9 @@ import { CURATED, WIKIDATA_FIXES } from "../src/crosswalk/curated.ts";
 import { wikipediaTitle } from "../src/crosswalk/wikidata.ts";
 import type { WikidataItem } from "../src/wikidata-data.ts";
 import { engineSymbols } from "../src/engine-symbols-data.ts";
-import { entries } from "../src/entries.ts";
+import { referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
 
 const API = "https://www.wikidata.org/w/api.php";
 const headers = { "User-Agent": "notatio-crosswalk/0.1 (https://github.com/enumeratio)" };

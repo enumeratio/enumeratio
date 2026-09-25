@@ -14,7 +14,9 @@
 
 import { runKernel } from "@enumeratio/oracle/bounded";
 import { toWolfram } from "@enumeratio/wolfram/src";
-import { entries } from "../src/entries.ts";
+import { referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
 
 type Expected = unknown;
 
