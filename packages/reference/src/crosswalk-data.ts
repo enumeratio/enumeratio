@@ -922,6 +922,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Csch",
   },
   {
+    name: "CubeRoot",
+    wolfram: "CubeRoot",
+  },
+  {
     name: "DedekindEta",
     fungrimEntries: [
       "02d14f",
@@ -1842,6 +1846,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Fold",
   },
   {
+    name: "FractionalPart",
+    wolfram: "FractionalPart",
+  },
+  {
     name: "FromDigits",
     wolfram: "FromDigits",
   },
@@ -2096,6 +2104,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Gudermannian",
+    wolfram: "Gudermannian",
+  },
+  {
     name: "HarmonicNumber",
     fungrimEntries: ["00c02a", "f50c74"],
     wolfram: "HarmonicNumber",
@@ -2170,6 +2182,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "Hyperfactorial",
+    wolfram: "Hyperfactorial",
   },
   {
     name: "Hypergeometric0F1",
@@ -2330,6 +2346,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "IntegerPart",
+    wolfram: "IntegerPart",
   },
   {
     name: "IntegerPartitions",
@@ -2644,6 +2664,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Join",
     wolfram: "Join",
+  },
+  {
+    name: "Khinchin",
+    wolfram: "Khinchin",
   },
   {
     name: "KroneckerSymbol",
@@ -3521,6 +3545,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "RealAbs",
+    wolfram: "RealAbs",
+  },
+  {
+    name: "RealSign",
+    wolfram: "RealSign",
+  },
+  {
     name: "Repeat",
     wolfram: "ConstantArray",
   },
@@ -4067,6 +4099,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Unique",
     wolfram: "DeleteDuplicates",
+  },
+  {
+    name: "UnitStep",
+    wolfram: "UnitStep",
   },
   {
     name: "Variance",
