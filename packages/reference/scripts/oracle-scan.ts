@@ -24,6 +24,7 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { isDeepStrictEqual } from "node:util";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compare,
@@ -337,9 +338,14 @@ for (const system of systems) {
   }
 }
 
+// An unchanged sidecar is left as it is on disk, however it happens to be formatted, so a
+// rescan that finds nothing new leaves the tree clean (the nightly lanes fail on drift).
 for (const { stem } of entryFiles) {
   const sidecar = sidecars.get(stem) as Sidecar;
-  writeFileSync(sidecarUrl(stem), `${JSON.stringify(sidecar, null, 2)}\n`);
+  const url = sidecarUrl(stem);
+  if (existsSync(url) && isDeepStrictEqual(JSON.parse(readFileSync(url, "utf8")), sidecar))
+    continue;
+  writeFileSync(url, `${JSON.stringify(sidecar, null, 2)}\n`);
 }
 
 const fresh = [...sidecars.values()].flatMap((sidecar) =>
