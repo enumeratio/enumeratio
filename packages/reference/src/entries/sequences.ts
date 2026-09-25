@@ -21,7 +21,7 @@ export const sequences: readonly ReferenceEntry[] = [
       {
         call: "Fibonacci(n, x)",
         description:
-          "the Fibonacci polynomial $F_n(x)$, from $F_n(x) = xF_{n-1}(x) + F_{n-2}(x)$, exact for a nonnegative integer n.",
+          "the Fibonacci polynomial $F_n(x)$, from $F_n(x) = xF_{n-1}(x) + F_{n-2}(x)$, exact for a nonnegative integer n and numeric via the two-variable Binet formula for a real order.",
         library: "enumeratio-number-theory",
       },
     ],
@@ -68,9 +68,9 @@ export const sequences: readonly ReferenceEntry[] = [
       {
         expr: ["Fibonacci", 5.8, 3],
         expected: 283.4827308329499,
-        aspirational: true,
         category: "Scope",
-        caption: "The Fibonacci polynomial at a real order and argument; not yet supported",
+        caption:
+          "The Fibonacci polynomial at a real order and argument, via the two-variable Binet formula",
       },
       {
         expr: ["Fibonacci", 1, 0],
