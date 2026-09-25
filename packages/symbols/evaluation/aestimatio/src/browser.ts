@@ -1,5 +1,5 @@
 // Browser-only isolated evaluation: a plain dedicated `Worker` running one evaluation,
-// `terminate()` as the hard time kill — design/aestimatio.md §3; a reusable pool across
+// `terminate()` as the hard time kill — design/computation.md §5.3; a reusable pool across
 // calls; and a session (preferring `SharedWorker` so tabs can join one). Kept out of
 // `./index.ts` so a Node bundle never pulls in a `Worker`/`self` entry point (mirrors
 // `./node`).
@@ -393,7 +393,7 @@ function getDefaultPool(): BrowserEvaluatorPool {
 // ---------------------------------------------------------------------------------------
 // Session: one `./browser-session-worker.ts`, one `ComputeEngine`, held across `evaluate`
 // calls. Prefers a `SharedWorker` (tabs can join the same named session); falls back to a
-// dedicated `Worker` where `SharedWorker` isn't available. See design/aestimatio.md §5.
+// dedicated `Worker` where `SharedWorker` isn't available. See design/computation.md §5.3.
 // ---------------------------------------------------------------------------------------
 
 function globalSharedWorkerFactory(): SharedWorkerFactory | undefined {
@@ -571,7 +571,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         cleanup();
         if (wasDedicated) {
           // Kill it outright (the only reliable cancel for a tight, uncooperative loop --
-          // design/aestimatio.md §3) and start fresh for the next call.
+          // design/computation.md §5.3) and start fresh for the next call.
           terminateMine?.();
           spawnDedicated();
         } else {

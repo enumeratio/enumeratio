@@ -98,7 +98,7 @@ const setup = new URL("../scripts/engines.ts", import.meta.url).href;
 
 /** Per-example caps: generous for a real reference example, tight enough that a runaway
  * one fails fast instead of hanging the suite or eating the machine's memory (this box
- * OOM'd once already — see design/aestimatio.md §3). */
+ * OOM'd once already — see design/computation.md §5.3). */
 const TIME_MS = 10_000;
 const MEMORY_BYTES = 512 * 1024 * 1024;
 // Modest on purpose: several examples can still exceed their own cap independently

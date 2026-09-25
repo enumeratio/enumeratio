@@ -700,7 +700,7 @@ const trackedSymbolsOption = (value: Json): Record<string, string> => {
 
 /**
  * `Evaluator -> "Local" | "Worker"` -- Wolfram's own option name, borrowed from
- * `Dynamic` (design/aestimatio.md): which kernel a `DynamicModule`'s cells evaluate
+ * `Dynamic` (design/computation.md): which kernel a `DynamicModule`'s cells evaluate
  * against. `"Local"` (the default, and anything not recognised as `"Worker"`) leaves
  * the attribute unset -- today's in-page evaluation; `"Worker"` sets it, routing
  * evaluation to the module's own `@enumeratio/aestimatio/browser` session instead
