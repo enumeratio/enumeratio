@@ -2704,6 +2704,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MatrixRank",
+    wolfram: "MatrixRank",
+  },
+  {
     name: "Max",
     fungrimEntries: ["47d430", "632d1c", "bfe28b"],
     wolfram: "Max",
@@ -3060,6 +3064,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Range",
     wolfram: "Range",
+  },
+  {
+    name: "Rank",
+    wolfram: "ArrayDepth",
   },
   {
     name: "Rational",
@@ -3598,6 +3606,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "Transpose",
+    wolfram: "Transpose",
   },
   {
     name: "True",
