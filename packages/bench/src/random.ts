@@ -5,7 +5,7 @@
 import type { MathJSON } from "@enumeratio/oracle/src";
 import type { Draw, Sample } from "./types.ts";
 
-/** mulberry32, as the quickcheck scripts use. */
+/** mulberry32, as the Plausible scripts use. */
 export function mulberry32(seed: number): () => number {
   let state = seed >>> 0;
   return () => {
