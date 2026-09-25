@@ -1,0 +1,28 @@
+name: FactorialPower
+domain: Collections
+signature: FactorialPower(x, n)
+summary: The falling factorial x(x-1)…(x-n+1), n factors.
+signatures:
+  - call: FactorialPower(x, n)
+    description: x(x-1)(x-2)…(x-n+1)
+    library: enumeratio-collections
+  - call: FactorialPower(x, n, h)
+    description: x(x-h)(x-2h)…(x-(n-1)h), stepping by h instead of 1
+    library: enumeratio-collections
+details:
+  - A negative integer n inverts the product -- FactorialPower(x, -m, h) = 1 / ((x+h)(x+2h)…(x+mh)).
+  - A non-integer n (step h = 1 only) generalizes via Gamma(x+1)/Gamma(x-n+1).
+examples:
+  - id: symbolic-falling
+    expr: [FactorialPower, x, 3]
+    expected: [Multiply, x, [Add, x, -2], [Add, x, -1]]
+    caption: x(x-1)(x-2), CE's own canonical operand order
+  - id: numeric
+    expr: [FactorialPower, 5, 3]
+    expected: 60
+    caption: 5 × 4 × 3 = 60
+  - id: step
+    expr: [FactorialPower, x, 2, h]
+    expected: [Multiply, x, [Add, [Negate, h], x]]
+    category: Scope
+    caption: A third argument steps by h instead of 1 -- x(x-h)

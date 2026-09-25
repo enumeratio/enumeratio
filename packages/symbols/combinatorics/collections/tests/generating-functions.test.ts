@@ -71,6 +71,24 @@ test("DiscreteRatio(Binomial(n,2), n) simplifies to a rational function of n", (
   }
 });
 
+// ─── DifferenceDelta ────────────────────────────────────────────────────────────────────────
+
+test("DifferenceDelta(n^2, n) simplifies to 2n + 1", () => {
+  expect(evalMJ(["DifferenceDelta", ["Power", "n", 2], "n"]).toString()).toBe("2n + 1");
+});
+
+test("DifferenceDelta(2^n, n) is 2^n at every n — checked numerically, since simplify doesn't fold 2^(n+1) - 2^n on its own", () => {
+  const r = evalMJ(["DifferenceDelta", ["Power", 2, "n"], "n"]);
+  for (const n of [1, 2, 5, 10]) {
+    expect(
+      r
+        .subs({ n: ce.number(n) })
+        .evaluate()
+        .N().re,
+    ).toBeCloseTo(2 ** n, 9);
+  }
+});
+
 // ─── GeneratingFunction ─────────────────────────────────────────────────────────────────────
 
 test("GeneratingFunction(Fibonacci(n), n, x) is x/(1-x-x^2) — checked against the sequence's first 20 terms", () => {

@@ -1,0 +1,32 @@
+name: Thread
+domain: Collections
+signature: Thread(f(a1, …, an))
+summary: f applied elementwise across every list-headed argument, other arguments broadcast.
+signatures:
+  - call: Thread(f(a1, …, an))
+    description: f threaded over every List-headed operand
+    library: enumeratio-collections
+  - call: Thread(f(a1, …, an), h)
+    description: like Thread(f(...)), threading only over operands headed by h instead of List
+    library: enumeratio-collections
+details:
+  - Operands not headed by h are broadcast unchanged to every threaded call.
+  - Left unevaluated when the h-headed operands don't all share one length.
+  - Many arithmetic heads already thread over lists automatically; Thread's value is threading a head that doesn't, such as [[Equal]] or a plain function.
+examples:
+  - id: equal-over-lists
+    expr: [Thread, [Equal, [List, 1, 2, 3], [List, 1, 5, 3]]]
+    expected: [List, [Equal, 1, 1], [Equal, 2, 5], [Equal, 3, 3]]
+  - id: scalar-broadcast
+    expr: [Thread, [Equal, [List, 1, 2, 3], 1]]
+    expected: [List, [Equal, 1, 1], [Equal, 2, 1], [Equal, 3, 1]]
+    category: Scope
+    caption: A non-list operand is broadcast to every threaded call
+  - id: custom-head
+    expr: [Thread, [f, [g, 1, 2], [g, 3, 4]], g]
+    expected: [g, [f, 1, 3], [f, 2, 4]]
+    category: Scope
+    caption: A second argument threads over a head other than List
+seeAlso:
+  - MovingMap
+  - Array

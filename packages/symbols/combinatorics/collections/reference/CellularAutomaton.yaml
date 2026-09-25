@@ -1,0 +1,22 @@
+name: CellularAutomaton
+domain: Collections
+signature: CellularAutomaton(rule, init, t)
+summary: t+1 generations of an elementary 1-D cellular automaton starting from init.
+signatures:
+  - call: CellularAutomaton(rule, init, t)
+    description: t+1 generations of Wolfram's elementary (k = 2 colors, radius 1) rule number rule, from initial condition init
+    library: enumeratio-collections
+details:
+  - init is either 1 (Wolfram's shorthand for a single black cell on an all-0 background) or an explicit {list} / {list, background}.
+  - Each generation is one cell wider on each side than the last -- the region t steps could possibly reach.
+  - Only the elementary (k = 2, radius 1) rule form is answered; totalistic and multi-color rule specs are left unevaluated.
+examples:
+  - id: rule-30-single-seed
+    expr: [CellularAutomaton, 30, 1, 2]
+    expected: [List, [List, 1], [List, 1, 1, 1], [List, 1, 1, 0, 0, 1]]
+    caption: The classic Rule 30 triangle, grown for 2 steps from a single seed cell
+  - id: rule-90-explicit-init
+    expr: [CellularAutomaton, 90, [List, [List, 1, 0, 0], 0], 2]
+    expected: [List, [List, 1, 0, 0], [List, 1, 0, 1, 0, 0], [List, 1, 0, 0, 0, 1, 0, 0]]
+    category: Scope
+    caption: An explicit {list, background} initial condition, instead of the single-seed shorthand

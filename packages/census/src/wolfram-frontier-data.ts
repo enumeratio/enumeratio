@@ -209,10 +209,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 16,
   },
   {
-    head: "DifferenceDelta",
-    uses: 15,
-  },
-  {
     head: "FourierSeries",
     uses: 15,
   },
@@ -230,10 +226,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Attributes",
-    uses: 14,
-  },
-  {
-    head: "CellularAutomaton",
     uses: 14,
   },
   {
@@ -281,10 +273,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "PascalBinomial",
-    uses: 11,
-  },
-  {
     head: "FractionBox",
     uses: 10,
   },
@@ -309,10 +297,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 9,
   },
   {
-    head: "FactorialPower",
-    uses: 9,
-  },
-  {
     head: "Key",
     uses: 9,
   },
@@ -322,10 +306,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Minimize",
-    uses: 9,
-  },
-  {
-    head: "Normalize",
     uses: 9,
   },
   {
@@ -345,19 +325,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 8,
   },
   {
-    head: "DeleteDuplicates",
-    uses: 8,
-  },
-  {
     head: "EmpiricalDistribution",
     uses: 8,
   },
   {
     head: "FunctionPeriod",
-    uses: 8,
-  },
-  {
-    head: "HankelMatrix",
     uses: 8,
   },
   {
@@ -382,10 +354,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "TagBox",
-    uses: 8,
-  },
-  {
-    head: "Thread",
     uses: 8,
   },
   {
@@ -429,10 +397,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "Surd",
-    uses: 7,
-  },
-  {
     head: "SymmetrizedArray",
     uses: 7,
   },
@@ -469,15 +433,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 6,
   },
   {
-    head: "LetterNumber",
-    uses: 6,
-  },
-  {
     head: "ListPolarPlot",
-    uses: 6,
-  },
-  {
-    head: "MapAt",
     uses: 6,
   },
   {
@@ -486,10 +442,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "MatrixPlot",
-    uses: 6,
-  },
-  {
-    head: "MovingMap",
     uses: 6,
   },
   {

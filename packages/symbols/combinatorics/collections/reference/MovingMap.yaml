@@ -1,0 +1,15 @@
+name: MovingMap
+domain: Collections
+signature: MovingMap(f, list, r)
+summary: f applied to the radius-r neighborhood around each element of list.
+signatures:
+  - call: MovingMap(f, list, r)
+    description: f applied to each window {list[i-r], …, list[i+r]}, clipped at the boundary
+    library: enumeratio-collections
+details:
+  - 'Unlike [[MovingAverage]]-style windows, the output is the same length as list: a boundary window is clipped rather than dropped.'
+examples:
+  - id: length-of-window
+    expr: [MovingMap, Length, [List, 1, 2, 3, 4], 1]
+    expected: [List, 2, 3, 3, 2]
+    caption: Boundary windows are shorter -- only the interior gets the full radius-1 neighborhood

@@ -1,0 +1,23 @@
+name: HankelMatrix
+domain: Collections
+signature: HankelMatrix(c)
+summary: The square matrix, constant along every anti-diagonal, built from c.
+signatures:
+  - call: HankelMatrix(c)
+    description: the n×n Hankel matrix with first column and first row c, zero-padded past c's reach
+    library: enumeratio-collections
+  - call: HankelMatrix(c, r)
+    description: the n×m Hankel matrix (n = Length(c), m = Length(r)) filled past c's reach from r
+    library: enumeratio-collections
+details:
+  - 'A Hankel matrix is constant along each anti-diagonal: M(i, j) depends only on i + j.'
+examples:
+  - id: single-arg
+    expr: [HankelMatrix, [List, 1, 2, 3]]
+    expected: [List, [List, 1, 2, 3], [List, 2, 3, 0], [List, 3, 0, 0]]
+    caption: Past c's reach, the matrix is zero-padded
+  - id: with-last-row
+    expr: [HankelMatrix, [List, 1, 2, 3], [List, 3, 4, 5]]
+    expected: [List, [List, 1, 2, 3], [List, 2, 3, 3], [List, 3, 3, 4]]
+    category: Scope
+    caption: A second argument fills the region past c's reach from r instead of zero

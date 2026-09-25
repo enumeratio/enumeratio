@@ -39,6 +39,17 @@ export const sources: readonly string[] = [
   "packages/symbols/combinatorics/collections/reference/IsNumeric.yaml",
   "packages/symbols/combinatorics/collections/reference/IsMachineNumber.yaml",
   "packages/symbols/combinatorics/collections/reference/Precision.yaml",
+  "packages/symbols/combinatorics/collections/reference/Thread.yaml",
+  "packages/symbols/combinatorics/collections/reference/MapAt.yaml",
+  "packages/symbols/combinatorics/collections/reference/Normalize.yaml",
+  "packages/symbols/combinatorics/collections/reference/Surd.yaml",
+  "packages/symbols/combinatorics/collections/reference/LetterNumber.yaml",
+  "packages/symbols/combinatorics/collections/reference/FactorialPower.yaml",
+  "packages/symbols/combinatorics/collections/reference/DifferenceDelta.yaml",
+  "packages/symbols/combinatorics/collections/reference/HankelMatrix.yaml",
+  "packages/symbols/combinatorics/collections/reference/MovingMap.yaml",
+  "packages/symbols/combinatorics/collections/reference/PascalBinomial.yaml",
+  "packages/symbols/combinatorics/collections/reference/CellularAutomaton.yaml",
 ];
 
 export const entries: readonly ReferenceEntry[] = [
@@ -1404,5 +1415,395 @@ export const entries: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["IsMachineNumber", "IsNumeric"],
+  },
+  {
+    name: "Thread",
+    domain: "Collections",
+    signature: "Thread(f(a1, …, an))",
+    summary: "f applied elementwise across every list-headed argument, other arguments broadcast.",
+    signatures: [
+      {
+        call: "Thread(f(a1, …, an))",
+        description: "f threaded over every List-headed operand",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Thread(f(a1, …, an), h)",
+        description:
+          "like Thread(f(...)), threading only over operands headed by h instead of List",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Operands not headed by h are broadcast unchanged to every threaded call.",
+      "Left unevaluated when the h-headed operands don't all share one length.",
+      "Many arithmetic heads already thread over lists automatically; Thread's value is threading a head that doesn't, such as [[Equal]] or a plain function.",
+    ],
+    examples: [
+      {
+        id: "equal-over-lists",
+        expr: ["Thread", ["Equal", ["List", 1, 2, 3], ["List", 1, 5, 3]]],
+        expected: ["List", ["Equal", 1, 1], ["Equal", 2, 5], ["Equal", 3, 3]],
+      },
+      {
+        id: "scalar-broadcast",
+        expr: ["Thread", ["Equal", ["List", 1, 2, 3], 1]],
+        expected: ["List", ["Equal", 1, 1], ["Equal", 2, 1], ["Equal", 3, 1]],
+        category: "Scope",
+        caption: "A non-list operand is broadcast to every threaded call",
+      },
+      {
+        id: "custom-head",
+        expr: ["Thread", ["f", ["g", 1, 2], ["g", 3, 4]], "g"],
+        expected: ["g", ["f", 1, 3], ["f", 2, 4]],
+        category: "Scope",
+        caption: "A second argument threads over a head other than List",
+      },
+    ],
+    seeAlso: ["MovingMap", "Array"],
+  },
+  {
+    name: "MapAt",
+    domain: "Collections",
+    signature: "MapAt(f, expr, n)",
+    summary: "f applied to the part of expr at position n, leaving the rest of expr unchanged.",
+    signatures: [
+      {
+        call: "MapAt(f, expr, n)",
+        description: "f applied at the (1-based, negative counts from the end) position n",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "MapAt(f, expr, {{n1}, {n2}, …})",
+        description: "f applied independently at each of several top-level positions",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.",
+    ],
+    examples: [
+      {
+        id: "single-position",
+        expr: ["MapAt", "f", ["List", "a", "b", "c"], 2],
+        expected: ["List", "a", ["f", "b"], "c"],
+      },
+      {
+        id: "negative-position",
+        expr: ["MapAt", "f", ["List", "a", "b", "c"], -1],
+        expected: ["List", "a", "b", ["f", "c"]],
+        category: "Scope",
+        caption: "A negative position counts from the end",
+      },
+      {
+        id: "several-positions",
+        expr: ["MapAt", "f", ["List", "a", "b", "c"], ["List", ["List", 1], ["List", 3]]],
+        expected: ["List", ["f", "a"], "b", ["f", "c"]],
+        category: "Scope",
+        caption: "A list of positions applies f at each independently",
+      },
+    ],
+  },
+  {
+    name: "Normalize",
+    domain: "Collections",
+    signature: "Normalize(v)",
+    summary: "v divided by its Euclidean norm -- a unit vector in v's direction.",
+    signatures: [
+      {
+        call: "Normalize(v)",
+        description: "v / Sqrt(Total(Abs(v)^2))",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Normalize(v, f)",
+        description: "v / f(v), a custom norm function",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: ["The zero vector is returned unchanged -- there is no direction to normalize it to."],
+    examples: [
+      {
+        id: "3-4-5",
+        expr: ["Normalize", ["List", 3, 4]],
+        expected: ["List", ["Rational", 3, 5], ["Rational", 4, 5]],
+        caption: "The 3-4-5 triangle's direction vector, normalized to unit length",
+      },
+      {
+        id: "zero-vector",
+        expr: ["Normalize", ["List", 0, 0]],
+        expected: ["List", 0, 0],
+        category: "Scope",
+        caption: "The zero vector has no direction, so it is left unchanged",
+      },
+    ],
+  },
+  {
+    name: "Surd",
+    domain: "Collections",
+    signature: "Surd(x, n)",
+    summary: "The real nth root of a real x, staying real for a negative x when n is odd.",
+    signatures: [
+      {
+        call: "Surd(x, n)",
+        description: "the real nth root of x",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Differs from x^(1/n): that gives a complex principal root for a negative x, where Surd stays on the real line whenever a real root exists.",
+      "An even n with a negative x has no real root and is left unevaluated.",
+    ],
+    examples: [
+      {
+        id: "negative-cube-root",
+        expr: ["Surd", -8, 3],
+        expected: -2,
+        caption: "The real cube root of -8 is -2, not a complex principal root",
+      },
+      {
+        id: "nonnegative-base",
+        expr: ["Surd", 8, 3],
+        expected: 2,
+        category: "Scope",
+        caption: "For a nonnegative base, Surd agrees with Power(x, 1/n)",
+      },
+    ],
+  },
+  {
+    name: "LetterNumber",
+    domain: "Collections",
+    signature: "LetterNumber(c)",
+    summary: "A letter's 1-based position in the English alphabet -- a → 1, …, z → 26.",
+    signatures: [
+      {
+        call: "LetterNumber(c)",
+        description: "the 1-based alphabet position of a single character c (0 if not a letter)",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "LetterNumber(s)",
+        description: "a list, one position per character of string s",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      'Case-insensitive -- LetterNumber("D") and LetterNumber("d") agree.',
+      'The LetterNumber(c, alphabet) form is only answered for alphabet = "English"; any other named alphabet is left unevaluated.',
+    ],
+    examples: [
+      { id: "single-letter", expr: ["LetterNumber", "'d'"], expected: 4 },
+      {
+        id: "string",
+        expr: ["LetterNumber", "'cab'"],
+        expected: ["List", 3, 1, 2],
+        category: "Scope",
+        caption: "A string gives one position per character",
+      },
+    ],
+  },
+  {
+    name: "FactorialPower",
+    domain: "Collections",
+    signature: "FactorialPower(x, n)",
+    summary: "The falling factorial x(x-1)…(x-n+1), n factors.",
+    signatures: [
+      {
+        call: "FactorialPower(x, n)",
+        description: "x(x-1)(x-2)…(x-n+1)",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "FactorialPower(x, n, h)",
+        description: "x(x-h)(x-2h)…(x-(n-1)h), stepping by h instead of 1",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "A negative integer n inverts the product -- FactorialPower(x, -m, h) = 1 / ((x+h)(x+2h)…(x+mh)).",
+      "A non-integer n (step h = 1 only) generalizes via Gamma(x+1)/Gamma(x-n+1).",
+    ],
+    examples: [
+      {
+        id: "symbolic-falling",
+        expr: ["FactorialPower", "x", 3],
+        expected: ["Multiply", "x", ["Add", "x", -2], ["Add", "x", -1]],
+        caption: "x(x-1)(x-2), CE's own canonical operand order",
+      },
+      { id: "numeric", expr: ["FactorialPower", 5, 3], expected: 60, caption: "5 × 4 × 3 = 60" },
+      {
+        id: "step",
+        expr: ["FactorialPower", "x", 2, "h"],
+        expected: ["Multiply", "x", ["Add", ["Negate", "h"], "x"]],
+        category: "Scope",
+        caption: "A third argument steps by h instead of 1 -- x(x-h)",
+      },
+    ],
+  },
+  {
+    name: "DifferenceDelta",
+    domain: "Collections",
+    signature: "DifferenceDelta(f, n)",
+    summary: "f(n+1) - f(n), simplified -- the forward difference of a sequence.",
+    signatures: [
+      {
+        call: "DifferenceDelta(f, n)",
+        description: "f(n+1) - f(n), simplified",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Substitutes n -> n+1 into f and simplifies the difference; stays symbolic when it does not collapse further.",
+    ],
+    examples: [
+      {
+        id: "quadratic",
+        expr: ["DifferenceDelta", ["Power", "n", 2], "n"],
+        expected: ["Add", ["Multiply", 2, "n"], 1],
+        caption: "$(n+1)^2 - n^2 = 2n + 1$",
+      },
+      {
+        id: "linear",
+        expr: ["DifferenceDelta", ["Add", ["Multiply", 3, "n"], 5], "n"],
+        expected: 3,
+        caption: "The forward difference of a linear function is its slope, everywhere",
+      },
+    ],
+    seeAlso: ["DiscreteRatio"],
+  },
+  {
+    name: "HankelMatrix",
+    domain: "Collections",
+    signature: "HankelMatrix(c)",
+    summary: "The square matrix, constant along every anti-diagonal, built from c.",
+    signatures: [
+      {
+        call: "HankelMatrix(c)",
+        description:
+          "the n×n Hankel matrix with first column and first row c, zero-padded past c's reach",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "HankelMatrix(c, r)",
+        description:
+          "the n×m Hankel matrix (n = Length(c), m = Length(r)) filled past c's reach from r",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "A Hankel matrix is constant along each anti-diagonal: M(i, j) depends only on i + j.",
+    ],
+    examples: [
+      {
+        id: "single-arg",
+        expr: ["HankelMatrix", ["List", 1, 2, 3]],
+        expected: ["List", ["List", 1, 2, 3], ["List", 2, 3, 0], ["List", 3, 0, 0]],
+        caption: "Past c's reach, the matrix is zero-padded",
+      },
+      {
+        id: "with-last-row",
+        expr: ["HankelMatrix", ["List", 1, 2, 3], ["List", 3, 4, 5]],
+        expected: ["List", ["List", 1, 2, 3], ["List", 2, 3, 3], ["List", 3, 3, 4]],
+        category: "Scope",
+        caption: "A second argument fills the region past c's reach from r instead of zero",
+      },
+    ],
+  },
+  {
+    name: "MovingMap",
+    domain: "Collections",
+    signature: "MovingMap(f, list, r)",
+    summary: "f applied to the radius-r neighborhood around each element of list.",
+    signatures: [
+      {
+        call: "MovingMap(f, list, r)",
+        description: "f applied to each window {list[i-r], …, list[i+r]}, clipped at the boundary",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Unlike [[MovingAverage]]-style windows, the output is the same length as list: a boundary window is clipped rather than dropped.",
+    ],
+    examples: [
+      {
+        id: "length-of-window",
+        expr: ["MovingMap", "Length", ["List", 1, 2, 3, 4], 1],
+        expected: ["List", 2, 3, 3, 2],
+        caption:
+          "Boundary windows are shorter -- only the interior gets the full radius-1 neighborhood",
+      },
+    ],
+  },
+  {
+    name: "PascalBinomial",
+    domain: "Collections",
+    signature: "PascalBinomial(n, m)",
+    summary: "The binomial coefficient, extended to a negative n so Pascal's identity still holds.",
+    signatures: [
+      {
+        call: "PascalBinomial(n, m)",
+        description: "n(n-1)…(n-m+1) / m!, for m >= 0 and any integer n",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Agrees with [[Binomial]] where n >= m >= 0; for a negative n it is the standard generalized binomial coefficient, which still satisfies Pascal's recurrence P(n, m) = P(n-1, m-1) + P(n-1, m).",
+      "A negative m is left unevaluated -- Wolfram's extension there is a documented gap, not yet cross-checked against a kernel.",
+    ],
+    examples: [
+      {
+        id: "standard-range",
+        expr: ["PascalBinomial", 5, 2],
+        expected: 10,
+        caption: "Agrees with Binomial(5, 2) in the standard range",
+      },
+      {
+        id: "negative-n",
+        expr: ["PascalBinomial", -1, 3],
+        expected: -1,
+        category: "Scope",
+        caption: "C(-1, k) = (-1)^k, the standard identity for a negative upper index",
+      },
+    ],
+  },
+  {
+    name: "CellularAutomaton",
+    domain: "Collections",
+    signature: "CellularAutomaton(rule, init, t)",
+    summary: "t+1 generations of an elementary 1-D cellular automaton starting from init.",
+    signatures: [
+      {
+        call: "CellularAutomaton(rule, init, t)",
+        description:
+          "t+1 generations of Wolfram's elementary (k = 2 colors, radius 1) rule number rule, from initial condition init",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "init is either 1 (Wolfram's shorthand for a single black cell on an all-0 background) or an explicit {list} / {list, background}.",
+      "Each generation is one cell wider on each side than the last -- the region t steps could possibly reach.",
+      "Only the elementary (k = 2, radius 1) rule form is answered; totalistic and multi-color rule specs are left unevaluated.",
+    ],
+    examples: [
+      {
+        id: "rule-30-single-seed",
+        expr: ["CellularAutomaton", 30, 1, 2],
+        expected: ["List", ["List", 1], ["List", 1, 1, 1], ["List", 1, 1, 0, 0, 1]],
+        caption: "The classic Rule 30 triangle, grown for 2 steps from a single seed cell",
+      },
+      {
+        id: "rule-90-explicit-init",
+        expr: ["CellularAutomaton", 90, ["List", ["List", 1, 0, 0], 0], 2],
+        expected: [
+          "List",
+          ["List", 1, 0, 0],
+          ["List", 1, 0, 1, 0, 0],
+          ["List", 1, 0, 0, 0, 1, 0, 0],
+        ],
+        category: "Scope",
+        caption:
+          "An explicit {list, background} initial condition, instead of the single-seed shorthand",
+      },
+    ],
   },
 ];

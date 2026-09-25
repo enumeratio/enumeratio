@@ -1,0 +1,27 @@
+name: MapAt
+domain: Collections
+signature: MapAt(f, expr, n)
+summary: f applied to the part of expr at position n, leaving the rest of expr unchanged.
+signatures:
+  - call: MapAt(f, expr, n)
+    description: f applied at the (1-based, negative counts from the end) position n
+    library: enumeratio-collections
+  - call: MapAt(f, expr, {{n1}, {n2}, …})
+    description: f applied independently at each of several top-level positions
+    library: enumeratio-collections
+details:
+  - Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.
+examples:
+  - id: single-position
+    expr: [MapAt, f, [List, a, b, c], 2]
+    expected: [List, a, [f, b], c]
+  - id: negative-position
+    expr: [MapAt, f, [List, a, b, c], -1]
+    expected: [List, a, b, [f, c]]
+    category: Scope
+    caption: A negative position counts from the end
+  - id: several-positions
+    expr: [MapAt, f, [List, a, b, c], [List, [List, 1], [List, 3]]]
+    expected: [List, [f, a], b, [f, c]]
+    category: Scope
+    caption: A list of positions applies f at each independently

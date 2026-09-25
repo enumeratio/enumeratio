@@ -403,6 +403,32 @@ function declareDiscreteRatio(ce: ComputeEngine): void {
   });
 }
 
+// ─── DifferenceDelta ────────────────────────────────────────────────────────────────────────
+// Same shape as DiscreteRatio (Wolfram frontier), subtraction instead of division: the
+// forward-difference operator Δf(n) = f(n+1) - f(n).
+
+function evaluateDifferenceDelta(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+): BoxedExpression | undefined {
+  const [f, nExpr] = ops;
+  if (f === undefined || nExpr === undefined) return undefined;
+  const varName = symbolNameOf(nExpr);
+  if (varName === undefined) return undefined;
+  const fNext = f.subs({ [varName]: ce.function("Add", [nExpr, ce.One]) }).evaluate();
+  const delta = ce.function("Subtract", [fNext, f]).evaluate();
+  return delta.simplify();
+}
+
+function declareDifferenceDelta(ce: ComputeEngine): void {
+  ce.declare("DifferenceDelta", {
+    description: "f(n+1) - f(n), simplified — the forward difference of a sequence.",
+    signature: "(any, symbol) -> any",
+    lazy: true,
+    evaluate: (ops: readonly BoxedExpression[]) => evaluateDifferenceDelta(ce, ops),
+  });
+}
+
 // ─── FindSequenceFunction ───────────────────────────────────────────────────────────────────
 
 /** The list's elements as exact fractions, or `undefined` if any isn't one. */
@@ -542,4 +568,5 @@ export function declareGeneratingFunctions(ce: ComputeEngine): void {
   declareExponentialGeneratingFunction(ce);
   declareFindSequenceFunction(ce);
   declareDiscreteRatio(ce);
+  declareDifferenceDelta(ce);
 }
