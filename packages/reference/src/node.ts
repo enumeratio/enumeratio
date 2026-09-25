@@ -184,7 +184,7 @@ const cache = new Map<string, ReferenceData>();
 /**
  * The reference data every consumer reads: the YAML, validated (a problem throws). Each
  * example carries its implementations record's rows as the page reads them: a scanned
- * system's run as `others`, and any system's note as `divergence`.
+ * system's run as `others`, and Wolfram's note as `divergence`.
  */
 export function referenceData(
   packagesRoot: string = PACKAGES,
@@ -209,7 +209,12 @@ export function referenceData(
         const rows = record[example.id];
         if (rows === undefined) return example;
         const scanned = Object.entries(rows).filter(([, row]) => row.out !== undefined);
-        const noted = Object.entries(rows).filter(([, row]) => row.note);
+        // A chip is Wolfram's: the one system with authored "differs from" prose. Other
+        // systems' notes explain their rows (a transpiler shape, a kernel's convention), and so
+        // does a note on a row where Wolfram errored.
+        const noted = Object.entries(rows).filter(
+          ([system, row]) => system === "wolfram" && row.note && row.verdict !== "error",
+        );
         return {
           ...example,
           ...(scanned.length ? { others: Object.fromEntries(scanned.map(([s, row]) => [s, runOf(row)])) } : {}),

@@ -57,8 +57,8 @@ export interface ReferenceExample {
    */
   readonly aspirational?: boolean;
   /**
-   * Derived by the loader, never written in a record: each system's `note` from the head's
-   * implementations record, where our result deliberately differs from that system's. The
+   * Derived by the loader, never written in a record: Wolfram's `note` from the head's
+   * implementations record, where our result deliberately differs from Wolfram's. The
    * page shows a "differs from <system>" chip per key, and the note.
    */
   readonly divergence?: Readonly<Record<string, string>>;
