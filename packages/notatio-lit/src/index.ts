@@ -55,6 +55,7 @@ import "./notatio-labeled.ts";
 import "./notatio-code.ts";
 import "./notatio-terminal.ts";
 import "./notatio-collection-table.ts";
+import "./notatio-test-result-object.ts";
 
 import type { NotatioCell } from "./notatio-cell.ts";
 import type { NotatioCode } from "./notatio-code.ts";
@@ -100,6 +101,7 @@ import type { NotatioVectorPlot } from "./notatio-vector-plot.ts";
 import type { NotatioBarChart3D } from "./notatio-bar-chart-3d.ts";
 import type { NotatioListPlot3D } from "./notatio-list-plot-3d.ts";
 import type { NotatioTerminal } from "./notatio-terminal.ts";
+import type { NotatioTestResultObject } from "./notatio-test-result-object.ts";
 
 export { NotatioIn } from "./notatio-in.ts";
 export { NotatioOut } from "./notatio-out.ts";
@@ -153,6 +155,7 @@ export { NotatioDynamic } from "./notatio-dynamic.ts";
 export { NotatioWhen } from "./notatio-when.ts";
 export { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
 export { NotatioTerminal } from "./notatio-terminal.ts";
+export { NotatioTestResultObject } from "./notatio-test-result-object.ts";
 
 // The MathLive/compute-engine integration, so hosts depend on this package alone.
 export {
@@ -210,6 +213,7 @@ declare global {
     "notatio-dynamic": NotatioDynamic;
     "notatio-when": NotatioWhen;
     "notatio-terminal": NotatioTerminal;
+    "notatio-test-result-object": NotatioTestResultObject;
   }
 }
 

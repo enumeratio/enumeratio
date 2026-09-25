@@ -409,6 +409,28 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       return ops[0] === undefined ? [] : [slotted(ops[0], names)];
     },
   },
+  {
+    // `TestResultObject(KeyValuePair("Outcome", …), …)` -- `VerificationTest`'s return
+    // value (`@enumeratio/aestimatio`). Every operand is a `KeyValuePair`, so
+    // `optionsOf` (called generically in `render`, below) treats the whole thing as
+    // OPTIONS, not positional operands -- this symbol has no `attributes(ops)` of its
+    // own, only the option map. `Outcome`/`Input`/`TestID` need no override: their
+    // default kebab-cased attribute (`outcome`, `input`, `test-id`) is already right,
+    // and the default option text (a string bare, else notatio) is already what the
+    // component wants. `ExpectedOutput`/`ActualOutput` rename to `expected`/`actual`
+    // and drop the `Missing` sentinel `declare.ts` fills the gap with; `time` is
+    // Wolfram's `AbsoluteTiming`-style name for `AbsoluteTimeUsed`.
+    head: "TestResultObject",
+    tag: "notatio-test-result-object",
+    attributes: () => ({}),
+    options: {
+      ExpectedOutput: (value): Record<string, string> =>
+        symOf(value) === "Missing" ? {} : { expected: notatio(value) },
+      ActualOutput: (value): Record<string, string> =>
+        symOf(value) === "Missing" ? {} : { actual: notatio(value) },
+      AbsoluteTimeUsed: (value): Record<string, string> => ({ time: notatio(value) }),
+    },
+  },
 ];
 
 function vectorField(ops: readonly Json[]): Record<string, string> {

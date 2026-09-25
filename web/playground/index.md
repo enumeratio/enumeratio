@@ -12,6 +12,7 @@ experimental and move fast.
 - [Input](/playground/in) — `<notatio-in>`, the live math editor (and its read-only mode)
 - [Output](/playground/out) — `<notatio-out>`, typeset read-only rendering + display forms
 - [Cell](/playground/cell) — `<notatio-cell>`, a notebook In/Out pair
+- [Verification](/playground/verification) — `<notatio-test-result-object>`, `VerificationTest`'s outcome as a badge over an In/Out pair
 - [Figure (glyphs)](/playground/figure) — `<notatio-figure>`, combinatorial pictorial forms
 - [Plot](/playground/plot) — `<notatio-plot>`, function plots of one variable
 - [Plot 3D](/playground/plot-3d) — `<notatio-plot-3d>`, bivariate surfaces, projected and shaded in plain SVG
