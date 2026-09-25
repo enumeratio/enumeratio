@@ -371,6 +371,23 @@ def enumeratio_equal(a, b):
         return False
     except (TypeError, ValueError, AttributeError):
         return a == b
+
+# Max/Min of a (possibly nested) list: Wolfram's Max/Min flatten every list argument into
+# one pool, which SymPy's own Max/Min do not — handed a raw list they raise, since each of
+# their *args must sympify to a comparable scalar, not a Python list.
+def _enumeratio_flatten(x):
+    if isinstance(x, (list, tuple)):
+        out = []
+        for e in x:
+            out.extend(_enumeratio_flatten(e))
+        return out
+    return [x]
+
+def enumeratio_max(*args):
+    return Max(*_enumeratio_flatten(list(args)))
+
+def enumeratio_min(*args):
+    return Min(*_enumeratio_flatten(list(args)))
 `;
 
 // How SymPy and mpmath print a value for the scan: an exact integer or rational as it is, any

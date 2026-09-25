@@ -12075,9 +12075,7 @@
         "wolfram": {
           "input": "PolyLog[2.5, 2]",
           "output": "2.789660332381895 - 1.3638037005377295*I",
-          "verdict": "disagree",
-          "kind": "unevaluated",
-          "note": "A non-integer order past |z| = 1 is left unevaluated here (the continuation is only implemented for integer s); Wolfram continues to a complex value.",
+          "verdict": "agree",
           "tex": {
             "input": "\\text{Li}_{2.5}(2)",
             "output": "2.78966\\, -1.3638 i"
@@ -12086,23 +12084,19 @@
         "sage": {
           "input": "polylog(2.5, 2)",
           "output": "2.78966033238278 - 1.36380370053935*I",
-          "verdict": "disagree",
-          "kind": "unevaluated",
-          "note": "A non-integer order past |z| = 1 is left unevaluated here, matching the classified Wolfram row; Sage's polylog continues to the same complex value 2.7897 - 1.3638i."
+          "verdict": "agree"
         },
         "mpmath": {
           "input": "polylog(2.5, 2)",
           "output": "(2.78966033238277714404754430876 - 1.36380370053935279437171941141j)",
-          "verdict": "disagree",
-          "kind": "unevaluated",
-          "note": "compute-engine leaves Li_s(z) unevaluated for non-integer s at z > 1, on the branch cut; mpmath continues it."
+          "verdict": "agree"
         },
         "sympy": {
           "input": "polylog(2.5, 2)",
           "output": "polylog(2.5, 2)",
           "verdict": "disagree",
           "kind": "undefined-form",
-          "note": "Both leave Li_2.5(2) unevaluated, on the branch cut."
+          "note": "SymPy leaves Li_2.5(2) unevaluated on the branch cut; ours continues to the complex value Wolfram, Sage and mpmath give."
         }
       },
       "an-exact-argument-stays-symbolic-under-plain": {

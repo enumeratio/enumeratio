@@ -68,9 +68,52 @@ test("native |z| > 1 continuation survives the extension", () => {
   expect(r.im).toBeCloseTo(-Math.PI * Math.LN2, 10);
 });
 
-test("Liₛ(z) outside |z| ≤ 1 at non-integer s stays symbolic (no continuation here)", () => {
-  expect(ce.box(["PolyLog", 2.5, 2]).N().operator).toBe("PolyLog");
-  expect(Number.isNaN(polyLogReal(2.5, 2))).toBe(true);
+// Found by the oracle quickcheck: this used to stay unevaluated (`polyLogReal` NaNs by
+// design — no ce/Gamma access outside the boxed evaluator — but `evaluatePolyLog` now
+// continues past |z| = 1 the same way LerchPhi does).
+test("Liₛ(z) outside |z| ≤ 1 at non-integer s continues via the Lerch integral (mpmath value)", () => {
+  expect(Number.isNaN(polyLogReal(2.5, 2))).toBe(true); // the raw kernel still doesn't continue
+  const r = ce.box(["PolyLog", 2.5, 2]).N();
+  expect(r.re).toBeCloseTo(2.789660332382777, 10);
+  expect(r.im).toBeCloseTo(-1.363803700539353, 10);
+});
+
+test("PolyLog on the |z|=1 rim continues once Re(s) ≤ 1, like LerchPhi", () => {
+  const z: Expr = ["Complex", Math.cos(0.5), Math.sin(0.5)];
+  const r = ce.box(["N", ["PolyLog", -0.5, z]] as Expr).N();
+  // Liₛ(z) = z·Φ(z, s, 1); cross-checked against mpmath.
+  expect(r.re).toBeCloseTo(-1.9814128032416301, 8);
+  expect(r.im).toBeCloseTo(1.7596180280954192, 8);
+});
+
+// Every Re(s) on the rim routes through the continuation, not just Re(s) ≤ 1: the rim's
+// own series converges too slowly past that to trust at double precision (a term at
+// n = 200,000 is still ~1e-8 at Re(s) = 1.5 — this is what the oracle quickcheck's
+// PolyLog(1.5, 0.6+0.8i) caught, wrong from the 9th digit). Golden grid at e^(iθ), against
+// mpmath at dps = 30 (`mp.polylog(s, mp.e**(1j*theta))`).
+const POLYLOG_RIM_GOLDEN: readonly [number, number, number, number][] = [
+  // theta, s, expected re, expected im
+  [0.5, 0, -0.5, 1.9581586823229701],
+  [0.5, 0.5, 0.31529661575870839, 1.6683324929967654],
+  [0.5, 1, 0.70358563513784466, 1.3207963267948966],
+  [0.5, 1.5, 0.86592952276498824, 1.0428086988788313],
+  [1.7, 0, -0.5, 0.43923889227600591],
+  [1.7, 0.5, -0.46063922619752787, 0.60047781605507835],
+  [1.7, 1, -0.4071708593407294, 0.72079632679489664],
+  [1.7, 1.5, -0.35239988663966856, 0.80705722906946167],
+  [2.4, 0, -0.5, 0.19438978468410248],
+  [2.4, 0.5, -0.57099531310013763, 0.2881223505446887],
+  [2.4, 1, -0.62276665311711276, 0.37079632679489666],
+  [2.4, 1.5, -0.65948608809007347, 0.44033552542469974],
+];
+
+test("PolyLog on the |z|=1 rim: golden grid at every Re(s), accurate to ~1e-13 (mpmath dps=30)", () => {
+  for (const [theta, s, re, im] of POLYLOG_RIM_GOLDEN) {
+    const z: Expr = ["Complex", Math.cos(theta), Math.sin(theta)];
+    const r = ce.box(["N", ["PolyLog", s, z]] as Expr).N();
+    expect(r.re, `theta=${theta} s=${s} re`).toBeCloseTo(re, 12);
+    expect(r.im, `theta=${theta} s=${s} im`).toBeCloseTo(im, 12);
+  }
 });
 
 // --- PolyGamma ψ⁽ᵐ⁾(z) = (−1)^(m+1) m! ζ(m+1, z) ----------------------------------
@@ -106,6 +149,23 @@ test("complex argument — the case the native handler declines (mpmath values)"
   const b = ce.box(["PolyGamma", 2, ["Complex", 0.5, 0.3]]).N();
   expect(b.re).toBeCloseTo(-0.17725989989006736, 11);
   expect(b.im).toBeCloseTo(10.451822205943449, 11);
+});
+
+// --- Found by the oracle quickcheck: PolyGamma(-1, z) was unevaluated ------------
+
+test("ψ⁽⁻¹⁾(z) = LogGamma(z), matching Wolfram's PolyGamma[-1, z] (mpmath has no negative order)", () => {
+  expect(num(["PolyGamma", -1, 2])).toBeCloseTo(0, 13); // LogGamma(2) = log(1!) = 0
+  expect(num(["PolyGamma", -1, ["Rational", 1, 2]])).toBeCloseTo(0.5723649429247001, 12); // log(√π)
+  const a = ce.box(["PolyGamma", -1, ["Complex", 1, 1]]).N();
+  expect(a.re).toBeCloseTo(-0.6509231993018563, 12);
+  expect(a.im).toBeCloseTo(-0.3016403204675332, 12);
+  const b = ce.box(["PolyGamma", -1, -0.5]).N(); // off the positive axis: LogGamma's branch
+  expect(b.re).toBeCloseTo(1.2655121234846454, 12);
+  expect(b.im).toBeCloseTo(-3.141592653589793, 12);
+});
+
+test("ψ⁽ᵐ⁾ for m ≤ −2 is past what we cover and stays unevaluated", () => {
+  expect(ce.box(["N", ["PolyGamma", -2, 2]]).evaluate().json).toEqual(["PolyGamma", -2, 2]);
 });
 
 test("the kernel is the Hurwitz zeta: ψ⁽ᵐ⁾(z) = (−1)^(m+1) m! ζ(m+1, z)", () => {

@@ -5070,14 +5070,10 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         id: "a-non-integer-order-past-z-1-is-left-unevaluated",
         expr: ["PolyLog", 2.5, 2],
-        expected: ["PolyLog", 2.5, 2],
-        category: "Possible issues",
+        expected: ["Complex", 2.7896603323827778, -1.363803700539351],
+        category: "Scope",
         caption:
-          "A non-integer order past $|z| = 1$ is left unevaluated: the series does not reach there and the continuation is only implemented for integer $s$",
-        divergence: {
-          wolfram:
-            "Wolfram's $\\mathrm{PolyLog}[5/2, 2]$ continues to a complex value; we return the expression unevaluated rather than a wrong number.",
-        },
+          "A non-integer order continues past $|z| = 1$ to a complex value, as Wolfram does: $\\mathrm{Li}_{5/2}(2) \\approx 2.78966 - 1.36380i$",
       },
       {
         id: "an-exact-argument-stays-symbolic-under-plain",
