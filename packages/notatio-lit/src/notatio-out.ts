@@ -9,6 +9,7 @@ import { toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./notatio-code.ts";
+import { WorkerUnavailableError } from "./notatio-dynamic-module.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import { visualMarkup } from "./visual.ts";
@@ -449,17 +450,27 @@ export class NotatioOut extends LitElement {
         this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
       const boxed = transcript.run(() => parseText());
       this.#abort = new AbortController();
-      let resultJson: unknown;
       try {
-        ({ value: resultJson } = await host.evaluateRemote(boxed.json, {
-          signal: this.#abort.signal,
-        }));
-      } finally {
-        this.#abort = undefined;
+        let resultJson: unknown;
+        try {
+          ({ value: resultJson } = await host.evaluateRemote(boxed.json, {
+            signal: this.#abort.signal,
+          }));
+        } finally {
+          this.#abort = undefined;
+        }
+        const value = transcript.run(() => engine.box(resultJson as never));
+        this.#historyN = transcript.record(input, boxed, value);
+        return { latex: latexOf(engine, value), json: value.json, messages: [] };
+      } catch (err) {
+        // No worker could ever be started for this session (not a user "stop" --
+        // that resolves normally with `$Aborted` rather than throwing) --
+        // `host.evaluatorKind` has already flipped to `"Local"` for every cell after
+        // this one; fall through to the LOCAL path below for this one too, rather
+        // than showing `$Aborted` for a failure the reader never asked for.
+        if (!(err instanceof WorkerUnavailableError)) throw err;
+        log("worker-evaluate: no worker could start -- evaluating this cell locally", err);
       }
-      const value = transcript.run(() => engine.box(resultJson as never));
-      this.#historyN = transcript.record(input, boxed, value);
-      return { latex: latexOf(engine, value), json: value.json, messages: [] };
     }
     // A host in Worker mode but missing `evaluateRemote` would otherwise fall through to
     // the LOCAL evaluation below without a trace -- exactly the failure mode that let

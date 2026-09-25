@@ -15,8 +15,12 @@ import type { BoxInput } from "./box.ts";
 //             + Σ_{j=1}^{M} B_{2j}/(2j)! · (s)_{2j-1} · (N+a)^{-s-2j+1}
 //
 // The truncation is what makes it an approximation rather than the definition — see
-// definitions.ts for the definition. N and M are chosen from the requested precision; the
+// definitions.ts for the definition. N and M are chosen from the working precision; the
 // pair below holds every digit the engine asks for at 21, 40 and 80 (tests/definitions.test.ts).
+//
+// Left of Re(s) = 1 the direct sum and the integral term grow like (N+a)^(1−s) and cancel
+// down to the answer — for Re(s) ≪ 0 most of the digits. So the series is carried at the
+// requested precision plus that loss, measured against the result it came out to.
 
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
 export const DOUBLE_DIGITS = 15;
@@ -70,13 +74,73 @@ export function preciseHurwitzZeta(
     return undefined;
   if (a.re <= 0 || s.re === 1) return undefined;
 
-  const expr = hurwitzZetaExpr(
-    s.json as unknown as Json,
-    a.json as unknown as Json,
-    Math.abs(s.re),
-    ce.precision,
-  );
-  return atEnginePrecision(ce, ce.box(expr as unknown as BoxInput).N());
+  const target = ce.precision;
+  const magnitudeOfS = Math.abs(s.re);
+  const sJson = s.json as unknown as Json;
+  const aJson = a.json as unknown as Json;
+  // Carry the digits cancellation will take from an O(1) result, then check against the size
+  // the result actually came out; short of them, carry more and go again.
+  let working = digitsNeeded(target, s.re, magnitudeOfS, a.re, 1);
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const expr = hurwitzZetaExpr(sJson, aJson, magnitudeOfS, working);
+    const value = withPrecision(ce, working, () => ce.box(expr as unknown as BoxInput).N());
+    if (!isNumber(value)) return undefined;
+    const needed = digitsNeeded(target, s.re, magnitudeOfS, a.re, value.re);
+    if (needed <= working) return atEnginePrecision(ce, value);
+    working = needed;
+  }
+  return undefined;
+}
+
+/**
+ * Working digits for `target` correct ones, given a result of size `result`. More digits
+ * lengthen the direct sum, which loses a little more, so this settles on a fixed point.
+ */
+function digitsNeeded(
+  target: number,
+  sigma: number,
+  magnitudeOfS: number,
+  a: number,
+  result: number,
+): number {
+  let working = target;
+  for (let i = 0; i < 8; i++) {
+    const { terms } = truncation(working, magnitudeOfS);
+    const next = target + cancellation(sigma, terms + a, result) + GUARD_DIGITS;
+    if (next <= working) break;
+    working = next;
+  }
+  return working;
+}
+
+/** Digits kept past the predicted loss, for the estimate being one. */
+const GUARD_DIGITS = 5;
+
+/**
+ * Digits lost to cancellation: the largest piece of the sum against the result. Right of
+ * Re(s) = 1 nothing cancels; left of it the direct sum and the (N+a)^(1−s)/(s−1) tail grow
+ * like (N+a)^(1−σ) to meet in an O(1) answer, and far left that is most of the digits.
+ */
+function cancellation(sigma: number, edge: number, result: number): number {
+  if (sigma >= 1) return 0;
+  const largest = (1 - sigma) * Math.log10(edge) - Math.log10(Math.abs(sigma - 1));
+  const size = Math.log10(Math.abs(result));
+  if (size === Number.POSITIVE_INFINITY) return 0;
+  // An exact 0 (or NaN) can't be sized: carry every digit the largest piece has, and some.
+  if (!Number.isFinite(size)) return Math.ceil(largest) + 2 * GUARD_DIGITS;
+  return Math.max(0, Math.ceil(largest - size));
+}
+
+/** `run()` with the engine carrying `digits`, restored after. Each change purges its caches. */
+function withPrecision<T>(ce: ComputeEngine, digits: number, run: () => T): T {
+  const was = ce.precision;
+  if (digits === was) return run();
+  ce.precision = digits;
+  try {
+    return run();
+  } finally {
+    ce.precision = was;
+  }
 }
 
 /**

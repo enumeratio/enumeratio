@@ -4,10 +4,12 @@ import { entries as words } from "./words.ts";
 import { entries as pathsPartitions } from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
 import { entries as permutations } from "./permutations.ts";
+import { entries as permutationClasses } from "./permutation-classes.ts";
 import { entries as compositions } from "./compositions.ts";
 import { entries as partitions } from "./partitions.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
+import { entries as unlabeledTrees } from "./unlabeled-trees.ts";
 import type { FamilyKernel } from "./types.ts";
 
 export * from "./types.ts";
@@ -20,8 +22,10 @@ export const allEntries: readonly FamilyKernel[] = [
   ...pathsPartitions,
   ...tableauxTrees,
   ...permutations,
+  ...permutationClasses,
   ...compositions,
   ...partitions,
   ...binaryWordFamilies,
   ...numericSets,
+  ...unlabeledTrees,
 ];
