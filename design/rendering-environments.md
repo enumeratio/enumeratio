@@ -1,7 +1,7 @@
 # Design: rendering in other environments
 
 Status: **built**. The wider exploration this grew from — the axes environments differ
-along, per-environment cost, open questions — moved to speculative/rendering-environments.md.
+along, per-environment cost, open questions — moved to design/speculative/rendering-environments.md.
 This is what landed.
 
 ## Where it is

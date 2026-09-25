@@ -69,4 +69,4 @@ TestID -> "…")` holds `input`, evaluates it under the constraints, compares wi
 Reference examples are, in effect, verification tests; they may be expressed this way later.
 
 Future work (running our own test suites under aestimatio,
-`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to speculative/aestimatio.md.
+`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to design/speculative/aestimatio.md.

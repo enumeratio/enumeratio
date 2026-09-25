@@ -2,7 +2,7 @@
 
 Status: **landed** (renames, heads, argument map, wrapper generator, `Chart` family head,
 controls — all shipped 2026-09-15; §5–§6a below). Open questions moved to
-speculative/components-and-symbols.md. The idea: a symbol and its component are
+design/speculative/components-and-symbols.md. The idea: a symbol and its component are
 the same thing seen from two ends. `<Cell>` in a markdown page is the symbol `Cell` as a
 Vue component; `Histogram(data)` in a cell is the same symbol as an expression; the web
 component is how either one gets drawn. Companion to

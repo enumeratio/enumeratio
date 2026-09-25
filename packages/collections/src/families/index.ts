@@ -9,7 +9,7 @@ import type { FamilyKernel } from "./types.ts";
 
 export * from "./types.ts";
 
-// The registry of every pack. library.ts consumes `allEntries` and nothing else.
+// Every family. declare.ts declares them all; the quickcheck and OEIS scripts read them too.
 export const allEntries: readonly FamilyKernel[] = [
   ...core,
   ...subsets,

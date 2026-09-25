@@ -1,7 +1,7 @@
 # Design: namespaces, resources, and the shape of a 1500-name catalog
 
 Status: **§1–§5 are the argument, §6 is history plus what stands, §8 is current.** Open
-questions moved to speculative/namespaces.md. Counts in this file are as of the day they
+questions moved to design/speculative/namespaces.md. Counts in this file are as of the day they
 were written; anything a test pins is cited by the test rather than repeated (see
 [roadmap.md](./roadmap.md) §1 for the rule).
 
@@ -556,7 +556,7 @@ compute-engine, or a cardinality answered by `Count` — and the frontier is emp
 and are not repeated here, because the last two copies of that table in this file were both
 wrong within a month.
 
-Open questions moved to speculative/namespaces.md.
+Open questions moved to design/speculative/namespaces.md.
 
 ## 8. What is built
 

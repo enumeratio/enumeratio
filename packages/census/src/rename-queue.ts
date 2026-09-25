@@ -42,7 +42,7 @@ export const RENAME_QUEUE: readonly QueuedRename[] = [
     to,
     why: "numeral systems take one suffix; four of these have no radix, and `Numerals` is right for all",
     blockedBy:
-      "speculative/numeral-naming.md §4 needs a decision (A recommended); keep the old name as an alias",
+      "design/speculative/numeral-naming.md §4 needs a decision (A recommended); keep the old name as an alias",
   })),
 
   // modular: named for the implementation rather than the mathematics. No Wolfram
