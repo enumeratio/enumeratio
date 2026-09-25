@@ -9,42 +9,66 @@
         "wolfram": {
           "input": "BarnesG[5]",
           "output": "12",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "G(5)",
+            "output": "12"
+          }
         }
       },
       "[\"BarnesG\",7]": {
         "wolfram": {
           "input": "BarnesG[7]",
           "output": "34560",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "G(7)",
+            "output": "34560"
+          }
         }
       },
       "[\"BarnesG\",[\"List\",1,2,3,4,5,6]]": {
         "wolfram": {
           "input": "BarnesG[List[1, 2, 3, 4, 5, 6]]",
           "output": "{1, 1, 1, 2, 12, 288}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "G(\\{1,2,3,4,5,6\\})",
+            "output": "\\{1,1,1,2,12,288\\}"
+          }
         }
       },
       "[\"BarnesG\",0]": {
         "wolfram": {
           "input": "BarnesG[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "G(0)",
+            "output": "0"
+          }
         }
       },
       "[\"BarnesG\",-3]": {
         "wolfram": {
           "input": "BarnesG[-3]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "G(-3)",
+            "output": "0"
+          }
         }
       },
       "[\"BarnesG\",2.5]": {
         "wolfram": {
           "input": "BarnesG[2.5]",
           "output": "0.947573901083827",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "G(2.5)",
+            "output": "0.947574"
+          }
         }
       },
       "[\"BarnesG\",[\"Rational\",5,2]]": {
@@ -53,7 +77,11 @@
           "output": "(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))",
           "verdict": "disagree",
           "kind": "unevaluated",
-          "note": "An exact non-integer argument stays symbolic under plain evaluation here; Wolfram continues to a closed form in Glaisher's constant."
+          "note": "An exact non-integer argument stays symbolic under plain evaluation here; Wolfram continues to a closed form in Glaisher's constant.",
+          "tex": {
+            "input": "G\\left(\\frac{5}{2}\\right)",
+            "output": "\\frac{\\sqrt[8]{e} \\pi ^{3/4}}{2^{23/24} A^{3/2}}"
+          }
         }
       }
     },
@@ -62,28 +90,44 @@
         "wolfram": {
           "input": "LogBarnesG[4]",
           "output": "Log[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{logG}(4)",
+            "output": "\\log (2)"
+          }
         }
       },
       "[\"LogBarnesG\",3]": {
         "wolfram": {
           "input": "LogBarnesG[3]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{logG}(3)",
+            "output": "0"
+          }
         }
       },
       "[\"LogBarnesG\",0]": {
         "wolfram": {
           "input": "LogBarnesG[0]",
           "output": "-Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{logG}(0)",
+            "output": "-\\infty"
+          }
         }
       },
       "[\"LogBarnesG\",10.5]": {
         "wolfram": {
           "input": "LogBarnesG[10.5]",
           "output": "42.278883636795044",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{logG}(10.5)",
+            "output": "42.2789"
+          }
         }
       }
     },
@@ -92,42 +136,66 @@
         "wolfram": {
           "input": "LogGamma[3]",
           "output": "Log[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{log$\\Gamma $}(3)",
+            "output": "\\log (2)"
+          }
         }
       },
       "[\"LogGamma\",1]": {
         "wolfram": {
           "input": "LogGamma[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{log$\\Gamma $}(1)",
+            "output": "0"
+          }
         }
       },
       "[\"LogGamma\",[\"Rational\",1,2]]": {
         "wolfram": {
           "input": "LogGamma[Rational[1, 2]]",
           "output": "Log[Pi]/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{log$\\Gamma $}\\left(\\frac{1}{2}\\right)",
+            "output": "\\frac{\\log (\\pi )}{2}"
+          }
         }
       },
       "[\"LogGamma\",0]": {
         "wolfram": {
           "input": "LogGamma[0]",
           "output": "Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{log$\\Gamma $}(0)",
+            "output": "\\infty"
+          }
         }
       },
       "[\"LogGamma\",2.5]": {
         "wolfram": {
           "input": "LogGamma[2.5]",
           "output": "0.2846828704729192",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{log$\\Gamma $}(2.5)",
+            "output": "0.284683"
+          }
         }
       },
       "[\"LogGamma\",[\"Complex\",-2.5,1.5]]": {
         "wolfram": {
           "input": "LogGamma[Complex[-2.5, 1.5]]",
           "output": "-3.7175134511917927 - 7.7130655258341925*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{log$\\Gamma $}(-2.5+1.5 i)",
+            "output": "-3.71751-7.71307 i"
+          }
         }
       }
     },
@@ -136,35 +204,55 @@
         "wolfram": {
           "input": "DirichletEta[1]",
           "output": "Log[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\eta (1)",
+            "output": "\\log (2)"
+          }
         }
       },
       "[\"DirichletEta\",2]": {
         "wolfram": {
           "input": "DirichletEta[2]",
           "output": "Pi^2/12",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\eta (2)",
+            "output": "\\frac{\\pi ^2}{12}"
+          }
         }
       },
       "[\"DirichletEta\",3]": {
         "wolfram": {
           "input": "DirichletEta[3]",
           "output": "(3*Zeta[3])/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\eta (3)",
+            "output": "\\frac{3 \\zeta (3)}{4}"
+          }
         }
       },
       "[\"DirichletEta\",[\"List\",0,-1,-2,-3]]": {
         "wolfram": {
           "input": "DirichletEta[List[0, -1, -2, -3]]",
           "output": "{1/2, 1/4, 0, -1/8}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\eta (\\{0,-1,-2,-3\\})",
+            "output": "\\left\\{\\frac{1}{2},\\frac{1}{4},0,-\\frac{1}{8}\\right\\}"
+          }
         }
       },
       "[\"DirichletEta\",0.5]": {
         "wolfram": {
           "input": "DirichletEta[0.5]",
           "output": "0.604898643421631",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\eta (0.5)",
+            "output": "0.604899"
+          }
         }
       },
       "[\"DirichletEta\",[\"Rational\",1,2]]": {
@@ -173,7 +261,11 @@
           "output": "(1 - Sqrt[2])*Zeta[1/2]",
           "verdict": "disagree",
           "kind": "unevaluated",
-          "note": "An exact non-integer argument stays symbolic here; Wolfram rewrites it as (1 - sqrt(2)) Zeta[1/2] instead of a further-reduced number."
+          "note": "An exact non-integer argument stays symbolic here; Wolfram rewrites it as (1 - sqrt(2)) Zeta[1/2] instead of a further-reduced number.",
+          "tex": {
+            "input": "\\eta \\left(\\frac{1}{2}\\right)",
+            "output": "\\left(1-\\sqrt{2}\\right) \\zeta \\left(\\frac{1}{2}\\right)"
+          }
         }
       }
     },
@@ -182,35 +274,55 @@
         "wolfram": {
           "input": "DirichletBeta[1]",
           "output": "Pi/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\beta (1)",
+            "output": "\\frac{\\pi }{4}"
+          }
         }
       },
       "[\"DirichletBeta\",2]": {
         "wolfram": {
           "input": "DirichletBeta[2]",
           "output": "Catalan",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\beta (2)",
+            "output": "C"
+          }
         }
       },
       "[\"DirichletBeta\",3]": {
         "wolfram": {
           "input": "DirichletBeta[3]",
           "output": "Pi^3/32",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\beta (3)",
+            "output": "\\frac{\\pi ^3}{32}"
+          }
         }
       },
       "[\"DirichletBeta\",7]": {
         "wolfram": {
           "input": "DirichletBeta[7]",
           "output": "(61*Pi^7)/184320",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\beta (7)",
+            "output": "\\frac{61 \\pi ^7}{184320}"
+          }
         }
       },
       "[\"DirichletBeta\",[\"List\",0,-1,-2,-3,-4]]": {
         "wolfram": {
           "input": "DirichletBeta[List[0, -1, -2, -3, -4]]",
           "output": "{1/2, 0, -1/2, 0, 5/2}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\beta (\\{0,-1,-2,-3,-4\\})",
+            "output": "\\left\\{\\frac{1}{2},0,-\\frac{1}{2},0,\\frac{5}{2}\\right\\}"
+          }
         }
       },
       "[\"DirichletBeta\",4]": {
@@ -219,14 +331,22 @@
           "output": "(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16",
           "verdict": "disagree",
           "kind": "unevaluated",
-          "note": "Even s >= 4 has no closed form here and stays symbolic; Wolfram expresses it via HurwitzZeta(4, 1/4) and HurwitzZeta(4, 3/4) instead of a further-reduced number."
+          "note": "Even s >= 4 has no closed form here and stays symbolic; Wolfram expresses it via HurwitzZeta(4, 1/4) and HurwitzZeta(4, 3/4) instead of a further-reduced number.",
+          "tex": {
+            "input": "\\beta (4)",
+            "output": "\\frac{1}{16} \\left(\\frac{\\zeta \\left(4,\\frac{1}{4}\\right)}{16}-\\frac{\\zeta \\left(4,\\frac{3}{4}\\right)}{16}\\right)"
+          }
         }
       },
       "[\"DirichletBeta\",2.5]": {
         "wolfram": {
           "input": "DirichletBeta[2.5]",
           "output": "0.948622174037055",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\beta (2.5)",
+            "output": "0.948622"
+          }
         }
       }
     },
@@ -235,42 +355,66 @@
         "wolfram": {
           "input": "StieltjesGamma[0]",
           "output": "EulerGamma",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gamma _0",
+            "output": "\\gamma"
+          }
         }
       },
       "[\"StieltjesGamma\",1]": {
         "wolfram": {
           "input": "StieltjesGamma[1]",
           "output": "StieltjesGamma[1]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gamma _1",
+            "output": "\\gamma _1"
+          }
         }
       },
       "[\"StieltjesGamma\",1,1.5]": {
         "wolfram": {
           "input": "StieltjesGamma[1, 1.5]",
           "output": "0.0328346803149491",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gamma _1(1.5)",
+            "output": "0.0328347"
+          }
         }
       },
       "[\"StieltjesGamma\",3,0.5]": {
         "wolfram": {
           "input": "StieltjesGamma[3, 0.5]",
           "output": "-0.6674242737113807",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gamma _3(0.5)",
+            "output": "-0.667424"
+          }
         }
       },
       "[\"StieltjesGamma\",2,-1]": {
         "wolfram": {
           "input": "StieltjesGamma[2, -1]",
           "output": "ComplexInfinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gamma _2(-1)",
+            "output": "\\text{ComplexInfinity}"
+          }
         }
       },
       "[\"StieltjesGamma\",40]": {
         "wolfram": {
           "input": "StieltjesGamma[40]",
           "output": "StieltjesGamma[40]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gamma _{40}",
+            "output": "\\gamma _{40}"
+          }
         }
       }
     },
@@ -279,42 +423,66 @@
         "wolfram": {
           "input": "DirichletCharacter[4, 2, 3]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\chi _{4,2}(3)",
+            "output": "-1"
+          }
         }
       },
       "[\"DirichletCharacter\",5,2,2]": {
         "wolfram": {
           "input": "DirichletCharacter[5, 2, 2]",
           "output": "I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\chi _{5,2}(2)",
+            "output": "i"
+          }
         }
       },
       "[\"DirichletCharacter\",5,2,5]": {
         "wolfram": {
           "input": "DirichletCharacter[5, 2, 5]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\chi _{5,2}(5)",
+            "output": "0"
+          }
         }
       },
       "[\"DirichletCharacter\",5,3,2]": {
         "wolfram": {
           "input": "DirichletCharacter[5, 3, 2]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\chi _{5,3}(2)",
+            "output": "-1"
+          }
         }
       },
       "[\"DirichletCharacter\",1,1,7]": {
         "wolfram": {
           "input": "DirichletCharacter[1, 1, 7]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\chi _{1,1}(7)",
+            "output": "1"
+          }
         }
       },
       "[\"DirichletCharacter\",5,9,2]": {
         "wolfram": {
           "input": "DirichletCharacter[5, 9, 2]",
           "output": "DirichletCharacter[5, 9, 2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\chi _{5,9}(2)",
+            "output": "\\chi _{5,9}(2)"
+          }
         }
       }
     },
@@ -323,7 +491,11 @@
         "wolfram": {
           "input": "DirichletL[4, 2, 1]",
           "output": "Pi/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{4,2}(1)",
+            "output": "\\frac{\\pi }{4}"
+          }
         }
       },
       "[\"DirichletL\",12,1,1]": {
@@ -332,28 +504,44 @@
           "output": "DirichletL[12, 1, 1]",
           "verdict": "disagree",
           "kind": "undefined-form",
-          "note": "We answer the pole as ComplexInfinity (a principal character mod 12 keeps zeta's pole at s=1); Wolfram declines and leaves the call unevaluated instead."
+          "note": "We answer the pole as ComplexInfinity (a principal character mod 12 keeps zeta's pole at s=1); Wolfram declines and leaves the call unevaluated instead.",
+          "tex": {
+            "input": "L_{12,1}(1)",
+            "output": "L_{12,1}(1)"
+          }
         }
       },
       "[\"DirichletL\",5,2,0]": {
         "wolfram": {
           "input": "DirichletL[5, 2, 0]",
           "output": "3/5 + I/5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{5,2}(0)",
+            "output": "\\frac{3}{5}+\\frac{i}{5}"
+          }
         }
       },
       "[\"DirichletL\",8,2,-3]": {
         "wolfram": {
           "input": "DirichletL[8, 2, -3]",
           "output": "11",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{8,2}(-3)",
+            "output": "11"
+          }
         }
       },
       "[\"DirichletL\",5,2,2]": {
         "wolfram": {
           "input": "DirichletL[5, 2, 2]",
           "output": "DirichletL[5, 2, 2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{5,2}(2)",
+            "output": "L_{5,2}(2)"
+          }
         }
       }
     },
@@ -362,42 +550,66 @@
         "wolfram": {
           "input": "HarmonicNumber[10]",
           "output": "7381/2520",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "H_{10}",
+            "output": "\\frac{7381}{2520}"
+          }
         }
       },
       "[\"HarmonicNumber\",0]": {
         "wolfram": {
           "input": "HarmonicNumber[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "H_0",
+            "output": "0"
+          }
         }
       },
       "[\"HarmonicNumber\",5,-1]": {
         "wolfram": {
           "input": "HarmonicNumber[5, -1]",
           "output": "15",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "H_5^{(-1)}",
+            "output": "15"
+          }
         }
       },
       "[\"HarmonicNumber\",2.5]": {
         "wolfram": {
           "input": "HarmonicNumber[2.5]",
           "output": "1.680372305546776",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "H_{2.5}",
+            "output": "1.68037"
+          }
         }
       },
       "[\"HarmonicNumber\",-3]": {
         "wolfram": {
           "input": "HarmonicNumber[-3]",
           "output": "ComplexInfinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "H_{-3}",
+            "output": "\\text{ComplexInfinity}"
+          }
         }
       },
       "[\"HarmonicNumber\",5,[\"Rational\",1,2]]": {
         "wolfram": {
           "input": "HarmonicNumber[5, Rational[1, 2]]",
           "output": "HarmonicNumber[5, 1/2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "H_5^{\\left(\\frac{1}{2}\\right)}",
+            "output": "H_5^{\\left(\\frac{1}{2}\\right)}"
+          }
         }
       }
     }

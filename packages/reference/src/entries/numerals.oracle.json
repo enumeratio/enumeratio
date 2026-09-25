@@ -9,49 +9,77 @@
         "wolfram": {
           "input": "IntegerDigits[255, 16]",
           "output": "{15, 15}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[255,16]",
+            "output": "\\{15,15\\}"
+          }
         }
       },
       "[\"IntegerDigits\",93784,[\"MixedRadixNumerals\",[\"List\",24,60,60]]]": {
         "wolfram": {
           "input": "IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]",
           "output": "{1, 2, 3, 4}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[93784,\\text{MixedRadix}[\\{24,60,60\\}]]",
+            "output": "\\{1,2,3,4\\}"
+          }
         }
       },
       "[\"IntegerDigits\",1234]": {
         "wolfram": {
           "input": "IntegerDigits[1234]",
           "output": "{1, 2, 3, 4}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[1234]",
+            "output": "\\{1,2,3,4\\}"
+          }
         }
       },
       "[\"IntegerDigits\",2147,2]": {
         "wolfram": {
           "input": "IntegerDigits[2147, 2]",
           "output": "{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[2147,2]",
+            "output": "\\{1,0,0,0,0,1,1,0,0,0,1,1\\}"
+          }
         }
       },
       "[\"IntegerDigits\",0]": {
         "wolfram": {
           "input": "IntegerDigits[0]",
           "output": "{0}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[0]",
+            "output": "\\{0\\}"
+          }
         }
       },
       "[\"IntegerDigits\",-3134]": {
         "wolfram": {
           "input": "IntegerDigits[-3134]",
           "output": "{3, 1, 3, 4}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[-3134]",
+            "output": "\\{3,1,3,4\\}"
+          }
         }
       },
       "[\"IntegerDigits\",6345354,10,4]": {
         "wolfram": {
           "input": "IntegerDigits[6345354, 10, 4]",
           "output": "{5, 3, 5, 4}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerDigits}[6345354,10,4]",
+            "output": "\\{5,3,5,4\\}"
+          }
         }
       }
     },
@@ -60,35 +88,55 @@
         "wolfram": {
           "input": "FromDigits[List[1, 2, 3, 4], MixedRadix[List[24, 60, 60]]]",
           "output": "93784",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FromDigits}[\\{1,2,3,4\\},\\text{MixedRadix}[\\{24,60,60\\}]]",
+            "output": "93784"
+          }
         }
       },
       "[\"FromDigits\",[\"List\",5,1,2,8]]": {
         "wolfram": {
           "input": "FromDigits[List[5, 1, 2, 8]]",
           "output": "5128",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FromDigits}[\\{5,1,2,8\\}]",
+            "output": "5128"
+          }
         }
       },
       "[\"FromDigits\",[\"List\",1,0,1,1,0,1,1],2]": {
         "wolfram": {
           "input": "FromDigits[List[1, 0, 1, 1, 0, 1, 1], 2]",
           "output": "91",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FromDigits}[\\{1,0,1,1,0,1,1\\},2]",
+            "output": "91"
+          }
         }
       },
       "[\"Equal\",[\"FromDigits\",[\"IntegerDigits\",58127]],58127]": {
         "wolfram": {
           "input": "(FromDigits[IntegerDigits[58127]] == 58127)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FromDigits}[\\text{IntegerDigits}[58127]]=58127",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"FromDigits\",[\"List\",7,11,0,0,0,122]]": {
         "wolfram": {
           "input": "FromDigits[List[7, 11, 0, 0, 0, 122]]",
           "output": "810122",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FromDigits}[\\{7,11,0,0,0,122\\}]",
+            "output": "810122"
+          }
         }
       },
       "[\"FromDigits\",[\"List\"]]": {
@@ -97,7 +145,11 @@
           "output": "0",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "An empty digit list is left unevaluated here; Wolfram reads it as 0."
+          "note": "An empty digit list is left unevaluated here; Wolfram reads it as 0.",
+          "tex": {
+            "input": "\\text{FromDigits}[\\{\\}]",
+            "output": "0"
+          }
         }
       }
     },
@@ -106,28 +158,44 @@
         "wolfram": {
           "input": "IntegerString[42]",
           "output": "\"42\"",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerString}[42]",
+            "output": "42"
+          }
         }
       },
       "[\"IntegerString\",17651,2]": {
         "wolfram": {
           "input": "IntegerString[17651, 2]",
           "output": "\"100010011110011\"",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerString}[17651,2]",
+            "output": "100010011110011"
+          }
         }
       },
       "[\"IntegerString\",255,16]": {
         "wolfram": {
           "input": "IntegerString[255, 16]",
           "output": "\"ff\"",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerString}[255,16]",
+            "output": "\\text{ff}"
+          }
         }
       },
       "[\"IntegerString\",0]": {
         "wolfram": {
           "input": "IntegerString[0]",
           "output": "\"0\"",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerString}[0]",
+            "output": "0"
+          }
         }
       },
       "[\"IntegerString\",-42]": {
@@ -136,7 +204,11 @@
           "output": "\"42\"",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "compute-engine keeps the sign; Wolfram's IntegerString drops it."
+          "note": "compute-engine keeps the sign; Wolfram's IntegerString drops it.",
+          "tex": {
+            "input": "\\text{IntegerString}[-42]",
+            "output": "42"
+          }
         }
       }
     },
@@ -145,28 +217,44 @@
         "wolfram": {
           "input": "DigitCount[2147]",
           "output": "{1, 1, 0, 1, 0, 0, 1, 0, 0, 0}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{DigitCount}[2147]",
+            "output": "\\{1,1,0,1,0,0,1,0,0,0\\}"
+          }
         }
       },
       "[\"DigitCount\",2147,2]": {
         "wolfram": {
           "input": "DigitCount[2147, 2]",
           "output": "{5, 7}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{DigitCount}[2147,2]",
+            "output": "\\{5,7\\}"
+          }
         }
       },
       "[\"DigitCount\",2147,10,1]": {
         "wolfram": {
           "input": "DigitCount[2147, 10, 1]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{DigitCount}[2147,10,1]",
+            "output": "1"
+          }
         }
       },
       "[\"DigitCount\",122000,10,0]": {
         "wolfram": {
           "input": "DigitCount[122000, 10, 0]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{DigitCount}[122000,10,0]",
+            "output": "3"
+          }
         }
       }
     },
@@ -175,28 +263,44 @@
         "wolfram": {
           "input": "Total[IntegerDigits[58127]]",
           "output": "23",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Total}[\\text{IntegerDigits}[58127]]",
+            "output": "23"
+          }
         }
       },
       "[\"DigitSum\",58127,2]": {
         "wolfram": {
           "input": "Total[IntegerDigits[58127, 2]]",
           "output": "9",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Total}[\\text{IntegerDigits}[58127,2]]",
+            "output": "9"
+          }
         }
       },
       "[\"DigitSum\",0]": {
         "wolfram": {
           "input": "Total[IntegerDigits[0]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Total}[\\text{IntegerDigits}[0]]",
+            "output": "0"
+          }
         }
       },
       "[\"Equal\",[\"Mod\",[\"DigitSum\",58127],9],[\"Mod\",58127,9]]": {
         "wolfram": {
           "input": "(Mod[Total[IntegerDigits[58127]], 9] == Mod[58127, 9])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(\\text{Total}[\\text{IntegerDigits}[58127]] \\bmod 9)=(58127 \\bmod 9)",
+            "output": "\\text{True}"
+          }
         }
       }
     },

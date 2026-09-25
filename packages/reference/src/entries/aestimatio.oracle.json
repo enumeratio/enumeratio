@@ -9,7 +9,11 @@
         "wolfram": {
           "input": "TimeConstrained[Sum[k, List[k, 1, 10]], 1]",
           "output": "55",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{TimeConstrained}\\left[\\sum _{k=1}^{10} k,1\\right]",
+            "output": "55"
+          }
         }
       }
     },
@@ -20,7 +24,11 @@
           "output": "3",
           "verdict": "disagree",
           "kind": "unevaluated",
-          "note": "In-process, MemoryConstrained stays unevaluated because JavaScript cannot cap a synchronous computation's memory; Wolfram enforces the cap and evaluates 1 + 2 = 3."
+          "note": "In-process, MemoryConstrained stays unevaluated because JavaScript cannot cap a synchronous computation's memory; Wolfram enforces the cap and evaluates 1 + 2 = 3.",
+          "tex": {
+            "input": "\\text{MemoryConstrained}[1+2,1000000]",
+            "output": "3"
+          }
         }
       }
     },
@@ -31,7 +39,11 @@
           "output": "TestObject[<|\"Outcome\" -> \"Success\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[5], \"ActualOutput\" -> HoldForm[5]|>]",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput)."
+          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput).",
+          "tex": {
+            "input": "\\text{VerificationTest}[2+3,5]",
+            "output": "\\text{TestObject}[\\unicode{f113}\\text{Outcome}\\to \\text{Success},\\text{Input}\\to 2+3,\\text{ExpectedOutput}\\to 5,\\text{ActualOutput}\\to 5\\unicode{f114}]"
+          }
         }
       },
       "[\"VerificationTest\",[\"Add\",2,3],6]": {
@@ -40,7 +52,11 @@
           "output": "TestObject[<|\"Outcome\" -> \"Failure\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[6], \"ActualOutput\" -> HoldForm[5]|>]",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput)."
+          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput).",
+          "tex": {
+            "input": "\\text{VerificationTest}[2+3,6]",
+            "output": "\\text{TestObject}[\\unicode{f113}\\text{Outcome}\\to \\text{Failure},\\text{Input}\\to 2+3,\\text{ExpectedOutput}\\to 6,\\text{ActualOutput}\\to 5\\unicode{f114}]"
+          }
         }
       }
     }

@@ -9,7 +9,11 @@
         "wolfram": {
           "input": "Mod[17, 5]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(17 \\bmod 5)",
+            "output": "2"
+          }
         },
         "sage": {
           "input": "(17 % 5)",
@@ -46,7 +50,11 @@
         "wolfram": {
           "input": "Mod[100, 7]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(100 \\bmod 7)",
+            "output": "2"
+          }
         },
         "sage": {
           "input": "(100 % 7)",
@@ -83,7 +91,11 @@
         "wolfram": {
           "input": "Mod[-7, 3]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((-7) \\bmod 3)",
+            "output": "2"
+          }
         },
         "sage": {
           "input": "(-7 % 3)",
@@ -120,7 +132,11 @@
         "wolfram": {
           "input": "Mod[List[1, 2, 3, 4, 5], 3]",
           "output": "{1, 2, 0, 1, 2}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(\\{1,2,3,4,5\\} \\bmod 3)",
+            "output": "\\{1,2,0,1,2\\}"
+          }
         },
         "sage": {
           "input": "([1, 2, 3, 4, 5] % 3)",
@@ -169,7 +185,11 @@
         "wolfram": {
           "input": "Mod[5, 0]",
           "output": "Indeterminate",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(5 \\bmod 0)",
+            "output": "\\text{Indeterminate}"
+          }
         },
         "sage": {
           "input": "(5 % 0)",
@@ -218,7 +238,11 @@
         "wolfram": {
           "input": "(Mod[17, 5] == Mod[Plus[17, Times[3, 5]], 5])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(17 \\bmod 5)=((17+3\\ 5) \\bmod 5)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((17 % 5) == ((17 + (3 * 5)) % 5))",
@@ -255,7 +279,11 @@
         "wolfram": {
           "input": "Mod[Complex[7, 5], 3]",
           "output": "1 - I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((7+5 i) \\bmod 3)",
+            "output": "1-i"
+          }
         },
         "sympy": {
           "input": "((7 + 5*I) % 3)",
@@ -290,7 +318,11 @@
         "wolfram": {
           "input": "Mod[Complex[7, 5], Complex[2, 1]]",
           "output": "-I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((7+5 i) \\bmod (2+i))",
+            "output": "-i"
+          }
         },
         "sympy": {
           "input": "((7 + 5*I) % (2 + 1*I))",
@@ -325,7 +357,11 @@
         "wolfram": {
           "input": "Mod[Complex[100000000000000000001, 9007199254740993], Complex[2, 1]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((100000000000000000001+9007199254740993 i) \\bmod (2+i))",
+            "output": "0"
+          }
         },
         "sympy": {
           "input": "((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))",
@@ -360,14 +396,22 @@
         "wolfram": {
           "input": "(Mod[Complex[7, 5], Complex[2, 1]] == Subtract[Complex[7, 5], Times[Complex[2, 1], Quotient[Complex[7, 5], Complex[2, 1]]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((7+5 i) \\bmod (2+i))=(7+5 i)-(2+i) \\text{Quotient}[7+5 i,2+i]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"List\",[\"Mod\",[\"Complex\",1,2],2],[\"Mod\",[\"Complex\",3,2],2]]": {
         "wolfram": {
           "input": "List[Mod[Complex[1, 2], 2], Mod[Complex[3, 2], 2]]",
           "output": "{1, -1}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\{((1+2 i) \\bmod 2),((3+2 i) \\bmod 2)\\}",
+            "output": "\\{1,-1\\}"
+          }
         },
         "sympy": {
           "input": "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]",
@@ -404,7 +448,11 @@
         "wolfram": {
           "input": "PowerMod[2, 10, 3]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(2^{10} \\bmod 3)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "power_mod(2, 10, 3)",
@@ -421,7 +469,11 @@
         "wolfram": {
           "input": "PowerMod[3, 50, 11]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(3^{50} \\bmod 11)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "power_mod(3, 50, 11)",
@@ -438,7 +490,11 @@
         "wolfram": {
           "input": "PowerMod[2, -1, 7]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(2^{-1} \\bmod 7)",
+            "output": "4"
+          }
         },
         "sage": {
           "input": "power_mod(2, -1, 7)",
@@ -457,7 +513,11 @@
         "wolfram": {
           "input": "PowerMod[7, 13, 33]",
           "output": "13",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(7^{13} \\bmod 33)",
+            "output": "13"
+          }
         },
         "sage": {
           "input": "power_mod(7, 13, 33)",
@@ -474,7 +534,11 @@
         "wolfram": {
           "input": "(PowerMod[2, 10, 3] == Mod[Power[2, 10], 3])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(2^{10} \\bmod 3)=(2^{10} \\bmod 3)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(power_mod(2, 10, 3) == ((2^10) % 3))",
@@ -491,7 +555,11 @@
         "wolfram": {
           "input": "PowerMod[2, -1, 4]",
           "output": "PowerMod[2, -1, 4]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(2^{-1} \\bmod 4)",
+            "output": "(2^{-1} \\bmod 4)"
+          }
         },
         "sage": {
           "input": "power_mod(2, -1, 4)",
@@ -519,7 +587,11 @@
         "wolfram": {
           "input": "PowerMod[4, Rational[1, 2], 7]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(4^{\\frac{1}{2}} \\bmod 7)",
+            "output": "2"
+          }
         },
         "rust": {
           "input": "powermod(n(4), rational(n(1), n(2)), n(7))",
@@ -540,7 +612,11 @@
         "wolfram": {
           "input": "PowerMod[2, List[10, 11, 12, 13, 14], 5]",
           "output": "{4, 3, 1, 2, 4}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(2^{\\{10,11,12,13,14\\}} \\bmod 5)",
+            "output": "\\{4,3,1,2,4\\}"
+          }
         },
         "rust": {
           "input": "powermod(n(2), list(vec![n(10), n(11), n(12), n(13), n(14)]), n(5))",
@@ -559,7 +635,11 @@
         "wolfram": {
           "input": "PowerMod[Plus[Power[10, 300], 1], 7, 5]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(\\left(10^{300}+1\\right)^7 \\bmod 5)",
+            "output": "1"
+          }
         },
         "rust": {
           "input": "powermod((power(n(10), n(300)) + n(1)), n(7), n(5))",
@@ -578,7 +658,11 @@
         "wolfram": {
           "input": "PowerMod[3, Rational[1, 2], Plus[Power[10, 30], 57]]",
           "output": "492767688934650018614948489645",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(3^{\\frac{1}{2}} \\bmod \\left(10^{30}+57\\right))",
+            "output": "492767688934650018614948489645"
+          }
         },
         "rust": {
           "input": "powermod(n(3), rational(n(1), n(2)), (power(n(10), n(30)) + n(57)))",
@@ -599,7 +683,11 @@
           "output": "PowerMod[2/3, 1, 7]",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "We extend PowerMod to a rational base; Wolfram's PowerMod takes integers (and Gaussian integers) only and leaves a rational base unevaluated."
+          "note": "We extend PowerMod to a rational base; Wolfram's PowerMod takes integers (and Gaussian integers) only and leaves a rational base unevaluated.",
+          "tex": {
+            "input": "(\\left(\\frac{2}{3}\\right)^1 \\bmod 7)",
+            "output": "(\\left(\\frac{2}{3}\\right)^1 \\bmod 7)"
+          }
         },
         "rust": {
           "input": "powermod(rational(n(2), n(3)), n(1), n(7))",
@@ -618,7 +706,11 @@
         "wolfram": {
           "input": "PowerMod[7, EulerPhi[19], 19]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(7^{\\phi (19)} \\bmod 19)",
+            "output": "1"
+          }
         }
       },
       "[\"PowerMod\",2,340,341]": {
@@ -630,7 +722,11 @@
         "wolfram": {
           "input": "PowerMod[2, 340, 341]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(2^{340} \\bmod 341)",
+            "output": "1"
+          }
         },
         "rust": {
           "input": "powermod(n(2), n(340), n(341))",
@@ -647,7 +743,11 @@
         "wolfram": {
           "input": "(PowerMod[PowerMod[5, 6, 23], 15, 23] == PowerMod[PowerMod[5, 15, 23], 6, 23])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((5^6 \\bmod 23)^{15} \\bmod 23)=((5^{15} \\bmod 23)^6 \\bmod 23)",
+            "output": "\\text{True}"
+          }
         },
         "rust": {
           "input": "equal(powermod(powermod(n(5), n(6), n(23)), n(15), n(23)), powermod(powermod(n(5), n(15), n(23)), n(6), n(23)))",
@@ -666,7 +766,11 @@
         "wolfram": {
           "input": "PowerMod[2, Rational[1, 2], 5]",
           "output": "PowerMod[2, 1/2, 5]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(2^{\\frac{1}{2}} \\bmod 5)",
+            "output": "(2^{\\frac{1}{2}} \\bmod 5)"
+          }
         },
         "rust": {
           "input": "powermod(n(2), rational(n(1), n(2)), n(5))",
@@ -680,7 +784,11 @@
         "wolfram": {
           "input": "PowerMod[Complex[2, 1], 2, 3]",
           "output": "I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((2+i)^2 \\bmod 3)",
+            "output": "i"
+          }
         },
         "sage": {
           "input": "power_mod((2 + 1*I), 2, 3)",
@@ -694,7 +802,11 @@
         "wolfram": {
           "input": "PowerMod[Complex[1, 2], Power[10, 30], Complex[7, 2]]",
           "output": "1 + 2*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "((1+2 i)^{10^{30}} \\bmod (7+2 i))",
+            "output": "1+2 i"
+          }
         },
         "sage": {
           "input": "power_mod((1 + 2*I), (10^30), (7 + 2*I))",
@@ -710,7 +822,11 @@
           "output": "PowerMod[11 - 7*I, -4, 7 + 4*I]",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Both support negative powers of a Gaussian unit; Wolfram's PowerMod asks for a unit modulo the integer norm of the Gaussian modulus rather than modulo the Gaussian integer itself -- a different definition of 'modulus' -- and declines this call."
+          "note": "Both support negative powers of a Gaussian unit; Wolfram's PowerMod asks for a unit modulo the integer norm of the Gaussian modulus rather than modulo the Gaussian integer itself -- a different definition of 'modulus' -- and declines this call.",
+          "tex": {
+            "input": "((11-7 i)^{-4} \\bmod (7+4 i))",
+            "output": "((11-7 i)^{-4} \\bmod (7+4 i))"
+          }
         },
         "sage": {
           "input": "power_mod((11 + -7*I), -4, (7 + 4*I))",
@@ -726,7 +842,11 @@
         "wolfram": {
           "input": "Mod[Times[Plus[1, 4], Subtract[1, 4]], 15]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(((1+4) (1-4)) \\bmod 15)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "(((1 + 4) * (1 - 4)) % 15)",
@@ -763,7 +883,11 @@
         "wolfram": {
           "input": "PowerModList[3, Rational[1, 2], 11]",
           "output": "{5, 6}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[3,\\frac{1}{2},11\\right]",
+            "output": "\\{5,6\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(3, (1/2), 11)",
@@ -775,7 +899,11 @@
         "wolfram": {
           "input": "PowerModList[2, 10, 1000]",
           "output": "{24}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}[2,10,1000]",
+            "output": "\\{24\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(2, 10, 1000)",
@@ -787,7 +915,11 @@
         "wolfram": {
           "input": "PowerModList[2, Rational[3, 2], 17]",
           "output": "{5, 12}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[2,\\frac{3}{2},17\\right]",
+            "output": "\\{5,12\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(2, (3/2), 17)",
@@ -799,7 +931,11 @@
         "wolfram": {
           "input": "PowerModList[2, Rational[2, 3], 31]",
           "output": "{16, 18, 28}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[2,\\frac{2}{3},31\\right]",
+            "output": "\\{16,18,28\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(2, (2/3), 31)",
@@ -811,7 +947,11 @@
         "wolfram": {
           "input": "PowerModList[3, -1, 7]",
           "output": "{5}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}[3,-1,7]",
+            "output": "\\{5\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(3, -1, 7)",
@@ -823,7 +963,11 @@
         "wolfram": {
           "input": "PowerModList[-1, Rational[1, 2], 625]",
           "output": "{182, 443}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[-1,\\frac{1}{2},625\\right]",
+            "output": "\\{182,443\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(-1, (1/2), 625)",
@@ -837,7 +981,11 @@
           "output": "PowerModList[2/3, 1/2, 23]",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "We extend PowerModList to a rational base; Wolfram's PowerModList takes integers only and leaves the rational base unevaluated."
+          "note": "We extend PowerModList to a rational base; Wolfram's PowerModList takes integers only and leaves the rational base unevaluated.",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[\\frac{2}{3},\\frac{1}{2},23\\right]",
+            "output": "\\text{PowerModList}\\left[\\frac{2}{3},\\frac{1}{2},23\\right]"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list((2/3), (1/2), 23)",
@@ -851,7 +999,11 @@
           "output": "PowerModList[{1, 2, 3, 4}, 1/2, 5]",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "We thread PowerModList element-wise over a List base with a rational exponent; Wolfram's PowerModList doesn't accept a List in the base position and leaves the call unevaluated."
+          "note": "We thread PowerModList element-wise over a List base with a rational exponent; Wolfram's PowerModList doesn't accept a List in the base position and leaves the call unevaluated.",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[\\{1,2,3,4\\},\\frac{1}{2},5\\right]",
+            "output": "\\text{PowerModList}\\left[\\{1,2,3,4\\},\\frac{1}{2},5\\right]"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list([1, 2, 3, 4], (1/2), 5)",
@@ -865,7 +1017,11 @@
         "wolfram": {
           "input": "PowerModList[-1, Rational[1, 2], Plus[Power[10, 30], 57]]",
           "output": "{164543371520667882579352850009, 835456628479332117420647150048}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[-1,\\frac{1}{2},10^{30}+57\\right]",
+            "output": "\\{164543371520667882579352850009,835456628479332117420647150048\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(-1, (1/2), ((10^30) + 57))",
@@ -877,7 +1033,11 @@
         "wolfram": {
           "input": "PowerModList[2, Rational[1, 3], Subtract[Power[2, 89], 1]]",
           "output": "{1073741824, 205880356524696485265270985, 413089663117993651110549302}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[2,\\frac{1}{3},2^{89}-1\\right]",
+            "output": "\\{1073741824,205880356524696485265270985,413089663117993651110549302\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(2, (1/3), ((2^89) - 1))",
@@ -889,7 +1049,11 @@
         "wolfram": {
           "input": "PowerModList[-1, Rational[1, 2], Power[5, 40]]",
           "output": "{2224618918409236552857702057, 6870328099320045826292688568}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[-1,\\frac{1}{2},5^{40}\\right]",
+            "output": "\\{2224618918409236552857702057,6870328099320045826292688568\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(-1, (1/2), (5^40))",
@@ -901,7 +1065,11 @@
         "wolfram": {
           "input": "Length[PowerModList[1, Rational[1, 2], Times[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]]]",
           "output": "32768",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}\\left[\\text{PowerModList}\\left[1,\\frac{1}{2},2\\ 3\\ 5\\ 7\\ 11\\ 13\\ 17\\ 19\\ 23\\ 29\\ 31\\ 37\\ 41\\ 43\\ 47\\ 53\\right]\\right]",
+            "output": "32768"
+          }
         },
         "sage": {
           "input": "len(enumeratio_power_mod_list(1, (1/2), (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53)))",
@@ -913,7 +1081,11 @@
         "wolfram": {
           "input": "Length[PowerModList[1, Rational[1, 1000], Subtract[Power[2, 61], 1]]]",
           "output": "50",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}\\left[\\text{PowerModList}\\left[1,\\frac{1}{1000},2^{61}-1\\right]\\right]",
+            "output": "50"
+          }
         },
         "sage": {
           "input": "len(enumeratio_power_mod_list(1, (1/1000), ((2^61) - 1)))",
@@ -925,7 +1097,11 @@
         "wolfram": {
           "input": "(Length[PowerModList[1, Rational[1, 12], 1009]] == GCD[12, 1008])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}\\left[\\text{PowerModList}\\left[1,\\frac{1}{12},1009\\right]\\right]=\\gcd (12,1008)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(len(enumeratio_power_mod_list(1, (1/12), 1009)) == gcd(12, 1008))",
@@ -937,21 +1113,33 @@
         "wolfram": {
           "input": "(Length[PowerModList[1, Rational[1, 2], 1155]] == Power[2, PrimeNu[1155]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}\\left[\\text{PowerModList}\\left[1,\\frac{1}{2},1155\\right]\\right]=2^{\\nu (1155)}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"PowerMod\",4,[\"Rational\",1,2],7],[\"First\",[\"PowerModList\",4,[\"Rational\",1,2],7]]]": {
         "wolfram": {
           "input": "(PowerMod[4, Rational[1, 2], 7] == First[PowerModList[4, Rational[1, 2], 7]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(4^{\\frac{1}{2}} \\bmod 7)=\\text{First}\\left[\\text{PowerModList}\\left[4,\\frac{1}{2},7\\right]\\right]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"PowerModList\",1,[\"Rational\",1,2],15]": {
         "wolfram": {
           "input": "PowerModList[1, Rational[1, 2], 15]",
           "output": "{1, 4, 11, 14}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[1,\\frac{1}{2},15\\right]",
+            "output": "\\{1,4,11,14\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(1, (1/2), 15)",
@@ -963,7 +1151,11 @@
         "wolfram": {
           "input": "PowerModList[-1, Rational[1, 2], 65]",
           "output": "{8, 18, 47, 57}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[-1,\\frac{1}{2},65\\right]",
+            "output": "\\{8,18,47,57\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(-1, (1/2), 65)",
@@ -975,7 +1167,11 @@
         "wolfram": {
           "input": "PowerModList[PowerMod[123456789, 2, Times[1000003, 1000033]], Rational[1, 2], Times[1000003, 1000033]]",
           "output": "{123456789, 30305547335, 969730452764, 999912543310}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[(123456789^2 \\bmod (1000003\\ 1000033)),\\frac{1}{2},1000003\\ 1000033\\right]",
+            "output": "\\{123456789,30305547335,969730452764,999912543310\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(power_mod(123456789, 2, (1000003 * 1000033)), (1/2), (1000003 * 1000033))",
@@ -987,7 +1183,11 @@
         "wolfram": {
           "input": "PowerModList[-1, Rational[1, 2], 15]",
           "output": "{}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[-1,\\frac{1}{2},15\\right]",
+            "output": "\\{\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(-1, (1/2), 15)",
@@ -1001,7 +1201,11 @@
           "output": "PowerModList[2, -1, 4]",
           "verdict": "disagree",
           "kind": "undefined-form",
-          "note": "No inverse exists since gcd(2,4)=2; we spell that as the empty list, but Wolfram's PowerModList instead leaves the call unevaluated rather than returning {}."
+          "note": "No inverse exists since gcd(2,4)=2; we spell that as the empty list, but Wolfram's PowerModList instead leaves the call unevaluated rather than returning {}.",
+          "tex": {
+            "input": "\\text{PowerModList}[2,-1,4]",
+            "output": "\\text{PowerModList}[2,-1,4]"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(2, -1, 4)",
@@ -1015,7 +1219,11 @@
         "wolfram": {
           "input": "PowerModList[1, Rational[1, 2], 8]",
           "output": "{1, 3, 5, 7}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[1,\\frac{1}{2},8\\right]",
+            "output": "\\{1,3,5,7\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(1, (1/2), 8)",
@@ -1029,7 +1237,11 @@
           "output": "{2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10000000000000000016800000000000000005029}",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "We decline once factoring the modulus exceeds our budget and leave the call symbolic; Wolfram's kernel factors this 41-digit product of two 21-digit primes within its own budget and returns all four square roots."
+          "note": "We decline once factoring the modulus exceeds our budget and leave the call symbolic; Wolfram's kernel factors this 41-digit product of two 21-digit primes within its own budget and returns all four square roots.",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[4,\\frac{1}{2},\\left(10^{20}+39\\right) \\left(10^{20}+129\\right)\\right]",
+            "output": "\\{2,4888888888888888897106666666666666669130,5111111111111111119693333333333333335901,10000000000000000016800000000000000005029\\}"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(4, (1/2), (((10^20) + 39) * ((10^20) + 129)))",
@@ -1061,7 +1273,11 @@
           "output": "PowerModList[1, 1/2, {8, 15, 21, 24}]",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "We thread a rational exponent over a List of moduli; Wolfram's PowerModList doesn't accept a List modulus and leaves the call unevaluated."
+          "note": "We thread a rational exponent over a List of moduli; Wolfram's PowerModList doesn't accept a List modulus and leaves the call unevaluated.",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[1,\\frac{1}{2},\\{8,15,21,24\\}\\right]",
+            "output": "\\text{PowerModList}\\left[1,\\frac{1}{2},\\{8,15,21,24\\}\\right]"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list(1, (1/2), [8, 15, 21, 24])",
@@ -1077,7 +1293,11 @@
           "output": "PowerModList[I, 1/2, 7]",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "We extend PowerModList over the Gaussian integers; Wolfram's PowerModList takes integers only and leaves a Gaussian base unevaluated."
+          "note": "We extend PowerModList over the Gaussian integers; Wolfram's PowerModList takes integers only and leaves a Gaussian base unevaluated.",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[i,\\frac{1}{2},7\\right]",
+            "output": "\\text{PowerModList}\\left[i,\\frac{1}{2},7\\right]"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list((0 + 1*I), (1/2), 7)",
@@ -1093,7 +1313,11 @@
           "output": "PowerModList[3 + 4*I, 1/2, 100000000000000000039]",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "Same Gaussian extension as the other row: Wolfram's PowerModList takes integers only and leaves the Gaussian base unevaluated."
+          "note": "Same Gaussian extension as the other row: Wolfram's PowerModList takes integers only and leaves the Gaussian base unevaluated.",
+          "tex": {
+            "input": "\\text{PowerModList}\\left[3+4 i,\\frac{1}{2},10^{20}+39\\right]",
+            "output": "\\text{PowerModList}\\left[3+4 i,\\frac{1}{2},100000000000000000039\\right]"
+          }
         },
         "sage": {
           "input": "enumeratio_power_mod_list((3 + 4*I), (1/2), ((10^20) + 39))",
@@ -1114,7 +1338,11 @@
         "wolfram": {
           "input": "ModularInverse[3, 7]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ModularInverse}[3,7]",
+            "output": "5"
+          }
         }
       },
       "[\"ModularInverse\",2,4]": {
@@ -1128,14 +1356,22 @@
         "wolfram": {
           "input": "ModularInverse[2, 4]",
           "output": "ModularInverse[2, 4]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ModularInverse}[2,4]",
+            "output": "\\text{ModularInverse}[2,4]"
+          }
         }
       },
       "[\"ModularInverse\",[\"Complex\",2,1],7]": {
         "wolfram": {
           "input": "ModularInverse[Complex[2, 1], 7]",
           "output": "6 + 4*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ModularInverse}[2+i,7]",
+            "output": "6+4 i"
+          }
         },
         "sage": {
           "input": "inverse_mod((2 + 1*I), 7)",
@@ -1149,7 +1385,11 @@
         "wolfram": {
           "input": "ModularInverse[Complex[11, -7], Complex[7, 4]]",
           "output": "-1 + 2*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ModularInverse}[11-7 i,7+4 i]",
+            "output": "-1+2 i"
+          }
         },
         "sage": {
           "input": "inverse_mod((11 + -7*I), (7 + 4*I))",
@@ -1165,28 +1405,44 @@
         "wolfram": {
           "input": "ChineseRemainder[List[3, 4], List[4, 5]]",
           "output": "19",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ChineseRemainder}[\\{3,4\\},\\{4,5\\}]",
+            "output": "19"
+          }
         }
       },
       "[\"ChineseRemainder\",[\"List\",2,3,5],[\"List\",3,5,7]]": {
         "wolfram": {
           "input": "ChineseRemainder[List[2, 3, 5], List[3, 5, 7]]",
           "output": "68",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ChineseRemainder}[\\{2,3,5\\},\\{3,5,7\\}]",
+            "output": "68"
+          }
         }
       },
       "[\"And\",[\"Equal\",[\"Mod\",[\"ChineseRemainder\",[\"List\",3,4],[\"List\",4,5]],4],3],[\"Equal\",[\"Mod\",[\"ChineseRemainder\",[\"List\",3,4],[\"List\",4,5]],5],4]]": {
         "wolfram": {
           "input": "And[(Mod[ChineseRemainder[List[3, 4], List[4, 5]], 4] == 3), (Mod[ChineseRemainder[List[3, 4], List[4, 5]], 5] == 4)]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(\\text{ChineseRemainder}[\\{3,4\\},\\{4,5\\}] \\bmod 4)=3\\land (\\text{ChineseRemainder}[\\{3,4\\},\\{4,5\\}] \\bmod 5)=4",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"ChineseRemainder\",[\"List\",1,2],[\"List\",6,10]]": {
         "wolfram": {
           "input": "ChineseRemainder[List[1, 2], List[6, 10]]",
           "output": "ChineseRemainder[{1, 2}, {6, 10}]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ChineseRemainder}[\\{1,2\\},\\{6,10\\}]",
+            "output": "\\text{ChineseRemainder}[\\{1,2\\},\\{6,10\\}]"
+          }
         }
       }
     },
@@ -1195,7 +1451,11 @@
         "wolfram": {
           "input": "MultiplicativeOrder[5, 8]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ord}_8(5)",
+            "output": "2"
+          }
         },
         "sage": {
           "input": "Mod(5, 8).multiplicative_order()",
@@ -1207,7 +1467,11 @@
         "wolfram": {
           "input": "MultiplicativeOrder[3, 7]",
           "output": "6",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ord}_7(3)",
+            "output": "6"
+          }
         },
         "sage": {
           "input": "Mod(3, 7).multiplicative_order()",
@@ -1219,7 +1483,11 @@
         "wolfram": {
           "input": "MultiplicativeOrder[2, 7]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ord}_7(2)",
+            "output": "3"
+          }
         },
         "sage": {
           "input": "Mod(2, 7).multiplicative_order()",
@@ -1231,7 +1499,11 @@
         "wolfram": {
           "input": "(Mod[EulerPhi[7], MultiplicativeOrder[3, 7]] == 0)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(\\phi (7) \\bmod \\text{ord}_7(3))=0",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((euler_phi(7) % Mod(3, 7).multiplicative_order()) == 0)",
@@ -1243,7 +1515,11 @@
         "wolfram": {
           "input": "MultiplicativeOrder[10, 22]",
           "output": "MultiplicativeOrder[10, 22]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ord}_{22}(10)",
+            "output": "\\text{ord}_{22}(10)"
+          }
         },
         "sage": {
           "input": "Mod(10, 22).multiplicative_order()",
@@ -1262,21 +1538,33 @@
         "wolfram": {
           "input": "MultiplicativeOrder[3, Subtract[Power[2, 127], 1]]",
           "output": "56713727820156410577229101238628035242",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ord}_{2^{127}-1}(3)",
+            "output": "56713727820156410577229101238628035242"
+          }
         }
       },
       "[\"MultiplicativeOrder\",3,7,[\"List\",-1,1]]": {
         "wolfram": {
           "input": "MultiplicativeOrder[3, 7, List[-1, 1]]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MultiplicativeOrder}[3,7,\\{-1,1\\}]",
+            "output": "3"
+          }
         }
       },
       "[\"MultiplicativeOrder\",5,7,[\"List\",2,3,4]]": {
         "wolfram": {
           "input": "MultiplicativeOrder[5, 7, List[2, 3, 4]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MultiplicativeOrder}[5,7,\\{2,3,4\\}]",
+            "output": "2"
+          }
         }
       },
       "[\"MultiplicativeOrder\",3,[\"Subtract\",[\"Power\",2,61],1],[\"List\",2]]": {
@@ -1301,7 +1589,11 @@
         "wolfram": {
           "input": "MultiplicativeOrder[2, 7, List[3]]",
           "output": "MultiplicativeOrder[2, 7, {3}]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MultiplicativeOrder}[2,7,\\{3\\}]",
+            "output": "\\text{MultiplicativeOrder}[2,7,\\{3\\}]"
+          }
         }
       }
     },
@@ -1315,7 +1607,11 @@
         "wolfram": {
           "input": "PrimitiveRootList[7]",
           "output": "{3, 5}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimitiveRootList}[7]",
+            "output": "\\{3,5\\}"
+          }
         }
       },
       "[\"PrimitiveRootList\",18]": {
@@ -1327,7 +1623,11 @@
         "wolfram": {
           "input": "PrimitiveRootList[18]",
           "output": "{5, 11}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimitiveRootList}[18]",
+            "output": "\\{5,11\\}"
+          }
         }
       },
       "[\"Length\",[\"PrimitiveRootList\",1009]]": {
@@ -1339,7 +1639,11 @@
         "wolfram": {
           "input": "Length[PrimitiveRootList[1009]]",
           "output": "288",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}[\\text{PrimitiveRootList}[1009]]",
+            "output": "288"
+          }
         }
       },
       "[\"Equal\",[\"Length\",[\"PrimitiveRootList\",1009]],[\"Totient\",[\"Totient\",1009]]]": {
@@ -1351,7 +1655,11 @@
         "wolfram": {
           "input": "(Length[PrimitiveRootList[1009]] == EulerPhi[EulerPhi[1009]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}[\\text{PrimitiveRootList}[1009]]=\\phi (\\phi (1009))",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"PrimitiveRootList\",8]": {
@@ -1363,7 +1671,11 @@
         "wolfram": {
           "input": "PrimitiveRootList[8]",
           "output": "{}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimitiveRootList}[8]",
+            "output": "\\{\\}"
+          }
         }
       },
       "[\"Length\",[\"PrimitiveRootList\",1000003]]": {
@@ -1375,7 +1687,11 @@
         "wolfram": {
           "input": "Length[PrimitiveRootList[1000003]]",
           "output": "333332",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}[\\text{PrimitiveRootList}[1000003]]",
+            "output": "333332"
+          }
         }
       }
     }
