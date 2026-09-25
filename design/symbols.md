@@ -116,4 +116,12 @@ they are what the people who built the function thought worth showing, and there
 of them to rank. [roadmap.md](./roadmap.md) is where that lands as work to pick up, next to
 the statistics and maps frontiers, which are the same discipline at a smaller scale.
 
+The frontier ranks heads; it does not say what they should return. That lives with the
+reference. For a head we document, each of its Wolfram page's examples we can state as an
+input and a verified output is an example on its entry — `aspirational: true` where we do not
+meet it yet, so the page badges it and the test notices the day we do. For a head we do not
+have, the same examples wait in `packages/reference/src/backlog.json`, with the heads whose
+pages reached for it (`neededBy`); `tests/backlog.test.ts` holds them to the aspirational
+standard, and adding the head means moving its record into an entry file.
+
 Open questions moved to design/speculative/symbols.md.
