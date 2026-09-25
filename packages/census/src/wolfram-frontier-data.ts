@@ -501,10 +501,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "UpTo",
-    uses: 7,
-  },
-  {
     head: "ArrayMesh",
     uses: 6,
   },
@@ -805,10 +801,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "Riffle",
-    uses: 4,
-  },
-  {
     head: "SmoothHistogram",
     uses: 4,
   },
@@ -969,10 +961,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "PadLeft",
-    uses: 3,
-  },
-  {
     head: "Parallelepiped",
     uses: 3,
   },
@@ -1006,14 +994,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "SetSharedVariable",
-    uses: 3,
-  },
-  {
-    head: "SortBy",
-    uses: 3,
-  },
-  {
-    head: "Split",
     uses: 3,
   },
   {

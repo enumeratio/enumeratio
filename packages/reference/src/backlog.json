@@ -4,23 +4,57 @@
     "summary": "The Carmichael function: the exponent of the multiplicative group mod n. compute-engine has it, undocumented here; these are the gaps.",
     "signature": "CarmichaelLambda(n)",
     "home": "number-theory",
-    "neededBy": ["Totient"],
+    "neededBy": [
+      "Totient"
+    ],
     "examples": [
       {
-        "expr": ["CarmichaelLambda", ["List", 8, 15]],
-        "expected": ["List", 2, 4],
+        "expr": [
+          "CarmichaelLambda",
+          [
+            "List",
+            8,
+            15
+          ]
+        ],
+        "expected": [
+          "List",
+          2,
+          4
+        ],
         "category": "Scope",
         "caption": "Listable"
       },
       {
-        "expr": ["CarmichaelLambda", -100],
+        "expr": [
+          "CarmichaelLambda",
+          -100
+        ],
         "expected": 20,
         "category": "Scope",
         "caption": "Negative n: $\\lambda(-n)=\\lambda(n)$"
       },
       {
-        "expr": ["CarmichaelLambda", ["Range", 10]],
-        "expected": ["List", 1, 1, 2, 2, 4, 2, 6, 2, 6, 4],
+        "expr": [
+          "CarmichaelLambda",
+          [
+            "Range",
+            10
+          ]
+        ],
+        "expected": [
+          "List",
+          1,
+          1,
+          2,
+          2,
+          4,
+          2,
+          6,
+          2,
+          6,
+          4
+        ],
         "category": "Scope",
         "caption": "Listable over a Range"
       }
@@ -31,32 +65,94 @@
     "summary": "The sum of f(d) over the positive divisors d of n, optionally only those satisfying a condition.",
     "signature": "DivisorSum(n, f, cond?)",
     "home": "number-theory",
-    "neededBy": ["DivisorSigma", "MoebiusMu", "Totient"],
+    "neededBy": [
+      "DivisorSigma",
+      "MoebiusMu",
+      "Totient"
+    ],
     "examples": [
       {
-        "expr": ["DivisorSum", 20, ["Function", ["Power", "d", 2], "d"]],
+        "expr": [
+          "DivisorSum",
+          20,
+          [
+            "Function",
+            [
+              "Power",
+              "d",
+              2
+            ],
+            "d"
+          ]
+        ],
         "expected": 546,
         "caption": "$\\sigma_2(20)$. See [[DivisorSigma]]"
       },
       {
-        "expr": ["DivisorSum", 30, ["Function", "d", "d"], ["Function", ["IsOdd", "d"], "d"]],
+        "expr": [
+          "DivisorSum",
+          30,
+          [
+            "Function",
+            "d",
+            "d"
+          ],
+          [
+            "Function",
+            [
+              "IsOdd",
+              "d"
+            ],
+            "d"
+          ]
+        ],
         "expected": 24,
         "caption": "Only the odd divisors: $1+3+5+15$"
       },
       {
-        "expr": ["DivisorSum", 12, ["Function", ["MoebiusMu", "d"], "d"]],
+        "expr": [
+          "DivisorSum",
+          12,
+          [
+            "Function",
+            [
+              "MoebiusMu",
+              "d"
+            ],
+            "d"
+          ]
+        ],
         "expected": 0,
         "category": "Properties",
         "caption": "$\\sum_{d\\mid n}\\mu(d)=0$ for $n>1$"
       },
       {
-        "expr": ["DivisorSum", 36, ["Function", ["Totient", "d"], "d"]],
+        "expr": [
+          "DivisorSum",
+          36,
+          [
+            "Function",
+            [
+              "Totient",
+              "d"
+            ],
+            "d"
+          ]
+        ],
         "expected": 36,
         "category": "Properties",
         "caption": "$\\sum_{d\\mid n}\\varphi(d)=n$"
       },
       {
-        "expr": ["DivisorSum", 1, ["Function", "d", "d"]],
+        "expr": [
+          "DivisorSum",
+          1,
+          [
+            "Function",
+            "d",
+            "d"
+          ]
+        ],
         "expected": 1,
         "category": "Possible issues",
         "caption": "1 has one divisor"
@@ -71,33 +167,100 @@
     "neededBy": [],
     "examples": [
       {
-        "expr": ["EulerE", 10],
+        "expr": [
+          "EulerE",
+          10
+        ],
         "expected": -50521
       },
       {
-        "expr": ["EulerE", 8],
+        "expr": [
+          "EulerE",
+          8
+        ],
         "expected": 1385
       },
       {
-        "expr": ["EulerE", ["List", 0, 1, 2, 3, 4]],
-        "expected": ["List", 1, 0, -1, 0, 5],
+        "expr": [
+          "EulerE",
+          [
+            "List",
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "expected": [
+          "List",
+          1,
+          0,
+          -1,
+          0,
+          5
+        ],
         "category": "Scope",
         "caption": "Listable; odd indices vanish"
       },
       {
-        "expr": ["EulerE", 2, "x"],
-        "expected": ["Add", ["Power", "x", 2], ["Negate", "x"]],
+        "expr": [
+          "EulerE",
+          2,
+          "x"
+        ],
+        "expected": [
+          "Add",
+          [
+            "Power",
+            "x",
+            2
+          ],
+          [
+            "Negate",
+            "x"
+          ]
+        ],
         "category": "Scope",
         "caption": "the Euler polynomial $E_2(x) = x^2 - x$"
       },
       {
-        "expr": ["EulerE", 4, "x"],
-        "expected": ["Add", ["Power", "x", 4], ["Multiply", -2, ["Power", "x", 3]], "x"],
+        "expr": [
+          "EulerE",
+          4,
+          "x"
+        ],
+        "expected": [
+          "Add",
+          [
+            "Power",
+            "x",
+            4
+          ],
+          [
+            "Multiply",
+            -2,
+            [
+              "Power",
+              "x",
+              3
+            ]
+          ],
+          "x"
+        ],
         "category": "Scope",
         "caption": "$E_4(x) = x^4 - 2x^3 + x$"
       },
       {
-        "expr": ["EulerE", 3, ["Rational", 1, 2]],
+        "expr": [
+          "EulerE",
+          3,
+          [
+            "Rational",
+            1,
+            2
+          ]
+        ],
         "expected": 0,
         "category": "Properties",
         "caption": "$E_n = 2^n E_n(\\frac12)$, and $E_3 = 0$"
@@ -112,27 +275,65 @@
     "neededBy": [],
     "examples": [
       {
-        "expr": ["FrobeniusNumber", ["List", 6, 9, 20]],
+        "expr": [
+          "FrobeniusNumber",
+          [
+            "List",
+            6,
+            9,
+            20
+          ]
+        ],
         "expected": 43,
         "caption": "The McNugget number"
       },
       {
-        "expr": ["FrobeniusNumber", ["List", 3, 5]],
+        "expr": [
+          "FrobeniusNumber",
+          [
+            "List",
+            3,
+            5
+          ]
+        ],
         "expected": 7
       },
       {
-        "expr": ["FrobeniusNumber", ["List", 4, 7]],
+        "expr": [
+          "FrobeniusNumber",
+          [
+            "List",
+            4,
+            7
+          ]
+        ],
         "expected": 17,
         "category": "Properties",
         "caption": "Two generators: $ab-a-b$"
       },
       {
-        "expr": ["FrobeniusNumber", ["List", 12, 16, 20, 27]],
+        "expr": [
+          "FrobeniusNumber",
+          [
+            "List",
+            12,
+            16,
+            20,
+            27
+          ]
+        ],
         "expected": 89,
         "category": "Scope"
       },
       {
-        "expr": ["FrobeniusNumber", ["List", 2, 4]],
+        "expr": [
+          "FrobeniusNumber",
+          [
+            "List",
+            2,
+            4
+          ]
+        ],
         "expected": "PositiveInfinity",
         "category": "Possible issues",
         "caption": "Not coprime: infinitely many numbers are unreachable"
@@ -141,145 +342,201 @@
   },
   "FrobeniusSolve": {
     "wolfram": "FrobeniusSolve",
-    "summary": "All non-negative integer solutions x of a\u00b7x = b, lexicographically.",
+    "summary": "All non-negative integer solutions x of a·x = b, lexicographically.",
     "signature": "FrobeniusSolve(a, b)",
     "home": "number-theory",
-    "neededBy": ["FrobeniusNumber"],
+    "neededBy": [
+      "FrobeniusNumber"
+    ],
     "examples": [
       {
-        "expr": ["FrobeniusSolve", ["List", 2, 3], 7],
-        "expected": ["List", ["List", 2, 1]]
-      },
-      {
-        "expr": ["FrobeniusSolve", ["List", 2, 3, 5], 10],
+        "expr": [
+          "FrobeniusSolve",
+          [
+            "List",
+            2,
+            3
+          ],
+          7
+        ],
         "expected": [
           "List",
-          ["List", 0, 0, 2],
-          ["List", 1, 1, 1],
-          ["List", 2, 2, 0],
-          ["List", 5, 0, 0]
+          [
+            "List",
+            2,
+            1
+          ]
         ]
       },
       {
-        "expr": ["FrobeniusSolve", ["List", 12, 16, 20, 27], 117],
-        "expected": ["List", ["List", 0, 1, 1, 3], ["List", 3, 0, 0, 3]],
-        "category": "Scope"
-      },
-      {
-        "expr": ["FrobeniusSolve", ["List", 6, 9, 20], 43],
-        "expected": ["List"],
-        "category": "Properties",
-        "caption": "43 is the Frobenius number of $\\{6,9,20\\}$, so it has no solutions"
-      }
-    ]
-  },
-  "Gather": {
-    "wolfram": "Gather",
-    "summary": "Group identical elements into sublists, in order of first appearance.",
-    "signature": "Gather(list)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]],
-        "expected": ["List", ["List", 1], ["List", 7, 7], ["List", 3, 3], ["List", 2], ["List", 9]]
-      },
-      {
-        "expr": ["Gather", ["List", "a", "b", "a", "a", "c", "b"]],
-        "expected": ["List", ["List", "a", "a", "a"], ["List", "b", "b"], ["List", "c"]],
-        "caption": "Symbolic elements"
-      },
-      {
         "expr": [
-          "Gather",
-          ["List", 1, 2, 3, 4, 5, 6],
-          ["Function", ["Equal", ["Mod", "_1", 2], ["Mod", "_2", 2]]]
-        ],
-        "expected": ["List", ["List", 1, 3, 5], ["List", 2, 4, 6]],
-        "category": "Scope",
-        "caption": "A test decides which elements belong together: here, same parity"
-      },
-      {
-        "expr": [
-          "Equal",
-          ["Map", "Length", ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]]],
-          ["List", 1, 2, 2, 1, 1]
-        ],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "The group sizes are the multiplicities of the distinct elements"
-      }
-    ]
-  },
-  "GatherBy": {
-    "wolfram": "GatherBy",
-    "summary": "Group elements by the value of a function, in order of first appearance.",
-    "signature": "GatherBy(list, f)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["GatherBy", ["List", 1, 2, 3, 4, 5, 6, 7], ["Function", ["Mod", "_1", 3]]],
-        "expected": ["List", ["List", 1, 4, 7], ["List", 2, 5], ["List", 3, 6]],
-        "caption": "Grouped by residue mod 3"
-      },
-      {
-        "expr": ["GatherBy", ["List", -2, 1, 2, -1, 3], "Abs"],
-        "expected": ["List", ["List", -2, 2], ["List", 1, -1], ["List", 3]],
-        "caption": "Grouped by absolute value"
-      },
-      {
-        "expr": [
-          "GatherBy",
-          ["List", ["List", "a", 1], ["List", "b", 2], ["List", "c", 1]],
-          "Last"
+          "FrobeniusSolve",
+          [
+            "List",
+            2,
+            3,
+            5
+          ],
+          10
         ],
         "expected": [
           "List",
-          ["List", ["List", "a", 1], ["List", "c", 1]],
-          ["List", ["List", "b", 2]]
+          [
+            "List",
+            0,
+            0,
+            2
+          ],
+          [
+            "List",
+            1,
+            1,
+            1
+          ],
+          [
+            "List",
+            2,
+            2,
+            0
+          ],
+          [
+            "List",
+            5,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "expr": [
+          "FrobeniusSolve",
+          [
+            "List",
+            12,
+            16,
+            20,
+            27
+          ],
+          117
         ],
-        "category": "Scope",
-        "caption": "Pairs grouped by their last element"
+        "expected": [
+          "List",
+          [
+            "List",
+            0,
+            1,
+            1,
+            3
+          ],
+          [
+            "List",
+            3,
+            0,
+            0,
+            3
+          ]
+        ],
+        "category": "Scope"
+      },
+      {
+        "expr": [
+          "FrobeniusSolve",
+          [
+            "List",
+            6,
+            9,
+            20
+          ],
+          43
+        ],
+        "expected": [
+          "List"
+        ],
+        "category": "Properties",
+        "caption": "43 is the Frobenius number of $\\{6,9,20\\}$, so it has no solutions"
       }
     ]
   },
   "IsCoprime": {
     "wolfram": "CoprimeQ",
     "summary": "Tests whether integers are pairwise relatively prime.",
-    "signature": "IsCoprime(a, b, \u2026)",
+    "signature": "IsCoprime(a, b, …)",
     "home": "number-theory",
-    "neededBy": ["GCD"],
+    "neededBy": [
+      "GCD"
+    ],
     "examples": [
       {
-        "expr": ["IsCoprime", 4, 9],
+        "expr": [
+          "IsCoprime",
+          4,
+          9
+        ],
         "expected": "True"
       },
       {
-        "expr": ["IsCoprime", 6, 9],
+        "expr": [
+          "IsCoprime",
+          6,
+          9
+        ],
         "expected": "False",
         "caption": "Both are divisible by 3"
       },
       {
-        "expr": ["IsCoprime", 2, 3, 5],
+        "expr": [
+          "IsCoprime",
+          2,
+          3,
+          5
+        ],
         "expected": "True",
         "caption": "Several arguments: every pair must be coprime"
       },
       {
-        "expr": ["IsCoprime", 6, 10, 15],
+        "expr": [
+          "IsCoprime",
+          6,
+          10,
+          15
+        ],
         "expected": "False",
         "category": "Possible issues",
         "caption": "Pairwise, not collectively: $\\gcd(6,10,15)=1$ yet no pair is coprime"
       },
       {
-        "expr": ["IsCoprime", ["Complex", 2, 1], ["Complex", 2, -1]],
+        "expr": [
+          "IsCoprime",
+          [
+            "Complex",
+            2,
+            1
+          ],
+          [
+            "Complex",
+            2,
+            -1
+          ]
+        ],
         "expected": "True",
         "category": "Scope",
         "caption": "Gaussian integers: $2+i$ and $2-i$ are non-associate primes"
       },
       {
-        "expr": ["IsCoprime", 3, ["List", 4, 6]],
-        "expected": ["List", "True", "False"],
+        "expr": [
+          "IsCoprime",
+          3,
+          [
+            "List",
+            4,
+            6
+          ]
+        ],
+        "expected": [
+          "List",
+          "True",
+          "False"
+        ],
         "category": "Scope",
         "caption": "Listable"
       }
@@ -290,16 +547,34 @@
     "summary": "Tests whether n equals the sum of its proper divisors. compute-engine has it, undocumented here; these are the gaps.",
     "signature": "IsPerfect(n)",
     "home": "number-theory",
-    "neededBy": ["DivisorSigma"],
+    "neededBy": [
+      "DivisorSigma"
+    ],
     "examples": [
       {
-        "expr": ["IsPerfect", ["List", 6, 28, 12]],
-        "expected": ["List", "True", "True", "False"],
+        "expr": [
+          "IsPerfect",
+          [
+            "List",
+            6,
+            28,
+            12
+          ]
+        ],
+        "expected": [
+          "List",
+          "True",
+          "True",
+          "False"
+        ],
         "category": "Scope",
         "caption": "Listable"
       },
       {
-        "expr": ["IsPerfect", -6],
+        "expr": [
+          "IsPerfect",
+          -6
+        ],
         "expected": "False",
         "category": "Possible issues",
         "caption": "Negative numbers are not perfect"
@@ -314,34 +589,72 @@
     "neededBy": [],
     "examples": [
       {
-        "expr": ["IsPrimePower", 8],
+        "expr": [
+          "IsPrimePower",
+          8
+        ],
         "expected": "True",
         "caption": "$8=2^3$"
       },
       {
-        "expr": ["IsPrimePower", 12],
+        "expr": [
+          "IsPrimePower",
+          12
+        ],
         "expected": "False",
         "caption": "$12=2^2\\cdot3$ has two distinct primes"
       },
       {
-        "expr": ["IsPrimePower", 7],
+        "expr": [
+          "IsPrimePower",
+          7
+        ],
         "expected": "True",
         "caption": "A prime is its own first power"
       },
       {
-        "expr": ["IsPrimePower", 1],
+        "expr": [
+          "IsPrimePower",
+          1
+        ],
         "expected": "False",
         "category": "Possible issues",
         "caption": "1 is $p^0$, which does not count"
       },
       {
-        "expr": ["IsPrimePower", ["List", 2, 4, 6, 9, 10, 16]],
-        "expected": ["List", "True", "True", "False", "True", "False", "True"],
+        "expr": [
+          "IsPrimePower",
+          [
+            "List",
+            2,
+            4,
+            6,
+            9,
+            10,
+            16
+          ]
+        ],
+        "expected": [
+          "List",
+          "True",
+          "True",
+          "False",
+          "True",
+          "False",
+          "True"
+        ],
         "category": "Scope",
         "caption": "Listable"
       },
       {
-        "expr": ["IsPrimePower", ["Power", 3, 40]],
+        "expr": [
+          "IsPrimePower",
+          [
+            "Power",
+            3,
+            40
+          ]
+        ],
         "expected": "True",
         "category": "Scope",
         "caption": "Large integers"
@@ -356,26 +669,67 @@
     "neededBy": [],
     "examples": [
       {
-        "expr": ["LiouvilleLambda", 12],
+        "expr": [
+          "LiouvilleLambda",
+          12
+        ],
         "expected": -1,
         "caption": "$\\Omega(12)=3$"
       },
       {
-        "expr": ["LiouvilleLambda", 10],
+        "expr": [
+          "LiouvilleLambda",
+          10
+        ],
         "expected": 1
       },
       {
-        "expr": ["LiouvilleLambda", 1],
+        "expr": [
+          "LiouvilleLambda",
+          1
+        ],
         "expected": 1
       },
       {
-        "expr": ["LiouvilleLambda", ["Range", 10]],
-        "expected": ["List", 1, -1, -1, 1, -1, 1, -1, -1, 1, 1],
+        "expr": [
+          "LiouvilleLambda",
+          [
+            "Range",
+            10
+          ]
+        ],
+        "expected": [
+          "List",
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          1,
+          1
+        ],
         "category": "Scope",
         "caption": "Listable"
       },
       {
-        "expr": ["Equal", ["LiouvilleLambda", 360], ["Power", -1, ["PrimeOmega", 360]]],
+        "expr": [
+          "Equal",
+          [
+            "LiouvilleLambda",
+            360
+          ],
+          [
+            "Power",
+            -1,
+            [
+              "PrimeOmega",
+              360
+            ]
+          ]
+        ],
         "expected": "True",
         "category": "Properties",
         "caption": "$\\lambda(n)=(-1)^{\\Omega(n)}$. See [[PrimeOmega]]"
@@ -390,34 +744,82 @@
     "neededBy": [],
     "examples": [
       {
-        "expr": ["MangoldtLambda", 8],
-        "expected": ["Ln", 2],
+        "expr": [
+          "MangoldtLambda",
+          8
+        ],
+        "expected": [
+          "Ln",
+          2
+        ],
         "caption": "$8=2^3$"
       },
       {
-        "expr": ["MangoldtLambda", 6],
+        "expr": [
+          "MangoldtLambda",
+          6
+        ],
         "expected": 0,
         "caption": "6 is not a prime power"
       },
       {
-        "expr": ["MangoldtLambda", 7],
-        "expected": ["Ln", 7]
+        "expr": [
+          "MangoldtLambda",
+          7
+        ],
+        "expected": [
+          "Ln",
+          7
+        ]
       },
       {
-        "expr": ["MangoldtLambda", 1],
+        "expr": [
+          "MangoldtLambda",
+          1
+        ],
         "expected": 0,
         "category": "Possible issues",
         "caption": "$\\Lambda(1)=0$"
       },
       {
-        "expr": ["N", ["MangoldtLambda", 9]],
+        "expr": [
+          "N",
+          [
+            "MangoldtLambda",
+            9
+          ]
+        ],
         "expected": 1.0986122886681098,
         "category": "Scope",
         "caption": "Numerically, $\\ln3$"
       },
       {
-        "expr": ["MangoldtLambda", ["List", 2, 4, 6, 25]],
-        "expected": ["List", ["Ln", 2], ["Ln", 2], 0, ["Ln", 5]],
+        "expr": [
+          "MangoldtLambda",
+          [
+            "List",
+            2,
+            4,
+            6,
+            25
+          ]
+        ],
+        "expected": [
+          "List",
+          [
+            "Ln",
+            2
+          ],
+          [
+            "Ln",
+            2
+          ],
+          0,
+          [
+            "Ln",
+            5
+          ]
+        ],
         "category": "Scope",
         "caption": "Listable"
       }
@@ -428,120 +830,55 @@
     "summary": "The exponent p of the nth Mersenne prime $2^p-1$.",
     "signature": "MersennePrimeExponent(n)",
     "home": "number-theory",
-    "neededBy": ["IsPrime"],
+    "neededBy": [
+      "IsPrime"
+    ],
     "examples": [
       {
-        "expr": ["MersennePrimeExponent", 1],
+        "expr": [
+          "MersennePrimeExponent",
+          1
+        ],
         "expected": 2
       },
       {
-        "expr": ["MersennePrimeExponent", 5],
+        "expr": [
+          "MersennePrimeExponent",
+          5
+        ],
         "expected": 13
       },
       {
-        "expr": ["MersennePrimeExponent", 10],
+        "expr": [
+          "MersennePrimeExponent",
+          10
+        ],
         "expected": 89
       },
       {
-        "expr": ["MersennePrimeExponent", ["List", 1, 2, 3, 4, 5, 6]],
-        "expected": ["List", 2, 3, 5, 7, 13, 17],
+        "expr": [
+          "MersennePrimeExponent",
+          [
+            "List",
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        ],
+        "expected": [
+          "List",
+          2,
+          3,
+          5,
+          7,
+          13,
+          17
+        ],
         "category": "Scope",
         "caption": "Listable"
-      }
-    ]
-  },
-  "NoneTrue": {
-    "wolfram": "NoneTrue",
-    "summary": "Whether no element of a collection satisfies a predicate.",
-    "signature": "NoneTrue(xs, predicate)",
-    "home": "collections",
-    "neededBy": ["All", "Any"],
-    "examples": [
-      {
-        "expr": ["NoneTrue", ["List", 1, 3, 5], "IsEven"],
-        "expected": "True"
-      },
-      {
-        "expr": ["NoneTrue", ["List", 1, 2, 3], "IsEven"],
-        "expected": "False"
-      },
-      {
-        "expr": ["NoneTrue", ["List"], "IsEven"],
-        "expected": "True",
-        "category": "Scope",
-        "caption": "Vacuously true on an empty list"
-      },
-      {
-        "expr": [
-          "Equal",
-          ["NoneTrue", ["List", 4, 6, 9], "IsPrime"],
-          ["Not", ["Any", ["List", 4, 6, 9], "IsPrime"]]
-        ],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "The negation of [[Any]]"
-      }
-    ]
-  },
-  "PadLeft": {
-    "wolfram": "PadLeft",
-    "summary": "Pad a list on the left to length n (with 0 or a given element), or truncate it from the left.",
-    "signature": "PadLeft(list, n, x)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["PadLeft", ["List", 1, 2, 3], 5],
-        "expected": ["List", 0, 0, 1, 2, 3],
-        "caption": "Padded with zeros on the left"
-      },
-      {
-        "expr": ["PadLeft", ["List", 1, 2, 3], 5, "x"],
-        "expected": ["List", "x", "x", 1, 2, 3],
-        "caption": "A padding element"
-      },
-      {
-        "expr": ["PadLeft", ["List", 1, 2, 3, 4, 5], 3],
-        "expected": ["List", 3, 4, 5],
-        "category": "Scope",
-        "caption": "A shorter length drops elements from the left"
-      },
-      {
-        "expr": ["PadLeft", ["List", ["List", 1], ["List", 2, 3]]],
-        "expected": ["List", ["List", 0, 1], ["List", 2, 3]],
-        "category": "Scope",
-        "caption": "With no length, a ragged array is padded to a full matrix"
-      }
-    ]
-  },
-  "PadRight": {
-    "wolfram": "PadRight",
-    "summary": "Pad a list on the right to length n (with 0 or a given element), or truncate it from the right.",
-    "signature": "PadRight(list, n, x)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["PadRight", ["List", 1, 2, 3], 5],
-        "expected": ["List", 1, 2, 3, 0, 0],
-        "caption": "Padded with zeros on the right"
-      },
-      {
-        "expr": ["PadRight", ["List", 1, 2, 3], 5, "x"],
-        "expected": ["List", 1, 2, 3, "x", "x"],
-        "caption": "A padding element"
-      },
-      {
-        "expr": ["PadRight", ["List", 1, 2, 3, 4, 5], 3],
-        "expected": ["List", 1, 2, 3],
-        "category": "Scope",
-        "caption": "A shorter length drops elements from the right"
-      },
-      {
-        "expr": ["PadRight", ["List", ["List", 1], ["List", 2, 3]]],
-        "expected": ["List", ["List", 1, 0], ["List", 2, 3]],
-        "category": "Scope",
-        "caption": "With no length, a ragged array is padded to a full matrix"
       }
     ]
   },
@@ -550,32 +887,79 @@
     "summary": "The number q(n) of partitions of n into distinct parts.",
     "signature": "PartitionsQ(n)",
     "home": "number-theory",
-    "neededBy": ["IntegerPartitions"],
+    "neededBy": [
+      "IntegerPartitions"
+    ],
     "examples": [
       {
-        "expr": ["PartitionsQ", 10],
+        "expr": [
+          "PartitionsQ",
+          10
+        ],
         "expected": 10,
         "caption": "The partitions of 10 into distinct parts"
       },
       {
-        "expr": ["PartitionsQ", 0],
+        "expr": [
+          "PartitionsQ",
+          0
+        ],
         "expected": 1,
         "caption": "The empty partition"
       },
       {
-        "expr": ["PartitionsQ", 100],
+        "expr": [
+          "PartitionsQ",
+          100
+        ],
         "expected": 444793,
         "category": "Scope",
         "caption": "Exact for large n"
       },
       {
-        "expr": ["PartitionsQ", ["List", 1, 2, 3, 4, 5, 6, 7, 8]],
-        "expected": ["List", 1, 1, 2, 2, 3, 4, 5, 6],
+        "expr": [
+          "PartitionsQ",
+          [
+            "List",
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        ],
+        "expected": [
+          "List",
+          1,
+          1,
+          2,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
         "category": "Scope",
         "caption": "Threads over a list"
       },
       {
-        "expr": ["Equal", ["PartitionsQ", 10], ["Count", ["DistinctPartitions", 10]]],
+        "expr": [
+          "Equal",
+          [
+            "PartitionsQ",
+            10
+          ],
+          [
+            "Count",
+            [
+              "DistinctPartitions",
+              10
+            ]
+          ]
+        ],
         "expected": "True",
         "category": "Properties",
         "caption": "Counts the DistinctPartitions family"
@@ -583,8 +967,27 @@
       {
         "expr": [
           "Equal",
-          ["PartitionsQ", 12],
-          ["Count", ["IntegerPartitions", 12, "All", ["List", 1, 3, 5, 7, 9, 11]]]
+          [
+            "PartitionsQ",
+            12
+          ],
+          [
+            "Count",
+            [
+              "IntegerPartitions",
+              12,
+              "All",
+              [
+                "List",
+                1,
+                3,
+                5,
+                7,
+                9,
+                11
+              ]
+            ]
+          ]
         ],
         "expected": "True",
         "category": "Properties",
@@ -597,23 +1000,49 @@
     "summary": "The nth perfect number.",
     "signature": "PerfectNumber(n)",
     "home": "number-theory",
-    "neededBy": ["DivisorSigma"],
+    "neededBy": [
+      "DivisorSigma"
+    ],
     "examples": [
       {
-        "expr": ["PerfectNumber", 1],
+        "expr": [
+          "PerfectNumber",
+          1
+        ],
         "expected": 6
       },
       {
-        "expr": ["PerfectNumber", 3],
+        "expr": [
+          "PerfectNumber",
+          3
+        ],
         "expected": 496
       },
       {
-        "expr": ["PerfectNumber", 5],
+        "expr": [
+          "PerfectNumber",
+          5
+        ],
         "expected": 33550336
       },
       {
-        "expr": ["PerfectNumber", ["List", 1, 2, 3, 4]],
-        "expected": ["List", 6, 28, 496, 8128],
+        "expr": [
+          "PerfectNumber",
+          [
+            "List",
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "expected": [
+          "List",
+          6,
+          28,
+          496,
+          8128
+        ],
         "category": "Scope",
         "caption": "Listable"
       }
@@ -624,25 +1053,97 @@
     "summary": "The ways to write n as a sum of k non-negative p-th powers, as non-decreasing lists.",
     "signature": "PowersRepresentations(n, k, p)",
     "home": "number-theory",
-    "neededBy": ["SquaresR"],
+    "neededBy": [
+      "SquaresR"
+    ],
     "examples": [
       {
-        "expr": ["PowersRepresentations", 25, 2, 2],
-        "expected": ["List", ["List", 0, 5], ["List", 3, 4]]
+        "expr": [
+          "PowersRepresentations",
+          25,
+          2,
+          2
+        ],
+        "expected": [
+          "List",
+          [
+            "List",
+            0,
+            5
+          ],
+          [
+            "List",
+            3,
+            4
+          ]
+        ]
       },
       {
-        "expr": ["PowersRepresentations", 50, 2, 2],
-        "expected": ["List", ["List", 1, 7], ["List", 5, 5]],
+        "expr": [
+          "PowersRepresentations",
+          50,
+          2,
+          2
+        ],
+        "expected": [
+          "List",
+          [
+            "List",
+            1,
+            7
+          ],
+          [
+            "List",
+            5,
+            5
+          ]
+        ],
         "caption": "The smallest number that is a sum of two positive squares in two ways"
       },
       {
-        "expr": ["PowersRepresentations", 100, 3, 2],
-        "expected": ["List", ["List", 0, 0, 10], ["List", 0, 6, 8]],
+        "expr": [
+          "PowersRepresentations",
+          100,
+          3,
+          2
+        ],
+        "expected": [
+          "List",
+          [
+            "List",
+            0,
+            0,
+            10
+          ],
+          [
+            "List",
+            0,
+            6,
+            8
+          ]
+        ],
         "category": "Scope"
       },
       {
-        "expr": ["PowersRepresentations", 1729, 2, 3],
-        "expected": ["List", ["List", 1, 12], ["List", 9, 10]],
+        "expr": [
+          "PowersRepresentations",
+          1729,
+          2,
+          3
+        ],
+        "expected": [
+          "List",
+          [
+            "List",
+            1,
+            12
+          ],
+          [
+            "List",
+            9,
+            10
+          ]
+        ],
         "category": "Neat examples",
         "caption": "The taxicab number $1729=1^3+12^3=9^3+10^3$"
       }
@@ -656,193 +1157,67 @@
     "neededBy": [],
     "examples": [
       {
-        "expr": ["RamanujanTau", 2],
+        "expr": [
+          "RamanujanTau",
+          2
+        ],
         "expected": -24
       },
       {
-        "expr": ["RamanujanTau", 5],
+        "expr": [
+          "RamanujanTau",
+          5
+        ],
         "expected": 4830
       },
       {
-        "expr": ["RamanujanTau", ["List", 1, 2, 3, 4, 5, 6]],
-        "expected": ["List", 1, -24, 252, -1472, 4830, -6048],
+        "expr": [
+          "RamanujanTau",
+          [
+            "List",
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        ],
+        "expected": [
+          "List",
+          1,
+          -24,
+          252,
+          -1472,
+          4830,
+          -6048
+        ],
         "category": "Scope",
         "caption": "Listable"
       },
       {
-        "expr": ["RamanujanTau", 12],
+        "expr": [
+          "RamanujanTau",
+          12
+        ],
         "expected": -370944,
         "category": "Scope"
       },
       {
-        "expr": ["Multiply", ["RamanujanTau", 2], ["RamanujanTau", 3]],
+        "expr": [
+          "Multiply",
+          [
+            "RamanujanTau",
+            2
+          ],
+          [
+            "RamanujanTau",
+            3
+          ]
+        ],
         "expected": -6048,
         "category": "Properties",
         "caption": "Multiplicative: $\\tau(6) = \\tau(2)\\tau(3)$"
-      }
-    ]
-  },
-  "Riffle": {
-    "wolfram": "Riffle",
-    "summary": "Interleave a separator (or a second list) between the elements of a list.",
-    "signature": "Riffle(list, x)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["Riffle", ["List", "a", "b", "c"], "x"],
-        "expected": ["List", "a", "x", "b", "x", "c"],
-        "caption": "x between consecutive elements"
-      },
-      {
-        "expr": ["Riffle", ["List", "a", "b", "c"], ["List", "x", "y", "z"]],
-        "expected": ["List", "a", "x", "b", "y", "c", "z"],
-        "caption": "Interleave two lists of the same length"
-      },
-      {
-        "expr": ["Riffle", ["List", "a", "b", "c"], ["List", "x", "y"]],
-        "expected": ["List", "a", "x", "b", "y", "c"],
-        "category": "Scope",
-        "caption": "A list one shorter goes strictly between the elements"
-      },
-      {
-        "expr": ["Riffle", ["List", 1, 2, 3, 4, 5, 6, 7], "x", 3],
-        "expected": ["List", 1, 2, "x", 3, 4, "x", 5, 6, "x", 7],
-        "category": "Scope",
-        "caption": "Every 3rd element of the result is x"
-      },
-      {
-        "expr": ["Riffle", ["List", "a"], "x"],
-        "expected": ["List", "a"],
-        "category": "Scope",
-        "caption": "A single element has nothing to separate"
-      }
-    ]
-  },
-  "SortBy": {
-    "wolfram": "SortBy",
-    "summary": "The collection sorted by the value of a function on each element.",
-    "signature": "SortBy(collection, f)",
-    "home": "collections",
-    "neededBy": ["Sort"],
-    "examples": [
-      {
-        "expr": ["SortBy", ["List", -3, 1, -2], "Abs"],
-        "expected": ["List", 1, -2, -3],
-        "caption": "Sorted by absolute value"
-      },
-      {
-        "expr": ["SortBy", ["List", ["List", "a", 2], ["List", "c", 1], ["List", "d", 3]], "Last"],
-        "expected": ["List", ["List", "c", 1], ["List", "a", 2], ["List", "d", 3]],
-        "caption": "Pairs sorted by their last element"
-      },
-      {
-        "expr": ["SortBy", ["List", 4, -5, 1, 3, -2], ["Function", ["Power", "_1", 2]]],
-        "expected": ["List", 1, -2, 3, 4, -5],
-        "category": "Scope",
-        "caption": "Sorted by the square of each element"
-      },
-      {
-        "expr": ["SortBy", ["List", 3, 1, 2], "Negate"],
-        "expected": ["List", 3, 2, 1],
-        "category": "Scope",
-        "caption": "Sorting by $-x$ gives descending order"
-      }
-    ]
-  },
-  "Span": {
-    "wolfram": "Span",
-    "summary": "A range of positions i;;j;;step used as a part specification, with negative positions counted from the end.",
-    "signature": "Span(i, j, step)",
-    "home": "collections",
-    "neededBy": ["At"],
-    "examples": [
-      {
-        "expr": ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]],
-        "expected": ["List", "b", "c", "d"],
-        "caption": "Positions 2 through 4 ($2;;4$ in Wolfram)"
-      },
-      {
-        "expr": ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 1, -1, 2]],
-        "expected": ["List", "a", "c", "f"],
-        "caption": "Every other element through the last ($1;;-1;;2$)"
-      },
-      {
-        "expr": ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -1, 1, -1]],
-        "expected": ["List", "f", "d", "c", "b", "a"],
-        "category": "Scope",
-        "caption": "A negative step walks backwards ($-1;;1;;-1$)"
-      },
-      {
-        "expr": ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -2, -1]],
-        "expected": ["List", "d", "f"],
-        "category": "Scope",
-        "caption": "Negative bounds: the last two elements"
-      },
-      {
-        "expr": [
-          "At",
-          ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]],
-          ["Span", 2, 3],
-          ["Span", 1, 2]
-        ],
-        "expected": ["List", ["List", 4, 5], ["List", 7, 8]],
-        "category": "Scope",
-        "caption": "Spans at two levels cut out a submatrix"
-      }
-    ]
-  },
-  "Split": {
-    "wolfram": "Split",
-    "summary": "Split a list into runs of identical adjacent elements.",
-    "signature": "Split(list)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["Split", ["List", 1, 1, 2, 2, 2, 3, 1, 1]],
-        "expected": ["List", ["List", 1, 1], ["List", 2, 2, 2], ["List", 3], ["List", 1, 1]],
-        "caption": "Runs, not groups: the two runs of 1 stay apart"
-      },
-      {
-        "expr": ["Split", ["List", "a", "a", "b", "b", "b", "a"]],
-        "expected": ["List", ["List", "a", "a"], ["List", "b", "b", "b"], ["List", "a"]],
-        "caption": "Symbolic elements"
-      },
-      {
-        "expr": ["Split", ["List", 1, 2, 3, 5, 4, 6], "Less"],
-        "expected": ["List", ["List", 1, 2, 3, 5], ["List", 4, 6]],
-        "category": "Scope",
-        "caption": "A test between neighbours: split into increasing runs"
-      },
-      {
-        "expr": ["Split", ["List"]],
-        "expected": ["List"],
-        "category": "Scope",
-        "caption": "The empty list"
-      }
-    ]
-  },
-  "SplitBy": {
-    "wolfram": "SplitBy",
-    "summary": "Split a list into runs on which a function is constant.",
-    "signature": "SplitBy(list, f)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["SplitBy", ["List", 1, 3, 5, 2, 4, 7, 9], ["Function", ["Mod", "_1", 2]]],
-        "expected": ["List", ["List", 1, 3, 5], ["List", 2, 4], ["List", 7, 9]],
-        "caption": "Runs of the same parity"
-      },
-      {
-        "expr": [
-          "SplitBy",
-          ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          ["Function", ["Floor", ["Divide", "_1", 4]]]
-        ],
-        "expected": ["List", ["List", 1, 2, 3], ["List", 4, 5, 6, 7], ["List", 8, 9, 10]],
-        "caption": "Runs with the same value of $\\lfloor x/4 \\rfloor$"
       }
     ]
   },
@@ -854,65 +1229,58 @@
     "neededBy": [],
     "examples": [
       {
-        "expr": ["SquaresR", 2, 5],
+        "expr": [
+          "SquaresR",
+          2,
+          5
+        ],
         "expected": 8,
         "caption": "$(\\pm1)^2+(\\pm2)^2$ in either order"
       },
       {
-        "expr": ["SquaresR", 2, 25],
+        "expr": [
+          "SquaresR",
+          2,
+          25
+        ],
         "expected": 12
       },
       {
-        "expr": ["SquaresR", 2, 3],
+        "expr": [
+          "SquaresR",
+          2,
+          3
+        ],
         "expected": 0,
         "caption": "No $n\\equiv3\\pmod4$ is a sum of two squares"
       },
       {
-        "expr": ["SquaresR", 3, 6],
+        "expr": [
+          "SquaresR",
+          3,
+          6
+        ],
         "expected": 24,
         "category": "Scope"
       },
       {
-        "expr": ["SquaresR", 4, 10],
+        "expr": [
+          "SquaresR",
+          4,
+          10
+        ],
         "expected": 144,
         "category": "Properties",
         "caption": "Jacobi: $r_4(n)=8\\sigma_1(n)$ for $4\\nmid n$"
       },
       {
-        "expr": ["SquaresR", 8, 3],
+        "expr": [
+          "SquaresR",
+          8,
+          3
+        ],
         "expected": 448,
         "category": "Scope"
-      }
-    ]
-  },
-  "UpTo": {
-    "wolfram": "UpTo",
-    "summary": "A count specification meaning at most n, taking fewer when fewer are available.",
-    "signature": "UpTo(n)",
-    "home": "collections",
-    "neededBy": ["Ordering", "Partition"],
-    "examples": [
-      {
-        "expr": ["Take", ["List", 1, 2, 3], ["UpTo", 5]],
-        "expected": ["List", 1, 2, 3],
-        "caption": "Asking for up to 5 of 3 elements takes all 3, with no error"
-      },
-      {
-        "expr": ["Take", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 2]],
-        "expected": ["List", 1, 2],
-        "caption": "When enough elements are available, exactly n are taken"
-      },
-      {
-        "expr": ["Partition", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 4]],
-        "expected": ["List", ["List", 1, 2, 3, 4], ["List", 5, 6]],
-        "category": "Scope",
-        "caption": "In [[Partition]], a shorter final chunk is allowed"
-      },
-      {
-        "expr": ["Ordering", ["List", 2, 6, 1, 9, 2], ["UpTo", 6]],
-        "expected": ["List", 3, 1, 5, 2, 4],
-        "category": "Scope",
-        "caption": "In [[Ordering]], at most 6 positions of a 5-element list"
       }
     ]
   }

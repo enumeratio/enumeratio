@@ -278,15 +278,18 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * expose (`rational_reconstruction`, `iratrecon`). IntegerMod and IntegerModRing are Sage's
  * `Mod(a, m)` and `Zmod(m)`.
  *
- * TimeConstrained, MemoryConstrained, VerificationTest and Commonest are genuinely Wolfram's
- * own (see `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled
- * in by the external-kernel coverage script, which needs a Wolfram kernel this offline test
- * suite doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
- * BesselJZero (Wolfram, mpmath) waits on the same run, and so do IntegerPartitions (Wolfram)
- * and SetPartitions (SymPy's `multiset_partitions`): the collection families read as
- * `unknown` until their entries carried examples. IncompleteEllipticPi (Wolfram's own
- * EllipticPi[n, φ, m], mpmath's ellippi) waits too; KeiperLiLambda has no known
- * equivalent elsewhere and should stay novel even after a coverage run.
+ * TimeConstrained, MemoryConstrained, VerificationTest, Commonest, and the Wolfram-sweep list
+ * heads (Span, UpTo, Riffle, Gather, GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight,
+ * NoneTrue, Nest, NestList, Outer, LinearRecurrence, RecurrenceTable, Association,
+ * GeometricMean, HarmonicMean) are genuinely Wolfram's own (see `HEADS` in @enumeratio/wolfram)
+ * — they land here only because `elsewhere` is filled in by the external-kernel coverage
+ * script, which needs a Wolfram kernel this offline test suite doesn't have. Remove them once
+ * a coverage run records `elsewhere: ["wolfram"]`. BesselJZero (Wolfram, mpmath) waits on the
+ * same run, and so do IntegerPartitions (Wolfram) and SetPartitions (SymPy's
+ * `multiset_partitions`): the collection families read as `unknown` until their entries
+ * carried examples. IncompleteEllipticPi (Wolfram's own EllipticPi[n, φ, m], mpmath's
+ * ellippi) waits too; KeiperLiLambda has no known equivalent elsewhere and should stay novel
+ * even after a coverage run.
  *
  * ExpIntegralE, InverseErfc, InverseGammaRegularized, InverseBetaRegularized, BellY,
  * NorlundB, PrimeZetaP, HypergeometricPFQ and KleinInvariantJ are the same story: all nine
@@ -402,6 +405,17 @@ const NOVEL = [
   "Association",
   "GeometricMean",
   "HarmonicMean",
+  "Span",
+  "UpTo",
+  "Riffle",
+  "Gather",
+  "GatherBy",
+  "Split",
+  "SplitBy",
+  "SortBy",
+  "PadLeft",
+  "PadRight",
+  "NoneTrue",
   "IntegerPartitions",
   "SetPartitions",
 ];
