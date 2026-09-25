@@ -195,9 +195,14 @@ export function declareGraphics(ce: ComputeEngine): void {
   // with a `List` of `Cell`s as its body, evaluated in document order in one shared scope
   // (`@enumeratio/notatio/transcript`). Held like `Cell`, for the same reason: the cells
   // are evaluated by whatever renders the notebook, one at a time, not by boxing the whole
-  // tree at once.
+  // tree at once. Variadic (`any*`), matching `DynamicModule` above: `Notebook` takes the
+  // same trailing options (`TrackedSymbols`, `Evaluator`, …) `DynamicModule` does -- a
+  // single-argument `(any) -> any` signature canonicalised `Notebook(cells, Evaluator ->
+  // "Worker")` straight to an `unexpected-argument` error, silently dropping the option
+  // (and, since the rendered element never saw `evaluator="worker"`, silently falling
+  // back to local, page-thread evaluation).
   if (!ce.lookupDefinition("Notebook")) {
-    ce.declare("Notebook", { signature: "(any) -> any", lazy: true });
+    ce.declare("Notebook", { signature: "(any*) -> any", lazy: true });
   }
 
   ce.declare("Image", {
