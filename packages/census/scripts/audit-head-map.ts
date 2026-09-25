@@ -31,11 +31,120 @@
 // which is worse than not checking. No kernel needed, so this is a fast guard rather than
 // an oracle sweep.
 //
+// Before any of that, an exact probe: the head's first reference example (its `expected`
+// is already pinned by the reference tests), else a hand-written call from `PROBES` for the
+// engine-native heads no reference page documents. A probe is checked by value, so it
+// settles a head the signature leaves undecided.
+//
 //   vp node packages/census/scripts/audit-head-map.ts
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { DOMAINS } from "@enumeratio/domains";
+import { GRAPHICS_HEADS } from "@enumeratio/formats";
+import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/notatio/symbols";
+import { entries as referenceEntries } from "@enumeratio/reference";
 import { HEADS } from "@enumeratio/wolfram/src";
 import { fullEngine } from "../src/engine.ts";
+
+type MathJSON = unknown;
+const L = (...xs: MathJSON[]): MathJSON => ["List", ...xs];
+const S = (...xs: MathJSON[]): MathJSON => ["Set", ...xs];
+
+/** Exact checks for mapped heads with no reference example: `call` must evaluate to
+ *  `expected`. A lazy collection answers through `Count`, so it is probed that way. */
+const PROBES: Readonly<Record<string, { call: MathJSON; expected: MathJSON }>> = {
+  Add: { call: ["Add", 2, 3], expected: 5 },
+  Append: { call: ["Append", L(1, 2), 3], expected: L(1, 2, 3) },
+  At: { call: ["At", L(5, 6, 7), 2], expected: 6 },
+  Chop: { call: ["Chop", 1e-20], expected: 0 },
+  Compose: { call: ["Apply", ["Compose", "Sqrt", "Sqrt"], 16], expected: 2 },
+  Count: { call: ["Count", L(1, 2, 3)], expected: 3 },
+  CyclicGroup: { call: ["GroupOrder", ["CyclicGroup", 5]], expected: 5 },
+  Determinant: { call: ["Determinant", L(L(1, 2), L(3, 4))], expected: -2 },
+  DihedralGroup: { call: ["GroupOrder", ["DihedralGroup", 4]], expected: 8 },
+  Dot: { call: ["Dot", L(1, 2), L(3, 4)], expected: 11 },
+  Equal: { call: ["Equal", 2, 2], expected: "True" },
+  Filter: {
+    call: ["Count", ["Filter", L(1, 2, 3, 4), ["Function", ["Greater", "x", 2], "x"]]],
+    expected: 2,
+  },
+  First: { call: ["First", L(5, 6)], expected: 5 },
+  Flatten: { call: ["Flatten", L(L(1, 2), L(3))], expected: L(1, 2, 3) },
+  Function: { call: ["Apply", ["Function", ["Add", "x", 1], "x"], 2], expected: 3 },
+  GCD: { call: ["GCD", 12, 18], expected: 6 },
+  Greater: { call: ["Greater", 3, 2], expected: "True" },
+  GreaterEqual: { call: ["GreaterEqual", 2, 2], expected: "True" },
+  GroupElements: { call: ["Count", ["GroupElements", ["CyclicGroup", 3]]], expected: 3 },
+  GrassmannAlgebra: { call: ["AlgebraDimension", ["GrassmannAlgebra", 3]], expected: 8 },
+  GroupOrder: { call: ["GroupOrder", ["DihedralGroup", 4]], expected: 8 },
+  IntegerString: { call: ["IntegerString", 255, 16], expected: "'ff'" },
+  Intersection: { call: ["Intersection", S(1, 2, 3), S(2, 3, 4)], expected: S(2, 3) },
+  Last: { call: ["Last", L(5, 6)], expected: 6 },
+  LCM: { call: ["LCM", 4, 6], expected: 12 },
+  Length: { call: ["Length", L(1, 2, 3)], expected: 3 },
+  Less: { call: ["Less", 2, 3], expected: "True" },
+  LessEqual: { call: ["LessEqual", 2, 2], expected: "True" },
+  List: { call: ["List", 1, 2], expected: L(1, 2) },
+  Max: { call: ["Max", 1, 5, 3], expected: 5 },
+  Median: { call: ["Median", L(1, 3, 2)], expected: 2 },
+  Min: { call: ["Min", 1, 5, 3], expected: 1 },
+  // λ(i) = 1/2.
+  ModularLambda: { call: ["N", ["ModularLambda", "ImaginaryUnit"]], expected: 0.5 },
+  N: { call: ["N", ["Rational", 1, 4]], expected: 0.25 },
+  NotEqual: { call: ["NotEqual", 2, 3], expected: "True" },
+  OverBar: { call: ["OverBar", ["Add", 1, "i_1"]], expected: ["Add", ["Negate", "i_1"], 1] },
+  Partition: { call: ["Partition", L(1, 2, 3, 4), 2], expected: L(L(1, 2), L(3, 4)) },
+  Prepend: { call: ["Prepend", L(2, 3), 1], expected: L(1, 2, 3) },
+  Product: { call: ["Product", "k", ["Tuple", "k", 1, 4]], expected: 24 },
+  Random: { call: ["Element", ["Random", L(1, 2, 3)], L(1, 2, 3)], expected: "True" },
+  Repeat: { call: ["Repeat", 0, 3], expected: L(0, 0, 0) },
+  SetMinus: { call: ["SetMinus", S(1, 2, 3), 2], expected: S(1, 3) },
+  Shape: { call: ["Shape", L(L(1, 2), L(3, 4))], expected: ["Tuple", 2, 2] },
+  // The sample standard deviation, as Wolfram's: 4√14/7.
+  StandardDeviation: {
+    call: ["StandardDeviation", L(2, 4, 4, 4, 5, 5, 7, 9)],
+    expected: ["Multiply", ["Rational", 4, 7], ["Sqrt", 14]],
+  },
+  Sum: { call: ["Sum", "k", ["Tuple", "k", 1, 4]], expected: 10 },
+  Tuple: { call: ["Tuple", 1, 2], expected: ["Tuple", 1, 2] },
+  Union: { call: ["Union", S(1, 2), S(2, 3)], expected: S(1, 2, 3) },
+  // In 2D PGA, two lines through e_2 meet there.
+  Vee: {
+    call: [
+      "Vee",
+      ["Multiply", "e_1", "e_2"],
+      ["Multiply", "e_2", "theta_1"],
+      ["CliffordAlgebra", 2, 0, 1],
+    ],
+    expected: "e_2",
+  },
+  Variance: { call: ["Variance", L(1, 2, 3, 4)], expected: ["Rational", 5, 3] },
+};
+
+/** Heads held by design: drawn for display (plots, controls, layout, graphics primitives,
+ *  `Rasterize`) or carrier constructors (`PermutationCycles`), which wrap a value rather than
+ *  compute one. */
+const HELD_HEADS = new Set([
+  ...[...VISUAL_SYMBOLS, ...CONTROL_SYMBOLS, ...LAYOUT_SYMBOLS].map((symbol) => symbol.head),
+  ...GRAPHICS_HEADS,
+  "Rasterize",
+  ...DOMAINS.map((domain) => domain.name),
+]);
+
+const mentions = (node: unknown, head: string): boolean =>
+  node === head || (Array.isArray(node) && node.some((child) => mentions(child, head)));
+
+/** The first plain reference example that uses `head`, from its own entry if it has one. */
+function referenceProbe(head: string): { call: MathJSON; expected: MathJSON } | undefined {
+  const own = referenceEntries.filter((entry) => entry.name === head);
+  for (const entry of [...own, ...referenceEntries]) {
+    const example = entry.examples.find(
+      (e) => !e.aspirational && e.volatile === undefined && mentions(e.expr, head),
+    );
+    if (example) return { call: example.expr, expected: example.expected };
+  }
+  return undefined;
+}
 
 /** Split `s` on every top-level occurrence of a character in `on` — depth tracked by
  *  parens, so a separator nested inside a parenthesized union (or, for `sampleArgs`, a
@@ -230,12 +339,50 @@ export function auditHeadMap(): AuditEntry[] {
       entries.push({ head, category: "undeclared", reason: "ce.lookupDefinition finds nothing" });
       continue;
     }
+    if (HELD_HEADS.has(head)) continue;
+    // A constant is emitted as a bare symbol, so it answers through N.
+    const value = "value" in def ? (def.value as { isConstant?: boolean } | undefined) : undefined;
+    if (!op && value?.isConstant) {
+      if (!Number.isFinite(ce.box(head).N().re)) {
+        entries.push({
+          head,
+          category: "unevaluated",
+          sample: head,
+          reason: "N gives no finite value",
+        });
+      }
+      continue;
+    }
     if (!op) {
       entries.push({
         head,
         category: "undeclared",
         reason: "declared as a value, not an operator — the transpiler emits it as a call",
       });
+      continue;
+    }
+
+    const probe = referenceProbe(head) ?? PROBES[head];
+    if (probe) {
+      const sample = JSON.stringify(probe.call);
+      try {
+        const got = ce.box(probe.call as never).evaluate().json;
+        if (JSON.stringify(got) !== JSON.stringify(probe.expected)) {
+          entries.push({
+            head,
+            category: "unevaluated",
+            sample,
+            reason: `expected ${JSON.stringify(probe.expected)}, got ${JSON.stringify(got)}`,
+          });
+        }
+      } catch (err) {
+        entries.push({
+          head,
+          category: "unevaluated",
+          sample,
+          reason: `threw: ${(err as Error).message}`,
+        });
+      }
       continue;
     }
 
