@@ -2172,8 +2172,32 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Hypergeometric0F1",
+    fungrimEntries: [
+      "01bbb6",
+      "20e530",
+      "2df3e3",
+      "4d65e5",
+      "50f72f",
+      "54daa9",
+      "bd319e",
+      "e2878f",
+    ],
+    wolfram: "Hypergeometric0F1",
+  },
+  {
+    name: "Hypergeometric0F1Regularized",
+    fungrimEntries: ["00dfd1", "325a0e", "81eec6", "98703d", "b049dc", "ecd36f"],
+    wolfram: "Hypergeometric0F1Regularized",
+  },
+  {
     name: "Hypergeometric1F1",
     fungrimEntries: ["2df3e3", "6cf802", "98688d", "9ad254", "abadc7", "be533c"],
+  },
+  {
+    name: "Hypergeometric1F1Regularized",
+    fungrimEntries: ["a047eb", "f7f84e"],
+    wolfram: "Hypergeometric1F1Regularized",
   },
   {
     name: "Hypergeometric2F1",
@@ -2211,6 +2235,30 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f55f0a",
       "fe6e74",
     ],
+  },
+  {
+    name: "Hypergeometric2F1Regularized",
+    fungrimEntries: [
+      "27bc34",
+      "504717",
+      "651a4a",
+      "65693e",
+      "90ac58",
+      "b25089",
+      "ca9123",
+      "db3eb9",
+      "fe6e74",
+    ],
+    wolfram: "Hypergeometric2F1Regularized",
+  },
+  {
+    name: "Hypergeometric3F2Regularized",
+    fungrimEntries: ["6582c4", "e1797b"],
+  },
+  {
+    name: "HypergeometricU",
+    fungrimEntries: ["6cf802", "9d3147", "c8fcc7"],
+    wolfram: "HypergeometricU",
   },
   {
     name: "HypergeometricUStar",
