@@ -321,6 +321,16 @@ export const HEADS: Record<string, string> = {
   Hypergeometric1F1Regularized: "Hypergeometric1F1Regularized",
   Hypergeometric2F1Regularized: "Hypergeometric2F1Regularized",
   HypergeometricU: "HypergeometricU",
+  // Backlog transformers and interval/uncertainty arithmetic (@enumeratio/analytic) — same
+  // name, same meaning as Wolfram's, within the scope each declares.
+  ComplexExpand: "ComplexExpand",
+  ExpToTrig: "ExpToTrig",
+  FunctionExpand: "FunctionExpand",
+  PowerExpand: "PowerExpand",
+  FullSimplify: "FullSimplify",
+  MatrixFunction: "MatrixFunction",
+  CenteredInterval: "CenteredInterval",
+  Around: "Around",
   HypergeometricPFQ: "HypergeometricPFQ",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.

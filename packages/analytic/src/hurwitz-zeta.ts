@@ -45,6 +45,13 @@ import { declareHypergeometricPFQ } from "./hypergeometric-pfq.ts";
 import { declareBellY } from "./bell-y.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
+import { declareTaggedArithmetic } from "./declare-tagged-arithmetic.ts";
+import { declareComplexExpand } from "./complex-expand.ts";
+import { declareExpToTrig } from "./exp-to-trig.ts";
+import { declarePowerExpand } from "./power-expand.ts";
+import { declareFunctionExpand } from "./function-expand.ts";
+import { declareFullSimplify } from "./full-simplify.ts";
+import { declareMatrixFunction } from "./matrix-function.ts";
 import { declareCubeRoot } from "./cube-root.ts";
 import { declareIntegerFractionalPart } from "./integer-fractional-part.ts";
 import { declareRealAbsSign } from "./real-abs-sign.ts";
@@ -553,6 +560,11 @@ function evaluateLerch(
  * `Hypergeometric2F1Regularized` and `Hypergeometric3F2Regularized` in
  * hypergeometric.ts; and, in matrix-exp.ts, `MatrixExp`.
  *
+ * Also: interval and uncertainty arithmetic — `Interval` (extended in place; interval.ts),
+ * `CenteredInterval` (centered-interval.ts) and `Around` (around.ts) — the transformers
+ * `ComplexExpand`, `ExpToTrig`, `PowerExpand`, `FunctionExpand` and `FullSimplify` (each in
+ * its own file), and `MatrixFunction` (matrix-function.ts, reusing `MatrixExp`).
+ *
  * Also declares, each in its own file: `CubeRoot` (cube-root.ts); `IntegerPart` and
  * `FractionalPart` (integer-fractional-part.ts); `RealAbs` and `RealSign`
  * (real-abs-sign.ts); `UnitStep` (unit-step.ts); `Gudermannian` (gudermannian.ts); the
@@ -667,6 +679,13 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareHypergeometricU(ce);
   declareHypergeometric(ce);
   declareMatrixExp(ce);
+  declareTaggedArithmetic(ce);
+  declareComplexExpand(ce);
+  declareExpToTrig(ce);
+  declarePowerExpand(ce);
+  declareFunctionExpand(ce);
+  declareFullSimplify(ce);
+  declareMatrixFunction(ce);
   declareLambertW(ce);
   declareInverseErfc(ce);
   declareInverseGammaRegularized(ce);
