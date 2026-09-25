@@ -104,6 +104,12 @@ export const HEADS: Record<string, string> = {
   Arsinh: "ArcSinh",
   Arcosh: "ArcCosh",
   Artanh: "ArcTanh",
+  Arccot: "ArcCot",
+  Arccsc: "ArcCsc",
+  Arcsec: "ArcSec",
+  Arcoth: "ArcCoth",
+  Arcsch: "ArcCsch",
+  Arsech: "ArcSech",
   // combinatorics / sequences
   Binomial: "Binomial",
   Factorial: "Factorial",
@@ -126,6 +132,8 @@ export const HEADS: Record<string, string> = {
   FallingFactorial: "FactorialPower",
   // number theory
   IsPrime: "PrimeQ",
+  IsOdd: "OddQ",
+  IsEven: "EvenQ",
   IsSquareFree: "SquareFreeQ",
   Totient: "EulerPhi",
   MoebiusMu: "MoebiusMu",
@@ -231,6 +239,11 @@ export const HEADS: Record<string, string> = {
   // divides n — same relation, arguments swapped. See SPECIAL.
   Divides: "Divisible",
   IsComposite: "CompositeQ",
+  // Same (collection, value) order as Wolfram's MemberQ[list, form]; ours is a structural
+  // equality test rather than a pattern match, which agrees on any literal value.
+  Contains: "MemberQ",
+  // Both keep first-occurrence order.
+  Unique: "DeleteDuplicates",
 
   // ── heads our own libraries add that Wolfram already has, under the same meaning ──
   //

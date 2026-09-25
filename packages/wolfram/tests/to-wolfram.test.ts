@@ -164,3 +164,25 @@ test("extension heads Wolfram shares are vouched for, not passed through", () =>
   expect(isWolframHead("CircleTimes")).toBe(true);
   expect(isWolframHead("FareySequence")).toBe(true);
 });
+
+test("the reciprocal inverse trig/hyperbolic heads rename straight to Wolfram's Arc*/ArcC*", () => {
+  expect(toWolfram(["Arccot", 1])).toBe("ArcCot[1]");
+  expect(toWolfram(["Arccsc", 2])).toBe("ArcCsc[2]");
+  expect(toWolfram(["Arcsec", 2])).toBe("ArcSec[2]");
+  expect(toWolfram(["Arcoth", 2])).toBe("ArcCoth[2]");
+  expect(toWolfram(["Arcsch", 2])).toBe("ArcCsch[2]");
+  expect(toWolfram(["Arsech", ["Rational", 1, 2]])).toBe("ArcSech[Rational[1, 2]]");
+});
+
+test("IsOdd/IsEven rename to OddQ/EvenQ", () => {
+  expect(toWolfram(["IsOdd", 3])).toBe("OddQ[3]");
+  expect(toWolfram(["IsEven", 4])).toBe("EvenQ[4]");
+});
+
+test("Contains(xs, v) renames to Wolfram's MemberQ[list, form], same argument order", () => {
+  expect(toWolfram(["Contains", ["List", 1, 2, 3], 2])).toBe("MemberQ[List[1, 2, 3], 2]");
+});
+
+test("Unique(xs) renames to Wolfram's DeleteDuplicates[list]", () => {
+  expect(toWolfram(["Unique", ["List", 1, 2, 2, 3]])).toBe("DeleteDuplicates[List[1, 2, 2, 3]]");
+});
