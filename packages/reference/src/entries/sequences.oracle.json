@@ -30,6 +30,11 @@
           "input": "fibonacci(0)",
           "output": "0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "fibonacci(0)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Fibonacci\",1]": {
@@ -54,6 +59,11 @@
           "verdict": "agree"
         },
         "oscar": {
+          "input": "fibonacci(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "fibonacci(1)",
           "output": "1",
           "verdict": "agree"
@@ -84,6 +94,11 @@
           "input": "fibonacci(10)",
           "output": "55",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "fibonacci(10)",
+          "output": "55",
+          "verdict": "agree"
         }
       },
       "[\"Fibonacci\",20]": {
@@ -108,6 +123,11 @@
           "verdict": "agree"
         },
         "oscar": {
+          "input": "fibonacci(20)",
+          "output": "6765",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "fibonacci(20)",
           "output": "6765",
           "verdict": "agree"
@@ -138,6 +158,11 @@
           "input": "(fibonacci(10) == (fibonacci(9) + fibonacci(8)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(fibonacci(10), (fibonacci(9) + fibonacci(8)))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Subtract\",[\"Multiply\",[\"Fibonacci\",5],[\"Fibonacci\",7]],[\"Power\",[\"Fibonacci\",6],2]]": {
@@ -163,6 +188,11 @@
         },
         "oscar": {
           "input": "((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "((fibonacci(5) * fibonacci(7)) - (fibonacci(6)**2))",
           "output": "1",
           "verdict": "agree"
         }
@@ -191,6 +221,11 @@
         "oscar": {
           "input": "(gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(gcd(fibonacci(12), fibonacci(18)), fibonacci(gcd(12, 18)))",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -221,6 +256,11 @@
           "input": "fibonacci(-5)",
           "output": "5",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "fibonacci(-5)",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"Divide\",[\"Fibonacci\",20],[\"Fibonacci\",19]]": {
@@ -247,6 +287,11 @@
         "oscar": {
           "input": "(fibonacci(20) // fibonacci(19))",
           "output": "1.6180339631667064",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(S(fibonacci(20)) / fibonacci(19))",
+          "output": "6765/4181",
           "verdict": "agree"
         }
       },
@@ -275,6 +320,11 @@
           "input": "fibonacci(50)",
           "output": "12586269025",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "fibonacci(50)",
+          "output": "12586269025",
+          "verdict": "agree"
         }
       }
     },
@@ -294,6 +344,11 @@
           "input": "Combinatorics.lucasnum(0)",
           "output": "2",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lucas(0)",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"LucasL\",1]": {
@@ -309,6 +364,11 @@
         },
         "julia": {
           "input": "Combinatorics.lucasnum(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lucas(1)",
           "output": "1",
           "verdict": "agree"
         }
@@ -328,6 +388,11 @@
           "input": "Combinatorics.lucasnum(5)",
           "output": "11",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lucas(5)",
+          "output": "11",
+          "verdict": "agree"
         }
       },
       "[\"LucasL\",10]": {
@@ -343,6 +408,11 @@
         },
         "julia": {
           "input": "Combinatorics.lucasnum(10)",
+          "output": "123",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lucas(10)",
           "output": "123",
           "verdict": "agree"
         }
@@ -362,6 +432,11 @@
           "input": "(Combinatorics.lucasnum(6) == (fibonacci(5) + fibonacci(7)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(lucas(6), (fibonacci(5) + fibonacci(7)))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Fibonacci\",6],[\"Divide\",[\"Add\",[\"LucasL\",5],[\"LucasL\",7]],5]]": {
@@ -379,6 +454,11 @@
           "input": "(fibonacci(6) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(fibonacci(6), (S((lucas(5) + lucas(7))) / 5))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Subtract\",[\"Multiply\",[\"LucasL\",4],[\"LucasL\",6]],[\"Power\",[\"LucasL\",5],2]]": {
@@ -394,6 +474,11 @@
         },
         "julia": {
           "input": "((Combinatorics.lucasnum(4) * Combinatorics.lucasnum(6)) - (big(Combinatorics.lucasnum(5))^2))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "((lucas(4) * lucas(6)) - (lucas(5)**2))",
           "output": "5",
           "verdict": "agree"
         }
@@ -415,6 +500,11 @@
           "verdict": "error",
           "kind": "domain",
           "note": "compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only."
+        },
+        "sympy": {
+          "input": "lucas(-1)",
+          "output": "-1",
+          "verdict": "agree"
         }
       },
       "[\"Divide\",[\"LucasL\",15],[\"LucasL\",14]]": {
@@ -431,6 +521,11 @@
         "julia": {
           "input": "(Combinatorics.lucasnum(15) // Combinatorics.lucasnum(14))",
           "output": "1.6180308422301304",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(S(lucas(15)) / lucas(14))",
+          "output": "1364/843",
           "verdict": "agree"
         }
       },
@@ -449,6 +544,11 @@
           "input": "Combinatorics.lucasnum(30)",
           "output": "1860498",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lucas(30)",
+          "output": "1860498",
+          "verdict": "agree"
         }
       }
     },
@@ -460,6 +560,11 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "bernoulli(0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "bernoulli(0)",
           "output": "1",
           "verdict": "agree"
@@ -475,6 +580,13 @@
           "input": "bernoulli(1)",
           "output": "-1/2",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "bernoulli(1)",
+          "output": "1/2",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does."
         }
       },
       "[\"BernoulliB\",2]": {
@@ -484,6 +596,11 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "bernoulli(2)",
+          "output": "1/6",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "bernoulli(2)",
           "output": "1/6",
           "verdict": "agree"
@@ -499,6 +616,11 @@
           "input": "bernoulli(4)",
           "output": "-1/30",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "bernoulli(4)",
+          "output": "-1/30",
+          "verdict": "agree"
         }
       },
       "[\"BernoulliB\",12]": {
@@ -508,6 +630,11 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "bernoulli(12)",
+          "output": "-691/2730",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "bernoulli(12)",
           "output": "-691/2730",
           "verdict": "agree"
@@ -523,6 +650,11 @@
           "input": "bool(bernoulli(5) == 0)",
           "output": "True",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(bernoulli(5), 0)",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Divide\",[\"Add\",[\"Multiply\",[\"Binomial\",3,0],[\"BernoulliB\",0],[\"Power\",5,3]],[\"Multiply\",[\"Binomial\",3,1],[\"BernoulliB\",1],[\"Power\",5,2]],[\"Multiply\",[\"Binomial\",3,2],[\"BernoulliB\",2],[\"Power\",5,1]]],3]": {
@@ -535,6 +667,13 @@
           "input": "(((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)",
           "output": "30",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(S(((binomial(3, 0) * bernoulli(0) * (5**3)) + (binomial(3, 1) * bernoulli(1) * (5**2)) + (binomial(3, 2) * bernoulli(2) * (5**1)))) / 3)",
+          "output": "55",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does."
         }
       },
       "[\"BernoulliB\",-1]": {
@@ -549,6 +688,13 @@
           "verdict": "error",
           "kind": "undefined-form",
           "note": "Both decline: compute-engine answers [\"BernoulliB\", -1] and Sage raises an error."
+        },
+        "sympy": {
+          "input": "bernoulli(-1)",
+          "output": "bernoulli(-1)",
+          "verdict": "inconclusive",
+          "kind": "undefined-form",
+          "note": "Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated."
         }
       },
       "[\"BernoulliB\",20]": {
@@ -558,6 +704,11 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "bernoulli(20)",
+          "output": "-174611/330",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "bernoulli(20)",
           "output": "-174611/330",
           "verdict": "agree"

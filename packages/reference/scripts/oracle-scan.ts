@@ -221,7 +221,9 @@ for (const system of systems) {
       verdict = compareCombinations(row.item.expected, theirs);
     } else {
       verdict = compare(show(row.item.expected), theirs, tolerance);
-      if (verdict === "disagree") {
+      // A text comparison that disagrees or can't decide (a complex against a real, say)
+      // gets a second, structural look.
+      if (verdict !== "agree") {
         const structured = comparePythonStructured(
           reduce(row.item.expected, leaf),
           theirs,

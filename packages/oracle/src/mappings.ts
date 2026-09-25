@@ -68,7 +68,7 @@ export const MAPPINGS: readonly Mapping[] = [
     head: "Divide",
     arity: 2,
     emit: {
-      sympy: "Rational($1, $2)",
+      sympy: "(S($1) / $2)",
       sage: "($1 / $2)",
       oscar: "($1 // $2)",
       julia: "($1 // $2)",
@@ -146,6 +146,31 @@ export const MAPPINGS: readonly Mapping[] = [
     },
   },
 
+  {
+    head: "N",
+    arity: 1,
+    emit: {
+      sympy: "N($1, 30)",
+      mpmath: "($1)",
+      sage: "N($1)",
+      julia: "($1)",
+      oscar: "($1)",
+      rust: "nf($1)",
+    },
+    note: "mpmath and the Julia libraries are numeric already; SymPy and Sage evaluate exactly unless asked.",
+  },
+  {
+    head: "Complex",
+    arity: 2,
+    emit: {
+      sympy: "($1 + $2*I)",
+      mpmath: "mpc($1, $2)",
+      sage: "($1 + $2*I)",
+      julia: "complex($1, $2)",
+      oscar: "complex($1, $2)",
+    },
+  },
+
   // ── the special functions, where the oracles are authoritative ──────────────
   {
     head: "Zeta",
@@ -173,7 +198,7 @@ export const MAPPINGS: readonly Mapping[] = [
       mpmath: "zeta($1, $2)",
       sage: "hurwitz_zeta($1, $2)",
     },
-    note: "mpmath is correct at negative-integer s where Wolfram's N[] is not — see analytic/scripts/validate-mpmath.ts.",
+    note: "mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.",
   },
   {
     head: "LerchPhi",
@@ -444,8 +469,8 @@ export const MAPPINGS: readonly Mapping[] = [
     arity: 2,
     emit: {
       wolfram: "($1 == $2)",
-      sympy: "bool(Eq($1, $2))",
-      mpmath: "($1 == $2)",
+      sympy: "enumeratio_equal($1, $2)",
+      mpmath: "almosteq($1, $2, 1e-20)",
       sage: "bool($1 == $2)",
       oscar: "($1 == $2)",
       julia: "($1 == $2)",

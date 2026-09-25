@@ -172,7 +172,10 @@ export function divergingHeads(
 ): string[] {
   const heads = new Set<string>();
   for (const divergence of divergences(bare, ours, corpus)) {
-    if (isCall(divergence.expression)) heads.add(divergence.expression[0] as string);
+    // `N(f(…))` diverges because f does; N only asks for the number.
+    let e = divergence.expression;
+    while (isCall(e) && e[0] === "N" && e.length === 2) e = e[1] as MathJSON;
+    if (isCall(e)) heads.add(e[0] as string);
   }
   return [...heads].sort();
 }

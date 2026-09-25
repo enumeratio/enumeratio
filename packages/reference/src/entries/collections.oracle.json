@@ -307,6 +307,11 @@
           "input": "len([1, 2, 3, 4])",
           "output": "4",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "len([1, 2, 3, 4])",
+          "output": "4",
+          "verdict": "agree"
         }
       },
       "[\"Length\",[\"List\",1,2,3,4,5]]": {
@@ -316,6 +321,11 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "len([1, 2, 3, 4, 5])",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "len([1, 2, 3, 4, 5])",
           "output": "5",
           "verdict": "agree"

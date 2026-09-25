@@ -43,6 +43,7 @@ import { sequences } from "./entries/sequences.ts";
 import sequencesOracle from "./entries/sequences.oracle.json" with { type: "json" };
 import { specialFunctions } from "./entries/special-functions.ts";
 import specialFunctionsOracle from "./entries/special-functions.oracle.json" with { type: "json" };
+import specialFunctionsExamples from "./entries/special-functions.examples.json" with { type: "json" };
 import { analyticSpecial } from "./entries/analytic-special.ts";
 import analyticSpecialOracle from "./entries/analytic-special.oracle.json" with { type: "json" };
 
@@ -69,6 +70,20 @@ const withOthers = (sidecar: OracleSidecar, entry: ReferenceEntry): ReferenceEnt
   });
   return { ...entry, examples };
 };
+
+/** More examples for an entry file's heads, kept as data in `<stem>.examples.json` (see
+ * `scripts/collect-examples.ts`): appended after the authored ones, hidden unless they say
+ * otherwise. */
+const withExamples = (
+  entries: readonly ReferenceEntry[],
+  data: Readonly<Record<string, readonly object[]>>,
+): readonly ReferenceEntry[] =>
+  entries.map((entry) => {
+    const more = (data[entry.name] ?? []) as readonly ReferenceExample[];
+    return more.length === 0
+      ? entry
+      : { ...entry, examples: [...entry.examples, ...more.map((e) => ({ hidden: true, ...e }))] };
+  });
 
 const attach = (
   sidecar: OracleSidecar,
@@ -145,7 +160,13 @@ export const entryFiles: readonly { stem: string; entries: readonly ReferenceEnt
   { stem: "arithmetic", entries: attach(arithmeticOracle, arithmetic) },
   { stem: "elementary", entries: attach(elementaryOracle, elementary) },
   { stem: "linear-algebra", entries: attach(linearAlgebraOracle, linearAlgebra) },
-  { stem: "special-functions", entries: attach(specialFunctionsOracle, specialFunctions) },
+  {
+    stem: "special-functions",
+    entries: attach(
+      specialFunctionsOracle,
+      withExamples(specialFunctions, specialFunctionsExamples),
+    ),
+  },
   { stem: "analytic-special", entries: attach(analyticSpecialOracle, analyticSpecial) },
   { stem: "hypercomplex", entries: attach(hypercomplexOracle, hypercomplex) },
   { stem: "diagram", entries: attach(diagramOracle, diagramAlgebras) },

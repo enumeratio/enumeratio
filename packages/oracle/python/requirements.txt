@@ -1,0 +1,3 @@
+# The Python oracle lanes (mpmath, SymPy), pinned so a nightly rescan only moves when these do.
+mpmath==1.3.0
+sympy==1.14.0

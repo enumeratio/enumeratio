@@ -151,6 +151,7 @@ const grouped = computed(() => {
   const list = entry.value?.examples ?? [];
   const byCategory = new Map<string, { ex: (typeof list)[number]; i: number }[]>();
   list.forEach((ex, i) => {
+    if (ex.hidden) return; // kept as data, not rendered
     const category = ex.category ?? "Basic";
     const group = byCategory.get(category) ?? [];
     group.push({ ex, i });
@@ -164,6 +165,8 @@ const grouped = computed(() => {
     .sort(([a], [b]) => rank(a) - rank(b))
     .map(([category, items]) => ({ category, items }));
 });
+// Examples kept as data (grid points, edge cases) that the page leaves out.
+const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex.hidden).length);
 </script>
 
 <template>
@@ -220,6 +223,9 @@ const grouped = computed(() => {
 
     <div v-if="grouped.length" class="ref-examples-head">
       <h2>Examples</h2>
+      <span v-if="hiddenCount" class="ref-hidden-count"
+        >{{ hiddenCount }} more kept as data, checked against the oracles</span
+      >
       <span class="ref-view">
         <button v-if="grouped.length > 1" @click="sectionsOpen = !sectionsOpen">
           {{ sectionsOpen ? "close all" : "open all" }}
@@ -502,6 +508,12 @@ const grouped = computed(() => {
   margin: 1.5rem 0 0.5rem;
   font-size: 1rem;
   color: var(--vp-c-text-1);
+}
+.ref-hidden-count {
+  font-size: 0.8rem;
+  color: var(--vp-c-text-3);
+  margin-right: auto;
+  margin-left: 0.75rem;
 }
 .ref-examples-head {
   display: flex;
