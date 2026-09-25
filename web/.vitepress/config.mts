@@ -128,15 +128,6 @@ export default defineConfig({
     ],
     sidebar: [
       {
-        text: "The pieces",
-        items: [
-          { text: "nucleus — the kernel", link: "/nucleus/" },
-          { text: "aestimatio — the core", link: "/aestimatio/" },
-          { text: "notatio — the notation", link: "/notatio/" },
-          { text: "enumeratio — the catalogue", link: "/enumeratio/" },
-        ],
-      },
-      {
         text: "Guides",
         items: [
           { text: "Overview", link: "/guide/" },
