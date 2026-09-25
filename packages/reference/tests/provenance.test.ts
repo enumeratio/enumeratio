@@ -65,7 +65,8 @@ const VANILLA: MathJSON[] = [
   ["Zeta", -1],
   ["PolyLog", 2, 1],
   ["PolyGamma", 0, 1],
-  ["Gamma", 5],
+  // Not Gamma(5): exact positive integers and half-integers are ours (analytic's widened.ts).
+  ["Gamma", 5.5],
   // Digits, whose base slot we widen.
   ["IntegerDigits", 255, 16],
   ["IntegerDigits", 10, 2],
@@ -110,7 +111,8 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `GammaRegularized` are here for the third argument (Wolfram's generalized incomplete
  * gamma, which a bare engine rejects as an unexpected argument), plus Γ(1, z) = e^{−z}.
  * Most of the integer and special functions are here for threading over a list, which a
- * bare engine rejects as a type error (`threadOverLists` in @enumeratio/boxed).
+ * bare engine rejects as a type error (`threadOverLists` in @enumeratio/boxed). The core list,
+ * statistics and elementary heads (`First`, `Ordering`, `Mean`, `Ln`, …) are @enumeratio/kernel's.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -122,7 +124,10 @@ const OVERRIDDEN = [
   "Binomial",
   "CatalanNumber",
   "ChineseRemainder",
+  "Clamp",
+  "Digamma",
   "DigitCount",
+  "DigitSum",
   "DivisorSigma",
   "Divisors",
   "Dot",
@@ -130,9 +135,11 @@ const OVERRIDDEN = [
   "Erf",
   "ErfInv",
   "Erfc",
+  "ExtendedGCD",
   "FactorInteger",
   "Factorial2",
   "Fibonacci",
+  "First",
   "FromDigits",
   "Gamma",
   "GammaRegularized",
@@ -142,8 +149,13 @@ const OVERRIDDEN = [
   "IsPrime",
   "IsSquareFree",
   "JacobiSymbol",
+  "Last",
+  "Length",
+  "Ln",
   "LucasL",
   "MatrixPower",
+  "Mean",
+  "Median",
   "Mod",
   "MoebiusMu",
   "Multinomial",
@@ -151,6 +163,7 @@ const OVERRIDDEN = [
   "NextPrime",
   "Norm",
   "NthPrime",
+  "Ordering",
   "Pochhammer",
   "PolyLog",
   "PowerMod",

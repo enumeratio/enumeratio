@@ -1,9 +1,15 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import {
+  bigIntegerAt,
+  bigRationalAt,
+  operandsOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/boxed";
 
 // compute-engine's integer functions, widened to the arguments Wolfram also answers and the
 // native handler leaves unevaluated or rejects: φ(0), σ of a negative order, the GCD and LCM
-// of rationals, and Mod's offset. Each wrapper applies only to what the native handler does
+// of rationals, Mod's offset, and ExtendedGCD of more than two integers. Each wrapper applies only to what the native handler does
 // not answer, so no result compute-engine already gives changes.
 
 type Ops = readonly BoxedExpression[];
@@ -67,6 +73,30 @@ export function declareWidened(ce: ComputeEngine): void {
       },
     );
   }
+
+  // ExtendedGCD(a₁, …, aₖ) = (g, c₁, …, cₖ) with Σ cᵢ·aᵢ = g, folded pairwise: from
+  // g′ = Σ cᵢ·aᵢ and (g, s, t) = xgcd(g′, aₖ₊₁), scale every coefficient so far by s and
+  // append t. The operand types stay `number` so the Gaussian ExtendedGCD still reaches its
+  // handler (declare-gaussian.ts); a call past two operands is integers only.
+  widenSignature(ce, "ExtendedGCD", "(number, number+) -> tuple");
+  wrapOperator(
+    ce,
+    ["ExtendedGCD", 1, 1],
+    (ops) => ops.length > 2,
+    (native) => (ops, options) => {
+      if (ops.some((op) => bigIntegerAt(op) === undefined)) return undefined;
+      let g = ops[0]!;
+      let coefficients: BoxedExpression[] = [ce.One];
+      for (const a of ops.slice(1)) {
+        const step = native?.([g, a], options);
+        if (step?.operator !== "Tuple") return undefined;
+        const [next, s, t] = operandsOf(step);
+        coefficients = [...coefficients.map((c) => c.mul(s!)), t!];
+        g = next!;
+      }
+      return ce.function("Tuple", [g, ...coefficients]);
+    },
+  );
 
   // Wolfram's Mod[m, n, d]: the x ≡ m (mod n) with d ≤ x < d + n. The operand types stay
   // `number` so the Gaussian Mod (declare-gaussian.ts) still reaches its handler.

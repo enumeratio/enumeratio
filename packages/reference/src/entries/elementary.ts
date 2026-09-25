@@ -368,19 +368,7 @@ export const elementary: readonly ReferenceEntry[] = [
         expected: ["Arcsin", 2],
         category: "Possible issues",
         caption:
-          "Outside $[-1, 1]$ the real domain is exceeded, so this stays symbolic; N(...) gives a complex approximation",
-      },
-      {
-        expr: ["Arcsin", 2],
-        expected: [
-          "Subtract",
-          ["Divide", "Pi", 2],
-          ["Multiply", "ImaginaryUnit", ["Ln", ["Add", 2, ["Sqrt", 3]]]],
-        ],
-        aspirational: true,
-        category: "Scope",
-        caption:
-          "Should evaluate to the exact closed form $\\frac{\\pi}{2} - i\\ln(2+\\sqrt3)$; currently left symbolic, and even $N(\\dots)$ gives only a numeric approximation, not this exact form",
+          "Outside $[-1, 1]$ this stays symbolic, as in Wolfram; N(...) gives the complex principal value $\\frac{\\pi}{2} - i\\ln(2+\\sqrt3)$",
       },
     ],
     seeAlso: ["Sin", "Arccos", "Arctan"],
@@ -748,11 +736,10 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Exp", ["List", ["List", 0, 1], ["List", 1, 0]]],
-        expected: ["List", ["List", ["Cosh", 1], ["Sinh", 1]], ["List", ["Sinh", 1], ["Cosh", 1]]],
-        aspirational: true,
-        category: "Scope",
+        expected: ["List", ["List", 1, "ExponentialE"], ["List", "ExponentialE", 1]],
+        category: "Possible issues",
         caption:
-          "The true matrix exponential -- here $\\begin{pmatrix}\\cosh 1 & \\sinh 1\\\\ \\sinh 1 & \\cosh 1\\end{pmatrix}$ -- is not yet computed; $\\mathrm{Exp}$ always broadcasts element-wise, giving $\\begin{pmatrix}1 & e\\\\ e & 1\\end{pmatrix}$ instead",
+          "Exp of a matrix is taken element by element, as Wolfram's is; the matrix exponential $\\begin{pmatrix}\\cosh 1 & \\sinh 1\\\\ \\sinh 1 & \\cosh 1\\end{pmatrix}$ is a different function (MatrixExp there)",
       },
     ],
     seeAlso: ["Ln", "Log", "Sinh"],
@@ -786,18 +773,10 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Ln", -1],
-        expected: ["Ln", -1],
-        category: "Possible issues",
-        caption:
-          "A negative real stays symbolic under plain evaluation; N(Ln(-1)) gives the complex value $i\\pi$",
-      },
-      {
-        expr: ["Ln", -1],
-        expected: ["Multiply", "ImaginaryUnit", "Pi"],
-        aspirational: true,
+        expected: ["Multiply", ["Complex", 0, 1], "Pi"],
         category: "Scope",
         caption:
-          "$\\mathrm{Ln}(-1)$ should evaluate to the exact principal value $i\\pi$; currently left symbolic, and $N(\\dots)$ gives only a numeric approximation of it",
+          "A negative rational has the exact principal value $\\ln(-q) = \\ln q + i\\pi$, so $\\ln(-1) = i\\pi$",
       },
     ],
     seeAlso: ["Exp", "Log", "Log2"],

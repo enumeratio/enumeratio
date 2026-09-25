@@ -352,7 +352,21 @@ export function declareNumerals(ce: ComputeEngine): void {
     },
   );
 
-  /** The integers from `lo` to `hi` as a set, either end possibly unbounded. */
+  // DigitSum(n, b, len): the digit sum of IntegerDigits(n, b, len) — the last `len` digits,
+  // zero-padded — which is how the transpiler already writes it for Wolfram, which has no
+  // DigitSum (@enumeratio/wolfram's to-wolfram.ts).
+  widenSignature(ce, "DigitSum", "(integer, integer?, integer?) -> integer");
+  wrapOperator(
+    ce,
+    ["DigitSum", 12],
+    (ops) => ops.length === 3,
+    () => (ops) => {
+      const digits = ce.function("IntegerDigits", [...ops]).evaluate();
+      if (digits.operator !== "List") return undefined;
+      return ce.function("Add", [...operandsOf(digits)]).evaluate();
+    },
+  );
+
   const integers = (lo: bigint | number | undefined, hi: bigint | number | undefined) => {
     if (hi === undefined) {
       if (lo === undefined) return ce.symbol("Integers");

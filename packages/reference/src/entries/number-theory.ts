@@ -412,10 +412,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
       },
       {
         expr: ["IsPrime", -7],
-        expected: "True",
-        aspirational: true,
-        category: "Scope",
-        caption: "compute-engine's IsPrime requires a positive integer and returns False",
+        expected: "False",
+        category: "Possible issues",
+        caption: "Primes are positive here: a negative integer is never prime",
+        divergence: {
+          wolfram: "Wolfram's PrimeQ counts the associates of primes, so PrimeQ[-7] is True.",
+        },
       },
       {
         expr: ["IsPrime", ["Complex", 2, 1]],
@@ -1058,7 +1060,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
   {
     name: "ExtendedGCD",
     domain: "Number theory",
-    signature: "ExtendedGCD(a, b)",
+    signature: "ExtendedGCD(a, b, \u2026)",
     summary:
       "The GCD of a and b together with Bézout coefficients x, y such that a·x + b·y = GCD(a, b).",
     signatures: [
@@ -1067,12 +1069,17 @@ export const numberTheory: readonly ReferenceEntry[] = [
         description:
           "$\\gcd(a,b)$ together with Bézout coefficients $x,y$ satisfying $ax+by=\\gcd(a,b)$.",
       },
+      {
+        call: "ExtendedGCD(a1, a2, \u2026, ak)",
+        description: "$(g, c_1, \\dots, c_k)$ with $\\sum c_i a_i = g$, folded pairwise.",
+        library: "enumeratio-number-theory",
+      },
     ],
     details: [
       "Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].",
       "The coefficients $x,y$ are not unique; the algorithm returns one particular solution pair.",
       "When $a=0$, the coefficients reduce to $x=0,\\,y=1$.",
-      "compute-engine only accepts two.",
+      "More than two integers fold pairwise, so the coefficients satisfy $\\sum c_i a_i = g$.",
     ],
     examples: [
       {
@@ -1115,10 +1122,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
       },
       {
         expr: ["ExtendedGCD", 6, 15, 30],
-        expected: ["Tuple", 3, 1, -1, 1],
-        aspirational: true,
+        expected: ["Tuple", 3, -2, 1, 0],
         category: "Scope",
-        caption: "compute-engine only accepts two arguments",
+        caption:
+          "More than two integers fold pairwise: $6 \\cdot (-2) + 15 \\cdot 1 + 30 \\cdot 0 = 3$",
       },
       {
         expr: ["ExtendedGCD", ["Complex", 7, 2], ["Complex", 3, -5]],

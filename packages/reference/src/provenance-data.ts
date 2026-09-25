@@ -327,7 +327,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "ExtendedGCD",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "ExtendedGCD",
     elsewhere: ["wolfram"],
@@ -453,7 +453,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Clamp",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -635,7 +635,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Ln",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Log",
     elsewhere: ["sympy", "mpmath"],
@@ -761,7 +761,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Digamma",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "PolyGamma",
     elsewhere: ["sympy", "mpmath"],
@@ -964,7 +964,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "DigitSum",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: ["wolfram"],
@@ -1202,14 +1202,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "First",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "First",
     elsewhere: ["wolfram"],
   },
   {
     name: "Last",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Last",
     elsewhere: ["wolfram"],
@@ -1237,14 +1237,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Ordering",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Ordering",
     elsewhere: ["wolfram"],
   },
   {
     name: "Length",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Length",
     elsewhere: ["wolfram"],
@@ -1286,14 +1286,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Mean",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Mean",
     elsewhere: ["wolfram"],
   },
   {
     name: "Median",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Median",
     elsewhere: ["wolfram"],

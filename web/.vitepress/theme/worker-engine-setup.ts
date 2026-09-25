@@ -35,6 +35,7 @@ import { declareHecke } from "@enumeratio/hecke";
 import { declareHopf } from "@enumeratio/hopf";
 import { declareHypercomplex } from "@enumeratio/hypercomplex";
 import { declareIncidence } from "@enumeratio/incidence";
+import { declareKernel } from "@enumeratio/kernel";
 import { declareModular } from "@enumeratio/modular";
 import { declareNumberTheory } from "@enumeratio/number-theory";
 import { declareNumerals } from "@enumeratio/numerals";
@@ -68,5 +69,6 @@ export function configure(ce: ComputeEngine): void {
     declareNumberTheory,
     declareAdeles,
     declareBraid,
+    declareKernel,
   });
 }

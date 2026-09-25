@@ -7,9 +7,10 @@ import {
   wrapOperator,
 } from "@enumeratio/boxed";
 
-// compute-engine's Gamma-built combinatorial heads, widened to the exact values Wolfram gives
-// and the native handler leaves unevaluated or rejects: Binomial, Beta and CatalanNumber at
-// half-integers, n!! at negative odd n, and the Bernoulli polynomial BernoulliB(n, x). Each
+// compute-engine's Gamma-built heads, widened to the exact values Wolfram gives and the
+// native handler leaves unevaluated or rejects: Γ at positive integers and half-integers,
+// ψ at positive integers, Binomial, Beta and CatalanNumber at half-integers, n!! at negative
+// odd n, and the Bernoulli polynomial BernoulliB(n, x). Each
 // wrapper applies only to what the native handler does not answer, so no result
 // compute-engine already gives changes. Declared by `declareAnalytic`.
 
@@ -108,6 +109,37 @@ const GAMMA_RATIOS: Record<string, (x: readonly Rational[]) => [Rational[], Rati
 };
 
 export function declareWidened(ce: ComputeEngine): void {
+  // Γ(n) = (n − 1)! and Γ(m + ½) = c·√π. compute-engine keeps both standing until N(); the
+  // poles at the non-positive integers stay native.
+  wrapOperator(
+    ce,
+    ["Gamma", 1],
+    (ops) => {
+      const x = ops.length === 1 ? bigRationalAt(ops[0]) : undefined;
+      return x !== undefined && (x[1] === 2n || (x[1] === 1n && x[0] > 0n));
+    },
+    () => (ops) => gammaRatio(ce, [bigRationalAt(ops[0])!], []),
+  );
+
+  // ψ(n) = H₍ₙ₋₁₎ − γ at the positive integers, which compute-engine keeps standing until N().
+  // Past a few thousand terms the exact harmonic number is an unreadable fraction, so larger n
+  // stay native.
+  wrapOperator(
+    ce,
+    ["Digamma", 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return n !== undefined && n > 0n && n <= 5000n;
+    },
+    () => (ops) => {
+      let harmonic: Rational = [0n, 1n];
+      for (let k = 1n; k < bigIntegerAt(ops[0])!; k += 1n) harmonic = plus(harmonic, [1n, k]);
+      return ce
+        .function("Subtract", [ce.number([harmonic[0], harmonic[1]]), ce.symbol("EulerGamma")])
+        .evaluate();
+    },
+  );
+
   // CatalanNumber is natively typed `integer`; its half-integers have to get past boxing.
   widenSignature(ce, "CatalanNumber", "(number) -> number", mayBeInteger);
   for (const [head, ratio] of Object.entries(GAMMA_RATIOS)) {

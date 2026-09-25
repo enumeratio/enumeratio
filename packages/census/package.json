@@ -29,6 +29,7 @@
     "@enumeratio/hopf": "workspace:*",
     "@enumeratio/hypercomplex": "workspace:*",
     "@enumeratio/incidence": "workspace:*",
+    "@enumeratio/kernel": "workspace:*",
     "@enumeratio/modular": "workspace:*",
     "@enumeratio/notatio": "workspace:*",
     "@enumeratio/number-theory": "workspace:*",

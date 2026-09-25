@@ -37,7 +37,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "Reflection formula: $\\Gamma(z)\\,\\Gamma(1-z) = \\dfrac{\\pi}{\\sin(\\pi z)}$, linking $\\Gamma$ at z and $1-z$.",
       "Poles at the nonpositive integers $0, -1, -2, \\ldots$, where $\\Gamma$ diverges to ComplexInfinity.",
       "$\\Gamma(1/2) = \\sqrt{\\pi}$, the constant behind the normal distribution's normalizing factor. See [[Erf]].",
-      "compute-engine's plain evaluation leaves Gamma at exact integer or rational arguments unevaluated -- it only reduces to a decimal with N() or when given an inexact (floating-point) argument.",
+      "Exact at the positive integers and half-integers ($\\Gamma(m + \\tfrac12) = \\frac{(2m)!}{4^m m!}\\sqrt{\\pi}$); at other exact arguments it stays symbolic until N() or an inexact (floating-point) argument.",
       "The three-argument form (`@enumeratio/analytic`) is Wolfram's generalized incomplete gamma, the integral between two limits: $\\Gamma(s, z_0, z_1) = \\Gamma(s, z_0) - \\Gamma(s, z_1)$. It is the only spelling here for the LOWER incomplete gamma $\\gamma(s, z) = \\Gamma(s, 0, z)$, which is what the Gamma-distribution CDF and the $\\chi^2$ CDF are built from. See [[GammaRegularized]] for the normalized version.",
       "$\\Gamma(1, z) = e^{-z}$, also supplied by `@enumeratio/analytic` -- exact and valid for symbolic $z$, which is what makes $\\Gamma(1, 0, z)$ collapse to $1 - e^{-z}$ as Wolfram's does.",
     ],
@@ -94,11 +94,11 @@ export const specialFunctions: readonly ReferenceEntry[] = [
           "The volume of a unit 4-ball is $\\pi^{n/2}/\\Gamma(n/2+1)$; at $n=4$ that's $\\pi^2/\\Gamma(3) = \\pi^2/2$",
       },
       {
-        expr: ["Gamma", ["Rational", 5, 2]],
-        expected: ["Gamma", ["Rational", 5, 2]],
+        expr: ["Gamma", ["Rational", 1, 3]],
+        expected: ["Gamma", ["Rational", 1, 3]],
         category: "Possible issues",
         caption:
-          "An exact rational argument is left unevaluated under plain evaluation -- pair with N() or use an inexact input like 2.5 for a decimal",
+          "An exact argument that is not an integer or half-integer is left unevaluated under plain evaluation -- pair with N() or use an inexact input for a decimal",
       },
       {
         expr: ["Equal", ["Power", ["Gamma", ["Rational", 1, 2]], 2], "Pi"],
@@ -110,18 +110,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Gamma", ["List", 1, 2, 3, 4, 5]],
         expected: ["List", 1, 1, 2, 6, 24],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine leaves integer $\\Gamma$ arguments symbolic under plain evaluation rather than reducing them to concrete factorials",
+        caption: "At the positive integers $\\Gamma(n) = (n-1)!$ exactly",
       },
       {
         expr: ["Gamma", ["Rational", 5, 2]],
         expected: ["Multiply", ["Rational", 3, 4], ["Sqrt", "Pi"]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "$\\Gamma(5/2)$ should evaluate to the exact closed form $\\frac{3}{4}\\sqrt{\\pi}$ via the half-integer recurrence; currently rational arguments are left symbolic",
+          "At the half-integers $\\Gamma(m + \\tfrac12) = \\frac{(2m)!}{4^m m!}\\sqrt{\\pi}$ exactly",
       },
       {
         expr: ["Gamma", 2.5, 0, 1.5],
@@ -241,11 +238,13 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["GammaLn", -1],
-        expected: "ComplexInfinity",
-        aspirational: true,
-        category: "Scope",
+        expected: "PositiveInfinity",
+        category: "Possible issues",
         caption:
-          "compute-engine treats GammaLn as a real log-magnitude and returns PositiveInfinity at Gamma's poles (rather than a complex-analytic ComplexInfinity)",
+          "GammaLn is the real log-magnitude $\\ln|\\Gamma(x)|$, so it is $+\\infty$ at the poles of $\\Gamma$",
+        divergence: {
+          wolfram: "Wolfram's LogGamma is complex-analytic and gives ComplexInfinity at the poles.",
+        },
       },
     ],
     seeAlso: ["Gamma", "LogGamma", "Digamma"],
@@ -1076,7 +1075,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "Recurrence inherited from Gamma's functional equation: $\\psi(z+1) = \\psi(z) + 1/z$.",
       "$\\psi(1/2) = -\\gamma - 2\\ln 2$.",
       "Poles at the nonpositive integers, the same poles as [[Gamma]].",
-      "compute-engine reduces Digamma to a numeric value only via N() or an inexact argument; exact integer or rational arguments stay symbolic under plain evaluation except at the poles.",
+      "At the positive integers $\\psi(n) = H_{n-1} - \\gamma$ exactly; other exact arguments stay symbolic under plain evaluation (pair with N()), except at the poles.",
     ],
     examples: [
       {
@@ -1131,10 +1130,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Digamma", 1],
-        expected: ["Digamma", 1],
-        category: "Possible issues",
-        caption:
-          "An exact integer argument is left unevaluated under plain evaluation -- pair with N() or use an inexact argument like 0.5 for a decimal",
+        expected: ["Negate", "EulerGamma"],
+        caption: "$\\psi(1) = -\\gamma$ exactly",
       },
       {
         expr: ["Digamma", -0.5],
@@ -1148,13 +1145,11 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         expected: [
           "List",
           ["Negate", "EulerGamma"],
-          ["Subtract", 1, "EulerGamma"],
-          ["Subtract", ["Rational", 3, 2], "EulerGamma"],
+          ["Add", 1, ["Negate", "EulerGamma"]],
+          ["Add", ["Rational", 3, 2], ["Negate", "EulerGamma"]],
         ],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Integer arguments should reduce to closed forms in $\\gamma$; currently each element is left symbolic",
+        caption: "At the positive integers $\\psi(n) = H_{n-1} - \\gamma$ exactly",
       },
     ],
     seeAlso: ["Gamma", "Zeta", "GammaLn"],

@@ -36,6 +36,7 @@ import { declareHecke } from "@enumeratio/hecke/src";
 import { declareHopf } from "@enumeratio/hopf/src";
 import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
+import { declareKernel } from "@enumeratio/kernel/src";
 import { declareModular } from "@enumeratio/modular/src";
 import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
@@ -62,6 +63,7 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
   declareNumberTheory,
   declareAdeles,
   declareBraid,
+  declareKernel,
   declareCollections,
   declareGraphics,
   declareDomains,

@@ -60,11 +60,13 @@ export const collections: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Union", ["Divisors", 10], ["Divisors", 12], ["Divisors", 20]],
-        expected: ["Set", 1, 2, 3, 4, 5, 6, 10, 12, 20],
-        aspirational: true,
+        expected: ["Set", 1, 2, 5, 10, 3, 4, 6, 12, 20],
         category: "Possible issues",
         caption:
-          "compute-engine's Union preserves the order in which elements were first encountered instead",
+          "Elements keep the order in which they were first encountered; a Set's order carries no meaning",
+        divergence: {
+          wolfram: "Wolfram's Union sorts its result: {1, 2, 3, 4, 5, 6, 10, 12, 20}.",
+        },
       },
     ],
     seeAlso: ["Intersection", "SetMinus"],
@@ -195,16 +197,21 @@ export const collections: readonly ReferenceEntry[] = [
   {
     name: "First",
     domain: "Collections",
-    signature: "First(collection)",
+    signature: "First(collection, default?)",
     summary: "The first element of a collection.",
     signatures: [
       { call: "First(collection)", description: "the first element of the collection." },
+      {
+        call: "First(collection, default)",
+        description: "the first element, or `default` when the collection is empty.",
+        library: "enumeratio-kernel",
+      },
     ],
     details: [
       "$First(c) = At(c, 1)$. See [[At]].",
       "Positional indexing from the front (index 1) and back (negative indices).",
       "On an empty collection, returns the symbol $Missing$ rather than raising an error.",
-      "compute-engine's First doesn't accept one yet.",
+      "A second argument is returned instead of $Missing$ when the collection is empty.",
     ],
     examples: [
       { expr: ["First", ["List", 1, 2, 3]], expected: 1 },
@@ -229,9 +236,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["First", ["List"], 99],
         expected: 99,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's First doesn't accept a second argument yet",
+        caption: "A second argument is the default for an empty collection, instead of $Missing$",
       },
     ],
     seeAlso: ["Last", "At"],
@@ -239,14 +245,21 @@ export const collections: readonly ReferenceEntry[] = [
   {
     name: "Last",
     domain: "Collections",
-    signature: "Last(collection)",
+    signature: "Last(collection, default?)",
     summary: "The last element of a collection.",
-    signatures: [{ call: "Last(collection)", description: "the last element of the collection." }],
+    signatures: [
+      { call: "Last(collection)", description: "the last element of the collection." },
+      {
+        call: "Last(collection, default)",
+        description: "the last element, or `default` when the collection is empty.",
+        library: "enumeratio-kernel",
+      },
+    ],
     details: [
       "$Last(c) = At(c, -1)$. See [[At]].",
       "Positional indexing from the front (index 1) and back (negative indices).",
       "Complements [[First]] for the other end of a collection.",
-      "compute-engine's Last doesn't accept one yet.",
+      "A second argument is returned instead of $Missing$ when the collection is empty.",
     ],
     examples: [
       { expr: ["Last", ["List", 1, 2, 3]], expected: 3 },
@@ -260,9 +273,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Last", ["List"], 99],
         expected: 99,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's Last doesn't accept a second argument yet",
+        caption: "A second argument is the default for an empty collection, instead of $Missing$",
       },
     ],
     seeAlso: ["First", "At"],
@@ -290,7 +302,7 @@ export const collections: readonly ReferenceEntry[] = [
       "Negative indices count from the end: $At(c, -1)$ is the last element. See [[Last]].",
       "Chaining reaches into nested collections, like indexing a matrix row then column.",
       "An out-of-range index evaluates to $NaN$ rather than raising an error.",
-      "compute-engine treats 0 as out of range.",
+      "Positions count from 1, so 0 is out of range (NaN).",
       "Positional element access, 1-based; negative indices count from the end.",
     ],
     examples: [
@@ -321,10 +333,12 @@ export const collections: readonly ReferenceEntry[] = [
       },
       {
         expr: ["At", ["List", 1, 2, 3], 0],
-        expected: "List",
-        aspirational: true,
-        category: "Scope",
-        caption: "compute-engine treats 0 as out of range",
+        expected: "NaN",
+        category: "Possible issues",
+        caption: "Positions count from 1, so 0 is out of range",
+        divergence: {
+          wolfram: "Wolfram's Part[list, 0] is the head of the expression, List.",
+        },
       },
       {
         expr: ["At", ["List", 1, 2, 3], 10],
@@ -353,7 +367,7 @@ export const collections: readonly ReferenceEntry[] = [
     details: [
       "Returns 0 when the value isn't present, since 0 is never a valid position.",
       "Round-trips with [[At]]: $At(c, IndexOf(c, v)) = v$ whenever v occurs in c.",
-      "compute-engine's IndexOf reports only the first occurrence, as a plain index (not every match).",
+      "Reports only the first occurrence, as a plain index; Wolfram's Position is the head that lists every match.",
     ],
     examples: [
       { expr: ["IndexOf", ["List", 1, 2, 3], 2], expected: 2 },
@@ -370,10 +384,10 @@ export const collections: readonly ReferenceEntry[] = [
       },
       {
         expr: ["IndexOf", ["List", 1, 2, 3, 2], 2],
-        expected: ["List", ["List", 2], ["List", 4]],
-        aspirational: true,
-        category: "Scope",
-        caption: "compute-engine's IndexOf reports only the first occurrence as a plain index",
+        expected: 2,
+        category: "Possible issues",
+        caption:
+          "Only the first occurrence is reported, as a plain index. Wolfram's Position is the head that lists every one",
       },
     ],
     seeAlso: ["At", "Count"],
@@ -425,11 +439,11 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A custom comparator sorts in a different order, here descending",
       },
       {
-        expr: ["Sort", ["List", "banana", "apple", "cherry"]],
-        expected: ["List", "apple", "banana", "cherry"],
-        aspirational: true,
+        expr: ["Sort", ["List", "'banana'", "'apple'", "'cherry'"]],
+        expected: ["List", "'apple'", "'banana'", "'cherry'"],
         category: "Scope",
-        caption: "compute-engine's Sort leaves a list of strings untouched",
+        caption:
+          "Strings sort alphabetically. (Unquoted, `banana` would be an unknown symbol, which Sort leaves where it is.)",
       },
     ],
     seeAlso: ["Ordering"],
@@ -437,18 +451,23 @@ export const collections: readonly ReferenceEntry[] = [
   {
     name: "Ordering",
     domain: "Collections",
-    signature: "Ordering(collection)",
+    signature: "Ordering(collection, n?)",
     summary: "The permutation of indices that would sort the collection into increasing order.",
     signatures: [
       {
         call: "Ordering(collection)",
         description: "the permutation of indices that sorts the collection into increasing order.",
       },
+      {
+        call: "Ordering(collection, n)",
+        description: "the first $n$ positions of the ordering (the last $|n|$ for negative $n$).",
+        library: "enumeratio-kernel",
+      },
     ],
     details: [
       "$c[[Ordering(c)]] = Sort(c)$: applying the permutation at those positions recovers [[Sort]]'s result.",
       "Ties break in favor of earlier position, i.e. it's a stable ordering.",
-      "compute-engine's Ordering only computes the full permutation.",
+      "A count $n$ keeps only the first $n$ positions of the ordering, and $-n$ the last $n$.",
     ],
     examples: [
       { expr: ["Ordering", ["List", 3, 1, 2]], expected: ["List", 2, 3, 1] },
@@ -461,9 +480,9 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3], 4],
         expected: ["List", 3, 5, 1, 6],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's Ordering only computes the full permutation",
+        caption:
+          "A count $n$ keeps the first $n$ positions of the ordering (a negative one, the last)",
       },
     ],
     seeAlso: ["Sort"],
@@ -479,7 +498,7 @@ export const collections: readonly ReferenceEntry[] = [
     details: [
       "Works on any collection head, not just $List$ — e.g. $Set$.",
       "Additive over concatenation: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]].",
-      "compute-engine's Length requires an actual collection.",
+      "A number is an atom with no parts: its length is 0.",
       "See [[Count]] to count occurrences of a specific value instead of every element.",
     ],
     examples: [
@@ -503,9 +522,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Length", 5],
         expected: 0,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's Length requires an actual collection",
+        caption: "A number is an atom with no parts, so its length is 0",
       },
     ],
     seeAlso: ["Count"],
@@ -517,10 +535,14 @@ export const collections: readonly ReferenceEntry[] = [
     summary: "The number of elements equal to value in the collection.",
     signatures: [
       { call: "Count(collection, value)", description: "the number of elements equal to `value`." },
+      {
+        call: "Count(collection, predicate)",
+        description: "the number of elements for which `predicate` is True.",
+      },
     ],
     details: [
       "A value absent from the collection counts as 0.",
-      "compute-engine's Count only tests exact equality against a fixed value.",
+      "The second argument is a value to match exactly, or a predicate function the counted elements satisfy.",
       "See [[Length]] for the total element count, and [[IndexOf]] for a single matching position.",
     ],
     examples: [
@@ -532,11 +554,18 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A value absent from the collection counts as 0",
       },
       {
-        expr: ["Count", ["List", 1, "a", 2, "b"], "_Integer"],
+        expr: [
+          "Count",
+          ["List", 1, "'a'", 2, "'b'"],
+          ["Function", ["Element", "x", "Integers"], "x"],
+        ],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's Count only tests exact equality against a fixed value",
+        caption: "Given a predicate instead of a value, Count counts the elements that satisfy it",
+        divergence: {
+          wolfram:
+            'Wolfram writes this with a pattern, Count[{1, "a", 2, "b"}, _Integer]; compute-engine takes a predicate function.',
+        },
       },
     ],
     seeAlso: ["Length", "IndexOf"],
@@ -552,7 +581,7 @@ export const collections: readonly ReferenceEntry[] = [
     details: [
       "$Join(A, B) = Flatten(\\{A, B\\}, 1)$. See [[Flatten]].",
       "The argument collections don't need to be $List$, but must all share the same head.",
-      "compute-engine's Join always concatenates at the top level.",
+      "Always concatenates at the top level: a trailing number is one more element, not a level.",
       "See [[Append]] for adding a single element rather than concatenating collections.",
     ],
     examples: [
@@ -581,10 +610,12 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", ["List", 5, 6], ["List", 7, 8]],
           2,
         ],
-        expected: ["List", ["List", 1, 2, 5, 6], ["List", 3, 4, 7, 8]],
-        aspirational: true,
-        category: "Scope",
-        caption: "compute-engine's Join always concatenates at the top level",
+        expected: ["List", ["List", 1, 2], ["List", 3, 4], ["List", 5, 6], ["List", 7, 8], 2],
+        category: "Possible issues",
+        caption: "A trailing number is one more element to join, not a level",
+        divergence: {
+          wolfram: "Wolfram's Join[a, b, 2] joins at level 2: {{1, 2, 5, 6}, {3, 4, 7, 8}}.",
+        },
       },
     ],
     seeAlso: ["Flatten", "Append"],
@@ -717,11 +748,13 @@ export const collections: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5], 2],
-        expected: ["List", ["List", 1, 2], ["List", 3, 4]],
-        aspirational: true,
+        expected: ["List", ["List", 1, 2], ["List", 3, 4], ["List", 5]],
         category: "Possible issues",
         caption:
-          "compute-engine keeps it, so $\\{1..5\\}$ partitioned by 2 also yields the ragged $\\{5\\}$",
+          "A short final block is kept, so $\\{1..5\\}$ partitioned by 2 also yields the ragged $\\{5\\}$",
+        divergence: {
+          wolfram: "Wolfram's Partition drops the incomplete block: {{1, 2}, {3, 4}}.",
+        },
       },
     ],
     seeAlso: ["Flatten"],
@@ -733,11 +766,16 @@ export const collections: readonly ReferenceEntry[] = [
     summary: "The arithmetic average of the elements of the collection.",
     signatures: [
       { call: "Mean(collection)", description: "the arithmetic average of the elements." },
+      {
+        call: "Mean(matrix)",
+        description: "the column means of a matrix.",
+        library: "enumeratio-kernel",
+      },
     ],
     details: [
       "$Mean(c) = \\dfrac{\\sum c}{Length(c)}$. See [[Length]].",
       "Sensitive to outliers — a single extreme value can drag the mean far from the bulk of the data. See [[Median]] for a more robust alternative.",
-      "compute-engine's Mean requires a flat list of numbers.",
+      "The mean of a matrix is taken column by column, as in Wolfram.",
       "See [[Mode]] for the most frequent value rather than the average.",
     ],
     examples: [
@@ -764,9 +802,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Mean", ["List", ["List", 1, 10], ["List", 2, 20], ["List", 3, 30]]],
         expected: ["List", 2, 20],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's Mean requires a flat list of numbers",
+        caption: "The mean of a matrix is taken column by column",
       },
     ],
     seeAlso: ["Median", "Mode"],
@@ -781,11 +818,16 @@ export const collections: readonly ReferenceEntry[] = [
         call: "Median(collection)",
         description: "the middle value of the collection once sorted.",
       },
+      {
+        call: "Median(matrix)",
+        description: "the column medians of a matrix.",
+        library: "enumeratio-kernel",
+      },
     ],
     details: [
       "For an odd-length collection, the median is the middle element of [[Sort]]'s result; for even length, it's the average of the two middle elements.",
       "Much less sensitive to outliers than [[Mean]] — a single extreme value barely moves it.",
-      "compute-engine's Median requires a flat list of numbers.",
+      "The median of a matrix is taken column by column, as in Wolfram.",
       "See [[Mode]] for the most frequent value.",
     ],
     examples: [
@@ -815,9 +857,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Median", ["List", ["List", 1, 11, 3], ["List", 4, 6, 7]]],
         expected: ["List", ["Rational", 5, 2], ["Rational", 17, 2], 5],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's Median requires a flat list of numbers",
+        caption: "The median of a matrix is taken column by column",
       },
     ],
     seeAlso: ["Mean", "Mode"],
@@ -832,7 +873,7 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     details: [
       "The mode occurs exactly as many times as the highest frequency in the collection: $Count(c, Mode(c))$ gives that frequency. See [[Count]].",
-      "When several elements share the highest frequency, Mode returns just one; a form returning every tied value is not yet supported.",
+      "When several elements share the highest frequency, Mode returns just one; Wolfram's Commonest is the head that lists every tied value.",
       "See [[Mean]] and [[Median]] for other measures of central tendency.",
     ],
     examples: [
@@ -846,10 +887,10 @@ export const collections: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Mode", ["List", 1, 1, 2, 2, 3]],
-        expected: ["List", 1, 2],
-        aspirational: true,
-        category: "Scope",
-        caption: "With a tie for most frequent, compute-engine's Mode returns just one",
+        expected: 1,
+        category: "Possible issues",
+        caption:
+          "With a tie for most frequent, Mode returns just one of them. Wolfram's Commonest is the head that lists every one",
       },
     ],
     seeAlso: ["Mean", "Median"],

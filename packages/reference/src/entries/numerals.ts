@@ -361,18 +361,23 @@ export const numerals: readonly ReferenceEntry[] = [
   {
     name: "DigitSum",
     domain: DOMAIN,
-    signature: "DigitSum(n, base?)",
+    signature: "DigitSum(n, base?, length?)",
     summary: "The sum of the digits of n in the given base (default 10).",
     signatures: [
       { call: "DigitSum(n)", description: "sum of the digits of $n$, base 10." },
       { call: "DigitSum(n, base)", description: "sum of the digits of $n$ in the given base." },
+      {
+        call: "DigitSum(n, base, length)",
+        description: "the digit sum of the last `length` digits, zero-padded.",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "Equivalent to summing [[IntegerDigits]](n, base).",
       "In base 2, the digit sum is the number of set bits (population count).",
       "$n\\equiv\\mathrm{DigitSum}(n)\\pmod9$ in base 10 -- the basis of the classic divisibility-by-9 check and digital root.",
       "The sign of n is discarded before summing.",
-      "compute-engine only supports the 2-argument form.",
+      "A third argument keeps the last that many digits, zero-padded, as [[IntegerDigits]] does.",
     ],
     examples: [
       { expr: ["DigitSum", 58127], expected: 23 },
@@ -395,10 +400,10 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         expr: ["DigitSum", 6345354, 10, 4],
-        expected: 18,
-        aspirational: true,
+        expected: 17,
         category: "Scope",
-        caption: "compute-engine only supports the 2-argument form",
+        caption:
+          "A length keeps the last that many digits, as [[IntegerDigits]] does: $5 + 3 + 5 + 4$",
       },
     ],
     seeAlso: ["DigitCount"],

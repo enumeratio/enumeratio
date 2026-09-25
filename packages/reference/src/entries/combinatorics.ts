@@ -216,12 +216,11 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption: "Factorials grow fast: $20!$ already exceeds $2 \\times 10^{18}$",
       },
       {
-        expr: ["Divide", ["Factorial", "n"], ["Factorial", ["Subtract", "n", 1]]],
+        expr: ["Simplify", ["Divide", ["Factorial", "n"], ["Factorial", ["Subtract", "n", 1]]]],
         expected: "n",
-        aspirational: true,
         category: "Scope",
         caption:
-          "$\\frac{n!}{(n-1)!}$ should symbolically simplify to $n$; currently the ratio is left unevaluated",
+          "$\\frac{n!}{(n-1)!}$ simplifies to $n$. Plain evaluation leaves the ratio standing, as Wolfram's does",
       },
     ],
     seeAlso: ["Binomial", "Factorial2", "Subfactorial", "Pochhammer"],
@@ -300,7 +299,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "The Catalan numbers have the closed form $C_n = \\frac{1}{n+1}\\binom{2n}{n}$.",
       "They satisfy the recurrence $C_{n+1} = \\sum_{i=0}^{n} C_i\\,C_{n-i}$ with $C_0 = 1$.",
       "$C_n$ is the number of monotonic lattice paths from one corner of an $n \\times n$ grid to the opposite corner that stay below the diagonal.",
-      "compute-engine defines $C_n$ on nonnegative integers; extension to real and complex arguments through the [[Binomial]] gamma-function form is not yet supported.",
+      "compute-engine defines $C_n$ on nonnegative integers; half-integers evaluate exactly through $C_n = \\frac{\\Gamma(2n+1)}{\\Gamma(n+1)\\,\\Gamma(n+2)}$, and other real and complex arguments are not yet supported.",
     ],
     examples: [
       { expr: ["CatalanNumber", 0], expected: 1 },

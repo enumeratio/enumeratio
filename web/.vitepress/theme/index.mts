@@ -81,6 +81,7 @@ export default {
           { declareNumberTheory },
           { declareAdeles },
           { declareBraid },
+          { declareKernel },
           { declareAestimatio },
         ] = await Promise.all([
           import("@enumeratio/notatio-lit"),
@@ -103,6 +104,7 @@ export default {
           import("@enumeratio/number-theory"),
           import("@enumeratio/adeles"),
           import("@enumeratio/braid"),
+          import("@enumeratio/kernel"),
           import("@enumeratio/aestimatio"),
         ]);
         // Notation has to be in before the engine is built: its dictionary is fixed then.
@@ -131,6 +133,7 @@ export default {
           declareNumberTheory,
           declareAdeles,
           declareBraid,
+          declareKernel,
         });
         configureEngine(declareAestimatio);
       };

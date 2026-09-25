@@ -42,6 +42,7 @@ export interface EngineLibraries {
   readonly declareNumberTheory: typeof import("@enumeratio/number-theory").declareNumberTheory;
   readonly declareAdeles: typeof import("@enumeratio/adeles").declareAdeles;
   readonly declareBraid: typeof import("@enumeratio/braid").declareBraid;
+  readonly declareKernel: typeof import("@enumeratio/kernel").declareKernel;
 }
 
 /**
@@ -95,4 +96,6 @@ export function applyEngineLibraries(
   apply(libs.declareNumberTheory);
   apply(libs.declareAdeles);
   apply(libs.declareBraid);
+  // Last: it wraps whatever definition of each core head is current.
+  apply(libs.declareKernel);
 }

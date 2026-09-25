@@ -16,6 +16,7 @@ import { declareHecke } from "@enumeratio/hecke/src";
 import { declareHopf } from "@enumeratio/hopf/src";
 import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
+import { declareKernel } from "@enumeratio/kernel/src";
 import { declareModular } from "@enumeratio/modular/src";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
@@ -42,6 +43,8 @@ const LIBRARY_DECLARATIONS = [
   declareNumberTheory,
   declareAdeles,
   declareBraid,
+  // Last: it wraps whatever definition of each core head is current.
+  declareKernel,
 ];
 
 /** Every library we ship, in the order the reference tests declare them. */
