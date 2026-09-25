@@ -4,6 +4,7 @@ import { entries as words } from "./words.ts";
 import { entries as pathsPartitions } from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
 import { entries as permutations } from "./permutations.ts";
+import { entries as compositions } from "./compositions.ts";
 import type { PackEntry } from "./types.ts";
 
 export * from "./types.ts";
@@ -16,4 +17,5 @@ export const allEntries: readonly PackEntry[] = [
   ...pathsPartitions,
   ...tableauxTrees,
   ...permutations,
+  ...compositions,
 ];
