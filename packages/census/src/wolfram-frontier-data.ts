@@ -73,10 +73,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 115,
   },
   {
-    head: "TransformedDistribution",
-    uses: 113,
-  },
-  {
     head: "Arrowheads",
     uses: 94,
   },
@@ -133,10 +129,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 41,
   },
   {
-    head: "ProductDistribution",
-    uses: 41,
-  },
-  {
     head: "Rotate",
     uses: 39,
   },
@@ -178,10 +170,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "AnnotationValue",
-    uses: 32,
-  },
-  {
-    head: "DirichletDistribution",
     uses: 32,
   },
   {
@@ -246,10 +234,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Button",
-    uses: 25,
-  },
-  {
-    head: "MarginalDistribution",
     uses: 25,
   },
   {
@@ -318,10 +302,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ImageScaled",
-    uses: 20,
-  },
-  {
-    head: "MixtureDistribution",
     uses: 20,
   },
   {
@@ -474,10 +454,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "OverVector",
-    uses: 14,
-  },
-  {
-    head: "TruncatedDistribution",
     uses: 14,
   },
   {

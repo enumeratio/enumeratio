@@ -366,6 +366,14 @@ export const HEADS: Record<string, string> = {
   // identity here already.
   CharacteristicFunction: "CharacteristicFunction",
   MomentGeneratingFunction: "MomentGeneratingFunction",
+  // Fourth-wave (compound) distribution heads (@enumeratio/statistics/src/distributions-4.ts)
+  // — identity here already.
+  TruncatedDistribution: "TruncatedDistribution",
+  MixtureDistribution: "MixtureDistribution",
+  ProductDistribution: "ProductDistribution",
+  TransformedDistribution: "TransformedDistribution",
+  MarginalDistribution: "MarginalDistribution",
+  DirichletDistribution: "DirichletDistribution",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
