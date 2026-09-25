@@ -5,18 +5,22 @@ import { collectErrors } from "../src/assert.ts";
 import {
   boundName,
   type Cell,
+  bindingNotatio,
   bindingSource,
   controlsFor,
+  elideResult,
   freeVariables,
   inferProjection,
   missingProjection,
   projectionReason,
   DEFAULT_BOUND,
+  ELIDE_ABOVE,
   inferRange,
   resolveRange,
   projectionFits,
   referencesOrdinal,
   runPass,
+  substitutedForm,
   symbolLatex,
 } from "../src/reactive.ts";
 
@@ -312,4 +316,95 @@ test("a declared name keeps its type while the cell is mid-edit", () => {
     { id: 2, value: "p \\coloneq 1.5", bind: "p", domain: "integer" },
   ]);
   expect(q?.result.detail).toContain("expected integer");
+});
+
+// --- notatio-out's general capabilities: elision, the substituted-unevaluated form,
+// and the notatio-syntax binding rewrite a `<notatio-cell>`-backed control needs -----
+
+test("a short list is not elided", () => {
+  const short = ce.box(["List", 1, 2, 3]);
+  expect(elideResult(short)).toBeUndefined();
+});
+
+test("a list above the threshold is described, not typeset", () => {
+  const long = ce.box(["List", ...Array.from({ length: ELIDE_ABOVE + 1 }, (_, i) => i)]);
+  expect(elideResult(long)).toBe(`\\left[\\ldots\\right]_{${ELIDE_ABOVE + 1}}`);
+});
+
+test("a matrix (a list of lists) is described by its shape", () => {
+  const row = ce.box(["List", 1, 2, 3]);
+  const matrix = ce.box(["List", ...Array.from({ length: ELIDE_ABOVE + 1 }, () => row)]);
+  expect(elideResult(matrix)).toBe(`\\left[\\ldots\\right]_{${ELIDE_ABOVE + 1}\\times 3}`);
+});
+
+test("elideResult takes its own threshold, not only the default", () => {
+  const ten = ce.box(["List", ...Array.from({ length: 10 }, (_, i) => i)]);
+  expect(elideResult(ten)).toBeUndefined();
+  expect(elideResult(ten, 5)).toBe("\\left[\\ldots\\right]_{10}");
+});
+
+test("a non-list result is never elided", () => {
+  expect(elideResult(ce.box(12345))).toBeUndefined();
+});
+
+test("substitutedForm leaves a truly free name alone", () => {
+  const scope = ce.createScope({});
+  ce.pushScope(scope);
+  try {
+    const expr = ce.box(["Add", "z", 1]);
+    const substituted = substitutedForm(ce, expr);
+    expect(substituted.unknowns).toEqual(["z"]);
+  } finally {
+    ce.popScope();
+  }
+});
+
+test("substitutedForm replaces a bound name but does not evaluate the head", () => {
+  const scope = ce.createScope({});
+  ce.pushScope(scope);
+  try {
+    ce.declare("s", "unknown");
+    ce.box(["Assign", "s", 2]).evaluate();
+    // `HurwitzZeta` isn't declared in this bare test engine, so the head simply
+    // doesn't reduce -- which is the point: substitution must not evaluate it either.
+    const expr = ce.box(["HurwitzZeta", "s", "z"]);
+    const substituted = substitutedForm(ce, expr);
+    expect(substituted.json).toEqual(["HurwitzZeta", 2, "z"]);
+    expect(substituted.unknowns).toEqual(["z"]);
+  } finally {
+    ce.popScope();
+  }
+});
+
+test("substitutedForm is a no-op with nothing bound", () => {
+  const scope = ce.createScope({});
+  ce.pushScope(scope);
+  try {
+    const expr = ce.box(["Add", "x", "y"]);
+    const substituted = substitutedForm(ce, expr);
+    expect(substituted.json).toEqual(expr.json);
+  } finally {
+    ce.popScope();
+  }
+});
+
+test("bindingNotatio writes notatio, not LaTeX -- a plain multi-letter name needs no escaping", () => {
+  // `\mathrm{camera}` is a genuine multi-letter symbol (a bare `camera` would parse as
+  // six letters multiplied); notatio has no such ambiguity, so the rewrite is plain.
+  const [only] = pass("\\mathrm{camera} \\coloneq 2");
+  const [c] = controlsFor(only.result.name, only.value!);
+  expect(bindingNotatio(c, 5)).toBe("camera := 5");
+});
+
+test("bindingNotatio round-trips a complex rewrite the same way bindingSource does", () => {
+  const [only] = pass("w \\coloneq 2 + 3i");
+  const [re, im] = controlsFor(only.result.name, only.value!);
+  expect(bindingNotatio(re, 5)).toBe("w := 5 + 3i");
+  expect(bindingNotatio(im, -4)).toBe("w := 2 - 4i");
+});
+
+test("bindingNotatio rounds to a whole number for an integer control", () => {
+  const [only] = pass("n \\coloneq 2");
+  const [c] = controlsFor(only.result.name, only.value!, undefined, true);
+  expect(bindingNotatio(c, 5.7, true)).toBe("n := 6");
 });

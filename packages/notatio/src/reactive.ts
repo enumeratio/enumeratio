@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 
 // The dataflow core shared by `<notatio-notebook>` and `<notatio-worksheet>`: cells with
 // stable identity, evaluated top-to-bottom in a scope that is rebuilt from scratch on
@@ -225,8 +225,10 @@ export function symbolLatex(name: string): string {
 }
 
 /**
- * The notatio a control's cell should now read, after one of its axes moved. A complex
- * binding is rewritten whole, so moving either slider preserves the other part.
+ * The LaTeX a control's cell should now read, after one of its axes moved -- for a
+ * `<notatio-in>`-backed field (`bind`'s own pinned chrome is LaTeX regardless of a
+ * page's syntax). A complex binding is rewritten whole, so moving either slider
+ * preserves the other part.
  */
 export function bindingSource(control: WorksheetControl, next: number, integer = false): string {
   const round = (v: number) => (integer ? Math.round(v) : Number(v.toPrecision(12)));
@@ -236,6 +238,21 @@ export function bindingSource(control: WorksheetControl, next: number, integer =
   const im = round(control.part === "im" ? next : control.other);
   const sign = im < 0 ? "-" : "+";
   return `${name}\\coloneq ${re} ${sign} ${Math.abs(im)}i`;
+}
+
+/**
+ * `bindingSource`'s notatio equivalent, for a `<notatio-cell format="notatio">`-backed
+ * cell (the worksheet, once it sits on the unified cell) -- notatio has no LaTeX-style
+ * adjacency ambiguity, so a multi-letter name needs no escaping the way `symbolLatex`
+ * gives a LaTeX field.
+ */
+export function bindingNotatio(control: WorksheetControl, next: number, integer = false): string {
+  const round = (v: number) => (integer ? Math.round(v) : Number(v.toPrecision(12)));
+  if (control.part === "real") return `${control.name} := ${round(next)}`;
+  const re = round(control.part === "re" ? next : control.other);
+  const im = round(control.part === "im" ? next : control.other);
+  const sign = im < 0 ? "-" : "+";
+  return `${control.name} := ${re} ${sign} ${Math.abs(im)}i`;
 }
 
 // --- projection --------------------------------------------------------------------
@@ -427,8 +444,11 @@ function safeSubs(
   }
 }
 
-/** Above this many operands, a result is described rather than typeset. */
-const ELIDE_ABOVE = 64;
+/**
+ * Above this many operands, a result is described rather than typeset -- the
+ * worksheet's own default, and `elideResult`'s when a caller doesn't pass one.
+ */
+export const ELIDE_ABOVE = 64;
 
 /**
  * A short description of a result too big to typeset, or `undefined` to typeset it.
@@ -438,17 +458,51 @@ const ELIDE_ABOVE = 64;
  * cell that exists to be *drawn*. A dragged slider cannot afford that, and it was what
  * made a curve worksheet feel stuck. The shape is what a reader wanted from that line
  * anyway; Wolfram elides long output for the same reason.
+ *
+ * General, not worksheet-specific: any cell can ask for it (`notatio-out`'s
+ * `elide-above`), with its own threshold.
  */
-function elideResult(expr: BoxedExpression): string | undefined {
+export function elideResult(
+  expr: BoxedExpression,
+  above: number = ELIDE_ABOVE,
+): string | undefined {
   if (expr.operator !== "List") return undefined;
   // `ops` lives on compute-engine's narrowed function interface; read it structurally.
   const opsOf = (e: BoxedExpression): readonly BoxedExpression[] =>
     (e as unknown as { ops?: readonly BoxedExpression[] }).ops ?? [];
   const rows = opsOf(expr).length;
-  if (rows <= ELIDE_ABOVE) return undefined;
+  if (rows <= above) return undefined;
   const inner = opsOf(expr)[0];
   const shape = inner?.operator === "List" ? `${rows}\\times ${opsOf(inner).length}` : `${rows}`;
   return `\\left[\\ldots\\right]_{${shape}}`;
+}
+
+/**
+ * `expr` with every unknown that is currently BOUND in `engine`'s live scope replaced by
+ * its value, but not evaluated -- the general form of `PassCell.plot` above, read off the
+ * engine's scope directly rather than a pass's own tracked `bindings` map, so it works for
+ * any cell sharing a scope (a `Transcript`'s), not only a worksheet's own pass.
+ *
+ * Call it with that scope current (inside `Transcript.run`, as `PassCell.plot`'s callers
+ * already are): a name still free there (an axis variable, `x`/`z`) evaluates back to
+ * itself and is left alone; a name a `:=` bound resolves to its value and is substituted.
+ * Deliberately not evaluated -- see `PassCell.plot`'s own comment for why (a pole should
+ * stay a pole as a bound parameter moves past it).
+ */
+export function substitutedForm(engine: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+  const bindings: Record<string, BoxedExpression> = {};
+  // `.symbols`, not `.unknowns`: a name the scope has ALREADY bound (`s` after `s := 2`)
+  // has a value and so is not "unknown" to compute-engine at all -- exactly the ones
+  // this function exists to substitute. `.unknowns` is for what is LEFT free afterwards.
+  for (const name of expr.symbols) {
+    try {
+      const bound = engine.box(name).evaluate();
+      if (!isSymbol(bound) || bound.symbol !== name) bindings[name] = bound;
+    } catch {
+      // an unresolvable name is left free
+    }
+  }
+  return safeSubs(expr, bindings) ?? expr;
 }
 
 function evaluateCell(

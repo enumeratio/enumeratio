@@ -1,38 +1,33 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { html, LitElement, type PropertyValues } from "lit";
 import { repeat } from "lit/directives/repeat.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import "./notatio-in.ts";
+import "./notatio-cell.ts";
+import "./notatio-dynamic-module.ts";
 import "./notatio-complex-plot.ts";
 import "./notatio-plot.ts";
 import "./notatio-plot-3d.ts";
 import { imageUri } from "@enumeratio/formats";
-import { pointsOf } from "./notatio-curve-3d.ts";
 import { toInputForm } from "@enumeratio/formats/inputform";
-import { loadEngine, loadMarkup } from "./mathlive.ts";
+import { parseNotatio } from "@enumeratio/formats/notatio";
+import { pointsOf } from "./notatio-curve-3d.ts";
+import { loadEngine } from "./mathlive.ts";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
 import { ensureStyles } from "./styles.ts";
 import {
-  bindingSource,
+  bindingNotatio,
   type Cell,
-  type CellResult,
-  collectErrors,
   type ControlRange,
   controlsFor,
-  debug,
   domainsOf,
-  editorLatexOf,
   formatValue,
-  freeVariables,
-  inferProjection,
   INTEGER_TYPES,
+  inferProjection,
   type Loop,
   projectionFits,
   type ProjectionKind,
   projectionReason,
   resolveView,
-  runPass,
   settingName,
   type SpaceView,
   stackLayers,
@@ -44,8 +39,10 @@ import { SliderPlayback } from "./sweep.ts";
 /**
  * `<notatio-worksheet>` -- a set of named expressions and a shared view of what they draw.
  *
- * It is the reactive notebook with two additions, and the additions fall out of the
- * cells rather than being configured:
+ * Built on the same unified pieces `<notatio-notebook>` is: a reactive
+ * `<notatio-dynamic-module tracked-symbols="all">` of `<notatio-cell>`s owns editing and
+ * evaluation; this element owns the worksheet-specific chrome (add/remove, drag to
+ * reorder, the gutter's marks) and the two things a worksheet adds on top:
  *
  * - A cell that binds a plain number (`s := 2`) gets a **slider**. No separate control
  *   syntax, which is the whole point: a knob is just a binding you can move.
@@ -58,9 +55,17 @@ import { SliderPlayback } from "./sweep.ts";
  * is why there is no "which function?" control. Each drawable cell carries a visibility
  * toggle, Desmos-style, and may override the projection its variables imply.
  *
+ * The knob/projection inference is read off every cell's own `notatio-result` event --
+ * `<notatio-cell>`'s `plot` option (`notatio-out.ts`) reports the input substituted but
+ * not evaluated, and `elide-above` keeps a long curve from being typeset every frame.
+ * A slider drives a cell through `<notatio-cell>`'s `liveValue` (a property, not
+ * `value`): the Out re-evaluates on every frame, the editor field does not, which is
+ * what keeps a drag from re-typesetting the very field being dragged.
+ *
  * There is no cell history and no ordinals: every cell is defined by its name and
- * recomputed from its dependencies. That is what separates a worksheet from
- * [[notatio-notebook]], whose sequential mode is exactly the transcript this lacks.
+ * recomputed from its dependencies, the same reactive schedule `<notatio-notebook>`
+ * uses -- which is what separates a worksheet from a plain transcript, whose sequential
+ * mode is exactly the history this lacks.
  */
 export class NotatioWorksheet extends LitElement {
   static properties = {
@@ -71,7 +76,7 @@ export class NotatioWorksheet extends LitElement {
      * names; a binding is `s := 2`.
      */
     seed: { type: String },
-    /** The seed's syntax: `notatio` (default) or `latex`, the editor's own form. */
+    /** The seed's syntax: `notatio` (default) or `latex`. Cells are notatio internally. */
     inForm: { type: String, attribute: "in-form" },
     /** Where the shared view sits: `auto`, `side` or `below`. */
     screen: { type: String },
@@ -82,13 +87,11 @@ export class NotatioWorksheet extends LitElement {
     /** What a sweeping binding does at the ends: `cycle` (default), `reflect` or `none`. */
     loop: { type: String, reflect: true },
     _cells: { state: true },
-    _results: { state: true },
     _controls: { state: true },
     _draw: { state: true },
     _views: { state: true },
     _declined: { state: true },
     _collapsed: { state: true },
-    _fatal: { state: true },
     _height: { state: true },
     _seedError: { state: true },
     _dragId: { state: true },
@@ -110,7 +113,6 @@ export class NotatioWorksheet extends LitElement {
   declare structure: string;
   declare loop: Loop | "";
   declare _cells: Cell[];
-  declare _results: Record<number, CellResult>;
   declare _controls: WorksheetControl[];
   declare _draw: Drawable[];
   /** The resolved view per projection kind — see space.ts. */
@@ -119,8 +121,6 @@ export class NotatioWorksheet extends LitElement {
   declare _declined: Record<number, string>;
   /** Whether the screen is folded away. */
   declare _collapsed: boolean;
-  /** A pass that could not finish at all, as opposed to a cell that could not. */
-  declare _fatal: string;
   /** A height the reader dragged to, overriding what the projections asked for. */
   declare _height: number | undefined;
   declare _seedError: string;
@@ -128,27 +128,21 @@ export class NotatioWorksheet extends LitElement {
   declare _dropId: number | undefined;
 
   #nextId = 1;
-  #evalToken = 0;
   /**
-   * Cell sources a slider is driving right now, before they are committed.
-   *
-   * A drag must not rewrite the cell: the cell holds LaTeX, and handing new LaTeX to
-   * the editor re-typesets it on every input event -- which measured 11-31ms of
-   * synchronous work each, so a real drag froze the renderer outright. The override is
-   * evaluated in the cell's place and written back once, on release.
+   * Cell sources a slider is driving right now, in notatio -- handed to the cell's own
+   * `liveValue`, not `value`. `<notatio-cell>`'s own doc comment has the reason: `value`
+   * feeds the editor field, and rewriting it on every drag frame is what measured
+   * 11-31ms of synchronous MathLive relayout each, freezing the renderer outright. The
+   * override is evaluated in the cell's place and written into `value` once, on release.
    */
   #live = new Map<number, string>();
-  #evalTimer: ReturnType<typeof setTimeout> | undefined;
-  #lastPassAt = 0;
-  /**
-   * Typeset markup by the LaTeX that produced it.
-   *
-   * Converting LaTeX to markup is the expensive part of a pass, and a pass re-runs
-   * every cell — so a dragged slider was re-typesetting every *unchanged* result
-   * dozens of times a second. The cache is per worksheet and small by construction:
-   * one entry per distinct result a cell has shown.
-   */
-  #markupCache = new Map<string, string>();
+  /** Per-cell facts read off its `notatio-result` event -- see `#onResult`. */
+  #cellData = new Map<number, CellData>();
+  /** `#cellData`'s evaluated JSON, boxed -- cached by JSON text, since a slider redraws
+   * only the cell it drives; every OTHER cell's box is unchanged from the last pass. */
+  #boxedCache = new Map<string, BoxedExpression | null>();
+  #deriveTimer: ReturnType<typeof setTimeout> | undefined;
+  #lastDeriveAt = 0;
   /** How many points a curve cell evaluated to, for the elided readout. */
   #pointCount: Record<number, number> = {};
   /** Bindings the author declared whole, so a slider on them moves by ones. */
@@ -184,13 +178,11 @@ export class NotatioWorksheet extends LitElement {
     this.structure = "open";
     this.loop = "";
     this._cells = [];
-    this._results = {};
     this._controls = [];
     this._draw = [];
     this._views = {};
     this._declined = {};
     this._collapsed = false;
-    this._fatal = "";
     this._height = undefined;
     this._seedError = "";
     this._dragId = undefined;
@@ -211,6 +203,15 @@ export class NotatioWorksheet extends LitElement {
       this.#hostWidth = width;
     });
     this.#resize.observe(this);
+    void loadEngine().then((engine) => {
+      this.#engine = engine;
+      this.#deriveState();
+    });
+  }
+
+  /** `format` every cell reads its source in -- notatio unless the seed asked for LaTeX. */
+  get #format(): "notatio" | "latex" {
+    return this.inForm === "latex" ? "latex" : "notatio";
   }
 
   /**
@@ -243,13 +244,12 @@ export class NotatioWorksheet extends LitElement {
 
   protected override willUpdate(changed: PropertyValues): void {
     if (changed.has("seed") && this._cells.length === 0) void this.#seedCells();
-    if (changed.has("_cells")) this.#scheduleEvaluate();
   }
 
   /**
-   * Read the seed into cells. A notatio seed is converted to the editor's LaTeX first,
-   * which needs the engine -- so the cells land after an await, which is also what
-   * reports them as a change and schedules the first pass.
+   * Read the seed into cells, kept in notatio (`#format`'s syntax) -- the syntax every
+   * `<notatio-cell>` below reads directly, so this is synchronous unless the seed itself
+   * asked for `in-form="latex"`, which needs the engine to convert it once.
    */
   async #seedCells(): Promise<void> {
     let seeded: Cell[] = [];
@@ -265,15 +265,18 @@ export class NotatioWorksheet extends LitElement {
         err instanceof Error ? err.message : String(err)
       })`;
     }
-    if (this.inForm !== "latex" && seeded.length > 0) {
+    if (this.inForm === "latex" && seeded.length > 0) {
       const engine = await loadEngine();
-      const problems: string[] = [];
       seeded = seeded.map((cell) => {
-        const { latex, errors } = editorLatexOf(engine, this.inForm, cell.value, { assign: true });
-        if (errors.length) problems.push(`${cell.value}: ${errors[0]}`);
-        return { ...cell, value: latex };
+        if (!cell.value.trim()) return cell;
+        try {
+          return { ...cell, value: toInputForm(engine.parse(cell.value, { form: "raw" }).json) };
+        } catch {
+          // Left as authored; the cell's own Out reports the parse error, same as any
+          // other cell a reader mistypes.
+          return cell;
+        }
       });
-      if (problems.length) this._seedError = `seed is not notatio (${problems.join("; ")})`;
     }
     this._cells = seeded.length > 0 ? seeded : [this.#cell()];
   }
@@ -281,8 +284,9 @@ export class NotatioWorksheet extends LitElement {
   // --- editing ---------------------------------------------------------------------
 
   #onChange(id: number, event: Event): void {
-    const latex = (event as CustomEvent<{ latex: string }>).detail.latex;
-    this._cells = this._cells.map((c) => (c.id === id ? { ...c, value: latex } : c));
+    const notatio = (event as CustomEvent<{ notatio: string }>).detail.notatio;
+    this.#live.delete(id);
+    this._cells = this._cells.map((c) => (c.id === id ? { ...c, value: notatio } : c));
   }
 
   /** May the reader add or remove cells at all? */
@@ -305,13 +309,17 @@ export class NotatioWorksheet extends LitElement {
     this._cells = cells;
     // Focus the new cell once it exists, so typing continues where the caret went.
     void this.updateComplete.then(() => {
-      const el = this.querySelector<HTMLElement>(`[data-cell="${fresh.id}"] notatio-in`);
+      const el = this.querySelector<HTMLElement>(
+        `[data-cell="${fresh.id}"] notatio-cell notatio-in`,
+      );
       el?.focus();
     });
   }
 
   #remove(id: number): void {
     if (this.#fixed || this._cells.find((c) => c.id === id)?.locked) return;
+    this.#cellData.delete(id);
+    this.#live.delete(id);
     const cells = this._cells.filter((c) => c.id !== id);
     this._cells = cells.length > 0 ? cells : [this.#cell()];
   }
@@ -329,48 +337,69 @@ export class NotatioWorksheet extends LitElement {
   #setControl(control: WorksheetControl, raw: string, commit = false): void {
     const v = Number(raw);
     if (!Number.isFinite(v)) return;
-    const target = this._cells.find((c) => this._results[c.id]?.name === control.name);
-    if (!target) return;
-    const source = bindingSource(control, v, this.#integerNames.has(control.name));
+    const targetId = this.#cellIdFor(control.name);
+    if (targetId === undefined) return;
+    const source = bindingNotatio(control, v, this.#integerNames.has(control.name));
     if (commit) {
-      this.#live.delete(target.id);
-      this.#patch(target.id, { value: source });
+      this.#live.delete(targetId);
+      this.#patch(targetId, { value: source });
+      this.#notifyReactive(targetId, source);
       return;
     }
-    this.#live.set(target.id, source);
-    this.#scheduleEvaluate();
+    this.#live.set(targetId, source);
+    this.#scheduleRerender();
   }
 
-  /** The cells to evaluate: whatever a slider is currently driving, in place. */
-  #cellsForPass(): Cell[] {
-    if (this.#live.size === 0) return this._cells;
-    return this._cells.map((c) => {
-      const live = this.#live.get(c.id);
-      return live === undefined ? c : { ...c, value: live };
+  /** The cell currently bound to `name`, from the last pass's own facts. */
+  #cellIdFor(name: string): number | undefined {
+    for (const [id, data] of this.#cellData) if (data.name === name) return id;
+    return undefined;
+  }
+
+  /**
+   * Tell the reactive module a slider just committed `source` into cell `id`, the same
+   * way a reader's own edit would: `<notatio-cell>`'s `value` PROPERTY changing (which
+   * `#patch`, above, already did) only reloads that one cell's own display
+   * (`notatio-cell.ts`'s `#load`) -- it does not fire `notatio-change`, which is the
+   * only thing `<notatio-dynamic-module>`'s reactive graph listens for
+   * (`reactive-module.ts`'s `commit`). Without this, a downstream cell reading the
+   * slider's binding would keep showing what it read before the slider moved.
+   */
+  #notifyReactive(id: number, source: string): void {
+    let json: unknown;
+    try {
+      json = parseNotatio(source, { allow: ["Assign"] }).json;
+    } catch {
+      return;
+    }
+    void this.updateComplete.then(() => {
+      const el = this.querySelector<Element>(`[data-cell="${id}"] notatio-cell`);
+      el?.dispatchEvent(
+        new CustomEvent("notatio-change", {
+          detail: { notatio: source, json },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     });
   }
 
-  /** At most one pass per this many milliseconds. */
+  /** At most one re-render per this many milliseconds -- a dragged slider's own throttle. */
   static readonly PASS_INTERVAL_MS = 16;
 
   /**
-   * Evaluate at most once per interval. A dragged slider emits input events faster than
-   * a pass can run, and running one per event is what made the worksheet stop
-   * responding rather than merely lag.
-   *
-   * On a timer rather than an animation frame, deliberately. Evaluating is not a
-   * rendering concern, and a backgrounded tab suspends animation frames entirely — so
-   * a worksheet nobody is looking at would never evaluate at all, and would still be
-   * empty when its tab came back.
+   * Re-render at most once per interval. A dragged slider emits input events faster than
+   * a frame can afford to redraw, and redrawing on every one is what made the worksheet
+   * stop responding rather than merely lag.
    */
-  #scheduleEvaluate(): void {
-    if (this.#evalTimer !== undefined) return;
-    const since = performance.now() - this.#lastPassAt;
+  #scheduleRerender(): void {
+    if (this.#deriveTimer !== undefined) return;
+    const since = performance.now() - this.#lastDeriveAt;
     const wait = Math.max(0, NotatioWorksheet.PASS_INTERVAL_MS - since);
-    this.#evalTimer = setTimeout(() => {
-      this.#evalTimer = undefined;
-      this.#lastPassAt = performance.now();
-      void this.#evaluate();
+    this.#deriveTimer = setTimeout(() => {
+      this.#deriveTimer = undefined;
+      this.#lastDeriveAt = performance.now();
+      this.requestUpdate();
     }, wait);
   }
 
@@ -428,139 +457,134 @@ export class NotatioWorksheet extends LitElement {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#playback.stop();
-    if (this.#evalTimer !== undefined) clearTimeout(this.#evalTimer);
-    this.#evalTimer = undefined;
+    if (this.#deriveTimer !== undefined) clearTimeout(this.#deriveTimer);
+    this.#deriveTimer = undefined;
     this.#resize?.disconnect();
     this.#resize = undefined;
   }
 
-  // --- evaluation ------------------------------------------------------------------
+  // --- reading the module's cells ----------------------------------------------------
 
   /**
-   * Run a pass, and survive one that goes wrong.
-   *
-   * Everything here used to be unguarded, and the method is called as
-   * `void this.#evaluate()` — so a single throwing cell rejected the whole pass, no
-   * state was ever written, and every *other* cell stopped updating with it. The
-   * worksheet froze on its last good state and could not come back, because the next
-   * pass hit the same cell again. A bad expression is an ordinary thing to type; it has
-   * to cost only the cell it is in.
+   * A descendant `<notatio-cell>`'s Out reported a result -- the trigger this element
+   * reacts to, the way `<notatio-notebook>`'s module reacts to `notatio-change`. Kept
+   * per cell (`#cellData`), then folded into the controls/drawables every cell's facts
+   * are worked out from together (`#deriveState`), throttled the same way a dragged
+   * slider's own re-renders are.
    */
-  async #evaluate(): Promise<void> {
-    try {
-      await this.#runPass();
-      this._fatal = "";
-    } catch (err) {
-      // The pass could not finish at all. Say so, and leave the last good render up
-      // rather than blanking the worksheet.
-      this._fatal = err instanceof Error ? err.message : String(err);
+  #onResult = (event: Event): void => {
+    const detail = (event as CustomEvent<ResultDetail>).detail;
+    const cellEl = (event.target as Element | null)?.closest<HTMLElement>("[data-cell]");
+    const id = cellEl ? Number(cellEl.dataset.cell) : Number.NaN;
+    if (!Number.isFinite(id)) return;
+    this.#cellData.set(id, {
+      name: detail.name,
+      jsonStr: detail.json ?? "",
+      plotFree: detail.plot?.free,
+      plotSource: detail.plot?.source,
+    });
+    this.#scheduleRerender();
+    // A rerender alone would not re-run `#deriveState` (it only recomputes on a timer
+    // tick, see `#scheduleRerender`); tie the two together here so `_controls`/`_draw`
+    // catch up in the same throttle window as the redraw they feed.
+    this.#deriveOnNextRerender = true;
+  };
+
+  #deriveOnNextRerender = false;
+
+  protected override updated(changed: PropertyValues): void {
+    super.updated(changed);
+    if (this.#deriveOnNextRerender) {
+      this.#deriveOnNextRerender = false;
+      this.#deriveState();
     }
   }
 
-  async #runPass(): Promise<void> {
-    const token = ++this.#evalToken;
-    const engine = (this.#engine ??= await loadEngine());
-    const convert = await loadMarkup();
-    if (token !== this.#evalToken) return;
-
-    const startedAt = performance.now();
-    const passed = runPass(engine, this.#cellsForPass(), {
-      rejectOrdinals: true, // a worksheet has no ordinals to reference
-      markup: (latex) => {
-        const hit = this.#markupCache.get(latex);
-        if (hit !== undefined) return hit;
-        const made = convert(latex);
-        // Bound it: a swept parameter produces a new result every frame, and those
-        // are exactly the ones least worth keeping.
-        if (this.#markupCache.size > 256) this.#markupCache.clear();
-        this.#markupCache.set(latex, made);
-        return made;
-      },
-      errors: collectErrors,
-    });
-    if (token !== this.#evalToken) return;
-    const afterPass = performance.now();
-
-    const results: Record<number, CellResult> = {};
-    const controls: WorksheetControl[] = [];
-    const bound = new Set<string>();
-    const settings = new Map<string, BoxedExpression>();
-    for (const p of passed) {
-      results[p.cell.id] = p.result;
-      if (!p.result.name) continue;
-      bound.add(p.result.name);
-      const setting = settingName(p.result.name);
-      // A setting is a binding like any other, so it gets its slider too -- which is
-      // what makes the framing itself manipulable.
-      if (setting !== undefined && p.value) settings.set(setting, p.value);
-      const cell = this._cells.find((c) => c.id === p.cell.id);
-      if (p.value) {
-        controls.push(...controlsFor(p.result.name, p.value, cell?.range, cell?.integer));
-        if (cell?.integer) this.#integerNames.add(p.result.name);
-      }
+  /** `jsonStr`, boxed -- cached, since most cells are unchanged from the last pass. */
+  #boxedFor(jsonStr: string): BoxedExpression | undefined {
+    if (!this.#engine || !jsonStr) return undefined;
+    const hit = this.#boxedCache.get(jsonStr);
+    if (hit !== undefined) return hit ?? undefined;
+    let value: BoxedExpression | null = null;
+    try {
+      value = this.#engine.box(JSON.parse(jsonStr));
+    } catch {
+      value = null;
     }
+    if (this.#boxedCache.size > 256) this.#boxedCache.clear();
+    this.#boxedCache.set(jsonStr, value);
+    return value ?? undefined;
+  }
 
-    // Drawables are worked out after every binding is known, so a cell over a slider
-    // variable is free only in the axes it is actually plotted against.
+  /**
+   * Fold every cell's own facts (`#cellData`) into the shared state: which bindings get
+   * a slider, which cells draw, and what view each projection resolves to. The
+   * per-cell work (evaluating, typesetting) already happened inside that cell's own
+   * `<notatio-out>`; this only reads it back.
+   */
+  #deriveState(): void {
+    if (!this.#engine) return;
+    const controls: WorksheetControl[] = [];
+    const settings = new Map<string, BoxedExpression>();
     const draw: Drawable[] = [];
     const declined: Record<number, string> = {};
-    for (const p of passed) {
+
+    for (const cell of this._cells) {
+      const data = this.#cellData.get(cell.id);
+      if (!data || !data.jsonStr) continue;
+      const value = this.#boxedFor(data.jsonStr);
+      if (data.name !== undefined) {
+        if (!value) continue;
+        const setting = settingName(data.name);
+        if (setting !== undefined) settings.set(setting, value);
+        controls.push(...controlsFor(data.name, value, cell.range, cell.integer));
+        if (cell.integer) this.#integerNames.add(data.name);
+        continue;
+      }
       try {
-        if (p.result.name !== undefined || p.result.status) continue;
         // A picture is drawn for what it is, not for what it is a function of, so it is
         // recognised from the value rather than from the variables left free.
-        const uri = imageUri(p.value);
+        const uri = value ? imageUri(value) : undefined;
         if (uri !== undefined) {
-          draw.push({ id: p.cell.id, kind: "image", source: uri, free: [] });
+          draw.push({ id: cell.id, kind: "image", source: uri, free: [] });
           continue;
         }
         // A list of points in space is a curve, for the same reason an image is a
         // picture: it is drawn for what it is, not for what it is a function of.
-        const source = p.plot ?? p.value;
-        const curve = p.value ? pointsOf(p.value) : [];
-        if (curve.length >= 2 && source) {
-          this.#pointCount[p.cell.id] = curve.length;
+        const curve = value ? pointsOf(value) : [];
+        if (curve.length >= 2 && data.plotSource) {
+          this.#pointCount[cell.id] = curve.length;
           draw.push({
-            id: p.cell.id,
+            id: cell.id,
             kind: "curve3d",
-            source: sourceOf(source),
-            // Already evaluated here; handing the element the expression instead would
-            // make it parse and sample the same curve a second time, every frame.
+            source: data.plotSource,
             points: curve,
             free: [],
           });
           continue;
         }
-        if (!p.plot) continue;
-        const free = freeVariables(p.plot, bound);
+        if (!data.plotSource) continue;
+        const free = data.plotFree ?? [];
         const inferred = inferProjection(free);
-        const chosen = p.cell.projection ?? inferred;
+        const chosen = cell.projection ?? inferred;
         if (chosen === "none") continue;
         if (!projectionFits(chosen, free)) {
           // Asked for a projection this cell cannot supply. Say so where it was asked
           // for, rather than leaving an empty screen and no account of why.
-          declined[p.cell.id] = projectionReason(chosen, free);
+          declined[cell.id] = projectionReason(chosen, free);
           continue;
         }
-        draw.push({ id: p.cell.id, kind: chosen, source: sourceOf(p.plot), free });
+        draw.push({ id: cell.id, kind: chosen, source: data.plotSource, free });
       } catch (err) {
         // Whatever this cell was going to draw, it cannot. That is this cell's problem
         // and nobody else's.
-        declined[p.cell.id] = err instanceof Error ? err.message : String(err);
+        declined[cell.id] = err instanceof Error ? err.message : String(err);
       }
     }
 
     const views: Record<string, SpaceView> = {};
     for (const d of draw) views[d.kind] ??= resolveView(d.kind, settings);
-    log("pass", {
-      ms: Math.round(performance.now() - startedAt),
-      evalMs: Math.round(afterPass - startedAt),
-      drawMs: Math.round(performance.now() - afterPass),
-      cells: passed.length,
-      drawn: draw.length,
-    });
 
-    this._results = results;
     this._declined = declined;
     this._controls = controls;
     this._draw = draw;
@@ -568,47 +592,6 @@ export class NotatioWorksheet extends LitElement {
   }
 
   // --- rendering -------------------------------------------------------------------
-
-  /**
-   * A cell's diagnostic, placed where it came from: a cell that would not parse is a
-   * problem with what was typed, so it sits under the input; anything else came out of
-   * evaluating and sits under the result.
-   */
-  #diagnostic(cell: Cell, from: "input" | "output"): unknown {
-    const declined = this._declined[cell.id];
-    if (declined && from === "output") {
-      return html`<div class="ws-diag">
-        <span class="notatio-assert-diag">Missing — ${declined}</span>
-      </div>`;
-    }
-    const r = this._results[cell.id];
-    if (!r?.status) return "";
-    const fromInput = r.status === "invalid";
-    if ((from === "input") !== fromInput) return "";
-    return html`<div class="ws-diag ${r.status === "error" ? "ws-diag-error" : ""}">
-      <span class="notatio-assert-diag">${r.status === "error" ? "⚠ " : ""}${r.detail}</span>
-    </div>`;
-  }
-
-  #outLine(cell: Cell): unknown {
-    const r = this._results[cell.id];
-    if (!cell.value.trim() || !r || r.status) return "";
-    // A curve is hundreds of coordinates. Printing them says nothing a reader wants and
-    // buries the cell; the picture below is the answer, so summarise and get out of the
-    // way.
-    const drawn = this._draw.find((d) => d.id === cell.id);
-    if (drawn?.kind === "curve3d") {
-      const count = this.#pointCount[cell.id] ?? 0;
-      return html`<div class="ws-out">
-        ${r.name ? html`<span class="ws-bind">${displayName(r.name)} =</span>` : ""}
-        <span class="ws-elided">a curve through ${count} points</span>
-      </div>`;
-    }
-    return html`<div class="ws-out">
-      ${r.name ? html`<span class="ws-bind">${displayName(r.name)} =</span>` : ""}
-      <span class="notatio-render">${unsafeHTML(r.markup)}</span>
-    </div>`;
-  }
 
   /** Edit one endpoint of a binding's range, keeping the rest as it was. */
   #setRange(cell: Cell, patch: ControlRange): void {
@@ -621,7 +604,7 @@ export class NotatioWorksheet extends LitElement {
    * the number beside each end is an input, and typing in it pins that end.
    */
   #controlsFor(cell: Cell): unknown {
-    const name = this._results[cell.id]?.name;
+    const name = this.#cellData.get(cell.id)?.name;
     const mine = name ? this._controls.filter((x) => x.name === name) : [];
     if (mine.length === 0) return "";
     const first = mine[0];
@@ -675,6 +658,14 @@ export class NotatioWorksheet extends LitElement {
     </div>`;
   }
 
+  #declinedDiag(cell: Cell): unknown {
+    const declined = this._declined[cell.id];
+    if (!declined) return "";
+    return html`<div class="ws-diag">
+      <span class="notatio-assert-diag">Missing — ${declined}</span>
+    </div>`;
+  }
+
   /**
    * The gutter every cell carries. A drawable cell gets a visibility toggle shaped like
    * what it draws; a binding gets a play button; anything else gets a mark saying what
@@ -691,7 +682,7 @@ export class NotatioWorksheet extends LitElement {
 
   #mark(cell: Cell): unknown {
     const drawable = this._draw.find((x) => x.id === cell.id);
-    const name = this._results[cell.id]?.name;
+    const name = this.#cellData.get(cell.id)?.name;
     const control = name ? this._controls.find((x) => x.name === name) : undefined;
 
     if (drawable) {
@@ -842,62 +833,66 @@ export class NotatioWorksheet extends LitElement {
                 </div>`
               : ""
           }
-          ${repeat(
-            this._cells,
-            (cell) => cell.id,
-            (cell, i) => {
-              const blank = !cell.value.trim();
-              return html`<div
-                data-cell=${cell.id}
-                class=${[
-                  "ws-cell",
-                  this._dragId === cell.id ? "ws-dragging" : "",
-                  this._dropId === cell.id ? "ws-drop-before" : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                @dragover=${(e: DragEvent) => this.#onDragOver(cell.id, e)}
-                @drop=${(e: DragEvent) => this.#onDrop(cell.id, e)}
-              >
-                <div class="ws-in">
-                  <span
-                    class="ws-gutter"
-                    draggable=${blank ? "false" : "true"}
-                    title=${blank ? "" : "Drag to reorder"}
-                    @dragstart=${(e: DragEvent) => this.#onDragStart(cell.id, e)}
-                    @dragend=${() => this.#onDragEnd()}
-                    >${this.#gutter(cell, i, blank)}</span
-                  >
-                  <notatio-in
-                    .value=${cell.value}
-                    .bind=${cell.bind ?? ""}
-                    .domain=${cell.domain ?? ""}
-                    @notatio-change=${(e: Event) => this.#onChange(cell.id, e)}
-                    @keydown=${(e: KeyboardEvent) => this.#onKeyDown(cell.id, e)}
-                  ></notatio-in>
-                  <button
-                    class="ws-mark ws-static"
-                    title="Remove cell"
-                    aria-label="Remove cell"
-                    ?hidden=${this.#fixed || cell.locked || this._cells.length === 1}
-                    @click=${() => this.#remove(cell.id)}
-                  >
-                    ✕
-                  </button>
-                </div>
-                ${this.#diagnostic(cell, "input")} ${this.#controlsFor(cell)} ${this.#outLine(cell)}
-                ${this.#diagnostic(cell, "output")}
-              </div>`;
-            },
-          )}
+          <notatio-dynamic-module tracked-symbols="all" @notatio-result=${this.#onResult}>
+            ${repeat(
+              this._cells,
+              (cell) => cell.id,
+              (cell, i) => {
+                const blank = !cell.value.trim();
+                return html`<div
+                  data-cell=${cell.id}
+                  class=${[
+                    "ws-cell",
+                    this._dragId === cell.id ? "ws-dragging" : "",
+                    this._dropId === cell.id ? "ws-drop-before" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  @dragover=${(e: DragEvent) => this.#onDragOver(cell.id, e)}
+                  @drop=${(e: DragEvent) => this.#onDrop(cell.id, e)}
+                >
+                  <div class="ws-in">
+                    <span
+                      class="ws-gutter"
+                      draggable=${blank ? "false" : "true"}
+                      title=${blank ? "" : "Drag to reorder"}
+                      @dragstart=${(e: DragEvent) => this.#onDragStart(cell.id, e)}
+                      @dragend=${() => this.#onDragEnd()}
+                      >${this.#gutter(cell, i, blank)}</span
+                    >
+                    <notatio-cell
+                      .value=${cell.value}
+                      format=${this.#format}
+                      .bind=${cell.bind ?? ""}
+                      .domain=${cell.domain ?? ""}
+                      evaluate
+                      elide-above="64"
+                      plot
+                      .liveValue=${this.#live.get(cell.id)}
+                      @notatio-change=${(e: Event) => this.#onChange(cell.id, e)}
+                      @keydown=${(e: KeyboardEvent) => this.#onKeyDown(cell.id, e)}
+                    ></notatio-cell>
+                    <button
+                      class="ws-mark ws-static"
+                      title="Remove cell"
+                      aria-label="Remove cell"
+                      ?hidden=${this.#fixed || cell.locked || this._cells.length === 1}
+                      @click=${() => this.#remove(cell.id)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  ${this.#declinedDiag(cell)} ${this.#controlsFor(cell)}
+                </div>`;
+              },
+            )}
+          </notatio-dynamic-module>
         </div>
         ${this.#screen()}
       </div>
     </div>`;
   }
 }
-
-const log = debug("worksheet");
 
 interface Drawable {
   id: number;
@@ -906,19 +901,27 @@ interface Drawable {
   source: string;
   /** For a curve, the points already evaluated, so the element need not resample. */
   points?: Triple[];
-  free: string[];
+  free: readonly string[];
 }
 
-/**
- * The mark a drawable's toggle wears: what it draws, not a generic eye. A reader
- * scanning the gutter can then tell a curve from a surface without reading the row.
- */
-/**
- * A bound name as a reader should see it. A setting is the symbol `extent_sansserif`
- * internally; that spelling is an implementation detail of the namespace and has no
- * business on the page.
- */
-const displayName = (name: string): string => settingName(name) ?? name;
+/** One cell's facts, read off its own `notatio-result` event. */
+interface CellData {
+  /** The bound symbol, when the cell is an assignment. */
+  name?: string;
+  /** The evaluated result, as MathJSON text -- `""` for a blank or errored cell. */
+  jsonStr: string;
+  /** The names still free in the substituted-but-unevaluated input, when `plot` reported one. */
+  plotFree?: readonly string[];
+  /** That input's InputForm, for a pane to re-parse. */
+  plotSource?: string;
+}
+
+/** The shape of `notatio-out`'s `notatio-result` event detail this element reads. */
+interface ResultDetail {
+  json?: string;
+  name?: string;
+  plot?: { source: string; free: readonly string[] };
+}
 
 /** The container width at which the screen moves beside the cells; matches the CSS. */
 const SIDE_BY_SIDE_PX = 46 * 16;
@@ -932,7 +935,7 @@ const MAX_SCREEN_PX = 1200;
  * folds to the right, below them it folds up.
  */
 const foldGlyph = (side: boolean, collapsed: boolean): string =>
-  side ? (collapsed ? "\u25c2" : "\u25b8") : collapsed ? "\u25be" : "\u25b4";
+  side ? (collapsed ? "◂" : "▸") : collapsed ? "▾" : "▴";
 
 const PROJECTION_GLYPH: Record<string, string> = {
   portrait: "▦",
@@ -942,22 +945,6 @@ const PROJECTION_GLYPH: Record<string, string> = {
   image: "▣",
   curve3d: "◠",
 };
-
-/**
- * The expression a pane plots -- see `PassCell.plot` for why it is not evaluated.
- *
- * InputForm, not `toString`. A pane re-parses what it is handed, and compute-engine's
- * own rendering lowercases function names: given `sin(2x)` a pane parses the head
- * `sin`, which nothing knows, and draws an empty picture without complaining.
- * InputForm is notatio you could have typed, so it parses back to what it printed.
- */
-function sourceOf(value: BoxedExpression): string {
-  try {
-    return toInputForm(value.json);
-  } catch {
-    return value.toString();
-  }
-}
 
 function paneFor(d: Drawable, view: SpaceView | undefined): unknown {
   const v = view ?? {
