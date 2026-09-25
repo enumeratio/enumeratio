@@ -18,4442 +18,4330 @@ export interface EngineSymbol {
 
 export const engineSymbols: readonly EngineSymbol[] = [
   {
-    name: "A",
-    kind: "constant",
-    signature: "unknown",
+    "name": "A",
+    "kind": "constant",
+    "signature": "unknown"
   },
   {
-    name: "AGM",
-    kind: "operator",
-    description: "Arithmetic-geometric mean. AGM(z) is shorthand for AGM(1, z) (Fungrim convention).",
-    signature: "(complex | infinity, (complex | infinity)?) -> number",
+    "name": "AGM",
+    "kind": "operator",
+    "description": "Arithmetic-geometric mean. AGM(z) is shorthand for AGM(1, z) (Fungrim convention).",
+    "signature": "(complex | infinity, (complex | infinity)?) -> number"
   },
   {
-    name: "About",
-    kind: "operator",
-    description:
-      "Return information about an expression as a dictionary: its kind (symbol, constant, function, number, string, expression), its static type and, when applicable, its name, value, signature, clause listing, algebraic attributes, description, wikidata and url.",
-    signature: "(any) -> dictionary<any>",
+    "name": "About",
+    "kind": "operator",
+    "description": "Return information about an expression as a dictionary: its kind (symbol, constant, function, number, string, expression), its static type and, when applicable, its name, value, signature, clause listing, algebraic attributes, description, wikidata and url.",
+    "signature": "(any) -> dictionary<any>"
   },
   {
-    name: "Abs",
-    kind: "operator",
-    description: "Absolute value (magnitude) of a number.",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q3317982",
-    keywords: ["magnitude", "modulus"],
+    "name": "Abs",
+    "kind": "operator",
+    "description": "Absolute value (magnitude) of a number.",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q3317982",
+    "keywords": [
+      "magnitude",
+      "modulus"
+    ]
   },
   {
-    name: "AbsArg",
-    kind: "operator",
-    description: "Tuple of magnitude and argument of a complex number.",
-    signature: "(complex | infinity) -> tuple<+oo | real, real>",
-    keywords: ["polar form"],
+    "name": "AbsArg",
+    "kind": "operator",
+    "description": "Tuple of magnitude and argument of a complex number.",
+    "signature": "(complex | infinity) -> tuple<+oo | real, real>",
+    "keywords": [
+      "polar form"
+    ]
   },
   {
-    name: "Add",
-    kind: "operator",
-    description: "Sum of two or more values.",
-    signature: "(value+) -> value",
-    wikidata: "Q32043",
+    "name": "Add",
+    "kind": "operator",
+    "description": "Sum of two or more values.",
+    "signature": "(value+) -> value",
+    "wikidata": "Q32043"
   },
   {
-    name: "Adjoin",
-    kind: "operator",
-    description:
-      'The ring obtained by adjoining one or more elements to a base ring. `Adjoin(Integers, Sqrt(2))` is ℤ[√2]; `Adjoin(Integers, ["Complex", 0, 1])` is the Gaussian integers ℤ[i]; `Adjoin(Integers, "x")` is the polynomial ring ℤ[x]. Inert: the adjunction is not expanded, and membership in it is not decided.',
-    signature: "(set<any>, any+) -> set",
+    "name": "Adjoin",
+    "kind": "operator",
+    "description": "The ring obtained by adjoining one or more elements to a base ring. `Adjoin(Integers, Sqrt(2))` is ℤ[√2]; `Adjoin(Integers, [\"Complex\", 0, 1])` is the Gaussian integers ℤ[i]; `Adjoin(Integers, \"x\")` is the polynomial ring ℤ[x]. Inert: the adjunction is not expanded, and membership in it is not decided.",
+    "signature": "(set<any>, any+) -> set"
   },
   {
-    name: "AdjugateMatrix",
-    kind: "operator",
-    description: "Adjugate (classical adjoint) of a square matrix.",
-    signature: "(matrix) -> matrix",
+    "name": "AdjugateMatrix",
+    "kind": "operator",
+    "description": "Adjugate (classical adjoint) of a square matrix.",
+    "signature": "(matrix) -> matrix"
   },
   {
-    name: "AiryAi",
-    kind: "operator",
-    description: "Airy function of the first kind",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    "name": "AiryAi",
+    "kind": "operator",
+    "description": "Airy function of the first kind",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q403629"
   },
   {
-    name: "AiryAiPrime",
-    kind: "operator",
-    description: "Derivative of the Airy function of the first kind",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    "name": "AiryAiPrime",
+    "kind": "operator",
+    "description": "Derivative of the Airy function of the first kind",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q403629"
   },
   {
-    name: "AiryBi",
-    kind: "operator",
-    description: "Airy function of the second kind",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    "name": "AiryBi",
+    "kind": "operator",
+    "description": "Airy function of the second kind",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q403629"
   },
   {
-    name: "AiryBiPrime",
-    kind: "operator",
-    description: "Derivative of the Airy function of the second kind",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    "name": "AiryBiPrime",
+    "kind": "operator",
+    "description": "Derivative of the Airy function of the second kind",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q403629"
   },
   {
-    name: "All",
-    kind: "operator",
-    description:
-      "Return True if the predicate holds for every element of the collection (or if every element is True when no predicate is given).",
-    signature: "(collection<T>, predicate: ((T) any -> boolean)?) -> boolean where T",
+    "name": "All",
+    "kind": "operator",
+    "description": "Return True if the predicate holds for every element of the collection (or if every element is True when no predicate is given).",
+    "signature": "(collection<T>, predicate: ((T) any -> boolean)?) -> boolean where T"
   },
   {
-    name: "Alternatives",
-    kind: "operator",
-    description:
-      "Inside a `Match` pattern, `Alternatives(p1, p2, …)` matches if any alternative matches. Alternatives must be binding-free.",
-    signature: "(expression+) -> nothing",
+    "name": "Alternatives",
+    "kind": "operator",
+    "description": "Inside a `Match` pattern, `Alternatives(p1, p2, …)` matches if any alternative matches. Alternatives must be binding-free.",
+    "signature": "(expression+) -> nothing"
   },
   {
-    name: "And",
-    kind: "operator",
-    description:
-      "Logical conjunction (AND): true when all operands are true. Short-circuits: operands are evaluated left to right and evaluation stops at the first `False`.",
-    signature: "(boolean+) -> boolean",
-    wikidata: "Q191081",
+    "name": "And",
+    "kind": "operator",
+    "description": "Logical conjunction (AND): true when all operands are true. Short-circuits: operands are evaluated left to right and evaluation stops at the first `False`.",
+    "signature": "(boolean+) -> boolean",
+    "wikidata": "Q191081"
   },
   {
-    name: "Angle",
-    kind: "operator",
-    description: "Angle mark / measure (`\\angle ABC`, `\\varangle XYZ`, `∠ABC`) — opaque typed head; not evaluated.",
-    signature: "(any+) -> number",
+    "name": "Angle",
+    "kind": "operator",
+    "description": "Angle mark / measure (`\\angle ABC`, `\\varangle XYZ`, `∠ABC`) — opaque typed head; not evaluated.",
+    "signature": "(any+) -> number"
   },
   {
-    name: "Annotated",
-    kind: "operator",
-    description: "Attach metadata or style annotations to an expression.",
-    signature: "(expression, dictionary<any>) -> expression",
+    "name": "Annotated",
+    "kind": "operator",
+    "description": "Attach metadata or style annotations to an expression.",
+    "signature": "(expression, dictionary<any>) -> expression"
   },
   {
-    name: "Any",
-    kind: "operator",
-    description:
-      "Return True if the predicate holds for at least one element of the collection (or if any element is True when no predicate is given).\n\nTo test membership of a specific value, use `Contains(xs, v)` — the structural-identity specialization `Any(xs, (e) => e === v)`.",
-    signature: "(collection<T>, predicate: ((T) any -> boolean)?) -> boolean where T",
+    "name": "Any",
+    "kind": "operator",
+    "description": "Return True if the predicate holds for at least one element of the collection (or if any element is True when no predicate is given).\n\nTo test membership of a specific value, use `Contains(xs, v)` — the structural-identity specialization `Any(xs, (e) => e === v)`.",
+    "signature": "(collection<T>, predicate: ((T) any -> boolean)?) -> boolean where T"
   },
   {
-    name: "Apart",
-    kind: "operator",
-    description: "Alias for PartialFraction. Decompose a rational expression into partial fractions.",
-    signature: "(value, symbol?) -> value",
+    "name": "Apart",
+    "kind": "operator",
+    "description": "Alias for PartialFraction. Decompose a rational expression into partial fractions.",
+    "signature": "(value, symbol?) -> value"
   },
   {
-    name: "AppellF1",
-    kind: "operator",
-    description: "Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double series for |x|, |y| < 1.",
-    signature:
-      "(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q2701540",
+    "name": "AppellF1",
+    "kind": "operator",
+    "description": "Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double series for |x|, |y| < 1.",
+    "signature": "(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q2701540"
   },
   {
-    name: "Append",
-    kind: "operator",
-    description: "Add one or more elements to the end of a collection.",
-    signature: "(collection<any>, value+) -> collection",
+    "name": "Append",
+    "kind": "operator",
+    "description": "Add one or more elements to the end of a collection.",
+    "signature": "(collection<any>, value+) -> collection"
   },
   {
-    name: "Apply",
-    kind: "operator",
-    description: "Apply a function to a list of arguments",
-    signature: "(name: any, arguments: any*) -> unknown",
+    "name": "Apply",
+    "kind": "operator",
+    "description": "Apply a function to a list of arguments",
+    "signature": "(name: any, arguments: any*) -> unknown"
   },
   {
-    name: "Approx",
-    kind: "operator",
-    description: "Approximate-equality relation (approximately equal).",
-    signature: "(any, any*) -> boolean",
+    "name": "Approx",
+    "kind": "operator",
+    "description": "Approximate-equality relation (approximately equal).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "ApproxEqual",
-    kind: "operator",
-    description: "Approximately-equal relation.",
-    signature: "(any, any*) -> boolean",
+    "name": "ApproxEqual",
+    "kind": "operator",
+    "description": "Approximately-equal relation.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "ApproxNotEqual",
-    kind: "operator",
-    description: "Approximately-not-equal relation.",
-    signature: "(any, any*) -> boolean",
+    "name": "ApproxNotEqual",
+    "kind": "operator",
+    "description": "Approximately-not-equal relation.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Arc",
-    kind: "operator",
-    description: "Arc / wide-hat accent measure (`\\widehat{ABC}`) — opaque typed head; not evaluated.",
-    signature: "(any+) -> number",
+    "name": "Arc",
+    "kind": "operator",
+    "description": "Arc / wide-hat accent measure (`\\widehat{ABC}`) — opaque typed head; not evaluated.",
+    "signature": "(any+) -> number"
   },
   {
-    name: "Arccos",
-    kind: "operator",
-    description: "Arccosine, the inverse cosine function.",
-    signature: "(complex) -> number",
-    keywords: ["acos", "inverse cosine"],
+    "name": "Arccos",
+    "kind": "operator",
+    "description": "Arccosine, the inverse cosine function.",
+    "signature": "(complex) -> number",
+    "keywords": [
+      "acos",
+      "inverse cosine"
+    ]
   },
   {
-    name: "Arccot",
-    kind: "operator",
-    description: "Arccotangent, the inverse cotangent function.",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Arccot",
+    "kind": "operator",
+    "description": "Arccotangent, the inverse cotangent function.",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "Arccsc",
-    kind: "operator",
-    description: "Arccosecant, the inverse cosecant function.",
-    signature: "(complex | infinity) -> number",
+    "name": "Arccsc",
+    "kind": "operator",
+    "description": "Arccosecant, the inverse cosecant function.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Arcosh",
-    kind: "operator",
-    description: "Inverse hyperbolic cosine (area hyperbolic cosine).",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Arcosh",
+    "kind": "operator",
+    "description": "Inverse hyperbolic cosine (area hyperbolic cosine).",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "Arcoth",
-    kind: "operator",
-    description: "Inverse hyperbolic cotangent (area hyperbolic cotangent).",
-    signature: "(complex | infinity) -> number",
+    "name": "Arcoth",
+    "kind": "operator",
+    "description": "Inverse hyperbolic cotangent (area hyperbolic cotangent).",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Arcsch",
-    kind: "operator",
-    description: "Inverse hyperbolic cosecant (area hyperbolic cosecant).",
-    signature: "(complex | infinity) -> number",
+    "name": "Arcsch",
+    "kind": "operator",
+    "description": "Inverse hyperbolic cosecant (area hyperbolic cosecant).",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Arcsec",
-    kind: "operator",
-    description: "Arcsecant, the inverse secant function.",
-    signature: "(complex | infinity) -> number",
+    "name": "Arcsec",
+    "kind": "operator",
+    "description": "Arcsecant, the inverse secant function.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Arcsin",
-    kind: "operator",
-    description: "Arcsine, the inverse sine function.",
-    signature: "(complex) -> number",
-    keywords: ["asin", "inverse sine"],
+    "name": "Arcsin",
+    "kind": "operator",
+    "description": "Arcsine, the inverse sine function.",
+    "signature": "(complex) -> number",
+    "keywords": [
+      "asin",
+      "inverse sine"
+    ]
   },
   {
-    name: "Arctan",
-    kind: "operator",
-    description: "Inverse tangent.",
-    signature: "(complex | signed_infinity) -> number",
-    wikidata: "Q2257242",
-    keywords: ["atan"],
+    "name": "Arctan",
+    "kind": "operator",
+    "description": "Inverse tangent.",
+    "signature": "(complex | signed_infinity) -> number",
+    "wikidata": "Q2257242",
+    "keywords": [
+      "atan"
+    ]
   },
   {
-    name: "Arctan2",
-    kind: "operator",
-    description: "Two-argument arctangent giving the angle of a vector.",
-    signature: "(y: real | signed_infinity, x: real | signed_infinity) -> real",
-    wikidata: "Q776598",
-    keywords: ["atan2"],
+    "name": "Arctan2",
+    "kind": "operator",
+    "description": "Two-argument arctangent giving the angle of a vector.",
+    "signature": "(y: real | signed_infinity, x: real | signed_infinity) -> real",
+    "wikidata": "Q776598",
+    "keywords": [
+      "atan2"
+    ]
   },
   {
-    name: "Arg",
-    kind: "operator",
-    description:
-      "`Arg` is an alias for `Argument`, which is the preferred name. Returns the complex argument (phase angle) of a number.",
-    signature: "(complex | infinity) -> number",
+    "name": "Arg",
+    "kind": "operator",
+    "description": "`Arg` is an alias for `Argument`, which is the preferred name. Returns the complex argument (phase angle) of a number.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "ArgMax",
-    kind: "operator",
-    description:
-      "Return the 1-based index of the element that maximizes the given key function (or the element itself when no key is given).",
-    signature: "(indexed_collection<T>, key: ((T) any -> unknown)?) -> integer where T",
+    "name": "ArgMax",
+    "kind": "operator",
+    "description": "Return the 1-based index of the element that maximizes the given key function (or the element itself when no key is given).",
+    "signature": "(indexed_collection<T>, key: ((T) any -> unknown)?) -> integer where T"
   },
   {
-    name: "ArgMin",
-    kind: "operator",
-    description:
-      "Return the 1-based index of the element that minimizes the given key function (or the element itself when no key is given).",
-    signature: "(indexed_collection<T>, key: ((T) any -> unknown)?) -> integer where T",
+    "name": "ArgMin",
+    "kind": "operator",
+    "description": "Return the 1-based index of the element that minimizes the given key function (or the element itself when no key is given).",
+    "signature": "(indexed_collection<T>, key: ((T) any -> unknown)?) -> integer where T"
   },
   {
-    name: "Argument",
-    kind: "operator",
-    description: "Complex argument (phase angle) of a number.",
-    signature: "(complex | infinity) -> number",
+    "name": "Argument",
+    "kind": "operator",
+    "description": "Complex argument (phase angle) of a number.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Arsech",
-    kind: "operator",
-    description: "Inverse hyperbolic secant (area hyperbolic secant).",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Arsech",
+    "kind": "operator",
+    "description": "Inverse hyperbolic secant (area hyperbolic secant).",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "Arsinh",
-    kind: "operator",
-    description: "Inverse hyperbolic sine (area hyperbolic sine).",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Arsinh",
+    "kind": "operator",
+    "description": "Inverse hyperbolic sine (area hyperbolic sine).",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "Artanh",
-    kind: "operator",
-    description: "Inverse hyperbolic tangent (area hyperbolic tangent).",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Artanh",
+    "kind": "operator",
+    "description": "Inverse hyperbolic tangent (area hyperbolic tangent).",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "AsHsl",
-    kind: "operator",
-    description: "Convert any color to HSL (hue degrees, s/l 0-1)",
-    signature: "(color | string | tuple) -> color",
+    "name": "AsHsl",
+    "kind": "operator",
+    "description": "Convert any color to HSL (hue degrees, s/l 0-1)",
+    "signature": "(color | string | tuple) -> color"
   },
   {
-    name: "AsHsv",
-    kind: "operator",
-    description: "Convert any color to HSV (hue degrees, s/v 0-1)",
-    signature: "(color | string | tuple) -> color",
+    "name": "AsHsv",
+    "kind": "operator",
+    "description": "Convert any color to HSV (hue degrees, s/v 0-1)",
+    "signature": "(color | string | tuple) -> color"
   },
   {
-    name: "AsOklab",
-    kind: "operator",
-    description: "Convert any color to OKLab",
-    signature: "(color | string | tuple) -> color",
+    "name": "AsOklab",
+    "kind": "operator",
+    "description": "Convert any color to OKLab",
+    "signature": "(color | string | tuple) -> color"
   },
   {
-    name: "AsOklch",
-    kind: "operator",
-    description: "Convert any color to OKLCh",
-    signature: "(color | string | tuple) -> color",
+    "name": "AsOklch",
+    "kind": "operator",
+    "description": "Convert any color to OKLCh",
+    "signature": "(color | string | tuple) -> color"
   },
   {
-    name: "AsRgb",
-    kind: "operator",
-    description: "Convert any color to sRGB (channels 0-1)",
-    signature: "(color | string | tuple) -> color",
+    "name": "AsRgb",
+    "kind": "operator",
+    "description": "Convert any color to sRGB (channels 0-1)",
+    "signature": "(color | string | tuple) -> color"
   },
   {
-    name: "Assign",
-    kind: "operator",
-    description:
-      "Assign a value to a symbol or define a sequence. The RHS is evaluated immediately and `ce.assign(name, val)` mutates the binding in the current scope chain. When used inside a `Block`, the assignment is visible to subsequent statements in the block (sequential semantics).",
-    signature: "(expression | symbol, any) scope -> any",
+    "name": "Assign",
+    "kind": "operator",
+    "description": "Assign a value to a symbol or define a sequence. The RHS is evaluated immediately and `ce.assign(name, val)` mutates the binding in the current scope chain. When used inside a `Block`, the assignment is visible to subsequent statements in the block (sequential semantics).",
+    "signature": "(expression | symbol, any) scope -> any"
   },
   {
-    name: "Assume",
-    kind: "operator",
-    description:
-      'Record an assumption about a symbol. Evaluates to the outcome as a string: "ok", "tautology", "contradiction", "not-a-predicate" or "internal-error".',
-    signature: "(any) scope -> string",
+    "name": "Assume",
+    "kind": "operator",
+    "description": "Record an assumption about a symbol. Evaluates to the outcome as a string: \"ok\", \"tautology\", \"contradiction\", \"not-a-predicate\" or \"internal-error\".",
+    "signature": "(any) scope -> string"
   },
   {
-    name: "At",
-    kind: "operator",
-    description:
-      "Access an element of an indexed collection. If the index is negative, it is counted from the end. Multiple indices can be provided to access nested collections (e.g., matrices). If the index is a finite collection of booleans, returns the elements where the mask is True (a mask is a filter, and its length must match the collection length; otherwise it is an error). If the index is a finite collection of integers, returns the elements at those indices, preserving position: an out-of-range index yields the absence marker, it is not dropped. Out-of-band access (an out-of-range index, or a dictionary key that is not present) yields a POSITION-PRESERVING marker: `NaN` when the collection’s elements are numeric, `Missing` otherwise. It never yields `Nothing`, which would erase the position. An index that is provably not an integer (`2.5`, `3/2`, `5 + √17`), as a scalar or as an entry of an index list, selects no element and yields the same marker. An index that cannot be decided (an unknown, an exact constant within rounding of an integer) leaves `At` unevaluated.",
-    signature: "(value: any, index: (boolean | indexed_collection<any> | number | string)+) -> unknown",
+    "name": "At",
+    "kind": "operator",
+    "description": "Access an element of an indexed collection. If the index is negative, it is counted from the end. Multiple indices can be provided to access nested collections (e.g., matrices). If the index is a finite collection of booleans, returns the elements where the mask is True (a mask is a filter, and its length must match the collection length; otherwise it is an error). If the index is a finite collection of integers, returns the elements at those indices, preserving position: an out-of-range index yields the absence marker, it is not dropped. Out-of-band access (an out-of-range index, or a dictionary key that is not present) yields a POSITION-PRESERVING marker: `NaN` when the collection’s elements are numeric, `Missing` otherwise. It never yields `Nothing`, which would erase the position. An index that is provably not an integer (`2.5`, `3/2`, `5 + √17`), as a scalar or as an entry of an index list, selects no element and yields the same marker. An index that cannot be decided (an unknown, an exact constant within rounding of an integer) leaves `At` unevaluated.",
+    "signature": "(value: any, index: (boolean | indexed_collection<any> | number | string)+) -> unknown"
   },
   {
-    name: "AvogadroConstant",
-    kind: "constant",
-    description: "Avogadro constant",
-    signature: "value",
-    wikidata: "Q47574",
+    "name": "AvogadroConstant",
+    "kind": "constant",
+    "description": "Avogadro constant",
+    "signature": "value",
+    "wikidata": "Q47574"
   },
   {
-    name: "BaseForm",
-    kind: "operator",
-    description: "`BaseForm(expr, base=10)`",
-    signature: "(T, (number | string)?) -> T where T: number",
+    "name": "BaseForm",
+    "kind": "operator",
+    "description": "`BaseForm(expr, base=10)`",
+    "signature": "(T, (number | string)?) -> T where T: number"
   },
   {
-    name: "BellNumber",
-    kind: "operator",
-    description: "Compute the Bell number B(n), the number of partitions of a set of n elements.",
-    signature: "(integer) -> integer",
-    wikidata: "Q816063",
+    "name": "BellNumber",
+    "kind": "operator",
+    "description": "Compute the Bell number B(n), the number of partitions of a set of n elements.",
+    "signature": "(integer) -> integer",
+    "wikidata": "Q816063"
   },
   {
-    name: "BernoulliB",
-    kind: "operator",
-    description:
-      "Return the nth Bernoulli number Bₙ as an exact rational, using the convention B₁ = -1/2. Odd `n > 1` give 0.",
-    signature: "(integer) -> rational",
+    "name": "BernoulliB",
+    "kind": "operator",
+    "description": "Return the nth Bernoulli number Bₙ as an exact rational, using the convention B₁ = -1/2. Odd `n > 1` give 0.",
+    "signature": "(integer) -> rational"
   },
   {
-    name: "BesselI",
-    kind: "operator",
-    description: "Modified Bessel function of the first kind",
-    signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    "name": "BesselI",
+    "kind": "operator",
+    "description": "Modified Bessel function of the first kind",
+    "signature": "(order: complex, complex | infinity) -> number",
+    "wikidata": "Q627488"
   },
   {
-    name: "BesselJ",
-    kind: "operator",
-    description: "Bessel function of the first kind",
-    signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    "name": "BesselJ",
+    "kind": "operator",
+    "description": "Bessel function of the first kind",
+    "signature": "(order: complex, complex | infinity) -> number",
+    "wikidata": "Q627488"
   },
   {
-    name: "BesselK",
-    kind: "operator",
-    description: "Modified Bessel function of the second kind (Macdonald function)",
-    signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    "name": "BesselK",
+    "kind": "operator",
+    "description": "Modified Bessel function of the second kind (Macdonald function)",
+    "signature": "(order: complex, complex | infinity) -> number",
+    "wikidata": "Q627488"
   },
   {
-    name: "BesselY",
-    kind: "operator",
-    description: "Bessel function of the second kind (Neumann function)",
-    signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    "name": "BesselY",
+    "kind": "operator",
+    "description": "Bessel function of the second kind (Neumann function)",
+    "signature": "(order: complex, complex | infinity) -> number",
+    "wikidata": "Q627488"
   },
   {
-    name: "Beta",
-    kind: "operator",
-    description: "Euler beta function",
-    signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q189062",
+    "name": "Beta",
+    "kind": "operator",
+    "description": "Euler beta function",
+    "signature": "(complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q189062"
   },
   {
-    name: "BetaRegularized",
-    kind: "operator",
-    description: "Regularized incomplete beta function I_x(a, b)",
-    signature: "(complex | infinity, complex | infinity, complex | infinity) -> number",
+    "name": "BetaRegularized",
+    "kind": "operator",
+    "description": "Regularized incomplete beta function I_x(a, b)",
+    "signature": "(complex | infinity, complex | infinity, complex | infinity) -> number"
   },
   {
-    name: "BigO",
-    kind: "operator",
-    description:
-      "Landau big-O remainder term. Inert; any numeric approximation (.N()) of an expression containing it is NaN.",
-    signature: "(value) -> number",
+    "name": "BigO",
+    "kind": "operator",
+    "description": "Landau big-O remainder term. Inert; any numeric approximation (.N()) of an expression containing it is NaN.",
+    "signature": "(value) -> number"
   },
   {
-    name: "BinCounts",
-    kind: "operator",
-    description: "Count the number of elements falling into each bin.",
-    signature: "(collection<any>, list<number> | number) -> list<number>",
+    "name": "BinCounts",
+    "kind": "operator",
+    "description": "Count the number of elements falling into each bin.",
+    "signature": "(collection<any>, list<number> | number) -> list<number>"
   },
   {
-    name: "Binomial",
-    kind: "operator",
-    description:
-      "Compute the binomial coefficient C(n, k) = n! / (k! (n-k)!). Agrees with Choose for all defined values.",
-    signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q209875",
-    keywords: ["choose", "nCr", "combination"],
+    "name": "Binomial",
+    "kind": "operator",
+    "description": "Compute the binomial coefficient C(n, k) = n! / (k! (n-k)!). Agrees with Choose for all defined values.",
+    "signature": "(complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q209875",
+    "keywords": [
+      "choose",
+      "nCr",
+      "combination"
+    ]
   },
   {
-    name: "BinomialDistribution",
-    kind: "operator",
-    description: "Binomial distribution: number of successes in n independent trials, each with success probability p.",
-    signature: "(integer<0..>, real<0..1>) -> expression<BinomialDistribution>",
+    "name": "BinomialDistribution",
+    "kind": "operator",
+    "description": "Binomial distribution: number of successes in n independent trials, each with success probability p.",
+    "signature": "(integer<0..>, real<0..1>) -> expression<BinomialDistribution>"
   },
   {
-    name: "Block",
-    kind: "operator",
-    description:
-      "Evaluate a sequence of expressions in a local scope, **sequentially**. Each operand is evaluated in order; later operands observe side effects (`Assign`, `Declare`) of earlier operands. The block's value is the value of the last expression. Short-circuiting heads (`Return`, `Break`, `Continue`) terminate the sequence early.\n\nIMPORTANT — consumers translating *simultaneous* action tuples (e.g. Desmos `(a → 1, b → a + 1)` where `b` reads the *pre-action* `a`) must rewrite to a snapshot-then-commit Block: bind each RHS to a fresh temp first, then assign the temps to the LHS symbols. See `doc/84-reference-control-structures.md` for the canonical recipe.",
-    signature: "(unknown*) -> unknown",
+    "name": "Block",
+    "kind": "operator",
+    "description": "Evaluate a sequence of expressions in a local scope, **sequentially**. Each operand is evaluated in order; later operands observe side effects (`Assign`, `Declare`) of earlier operands. The block's value is the value of the last expression. Short-circuiting heads (`Return`, `Break`, `Continue`) terminate the sequence early.\n\nIMPORTANT — consumers translating *simultaneous* action tuples (e.g. Desmos `(a → 1, b → a + 1)` where `b` reads the *pre-action* `a`) must rewrite to a snapshot-then-commit Block: bind each RHS to a fresh temp first, then assign the temps to the LHS symbols. See `doc/84-reference-control-structures.md` for the canonical recipe.",
+    "signature": "(unknown*) -> unknown"
   },
   {
-    name: "BoltzmannConstant",
-    kind: "constant",
-    description: "Boltzmann constant",
-    signature: "value",
-    wikidata: "Q131536",
+    "name": "BoltzmannConstant",
+    "kind": "constant",
+    "description": "Boltzmann constant",
+    "signature": "value",
+    "wikidata": "Q131536"
   },
   {
-    name: "Boole",
-    kind: "operator",
-    description: "Return 1 if the argument is true, 0 otherwise. Also known as the Iverson bracket",
-    signature: "(boolean) -> integer",
+    "name": "Boole",
+    "kind": "operator",
+    "description": "Return 1 if the argument is true, 0 otherwise. Also known as the Iverson bracket",
+    "signature": "(boolean) -> integer"
   },
   {
-    name: "Break",
-    kind: "operator",
-    description:
-      "Exit the enclosing loop immediately, optionally with a value (`Break(v)`) that becomes the loop value.",
-    signature: "(value: any?) -> nothing",
+    "name": "Break",
+    "kind": "operator",
+    "description": "Exit the enclosing loop immediately, optionally with a value (`Break(v)`) that becomes the loop value.",
+    "signature": "(value: any?) -> nothing"
   },
   {
-    name: "BuiltinFunction",
-    kind: "operator",
-    description: "Return a built-in function symbol by name.",
-    signature: "(string | symbol) -> symbol",
+    "name": "BuiltinFunction",
+    "kind": "operator",
+    "description": "Return a built-in function symbol by name.",
+    "signature": "(string | symbol) -> symbol"
   },
   {
-    name: "C",
-    kind: "constant",
-    signature: "unknown",
+    "name": "C",
+    "kind": "constant",
+    "signature": "unknown"
   },
   {
-    name: "CDF",
-    kind: "operator",
-    description: "Cumulative distribution function P(X ≤ x) of a distribution.",
-    signature: "(distribution, real | signed_infinity) -> nan | real<0..1>",
+    "name": "CDF",
+    "kind": "operator",
+    "description": "Cumulative distribution function P(X ≤ x) of a distribution.",
+    "signature": "(distribution, real | signed_infinity) -> nan | real<0..1>"
   },
   {
-    name: "Cancel",
-    kind: "operator",
-    description:
-      "Cancel common polynomial factors in the numerator and denominator of a rational expression. Example: Cancel((x² - 1)/(x - 1), x) → x + 1",
-    signature: "(value, symbol?) -> value",
+    "name": "Cancel",
+    "kind": "operator",
+    "description": "Cancel common polynomial factors in the numerator and denominator of a rational expression. Example: Cancel((x² - 1)/(x - 1), x) → x + 1",
+    "signature": "(value, symbol?) -> value"
   },
   {
-    name: "CanonicalForm",
-    kind: "operator",
-    description:
-      'Return the canonical form of an expression Can be used to sort arguments of an expression. Sorting arguments of commutative functions is a weak form of canonicalization that can be useful in some cases, for example to accept "x+1" and "1+x" while rejecting "x+1" and "2x-x+1"',
-    signature: "(any, symbol*) -> any",
+    "name": "CanonicalForm",
+    "kind": "operator",
+    "description": "Return the canonical form of an expression Can be used to sort arguments of an expression. Sorting arguments of commutative functions is a weak form of canonicalization that can be useful in some cases, for example to accept \"x+1\" and \"1+x\" while rejecting \"x+1\" and \"2x-x+1\"",
+    "signature": "(any, symbol*) -> any"
   },
   {
-    name: "CarmichaelLambda",
-    kind: "operator",
-    description:
-      "Return the Carmichael function λ(n) (the reduced totient): the smallest positive integer `m` such that `a^m ≡ 1 (mod n)` for every `a` coprime to `n`. Defined for `n ≥ 1`.",
-    signature: "(integer) -> integer",
+    "name": "CarmichaelLambda",
+    "kind": "operator",
+    "description": "Return the Carmichael function λ(n) (the reduced totient): the smallest positive integer `m` such that `a^m ≡ 1 (mod n)` for every `a` coprime to `n`. Defined for `n ≥ 1`.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "CartesianProduct",
-    kind: "operator",
-    description: "Return the Cartesian product of input sets.",
-    signature: "(set<any>+) -> set",
-    wikidata: "Q173740",
+    "name": "CartesianProduct",
+    "kind": "operator",
+    "description": "Return the Cartesian product of input sets.",
+    "signature": "(set<any>+) -> set",
+    "wikidata": "Q173740"
   },
   {
-    name: "CaseFold",
-    kind: "operator",
-    description:
-      "CaseFold(s): a case-folded form of `s`, for case-insensitive comparison — `CaseFold(a) == CaseFold(b)` tests equality ignoring case. An approximation of Unicode full case folding.",
-    signature: "(string) -> string",
+    "name": "CaseFold",
+    "kind": "operator",
+    "description": "CaseFold(s): a case-folded form of `s`, for case-insensitive comparison — `CaseFold(a) == CaseFold(b)` tests equality ignoring case. An approximation of Unicode full case folding.",
+    "signature": "(string) -> string"
   },
   {
-    name: "CatalanConstant",
-    kind: "constant",
-    description: "Catalan's constant G ≈ 0.9160.",
-    signature: "real<0.915965594177219..0.9159655941772191>",
-    wikidata: "Q855282",
+    "name": "CatalanConstant",
+    "kind": "constant",
+    "description": "Catalan's constant G ≈ 0.9160.",
+    "signature": "real<0.915965594177219..0.9159655941772191>",
+    "wikidata": "Q855282"
   },
   {
-    name: "CatalanNumber",
-    kind: "operator",
-    description:
-      "Return the nth Catalan number `C(n) = (2n)! / ((n+1)! · n!)`: 1, 1, 2, 5, 14, 42, … Defined for `n ≥ 0`.",
-    signature: "(integer) -> integer",
+    "name": "CatalanNumber",
+    "kind": "operator",
+    "description": "Return the nth Catalan number `C(n) = (2n)! / ((n+1)! · n!)`: 1, 1, 2, 5, 14, 42, … Defined for `n ≥ 0`.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "Ceil",
-    kind: "operator",
-    description: "Rounds a number up to the next largest integer",
-    signature: "(real | signed_infinity) -> integer | signed_infinity",
-    keywords: ["round up", "ceiling"],
+    "name": "Ceil",
+    "kind": "operator",
+    "description": "Rounds a number up to the next largest integer",
+    "signature": "(real | signed_infinity) -> integer | signed_infinity",
+    "keywords": [
+      "round up",
+      "ceiling"
+    ]
   },
   {
-    name: "CharacterFrom",
-    kind: "operator",
-    description:
-      "CharacterFrom(s): the character `s` denotes. `s` must be exactly one user-perceived character (one grapheme cluster) after NFC normalization; an empty or multi-character string is an error.",
-    signature: "(string) -> character",
+    "name": "CharacterFrom",
+    "kind": "operator",
+    "description": "CharacterFrom(s): the character `s` denotes. `s` must be exactly one user-perceived character (one grapheme cluster) after NFC normalization; an empty or multi-character string is an error.",
+    "signature": "(string) -> character"
   },
   {
-    name: "CharacteristicPolynomial",
-    kind: "operator",
-    description: "Characteristic polynomial det(x·I − A) of a square matrix (monic).",
-    signature: "(matrix, any?) -> expression",
+    "name": "CharacteristicPolynomial",
+    "kind": "operator",
+    "description": "Characteristic polynomial det(x·I − A) of a square matrix (monic).",
+    "signature": "(matrix, any?) -> expression"
   },
   {
-    name: "Characters",
-    kind: "operator",
-    description:
-      "Characters(s): split a string into a list of user-perceived characters (grapheme clusters). Synonym: GraphemeClusters. For stable integer decompositions see UnicodeScalars, Utf8 and Utf16. A non-string argument leaves the expression unevaluated.",
-    signature: "(string) -> list<character>",
+    "name": "Characters",
+    "kind": "operator",
+    "description": "Characters(s): split a string into a list of user-perceived characters (grapheme clusters). Synonym: GraphemeClusters. For stable integer decompositions see UnicodeScalars, Utf8 and Utf16. A non-string argument leaves the expression unevaluated.",
+    "signature": "(string) -> list<character>"
   },
   {
-    name: "ChineseRemainder",
-    kind: "operator",
-    description:
-      "Solve a system of simultaneous congruences: return the smallest non-negative integer `x` such that `x ≡ residues[i] (mod moduli[i])` for every `i`. Undefined if the system is inconsistent or the two lists differ in length.",
-    signature: "(collection<any>, collection<any>) -> integer",
+    "name": "ChineseRemainder",
+    "kind": "operator",
+    "description": "Solve a system of simultaneous congruences: return the smallest non-negative integer `x` such that `x ≡ residues[i] (mod moduli[i])` for every `i`. Undefined if the system is inconsistent or the two lists differ in length.",
+    "signature": "(collection<any>, collection<any>) -> integer"
   },
   {
-    name: "CholeskyDecomposition",
-    kind: "operator",
-    description: "Cholesky decomposition of a positive-definite matrix.",
-    signature: "(matrix) -> matrix",
+    "name": "CholeskyDecomposition",
+    "kind": "operator",
+    "description": "Cholesky decomposition of a positive-definite matrix.",
+    "signature": "(matrix) -> matrix"
   },
   {
-    name: "Choose",
-    kind: "operator",
-    description:
-      "Binomial coefficient: number of ways to choose k items from n. Agrees with Binomial for all defined values.",
-    signature: "(n: complex | infinity, m: complex | infinity) -> number",
+    "name": "Choose",
+    "kind": "operator",
+    "description": "Binomial coefficient: number of ways to choose k items from n. Agrees with Binomial for all defined values.",
+    "signature": "(n: complex | infinity, m: complex | infinity) -> number"
   },
   {
-    name: "Chop",
-    kind: "operator",
-    description: "Replace tiny numeric values with zero.",
-    signature: "(T) -> T where T: number",
+    "name": "Chop",
+    "kind": "operator",
+    "description": "Replace tiny numeric values with zero.",
+    "signature": "(T) -> T where T: number"
   },
   {
-    name: "Chunk",
-    kind: "operator",
-    description:
-      "Split the collection into `k` nearly equal-sized groups. See `Partition` for splitting into fixed-size chunks.",
-    signature: "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
+    "name": "Chunk",
+    "kind": "operator",
+    "description": "Split the collection into `k` nearly equal-sized groups. See `Partition` for splitting into fixed-size chunks.",
+    "signature": "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)"
   },
   {
-    name: "ChunkBy",
-    kind: "operator",
-    description:
-      "Split the collection into maximal runs of consecutive elements over which the key function yields the same value. Returns a list of lists. Unlike `GroupBy`, only adjacent elements are grouped, so a key value that recurs after a different run starts a new chunk.",
-    signature:
-      "((S, key: (character) any -> unknown) -> list<string> where S: string) & ((collection<T>, key: (T) any -> unknown) -> list<list<T>> where T)",
+    "name": "ChunkBy",
+    "kind": "operator",
+    "description": "Split the collection into maximal runs of consecutive elements over which the key function yields the same value. Returns a list of lists. Unlike `GroupBy`, only adjacent elements are grouped, so a key value that recurs after a different run starts a new chunk.",
+    "signature": "((S, key: (character) any -> unknown) -> list<string> where S: string) & ((collection<T>, key: (T) any -> unknown) -> list<list<T>> where T)"
   },
   {
-    name: "CircularIntegrate",
-    kind: "operator",
-    description: "Contour (closed-path) integral. Inert: never evaluated.",
-    signature: "(function, limits+) -> number",
-    keywords: ["contour integral", "closed integral", "line integral"],
+    "name": "CircularIntegrate",
+    "kind": "operator",
+    "description": "Contour (closed-path) integral. Inert: never evaluated.",
+    "signature": "(function, limits+) -> number",
+    "keywords": [
+      "contour integral",
+      "closed integral",
+      "line integral"
+    ]
   },
   {
-    name: "Clamp",
-    kind: "operator",
-    description: "Clamp a value to the range [lo, hi] = min(max(x, lo), hi). Broadcasts over collection arguments.",
-    signature: "(real | signed_infinity, real | signed_infinity, real | signed_infinity) -> real | signed_infinity",
+    "name": "Clamp",
+    "kind": "operator",
+    "description": "Clamp a value to the range [lo, hi] = min(max(x, lo), hi). Broadcasts over collection arguments.",
+    "signature": "(real | signed_infinity, real | signed_infinity, real | signed_infinity) -> real | signed_infinity"
   },
   {
-    name: "Coalesce",
-    kind: "operator",
-    description:
-      "Return the first operand that is not ABSENT (`Missing`, `Undefined` or `NaN`), evaluated left-to-right. If every operand is absent, the last operand’s value is returned verbatim (still absent).",
-    signature: "(any+) -> unknown",
+    "name": "Coalesce",
+    "kind": "operator",
+    "description": "Return the first operand that is not ABSENT (`Missing`, `Undefined` or `NaN`), evaluated left-to-right. If every operand is absent, the last operand’s value is returned verbatim (still absent).",
+    "signature": "(any+) -> unknown"
   },
   {
-    name: "CoefficientList",
-    kind: "operator",
-    description:
-      "Return the list of coefficients of a polynomial, from highest to lowest degree. Example: CoefficientList(x³ + 2x + 1, x) → [1, 0, 2, 1]",
-    signature: "(value, symbol?) -> list<value>",
+    "name": "CoefficientList",
+    "kind": "operator",
+    "description": "Return the list of coefficients of a polynomial, from highest to lowest degree. Example: CoefficientList(x³ + 2x + 1, x) → [1, 0, 2, 1]",
+    "signature": "(value, symbol?) -> list<value>"
   },
   {
-    name: "Colon",
-    kind: "operator",
-    description: "Type annotation (`a : b`) — opaque typed head.",
-    signature: "(any, any) -> expression",
+    "name": "Colon",
+    "kind": "operator",
+    "description": "Type annotation (`a : b`) — opaque typed head.",
+    "signature": "(any, any) -> expression"
   },
   {
-    name: "Color",
-    kind: "operator",
-    description: "Parse a CSS-style color string to an Oklch color",
-    signature: "(string) -> color",
+    "name": "Color",
+    "kind": "operator",
+    "description": "Parse a CSS-style color string to an Oklch color",
+    "signature": "(string) -> color"
   },
   {
-    name: "ColorContrast",
-    kind: "operator",
-    description: "APCA contrast ratio between two colors",
-    signature: "(color | string | tuple, color | string | tuple) -> number",
+    "name": "ColorContrast",
+    "kind": "operator",
+    "description": "APCA contrast ratio between two colors",
+    "signature": "(color | string | tuple, color | string | tuple) -> number"
   },
   {
-    name: "ColorDelta",
-    kind: "operator",
-    description: "Perceptual color difference (ΔE_OK) between two colors",
-    signature: "(color | string | tuple, color | string | tuple) -> number",
+    "name": "ColorDelta",
+    "kind": "operator",
+    "description": "Perceptual color difference (ΔE_OK) between two colors",
+    "signature": "(color | string | tuple, color | string | tuple) -> number"
   },
   {
-    name: "ColorFromColorspace",
-    kind: "operator",
-    description:
-      "Build a color from channel values in a named color space. The result is a color on every route — the color head of the named space when evaluated, the target's color value when compiled. To read the channels back out, call ColorToColorspace(color, space)",
-    signature: "(color | tuple, string) -> color",
+    "name": "ColorFromColorspace",
+    "kind": "operator",
+    "description": "Build a color from channel values in a named color space. The result is a color on every route — the color head of the named space when evaluated, the target's color value when compiled. To read the channels back out, call ColorToColorspace(color, space)",
+    "signature": "(color | tuple, string) -> color"
   },
   {
-    name: "ColorMix",
-    kind: "operator",
-    description: "Mix two colors in OKLCh space",
-    signature: "(color | string | tuple, color | string | tuple, number?) -> color",
+    "name": "ColorMix",
+    "kind": "operator",
+    "description": "Mix two colors in OKLCh space",
+    "signature": "(color | string | tuple, color | string | tuple, number?) -> color"
   },
   {
-    name: "ColorToColorspace",
-    kind: "operator",
-    description: "Convert a color to components in a target color space",
-    signature: "(color | string | tuple, string) -> tuple",
+    "name": "ColorToColorspace",
+    "kind": "operator",
+    "description": "Convert a color to components in a target color space",
+    "signature": "(color | string | tuple, string) -> tuple"
   },
   {
-    name: "ColorToString",
-    kind: "operator",
-    description:
-      'Convert a color to a string in the specified format: "hex" (the default), "rgb", "hsl", "oklch", "srgb" (the same as "hex") or "display-p3" (the CSS spelling `color(display-p3 r g b)`). The hex, rgb, hsl and srgb formats map the color into the sRGB gamut, and display-p3 maps it into the Display-P3 gamut, with the CSS Color 4 gamut mapping: the OKLCh chroma is reduced at constant lightness and hue. The channels are not clipped one by one. The oklch format has no gamut and is not mapped',
-    signature: "(color | string | tuple, string?) -> string",
+    "name": "ColorToString",
+    "kind": "operator",
+    "description": "Convert a color to a string in the specified format: \"hex\" (the default), \"rgb\", \"hsl\", \"oklch\", \"srgb\" (the same as \"hex\") or \"display-p3\" (the CSS spelling `color(display-p3 r g b)`). The hex, rgb, hsl and srgb formats map the color into the sRGB gamut, and display-p3 maps it into the Display-P3 gamut, with the CSS Color 4 gamut mapping: the OKLCh chroma is reduced at constant lightness and hue. The channels are not clipped one by one. The oklch format has no gamut and is not mapped",
+    "signature": "(color | string | tuple, string?) -> string"
   },
   {
-    name: "Colormap",
-    kind: "operator",
-    description: "Sample colors from a named palette",
-    signature: "(string, number?) -> color | list<color>",
+    "name": "Colormap",
+    "kind": "operator",
+    "description": "Sample colors from a named palette",
+    "signature": "(string, number?) -> color | list<color>"
   },
   {
-    name: "Combinations",
-    kind: "operator",
-    description: "Return all k-element combinations of a collection.",
-    signature: "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
-    wikidata: "Q193606",
+    "name": "Combinations",
+    "kind": "operator",
+    "description": "Return all k-element combinations of a collection.",
+    "signature": "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
+    "wikidata": "Q193606"
   },
   {
-    name: "Complement",
-    kind: "operator",
-    description: "Return the elements of the first set that are not in any of the subsequent sets.",
-    signature: "(set<any>+) -> set",
-    wikidata: "Q242767",
+    "name": "Complement",
+    "kind": "operator",
+    "description": "Return the elements of the first set that are not in any of the subsequent sets.",
+    "signature": "(set<any>+) -> set",
+    "wikidata": "Q242767"
   },
   {
-    name: "Complex",
-    kind: "operator",
-    description:
-      'Construct a complex number from real and imaginary parts. Converted directly to a BoxedNumber during boxing; this entry exists so `operatorInfo("Complex")` returns a signature.',
-    signature: "(real: number, imaginary: number) -> complex",
-    wikidata: "Q11567",
+    "name": "Complex",
+    "kind": "operator",
+    "description": "Construct a complex number from real and imaginary parts. Converted directly to a BoxedNumber during boxing; this entry exists so `operatorInfo(\"Complex\")` returns a signature.",
+    "signature": "(real: number, imaginary: number) -> complex",
+    "wikidata": "Q11567"
   },
   {
-    name: "ComplexInfinity",
-    kind: "constant",
-    description: "Complex infinity, a single unsigned infinity in the complex plane.",
-    signature: "number",
+    "name": "ComplexInfinity",
+    "kind": "constant",
+    "description": "Complex infinity, a single unsigned infinity in the complex plane.",
+    "signature": "number"
   },
   {
-    name: "ComplexNumbers",
-    kind: "constant",
-    description: "The set of all finite complex numbers.",
-    signature: "set<complex>",
+    "name": "ComplexNumbers",
+    "kind": "constant",
+    "description": "The set of all finite complex numbers.",
+    "signature": "set<complex>"
   },
   {
-    name: "ComplexRoots",
-    kind: "operator",
-    description: "All n-th complex roots of a number.",
-    signature: "(complex, integer) -> list<number>",
+    "name": "ComplexRoots",
+    "kind": "operator",
+    "description": "All n-th complex roots of a number.",
+    "signature": "(complex, integer) -> list<number>"
   },
   {
-    name: "Comprehension",
-    kind: "operator",
-    description:
-      "Value-producing comprehension: evaluate `body` in nested iteration over one or more `Element` clauses and collect the results into an indexed collection (a `List`). Later clauses see earlier bindings; independent clauses produce a Cartesian product.",
-    signature: "(body: expression, iterators: expression+) -> indexed_collection",
+    "name": "Comprehension",
+    "kind": "operator",
+    "description": "Value-producing comprehension: evaluate `body` in nested iteration over one or more `Element` clauses and collect the results into an indexed collection (a `List`). Later clauses see earlier bindings; independent clauses produce a Cartesian product.",
+    "signature": "(body: expression, iterators: expression+) -> indexed_collection"
   },
   {
-    name: "Condition",
-    kind: "operator",
-    description: "Test whether a value satisfies one or more conditions.",
-    signature: "(expression, symbol?) -> boolean",
+    "name": "Condition",
+    "kind": "operator",
+    "description": "Test whether a value satisfies one or more conditions.",
+    "signature": "(expression, symbol?) -> boolean"
   },
   {
-    name: "Conforms",
-    kind: "operator",
-    description:
-      "True iff the subject conforms to EVERY named protocol. A `type` VALUE subject asks whether that type conforms (the branch is unambiguous because the `type` primitive itself declares no conformances); any other subject is evaluated once and its precise type is asked. This is the lowering of the Epsil `x is Hashable & Comparable` test. A valueless or unresolved subject stays symbolic; an unknown protocol name is an error; an Error-valued subject answers `False` (the `error` type declares no conformances). Conformance is monotone but late-bound: the answer reflects the registry at the moment of evaluation.",
-    signature: "(subject: any, protocols: string+) -> boolean",
+    "name": "Conforms",
+    "kind": "operator",
+    "description": "True iff the subject conforms to EVERY named protocol. A `type` VALUE subject asks whether that type conforms (the branch is unambiguous because the `type` primitive itself declares no conformances); any other subject is evaluated once and its precise type is asked. This is the lowering of the Epsil `x is Hashable & Comparable` test. A valueless or unresolved subject stays symbolic; an unknown protocol name is an error; an Error-valued subject answers `False` (the `error` type declares no conformances). Conformance is monotone but late-bound: the answer reflects the registry at the moment of evaluation.",
+    "signature": "(subject: any, protocols: string+) -> boolean"
   },
   {
-    name: "Congruent",
-    kind: "operator",
-    description: "Indicate that two expressions are congruent modulo a number",
-    signature: "(number, number, modulo: number) -> boolean",
-    keywords: ["congruence"],
+    "name": "Congruent",
+    "kind": "operator",
+    "description": "Indicate that two expressions are congruent modulo a number",
+    "signature": "(number, number, modulo: number) -> boolean",
+    "keywords": [
+      "congruence"
+    ]
   },
   {
-    name: "Conjugate",
-    kind: "operator",
-    description: "Complex conjugate of a number, or the pointwise conjugate of a function.",
-    signature: "(T) -> T where T: number",
+    "name": "Conjugate",
+    "kind": "operator",
+    "description": "Complex conjugate of a number, or the pointwise conjugate of a function.",
+    "signature": "(T) -> T where T: number"
   },
   {
-    name: "ConjugateTranspose",
-    kind: "operator",
-    description: "Conjugate transpose (Hermitian adjoint) of a matrix or tensor.",
-    signature: "(value, axis1: integer?, axis2: integer?) -> value",
+    "name": "ConjugateTranspose",
+    "kind": "operator",
+    "description": "Conjugate transpose (Hermitian adjoint) of a matrix or tensor.",
+    "signature": "(value, axis1: integer?, axis2: integer?) -> value"
   },
   {
-    name: "Contains",
-    kind: "operator",
-    description:
-      "Return True if the collection contains the given element (structural identity, like `===`), False otherwise.\n\nEquivalent to `Any(xs, (e) => e === v)`; use `Any` to test an arbitrary predicate instead of a specific value.",
-    signature: "(collection<any>, element: any) -> boolean",
+    "name": "Contains",
+    "kind": "operator",
+    "description": "Return True if the collection contains the given element (structural identity, like `===`), False otherwise.\n\nEquivalent to `Any(xs, (e) => e === v)`; use `Any` to test an arbitrary predicate instead of a specific value.",
+    "signature": "(collection<any>, element: any) -> boolean"
   },
   {
-    name: "ContainsSequence",
-    kind: "operator",
-    description:
-      'Return `True` when `needle` occurs as a contiguous subsequence of the indexed collection. Unlike `Contains`, which tests membership of a single element, the needle is read as a sequence: `ContainsSequence("abc", "ab")` is `True` while `Contains("abc", "ab")` is `False`.',
-    signature: "(indexed_collection<T>, indexed_collection<T>) -> boolean where T",
+    "name": "ContainsSequence",
+    "kind": "operator",
+    "description": "Return `True` when `needle` occurs as a contiguous subsequence of the indexed collection. Unlike `Contains`, which tests membership of a single element, the needle is read as a sequence: `ContainsSequence(\"abc\", \"ab\")` is `True` while `Contains(\"abc\", \"ab\")` is `False`.",
+    "signature": "(indexed_collection<T>, indexed_collection<T>) -> boolean where T"
   },
   {
-    name: "ContinuationPlaceholder",
-    kind: "constant",
-    description:
-      "This symbol indicates that some elements in a collection have been omitted, for example in a long list of numbers, or in an infinite set",
-    signature: "unknown",
+    "name": "ContinuationPlaceholder",
+    "kind": "constant",
+    "description": "This symbol indicates that some elements in a collection have been omitted, for example in a long list of numbers, or in an infinite set",
+    "signature": "unknown"
   },
   {
-    name: "Continue",
-    kind: "operator",
-    description: "Skip to the next iteration of the enclosing loop.",
-    signature: "() -> nothing",
+    "name": "Continue",
+    "kind": "operator",
+    "description": "Skip to the next iteration of the enclosing loop.",
+    "signature": "() -> nothing"
   },
   {
-    name: "ContinuedFraction",
-    kind: "operator",
-    description:
-      "Return the continued-fraction expansion of `x` as a list of integer terms `[a0, a1, …]`. An exact rational is expanded fully; an inexact value is expanded as its best rational approximation at working precision (see `Rationalize`), truncated to the optional `n` terms (default 20).",
-    signature: "(real, integer?) -> list<integer>",
+    "name": "ContinuedFraction",
+    "kind": "operator",
+    "description": "Return the continued-fraction expansion of `x` as a list of integer terms `[a0, a1, …]`. An exact rational is expanded fully; an inexact value is expanded as its best rational approximation at working precision (see `Rationalize`), truncated to the optional `n` terms (default 20).",
+    "signature": "(real, integer?) -> list<integer>"
   },
   {
-    name: "ContrastingColor",
-    kind: "operator",
-    description:
-      "Choose the foreground color with better APCA contrast against a background, answered as given: the interpreter keeps the color head the candidate was written with, and a compiled target answers the same color in its canonical form",
-    signature: "(color | string | tuple, (color | string | tuple)?, (color | string | tuple)?) -> color",
+    "name": "ContrastingColor",
+    "kind": "operator",
+    "description": "Choose the foreground color with better APCA contrast against a background, answered as given: the interpreter keeps the color head the candidate was written with, and a compiled target answers the same color in its canonical form",
+    "signature": "(color | string | tuple, (color | string | tuple)?, (color | string | tuple)?) -> color"
   },
   {
-    name: "Correlation",
-    kind: "operator",
-    description:
-      "Pearson's correlation coefficient of paired data, given as two equal-length collections or one collection of (x, y) pairs.",
-    signature: "(collection<any>, collection<any>?) -> nan | real<-1..1>",
+    "name": "Correlation",
+    "kind": "operator",
+    "description": "Pearson's correlation coefficient of paired data, given as two equal-length collections or one collection of (x, y) pairs.",
+    "signature": "(collection<any>, collection<any>?) -> nan | real<-1..1>"
   },
   {
-    name: "Cos",
-    kind: "operator",
-    description: "Cosine of an angle.",
-    signature: "(complex) -> number",
-    keywords: ["cosine"],
+    "name": "Cos",
+    "kind": "operator",
+    "description": "Cosine of an angle.",
+    "signature": "(complex) -> number",
+    "keywords": [
+      "cosine"
+    ]
   },
   {
-    name: "CosIntegral",
-    kind: "operator",
-    description: "Cosine integral: γ + ln(x) + ∫₀ˣ (cos(t)−1)/t dt.",
-    signature: "(complex | infinity) -> number",
+    "name": "CosIntegral",
+    "kind": "operator",
+    "description": "Cosine integral: γ + ln(x) + ∫₀ˣ (cos(t)−1)/t dt.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Cosh",
-    kind: "operator",
-    description: "Hyperbolic cosine.",
-    signature: "(complex | signed_infinity) -> number",
-    keywords: ["hyperbolic cosine"],
+    "name": "Cosh",
+    "kind": "operator",
+    "description": "Hyperbolic cosine.",
+    "signature": "(complex | signed_infinity) -> number",
+    "keywords": [
+      "hyperbolic cosine"
+    ]
   },
   {
-    name: "CoshIntegral",
-    kind: "operator",
-    description: "Hyperbolic cosine integral: γ + ln|x| + ∫₀ˣ (cosh(t)−1)/t dt.",
-    signature: "(complex | infinity) -> number",
+    "name": "CoshIntegral",
+    "kind": "operator",
+    "description": "Hyperbolic cosine integral: γ + ln|x| + ∫₀ˣ (cosh(t)−1)/t dt.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Cot",
-    kind: "operator",
-    description: "Cotangent, the reciprocal of tangent.",
-    signature: "(complex) -> number",
+    "name": "Cot",
+    "kind": "operator",
+    "description": "Cotangent, the reciprocal of tangent.",
+    "signature": "(complex) -> number"
   },
   {
-    name: "Coth",
-    kind: "operator",
-    description: "Hyperbolic cotangent, the reciprocal of hyperbolic tangent.",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Coth",
+    "kind": "operator",
+    "description": "Hyperbolic cotangent, the reciprocal of hyperbolic tangent.",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "Count",
-    kind: "operator",
-    description:
-      "`Count(xs)`: the number of elements in the collection. `Count(xs, v)`: how many elements are structurally the same as `v`. `Count(xs, p)`: how many elements satisfy the predicate `p`.",
-    signature: "(collection<any>, any?) -> infinity | integer",
-    keywords: ["cardinality", "tally", "occurrences"],
+    "name": "Count",
+    "kind": "operator",
+    "description": "`Count(xs)`: the number of elements in the collection. `Count(xs, v)`: how many elements are structurally the same as `v`. `Count(xs, p)`: how many elements satisfy the predicate `p`.",
+    "signature": "(collection<any>, any?) -> infinity | integer",
+    "keywords": [
+      "cardinality",
+      "tally",
+      "occurrences"
+    ]
   },
   {
-    name: "CountIf",
-    kind: "operator",
-    description: "Return the number of elements in the collection satisfying the predicate.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> integer where T",
+    "name": "CountIf",
+    "kind": "operator",
+    "description": "Return the number of elements in the collection satisfying the predicate.",
+    "signature": "(collection<T>, predicate: (T) any -> boolean) -> integer where T"
   },
   {
-    name: "Covariance",
-    kind: "operator",
-    description:
-      "Sample covariance (n − 1 denominator) of paired data, given as two equal-length collections or one collection of (x, y) pairs.",
-    signature: "(collection<any>, collection<any>?) -> nan | real",
+    "name": "Covariance",
+    "kind": "operator",
+    "description": "Sample covariance (n − 1 denominator) of paired data, given as two equal-length collections or one collection of (x, y) pairs.",
+    "signature": "(collection<any>, collection<any>?) -> nan | real"
   },
   {
-    name: "Cross",
-    kind: "operator",
-    description: "Cross product of two 3-vectors.",
-    signature: "(tuple | vector, tuple | vector) -> tuple | vector",
+    "name": "Cross",
+    "kind": "operator",
+    "description": "Cross product of two 3-vectors.",
+    "signature": "(tuple | vector, tuple | vector) -> tuple | vector"
   },
   {
-    name: "Csc",
-    kind: "operator",
-    description: "Cosecant, the reciprocal of sine.",
-    signature: "(complex) -> number",
+    "name": "Csc",
+    "kind": "operator",
+    "description": "Cosecant, the reciprocal of sine.",
+    "signature": "(complex) -> number"
   },
   {
-    name: "Csch",
-    kind: "operator",
-    description: "Hyperbolic cosecant, the reciprocal of hyperbolic sine.",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Csch",
+    "kind": "operator",
+    "description": "Hyperbolic cosecant, the reciprocal of hyperbolic sine.",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "Cycle",
-    kind: "operator",
-    description: "Produce an infinite sequence by cycling through the elements of a finite collection.",
-    signature: "(list<any>) -> list",
+    "name": "Cycle",
+    "kind": "operator",
+    "description": "Produce an infinite sequence by cycling through the elements of a finite collection.",
+    "signature": "(list<any>) -> list"
   },
   {
-    name: "D",
-    kind: "operator",
-    description: "Symbolic partial derivative with respect to one or more variables.",
-    signature: "(expression, variables: symbol*) -> expression",
-    keywords: ["differentiate"],
+    "name": "D",
+    "kind": "operator",
+    "description": "Symbolic partial derivative with respect to one or more variables.",
+    "signature": "(expression, variables: symbol*) -> expression",
+    "keywords": [
+      "differentiate"
+    ]
   },
   {
-    name: "DMS",
-    kind: "operator",
-    description: "Construct an angle from degrees, minutes, and seconds.",
-    signature: "(number, number?, number?) -> number",
+    "name": "DMS",
+    "kind": "operator",
+    "description": "Construct an angle from degrees, minutes, and seconds.",
+    "signature": "(number, number?, number?) -> number"
   },
   {
-    name: "DSolve",
-    kind: "operator",
-    description: "Symbolic differential equation solver.",
-    signature: "(expression, symbol, symbol) -> expression",
+    "name": "DSolve",
+    "kind": "operator",
+    "description": "Symbolic differential equation solver.",
+    "signature": "(expression, symbol, symbol) -> expression"
   },
   {
-    name: "Declare",
-    kind: "operator",
-    description:
-      "Declare a symbol in the current scope, optionally assigning a type and an initial value. An optional trailing attributes dictionary (with keys `type`, `value`, `constant` and `holdUntil`) can further describe the definition, e.g. to declare a constant. With a value, evaluates to that value; otherwise evaluates to `Nothing`.",
-    signature: "(symbol, type: (string | symbol)?, value: any?, attributes: dictionary<any>?) scope -> any",
+    "name": "Declare",
+    "kind": "operator",
+    "description": "Declare a symbol in the current scope, optionally assigning a type and an initial value. An optional trailing attributes dictionary (with keys `type`, `value`, `constant` and `holdUntil`) can further describe the definition, e.g. to declare a constant. With a value, evaluates to that value; otherwise evaluates to `Nothing`.",
+    "signature": "(symbol, type: (string | symbol)?, value: any?, attributes: dictionary<any>?) scope -> any"
   },
   {
-    name: "DeclareConformance",
-    kind: "operator",
-    description:
-      'Declare that a type CONFORMS to one or more protocols — the lowering of the Epsil `type string is Hashable & Comparable` statement. The target rides as a type-expression string and must be named and ground (not a union, an anonymous structural type or a `type alias` name); the protocols ride as a `List` of names. An optional trailing dictionary carries the implementation block, member name -> function literal (property handlers under the mangled keys `__get__x` / `__set__x`); it may only accompany a SINGLE protocol. A CONDITIONAL conformance carries, ahead of that block, the source text of its trailing `where` clause as a string: the target is then a head pattern naming the variables the clause binds (`list<T>` with `"where T is Comparable"`). Conformance is monotone — it can be added but never removed — and a re-declaration is a no-op. Evaluates to `Nothing`.',
-    signature:
-      "(target: string | symbol, protocols: any, whereClauseOrImplementation: any?, implementation: dictionary<any>?) scope -> nothing",
+    "name": "DeclareConformance",
+    "kind": "operator",
+    "description": "Declare that a type CONFORMS to one or more protocols — the lowering of the Epsil `type string is Hashable & Comparable` statement. The target rides as a type-expression string and must be named and ground (not a union, an anonymous structural type or a `type alias` name); the protocols ride as a `List` of names. An optional trailing dictionary carries the implementation block, member name -> function literal (property handlers under the mangled keys `__get__x` / `__set__x`); it may only accompany a SINGLE protocol. A CONDITIONAL conformance carries, ahead of that block, the source text of its trailing `where` clause as a string: the target is then a head pattern naming the variables the clause binds (`list<T>` with `\"where T is Comparable\"`). Conformance is monotone — it can be added but never removed — and a re-declaration is a no-op. Evaluates to `Nothing`.",
+    "signature": "(target: string | symbol, protocols: any, whereClauseOrImplementation: any?, implementation: dictionary<any>?) scope -> nothing"
   },
   {
-    name: "DeclareProtocol",
-    kind: "operator",
-    description:
-      'Declare a PROTOCOL: a set of function and property requirements a type may declare itself to satisfy. Protocols are engine-global (not lexically scoped) and are NOT types, so this is only valid at the top level of a program. The name is a symbol (or a string); the optional members ride as a dictionary of `member -> ["Pair", "function"|"readonly"|"readwrite", signature]`, with the signature as a type-expression string. A `function` member\'s first parameter must be typed `Self`, the substitution token standing for the conforming type. A protocol with no members is a SEMANTIC protocol (a marker). Evaluates to `Nothing`.',
-    signature: "(string | symbol, members: dictionary<any>?) scope -> nothing",
+    "name": "DeclareProtocol",
+    "kind": "operator",
+    "description": "Declare a PROTOCOL: a set of function and property requirements a type may declare itself to satisfy. Protocols are engine-global (not lexically scoped) and are NOT types, so this is only valid at the top level of a program. The name is a symbol (or a string); the optional members ride as a dictionary of `member -> [\"Pair\", \"function\"|\"readonly\"|\"readwrite\", signature]`, with the signature as a type-expression string. A `function` member's first parameter must be typed `Self`, the substitution token standing for the conforming type. A protocol with no members is a SEMANTIC protocol (a marker). Evaluates to `Nothing`.",
+    "signature": "(string | symbol, members: dictionary<any>?) scope -> nothing"
   },
   {
-    name: "DeclareSumType",
-    kind: "operator",
-    description:
-      'Declare a SUM TYPE: N nominal variants plus the transparent union that names them, in one statement — the lowering of the Epsil sugar `type node = lit(num: number) | plus(op1: node, op2: node)`. The name is a symbol (or a string); each variant is a `["Tuple", name, payload]` pair whose payload is a type string (`"nothing"` for a nullary variant). An optional attributes dictionary at operand 1 — ahead of the variants — carries `typeParams -> "T"` for a generic sum, whose parameters are distributed to each variant by usage. The sum name is forward-registered before the variants are declared, so a payload may name it bare. A variant name that already names a type, is reserved, or is a builtin is rejected and NOTHING is declared. Types are engine-global, so this is only valid at the top level of a program. Evaluates to `Nothing`.',
-    signature: "(string | symbol, any*) scope -> nothing",
+    "name": "DeclareSumType",
+    "kind": "operator",
+    "description": "Declare a SUM TYPE: N nominal variants plus the transparent union that names them, in one statement — the lowering of the Epsil sugar `type node = lit(num: number) | plus(op1: node, op2: node)`. The name is a symbol (or a string); each variant is a `[\"Tuple\", name, payload]` pair whose payload is a type string (`\"nothing\"` for a nullary variant). An optional attributes dictionary at operand 1 — ahead of the variants — carries `typeParams -> \"T\"` for a generic sum, whose parameters are distributed to each variant by usage. The sum name is forward-registered before the variants are declared, so a payload may name it bare. A variant name that already names a type, is reserved, or is a builtin is rejected and NOTHING is declared. Types are engine-global, so this is only valid at the top level of a program. Evaluates to `Nothing`.",
+    "signature": "(string | symbol, any*) scope -> nothing"
   },
   {
-    name: "DeclareType",
-    kind: "operator",
-    description:
-      'Declare a type. Types are engine-global (not lexically scoped), so this is only valid at the top level of a program — inside a block or function body it is an error. The name is a symbol (or a string) and the type a string holding a type expression, e.g. `"tuple<x: integer, y: integer>"`. The type is nominal by default; an optional trailing attributes dictionary with `alias -> True` makes it a structural alias instead, and an additional `typeParams -> "T, U: number"` entry makes it a GENERIC alias whose uses must be applied (`Pair<integer>`). The declaration also mints a value constructor of the same name — `["point", 1, 2]`, an inert tagged value for a nominal type, a checked identity for an alias — except for a `record` body, which mints none. Evaluates to `Nothing`.',
-    signature: "(string | symbol, type: string | symbol | type, attributes: dictionary<any>?) scope -> nothing",
+    "name": "DeclareType",
+    "kind": "operator",
+    "description": "Declare a type. Types are engine-global (not lexically scoped), so this is only valid at the top level of a program — inside a block or function body it is an error. The name is a symbol (or a string) and the type a string holding a type expression, e.g. `\"tuple<x: integer, y: integer>\"`. The type is nominal by default; an optional trailing attributes dictionary with `alias -> True` makes it a structural alias instead, and an additional `typeParams -> \"T, U: number\"` entry makes it a GENERIC alias whose uses must be applied (`Pair<integer>`). The declaration also mints a value constructor of the same name — `[\"point\", 1, 2]`, an inert tagged value for a nominal type, a checked identity for an alias — except for a `record` body, which mints none. Evaluates to `Nothing`.",
+    "signature": "(string | symbol, type: string | symbol | type, attributes: dictionary<any>?) scope -> nothing"
   },
   {
-    name: "DedekindEta",
-    kind: "operator",
-    description: "Dedekind eta function η(τ), Im(τ) > 0.",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q1187208",
+    "name": "DedekindEta",
+    "kind": "operator",
+    "description": "Dedekind eta function η(τ), Im(τ) > 0.",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q1187208"
   },
   {
-    name: "Dedup",
-    kind: "operator",
-    description:
-      "Return the collection with consecutive duplicate elements collapsed to a single element. Only immediately-adjacent equal elements are removed; unlike `Unique`, a value that recurs after a different element is kept.",
-    signature: "(collection<any>) -> collection",
+    "name": "Dedup",
+    "kind": "operator",
+    "description": "Return the collection with consecutive duplicate elements collapsed to a single element. Only immediately-adjacent equal elements are removed; unlike `Unique`, a value that recurs after a different element is kept.",
+    "signature": "(collection<any>) -> collection"
   },
   {
-    name: "DefineFunction",
-    kind: "operator",
-    description:
-      "Define one clause of a (possibly multi-clause) function: `DefineFunction(f, Function(body, params…))`. Unlike `Assign` — which replaces the binding wholesale — `DefineFunction` ACCUMULATES: a clause with the same parameter domain replaces the earlier clause in place, any other clause is appended, and calls dispatch to the most specific clause admitting the arguments.",
-    signature: "(symbol, function, dictionary<any>?) scope -> nothing",
+    "name": "DefineFunction",
+    "kind": "operator",
+    "description": "Define one clause of a (possibly multi-clause) function: `DefineFunction(f, Function(body, params…))`. Unlike `Assign` — which replaces the binding wholesale — `DefineFunction` ACCUMULATES: a clause with the same parameter domain replaces the earlier clause in place, any other clause is appended, and calls dispatch to the most specific clause admitting the arguments.",
+    "signature": "(symbol, function, dictionary<any>?) scope -> nothing"
   },
   {
-    name: "Degree",
-    kind: "operator",
-    description: "Degree of an object",
-    signature: "(value) -> integer",
+    "name": "Degree",
+    "kind": "operator",
+    "description": "Degree of an object",
+    "signature": "(value) -> integer"
   },
   {
-    name: "Degrees",
-    kind: "operator",
-    description: "Convert an angle in degrees.",
-    signature: "(real) -> real",
+    "name": "Degrees",
+    "kind": "operator",
+    "description": "Convert an angle in degrees.",
+    "signature": "(real) -> real"
   },
   {
-    name: "DeleteAt",
-    kind: "operator",
-    description:
-      "Return a copy of the indexed collection with the element at the 1-based `index` removed. A negative index counts from the end. An out-of-range, zero, or non-integer index leaves the expression unevaluated. Deleting from a string yields a string.",
-    signature: "((T, integer) -> T where T: string) & ((indexed_collection<T>, integer) -> list<T> where T)",
+    "name": "DeleteAt",
+    "kind": "operator",
+    "description": "Return a copy of the indexed collection with the element at the 1-based `index` removed. A negative index counts from the end. An out-of-range, zero, or non-integer index leaves the expression unevaluated. Deleting from a string yields a string.",
+    "signature": "((T, integer) -> T where T: string) & ((indexed_collection<T>, integer) -> list<T> where T)"
   },
   {
-    name: "Delimiter",
-    kind: "operator",
-    description: "Group expressions with explicit delimiters.",
-    signature: "(any, string?) -> any",
+    "name": "Delimiter",
+    "kind": "operator",
+    "description": "Group expressions with explicit delimiters.",
+    "signature": "(any, string?) -> any"
   },
   {
-    name: "Denominator",
-    kind: "operator",
-    description: "Denominator of an expression",
-    signature: "(number) -> nothing | number",
+    "name": "Denominator",
+    "kind": "operator",
+    "description": "Denominator of an expression",
+    "signature": "(number) -> nothing | number"
   },
   {
-    name: "Derivative",
-    kind: "operator",
-    description: "Derivative operator that returns a derivative function.",
-    signature: "(function, order: number*) -> function",
-    keywords: ["differentiate"],
+    "name": "Derivative",
+    "kind": "operator",
+    "description": "Derivative operator that returns a derivative function.",
+    "signature": "(function, order: number*) -> function",
+    "keywords": [
+      "differentiate"
+    ]
   },
   {
-    name: "Determinant",
-    kind: "operator",
-    description: "Determinant of a square matrix.",
-    signature: "(matrix) -> number",
+    "name": "Determinant",
+    "kind": "operator",
+    "description": "Determinant of a square matrix.",
+    "signature": "(matrix) -> number"
   },
   {
-    name: "Diagonal",
-    kind: "operator",
-    description: "Extract a matrix diagonal or build a diagonal matrix.",
-    signature: "(value) -> value",
+    "name": "Diagonal",
+    "kind": "operator",
+    "description": "Extract a matrix diagonal or build a diagonal matrix.",
+    "signature": "(value) -> value"
   },
   {
-    name: "Dictionary",
-    kind: "operator",
-    description: "A collection of key -> value entries with string keys (`{x -> 1, y -> 2}` in Epsil).",
-    signature: "(tuple<string, unknown>*) -> dictionary",
+    "name": "Dictionary",
+    "kind": "operator",
+    "description": "A collection of key -> value entries with string keys (`{x -> 1, y -> 2}` in Epsil).",
+    "signature": "(tuple<string, unknown>*) -> dictionary"
   },
   {
-    name: "DictionaryFrom",
-    kind: "operator",
-    description: "Create a dictionary from the elements of a collection of (key, value) pairs.",
-    signature: "(collection<any>) -> dictionary",
+    "name": "DictionaryFrom",
+    "kind": "operator",
+    "description": "Create a dictionary from the elements of a collection of (key, value) pairs.",
+    "signature": "(collection<any>) -> dictionary"
   },
   {
-    name: "Differences",
-    kind: "operator",
-    description:
-      "Return the successive differences of a collection: a collection whose k-th element is `x(k+1) − xk`, of length one less than the input.",
-    signature: "(collection<any>) -> indexed_collection",
+    "name": "Differences",
+    "kind": "operator",
+    "description": "Return the successive differences of a collection: a collection whose k-th element is `x(k+1) − xk`, of length one less than the input.",
+    "signature": "(collection<any>) -> indexed_collection"
   },
   {
-    name: "Digamma",
-    kind: "operator",
-    description: "Digamma function, the logarithmic derivative of the gamma function",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q1142755",
+    "name": "Digamma",
+    "kind": "operator",
+    "description": "Digamma function, the logarithmic derivative of the gamma function",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q1142755"
   },
   {
-    name: "DigitCount",
-    kind: "operator",
-    description:
-      "Count digits of `n` in the given `base` (default 10); the sign of `n` is ignored. With a third argument `digit`, return how many times that digit occurs. Otherwise return a list `[count of 1, count of 2, …, count of base-1, count of 0]`.",
-    signature: "(integer, integer?, integer?) -> integer | list<integer>",
+    "name": "DigitCount",
+    "kind": "operator",
+    "description": "Count digits of `n` in the given `base` (default 10); the sign of `n` is ignored. With a third argument `digit`, return how many times that digit occurs. Otherwise return a list `[count of 1, count of 2, …, count of base-1, count of 0]`.",
+    "signature": "(integer, integer?, integer?) -> integer | list<integer>"
   },
   {
-    name: "DigitSum",
-    kind: "operator",
-    description: "Return the sum of the digits of `n` in the given `base` (default 10). The sign of `n` is ignored.",
-    signature: "(integer, integer?) -> integer",
+    "name": "DigitSum",
+    "kind": "operator",
+    "description": "Return the sum of the digits of `n` in the given `base` (default 10). The sign of `n` is ignored.",
+    "signature": "(integer, integer?) -> integer"
   },
   {
-    name: "DigitsFrom",
-    kind: "operator",
-    description: "Return an integer representation of the string `s` in base `base`.",
-    signature: "(string, (integer | string)?) -> integer",
+    "name": "DigitsFrom",
+    "kind": "operator",
+    "description": "Return an integer representation of the string `s` in base `base`.",
+    "signature": "(string, (integer | string)?) -> integer"
   },
   {
-    name: "Dimension",
-    kind: "operator",
-    description: "Dimension of an object",
-    signature: "(value) -> integer",
+    "name": "Dimension",
+    "kind": "operator",
+    "description": "Dimension of an object",
+    "signature": "(value) -> integer"
   },
   {
-    name: "Discriminant",
-    kind: "operator",
-    description: "Return the discriminant of a polynomial. Example: Discriminant(x² - 5x + 6, x) → 1",
-    signature: "(value, symbol?) -> value",
+    "name": "Discriminant",
+    "kind": "operator",
+    "description": "Return the discriminant of a polynomial. Example: Discriminant(x² - 5x + 6, x) → 1",
+    "signature": "(value, symbol?) -> value"
   },
   {
-    name: "Distance",
-    kind: "operator",
-    description: "Euclidean distance between two points, broadcasting over a list of points.",
-    signature:
-      "(list<list<number>> | list<number> | list<tuple> | tuple, list<list<number>> | list<number> | list<tuple> | tuple) -> number",
+    "name": "Distance",
+    "kind": "operator",
+    "description": "Euclidean distance between two points, broadcasting over a list of points.",
+    "signature": "(list<list<number>> | list<number> | list<tuple> | tuple, list<list<number>> | list<number> | list<tuple> | tuple) -> number"
   },
   {
-    name: "Distribute",
-    kind: "operator",
-    description: "Distribute multiplication over addition",
-    signature: "(value) -> value",
+    "name": "Distribute",
+    "kind": "operator",
+    "description": "Distribute multiplication over addition",
+    "signature": "(value) -> value"
   },
   {
-    name: "Divide",
-    kind: "operator",
-    description: "Quotient of a numerator and one or more denominators.",
-    signature: "(complex | infinity, (complex | infinity)+) -> number",
-    wikidata: "Q1226939",
+    "name": "Divide",
+    "kind": "operator",
+    "description": "Quotient of a numerator and one or more denominators.",
+    "signature": "(complex | infinity, (complex | infinity)+) -> number",
+    "wikidata": "Q1226939"
   },
   {
-    name: "Divides",
-    kind: "operator",
-    description:
-      "`Divides(a, b)` returns `True` if `a` divides `b` (i.e. `b` is an integer multiple of `a`), corresponding to the notation `a ∣ b`. Both operands are integers; a symbolic operand keeps the relation unevaluated.",
-    signature: "(integer, integer) -> boolean",
+    "name": "Divides",
+    "kind": "operator",
+    "description": "`Divides(a, b)` returns `True` if `a` divides `b` (i.e. `b` is an integer multiple of `a`), corresponding to the notation `a ∣ b`. Both operands are integers; a symbolic operand keeps the relation unevaluated.",
+    "signature": "(integer, integer) -> boolean"
   },
   {
-    name: "DivisorSigma",
-    kind: "operator",
-    description:
-      "The divisor function σ_k(n) = Σ_{d | n} dᵏ over the positive divisors of `n`. σ₀ counts divisors, σ₁ sums them. Defined for `n ≥ 1`.",
-    signature: "(integer, integer) -> integer",
+    "name": "DivisorSigma",
+    "kind": "operator",
+    "description": "The divisor function σ_k(n) = Σ_{d | n} dᵏ over the positive divisors of `n`. σ₀ counts divisors, σ₁ sums them. Defined for `n ≥ 1`.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "Divisors",
-    kind: "operator",
-    description: "Return the sorted list of positive divisors of an integer `n`. The sign of `n` is ignored.",
-    signature: "(integer) -> list<integer>",
+    "name": "Divisors",
+    "kind": "operator",
+    "description": "Return the sorted list of positive divisors of an integer `n`. The sign of `n` is ignored.",
+    "signature": "(integer) -> list<integer>"
   },
   {
-    name: "Dot",
-    kind: "operator",
-    description: "Dot product (vector inner product) or matrix product.",
-    signature: "(list<tuple> | matrix | tuple | vector, list<tuple> | matrix | tuple | vector) -> value",
-    keywords: ["dot product", "inner product", "scalar product"],
+    "name": "Dot",
+    "kind": "operator",
+    "description": "Dot product (vector inner product) or matrix product.",
+    "signature": "(list<tuple> | matrix | tuple | vector, list<tuple> | matrix | tuple | vector) -> value",
+    "keywords": [
+      "dot product",
+      "inner product",
+      "scalar product"
+    ]
   },
   {
-    name: "Drop",
-    kind: "operator",
-    description: "Return the collection without the first n elements.",
-    signature:
-      "((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)",
+    "name": "Drop",
+    "kind": "operator",
+    "description": "Return the collection without the first n elements.",
+    "signature": "((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)"
   },
   {
-    name: "DropWhile",
-    kind: "operator",
-    description:
-      "Return the collection with its leading elements for which the predicate returns True removed; the remaining elements are returned unfiltered.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> collection where T",
+    "name": "DropWhile",
+    "kind": "operator",
+    "description": "Return the collection with its leading elements for which the predicate returns True removed; the remaining elements are returned unfiltered.",
+    "signature": "(collection<T>, predicate: (T) any -> boolean) -> collection where T"
   },
   {
-    name: "Eigen",
-    kind: "operator",
-    description: "Eigenvalue-eigenvector decomposition of a square matrix.",
-    signature: "(matrix) -> tuple",
+    "name": "Eigen",
+    "kind": "operator",
+    "description": "Eigenvalue-eigenvector decomposition of a square matrix.",
+    "signature": "(matrix) -> tuple"
   },
   {
-    name: "Eigenvalues",
-    kind: "operator",
-    description: "Eigenvalues of a square matrix.",
-    signature: "(matrix) -> list",
+    "name": "Eigenvalues",
+    "kind": "operator",
+    "description": "Eigenvalues of a square matrix.",
+    "signature": "(matrix) -> list"
   },
   {
-    name: "Eigenvectors",
-    kind: "operator",
-    description: "Eigenvectors of a square matrix.",
-    signature: "(matrix) -> list",
+    "name": "Eigenvectors",
+    "kind": "operator",
+    "description": "Eigenvectors of a square matrix.",
+    "signature": "(matrix) -> list"
   },
   {
-    name: "EisensteinE",
-    kind: "operator",
-    description: "Normalized Eisenstein series Eₛ(τ) of even weight s ≥ 2, Im(τ) > 0.",
-    signature: "(number, complex | infinity) -> number",
+    "name": "EisensteinE",
+    "kind": "operator",
+    "description": "Normalized Eisenstein series Eₛ(τ) of even weight s ≥ 2, Im(τ) > 0.",
+    "signature": "(number, complex | infinity) -> number"
   },
   {
-    name: "Element",
-    kind: "operator",
-    description:
-      'Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.\n\nElement supports two modes of operation:\n1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list\n2. Type-style membership: Element(x, integer) checks if x has type integer\n\nType-style membership works with:\n- Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.\n- Type names: integer, rational, real, number, positive_integer, etc.\n- Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))',
-    signature: "(any, any, boolean?) -> boolean",
-    keywords: ["element of", "member"],
+    "name": "Element",
+    "kind": "operator",
+    "description": "Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.\n\nElement supports two modes of operation:\n1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list\n2. Type-style membership: Element(x, integer) checks if x has type integer\n\nType-style membership works with:\n- Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.\n- Type names: integer, rational, real, number, positive_integer, etc.\n- Invalid type names remain unevaluated (e.g., Element(2, \"Booleans\"))",
+    "signature": "(any, any, boolean?) -> boolean",
+    "keywords": [
+      "element of",
+      "member"
+    ]
   },
   {
-    name: "ElementMax",
-    kind: "operator",
-    description:
-      "Element-wise maximum: broadcasts scalars over collections (and zips collections), returning a collection; all-scalar arguments give a scalar. Variadic.",
-    signature: "(real | signed_infinity, (real | signed_infinity)+) -> real | signed_infinity",
+    "name": "ElementMax",
+    "kind": "operator",
+    "description": "Element-wise maximum: broadcasts scalars over collections (and zips collections), returning a collection; all-scalar arguments give a scalar. Variadic.",
+    "signature": "(real | signed_infinity, (real | signed_infinity)+) -> real | signed_infinity"
   },
   {
-    name: "ElementMin",
-    kind: "operator",
-    description:
-      "Element-wise minimum: broadcasts scalars over collections (and zips collections), returning a collection; all-scalar arguments give a scalar. Variadic.",
-    signature: "(real | signed_infinity, (real | signed_infinity)+) -> real | signed_infinity",
+    "name": "ElementMin",
+    "kind": "operator",
+    "description": "Element-wise minimum: broadcasts scalars over collections (and zips collections), returning a collection; all-scalar arguments give a scalar. Variadic.",
+    "signature": "(real | signed_infinity, (real | signed_infinity)+) -> real | signed_infinity"
   },
   {
-    name: "ElementaryCharge",
-    kind: "constant",
-    description: "Elementary electric charge",
-    signature: "value",
-    wikidata: "Q2101",
+    "name": "ElementaryCharge",
+    "kind": "constant",
+    "description": "Elementary electric charge",
+    "signature": "value",
+    "wikidata": "Q2101"
   },
   {
-    name: "EllipticE",
-    kind: "operator",
-    description:
-      "Elliptic integral of the second kind: complete E(m) with one argument, incomplete E(φ|m) with two (amplitude first, parameter convention m = k², as in Mathematica).",
-    signature: "(complex | infinity, (complex | infinity)?) -> number",
-    wikidata: "Q1375529",
+    "name": "EllipticE",
+    "kind": "operator",
+    "description": "Elliptic integral of the second kind: complete E(m) with one argument, incomplete E(φ|m) with two (amplitude first, parameter convention m = k², as in Mathematica).",
+    "signature": "(complex | infinity, (complex | infinity)?) -> number",
+    "wikidata": "Q1375529"
   },
   {
-    name: "EllipticF",
-    kind: "operator",
-    description:
-      "Incomplete elliptic integral of the first kind F(φ|m) (amplitude first, parameter convention m = k², as in Mathematica). F(π/2|m) = K(m).",
-    signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q1062952",
+    "name": "EllipticF",
+    "kind": "operator",
+    "description": "Incomplete elliptic integral of the first kind F(φ|m) (amplitude first, parameter convention m = k², as in Mathematica). F(π/2|m) = K(m).",
+    "signature": "(complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q1062952"
   },
   {
-    name: "EllipticK",
-    kind: "operator",
-    description: "Complete elliptic integral of the first kind K(m), parameter convention m = k².",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q1080993",
+    "name": "EllipticK",
+    "kind": "operator",
+    "description": "Complete elliptic integral of the first kind K(m), parameter convention m = k².",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q1080993"
   },
   {
-    name: "EllipticPi",
-    kind: "operator",
-    description:
-      "Elliptic integral of the third kind: complete Π(n|m) with two arguments, incomplete Π(n; φ|m) with three (characteristic first, amplitude second, parameter convention m = k², as in Mathematica).",
-    signature: "(complex | infinity, complex | infinity, (complex | infinity)?) -> number",
-    wikidata: "Q1123360",
+    "name": "EllipticPi",
+    "kind": "operator",
+    "description": "Elliptic integral of the third kind: complete Π(n|m) with two arguments, incomplete Π(n; φ|m) with three (characteristic first, amplitude second, parameter convention m = k², as in Mathematica).",
+    "signature": "(complex | infinity, complex | infinity, (complex | infinity)?) -> number",
+    "wikidata": "Q1123360"
   },
   {
-    name: "EmptySet",
-    kind: "constant",
-    description: "The empty set, a set containing no elements.",
-    signature: "set",
-    wikidata: "Q226183",
+    "name": "EmptySet",
+    "kind": "constant",
+    "description": "The empty set, a set containing no elements.",
+    "signature": "set",
+    "wikidata": "Q226183"
   },
   {
-    name: "EndsWith",
-    kind: "operator",
-    description:
-      "Return `True` when the indexed collection ends with `suffix` as a contiguous subsequence. On a string the suffix is matched character by character, so a suffix that would begin inside a grapheme cluster does not match. An empty suffix matches everything.",
-    signature: "(indexed_collection<T>, suffix: indexed_collection<T>) -> boolean where T",
+    "name": "EndsWith",
+    "kind": "operator",
+    "description": "Return `True` when the indexed collection ends with `suffix` as a contiguous subsequence. On a string the suffix is matched character by character, so a suffix that would begin inside a grapheme cluster does not match. An empty suffix matches everything.",
+    "signature": "(indexed_collection<T>, suffix: indexed_collection<T>) -> boolean where T"
   },
   {
-    name: "Equal",
-    kind: "operator",
-    description: "Equality comparison (equal to).",
-    signature: "(any, any) -> boolean",
+    "name": "Equal",
+    "kind": "operator",
+    "description": "Equality comparison (equal to).",
+    "signature": "(any, any) -> boolean"
   },
   {
-    name: "Equivalent",
-    kind: "operator",
-    description: "Logical equivalence (if and only if): true when both operands have the same truth value.",
-    signature: "(boolean, boolean) -> boolean",
-    wikidata: "Q220433",
+    "name": "Equivalent",
+    "kind": "operator",
+    "description": "Logical equivalence (if and only if): true when both operands have the same truth value.",
+    "signature": "(boolean, boolean) -> boolean",
+    "wikidata": "Q220433"
   },
   {
-    name: "Erf",
-    kind: "operator",
-    description: "Gauss error function",
-    signature: "(complex | signed_infinity) -> complex",
+    "name": "Erf",
+    "kind": "operator",
+    "description": "Gauss error function",
+    "signature": "(complex | signed_infinity) -> complex"
   },
   {
-    name: "ErfInv",
-    kind: "operator",
-    description: "Inverse of the error function",
-    signature: "(complex | infinity) -> number",
+    "name": "ErfInv",
+    "kind": "operator",
+    "description": "Inverse of the error function",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Erfc",
-    kind: "operator",
-    description: "Complementary error function: 1 - Erf(x)",
-    signature: "(complex | signed_infinity) -> complex",
+    "name": "Erfc",
+    "kind": "operator",
+    "description": "Complementary error function: 1 - Erf(x)",
+    "signature": "(complex | signed_infinity) -> complex"
   },
   {
-    name: "Erfi",
-    kind: "operator",
-    description: "Imaginary error function: -i·Erf(i·x)",
-    signature: "(complex | signed_infinity) -> complex | signed_infinity",
+    "name": "Erfi",
+    "kind": "operator",
+    "description": "Imaginary error function: -i·Erf(i·x)",
+    "signature": "(complex | signed_infinity) -> complex | signed_infinity"
   },
   {
-    name: "Error",
-    kind: "operator",
-    description: "Represent an error expression.",
-    signature: "(expression<ErrorCode> | string, expression?) -> nothing",
+    "name": "Error",
+    "kind": "operator",
+    "description": "Represent an error expression.",
+    "signature": "(expression<ErrorCode> | string, expression?) -> nothing"
   },
   {
-    name: "ErrorCode",
-    kind: "operator",
-    description: "Structured error code with optional arguments.",
-    signature: "(string, any*) -> error",
+    "name": "ErrorCode",
+    "kind": "operator",
+    "description": "Structured error code with optional arguments.",
+    "signature": "(string, any*) -> error"
   },
   {
-    name: "EulerGamma",
-    kind: "constant",
-    description: "The Euler–Mascheroni constant γ ≈ 0.5772.",
-    signature: "real<0.5772156649015328..0.5772156649015329>",
-    wikidata: "Q273023",
-    keywords: ["euler-mascheroni", "euler gamma"],
+    "name": "EulerGamma",
+    "kind": "constant",
+    "description": "The Euler–Mascheroni constant γ ≈ 0.5772.",
+    "signature": "real<0.5772156649015328..0.5772156649015329>",
+    "wikidata": "Q273023",
+    "keywords": [
+      "euler-mascheroni",
+      "euler gamma"
+    ]
   },
   {
-    name: "Eulerian",
-    kind: "operator",
-    description: "Eulerian number A(n, m): number of permutations of {1..n} with exactly m ascents.",
-    signature: "(integer, integer) -> integer",
+    "name": "Eulerian",
+    "kind": "operator",
+    "description": "Eulerian number A(n, m): number of permutations of {1..n} with exactly m ascents.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "Evaluate",
-    kind: "operator",
-    description: "Evaluate an expression.",
-    signature: "(any) -> unknown",
+    "name": "Evaluate",
+    "kind": "operator",
+    "description": "Evaluate an expression.",
+    "signature": "(any) -> unknown"
   },
   {
-    name: "EvaluateAt",
-    kind: "operator",
-    description: "Evaluate a function at one point or between two bounds.",
-    signature: "(function, lower: expression, upper: expression) -> unknown",
+    "name": "EvaluateAt",
+    "kind": "operator",
+    "description": "Evaluate a function at one point or between two bounds.",
+    "signature": "(function, lower: expression, upper: expression) -> unknown"
   },
   {
-    name: "Exists",
-    kind: "operator",
-    description: "Existential quantifier (there exists): true when the predicate holds for at least one value.",
-    signature: "(value, boolean) -> boolean",
+    "name": "Exists",
+    "kind": "operator",
+    "description": "Existential quantifier (there exists): true when the predicate holds for at least one value.",
+    "signature": "(value, boolean) -> boolean"
   },
   {
-    name: "ExistsUnique",
-    kind: "operator",
-    description: "Unique existential quantifier (there exists exactly one value satisfying the predicate).",
-    signature: "(value, boolean) -> boolean",
+    "name": "ExistsUnique",
+    "kind": "operator",
+    "description": "Unique existential quantifier (there exists exactly one value satisfying the predicate).",
+    "signature": "(value, boolean) -> boolean"
   },
   {
-    name: "Exp",
-    kind: "operator",
-    description:
-      "Natural exponential function: e^x. Applied to a matrix (or any collection), it broadcasts ELEMENTWISE — it is NOT the matrix exponential e^M (which is not currently implemented).",
-    signature: "(number) -> number",
-    wikidata: "Q168698",
+    "name": "Exp",
+    "kind": "operator",
+    "description": "Natural exponential function: e^x. Applied to a matrix (or any collection), it broadcasts ELEMENTWISE — it is NOT the matrix exponential e^M (which is not currently implemented).",
+    "signature": "(number) -> number",
+    "wikidata": "Q168698"
   },
   {
-    name: "Exp2",
-    kind: "operator",
-    description: "Base-2 exponential: 2^x",
-    signature: "(number) -> number",
+    "name": "Exp2",
+    "kind": "operator",
+    "description": "Base-2 exponential: 2^x",
+    "signature": "(number) -> number"
   },
   {
-    name: "ExpIntegralEi",
-    kind: "operator",
-    description: "Exponential integral Ei(x) = PV ∫_{−∞}^x eᵗ/t dt.",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q1361401",
+    "name": "ExpIntegralEi",
+    "kind": "operator",
+    "description": "Exponential integral Ei(x) = PV ∫_{−∞}^x eᵗ/t dt.",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q1361401"
   },
   {
-    name: "Expand",
-    kind: "operator",
-    description: "Expand out products and positive integer powers",
-    signature: "(value) -> value",
+    "name": "Expand",
+    "kind": "operator",
+    "description": "Expand out products and positive integer powers",
+    "signature": "(value) -> value"
   },
   {
-    name: "ExpandAll",
-    kind: "operator",
-    description: "Recursively expand out products and positive integer powers",
-    signature: "(value) -> value",
+    "name": "ExpandAll",
+    "kind": "operator",
+    "description": "Recursively expand out products and positive integer powers",
+    "signature": "(value) -> value"
   },
   {
-    name: "ExponentialDistribution",
-    kind: "operator",
-    description: "Exponential distribution with rate parameter λ.",
-    signature: "(real<0<..>) -> expression<ExponentialDistribution>",
+    "name": "ExponentialDistribution",
+    "kind": "operator",
+    "description": "Exponential distribution with rate parameter λ.",
+    "signature": "(real<0<..>) -> expression<ExponentialDistribution>"
   },
   {
-    name: "ExponentialE",
-    kind: "constant",
-    description: "Euler's number e ≈ 2.71828, the base of the natural logarithm.",
-    signature: "real<2.718281828459045..2.718281828459046>",
-    wikidata: "Q82435",
-    keywords: ["euler number"],
+    "name": "ExponentialE",
+    "kind": "constant",
+    "description": "Euler's number e ≈ 2.71828, the base of the natural logarithm.",
+    "signature": "real<2.718281828459045..2.718281828459046>",
+    "wikidata": "Q82435",
+    "keywords": [
+      "euler number"
+    ]
   },
   {
-    name: "ExtendedComplexNumbers",
-    kind: "constant",
-    description: "The set of all complex numbers, including infinities.",
-    signature: "set<complex | infinity>",
+    "name": "ExtendedComplexNumbers",
+    "kind": "constant",
+    "description": "The set of all complex numbers, including infinities.",
+    "signature": "set<complex | infinity>"
   },
   {
-    name: "ExtendedGCD",
-    kind: "operator",
-    description:
-      "Return the extended GCD of `a` and `b` as a tuple `(g, x, y)` where `g = gcd(a, b)` is non-negative and `a·x + b·y = g` (Bézout coefficients).",
-    signature: "(integer, integer) -> tuple<integer, integer, integer>",
+    "name": "ExtendedGCD",
+    "kind": "operator",
+    "description": "Return the extended GCD of `a` and `b` as a tuple `(g, x, y)` where `g = gcd(a, b)` is non-negative and `a·x + b·y = g` (Bézout coefficients).",
+    "signature": "(integer, integer) -> tuple<integer, integer, integer>"
   },
   {
-    name: "ExtendedIntegers",
-    kind: "constant",
-    description: "The set of all integers, including infinities.",
-    signature: "set<integer | signed_infinity>",
+    "name": "ExtendedIntegers",
+    "kind": "constant",
+    "description": "The set of all integers, including infinities.",
+    "signature": "set<integer | signed_infinity>"
   },
   {
-    name: "ExtendedRationalNumbers",
-    kind: "constant",
-    description: "The set of all rational numbers, including infinities.",
-    signature: "set<rational | signed_infinity>",
+    "name": "ExtendedRationalNumbers",
+    "kind": "constant",
+    "description": "The set of all rational numbers, including infinities.",
+    "signature": "set<rational | signed_infinity>"
   },
   {
-    name: "ExtendedRealNumbers",
-    kind: "constant",
-    description: "The set of all real numbers, including infinities.",
-    signature: "set<real | signed_infinity>",
+    "name": "ExtendedRealNumbers",
+    "kind": "constant",
+    "description": "The set of all real numbers, including infinities.",
+    "signature": "set<real | signed_infinity>"
   },
   {
-    name: "F",
-    kind: "constant",
-    signature: "unknown",
+    "name": "F",
+    "kind": "constant",
+    "signature": "unknown"
   },
   {
-    name: "Factor",
-    kind: "operator",
-    description:
-      "Factor a polynomial expression into a product of irreducible factors. Supports perfect square trinomials, difference of squares, and quadratic factoring with rational roots. Example: Factor(x² + 5x + 6) → (x+2)(x+3), Factor(x² + 2x + 1) → (x+1)²",
-    signature: "(value, symbol?) -> value",
+    "name": "Factor",
+    "kind": "operator",
+    "description": "Factor a polynomial expression into a product of irreducible factors. Supports perfect square trinomials, difference of squares, and quadratic factoring with rational roots. Example: Factor(x² + 5x + 6) → (x+2)(x+3), Factor(x² + 2x + 1) → (x+1)²",
+    "signature": "(value, symbol?) -> value"
   },
   {
-    name: "FactorInteger",
-    kind: "operator",
-    description:
-      "Return the prime factorization of an integer `n` as a list of `[prime, exponent]` tuples, ordered by ascending prime. For a negative `n`, a leading `[-1, 1]` tuple carries the sign.",
-    signature: "(integer) -> list<tuple<integer, integer>>",
+    "name": "FactorInteger",
+    "kind": "operator",
+    "description": "Return the prime factorization of an integer `n` as a list of `[prime, exponent]` tuples, ordered by ascending prime. For a negative `n`, a leading `[-1, 1]` tuple carries the sign.",
+    "signature": "(integer) -> list<tuple<integer, integer>>"
   },
   {
-    name: "Factorial",
-    kind: "operator",
-    description: "Factorial function: the product of all positive integers less than or equal to n",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q120976",
+    "name": "Factorial",
+    "kind": "operator",
+    "description": "Factorial function: the product of all positive integers less than or equal to n",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q120976"
   },
   {
-    name: "Factorial2",
-    kind: "operator",
-    description: "Double Factorial Function",
-    signature: "(complex | infinity) -> number",
+    "name": "Factorial2",
+    "kind": "operator",
+    "description": "Double Factorial Function",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "False",
-    kind: "constant",
-    description: "The boolean truth value false.",
-    signature: "boolean",
-    wikidata: "Q5432619",
+    "name": "False",
+    "kind": "constant",
+    "description": "The boolean truth value false.",
+    "signature": "boolean",
+    "wikidata": "Q5432619"
   },
   {
-    name: "Fibonacci",
-    kind: "operator",
-    description: "Compute the nth Fibonacci number.",
-    signature: "(integer) -> integer",
-    wikidata: "Q47577",
+    "name": "Fibonacci",
+    "kind": "operator",
+    "description": "Compute the nth Fibonacci number.",
+    "signature": "(integer) -> integer",
+    "wikidata": "Q47577"
   },
   {
-    name: "Field",
-    kind: "operator",
-    description:
-      'Access a named field of a value: `p.x` in Epsil. On a record or dictionary value, `Field(d, "x")` behaves exactly as `d["x"]` (`At` semantics, including the absence marker for a key a dictionary may not have). On a value of a NOMINAL type whose definition body has named fields (a record body, or a named-tuple body), the field is resolved through the type definition — the sanctioned accessor window of the nominal-types design (D6/§4.5b D16). This does not make the value a collection: `First(p)` and `p["x"]` keep rejecting. A field name that is not in a record/named-tuple definition is a static defect (the result type is `error`); on an unknown-typed operand the expression stays symbolic.',
-    signature: "(value: any, field: string) -> unknown",
+    "name": "Field",
+    "kind": "operator",
+    "description": "Access a named field of a value: `p.x` in Epsil. On a record or dictionary value, `Field(d, \"x\")` behaves exactly as `d[\"x\"]` (`At` semantics, including the absence marker for a key a dictionary may not have). On a value of a NOMINAL type whose definition body has named fields (a record body, or a named-tuple body), the field is resolved through the type definition — the sanctioned accessor window of the nominal-types design (D6/§4.5b D16). This does not make the value a collection: `First(p)` and `p[\"x\"]` keep rejecting. A field name that is not in a record/named-tuple definition is a static defect (the result type is `error`); on an unknown-typed operand the expression stays symbolic.",
+    "signature": "(value: any, field: string) -> unknown"
   },
   {
-    name: "Fill",
-    kind: "operator",
-    description: "Produce a 2D list (matrix) by applying a function to each pair of row and column indexes.",
-    signature: "(function, tuple) -> list",
+    "name": "Fill",
+    "kind": "operator",
+    "description": "Produce a 2D list (matrix) by applying a function to each pair of row and column indexes.",
+    "signature": "(function, tuple) -> list"
   },
   {
-    name: "Filter",
-    kind: "operator",
-    description:
-      "Return the elements of the collection for which the predicate function returns True. Equivalent to `[x for x in xs if p(x)]`.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> collection where T",
+    "name": "Filter",
+    "kind": "operator",
+    "description": "Return the elements of the collection for which the predicate function returns True. Equivalent to `[x for x in xs if p(x)]`.",
+    "signature": "(collection<T>, predicate: (T) any -> boolean) -> collection where T"
   },
   {
-    name: "Find",
-    kind: "operator",
-    description: "Return the first element of the collection satisfying the predicate, or Nothing if none found.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> any where T",
+    "name": "Find",
+    "kind": "operator",
+    "description": "Return the first element of the collection satisfying the predicate, or Nothing if none found.",
+    "signature": "(collection<T>, predicate: (T) any -> boolean) -> any where T"
   },
   {
-    name: "FindFit",
-    kind: "operator",
-    description:
-      "Nonlinear least-squares fit of a model to data. FindFit(data, model, params, vars): fit `model` (an expression in `vars` and the parameters) to `data`, a list of (x…, y) tuples or a plain list of y values. Each parameter spec is a bare symbol, (a, a0), or (a, a0, lo, hi) with box constraints. Returns a record {parameters, converged, residualNorm, iterations}. The joint form takes a list of models and matching datasets sharing parameters.",
-    signature: "(any, any, any, any) -> dictionary",
+    "name": "FindFit",
+    "kind": "operator",
+    "description": "Nonlinear least-squares fit of a model to data. FindFit(data, model, params, vars): fit `model` (an expression in `vars` and the parameters) to `data`, a list of (x…, y) tuples or a plain list of y values. Each parameter spec is a bare symbol, (a, a0), or (a, a0, lo, hi) with box constraints. Returns a record {parameters, converged, residualNorm, iterations}. The joint form takes a list of models and matching datasets sharing parameters.",
+    "signature": "(any, any, any, any) -> dictionary"
   },
   {
-    name: "FindRoot",
-    kind: "operator",
-    description:
-      "FindRoot(equations, params): numerically find parameter values that zero the residuals. `equations` is an equation (`lhs == rhs`), a bare residual expression (read as `= 0`), or a list of either. `params` is a list of specs (a bare symbol, `(a, a0)`, or `(a, a0, lo, hi)` with box constraints), matching `FindFit`. Returns a record {parameters, converged, residualNorm, iterations}.",
-    signature: "(any, any) -> dictionary",
-    keywords: ["roots", "zeros"],
+    "name": "FindRoot",
+    "kind": "operator",
+    "description": "FindRoot(equations, params): numerically find parameter values that zero the residuals. `equations` is an equation (`lhs == rhs`), a bare residual expression (read as `= 0`), or a list of either. `params` is a list of specs (a bare symbol, `(a, a0)`, or `(a, a0, lo, hi)` with box constraints), matching `FindFit`. Returns a record {parameters, converged, residualNorm, iterations}.",
+    "signature": "(any, any) -> dictionary",
+    "keywords": [
+      "roots",
+      "zeros"
+    ]
   },
   {
-    name: "First",
-    kind: "operator",
-    description: "The first element of a collection.",
-    signature: "(xs: indexed_collection<any>) -> any",
+    "name": "First",
+    "kind": "operator",
+    "description": "The first element of a collection.",
+    "signature": "(xs: indexed_collection<any>) -> any"
   },
   {
-    name: "FixedPoint",
-    kind: "operator",
-    description: "Iterate a function until a fixed point is reached.",
-    signature: "(any) -> unknown",
+    "name": "FixedPoint",
+    "kind": "operator",
+    "description": "Iterate a function until a fixed point is reached.",
+    "signature": "(any) -> unknown"
   },
   {
-    name: "FlatMap",
-    kind: "operator",
-    description:
-      "Map a function over a collection and concatenate the results into a single list, splicing collection-valued results and keeping scalar results as single elements.",
-    signature: "(collection<T>, mapping: (T) any -> U) -> list where T, U",
+    "name": "FlatMap",
+    "kind": "operator",
+    "description": "Map a function over a collection and concatenate the results into a single list, splicing collection-valued results and keeping scalar results as single elements.",
+    "signature": "(collection<T>, mapping: (T) any -> U) -> list where T, U"
   },
   {
-    name: "Flatten",
-    kind: "operator",
-    description: "Flatten a tensor or collection into a list.",
-    signature: "(value, integer?) -> list",
+    "name": "Flatten",
+    "kind": "operator",
+    "description": "Flatten a tensor or collection into a list.",
+    "signature": "(value, integer?) -> list"
   },
   {
-    name: "Floor",
-    kind: "operator",
-    description: "Rounds a number down to the nearest integer.",
-    signature: "(real | signed_infinity) -> integer | signed_infinity",
-    wikidata: "Q56860783",
-    keywords: ["round down", "integer part"],
+    "name": "Floor",
+    "kind": "operator",
+    "description": "Rounds a number down to the nearest integer.",
+    "signature": "(real | signed_infinity) -> integer | signed_infinity",
+    "wikidata": "Q56860783",
+    "keywords": [
+      "round down",
+      "integer part"
+    ]
   },
   {
-    name: "Fold",
-    kind: "operator",
-    description:
-      "Fold a collection to a single value, applying a binary function f(accumulator, element) left to right from an initial value.",
-    signature: "(reducer: (unknown, T) any -> unknown, initial: value, collection<T>) -> value where T",
+    "name": "Fold",
+    "kind": "operator",
+    "description": "Fold a collection to a single value, applying a binary function f(accumulator, element) left to right from an initial value.",
+    "signature": "(reducer: (unknown, T) any -> unknown, initial: value, collection<T>) -> value where T"
   },
   {
-    name: "ForAll",
-    kind: "operator",
-    description: "Universal quantifier (for all): true when the predicate holds for every value.",
-    signature: "(value, boolean) -> boolean",
+    "name": "ForAll",
+    "kind": "operator",
+    "description": "Universal quantifier (for all): true when the predicate holds for every value.",
+    "signature": "(value, boolean) -> boolean"
   },
   {
-    name: "Fract",
-    kind: "operator",
-    description: "Fractional part of a number: x - floor(x)",
-    signature: "(real | signed_infinity) -> real<0..1>",
+    "name": "Fract",
+    "kind": "operator",
+    "description": "Fractional part of a number: x - floor(x)",
+    "signature": "(real | signed_infinity) -> real<0..1>"
   },
   {
-    name: "FresnelC",
-    kind: "operator",
-    description: "Fresnel cosine integral.",
-    signature: "(complex | signed_infinity) -> complex",
+    "name": "FresnelC",
+    "kind": "operator",
+    "description": "Fresnel cosine integral.",
+    "signature": "(complex | signed_infinity) -> complex"
   },
   {
-    name: "FresnelS",
-    kind: "operator",
-    description: "Fresnel sine integral.",
-    signature: "(complex | signed_infinity) -> complex",
+    "name": "FresnelS",
+    "kind": "operator",
+    "description": "Fresnel sine integral.",
+    "signature": "(complex | signed_infinity) -> complex"
   },
   {
-    name: "FromContinuedFraction",
-    kind: "operator",
-    description:
-      "Reconstruct the (rational) value of a continued fraction given its list of integer terms `[a0, a1, …]`.",
-    signature: "(collection<any>) -> number",
+    "name": "FromContinuedFraction",
+    "kind": "operator",
+    "description": "Reconstruct the (rational) value of a continued fraction given its list of integer terms `[a0, a1, …]`.",
+    "signature": "(collection<any>) -> number"
   },
   {
-    name: "FromDigits",
-    kind: "operator",
-    description:
-      "Reconstruct an integer from its list of digits (most-significant first) in the given `base` (default 10). The inverse of `IntegerDigits`. Digits outside `[0, base)` are combined positionally (Horner evaluation).",
-    signature: "(collection<any>, integer?) -> integer",
+    "name": "FromDigits",
+    "kind": "operator",
+    "description": "Reconstruct an integer from its list of digits (most-significant first) in the given `base` (default 10). The inverse of `IntegerDigits`. Digits outside `[0, base)` are combined positionally (Horner evaluation).",
+    "signature": "(collection<any>, integer?) -> integer"
   },
   {
-    name: "Function",
-    kind: "operator",
-    description: "A function literal",
-    signature: "(expression, (function | symbol)*) -> function",
+    "name": "Function",
+    "kind": "operator",
+    "description": "A function literal",
+    "signature": "(expression, (function | symbol)*) -> function"
   },
   {
-    name: "GCD",
-    kind: "operator",
-    description: "Greatest Common Divisor",
-    signature: "(any*) -> number",
+    "name": "GCD",
+    "kind": "operator",
+    "description": "Greatest Common Divisor",
+    "signature": "(any*) -> number"
   },
   {
-    name: "Gamma",
-    kind: "operator",
-    description: "Gamma function Γ(z); with two arguments, the upper incomplete gamma Γ(s, z) = ∫_z^∞ tˢ⁻¹ e⁻ᵗ dt.",
-    signature: "(complex | infinity, (complex | infinity)?) -> number",
-    wikidata: "Q190573",
+    "name": "Gamma",
+    "kind": "operator",
+    "description": "Gamma function Γ(z); with two arguments, the upper incomplete gamma Γ(s, z) = ∫_z^∞ tˢ⁻¹ e⁻ᵗ dt.",
+    "signature": "(complex | infinity, (complex | infinity)?) -> number",
+    "wikidata": "Q190573"
   },
   {
-    name: "GammaLn",
-    kind: "operator",
-    description: "Natural logarithm of the gamma function.",
-    signature: "(complex | infinity) -> number",
+    "name": "GammaLn",
+    "kind": "operator",
+    "description": "Natural logarithm of the gamma function.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "GammaRegularized",
-    kind: "operator",
-    description: "Regularized upper incomplete gamma function Q(a, z) = Γ(a, z)/Γ(a)",
-    signature: "(complex | infinity, complex | infinity) -> number",
+    "name": "GammaRegularized",
+    "kind": "operator",
+    "description": "Regularized upper incomplete gamma function Q(a, z) = Γ(a, z)/Γ(a)",
+    "signature": "(complex | infinity, complex | infinity) -> number"
   },
   {
-    name: "GamutMap",
-    kind: "operator",
-    description:
-      'Map a color into a target gamut, "srgb" (the default) or "display-p3", with the CSS Color 4 gamut-mapping algorithm: the OKLCh chroma is reduced, at constant lightness and hue, until the color is inside the gamut or until clipping each channel changes the color by less than a just noticeable difference (ΔE_OK 0.02). A lightness of 1 or more gives white, and 0 or less gives black. A color already inside the gamut is returned unchanged. The result is an Rgb color, in sRGB coordinates also for "display-p3": its channels are in [0, 1] for "srgb", and for "display-p3" they can be outside [0, 1] (extended sRGB) for a color that is inside the Display-P3 gamut but outside the sRGB gamut. Color values themselves have no gamut: only this operator and the string output map a color',
-    signature: "(color | string | tuple, string?) -> color",
+    "name": "GamutMap",
+    "kind": "operator",
+    "description": "Map a color into a target gamut, \"srgb\" (the default) or \"display-p3\", with the CSS Color 4 gamut-mapping algorithm: the OKLCh chroma is reduced, at constant lightness and hue, until the color is inside the gamut or until clipping each channel changes the color by less than a just noticeable difference (ΔE_OK 0.02). A lightness of 1 or more gives white, and 0 or less gives black. A color already inside the gamut is returned unchanged. The result is an Rgb color, in sRGB coordinates also for \"display-p3\": its channels are in [0, 1] for \"srgb\", and for \"display-p3\" they can be outside [0, 1] (extended sRGB) for a color that is inside the Display-P3 gamut but outside the sRGB gamut. Color values themselves have no gamut: only this operator and the string output map a color",
+    "signature": "(color | string | tuple, string?) -> color"
   },
   {
-    name: "GasConstant",
-    kind: "constant",
-    description: "Molar gas constant",
-    signature: "value",
-    wikidata: "Q39600",
+    "name": "GasConstant",
+    "kind": "constant",
+    "description": "Molar gas constant",
+    "signature": "value",
+    "wikidata": "Q39600"
   },
   {
-    name: "GeometricVector",
-    kind: "operator",
-    description:
-      "Geometric vector (directed segment between two points) — opaque typed head. Distinct from the column-vector `Vector` operator.",
-    signature: "(any, any) -> expression",
+    "name": "GeometricVector",
+    "kind": "operator",
+    "description": "Geometric vector (directed segment between two points) — opaque typed head. Distinct from the column-vector `Vector` operator.",
+    "signature": "(any, any) -> expression"
   },
   {
-    name: "GoldenRatio",
-    kind: "constant",
-    description: "The golden ratio φ = (1+√5)/2 ≈ 1.618.",
-    signature: "real<1.618033988749894..1.618033988749895>",
-    wikidata: "Q41690",
+    "name": "GoldenRatio",
+    "kind": "constant",
+    "description": "The golden ratio φ = (1+√5)/2 ≈ 1.618.",
+    "signature": "real<1.618033988749894..1.618033988749895>",
+    "wikidata": "Q41690"
   },
   {
-    name: "GraphemeClusters",
-    kind: "operator",
-    description: "A collection of grapheme clusters from a string. Synonym of Characters.",
-    signature: "(string) -> list<character>",
+    "name": "GraphemeClusters",
+    "kind": "operator",
+    "description": "A collection of grapheme clusters from a string. Synonym of Characters.",
+    "signature": "(string) -> list<character>"
   },
   {
-    name: "GravitationalConstant",
-    kind: "constant",
-    description: "Newtonian constant of gravitation",
-    signature: "value",
-    wikidata: "Q30022",
+    "name": "GravitationalConstant",
+    "kind": "constant",
+    "description": "Newtonian constant of gravitation",
+    "signature": "value",
+    "wikidata": "Q30022"
   },
   {
-    name: "Greater",
-    kind: "operator",
-    description: "Greater-than comparison (strictly greater than).",
-    signature: "(any, any*) -> boolean",
+    "name": "Greater",
+    "kind": "operator",
+    "description": "Greater-than comparison (strictly greater than).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "GreaterEqual",
-    kind: "operator",
-    description: "Greater-than-or-equal comparison (greater than or equal to).",
-    signature: "(any, any*) -> boolean",
+    "name": "GreaterEqual",
+    "kind": "operator",
+    "description": "Greater-than-or-equal comparison (greater than or equal to).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "GroupBy",
-    kind: "operator",
-    description: "Partition the collection into a dictionary of lists based on the key returned by the function.",
-    signature: "(collection<T>, key: (T) any -> unknown) -> dictionary<list> where T",
+    "name": "GroupBy",
+    "kind": "operator",
+    "description": "Partition the collection into a dictionary of lists based on the key returned by the function.",
+    "signature": "(collection<T>, key: (T) any -> unknown) -> dictionary<list> where T"
   },
   {
-    name: "HadamardProduct",
-    kind: "operator",
-    description: "Hadamard (element-wise) product of two vectors or matrices of the same shape.",
-    signature: "(matrix | vector, matrix | vector) -> matrix | vector",
+    "name": "HadamardProduct",
+    "kind": "operator",
+    "description": "Hadamard (element-wise) product of two vectors or matrices of the same shape.",
+    "signature": "(matrix | vector, matrix | vector) -> matrix | vector"
   },
   {
-    name: "Half",
-    kind: "constant",
-    description: "The rational number one half (1/2).",
-    signature: "rational",
+    "name": "Half",
+    "kind": "constant",
+    "description": "The rational number one half (1/2).",
+    "signature": "rational"
   },
   {
-    name: "Haversine",
-    kind: "operator",
-    description: "Haversine function.",
-    signature: "(real) -> number",
-    wikidata: "Q2528380",
+    "name": "Haversine",
+    "kind": "operator",
+    "description": "Haversine function.",
+    "signature": "(real) -> number",
+    "wikidata": "Q2528380"
   },
   {
-    name: "Head",
-    kind: "operator",
-    description: "Return the head of an expression, the name of the operator",
-    signature: "(any) -> symbol",
+    "name": "Head",
+    "kind": "operator",
+    "description": "Return the head of an expression, the name of the operator",
+    "signature": "(any) -> symbol"
   },
   {
-    name: "Heaviside",
-    kind: "operator",
-    description: "Heaviside step function.",
-    signature: "(real | signed_infinity) -> rational<0..1>",
+    "name": "Heaviside",
+    "kind": "operator",
+    "description": "Heaviside step function.",
+    "signature": "(real | signed_infinity) -> rational<0..1>"
   },
   {
-    name: "Histogram",
-    kind: "operator",
-    description: "Compute a histogram of the values in a collection. Returns a list of (bin start, count) tuples.",
-    signature: "(collection<any>, list<number> | number) -> list<tuple<number, integer>>",
+    "name": "Histogram",
+    "kind": "operator",
+    "description": "Compute a histogram of the values in a collection. Returns a list of (bin start, count) tuples.",
+    "signature": "(collection<any>, list<number> | number) -> list<tuple<number, integer>>"
   },
   {
-    name: "Hold",
-    kind: "operator",
-    description:
-      "Hold an expression, preventing it from being canonicalized or evaluated until `ReleaseHold` is applied to it",
-    signature: "(any) -> unknown",
+    "name": "Hold",
+    "kind": "operator",
+    "description": "Hold an expression, preventing it from being canonicalized or evaluated until `ReleaseHold` is applied to it",
+    "signature": "(any) -> unknown"
   },
   {
-    name: "HoldValues",
-    kind: "operator",
-    description:
-      "HoldValues(body): evaluate `body` with its assigned free symbols shielded — each such symbol becomes a pure symbol (its declared type and in-scope assumptions apply, its assigned value does NOT) for the duration. The value-blind counterpart of evaluating `body` directly; analogous to Mathematica's `Block[{x}, …]`. HoldValues(body, [x, y]): shield only the listed symbols (a List, Set, Tuple, or a single symbol); every other symbol resolves normally. Constants (`Pi`, `ExponentialE`, …) are never shielded, assumptions survive the shield, and the global values are intact afterwards.",
-    signature: "(any, any?) -> expression",
+    "name": "HoldValues",
+    "kind": "operator",
+    "description": "HoldValues(body): evaluate `body` with its assigned free symbols shielded — each such symbol becomes a pure symbol (its declared type and in-scope assumptions apply, its assigned value does NOT) for the duration. The value-blind counterpart of evaluating `body` directly; analogous to Mathematica's `Block[{x}, …]`. HoldValues(body, [x, y]): shield only the listed symbols (a List, Set, Tuple, or a single symbol); every other symbol resolves normally. Constants (`Pi`, `ExponentialE`, …) are never shielded, assumptions survive the shield, and the global values are intact afterwards.",
+    "signature": "(any, any?) -> expression"
   },
   {
-    name: "Hom",
-    kind: "operator",
-    description: "Hom-set of morphisms between objects",
-    signature: "(value*) -> value",
+    "name": "Hom",
+    "kind": "operator",
+    "description": "Hom-set of morphisms between objects",
+    "signature": "(value*) -> value"
   },
   {
-    name: "HorizontalSpacing",
-    kind: "operator",
-    description: "Horizontal spacing annotation.",
-    signature: "(number) -> nothing",
+    "name": "HorizontalSpacing",
+    "kind": "operator",
+    "description": "Horizontal spacing annotation.",
+    "signature": "(number) -> nothing"
   },
   {
-    name: "Hsl",
-    kind: "operator",
-    description: "HSL color (hue degrees, saturation/lightness 0-1, optional alpha)",
-    signature: "(number, number, number, number?) -> color",
+    "name": "Hsl",
+    "kind": "operator",
+    "description": "HSL color (hue degrees, saturation/lightness 0-1, optional alpha)",
+    "signature": "(number, number, number, number?) -> color"
   },
   {
-    name: "Hsv",
-    kind: "operator",
-    description: "HSV color (hue degrees, saturation/value 0-1, optional alpha)",
-    signature: "(number, number, number, number?) -> color",
+    "name": "Hsv",
+    "kind": "operator",
+    "description": "HSV color (hue degrees, saturation/value 0-1, optional alpha)",
+    "signature": "(number, number, number, number?) -> color"
   },
   {
-    name: "Hypergeometric1F1",
-    kind: "operator",
-    description: "Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).",
-    signature: "(complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q1331447",
+    "name": "Hypergeometric1F1",
+    "kind": "operator",
+    "description": "Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).",
+    "signature": "(complex | infinity, complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q1331447"
   },
   {
-    name: "Hypergeometric2F1",
-    kind: "operator",
-    description: "Gauss hypergeometric function ₂F₁(a, b; c; z).",
-    signature: "(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q672619",
+    "name": "Hypergeometric2F1",
+    "kind": "operator",
+    "description": "Gauss hypergeometric function ₂F₁(a, b; c; z).",
+    "signature": "(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q672619"
   },
   {
-    name: "Hypot",
-    kind: "operator",
-    description: "Hypotenuse length: sqrt(x^2 + y^2).",
-    signature: "(infinity | real, infinity | real) -> +oo | nan | real",
+    "name": "Hypot",
+    "kind": "operator",
+    "description": "Hypotenuse length: sqrt(x^2 + y^2).",
+    "signature": "(infinity | real, infinity | real) -> +oo | nan | real"
   },
   {
-    name: "IdenticallyEqual",
-    kind: "operator",
-    description:
-      "Identity comparison (`\\equiv`). True iff the operands are equal for every value of their free variables.",
-    signature: "(any, any) -> boolean",
+    "name": "IdenticallyEqual",
+    "kind": "operator",
+    "description": "Identity comparison (`\\equiv`). True iff the operands are equal for every value of their free variables.",
+    "signature": "(any, any) -> boolean"
   },
   {
-    name: "Identity",
-    kind: "operator",
-    description: "Return the argument unchanged",
-    signature: "(T) -> T where T",
+    "name": "Identity",
+    "kind": "operator",
+    "description": "Return the argument unchanged",
+    "signature": "(T) -> T where T"
   },
   {
-    name: "IdentityMatrix",
-    kind: "operator",
-    description: "n-by-n identity matrix.",
-    signature: "(integer) -> matrix",
+    "name": "IdentityMatrix",
+    "kind": "operator",
+    "description": "n-by-n identity matrix.",
+    "signature": "(integer) -> matrix"
   },
   {
-    name: "If",
-    kind: "operator",
-    description: "Conditional branch: evaluate one of two expressions.",
-    signature: "(expression, expression, expression?) -> any",
+    "name": "If",
+    "kind": "operator",
+    "description": "Conditional branch: evaluate one of two expressions.",
+    "signature": "(expression, expression, expression?) -> any"
   },
   {
-    name: "Im",
-    kind: "operator",
-    description:
-      "`Im` is an alias for `Imaginary`, which is the preferred name. Returns the imaginary part of a complex number.",
-    signature: "(complex | infinity) -> number",
+    "name": "Im",
+    "kind": "operator",
+    "description": "`Im` is an alias for `Imaginary`, which is the preferred name. Returns the imaginary part of a complex number.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Imaginary",
-    kind: "operator",
-    description: "Imaginary part of a complex number.",
-    signature: "(complex | infinity) -> number",
+    "name": "Imaginary",
+    "kind": "operator",
+    "description": "Imaginary part of a complex number.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "ImaginaryNumbers",
-    kind: "constant",
-    description: "The set of all imaginary numbers.",
-    signature: "set<imaginary>",
+    "name": "ImaginaryNumbers",
+    "kind": "constant",
+    "description": "The set of all imaginary numbers.",
+    "signature": "set<imaginary>"
   },
   {
-    name: "ImaginaryUnit",
-    kind: "constant",
-    description: "The imaginary unit, whose square is −1.",
-    signature: "imaginary",
-    wikidata: "Q193796",
+    "name": "ImaginaryUnit",
+    "kind": "constant",
+    "description": "The imaginary unit, whose square is −1.",
+    "signature": "imaginary",
+    "wikidata": "Q193796"
   },
   {
-    name: "Implies",
-    kind: "operator",
-    description:
-      "Logical implication: false only when the antecedent is true and the consequent is false. Short-circuits: a `False` antecedent decides (`True`) without evaluating the consequent.",
-    signature: "(boolean, boolean) -> boolean",
-    wikidata: "Q7881229",
+    "name": "Implies",
+    "kind": "operator",
+    "description": "Logical implication: false only when the antecedent is true and the consequent is false. Short-circuits: a `False` antecedent decides (`True`) without evaluating the consequent.",
+    "signature": "(boolean, boolean) -> boolean",
+    "wikidata": "Q7881229"
   },
   {
-    name: "IndexOf",
-    kind: "operator",
-    description: "Return the 1-based index of the first occurrence of value in collection, or 0 if not found.",
-    signature: "(collection<any>, any) -> integer",
+    "name": "IndexOf",
+    "kind": "operator",
+    "description": "Return the 1-based index of the first occurrence of value in collection, or 0 if not found.",
+    "signature": "(collection<any>, any) -> integer"
   },
   {
-    name: "IndexWhere",
-    kind: "operator",
-    description: "Return the 1-based index of the first element satisfying the predicate, or 0 if not found.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> integer where T",
+    "name": "IndexWhere",
+    "kind": "operator",
+    "description": "Return the 1-based index of the first element satisfying the predicate, or 0 if not found.",
+    "signature": "(collection<T>, predicate: (T) any -> boolean) -> integer where T"
   },
   {
-    name: "IndexedSequence",
-    kind: "operator",
-    description:
-      "Indexed sequence `\\{a_n\\}_{n=1}^{\\infty}` — inert head `IndexedSequence(term, index, lower, upper?)`; not evaluated.",
-    signature: "(any, symbol, any, any?) -> expression",
+    "name": "IndexedSequence",
+    "kind": "operator",
+    "description": "Indexed sequence `\\{a_n\\}_{n=1}^{\\infty}` — inert head `IndexedSequence(term, index, lower, upper?)`; not evaluated.",
+    "signature": "(any, symbol, any, any?) -> expression"
   },
   {
-    name: "Infimum",
-    kind: "operator",
-    description: "Like Min, but defined for open sets",
-    signature: "(value*) -> number",
+    "name": "Infimum",
+    "kind": "operator",
+    "description": "Like Min, but defined for open sets",
+    "signature": "(value*) -> number"
   },
   {
-    name: "Input",
-    kind: "operator",
-    description:
-      "Read one line of text from the host: the terminal in a command-line host, the `prompt()` dialog in a browser. The optional operand is a prompt string, displayed before reading. Evaluates to the line read, without the trailing newline; to `Nothing` at end-of-input (or a canceled dialog). On a host with no interactive input, stays unevaluated. When the host denies console access, evaluates to a `capability-denied` error.",
-    signature: "(prompt: string?) console -> nothing | string",
+    "name": "Input",
+    "kind": "operator",
+    "description": "Read one line of text from the host: the terminal in a command-line host, the `prompt()` dialog in a browser. The optional operand is a prompt string, displayed before reading. Evaluates to the line read, without the trailing newline; to `Nothing` at end-of-input (or a canceled dialog). On a host with no interactive input, stays unevaluated. When the host denies console access, evaluates to a `capability-denied` error.",
+    "signature": "(prompt: string?) console -> nothing | string"
   },
   {
-    name: "Insert",
-    kind: "operator",
-    description:
-      "Return a copy of the indexed collection with `value` inserted before the 1-based `index`. `index` may range from 1 to n+1 (n+1 appends). A negative index counts from the end, with -1 appending at the end (Elixir semantics). An out-of-range, zero, or non-integer index leaves the expression unevaluated.",
-    signature: "(indexed_collection<T>, integer, T) -> list<T> where T",
+    "name": "Insert",
+    "kind": "operator",
+    "description": "Return a copy of the indexed collection with `value` inserted before the 1-based `index`. `index` may range from 1 to n+1 (n+1 appends). A negative index counts from the end, with -1 appending at the end (Elixir semantics). An out-of-range, zero, or non-integer index leaves the expression unevaluated.",
+    "signature": "(indexed_collection<T>, integer, T) -> list<T> where T"
   },
   {
-    name: "IntegerDigits",
-    kind: "operator",
-    description:
-      "Return the digits of `n` in the given `base` (default 10), most-significant first. The sign of `n` is ignored. With a third argument `length`, the result is zero-padded on the left (or truncated to its least-significant digits) to that length.",
-    signature: "(integer, integer?, integer?) -> list<integer>",
+    "name": "IntegerDigits",
+    "kind": "operator",
+    "description": "Return the digits of `n` in the given `base` (default 10), most-significant first. The sign of `n` is ignored. With a third argument `length`, the result is zero-padded on the left (or truncated to its least-significant digits) to that length.",
+    "signature": "(integer, integer?, integer?) -> list<integer>"
   },
   {
-    name: "IntegerSqrt",
-    kind: "operator",
-    description:
-      "Return the integer square root of `n`, i.e. the largest integer `m` such that `m² ≤ n`. Undefined for negative `n`.",
-    signature: "(integer) -> integer",
+    "name": "IntegerSqrt",
+    "kind": "operator",
+    "description": "Return the integer square root of `n`, i.e. the largest integer `m` such that `m² ≤ n`. Undefined for negative `n`.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "IntegerString",
-    kind: "operator",
-    description: "`IntegerString(n, base=10)`       return a string representation of the integer `n` in base `base`.",
-    signature: "(integer, integer?) -> string",
+    "name": "IntegerString",
+    "kind": "operator",
+    "description": "`IntegerString(n, base=10)`       return a string representation of the integer `n` in base `base`.",
+    "signature": "(integer, integer?) -> string"
   },
   {
-    name: "Integers",
-    kind: "constant",
-    description: "The set of all finite integers.",
-    signature: "set<integer>",
+    "name": "Integers",
+    "kind": "constant",
+    "description": "The set of all finite integers.",
+    "signature": "set<integer>"
   },
   {
-    name: "Integrate",
-    kind: "operator",
-    description: "Symbolic integral with optional bounds.",
-    signature: "(function, limits+) -> number",
-    wikidata: "Q80091",
-    keywords: ["antiderivative", "primitive", "integral", "definite integral"],
+    "name": "Integrate",
+    "kind": "operator",
+    "description": "Symbolic integral with optional bounds.",
+    "signature": "(function, limits+) -> number",
+    "wikidata": "Q80091",
+    "keywords": [
+      "antiderivative",
+      "primitive",
+      "integral",
+      "definite integral"
+    ]
   },
   {
-    name: "InterpolatingFunction",
-    kind: "operator",
-    description:
-      "Piecewise-quartic dense-output interpolant of a numeric ODE solution (produced by `NDSolveFunction`). The first operand is the per-step coefficient table; applied to a number, it evaluates the solution there (clamping to the covered interval outside it). Stays symbolic for a non-numeric argument.",
-    signature: "(list<any>, number?) -> number",
+    "name": "InterpolatingFunction",
+    "kind": "operator",
+    "description": "Piecewise-quartic dense-output interpolant of a numeric ODE solution (produced by `NDSolveFunction`). The first operand is the per-step coefficient table; applied to a number, it evaluates the solution there (clamping to the covered interval outside it). Stays symbolic for a non-numeric argument.",
+    "signature": "(list<any>, number?) -> number"
   },
   {
-    name: "Interpret",
-    kind: "operator",
-    description:
-      "Interpret a notational expression as its mathematical meaning. In v1: a continuation-bearing `Add`/`Multiply` (e.g. `1 + 2 + \\dots + n`) becomes a `Sum`/`Product`. Returns the argument unchanged when the (strict) inference gate does not pass",
-    signature: "(any) -> any",
+    "name": "Interpret",
+    "kind": "operator",
+    "description": "Interpret a notational expression as its mathematical meaning. In v1: a continuation-bearing `Add`/`Multiply` (e.g. `1 + 2 + \\dots + n`) becomes a `Sum`/`Product`. Returns the argument unchanged when the (strict) inference gate does not pass",
+    "signature": "(any) -> any"
   },
   {
-    name: "InterquartileRange",
-    kind: "operator",
-    description: "Interquartile range (Q3 - Q1) of a collection.",
-    signature: "((collection<any> | number)+) -> +oo | nan | real<0..>",
+    "name": "InterquartileRange",
+    "kind": "operator",
+    "description": "Interquartile range (Q3 - Q1) of a collection.",
+    "signature": "((collection<any> | number)+) -> +oo | nan | real<0..>"
   },
   {
-    name: "Intersection",
-    kind: "operator",
-    description: "Return the intersection of one or more collections as a set.",
-    signature: "(any+) -> set",
-    wikidata: "Q185837",
+    "name": "Intersection",
+    "kind": "operator",
+    "description": "Return the intersection of one or more collections as a set.",
+    "signature": "(any+) -> set",
+    "wikidata": "Q185837"
   },
   {
-    name: "Interval",
-    kind: "operator",
-    description: "A set of real numbers between two endpoints. The endpoints may or may not be included.",
-    signature: "(number, number) -> set<real>",
+    "name": "Interval",
+    "kind": "operator",
+    "description": "A set of real numbers between two endpoints. The endpoints may or may not be included.",
+    "signature": "(number, number) -> set<real>"
   },
   {
-    name: "Inverse",
-    kind: "operator",
-    description: "Multiplicative inverse of a square matrix.",
-    signature: "(T) -> T where T: matrix",
+    "name": "Inverse",
+    "kind": "operator",
+    "description": "Multiplicative inverse of a square matrix.",
+    "signature": "(T) -> T where T: matrix"
   },
   {
-    name: "InverseFunction",
-    kind: "operator",
-    description: "Inverse of a function.",
-    signature: "(function) -> function",
+    "name": "InverseFunction",
+    "kind": "operator",
+    "description": "Inverse of a function.",
+    "signature": "(function) -> function"
   },
   {
-    name: "InverseHaversine",
-    kind: "operator",
-    description: "Inverse haversine function.",
-    signature: "(real) -> number",
+    "name": "InverseHaversine",
+    "kind": "operator",
+    "description": "Inverse haversine function.",
+    "signature": "(real) -> number"
   },
   {
-    name: "InvisibleOperator",
-    kind: "operator",
-    description: "Implicit operator used for juxtapositions such as function application or multiplication.",
-    signature: "function",
+    "name": "InvisibleOperator",
+    "kind": "operator",
+    "description": "Implicit operator used for juxtapositions such as function application or multiplication.",
+    "signature": "function"
   },
   {
-    name: "IsAbundant",
-    kind: "operator",
-    description: "True if n is an abundant number (sum of divisors > 2n).",
-    signature: "(integer) -> boolean",
+    "name": "IsAbundant",
+    "kind": "operator",
+    "description": "True if n is an abundant number (sum of divisors > 2n).",
+    "signature": "(integer) -> boolean"
   },
   {
-    name: "IsCenteredSquare",
-    kind: "operator",
-    description: "True if n is a centered square number.",
-    signature: "(integer) -> boolean",
+    "name": "IsCenteredSquare",
+    "kind": "operator",
+    "description": "True if n is a centered square number.",
+    "signature": "(integer) -> boolean"
   },
   {
-    name: "IsCompatibleUnit",
-    kind: "operator",
-    description: "Check if two units have the same dimension",
-    signature: "(value, value) -> value",
+    "name": "IsCompatibleUnit",
+    "kind": "operator",
+    "description": "Check if two units have the same dimension",
+    "signature": "(value, value) -> value"
   },
   {
-    name: "IsComposite",
-    kind: "operator",
-    description: "`IsComposite(n)` returns `True` if `n` is a composite number",
-    signature: "(number) -> boolean",
+    "name": "IsComposite",
+    "kind": "operator",
+    "description": "`IsComposite(n)` returns `True` if `n` is a composite number",
+    "signature": "(number) -> boolean"
   },
   {
-    name: "IsDiagonal",
-    kind: "operator",
-    description: "Whether the matrix is diagonal (all off-diagonal entries are zero).",
-    signature: "(value) -> boolean",
+    "name": "IsDiagonal",
+    "kind": "operator",
+    "description": "Whether the matrix is diagonal (all off-diagonal entries are zero).",
+    "signature": "(value) -> boolean"
   },
   {
-    name: "IsEmpty",
-    kind: "operator",
-    description: "Return True if the collection is empty, False otherwise.",
-    signature: "(collection<any>) -> boolean",
+    "name": "IsEmpty",
+    "kind": "operator",
+    "description": "Return True if the collection is empty, False otherwise.",
+    "signature": "(collection<any>) -> boolean"
   },
   {
-    name: "IsError",
-    kind: "operator",
-    description:
-      'True if the expression is an `Error` value, or a frozen expression embedding one (`"a" + 1`). False otherwise. Total.',
-    signature: "(any) -> boolean",
+    "name": "IsError",
+    "kind": "operator",
+    "description": "True if the expression is an `Error` value, or a frozen expression embedding one (`\"a\" + 1`). False otherwise. Total.",
+    "signature": "(any) -> boolean"
   },
   {
-    name: "IsEven",
-    kind: "operator",
-    description: "`IsEven(n)` returns `True` if `n` is an even number",
-    signature: "(number) -> boolean",
+    "name": "IsEven",
+    "kind": "operator",
+    "description": "`IsEven(n)` returns `True` if `n` is an even number",
+    "signature": "(number) -> boolean"
   },
   {
-    name: "IsHappy",
-    kind: "operator",
-    description:
-      "True if n is a happy number, a number which eventually reaches 1 when the number is replaced by the sum of the square of each digit",
-    signature: "(integer) -> boolean",
-    wikidata: "Q44535",
+    "name": "IsHappy",
+    "kind": "operator",
+    "description": "True if n is a happy number, a number which eventually reaches 1 when the number is replaced by the sum of the square of each digit",
+    "signature": "(integer) -> boolean",
+    "wikidata": "Q44535"
   },
   {
-    name: "IsMatch",
-    kind: "operator",
-    description: "Whether a string contains a match for a regular expression.",
-    signature: "(subject: string, pattern: regexp) -> boolean",
+    "name": "IsMatch",
+    "kind": "operator",
+    "description": "Whether a string contains a match for a regular expression.",
+    "signature": "(subject: string, pattern: regexp) -> boolean"
   },
   {
-    name: "IsMissing",
-    kind: "operator",
-    description:
-      "True if the value is ABSENT — the `Missing` or `Undefined` symbol, or a `NaN` number (regardless of provenance). R’s `is.na` (`TRUE` for both `NA` and `NaN`). There is no NaN-specific test operator (R’s `is.nan`).",
-    signature: "(any) -> boolean",
+    "name": "IsMissing",
+    "kind": "operator",
+    "description": "True if the value is ABSENT — the `Missing` or `Undefined` symbol, or a `NaN` number (regardless of provenance). R’s `is.na` (`TRUE` for both `NA` and `NaN`). There is no NaN-specific test operator (R’s `is.nan`).",
+    "signature": "(any) -> boolean"
   },
   {
-    name: "IsOctahedral",
-    kind: "operator",
-    description: "True if n is an octahedral number.",
-    signature: "(integer) -> boolean",
+    "name": "IsOctahedral",
+    "kind": "operator",
+    "description": "True if n is an octahedral number.",
+    "signature": "(integer) -> boolean"
   },
   {
-    name: "IsOdd",
-    kind: "operator",
-    description: "`IsOdd(n)` returns `True` if `n` is an odd number",
-    signature: "(number) -> boolean",
+    "name": "IsOdd",
+    "kind": "operator",
+    "description": "`IsOdd(n)` returns `True` if `n` is an odd number",
+    "signature": "(number) -> boolean"
   },
   {
-    name: "IsPerfect",
-    kind: "operator",
-    description:
-      'Returns "True" if n is a perfect number, a positive integer which equals the sum of all its divisors.',
-    signature: "(integer) -> boolean",
-    wikidata: "Q170043",
+    "name": "IsPerfect",
+    "kind": "operator",
+    "description": "Returns \"True\" if n is a perfect number, a positive integer which equals the sum of all its divisors.",
+    "signature": "(integer) -> boolean",
+    "wikidata": "Q170043"
   },
   {
-    name: "IsPerfectPower",
-    kind: "operator",
-    description:
-      'Return `"True"` if `n` is a perfect power `a^b` for integers `a` and `b ≥ 2` (a negative `n` requires an odd exponent). The smallest perfect power is 4.',
-    signature: "(integer) -> boolean",
+    "name": "IsPerfectPower",
+    "kind": "operator",
+    "description": "Return `\"True\"` if `n` is a perfect power `a^b` for integers `a` and `b ≥ 2` (a negative `n` requires an odd exponent). The smallest perfect power is 4.",
+    "signature": "(integer) -> boolean"
   },
   {
-    name: "IsPrime",
-    kind: "operator",
-    description: "`IsPrime(n)` returns `True` if `n` is a prime number",
-    signature: "(number) -> boolean",
-    wikidata: "Q49008",
+    "name": "IsPrime",
+    "kind": "operator",
+    "description": "`IsPrime(n)` returns `True` if `n` is a prime number",
+    "signature": "(number) -> boolean",
+    "wikidata": "Q49008"
   },
   {
-    name: "IsSame",
-    kind: "operator",
-    description: "Compare two expressions for structural equality",
-    signature: "(any, any) -> boolean",
+    "name": "IsSame",
+    "kind": "operator",
+    "description": "Compare two expressions for structural equality",
+    "signature": "(any, any) -> boolean"
   },
   {
-    name: "IsSatisfiable",
-    kind: "operator",
-    description: "Check satisfiability using brute-force enumeration. O(2^n) complexity, max 20 variables.",
-    signature: "(boolean) -> boolean",
+    "name": "IsSatisfiable",
+    "kind": "operator",
+    "description": "Check satisfiability using brute-force enumeration. O(2^n) complexity, max 20 variables.",
+    "signature": "(boolean) -> boolean"
   },
   {
-    name: "IsSquare",
-    kind: "operator",
-    description: "True if n is a perfect square.",
-    signature: "(integer) -> boolean",
+    "name": "IsSquare",
+    "kind": "operator",
+    "description": "True if n is a perfect square.",
+    "signature": "(integer) -> boolean"
   },
   {
-    name: "IsSquareFree",
-    kind: "operator",
-    description:
-      'Return `"True"` if `n` is square-free (not divisible by any perfect square > 1). The sign of `n` is ignored.',
-    signature: "(integer) -> boolean",
+    "name": "IsSquareFree",
+    "kind": "operator",
+    "description": "Return `\"True\"` if `n` is square-free (not divisible by any perfect square > 1). The sign of `n` is ignored.",
+    "signature": "(integer) -> boolean"
   },
   {
-    name: "IsSquareMatrix",
-    kind: "operator",
-    description: "Whether the value is a square matrix.",
-    signature: "(value) -> boolean",
+    "name": "IsSquareMatrix",
+    "kind": "operator",
+    "description": "Whether the value is a square matrix.",
+    "signature": "(value) -> boolean"
   },
   {
-    name: "IsSymmetric",
-    kind: "operator",
-    description: "Whether the matrix is symmetric (A equals its transpose).",
-    signature: "(value) -> boolean",
+    "name": "IsSymmetric",
+    "kind": "operator",
+    "description": "Whether the matrix is symmetric (A equals its transpose).",
+    "signature": "(value) -> boolean"
   },
   {
-    name: "IsTautology",
-    kind: "operator",
-    description:
-      "Check if expression is a tautology using brute-force enumeration. O(2^n) complexity, max 20 variables.",
-    signature: "(boolean) -> boolean",
+    "name": "IsTautology",
+    "kind": "operator",
+    "description": "Check if expression is a tautology using brute-force enumeration. O(2^n) complexity, max 20 variables.",
+    "signature": "(boolean) -> boolean"
   },
   {
-    name: "IsTriangular",
-    kind: "operator",
-    description: "True if n is a triangular number.",
-    signature: "(integer) -> boolean",
+    "name": "IsTriangular",
+    "kind": "operator",
+    "description": "True if n is a triangular number.",
+    "signature": "(integer) -> boolean"
   },
   {
-    name: "Iterate",
-    kind: "operator",
-    description:
-      "Produce an infinite sequence by repeatedly applying a function to the previous value, starting with an initial value. The function is invoked as `f(index, acc)`: `index` is the 1-based position of the element being produced, and `acc` is the previous element — the `initial` value when producing element 1. Element `k` is therefore `f(k, element(k-1))`. A function whose type says it is UNARY is applied to the accumulator alone (`Iterate(2 * _, 1)` produces `[2, 4, 8, 16, …]`); a statically-unknown arity keeps the two-argument form.",
-    signature: "(function, initial: any?) -> list",
+    "name": "Iterate",
+    "kind": "operator",
+    "description": "Produce an infinite sequence by repeatedly applying a function to the previous value, starting with an initial value. The function is invoked as `f(index, acc)`: `index` is the 1-based position of the element being produced, and `acc` is the previous element — the `initial` value when producing element 1. Element `k` is therefore `f(k, element(k-1))`. A function whose type says it is UNARY is applied to the accumulator alone (`Iterate(2 * _, 1)` produces `[2, 4, 8, 16, …]`); a statically-unknown arity keeps the two-argument form.",
+    "signature": "(function, initial: any?) -> list"
   },
   {
-    name: "J",
-    kind: "constant",
-    signature: "unknown",
+    "name": "J",
+    "kind": "constant",
+    "signature": "unknown"
   },
   {
-    name: "JacobiSymbol",
-    kind: "operator",
-    description:
-      "The Jacobi symbol (a/n) for an odd `n > 0`. Returns -1, 0, or 1. Undefined when `n` is even or non-positive.",
-    signature: "(integer, integer) -> integer",
+    "name": "JacobiSymbol",
+    "kind": "operator",
+    "description": "The Jacobi symbol (a/n) for an odd `n > 0`. Returns -1, 0, or 1. Undefined when `n` is even or non-positive.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "JacobiTheta",
-    kind: "operator",
-    description: "Jacobi theta function θⱼ(z, τ), j ∈ {1,2,3,4}, nome q = e^{iπτ} (Fungrim convention).",
-    signature: "(number, complex | infinity, complex | infinity, number?) -> number",
-    wikidata: "Q1154532",
+    "name": "JacobiTheta",
+    "kind": "operator",
+    "description": "Jacobi theta function θⱼ(z, τ), j ∈ {1,2,3,4}, nome q = e^{iπτ} (Fungrim convention).",
+    "signature": "(number, complex | infinity, complex | infinity, number?) -> number",
+    "wikidata": "Q1154532"
   },
   {
-    name: "JacobianMatrix",
-    kind: "operator",
-    description:
-      "JacobianMatrix(fs, vars): the matrix of partial derivatives ∂fᵢ/∂xⱼ, one row per function and one column per variable. `fs` is a list of expressions. A single (non-list) expression is the gradient case: the result is the flat vector [∂f/∂x₁, …, ∂f/∂xₙ]. `vars` is a list of symbols and may be omitted, in which case the free variables of `fs` are used, in lexicographic order. Example: JacobianMatrix([x^2 y, x + z], [x, y, z]).",
-    signature: "(any, any?) -> value",
-    keywords: ["jacobian", "gradient", "derivative", "partial derivative"],
+    "name": "JacobianMatrix",
+    "kind": "operator",
+    "description": "JacobianMatrix(fs, vars): the matrix of partial derivatives ∂fᵢ/∂xⱼ, one row per function and one column per variable. `fs` is a list of expressions. A single (non-list) expression is the gradient case: the result is the flat vector [∂f/∂x₁, …, ∂f/∂xₙ]. `vars` is a list of symbols and may be omitted, in which case the free variables of `fs` are used, in lexicographic order. Example: JacobianMatrix([x^2 y, x + z], [x, y, z]).",
+    "signature": "(any, any?) -> value",
+    "keywords": [
+      "jacobian",
+      "gradient",
+      "derivative",
+      "partial derivative"
+    ]
   },
   {
-    name: "Join",
-    kind: "operator",
-    description:
-      "Join the elements of some collections into a flat collection. A tuple operand is appended as a single element, not spliced. A scalar operand is appended as a single element too: `Join([1, 2], 3)` is `[1, 2, 3]`. When every operand is a string, the result is their concatenation as a string: `Join` is the variadic string concatenation.",
-    signature: "((T+) -> T where T: string) & ((collection<any>*) -> collection)",
+    "name": "Join",
+    "kind": "operator",
+    "description": "Join the elements of some collections into a flat collection. A tuple operand is appended as a single element, not spliced. A scalar operand is appended as a single element too: `Join([1, 2], 3)` is `[1, 2, 3]`. When every operand is a string, the result is their concatenation as a string: `Join` is the variadic string concatenation.",
+    "signature": "((T+) -> T where T: string) & ((collection<any>*) -> collection)"
   },
   {
-    name: "Julia",
-    kind: "operator",
-    description:
-      "Smooth escape-time value for a Julia set with parameter c. Returns 1 for points inside the set, values in [0,1) for escaping points.",
-    signature: "(complex, complex, integer) -> real",
+    "name": "Julia",
+    "kind": "operator",
+    "description": "Smooth escape-time value for a Julia set with parameter c. Returns 1 for points inside the set, values in [0,1) for escaping points.",
+    "signature": "(complex, complex, integer) -> real"
   },
   {
-    name: "K",
-    kind: "constant",
-    signature: "unknown",
+    "name": "K",
+    "kind": "constant",
+    "signature": "unknown"
   },
   {
-    name: "Kernel",
-    kind: "operator",
-    description: "Kernel (null space) of a linear map",
-    signature: "(value) -> list",
+    "name": "Kernel",
+    "kind": "operator",
+    "description": "Kernel (null space) of a linear map",
+    "signature": "(value) -> list"
   },
   {
-    name: "KeyValuePair",
-    kind: "operator",
-    description: "A key/value pair",
-    signature: "(key: string, value: T) -> tuple<string, T> where T",
+    "name": "KeyValuePair",
+    "kind": "operator",
+    "description": "A key/value pair",
+    "signature": "(key: string, value: T) -> tuple<string, T> where T"
   },
   {
-    name: "Keys",
-    kind: "operator",
-    description: "Return a list of the keys of a dictionary.",
-    signature: "(dictionary<any>) -> list<string>",
+    "name": "Keys",
+    "kind": "operator",
+    "description": "Return a list of the keys of a dictionary.",
+    "signature": "(dictionary<any>) -> list<string>"
   },
   {
-    name: "KroneckerDelta",
-    kind: "operator",
-    description:
-      "Return 1 if the arguments are equal, 0 otherwise. With a single argument n, this is δ_{n,0}: 1 if n = 0, 0 otherwise.",
-    signature: "(value+) -> integer",
+    "name": "KroneckerDelta",
+    "kind": "operator",
+    "description": "Return 1 if the arguments are equal, 0 otherwise. With a single argument n, this is δ_{n,0}: 1 if n = 0, 0 otherwise.",
+    "signature": "(value+) -> integer"
   },
   {
-    name: "Kurtosis",
-    kind: "operator",
-    description: "Kurtosis of a collection of numbers.",
-    signature: "((collection<any> | number)+) -> nan | real",
+    "name": "Kurtosis",
+    "kind": "operator",
+    "description": "Kurtosis of a collection of numbers.",
+    "signature": "((collection<any> | number)+) -> nan | real"
   },
   {
-    name: "LCM",
-    kind: "operator",
-    description: "Least Common Multiple",
-    signature: "(any*) -> number",
+    "name": "LCM",
+    "kind": "operator",
+    "description": "Least Common Multiple",
+    "signature": "(any*) -> number"
   },
   {
-    name: "LUDecomposition",
-    kind: "operator",
-    description: "LU decomposition of a square matrix.",
-    signature: "(matrix) -> tuple",
+    "name": "LUDecomposition",
+    "kind": "operator",
+    "description": "LU decomposition of a square matrix.",
+    "signature": "(matrix) -> tuple"
   },
   {
-    name: "LambertW",
-    kind: "operator",
-    description: "Lambert W function (product logarithm)",
-    signature: "(complex | infinity, number?) -> number",
-    wikidata: "Q429963",
-    keywords: ["product log", "omega function"],
+    "name": "LambertW",
+    "kind": "operator",
+    "description": "Lambert W function (product logarithm)",
+    "signature": "(complex | infinity, number?) -> number",
+    "wikidata": "Q429963",
+    "keywords": [
+      "product log",
+      "omega function"
+    ]
   },
   {
-    name: "Last",
-    kind: "operator",
-    description: "The last element of a collection.",
-    signature: "(xs: indexed_collection<any>) -> any",
+    "name": "Last",
+    "kind": "operator",
+    "description": "The last element of a collection.",
+    "signature": "(xs: indexed_collection<any>) -> any"
   },
   {
-    name: "Latex",
-    kind: "operator",
-    description: "Serialize an expression to LaTeX",
-    signature: "(any+) -> string",
+    "name": "Latex",
+    "kind": "operator",
+    "description": "Serialize an expression to LaTeX",
+    "signature": "(any+) -> string"
   },
   {
-    name: "LatexString",
-    kind: "operator",
-    description: "Value preserving type conversion/tag indicating the string is a LaTeX string",
-    signature: "(string) -> string",
+    "name": "LatexString",
+    "kind": "operator",
+    "description": "Value preserving type conversion/tag indicating the string is a LaTeX string",
+    "signature": "(string) -> string"
   },
   {
-    name: "Lb",
-    kind: "operator",
-    description: "Base-2 Logarithm",
-    signature: "(number) -> number",
-    wikidata: "Q581168",
+    "name": "Lb",
+    "kind": "operator",
+    "description": "Base-2 Logarithm",
+    "signature": "(number) -> number",
+    "wikidata": "Q581168"
   },
   {
-    name: "LegendreSymbol",
-    kind: "operator",
-    description:
-      "The Legendre symbol (a/p) for an odd prime `p`. Returns -1, 0, or 1. Undefined when `p` is not an odd prime.",
-    signature: "(integer, integer) -> integer",
+    "name": "LegendreSymbol",
+    "kind": "operator",
+    "description": "The Legendre symbol (a/p) for an odd prime `p`. Returns -1, 0, or 1. Undefined when `p` is not an odd prime.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "Length",
-    kind: "operator",
-    description:
-      "Number of elements in a collection. Returns +oo for an unbounded Range, an `incompatible-type` error for an operand that is decidably not a collection, and stays unevaluated for an infinite collection whose length is not decided.",
-    signature: "(any) -> infinity | integer",
-    keywords: ["size"],
+    "name": "Length",
+    "kind": "operator",
+    "description": "Number of elements in a collection. Returns +oo for an unbounded Range, an `incompatible-type` error for an operand that is decidably not a collection, and stays unevaluated for an infinite collection whose length is not decided.",
+    "signature": "(any) -> infinity | integer",
+    "keywords": [
+      "size"
+    ]
   },
   {
-    name: "Less",
-    kind: "operator",
-    description: "Less-than comparison (strictly less than).",
-    signature: "(any, any*) -> boolean",
+    "name": "Less",
+    "kind": "operator",
+    "description": "Less-than comparison (strictly less than).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "LessEqual",
-    kind: "operator",
-    description: "Less-than-or-equal comparison (less than or equal to).",
-    signature: "(any, any*) -> boolean",
+    "name": "LessEqual",
+    "kind": "operator",
+    "description": "Less-than-or-equal comparison (less than or equal to).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Lg",
-    kind: "operator",
-    description: "Base-10 Logarithm",
-    signature: "(number) -> number",
-    wikidata: "Q966582",
+    "name": "Lg",
+    "kind": "operator",
+    "description": "Base-10 Logarithm",
+    "signature": "(number) -> number",
+    "wikidata": "Q966582"
   },
   {
-    name: "Limit",
-    kind: "operator",
-    description: "Limit of a function",
-    signature: "(function, point: number, direction: number?) -> number",
+    "name": "Limit",
+    "kind": "operator",
+    "description": "Limit of a function",
+    "signature": "(function, point: number, direction: number?) -> number"
   },
   {
-    name: "Limits",
-    kind: "operator",
-    description: "Limits of a function",
-    signature: "(index: symbol, lower: value, upper: value) -> tuple",
+    "name": "Limits",
+    "kind": "operator",
+    "description": "Limits of a function",
+    "signature": "(index: symbol, lower: value, upper: value) -> tuple"
   },
   {
-    name: "LinearRegression",
-    kind: "operator",
-    description:
-      "Least-squares linear fit b0 + b1·x. Returns Tuple(b0, b1), or the fitted expression if a trailing variable symbol is given.",
-    signature: "(any+) -> tuple<number, number>",
+    "name": "LinearRegression",
+    "kind": "operator",
+    "description": "Least-squares linear fit b0 + b1·x. Returns Tuple(b0, b1), or the fitted expression if a trailing variable symbol is given.",
+    "signature": "(any+) -> tuple<number, number>"
   },
   {
-    name: "LinearSolve",
-    kind: "operator",
-    description: "Solve the linear system A·x = b for x.",
-    signature: "(matrix, matrix | vector) -> value",
-    keywords: ["linear system", "solve"],
+    "name": "LinearSolve",
+    "kind": "operator",
+    "description": "Solve the linear system A·x = b for x.",
+    "signature": "(matrix, matrix | vector) -> value",
+    "keywords": [
+      "linear system",
+      "solve"
+    ]
   },
   {
-    name: "Linspace",
-    kind: "operator",
-    description: "A sequence of evenly spaced numbers between a start and end value, both endpoints included.",
-    signature: "(start: number, end: number?, count: number?) -> indexed_collection",
+    "name": "Linspace",
+    "kind": "operator",
+    "description": "A sequence of evenly spaced numbers between a start and end value, both endpoints included.",
+    "signature": "(start: number, end: number?, count: number?) -> indexed_collection"
   },
   {
-    name: "List",
-    kind: "operator",
-    description: "An ordered collection of elements (a list).",
-    signature: "(any*) -> list",
+    "name": "List",
+    "kind": "operator",
+    "description": "An ordered collection of elements (a list).",
+    "signature": "(any*) -> list"
   },
   {
-    name: "ListFrom",
-    kind: "operator",
-    description: "Create a list from the elements of a collection.",
-    signature: "(value*) -> list",
+    "name": "ListFrom",
+    "kind": "operator",
+    "description": "Create a list from the elements of a collection.",
+    "signature": "(value*) -> list"
   },
   {
-    name: "Ln",
-    kind: "operator",
-    description: "Natural Logarithm",
-    signature: "(complex | infinity, base: (complex | infinity)?) -> complex | infinity",
-    wikidata: "Q204037",
+    "name": "Ln",
+    "kind": "operator",
+    "description": "Natural Logarithm",
+    "signature": "(complex | infinity, base: (complex | infinity)?) -> complex | infinity",
+    "wikidata": "Q204037"
   },
   {
-    name: "Log",
-    kind: "operator",
-    description: "Log(z, b = 10) = Logarithm of base b",
-    signature: "(complex | infinity, base: (complex | infinity)?) -> number",
-    wikidata: "Q11197",
+    "name": "Log",
+    "kind": "operator",
+    "description": "Log(z, b = 10) = Logarithm of base b",
+    "signature": "(complex | infinity, base: (complex | infinity)?) -> number",
+    "wikidata": "Q11197"
   },
   {
-    name: "Log10",
-    kind: "operator",
-    description: "Base-10 Logarithm",
-    signature: "(number) -> number",
+    "name": "Log10",
+    "kind": "operator",
+    "description": "Base-10 Logarithm",
+    "signature": "(number) -> number"
   },
   {
-    name: "Log2",
-    kind: "operator",
-    description: "Base-2 Logarithm",
-    signature: "(number) -> number",
+    "name": "Log2",
+    "kind": "operator",
+    "description": "Base-2 Logarithm",
+    "signature": "(number) -> number"
   },
   {
-    name: "LogIntegral",
-    kind: "operator",
-    description: "Logarithmic integral li(x) = PV ∫₀ˣ dt/ln t = Ei(ln x).",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q853513",
+    "name": "LogIntegral",
+    "kind": "operator",
+    "description": "Logarithmic integral li(x) = PV ∫₀ˣ dt/ln t = Ei(ln x).",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q853513"
   },
   {
-    name: "Loop",
-    kind: "operator",
-    description:
-      "Imperative loop, evaluated **for effect**. `Loop(body)` repeatedly evaluates `body` until it yields a `Break` or `Return`. `Loop(body, Element(x, coll), …)` iterates `body` in nested iteration over the Element clauses (later clauses see earlier bindings; independent clauses produce a Cartesian product). The loop value is `Nothing`, or the value carried by a `Break`/`Return`. For a value-producing comprehension use `Comprehension` or `Map`.",
-    signature: "(body: expression, iterators: expression*) -> any",
+    "name": "Loop",
+    "kind": "operator",
+    "description": "Imperative loop, evaluated **for effect**. `Loop(body)` repeatedly evaluates `body` until it yields a `Break` or `Return`. `Loop(body, Element(x, coll), …)` iterates `body` in nested iteration over the Element clauses (later clauses see earlier bindings; independent clauses produce a Cartesian product). The loop value is `Nothing`, or the value carried by a `Break`/`Return`. For a value-producing comprehension use `Comprehension` or `Map`.",
+    "signature": "(body: expression, iterators: expression*) -> any"
   },
   {
-    name: "Lucas",
-    kind: "operator",
-    description: "`Lucas` is an alias for `LucasL`, which is the preferred name. Returns the nth Lucas number.",
-    signature: "(integer) -> integer",
+    "name": "Lucas",
+    "kind": "operator",
+    "description": "`Lucas` is an alias for `LucasL`, which is the preferred name. Returns the nth Lucas number.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "LucasL",
-    kind: "operator",
-    description:
-      "Return the nth Lucas number: `LucasL(0)` is 2, `LucasL(1)` is 1, and `LucasL(n) = LucasL(n-1) + LucasL(n-2)`. Negative indices follow `LucasL(-n) = (-1)^n · LucasL(n)`.",
-    signature: "(integer) -> integer",
+    "name": "LucasL",
+    "kind": "operator",
+    "description": "Return the nth Lucas number: `LucasL(0)` is 2, `LucasL(1)` is 1, and `LucasL(n) = LucasL(n-1) + LucasL(n-2)`. Negative indices follow `LucasL(-n) = (-1)^n · LucasL(n)`.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "MachineEpsilon",
-    kind: "constant",
-    description: "The difference between 1 and the next larger floating point number (machine epsilon).",
-    signature: "real",
+    "name": "MachineEpsilon",
+    "kind": "constant",
+    "description": "The difference between 1 and the next larger floating point number (machine epsilon).",
+    "signature": "real"
   },
   {
-    name: "Mandelbrot",
-    kind: "operator",
-    description:
-      "Smooth escape-time value for the Mandelbrot set. Returns 1 for points inside the set, values in [0,1) for escaping points.",
-    signature: "(complex, integer) -> real",
+    "name": "Mandelbrot",
+    "kind": "operator",
+    "description": "Smooth escape-time value for the Mandelbrot set. Returns 1 for points inside the set, values in [0,1) for escaping points.",
+    "signature": "(complex, integer) -> real"
   },
   {
-    name: "Map",
-    kind: "operator",
-    description:
-      "Return the collection where each element has been transformed by the mapping function. With a single collection, equivalent to `[f(x) for x in xs]`. With multiple collections, combines them element-wise (like `zipWith`):  `Map(f, xs, ys) = [f(x1, y1), f(x2, y2), …]`, with the length of the shortest input. The mapping function is always the FIRST argument.",
-    signature: "(mapping: (T) any -> U, collection<T>+) -> indexed_collection where T, U",
+    "name": "Map",
+    "kind": "operator",
+    "description": "Return the collection where each element has been transformed by the mapping function. With a single collection, equivalent to `[f(x) for x in xs]`. With multiple collections, combines them element-wise (like `zipWith`):  `Map(f, xs, ys) = [f(x1, y1), f(x2, y2), …]`, with the length of the shortest input. The mapping function is always the FIRST argument.",
+    "signature": "(mapping: (T) any -> U, collection<T>+) -> indexed_collection where T, U"
   },
   {
-    name: "Match",
-    kind: "operator",
-    description:
-      'Structural pattern match. `Match(subject, MatchCase(pattern, body), …)` evaluates `subject` once, then selects the first case whose pattern matches (structurally, `isSame`-like) and whose guard holds, applying its body to the captured values. Unlike `Which`, `Match` always decides: a symbolic subject that is not structurally a case still falls through to a wildcard case. No matching case yields `Error("match-no-case", subject)`.',
-    signature: "(expression, expression+) -> unknown",
+    "name": "Match",
+    "kind": "operator",
+    "description": "Structural pattern match. `Match(subject, MatchCase(pattern, body), …)` evaluates `subject` once, then selects the first case whose pattern matches (structurally, `isSame`-like) and whose guard holds, applying its body to the captured values. Unlike `Which`, `Match` always decides: a symbolic subject that is not structurally a case still falls through to a wildcard case. No matching case yields `Error(\"match-no-case\", subject)`.",
+    "signature": "(expression, expression+) -> unknown"
   },
   {
-    name: "MatchCase",
-    kind: "operator",
-    description:
-      "A case of a `Match`: `MatchCase(pattern, body)` or `MatchCase(pattern, guard, body)`. The pattern holds engine wildcards; the body references the bound capture names.",
-    signature: "(expression, expression, expression?) -> nothing",
+    "name": "MatchCase",
+    "kind": "operator",
+    "description": "A case of a `Match`: `MatchCase(pattern, body)` or `MatchCase(pattern, guard, body)`. The pattern holds engine wildcards; the body references the bound capture names.",
+    "signature": "(expression, expression, expression?) -> nothing"
   },
   {
-    name: "MatchesType",
-    kind: "operator",
-    description:
-      'True iff the first operand, EVALUATED, is a value of the given type — the engine form of the Epsil `x is T` test and of `match` type patterns, which both lower here. The subject is never unwrapped: a type VALUE is a value like any other, so `MatchesType(TypeFrom("integer"), "number")` is `False` while `MatchesType(TypeFrom("integer"), "type")` is `True`; the type-to-type question is `Subtype`. A settled subject is decided both ways; a valueless or unresolved subject answers from its static type when that decides it, and stays symbolic otherwise.',
-    signature: "(subject: any, type: string | type) -> boolean",
+    "name": "MatchesType",
+    "kind": "operator",
+    "description": "True iff the first operand, EVALUATED, is a value of the given type — the engine form of the Epsil `x is T` test and of `match` type patterns, which both lower here. The subject is never unwrapped: a type VALUE is a value like any other, so `MatchesType(TypeFrom(\"integer\"), \"number\")` is `False` while `MatchesType(TypeFrom(\"integer\"), \"type\")` is `True`; the type-to-type question is `Subtype`. A settled subject is decided both ways; a valueless or unresolved subject answers from its static type when that decides it, and stays symbolic otherwise.",
+    "signature": "(subject: any, type: string | type) -> boolean"
   },
   {
-    name: "Matrix",
-    kind: "operator",
-    description: "Matrix constructor and canonicalizer.",
-    signature: "(matrix, string?, string?) -> matrix",
+    "name": "Matrix",
+    "kind": "operator",
+    "description": "Matrix constructor and canonicalizer.",
+    "signature": "(matrix, string?, string?) -> matrix"
   },
   {
-    name: "MatrixMultiply",
-    kind: "operator",
-    description: "Matrix and vector multiplication.",
-    signature: "(matrix | vector, matrix | vector) -> matrix | vector",
+    "name": "MatrixMultiply",
+    "kind": "operator",
+    "description": "Matrix and vector multiplication.",
+    "signature": "(matrix | vector, matrix | vector) -> matrix | vector"
   },
   {
-    name: "MatrixPower",
-    kind: "operator",
-    description:
-      "Square matrix raised to a power. Integer powers are the repeated matrix product; a half-integer power (e.g. 1/2) of an exact 2×2 positive-semidefinite matrix is the principal matrix square root.",
-    signature: "(matrix, real) -> matrix",
+    "name": "MatrixPower",
+    "kind": "operator",
+    "description": "Square matrix raised to a power. Integer powers are the repeated matrix product; a half-integer power (e.g. 1/2) of an exact 2×2 positive-semidefinite matrix is the principal matrix square root.",
+    "signature": "(matrix, real) -> matrix"
   },
   {
-    name: "MatrixRank",
-    kind: "operator",
-    description: "Rank of a matrix (number of linearly independent rows/columns).",
-    signature: "(value) -> integer",
+    "name": "MatrixRank",
+    "kind": "operator",
+    "description": "Rank of a matrix (number of linearly independent rows/columns).",
+    "signature": "(value) -> integer"
   },
   {
-    name: "Max",
-    kind: "operator",
-    description: "Maximum of two or more numbers",
-    signature: "(value*) -> number",
+    "name": "Max",
+    "kind": "operator",
+    "description": "Maximum of two or more numbers",
+    "signature": "(value*) -> number"
   },
   {
-    name: "MaxBy",
-    kind: "operator",
-    description: "Return the element of the collection that maximizes the given key function.",
-    signature: "(collection<T>, key: (T) any -> unknown) -> value where T",
+    "name": "MaxBy",
+    "kind": "operator",
+    "description": "Return the element of the collection that maximizes the given key function.",
+    "signature": "(collection<T>, key: (T) any -> unknown) -> value where T"
   },
   {
-    name: "Mean",
-    kind: "operator",
-    description: "Arithmetic mean (average) of a collection of numbers.",
-    signature: "((collection<any> | distribution | number)+) -> number",
-    keywords: ["average"],
+    "name": "Mean",
+    "kind": "operator",
+    "description": "Arithmetic mean (average) of a collection of numbers.",
+    "signature": "((collection<any> | distribution | number)+) -> number",
+    "keywords": [
+      "average"
+    ]
   },
   {
-    name: "Measurement",
-    kind: "operator",
-    description: "A nominal value carrying a 1σ absolute uncertainty.",
-    signature: "(value, value) -> value",
+    "name": "Measurement",
+    "kind": "operator",
+    "description": "A nominal value carrying a 1σ absolute uncertainty.",
+    "signature": "(value, value) -> value"
   },
   {
-    name: "Median",
-    kind: "operator",
-    description: "Median of a collection of numbers.",
-    signature: "((collection<any> | number)+) -> nan | real | signed_infinity",
+    "name": "Median",
+    "kind": "operator",
+    "description": "Median of a collection of numbers.",
+    "signature": "((collection<any> | number)+) -> nan | real | signed_infinity"
   },
   {
-    name: "MemberCall",
-    kind: "operator",
-    description:
-      'Call the member `name` of a value with the value as its first argument: `c.area(2)` in Epsil. A parse-level node. Canonicalization rewrites it to `Apply(Field(c, "area"), 2)` when the receiver\'s type declares a field `area` (a stored function is called), or to the bare protocol call `area(c, 2)` when `area` is a protocol function member; a canonical expression never contains it.',
-    signature: "(receiver: any, member: string, arguments: any*) -> unknown",
+    "name": "MemberCall",
+    "kind": "operator",
+    "description": "Call the member `name` of a value with the value as its first argument: `c.area(2)` in Epsil. A parse-level node. Canonicalization rewrites it to `Apply(Field(c, \"area\"), 2)` when the receiver's type declares a field `area` (a stored function is called), or to the bare protocol call `area(c, 2)` when `area` is a protocol function member; a canonical expression never contains it.",
+    "signature": "(receiver: any, member: string, arguments: any*) -> unknown"
   },
   {
-    name: "Min",
-    kind: "operator",
-    description: "Minimum of two or more numbers",
-    signature: "(value+) -> number",
+    "name": "Min",
+    "kind": "operator",
+    "description": "Minimum of two or more numbers",
+    "signature": "(value+) -> number"
   },
   {
-    name: "MinBy",
-    kind: "operator",
-    description: "Return the element of the collection that minimizes the given key function.",
-    signature: "(collection<T>, key: (T) any -> unknown) -> value where T",
+    "name": "MinBy",
+    "kind": "operator",
+    "description": "Return the element of the collection that minimizes the given key function.",
+    "signature": "(collection<T>, key: (T) any -> unknown) -> value where T"
   },
   {
-    name: "MinimalCNF",
-    kind: "operator",
-    description: "Convert to minimal CNF using Quine-McCluskey. Max 12 variables.",
-    signature: "(boolean) -> boolean",
+    "name": "MinimalCNF",
+    "kind": "operator",
+    "description": "Convert to minimal CNF using Quine-McCluskey. Max 12 variables.",
+    "signature": "(boolean) -> boolean"
   },
   {
-    name: "MinimalDNF",
-    kind: "operator",
-    description: "Convert to minimal DNF using Quine-McCluskey. Max 12 variables.",
-    signature: "(boolean) -> boolean",
+    "name": "MinimalDNF",
+    "kind": "operator",
+    "description": "Convert to minimal DNF using Quine-McCluskey. Max 12 variables.",
+    "signature": "(boolean) -> boolean"
   },
   {
-    name: "Missing",
-    kind: "constant",
-    description:
-      "A value that is absent but whose position is preserved (Julia `missing`, R `NA`); the sole member of the `missing` type.",
-    signature: "missing",
+    "name": "Missing",
+    "kind": "constant",
+    "description": "A value that is absent but whose position is preserved (Julia `missing`, R `NA`); the sole member of the `missing` type.",
+    "signature": "missing"
   },
   {
-    name: "Mod",
-    kind: "operator",
-    description:
-      "Modulo: the remainder of the floored division of x by y. The sign of the result follows the sign of the divisor y (floored-division convention, matching most CAS). For a truncated/round-to-nearest remainder, see `Remainder`.",
-    signature: "(real, real) -> real",
-    wikidata: "Q1799665",
-    keywords: ["remainder", "modulo", "modulus"],
+    "name": "Mod",
+    "kind": "operator",
+    "description": "Modulo: the remainder of the floored division of x by y. The sign of the result follows the sign of the divisor y (floored-division convention, matching most CAS). For a truncated/round-to-nearest remainder, see `Remainder`.",
+    "signature": "(real, real) -> real",
+    "wikidata": "Q1799665",
+    "keywords": [
+      "remainder",
+      "modulo",
+      "modulus"
+    ]
   },
   {
-    name: "Mode",
-    kind: "operator",
-    description: "Most frequently occurring value in a collection.",
-    signature: "((collection<any> | number)+) -> nan | real | signed_infinity",
+    "name": "Mode",
+    "kind": "operator",
+    "description": "Most frequently occurring value in a collection.",
+    "signature": "((collection<any> | number)+) -> nan | real | signed_infinity"
   },
   {
-    name: "ModularInverse",
-    kind: "operator",
-    description:
-      "Return the modular multiplicative inverse of `a` modulo `m`: the integer `x` in [0, m) with `a·x ≡ 1 (mod m)`. Undefined when `a` and `m` are not coprime.",
-    signature: "(integer, integer) -> integer",
+    "name": "ModularInverse",
+    "kind": "operator",
+    "description": "Return the modular multiplicative inverse of `a` modulo `m`: the integer `x` in [0, m) with `a·x ≡ 1 (mod m)`. Undefined when `a` and `m` are not coprime.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "MoebiusMu",
-    kind: "operator",
-    description:
-      "Return the Möbius function μ(n): 0 if `n` is divisible by a perfect square > 1, otherwise (-1) raised to the number of distinct prime factors. The sign of `n` is ignored.",
-    signature: "(integer) -> integer",
+    "name": "MoebiusMu",
+    "kind": "operator",
+    "description": "Return the Möbius function μ(n): 0 if `n` is divisible by a perfect square > 1, otherwise (-1) raised to the number of distinct prime factors. The sign of `n` is ignored.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "Most",
-    kind: "operator",
-    description:
-      "Return the collection without the last element. If the collection has only one element, return an empty collection.",
-    signature: "((T) -> T where T: string) & ((indexed_collection<T>) -> list<T> where T)",
+    "name": "Most",
+    "kind": "operator",
+    "description": "Return the collection without the last element. If the collection has only one element, return an empty collection.",
+    "signature": "((T) -> T where T: string) & ((indexed_collection<T>) -> list<T> where T)"
   },
   {
-    name: "Mu0",
-    kind: "constant",
-    description: "Vacuum permeability",
-    signature: "value",
-    wikidata: "Q1515261",
+    "name": "Mu0",
+    "kind": "constant",
+    "description": "Vacuum permeability",
+    "signature": "value",
+    "wikidata": "Q1515261"
   },
   {
-    name: "Multinomial",
-    kind: "operator",
-    description: "Compute the multinomial coefficient for multiple integers.",
-    signature: "(integer+) -> integer",
-    wikidata: "Q20820114",
+    "name": "Multinomial",
+    "kind": "operator",
+    "description": "Compute the multinomial coefficient for multiple integers.",
+    "signature": "(integer+) -> integer",
+    "wikidata": "Q20820114"
   },
   {
-    name: "MultiplicativeOrder",
-    kind: "operator",
-    description:
-      "The multiplicative order of `a` modulo `n`: the smallest `k > 0` such that `a^k ≡ 1 (mod n)`. Undefined unless `a` and `n` are coprime.",
-    signature: "(integer, integer) -> integer",
+    "name": "MultiplicativeOrder",
+    "kind": "operator",
+    "description": "The multiplicative order of `a` modulo `n`: the smallest `k > 0` such that `a^k ≡ 1 (mod n)`. Undefined unless `a` and `n` are coprime.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "Multiply",
-    kind: "operator",
-    description: "Product of two or more values.",
-    signature: "(number*) -> number",
-    wikidata: "Q40276",
+    "name": "Multiply",
+    "kind": "operator",
+    "description": "Product of two or more values.",
+    "signature": "(number*) -> number",
+    "wikidata": "Q40276"
   },
   {
-    name: "N",
-    kind: "operator",
-    description:
-      "N(expr): numerically evaluate an expression N(expr, precision): evaluate to `precision` significant digits",
-    signature: "(any, integer?) -> unknown",
+    "name": "N",
+    "kind": "operator",
+    "description": "N(expr): numerically evaluate an expression N(expr, precision): evaluate to `precision` significant digits",
+    "signature": "(any, integer?) -> unknown"
   },
   {
-    name: "ND",
-    kind: "operator",
-    description: "Numerical derivative evaluated at a point.",
-    signature: "(function, at: number) -> list<number> | number | tuple",
+    "name": "ND",
+    "kind": "operator",
+    "description": "Numerical derivative evaluated at a point.",
+    "signature": "(function, at: number) -> list<number> | number | tuple"
   },
   {
-    name: "NDSolve",
-    kind: "operator",
-    description: "Numerical differential equation solver.",
-    signature: "(expression, symbol, limits: symbol | tuple, number, number?) -> list",
+    "name": "NDSolve",
+    "kind": "operator",
+    "description": "Numerical differential equation solver.",
+    "signature": "(expression, symbol, limits: symbol | tuple, number, number?) -> list"
   },
   {
-    name: "NDSolveFunction",
-    kind: "operator",
-    description:
-      "Numerically solve an ordinary differential equation and return the solution as an applicable function (a `Function` literal wrapping an `InterpolatingFunction`), usable at any point of the integration interval. Same arguments as `NDSolve`, without the sample count.",
-    signature: "(expression, symbol, limits: symbol | tuple, number) -> function",
+    "name": "NDSolveFunction",
+    "kind": "operator",
+    "description": "Numerically solve an ordinary differential equation and return the solution as an applicable function (a `Function` literal wrapping an `InterpolatingFunction`), usable at any point of the integration interval. Same arguments as `NDSolve`, without the sample count.",
+    "signature": "(expression, symbol, limits: symbol | tuple, number) -> function"
   },
   {
-    name: "NIntegrate",
-    kind: "operator",
-    description: "Numerical approximation of a definite integral.",
-    signature: "(function, limits: (symbol | tuple)?) -> number",
+    "name": "NIntegrate",
+    "kind": "operator",
+    "description": "Numerical approximation of a definite integral.",
+    "signature": "(function, limits: (symbol | tuple)?) -> number"
   },
   {
-    name: "NLimit",
-    kind: "operator",
-    description: "Numerical approximation of the limit of a function",
-    signature: "(function, point: number, direction: number?) -> number",
+    "name": "NLimit",
+    "kind": "operator",
+    "description": "Numerical approximation of the limit of a function",
+    "signature": "(function, point: number, direction: number?) -> number"
   },
   {
-    name: "NPartition",
-    kind: "operator",
-    description: "Number of integer partitions of n.",
-    signature: "(integer) -> integer",
+    "name": "NPartition",
+    "kind": "operator",
+    "description": "Number of integer partitions of n.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "NaN",
-    kind: "constant",
-    description: "Not a Number, the result of an undefined or unrepresentable numeric operation.",
-    signature: "number",
+    "name": "NaN",
+    "kind": "constant",
+    "description": "Not a Number, the result of an undefined or unrepresentable numeric operation.",
+    "signature": "number"
   },
   {
-    name: "NamedArgument",
-    kind: "operator",
-    description:
-      "NamedArgument(name, value): one named argument of a call (Epsil surface syntax: `f(rate: 0.05)`). A parse-level carrier, like `Spread`, but one that never survives: the enclosing call consumes it at canonicalization, permuting the written arguments into the order its callee declares. Reaching this definition therefore means the carrier was NOT consumed — the callee supplied no parameter names to match — which is the `argument-names-unavailable` error.",
-    signature: "(string, any) -> nothing",
+    "name": "NamedArgument",
+    "kind": "operator",
+    "description": "NamedArgument(name, value): one named argument of a call (Epsil surface syntax: `f(rate: 0.05)`). A parse-level carrier, like `Spread`, but one that never survives: the enclosing call consumes it at canonicalization, permuting the written arguments into the order its callee declares. Reaching this definition therefore means the carrier was NOT consumed — the callee supplied no parameter names to match — which is the `argument-names-unavailable` error.",
+    "signature": "(string, any) -> nothing"
   },
   {
-    name: "Nand",
-    kind: "operator",
-    description:
-      "Logical NAND: the negation of AND (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `False`.",
-    signature: "(boolean+) -> boolean",
-    wikidata: "Q189550",
+    "name": "Nand",
+    "kind": "operator",
+    "description": "Logical NAND: the negation of AND (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `False`.",
+    "signature": "(boolean+) -> boolean",
+    "wikidata": "Q189550"
   },
   {
-    name: "Negate",
-    kind: "operator",
-    description: "Additive Inverse",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q715358",
+    "name": "Negate",
+    "kind": "operator",
+    "description": "Additive Inverse",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q715358"
   },
   {
-    name: "NegativeInfinity",
-    kind: "constant",
-    description: "Negative infinity (−∞).",
-    signature: "-oo",
+    "name": "NegativeInfinity",
+    "kind": "constant",
+    "description": "Negative infinity (−∞).",
+    "signature": "-oo"
   },
   {
-    name: "NegativeIntegers",
-    kind: "constant",
-    description: "The set of all negative integers.",
-    signature: "set<integer>",
+    "name": "NegativeIntegers",
+    "kind": "constant",
+    "description": "The set of all negative integers.",
+    "signature": "set<integer>"
   },
   {
-    name: "NegativeNumbers",
-    kind: "constant",
-    description: "The set of all negative real numbers.",
-    signature: "set<real>",
+    "name": "NegativeNumbers",
+    "kind": "constant",
+    "description": "The set of all negative real numbers.",
+    "signature": "set<real>"
   },
   {
-    name: "NextPrime",
-    kind: "operator",
-    description:
-      "Return the smallest prime greater than `n`. With a second argument `k`, return the kth prime after `n` (`k < 0` returns the |k|th prime before `n`).",
-    signature: "(integer, integer?) -> integer",
+    "name": "NextPrime",
+    "kind": "operator",
+    "description": "Return the smallest prime greater than `n`. With a second argument `k`, return the kth prime after `n` (`k < 0` returns the |k|th prime before `n`).",
+    "signature": "(integer, integer?) -> integer"
   },
   {
-    name: "NonNegativeIntegers",
-    kind: "constant",
-    description: "The set of all non-negative integers.",
-    signature: "set<integer>",
+    "name": "NonNegativeIntegers",
+    "kind": "constant",
+    "description": "The set of all non-negative integers.",
+    "signature": "set<integer>"
   },
   {
-    name: "NonNegativeNumbers",
-    kind: "constant",
-    description: "The set of all non-negative real numbers.",
-    signature: "set<real>",
+    "name": "NonNegativeNumbers",
+    "kind": "constant",
+    "description": "The set of all non-negative real numbers.",
+    "signature": "set<real>"
   },
   {
-    name: "NonPositiveIntegers",
-    kind: "constant",
-    description: "The set of all non-positive integers.",
-    signature: "set<integer>",
+    "name": "NonPositiveIntegers",
+    "kind": "constant",
+    "description": "The set of all non-positive integers.",
+    "signature": "set<integer>"
   },
   {
-    name: "NonPositiveNumbers",
-    kind: "constant",
-    description: "The set of all non-positive real numbers.",
-    signature: "set<real>",
+    "name": "NonPositiveNumbers",
+    "kind": "constant",
+    "description": "The set of all non-positive real numbers.",
+    "signature": "set<real>"
   },
   {
-    name: "Nor",
-    kind: "operator",
-    description:
-      "Logical NOR: the negation of OR (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `True`.",
-    signature: "(boolean+) -> boolean",
-    wikidata: "Q189561",
+    "name": "Nor",
+    "kind": "operator",
+    "description": "Logical NOR: the negation of OR (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `True`.",
+    "signature": "(boolean+) -> boolean",
+    "wikidata": "Q189561"
   },
   {
-    name: "Norm",
-    kind: "operator",
-    description: "Vector or matrix norm.",
-    signature: "(list<number> | list<tuple> | number | tuple, (+oo | real | string)?) -> +oo | nan | real",
+    "name": "Norm",
+    "kind": "operator",
+    "description": "Vector or matrix norm.",
+    "signature": "(list<number> | list<tuple> | number | tuple, (+oo | real | string)?) -> +oo | nan | real"
   },
   {
-    name: "Normal",
-    kind: "operator",
-    description:
-      "Strip Big-O remainder terms from a series, yielding the truncated polynomial. Example: Normal(Series(\\sin x, x)) → x - x^3/6 + x^5/120",
-    signature: "(value) -> value",
+    "name": "Normal",
+    "kind": "operator",
+    "description": "Strip Big-O remainder terms from a series, yielding the truncated polynomial. Example: Normal(Series(\\sin x, x)) → x - x^3/6 + x^5/120",
+    "signature": "(value) -> value"
   },
   {
-    name: "NormalDistribution",
-    kind: "operator",
-    description: "Normal (Gaussian) distribution with mean μ and standard deviation σ.",
-    signature: "(real, real<0<..>) -> expression<NormalDistribution>",
+    "name": "NormalDistribution",
+    "kind": "operator",
+    "description": "Normal (Gaussian) distribution with mean μ and standard deviation σ.",
+    "signature": "(real, real<0<..>) -> expression<NormalDistribution>"
   },
   {
-    name: "Not",
-    kind: "operator",
-    description: "Logical negation (NOT).",
-    signature: "(boolean) -> boolean",
-    wikidata: "Q190558",
+    "name": "Not",
+    "kind": "operator",
+    "description": "Logical negation (NOT).",
+    "signature": "(boolean) -> boolean",
+    "wikidata": "Q190558"
   },
   {
-    name: "NotApprox",
-    kind: "operator",
-    description: "Negated approximate-equality relation (not approximately equal).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotApprox",
+    "kind": "operator",
+    "description": "Negated approximate-equality relation (not approximately equal).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotApproxEqual",
-    kind: "operator",
-    description: "Negated approximately-equal relation.",
-    signature: "(any*) -> unknown",
+    "name": "NotApproxEqual",
+    "kind": "operator",
+    "description": "Negated approximately-equal relation.",
+    "signature": "(any*) -> unknown"
   },
   {
-    name: "NotApproxNotEqual",
-    kind: "operator",
-    description: "Negated approximately-not-equal relation.",
-    signature: "(any, any*) -> boolean",
+    "name": "NotApproxNotEqual",
+    "kind": "operator",
+    "description": "Negated approximately-not-equal relation.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotDivides",
-    kind: "operator",
-    description: "`NotDivides(a, b)` returns `True` if `a` does not divide `b`, corresponding to the notation `a ∤ b`.",
-    signature: "(integer, integer) -> boolean",
+    "name": "NotDivides",
+    "kind": "operator",
+    "description": "`NotDivides(a, b)` returns `True` if `a` does not divide `b`, corresponding to the notation `a ∤ b`.",
+    "signature": "(integer, integer) -> boolean"
   },
   {
-    name: "NotElement",
-    kind: "operator",
-    description: "Test whether a value is not an element of a collection.",
-    signature: "(any, any) -> boolean",
+    "name": "NotElement",
+    "kind": "operator",
+    "description": "Test whether a value is not an element of a collection.",
+    "signature": "(any, any) -> boolean"
   },
   {
-    name: "NotEqual",
-    kind: "operator",
-    description: "Inequality comparison (not equal to).",
-    signature: "(any, any) -> boolean",
-    wikidata: "Q28113351",
+    "name": "NotEqual",
+    "kind": "operator",
+    "description": "Inequality comparison (not equal to).",
+    "signature": "(any, any) -> boolean",
+    "wikidata": "Q28113351"
   },
   {
-    name: "NotExists",
-    kind: "operator",
-    description: "Negated existential quantifier (there does not exist): true when the predicate holds for no value.",
-    signature: "(value, boolean) -> boolean",
+    "name": "NotExists",
+    "kind": "operator",
+    "description": "Negated existential quantifier (there does not exist): true when the predicate holds for no value.",
+    "signature": "(value, boolean) -> boolean"
   },
   {
-    name: "NotForAll",
-    kind: "operator",
-    description: "Negated universal quantifier (not for all): true when the predicate fails for at least one value.",
-    signature: "(value, boolean) -> boolean",
+    "name": "NotForAll",
+    "kind": "operator",
+    "description": "Negated universal quantifier (not for all): true when the predicate fails for at least one value.",
+    "signature": "(value, boolean) -> boolean"
   },
   {
-    name: "NotGreater",
-    kind: "operator",
-    description: "Negated greater-than relation (not greater than).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotGreater",
+    "kind": "operator",
+    "description": "Negated greater-than relation (not greater than).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotGreaterNotEqual",
-    kind: "operator",
-    description: "Neither greater than nor equal to.",
-    signature: "(any, any*) -> boolean",
+    "name": "NotGreaterNotEqual",
+    "kind": "operator",
+    "description": "Neither greater than nor equal to.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotLess",
-    kind: "operator",
-    description: "Negated less-than relation (not less than).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotLess",
+    "kind": "operator",
+    "description": "Negated less-than relation (not less than).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotLessNotEqual",
-    kind: "operator",
-    description: "Neither less than nor equal to.",
-    signature: "(any, any*) -> boolean",
+    "name": "NotLessNotEqual",
+    "kind": "operator",
+    "description": "Neither less than nor equal to.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotPrecedes",
-    kind: "operator",
-    description: "Negated precedes relation (does not precede).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotPrecedes",
+    "kind": "operator",
+    "description": "Negated precedes relation (does not precede).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotSubset",
-    kind: "operator",
-    description: "Test whether the first collection is not a strict subset of the second.",
-    signature: "(lhs: any, rhs: any) -> boolean",
+    "name": "NotSubset",
+    "kind": "operator",
+    "description": "Test whether the first collection is not a strict subset of the second.",
+    "signature": "(lhs: any, rhs: any) -> boolean"
   },
   {
-    name: "NotSucceeds",
-    kind: "operator",
-    description: "Negated succeeds relation (does not succeed).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotSucceeds",
+    "kind": "operator",
+    "description": "Negated succeeds relation (does not succeed).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotSuperset",
-    kind: "operator",
-    description: "Test whether the first collection is not a strict superset of the second.",
-    signature: "(lhs: any, rhs: any) -> boolean",
+    "name": "NotSuperset",
+    "kind": "operator",
+    "description": "Test whether the first collection is not a strict superset of the second.",
+    "signature": "(lhs: any, rhs: any) -> boolean"
   },
   {
-    name: "NotSupersetEqual",
-    kind: "operator",
-    description: "Test whether the first collection is not a superset (possibly equal) of the second.",
-    signature: "(lhs: any, rhs: any) -> boolean",
+    "name": "NotSupersetEqual",
+    "kind": "operator",
+    "description": "Test whether the first collection is not a superset (possibly equal) of the second.",
+    "signature": "(lhs: any, rhs: any) -> boolean"
   },
   {
-    name: "NotTilde",
-    kind: "operator",
-    description: "Negated similarity relation (not similar).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotTilde",
+    "kind": "operator",
+    "description": "Negated similarity relation (not similar).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotTildeEqual",
-    kind: "operator",
-    description: "Negated approximately/asymptotically-equal relation (not approximately equal).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotTildeEqual",
+    "kind": "operator",
+    "description": "Negated approximately/asymptotically-equal relation (not approximately equal).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "NotTildeFullEqual",
-    kind: "operator",
-    description: "Negated isomorphism/congruence relation (not isomorphic or congruent).",
-    signature: "(any, any*) -> boolean",
+    "name": "NotTildeFullEqual",
+    "kind": "operator",
+    "description": "Negated isomorphism/congruence relation (not isomorphic or congruent).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Nothing",
-    kind: "constant",
-    description: "The absence of a value; the sole member of the unit type.",
-    signature: "nothing",
+    "name": "Nothing",
+    "kind": "constant",
+    "description": "The absence of a value; the sole member of the unit type.",
+    "signature": "nothing"
   },
   {
-    name: "NthPrime",
-    kind: "operator",
-    description: "Return the nth prime number (1-based): `NthPrime(1)` is 2, `NthPrime(2)` is 3, …",
-    signature: "(integer) -> integer",
+    "name": "NthPrime",
+    "kind": "operator",
+    "description": "Return the nth prime number (1-based): `NthPrime(1)` is 2, `NthPrime(2)` is 3, …",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "NumberFrom",
-    kind: "operator",
-    description:
-      'NumberFrom(s): the number the string `s` denotes — optional surrounding whitespace, an optional sign, then ASCII digits with an optional "." fraction and an optional e/E exponent, or one of "oo", "+oo", "-oo", "NaN". The integer part may be omitted before a fraction (".5" is 0.5); a trailing "." with no fraction digits ("5.") is not accepted. Any other text, including "", is an error value (never NaN). NumberFrom(s, base): the integer `s` denotes in `base` (2 to 36); only integer numerals are accepted.',
-    signature: "(string, base: (integer | string)?) -> number",
+    "name": "NumberFrom",
+    "kind": "operator",
+    "description": "NumberFrom(s): the number the string `s` denotes — optional surrounding whitespace, an optional sign, then ASCII digits with an optional \".\" fraction and an optional e/E exponent, or one of \"oo\", \"+oo\", \"-oo\", \"NaN\". The integer part may be omitted before a fraction (\".5\" is 0.5); a trailing \".\" with no fraction digits (\"5.\") is not accepted. Any other text, including \"\", is an error value (never NaN). NumberFrom(s, base): the integer `s` denotes in `base` (2 to 36); only integer numerals are accepted.",
+    "signature": "(string, base: (integer | string)?) -> number"
   },
   {
-    name: "Numbers",
-    kind: "constant",
-    description: "The set of all numbers.",
-    signature: "set<number>",
+    "name": "Numbers",
+    "kind": "constant",
+    "description": "The set of all numbers.",
+    "signature": "set<number>"
   },
   {
-    name: "Numerator",
-    kind: "operator",
-    description: "Numerator of an expression",
-    signature: "(number) -> nothing | number",
+    "name": "Numerator",
+    "kind": "operator",
+    "description": "Numerator of an expression",
+    "signature": "(number) -> nothing | number"
   },
   {
-    name: "NumeratorDenominator",
-    kind: "operator",
-    description: "Sequence of Numerator and Denominator of an expression",
-    signature: "(number) -> nothing | tuple<number, number>",
+    "name": "NumeratorDenominator",
+    "kind": "operator",
+    "description": "Sequence of Numerator and Denominator of an expression",
+    "signature": "(number) -> nothing | tuple<number, number>"
   },
   {
-    name: "Object",
-    kind: "operator",
-    description:
-      'Provenance head for the snapshot of a mutable object: `["Object", <record>, "\'TypeName\'"]`. The record holds the object\'s stored fields at the moment it was serialized; the second operand names the nominal type the object had. Not a constructor and not an ascription — it wraps data, it does not make an object.',
-    signature: "(any, string?) -> unknown",
+    "name": "Object",
+    "kind": "operator",
+    "description": "Provenance head for the snapshot of a mutable object: `[\"Object\", <record>, \"'TypeName'\"]`. The record holds the object's stored fields at the moment it was serialized; the second operand names the nominal type the object had. Not a constructor and not an ascription — it wraps data, it does not make an object.",
+    "signature": "(any, string?) -> unknown"
   },
   {
-    name: "Oklab",
-    kind: "operator",
-    description: "OKLab color (L 0-1, a/b ~ -0.4..0.4, optional alpha)",
-    signature: "(number, number, number, number?) -> color",
+    "name": "Oklab",
+    "kind": "operator",
+    "description": "OKLab color (L 0-1, a/b ~ -0.4..0.4, optional alpha)",
+    "signature": "(number, number, number, number?) -> color"
   },
   {
-    name: "Oklch",
-    kind: "operator",
-    description: "OKLCh color (L 0-1, C 0-~0.4, hue degrees, optional alpha)",
-    signature: "(number, number, number, number?) -> color",
+    "name": "Oklch",
+    "kind": "operator",
+    "description": "OKLCh color (L 0-1, C 0-~0.4, hue degrees, optional alpha)",
+    "signature": "(number, number, number, number?) -> color"
   },
   {
-    name: "OnesMatrix",
-    kind: "operator",
-    description: "Matrix filled with ones.",
-    signature: "(integer, integer?) -> matrix",
+    "name": "OnesMatrix",
+    "kind": "operator",
+    "description": "Matrix filled with ones.",
+    "signature": "(integer, integer?) -> matrix"
   },
   {
-    name: "Or",
-    kind: "operator",
-    description:
-      "Logical disjunction (OR): true when at least one operand is true. Short-circuits: operands are evaluated left to right and evaluation stops at the first `True`.",
-    signature: "(boolean+) -> boolean",
-    wikidata: "Q1651704",
+    "name": "Or",
+    "kind": "operator",
+    "description": "Logical disjunction (OR): true when at least one operand is true. Short-circuits: operands are evaluated left to right and evaluation stops at the first `True`.",
+    "signature": "(boolean+) -> boolean",
+    "wikidata": "Q1651704"
   },
   {
-    name: "Ordering",
-    kind: "operator",
-    description: "Return the indexes that would sort the collection.",
-    signature:
-      "(indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<integer> where T",
+    "name": "Ordering",
+    "kind": "operator",
+    "description": "Return the indexes that would sort the collection.",
+    "signature": "(indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<integer> where T"
   },
   {
-    name: "OverParen",
-    kind: "operator",
-    description: "Over-paren accent (`\\overparen{BC}`) — opaque typed head; not evaluated.",
-    signature: "(any+) -> expression",
+    "name": "OverParen",
+    "kind": "operator",
+    "description": "Over-paren accent (`\\overparen{BC}`) — opaque typed head; not evaluated.",
+    "signature": "(any+) -> expression"
   },
   {
-    name: "PDF",
-    kind: "operator",
-    description: "Probability density (continuous) or mass (discrete) function of a distribution, evaluated at x.",
-    signature: "(distribution, real | signed_infinity) -> nan | real<0..>",
+    "name": "PDF",
+    "kind": "operator",
+    "description": "Probability density (continuous) or mass (discrete) function of a distribution, evaluated at x.",
+    "signature": "(distribution, real | signed_infinity) -> nan | real<0..>"
   },
   {
-    name: "PadEnd",
-    kind: "operator",
-    description:
-      'PadEnd(s, n, pad=" "): `s` padded at the END to `n` characters by repeating `pad` (its final copy truncated on a character boundary). Returned unchanged when `s` already has `n` or more characters. `n` must be a non-negative integer; an empty `pad` is an error; a non-string `pad` leaves the expression unevaluated.',
-    signature: "(string, n: integer, pad: string?) -> string",
+    "name": "PadEnd",
+    "kind": "operator",
+    "description": "PadEnd(s, n, pad=\" \"): `s` padded at the END to `n` characters by repeating `pad` (its final copy truncated on a character boundary). Returned unchanged when `s` already has `n` or more characters. `n` must be a non-negative integer; an empty `pad` is an error; a non-string `pad` leaves the expression unevaluated.",
+    "signature": "(string, n: integer, pad: string?) -> string"
   },
   {
-    name: "PadStart",
-    kind: "operator",
-    description:
-      'PadStart(s, n, pad=" "): `s` padded at the START to `n` characters by repeating `pad` (its final copy truncated on a character boundary). Returned unchanged when `s` already has `n` or more characters. `n` must be a non-negative integer; an empty `pad` is an error; a non-string `pad` leaves the expression unevaluated.',
-    signature: "(string, n: integer, pad: string?) -> string",
+    "name": "PadStart",
+    "kind": "operator",
+    "description": "PadStart(s, n, pad=\" \"): `s` padded at the START to `n` characters by repeating `pad` (its final copy truncated on a character boundary). Returned unchanged when `s` already has `n` or more characters. `n` must be a non-negative integer; an empty `pad` is an error; a non-string `pad` leaves the expression unevaluated.",
+    "signature": "(string, n: integer, pad: string?) -> string"
   },
   {
-    name: "Pair",
-    kind: "operator",
-    description: "A tuple of two elements",
-    signature: "(first: T, second: U) -> tuple<T, U> where T, U",
+    "name": "Pair",
+    "kind": "operator",
+    "description": "A tuple of two elements",
+    "signature": "(first: T, second: U) -> tuple<T, U> where T, U"
   },
   {
-    name: "Parallel",
-    kind: "operator",
-    description: "Parallelism relation (`AB \\parallel CD`) — opaque typed head; not evaluated.",
-    signature: "(any, any) -> expression",
+    "name": "Parallel",
+    "kind": "operator",
+    "description": "Parallelism relation (`AB \\parallel CD`) — opaque typed head; not evaluated.",
+    "signature": "(any, any) -> expression"
   },
   {
-    name: "Parse",
-    kind: "operator",
-    description: "Parse a LaTeX string and evaluate to a corresponding expression",
-    signature: "(string) -> any",
+    "name": "Parse",
+    "kind": "operator",
+    "description": "Parse a LaTeX string and evaluate to a corresponding expression",
+    "signature": "(string) -> any"
   },
   {
-    name: "PartialFraction",
-    kind: "operator",
-    description:
-      "Decompose a rational expression into partial fractions. Example: PartialFraction(1/((x+1)(x+2)), x) → 1/(x+1) - 1/(x+2)",
-    signature: "(value, symbol?) -> value",
+    "name": "PartialFraction",
+    "kind": "operator",
+    "description": "Decompose a rational expression into partial fractions. Example: PartialFraction(1/((x+1)(x+2)), x) → 1/(x+1) - 1/(x+2)",
+    "signature": "(value, symbol?) -> value"
   },
   {
-    name: "Partition",
-    kind: "operator",
-    description:
-      "Partition a collection into consecutive chunks each of size `n`; the trailing chunk may be shorter when `n` does not divide the length. With a third argument `step`, produce sliding windows of length `n` whose starts are `step` apart, keeping only complete windows. With a predicate function instead of an integer, split into two groups: elements for which the predicate is true, and those for which it is false. Asymmetry: with no `step`, the trailing partial chunk is included; with an explicit `step`, only complete windows are returned. See `Chunk` for splitting into a given number of nearly-equal groups.",
-    signature: "(collection<T>, ((T) any -> boolean) | integer, integer?) -> list<list<T>> where T",
-    wikidata: "Q381060",
+    "name": "Partition",
+    "kind": "operator",
+    "description": "Partition a collection into consecutive chunks each of size `n`; the trailing chunk may be shorter when `n` does not divide the length. With a third argument `step`, produce sliding windows of length `n` whose starts are `step` apart, keeping only complete windows. With a predicate function instead of an integer, split into two groups: elements for which the predicate is true, and those for which it is false. Asymmetry: with no `step`, the trailing partial chunk is included; with an explicit `step`, only complete windows are returned. See `Chunk` for splitting into a given number of nearly-equal groups.",
+    "signature": "(collection<T>, ((T) any -> boolean) | integer, integer?) -> list<list<T>> where T",
+    "wikidata": "Q381060"
   },
   {
-    name: "Permutations",
-    kind: "operator",
-    description: "Return all permutations of length k (default full length) of a collection.",
-    signature: "((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>)",
-    keywords: ["nPr"],
+    "name": "Permutations",
+    "kind": "operator",
+    "description": "Return all permutations of length k (default full length) of a collection.",
+    "signature": "((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>)",
+    "keywords": [
+      "nPr"
+    ]
   },
   {
-    name: "Perpendicular",
-    kind: "operator",
-    description: "Perpendicularity relation (`AB \\perp CD`) — opaque typed head; not evaluated.",
-    signature: "(any, any) -> expression",
+    "name": "Perpendicular",
+    "kind": "operator",
+    "description": "Perpendicularity relation (`AB \\perp CD`) — opaque typed head; not evaluated.",
+    "signature": "(any, any) -> expression"
   },
   {
-    name: "Pi",
-    kind: "constant",
-    description: "The constant π ≈ 3.14159, the ratio of a circle's circumference to its diameter.",
-    signature: "real<3.141592653589793..3.141592653589794>",
-    wikidata: "Q167",
+    "name": "Pi",
+    "kind": "constant",
+    "description": "The constant π ≈ 3.14159, the ratio of a circle's circumference to its diameter.",
+    "signature": "real<3.141592653589793..3.141592653589794>",
+    "wikidata": "Q167"
   },
   {
-    name: "Pin",
-    kind: "operator",
-    description:
-      "Inside a `Match` pattern, `Pin(expr)` matches the value of `expr` (evaluated at match time) rather than its structure.",
-    signature: "(expression) -> nothing",
+    "name": "Pin",
+    "kind": "operator",
+    "description": "Inside a `Match` pattern, `Pin(expr)` matches the value of `expr` (evaluated at match time) rather than its structure.",
+    "signature": "(expression) -> nothing"
   },
   {
-    name: "Pipe",
-    kind: "operator",
-    description: "Apply a function to a value: `Pipe(x, f)` evaluates to `f(x)`.",
-    signature: "(value, function) -> unknown",
+    "name": "Pipe",
+    "kind": "operator",
+    "description": "Apply a function to a value: `Pipe(x, f)` evaluates to `f(x)`.",
+    "signature": "(value, function) -> unknown"
   },
   {
-    name: "PlanckConstant",
-    kind: "constant",
-    description: "Planck constant",
-    signature: "value",
-    wikidata: "Q524",
+    "name": "PlanckConstant",
+    "kind": "constant",
+    "description": "Planck constant",
+    "signature": "value",
+    "wikidata": "Q524"
   },
   {
-    name: "PlusMinus",
-    kind: "operator",
-    description: "Plus or Minus",
-    signature: "(T, U) -> tuple<T, U> where T: value, U: value",
-    wikidata: "Q120812",
+    "name": "PlusMinus",
+    "kind": "operator",
+    "description": "Plus or Minus",
+    "signature": "(T, U) -> tuple<T, U> where T: value, U: value",
+    "wikidata": "Q120812"
   },
   {
-    name: "Pochhammer",
-    kind: "operator",
-    description: "Rising factorial (Pochhammer symbol) (a)_k = a(a+1)…(a+k-1).",
-    signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q2367490",
+    "name": "Pochhammer",
+    "kind": "operator",
+    "description": "Rising factorial (Pochhammer symbol) (a)_k = a(a+1)…(a+k-1).",
+    "signature": "(complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q2367490"
   },
   {
-    name: "PointList",
-    kind: "operator",
-    description:
-      "A list of points: zips collection components into a List of point-tuples (Desmos point-list idiom); a plain point when no component is a collection.",
-    signature: "(any+) -> any",
+    "name": "PointList",
+    "kind": "operator",
+    "description": "A list of points: zips collection components into a List of point-tuples (Desmos point-list idiom); a plain point when no component is a collection.",
+    "signature": "(any+) -> any"
   },
   {
-    name: "PointX",
-    kind: "operator",
-    description: "The x-coordinate of a point, broadcasting over a list of points.",
-    signature: "(xs: collection<any> | tuple) -> any",
+    "name": "PointX",
+    "kind": "operator",
+    "description": "The x-coordinate of a point, broadcasting over a list of points.",
+    "signature": "(xs: collection<any> | tuple) -> any"
   },
   {
-    name: "PointY",
-    kind: "operator",
-    description: "The y-coordinate of a point, broadcasting over a list of points.",
-    signature: "(xs: collection<any> | tuple) -> any",
+    "name": "PointY",
+    "kind": "operator",
+    "description": "The y-coordinate of a point, broadcasting over a list of points.",
+    "signature": "(xs: collection<any> | tuple) -> any"
   },
   {
-    name: "PointZ",
-    kind: "operator",
-    description: "The z-coordinate of a point, broadcasting over a list of points.",
-    signature: "(xs: collection<any> | tuple) -> any",
+    "name": "PointZ",
+    "kind": "operator",
+    "description": "The z-coordinate of a point, broadcasting over a list of points.",
+    "signature": "(xs: collection<any> | tuple) -> any"
   },
   {
-    name: "PoissonDistribution",
-    kind: "operator",
-    description: "Poisson distribution with rate parameter λ.",
-    signature: "(real<0<..>) -> expression<PoissonDistribution>",
+    "name": "PoissonDistribution",
+    "kind": "operator",
+    "description": "Poisson distribution with rate parameter λ.",
+    "signature": "(real<0<..>) -> expression<PoissonDistribution>"
   },
   {
-    name: "PolyGamma",
-    kind: "operator",
-    description: "Polygamma function, the n-th derivative of the digamma function",
-    signature: "(order: integer, complex | infinity) -> number",
-    wikidata: "Q1817679",
+    "name": "PolyGamma",
+    "kind": "operator",
+    "description": "Polygamma function, the n-th derivative of the digamma function",
+    "signature": "(order: integer, complex | infinity) -> number",
+    "wikidata": "Q1817679"
   },
   {
-    name: "PolyLog",
-    kind: "operator",
-    description: "Polylogarithm Liₛ(z) = Σ_{k≥1} zᵏ/kˢ.",
-    signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q320067",
+    "name": "PolyLog",
+    "kind": "operator",
+    "description": "Polylogarithm Liₛ(z) = Σ_{k≥1} zᵏ/kˢ.",
+    "signature": "(complex | infinity, complex | infinity) -> number",
+    "wikidata": "Q320067"
   },
   {
-    name: "Polygon",
-    kind: "operator",
-    description: "Polygon primitive — opaque typed head.",
-    signature: "(any+) -> expression",
+    "name": "Polygon",
+    "kind": "operator",
+    "description": "Polygon primitive — opaque typed head.",
+    "signature": "(any+) -> expression"
   },
   {
-    name: "Polynomial",
-    kind: "operator",
-    description:
-      "Construct a polynomial from a list of coefficients (highest to lowest degree) and a variable. Example: Polynomial([1, 0, 2, 1], x) → x³ + 2x + 1",
-    signature: "(list<value>, symbol) -> value",
+    "name": "Polynomial",
+    "kind": "operator",
+    "description": "Construct a polynomial from a list of coefficients (highest to lowest degree) and a variable. Example: Polynomial([1, 0, 2, 1], x) → x³ + 2x + 1",
+    "signature": "(list<value>, symbol) -> value"
   },
   {
-    name: "PolynomialDegree",
-    kind: "operator",
-    description:
-      "Return the degree of a polynomial with respect to a variable. Example: PolynomialDegree(x³ + 2x + 1, x) → 3",
-    signature: "(value, symbol?) -> integer",
+    "name": "PolynomialDegree",
+    "kind": "operator",
+    "description": "Return the degree of a polynomial with respect to a variable. Example: PolynomialDegree(x³ + 2x + 1, x) → 3",
+    "signature": "(value, symbol?) -> integer"
   },
   {
-    name: "PolynomialFit",
-    kind: "operator",
-    description:
-      "Least-squares polynomial fit of the given degree. Returns the ascending coefficient List(c0, …, c_deg), or the fitted expression if a trailing variable symbol is given.",
-    signature: "(any+) -> list<number>",
+    "name": "PolynomialFit",
+    "kind": "operator",
+    "description": "Least-squares polynomial fit of the given degree. Returns the ascending coefficient List(c0, …, c_deg), or the fitted expression if a trailing variable symbol is given.",
+    "signature": "(any+) -> list<number>"
   },
   {
-    name: "PolynomialGCD",
-    kind: "operator",
-    description:
-      "Return the greatest common divisor of two polynomials. Example: PolynomialGCD(x² - 1, x - 1, x) → x - 1",
-    signature: "(a: value, b: value, variable: symbol?) -> value",
+    "name": "PolynomialGCD",
+    "kind": "operator",
+    "description": "Return the greatest common divisor of two polynomials. Example: PolynomialGCD(x² - 1, x - 1, x) → x - 1",
+    "signature": "(a: value, b: value, variable: symbol?) -> value"
   },
   {
-    name: "PolynomialQuotient",
-    kind: "operator",
-    description:
-      "Return the quotient of polynomial division of dividend by divisor. Example: PolynomialQuotient(x³ - 1, x - 1, x) → x² + x + 1",
-    signature: "(dividend: value, divisor: value, variable: symbol?) -> value",
+    "name": "PolynomialQuotient",
+    "kind": "operator",
+    "description": "Return the quotient of polynomial division of dividend by divisor. Example: PolynomialQuotient(x³ - 1, x - 1, x) → x² + x + 1",
+    "signature": "(dividend: value, divisor: value, variable: symbol?) -> value"
   },
   {
-    name: "PolynomialRemainder",
-    kind: "operator",
-    description:
-      "Return the remainder of polynomial division of dividend by divisor. Example: PolynomialRemainder(x³ + 2x + 1, x + 1, x) → -2",
-    signature: "(dividend: value, divisor: value, variable: symbol?) -> value",
+    "name": "PolynomialRemainder",
+    "kind": "operator",
+    "description": "Return the remainder of polynomial division of dividend by divisor. Example: PolynomialRemainder(x³ + 2x + 1, x + 1, x) → -2",
+    "signature": "(dividend: value, divisor: value, variable: symbol?) -> value"
   },
   {
-    name: "PolynomialRoots",
-    kind: "operator",
-    description: "Return the roots of a polynomial expression. Example: PolynomialRoots(x² - 5x + 6, x) → {2, 3}",
-    signature: "(value, symbol?) -> set<value>",
+    "name": "PolynomialRoots",
+    "kind": "operator",
+    "description": "Return the roots of a polynomial expression. Example: PolynomialRoots(x² - 5x + 6, x) → {2, 3}",
+    "signature": "(value, symbol?) -> set<value>"
   },
   {
-    name: "PopulationCovariance",
-    kind: "operator",
-    description:
-      "Population covariance (n denominator) of paired data, given as two equal-length collections or one collection of (x, y) pairs.",
-    signature: "(collection<any>, collection<any>?) -> nan | real",
+    "name": "PopulationCovariance",
+    "kind": "operator",
+    "description": "Population covariance (n denominator) of paired data, given as two equal-length collections or one collection of (x, y) pairs.",
+    "signature": "(collection<any>, collection<any>?) -> nan | real"
   },
   {
-    name: "PopulationStandardDeviation",
-    kind: "operator",
-    description: "Population Standard Deviation of a collection of numbers.",
-    signature: "((collection<any> | number)+) -> nan | real<0..>",
+    "name": "PopulationStandardDeviation",
+    "kind": "operator",
+    "description": "Population Standard Deviation of a collection of numbers.",
+    "signature": "((collection<any> | number)+) -> nan | real<0..>"
   },
   {
-    name: "PopulationVariance",
-    kind: "operator",
-    description: "Population variance of a collection of numbers.",
-    signature: "((collection<any> | number)+) -> nan | real<0..>",
+    "name": "PopulationVariance",
+    "kind": "operator",
+    "description": "Population variance of a collection of numbers.",
+    "signature": "((collection<any> | number)+) -> nan | real<0..>"
   },
   {
-    name: "Position",
-    kind: "operator",
-    description: "Return a list of indexes of elements in the collection satisfying the predicate.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> list<integer> where T",
+    "name": "Position",
+    "kind": "operator",
+    "description": "Return a list of indexes of elements in the collection satisfying the predicate.",
+    "signature": "(collection<T>, predicate: (T) any -> boolean) -> list<integer> where T"
   },
   {
-    name: "PositiveInfinity",
-    kind: "constant",
-    description: "Positive infinity (+∞).",
-    signature: "+oo",
+    "name": "PositiveInfinity",
+    "kind": "constant",
+    "description": "Positive infinity (+∞).",
+    "signature": "+oo"
   },
   {
-    name: "PositiveIntegers",
-    kind: "constant",
-    description: "The set of all positive integers.",
-    signature: "set<integer>",
+    "name": "PositiveIntegers",
+    "kind": "constant",
+    "description": "The set of all positive integers.",
+    "signature": "set<integer>"
   },
   {
-    name: "PositiveNumbers",
-    kind: "constant",
-    description: "The set of all positive real numbers.",
-    signature: "set<real>",
+    "name": "PositiveNumbers",
+    "kind": "constant",
+    "description": "The set of all positive real numbers.",
+    "signature": "set<real>"
   },
   {
-    name: "Power",
-    kind: "operator",
-    description: "Exponentiation: raise a base to a power.",
-    signature: "(complex | infinity, complex | signed_infinity) -> number",
-    wikidata: "Q33456",
-    keywords: ["exponent", "exponentiation"],
+    "name": "Power",
+    "kind": "operator",
+    "description": "Exponentiation: raise a base to a power.",
+    "signature": "(complex | infinity, complex | signed_infinity) -> number",
+    "wikidata": "Q33456",
+    "keywords": [
+      "exponent",
+      "exponentiation"
+    ]
   },
   {
-    name: "PowerMod",
-    kind: "operator",
-    description:
-      "Return `a^b mod m` (modular exponentiation). A negative `b` uses the modular inverse of `a`; the result is undefined when that inverse does not exist (i.e. when `a` and `m` are not coprime). The result is in the range [0, m).",
-    signature: "(integer, integer, integer) -> integer",
+    "name": "PowerMod",
+    "kind": "operator",
+    "description": "Return `a^b mod m` (modular exponentiation). A negative `b` uses the modular inverse of `a`; the result is undefined when that inverse does not exist (i.e. when `a` and `m` are not coprime). The result is in the range [0, m).",
+    "signature": "(integer, integer, integer) -> integer"
   },
   {
-    name: "PowerSet",
-    kind: "operator",
-    description: "Return the power set of a set (set of all subsets).",
-    signature: "(set<any>) -> set",
-    wikidata: "Q205170",
+    "name": "PowerSet",
+    "kind": "operator",
+    "description": "Return the power set of a set (set of all subsets).",
+    "signature": "(set<any>) -> set",
+    "wikidata": "Q205170"
   },
   {
-    name: "PreDecrement",
-    kind: "operator",
-    description: "Decrement a number by one.",
-    signature: "(number) -> number",
+    "name": "PreDecrement",
+    "kind": "operator",
+    "description": "Decrement a number by one.",
+    "signature": "(number) -> number"
   },
   {
-    name: "PreIncrement",
-    kind: "operator",
-    description: "Increment a number by one.",
-    signature: "(number) -> number",
+    "name": "PreIncrement",
+    "kind": "operator",
+    "description": "Increment a number by one.",
+    "signature": "(number) -> number"
   },
   {
-    name: "Precedes",
-    kind: "operator",
-    description: "Precedes relation in an ordering (comes before).",
-    signature: "(any, any*) -> boolean",
+    "name": "Precedes",
+    "kind": "operator",
+    "description": "Precedes relation in an ordering (comes before).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Predicate",
-    kind: "operator",
-    description: "Apply a predicate to arguments, returning a boolean",
-    signature: "(symbol, value+) -> boolean",
+    "name": "Predicate",
+    "kind": "operator",
+    "description": "Apply a predicate to arguments, returning a boolean",
+    "signature": "(symbol, value+) -> boolean"
   },
   {
-    name: "Prime",
-    kind: "operator",
-    description:
-      "Derivative or prime notation (`f'`, `f^{(n)}`) — opaque typed head until a derivative library handler runs.",
-    signature: "(T, integer?) -> T where T",
+    "name": "Prime",
+    "kind": "operator",
+    "description": "Derivative or prime notation (`f'`, `f^{(n)}`) — opaque typed head until a derivative library handler runs.",
+    "signature": "(T, integer?) -> T where T"
   },
   {
-    name: "PrimeFactors",
-    kind: "operator",
-    description:
-      "Return the sorted list of distinct prime factors of an integer `n`. The sign of `n` is ignored; `PrimeFactors(1)` is the empty list.",
-    signature: "(integer) -> list<integer>",
+    "name": "PrimeFactors",
+    "kind": "operator",
+    "description": "Return the sorted list of distinct prime factors of an integer `n`. The sign of `n` is ignored; `PrimeFactors(1)` is the empty list.",
+    "signature": "(integer) -> list<integer>"
   },
   {
-    name: "PrimeImplicants",
-    kind: "operator",
-    description: "Find all prime implicants using Quine-McCluskey. Max 12 variables.",
-    signature: "(boolean) -> list",
+    "name": "PrimeImplicants",
+    "kind": "operator",
+    "description": "Find all prime implicants using Quine-McCluskey. Max 12 variables.",
+    "signature": "(boolean) -> list"
   },
   {
-    name: "PrimeImplicates",
-    kind: "operator",
-    description: "Find all prime implicates using Quine-McCluskey. Max 12 variables.",
-    signature: "(boolean) -> list",
+    "name": "PrimeImplicates",
+    "kind": "operator",
+    "description": "Find all prime implicates using Quine-McCluskey. Max 12 variables.",
+    "signature": "(boolean) -> list"
   },
   {
-    name: "PrimeNu",
-    kind: "operator",
-    description:
-      "Return ω(n), the number of distinct prime factors of `n`. The sign of `n` is ignored; `PrimeNu(1)` is 0.",
-    signature: "(integer) -> integer",
+    "name": "PrimeNu",
+    "kind": "operator",
+    "description": "Return ω(n), the number of distinct prime factors of `n`. The sign of `n` is ignored; `PrimeNu(1)` is 0.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "PrimeNumber",
-    kind: "operator",
-    description: "The nth prime number. `PrimeNumber` is an alias for `NthPrime`, which is the preferred name.",
-    signature: "(integer) -> integer",
+    "name": "PrimeNumber",
+    "kind": "operator",
+    "description": "The nth prime number. `PrimeNumber` is an alias for `NthPrime`, which is the preferred name.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "PrimeOmega",
-    kind: "operator",
-    description:
-      "Return Ω(n), the number of prime factors of `n` counted with multiplicity. The sign of `n` is ignored; `PrimeOmega(1)` is 0.",
-    signature: "(integer) -> integer",
+    "name": "PrimeOmega",
+    "kind": "operator",
+    "description": "Return Ω(n), the number of prime factors of `n` counted with multiplicity. The sign of `n` is ignored; `PrimeOmega(1)` is 0.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "PrimePi",
-    kind: "operator",
-    description: "Return π(n), the prime-counting function: the number of primes less than or equal to `n`.",
-    signature: "(real) -> integer",
+    "name": "PrimePi",
+    "kind": "operator",
+    "description": "Return π(n), the prime-counting function: the number of primes less than or equal to `n`.",
+    "signature": "(real) -> integer"
   },
   {
-    name: "Primes",
-    kind: "constant",
-    description: "The set of all prime numbers.",
-    signature: "set<integer>",
+    "name": "Primes",
+    "kind": "constant",
+    "description": "The set of all prime numbers.",
+    "signature": "set<integer>"
   },
   {
-    name: "PrimitiveRoot",
-    kind: "operator",
-    description:
-      "The smallest primitive root modulo `n` (a generator of the multiplicative group of integers mod `n`), or undefined if none exists (which happens unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p).",
-    signature: "(integer) -> integer",
+    "name": "PrimitiveRoot",
+    "kind": "operator",
+    "description": "The smallest primitive root modulo `n` (a generator of the multiplicative group of integers mod `n`), or undefined if none exists (which happens unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p).",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "Print",
-    kind: "operator",
-    description:
-      "Print the operands to the host console, separated by spaces and followed by a newline. String operands print their content (without quotes); other expressions print their text form. Evaluates to `Nothing`. On a host without a console, prints nothing. When the host denies console access, evaluates to a `capability-denied` error.",
-    signature: "(any*) console -> nothing",
+    "name": "Print",
+    "kind": "operator",
+    "description": "Print the operands to the host console, separated by spaces and followed by a newline. String operands print their content (without quotes); other expressions print their text form. Evaluates to `Nothing`. On a host without a console, prints nothing. When the host denies console access, evaluates to a `capability-denied` error.",
+    "signature": "(any*) console -> nothing"
   },
   {
-    name: "Product",
-    kind: "operator",
-    description: "`Product(f, a, b)` computes the product of `f` from `a` to `b`",
-    signature: "(any, tuple*) -> number",
-    wikidata: "Q901718",
+    "name": "Product",
+    "kind": "operator",
+    "description": "`Product(f, a, b)` computes the product of `f` from `a` to `b`",
+    "signature": "(any, tuple*) -> number",
+    "wikidata": "Q901718"
   },
   {
-    name: "ProtocolMember",
-    kind: "operator",
-    description:
-      'Invoke a protocol member on a value — the lowering of a QUALIFIED protocol call (`Comparable.compare(x, y)` in Epsil, whose parse, a `MemberCall` on the protocol name, canonicalizes to `Apply(Field(Comparable, "compare"), x, y)`). The first two operands name the protocol and the member; the rest are the call arguments. Dispatch is dynamic and restricted to the named protocol: the most specific conformance implementation for the runtime type of the first argument is invoked. Several equally specific implementations are `protocol-call-ambiguous`; none is `protocol-implementation-missing`; an argument whose type cannot decide the question leaves the call symbolic.',
-    signature: "(protocol: string, member: string, arguments: any*) -> unknown",
+    "name": "ProtocolMember",
+    "kind": "operator",
+    "description": "Invoke a protocol member on a value — the lowering of a QUALIFIED protocol call (`Comparable.compare(x, y)` in Epsil, whose parse, a `MemberCall` on the protocol name, canonicalizes to `Apply(Field(Comparable, \"compare\"), x, y)`). The first two operands name the protocol and the member; the rest are the call arguments. Dispatch is dynamic and restricted to the named protocol: the most specific conformance implementation for the runtime type of the first argument is invoked. Several equally specific implementations are `protocol-call-ambiguous`; none is `protocol-implementation-missing`; an argument whose type cannot decide the question leaves the call symbolic.",
+    "signature": "(protocol: string, member: string, arguments: any*) -> unknown"
   },
   {
-    name: "ProtocolProperty",
-    kind: "operator",
-    description:
-      "Read (or write) a protocol PROPERTY through a NAMED protocol — the lowering of the qualified field form `person.(Nameable.name)` (protocols design P6, amending the D16 field grammar). The first two operands name the protocol and the property; the third is the receiver. A fourth operand makes it a property STORE — the qualified write `person.(Nameable.name) = v` — which invokes the `set` accessor against the receiver, discards what it returns, and evaluates to the value assigned; a receiver that is not an object is `immutable-value-assignment`. Dispatch is dynamic and restricted to the named protocol: the most specific conformance implementation for the runtime type of the receiver is invoked.",
-    signature: "(protocol: string, property: string, receiver: any, value: any?) -> unknown",
+    "name": "ProtocolProperty",
+    "kind": "operator",
+    "description": "Read (or write) a protocol PROPERTY through a NAMED protocol — the lowering of the qualified field form `person.(Nameable.name)` (protocols design P6, amending the D16 field grammar). The first two operands name the protocol and the property; the third is the receiver. A fourth operand makes it a property STORE — the qualified write `person.(Nameable.name) = v` — which invokes the `set` accessor against the receiver, discards what it returns, and evaluates to the value assigned; a receiver that is not an object is `immutable-value-assignment`. Dispatch is dynamic and restricted to the named protocol: the most specific conformance implementation for the runtime type of the receiver is invoked.",
+    "signature": "(protocol: string, property: string, receiver: any, value: any?) -> unknown"
   },
   {
-    name: "PseudoInverse",
-    kind: "operator",
-    description: "Moore-Penrose pseudoinverse of a matrix.",
-    signature: "(matrix) -> matrix",
+    "name": "PseudoInverse",
+    "kind": "operator",
+    "description": "Moore-Penrose pseudoinverse of a matrix.",
+    "signature": "(matrix) -> matrix"
   },
   {
-    name: "QRDecomposition",
-    kind: "operator",
-    description: "QR decomposition of a matrix.",
-    signature: "(matrix) -> tuple",
+    "name": "QRDecomposition",
+    "kind": "operator",
+    "description": "QR decomposition of a matrix.",
+    "signature": "(matrix) -> tuple"
   },
   {
-    name: "Quadrilateral",
-    kind: "operator",
-    description: "Quadrilateral mark (`\\square ABCD`) — opaque typed head; not evaluated.",
-    signature: "(any+) -> expression",
+    "name": "Quadrilateral",
+    "kind": "operator",
+    "description": "Quadrilateral mark (`\\square ABCD`) — opaque typed head; not evaluated.",
+    "signature": "(any+) -> expression"
   },
   {
-    name: "Quantile",
-    kind: "operator",
-    description:
-      "Quantile (inverse CDF): the least x with CDF(x) ≥ p, for p in [0, 1]. The first argument may also be a data collection, in which case the empirical quantile is returned.",
-    signature: "(collection<any> | distribution, real<0..1>) -> nan | real | signed_infinity",
+    "name": "Quantile",
+    "kind": "operator",
+    "description": "Quantile (inverse CDF): the least x with CDF(x) ≥ p, for p in [0, 1]. The first argument may also be a data collection, in which case the empirical quantile is returned.",
+    "signature": "(collection<any> | distribution, real<0..1>) -> nan | real | signed_infinity"
   },
   {
-    name: "Quantity",
-    kind: "operator",
-    description: "A value paired with a physical unit",
-    signature: "(value, value) -> value",
-    wikidata: "Q309314",
+    "name": "Quantity",
+    "kind": "operator",
+    "description": "A value paired with a physical unit",
+    "signature": "(value, value) -> value",
+    "wikidata": "Q309314"
   },
   {
-    name: "QuantityMagnitude",
-    kind: "operator",
-    description: "Extract the numeric value from a quantity",
-    signature: "(value) -> value",
+    "name": "QuantityMagnitude",
+    "kind": "operator",
+    "description": "Extract the numeric value from a quantity",
+    "signature": "(value) -> value"
   },
   {
-    name: "QuantityUnit",
-    kind: "operator",
-    description: "Extract the unit from a quantity",
-    signature: "(value) -> value",
+    "name": "QuantityUnit",
+    "kind": "operator",
+    "description": "Extract the unit from a quantity",
+    "signature": "(value) -> value"
   },
   {
-    name: "Quartiles",
-    kind: "operator",
-    description:
-      "Lower quartile, median, and upper quartile of a collection. Uses the Moore–McCabe (exclusive-hinges) convention: the sample is split at its median, and Q1/Q3 are the medians of the lower/upper halves with the overall median excluded from both halves when the sample size is odd.",
-    signature:
-      "((collection<any> | number)+) -> tuple<lower: nan | real | signed_infinity, mid: nan | real | signed_infinity, upper: nan | real | signed_infinity>",
-    keywords: ["percentile"],
+    "name": "Quartiles",
+    "kind": "operator",
+    "description": "Lower quartile, median, and upper quartile of a collection. Uses the Moore–McCabe (exclusive-hinges) convention: the sample is split at its median, and Q1/Q3 are the medians of the lower/upper halves with the overall median excluded from both halves when the sample size is odd.",
+    "signature": "((collection<any> | number)+) -> tuple<lower: nan | real | signed_infinity, mid: nan | real | signed_infinity, upper: nan | real | signed_infinity>",
+    "keywords": [
+      "percentile"
+    ]
   },
   {
-    name: "QuotientRing",
-    kind: "operator",
-    description:
-      "The quotient of a ring by the ideal generated by the second argument. `QuotientRing(Integers, n)` is ℤ/nℤ, the integers modulo `n`. Inert: the residues are not enumerated, and membership is not decided.",
-    signature: "(set<any>, any) -> set",
+    "name": "QuotientRing",
+    "kind": "operator",
+    "description": "The quotient of a ring by the ideal generated by the second argument. `QuotientRing(Integers, n)` is ℤ/nℤ, the integers modulo `n`. Inert: the residues are not enumerated, and membership is not decided.",
+    "signature": "(set<any>, any) -> set"
   },
   {
-    name: "RSolve",
-    kind: "operator",
-    description: "Symbolic recurrence equation solver.",
-    signature: "(expression, symbol, symbol) -> expression",
+    "name": "RSolve",
+    "kind": "operator",
+    "description": "Symbolic recurrence equation solver.",
+    "signature": "(expression, symbol, symbol) -> expression"
   },
   {
-    name: "Radical",
-    kind: "operator",
-    description:
-      "Return the radical of `n` (its square-free kernel): the product of its distinct prime factors. The sign of `n` is ignored; `Radical(1)` is 1.",
-    signature: "(integer) -> integer",
+    "name": "Radical",
+    "kind": "operator",
+    "description": "Return the radical of `n` (its square-free kernel): the product of its distinct prime factors. The sign of `n` is ignored; `Radical(1)` is 1.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "Random",
-    kind: "operator",
-    description:
-      "Random(): non-deterministic real in [0, 1) Random(Interval(a, b)): a real in [a, b) (endpoint markers ignored) Random(Range(...)): an element of the range Random(xs): an element of the finite collection `xs`",
-    signature: "((collection<any> | set<real>)?) random -> any",
+    "name": "Random",
+    "kind": "operator",
+    "description": "Random(): non-deterministic real in [0, 1) Random(Interval(a, b)): a real in [a, b) (endpoint markers ignored) Random(Range(...)): an element of the range Random(xs): an element of the finite collection `xs`",
+    "signature": "((collection<any> | set<real>)?) random -> any"
   },
   {
-    name: "RandomChoice",
-    kind: "operator",
-    description:
-      "RandomChoice(domain, k): a list of k independent draws from `domain`, with replacement. `k` may exceed the size of the domain — that is what replacement means. Choosing from a string yields a string.",
-    signature:
-      "((T, number) random -> T where T: string) & ((collection<any> | set<real>, number) random -> list<any>)",
+    "name": "RandomChoice",
+    "kind": "operator",
+    "description": "RandomChoice(domain, k): a list of k independent draws from `domain`, with replacement. `k` may exceed the size of the domain — that is what replacement means. Choosing from a string yields a string.",
+    "signature": "((T, number) random -> T where T: string) & ((collection<any> | set<real>, number) random -> list<any>)"
   },
   {
-    name: "RandomExpression",
-    kind: "operator",
-    description: "Generate a random expression.",
-    signature: "() entropy -> expression",
+    "name": "RandomExpression",
+    "kind": "operator",
+    "description": "Generate a random expression.",
+    "signature": "() entropy -> expression"
   },
   {
-    name: "RandomPrime",
-    kind: "operator",
-    description:
-      "Return a random prime. `RandomPrime(n)` draws a prime in [2, n]; `RandomPrime(m, n)` draws a prime in [m, n]. Undefined if the range contains no prime.",
-    signature: "(integer, integer?) random -> integer",
+    "name": "RandomPrime",
+    "kind": "operator",
+    "description": "Return a random prime. `RandomPrime(n)` draws a prime in [2, n]; `RandomPrime(m, n)` draws a prime in [m, n]. Undefined if the range contains no prime.",
+    "signature": "(integer, integer?) random -> integer"
   },
   {
-    name: "RandomSample",
-    kind: "operator",
-    description:
-      'RandomSample(xs, k): a list of k elements drawn from the indexed collection `xs`, without replacement. "Without replacement" is over POSITIONS, not values: on a multiset, repeats are expected — RandomSample([1, 1, 2], 2) can return [1, 1]. Sampling a string yields a string. Wrap the call in `WithRandomSeed(seed, ...)` to make it deterministic.',
-    signature: "((T, number) random -> T where T: string) & ((indexed_collection, number) random -> list)",
+    "name": "RandomSample",
+    "kind": "operator",
+    "description": "RandomSample(xs, k): a list of k elements drawn from the indexed collection `xs`, without replacement. \"Without replacement\" is over POSITIONS, not values: on a multiset, repeats are expected — RandomSample([1, 1, 2], 2) can return [1, 1]. Sampling a string yields a string. Wrap the call in `WithRandomSeed(seed, ...)` to make it deterministic.",
+    "signature": "((T, number) random -> T where T: string) & ((indexed_collection, number) random -> list)"
   },
   {
-    name: "RandomShuffle",
-    kind: "operator",
-    description:
-      "Randomize the order of the elements in the collection. Shuffling a string yields a string. Wrap the call in `WithRandomSeed(seed, ...)` to make it deterministic.",
-    signature: "((T) random -> T where T: string) & ((indexed_collection<T>) random -> list<T> where T)",
+    "name": "RandomShuffle",
+    "kind": "operator",
+    "description": "Randomize the order of the elements in the collection. Shuffling a string yields a string. Wrap the call in `WithRandomSeed(seed, ...)` to make it deterministic.",
+    "signature": "((T) random -> T where T: string) & ((indexed_collection<T>) random -> list<T> where T)"
   },
   {
-    name: "Range",
-    kind: "operator",
-    description: "A sequence of numbers from a start to an end value with an optional step.",
-    signature: "(number, number?, step: number?) -> indexed_collection<number>",
+    "name": "Range",
+    "kind": "operator",
+    "description": "A sequence of numbers from a start to an end value with an optional step.",
+    "signature": "(number, number?, step: number?) -> indexed_collection<number>"
   },
   {
-    name: "RangeOf",
-    kind: "operator",
-    description:
-      "Return the 1-based inclusive index span of the first occurrence of `needle` as a contiguous subsequence of the indexed collection, or `Nothing` when it does not occur. The search starts at index `from` (1 by default) and the span is always expressed in the original collection's indices, so `RangeOf(xs, needle, Last(r) + 1)` finds the next non-overlapping occurrence and the loop ends at `Nothing`. On a string the needle is matched character by character, so a match never begins or ends inside a grapheme cluster.",
-    signature: "(indexed_collection<T>, indexed_collection<T>, from: integer?) -> nothing | range where T",
+    "name": "RangeOf",
+    "kind": "operator",
+    "description": "Return the 1-based inclusive index span of the first occurrence of `needle` as a contiguous subsequence of the indexed collection, or `Nothing` when it does not occur. The search starts at index `from` (1 by default) and the span is always expressed in the original collection's indices, so `RangeOf(xs, needle, Last(r) + 1)` finds the next non-overlapping occurrence and the loop ends at `Nothing`. On a string the needle is matched character by character, so a match never begins or ends inside a grapheme cluster.",
+    "signature": "(indexed_collection<T>, indexed_collection<T>, from: integer?) -> nothing | range where T"
   },
   {
-    name: "Rank",
-    kind: "operator",
-    description:
-      "The length of the shape of the expression. Note this is not the matrix rank (the number of linearly independent rows or columns in the matrix)",
-    signature: "(value) -> integer",
+    "name": "Rank",
+    "kind": "operator",
+    "description": "The length of the shape of the expression. Note this is not the matrix rank (the number of linearly independent rows or columns in the matrix)",
+    "signature": "(value) -> integer"
   },
   {
-    name: "Rational",
-    kind: "operator",
-    description: "Construct a rational number from a numerator and denominator.",
-    signature: "((integer, integer) -> rational) | ((real) -> rational)",
+    "name": "Rational",
+    "kind": "operator",
+    "description": "Construct a rational number from a numerator and denominator.",
+    "signature": "((integer, integer) -> rational) | ((real) -> rational)"
   },
   {
-    name: "RationalNumbers",
-    kind: "constant",
-    description: "The set of all finite rational numbers.",
-    signature: "set<rational>",
+    "name": "RationalNumbers",
+    "kind": "constant",
+    "description": "The set of all finite rational numbers.",
+    "signature": "set<rational>"
   },
   {
-    name: "Rationalize",
-    kind: "operator",
-    description:
-      "Approximate a real number by a rational. With a second argument `tolerance`, return the rational with the smallest denominator that approximates the number to within `tolerance` (a continued-fraction convergent); with no tolerance, rationalize at full working precision, as single-argument `Rational`.",
-    signature: "(real, real<0..>?) -> rational",
+    "name": "Rationalize",
+    "kind": "operator",
+    "description": "Approximate a real number by a rational. With a second argument `tolerance`, return the rational with the smallest denominator that approximates the number to within `tolerance` (a continued-fraction convergent); with no tolerance, rationalize at full working precision, as single-argument `Rational`.",
+    "signature": "(real, real<0..>?) -> rational"
   },
   {
-    name: "Re",
-    kind: "operator",
-    description: "`Re` is an alias for `Real`, which is the preferred name. Returns the real part of a complex number.",
-    signature: "(complex | infinity) -> number",
+    "name": "Re",
+    "kind": "operator",
+    "description": "`Re` is an alias for `Real`, which is the preferred name. Returns the real part of a complex number.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Real",
-    kind: "operator",
-    description: "Real part of a complex number.",
-    signature: "(complex | infinity) -> number",
+    "name": "Real",
+    "kind": "operator",
+    "description": "Real part of a complex number.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "RealNumbers",
-    kind: "constant",
-    description: "The set of all finite real numbers.",
-    signature: "set<real>",
+    "name": "RealNumbers",
+    "kind": "constant",
+    "description": "The set of all finite real numbers.",
+    "signature": "set<real>"
   },
   {
-    name: "Reduce",
-    kind: "operator",
-    description:
-      "Reduce (fold) a collection to a single value by repeatedly applying a binary function, with an optional initial value.",
-    signature: "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> value where T",
+    "name": "Reduce",
+    "kind": "operator",
+    "description": "Reduce (fold) a collection to a single value by repeatedly applying a binary function, with an optional initial value.",
+    "signature": "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> value where T"
   },
   {
-    name: "RegExp",
-    kind: "operator",
-    description:
-      'A compiled regular expression, using the host JavaScript dialect. The pattern is written most readably as a raw string literal: `RegExp(#"[0-9]+"#)`.',
-    signature: "(pattern: string, flags: string?) -> regexp",
+    "name": "RegExp",
+    "kind": "operator",
+    "description": "A compiled regular expression, using the host JavaScript dialect. The pattern is written most readably as a raw string literal: `RegExp(#\"[0-9]+\"#)`.",
+    "signature": "(pattern: string, flags: string?) -> regexp"
   },
   {
-    name: "ReleaseHold",
-    kind: "operator",
-    description: "Release an expression held by `Hold`",
-    signature: "(any) -> unknown",
+    "name": "ReleaseHold",
+    "kind": "operator",
+    "description": "Release an expression held by `Hold`",
+    "signature": "(any) -> unknown"
   },
   {
-    name: "Remainder",
-    kind: "operator",
-    description:
-      "IEEE remainder: the signed remainder after dividing x by y, with the quotient rounded to the nearest integer (ties round toward +Infinity, matching JavaScript `Math.round`)",
-    signature: "(T, T) -> T where T: number",
+    "name": "Remainder",
+    "kind": "operator",
+    "description": "IEEE remainder: the signed remainder after dividing x by y, with the quotient rounded to the nearest integer (ties round toward +Infinity, matching JavaScript `Math.round`)",
+    "signature": "(T, T) -> T where T: number"
   },
   {
-    name: "Repeat",
-    kind: "operator",
-    description:
-      "Produce a sequence by repeating a single value. With 1 argument, returns an infinite sequence; with 2 arguments (value, count), returns a finite list of `count` copies.",
-    signature: "(value: any, count: integer?) -> list",
+    "name": "Repeat",
+    "kind": "operator",
+    "description": "Produce a sequence by repeating a single value. With 1 argument, returns an infinite sequence; with 2 arguments (value, count), returns a finite list of `count` copies.",
+    "signature": "(value: any, count: integer?) -> list"
   },
   {
-    name: "ReplaceAll",
-    kind: "operator",
-    description:
-      "ReplaceAll(expr, rules): apply one or more replacement rules to `expr`, then evaluate the result (Mathematica `expr /. rules`). A rule is `lhs -> rhs` (parsed as `To`) or `Rule(lhs, rhs)`. Several rules may be given as extra arguments or as a `List`/`Set` of rules; they are applied simultaneously in a single pass.",
-    signature: "(any, any+) -> any",
+    "name": "ReplaceAll",
+    "kind": "operator",
+    "description": "ReplaceAll(expr, rules): apply one or more replacement rules to `expr`, then evaluate the result (Mathematica `expr /. rules`). A rule is `lhs -> rhs` (parsed as `To`) or `Rule(lhs, rhs)`. Several rules may be given as extra arguments or as a `List`/`Set` of rules; they are applied simultaneously in a single pass.",
+    "signature": "(any, any+) -> any"
   },
   {
-    name: "ReplaceAt",
-    kind: "operator",
-    description:
-      "Return a copy of the indexed collection with the element at the 1-based `index` replaced by `value`. A negative index counts from the end. An out-of-range, zero, or non-integer index leaves the expression unevaluated.",
-    signature: "(indexed_collection<T>, integer, T) -> list<T> where T",
+    "name": "ReplaceAt",
+    "kind": "operator",
+    "description": "Return a copy of the indexed collection with the element at the 1-based `index` replaced by `value`. A negative index counts from the end. An out-of-range, zero, or non-integer index leaves the expression unevaluated.",
+    "signature": "(indexed_collection<T>, integer, T) -> list<T> where T"
   },
   {
-    name: "Reshape",
-    kind: "operator",
-    description: "Reshape a tensor or collection to a target shape.",
-    signature: "(value, tuple) -> value",
+    "name": "Reshape",
+    "kind": "operator",
+    "description": "Reshape a tensor or collection to a target shape.",
+    "signature": "(value, tuple) -> value"
   },
   {
-    name: "Residue",
-    kind: "operator",
-    description: "Residue of a function at a point (the coefficient of (x-a)⁻¹ in its Laurent expansion)",
-    signature: "(expression, variable: symbol, point: value) -> number",
+    "name": "Residue",
+    "kind": "operator",
+    "description": "Residue of a function at a point (the coefficient of (x-a)⁻¹ in its Laurent expansion)",
+    "signature": "(expression, variable: symbol, point: value) -> number"
   },
   {
-    name: "Rest",
-    kind: "operator",
-    description:
-      "Return the collection without the first element. If the collection has only one element, return an empty collection.",
-    signature: "((T) -> T where T: string) & ((indexed_collection<T>) -> list<T> where T)",
+    "name": "Rest",
+    "kind": "operator",
+    "description": "Return the collection without the first element. If the collection has only one element, return an empty collection.",
+    "signature": "((T) -> T where T: string) & ((indexed_collection<T>) -> list<T> where T)"
   },
   {
-    name: "Resultant",
-    kind: "operator",
-    description:
-      "Return the resultant of two polynomials with respect to a variable. It is zero iff the polynomials share a common factor. Example: Resultant(x² - 1, x - 1, x) → 0",
-    signature: "(a: value, b: value, variable: symbol?) -> value",
+    "name": "Resultant",
+    "kind": "operator",
+    "description": "Return the resultant of two polynomials with respect to a variable. It is zero iff the polynomials share a common factor. Example: Resultant(x² - 1, x - 1, x) → 0",
+    "signature": "(a: value, b: value, variable: symbol?) -> value"
   },
   {
-    name: "Reverse",
-    kind: "operator",
-    description: "Reverse the order of the elements of an indexed collection.",
-    signature: "((T) -> T where T: string) & ((T) -> T where T: list) & ((indexed_collection<T>) -> list<T> where T)",
+    "name": "Reverse",
+    "kind": "operator",
+    "description": "Reverse the order of the elements of an indexed collection.",
+    "signature": "((T) -> T where T: string) & ((T) -> T where T: list) & ((indexed_collection<T>) -> list<T> where T)"
   },
   {
-    name: "Rgb",
-    kind: "operator",
-    description: "sRGB color (channels 0-1, optional alpha 0-1)",
-    signature: "(number, number, number, number?) -> color",
+    "name": "Rgb",
+    "kind": "operator",
+    "description": "sRGB color (channels 0-1, optional alpha 0-1)",
+    "signature": "(number, number, number, number?) -> color"
   },
   {
-    name: "Root",
-    kind: "operator",
-    description: "n-th root of a value.",
-    signature: "(complex | infinity, complex | infinity) -> number",
-    keywords: ["nth root", "cube root"],
+    "name": "Root",
+    "kind": "operator",
+    "description": "n-th root of a value.",
+    "signature": "(complex | infinity, complex | infinity) -> number",
+    "keywords": [
+      "nth root",
+      "cube root"
+    ]
   },
   {
-    name: "RotateLeft",
-    kind: "operator",
-    description: "Rotate the elements of the collection to the left by n positions.",
-    signature:
-      "((T, integer?) -> T where T: string) & ((T, integer?) -> T where T: list) & ((indexed_collection<T>, integer?) -> list<T> where T)",
+    "name": "RotateLeft",
+    "kind": "operator",
+    "description": "Rotate the elements of the collection to the left by n positions.",
+    "signature": "((T, integer?) -> T where T: string) & ((T, integer?) -> T where T: list) & ((indexed_collection<T>, integer?) -> list<T> where T)"
   },
   {
-    name: "RotateRight",
-    kind: "operator",
-    description: "Rotate the elements of the collection to the right by n positions.",
-    signature:
-      "((T, integer?) -> T where T: string) & ((T, integer?) -> T where T: list) & ((indexed_collection<T>, integer?) -> list<T> where T)",
+    "name": "RotateRight",
+    "kind": "operator",
+    "description": "Rotate the elements of the collection to the right by n positions.",
+    "signature": "((T, integer?) -> T where T: string) & ((T, integer?) -> T where T: list) & ((indexed_collection<T>, integer?) -> list<T> where T)"
   },
   {
-    name: "Round",
-    kind: "operator",
-    description: "Rounds a number to the nearest integer, or (with a precision argument) to `n` decimal places.",
-    signature: "(real | signed_infinity, integer?) -> real | signed_infinity",
+    "name": "Round",
+    "kind": "operator",
+    "description": "Rounds a number to the nearest integer, or (with a precision argument) to `n` decimal places.",
+    "signature": "(real | signed_infinity, integer?) -> real | signed_infinity"
   },
   {
-    name: "RowReduce",
-    kind: "operator",
-    description: "Reduced row echelon form (RREF) of a matrix.",
-    signature: "(matrix) -> matrix",
+    "name": "RowReduce",
+    "kind": "operator",
+    "description": "Reduced row echelon form (RREF) of a matrix.",
+    "signature": "(matrix) -> matrix"
   },
   {
-    name: "Rule",
-    kind: "operator",
-    description: "Pattern replacement rule.",
-    signature: "(match: expression, replace: expression, predicate: function?) -> expression",
+    "name": "Rule",
+    "kind": "operator",
+    "description": "Pattern replacement rule.",
+    "signature": "(match: expression, replace: expression, predicate: function?) -> expression"
   },
   {
-    name: "RuntimeError",
-    kind: "operator",
-    description:
-      "Construct an error value when evaluated: the runtime counterpart of a written `Error(…)`, which is a static diagnostic node. Evaluates to `Error(code)`.",
-    signature: "(expression<ErrorCode> | string) -> never",
+    "name": "RuntimeError",
+    "kind": "operator",
+    "description": "Construct an error value when evaluated: the runtime counterpart of a written `Error(…)`, which is a static diagnostic node. Evaluates to `Error(code)`.",
+    "signature": "(expression<ErrorCode> | string) -> never"
   },
   {
-    name: "SVD",
-    kind: "operator",
-    description: "Singular value decomposition of a matrix.",
-    signature: "(matrix) -> tuple",
+    "name": "SVD",
+    "kind": "operator",
+    "description": "Singular value decomposition of a matrix.",
+    "signature": "(matrix) -> tuple"
   },
   {
-    name: "Same",
-    kind: "operator",
-    description:
-      "Structural identity comparison (Epsil `===`). True iff every adjacent pair of operands is structurally identical.",
-    signature: "(any, any*) -> boolean",
+    "name": "Same",
+    "kind": "operator",
+    "description": "Structural identity comparison (Epsil `===`). True iff every adjacent pair of operands is structurally identical.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Scan",
-    kind: "operator",
-    description:
-      "Return the cumulative fold of a collection: a same-length collection whose k-th element is the running result of applying a binary function left to right (optionally seeded by an initial value).",
-    signature: "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> indexed_collection where T",
+    "name": "Scan",
+    "kind": "operator",
+    "description": "Return the cumulative fold of a collection: a same-length collection whose k-th element is the running result of applying a binary function left to right (optionally seeded by an initial value).",
+    "signature": "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> indexed_collection where T"
   },
   {
-    name: "Sec",
-    kind: "operator",
-    description: "Secant, the reciprocal of cosine.",
-    signature: "(complex) -> number",
+    "name": "Sec",
+    "kind": "operator",
+    "description": "Secant, the reciprocal of cosine.",
+    "signature": "(complex) -> number"
   },
   {
-    name: "Sech",
-    kind: "operator",
-    description: "Hyperbolic secant, the reciprocal of hyperbolic cosine.",
-    signature: "(complex | signed_infinity) -> number",
+    "name": "Sech",
+    "kind": "operator",
+    "description": "Hyperbolic secant, the reciprocal of hyperbolic cosine.",
+    "signature": "(complex | signed_infinity) -> number"
   },
   {
-    name: "Second",
-    kind: "operator",
-    description: "The second element of a collection.",
-    signature: "(xs: indexed_collection<any>) -> any",
+    "name": "Second",
+    "kind": "operator",
+    "description": "The second element of a collection.",
+    "signature": "(xs: indexed_collection<any>) -> any"
   },
   {
-    name: "Segment",
-    kind: "operator",
-    description: "Segment primitive — opaque typed head.",
-    signature: "(any+) -> expression",
+    "name": "Segment",
+    "kind": "operator",
+    "description": "Segment primitive — opaque typed head.",
+    "signature": "(any+) -> expression"
   },
   {
-    name: "Sequence",
-    kind: "operator",
-    description: "Ordered sequence of expressions.",
-    signature: "function",
+    "name": "Sequence",
+    "kind": "operator",
+    "description": "Ordered sequence of expressions.",
+    "signature": "function"
   },
   {
-    name: "Series",
-    kind: "operator",
-    description:
-      "Taylor series expansion of an expression about a point (or an asymptotic expansion at ±∞), including Laurent, Puiseux (fractional-power), and log-aware expansions at poles and branch points. Only essential singularities, irrational exponents, and nested/reciprocal logarithms are left unevaluated. Example: Series(\\sin x, x) → x - x^3/6 + x^5/120 + O(x^7)",
-    signature: "(expression, variable: symbol?, point: value?, order: number?) -> number",
+    "name": "Series",
+    "kind": "operator",
+    "description": "Taylor series expansion of an expression about a point (or an asymptotic expansion at ±∞), including Laurent, Puiseux (fractional-power), and log-aware expansions at poles and branch points. Only essential singularities, irrational exponents, and nested/reciprocal logarithms are left unevaluated. Example: Series(\\sin x, x) → x - x^3/6 + x^5/120 + O(x^7)",
+    "signature": "(expression, variable: symbol?, point: value?, order: number?) -> number"
   },
   {
-    name: "Set",
-    kind: "operator",
-    description: "An unordered collection of distinct elements (a set).",
-    signature: "(any*) -> set",
+    "name": "Set",
+    "kind": "operator",
+    "description": "An unordered collection of distinct elements (a set).",
+    "signature": "(any*) -> set"
   },
   {
-    name: "SetFrom",
-    kind: "operator",
-    description: "Create a set from the elements of a collection.",
-    signature: "(value*) -> set",
+    "name": "SetFrom",
+    "kind": "operator",
+    "description": "Create a set from the elements of a collection.",
+    "signature": "(value*) -> set"
   },
   {
-    name: "SetMinus",
-    kind: "operator",
-    description: "Return the set difference between the first set and subsequent values.",
-    signature: "(set<any>, value*) -> set",
-    wikidata: "Q18192442",
+    "name": "SetMinus",
+    "kind": "operator",
+    "description": "Return the set difference between the first set and subsequent values.",
+    "signature": "(set<any>, value*) -> set",
+    "wikidata": "Q18192442"
   },
   {
-    name: "Shape",
-    kind: "operator",
-    description: "Return the shape tuple of an expression.",
-    signature: "(value) -> tuple",
+    "name": "Shape",
+    "kind": "operator",
+    "description": "Return the shape tuple of an expression.",
+    "signature": "(value) -> tuple"
   },
   {
-    name: "Sigma0",
-    kind: "operator",
-    description: "Number of positive divisors of n.",
-    signature: "(integer) -> integer",
+    "name": "Sigma0",
+    "kind": "operator",
+    "description": "Number of positive divisors of n.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "Sigma1",
-    kind: "operator",
-    description: "Sum of positive divisors of n.",
-    signature: "(integer) -> integer",
+    "name": "Sigma1",
+    "kind": "operator",
+    "description": "Sum of positive divisors of n.",
+    "signature": "(integer) -> integer"
   },
   {
-    name: "SigmaMinus1",
-    kind: "operator",
-    description: "Sum of reciprocals of positive divisors of n.",
-    signature: "(integer) -> rational",
+    "name": "SigmaMinus1",
+    "kind": "operator",
+    "description": "Sum of reciprocals of positive divisors of n.",
+    "signature": "(integer) -> rational"
   },
   {
-    name: "Sign",
-    kind: "operator",
-    description:
-      "Sign of a number: -1, 0, or 1 for a real; `z/|z|`, the point of the unit circle in its direction, for a complex `z`.",
-    signature: "(complex | signed_infinity) -> complex",
+    "name": "Sign",
+    "kind": "operator",
+    "description": "Sign of a number: -1, 0, or 1 for a real; `z/|z|`, the point of the unit circle in its direction, for a complex `z`.",
+    "signature": "(complex | signed_infinity) -> complex"
   },
   {
-    name: "Signature",
-    kind: "operator",
-    description: "Return the signature string of an operator.",
-    signature: "(symbol) -> nothing | string",
+    "name": "Signature",
+    "kind": "operator",
+    "description": "Return the signature string of an operator.",
+    "signature": "(symbol) -> nothing | string"
   },
   {
-    name: "Simplify",
-    kind: "operator",
-    description:
-      "Simplify(expr): simplify an expression. Simplify(expr, assumptions): simplify under one or more boolean assumptions (e.g. `x > 0`), or a `List`/`And` of them. The assumptions hold only for the duration of the simplification.",
-    signature: "(any, any?) -> expression",
+    "name": "Simplify",
+    "kind": "operator",
+    "description": "Simplify(expr): simplify an expression. Simplify(expr, assumptions): simplify under one or more boolean assumptions (e.g. `x > 0`), or a `List`/`And` of them. The assumptions hold only for the duration of the simplification.",
+    "signature": "(any, any?) -> expression"
   },
   {
-    name: "Sin",
-    kind: "operator",
-    description: "Sine of an angle.",
-    signature: "(complex) -> number",
-    keywords: ["sine"],
+    "name": "Sin",
+    "kind": "operator",
+    "description": "Sine of an angle.",
+    "signature": "(complex) -> number",
+    "keywords": [
+      "sine"
+    ]
   },
   {
-    name: "SinIntegral",
-    kind: "operator",
-    description: "Sine integral: ∫₀ˣ sin(t)/t dt.",
-    signature: "(complex | infinity) -> number",
+    "name": "SinIntegral",
+    "kind": "operator",
+    "description": "Sine integral: ∫₀ˣ sin(t)/t dt.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Sinc",
-    kind: "operator",
-    description: "Unnormalized sinc function: sin(x)/x with sinc(0)=1.",
-    signature: "(complex | signed_infinity) -> complex",
+    "name": "Sinc",
+    "kind": "operator",
+    "description": "Unnormalized sinc function: sin(x)/x with sinc(0)=1.",
+    "signature": "(complex | signed_infinity) -> complex"
   },
   {
-    name: "Single",
-    kind: "operator",
-    description: "A tuple with a single element",
-    signature: "(value: T) -> tuple<T> where T",
+    "name": "Single",
+    "kind": "operator",
+    "description": "A tuple with a single element",
+    "signature": "(value: T) -> tuple<T> where T"
   },
   {
-    name: "SingularValues",
-    kind: "operator",
-    description:
-      "The singular values of a matrix, sorted in descending order (including any zero values). Exact for a matrix whose Gram matrix A^T·A (or A·A^T) is at most 2×2 with exact rational entries; numeric otherwise.",
-    signature: "(matrix) -> list",
+    "name": "SingularValues",
+    "kind": "operator",
+    "description": "The singular values of a matrix, sorted in descending order (including any zero values). Exact for a matrix whose Gram matrix A^T·A (or A·A^T) is at most 2×2 with exact rational entries; numeric otherwise.",
+    "signature": "(matrix) -> list"
   },
   {
-    name: "Sinh",
-    kind: "operator",
-    description: "Hyperbolic sine.",
-    signature: "(complex | signed_infinity) -> number",
-    keywords: ["hyperbolic sine"],
+    "name": "Sinh",
+    "kind": "operator",
+    "description": "Hyperbolic sine.",
+    "signature": "(complex | signed_infinity) -> number",
+    "keywords": [
+      "hyperbolic sine"
+    ]
   },
   {
-    name: "SinhIntegral",
-    kind: "operator",
-    description: "Hyperbolic sine integral: ∫₀ˣ sinh(t)/t dt.",
-    signature: "(complex | infinity) -> number",
+    "name": "SinhIntegral",
+    "kind": "operator",
+    "description": "Hyperbolic sine integral: ∫₀ˣ sinh(t)/t dt.",
+    "signature": "(complex | infinity) -> number"
   },
   {
-    name: "Skewness",
-    kind: "operator",
-    description: "Skewness of a collection of numbers.",
-    signature: "((collection<any> | number)+) -> nan | real",
+    "name": "Skewness",
+    "kind": "operator",
+    "description": "Skewness of a collection of numbers.",
+    "signature": "((collection<any> | number)+) -> nan | real"
   },
   {
-    name: "Slice",
-    kind: "operator",
-    description:
-      "Return a contiguous run of elements from an indexed collection. Given `start` and `end` (1-based, inclusive), a negative index is counted from the end and out-of-bounds indices are clamped. Given a `range` (an ascending index span such as `2..4`), returns the elements at those indices: `Slice(xs, r)` is `Slice(xs, First(r), Last(r))`.",
-    signature:
-      "((value: T, span: range) -> T where T: string) & ((value: T, span: nothing | range) -> T | nothing where T: string) & ((value: T, start: number, end: number) -> T where T: string) & ((value: indexed_collection<T>, span: range) -> list<T> where T) & ((value: indexed_collection<T>, span: nothing | range) -> list<T> | nothing where T) & ((value: indexed_collection<T>, start: number, end: number) -> list<T> where T)",
+    "name": "Slice",
+    "kind": "operator",
+    "description": "Return a contiguous run of elements from an indexed collection. Given `start` and `end` (1-based, inclusive), a negative index is counted from the end and out-of-bounds indices are clamped. Given a `range` (an ascending index span such as `2..4`), returns the elements at those indices: `Slice(xs, r)` is `Slice(xs, First(r), Last(r))`.",
+    "signature": "((value: T, span: range) -> T where T: string) & ((value: T, span: nothing | range) -> T | nothing where T: string) & ((value: T, start: number, end: number) -> T where T: string) & ((value: indexed_collection<T>, span: range) -> list<T> where T) & ((value: indexed_collection<T>, span: nothing | range) -> list<T> | nothing where T) & ((value: indexed_collection<T>, start: number, end: number) -> list<T> where T)"
   },
   {
-    name: "SlidingWindow",
-    kind: "operator",
-    description: "Return overlapping sliding windows of fixed size over the collection.",
-    signature:
-      "((S, integer, integer?) -> list<string> where S: string) & ((collection, integer, integer?) -> list<list>)",
+    "name": "SlidingWindow",
+    "kind": "operator",
+    "description": "Return overlapping sliding windows of fixed size over the collection.",
+    "signature": "((S, integer, integer?) -> list<string> where S: string) & ((collection, integer, integer?) -> list<list>)"
   },
   {
-    name: "Solve",
-    kind: "operator",
-    description:
-      "Solve(equation, unknown): the list of solutions of an equation for the unknown. The equation may be an `Equal` expression or a bare expression (read as `= 0`), e.g. `Solve(x^2 - 1 == 0, x)` or `Solve(x^2 - 1, x)`. The unknown may be omitted: it defaults to the equation's single free variable, or to `x` when there are several and one of them is `x`. Solve([eq1, eq2, …], [x, y, …]): solve a system of equations; each solution is a tuple of values in the order of the variable list, e.g. Solve([x + y == 3, x - y == 1], [x, y]) → [(2, 1)].",
-    signature: "(any, any*) -> list",
-    keywords: ["roots", "zeros"],
+    "name": "Solve",
+    "kind": "operator",
+    "description": "Solve(equation, unknown): the list of solutions of an equation for the unknown. The equation may be an `Equal` expression or a bare expression (read as `= 0`), e.g. `Solve(x^2 - 1 == 0, x)` or `Solve(x^2 - 1, x)`. The unknown may be omitted: it defaults to the equation's single free variable, or to `x` when there are several and one of them is `x`. Solve([eq1, eq2, …], [x, y, …]): solve a system of equations; each solution is a tuple of values in the order of the variable list, e.g. Solve([x + y == 3, x - y == 1], [x, y]) → [(2, 1)].",
+    "signature": "(any, any*) -> list",
+    "keywords": [
+      "roots",
+      "zeros"
+    ]
   },
   {
-    name: "Sort",
-    kind: "operator",
-    description: "Return the elements of the collection sorted according to the given comparison function.",
-    signature:
-      "((T, order: (((character) any -> unknown) | ((character, character) any -> boolean | number))?) -> T where T: string) & ((indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<T> where T)",
+    "name": "Sort",
+    "kind": "operator",
+    "description": "Return the elements of the collection sorted according to the given comparison function.",
+    "signature": "((T, order: (((character) any -> unknown) | ((character, character) any -> boolean | number))?) -> T where T: string) & ((indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<T> where T)"
   },
   {
-    name: "SpeedOfLight",
-    kind: "constant",
-    description: "Speed of light in vacuum",
-    signature: "value",
-    wikidata: "Q2111",
+    "name": "SpeedOfLight",
+    "kind": "constant",
+    "description": "Speed of light in vacuum",
+    "signature": "value",
+    "wikidata": "Q2111"
   },
   {
-    name: "Sphere",
-    kind: "operator",
-    description: "Sphere primitive — opaque typed head.",
-    signature: "(any+) -> expression",
+    "name": "Sphere",
+    "kind": "operator",
+    "description": "Sphere primitive — opaque typed head.",
+    "signature": "(any+) -> expression"
   },
   {
-    name: "Spread",
-    kind: "operator",
-    description:
-      "Spread(t): splice the elements of the tuple `t` into the enclosing argument list (Epsil surface syntax: `f(...t)`). A literal tuple splices at canonicalization; a symbolic argument is spliced by the enclosing call at evaluation (step 0 of the evaluate path), which re-validates the resulting arity.",
-    signature: "(any) -> unknown",
+    "name": "Spread",
+    "kind": "operator",
+    "description": "Spread(t): splice the elements of the tuple `t` into the enclosing argument list (Epsil surface syntax: `f(...t)`). A literal tuple splices at canonicalization; a symbolic argument is spliced by the enclosing call at evaluation (step 0 of the evaluate path), which re-validates the resulting arity.",
+    "signature": "(any) -> unknown"
   },
   {
-    name: "Sqrt",
-    kind: "operator",
-    description: "Square Root",
-    signature: "(complex | infinity) -> complex | infinity",
-    wikidata: "Q134237",
-    keywords: ["square root", "radical"],
+    "name": "Sqrt",
+    "kind": "operator",
+    "description": "Square Root",
+    "signature": "(complex | infinity) -> complex | infinity",
+    "wikidata": "Q134237",
+    "keywords": [
+      "square root",
+      "radical"
+    ]
   },
   {
-    name: "Square",
-    kind: "operator",
-    description: "Square of a number: x^2.",
-    signature: "(number) -> number",
-    wikidata: "Q3075175",
+    "name": "Square",
+    "kind": "operator",
+    "description": "Square of a number: x^2.",
+    "signature": "(number) -> number",
+    "wikidata": "Q3075175"
   },
   {
-    name: "StandardDeviation",
-    kind: "operator",
-    description: "Sample Standard Deviation of a collection of numbers.",
-    signature: "((collection<any> | distribution | number)+) -> nan | real<0..>",
-    keywords: ["stdev", "std"],
+    "name": "StandardDeviation",
+    "kind": "operator",
+    "description": "Sample Standard Deviation of a collection of numbers.",
+    "signature": "((collection<any> | distribution | number)+) -> nan | real<0..>",
+    "keywords": [
+      "stdev",
+      "std"
+    ]
   },
   {
-    name: "StandardGravity",
-    kind: "constant",
-    description: "Standard acceleration due to gravity",
-    signature: "value",
-    wikidata: "Q30006",
+    "name": "StandardGravity",
+    "kind": "constant",
+    "description": "Standard acceleration due to gravity",
+    "signature": "value",
+    "wikidata": "Q30006"
   },
   {
-    name: "StartsWith",
-    kind: "operator",
-    description:
-      "Return `True` when the indexed collection begins with `prefix` as a contiguous subsequence. On a string the prefix is matched character by character, so a prefix that would end inside a grapheme cluster does not match. An empty prefix matches everything.",
-    signature: "(indexed_collection<T>, prefix: indexed_collection<T>) -> boolean where T",
+    "name": "StartsWith",
+    "kind": "operator",
+    "description": "Return `True` when the indexed collection begins with `prefix` as a contiguous subsequence. On a string the prefix is matched character by character, so a prefix that would end inside a grapheme cluster does not match. An empty prefix matches everything.",
+    "signature": "(indexed_collection<T>, prefix: indexed_collection<T>) -> boolean where T"
   },
   {
-    name: "StefanBoltzmannConstant",
-    kind: "constant",
-    description: "Stefan-Boltzmann constant",
-    signature: "value",
-    wikidata: "Q196898",
+    "name": "StefanBoltzmannConstant",
+    "kind": "constant",
+    "description": "Stefan-Boltzmann constant",
+    "signature": "value",
+    "wikidata": "Q196898"
   },
   {
-    name: "Stirling",
-    kind: "operator",
-    description: "Stirling number of the second kind S(n, m): ways to partition n elements into m non-empty subsets.",
-    signature: "(integer, integer) -> integer",
+    "name": "Stirling",
+    "kind": "operator",
+    "description": "Stirling number of the second kind S(n, m): ways to partition n elements into m non-empty subsets.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "StirlingS1",
-    kind: "operator",
-    description:
-      "Signed Stirling number of the first kind s(n, m): the coefficient of x^m in the falling factorial x(x−1)…(x−n+1). Its absolute value counts the permutations of n elements with exactly m disjoint cycles.",
-    signature: "(integer, integer) -> integer",
+    "name": "StirlingS1",
+    "kind": "operator",
+    "description": "Signed Stirling number of the first kind s(n, m): the coefficient of x^m in the falling factorial x(x−1)…(x−n+1). Its absolute value counts the permutations of n elements with exactly m disjoint cycles.",
+    "signature": "(integer, integer) -> integer"
   },
   {
-    name: "String",
-    kind: "operator",
-    description:
-      "A string created by joining its arguments. The arguments are converted to their default string representation.",
-    signature: "(any*) -> string",
+    "name": "String",
+    "kind": "operator",
+    "description": "A string created by joining its arguments. The arguments are converted to their default string representation.",
+    "signature": "(any*) -> string"
   },
   {
-    name: "StringCompare",
-    kind: "operator",
-    description:
-      "StringCompare(a, b): -1 when `a` sorts before `b`, 0 when they are equal, 1 when `a` sorts after `b`. The order compares Unicode scalar sequences code point by code point (NOT UTF-16 code units, which would sort astral characters below U+E000..U+FFFF).",
-    signature: "(string, string) -> integer",
+    "name": "StringCompare",
+    "kind": "operator",
+    "description": "StringCompare(a, b): -1 when `a` sorts before `b`, 0 when they are equal, 1 when `a` sorts after `b`. The order compares Unicode scalar sequences code point by code point (NOT UTF-16 code units, which would sort astral characters below U+E000..U+FFFF).",
+    "signature": "(string, string) -> integer"
   },
   {
-    name: "StringFrom",
-    kind: "operator",
-    description:
-      'StringFrom(value, format?): create a string from `value`. With no format, a number or a list of numbers is read as Unicode scalar values (`StringFrom(65)` is `"A"`), and any other value is printed (`StringFrom(True)` is `"True"`). The formats are `"default"` (print the value), `"unicode-scalars"`, `"utf-8"` and `"utf-16"`.',
-    signature: "(any, format: string?) -> string",
+    "name": "StringFrom",
+    "kind": "operator",
+    "description": "StringFrom(value, format?): create a string from `value`. With no format, a number or a list of numbers is read as Unicode scalar values (`StringFrom(65)` is `\"A\"`), and any other value is printed (`StringFrom(True)` is `\"True\"`). The formats are `\"default\"` (print the value), `\"unicode-scalars\"`, `\"utf-8\"` and `\"utf-16\"`.",
+    "signature": "(any, format: string?) -> string"
   },
   {
-    name: "StringJoin",
-    kind: "operator",
-    description:
-      'StringJoin(xs): join the elements of the finite collection `xs` (strings or characters) into a string. StringJoin(xs, sep): the same, with `sep` between consecutive elements. The inverse of StringSplit. An empty collection joins to "", a one-element collection to that element. A non-text element, or a non-finite collection, leaves the expression unevaluated. For variadic concatenation use Join(a, b, …) or string interpolation.',
-    signature: "(collection<character | string>, separator: string?) -> string",
+    "name": "StringJoin",
+    "kind": "operator",
+    "description": "StringJoin(xs): join the elements of the finite collection `xs` (strings or characters) into a string. StringJoin(xs, sep): the same, with `sep` between consecutive elements. The inverse of StringSplit. An empty collection joins to \"\", a one-element collection to that element. A non-text element, or a non-finite collection, leaves the expression unevaluated. For variadic concatenation use Join(a, b, …) or string interpolation.",
+    "signature": "(collection<character | string>, separator: string?) -> string"
   },
   {
-    name: "StringMatch",
-    kind: "operator",
-    description:
-      "The first match of a regular expression in a string, as a record. The record holds `match`, `range`, `groups` and `names`; the result is `Nothing` when there is no match.",
-    signature: "(subject: string, pattern: regexp) -> nothing | record",
+    "name": "StringMatch",
+    "kind": "operator",
+    "description": "The first match of a regular expression in a string, as a record. The record holds `match`, `range`, `groups` and `names`; the result is `Nothing` when there is no match.",
+    "signature": "(subject: string, pattern: regexp) -> nothing | record"
   },
   {
-    name: "StringMatchAll",
-    kind: "operator",
-    description:
-      "Every non-overlapping match of a regular expression in a string, as a list of records. Each record has the same shape as `StringMatch`.",
-    signature: "(subject: string, pattern: regexp) -> list<record>",
+    "name": "StringMatchAll",
+    "kind": "operator",
+    "description": "Every non-overlapping match of a regular expression in a string, as a list of records. Each record has the same shape as `StringMatch`.",
+    "signature": "(subject: string, pattern: regexp) -> list<record>"
   },
   {
-    name: "StringRepeat",
-    kind: "operator",
-    description:
-      'StringRepeat(s, n): `n` copies of the string `s`, concatenated. StringRepeat(s, 0) is "". A negative or non-integer `n` is an error.',
-    signature: "(string, n: integer) -> string",
+    "name": "StringRepeat",
+    "kind": "operator",
+    "description": "StringRepeat(s, n): `n` copies of the string `s`, concatenated. StringRepeat(s, 0) is \"\". A negative or non-integer `n` is an error.",
+    "signature": "(string, n: integer) -> string"
   },
   {
-    name: "StringReplace",
-    kind: "operator",
-    description:
-      'StringReplace(s, target, replacement): replace every non-overlapping occurrence of `target` in `s`, scanning left to right over whole characters. StringReplace(s, target, replacement, count): replace at most `count` occurrences, from the left. An empty `target` is an error (the "insert at every boundary" behavior is deliberately not inherited); an empty `replacement` means deletion. `count` must be a positive integer. StringReplace(s, pattern, replacement, count?): `target` may be a regular expression, matched with the host dialect. `$1`-style templates are NOT expanded in `replacement`. StringReplace(s, pattern, f, count?): `replacement` may be a function, called with the same match record StringMatch returns, so each replacement can be computed from its captures.',
-    signature:
-      "((string, string, string, count: integer?) -> string) & ((string, regexp, string, count: integer?) -> string) & ((string, regexp, function, count: integer?) -> string)",
+    "name": "StringReplace",
+    "kind": "operator",
+    "description": "StringReplace(s, target, replacement): replace every non-overlapping occurrence of `target` in `s`, scanning left to right over whole characters. StringReplace(s, target, replacement, count): replace at most `count` occurrences, from the left. An empty `target` is an error (the \"insert at every boundary\" behavior is deliberately not inherited); an empty `replacement` means deletion. `count` must be a positive integer. StringReplace(s, pattern, replacement, count?): `target` may be a regular expression, matched with the host dialect. `$1`-style templates are NOT expanded in `replacement`. StringReplace(s, pattern, f, count?): `replacement` may be a function, called with the same match record StringMatch returns, so each replacement can be computed from its captures.",
+    "signature": "((string, string, string, count: integer?) -> string) & ((string, regexp, string, count: integer?) -> string) & ((string, regexp, function, count: integer?) -> string)"
   },
   {
-    name: "StringSplit",
-    kind: "operator",
-    description:
-      "StringSplit(s): split a string on runs of whitespace (the Unicode White_Space code points), dropping empty parts. StringSplit(s, sep): split a string on the separator string `sep` (empty parts are kept). An empty separator splits into user-perceived characters (grapheme clusters), like Characters. A non-string argument leaves the expression unevaluated. StringSplit(s, pattern): split on each match of a regular expression, with the host dialect's own semantics — including splitting at a zero-width match. Captures are not interleaved into the result; use StringMatchAll for those.",
-    signature: "((string, string?) -> list<string>) & ((string, regexp) -> list<string>)",
+    "name": "StringSplit",
+    "kind": "operator",
+    "description": "StringSplit(s): split a string on runs of whitespace (the Unicode White_Space code points), dropping empty parts. StringSplit(s, sep): split a string on the separator string `sep` (empty parts are kept). An empty separator splits into user-perceived characters (grapheme clusters), like Characters. A non-string argument leaves the expression unevaluated. StringSplit(s, pattern): split on each match of a regular expression, with the host dialect's own semantics — including splitting at a zero-width match. Captures are not interleaved into the result; use StringMatchAll for those.",
+    "signature": "((string, string?) -> list<string>) & ((string, regexp) -> list<string>)"
   },
   {
-    name: "Subfactorial",
-    kind: "operator",
-    description: "Compute the number of derangements (subfactorial) of n items.",
-    signature: "(integer) -> integer",
-    wikidata: "Q2361661",
+    "name": "Subfactorial",
+    "kind": "operator",
+    "description": "Compute the number of derangements (subfactorial) of n items.",
+    "signature": "(integer) -> integer",
+    "wikidata": "Q2361661"
   },
   {
-    name: "Subscript",
-    kind: "operator",
-    description: "Subscript notation for indexing or compound symbols.",
-    signature: "(collection<any>, any) -> any",
+    "name": "Subscript",
+    "kind": "operator",
+    "description": "Subscript notation for indexing or compound symbols.",
+    "signature": "(collection<any>, any) -> any"
   },
   {
-    name: "Subset",
-    kind: "operator",
-    description: "Test whether the first collection is a strict subset of the second.",
-    signature: "(any, any*) -> boolean",
+    "name": "Subset",
+    "kind": "operator",
+    "description": "Test whether the first collection is a strict subset of the second.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "SubsetEqual",
-    kind: "operator",
-    description: "Test whether the first collection is a subset (possibly equal) of the second.",
-    signature: "(any, any*) -> boolean",
+    "name": "SubsetEqual",
+    "kind": "operator",
+    "description": "Test whether the first collection is a subset (possibly equal) of the second.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Subtract",
-    kind: "operator",
-    description: "Difference between two or more values.",
-    signature: "(number+) -> number",
-    wikidata: "Q40754",
+    "name": "Subtract",
+    "kind": "operator",
+    "description": "Difference between two or more values.",
+    "signature": "(number+) -> number",
+    "wikidata": "Q40754"
   },
   {
-    name: "Subtype",
-    kind: "operator",
-    description:
-      'True iff the FIRST operand is a subtype of the second — `Subtype("integer", "number")` is `True`, `Subtype("number", "integer")` is `False`. This is the same compatibility relation annotations and signatures use. Operands are type values or type text; a quantified (`where`) type is not comparable and errors.',
-    signature: "(subtype: string | type, supertype: string | type) -> boolean",
+    "name": "Subtype",
+    "kind": "operator",
+    "description": "True iff the FIRST operand is a subtype of the second — `Subtype(\"integer\", \"number\")` is `True`, `Subtype(\"number\", \"integer\")` is `False`. This is the same compatibility relation annotations and signatures use. Operands are type values or type text; a quantified (`where`) type is not comparable and errors.",
+    "signature": "(subtype: string | type, supertype: string | type) -> boolean"
   },
   {
-    name: "Succeeds",
-    kind: "operator",
-    description: "Succeeds relation in an ordering (comes after).",
-    signature: "(any, any*) -> boolean",
+    "name": "Succeeds",
+    "kind": "operator",
+    "description": "Succeeds relation in an ordering (comes after).",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Sum",
-    kind: "operator",
-    description:
-      "`Sum(f, [a, b])` computes the sum of `f` from `a` to `b`; `Sum(L)` sums the elements of a collection `L`",
-    signature: "(any, tuple*) -> number",
-    wikidata: "Q218005",
-    keywords: ["summation", "sigma"],
+    "name": "Sum",
+    "kind": "operator",
+    "description": "`Sum(f, [a, b])` computes the sum of `f` from `a` to `b`; `Sum(L)` sums the elements of a collection `L`",
+    "signature": "(any, tuple*) -> number",
+    "wikidata": "Q218005",
+    "keywords": [
+      "summation",
+      "sigma"
+    ]
   },
   {
-    name: "Superset",
-    kind: "operator",
-    description: "Test whether the first collection is a strict superset of the second.",
-    signature: "(any, any*) -> boolean",
+    "name": "Superset",
+    "kind": "operator",
+    "description": "Test whether the first collection is a strict superset of the second.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "SupersetEqual",
-    kind: "operator",
-    description: "Test whether the first collection is a superset (possibly equal) of the second.",
-    signature: "(any, any*) -> boolean",
+    "name": "SupersetEqual",
+    "kind": "operator",
+    "description": "Test whether the first collection is a superset (possibly equal) of the second.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Supremum",
-    kind: "operator",
-    description: "Like Max, but defined for open sets",
-    signature: "(value*) -> number",
+    "name": "Supremum",
+    "kind": "operator",
+    "description": "Like Max, but defined for open sets",
+    "signature": "(value*) -> number"
   },
   {
-    name: "Symbol",
-    kind: "operator",
-    description: "Construct a new symbol with a name formed by concatenating the arguments",
-    signature: "function",
+    "name": "Symbol",
+    "kind": "operator",
+    "description": "Construct a new symbol with a name formed by concatenating the arguments",
+    "signature": "function"
   },
   {
-    name: "SymmetricDifference",
-    kind: "operator",
-    description: "Return the symmetric difference of two sets (elements in either set but not both).",
-    signature: "(set<any>, set<any>) -> set",
-    wikidata: "Q1147242",
+    "name": "SymmetricDifference",
+    "kind": "operator",
+    "description": "Return the symmetric difference of two sets (elements in either set but not both).",
+    "signature": "(set<any>, set<any>) -> set",
+    "wikidata": "Q1147242"
   },
   {
-    name: "Table",
-    kind: "operator",
-    description:
-      "An alias for `Tabulate` (the preferred name) that additionally accepts Mathematica-style iterator specs, e.g. `Table(i^2, {i, 1, n})` or `Table(i, {i, lo, hi, step})`, and the equivalent tuple spelling `Table(i^2, (i, 1, n))`.",
-    signature: "(function, integer, integer?) -> collection",
+    "name": "Table",
+    "kind": "operator",
+    "description": "An alias for `Tabulate` (the preferred name) that additionally accepts Mathematica-style iterator specs, e.g. `Table(i^2, {i, 1, n})` or `Table(i, {i, lo, hi, step})`, and the equivalent tuple spelling `Table(i^2, (i, 1, n))`.",
+    "signature": "(function, integer, integer?) -> collection"
   },
   {
-    name: "Tabulate",
-    kind: "operator",
-    description: "Create a collection by applying a function to each index in the specified dimensions.",
-    signature: "(generator: function, integer, integer?) -> indexed_collection",
-    keywords: ["table"],
+    "name": "Tabulate",
+    "kind": "operator",
+    "description": "Create a collection by applying a function to each index in the specified dimensions.",
+    "signature": "(generator: function, integer, integer?) -> indexed_collection",
+    "keywords": [
+      "table"
+    ]
   },
   {
-    name: "Tail",
-    kind: "operator",
-    description: "Return the tail of an expression, the operands of the expression",
-    signature: "(any) -> collection",
+    "name": "Tail",
+    "kind": "operator",
+    "description": "Return the tail of an expression, the operands of the expression",
+    "signature": "(any) -> collection"
   },
   {
-    name: "Take",
-    kind: "operator",
-    description: "Return `n` elements from a collection.",
-    signature:
-      "((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)",
+    "name": "Take",
+    "kind": "operator",
+    "description": "Return `n` elements from a collection.",
+    "signature": "((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)"
   },
   {
-    name: "TakeWhile",
-    kind: "operator",
-    description:
-      "Return the leading elements of the collection for which the predicate returns True, stopping at the first element that does not.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> collection where T",
+    "name": "TakeWhile",
+    "kind": "operator",
+    "description": "Return the leading elements of the collection for which the predicate returns True, stopping at the first element that does not.",
+    "signature": "(collection<T>, predicate: (T) any -> boolean) -> collection where T"
   },
   {
-    name: "Tally",
-    kind: "operator",
-    description: "Return a tuple with the unique elements of the collection and their respective counts.",
-    signature: "(collection<T>) -> tuple<list<T>, list<integer>> where T",
+    "name": "Tally",
+    "kind": "operator",
+    "description": "Return a tuple with the unique elements of the collection and their respective counts.",
+    "signature": "(collection<T>) -> tuple<list<T>, list<integer>> where T"
   },
   {
-    name: "Tan",
-    kind: "operator",
-    description: "Tangent of an angle.",
-    signature: "(complex) -> number",
-    keywords: ["tangent"],
+    "name": "Tan",
+    "kind": "operator",
+    "description": "Tangent of an angle.",
+    "signature": "(complex) -> number",
+    "keywords": [
+      "tangent"
+    ]
   },
   {
-    name: "Tanh",
-    kind: "operator",
-    description: "Hyperbolic tangent.",
-    signature: "(complex | signed_infinity) -> number",
-    keywords: ["hyperbolic tangent"],
+    "name": "Tanh",
+    "kind": "operator",
+    "description": "Hyperbolic tangent.",
+    "signature": "(complex | signed_infinity) -> number",
+    "keywords": [
+      "hyperbolic tangent"
+    ]
   },
   {
-    name: "Text",
-    kind: "operator",
-    description: "A sequence of strings, annotated expressions and other Text expressions",
-    signature: "(any*) -> string",
+    "name": "Text",
+    "kind": "operator",
+    "description": "A sequence of strings, annotated expressions and other Text expressions",
+    "signature": "(any*) -> string"
   },
   {
-    name: "Third",
-    kind: "operator",
-    description: "The third element of a collection.",
-    signature: "(xs: indexed_collection<any>) -> any",
+    "name": "Third",
+    "kind": "operator",
+    "description": "The third element of a collection.",
+    "signature": "(xs: indexed_collection<any>) -> any"
   },
   {
-    name: "Tilde",
-    kind: "operator",
-    description:
-      'Generic similarity relation (`\\sim`): similar geometric figures, asymptotic equivalence, or "is distributed as". Inert: stays symbolic.',
-    signature: "(any, any*) -> boolean",
+    "name": "Tilde",
+    "kind": "operator",
+    "description": "Generic similarity relation (`\\sim`): similar geometric figures, asymptotic equivalence, or \"is distributed as\". Inert: stays symbolic.",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "TildeEqual",
-    kind: "operator",
-    description: "Approximately or asymptotically equal",
-    signature: "(any, any*) -> boolean",
+    "name": "TildeEqual",
+    "kind": "operator",
+    "description": "Approximately or asymptotically equal",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "TildeFullEqual",
-    kind: "operator",
-    description: "Indicate isomorphism, congruence and homotopic equivalence",
-    signature: "(any, any*) -> boolean",
+    "name": "TildeFullEqual",
+    "kind": "operator",
+    "description": "Indicate isomorphism, congruence and homotopic equivalence",
+    "signature": "(any, any*) -> boolean"
   },
   {
-    name: "Timing",
-    kind: "operator",
-    description:
-      "`Timing(expr)` evaluates `expr` and returns a pair: the time the evaluation took, in microseconds, then the value. `Timing(expr, n)` evaluates `expr` n times (at least 3), drops the fastest and the slowest run, and returns the mean time of the others",
-    signature: "(value, repeat: integer?) -> tuple<time: number, result: value>",
+    "name": "Timing",
+    "kind": "operator",
+    "description": "`Timing(expr)` evaluates `expr` and returns a pair: the time the evaluation took, in microseconds, then the value. `Timing(expr, n)` evaluates `expr` n times (at least 3), drops the fastest and the slowest run, and returns the mean time of the others",
+    "signature": "(value, repeat: integer?) -> tuple<time: number, result: value>"
   },
   {
-    name: "To",
-    kind: "operator",
-    description: "Action arrow / mapping (`a \\to b`) — opaque typed head.",
-    signature: "(any, any) -> nothing",
+    "name": "To",
+    "kind": "operator",
+    "description": "Action arrow / mapping (`a \\to b`) — opaque typed head.",
+    "signature": "(any, any) -> nothing"
   },
   {
-    name: "ToCNF",
-    kind: "operator",
-    description: "Convert a boolean expression to conjunctive normal form (CNF), an AND of ORs.",
-    signature: "(boolean) -> boolean",
+    "name": "ToCNF",
+    "kind": "operator",
+    "description": "Convert a boolean expression to conjunctive normal form (CNF), an AND of ORs.",
+    "signature": "(boolean) -> boolean"
   },
   {
-    name: "ToDNF",
-    kind: "operator",
-    description: "Convert a boolean expression to disjunctive normal form (DNF), an OR of ANDs.",
-    signature: "(boolean) -> boolean",
+    "name": "ToDNF",
+    "kind": "operator",
+    "description": "Convert a boolean expression to disjunctive normal form (DNF), an OR of ANDs.",
+    "signature": "(boolean) -> boolean"
   },
   {
-    name: "ToLowerCase",
-    kind: "operator",
-    description:
-      "ToLowerCase(s): the string `s` mapped to lower case using the Unicode default (locale-independent) mappings.",
-    signature: "(string) -> string",
+    "name": "ToLowerCase",
+    "kind": "operator",
+    "description": "ToLowerCase(s): the string `s` mapped to lower case using the Unicode default (locale-independent) mappings.",
+    "signature": "(string) -> string"
   },
   {
-    name: "ToUpperCase",
-    kind: "operator",
-    description:
-      'ToUpperCase(s): the string `s` mapped to upper case using the Unicode default (locale-independent) mappings. The character count can change ("ß" uppercases to "SS").',
-    signature: "(string) -> string",
+    "name": "ToUpperCase",
+    "kind": "operator",
+    "description": "ToUpperCase(s): the string `s` mapped to upper case using the Unicode default (locale-independent) mappings. The character count can change (\"ß\" uppercases to \"SS\").",
+    "signature": "(string) -> string"
   },
   {
-    name: "Together",
-    kind: "operator",
-    description: "Combine rational expressions into a single fraction",
-    signature: "(value) -> value",
+    "name": "Together",
+    "kind": "operator",
+    "description": "Combine rational expressions into a single fraction",
+    "signature": "(value) -> value"
   },
   {
-    name: "Totient",
-    kind: "operator",
-    description: "Euler's totient function φ(n): count of positive integers ≤ n that are coprime to n.",
-    signature: "(integer) -> integer",
-    wikidata: "Q190026",
+    "name": "Totient",
+    "kind": "operator",
+    "description": "Euler's totient function φ(n): count of positive integers ≤ n that are coprime to n.",
+    "signature": "(integer) -> integer",
+    "wikidata": "Q190026"
   },
   {
-    name: "Trace",
-    kind: "operator",
-    description: "Trace of a matrix or pair of tensor axes.",
-    signature: "(list<number> | number, axis1: integer?, axis2: integer?) -> list<number> | number",
+    "name": "Trace",
+    "kind": "operator",
+    "description": "Trace of a matrix or pair of tensor axes.",
+    "signature": "(list<number> | number, axis1: integer?, axis2: integer?) -> list<number> | number"
   },
   {
-    name: "Transpose",
-    kind: "operator",
-    description: "Transpose a matrix or swap two tensor axes.",
-    signature: "(value, axis1: integer?, axis2: integer?) -> value",
+    "name": "Transpose",
+    "kind": "operator",
+    "description": "Transpose a matrix or swap two tensor axes.",
+    "signature": "(value, axis1: integer?, axis2: integer?) -> value"
   },
   {
-    name: "Triangle",
-    kind: "operator",
-    description: "Triangle primitive — opaque typed head.",
-    signature: "(any+) -> expression",
+    "name": "Triangle",
+    "kind": "operator",
+    "description": "Triangle primitive — opaque typed head.",
+    "signature": "(any+) -> expression"
   },
   {
-    name: "TrigExpand",
-    kind: "operator",
-    description:
-      "Expand trigonometric and hyperbolic functions of sums and integer multiples of angles. Example: TrigExpand(sin(a+b)) → sin(a)cos(b) + cos(a)sin(b), TrigExpand(sin(2x)) → 2 sin(x) cos(x)",
-    signature: "(value) -> value",
+    "name": "TrigExpand",
+    "kind": "operator",
+    "description": "Expand trigonometric and hyperbolic functions of sums and integer multiples of angles. Example: TrigExpand(sin(a+b)) → sin(a)cos(b) + cos(a)sin(b), TrigExpand(sin(2x)) → 2 sin(x) cos(x)",
+    "signature": "(value) -> value"
   },
   {
-    name: "TrigReduce",
-    kind: "operator",
-    description:
-      "Rewrite products and integer powers of trigonometric and hyperbolic functions as a linear combination of functions of multiple angles (the inverse of TrigExpand). Example: TrigReduce(sin(x)^2) → (1 - cos(2x))/2",
-    signature: "(value) -> value",
+    "name": "TrigReduce",
+    "kind": "operator",
+    "description": "Rewrite products and integer powers of trigonometric and hyperbolic functions as a linear combination of functions of multiple angles (the inverse of TrigExpand). Example: TrigReduce(sin(x)^2) → (1 - cos(2x))/2",
+    "signature": "(value) -> value"
   },
   {
-    name: "TrigToExp",
-    kind: "operator",
-    description:
-      "Rewrite trigonometric and hyperbolic functions in terms of the complex exponential, exactly. Example: TrigToExp(sin(x)) → -(i/2) e^{ix} + (i/2) e^{-ix}",
-    signature: "(value) -> value",
+    "name": "TrigToExp",
+    "kind": "operator",
+    "description": "Rewrite trigonometric and hyperbolic functions in terms of the complex exponential, exactly. Example: TrigToExp(sin(x)) → -(i/2) e^{ix} + (i/2) e^{-ix}",
+    "signature": "(value) -> value"
   },
   {
-    name: "Trigamma",
-    kind: "operator",
-    description: "Trigamma function, the derivative of the digamma function",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q2371722",
+    "name": "Trigamma",
+    "kind": "operator",
+    "description": "Trigamma function, the derivative of the digamma function",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q2371722"
   },
   {
-    name: "Trim",
-    kind: "operator",
-    description:
-      "Trim(s): remove leading and trailing whitespace (the Unicode White_Space characters). Trim(s, chars): remove leading and trailing characters that belong to `chars` — a SET of characters, given as a character, a string (meaning the set of that string's characters) or a collection whose elements each contribute their own characters.",
-    signature: "(string, chars: (character | collection<character | string> | string)?) -> string",
+    "name": "Trim",
+    "kind": "operator",
+    "description": "Trim(s): remove leading and trailing whitespace (the Unicode White_Space characters). Trim(s, chars): remove leading and trailing characters that belong to `chars` — a SET of characters, given as a character, a string (meaning the set of that string's characters) or a collection whose elements each contribute their own characters.",
+    "signature": "(string, chars: (character | collection<character | string> | string)?) -> string"
   },
   {
-    name: "TrimEnd",
-    kind: "operator",
-    description:
-      "TrimEnd(s): remove trailing whitespace (the Unicode White_Space characters). TrimEnd(s, chars): remove trailing characters that belong to `chars` — a SET of characters, as for Trim.",
-    signature: "(string, chars: (character | collection<character | string> | string)?) -> string",
+    "name": "TrimEnd",
+    "kind": "operator",
+    "description": "TrimEnd(s): remove trailing whitespace (the Unicode White_Space characters). TrimEnd(s, chars): remove trailing characters that belong to `chars` — a SET of characters, as for Trim.",
+    "signature": "(string, chars: (character | collection<character | string> | string)?) -> string"
   },
   {
-    name: "TrimStart",
-    kind: "operator",
-    description:
-      "TrimStart(s): remove leading whitespace (the Unicode White_Space characters). TrimStart(s, chars): remove leading characters that belong to `chars` — a SET of characters, as for Trim.",
-    signature: "(string, chars: (character | collection<character | string> | string)?) -> string",
+    "name": "TrimStart",
+    "kind": "operator",
+    "description": "TrimStart(s): remove leading whitespace (the Unicode White_Space characters). TrimStart(s, chars): remove leading characters that belong to `chars` — a SET of characters, as for Trim.",
+    "signature": "(string, chars: (character | collection<character | string> | string)?) -> string"
   },
   {
-    name: "Triple",
-    kind: "operator",
-    description: "A tuple of three elements",
-    signature: "(first: T, second: U, third: V) -> tuple<T, U, V> where T, U, V",
+    "name": "Triple",
+    "kind": "operator",
+    "description": "A tuple of three elements",
+    "signature": "(first: T, second: U, third: V) -> tuple<T, U, V> where T, U, V"
   },
   {
-    name: "True",
-    kind: "constant",
-    description: "The boolean truth value true.",
-    signature: "boolean",
-    wikidata: "Q16751793",
+    "name": "True",
+    "kind": "constant",
+    "description": "The boolean truth value true.",
+    "signature": "boolean",
+    "wikidata": "Q16751793"
   },
   {
-    name: "Truncate",
-    kind: "operator",
-    description: "Rounds a number towards zero (removes the fractional part)",
-    signature: "(real | signed_infinity) -> integer | signed_infinity",
+    "name": "Truncate",
+    "kind": "operator",
+    "description": "Rounds a number towards zero (removes the fractional part)",
+    "signature": "(real | signed_infinity) -> integer | signed_infinity"
   },
   {
-    name: "TruthTable",
-    kind: "operator",
-    description: "Generate truth table for expression. O(2^n) complexity, max 10 variables.",
-    signature: "(boolean) -> list",
+    "name": "TruthTable",
+    "kind": "operator",
+    "description": "Generate truth table for expression. O(2^n) complexity, max 10 variables.",
+    "signature": "(boolean) -> list"
   },
   {
-    name: "Tuple",
-    kind: "operator",
-    description: "A fixed number of heterogeneous elements",
-    signature: "(any*) -> tuple",
+    "name": "Tuple",
+    "kind": "operator",
+    "description": "A fixed number of heterogeneous elements",
+    "signature": "(any*) -> tuple"
   },
   {
-    name: "TupleFrom",
-    kind: "operator",
-    description: "Create a tuple from the elements of a collection.",
-    signature: "(value*) -> tuple",
+    "name": "TupleFrom",
+    "kind": "operator",
+    "description": "Create a tuple from the elements of a collection.",
+    "signature": "(value*) -> tuple"
   },
   {
-    name: "Type",
-    kind: "operator",
-    description:
-      'The STATIC type of an expression, as a type value: `Type(3)` is `TypeFrom("integer")`. The observer does not evaluate its operand. Recover the text with `StringFrom(Type(x))`; in a string interpolation a type value renders as its text directly. BREAKING (2026-08-19, ruling R3 of `docs/TYPE-SYSTEM.md`): the result used to be a STRING, and `Type(x) == "some text"` is now always `False` — use `x is T`, `Subtype(Type(x), u)`, or compare `StringFrom` text.',
-    signature: "(any) -> type",
+    "name": "Type",
+    "kind": "operator",
+    "description": "The STATIC type of an expression, as a type value: `Type(3)` is `TypeFrom(\"integer\")`. The observer does not evaluate its operand. Recover the text with `StringFrom(Type(x))`; in a string interpolation a type value renders as its text directly. BREAKING (2026-08-19, ruling R3 of `docs/TYPE-SYSTEM.md`): the result used to be a STRING, and `Type(x) == \"some text\"` is now always `False` — use `x is T`, `Subtype(Type(x), u)`, or compare `StringFrom` text.",
+    "signature": "(any) -> type"
   },
   {
-    name: "TypeFrom",
-    kind: "operator",
-    description:
-      'A type expression as a first-class value, constructed from its text: `TypeFrom("list<integer>")`. The value SETTLES at construction — the text is parsed, reduced, and stored back as its canonical form — so two values built from equivalent spellings (`"integer|real"`, `"real|integer"`) are the same value. `==` between two type values is mutual subtyping (it also equates an alias with its body); `==` between a type value and anything else, a string included, is `False`. Construction never touches the type registry: a forward reference (`type X`) or an unknown name is an error, not a registration.',
-    signature: "(text: string) -> type",
+    "name": "TypeFrom",
+    "kind": "operator",
+    "description": "A type expression as a first-class value, constructed from its text: `TypeFrom(\"list<integer>\")`. The value SETTLES at construction — the text is parsed, reduced, and stored back as its canonical form — so two values built from equivalent spellings (`\"integer|real\"`, `\"real|integer\"`) are the same value. `==` between two type values is mutual subtyping (it also equates an alias with its body); `==` between a type value and anything else, a string included, is `False`. Construction never touches the type registry: a forward reference (`type X`) or an unknown name is an error, not a registration.",
+    "signature": "(text: string) -> type"
   },
   {
-    name: "Typed",
-    kind: "operator",
-    description:
-      "Ascribe a type to an expression. The type is asserted for the type system (ascription, not a check); evaluation is transparent. Used to annotate `Function` literal parameters and return types.",
-    signature: "(any, string | symbol) -> unknown",
+    "name": "Typed",
+    "kind": "operator",
+    "description": "Ascribe a type to an expression. The type is asserted for the type system (ascription, not a check); evaluation is transparent. Used to annotate `Function` literal parameters and return types.",
+    "signature": "(any, string | symbol) -> unknown"
   },
   {
-    name: "Unevaluated",
-    kind: "operator",
-    description: "Prevent an expression from being evaluated",
-    signature: "(any) -> unknown",
+    "name": "Unevaluated",
+    "kind": "operator",
+    "description": "Prevent an expression from being evaluated",
+    "signature": "(any) -> unknown"
   },
   {
-    name: "UnicodeScalars",
-    kind: "operator",
-    description: "A collection of Unicode scalars from a string, same as UTF-32",
-    signature: "(string) -> list<integer>",
+    "name": "UnicodeScalars",
+    "kind": "operator",
+    "description": "A collection of Unicode scalars from a string, same as UTF-32",
+    "signature": "(string) -> list<integer>"
   },
   {
-    name: "UniformDistribution",
-    kind: "operator",
-    description: "Continuous uniform distribution on the interval [a, b].",
-    signature: "(real, real) -> expression<UniformDistribution>",
+    "name": "UniformDistribution",
+    "kind": "operator",
+    "description": "Continuous uniform distribution on the interval [a, b].",
+    "signature": "(real, real) -> expression<UniformDistribution>"
   },
   {
-    name: "Union",
-    kind: "operator",
-    description: "Return the union of two or more collections as a set.",
-    signature: "(any+) -> set",
-    wikidata: "Q185359",
+    "name": "Union",
+    "kind": "operator",
+    "description": "Return the union of two or more collections as a set.",
+    "signature": "(any+) -> set",
+    "wikidata": "Q185359"
   },
   {
-    name: "Unique",
-    kind: "operator",
-    description: "Return a list of the unique elements of the collection.",
-    signature: "((T) -> T where T: string) & ((collection<T>) -> list<T> where T)",
+    "name": "Unique",
+    "kind": "operator",
+    "description": "Return a list of the unique elements of the collection.",
+    "signature": "((T) -> T where T: string) & ((collection<T>) -> list<T> where T)"
   },
   {
-    name: "UnitConvert",
-    kind: "operator",
-    description: "Convert a quantity to a different compatible unit",
-    signature: "(value, value) -> value",
+    "name": "UnitConvert",
+    "kind": "operator",
+    "description": "Convert a quantity to a different compatible unit",
+    "signature": "(value, value) -> value"
   },
   {
-    name: "UnitDimension",
-    kind: "operator",
-    description: "Return the dimension vector of a unit",
-    signature: "(value) -> value",
+    "name": "UnitDimension",
+    "kind": "operator",
+    "description": "Return the dimension vector of a unit",
+    "signature": "(value) -> value"
   },
   {
-    name: "UnitSimplify",
-    kind: "operator",
-    description: "Simplify a quantity unit to a named derived unit if possible",
-    signature: "(value) -> value",
+    "name": "UnitSimplify",
+    "kind": "operator",
+    "description": "Simplify a quantity unit to a named derived unit if possible",
+    "signature": "(value) -> value"
   },
   {
-    name: "Utf16",
-    kind: "operator",
-    description: "A collection of UTF-16 code units from a string.",
-    signature: "(string) -> list<integer>",
+    "name": "Utf16",
+    "kind": "operator",
+    "description": "A collection of UTF-16 code units from a string.",
+    "signature": "(string) -> list<integer>"
   },
   {
-    name: "Utf8",
-    kind: "operator",
-    description: "A collection of UTF-8 code units from a string.",
-    signature: "(string) -> list<integer>",
+    "name": "Utf8",
+    "kind": "operator",
+    "description": "A collection of UTF-8 code units from a string.",
+    "signature": "(string) -> list<integer>"
   },
   {
-    name: "VacuumPermittivity",
-    kind: "constant",
-    description: "Vacuum permittivity (electric constant)",
-    signature: "value",
-    wikidata: "Q176908",
+    "name": "VacuumPermittivity",
+    "kind": "constant",
+    "description": "Vacuum permittivity (electric constant)",
+    "signature": "value",
+    "wikidata": "Q176908"
   },
   {
-    name: "Values",
-    kind: "operator",
-    description: "Return a list of the values of a dictionary.",
-    signature: "(dictionary<any>) -> list",
+    "name": "Values",
+    "kind": "operator",
+    "description": "Return a list of the values of a dictionary.",
+    "signature": "(dictionary<any>) -> list"
   },
   {
-    name: "Variance",
-    kind: "operator",
-    description: "Sample variance of a collection of numbers.",
-    signature: "((collection<any> | distribution | number)+) -> nan | real<0..>",
+    "name": "Variance",
+    "kind": "operator",
+    "description": "Sample variance of a collection of numbers.",
+    "signature": "((collection<any> | distribution | number)+) -> nan | real<0..>"
   },
   {
-    name: "Vector",
-    kind: "operator",
-    description: "Construct a column vector.",
-    signature: "(any+) -> vector",
+    "name": "Vector",
+    "kind": "operator",
+    "description": "Construct a column vector.",
+    "signature": "(any+) -> vector"
   },
   {
-    name: "W",
-    kind: "constant",
-    signature: "unknown",
+    "name": "W",
+    "kind": "constant",
+    "signature": "unknown"
   },
   {
-    name: "When",
-    kind: "operator",
-    description:
-      'Conditional/restriction value. `When(e, cond)` evaluates to:\n  - `e` when `cond` evaluates to `True`\n  - `Missing` when `cond` evaluates to `False` (the "masking rule": the position-preserving absent datum, the same answer a selection with no selected branch gives; consumers like 2D plotters skip masked points)\n  - `When(e, cond_simplified)` when `cond` is indeterminate (holds)\nStacked restrictions canonicalize: `When(When(e, c1), c2)` → `When(e, And(c1, c2))`.\nCompiles to ternary `(cond) ? (e) : NaN` in JS and GLSL.',
-    signature: "(expression, boolean) -> any",
+    "name": "When",
+    "kind": "operator",
+    "description": "Conditional/restriction value. `When(e, cond)` evaluates to:\n  - `e` when `cond` evaluates to `True`\n  - `Missing` when `cond` evaluates to `False` (the \"masking rule\": the position-preserving absent datum, the same answer a selection with no selected branch gives; consumers like 2D plotters skip masked points)\n  - `When(e, cond_simplified)` when `cond` is indeterminate (holds)\nStacked restrictions canonicalize: `When(When(e, c1), c2)` → `When(e, And(c1, c2))`.\nCompiles to ternary `(cond) ? (e) : NaN` in JS and GLSL.",
+    "signature": "(expression, boolean) -> any"
   },
   {
-    name: "Which",
-    kind: "operator",
-    description: "Return the value for the first condition that is true.",
-    signature: "(expression+) -> unknown",
-    keywords: ["piecewise"],
+    "name": "Which",
+    "kind": "operator",
+    "description": "Return the value for the first condition that is true.",
+    "signature": "(expression+) -> unknown",
+    "keywords": [
+      "piecewise"
+    ]
   },
   {
-    name: "Wildcard",
-    kind: "operator",
-    description: "Single-expression pattern wildcard.",
-    signature: "(symbol) -> symbol",
+    "name": "Wildcard",
+    "kind": "operator",
+    "description": "Single-expression pattern wildcard.",
+    "signature": "(symbol) -> symbol"
   },
   {
-    name: "WildcardOptionalSequence",
-    kind: "operator",
-    description: "Pattern wildcard matching zero or more expressions.",
-    signature: "(symbol) -> symbol",
+    "name": "WildcardOptionalSequence",
+    "kind": "operator",
+    "description": "Pattern wildcard matching zero or more expressions.",
+    "signature": "(symbol) -> symbol"
   },
   {
-    name: "WildcardSequence",
-    kind: "operator",
-    description: "Pattern wildcard matching one or more expressions.",
-    signature: "(symbol) -> symbol",
+    "name": "WildcardSequence",
+    "kind": "operator",
+    "description": "Pattern wildcard matching one or more expressions.",
+    "signature": "(symbol) -> symbol"
   },
   {
-    name: "WithRandomSeed",
-    kind: "operator",
-    description:
-      "WithRandomSeed(seed, body): evaluate `body` with a random seed frame seeded by `seed` (a finite real or a string). The block replays identically, while repeated draws WITHIN the frame differ (the n-th draw is hash(seed, n)). Scoping is dynamic: the frame is active through user-function calls, not just lexically inside `body`. Frames nest and the innermost wins. Counters are per-frame, so a nested frame does not perturb its parent's subsequent draws. Outside any frame, draws are live (non-deterministic).",
-    signature: "(real | string, any) -> expression",
+    "name": "WithRandomSeed",
+    "kind": "operator",
+    "description": "WithRandomSeed(seed, body): evaluate `body` with a random seed frame seeded by `seed` (a finite real or a string). The block replays identically, while repeated draws WITHIN the frame differ (the n-th draw is hash(seed, n)). Scoping is dynamic: the frame is active through user-function calls, not just lexically inside `body`. Frames nest and the innermost wins. Counters are per-frame, so a nested frame does not perturb its parent's subsequent draws. Outside any frame, draws are live (non-deterministic).",
+    "signature": "(real | string, any) -> expression"
   },
   {
-    name: "Xor",
-    kind: "operator",
-    description: "Exclusive or: true when an odd number of operands are true",
-    signature: "(boolean+) -> boolean",
-    wikidata: "Q498186",
+    "name": "Xor",
+    "kind": "operator",
+    "description": "Exclusive or: true when an odd number of operands are true",
+    "signature": "(boolean+) -> boolean",
+    "wikidata": "Q498186"
   },
   {
-    name: "ZeroMatrix",
-    kind: "operator",
-    description: "Matrix filled with zeros.",
-    signature: "(integer, integer?) -> matrix",
+    "name": "ZeroMatrix",
+    "kind": "operator",
+    "description": "Matrix filled with zeros.",
+    "signature": "(integer, integer?) -> matrix"
   },
   {
-    name: "Zeta",
-    kind: "operator",
-    description: "Riemann zeta function",
-    signature: "(complex | infinity) -> number",
-    wikidata: "Q187235",
+    "name": "Zeta",
+    "kind": "operator",
+    "description": "Riemann zeta function",
+    "signature": "(complex | infinity) -> number",
+    "wikidata": "Q187235"
   },
   {
-    name: "Zip",
-    kind: "operator",
-    description:
-      "Combine multiple collections element-wise into a list of tuples. The result has the length of the shortest input.",
-    signature: "(indexed_collection<any>+) -> list",
-  },
+    "name": "Zip",
+    "kind": "operator",
+    "description": "Combine multiple collections element-wise into a list of tuples. The result has the length of the shortest input.",
+    "signature": "(indexed_collection<any>+) -> list"
+  }
 ];

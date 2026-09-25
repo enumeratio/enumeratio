@@ -653,6 +653,11 @@ const NOVEL = [
   "IsBipartiteGraph",
   "NeighborhoodGraph",
   "Subgraph",
+  // Inequality and FindInstance (@enumeratio/analytic): genuine Wolfram heads (see HEADS
+  // in @enumeratio/wolfram), waiting on the same offline-kernel-less story as the rest of
+  // this list for `elsewhere` to fill in.
+  "Inequality",
+  "FindInstance",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

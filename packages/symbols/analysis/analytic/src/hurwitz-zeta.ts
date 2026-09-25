@@ -89,6 +89,8 @@ import { declareTransforms } from "./transforms.ts";
 import { declareMeijerG } from "./meijer-g.ts";
 import { declareMeijerGReduce } from "./meijer-g-reduce.ts";
 import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
+import { declareInequality } from "./inequality.ts";
+import { declareFindInstance } from "./find-instance.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -768,5 +770,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareTrigPowerIntegrals(ce);
   declareHugeArguments(ce);
   declareInverseCompositions(ce);
+  declareInequality(ce);
+  declareFindInstance(ce);
   declareCorrectlyRoundedN(ce);
 }
