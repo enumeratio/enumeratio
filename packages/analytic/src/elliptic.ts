@@ -6,7 +6,7 @@ import {
   numberResult,
   wantsNumber,
 } from "./box.ts";
-import { carlsonRF, carlsonRJ } from "./carlson.ts";
+import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
 import { add, ccos, csin, cx, type Cx, mul, scale, sub } from "./complex.ts";
 
 // The incomplete Legendre elliptic integrals, and two precision fixes for the native
@@ -120,40 +120,18 @@ function declareIncompleteE(ce: ComputeEngine): void {
 }
 
 /**
- * Is an `R_J(x, y, z, p)` call here at genuine risk of `carlsonRJ`'s documented branch
- * issue — a per-step `R_C` sum whose implicit branch choice can disagree with mpmath?
- * Found by testing IncompleteEllipticPi's own Fungrim identity 5f84d9 at
- * n = m = φ = 1.17 + 0.45i, k = 3: `RJ(0, 0.7, 1, −0.17−0.45i)` disagrees with mpmath's
- * `elliprj` by an order of magnitude (well outside this file's tolerance), even though
- * only `p` is off the positive real axis and `carlsonRJ`'s own decline heuristic
- * (`carlsonRJDeclines` in carlson.ts) does not catch it — it only declines at two or
- * more of the four arguments at Re < 0, and here it is one. Bisecting the failure
- * pinned it to `p` specifically: `RJ(0.5, 0.7, 1, −0.17−0.45i)` (same `p`, `x` moved
- * away from 0) agrees with mpmath, and `RJ(0.1, −0.3, 1, 0.5+0.1i)` (`y` negative,
- * `p` positive) agrees too — so this declines whenever `p` alone has Re < 0 and the
- * call is not the all-real case (where `carlsonRJ`'s reflection/CPV branches are
- * already verified), rather than trying to characterize exactly which `x` keeps it
- * safe. More conservative than strictly necessary, but a false decline costs
- * coverage; a wrong number costs correctness.
- */
-function riskyRJ(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
-  if ([x, y, z, p].every((v) => v.im === 0)) return false;
-  return p.re < 0;
-}
-
-/**
  * Π(n; m) = R_F(0, 1−m, 1) + (n/3)·R_J(0, 1−m, 1, 1−n) — the complete elliptic integral
  * of the third kind (DLMF 19.25.15 at φ = π/2: cosφ = 0, sinφ = 1), used below only to
  * bridge the quasi-periodicity identity across φ = π/2 + kπ. Matches Fungrim identity
  * 9ccaef, which states the same reduction for native `EllipticPi`. `undefined` when the
- * R_J call is at risk (see `riskyRJ`) — declining rather than trusting a number this
- * file cannot vouch for.
+ * R_J call is outside `carlsonRJDeclines`'s verified regions (carlson.ts) — declining
+ * rather than trusting a number this file cannot vouch for.
  */
 function ellipticPiComplete(n: Cx, m: Cx): Cx | undefined {
   const one = cx(1);
   const oneMinusM = sub(one, m);
   const oneMinusN = sub(one, n);
-  if (riskyRJ(cx(0), oneMinusM, one, oneMinusN)) return undefined;
+  if (carlsonRJDeclines(cx(0), oneMinusM, one, oneMinusN)) return undefined;
   const rf = carlsonRF(cx(0), oneMinusM, one);
   const rj = carlsonRJ(cx(0), oneMinusM, one, oneMinusN);
   return add(rf, scale(mul(n, rj), 1 / 3));
@@ -162,7 +140,7 @@ function ellipticPiComplete(n: Cx, m: Cx): Cx | undefined {
 /**
  * Π(n; φ, m) for Re(φ) ∈ [−π/2, π/2] — Fungrim identity 8f4e31 / DLMF 19.25.14:
  *   Π(n;φ,m) = sinφ·R_F(cos²φ, 1−m sin²φ, 1) + (n/3)·sin³φ·R_J(cos²φ, 1−m sin²φ, 1, 1−n sin²φ)
- * `undefined` when the R_J call is at risk (see `riskyRJ`).
+ * `undefined` when the R_J call is outside `carlsonRJDeclines`'s verified regions.
  */
 function incompleteEllipticPiBase(n: Cx, phi: Cx, m: Cx): Cx | undefined {
   const c = ccos(phi);
@@ -174,7 +152,7 @@ function incompleteEllipticPiBase(n: Cx, phi: Cx, m: Cx): Cx | undefined {
   const x = c2;
   const y = sub(one, mul(m, s2));
   const p = sub(one, mul(n, s2));
-  if (riskyRJ(x, y, one, p)) return undefined;
+  if (carlsonRJDeclines(x, y, one, p)) return undefined;
   const rf = carlsonRF(x, y, one);
   const rj = carlsonRJ(x, y, one, p);
   return add(mul(s, rf), scale(mul(n, mul(s3, rj)), 1 / 3));

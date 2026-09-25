@@ -651,6 +651,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "CarmichaelLambda",
+    wolfram: "CarmichaelLambda",
+  },
+  {
     name: "CatalanConstant",
     wolfram: "Catalan",
   },
@@ -1191,6 +1195,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DigitCount",
   },
   {
+    name: "DigitSum",
+    wolfram: "DigitSum",
+  },
+  {
     name: "DirichletBeta",
     wolfram: "DirichletBeta",
   },
@@ -1233,6 +1241,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "DivisorSigma",
     fungrimEntries: ["7c00e6"],
     wolfram: "DivisorSigma",
+  },
+  {
+    name: "DivisorSum",
+    wolfram: "DivisorSum",
   },
   {
     name: "Divisors",
@@ -1453,6 +1465,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Erfi",
     fungrimEntries: ["01440f", "603a49"],
+  },
+  {
+    name: "EulerE",
+    wolfram: "EulerE",
   },
   {
     name: "EulerGamma",
@@ -1890,6 +1906,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FractionalPart",
   },
   {
+    name: "FrobeniusNumber",
+    wolfram: "FrobeniusNumber",
+  },
+  {
+    name: "FrobeniusSolve",
+    wolfram: "FrobeniusSolve",
+  },
+  {
     name: "FromDigits",
     wolfram: "FromDigits",
   },
@@ -2128,6 +2152,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "GammaRegularized",
     wolfram: "GammaRegularized",
+  },
+  {
+    name: "Gather",
+    wolfram: "Gather",
+  },
+  {
+    name: "GatherBy",
+    wolfram: "GatherBy",
   },
   {
     name: "GeometricMean",
@@ -2473,6 +2505,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "CompositeQ",
   },
   {
+    name: "IsCoprime",
+    wolfram: "CoprimeQ",
+  },
+  {
     name: "IsEven",
     fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
     wolfram: "EvenQ",
@@ -2481,6 +2517,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "IsOdd",
     fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
     wolfram: "OddQ",
+  },
+  {
+    name: "IsPerfect",
+    wolfram: "PerfectNumberQ",
   },
   {
     name: "IsPrime",
@@ -2512,6 +2552,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "IsPrimePower",
+    wolfram: "PrimePowerQ",
   },
   {
     name: "IsQuadraticIrrational",
@@ -2912,6 +2956,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "LinearRecurrence",
   },
   {
+    name: "LiouvilleLambda",
+    fungrimEntries: ["e4e707"],
+    wolfram: "LiouvilleLambda",
+  },
+  {
     name: "List",
     wolfram: "List",
     oracle: [
@@ -3101,6 +3150,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MangoldtLambda",
+    wolfram: "MangoldtLambda",
+  },
+  {
     name: "Map",
     fungrimEntries: [
       "27766c",
@@ -3162,6 +3215,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MemoryConstrained",
     wolfram: "MemoryConstrained",
+  },
+  {
+    name: "MersennePrimeExponent",
+    wolfram: "MersennePrimeExponent",
   },
   {
     name: "Min",
@@ -3339,6 +3396,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NonCommutativeMultiply",
   },
   {
+    name: "NoneTrue",
+    wolfram: "NoneTrue",
+  },
+  {
     name: "NorlundB",
     wolfram: "NorlundB",
   },
@@ -3375,6 +3436,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Outer",
   },
   {
+    name: "PadLeft",
+    wolfram: "PadLeft",
+  },
+  {
+    name: "PadRight",
+    wolfram: "PadRight",
+  },
+  {
     name: "Partition",
     wolfram: "Partition",
   },
@@ -3392,6 +3461,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "PartitionsQ",
+    wolfram: "PartitionsQ",
+  },
+  {
+    name: "PerfectNumber",
+    wolfram: "PerfectNumber",
   },
   {
     name: "Pi",
@@ -3525,6 +3602,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "PowersRepresentations",
+    wolfram: "PowersRepresentations",
+  },
+  {
     name: "Prime",
     oracle: [
       {
@@ -3617,6 +3698,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Quotient",
     wolfram: "Quotient",
+  },
+  {
+    name: "RamanujanTau",
+    wolfram: "RamanujanTau",
   },
   {
     name: "Random",
@@ -3729,6 +3814,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "RiemannZetaZero",
     fungrimEntries: ["60c2ec"],
     wolfram: "ZetaZero",
+  },
+  {
+    name: "Riffle",
+    wolfram: "Riffle",
   },
   {
     name: "RomanNumeral",
@@ -4000,6 +4089,22 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Sort",
   },
   {
+    name: "SortBy",
+    wolfram: "SortBy",
+  },
+  {
+    name: "Span",
+    wolfram: "Span",
+  },
+  {
+    name: "Split",
+    wolfram: "Split",
+  },
+  {
+    name: "SplitBy",
+    wolfram: "SplitBy",
+  },
+  {
     name: "Sqrt",
     wolfram: "Sqrt",
     oracle: [
@@ -4024,6 +4129,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "SquaresR",
+    wolfram: "SquaresR",
   },
   {
     name: "StandardDeviation",
@@ -4273,6 +4382,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "UnitStep",
     wolfram: "UnitStep",
+  },
+  {
+    name: "UpTo",
+    wolfram: "UpTo",
   },
   {
     name: "Variance",

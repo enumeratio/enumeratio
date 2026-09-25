@@ -514,6 +514,20 @@
             "input": "\\binom{\\{2,3,5,7,11\\}}{3}",
             "output": "\\{0,1,10,35,165\\}"
           }
+        },
+        "sympy": {
+          "input": "binomial([2, 3, 5, 7, 11], 3)",
+          "output": "TypeError: unsupported operand type(s) for -: 'list' and 'Integer'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Binomial is Listable and threads over the list; SymPy's takes scalars only."
+        },
+        "rust": {
+          "input": "binomial(list(vec![n(2), n(3), n(5), n(7), n(11)]), n(3))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Binomial is Listable and threads over the list; the Rust crate takes scalars only."
         }
       },
       "[\"Binomial\",[\"Rational\",9,2],[\"Rational\",7,2]]": {
@@ -525,6 +539,18 @@
             "input": "\\binom{\\frac{9}{2}}{\\frac{7}{2}}",
             "output": "\\frac{9}{2}"
           }
+        },
+        "sympy": {
+          "input": "binomial(Rational(9, 2), Rational(7, 2))",
+          "output": "9/2",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(rational(n(9), n(2)), rational(n(7), n(2)))",
+          "output": "panic: an integer, not 9/2",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's Binomial extends to non-integer arguments via Gamma; the Rust crate takes integers only."
         }
       }
     },
@@ -1544,6 +1570,13 @@
             "input": "C_{\\{1,2,3,4\\}}",
             "output": "\\{1,2,5,14\\}"
           }
+        },
+        "sympy": {
+          "input": "catalan([1, 2, 3, 4])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Integer'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's CatalanNumber is Listable and threads over the list; SymPy's takes scalars only."
         }
       },
       "[\"CatalanNumber\",[\"Rational\",5,2]]": {
@@ -1555,6 +1588,11 @@
             "input": "C_{\\frac{5}{2}}",
             "output": "\\frac{1024}{105 \\pi }"
           }
+        },
+        "sympy": {
+          "input": "catalan(Rational(5, 2))",
+          "output": "catalan(5/2)",
+          "verdict": "agree"
         }
       }
     },
@@ -2401,6 +2439,13 @@
             "input": "B_{\\{1,2,3,4\\}}",
             "output": "\\{1,2,5,15\\}"
           }
+        },
+        "sympy": {
+          "input": "bell([1, 2, 3, 4])",
+          "output": "AttributeError: 'list' object has no attribute 'is_negative'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's BellNumber is Listable and threads over the list; SymPy's takes scalars only."
         }
       }
     }

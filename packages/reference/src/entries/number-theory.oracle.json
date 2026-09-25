@@ -822,6 +822,13 @@
             "input": "\\phi (0)",
             "output": "0"
           }
+        },
+        "sympy": {
+          "input": "totient(0)",
+          "output": "ValueError: n should be a positive integer",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's Totient answers at 0; SymPy's totient() requires a positive integer and declines."
         }
       },
       "[\"Totient\",[\"List\",2,4,6]]": {
@@ -833,6 +840,13 @@
             "input": "\\phi (\\{2,4,6\\})",
             "output": "\\{1,2,2\\}"
           }
+        },
+        "sympy": {
+          "input": "totient([2, 4, 6])",
+          "output": "AttributeError: 'list' object has no attribute 'is_integer'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Totient is Listable and threads over the list; SymPy's takes scalars only."
         }
       }
     },
@@ -1117,6 +1131,20 @@
             "input": "\\pi (\\{10,100\\})",
             "output": "\\{4,25\\}"
           }
+        },
+        "sympy": {
+          "input": "primepi([10, 100])",
+          "output": "AttributeError: 'list' object has no attribute 'is_real'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PrimePi is Listable and threads over the list; SymPy's takes scalars only."
+        },
+        "rust": {
+          "input": "prime_pi(list(vec![n(10), n(100)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PrimePi is Listable and threads over the list; the Rust crate takes scalars only."
         }
       }
     },
@@ -1498,6 +1526,22 @@
           "input": "is_prime((2 + 1*I))",
           "output": "True",
           "verdict": "agree"
+        }
+      },
+      "[\"IsPrime\",-7]": {
+        "sympy": {
+          "input": "isprime(-7)",
+          "output": "False",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; SymPy's isprime() only accepts positive primes."
+        },
+        "rust": {
+          "input": "is_prime(n(-7))",
+          "output": "panic: a non-negative integer",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; the Rust crate requires a non-negative integer and declines."
         }
       }
     },
@@ -2284,6 +2328,13 @@
             "input": "\\mu (\\{1,2,3,4\\})",
             "output": "\\{1,-1,-1,0\\}"
           }
+        },
+        "sympy": {
+          "input": "mobius([1, 2, 3, 4])",
+          "output": "AttributeError: 'list' object has no attribute 'is_integer'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's MoebiusMu is Listable and threads over the list; SymPy's takes scalars only."
         }
       }
     },

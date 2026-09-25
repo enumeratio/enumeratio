@@ -1,5 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
+  bigIntegerAt,
+  bigRationalAt,
   mayBeInteger,
   operandsOf,
   optionsOf,
@@ -10,15 +12,21 @@ import { factorInteger, invMod, isPrime } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
   divisorsGaussian,
+  divisorSigmaGaussian,
   extendedGcd,
   factorGaussian,
   type Gaussian,
   gcd,
+  integerExponentGaussian,
   inverseMod,
   isGaussianPrime,
   isReal,
+  isSquareFreeGaussian,
   lcm,
+  moebiusMuGaussian,
   mod,
+  primeNuGaussian,
+  primeOmegaGaussian,
   quotient,
 } from "./gaussian.ts";
 
@@ -53,6 +61,13 @@ function gaussianOption(head: string, ops: Ops): { positional: number; value?: b
   };
 }
 
+/** ⌊a/b⌋ for bigints, b ≠ 0. */
+const floorDiv = (a: bigint, b: bigint): bigint => {
+  const q = a / b;
+  const r = a - q * b;
+  return r !== 0n && r < 0n !== b < 0n ? q - 1n : q;
+};
+
 export function declareGaussian(ce: ComputeEngine): void {
   const list = (items: readonly BoxedExpression[]): BoxedExpression => ce.function("List", items);
   const g = (z: Gaussian | undefined): BoxedExpression | undefined =>
@@ -69,19 +84,45 @@ export function declareGaussian(ce: ComputeEngine): void {
     },
   );
 
-  // Wolfram's Quotient: ⌊m/n⌋ for integers, z/m rounded half-even for Gaussian integers.
+  // Wolfram's Quotient: ⌊m/n⌋ for integers — rational and real m, n included — with an
+  // optional offset d shifting the remainder into [d, d+n); z/m rounded half-even for
+  // Gaussian integers.
   ce.declare("Quotient", {
     description:
-      "The integer quotient of m by n: ⌊m/n⌋ for integers; for Gaussian integers, m/n rounded to the nearest lattice point, ties to even.",
-    signature: "(number, number) -> number",
+      "The integer quotient of m by n: ⌊(m−d)/n⌋, d defaulting to 0, for integers, rationals and reals; for Gaussian integers, m/n rounded to the nearest lattice point, ties to even.",
+    signature: "(number, number, number?) -> number",
+    broadcastable: true,
     evaluate: (ops: Ops) => {
-      const gaussian = gaussianCall(ops);
+      if (ops.length < 2 || ops.length > 3) return undefined;
+      const gaussian = ops.length === 2 ? gaussianCall(ops) : undefined;
       if (gaussian !== undefined) return g(quotient(gaussian[0]!, gaussian[1]!));
-      const [m, n] = ops.map(gaussianAt);
-      if (m === undefined || n === undefined || n[0] === 0n) return undefined;
-      const [a, b] = [m[0], n[0]];
-      const q = a / b;
-      return ce.number(q * b !== a && a < 0n !== b < 0n ? q - 1n : q);
+      const m = bigRationalAt(ops[0]);
+      const n = bigRationalAt(ops[1]);
+      const d = ops.length === 3 ? bigRationalAt(ops[2]) : ([0n, 1n] as const);
+      if (m !== undefined && n !== undefined && d !== undefined) {
+        const [mn, md] = m;
+        const [nn, nd] = n;
+        const [dn, dd] = d;
+        if (nn === 0n) return undefined;
+        // (m − d)/n, cross-multiplied to a single bigint ratio, then floored.
+        const num = (mn * dd - dn * md) * nd;
+        const den = md * dd * nn;
+        return ce.number(floorDiv(num, den));
+      }
+      // A genuinely irrational operand: fall back to doubles.
+      const [mr, nr, dr] = [ops[0]?.re, ops[1]?.re, ops.length === 3 ? ops[2]?.re : 0];
+      if (
+        mr !== undefined &&
+        nr !== undefined &&
+        dr !== undefined &&
+        Number.isFinite(mr) &&
+        Number.isFinite(nr) &&
+        nr !== 0 &&
+        Number.isFinite(dr)
+      ) {
+        return ce.number(Math.floor((mr - dr) / nr));
+      }
+      return undefined;
     },
   });
 
@@ -231,6 +272,78 @@ export function declareGaussian(ce: ComputeEngine): void {
       }
       divisors.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
       return list(divisors.map((d) => ce.number(d)));
+    },
+  );
+
+  // PrimeNu, PrimeOmega, MoebiusMu and IsSquareFree already answer plain integers (widened in
+  // declare.ts's threadOverLists); only the `GaussianIntegers -> True` read of a rational
+  // integer, and a Gaussian argument off the real line, are new here.
+  const bool = (value: boolean): BoxedExpression => ce.symbol(value ? "True" : "False");
+
+  optionHead("PrimeNu", "(number, any*) -> integer", undefined, (z) => {
+    const count = primeNuGaussian(z);
+    return count === undefined ? undefined : ce.number(count);
+  });
+  optionHead("PrimeOmega", "(number, any*) -> integer", undefined, (z) => {
+    const count = primeOmegaGaussian(z);
+    return count === undefined ? undefined : ce.number(count);
+  });
+  optionHead("MoebiusMu", "(number, any*) -> integer", undefined, (z) => {
+    const mu = moebiusMuGaussian(z);
+    return mu === undefined ? undefined : ce.number(mu);
+  });
+  optionHead("IsSquareFree", "(number, any*) -> boolean", undefined, (z) => {
+    const squareFree = isSquareFreeGaussian(z);
+    return squareFree === undefined ? undefined : bool(squareFree);
+  });
+
+  // DivisorSigma(k, n, GaussianIntegers -> True): two positional arguments ahead of the
+  // option, so it needs its own wiring rather than `optionHead`'s single-positional one.
+  // Widened first so a Complex n, or a trailing option tuple, reach `evaluate` at all.
+  widenSignature(ce, "DivisorSigma", "(number, number, any*) -> number");
+  const nativeDivisorSigma = ce.lookupDefinition("DivisorSigma");
+  const divisorSigmaOperator =
+    nativeDivisorSigma !== undefined && "operator" in nativeDivisorSigma
+      ? nativeDivisorSigma.operator
+      : undefined;
+  if (divisorSigmaOperator !== undefined) {
+    // declare.ts marks DivisorSigma broadcastable, for the list-in-n case; without this a
+    // rule canonicalising to a Tuple (the GaussianIntegers option) gets threaded over too.
+    const flags = divisorSigmaOperator as { broadcastExemptions: readonly string[] };
+    if (!flags.broadcastExemptions.includes("tuples")) {
+      flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
+    }
+    const nativeEvaluate = divisorSigmaOperator.evaluate;
+    divisorSigmaOperator.evaluate = (ops, options) => {
+      const option = gaussianOption("DivisorSigma", ops);
+      if (option !== "other" && option.positional === 2) {
+        const k = bigIntegerAt(ops[0]);
+        const z = gaussianAt(ops[1]);
+        if (k !== undefined && z !== undefined && (z[1] !== 0n || option.value === true)) {
+          const sum = divisorSigmaGaussian(k, z);
+          if (sum !== undefined) return gaussianExpression(ce, sum);
+        }
+      }
+      return nativeEvaluate?.(ops, options);
+    };
+  }
+}
+
+/**
+ * IntegerExponent(z, b) over ℤ[i]: both arguments read in ℤ[i] once either is off the real
+ * line — no GaussianIntegers option, the way PowerMod's Gaussian case also switches on its
+ * operands. Declared after `IntegerExponent` itself (declare.ts), unlike the rest of this
+ * module, since the head is ours rather than compute-engine's native one.
+ */
+export function declareIntegerExponentGaussian(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["IntegerExponent", 1, 1],
+    (ops) => ops.length === 2 && gaussianCall(ops) !== undefined,
+    () => (ops) => {
+      const [z, b] = gaussianCall(ops)!;
+      const k = integerExponentGaussian(z!, b!);
+      return k === undefined ? undefined : ce.number(k);
     },
   );
 }

@@ -490,6 +490,12 @@ export const collections: readonly ReferenceEntry[] = [
         call: "At(collection, Range(start, end))",
         description: "a contiguous slice selected by a [[Range]].",
       },
+      {
+        call: "At(collection, Span(i, j, step))",
+        description:
+          "a contiguous (or stepped) slice selected by a [[Span]], negative step included.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Negative indices count from the end: $At(c, -1)$ is the last element. See [[Last]].",
@@ -601,24 +607,20 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]],
         expected: ["List", "b", "c", "d"],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A $Span$ ($2;;4$ in Wolfram) takes a contiguous slice; compute-engine has no $Span$ — not yet",
+        caption: "A [[Span]] ($2;;4$ in Wolfram) takes a contiguous slice",
       },
       {
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 1, -1, 2]],
         expected: ["List", "a", "c", "f"],
-        aspirational: true,
         category: "Scope",
-        caption: "A stepped $Span$ ($1;;-1;;2$) takes every other element up to the end; not yet",
+        caption: "A stepped [[Span]] ($1;;-1;;2$) takes every other element up to the end",
       },
       {
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -1, 1, -1]],
         expected: ["List", "f", "d", "c", "b", "a"],
-        aspirational: true,
         category: "Scope",
-        caption: "A negative step ($-1;;1;;-1$) walks backwards, reversing the list; not yet",
+        caption: "A negative step ($-1;;1;;-1$) walks backwards, reversing the list",
       },
       {
         expr: ["At", ["Add", "a", "b", "c"], 2],
@@ -628,7 +630,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Parts of any expression, not just lists: the second term of a sum; not yet",
       },
     ],
-    seeAlso: ["First", "Last", "IndexOf"],
+    seeAlso: ["First", "Last", "IndexOf", "Span"],
   },
   {
     name: "IndexOf",
@@ -921,9 +923,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Ordering", ["List", 2, 6, 1, 9, 2], ["UpTo", 6]],
         expected: ["List", 3, 1, 5, 2, 4],
-        aspirational: true,
         category: "Scope",
-        caption: "$UpTo(6)$ asks for at most 6 positions, so a 5-element list gives all 5; not yet",
+        caption: "[[UpTo]](6) asks for at most 6 positions, so a 5-element list gives all 5",
       },
       {
         expr: ["Ordering", ["Ordering", ["List", 3, 1, 2]]],
@@ -939,7 +940,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "The position of the smallest element. See [[First]]",
       },
     ],
-    seeAlso: ["Sort"],
+    seeAlso: ["Sort", "UpTo"],
   },
   {
     name: "Length",
@@ -1618,9 +1619,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 4]],
         expected: ["List", ["List", 1, 2, 3, 4], ["List", 5, 6]],
-        aspirational: true,
         category: "Scope",
-        caption: "$UpTo(4)$ allows a shorter final chunk; not yet",
+        caption: "[[UpTo]](4) allows a shorter final chunk, unlike a plain integer count",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 5, 1, ["List", 1, 1]],
@@ -1712,7 +1712,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Reshaping a list of 9 into a $3 \\times 3$ matrix",
       },
     ],
-    seeAlso: ["Flatten"],
+    seeAlso: ["Flatten", "UpTo"],
   },
   {
     name: "Mean",
@@ -2652,5 +2652,451 @@ export const collections: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["GeometricMean", "Mean"],
+  },
+  // ── Wolfram-sweep list heads (packages/collections/src/list-ops-wolfram.ts) ──
+  {
+    name: "Span",
+    domain: "Collections",
+    signature: "Span(i, j, step)",
+    summary: "A range of positions i;;j;;step used as a part specification.",
+    signatures: [
+      {
+        call: "Span(i, j, step?)",
+        description:
+          "positions $i, i+step, \\dots$ up to $j$; a negative position counts from the end. Never evaluated on its own — read by [[At]].",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Never reduces by itself: it is a part specification other heads read, the way $Range$ describes a sequence of numbers. [[At]] is the only head here that reads one.",
+      "$step$ defaults to 1; a negative $step$ walks from $i$ down to $j$.",
+      "Negative $i$/$j$ count from the end, exactly as a plain negative index does in [[At]].",
+    ],
+    examples: [
+      {
+        expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]],
+        expected: ["List", "b", "c", "d"],
+        caption: "Positions 2 through 4 ($2;;4$ in Wolfram)",
+      },
+      {
+        expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 1, -1, 2]],
+        expected: ["List", "a", "c", "f"],
+        caption: "Every other element through the last ($1;;-1;;2$)",
+      },
+      {
+        expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -1, 1, -1]],
+        expected: ["List", "f", "d", "c", "b", "a"],
+        category: "Scope",
+        caption: "A negative step walks backwards ($-1;;1;;-1$)",
+      },
+      {
+        expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -2, -1]],
+        expected: ["List", "d", "f"],
+        category: "Scope",
+        caption: "Negative bounds: the last two elements",
+      },
+      {
+        expr: [
+          "At",
+          ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]],
+          ["Span", 2, 3],
+          ["Span", 1, 2],
+        ],
+        expected: ["List", ["List", 4, 5], ["List", 7, 8]],
+        category: "Scope",
+        caption: "Spans at two levels cut out a submatrix",
+      },
+    ],
+    seeAlso: ["At", "UpTo"],
+  },
+  {
+    name: "UpTo",
+    domain: "Collections",
+    signature: "UpTo(n)",
+    summary: "A count specification meaning at most n, taking fewer when fewer are available.",
+    signatures: [
+      {
+        call: "UpTo(n)",
+        description:
+          "at most $n$ — never an error for asking for more than a collection holds. Never evaluated on its own — read by [[Partition]] and [[Ordering]].",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Never reduces by itself: a count specification other heads read, not a value.",
+      "In [[Partition]], allows a shorter final chunk instead of dropping the ragged remainder.",
+      "In [[Ordering]], the same clamping a plain integer count already gives — at most n positions, fewer if the collection is shorter.",
+    ],
+    examples: [
+      {
+        expr: ["Take", ["List", 1, 2, 3], ["UpTo", 5]],
+        expected: ["List", 1, 2, 3],
+        aspirational: true,
+        caption:
+          "Asking for up to 5 of 3 elements should take all 3, with no error; compute-engine's Take has no override hook this library can safely use, so this is not yet met",
+      },
+      {
+        expr: ["Take", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 2]],
+        expected: ["List", 1, 2],
+        aspirational: true,
+        caption: "When enough elements are available, exactly n should be taken; not yet, same gap",
+      },
+      {
+        expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 4]],
+        expected: ["List", ["List", 1, 2, 3, 4], ["List", 5, 6]],
+        category: "Scope",
+        caption: "In [[Partition]], a shorter final chunk is allowed",
+      },
+      {
+        expr: ["Ordering", ["List", 2, 6, 1, 9, 2], ["UpTo", 6]],
+        expected: ["List", 3, 1, 5, 2, 4],
+        category: "Scope",
+        caption: "In [[Ordering]], at most 6 positions of a 5-element list",
+      },
+    ],
+    seeAlso: ["Partition", "Ordering", "Span"],
+  },
+  {
+    name: "Riffle",
+    domain: "Collections",
+    signature: "Riffle(list, x)",
+    summary: "Interleave a separator (or a second list) between the elements of a list.",
+    signatures: [
+      {
+        call: "Riffle(list, x)",
+        description:
+          "$x$ between every consecutive pair of elements; if $x$ is itself a $List$, its elements are used in turn (and, once list and x run the same length, a trailing one too).",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Riffle(list, x, n)",
+        description: "a separator every $n$ elements, rather than between every pair.",
+        library: "enumeratio-collections",
+      },
+    ],
+    examples: [
+      {
+        expr: ["Riffle", ["List", "a", "b", "c"], "x"],
+        expected: ["List", "a", "x", "b", "x", "c"],
+        caption: "$x$ between consecutive elements",
+      },
+      {
+        expr: ["Riffle", ["List", "a", "b", "c"], ["List", "x", "y", "z"]],
+        expected: ["List", "a", "x", "b", "y", "c", "z"],
+        caption: "Interleave two lists of the same length",
+      },
+      {
+        expr: ["Riffle", ["List", "a", "b", "c"], ["List", "x", "y"]],
+        expected: ["List", "a", "x", "b", "y", "c"],
+        category: "Scope",
+        caption: "A list one shorter goes strictly between the elements",
+      },
+      {
+        expr: ["Riffle", ["List", 1, 2, 3, 4, 5, 6, 7], "x", 3],
+        expected: ["List", 1, 2, "x", 3, 4, "x", 5, 6, "x", 7],
+        category: "Scope",
+        caption: "Every 3rd element of the result is x",
+      },
+      {
+        expr: ["Riffle", ["List", "a"], "x"],
+        expected: ["List", "a"],
+        category: "Scope",
+        caption: "A single element has nothing to separate",
+      },
+    ],
+    seeAlso: ["Join", "Partition"],
+  },
+  {
+    name: "Gather",
+    domain: "Collections",
+    signature: "Gather(list)",
+    summary: "Group identical elements into sublists, in order of first appearance.",
+    signatures: [
+      {
+        call: "Gather(list)",
+        description: "elements grouped by equality, in first-appearance order.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Gather(list, test)",
+        description: "elements grouped by a custom two-argument equivalence test.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Groups, not runs: every occurrence of a value lands in the same group wherever it appears — unlike [[Split]], which only joins ADJACENT equal elements. See [[GatherBy]] to group by a function's value instead of the elements themselves.",
+    ],
+    examples: [
+      {
+        expr: ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]],
+        expected: ["List", ["List", 1], ["List", 7, 7], ["List", 3, 3], ["List", 2], ["List", 9]],
+      },
+      {
+        expr: ["Gather", ["List", "a", "b", "a", "a", "c", "b"]],
+        expected: ["List", ["List", "a", "a", "a"], ["List", "b", "b"], ["List", "c"]],
+        caption: "Symbolic elements",
+      },
+      {
+        expr: [
+          "Gather",
+          ["List", 1, 2, 3, 4, 5, 6],
+          ["Function", ["Equal", ["Mod", "_1", 2], ["Mod", "_2", 2]]],
+        ],
+        expected: ["List", ["List", 1, 3, 5], ["List", 2, 4, 6]],
+        category: "Scope",
+        caption: "A test decides which elements belong together: here, same parity",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Map", "Length", ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]]],
+          ["List", 1, 2, 2, 1, 1],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "The group sizes are the multiplicities of the distinct elements",
+      },
+    ],
+    seeAlso: ["GatherBy", "Split", "Union"],
+  },
+  {
+    name: "GatherBy",
+    domain: "Collections",
+    signature: "GatherBy(list, f)",
+    summary: "Group elements by the value of a function, in order of first appearance.",
+    signatures: [
+      {
+        call: "GatherBy(list, f)",
+        description: "elements grouped by $f(element)$, in first-appearance order.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: ['[[Gather]] with the equivalence "same $f$ value" instead of plain equality.'],
+    examples: [
+      {
+        expr: ["GatherBy", ["List", 1, 2, 3, 4, 5, 6, 7], ["Function", ["Mod", "_1", 3]]],
+        expected: ["List", ["List", 1, 4, 7], ["List", 2, 5], ["List", 3, 6]],
+        caption: "Grouped by residue mod 3",
+      },
+      {
+        expr: ["GatherBy", ["List", -2, 1, 2, -1, 3], "Abs"],
+        expected: ["List", ["List", -2, 2], ["List", 1, -1], ["List", 3]],
+        caption: "Grouped by absolute value",
+      },
+      {
+        expr: ["GatherBy", ["List", ["List", "a", 1], ["List", "b", 2], ["List", "c", 1]], "Last"],
+        expected: [
+          "List",
+          ["List", ["List", "a", 1], ["List", "c", 1]],
+          ["List", ["List", "b", 2]],
+        ],
+        category: "Scope",
+        caption: "Pairs grouped by their last element",
+      },
+    ],
+    seeAlso: ["Gather", "SplitBy", "SortBy"],
+  },
+  {
+    name: "Split",
+    domain: "Collections",
+    signature: "Split(list)",
+    summary: "Split a list into runs of identical adjacent elements.",
+    signatures: [
+      {
+        call: "Split(list)",
+        description: "runs of adjacent equal elements.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Split(list, test)",
+        description: "runs on which adjacent elements agree by a custom two-argument test.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Runs, not groups: only ADJACENT equal elements join a run, so the same value can appear in several separate runs. See [[Gather]] to group every occurrence together regardless of position.",
+    ],
+    examples: [
+      {
+        expr: ["Split", ["List", 1, 1, 2, 2, 2, 3, 1, 1]],
+        expected: ["List", ["List", 1, 1], ["List", 2, 2, 2], ["List", 3], ["List", 1, 1]],
+        caption: "Runs, not groups: the two runs of 1 stay apart",
+      },
+      {
+        expr: ["Split", ["List", "a", "a", "b", "b", "b", "a"]],
+        expected: ["List", ["List", "a", "a"], ["List", "b", "b", "b"], ["List", "a"]],
+        caption: "Symbolic elements",
+      },
+      {
+        expr: ["Split", ["List", 1, 2, 3, 5, 4, 6], "Less"],
+        expected: ["List", ["List", 1, 2, 3, 5], ["List", 4, 6]],
+        category: "Scope",
+        caption: "A test between neighbours: split into increasing runs",
+      },
+      {
+        expr: ["Split", ["List"]],
+        expected: ["List"],
+        category: "Scope",
+        caption: "The empty list",
+      },
+    ],
+    seeAlso: ["Gather", "SplitBy", "Partition"],
+  },
+  {
+    name: "SplitBy",
+    domain: "Collections",
+    signature: "SplitBy(list, f)",
+    summary: "Split a list into runs on which a function is constant.",
+    signatures: [
+      {
+        call: "SplitBy(list, f)",
+        description: "runs on which $f(element)$ stays the same.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: ['[[Split]] with the adjacency test "same $f$ value" instead of plain equality.'],
+    examples: [
+      {
+        expr: ["SplitBy", ["List", 1, 3, 5, 2, 4, 7, 9], ["Function", ["Mod", "_1", 2]]],
+        expected: ["List", ["List", 1, 3, 5], ["List", 2, 4], ["List", 7, 9]],
+        caption: "Runs of the same parity",
+      },
+      {
+        expr: [
+          "SplitBy",
+          ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          ["Function", ["Floor", ["Divide", "_1", 4]]],
+        ],
+        expected: ["List", ["List", 1, 2, 3], ["List", 4, 5, 6, 7], ["List", 8, 9, 10]],
+        caption: "Runs with the same value of $\\lfloor x/4 \\rfloor$",
+      },
+    ],
+    seeAlso: ["Split", "GatherBy"],
+  },
+  {
+    name: "SortBy",
+    domain: "Collections",
+    signature: "SortBy(collection, f)",
+    summary: "The collection sorted by the value of a function on each element.",
+    signatures: [
+      {
+        call: "SortBy(collection, f)",
+        description: "sorted by $f(element)$, ascending, stable on ties.",
+        library: "enumeratio-collections",
+      },
+    ],
+    examples: [
+      {
+        expr: ["SortBy", ["List", -3, 1, -2], "Abs"],
+        expected: ["List", 1, -2, -3],
+        caption: "Sorted by absolute value",
+      },
+      {
+        expr: ["SortBy", ["List", ["List", "a", 2], ["List", "c", 1], ["List", "d", 3]], "Last"],
+        expected: ["List", ["List", "c", 1], ["List", "a", 2], ["List", "d", 3]],
+        caption: "Pairs sorted by their last element",
+      },
+      {
+        expr: ["SortBy", ["List", 4, -5, 1, 3, -2], ["Function", ["Power", "_1", 2]]],
+        expected: ["List", 1, -2, 3, 4, -5],
+        category: "Scope",
+        caption: "Sorted by the square of each element",
+      },
+      {
+        expr: ["SortBy", ["List", 3, 1, 2], "Negate"],
+        expected: ["List", 3, 2, 1],
+        category: "Scope",
+        caption: "Sorting by $-x$ gives descending order",
+      },
+    ],
+    seeAlso: ["Sort", "GatherBy"],
+  },
+  {
+    name: "PadLeft",
+    domain: "Collections",
+    signature: "PadLeft(list, n, x)",
+    summary: "Pad a list on the left to length n, or truncate it from the left.",
+    signatures: [
+      {
+        call: "PadLeft(list)",
+        description: "a ragged array (a list of lists) padded with 0s to a full matrix.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "PadLeft(list, n, x?)",
+        description:
+          "padded on the left with $x$ (default 0) to length $n$; a shorter $n$ drops elements from the left instead.",
+        library: "enumeratio-collections",
+      },
+    ],
+    examples: [
+      {
+        expr: ["PadLeft", ["List", 1, 2, 3], 5],
+        expected: ["List", 0, 0, 1, 2, 3],
+        caption: "Padded with zeros on the left",
+      },
+      {
+        expr: ["PadLeft", ["List", 1, 2, 3], 5, "x"],
+        expected: ["List", "x", "x", 1, 2, 3],
+        caption: "A padding element",
+      },
+      {
+        expr: ["PadLeft", ["List", 1, 2, 3, 4, 5], 3],
+        expected: ["List", 3, 4, 5],
+        category: "Scope",
+        caption: "A shorter length drops elements from the left",
+      },
+      {
+        expr: ["PadLeft", ["List", ["List", 1], ["List", 2, 3]]],
+        expected: ["List", ["List", 0, 1], ["List", 2, 3]],
+        category: "Scope",
+        caption: "With no length, a ragged array is padded to a full matrix",
+      },
+    ],
+    seeAlso: ["PadRight", "Take"],
+  },
+  {
+    name: "PadRight",
+    domain: "Collections",
+    signature: "PadRight(list, n, x)",
+    summary: "Pad a list on the right to length n, or truncate it from the right.",
+    signatures: [
+      {
+        call: "PadRight(list)",
+        description: "a ragged array (a list of lists) padded with 0s to a full matrix.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "PadRight(list, n, x?)",
+        description:
+          "padded on the right with $x$ (default 0) to length $n$; a shorter $n$ drops elements from the right instead.",
+        library: "enumeratio-collections",
+      },
+    ],
+    examples: [
+      {
+        expr: ["PadRight", ["List", 1, 2, 3], 5],
+        expected: ["List", 1, 2, 3, 0, 0],
+        caption: "Padded with zeros on the right",
+      },
+      {
+        expr: ["PadRight", ["List", 1, 2, 3], 5, "x"],
+        expected: ["List", 1, 2, 3, "x", "x"],
+        caption: "A padding element",
+      },
+      {
+        expr: ["PadRight", ["List", 1, 2, 3, 4, 5], 3],
+        expected: ["List", 1, 2, 3],
+        category: "Scope",
+        caption: "A shorter length drops elements from the right",
+      },
+      {
+        expr: ["PadRight", ["List", ["List", 1], ["List", 2, 3]]],
+        expected: ["List", ["List", 1, 0], ["List", 2, 3]],
+        category: "Scope",
+        caption: "With no length, a ragged array is padded to a full matrix",
+      },
+    ],
+    seeAlso: ["PadLeft", "Take"],
   },
 ];

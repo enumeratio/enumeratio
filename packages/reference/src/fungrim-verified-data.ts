@@ -723,7 +723,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "255d81",
     heads: ["IncompleteEllipticPi"],
     verdict: "agree",
-    samples: 2,
+    samples: 3,
   },
   {
     entry: "2573ba",
@@ -868,6 +868,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["ChebyshevU"],
     verdict: "agree",
     samples: 3,
+  },
+  {
+    entry: "303827",
+    heads: ["CarlsonRJ", "Ln"],
+    verdict: "agree",
+    samples: 1,
   },
   {
     entry: "3047b1",
@@ -1376,6 +1382,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "4c1db8",
+    heads: ["CarlsonRJ", "Ln"],
+    verdict: "agree",
+    samples: 1,
+  },
+  {
     entry: "4c7aeb",
     heads: ["ChebyshevU", "Cos", "Sin"],
     verdict: "disagree",
@@ -1531,6 +1543,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["Conjugate", "Exp"],
     verdict: "agree",
     samples: 3,
+  },
+  {
+    entry: "534335",
+    heads: ["CarlsonRJ", "Ln"],
+    verdict: "agree",
+    samples: 1,
   },
   {
     entry: "5384f3",
@@ -1747,7 +1765,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "5f84d9",
     heads: ["EllipticPi", "IncompleteEllipticPi"],
     verdict: "agree",
-    samples: 2,
+    samples: 3,
   },
   {
     entry: "5fb5e2",
@@ -1826,6 +1844,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["Exp", "Ln"],
     verdict: "agree",
     samples: 3,
+  },
+  {
+    entry: "62b0c4",
+    heads: ["CarlsonRJ", "Gamma"],
+    verdict: "agree",
+    samples: 1,
   },
   {
     entry: "62c6c9",
@@ -2833,7 +2857,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "9ccaef",
     heads: ["CarlsonRF", "CarlsonRJ", "EllipticPi"],
     verdict: "agree",
-    samples: 2,
+    samples: 3,
   },
   {
     entry: "9ce413",
@@ -4740,11 +4764,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "CarlsonRJ",
-    identities: 15,
-    declared: true,
-  },
-  {
     head: "BesselK",
     identities: 13,
     declared: true,
@@ -4775,12 +4794,12 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Filter",
+    head: "CarlsonRJ",
     identities: 11,
     declared: true,
   },
   {
-    head: "Ln",
+    head: "Filter",
     identities: 11,
     declared: true,
   },
@@ -4811,6 +4830,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "DirichletCharacter",
+    identities: 8,
+    declared: true,
+  },
+  {
+    head: "Ln",
     identities: 8,
     declared: true,
   },
@@ -4945,11 +4969,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Gamma",
-    identities: 3,
-    declared: true,
-  },
-  {
     head: "IncompleteEllipticF",
     identities: 3,
     declared: true,
@@ -5016,6 +5035,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Factorial2",
+    identities: 2,
+    declared: true,
+  },
+  {
+    head: "Gamma",
     identities: 2,
     declared: true,
   },
