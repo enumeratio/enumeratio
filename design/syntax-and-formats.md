@@ -59,7 +59,7 @@ round-trips as itself (a result prints as notatio and re-reads as the same value
 `$…$` LaTeX islands are allowed (parsed through the engine's LaTeX parser, threaded
 in as a `parseLatex` hook); without an engine the islands are inert. A product of
 two symbols needs an explicit `*` in the Epsil text (`A * Sin(x)`) — juxtaposition
-(`A Sin(x)`) is only legal inside an island. We may move off islands over time.
+(`A Sin(x)`) is only legal inside an island.
 
 ### Where the word stops: enumeratio owns meaning, notatio owns writing
 

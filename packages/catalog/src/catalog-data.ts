@@ -3107,6 +3107,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "Step Compositions",
     description: "Compositions of n into 1- and 2-steps (a staircase).",
+    aliasOf: "FibonacciCompositions",
   },
   {
     name: "SternBrocotPaths",
@@ -3503,6 +3504,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "Weak Compositions into k Parts",
     description: "Compositions of n into k nonnegative parts.",
+    aliasOf: "WeakCompositions",
   },
   {
     name: "WeirdNumbers",

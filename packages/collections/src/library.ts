@@ -1,5 +1,5 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { installPacks } from "./packs/install.ts";
+import { installFamilies } from "./families/install.ts";
 import { declareListOps } from "./list-ops.ts";
 import { declareStats, type StatsOptions } from "./stats.ts";
 
@@ -14,7 +14,7 @@ import { declareStats, type StatsOptions } from "./stats.ts";
  * a bare list — see `StatsOptions`. The carrier types have to exist on `ce` already.
  */
 export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
-  installPacks(ce);
+  installFamilies(ce);
   declareListOps(ce);
   declareStats(ce, options);
 }

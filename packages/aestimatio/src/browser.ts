@@ -98,7 +98,7 @@ export async function probeMemoryBytes(): Promise<number | undefined> {
  * worker times out, is memory-terminated, errors, or the caller's `signal` fires — same
  * contract as `./node`'s `evaluateIsolated`: a caller should not have to distinguish
  * "the answer is $Aborted" from "the call itself failed". One worker per call; a
- * reusable pool is future work (design/aestimatio.md §5's `SharedWorker` session).
+ * reusable pool (a `SharedWorker` session) is future work.
  */
 export function evaluateInWorker(
   json: unknown,

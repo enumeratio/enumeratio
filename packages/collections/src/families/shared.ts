@@ -1,4 +1,4 @@
-// Small exact-integer helpers shared by the pure-kernel packs (multiply-before-divide).
+// Small exact-integer helpers shared by the family kernels (multiply-before-divide).
 // Collection-specific DP tables stay in their own pack; only generic helpers live here.
 
 /** C(n, k), exact, 0 outside 0 ≤ k ≤ n. */

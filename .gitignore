@@ -43,3 +43,7 @@ catalog-dump.json
 
 # VitePress writes these beside a data loader while resolving it.
 *.timestamp-*.mjs
+
+# open design, dev-only (web/.vitepress/config.mts)
+/speculative/
+/web/speculative

@@ -1,7 +1,7 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { integerAt } from "@enumeratio/boxed";
 
-// The one collection contract, shared by every pack. A PackEntry is a pure kernel
+// The one collection contract, shared by every family. A FamilyKernel is a pure kernel
 // (count / unrank / rank / valid) over plain JS values, with NO compute-engine
 // dependency. The engine wiring (MathJSON boxing, CE CollectionHandlers) lives in
 // ../library.ts via `adaptEntry` + `gradedHandlers`.
@@ -23,7 +23,7 @@ export interface Boxed {
 type Element = number[] | number[][] | NestedTree;
 
 /** A pure combinatorial family: closed-form count + rank/unrank/valid kernels. */
-export interface PackEntry {
+export interface FamilyKernel {
   readonly head: string;
   readonly paramCount: 1 | 2;
   readonly kind: "ints" | "blocks" | "nested";
@@ -61,7 +61,7 @@ export const asBlockList = (t: Boxed): number[][] =>
 export const denest = (x: Boxed): NestedTree =>
   x.ops ? (x.ops.map(denest) as NestedTree[]) : intOf(x);
 
-const signatureFor = (kind: PackEntry["kind"], pc: 1 | 2): string => {
+const signatureFor = (kind: FamilyKernel["kind"], pc: 1 | 2): string => {
   if (kind === "nested") {
     return pc === 1 ? "(integer) -> collection" : "(integer, integer) -> collection";
   }
@@ -69,8 +69,8 @@ const signatureFor = (kind: PackEntry["kind"], pc: 1 | 2): string => {
   return pc === 1 ? `(integer) -> ${inner}` : `(integer, integer) -> ${inner}`;
 };
 
-/** Adapt a pure PackEntry into a CE-facing FamilySpec (boxing + membership-gated rank). */
-export function adaptEntry(e: PackEntry): FamilySpec {
+/** Adapt a pure FamilyKernel into a CE-facing FamilySpec (boxing + membership-gated rank). */
+export function adaptEntry(e: FamilyKernel): FamilySpec {
   const encode = e.kind === "ints" ? listMJ : e.kind === "blocks" ? blocksMJ : nestMJ;
   const decode = e.kind === "ints" ? asIntList : e.kind === "blocks" ? asBlockList : denest;
   return {

@@ -3,7 +3,7 @@
 // @enumeratio library. Each kernel satisfies rank(unrank(p, r), p) === r.
 
 import { binomial } from "./shared.ts";
-import type { PackEntry } from "./types.ts";
+import type { FamilyKernel } from "./types.ts";
 
 const normRank = (r: number, total: number): number =>
   total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
@@ -171,7 +171,7 @@ function evenOddValid(e: unknown, p: number[], wantOdd: boolean): boolean {
   return e.length % 2 === (wantOdd ? 1 : 0);
 }
 
-export const entries: readonly PackEntry[] = [
+export const entries: readonly FamilyKernel[] = [
   {
     head: "SubsetsWithoutConsecutive",
     paramCount: 1,

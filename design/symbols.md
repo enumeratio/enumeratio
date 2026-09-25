@@ -116,15 +116,4 @@ they are what the people who built the function thought worth showing, and there
 of them to rank. [roadmap.md](./roadmap.md) is where that lands as work to pick up, next to
 the statistics and maps frontiers, which are the same discipline at a smaller scale.
 
-## 5. Open
-
-- **Numeral systems as domains.** The systems are already values rather than heads —
-  `IntegerDigits(n, Zeckendorf)` — which is the Wolfram model and needs no collapsing. The
-  open idea is larger: represent numerals as polynomial-like domains, so a numeral is an
-  object with structure rather than a digit list, and the systems become mappable onto the
-  other structures they secretly are (factoradic is the Lehmer code; the combinatorial system
-  is subset unranking).
-- **`modular` is the least normalised package** — 34 heads, heavily prefixed (`Form*`,
-  `Modular*`), several of them (`FormRho`, `LinkingWithTrefoil`, `WordSymbol`) named for the
-  implementation rather than the mathematics. No Wolfram counterpart to align against, which
-  is precisely why it drifted.
+Open questions moved to speculative/symbols.md.

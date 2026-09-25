@@ -1,10 +1,10 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/packs/core.ts";
+import { entries } from "../src/families/core.ts";
 
 // Self-cert a sample of core.ts families (kept small so counts stay well under ~5000):
 // for every rank r in [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r.
 // core.ts is not yet wired into allEntries (its Subsets/Tuples heads intentionally differ from the
-// existing hand-rolled ones), so this reads `entries` straight from the pack module.
+// existing hand-rolled ones), so this reads `entries` straight from the family module.
 const PARAMS: Record<string, number[]> = {
   SymmetricGroup: [4],
   Derangements: [4],
