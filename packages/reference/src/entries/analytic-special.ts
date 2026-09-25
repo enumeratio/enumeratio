@@ -2890,4 +2890,601 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["ModularJ", "ModularLambda"],
   },
+  {
+    name: "ComplexExpand",
+    domain: "Transformations",
+    signature: "ComplexExpand(expr)",
+    summary:
+      "Split `expr` into real and imaginary parts, treating every free symbol as real. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "ComplexExpand(expr)",
+        description: "`expr`, rewritten as `Re + i·Im` with its symbols assumed real.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      'Covers Add, Multiply, Negate, a nonnegative-integer Power, Sin, Exp and Abs of a complex argument -- the heads the reference examples reach for. Cos, the hyperbolic functions and a non-integer power of a complex argument have no rule and fall through to "assumed real", which is wrong for them specifically.',
+      "A concrete numeric argument with no free symbols needs none of this: plain evaluation already gives the same split (see the last example), so this is a no-op there.",
+    ],
+    examples: [
+      {
+        expr: ["ComplexExpand", ["Sin", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]]]],
+        expected: [
+          "Add",
+          ["Multiply", ["Complex", 0, 1], ["Cos", "x"], ["Sinh", "y"]],
+          ["Multiply", ["Sin", "x"], ["Cosh", "y"]],
+        ],
+        caption: "$\\sin(x + iy) = \\sin x\\cosh y + i\\cos x\\sinh y$",
+      },
+      {
+        expr: ["ComplexExpand", ["Exp", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]]]],
+        expected: [
+          "Add",
+          ["Multiply", ["Complex", 0, 1], ["Sin", "y"], ["Power", "ExponentialE", "x"]],
+          ["Multiply", ["Cos", "y"], ["Power", "ExponentialE", "x"]],
+        ],
+        caption: "Polar form of a complex exponential",
+      },
+      {
+        expr: ["ComplexExpand", ["Power", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]], 2]],
+        expected: [
+          "Add",
+          ["Power", "x", 2],
+          ["Negate", ["Power", "y", 2]],
+          ["Multiply", ["Complex", 0, 2], "x", "y"],
+        ],
+        category: "Scope",
+      },
+      {
+        expr: ["ComplexExpand", ["Abs", ["Add", "x", ["Multiply", "ImaginaryUnit", "y"]]]],
+        expected: ["Sqrt", ["Add", ["Power", "x", 2], ["Power", "y", 2]]],
+        category: "Scope",
+      },
+      {
+        expr: ["ComplexExpand", ["Exp", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 5]]]],
+        expected: [
+          "Add",
+          ["Rational", 1, 4],
+          ["Divide", ["Sqrt", 5], 4],
+          [
+            "Multiply",
+            ["Complex", 0, ["Divide", ["Sqrt", 2], 4]],
+            ["Sqrt", ["Add", 5, ["Negate", ["Sqrt", 5]]]],
+          ],
+        ],
+        category: "Scope",
+        caption:
+          "Wolfram leaves $e^{i\\pi/5}$ alone until asked; this is the radical form compute-engine's Exp already produces",
+      },
+    ],
+    seeAlso: ["ExpToTrig", "Re", "Im"],
+  },
+  {
+    name: "ExpToTrig",
+    domain: "Transformations",
+    signature: "ExpToTrig(expr)",
+    summary:
+      "Rewrite every exponential in `expr` as circular or hyperbolic functions -- the inverse of TrigToExp. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "ExpToTrig(expr)",
+        description:
+          "`expr` with each `Exp` rewritten via Euler's formula or its hyperbolic analogue.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Rewrites `Exp(ix)` to `cos(x) + i·sin(x)` and a real `Exp(x)` to `cosh(x) + sinh(x)` everywhere in the tree, then simplifies. A combination that cancels back down to a single Cosh/Sinh/Sin -- the Scope examples -- falls out of that simplification pass; there is no separate 'recognize this shape' rule.",
+    ],
+    examples: [
+      {
+        expr: ["ExpToTrig", ["Exp", ["Multiply", "ImaginaryUnit", "x"]]],
+        expected: ["Add", ["Multiply", ["Complex", 0, 1], ["Sin", "x"]], ["Cos", "x"]],
+        caption: "Euler's formula",
+      },
+      {
+        expr: ["ExpToTrig", ["Exp", "x"]],
+        expected: ["Add", ["Sinh", "x"], ["Cosh", "x"]],
+        caption: "A real exponential splits into hyperbolic parts",
+      },
+      {
+        expr: ["ExpToTrig", ["Divide", ["Add", ["Exp", "x"], ["Exp", ["Negate", "x"]]], 2]],
+        expected: ["Cosh", "x"],
+        category: "Scope",
+        caption: "Recognizes [[Cosh]]",
+      },
+      {
+        expr: [
+          "ExpToTrig",
+          [
+            "Divide",
+            [
+              "Subtract",
+              ["Exp", ["Multiply", "ImaginaryUnit", "x"]],
+              ["Exp", ["Negate", ["Multiply", "ImaginaryUnit", "x"]]],
+            ],
+            ["Multiply", 2, "ImaginaryUnit"],
+          ],
+        ],
+        expected: ["Sin", "x"],
+        category: "Scope",
+        caption: "Recognizes [[Sin]]",
+      },
+    ],
+    seeAlso: ["ComplexExpand", "TrigToExp"],
+  },
+  {
+    name: "FunctionExpand",
+    domain: "Transformations",
+    signature: "FunctionExpand(expr)",
+    summary:
+      "Rewrite special functions in `expr` in terms of more elementary or better-known ones. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "FunctionExpand(expr)",
+        description: "`expr` with a handful of named special-function identities applied.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Not a general special-function identity engine: DirichletEta and DirichletBeta rewrite in terms of the (Hurwitz) zeta this package already declares, BarnesG(½) in Glaisher's constant, and two special angles (Sin(π/15), Cos(π/24)) past compute-engine's automatic table -- each is a named identity, not a derivation.",
+      "The two special angles are pinned lookups at exactly those arguments, not a general nested-radical solver for an arbitrary rational multiple of π.",
+      "Pochhammer(x, 3) and Binomial(n, 2) need no rule here: compute-engine's own evaluator already expands a concrete nonnegative integer length into the product before FunctionExpand runs.",
+    ],
+    examples: [
+      {
+        expr: ["FunctionExpand", ["DirichletEta", "s"]],
+        expected: [
+          "Multiply",
+          ["Add", ["Negate", ["Power", 2, ["Add", ["Negate", "s"], 1]]], 1],
+          ["Zeta", "s"],
+        ],
+        caption: "$\\eta(s) = (1 - 2^{1-s})\\zeta(s)$",
+      },
+      {
+        expr: ["FunctionExpand", ["DirichletBeta", "s"]],
+        expected: [
+          "Multiply",
+          ["Add", ["Negate", ["Zeta", "s", ["Rational", 3, 4]]], ["Zeta", "s", ["Rational", 1, 4]]],
+          ["Power", 4, ["Negate", "s"]],
+        ],
+        caption: "$\\beta(s) = 4^{-s}(\\zeta(s, \\tfrac14) - \\zeta(s, \\tfrac34))$",
+      },
+      {
+        expr: ["FunctionExpand", ["BarnesG", ["Rational", 1, 2]]],
+        expected: [
+          "Multiply",
+          ["Divide", 1, ["Root", "Pi", 4]],
+          ["Root", 2, 24],
+          ["Power", "ConstGlaisher", ["Rational", -3, 2]],
+          ["Root", "ExponentialE", 8],
+        ],
+        caption: "$G(\\tfrac12)$ in Glaisher's constant",
+      },
+      {
+        expr: ["FunctionExpand", ["Sin", ["Divide", "Pi", 15]]],
+        expected: [
+          "Multiply",
+          ["Rational", 1, 8],
+          [
+            "Add",
+            ["Negate", ["Sqrt", 15]],
+            ["Sqrt", 3],
+            ["Sqrt", ["Add", 10, ["Multiply", 2, ["Sqrt", 5]]]],
+          ],
+        ],
+        caption: "Radicals past the automatic special-angle table",
+      },
+      {
+        expr: ["FunctionExpand", ["Cos", ["Divide", "Pi", 24]]],
+        expected: [
+          "Multiply",
+          ["Divide", ["Sqrt", 2], 4],
+          ["Sqrt", ["Add", 4, ["Sqrt", 2], ["Sqrt", 6]]],
+        ],
+        caption:
+          "Half-angle radicals: $\\cos\\frac{\\pi}{24} = \\tfrac12\\sqrt{2 + \\tfrac{\\sqrt2 + \\sqrt6}{2}}$",
+      },
+      {
+        expr: ["FunctionExpand", ["Pochhammer", "x", 3]],
+        expected: ["Multiply", "x", ["Add", "x", 1], ["Add", "x", 2]],
+        category: "Scope",
+        caption: "A rising factorial with an integer length becomes a polynomial",
+      },
+      {
+        expr: ["FunctionExpand", ["Binomial", "n", 2]],
+        expected: ["Divide", ["Multiply", "n", ["Subtract", "n", 1]], 2],
+        category: "Scope",
+        caption: "$\\binom n2 = \\frac{n(n-1)}{2}$",
+      },
+    ],
+    seeAlso: ["FullSimplify", "DirichletEta", "DirichletBeta", "BarnesG"],
+  },
+  {
+    name: "PowerExpand",
+    domain: "Transformations",
+    signature: "PowerExpand(expr)",
+    summary:
+      "Expand powers and logarithms of products in `expr` as though every variable were positive. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "PowerExpand(expr)",
+        description: "`expr` with Ln and Power distributed over products, assuming positivity.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "A bottom-up rewrite: Ln(xy) → Ln(x) + Ln(y), Ln(x^n) → n·Ln(x), (ab)^c → a^c·b^c, and the same two rules specialized for Sqrt.",
+      "Does not check or track positivity -- it assumes it unconditionally, same as Wolfram's default (`PowerExpand` ignores `Assumptions` unless told otherwise, which this does not model either).",
+    ],
+    examples: [
+      {
+        expr: ["PowerExpand", ["Sqrt", ["Power", "x", 2]]],
+        expected: "x",
+        caption: "$\\sqrt{x^2} = x$ for positive $x$",
+      },
+      {
+        expr: ["PowerExpand", ["Ln", ["Multiply", "x", "y"]]],
+        expected: ["Add", ["Ln", "x"], ["Ln", "y"]],
+        caption: "Splits a logarithm of a product",
+      },
+      {
+        expr: ["PowerExpand", ["Ln", ["Power", "x", "n"]]],
+        expected: ["Multiply", "n", ["Ln", "x"]],
+        category: "Scope",
+        caption: "Pulls out an exponent",
+      },
+      {
+        expr: ["PowerExpand", ["Power", ["Multiply", "a", "b"], "c"]],
+        expected: ["Multiply", ["Power", "a", "c"], ["Power", "b", "c"]],
+        category: "Scope",
+        caption: "Distributes a power over a product",
+      },
+      {
+        expr: ["PowerExpand", ["Sqrt", ["Multiply", "a", "b"]]],
+        expected: ["Multiply", ["Sqrt", "a"], ["Sqrt", "b"]],
+        category: "Scope",
+      },
+    ],
+    seeAlso: ["FunctionExpand", "Ln"],
+  },
+  {
+    name: "FullSimplify",
+    domain: "Transformations",
+    signature: "FullSimplify(expr)",
+    summary:
+      "Simplify `expr` harder than Simplify, trying a wider set of transformations including special-function identities. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "FullSimplify(expr)",
+        description: "compute-engine's own `simplify()`, plus a few extra targeted passes.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Starts from compute-engine's native `simplify()`, which already folds the Pythagorean identity and a double-angle product on its own.",
+      "Adds exactly four passes: the Gamma functional equation Γ(a)/Γ(b) for a concrete integer a−b; the hyperbolic Pythagorean identity cosh²(u) − sinh²(u) = 1; denesting Sqrt(a + 2·Sqrt(b)) for concrete rational a, b with a rational discriminant; and ExpToTrig everywhere in the tree (which is how a (e^x − e^(−x))/2 shows up as Sinh(x), with no separate 'looks like a hyperbolic definition' rule needed).",
+      "NOT a general simplifier: no broader special-function identity table beyond the one Gamma shift above, no general nested-radical denesting past the one quadratic form, and no trigonometric identities beyond what `simplify()` already has. An expression needing more than this list is left exactly as `simplify()` leaves it.",
+    ],
+    examples: [
+      {
+        expr: ["FullSimplify", ["Add", ["Power", ["Sin", "x"], 2], ["Power", ["Cos", "x"], 2]]],
+        expected: 1,
+        caption: "The Pythagorean identity",
+      },
+      {
+        expr: ["FullSimplify", ["Divide", ["Subtract", ["Exp", "x"], ["Exp", ["Negate", "x"]]], 2]],
+        expected: ["Sinh", "x"],
+        caption: "Recognizes the definition of [[Sinh]]",
+      },
+      {
+        expr: ["FullSimplify", ["Multiply", 2, ["Sin", "x"], ["Cos", "x"]]],
+        expected: ["Sin", ["Multiply", 2, "x"]],
+        category: "Scope",
+        caption: "Folds the double-angle product",
+      },
+      {
+        expr: ["FullSimplify", ["Divide", ["Gamma", ["Add", "x", 1]], ["Gamma", "x"]]],
+        expected: "x",
+        category: "Scope",
+        caption: "The functional equation of [[Gamma]]",
+      },
+      {
+        expr: [
+          "FullSimplify",
+          [
+            "Subtract",
+            ["Add", ["Sqrt", 2], ["Sqrt", 3]],
+            ["Sqrt", ["Add", 5, ["Multiply", 2, ["Sqrt", 6]]]],
+          ],
+        ],
+        expected: 0,
+        category: "Scope",
+        caption: "Denests $\\sqrt{5 + 2\\sqrt6} = \\sqrt2 + \\sqrt3$",
+      },
+      {
+        expr: [
+          "FullSimplify",
+          ["Subtract", ["Power", ["Cosh", "x"], 2], ["Power", ["Sinh", "x"], 2]],
+        ],
+        expected: 1,
+        category: "Scope",
+        caption: "The hyperbolic Pythagorean identity",
+      },
+    ],
+    seeAlso: ["FunctionExpand", "ExpToTrig"],
+  },
+  {
+    name: "MatrixFunction",
+    domain: "Linear algebra",
+    signature: "MatrixFunction(f, m)",
+    summary:
+      "A scalar function f extended to a square matrix m, via its eigendecomposition. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "MatrixFunction(f, m)",
+        description: "f applied to the square matrix m, via its eigendecomposition.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Exact where the structure gives one: a diagonal m (any size, including symbolic entries) reduces to elementwise f down the diagonal; f = Exp reduces to [[MatrixExp]] for any m; a 2×2 m otherwise reduces to Lagrange's formula at its two eigenvalues, with the Jordan-block limit f(λ)·I + f′(λ)·(M − λI) (f′ via compute-engine's own D) when they coincide.",
+      "No general n×n closed form past that: a non-diagonal matrix larger than 2×2 needs a numerical-linear-algebra kernel (Parlett recurrence or a Schur form), which this does not implement -- those calls stay symbolic.",
+    ],
+    examples: [
+      {
+        expr: ["MatrixFunction", "Sqrt", ["List", ["List", 4, 0], ["List", 0, 9]]],
+        expected: ["List", ["List", 2, 0], ["List", 0, 3]],
+        caption: "The principal square root of a diagonal matrix",
+      },
+      {
+        expr: ["MatrixFunction", "f", ["List", ["List", "a", 0], ["List", 0, "b"]]],
+        expected: ["List", ["List", ["f", "a"], 0], ["List", 0, ["f", "b"]]],
+        caption: "On a diagonal matrix, f acts on the diagonal",
+      },
+      {
+        expr: ["MatrixFunction", "Exp", ["List", ["List", 0, 0], ["List", 0, 0]]],
+        expected: ["List", ["List", 1, 0], ["List", 0, 1]],
+        category: "Properties",
+        caption: "With Exp it is [[MatrixExp]]",
+      },
+      {
+        expr: [
+          "MatrixFunction",
+          ["Function", ["Power", "_1", 2]],
+          ["List", ["List", 1, 1], ["List", 0, 1]],
+        ],
+        expected: ["List", ["List", 1, 2], ["List", 0, 1]],
+        category: "Properties",
+        caption: "A polynomial f agrees with the matrix power",
+      },
+      {
+        expr: ["MatrixFunction", "Cos", ["List", ["List", 0, 0], ["List", 0, 0]]],
+        expected: ["List", ["List", 1, 0], ["List", 0, 1]],
+        category: "Scope",
+      },
+    ],
+    seeAlso: ["MatrixExp", "MatrixPower"],
+  },
+  {
+    name: "Interval",
+    domain: "Interval arithmetic",
+    signature: "Interval(a, b)",
+    summary:
+      "Arithmetic over compute-engine's native `Interval(a, b)` -- extended in place by `@enumeratio/analytic`, since compute-engine declares it only as a real set with no arithmetic of its own.",
+    signatures: [
+      {
+        call: "Interval(a, b)",
+        description:
+          "the real interval [a, b], now with Add, Multiply, Divide, integer Power, Abs and a monotonic Sin.",
+      },
+    ],
+    details: [
+      "Covers exactly the operations the reference examples use: Add, Negate (which is what Subtract runs through -- compute-engine canonicalizes Subtract(a,b) to Add(a, Negate(b)) before any hook sees a Subtract head), Multiply, Divide (via the reciprocal of an interval not containing 0), integer Power (odd powers are monotonic; an even power folds to [0, …] once the interval straddles 0), Abs, and Sin restricted to an interval inside [−π/2, π/2].",
+      "The 'dependency problem' is not modeled: Interval(1,2) − Interval(1,2) is Interval(-1,1), not Interval(0,0), because the two copies are treated as independent quantities, exactly as Wolfram's own interval arithmetic does.",
+      "Endpoints stay exact boxed expressions throughout -- Interval(1,2) + Interval(3,4) is Interval(4,6), not a floating-point approximation.",
+    ],
+    examples: [
+      {
+        expr: ["Add", ["Interval", 1, 2], ["Interval", 3, 4]],
+        expected: ["Interval", 4, 6],
+        caption: "Endpoints add",
+      },
+      {
+        expr: ["Multiply", ["Interval", 1, 2], ["Interval", -1, 3]],
+        expected: ["Interval", -2, 6],
+        caption: "A product takes the extreme endpoint products",
+      },
+      {
+        expr: ["Divide", 1, ["Interval", 2, 4]],
+        expected: ["Interval", ["Rational", 1, 4], ["Rational", 1, 2]],
+        category: "Scope",
+        caption: "Reciprocal of an interval not containing 0",
+      },
+      {
+        expr: ["Power", ["Interval", -1, 2], 2],
+        expected: ["Interval", 0, 4],
+        category: "Scope",
+        caption: "An even power of an interval straddling 0 starts at 0, not at 1",
+      },
+      {
+        expr: ["Subtract", ["Interval", 1, 2], ["Interval", 1, 2]],
+        expected: ["Interval", -1, 1],
+        category: "Scope",
+        caption:
+          "The dependency problem: interval arithmetic doesn't know both operands are the same quantity",
+      },
+      {
+        expr: ["Sin", ["Interval", ["Negate", ["Divide", "Pi", 6]], ["Divide", "Pi", 6]]],
+        expected: ["Interval", ["Rational", -1, 2], ["Rational", 1, 2]],
+        category: "Scope",
+        caption: "Through an elementary function",
+      },
+      {
+        expr: ["Abs", ["Interval", -3, 2]],
+        expected: ["Interval", 0, 3],
+        category: "Scope",
+        caption: "The absolute value of an interval straddling 0",
+      },
+    ],
+    seeAlso: ["CenteredInterval", "Around"],
+  },
+  {
+    name: "CenteredInterval",
+    domain: "Interval arithmetic",
+    signature: "CenteredInterval(c, r)",
+    summary:
+      "A ball c ± r with center-radius arithmetic -- the complex-capable sibling of [[Interval]]. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "CenteredInterval(c, r)",
+        description: "the ball of radius r centered at c.",
+        library: LIBRARY,
+      },
+      {
+        call: "CenteredInterval(interval)",
+        description: "an [[Interval]] converted to center-radius form.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Covers Add (centers add, radii add) and a scalar Multiply (the center scales by the factor, the radius by its absolute value). Subtraction runs through Add and Negate the same way Interval's does, which is why radii add under subtraction too, not cancel.",
+      "Does NOT round outward the way Wolfram's rigorous interval arithmetic does -- that needs a kernel to pin the rounding direction (see enumeratio/enumeratio#113 §2), so every example here uses exact endpoints, where there is nothing to round.",
+      "Two CenteredInterval operands multiplied together has no example and no simple exact rule here, so it is not handled.",
+    ],
+    examples: [
+      {
+        expr: [
+          "Add",
+          ["CenteredInterval", 1, ["Rational", 1, 2]],
+          ["CenteredInterval", 2, ["Rational", 1, 4]],
+        ],
+        expected: ["CenteredInterval", 3, ["Rational", 3, 4]],
+        caption: "Centers add and radii add",
+      },
+      {
+        expr: ["Multiply", 2, ["CenteredInterval", 2, ["Rational", 1, 2]]],
+        expected: ["CenteredInterval", 4, 1],
+        caption: "An exact factor scales center and radius",
+      },
+      {
+        expr: ["CenteredInterval", ["Interval", 1, 3]],
+        expected: ["CenteredInterval", 2, 1],
+        category: "Scope",
+        caption: "Converts an [[Interval]] to center-radius form",
+      },
+      {
+        expr: [
+          "Subtract",
+          ["CenteredInterval", 5, ["Rational", 1, 4]],
+          ["CenteredInterval", 1, ["Rational", 1, 4]],
+        ],
+        expected: ["CenteredInterval", 4, ["Rational", 1, 2]],
+        category: "Scope",
+        caption: "Radii add under subtraction too",
+      },
+    ],
+    seeAlso: ["Interval", "Around"],
+  },
+  {
+    name: "Around",
+    domain: "Interval arithmetic",
+    signature: "Around(x, dx)",
+    summary:
+      "A number x with an uncertainty dx, propagated to first order through arithmetic and functions -- the same uncertainty-arithmetic layer as [[Interval]] and [[CenteredInterval]]. Provided by `@enumeratio/analytic`, though the head's natural home is `@enumeratio/statistics`.",
+    signatures: [
+      {
+        call: "Around(x, dx)",
+        description:
+          "x with uncertainty dx, propagated as Around(f(x), |f′(x)|·dx) through a function f.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Add sums several independent uncertainties in quadrature (√Σdxᵢ²); a scalar Multiply scales the uncertainty linearly; several Around factors multiplied together combine their RELATIVE uncertainties in quadrature (the same rule, since d(∏xᵢ) = Σⱼ(∏_{i≠j}xᵢ)dxⱼ in quadrature, divided back out by the product); Power with a concrete exponent and Exp (Wolfram's Exp, canonicalized to Power(E, ·)) use their own closed-form derivatives; Sqrt and Erf go through compute-engine's own symbolic D.",
+      "Multinomial(Around(x, dx), k) is NOT covered: Multinomial is declared over integers only, so there is no nearby point to take a derivative at without first widening it to the Gamma-based real domain, which is out of scope for Around itself.",
+    ],
+    examples: [
+      {
+        expr: ["Add", ["Around", 1, 0.1], ["Around", 2, 0.2]],
+        expected: ["Around", 3, 0.223606797749979],
+        caption: "Independent uncertainties add in quadrature",
+      },
+      {
+        expr: ["Multiply", 3, ["Around", 2, 0.1]],
+        expected: ["Around", 6, 0.3],
+        caption: "Scaling scales the uncertainty",
+      },
+      {
+        expr: ["Power", ["Around", 2, 0.1], 2],
+        expected: ["Around", 4, 0.4],
+        category: "Scope",
+        caption: "Through a function: $|f'(x)|\\,\\delta x$",
+      },
+      {
+        expr: ["Sqrt", ["Around", 4, 0.4]],
+        expected: ["Around", 2, 0.1],
+        category: "Scope",
+      },
+      {
+        expr: ["Add", ["Around", 2, 0.01], ["Around", 3, 0.02]],
+        expected: ["Around", 5, 0.022360679774997897],
+        caption: "Independent uncertainties add in quadrature",
+      },
+      {
+        expr: ["Multiply", 3, ["Around", 2, 0.01]],
+        expected: ["Around", 6, 0.03],
+      },
+      {
+        expr: ["Multinomial", ["Around", 2, 0.01], 2],
+        expected: ["Around", 6, 0.035],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Through a function: $f'(2) = 3.5$ -- not yet, Multinomial has no real-argument domain to differentiate on",
+      },
+      {
+        expr: ["Add", ["Around", 5, 0.1], ["Around", 3, 0.2]],
+        expected: ["Around", 8, 0.223606797749979],
+        caption: "Independent uncertainties add in quadrature: $\\sqrt{0.1^2 + 0.2^2}$",
+      },
+      {
+        expr: ["Multiply", ["Around", 2, 0.1], ["Around", 3, 0.2]],
+        expected: ["Around", 6, 0.5],
+        caption: "Relative uncertainties combine: $6\\sqrt{(0.1/2)^2 + (0.2/3)^2} = 0.5$",
+      },
+      {
+        expr: ["Power", ["Around", 3, 0.1], 2],
+        expected: ["Around", 9, 0.6000000000000001],
+        category: "Scope",
+        caption: "A power scales the uncertainty by the derivative, $2 \\cdot 3 \\cdot 0.1$",
+      },
+      {
+        expr: ["Sqrt", ["Around", 4, 0.2]],
+        expected: ["Around", 2, 0.05],
+        category: "Scope",
+        caption: "$\\frac{0.2}{2\\sqrt4}$",
+      },
+      {
+        expr: ["Multiply", 10, ["Around", 1.5, 0.02]],
+        expected: ["Around", 15, 0.2],
+        category: "Scope",
+        caption: "An exact factor scales the uncertainty",
+      },
+      {
+        expr: ["Exp", ["Around", 2, 0.01]],
+        expected: ["Around", 7.38905609893065, 0.0738905609893065],
+        category: "Scope",
+        caption: "Through an elementary function: $\\delta \\cdot e^2$",
+      },
+      {
+        expr: ["Erf", ["Around", 2, 0.01]],
+        expected: ["Around", 0.9953222650189527, 0.00020666985354092054],
+        category: "Scope",
+        caption: "Through a special function, with its derivative as slope",
+      },
+    ],
+    seeAlso: ["Interval", "CenteredInterval"],
+  },
 ];
