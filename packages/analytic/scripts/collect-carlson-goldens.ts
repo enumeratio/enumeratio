@@ -146,6 +146,19 @@ const rjQuads: [Val, Val, Val, Val][] = [
   [{ c: [1, 1] }, 2, 3, 4],
   [1, 2, 3, { c: [1, 1] }],
   [{ c: [0.5, -1] }, { c: [2, 0.5] }, 3, { c: [1, -0.5] }],
+  // p alone with Re < 0 (Im ≠ 0, off the branch cut), x,y,z real ≥ 0: the region the
+  // 19.26.7 α/β sum got wrong and the d_m/e_m fix above targets directly. Includes the
+  // exact case Fungrim 5f84d9 (IncompleteEllipticPi's quasi-periodicity) found it at.
+  [0, 0.7, 1, { c: [-0.17, -0.45] }],
+  [0.5, 0.7, 1, { c: [-0.17, -0.45] }],
+  [1, 2, 3, { c: [-0.5, -1.5] }],
+  [0.1, 2.4, 5, { c: [-2, -0.1] }],
+  // p alone with Re < 0, x, y, z ALSO genuinely complex (not just real ≥ 0) — same fix,
+  // wider domain.
+  [{ c: [0.3, 0.4] }, { c: [1.1, -0.2] }, { c: [2, 0.5] }, { c: [-0.6, -0.9] }],
+  // p equals one of x, y, z exactly, with two OTHER arguments at Re < 0: RJ(x,y,z,z) =
+  // RD(x,y,z) exempts this from the two-or-more-negative decline heuristic (carlsonRJDeclines).
+  [{ c: [-0.3, 0.2] }, { c: [-0.5, 0.1] }, 1, 1],
 ];
 for (const [x, y, z, p] of rjQuads) {
   push({

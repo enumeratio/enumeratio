@@ -153,6 +153,19 @@ test("IncompleteEllipticPi computes complex φ directly via Carlson, where nativ
   expect(v.im).toBeCloseTo(0.7186657188751805, 9);
 });
 
+test("IncompleteEllipticPi answers at Fungrim 5f84d9's quasi-periodicity, n = m complex, φ shifted by kπ", () => {
+  // Regression: this used to decline (riskyRJ in elliptic.ts blanket-declined any R_J call
+  // with p alone at Re < 0 once complex). n = m makes the shifted-φ R_J call's p land
+  // exactly on x, y, or z (carlsonRJDeclines's own exemption — see carlson.ts), and the
+  // fixed carlsonRJ answers correctly there regardless of sign pattern. Pinned against
+  // mpmath's ellippi.
+  const nm = ["Complex", 1.17, 0.45] as const;
+  const phi = ["Add", ["Complex", 1.17, 0.45], ["Multiply", 3, "Pi"]] as const;
+  const v = ce.box(["IncompleteEllipticPi", nm, phi, nm]).N();
+  expect(v.re).toBeCloseTo(-0.103480823340677958646514658117, 9);
+  expect(v.im).toBeCloseTo(15.1133814653099445550739326363, 9);
+});
+
 test("IncompleteEllipticPi quasi-periodicity: Π(n; φ+2π, m) = 4·Π(n,m) + Π(n; φ, m)", () => {
   const n = 0.4;
   const m = 0.35;

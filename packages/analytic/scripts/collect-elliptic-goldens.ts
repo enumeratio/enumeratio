@@ -85,6 +85,46 @@ for (const [phi, m] of phiM) {
   });
 }
 
+// --- IncompleteEllipticPi(n, φ, m) --------------------------------------------------
+// Same (n, φ, m) argument order and m = k² convention as mpmath's `ellippi` / Wolfram's
+// `EllipticPi[n, φ, m]`. A spread: generic real, φ outside [-π/2, π/2] and past π (the
+// quasi-periodicity reduction), n > 1, complex n/φ/m individually and combined — including
+// the case native EllipticPi itself NaNs at (complex φ, well inside its own stated validity
+// region) — and finally the region Fungrim identity 5f84d9 (quasi-periodicity) exposed the
+// old carlsonRJ branch bug at: n = m = φ₀ complex, φ = φ₀ + kπ for k ≠ 0, which drives
+// incompleteEllipticPi's own RJ call to a single-argument-Re<0, non-real p (see
+// elliptic.ts's ellipticPiComplete / carlson.ts's carlsonRJDeclines).
+const piNPhiM: [Val, Val, Val][] = [
+  [0.5, 0.4, 0.3],
+  [0.5, -0.4, 0.3],
+  [0.5, 1.9, 0.3], // phi > pi/2
+  [2.0, 0.4, 0.3], // n > 1
+  [0.5, 3.5, 0.3], // phi > pi
+  [0.2, 2.0, 0.5], // real, wide phi
+  [0.5, 0.4, { c: [0.7, 0.2] }], // complex m
+  [{ c: [0.5, 0.2] }, 0.4, 0.3], // complex n
+  [0.5, { c: [0.4, 0.3] }, { c: [0.6, 0.1] }], // all complex
+  [0.2, { c: [1.2, 0.5] }, 0.3], // complex phi (native NaN case)
+  [0.2, { c: [2.0, 0.5] }, 0.3], // complex phi, wide re
+  // Fungrim 5f84d9's quasi-periodicity region: n = m = φ₀ = 1.17+0.45i, φ shifted by kπ —
+  // the exact configuration that used to send carlsonRJ's per-step sum an order of
+  // magnitude off (see carlson.test.ts's RJ(0,0.7,1,p) regression).
+  [{ c: [1.17, 0.45] }, { c: [1.17 + 3 * Math.PI, 0.45] }, { c: [1.17, 0.45] }],
+  [{ c: [1.17, 0.45] }, { c: [1.17 - 2 * Math.PI, 0.45] }, { c: [1.17, 0.45] }],
+];
+for (const [n, phi, m] of piNPhiM) {
+  push({
+    golden: {
+      head: "IncompleteEllipticPi",
+      args: [toCE(n), toCE(phi), toCE(m)],
+      label: `Pi(${label(n)};${label(phi)}|${label(m)})`,
+      tol: 1e-9,
+    },
+    py: `ellippi(${toPy(n)}, ${toPy(phi)}, ${toPy(m)})`,
+    wl: `EllipticPi[${toWL(n)}, ${toWL(phi)}, ${toWL(m)}]`,
+  });
+}
+
 // --- EllipticE(m), complex m — the precision fix -----------------------------------
 const complexM: Val[] = [
   { c: [0.57, 0.23] },
@@ -118,7 +158,7 @@ const parseLines = (out: string, clean: (s: string) => number): Map<number, Pair
 
 const pyCases = pending.map((p, k) => (p.py ? `    (${k}, ${p.py}),` : "")).filter(Boolean);
 const py = `
-from mpmath import mp, mpf, mpc, ellipf, ellipe
+from mpmath import mp, mpf, mpc, ellipf, ellipe, ellippi
 mp.dps = 30
 cases = [
 ${pyCases.join("\n")}
