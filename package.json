@@ -5,7 +5,7 @@
   "license": "WTFPL",
   "type": "module",
   "scripts": {
-    "ready": "vp check && vp run -r --parallel --concurrency-limit 4 test && vp run -r build",
+    "ready": "vp check && vp run -r test && vp run -r build",
     "dev": "vp run web#dev",
     "prepare": "vp config"
   },

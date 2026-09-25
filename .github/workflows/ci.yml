@@ -31,16 +31,47 @@ jobs:
           path: web/.vitepress/dist
           retention-days: 3
 
-  test:
-    name: tests
+  # A handful of suites (statistics, domains, collections) are CPU-bound and saturate a 4-vCPU
+  # runner on their own, so splitting them across separate runners buys real wall-clock time —
+  # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
+  # Rebalance by moving a package between the shards below (or adding one) as suites grow.
+  test_shard:
+    name: tests (${{ matrix.shard }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shard: statistics
+            filter: --filter @enumeratio/statistics
+          - shard: domains-collections
+            filter: --filter @enumeratio/domains --filter @enumeratio/collections
+          - shard: rest
+            filter: >-
+              --filter '!@enumeratio/web'
+              --filter '!@enumeratio/statistics'
+              --filter '!@enumeratio/domains'
+              --filter '!@enumeratio/collections'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      # Sibling packages resolve through prebuilt dist/ (built in setup), so topological order buys
-      # nothing here — run unordered with concurrency capped to the runner's 4 vCPUs.
-      - run: pnpm -r --no-sort --workspace-concurrency=4 --filter '!@enumeratio/web' run test
+      - run: pnpm -r ${{ matrix.filter }} run test
+
+  # Branch protection names the required check `tests`, but that name has to stay off the matrix
+  # job above (each shard would collide on it). This fans back in and fails if any shard did.
+  tests:
+    name: tests
+    needs: test_shard
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          if [ "${{ needs.test_shard.result }}" != "success" ]; then
+            echo "one or more test shards failed: ${{ needs.test_shard.result }}"
+            exit 1
+          fi
 
   # Every build of every commit goes up as a Cloudflare Pages preview at <sha7>.enumeratio.pages.dev — PR pushes
   # and main alike (production is GitHub Pages, pages.yml). Direct upload of the artifact `build` made: no second
