@@ -53,28 +53,45 @@ export const cpow = (z: Cx, w: Cx): Cx => {
   return cexp(mul(w, clog(z)));
 };
 
-// #loggamma reflection: `x - 2·⌊x/2⌋`, not `((x % 2) + 2) % 2` — the latter adds 2 before
-// reducing back down, and for x within a ulp of an even integer that round-trip corrupts
-// the low bits it's trying to preserve (e.g. x = 1e-6 came back as 1.0000000001397…e-6,
-// a relative error of ~1e-10, not the ~1e-16 either form owes). Sterbenz's lemma makes
-// `x - 2·⌊x/2⌋` exact whenever `2·⌊x/2⌋` is within a factor of 2 of x, which it always is.
+// #loggamma reflection: two-stage reduction, not `((x % 2) + 2) % 2` or a plain
+// `x - 2·⌊x/2⌋`. The naive `%2` form adds 2 before reducing back down, and for x within
+// a ulp of an even integer that round-trip corrupts the low bits it's trying to preserve
+// (e.g. x = 1e-6 came back as 1.0000000001397…e-6, a relative error of ~1e-10). Reducing
+// straight to [0, 2) has the same problem one integer over: x just below an odd integer
+// (e.g. x = 1 − 1e-6) lands at r ≈ 1, and Math.sin/cos(π·r) then loses precision the same
+// way, because it's evaluating near π·(an integer or half-integer) rather than near 0.
+//
+// Fixed in two steps. First, `x − 2·round(x/2)` lands in [−1, 1] exactly (Sterbenz's lemma:
+// `2·round(x/2)` is always within a factor of 2 of x). Second, sin/cos each fold that further
+// so the actual `Math.sin`/`Math.cos` call only ever sees an argument of magnitude ≤ π/4 —
+// as close to 0, where these are best conditioned, as the identities allow — via the
+// reflection identities (sin(π−x) = sin(x), cos(π−x) = −cos(x), cos(π/2−x) = sin(x)), each
+// applied to a value close enough to its source for the subtraction to stay exact.
+
+function reduceMod2(x: number): number {
+  return x - 2 * Math.round(x / 2); // [-1, 1], exact
+}
 
 /** cos(πx), exact (0 or ±1) at multiples of ½ — where Math.cos(Math.PI·x) is off by ~1e−16. */
 export function cosPi(x: number): number {
-  const r = x - 2 * Math.floor(x / 2); // [0, 2)
+  const r = reduceMod2(x);
+  if (r === 0.5 || r === -0.5) return 0;
   if (r === 0) return 1;
-  if (r === 0.5 || r === 1.5) return 0;
-  if (r === 1) return -1;
-  return Math.cos(Math.PI * r);
+  if (r === 1 || r === -1) return -1;
+  const a = Math.abs(r);
+  if (a <= 0.25) return Math.cos(Math.PI * a);
+  if (a <= 0.75) return Math.sin(Math.PI * (0.5 - a));
+  return -Math.cos(Math.PI * (1 - a));
 }
 
 /** sin(πx), exact (0 or ±1) at multiples of ½. */
 export function sinPi(x: number): number {
-  const r = x - 2 * Math.floor(x / 2);
-  if (r === 0 || r === 1) return 0;
+  const r = reduceMod2(x);
+  if (r === 0 || r === 1 || r === -1) return 0;
   if (r === 0.5) return 1;
-  if (r === 1.5) return -1;
-  return Math.sin(Math.PI * r);
+  if (r === -0.5) return -1;
+  const rr = r > 0.5 ? 1 - r : r < -0.5 ? -1 - r : r; // |rr| <= 0.5, exact
+  return Math.sin(Math.PI * rr);
 }
 
 /** cos(x+iy) = cos x·cosh y − i·sin x·sinh y. */
