@@ -1940,4 +1940,554 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["HypergeometricUStar", "Hypergeometric1F1Regularized"],
   },
+  {
+    name: "ExpIntegralE",
+    domain: "Special functions",
+    signature: "ExpIntegralE(n, z)",
+    summary:
+      "The generalized exponential integral $E_n(z) = \\int_1^\\infty e^{-zt}/t^n\\,dt$. Built on this package's generalized incomplete Gamma: $E_n(z) = z^{n-1}\\,\\Gamma(1-n, z)$.",
+    signatures: [
+      {
+        call: "ExpIntegralE(n, z)",
+        description: "$E_n(z)$, for any order $n$ (real, complex, or non-integer).",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine has no `ExpIntegralE`; this reduces it entirely to [[Gamma]]'s generalized incomplete form, already extended here for complex operands.",
+      "Two identities are kept exact ahead of the general formula, which hits a genuine $0 \\cdot \\infty$ at each: $E_0(z) = e^{-z}/z$ (since $\\Gamma(1,z) = e^{-z}$ exactly, symbolic $z$ included), and $E_n(0) = 1/(n-1)$ for $\\operatorname{Re}(n) > 1$ — the removable limit the $z^{n-1}$ factor can't see through when $z$ actually is 0.",
+      "Non-integer order (e.g. $n = 1/2$) works the same way, since the incomplete Gamma it reduces to does.",
+    ],
+    examples: [
+      {
+        expr: ["ExpIntegralE", 1, 1.5],
+        expected: 0.10001958240663265,
+        caption: "$E_1(3/2) = \\Gamma(0, 3/2)$",
+      },
+      { expr: ["ExpIntegralE", 2, 1.5], expected: 0.07310078653848084 },
+      {
+        expr: ["ExpIntegralE", 0.5, 2.5],
+        expected: 0.028414299709289756,
+        category: "Scope",
+        caption: "Non-integer order",
+      },
+      {
+        expr: ["N", ["ExpIntegralE", 1, 1]],
+        expected: 0.21938393439552029,
+        category: "Scope",
+        caption: "Exact arguments under N()",
+      },
+      {
+        expr: ["ExpIntegralE", 2, 0],
+        expected: 1,
+        category: "Properties",
+        caption: "$E_n(0) = 1/(n-1)$ for $n > 1$",
+      },
+      {
+        expr: ["ExpIntegralE", 0, "x"],
+        expected: ["Divide", ["Power", "ExponentialE", ["Negate", "x"]], "x"],
+        category: "Properties",
+        caption: "$E_0(x) = e^{-x}/x$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/exp-integral-e.ts",
+        note: "z^(n-1)·Γ(1-n, z), with the n = 0 and z = 0 removable cases handled ahead of it.",
+      },
+    ],
+    seeAlso: ["Gamma", "GammaRegularized"],
+  },
+  {
+    name: "LambertW",
+    domain: "Special functions",
+    signature: "LambertW(z) / LambertW(z, k)",
+    summary:
+      "The Lambert $W$ function (Wolfram's `ProductLog`), the inverse of $w\\,e^w$. compute-engine's native `LambertW` already covers the principal ($k=0$) and lower-real ($k=-1$) branches numerically; extended here with exact values at algebraically nice points and every other integer branch.",
+    signatures: [
+      {
+        call: "LambertW(z)",
+        description: "the principal branch $W_0(z)$ — native, extended with exact values.",
+        library: LIBRARY,
+      },
+      {
+        call: "LambertW(z, k)",
+        description:
+          "the $k$-th branch $W_k(z)$, by Halley's iteration from the standard log-log seed (Corless et al. 1996). $k=0$ and $k=-1$ stay on compute-engine's own native handler.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine's own argument order is $(z, k)$, not Wolfram's $\\mathrm{ProductLog}[k, z]$ — checked directly (`LambertW(-0.14, -1)` is the $k=-1$ branch; `LambertW(-1, -0.14)` declines). The existing $k=0$/$-1$ order is kept as-is; the Wolfram crosswalk carries the reversal.",
+      "Exact values are recognized structurally at $z=0$, $z=e$ (giving $w=1$), $z=-1/e$ (giving $w=-1$), $z = n\\,e^n$ for small integer $n$, and $z=-\\ln(k)/k$ for small integer $k \\ge 2$ (giving $w=-\\ln k$, since $e^{-\\ln k}=1/k$) — even under plain `evaluate()`, not just `N()`.",
+      "Every other branch is solved by Halley's method in the complex plane; checked against `wolframscript`'s `N[ProductLog[k, z], 16]` at several points (real and complex $z$, several $k$) to full double precision.",
+    ],
+    examples: [
+      { expr: ["LambertW", 0], expected: 0 },
+      { expr: ["LambertW", "ExponentialE"], expected: 1, caption: "$1 \\cdot e^1 = e$" },
+      {
+        expr: ["LambertW", ["Negate", ["Divide", 1, "ExponentialE"]]],
+        expected: -1,
+        category: "Scope",
+        caption: "The branch point $-1/e$",
+      },
+      {
+        expr: ["LambertW", ["Multiply", 2, ["Power", "ExponentialE", 2]]],
+        expected: 2,
+        category: "Scope",
+        caption: "$2e^2 = w e^w$ at $w = 2$",
+      },
+      {
+        expr: ["LambertW", ["Negate", ["Divide", ["Ln", 2], 2]]],
+        expected: ["Negate", ["Ln", 2]],
+        category: "Scope",
+        caption: "$-\\ln 2 \\cdot e^{-\\ln 2} = -\\tfrac{\\ln 2}{2}$",
+      },
+      {
+        expr: ["N", ["LambertW", -0.14, -3]],
+        expected: ["Complex", -4.645279174278859, -13.812745325218817],
+        category: "Scope",
+        caption: "A branch other than 0 or -1, checked against `N[ProductLog[-3, -0.14], 16]`",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/lambert-w.ts",
+        note: "Halley's iteration in the complex plane for k ∉ {0, -1}; structural pattern matching for the exact cases.",
+      },
+    ],
+    seeAlso: ["Exp", "Ln"],
+  },
+  {
+    name: "InverseErfc",
+    domain: "Special functions",
+    signature: "InverseErfc(s)",
+    summary:
+      "The inverse complementary error function: solves $\\operatorname{erfc}(y) = s$ for $0 < s < 2$. Not simply `ErfInv(1 - s)` — that loses precision exactly in the tail ($s \\to 0$) InverseErfc exists for.",
+    signatures: [
+      {
+        call: "InverseErfc(s)",
+        description: "solves $\\operatorname{erfc}(y) = s$ for $y$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Built on compute-engine's native `ErfInv`, but $1 - s$ is computed as a compute-engine expression (exact rational/bignum arithmetic) rather than a plain double, so the final `N()` sees a fully precise argument even at $s = 10^{-10}$ — where `ErfInv` of a *literal* double $1-s$ would already have dropped several digits.",
+      "For $s > 1$, uses $\\operatorname{erfc}(-y) = 2 - \\operatorname{erfc}(y)$ to reduce to the $s \\le 1$ case: $\\operatorname{InverseErfc}(s) = -\\operatorname{InverseErfc}(2-s)$.",
+      "$\\operatorname{Erfc}(\\operatorname{InverseErfc}(x)) = x$ holds exactly, symbolic $x$ included — compute-engine has no general inverse-composition simplification (checked: `ErfInv(Erf(x))` stays unevaluated too), so `Erfc` is extended in place with this one structural cancellation.",
+    ],
+    examples: [
+      {
+        expr: ["InverseErfc", 0.5],
+        expected: 0.4769362762044699,
+        caption: "$\\operatorname{erfc}^{-1}(1/2) = \\operatorname{erf}^{-1}(1/2)$",
+      },
+      { expr: ["InverseErfc", 1], expected: 0, caption: "$\\operatorname{erfc}^{-1}(1) = 0$" },
+      {
+        expr: ["InverseErfc", 0],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "$\\operatorname{erfc}^{-1}(0) = \\infty$",
+      },
+      {
+        expr: ["InverseErfc", 2],
+        expected: "NegativeInfinity",
+        category: "Scope",
+        caption: "$\\operatorname{erfc}^{-1}(2) = -\\infty$",
+      },
+      {
+        expr: ["InverseErfc", 1.5],
+        expected: -0.4769362762044699,
+        category: "Scope",
+        caption: "Arguments in $(1, 2)$ give negative values",
+      },
+      {
+        expr: ["InverseErfc", ["List", 0, 1]],
+        expected: ["List", "PositiveInfinity", 0],
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["InverseErfc", 0.01],
+        expected: 1.8213863677184496,
+        category: "Applications",
+        caption:
+          "$\\sqrt2$ times this, $2.5758\\ldots$, is the two-sided 99% normal critical value",
+      },
+      {
+        expr: ["InverseErfc", { num: "1e-10" }],
+        expected: 4.572824967389485,
+        category: "Possible issues",
+        caption:
+          "Deep in the tail it keeps full precision, where $\\operatorname{erf}^{-1}(1 - s)$ would lose it",
+      },
+      {
+        expr: ["Erfc", ["InverseErfc", "x"]],
+        expected: "x",
+        category: "Properties",
+        caption: "$\\operatorname{erfc}(\\operatorname{erfc}^{-1}(x)) = x$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/inverse-erfc.ts",
+      },
+    ],
+    seeAlso: ["Erfc"],
+  },
+  {
+    name: "InverseGammaRegularized",
+    domain: "Special functions",
+    signature: "InverseGammaRegularized(a, s)",
+    summary:
+      "The inverse of the regularized incomplete gamma $Q(a, z)$ in $z$: solves $s = Q(a, z)$. Solved numerically by a safeguarded Newton's method against compute-engine's own `GammaRegularized`, using the Gamma density (in log space) as the derivative.",
+    signatures: [
+      {
+        call: "InverseGammaRegularized(a, s)",
+        description: "solves $s = Q(a, z)$ for $z$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "$Q(a, 0) = 1$ and $Q(a, \\infty) = 0$ hold for any $a$, even a symbolic one, so `InverseGammaRegularized(a, 1) = 0` and `InverseGammaRegularized(a, 0) = \\infty` are exact regardless.",
+      "$Q(1, z) = e^{-z}$ inverts exactly to $-\\ln s$, symbolic $s$ included.",
+      "Otherwise: a safeguarded Newton's method (falls back to bisection whenever a step would leave the bracket) against the forward function `GammaRegularized(a, z)`, whose own accuracy was checked directly against `wolframscript` to 20 digits.",
+    ],
+    examples: [
+      {
+        expr: ["InverseGammaRegularized", 1, 0.5],
+        expected: 0.6931471805599453,
+        caption: "$Q(1, z) = e^{-z}$, so the inverse at $1/2$ is $\\ln 2$",
+      },
+      {
+        expr: ["InverseGammaRegularized", 2, 0.5],
+        expected: 1.6783469900166608,
+        caption: "The median of the Gamma(2, 1) distribution",
+      },
+      { expr: ["InverseGammaRegularized", 2.5, 0.3], expected: 3.032214992077453 },
+      {
+        expr: ["InverseGammaRegularized", "a", 1],
+        expected: 0,
+        category: "Properties",
+        caption: "$Q(a, 0) = 1$",
+      },
+      {
+        expr: ["InverseGammaRegularized", "a", 0],
+        expected: "PositiveInfinity",
+        category: "Properties",
+        caption: "$Q(a, \\infty) = 0$",
+      },
+      {
+        expr: ["InverseGammaRegularized", 1, "s"],
+        expected: ["Negate", ["Ln", "s"]],
+        category: "Properties",
+        caption: "Order 1 inverts $e^{-z}$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/inverse-regularized.ts",
+        note: "Safeguarded Newton/bisection against native GammaRegularized.",
+      },
+    ],
+    seeAlso: ["GammaRegularized", "Gamma", "InverseBetaRegularized"],
+  },
+  {
+    name: "InverseBetaRegularized",
+    domain: "Special functions",
+    signature: "InverseBetaRegularized(s, a, b)",
+    summary:
+      "The inverse of the regularized incomplete beta $I_x(a, b)$ in $x$: the Beta-distribution quantile. Solved the same way as [[InverseGammaRegularized]] — a safeguarded Newton's method against native `BetaRegularized`.",
+    signatures: [
+      {
+        call: "InverseBetaRegularized(s, a, b)",
+        description: "solves $s = I_x(a, b)$ for $x$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "$I_x(1, 1) = x$ is its own inverse, and $I_x(a, 1) = x^a$ inverts to $s^{1/a}$ — both exact, symbolic $s$ (and $a$) included.",
+      "Otherwise: a safeguarded Newton's method against `BetaRegularized(x, a, b)`, using the Beta density $x^{a-1}(1-x)^{b-1}/B(a,b)$ (in log space) as the derivative; checked against `wolframscript` to 20 digits.",
+    ],
+    examples: [
+      {
+        expr: ["InverseBetaRegularized", 0.5, 2, 3],
+        expected: 0.3857275681323895,
+        caption: "The median of Beta(2, 3)",
+      },
+      { expr: ["InverseBetaRegularized", 0.3, 2.5, 1.5], expected: 0.5094974124283413 },
+      {
+        expr: ["InverseBetaRegularized", 0.25, 2, 1],
+        expected: 0.5,
+        caption: "$I_x(2, 1) = x^2$, so the inverse at $1/4$ is $1/2$",
+      },
+      {
+        expr: ["InverseBetaRegularized", "s", 1, 1],
+        expected: "s",
+        category: "Properties",
+        caption: "$I_x(1, 1) = x$ is its own inverse",
+      },
+      {
+        expr: ["InverseBetaRegularized", "s", "a", 1],
+        expected: ["Power", "s", ["Divide", 1, "a"]],
+        category: "Properties",
+        caption: "$I_x(a, 1) = x^a$ inverts to $s^{1/a}$",
+      },
+      { expr: ["InverseBetaRegularized", 0, 2, 3], expected: 0, category: "Properties" },
+      { expr: ["InverseBetaRegularized", 1, 2, 3], expected: 1, category: "Properties" },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/inverse-regularized.ts",
+        note: "Safeguarded Newton/bisection against native BetaRegularized.",
+      },
+    ],
+    seeAlso: ["BetaRegularized", "InverseGammaRegularized"],
+  },
+  {
+    name: "BellY",
+    domain: "Special functions",
+    signature: "BellY(n, k, xs)",
+    summary:
+      "The partial (incomplete) Bell polynomial $B_{n,k}(x_1, x_2, \\dots)$, by its textbook recurrence — built entirely from bigint binomial coefficients and compute-engine's own Add/Multiply, so it works the same for numeric or symbolic $x_i$.",
+    signatures: [
+      {
+        call: "BellY(n, k, xs)",
+        description: "$B_{n,k}(x_1, \\dots, x_{n-k+1})$, from the list `xs`.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Comtet's recurrence: $B_{n,k} = \\sum_{i=1}^{n-k+1} \\binom{n-1}{i-1} x_i B_{n-i,k-1}$, with $B_{0,0}=1$.",
+      "All-ones arguments give the Stirling numbers of the second kind; $x_j = j!$ gives the (unsigned) Lah numbers — both checked directly against Wolfram's `BellY`.",
+      "`xs` must have exactly $n-k+1$ elements, matching Wolfram's own arity requirement.",
+    ],
+    examples: [
+      {
+        expr: ["BellY", 4, 2, ["List", "x1", "x2", "x3"]],
+        expected: ["Add", ["Multiply", 3, ["Power", "x2", 2]], ["Multiply", 4, "x1", "x3"]],
+      },
+      {
+        expr: ["BellY", 6, 2, ["List", 1, 1, 1, 1, 1]],
+        expected: 31,
+        category: "Properties",
+        caption: "All-ones arguments give Stirling(6, 2)",
+      },
+      {
+        expr: ["BellY", 4, 2, ["List", 1, 2, 6]],
+        expected: 36,
+        category: "Properties",
+        caption: "$x_j = j!$ gives the Lah number L(4, 2)",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/bell-y.ts",
+      },
+    ],
+    seeAlso: ["BellNumber", "StirlingS2"],
+  },
+  {
+    name: "NorlundB",
+    domain: "Special functions",
+    signature: "NorlundB(n, a)",
+    summary:
+      "The Nörlund polynomial $B_n^{(a)}$, from the generating function $(t/(e^t-1))^a$. At $a=1$ it is the ordinary Bernoulli number; in general, an exact polynomial in $a$ with bigint-rational coefficients, from a power-series log/exp of the Bernoulli EGF.",
+    signatures: [{ call: "NorlundB(n, a)", description: "$B_n^{(a)}$, exact.", library: LIBRARY }],
+    details: [
+      "Computed by logging the EGF $t/(e^t-1) = \\sum B_k t^k/k!$ into a power series $g(t)$ (the standard power-series-logarithm recurrence), then exponentiating $a \\cdot g(t)$ back — a genuine polynomial identity in $a$, since each convolution step contributes one more factor of $a$. Every step is exact bigint-rational arithmetic; no float is involved until $a$ itself is one.",
+      "At a symbolic $a$, returns the polynomial as a MathJSON expression in $a$; at a concrete rational $a$, an exact rational number; at a float $a$, a float.",
+      "Checked directly against Wolfram's own `NorlundB` at several $(n, a)$ pairs, including $n = 6, a = 4$ ($221/42$).",
+    ],
+    examples: [
+      {
+        expr: ["NorlundB", 2, 1],
+        expected: ["Rational", 1, 6],
+        caption: "At a = 1 it is the Bernoulli number $B_2$",
+      },
+      { expr: ["NorlundB", 4, 1], expected: ["Rational", -1, 30] },
+      { expr: ["NorlundB", 2, 2], expected: ["Rational", 5, 6] },
+      { expr: ["NorlundB", 3, 2], expected: ["Rational", -1, 2] },
+      {
+        expr: ["NorlundB", 1, "a"],
+        expected: ["Multiply", ["Rational", -1, 2], "a"],
+        category: "Scope",
+        caption: "A polynomial in a",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/norlund.ts",
+      },
+    ],
+    seeAlso: ["BernoulliB"],
+  },
+  {
+    name: "PrimeZetaP",
+    domain: "Special functions",
+    signature: "PrimeZetaP(s)",
+    summary:
+      "The prime zeta function $P(s) = \\sum_p p^{-s}$, the sum over primes. Computed via the Möbius/ζ identity $P(s) = \\sum_{k \\ge 1} \\mu(k)/k \\cdot \\ln\\zeta(ks)$ rather than sieving primes directly — the identity converges geometrically, sieving does not.",
+    signatures: [
+      {
+        call: "PrimeZetaP(s)",
+        description: "$P(s)$, for $\\operatorname{Re}(s) > 1$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Reuses this package's own `Zeta` (already extended to complex arguments) rather than a fresh prime-summation kernel; $\\ln\\zeta(ks) \\to 0$ geometrically as $k$ grows, so the sum settles in a few dozen terms at double precision.",
+      "The identity only converges for $\\operatorname{Re}(s) > 1$; outside that region (including the pole at $s=1$) this declines rather than attempting an analytic continuation it hasn't proven.",
+      "Checked against `wolframscript`'s `N[PrimeZetaP[s], 17]` at several points, matching to ~15 significant digits.",
+    ],
+    examples: [
+      { expr: ["N", ["PrimeZetaP", 2]], expected: 0.4522474200410655, caption: "$\\sum_p 1/p^2$" },
+      { expr: ["N", ["PrimeZetaP", 3]], expected: 0.17476263929944355 },
+      { expr: ["PrimeZetaP", 2.5], expected: 0.273680737993234, category: "Scope" },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/prime-zeta.ts",
+      },
+    ],
+    seeAlso: ["Zeta"],
+  },
+  {
+    name: "HypergeometricPFQ",
+    domain: "Special functions",
+    signature: "HypergeometricPFQ(a, b, z)",
+    summary:
+      "The generalized hypergeometric function ${}_pF_q(a; b; z)$, built on the same series machinery (`pfqSeries`) as this package's 0F1/1F1Regularized/2F1Regularized/3F2Regularized, generalized to arbitrary $p$ and $q$.",
+    signatures: [
+      {
+        call: "HypergeometricPFQ(a, b, z)",
+        description:
+          "${}_pF_q(a; b; z)$, for parameter lists `a` (length $p$) and `b` (length $q$).",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Three closed forms stay exact ahead of the numeric series, symbolic $z$ (and parameters) included: ${}_0F_0(;;z) = e^z$; ${}_1F_0(a;;z) = (1-z)^{-a}$; and $\\mathrm{HypergeometricPFQ}(\\ldots; 0) = 1$ for any parameter lists (the series' own leading term).",
+      "Otherwise: $p \\le q$ converges for any $z$; $p = q+1$ only inside the unit disc, matching this package's Regularized forms — declined outside it rather than attempting an analytic continuation.",
+    ],
+    examples: [
+      {
+        expr: ["HypergeometricPFQ", ["List", 1, 1], ["List", 2], 0.5],
+        expected: 1.3862943611198906,
+        caption: "${}_2F_1(1, 1; 2; z) = -\\ln(1-z)/z$, here $2\\ln 2$",
+      },
+      {
+        expr: ["HypergeometricPFQ", ["List", 1], ["List", 2], 0.5],
+        expected: 1.2974425414002564,
+        caption: "${}_1F_1(1; 2; z) = (e^z - 1)/z$",
+      },
+      {
+        expr: ["HypergeometricPFQ", ["List", 1, 2, 3], ["List", 4, 5], 0.5],
+        expected: 1.189874754256423,
+        category: "Scope",
+        caption: "${}_3F_2$",
+      },
+      {
+        expr: ["HypergeometricPFQ", ["List"], ["List"], "z"],
+        expected: ["Power", "ExponentialE", "z"],
+        category: "Properties",
+        caption: "${}_0F_0(;;z) = e^z$",
+      },
+      {
+        expr: ["HypergeometricPFQ", ["List", "a"], ["List"], "z"],
+        expected: ["Power", ["Add", ["Negate", "z"], 1], ["Negate", "a"]],
+        category: "Properties",
+        caption: "${}_1F_0(a;;z) = (1-z)^{-a}$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric-pfq.ts",
+      },
+    ],
+    seeAlso: ["Hypergeometric0F1", "Hypergeometric2F1Regularized", "Hypergeometric3F2Regularized"],
+  },
+  {
+    name: "KleinInvariantJ",
+    domain: "Special functions",
+    signature: "KleinInvariantJ(tau)",
+    summary:
+      "Klein's absolute invariant $J(\\tau) = j(\\tau)/1728$, normalised so $J(i) = 1$ and $J(\\rho) = 0$ at the elliptic points. A thin wrapper over this package's own [[ModularJ]] (the un-normalised $j$).",
+    signatures: [
+      {
+        call: "KleinInvariantJ(tau)",
+        description: "$J(\\tau) = j(\\tau)/1728$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "All the analytic work — fundamental-domain reduction, the $\\eta^{24}$ discriminant — is [[ModularJ]]'s; this only rescales.",
+      "$\\tau = i$ is returned exactly (1): $j(i) = 1728$ is a textbook identity, kept exact even under plain `evaluate()`, not just `N()`.",
+    ],
+    examples: [
+      {
+        expr: ["N", ["KleinInvariantJ", ["Complex", 0, 1]]],
+        expected: 1,
+        caption: "$J(i) = 1$",
+      },
+      {
+        expr: ["N", ["KleinInvariantJ", ["Complex", 0, 2]]],
+        expected: 166.375,
+        caption: "$J(2i) = 66^3/1728 = 1331/8$",
+      },
+      {
+        expr: ["KleinInvariantJ", ["Complex", 0, 1]],
+        expected: 1,
+        category: "Scope",
+        caption: "Exact at the elliptic point $i$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/modular.ts",
+        note: "j(τ)/1728, delegating entirely to ModularJ.",
+      },
+    ],
+    seeAlso: ["ModularJ", "ModularLambda"],
+  },
 ];
