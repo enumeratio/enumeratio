@@ -3,6 +3,7 @@ import { entries as subsets } from "./subsets.ts";
 import { entries as words } from "./words.ts";
 import { entries as pathsPartitions } from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
+import { entries as tableauxPlane } from "./tableaux-plane.ts";
 import { entries as permutations } from "./permutations.ts";
 import { entries as permutationClasses } from "./permutation-classes.ts";
 import { entries as compositions } from "./compositions.ts";
@@ -21,6 +22,7 @@ export const allEntries: readonly FamilyKernel[] = [
   ...words,
   ...pathsPartitions,
   ...tableauxTrees,
+  ...tableauxPlane,
   ...permutations,
   ...permutationClasses,
   ...compositions,
