@@ -55,6 +55,17 @@ test("PowerMod gains Wolfram's rational exponent, and keeps its native forms", (
   expect(run(["PowerMod", 2, ["List", 10, 11, 12, 13, 14], 5])).toEqual(["List", 4, 3, 1, 2, 4]);
 });
 
+test("PowerMod(a, 0, m) is Mod(1, m) even for m ≤ 0 — a⁰ = 1 doesn't care about m's sign", () => {
+  // Wolfram evaluates this special case (PowerMod[-2,0,-14] = -13) while declining
+  // PowerMod for a negative modulus and any other exponent — oracle-quickcheck finding.
+  expect(run(["PowerMod", -2, 0, -14])).toBe(-13);
+  expect(run(["PowerMod", -4, 0, -2])).toBe(-1);
+  expect(run(["PowerMod", 5, 0, -7])).toBe(-6);
+  expect(run(["PowerMod", 2, 0, 14])).toBe(1);
+  // Nonzero exponent with a negative modulus still declines, matching Wolfram.
+  expect(run(["PowerMod", -2, 3, -14])).toEqual(["PowerMod", -2, 3, -14]);
+});
+
 test("MultiplicativeOrder gains the discrete-log form", () => {
   expect(run(["MultiplicativeOrder", 2, 7])).toBe(3);
   expect(run(["MultiplicativeOrder", 5, 7, ["List", 2, 3, 4]])).toBe(2);
