@@ -29,38 +29,43 @@ export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = D
 }
 
 /**
- * One carrier's constructor. Held, with no `evaluate` — unless compute-engine already has
- * the name, in which case the two become overloads of it.
+ * One carrier's constructor. Held, with no `evaluate` — unless the name is already
+ * declared (a compute-engine native, or another library's head), in which case the two
+ * become overloads of it. Attached IN PLACE, same reasoning as `wrapOperator`
+ * (`@enumeratio/boxed`): `ce.declare` throws the SECOND time any name is declared, native
+ * or not, so a plain re-declare only ever worked here by luck of engine composition order.
  *
- * `ContinuedFraction` is the case that forced this, and is currently the only one:
- * compute-engine computes the expansion, `(real, integer?) -> list<integer>`, and we want
- * the same name for the value that expansion produces. Declaring straight over it replaced
- * the definition and `ContinuedFraction(355, 113)` started erroring — a break nowhere near
- * this file, and invisible until the whole library set was booted in one engine.
+ * `ContinuedFraction` is the case that forced overloading at all: compute-engine computes
+ * the expansion, `(real, integer?) -> list<integer>`, and we want the same name for the
+ * value that expansion produces. `PermutationCycles` is the same shape of problem from the
+ * other direction — `@enumeratio/groupalgebra` declares it as Wolfram's real cycle-notation
+ * conversion, and depending on which library's `declare*` runs first in a combined engine
+ * (as `@enumeratio/census` builds one), this carrier constructor has to layer onto THAT
+ * instead of onto a native definition.
  *
- * The two clauses are disjoint by argument type (the native rejects a list, ours takes only
- * a list), so the intersection signature is honest and the dispatch below is total.
+ * The existing definition is tried FIRST, the domain's own "hold, untouched" behaviour only
+ * as what happens when it declines (returns `undefined`) on a value matching the carrier's
+ * shape — never the other way around, so a library that actually computes something for
+ * that shape is not shadowed by a same-named type tag nobody asked for.
  */
 function declareConstructor(ce: ComputeEngine, domain: Domain): void {
   const clause = `(${domain.shape}) -> ${domain.type}`;
-  const native = ce.lookupDefinition(domain.name)
-    ? ce.box([domain.name, ce.number(1)] as never).operatorDefinition
-    : undefined;
+  const definition = ce.lookupDefinition(domain.name);
+  const operator =
+    definition !== undefined && "operator" in definition ? definition.operator : undefined;
 
-  if (native === undefined) {
+  if (operator === undefined) {
     ce.declare(domain.name, { signature: clause });
     return;
   }
 
-  ce.declare(domain.name, {
-    signature: `(${String(native.signature)}) & (${clause})`,
-    evaluate: (ops: readonly BoxedExpression[], options) => {
-      const subject = ops[0];
-      // Ours: hold it, exactly as a constructor with no handler would.
-      if (ops.length === 1 && subject?.type.matches(domain.shape) === true) return undefined;
-      return native.evaluate?.(ops, options);
-    },
-  });
+  const existingEvaluate = operator.evaluate;
+  const existingSignature = operator.signature;
+  (operator as { signature: unknown }).signature = ce.type(
+    `(${String(existingSignature)}) & (${clause})`,
+  );
+  operator.evaluate = (ops: readonly BoxedExpression[], options) =>
+    existingEvaluate?.(ops, options);
 }
 
 /** The value inside a constructed carrier — what a statistic reaches for. */

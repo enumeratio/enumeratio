@@ -269,6 +269,7 @@ const OVERRIDDEN = [
   "Multinomial",
   "MultiplicativeOrder",
   "Multiply",
+  "N",
   "NextPrime",
   "Norm",
   "NthPrime",
@@ -480,6 +481,14 @@ const NOVEL = [
   "NSymR",
   "GroupBasis",
   "ClassSum",
+  "Cycles",
+  "PermutationCycles",
+  "InversePermutation",
+  "Permute",
+  "PermutationGroup",
+  "GroupGenerators",
+  "GroupOrder",
+  "GroupElements",
   "ModularMatrix",
   "ModularWord",
   "Convergents",
@@ -548,6 +557,10 @@ const NOVEL = [
   "StandardTableauPairs",
   "PlanePartitions",
   "BoxedPlanePartitions",
+  "DiscreteRatio",
+  "GeneratingFunction",
+  "ExponentialGeneratingFunction",
+  "FindSequenceFunction",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

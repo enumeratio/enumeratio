@@ -123,6 +123,10 @@ export const sources: readonly string[] = [
   "packages/reference/entries/EmirpPrimes.yaml",
   "packages/reference/entries/MersennePrimes.yaml",
   "packages/reference/entries/FibonacciPrimes.yaml",
+  "packages/symbols/combinatorics/collections/reference/DiscreteRatio.yaml",
+  "packages/symbols/combinatorics/collections/reference/GeneratingFunction.yaml",
+  "packages/symbols/combinatorics/collections/reference/ExponentialGeneratingFunction.yaml",
+  "packages/symbols/combinatorics/collections/reference/FindSequenceFunction.yaml",
 ];
 
 export const enumerableFamilies: readonly ReferenceEntry[] = [
@@ -3315,5 +3319,236 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     examples: [],
     enumerate: { expr: "Take(FibonacciPrimes, 11)" },
     seeAlso: ["Count", "At", "Element", "MersennePrimes", "Primes"],
+  },
+  {
+    name: "DiscreteRatio",
+    domain: "Combinatorics",
+    signature: "DiscreteRatio(f, n)",
+    summary: "The ratio $f(n+1)/f(n)$ between consecutive terms of a sequence, simplified.",
+    signatures: [
+      {
+        call: "DiscreteRatio(f, n)",
+        description: "f(n+1)/f(n), simplified",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Substitutes $n \\to n+1$ into $f$ and simplifies the quotient; stays symbolic when the ratio does not collapse further (e.g. a ratio of two named sequences with no known closed form).",
+    ],
+    examples: [
+      {
+        id: "factorial-ratio",
+        expr: ["DiscreteRatio", ["Factorial", "n"], "n"],
+        expected: ["Add", "n", 1],
+        caption: "$(n+1)!/n! = n + 1$",
+      },
+      {
+        id: "geometric-ratio",
+        expr: ["DiscreteRatio", ["Power", 2, "n"], "n"],
+        expected: 2,
+        caption: "a constant ratio for a geometric sequence",
+      },
+    ],
+    seeAlso: ["GeneratingFunction", "FindSequenceFunction"],
+  },
+  {
+    name: "GeneratingFunction",
+    domain: "Combinatorics",
+    signature: "GeneratingFunction(expr, n, x)",
+    summary:
+      "The ordinary generating function $\\sum_n \\mathrm{expr}(n)\\,x^n$ of a sequence, in closed form, when one exists.",
+    signatures: [
+      {
+        call: "GeneratingFunction(expr, n, x)",
+        description: "the ordinary generating function of expr(n) in x",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "C-finite sequences (satisfying a constant-coefficient linear recurrence -- Fibonacci-like sequences, fixed-$k$ binomials, polynomials in $n$, geometric terms, and any combination of those) get a rational generating function, found from the recurrence by Berlekamp--Massey -- there is no family-specific code.",
+      "A handful of named, non-C-finite sequences are recognised directly by value, not by name: the Catalan numbers have the algebraic generating function $(1-\\sqrt{1-4x})/(2x)$.",
+      "`Count(Family(n))` is not special-cased either: it is sampled numerically like any other sequence, so a family whose cardinality happens to be Catalan (or any C-finite sequence) gets the matching closed form automatically.",
+      "Falls back to staying symbolic when no closed form is found (e.g. $n!$ has none), the same as Wolfram.",
+    ],
+    examples: [
+      {
+        id: "fibonacci",
+        expr: ["GeneratingFunction", ["Fibonacci", "n"], "n", "x"],
+        expected: ["Divide", "x", ["Add", ["Negate", ["Power", "x", 2]], ["Negate", "x"], 1]],
+        caption: "$x/(1-x-x^2)$",
+      },
+      {
+        id: "catalan-numbers",
+        expr: ["GeneratingFunction", ["CatalanNumber", "n"], "n", "x"],
+        expected: [
+          "Divide",
+          ["Add", ["Negate", ["Sqrt", ["Add", ["Multiply", -4, "x"], 1]]], 1],
+          ["Multiply", 2, "x"],
+        ],
+        caption:
+          "$(1-\\sqrt{1-4x})/(2x)$ -- algebraic, not rational: Catalan numbers are not C-finite",
+      },
+      {
+        id: "dyck-paths-via-count",
+        expr: ["GeneratingFunction", ["Count", ["DyckPaths", "n"]], "n", "x"],
+        expected: [
+          "Divide",
+          ["Add", ["Negate", ["Sqrt", ["Add", ["Multiply", -4, "x"], 1]]], 1],
+          ["Multiply", 2, "x"],
+        ],
+        caption:
+          "the same Catalan generating function, reached through a collection's cardinality rather than CatalanNumber directly",
+      },
+      {
+        id: "fixed-k-binomial",
+        expr: ["GeneratingFunction", ["Binomial", "n", 3], "n", "x"],
+        expected: [
+          "Divide",
+          ["Power", "x", 3],
+          [
+            "Add",
+            ["Power", "x", 4],
+            ["Multiply", -4, ["Power", "x", 3]],
+            ["Multiply", 6, ["Power", "x", 2]],
+            ["Multiply", -4, "x"],
+            1,
+          ],
+        ],
+        caption: "$x^3/(1-x)^4$",
+      },
+      {
+        id: "geometric",
+        expr: ["GeneratingFunction", ["Power", 2, "n"], "n", "x"],
+        expected: ["Divide", 1, ["Add", ["Multiply", -2, "x"], 1]],
+        caption: "$1/(1-2x)$",
+      },
+      {
+        id: "no-closed-form",
+        expr: ["GeneratingFunction", ["Factorial", "n"], "n", "x"],
+        expected: ["GeneratingFunction", ["Factorial", "n"], "n", "x"],
+        category: "Scope",
+        caption:
+          "$n!$ has no elementary ordinary generating function -- stays unevaluated, as Wolfram does too",
+      },
+    ],
+    seeAlso: ["ExponentialGeneratingFunction", "FindSequenceFunction", "DiscreteRatio"],
+  },
+  {
+    name: "ExponentialGeneratingFunction",
+    domain: "Combinatorics",
+    signature: "ExponentialGeneratingFunction(expr, n, x)",
+    summary:
+      "The exponential generating function $\\sum_n \\mathrm{expr}(n)\\,x^n/n!$ of a sequence, in closed form, when one exists.",
+    signatures: [
+      {
+        call: "ExponentialGeneratingFunction(expr, n, x)",
+        description: "the exponential generating function of expr(n) in x",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "For a C-finite sequence of recurrence order at most 2 (Fibonacci-like sequences), the characteristic roots come straight out of the compute engine's own `Sqrt`/arithmetic, so an irrational discriminant stays exact rather than being hand-simplified -- e.g. Fibonacci's $\\sqrt5$.",
+      "A small registry covers named factorial-growth sequences that are not C-finite at all -- $n!$, the derangement numbers, and the Bell numbers -- each with a textbook closed form.",
+      "Higher-order C-finite sequences and other non-C-finite sequences stay symbolic: only order ≤ 2 is attempted here.",
+    ],
+    examples: [
+      {
+        id: "factorial",
+        expr: ["ExponentialGeneratingFunction", ["Factorial", "n"], "n", "x"],
+        expected: ["Divide", 1, ["Add", ["Negate", "x"], 1]],
+        caption: "$1/(1-x)$",
+      },
+      {
+        id: "derangements",
+        expr: ["ExponentialGeneratingFunction", ["Subfactorial", "n"], "n", "x"],
+        expected: [
+          "Divide",
+          ["Power", "ExponentialE", ["Negate", "x"]],
+          ["Add", ["Negate", "x"], 1],
+        ],
+        caption: "$e^{-x}/(1-x)$",
+      },
+      {
+        id: "bell-numbers",
+        expr: ["ExponentialGeneratingFunction", ["BellNumber", "n"], "n", "x"],
+        expected: ["Power", "ExponentialE", ["Add", ["Power", "ExponentialE", "x"], -1]],
+        caption: "$e^{e^x-1}$ -- the exponential formula for set partitions",
+      },
+      {
+        id: "fibonacci",
+        expr: ["ExponentialGeneratingFunction", ["Fibonacci", "n"], "n", "x"],
+        expected: [
+          "Add",
+          [
+            "Multiply",
+            ["Negate", ["Divide", ["Sqrt", 5], 5]],
+            [
+              "Power",
+              "ExponentialE",
+              ["Multiply", ["Rational", 1, 2], "x", ["Add", 1, ["Negate", ["Sqrt", 5]]]],
+            ],
+          ],
+          [
+            "Multiply",
+            ["Divide", ["Sqrt", 5], 5],
+            [
+              "Power",
+              "ExponentialE",
+              ["Multiply", ["Rational", 1, 2], "x", ["Add", 1, ["Sqrt", 5]]],
+            ],
+          ],
+        ],
+        caption:
+          "Binet's formula, exponentiated -- built from the order-2 recurrence's own roots $(1\\pm\\sqrt5)/2$",
+      },
+    ],
+    seeAlso: ["GeneratingFunction", "FindSequenceFunction", "DiscreteRatio"],
+  },
+  {
+    name: "FindSequenceFunction",
+    domain: "Combinatorics",
+    signature: "FindSequenceFunction(list, n)",
+    summary:
+      "A closed form $a(n)$ for a sequence given as a list $a(0), a(1), \\dots$, when one can be found.",
+    signatures: [
+      {
+        call: "FindSequenceFunction(list, n)",
+        description: "a closed form for the sequence given by list, in n",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Tries, in order, a polynomial fit (exact finite differences: the least degree whose difference row vanishes), a small registry of named sequences (Fibonacci, Catalan, factorial, derangements, Bell numbers) matched by value, and a linear-recurrence fit (Berlekamp--Massey over ℚ) resolved to a closed form for orders 1 (geometric) and 2 (exponential-polynomial, via the recurrence's characteristic roots).",
+      "Every closed form found is exact -- re-evaluating it reproduces the input list precisely, not just approximately.",
+      "Falls back to staying symbolic when nothing fits.",
+    ],
+    examples: [
+      {
+        id: "geometric",
+        expr: ["FindSequenceFunction", ["List", 1, 2, 4, 8, 16], "n"],
+        expected: ["Power", 2, "n"],
+        caption: "$2^n$",
+      },
+      {
+        id: "polynomial",
+        expr: ["FindSequenceFunction", ["List", 1, 4, 9, 16, 25], "n"],
+        expected: ["Add", ["Power", "n", 2], ["Multiply", 2, "n"], 1],
+        caption: "$(n+1)^2$, found by finite differences",
+      },
+      {
+        id: "catalan-numbers",
+        expr: ["FindSequenceFunction", ["List", 1, 1, 2, 5, 14, 42, 132], "n"],
+        expected: ["CatalanNumber", "n"],
+        caption: "recognised by value against the compute engine's own CatalanNumber",
+      },
+      {
+        id: "factorial",
+        expr: ["FindSequenceFunction", ["List", 1, 1, 2, 6, 24, 120], "n"],
+        expected: ["Factorial", "n"],
+        caption:
+          "$n!$ -- not C-finite, so only reached via the named-sequence registry, not Berlekamp--Massey",
+      },
+    ],
+    seeAlso: ["GeneratingFunction", "ExponentialGeneratingFunction", "DiscreteRatio"],
   },
 ];

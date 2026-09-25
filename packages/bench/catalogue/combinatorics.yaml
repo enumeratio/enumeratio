@@ -1,0 +1,35 @@
+# Big-integer combinatorics. Huge answers are reduced mod a word-sized prime, which every
+# system maps, so the answer compares as a small value and the reduction costs next to nothing.
+
+Factorial:
+  - id: factorial-10-to-the-4
+    role: bench
+    expr: [Mod, [Factorial, 10000], 1000000007]
+    expected: 531950728
+    bench:
+      tags: [combinatorics, big-integer]
+      precision: exact
+  - id: factorial-10-to-the-5
+    role: bench
+    expr: [Mod, [Factorial, 100000], 1000000007]
+    expected: 457992974
+    bench:
+      tags: [combinatorics, big-integer]
+      source: GMP
+      precision: exact
+Binomial:
+  - id: binomial-10-to-the-5-choose-3-10-to-the-4
+    role: bench
+    expr: [Mod, [Binomial, 100000, 30000], 1000000007]
+    expected: 169452473
+    bench:
+      tags: [combinatorics, big-integer]
+      precision: exact
+Fibonacci:
+  - id: fibonacci-10-to-the-5
+    role: bench
+    expr: [Mod, [Fibonacci, 100000], 1000000007]
+    expected: 911435502
+    bench:
+      tags: [combinatorics, big-integer]
+      precision: exact

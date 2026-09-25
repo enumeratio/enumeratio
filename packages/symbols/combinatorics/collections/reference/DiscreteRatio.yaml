@@ -1,0 +1,22 @@
+name: DiscreteRatio
+domain: Combinatorics
+signature: DiscreteRatio(f, n)
+summary: The ratio $f(n+1)/f(n)$ between consecutive terms of a sequence, simplified.
+signatures:
+  - call: DiscreteRatio(f, n)
+    description: f(n+1)/f(n), simplified
+    library: enumeratio-collections
+details:
+  - Substitutes $n \to n+1$ into $f$ and simplifies the quotient; stays symbolic when the ratio does not collapse further (e.g. a ratio of two named sequences with no known closed form).
+examples:
+  - id: factorial-ratio
+    expr: [DiscreteRatio, [Factorial, n], n]
+    expected: [Add, n, 1]
+    caption: $(n+1)!/n! = n + 1$
+  - id: geometric-ratio
+    expr: [DiscreteRatio, [Power, 2, n], n]
+    expected: 2
+    caption: a constant ratio for a geometric sequence
+seeAlso:
+  - GeneratingFunction
+  - FindSequenceFunction

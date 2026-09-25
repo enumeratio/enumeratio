@@ -93,7 +93,7 @@ export const bigCx = (re: number | BigDecimal, im: number | BigDecimal = 0): Big
 });
 
 /** Run `fn` with BigDecimal working at `digits`, restoring the engine's precision after. */
-function atDigits<T>(digits: number, fn: () => T): T {
+export function atDigits<T>(digits: number, fn: () => T): T {
   const saved = BigDecimal.precision;
   BigDecimal.precision = digits;
   try {

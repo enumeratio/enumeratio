@@ -21,7 +21,8 @@ import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
 import { evaluatePolyLog } from "./polylog.ts";
-import { atEnginePrecision, DOUBLE_DIGITS } from "./precise.ts";
+import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "./precise.ts";
+import { lerchPhiBig } from "./lerch-big.ts";
 import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
 import { declareElliptic } from "./elliptic.ts";
@@ -74,6 +75,7 @@ import { declareClosedForms113 } from "./closed-forms-113.ts";
 import { declarePrecision113 } from "./precision-113.ts";
 import { declareLinearAlgebra113 } from "./linear-algebra-113.ts";
 import { declareSpecialFunctionsRemaining } from "./special-functions-remaining.ts";
+import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -401,6 +403,14 @@ function evaluateHurwitz(
     return finish(box(["Divide", ["Negate", poly], nn + 1]));
   }
 
+  // ζ(s, a) for a a nonpositive integer and Re(s) > 0: the (n+a) = 0 term is 0^{−s} with
+  // Re(s) > 0, a genuine pole — not the generalized-zeta convention (`Zeta(s, a)`, evaluated
+  // below) that drops it and stays finite. Matches Wolfram, mpmath and SymPy, all of which
+  // diverge or error here; Re(s) ≤ 0 needs no guard, since 0^{−s} is then just 0.
+  if (a.im === 0 && Number.isInteger(a.re) && a.re <= 0 && isFiniteNum(s) && s.re > 0) {
+    return ce.symbol("ComplexInfinity");
+  }
+
   // ζ(s, m) for a positive integer m: ζ(s) − Σ_{k=1}^{m-1} k^{-s}. Gives the
   // ζ(s, 1) = ζ(s) reduction and closed forms like ζ(2, 2) = π²/6 − 1. Skipped for
   // a concretely complex s, whose ζ(s) compute-engine can't evaluate numerically —
@@ -514,8 +524,15 @@ function evaluateLerch(
   }
   // Past |z| = 1 the series stops converging: continue by the integral representation
   // (lerch-continuation.ts), with compute-engine's own upper incomplete Γ. Where that can't
-  // be trusted to double precision, stay unevaluated rather than guess.
-  if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a) && Math.hypot(z.re, z.im) > 1) {
+  // be trusted to double precision, stay unevaluated rather than guess. On the rim itself
+  // (|z| = 1, real z = −1 excepted: the Euler transform in lerchPhi handles that ray at
+  // every s) the direct sum below either diverges outright (Re(s) ≤ 1) or converges too
+  // slowly for double precision to matter (a term at n = 200,000 is still ~n^(1−Re(s)) —
+  // only ~1e-8 at Re(s) = 1.5), so the whole rim routes through the same continuation,
+  // which is accurate there to ~1e-14 at every Re(s) tried.
+  const absZ = Math.hypot(z.re, z.im);
+  const onRim = z.im !== 0 && Math.abs(absZ - 1) < 1e-9;
+  if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a) && (absZ > 1 || onRim)) {
     const upperGamma = (sigma: Cx, x: Cx): Cx | undefined => {
       const v = ce.box(["Gamma", ["Complex", sigma.re, sigma.im], ["Complex", x.re, x.im]]).N();
       return isFiniteNum(v) ? { re: v.re, im: v.im } : undefined;
@@ -527,6 +544,12 @@ function evaluateLerch(
       upperGamma,
     );
     return continued === undefined ? undefined : numberResult(ce, continued);
+  }
+  if (numeric) {
+    // Real arguments past a double's digits: the arbitrary-precision series (lerch-big.ts).
+    const [zb, sb, ab] = [z, s, a].map((x) => bigRealOperand(ce, x));
+    const phi = zb && sb && ab ? lerchPhiBig(zb, sb, ab, ce.precision) : undefined;
+    if (phi !== undefined) return bigResult(ce, phi);
   }
   if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a)) {
     return numberResult(
@@ -732,4 +755,5 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declarePrecision113(ce);
   declareLinearAlgebra113(ce);
   declareSpecialFunctionsRemaining(ce);
+  declareCorrectlyRoundedN(ce);
 }

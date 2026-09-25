@@ -4456,7 +4456,8 @@
   {
     "id": "Rank#15",
     "expr": ["Rank", ["Tabulate", "f", 2, 3]],
-    "wolfram": "ArrayDepth[Array[f, List[2, 3]]]"
+    "wolfram": "ArrayDepth[Array[f, List[2, 3]]]",
+    "back": ["Rank", ["Array", "f", ["List", 2, 3]]]
   },
   {
     "id": "MatrixRank#1",
@@ -4527,7 +4528,8 @@
   {
     "id": "MatrixRank#17",
     "expr": ["MatrixRank", ["Tabulate", "Multiply", 4, 4]],
-    "wolfram": "MatrixRank[Array[Times, List[4, 4]]]"
+    "wolfram": "MatrixRank[Array[Times, List[4, 4]]]",
+    "back": ["MatrixRank", ["Array", "Multiply", ["List", 4, 4]]]
   },
   {
     "id": "MatrixRank#18",
@@ -4535,7 +4537,11 @@
       "MatrixRank",
       ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 4, 4]
     ],
-    "wolfram": "MatrixRank[Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[4, 4]]]"
+    "wolfram": "MatrixRank[Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[4, 4]]]",
+    "back": [
+      "MatrixRank",
+      ["Array", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], ["List", 4, 4]]
+    ]
   },
   {
     "id": "MatrixExp#1",
@@ -9142,37 +9148,48 @@
   {
     "id": "Tabulate#1",
     "expr": ["Tabulate", ["Function", ["Power", "_1", 2]], 5],
-    "wolfram": "Array[Function[Power[Slot[1], 2]], 5]"
+    "wolfram": "Array[Function[Power[Slot[1], 2]], 5]",
+    "back": ["Array", ["Function", ["Power", "_1", 2]], 5]
   },
   {
     "id": "Tabulate#2",
     "expr": ["Tabulate", ["Function", ["Multiply", "_1", "_2"]], 2, 2],
-    "wolfram": "Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]"
+    "wolfram": "Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]",
+    "back": ["Array", ["Function", ["Multiply", "_1", "_2"]], ["List", 2, 2]]
   },
   {
     "id": "Tabulate#3",
     "expr": ["Tabulate", "f", 3],
-    "wolfram": "Array[f, 3]"
+    "wolfram": "Array[f, 3]",
+    "back": ["Array", "f", 3]
   },
   {
     "id": "Tabulate#4",
     "expr": ["Tabulate", "f", 2, 3],
-    "wolfram": "Array[f, List[2, 3]]"
+    "wolfram": "Array[f, List[2, 3]]",
+    "back": ["Array", "f", ["List", 2, 3]]
   },
   {
     "id": "Tabulate#8",
     "expr": ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 3, 3],
-    "wolfram": "Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]"
+    "wolfram": "Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]",
+    "back": [
+      "Array",
+      ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]],
+      ["List", 3, 3]
+    ]
   },
   {
     "id": "Tabulate#9",
     "expr": ["Tabulate", ["Function", ["If", ["Equal", "_1", "_2"], 1, 0]], 3, 3],
-    "wolfram": "Array[Function[If[Equal[Slot[1], Slot[2]], 1, 0]], List[3, 3]]"
+    "wolfram": "Array[Function[If[Equal[Slot[1], Slot[2]], 1, 0]], List[3, 3]]",
+    "back": ["Array", ["Function", ["If", ["Equal", "_1", "_2"], 1, 0]], ["List", 3, 3]]
   },
   {
     "id": "Scan#1",
     "expr": ["Scan", ["List", 1, 2, 3, 4], "Add"],
-    "wolfram": "FoldList[Plus, List[1, 2, 3, 4]]"
+    "wolfram": "FoldList[Plus, List[1, 2, 3, 4]]",
+    "back": ["FoldList", "Add", ["List", 1, 2, 3, 4]]
   },
   {
     "id": "Scan#3",
@@ -9182,22 +9199,26 @@
   {
     "id": "Scan#4",
     "expr": ["Scan", ["List", "a", "b", "c"], "f"],
-    "wolfram": "FoldList[f, List[a, b, c]]"
+    "wolfram": "FoldList[f, List[a, b, c]]",
+    "back": ["FoldList", "f", ["List", "a", "b", "c"]]
   },
   {
     "id": "Scan#5",
     "expr": ["Scan", ["List", 1, 2, 3, 4, 5], "Multiply"],
-    "wolfram": "FoldList[Times, List[1, 2, 3, 4, 5]]"
+    "wolfram": "FoldList[Times, List[1, 2, 3, 4, 5]]",
+    "back": ["FoldList", "Multiply", ["List", 1, 2, 3, 4, 5]]
   },
   {
     "id": "Scan#8",
     "expr": ["Scan", ["List"], "Add"],
-    "wolfram": "FoldList[Plus, List[]]"
+    "wolfram": "FoldList[Plus, List[]]",
+    "back": ["FoldList", "Add", ["List"]]
   },
   {
     "id": "Scan#9",
     "expr": ["Scan", ["List", 1, 0, 1, 1], ["Function", ["Add", ["Multiply", 2, "_1"], "_2"]]],
-    "wolfram": "FoldList[Function[Plus[Times[2, Slot[1]], Slot[2]]], List[1, 0, 1, 1]]"
+    "wolfram": "FoldList[Function[Plus[Times[2, Slot[1]], Slot[2]]], List[1, 0, 1, 1]]",
+    "back": ["FoldList", ["Function", ["Add", ["Multiply", 2, "_1"], "_2"]], ["List", 1, 0, 1, 1]]
   },
   {
     "id": "Contains#1",

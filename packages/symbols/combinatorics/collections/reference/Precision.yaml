@@ -1,0 +1,33 @@
+name: Precision
+domain: Collections
+signature: Precision(expr)
+summary: How many significant decimal digits a number carries.
+signatures:
+  - call: Precision(expr)
+    description: $PositiveInfinity$ for an exact number, otherwise its significant decimal digit count.
+    library: enumeratio-collections
+details:
+  - Exact numbers (integers, rationals, radicals, symbolic constants like $\pi$) carry infinite precision, Wolfram's own convention.
+  - For an inexact number, this counts the digits actually written — `2.5` has 2, and a literal with more digits than a double can represent is rounded to about 16.
+examples:
+  - id: precision-exact-integer
+    expr: [Precision, 2]
+    expected: PositiveInfinity
+  - id: precision-rational
+    expr: [Precision, [Rational, 1, 3]]
+    expected: PositiveInfinity
+    category: Scope
+    caption: An exact rational also carries infinite precision
+  - id: precision-inexact-literal
+    expr: [Precision, 2.5]
+    expected: 2
+    category: Scope
+    caption: An inexact literal's precision is its written digit count
+  - id: precision-extended
+    expr: [Precision, 3.141592653589793]
+    expected: 16
+    category: Scope
+    caption: A literal with more digits than a double can hold rounds to about 16 of them
+seeAlso:
+  - IsMachineNumber
+  - IsNumeric

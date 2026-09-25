@@ -54,6 +54,10 @@ const LOSSY = new Set([
   "MixedRadix",
   // Tuple shares List with List, which wins the reverse map.
   "Tuple",
+  // Tabulate lowers to Array[...], which our own (now native) Array head wins the reverse map for.
+  "Tabulate",
+  // Scan lowers to FoldList[...], which our own (now native) FoldList head wins the reverse map for.
+  "Scan",
 ]);
 
 /** The head of the innermost call that came back different — the one whose lowering lost. */
