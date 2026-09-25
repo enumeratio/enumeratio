@@ -23,8 +23,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # The analytic heads (HurwitzZeta, LerchPhi, PolyLog, PolyGamma …) against mpmath, the one oracle that installs
-  # from pip. The Wolfram sweeps (packages/wolfram, packages/oracle) need a licensed kernel and stay manual.
+  # The analytic heads (HurwitzZeta, LerchPhi, PolyLog, PolyGamma …) against mpmath. The Wolfram and Sage sweeps
+  # need a licensed kernel or a full Sage install and stay manual.
   mpmath-oracle:
     name: analytic ⟷ mpmath
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
   # The combinatorial counts and FLINT number theory against Nemo + Combinatorics.jl, the Julia lane light enough
   # to install here. Rescans the committed julia rows in the entry sidecars and fails on any drift: a verdict that
   # moved, a new unclassified disagreement, an example added without a scan. Oscar and Mathlib need a multi-GB
-  # install and stay manual (packages/oracle/scripts/setup.ts).
+  # install, so they run weekly below.
   julia-oracle:
     name: reference ⟷ Julia (Nemo, Combinatorics.jl)
     runs-on: ubuntu-latest
@@ -54,16 +54,56 @@ jobs:
           version: "1.13" # packages/oracle/julia/Manifest.toml's julia_version
       - uses: julia-actions/cache@v2
       - run: node packages/oracle/scripts/setup.ts julia
-      - run: node packages/reference/scripts/oracle-scan.ts julia
-      # The scan writes JSON.stringify output; the committed files are formatted.
-      - run: pnpm exec vp fmt packages/reference/src/entries packages/reference/golden/oracle
-      - name: julia rows match the committed sidecars
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: julia
+
+  # The group and diagram algebras (and a few counts) against Oscar, weekly: a multi-GB install whose precompile
+  # julia-actions/cache keeps between runs. The kernel is 2-3 GB resident, so the watchdog cap is raised to fit
+  # a parallel precompile on the runner.
+  oscar-oracle:
+    name: reference ⟷ Oscar
+    if: github.event.schedule == '17 3 * * 0' || inputs.weekly
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      ORACLE_MEMORY_MB: 12000
+      JULIA_NUM_PRECOMPILE_TASKS: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1.13" # packages/oracle/oscar/Manifest.toml's julia_version
+      - uses: julia-actions/cache@v2
+      - run: node packages/oracle/scripts/setup.ts oscar
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: oscar
+
+  # The discrete heads against Lean 4 + Mathlib, weekly: the pinned toolchain from elan, and mathlib's prebuilt
+  # oleans (~5 GB) from its cache, kept between runs.
+  mathlib-oracle:
+    name: reference ⟷ Mathlib
+    if: github.event.schedule == '17 3 * * 0' || inputs.weekly
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - name: elan
         run: |
-          if ! git diff --quiet -- packages/reference; then
-            { echo '```diff'; git diff -- packages/reference | head -200; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
-            git diff --stat -- packages/reference
-            exit 1
-          fi
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - uses: actions/cache@v4
+        with:
+          # The compressed oleans only: the unpacked .lake doubles it past the repo's cache quota.
+          path: ~/.cache/mathlib
+          key: mathlib-${{ hashFiles('packages/oracle/lean/lake-manifest.json', 'packages/oracle/lean/lean-toolchain') }}
+      - run: node packages/oracle/scripts/setup.ts mathlib4
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: mathlib4
 
   # Follow every crosswalk link (Wikipedia, MathWorld, DLMF, Fungrim …) and report the ones that no longer answer.
   crosswalk-links:

@@ -85,8 +85,8 @@ release. Add a tool name to select part of the graph. For example, run
   kernels on every push touching them and deeply each night; a failure files/reopens one
   rolling issue, `quickcheck sampling regression`, labelled `nightly-fixup`. `nightly.yml`
   cross-checks the analytic heads against mpmath and rescans the Julia lane (Nemo +
-  Combinatorics.jl) against the committed sidecars nightly, and follows every crosswalk link
-  weekly. The Wolfram sweeps (`packages/wolfram`, `packages/oracle`) need a licensed kernel,
-  and Oscar and Mathlib a multi-GB install, so those stay manual. The nightly-fixup routine
+  Combinatorics.jl) against the committed sidecars nightly; weekly it rescans the Oscar and
+  Mathlib lanes the same way and follows every crosswalk link. The Wolfram and Sage sweeps
+  need a licensed kernel or a full Sage install, so those stay manual. The nightly-fixup routine
   (06:15 UTC) reads these runs, files `CI failure: <workflow> › <job>` issues, and opens fix
   PRs — it never merges.
