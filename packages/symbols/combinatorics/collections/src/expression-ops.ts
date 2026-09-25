@@ -44,9 +44,16 @@ const invoke = (ce: ComputeEngine, f: BoxedExpression, args: readonly BoxedExpre
 const normalizePosition = (position: number, length: number): number =>
   position < 0 ? length + position + 1 : position;
 
+/** Whether `expr` matches `pattern` at the top level — the same one-line test `MatchQ` and
+ *  `FreeQ` both build on. Exported so later waves (`misc-frontier.ts`'s `DeleteCases`) reuse
+ *  this instead of re-deriving it from `BoxedExpression.match`. */
+export function matches(expr: BoxedExpression, pattern: BoxedExpression): boolean {
+  return expr.match(pattern) !== null;
+}
+
 /** Whether `expr` matches `pattern` anywhere in its tree (itself, or any subexpression). */
 function containsMatch(expr: BoxedExpression, pattern: BoxedExpression): boolean {
-  if (expr.match(pattern) !== null) return true;
+  if (matches(expr, pattern)) return true;
   return operandsOf(expr).some((op) => containsMatch(op, pattern));
 }
 
@@ -228,7 +235,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
       const exprRaw = ops[0];
       const pattern = ops[1];
       if (exprRaw === undefined || pattern === undefined) return undefined;
-      return exprRaw.evaluate().match(pattern) !== null ? ce.True : ce.False;
+      return matches(exprRaw.evaluate(), pattern) ? ce.True : ce.False;
     },
   });
 
