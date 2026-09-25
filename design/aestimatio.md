@@ -43,7 +43,18 @@ setup })` runs one evaluation in a `worker_threads` Worker with `resourceLimits`
   module whose `configure(ce)` declares the libraries the host engine has, so the worker's
   engine means the same things.
 - **Browser** (`@enumeratio/aestimatio/browser`): a plain `Worker`, `terminate()` for time,
-  best-effort memory only (browsers expose no per-worker cap).
+  best-effort memory only (browsers expose no per-worker cap, so this polls the page's own
+  memory instead — see `probeMemoryBytes`).
+
+Both hosts evaluate through a worker pool (`createEvaluatorPool`): a worker that finished
+cleanly is reused; one killed for time or memory, or errored, is replaced. Node keys idle
+workers by memory limit, since `resourceLimits` are fixed at spawn. `evaluateIsolated` and
+`evaluateInWorker` use a default pool.
+
+A **session** (`openSession`) keeps one worker and one engine across calls, so `:=` bindings
+survive from one evaluation to the next. A `timeMs` kill still terminates the worker; the
+bindings are gone and that call's result says `reset: true`. In the browser a session prefers
+a `SharedWorker` (tabs with the same `name` share it), falling back to a dedicated `Worker`.
 
 Lessons carried from the archived async-engines design: `AbortSignal` from day one, and
 `terminate()` is the only cancel that always works against a tight loop.
@@ -57,5 +68,5 @@ TestID -> "…")` holds `input`, evaluates it under the constraints, compares wi
 `ExpectedOutput`, `AbsoluteTimeUsed` and `TestID`. It draws as a cell with an outcome badge.
 Reference examples are, in effect, verification tests; they may be expressed this way later.
 
-Future work (a `SharedWorker` session, running our own test suites under aestimatio,
+Future work (running our own test suites under aestimatio,
 `AbsoluteTiming`/`CheckAbort`/evaluation history) moved to speculative/aestimatio.md.
