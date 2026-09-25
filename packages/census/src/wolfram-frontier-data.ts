@@ -97,10 +97,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 53,
   },
   {
-    head: "CellularAutomaton",
-    uses: 47,
-  },
-  {
     head: "FullForm",
     uses: 46,
   },
@@ -153,10 +149,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 31,
   },
   {
-    head: "Thread",
-    uses: 31,
-  },
-  {
     head: "Reap",
     uses: 29,
   },
@@ -185,20 +177,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 25,
   },
   {
-    head: "DifferenceDelta",
-    uses: 24,
-  },
-  {
     head: "Fourier",
     uses: 24,
   },
   {
     head: "InputForm",
     uses: 24,
-  },
-  {
-    head: "Surd",
-    uses: 22,
   },
   {
     head: "Button",
@@ -263,10 +247,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Pause",
     uses: 19,
-  },
-  {
-    head: "Normalize",
-    uses: 18,
   },
   {
     head: "RegionEqual",
@@ -469,10 +449,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "PascalBinomial",
-    uses: 11,
-  },
-  {
     head: "RegionNearest",
     uses: 11,
   },
@@ -482,10 +458,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "FaceForm",
-    uses: 10,
-  },
-  {
-    head: "HankelMatrix",
     uses: 10,
   },
   {
@@ -757,10 +729,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "MapAt",
-    uses: 7,
-  },
-  {
     head: "MatrixQ",
     uses: 7,
   },
@@ -857,19 +825,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 6,
   },
   {
-    head: "LetterNumber",
-    uses: 6,
-  },
-  {
     head: "ListLinePlot3D",
     uses: 6,
   },
   {
     head: "MathieuGroupM24",
-    uses: 6,
-  },
-  {
-    head: "MovingMap",
     uses: 6,
   },
   {

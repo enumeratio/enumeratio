@@ -1,0 +1,21 @@
+name: Surd
+domain: Collections
+signature: Surd(x, n)
+summary: The real nth root of a real x, staying real for a negative x when n is odd.
+signatures:
+  - call: Surd(x, n)
+    description: the real nth root of x
+    library: enumeratio-collections
+details:
+  - "Differs from x^(1/n): that gives a complex principal root for a negative x, where Surd stays on the real line whenever a real root exists."
+  - An even n with a negative x has no real root and is left unevaluated.
+examples:
+  - id: negative-cube-root
+    expr: [Surd, -8, 3]
+    expected: -2
+    caption: The real cube root of -8 is -2, not a complex principal root
+  - id: nonnegative-base
+    expr: [Surd, 8, 3]
+    expected: 2
+    category: Scope
+    caption: For a nonnegative base, Surd agrees with Power(x, 1/n)

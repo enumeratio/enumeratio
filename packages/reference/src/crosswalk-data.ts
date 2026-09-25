@@ -735,6 +735,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "CellularAutomaton",
+    wolfram: "CellularAutomaton",
+  },
+  {
     name: "CenteredInterval",
     wolfram: "CenteredInterval",
   },
@@ -1166,6 +1170,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "DifferenceDelta",
+    wolfram: "DifferenceDelta",
   },
   {
     name: "Digamma",
@@ -1794,6 +1802,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Factorial2",
   },
   {
+    name: "FactorialPower",
+    wolfram: "FactorialPower",
+  },
+  {
     name: "False",
     wolfram: "False",
   },
@@ -2317,6 +2329,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Gudermannian",
     wolfram: "Gudermannian",
+  },
+  {
+    name: "HankelMatrix",
+    wolfram: "HankelMatrix",
   },
   {
     name: "HarmonicMean",
@@ -3091,6 +3107,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "LessEqual",
   },
   {
+    name: "LetterNumber",
+    wolfram: "LetterNumber",
+  },
+  {
     name: "LinearRecurrence",
     wolfram: "LinearRecurrence",
   },
@@ -3317,6 +3337,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MapAt",
+    wolfram: "MapAt",
+  },
+  {
     name: "MatrixExp",
     wolfram: "MatrixExp",
   },
@@ -3456,6 +3480,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MovingMap",
+    wolfram: "MovingMap",
+  },
+  {
     name: "MultiZetaValue",
     fungrimEntries: ["3a5167", "62de01", "856317", "a5e52e", "da71d3", "ef2c71", "ef8b17"],
   },
@@ -3555,6 +3583,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NormalDistribution",
   },
   {
+    name: "Normalize",
+    wolfram: "Normalize",
+  },
+  {
     name: "Not",
     wolfram: "Not",
   },
@@ -3620,6 +3652,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "PartitionsQ",
     wolfram: "PartitionsQ",
+  },
+  {
+    name: "PascalBinomial",
+    wolfram: "PascalBinomial",
   },
   {
     name: "PerfectNumber",
@@ -4464,6 +4500,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Sum",
   },
   {
+    name: "Surd",
+    wolfram: "Surd",
+  },
+  {
     name: "SymmetricGroup",
     wolfram: "SymmetricGroup",
   },
@@ -4517,6 +4557,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "Thread",
+    wolfram: "Thread",
   },
   {
     name: "TimeConstrained",

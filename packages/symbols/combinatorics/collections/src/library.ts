@@ -4,6 +4,7 @@ import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
 import { declareGeneratingFunctions } from "./generating-functions.ts";
 import { declareListFrontier } from "./list-frontier.ts";
+import { declareListFrontier2 } from "./list-frontier-2.ts";
 import { declareListFunctional } from "./list-functional.ts";
 import { declareListHeads } from "./list-heads.ts";
 import { declareListLevelHeads } from "./list-levels.ts";
@@ -31,6 +32,7 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareListHeads(ce);
   declareListLevelHeads(ce);
   declareListFrontier(ce);
+  declareListFrontier2(ce);
   declareListFunctional(ce);
   declareListOpsWolfram(ce);
   declareProducts(ce);

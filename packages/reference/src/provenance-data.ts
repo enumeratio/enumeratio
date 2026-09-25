@@ -389,6 +389,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "CellularAutomaton",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "CellularAutomaton",
+    elsewhere: [],
+  },
+  {
     name: "CenteredHexagonalNumbers",
     provenance: "unknown",
     declared: null,
@@ -473,6 +480,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "DifferenceDelta",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "DifferenceDelta",
+    elsewhere: [],
+  },
+  {
     name: "DoubleFactorialNumbers",
     provenance: "unknown",
     declared: null,
@@ -505,6 +519,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "FactorialPower",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "FactorialPower",
     elsewhere: [],
   },
   {
@@ -610,6 +631,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "HankelMatrix",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "HankelMatrix",
     elsewhere: [],
   },
   {
@@ -753,6 +781,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "LetterNumber",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "LetterNumber",
+    elsewhere: [],
+  },
+  {
     name: "LinearRecurrence",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -778,6 +813,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "MapAt",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "MapAt",
     elsewhere: [],
   },
   {
@@ -813,6 +855,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "MovingMap",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "MovingMap",
     elsewhere: [],
   },
   {
@@ -855,6 +904,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "NoneTrue",
+    elsewhere: [],
+  },
+  {
+    name: "Normalize",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Normalize",
     elsewhere: [],
   },
   {
@@ -925,6 +981,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "PascalBinomial",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "PascalBinomial",
     elsewhere: [],
   },
   {
@@ -1376,6 +1439,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Surd",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Surd",
+    elsewhere: [],
+  },
+  {
     name: "SymmetricGroup",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1401,6 +1471,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "Thread",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Thread",
     elsewhere: [],
   },
   {

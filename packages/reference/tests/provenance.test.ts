@@ -623,6 +623,17 @@ const NOVEL = [
   "RandomInteger",
   "SeedRandom",
   "SparseArray",
+  "DifferenceDelta",
+  "PascalBinomial",
+  "FactorialPower",
+  "HankelMatrix",
+  "LetterNumber",
+  "Surd",
+  "Normalize",
+  "MapAt",
+  "Thread",
+  "MovingMap",
+  "CellularAutomaton",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

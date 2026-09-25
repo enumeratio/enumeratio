@@ -1,0 +1,23 @@
+name: Normalize
+domain: Collections
+signature: Normalize(v)
+summary: v divided by its Euclidean norm -- a unit vector in v's direction.
+signatures:
+  - call: Normalize(v)
+    description: v / Sqrt(Total(Abs(v)^2))
+    library: enumeratio-collections
+  - call: Normalize(v, f)
+    description: v / f(v), a custom norm function
+    library: enumeratio-collections
+details:
+  - The zero vector is returned unchanged -- there is no direction to normalize it to.
+examples:
+  - id: 3-4-5
+    expr: [Normalize, [List, 3, 4]]
+    expected: [List, [Rational, 3, 5], [Rational, 4, 5]]
+    caption: The 3-4-5 triangle's direction vector, normalized to unit length
+  - id: zero-vector
+    expr: [Normalize, [List, 0, 0]]
+    expected: [List, 0, 0]
+    category: Scope
+    caption: The zero vector has no direction, so it is left unchanged
