@@ -247,6 +247,21 @@ export const numerals: readonly ReferenceEntry[] = [
         description: "read the digits in that system",
         library: "enumeratio-numerals",
       },
+      {
+        call: 'FromDigits(roman, "Roman")',
+        description: "the integer a Roman numeral spells, the inverse of [[RomanNumeral]].",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "FromDigits(digits, x)",
+        description: "a symbolic base gives the polynomial the digits spell in x.",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "FromDigits(digits, negativeBase)",
+        description: "a negative base reads with the same Horner reduction as a positive one.",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies",
@@ -301,9 +316,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["FromDigits", "'XVII'", "'Roman'"],
         expected: 17,
-        aspirational: true,
         category: "Scope",
-        caption: 'Roman numerals, with the base `"Roman"`; not yet supported',
+        caption: 'Roman numerals, with the base `"Roman"`',
       },
       {
         expr: ["FromDigits", L(1, 4, 25, 41), ["MixedRadix", L(24, 60, 60)]],
@@ -326,17 +340,14 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["FromDigits", L(1, 2, 3), "x"],
         expected: ["Add", ["Power", "x", 2], ["Multiply", 2, "x"], 3],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "a symbolic base should give the polynomial $x^2 + 2x + 3$; only integer bases evaluate",
+        caption: "a symbolic base gives the polynomial $x^2 + 2x + 3$",
       },
       {
         expr: ["FromDigits", L(1, 1, 0), -2],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "a negative base: $1 \\cdot 4 - 1 \\cdot 2 + 0 = 2$; only bases $\\ge 2$ evaluate",
+        caption: "a negative base: $1 \\cdot 4 - 1 \\cdot 2 + 0 = 2$",
       },
       {
         expr: ["FromDigits", ["List", L(1, 4, 1, 5), 1]],
@@ -400,6 +411,11 @@ export const numerals: readonly ReferenceEntry[] = [
           "padded with leading zeros to exactly `length` digits, or cut to the last `length`.",
         library: "enumeratio-numerals",
       },
+      {
+        call: 'IntegerString(n, "Roman")',
+        description: "the Roman numeral for n, same as [[RomanNumeral]].",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "Bases above 10 use letters a-z for digit values beyond 9, up to base 36.",
@@ -442,18 +458,14 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["IntegerString", ["Factorial", 50], 16],
         expected: "'49eebc961ed279b02b1ef4f28d19a84f5973a1d2c7800000000000'",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$50!$ in hexadecimal: compute-engine's digits go wrong past double precision (it gives `…ed278000…`)",
+        caption: "$50!$ in hexadecimal: exact past double precision, via bigint arithmetic",
       },
       {
         expr: ["IntegerString", 1988, "'Roman'"],
         expected: "'MCMLXXXVIII'",
-        aspirational: true,
         category: "Scope",
-        caption:
-          'Roman numerals, with the base `"Roman"`; compute-engine takes a numeric base only',
+        caption: 'Roman numerals, with the base `"Roman"`',
       },
       {
         expr: ["IntegerString", 255, 16, 4],
@@ -489,6 +501,11 @@ export const numerals: readonly ReferenceEntry[] = [
         description: "counts of each digit in the given base, highest digit value first.",
       },
       { call: "DigitCount(n, base, digit)", description: "count of just one digit value." },
+      {
+        call: "DigitCount(n, base, digit(s), width)",
+        description: "counted over exactly `width` digits, padded or truncated to fit.",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "Equivalent to tallying [[IntegerDigits]](n, base) bucket by bucket.",
@@ -542,10 +559,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["DigitCount", 122000, 10, 0, 9],
         expected: 6,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "a width counts padding zeros too: $000122000$ has six; compute-engine takes at most 3 arguments",
+        caption: "a width counts padding zeros too: $000122000$ has six",
       },
       {
         expr: ["DigitCount", 242442422, 3, L(1, 2)],
@@ -556,9 +571,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["DigitCount", 242442422, 3, L(1, 2), 12],
         expected: L(4, 4),
-        aspirational: true,
         category: "Scope",
-        caption: "counts over the 12 least-significant base-3 digits; not yet",
+        caption: "counts over the 12 least-significant base-3 digits",
       },
       {
         expr: ["DigitCount", 0],
@@ -634,9 +648,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["DigitSum", L(12, 345)],
         expected: L(3, 12),
-        aspirational: true,
         category: "Scope",
-        caption: "Listable: should thread over a list; not yet",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["DigitSum", ["Factorial", 100]],

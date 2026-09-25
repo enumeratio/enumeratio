@@ -10,14 +10,28 @@ export const sequences: readonly ReferenceEntry[] = [
     signature: "Fibonacci(n)",
     summary:
       "The nth Fibonacci number, with $F_0 = 0$ and $F_1 = 1$, extended to negative n by the same recurrence.",
-    signatures: [{ call: "Fibonacci(n)", description: "the nth Fibonacci number $F_n$." }],
+    signatures: [
+      { call: "Fibonacci(n)", description: "the nth Fibonacci number $F_n$." },
+      {
+        call: "Fibonacci(nu)",
+        description:
+          "a real (non-integer) index via Binet's formula, $F_\\nu = \\frac{\\varphi^\\nu - \\cos(\\pi\\nu)\\varphi^{-\\nu}}{\\sqrt5}$.",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "Fibonacci(n, x)",
+        description:
+          "the Fibonacci polynomial $F_n(x)$, from $F_n(x) = xF_{n-1}(x) + F_{n-2}(x)$, exact for a nonnegative integer n.",
+        library: "enumeratio-number-theory",
+      },
+    ],
     details: [
       "Defined by the recurrence $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$, $F_1 = 1$.",
       "Closed form (Binet's formula): $F_n = \\frac{\\varphi^n - \\psi^n}{\\sqrt5}$, where $\\varphi = \\frac{1+\\sqrt5}{2}$ and $\\psi = \\frac{1-\\sqrt5}{2}$.",
       "Consecutive ratios $F_{n+1}/F_n$ converge to the golden ratio $\\varphi$. See [[LucasL]].",
       "GCD identity: $\\gcd(F_m, F_n) = F_{\\gcd(m,n)}$.",
       "Extends to negative n via $F_{-n} = (-1)^{n+1} F_n$.",
-      "compute-engine only accepts an integer index (no complex $n$); a list of indices is threaded over element-wise.",
+      "A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Fibonacci polynomial.",
     ],
     examples: [
       { expr: ["Fibonacci", 0], expected: 0 },
@@ -34,10 +48,9 @@ export const sequences: readonly ReferenceEntry[] = [
       {
         expr: ["Fibonacci", 1.5],
         expected: 0.920442065259926,
-        aspirational: true,
         category: "Scope",
         caption:
-          "A real index should use $F_\\nu = \\frac{\\varphi^\\nu - \\cos(\\pi\\nu)\\,\\varphi^{-\\nu}}{\\sqrt5}$; only integer $n$ evaluates",
+          "A real index uses $F_\\nu = \\frac{\\varphi^\\nu - \\cos(\\pi\\nu)\\,\\varphi^{-\\nu}}{\\sqrt5}$",
       },
       {
         expr: ["Fibonacci", 7, "x"],
@@ -48,10 +61,9 @@ export const sequences: readonly ReferenceEntry[] = [
           ["Multiply", 6, ["Power", "x", 2]],
           1,
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "The two-argument Fibonacci polynomial $F_7(x)$, from $F_n(x) = x F_{n-1}(x) + F_{n-2}(x)$; not yet supported",
+          "The two-argument Fibonacci polynomial $F_7(x)$, from $F_n(x) = x F_{n-1}(x) + F_{n-2}(x)$",
       },
       {
         expr: ["Fibonacci", 5.8, 3],
@@ -63,24 +75,20 @@ export const sequences: readonly ReferenceEntry[] = [
       {
         expr: ["Fibonacci", 1, 0],
         expected: 1,
-        aspirational: true,
         category: "Scope",
         caption: "Special value of the Fibonacci polynomial: $F_1(0) = 1$",
       },
       {
         expr: ["Fibonacci", 0, 0],
         expected: 0,
-        aspirational: true,
         category: "Scope",
         caption: "Special value of the Fibonacci polynomial: $F_0(0) = 0$",
       },
       {
         expr: ["Fibonacci", 3, ["List", ["List", -1, 0], ["List", 0, 5]]],
         expected: ["List", ["List", 2, 1], ["List", 1, 26]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$F_3(x) = x^2 + 1$ should thread element-wise over a matrix argument; the polynomial form is missing",
+        caption: "$F_3(x) = x^2 + 1$ threads element-wise over a matrix argument",
       },
       {
         expr: ["Sum", ["Fibonacci", "k"], ["Tuple", "k", 1, 10]],
@@ -160,14 +168,28 @@ export const sequences: readonly ReferenceEntry[] = [
     signature: "LucasL(n)",
     summary:
       "The nth Lucas number: the Fibonacci-style recurrence started from $L_0 = 2$, $L_1 = 1$, closely related to [[Fibonacci]].",
-    signatures: [{ call: "LucasL(n)", description: "the nth Lucas number $L_n$." }],
+    signatures: [
+      { call: "LucasL(n)", description: "the nth Lucas number $L_n$." },
+      {
+        call: "LucasL(nu)",
+        description:
+          "a real (non-integer) index via Binet's formula, $L_\\nu = \\varphi^\\nu + \\cos(\\pi\\nu)\\varphi^{-\\nu}$.",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "LucasL(n, x)",
+        description:
+          "the Lucas polynomial $L_n(x)$, from $L_n(x) = xL_{n-1}(x) + L_{n-2}(x)$ with $L_0(x) = 2$, $L_1(x) = x$, exact for a nonnegative integer n.",
+        library: "enumeratio-number-theory",
+      },
+    ],
     details: [
       "Defined by the same recurrence as [[Fibonacci]], $L_n = L_{n-1} + L_{n-2}$, but started from $L_0 = 2$, $L_1 = 1$.",
       "Closed form: $L_n = \\varphi^n + \\psi^n$, where $\\varphi = \\frac{1+\\sqrt5}{2}$ and $\\psi = \\frac{1-\\sqrt5}{2}$.",
       "Related to Fibonacci by $L_n = F_{n-1} + F_{n+1}$ and, conversely, $F_n = \\dfrac{L_{n-1} + L_{n+1}}{5}$.",
       "Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio, just as they do for [[Fibonacci]].",
       "Extends to negative n via $L_{-n} = (-1)^n L_n$.",
-      "compute-engine only accepts an integer index (no complex $n$); a list of indices is threaded over element-wise.",
+      "A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Lucas polynomial.",
     ],
     examples: [
       { expr: ["LucasL", 0], expected: 2 },
@@ -189,10 +211,8 @@ export const sequences: readonly ReferenceEntry[] = [
       {
         expr: ["LucasL", 2.3333333333333335],
         expected: 3.2362118794916213,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A real index should use $L_\\nu = \\varphi^\\nu + \\cos(\\pi\\nu)\\,\\varphi^{-\\nu}$; only integer $n$ evaluates",
+        caption: "A real index uses $L_\\nu = \\varphi^\\nu + \\cos(\\pi\\nu)\\,\\varphi^{-\\nu}$",
       },
       {
         expr: ["LucasL", 7, "x"],
@@ -203,29 +223,25 @@ export const sequences: readonly ReferenceEntry[] = [
           ["Multiply", 14, ["Power", "x", 3]],
           ["Multiply", 7, "x"],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$; not yet supported",
+          "The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$",
       },
       {
         expr: ["LucasL", 143, 1],
         expected: { num: "767772505664398093937756525279" },
-        aspirational: true,
         category: "Scope",
         caption: "The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$",
       },
       {
         expr: ["LucasL", 1, 0],
         expected: 0,
-        aspirational: true,
         category: "Scope",
         caption: "Special value of the Lucas polynomial: $L_1(0) = 0$",
       },
       {
         expr: ["LucasL", 0, 0],
         expected: 2,
-        aspirational: true,
         category: "Scope",
         caption: "Special value of the Lucas polynomial: $L_0(0) = 2$",
       },
@@ -236,10 +252,8 @@ export const sequences: readonly ReferenceEntry[] = [
           ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]],
         ],
         expected: ["List", ["List", ["Rational", 9, 4], 3], ["List", 2, ["Rational", 9, 4]]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$L_2(x) = x^2 + 2$ should thread element-wise over a matrix argument; the polynomial form is missing",
+        caption: "$L_2(x) = x^2 + 2$ threads element-wise over a matrix argument",
       },
       {
         expr: [

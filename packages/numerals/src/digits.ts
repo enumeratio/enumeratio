@@ -155,3 +155,42 @@ export function romanNumeralOf(n: number): string | undefined {
   }
   return out;
 }
+
+const ROMAN_VALUES: Readonly<Record<string, number>> = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
+};
+
+/**
+ * The integer a Roman numeral spells, the inverse of `romanNumeralOf`. Rejects anything
+ * that isn't the CANONICAL spelling for its value (no `IIII`, no out-of-order digits) by
+ * round-tripping the parsed value back through `romanNumeralOf`, rather than trying to
+ * encode every well-formedness rule twice.
+ */
+export function integerOfRomanNumeral(s: string): number | undefined {
+  const upper = s.toUpperCase();
+  if (upper === "N") return 0;
+  if (upper === "" || !/^[IVXLCDM]+$/.test(upper)) return undefined;
+  let total = 0;
+  let prev = 0;
+  for (let i = upper.length - 1; i >= 0; i--) {
+    const value = ROMAN_VALUES[upper[i]!]!;
+    total += value < prev ? -value : value;
+    if (value > prev) prev = value;
+  }
+  return romanNumeralOf(total) === upper ? total : undefined;
+}
+
+const BASE_DIGIT_CHARS = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+/** `n` written in `base` (2-36), as a string -- exact bigint math throughout. */
+export function bigIntToBaseString(n: bigint, base: bigint): string {
+  const sign = n < 0n ? "-" : "";
+  const digits = digitsOfBigInt(n, base);
+  return sign + digits.map((d) => BASE_DIGIT_CHARS[Number(d)]).join("");
+}
