@@ -70,6 +70,14 @@ test("Clamp(x) defaults to the range [-1, 1]", () => {
 test("Clamp(x, lower, upper) is unaffected", () => {
   expect(run(["Clamp", 5, 0, 3])).toEqual(3);
 });
+// Lane B-35 regression: notatio's editor flagged the 1-argument form as a type error before
+// this widening landed. Pin that boxing produces no `Error` node -- what notatio's type
+// check marks red -- not just that evaluation happens to still work.
+test("Clamp(x) boxes without a type error", () => {
+  const boxed = ce.box(["Clamp", 1.5]);
+  expect(JSON.stringify(boxed.json)).not.toContain("Error");
+  expect(boxed.evaluate().json).toEqual(1);
+});
 
 // Sort: strings sort lexicographically; numeric and comparator forms are unaffected.
 test("Sort(strings) sorts lexicographically", () => {

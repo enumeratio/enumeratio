@@ -210,3 +210,13 @@ test("closed form: FromContinuedFraction of plain symbols builds the nested frac
 test("closed form: Mod(√28, 3) = 2√7 − 3", () => {
   expect(evalOf(["Mod", ["Sqrt", 28], 3])).toEqual(["Add", -3, ["Multiply", 2, ["Sqrt", 7]]]);
 });
+
+// Lane B-35 regression: notatio's editor flagged `Binomial([2,3,5,7,11], 3)` as a type
+// error (the native signature rejects a list first argument). The `threadOverLists(ce,
+// ["Binomial", ...])` call above already covers it — this pins that boxing produces no
+// `Error` node (what notatio's type check marks red) and that it evaluates correctly.
+test("Binomial threads over a list first argument without a type error", () => {
+  const boxed = ce.box(["Binomial", ["List", 2, 3, 5, 7, 11], 3]);
+  expect(JSON.stringify(boxed.json)).not.toContain("Error");
+  expect(boxed.evaluate().json).toEqual(["List", 0, 1, 10, 35, 165]);
+});
