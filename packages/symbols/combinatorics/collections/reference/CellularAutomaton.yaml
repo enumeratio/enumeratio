@@ -14,7 +14,14 @@ details:
 examples:
   - id: rule-30-single-seed
     expr: [CellularAutomaton, 30, [List, [List, 1], 0], 3]
-    expected: [List, [List, 0, 0, 0, 1, 0, 0, 0], [List, 0, 0, 1, 1, 1, 0, 0], [List, 0, 1, 1, 0, 0, 1, 0], [List, 1, 1, 0, 1, 1, 1, 1]]
+    expected:
+      [
+        List,
+        [List, 0, 0, 0, 1, 0, 0, 0],
+        [List, 0, 0, 1, 1, 1, 0, 0],
+        [List, 0, 1, 1, 0, 0, 1, 0],
+        [List, 1, 1, 0, 1, 1, 1, 1],
+      ]
     caption: The classic Rule 30 triangle, from a single seed cell, at its final fixed width
   - id: rule-90-explicit-init
     expr: [CellularAutomaton, 90, [List, [List, 1, 0, 0], 0], 2]
