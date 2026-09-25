@@ -1302,7 +1302,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "DigitSum",
     provenance: "override",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "DigitSum",
     elsewhere: ["wolfram"],
   },
   {

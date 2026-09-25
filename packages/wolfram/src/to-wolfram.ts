@@ -172,6 +172,9 @@ export const HEADS: Record<string, string> = {
   FromDigits: "FromDigits",
   IntegerString: "IntegerString",
   DigitCount: "DigitCount",
+  // Wolfram's own DigitSum[n, b, k]: k > 0 sums the first k digits, k < 0 the last |k|.
+  // Not Total[IntegerDigits[n, b, k]], which keeps the last k digits (zero-padded).
+  DigitSum: "DigitSum",
   ContinuedFraction: "ContinuedFraction",
   IntegerLength: "IntegerLength",
   IntegerReverse: "IntegerReverse",
@@ -544,8 +547,6 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
       : call("Interval", a),
   // IndexOf returns 0 when absent; FirstPosition returns Missing unless given a default.
   IndexOf: (a) => `First[FirstPosition[${toWolfram(a[0])}, ${toWolfram(a[1])}, List[0]]]`,
-  // No DigitSum in Wolfram: sum the digit list, in whatever base was given.
-  DigitSum: (a) => `Total[${call("IntegerDigits", a)}]`,
   // Degrees(x) is the angle x° — Wolfram multiplies by the `Degree` constant.
   Degrees: (a) => `Times[${toWolfram(a[0])}, Degree]`,
   // Divides(a, b) is "a divides b"; Divisible(n, m) is "n is divisible by m" — the

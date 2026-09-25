@@ -2830,20 +2830,17 @@
   {
     "id": "DigitSum#1",
     "expr": ["DigitSum", 58127],
-    "wolfram": "Total[IntegerDigits[58127]]",
-    "back": ["Sum", ["IntegerDigits", 58127]]
+    "wolfram": "DigitSum[58127]"
   },
   {
     "id": "DigitSum#2",
     "expr": ["DigitSum", 58127, 2],
-    "wolfram": "Total[IntegerDigits[58127, 2]]",
-    "back": ["Sum", ["IntegerDigits", 58127, 2]]
+    "wolfram": "DigitSum[58127, 2]"
   },
   {
     "id": "DigitSum#4",
     "expr": ["Equal", ["Mod", ["DigitSum", 58127], 9], ["Mod", 58127, 9]],
-    "wolfram": "Equal[Mod[Total[IntegerDigits[58127]], 9], Mod[58127, 9]]",
-    "back": ["Equal", ["Mod", ["Sum", ["IntegerDigits", 58127]], 9], ["Mod", 58127, 9]]
+    "wolfram": "Equal[Mod[DigitSum[58127], 9], Mod[58127, 9]]"
   },
   {
     "id": "NumeralSystemShape#1",

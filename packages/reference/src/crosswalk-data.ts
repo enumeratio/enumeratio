@@ -1191,6 +1191,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DigitCount",
   },
   {
+    name: "DigitSum",
+    wolfram: "DigitSum",
+  },
+  {
     name: "DirichletBeta",
     wolfram: "DirichletBeta",
   },
