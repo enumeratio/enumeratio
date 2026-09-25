@@ -21,7 +21,9 @@ import {
   type InventorySystem,
 } from "../src/crosswalk/inventory.ts";
 import { CURATED } from "../src/crosswalk/curated.ts";
-import { entries } from "../src/entries.ts";
+import { referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
 
 interface Entry {
   readonly system: InventorySystem;
@@ -106,6 +108,7 @@ writeFileSync(
 //   vp node packages/reference/scripts/fetch-inventories.ts
 
 import type { InventorySystem } from "./crosswalk/inventory.ts";
+
 
 /** One documented object: its dotted name, Sphinx role and page anchor. */
 export interface InventoryEntry {

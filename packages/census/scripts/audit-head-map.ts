@@ -43,9 +43,11 @@ import { DOMAINS } from "@enumeratio/domains";
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
 import { NUMERAL_ALIASES } from "@enumeratio/numerals";
 import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/notatio/symbols";
-import { entries as referenceEntries } from "@enumeratio/reference";
+import { referenceEntries as loadEntries } from "@enumeratio/reference/node";
 import { HEADS } from "@enumeratio/wolfram/src";
 import { fullEngine } from "../src/engine.ts";
+
+const referenceEntries = loadEntries();
 
 type MathJSON = unknown;
 const L = (...xs: MathJSON[]): MathJSON => ["List", ...xs];

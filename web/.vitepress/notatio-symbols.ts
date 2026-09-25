@@ -8,7 +8,7 @@
 //
 // A page opts out entirely with `autolinkSymbols: false` in its frontmatter.
 
-import { documented } from "./data/reference.ts";
+import { documented } from "./data/reference-node.ts";
 import { NEVER_AUTOLINK } from "./data/symbol-links.ts";
 
 // Only DOCUMENTED heads auto-link. The engine stubs would make `Sort`, `First` and `Length`

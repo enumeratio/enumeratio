@@ -3,7 +3,10 @@
 // none is met yet, and a head leaves the backlog the moment it gets an entry.
 import { runCases } from "@enumeratio/aestimatio/src/node";
 import { expect, test } from "vite-plus/test";
-import { backlog, entries } from "../src/index.ts";
+import { backlog } from "../src/index.ts";
+import { referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
 
 const documented = new Set(entries.map((entry) => entry.name));
 

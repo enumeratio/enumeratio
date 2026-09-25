@@ -9,7 +9,10 @@ import { writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
-import { engineSymbols, entries } from "@enumeratio/reference";
+import { engineSymbols } from "@enumeratio/reference";
+import { referenceEntries } from "@enumeratio/reference/node";
+
+const entries = referenceEntries();
 
 const names = new Set<string>();
 for (const s of engineSymbols) names.add(s.name);
