@@ -5,7 +5,7 @@
   },
   "examples": {
     "TimeConstrained": {
-      "[\"TimeConstrained\",[\"Sum\",\"k\",[\"Tuple\",\"k\",1,10]],1]": {
+      "finishes-well-inside-the-deadline-so-the-value": {
         "wolfram": {
           "input": "TimeConstrained[Sum[k, List[k, 1, 10]], 1]",
           "output": "55",
@@ -18,7 +18,7 @@
       }
     },
     "MemoryConstrained": {
-      "[\"MemoryConstrained\",[\"Add\",1,2],1000000]": {
+      "in-process-the-call-simply-does-not-reduce-see": {
         "wolfram": {
           "input": "MemoryConstrained[Plus[1, 2], 1000000]",
           "output": "3",
@@ -33,7 +33,7 @@
       }
     },
     "VerificationTest": {
-      "[\"VerificationTest\",[\"Add\",2,3],5]": {
+      "input-matches-expected": {
         "wolfram": {
           "input": "VerificationTest[Plus[2, 3], 5]",
           "output": "TestObject[<|\"Outcome\" -> \"Success\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[5], \"ActualOutput\" -> HoldForm[5]|>]",
@@ -46,7 +46,7 @@
           }
         }
       },
-      "[\"VerificationTest\",[\"Add\",2,3],6]": {
+      "input-evaluates-but-does-not-match-expected": {
         "wolfram": {
           "input": "VerificationTest[Plus[2, 3], 6]",
           "output": "TestObject[<|\"Outcome\" -> \"Failure\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[6], \"ActualOutput\" -> HoldForm[5]|>]",

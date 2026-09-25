@@ -19,16 +19,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Descents", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["Descents", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Descents", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 1,
         caption: "the one-line word $2413$",
@@ -46,16 +49,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Ascents", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["Ascents", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Ascents", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -75,16 +81,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["MajorIndex", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["MajorIndex", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["MajorIndex", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -102,16 +111,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["MinorIndex", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["MinorIndex", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["MinorIndex", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 4,
         caption: "the one-line word $2413$",
@@ -129,16 +141,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Inversions", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["Inversions", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Inversions", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 3,
         caption: "the one-line word $2413$",
@@ -156,11 +171,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["FixedPoints", ["Permutation", ["List", 3, 1, 2]]],
         expected: 0,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["FixedPoints", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 0,
         caption: "the one-line word $2413$",
@@ -178,11 +195,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Excedances", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Excedances", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -200,11 +219,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["WeakExceedances", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["WeakExceedances", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -222,11 +243,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Antiexcedances", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Antiexcedances", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -246,11 +269,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Denert", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Denert", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 3,
         caption: "the one-line word $2413$",
@@ -269,16 +294,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Peaks", ["Permutation", ["List", 3, 1, 2]]],
         expected: 0,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["Peaks", ["List", 3, 1, 2]],
         expected: 0,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Peaks", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 1,
         caption: "the one-line word $2413$",
@@ -297,16 +325,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Valleys", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["Valleys", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Valleys", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 1,
         caption: "the one-line word $2413$",
@@ -325,16 +356,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LeftToRightMaxima", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["LeftToRightMaxima", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LeftToRightMaxima", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -352,16 +386,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LeftToRightMinima", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["LeftToRightMinima", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LeftToRightMinima", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -379,16 +416,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["RightToLeftMaxima", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["RightToLeftMaxima", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["RightToLeftMaxima", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -406,16 +446,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["RightToLeftMinima", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["RightToLeftMinima", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["RightToLeftMinima", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -433,16 +476,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["FirstDescent", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["FirstDescent", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["FirstDescent", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -460,16 +506,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LastDescent", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["LastDescent", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LastDescent", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -487,16 +536,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Runs", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["Runs", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Runs", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -514,11 +566,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Depth", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Depth", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 3,
         caption: "the one-line word $2413$",
@@ -536,16 +590,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["CyclicDescents", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["CyclicDescents", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["CyclicDescents", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -563,16 +620,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["OccurrencesOf123", ["Permutation", ["List", 3, 1, 2]]],
         expected: 0,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["OccurrencesOf123", ["List", 3, 1, 2]],
         expected: 0,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["OccurrencesOf123", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 0,
         caption: "the one-line word $2413$",
@@ -590,16 +650,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["OccurrencesOf132", ["Permutation", ["List", 3, 1, 2]]],
         expected: 0,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["OccurrencesOf132", ["List", 3, 1, 2]],
         expected: 0,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["OccurrencesOf132", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 1,
         caption: "the one-line word $2413$",
@@ -617,16 +680,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["OccurrencesOf213", ["Permutation", ["List", 3, 1, 2]]],
         expected: 0,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["OccurrencesOf213", ["List", 3, 1, 2]],
         expected: 0,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["OccurrencesOf213", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 1,
         caption: "the one-line word $2413$",
@@ -645,16 +711,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["StackSortable", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["StackSortable", ["List", 3, 1, 2]],
         expected: 1,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["StackSortable", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 0,
         caption: "the one-line word $2413$",
@@ -673,16 +742,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LongestRun", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["LongestRun", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LongestRun", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -701,16 +773,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LargestRunLength", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["LargestRunLength", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LargestRunLength", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -728,11 +803,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["CycleCount", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["CycleCount", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 1,
         caption: "the one-line word $2413$",
@@ -750,11 +827,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["ReflectionLength", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["ReflectionLength", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 3,
         caption: "the one-line word $2413$",
@@ -772,11 +851,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LargestCycleLength", ["Permutation", ["List", 3, 1, 2]]],
         expected: 3,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LargestCycleLength", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 4,
         caption: "the one-line word $2413$",
@@ -794,11 +875,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LongestCycleLength", ["Permutation", ["List", 3, 1, 2]]],
         expected: 3,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LongestCycleLength", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 4,
         caption: "the one-line word $2413$",
@@ -816,11 +899,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["DistinctCycleLengths", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["DistinctCycleLengths", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 1,
         caption: "the one-line word $2413$",
@@ -838,11 +923,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["TwoCycleCount", ["Permutation", ["List", 3, 1, 2]]],
         expected: 0,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["TwoCycleCount", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 0,
         caption: "the one-line word $2413$",
@@ -860,11 +947,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["ThreeCycleCount", ["Permutation", ["List", 3, 1, 2]]],
         expected: 1,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["ThreeCycleCount", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 0,
         caption: "the one-line word $2413$",
@@ -882,11 +971,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["Order", ["Permutation", ["List", 3, 1, 2]]],
         expected: 3,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["Order", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 4,
         caption: "the one-line word $2413$",
@@ -905,16 +996,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LongestIncreasingSubsequence", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["LongestIncreasingSubsequence", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LongestIncreasingSubsequence", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -933,16 +1027,19 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-312",
         expr: ["LongestDecreasingSubsequence", ["Permutation", ["List", 3, 1, 2]]],
         expected: 2,
         caption: "the one-line word $312$",
       },
       {
+        id: "the-one-line-word-312-as-a-plain-list",
         expr: ["LongestDecreasingSubsequence", ["List", 3, 1, 2]],
         expected: 2,
         caption: "the one-line word $312$, as a plain list",
       },
       {
+        id: "the-one-line-word-2413",
         expr: ["LongestDecreasingSubsequence", ["Permutation", ["List", 2, 4, 1, 3]]],
         expected: 2,
         caption: "the one-line word $2413$",
@@ -960,11 +1057,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["LargestPart", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 4,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["LargestPart", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 3,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -982,11 +1081,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["MultiplicityOfLargestPart", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 1,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["MultiplicityOfLargestPart", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1004,11 +1105,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["DistinctParts", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 3,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["DistinctParts", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1026,11 +1129,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["EvenParts", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 2,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["EvenParts", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 0,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1048,11 +1153,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["OddParts", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 1,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["OddParts", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 3,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1070,11 +1177,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["PartsEqualOne", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 1,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["PartsEqualOne", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 1,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1092,11 +1201,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["PartsAtLeastTwo", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 2,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["PartsAtLeastTwo", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1114,11 +1225,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["ConjugateOddParts", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 3,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["ConjugateOddParts", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 1,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1136,11 +1249,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["ConjugateDistinctParts", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 3,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["ConjugateDistinctParts", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1159,11 +1274,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["DurfeeSquare", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 2,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["DurfeeSquare", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1181,11 +1298,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["ArmOfFirstCell", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 3,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["ArmOfFirstCell", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1203,11 +1322,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["LegOfFirstCell", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 2,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["LegOfFirstCell", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1226,11 +1347,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["Corners", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 3,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["Corners", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 2,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1248,11 +1371,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["Perimeter", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 7,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["Perimeter", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 6,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1270,11 +1395,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["IsSelfConjugate", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 0,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["IsSelfConjugate", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 0,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1293,11 +1420,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["SumOfHookLengths", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 18,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["SumOfHookLengths", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 18,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1315,11 +1444,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["HookProduct", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 144,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["HookProduct", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 240,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1337,11 +1468,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["DysonRank", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 1,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["DysonRank", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 0,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1360,11 +1493,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-4-2-1-of-7",
         expr: ["Crank", ["IntegerPartition", ["List", 4, 2, 1]]],
         expected: 1,
         caption: "the partition $4 + 2 + 1$ of $7$",
       },
       {
+        id: "the-partition-3-3-1-of-7",
         expr: ["Crank", ["IntegerPartition", ["List", 3, 3, 1]]],
         expected: 1,
         caption: "the partition $3 + 3 + 1$ of $7$",
@@ -1382,11 +1517,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["Height", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 2,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["Height", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 2,
         caption: "the step word $UDUUDD$",
@@ -1404,11 +1541,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["DoubleRises", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 1,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["DoubleRises", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 1,
         caption: "the step word $UDUUDD$",
@@ -1426,11 +1565,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["Returns", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 2,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["Returns", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 2,
         caption: "the step word $UDUUDD$",
@@ -1449,11 +1590,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["TouchPointCount", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 2,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["TouchPointCount", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 2,
         caption: "the step word $UDUUDD$",
@@ -1471,11 +1614,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["InteriorReturns", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 1,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["InteriorReturns", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 1,
         caption: "the step word $UDUUDD$",
@@ -1493,11 +1638,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["Hills", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 1,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["Hills", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 1,
         caption: "the step word $UDUUDD$",
@@ -1516,11 +1663,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["InitialRise", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 2,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["InitialRise", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 1,
         caption: "the step word $UDUUDD$",
@@ -1538,11 +1687,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["Area", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 5,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["Area", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 5,
         caption: "the step word $UDUUDD$",
@@ -1561,11 +1712,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["Coarea", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 1,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["Coarea", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 1,
         caption: "the step word $UDUUDD$",
@@ -1583,11 +1736,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["LongestAscent", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 2,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["LongestAscent", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 2,
         caption: "the step word $UDUUDD$",
@@ -1605,11 +1760,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["LongestDescent", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 2,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["LongestDescent", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 2,
         caption: "the step word $UDUUDD$",
@@ -1628,11 +1785,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["Dinv", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 2,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["Dinv", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 1,
         caption: "the step word $UDUUDD$",
@@ -1651,11 +1810,13 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-step-word-uuddud",
         expr: ["Bounce", ["DyckPath", ["List", 1, 1, 0, 0, 1, 0]]],
         expected: 1,
         caption: "the step word $UUDDUD$",
       },
       {
+        id: "the-step-word-uduudd",
         expr: ["Bounce", ["DyckPath", ["List", 1, 0, 1, 1, 0, 0]]],
         expected: 2,
         caption: "the step word $UDUUDD$",
@@ -1673,6 +1834,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["Blocks", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 2,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1690,6 +1852,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["LargestBlock", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 2,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1707,6 +1870,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["SmallestBlock", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 1,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1724,6 +1888,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["BlockSizeSpan", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 1,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1741,6 +1906,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["SingletonBlocks", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 1,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1758,6 +1924,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["BlocksAtLeastTwo", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 1,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1775,6 +1942,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["BlocksSizeTwo", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 1,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1792,6 +1960,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["LastBlockSize", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 1,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1810,6 +1979,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["Crossings", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 0,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1828,6 +1998,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["Nestings", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 0,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
@@ -1845,6 +2016,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-partition-1-3-mid-2-as-a-plain-list",
         expr: ["CrossingNestingTotal", ["List", ["List", 1, 3], ["List", 2]]],
         expected: 0,
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",

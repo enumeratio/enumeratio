@@ -33,22 +33,26 @@ export const hopf: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-quasi-shuffle-overlap-term-included",
         expr: times(M(1), M(1)),
         expected: ["Add", ["Multiply", 2, M(1, 1)], M(2)],
         caption: "the quasi-shuffle, overlap term included",
       },
       {
+        id: "two-interleavings-and-one-overlap",
         expr: times(M(1), M(2)),
         expected: ["Add", M(3), M(1, 2), M(2, 1)],
         caption: "two interleavings and one overlap",
       },
       {
+        id: "nsym-just-concatenates",
         expr: times(H(2), H(1, 3)),
         expected: H(2, 1, 3),
         caption: "NSym just concatenates",
         category: "Scope",
       },
       {
+        id: "2-4-compositions-of-5",
         expr: ["AlgebraDimension", ["QSymAlgebra", 5]],
         expected: 16,
         caption: "$2^4$ compositions of 5",
@@ -79,6 +83,7 @@ export const hopf: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "deconcatenation-cut-at-each-gap",
         expr: ["Coproduct", M(1, 2)],
         expected: [
           "Add",
@@ -89,6 +94,7 @@ export const hopf: readonly ReferenceEntry[] = [
         caption: "deconcatenation: cut at each gap",
       },
       {
+        id: "delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes",
         expr: ["Coproduct", H(2)],
         expected: [
           "Add",
@@ -99,6 +105,7 @@ export const hopf: readonly ReferenceEntry[] = [
         caption: "$\\Delta(H_2) = 1\\otimes H_2 + H_1\\otimes H_1 + H_2\\otimes 1$",
       },
       {
+        id: "the-counit-picks-out-the-constant-term",
         expr: ["Counit", H()],
         expected: 1,
         caption: "the counit picks out the constant term",
@@ -126,14 +133,21 @@ export const hopf: readonly ReferenceEntry[] = [
       "On a commutative Hopf algebra $S$ is an involution, so $S^2 = \\mathrm{id}$ on QSym",
     ],
     examples: [
-      { expr: ["Antipode", M(1)], expected: ["Negate", M(1)], caption: "$S(M_1) = -M_1$" },
       {
+        id: "s-m-1-m-1",
+        expr: ["Antipode", M(1)],
+        expected: ["Negate", M(1)],
+        caption: "$S(M_1) = -M_1$",
+      },
+      {
+        id: "s-2-id-since-qsym-is-commutative",
         expr: ["Antipode", ["Antipode", M(1, 2)]],
         expected: M(1, 2),
         caption: "$S^2 = \\mathrm{id}$, since QSym is commutative",
         category: "Properties",
       },
       {
+        id: "the-product-is-homogeneous-so-degrees-add",
         expr: ["HopfDegree", times(M(1), M(2))],
         expected: 3,
         caption: "the product is homogeneous, so degrees add",
@@ -185,23 +199,27 @@ export const hopf: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "r-1-1-h-1-1-h-2",
         expr: ["InCompleteBasis", ["NSymR", ["List", 1, 1]]],
         // Canonical Add order leads with the negated term.
         expected: ["Add", ["Negate", ["NSymH", ["List", 2]]], ["NSymH", ["List", 1, 1]]],
         caption: "$R_{(1,1)} = H_{(1,1)} - H_{(2)}$",
       },
       {
+        id: "the-fundamental-basis-sums-over-refinements",
         expr: ["InMonomialBasis", ["QSymF", ["List", 2]]],
         expected: ["Add", ["QSymM", ["List", 2]], ["QSymM", ["List", 1, 1]]],
         caption: "the fundamental basis sums over refinements",
       },
       {
+        id: "one-signed-term",
         expr: ["Antipode", ["NSymR", ["List", 3]]],
         expected: ["Negate", ["NSymR", ["List", 1, 1, 1]]],
         caption: "one signed term",
         category: "Properties",
       },
       {
+        id: "self-conjugate-the-convention-is-settled-by-the",
         expr: ["ConjugateComposition", ["List", 2, 1]],
         expected: ["List", 2, 1],
         caption: "self-conjugate — the convention is settled by the antipode, not by taste",

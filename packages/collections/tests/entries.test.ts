@@ -8,8 +8,8 @@ declareCollections(ce);
 
 // Ground every documented example against the registered library.
 for (const entry of entries) {
-  for (const [index, example] of entry.examples.entries()) {
-    test(`${entry.name} example ${index + 1}`, () => {
+  for (const example of entry.examples) {
+    test(`${entry.name} example/${example.id}`, () => {
       const input = example.expr as unknown as Parameters<ComputeEngine["box"]>[0];
       expect(ce.box(input).evaluate().json).toEqual(example.expected);
     });

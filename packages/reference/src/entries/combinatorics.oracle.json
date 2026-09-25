@@ -5,7 +5,7 @@
   },
   "examples": {
     "Binomial": {
-      "[\"Binomial\",5,2]": {
+      "binomial-5-2": {
         "wolfram": {
           "input": "Binomial[5, 2]",
           "output": "10",
@@ -46,7 +46,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",10,3]": {
+      "binomial-10-3": {
         "wolfram": {
           "input": "Binomial[10, 3]",
           "output": "120",
@@ -87,7 +87,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",4,2]": {
+      "binomial-4-2": {
         "wolfram": {
           "input": "Binomial[4, 2]",
           "output": "6",
@@ -128,7 +128,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",5,0]": {
+      "choosing-none-of-n-is-always-1-way": {
         "wolfram": {
           "input": "Binomial[5, 0]",
           "output": "1",
@@ -169,7 +169,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",5,5]": {
+      "choosing-all-of-n-is-always-1-way": {
         "wolfram": {
           "input": "Binomial[5, 5]",
           "output": "1",
@@ -210,7 +210,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Binomial\",10,3],[\"Binomial\",10,7]]": {
+      "symmetry-binom-n-k-binom-n-n-k": {
         "wolfram": {
           "input": "(Binomial[10, 3] == Binomial[10, 7])",
           "output": "True",
@@ -251,7 +251,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Add\",[\"Binomial\",9,2],[\"Binomial\",9,3]],[\"Binomial\",10,3]]": {
+      "pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n": {
         "wolfram": {
           "input": "(Plus[Binomial[9, 2], Binomial[9, 3]] == Binomial[10, 3])",
           "output": "True",
@@ -292,7 +292,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Add\",[\"Binomial\",4,0],[\"Binomial\",4,1],[\"Binomial\",4,2],[\"Binomial\",4,3],[\"Binomial\",4,4]],[\"Power\",2,4]]": {
+      "row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4": {
         "wolfram": {
           "input": "(Plus[Binomial[4, 0], Binomial[4, 1], Binomial[4, 2], Binomial[4, 3], Binomial[4, 4]] == Power[2, 4])",
           "output": "True",
@@ -333,7 +333,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",52,5]": {
+      "the-number-of-distinct-5-card-hands-dealt-from-a": {
         "wolfram": {
           "input": "Binomial[52, 5]",
           "output": "2598960",
@@ -374,7 +374,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",5,7]": {
+      "choosing-more-elements-than-available-k-n-gives": {
         "wolfram": {
           "input": "Binomial[5, 7]",
           "output": "0",
@@ -415,7 +415,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",5,-1]": {
+      "a-negative-k-also-gives-0": {
         "wolfram": {
           "input": "Binomial[5, -1]",
           "output": "0",
@@ -460,7 +460,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",-5,2]": {
+      "a-negative-n-uses-the-generalized-formula-binom": {
         "wolfram": {
           "input": "Binomial[-5, 2]",
           "output": "15",
@@ -505,7 +505,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Binomial\",[\"List\",2,3,5,7,11],3]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "Binomial[List[2, 3, 5, 7, 11], 3]",
           "output": "{0, 1, 10, 35, 165}",
@@ -530,7 +530,7 @@
           "note": "compute-engine's Binomial is Listable and threads over the list; the Rust crate takes scalars only."
         }
       },
-      "[\"Binomial\",[\"Rational\",9,2],[\"Rational\",7,2]]": {
+      "half-integer-arguments-evaluate-exactly-through": {
         "wolfram": {
           "input": "Binomial[Rational[9, 2], Rational[7, 2]]",
           "output": "9/2",
@@ -555,7 +555,7 @@
       }
     },
     "Multinomial": {
-      "[\"Multinomial\",1,2,1]": {
+      "multinomial-1-2-1": {
         "wolfram": {
           "input": "Multinomial[1, 2, 1]",
           "output": "12",
@@ -566,7 +566,7 @@
           }
         }
       },
-      "[\"Multinomial\",2,3,4]": {
+      "multinomial-2-3-4": {
         "wolfram": {
           "input": "Multinomial[2, 3, 4]",
           "output": "1260",
@@ -577,7 +577,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Multinomial\",7,3],[\"Binomial\",10,3]]": {
+      "with-two-arguments-it-reduces-to-binomial-binom": {
         "wolfram": {
           "input": "(Multinomial[7, 3] == Binomial[10, 3])",
           "output": "True",
@@ -588,7 +588,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Multinomial\",1,2,3],[\"Multinomial\",3,1,2]]": {
+      "orderless-permuting-the-arguments-doesn-t-change": {
         "wolfram": {
           "input": "(Multinomial[1, 2, 3] == Multinomial[3, 1, 2])",
           "output": "True",
@@ -599,7 +599,7 @@
           }
         }
       },
-      "[\"Multinomial\",1,4,4,2]": {
+      "the-number-of-distinct-letter-arrangements-of": {
         "wolfram": {
           "input": "Multinomial[1, 4, 4, 2]",
           "output": "34650",
@@ -610,7 +610,7 @@
           }
         }
       },
-      "[\"Multinomial\",0,0,0]": {
+      "all-zero-arguments-still-give-the-empty-product": {
         "wolfram": {
           "input": "Multinomial[0, 0, 0]",
           "output": "1",
@@ -621,7 +621,7 @@
           }
         }
       },
-      "[\"Multinomial\",5]": {
+      "a-single-argument-is-always-1-there-s-only-one": {
         "wolfram": {
           "input": "Multinomial[5]",
           "output": "1",
@@ -632,7 +632,7 @@
           }
         }
       },
-      "[\"Multinomial\",[\"List\",2,3,5],3]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "Multinomial[List[2, 3, 5], 3]",
           "output": "{10, 20, 56}",
@@ -645,7 +645,7 @@
       }
     },
     "Factorial": {
-      "[\"Factorial\",5]": {
+      "5-factorial": {
         "wolfram": {
           "input": "Factorial[5]",
           "output": "120",
@@ -686,7 +686,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",6]": {
+      "6-factorial": {
         "wolfram": {
           "input": "Factorial[6]",
           "output": "720",
@@ -727,7 +727,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",0]": {
+      "the-empty-product-is-1-by-convention": {
         "wolfram": {
           "input": "Factorial[0]",
           "output": "1",
@@ -768,7 +768,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",10]": {
+      "10-factorial": {
         "wolfram": {
           "input": "Factorial[10]",
           "output": "3628800",
@@ -809,7 +809,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",[\"List\",1,2,3,4]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Factorial[List[1, 2, 3, 4]]",
           "output": "{1, 2, 6, 24}",
@@ -862,7 +862,7 @@
           "note": "compute-engine's Factorial threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Equal\",[\"Factorial\",5],[\"Multiply\",5,[\"Factorial\",4]]]": {
+      "recurrence-n-n-n-1": {
         "wolfram": {
           "input": "(Factorial[5] == Times[5, Factorial[4]])",
           "output": "True",
@@ -903,7 +903,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",[\"Rational\",1,2]]": {
+      "extends-to-non-integers-via-the-gamma-function": {
         "wolfram": {
           "input": "Factorial[Rational[1, 2]]",
           "output": "Sqrt[Pi]/2",
@@ -952,7 +952,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",8]": {
+      "the-number-of-ways-to-arrange-8-distinct-books": {
         "wolfram": {
           "input": "Factorial[8]",
           "output": "40320",
@@ -993,7 +993,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",-1]": {
+      "negative-integers-are-poles-of-the-gamma": {
         "wolfram": {
           "input": "Factorial[-1]",
           "output": "ComplexInfinity",
@@ -1044,7 +1044,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Factorial\",20]": {
+      "factorials-grow-fast-20-already-exceeds-2-times": {
         "wolfram": {
           "input": "Factorial[20]",
           "output": "2432902008176640000",
@@ -1087,7 +1087,7 @@
       }
     },
     "Factorial2": {
-      "[\"Factorial2\",7]": {
+      "7-5-3-1": {
         "wolfram": {
           "input": "Factorial2[7]",
           "output": "105",
@@ -1098,7 +1098,7 @@
           }
         }
       },
-      "[\"Factorial2\",8]": {
+      "8-6-4-2": {
         "wolfram": {
           "input": "Factorial2[8]",
           "output": "384",
@@ -1109,7 +1109,7 @@
           }
         }
       },
-      "[\"Factorial2\",10]": {
+      "factorial2-10": {
         "wolfram": {
           "input": "Factorial2[10]",
           "output": "3840",
@@ -1120,7 +1120,7 @@
           }
         }
       },
-      "[\"Factorial2\",0]": {
+      "factorial2-0": {
         "wolfram": {
           "input": "Factorial2[0]",
           "output": "1",
@@ -1131,7 +1131,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Factorial\",8],[\"Multiply\",[\"Factorial2\",8],[\"Factorial2\",7]]]": {
+      "splits-an-ordinary-factorial-into-even-and-odd": {
         "wolfram": {
           "input": "(Factorial[8] == Times[Factorial2[8], Factorial2[7]])",
           "output": "True",
@@ -1142,7 +1142,7 @@
           }
         }
       },
-      "[\"Factorial2\",9]": {
+      "the-number-of-ways-to-pair-up-10-people-into-5": {
         "wolfram": {
           "input": "Factorial2[9]",
           "output": "945",
@@ -1153,7 +1153,7 @@
           }
         }
       },
-      "[\"Factorial2\",-2]": {
+      "negative-even-arguments-hit-a-pole-in-the": {
         "wolfram": {
           "input": "Factorial2[-2]",
           "output": "ComplexInfinity",
@@ -1166,7 +1166,7 @@
           }
         }
       },
-      "[\"Factorial2\",15]": {
+      "15-2-027-025-already-past-two-million-despite": {
         "wolfram": {
           "input": "Factorial2[15]",
           "output": "2027025",
@@ -1177,7 +1177,7 @@
           }
         }
       },
-      "[\"Factorial2\",-1]": {
+      "the-recurrence-n-n-cdot-n-2-run-downwards": {
         "wolfram": {
           "input": "Factorial2[-1]",
           "output": "1",
@@ -1190,7 +1190,7 @@
       }
     },
     "CatalanNumber": {
-      "[\"CatalanNumber\",0]": {
+      "catalannumber-0": {
         "wolfram": {
           "input": "CatalanNumber[0]",
           "output": "1",
@@ -1221,7 +1221,7 @@
           "verdict": "agree"
         }
       },
-      "[\"CatalanNumber\",1]": {
+      "catalannumber-1": {
         "wolfram": {
           "input": "CatalanNumber[1]",
           "output": "1",
@@ -1252,7 +1252,7 @@
           "verdict": "agree"
         }
       },
-      "[\"CatalanNumber\",5]": {
+      "catalannumber-5": {
         "wolfram": {
           "input": "CatalanNumber[5]",
           "output": "42",
@@ -1283,7 +1283,7 @@
           "verdict": "agree"
         }
       },
-      "[\"CatalanNumber\",10]": {
+      "catalannumber-10": {
         "wolfram": {
           "input": "CatalanNumber[10]",
           "output": "16796",
@@ -1314,7 +1314,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divide\",[\"Binomial\",[\"Multiply\",2,5],5],[\"Add\",5,1]]": {
+      "closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n": {
         "wolfram": {
           "input": "Divide[Binomial[Times[2, 5], 5], Plus[5, 1]]",
           "output": "42",
@@ -1355,7 +1355,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Subtract\",[\"Binomial\",10,5],[\"Binomial\",10,6]]": {
+      "equivalently-c-n-binom-2n-n-binom-2n-n-1": {
         "wolfram": {
           "input": "Subtract[Binomial[10, 5], Binomial[10, 6]]",
           "output": "42",
@@ -1396,7 +1396,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divide\",[\"CatalanNumber\",6],[\"CatalanNumber\",5]]": {
+      "the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2": {
         "wolfram": {
           "input": "Divide[CatalanNumber[6], CatalanNumber[5]]",
           "output": "22/7",
@@ -1427,7 +1427,7 @@
           "verdict": "agree"
         }
       },
-      "[\"CatalanNumber\",3]": {
+      "the-5-ways-to-balance-3-pairs-of-parentheses": {
         "wolfram": {
           "input": "CatalanNumber[3]",
           "output": "5",
@@ -1458,7 +1458,7 @@
           "verdict": "agree"
         }
       },
-      "[\"CatalanNumber\",4]": {
+      "the-14-triangulations-of-a-hexagon-and-the-14": {
         "wolfram": {
           "input": "CatalanNumber[4]",
           "output": "14",
@@ -1489,7 +1489,7 @@
           "verdict": "agree"
         }
       },
-      "[\"CatalanNumber\",-1]": {
+      "a-negative-argument-is-left-unevaluated": {
         "wolfram": {
           "input": "CatalanNumber[-1]",
           "output": "-1",
@@ -1530,7 +1530,7 @@
           "note": "SymPy extends CatalanNumber here (-1/2); compute-engine leaves it unevaluated."
         }
       },
-      "[\"CatalanNumber\",15]": {
+      "they-grow-fast-c-15-already-passes-nine-million": {
         "wolfram": {
           "input": "CatalanNumber[15]",
           "output": "9694845",
@@ -1561,7 +1561,7 @@
           "verdict": "agree"
         }
       },
-      "[\"CatalanNumber\",[\"List\",1,2,3,4]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "CatalanNumber[List[1, 2, 3, 4]]",
           "output": "{1, 2, 5, 14}",
@@ -1579,7 +1579,7 @@
           "note": "compute-engine's CatalanNumber is Listable and threads over the list; SymPy's takes scalars only."
         }
       },
-      "[\"CatalanNumber\",[\"Rational\",5,2]]": {
+      "half-integer-arguments-evaluate-exactly-through": {
         "wolfram": {
           "input": "CatalanNumber[Rational[5, 2]]",
           "output": "1024/(105*Pi)",
@@ -1597,7 +1597,7 @@
       }
     },
     "Pochhammer": {
-      "[\"Pochhammer\",5,3]": {
+      "5-6-7": {
         "wolfram": {
           "input": "Pochhammer[5, 3]",
           "output": "210",
@@ -1608,7 +1608,7 @@
           }
         }
       },
-      "[\"Pochhammer\",2,0]": {
+      "an-empty-product-is-1": {
         "wolfram": {
           "input": "Pochhammer[2, 0]",
           "output": "1",
@@ -1619,7 +1619,7 @@
           }
         }
       },
-      "[\"Pochhammer\",1,5]": {
+      "1-5-equals-5": {
         "wolfram": {
           "input": "Pochhammer[1, 5]",
           "output": "120",
@@ -1630,7 +1630,7 @@
           }
         }
       },
-      "[\"Pochhammer\",3,4]": {
+      "pochhammer-3-4": {
         "wolfram": {
           "input": "Pochhammer[3, 4]",
           "output": "360",
@@ -1641,7 +1641,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Pochhammer\",1,5],[\"Factorial\",5]]": {
+      "1-n-n-since-the-rising-factorial-from-1-just": {
         "wolfram": {
           "input": "(Pochhammer[1, 5] == Factorial[5])",
           "output": "True",
@@ -1652,7 +1652,7 @@
           }
         }
       },
-      "[\"Pochhammer\",5,-2]": {
+      "negative-order-gives-the-reciprocal-a-n-frac-1-a": {
         "wolfram": {
           "input": "Pochhammer[5, -2]",
           "output": "1/12",
@@ -1663,7 +1663,7 @@
           }
         }
       },
-      "[\"Divide\",[\"Pochhammer\",5,3],[\"Factorial\",3]]": {
+      "dividing-by-k-counts-multisets-binom-n-k-1-k": {
         "wolfram": {
           "input": "Divide[Pochhammer[5, 3], Factorial[3]]",
           "output": "35",
@@ -1674,7 +1674,7 @@
           }
         }
       },
-      "[\"Pochhammer\",-3,4]": {
+      "if-a-is-a-non-positive-integer-with-a-n-the": {
         "wolfram": {
           "input": "Pochhammer[-3, 4]",
           "output": "0",
@@ -1685,7 +1685,7 @@
           }
         }
       },
-      "[\"Pochhammer\",[\"List\",2,3,4],2]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "Pochhammer[List[2, 3, 4], 2]",
           "output": "{6, 12, 20}",
@@ -1698,7 +1698,7 @@
       }
     },
     "Subfactorial": {
-      "[\"Subfactorial\",0]": {
+      "subfactorial-0": {
         "wolfram": {
           "input": "Subfactorial[0]",
           "output": "1",
@@ -1709,7 +1709,7 @@
           }
         }
       },
-      "[\"Subfactorial\",1]": {
+      "a-single-object-can-t-be-deranged": {
         "wolfram": {
           "input": "Subfactorial[1]",
           "output": "0",
@@ -1720,7 +1720,7 @@
           }
         }
       },
-      "[\"Subfactorial\",4]": {
+      "subfactorial-4": {
         "wolfram": {
           "input": "Subfactorial[4]",
           "output": "9",
@@ -1731,7 +1731,7 @@
           }
         }
       },
-      "[\"Subfactorial\",5]": {
+      "subfactorial-5": {
         "wolfram": {
           "input": "Subfactorial[5]",
           "output": "44",
@@ -1742,7 +1742,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Subfactorial\",4],[\"Add\",[\"Multiply\",4,[\"Subfactorial\",3]],[\"Power\",-1,4]]]": {
+      "recurrence-d-n-n-d-n-1-1-n": {
         "wolfram": {
           "input": "(Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])",
           "output": "True",
@@ -1753,7 +1753,7 @@
           }
         }
       },
-      "[\"Subfactorial\",6]": {
+      "the-hat-check-problem-the-number-of-ways-6": {
         "wolfram": {
           "input": "Subfactorial[6]",
           "output": "265",
@@ -1764,7 +1764,7 @@
           }
         }
       },
-      "[\"Subfactorial\",-1]": {
+      "a-negative-argument-is-left-unevaluated": {
         "wolfram": {
           "input": "Subfactorial[-1]",
           "output": "Subfactorial[-1]",
@@ -1775,7 +1775,7 @@
           }
         }
       },
-      "[\"Subfactorial\",[\"List\",1,2,3,4]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "Subfactorial[List[1, 2, 3, 4]]",
           "output": "{0, 1, 2, 9}",
@@ -1788,7 +1788,7 @@
       }
     },
     "StirlingS1": {
-      "[\"StirlingS1\",5,2]": {
+      "stirlings1-5-2": {
         "wolfram": {
           "input": "StirlingS1[5, 2]",
           "output": "-50",
@@ -1820,7 +1820,7 @@
           "note": "Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram."
         }
       },
-      "[\"StirlingS1\",4,2]": {
+      "stirlings1-4-2": {
         "wolfram": {
           "input": "StirlingS1[4, 2]",
           "output": "11",
@@ -1846,7 +1846,7 @@
           "verdict": "agree"
         }
       },
-      "[\"StirlingS1\",3,3]": {
+      "s-n-n-is-always-1": {
         "wolfram": {
           "input": "StirlingS1[3, 3]",
           "output": "1",
@@ -1872,7 +1872,7 @@
           "verdict": "agree"
         }
       },
-      "[\"StirlingS1\",5,0]": {
+      "s-n-0-is-0-for-n-0": {
         "wolfram": {
           "input": "StirlingS1[5, 0]",
           "output": "0",
@@ -1898,7 +1898,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Sum\",[\"Abs\",[\"StirlingS1\",4,\"k\"]],[\"Tuple\",\"k\",0,4]],[\"Factorial\",4]]": {
+      "the-unsigned-values-in-a-row-sum-to-n": {
         "wolfram": {
           "input": "(Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]] == Factorial[4])",
           "output": "True",
@@ -1909,7 +1909,7 @@
           }
         }
       },
-      "[\"StirlingS1\",5,3]": {
+      "the-number-of-permutations-of-5-elements-with": {
         "wolfram": {
           "input": "StirlingS1[5, 3]",
           "output": "35",
@@ -1935,7 +1935,7 @@
           "verdict": "agree"
         }
       },
-      "[\"StirlingS1\",0,0]": {
+      "the-empty-case-s-0-0-1-by-convention-distinct": {
         "wolfram": {
           "input": "StirlingS1[0, 0]",
           "output": "1",
@@ -1961,7 +1961,7 @@
           "verdict": "agree"
         }
       },
-      "[\"StirlingS1\",10,1]": {
+      "s-n-1-1-n-1-n-1-so-s-10-1-9": {
         "wolfram": {
           "input": "StirlingS1[10, 1]",
           "output": "-362880",
@@ -1993,7 +1993,7 @@
           "note": "Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram."
         }
       },
-      "[\"StirlingS1\",[\"List\",2,4,6],2]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "StirlingS1[List[2, 4, 6], 2]",
           "output": "{1, 11, 274}",
@@ -2006,7 +2006,7 @@
       }
     },
     "Stirling": {
-      "[\"Stirling\",5,2]": {
+      "stirling-5-2": {
         "wolfram": {
           "input": "StirlingS2[5, 2]",
           "output": "15",
@@ -2037,7 +2037,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Stirling\",6,3]": {
+      "stirling-6-3": {
         "wolfram": {
           "input": "StirlingS2[6, 3]",
           "output": "90",
@@ -2068,7 +2068,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Stirling\",5,1]": {
+      "one-block-means-one-partition-s-n-1-1": {
         "wolfram": {
           "input": "StirlingS2[5, 1]",
           "output": "1",
@@ -2099,7 +2099,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Stirling\",5,5]": {
+      "singletons-only-s-n-n-1": {
         "wolfram": {
           "input": "StirlingS2[5, 5]",
           "output": "1",
@@ -2130,7 +2130,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Sum\",[\"Stirling\",4,\"k\"],[\"Tuple\",\"k\",0,4]],[\"BellNumber\",4]]": {
+      "row-sums-give-the-bell-numbers": {
         "wolfram": {
           "input": "(Sum[StirlingS2[4, k], List[k, 0, 4]] == BellB[4])",
           "output": "True",
@@ -2141,7 +2141,7 @@
           }
         }
       },
-      "[\"Stirling\",0,0]": {
+      "the-empty-set-has-one-partition-into-no-blocks": {
         "wolfram": {
           "input": "StirlingS2[0, 0]",
           "output": "1",
@@ -2174,7 +2174,7 @@
       }
     },
     "BellNumber": {
-      "[\"BellNumber\",0]": {
+      "bellnumber-0": {
         "wolfram": {
           "input": "BellB[0]",
           "output": "1",
@@ -2205,7 +2205,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BellNumber\",1]": {
+      "bellnumber-1": {
         "wolfram": {
           "input": "BellB[1]",
           "output": "1",
@@ -2236,7 +2236,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BellNumber\",3]": {
+      "bellnumber-3": {
         "wolfram": {
           "input": "BellB[3]",
           "output": "5",
@@ -2267,7 +2267,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BellNumber\",5]": {
+      "bellnumber-5": {
         "wolfram": {
           "input": "BellB[5]",
           "output": "52",
@@ -2298,7 +2298,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BellNumber\",10]": {
+      "bellnumber-10": {
         "wolfram": {
           "input": "BellB[10]",
           "output": "115975",
@@ -2329,7 +2329,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"BellNumber\",5],[\"Add\",[\"Multiply\",[\"Binomial\",4,0],[\"BellNumber\",0]],[\"Multiply\",[\"Binomial\",4,1],[\"BellNumber\",1]],[\"Multiply\",[\"Binomial\",4,2],[\"BellNumber\",2]],[\"Multiply\",[\"Binomial\",4,3],[\"BellNumber\",3]],[\"Multiply\",[\"Binomial\",4,4],[\"BellNumber\",4]]]]": {
+      "recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at": {
         "wolfram": {
           "input": "(BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])",
           "output": "True",
@@ -2360,7 +2360,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BellNumber\",4]": {
+      "the-number-of-ways-to-partition-a-4-element-set": {
         "wolfram": {
           "input": "BellB[4]",
           "output": "15",
@@ -2391,7 +2391,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BellNumber\",-1]": {
+      "a-negative-argument-is-left-unevaluated": {
         "wolfram": {
           "input": "BellB[-1]",
           "output": "BellB[-1]",
@@ -2430,7 +2430,7 @@
           "note": "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
         }
       },
-      "[\"BellNumber\",[\"List\",1,2,3,4]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "BellB[List[1, 2, 3, 4]]",
           "output": "{1, 2, 5, 15}",

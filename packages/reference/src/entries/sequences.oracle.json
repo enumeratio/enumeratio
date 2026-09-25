@@ -5,7 +5,7 @@
   },
   "examples": {
     "Fibonacci": {
-      "[\"Fibonacci\",0]": {
+      "fibonacci-0": {
         "wolfram": {
           "input": "Fibonacci[0]",
           "output": "0",
@@ -41,7 +41,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Fibonacci\",1]": {
+      "fibonacci-1": {
         "wolfram": {
           "input": "Fibonacci[1]",
           "output": "1",
@@ -77,7 +77,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Fibonacci\",10]": {
+      "fibonacci-10": {
         "wolfram": {
           "input": "Fibonacci[10]",
           "output": "55",
@@ -113,7 +113,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Fibonacci\",20]": {
+      "fibonacci-20": {
         "wolfram": {
           "input": "Fibonacci[20]",
           "output": "6765",
@@ -149,7 +149,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Fibonacci\",10],[\"Add\",[\"Fibonacci\",9],[\"Fibonacci\",8]]]": {
+      "the-defining-recurrence-f-10-f-9-f-8": {
         "wolfram": {
           "input": "(Fibonacci[10] == Plus[Fibonacci[9], Fibonacci[8]])",
           "output": "True",
@@ -185,7 +185,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Subtract\",[\"Multiply\",[\"Fibonacci\",5],[\"Fibonacci\",7]],[\"Power\",[\"Fibonacci\",6],2]]": {
+      "cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at": {
         "wolfram": {
           "input": "Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]",
           "output": "1",
@@ -221,7 +221,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"GCD\",[\"Fibonacci\",12],[\"Fibonacci\",18]],[\"Fibonacci\",[\"GCD\",12,18]]]": {
+      "gcd-f-12-f-18-f-gcd-12-18": {
         "wolfram": {
           "input": "(GCD[Fibonacci[12], Fibonacci[18]] == Fibonacci[GCD[12, 18]])",
           "output": "True",
@@ -257,7 +257,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Fibonacci\",-5]": {
+      "negative-indices-are-supported-via-f-n-1-n-1-f-n": {
         "wolfram": {
           "input": "Fibonacci[-5]",
           "output": "5",
@@ -295,7 +295,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divide\",[\"Fibonacci\",20],[\"Fibonacci\",19]]": {
+      "consecutive-ratios-f-n-1-f-n-converge-to-the": {
         "wolfram": {
           "input": "Divide[Fibonacci[20], Fibonacci[19]]",
           "output": "6765/4181",
@@ -331,7 +331,25 @@
           "verdict": "agree"
         }
       },
-      "[\"Fibonacci\",50]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
+        "wolfram": {
+          "input": "Fibonacci[List[1, 2, 3, 4]]",
+          "output": "{1, 1, 2, 3}",
+          "verdict": "agree",
+          "tex": {
+            "input": "F_{\\{1,2,3,4\\}}",
+            "output": "\\{1,1,2,3\\}"
+          }
+        },
+        "sympy": {
+          "input": "fibonacci([1, 2, 3, 4])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Integer'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Fibonacci is Listable and threads over the list; SymPy's takes scalars only."
+        }
+      },
+      "they-grow-fast-f-50-already-exceeds-twelve": {
         "wolfram": {
           "input": "Fibonacci[50]",
           "output": "12586269025",
@@ -366,28 +384,10 @@
           "output": "12586269025",
           "verdict": "agree"
         }
-      },
-      "[\"Fibonacci\",[\"List\",1,2,3,4]]": {
-        "wolfram": {
-          "input": "Fibonacci[List[1, 2, 3, 4]]",
-          "output": "{1, 1, 2, 3}",
-          "verdict": "agree",
-          "tex": {
-            "input": "F_{\\{1,2,3,4\\}}",
-            "output": "\\{1,1,2,3\\}"
-          }
-        },
-        "sympy": {
-          "input": "fibonacci([1, 2, 3, 4])",
-          "output": "AttributeError: 'list' object has no attribute 'is_Integer'",
-          "verdict": "error",
-          "kind": "threading",
-          "note": "compute-engine's Fibonacci is Listable and threads over the list; SymPy's takes scalars only."
-        }
       }
     },
     "LucasL": {
-      "[\"LucasL\",0]": {
+      "lucasl-0": {
         "wolfram": {
           "input": "LucasL[0]",
           "output": "2",
@@ -413,7 +413,7 @@
           "verdict": "agree"
         }
       },
-      "[\"LucasL\",1]": {
+      "lucasl-1": {
         "wolfram": {
           "input": "LucasL[1]",
           "output": "1",
@@ -439,7 +439,7 @@
           "verdict": "agree"
         }
       },
-      "[\"LucasL\",5]": {
+      "lucasl-5": {
         "wolfram": {
           "input": "LucasL[5]",
           "output": "11",
@@ -465,7 +465,7 @@
           "verdict": "agree"
         }
       },
-      "[\"LucasL\",10]": {
+      "lucasl-10": {
         "wolfram": {
           "input": "LucasL[10]",
           "output": "123",
@@ -491,7 +491,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"LucasL\",6],[\"Add\",[\"Fibonacci\",5],[\"Fibonacci\",7]]]": {
+      "l-n-f-n-1-f-n-1-here-at-n-6": {
         "wolfram": {
           "input": "(LucasL[6] == Plus[Fibonacci[5], Fibonacci[7]])",
           "output": "True",
@@ -517,7 +517,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Fibonacci\",6],[\"Divide\",[\"Add\",[\"LucasL\",5],[\"LucasL\",7]],5]]": {
+      "conversely-f-n-frac-l-n-1-l-n-1-5": {
         "wolfram": {
           "input": "(Fibonacci[6] == Divide[Plus[LucasL[5], LucasL[7]], 5])",
           "output": "True",
@@ -543,7 +543,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Subtract\",[\"Multiply\",[\"LucasL\",4],[\"LucasL\",6]],[\"Power\",[\"LucasL\",5],2]]": {
+      "a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n": {
         "wolfram": {
           "input": "Subtract[Times[LucasL[4], LucasL[6]], Power[LucasL[5], 2]]",
           "output": "5",
@@ -569,7 +569,7 @@
           "verdict": "agree"
         }
       },
-      "[\"LucasL\",-1]": {
+      "negative-indices-are-supported-via-l-n-1-n-l-n": {
         "wolfram": {
           "input": "LucasL[-1]",
           "output": "-1",
@@ -597,7 +597,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divide\",[\"LucasL\",15],[\"LucasL\",14]]": {
+      "consecutive-ratios-l-n-1-l-n-converge-to-the": {
         "wolfram": {
           "input": "Divide[LucasL[15], LucasL[14]]",
           "output": "1364/843",
@@ -623,7 +623,25 @@
           "verdict": "agree"
         }
       },
-      "[\"LucasL\",30]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
+        "wolfram": {
+          "input": "LucasL[List[1, 2, 3, 4]]",
+          "output": "{1, 3, 4, 7}",
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{\\{1,2,3,4\\}}",
+            "output": "\\{1,3,4,7\\}"
+          }
+        },
+        "sympy": {
+          "input": "lucas([1, 2, 3, 4])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Integer'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's LucasL is Listable and threads over the list; SymPy's takes scalars only."
+        }
+      },
+      "l-30-already-tops-1-8-million-growing-at-the": {
         "wolfram": {
           "input": "LucasL[30]",
           "output": "1860498",
@@ -648,28 +666,10 @@
           "output": "1860498",
           "verdict": "agree"
         }
-      },
-      "[\"LucasL\",[\"List\",1,2,3,4]]": {
-        "wolfram": {
-          "input": "LucasL[List[1, 2, 3, 4]]",
-          "output": "{1, 3, 4, 7}",
-          "verdict": "agree",
-          "tex": {
-            "input": "L_{\\{1,2,3,4\\}}",
-            "output": "\\{1,3,4,7\\}"
-          }
-        },
-        "sympy": {
-          "input": "lucas([1, 2, 3, 4])",
-          "output": "AttributeError: 'list' object has no attribute 'is_Integer'",
-          "verdict": "error",
-          "kind": "threading",
-          "note": "compute-engine's LucasL is Listable and threads over the list; SymPy's takes scalars only."
-        }
       }
     },
     "BernoulliB": {
-      "[\"BernoulliB\",0]": {
+      "bernoullib-0": {
         "wolfram": {
           "input": "BernoulliB[0]",
           "output": "1",
@@ -690,7 +690,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BernoulliB\",1]": {
+      "bernoullib-1": {
         "wolfram": {
           "input": "BernoulliB[1]",
           "output": "-1/2",
@@ -713,7 +713,7 @@
           "note": "SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does."
         }
       },
-      "[\"BernoulliB\",2]": {
+      "bernoullib-2": {
         "wolfram": {
           "input": "BernoulliB[2]",
           "output": "1/6",
@@ -734,7 +734,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BernoulliB\",4]": {
+      "bernoullib-4": {
         "wolfram": {
           "input": "BernoulliB[4]",
           "output": "-1/30",
@@ -755,7 +755,7 @@
           "verdict": "agree"
         }
       },
-      "[\"BernoulliB\",12]": {
+      "bernoullib-12": {
         "wolfram": {
           "input": "BernoulliB[12]",
           "output": "-691/2730",
@@ -776,7 +776,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"BernoulliB\",5],0]": {
+      "b-n-0-for-every-odd-n-1": {
         "wolfram": {
           "input": "(BernoulliB[5] == 0)",
           "output": "True",
@@ -797,7 +797,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divide\",[\"Add\",[\"Multiply\",[\"Binomial\",3,0],[\"BernoulliB\",0],[\"Power\",5,3]],[\"Multiply\",[\"Binomial\",3,1],[\"BernoulliB\",1],[\"Power\",5,2]],[\"Multiply\",[\"Binomial\",3,2],[\"BernoulliB\",2],[\"Power\",5,1]]],3]": {
+      "faulhaber-s-formula-recovers-sum-k-0-4-k-2-30": {
         "wolfram": {
           "input": "Divide[Plus[Times[Binomial[3, 0], BernoulliB[0], Power[5, 3]], Times[Binomial[3, 1], BernoulliB[1], Power[5, 2]], Times[Binomial[3, 2], BernoulliB[2], Power[5, 1]]], 3]",
           "output": "30",
@@ -820,7 +820,7 @@
           "note": "SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does."
         }
       },
-      "[\"BernoulliB\",-1]": {
+      "bernoulli-numbers-are-only-defined-for-n-ge-0-a": {
         "wolfram": {
           "input": "BernoulliB[-1]",
           "output": "BernoulliB[-1]",
@@ -845,7 +845,25 @@
           "note": "Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated."
         }
       },
-      "[\"BernoulliB\",20]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
+        "wolfram": {
+          "input": "BernoulliB[List[1, 2, 3]]",
+          "output": "{-1/2, 1/6, 0}",
+          "verdict": "agree",
+          "tex": {
+            "input": "B_{\\{1,2,3\\}}",
+            "output": "\\left\\{-\\frac{1}{2},\\frac{1}{6},0\\right\\}"
+          }
+        },
+        "sympy": {
+          "input": "bernoulli([1, 2, 3])",
+          "output": "AttributeError: 'list' object has no attribute 'is_zero'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's BernoulliB is Listable and threads over the list; SymPy's takes scalars only."
+        }
+      },
+      "numerators-and-denominators-grow-quickly-b-20": {
         "wolfram": {
           "input": "BernoulliB[20]",
           "output": "-174611/330",
@@ -864,24 +882,6 @@
           "input": "bernoulli(20)",
           "output": "-174611/330",
           "verdict": "agree"
-        }
-      },
-      "[\"BernoulliB\",[\"List\",1,2,3]]": {
-        "wolfram": {
-          "input": "BernoulliB[List[1, 2, 3]]",
-          "output": "{-1/2, 1/6, 0}",
-          "verdict": "agree",
-          "tex": {
-            "input": "B_{\\{1,2,3\\}}",
-            "output": "\\left\\{-\\frac{1}{2},\\frac{1}{6},0\\right\\}"
-          }
-        },
-        "sympy": {
-          "input": "bernoulli([1, 2, 3])",
-          "output": "AttributeError: 'list' object has no attribute 'is_zero'",
-          "verdict": "error",
-          "kind": "threading",
-          "note": "compute-engine's BernoulliB is Listable and threads over the list; SymPy's takes scalars only."
         }
       }
     }

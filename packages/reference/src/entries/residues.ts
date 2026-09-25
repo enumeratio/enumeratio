@@ -37,31 +37,44 @@ export const residues: readonly ReferenceEntry[] = [
       "A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.",
     ],
     examples: [
-      { expr: ["Mod", 17, 5], expected: 2 },
-      { expr: ["Mod", 100, 7], expected: 2 },
       {
+        id: "17-mod-5",
+        expr: ["Mod", 17, 5],
+        expected: 2,
+      },
+      {
+        id: "100-mod-7",
+        expr: ["Mod", 100, 7],
+        expected: 2,
+      },
+      {
+        id: "the-result-takes-the-sign-of-the-modulus",
         expr: ["Mod", -7, 3],
         expected: 2,
         caption: "The result takes the sign of the modulus",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["Mod", ["List", 1, 2, 3, 4, 5], 3],
         expected: ["List", 1, 2, 0, 1, 2],
         caption: "Threads element-wise over a list",
       },
       {
+        id: "division-by-a-0-modulus-yields-nan-rather-than",
         expr: ["Mod", 5, 0],
         expected: "NaN",
         category: "Possible issues",
         caption: "Division by a 0 modulus yields NaN rather than an error",
       },
       {
+        id: "periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer",
         expr: ["Equal", ["Mod", 17, 5], ["Mod", ["Add", 17, ["Multiply", 3, 5]], 5]],
         expected: "True",
         category: "Properties",
         caption: "Periodicity: $a \\bmod n = (a+kn) \\bmod n$ for any integer $k$",
       },
       {
+        id: "a-third-argument-offsets-the-range-the-result",
         expr: ["Mod", 17, 5, 1],
         expected: 2,
         category: "Scope",
@@ -69,77 +82,90 @@ export const residues: readonly ReferenceEntry[] = [
           "A third argument offsets the range: the result lies in $[d, d + n)$, here $[1, 6)$",
       },
       {
+        id: "with-offset-1-the-residues-run-1-2-3-rather-than",
         expr: ["Mod", 5, 3, 1],
         expected: 2,
         category: "Scope",
         caption: "With offset 1 the residues run $1, 2, 3$ rather than $0, 1, 2$",
       },
       {
+        id: "rationals-are-reduced-exactly",
         expr: ["Mod", ["Rational", 5, 2], 2],
         expected: ["Rational", 1, 2],
         category: "Scope",
         caption: "Rationals are reduced exactly",
       },
       {
+        id: "3p14-mod-2",
         expr: ["Mod", 3.14, 2],
         expected: 1.14,
         category: "Scope",
       },
       {
+        id: "an-exact-irrational-reduces-exactly-to-2-sqrt-7",
         expr: ["Mod", ["Sqrt", 28], 3],
         expected: ["Add", -3, ["Multiply", 2, ["Sqrt", 7]]],
         category: "Scope",
         caption: "An exact irrational reduces exactly to $2\\sqrt7 - 3$",
       },
       {
+        id: "a-symbolic-constant-reduces-exactly-to-pi-2",
         expr: ["Mod", "Pi", 2],
         expected: ["Add", -2, "Pi"],
         category: "Scope",
         caption: "A symbolic constant reduces exactly to $\\pi - 2$",
       },
       {
+        id: "a-10-001-digit-dividend",
         expr: ["Mod", ["Power", 10, 10000], 10007],
         expected: 6333,
         category: "Scope",
         caption: "a 10 001-digit dividend",
       },
       {
+        id: "threads-over-a-list-of-moduli",
         expr: ["Mod", 10, ["List", 3, 4, 7]],
         expected: ["List", 1, 2, 3],
         category: "Scope",
         caption: "Threads over a list of moduli",
       },
       {
+        id: "a-gaussian-integer-5-3i-2-2-2i",
         expr: ["Mod", ["Complex", 5, 3], 2],
         expected: ["Complex", 1, -1],
         category: "Scope",
         caption: "a Gaussian integer: $(5 + 3i) - 2(2 + 2i)$",
       },
       {
+        id: "1-i-divides-5-3i-1-i-4-i",
         expr: ["Mod", ["Complex", 5, 3], ["Complex", 1, 1]],
         expected: 0,
         category: "Scope",
         caption: "$1 + i$ divides $5 + 3i = (1 + i)(4 - i)$",
       },
       {
+        id: "a-negative-modulus-gives-a-result-in-n-0",
         expr: ["Mod", -5, -3],
         expected: -2,
         category: "Properties",
         caption: "A negative modulus gives a result in $(n, 0]$",
       },
       {
+        id: "gaussian-integers-the-quotient-rounds-so-each",
         expr: ["Mod", ["Complex", 7, 5], 3],
         expected: ["Complex", 1, -1],
         category: "Scope",
         caption: "Gaussian integers: the quotient rounds, so each part lands in $(-m/2, m/2]$",
       },
       {
+        id: "a-gaussian-modulus-7-5i-2-i-4-i-i",
         expr: ["Mod", ["Complex", 7, 5], ["Complex", 2, 1]],
         expected: ["Complex", 0, -1],
         category: "Scope",
         caption: "a Gaussian modulus: $7 + 5i = (2 + i)(4 + i) - i$",
       },
       {
+        id: "exact-in-both-parts-past-2-53",
         expr: [
           "Mod",
           ["Complex", { num: "100000000000000000001" }, { num: "9007199254740993" }],
@@ -150,6 +176,7 @@ export const residues: readonly ReferenceEntry[] = [
         caption: "exact in both parts past $2^{53}$",
       },
       {
+        id: "the-remainder-of-quotient",
         expr: [
           "Equal",
           ["Mod", ["Complex", 7, 5], ["Complex", 2, 1]],
@@ -164,6 +191,7 @@ export const residues: readonly ReferenceEntry[] = [
         caption: "the remainder of [[Quotient]]",
       },
       {
+        id: "rounding-ties-to-even-means-1-and-1-both-appear",
         expr: ["List", ["Mod", ["Complex", 1, 2], 2], ["Mod", ["Complex", 3, 2], 2]],
         expected: ["List", 1, -1],
         category: "Possible issues",
@@ -201,45 +229,64 @@ export const residues: readonly ReferenceEntry[] = [
       "Gaussian integers are reduced as [[Mod]] reduces them; a rational-integer modulus must be positive, and a result that comes out real is reported in $[0, m)$.",
     ],
     examples: [
-      { expr: ["PowerMod", 2, 10, 3], expected: 1 },
-      { expr: ["PowerMod", 3, 50, 11], expected: 1 },
-      { expr: ["PowerMod", 3, 2, 7], expected: 2 },
       {
+        id: "powermod-2-10-3",
+        expr: ["PowerMod", 2, 10, 3],
+        expected: 1,
+      },
+      {
+        id: "powermod-3-50-11",
+        expr: ["PowerMod", 3, 50, 11],
+        expected: 1,
+      },
+      {
+        id: "powermod-3-2-7",
+        expr: ["PowerMod", 3, 2, 7],
+        expected: 2,
+      },
+      {
+        id: "3-1-equiv-5-and-5-2-25-equiv-4",
         expr: ["PowerMod", 3, -2, 7],
         expected: 4,
         category: "Scope",
         caption: "$3^{-1} \\equiv 5$, and $5^2 = 25 \\equiv 4$",
       },
       {
+        id: "a-square-root-of-3-equiv-1-pmod-2",
         expr: ["PowerMod", 3, ["Rational", 1, 2], 2],
         expected: 1,
         category: "Scope",
         caption: "a square root of $3 \\equiv 1 \\pmod 2$",
       },
       {
+        id: "threads-over-a-list-of-bases",
         expr: ["PowerMod", ["List", 2, 3, 4], 2, 5],
         expected: ["List", 4, 4, 1],
         category: "Scope",
         caption: "threads over a list of bases",
       },
       {
+        id: "a-negative-exponent-gives-the-modular-inverse",
         expr: ["PowerMod", 2, -1, 7],
         expected: 4,
         caption: "A negative exponent gives the modular inverse",
       },
       {
+        id: "one-step-of-rsa-style-modular-exponentiation-7",
         expr: ["PowerMod", 7, 13, 33],
         expected: 13,
         category: "Applications",
         caption: "One step of RSA-style modular exponentiation: $7^{13} \\bmod 33$",
       },
       {
+        id: "by-definition-a-b-bmod-m-computed-without-ever",
         expr: ["Equal", ["PowerMod", 2, 10, 3], ["Mod", ["Power", 2, 10], 3]],
         expected: "True",
         category: "Properties",
         caption: "By definition $a^b \\bmod m$, computed without ever forming $a^b$ directly",
       },
       {
+        id: "no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2",
         expr: ["PowerMod", 2, -1, 4],
         expected: ["PowerMod", 2, -1, 4],
         category: "Possible issues",
@@ -247,30 +294,35 @@ export const residues: readonly ReferenceEntry[] = [
           "No inverse exists when $\\gcd(a,m)\\neq1$ (here $\\gcd(2,4)=2$), so the call is left unevaluated",
       },
       {
+        id: "a-rational-exponent-is-a-modular-root-the-least",
         expr: ["PowerMod", 4, ["Rational", 1, 2], 7],
         expected: 2,
         category: "Scope",
         caption: "a rational exponent is a modular root: the least of $2, 5$",
       },
       {
+        id: "threads-over-lists-the-period-is-the-order-of-2",
         expr: ["PowerMod", 2, ["List", 10, 11, 12, 13, 14], 5],
         expected: ["List", 4, 3, 1, 2, 4],
         category: "Scope",
         caption: "threads over lists; the period is the order of 2 mod 5",
       },
       {
+        id: "a-301-digit-base",
         expr: ["PowerMod", ["Add", ["Power", 10, 300], 1], 7, 5],
         expected: 1,
         category: "Scope",
         caption: "a 301-digit base",
       },
       {
+        id: "a-square-root-of-3-modulo-the-prime-10-30-57",
         expr: ["PowerMod", 3, ["Rational", 1, 2], ["Add", ["Power", 10, 30], 57]],
         expected: { num: "492767688934650018614948489645" },
         category: "Scope",
         caption: "a square root of 3 modulo the prime $10^{30} + 57$",
       },
       {
+        id: "a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod",
         expr: ["PowerMod", ["Rational", 2, 3], 1, 7],
         expected: 3,
         category: "Scope",
@@ -280,18 +332,21 @@ export const residues: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3",
         expr: ["PowerMod", ["Complex", 2, 1], 2, 3],
         expected: ["Complex", 0, 1],
         category: "Scope",
         caption: "Gaussian integers: $(2+i)^2 = 3 + 4i \\equiv i \\pmod 3$",
       },
       {
+        id: "a-gaussian-modulus-and-an-exponent-of-10-30",
         expr: ["PowerMod", ["Complex", 1, 2], ["Power", 10, 30], ["Complex", 7, 2]],
         expected: ["Complex", 1, 2],
         category: "Scope",
         caption: "a Gaussian modulus, and an exponent of $10^{30}$",
       },
       {
+        id: "11-7i-is-a-unit-mod-7-4i-so-it-has-negative",
         expr: ["PowerMod", ["Complex", 11, -7], -4, ["Complex", 7, 4]],
         expected: ["Complex", -2, -1],
         category: "Scope",
@@ -302,18 +357,21 @@ export const residues: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime",
         expr: ["PowerMod", 7, ["Totient", 19], 19],
         expected: 1,
         category: "Properties",
         caption: "Euler's theorem: $a^{\\varphi(m)} \\equiv 1$ for $a$ coprime to $m$",
       },
       {
+        id: "341-11-cdot-31-passes-fermat-s-test-to-base-2",
         expr: ["PowerMod", 2, 340, 341],
         expected: 1,
         category: "Applications",
         caption: "$341 = 11 \\cdot 31$ passes Fermat's test to base 2 — the least pseudoprime",
       },
       {
+        id: "diffie-hellman-both-parties-reach-the-shared-key",
         expr: [
           "Equal",
           ["PowerMod", ["PowerMod", 5, 6, 23], 15, 23],
@@ -324,6 +382,7 @@ export const residues: readonly ReferenceEntry[] = [
         caption: "Diffie–Hellman: both parties reach the shared key $5^{6 \\cdot 15} \\bmod 23$",
       },
       {
+        id: "2-is-not-a-square-mod-5-so-there-is-no-root",
         expr: ["PowerMod", 2, ["Rational", 1, 2], 5],
         expected: ["PowerMod", 2, ["Rational", 1, 2], 5],
         category: "Possible issues",
@@ -367,51 +426,60 @@ export const residues: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-square-roots-of-3-modulo-11-5-2-25-and-6-2",
         expr: ["PowerModList", 3, ["Rational", 1, 2], 11],
         expected: ["List", 5, 6],
         caption: "the square roots of 3 modulo 11: $5^2 = 25$ and $6^2 = 36$ are both $\\equiv 3$",
       },
       {
+        id: "the-cube-roots-of-unity-modulo-7-since-3-mid-6",
         expr: ["PowerModList", 1, ["Rational", 1, 3], 7],
         expected: ["List", 1, 2, 4],
         caption: "the cube roots of unity modulo 7, since $3 \\mid 6$",
       },
       {
+        id: "the-cubes-mod-7-are-only-0-1-6-so-2-has-no-cube",
         expr: ["PowerModList", 2, ["Rational", 1, 3], 7],
         expected: ["List"],
         category: "Possible issues",
         caption: "the cubes mod 7 are only $0, 1, 6$, so 2 has no cube root",
       },
       {
+        id: "an-integer-exponent-is-an-ordinary-power-2-10",
         expr: ["PowerModList", 2, 10, 1000],
         expected: ["List", 24],
         caption: "an integer exponent is an ordinary power: $2^{10} = 1024$",
       },
       {
+        id: "a-general-exponent-s-r-every-x-with-x-2-equiv-2",
         expr: ["PowerModList", 2, ["Rational", 3, 2], 17],
         expected: ["List", 5, 12],
         caption: "a general exponent $s/r$: every $x$ with $x^2 \\equiv 2^3$",
         category: "Scope",
       },
       {
+        id: "the-three-cube-roots-of-2-2-4-since-3-mid-30",
         expr: ["PowerModList", 2, ["Rational", 2, 3], 31],
         expected: ["List", 16, 18, 28],
         caption: "the three cube roots of $2^2 = 4$, since $3 \\mid 30$",
         category: "Scope",
       },
       {
+        id: "exponent-1-is-the-modular-inverse-3-cdot-5-15",
         expr: ["PowerModList", 3, -1, 7],
         expected: ["List", 5],
         caption: "exponent $-1$ is the modular inverse: $3 \\cdot 5 = 15 \\equiv 1$",
         category: "Scope",
       },
       {
+        id: "a-prime-power-the-root-2-of-x-2-equiv-1-pmod-5",
         expr: ["PowerModList", -1, ["Rational", 1, 2], 625],
         expected: ["List", 182, 443],
         caption: "a prime power: the root $2$ of $x^2 \\equiv -1 \\pmod 5$, Hensel-lifted to $5^4$",
         category: "Scope",
       },
       {
+        id: "a-rational-base-reads-as-2-cdot-3-1-in-z-23",
         expr: ["PowerModList", ["Rational", 2, 3], ["Rational", 1, 2], 23],
         expected: ["List", 4, 19],
         caption: "a rational base reads as $2 \\cdot 3^{-1}$ in $\\mathbb{Z}/23$",
@@ -422,6 +490,7 @@ export const residues: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "threads-over-lists-the-squares-mod-5-are-exactly",
         expr: ["PowerModList", ["List", 1, 2, 3, 4], ["Rational", 1, 2], 5],
         expected: ["List", ["List", 1, 4], ["List"], ["List"], ["List", 2, 3]],
         caption: "threads over lists: the squares mod 5 are exactly 1 and 4",
@@ -432,6 +501,7 @@ export const residues: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "sqrt-1-modulo-the-31-digit-prime-10-30-57-no",
         expr: ["PowerModList", -1, ["Rational", 1, 2], ["Add", ["Power", 10, 30], 57]],
         expected: [
           "List",
@@ -443,6 +513,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "the-cube-roots-of-2-modulo-the-mersenne-prime-2",
         expr: ["PowerModList", 2, ["Rational", 1, 3], ["Subtract", ["Power", 2, 89], 1]],
         expected: [
           "List",
@@ -455,6 +526,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "forty-hensel-steps-up-from-sqrt-1-equiv-2-pmod-5",
         expr: ["PowerModList", -1, ["Rational", 1, 2], ["Power", 5, 40]],
         expected: [
           "List",
@@ -465,6 +537,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "the-square-roots-of-1-modulo-the-product-of-the",
         expr: [
           "Length",
           [
@@ -480,6 +553,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "the-1000th-roots-of-unity-mod-2-61-1-gcd-1000-2",
         expr: [
           "Length",
           ["PowerModList", 1, ["Rational", 1, 1000], ["Subtract", ["Power", 2, 61], 1]],
@@ -490,6 +564,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "mod-a-prime-there-are-exactly-gcd-r-p-1-r-th",
         expr: [
           "Equal",
           ["Length", ["PowerModList", 1, ["Rational", 1, 12], 1009]],
@@ -500,6 +575,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "for-odd-m-the-square-roots-of-1-are-the-2-omega",
         expr: [
           "Equal",
           ["Length", ["PowerModList", 1, ["Rational", 1, 2], 1155]],
@@ -511,6 +587,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "powermod-with-a-rational-exponent-is-the-least",
         expr: [
           "Equal",
           ["PowerMod", 4, ["Rational", 1, 2], 7],
@@ -521,6 +598,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Properties",
       },
       {
+        id: "the-split-units-of-z-15-j-1-mapsto-4-is-a-ring",
         expr: ["PowerModList", 1, ["Rational", 1, 2], 15],
         expected: ["List", 1, 4, 11, 14],
         caption:
@@ -528,12 +606,14 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Applications",
       },
       {
+        id: "so-the-identity-1-j-1-j-0-transports-by-j-mapsto",
         expr: ["Mod", ["Multiply", ["Add", 1, 4], ["Subtract", 1, 4]], 15],
         expected: 0,
         caption: "so the identity $(1+j)(1-j) = 0$ transports by $j \\mapsto 4$",
         category: "Applications",
       },
       {
+        id: "imaginary-units-of-z-65-exist-because-5-and-13",
         expr: ["PowerModList", -1, ["Rational", 1, 2], 65],
         expected: ["List", 8, 18, 47, 57],
         caption:
@@ -541,6 +621,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Applications",
       },
       {
+        id: "rabin-decryption-knowing-the-factors-of-n-the",
         expr: [
           "PowerModList",
           ["PowerMod", 123456789, 2, ["Multiply", 1000003, 1000033]],
@@ -553,12 +634,14 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Applications",
       },
       {
+        id: "no-square-root-of-1-3-equiv-3-pmod-4-blocks-its",
         expr: ["PowerModList", -1, ["Rational", 1, 2], 15],
         expected: ["List"],
         caption: "no square root of $-1$: $3 \\equiv 3 \\pmod 4$ blocks its channel",
         category: "Possible issues",
       },
       {
+        id: "no-inverse-when-gcd-a-m-ne-1-so-the-list-is",
         expr: ["PowerModList", 2, -1, 4],
         expected: ["List"],
         caption: "no inverse when $\\gcd(a, m) \\ne 1$, so the list is empty",
@@ -569,6 +652,7 @@ export const residues: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "the-2-adic-channel-breaks-the-2-omega-m-law-z-2",
         expr: ["PowerModList", 1, ["Rational", 1, 2], 8],
         expected: ["List", 1, 3, 5, 7],
         caption:
@@ -576,6 +660,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Possible issues",
       },
       {
+        id: "a-product-of-two-21-digit-primes-cannot-be",
         expr: [
           "PowerModList",
           4,
@@ -597,12 +682,14 @@ export const residues: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "x-2-equiv-0-pmod-3-40-has-3-20-roots-too-many-to",
         expr: ["PowerModList", 0, ["Rational", 1, 2], ["Power", 3, 40]],
         expected: ["PowerModList", 0, ["Rational", 1, 2], { num: "12157665459056928801" }],
         caption: "$x^2 \\equiv 0 \\pmod{3^{40}}$ has $3^{20}$ roots — too many to list",
         category: "Possible issues",
       },
       {
+        id: "the-moduli-with-four-or-more-square-roots-of-1",
         expr: ["PowerModList", 1, ["Rational", 1, 2], ["List", 8, 15, 21, 24]],
         expected: [
           "List",
@@ -620,6 +707,7 @@ export const residues: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "a-square-root-of-i-in-z-i-7-the-field-of-49",
         expr: ["PowerModList", ["Complex", 0, 1], ["Rational", 1, 2], 7],
         expected: ["List", ["Complex", -2, -2], ["Complex", 2, 2]],
         category: "Scope",
@@ -628,6 +716,7 @@ export const residues: readonly ReferenceEntry[] = [
         divergence: { wolfram: "Wolfram's PowerModList takes integers only." },
       },
       {
+        id: "10-20-39-is-inert-so-its-residue-field-is-f-p-2",
         expr: [
           "PowerModList",
           ["Complex", 3, 4],
@@ -668,33 +757,47 @@ export const residues: readonly ReferenceEntry[] = [
       "For Gaussian integers, Wolfram reduces the inverse into $[0, m)$ part by part for a positive rational-integer $m$, and as [[Mod]] does otherwise.",
     ],
     examples: [
-      { expr: ["ModularInverse", 3, 7], expected: 5, caption: "$3 \\cdot 5 = 15 \\equiv 1$" },
-      { expr: ["ModularInverse", 2, 11], expected: 6 },
       {
+        id: "3-cdot-5-15-equiv-1",
+        expr: ["ModularInverse", 3, 7],
+        expected: 5,
+        caption: "$3 \\cdot 5 = 15 \\equiv 1$",
+      },
+      {
+        id: "modularinverse-2-11",
+        expr: ["ModularInverse", 2, 11],
+        expected: 6,
+      },
+      {
+        id: "a-negative-argument-3-cdot-2-6-equiv-1",
         expr: ["ModularInverse", -3, 7],
         expected: 2,
         category: "Scope",
         caption: "a negative argument: $-3 \\cdot 2 = -6 \\equiv 1$",
       },
       {
+        id: "a-21-digit-modulus",
         expr: ["ModularInverse", 3, ["Add", ["Power", 10, 20], 1]],
         expected: { num: "33333333333333333334" },
         category: "Scope",
         caption: "a 21-digit modulus",
       },
       {
+        id: "listable-threads-over-a-list",
         expr: ["ModularInverse", ["List", 2, 3, 4], 11],
         expected: ["List", 6, 4, 3],
         category: "Scope",
         caption: "Listable: threads over a list",
       },
       {
+        id: "the-same-as-powermod-with-exponent-1",
         expr: ["Equal", ["ModularInverse", 3, 7], ["PowerMod", 3, -1, 7]],
         expected: "True",
         category: "Properties",
         caption: "the same as [[PowerMod]] with exponent $-1$",
       },
       {
+        id: "a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2",
         expr: [
           "Mod",
           ["Multiply", 12345, ["ModularInverse", 12345, ["Subtract", ["Power", 2, 61], 1]]],
@@ -705,17 +808,20 @@ export const residues: readonly ReferenceEntry[] = [
         caption: "$a \\cdot a^{-1} \\equiv 1$, modulo the Mersenne prime $2^{61} - 1$",
       },
       {
+        id: "2-i-6-4i-8-14i-equiv-1-pmod-7",
         expr: ["ModularInverse", ["Complex", 2, 1], 7],
         expected: ["Complex", 6, 4],
         category: "Scope",
         caption: "$(2 + i)(6 + 4i) = 8 + 14i \\equiv 1 \\pmod 7$",
       },
       {
+        id: "modularinverse-11-plus-neg-7-times-i-7-plus-4i",
         expr: ["ModularInverse", ["Complex", 11, -7], ["Complex", 7, 4]],
         expected: ["Complex", -1, 2],
         category: "Scope",
       },
       {
+        id: "gcd-2-4-2-no-inverse",
         expr: ["ModularInverse", 2, 4],
         expected: ["ModularInverse", 2, 4],
         category: "Possible issues",
@@ -753,14 +859,17 @@ export const residues: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "chineseremainder-list-3-4-list-4-5",
         expr: ["ChineseRemainder", ["List", 3, 4], ["List", 4, 5]],
         expected: 19,
       },
       {
+        id: "chineseremainder-list-2-3-5-list-3-5-7",
         expr: ["ChineseRemainder", ["List", 2, 3, 5], ["List", 3, 5, 7]],
         expected: 68,
       },
       {
+        id: "five-congruences-unique-modulo-7-cdot-11-cdot-13",
         expr: ["ChineseRemainder", ["List", 1, 2, 3, 4, 5], ["List", 7, 11, 13, 17, 19]],
         expected: 180391,
         category: "Scope",
@@ -768,6 +877,7 @@ export const residues: readonly ReferenceEntry[] = [
           "five congruences, unique modulo $7 \\cdot 11 \\cdot 13 \\cdot 17 \\cdot 19 = 323323$",
       },
       {
+        id: "moduli-sharing-a-factor-with-remainders-that",
         expr: ["ChineseRemainder", ["List", 1, 3], ["List", 4, 6]],
         expected: 9,
         category: "Scope",
@@ -775,18 +885,21 @@ export const residues: readonly ReferenceEntry[] = [
           "moduli sharing a factor, with remainders that agree on it: unique mod $\\operatorname{lcm} = 12$",
       },
       {
+        id: "recover-123456-bmod-1001-from-its-residues-mod-7",
         expr: ["ChineseRemainder", ["Mod", 123456, ["List", 7, 11, 13]], ["List", 7, 11, 13]],
         expected: 333,
         category: "Applications",
         caption: "recover $123456 \\bmod 1001$ from its residues mod 7, 11 and 13. See [[Mod]]",
       },
       {
+        id: "the-least-solution-ge-200-52-2-cdot-105",
         expr: ["ChineseRemainder", ["List", 1, 2, 3], ["List", 3, 5, 7], 200],
         expected: 262,
         category: "Scope",
         caption: "the least solution $\\ge 200$: $52 + 2 \\cdot 105$",
       },
       {
+        id: "verifies-the-solution-satisfies-both-congruences",
         expr: [
           "And",
           ["Equal", ["Mod", ["ChineseRemainder", ["List", 3, 4], ["List", 4, 5]], 4], 3],
@@ -797,6 +910,7 @@ export const residues: readonly ReferenceEntry[] = [
         caption: "Verifies the solution satisfies both congruences via [[Mod]]",
       },
       {
+        id: "over-classes-the-answer-is-a-class-and-reading",
         expr: [
           "ChineseRemainder",
           ["IntegerMod", 2, 3],
@@ -809,6 +923,7 @@ export const residues: readonly ReferenceEntry[] = [
           "over classes, the answer is a class — and reading `ResidueNumerals([3, 5, 7])` digits back with [[FromDigits]] is the same computation",
       },
       {
+        id: "no-solution-exists-when-the-remainders-are",
         expr: ["ChineseRemainder", ["List", 1, 2], ["List", 6, 10]],
         expected: ["ChineseRemainder", ["List", 1, 2], ["List", 6, 10]],
         category: "Possible issues",
@@ -816,6 +931,7 @@ export const residues: readonly ReferenceEntry[] = [
           "No solution exists when the remainders are inconsistent at $\\gcd(6,10)=2$, so the call stays unevaluated and says why",
       },
       {
+        id: "a-third-argument-asks-for-the-smallest-solution",
         expr: ["ChineseRemainder", ["List", 1, 2], ["List", 3, 5], 100],
         expected: 112,
         category: "Scope",
@@ -850,45 +966,64 @@ export const residues: readonly ReferenceEntry[] = [
       "The three-argument form is a discrete logarithm, by Pohlig–Hellman over the order of $a$ and baby-step giant-step within each prime: the cost is $\\sqrt q$ for the largest prime $q$ dividing that order — instant for a smooth order, hopeless for a safe prime.",
     ],
     examples: [
-      { expr: ["MultiplicativeOrder", 5, 8], expected: 2 },
-      { expr: ["MultiplicativeOrder", 3, 7], expected: 6 },
-      { expr: ["MultiplicativeOrder", 5, 7], expected: 6 },
       {
+        id: "multiplicativeorder-5-8",
+        expr: ["MultiplicativeOrder", 5, 8],
+        expected: 2,
+      },
+      {
+        id: "multiplicativeorder-3-7",
+        expr: ["MultiplicativeOrder", 3, 7],
+        expected: 6,
+      },
+      {
+        id: "multiplicativeorder-5-7",
+        expr: ["MultiplicativeOrder", 5, 7],
+        expected: 6,
+      },
+      {
+        id: "a-negative-base-5-equiv-2-pmod-7",
         expr: ["MultiplicativeOrder", -5, 7],
         expected: 3,
         category: "Scope",
         caption: "a negative base: $-5 \\equiv 2 \\pmod 7$",
       },
       {
+        id: "the-first-power-of-5-to-reach-3-or-11-equiv-4-5",
         expr: ["MultiplicativeOrder", 5, 7, ["List", 3, 11]],
         expected: 2,
         category: "Scope",
         caption: "the first power of 5 to reach 3 or $11 \\equiv 4$: $5^2 = 25 \\equiv 4$",
       },
       {
+        id: "a-10-001-digit-base-modulo-the-prime-7919",
         expr: ["MultiplicativeOrder", ["Power", 10, 10000], 7919],
         expected: 3959,
         category: "Scope",
         caption: "a 10 001-digit base modulo the prime 7919",
       },
       {
+        id: "1-is-the-only-element-of-order-1",
         expr: ["MultiplicativeOrder", 1, 7],
         expected: 1,
         category: "Properties",
         caption: "1 is the only element of order 1",
       },
       {
+        id: "2-3-8-equiv-1-pmod-7-and-no-smaller-power-works",
         expr: ["MultiplicativeOrder", 2, 7],
         expected: 3,
         caption: "$2^3=8\\equiv1\\pmod7$, and no smaller power works",
       },
       {
+        id: "the-multiplicative-order-always-divides-varphi-n",
         expr: ["Equal", ["Mod", ["Totient", 7], ["MultiplicativeOrder", 3, 7]], 0],
         expected: "True",
         category: "Properties",
         caption: "The multiplicative order always divides $\\varphi(n)$. See [[Totient]]",
       },
       {
+        id: "no-order-exists-when-gcd-a-n-neq-1-here-gcd-10",
         expr: ["MultiplicativeOrder", 10, 22],
         expected: ["MultiplicativeOrder", 10, 22],
         category: "Possible issues",
@@ -896,30 +1031,35 @@ export const residues: readonly ReferenceEntry[] = [
           "No order exists when $\\gcd(a,n)\\neq1$; here $\\gcd(10,22)=2$, so compute-engine leaves it unevaluated",
       },
       {
+        id: "the-first-power-of-3-to-reach-pm-1-3-3-27-equiv",
         expr: ["MultiplicativeOrder", 3, 7, ["List", -1, 1]],
         expected: 3,
         category: "Scope",
         caption: "the first power of 3 to reach $\\pm 1$: $3^3 = 27 \\equiv -1$",
       },
       {
+        id: "5-2-25-equiv-4",
         expr: ["MultiplicativeOrder", 5, 7, ["List", 2, 3, 4]],
         expected: 2,
         category: "Scope",
         caption: "$5^2 = 25 \\equiv 4$",
       },
       {
+        id: "a-discrete-log-mod-the-mersenne-prime-2-61-1",
         expr: ["MultiplicativeOrder", 3, ["Subtract", ["Power", 2, 61], 1], ["List", 2]],
         expected: { num: "159602976958324900" },
         category: "Scope",
         caption: "a discrete log mod the Mersenne prime $2^{61} - 1$, whose $p - 1$ is smooth",
       },
       {
+        id: "3-has-order-p-1-3-modulo-2-127-1",
         expr: ["MultiplicativeOrder", 3, ["Subtract", ["Power", 2, 127], 1]],
         expected: { num: "56713727820156410577229101238628035242" },
         category: "Scope",
         caption: "3 has order $(p-1)/3$ modulo $2^{127} - 1$",
       },
       {
+        id: "the-discrete-log-inverts-powermod",
         expr: [
           "PowerMod",
           3,
@@ -931,6 +1071,7 @@ export const residues: readonly ReferenceEntry[] = [
         caption: "the discrete log inverts [[PowerMod]]",
       },
       {
+        id: "3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4",
         expr: ["MultiplicativeOrder", 2, 7, ["List", 3]],
         expected: ["MultiplicativeOrder", 2, 7, ["List", 3]],
         category: "Possible issues",
@@ -959,67 +1100,82 @@ export const residues: readonly ReferenceEntry[] = [
       "At most 100 000 roots are listed; past that the call stays unevaluated. [[PrimitiveRoot]] gives the least one at any size.",
     ],
     examples: [
-      { expr: ["PrimitiveRootList", 7], expected: ["List", 3, 5] },
       {
+        id: "primitiverootlist-7",
+        expr: ["PrimitiveRootList", 7],
+        expected: ["List", 3, 5],
+      },
+      {
+        id: "10-2-cdot-5-is-of-the-form-2p",
         expr: ["PrimitiveRootList", 10],
         expected: ["List", 3, 7],
         category: "Scope",
         caption: "$10 = 2 \\cdot 5$ is of the form $2p$",
       },
       {
+        id: "an-odd-prime-power-varphi-varphi-25-8-generators",
         expr: ["PrimitiveRootList", 25],
         expected: ["List", 2, 3, 8, 12, 13, 17, 22, 23],
         category: "Scope",
         caption: "an odd prime power: $\\varphi(\\varphi(25)) = 8$ generators",
       },
       {
+        id: "n-4-is-one-of-the-small-cyclic-cases",
         expr: ["PrimitiveRootList", 4],
         expected: ["List", 3],
         category: "Scope",
         caption: "$n = 4$ is one of the small cyclic cases",
       },
       {
+        id: "threads-over-a-list",
         expr: ["PrimitiveRootList", ["List", 9, 11]],
         expected: ["List", ["List", 2, 5], ["List", 2, 6, 7, 8]],
         category: "Scope",
         caption: "threads over a list",
       },
       {
+        id: "z-12-times-cong-c-2-times-c-2-is-not-cyclic",
         expr: ["PrimitiveRootList", 12],
         expected: ["List"],
         category: "Possible issues",
         caption: "$(\\mathbb{Z}/12)^\\times \\cong C_2 \\times C_2$ is not cyclic either",
       },
       {
+        id: "18-2-cdot-3-2-is-of-the-form-2p-k",
         expr: ["PrimitiveRootList", 18],
         expected: ["List", 5, 11],
         caption: "$18 = 2 \\cdot 3^2$ is of the form $2p^k$",
         category: "Scope",
       },
       {
+        id: "length-primitiverootlist-1-009",
         expr: ["Length", ["PrimitiveRootList", 1009]],
         expected: 288,
         category: "Scope",
       },
       {
+        id: "there-are-varphi-varphi-n-of-them",
         expr: ["Equal", ["Length", ["PrimitiveRootList", 1009]], ["Totient", ["Totient", 1009]]],
         expected: "True",
         caption: "there are $\\varphi(\\varphi(n))$ of them",
         category: "Properties",
       },
       {
+        id: "the-first-is-primitiveroot",
         expr: ["Equal", ["First", ["PrimitiveRootList", 1009]], ["PrimitiveRoot", 1009]],
         expected: "True",
         caption: "the first is [[PrimitiveRoot]]",
         category: "Properties",
       },
       {
+        id: "z-8-times-cong-c-2-times-c-2-is-not-cyclic",
         expr: ["PrimitiveRootList", 8],
         expected: ["List"],
         caption: "$(\\mathbb{Z}/8)^\\times \\cong C_2 \\times C_2$ is not cyclic",
         category: "Possible issues",
       },
       {
+        id: "past-100-000-roots-the-list-is-not-built-but-its",
         expr: ["Length", ["PrimitiveRootList", 1000003]],
         expected: 333332,
         caption:
@@ -1057,45 +1213,57 @@ export const residues: readonly ReferenceEntry[] = [
       "A call that declines — dividing by a non-unit — stays unevaluated with an `IntegerMod::ninv` message, after Wolfram's `PowerMod::ninv`",
     ],
     examples: [
-      { expr: ["IntegerMod", 10, 7], expected: ["IntegerMod", 3, 7] },
       {
+        id: "integermod-10-7",
+        expr: ["IntegerMod", 10, 7],
+        expected: ["IntegerMod", 3, 7],
+      },
+      {
+        id: "1-3-is-the-inverse-of-3-3-cdot-5-15-equiv-1",
         expr: ["IntegerMod", ["Rational", 1, 3], 7],
         expected: ["IntegerMod", 5, 7],
         caption: "$1/3$ is the inverse of 3: $3 \\cdot 5 = 15 \\equiv 1$",
       },
       {
+        id: "fermat-3-6-equiv-1-pmod-7",
         expr: ["Power", ["IntegerMod", 3, 7], 6],
         expected: ["IntegerMod", 1, 7],
         caption: "Fermat: $3^6 \\equiv 1 \\pmod 7$",
       },
       {
+        id: "1-over-integermod-3-7",
         expr: ["Divide", 1, ["IntegerMod", 3, 7]],
         expected: ["IntegerMod", 5, 7],
         category: "Scope",
       },
       {
+        id: "different-moduli-meet-in-z-gcd-4-6",
         expr: ["Add", ["IntegerMod", 2, 4], ["IntegerMod", 1, 6]],
         expected: ["IntegerMod", 1, 2],
         caption: "different moduli meet in $\\mathbb{Z}/\\gcd(4, 6)$",
         category: "Scope",
       },
       {
+        id: "chineseremainder-integermod-2-3-integermod-3-5",
         expr: ["ChineseRemainder", ["IntegerMod", 2, 3], ["IntegerMod", 3, 5]],
         expected: ["IntegerMod", 8, 15],
         category: "Applications",
       },
       {
+        id: "multiplicativeorder-integermod-2-7",
         expr: ["MultiplicativeOrder", ["IntegerMod", 2, 7]],
         expected: 3,
         category: "Applications",
       },
       {
+        id: "2-is-not-a-unit-mod-4-and-the-message-says-so",
         expr: ["Divide", 1, ["IntegerMod", 2, 4]],
         expected: ["Divide", 1, ["IntegerMod", 2, 4]],
         caption: "2 is not a unit mod 4, and the message says so",
         category: "Possible issues",
       },
       {
+        id: "odd-mod-4-and-even-mod-6-at-once-no-such-class",
         expr: ["ChineseRemainder", ["IntegerMod", 1, 4], ["IntegerMod", 2, 6]],
         expected: ["ChineseRemainder", ["IntegerMod", 1, 4], ["IntegerMod", 2, 6]],
         caption: "odd mod 4 and even mod 6 at once: no such class",
@@ -1124,17 +1292,24 @@ export const residues: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "listfrom-integermodring-3",
         expr: ["ListFrom", ["IntegerModRing", 3]],
         expected: ["List", ["IntegerMod", 0, 3], ["IntegerMod", 1, 3], ["IntegerMod", 2, 3]],
       },
-      { expr: ["Count", ["IntegerModRing", 12]], expected: 12 },
       {
+        id: "count-integermodring-12",
+        expr: ["Count", ["IntegerModRing", 12]],
+        expected: 12,
+      },
+      {
+        id: "z-12-z",
         expr: ["QuotientRing", "Integers", 12],
         expected: ["IntegerModRing", 12],
         caption: "$\\mathbb{Z}/12\\mathbb{Z}$",
         category: "Scope",
       },
       {
+        id: "integermod-3-5-in-integermodring-5",
         expr: ["Element", ["IntegerMod", 3, 5], ["IntegerModRing", 5]],
         expected: "True",
         category: "Properties",

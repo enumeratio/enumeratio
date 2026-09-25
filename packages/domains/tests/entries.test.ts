@@ -22,9 +22,9 @@ declareStatistics(ce, ALL_STATISTICS, {
 declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
 
 for (const entry of entries) {
-  for (const [index, example] of entry.examples.entries()) {
+  for (const example of entry.examples) {
     const label = example.aspirational ? " (gap)" : "";
-    test(`${entry.name} example ${index + 1}${label}`, () => {
+    test(`${entry.name} example/${example.id}${label}`, () => {
       const input = example.expr as unknown as Parameters<ComputeEngine["box"]>[0];
       const output = ce.box(input).evaluate().json;
       // An undefined map has no head to call, so its example is a claim about what it WOULD

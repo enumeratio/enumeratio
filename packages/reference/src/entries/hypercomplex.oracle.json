@@ -5,7 +5,7 @@
   },
   "examples": {
     "NonCommutativeMultiply": {
-      "[\"CircleTimes\",2,3]": {
+      "scalars-the-implied-identity-factor": {
         "wolfram": {
           "input": "CircleTimes[2, 3]",
           "output": "2 (x) 3",
