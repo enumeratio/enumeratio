@@ -133,6 +133,27 @@ examples:
     expected: [PowerMod, 2, [Rational, 1, 2], 5]
     category: Possible issues
     caption: 2 is not a square mod 5, so there is no root
+  - id: a-square-root-of-3-mod-2-is-1-trivially
+    expr: [PowerMod, 3, [Rational, 1, 2], 2]
+    expected: 1
+    role: test
+    category: Scope
+  - id: exponent-0-base-minus-4-modulus-minus-2
+    expr: [PowerMod, -4, 0, -2]
+    expected: -1
+    role: test
+    category: Scope
+    caption: $a^0 = 1$ regardless of $a$ or $m$'s sign
+  - id: exponent-0-base-5-modulus-minus-7
+    expr: [PowerMod, 5, 0, -7]
+    expected: -6
+    role: test
+    category: Scope
+  - id: exponent-0-with-a-positive-modulus
+    expr: [PowerMod, 2, 0, 14]
+    expected: 1
+    role: test
+    category: Scope
 seeAlso:
   - Mod
   - PowerModList

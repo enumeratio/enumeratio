@@ -186,3 +186,27 @@ past-100-000-roots-the-list-is-not-built-but-its:
   sage:
     in: (len(enumeratio_primitive_root_list(1000003)) if hasattr(enumeratio_primitive_root_list(1000003), '__len__') else 0)
     out: "333332"
+past-the-cap-primitiverootlist-itself-stays:
+  epsil:
+    in: PrimitiveRootList(1_000_003)
+    out: PrimitiveRootList(1_000_003)
+  tex:
+    in: \mathrm{PrimitiveRootList}(1\,000\,003)
+    out: \mathrm{PrimitiveRootList}(1\,000\,003)
+  fullform:
+    in: PrimitiveRootList[1000003]
+  wolfram:
+    in: PrimitiveRootList[1000003]
+  sage:
+    in: enumeratio_primitive_root_list(1000003)
+the-first-element-still-answers-past-the-cap:
+  epsil:
+    in: PrimitiveRootList(1_000_003)[1]
+    out: "2"
+  tex:
+    in: \mathrm{PrimitiveRootList}(1\,000\,003)[1]
+    out: "2"
+  fullform:
+    in: Part[PrimitiveRootList[1000003], 1]
+  wolfram:
+    in: Part[PrimitiveRootList[1000003], 1]
