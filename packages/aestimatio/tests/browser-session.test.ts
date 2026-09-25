@@ -88,6 +88,35 @@ test("openSession (dedicated-Worker fallback) sends a handshake and persists sta
   expect(workers[0]!.terminatedCount()).toBe(1);
 });
 
+test("two concurrent evaluate() calls on one session both resolve -- neither's listener clobbers the other's", async () => {
+  // A worker's `onmessage` can only ever point at ONE handler at a time -- if `evaluate()`
+  // assigned it fresh per call (as it used to), the second call in flight would silently
+  // steal the first call's listener, and the first call's eventual response would arrive
+  // with nowhere to go. Two cells evaluating around the same page load is the ordinary
+  // case this has to survive, not a rare race.
+  const workers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    createWorker: () => {
+      const fake = fakeWorker();
+      workers.push(fake);
+      return fake.worker;
+    },
+  });
+
+  const first = session.evaluate(["Assign", "a", 5]); // id 0
+  const second = session.evaluate(["Power", "a", 2]); // id 1, started before `first` answers
+
+  // Answer out of order too: the second call's result arrives before the first's.
+  workers[0]!.respond({ id: 1, ok: true, json: 25 });
+  workers[0]!.respond({ id: 0, ok: true, json: 5 });
+
+  await expect(first).resolves.toEqual({ value: 5, reset: false });
+  await expect(second).resolves.toEqual({ value: 25, reset: false });
+  expect(workers).toHaveLength(1);
+
+  session.close();
+});
+
 test("openSession (dedicated-Worker fallback) resets (reset: true) on a timeMs kill", async () => {
   const workers: ReturnType<typeof fakeWorker>[] = [];
   const session = openSession({
