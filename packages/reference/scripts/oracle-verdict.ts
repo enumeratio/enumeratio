@@ -1,5 +1,5 @@
 // How one oracle answer is judged against our pinned value — shared by the scan
-// (oracle-scan.ts) and the sampler (oracle-quickcheck.ts), so both mean the same thing
+// (oracle-scan.ts) and the sampler (oracle-plausible.ts), so both mean the same thing
 // by "agree".
 
 import { ComputeEngine } from "@cortex-js/compute-engine";

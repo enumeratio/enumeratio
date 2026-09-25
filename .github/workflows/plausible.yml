@@ -1,6 +1,6 @@
-name: Quickcheck
+name: Plausible
 
-# Property-based sampling over the collection catalogue (packages/symbols/combinatorics/collections/scripts/quickcheck.ts): random
+# Property-based sampling over the collection catalogue (packages/symbols/combinatorics/collections/scripts/plausible.ts): random
 # (family, params, rank) points, checked for round trip, validity, injectivity and count. A fresh seed each run
 # means a red result is a finding to triage, not a broken build — so this is ADVISORY, never a required check.
 #   push / PR  — default budget, scoped to the kernels and the harness. The job stays green; a failure
@@ -24,11 +24,11 @@ permissions:
   issues: write
 
 concurrency:
-  group: quickcheck-${{ github.ref }}
+  group: plausible-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  quickcheck:
+  plausible:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -40,9 +40,9 @@ jobs:
         run: |
           set -o pipefail
           if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
-            export QUICKCHECK_POINTS=100 QUICKCHECK_PARAM_CAP=9
+            export PLAUSIBLE_POINTS=100 PLAUSIBLE_PARAM_CAP=9
           fi
-          node packages/symbols/combinatorics/collections/scripts/quickcheck.ts 2>&1 | tee quickcheck.log
+          node packages/symbols/combinatorics/collections/scripts/plausible.ts 2>&1 | tee plausible.log
 
       - name: open/reopen the tracking issue
         if: steps.run.outcome == 'failure'
@@ -51,20 +51,20 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const TITLE = 'quickcheck sampling regression'
+            const TITLE = 'plausible sampling regression'
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
             const trigger = context.eventName === 'schedule'
               ? 'nightly (deep sample)'
               : `${context.eventName} on \`${context.ref.replace('refs/heads/', '')}\``
             let log = ''
-            try { log = fs.readFileSync('quickcheck.log', 'utf8') } catch {}
+            try { log = fs.readFileSync('plausible.log', 'utf8') } catch {}
             const tail = log.split('\n').slice(-60).join('\n')
             const body = [
-              `A **quickcheck** run found a sampled property that does not hold. Trigger: ${trigger}.`,
+              `A **Plausible** run found a sampled property that does not hold. Trigger: ${trigger}.`,
               ``,
               `Run: ${runUrl}`,
               ``,
-              `Each failure prints the exact replay command (\`node packages/symbols/combinatorics/collections/scripts/quickcheck.ts <family> <seed>\`). Findings collect here and are swept in batches rather than gating PRs. Tail of the output:`,
+              `Each failure prints the exact replay command (\`node packages/symbols/combinatorics/collections/scripts/plausible.ts <family> <seed>\`). Findings collect here and are swept in batches rather than gating PRs. Tail of the output:`,
               ``,
               '```',
               tail,
@@ -95,17 +95,17 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const TITLE = 'quickcheck sampling regression'
+            const TITLE = 'plausible sampling regression'
             const found = await github.rest.search.issuesAndPullRequests({
               q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title "${TITLE}"`,
             })
             const existing = found.data.items.find(i => i.title === TITLE)
             if (existing) {
               const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
-              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body: `Green again — nightly quickcheck passed. ${runUrl}` })
+              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body: `Green again — nightly Plausible passed. ${runUrl}` })
               await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'closed' })
             }
 
-      - name: nightly — fail the run if quickcheck failed
+      - name: nightly — fail the run if Plausible failed
         if: github.event_name == 'schedule' && steps.run.outcome == 'failure'
         run: exit 1

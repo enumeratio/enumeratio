@@ -1,0 +1,268 @@
+# Plausible: property checks derived from what a space declares
+
+Status: **decided** (2026-09-25), being built in phases (§9).
+
+Plausible is the property-based sampler over our value spaces. It was called quickcheck, and it
+is named after Lean 4's Plausible (formerly SlimCheck), whose typeclasses it lifts. It samples
+each space by **introspecting what the space declares**, and keeps no hand lists of families in
+the runner. A unit test refuses a collection that doesn't meet the contract.
+
+## 1. Why
+
+The old runner decided how to sample a family from lists in the script
+(`FULL_ENUMERATION_FAMILIES`, `SMALL_PARAM_CAP`, `MAX_MATERIALIZED`). Those were facts about
+families, kept somewhere else, and they drifted. `BoxedPlanePartitions` was missing (#219). Its
+count is closed-form, but its unrank enumerates the whole box, and sampling `(7,7,7)` tried to
+build 3.9e16 elements.
+
+A census taken while designing this found worse drift:
+
+- enumerative families that weren't on the list;
+- infinite and unknown-count families (every numeric set) that were skipped outright;
+- scan-backed sequences whose cost depends on the value, not the rank.
+
+The same facts matter outside tests. `At` and `RandomChoice` reach a family through the same
+`unrank`, so a notebook can take the path that OOM'd CI.
+
+## 2. Prior art
+
+- **Lean 4 Plausible** ([repo](https://github.com/leanprover-community/plausible)) is the model.
+  - `Gen` is a seeded random monad that reads a **size**.
+  - `Arbitrary α` gives `arbitrary : Gen α`, and its instances scale with size. `Shrinkable α`
+    gives `shrink : α → List α`.
+  - **`SampleableExt α`** samples and shrinks an inspectable `proxy`, then maps it through
+    `interp : proxy → α`. `selfContained` is the case `proxy = α`.
+  - `Testable p` returns `success | gaveUp | failure`. A guard that fails counts as `gaveUp`,
+    retried up to `numRetries`.
+  - `Configuration` holds `numInst`, `maxSize`, `randomSeed`. Size ramps up across the run.
+  - `Prod`, `Sum`, `List` and `Option` instances compose. `deriving Arbitrary` derives them.
+  - A missing instance is an elaboration error, so a type without one is untestable by
+    construction.
+- **Sage** (`TestSuite`, [sage_unittest.py](https://github.com/sagemath/sage/blob/develop/src/sage/misc/sage_unittest.py)).
+  - Categories contribute `_test_*` methods (`_test_an_element`, `_test_some_elements`,
+    `_test_enumerated_set_contains`, `_test_rank`, `_test_random`). Membership in a category is
+    what makes a test apply, and `max_runs` caps the work.
+  - **The trap to avoid:** `FiniteEnumeratedSets` defaults `cardinality`, `unrank` and
+    `random_element` to implementations that iterate or materialise
+    (`_cardinality_from_iterator`, `_unrank_from_list`, `_random_element_from_unrank`). A
+    capability's cost must be declared where it is implemented, not inferred from the method
+    being there.
+- **QuickCheck, Feat, Hypothesis.**
+  - QuickCheck contributes `sized` and `suchThat`.
+  - Feat indexes an enumeration by rank for uniform-by-size sampling. That is our `count` +
+    `unrank`.
+  - Hypothesis shrinks the **choice sequence**, not the value, so nothing writes a per-type
+    shrinker. Its `filter_too_much` health check is our "too many discards".
+- **Wolfram has no generic protocol.** It has one sampling verb per domain (`RandomVariate`,
+  `RandomPoint`, `RandomGraph`, `RandomPermutation[group]`, …). `RandomInstance` covers only
+  geometric scenes and biomolecular sequences. `VerificationTest` is example testing.
+- **compute-engine.** `CollectionHandlers` has `count`, `iterator`, `contains`, `at`,
+  `indexWhere`, but no random handler, no rank and no cost. **User-facing sampling stays CE's
+  `RandomChoice`** (with `WithRandomSeed`), which goes through `count` and `at`. Plausible's
+  sampler is kernel-level and needs no head.
+
+## 3. The contract
+
+### 3.1 Plausible's classes, mapped
+
+| Plausible                | Ours                                                                                                                |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `Gen α` reading a size   | `Gen<T> = (rng, size) => T`, seeded, in the leaf package `@enumeratio/plausible`                                    |
+| `Arbitrary`              | Params from `Param` specs (§3.2); elements through the proxy                                                        |
+| `SampleableExt`          | `proxy = address = (params, rank)`, `interp = unrank`, `Repr proxy` = the replay line                               |
+| `Shrinkable`             | On the proxy: params toward `min`, then rank toward 0. Generic, never per family                                    |
+| (Lean assumes it's free) | **`interp` has a cost class**, and the runner gates on it (§3.3)                                                    |
+| `Testable`, `TestResult` | `Property`: `applies(capabilities)` + `check` → pass, fail, or **discard** (`gaveUp`)                               |
+| `Configuration`          | `points`, `maxSize`, `retries`, `seed`, `budget`                                                                    |
+| missing instance → error | Required fields (a tsc error), plus the guard test (§6)                                                             |
+| `deriving Arbitrary`     | `sampleable(family)` derives the instance from capabilities, as `declareFamilies` derives CE handlers               |
+| `Prod`, `Sum`            | Multi-variable properties; call forms (a sum over arg shapes); a carrier's instance (a sum over its families, §4.2) |
+| Σ types                  | A parameterised family is `Σ p, Family(p)`: sample `p` at the current size, then the element; shrink `p` first      |
+
+A family with a direct sampler (`sample`) is `selfContained`, and only its params shrink. This
+is how an enumerative family becomes testable at large params without enumerating, and later
+the hook for `RandomChoice` if CE takes a random handler.
+
+### 3.2 Parameters
+
+These extend the catalogue's grades (`axis | param`, from enumeratio):
+
+```ts
+interface Param {
+  readonly name: string;
+  readonly role: "axis" | "param"; // an axis grows with size; a param draws from a small range of its own
+  readonly min: number;
+  readonly max?: number; // representability only: past it the kernel is wrong or unrepresentable
+}
+```
+
+### 3.3 Cost classes
+
+```ts
+type Cost =
+  | "closed" // arithmetic in params and rank (Lehmer unrank, closed-form count)
+  | "polynomial" // DP tables polynomial in the params
+  | "enumerative" // time and memory ∝ count(p): enumerate, cache, index
+  | "scan"; // ∝ the element's value: nth-match scans of an infinite sequence
+```
+
+Cost is declared per operation (`count`, `unrank`, `rank`, `valid`). **The helpers declare their
+own cost.** `indexedFamily` is `enumerative`, `nthMatchCache` is `scan`, and a table-backed
+sequence is `closed` with a `known` prefix. A family built on a helper takes the helper's
+cost. The declaration sits where the behaviour is, so it can't drift from it.
+
+Feasibility:
+
+- The runner checks `count(p) ≤ budget`, compared as bigint, whenever count is closed or
+  polynomial.
+- **Only a family whose count itself enumerates** declares a cheap upper bound, `sizeBound(p)`.
+  The type forces it.
+- `scan` bounds the rank by size, optionally through `sized(p, size)`, since only the family
+  knows how fast its values grow.
+- An infeasible draw is a discard, not a failure.
+
+### 3.4 Counts and positions
+
+We keep the archived enumeratio's vocabulary:
+
+| Notion               | Meaning                                                                      | Here                                                                  |
+| -------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| **count**            | fiber size                                                                   | **bigint** when finite; `Infinity` known-infinite; `NaN` open problem |
+| **rank**             | 0-based place in a fiber (one family at fixed params); what `unrank` inverts | **bigint**; `-1n` for a non-member                                    |
+| **address**          | fiber axes ⊕ rank, `(params, rank)`, printed `4.2.1`                         | Plausible's proxy: in replay lines and findings, no head              |
+| **ordinality**       | 1-based position in a result set, a property of a query                      | CE's `At(view, k)` index                                              |
+| **omega_ordinality** | transfinite address across an open collection (ω·4 + 2)                      | not surfaced                                                          |
+
+- **A filtered view takes its ordinality from its own iteration.** `At(Filter(F, pred), k)`
+  counts survivors, and an element's rank in `F` is untouched. Only on the bare family is
+  ordinality `rank + 1`.
+- **The CE boundary stays in numbers.** An exact count past 2⁵³ answers `undefined` (unknown),
+  never a rounded wrong number.
+- **Migration adapter.** `numberKernel({…})` wraps a number-arithmetic kernel into the bigint
+  contract. Instead of rounding it throws `RangeError`, which Plausible reports as "needs
+  bigint". Those kernels then move to real bigint one at a time, heaviest first.
+- **Each count class samples differently.** A finite family draws rank from `[0, count)`, biased
+  toward both ends. An infinite one draws from `[0, size]`. An open-problem family (`NaN`) needs
+  `known(p)`, draws inside that prefix, and must decline (never hang) past it. CE's `isFinite`
+  follows the count class.
+
+### 3.5 Shape
+
+```ts
+type Costs =
+  | { count: "closed" | "polynomial"; unrank: Cost; rank: Cost; valid: Cost }
+  | { count: "enumerative"; unrank: Cost; rank: Cost; valid: Cost; sizeBound: (p: number[]) => bigint };
+
+interface FamilyKernel {
+  readonly head: string;
+  readonly kind: "ints" | "blocks" | "nested" | "scalar";
+  readonly carrier: string; // the domain its elements inhabit (§4.2)
+  readonly params: readonly Param[];
+  readonly cost: Costs;
+  readonly count: (p: number[]) => bigint | number; // number only for Infinity / NaN
+  readonly unrank: (p: number[], r: bigint) => Element;
+  readonly rank: (element: unknown, p: number[]) => bigint;
+  readonly valid: (element: unknown, p: number[]) => boolean;
+  readonly known?: (p: number[]) => bigint; // required when count is NaN
+  readonly sized?: (p: number[], size: number) => bigint; // scan: largest rank at this size
+  readonly sample?: { gen: (p: number[]) => Gen<Element>; distribution: "uniform" | string };
+}
+
+function sampleable(f: FamilyKernel): Sampleable<Address, Element> | { untestable: string };
+```
+
+## 4. Properties
+
+### 4.1 From capabilities
+
+| Applies when        | Property                                                                         |
+| ------------------- | -------------------------------------------------------------------------------- |
+| always              | a sampled element is a member (Sage `_test_some_elements`)                       |
+| rank                | `rank(unrank(r)) = r` (`_test_rank`)                                             |
+| finite count        | injectivity over a sampled window                                                |
+| finite, count ≤ cap | count = distinct enumeration                                                     |
+| rank and valid      | **non-members**: mutate a member; `valid(y) ⇔ rank(y) ≥ 0 ∧ unrank(rank(y)) = y` |
+| scalar, infinite    | ascending                                                                        |
+| `NaN` count         | answers inside `known`, declines past it                                         |
+| cost                | honesty: measured time and heap fit the declared class (nightly finding only)    |
+| CE handlers         | `Count`, `At`, `Element` agree with the kernel                                   |
+
+### 4.2 Laws from carriers and maps (the Sage layer)
+
+The carrier plays the part of Sage's category. A law on a map or statistic applies to **every
+family over its carrier**. Laws are found by walking the structure (family → carrier → the maps
+and statistics on it), with no method-name sigil, because everything here is a record and there
+are no classes to scan:
+
+```ts
+{ name: "Inverse",    from: "permutation", to: "permutation", body: …, laws: ["involution"] }
+{ name: "RSK",        from: "permutation", to: "standard_tableau_pair", laws: [{ inverse: "InverseRSK" }] }
+```
+
+The vocabulary is `involution`, `idempotent`, `{inverse: g}`, and an always-on **typed** law
+(the result is a member of the target domain). `{equidistributed: s}` is deferred to later
+FindStat work. A law is a `Testable` over the carrier, and its instance is the **Sum** of the
+instances of every family on that carrier.
+
+## 5. The runner
+
+- **Seeds.** Each family has its own stream (`seed/head`), so a filtered replay line reproduces
+  the full run.
+- **Size ramp.** Size grows from 0 to `maxSize` across the points, so degenerate params come
+  first.
+- **Discards.** An infeasible or empty draw is redrawn up to `retries` times. Mostly-discarded
+  families are reported: their declared parameter space is too wide for their cost.
+- **Isolation.** Each family runs in a worker with `resourceLimits` and a time cap, so a wrong
+  declaration becomes a finding instead of a dead run.
+- **Output.** Findings print the shrunk address as the replay line.
+
+## 6. Enforcement
+
+1. **Types.** `params`, `cost` and `carrier` are required, and `sizeBound` is forced by `Costs`.
+   An undeclared family doesn't compile.
+2. **Guard test** (fast). For every family:
+   - `sampleable` is an instance;
+   - the element at the smallest nonempty params is valid and round-trips;
+   - `NaN` count ⇒ `known`; ∞ count ⇒ not `enumerative`;
+   - CE's `isFinite` matches the count.
+
+   Exemptions carry a reason, and a stale exemption fails.
+
+3. **Scope.** The guard walks the declared engine's definitions for collection handlers. Every
+   one must be built through the contract or be exempt with a reason, so nothing escapes by not
+   registering.
+4. **Honesty** is checked by the nightly run, since timing is too noisy for a unit test.
+
+## 7. The oracle side
+
+The two checks answer different questions. Plausible tests **internal consistency**: a kernel
+agrees with itself. The oracle run (`oracle-plausible`) tests **external agreement** with mpmath,
+Sage, Wolfram and the rest, at the edges of documented examples.
+
+- **Shared:** `Gen`, date and per-key seeding, and edge-biased draws, all from
+  `@enumeratio/plausible`.
+- **The oracle gains param specs.** A family call's params are resampled from its `Param` spec,
+  so its hand list of structural heads shrinks to non-family heads.
+- **Findings from either become hidden examples** in the head's YAML.
+
+## 8. Deferred
+
+- A CE upstream issue for `random` and `indexOf` collection handlers, drafted for sign-off once
+  ours works.
+- The chi-squared uniformity check, until direct samplers exist.
+- `equidistributed` laws.
+- Direct samplers (plane partitions, SSYT via RSK) and Boltzmann sampling.
+
+## 9. Phases
+
+1. Small fixes (replay seeds, `SmoothNumbers(k<2)`, `isFinite` from count). Landed #229.
+2. Rename: quickcheck becomes Plausible across scripts, workflows, actions, issue titles and
+   docs.
+3. Bigint count and rank, through `numberKernel`.
+4. `@enumeratio/plausible` (leaf) with `Gen` and seeding, plus the contract (optional fields),
+   the helpers self-declaring, and the guard with a ratchet.
+5. The capability-driven runner, with the lists deleted.
+6. Families declare, file by file, and the ratchet shrinks.
+7. Carrier laws. CE handlers honour cost (`At`/`RandomChoice` decline past the budget). The
+   oracle uses param specs.
+8. Fields become required, and the ratchet goes.
