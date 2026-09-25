@@ -30,7 +30,8 @@ import { declareMatrixExp } from "./matrix-exp.ts";
 import { declareSpecialFunctions } from "./special-functions.ts";
 import { declareBesselJZero } from "./bessel-zeros.ts";
 import { declareDigammaFunctionZero } from "./digamma-zero.ts";
-import { declareHypergeometricUStar } from "./hypergeometric-ustar.ts";
+import { declareHypergeometricU, declareHypergeometricUStar } from "./hypergeometric-ustar.ts";
+import { declareHypergeometric } from "./hypergeometric.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
 import { declareKeiperLi } from "./keiper-li.ts";
@@ -525,9 +526,12 @@ function evaluateLerch(
  * — and, in elliptic.ts, `IncompleteEllipticF`/`IncompleteEllipticE` plus an in-place
  * precision fix for native `EllipticE` at complex modulus; the modular heads in
  * modular.ts: `ModularJ`, `ModularLambda`, `EisensteinG`; the Fungrim-frontier
- * heads `BesselJZero`, `DigammaFunctionZero`, `MultiZetaValue`, `SloaneA` and
- * `HypergeometricUStar` (bessel-zeros.ts, digamma-zero.ts, multizeta.ts,
- * sloane-a.ts, hypergeometric-ustar.ts); and, in matrix-exp.ts, `MatrixExp`.
+ * heads `BesselJZero`, `DigammaFunctionZero`, `MultiZetaValue`, `SloaneA`,
+ * `HypergeometricUStar` and `HypergeometricU` (bessel-zeros.ts, digamma-zero.ts,
+ * multizeta.ts, sloane-a.ts, hypergeometric-ustar.ts), plus `Hypergeometric0F1`,
+ * `Hypergeometric0F1Regularized`, `Hypergeometric1F1Regularized`,
+ * `Hypergeometric2F1Regularized` and `Hypergeometric3F2Regularized` in
+ * hypergeometric.ts; and, in matrix-exp.ts, `MatrixExp`.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -633,6 +637,8 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareMultiZetaValue(ce);
   declareSloaneA(ce);
   declareHypergeometricUStar(ce);
+  declareHypergeometricU(ce);
+  declareHypergeometric(ce);
   declareMatrixExp(ce);
   declareKeiperLi(ce);
 }

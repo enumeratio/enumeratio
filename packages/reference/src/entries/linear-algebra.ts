@@ -42,6 +42,56 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "A singular 2×2 matrix still has Rank 2; its [[MatrixRank]] is 1",
       },
+      {
+        expr: ["Rank", ["List", ["List", "a", "b"], ["List", "c", "d"]]],
+        expected: 2,
+        caption: "Symbolic entries",
+      },
+      { expr: ["Rank", "x"], expected: 0, caption: "A symbol is a scalar" },
+      {
+        expr: ["Rank", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]]],
+        expected: 2,
+        category: "Scope",
+        caption: "Rectangular arrays",
+      },
+      { expr: ["Rank", ["IdentityMatrix", 3]], expected: 2, category: "Scope" },
+      {
+        expr: ["Rank", ["List", ["List", 1, 2], ["List", 3]]],
+        expected: 1,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A ragged list should have depth 1 -- only its outer level is a full array; compute-engine answers 0",
+      },
+      {
+        expr: ["Rank", ["List", 1, ["List", 2, 3]]],
+        expected: 1,
+        aspirational: true,
+        category: "Scope",
+        caption: "...likewise a list mixing scalars and lists; compute-engine answers 0",
+      },
+      {
+        expr: ["Rank", ["List"]],
+        expected: 1,
+        aspirational: true,
+        category: "Scope",
+        caption: "The empty list is still a vector, of length 0; compute-engine answers 0",
+      },
+      {
+        expr: ["Rank", ["List", ["List"]]],
+        expected: 2,
+        aspirational: true,
+        category: "Scope",
+        caption: "...and $\\{\\{\\}\\}$ a 1×0 matrix; compute-engine answers 0",
+      },
+      {
+        expr: ["Rank", ["Tabulate", "f", 2, 3]],
+        expected: 2,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A 2×3 grid of unevaluated calls should still be a matrix; compute-engine answers 0",
+      },
     ],
   },
   {
@@ -86,6 +136,88 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
         divergence: {
           wolfram: "Wolfram leaves `MatrixRank[{1, 2, 3}]` unevaluated: a vector is not a matrix.",
         },
+      },
+      {
+        expr: ["MatrixRank", ["List", ["List", "a", "b"], ["List", "c", "d"]]],
+        expected: 2,
+        aspirational: true,
+        caption:
+          "A generic symbolic matrix should have full rank; compute-engine leaves it unevaluated",
+      },
+      {
+        expr: ["MatrixRank", ["List", ["List", 1, 2.5], ["List", 3.5, 4]]],
+        expected: 2,
+        category: "Scope",
+        caption: "Approximate entries",
+      },
+      {
+        expr: ["MatrixRank", ["List", ["List", 1, "ImaginaryUnit"], ["List", "ImaginaryUnit", -1]]],
+        expected: 1,
+        category: "Scope",
+        caption: "Complex entries: the second row is $i$ times the first",
+      },
+      {
+        expr: [
+          "MatrixRank",
+          [
+            "List",
+            ["List", "Pi", "ExponentialE"],
+            ["List", ["Multiply", 2, "Pi"], ["Multiply", 2, "ExponentialE"]],
+          ],
+        ],
+        expected: 1,
+        category: "Scope",
+        caption: "Exact numeric entries",
+      },
+      {
+        expr: ["MatrixRank", ["List", ["List", ["Sqrt", 2], 1], ["List", 2, ["Sqrt", 2]]]],
+        expected: 1,
+        category: "Scope",
+        caption: "The second row is $\\sqrt{2}$ times the first",
+      },
+      {
+        expr: [
+          "MatrixRank",
+          ["List", ["List", 1, 2, 3, 4], ["List", 2, 4, 6, 8], ["List", 1, 0, 1, 0]],
+        ],
+        expected: 2,
+        category: "Scope",
+        caption: "A 3×4 matrix with one dependent row",
+      },
+      { expr: ["MatrixRank", ["IdentityMatrix", 5]], expected: 5, category: "Scope" },
+      {
+        expr: ["Add", ["MatrixRank", threeByThree], ["Length", ["Kernel", threeByThree]]],
+        expected: 3,
+        category: "Properties",
+        caption:
+          "Rank–nullity: the rank plus the dimension of the null space is the number of columns",
+      },
+      {
+        expr: ["MatrixRank", ["Tabulate", "Multiply", 4, 4]],
+        expected: 1,
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "An outer product $u v^\\top$ has rank 1; a lazy [[Tabulate]] matrix is left unevaluated, not yet read as a matrix",
+      },
+      {
+        expr: [
+          "MatrixRank",
+          ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 4, 4],
+        ],
+        expected: 4,
+        aspirational: true,
+        category: "Applications",
+        caption:
+          "The 4×4 Hilbert matrix is badly conditioned but invertible; not yet, as a lazy [[Tabulate]] argument is not read as a matrix",
+      },
+      {
+        expr: ["MatrixRank", ["Tabulate", "Add", 4, 4]],
+        expected: 2,
+        aspirational: true,
+        category: "Neat examples",
+        caption:
+          "Every matrix with entries $i + j$ has rank 2, whatever its size; not yet, as a lazy [[Tabulate]] argument is not read as a matrix",
       },
     ],
   },
@@ -144,6 +276,49 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
         category: "Scope",
         caption:
           "A 3×3 matrix with no diagonal, nilpotent, or 2×2 structure to exploit: numeric only, via scaling-and-squaring",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 0, 0], ["List", 0, 0]]],
+        expected: ["List", ["List", 1, 0], ["List", 0, 1]],
+        caption: "The exponential of the zero matrix is the identity",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 1, 0], ["List", 0, 2]]],
+        expected: ["List", ["List", "ExponentialE", 0], ["List", 0, ["Power", "ExponentialE", 2]]],
+        caption: "A diagonal matrix exponentiates entry by entry",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 1, 1], ["List", 0, 1]]],
+        expected: ["List", ["List", "ExponentialE", "ExponentialE"], ["List", 0, "ExponentialE"]],
+        category: "Scope",
+        caption: "A Jordan block: $e^{I + N} = e\\,(I + N)$",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 0, 1], ["List", -1, 0]]],
+        expected: [
+          "List",
+          ["List", ["Cos", 1], ["Sin", 1]],
+          ["List", ["Negate", ["Sin", 1]], ["Cos", 1]],
+        ],
+        aspirational: true,
+        category: "Applications",
+        caption:
+          "A skew-symmetric generator gives a rotation matrix; the 2×2 closed form is left in $\\cosh i$ and $\\sinh i$ rather than reduced to $\\cos 1$ and $\\sin 1$",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 0, ["Negate", "Pi"]], ["List", "Pi", 0]]],
+        expected: ["List", ["List", -1, 0], ["List", 0, -1]],
+        aspirational: true,
+        category: "Neat examples",
+        caption:
+          "Euler's identity for matrices: rotation by $\\pi$ is $-I$; not yet, as $\\cosh\\sqrt{-\\pi^2}$ is not reduced",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 0, 1], ["List", 0, 0]], ["List", 1, 1]],
+        expected: ["List", 2, 1],
+        aspirational: true,
+        category: "Scope",
+        caption: "Applied to a vector, $e^A v$ without forming $e^A$; not yet",
       },
       {
         expr: ["MatrixExp", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]]],

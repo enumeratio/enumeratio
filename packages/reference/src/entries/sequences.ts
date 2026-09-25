@@ -24,6 +24,82 @@ export const sequences: readonly ReferenceEntry[] = [
       { expr: ["Fibonacci", 1], expected: 1 },
       { expr: ["Fibonacci", 10], expected: 55 },
       { expr: ["Fibonacci", 20], expected: 6765 },
+      { expr: ["Fibonacci", 8], expected: 21 },
+      {
+        expr: ["Fibonacci", 100],
+        expected: { num: "354224848179261915075" },
+        category: "Scope",
+        caption: "Exact at any size: $F_{100}$ has 21 digits",
+      },
+      {
+        expr: ["Fibonacci", 1.5],
+        expected: 0.920442065259926,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A real index should use $F_\\nu = \\frac{\\varphi^\\nu - \\cos(\\pi\\nu)\\,\\varphi^{-\\nu}}{\\sqrt5}$; only integer $n$ evaluates",
+      },
+      {
+        expr: ["Fibonacci", 7, "x"],
+        expected: [
+          "Add",
+          ["Power", "x", 6],
+          ["Multiply", 5, ["Power", "x", 4]],
+          ["Multiply", 6, ["Power", "x", 2]],
+          1,
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "The two-argument Fibonacci polynomial $F_7(x)$, from $F_n(x) = x F_{n-1}(x) + F_{n-2}(x)$; not yet supported",
+      },
+      {
+        expr: ["Fibonacci", 5.8, 3],
+        expected: 283.4827308329499,
+        aspirational: true,
+        category: "Scope",
+        caption: "The Fibonacci polynomial at a real order and argument; not yet supported",
+      },
+      {
+        expr: ["Fibonacci", 1, 0],
+        expected: 1,
+        aspirational: true,
+        category: "Scope",
+        caption: "Special value of the Fibonacci polynomial: $F_1(0) = 1$",
+      },
+      {
+        expr: ["Fibonacci", 0, 0],
+        expected: 0,
+        aspirational: true,
+        category: "Scope",
+        caption: "Special value of the Fibonacci polynomial: $F_0(0) = 0$",
+      },
+      {
+        expr: ["Fibonacci", 3, ["List", ["List", -1, 0], ["List", 0, 5]]],
+        expected: ["List", ["List", 2, 1], ["List", 1, 26]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$F_3(x) = x^2 + 1$ should thread element-wise over a matrix argument; the polynomial form is missing",
+      },
+      {
+        expr: ["Sum", ["Fibonacci", "k"], ["Tuple", "k", 1, 10]],
+        expected: 143,
+        category: "Properties",
+        caption: "$\\sum_{k=1}^{n} F_k = F_{n+2} - 1$, here $F_{12} - 1 = 143$",
+      },
+      {
+        expr: ["Equal", ["Fibonacci", 20], ["Multiply", ["Fibonacci", 10], ["LucasL", 10]]],
+        expected: "True",
+        category: "Properties",
+        caption: "The doubling identity $F_{2n} = F_n L_n$. See [[LucasL]]",
+      },
+      {
+        expr: ["Length", ["IntegerDigits", ["Fibonacci", 1000]]],
+        expected: 209,
+        category: "Neat examples",
+        caption: "$F_{1000}$ has 209 digits. See [[IntegerDigits]]",
+      },
       {
         expr: ["Equal", ["Fibonacci", 10], ["Add", ["Fibonacci", 9], ["Fibonacci", 8]]],
         expected: "True",
@@ -99,6 +175,83 @@ export const sequences: readonly ReferenceEntry[] = [
       { expr: ["LucasL", 5], expected: 11 },
       { expr: ["LucasL", 10], expected: 123 },
       {
+        expr: ["LucasL", 100],
+        expected: { num: "792070839848372253127" },
+        category: "Scope",
+        caption: "Exact at any size",
+      },
+      {
+        expr: ["LucasL", -11],
+        expected: -199,
+        category: "Scope",
+        caption: "An odd negative index flips the sign: $L_{-11} = -L_{11}$",
+      },
+      {
+        expr: ["LucasL", 2.3333333333333335],
+        expected: 3.2362118794916213,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A real index should use $L_\\nu = \\varphi^\\nu + \\cos(\\pi\\nu)\\,\\varphi^{-\\nu}$; only integer $n$ evaluates",
+      },
+      {
+        expr: ["LucasL", 7, "x"],
+        expected: [
+          "Add",
+          ["Power", "x", 7],
+          ["Multiply", 7, ["Power", "x", 5]],
+          ["Multiply", 14, ["Power", "x", 3]],
+          ["Multiply", 7, "x"],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$; not yet supported",
+      },
+      {
+        expr: ["LucasL", 143, 1],
+        expected: { num: "767772505664398093937756525279" },
+        aspirational: true,
+        category: "Scope",
+        caption: "The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$",
+      },
+      {
+        expr: ["LucasL", 1, 0],
+        expected: 0,
+        aspirational: true,
+        category: "Scope",
+        caption: "Special value of the Lucas polynomial: $L_1(0) = 0$",
+      },
+      {
+        expr: ["LucasL", 0, 0],
+        expected: 2,
+        aspirational: true,
+        category: "Scope",
+        caption: "Special value of the Lucas polynomial: $L_0(0) = 2$",
+      },
+      {
+        expr: [
+          "LucasL",
+          2,
+          ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]],
+        ],
+        expected: ["List", ["List", ["Rational", 9, 4], 3], ["List", 2, ["Rational", 9, 4]]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$L_2(x) = x^2 + 2$ should thread element-wise over a matrix argument; the polynomial form is missing",
+      },
+      {
+        expr: [
+          "Subtract",
+          ["Power", ["LucasL", 10], 2],
+          ["Multiply", 5, ["Power", ["Fibonacci", 10], 2]],
+        ],
+        expected: 4,
+        category: "Properties",
+        caption: "$L_n^2 - 5F_n^2 = 4(-1)^n$, here at $n = 10$. See [[Fibonacci]]",
+      },
+      {
         expr: ["Equal", ["LucasL", 6], ["Add", ["Fibonacci", 5], ["Fibonacci", 7]]],
         expected: "True",
         category: "Properties",
@@ -171,6 +324,71 @@ export const sequences: readonly ReferenceEntry[] = [
       { expr: ["BernoulliB", 2], expected: ["Rational", 1, 6] },
       { expr: ["BernoulliB", 4], expected: ["Rational", -1, 30] },
       { expr: ["BernoulliB", 12], expected: ["Rational", -691, 2730] },
+      { expr: ["BernoulliB", 10], expected: ["Rational", 5, 66] },
+      {
+        expr: ["BernoulliB", 60],
+        expected: ["Rational", { num: "-1215233140483755572040304994079820246041491" }, 56786730],
+        category: "Scope",
+        caption: "Exact rationals at any index",
+      },
+      {
+        expr: ["BernoulliB", ["List", 2, 4, 6]],
+        expected: ["List", ["Rational", 1, 6], ["Rational", -1, 30], ["Rational", 1, 42]],
+        category: "Scope",
+        caption: "Listable: $B_n$ threads over a list of indices",
+      },
+      {
+        expr: ["BernoulliB", 4, "x"],
+        expected: [
+          "Add",
+          ["Power", "x", 4],
+          ["Multiply", -2, ["Power", "x", 3]],
+          ["Power", "x", 2],
+          ["Rational", -1, 30],
+        ],
+        category: "Scope",
+        caption: "The Bernoulli polynomial $B_4(x) = x^4 - 2x^3 + x^2 - \\frac{1}{30}$",
+      },
+      {
+        expr: ["BernoulliB", 2, ["Rational", 1, 2]],
+        expected: ["Rational", -1, 12],
+
+        category: "Scope",
+        caption: "The Bernoulli polynomial at a rational point: $B_2(\\frac12) = -\\frac{1}{12}$",
+      },
+      {
+        expr: ["BernoulliB", 1, 1],
+        expected: ["Rational", 1, 2],
+        category: "Possible issues",
+        caption: "$B_1(1) = +\\frac12$ is the other convention for $B_1$",
+      },
+      {
+        expr: ["Denominator", ["BernoulliB", 12]],
+        expected: 2730,
+        category: "Properties",
+        caption:
+          "von Staudt–Clausen: the denominator of $B_{2n}$ is the product of the primes $p$ with $(p-1) \\mid 2n$, here $2 \\cdot 3 \\cdot 5 \\cdot 7 \\cdot 13$",
+      },
+      {
+        expr: ["Equal", ["Zeta", -3], ["Negate", ["Divide", ["BernoulliB", 4], 4]]],
+        expected: "True",
+        category: "Properties",
+        caption:
+          "$\\zeta(-n) = -\\frac{B_{n+1}}{n+1}$, here $\\zeta(-3) = \\frac{1}{120}$. See [[Zeta]]",
+      },
+      {
+        expr: [
+          "Add",
+          ["Multiply", ["Binomial", 5, 0], ["BernoulliB", 0]],
+          ["Multiply", ["Binomial", 5, 1], ["BernoulliB", 1]],
+          ["Multiply", ["Binomial", 5, 2], ["BernoulliB", 2]],
+          ["Multiply", ["Binomial", 5, 3], ["BernoulliB", 3]],
+          ["Multiply", ["Binomial", 5, 4], ["BernoulliB", 4]],
+        ],
+        expected: 0,
+        category: "Properties",
+        caption: "The recurrence $\\sum_{k=0}^{n-1} \\binom{n}{k} B_k = 0$, here at $n = 5$",
+      },
       {
         expr: ["Equal", ["BernoulliB", 5], 0],
         expected: "True",

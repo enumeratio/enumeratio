@@ -4,8 +4,10 @@ import type { ReferenceEntry } from "../types.ts";
 // Each has a closed-form `Count` and an `At` that unranks, so the page can enumerate it
 // with `<notatio-collection-table>` without ever materialising the whole family. The
 // families are provided by @enumeratio/collections, which the reference test does not
-// load (it would cycle: collections depends on the reference), so these entries assert
-// nothing in bare compute-engine and demonstrate through the live `enumerate` table.
+// load (it would cycle: collections depends on the reference), so these entries demonstrate
+// through the live `enumerate` table. Their `examples` hold only what the reference engine
+// can pin — counting identities in compute-engine heads — and the Wolfram call forms the
+// families do not take yet (list arguments, size and part restrictions), as gaps.
 export const enumerableFamilies: readonly ReferenceEntry[] = [
   {
     name: "Subsets",
@@ -13,15 +15,79 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signature: "Subsets(n)",
     summary: "The power set of $\\{1, …, n\\}$ — every subset, as a lazy indexed family of $2^n$.",
     signatures: [
-      { call: "Subsets(n)", description: "the $2^n$ subsets of $\\{1, …, n\\}$." },
-      { call: "Subsets(collection)", description: "the subsets of any finite collection." },
+      {
+        call: "Subsets(n)",
+        description: "the $2^n$ subsets of $\\{1, …, n\\}$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Subsets(collection)",
+        description: "the subsets of any finite collection.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built.",
       "The subsets carrying a fixed size $k$ number $\\binom{n}{k}$; summing over $k$ gives $2^n$. See [[Binomial]].",
       "Each element is the subset's list of members; [[Length]] is its size.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Subsets", ["List", "a", "b", "c"]],
+        expected: [
+          "List",
+          ["List"],
+          ["List", "a"],
+          ["List", "b"],
+          ["List", "a", "b"],
+          ["List", "c"],
+          ["List", "a", "c"],
+          ["List", "b", "c"],
+          ["List", "a", "b", "c"],
+        ],
+        aspirational: true,
+        caption:
+          "The documented $Subsets(collection)$ form, listed in the family's binary-mask order; the family takes only an integer n today",
+        divergence: { wolfram: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …" },
+      },
+      {
+        expr: ["Count", ["Subsets", 4, 2]],
+        expected: 11,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A size bound: the subsets with at most 2 elements, $1 + 4 + 6$; the second argument is not yet taken",
+      },
+      {
+        expr: ["Count", ["Subsets", 4, ["List", 2]]],
+        expected: 6,
+        aspirational: true,
+        category: "Scope",
+        caption: "An exact size $\\{2\\}$: $\\binom{4}{2}$ subsets; not yet taken",
+      },
+      {
+        expr: ["Count", ["Subsets", 5, ["List", 0, 5, 2]]],
+        expected: 16,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A size range $\\{0, 5, 2\\}$, the even-size subsets, $2^{4}$ of them; not yet taken",
+      },
+      {
+        expr: ["Length", ["Subsets", ["Range", 1, 10]]],
+        expected: 1024,
+        aspirational: true,
+        category: "Properties",
+        caption: "A set of $n$ elements has $2^n$ subsets; a list argument is not yet taken",
+      },
+      {
+        expr: ["Sum", ["Binomial", 5, "k"], ["Tuple", "k", 0, 5]],
+        expected: 32,
+        category: "Properties",
+        caption:
+          "Counting by size: $\\sum_k \\binom{n}{k} = 2^n$ subsets of a 5-set. See [[Binomial]]",
+      },
+    ],
     enumerate: { expr: "Subsets(4)", columns: "Length, Sum", glyph: "subset" },
     seeAlso: ["Binomial", "Length", "Count", "At"],
   },
@@ -31,14 +97,40 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signature: "SymmetricGroup(n)",
     summary: "The $n!$ permutations of $\\{1, …, n\\}$ as a lazy indexed family, in one-line form.",
     signatures: [
-      { call: "SymmetricGroup(n)", description: "the $n!$ permutations of $\\{1, …, n\\}$." },
+      {
+        call: "SymmetricGroup(n)",
+        description: "the $n!$ permutations of $\\{1, …, n\\}$.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \\times 10^{18}$ rows — pages as cheaply as a small one.",
       "Each element is the image word $[\\pi(1), …, \\pi(n)]$; the classical statistics ([[Descents]], MajorIndex, Inversions, CycleCount, FixedPoints) are heads over that word.",
       "The derangements — permutations with no fixed point — number $Subfactorial(n)$. See [[Subfactorial]].",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["GroupOrder", ["SymmetricGroup", 5]],
+        expected: 120,
+        aspirational: true,
+        caption:
+          "The order of $S_5$ is $5!$; [[GroupOrder]] reads only CyclicGroup, DihedralGroup and GroupDirectProduct",
+      },
+      {
+        expr: ["GroupOrder", ["SymmetricGroup", 10]],
+        expected: 3628800,
+        aspirational: true,
+        category: "Scope",
+        caption: "$|S_{10}| = 10!$; not yet read by [[GroupOrder]]",
+      },
+      {
+        expr: ["Length", ["Permutations", ["List", 1, 2, 3]]],
+        expected: 6,
+        category: "Properties",
+        caption:
+          "The one-line words are compute-engine's Permutations of $1, …, n$, $n!$ of them. See [[Factorial]]",
+      },
+    ],
     enumerate: {
       expr: "SymmetricGroup(5)",
       columns: "Descents, MajorIndex, Inversions, CycleCount, FixedPoints",
@@ -55,6 +147,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         call: "IntegerPartitions(n)",
         description: "every way to write $n$ as a sum of positive parts, order-insensitive.",
+        library: "enumeratio-collections",
       },
     ],
     details: [
@@ -62,7 +155,78 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the part list in weakly decreasing order; drawn as a Ferrers diagram, its statistics (Length, LargestPart, DurfeeSquare, …) live in $@enumeratio/statistics$.",
       "Conjugation (transposing the diagram) is an involution; the self-conjugate partitions of $n$ equal the partitions of $n$ into distinct odd parts.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["IntegerPartitions", 8, 3],
+        expected: [
+          "List",
+          ["List", 8],
+          ["List", 7, 1],
+          ["List", 6, 2],
+          ["List", 6, 1, 1],
+          ["List", 5, 3],
+          ["List", 5, 2, 1],
+          ["List", 4, 4],
+          ["List", 4, 3, 1],
+          ["List", 4, 2, 2],
+          ["List", 3, 3, 2],
+        ],
+        aspirational: true,
+        caption: "The partitions of 8 into at most 3 parts; the part-count bound is not yet taken",
+      },
+      {
+        expr: ["IntegerPartitions", 8, ["List", 3]],
+        expected: [
+          "List",
+          ["List", 6, 1, 1],
+          ["List", 5, 2, 1],
+          ["List", 4, 3, 1],
+          ["List", 4, 2, 2],
+          ["List", 3, 3, 2],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "Exactly 3 parts; not yet taken",
+      },
+      {
+        expr: ["IntegerPartitions", 8, "All", ["List", 1, 2, 5]],
+        expected: [
+          "List",
+          ["List", 5, 2, 1],
+          ["List", 5, 1, 1, 1],
+          ["List", 2, 2, 2, 2],
+          ["List", 2, 2, 2, 1, 1],
+          ["List", 2, 2, 1, 1, 1, 1],
+          ["List", 2, 1, 1, 1, 1, 1, 1],
+          ["List", 1, 1, 1, 1, 1, 1, 1, 1],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "Parts restricted to $\\{1, 2, 5\\}$; not yet taken",
+      },
+      {
+        expr: ["NPartition", 8],
+        expected: 22,
+        category: "Properties",
+        caption: "The family has $p(8) = 22$ members, compute-engine's NPartition",
+      },
+      {
+        expr: ["Count", ["IntegerPartitions", 100, "All", ["List", 1, 5, 10, 25, 50]]],
+        expected: 292,
+        aspirational: true,
+        category: "Applications",
+        caption:
+          "The ways to make change for a dollar from 1, 5, 10, 25 and 50 cent coins; restricted parts are not yet taken",
+      },
+      {
+        expr: ["Count", ["IntegerPartitions", 10, "All", ["List", 1, 3, 5, 7, 9]]],
+        expected: 10,
+        aspirational: true,
+        category: "Neat examples",
+        caption:
+          "Euler: partitions into odd parts are as many as partitions into distinct parts, $q(10) = 10$; restricted parts are not yet taken",
+      },
+    ],
     enumerate: {
       expr: "IntegerPartitions(8)",
       columns: "Length, LargestPart, DistinctParts, DurfeeSquare",
@@ -102,6 +266,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         call: "SetPartitions(n)",
         description: "every way to split $\\{1, …, n\\}$ into disjoint non-empty blocks.",
+        library: "enumeratio-collections",
       },
     ],
     details: [
@@ -109,7 +274,52 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "The partitions into exactly $k$ blocks number the Stirling numbers of the second kind $S(n, k)$; summing over $k$ gives $B_n$. See [[Stirling]].",
       "Each element is the block list; the $set$-$partition$ glyph draws it from its restricted-growth string.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["SetPartitions", ["List", "a", "b", "c"]],
+        expected: [
+          "List",
+          ["List", ["List", "a", "b", "c"]],
+          ["List", ["List", "a", "b"], ["List", "c"]],
+          ["List", ["List", "a", "c"], ["List", "b"]],
+          ["List", ["List", "a"], ["List", "b", "c"]],
+          ["List", ["List", "a"], ["List", "b"], ["List", "c"]],
+        ],
+        aspirational: true,
+        caption: "The set partitions of an explicit list; the family takes only an integer n today",
+      },
+      {
+        expr: ["SetPartitions", 3, 2],
+        expected: [
+          "List",
+          ["List", ["List", 1, 2], ["List", 3]],
+          ["List", ["List", 1, 3], ["List", 2]],
+          ["List", ["List", 1], ["List", 2, 3]],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "Exactly 2 blocks; a block count is not yet taken",
+      },
+      {
+        expr: ["Count", ["SetPartitions", 4, 2]],
+        expected: 7,
+        aspirational: true,
+        category: "Scope",
+        caption: "The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$; not yet taken",
+      },
+      {
+        expr: ["BellNumber", 4],
+        expected: 15,
+        category: "Properties",
+        caption: "The family has $B_4 = 15$ members. See [[BellNumber]]",
+      },
+      {
+        expr: ["Stirling", 4, 2],
+        expected: 7,
+        category: "Properties",
+        caption: "Those with exactly 2 blocks number $S(4, 2) = 7$. See [[Stirling]]",
+      },
+    ],
     enumerate: {
       expr: "SetPartitions(4)",
       columns: "Length, Max(Map(Length, _))",
@@ -825,5 +1035,1727 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     examples: [],
     enumerate: { expr: "PlanePartitions(6)", columns: "Length" },
     seeAlso: ["IntegerPartitions", "Count", "At"],
+  },
+  {
+    name: "BoxedPlanePartitions",
+    domain: "Collections",
+    signature: "BoxedPlanePartitions(a, b, c)",
+    summary:
+      "Plane partitions of any size fitting in an $a \\times b \\times c$ box — at most $a$ rows, each at most $b$ long, entries at most $c$ — as a lazy indexed family.",
+    signatures: [
+      {
+        call: "BoxedPlanePartitions(a, b, c)",
+        description: "the plane partitions fitting an $a \\times b \\times c$ box.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection, exact and closed-form by MacMahon's box formula: $Count(BoxedPlanePartitions(a,b,c)) = \\prod_{i=1}^{a} \\prod_{j=1}^{b} \\prod_{k=1}^{c} \\frac{i+j+k-1}{i+j+k-2}$ — $Count(BoxedPlanePartitions(2,2,2)) = 20$.",
+      "Each element is the array's rows, [[PlanePartitions]]'s ragged carrier: entries weakly decrease along every row and down every column, with trailing zeros trimmed rather than stored.",
+      "Unranked in shape-then-entries order, same as [[PlanePartitions]]; rank/unrank enumerate the box and index into it, so stick to small boxes.",
+    ],
+    examples: [],
+    enumerate: { expr: "BoxedPlanePartitions(2, 2, 2)" },
+    seeAlso: ["PlanePartitions", "Count", "At"],
+  },
+  // ---- closed-form numeric sets (@enumeratio/collections numeric-closed-form.ts): every
+  // element is f(n) for a fixed polynomial or product formula, n = 1, 2, 3, ... -- bare
+  // integers like the numeric-set prototypes above, so Count is +oo and `enumerate` pages a
+  // `Take(...)` prefix rather than the family itself. See each entry for the OEIS number and
+  // where its offset differs from ours (we always start `At(S, 1)` at n=1).
+  {
+    name: "TriangularNumbers",
+    domain: "Collections",
+    signature: "TriangularNumbers",
+    summary: "The triangular numbers $1, 3, 6, 10, …$ — $T(n) = n(n+1)/2$ — dots in a triangle.",
+    signatures: [
+      { call: "TriangularNumbers", description: "$T(n) = n(n+1)/2$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(TriangularNumbers) = +\\infty$, and $At(TriangularNumbers, k) = k(k+1)/2$ unranks in closed form -- $At(TriangularNumbers, 5) = 15$.",
+      "OEIS A000217.",
+      "Membership goes through [[Element]] by inverting the closed form exactly: $x$ is triangular iff $8x+1$ is a perfect square -- $Element(15, TriangularNumbers)$ is true, $Element(14, TriangularNumbers)$ is false.",
+      "The $k$-gonal case $k=3$ of [[PolygonalNumbers]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(TriangularNumbers, 20)" },
+    seeAlso: ["PolygonalNumbers", "SquareNumbers", "PentagonalNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "PentagonalNumbers",
+    domain: "Collections",
+    signature: "PentagonalNumbers",
+    summary: "The pentagonal numbers $1, 5, 12, 22, …$ — $P(n) = n(3n-1)/2$ — dots in a pentagon.",
+    signatures: [
+      { call: "PentagonalNumbers", description: "$P(n) = n(3n-1)/2$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PentagonalNumbers) = +\\infty$, and $At(PentagonalNumbers, k) = k(3k-1)/2$ unranks in closed form -- $At(PentagonalNumbers, 5) = 35$.",
+      "OEIS A000326.",
+      "Membership goes through [[Element]] by inverting the closed form exactly, solving the quadratic in $n$ over the integers -- $Element(35, PentagonalNumbers)$ is true, $Element(36, PentagonalNumbers)$ is false.",
+      "The $k$-gonal case $k=5$ of [[PolygonalNumbers]]; not to be confused with the (signed-index) generalized pentagonal numbers of Euler's pentagonal number theorem.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PentagonalNumbers, 20)" },
+    seeAlso: [
+      "PolygonalNumbers",
+      "TriangularNumbers",
+      "HexagonalNumbers",
+      "Count",
+      "At",
+      "Element",
+    ],
+  },
+  {
+    name: "HexagonalNumbers",
+    domain: "Collections",
+    signature: "HexagonalNumbers",
+    summary: "The hexagonal numbers $1, 6, 15, 28, …$ — $H(n) = n(2n-1)$ — dots in a hexagon.",
+    signatures: [
+      { call: "HexagonalNumbers", description: "$H(n) = n(2n-1)$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(HexagonalNumbers) = +\\infty$, and $At(HexagonalNumbers, k) = k(2k-1)$ unranks in closed form -- $At(HexagonalNumbers, 5) = 45$.",
+      "OEIS A000384.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(45, HexagonalNumbers)$ is true, $Element(44, HexagonalNumbers)$ is false.",
+      "Every hexagonal number is triangular ($H(n) = T(2n-1)$); the $k$-gonal case $k=6$ of [[PolygonalNumbers]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(HexagonalNumbers, 20)" },
+    seeAlso: [
+      "PolygonalNumbers",
+      "TriangularNumbers",
+      "PentagonalNumbers",
+      "Count",
+      "At",
+      "Element",
+    ],
+  },
+  {
+    name: "HeptagonalNumbers",
+    domain: "Collections",
+    signature: "HeptagonalNumbers",
+    summary: "The heptagonal numbers $1, 7, 18, 34, …$ — $n(5n-3)/2$ — dots in a heptagon.",
+    signatures: [{ call: "HeptagonalNumbers", description: "$n(5n-3)/2$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(HeptagonalNumbers) = +\\infty$, and $At(HeptagonalNumbers, k) = k(5k-3)/2$ unranks in closed form -- $At(HeptagonalNumbers, 5) = 55$.",
+      "OEIS A000566.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(55, HeptagonalNumbers)$ is true, $Element(54, HeptagonalNumbers)$ is false.",
+      "The $k$-gonal case $k=7$ of [[PolygonalNumbers]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(HeptagonalNumbers, 20)" },
+    seeAlso: ["PolygonalNumbers", "HexagonalNumbers", "OctagonalNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "OctagonalNumbers",
+    domain: "Collections",
+    signature: "OctagonalNumbers",
+    summary: "The octagonal numbers $1, 8, 21, 40, …$ — $n(3n-2)$ — dots in an octagon.",
+    signatures: [{ call: "OctagonalNumbers", description: "$n(3n-2)$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(OctagonalNumbers) = +\\infty$, and $At(OctagonalNumbers, k) = k(3k-2)$ unranks in closed form -- $At(OctagonalNumbers, 5) = 65$.",
+      "OEIS A000567.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(65, OctagonalNumbers)$ is true, $Element(64, OctagonalNumbers)$ is false.",
+      "The $k$-gonal case $k=8$ of [[PolygonalNumbers]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(OctagonalNumbers, 20)" },
+    seeAlso: ["PolygonalNumbers", "HeptagonalNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "PolygonalNumbers",
+    domain: "Collections",
+    signature: "PolygonalNumbers(k)",
+    summary:
+      "The $k$-gonal figurate numbers $P(k, n) = \\big((k-2)n^2 - (k-4)n\\big)/2$, one lazy indexed collection per polygon size $k \\ge 3$.",
+    signatures: [
+      {
+        call: "PolygonalNumbers(k)",
+        description: "$P(k, n)$ for $n = 1, 2, 3, …$, the $k$-gonal numbers.",
+      },
+    ],
+    details: [
+      "A lazy indexed family for each $k \\ge 3$: $Count(PolygonalNumbers(k)) = +\\infty$, and $At(PolygonalNumbers(k), n)$ unranks $P(k, n)$ in closed form -- $At(PolygonalNumbers(5), 3) = 12$.",
+      "$k = 3, 4, 5, 6, 7, 8$ reproduce [[TriangularNumbers]], [[SquareNumbers]], [[PentagonalNumbers]], [[HexagonalNumbers]], [[HeptagonalNumbers]] and [[OctagonalNumbers]] termwise; those fixed-$k$ names exist as their own lazy collections for convenience, not as a separate definition.",
+      "Membership goes through [[Element]] by inverting the quadratic in $n$ exactly for the given $k$ -- $Element(12, PolygonalNumbers(5))$ is true, $Element(13, PolygonalNumbers(5))$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PolygonalNumbers(5), 20)" },
+    seeAlso: [
+      "TriangularNumbers",
+      "SquareNumbers",
+      "PentagonalNumbers",
+      "HexagonalNumbers",
+      "Count",
+      "At",
+      "Element",
+    ],
+  },
+  {
+    name: "CenteredTriangularNumbers",
+    domain: "Collections",
+    signature: "CenteredTriangularNumbers",
+    summary:
+      "The centered triangular numbers $1, 4, 10, 19, …$ — $(3n^2-3n+2)/2$ — a triangle of dots grown ring by ring around a center.",
+    signatures: [
+      { call: "CenteredTriangularNumbers", description: "$(3n^2-3n+2)/2$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CenteredTriangularNumbers) = +\\infty$, and $At(CenteredTriangularNumbers, k) = (3k^2-3k+2)/2$ unranks in closed form -- $At(CenteredTriangularNumbers, 5) = 31$.",
+      "OEIS A005448.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(31, CenteredTriangularNumbers)$ is true, $Element(30, CenteredTriangularNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CenteredTriangularNumbers, 20)" },
+    seeAlso: ["TriangularNumbers", "CenteredSquareNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "CenteredSquareNumbers",
+    domain: "Collections",
+    signature: "CenteredSquareNumbers",
+    summary:
+      "The centered square numbers $1, 5, 13, 25, …$ — $2n^2-2n+1$ — a square of dots grown ring by ring around a center.",
+    signatures: [
+      { call: "CenteredSquareNumbers", description: "$2n^2-2n+1$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CenteredSquareNumbers) = +\\infty$, and $At(CenteredSquareNumbers, k) = 2k^2-2k+1$ unranks in closed form -- $At(CenteredSquareNumbers, 5) = 41$.",
+      "OEIS A001844.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(41, CenteredSquareNumbers)$ is true, $Element(40, CenteredSquareNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CenteredSquareNumbers, 20)" },
+    seeAlso: ["SquareNumbers", "CenteredHexagonalNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "CenteredHexagonalNumbers",
+    domain: "Collections",
+    signature: "CenteredHexagonalNumbers",
+    summary:
+      "The centered hexagonal numbers $1, 7, 19, 37, …$ — $3n^2-3n+1$ — a hexagon of dots grown ring by ring around a center.",
+    signatures: [
+      { call: "CenteredHexagonalNumbers", description: "$3n^2-3n+1$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CenteredHexagonalNumbers) = +\\infty$, and $At(CenteredHexagonalNumbers, k) = 3k^2-3k+1$ unranks in closed form -- $At(CenteredHexagonalNumbers, 5) = 61$.",
+      "OEIS A003215.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(61, CenteredHexagonalNumbers)$ is true, $Element(60, CenteredHexagonalNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CenteredHexagonalNumbers, 20)" },
+    seeAlso: ["HexagonalNumbers", "CenteredSquareNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "StarNumbers",
+    domain: "Collections",
+    signature: "StarNumbers",
+    summary:
+      "The star numbers $1, 13, 37, 73, …$ — $6n^2-6n+1$ — centered figurate numbers of a six-pointed star.",
+    signatures: [{ call: "StarNumbers", description: "$6n^2-6n+1$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(StarNumbers) = +\\infty$, and $At(StarNumbers, k) = 6k^2-6k+1$ unranks in closed form -- $At(StarNumbers, 5) = 121$.",
+      "OEIS A003154.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(121, StarNumbers)$ is true, $Element(120, StarNumbers)$ is false.",
+      "Every star number is both centered hexagonal and centered triangular in disguise (it is the centered figurate number of the $\\{6/2\\}$ hexagram).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(StarNumbers, 20)" },
+    seeAlso: ["CenteredHexagonalNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "PronicNumbers",
+    domain: "Collections",
+    signature: "PronicNumbers",
+    summary:
+      "The pronic (oblong) numbers $2, 6, 12, 20, …$ — $n(n+1)$ — twice a triangular number.",
+    signatures: [{ call: "PronicNumbers", description: "$n(n+1)$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(PronicNumbers) = +\\infty$, and $At(PronicNumbers, k) = k(k+1)$ unranks in closed form -- $At(PronicNumbers, 5) = 30$.",
+      "OEIS A002378, whose offset differs from ours: A002378 opens $a(0) = 0$; this collection starts at $n=1$, so $At(PronicNumbers, 1) = 2$ and the value $0$ is not a member.",
+      "Membership goes through [[Element]] by inverting the closed form exactly -- $Element(30, PronicNumbers)$ is true, $Element(29, PronicNumbers)$ is false. $PronicNumbers(k) = 2 \\cdot TriangularNumbers(k)$.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PronicNumbers, 20)" },
+    seeAlso: ["TriangularNumbers", "SquareNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "CubeNumbers",
+    domain: "Collections",
+    signature: "CubeNumbers",
+    summary: "The perfect cubes $1, 8, 27, 64, …$ — $n^3$.",
+    signatures: [{ call: "CubeNumbers", description: "$n^3$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(CubeNumbers) = +\\infty$, and $At(CubeNumbers, k) = k^3$ unranks in closed form -- $At(CubeNumbers, 5) = 125$.",
+      "OEIS A000578.",
+      "Membership goes through [[Element]] by bisecting the monotone formula $n \\mapsto n^3$ for its exact integer cube root -- $Element(125, CubeNumbers)$ is true, $Element(126, CubeNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CubeNumbers, 20)" },
+    seeAlso: ["SquareNumbers", "TetrahedralNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "TetrahedralNumbers",
+    domain: "Collections",
+    signature: "TetrahedralNumbers",
+    summary:
+      "The tetrahedral numbers $1, 4, 10, 20, …$ — $\\binom{n+2}{3}$ — stacked triangles, partial sums of the triangular numbers.",
+    signatures: [
+      { call: "TetrahedralNumbers", description: "$\\binom{n+2}{3}$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(TetrahedralNumbers) = +\\infty$, and $At(TetrahedralNumbers, k) = \\binom{k+2}{3}$ unranks in closed form -- $At(TetrahedralNumbers, 5) = 35$.",
+      "OEIS A000292.",
+      "Membership goes through [[Element]] by bisecting the monotone cubic for its exact root -- $Element(35, TetrahedralNumbers)$ is true, $Element(36, TetrahedralNumbers)$ is false.",
+      "$TetrahedralNumbers(n) = \\sum_{i=1}^n TriangularNumbers(i)$; the 4-simplex case is [[PentatopeNumbers]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(TetrahedralNumbers, 20)" },
+    seeAlso: ["TriangularNumbers", "PentatopeNumbers", "Binomial", "Count", "At", "Element"],
+  },
+  {
+    name: "PentatopeNumbers",
+    domain: "Collections",
+    signature: "PentatopeNumbers",
+    summary:
+      "The pentatope numbers $1, 5, 15, 35, …$ — $\\binom{n+3}{4}$ — the 4-simplex figurate numbers.",
+    signatures: [
+      { call: "PentatopeNumbers", description: "$\\binom{n+3}{4}$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PentatopeNumbers) = +\\infty$, and $At(PentatopeNumbers, k) = \\binom{k+3}{4}$ unranks in closed form -- $At(PentatopeNumbers, 5) = 70$.",
+      "OEIS A000332.",
+      "Membership goes through [[Element]] by bisecting the monotone quartic for its exact root -- $Element(70, PentatopeNumbers)$ is true, $Element(71, PentatopeNumbers)$ is false.",
+      "$PentatopeNumbers(n) = \\sum_{i=1}^n TetrahedralNumbers(i)$, one dimension up from [[TetrahedralNumbers]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PentatopeNumbers, 20)" },
+    seeAlso: ["TetrahedralNumbers", "Binomial", "Count", "At", "Element"],
+  },
+  {
+    name: "SquarePyramidalNumbers",
+    domain: "Collections",
+    signature: "SquarePyramidalNumbers",
+    summary:
+      "The square pyramidal numbers $1, 5, 14, 30, …$ — $n(n+1)(2n+1)/6$ — stacked squares, partial sums of the square numbers.",
+    signatures: [
+      {
+        call: "SquarePyramidalNumbers",
+        description: "$n(n+1)(2n+1)/6$ for $n = 1, 2, 3, …$.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SquarePyramidalNumbers) = +\\infty$, and $At(SquarePyramidalNumbers, k) = k(k+1)(2k+1)/6$ unranks in closed form -- $At(SquarePyramidalNumbers, 5) = 55$.",
+      "OEIS A000330.",
+      "Membership goes through [[Element]] by bisecting the monotone cubic for its exact root -- $Element(55, SquarePyramidalNumbers)$ is true, $Element(56, SquarePyramidalNumbers)$ is false.",
+      "$SquarePyramidalNumbers(n) = \\sum_{i=1}^n SquareNumbers(i)$.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SquarePyramidalNumbers, 20)" },
+    seeAlso: ["SquareNumbers", "TetrahedralNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "PowersOfTwo",
+    domain: "Collections",
+    signature: "PowersOfTwo",
+    summary:
+      "The powers of two $1, 2, 4, 8, …$ — subsets of an $n$-set; row-sums of Pascal's triangle.",
+    signatures: [{ call: "PowersOfTwo", description: "$2^{n-1}$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(PowersOfTwo) = +\\infty$, and $At(PowersOfTwo, k) = 2^{k-1}$ unranks in closed form, exact for every $k$ -- $At(PowersOfTwo, 60)$ is exact past $2^{53}$, not a rounded double.",
+      "OEIS A000079.",
+      "Membership goes through [[Element]] by the bit trick $x \\mathbin{\\&} (x-1) = 0$ -- $Element(64, PowersOfTwo)$ is true, $Element(48, PowersOfTwo)$ is false.",
+      "$Count(Subsets(n)) = At(PowersOfTwo, n+1)$; see [[Subsets]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PowersOfTwo, 20)" },
+    seeAlso: ["Subsets", "FactorialNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "FactorialNumbers",
+    domain: "Collections",
+    signature: "FactorialNumbers",
+    summary: "The factorials $1, 2, 6, 24, …$ — $n!$ — the number of permutations of $n$ items.",
+    signatures: [{ call: "FactorialNumbers", description: "$n!$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(FactorialNumbers) = +\\infty$, and $At(FactorialNumbers, k) = k!$ -- exact for every $k$, since every term is computed over arbitrary-precision integers rather than floats -- $At(FactorialNumbers, 20) = 2432902008176640000$, already past $2^{53}$.",
+      "OEIS A000142, whose offset differs from ours: A000142 opens $a(0) = a(1) = 1$ (the duplicate $0! = 1! = 1$); this collection starts at $n=1$, so $At(FactorialNumbers, 1) = 1$ without repeating.",
+      "Membership goes through [[Element]] by growing the factorial sequence forward until it reaches or passes the candidate -- $Element(720, FactorialNumbers)$ is true, $Element(700, FactorialNumbers)$ is false. See [[Factorial]] for the scalar function.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(FactorialNumbers, 20)" },
+    seeAlso: ["Factorial", "DoubleFactorialNumbers", "SymmetricGroup", "Count", "At", "Element"],
+  },
+  {
+    name: "DoubleFactorialNumbers",
+    domain: "Collections",
+    signature: "DoubleFactorialNumbers",
+    summary:
+      "The odd double factorials $1, 3, 15, 105, …$ — $(2n-1)!!$ — perfect matchings of $K_{2n}$.",
+    signatures: [
+      { call: "DoubleFactorialNumbers", description: "$(2n-1)!!$ for $n = 1, 2, 3, …$." },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(DoubleFactorialNumbers) = +\\infty$, and $At(DoubleFactorialNumbers, k) = (2k-1)!!$, computed exactly over arbitrary-precision integers -- $At(DoubleFactorialNumbers, 5) = 945$.",
+      "OEIS A001147, whose offset differs from ours the same way as [[FactorialNumbers]]: A001147 opens with the duplicate $a(0) = a(1) = 1$; this collection starts at $n=1$ without repeating it.",
+      "Membership goes through [[Element]] by growing the sequence forward until it reaches or passes the candidate -- $Element(945, DoubleFactorialNumbers)$ is true, $Element(900, DoubleFactorialNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(DoubleFactorialNumbers, 20)" },
+    seeAlso: ["FactorialNumbers", "PhylogeneticTrees", "Count", "At", "Element"],
+  },
+  {
+    name: "PrimorialNumbers",
+    domain: "Collections",
+    signature: "PrimorialNumbers",
+    summary: "The primorials $2, 6, 30, 210, …$ — $p_n\\#$ — the product of the first $n$ primes.",
+    signatures: [{ call: "PrimorialNumbers", description: "$p_n\\#$ for $n = 1, 2, 3, …$." }],
+    details: [
+      "A lazy indexed collection: $Count(PrimorialNumbers) = +\\infty$, and $At(PrimorialNumbers, k) = p_k\\#$, computed exactly over arbitrary-precision integers -- $At(PrimorialNumbers, 5) = 2310$.",
+      "OEIS A002110, whose offset differs from ours: A002110 opens with the empty product $a(0) = 1$; this collection starts at $n=1$ (value $2$), so the empty product is not itself a member.",
+      "Membership goes through [[Element]] by growing the sequence forward until it reaches or passes the candidate -- $Element(2310, PrimorialNumbers)$ is true, $Element(2000, PrimorialNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PrimorialNumbers, 20)" },
+    seeAlso: ["Primes", "FactorialNumbers", "Count", "At", "Element"],
+  },
+  {
+    name: "AllOnes",
+    domain: "Collections",
+    signature: "AllOnes",
+    summary: "The constant sequence $1, 1, 1, …$ as a lazy indexed collection.",
+    signatures: [{ call: "AllOnes", description: "the constant $1$, repeated forever." }],
+    details: [
+      "A lazy indexed collection: $Count(AllOnes) = +\\infty$, and $At(AllOnes, k) = 1$ for every $k$.",
+      "OEIS A000012.",
+      "A repeated-term collection: every position holds the same value, so $At$ still indexes by position while [[Element]] answers membership in the *set* of values -- $Element(1, AllOnes)$ is true, $Element(2, AllOnes)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(AllOnes, 20)" },
+    seeAlso: ["Count", "At", "Element"],
+  },
+  {
+    name: "FibonacciNumbers",
+    domain: "Collections",
+    signature: "FibonacciNumbers",
+    summary: "The Fibonacci numbers $0, 1, 1, 2, 3, 5, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "FibonacciNumbers",
+        description:
+          "$F_n = F_{n-1} + F_{n-2}$, $F_0 = 0$, $F_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(FibonacciNumbers) = +\\infty$, and $At(FibonacciNumbers, k)$ unranks the term via a memoised linear recurrence -- $At(FibonacciNumbers, 1) = F_0 = 0$ (`At` is 1-indexed; rank 0 is $F_0$).",
+      "OEIS A000045, starting exactly at its offset-0 term: $0, 1, 1, 2, 3, 5, 8, …$.",
+      "Membership goes through [[Element]]: $Element(21, FibonacciNumbers)$ is true, $Element(10, FibonacciNumbers)$ is false. $F_1 = F_2 = 1$ repeats, so the sequence is non-decreasing rather than strictly increasing.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(FibonacciNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "LucasNumbers", "PellNumbers", "TribonacciNumbers"],
+  },
+  {
+    name: "LucasNumbers",
+    domain: "Collections",
+    signature: "LucasNumbers",
+    summary: "The Lucas numbers $2, 1, 3, 4, 7, 11, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "LucasNumbers",
+        description:
+          "$L_n = L_{n-1} + L_{n-2}$, $L_0 = 2$, $L_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(LucasNumbers) = +\\infty$, and $At(LucasNumbers, 1) = L_0 = 2$.",
+      "OEIS A000032, starting exactly at its offset-0 term: $2, 1, 3, 4, 7, 11, 18, …$. The sequence dips once ($L_0 = 2 > L_1 = 1$) before climbing forever from $L_1$ on.",
+      "Membership goes through [[Element]]: $Element(1, LucasNumbers)$ is true, $Element(5, LucasNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(LucasNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "FibonacciNumbers"],
+  },
+  {
+    name: "JacobsthalNumbers",
+    domain: "Collections",
+    signature: "JacobsthalNumbers",
+    summary: "The Jacobsthal numbers $0, 1, 1, 3, 5, 11, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "JacobsthalNumbers",
+        description:
+          "$J_n = J_{n-1} + 2J_{n-2}$, $J_0 = 0$, $J_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(JacobsthalNumbers) = +\\infty$, and $At(JacobsthalNumbers, 1) = J_0 = 0$.",
+      "OEIS A001045, starting exactly at its offset-0 term: $0, 1, 1, 3, 5, 11, 21, …$.",
+      "Membership goes through [[Element]]: $Element(21, JacobsthalNumbers)$ is true, $Element(4, JacobsthalNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(JacobsthalNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PellNumbers"],
+  },
+  {
+    name: "PellNumbers",
+    domain: "Collections",
+    signature: "PellNumbers",
+    summary: "The Pell numbers $0, 1, 2, 5, 12, 29, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PellNumbers",
+        description:
+          "$P_n = 2P_{n-1} + P_{n-2}$, $P_0 = 0$, $P_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PellNumbers) = +\\infty$, and $At(PellNumbers, 1) = P_0 = 0$.",
+      "OEIS A000129, starting exactly at its offset-0 term: $0, 1, 2, 5, 12, 29, 70, …$; strictly increasing from the start.",
+      "Membership goes through [[Element]]: $Element(12, PellNumbers)$ is true, $Element(7, PellNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PellNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "JacobsthalNumbers", "CentralDelannoyNumbers"],
+  },
+  {
+    name: "TribonacciNumbers",
+    domain: "Collections",
+    signature: "TribonacciNumbers",
+    summary: "The tribonacci numbers $0, 0, 1, 1, 2, 4, 7, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "TribonacciNumbers",
+        description:
+          "$T_n = T_{n-1} + T_{n-2} + T_{n-3}$, $T_0 = 0$, $T_1 = 0$, $T_2 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(TribonacciNumbers) = +\\infty$, and $At(TribonacciNumbers, 1) = T_0 = 0$.",
+      "OEIS A000073, starting exactly at its offset-0 term: $0, 0, 1, 1, 2, 4, 7, 13, …$.",
+      "Membership goes through [[Element]]: $Element(24, TribonacciNumbers)$ is true, $Element(6, TribonacciNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(TribonacciNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "FibonacciNumbers"],
+  },
+  {
+    name: "PadovanSequence",
+    domain: "Collections",
+    signature: "PadovanSequence",
+    summary: "The Padovan sequence $1, 0, 0, 1, 0, 1, 1, 1, 2, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PadovanSequence",
+        description:
+          "$a_n = a_{n-2} + a_{n-3}$, $a_0 = 1$, $a_1 = a_2 = 0$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PadovanSequence) = +\\infty$, and $At(PadovanSequence, 1) = a_0 = 1$.",
+      "OEIS A000931, starting exactly at its offset-0 term: $1, 0, 0, 1, 0, 1, 1, 1, 2, 2, 3, …$. The sequence dips through index 4 before climbing forever from $a_4 = 0$ on.",
+      "Membership goes through [[Element]]: $Element(9, PadovanSequence)$ is true (it's $a_{16}$, following $…,7,9,12,…$), $Element(6, PadovanSequence)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PadovanSequence, 20)" },
+    seeAlso: ["Count", "At", "Element", "PerrinSequence"],
+  },
+  {
+    name: "PerrinSequence",
+    domain: "Collections",
+    signature: "PerrinSequence",
+    summary: "The Perrin sequence $3, 0, 2, 3, 2, 5, 5, 7, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PerrinSequence",
+        description:
+          "$P_n = P_{n-2} + P_{n-3}$, $P_0 = 3$, $P_1 = 0$, $P_2 = 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PerrinSequence) = +\\infty$, and $At(PerrinSequence, 1) = P_0 = 3$.",
+      "OEIS A001608, starting exactly at its offset-0 term: $3, 0, 2, 3, 2, 5, 5, 7, 10, 12, …$. The sequence dips through index 4 before climbing forever from $P_4 = 2$ on.",
+      "Membership goes through [[Element]]: $Element(10, PerrinSequence)$ is true, $Element(4, PerrinSequence)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PerrinSequence, 20)" },
+    seeAlso: ["Count", "At", "Element", "PadovanSequence"],
+  },
+  {
+    name: "SternDiatomicSequence",
+    domain: "Collections",
+    signature: "SternDiatomicSequence",
+    summary:
+      "Stern's diatomic sequence (the fusc function) $0, 1, 1, 2, 1, 3, 2, 3, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SternDiatomicSequence",
+        description:
+          "$s(0) = 0$, $s(1) = 1$, $s(2n) = s(n)$, $s(2n+1) = s(n) + s(n+1)$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SternDiatomicSequence) = +\\infty$, and $At(SternDiatomicSequence, 1) = s(0) = 0$; unranking is $O(\\log k)$ via the bit-doubling pair $(s(n), s(n+1))$, not a growing cache.",
+      "OEIS A002487, starting exactly at its offset-0 term: $0, 1, 1, 2, 1, 3, 2, 3, 1, 4, …$.",
+      "Not monotone, so membership is not 'is this term $\\le$ some bound': every non-negative integer is a term ($0$ appears exactly once, at $n = 0$; every positive integer appears infinitely often). $Element(0, SternDiatomicSequence)$ and $Element(42, SternDiatomicSequence)$ are both true; only a negative or non-integer value is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SternDiatomicSequence, 20)" },
+    seeAlso: ["Count", "At", "Element", "ThueMorseNumbers"],
+  },
+  {
+    name: "ThueMorseNumbers",
+    domain: "Collections",
+    signature: "ThueMorseNumbers",
+    summary: "The Thue–Morse sequence $0, 1, 1, 0, 1, 0, 0, 1, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "ThueMorseNumbers",
+        description: "$t(n) = popcount(n) \\bmod 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(ThueMorseNumbers) = +\\infty$, and $At(ThueMorseNumbers, 1) = t(0) = 0$.",
+      "OEIS A010060, starting exactly at its offset-0 term: $0, 1, 1, 0, 1, 0, 0, 1, 1, 0, …$.",
+      "Not monotone; every term is $0$ or $1$, so membership is exactly $\\{0, 1\\}$ -- $Element(0, ThueMorseNumbers)$ and $Element(1, ThueMorseNumbers)$ are true, everything else (including $2$) is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(ThueMorseNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "SternDiatomicSequence"],
+  },
+  {
+    name: "CatalanNumbers",
+    domain: "Collections",
+    signature: "CatalanNumbers",
+    summary: "The Catalan numbers $1, 1, 2, 5, 14, 42, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "CatalanNumbers",
+        description: "$C_n = \\binom{2n}{n}/(n+1)$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CatalanNumbers) = +\\infty$, and $At(CatalanNumbers, k)$ unranks $C_{k-1}$ exactly (bigint arithmetic; $C_{30}$ already exceeds $2^{53}$) -- $At(CatalanNumbers, 1) = C_0 = 1$.",
+      "OEIS A000108, starting exactly at its offset-0 term: $1, 1, 2, 5, 14, 42, 132, …$; counts balanced parenthesizations, binary trees, Dyck paths and more.",
+      "Membership goes through [[Element]]: $Element(14, CatalanNumbers)$ is true, $Element(10, CatalanNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CatalanNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "MotzkinNumbers", "SymmetricGroup"],
+  },
+  {
+    name: "BellNumbers",
+    domain: "Collections",
+    signature: "BellNumbers",
+    summary: "The Bell numbers $1, 1, 2, 5, 15, 52, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "BellNumbers",
+        description: "The number of set partitions of an $n$-set, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(BellNumbers) = +\\infty$, and $At(BellNumbers, k)$ unranks $B_{k-1}$ exactly via a memoised Bell (Aitken's) triangle, bigint throughout -- $At(BellNumbers, 5) = B_4 = 15$.",
+      "OEIS A000110, starting exactly at its offset-0 term: $1, 1, 2, 5, 15, 52, 203, …$; $B_{25}$ already exceeds $2^{53}$.",
+      "Membership goes through [[Element]]: $Element(15, BellNumbers)$ is true, $Element(10, BellNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(BellNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "FubiniNumbers", "PartitionNumbers"],
+  },
+  {
+    name: "FubiniNumbers",
+    domain: "Collections",
+    signature: "FubiniNumbers",
+    summary:
+      "The Fubini numbers (ordered Bell numbers) $1, 1, 3, 13, 75, 541, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "FubiniNumbers",
+        description:
+          "The number of ordered set partitions (rankings with ties allowed) of an $n$-set, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(FubiniNumbers) = +\\infty$, and $At(FubiniNumbers, k)$ unranks term $k-1$ via $a(n) = \\sum_{j=1}^{n} \\binom{n}{j} a(n-j)$, bigint throughout -- $At(FubiniNumbers, 1) = a(0) = 1$.",
+      "OEIS A000670, starting exactly at its offset-0 term: $1, 1, 3, 13, 75, 541, 4683, …$.",
+      "Membership goes through [[Element]]: $Element(75, FubiniNumbers)$ is true, $Element(20, FubiniNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(FubiniNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "BellNumbers"],
+  },
+  {
+    name: "MotzkinNumbers",
+    domain: "Collections",
+    signature: "MotzkinNumbers",
+    summary: "The Motzkin numbers $1, 1, 2, 4, 9, 21, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "MotzkinNumbers",
+        description: "The number of Motzkin paths of length $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(MotzkinNumbers) = +\\infty$, and $At(MotzkinNumbers, k)$ unranks term $k-1$ via $M(n) = \\left((2n+1)M(n-1) + 3(n-1)M(n-2)\\right)/(n+2)$, bigint throughout -- $At(MotzkinNumbers, 1) = M_0 = 1$.",
+      "OEIS A001006, starting exactly at its offset-0 term: $1, 1, 2, 4, 9, 21, 51, …$.",
+      "Membership goes through [[Element]]: $Element(9, MotzkinNumbers)$ is true, $Element(6, MotzkinNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(MotzkinNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "CatalanNumbers"],
+  },
+  {
+    name: "PartitionNumbers",
+    domain: "Collections",
+    signature: "PartitionNumbers",
+    summary:
+      "The integer partition counts $p(n) = 1, 1, 2, 3, 5, 7, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PartitionNumbers",
+        description:
+          "$p(n)$, the number of integer partitions of $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PartitionNumbers) = +\\infty$, and $At(PartitionNumbers, k)$ unranks $p(k-1)$ via Euler's pentagonal-number recurrence, bigint throughout -- $At(PartitionNumbers, 1) = p(0) = 1$.",
+      "OEIS A000041, starting exactly at its offset-0 term: $1, 1, 2, 3, 5, 7, 11, 15, …$.",
+      "Membership goes through [[Element]]: $Element(11, PartitionNumbers)$ is true, $Element(9, PartitionNumbers)$ is false. See [[IntegerPartitions]] for the partitions themselves, not just their count.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PartitionNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "IntegerPartitions", "BellNumbers"],
+  },
+  {
+    name: "CentralDelannoyNumbers",
+    domain: "Collections",
+    signature: "CentralDelannoyNumbers",
+    summary: "The central Delannoy numbers $1, 3, 13, 63, 321, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "CentralDelannoyNumbers",
+        description:
+          "The count of king-move lattice paths across an $n \\times n$ grid, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CentralDelannoyNumbers) = +\\infty$, and $At(CentralDelannoyNumbers, k)$ unranks term $k-1$ via $n D(n) = 3(2n-1)D(n-1) - (n-1)D(n-2)$, $D_0 = 1$, $D_1 = 3$, bigint throughout -- $At(CentralDelannoyNumbers, 1) = D_0 = 1$.",
+      "OEIS A001850, starting exactly at its offset-0 term: $1, 3, 13, 63, 321, 1683, …$; strictly increasing.",
+      "Membership goes through [[Element]]: $Element(13, CentralDelannoyNumbers)$ is true, $Element(10, CentralDelannoyNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CentralDelannoyNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "SchroederNumbers", "PellNumbers"],
+  },
+  {
+    name: "LittleSchroderNumbers",
+    domain: "Collections",
+    signature: "LittleSchroderNumbers",
+    summary:
+      "The little Schröder numbers (super-Catalan numbers) $1, 1, 3, 11, 45, 197, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "LittleSchroderNumbers",
+        description:
+          "$s_n$, counting dissections of a convex polygon, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(LittleSchroderNumbers) = +\\infty$, and $At(LittleSchroderNumbers, k)$ unranks term $k-1$ via $(n+1)s(n) = (6n-3)s(n-1) - (n-2)s(n-2)$, $s_0 = s_1 = 1$, bigint throughout -- $At(LittleSchroderNumbers, 1) = s_0 = 1$.",
+      "OEIS A001003, starting exactly at its offset-0 term: $1, 1, 3, 11, 45, 197, 903, …$.",
+      "Membership goes through [[Element]]: $Element(11, LittleSchroderNumbers)$ is true, $Element(6, LittleSchroderNumbers)$ is false. See [[SchroederNumbers]] -- $s_n$ is exactly half $SchroederNumbers$'s term for $n \\ge 1$.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(LittleSchroderNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "SchroederNumbers", "CatalanNumbers"],
+  },
+  {
+    name: "SchroederNumbers",
+    domain: "Collections",
+    signature: "SchroederNumbers",
+    summary: "The (large) Schröder numbers $1, 2, 6, 22, 90, 394, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SchroederNumbers",
+        description:
+          "$S_0 = 1$, $S_n = 2 s_n$ for $n \\ge 1$ (twice the little Schröder numbers), an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SchroederNumbers) = +\\infty$, and $At(SchroederNumbers, k)$ unranks term $k-1$ by doubling [[LittleSchroderNumbers]] rather than re-deriving a recurrence -- $At(SchroederNumbers, 1) = S_0 = 1$.",
+      "OEIS A006318, starting exactly at its offset-0 term: $1, 2, 6, 22, 90, 394, 1806, …$; counts monotone lattice paths from $(0,0)$ to $(n,n)$ using steps $(1,0)$, $(0,1)$ and $(1,1)$ that never rise above the diagonal.",
+      "Membership goes through [[Element]]: $Element(22, SchroederNumbers)$ is true, $Element(10, SchroederNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SchroederNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "LittleSchroderNumbers", "CentralDelannoyNumbers"],
+  },
+  // ---- divisor and multiplicative-structure numeric sets (@enumeratio/collections
+  // numeric-divisor.ts): bare integers like the numeric-set prototypes above, so `enumerate`
+  // pages a Take(...) prefix rather than the (usually infinite) family itself. Three sets --
+  // PerfectNumbers, GiugaNumbers, IdonealNumbers -- have Count = NaN: whether more members
+  // exist past the known ones is an open problem, not something a scan could resolve.
+  {
+    name: "DeficientNumbers",
+    domain: "Collections",
+    signature: "DeficientNumbers",
+    summary:
+      "The deficient numbers $1, 2, 3, 4, 5, 7, …$ -- integers whose proper divisors fall short of them -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "DeficientNumbers",
+        description: "the $n$ with $\\sigma(n) - n < n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(DeficientNumbers) = +\\infty$ -- deficient numbers include every prime -- and $At(DeficientNumbers, k)$ unranks the $k$-th by scanning forward from the last cached match.",
+      "OEIS A005100.",
+      "Membership goes through [[Element]]: $Element(7, DeficientNumbers)$ is true, $Element(12, DeficientNumbers)$ is false (abundant).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(DeficientNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers", "PerfectNumbers"],
+  },
+  {
+    name: "PerfectNumbers",
+    domain: "Collections",
+    signature: "PerfectNumbers",
+    summary:
+      "The perfect numbers $6, 28, 496, 8128, …$ -- integers equal to the sum of their proper divisors -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PerfectNumbers",
+        description: "the $n$ with $\\sigma(n) = 2n$, an indexed collection of unknown count.",
+      },
+    ],
+    details: [
+      "$Count(PerfectNumbers) = NaN$: every even perfect number is $2^{p-1}(2^p - 1)$ for a Mersenne prime exponent $p$ (Euclid–Euler), but whether any odd perfect number exists -- and so whether the family is even finite or infinite -- is open.",
+      "$At$ reads off a table of the known even perfect numbers that fit an exact JS integer ($p = 2, 3, 5, 7, 13, 17, 19$); past that table it returns unevaluated rather than scanning forever, since no predicate here could safely keep searching.",
+      "OEIS A000396. Membership goes through [[Element]]: $Element(28, PerfectNumbers)$ is true, $Element(24, PerfectNumbers)$ is false (abundant, not perfect).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PerfectNumbers, 7)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers", "SemiperfectNumbers"],
+  },
+  {
+    name: "SemiperfectNumbers",
+    domain: "Collections",
+    signature: "SemiperfectNumbers",
+    summary:
+      "The semiperfect numbers $6, 12, 18, 20, …$ -- integers equal to a sum of some subset of their proper divisors -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SemiperfectNumbers",
+        description:
+          "the $n$ with a proper-divisor subset summing to $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SemiperfectNumbers) = +\\infty$ (every perfect number is trivially semiperfect, taking the whole divisor set), and $At$ unranks the $k$-th by scanning forward, testing each candidate with a subset-sum search over its proper divisors.",
+      "OEIS A005835.",
+      "Membership goes through [[Element]]: $Element(12, SemiperfectNumbers)$ is true ($12 = 2 + 4 + 6$), $Element(70, SemiperfectNumbers)$ is false -- $70$ is abundant but [[WeirdNumbers|weird]].",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SemiperfectNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PerfectNumbers", "WeirdNumbers"],
+  },
+  {
+    name: "WeirdNumbers",
+    domain: "Collections",
+    signature: "WeirdNumbers",
+    summary:
+      "The weird numbers $70, 836, 4030, …$ -- abundant but not semiperfect -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "WeirdNumbers",
+        description:
+          "the abundant $n$ with no proper-divisor subset summing to $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(WeirdNumbers) = +\\infty$ (infinitely many are known to exist), and $At$ unranks the $k$-th by scanning forward, testing $\\sigma(n) - n > n$ and then a subset-sum search over $n$'s proper divisors.",
+      "OEIS A006037. $70$ is the smallest: its proper divisors $1, 2, 5, 7, 10, 14, 35$ sum past $70$ but no subset of them sums to exactly $70$.",
+      "Membership goes through [[Element]]: $Element(70, WeirdNumbers)$ is true, $Element(12, WeirdNumbers)$ is false (abundant, but semiperfect).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(WeirdNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers", "SemiperfectNumbers"],
+  },
+  {
+    name: "PracticalNumbers",
+    domain: "Collections",
+    signature: "PracticalNumbers",
+    summary:
+      "The practical numbers $1, 2, 4, 6, 8, 12, …$ -- integers whose divisors let every smaller integer be written as a distinct-divisor sum -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PracticalNumbers",
+        description:
+          "the $n$ where every $1 \\le m \\le n$ is a sum of distinct divisors of $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PracticalNumbers) = +\\infty$ (Saias 1997 confirmed they have positive density), and $At$ unranks the $k$-th by the classical criterion -- sorted divisors $d_1 = 1 < d_2 < … < d_j = n$, practical iff no $d_{i+1}$ exceeds $1 + \\sum_{l \\le i} d_l$.",
+      "OEIS A005153.",
+      "Membership goes through [[Element]]: $Element(12, PracticalNumbers)$ is true, $Element(10, PracticalNumbers)$ is false ($7$ isn't a sum of $10$'s divisors $\\{1,2,5,10\\}$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PracticalNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "ArithmeticNumbers"],
+  },
+  {
+    name: "HighlyCompositeNumbers",
+    domain: "Collections",
+    signature: "HighlyCompositeNumbers",
+    summary:
+      "The highly composite numbers $1, 2, 4, 6, 12, 24, …$ -- integers with more divisors than any smaller one -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "HighlyCompositeNumbers",
+        description:
+          "the $n$ with $\\tau(n) > \\tau(m)$ for every $m < n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(HighlyCompositeNumbers) = +\\infty$ ($n!$'s divisor count strictly increases with $n$), and $At$ unranks the $k$-th by scanning forward, keeping a running record of the largest divisor count seen so far.",
+      "Ramanujan's sequence, OEIS A002182.",
+      "Membership goes through [[Element]]: $Element(12, HighlyCompositeNumbers)$ is true ($\\tau(12) = 6$, a new record over $1..11$), $Element(18, HighlyCompositeNumbers)$ is false ($\\tau(18) = 6$, not a new record).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(HighlyCompositeNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "SuperabundantNumbers"],
+  },
+  {
+    name: "SuperabundantNumbers",
+    domain: "Collections",
+    signature: "SuperabundantNumbers",
+    summary:
+      "The superabundant numbers $1, 2, 4, 6, 12, 24, …$ -- integers whose abundancy $\\sigma(n)/n$ exceeds every smaller one's -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SuperabundantNumbers",
+        description:
+          "the $n$ with $\\sigma(n)/n > \\sigma(m)/m$ for every $m < n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SuperabundantNumbers) = +\\infty$, and $At$ unranks the $k$-th by scanning forward, comparing abundancy ratios by cross-multiplication (exact, no floating point) against a running record.",
+      "OEIS A004394. Every superabundant number is highly composite, but not conversely -- the two sequences share early terms and then diverge (e.g. $180$ is superabundant but not highly composite, and vice versa further out).",
+      "Membership goes through [[Element]]: $Element(4, SuperabundantNumbers)$ is true ($\\sigma(4)/4 = 7/4$, a new record over $1..3$), $Element(3, SuperabundantNumbers)$ is false ($\\sigma(3)/3 = 4/3 < \\sigma(2)/2 = 3/2$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SuperabundantNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "HighlyCompositeNumbers"],
+  },
+  {
+    name: "ArithmeticNumbers",
+    domain: "Collections",
+    signature: "ArithmeticNumbers",
+    summary:
+      "The arithmetic numbers $1, 3, 5, 6, 7, …$ -- integers whose divisors have an integer mean -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "ArithmeticNumbers",
+        description: "the $n$ with $\\tau(n) \\mid \\sigma(n)$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(ArithmeticNumbers) = +\\infty$ (almost all integers are arithmetic -- the exceptions have density zero), and $At$ unranks the $k$-th by scanning forward, testing $\\sigma(n) \\bmod \\tau(n) = 0$.",
+      "OEIS A003601.",
+      "Membership goes through [[Element]]: $Element(6, ArithmeticNumbers)$ is true (divisors $1,2,3,6$ average $3$), $Element(4, ArithmeticNumbers)$ is false (divisors $1,2,4$ average $7/3$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(ArithmeticNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PracticalNumbers"],
+  },
+  {
+    name: "UntouchableNumbers",
+    domain: "Collections",
+    signature: "UntouchableNumbers",
+    summary:
+      "The untouchable numbers $2, 5, 52, 88, …$ -- integers that are no number's aliquot sum -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "UntouchableNumbers",
+        description:
+          "the $n$ with $\\sigma(m) - m \\ne n$ for every $m$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(UntouchableNumbers) = +\\infty$ (Erdős), and $At$ unranks the $k$-th by scanning forward, testing each candidate $n$ against a sieve of aliquot sums $\\sigma(m) - m$ for $m$ up to $n^2$ -- large enough to catch $m = p^2$ for a prime $p$ as big as $n - 1$, which gives aliquot sum $1 + p = n$.",
+      "OEIS A005114. $1$ is excluded by convention even though it's also never an aliquot sum for $m > 1$; the sequence starts at $2$.",
+      "Membership goes through [[Element]]: $Element(5, UntouchableNumbers)$ is true, $Element(4, UntouchableNumbers)$ is false ($\\sigma(9) - 9 = 4$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(UntouchableNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "AbundantNumbers"],
+  },
+  {
+    name: "AchillesNumbers",
+    domain: "Collections",
+    signature: "AchillesNumbers",
+    summary:
+      "The Achilles numbers $72, 108, 200, 288, …$ -- powerful but not a perfect power -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "AchillesNumbers",
+        description:
+          "the powerful $n > 1$ that aren't of the form $a^k$ ($a, k \\ge 2$), an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(AchillesNumbers) = +\\infty$, and $At$ unranks the $k$-th by scanning forward, testing [[PowerfulNumbers|powerfulness]] and then [[PerfectPowerNumbers|non-perfect-power]]ness.",
+      "OEIS A052486. $72 = 2^3 \\cdot 3^2$ is the smallest: every prime factor's exponent is $\\ge 2$ (powerful), but no single base and exponent produce it (not a perfect power).",
+      "Membership goes through [[Element]]: $Element(72, AchillesNumbers)$ is true, $Element(64, AchillesNumbers)$ is false ($64 = 2^6$, a perfect power).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(AchillesNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "PowerfulNumbers", "PerfectPowerNumbers"],
+  },
+  {
+    name: "PowerfulNumbers",
+    domain: "Collections",
+    signature: "PowerfulNumbers",
+    summary:
+      "The powerful numbers $1, 4, 8, 9, 16, …$ -- integers where every prime factor appears squared or more -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PowerfulNumbers",
+        description:
+          "the $n$ whose every prime factor has exponent $\\ge 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PowerfulNumbers) = +\\infty$ (every perfect square is powerful), and $At$ unranks the $k$-th by scanning forward, testing each candidate's factorisation.",
+      "OEIS A001694. Every powerful number factors uniquely as $a^2 b^3$ for squarefree $b$.",
+      "Membership goes through [[Element]]: $Element(8, PowerfulNumbers)$ is true ($8 = 2^3$), $Element(12, PowerfulNumbers)$ is false ($12 = 2^2 \\cdot 3$, and $3$'s exponent is only $1$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PowerfulNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "SquareFreeNumbers", "PerfectPowerNumbers"],
+  },
+  {
+    name: "PerfectPowerNumbers",
+    domain: "Collections",
+    signature: "PerfectPowerNumbers",
+    summary:
+      "The perfect powers $4, 8, 9, 16, 25, …$ -- integers $a^k$ with $a \\ge 2, k \\ge 2$ -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PerfectPowerNumbers",
+        description: "the $a^k$ for integers $a \\ge 2, k \\ge 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PerfectPowerNumbers) = +\\infty$, and $At$ unranks the $k$-th by scanning forward, testing each candidate by binary search over exponents.",
+      "OEIS A075109 -- the $a \\ge 2$ convention excludes $1$, unlike A001597's $m > 0$.",
+      "Membership goes through [[Element]]: $Element(16, PerfectPowerNumbers)$ is true ($16 = 2^4 = 4^2$), $Element(1, PerfectPowerNumbers)$ is false under this convention (needs $a \\ge 2$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PerfectPowerNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PowerfulNumbers", "SquareNumbers"],
+  },
+  {
+    name: "SquareFreeNumbers",
+    domain: "Collections",
+    signature: "SquareFreeNumbers",
+    summary:
+      "The squarefree numbers $1, 2, 3, 5, 6, …$ -- integers divisible by no perfect square $> 1$ -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SquareFreeNumbers",
+        description:
+          "the $n$ with every prime factor's exponent $\\le 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SquareFreeNumbers) = +\\infty$ (density $6/\\pi^2$), and $At$ unranks the $k$-th by scanning forward, testing each candidate's factorisation.",
+      "OEIS A005117. Exactly $[[KFreeIntegers]](2)$ -- the two families are unranked identically.",
+      "Membership goes through [[Element]]: $Element(10, SquareFreeNumbers)$ is true ($10 = 2 \\cdot 5$), $Element(12, SquareFreeNumbers)$ is false ($12 = 2^2 \\cdot 3$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SquareFreeNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "KFreeIntegers", "PowerfulNumbers"],
+  },
+  {
+    name: "KFreeIntegers",
+    domain: "Collections",
+    signature: "KFreeIntegers(k)",
+    summary:
+      "The $k$-free integers -- naturals with no prime factor raised to the $k$-th power or higher -- as a lazy indexed family, one collection per $k$.",
+    signatures: [
+      {
+        call: "KFreeIntegers(k)",
+        description:
+          "the positive integers whose every prime factor has exponent $< k$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection for each $k$: $Count(KFreeIntegers(k)) = +\\infty$, and $At(KFreeIntegers(k), i)$ unranks the $i$-th by scanning forward, testing each candidate's factorisation against $k$.",
+      "$KFreeIntegers(2)$ is exactly [[SquareFreeNumbers]] (A005117); $KFreeIntegers(3)$ is the cube-free numbers, A004709.",
+      "Membership goes through [[Element]]: $Element(8, KFreeIntegers(3))$ is false ($8 = 2^3$, exponent $3 \\ge 3$), $Element(8, KFreeIntegers(4))$ is true.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(KFreeIntegers(3), 20)" },
+    seeAlso: ["Count", "At", "Element", "SquareFreeNumbers"],
+  },
+  {
+    name: "CarmichaelNumbers",
+    domain: "Collections",
+    signature: "CarmichaelNumbers",
+    summary:
+      "The Carmichael numbers $561, 1105, 1729, …$ -- composite Fermat pseudoprimes to every coprime base -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "CarmichaelNumbers",
+        description:
+          "the composite $n$ satisfying Korselt's criterion, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CarmichaelNumbers) = +\\infty$ (Alford–Granville–Pomerance, 1994), and $At$ unranks the $k$-th by scanning forward, testing Korselt's criterion -- $n$ squarefree, and $(p-1) \\mid (n-1)$ for every prime $p \\mid n$ -- which is equivalent to passing the Fermat test $a^{n-1} \\equiv 1 \\pmod n$ for every $a$ coprime to $n$.",
+      "OEIS A002997. $561 = 3 \\cdot 11 \\cdot 17$ is the smallest, found by Korselt in 1899 (four years before Carmichael's first published example).",
+      "Membership goes through [[Element]]: $Element(561, CarmichaelNumbers)$ is true, $Element(560, CarmichaelNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CarmichaelNumbers, 10)" },
+    seeAlso: ["Count", "At", "Element", "Primes"],
+  },
+  {
+    name: "GiugaNumbers",
+    domain: "Collections",
+    signature: "GiugaNumbers",
+    summary:
+      "The Giuga numbers $30, 858, 1722, 66198, …$ -- composite $n$ with $p \\mid (n/p - 1)$ for every prime $p \\mid n$ -- as an indexed collection of unknown count.",
+    signatures: [
+      {
+        call: "GiugaNumbers",
+        description:
+          "the composite $n$ satisfying Giuga's divisibility condition, an indexed collection of unknown count.",
+      },
+    ],
+    details: [
+      "$Count(GiugaNumbers) = NaN$: only a handful are known, none odd, and Giuga's conjecture (that no counterexample to Giuga's primality criterion exists, equivalently no Giuga number is a counterexample) is open -- so whether the family is finite is open too.",
+      "$At$ reads off a table of the known Giuga numbers; past that table it returns unevaluated rather than scanning forever, since no predicate here could safely keep searching.",
+      "OEIS A007850. Equivalently, $n$ is Giuga iff $\\sum_{p \\mid n} 1/p - \\prod_{p \\mid n} 1/p$ is a positive integer.",
+      "Membership goes through [[Element]]: $Element(30, GiugaNumbers)$ is true ($30 = 2 \\cdot 3 \\cdot 5$: $2 \\mid (15-1)$, $3 \\mid (10-1)$, $5 \\mid (6-1)$), $Element(6, GiugaNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(GiugaNumbers, 4)" },
+    seeAlso: ["Count", "At", "Element", "CarmichaelNumbers"],
+  },
+  {
+    name: "IdonealNumbers",
+    domain: "Collections",
+    signature: "IdonealNumbers",
+    summary:
+      "Euler's 65 numeri idonei $1, 2, 3, 4, 5, …, 1848$ -- one class per genus of discriminant $-4n$ -- as an indexed collection of unknown count.",
+    signatures: [
+      {
+        call: "IdonealNumbers",
+        description: "Euler's idoneal numbers, an indexed collection of unknown count.",
+      },
+    ],
+    details: [
+      "$Count(IdonealNumbers) = NaN$: the 65 known idoneal numbers are exhaustive assuming the generalized Riemann hypothesis; unconditionally, at most one more (necessarily $> 1848$) could exist.",
+      "$At$ reads off Euler's table of 65; past it, returns unevaluated rather than asserting a completeness the field doesn't unconditionally have.",
+      "OEIS A000926. $n$ is idoneal iff every genus of binary quadratic forms of discriminant $-4n$ contains only one class -- equivalently, $n$'s only representations $n = x^2 + m y^2$ (for each $m$ coprime to $n$) force $\\gcd(x, y) = 1$ or similar; the list traces to Euler's search for primality-testing moduli.",
+      "Membership goes through [[Element]]: $Element(120, IdonealNumbers)$ is true, $Element(11, IdonealNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(IdonealNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element"],
+  },
+  {
+    name: "LuckyNumbers",
+    domain: "Collections",
+    signature: "LuckyNumbers",
+    summary:
+      "The lucky numbers $1, 3, 7, 9, 13, …$ -- survivors of Ulam's positional sieve -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "LuckyNumbers",
+        description: "the survivors of Ulam's sieve, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(LuckyNumbers) = +\\infty$, and $At$ unranks the $k$-th by running the sieve out far enough -- start from the odd numbers, then repeatedly take the smallest surviving number past $1$ as a step and delete every step-th survivor, until enough terms remain.",
+      "OEIS A000959. Despite the name, luckiness has nothing to do with primality; the sieve's mechanics happen to leave a prime-like density behind, a coincidence number theorists still find useful for testing conjectures like a lucky-number Goldbach analogue.",
+      "Membership goes through [[Element]]: $Element(13, LuckyNumbers)$ is true, $Element(11, LuckyNumbers)$ is false ($11$ is sieved out at the step-$3$ pass).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(LuckyNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes"],
+  },
+  // ---- digit-structure, bit-structure and prime-structure numeric sets
+  // (@enumeratio/collections numeric-digits-primes.ts): the numeric-set-prototype pattern
+  // above, extended. Count is +oo for every set here known infinite by an elementary
+  // argument, NaN where infinitude itself is an open conjecture (the twin-prime conjecture
+  // and its kin), and the proven-exact 88 for NarcissisticNumbers -- the one set here that's
+  // PROVEN finite. ----
+  {
+    name: "HarshadNumbers",
+    domain: "Collections",
+    signature: "HarshadNumbers",
+    summary:
+      "The Harshad (Niven) numbers $1, 2, 3, …, 10, 12, 18, …$: integers divisible by their own digit sum.",
+    signatures: [
+      {
+        call: "HarshadNumbers",
+        description:
+          "the $n$ with $n \\bmod \\mathrm{digitSum}(n) = 0$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(HarshadNumbers) = +\\infty$ -- every digit-sum-1 number (a power of 10) qualifies, so the family never thins out. OEIS A005349.",
+      "$At(HarshadNumbers, k)$ unranks by scanning forward from the last cached match -- $At(HarshadNumbers, 11) = 12$.",
+      "Membership goes through [[Element]]: $Element(18, HarshadNumbers)$ is true (digit sum 9, $18/9=2$), $Element(11, HarshadNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(HarshadNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "HappyNumbers", "SmithNumbers"],
+  },
+  {
+    name: "HappyNumbers",
+    domain: "Collections",
+    signature: "HappyNumbers",
+    summary: "The happy numbers $1, 7, 10, 13, 19, …$: iterating sum-of-squared-digits reaches 1.",
+    signatures: [
+      {
+        call: "HappyNumbers",
+        description:
+          "the $n$ whose sum-of-squared-digits iteration reaches 1 (rather than the other cycle, $\\{4,16,37,58,89,145,42,20\\}$), an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(HappyNumbers) = +\\infty$. OEIS A007770.",
+      "$At(HappyNumbers, k)$ unranks by scanning forward from the last cached match -- $At(HappyNumbers, 5) = 19$.",
+      "Membership goes through [[Element]]: $Element(7, HappyNumbers)$ is true ($7 \\to 49 \\to 97 \\to 130 \\to 10 \\to 1$), $Element(4, HappyNumbers)$ is false (the other cycle).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(HappyNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "HarshadNumbers"],
+  },
+  {
+    name: "NarcissisticNumbers",
+    domain: "Collections",
+    signature: "NarcissisticNumbers",
+    summary:
+      "The Armstrong (narcissistic) numbers $1, …, 9, 153, 370, …$: $n$ equal to the sum of its own digits, each raised to the digit count -- the one PROVEN finite family here.",
+    signatures: [
+      {
+        call: "NarcissisticNumbers",
+        description:
+          "the base-10 narcissistic numbers, excluding the trivial 0: a finite indexed collection of exactly 88.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection, but $Count(NarcissisticNumbers) = 88$, not $+\\infty$: Diamond \\& Kellner's digit-length bound proves base 10 has no more, and the largest is the 39-digit $115132219018763992565095597973971522401$. OEIS A005188 (which also lists the trivial $0 = 0^1$; this family starts at 1).",
+      "$At(NarcissisticNumbers, k)$ unranks from a table verified against every OEIS term -- $At(NarcissisticNumbers, 10) = 153$. Terms past the 43rd exceed what a numeric collection element can represent exactly (IEEE-754 double precision, $2^{53}-1$); $At$ answers $NaN$ for those -- a known value, just not one this element type can carry, same as an out-of-range $At$ elsewhere in the library.",
+      "Membership goes through [[Element]]: $Element(153, NarcissisticNumbers)$ is true ($1^3+5^3+3^3=153$), $Element(154, NarcissisticNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(NarcissisticNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "KaprekarNumbers"],
+  },
+  {
+    name: "AutomorphicNumbers",
+    domain: "Collections",
+    signature: "AutomorphicNumbers",
+    summary:
+      "The automorphic numbers $1, 5, 6, 25, 76, 376, …$: $n$ whose square ends in $n$ itself (base 10).",
+    signatures: [
+      {
+        call: "AutomorphicNumbers",
+        description:
+          "the $n$ with $n^2 \\equiv n \\pmod{10^{\\mathrm{digits}(n)}}$, excluding the trivial 0, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(AutomorphicNumbers) = +\\infty$ -- the two nontrivial 10-adic idempotents ($…890625$ and $…109376$) extend to a new automorphic number of every digit length. OEIS A003226.",
+      "$At(AutomorphicNumbers, k)$ unranks from a table built by Hensel-lifting those idempotents digit by digit (not a search -- the terms thin out too fast, roughly 10x per step, for a scan to reach past the mid-teens); $At(AutomorphicNumbers, 5) = 76$. Terms whose value exceeds $2^{53}-1$ answer $NaN$, the same representable-range limit as [[NarcissisticNumbers]].",
+      "Membership goes through [[Element]]: $Element(76, AutomorphicNumbers)$ is true ($76^2=5776$), $Element(77, AutomorphicNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(AutomorphicNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "KaprekarNumbers"],
+  },
+  {
+    name: "KaprekarNumbers",
+    domain: "Collections",
+    signature: "KaprekarNumbers",
+    summary:
+      "The Kaprekar numbers $1, 9, 45, 55, 99, 297, …$: $n$ whose square splits into a left and a (nonzero) right part that sum back to $n$.",
+    signatures: [
+      {
+        call: "KaprekarNumbers",
+        description:
+          "the $n$ for which some split of $n^2$'s decimal digits sums back to $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(KaprekarNumbers) = +\\infty$ -- every repunit-of-nines $10^k - 1$ qualifies, since $(10^k-1)^2$ splits at position $k$ into $10^k - 2$ and the last $k$ digits, summing to $10^k - 1$. OEIS A006886.",
+      "$At(KaprekarNumbers, k)$ unranks by scanning forward from the last cached match, trying every split position (the split isn't always at $n$'s own digit count -- $4879^2 = 23804641$ splits as $238 + 4641$, not $2380+4641$) -- $At(KaprekarNumbers, 3) = 45$ ($45^2=2025 \\to 20+25$).",
+      "Membership goes through [[Element]]: $Element(297, KaprekarNumbers)$ is true ($297^2=88209 \\to 88+209=297$), $Element(298, KaprekarNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(KaprekarNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "NarcissisticNumbers"],
+  },
+  {
+    name: "EvilNumbers",
+    domain: "Collections",
+    signature: "EvilNumbers",
+    summary:
+      "The evil numbers $0, 3, 5, 6, 9, …$: nonnegative integers with an even number of 1-bits.",
+    signatures: [
+      {
+        call: "EvilNumbers",
+        description:
+          "the $n \\geq 0$ with an even binary popcount, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(EvilNumbers) = +\\infty$, and this is the one family here whose first term is 0 rather than 1 (popcount 0 is even). OEIS A001969.",
+      "$At(EvilNumbers, k)$ unranks by scanning forward -- $At(EvilNumbers, 1) = 0$, $At(EvilNumbers, 2) = 3$.",
+      "Membership goes through [[Element]]: $Element(6, EvilNumbers)$ is true ($110_2$, two 1-bits), $Element(7, EvilNumbers)$ is false ([[OdiousNumbers]], three 1-bits).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(EvilNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "OdiousNumbers", "PerniciousNumbers"],
+  },
+  {
+    name: "OdiousNumbers",
+    domain: "Collections",
+    signature: "OdiousNumbers",
+    summary:
+      "The odious numbers $1, 2, 4, 7, 8, …$: positive integers with an odd number of 1-bits.",
+    signatures: [
+      {
+        call: "OdiousNumbers",
+        description: "the $n$ with an odd binary popcount, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(OdiousNumbers) = +\\infty$, the complement of [[EvilNumbers]] among the positive integers. OEIS A000069.",
+      "$At(OdiousNumbers, k)$ unranks by scanning forward -- $At(OdiousNumbers, 4) = 7$.",
+      "Membership goes through [[Element]]: $Element(7, OdiousNumbers)$ is true ($111_2$, three 1-bits), $Element(6, OdiousNumbers)$ is false ([[EvilNumbers]]).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(OdiousNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "EvilNumbers", "PerniciousNumbers"],
+  },
+  {
+    name: "PerniciousNumbers",
+    domain: "Collections",
+    signature: "PerniciousNumbers",
+    summary:
+      "The pernicious numbers $3, 5, 6, 7, 9, …$: positive integers whose binary popcount is itself prime.",
+    signatures: [
+      {
+        call: "PerniciousNumbers",
+        description: "the $n$ with $\\mathrm{popcount}(n)$ prime, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PerniciousNumbers) = +\\infty$ -- every $n$ with exactly two 1-bits already qualifies (popcount 2 is prime), and there are infinitely many. OEIS A052294.",
+      "$At(PerniciousNumbers, k)$ unranks by scanning forward -- $At(PerniciousNumbers, 1) = 3$.",
+      "Membership goes through [[Element]]: $Element(7, PerniciousNumbers)$ is true (popcount 3, prime), $Element(15, PerniciousNumbers)$ is false (popcount 4).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PerniciousNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "EvilNumbers", "OdiousNumbers", "Primes"],
+  },
+  {
+    name: "SmithNumbers",
+    domain: "Collections",
+    signature: "SmithNumbers",
+    summary:
+      "The Smith numbers $4, 22, 27, 58, 85, …$: composite integers whose digit sum equals the digit sum of their prime factors (with multiplicity).",
+    signatures: [
+      {
+        call: "SmithNumbers",
+        description:
+          "the composite $n$ with $\\mathrm{digitSum}(n) = \\sum \\mathrm{digitSum}(p)$ over $n$'s prime factorisation, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SmithNumbers) = +\\infty$ (McDaniel, 1987). OEIS A006753.",
+      "$At(SmithNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SmithNumbers, 2) = 22$ ($2+2=4$; factors $2, 11$, digit sums $2+1+1=4$).",
+      "Membership goes through [[Element]]: $Element(4, SmithNumbers)$ is true ($4=2 \\times 2$: digit sums $4 = 2+2$), $Element(6, SmithNumbers)$ is false ($6=2\\times3$: digit sums $2+3=5 \\ne 6$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SmithNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "HarshadNumbers", "SemiprimeNumbers"],
+  },
+  {
+    name: "SemiprimeNumbers",
+    domain: "Collections",
+    signature: "SemiprimeNumbers",
+    summary:
+      "The semiprimes $4, 6, 9, 10, 14, …$: products of exactly two primes, with multiplicity ($\\Omega(n) = 2$).",
+    signatures: [
+      {
+        call: "SemiprimeNumbers",
+        description:
+          "the $n$ with $\\Omega(n) = 2$ (two prime factors counted with multiplicity, so $4=2^2$ counts), an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SemiprimeNumbers) = +\\infty$ -- $2p$ is semiprime for every prime $p$. OEIS A001358. Identical to [[KAlmostPrimes]]$(2)$.",
+      "$At(SemiprimeNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SemiprimeNumbers, 3) = 9$ ($3^2$).",
+      "Membership goes through [[Element]]: $Element(9, SemiprimeNumbers)$ is true, $Element(8, SemiprimeNumbers)$ is false ($2^3$, $\\Omega=3$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SemiprimeNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "SquarefreeSemiprimes", "KAlmostPrimes", "Primes"],
+  },
+  {
+    name: "SquarefreeSemiprimes",
+    domain: "Collections",
+    signature: "SquarefreeSemiprimes",
+    summary:
+      "The squarefree semiprimes $6, 10, 14, 15, 21, …$: products of two DISTINCT primes ($\\tau=4$, $\\mu=+1$).",
+    signatures: [
+      {
+        call: "SquarefreeSemiprimes",
+        description: "the $n = pq$ for distinct primes $p \\ne q$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SquarefreeSemiprimes) = +\\infty$; the squarefree subset of [[SemiprimeNumbers]] (which also allows $p^2$). OEIS A006881.",
+      "$At(SquarefreeSemiprimes, k)$ unranks by scanning forward, factoring each candidate -- $At(SquarefreeSemiprimes, 1) = 6$.",
+      "Membership goes through [[Element]]: $Element(6, SquarefreeSemiprimes)$ is true ($2 \\times 3$), $Element(4, SquarefreeSemiprimes)$ is false ($2^2$, not squarefree).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SquarefreeSemiprimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "SemiprimeNumbers", "SphenicNumbers"],
+  },
+  {
+    name: "SphenicNumbers",
+    domain: "Collections",
+    signature: "SphenicNumbers",
+    summary:
+      "The sphenic numbers $30, 42, 66, 70, 78, …$: products of three DISTINCT primes ($\\tau=8$, $\\mu=-1$).",
+    signatures: [
+      {
+        call: "SphenicNumbers",
+        description: "the $n = pqr$ for distinct primes $p, q, r$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SphenicNumbers) = +\\infty$. OEIS A007304.",
+      "$At(SphenicNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SphenicNumbers, 1) = 30$ ($2\\times3\\times5$).",
+      "Membership goes through [[Element]]: $Element(30, SphenicNumbers)$ is true, $Element(60, SphenicNumbers)$ is false ($2^2\\times3\\times5$, a repeated factor).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SphenicNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "SquarefreeSemiprimes", "KAlmostPrimes"],
+  },
+  {
+    name: "PrimePowerNumbers",
+    domain: "Collections",
+    signature: "PrimePowerNumbers",
+    summary:
+      "The prime powers $2, 3, 4, 5, 7, 8, 9, 11, …$: $p^k$ for a prime $p$ and $k \\geq 1$ (excluding 1, which is $p^0$).",
+    signatures: [
+      {
+        call: "PrimePowerNumbers",
+        description:
+          "the $n = p^k$ for a prime $p$ and integer $k \\geq 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PrimePowerNumbers) = +\\infty$ ([[Primes]] alone already is). OEIS A246655.",
+      "$At(PrimePowerNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(PrimePowerNumbers, 3) = 4$ ($2^2$).",
+      "Membership goes through [[Element]]: $Element(9, PrimePowerNumbers)$ is true ($3^2$), $Element(12, PrimePowerNumbers)$ is false ($2^2 \\times 3$, two distinct primes).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PrimePowerNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes", "KAlmostPrimes"],
+  },
+  {
+    name: "KAlmostPrimes",
+    domain: "Collections",
+    signature: "KAlmostPrimes(k)",
+    summary:
+      "The $k$-almost primes -- integers with exactly $k$ prime factors, counted with multiplicity ($\\Omega(n)=k$) -- as a lazy indexed family, one collection per $k$.",
+    signatures: [
+      {
+        call: "KAlmostPrimes(k)",
+        description:
+          "the $n$ with $\\Omega(n) = k$, an infinite indexed collection for every $k \\geq 1$.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection for each $k$: $Count(KAlmostPrimes(k)) = +\\infty$ -- $2^{k-1}p$ has $\\Omega = k$ for every prime $p$. $KAlmostPrimes(1)$ is [[Primes]] verbatim; $KAlmostPrimes(2)$ is [[SemiprimeNumbers]] verbatim.",
+      "$At(KAlmostPrimes(k), i)$ unranks the $i$-th match by scanning forward, factoring each candidate -- $At(KAlmostPrimes(3), 1) = 8$ ($2^3$).",
+      "Membership goes through [[Element]]: $Element(30, KAlmostPrimes(3))$ is true ($2\\times3\\times5$), $Element(30, KAlmostPrimes(2))$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(KAlmostPrimes(3), 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes", "SemiprimeNumbers", "RoughNumbers"],
+  },
+  {
+    name: "RoughNumbers",
+    domain: "Collections",
+    signature: "RoughNumbers(k)",
+    summary:
+      "The $k$-rough numbers -- positive integers with no prime factor below $k$ -- as a lazy indexed family, one collection per $k$ ([[SmoothNumbers]]'s mirror image).",
+    signatures: [
+      {
+        call: "RoughNumbers(k)",
+        description:
+          "the $n \\geq 1$ whose prime factors are all $\\geq k$ ($n=1$ counts, vacuously), an infinite indexed collection for every $k$.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection for each $k$: $Count(RoughNumbers(k)) = +\\infty$ -- every sufficiently large prime is $k$-rough. $RoughNumbers(5)$ is OEIS A007310 (coprime to 6); $RoughNumbers(7)$ is A007775 (coprime to 30).",
+      "$At(RoughNumbers(k), i)$ unranks the $i$-th match by scanning forward, factoring each candidate -- $At(RoughNumbers(5), 1) = 1$ (vacuously rough).",
+      "Membership goes through [[Element]]: $Element(35, RoughNumbers(5))$ is true ($5\\times7$, both $\\geq5$), $Element(15, RoughNumbers(5))$ is false ($3\\times5$, $3<5$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(RoughNumbers(7), 20)" },
+    seeAlso: ["Count", "At", "Element", "SmoothNumbers", "KAlmostPrimes"],
+  },
+  {
+    name: "TwinPrimes",
+    domain: "Collections",
+    signature: "TwinPrimes",
+    summary: "The (lesser) twin primes $3, 5, 11, 17, 29, …$: primes $p$ with $p+2$ also prime.",
+    signatures: [
+      {
+        call: "TwinPrimes",
+        description:
+          "the lesser prime $p$ of a twin pair $(p, p+2)$, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; whether there are infinitely many is the open twin-prime conjecture, so $Count(TwinPrimes) = NaN$ rather than $+\\infty$ -- a deliberately different answer from every $+\\infty$ family in this library, marking a genuinely open question rather than a known-infinite one. OEIS A001359 (the LESSER member; A001097 lists both members of each pair instead).",
+      "$At(TwinPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+2$ -- $At(TwinPrimes, 3) = 11$.",
+      "Membership goes through [[Element]]: $Element(11, TwinPrimes)$ is true ($11, 13$ both prime), $Element(13, TwinPrimes)$ is false ($15$ is not).",
+      "$TwinPrimes$ is $PrimePairs(2)$ verbatim.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(TwinPrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes", "CousinPrimes", "SexyPrimes", "PrimePairs"],
+  },
+  {
+    name: "CousinPrimes",
+    domain: "Collections",
+    signature: "CousinPrimes",
+    summary: "The (lesser) cousin primes $3, 7, 13, 19, 37, …$: primes $p$ with $p+4$ also prime.",
+    signatures: [
+      {
+        call: "CousinPrimes",
+        description:
+          "the lesser prime $p$ of a cousin pair $(p, p+4)$, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; open infinitude (a cousin-prime analogue of the twin-prime conjecture), so $Count(CousinPrimes) = NaN$. OEIS A023200 (the lesser member).",
+      "$At(CousinPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+4$ -- $At(CousinPrimes, 2) = 7$.",
+      "Membership goes through [[Element]]: $Element(7, CousinPrimes)$ is true ($7, 11$ both prime), $Element(11, CousinPrimes)$ is false ($15$ is not).",
+      "$CousinPrimes$ is $PrimePairs(4)$ verbatim.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CousinPrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "TwinPrimes", "SexyPrimes", "PrimePairs"],
+  },
+  {
+    name: "SexyPrimes",
+    domain: "Collections",
+    signature: "SexyPrimes",
+    summary: "The (lesser) sexy primes $5, 7, 11, 13, 17, …$: primes $p$ with $p+6$ also prime.",
+    signatures: [
+      {
+        call: "SexyPrimes",
+        description:
+          "the lesser prime $p$ of a sexy pair $(p, p+6)$, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; open infinitude, so $Count(SexyPrimes) = NaN$. OEIS A023201 (the lesser member; named for the Latin \\emph{sex}, six).",
+      "$At(SexyPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+6$ -- $At(SexyPrimes, 1) = 5$.",
+      "Membership goes through [[Element]]: $Element(5, SexyPrimes)$ is true ($5, 11$ both prime), $Element(7, SexyPrimes)$ is true too ($7,13$); $Element(9, SexyPrimes)$ is false (not prime).",
+      "$SexyPrimes$ is $PrimePairs(6)$ verbatim.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SexyPrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "TwinPrimes", "CousinPrimes", "PrimePairs"],
+  },
+  {
+    name: "SophieGermainPrimes",
+    domain: "Collections",
+    signature: "SophieGermainPrimes",
+    summary: "The Sophie Germain primes $2, 3, 5, 11, 23, …$: primes $p$ with $2p+1$ also prime.",
+    signatures: [
+      {
+        call: "SophieGermainPrimes",
+        description:
+          "the prime $p$ with $2p+1$ also prime, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; whether there are infinitely many is open, so $Count(SophieGermainPrimes) = NaN$. OEIS A005384.",
+      "$At(SophieGermainPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $2n+1$ -- $At(SophieGermainPrimes, 4) = 11$ ($23$ is prime).",
+      "Membership goes through [[Element]]: $Element(11, SophieGermainPrimes)$ is true, $Element(7, SophieGermainPrimes)$ is false ($15$ is not prime).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SophieGermainPrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "SafePrimes", "Primes"],
+  },
+  {
+    name: "SafePrimes",
+    domain: "Collections",
+    signature: "SafePrimes",
+    summary: "The safe primes $5, 7, 11, 23, 47, …$: primes $q$ with $(q-1)/2$ also prime.",
+    signatures: [
+      {
+        call: "SafePrimes",
+        description:
+          "the prime $q$ with $(q-1)/2$ also prime, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection, and the mirror image of [[SophieGermainPrimes]] ($q$ is safe iff $(q-1)/2$ is Sophie Germain); infinitude is equally open, so $Count(SafePrimes) = NaN$. OEIS A005385.",
+      "$At(SafePrimes, k)$ unranks by scanning forward, testing primality of $n$ and $(n-1)/2$ -- $At(SafePrimes, 1) = 5$ ($2$ is prime).",
+      "Membership goes through [[Element]]: $Element(23, SafePrimes)$ is true ($11$ is prime), $Element(13, SafePrimes)$ is false ($6$ is not prime).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SafePrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "SophieGermainPrimes", "Primes"],
+  },
+  {
+    name: "PrimePairs",
+    domain: "Collections",
+    signature: "PrimePairs(gap)",
+    summary:
+      "The lesser prime $p$ of a pair $(p, p+gap)$, both prime -- $gap$ selects the family ($2$=twin, $4$=cousin, $6$=sexy, …), as a lazy indexed family.",
+    signatures: [
+      {
+        call: "PrimePairs(gap)",
+        description:
+          "the prime $p$ with $p+gap$ also prime, an indexed collection of open infinitude for every $gap$.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection for each $gap$; whether there are infinitely many prime pairs at ANY fixed gap is open (the twin-prime conjecture generalises to every gap), so $Count(PrimePairs(gap)) = NaN$ for every $gap$, not just $gap=2$.",
+      "$PrimePairs(2)$, $PrimePairs(4)$, $PrimePairs(6)$ are [[TwinPrimes]], [[CousinPrimes]], [[SexyPrimes]] verbatim.",
+      "$At(PrimePairs(gap), i)$ unranks the $i$-th match by scanning forward, testing primality of $n$ and $n+gap$ -- $At(PrimePairs(4), 1) = 3$.",
+      "Membership goes through [[Element]]: $Element(3, PrimePairs(4))$ is true ($3,7$ both prime), $Element(5, PrimePairs(4))$ is false ($9$ is not).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PrimePairs(4), 20)" },
+    seeAlso: ["Count", "At", "Element", "TwinPrimes", "CousinPrimes", "SexyPrimes"],
+  },
+  {
+    name: "PalindromicPrimes",
+    domain: "Collections",
+    signature: "PalindromicPrimes",
+    summary:
+      "The palindromic primes $2, 3, 5, 7, 11, 101, …$: primes that read the same forwards and backwards in base 10.",
+    signatures: [
+      {
+        call: "PalindromicPrimes",
+        description:
+          "the prime $p$ whose decimal digits are a palindrome, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; whether there are infinitely many (beyond the trivial even-length exclusion -- every palindrome with an even digit count past 11 is divisible by 11) is open, so $Count(PalindromicPrimes) = NaN$. OEIS A002385.",
+      "$At(PalindromicPrimes, k)$ unranks by scanning forward, testing primality and digit-palindromy -- $At(PalindromicPrimes, 6) = 101$.",
+      "Membership goes through [[Element]]: $Element(101, PalindromicPrimes)$ is true, $Element(103, PalindromicPrimes)$ is false ($103 \\ne 301$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PalindromicPrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "CircularPrimes", "EmirpPrimes"],
+  },
+  {
+    name: "CircularPrimes",
+    domain: "Collections",
+    signature: "CircularPrimes",
+    summary:
+      "The circular primes $2, 3, 5, 7, 11, 13, 17, 31, …$: primes whose every base-10 digit rotation is also prime.",
+    signatures: [
+      {
+        call: "CircularPrimes",
+        description:
+          "the prime $p$ (no digit 0) with every cyclic rotation of its decimal digits also prime, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; conjectured but unproven that only finitely many beyond the repunit primes $R_n$ (all-1s) exist at all, and separately whether infinitely many repunit primes exist is itself open, so $Count(CircularPrimes) = NaN$. OEIS A068652. A digit-0 prime is excluded (a rotation would start with a leading zero).",
+      "$At(CircularPrimes, k)$ unranks by scanning forward, testing every rotation's primality -- $At(CircularPrimes, 8) = 31$ ($31$ and $13$ both prime).",
+      "Membership goes through [[Element]]: $Element(13, CircularPrimes)$ is true ($13, 31$ both prime), $Element(19, CircularPrimes)$ is false ($91 = 7 \\times 13$, its only other rotation, isn't prime).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CircularPrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "PalindromicPrimes", "EmirpPrimes"],
+  },
+  {
+    name: "EmirpPrimes",
+    domain: "Collections",
+    signature: "EmirpPrimes",
+    summary:
+      "The emirps $13, 17, 31, 37, 71, …$: primes whose decimal reversal is a DIFFERENT prime ('prime' spelled backwards).",
+    signatures: [
+      {
+        call: "EmirpPrimes",
+        description:
+          "the prime $p$ with $\\mathrm{reverse}(p) \\ne p$ also prime, an indexed collection of open infinitude.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; infinitude is conjectured but unproven, so $Count(EmirpPrimes) = NaN$. OEIS A006567. Excludes palindromic primes ($\\mathrm{reverse}(p)=p$ is disqualified, even though $p$ is trivially 'prime both ways').",
+      "$At(EmirpPrimes, k)$ unranks by scanning forward, testing primality of $n$ and its reversal -- $At(EmirpPrimes, 1) = 13$ ($31$ is prime, and $31 \\ne 13$).",
+      "Membership goes through [[Element]]: $Element(13, EmirpPrimes)$ is true, $Element(11, EmirpPrimes)$ is false (reversal is itself, a palindrome).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(EmirpPrimes, 20)" },
+    seeAlso: ["Count", "At", "Element", "PalindromicPrimes", "CircularPrimes"],
+  },
+  {
+    name: "MersennePrimes",
+    domain: "Collections",
+    signature: "MersennePrimes",
+    summary: "The Mersenne primes $3, 7, 31, 127, 8191, …$: primes of the form $2^p - 1$.",
+    signatures: [
+      {
+        call: "MersennePrimes",
+        description:
+          "the primes $2^p-1$ for a prime exponent $p$, an indexed collection of open infinitude -- only finitely many are known at any time.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; whether there are infinitely many is the open Lenstra-Pomerance-Wagstaff conjecture, so $Count(MersennePrimes) = NaN$. OEIS A000668.",
+      "$At(MersennePrimes, k)$ unranks from a table of exponents verified by the Lucas-Lehmer test, not a search -- the known terms grow to tens of millions of digits, so past the point a value would exceed what a numeric collection element can represent exactly ($2^{53}-1$), $At$ answers $NaN$ rather than hang looking for more: $At(MersennePrimes, 4) = 127$ ($p=7$), and $At(MersennePrimes, 9)$ is $NaN$ (the 9th, $2^{61}-1$, exists and is known, but doesn't fit).",
+      "Membership goes through [[Element]]: $Element(127, MersennePrimes)$ is true, $Element(63, MersennePrimes)$ is false ($2^6-1=63=3^2 \\times 7$, and 6 isn't even prime).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(MersennePrimes, 8)" },
+    seeAlso: ["Count", "At", "Element", "Primes", "FibonacciPrimes"],
+  },
+  {
+    name: "FibonacciPrimes",
+    domain: "Collections",
+    signature: "FibonacciPrimes",
+    summary:
+      "The Fibonacci primes $2, 3, 5, 13, 89, 233, …$: Fibonacci numbers that are themselves prime.",
+    signatures: [
+      {
+        call: "FibonacciPrimes",
+        description:
+          "the Fibonacci number $F(n)$ that is prime, an indexed collection of open infinitude -- only finitely many are known at any time.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; whether there are infinitely many is open, so $Count(FibonacciPrimes) = NaN$. OEIS A005478.",
+      "$At(FibonacciPrimes, k)$ unranks from a table of Fibonacci indices verified prime by exact bigint primality testing, not a search -- past the point a term exceeds what a numeric collection element can represent exactly ($2^{53}-1$), $At$ answers $NaN$ rather than hang: $At(FibonacciPrimes, 4) = 13$ ($F(7)$), $At(FibonacciPrimes, 12)$ is $NaN$.",
+      "Membership goes through [[Element]]: $Element(89, FibonacciPrimes)$ is true ($F(11)$, prime), $Element(21, FibonacciPrimes)$ is false ($F(8)=21=3\\times7$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(FibonacciPrimes, 11)" },
+    seeAlso: ["Count", "At", "Element", "MersennePrimes", "Primes"],
   },
 ];

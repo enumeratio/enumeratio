@@ -1575,6 +1575,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "54daa9",
+    heads: ["Hypergeometric0F1", "Sin"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "54f420",
     heads: ["Binomial", "Cos", "Sin", "Sum"],
     verdict: "agree",
@@ -2842,6 +2848,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "9d3147",
+    heads: ["HypergeometricU"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "9d84d8",
     heads: ["AGM"],
     verdict: "agree",
@@ -2876,6 +2888,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["Zeta"],
     verdict: "agree",
     samples: 1,
+  },
+  {
+    entry: "a047eb",
+    heads: ["Exp", "Hypergeometric1F1Regularized"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "a091d1",
@@ -3658,6 +3676,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "c8fcc7",
+    heads: ["HypergeometricU", "HypergeometricUStar"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "c95c4f",
     heads: ["LambertW"],
     verdict: "agree",
@@ -4390,6 +4414,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "f7f84e",
+    heads: ["Exp", "Gamma", "Hypergeometric1F1Regularized", "HypergeometricUStar"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "f826a6",
     heads: ["Gamma"],
     verdict: "agree",
@@ -4530,17 +4560,7 @@ export const fungrimFrontier: readonly {
   readonly declared: boolean;
 }[] = [
   {
-    head: "Hypergeometric0F1",
-    identities: 7,
-    declared: false,
-  },
-  {
     head: "HH",
-    identities: 4,
-    declared: false,
-  },
-  {
-    head: "Hypergeometric0F1Regularized",
     identities: 4,
     declared: false,
   },
@@ -4552,26 +4572,6 @@ export const fungrimFrontier: readonly {
   {
     head: "ModularLambdaFundamentalDomain",
     identities: 3,
-    declared: false,
-  },
-  {
-    head: "Hypergeometric1F1Regularized",
-    identities: 2,
-    declared: false,
-  },
-  {
-    head: "Hypergeometric2F1Regularized",
-    identities: 2,
-    declared: false,
-  },
-  {
-    head: "Hypergeometric3F2Regularized",
-    identities: 2,
-    declared: false,
-  },
-  {
-    head: "HypergeometricU",
-    identities: 2,
     declared: false,
   },
   {
@@ -4725,13 +4725,13 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Exp",
-    identities: 21,
+    head: "Sin",
+    identities: 20,
     declared: true,
   },
   {
-    head: "Sin",
-    identities: 21,
+    head: "Exp",
+    identities: 19,
     declared: true,
   },
   {
@@ -4845,7 +4845,7 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "HypergeometricUStar",
+    head: "Hypergeometric0F1",
     identities: 6,
     declared: true,
   },
@@ -4900,7 +4900,12 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Gamma",
+    head: "Hypergeometric0F1Regularized",
+    identities: 4,
+    declared: true,
+  },
+  {
+    head: "HypergeometricUStar",
     identities: 4,
     declared: true,
   },
@@ -4941,6 +4946,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Erfc",
+    identities: 3,
+    declared: true,
+  },
+  {
+    head: "Gamma",
     identities: 3,
     declared: true,
   },
@@ -5021,6 +5031,16 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "HurwitzZeta",
+    identities: 2,
+    declared: true,
+  },
+  {
+    head: "Hypergeometric2F1Regularized",
+    identities: 2,
+    declared: true,
+  },
+  {
+    head: "Hypergeometric3F2Regularized",
     identities: 2,
     declared: true,
   },

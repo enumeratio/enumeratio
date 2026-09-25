@@ -226,6 +226,15 @@ export const HEADS: Record<string, string> = {
   Mean: "Mean",
   Median: "Median",
   Commonest: "Commonest",
+  GeometricMean: "GeometricMean",
+  HarmonicMean: "HarmonicMean",
+  Nest: "Nest",
+  NestList: "NestList",
+  FixedPoint: "FixedPoint",
+  Outer: "Outer",
+  LinearRecurrence: "LinearRecurrence",
+  RecurrenceTable: "RecurrenceTable",
+  Association: "Association",
   Variance: "Variance",
   StandardDeviation: "StandardDeviation",
   Determinant: "Det",
@@ -303,6 +312,15 @@ export const HEADS: Record<string, string> = {
   CarlsonRD: "CarlsonRD",
   CarlsonRJ: "CarlsonRJ",
   CarlsonRG: "CarlsonRG",
+  // The hypergeometric heads: 1F1 and 2F1 themselves are compute-engine natives (never
+  // reach here via `declaredNames()`), so only what hypergeometric.ts / hypergeometric-ustar.ts
+  // add. Hypergeometric3F2Regularized has no dedicated Wolfram head — it maps into the generic
+  // `HypergeometricPFQRegularized` in SPECIAL below, not here.
+  Hypergeometric0F1: "Hypergeometric0F1",
+  Hypergeometric0F1Regularized: "Hypergeometric0F1Regularized",
+  Hypergeometric1F1Regularized: "Hypergeometric1F1Regularized",
+  Hypergeometric2F1Regularized: "Hypergeometric2F1Regularized",
+  HypergeometricU: "HypergeometricU",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",
@@ -499,6 +517,17 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // rather than the (sometimes wrong) rename. One-way: Wolfram's ArcCot does not reverse to
   // this — see REVERSE_HEADS, built from HEADS, which no longer lists Arccot at all.
   Arccot: (a) => `Subtract[Divide[Pi, 2], ArcTan[${toWolfram(a[0])}]]`,
+  // Hypergeometric3F2Regularized(a1,a2,a3,b1,b2,z) has no dedicated Wolfram head — it is the
+  // 3,2 case of the generic HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z], which takes
+  // its upper and lower parameters as lists rather than flat arguments.
+  Hypergeometric3F2Regularized: (a) =>
+    `HypergeometricPFQRegularized[List[${a
+      .slice(0, 3)
+      .map((x) => toWolfram(x))
+      .join(", ")}], List[${a
+      .slice(3, 5)
+      .map((x) => toWolfram(x))
+      .join(", ")}], ${toWolfram(a[5])}]`,
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */

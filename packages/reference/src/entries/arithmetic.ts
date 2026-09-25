@@ -61,6 +61,97 @@ export const arithmetic: readonly ReferenceEntry[] = [
         caption:
           "Doesn't factor constants out of a symbolic argument: $|-3x|$ stays as written rather than reducing to $3|x|$",
       },
+      { expr: ["Abs", -2.5], expected: 2.5 },
+      {
+        expr: ["Abs", ["Complex", 1.4, 2.3]],
+        expected: { num: "2.69258240356725201563" },
+        caption: "The modulus of a complex number with approximate parts",
+      },
+      {
+        expr: [
+          "Abs",
+          [
+            "List",
+            ["List", ["Rational", 1, 2], -1],
+            ["List", ["Rational", -5, 3], ["Rational", 1, 2]],
+          ],
+        ],
+        expected: [
+          "List",
+          ["List", ["Rational", 1, 2], 1],
+          ["List", ["Rational", 5, 3], ["Rational", 1, 2]],
+        ],
+        category: "Scope",
+        caption: "Threads over a matrix, entry by entry",
+      },
+      {
+        expr: ["Abs", ["Negate", "Pi"]],
+        expected: "Pi",
+        category: "Scope",
+        caption: "Exact numeric constants",
+      },
+      {
+        expr: ["Abs", ["Complex", 1, 1]],
+        expected: ["Sqrt", 2],
+        category: "Scope",
+        caption: "An exact complex number gives an exact radical",
+      },
+      { expr: ["Abs", "ImaginaryUnit"], expected: 1, category: "Scope" },
+      {
+        expr: ["Abs", ["Exp", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 3]]]],
+        expected: 1,
+        category: "Scope",
+        caption: "$e^{i\\pi/3}$ lies on the unit circle",
+      },
+      { expr: ["Abs", "NegativeInfinity"], expected: "PositiveInfinity", category: "Scope" },
+      {
+        expr: ["Abs", "ComplexInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "Complex infinity has infinite magnitude in every direction",
+      },
+      {
+        expr: ["Abs", ["Interval", -3, 5]],
+        expected: ["Interval", 0, 5],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "An [[Interval]] should map to the interval of absolute values, $[0, 5]$; compute-engine's Abs does no interval arithmetic yet",
+      },
+      {
+        expr: ["Abs", ["Subtract", ["Sqrt", 2], 2]],
+        expected: ["Add", 2, ["Negate", ["Sqrt", 2]]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should decide the sign of an exact numeric expression and give $2-\\sqrt{2}$; not yet, it stays unevaluated",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Power", ["Abs", ["Complex", 3, 4]], 2],
+          ["Multiply", ["Complex", 3, 4], ["Conjugate", ["Complex", 3, 4]]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "$|z|^2 = z\\bar{z}$",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Abs", ["Multiply", ["Complex", 1, 2], ["Complex", 3, -1]]],
+          ["Multiply", ["Abs", ["Complex", 1, 2]], ["Abs", ["Complex", 3, -1]]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "Multiplicative: $|ab| = |a|\\,|b|$",
+      },
+      {
+        expr: ["Abs", ["Subtract", ["Complex", 1, 1], ["Complex", 4, 5]]],
+        expected: 5,
+        category: "Applications",
+        caption: "The distance between the points $1+i$ and $4+5i$ of the complex plane",
+      },
     ],
     seeAlso: ["Sign", "Chop"],
   },
@@ -124,6 +215,59 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "NaN propagates rather than being treated as 0",
       },
+      { expr: ["Sign", -2.5], expected: -1 },
+      { expr: ["Sign", 3.14], expected: 1 },
+      {
+        expr: ["Sign", ["Complex", 1.4, 2.3]],
+        expected: ["Complex", { num: "0.5199469468957452168102" }, 0.8541985556144385],
+        caption: "A complex number with approximate parts",
+      },
+      {
+        expr: ["Sign", ["Complex", 1, 1]],
+        expected: ["Complex", { num: "0.7071067811865475244008444" }, 0.7071067811865476],
+        category: "Scope",
+        caption: "An exact complex argument comes back numeric",
+        divergence: { wolfram: "Wolfram keeps it exact: $\\mathrm{Sign}[1+i] = (1+i)/\\sqrt{2}$." },
+      },
+      {
+        expr: [
+          "Sign",
+          [
+            "List",
+            ["List", ["Rational", 1, 2], -1],
+            ["List", ["Rational", -5, 3], ["Rational", 1, 2]],
+          ],
+        ],
+        expected: ["List", ["List", 1, -1], ["List", -1, 1]],
+        category: "Scope",
+        caption: "Threads over a matrix, entry by entry",
+      },
+      { expr: ["Sign", "Pi"], expected: 1, category: "Scope", caption: "Exact numeric constants" },
+      { expr: ["Sign", ["Negate", "ExponentialE"]], expected: -1, category: "Scope" },
+      { expr: ["Sign", "ImaginaryUnit"], expected: ["Complex", 0, 1], category: "Scope" },
+      { expr: ["Sign", "PositiveInfinity"], expected: 1, category: "Scope" },
+      {
+        expr: ["Sign", ["Interval", 1, 3]],
+        expected: 1,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "An [[Interval]] of positive numbers should have sign 1; compute-engine leaves it unevaluated",
+      },
+      {
+        expr: ["Sign", ["Subtract", ["Sqrt", 2], 2]],
+        expected: -1,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should decide the sign of the exact number $\\sqrt{2}-2$; not yet, it stays unevaluated",
+      },
+      {
+        expr: ["Equal", ["Abs", ["Sign", ["Complex", 3, 4]]], 1],
+        expected: "True",
+        category: "Properties",
+        caption: "The sign of a nonzero complex number lies on the unit circle",
+      },
     ],
     seeAlso: ["Abs", "Negate"],
   },
@@ -173,6 +317,32 @@ export const arithmetic: readonly ReferenceEntry[] = [
         expected: "NegativeInfinity",
         category: "Possible issues",
         caption: "Flips signed infinities too",
+      },
+      { expr: ["Negate", "x"], expected: ["Negate", "x"], caption: "Stays symbolic" },
+      { expr: ["Negate", ["Complex", 1, 2]], expected: ["Complex", -1, -2], category: "Scope" },
+      {
+        expr: ["Negate", ["List", ["List", 1, -2], ["List", 3, 4]]],
+        expected: ["List", ["List", -1, 2], ["List", -3, -4]],
+        category: "Scope",
+        caption: "Threads over a matrix, entry by entry",
+      },
+      {
+        expr: ["Negate", ["Multiply", 2, "x"]],
+        expected: ["Multiply", -2, "x"],
+        category: "Scope",
+        caption: "Folds into a numeric coefficient",
+      },
+      {
+        expr: ["Negate", ["Subtract", "a", "b"]],
+        expected: ["Add", ["Negate", "a"], "b"],
+        category: "Properties",
+        caption: "$-(a-b) = b-a$",
+      },
+      {
+        expr: ["Add", ["Negate", "x"], "x"],
+        expected: 0,
+        category: "Properties",
+        caption: "The additive inverse: $x + (-x) = 0$",
       },
     ],
     seeAlso: ["Abs", "Sign"],
@@ -288,6 +458,92 @@ export const arithmetic: readonly ReferenceEntry[] = [
         caption:
           "A negative rational still evaluates exactly when both numerator and denominator are perfect squares",
       },
+      {
+        expr: ["Sqrt", 3.5],
+        expected: { num: "1.87082869338697069279" },
+        caption: "An approximate number gives an approximate root",
+      },
+      {
+        expr: ["Sqrt", 200],
+        expected: ["Multiply", 10, ["Sqrt", 2]],
+        caption: "Pulls perfect-square factors out of the radical",
+      },
+      { expr: ["Sqrt", -25], expected: ["Complex", 0, 5] },
+      { expr: ["Sqrt", 8], expected: ["Multiply", 2, ["Sqrt", 2]], category: "Scope" },
+      {
+        expr: ["Sqrt", ["Rational", 1, 2]],
+        expected: ["Divide", ["Sqrt", 2], 2],
+        category: "Scope",
+        caption: "Rationalizes the denominator",
+      },
+      {
+        expr: ["Sqrt", ["Rational", 12, 5]],
+        expected: ["Multiply", ["Rational", 2, 5], ["Sqrt", 15]],
+        category: "Scope",
+      },
+      { expr: ["Sqrt", -2.5], expected: ["Complex", 0, 1.5811388300841898], category: "Scope" },
+      {
+        expr: ["Sqrt", ["Complex", 3, 4]],
+        expected: ["Complex", 2, 1],
+        category: "Scope",
+        caption: "An exact complex square: $(2+i)^2 = 3+4i$",
+      },
+      { expr: ["Sqrt", "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
+      {
+        expr: ["Sqrt", ["List", 1, 4, 9]],
+        expected: ["List", 1, 2, 3],
+        category: "Scope",
+        caption: "Threads element-wise over a list",
+      },
+      {
+        expr: ["Sqrt", ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]],
+        expected: [
+          "List",
+          ["List", ["Divide", ["Sqrt", 2], 2], ["Complex", 0, 1]],
+          ["List", 0, ["Divide", ["Sqrt", 2], 2]],
+        ],
+        category: "Scope",
+        caption: "Threads over a matrix entry by entry -- this is not the matrix square root",
+      },
+      {
+        expr: ["Sqrt", ["Interval", 1, 8]],
+        expected: ["Interval", 1, ["Multiply", 2, ["Sqrt", 2]]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "An [[Interval]] should map to $[1, 2\\sqrt{2}]$; compute-engine's Sqrt rejects a set argument",
+      },
+      {
+        expr: ["Power", ["Sqrt", "x"], 2],
+        expected: "x",
+        category: "Properties",
+        caption: "$(\\sqrt{x})^2 = x$ for every x",
+      },
+      {
+        expr: ["Sqrt", ["Power", "x", 2]],
+        expected: ["Sqrt", ["Power", "x", 2]],
+        category: "Possible issues",
+        caption: "$\\sqrt{x^2}$ is not simplified to x, which would be wrong for negative x",
+      },
+      {
+        expr: ["Sqrt", ["Power", -1, 2]],
+        expected: 1,
+        category: "Possible issues",
+        caption: "...at $x = -1$, $\\sqrt{x^2} = 1$, not $-1$",
+      },
+      {
+        expr: ["Multiply", ["Sqrt", -1], ["Sqrt", -1]],
+        expected: -1,
+        category: "Possible issues",
+        caption:
+          "$\\sqrt{a}\\sqrt{b} = \\sqrt{ab}$ fails for negative a and b: $\\sqrt{-1}\\sqrt{-1} = -1$...",
+      },
+      {
+        expr: ["Sqrt", ["Multiply", -1, -1]],
+        expected: 1,
+        category: "Possible issues",
+        caption: "...while $\\sqrt{(-1)(-1)} = 1$",
+      },
     ],
     seeAlso: ["Root", "Square"],
   },
@@ -351,6 +607,30 @@ export const arithmetic: readonly ReferenceEntry[] = [
         caption:
           "An even root of a negative, non-perfect-power number canonicalizes to [[Sqrt]] and stays symbolic; numerically it's $2\\sqrt{2}\\,i$",
       },
+      {
+        expr: ["Root", -27, 3],
+        expected: -3,
+        category: "Scope",
+        caption: "The real cube root, Wolfram's $\\mathrm{Surd}[-27, 3]$",
+      },
+      {
+        expr: ["Root", -32, 5],
+        expected: -2,
+        category: "Scope",
+        caption: "Any odd root of a negative number is real",
+      },
+      {
+        expr: ["Root", -3.5, 5],
+        expected: { num: "-1.28473515712343933868" },
+        category: "Scope",
+        caption: "Approximate negative radicands stay real too",
+      },
+      {
+        expr: ["Root", ["List", -8, 27], 3],
+        expected: ["List", -2, 3],
+        category: "Scope",
+        caption: "Threads element-wise over a list",
+      },
     ],
     seeAlso: ["Sqrt", "Square"],
   },
@@ -409,6 +689,97 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "Infinities pass through unchanged",
       },
+      { expr: ["Floor", 2.4], expected: 2 },
+      { expr: ["Floor", 2.6], expected: 2 },
+      {
+        expr: ["Floor", "x"],
+        expected: ["Floor", "x"],
+        category: "Scope",
+        caption: "Stays symbolic",
+      },
+      {
+        expr: ["Floor", ["Sqrt", 50]],
+        expected: 7,
+        category: "Scope",
+        caption: "Exact radicals are decided numerically",
+      },
+      {
+        expr: ["Floor", "Pi"],
+        expected: 3,
+        aspirational: true,
+        category: "Scope",
+        caption: "Should evaluate at an exact constant; $\\lfloor\\pi\\rfloor$ stays unevaluated",
+      },
+      {
+        expr: ["Floor", ["Negate", "Pi"]],
+        expected: -4,
+        aspirational: true,
+        category: "Scope",
+        caption: "...and at its negative, $\\lfloor -\\pi \\rfloor = -4$; not yet",
+      },
+      {
+        expr: ["Floor", 226, 10],
+        expected: 220,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A second argument should floor to a multiple of it -- the nearest multiple of 10 below 226; Floor takes one argument",
+      },
+      {
+        expr: ["Floor", -10.3, 3.5],
+        expected: -10.5,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "...the step needn't be an integer: $3.5 \\cdot \\lfloor -10.3/3.5 \\rfloor = -10.5$; not yet",
+      },
+      {
+        expr: ["Floor", ["Subtract", ["Multiply", 2, "Pi"], "ExponentialE"], ["Rational", 5, 4]],
+        expected: ["Rational", 5, 2],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "...nor rational: $2\\pi - e \\approx 3.57$ floors to the multiple $5/2$ of $5/4$; not yet",
+      },
+      {
+        expr: ["Floor", ["Complex", 5.37, -1.3]],
+        expected: ["Complex", 5, -2],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should floor the real and imaginary parts separately; compute-engine's Floor is real-only",
+      },
+      {
+        expr: ["Floor", ["Floor", "x"]],
+        expected: ["Floor", "x"],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "Idempotent: $\\lfloor\\lfloor x \\rfloor\\rfloor = \\lfloor x \\rfloor$, since the inner value is an integer; not simplified yet",
+      },
+      {
+        expr: ["Add", ["Floor", ["Divide", 100, 5]], ["Floor", ["Divide", 100, 25]]],
+        expected: 24,
+        category: "Applications",
+        caption:
+          "Legendre's formula: $100!$ ends in $\\lfloor 100/5 \\rfloor + \\lfloor 100/25 \\rfloor = 24$ zeros",
+      },
+      {
+        expr: ["Add", ["Floor", ["Log", 12345]], 1],
+        expected: 5,
+        aspirational: true,
+        category: "Applications",
+        caption:
+          "The number of decimal digits of n is $\\lfloor \\log_{10} n \\rfloor + 1$; the floor of an exact logarithm doesn't evaluate yet",
+      },
+      {
+        expr: ["Floor", ["Multiply", 1000, "ExponentialE"]],
+        expected: 2718,
+        aspirational: true,
+        category: "Applications",
+        caption:
+          "The first four digits of $e$; the floor of an exact constant doesn't evaluate yet",
+      },
     ],
     seeAlso: ["Ceil", "Round"],
   },
@@ -466,6 +837,67 @@ export const arithmetic: readonly ReferenceEntry[] = [
         expected: "NaN",
         category: "Possible issues",
         caption: "NaN propagates rather than erroring",
+      },
+      { expr: ["Ceil", 2.4], expected: 3 },
+      { expr: ["Ceil", 2.6], expected: 3 },
+      {
+        expr: ["Ceil", "x"],
+        expected: ["Ceil", "x"],
+        category: "Scope",
+        caption: "Stays symbolic",
+      },
+      {
+        expr: ["Ceil", ["Sqrt", 50]],
+        expected: 8,
+        category: "Scope",
+        caption: "Exact radicals are decided numerically",
+      },
+      {
+        expr: ["Ceil", "Pi"],
+        expected: 4,
+        aspirational: true,
+        category: "Scope",
+        caption: "Should evaluate at an exact constant; $\\lceil\\pi\\rceil$ stays unevaluated",
+      },
+      {
+        expr: ["Ceil", 226, 10],
+        expected: 230,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A second argument should round up to a multiple of it -- the next multiple of 10 above 226; Ceil takes one argument",
+      },
+      {
+        expr: ["Ceil", -10.3, 3.5],
+        expected: -7,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "...the step needn't be an integer: $3.5 \\cdot \\lceil -10.3/3.5 \\rceil = -7$; not yet",
+      },
+      {
+        expr: ["Ceil", ["Subtract", ["Multiply", 2, "Pi"], "ExponentialE"], ["Rational", 5, 4]],
+        expected: ["Rational", 15, 4],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "...nor rational: $2\\pi - e \\approx 3.57$ rounds up to the multiple $15/4$ of $5/4$; not yet",
+      },
+      {
+        expr: ["Ceil", ["Complex", 5.37, -1.3]],
+        expected: ["Complex", 6, -1],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should round the real and imaginary parts up separately; compute-engine's Ceil is real-only",
+      },
+      {
+        expr: ["Ceil", ["Log", 1000, 2]],
+        expected: 10,
+        aspirational: true,
+        category: "Applications",
+        caption:
+          "Ten bits are enough to number 1000 items, $\\lceil \\log_2 1000 \\rceil$; the ceiling of an exact logarithm doesn't evaluate yet",
       },
     ],
     seeAlso: ["Floor", "Round"],
@@ -550,6 +982,62 @@ export const arithmetic: readonly ReferenceEntry[] = [
           wolfram: "Wolfram's half-to-even gives $\\mathrm{Round}[-2.5] = -2$.",
         },
       },
+      { expr: ["Round", 2.4], expected: 2 },
+      { expr: ["Round", 2.6], expected: 3 },
+      { expr: ["Round", 5.37], expected: 5 },
+      { expr: ["Round", -3.7], expected: -4 },
+      {
+        expr: ["Round", "x"],
+        expected: ["Round", "x"],
+        category: "Scope",
+        caption: "Stays symbolic",
+      },
+      {
+        expr: ["Round", 226, -1],
+        expected: 230,
+        category: "Scope",
+        caption: "To the nearest ten",
+        divergence: {
+          wolfram:
+            "Wolfram's second argument is the step itself: $\\mathrm{Round}[226, 10] = 230$.",
+        },
+      },
+      {
+        expr: ["Round", ["Sqrt", 2], 4],
+        expected: ["Rational", 7071, 5000],
+        category: "Scope",
+        caption: "An exact argument rounds to an exact rational",
+      },
+      {
+        expr: ["Round", "Pi"],
+        expected: 3,
+        aspirational: true,
+        category: "Scope",
+        caption: "Should evaluate at an exact constant; $\\mathrm{Round}(\\pi)$ stays unevaluated",
+      },
+      {
+        expr: ["Round", ["Multiply", 100, "ExponentialE"]],
+        expected: 272,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$100e \\approx 271.83$ should round to 272; the round of an exact constant doesn't evaluate yet",
+      },
+      {
+        expr: ["Round", ["Complex", 5.37, -1.3]],
+        expected: ["Complex", 5, -1],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should round the real and imaginary parts separately; compute-engine's Round is real-only",
+      },
+      {
+        expr: ["Round", ["Rational", 1, 2]],
+        expected: 1,
+        category: "Possible issues",
+        caption: "An exact half rounds away from zero as well",
+        divergence: { wolfram: "Wolfram rounds half to even: $\\mathrm{Round}[1/2] = 0$." },
+      },
     ],
     seeAlso: ["Floor", "Ceil", "Clamp"],
   },
@@ -615,6 +1103,33 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "A 1-argument $\\mathrm{Clamp}(x)$ clamps to the default range $[-1, 1]$",
       },
+      {
+        expr: ["Clamp", ["List", -2, 0.5, 3], 0, 1],
+        expected: ["List", 0, 0.5, 1],
+        category: "Scope",
+        caption: "Threads element-wise over a list",
+      },
+      {
+        expr: ["Clamp", "Pi", 0, 3],
+        expected: 3,
+        category: "Scope",
+        caption: "Exact numeric constants are compared numerically",
+      },
+      { expr: ["Clamp", ["Rational", 7, 2], 1, 3], expected: 3, category: "Scope" },
+      {
+        expr: ["Clamp", "PositiveInfinity", 0, 3],
+        expected: 3,
+        category: "Scope",
+        caption: "Infinities clamp to the nearer bound",
+      },
+      {
+        expr: ["Clamp", 5, 0, 3, -1, 10],
+        expected: 10,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Wolfram's $\\mathrm{Clip}[x, \\{min, max\\}, \\{v_{min}, v_{max}\\}]$ returns replacement values outside the range -- here 10 above it; not yet supported",
+      },
     ],
     seeAlso: ["Min", "Max"],
   },
@@ -672,6 +1187,55 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "A hard cutoff at about $10^{-10}$: a value just above the threshold survives untouched",
+      },
+      {
+        expr: ["Chop", ["List", 1.2, 1e-11, 3.5]],
+        expected: ["List", 1.2, 0, 3.5],
+        category: "Scope",
+        caption: "Threads element-wise over a list",
+      },
+      {
+        expr: ["Chop", ["Add", 1, ["Complex", 0, 1e-14]]],
+        expected: 1,
+        category: "Scope",
+        caption: "A negligible imaginary part is dropped, leaving a real number",
+      },
+      {
+        expr: ["Chop", "x"],
+        expected: ["Chop", "x"],
+        category: "Scope",
+        caption: "Stays symbolic",
+      },
+      {
+        expr: ["Chop", ["Rational", 1, 3]],
+        expected: ["Rational", 1, 3],
+        category: "Scope",
+        caption: "Exact numbers not near zero pass through",
+      },
+      {
+        expr: ["Chop", 0.001, 0.01],
+        expected: 0,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A second argument should set the tolerance, here chopping anything below 0.01; Chop takes one argument",
+      },
+      {
+        expr: ["Chop", 1e-15, 1e-20],
+        expected: 1e-15,
+        aspirational: true,
+        category: "Scope",
+        caption: "...and a tighter tolerance should keep a value the default would chop; not yet",
+      },
+      {
+        expr: ["Chop", ["Power", 10, -20]],
+        expected: 0,
+        category: "Possible issues",
+        caption: "An exact small number is chopped too",
+        divergence: {
+          wolfram:
+            "Wolfram's Chop only touches approximate numbers: $\\mathrm{Chop}[10^{-20}]$ stays $1/10^{20}$.",
+        },
       },
     ],
     seeAlso: ["Round"],
@@ -739,6 +1303,73 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "A loose tolerance can snap to something far simpler -- 0 is within 0.5 of 0.1",
       },
+      { expr: ["Rationalize", 6.75], expected: ["Rational", 27, 4] },
+      {
+        expr: ["Rationalize", "Pi", 0.01],
+        expected: ["Rational", 22, 7],
+        caption: "A second argument sets the tolerance",
+      },
+      {
+        expr: ["Rationalize", ["Exp", ["Sqrt", 2]], ["Power", 2, -12]],
+        expected: ["Rational", 218, 53],
+        category: "Scope",
+        caption: "Any exact numeric expression, to any tolerance",
+      },
+      {
+        expr: ["Rationalize", ["Sqrt", 2], 0.001],
+        expected: ["Rational", 41, 29],
+        category: "Scope",
+      },
+      { expr: ["Rationalize", -0.125], expected: ["Rational", -1, 8], category: "Scope" },
+      {
+        expr: ["Rationalize", "Pi", 0.001],
+        expected: ["Rational", 201, 64],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should give the rational with the smallest denominator within 0.001 of $\\pi$, $201/64$; compute-engine returns the closer continued-fraction convergent $333/106$",
+      },
+      {
+        expr: ["Rationalize", ["Add", 1.2, ["Multiply", 6.7, "x"]]],
+        expected: ["Add", ["Multiply", ["Rational", 67, 10], "x"], ["Rational", 6, 5]],
+        aspirational: true,
+        category: "Scope",
+        caption: "Should rationalize every approximate number inside an expression; not yet",
+      },
+      {
+        expr: ["Rationalize", ["List", 0.5, 0.25, 0.2]],
+        expected: ["List", ["Rational", 1, 2], ["Rational", 1, 4], ["Rational", 1, 5]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should thread element-wise over a list; compute-engine's Rationalize takes a single real",
+      },
+      {
+        expr: ["Rationalize", ["N", "Pi"], 0],
+        expected: ["Rational", 245850922, 78256779],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A zero tolerance should give the simplest rational exactly equal to the machine number; compute-engine returns one that is merely within an epsilon",
+      },
+      {
+        expr: ["Rationalize", 0.618034, 0.0001],
+        expected: ["Rational", 55, 89],
+        category: "Applications",
+        caption:
+          "Recognizes a ratio of consecutive Fibonacci numbers in a decimal approximation of $1/\\varphi$",
+      },
+      {
+        expr: ["Rationalize", ["N", "Pi"]],
+        expected: ["Rational", 80143857, 25510582],
+        category: "Possible issues",
+        caption:
+          "Without a tolerance, a float with no simple fraction nearby still becomes a fraction with a large denominator",
+        divergence: {
+          wolfram:
+            "Wolfram returns $\\mathrm{Rationalize}[N[\\pi]]$ unchanged as 3.14159: no $p/q$ lies close enough to it, relative to $1/q^2$.",
+        },
+      },
     ],
     seeAlso: ["Round"],
   },
@@ -802,6 +1433,69 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "NaN poisons the result, overriding every other argument",
       },
+      { expr: ["Max", 9, 2], expected: 9 },
+      { expr: ["Max", ["List", 4, 1, 7, 2]], expected: 7 },
+      { expr: ["Max", 5.56, -4.8, 7.3], expected: 7.3 },
+      {
+        expr: [
+          "Max",
+          2,
+          3,
+          [
+            "List",
+            ["List", ["Rational", 1, 2], -1],
+            ["List", ["Rational", -5, 3], ["Rational", 1, 2]],
+          ],
+        ],
+        expected: 3,
+        category: "Scope",
+        caption: "Nested lists are flattened into the pool",
+      },
+      {
+        expr: ["Max", ["Sqrt", 2], ["Rational", 3, 2]],
+        expected: ["Rational", 3, 2],
+        category: "Scope",
+        caption: "Exact numbers are compared numerically",
+      },
+      { expr: ["Max", 1, "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
+      {
+        expr: ["Max", 3, "x", 5],
+        expected: ["Max", 5, "x"],
+        category: "Scope",
+        caption: "The numeric arguments collapse to their maximum; symbolic ones stay",
+      },
+      {
+        expr: ["Max", ["List", "ExponentialE", "Pi", 2]],
+        expected: "Pi",
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should compare exact constants numerically; $\\max(e, \\pi, 2)$ stays unevaluated",
+      },
+      {
+        expr: ["Max", ["Interval", 1, 3], ["Interval", -3, 5]],
+        expected: ["Interval", 1, 5],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "The max of two [[Interval]]s should be the interval of possible maxima, $[1, 5]$; compute-engine collapses it to the number 5",
+      },
+      {
+        expr: ["Max", "x", "x"],
+        expected: "x",
+        aspirational: true,
+        category: "Properties",
+        caption: "Idempotent: $\\max(x, x) = x$; repeated symbolic arguments aren't merged yet",
+      },
+      {
+        expr: ["Max", ["List"]],
+        expected: "NaN",
+        category: "Possible issues",
+        caption: "The max of an empty list is NaN too",
+        divergence: {
+          wolfram: "Wolfram's $\\mathrm{Max}[\\{\\}]$ is the identity element $-\\infty$.",
+        },
+      },
     ],
     seeAlso: ["Min", "Clamp"],
   },
@@ -861,6 +1555,76 @@ export const arithmetic: readonly ReferenceEntry[] = [
         caption:
           "Multiple arguments -- lists included -- are flattened into one pool rather than compared list-by-list. See [[Max]]",
       },
+      { expr: ["Min", 9, 2], expected: 2 },
+      { expr: ["Min", ["List", 4, 1, 7, 2]], expected: 1 },
+      { expr: ["Min", 5.56, -4.8, 7.3], expected: -4.8 },
+      {
+        expr: [
+          "Min",
+          2,
+          3,
+          [
+            "List",
+            ["List", ["Rational", 1, 2], -1],
+            ["List", ["Rational", -5, 3], ["Rational", 1, 2]],
+          ],
+        ],
+        expected: ["Rational", -5, 3],
+        category: "Scope",
+        caption: "Nested lists are flattened into the pool",
+      },
+      {
+        expr: ["Min", ["Sqrt", 2], ["Rational", 3, 2]],
+        expected: ["Sqrt", 2],
+        category: "Scope",
+        caption: "Exact numbers are compared numerically",
+      },
+      {
+        expr: ["Min", 3, "x", 5],
+        expected: ["Min", 3, "x"],
+        category: "Scope",
+        caption: "The numeric arguments collapse to their minimum; symbolic ones stay",
+      },
+      {
+        expr: ["Min", ["List", "ExponentialE", "Pi", 5]],
+        expected: "ExponentialE",
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Should compare exact constants numerically; $\\min(e, \\pi, 5)$ stays unevaluated",
+      },
+      {
+        expr: ["Min", ["Interval", 1, 3], ["Interval", -3, 5]],
+        expected: ["Interval", -3, 3],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "The min of two [[Interval]]s should be the interval of possible minima, $[-3, 3]$; compute-engine collapses it to the number -3",
+      },
+      {
+        expr: ["Min", "x", "x"],
+        expected: "x",
+        aspirational: true,
+        category: "Properties",
+        caption: "Idempotent: $\\min(x, x) = x$; repeated symbolic arguments aren't merged yet",
+      },
+      {
+        expr: ["Min"],
+        expected: "PositiveInfinity",
+        aspirational: true,
+        category: "Possible issues",
+        caption:
+          "With no arguments it should return the identity element $+\\infty$; compute-engine reports a missing argument (and [[Max]] returns NaN)",
+      },
+      {
+        expr: ["Min", ["List"]],
+        expected: "NaN",
+        category: "Possible issues",
+        caption: "The min of an empty list is NaN",
+        divergence: {
+          wolfram: "Wolfram's $\\mathrm{Min}[\\{\\}]$ is the identity element $+\\infty$.",
+        },
+      },
     ],
     seeAlso: ["Max", "Clamp"],
   },
@@ -876,6 +1640,59 @@ export const arithmetic: readonly ReferenceEntry[] = [
       { expr: ["IsOdd", 3], expected: "True" },
       { expr: ["IsOdd", 4], expected: "False" },
       { expr: ["IsOdd", -7], expected: "True", caption: "Negative integers count too" },
+      { expr: ["IsOdd", 0], expected: "False" },
+      {
+        expr: ["IsOdd", 3.5],
+        expected: "False",
+        category: "Scope",
+        caption: "A non-integer is not odd",
+      },
+      { expr: ["IsOdd", ["Rational", 1, 3]], expected: "False", category: "Scope" },
+      {
+        expr: ["IsOdd", ["Add", ["Power", 2, 100], 1]],
+        expected: "True",
+        category: "Scope",
+        caption: "Big integers",
+      },
+      {
+        expr: ["IsOdd", "Pi"],
+        expected: "False",
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$\\pi$ is known not to be an integer, so it should be decided False; it stays unevaluated",
+      },
+      {
+        expr: ["IsOdd", ["List", 1, 2, 3]],
+        expected: ["List", "True", "False", "True"],
+        category: "Scope",
+        caption: "Threads element-wise over a list",
+        divergence: {
+          wolfram: "OddQ tests its argument as a whole: $\\mathrm{OddQ}[\\{1, 2, 3\\}]$ is False.",
+        },
+      },
+      {
+        expr: ["Equal", ["IsOdd", 7], ["Not", ["IsEven", 7]]],
+        expected: "True",
+        category: "Properties",
+        caption: "An integer is odd exactly when it is not even. See [[IsEven]]",
+      },
+      {
+        expr: ["Filter", ["Range", 10], "IsOdd"],
+        expected: ["List", 1, 3, 5, 7, 9],
+        category: "Applications",
+        caption: "Select the odd numbers up to 10",
+      },
+      {
+        expr: ["IsOdd", "x"],
+        expected: ["IsOdd", "x"],
+        category: "Possible issues",
+        caption: "A symbol stays undecided rather than False",
+        divergence: {
+          wolfram:
+            "$\\mathrm{OddQ}[x]$ is False: OddQ tests the literal form, not what x might be.",
+        },
+      },
     ],
     seeAlso: ["IsEven"],
   },
@@ -891,6 +1708,52 @@ export const arithmetic: readonly ReferenceEntry[] = [
       { expr: ["IsEven", 4], expected: "True" },
       { expr: ["IsEven", 3], expected: "False" },
       { expr: ["IsEven", 0], expected: "True", caption: "Zero is even" },
+      { expr: ["IsEven", -4], expected: "True", caption: "Negative integers count too" },
+      {
+        expr: ["IsEven", 2.5],
+        expected: "False",
+        category: "Scope",
+        caption: "A non-integer is not even",
+      },
+      {
+        expr: ["IsEven", ["Power", 2, 100]],
+        expected: "True",
+        category: "Scope",
+        caption: "Big integers",
+      },
+      { expr: ["IsEven", ["Factorial", 10]], expected: "True", category: "Scope" },
+      {
+        expr: ["IsEven", ["List", 1, 2, 3]],
+        expected: ["List", "False", "True", "False"],
+        category: "Scope",
+        caption: "Threads element-wise over a list",
+        divergence: {
+          wolfram:
+            "EvenQ tests its argument as a whole: $\\mathrm{EvenQ}[\\{1, 2, 3\\}]$ is False.",
+        },
+      },
+      {
+        expr: ["Xor", ["IsOdd", 12], ["IsEven", 12]],
+        expected: "True",
+        category: "Properties",
+        caption: "Every integer is exactly one of odd and even. See [[IsOdd]]",
+      },
+      {
+        expr: ["Filter", ["Range", 10], "IsEven"],
+        expected: ["List", 2, 4, 6, 8, 10],
+        category: "Applications",
+        caption: "Select the even numbers up to 10",
+      },
+      {
+        expr: ["IsEven", "x"],
+        expected: ["IsEven", "x"],
+        category: "Possible issues",
+        caption: "A symbol stays undecided rather than False",
+        divergence: {
+          wolfram:
+            "$\\mathrm{EvenQ}[x]$ is False: EvenQ tests the literal form, not what x might be.",
+        },
+      },
     ],
     seeAlso: ["IsOdd"],
   },

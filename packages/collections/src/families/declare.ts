@@ -31,8 +31,8 @@ const collectionTypeOf = (kind: FamilyKernel["kind"]): string => {
 };
 
 const signatureOf = ({ kind, paramCount }: FamilyKernel): string => {
-  const params = paramCount === 1 ? "(integer)" : "(integer, integer)";
-  return `${params} -> ${collectionTypeOf(kind)}`;
+  const params = Array.from({ length: paramCount }, () => "integer").join(", ");
+  return `(${params}) -> ${collectionTypeOf(kind)}`;
 };
 
 // element codecs (element -> boxed MathJSON encoder, boxed -> element decoder).

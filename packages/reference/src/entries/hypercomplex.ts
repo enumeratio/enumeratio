@@ -81,6 +81,43 @@ export const hypercomplex: readonly ReferenceEntry[] = [
         caption: "plain $\\times$ declines: both orders arrive identical",
         category: "Possible issues",
       },
+      {
+        expr: [
+          "NonCommutativeMultiply",
+          ["Add", 1, ["Multiply", 2, "f_1"], ["Multiply", 3, "f_2"], ["Multiply", 4, "f_1", "f_2"]],
+          ["Add", 2, ["Negate", "f_1"], "f_2", ["Multiply", -3, "f_1", "f_2"]],
+        ],
+        expected: [
+          "Add",
+          ["Multiply", 10, "f_1", "f_2"],
+          ["Multiply", -10, "f_1"],
+          ["Multiply", 9, "f_2"],
+          13,
+        ],
+        caption:
+          "the quaternion product $(1+2i+3j+4k)(2-i+j-3k) = 13-10i+9j+10k$, with $i = f_1$, $j = f_2$, $k = f_1f_2$",
+        category: "Applications",
+      },
+      {
+        expr: ["NonCommutativeMultiply", "a", ["NonCommutativeMultiply", "b", "c"]],
+        expected: ["Multiply", "a", "b", "c"],
+        caption: "associative: nested products flatten",
+        category: "Properties",
+        divergence: {
+          wolfram:
+            "Wolfram flattens too but has no rules for undeclared symbols, so it keeps a**b**c unevaluated.",
+        },
+      },
+      {
+        expr: ["NonCommutativeMultiply", "b", "a"],
+        expected: ["Multiply", "a", "b"],
+        caption: "undeclared symbols are taken to commute, so the order is not kept",
+        category: "Possible issues",
+        divergence: {
+          wolfram:
+            "Wolfram assumes nothing about undeclared symbols and leaves b**a unevaluated, in its order.",
+        },
+      },
     ],
     seeAlso: ["Norm", "Basis", "Quaternions"],
   },

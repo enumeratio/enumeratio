@@ -1,7 +1,6 @@
 // Tableaux and plane-partition heads catalogued (packages/catalog/src/catalog-data.ts) but never wired
 // to a kernel: SemistandardTableaux, GelfandTsetlin, AlternatingSignMatrices, SkewPartitions,
-// SkewStandardTableaux, ShiftedStandardTableaux, StandardTableauPairs, PlanePartitions. (BoxedPlanePartitions
-// is NOT here — it's a 3-parameter family (a,b,c) and FamilyKernel.paramCount is `1 | 2`; see ./types.ts.)
+// SkewStandardTableaux, ShiftedStandardTableaux, StandardTableauPairs, PlanePartitions, BoxedPlanePartitions.
 //
 // Every closed-form count below was cross-checked, before landing, against the archived enumeratio
 // checkout's SQL packs (packages/data/packs/{tableaux,partitions-plus}/*.sql in the enumeratio/archive
@@ -721,6 +720,94 @@ export function IsPlanePartitionOf(e: unknown, n: number): boolean {
   return total === n;
 }
 
+// ═══ BoxedPlanePartitions(a, b, c) — plane partitions (any size) fitting in an a×b×c box ═══
+// Count: MacMahon's box formula, Π_{i=1..a} Π_{j=1..b} Π_{k=1..c} (i+j+k−1)/(i+j+k−2) — exact and
+// closed-form; accumulated as bigint numerator/denominator (not Math.round'd like the other formulas
+// above) since the box formula's intermediate factors don't individually cancel to integers. Element:
+// PlanePartitions' ragged-rows carrier (ragged number[][], nonincreasing along rows and down columns,
+// trailing zeros trimmed) with the box's bounds standing in for the fixed-size target — IsPlanePartitionOf's
+// structural checks plus ≤a rows, each row ≤b long, entries ≤c. Unrank/rank: enumerate-then-index
+// (indexedFamily), same shape-then-entries order as PlanePartitions — small boxes only.
+export function BoxedPlanePartitionsCount(a: number, b: number, c: number): number {
+  let num = 1n;
+  let den = 1n;
+  for (let i = 1; i <= a; i++)
+    for (let j = 1; j <= b; j++)
+      for (let k = 1; k <= c; k++) {
+        num *= BigInt(i + j + k - 1);
+        den *= BigInt(i + j + k - 2);
+      }
+  return Number(num / den);
+}
+// Every weakly-decreasing positive sequence of length ≤ min(maxLen, ceiling.length), entry i bounded by
+// ceiling[i] (the column above), maxVal (the box height c), and the previous entry in the row.
+function rowsUnder(ceiling: readonly number[], maxLen: number, maxVal: number): number[][] {
+  const results: number[][] = [];
+  function rec(idx: number, cur: number[]): void {
+    results.push(cur.slice());
+    if (idx === maxLen || idx === ceiling.length) return;
+    const prevVal = idx > 0 ? cur[idx - 1] : maxVal;
+    const hi = Math.min(prevVal, ceiling[idx], maxVal);
+    for (let v = 1; v <= hi; v++) {
+      cur.push(v);
+      rec(idx + 1, cur);
+      cur.pop();
+    }
+  }
+  rec(0, []);
+  return results;
+}
+const boxedPlanePart = indexedFamily<number[][]>((key) => {
+  const [a, b, c] = key.split("|").map(Number);
+  const results: number[][][] = [];
+  const rows: number[][] = [];
+  // Every prefix (0..a rows) is itself a box-confined plane partition — push on entry, then extend.
+  function backtrack(ceiling: readonly number[], rowsLeft: number): void {
+    results.push(rows.map((r) => r.slice()));
+    if (rowsLeft === 0) return;
+    for (const nr of rowsUnder(ceiling, b, c)) {
+      if (nr.length === 0) continue;
+      rows.push(nr);
+      backtrack(nr, rowsLeft - 1);
+      rows.pop();
+    }
+  }
+  backtrack(
+    Array.from({ length: b }, () => c),
+    a,
+  );
+  results.sort(cmpRowsShapeThenEntries);
+  return results;
+});
+export function BoxedPlanePartitionsUnrank(
+  a: number,
+  b: number,
+  c: number,
+  rank: number,
+): number[][] {
+  return boxedPlanePart.unrank(`${a}|${b}|${c}`, rank);
+}
+export function BoxedPlanePartitionsRank(e: number[][], a: number, b: number, c: number): number {
+  return boxedPlanePart.rank(`${a}|${b}|${c}`, e);
+}
+export function IsBoxedPlanePartitionOf(e: unknown, a: number, b: number, c: number): boolean {
+  if (!Array.isArray(e)) return false;
+  const rows = e as number[][];
+  if (rows.length > a) return false;
+  for (let r = 0; r < rows.length; r++) {
+    const row = rows[r];
+    if (!Array.isArray(row) || row.length === 0 || row.length > b) return false;
+    if (r > 0 && rows[r - 1].length < row.length) return false;
+    for (let ci = 0; ci < row.length; ci++) {
+      const v = row[ci];
+      if (!Number.isInteger(v) || v < 1 || v > c) return false;
+      if (ci > 0 && row[ci - 1] < v) return false;
+      if (r > 0 && rows[r - 1][ci] < v) return false;
+    }
+  }
+  return true;
+}
+
 export const entries: FamilyKernel[] = [
   {
     head: "SemistandardTableaux",
@@ -793,5 +880,14 @@ export const entries: FamilyKernel[] = [
     unrank: ([n], r) => PlanePartitionsUnrank(n, r),
     valid: (e, [n]) => IsPlanePartitionOf(e, n),
     rank: (e, [n]) => PlanePartitionsRank(e as number[][], n),
+  },
+  {
+    head: "BoxedPlanePartitions",
+    paramCount: 3,
+    kind: "blocks",
+    count: ([a, b, c]) => BoxedPlanePartitionsCount(a, b, c),
+    unrank: ([a, b, c], r) => BoxedPlanePartitionsUnrank(a, b, c, r),
+    valid: (e, [a, b, c]) => IsBoxedPlanePartitionOf(e, a, b, c),
+    rank: (e, [a, b, c]) => BoxedPlanePartitionsRank(e as number[][], a, b, c),
   },
 ];

@@ -28,6 +28,16 @@ const PARAMS: Record<string, number[][]> = {
   ShiftedStandardTableaux: [[0], [1], [2], [3], [4], [5]],
   StandardTableauPairs: [[0], [1], [2], [3], [4], [5]],
   PlanePartitions: [[0], [1], [2], [3], [4], [5]],
+  BoxedPlanePartitions: [
+    [0, 0, 0],
+    [1, 1, 1],
+    [1, 1, 3],
+    [1, 2, 2],
+    [2, 1, 2],
+    [2, 2, 1],
+    [2, 2, 2],
+    [3, 2, 1],
+  ],
 };
 
 for (const [head, paramSets] of Object.entries(PARAMS)) {
@@ -379,6 +389,72 @@ test("PlanePartitions(n) matches an independent brute-force enumeration, n<=6", 
   }
 });
 
+// BoxedPlanePartitions: independent brute-force over full a×b×c grids of 0..c, checked column/row-wise —
+// deliberately built as a dense grid (not the ragged carrier) so it shares no code with the kernel.
+function bruteBoxedPlanePartitions(a: number, b: number, c: number): number[][][] {
+  const results: number[][][] = [];
+  const grid: number[][] = Array.from({ length: a }, () => Array.from({ length: b }, () => 0));
+  function cell(r: number, col: number): void {
+    if (r === a) {
+      // trim to the ragged carrier: drop zero entries, drop empty trailing rows.
+      const rows = grid.map((row) => row.filter((v) => v > 0)).filter((row) => row.length > 0);
+      results.push(rows.map((row) => row.slice()));
+      return;
+    }
+    if (col === b) {
+      cell(r + 1, 0);
+      return;
+    }
+    const rowBound = col > 0 ? grid[r][col - 1] : c;
+    const colBound = r > 0 ? grid[r - 1][col] : c;
+    for (let v = 0; v <= Math.min(rowBound, colBound); v++) {
+      grid[r][col] = v;
+      cell(r, col + 1);
+    }
+    grid[r][col] = 0;
+  }
+  cell(0, 0);
+  return results;
+}
+function macMahonBoxCount(a: number, b: number, c: number): number {
+  let num = 1;
+  let den = 1;
+  for (let i = 1; i <= a; i++)
+    for (let j = 1; j <= b; j++)
+      for (let k = 1; k <= c; k++) {
+        num *= i + j + k - 1;
+        den *= i + j + k - 2;
+      }
+  return Math.round(num / den);
+}
+test("BoxedPlanePartitions(a,b,c) matches MacMahon's formula and an independent brute-force enumeration, a,b,c<=3", () => {
+  const entry = byHead.get("BoxedPlanePartitions")!;
+  for (let a = 0; a <= 3; a++)
+    for (let b = 0; b <= 3; b++)
+      for (let c = 0; c <= 3; c++) {
+        const total = entry.count([a, b, c]);
+        expect(total).toBe(macMahonBoxCount(a, b, c));
+        const expected = new Set(bruteBoxedPlanePartitions(a, b, c).map((rows) => asKey(rows)));
+        expect(total).toBe(expected.size);
+        const got = new Set<string>();
+        for (let r = 0; r < total; r++) {
+          const element = entry.unrank([a, b, c], r) as number[][];
+          expect(entry.valid(element, [a, b, c])).toBe(true);
+          expect(entry.rank(element, [a, b, c])).toBe(r);
+          got.add(asKey(element));
+        }
+        expect(got).toEqual(expected);
+      }
+});
+test("BoxedPlanePartitions(2,2,2) = 20", () => {
+  const entry = byHead.get("BoxedPlanePartitions")!;
+  expect(entry.count([2, 2, 2])).toBe(20);
+});
+test("BoxedPlanePartitions(1,1,n) = n+1 for n=0..5", () => {
+  const entry = byHead.get("BoxedPlanePartitions")!;
+  expect([0, 1, 2, 3, 4, 5].map((n) => entry.count([1, 1, n]))).toEqual([1, 2, 3, 4, 5, 6]);
+});
+
 // GelfandTsetlin: closed-form Weyl-dimension anchors from the archived checkout.
 test("GelfandTsetlin(2,k) for k=1..4 is 4,10,20,35", () => {
   const entry = byHead.get("GelfandTsetlin")!;
@@ -424,6 +500,7 @@ const GOLDEN_CASES: Record<string, number[][]> = {
   ShiftedStandardTableaux: [[5]],
   StandardTableauPairs: [[4]],
   PlanePartitions: [[5]],
+  BoxedPlanePartitions: [[2, 2, 2]],
 };
 
 for (const [head, paramsList] of Object.entries(GOLDEN_CASES)) {

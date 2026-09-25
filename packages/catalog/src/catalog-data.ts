@@ -403,6 +403,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "Calkin–Wilf Paths",
     description: "Length-n tree paths (0=L,1=R) encoding the positive rationals; 2ⁿ.",
+    aliasOf: "BinaryWords",
   },
   {
     name: "CardinalNumbers",
@@ -1234,6 +1235,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     title: "Independent Sets of a Cycle",
     description:
       "Binary words with no two cyclically-adjacent 1s — the Lucas numbers; cyclic analogue of sparse_subsets.",
+    aliasOf: "LucasStrings",
   },
   {
     name: "IntegerCompositions",
@@ -1579,6 +1581,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "Labeled Forests",
     description: "Rooted forests on n labeled vertices — (n+1)ⁿ⁻¹ via the super-root tree.",
+    aliasOf: "RootedForests",
   },
   {
     name: "LabeledGraphs",
@@ -2994,6 +2997,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "Sparse Subsets",
     description: "Subsets with no two consecutive elements.",
+    aliasOf: "FibStrings",
   },
   {
     name: "SphenicNumbers",
@@ -3124,6 +3128,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     ],
     title: "Stern–Brocot Paths",
     description: "Length-n tree paths encoding ℚ⁺ in ascending order; 2ⁿ.",
+    aliasOf: "BinaryWords",
   },
   {
     name: "SternDiatomicSequence",
@@ -5966,6 +5971,7 @@ export const REFERENCES: readonly CatalogReference[] = [
     subject: "CalkinWilfPaths",
     system: "oeis",
     identity: "A002487",
+    relation: "conceptual",
     url: "https://oeis.org/A002487",
     note: "fiber n is a contiguous depth-block of the BFS Calkin-Wilf enumeration (fusc-indexed); rank = word binary value",
   },
@@ -6681,9 +6687,9 @@ export const REFERENCES: readonly CatalogReference[] = [
     kind: "collection",
     subject: "IndependentSetsCycle",
     system: "oeis",
-    identity: "A000032",
-    url: "https://oeis.org/A000032",
-    note: "Lucas Lₙ — independent sets of the cycle Cₙ",
+    identity: "A000204",
+    url: "https://oeis.org/A000204",
+    note: "Lucas numbers with L(0) = 1 (the empty cycle has one independent set, ∅), matching LucasStrings",
   },
   {
     kind: "collection",

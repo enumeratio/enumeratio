@@ -67,6 +67,75 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
             "An exact non-integer argument stays symbolic here; Wolfram continues to a closed form in Glaisher's constant.",
         },
       },
+      {
+        expr: ["BarnesG", 10],
+        expected: 5056584744960000,
+        caption: "$G(10) = \\prod_{k=0}^{8} k!$, exact",
+      },
+      { expr: ["BarnesG", 3], expected: 1, caption: "$G(3) = 0!\\,1! = 1$" },
+      {
+        expr: ["BarnesG", 0.5],
+        expected: 0.6032442812095893,
+        caption: "$G(\\tfrac12)$ to machine precision",
+      },
+      {
+        expr: ["BarnesG", ["Complex", 1.3, 1]],
+        expected: ["Complex", 1.4446139350503153, -0.2985488252115687],
+        category: "Scope",
+        caption: "Complex arguments",
+      },
+      {
+        expr: ["BarnesG", -2.5],
+        expected: 0.07617297965688405,
+        category: "Scope",
+        caption: "Negative non-integer arguments, between the zeros",
+      },
+      {
+        expr: [
+          "BarnesG",
+          ["List", ["List", ["Rational", 1, 2], 1], ["List", 1, ["Rational", 1, 2]]],
+        ],
+        expected: [
+          "List",
+          ["List", ["BarnesG", ["Rational", 1, 2]], 1],
+          ["List", 1, ["BarnesG", ["Rational", 1, 2]]],
+        ],
+        category: "Scope",
+        caption: "Threads elementwise over an array",
+        divergence: {
+          wolfram:
+            "Wolfram also threads, but writes $G(\\tfrac12)$ as its closed form $2^{1/24} e^{1/8} \\pi^{-1/4} A^{-3/2}$ in Glaisher's constant.",
+        },
+      },
+      {
+        expr: ["BarnesG", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "$G(\\infty) = \\infty$ — the limit at infinity is not taken yet",
+        aspirational: true,
+      },
+      {
+        expr: ["BarnesG", ["Interval", 1.17, 1.18]],
+        expected: ["Interval", 1.0522163286861943, 1.054193606435691],
+        category: "Scope",
+        caption:
+          "Interval arithmetic: $G$ is increasing on $[1.17, 1.18]$, so the image is the interval of the endpoint values; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["BarnesG", ["Around", 2.1, 0.01]],
+        expected: ["Around", 0.9847727243540465, 0.001449505695943639],
+        category: "Scope",
+        caption:
+          "Uncertainty propagation: $G(2.1 \\pm 0.01) = 0.98477 \\pm 0.00145$, to first order in $G'$; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["Divide", ["Power", ["Gamma", 6], 5], ["BarnesG", 6]],
+        expected: 86400000,
+        category: "Properties",
+        caption: "The hyperfactorial $H(n) = \\Gamma(n+1)^n / G(n+1)$: here $120^5/288 = H(5)$",
+      },
     ],
     implementations: [
       {
@@ -124,6 +193,83 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["LogBarnesG", 10.5],
         expected: 42.2788836367952,
         caption: "Numeric for a floating-point argument",
+      },
+      {
+        expr: ["LogBarnesG", 0.5],
+        expected: -0.5054330544894583,
+        caption: "$\\ln G(\\tfrac12)$",
+      },
+      {
+        expr: ["LogBarnesG", 0.7],
+        expected: -0.21458989707508636,
+        caption: "$\\ln G(0.7)$ — negative, since $G < 1$ on $(0, 1)$",
+      },
+      {
+        expr: ["LogBarnesG", ["Complex", 1.7, 1]],
+        expected: ["Complex", 0.12137866262889929, -0.31356176133685665],
+        category: "Scope",
+        caption: "Complex arguments",
+      },
+      {
+        expr: ["LogBarnesG", ["List", ["List", 4, -1], ["List", 0, 3]]],
+        expected: [
+          "List",
+          ["List", ["Ln", 2], "NegativeInfinity"],
+          ["List", "NegativeInfinity", 0],
+        ],
+        category: "Scope",
+        caption: "Threads elementwise over an array: $-\\infty$ at the zeros of $G$",
+      },
+      {
+        expr: ["LogBarnesG", 10],
+        expected: [
+          "Add",
+          ["Multiply", 2, ["Ln", 14]],
+          ["Multiply", 3, ["Ln", 10]],
+          ["Multiply", 9, ["Ln", 3]],
+          ["Multiply", 18, ["Ln", 2]],
+          ["Ln", 5],
+        ],
+        category: "Properties",
+        caption:
+          "Exact at the integers: $\\ln G(10) = \\ln 5056584744960000$, split into logarithms of its factors",
+        divergence: { wolfram: "Wolfram keeps a single logarithm, Log[5056584744960000]." },
+      },
+      {
+        expr: ["LogBarnesG", -2.5],
+        expected: ["Complex", -2.5747484768528466, 18.84955592153876],
+        category: "Possible issues",
+        caption:
+          "The continuation, not $\\ln$ of the value: $G(-2.5) > 0$, yet the imaginary part is $6\\pi$",
+      },
+      {
+        expr: ["N", ["LogBarnesG", ["Power", 10, 1000]]],
+        expected: { num: "1.15054254649702284200899572734e2003" },
+        category: "Scope",
+        caption:
+          "Huge arguments, straight from the asymptotic series: $\\ln G(10^{1000}) \\approx 1.1505\\times10^{2003}$; stays unevaluated (and arguments near $10^{20}$ exceed the time cap)",
+        aspirational: true,
+      },
+      {
+        expr: ["LogBarnesG", ["Interval", 0.111, 0.112]],
+        expected: ["Interval", -2.106284277112393, -2.096646198881469],
+        category: "Scope",
+        caption: "Interval arithmetic over an increasing stretch; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["LogBarnesG", ["Around", 1.2, 0.01]],
+        expected: ["Around", 0.05620885559910568, 0.0016113055388623507],
+        category: "Scope",
+        caption: "Uncertainty propagation through $\\ln G$; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["LogBarnesG", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "$\\ln G(\\infty) = \\infty$; the limit is not taken yet",
+        aspirational: true,
       },
     ],
     implementations: [
@@ -194,6 +340,93 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "Off the positive axis this is the continuation: $\\ln(\\Gamma(-2.5+1.5i))$ with a principal log has imaginary part $-1.4299$, a full $2\\pi$ away",
+      },
+      {
+        expr: ["LogGamma", 5],
+        expected: ["Add", ["Multiply", 3, ["Ln", 2]], ["Ln", 3]],
+        caption: "$\\ln\\Gamma(5) = \\ln 4! = \\ln 24$, split into prime logarithms",
+        divergence: { wolfram: "Wolfram keeps a single logarithm, Log[24]." },
+      },
+      {
+        expr: ["LogGamma", 2.2],
+        expected: { num: "0.096947466790638776492" },
+        category: "Scope",
+        caption: "To the engine's working precision",
+      },
+      {
+        expr: ["LogGamma", ["Complex", 2.5, 3]],
+        expected: ["Complex", -1.4709546103488336, 2.822615638260796],
+        category: "Scope",
+        caption: "Complex arguments",
+      },
+      {
+        expr: [
+          "LogGamma",
+          ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]],
+        ],
+        expected: [
+          "List",
+          ["List", ["Multiply", ["Rational", 1, 2], ["Ln", "Pi"]], "PositiveInfinity"],
+          ["List", "PositiveInfinity", ["Multiply", ["Rational", 1, 2], ["Ln", "Pi"]]],
+        ],
+        category: "Scope",
+        caption: "Threads elementwise over an array",
+      },
+      {
+        expr: ["LogGamma", -1.5],
+        expected: ["Complex", 0.8600470153764732, -6.283185307179586],
+        category: "Properties",
+        caption:
+          "On the negative axis: $\\Gamma(-\\tfrac32) = \\tfrac43\\sqrt\\pi > 0$, but the continuation carries $-2\\pi i$",
+      },
+      {
+        expr: ["LogGamma", ["Rational", 3, 2]],
+        expected: ["Ln", ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"]]],
+        category: "Properties",
+        caption:
+          "Half-integers past $\\tfrac12$: $\\ln\\Gamma(\\tfrac32) = \\ln\\tfrac{\\sqrt\\pi}{2}$; stays symbolic",
+        aspirational: true,
+      },
+      {
+        expr: ["LogGamma", ["Rational", -3, 2]],
+        expected: [
+          "Subtract",
+          ["Ln", ["Multiply", ["Rational", 4, 3], ["Sqrt", "Pi"]]],
+          ["Multiply", 2, "ImaginaryUnit", "Pi"],
+        ],
+        category: "Scope",
+        caption:
+          "Exact negative half-integers: $\\ln\\Gamma(-\\tfrac32) = \\ln\\tfrac{4\\sqrt\\pi}{3} - 2\\pi i$; stays symbolic",
+        aspirational: true,
+      },
+      {
+        expr: ["LogGamma", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "$\\ln\\Gamma(\\infty) = \\infty$; the limit is not taken yet",
+        aspirational: true,
+      },
+      {
+        expr: ["N", ["LogGamma", ["Power", 10, 300]]],
+        expected: { num: "6.89775527898213705205397436405e302" },
+        category: "Scope",
+        caption:
+          "Huge arguments: $\\ln\\Gamma(10^{300}) \\approx 6.898\\times10^{302}$ — N() overflows to $\\infty$ through $\\Gamma$ instead of using Stirling's series",
+        aspirational: true,
+      },
+      {
+        expr: ["LogGamma", ["Interval", 0.41, 0.42]],
+        expected: ["Interval", 0.7468637271280142, 0.7714224633947468],
+        category: "Scope",
+        caption: "Interval arithmetic: decreasing here, so the endpoints swap; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["LogGamma", ["Around", 1.2, 0.01]],
+        expected: ["Around", -0.08537409000331585, 0.002890398965921883],
+        category: "Scope",
+        caption: "Uncertainty propagation, with $\\psi(1.2)$ as the slope; not yet",
+        aspirational: true,
       },
     ],
     implementations: [
@@ -361,6 +594,69 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
             "An exact non-integer argument stays symbolic here; Wolfram rewrites it as $(1-\\sqrt2)\\zeta(1/2)$ instead.",
         },
       },
+      {
+        expr: ["DirichletEta", 1.5],
+        expected: { num: "0.765147024625407945367" },
+        caption: "Numeric for a floating-point argument",
+      },
+      {
+        expr: ["DirichletEta", 4],
+        expected: ["Multiply", ["Rational", 7, 720], ["Power", "Pi", 4]],
+        category: "Properties",
+        caption: "$\\eta(4) = \\tfrac78\\zeta(4) = 7\\pi^4/720$",
+      },
+      {
+        expr: ["DirichletEta", ["Complex", 3.5, 2.5]],
+        expected: ["Complex", 1.0001097278046978, 0.07812891204148316],
+        category: "Scope",
+        caption: "Complex arguments",
+      },
+      {
+        expr: [
+          "DirichletEta",
+          ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]],
+        ],
+        expected: [
+          "List",
+          ["List", ["DirichletEta", ["Rational", 1, 2]], ["Rational", 1, 4]],
+          ["List", ["Rational", 1, 2], ["DirichletEta", ["Rational", 1, 2]]],
+        ],
+        category: "Scope",
+        caption: "Threads elementwise over an array",
+        divergence: {
+          wolfram:
+            "Wolfram also threads, but rewrites $\\eta(\\tfrac12)$ as $(1-\\sqrt2)\\zeta(\\tfrac12)$.",
+        },
+      },
+      {
+        expr: ["DirichletEta", "PositiveInfinity"],
+        expected: 1,
+        category: "Scope",
+        caption: "$\\eta(s) \\to 1$ as $s \\to \\infty$; the limit is not taken yet",
+        aspirational: true,
+      },
+      {
+        expr: ["DirichletEta", ["Interval", 1.5, 1.6]],
+        expected: ["Interval", 0.7651470246254078, 0.7777227266611288],
+        category: "Scope",
+        caption: "Interval arithmetic over an increasing stretch; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["DirichletEta", ["Around", 2, 0.01]],
+        expected: ["Around", 0.8224670334241132, 0.001013165781635045],
+        category: "Scope",
+        caption: "Uncertainty propagation: $\\eta(2 \\pm 0.01) = 0.82247 \\pm 0.00101$; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["FunctionExpand", ["DirichletEta", "s"]],
+        expected: ["Multiply", ["Subtract", 1, ["Power", 2, ["Subtract", 1, "s"]]], ["Zeta", "s"]],
+        category: "Properties",
+        caption:
+          "Rewriting in terms of [[Zeta]]: $\\eta(s) = (1 - 2^{1-s})\\zeta(s)$ — needs a `FunctionExpand` head",
+        aspirational: true,
+      },
     ],
     implementations: [
       {
@@ -449,6 +745,47 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: { num: "0.948622174037054707445" },
         caption:
           "Numeric for a floating-point argument — through $4^{-s}(\\zeta(s,\\tfrac14) - \\zeta(s,\\tfrac34))$, so it answers to the engine's working precision rather than a double's",
+      },
+      {
+        expr: ["DirichletBeta", "s"],
+        expected: ["DirichletBeta", "s"],
+        caption: "A symbolic argument stays symbolic",
+      },
+      {
+        expr: ["DirichletBeta", 5],
+        expected: ["Multiply", ["Rational", 5, 1536], ["Power", "Pi", 5]],
+        category: "Properties",
+        caption: "$\\beta(5) = 5\\pi^5/1536$",
+      },
+      {
+        expr: ["DirichletBeta", ["Complex", 0.5, 14]],
+        expected: ["Complex", 1.537115438440316, 1.3434514268677573],
+        category: "Scope",
+        caption: "Complex arguments, here on the critical line",
+      },
+      {
+        expr: ["DirichletBeta", ["List", ["List", 1, -1], ["List", -1, 1]]],
+        expected: [
+          "List",
+          ["List", ["Multiply", ["Rational", 1, 4], "Pi"], 0],
+          ["List", 0, ["Multiply", ["Rational", 1, 4], "Pi"]],
+        ],
+        category: "Scope",
+        caption: "Threads elementwise over an array",
+      },
+      {
+        expr: ["DirichletBeta", "PositiveInfinity"],
+        expected: 1,
+        category: "Scope",
+        caption: "$\\beta(s) \\to 1$ as $s \\to \\infty$; the limit is not taken yet",
+        aspirational: true,
+      },
+      {
+        expr: ["DirichletBeta", ["Around", 2, 0.01]],
+        expected: ["Around", 0.915965594177219, 0.000815807361165928],
+        category: "Scope",
+        caption: "Uncertainty propagation: $\\beta(2 \\pm 0.01) = G \\pm 0.00082$; not yet",
+        aspirational: true,
       },
     ],
     implementations: [
@@ -540,6 +877,58 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption:
           "Orders past 30 stay unevaluated even under N(): the double-precision kernel cannot be trusted there",
       },
+      {
+        expr: ["StieltjesGamma", 2, 1.5],
+        expected: 0.007958447383888047,
+        caption: "$\\gamma_2(\\tfrac32)$",
+      },
+      {
+        expr: ["N", ["StieltjesGamma", 1]],
+        expected: -0.07281584548367652,
+        caption: "$\\gamma_1 = -0.0728158\\ldots$ under N()",
+      },
+      {
+        expr: ["N", ["StieltjesGamma", 2, ["Complex", 1, 1]]],
+        expected: ["Complex", 0.1703042014685879, 0.37317719575749525],
+        category: "Scope",
+        caption: "Complex $a$",
+      },
+      {
+        expr: ["StieltjesGamma", ["List", 1, 2, 3], 0.5],
+        expected: ["List", -1.3534596808049415, 0.9688644752202907, -0.6674242737113807],
+        category: "Scope",
+        caption: "Listable in the order $n$: threads over a list; not yet (a type error today)",
+        aspirational: true,
+      },
+      {
+        expr: ["StieltjesGamma", 2, ["Interval", 2.34, 2.35]],
+        expected: ["Interval", -0.06724128035508715, -0.06514040366307242],
+        category: "Scope",
+        caption: "Interval arithmetic in $a$; not yet (a type error today)",
+        aspirational: true,
+      },
+      {
+        expr: ["StieltjesGamma", 1, 1],
+        expected: ["StieltjesGamma", 1],
+        category: "Properties",
+        caption: "$\\gamma_n(1) = \\gamma_n$; the two-argument form does not reduce to it yet",
+        aspirational: true,
+      },
+      {
+        expr: ["StieltjesGamma", 0, 1],
+        expected: "EulerGamma",
+        category: "Properties",
+        caption: "$\\gamma_0(1) = -\\psi(1) = \\gamma$; stops at $-\\psi(1)$",
+        aspirational: true,
+      },
+      {
+        expr: ["StieltjesGamma", 0, ["Rational", 1, 2]],
+        expected: ["Add", "EulerGamma", ["Multiply", 2, ["Ln", 2]]],
+        category: "Properties",
+        caption:
+          "$\\gamma_0(\\tfrac12) = -\\psi(\\tfrac12) = \\gamma + 2\\ln 2$; stops at $-\\psi(\\tfrac12)$",
+        aspirational: true,
+      },
     ],
     // \u03b3\u2099(a) IS a Laurent coefficient of \u03b6(s, a) at s = 1, so its definition is a limit of an
     // n-th derivative \u2014 and compute-engine cannot take it: the head collapses to the pole at
@@ -621,6 +1010,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "$j$ must be at most $\\varphi(k) = 4$; out of range names no character and stays unevaluated",
+      },
+      {
+        expr: ["DirichletCharacter", 7, 3, 3],
+        expected: ["Add", ["Rational", -1, 2], ["Complex", 0, ["Divide", ["Sqrt", 3], 2]]],
+        category: "Scope",
+        caption:
+          "Values are roots of unity: 3 generates $(\\mathbb{Z}/7)^\\times$, and $\\chi_3(3) = e^{2\\pi i/3}$",
+      },
+      {
+        expr: ["DirichletCharacter", 3, 2, ["List", 1, 2, 3, 4, 5]],
+        expected: ["List", 1, -1, 0, 1, -1],
+        category: "Scope",
+        caption:
+          "Listable in $n$: the nontrivial character mod 3 over $1, \\dots, 5$; not yet (a type error today)",
+        aspirational: true,
       },
     ],
     primitive: "kernel",
@@ -713,6 +1117,73 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption:
           "No closed form at positive integer $s$ in general, so this stays symbolic; N() gives $0.95872 + 0.14557i$",
       },
+      {
+        expr: ["DirichletL", 1, 1, 2],
+        expected: ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
+        caption: "$L(2, \\chi_1 \\bmod 1) = \\zeta(2) = \\pi^2/6$",
+      },
+      {
+        expr: ["DirichletL", 3, 2, 1.5],
+        expected: 0.7039682448687329,
+        caption: "Numeric for a floating-point argument",
+      },
+      {
+        expr: ["N", ["DirichletL", 2, 1, ["Complex", 1, 1]]],
+        expected: ["Complex", 0.6543589174072331, -0.3843763502147996],
+        category: "Scope",
+        caption: "Complex $s$: $L(s, \\chi_1 \\bmod 2) = (1 - 2^{-s})\\zeta(s)$ at $s = 1 + i$",
+      },
+      {
+        expr: ["DirichletL", 2, 1, "s"],
+        expected: [
+          "Multiply",
+          ["Add", ["Negate", ["Power", 2, ["Negate", "s"]]], 1],
+          ["Zeta", "s"],
+        ],
+        category: "Properties",
+        caption: "The principal character mod 2 removes the Euler factor at 2",
+      },
+      {
+        expr: ["DirichletL", 4, 2, 2],
+        expected: "Catalan",
+        category: "Properties",
+        caption: "$L(2, \\chi_2 \\bmod 4) = \\beta(2) = G$",
+      },
+      {
+        expr: ["DirichletL", 3, 2, 0],
+        expected: ["Rational", 1, 3],
+        category: "Properties",
+        caption:
+          "$L(0, \\chi_{-3}) = \\tfrac13$ — the class number formula's $2h/w$ for $\\mathbb{Q}(\\sqrt{-3})$",
+      },
+      {
+        expr: ["DirichletL", 3, 2, 1],
+        expected: ["Divide", "Pi", ["Multiply", 3, ["Sqrt", 3]]],
+        category: "Properties",
+        caption:
+          "$L(1, \\chi_{-3}) = \\pi/(3\\sqrt3)$: $s = 1$ for an odd character has a closed form; stays symbolic",
+        aspirational: true,
+      },
+      {
+        expr: ["DirichletL", 1, 1, ["List", 1, 2, 3, 4]],
+        expected: [
+          "List",
+          "ComplexInfinity",
+          ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
+          ["Zeta", 3],
+          ["Multiply", ["Rational", 1, 90], ["Power", "Pi", 4]],
+        ],
+        category: "Scope",
+        caption: "Listable in $s$: threads over a list; not yet (a type error today)",
+        aspirational: true,
+      },
+      {
+        expr: ["DirichletL", 5, 1, ["Interval", 1.23, 1.24]],
+        expected: ["Interval", 4.113958567039058, 4.25898895010849],
+        category: "Scope",
+        caption: "Interval arithmetic in $s$ (decreasing here); not yet (a type error today)",
+        aspirational: true,
+      },
     ],
     implementations: [
       {
@@ -791,6 +1262,117 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "A non-integer order stays symbolic under plain evaluation, even at an exact $n$; N() gives $3.23167\\ldots$",
+      },
+      {
+        expr: ["HarmonicNumber", 10, 2],
+        expected: ["Rational", 1968329, 1270080],
+        caption: "$H_{10}^{(2)} = \\sum_{k=1}^{10} k^{-2}$, exact",
+      },
+      {
+        expr: ["HarmonicNumber", 0.33],
+        expected: { num: "0.441523646937363528111" },
+        category: "Scope",
+        caption: "Non-integer arguments via $\\psi(z+1) + \\gamma$",
+      },
+      {
+        expr: ["HarmonicNumber", 0.8, 3],
+        expected: { num: "0.940124048948776980484" },
+        category: "Scope",
+        caption: "The generalized form off the integers, via $\\zeta(r) - \\zeta(r, z+1)$",
+      },
+      {
+        expr: ["HarmonicNumber", ["Complex", 1.5, 2]],
+        expected: ["Complex", 1.6170494230744863, 0.7801971357298588],
+        category: "Scope",
+        caption: "Complex arguments",
+      },
+      {
+        expr: ["N", ["HarmonicNumber", "ExponentialE", 1]],
+        expected: 1.7500213805365417,
+        category: "Scope",
+        caption:
+          "Order $r = 1$ off the integers is plain $H_z$: $H_e = 1.75002\\ldots$ — today it comes back ComplexInfinity, from the pole of $\\zeta(1) - \\zeta(1, z+1)$",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", ["List", 2, 3, 5, 7, 11]],
+        expected: [
+          "List",
+          ["Rational", 3, 2],
+          ["Rational", 11, 6],
+          ["Rational", 137, 60],
+          ["Rational", 363, 140],
+          ["Rational", 83711, 27720],
+        ],
+        category: "Scope",
+        caption: "Listable: threads over a list; not yet (a type error today)",
+        aspirational: true,
+      },
+      {
+        expr: [
+          "HarmonicNumber",
+          2,
+          ["List", ["List", ["Rational", 1, 2], 2], ["List", 2, ["Rational", 1, 2]]],
+        ],
+        expected: [
+          "List",
+          ["List", ["Add", 1, ["Divide", 1, ["Sqrt", 2]]], ["Rational", 5, 4]],
+          ["List", ["Rational", 5, 4], ["Add", 1, ["Divide", 1, ["Sqrt", 2]]]],
+        ],
+        category: "Scope",
+        caption:
+          "Threads elementwise over an array of orders, and $H_2^{(1/2)} = 1 + 1/\\sqrt2$ is a finite sum; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", ["Rational", 1, 2]],
+        expected: ["Subtract", 2, ["Multiply", 2, ["Ln", 2]]],
+        category: "Properties",
+        caption:
+          "$H_{1/2} = 2 - 2\\ln 2$: exact at rational arguments by Gauss's digamma theorem; stays symbolic",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", ["Rational", 1, 4]],
+        expected: ["Subtract", ["Subtract", 4, ["Divide", "Pi", 2]], ["Multiply", 3, ["Ln", 2]]],
+        category: "Properties",
+        caption: "$H_{1/4} = 4 - \\tfrac{\\pi}{2} - 3\\ln 2$; stays symbolic",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", "n", -1],
+        expected: ["Multiply", ["Rational", 1, 2], "n", ["Add", "n", 1]],
+        category: "Properties",
+        caption: "Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum; stays symbolic",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Properties",
+        caption: "The harmonic series diverges; the limit is not taken yet",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", "PositiveInfinity", 2],
+        expected: ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
+        category: "Properties",
+        caption: "$H_\\infty^{(r)} = \\zeta(r)$ for $r > 1$: the Basel sum; not yet",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", 0.2, ["Interval", 2.1, 2.2]],
+        expected: ["Interval", 0.3863469411841759, 0.3950923922402868],
+        category: "Scope",
+        caption: "Interval arithmetic in the order; not yet (a type error today)",
+        aspirational: true,
+      },
+      {
+        expr: ["HarmonicNumber", ["Rational", 3, 2], ["Around", 2.1, 0.01]],
+        expected: ["Around", 1.1455164340491326, 0.0008799826466981091],
+        category: "Scope",
+        caption: "Uncertainty propagation in the order; not yet",
+        aspirational: true,
       },
     ],
     implementations: [
@@ -1074,5 +1656,288 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["Fibonacci", "BellNumber", "BernoulliB"],
+  },
+  {
+    name: "Hypergeometric0F1",
+    domain: "Special functions",
+    signature: "Hypergeometric0F1(b, z)",
+    summary:
+      "The confluent hypergeometric limit function ${}_0F_1(b; z) = \\sum_{k\\ge0} z^k / ((b)_k\\,k!)$ — entire in $z$, related to the Bessel functions. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric0F1(b, z)",
+        description: "${}_0F_1(b; z)$, by its defining series.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine 0.128 does not declare this head at all — no `Hypergeometric1F1`-style native to extend — so it is supplied here directly, by the term-ratio recurrence (Fungrim's own `Hypergeometric0F1` identities relate it to `AiryAi`, `Sin` and `Sinc`).",
+      "Poles at $b$ a nonpositive integer $0, -1, -2, \\dots$ stay symbolic; see [[Hypergeometric0F1Regularized]] for the entire version.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric0F1", 2, 0.5],
+        expected: 1.271723456312137,
+        caption: "a generic point, checked against mpmath's `hyp0f1`",
+      },
+      {
+        expr: ["Hypergeometric0F1", 0, 0.5],
+        expected: ["Hypergeometric0F1", 0, 0.5],
+        category: "Possible issues",
+        caption: "$b = 0$ is a pole — stays symbolic",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric0F1[b,z]; mpmath.hyp0f1(b,z).",
+      },
+    ],
+    seeAlso: ["Hypergeometric0F1Regularized", "BesselJ"],
+  },
+  {
+    name: "Hypergeometric0F1Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric0F1Regularized(b, z)",
+    summary:
+      "The regularized confluent hypergeometric limit function ${}_0F_1(b; z) / \\Gamma(b)$ — entire in both $b$ and $z$, unlike [[Hypergeometric0F1]] itself. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric0F1Regularized(b, z)",
+        description: "${}_0F_1(b; z) / \\Gamma(b)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Computed by its own series $\\sum_{k\\ge0} z^k / (\\Gamma(b+k)\\,k!)$ rather than dividing `Hypergeometric0F1` by `Gamma(b)`: at $b$ a nonpositive integer, `Gamma(b)` is itself a pole, and $1/\\Gamma$ is taken directly (zero there, by the standard convention) so the sum stays finite exactly where the naive division would not.",
+      "Entire in $z$ too ($p \\le q$ for this series), so — unlike [[Hypergeometric2F1Regularized]] — never declines on $z$.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric0F1Regularized", 2, 0.5],
+        expected: 1.2717234563121365,
+        caption: "matches Hypergeometric0F1(2, 0.5) / Gamma(2) = Hypergeometric0F1(2, 0.5)",
+      },
+      {
+        expr: ["Hypergeometric0F1Regularized", -1, 0.5],
+        expected: 0.1471797367221067,
+        caption: "$b = -1$ is a pole of $\\Gamma$, but the regularized form is finite there",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric0F1Regularized[b,z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric0F1", "BesselJ"],
+  },
+  {
+    name: "Hypergeometric1F1Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric1F1Regularized(a, b, z)",
+    summary:
+      "The regularized Kummer confluent hypergeometric function ${}_1F_1(a,b;z) / \\Gamma(b)$ — entire in $b$ and $z$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric1F1Regularized(a, b, z)",
+        description: "${}_1F_1(a,b;z) / \\Gamma(b)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine declares `Hypergeometric1F1` itself (real and complex $z$) but not this regularized form. Computed by the same $1/\\Gamma$-per-term series as [[Hypergeometric0F1Regularized]], so it stays finite at $b$ a nonpositive integer rather than dividing by `Gamma(b)`'s pole there.",
+      "Entire in $z$ ($p = q$ for this series), so never declines on $z$.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric1F1Regularized", 1, 2, 0.5],
+        expected: 1.2974425414002555,
+        caption: "matches Hypergeometric1F1(1, 2, 0.5) / Gamma(2)",
+      },
+      {
+        expr: ["Hypergeometric1F1Regularized", 1, -1, 0.7],
+        expected: 0.9867388266605329,
+        caption: "$b = -1$ is a pole of $\\Gamma$, but the regularized form is finite there",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric1F1Regularized[a,b,z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric2F1Regularized", "HypergeometricU"],
+  },
+  {
+    name: "Hypergeometric2F1Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric2F1Regularized(a, b, c, z)",
+    summary:
+      "The regularized Gauss hypergeometric function ${}_2F_1(a,b,c;z) / \\Gamma(c)$ (fungrim:fe6e74) — entire in $c$; only converges for $|z| < 1$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric2F1Regularized(a, b, c, z)",
+        description: "${}_2F_1(a,b,c;z) / \\Gamma(c)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Computed by the $1/\\Gamma$-per-term series ($p = q + 1$ here), so it stays finite at $c$ a nonpositive integer rather than dividing `Hypergeometric2F1` by `Gamma(c)`'s pole there.",
+      "The series only converges for $|z| < 1$; outside the unit disc this stays symbolic rather than answering with a guessed analytic continuation. Several of Fungrim's own identities for this head (e.g. fungrim:90ac58) rewrite to a different argument first — that rewrite belongs in the identity layer, not here.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric2F1Regularized", 1, 1, 2, 0.5],
+        expected: 1.3862943611198895,
+        caption: "matches Hypergeometric2F1(1, 1, 2, 0.5) / Gamma(2)",
+      },
+      {
+        expr: ["Hypergeometric2F1Regularized", 1, 1, 2, 1.5],
+        expected: ["Hypergeometric2F1Regularized", 1, 1, 2, 1.5],
+        category: "Possible issues",
+        caption: "$|z| \\ge 1$ stays symbolic — no continuation past the unit disc",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "Hypergeometric2F1Regularized[a,b,c,z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric3F2Regularized", "Hypergeometric1F1Regularized"],
+  },
+  {
+    name: "Hypergeometric3F2Regularized",
+    domain: "Special functions",
+    signature: "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, z)",
+    summary:
+      "The regularized generalized hypergeometric function ${}_3F_2(a_1,a_2,a_3;b_1,b_2;z) / (\\Gamma(b_1)\\Gamma(b_2))$ — entire in $b_1, b_2$; only converges for $|z| < 1$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, z)",
+        description: "${}_3F_2(a_1,a_2,a_3;b_1,b_2;z) / (\\Gamma(b_1)\\Gamma(b_2))$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine has no `Hypergeometric3F2` at all, regularized or otherwise. Computed directly by the $1/\\Gamma$-per-term series ($p = q + 1$ here), finite at either $b_1$ or $b_2$ a nonpositive integer.",
+      "The series only converges for $|z| < 1$; outside the unit disc this stays symbolic. Fungrim's own identities for this head (e.g. the Chebyshev derivative formulas, fungrim:6582c4 / fungrim:e1797b) are unconstrained in their own argument, so not every instance evaluates.",
+      "Wolfram has no dedicated 3,2 head; it maps to the generic `HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]`.",
+    ],
+    examples: [
+      {
+        expr: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 0.5],
+        expected: 0.5507754140499144,
+        caption: "a generic point inside the unit disc",
+      },
+      {
+        expr: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 1.2],
+        expected: ["Hypergeometric3F2Regularized", 1, 1, 1, 2, 3, 1.2],
+        category: "Possible issues",
+        caption: "$|z| \\ge 1$ stays symbolic — no continuation past the unit disc",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]; mpmath's own regularized series (rgamma per term).",
+      },
+    ],
+    seeAlso: ["Hypergeometric2F1Regularized"],
+  },
+  {
+    name: "HypergeometricU",
+    domain: "Special functions",
+    signature: "HypergeometricU(a, b, z)",
+    summary:
+      "Tricomi's confluent hypergeometric function $U(a,b,z)$, for $b$ not an integer — see [[HypergeometricUStar]] for the $z^a$-regularized form Fungrim builds most of its identities from. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "HypergeometricU(a, b, z)",
+        description: "Tricomi's confluent hypergeometric $U(a,b,z)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine 0.128 references this head only inside its identity rules (relating it to `HypergeometricUStar`) but never actually declares it as an operator, so there was nothing to extend — it is declared directly here, reusing the same Kummer connection-formula kernel as `HypergeometricUStar`.",
+      "$b$ at (or very near) an integer is declined, for the same reason `HypergeometricUStar` declines there: the connection formula's $\\Gamma(1-b)$ and $\\Gamma(b-1)$ blow up, and the log-case limit that resolves it is not implemented.",
+      "$U(a,b,z) \\cdot z^a$ equals `HypergeometricUStar(a,b,z)` exactly (fungrim:c8fcc7), which is how this is cross-checked.",
+    ],
+    examples: [
+      {
+        expr: ["HypergeometricU", 1, 2.5, 3],
+        expected: 0.3823406624903156,
+        caption: "a generic point, checked against mpmath's `hyperu`",
+      },
+      {
+        expr: ["HypergeometricU", 1, 2, 3],
+        expected: ["HypergeometricU", 1, 2, 3],
+        category: "Possible issues",
+        caption:
+          "integer $b$ stays symbolic — the connection formula's log-case limit is not implemented",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric-ustar.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "HypergeometricU[a,b,z]; mpmath.hyperu(a,b,z).",
+      },
+    ],
+    seeAlso: ["HypergeometricUStar", "Hypergeometric1F1Regularized"],
   },
 ];

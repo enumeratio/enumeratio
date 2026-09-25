@@ -10,6 +10,10 @@ import { entries as compositions } from "./compositions.ts";
 import { entries as partitions } from "./partitions.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
+import { entries as numericClosedForm } from "./numeric-closed-form.ts";
+import { entries as numericRecurrence } from "./numeric-recurrence.ts";
+import { entries as numericDivisor } from "./numeric-divisor.ts";
+import { entries as numericDigitsPrimes } from "./numeric-digits-primes.ts";
 import { entries as unlabeledTrees } from "./unlabeled-trees.ts";
 import type { FamilyKernel } from "./types.ts";
 
@@ -29,5 +33,9 @@ export const allEntries: readonly FamilyKernel[] = [
   ...partitions,
   ...binaryWordFamilies,
   ...numericSets,
+  ...numericClosedForm,
+  ...numericRecurrence,
+  ...numericDivisor,
+  ...numericDigitsPrimes,
   ...unlabeledTrees,
 ];
