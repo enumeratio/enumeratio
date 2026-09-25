@@ -8,6 +8,10 @@ import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
 // and Min drop an exactly-repeated argument (and compare a list of exact constants
 // numerically), and IsOdd is False at a non-integer exact constant. Declared by
 // `declareAnalytic`.
+//
+// Idempotence and the Max/Min pool comparison can hand back an exact symbolic operand
+// (Pi, say) as is -- honoring `options.numericApproximation` there too, so N(Max(Pi, Pi))
+// comes back as a decimal rather than the exact Pi evaluate() alone would give.
 
 const KNOWN_CONSTANTS = new Set([
   "Pi",
@@ -53,7 +57,7 @@ function declareRoundingHead(
     ce,
     [name, 1],
     (ops) => ops.length === 1 && ops[0]?.operator === name,
-    () => (ops) => ops[0],
+    () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
   );
   // An exact constant expression: evaluate it numerically and round that.
   wrapOperator(
@@ -88,7 +92,7 @@ function declareExtremum(
     ce,
     [name, 2],
     (ops) => ops.length >= 2 && ops.every((op) => op === ops[0] || op.isSame(ops[0])),
-    () => (ops) => ops[0],
+    () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
   );
   // A pool of exact constants (Pi, E, ...): compare numerically, keep the exact form.
   wrapOperator(
@@ -98,7 +102,7 @@ function declareExtremum(
       const items = pool(ops);
       return items.length >= 2 && items.some(looksConstant);
     },
-    () => (ops) => {
+    () => (ops, options) => {
       const items = pool(ops);
       let best: { op: BoxedExpression; v: number } | undefined;
       for (const op of items) {
@@ -106,7 +110,8 @@ function declareExtremum(
         if (n.im !== 0 || !Number.isFinite(n.re)) return undefined;
         if (best === undefined || better(n.re, best.v)) best = { op, v: n.re };
       }
-      return best?.op;
+      if (best === undefined) return undefined;
+      return options.numericApproximation ? best.op.N() : best.op;
     },
   );
 }

@@ -1,11 +1,21 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/boxed";
+import type { EvalOptions } from "./box.ts";
 
 // A few elementary special values Wolfram folds and compute-engine's native handlers
 // leave symbolic: the hyperbolic functions at a purely imaginary argument (rewritten
 // through the matching circular function), Ln(i), Arccot's special-angle table (it has
 // none, unlike Arctan), and the two poles Arccsc(0)/Arcsec(0). Declared by
 // `declareAnalytic`.
+//
+// Every handler below builds an exact symbolic expression and finishes with
+// `options.numericApproximation ? expr.N() : expr.evaluate()` -- plain evaluate() would
+// leave a Pi or a Sinh(rational) inside untouched, so N(Ln(i)) would come back as the
+// exact ½iπ instead of a decimal (issue #107's bug, recurring here).
+
+/** Build then finish an expression the way the caller asked: N() for N(...), else evaluate(). */
+const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+  options.numericApproximation ? expr.N() : expr.evaluate();
 
 // A Multiply with a real coefficient folds straight into the ImaginaryUnit literal --
 // Multiply(ImaginaryUnit, Divide(Pi, 2)) boxes to Multiply(Complex(0, 1/2), Pi), not
@@ -36,7 +46,7 @@ function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
       ce,
       [head, 1],
       (ops) => ops.length === 1 && ops[0] !== undefined && hasImaginaryFactor(ops[0]),
-      () => (ops) => rewrite(realPartOf(ce, ops[0]!)).evaluate(),
+      () => (ops, options) => finish(rewrite(realPartOf(ce, ops[0]!)), options),
     );
   }
 }
@@ -52,18 +62,26 @@ function declareLnImaginaryUnit(ce: ComputeEngine): void {
       ops[0].operator === "Complex" &&
       ops[0].re === 0 &&
       ops[0].im === 1,
-    () => () =>
-      ce.function("Multiply", [ce.function("Complex", [0, ce.number([1, 2])]), "Pi"]).evaluate(),
+    () => (_ops, options) =>
+      finish(
+        ce.function("Multiply", [ce.function("Complex", [0, ce.number([1, 2])]), "Pi"]),
+        options,
+      ),
   );
 }
 
 /**
- * Arccot's special-value table: Wolfram's convention is Arccot(x) = Arctan(1/x) for
- * x != 0, and Arccot(0) = pi/2 by definition (the reciprocal identity is discontinuous
- * there). Falls through to native first, so nothing native already answers (a float
- * argument, PositiveInfinity, ...) changes; only tried, and only kept, when Arctan's
- * own table gives an exact fold at the reciprocal -- otherwise this declines exactly
- * as native does.
+ * Arccot's special-value table: compute-engine's own N(Arccot(x)) already answers on the
+ * range (0, pi) -- continuous, Arccot(0) = pi/2 -- via Arccot(x) = pi/2 - Arctan(x). That
+ * is also what our Wolfram mapping (PR #88) assumes when it emits `Pi/2 - ArcTan[x]` for
+ * ArcCot. The exact table has to follow the same formula, or evaluate() and N() would
+ * disagree on the very call that this table exists to fold (Wolfram's own convention,
+ * ArcCot(x) = ArcTan(1/x) on (-pi/2, pi/2], is a real difference at a negative x -- see
+ * the `divergence` notes on the negative-argument reference examples).
+ *
+ * Falls through to native first, so nothing native already answers (a float argument,
+ * PositiveInfinity, ...) changes; only tried, and only kept, when Arctan's own table
+ * gives an exact fold -- otherwise this declines exactly as native does.
  */
 function declareArccotTable(ce: ComputeEngine): void {
   wrapOperator(
@@ -73,16 +91,19 @@ function declareArccotTable(ce: ComputeEngine): void {
     (native) => (ops, options) => {
       const nativeResult = native?.(ops, options);
       if (nativeResult !== undefined && nativeResult.operator !== "Arccot") return nativeResult;
-      const x = ops[0]!;
-      if (x.is(0)) return ce.function("Divide", ["Pi", 2]).evaluate();
-      const folded = ce.function("Arctan", [ce.function("Divide", [1, x])]).evaluate();
-      return folded.operator === "Arctan" ? nativeResult : folded;
+      const arctanValue = ce.function("Arctan", [ops[0]!]).evaluate();
+      if (arctanValue.operator === "Arctan") return nativeResult; // Arctan didn't fold either
+      return finish(
+        ce.function("Subtract", [ce.function("Divide", ["Pi", 2]), arctanValue]),
+        options,
+      );
     },
   );
 }
 
 /** Arccsc(0) and Arcsec(0): a pole, ComplexInfinity -- both are reciprocal-of-Arcsin /
- * reciprocal-of-Arccos style inverses, undefined at their reciprocal's own 0. */
+ * reciprocal-of-Arccos style inverses, undefined at their reciprocal's own 0. Infinity
+ * has no separate decimal form, so N() and evaluate() agree without branching. */
 function declareReciprocalInversePoles(ce: ComputeEngine): void {
   for (const head of ["Arccsc", "Arcsec"] as const) {
     wrapOperator(

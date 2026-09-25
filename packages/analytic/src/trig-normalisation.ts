@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import type { EvalOptions } from "./box.ts";
 
 // A handful of symbolic Sin normalisations Wolfram applies automatically and
 // compute-engine's native Sin leaves as is: parity, a shift by an integer multiple of
@@ -10,6 +11,14 @@ import { bigIntegerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumerati
 // Each check below is a structural read of `operator` (and, for a symbol, its name) --
 // no evaluation -- so a Sin call whose argument isn't one of these shapes falls straight
 // through to the native handler.
+//
+// Every branch below finishes with `finish`, not a bare evaluate() -- N(Sin(i*(pi/2)))
+// has to come back as a decimal, not the exact i*Sinh(pi/2) evaluate() alone would give
+// (issue #107's bug: a wrapper that ignores `options.numericApproximation`).
+
+/** Build then finish an expression the way the caller asked: N() for N(...), else evaluate(). */
+const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
+  options.numericApproximation ? expr.N() : expr.evaluate();
 
 /** The integer k with op = k*Pi (as bare Pi, Negate(Pi), or Multiply(k, Pi)), if any. */
 function piMultiple(op: BoxedExpression): bigint | undefined {
@@ -48,7 +57,11 @@ function imaginaryFactor(ce: ComputeEngine, op: BoxedExpression): BoxedExpressio
   return ce.function("Divide", [op, "ImaginaryUnit"]).evaluate();
 }
 
-function evaluateSin(ce: ComputeEngine, op: BoxedExpression): BoxedExpression | undefined {
+function evaluateSin(
+  ce: ComputeEngine,
+  op: BoxedExpression,
+  options: EvalOptions,
+): BoxedExpression | undefined {
   const k = piMultiple(op);
   if (k !== undefined) return ce.Zero; // sin(k*pi) = 0 for any integer k
 
@@ -61,7 +74,7 @@ function evaluateSin(ce: ComputeEngine, op: BoxedExpression): BoxedExpression | 
         const rest = ops[1 - i]!;
         // sin(x + k*pi) = (-1)^k * sin(x)
         const sinRest = ce.function("Sin", [rest]);
-        return (shift % 2n === 0n ? sinRest : ce.function("Negate", [sinRest])).evaluate();
+        return finish(shift % 2n === 0n ? sinRest : ce.function("Negate", [sinRest]), options);
       }
     }
   }
@@ -69,24 +82,25 @@ function evaluateSin(ce: ComputeEngine, op: BoxedExpression): BoxedExpression | 
   if (op.operator === "Negate") {
     const inner = operandsOf(op)[0];
     if (inner === undefined) return undefined;
-    return ce.function("Negate", [ce.function("Sin", [inner])]).evaluate();
+    return finish(ce.function("Negate", [ce.function("Sin", [inner])]), options);
   }
 
   if (hasImaginaryFactor(op)) {
     // sin(i*t) = i*sinh(t)
     const t = imaginaryFactor(ce, op);
-    return ce.function("Multiply", ["ImaginaryUnit", ce.function("Sinh", [t])]).evaluate();
+    return finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Sinh", [t])]), options);
   }
 
   if (op.operator === "Arccos") {
     const x = operandsOf(op)[0];
     if (x === undefined) return undefined;
     // sin(arccos(x)) = sqrt(1 - x^2)
-    return ce
-      .function("Sqrt", [
+    return finish(
+      ce.function("Sqrt", [
         ce.function("Add", [1, ce.function("Negate", [ce.function("Power", [x, 2])])]),
-      ])
-      .evaluate();
+      ]),
+      options,
+    );
   }
 
   return undefined;
@@ -119,7 +133,7 @@ export function declareTrigNormalisation(ce: ComputeEngine): void {
     ce,
     ["Sin", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && looksNormalisable(ops[0]),
-    () => (ops) => evaluateSin(ce, ops[0]!),
+    () => (ops, options) => evaluateSin(ce, ops[0]!, options),
   );
 
   // Arcsin(Sin(y)), for a real number literal y already in (-pi, pi]: Wolfram's
@@ -130,16 +144,16 @@ export function declareTrigNormalisation(ce: ComputeEngine): void {
     ce,
     ["Arcsin", 1],
     (ops) => ops.length === 1 && ops[0]?.operator === "Sin",
-    () => (ops) => {
+    () => (ops, options) => {
       const y = operandsOf(ops[0]!)[0];
       // A free variable's re/im are both NaN, so this also excludes a symbolic argument.
       if (y === undefined || y.im !== 0 || !Number.isFinite(y.re)) return undefined;
       const value = y.re;
       const pi = Math.PI;
       if (value < -pi || value > pi) return undefined;
-      if (value >= -pi / 2 && value <= pi / 2) return y;
-      if (value > pi / 2) return ce.function("Subtract", ["Pi", y]).evaluate();
-      return ce.function("Subtract", [ce.function("Negate", ["Pi"]), y]).evaluate();
+      if (value >= -pi / 2 && value <= pi / 2) return finish(y, options);
+      if (value > pi / 2) return finish(ce.function("Subtract", ["Pi", y]), options);
+      return finish(ce.function("Subtract", [ce.function("Negate", ["Pi"]), y]), options);
     },
   );
 }

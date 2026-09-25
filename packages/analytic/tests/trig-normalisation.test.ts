@@ -40,6 +40,15 @@ test("Sin(i*t) = i*Sinh(t), for any real coefficient folded into the imaginary l
   ]);
 });
 
+test("N() decimalizes Sin(i*t), not just evaluate()", () => {
+  // Regression for #107's bug: i*Sinh(pi/2) is exact and symbolic (Sinh has no special
+  // value at pi/2); a wrapper that ignores `options.numericApproximation` would leave
+  // N(...) with that exact form instead of a decimal.
+  const n = ce.box(["N", ["Sin", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]]]).evaluate();
+  expect(n.re).toBe(0);
+  expect(n.im).toBeCloseTo(Math.sinh(Math.PI / 2), 9);
+});
+
 test("Sin(Arccos(x)) = Sqrt(1 - x^2)", () => {
   expect(evalJson(["Sin", ["Arccos", "x"]])).toEqual([
     "Sqrt",

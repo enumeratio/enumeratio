@@ -1902,10 +1902,13 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Arccot", -1],
-        expected: ["Multiply", ["Rational", -1, 4], "Pi"],
+        expected: ["Multiply", ["Rational", 3, 4], "Pi"],
         category: "Scope",
         caption:
-          "With Wolfram's convention $\\operatorname{arccot} x = \\arctan(1/x)$ this is $-\\pi/4$ (an odd function, discontinuous at 0)",
+          "$\\operatorname{arccot}(-1) = 3\\pi/4$ on compute-engine's range $(0, \\pi)$ -- continuous through 0, unlike Wolfram's",
+        divergence: {
+          wolfram: "Wolfram's ArcCot[x] = ArcTan[1/x] on (-π/2, π/2], so ArcCot[-1] = -π/4.",
+        },
       },
       { expr: ["Arccot", "PositiveInfinity"], expected: 0, category: "Scope" },
       {
