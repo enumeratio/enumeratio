@@ -44,6 +44,18 @@ test("materialize expands only the result: an argument is counted whole, not as 
   expect(counted?.value).toBe(20);
 });
 
+test("materialize expands a result in full up to the limit, and not past it", async () => {
+  const [full, huge] = await runCases(
+    [
+      { id: "full", input: ["Range", 1, 20] },
+      { id: "huge", input: ["Range", 1, 1_000_000] },
+    ],
+    { materialize: true },
+  );
+  expect(full?.value).toEqual(["List", ...Array.from({ length: 20 }, (_, i) => i + 1)]);
+  expect(JSON.stringify(huge?.value).length).toBeLessThan(1000);
+});
+
 test("N(x, d) in one case leaves the working precision alone for the next", async () => {
   // One worker, so both cases share an engine: compute-engine's own `N(x, d)` leaves
   // `ce.precision` at `d`, and `1 - Erf(9.5)` only cancels to 0 at the default precision.
