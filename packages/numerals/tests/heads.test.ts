@@ -218,3 +218,18 @@ test("every old spelling is a working alias for its `…Numerals` name", () => {
     expect(symbolNameOf(evaluated) ?? evaluated.operator, alias).toBe(canonical);
   }
 });
+
+test("DigitSum(n, base, k): the first k digits, or the last |k| when k is negative", () => {
+  // 6345354 in base 10 is 6 3 4 5 3 5 4 — the first four are 6 3 4 5.
+  expect(value(["DigitSum", 6345354, 10, 4])).toBe(18);
+  // The last three are 3 5 4.
+  expect(value(["DigitSum", 6345354, 10, -3])).toBe(12);
+  // k at least the digit count is the plain digit sum.
+  expect(value(["DigitSum", 6345354, 10, 7])).toBe(30);
+  expect(value(["DigitSum", 6345354, 10, 7])).toEqual(value(["DigitSum", 6345354, 10]));
+  // Sign is discarded, as in the two-argument form.
+  expect(value(["DigitSum", -6345354, 10, 4])).toBe(18);
+  // The two-argument form is untouched.
+  const bare = new ComputeEngine();
+  expect(value(["DigitSum", 58127, 2])).toEqual(bare.box(["DigitSum", 58127, 2]).evaluate().json);
+});

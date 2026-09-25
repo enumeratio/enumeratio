@@ -6,7 +6,7 @@ import {
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
-import { factorInteger, invMod } from "@enumeratio/residues";
+import { factorInteger, invMod, isPrime } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
   divisorsGaussian,
@@ -106,7 +106,10 @@ export function declareGaussian(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["ExtendedGCD", 1, 1],
-    (ops) => gaussianCall(ops) !== undefined,
+    // Exactly two: declare-widened.ts widens past that for plain integers, and a Gaussian
+    // in a longer call falls through to it rather than have this handler silently drop
+    // every operand past the second.
+    (ops) => ops.length === 2 && gaussianCall(ops) !== undefined,
     () => (ops) => {
       const [a, b] = gaussianCall(ops)!;
       return ce.function(
@@ -173,8 +176,16 @@ export function declareGaussian(ce: ComputeEngine): void {
     operator.evaluate = evaluate;
   };
 
-  optionHead("IsPrime", "(number, any*) -> boolean", undefined, (z) =>
-    ce.symbol(isGaussianPrime(z) ? "True" : "False"),
+  optionHead(
+    "IsPrime",
+    "(number, any*) -> boolean",
+    undefined,
+    (z) => ce.symbol(isGaussianPrime(z) ? "True" : "False"),
+    // Wolfram's PrimeQ counts a prime's associates: PrimeQ[-7] is True. compute-engine's
+    // native IsPrime asks for a positive integer and answers False for any negative one —
+    // an undefined corner we override rather than diverge on, matching Wolfram. Positive n
+    // falls through (returns undefined) to the native handler, unchanged.
+    (n) => (n < 0n ? ce.symbol(isPrime(-n) ? "True" : "False") : undefined),
   );
   // 0 and ±1 have no prime factorisation; the native handler spells them as Wolfram does.
   const factorsOf = (n: bigint): [bigint, number][] | undefined =>

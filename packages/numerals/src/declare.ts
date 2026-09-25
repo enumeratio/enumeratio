@@ -352,6 +352,27 @@ export function declareNumerals(ce: ComputeEngine): void {
     },
   );
 
+  // Wolfram's DigitSum[n, b, k]: the sum of the first k base-b digits (most significant
+  // first); negative k sums the last |k| instead (least significant first). The sign of n
+  // is discarded, as the two-argument form already does.
+  widenSignature(ce, "DigitSum", "(integer, integer?, integer?) -> integer");
+  wrapOperator(
+    ce,
+    ["DigitSum", 5, 2],
+    (ops) => ops.length === 3,
+    () => (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      const base = bigIntegerAt(ops[1]);
+      const k = integerAt(ops[2]);
+      if (n === undefined || base === undefined || base < 2n || k === undefined) return undefined;
+      const digits: bigint[] = [];
+      for (let x = n < 0n ? -n : n; x > 0n; x /= base) digits.unshift(x % base);
+      if (digits.length === 0) digits.push(0n);
+      const slice = k >= 0 ? digits.slice(0, k) : digits.slice(digits.length + k);
+      return ce.number(slice.reduce((sum, d) => sum + d, 0n));
+    },
+  );
+
   /** The integers from `lo` to `hi` as a set, either end possibly unbounded. */
   const integers = (lo: bigint | number | undefined, hi: bigint | number | undefined) => {
     if (hi === undefined) {
