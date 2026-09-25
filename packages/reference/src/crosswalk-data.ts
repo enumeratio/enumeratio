@@ -1850,6 +1850,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "First",
   },
   {
+    name: "FirstPosition",
+    wolfram: "FirstPosition",
+  },
+  {
     name: "FixedPoint",
     wolfram: "FixedPoint",
   },

@@ -224,6 +224,48 @@ test("Subsets(n, {kmin, kmax}) defaults its step to 1", () => {
   expect(canon(elementsOf(expr) as number[][])).toEqual(canon(want));
 });
 
+// ─── Subsets(list) / SetPartitions(list) -- an explicit list of elements ────────────
+
+test("Subsets(list) is Subsets(n) unranked in the same binary-mask order, elements swapped in for positions", () => {
+  const expr = ["Subsets", ["List", "a", "b", "c"]];
+  expect(countOf(expr)).toBe(8);
+  expect(elementsOf(expr)).toEqual([
+    [],
+    ["a"],
+    ["b"],
+    ["a", "b"],
+    ["c"],
+    ["a", "c"],
+    ["b", "c"],
+    ["a", "b", "c"],
+  ]);
+});
+
+test("Count(Subsets(list)) is 2^n for an n-element list", () => {
+  for (const n of [0, 1, 3, 7, 10]) {
+    const list = ["List", ...Array.from({ length: n }, (_, i) => i)];
+    expect(countOf(["Subsets", list])).toBe(2 ** n);
+  }
+});
+
+test("Subsets(collection) also takes a lazy collection, not just a List literal", () => {
+  // Range(1, 10) is itself a lazy indexed collection, never materialized into a List --
+  // elementsOf() has to read it through .each(), not by assuming operator === "List".
+  expect(countOf(["Subsets", ["Range", 1, 10]])).toBe(1024);
+});
+
+test("SetPartitions(list) is SetPartitions(n) unranked in the same RGS order, elements swapped in for positions", () => {
+  const expr = ["SetPartitions", ["List", "a", "b", "c"]];
+  expect(countOf(expr)).toBe(5);
+  expect(elementsOf(expr)).toEqual([
+    [["a", "b", "c"]],
+    [["a", "b"], ["c"]],
+    [["a", "c"], ["b"]],
+    [["a"], ["b", "c"]],
+    [["a"], ["b"], ["c"]],
+  ]);
+});
+
 // ─── PartitionsQ Euler identity, now provable (#137's promoted example) ─────────────
 
 test("Euler: partitions into odd parts as many as partitions into distinct parts", () => {

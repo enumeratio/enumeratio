@@ -94,9 +94,8 @@ export const residues: readonly ReferenceEntry[] = [
       {
         expr: ["Mod", "Pi", 2],
         expected: ["Add", -2, "Pi"],
-        aspirational: true,
         category: "Scope",
-        caption: "A symbolic constant should reduce exactly to $\\pi - 2$; left unevaluated",
+        caption: "A symbolic constant reduces exactly to $\\pi - 2$",
       },
       {
         expr: ["Mod", ["Power", 10, 10000], 10007],

@@ -245,18 +245,21 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Sign", ["Interval", 1, 3]],
         expected: 1,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An [[Interval]] of positive numbers should have sign 1; compute-engine leaves it unevaluated",
+        caption: "An [[Interval]] entirely above 0 has sign 1",
       },
       {
         expr: ["Sign", ["Subtract", ["Sqrt", 2], 2]],
         expected: -1,
-        aspirational: true,
         category: "Scope",
         caption:
-          "Should decide the sign of the exact number $\\sqrt{2}-2$; not yet, it stays unevaluated",
+          "Decides the sign of the exact number $\\sqrt{2}-2$ by certified bignum evaluation at increasing precision",
+      },
+      {
+        expr: ["Sign", ["Subtract", 2, ["Sqrt", 2]]],
+        expected: 1,
+        category: "Scope",
+        caption: "$2-\\sqrt{2}$ is the same certified decision, the other way",
       },
       {
         expr: ["Equal", ["Abs", ["Sign", ["Complex", 3, 4]]], 1],
@@ -504,10 +507,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Sqrt", ["Interval", 1, 8]],
         expected: ["Interval", 1, ["Multiply", 2, ["Sqrt", 2]]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "An [[Interval]] should map to $[1, 2\\sqrt{2}]$; compute-engine's Sqrt rejects a set argument",
+          "Interval arithmetic: $\\sqrt{}$ is increasing, so $\\sqrt{[1,8]} = [1, 2\\sqrt2]$",
       },
       {
         expr: ["Power", ["Sqrt", "x"], 2],
@@ -643,6 +645,11 @@ export const arithmetic: readonly ReferenceEntry[] = [
           "the greatest multiple of `step` at or below x, $\\mathrm{step}\\cdot\\lfloor x/\\mathrm{step}\\rfloor$.",
         library: "enumeratio-collections",
       },
+      {
+        call: "Floor(z)",
+        description: "for a complex $z$, the real and imaginary parts floored separately.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "The greatest integer $\\le x$: $\\lfloor x \\rfloor$.",
@@ -740,10 +747,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Floor", ["Complex", 5.37, -1.3]],
         expected: ["Complex", 5, -2],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Should floor the real and imaginary parts separately; compute-engine's Floor is real-only",
+        caption: "Floors the real and imaginary parts separately",
       },
       {
         expr: ["Floor", ["Floor", "x"]],
@@ -785,6 +790,11 @@ export const arithmetic: readonly ReferenceEntry[] = [
         call: "Ceil(x, step)",
         description:
           "the least multiple of `step` at or above x, $\\mathrm{step}\\cdot\\lceil x/\\mathrm{step}\\rceil$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Ceil(z)",
+        description: "for a complex $z$, the real and imaginary parts rounded up separately.",
         library: "enumeratio-collections",
       },
     ],
@@ -878,10 +888,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Ceil", ["Complex", 5.37, -1.3]],
         expected: ["Complex", 6, -1],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Should round the real and imaginary parts up separately; compute-engine's Ceil is real-only",
+        caption: "Rounds the real and imaginary parts up separately",
       },
       {
         expr: ["Ceil", ["Log", 1000, 2]],
@@ -903,6 +911,11 @@ export const arithmetic: readonly ReferenceEntry[] = [
         call: "Round(x, n)",
         description:
           "rounds to the nearest $10^{-n}$: n decimal places, or -- for negative n -- the nearest power of ten.",
+      },
+      {
+        call: "Round(z)",
+        description: "for a complex $z$, the real and imaginary parts rounded separately.",
+        library: "enumeratio-collections",
       },
     ],
     details: [
@@ -1013,10 +1026,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Round", ["Complex", 5.37, -1.3]],
         expected: ["Complex", 5, -1],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Should round the real and imaginary parts separately; compute-engine's Round is real-only",
+        caption: "Rounds the real and imaginary parts separately",
       },
       {
         expr: ["Round", ["Rational", 1, 2]],
@@ -1337,11 +1348,10 @@ export const arithmetic: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Rationalize", ["N", "Pi"], 0],
-        expected: ["Rational", 245850922, 78256779],
-        aspirational: true,
+        expected: ["Rational", 884279719003555, 281474976710656],
         category: "Scope",
         caption:
-          "A zero tolerance should give the simplest rational exactly equal to the machine number; compute-engine returns one that is merely within an epsilon",
+          "A zero tolerance gives the exact rational the machine double denotes -- $N(\\pi)$'s own dyadic value, $884279719003555/2^{48}$, not merely a rational within some epsilon of it",
       },
       {
         expr: ["Rationalize", 0.618034, 0.0001],
@@ -1464,10 +1474,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Max", ["Interval", 1, 3], ["Interval", -3, 5]],
         expected: ["Interval", 1, 5],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "The max of two [[Interval]]s should be the interval of possible maxima, $[1, 5]$; compute-engine collapses it to the number 5",
+        caption: "The max of two [[Interval]]s is the interval of possible maxima, $[1, 5]$",
       },
       {
         expr: ["Max", "x", "x"],
@@ -1588,10 +1596,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Min", ["Interval", 1, 3], ["Interval", -3, 5]],
         expected: ["Interval", -3, 3],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "The min of two [[Interval]]s should be the interval of possible minima, $[-3, 3]$; compute-engine collapses it to the number -3",
+        caption: "The min of two [[Interval]]s is the interval of possible minima, $[-3, 3]$",
       },
       {
         expr: ["Min", "x", "x"],

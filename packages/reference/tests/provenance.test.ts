@@ -27,8 +27,13 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Not pinned exactly — it moves as the catalogue grows — but every head lands somewhere,
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
-  // Trails the actual count: heads move to extension as we widen them.
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(30);
+  // Interval/CenteredInterval/Around now genuinely diverge bare compute-engine's Sin, Cos,
+  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), and
+  // All/Any/Count/Flatten now genuinely diverge it too (level arguments, infinite depth,
+  // dimension permutation, any-head nesting — #113 §7), moving them all from
+  // "compute-engine" to "override" — the threshold tracks that, well below the current
+  // count so it still catches a real regression.
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(20);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -145,6 +150,16 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `BellNumber`'s own Touchard-polynomial form), `IntegerString`'s bigint arithmetic, and
  * `FromDigits`'s symbolic/negative base and Roman-numeral reading -- all in number-theory,
  * numerals or collections, additive in the same way: native for anything not ours.
+ * The #113 list-stats sweep (`list-stats.ts`) adds `Tabulate` at three or more dimensions,
+ * or a literal 0 in any dimension (materialized directly rather than left truncated or
+ * unevaluated), and `Unique`'s second-argument sameness test — both additive, native for
+ * anything not ours. `Mean`/`Median` on symbolic or exact-constant data is the same sweep,
+ * already covered above since those heads were already overridden for their matrix form.
+ * `Take(xs, UpTo(n))` and `Fold`'s unseeded 2-argument form are ALSO from that sweep but
+ * don't appear here: a bare engine's own `.json` for the unmaterialized/rejected call is
+ * textually identical to (`Take`) or excluded from comparison by (`Fold`, whose malformed
+ * 2-argument call a bare engine's own canonical fails to validate) this ledger's plain,
+ * non-materializing comparison — see their own overrides' comments in `list-stats.ts`.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -155,10 +170,13 @@ const OVERRIDDEN = [
   // formula, and the decimal-digit-count identity), so Add is the corpus expression's own
   // outer head even though the divergence is Floor's.
   "Add",
+  "All",
+  "Any",
   "Arccot",
   "Arccsc",
   "Arcsec",
   "Arcsin",
+  "Arctan",
   "At",
   "BellNumber",
   "BernoulliB",
@@ -172,7 +190,10 @@ const OVERRIDDEN = [
   "Chop",
   "Clamp",
   "ContinuedFraction",
+  "Cos",
   "Cosh",
+  "Count",
+  "Csc",
   "Digamma",
   "DigitCount",
   "DigitSum",
@@ -184,12 +205,14 @@ const OVERRIDDEN = [
   "Erf",
   "ErfInv",
   "Erfc",
+  "Exp",
   "ExtendedGCD",
   "FactorInteger",
   "Factorial2",
   "Fibonacci",
   "First",
   "FixedPoint",
+  "Flatten",
   "Floor",
   "FromContinuedFraction",
   "FromDigits",
@@ -239,13 +262,17 @@ const OVERRIDDEN = [
   "PrimeNu",
   "PrimeOmega",
   "PrimePi",
+  "Product",
   "QuotientRing",
   "Rank",
   "Rationalize",
   "Round",
+  "Sec",
+  "Sign",
   "Sin",
   "Sinh",
   "Sort",
+  "Sqrt",
   "Stirling",
   "StirlingS1",
   "Subfactorial",
@@ -254,9 +281,12 @@ const OVERRIDDEN = [
   // that used to stay unevaluated (S(1, 2), past the k > n boundary); Sum is the corpus
   // expression's own outer head, the same reason Add is here.
   "Sum",
+  "Tabulate",
+  "Tan",
   "Tanh",
   "Totient",
   "Union",
+  "Unique",
   "Zeta",
 ];
 
@@ -439,6 +469,9 @@ const NOVEL = [
   "Braid",
   "AlexanderPolynomial",
   "JonesPolynomial",
+  // FirstPosition exists in Wolfram (system-names.ts has it), but that isn't confirmed by
+  // an external kernel here -- same story as Prepend, just below.
+  "FirstPosition",
   // Prepend exists in Wolfram (crosswalk-data.ts has the alias), but that isn't confirmed
   // by an external kernel here -- collect-coverage.ts's "elsewhere" column needs
   // wolframscript/sympy/mpmath, which this offline pass doesn't have.

@@ -61,9 +61,8 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           ["List", "b", "c"],
           ["List", "a", "b", "c"],
         ],
-        aspirational: true,
         caption:
-          "The documented $Subsets(collection)$ form, listed in the family's binary-mask order; the family takes only an integer n today",
+          "The documented $Subsets(collection)$ form, listed in the family's binary-mask order",
         divergence: { wolfram: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …" },
       },
       {
@@ -87,9 +86,8 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         expr: ["Length", ["Subsets", ["Range", 1, 10]]],
         expected: 1024,
-        aspirational: true,
         category: "Properties",
-        caption: "A set of $n$ elements has $2^n$ subsets; a list argument is not yet taken",
+        caption: "A set of $n$ elements has $2^n$ subsets: $Count(Subsets(list)) = 2^n$",
       },
       {
         expr: ["Sum", ["Binomial", 5, "k"], ["Tuple", "k", 0, 5]],
@@ -290,6 +288,11 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         description: "the set partitions of $\\{1, …, n\\}$ into exactly $k$ blocks.",
         library: "enumeratio-collections",
       },
+      {
+        call: "SetPartitions(collection)",
+        description: "the set partitions of any finite collection.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection; the count is the Bell number $B_n$ — $B_4 = 15$. See [[BellNumber]].",
@@ -307,8 +310,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           ["List", ["List", "a"], ["List", "b", "c"]],
           ["List", ["List", "a"], ["List", "b"], ["List", "c"]],
         ],
-        aspirational: true,
-        caption: "The set partitions of an explicit list; the family takes only an integer n today",
+        caption: "The set partitions of an explicit list, in the family's own RGS order",
       },
       {
         expr: ["SetPartitions", 3, 2],

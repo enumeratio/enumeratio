@@ -53,11 +53,17 @@ import { asBlockList, asIntList, type Boxed, blocksMJ, listMJ } from "./types.ts
 type BoxInput = Parameters<ComputeEngine["box"]>[0];
 const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
 
-/** A fully-resolved call: closed over its params, ready to count/unrank/validate. */
+/** A fully-resolved call: closed over its params, ready to count/unrank/validate.
+ *  `encode`, when present, overrides the family-wide MathJSON encoder for this one
+ *  resolution -- used by the explicit-list call forms (`Subsets(list)`,
+ *  `SetPartitions(list)`), where the family's integer kernel still unranks POSITIONS
+ *  1..n, but each position has to print as the list's own element at that position
+ *  rather than as the bare integer. */
 interface Resolved<E> {
   readonly count: number;
   unrank(r: number): E;
   valid(e: unknown): boolean;
+  encode?: (e: E) => unknown;
 }
 
 /** Build `CollectionHandlers` that re-resolve the kernel from the call's actual operands
@@ -71,7 +77,7 @@ function polyCollection<E>(
 ): CollectionHandlers {
   const opsOf = (c: BoxedExpression) => operandsOf(c);
   const element = (res: Resolved<E>, i: number): BoxedExpression =>
-    ce.box(encode(res.unrank(i)) as BoxInput);
+    ce.box((res.encode ?? encode)(res.unrank(i)) as BoxInput);
   return {
     count: (c) => resolve(opsOf(c))?.count ?? 0,
     isFinite: () => true,
@@ -186,7 +192,39 @@ function resolveIntegerPartitions(ops: readonly BoxedExpression[]): Resolved<num
 
 // ─── SetPartitions(n) / (n, k) ──────────────────────────────────────────────────────────
 
+/** The elements of any finite collection ops[0] denotes -- a `List`, but also `Range(...)`
+ *  or any other lazy indexed collection -- materialized via `.each()`. `undefined` for
+ *  anything that isn't a finite collection at all (an integer n, a free symbol, …), which
+ *  is what lets the caller fall through to the plain integer-n family form. `.isCollection`
+ *  is false for a bare number, so this never mistakes `Subsets(4)` for a 1-collection call. */
+function elementsOf(expr: BoxedExpression | undefined): readonly BoxedExpression[] | undefined {
+  if (expr === undefined || expr.isCollection !== true) return undefined;
+  if (expr.isFiniteCollection === false) return undefined;
+  return [...expr.each()];
+}
+
+/** `SetPartitions(list)`: the same RGS unranking as `SetPartitions(n)` over the list's
+ *  positions 1..n, with each position printed as the list's own element there instead of
+ *  the bare position -- `encode` overrides `blocksMJ` for this one resolution. */
+function resolveSetPartitionsOfList(elements: readonly BoxedExpression[]): Resolved<number[][]> {
+  const n = elements.length;
+  return {
+    count: BellB(n),
+    unrank: (r) => RgsToBlocks(RgsUnrank(n, r)),
+    valid: (e) => Array.isArray(e) && IsSetPartitionOf(e as number[][], n),
+    encode: (blocks) => [
+      "List",
+      ...blocks.map((block) => ["List", ...block.map((i) => elements[i - 1]!.json)]),
+    ],
+  };
+}
+
 function resolveSetPartitions(ops: readonly BoxedExpression[]): Resolved<number[][]> | undefined {
+  if (ops.length === 1) {
+    const elements = elementsOf(ops[0]);
+    if (elements !== undefined) return resolveSetPartitionsOfList(elements);
+  }
+
   const n = integerAt(ops[0]);
   if (n === undefined) return undefined;
 
@@ -239,7 +277,25 @@ function sizesInRange(kmin: number, kmax: number, step: number): number[] {
   return sizes;
 }
 
+/** `Subsets(list)`: the same binary-mask unranking as `Subsets(n)` over the list's
+ *  positions 1..n, with each position printed as the list's own element there instead of
+ *  the bare position -- `encode` overrides `listMJ` for this one resolution. */
+function resolveSubsetsOfList(elements: readonly BoxedExpression[]): Resolved<number[]> {
+  const n = elements.length;
+  return {
+    count: SubsetCount(n),
+    unrank: (r) => SubsetUnrank(n, r),
+    valid: (e) => Array.isArray(e) && IsSubsetOf(e as number[], n),
+    encode: (idxs) => ["List", ...idxs.map((i) => elements[i - 1]!.json)],
+  };
+}
+
 function resolveSubsets(ops: readonly BoxedExpression[]): Resolved<number[]> | undefined {
+  if (ops.length === 1) {
+    const elements = elementsOf(ops[0]);
+    if (elements !== undefined) return resolveSubsetsOfList(elements);
+  }
+
   const n = integerAt(ops[0]);
   if (n === undefined) return undefined;
 
@@ -314,14 +370,17 @@ export function declareCallForms(ce: ComputeEngine): void {
     polyCollection(ce, listMJ, asIntList, resolveIntegerPartitions),
   );
 
-  widenSignature(ce, "SetPartitions", "(integer, integer?) -> list<list<list<integer>>>");
+  // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an
+  // explicit list of elements, not just the family's integer index n -- alongside the
+  // plain integer form; resolveSetPartitions/resolveSubsets dispatch on which it got.
+  widenSignature(ce, "SetPartitions", "(any, integer?) -> list<list<list<any>>>");
   setCollection(
     ce,
     "SetPartitions",
     polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions),
   );
 
-  widenSignature(ce, "Subsets", "(integer, any?) -> list<list<integer>>");
+  widenSignature(ce, "Subsets", "(any, any?) -> list<list<any>>");
   setCollection(ce, "Subsets", polyCollection(ce, listMJ, asIntList, resolveSubsets));
 
   // GroupOrder(SymmetricGroup(n)) -> n! is wired from packages/groupalgebra/src/declare.ts

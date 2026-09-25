@@ -343,15 +343,22 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: "Λ(n) = ln p when n is a power of the prime p, else 0.",
     signature: "(integer) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    // `N(MangoldtLambda(9))` doesn't re-derive a double from this handler's own evaluated
+    // `Ln(3)` on its own -- compute-engine's generic N() calls a custom operator's
+    // `evaluate` once with `numericApproximation: true` and takes whatever comes back as
+    // final, it does not recursively re-approximate an exact result the handler returns.
+    // Honoring the flag here -- `.N()` instead of `.evaluate()` on the built `Ln(p)` -- is
+    // what makes `N(MangoldtLambda(9))` come back as the double 1.0986…, not the still-exact
+    // `Ln(3)`; `N(Ln(3))` alone already worked because THAT `Ln` is compute-engine's own.
+    evaluate: (ops: readonly BoxedExpression[], options) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined || n < 1n) return undefined;
       if (n === 1n) return ce.Zero;
       const factors = factorInteger(n);
       if (factors === undefined) return undefined;
-      return factors.length === 1
-        ? ce.function("Ln", [ce.number(factors[0]![0])]).evaluate()
-        : ce.Zero;
+      if (factors.length !== 1) return ce.Zero;
+      const ln = ce.function("Ln", [ce.number(factors[0]![0])]);
+      return options.numericApproximation ? ln.N() : ln.evaluate();
     },
   });
 

@@ -91,7 +91,7 @@ const applyOrderingSpec = (full: readonly number[], spec: OrderingSpec): number[
 };
 
 /** A non-empty $List$ of $List$s, all the same shape — what Mean/Median thread over column-wise. */
-const isMatrixLike = (expr: BoxedExpression): boolean => {
+export const isMatrixLike = (expr: BoxedExpression): boolean => {
   const rows = operandsOf(expr);
   if (rows.length === 0) return false;
   return rows.every((row) => row.operator === "List") && operandsOf(rows[0]).length > 0;
@@ -107,12 +107,19 @@ const columnsOf = (rows: readonly BoxedExpression[]): BoxedExpression[][] => {
   return columns;
 };
 
-/** Reduce a matrix column-wise by calling `native` (Mean/Median's own 1-arg logic) on each column. */
+/**
+ * Reduce a matrix column-wise by calling `head` (Mean/Median) on each column — re-entered
+ * through `ce.function(...).evaluate()` rather than a captured native handler, so a LATER
+ * wrap on `head` (e.g. `list-stats.ts`'s symbolic Mean/Median) is picked up too. A column is
+ * never itself matrix-shaped, so this can't recurse back into the matrix arm.
+ */
 const threadOverColumns =
-  (ce: ComputeEngine, native: (ops: readonly BoxedExpression[]) => BoxedExpression | undefined) =>
+  (ce: ComputeEngine, head: string) =>
   (matrix: BoxedExpression): BoxedExpression | undefined => {
     const columns = columnsOf(operandsOf(matrix));
-    const results = columns.map((column) => native([ce.box(["List", ...column])]));
+    const results = columns.map((column) =>
+      ce.function(head, [ce.box(["List", ...column])]).evaluate(),
+    );
     return results.some((r) => r === undefined)
       ? undefined
       : ce.box(["List", ...(results as BoxedExpression[])]);
@@ -166,7 +173,9 @@ const materializeTabulate = (
   return ce.box(["List", ...rows]);
 };
 
-/** `Join` at a level `n > 1`: recursively join corresponding sublists n-1 levels down. */
+/** `Join` at a level `n > 1`: recursively join corresponding sublists n-1 levels down. A
+ *  row missing from a shorter array (the outer lists don't all have the same length) is
+ *  simply skipped rather than treated as empty — `length` is the longest, not the first. */
 const joinAtLevel = (
   ce: ComputeEngine,
   lists: readonly BoxedExpression[],
@@ -174,7 +183,7 @@ const joinAtLevel = (
 ): BoxedExpression => {
   if (level <= 1) return ce.box(["List", ...lists.flatMap((list) => operandsOf(list))]);
   const rows = lists.map((list) => operandsOf(list));
-  const length = rows[0]?.length ?? 0;
+  const length = Math.max(0, ...rows.map((row) => row.length));
   const merged: BoxedExpression[] = [];
   for (let i = 0; i < length; i++) {
     const slice = rows
@@ -272,8 +281,7 @@ export function declareListHeads(ce: ComputeEngine): void {
       ce,
       [head, 1],
       (ops) => isMatrixLike(ops[0]),
-      (native) => (ops, options) =>
-        threadOverColumns(ce, (columnOps) => native?.(columnOps, options))(ops[0]),
+      () => (ops) => threadOverColumns(ce, head)(ops[0]),
       1,
     );
   }
@@ -457,18 +465,19 @@ export function declareListHeads(ce: ComputeEngine): void {
       ? { lists, level }
       : undefined;
   };
+  // Join(a, b, …): any head, as long as every argument shares it — not just List or Set.
   wrapOperator(
     ce,
     ["Join", 1, 1],
     (ops) =>
       joinsAtLevel(ops) !== undefined ||
       ops.length === 0 ||
-      (ops.length >= 1 && ops.every((op) => op.operator === "Set")),
+      (ops.length >= 1 && ops.every((op) => op.operator === ops[0].operator)),
     () => (ops) => {
       const join = joinsAtLevel(ops);
       if (join !== undefined) return joinAtLevel(ce, join.lists, join.level);
       if (ops.length === 0) return ce.box(["List"]);
-      return ce.box(["Set", ...ops.flatMap((op) => operandsOf(op))]);
+      return ce.box([ops[0].operator, ...ops.flatMap((op) => operandsOf(op))]);
     },
   );
   {
