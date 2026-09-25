@@ -115,29 +115,136 @@ const happyCache = nthMatchCache(isHappy);
 
 // ---- NarcissisticNumbers (Armstrong numbers): A005188, excluding the trivial 0 -- PROVEN
 // finite, exactly 88 terms (the largest is the 39-digit 115132219018763992565095597973971522401,
-// per Diamond & Kellner's 1993 base-b bound d(10) = 60). Elements beyond Number.MAX_SAFE_INTEGER
-// (2^53 - 1) cannot be represented exactly as this family's scalar `number` element, so the
-// safe-range prefix below (the first 43 of the 88 -- narcissistic numbers only grow in digit
-// count as the index grows, so the cut is a clean prefix) is the full unrank/rank table, and
-// `unrank` answers NaN past it: a known value, just not one this element type can carry. `valid`
-// needs no table at all -- it checks the definition directly via BigInt digit-power sums, exact
-// for any representable input. Values from OEIS A005188 (b-file), indices 2-44 (index 1 is the
-// excluded 0). ----
+// per Diamond & Kellner's 1993 base-b bound d(10) = 60). The first 43 fit in a plain `number`;
+// the remaining 45 exceed Number.MAX_SAFE_INTEGER (2^53 - 1) and are carried as exact `bigint`
+// (the `narrow()` idiom from numeric-closed-form.ts, inlined here rather than imported -- see
+// this file's own note at the top about families not sharing kernels across the boundary).
+// `unrank` used to answer NaN past the safe prefix -- a known value, just not one `number` can
+// carry, and worse, a value that collapses every large pair to the same NaN under quickcheck's
+// JSON.stringify-based comparison (issue #90). Returning the bigint instead keeps every rank
+// exact and distinct. `valid` needs no table at all -- it checks the definition directly via
+// BigInt digit-power sums, exact for any representable input. Values from OEIS A005188
+// (b-file), indices 2-89 (index 1 is the excluded 0), verified against the definition in
+// numeric-digits-primes.test.ts. ----
 
-const NARCISSISTIC_SAFE: readonly number[] = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1634, 8208, 9474, 54748, 92727, 93084, 548834,
-  1741725, 4210818, 9800817, 9926315, 24678050, 24678051, 88593477, 146511208, 472335975, 534494836,
-  912985153, 4679307774, 32164049650, 32164049651, 40028394225, 42678290603, 44708635679,
-  49388550606, 82693916578, 94204591914, 28116440335967, 4338281769391370, 4338281769391371,
+const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
+
+/** bigint -> plain number when exact there, else the bigint itself (still an exact integer,
+ *  just not representable as an IEEE double without loss). Cast at the call site, since
+ *  `FamilyKernel`'s scalar element type is `number`. Same idiom as numeric-closed-form.ts. */
+function narrow(x: bigint): number {
+  return x <= MAX_SAFE_BIG ? Number(x) : (x as unknown as number);
+}
+
+const NARCISSISTIC_NUMBERS: readonly bigint[] = [
+  1n,
+  2n,
+  3n,
+  4n,
+  5n,
+  6n,
+  7n,
+  8n,
+  9n,
+  153n,
+  370n,
+  371n,
+  407n,
+  1634n,
+  8208n,
+  9474n,
+  54748n,
+  92727n,
+  93084n,
+  548834n,
+  1741725n,
+  4210818n,
+  9800817n,
+  9926315n,
+  24678050n,
+  24678051n,
+  88593477n,
+  146511208n,
+  472335975n,
+  534494836n,
+  912985153n,
+  4679307774n,
+  32164049650n,
+  32164049651n,
+  40028394225n,
+  42678290603n,
+  44708635679n,
+  49388550606n,
+  82693916578n,
+  94204591914n,
+  28116440335967n,
+  4338281769391370n,
+  4338281769391371n,
+  21897142587612075n,
+  35641594208964132n,
+  35875699062250035n,
+  1517841543307505039n,
+  3289582984443187032n,
+  4498128791164624869n,
+  4929273885928088826n,
+  63105425988599693916n,
+  128468643043731391252n,
+  449177399146038697307n,
+  21887696841122916288858n,
+  27879694893054074471405n,
+  27907865009977052567814n,
+  28361281321319229463398n,
+  35452590104031691935943n,
+  174088005938065293023722n,
+  188451485447897896036875n,
+  239313664430041569350093n,
+  1550475334214501539088894n,
+  1553242162893771850669378n,
+  3706907995955475988644380n,
+  3706907995955475988644381n,
+  4422095118095899619457938n,
+  121204998563613372405438066n,
+  121270696006801314328439376n,
+  128851796696487777842012787n,
+  174650464499531377631639254n,
+  177265453171792792366489765n,
+  14607640612971980372614873089n,
+  19008174136254279995012734740n,
+  19008174136254279995012734741n,
+  23866716435523975980390369295n,
+  1145037275765491025924292050346n,
+  1927890457142960697580636236639n,
+  2309092682616190307509695338915n,
+  17333509997782249308725103962772n,
+  186709961001538790100634132976990n,
+  186709961001538790100634132976991n,
+  1122763285329372541592822900204593n,
+  12639369517103790328947807201478392n,
+  12679937780272278566303885594196922n,
+  1219167219625434121569735803609966019n,
+  12815792078366059955099770545296129367n,
+  115132219018763992565095597973971522400n,
+  115132219018763992565095597973971522401n,
 ];
 const NARCISSISTIC_COUNT = 88;
 
-function isNarcissistic(n: number): boolean {
-  if (!Number.isInteger(n) || n < 1) return false;
-  const digits = String(n).split("");
+/** Checks the definition directly (sum of digit^digitCount == n) via exact BigInt arithmetic,
+ *  so it stays correct at any magnitude a `bigint` element can represent -- no dependence on
+ *  the NARCISSISTIC_NUMBERS table. */
+function isNarcissisticBig(n: bigint): boolean {
+  if (n < 1n) return false;
+  const digits = n.toString().split("");
   const d = BigInt(digits.length);
   const sum = digits.reduce((s, ch) => s + BigInt(ch) ** d, 0n);
-  return sum === BigInt(n);
+  return sum === n;
+}
+
+/** Loosely read an element (number or bigint, whatever the caller has) as a bigint,
+ *  or `undefined` if it isn't an integer at all. */
+function toBigNarcissistic(x: unknown): bigint | undefined {
+  if (typeof x === "bigint") return x;
+  if (typeof x === "number" && Number.isInteger(x)) return BigInt(x);
+  return undefined;
 }
 
 // ---- AutomorphicNumbers: A003226 (excluding the trivial 0). n whose square ends in n (base
@@ -462,11 +569,15 @@ export const entries: FamilyKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => NARCISSISTIC_COUNT,
-    unrank: (_p, r) => (r < NARCISSISTIC_SAFE.length ? NARCISSISTIC_SAFE[r] : Number.NaN),
-    valid: (element) => isNarcissistic(Number(element)),
+    unrank: (_p, r) =>
+      r >= 0 && r < NARCISSISTIC_NUMBERS.length ? narrow(NARCISSISTIC_NUMBERS[r]) : Number.NaN,
+    valid: (element) => {
+      const x = toBigNarcissistic(element);
+      return x !== undefined && isNarcissisticBig(x);
+    },
     rank: (element) => {
-      const n = Number(element);
-      return isNarcissistic(n) ? NARCISSISTIC_SAFE.indexOf(n) : -1;
+      const x = toBigNarcissistic(element);
+      return x === undefined ? -1 : NARCISSISTIC_NUMBERS.indexOf(x);
     },
   },
   {
