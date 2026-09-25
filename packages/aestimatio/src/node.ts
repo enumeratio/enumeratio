@@ -91,10 +91,27 @@ export interface EvaluateIsolatedOptions {
   readonly setup?: string;
 }
 
+/** How one `evaluateDetailed` call came back — `evaluate()`'s richer sibling, distinguishing
+ * a cooperative/hard-killed abort from an actual evaluation error (`runCases` needs both). */
+export interface EvaluateDetail {
+  readonly outcome: "Evaluated" | "Aborted" | "Error";
+  /** Present when `outcome` is `"Evaluated"`. */
+  readonly value?: unknown;
+  /** Present when `outcome` is `"Error"`: the worker's exception message. */
+  readonly reason?: string;
+  /** Wall-clock milliseconds from this call's start (including any queue wait for a free
+   * worker) to its result. */
+  readonly ms: number;
+}
+
 export interface EvaluatorPool {
   /** Runs one evaluation of `json` on a pooled worker sized for `options.memoryBytes`. See
    * `evaluateIsolated`, which calls this on a shared default pool. */
   evaluate(json: unknown, options?: EvaluateIsolatedOptions): Promise<unknown>;
+  /** Like `evaluate`, but keeps a real evaluation error (`outcome: "Error"`, with `reason`)
+   * distinct from a timeout/memory abort (`outcome: "Aborted"`) instead of collapsing both
+   * to `$Aborted` — what `runCases` (./run-cases.ts) needs to report each case honestly. */
+  evaluateDetailed(json: unknown, options?: EvaluateIsolatedOptions): Promise<EvaluateDetail>;
   /** Terminates every idle worker and drops the wait queue. */
   close(): void;
   /** Alias for `close`. */
@@ -136,12 +153,17 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
     destroy: (worker) => void worker.terminate(),
   });
 
-  function evaluate(json: unknown, callOptions: EvaluateIsolatedOptions = {}): Promise<unknown> {
+  function evaluateDetailed(
+    json: unknown,
+    callOptions: EvaluateIsolatedOptions = {},
+  ): Promise<EvaluateDetail> {
     const { memoryBytes, timeMs, setup } = callOptions;
     const key = memoryKeyOf(memoryBytes);
+    const start = performance.now();
+    const ms = (): number => performance.now() - start;
     return pool.acquire(key).then(
       (worker) =>
-        new Promise<unknown>((resolve) => {
+        new Promise<EvaluateDetail>((resolve) => {
           const id = nextId++;
           let settled = false;
           // Guards a worker that never reports "started" (see SPAWN_TIMEOUT_MS). Armed
@@ -160,13 +182,13 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
             worker.off("error", onError);
             worker.off("exit", onExit);
           };
-          const finish = (value: unknown, disposition: "reused" | "replace"): void => {
+          const finish = (detail: EvaluateDetail, disposition: "reused" | "replace"): void => {
             if (settled) return;
             settled = true;
             cleanup();
             if (disposition === "reused") worker.unref();
             pool.release(key, worker, disposition);
-            resolve(value);
+            resolve(detail);
           };
           const onMessage = (message: unknown): void => {
             const m = message as {
@@ -174,6 +196,7 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
               kind?: "started" | "result";
               ok?: boolean;
               json?: unknown;
+              error?: string;
             };
             if (m.id !== id) return; // a stale reply from a request this call gave up on
             if (m.kind === "started") {
@@ -183,24 +206,37 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
               }
               if (timeMs !== undefined) {
                 killTimer = setTimeout(
-                  () => finish(ABORTED, "replace"),
+                  () => finish({ outcome: "Aborted", ms: ms() }, "replace"),
                   timeMs + COOPERATIVE_GRACE_MS,
                 );
               }
               return;
             }
             // No `kind` (a test fake answering directly) or `kind: "result"`: the answer.
-            finish(m.ok ? m.json : ABORTED, "reused");
+            // `m.ok` is the only signal that matters here: a worker that answered — even
+            // with `json: "Aborted"`, the ordinary value a cooperative deadline (this
+            // call's own `timeMs`, or a `TimeConstrained` inside the expression) produces
+            // — is "Evaluated". "Aborted" as an OUTCOME is reserved for a case that never
+            // got an answer at all: the spawn/kill timers below, or a worker crash.
+            if (m.ok) finish({ outcome: "Evaluated", value: m.json, ms: ms() }, "reused");
+            else finish({ outcome: "Error", reason: m.error, ms: ms() }, "reused");
           };
-          // Covers ERR_WORKER_OUT_OF_MEMORY and any other in-worker crash.
-          const onError = (): void => finish(ABORTED, "replace");
-          const onExit = (): void => finish(ABORTED, "replace");
+          // Covers ERR_WORKER_OUT_OF_MEMORY and any other in-worker crash — the worker is
+          // gone, not merely slow, so this is always an abort, never a reportable "Error".
+          const onError = (): void => finish({ outcome: "Aborted", ms: ms() }, "replace");
+          const onExit = (): void => finish({ outcome: "Aborted", ms: ms() }, "replace");
 
           worker.on("message", onMessage);
           worker.once("error", onError);
           worker.once("exit", onExit);
           if (timeMs !== undefined) {
-            spawnTimer = setTimeout(() => finish(ABORTED, "replace"), spawnTimeoutMs);
+            // Guards a worker that never reports "started" at all (crashed/hung during
+            // its own spin-up or import) -- see SPAWN_TIMEOUT_MS. The real deadline
+            // (`killTimer`) only arms once "started" arrives, above.
+            spawnTimer = setTimeout(
+              () => finish({ outcome: "Aborted", ms: ms() }, "replace"),
+              spawnTimeoutMs,
+            );
           }
           worker.ref();
           worker.postMessage({ id, json, setup, timeMs });
@@ -208,8 +244,15 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
     );
   }
 
+  function evaluate(json: unknown, callOptions: EvaluateIsolatedOptions = {}): Promise<unknown> {
+    return evaluateDetailed(json, callOptions).then((detail) =>
+      detail.outcome === "Evaluated" ? detail.value : ABORTED,
+    );
+  }
+
   return {
     evaluate,
+    evaluateDetailed,
     close: () => pool.close(),
     terminateAll: () => pool.close(),
   };
@@ -381,3 +424,11 @@ export function openSession(options: SessionOptions = {}): Session {
 
   return { evaluate, close };
 }
+
+// ---------------------------------------------------------------------------------------
+// Batch evaluation of many independent cases — see ./run-cases.ts. Re-exported here (never
+// from ./index.ts) since it's Node-only, same as everything else in this module.
+// ---------------------------------------------------------------------------------------
+
+export type { Case, CaseResult, RunCasesOptions } from "./run-cases.ts";
+export { runCases } from "./run-cases.ts";

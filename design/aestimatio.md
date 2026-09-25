@@ -84,5 +84,36 @@ TestID -> "…")` holds `input`, evaluates it under the constraints, compares wi
 `ExpectedOutput`, `AbsoluteTimeUsed` and `TestID`. It draws as a cell with an outcome badge.
 Reference examples are, in effect, verification tests; they may be expressed this way later.
 
-Future work (running our own test suites under aestimatio,
-`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to design/speculative/aestimatio.md.
+## 5. Running our own test suites under aestimatio
+
+`runCases(cases, { setup, timeMs, memoryBytes, concurrency, pool? })` (`@enumeratio/aestimatio/node`)
+batch-evaluates independent `{ id, input }` cases (MathJSON), each on a pooled worker (§3's
+pool and worker.ts) under its own time/memory cap — a per-case `timeMs`/`memoryBytes`
+overrides the batch default. Each result is `{ id, outcome: "Evaluated" | "Aborted" |
+"Error", value?, ms, reason? }`: `"Evaluated"` covers a worker that answered at all,
+including a cooperative deadline's own `"Aborted"` VALUE (§2 — TimeConstrained returning
+`$Aborted` is a normal answer, not a failure); `"Aborted"` as an OUTCOME means the worker
+never answered — the host's hard kill or a crash (e.g. `ERR_WORKER_OUT_OF_MEMORY`); `"Error"`
+is a genuine exception from evaluation. Comparison against an expected value is left to the
+caller. Concurrency is the pool's own cap; results come back in `cases`' order regardless of
+completion order.
+
+`packages/reference/tests/entries.test.ts` runs every documented example this way: one
+`runCases` batch up front (10s / 512MB per example, concurrency 3 — generous for a real
+example, tight enough that a runaway one fails fast as `"Aborted"` instead of hanging the
+suite or growing without bound), then one `vitest` `test` per example asserting the masked
+`toEqual` against the batched result, same as before. The `setup` module is
+`packages/reference/scripts/engines.ts`'s `configure(ce)`, which declares every library the
+reference engine declares EXCEPT `@enumeratio/aestimatio` itself — the worker's own engine
+already has it (worker.ts), and redeclaring throws.
+
+`worker.ts` keeps ONE configured `ComputeEngine` per `setup` URL for a worker's whole
+lifetime (declaring a whole library set on every single message, for every case, was the
+dominant cost of running many small cases through the pool) — only the declarations survive
+across calls. Each call still runs inside its own `ce.pushScope()`/`ce.popScope()` (mirroring
+`Transcript.run`), so a `:=` or other binding one call makes is gone before the next call on
+that same (reused) worker ever sees it. A worker that gets hard-killed is destroyed outright
+and replaced, so there's never a stale engine to worry about. Sessions are unaffected — they
+already keep one engine (and its bindings) on purpose.
+
+Future work (`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to design/speculative/aestimatio.md.

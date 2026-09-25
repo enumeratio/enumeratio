@@ -222,6 +222,32 @@ test("a cooperative timeMs stop keeps the pool worker reused (real worker.ts)", 
   }
 });
 
+test("an assignment in one pool call is not visible in the next call on the same (reused) worker", async () => {
+  // Real worker.ts: proves the per-call `pushScope()`/`popScope()` actually isolates
+  // bindings, not just that the pool reuses the worker process. If this leaked, the second
+  // call would see `a` bound to 5 from the first.
+  const created: NodeWorkerLike[] = [];
+  const pool = createEvaluatorPool({
+    size: 1,
+    createWorker: (url, options) => {
+      const worker = new Worker(url, options) as unknown as NodeWorkerLike;
+      created.push(worker);
+      return worker;
+    },
+  });
+  try {
+    const assigned = await pool.evaluate(["Assign", "a", 5]);
+    expect(assigned).toBe(5);
+
+    // Same worker (still just one created) -- `a` must be unbound again.
+    const read = await pool.evaluate("a");
+    expect(created).toHaveLength(1);
+    expect(read).toBe("a"); // an undeclared symbol evaluates to itself, not 5
+  } finally {
+    pool.close();
+  }
+});
+
 test("createEvaluatorPool keys workers by memory limit separately from the default", async () => {
   const created: { key?: number }[] = [];
   const pool = createEvaluatorPool({
