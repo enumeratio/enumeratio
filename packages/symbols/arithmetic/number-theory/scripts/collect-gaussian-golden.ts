@@ -49,8 +49,7 @@ for (let n = -30; n <= 120; n++) if (n !== 0) push("FactorIntegerG", [[n, 0]], f
 for (let k = 0; k < 40; k++) push("Divisors", [nonzero(30)]);
 for (let n = 1; n <= 60; n++) push("DivisorsG", [[n, 0]], false);
 
-const wl = (v: Value): string =>
-  typeof v === "string" ? v : Array.isArray(v) ? `(${v[0]}) + (${v[1]}) I` : String(v);
+const wl = (v: Value): string => (typeof v === "string" ? v : Array.isArray(v) ? `(${v[0]}) + (${v[1]}) I` : String(v));
 const call = ({ op, args }: Omit<GoldenCase, "wolfram">): string => {
   const a = args.map(wl).join(", ");
   switch (op) {
@@ -77,14 +76,10 @@ const lines = output
   .trim()
   .split("\n")
   .filter((line) => line !== "Null");
-if (lines.length !== cases.length)
-  throw new Error(`${lines.length} answers for ${cases.length} cases`);
+if (lines.length !== cases.length) throw new Error(`${lines.length} answers for ${cases.length} cases`);
 
 const golden: GoldenCase[] = cases.map((c, k) => ({ ...c, wolfram: JSON.parse(lines[k]!) }));
-writeFileSync(
-  new URL("../tests/gaussian.golden.json", import.meta.url),
-  JSON.stringify(golden) + "\n",
-);
+writeFileSync(new URL("../tests/gaussian.golden.json", import.meta.url), JSON.stringify(golden) + "\n");
 
 const disagree = golden.filter((c) => JSON.stringify(ours(c)) !== JSON.stringify(c.wolfram));
 console.log(`cases ${golden.length}  |  disagree ${disagree.length}`);

@@ -48,12 +48,8 @@ test("Boolean lattice: μ([S,T]) = (−1)^{|T\\S|} — inclusion–exclusion", (
   for (const n of [1, 2, 3, 4]) {
     const poset = booleanLattice(n)!;
     for (const { from, to } of intervals(poset)) {
-      const added =
-        maskMembers(Number(poset.elements[to]!)).length -
-        maskMembers(Number(poset.elements[from]!)).length;
-      expect(moebius(poset, from, to), `${poset.elements[from]}→${poset.elements[to]}`).toBe(
-        added % 2 === 0 ? 1 : -1,
-      );
+      const added = maskMembers(Number(poset.elements[to]!)).length - maskMembers(Number(poset.elements[from]!)).length;
+      expect(moebius(poset, from, to), `${poset.elements[from]}→${poset.elements[to]}`).toBe(added % 2 === 0 ? 1 : -1);
     }
   }
 });

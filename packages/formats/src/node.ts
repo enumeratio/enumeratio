@@ -22,8 +22,7 @@ const asSvg = (v: unknown): string => {
   if (typeof v !== "string") throw new Error("expected an SVG string");
   return v;
 };
-const bytes = (d: string | Uint8Array): Uint8Array =>
-  typeof d === "string" ? Buffer.from(d, "binary") : d;
+const bytes = (d: string | Uint8Array): Uint8Array => (typeof d === "string" ? Buffer.from(d, "binary") : d);
 
 registerFormat({
   name: "PNG",
@@ -46,12 +45,7 @@ function resolve(path: string, format?: string | Format, sniff?: Uint8Array): Fo
 }
 
 /** Export a value to a file; format inferred from the extension when omitted. */
-export function writeFormat(
-  path: string,
-  value: unknown,
-  format?: string | Format,
-  opts?: FormatOptions,
-): Format {
+export function writeFormat(path: string, value: unknown, format?: string | Format, opts?: FormatOptions): Format {
   const f = resolve(path, format);
   writeFileSync(path, exportTo(value, f, opts));
   return f;

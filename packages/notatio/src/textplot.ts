@@ -34,8 +34,7 @@ const GUTTER = 7;
 /** A y label that fits `width` columns: three significant figures, exponential when it must. */
 function label(v: number, width: number): string {
   const s = Number(v.toPrecision(3));
-  const plain =
-    Math.abs(s) >= 1e5 || (Math.abs(s) < 1e-3 && s !== 0) ? s.toExponential(1) : String(s);
+  const plain = Math.abs(s) >= 1e5 || (Math.abs(s) < 1e-3 && s !== 0) ? s.toExponential(1) : String(s);
   if (plain.length <= width) return plain;
   for (let digits = 2; digits >= 0; digits--) {
     const short = s.toExponential(digits);
@@ -56,10 +55,7 @@ export function textPlot(points: readonly PlotPoint[], opts: TextPlotOptions = {
   const x1 = Math.max(...xs);
   const marks = (opts.marks ?? []).filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
   // A mark off the curve's own range widens it, so it is on the page rather than lost.
-  let [y0, y1] = opts.yRange ?? [
-    Math.min(...ys, ...marks.map((p) => p.y)),
-    Math.max(...ys, ...marks.map((p) => p.y)),
-  ];
+  let [y0, y1] = opts.yRange ?? [Math.min(...ys, ...marks.map((p) => p.y)), Math.max(...ys, ...marks.map((p) => p.y))];
   if (y1 === y0) {
     y0 -= 1;
     y1 += 1;
@@ -92,8 +88,7 @@ export function textPlot(points: readonly PlotPoint[], opts: TextPlotOptions = {
   const marked = new Set<number>();
   for (const m of marks) {
     const [cx, cy] = toDot(m);
-    if (cx >= 0 && cy >= 0 && cx < cols && cy < rows)
-      marked.add(Math.floor(cy / 4) * width + Math.floor(cx / 2));
+    if (cx >= 0 && cy >= 0 && cx < cols && cy < rows) marked.add(Math.floor(cy / 4) * width + Math.floor(cx / 2));
   }
   const gutter = Math.max(3, opts.gutter ?? GUTTER);
   const lines: string[] = [];
@@ -109,9 +104,7 @@ export function textPlot(points: readonly PlotPoint[], opts: TextPlotOptions = {
   lines.push(`${" ".repeat(gutter)} └${"─".repeat(width)}`);
   const lo = label(x0, gutter);
   const hi = label(x1, gutter);
-  lines.push(
-    `${" ".repeat(gutter)}  ${lo}${" ".repeat(Math.max(1, width - lo.length - hi.length))}${hi}`,
-  );
+  lines.push(`${" ".repeat(gutter)}  ${lo}${" ".repeat(Math.max(1, width - lo.length - hi.length))}${hi}`);
   return lines.join("\n");
 }
 

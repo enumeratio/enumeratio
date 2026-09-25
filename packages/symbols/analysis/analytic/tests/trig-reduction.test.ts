@@ -57,8 +57,7 @@ test("a moderate argument is untouched -- native still handles it", () => {
   for (const c of golden.moderate) {
     const got = ce.box(c.expr as never).N();
     const expected = Number(c.value);
-    if (Math.abs(got.re - expected) > 1e-13)
-      off.push(`${c.label}: got ${got.re}, expected ${expected}`);
+    if (Math.abs(got.re - expected) > 1e-13) off.push(`${c.label}: got ${got.re}, expected ${expected}`);
   }
   expect(off).toEqual([]);
 });

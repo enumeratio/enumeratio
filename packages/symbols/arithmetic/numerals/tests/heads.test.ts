@@ -25,9 +25,7 @@ test("a plain integer base is still compute-engine's own", () => {
 });
 
 test("the base slot takes a SYSTEM, as in Wolfram's MixedRadix", () => {
-  expect(value(["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]])).toEqual(
-    L(1, 2, 3, 4),
-  );
+  expect(value(["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]])).toEqual(L(1, 2, 3, 4));
   expect(value(["FromDigits", L(1, 2, 3, 4), ["MixedRadixNumerals", L(24, 60, 60)]])).toBe(93784);
 });
 
@@ -48,14 +46,10 @@ test("padding lines the factoradic digits up with a Lehmer code", () => {
 });
 
 test("Zeckendorf, and the forbidden pattern", () => {
-  expect(value(["IntegerDigits", 100, "ZeckendorfNumerals"])).toEqual(
-    L(1, 0, 0, 0, 0, 1, 0, 1, 0, 0),
-  );
+  expect(value(["IntegerDigits", 100, "ZeckendorfNumerals"])).toEqual(L(1, 0, 0, 0, 0, 1, 0, 1, 0, 0));
   expect(value(["FromDigits", L(1, 0, 0, 0, 0, 1, 0, 1, 0, 0), "ZeckendorfNumerals"])).toBe(100);
   // Two adjacent ones is not a numeral, so it denotes nothing.
-  expect(ce.box(["FromDigits", L(1, 1), "ZeckendorfNumerals"]).evaluate().operator).toBe(
-    "FromDigits",
-  );
+  expect(ce.box(["FromDigits", L(1, 1), "ZeckendorfNumerals"]).evaluate().operator).toBe("FromDigits");
 });
 
 test("signless systems represent negatives", () => {
@@ -81,13 +75,9 @@ test("residue systems, and where they stop being a numeral system", () => {
   expect(value(["IntegerDigits", 23, ["ResidueNumerals", L(3, 5, 7)]])).toEqual(L(2, 3, 2));
   expect(value(["FromDigits", L(2, 3, 2), ["ResidueNumerals", L(3, 5, 7)]])).toBe(23);
   // Past the product there is no numeral.
-  expect(ce.box(["IntegerDigits", 105, ["ResidueNumerals", L(3, 5, 7)]]).evaluate().operator).toBe(
-    "IntegerDigits",
-  );
+  expect(ce.box(["IntegerDigits", 105, ["ResidueNumerals", L(3, 5, 7)]]).evaluate().operator).toBe("IntegerDigits");
   // Non-coprime moduli: an inconsistent digit string denotes nothing.
-  expect(ce.box(["FromDigits", L(1, 2), ["ResidueNumerals", L(4, 6)]]).evaluate().operator).toBe(
-    "FromDigits",
-  );
+  expect(ce.box(["FromDigits", L(1, 2), ["ResidueNumerals", L(4, 6)]]).evaluate().operator).toBe("FromDigits");
 });
 
 test("PositionalNumerals agrees with the native fixed-radix handler for b ≥ 2", () => {
@@ -102,9 +92,7 @@ test("PositionalNumerals agrees with the native fixed-radix handler for b ≥ 2"
     );
   }
   const digits = L(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1); // 2147 in base 2
-  expect(value(["FromDigits", digits, ["PositionalNumerals", 2]])).toBe(
-    value(["FromDigits", digits, 2]),
-  );
+  expect(value(["FromDigits", digits, ["PositionalNumerals", 2]])).toBe(value(["FromDigits", digits, 2]));
 });
 
 test("PositionalNumerals declines a negative — unlike the native handler, which drops the sign", () => {
@@ -112,9 +100,7 @@ test("PositionalNumerals declines a negative — unlike the native handler, whic
   // system value PositionalNumerals instead declines, consistent with every sibling whose
   // domain is the non-negative integers (FactorialNumerals, ZeckendorfNumerals, …).
   expect(value(["IntegerDigits", -5, 2])).toEqual(L(1, 0, 1));
-  expect(ce.box(["IntegerDigits", -5, ["PositionalNumerals", 2]]).evaluate().operator).toBe(
-    "IntegerDigits",
-  );
+  expect(ce.box(["IntegerDigits", -5, ["PositionalNumerals", 2]]).evaluate().operator).toBe("IntegerDigits");
 });
 
 test("the combinatorial system and the primorial base", () => {
@@ -147,9 +133,7 @@ test("systems describe their own shape as a Dictionary", () => {
 });
 
 test("an unreadable system leaves the call alone", () => {
-  expect(ce.box(["IntegerDigits", 10, ["BalancedNumerals", 4]]).evaluate().operator).toBe(
-    "IntegerDigits",
-  ); // even base
+  expect(ce.box(["IntegerDigits", 10, ["BalancedNumerals", 4]]).evaluate().operator).toBe("IntegerDigits"); // even base
   expect(ce.box(["IntegerDigits", 10, "NotASystem"]).evaluate().operator).toBe("IntegerDigits");
 });
 
@@ -165,17 +149,12 @@ test("Ostrowski takes a continued fraction in the base slot", () => {
 
 test("Ostrowski declines a string its ceiling rule forbids", () => {
   // The middle digit is at its ceiling, so nothing below it may be non-zero.
-  expect(
-    ce.box(["FromDigits", L(1, 2, 1), ["OstrowskiNumerals", L(2, 2, 2)]]).evaluate().operator,
-  ).toBe("FromDigits");
-  expect(ce.box(["IntegerDigits", 12, ["OstrowskiNumerals", L(2, 2, 2)]]).evaluate().operator).toBe(
-    "IntegerDigits",
-  ); // out of range: q₃ = 12
+  expect(ce.box(["FromDigits", L(1, 2, 1), ["OstrowskiNumerals", L(2, 2, 2)]]).evaluate().operator).toBe("FromDigits");
+  expect(ce.box(["IntegerDigits", 12, ["OstrowskiNumerals", L(2, 2, 2)]]).evaluate().operator).toBe("IntegerDigits"); // out of range: q₃ = 12
 });
 
 test("a system that declines says why", () => {
-  const said = (input: Expr): string[] =>
-    collectMessages(ce, () => ce.box(input).evaluate()).messages.map(messageLine);
+  const said = (input: Expr): string[] => collectMessages(ce, () => ce.box(input).evaluate()).messages.map(messageLine);
   expect(said(["IntegerDigits", -3, "FactorialNumerals"])).toEqual([
     "IntegerDigits::nonum: -3 has no numeral in FactorialNumerals. FactorialNumerals spells the integers ≥ 0.",
   ]);
@@ -210,9 +189,7 @@ test("every old spelling is a working alias for its `…Numerals` name", () => {
     const aliasExpr: Expr = args.length === 0 ? alias : [alias, ...args];
     const canonicalExpr: Expr = args.length === 0 ? canonical : [canonical, ...args];
     // Same digits as the canonical spelling.
-    expect(value(["IntegerDigits", n, aliasExpr]), alias).toEqual(
-      value(["IntegerDigits", n, canonicalExpr]),
-    );
+    expect(value(["IntegerDigits", n, aliasExpr]), alias).toEqual(value(["IntegerDigits", n, canonicalExpr]));
     // The base slot itself normalises to the canonical name on evaluation.
     const evaluated = ce.box(aliasExpr).evaluate();
     expect(symbolNameOf(evaluated) ?? evaluated.operator, alias).toBe(canonical);

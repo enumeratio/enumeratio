@@ -77,8 +77,7 @@ examples:
     caption: 'Half-integers past $\tfrac12$: $\ln\Gamma(\tfrac32) = \ln\tfrac{\sqrt\pi}{2}$'
   - id: exact-negative-half-integers-ln-gamma-frac-32-ln
     expr: [LogGamma, [Rational, -3, 2]]
-    expected:
-      [Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]
+    expected: [Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]
     category: Scope
     caption: 'Exact negative half-integers: $\ln\Gamma(-\tfrac32) = \ln\tfrac{4\sqrt\pi}{3} - 2\pi i$'
   - id: ln-gamma-infty-infty

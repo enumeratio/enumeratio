@@ -10,16 +10,7 @@ import type { BenchSystem, ConcreteCase, Exclusion, Plan, PlanCell, Precision } 
 /** Seconds, when a case names no budget. */
 export const DEFAULT_BUDGET = 10;
 
-export const SYSTEMS: readonly BenchSystem[] = [
-  "ts",
-  "wolfram",
-  "sympy",
-  "mpmath",
-  "sage",
-  "oscar",
-  "julia",
-  "rust",
-];
+export const SYSTEMS: readonly BenchSystem[] = ["ts", "wolfram", "sympy", "mpmath", "sage", "oscar", "julia", "rust"];
 
 type PrecisionClass = "exact" | "machine" | "digits";
 const classOf = (p: Precision): PrecisionClass => (typeof p === "number" ? "digits" : p);

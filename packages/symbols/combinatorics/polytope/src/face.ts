@@ -47,8 +47,7 @@ export type PolytopeSpec = Omit<Polytope, "contains">;
 
 /** Fill in the derived face-poset order, so no polytope has to restate it. */
 export function polytope(spec: PolytopeSpec): Polytope {
-  const verticesOf = (n: number): Face[] =>
-    spec.enumerate(n).filter((face) => spec.dimension(face) === 0);
+  const verticesOf = (n: number): Face[] => spec.enumerate(n).filter((face) => spec.dimension(face) === 0);
   return {
     ...spec,
     contains: (big, small, n) =>

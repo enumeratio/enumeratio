@@ -64,12 +64,7 @@ export interface Gearing {
  * the quantum at one and asks ten times the travel for it instead. Either way the
  * value per pixel is a tenth of normal, which is the property "fine" names.
  */
-export function gearing(
-  step: number,
-  pixelsPerStep: number,
-  gear: Gear,
-  integer: boolean,
-): Gearing {
+export function gearing(step: number, pixelsPerStep: number, gear: Gear, integer: boolean): Gearing {
   const factor = GEAR_FACTOR[gear];
   const per = Math.abs(pixelsPerStep) || DEFAULT_PIXELS_PER_STEP;
   const geared = clean(step * factor);
@@ -140,8 +135,7 @@ export function cycleIndex(index: number, delta: number, length: number): number
  * fixed width while it is being dragged. A number that reflows the sentence on every
  * frame is unreadable, and reading it is the whole point.
  */
-export const numberLatex = (v: number, step: number): string =>
-  formatValue(v, displayStep(v, step));
+export const numberLatex = (v: number, step: number): string => formatValue(v, displayStep(v, step));
 
 /**
  * The step whose places a value should be printed to: the knob's own, or a tenth of it
@@ -200,10 +194,7 @@ export function parseChoices(raw: string): Choice[] {
  * precisely to bind the value); a bare word as its index, which is the only thing a
  * word in prose can contribute to an expression.
  */
-export function choiceBinding(
-  choice: Choice | undefined,
-  index: number,
-): number | string | { str: string } {
+export function choiceBinding(choice: Choice | undefined, index: number): number | string | { str: string } {
   if (choice === undefined) return index;
   const quoted = /^"(.*)"$/.exec(choice.value);
   if (quoted) return { str: quoted[1]! };

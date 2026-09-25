@@ -85,8 +85,7 @@ function makeBruteForceClass(
       }
       return -1;
     },
-    valid: (perm: readonly number[], n: number): boolean =>
-      IsPermutationOf(perm as number[], n) && predicate(perm, n),
+    valid: (perm: readonly number[], n: number): boolean => IsPermutationOf(perm as number[], n) && predicate(perm, n),
   };
 }
 
@@ -120,8 +119,7 @@ function isBaxterPermutation(perm: readonly number[]): boolean {
 function baxterCount(n: number): number {
   if (n <= 1) return 1;
   let sum = 0;
-  for (let k = 0; k <= n - 1; k++)
-    sum += binomial(n + 1, k) * binomial(n + 1, k + 1) * binomial(n + 1, k + 2);
+  for (let k = 0; k <= n - 1; k++) sum += binomial(n + 1, k) * binomial(n + 1, k + 1) * binomial(n + 1, k + 2);
   return Math.round(sum / (binomial(n + 1, 1) * binomial(n + 1, 2)));
 }
 const baxterClass = makeBruteForceClass((p) => isBaxterPermutation(p), baxterCount);
@@ -153,8 +151,7 @@ function booleanUnrank(n: number, r: number): number[] {
 }
 function isBooleanPermutation(perm: readonly number[]): boolean {
   const n = perm.length;
-  for (let i = 0; i < n; i++)
-    for (let j = i + 1; j < n; j++) if (perm[i] > perm[j] && j !== i + 1) return false;
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) if (perm[i] > perm[j] && j !== i + 1) return false;
   return true;
 }
 function booleanRank(perm: readonly number[]): number {
@@ -293,8 +290,7 @@ function isNonCrossingCycles(perm: readonly number[]): boolean {
     for (let b = a + 1; b <= n; b++)
       for (let c = b + 1; c <= n; c++)
         for (let d = c + 1; d <= n; d++)
-          if (blockOf[a] === blockOf[c] && blockOf[b] === blockOf[d] && blockOf[a] !== blockOf[b])
-            return false;
+          if (blockOf[a] === blockOf[c] && blockOf[b] === blockOf[d] && blockOf[a] !== blockOf[b]) return false;
   return true;
 }
 const nonCrossingClass = makeBruteForceClass((p) => isNonCrossingCycles(p), nonCrossingF);

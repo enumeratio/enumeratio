@@ -95,9 +95,7 @@ export function declareHopf(ce: ComputeEngine): void {
   };
 
   /** Read an element of ONE of the algebras: which head it uses, and the combination. */
-  const toElement = (
-    expr: BoxedExpression,
-  ): { head: string; algebra: HopfAlgebra; element: Element } | undefined => {
+  const toElement = (expr: BoxedExpression): { head: string; algebra: HopfAlgebra; element: Element } | undefined => {
     const direct = BASIS_HEADS[expr.operator];
     if (direct !== undefined) {
       const a = compositionOf(operandsOf(expr)[0]);
@@ -211,16 +209,13 @@ export function declareHopf(ce: ComputeEngine): void {
       const read = ops[0] === undefined ? undefined : toElement(ops[0]);
       if (read === undefined) return undefined;
       const spec = BASIS_HEADS[read.head] as BasisSpec;
-      const terms = [...inBasis(read.algebra.coproduct(read.element), spec.fromNative)].sort(
-        ([a], [b]) => a.localeCompare(b),
+      const terms = [...inBasis(read.algebra.coproduct(read.element), spec.fromNative)].sort(([a], [b]) =>
+        a.localeCompare(b),
       );
       if (terms.length === 0) return ce.number(0);
       const parts = terms.map(([key, coefficient]) => {
         const [left, right] = splitTensorKey(key);
-        const pair = ce.function("HopfTensor", [
-          basisExpression(read.head, left),
-          basisExpression(read.head, right),
-        ]);
+        const pair = ce.function("HopfTensor", [basisExpression(read.head, left), basisExpression(read.head, right)]);
         return coefficient === 1 ? pair : ce.function("Multiply", [ce.number(coefficient), pair]);
       });
       return parts.length === 1 ? parts[0]! : ce.function("Add", parts);
@@ -231,9 +226,7 @@ export function declareHopf(ce: ComputeEngine): void {
     signature: "(number) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const read = ops[0] === undefined ? undefined : toElement(ops[0]);
-      return read === undefined
-        ? undefined
-        : toExpression(read.head, antipode(read.algebra, read.element));
+      return read === undefined ? undefined : toExpression(read.head, antipode(read.algebra, read.element));
     },
   });
 

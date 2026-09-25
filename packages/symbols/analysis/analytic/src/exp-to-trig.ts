@@ -27,12 +27,7 @@ function pureImaginaryArg(ce: ComputeEngine, u: BoxedExpression): BoxedExpressio
   if (coeffIndex === -1) return undefined;
   const k = ops[coeffIndex].im;
   const rest = ops.filter((_, i) => i !== coeffIndex);
-  const restExpr =
-    rest.length === 0
-      ? ce.One
-      : rest.length === 1
-        ? rest[0]
-        : ce.function("Multiply", rest).evaluate();
+  const restExpr = rest.length === 0 ? ce.One : rest.length === 1 ? rest[0] : ce.function("Multiply", rest).evaluate();
   return k === 1 ? restExpr : ce.function("Multiply", [ce.number(k), restExpr]).evaluate();
 }
 
@@ -49,9 +44,7 @@ function rewriteExp(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
         ])
         .evaluate();
     }
-    return ce
-      .function("Add", [ce.function("Cosh", [u]).simplify(), ce.function("Sinh", [u]).simplify()])
-      .evaluate();
+    return ce.function("Add", [ce.function("Cosh", [u]).simplify(), ce.function("Sinh", [u]).simplify()]).evaluate();
   }
   if (ops.length === 0) return e;
   return ce
@@ -62,10 +55,7 @@ function rewriteExp(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
     .evaluate();
 }
 
-export function evaluateExpToTrig(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-): BoxedExpression | undefined {
+export function evaluateExpToTrig(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   const expr = ops[0];
   return expr === undefined ? undefined : rewriteExp(ce, expr).simplify();
 }
@@ -73,7 +63,6 @@ export function evaluateExpToTrig(
 export function declareExpToTrig(ce: ComputeEngine): void {
   ce.declare("ExpToTrig", {
     signature: "(value) -> value",
-    evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) =>
-      evaluateExpToTrig(ce, ops),
+    evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => evaluateExpToTrig(ce, ops),
   });
 }

@@ -108,8 +108,7 @@ export function schedule(cells: readonly CellBindings[]): Schedule {
     if (cell.ordinal) {
       diagnostics.push({
         cellId: cell.id,
-        message:
-          "cell-number references aren't valid in a reactive module -- bind a variable with := instead",
+        message: "cell-number references aren't valid in a reactive module -- bind a variable with := instead",
       });
     }
   }
@@ -171,8 +170,7 @@ export function schedule(cells: readonly CellBindings[]): Schedule {
     const stuck = live.map((c) => c.id).filter((id) => !seen.has(id));
     const byId = new Map(cells.map((c) => [c.id, c] as const));
     const names = stuck.map((id) => byId.get(id)?.assigns ?? `cell ${id}`);
-    for (const id of stuck)
-      diagnostics.push({ cellId: id, message: `cycle: ${names.join(" -> ")}` });
+    for (const id of stuck) diagnostics.push({ cellId: id, message: `cycle: ${names.join(" -> ")}` });
   }
 
   return { order, diagnostics };
@@ -213,7 +211,5 @@ export function affected(
   // `changed` may itself carry a diagnostic (e.g. a duplicate definition) and so be
   // absent from `sched.order`; it still ran, so it still belongs in the result.
   const ordered = sched.order.filter((id) => dirty.has(id));
-  return sched.order.includes(changed) || ordered.includes(changed)
-    ? ordered
-    : [changed, ...ordered];
+  return sched.order.includes(changed) || ordered.includes(changed) ? ordered : [changed, ...ordered];
 }

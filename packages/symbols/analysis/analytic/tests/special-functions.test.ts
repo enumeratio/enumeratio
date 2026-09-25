@@ -22,8 +22,7 @@ type Expr = number | string | readonly [string, ...Expr[]];
 
 const sameExact = (input: Expr, expected: Expr) =>
   expect(ce.box(input).evaluate().json).toEqual(ce.box(expected).evaluate().json);
-const exactJson = (input: Expr, expected: unknown) =>
-  expect(ce.box(input).evaluate().json).toEqual(expected);
+const exactJson = (input: Expr, expected: unknown) => expect(ce.box(input).evaluate().json).toEqual(expected);
 const num = (input: Expr): number => ce.box(input).N().re;
 
 // --- Oracle goldens ------------------------------------------------------------------
@@ -42,8 +41,7 @@ const goldens: GoldenCase[] = JSON.parse(
 );
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 // One test per head rather than per case: the character tables alone are ~1800 rows, and a
 // test each would swamp the suite's output for no extra signal.
@@ -230,15 +228,9 @@ test("γ₁, γ₂ values and the shift identity γ_n(a+1) = γ_n(a) − lnⁿ(a
   expect(num(["StieltjesGamma", 1])).toBeCloseTo(-0.0728158454836767, 14);
   expect(num(["StieltjesGamma", 2])).toBeCloseTo(-0.0096903631928723, 14);
   // ζ(s, a+1) = ζ(s, a) − a^{−s} ⇒ γ_n(a+1) = γ_n(a) − lnⁿ(a)/a; at a = 1 the correction is 0 for n ≥ 1.
-  expect(stieltjesGamma(3, { re: 2, im: 0 }).re).toBeCloseTo(
-    stieltjesGamma(3, { re: 1, im: 0 }).re,
-    14,
-  );
+  expect(stieltjesGamma(3, { re: 2, im: 0 }).re).toBeCloseTo(stieltjesGamma(3, { re: 1, im: 0 }).re, 14);
   const a = { re: 0.5, im: 0 };
-  expect(stieltjesGamma(2, { re: 1.5, im: 0 }).re).toBeCloseTo(
-    stieltjesGamma(2, a).re - Math.log(0.5) ** 2 / 0.5,
-    13,
-  );
+  expect(stieltjesGamma(2, { re: 1.5, im: 0 }).re).toBeCloseTo(stieltjesGamma(2, a).re - Math.log(0.5) ** 2 / 0.5, 13);
 });
 
 test("orders past 30 stay symbolic — the double-precision kernel is not trusted there", () => {
@@ -406,10 +398,7 @@ test("a three-argument call that cannot reduce keeps its own form", () => {
 });
 
 test("Γ(2, 0, z) now reduces through Γ(2, z) = (1+z)e^{-z} (see generalized-special.ts)", () => {
-  sameExact(
-    ["Gamma", 2, 0, "z"],
-    ["Subtract", 1, ["Multiply", ["Add", "z", 1], ["Exp", ["Negate", "z"]]]],
-  );
+  sameExact(["Gamma", 2, 0, "z"], ["Subtract", 1, ["Multiply", ["Add", "z", 1], ["Exp", ["Negate", "z"]]]]);
 });
 
 test("Q(s, z) = Γ(s, z)/Γ(s) covers the complex arguments the native handler declines", () => {

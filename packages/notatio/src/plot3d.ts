@@ -169,11 +169,7 @@ export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}
   const Z = scale(opts.zScale);
 
   // Normalized axis positions from the (optionally scaled) sample coordinates.
-  const axisPos = (
-    coords: readonly number[] | undefined,
-    count: number,
-    s: typeof X,
-  ): ((k: number) => number) => {
+  const axisPos = (coords: readonly number[] | undefined, count: number, s: typeof X): ((k: number) => number) => {
     const t = Array.from({ length: count }, (_, k) => s.fwd(coords ? coords[k] : k / (count - 1)));
     const finite = t.filter(Number.isFinite);
     const lo = Math.min(...finite);
@@ -277,8 +273,7 @@ export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}
   }
   const order = Uint32Array.from(faceAt.keys()).sort((p, q) => depth[p] - depth[q]);
 
-  const shade = (base: string, t: number): string =>
-    `color-mix(in srgb, ${base} ${n2(22 + 60 * t)}%, ${BG})`;
+  const shade = (base: string, t: number): string => `color-mix(in srgb, ${base} ${n2(22 + 60 * t)}%, ${BG})`;
   const fill = opts.fill ?? ((c) => shade(SURF[c.surface % SURF.length], c.t));
   const count = order.length;
   const corners = new Float64Array(count * 8);
@@ -380,16 +375,14 @@ export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}
   };
 }
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** The scene as SVG, themed through CSS variables. */
 export function surfaceSceneSvg(scene: SurfaceScene): string {
   const { width: W, height: H } = scene;
   const frame = (body: string): string =>
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="surface plot">${body}</svg>`;
-  const pts = (points: readonly Pt[]): string =>
-    points.map(([x, y]) => `${n2(x)},${n2(y)}`).join(" ");
+  const pts = (points: readonly Pt[]): string => points.map(([x, y]) => `${n2(x)},${n2(y)}`).join(" ");
 
   let axesSvg = "";
   if (scene.axes) {
@@ -457,11 +450,7 @@ export interface SurfacePaint {
  * fills it is a few milliseconds. Face fills must be concrete colours here: the default
  * accent shading is a `color-mix` over CSS variables and will not paint.
  */
-export function drawSurfaceScene(
-  ctx: CanvasRenderingContext2D,
-  scene: SurfaceScene,
-  paint: SurfacePaint,
-): void {
+export function drawSurfaceScene(ctx: CanvasRenderingContext2D, scene: SurfaceScene, paint: SurfacePaint): void {
   const { width: W, height: H } = scene;
   ctx.clearRect(0, 0, W, H);
   ctx.lineJoin = "round";
@@ -614,8 +603,7 @@ export function curve3dSvg(points: readonly Triple[], opts: Curve3dOptions = {})
   const H = opts.height ?? 260;
   const stroke = opts.stroke ?? 2.4;
   const usable = points.filter((p) => p.every((v) => Number.isFinite(v)));
-  if (usable.length < 2)
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}"></svg>`;
+  if (usable.length < 2) return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}"></svg>`;
 
   const loop = opts.closed === false ? usable : [...usable, usable[0]];
   const box = bounds(usable);

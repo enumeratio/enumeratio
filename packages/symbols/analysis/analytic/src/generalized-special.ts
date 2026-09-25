@@ -53,8 +53,7 @@ const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
 /** Does `r`'s JSON still mention `head`? (same test `incomplete-gamma.ts` uses for Gamma.) */
-const stillMentions = (r: BoxedExpression, head: string): boolean =>
-  JSON.stringify(r.json).includes(`"${head}"`);
+const stillMentions = (r: BoxedExpression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
 
 // --- Beta: complete (a, b), incomplete (z, a, b) and generalized incomplete (z0, z1, a, b) ---
 
@@ -80,18 +79,12 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
         if (isRealInt(b) && b.re === 1) return finish(ce.function("Divide", [ce.One, a]), options);
         // B(a, n) = (n−1)!/(a(a+1)⋯(a+n−1)) at a small positive integer n, either side.
         const small = (x: BoxedExpression) => isRealInt(x) && x.re >= 2 && x.re <= 10;
-        const [x, n] =
-          small(b) && !isNumber(a) ? [a, b.re] : small(a) && !isNumber(b) ? [b, a.re] : [];
+        const [x, n] = small(b) && !isNumber(a) ? [a, b.re] : small(a) && !isNumber(b) ? [b, a.re] : [];
         if (x !== undefined && n !== undefined) {
-          const factors = Array.from({ length: n }, (_, k) =>
-            k === 0 ? x : ce.function("Add", [x, ce.number(k)]),
-          );
+          const factors = Array.from({ length: n }, (_, k) => (k === 0 ? x : ce.function("Add", [x, ce.number(k)])));
           let factorial = 1;
           for (let k = 2; k < n; k++) factorial *= k;
-          return finish(
-            ce.function("Divide", [ce.number(factorial), ce.function("Multiply", factors)]),
-            options,
-          );
+          return finish(ce.function("Divide", [ce.number(factorial), ce.function("Multiply", factors)]), options);
         }
         return r;
       }
@@ -100,29 +93,17 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
         const zq = bigRationalAt(z);
         const aq = bigRationalAt(a);
         const bq = bigRationalAt(b);
-        if (
-          zq !== undefined &&
-          aq !== undefined &&
-          bq !== undefined &&
-          aq[1] === 1n &&
-          bq[1] === 1n
-        ) {
+        if (zq !== undefined && aq !== undefined && bq !== undefined && aq[1] === 1n && bq[1] === 1n) {
           const exact = incompleteBetaExact(zq, aq[0], bq[0]);
           if (exact !== undefined) return finish(ce.number([exact[0], exact[1]]), options);
         }
-        const expr = ce.function("Multiply", [
-          ce.function("BetaRegularized", [z, a, b]),
-          ce.function("Beta", [a, b]),
-        ]);
+        const expr = ce.function("Multiply", [ce.function("BetaRegularized", [z, a, b]), ce.function("Beta", [a, b])]);
         const r = finish(expr, options);
         return stillMentions(r, "BetaRegularized") ? undefined : r;
       }
       if (ops.length === 4) {
         const [z0, z1, a, b] = ops;
-        const expr = ce.function("Subtract", [
-          ce.function("Beta", [z1, a, b]),
-          ce.function("Beta", [z0, a, b]),
-        ]);
+        const expr = ce.function("Subtract", [ce.function("Beta", [z1, a, b]), ce.function("Beta", [z0, a, b])]);
         const r = finish(expr, options);
         return stillMentions(r, "Beta") ? undefined : r;
       }
@@ -333,10 +314,7 @@ export function declareNielsenPolyLog(ce: ComputeEngine): void {
       }
       // S_{2,2}(1) = π⁴/360 (ζ(3,1), a single low-weight Euler sum).
       if (n.re === 2 && p.re === 2 && z.re === 1 && z.im === 0) {
-        const expr = ce.function("Multiply", [
-          ce.number([1, 360]),
-          ce.function("Power", [ce.Pi, ce.number(4)]),
-        ]);
+        const expr = ce.function("Multiply", [ce.number([1, 360]), ce.function("Power", [ce.Pi, ce.number(4)])]);
         return finish(expr, options);
       }
       if (z.im !== 0 || !Number.isFinite(z.re) || z.re > 1) return undefined;

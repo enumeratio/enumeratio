@@ -13,12 +13,7 @@ export { declareClosedForms113 } from "./closed-forms-113.ts";
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./barnes-g.ts";
 export { besselJZero } from "./bessel-zeros.ts";
 export { declareCorrectlyRoundedN, refinementOf } from "./correctly-rounded.ts";
-export {
-  bernoulliNumber,
-  bernoulliPolyAt,
-  bernoulliPolyExpr,
-  bernoulliRational,
-} from "./bernoulli.ts";
+export { bernoulliNumber, bernoulliPolyAt, bernoulliPolyExpr, bernoulliRational } from "./bernoulli.ts";
 export {
   carlsonRC,
   carlsonRCReal,
@@ -38,21 +33,8 @@ export { DEFINITIONS, PRIMITIVE } from "./definitions.ts";
 export { declareDerivatives } from "./derivatives.ts";
 export { declareElliptic } from "./elliptic.ts";
 export { dirichletBeta, dirichletBetaReal, dirichletEta, dirichletEtaReal } from "./dirichlet.ts";
-export {
-  character,
-  characterExponent,
-  dirichletL,
-  dirichletLReal,
-  eulerPhi,
-} from "./dirichlet-l.ts";
-export {
-  declareFractals,
-  iterateQuadratic,
-  julia,
-  juliaReal,
-  mandelbrot,
-  mandelbrotReal,
-} from "./fractal.ts";
+export { character, characterExponent, dirichletL, dirichletLReal, eulerPhi } from "./dirichlet-l.ts";
+export { declareFractals, iterateQuadratic, julia, juliaReal, mandelbrot, mandelbrotReal } from "./fractal.ts";
 export { evaluateHarmonicNumber } from "./harmonic.ts";
 export { digammaFunctionZero } from "./digamma-zero.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
@@ -64,10 +46,7 @@ export { lerchPhi, lerchPhiReal } from "./lerch.ts";
 export { declareModular } from "./modular.ts";
 export { declareLambertW } from "./lambert-w.ts";
 export { declareInverseErfc } from "./inverse-erfc.ts";
-export {
-  declareInverseGammaRegularized,
-  declareInverseBetaRegularized,
-} from "./inverse-regularized.ts";
+export { declareInverseGammaRegularized, declareInverseBetaRegularized } from "./inverse-regularized.ts";
 export { declareNorlundB } from "./norlund.ts";
 export { declarePrimeZetaP } from "./prime-zeta.ts";
 export { declareExpIntegralE } from "./exp-integral-e.ts";
@@ -98,13 +77,7 @@ export { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
 export { declareGeneralizedSpecial } from "./generalized-special.ts";
 export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./wgsl-complex.ts";
 export { declareConstantRounding } from "./constant-rounding.ts";
-export {
-  declareFunctionProperties,
-  domainOf,
-  recognize,
-  type Recognized,
-  type Trend,
-} from "./function-properties.ts";
+export { declareFunctionProperties, domainOf, recognize, type Recognized, type Trend } from "./function-properties.ts";
 export { declareTrigNormalisation } from "./trig-normalisation.ts";
 export { declareElementarySpecialValues } from "./elementary-special-values.ts";
 export { declareRefineAssuming } from "./refine-assuming.ts";

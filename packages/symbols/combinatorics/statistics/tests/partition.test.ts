@@ -66,8 +66,7 @@ const EXPECTED: Record<string, (l: number[]) => number> = {
 };
 
 test("every partition definition has an independent reading", () => {
-  for (const definition of PARTITION_STATISTICS)
-    expect(EXPECTED[definition.head], definition.head).toBeDefined();
+  for (const definition of PARTITION_STATISTICS) expect(EXPECTED[definition.head], definition.head).toBeDefined();
 });
 
 for (const definition of PARTITION_STATISTICS) {

@@ -115,8 +115,7 @@ export function reviewModePlugin(webDir: string): Plugin {
               feedback: feedback ?? "",
             };
             const known = new Set(["link", "pr", "check", "note"]);
-            for (const b of bullets)
-              if (known.has(b.key)) (item as unknown as Record<string, string>)[b.key] = b.value;
+            for (const b of bullets) if (known.has(b.key)) (item as unknown as Record<string, string>)[b.key] = b.value;
             result = upsertItem(raw, item);
           } else if (!existsSync(reviewPath)) {
             sendJson(res, 409, { error: "backlog file not found", path: reviewPath });
@@ -138,12 +137,10 @@ export function reviewModePlugin(webDir: string): Plugin {
       // ReviewMode.vue, which keeps the current selection and any unsaved draft.
       server.watcher.add(reviewPath);
       server.watcher.on("change", (file) => {
-        if (resolve(file) === reviewPath)
-          server.ws.send({ type: "custom", event: "review:changed" });
+        if (resolve(file) === reviewPath) server.ws.send({ type: "custom", event: "review:changed" });
       });
       server.watcher.on("add", (file) => {
-        if (resolve(file) === reviewPath)
-          server.ws.send({ type: "custom", event: "review:changed" });
+        if (resolve(file) === reviewPath) server.ws.send({ type: "custom", event: "review:changed" });
       });
     },
   };

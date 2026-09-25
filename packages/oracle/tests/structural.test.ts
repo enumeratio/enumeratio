@@ -1,13 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import type { MathJSON } from "../src/emit.ts";
-import {
-  compareTrees,
-  isNumericValue,
-  type Leaf,
-  reduce,
-  symbolic,
-  valuesOnly,
-} from "../src/structural.ts";
+import { compareTrees, isNumericValue, type Leaf, reduce, symbolic, valuesOnly } from "../src/structural.ts";
 
 // A stand-in for the caller's engine: it "evaluates" everything, the way compute-engine
 // evaluates a call Wolfram declined.
@@ -41,11 +34,7 @@ test("an unevaluated call disagrees with the value we computed", () => {
 
 test("numeric values still reduce, inside lists too", () => {
   const theirs = ["List", ["Rational", 1, 2], ["PowerMod", 2, -1, 4], 3] as MathJSON;
-  expect(reduce(theirs, valuesOnly(evaluateAll))).toEqual([
-    0.5,
-    symbolic(["PowerMod", 2, -1, 4]),
-    1,
-  ]);
+  expect(reduce(theirs, valuesOnly(evaluateAll))).toEqual([0.5, symbolic(["PowerMod", 2, -1, 4]), 1]);
 });
 
 test("truth values reduce to booleans whichever evaluator reads the rest", () => {

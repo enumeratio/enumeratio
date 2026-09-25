@@ -62,9 +62,7 @@ const dissections = memo((n: number): Face[] => {
 });
 
 /** The triangulations of the (n+2)-gon: the dissections nothing refines further. */
-const triangulations = memo((n: number): Face[] =>
-  dissections(n).filter((face) => size(face) === n - 1),
-);
+const triangulations = memo((n: number): Face[] => dissections(n).filter((face) => size(face) === n - 1));
 
 /**
  * Loday's point for one triangulation of the (n+2)-gon.
@@ -108,8 +106,7 @@ export const ASSOCIAHEDRON: Polytope = polytope({
     const spanning = triangulations(n).filter((vertex) => refines(vertex, face));
     return Array.from(
       { length: n },
-      (_, i) =>
-        spanning.reduce((sum, vertex) => sum + lodayPoint(n, vertex)[i]!, 0) / spanning.length,
+      (_, i) => spanning.reduce((sum, vertex) => sum + lodayPoint(n, vertex)[i]!, 0) / spanning.length,
     );
   },
   // A triangulation is a vertex of a dissection precisely when it refines it.

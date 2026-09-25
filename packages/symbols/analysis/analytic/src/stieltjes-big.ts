@@ -19,11 +19,7 @@ const GUARD_DIGITS = 10;
 const TAIL_PER_DIGIT = 0.4;
 
 /** γ_n(a) to `digits` significant digits, or undefined for a ≤ 0 or a negative or non-integer n. */
-export function stieltjesGammaBig(
-  n: number,
-  a: BigDecimal,
-  digits: number,
-): BigDecimal | undefined {
+export function stieltjesGammaBig(n: number, a: BigDecimal, digits: number): BigDecimal | undefined {
   if (!Number.isInteger(n) || n < 0 || !a.isPositive()) return undefined;
   const ad = a.toNumber();
   const target = digits + GUARD_DIGITS;
@@ -90,5 +86,4 @@ const times = (p: readonly bigint[], c: bigint): bigint[] =>
   Array.from({ length: p.length + 1 }, (_, i) => (p[i - 1] ?? 0n) - c * (p[i] ?? 0n));
 
 /** log10 |x|, or −∞ for 0. */
-const log10Abs = (x: BigDecimal): number =>
-  x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber()));
+const log10Abs = (x: BigDecimal): number => (x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber())));

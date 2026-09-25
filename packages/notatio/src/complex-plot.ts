@@ -60,8 +60,7 @@ fn hsv2rgb(h: f32, s: f32, v: f32) -> vec3f {
 `;
 
 /** The complete domain-colouring shader for a complex-valued WGSL expression `code`. */
-export const portraitShader = (code: string): string =>
-  `${zetaWGSL}\n${HOST.replace("VALUE", `clogPolar(${code})`)}`;
+export const portraitShader = (code: string): string => `${zetaWGSL}\n${HOST.replace("VALUE", `clogPolar(${code})`)}`;
 
 /** Bytes before the literal slots: center, res, extent, mask, pad. */
 const SLOTS_OFFSET = 32;

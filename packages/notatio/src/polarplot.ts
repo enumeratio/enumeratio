@@ -9,8 +9,7 @@ const FG = "var(--notatio-fg, currentColor)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function label(x: number): string {
   if (!Number.isFinite(x)) return "";
@@ -34,12 +33,7 @@ export function polarToCartesian(theta: number, r: number): { x: number; y: numb
  * included). Non-finite radii are kept as-is -- the renderer turns them into
  * gaps rather than dropping them, so a pole doesn't join two branches.
  */
-export function samplePolar(
-  f: (theta: number) => number,
-  t0: number,
-  t1: number,
-  n: number,
-): PolarPoint[] {
+export function samplePolar(f: (theta: number) => number, t0: number, t1: number, n: number): PolarPoint[] {
   const count = Math.max(2, Math.round(n));
   return Array.from({ length: count }, (_, i) => {
     const theta = t0 + ((t1 - t0) * i) / (count - 1);
@@ -99,10 +93,7 @@ export function polarPlotSvg(points: readonly PolarPoint[], opts: PolarPlotOptio
   const top = opts.title ? 26 : pad;
 
   const finite = points.filter((p) => Number.isFinite(p.r) && Number.isFinite(p.theta));
-  const rMax =
-    opts.max && opts.max > 0
-      ? opts.max
-      : finite.reduce((m, p) => Math.max(m, Math.abs(p.r)), 0) || 1;
+  const rMax = opts.max && opts.max > 0 ? opts.max : finite.reduce((m, p) => Math.max(m, Math.abs(p.r)), 0) || 1;
 
   const cx = W / 2;
   const cy = top + (H - top - pad) / 2;
@@ -155,8 +146,7 @@ export function polarPlotSvg(points: readonly PolarPoint[], opts: PolarPlotOptio
   let curve = "";
   if (d) {
     const closing = opts.closed || opts.filled ? " Z" : "";
-    if (opts.filled)
-      curve += `<path d="${d}${closing}" fill="${ACCENT}" opacity="0.18" stroke="none"/>`;
+    if (opts.filled) curve += `<path d="${d}${closing}" fill="${ACCENT}" opacity="0.18" stroke="none"/>`;
     curve += `<path d="${d}${closing}" fill="none" stroke="${ACCENT}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`;
   }
   if (opts.markers) {

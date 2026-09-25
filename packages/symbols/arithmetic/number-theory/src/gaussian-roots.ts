@@ -35,10 +35,7 @@ import {
 import { type Group, MAX_ROOTS, powerModRoots, rootsInCyclicGroup } from "@enumeratio/residues";
 
 /** Gaussian arithmetic with each part reduced into [0, q), q a positive rational integer. */
-const reduceParts = (z: Gaussian, q: bigint): Gaussian => [
-  ((z[0] % q) + q) % q,
-  ((z[1] % q) + q) % q,
-];
+const reduceParts = (z: Gaussian, q: bigint): Gaussian => [((z[0] % q) + q) % q, ((z[1] % q) + q) % q];
 
 /** zᵉ with parts reduced mod q, e ≥ 0. */
 function powParts(z: Gaussian, e: bigint, q: bigint): Gaussian {
@@ -71,15 +68,7 @@ function inertRoots(b: Gaussian, r: bigint, p: bigint, e: number): Gaussian[] | 
   let roots: Gaussian[] | undefined;
   const residue = reduceParts(target, p);
   if (isZero(residue)) roots = [ZERO];
-  else
-    roots = rootsInCyclicGroup(
-      inertField(p),
-      p * p - 1n,
-      residue,
-      r,
-      () => inertElements(p),
-      MAX_ROOTS,
-    );
+  else roots = rootsInCyclicGroup(inertField(p), p * p - 1n, residue, r, () => inertElements(p), MAX_ROOTS);
   if (roots === undefined) return undefined;
   let modulus = p;
   for (let k = 1; k < e && roots.length > 0; k++) {
@@ -173,9 +162,7 @@ export function gaussianRoots(b: Gaussian, r: bigint, m: Gaussian): Gaussian[] |
   let combined = ONE;
   for (const { modulus, roots } of channels) {
     const inverse = inverseMod(combined, modulus) ?? ZERO;
-    glued = glued.flatMap((x) =>
-      roots.map((c) => add(x, mul(combined, mod(mul(sub(c, x), inverse), modulus)!))),
-    );
+    glued = glued.flatMap((x) => roots.map((c) => add(x, mul(combined, mod(mul(sub(c, x), inverse), modulus)!))));
     combined = mul(combined, modulus);
   }
   return glued.map((x) => mod(x, m)!).sort(compare);
@@ -185,12 +172,7 @@ export function gaussianRoots(b: Gaussian, r: bigint, m: Gaussian): Gaussian[] |
  * `PowerModList[a, s/r, m]` over ℤ[i]: every x with xʳ ≡ aˢ (mod m). Empty where aˢ does not
  * exist — a non-unit to a negative power.
  */
-export function gaussianPowerModList(
-  a: Gaussian,
-  s: bigint,
-  r: bigint,
-  m: Gaussian,
-): Gaussian[] | undefined {
+export function gaussianPowerModList(a: Gaussian, s: bigint, r: bigint, m: Gaussian): Gaussian[] | undefined {
   if (r < 1n || isZero(m)) return undefined;
   const base = s < 0n ? inverseMod(a, m) : a;
   if (base === undefined) return [];

@@ -18,10 +18,8 @@ const asSvg = (v: unknown): string => {
   if (typeof v !== "string") throw new Error("expected an SVG string");
   return v;
 };
-const text = (d: string | Uint8Array): string =>
-  typeof d === "string" ? d : Buffer.from(d).toString("utf8");
-const bytes = (d: string | Uint8Array): Uint8Array =>
-  typeof d === "string" ? Buffer.from(d, "binary") : d;
+const text = (d: string | Uint8Array): string => (typeof d === "string" ? d : Buffer.from(d).toString("utf8"));
+const bytes = (d: string | Uint8Array): Uint8Array => (typeof d === "string" ? Buffer.from(d, "binary") : d);
 const engine = (o?: FormatOptions) => {
   if (!o?.ce) throw new Error("this import needs an engine (opts.ce)");
   return o.ce;
@@ -29,8 +27,7 @@ const engine = (o?: FormatOptions) => {
 const wolfram = (v: unknown) => toWolfram(asExpr(v).json as Parameters<typeof toWolfram>[0]);
 
 /** Flatten an Epsil diagnostic message (a string or a `[code, ...args]` tuple). */
-const diagText = (m: unknown): string =>
-  Array.isArray(m) ? m.join(" ") : typeof m === "string" ? m : String(m);
+const diagText = (m: unknown): string => (Array.isArray(m) ? m.join(" ") : typeof m === "string" ? m : String(m));
 
 // Epsil is compute-engine's own surface syntax (parens, `$…$` LaTeX islands).
 // Output serializes via `serializeEpsil`; `$…$` islands parse via the engine's

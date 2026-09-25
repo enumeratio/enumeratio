@@ -18,9 +18,7 @@ interface GoldenCase {
   tol: number;
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./keiper-li.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./keiper-li.golden.json", import.meta.url), "utf8"));
 
 test("KeiperLiLambda(n) matches the mpmath contour-integral oracle for n = 0..20", () => {
   const off: string[] = [];

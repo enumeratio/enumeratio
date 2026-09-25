@@ -86,14 +86,12 @@ test("LehmerCodes / SubexcedantSeqs count = n! (A000142)", () => {
   expect(countsOf("SubexcedantSeqs", ps)).toEqual([1, 1, 2, 6, 24, 120, 720]);
 });
 test("AlternatingPermutations count = Euler zigzag numbers (A000111)", () => {
-  expect(
-    countsOf("AlternatingPermutations", [[0], [1], [2], [3], [4], [5], [6], [7], [8]]),
-  ).toEqual([1, 1, 1, 2, 5, 16, 61, 272, 1385]);
+  expect(countsOf("AlternatingPermutations", [[0], [1], [2], [3], [4], [5], [6], [7], [8]])).toEqual([
+    1, 1, 1, 2, 5, 16, 61, 272, 1385,
+  ]);
 });
 test("ConnectedPermutations count = indecomposable permutations (A003319)", () => {
-  expect(countsOf("ConnectedPermutations", [[1], [2], [3], [4], [5], [6], [7]])).toEqual([
-    1, 1, 3, 13, 71, 461, 3447,
-  ]);
+  expect(countsOf("ConnectedPermutations", [[1], [2], [3], [4], [5], [6], [7]])).toEqual([1, 1, 3, 13, 71, 461, 3447]);
 });
 test("PermutationsAvoiding* count = Catalan numbers (A000108), all six patterns", () => {
   const ps = [[0], [1], [2], [3], [4], [5], [6], [7]];

@@ -56,10 +56,7 @@ export interface RunCasesOptions {
  * `"Aborted"`, one whose evaluation raises comes back `"Error"` with `reason`, and every
  * other case in the batch is unaffected.
  */
-export function runCases(
-  cases: readonly Case[],
-  options: RunCasesOptions = {},
-): Promise<CaseResult[]> {
+export function runCases(cases: readonly Case[], options: RunCasesOptions = {}): Promise<CaseResult[]> {
   const { setup, timeMs, memoryBytes, materialize, concurrency, pool: givenPool } = options;
   const pool = givenPool ?? createEvaluatorPool({ size: concurrency });
   const ownsPool = givenPool === undefined;

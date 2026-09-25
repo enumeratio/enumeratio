@@ -20,32 +20,22 @@
 // with the LARGER value, when both exist (permutation values are distinct, so there is never a
 // tie). `i` is L's RIGHT child (i lies to L's right) or R's LEFT child (i lies to R's left).
 
-type MathJSON =
-  | string
-  | number
-  | boolean
-  | readonly MathJSON[]
-  | { readonly [key: string]: unknown };
+type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
 const count = (list: MathJSON): MathJSON => ["Count", list];
 
-const overRange = (
-  n: MathJSON,
-  initial: MathJSON,
-  step: MathJSON,
-  accumulator: string,
-  variable: string,
-): MathJSON => ["Fold", ["Function", step, accumulator, variable], initial, ["Range", 1, n]];
+const overRange = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: string, variable: string): MathJSON => [
+  "Fold",
+  ["Function", step, accumulator, variable],
+  initial,
+  ["Range", 1, n],
+];
 
 /** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument. Same
  *  helper as map.ts / tableau.ts: a sub-term read more than once (here, each of the two
  *  nearest-smaller scans) is computed once rather than rebuilt at every reference. */
-const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => [
-  "Apply",
-  ["Function", body, name],
-  value,
-];
+const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => ["Apply", ["Function", body, name], value];
 
 const WORD: MathJSON = "_raw";
 const SIZE: MathJSON = count(WORD);
@@ -55,13 +45,7 @@ const posOf = (v: MathJSON): MathJSON => ["IndexOf", WORD, v];
 /** Nearest position left of `i` with a smaller value than `i`'s — 0 if none. Folding ascending
  *  and overwriting on every match leaves the LARGEST matching position, the closest one. */
 const nearestSmallerLeft = (i: MathJSON): MathJSON =>
-  overRange(
-    SIZE,
-    0,
-    ["If", ["And", ["Less", "jl", i], ["Less", val("jl"), val(i)]], "jl", "accl"],
-    "accl",
-    "jl",
-  );
+  overRange(SIZE, 0, ["If", ["And", ["Less", "jl", i], ["Less", val("jl"), val(i)]], "jl", "accl"], "accl", "jl");
 
 /** Nearest position right of `i` with a smaller value — 0 if none. Freezing once a match is
  *  found (the accumulator stays 0 until then) leaves the SMALLEST matching position, the
@@ -95,12 +79,7 @@ const parentPos = (i: MathJSON): MathJSON =>
           "If",
           ["Equal", "nsl", 0],
           "nsr",
-          [
-            "If",
-            ["Equal", "nsr", 0],
-            "nsl",
-            ["If", ["Greater", val("nsl"), val("nsr")], "nsl", "nsr"],
-          ],
+          ["If", ["Equal", "nsr", 0], "nsl", ["If", ["Greater", val("nsl"), val("nsr")], "nsl", "nsr"]],
         ],
       ],
       "nsr",
@@ -133,13 +112,7 @@ const childOnSide = (parentPosition: MathJSON, side: "left" | "right"): MathJSON
  *  `side`, read off `_raw` by folding over v = 1..n and indexing — never a fold over a list
  *  taken out of the accumulator (tableau.ts). */
 const childList = (side: "left" | "right"): MathJSON =>
-  overRange(
-    SIZE,
-    ["List"],
-    ["Join", "lracc", ["List", childOnSide(posOf("lrv"), side)]],
-    "lracc",
-    "lrv",
-  );
+  overRange(SIZE, ["List"], ["Join", "lracc", ["List", childOnSide(posOf("lrv"), side)]], "lracc", "lrv");
 
 /** The root's label — always 1, since every permutation of [n] holds the value 1 and heap
  *  order puts the global minimum at the top. */

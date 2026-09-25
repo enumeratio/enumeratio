@@ -53,9 +53,7 @@ export function evaluateCooperatively(
     if (!materialize || !result.isLazyCollection) return result;
     const count = result.count;
     const budget =
-      count !== undefined && Number.isFinite(count) && count <= MATERIALIZE_LIMIT
-        ? Math.max(count, 1)
-        : true;
+      count !== undefined && Number.isFinite(count) && count <= MATERIALIZE_LIMIT ? Math.max(count, 1) : true;
     return result.evaluate({ materialization: budget });
   };
   // compute-engine's `N(x, d)` leaves `ce.precision` at `d` once it returns, so every later
@@ -68,9 +66,7 @@ export function evaluateCooperatively(
     const result =
       timeMs === undefined
         ? run()
-        : withDeadline(timeMs, () =>
-            ce.withTimeLimit({ ms: timeMs, label: "evaluateIsolated" }, run),
-          );
+        : withDeadline(timeMs, () => ce.withTimeLimit({ ms: timeMs, label: "evaluateIsolated" }, run));
     return { ok: true, json: result.json };
   } catch (e) {
     if (timeMs !== undefined && isTimeout(e)) return { ok: true, json: ABORTED };

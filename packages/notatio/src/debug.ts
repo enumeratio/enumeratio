@@ -30,6 +30,4 @@ const enabled = (name: string): boolean =>
 
 /** A logger for one element, e.g. `debug("plot3d")`; a no-op unless enabled. */
 export const debug = (name: string): Log =>
-  enabled(name)
-    ? (message, ...detail) => console.debug(`notatio:${name}`, message, ...detail)
-    : NOOP;
+  enabled(name) ? (message, ...detail) => console.debug(`notatio:${name}`, message, ...detail) : NOOP;

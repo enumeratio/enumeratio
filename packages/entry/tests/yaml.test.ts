@@ -133,9 +133,7 @@ test("writes an implementations record: own forms and a system row, both block",
         verdict: "inconclusive",
         kind: "convention",
         note: "Lean defines x % 0 = x.",
-        messages: [
-          { code: "eq-warn", text: "x % 0 unfolds to x by definition.", severity: "warning" },
-        ],
+        messages: [{ code: "eq-warn", text: "x % 0 unfolds to x by definition.", severity: "warning" }],
       },
     },
   };

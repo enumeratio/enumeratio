@@ -64,12 +64,8 @@ for d, sn, sd, an, ad in cases:
     print(nstr(zeta(mpf(sn) / sd, mpf(an) / ad), d + 10))
 `;
 const out = (await runKernel("python3", ["-c", py], { timeoutMs: 120_000 })).trim().split("\n");
-if (out.length !== rows.length)
-  throw new Error(`mpmath gave ${out.length} values for ${rows.length} cases`);
+if (out.length !== rows.length) throw new Error(`mpmath gave ${out.length} values for ${rows.length} cases`);
 
 const goldens: PreciseZetaGolden[] = rows.map((row, k) => ({ ...row, mpmath: out[k] }));
-writeFileSync(
-  new URL("../tests/precise-zeta.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/precise-zeta.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 console.log(`cases ${goldens.length}`);

@@ -78,11 +78,7 @@ function replEngine(color: boolean): Engine {
 function cliEngine(color: boolean): Engine {
   const trim = (s: string) => s.replace(/\n+$/, "");
   return {
-    banner: () =>
-      dim(
-        "notatio — command line. Type the args after the prompt (the $ notatio is implied).",
-        color,
-      ),
+    banner: () => dim("notatio — command line. Type the args after the prompt (the $ notatio is implied).", color),
     prompt: () => `${dim("$", color)} notatio `,
     run: (input) => {
       const argv = splitArgs(input);
@@ -205,8 +201,7 @@ export class NotatioTerminal extends LitElement {
     const host = this.screen.value;
     if (!host) return;
     const color = true;
-    if (this.mode !== "show")
-      this.engine = this.mode === "cli" ? cliEngine(color) : replEngine(color);
+    if (this.mode !== "show") this.engine = this.mode === "cli" ? cliEngine(color) : replEngine(color);
 
     const [{ Terminal }, { FitAddon }] = await Promise.all([
       import("@xterm/xterm"),
@@ -249,8 +244,7 @@ export class NotatioTerminal extends LitElement {
   }
 
   protected override updated(changed: PropertyValues): void {
-    if (this.mode === "show" && this.term && (changed.has("value") || changed.has("env")))
-      this.show();
+    if (this.mode === "show" && this.term && (changed.has("value") || changed.has("env"))) this.show();
   }
 
   // --- Show --------------------------------------------------------------

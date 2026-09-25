@@ -19,9 +19,7 @@ export function hermiteDecomposition(m: readonly (readonly bigint[])[]): {
   const rows = m.length;
   const cols = rows === 0 ? 0 : m[0]!.length;
   const h = m.map((row) => [...row]);
-  const u = Array.from({ length: rows }, (_, i) =>
-    Array.from({ length: rows }, (_, j) => (i === j ? 1n : 0n)),
-  );
+  const u = Array.from({ length: rows }, (_, i) => Array.from({ length: rows }, (_, j) => (i === j ? 1n : 0n)));
 
   // Replace rows i, j by (a·row_i + b·row_j, c·row_i + d·row_j) in both h and u.
   const combine = (i: number, j: number, a: bigint, b: bigint, c: bigint, d: bigint): void => {

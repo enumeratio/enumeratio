@@ -53,13 +53,7 @@ export function declareThreading113(ce: ComputeEngine): void {
   // Listable heads thread over it: HurwitzZeta([2,3,4], 1/2); StieltjesGamma([1,2,3], a)
   // (in n); DirichletCharacter(k, j, [n...]) (in n); DirichletL(k, j, [s...]) (in s);
   // HarmonicNumber([n...]) and HarmonicNumber(n, matrix-of-orders).
-  threadOverLists(ce, [
-    "HurwitzZeta",
-    "HarmonicNumber",
-    "StieltjesGamma",
-    "DirichletCharacter",
-    "DirichletL",
-  ]);
+  threadOverLists(ce, ["HurwitzZeta", "HarmonicNumber", "StieltjesGamma", "DirichletCharacter", "DirichletL"]);
 
   // HurwitzZeta's own `evaluate` reads only `options.numericApproximation` to decide
   // whether to go numeric -- unlike the heads built on `wants()` (special-functions.ts),
@@ -73,12 +67,9 @@ export function declareThreading113(ce: ComputeEngine): void {
     ce,
     ["HurwitzZeta", 2],
     (ops) =>
-      !ops.some((o) => o === undefined) &&
-      ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false),
+      !ops.some((o) => o === undefined) && ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false),
     (native) => (ops, options) =>
-      options.numericApproximation
-        ? native?.(ops, options)
-        : native?.(ops, { ...options, numericApproximation: true }),
+      options.numericApproximation ? native?.(ops, options) : native?.(ops, { ...options, numericApproximation: true }),
     2,
   );
 

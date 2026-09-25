@@ -11,31 +11,16 @@ details:
   - Everything interesting about $H_n(q)$ — Kazhdan–Lusztig theory, the Jones polynomial, representations at roots of unity — lives at $q \ne 1$
 examples:
   - id: q-t-e-q-1-t-s-at-q-1-is-just-t-e
-    expr:
-      [
-        HeckeSpecialize,
-        [NonCommutativeMultiply, [HeckeT, [List, 2, 1, 3]], [HeckeT, [List, 2, 1, 3]]],
-        1,
-      ]
+    expr: [HeckeSpecialize, [NonCommutativeMultiply, [HeckeT, [List, 2, 1, 3]], [HeckeT, [List, 2, 1, 3]]], 1]
     expected: [HeckeT, [List, 1, 2, 3]]
     caption: $q\,T_e + (q-1)T_s$ at $q = 1$ is just $T_e$
   - id: at-q-2-it-stays-spread-over-two-basis-elements
-    expr:
-      [
-        HeckeSpecialize,
-        [NonCommutativeMultiply, [HeckeT, [List, 2, 1, 3]], [HeckeT, [List, 2, 1, 3]]],
-        2,
-      ]
+    expr: [HeckeSpecialize, [NonCommutativeMultiply, [HeckeT, [List, 2, 1, 3]], [HeckeT, [List, 2, 1, 3]]], 2]
     expected: [Add, [Multiply, 2, [HeckeT, [List, 1, 2, 3]]], [HeckeT, [List, 2, 1, 3]]]
     caption: at $q = 2$ it stays spread over two basis elements
     category: Properties
   - id: the-ordinary-product-of-permutations
-    expr:
-      [
-        HeckeSpecialize,
-        [NonCommutativeMultiply, [HeckeT, [List, 2, 1, 3]], [HeckeT, [List, 1, 3, 2]]],
-        1,
-      ]
+    expr: [HeckeSpecialize, [NonCommutativeMultiply, [HeckeT, [List, 2, 1, 3]], [HeckeT, [List, 1, 3, 2]]], 1]
     expected: [HeckeT, [List, 2, 3, 1]]
     caption: the ordinary product of permutations
     category: Applications

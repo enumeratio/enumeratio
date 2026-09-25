@@ -15,11 +15,7 @@ examples:
     expr:
       [
         ConnectedComponents,
-        [
-          Graph,
-          [List, 1, 2, 3],
-          [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1], [DirectedEdge, 2, 3]],
-        ],
+        [Graph, [List, 1, 2, 3], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1], [DirectedEdge, 2, 3]]],
       ]
     expected: [List, [List, 1, 2], [List, 3]]
     caption: 1 and 2 reach each other; 3 is downstream only

@@ -40,10 +40,9 @@ test('Notebook(cells, Evaluator -> Worker) lowers to evaluator="worker" too', ()
 });
 
 test("Notebook(cells, TrackedSymbols -> All, Evaluator -> Worker) keeps both options", () => {
-  const { json, errors } = parseNotatio(
-    "Notebook([Cell(a := 5)], TrackedSymbols -> All, Evaluator -> Worker)",
-    { allow: ["Assign"] },
-  );
+  const { json, errors } = parseNotatio("Notebook([Cell(a := 5)], TrackedSymbols -> All, Evaluator -> Worker)", {
+    allow: ["Assign"],
+  });
   expect(errors).toEqual([]);
   const boxed = ce.box(json as never);
   expect(JSON.stringify(boxed.json)).not.toContain('"Error"');

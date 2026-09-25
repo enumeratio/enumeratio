@@ -8,15 +8,7 @@
 import { niceTicks } from "./plot.ts";
 
 /** The members of the `Chart` family, by the attribute `type` that picks one. */
-export type ChartType =
-  | "list"
-  | "listline"
-  | "bar"
-  | "histogram"
-  | "pie"
-  | "box"
-  | "array"
-  | "discrete";
+export type ChartType = "list" | "listline" | "bar" | "histogram" | "pie" | "box" | "array" | "discrete";
 
 export const isNumber = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -37,8 +29,7 @@ const SERIES = [
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function label(x: number): string {
   if (!Number.isFinite(x)) return "";
@@ -213,13 +204,9 @@ export function pieChartSvg(values: readonly number[], opts: PieChartOptions = {
 
   const entries = values.map((v, i) => ({ v, i })).filter((e) => Number.isFinite(e.v) && e.v > 0);
   const total = entries.reduce((a, e) => a + e.v, 0);
-  if (entries.length === 0 || total <= 0 || r <= 0)
-    return frame(W, H, titleSvg(W, opts.title), "pie chart");
+  if (entries.length === 0 || total <= 0 || r <= 0) return frame(W, H, titleSvg(W, opts.title), "pie chart");
 
-  const arcPoint = (angle: number): [number, number] => [
-    cx + r * Math.sin(angle),
-    cy - r * Math.cos(angle),
-  ];
+  const arcPoint = (angle: number): [number, number] => [cx + r * Math.sin(angle), cy - r * Math.cos(angle)];
 
   let acc = 0;
   const wedges = entries
@@ -291,10 +278,7 @@ export interface BoxWhiskerOptions extends ChartOptions {
 }
 
 /** One box-and-whisker per series (min/Q1/median/Q3/max), side by side. */
-export function boxWhiskerChartSvg(
-  series: readonly (readonly number[])[],
-  opts: BoxWhiskerOptions = {},
-): string {
+export function boxWhiskerChartSvg(series: readonly (readonly number[])[], opts: BoxWhiskerOptions = {}): string {
   const W = opts.width ?? 340;
   const H = opts.height ?? 200;
   const mL = 32;
@@ -352,12 +336,7 @@ export function boxWhiskerChartSvg(
     tickText(mL - 4, yAt(lo + pad) + 3, "end", label(lo + pad)) +
     tickText(mL - 4, yAt(hi - pad) + 3, "end", label(hi - pad));
 
-  return frame(
-    W,
-    H,
-    titleSvg(W, opts.title) + axis + yTicks + boxes + labelsSvg,
-    "box-whisker chart",
-  );
+  return frame(W, H, titleSvg(W, opts.title) + axis + yTicks + boxes + labelsSvg, "box-whisker chart");
 }
 
 // ---------------------------------------------------------------------------
@@ -376,17 +355,13 @@ const ARRAY_MAX_H = 340;
  * A 0/1 matrix is drawn two-tone -- 0 background, 1 foreground, like Wolfram's white/black;
  * anything else maps value -> a blue-to-accent ramp.
  */
-export function arrayPlotSvg(
-  matrix: readonly (readonly number[])[],
-  opts: ArrayPlotOptions = {},
-): string {
+export function arrayPlotSvg(matrix: readonly (readonly number[])[], opts: ArrayPlotOptions = {}): string {
   const W = opts.width ?? 340;
   const mT = opts.title ? 26 : 6;
   const m = 6;
   const rows = matrix.length;
   const cols = rows > 0 ? Math.max(...matrix.map((r) => r.length)) : 0;
-  if (rows === 0 || cols === 0)
-    return frame(W, opts.height ?? 200, titleSvg(W, opts.title), "array plot");
+  if (rows === 0 || cols === 0) return frame(W, opts.height ?? 200, titleSvg(W, opts.title), "array plot");
 
   const flat = matrix.flat().filter(Number.isFinite);
   const lo = flat.length ? Math.min(...flat) : 0;

@@ -26,12 +26,7 @@ export interface OtherSystemRun {
 }
 
 /** A MathJSON expression (form-agnostic compute-engine input/output). */
-export type MathJSON =
-  | number
-  | string
-  | boolean
-  | readonly MathJSON[]
-  | { readonly [key: string]: unknown };
+export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 /**
  * One worked example. Outputs shown on a reference page are re-derived live by

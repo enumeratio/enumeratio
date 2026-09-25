@@ -44,12 +44,9 @@ export const intOf = (x: Boxed | undefined): number =>
 // MathJSON encoders (element -> boxed MathJSON expression input).
 export const listMJ = (xs: number[]): unknown => ["List", ...xs];
 export const blocksMJ = (bs: number[][]): unknown => ["List", ...bs.map((b) => ["List", ...b])];
-export const nestMJ = (t: NestedTree): unknown =>
-  Array.isArray(t) ? ["List", ...t.map(nestMJ)] : t;
+export const nestMJ = (t: NestedTree): unknown => (Array.isArray(t) ? ["List", ...t.map(nestMJ)] : t);
 
 // boxed MathJSON -> JS element (the inverse, for membership/rank).
 export const asIntList = (t: Boxed): number[] => (t.ops ?? []).map(intOf);
-export const asBlockList = (t: Boxed): number[][] =>
-  (t.ops ?? []).map((b) => (b.ops ?? []).map(intOf));
-export const denest = (x: Boxed): NestedTree =>
-  x.ops ? (x.ops.map(denest) as NestedTree[]) : intOf(x);
+export const asBlockList = (t: Boxed): number[][] => (t.ops ?? []).map((b) => (b.ops ?? []).map(intOf));
+export const denest = (x: Boxed): NestedTree => (x.ops ? (x.ops.map(denest) as NestedTree[]) : intOf(x));

@@ -13,11 +13,7 @@ let engine: ComputeEngine | undefined;
 let enginePromise: Promise<ComputeEngine> | undefined;
 
 const configurators: ((ce: ComputeEngine) => void)[] = [];
-const latexEntries: Partial<LatexDictionaryEntry>[] = [
-  ...NOTATIO_LATEX,
-  ...CONVENTIONAL_LATEX,
-  ...TRADITIONAL_LATEX,
-];
+const latexEntries: Partial<LatexDictionaryEntry>[] = [...NOTATIO_LATEX, ...CONVENTIONAL_LATEX, ...TRADITIONAL_LATEX];
 
 /**
  * Contribute LaTeX dictionary entries -- a library's notation, parsed and serialised --
@@ -34,10 +30,7 @@ export function configureLatex(entries: readonly Partial<LatexDictionaryEntry>[]
 
 /** `base` then `extra`, a named entry replacing any earlier one by that name -- in `base`
  *  or earlier in `extra` (two libraries may both redefine `Power`). */
-export function mergeLatex<T extends { readonly name?: string }>(
-  base: readonly T[],
-  extra: readonly T[],
-): T[] {
+export function mergeLatex<T extends { readonly name?: string }>(base: readonly T[], extra: readonly T[]): T[] {
   const last = new Map<string, number>();
   extra.forEach((e, i) => e.name !== undefined && last.set(e.name, i));
   const kept = extra.filter((e, i) => e.name === undefined || last.get(e.name) === i);
@@ -69,8 +62,7 @@ export function loadEngine(): Promise<ComputeEngine> {
   enginePromise ??= (async () => {
     const gate = (globalThis as EngineGate).__notatioEngineReady;
     if (gate) await gate.catch(() => {});
-    const { ComputeEngine, LatexSyntax, LATEX_DICTIONARY } =
-      await import("@cortex-js/compute-engine");
+    const { ComputeEngine, LatexSyntax, LATEX_DICTIONARY } = await import("@cortex-js/compute-engine");
     engine = new ComputeEngine({
       latexSyntax: new LatexSyntax({ dictionary: mergeLatex(LATEX_DICTIONARY, latexEntries) }),
     });

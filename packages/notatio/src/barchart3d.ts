@@ -21,8 +21,7 @@ const FG = "var(--notatio-fg, currentColor)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 type Matrix = readonly (readonly number[])[];
 
@@ -71,12 +70,10 @@ export function barChart3dSvg(matrix: Matrix, opts: BarChart3dOptions = {}): str
   const aria = "3-D bar chart";
   const ny = matrix.length;
   const nx = ny > 0 ? matrix[0].length : 0;
-  if (nx < 1 || ny < 1)
-    return frameSvg(cam.width, cam.height, aria, titleSvg(cam.width, opts.title));
+  if (nx < 1 || ny < 1) return frameSvg(cam.width, cam.height, aria, titleSvg(cam.width, opts.title));
 
   const flat = matrix.flat().filter(Number.isFinite);
-  if (flat.length === 0)
-    return frameSvg(cam.width, cam.height, aria, titleSvg(cam.width, opts.title));
+  if (flat.length === 0) return frameSvg(cam.width, cam.height, aria, titleSvg(cam.width, opts.title));
   const zlo = opts.zRange ? opts.zRange[0] : Math.min(0, ...flat);
   const zhi = opts.zRange ? opts.zRange[1] : Math.max(...flat);
   const sz = unitScale(zlo, zhi === zlo ? zlo + 1 : zhi);
@@ -116,8 +113,7 @@ export function barChart3dSvg(matrix: Matrix, opts: BarChart3dOptions = {}): str
       const hi = corners.map(([x, y]) => cam.at(x, y, top));
 
       const poly = (ps: ScreenPoint[]): string => ps.map((p) => `${n2(p.x)},${n2(p.y)}`).join(" ");
-      const centreDepth = (ps: ScreenPoint[]): number =>
-        ps.reduce((sum, p) => sum + p.depth, 0) / ps.length;
+      const centreDepth = (ps: ScreenPoint[]): number => ps.reduce((sum, p) => sum + p.depth, 0) / ps.length;
 
       // The four sides, of which only the two facing the viewer are drawn --
       // the back pair is always hidden behind the bar's own top and sides.
@@ -132,8 +128,7 @@ export function barChart3dSvg(matrix: Matrix, opts: BarChart3dOptions = {}): str
 
       const barDepth = centreDepth(lo);
       // Sides first, top last: the top can never be occluded by its own bar.
-      for (const s of visible)
-        faces.push({ depth: barDepth - 0.001, points: poly(s), fill: barShade(t, 0.72) });
+      for (const s of visible) faces.push({ depth: barDepth - 0.001, points: poly(s), fill: barShade(t, 0.72) });
       faces.push({ depth: barDepth, points: poly(hi), fill: barShade(t, 1) });
     }
   }

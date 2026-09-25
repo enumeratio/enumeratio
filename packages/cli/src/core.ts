@@ -4,19 +4,9 @@
 // terminal, and the golden tests all drive the same core. Node-only commands
 // (:export / :import) are injected by the host via `commands`.
 
-import {
-  allFormats,
-  exportFormats,
-  importFormats,
-  mimeTypeToFormatList,
-} from "@enumeratio/formats";
+import { allFormats, exportFormats, importFormats, mimeTypeToFormatList } from "@enumeratio/formats";
 import type { BoxedExpression } from "@cortex-js/compute-engine";
-import {
-  can,
-  type Environment,
-  ENVIRONMENTS,
-  environmentNamed,
-} from "../../notatio/src/environment.ts";
+import { can, type Environment, ENVIRONMENTS, environmentNamed } from "../../notatio/src/environment.ts";
 import { evaluateReadouts, reduce } from "../../notatio/src/reduce.ts";
 import { bold, cyan, dim, red } from "./ansi.ts";
 import {
@@ -33,13 +23,7 @@ import {
 export type { PlotPoint };
 
 export type GlyphKind = "permutation" | "partition" | "composition" | "subset" | "dyck";
-export const GLYPH_KINDS: readonly GlyphKind[] = [
-  "permutation",
-  "partition",
-  "composition",
-  "subset",
-  "dyck",
-];
+export const GLYPH_KINDS: readonly GlyphKind[] = ["permutation", "partition", "composition", "subset", "dyck"];
 
 /** A graphic the core produced but did not draw — an adapter renders it. */
 export type Graphic =
@@ -110,10 +94,7 @@ export class Repl {
   }
 
   banner(): string {
-    return (
-      bold("notatio", this.color) +
-      dim(" — compute-engine REPL. :help for commands, :quit to exit.", this.color)
-    );
+    return bold("notatio", this.color) + dim(" — compute-engine REPL. :help for commands, :quit to exit.", this.color);
   }
 
   /** Evaluate one input line. */
@@ -171,8 +152,7 @@ export class Repl {
       case "forms":
         return {
           text: FORMS.map(
-            (f) =>
-              `  ${f === s.form ? cyan("*", this.color) : " "} ${f.padEnd(9)} ${FORM_LABEL[f]}`,
+            (f) => `  ${f === s.form ? cyan("*", this.color) : " "} ${f.padEnd(9)} ${FORM_LABEL[f]}`,
           ).join("\n"),
         };
       case "env": {
@@ -189,10 +169,7 @@ export class Repl {
           return { text: dim("  environment -> this terminal", this.color) };
         }
         const env = environmentNamed(arg);
-        if (!env)
-          throw new Error(
-            `unknown environment: ${arg} (${ENVIRONMENTS.map((e) => e.name).join(", ")}, auto)`,
-          );
+        if (!env) throw new Error(`unknown environment: ${arg} (${ENVIRONMENTS.map((e) => e.name).join(", ")}, auto)`);
         this.environment = env;
         return { text: dim(`  environment -> ${env.name}`, this.color) };
       }

@@ -62,12 +62,7 @@ examples:
     caption: Complex arguments, here on the critical line
   - id: threads-elementwise-over-an-array
     expr: [DirichletBeta, [List, [List, 1, -1], [List, -1, 1]]]
-    expected:
-      [
-        List,
-        [List, [Multiply, [Rational, 1, 4], Pi], 0],
-        [List, 0, [Multiply, [Rational, 1, 4], Pi]],
-      ]
+    expected: [List, [List, [Multiply, [Rational, 1, 4], Pi], 0], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]
     category: Scope
     caption: Threads elementwise over an array
   - id: beta-s-to-1-as-s-to-infty

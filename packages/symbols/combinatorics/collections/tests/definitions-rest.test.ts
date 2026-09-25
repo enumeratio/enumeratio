@@ -4,15 +4,7 @@
 import { expect, test } from "vite-plus/test";
 import { ce, DEFINITIONS, evaluate, permutations } from "./definitions-helpers.ts";
 
-const HEADS = [
-  "Ascents",
-  "MajorIndex",
-  "MinorIndex",
-  "FixedPoints",
-  "Antiexcedances",
-  "Peaks",
-  "Valleys",
-] as const;
+const HEADS = ["Ascents", "MajorIndex", "MinorIndex", "FixedPoints", "Antiexcedances", "Peaks", "Valleys"] as const;
 for (const head of HEADS) {
   const definition = DEFINITIONS[head];
   test(`${head}: the definition agrees with the implementation`, { timeout: 60_000 }, () => {

@@ -29,18 +29,13 @@ test("candidates are found in either tree", () => {
 test("resolving installs the claimed names before boxing", async () => {
   const ce = new ComputeEngine();
   const registry = new ResourceRegistry().addAll([res("Foo"), res("Bar")]).bless("t");
-  const box = await prepare(
-    ce,
-    "\\operatorname{Foo}(3) + \\operatorname{Bar}(2) + a(b+c)",
-    registry,
-    (r) => {
-      ce.declare(r.name, {
-        signature: "(number) -> number",
-        evaluate: ([n]) => ce.number(n.re * 10),
-      });
-      return true;
-    },
-  );
+  const box = await prepare(ce, "\\operatorname{Foo}(3) + \\operatorname{Bar}(2) + a(b+c)", registry, (r) => {
+    ce.declare(r.name, {
+      signature: "(number) -> number",
+      evaluate: ([n]) => ce.number(n.re * 10),
+    });
+    return true;
+  });
   expect(box.json).toEqual(["Add", ["a", ["Add", "b", "c"]], ["Foo", 3], ["Bar", 2]]);
   // `a` is not a name we claim, so it stays an undeclared application.
   expect(box.evaluate().toString()).toBe("a(b + c) + 50");

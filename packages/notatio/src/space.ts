@@ -24,8 +24,7 @@ export function settingName(symbol: string): string | undefined {
 }
 
 /** Is this cell binding a setting rather than a value? */
-export const isSetting = (name: string | undefined): boolean =>
-  name !== undefined && settingName(name) !== undefined;
+export const isSetting = (name: string | undefined): boolean => name !== undefined && settingName(name) !== undefined;
 
 export interface SpaceView {
   /** Where the camera looks, in the plane. */
@@ -110,10 +109,7 @@ const isAuto = (value: BoxedExpression | undefined): boolean => {
  * centre-and-extent the camera actually holds, since that is the same statement made
  * two ways and authors think in ranges.
  */
-export function resolveView(
-  kind: string,
-  settings: ReadonlyMap<string, BoxedExpression>,
-): SpaceView {
+export function resolveView(kind: string, settings: ReadonlyMap<string, BoxedExpression>): SpaceView {
   const base = AUTO_VIEW[kind] ?? AUTO_VIEW.portrait;
   const view: SpaceView = { ...base, center: [...base.center] as [number, number] };
   const read = (name: string) => {
@@ -198,8 +194,7 @@ export function stackLayers<T>(items: readonly T[], kindOf: (item: T) => string)
   const ordered = items
     .map((item, index) => ({ item, index }))
     .sort((a, b) => {
-      const byDimension =
-        PROJECTION_DIMENSION[kindOf(b.item)] - PROJECTION_DIMENSION[kindOf(a.item)];
+      const byDimension = PROJECTION_DIMENSION[kindOf(b.item)] - PROJECTION_DIMENSION[kindOf(a.item)];
       // Higher dimension first, so it ends up underneath.
       return byDimension !== 0 ? byDimension : b.index - a.index;
     });

@@ -1,25 +1,9 @@
 // Mirrors packages/bench/src/types.ts's report/plan/index shapes (design/benchmarking.md §7).
 // Duplicated rather than imported: web shouldn't depend on packages/bench. Keep in sync by hand.
 
-export type BenchSystem =
-  | "ts"
-  | "wolfram"
-  | "sympy"
-  | "mpmath"
-  | "sage"
-  | "oscar"
-  | "julia"
-  | "rust";
+export type BenchSystem = "ts" | "wolfram" | "sympy" | "mpmath" | "sage" | "oscar" | "julia" | "rust";
 
-export type Status =
-  | "ok"
-  | "unsupported"
-  | "precision"
-  | "denied"
-  | "too-fast"
-  | "wrong"
-  | "error"
-  | "timeout";
+export type Status = "ok" | "unsupported" | "precision" | "denied" | "too-fast" | "wrong" | "error" | "timeout";
 
 export interface CaseResult {
   readonly name: string;

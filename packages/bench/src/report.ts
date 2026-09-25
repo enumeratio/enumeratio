@@ -16,8 +16,7 @@ export interface RunInfo {
 }
 
 export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date()): RunInfo {
-  const sha =
-    env["GITHUB_SHA"] ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const sha = env["GITHUB_SHA"] ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
   const stamp = date.toISOString().slice(0, 16).replace(":", "-");
   const url =
     env["GITHUB_RUN_ID"] === undefined
@@ -32,11 +31,7 @@ export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date())
   };
 }
 
-export function report(
-  run: RunInfo,
-  system: Report["system"],
-  results: readonly CaseResult[],
-): Report {
+export function report(run: RunInfo, system: Report["system"], results: readonly CaseResult[]): Report {
   return { schema: 1, run, system, machine: machine(), protocol: PROTOCOL, results };
 }
 

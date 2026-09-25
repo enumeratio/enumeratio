@@ -18,9 +18,7 @@ export const NOTATIO_LATEX: readonly Partial<LatexDictionaryEntry>[] = [
         const [key, value] = operands(pair);
         // A flag reads as a word here, not as ⊤/⊥.
         const shown =
-          typeof value === "string" && BOOLEAN.has(value)
-            ? `\\mathrm{${value}}`
-            : serializer.serialize(value ?? null);
+          typeof value === "string" && BOOLEAN.has(value) ? `\\mathrm{${value}}` : serializer.serialize(value ?? null);
         return `${serializer.serialize(key ?? null)}\\to ${shown}`;
       });
       return `\\left\\lbrace ${entries.join(",\\;")}\\right\\rbrace`;
@@ -52,26 +50,17 @@ export function expandDictionaries(node: unknown): unknown {
   if (isDict(node)) {
     return [
       "Dictionary",
-      ...Object.entries(node.dict).map(([k, v]) => [
-        "KeyValuePair",
-        { str: k },
-        expandDictionaries(entryOf(v)),
-      ]),
+      ...Object.entries(node.dict).map(([k, v]) => ["KeyValuePair", { str: k }, expandDictionaries(entryOf(v))]),
     ];
   }
   if (Array.isArray(node)) return node.map(expandDictionaries);
   return node;
 }
 
-const hasDictionary = (node: unknown): boolean =>
-  isDict(node) || (Array.isArray(node) && node.some(hasDictionary));
+const hasDictionary = (node: unknown): boolean => isDict(node) || (Array.isArray(node) && node.some(hasDictionary));
 
 /** `expr.latex`, except that a dictionary anywhere inside is written rather than dropped. */
-export function latexOf(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  options?: Record<string, unknown>,
-): string {
+export function latexOf(ce: ComputeEngine, expr: BoxedExpression, options?: Record<string, unknown>): string {
   const json = expr.json;
   if (!hasDictionary(json) || ce.latexSyntax === undefined) {
     return options === undefined ? expr.latex : expr.toLatex(options);

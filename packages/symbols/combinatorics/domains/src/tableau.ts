@@ -16,12 +16,7 @@
 
 /** A MathJSON expression, structurally — declared locally so this package stays packable
  *  (a bundled package cannot import types from the src-only reference package). */
-type MathJSON =
-  | string
-  | number
-  | boolean
-  | readonly MathJSON[]
-  | { readonly [key: string]: unknown };
+type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
 const count = (list: MathJSON): MathJSON => ["Count", list];
@@ -33,20 +28,15 @@ const count = (list: MathJSON): MathJSON => ["Count", list];
  *  from inside a loop over its own rows is rebuilt once per row. Binding it evaluates it once.
  *  Names must not collide with anything bound around them, or with the engine's constants
  *  (`e`, `i`, `pi`): the ones used here are short words, never single letters. */
-const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => [
-  "Apply",
-  ["Function", body, name],
-  value,
-];
+const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => ["Apply", ["Function", body, name], value];
 
 /** A fold over `1 .. n`, indexing rather than iterating a structure. */
-const overRange = (
-  n: MathJSON,
-  initial: MathJSON,
-  step: MathJSON,
-  accumulator: string,
-  variable: string,
-): MathJSON => ["Fold", ["Function", step, accumulator, variable], initial, ["Range", 1, n]];
+const overRange = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: string, variable: string): MathJSON => [
+  "Fold",
+  ["Function", step, accumulator, variable],
+  initial,
+  ["Range", 1, n],
+];
 
 /** The entries of `row` greater than `x`. */
 const greaterThan = (row: MathJSON, x: MathJSON): MathJSON =>
@@ -71,12 +61,7 @@ export const rowAfterInserting = (row: MathJSON, x: MathJSON): MathJSON =>
     overRange(
       ["Add", count(row), 1],
       ["List"],
-      [
-        "If",
-        ["Greater", "n", count(row)],
-        ["Join", "nacc", ["List", x]],
-        ["Join", "nacc", ["List", at(row, "n")]],
-      ],
+      ["If", ["Greater", "n", count(row)], ["Join", "nacc", ["List", x]], ["Join", "nacc", ["List", at(row, "n")]]],
       "nacc",
       "n",
     ),
@@ -125,14 +110,7 @@ const insertionStep: MathJSON = [
       overRange(
         count(TABLEAU),
         ["List"],
-        [
-          "Join",
-          "tacc",
-          [
-            "List",
-            ["If", ["Equal", "m", "r"], rowAfterInserting(ROW_R, CARRIED), at(TABLEAU, "m")],
-          ],
-        ],
+        ["Join", "tacc", ["List", ["If", ["Equal", "m", "r"], rowAfterInserting(ROW_R, CARRIED), at(TABLEAU, "m")]]],
         "tacc",
         "m",
       ),
@@ -144,35 +122,19 @@ const insertionStep: MathJSON = [
 /** Insert `x` into tableau `tableau`, returning the tableau. */
 export const afterInserting = (tableau: MathJSON, x: MathJSON): MathJSON => [
   "At",
-  [
-    "Fold",
-    ["Function", insertionStep, "st", "r"],
-    ["List", tableau, x],
-    ["Range", 1, ["Add", count(tableau), 1]],
-  ],
+  ["Fold", ["Function", insertionStep, "st", "r"], ["List", tableau, x], ["Range", 1, ["Add", count(tableau), 1]]],
   1,
 ];
 
 /** The RSK insertion tableau of a word: insert every entry in turn. */
-export const insertionTableau: MathJSON = [
-  "Fold",
-  ["Function", afterInserting("a", "b"), "a", "b"],
-  ["List"],
-  "_raw",
-];
+export const insertionTableau: MathJSON = ["Fold", ["Function", afterInserting("a", "b"), "a", "b"], ["List"], "_raw"];
 
 /** `body` with `tab` bound to the insertion tableau, built once. */
 const withInsertionTableau = (body: MathJSON): MathJSON => bind("tab", insertionTableau, body);
 
 /** The row lengths of `tableau`, as a partition. */
 const shapeOf = (tableau: MathJSON): MathJSON =>
-  overRange(
-    count(tableau),
-    ["List"],
-    ["Join", "sacc", ["List", count(at(tableau, "s"))]],
-    "sacc",
-    "s",
-  );
+  overRange(count(tableau), ["List"], ["Join", "sacc", ["List", count(at(tableau, "s"))]], "sacc", "s");
 
 /** `tableau` as a ROW WORD — its rows concatenated. */
 const rowWordOf = (tableau: MathJSON): MathJSON =>
@@ -255,12 +217,7 @@ const recordedQ: MathJSON = overRange(
 /** The RSK pair `(P, Q)`, both as tableaux of rows. */
 export const rskPair: MathJSON = [
   "Fold",
-  [
-    "Function",
-    bind("insertedP", afterInserting(P_SO_FAR, KTH), ["List", insertedP, recordedQ]),
-    "s",
-    "k",
-  ],
+  ["Function", bind("insertedP", afterInserting(P_SO_FAR, KTH), ["List", insertedP, recordedQ]), "s", "k"],
   ["List", ["List"], ["List"]],
   ["Range", 1, ["Count", "_raw"]],
 ];

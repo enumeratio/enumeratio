@@ -6,8 +6,7 @@
 // numbers/arrays, same contract as every other family (types.ts).
 import type { FamilyKernel } from "./types.ts";
 
-const normRank = (r: number, total: number): number =>
-  total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
 function arraysEqual(a: number[], b: number[]): boolean {
   if (a.length !== b.length) return false;
@@ -134,8 +133,7 @@ function braceletRank(w: number[], n: number, k: number): number {
 }
 function braceletValid(w: unknown, n: number, k: number): boolean {
   if (!Array.isArray(w) || w.length !== n) return false;
-  for (const v of w)
-    if (typeof v !== "number" || !Number.isInteger(v) || v < 0 || v >= k) return false;
+  for (const v of w) if (typeof v !== "number" || !Number.isInteger(v) || v < 0 || v >= k) return false;
   if (n === 0) return true;
   return arraysEqual(canonicalBracelet(w), w);
 }

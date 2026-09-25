@@ -12,13 +12,5 @@ export {
   isPlanar,
   toRgs,
 } from "./diagram.ts";
-export {
-  bell,
-  catalan,
-  DIMENSION_FORMULA,
-  dimensionOf,
-  doubleFactorialOdd,
-  motzkin,
-  rookCount,
-} from "./dimensions.ts";
+export { bell, catalan, DIMENSION_FORMULA, dimensionOf, doubleFactorialOdd, motzkin, rookCount } from "./dimensions.ts";
 export * from "./orbit.ts";

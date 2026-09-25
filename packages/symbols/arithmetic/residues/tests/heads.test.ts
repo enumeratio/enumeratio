@@ -5,8 +5,7 @@ import { declareResidues } from "../src/declare.ts";
 
 const ce = new ComputeEngine();
 declareResidues(ce);
-const run = (expr: unknown): unknown =>
-  ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
 
 test("PowerModList: roots, powers, inverses", () => {
   expect(run(["PowerModList", 3, ["Divide", 1, 2], 11])).toEqual(["List", 5, 6]);
@@ -19,17 +18,8 @@ test("PowerModList: roots, powers, inverses", () => {
   // x³ ≡ 2² (mod 13): 4 is not a cube mod 13
   expect(run(["PowerModList", 2, ["Rational", 2, 3], 13])).toEqual(["List"]);
   expect(run(["PowerModList", ["Rational", 2, 3], 1, 7])).toEqual(["List", 3]);
-  expect(run(["PowerModList", ["List", 1, 4], ["Divide", 1, 2], 5])).toEqual([
-    "List",
-    ["List", 1, 4],
-    ["List", 2, 3],
-  ]);
-  expect(run(["PowerModList", 1, ["Divide", 1, 2], "m"])).toEqual([
-    "PowerModList",
-    1,
-    ["Rational", 1, 2],
-    "m",
-  ]);
+  expect(run(["PowerModList", ["List", 1, 4], ["Divide", 1, 2], 5])).toEqual(["List", ["List", 1, 4], ["List", 2, 3]]);
+  expect(run(["PowerModList", 1, ["Divide", 1, 2], "m"])).toEqual(["PowerModList", 1, ["Rational", 1, 2], "m"]);
 });
 
 test("PowerModList reaches moduli no scan could", () => {
@@ -44,12 +34,7 @@ test("PowerModList reaches moduli no scan could", () => {
 test("PowerMod gains Wolfram's rational exponent, and keeps its native forms", () => {
   expect(run(["PowerMod", 4, ["Rational", 1, 2], 7])).toBe(2);
   expect(run(["PowerMod", 3, ["Rational", 1, 2], 2])).toBe(1);
-  expect(run(["PowerMod", 2, ["Rational", 1, 2], 5])).toEqual([
-    "PowerMod",
-    2,
-    ["Rational", 1, 2],
-    5,
-  ]);
+  expect(run(["PowerMod", 2, ["Rational", 1, 2], 5])).toEqual(["PowerMod", 2, ["Rational", 1, 2], 5]);
   expect(run(["PowerMod", 2, 10, 3])).toBe(1);
   expect(run(["PowerMod", 3, -2, 7])).toBe(4);
   expect(run(["PowerMod", 2, ["List", 10, 11, 12, 13, 14], 5])).toEqual(["List", 4, 3, 1, 2, 4]);
@@ -69,12 +54,7 @@ test("PowerMod(a, 0, m) is Mod(1, m) even for m ≤ 0 — a⁰ = 1 doesn't care 
 test("MultiplicativeOrder gains the discrete-log form", () => {
   expect(run(["MultiplicativeOrder", 2, 7])).toBe(3);
   expect(run(["MultiplicativeOrder", 5, 7, ["List", 2, 3, 4]])).toBe(2);
-  expect(run(["MultiplicativeOrder", 2, 7, ["List", 3]])).toEqual([
-    "MultiplicativeOrder",
-    2,
-    7,
-    ["List", 3],
-  ]);
+  expect(run(["MultiplicativeOrder", 2, 7, ["List", 3]])).toEqual(["MultiplicativeOrder", 2, 7, ["List", 3]]);
 });
 
 test("PrimitiveRootList", () => {
@@ -110,16 +90,8 @@ test("IntegerMod arithmetic", () => {
 });
 
 test("ChineseRemainder and MultiplicativeOrder take IntegerMod values", () => {
-  expect(run(["ChineseRemainder", ["IntegerMod", 2, 3], ["IntegerMod", 3, 5]])).toEqual([
-    "IntegerMod",
-    8,
-    15,
-  ]);
-  expect(run(["ChineseRemainder", ["IntegerMod", 1, 4], ["IntegerMod", 3, 6]])).toEqual([
-    "IntegerMod",
-    9,
-    12,
-  ]);
+  expect(run(["ChineseRemainder", ["IntegerMod", 2, 3], ["IntegerMod", 3, 5]])).toEqual(["IntegerMod", 8, 15]);
+  expect(run(["ChineseRemainder", ["IntegerMod", 1, 4], ["IntegerMod", 3, 6]])).toEqual(["IntegerMod", 9, 12]);
   expect(run(["ChineseRemainder", ["List", 3, 4], ["List", 4, 5]])).toBe(19);
   expect(run(["MultiplicativeOrder", ["IntegerMod", 2, 7]])).toBe(3);
 });

@@ -65,8 +65,7 @@ export type NodeWorkerFactory = (
   options: { resourceLimits?: { maxOldGenerationSizeMb: number } },
 ) => NodeWorkerLike;
 
-const defaultWorkerFactory: NodeWorkerFactory = (url, options) =>
-  new Worker(url, options) as unknown as NodeWorkerLike;
+const defaultWorkerFactory: NodeWorkerFactory = (url, options) => new Worker(url, options) as unknown as NodeWorkerLike;
 
 export interface EvaluatorPoolOptions {
   /** Max concurrent workers, across every memory-limit key combined. Default
@@ -156,10 +155,7 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
     destroy: (worker) => void worker.terminate(),
   });
 
-  function evaluateDetailed(
-    json: unknown,
-    callOptions: EvaluateIsolatedOptions = {},
-  ): Promise<EvaluateDetail> {
+  function evaluateDetailed(json: unknown, callOptions: EvaluateIsolatedOptions = {}): Promise<EvaluateDetail> {
     const { memoryBytes, timeMs, setup, materialize } = callOptions;
     const key = memoryKeyOf(memoryBytes);
     const start = performance.now();
@@ -236,10 +232,7 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
             // Guards a worker that never reports "started" at all (crashed/hung during
             // its own spin-up or import) -- see SPAWN_TIMEOUT_MS. The real deadline
             // (`killTimer`) only arms once "started" arrives, above.
-            spawnTimer = setTimeout(
-              () => finish({ outcome: "Aborted", ms: ms() }, "replace"),
-              spawnTimeoutMs,
-            );
+            spawnTimer = setTimeout(() => finish({ outcome: "Aborted", ms: ms() }, "replace"), spawnTimeoutMs);
           }
           worker.ref();
           worker.postMessage({ id, json, setup, timeMs, materialize });
@@ -275,10 +268,7 @@ function getDefaultPool(): EvaluatorPool {
  * caller should not have to distinguish "the answer is $Aborted" from "the call itself
  * failed".
  */
-export function evaluateIsolated(
-  json: unknown,
-  options: EvaluateIsolatedOptions = {},
-): Promise<unknown> {
+export function evaluateIsolated(json: unknown, options: EvaluateIsolatedOptions = {}): Promise<unknown> {
   return getDefaultPool().evaluate(json, options);
 }
 
@@ -287,10 +277,7 @@ export function evaluateIsolated(
 // for a notebook evaluating off the caller's own thread. See design/aestimatio.md §5.
 // ---------------------------------------------------------------------------------------
 
-export type NodeSessionWorkerFactory = (
-  url: URL,
-  options: { workerData?: unknown },
-) => NodeWorkerLike;
+export type NodeSessionWorkerFactory = (url: URL, options: { workerData?: unknown }) => NodeWorkerLike;
 
 export interface SessionOptions {
   /** Module URL whose `configure(ce)` declares the libraries the session's engine has.
@@ -353,10 +340,7 @@ export function openSession(options: SessionOptions = {}): Session {
   let nextId = 0;
   let closed = false;
 
-  function evaluate(
-    json: unknown,
-    callOptions: EvaluateSessionOptions = {},
-  ): Promise<SessionEvaluateResult> {
+  function evaluate(json: unknown, callOptions: EvaluateSessionOptions = {}): Promise<SessionEvaluateResult> {
     if (closed) throw new Error("openSession: evaluate() called after close()");
     const { timeMs, signal } = callOptions;
     const id = nextId++;

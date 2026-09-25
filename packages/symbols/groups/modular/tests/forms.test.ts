@@ -162,10 +162,9 @@ test("the cycles are exactly the equivalence classes", () => {
     // And forms in different cycles are not — no over-splitting.
     for (let i = 0; i < classes.length; i++) {
       for (let j = i + 1; j < classes.length; j++) {
-        expect(
-          equivalentBySearch(classes[i]![0] as Form, classes[j]![0] as Form),
-          `${d}: classes ${i} and ${j}`,
-        ).toBe(false);
+        expect(equivalentBySearch(classes[i]![0] as Form, classes[j]![0] as Form), `${d}: classes ${i} and ${j}`).toBe(
+          false,
+        );
       }
     }
     // The cycles partition the reduced forms.

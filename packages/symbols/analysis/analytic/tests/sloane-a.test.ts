@@ -13,9 +13,7 @@ declareAnalytic(ce);
 const sloaneA = (id: string, n: number): number => ce.box(["SloaneA", `'${id}'`, n]).N().re;
 
 test("fungrim:373aa1 — A000045 is Fibonacci", () => {
-  expect([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => sloaneA("A000045", n))).toEqual([
-    0, 1, 1, 2, 3, 5, 8, 13, 21, 34,
-  ]);
+  expect([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => sloaneA("A000045", n))).toEqual([0, 1, 1, 2, 3, 5, 8, 13, 21, 34]);
 });
 
 test("fungrim:9d0839 — A000040 is the n-th prime, 1-indexed", () => {

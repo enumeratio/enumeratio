@@ -46,12 +46,13 @@ import {
 } from "./vocabulary.ts";
 
 const on = "Permutation";
-const stat = (
-  head: string,
-  summary: string,
-  expr: Definition["expr"],
-  note?: string,
-): Definition => ({ head, on, summary, expr, ...(note ? { note } : {}) });
+const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
+  head,
+  on,
+  summary,
+  expr,
+  ...(note ? { note } : {}),
+});
 
 /**
  * A statistic that is ALSO a plain list function. These compare entries with each OTHER and
@@ -60,18 +61,13 @@ const stat = (
  * value against its position, or walks the orbits, and means nothing without a bijection
  * behind it — `Cycles([3, 1, 2])` is not a question, it is a type error.
  */
-const word = (
-  head: string,
-  summary: string,
-  expr: Definition["expr"],
-  note?: string,
-): Definition => ({ ...stat(head, summary, expr, note), alsoOnList: true });
+const word = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
+  ...stat(head, summary, expr, note),
+  alsoOnList: true,
+});
 
 /** i < j with p(i) > p(j) — counted as, for each i, how many later entries it dominates. */
-const inversions = sumOver(
-  positions,
-  count(["Range", add("i", 1), length()], greater(here, at("j")), "j"),
-);
+const inversions = sumOver(positions, count(["Range", add("i", 1), length()], greater(here, at("j")), "j"));
 
 // Denert's statistic (Foata–Zeilberger, FindStat St000156).
 //
@@ -118,12 +114,7 @@ const longestIncreasingRun: MathJSON = [
     [
       "If",
       ["Greater", visiting, carried(3)],
-      [
-        "List",
-        ["Max", ["List", carried(1), ["Add", carried(2), 1]]],
-        ["Add", carried(2), 1],
-        visiting,
-      ],
+      ["List", ["Max", ["List", carried(1), ["Add", carried(2), 1]]], ["Add", carried(2), 1], visiting],
       ["List", ["Max", ["List", carried(1), 1]], 1, visiting],
     ],
   ),
@@ -229,11 +220,7 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
 
   stat("FixedPoints", "Positions with p(i) = i.", nonEmpty(count(positions, equals(here, "i")))),
   stat("Excedances", "Positions with p(i) > i.", nonEmpty(count(positions, greater(here, "i")))),
-  stat(
-    "WeakExceedances",
-    "Positions with p(i) >= i.",
-    nonEmpty(count(positions, atLeastValue(here, "i"))),
-  ),
+  stat("WeakExceedances", "Positions with p(i) >= i.", nonEmpty(count(positions, atLeastValue(here, "i")))),
   stat("Antiexcedances", "Positions with p(i) < i.", nonEmpty(count(positions, less(here, "i")))),
 
   stat(
@@ -279,22 +266,12 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   word(
     "FirstDescent",
     "The smallest descent position, or 0 when p is increasing.",
-    hasPair([
-      "If",
-      equals(count(adjacent, fallsAfter), 0),
-      0,
-      ["Min", where(adjacent, fallsAfter)],
-    ]),
+    hasPair(["If", equals(count(adjacent, fallsAfter), 0), 0, ["Min", where(adjacent, fallsAfter)]]),
   ),
   word(
     "LastDescent",
     "The largest descent position, or 0 when p is increasing.",
-    hasPair([
-      "If",
-      equals(count(adjacent, fallsAfter), 0),
-      0,
-      ["Max", where(adjacent, fallsAfter)],
-    ]),
+    hasPair(["If", equals(count(adjacent, fallsAfter), 0), 0, ["Max", where(adjacent, fallsAfter)]]),
   ),
 
   word(
@@ -359,21 +336,13 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     nonEmpty(longestIncreasingRun),
   ),
 
-  stat(
-    "CycleCount",
-    "The number of cycles in the disjoint-cycle decomposition.",
-    nonEmpty(["Count", cycleLeaders]),
-  ),
+  stat("CycleCount", "The number of cycles in the disjoint-cycle decomposition.", nonEmpty(["Count", cycleLeaders])),
   stat(
     "ReflectionLength",
     "n minus the number of cycles — the minimum number of transpositions.",
     nonEmpty(subtract(length(), ["Count", cycleLeaders])),
   ),
-  stat(
-    "LargestCycleLength",
-    "The size of the largest cycle.",
-    nonEmpty(withOrbitInfo(["Max", cycleLengths])),
-  ),
+  stat("LargestCycleLength", "The size of the largest cycle.", nonEmpty(withOrbitInfo(["Max", cycleLengths]))),
   stat(
     "LongestCycleLength",
     "The size of the largest cycle (the catalog's second spelling).",

@@ -59,15 +59,10 @@ export type Resolver = (
  * Register a single evaluate hook for `head` that tries each resolver in turn once an
  * operand is structurally tagged, and otherwise defers to the native handler untouched.
  */
-export function registerTaggedHead(
-  ce: ComputeEngine,
-  head: string,
-  resolvers: readonly Resolver[],
-): void {
+export function registerTaggedHead(ce: ComputeEngine, head: string, resolvers: readonly Resolver[]): void {
   if (resolvers.length === 0) return;
   const definition = ce.lookupDefinition(head);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   const native = operator.evaluate;
   operator.evaluate = (ops, options) => {
@@ -94,9 +89,7 @@ export function registerTaggedHeads(
   ...resolverMaps: readonly Readonly<Record<string, Resolver | undefined>>[]
 ): void {
   for (const head of heads) {
-    const resolvers = resolverMaps
-      .map((map) => map[head])
-      .filter((r): r is Resolver => r !== undefined);
+    const resolvers = resolverMaps.map((map) => map[head]).filter((r): r is Resolver => r !== undefined);
     registerTaggedHead(ce, head, resolvers);
   }
 }

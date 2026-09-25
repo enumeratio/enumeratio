@@ -112,8 +112,7 @@ const EXPECTED: Record<string, (w: number[]) => number> = {
     while (k < w.length && w[k] === 1) k++;
     return k;
   },
-  MajorIndex: (w) =>
-    w.slice(0, -1).reduce((a, s, k) => (s === 1 && w[k + 1] === 0 ? a + k + 1 : a), 0),
+  MajorIndex: (w) => w.slice(0, -1).reduce((a, s, k) => (s === 1 && w[k + 1] === 0 ? a + k + 1 : a), 0),
   Area: (w) => heights(w).reduce((a, b) => a + b, 0),
   LongestAscent: (w) => longestRunOf(w, 1),
   LongestDescent: (w) => longestRunOf(w, 0),
@@ -126,8 +125,7 @@ const EXPECTED: Record<string, (w: number[]) => number> = {
 };
 
 test("every Dyck definition has an independent reading", () => {
-  for (const definition of DYCK_STATISTICS)
-    expect(EXPECTED[definition.head], definition.head).toBeDefined();
+  for (const definition of DYCK_STATISTICS) expect(EXPECTED[definition.head], definition.head).toBeDefined();
 });
 
 for (const definition of DYCK_STATISTICS) {
@@ -143,11 +141,7 @@ for (const definition of DYCK_STATISTICS) {
 // implementation, independent of either being individually "obviously right": a
 // transposition-style bug in one alone would still show up here as an asymmetric or
 // mismatched polynomial.
-function bivariatePolynomial(
-  words: number[][],
-  xOf: (w: number[]) => number,
-  yOf: (w: number[]) => number,
-) {
+function bivariatePolynomial(words: number[][], xOf: (w: number[]) => number, yOf: (w: number[]) => number) {
   const counts = new Map<string, number>();
   for (const w of words) {
     const key = `${xOf(w)},${yOf(w)}`;
@@ -155,8 +149,7 @@ function bivariatePolynomial(
   }
   return counts;
 }
-const sortedEntries = (m: Map<string, number>) =>
-  [...m.entries()].sort(([a], [b]) => (a < b ? -1 : 1));
+const sortedEntries = (m: Map<string, number>) => [...m.entries()].sort(([a], [b]) => (a < b ? -1 : 1));
 
 test("(Area, Dinv) and (Bounce, Area) share the same bivariate distribution for semilength 0..6", () => {
   // The "area" the (area, dinv)/(bounce, area) theorem is about is the DIAGONAL reading —

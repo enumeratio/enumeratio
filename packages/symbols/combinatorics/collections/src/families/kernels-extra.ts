@@ -314,14 +314,8 @@ export function ColoredPermutationRank(image: number[], colors: number[], k: num
   for (const c of colors) colorNum = colorNum * k + c;
   return colorNum * Factorial(n) + PermutationRank(image);
 }
-export function IsColoredPermutationOf(
-  image: number[],
-  colors: number[],
-  n: number,
-  k: number,
-): boolean {
-  if (!Array.isArray(image) || !Array.isArray(colors) || image.length !== n || colors.length !== n)
-    return false;
+export function IsColoredPermutationOf(image: number[], colors: number[], n: number, k: number): boolean {
+  if (!Array.isArray(image) || !Array.isArray(colors) || image.length !== n || colors.length !== n) return false;
   const seen = Array.from({ length: n + 1 }, () => false);
   for (const x of image) {
     if (!Number.isInteger(x) || x < 1 || x > n || seen[x]) return false;
@@ -468,8 +462,7 @@ export function IsLabeledTreeOf(edges: number[][], n: number): boolean {
   for (const e of edges) {
     if (!Array.isArray(e) || e.length !== 2) return false;
     const [u, v] = e;
-    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v)
-      return false;
+    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
     const ru = find(u),
       rv = find(v);
     if (ru === rv) return false; // a cycle — not a tree
@@ -482,8 +475,7 @@ export function IsLabeledTreeOf(edges: number[][], n: number): boolean {
 // ─── Involutions(n): self-inverse permutations (σ²=id). Count = telephone numbers T(n). ───────────────────
 const _telephone: number[] = [1, 1];
 function telephone(n: number): number {
-  for (let i = _telephone.length; i <= n; i++)
-    _telephone[i] = _telephone[i - 1] + (i - 1) * _telephone[i - 2];
+  for (let i = _telephone.length; i <= n; i++) _telephone[i] = _telephone[i - 1] + (i - 1) * _telephone[i - 2];
   return _telephone[n];
 }
 export function InvolutionCount(n: number): number {
@@ -532,11 +524,7 @@ export function InvolutionRank(image: number[]): number {
     if (image[last - 1] === last) return rec(labels.slice(0, m - 1));
     const partner = image[last - 1];
     const j = labels.indexOf(partner);
-    return (
-      telephone(m - 1) +
-      j * telephone(m - 2) +
-      rec(labels.filter((x) => x !== last && x !== partner))
-    );
+    return telephone(m - 1) + j * telephone(m - 2) + rec(labels.filter((x) => x !== last && x !== partner));
   };
   return rec(Array.from({ length: n }, (_, i) => i + 1));
 }
@@ -560,9 +548,7 @@ function motzkinCompletions(s: number, h: number): number {
   let v = _motzMemo.get(key);
   if (v === undefined) {
     v =
-      motzkinCompletions(s - 1, h + 1) +
-      motzkinCompletions(s - 1, h) +
-      (h > 0 ? motzkinCompletions(s - 1, h - 1) : 0);
+      motzkinCompletions(s - 1, h + 1) + motzkinCompletions(s - 1, h) + (h > 0 ? motzkinCompletions(s - 1, h - 1) : 0);
     _motzMemo.set(key, v);
   }
   return v;
@@ -695,8 +681,7 @@ export function BinaryTreeUnrank(n: number, rank: number): BinTree {
     const cl = CatalanNumber(i),
       cr = CatalanNumber(n - 1 - i);
     const block = cl * cr;
-    if (r < block)
-      return [BinaryTreeUnrank(i, Math.floor(r / cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
+    if (r < block) return [BinaryTreeUnrank(i, Math.floor(r / cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
     r -= block;
   }
   return 0; // unreachable
@@ -714,16 +699,14 @@ export function BinaryTreeRank(t: BinTree): number {
   return base + BinaryTreeRank(t[0]) * cr + BinaryTreeRank(t[1]);
 }
 export function IsBinaryTree(t: unknown, n: number): boolean {
-  const ok = (x: unknown): boolean =>
-    x === 0 || (Array.isArray(x) && x.length === 2 && ok(x[0]) && ok(x[1]));
+  const ok = (x: unknown): boolean => x === 0 || (Array.isArray(x) && x.length === 2 && ok(x[0]) && ok(x[1]));
   return ok(t) && binTreeSize(t as BinTree) === n;
 }
 
 // ─── Derangements(n): permutations with no fixed point. Count = subfactorial D(n). ──────────────────────
 const _subfac: number[] = [1, 0];
 function subfactorial(n: number): number {
-  for (let i = _subfac.length; i <= n; i++)
-    _subfac[i] = (i - 1) * (_subfac[i - 1] + _subfac[i - 2]);
+  for (let i = _subfac.length; i <= n; i++) _subfac[i] = (i - 1) * (_subfac[i - 1] + _subfac[i - 2]);
   return _subfac[n];
 }
 export function DerangementCount(n: number): number {
@@ -1105,8 +1088,7 @@ function unrankForest(m: number, slots: number, k: number, r: number): KTree[] {
     const cc = karyTreeCount0(s, k),
       rc = cntFill(m - s, slots - 1, k);
     const block = cc * rc;
-    if (r < block)
-      return [unrankKTree(s, k, Math.floor(r / rc)), ...unrankForest(m - s, slots - 1, k, r % rc)];
+    if (r < block) return [unrankKTree(s, k, Math.floor(r / rc)), ...unrankForest(m - s, slots - 1, k, r % rc)];
     r -= block;
   }
   return [];
@@ -1140,8 +1122,7 @@ export function KAryTreeRank(t: KTree, k: number): number {
   return rankKTree(t, k);
 }
 export function IsKAryTree(t: unknown, n: number, k: number): boolean {
-  const ok = (x: unknown): boolean =>
-    x === 0 || (Array.isArray(x) && x.length === k && x.every(ok));
+  const ok = (x: unknown): boolean => x === 0 || (Array.isArray(x) && x.length === k && x.every(ok));
   return ok(t) && kSize(t as KTree) === n;
 }
 

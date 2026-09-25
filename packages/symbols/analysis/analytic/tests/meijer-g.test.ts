@@ -37,16 +37,13 @@ interface GoldenCase {
   mpmath: [number, number];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./meijer-g.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./meijer-g.golden.json", import.meta.url), "utf8"));
 
 /** A `Param` as MathJSON — a bare number or `["Complex", re, im]`. */
 const paramJson = (p: Param): unknown => (typeof p === "number" ? p : ["Complex", p.re, p.im]);
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 test("MeijerG matches mpmath to a few ulps across the golden parameter sets", () => {
   const off: string[] = [];
@@ -89,17 +86,11 @@ test("MeijerG: a case with two upper and two lower parameters (m=1,n=1,p=1,q=2)"
 });
 
 test("MeijerG declines: p > q, non-simple poles, symbolic operands", () => {
-  const pGtQ = ce
-    .box(["MeijerG", ["List", ["List", 1, 2], ["List"]], ["List", ["List", 0], ["List"]], 0.5])
-    .N();
+  const pGtQ = ce.box(["MeijerG", ["List", ["List", 1, 2], ["List"]], ["List", ["List", 0], ["List"]], 0.5]).N();
   expect(pGtQ.operator).toBe("MeijerG");
-  const nonSimple = ce
-    .box(["MeijerG", ["List", ["List"], ["List"]], ["List", ["List", 0, 0], ["List"]], 0.5])
-    .N();
+  const nonSimple = ce.box(["MeijerG", ["List", ["List"], ["List"]], ["List", ["List", 0, 0], ["List"]], 0.5]).N();
   expect(nonSimple.operator).toBe("MeijerG");
-  const symbolic = ce
-    .box(["MeijerG", ["List", ["List"], ["List"]], ["List", ["List", 0], ["List"]], "z"])
-    .evaluate();
+  const symbolic = ce.box(["MeijerG", ["List", ["List"], ["List"]], ["List", ["List", 0], ["List"]], "z"]).evaluate();
   expect(symbolic.operator).toBe("MeijerG");
 });
 

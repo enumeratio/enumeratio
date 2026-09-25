@@ -27,9 +27,7 @@ export const isComplexGaussian = (expr: BoxedExpression | undefined): boolean =>
 };
 
 const part = (x: bigint): number | { num: string } =>
-  x >= BigInt(Number.MIN_SAFE_INTEGER) && x <= BigInt(Number.MAX_SAFE_INTEGER)
-    ? Number(x)
-    : { num: x.toString() };
+  x >= BigInt(Number.MIN_SAFE_INTEGER) && x <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(x) : { num: x.toString() };
 
 /** A Gaussian integer as an expression, exact in both parts. */
 export const gaussianExpression = (ce: ComputeEngine, z: Gaussian): BoxedExpression =>

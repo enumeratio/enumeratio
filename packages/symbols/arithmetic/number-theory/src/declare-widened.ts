@@ -59,10 +59,7 @@ export function declareWidened(ce: ComputeEngine): void {
     () => (ops) => {
       const [k, n] = ops;
       return ce
-        .function("Divide", [
-          ce.function("DivisorSigma", [k!.neg(), n!]),
-          ce.function("Power", [n!, k!.neg()]),
-        ])
+        .function("Divide", [ce.function("DivisorSigma", [k!.neg(), n!]), ce.function("Power", [n!, k!.neg()])])
         .evaluate();
     },
     2,
@@ -120,12 +117,7 @@ export function declareWidened(ce: ComputeEngine): void {
     ["DivisorSigma", 1, 1],
     (ops) => {
       const n = bigIntegerAt(ops[1]);
-      return (
-        n !== undefined &&
-        n > 0n &&
-        bigIntegerAt(ops[0]) === undefined &&
-        symbolNameOf(ops[0]!) !== undefined
-      );
+      return n !== undefined && n > 0n && bigIntegerAt(ops[0]) === undefined && symbolNameOf(ops[0]!) !== undefined;
     },
     () => (ops) => {
       const divisors = operandsOf(ce.function("Divisors", [ops[1]!]).evaluate());
@@ -272,11 +264,9 @@ export function declareWidened(ce: ComputeEngine): void {
       const denFactors = factorInteger(den);
       if (numFactors === undefined || denFactors === undefined) return undefined;
       const sign: [bigint, number][] = num < 0n ? [[-1n, 1]] : [];
-      const merged = [
-        ...sign,
-        ...numFactors,
-        ...denFactors.map(([p, e]) => [p, -e] as [bigint, number]),
-      ].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+      const merged = [...sign, ...numFactors, ...denFactors.map(([p, e]) => [p, -e] as [bigint, number])].sort(
+        ([a], [b]) => (a < b ? -1 : a > b ? 1 : 0),
+      );
       return ce.function(
         "List",
         merged.map(([p, e]) => ce.function("Tuple", [ce.number(p), ce.number(e)])),

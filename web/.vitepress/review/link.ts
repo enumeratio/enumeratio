@@ -9,9 +9,7 @@ const PROD_HOST = "enumeratio.dev";
 // AGENTS.md's CI-and-deployment section). A 7-hex-digit short SHA subdomain.
 const PREVIEW_HOST_RE = /^[0-9a-f]{7}\.enumeratio\.pages\.dev$/;
 
-export type ResolvedReviewLink =
-  | { kind: "local"; path: string }
-  | { kind: "external"; href: string };
+export type ResolvedReviewLink = { kind: "local"; path: string } | { kind: "external"; href: string };
 
 /**
  * Resolve a backlog item's `link` for the review sidebar:

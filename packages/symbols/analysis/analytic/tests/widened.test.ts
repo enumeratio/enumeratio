@@ -15,11 +15,7 @@ const evalJson = (expr: unknown) => ce.box(expr as never).evaluate().json;
 test("Gamma reduces exact integer and half-integer arguments, and threads over a list", () => {
   expect(evalJson(["Gamma", 5])).toEqual(24);
   expect(evalJson(["Gamma", ["List", 1, 2, 3, 4, 5]])).toEqual(["List", 1, 1, 2, 6, 24]);
-  expect(evalJson(["Gamma", ["Rational", 5, 2]])).toEqual([
-    "Multiply",
-    ["Rational", 3, 4],
-    ["Sqrt", "Pi"],
-  ]);
+  expect(evalJson(["Gamma", ["Rational", 5, 2]])).toEqual(["Multiply", ["Rational", 3, 4], ["Sqrt", "Pi"]]);
   // Still a pole, not a new exact value — untouched by this override.
   expect(evalJson(["Gamma", 0])).toEqual("ComplexInfinity");
 });

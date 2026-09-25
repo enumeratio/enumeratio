@@ -12,25 +12,11 @@
 // --dry-run skips the actual test runs and fabricates nothing — it's for wiring checks, not data.
 
 import { execFileSync } from "node:child_process";
-import {
-  mkdtempSync,
-  readFileSync,
-  writeFileSync,
-  existsSync,
-  mkdirSync,
-  readdirSync,
-} from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  appendRun,
-  detectDrift,
-  slowestFiles,
-  type History,
-  type PackageRun,
-  type RunRecord,
-} from "./history.ts";
+import { appendRun, detectDrift, slowestFiles, type History, type PackageRun, type RunRecord } from "./history.ts";
 import { toPackageRun, type VitestJsonReport } from "./vitest-report.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -96,20 +82,17 @@ function discoverPackages(root: string): Array<{ name: string; dir: string }> {
 
 function runPackageSuite(pkgName: string, outputFile: string): VitestJsonReport | undefined {
   try {
-    execFileSync(
-      "pnpm",
-      ["--filter", pkgName, "exec", "vp", "test", "--reporter=json", `--outputFile=${outputFile}`],
-      { cwd: REPO_ROOT, stdio: ["ignore", "pipe", "pipe"] },
-    );
+    execFileSync("pnpm", ["--filter", pkgName, "exec", "vp", "test", "--reporter=json", `--outputFile=${outputFile}`], {
+      cwd: REPO_ROOT,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
   } catch (error) {
     // A failing suite still writes the JSON report (vitest exits non-zero, not silently) — a red
     // test isn't this job's business, only its timing is. Fall through and try to read it.
     void error;
   }
   if (!existsSync(outputFile)) {
-    console.error(
-      `no JSON report for ${pkgName} — suite likely crashed before vitest could report`,
-    );
+    console.error(`no JSON report for ${pkgName} — suite likely crashed before vitest could report`);
     return undefined;
   }
   return JSON.parse(readFileSync(outputFile, "utf8")) as VitestJsonReport;

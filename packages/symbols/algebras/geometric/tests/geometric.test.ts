@@ -71,22 +71,16 @@ test("GradePart splits a rotor into its parts", () => {
 // --- involutions ------------------------------------------------------------------
 
 test("reversion flips grades 2 and 3 and leaves 0 and 1 alone", () => {
-  expect(ev("\\mathrm{Reversion}(1 + e_1 + e_1e_2 + e_1e_2e_3)")).toBe(
-    ev("1 + e_1 - e_1e_2 - e_1e_2e_3"),
-  );
+  expect(ev("\\mathrm{Reversion}(1 + e_1 + e_1e_2 + e_1e_2e_3)")).toBe(ev("1 + e_1 - e_1e_2 - e_1e_2e_3"));
 });
 
 test("grade involution flips the odd grades", () => {
-  expect(ev("\\mathrm{GradeInvolution}(1 + e_1 + e_1e_2 + e_1e_2e_3)")).toBe(
-    ev("1 - e_1 + e_1e_2 - e_1e_2e_3"),
-  );
+  expect(ev("\\mathrm{GradeInvolution}(1 + e_1 + e_1e_2 + e_1e_2e_3)")).toBe(ev("1 - e_1 + e_1e_2 - e_1e_2e_3"));
 });
 
 test("Clifford conjugation is reversion after grade involution", () => {
   const x = "1 + 2e_1 + 3e_1e_2 + 4e_1e_2e_3";
-  expect(ev(`\\mathrm{CliffordConjugate}(${x})`)).toBe(
-    ev(`\\mathrm{Reversion}(\\mathrm{GradeInvolution}(${x}))`),
-  );
+  expect(ev(`\\mathrm{CliffordConjugate}(${x})`)).toBe(ev(`\\mathrm{Reversion}(\\mathrm{GradeInvolution}(${x}))`));
 });
 
 test("every involution is an involution", () => {
@@ -117,8 +111,7 @@ test("the dual of a blade is its complement in the algebra it is taken in", () =
 
 test("the dual is signed so that b wedge dual(b) is the pseudoscalar", () => {
   for (const algebra of [CL2, "\\mathrm{CliffordAlgebra}(3)", PGA2]) {
-    const generators =
-      algebra === PGA2 ? ["e_1", "e_2", "\\theta_1", "e_1e_2"] : ["e_1", "e_2", "1"];
+    const generators = algebra === PGA2 ? ["e_1", "e_2", "\\theta_1", "e_1e_2"] : ["e_1", "e_2", "1"];
     for (const b of generators) {
       expect(ev(`\\mathrm{Wedge}(${b}, \\mathrm{Dual}(${b}, ${algebra}))`)).toBe(
         ev(`\\mathrm{Pseudoscalar}(${algebra})`),
@@ -130,11 +123,7 @@ test("the dual is signed so that b wedge dual(b) is the pseudoscalar", () => {
 test("the dual survives a degenerate metric, where the pseudoscalar has no inverse", () => {
   // In 2-D PGA the pseudoscalar squares to zero, so "multiply by I inverse" is not
   // available at all; the complement definition still answers.
-  expect(
-    ev(
-      `\\mathrm{GeometricProduct}(\\mathrm{Pseudoscalar}(${PGA2}), \\mathrm{Pseudoscalar}(${PGA2}))`,
-    ),
-  ).toBe("0");
+  expect(ev(`\\mathrm{GeometricProduct}(\\mathrm{Pseudoscalar}(${PGA2}), \\mathrm{Pseudoscalar}(${PGA2}))`)).toBe("0");
   expect(ev(`\\mathrm{Dual}(\\theta_1, ${PGA2})`)).toBe("e_1e_2");
 });
 
@@ -144,9 +133,7 @@ test("a generator outside the algebra leaves the dual unevaluated", () => {
 
 test("the vee is the wedge of the duals, dualised back", () => {
   expect(ev(`\\mathrm{Vee}(e_1e_2, e_1e_2, ${PGA2})`)).toBe(
-    ev(
-      `\\mathrm{Dual}(\\mathrm{Wedge}(\\mathrm{Dual}(e_1e_2, ${PGA2}), \\mathrm{Dual}(e_1e_2, ${PGA2})), ${PGA2})`,
-    ),
+    ev(`\\mathrm{Dual}(\\mathrm{Wedge}(\\mathrm{Dual}(e_1e_2, ${PGA2}), \\mathrm{Dual}(e_1e_2, ${PGA2})), ${PGA2})`),
   );
 });
 

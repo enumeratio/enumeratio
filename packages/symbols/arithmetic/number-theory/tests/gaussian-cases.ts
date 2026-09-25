@@ -25,8 +25,7 @@ export interface GoldenCase {
   readonly wolfram: unknown;
 }
 
-const read = (v: Value): Gaussian =>
-  typeof v === "object" ? [BigInt(v[0]), BigInt(v[1])] : [BigInt(v), 0n];
+const read = (v: Value): Gaussian => (typeof v === "object" ? [BigInt(v[0]), BigInt(v[1])] : [BigInt(v), 0n]);
 const big = (v: Value): bigint => (typeof v === "object" ? BigInt(v[0]) : BigInt(v));
 
 export const encode = (z: Gaussian | undefined): unknown =>

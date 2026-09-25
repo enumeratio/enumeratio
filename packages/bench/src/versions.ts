@@ -12,14 +12,11 @@ export interface Version {
   readonly packages?: Readonly<Record<string, string>>;
 }
 
-const oracle = (path: string): string =>
-  fileURLToPath(new URL(`../../oracle/${path}`, import.meta.url));
+const oracle = (path: string): string => fileURLToPath(new URL(`../../oracle/${path}`, import.meta.url));
 
 function probe(command: string, args: readonly string[]): string {
   try {
-    return execFileSync(command, args, { encoding: "utf8", timeout: 60_000 })
-      .trim()
-      .split("\n")[0]!;
+    return execFileSync(command, args, { encoding: "utf8", timeout: 60_000 }).trim().split("\n")[0]!;
   } catch {
     return "unknown";
   }
@@ -44,8 +41,7 @@ function pinned(file: string, names: readonly string[]): Record<string, string> 
   return out;
 }
 
-const python = (module: string): string =>
-  probe("python3", ["-c", `import ${module}; print(${module}.__version__)`]);
+const python = (module: string): string => probe("python3", ["-c", `import ${module}; print(${module}.__version__)`]);
 
 export function versionOf(system: BenchSystem): Version {
   switch (system) {

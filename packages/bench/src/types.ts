@@ -56,15 +56,7 @@ export interface ConcreteCase {
 }
 
 /** Every system a benchmark can run in: the oracle's systems plus our own side. */
-export type BenchSystem =
-  | "ts"
-  | "wolfram"
-  | "sympy"
-  | "mpmath"
-  | "sage"
-  | "oscar"
-  | "julia"
-  | "rust";
+export type BenchSystem = "ts" | "wolfram" | "sympy" | "mpmath" | "sage" | "oscar" | "julia" | "rust";
 
 export type Exclusion =
   | { readonly reason: "unmapped"; readonly missing: readonly string[] }
@@ -88,15 +80,7 @@ export interface Plan {
   }[];
 }
 
-export type Status =
-  | "ok"
-  | "unsupported"
-  | "precision"
-  | "denied"
-  | "too-fast"
-  | "wrong"
-  | "error"
-  | "timeout";
+export type Status = "ok" | "unsupported" | "precision" | "denied" | "too-fast" | "wrong" | "error" | "timeout";
 
 export interface Summary {
   readonly median: number;

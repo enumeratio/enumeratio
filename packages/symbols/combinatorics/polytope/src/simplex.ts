@@ -14,8 +14,7 @@ const size = (subset: Face): number => subset.reduce((sum, bit) => sum + bit, 0)
 
 function nonemptySubsets(n: number): Face[] {
   const out: Face[] = [];
-  for (let mask = 1; mask < 1 << n; mask++)
-    out.push(Array.from({ length: n }, (_, i) => ((mask >> i) & 1) as number));
+  for (let mask = 1; mask < 1 << n; mask++) out.push(Array.from({ length: n }, (_, i) => ((mask >> i) & 1) as number));
   return out;
 }
 

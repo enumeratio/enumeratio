@@ -21,8 +21,7 @@ const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
 // Multiply(ImaginaryUnit, Divide(Pi, 2)) boxes to Multiply(Complex(0, 1/2), Pi), not
 // Multiply(Complex(0, 1), Multiply(1/2, Pi)) -- so "is this Multiply(i, t)" has to allow
 // any nonzero purely-imaginary numeric factor, not just literal i.
-const isImaginaryLiteral = (op: BoxedExpression): boolean =>
-  op.operator === "Complex" && op.re === 0 && op.im !== 0;
+const isImaginaryLiteral = (op: BoxedExpression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
 
 /** Cheap (O(operands), no allocation): does this Multiply carry a purely-imaginary factor? */
 const hasImaginaryFactor = (op: BoxedExpression): boolean =>
@@ -57,13 +56,9 @@ function declareLnImaginaryUnit(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Ln", 1],
-    (ops) =>
-      ops[0] !== undefined && ops[0].operator === "Complex" && ops[0].re === 0 && ops[0].im === 1,
+    (ops) => ops[0] !== undefined && ops[0].operator === "Complex" && ops[0].re === 0 && ops[0].im === 1,
     () => (_ops, options) =>
-      finish(
-        ce.function("Multiply", [ce.function("Complex", [0, ce.number([1, 2])]), "Pi"]),
-        options,
-      ),
+      finish(ce.function("Multiply", [ce.function("Complex", [0, ce.number([1, 2])]), "Pi"]), options),
     1,
   );
 }
@@ -91,10 +86,7 @@ function declareArccotTable(ce: ComputeEngine): void {
       if (nativeResult !== undefined && nativeResult.operator !== "Arccot") return nativeResult;
       const arctanValue = ce.function("Arctan", [ops[0]!]).evaluate();
       if (arctanValue.operator === "Arctan") return nativeResult; // Arctan didn't fold either
-      return finish(
-        ce.function("Subtract", [ce.function("Divide", ["Pi", 2]), arctanValue]),
-        options,
-      );
+      return finish(ce.function("Subtract", [ce.function("Divide", ["Pi", 2]), arctanValue]), options);
     },
     1,
   );

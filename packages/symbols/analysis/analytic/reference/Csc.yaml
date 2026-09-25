@@ -48,10 +48,8 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix-with
-    expr:
-      [Csc, [List, [List, [Divide, Pi, 3], Pi], [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 2]]]]]
-    expected:
-      [List, [List, [Multiply, [Rational, 2, 3], [Sqrt, 3]], ComplexInfinity], [List, 2, -1]]
+    expr: [Csc, [List, [List, [Divide, Pi, 3], Pi], [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 2]]]]]
+    expected: [List, [List, [Multiply, [Rational, 2, 3], [Sqrt, 3]], ComplexInfinity], [List, 2, -1]]
     category: Scope
     caption: Threads element-wise over a matrix, with ComplexInfinity at the pole $\pi$
   - id: csc-pi-12-sqrt-6-sqrt-2

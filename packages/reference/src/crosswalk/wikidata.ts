@@ -6,8 +6,7 @@ import { type WikidataItem, wikidata } from "../wikidata-data.ts";
 import type { Reference } from "./types.ts";
 
 /** A Wikipedia identity as a title: spaces for underscores, no section anchor. */
-export const wikipediaTitle = (identity: string): string =>
-  identity.replace(/#.*$/, "").replace(/_/g, " ").trim();
+export const wikipediaTitle = (identity: string): string => identity.replace(/#.*$/, "").replace(/_/g, " ").trim();
 
 const byId = new Map(wikidata.map((item) => [item.id, item]));
 const byTitle = new Map(wikidata.flatMap((item) => (item.title ? [[item.title, item]] : [])));

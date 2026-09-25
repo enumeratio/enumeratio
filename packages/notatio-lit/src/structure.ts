@@ -26,8 +26,7 @@ import { controlSelector } from "./define.ts";
 import { isExpressive } from "./generic.ts";
 
 const BY_TAG = new Map<string, VisualSymbol>();
-for (const s of DRAWING_SYMBOLS)
-  if (!BY_TAG.has(s.tag) && s.fixed === undefined) BY_TAG.set(s.tag, s);
+for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag) && s.fixed === undefined) BY_TAG.set(s.tag, s);
 for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag)) BY_TAG.set(s.tag, s);
 
 const ADOPTED = new WeakSet<Element>();
@@ -86,9 +85,7 @@ function unwrapLayout(el: Element, head: string, names: ReadonlySet<string>): vo
     }
     entries.push(child);
   };
-  const expressive = Array.from(el.children).filter(
-    (c) => !c.hasAttribute("slot") && isExpressive(c),
-  );
+  const expressive = Array.from(el.children).filter((c) => !c.hasAttribute("slot") && isExpressive(c));
   const asText = (entry: Element): void => {
     if (entry.localName !== "notatio-string") return;
     const text = document.createElement("span");

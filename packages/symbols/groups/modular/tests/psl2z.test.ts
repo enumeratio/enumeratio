@@ -201,9 +201,7 @@ test("the number of hyperbolic classes matches the necklace closed forms", () =>
     // The primitive ones are the aperiodic necklaces — Lyndon words — again less two.
     let lyndon = 0;
     for (let d = 1; d <= n; d++) if (n % d === 0) lyndon += mobius(d) * 2 ** (n / d);
-    expect(hyperbolicClasses(n, true)!.length, `primitive ${n}`).toBe(
-      lyndon / n - (n === 1 ? 2 : 0),
-    );
+    expect(hyperbolicClasses(n, true)!.length, `primitive ${n}`).toBe(lyndon / n - (n === 1 ? 2 : 0));
   }
 });
 

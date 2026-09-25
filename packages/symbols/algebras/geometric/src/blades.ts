@@ -17,8 +17,7 @@ import {
 // a sign per grade. None of it needs a second representation.
 
 /** The canonical key hypercomplex maps blades by. Rebuilt here; it is one line. */
-export const bladeKey = (blade: readonly Generator[]): string =>
-  blade.map(generatorSymbol).join("*");
+export const bladeKey = (blade: readonly Generator[]): string => blade.map(generatorSymbol).join("*");
 
 /**
  * A one-blade multivector, unnormalised.
@@ -34,11 +33,7 @@ export const term = (blade: readonly Generator[], coefficient: BoxedExpression):
 export const zero: Multivector = { terms: new Map() };
 
 /** Multiply two coefficient expressions, keeping them exact. */
-export const scale = (
-  ce: ComputeEngine,
-  coefficient: BoxedExpression,
-  sign: -1 | 1,
-): BoxedExpression =>
+export const scale = (ce: ComputeEngine, coefficient: BoxedExpression, sign: -1 | 1): BoxedExpression =>
   sign === 1 ? coefficient : ce.function("Multiply", [ce.number(-1), coefficient]).evaluate();
 
 /**
@@ -72,14 +67,8 @@ export function gradedProduct(
 }
 
 /** Apply a sign that depends only on a blade's grade — every involution is one of these. */
-export function bySign(
-  ce: ComputeEngine,
-  mv: Multivector,
-  sign: (grade: number) => -1 | 1,
-): Multivector {
-  const parts = [...mv.terms.values()].map((t) =>
-    term(t.blade, scale(ce, t.coefficient, sign(t.blade.length))),
-  );
+export function bySign(ce: ComputeEngine, mv: Multivector, sign: (grade: number) => -1 | 1): Multivector {
+  const parts = [...mv.terms.values()].map((t) => term(t.blade, scale(ce, t.coefficient, sign(t.blade.length))));
   return parts.length === 0 ? zero : addMultivectors(ce, parts);
 }
 
@@ -92,9 +81,7 @@ export function gradesOf(mv: Multivector): number[] {
 
 /** `mv` restricted to one grade. */
 export function gradePart(ce: ComputeEngine, mv: Multivector, grade: number): Multivector {
-  const parts = [...mv.terms.values()]
-    .filter((t) => t.blade.length === grade)
-    .map((t) => term(t.blade, t.coefficient));
+  const parts = [...mv.terms.values()].filter((t) => t.blade.length === grade).map((t) => term(t.blade, t.coefficient));
   return parts.length === 0 ? zero : addMultivectors(ce, parts);
 }
 
@@ -102,9 +89,7 @@ export function gradePart(ce: ComputeEngine, mv: Multivector, grade: number): Mu
  * Are these the same generator? Identity is (family, index) — the family objects are
  * shared singletons, but comparing the rank says what is meant without relying on that.
  */
-export const same = (a: Generator, b: Generator): boolean =>
-  a.family.rank === b.family.rank && a.index === b.index;
+export const same = (a: Generator, b: Generator): boolean => a.family.rank === b.family.rank && a.index === b.index;
 
 /** Is `g` one of `blade`'s generators? */
-export const inBlade = (blade: readonly Generator[], g: Generator): boolean =>
-  blade.some((h) => same(g, h));
+export const inBlade = (blade: readonly Generator[], g: Generator): boolean => blade.some((h) => same(g, h));

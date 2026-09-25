@@ -42,9 +42,7 @@ const families = allEntries.filter((entry) =>
   filter === "" ? true : entry.head.toLowerCase().includes(filter.toLowerCase()),
 );
 
-process.stdout.write(
-  `quickcheck seed ${seed} — ${families.length} families, ${POINTS} points each\n`,
-);
+process.stdout.write(`quickcheck seed ${seed} — ${families.length} families, ${POINTS} points each\n`);
 if (families.length === 0) {
   process.stdout.write(`no family matches ${JSON.stringify(filter)}\n`);
   process.exit(1);
@@ -56,9 +54,7 @@ let checked = 0;
 for (const entry of families) {
   const paramCap = FULL_ENUMERATION_FAMILIES.has(entry.head) ? SMALL_PARAM_CAP : PARAM_CAP;
   for (let attempt = 0; attempt < POINTS; attempt++) {
-    const params = Array.from({ length: entry.paramCount }, () =>
-      Math.floor(draw() * (paramCap + 1)),
-    );
+    const params = Array.from({ length: entry.paramCount }, () => Math.floor(draw() * (paramCap + 1)));
     let total: number;
     try {
       total = entry.count(params);

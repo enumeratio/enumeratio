@@ -41,12 +41,7 @@ examples:
     category: Scope
     caption: "Complex numbers: real and imaginary parts truncated separately"
   - id: x-integerpart-x-fractionalpart-x
-    expr:
-      [
-        Equal,
-        [Add, [IntegerPart, [Rational, -7, 2]], [FractionalPart, [Rational, -7, 2]]],
-        [Rational, -7, 2],
-      ]
+    expr: [Equal, [Add, [IntegerPart, [Rational, -7, 2]], [FractionalPart, [Rational, -7, 2]]], [Rational, -7, 2]]
     expected: True
     category: Properties
     caption: $x = \mathrm{IntegerPart}(x) + \mathrm{FractionalPart}(x)$

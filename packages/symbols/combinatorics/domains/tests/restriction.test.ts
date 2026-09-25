@@ -4,12 +4,7 @@ import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
 import { declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
-import {
-  declareRestricted,
-  declareRestrictions,
-  fillPredicate,
-  RESTRICTIONS,
-} from "../src/restriction.ts";
+import { declareRestricted, declareRestrictions, fillPredicate, RESTRICTIONS } from "../src/restriction.ts";
 
 const ce = new ComputeEngine();
 declareCollections(ce);
@@ -25,15 +20,9 @@ const count = (expr: unknown): number => ce.box(["Count", expr] as never).evalua
 test("an anonymous restriction is a lazy sub-collection", () => {
   // No new machinery: Restricted delegates to Filter, and Filter over a lazy collection stays
   // lazy — counting the derangements of 5 never materialises the 120 permutations.
-  const derangements = [
-    "Restricted",
-    ["SymmetricGroup", 5],
-    ["Function", ["Equal", ["FixedPoints", "p"], 0], "p"],
-  ];
+  const derangements = ["Restricted", ["SymmetricGroup", 5], ["Function", ["Equal", ["FixedPoints", "p"], 0], "p"]];
   expect(count(derangements)).toBe(44);
-  expect(ce.box(["Element", ["List", 2, 1, 4, 5, 3], derangements] as never).evaluate().json).toBe(
-    "True",
-  );
+  expect(ce.box(["Element", ["List", 2, 1, 4, 5, 3], derangements] as never).evaluate().json).toBe("True");
 });
 
 test("a named restriction is an anonymous one that earned a name", () => {
@@ -54,21 +43,15 @@ test("a restriction does not change what its members ARE", () => {
 
 test("partition restrictions count the sequences they should", () => {
   // Partitions of n into distinct parts: 1, 1, 1, 2, 2, 3, 4, 5 for n = 0..7.
-  expect([0, 1, 2, 3, 4, 5, 6, 7].map((n) => count(["DistinctPartitions", n]))).toEqual([
-    1, 1, 1, 2, 2, 3, 4, 5,
-  ]);
+  expect([0, 1, 2, 3, 4, 5, 6, 7].map((n) => count(["DistinctPartitions", n]))).toEqual([1, 1, 1, 2, 2, 3, 4, 5]);
   // Self-conjugate partitions of n equal partitions into distinct ODD parts.
-  expect([1, 2, 3, 4, 5, 6, 7, 8].map((n) => count(["SelfConjugatePartitions", n]))).toEqual([
-    1, 0, 1, 1, 1, 1, 1, 2,
-  ]);
+  expect([1, 2, 3, 4, 5, 6, 7, 8].map((n) => count(["SelfConjugatePartitions", n]))).toEqual([1, 0, 1, 1, 1, 1, 1, 2]);
 });
 
 /** Every element of a collection, as comparable strings. */
 const members = (expr: unknown): string[] => {
   const total = count(expr);
-  return Array.from({ length: total }, (_, i) =>
-    JSON.stringify(ce.box(["At", expr, i + 1] as never).evaluate().json),
-  );
+  return Array.from({ length: total }, (_, i) => JSON.stringify(ce.box(["At", expr, i + 1] as never).evaluate().json));
 };
 
 test("the specification agrees with the fast kernel — as a SET", () => {
@@ -92,9 +75,7 @@ test("the specification agrees with the fast kernel — as a SET", () => {
       ];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(
-        members(kernel).sort(),
-      );
+      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(members(kernel).sort());
     }
   }
 });
@@ -127,9 +108,7 @@ test("composition restrictions agree with their kernels for n = 0..8", () => {
       ];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(
-        members(kernel).sort(),
-      );
+      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(members(kernel).sort());
     }
   }
 });
@@ -155,9 +134,7 @@ test("partition restrictions agree with their kernels for n = 0..8", () => {
       ];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(
-        members(kernel).sort(),
-      );
+      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(members(kernel).sort());
     }
   }
 });

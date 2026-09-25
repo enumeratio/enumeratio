@@ -2,13 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { afterAll, expect, test } from "vite-plus/test";
-import {
-  controlNames,
-  DRAWING_SYMBOLS,
-  markupOf,
-  renderingOf,
-  visualSymbol,
-} from "../src/symbols.ts";
+import { controlNames, DRAWING_SYMBOLS, markupOf, renderingOf, visualSymbol } from "../src/symbols.ts";
 
 // A head that draws, and the component that draws it. The corpus is one expression per
 // visual symbol plus the shapes that matter -- an iterator with and without a range, a
@@ -121,8 +115,7 @@ afterAll(() => {
 });
 
 test("every visual symbol's tag is its name, kebab-cased, or its family's", () => {
-  const kebab = (head: string): string =>
-    "notatio-" + head.replace(/([a-z])([A-Z0-9])/g, "$1-$2").toLowerCase();
+  const kebab = (head: string): string => "notatio-" + head.replace(/([a-z])([A-Z0-9])/g, "$1-$2").toLowerCase();
   for (const s of DRAWING_SYMBOLS) {
     // `Notebook` is Wolfram's name for the transcript configuration -- a `DynamicModule`
     // whose body is a `List` of `Cell`s -- so it deliberately shares `DynamicModule`'s
@@ -136,10 +129,7 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
       continue;
     }
     if (s.fixed === undefined) expect(s.tag, s.head).toBe(kebab(s.head));
-    else
-      expect(["notatio-chart", "notatio-graph-plot", "notatio-vector-plot"], s.head).toContain(
-        s.tag,
-      );
+    else expect(["notatio-chart", "notatio-graph-plot", "notatio-vector-plot"], s.head).toContain(s.tag);
   }
   expect(visualSymbol("Sin")).toBeUndefined();
   expect(visualSymbol("Plot")?.tag).toBe("notatio-plot");

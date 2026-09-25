@@ -116,12 +116,7 @@ examples:
     caption: 'Derivative: $\frac{1}{1 + x^2}$'
   - id: antiderivative
     expr: [Integrate, [Arctan, x], x]
-    expected:
-      [
-        Add,
-        [Multiply, x, [Arctan, x]],
-        [Multiply, [Rational, -1, 2], [Ln, [Add, [Power, x, 2], 1]]],
-      ]
+    expected: [Add, [Multiply, x, [Arctan, x]], [Multiply, [Rational, -1, 2], [Ln, [Add, [Power, x, 2], 1]]]]
     category: Scope
     caption: Antiderivative
   - id: gregory-s-series-about-0
@@ -160,11 +155,7 @@ examples:
     category: Neat examples
     caption: Euler's Machin-like identity $\arctan\tfrac12 + \arctan\tfrac13 = \tfrac{\pi}{4}$, by [[FullSimplify]]; the bare sum stays as written, as in Wolfram
   - id: machin-s-formula-4-arctan-frac-15-arctan-frac-1
-    expr:
-      [
-        FullSimplify,
-        [Subtract, [Multiply, 4, [Arctan, [Rational, 1, 5]]], [Arctan, [Rational, 1, 239]]],
-      ]
+    expr: [FullSimplify, [Subtract, [Multiply, 4, [Arctan, [Rational, 1, 5]]], [Arctan, [Rational, 1, 239]]]]
     expected: [Multiply, [Rational, 1, 4], Pi]
     category: Neat examples
     caption: Machin's formula $4\arctan\tfrac15 - \arctan\tfrac1{239} = \tfrac{\pi}{4}$, by [[FullSimplify]]

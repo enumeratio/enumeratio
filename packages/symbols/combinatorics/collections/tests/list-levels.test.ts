@@ -9,30 +9,15 @@ const run = (expr: unknown) => ce.box(expr as never).evaluate().json;
 // Partition(list, {n1, n2}, offset): a matrix cut into overlapping rectangular blocks.
 test("Partition(matrix, {2, 2}, 1) cuts overlapping 2x2 blocks", () => {
   expect(
-    run([
-      "Partition",
-      ["List", ["List", 11, 12, 13], ["List", 21, 22, 23], ["List", 31, 32, 33]],
-      ["List", 2, 2],
-      1,
-    ]),
+    run(["Partition", ["List", ["List", 11, 12, 13], ["List", 21, 22, 23], ["List", 31, 32, 33]], ["List", 2, 2], 1]),
   ).toEqual([
     "List",
-    [
-      "List",
-      ["List", ["List", 11, 12], ["List", 21, 22]],
-      ["List", ["List", 12, 13], ["List", 22, 23]],
-    ],
-    [
-      "List",
-      ["List", ["List", 21, 22], ["List", 31, 32]],
-      ["List", ["List", 22, 23], ["List", 32, 33]],
-    ],
+    ["List", ["List", ["List", 11, 12], ["List", 21, 22]], ["List", ["List", 12, 13], ["List", 22, 23]]],
+    ["List", ["List", ["List", 21, 22], ["List", 31, 32]], ["List", ["List", 22, 23], ["List", 32, 33]]],
   ]);
 });
 test("Partition(matrix, {2, 2}, 2) is non-overlapping, matching plain Partition per axis", () => {
-  expect(
-    run(["Partition", ["List", ["List", 1, 2, 3, 4], ["List", 5, 6, 7, 8]], ["List", 2, 2], 2]),
-  ).toEqual([
+  expect(run(["Partition", ["List", ["List", 1, 2, 3, 4], ["List", 5, 6, 7, 8]], ["List", 2, 2], 2])).toEqual([
     "List",
     ["List", ["List", ["List", 1, 2], ["List", 5, 6]], ["List", ["List", 3, 4], ["List", 7, 8]]],
   ]);
@@ -91,9 +76,11 @@ test("Flatten(list, PositiveInfinity) fully flattens, like the default", () => {
 
 // Flatten(list, {{p1}, {p2}}): a permutation of levels regroups the dimensions.
 test("Flatten with a permutation level spec transposes a matrix", () => {
-  expect(
-    run(["Flatten", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", 2], ["List", 1]]]),
-  ).toEqual(["List", ["List", 1, 3], ["List", 2, 4]]);
+  expect(run(["Flatten", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", 2], ["List", 1]]])).toEqual([
+    "List",
+    ["List", 1, 3],
+    ["List", 2, 4],
+  ]);
 });
 
 // Flatten(f(a, f(b, f(c)))): nested calls of any one head flatten, not just List.
@@ -106,14 +93,18 @@ test("Flatten on a single-level non-List call is unaffected", () => {
 
 // Join(a, b, …, n): a row missing from a shorter array is skipped, not treated as an error.
 test("Join at a level tolerates a shorter array (a missing row)", () => {
-  expect(
-    run(["Join", ["List", ["List", "x"]], ["List", ["List", 1, 2], ["List", 3, 4]], 2]),
-  ).toEqual(["List", ["List", "x", 1, 2], ["List", 3, 4]]);
+  expect(run(["Join", ["List", ["List", "x"]], ["List", ["List", 1, 2], ["List", 3, 4]], 2])).toEqual([
+    "List",
+    ["List", "x", 1, 2],
+    ["List", 3, 4],
+  ]);
 });
 test("Join at a level still works when the shorter array comes second", () => {
-  expect(
-    run(["Join", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", "x"]], 2]),
-  ).toEqual(["List", ["List", 1, 2, "x"], ["List", 3, 4]]);
+  expect(run(["Join", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", "x"]], 2])).toEqual([
+    "List",
+    ["List", 1, 2, "x"],
+    ["List", 3, 4],
+  ]);
 });
 
 // Join(a, b, …): any head, as long as every argument shares it.
@@ -127,19 +118,10 @@ test("Join still rejects mismatched heads (stays unevaluated)", () => {
 
 // Count(collection, value, level): a bare integer is cumulative (levels 1..n); {n} is exact.
 test("Count with a bare integer level counts levels 1 through n", () => {
-  expect(
-    run(["Count", ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]], "b", 2]),
-  ).toEqual(3);
+  expect(run(["Count", ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]], "b", 2])).toEqual(3);
 });
 test("Count with a {n} level counts that level only", () => {
-  expect(
-    run([
-      "Count",
-      ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]],
-      "b",
-      ["List", 2],
-    ]),
-  ).toEqual(2);
+  expect(run(["Count", ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]], "b", ["List", 2]])).toEqual(2);
 });
 test("Count with no level argument is unaffected", () => {
   expect(run(["Count", ["List", 1, 2, 2, 3, 2], 2])).toEqual(3);
@@ -147,14 +129,10 @@ test("Count with no level argument is unaffected", () => {
 
 // All/Any(collection, predicate, level): tests the elements at exactly that level.
 test("All at a level tests only the elements at that depth", () => {
-  expect(
-    run(["All", ["List", ["List", 1, 2], ["List", 3, 4]], ["Function", ["Greater", "_1", 0]], 2]),
-  ).toEqual("True");
+  expect(run(["All", ["List", ["List", 1, 2], ["List", 3, 4]], ["Function", ["Greater", "_1", 0]], 2])).toEqual("True");
 });
 test("Any at a level tests only the elements at that depth", () => {
-  expect(
-    run(["Any", ["List", ["List", 1, 2], ["List", 3, -4]], ["Function", ["Less", "_1", 0]], 2]),
-  ).toEqual("True");
+  expect(run(["Any", ["List", ["List", 1, 2], ["List", 3, -4]], ["Function", ["Less", "_1", 0]], 2])).toEqual("True");
 });
 
 // At(expr, index): parts of any expression, not just a collection's.
@@ -171,19 +149,11 @@ test("At still finds a lazy family collection's element", () => {
 // FirstPosition(collection, value): the first occurrence at any nested level.
 test("FirstPosition finds a match nested inside a sublist", () => {
   expect(
-    run([
-      "FirstPosition",
-      ["List", ["List", "a", "a", "b"], ["List", "b", "a", "a"], ["List", "a", "b", "a"]],
-      "b",
-    ]),
+    run(["FirstPosition", ["List", ["List", "a", "a", "b"], ["List", "b", "a", "a"], ["List", "a", "b", "a"]], "b"]),
   ).toEqual(["List", 1, 3]);
 });
 test("FirstPosition finds a match nested earlier over one later at the top level", () => {
-  expect(run(["FirstPosition", ["List", "a", ["List", "a", "b"], "b"], "b"])).toEqual([
-    "List",
-    2,
-    2,
-  ]);
+  expect(run(["FirstPosition", ["List", "a", ["List", "a", "b"], "b"], "b"])).toEqual(["List", 2, 2]);
 });
 test("FirstPosition gives the empty list when the value is absent", () => {
   expect(run(["FirstPosition", ["List", "a", ["List", "a", "c"]], "b"])).toEqual(["List"]);

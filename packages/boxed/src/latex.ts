@@ -1,9 +1,5 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine";
-import {
-  LATEX_DICTIONARY,
-  type LatexDictionaryEntry,
-  type Serializer,
-} from "@cortex-js/compute-engine/latex-syntax";
+import { LATEX_DICTIONARY, type LatexDictionaryEntry, type Serializer } from "@cortex-js/compute-engine/latex-syntax";
 
 // compute-engine parenthesises a power's base from a hard-coded list of heads, so
 // `(1+i)^2` prints as `1+\imaginaryI^2` and `(2/3)^2` as `\frac{2}{3}^2`. This entry

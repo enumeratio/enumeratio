@@ -45,9 +45,7 @@ const vertexKey = (expr: BoxedExpression): string => JSON.stringify(expr.json);
 
 /** Read one `UndirectedEdge(u, v)` / `DirectedEdge(u, v)` expression, or `undefined` if
  *  `expr` is neither. */
-function edgeOf(
-  expr: BoxedExpression,
-): { directed: boolean; a: BoxedExpression; b: BoxedExpression } | undefined {
+function edgeOf(expr: BoxedExpression): { directed: boolean; a: BoxedExpression; b: BoxedExpression } | undefined {
   if (expr.operator !== "UndirectedEdge" && expr.operator !== "DirectedEdge") return undefined;
   const ops = operandsOf(expr);
   if (ops.length !== 2) return undefined;
@@ -156,11 +154,7 @@ function degrees(model: GraphModel): Map<string, number> {
 /** BFS shortest path from `source` to `target` over `adj` (unweighted, respects whatever
  *  adjacency it is given — directed or underlying). Returns the vertex-key path including
  *  both ends, or `[]` if unreachable (matching Wolfram's `FindShortestPath`). */
-function bfsPath(
-  adj: ReadonlyMap<string, readonly string[]>,
-  source: string,
-  target: string,
-): string[] {
+function bfsPath(adj: ReadonlyMap<string, readonly string[]>, source: string, target: string): string[] {
   if (source === target) return [source];
   const prev = new Map<string, string>();
   const seen = new Set<string>([source]);
@@ -278,8 +272,7 @@ function bipartiteColoring(model: GraphModel): Map<string, 0 | 1> | undefined {
 
 // ─── encoders ────────────────────────────────────────────────────────────────────────────
 
-const listOf = (ce: ComputeEngine, items: readonly BoxedExpression[]): BoxedExpression =>
-  ce.function("List", items);
+const listOf = (ce: ComputeEngine, items: readonly BoxedExpression[]): BoxedExpression => ce.function("List", items);
 
 const vertexListExpr = (ce: ComputeEngine, model: GraphModel): BoxedExpression =>
   listOf(
@@ -294,11 +287,7 @@ const undirectedEdgeExpr = (ce: ComputeEngine, a: number, b: number): BoxedExpre
 
 /** `Graph(vertices 1..n, edges)` built from 1-based integer edges — every named family
  *  shares this shape, so they all decode through the same `graphOf`. */
-function integerGraph(
-  ce: ComputeEngine,
-  n: number,
-  edges: readonly (readonly [number, number])[],
-): BoxedExpression {
+function integerGraph(ce: ComputeEngine, n: number, edges: readonly (readonly [number, number])[]): BoxedExpression {
   const vertices = listOf(
     ce,
     Array.from({ length: n }, (_, i) => ce.number(i + 1)),
@@ -369,8 +358,7 @@ function gridGraph(ce: ComputeEngine, dims: readonly number[]): BoxedExpression 
     strides[i] = s;
     s *= dims[i]!;
   }
-  const indexOf = (coord: readonly number[]): number =>
-    1 + coord.reduce((acc, c, i) => acc + c * strides[i]!, 0);
+  const indexOf = (coord: readonly number[]): number => 1 + coord.reduce((acc, c, i) => acc + c * strides[i]!, 0);
   const edges: [number, number][] = [];
   const coord = Array.from({ length: dims.length }, () => 0);
   const advance = (): boolean => {
@@ -414,11 +402,7 @@ function hypercubeGraph(ce: ComputeEngine, n: number): BoxedExpression | undefin
  *  count (kernel-verified: `CompleteKaryTree[3, 2]` has 7 vertices, `CompleteKaryTree[1, 2]`
  *  has 1). Every level is completely filled, so `n = (k^levels - 1)/(k - 1)` vertices,
  *  1-indexed heap layout — vertex `i`'s children are `k(i-1)+2 .. k(i-1)+k+1`. */
-function completeKaryTree(
-  ce: ComputeEngine,
-  levels: number,
-  k: number,
-): BoxedExpression | undefined {
+function completeKaryTree(ce: ComputeEngine, levels: number, k: number): BoxedExpression | undefined {
   if (!Number.isSafeInteger(levels) || levels < 1 || !Number.isSafeInteger(k) || k < 2) {
     return undefined;
   }

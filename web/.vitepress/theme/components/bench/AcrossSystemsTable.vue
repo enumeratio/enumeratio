@@ -32,9 +32,7 @@ const props = defineProps<{
 const baselineByName = computed(() => byName(props.baselineReport?.results ?? []));
 
 const okNames = computed(() => {
-  const bySystem = new Map(
-    props.columns.map((c) => [c.system, byName(c.report?.results ?? [])] as const),
-  );
+  const bySystem = new Map(props.columns.map((c) => [c.system, byName(c.report?.results ?? [])] as const));
   bySystem.set(props.baseline, baselineByName.value);
   const systems = [props.baseline, ...props.columns.map((c) => c.system)];
   return new Set(okIntersection(props.caseNames, bySystem, systems));
@@ -73,8 +71,8 @@ const geomeans = computed(() => {
 <template>
   <div class="bench-across">
     <p class="bench-intersection-note">
-      {{ okNames.size }} of {{ caseNames.length }} benchmarks ok across every selected system
-      (baseline <code>{{ baseline }}</code
+      {{ okNames.size }} of {{ caseNames.length }} benchmarks ok across every selected system (baseline
+      <code>{{ baseline }}</code
       >).
     </p>
     <div class="bench-table-scroll">
@@ -85,11 +83,7 @@ const geomeans = computed(() => {
             <th scope="col">{{ baseline }} (baseline)</th>
             <th v-for="col in columns" :key="col.system" scope="col">
               {{ col.system }}
-              <span
-                v-if="col.chainTs"
-                class="bench-chained"
-                title="ratio chained through each run's own ts median"
-              >
+              <span v-if="col.chainTs" class="bench-chained" title="ratio chained through each run's own ts median">
                 chained via ts
               </span>
             </th>
@@ -98,9 +92,7 @@ const geomeans = computed(() => {
         <tbody>
           <tr v-for="name in caseNames" :key="name">
             <td>
-              <a
-                :href="`/reference/symbol/${name.split('/')[0]}#example/${name.split('/').slice(1).join('/')}`"
-              >
+              <a :href="`/reference/symbol/${name.split('/')[0]}#example/${name.split('/').slice(1).join('/')}`">
                 <code>{{ name }}</code>
               </a>
             </td>
@@ -112,10 +104,7 @@ const geomeans = computed(() => {
                 <span
                   class="bench-status"
                   :title="
-                    statusReason(
-                      baselineByName.get(name)?.status ?? 'unsupported',
-                      baselineByName.get(name)?.reason,
-                    )
+                    statusReason(baselineByName.get(name)?.status ?? 'unsupported', baselineByName.get(name)?.reason)
                   "
                   >{{ baselineByName.get(name)?.status ?? "unsupported" }}</span
                 >

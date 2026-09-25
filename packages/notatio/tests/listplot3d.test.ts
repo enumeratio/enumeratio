@@ -5,10 +5,7 @@ import type { Point3 } from "../src/project3d.ts";
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
 /** The projected coordinates of every drawn marker, in document order. */
 const circles = (s: string): [number, number][] =>
-  [...s.matchAll(/<circle cx="(-?[\d.]+)" cy="(-?[\d.]+)"/g)].map(([, x, y]) => [
-    Number(x),
-    Number(y),
-  ]);
+  [...s.matchAll(/<circle cx="(-?[\d.]+)" cy="(-?[\d.]+)"/g)].map(([, x, y]) => [Number(x), Number(y)]);
 
 /** The straight-on view (azimuth 0, elevation 0): x = 0 → 74, x = 1 → 286,
  * z = 0 → 236, z = 1 → 24, depth = y − ½. See project3d.test.ts. */

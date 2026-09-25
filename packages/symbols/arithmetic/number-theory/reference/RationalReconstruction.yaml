@@ -43,12 +43,7 @@ examples:
     caption: the harmonic number $H_{20}$, back from its image mod $2^{61} - 1$
     category: Scope
   - id: one-word-size-prime-is-not-enough-for-h-20-2nd-m
-    expr:
-      [
-        RationalReconstruction,
-        [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007],
-        1000000007,
-      ]
+    expr: [RationalReconstruction, [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007], 1000000007]
     expected: [RationalReconstruction, 301316272, 1000000007]
     caption: 'one word-size prime is not enough for $H_{20}$: $2ND < m$ needs $m$ past $1.7 \cdot 10^{15}$'
     category: Applications

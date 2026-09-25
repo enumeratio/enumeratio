@@ -13,10 +13,5 @@ export {
 } from "./logs.ts";
 export * as integerMod from "./integer-mod.ts";
 export type { IntegerMod } from "./integer-mod.ts";
-export {
-  INTEGER_MOD,
-  INTEGER_MOD_RING,
-  integerModExpression,
-  integerModOf,
-} from "./integer-mod-declare.ts";
+export { INTEGER_MOD, INTEGER_MOD_RING, integerModExpression, integerModOf } from "./integer-mod-declare.ts";
 export { RESIDUES_LATEX } from "./latex.ts";

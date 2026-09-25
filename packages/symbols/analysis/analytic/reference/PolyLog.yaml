@@ -40,12 +40,7 @@ examples:
     category: Properties
     caption: $\operatorname{Li}_{-1}(z) = z/(1-z)^2$ — negative orders are rational
   - id: li-2-1-2-pi-2-12-ln-2-2-2
-    expr:
-      [
-        Equal,
-        [Add, [PolyLog, 2, 0.5], [Multiply, 0.5, [Power, [Ln, 2], 2]]],
-        [Divide, [Power, Pi, 2], 12],
-      ]
+    expr: [Equal, [Add, [PolyLog, 2, 0.5], [Multiply, 0.5, [Power, [Ln, 2], 2]]], [Divide, [Power, Pi, 2], 12]]
     expected: True
     category: Properties
     caption: $\operatorname{Li}_2(1/2) = \pi^2/12 - (\ln 2)^2/2$
@@ -116,8 +111,7 @@ examples:
     caption: $\operatorname{Li}_3(-1) = -\eta(3) = -\frac34\zeta(3)$
   - id: li-2-2-pi-2-4-i-pi-ln-2-exactly
     expr: [PolyLog, 2, 2]
-    expected:
-      [Add, [Multiply, [Complex, 0, -1], Pi, [Ln, 2]], [Multiply, [Rational, 1, 4], [Power, Pi, 2]]]
+    expected: [Add, [Multiply, [Complex, 0, -1], Pi, [Ln, 2]], [Multiply, [Rational, 1, 4], [Power, Pi, 2]]]
     category: Scope
     caption: $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ exactly
   - id: li-n-1-1-2-1-n-zeta-n-for-symbolic-n

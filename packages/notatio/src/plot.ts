@@ -73,8 +73,7 @@ export function adaptiveSample(
   for (const x of x0) at(x);
 
   const finite = [...ys.values()].filter(Number.isFinite);
-  const span =
-    finite.length > 0 ? Math.max(...finite) - Math.min(...finite) || Math.abs(finite[0]) || 1 : 1;
+  const span = finite.length > 0 ? Math.max(...finite) - Math.min(...finite) || Math.abs(finite[0]) || 1 : 1;
 
   const shouldSplit = (a: number, m: number, b: number): boolean => {
     const fa = Number.isFinite(a);
@@ -135,11 +134,9 @@ export function adaptiveParam(
   const finite = [...pts.values()].filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y));
   const xs = finite.map((p) => p[0]);
   const ys = finite.map((p) => p[1]);
-  const diag =
-    Math.hypot(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) || 1;
+  const diag = Math.hypot(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) || 1;
 
-  const ok = (p: readonly [number, number]): boolean =>
-    Number.isFinite(p[0]) && Number.isFinite(p[1]);
+  const ok = (p: readonly [number, number]): boolean => Number.isFinite(p[0]) && Number.isFinite(p[1]);
   const shouldSplit = (
     a: readonly [number, number],
     m: readonly [number, number],
@@ -231,9 +228,8 @@ export interface RenderedPlot {
   frame?: PlotFrame;
 }
 
-const isSeriesList = (
-  input: readonly PlotPoint[] | readonly PlotSeries[],
-): input is readonly PlotSeries[] => input.length > 0 && "points" in input[0];
+const isSeriesList = (input: readonly PlotPoint[] | readonly PlotSeries[]): input is readonly PlotSeries[] =>
+  input.length > 0 && "points" in input[0];
 
 /** Format a number for an axis label: compact, at most 3 significant digits. */
 function label(x: number): string {
@@ -247,8 +243,7 @@ function label(x: number): string {
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
 /** Escape the few characters that can't sit as text inside SVG markup. */
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /**
  * "Nice" round tick values inside `[lo, hi]` (roughly `count` of them), the
@@ -272,18 +267,12 @@ export function niceTicks(lo: number, hi: number, count = 5): number[] {
  * values that are non-finite (or fall outside a scale's domain) break the line.
  * Returns an empty frame when nothing is finite.
  */
-export function linePlotSvg(
-  input: readonly PlotPoint[] | readonly PlotSeries[],
-  opts: PlotOptions = {},
-): string {
+export function linePlotSvg(input: readonly PlotPoint[] | readonly PlotSeries[], opts: PlotOptions = {}): string {
   return linePlot(input, opts).svg;
 }
 
 /** As `linePlotSvg`, also returning the pixel→data x mapping. */
-export function linePlot(
-  input: readonly PlotPoint[] | readonly PlotSeries[],
-  opts: PlotOptions = {},
-): RenderedPlot {
+export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], opts: PlotOptions = {}): RenderedPlot {
   const series: readonly PlotSeries[] = isSeriesList(input) ? input : [{ points: input }];
   const points = series.flatMap((s) => s.points);
   const W = opts.width ?? 340;
@@ -358,9 +347,7 @@ export function linePlot(
 
   const visible = (p: PlotPoint): boolean => {
     const ty = Y.fwd(p.y);
-    return (
-      Number.isFinite(X.fwd(p.x)) && Number.isFinite(ty) && ty <= tymax + span && ty >= tymin - span
-    );
+    return Number.isFinite(X.fwd(p.x)) && Number.isFinite(ty) && ty <= tymax + span && ty >= tymin - span;
   };
 
   // Split into pixel-space segments so poles don't draw a vertical streak: break
@@ -447,10 +434,8 @@ export function linePlot(
   if (opts.gridLines) {
     const gline = (x1: number, y1: number, x2: number, y2: number): string =>
       `<line x1="${n2(x1)}" y1="${n2(y1)}" x2="${n2(x2)}" y2="${n2(y2)}" stroke="${AXIS}" stroke-width="0.5" opacity="0.25"/>`;
-    for (const tx of niceTicks(X.inv(txmin), X.inv(txmax)))
-      grid += gline(sx(tx), mT, sx(tx), H - mB);
-    for (const ty of niceTicks(Y.inv(tymin), Y.inv(tymax)))
-      grid += gline(mL, syT(Y.fwd(ty)), W - mR, syT(Y.fwd(ty)));
+    for (const tx of niceTicks(X.inv(txmin), X.inv(txmax))) grid += gline(sx(tx), mT, sx(tx), H - mB);
+    for (const ty of niceTicks(Y.inv(tymin), Y.inv(tymax))) grid += gline(mL, syT(Y.fwd(ty)), W - mR, syT(Y.fwd(ty)));
   }
 
   // Axes + labels are the "chrome"; Axes:false drops them for a bare curve.
@@ -479,9 +464,7 @@ export function linePlot(
   // Legend: a small stacked key of the labelled series, top-right.
   let legend = "";
   if (opts.legend) {
-    const named = series
-      .map((s, k) => ({ label: s.label, color: SERIES[k % SERIES.length] }))
-      .filter((s) => s.label);
+    const named = series.map((s, k) => ({ label: s.label, color: SERIES[k % SERIES.length] })).filter((s) => s.label);
     named.forEach((s, k) => {
       const y = mT + 6 + 13 * k;
       legend +=
@@ -529,17 +512,7 @@ export function linePlot(
   const marks = (ps: readonly Primitive[] | undefined): string =>
     ps && ps.length ? primitivesSvg(ps, frameOut.toPixel, ACCENT) : "";
   return {
-    svg: frame(
-      clip +
-        grid +
-        marks(opts.prolog) +
-        chrome +
-        clipped +
-        marks(opts.epilog) +
-        legend +
-        titleSvg +
-        readout,
-    ),
+    svg: frame(clip + grid + marks(opts.prolog) + chrome + clipped + marks(opts.epilog) + legend + titleSvg + readout),
     xAt,
     frame: frameOut,
   };

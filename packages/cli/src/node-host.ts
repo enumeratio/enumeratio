@@ -3,13 +3,7 @@
 // images on a capable terminal. It keeps the interactive loop (repl.ts) and the
 // bin (main.ts) thin.
 
-import {
-  fileFormat,
-  isImageFormat,
-  isImageValue,
-  readFormat,
-  writeFormat,
-} from "@enumeratio/formats/node";
+import { fileFormat, isImageFormat, isImageValue, readFormat, writeFormat } from "@enumeratio/formats/node";
 import { type CommandHandler, type Graphic, type LineOutput, Repl } from "./core.ts";
 import type { SessionDefaults } from "./engine.ts";
 import { graphicLabel, graphicToSvg, inlineImage, writeSvg } from "./node-graphics.ts";

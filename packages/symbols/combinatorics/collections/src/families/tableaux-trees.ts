@@ -6,12 +6,7 @@
 // kernels-extra.ts + core.ts) so parallel authoring on the same catalog sweep doesn't collide.
 import type { FamilyKernel } from "./types.ts";
 import { Factorial, PermutationUnrank, PermutationRank } from "./kernels.ts";
-import {
-  Binomial,
-  PartitionsP,
-  IntegerPartitionUnrank,
-  IntegerPartitionRank,
-} from "./kernels-combinatorics.ts";
+import { Binomial, PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank } from "./kernels-combinatorics.ts";
 import {
   SubsetCount,
   SubsetUnrank,
@@ -25,8 +20,7 @@ import {
   IsTupleOf,
 } from "./kernels-extra.ts";
 
-const normRank = (r: number, total: number): number =>
-  total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
 // ─── PruferSequences(n): codes ⟨a,…⟩ of length n-2 over {1..n} for labeled trees on [n]. Count
 // n^(n-2) (n<=2: the empty code, 1 of it) — the raw code itself, no decode to an edge list; that's
@@ -213,8 +207,7 @@ export function IsLabeledGraphOf(e: unknown, n: number): boolean {
   for (const pair of e as unknown[]) {
     if (!Array.isArray(pair) || pair.length !== 2) return false;
     const [u, v] = pair as number[];
-    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v)
-      return false;
+    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
     const idx = edgeIndexOf(edges, u, v);
     if (idx === 0 || seen.has(idx)) return false;
     seen.add(idx);
@@ -267,8 +260,7 @@ export function IsTournamentOf(e: unknown, n: number): boolean {
   for (const pair of e as unknown[]) {
     if (!Array.isArray(pair) || pair.length !== 2) return false;
     const [u, v] = pair as number[];
-    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v)
-      return false;
+    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
     const idx = edgeIndexOf(edges, u, v);
     if (idx === 0 || seen.has(idx)) return false;
     seen.add(idx);
@@ -371,8 +363,7 @@ function conjugateShape(shape: number[]): number[] {
 function hookLengthProduct(shape: number[]): number {
   const conj = conjugateShape(shape);
   let prod = 1;
-  for (let r = 0; r < shape.length; r++)
-    for (let c = 0; c < shape[r]; c++) prod *= shape[r] - c + conj[c] - r - 1;
+  for (let r = 0; r < shape.length; r++) for (let c = 0; c < shape[r]; c++) prod *= shape[r] - c + conj[c] - r - 1;
   return prod;
 }
 function sytCountForShape(shape: number[]): number {
@@ -449,8 +440,7 @@ function isStandardTableauOf(e: unknown, n: number): boolean {
 // (largest-part-first order, same order IntegerPartitionUnrank/Rank already use).
 export function StandardTableauxCount(n: number): number {
   let total = 0;
-  for (let idx = 0; idx < PartitionsP(n); idx++)
-    total += sytCountForShape(IntegerPartitionUnrank(n, idx));
+  for (let idx = 0; idx < PartitionsP(n); idx++) total += sytCountForShape(IntegerPartitionUnrank(n, idx));
   return total;
 }
 export function StandardTableauxUnrank(n: number, rank: number): number[][] {
@@ -514,8 +504,7 @@ function ballotCompletions(s: number, h: number, memo: Map<string, number>): num
   const key = `${s},${h}`;
   const cached = memo.get(key);
   if (cached !== undefined) return cached;
-  const v =
-    ballotCompletions(s - 1, h + 1, memo) + (h > 0 ? ballotCompletions(s - 1, h - 1, memo) : 0);
+  const v = ballotCompletions(s - 1, h + 1, memo) + (h > 0 ? ballotCompletions(s - 1, h - 1, memo) : 0);
   memo.set(key, v);
   return v;
 }

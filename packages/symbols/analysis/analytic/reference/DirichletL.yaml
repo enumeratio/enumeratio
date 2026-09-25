@@ -24,12 +24,7 @@ examples:
   - id: a-principal-character-drops-the-euler-factors-at
     expr: [DirichletL, 12, 1, s]
     expected:
-      [
-        Multiply,
-        [Add, [Negate, [Power, 2, [Negate, s]]], 1],
-        [Add, [Negate, [Power, 3, [Negate, s]]], 1],
-        [Zeta, s],
-      ]
+      [Multiply, [Add, [Negate, [Power, 2, [Negate, s]]], 1], [Add, [Negate, [Power, 3, [Negate, s]]], 1], [Zeta, s]]
     category: Properties
     caption: A principal character drops the Euler factors at $2$ and $3$
   - id: and-keeps-zeta-s-pole-a-non-principal-l-is
@@ -111,11 +106,7 @@ implementations:
     expr:
       [
         Multiply,
-        [
-          Sum,
-          [Multiply, [DirichletCharacter, _k, _j, r], [HurwitzZeta, _s, [Divide, r, _k]]],
-          [Triple, r, 1, _k],
-        ],
+        [Sum, [Multiply, [DirichletCharacter, _k, _j, r], [HurwitzZeta, _s, [Divide, r, _k]]], [Triple, r, 1, _k]],
         [Power, _k, [Negate, _s]],
       ]
     note: The Hurwitz decomposition — the definition the kernel evaluates, away from s = 1.

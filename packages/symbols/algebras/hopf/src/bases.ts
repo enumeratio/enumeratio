@@ -87,10 +87,7 @@ export function refinements(a: Composition): Composition[] {
 
 // ── the four change-of-basis maps ───────────────────────────────────────────────
 
-const expand = (
-  element: Element,
-  images: (a: Composition) => readonly (readonly [Composition, number])[],
-): Element =>
+const expand = (element: Element, images: (a: Composition) => readonly (readonly [Composition, number])[]): Element =>
   combine(
     [...element].flatMap(([key, coefficient]) =>
       images(fromKey(key)).map(([target, sign]) => [basis(target), coefficient * sign] as const),
@@ -181,5 +178,4 @@ export function pair(left: Element, right: Element): number {
 }
 
 /** A readable name for a basis element, for the docs and the heads. */
-export const showComposition = (a: Composition): string =>
-  a.length === 0 ? "()" : compositionKey(a);
+export const showComposition = (a: Composition): string => (a.length === 0 ? "()" : compositionKey(a));

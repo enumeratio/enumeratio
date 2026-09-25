@@ -17,10 +17,7 @@ const stubGroups = every
 // definition, it sits on the primitive frontier for a stated reason, or neither -- which is
 // the population the frontier lint will eventually refuse.
 type Standing = "defined" | "primitive" | "undeclared";
-const standing = (entry: {
-  implementations?: readonly { origin: string }[];
-  primitive?: string;
-}): Standing =>
+const standing = (entry: { implementations?: readonly { origin: string }[]; primitive?: string }): Standing =>
   entry.implementations?.some((impl) => impl.origin === "reference")
     ? "defined"
     : entry.primitive
@@ -69,14 +66,13 @@ const all = groups.reduce((n, group) => n + group.entries.length, 0);
 <template>
   <div class="reference-index">
     <p class="ref-frontier">
-      {{ all }} heads — <span class="ref-standing is-defined">{{ total.defined }} defined</span> by
-      a reference expression,
-      <span class="ref-standing is-primitive">{{ total.primitive }} primitive</span> on the declared
+      {{ all }} heads — <span class="ref-standing is-defined">{{ total.defined }} defined</span> by a reference
+      expression, <span class="ref-standing is-primitive">{{ total.primitive }} primitive</span> on the declared
       frontier, and {{ total.undeclared }} not yet placed either way.
     </p>
     <p class="ref-frontier">
-      Elsewhere: {{ reach.pointers }} pointers from {{ reach.covered }} of {{ reach.heads }} pages
-      into {{ reach.systems.length }} systems —
+      Elsewhere: {{ reach.pointers }} pointers from {{ reach.covered }} of {{ reach.heads }} pages into
+      {{ reach.systems.length }} systems —
       <template v-for="(s, i) in reach.systems" :key="s.system"
         ><span class="ref-reach"
           >{{ s.label }} {{ s.pointers
@@ -94,9 +90,7 @@ const all = groups.reduce((n, group) => n + group.entries.length, 0);
             <span class="ref-standing is-defined">{{ tally(group.entries).defined }} ≝</span>
           </template>
           <template v-if="tally(group.entries).primitive">
-            <span class="ref-standing is-primitive"
-              >{{ tally(group.entries).primitive }} primitive</span
-            >
+            <span class="ref-standing is-primitive">{{ tally(group.entries).primitive }} primitive</span>
           </template>
         </span>
       </h2>
@@ -105,10 +99,7 @@ const all = groups.reduce((n, group) => n + group.entries.length, 0);
           <a :href="`/reference/symbol/${entry.name}`"
             ><code>{{ entry.name }}</code></a
           >
-          <span
-            v-if="standing(entry) === 'defined'"
-            class="ref-standing is-defined"
-            title="Has a reference definition"
+          <span v-if="standing(entry) === 'defined'" class="ref-standing is-defined" title="Has a reference definition"
             >≝</span
           >
           <span
@@ -124,8 +115,8 @@ const all = groups.reduce((n, group) => n + group.entries.length, 0);
     <section v-for="group in stubGroups" :key="group.domain" class="ref-stubs">
       <h2>{{ group.domain }}</h2>
       <p class="ref-frontier">
-        {{ group.entries.length }} generated pages -- each with the symbol's own description and its
-        crosswalk, and no examples yet.
+        {{ group.entries.length }} generated pages -- each with the symbol's own description and its crosswalk, and no
+        examples yet.
       </p>
       <ul class="ref-stub-list">
         <li v-for="entry in group.entries" :key="entry.name">

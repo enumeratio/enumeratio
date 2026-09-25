@@ -36,5 +36,4 @@ export class NotatioLabeled extends LitElement {
   }
 }
 
-if (!customElements.get("notatio-labeled"))
-  customElements.define("notatio-labeled", NotatioLabeled);
+if (!customElements.get("notatio-labeled")) customElements.define("notatio-labeled", NotatioLabeled);

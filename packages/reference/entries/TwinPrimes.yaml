@@ -13,30 +13,7 @@ details:
 examples:
   - id: the-first-20-lesser-twin-primes-oeis-a001359
     expr: [Take, TwinPrimes, 20]
-    expected:
-      [
-        List,
-        3,
-        5,
-        11,
-        17,
-        29,
-        41,
-        59,
-        71,
-        101,
-        107,
-        137,
-        149,
-        179,
-        191,
-        197,
-        227,
-        239,
-        269,
-        281,
-        311,
-      ]
+    expected: [List, 3, 5, 11, 17, 29, 41, 59, 71, 101, 107, 137, 149, 179, 191, 197, 227, 239, 269, 281, 311]
     caption: The first 20 lesser twin primes, OEIS A001359
   - id: count-twinprimes-is-unknown-but-the-first-20
     expr: [Count, [Take, TwinPrimes, 20]]

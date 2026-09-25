@@ -38,14 +38,7 @@ import {
   SetPartitionsIntoKBlocksUnrank,
   StirlingS2,
 } from "./kernels-combinatorics.ts";
-import {
-  IsKSubsetOf,
-  IsSubsetOf,
-  KSubsetCount,
-  KSubsetUnrank,
-  SubsetCount,
-  SubsetUnrank,
-} from "./kernels-extra.ts";
+import { IsKSubsetOf, IsSubsetOf, KSubsetCount, KSubsetUnrank, SubsetCount, SubsetUnrank } from "./kernels-extra.ts";
 import { partsInSet } from "./partitions.ts";
 import { subsetsAtMostKCount, subsetsAtMostKUnrank, subsetsAtMostKValid } from "./subsets.ts";
 import { asBlockList, asIntList, type Boxed, blocksMJ, listMJ } from "./types.ts";
@@ -90,9 +83,7 @@ function polyCollection<E>(
       let i = 0;
       return {
         next: () =>
-          res !== undefined && i < total
-            ? { value: element(res, i++), done: false }
-            : { value: undefined, done: true },
+          res !== undefined && i < total ? { value: element(res, i++), done: false } : { value: undefined, done: true },
       };
     },
     at: (c, index) => {
@@ -212,10 +203,7 @@ function resolveSetPartitionsOfList(elements: readonly BoxedExpression[]): Resol
     count: BellB(n),
     unrank: (r) => RgsToBlocks(RgsUnrank(n, r)),
     valid: (e) => Array.isArray(e) && IsSetPartitionOf(e as number[][], n),
-    encode: (blocks) => [
-      "List",
-      ...blocks.map((block) => ["List", ...block.map((i) => elements[i - 1]!.json)]),
-    ],
+    encode: (blocks) => ["List", ...blocks.map((block) => ["List", ...block.map((i) => elements[i - 1]!.json)])],
   };
 }
 
@@ -364,21 +352,13 @@ function setCollection(ce: ComputeEngine, head: string, handlers: CollectionHand
  *  SetPartitions and Subsets must already be declared) -- declareCollections does. */
 export function declareCallForms(ce: ComputeEngine): void {
   widenSignature(ce, "IntegerPartitions", "(integer, any?, any?) -> list<list<integer>>");
-  setCollection(
-    ce,
-    "IntegerPartitions",
-    polyCollection(ce, listMJ, asIntList, resolveIntegerPartitions),
-  );
+  setCollection(ce, "IntegerPartitions", polyCollection(ce, listMJ, asIntList, resolveIntegerPartitions));
 
   // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an
   // explicit list of elements, not just the family's integer index n -- alongside the
   // plain integer form; resolveSetPartitions/resolveSubsets dispatch on which it got.
   widenSignature(ce, "SetPartitions", "(any, integer?) -> list<list<list<any>>>");
-  setCollection(
-    ce,
-    "SetPartitions",
-    polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions),
-  );
+  setCollection(ce, "SetPartitions", polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions));
 
   widenSignature(ce, "Subsets", "(any, any?) -> list<list<any>>");
   setCollection(ce, "Subsets", polyCollection(ce, listMJ, asIntList, resolveSubsets));

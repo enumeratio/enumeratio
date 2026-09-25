@@ -9,13 +9,7 @@
 
 import { serializeNotatio } from "@enumeratio/formats/notatio";
 import { iterate } from "../../notatio/src/playback.ts";
-import {
-  type Declaration,
-  declarations,
-  pinValue,
-  pin,
-  sampleValues,
-} from "../../notatio/src/reduce.ts";
+import { type Declaration, declarations, pinValue, pin, sampleValues } from "../../notatio/src/reduce.ts";
 import { numOf, strOf, tupleOf } from "../../notatio/src/symbols.ts";
 import { bold, cyan, dim, stripAnsi } from "./ansi.ts";
 

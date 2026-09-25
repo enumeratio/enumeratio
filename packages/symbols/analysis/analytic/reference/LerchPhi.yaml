@@ -1587,11 +1587,7 @@ implementations:
     form: notatio
     environment: engine
     expr:
-      [
-        Sum,
-        [Multiply, [Power, _z, n], [Exp, [Multiply, [Negate, _s], [Ln, [Add, n, _a]]]]],
-        [Triple, n, 0, Infinity],
-      ]
+      [Sum, [Multiply, [Power, _z, n], [Exp, [Multiply, [Negate, _s], [Ln, [Add, n, _a]]]]], [Triple, n, 0, Infinity]]
     note: The defining series, converging for |z| < 1 (and for |z| = 1 with Re(s) > 1); ζ(s, a) is its z = 1 edge and Li_s(z) its a = 1 slice.
   - origin: native
     form: typescript

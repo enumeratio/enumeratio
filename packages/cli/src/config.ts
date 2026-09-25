@@ -18,8 +18,8 @@ export interface ConfigFile {
 export function configPaths(env: NodeJS.ProcessEnv = process.env): string[] {
   const home = env.HOME || homedir();
   const xdg = env.XDG_CONFIG_HOME || join(home, ".config");
-  return [env.NOTATIO_CONFIG, join(xdg, "notatio", "config.json"), join(home, ".notatiorc")].filter(
-    (p): p is string => Boolean(p),
+  return [env.NOTATIO_CONFIG, join(xdg, "notatio", "config.json"), join(home, ".notatiorc")].filter((p): p is string =>
+    Boolean(p),
   );
 }
 
@@ -31,16 +31,12 @@ export function parseConfig(raw: unknown, where = "config"): SessionDefaults {
   const out: SessionDefaults = {};
   if (cfg.form !== undefined) {
     const form = typeof cfg.form === "string" ? resolveForm(cfg.form) : undefined;
-    if (!form)
-      throw new Error(`${where}: unknown form ${JSON.stringify(cfg.form)} (${FORMS.join(", ")})`);
+    if (!form) throw new Error(`${where}: unknown form ${JSON.stringify(cfg.form)} (${FORMS.join(", ")})`);
     out.form = form;
   }
   if (cfg.syntax !== undefined) {
     const syntax = typeof cfg.syntax === "string" ? resolveSyntax(cfg.syntax) : undefined;
-    if (!syntax)
-      throw new Error(
-        `${where}: unknown syntax ${JSON.stringify(cfg.syntax)} (${SYNTAXES.join(", ")})`,
-      );
+    if (!syntax) throw new Error(`${where}: unknown syntax ${JSON.stringify(cfg.syntax)} (${SYNTAXES.join(", ")})`);
     out.syntax = syntax;
   }
   if (cfg.precision !== undefined) {

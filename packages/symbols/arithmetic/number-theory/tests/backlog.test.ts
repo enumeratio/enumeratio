@@ -10,8 +10,7 @@ import { declareNumberTheory } from "../src/declare.ts";
 const ce = new ComputeEngine();
 declareResidues(ce);
 declareNumberTheory(ce);
-const run = (expr: unknown): unknown =>
-  ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
 
 test("CarmichaelLambda and IsPerfect widen to negative n and thread over lists", () => {
   expect(run(["CarmichaelLambda", -100])).toBe(20);
@@ -27,9 +26,7 @@ test("DivisorSum: brute force over the divisors", () => {
     return sum;
   };
   for (const n of [1, 2, 6, 12, 20, 30, 97, 100]) {
-    expect(run(["DivisorSum", n, ["Function", ["Power", "d", 2], "d"]])).toBe(
-      naiveDivisorSum(n, (d) => d * d),
-    );
+    expect(run(["DivisorSum", n, ["Function", ["Power", "d", 2], "d"]])).toBe(naiveDivisorSum(n, (d) => d * d));
     expect(run(["DivisorSum", n, ["Function", "d", "d"], ["Function", ["IsOdd", "d"], "d"]])).toBe(
       naiveDivisorSum(
         n,
@@ -147,10 +144,7 @@ test("PowersRepresentations: brute force enumeration for small n, k, p", () => {
     [30, 3, 2],
     [1729, 2, 3],
   ] as const) {
-    expect(run(["PowersRepresentations", n, k, p])).toEqual([
-      "List",
-      ...naive(n, k, p).map((rep) => ["List", ...rep]),
-    ]);
+    expect(run(["PowersRepresentations", n, k, p])).toEqual(["List", ...naive(n, k, p).map((rep) => ["List", ...rep])]);
   }
 });
 

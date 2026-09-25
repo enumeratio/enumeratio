@@ -18,9 +18,7 @@ interface GoldenCase {
   mpmath: [number, number];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./bessel-zeros.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./bessel-zeros.golden.json", import.meta.url), "utf8"));
 
 test("BesselJZero matches mpmath.besseljzero", () => {
   const off: string[] = [];

@@ -251,16 +251,8 @@ examples:
     expected:
       [
         Add,
-        [
-          Multiply,
-          [Complex, 0, [Rational, -1, 2]],
-          [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]],
-        ],
-        [
-          Multiply,
-          [Complex, 0, [Rational, 1, 2]],
-          [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]],
-        ],
+        [Multiply, [Complex, 0, [Rational, -1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]],
+        [Multiply, [Complex, 0, [Rational, 1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]],
       ]
     category: Properties
     caption: "Euler's formula: $\\sin x = \\frac{e^{ix} - e^{-ix}}{2i}$"
@@ -287,11 +279,7 @@ examples:
   - id: functionexpand-gives-the-nested-radical-form
     expr: [FunctionExpand, [Sin, [Divide, Pi, 15]]]
     expected:
-      [
-        Multiply,
-        [Rational, 1, 8],
-        [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]],
-      ]
+      [Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]
     category: Neat examples
     caption: '[[FunctionExpand]] gives the nested-radical form $\frac{\sqrt{10+2\sqrt5} - \sqrt{15} + \sqrt3}{8}$'
   - id: to-30-significant-digits-every-one-correctly

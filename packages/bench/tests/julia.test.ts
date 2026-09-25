@@ -83,10 +83,7 @@ describe.each(SYSTEMS)("$system generator", ({ system, generate, harness, caches
   test("each source is defined once, outside the timed loop", () => {
     // The timed region (inside _measure) only ever calls `call()`, never a source literal,
     // Meta.parse, or an include.
-    const timedRegion = text.slice(
-      text.indexOf("function _measure"),
-      text.indexOf("function _run"),
-    );
+    const timedRegion = text.slice(text.indexOf("function _measure"), text.indexOf("function _run"));
     expect(timedRegion).not.toMatch(/Meta\.parse|include\(|eval\(/);
   });
 
@@ -94,9 +91,7 @@ describe.each(SYSTEMS)("$system generator", ({ system, generate, harness, caches
     const command = harness();
     expect(command.command).toBe("julia");
     expect(command.args.at(-1)).toContain(`generated/${system}/harness.jl`);
-    expect(
-      command.args.some((a) => a.startsWith("--project=") && a.endsWith(`/oracle/${system}`)),
-    ).toBe(true);
+    expect(command.args.some((a) => a.startsWith("--project=") && a.endsWith(`/oracle/${system}`))).toBe(true);
   });
 });
 
