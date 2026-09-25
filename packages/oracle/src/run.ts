@@ -27,6 +27,10 @@ export type Result =
       readonly value: string;
       readonly display?: string;
       readonly numeric?: string;
+      /** Wolfram only, for an arbitrary-precision value: the digits Wolfram displays -- its
+       * `N[x, d]` keeps every digit it computed (`0.125` at precision 2) and rounds only when
+       * it prints, so this is the line that says how it rounds. */
+      readonly shown?: string;
       /** Wolfram only: `TeXForm` of the input as written (held) and of the value. */
       readonly tex?: { readonly input: string; readonly output: string };
     }
@@ -112,7 +116,9 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
  * exact value like `Zeta[3]`, its `InputForm` on a `|`-marked line as `display`, for a
  * reader, and `TeXForm` of the held input and of the value on `^`/`$` lines as `tex`, so
  * notation can be compared with ours (newlines, which `TeXForm` puts in arrays, folded to
- * spaces). Each source
+ * spaces). An arbitrary-precision value (a finite `Precision`, which a machine number and an
+ * exact value don't have) also prints the digits Wolfram displays for it on a `~` line, as
+ * `shown`: `NumberForm` with no exponent, so a small number stays on one line. Each source
  * is handed to `ToExpression` as a string: a syntax error then yields `$Failed` for that
  * item instead of aborting the batch, which used to silently zero every item after the
  * first bad one. A `TestObject` keeps only its outcome fields: the rest (timestamps, IDs,
@@ -123,7 +129,7 @@ async function runWolfram(sources: readonly string[]): Promise<Result[]> {
   // Held, `Rational[7, 2]` is a call, not the number, and prints as `\text{Rational}[7,2]`;
   // rewritten as the division and sum it stands for, it prints as written.
   const tex = `tex[x_] := StringReplace[ToString[Quiet[TeXForm[x]]], "\\n" -> " "]; atoms = {Rational -> Divide, Complex[0, 1] :> I, Complex[a_, 1] :> a + I, Complex[0, b_] :> b I, Complex[a_, b_] :> a + b I};`;
-  const code = `${tex} Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]; Print["<<", i, "^>>", tex[ToExpression[{${list}}[[i]], InputForm, HoldForm] /. atoms]]; Print["<<", i, "$>>", tex[v]]], {i, 1, ${sources.length}}]`;
+  const code = `${tex} Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", i, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", i, "^>>", tex[ToExpression[{${list}}[[i]], InputForm, HoldForm] /. atoms]]; Print["<<", i, "$>>", tex[v]]], {i, 1, ${sources.length}}]`;
   const run = await transcript("wolframscript", ["-code", code], { timeoutMs: 600_000 });
   return "out" in run
     ? collectWolfram(run.out, sources.length)
@@ -328,11 +334,11 @@ function collect(output: string, count: number): Result[] {
 
 /** Like `collect`, plus the `<<n|>>` `InputForm` line as each value result's `display`,
  * the `<<n#>>` line as its `numeric`, and the `<<n^>>` / `<<n$>>` `TeXForm` lines as `tex`. */
-function collectWolfram(output: string, count: number): Result[] {
+export function collectWolfram(output: string, count: number): Result[] {
   const results = collect(output, count);
   const tex = new Map<number, { input: string; output: string }>();
   for (const line of output.split("\n")) {
-    const match = /^<<(\d+)([|#^$])>>(.*)$/.exec(line);
+    const match = /^<<(\d+)([|#^$~])>>(.*)$/.exec(line);
     if (match === null) continue;
     const index = Number(match[1]) - 1;
     const result = results[index];
@@ -344,7 +350,8 @@ function collectWolfram(output: string, count: number): Result[] {
       pair[marker === "^" ? "input" : "output"] = text;
       tex.set(index, pair);
     } else {
-      results[index] = { ...result, [marker === "|" ? "display" : "numeric"]: text };
+      const field = marker === "|" ? "display" : marker === "~" ? "shown" : "numeric";
+      results[index] = { ...result, [field]: text };
     }
   }
   for (const [index, pair] of tex) {

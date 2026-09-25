@@ -39,7 +39,7 @@ import {
   wiredSystems,
 } from "@enumeratio/oracle/src";
 import { entryFiles } from "../src/entries.ts";
-import { show, verdictOf } from "./oracle-verdict.ts";
+import { asksForDigits, show, verdictOf } from "./oracle-verdict.ts";
 
 interface Case {
   readonly id: string;
@@ -86,6 +86,8 @@ type Outcome = {
   readonly theirs: string;
   /** A reader-facing form of `theirs` — Wolfram's InputForm, or the Python `str(...)`. */
   readonly display: string;
+  /** Wolfram's displayed digits, for an arbitrary-precision value. */
+  readonly shown?: string;
   /** Wolfram's `TeXForm` of the input as written and of its value. */
   readonly tex?: { readonly input: string; readonly output: string };
 };
@@ -129,6 +131,7 @@ for (const system of systems) {
       value?: string;
       display?: string;
       numeric?: string;
+      shown?: string;
       tex?: { input: string; output: string };
       error?: string;
     };
@@ -144,13 +147,20 @@ for (const system of systems) {
     }
     const theirs = result.value ?? "";
     const tolerance = toleranceOf(row.item, system);
-    const verdict = verdictOf(system, row.item.expected, result, tolerance);
+    const verdict = verdictOf(
+      system,
+      row.item.expected,
+      result,
+      tolerance,
+      asksForDigits(row.item.expr),
+    );
     outcomes.push({
       id: row.item.id,
       source,
       verdict,
       theirs,
       display: result.display ?? theirs,
+      ...(result.shown === undefined ? {} : { shown: result.shown }),
       ...(result.tex === undefined ? {} : { tex: result.tex }),
     });
   });
@@ -195,6 +205,7 @@ interface OtherRow {
   readonly note?: string;
   readonly tolerance?: number;
   readonly issue?: number;
+  readonly shown?: string;
   readonly tex?: { readonly input: string; readonly output: string };
 }
 type Sidecar = {
@@ -279,6 +290,7 @@ for (const system of systems) {
           ...(prior?.tolerance === undefined
             ? {}
             : { tolerance: prior.tolerance, note: prior.note ?? "" }),
+          ...(outcome.shown === undefined ? {} : { shown: outcome.shown }),
           ...(outcome.tex === undefined ? {} : { tex: outcome.tex }),
         };
         existingForHead[item.key] = { ...existingForHead[item.key], [system]: row };

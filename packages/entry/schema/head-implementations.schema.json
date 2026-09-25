@@ -49,6 +49,9 @@
         "out": {
           "type": "string"
         },
+        "shown": {
+          "type": "string"
+        },
         "tex": {
           "$ref": "#/$defs/RenderedForm"
         },

@@ -68,10 +68,52 @@ const theirTree = (fullForm: string, evaluate: (expr: MathJSON) => Leaf): Tree |
   }
 };
 
-/** A system's answer: its printed value, and for Wolfram its numeric form too. */
+/** A system's answer: its printed value, and for Wolfram its numeric form too, and the
+ * digits it displays for an arbitrary-precision value. */
 export interface Answer {
   readonly value?: string;
   readonly numeric?: string;
+  readonly shown?: string;
+}
+
+/** An example that asks for digits, `N(x, d)`: its answer promises every digit it shows. */
+export const asksForDigits = (expr: MathJSON): boolean =>
+  Array.isArray(expr) && expr[0] === "N" && expr.length === 3;
+
+/** A decimal's significant digits alone -- no sign, point, exponent, or leading and trailing
+ * zeros -- so `"0.1250"` and `"1.25e-1"` read the same. */
+const significant = (text: string): string =>
+  text
+    .replace(/[eE].*$/, "")
+    .replace(/[^0-9]/g, "")
+    .replace(/^0+/, "")
+    .replace(/0+$/, "");
+
+/** Every non-integer number in `expr`, in order, as its significant digits: the digits an
+ * `N(x, d)` answer promises. */
+function ourDigits(expr: MathJSON): string[] {
+  if (Array.isArray(expr)) return expr.flatMap((node) => ourDigits(node as MathJSON));
+  const text =
+    typeof expr === "number"
+      ? String(expr)
+      : typeof expr === "object" &&
+          expr !== null &&
+          typeof (expr as { num?: unknown }).num === "string"
+        ? (expr as { num: string }).num
+        : undefined;
+  return text === undefined || !/[.eE]/.test(text) ? [] : [significant(text)];
+}
+
+/**
+ * Do the digits Wolfram displays match ours, digit for digit? For an `N(x, d)` example, where
+ * the last digit is the point: the tolerant comparison can't see it, and Wolfram holds more
+ * digits than it shows. `undefined` when the two can't be lined up number for number.
+ */
+export function sameDigits(expected: MathJSON, shown: string): boolean | undefined {
+  const ours = ourDigits(expected);
+  const theirs = (shown.match(/\d+\.\d*|\.\d+/g) ?? []).map(significant);
+  if (ours.length === 0 || ours.length !== theirs.length) return undefined;
+  return ours.every((digits, i) => digits === theirs[i]);
 }
 
 export function verdictOf(
@@ -79,6 +121,8 @@ export function verdictOf(
   expected: MathJSON,
   result: Answer,
   tolerance?: number,
+  /** An `N(x, d)` example: Wolfram's displayed digits must match ours, the last included. */
+  asksForDigits = false,
 ): Verdict {
   const theirs = result.value ?? "";
   let verdict: Verdict;
@@ -99,6 +143,9 @@ export function verdictOf(
         : verdicts.includes("agree")
           ? "agree"
           : (verdicts[0] as Verdict);
+    if (verdict === "agree" && asksForDigits && result.shown !== undefined) {
+      if (sameDigits(expected, result.shown) === false) verdict = "disagree";
+    }
   } else if (theirs.startsWith("combination:")) {
     verdict = compareCombination(expected, theirs);
   } else if (theirs.startsWith("combinations:")) {

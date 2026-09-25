@@ -192,6 +192,9 @@
               "issue": {
                 "type": "integer"
               },
+              "shown": {
+                "type": "string"
+              },
               "tex": {
                 "type": "object",
                 "properties": {
