@@ -26,6 +26,7 @@ import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
 import { declareElliptic } from "./elliptic.ts";
 import { declareModular } from "./modular.ts";
+import { declareMatrixExp } from "./matrix-exp.ts";
 import { declareSpecialFunctions } from "./special-functions.ts";
 import { declareBesselJZero } from "./bessel-zeros.ts";
 import { declareDigammaFunctionZero } from "./digamma-zero.ts";
@@ -522,10 +523,10 @@ function evaluateLerch(
  * integrals in carlson.ts: `CarlsonRF`, `CarlsonRC`, `CarlsonRD`, `CarlsonRJ`, `CarlsonRG`
  * — and, in elliptic.ts, `IncompleteEllipticF`/`IncompleteEllipticE` plus an in-place
  * precision fix for native `EllipticE` at complex modulus; the modular heads in
- * modular.ts: `ModularJ`, `ModularLambda`, `EisensteinG`; and the Fungrim-frontier
+ * modular.ts: `ModularJ`, `ModularLambda`, `EisensteinG`; the Fungrim-frontier
  * heads `BesselJZero`, `DigammaFunctionZero`, `MultiZetaValue`, `SloaneA` and
  * `HypergeometricUStar` (bessel-zeros.ts, digamma-zero.ts, multizeta.ts,
- * sloane-a.ts, hypergeometric-ustar.ts).
+ * sloane-a.ts, hypergeometric-ustar.ts); and, in matrix-exp.ts, `MatrixExp`.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -631,4 +632,5 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareMultiZetaValue(ce);
   declareSloaneA(ce);
   declareHypergeometricUStar(ce);
+  declareMatrixExp(ce);
 }

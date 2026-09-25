@@ -19672,7 +19672,7 @@
   "collections/Union#5": {
     "ours": {
       "input": "\\mathrm{Divisors}(10)\\cup\\mathrm{Divisors}(15)",
-      "output": "\\lbrace1, 2, 5, 10, 3, 15\\rbrace"
+      "output": "\\lbrace1, 2, 3, 5, 10, 15\\rbrace"
     },
     "wolfram": {
       "input": "\\text{Divisors}[10]\\cup \\text{Divisors}[15]",
@@ -19680,7 +19680,7 @@
     },
     "same": {
       "input": false,
-      "output": false
+      "output": true
     }
   },
   "collections/Intersection#1": {

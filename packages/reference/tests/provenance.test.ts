@@ -116,12 +116,14 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  */
 const OVERRIDDEN = [
   "Arcsin",
+  "At",
   "BellNumber",
   "BernoulliB",
   "BetaRegularized",
   "Binomial",
   "CatalanNumber",
   "ChineseRemainder",
+  "Clamp",
   "Digamma",
   "DigitCount",
   "DigitSum",
@@ -136,6 +138,7 @@ const OVERRIDDEN = [
   "FactorInteger",
   "Factorial2",
   "Fibonacci",
+  "First",
   "FromDigits",
   "Gamma",
   "GammaRegularized",
@@ -145,9 +148,14 @@ const OVERRIDDEN = [
   "IsPrime",
   "IsSquareFree",
   "JacobiSymbol",
+  "Join",
+  "Last",
+  "Length",
   "Ln",
   "LucasL",
   "MatrixPower",
+  "Mean",
+  "Median",
   "Mod",
   "MoebiusMu",
   "Multinomial",
@@ -155,16 +163,21 @@ const OVERRIDDEN = [
   "NextPrime",
   "Norm",
   "NthPrime",
+  "Ordering",
+  "Partition",
   "Pochhammer",
   "PolyLog",
+  "Position",
   "PowerMod",
   "PrimeNu",
   "PrimeOmega",
   "PrimePi",
   "QuotientRing",
+  "Sort",
   "StirlingS1",
   "Subfactorial",
   "Totient",
+  "Union",
   "Zeta",
 ];
 
@@ -212,11 +225,11 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * expose (`rational_reconstruction`, `iratrecon`). IntegerMod and IntegerModRing are Sage's
  * `Mod(a, m)` and `Zmod(m)`.
  *
- * TimeConstrained, MemoryConstrained and VerificationTest are genuinely Wolfram's own (see
- * `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled in by
- * the external-kernel coverage script, which needs a Wolfram kernel this offline test suite
- * doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`. BesselJZero
- * (Wolfram, mpmath) waits on the same run.
+ * TimeConstrained, MemoryConstrained, VerificationTest and Commonest are genuinely Wolfram's
+ * own (see `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled
+ * in by the external-kernel coverage script, which needs a Wolfram kernel this offline test
+ * suite doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
+ * BesselJZero (Wolfram, mpmath) waits on the same run.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -230,6 +243,7 @@ const NOVEL = [
   "Idele",
   "ProfiniteDecomposition",
   "ProfinitePlot",
+  "MatrixExp",
   "ClausenCl",
   "BesselJZero",
   "DigammaFunctionZero",
@@ -270,6 +284,7 @@ const NOVEL = [
   "Braid",
   "AlexanderPolynomial",
   "JonesPolynomial",
+  "Commonest",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

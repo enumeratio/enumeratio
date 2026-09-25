@@ -707,7 +707,7 @@ export const elementary: readonly ReferenceEntry[] = [
     details: [
       "Inverse of [[Ln]]: $\\ln(e^x) = x$ and $e^{\\ln x} = x$ for $x > 0$.",
       "Once the argument is symbolic, compute-engine represents Exp(x) as Power(ExponentialE, x) -- the same object as $e^x$ written with [[Power]].",
-      "Applied to a matrix (or any nested list) it broadcasts element-wise -- this is NOT the matrix exponential.",
+      "Applied to a matrix (or any nested list) it broadcasts element-wise, same as Wolfram's Exp -- this is NOT the matrix exponential, which is [[MatrixExp]].",
     ],
     examples: [
       { expr: ["Exp", 0], expected: 1 },
@@ -741,14 +741,17 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Exp", ["List", ["List", 0, 1], ["List", 1, 0]]],
-        expected: ["List", ["List", ["Cosh", 1], ["Sinh", 1]], ["List", ["Sinh", 1], ["Cosh", 1]]],
-        aspirational: true,
+        expected: ["List", ["List", 1, "ExponentialE"], ["List", "ExponentialE", 1]],
         category: "Scope",
         caption:
-          "The true matrix exponential -- here $\\begin{pmatrix}\\cosh 1 & \\sinh 1\\\\ \\sinh 1 & \\cosh 1\\end{pmatrix}$ -- is not yet computed; $\\mathrm{Exp}$ always broadcasts element-wise, giving $\\begin{pmatrix}1 & e\\\\ e & 1\\end{pmatrix}$ instead",
+          "Broadcasts element-wise, giving $\\begin{pmatrix}1 & e\\\\ e & 1\\end{pmatrix}$ -- NOT the matrix exponential $\\begin{pmatrix}\\cosh 1 & \\sinh 1\\\\ \\sinh 1 & \\cosh 1\\end{pmatrix}$, which is [[MatrixExp]]",
+        divergence: {
+          wolfram:
+            "Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.",
+        },
       },
     ],
-    seeAlso: ["Ln", "Log", "Sinh"],
+    seeAlso: ["Ln", "Log", "Sinh", "MatrixExp"],
   },
   {
     name: "Ln",
