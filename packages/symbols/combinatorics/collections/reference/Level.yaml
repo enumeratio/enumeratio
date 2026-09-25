@@ -19,6 +19,7 @@ signatures:
     description: every leaf, regardless of depth — Wolfram's own "leaves" shorthand
     library: enumeratio-collections
 details:
+  - "Wolfram's own POST-ORDER: a node's children (recursively) come before the node itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER its own parts, not before them. Siblings keep their original order; only each node's position relative to its OWN descendants moves."
   - Only `{-1}` (and bare `-1`) is supported among negative levels — Wolfram's general negative-level-from-the-leaves counting (`{-2}`, `{-3, -1}`, …) is left undone.
   - No 4th-argument predicate form, and no Heads option.
 examples:
@@ -31,8 +32,9 @@ examples:
     category: Scope
   - id: level-expr-2-gives-levels-1-and-2-together
     expr: [Level, [List, 1, [List, 2, 3], 4], 2]
-    expected: [List, 1, [List, 2, 3], 2, 3, 4]
+    expected: [List, 1, 2, 3, [List, 2, 3], 4]
     category: Scope
+    caption: "post-order: {2, 3} prints after its own parts 2 and 3"
   - id: level-expr-1-gives-every-leaf
     expr: [Level, [List, 1, [List, 2, 3], 4], [List, -1]]
     expected: [List, 1, 2, 3, 4]
@@ -40,7 +42,7 @@ examples:
     caption: "{-1} is Wolfram's own leaves shorthand"
   - id: level-expr-infinity-reaches-every-level
     expr: [Level, [List, 1, [List, 2, [List, 3]]], PositiveInfinity]
-    expected: [List, 1, [List, 2, [List, 3]], 2, [List, 3], 3]
+    expected: [List, 1, 2, 3, [List, 3], [List, 2, [List, 3]]]
     category: Scope
 seeAlso:
   - MapIndexed

@@ -149,20 +149,22 @@ test("Level(expr, 1) gives the top-level operands", () => {
 test("Level(expr, {0}) is just expr itself", () => {
   expect(run(["Level", ["List", 1, ["List", 2, 3]], ["List", 0]])).toEqual(["List", ["List", 1, ["List", 2, 3]]]);
 });
-test("Level(expr, 2) gives levels 1 and 2 together", () => {
-  expect(run(["Level", ["List", 1, ["List", 2, 3], 4], 2])).toEqual(["List", 1, ["List", 2, 3], 2, 3, 4]);
+test("Level(expr, 2) gives levels 1 and 2 together, post-order", () => {
+  // Wolfram's own order: a node's children come before the node itself, so {2, 3} prints
+  // AFTER its own parts 2 and 3 — not before them.
+  expect(run(["Level", ["List", 1, ["List", 2, 3], 4], 2])).toEqual(["List", 1, 2, 3, ["List", 2, 3], 4]);
 });
 test("Level(expr, {-1}) gives every leaf", () => {
   expect(run(["Level", ["List", 1, ["List", 2, 3], 4], ["List", -1]])).toEqual(["List", 1, 2, 3, 4]);
 });
-test("Level(expr, Infinity) reaches every level", () => {
+test("Level(expr, Infinity) reaches every level, post-order", () => {
   expect(run(["Level", ["List", 1, ["List", 2, ["List", 3]]], "PositiveInfinity"])).toEqual([
     "List",
     1,
-    ["List", 2, ["List", 3]],
     2,
-    ["List", 3],
     3,
+    ["List", 3],
+    ["List", 2, ["List", 3]],
   ]);
 });
 

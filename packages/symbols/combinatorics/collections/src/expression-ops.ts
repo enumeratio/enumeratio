@@ -89,12 +89,16 @@ function parseLevelSpec(spec: BoxedExpression): LevelSpec | undefined {
   return n < 0 ? undefined : { lo: 1, hi: n };
 }
 
-/** Every subexpression of `expr` whose depth from the root (root = 0) falls in `[lo, hi]`. */
+/** Every subexpression of `expr` whose depth from the root (root = 0) falls in `[lo, hi]`,
+ *  in Wolfram's own POST-ORDER: a node's own children (recursively) come before the node
+ *  itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER
+ *  its own parts `2, 3`, not before them. Siblings still keep their original left-to-right
+ *  order; only each node's position relative to its OWN descendants moves. */
 function levelsInRange(expr: BoxedExpression, lo: number, hi: number): BoxedExpression[] {
   const results: BoxedExpression[] = [];
   const walk = (node: BoxedExpression, depth: number): void => {
-    if (depth >= lo && depth <= hi) results.push(node);
     if (depth < hi) for (const op of operandsOf(node)) walk(op, depth + 1);
+    if (depth >= lo && depth <= hi) results.push(node);
   };
   walk(expr, 0);
   return results;
