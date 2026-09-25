@@ -485,6 +485,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "BesselJZero",
+    fungrimEntries: ["1e6344", "da7fb1"],
+  },
+  {
     name: "BesselK",
     fungrimEntries: [
       "0c09cc",
@@ -1116,6 +1120,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f946a5",
     ],
     wolfram: "PolyGamma",
+  },
+  {
+    name: "DigammaFunctionZero",
+    fungrimEntries: ["233814", "3f15eb"],
   },
   {
     name: "DigitCount",
@@ -2176,6 +2184,22 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "HypergeometricUStar",
+    fungrimEntries: [
+      "127f05",
+      "1976e1",
+      "32e162",
+      "4cf1e9",
+      "7efe21",
+      "ae3110",
+      "c8fcc7",
+      "cb93ea",
+      "d1b3b5",
+      "e2efbf",
+      "f7f84e",
+    ],
+  },
+  {
     name: "Imaginary",
     fungrimEntries: [
       "037a6e",
@@ -3016,6 +3040,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MultiZetaValue",
+    fungrimEntries: ["3a5167", "62de01", "856317", "a5e52e", "da71d3", "ef2c71", "ef8b17"],
+  },
+  {
     name: "Multinomial",
     wolfram: "Multinomial",
   },
@@ -3663,6 +3691,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "fd732d",
     ],
     wolfram: "Sinh",
+  },
+  {
+    name: "SloaneA",
+    fungrimEntries: [
+      "373aa1",
+      "447541",
+      "4fa169",
+      "60dc3e",
+      "6af603",
+      "8eed2c",
+      "9d0839",
+      "b6111c",
+      "d12aa0",
+    ],
   },
   {
     name: "Sort",
