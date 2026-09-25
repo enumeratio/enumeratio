@@ -531,7 +531,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         environment: "gpu",
         source: "packages/analytic/src/shader.ts:zetaWGSL",
         produces: "a colour per pixel — complex ζ, domain-coloured",
-        note: "compute-engine's WGSLTarget has no lowering for Zeta (it fails closed), so the real-scalar GPU path falls back to CPU. `zetaWGSL` is used only by the complex-portrait fragment shader (complex-plot.ts), where Zeta(s) becomes clogPolar(hurwitz(s, vec2f(1,0))).",
+        note: "compute-engine's WGSLTarget has no lowering for Zeta; ours compiles Zeta(s) as zetaGen(s, 1) on the real-scalar path, and the complex-portrait fragment shader (complex-plot.ts) takes it as clogPolar(hurwitz(s, vec2f(1,0))).",
       },
       {
         origin: "component",
@@ -623,6 +623,13 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Neat examples",
         caption:
           'The notorious "sum of all positive integers" result from zeta-function regularization, $\\zeta(-1) = -1/12$',
+      },
+      {
+        expr: ["N", ["Zeta", ["Complex", 0.5, 14]]],
+        expected: ["Complex", 0.022241142609992697, -0.10325812326645332],
+        category: "Scope",
+        caption:
+          "On the critical line, $\\zeta(1/2 + 14i) = 0.02224\\ldots - 0.10326\\ldots i$ — complex $s$, from `@enumeratio/analytic` (compute-engine's Zeta evaluates real $s$ only)",
       },
       {
         expr: ["Zeta", 2, 1],

@@ -2,14 +2,17 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bernoulliNumber, bernoulliPolyExpr, type Json } from "./bernoulli.ts";
 import {
   type BoxInput,
+  declined,
   type EvalOptions,
   isFiniteNum,
   isRealInt,
   type NativeEval,
   numberResult,
   realCompile,
+  wantsNumber,
 } from "./box.ts";
-import { add, cpow, cx, type Cx, mul, scale } from "./complex.ts";
+import { add, cexp, cpow, cx, type Cx, mul, scale } from "./complex.ts";
+import { logGamma } from "./loggamma.ts";
 import { lerchPhi } from "./lerch.ts";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
@@ -139,6 +142,26 @@ export function hurwitzZeta(s: Cx, a: Cx): Cx {
 }
 
 /**
+ * Numeric Riemann ζ(s) = ζ(s, 1) for complex s. Left of Re(s) = 0 the Euler–Maclaurin
+ * direct terms grow like N^(−Re s) and cancel down to an O(1) result, so there it takes the
+ * functional equation ζ(s) = 2ˢ πˢ⁻¹ sin(πs/2) Γ(1−s) ζ(1−s) instead, with the 2ˢπˢ⁻¹Γ(1−s)
+ * magnitudes combined as logs.
+ */
+export function riemannZeta(s: Cx): Cx {
+  const one = cx(1, 0);
+  if (s.re >= 0) return hurwitzZeta(s, one);
+  const reflected = cx(1 - s.re, -s.im);
+  const logFactor = add(
+    add(scale(s, Math.LN2), scale(cx(s.re - 1, s.im), Math.log(Math.PI))),
+    logGamma(reflected),
+  );
+  const x = (Math.PI / 2) * s.re;
+  const y = (Math.PI / 2) * s.im;
+  const sinHalf = cx(Math.sin(x) * Math.cosh(y), Math.cos(x) * Math.sinh(y));
+  return mul(mul(cexp(logFactor), sinHalf), hurwitzZeta(reflected, one));
+}
+
+/**
  * Numeric Zeta(s, a) in Wolfram's generalized-zeta convention. Identical to
  * HurwitzZeta for Re(a) > 0; for a with Re(a) ≤ 0 it differs in the finitely many
  * terms off the positive axis: those use ((k+a)²)^(−s/2) (which is the real
@@ -228,7 +251,9 @@ function evaluateHurwitz(
 
   // Numeric Euler–Maclaurin for everything else — only when a number is asked for.
   if (numeric && isFiniteNum(s) && isFiniteNum(a)) {
-    return numberResult(ce, hurwitzZeta({ re: s.re, im: s.im }, { re: a.re, im: a.im }));
+    const sc = { re: s.re, im: s.im };
+    const ac = { re: a.re, im: a.im };
+    return numberResult(ce, ac.re === 1 && ac.im === 0 ? riemannZeta(sc) : hurwitzZeta(sc, ac));
   }
 
   return undefined; // stay symbolic
@@ -342,20 +367,23 @@ export function declareAnalytic(ce: ComputeEngine): void {
 
   // Capture the native single-argument Riemann zeta before redeclaring, then defer
   // to it for the one-argument case; declaring `Zeta` replaces its whole definition.
+  // Native evaluates real s only, to the engine's precision; a concretely complex s it
+  // declines goes to ζ(s, 1). Real and symbolic s stay native: HurwitzZeta reduces ζ(s, 1)
+  // back to Zeta(s) for those, so routing them there would loop.
   const nativeZeta: NativeEval = ce.box(["Zeta", 2]).operatorDefinition?.evaluate;
+  const zetaCompile = realCompile(2, { js: "__zg", wgsl: "zetaGen" });
   ce.declare("Zeta", {
     signature: "(number, number?) -> number",
     broadcastable: true, // preserve native threading over a list of s
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      ops.length < 2
-        ? nativeZeta?.(ops, options)
-        : evaluateZeta(ce, ops, options.numericApproximation ?? false),
-    // Two-arg compile only; one-arg Riemann zeta has no GPU kernel here, so a
-    // single-argument call falls through to undefined (unsupported by the target).
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      if (ops.length >= 2) return evaluateZeta(ce, ops, options.numericApproximation ?? false);
+      const r = nativeZeta?.(ops, options);
+      const s = ops[0];
+      if (!declined(r, "Zeta") || s === undefined || !isFiniteNum(s) || s.im === 0) return r;
+      return evaluateHurwitz(ce, [s, ce.One], wantsNumber(ops, options)) ?? r;
+    },
     compile: (args, compile, ctx) =>
-      args.length >= 2
-        ? realCompile(2, { js: "__zg", wgsl: "zetaGen" })(args, compile, ctx)
-        : undefined,
+      zetaCompile(args.length === 1 ? [args[0], ce.One] : args, compile, ctx),
   });
 
   // LerchPhi(z, s, a): the Lerch transcendent (HurwitzZeta and PolyLog are special cases).
