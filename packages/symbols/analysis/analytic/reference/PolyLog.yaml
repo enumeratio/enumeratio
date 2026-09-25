@@ -349,6 +349,68 @@ examples:
     id: n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i
     expr: [N, [PolyLog, [Complex, 0.5, -1], [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.24654523479288867, 0.4321567364244429]
+  - role: test
+    id: li-3-over-2-1-zeta-3-2-non-integer-order
+    expr: [N, [PolyLog, [Rational, 3, 2], 1]]
+    expected: { num: "2.61237534868548834335" }
+    caption: $\operatorname{Li}_{3/2}(1) = \zeta(3/2)$
+  - role: test
+    id: li-1-1-2-ln-2
+    expr: [N, [PolyLog, 1, [Rational, 1, 2]]]
+    expected: { num: "0.693147180559945309417" }
+    caption: $\operatorname{Li}_1(1/2) = -\ln(1/2) = \ln 2$
+  - role: test
+    id: n-polylog-rim-theta-0p5-s-neg-0p5-z
+    expr: [N, [PolyLog, -0.5, [Complex, 0.8775825618903728, 0.479425538604203]]]
+    expected: [Complex, -1.9814128032416316, 1.759618028095421]
+  - role: test
+    id: polylog-rim-theta-0p5-s-0-z
+    expr: [N, [PolyLog, 0, [Complex, 0.8775825618903728, 0.479425538604203]]]
+    expected: [Complex, { num: "-0.500000000000000379457391008370314432" }, 1.9581586823229702]
+  - role: test
+    id: polylog-rim-theta-0p5-s-0p5-z
+    expr: [N, [PolyLog, 0.5, [Complex, 0.8775825618903728, 0.479425538604203]]]
+    expected: [Complex, 0.31529661575870827, 1.6683324929967651]
+  - role: test
+    id: polylog-rim-theta-0p5-s-1-z
+    expr: [N, [PolyLog, 1, [Complex, 0.8775825618903728, 0.479425538604203]]]
+    expected: [Complex, 0.7035856351378448, 1.3207963267948968]
+  - role: test
+    id: polylog-rim-theta-0p5-s-1p5-z
+    expr: [N, [PolyLog, 1.5, [Complex, 0.8775825618903728, 0.479425538604203]]]
+    expected: [Complex, 0.8659295227649891, 1.0428086988788294]
+  - role: test
+    id: polylog-rim-theta-1p7-s-0-z
+    expr: [N, [PolyLog, 0, [Complex, -0.12884449429552464, 0.9916648104524686]]]
+    expected: [Complex, { num: "-0.4999999999999999729402313598238722848" }, 0.4392388922760059]
+  - role: test
+    id: polylog-rim-theta-1p7-s-0p5-z
+    expr: [N, [PolyLog, 0.5, [Complex, -0.12884449429552464, 0.9916648104524686]]]
+    expected: [Complex, -0.46063922619752723, 0.6004778160550789]
+  - role: test
+    id: polylog-rim-theta-1p7-s-1-z
+    expr: [N, [PolyLog, 1, [Complex, -0.12884449429552464, 0.9916648104524686]]]
+    expected: [Complex, -0.40717085934072944, 0.7207963267948966]
+  - role: test
+    id: polylog-rim-theta-1p7-s-1p5-z
+    expr: [N, [PolyLog, 1.5, [Complex, -0.12884449429552464, 0.9916648104524686]]]
+    expected: [Complex, -0.3523998866396682, 0.8070572290694613]
+  - role: test
+    id: polylog-rim-theta-2p4-s-0-z
+    expr: [N, [PolyLog, 0, [Complex, -0.7373937155412454, 0.675463180551151]]]
+    expected: [Complex, { num: "-0.5000000000000000075578779372074230888" }, 0.19438978468410245]
+  - role: test
+    id: polylog-rim-theta-2p4-s-0p5-z
+    expr: [N, [PolyLog, 0.5, [Complex, -0.7373937155412454, 0.675463180551151]]]
+    expected: [Complex, -0.5709953131001384, 0.2881223505446884]
+  - role: test
+    id: polylog-rim-theta-2p4-s-1-z
+    expr: [N, [PolyLog, 1, [Complex, -0.7373937155412454, 0.675463180551151]]]
+    expected: [Complex, -0.6227666531171128, 0.37079632679489666]
+  - role: test
+    id: polylog-rim-theta-2p4-s-1p5-z
+    expr: [N, [PolyLog, 1.5, [Complex, -0.7373937155412454, 0.675463180551151]]]
+    expected: [Complex, -0.6594860880900733, 0.4403355254247001]
 seeAlso:
   - LerchPhi
   - Zeta

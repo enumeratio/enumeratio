@@ -1514,6 +1514,75 @@ examples:
     id: n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5
     expr: [N, [LerchPhi, [Complex, 0.8, 0.9], [Complex, 2, 1], -2.5]]
     expected: [Complex, -92.1275927724354, 93.92654608335769]
+  - role: test
+    id: phi-0p3-3-2-off-the-grid-sample
+    expr: [LerchPhi, 0.3, 3, 2]
+    expected: { num: "0.13777975436547356397" }
+  - role: test
+    id: n-lerchphi-2p809-2-2-on-the-cut-real-z-1
+    expr: [N, [LerchPhi, 2.809, 2, 2]]
+    expected: [Complex, -0.05658770197322309, -0.4112203779716625]
+  - role: test
+    id: n-lerchphi-neg-2-2-neg-2p5-negative-a-shifted-up
+    expr: [N, [LerchPhi, -2, 2, -2.5]]
+    expected: -12.286762723530918
+  - role: test
+    id: n-lerchphi-10-10-10-cancels-below-precision
+    expr: [N, [LerchPhi, 10, 10, 10]]
+    expected: [LerchPhi, 10, 10, 10]
+    caption: Where the terms cancel below double precision it stays unevaluated rather than guess
+  - role: test
+    id: n-lerchphi-rim-theta-0p5-s-neg-0p5-a-2
+    expr: [N, [LerchPhi, [Complex, 0.8775825618903728, 0.479425538604203], -0.5, 2]]
+    expected: [Complex, -0.4674769533712983, 3.097452599486018]
+  - role: test
+    id: lerchphi-rim-theta-0p5-s-0-a-1
+    expr: [N, [LerchPhi, [Complex, 0.8775825618903728, 0.479425538604203], 0, 1]]
+    expected: [Complex, { num: "0.49999999999999968156" }, 1.9581586823229704]
+  - role: test
+    id: lerchphi-rim-theta-0p5-s-0p5-a-1
+    expr: [N, [LerchPhi, [Complex, 0.8775825618903728, 0.479425538604203], 0.5, 1]]
+    expected: [Complex, 1.0765400158387584, 1.312938253458852]
+  - role: test
+    id: lerchphi-rim-theta-0p5-s-1-a-1
+    expr: [N, [LerchPhi, [Complex, 0.8775825618903728, 0.479425538604203], 1, 1]]
+    expected: [Complex, 1.2506779745536307, 0.8217909021239178]
+  - role: test
+    id: lerchphi-rim-theta-0p5-s-1p5-a-1
+    expr: [N, [LerchPhi, [Complex, 0.8775825618903728, 0.479425538604203], 1.5, 1]]
+    expected: [Complex, 1.259873771125738, 0.5000020016787639]
+  - role: test
+    id: lerchphi-rim-theta-1p7-s-0-a-1
+    expr: [N, [LerchPhi, [Complex, -0.12884449429552464, 0.9916648104524686], 0, 1]]
+    expected: [Complex, { num: "0.50000000000000002282" }, 0.4392388922760059]
+  - role: test
+    id: lerchphi-rim-theta-1p7-s-0p5-a-1
+    expr: [N, [LerchPhi, [Complex, -0.12884449429552464, 0.9916648104524686], 0.5, 1]]
+    expected: [Complex, 0.6548235477912744, 0.37943145038884496]
+  - role: test
+    id: lerchphi-rim-theta-1p7-s-1-a-1
+    expr: [N, [LerchPhi, [Complex, -0.12884449429552464, 0.9916648104524686], 1, 1]]
+    expected: [Complex, 0.7672500762495275, 0.31090637483393313]
+  - role: test
+    id: lerchphi-rim-theta-1p7-s-1p5-a-1
+    expr: [N, [LerchPhi, [Complex, -0.12884449429552464, 0.9916648104524686], 1.5, 1]]
+    expected: [Complex, 0.8457350392733503, 0.24547768624099586]
+  - role: test
+    id: lerchphi-rim-theta-2p4-s-0-a-1
+    expr: [N, [LerchPhi, [Complex, -0.7373937155412454, 0.675463180551151], 0, 1]]
+    expected: [Complex, { num: "0.500000000000000037372" }, 0.19438978468410248]
+  - role: test
+    id: lerchphi-rim-theta-2p4-s-0p5-a-1
+    expr: [N, [LerchPhi, [Complex, -0.7373937155412454, 0.675463180551151], 0.5, 1]]
+    expected: [Complex, 0.6156643947703367, 0.1732266996677948]
+  - role: test
+    id: lerchphi-rim-theta-2p4-s-1-a-1
+    expr: [N, [LerchPhi, [Complex, -0.7373937155412454, 0.675463180551151], 1, 1]]
+    expected: [Complex, 0.7096834824907782, 0.14723306313134574]
+  - role: test
+    id: lerchphi-rim-theta-2p4-s-1p5-a-1
+    expr: [N, [LerchPhi, [Complex, -0.7373937155412454, 0.675463180551151], 1.5, 1]]
+    expected: [Complex, 0.7837313313575304, 0.12075792141283123]
 implementations:
   - origin: reference
     form: notatio

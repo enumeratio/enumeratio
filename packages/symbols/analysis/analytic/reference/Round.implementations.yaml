@@ -289,3 +289,12 @@ an-exact-half-rounds-away-from-zero-as-well:
   wolfram:
     in: Round[Rational[1, 2]]
     note: 'Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.'
+idempotent-round-round-x-round-x:
+  epsil:
+    in: Round(Round(x))
+    out: Round(x)
+  tex:
+    in: \mathrm{round}(\mathrm{round}(x))
+    out: \mathrm{round}(x)
+  fullform:
+    in: Round[Round[x]]

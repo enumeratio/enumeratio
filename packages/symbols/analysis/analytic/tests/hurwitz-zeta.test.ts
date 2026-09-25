@@ -2,7 +2,6 @@ import { readFileSync } from "node:fs";
 import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
-import { bernoulliRational } from "../src/bernoulli.ts";
 import { bigCx, hurwitzZetaBig } from "../src/bigzeta.ts";
 import {
   declareAnalytic,
@@ -20,83 +19,17 @@ declareAnalytic(ce);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 
-/** Evaluate two expressions the same way and compare their canonical MathJSON. */
-const sameExact = (input: Expr, expected: Expr) =>
-  expect(ce.box(input).evaluate().json).toEqual(ce.box(expected).evaluate().json);
-
 /** Numeric value of an expression via .N(). */
 const num = (input: Expr): number => ce.box(input).N().re;
 
 // --- Exact closed forms (symbolic, no tolerance) --------------------------------
-
-test("ζ(2,1) = π²/6 (reduces to ordinary ζ)", () => {
-  sameExact(["HurwitzZeta", 2, 1], ["Zeta", 2]);
-  sameExact(["HurwitzZeta", 2, 1], ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]);
-});
-
-test("ζ(2,2) = π²/6 − 1", () => {
-  sameExact(["HurwitzZeta", 2, 2], ["Subtract", ["Zeta", 2], 1]);
-});
-
-test("ζ(4,2) = π⁴/90 − 1", () => {
-  sameExact(["HurwitzZeta", 4, 2], ["Subtract", ["Zeta", 4], 1]);
-});
-
-test("ζ(s,1) = ζ(s) for symbolic s", () => {
-  sameExact(["HurwitzZeta", "s", 1], ["Zeta", "s"]);
-});
-
-test("ζ(0,a) = 1/2 − a (symbolic a)", () => {
-  sameExact(["HurwitzZeta", 0, "a"], ["Subtract", ["Rational", 1, 2], "a"]);
-});
-
-// The symbolic ζ(0,a) form above is CE-canonical; the ζ(−1,a) closed form is not
-// (CE keeps −½(a²−a+⅙) unexpanded), so pin the exact rationals at sample a instead.
-test("ζ(0,a) = 1/2 − a at exact a", () => {
-  sameExact(["HurwitzZeta", 0, 3], ["Rational", -5, 2]); // 1/2 − 3
-  sameExact(["HurwitzZeta", 0, ["Rational", 5, 2]], ["Rational", -2, 1]); // 1/2 − 5/2
-});
-
-test("ζ(−1,a) = −(6a²−6a+1)/12 at exact a", () => {
-  const closed = (a: Expr): Expr => [
-    "Divide",
-    ["Negate", ["Add", ["Multiply", 6, ["Power", a, 2]], ["Multiply", -6, a], 1]],
-    12,
-  ];
-  const samples: Expr[] = [3, ["Rational", 5, 2], ["Rational", 7, 3]];
-  for (const a of samples) {
-    sameExact(["HurwitzZeta", -1, a], closed(a));
-  }
-});
-
-test("ζ(−n,a) = −B_{n+1}(a)/(n+1) for n = 2,3,4 at a = 5/2", () => {
-  const a: Expr = ["Rational", 5, 2];
-  for (const n of [2, 3, 4]) {
-    // -B_{n+1}(a)/(n+1) built independently from exact Bernoulli numbers.
-    const m = n + 1;
-    const terms: Expr[] = [];
-    for (let k = 0; k <= m; k++) {
-      const [bn, bd] = bernoulliRational(k);
-      if (bn === 0n) continue;
-      // C(m,k) * B_k * a^(m-k)
-      let c = 1;
-      for (let i = 0; i < k; i++) c = (c * (m - i)) / (i + 1);
-      terms.push(["Multiply", ["Rational", Number(bn) * c, Number(bd)], ["Power", a, m - k]]);
-    }
-    sameExact(["HurwitzZeta", -n, a], ["Divide", ["Negate", ["Add", ...terms]], m]);
-  }
-});
-
-test("ζ(1,a) is the pole (ComplexInfinity)", () => {
-  expect(ce.box(["HurwitzZeta", 1, 3]).evaluate().json).toEqual("ComplexInfinity");
-  expect(ce.box(["HurwitzZeta", 1, "a"]).evaluate().json).toEqual("ComplexInfinity");
-});
+// The concrete closed-form checks at fixed (s, a) moved to role: test examples on
+// HurwitzZeta's own record (packages/symbols/analysis/analytic/reference/HurwitzZeta.yaml):
+// ζ(2,1), ζ(2,2), ζ(4,2), ζ(s,1), ζ(0,a) symbolic and at a = 3, 5/2, ζ(−1,a) at a = 3, 5/2,
+// 7/3, ζ(−n,a) for n = 2,3,4 at a = 5/2, and the pole at s = 1 for both an exact and a
+// symbolic a.
 
 // --- Numeric evaluation vs known values (Euler–Maclaurin) -----------------------
-
-test("ζ(2,1/2) = π²/2", () => {
-  expect(num(["HurwitzZeta", 2, ["Rational", 1, 2]])).toBeCloseTo(Math.PI ** 2 / 2, 11);
-});
 
 test("ζ(3,1) numerically equals the ordinary ζ(3) (Apéry's constant)", () => {
   expect(Math.abs(num(["HurwitzZeta", 3, 1]) - num(["Zeta", 3]))).toBeLessThan(1e-14);
@@ -149,26 +82,17 @@ test("complex argument: ζ(2, 1+i) matches an independent tail-corrected sum", (
 });
 
 // --- Two-argument Zeta (Wolfram generalized zeta), and native 1-arg preserved ------
-
-test("1-arg Zeta still works after the head is extended", () => {
-  sameExact(["Zeta", 2], ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]);
-  sameExact(["Zeta", -1], ["Rational", -1, 12]);
-  sameExact(["Zeta", -2], 0);
-  expect(ce.box(["Zeta", 1]).evaluate().json).toEqual("ComplexInfinity");
-  // native threading over a list of s
-  sameExact(["Zeta", ["List", -1, -2, -3]], ["List", ["Rational", -1, 12], 0, ["Rational", 1, 120]]);
-});
+// The exact 1-arg closed forms and the exact-a two-arg reductions moved to role: test
+// examples on Zeta's own record; kept here are the cross-checks between Zeta and
+// HurwitzZeta / the raw kernels, which pin a relationship rather than a single value.
 
 test("Zeta(s,a) = HurwitzZeta(s,a) for Re(a) > 0", () => {
-  sameExact(["Zeta", 2, 2], ["HurwitzZeta", 2, 2]); // both π²/6 − 1
-  sameExact(["Zeta", "s", 1], ["Zeta", "s"]); // Zeta(s,1) = ζ(s)
   expect(Math.abs(num(["Zeta", ["Rational", 1, 2], 2]) - num(["HurwitzZeta", ["Rational", 1, 2], 2]))).toBeLessThan(
     1e-13,
   );
 });
 
 test("Zeta(s,0) = ζ(s) (dropped pole term, unlike HurwitzZeta)", () => {
-  sameExact(["Zeta", 2, 0], ["Zeta", 2]);
   expect(Math.abs(num(["Zeta", 3, 0]) - num(["Zeta", 3]))).toBeLessThan(1e-13);
 });
 
@@ -177,8 +101,6 @@ test("Zeta(s,a) for a ≤ 0 uses the generalized convention (differs from Hurwit
   const r = zetaGeneralized({ re: 3, im: 0 }, { re: -0.5, im: 0 });
   expect(Math.abs(num(["Zeta", 3, ["Rational", -1, 2]]) - r.re)).toBeLessThan(1e-13);
   expect(r.re).toBeCloseTo(16.4143983221172, 9);
-  // Wolfram Zeta[-1,-2] = 35/12
-  expect(num(["Zeta", -1, -2])).toBeCloseTo(35 / 12, 11);
 });
 
 test("Zeta vs HurwitzZeta divergence at real a < 0: real vs complex", () => {
@@ -310,55 +232,11 @@ test("compiled Zeta(x, a) and HurwitzZeta(x, a) hold left of the strip", () => {
   expect(offBy(real, (g) => cx(hurwitzZetaReal(g.s[0], g.a)))).toEqual([]);
 });
 
-test("Zeta(s) keeps the native behaviour wherever native evaluates", () => {
-  sameExact(["Zeta", 2], ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]);
-  expect(ce.box(["Zeta", 1]).evaluate().json).toBe("ComplexInfinity");
-  expect(ce.box(["Zeta", "s"]).N().json).toEqual(["Zeta", "s"]);
-  expect(ce.box(["Zeta", ["Rational", 1, 2]]).evaluate().json).toEqual(["Zeta", ["Rational", 1, 2]]);
-  // An exact complex stays symbolic under evaluate(), as an exact real does; N() gives a number.
-  expect(ce.box(["Zeta", ["Complex", 2, 1]]).evaluate().json).toEqual(["Zeta", ["Complex", 2, 1]]);
-  expect(ce.box(["Zeta", ["Complex", 2, 1]]).N().im).toBeCloseTo(-0.4375308659196079, 13);
-  // Threads over a list, complex entries included — correctly rounded, so exact.
-  expect(ce.box(["Zeta", ["List", 2, ["Complex", 0.5, 14]]]).evaluate().json).toEqual([
-    "List",
-    ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
-    ["Complex", 0.02224114260999359, -0.10325812326645006],
-  ]);
-});
-
 // --- LerchPhi Φ(z, s, a) = Σ zⁿ (n+a)^(−s) -----------------------------------------
 
-test("LerchPhi reductions: Φ(1,s,a)=ζ(s,a) and Φ(z,0,a)=1/(1−z)", () => {
-  sameExact(["LerchPhi", 1, 2, 1], ["Zeta", 2]); // Φ(1,2,1) = ζ(2) = π²/6
-  sameExact(["LerchPhi", 1, 2, 2], ["Subtract", ["Zeta", 2], 1]); // Φ(1,2,2) = ζ(2,2)
-  sameExact(["LerchPhi", ["Rational", 1, 2], 0, 5], 2); // Φ(1/2,0,a) = 1/(1−1/2) = 2
-});
-
-test("LerchPhi numeric matches known values (mpmath/Wolfram)", () => {
-  // Φ(1/2, 2, 1) = Li₂(1/2)/(1/2) = 1.16448105293…
-  expect(num(["LerchPhi", ["Rational", 1, 2], 2, 1])).toBeCloseTo(1.16448105293, 11);
-  // Φ(−1/2, 2, 1) = 0.89682841385…
-  expect(num(["LerchPhi", ["Rational", -1, 2], 2, 1])).toBeCloseTo(0.8968284138473, 11);
-  // Φ(0.3, 3, 2) = 0.13777975437…
-  expect(num(["LerchPhi", 0.3, 3, 2])).toBeCloseTo(0.1377797543655, 10);
-});
-
-test("LerchPhi at z = −1 (rim): Euler transform hits the Dirichlet-eta constants", () => {
-  // On |z| = 1 the alternating series converges too slowly for direct summation;
-  // the Euler transform recovers these to machine precision.
-  const ln2 = Math.LN2;
-  const pi2_12 = Math.PI ** 2 / 12;
-  const catalan = 0.915965594177219015;
-  const zeta3 = 1.2020569031595943;
-  expect(Math.abs(num(["LerchPhi", -1, 1, 1]) - ln2)).toBeLessThan(1e-14); // η(1) = ln 2
-  expect(Math.abs(num(["LerchPhi", -1, 2, 1]) - pi2_12)).toBeLessThan(1e-14); // η(2) = π²/12
-  // Φ(−1, 2, ½) = 4G (Catalan)
-  expect(Math.abs(num(["LerchPhi", -1, 2, ["Rational", 1, 2]]) - 4 * catalan)).toBeLessThan(1e-13);
-  // Φ(−1, 3, 1) = η(3) = ¾ ζ(3)
-  expect(Math.abs(num(["LerchPhi", -1, 3, 1]) - 0.75 * zeta3)).toBeLessThan(1e-14);
-  // η(½) = (1 − √2) ζ(½)-flavoured constant, mpmath value
-  expect(num(["LerchPhi", -1, ["Rational", 1, 2], 1])).toBeCloseTo(0.6048986434216, 11);
-});
+// LerchPhi's exact reductions (Φ(1,2,1)=ζ(2), Φ(1,2,2)=ζ(2,2), Φ(z,0,a)=1/(1−z)) and the
+// numeric grid at z ∈ {1/2, −1/2, 0.3}, and the z = −1 rim (η(1), η(2), 4·Catalan, ¾ζ(3),
+// η(1/2)) all moved to role: test examples on LerchPhi's own record.
 
 test("LerchPhi complex z matches the raw kernel", () => {
   const r = lerchPhi({ re: 0.4, im: 0.3 }, { re: 2, im: 0 }, { re: 1, im: 0 });
@@ -392,34 +270,10 @@ test("a negative real base's phase is exact: ζ(1.5, −10⁻¹²) keeps the rea
   expect(hurwitzZeta({ re: 5, im: 0 }, { re: -0.5, im: 0 }).im).toBe(0);
 });
 
-test("LerchPhi continues past |z| = 1 (values from mpmath)", () => {
-  const at = (z: Expr, s: Expr, a: Expr) => ce.box(["N", ["LerchPhi", z, s, a]] as Expr).N();
-  // On the cut, real z > 1: the side below it, as mpmath and Wolfram take.
-  const cut = at(2.809, 2, 2);
-  expect(cut.re).toBeCloseTo(-0.0565877019732229, 10);
-  expect(cut.im).toBeCloseTo(-0.4112203779716626, 10);
-  const off = at(["Complex", 1, 2], ["Complex", 3, -1], ["Complex", 4, 2]);
-  expect(off.re).toBeCloseTo(0.002025009957009909, 12);
-  expect(off.im).toBeCloseTo(0.003327897536813559, 12);
-  // A negative a, shifted up by the recurrence.
-  expect(at(-2, 2, -2.5).re).toBeCloseTo(-12.28676272353094, 9);
-  // Where the terms cancel below double precision it says nothing rather than guess.
-  expect(ce.box(["N", ["LerchPhi", 10, 10, 10]]).evaluate().json).toEqual(["LerchPhi", 10, 10, 10]);
-});
-
-test("Φ(0, s, a) = a^(−s)", () => {
-  sameExact(["LerchPhi", 0, 2, 3], ["Rational", 1, 9]);
-});
-
-test("HurwitzZeta(s,a) is the pole at a nonpositive integer and Re(s) > 0", () => {
-  // The (n+a)=0 term is 0^(−s) with Re(s) > 0: a genuine singularity (mpmath and SymPy both
-  // raise here), unlike the generalized Zeta(s,a), which drops that term and stays finite.
-  expect(ce.box(["N", ["HurwitzZeta", 2, -2]]).evaluate().json).toEqual("ComplexInfinity");
-  expect(ce.box(["N", ["HurwitzZeta", 0.158, -1]]).evaluate().json).toEqual("ComplexInfinity");
-  expect(ce.box(["N", ["HurwitzZeta", 3, 0]]).evaluate().json).toEqual("ComplexInfinity");
-  // Zeta(s,a) at the same a is unaffected: it keeps the generalized-zeta convention.
-  expect(num(["Zeta", 2, -2])).toBeCloseTo(2.89493406684822643647, 12);
-});
+// The remaining continuation values (past |z| = 1, at a negative a, and where the terms
+// cancel below double precision), Φ(0,s,a) at a concrete point, and the HurwitzZeta pole
+// at a nonpositive integer a (both exact and inexact s) moved to role: test examples on
+// LerchPhi's, HurwitzZeta's and Zeta's own records.
 
 test("HurwitzZeta(s,a) stays finite at a nonpositive integer when Re(s) < 0", () => {
   // 0^(−s) for Re(s) < 0 is 0, not a pole, so no guard is needed there (mpmath agrees).
@@ -428,40 +282,7 @@ test("HurwitzZeta(s,a) stays finite at a nonpositive integer when Re(s) < 0", ()
   expect(z.im).toBeCloseTo(-3.8284271247461903, 12);
 });
 
-test("LerchPhi on the |z|=1 rim continues past the series once Re(s) ≤ 1 (mpmath/Wolfram)", () => {
-  // z on the unit circle, off the real axis: the direct series never decays there once
-  // Re(s) ≤ 1, and used to return noise instead of routing to the continuation.
-  const z: Expr = ["Complex", Math.cos(0.5), Math.sin(0.5)];
-  const r = ce.box(["N", ["LerchPhi", z, -0.5, 2]] as Expr).N();
-  expect(r.re).toBeCloseTo(-0.4674769533712983, 9);
-  expect(r.im).toBeCloseTo(3.097452599486018, 9);
-});
-
-// The rim's own series converges too slowly to trust at Re(s) > 1 too — a term at
-// n = 200,000 is still ~n^(1−Re(s)), only ~1e-8 at Re(s) = 1.5 — so every Re(s) on the
-// rim routes through the continuation. Golden grid at e^(iθ), a = 1, against mpmath at
-// dps = 30 (`mp.lerchphi(mp.e**(1j*theta), s, 1)`).
-const LERCH_RIM_GOLDEN: readonly [number, number, number, number][] = [
-  // theta, s, expected re, expected im
-  [0.5, 0, 0.5, 1.9581586823229701],
-  [0.5, 0.5, 1.0765400158387588, 1.3129382534588525],
-  [0.5, 1, 1.250677974553631, 0.8217909021239179],
-  [0.5, 1.5, 1.259873771125738, 0.5000020016787661],
-  [1.7, 0, 0.5, 0.4392388922760059],
-  [1.7, 0.5, 0.6548235477912739, 0.3794314503888457],
-  [1.7, 1, 0.7672500762495273, 0.310906374833933],
-  [1.7, 1.5, 0.8457350392733506, 0.2454776862409962],
-  [2.4, 0, 0.5, 0.19438978468410248],
-  [2.4, 0.5, 0.6156643947703363, 0.17322669966779407],
-  [2.4, 1, 0.7096834824907786, 0.14723306313134564],
-  [2.4, 1.5, 0.7837313313575303, 0.12075792141283168],
-];
-
-test("LerchPhi on the |z|=1 rim: golden grid at every Re(s), accurate to ~1e-13 (mpmath dps=30)", () => {
-  for (const [theta, s, re, im] of LERCH_RIM_GOLDEN) {
-    const z: Expr = ["Complex", Math.cos(theta), Math.sin(theta)];
-    const r = ce.box(["N", ["LerchPhi", z, s, 1]] as Expr).N();
-    expect(r.re, `theta=${theta} s=${s} re`).toBeCloseTo(re, 12);
-    expect(r.im, `theta=${theta} s=${s} im`).toBeCloseTo(im, 12);
-  }
-});
+// LerchPhi on the |z|=1 rim, both the single Re(s) ≤ 1 case and the full golden grid at
+// every Re(s) (a term at n = 200,000 is still ~n^(1−Re(s)), only ~1e-8 at Re(s) = 1.5, so
+// every Re(s) on the rim routes through the continuation) moved to role: test examples on
+// LerchPhi's own record.

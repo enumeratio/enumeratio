@@ -440,3 +440,31 @@ the-first-four-digits-of-e:
     in: floor((1000 * e))
   rust:
     in: floor((n(1000) * x(std::f64::consts::E)))
+floor-2p7:
+  epsil:
+    in: Floor(2.7)
+    out: "2"
+  tex:
+    in: \lfloor2.7\rfloor
+    out: "2"
+  fullform:
+    in: Floor[2.7]
+  wolfram:
+    in: Floor[2.7]
+  sympy:
+    in: floor(2.7)
+  mpmath:
+    in: floor(2.7)
+  sage:
+    in: floor(2.7)
+  rust:
+    in: floor(x(2.7))
+floor-add-x-1-a-free-variable-is-untouched:
+  epsil:
+    in: Floor(x + 1)
+    out: Floor(x + 1)
+  tex:
+    in: \lfloor x+1\rfloor
+    out: \lfloor x+1\rfloor
+  fullform:
+    in: Floor[Plus[x, 1]]

@@ -97,6 +97,36 @@ examples:
     expected: [Interval, 4.113958567039058, 4.25898895010849]
     category: Scope
     caption: Interval arithmetic in $s$ (decreasing here)
+  - role: test
+    id: l-3-chi-2-bmod-4-beta-3
+    expr: [DirichletL, 4, 2, 3]
+    expected: [Multiply, [Rational, 1, 32], [Power, Pi, 3]]
+    caption: $L(3, \chi_2 \bmod 4) = \beta(3) = \pi^3/32$
+  - role: test
+    id: l-neg-2-chi-2-bmod-3-neg-2-over-9
+    expr: [DirichletL, 3, 2, -2]
+    expected: [Rational, -2, 9]
+  - role: test
+    id: l-neg-1-chi-2-bmod-5-0
+    expr: [DirichletL, 5, 2, -1]
+    expected: 0
+  - role: test
+    id: l-neg-1-chi-2-bmod-8-neg-1
+    expr: [DirichletL, 8, 2, -1]
+    expected: -1
+  - role: test
+    id: l-neg-3-chi-3-bmod-5-2
+    expr: [DirichletL, 5, 3, -3]
+    expected: 2
+  - role: test
+    id: n-dirichletl-5-2-2-critical-strip
+    expr: [N, [DirichletL, 5, 2, 2]]
+    expected: [Complex, 0.9587161227168832, 0.1455658767850895]
+  - role: test
+    id: n-dirichletl-4-2-1p0001-near-the-removable-point
+    expr: [N, [DirichletL, 4, 2, 1.0001]]
+    expected: { num: "0.785417452758435172836" }
+    caption: Just off the removable point at $s = 1$ — a non-principal $L$ has no pole there
 implementations:
   - origin: reference
     form: notatio
