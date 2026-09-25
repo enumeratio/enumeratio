@@ -24,15 +24,16 @@ import {
 // the head and the kernel the Barnes G recurrence needs.
 //
 // The recurrence subtracts two O(SHIFT_TO)-sized quantities — lnΓ(z+n) and the shift
-// sum — to land an answer that can be much smaller (Γ(0.6) needs lnΓ(18.6) ≈ 35.23
-// minus a shift sum ≈ 34.83 to get lnΓ(0.6) ≈ 0.40): catastrophic cancellation in
-// double, costing most of its 16 digits right where MeijerG's Γ-prefactors live
-// (enumeratio/enumeratio#186 landed MeijerG accurate to only ~1e-13 relative because
-// of exactly this). When a shift is needed the whole recurrence instead runs in
-// BigDecimal with guard digits (`logGammaBig`), and only the final answer rounds back
-// to a double (`logGamma`) — the cancellation still happens, but there are digits to
-// spare. Re(z) ≥ SHIFT_TO already needs no shift and stays on the plain double
-// `stirling` path.
+// sum — costing a few digits to cancellation whenever the true answer is much smaller
+// than SHIFT_TO (e.g. lnΓ(0.6) ≈ 0.40 from lnΓ(18.6) ≈ 35.23 minus a shift sum ≈
+// 34.83): a double still keeps ~13-14 good digits there, plenty for every caller of
+// the plain `logGamma` below (complex-plot-3d per pixel, riemann-siegel, hypergeometric,
+// polygamma, barnes-g, beta-continuation, rising-factorial, …), so it stays a fast,
+// unconditional double computation. `logGammaBig` is the BigDecimal twin for the one
+// caller that needs a few ulps instead: MeijerG's own outer sum (meijer-g-big.ts) has a
+// *second*, independent cancellation across its Slater-sum terms that a double
+// Γ-prefactor alone can't fix, so the whole reduction runs in BigDecimal there and only
+// rounds to a double once, at the very end.
 
 /** Stirling coefficients B₂ₖ / (2k (2k−1)). */
 const STIRLING: number[] = (() => {
@@ -59,6 +60,20 @@ function stirling(z: Cx): Cx {
 }
 
 const SHIFT_TO = 18;
+
+/** lnΓ(z), analytically continued (Wolfram `LogGamma`). Non-finite at the poles 0, −1, −2, …. */
+export function logGamma(z: Cx): Cx {
+  if (z.im === 0 && z.re <= 0 && Number.isInteger(z.re)) return cx(Number.NaN, Number.NaN);
+  const n = Math.max(0, Math.ceil(SHIFT_TO - z.re));
+  let shift = cx(0, 0);
+  for (let k = 0; k < n; k++) shift = add(shift, clog(cx(z.re + k, z.im)));
+  return sub(stirling(cx(z.re + n, z.im)), shift);
+}
+
+/** Real lnΓ(x); for x < 0 the real part of the continuation (ln|Γ(x)|). */
+export const logGammaReal = (x: number): number => logGamma(cx(x)).re;
+
+// --- BigDecimal path, for callers that need a few ulps instead of a double's ~1e-13-16 ---
 
 /** Digits carried past the ones asked for, so the shift recurrence's cancellation has room to
  * eat digits and still land a correctly-rounded answer. z + n always sits in
@@ -107,11 +122,9 @@ function stirlingBig(z: BigCx): BigCx {
 
 /**
  * lnΓ(z) in BigDecimal, correct to `digits` significant digits (guard included internally —
- * the caller doesn't need to pad `digits` itself). Shared by the double `logGamma` below and
- * by any caller that wants to keep a Γ-prefactor in BigDecimal for longer (MeijerG's outer
- * Slater sum: see `meijer-g-big.ts`), so the cancellation between *its* terms — a second,
- * independent source of precision loss from this recurrence's — has guard digits to draw on
- * too.
+ * the caller doesn't need to pad `digits` itself). Used only by `meijer-g-big.ts`, which needs
+ * more than a double's accuracy from its own Γ-prefactors; every other caller wants the fast
+ * plain `logGamma` above.
  */
 export function logGammaBig(z: BigCx, digits: number): BigCx {
   const n = Math.max(0, Math.ceil(SHIFT_TO - z.re.toNumber()));
@@ -122,15 +135,3 @@ export function logGammaBig(z: BigCx, digits: number): BigCx {
     return bsub(stirlingBig(badd(z, bigCx(n))), shift);
   });
 }
-
-/** lnΓ(z), analytically continued (Wolfram `LogGamma`). Non-finite at the poles 0, −1, −2, …. */
-export function logGamma(z: Cx): Cx {
-  if (z.im === 0 && z.re <= 0 && Number.isInteger(z.re)) return cx(Number.NaN, Number.NaN);
-  const n = Math.max(0, Math.ceil(SHIFT_TO - z.re));
-  if (n === 0) return stirling(z);
-  const r = logGammaBig(bigCx(z.re, z.im), 17);
-  return cx(r.re.toNumber(), r.im.toNumber());
-}
-
-/** Real lnΓ(x); for x < 0 the real part of the continuation (ln|Γ(x)|). */
-export const logGammaReal = (x: number): number => logGamma(cx(x)).re;
