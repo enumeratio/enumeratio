@@ -671,6 +671,11 @@ const NOVEL = [
   "IsBipartiteGraph",
   "NeighborhoodGraph",
   "Subgraph",
+  // Inequality and FindInstance (@enumeratio/analytic): genuine Wolfram heads (see HEADS
+  // in @enumeratio/wolfram), waiting on the same offline-kernel-less story as the rest of
+  // this list for `elsewhere` to fill in.
+  "Inequality",
+  "FindInstance",
   // Second wave (packages/symbols/combinatorics/collections/src/graphs-2.ts): same story --
   // every one of these is genuinely Wolfram's own (see HEADS in @enumeratio/wolfram), this
   // offline suite just has no kernel to confirm it.

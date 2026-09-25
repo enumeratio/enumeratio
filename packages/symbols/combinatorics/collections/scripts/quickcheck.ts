@@ -10,7 +10,7 @@
 //   QUICKCHECK_POINTS=20 vp node …/quickcheck.ts                   # more points per family
 
 import { allEntries } from "../src/families/index.ts";
-import { check, checkFamily, type Failure, random, shrink } from "./properties.ts";
+import { check, checkFamily, type Failure, shrink, streamFor } from "./properties.ts";
 
 const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 8);
 const PARAM_CAP = Number(process.env.QUICKCHECK_PARAM_CAP ?? 7);
@@ -49,7 +49,6 @@ const MAX_MATERIALIZED = 2_000_000;
 const args = process.argv.slice(2);
 const filter = args.find((argument) => !/^\d+$/.test(argument)) ?? "";
 const seed = Number(args.find((argument) => /^\d+$/.test(argument)) ?? Date.now() % 1_000_000);
-const draw = random(seed);
 
 const families = allEntries.filter((entry) =>
   filter === "" ? true : entry.head.toLowerCase().includes(filter.toLowerCase()),
@@ -65,6 +64,7 @@ const failures: Failure[] = [];
 let checked = 0;
 
 for (const entry of families) {
+  const draw = streamFor(seed, entry.head);
   const fullEnumeration = FULL_ENUMERATION_FAMILIES.has(entry.head);
   const paramCap = fullEnumeration ? SMALL_PARAM_CAP : PARAM_CAP;
   for (let attempt = 0; attempt < POINTS; attempt++) {

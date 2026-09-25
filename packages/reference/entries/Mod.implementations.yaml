@@ -625,3 +625,29 @@ rounding-ties-to-even-means-1-and-1-both-appear:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+eulers-number-mod-2-reduces-exactly:
+  epsil:
+    in: ExponentialE % 2
+    out: -2 + ExponentialE
+  tex:
+    in: e\bmod2
+    out: e-2
+  fullform:
+    in: Mod[E, 2]
+  wolfram:
+    in: Mod[E, 2]
+  sympy:
+    in: (E % 2)
+  sage:
+    in: (e % 2)
+  rust:
+    in: mod_floor(x(std::f64::consts::E), n(2))
+a-free-symbol-is-untouched:
+  epsil:
+    in: x % 2
+    out: x % 2
+  tex:
+    in: x\bmod2
+    out: x\bmod2
+  fullform:
+    in: Mod[x, 2]
