@@ -1,5 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { bigRationalAt } from "@enumeratio/boxed";
 import { type BoxInput, declined, type EvalOptions, isRealInt, type NativeEval } from "./box.ts";
+import { gammaExactValue } from "./widened.ts";
 
 // The three-argument generalized incomplete gamma, Wolfram's Gamma[s, z₀, z₁] =
 // Γ(s, z₀) − Γ(s, z₁) — which, at z₀ = 0, is the LOWER incomplete gamma γ(s, z). Same for
@@ -11,6 +13,11 @@ import { type BoxInput, declined, type EvalOptions, isRealInt, type NativeEval }
 // What it lacks is the third argument, which is purely a difference of two calls it can
 // already make, and so is added symbolically: the reduction works for symbolic operands too
 // (Gamma(1, 0, z) → 1 − e^{−z}) and inherits whatever accuracy the native handler has.
+//
+// The one-argument form also gets the exact-value policy decision from issue #92 group B:
+// plain evaluation leaves an exact integer or rational Gamma(x) symbolic (a deliberate
+// compute-engine policy, reduced only by N()), which this overrides at the integers and
+// half-integers via `gammaExactValue` — the same kernel Binomial/Beta/CatalanNumber reuse.
 
 /** Does this result still mention the head it was supposed to reduce away? */
 const unreduced = (r: BoxedExpression, head: string): boolean =>
@@ -51,6 +58,11 @@ export function evaluateIncompleteGamma(
 ): BoxedExpression | undefined {
   if (ops.length < 3) {
     const r = native?.(ops, options);
+    if (ops.length === 1) {
+      if (head !== "Gamma" || !declined(r, head)) return r;
+      const x = bigRationalAt(ops[0]);
+      return (x !== undefined ? gammaExactValue(ce, x) : undefined) ?? r;
+    }
     if (ops.length !== 2 || !declined(r, head)) return r;
     const [s, z] = ops;
     if (s === undefined || z === undefined) return r;

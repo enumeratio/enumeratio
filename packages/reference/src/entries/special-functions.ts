@@ -9,7 +9,9 @@ import type { ReferenceEntry } from "../types.ts";
 // argument -- an exact integer or Rational argument is left symbolic unless it
 // hits a special closed form (a pole, or an identity like Zeta(2) = pi^2/6).
 // `.N()` forces a numeric approximation regardless; several "Possible issues"
-// entries below call this out explicitly.
+// entries below call this out explicitly. Gamma and Digamma are overridden past
+// that policy at the integers and half-integers (`@enumeratio/analytic`), reusing
+// `gammaExact`/`HarmonicNumber` -- see their entries below.
 export const specialFunctions: readonly ReferenceEntry[] = [
   {
     name: "Gamma",
@@ -37,7 +39,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "Reflection formula: $\\Gamma(z)\\,\\Gamma(1-z) = \\dfrac{\\pi}{\\sin(\\pi z)}$, linking $\\Gamma$ at z and $1-z$.",
       "Poles at the nonpositive integers $0, -1, -2, \\ldots$, where $\\Gamma$ diverges to ComplexInfinity.",
       "$\\Gamma(1/2) = \\sqrt{\\pi}$, the constant behind the normal distribution's normalizing factor. See [[Erf]].",
-      "compute-engine's plain evaluation leaves Gamma at exact integer or rational arguments unevaluated -- it only reduces to a decimal with N() or when given an inexact (floating-point) argument.",
+      "compute-engine's plain evaluation would otherwise leave Gamma at exact integer or rational arguments unevaluated (`@enumeratio/analytic` overrides it, reducing every integer and half-integer exactly); a floating-point argument, or N(), still reduces to a decimal.",
       "The three-argument form (`@enumeratio/analytic`) is Wolfram's generalized incomplete gamma, the integral between two limits: $\\Gamma(s, z_0, z_1) = \\Gamma(s, z_0) - \\Gamma(s, z_1)$. It is the only spelling here for the LOWER incomplete gamma $\\gamma(s, z) = \\Gamma(s, 0, z)$, which is what the Gamma-distribution CDF and the $\\chi^2$ CDF are built from. See [[GammaRegularized]] for the normalized version.",
       "$\\Gamma(1, z) = e^{-z}$, also supplied by `@enumeratio/analytic` -- exact and valid for symbolic $z$, which is what makes $\\Gamma(1, 0, z)$ collapse to $1 - e^{-z}$ as Wolfram's does.",
     ],
@@ -94,13 +96,6 @@ export const specialFunctions: readonly ReferenceEntry[] = [
           "The volume of a unit 4-ball is $\\pi^{n/2}/\\Gamma(n/2+1)$; at $n=4$ that's $\\pi^2/\\Gamma(3) = \\pi^2/2$",
       },
       {
-        expr: ["Gamma", ["Rational", 5, 2]],
-        expected: ["Gamma", ["Rational", 5, 2]],
-        category: "Possible issues",
-        caption:
-          "An exact rational argument is left unevaluated under plain evaluation -- pair with N() or use an inexact input like 2.5 for a decimal",
-      },
-      {
         expr: ["Equal", ["Power", ["Gamma", ["Rational", 1, 2]], 2], "Pi"],
         expected: "True",
         category: "Neat examples",
@@ -110,18 +105,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Gamma", ["List", 1, 2, 3, 4, 5]],
         expected: ["List", 1, 1, 2, 6, 24],
-        aspirational: true,
         category: "Scope",
         caption:
-          "compute-engine leaves integer $\\Gamma$ arguments symbolic under plain evaluation rather than reducing them to concrete factorials",
+          "Threads over a list and reduces each integer argument to the concrete factorial, overriding compute-engine's plain policy of leaving exact Gamma arguments symbolic",
       },
       {
         expr: ["Gamma", ["Rational", 5, 2]],
         expected: ["Multiply", ["Rational", 3, 4], ["Sqrt", "Pi"]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$\\Gamma(5/2)$ should evaluate to the exact closed form $\\frac{3}{4}\\sqrt{\\pi}$ via the half-integer recurrence; currently rational arguments are left symbolic",
+        caption: "$\\Gamma(5/2) = \\frac{3}{4}\\sqrt{\\pi}$, via the half-integer recurrence",
       },
       {
         expr: ["Gamma", 2.5, 0, 1.5],
@@ -241,11 +233,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["GammaLn", -1],
-        expected: "ComplexInfinity",
-        aspirational: true,
+        expected: "PositiveInfinity",
         category: "Scope",
+        divergence: {
+          wolfram:
+            "Wolfram's GammaLn[-1] is ComplexInfinity, the complex-analytic reading of a pole of Gamma.",
+        },
         caption:
-          "compute-engine treats GammaLn as a real log-magnitude and returns PositiveInfinity at Gamma's poles (rather than a complex-analytic ComplexInfinity)",
+          "At a pole of Gamma, compute-engine gives the real log-magnitude's divergence, PositiveInfinity, rather than treating GammaLn as complex-analytic",
       },
     ],
     seeAlso: ["Gamma", "LogGamma", "Digamma"],
@@ -1087,7 +1082,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "Recurrence inherited from Gamma's functional equation: $\\psi(z+1) = \\psi(z) + 1/z$.",
       "$\\psi(1/2) = -\\gamma - 2\\ln 2$.",
       "Poles at the nonpositive integers, the same poles as [[Gamma]].",
-      "compute-engine reduces Digamma to a numeric value only via N() or an inexact argument; exact integer or rational arguments stay symbolic under plain evaluation except at the poles.",
+      "compute-engine's plain evaluation would otherwise leave Digamma at an exact integer argument symbolic except at the poles; `@enumeratio/analytic` overrides it at every positive integer via $\\psi(n) = H_{n-1} - \\gamma$, reusing [[HarmonicNumber]]. A rational, non-integer argument, or N(), still goes through the numeric path.",
     ],
     examples: [
       {
@@ -1141,13 +1136,6 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption: "Harmonic numbers via Digamma: $\\psi(n+1) + \\gamma = H_n$, here $H_5$ at $n=5$",
       },
       {
-        expr: ["Digamma", 1],
-        expected: ["Digamma", 1],
-        category: "Possible issues",
-        caption:
-          "An exact integer argument is left unevaluated under plain evaluation -- pair with N() or use an inexact argument like 0.5 for a decimal",
-      },
-      {
         expr: ["Digamma", -0.5],
         expected: { num: "0.036489973978576520559" },
         category: "Neat examples",
@@ -1159,13 +1147,12 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         expected: [
           "List",
           ["Negate", "EulerGamma"],
-          ["Subtract", 1, "EulerGamma"],
-          ["Subtract", ["Rational", 3, 2], "EulerGamma"],
+          ["Add", 1, ["Negate", "EulerGamma"]],
+          ["Add", ["Rational", 3, 2], ["Negate", "EulerGamma"]],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Integer arguments should reduce to closed forms in $\\gamma$; currently each element is left symbolic",
+          "Threads over a list, reducing each positive-integer element to its closed form in $\\gamma$",
       },
     ],
     seeAlso: ["Gamma", "Zeta", "GammaLn"],

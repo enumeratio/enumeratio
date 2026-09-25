@@ -337,6 +337,7 @@ export const elementary: readonly ReferenceEntry[] = [
       "Odd function: $\\arcsin(-x) = -\\arcsin(x)$.",
       "Co-function with [[Arccos]]: $\\arcsin(x) + \\arccos(x) = \\pi/2$.",
       "Undoes [[Sin]] on its principal branch: $\\sin(\\arcsin(x)) = x$ for $x \\in [-1, 1]$.",
+      "Past $[-1, 1]$, a rational $x$ reduces to the exact closed form $\\operatorname{sign}(x)\\left(\\frac{\\pi}{2} - i\\ln(|x|+\\sqrt{x^2-1})\\right)$ (`@enumeratio/analytic`) -- the same branch compute-engine's own N(Arcsin(x)) already takes.",
     ],
     examples: [
       { expr: ["Arcsin", 0], expected: 0 },
@@ -365,22 +366,14 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Arcsin", 2],
-        expected: ["Arcsin", 2],
-        category: "Possible issues",
-        caption:
-          "Outside $[-1, 1]$ the real domain is exceeded, so this stays symbolic; N(...) gives a complex approximation",
-      },
-      {
-        expr: ["Arcsin", 2],
         expected: [
-          "Subtract",
-          ["Divide", "Pi", 2],
-          ["Multiply", "ImaginaryUnit", ["Ln", ["Add", 2, ["Sqrt", 3]]]],
+          "Add",
+          ["Multiply", ["Rational", 1, 2], "Pi"],
+          ["Multiply", ["Complex", 0, -1], ["Ln", ["Add", 2, ["Sqrt", 3]]]],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Should evaluate to the exact closed form $\\frac{\\pi}{2} - i\\ln(2+\\sqrt3)$; currently left symbolic, and even $N(\\dots)$ gives only a numeric approximation, not this exact form",
+          "Outside $[-1, 1]$, reduces to the exact closed form $\\frac{\\pi}{2} - i\\ln(2+\\sqrt3)$ -- the branch compute-engine's own $N(\\mathrm{Arcsin}(2))$ already takes, overriding its plain policy of leaving the call symbolic",
       },
     ],
     seeAlso: ["Sin", "Arccos", "Arctan"],
@@ -766,7 +759,7 @@ export const elementary: readonly ReferenceEntry[] = [
     details: [
       "Inverse of [[Exp]]: $\\ln(e^x) = x$.",
       "The natural logarithm. Note compute-engine's own [[Log]] is not a synonym: it defaults to base 10 (see that entry).",
-      "$\\ln(0) = -\\infty$; a negative real argument leaves the plain evaluation symbolic rather than jumping to a complex value.",
+      "$\\ln(0) = -\\infty$. A negative real argument reduces to the principal value $\\ln(-q) = \\ln(q) + i\\pi$ for a positive rational $q$ (`@enumeratio/analytic`); compute-engine's own plain evaluation would otherwise leave it symbolic.",
     ],
     examples: [
       { expr: ["Ln", 1], expected: 0 },
@@ -786,18 +779,10 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Ln", -1],
-        expected: ["Ln", -1],
-        category: "Possible issues",
-        caption:
-          "A negative real stays symbolic under plain evaluation; N(Ln(-1)) gives the complex value $i\\pi$",
-      },
-      {
-        expr: ["Ln", -1],
-        expected: ["Multiply", "ImaginaryUnit", "Pi"],
-        aspirational: true,
+        expected: ["Multiply", ["Complex", 0, 1], "Pi"],
         category: "Scope",
         caption:
-          "$\\mathrm{Ln}(-1)$ should evaluate to the exact principal value $i\\pi$; currently left symbolic, and $N(\\dots)$ gives only a numeric approximation of it",
+          "$\\mathrm{Ln}(-1) = i\\pi$, the principal value past the branch cut, overriding compute-engine's plain policy of leaving a negative-real Ln symbolic",
       },
     ],
     seeAlso: ["Exp", "Log", "Log2"],

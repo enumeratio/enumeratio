@@ -376,7 +376,8 @@ test("L(s, χ) numerically, including the critical strip and near s = 1", () => 
 // --- The third argument on Gamma / GammaRegularized ---------------------------------
 
 test("Gamma keeps its native one- and two-argument behaviour", () => {
-  exactJson(["Gamma", 5], ["Gamma", 5]); // exact integer stays symbolic, as in vanilla CE
+  // Exact integers and half-integers reduce (widened.ts's gammaExact), unlike vanilla CE.
+  exactJson(["Gamma", 5], 24);
   expect(num(["Gamma", 5])).toBe(24);
   expect(num(["Gamma", 2.5, 1.5])).toBeCloseTo(0.9305194427867924, 13);
   const c = ce.box(["Gamma", 2.5, ["Complex", 1.5, 1]]).N();

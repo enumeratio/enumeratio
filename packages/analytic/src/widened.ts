@@ -14,7 +14,7 @@ import {
 // compute-engine already gives changes. Declared by `declareAnalytic`.
 
 type Ops = readonly BoxedExpression[];
-type Rational = readonly [bigint, bigint];
+export type Rational = readonly [bigint, bigint];
 
 const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? (a < 0n ? -a : a) : gcd(b, a % b));
 const reduced = ([p, q]: Rational): Rational => {
@@ -107,6 +107,25 @@ const GAMMA_RATIOS: Record<string, (x: readonly Rational[]) => [Rational[], Rati
   },
 };
 
+/**
+ * Γ(x) as an exact expression, at an integer or half-integer x, reusing `gammaExact`
+ * directly (as opposed to `gammaRatio`, which combines several Gammas into a ratio and
+ * so treats a pole specially depending on which side of the ratio it's on). A bare
+ * `Gamma(x)` has no "side" — a pole is just `ComplexInfinity` — and anything neither an
+ * integer nor a half-integer is left for the caller to fall back on.
+ */
+export function gammaExactValue(ce: ComputeEngine, x: Rational): BoxedExpression | undefined {
+  const g = gammaExact(x);
+  if (g === undefined) return undefined;
+  if (g === "pole") return ce.symbol("ComplexInfinity");
+  return ce
+    .function("Multiply", [
+      ce.number([g.c[0], g.c[1]]),
+      ce.function("Power", [ce.Pi, ce.number([g.h, 2])]),
+    ])
+    .evaluate();
+}
+
 export function declareWidened(ce: ComputeEngine): void {
   // CatalanNumber is natively typed `integer`; its half-integers have to get past boxing.
   widenSignature(ce, "CatalanNumber", "(number) -> number", mayBeInteger);
@@ -145,5 +164,74 @@ export function declareWidened(ce: ComputeEngine): void {
     ["BernoulliB", 1],
     (ops) => ops.length === 2,
     () => (ops) => ce.function("BernoulliPolynomial", [...ops]).evaluate(),
+  );
+
+  // ψ(n) = H_{n−1} − γ, the standard digamma identity, exact at every positive integer n.
+  // Digamma already threads over a list natively; wrapping the scalar case is enough.
+  // `finish` follows the caller: N() wants a decimal (EulerGamma has no exact value to stop
+  // at), plain evaluate() keeps the exact symbolic form.
+  wrapOperator(
+    ce,
+    ["Digamma", 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return n !== undefined && n > 0n;
+    },
+    () => (ops, options) => {
+      const n = bigIntegerAt(ops[0])!;
+      const expr = ce.function("Subtract", [
+        ce.function("HarmonicNumber", [ce.number(n - 1n)]),
+        ce.symbol("EulerGamma"),
+      ]);
+      return options.numericApproximation ? expr.N() : expr.evaluate();
+    },
+  );
+
+  // Ln(−q) = Ln(q) + iπ for a positive rational q — the principal branch past the cut,
+  // which is Wolfram's convention and matches what N(Ln(−q)) already gives; plain
+  // evaluate() otherwise leaves a negative-real Ln symbolic.
+  wrapOperator(
+    ce,
+    ["Ln", 1],
+    (ops) => {
+      const q = bigRationalAt(ops[0]);
+      return q !== undefined && q[0] < 0n;
+    },
+    () => (ops, options) => {
+      const [p, q] = bigRationalAt(ops[0])!;
+      const expr = ce.function("Add", [
+        ce.function("Ln", [ce.number([-p, q])]),
+        ce.function("Multiply", ["ImaginaryUnit", "Pi"]),
+      ]);
+      return options.numericApproximation ? expr.N() : expr.evaluate();
+    },
+  );
+
+  // Arcsin(x) past the real domain [−1, 1]: sign(x)·(π/2 − i·ln(|x| + √(x² − 1))), the
+  // branch compute-engine's own N(Arcsin(x)) already takes (checked against Wolfram's
+  // documented continuation). Exact at a rational |x| > 1; Arccos is not touched here, as
+  // no reference example calls for it.
+  wrapOperator(
+    ce,
+    ["Arcsin", 1],
+    (ops) => {
+      const q = bigRationalAt(ops[0]);
+      return q !== undefined && (q[0] > q[1] || q[0] < -q[1]);
+    },
+    () => (ops, options) => {
+      const [p, q] = bigRationalAt(ops[0])!;
+      const negative = p < 0n;
+      const absP = negative ? -p : p;
+      const magnitude = ce.function("Add", [
+        ce.number([absP, q]),
+        ce.function("Sqrt", [ce.number([absP * absP - q * q, q * q])]),
+      ]);
+      const principal = ce.function("Subtract", [
+        ce.function("Divide", ["Pi", 2]),
+        ce.function("Multiply", ["ImaginaryUnit", ce.function("Ln", [magnitude])]),
+      ]);
+      const expr = negative ? ce.function("Negate", [principal]) : principal;
+      return options.numericApproximation ? expr.N() : expr.evaluate();
+    },
   );
 }

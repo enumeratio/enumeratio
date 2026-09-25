@@ -11709,13 +11709,6 @@
           "verdict": "agree"
         }
       },
-      "[\"Digamma\",1]": {
-        "wolfram": {
-          "input": "PolyGamma[1]",
-          "output": "-EulerGamma",
-          "verdict": "agree"
-        }
-      },
       "[\"Digamma\",-0.5]": {
         "wolfram": {
           "input": "PolyGamma[-0.5]",
