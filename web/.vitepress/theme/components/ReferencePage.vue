@@ -159,10 +159,18 @@ const followHash = async (): Promise<void> => {
   const id = decodeURIComponent(location.hash.slice(1));
   targeted.value = id;
   if (id === "") return;
+  // A case of a grouped example: show that case on its card, which is what's scrolled to.
+  let card = id;
+  const key = entry.value?.examples[targetedExample.value]?.group;
+  if (key !== undefined) {
+    const cases = casesOf(key);
+    activeCase[key] = cases.indexOf(targetedExample.value);
+    card = `example-${cases[0]! + 1}`;
+  }
   await nextTick();
-  openAncestorSections(id);
+  openAncestorSections(card);
   await nextTick();
-  highlight(id);
+  highlight(card);
 };
 onMounted(() => {
   void followHash();
@@ -180,14 +188,55 @@ const CATEGORY_ORDER = [
   "Possible issues",
   "Neat examples",
 ];
+// Examples sharing a `group` are cases of one example: a single card, where the first
+// member sits, cycling through them. `activeCase` is the shown case's position per group.
+const activeCase = reactive<Record<string, number>>({});
+// `#example-N` is example N; `#example-N=X` is case X of the card example N heads (the
+// `target=choice` form EnvironmentPreview reads too). Every case keeps its own `#example-N`.
+const membersOf = (key: string): number[] =>
+  (entry.value?.examples ?? []).flatMap((ex, i) => (ex.group === key ? [i] : []));
+const targetedExample = computed((): number => {
+  const m = /^example-(\d+)(?:=(\d+))?$/.exec(targeted.value);
+  if (!m) return -1;
+  const n = Number(m[1]) - 1;
+  const key = entry.value?.examples[n]?.group;
+  if (m[2] === undefined || key === undefined) return n;
+  const members = membersOf(key);
+  return members[members.indexOf(n) + Number(m[2]) - 1] ?? -1;
+});
+const shown = (ex: { hidden?: boolean }, i: number): boolean =>
+  // Kept as data, not rendered -- unless a deep link asks for it.
+  !ex.hidden || i === targetedExample.value;
+const casesOf = (key: string): number[] =>
+  membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
+const cycle = (key: string, cases: readonly number[], step: number): void => {
+  activeCase[key] = ((activeCase[key] ?? 0) + step + cases.length) % cases.length;
+};
 const grouped = computed(() => {
   const list = entry.value?.examples ?? [];
-  const byCategory = new Map<string, { ex: (typeof list)[number]; i: number }[]>();
-  list.forEach((ex, i) => {
-    if (ex.hidden) return; // kept as data, not rendered
-    const category = ex.category ?? "Basic";
+  type Card = {
+    ex: (typeof list)[number];
+    i: number;
+    first: number;
+    key?: string;
+    cases: number[];
+  };
+  const byCategory = new Map<string, Card[]>();
+  const placed = new Set<string>();
+  list.forEach((first, f) => {
+    if (!shown(first, f)) return;
+    const key = first.group;
+    if (key !== undefined && placed.has(key)) return;
+    let card: Card = { ex: first, i: f, first: f, cases: [f] };
+    if (key !== undefined) {
+      placed.add(key);
+      const cases = casesOf(key);
+      const i = cases[Math.min(activeCase[key] ?? 0, cases.length - 1)]!;
+      card = { ex: list[i]!, i, first: f, key, cases };
+    }
+    const category = first.category ?? "Basic";
     const group = byCategory.get(category) ?? [];
-    group.push({ ex, i });
+    group.push(card);
     byCategory.set(category, group);
   });
   const rank = (c: string): number => {
@@ -288,9 +337,9 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
           >
         </summary>
         <div
-          v-for="{ ex, i } in group.items"
-          :key="i"
-          :id="`example-${i + 1}`"
+          v-for="{ ex, i, first, key, cases } in group.items"
+          :key="key ?? i"
+          :id="`example-${first + 1}`"
           class="ref-example"
           :class="{
             'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && !dirty[i],
@@ -300,9 +349,15 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
             'is-edited': dirty[i],
           }"
         >
+          <div v-if="key && cases.length > 1" class="ref-cases">
+            <button aria-label="Previous case" @click="cycle(key, cases, -1)">‹</button>
+            <span>{{ cases.indexOf(i) + 1 }} / {{ cases.length }}</span>
+            <button aria-label="Next case" @click="cycle(key, cases, 1)">›</button>
+          </div>
           <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
           <p v-if="ex.caption" class="ref-caption" v-html="linkify(ex.caption)"></p>
           <notatio-cell
+            :key="i"
             format="mathjson"
             :value="toJson(ex.expr)"
             :out-form="entry.outForm ?? 'standard'"
@@ -598,6 +653,23 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
   cursor: pointer;
 }
 .ref-view button:hover {
+  color: var(--vp-c-brand-1);
+}
+.ref-cases {
+  float: right;
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  color: var(--vp-c-text-2);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+.ref-cases button {
+  padding: 0 0.35rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+}
+.ref-cases button:hover {
   color: var(--vp-c-brand-1);
 }
 .ref-caption {

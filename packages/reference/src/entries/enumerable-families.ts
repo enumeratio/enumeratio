@@ -449,6 +449,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "RootedUnlabeledTrees(n)",
+        library: "enumeratio-collections",
         description:
           "every rooted tree on $n$ nodes with unordered children, one per isomorphism class.",
       },
@@ -458,7 +459,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the level sequence: node depths in canonical preorder, root first at depth 0. Canonical means a node's children are generated weight-descending, ties broken by ascending own rank — the order `At` unranks in, so isomorphic labellings collapse to one entry.",
       "$UnlabeledFreeTrees(n)$ is the unrooted counterpart: a free tree canonically rooted at its centroid uses the same level-sequence encoding.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["RootedUnlabeledTrees", 6]],
+        expected: 20,
+        category: "Basic",
+        caption: "$Count(RootedUnlabeledTrees(6)) = 20$, A000081",
+      },
+    ],
     enumerate: { expr: "RootedUnlabeledTrees(6)", columns: "Max" },
     seeAlso: ["UnlabeledFreeTrees", "Count", "At"],
   },
@@ -470,6 +478,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "UnlabeledFreeTrees(n)",
+        library: "enumeratio-collections",
         description:
           "every tree on $n$ unlabelled nodes with no distinguished root, one per isomorphism class.",
       },
@@ -479,7 +488,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is a level sequence, exactly as for $RootedUnlabeledTrees$, but rooted at the tree's centroid rather than an arbitrary node.",
       "See [[Binomial]] for the correction term and [[RootedUnlabeledTrees]] for the shared encoding and children-multiset kernel.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["UnlabeledFreeTrees", 7]],
+        expected: 11,
+        category: "Basic",
+        caption: "$Count(UnlabeledFreeTrees(7)) = 11$, A000055",
+      },
+    ],
     enumerate: { expr: "UnlabeledFreeTrees(7)", columns: "Max" },
     seeAlso: ["RootedUnlabeledTrees", "Binomial", "Count", "At"],
   },
@@ -492,6 +508,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "PhylogeneticTrees(n)",
+        library: "enumeratio-collections",
         description:
           "every rooted binary tree with leaves labeled $1, …, n$ and unlabeled internal nodes.",
       },
@@ -501,7 +518,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Built by successive insertion: start from the cherry $\\{1,2\\}$, then for $k = 3, …, n$ attach leaf $k$ at one of $2k-3$ places — above the current root, or subdividing one of the tree's edges.",
       "Each element is the digit sequence $(d_3, …, d_n)$ with $d_k \\in [0, 2k-3)$ recording that insertion choice at each step; $At$ unranks it as a mixed-radix number in those insertion-step radices.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["PhylogeneticTrees", 5]],
+        expected: 105,
+        category: "Basic",
+        caption: "$Count(PhylogeneticTrees(5)) = 105 = (2 \\cdot 5 - 3)!!$, A001147",
+      },
+    ],
     enumerate: { expr: "PhylogeneticTrees(5)", columns: "Max" },
     seeAlso: ["Factorial2", "Count", "At"],
   },
@@ -514,6 +538,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "NonCrossingTrees(n)",
+        library: "enumeratio-collections",
         description:
           "every spanning tree on $n+1$ points around a circle with no two edges crossing.",
       },
@@ -523,7 +548,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "In bijection (Flajolet & Noy 1999) with the ternary trees on $n$ internal nodes; each element reuses that encoding as its flat preorder arity word — $3n+1$ entries, each $0$ (leaf) or $3$ (internal node, followed in preorder by its three children).",
       "The $tree$ glyph draws an element directly from this word, since it is already a preorder child-count sequence.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["NonCrossingTrees", 5]],
+        expected: 273,
+        category: "Basic",
+        caption: "$Count(NonCrossingTrees(5)) = 273 = \\binom{15}{5}/11$, A001764",
+      },
+    ],
     enumerate: { expr: "NonCrossingTrees(3)", glyph: "tree" },
     seeAlso: ["Binomial", "CatalanNumber", "Count", "At"],
   },
@@ -536,6 +568,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "BinaryBracelets(n)",
+        library: "enumeratio-collections",
         description: "the bracelets of $n$ black-or-white beads on a necklace that can flip.",
       },
     ],
@@ -544,7 +577,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the lexicographically-least word in its rotation-and-reflection orbit; that canonical word's 1-count is an invariant of the whole orbit.",
       "$At$ unranks over these canonical words in ascending lexicographic order.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["BinaryBracelets", 6]],
+        expected: 13,
+        category: "Basic",
+        caption: "$Count(BinaryBracelets(6)) = 13$, A000029",
+      },
+    ],
     enumerate: { expr: "BinaryBracelets(6)", columns: "Descents, Ascents" },
     seeAlso: ["KBracelets", "Totient", "Count", "At"],
   },
@@ -557,6 +597,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "KBracelets(n, k)",
+        library: "enumeratio-collections",
         description: "the bracelets of $n$ beads, each one of $k$ colours.",
       },
     ],
@@ -565,7 +606,21 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the lexicographically-least word in its rotation-and-reflection orbit, over letters $0,…,k-1$.",
       "$At$ unranks over these canonical words in ascending lexicographic order.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["KBracelets", 4, 3]],
+        expected: 21,
+        category: "Basic",
+        caption: "$Count(KBracelets(4, 3)) = 21$: bracelets of length 4 over a 3-letter alphabet",
+      },
+      {
+        expr: ["Equal", ["Count", ["KBracelets", 5, 2]], ["Count", ["BinaryBracelets", 5]]],
+        expected: "True",
+        category: "Properties",
+        caption:
+          "$KBracelets(n, 2)$ agrees with [[BinaryBracelets]]$(n)$ — same Burnside sum over $D_n$",
+      },
+    ],
     enumerate: { expr: "KBracelets(4, 3)", columns: "Descents, Ascents" },
     seeAlso: ["BinaryBracelets", "Totient", "Count", "At"],
   },
@@ -578,6 +633,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "TriStrings(n)",
+        library: "enumeratio-collections",
         description: "the length-$n$ binary strings avoiding three 1s in a row.",
       },
     ],
@@ -586,7 +642,15 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the bit string itself, as a list of 0s and 1s.",
       "$At$ unranks via the same combinatorial-number-system walk as the other binary-word families: at each position, the number of valid completions with a leading 0 sizes the block that sorts first.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["TriStrings", 6]],
+        expected: 44,
+        category: "Basic",
+        caption:
+          "$Count(TriStrings(6)) = 44$: binary strings of length 6 with no run of 3 consecutive 1s",
+      },
+    ],
     enumerate: { expr: "TriStrings(6)", columns: "Descents, Ascents" },
     seeAlso: ["PrimitiveBinaryStrings", "Count", "At"],
   },
@@ -599,6 +663,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "PrimitiveBinaryStrings(n)",
+        library: "enumeratio-collections",
         description:
           "the length-$n$ binary strings that are not themselves a shorter word repeated.",
       },
@@ -608,7 +673,15 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Every primitive word's $n$ rotations are pairwise distinct and together form the orbit of exactly one length-$n$ Lyndon word, so the family is the union of every such orbit.",
       "Each element is the bit string itself; $At$ unranks over the rotations of the binary Lyndon words, sorted ascending lexicographically.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["PrimitiveBinaryStrings", 6]],
+        expected: 54,
+        category: "Basic",
+        caption:
+          "$Count(PrimitiveBinaryStrings(6)) = 54$, A027375: aperiodic binary strings of length 6",
+      },
+    ],
     enumerate: { expr: "PrimitiveBinaryStrings(6)", columns: "Descents, Ascents" },
     seeAlso: ["TriStrings", "MoebiusMu", "Count", "At"],
   },
@@ -621,6 +694,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "TernaryGrayCodes(n)",
+        library: "enumeratio-collections",
         description: "the $3^n$ base-3 digit strings of length $n$, Gray-code ordered.",
       },
     ],
@@ -629,7 +703,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the digit string itself, as a list over $\\{0,1,2\\}$.",
       "$At$ unranks directly into that Gray-code order, so consecutive indices always differ in exactly one digit, by exactly 1.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["TernaryGrayCodes", 4]],
+        expected: 81,
+        category: "Basic",
+        caption: "$Count(TernaryGrayCodes(4)) = 3^4 = 81$",
+      },
+    ],
     enumerate: { expr: "TernaryGrayCodes(4)", columns: "Descents, Ascents" },
     seeAlso: ["Count", "At"],
   },
@@ -642,6 +723,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "StirlingPermutations(n)",
+        library: "enumeratio-collections",
         description:
           "the $(2n-1)!!$ permutations of $\\{1,1,…,n,n\\}$ with that betweenness property.",
       },
@@ -651,7 +733,20 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Built by inserting the pair $(k,k)$, for $k=2,…,n$ increasing, into any of the $2(k-1)+1$ gaps of a Stirling permutation of order $k-1$ — every gap is valid because a later pair always carries a larger label.",
       "Each element is the length-$2n$ word itself; $At$ unranks the per-$k$ gap choices as mixed-radix digits (radix $2k-1$ at level $k$), combined by the standard Horner scheme.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["StirlingPermutations", 4]],
+        expected: 105,
+        category: "Basic",
+        caption: "$Count(StirlingPermutations(4)) = 105 = 7!!$, A001147",
+      },
+      {
+        expr: ["Equal", ["Count", ["StirlingPermutations", 4]], ["Factorial2", 7]],
+        expected: "True",
+        category: "Properties",
+        caption: "$Count(StirlingPermutations(n)) = (2n-1)!!$. See [[Factorial2]]",
+      },
+    ],
     enumerate: {
       expr: "StirlingPermutations(4)",
       columns: "Descents, Ascents, MajorIndex, Inversions",
@@ -667,6 +762,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "BaxterPermutations(n)",
+        library: "enumeratio-collections",
         description: "the Baxter permutations of $\\{1, …, n\\}$.",
       },
     ],
@@ -675,7 +771,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the one-line word $[\\pi(1), …, \\pi(n)]$, as in [[SymmetricGroup]].",
       "$At$ enumerates all $n!$ permutations in lexicographic (factorial-number-system) order and indexes into those satisfying the avoidance, so the family stays a filtered slice of [[SymmetricGroup]]'s own order.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["BaxterPermutations", 4]],
+        expected: 22,
+        category: "Basic",
+        caption: "$Count(BaxterPermutations(4)) = 22$, A001181",
+      },
+    ],
     enumerate: {
       expr: "BaxterPermutations(4)",
       columns: "Descents, Inversions",
@@ -692,6 +795,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "BooleanPermutations(n)",
+        library: "enumeratio-collections",
         description: "the permutations of $\\{1, …, n\\}$ whose inversions are all adjacent.",
       },
     ],
@@ -700,7 +804,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       'As implemented here this is NOT Tenner\'s "Boolean permutations" $Av(321, 3412)$, counted by $F(2n-1)$ (A001519, $1, 1, 2, 5, 13, …$); the two readings first differ at $n = 3$ (3 here against 5 there).',
       "Each permutation is a product of pairwise non-adjacent adjacent transpositions — a bijection with independent sets of the path graph on $\\{1, …, n-1\\}$, i.e. with a length-$(n-1)$ Fibonacci word. $At$ unranks that word and applies its transpositions to the identity.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["BooleanPermutations", 5]],
+        expected: 8,
+        category: "Basic",
+        caption: "$Count(BooleanPermutations(5)) = F(6) = 8$. See [[Fibonacci]]",
+      },
+    ],
     enumerate: {
       expr: "BooleanPermutations(4)",
       columns: "Descents, Inversions",
@@ -717,6 +828,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "GrassmannianPermutations(n)",
+        library: "enumeratio-collections",
         description: "the permutations of $\\{1, …, n\\}$ with at most one descent.",
       },
     ],
@@ -725,7 +837,25 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       'A permutation with at most one descent is the sorted-ascending concatenation of a value-subset $A$ (the "first block") with its sorted-ascending complement, split at the descent; every subset gives such a permutation except that the $n+1$ prefix subsets $\\{1, …, k\\}$ all collapse to the identity.',
       "$At$ fixes the identity at rank $0$ and, for increasing block size $k = 1, …, n-1$, unranks $A$ from the size-$k$ subsets in colex order ([[Binomial]]-many minus the one prefix subset already spoken for).",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["GrassmannianPermutations", 5]],
+        expected: 27,
+        category: "Basic",
+        caption: "$Count(GrassmannianPermutations(5)) = 2^5 - 5 = 27$, A000325",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Count", ["GrassmannianPermutations", 5]],
+          ["Count", ["CograssmannianPermutations", 5]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption:
+          "Grassmannian and Cograssmannian permutations share the same count, $2^n - n$, since value-complementing swaps descents for ascents",
+      },
+    ],
     enumerate: {
       expr: "GrassmannianPermutations(4)",
       columns: "Descents, Inversions",
@@ -742,6 +872,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "CograssmannianPermutations(n)",
+        library: "enumeratio-collections",
         description: "the permutations of $\\{1, …, n\\}$ with at most one ascent.",
       },
     ],
@@ -750,7 +881,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the one-line word of the complemented permutation.",
       "$At$ unranks the Grassmannian permutation of the same rank and applies the value-complement, so it inherits that family's order (identity first, then increasing first-block size).",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["CograssmannianPermutations", 5]],
+        expected: 27,
+        category: "Basic",
+        caption: "$Count(CograssmannianPermutations(5)) = 2^5 - 5 = 27$, A000325",
+      },
+    ],
     enumerate: {
       expr: "CograssmannianPermutations(4)",
       columns: "Ascents, Inversions",
@@ -767,6 +905,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "NonCrossingPermutations(n)",
+        library: "enumeratio-collections",
         description:
           "the permutations of $\\{1, …, n\\}$ whose cycles are a non-crossing set partition.",
       },
@@ -776,7 +915,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "As implemented, cyclic order within a block is unconstrained; requiring each cycle's elements to increase (the interval $[e, (1\\,2\\,…\\,n)]$ in absolute order) instead gives the Catalan reading $1, 2, 5, 14, …$",
       "Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those whose cycles are non-crossing.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["NonCrossingPermutations", 5]],
+        expected: 105,
+        category: "Basic",
+        caption: "$Count(NonCrossingPermutations(5)) = 105$",
+      },
+    ],
     enumerate: {
       expr: "NonCrossingPermutations(4)",
       columns: "CycleCount, FixedPoints",
@@ -793,6 +939,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "SeparablePermutations(n)",
+        library: "enumeratio-collections",
         description: "the permutations of $\\{1, …, n\\}$ built up by direct and skew sums.",
       },
     ],
@@ -801,7 +948,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2413$ and $3142$ — there is no closed-form unrank of the permutation itself.",
       "Separable permutations are exactly those avoiding every non-trivial [[SimplePermutations]] pattern beyond length $2$ — every one decomposes recursively as a direct or skew sum.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["SeparablePermutations", 5]],
+        expected: 90,
+        category: "Basic",
+        caption: "$Count(SeparablePermutations(5)) = 90$, the large Schröder numbers A006318",
+      },
+    ],
     enumerate: {
       expr: "SeparablePermutations(4)",
       columns: "Descents, Inversions",
@@ -818,6 +972,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "SimplePermutations(n)",
+        library: "enumeratio-collections",
         description: "the permutations of $\\{1, …, n\\}$ with no non-trivial interval.",
       },
     ],
@@ -826,7 +981,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Every permutation of size $\\geq 4$ decomposes into simple permutations by substitution, which makes this family the atoms [[SeparablePermutations]] and every other substitution-closed class are built from.",
       "Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those with no non-trivial interval.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["SimplePermutations", 5]],
+        expected: 6,
+        category: "Basic",
+        caption: "$Count(SimplePermutations(5)) = 6$, A111111",
+      },
+    ],
     enumerate: {
       expr: "SimplePermutations(5)",
       columns: "Descents, Inversions",
@@ -843,6 +1005,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "SmoothPermutations(n)",
+        library: "enumeratio-collections",
         description: "the permutations of $\\{1, …, n\\}$ whose Schubert variety is smooth.",
       },
     ],
@@ -851,7 +1014,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $3412$ and $4231$.",
       "Smoothness of the Schubert variety $X_\\pi$ is equivalent to pattern-avoidance (Lakshmibai–Sandhya, 1990); no closed-form unrank of the permutation itself is implemented.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["SmoothPermutations", 5]],
+        expected: 88,
+        category: "Basic",
+        caption: "$Count(SmoothPermutations(5)) = 88$, A032351",
+      },
+    ],
     enumerate: {
       expr: "SmoothPermutations(4)",
       columns: "Descents, Inversions",
@@ -868,6 +1038,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "VexillaryPermutations(n)",
+        library: "enumeratio-collections",
         description: "the permutations of $\\{1, …, n\\}$ avoiding $2143$.",
       },
     ],
@@ -876,7 +1047,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2143$.",
       'Vexillary ("flag") permutations are exactly those whose Schubert polynomial is a single Schur polynomial — the name is Lascoux and Schützenberger\'s.',
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["VexillaryPermutations", 5]],
+        expected: 103,
+        category: "Basic",
+        caption: "$Count(VexillaryPermutations(5)) = 103$, A005802",
+      },
+    ],
     enumerate: {
       expr: "VexillaryPermutations(4)",
       columns: "Descents, MajorIndex",
@@ -893,6 +1071,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "SemistandardTableaux(size, max_entry)",
+        library: "enumeratio-collections",
         description:
           "the SSYT of `size` cells over every partition shape, entries from 1 to `max_entry`.",
       },
@@ -902,7 +1081,21 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the filling's rows: weakly increasing left to right, strictly increasing top to bottom — semistandard, not standard, so entries may repeat within a row (unlike a standard Young tableau).",
       "Unranked in shape-then-entries order: by row-length shape first, then the flattened filling.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["SemistandardTableaux", 4, 3]],
+        expected: 39,
+        category: "Basic",
+        caption:
+          "$Count(SemistandardTableaux(4, 3)) = 39$: every SSYT of 4 cells with entries in $\\{1,2,3\\}$, summed over shape",
+      },
+      {
+        expr: ["At", ["SemistandardTableaux", 3, 2], 1],
+        expected: ["List", ["List", 1, 1], ["List", 2]],
+        category: "Scope",
+        caption: "The first SSYT of 3 cells with entries in $\\{1, 2\\}$, as a list of rows",
+      },
+    ],
     enumerate: { expr: "SemistandardTableaux(4, 3)", columns: "Length" },
     seeAlso: ["IntegerPartitions", "Count", "At"],
   },
@@ -915,6 +1108,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "GelfandTsetlin(rows, max_entry)",
+        library: "enumeratio-collections",
         description:
           "the triangular arrays with `rows` rows (lengths $n, n-1, …, 1$), entries from 0 to `max_entry`, each row interlacing the row above it.",
       },
@@ -924,7 +1118,15 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the array's rows, top (length $n$) to bottom (length 1); row $i{+}1$ interlaces row $i$: within a row entries weakly decrease, and $row_i[j] \\ge row_{i+1}[j] \\ge row_i[j+1]$.",
       "Unranked in backtracking generation order — rows built top-down, each row's entries enumerated within the bounds the row above imposes.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["GelfandTsetlin", 3, 2]],
+        expected: 35,
+        category: "Basic",
+        caption:
+          "$Count(GelfandTsetlin(3, 2)) = 35$: Gelfand–Tsetlin patterns with 3 rows, entries up to 2",
+      },
+    ],
     enumerate: { expr: "GelfandTsetlin(3, 2)" },
     seeAlso: ["Count", "At"],
   },
@@ -937,6 +1139,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "AlternatingSignMatrices(size)",
+        library: "enumeratio-collections",
         description: "the ASMs of size `size` × `size`.",
       },
     ],
@@ -945,7 +1148,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the matrix's rows; every row and column sums to 1, and every partial sum reading a row or column from its start lies in $\\{0, 1\\}$ — the alternating-sign condition.",
       "The permutation matrices are exactly the ASMs with no $-1$ entry; $A(n) \\ge n!$ for every $n$, with equality only at $n \\le 2$.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["AlternatingSignMatrices", 4]],
+        expected: 42,
+        category: "Basic",
+        caption: "$Count(AlternatingSignMatrices(4)) = 42$, the ASM numbers A005130",
+      },
+    ],
     enumerate: { expr: "AlternatingSignMatrices(4)" },
     seeAlso: ["Count", "At"],
   },
@@ -958,6 +1168,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "SkewPartitions(size)",
+        library: "enumeratio-collections",
         description:
           "the reduced skew shapes $\\lambda/\\mu$ with `size` cells total ($|\\lambda| - |\\mu| = n$).",
       },
@@ -967,7 +1178,21 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       'Each element packs both partitions as `[λ, μ]`; "reduced" means every row of $\\lambda$ strictly exceeds the matching row of $\\mu$ (no empty row) and every column $1..\\lambda_1$ is covered by some row\'s cells (no empty column).',
       "Unranked lexicographically, by $\\lambda$ first, then by $\\mu$.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["SkewPartitions", 4]],
+        expected: 28,
+        category: "Basic",
+        caption:
+          "$Count(SkewPartitions(4)) = 28$: pairs $(\\lambda, \\mu)$ with $\\mu \\subseteq \\lambda$ and $|\\lambda| - |\\mu| = 4$",
+      },
+      {
+        expr: ["At", ["SkewPartitions", 3], 1],
+        expected: ["List", ["List", 1, 1, 1], ["List"]],
+        category: "Scope",
+        caption: "The first skew shape of size 3, as an outer/inner partition pair",
+      },
+    ],
     enumerate: { expr: "SkewPartitions(4)" },
     seeAlso: ["IntegerPartitions", "Count", "At"],
   },
@@ -980,6 +1205,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "SkewStandardTableaux(size)",
+        library: "enumeratio-collections",
         description:
           "the standard fillings of every reduced skew shape $\\lambda/\\mu$ with `size` cells, entries $1..n$ each once, increasing along rows and down columns.",
       },
@@ -989,7 +1215,15 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element packs `[λ, μ, rowWord]`, where `rowWord[i]` is the 0-based row entry $i{+}1$ was placed in, in placement order; $\\mu = 0$ (every row) recovers a plain standard Young tableau.",
       "Unranked by shape ([[SkewPartitions]]'s $\\lambda$-then-$\\mu$ order), then by row-word within a shape.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["SkewStandardTableaux", 3]],
+        expected: 24,
+        category: "Basic",
+        caption:
+          "$Count(SkewStandardTableaux(3)) = 24$: standard fillings of every skew shape of 3 cells",
+      },
+    ],
     enumerate: { expr: "SkewStandardTableaux(3)" },
     seeAlso: ["SkewPartitions", "Count", "At"],
   },
@@ -1002,6 +1236,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "ShiftedStandardTableaux(size)",
+        library: "enumeratio-collections",
         description:
           "the standard fillings of every shifted diagram of a strict partition of `size`, entries $1..n$ increasing along rows and down columns.",
       },
@@ -1011,7 +1246,15 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the diagram's rows; row $i$ (0-indexed) occupies columns $i..i{+}shape[i]{-}1$, so a cell shares a column with the cell one row up and one entry over.",
       "Unranked by shape (strict partitions of $n$, in distinct-parts order), then by recursive corner-removal order within a shape — the value $n$ always sits at a removable corner.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["ShiftedStandardTableaux", 5]],
+        expected: 6,
+        category: "Basic",
+        caption:
+          "$Count(ShiftedStandardTableaux(5)) = 6$: standard fillings of every shifted shape of a strict partition of 5",
+      },
+    ],
     enumerate: { expr: "ShiftedStandardTableaux(6)", columns: "Length" },
     seeAlso: ["Count", "At"],
   },
@@ -1024,6 +1267,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "StandardTableauPairs(size)",
+        library: "enumeratio-collections",
         description:
           "the $(P, Q)$ pairs of size `size`, in bijection with the permutations of `size` via RSK.",
       },
@@ -1033,7 +1277,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is `[P, Q]`, two standard Young tableaux of the same shape; unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.",
       "Ranking inverts RSK back to a permutation and reads off [[SymmetricGroup]]'s rank — so the two families share one underlying order.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["StandardTableauPairs", 4]],
+        expected: 24,
+        category: "Basic",
+        caption: "$Count(StandardTableauPairs(4)) = 4! = 24$: RSK is a bijection with permutations",
+      },
+    ],
     enumerate: { expr: "StandardTableauPairs(4)" },
     seeAlso: ["SymmetricGroup", "Factorial", "Count", "At"],
   },
@@ -1046,6 +1297,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "PlanePartitions(size)",
+        library: "enumeratio-collections",
         description: "the plane partitions summing to `size` (OEIS A000219).",
       },
     ],
@@ -1054,7 +1306,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the array's rows; entries weakly decrease along every row and down every column, and the whole array sums to $n$.",
       "Unranked in shape-then-entries order: by row-length shape first, then the flattened array.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["PlanePartitions", 4]],
+        expected: 13,
+        category: "Basic",
+        caption: "$Count(PlanePartitions(4)) = 13$, A000219",
+      },
+    ],
     enumerate: { expr: "PlanePartitions(6)", columns: "Length" },
     seeAlso: ["IntegerPartitions", "Count", "At"],
   },
@@ -1067,6 +1326,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signatures: [
       {
         call: "BoxedPlanePartitions(a, b, c)",
+        library: "enumeratio-collections",
         description: "the plane partitions fitting an $a \\times b \\times c$ box.",
       },
     ],
@@ -1075,7 +1335,20 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the array's rows, [[PlanePartitions]]'s ragged carrier: entries weakly decrease along every row and down every column, with trailing zeros trimmed rather than stored.",
       "Unranked in shape-then-entries order, same as [[PlanePartitions]]; rank/unrank enumerate the box and index into it, so stick to small boxes.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", ["BoxedPlanePartitions", 2, 2, 2]],
+        expected: 20,
+        category: "Basic",
+        caption: "$Count(BoxedPlanePartitions(2,2,2)) = 20$, MacMahon's box formula",
+      },
+      {
+        expr: ["Count", ["BoxedPlanePartitions", 1, 1, 4]],
+        expected: 5,
+        category: "Scope",
+        caption: "A degenerate $1 \\times 1 \\times n$ box: $Count = n + 1$",
+      },
+    ],
     enumerate: { expr: "BoxedPlanePartitions(2, 2, 2)" },
     seeAlso: ["PlanePartitions", "Count", "At"],
   },
@@ -2276,7 +2549,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "$At(NarcissisticNumbers, k)$ unranks from a table verified against every OEIS term -- $At(NarcissisticNumbers, 10) = 153$. Terms past the 43rd exceed what a numeric collection element can represent exactly (IEEE-754 double precision, $2^{53}-1$); $At$ answers $NaN$ for those -- a known value, just not one this element type can carry, same as an out-of-range $At$ elsewhere in the library.",
       "Membership goes through [[Element]]: $Element(153, NarcissisticNumbers)$ is true ($1^3+5^3+3^3=153$), $Element(154, NarcissisticNumbers)$ is false.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Count", "NarcissisticNumbers"],
+        expected: 88,
+        category: "Properties",
+        caption: "Narcissistic (Armstrong) numbers are proven finite: exactly 88 exist.",
+      },
+    ],
     enumerate: { expr: "Take(NarcissisticNumbers, 20)" },
     seeAlso: ["Count", "At", "Element", "KaprekarNumbers"],
   },

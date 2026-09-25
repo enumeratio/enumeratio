@@ -945,6 +945,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption:
           "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
       },
+      {
+        expr: ["StieltjesGamma", 3, 1],
+        expected: ["StieltjesGamma", 3],
+        category: "Properties",
+        caption:
+          "$\\gamma_3(1) = \\gamma_3$ — order 1 at $a=1$ is just the ordinary Stieltjes constant.",
+      },
     ],
     // \u03b3\u2099(a) IS a Laurent coefficient of \u03b6(s, a) at s = 1, so its definition is a limit of an
     // n-th derivative \u2014 and compute-engine cannot take it: the head collapses to the pole at
@@ -1385,6 +1392,21 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         caption:
           "To exactly 30 significant digits; not yet -- 31 come back, and the last of the first 30 is not correctly rounded",
       },
+      {
+        expr: ["N", ["HarmonicNumber", 2.5, 1]],
+        expected: { num: "1.680372305546776047837" },
+        category: "Scope",
+        caption:
+          "Order 1 gives $H_z$ itself, not the $\\zeta(1)$ pole another order's formula would hit.",
+        group: "harmonic-order-one",
+      },
+      {
+        expr: ["HarmonicNumber", 10, 1],
+        expected: ["Rational", 7381, 2520],
+        category: "Scope",
+        caption: "At an integer, order 1 agrees exactly with the one-argument $H_{10}$.",
+        group: "harmonic-order-one",
+      },
     ],
     implementations: [
       {
@@ -1443,6 +1465,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 8.653727912911013,
         caption: "the third zero of $J_0$",
       },
+      {
+        expr: [
+          "Chop",
+          [
+            "Subtract",
+            ["Tan", ["N", ["BesselJZero", ["Rational", 3, 2], 1]]],
+            ["N", ["BesselJZero", ["Rational", 3, 2], 1]],
+          ],
+        ],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\tan(j_{3/2,1}) = j_{3/2,1}$ — the sinc function's first turning point",
+      },
     ],
     primitive: "numeric",
     implementations: [
@@ -1494,6 +1529,34 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 0,
         category: "Properties",
         caption: "$\\psi$ vanishes exactly there, by construction",
+      },
+      {
+        expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 0]]]],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\psi(x_n) = 0$ exactly at digamma's own claimed zero, $n = 0$",
+        group: "digamma-vanishes",
+      },
+      {
+        expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 1]]]],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\psi(x_n) = 0$ at $n = 1$",
+        group: "digamma-vanishes",
+      },
+      {
+        expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 3]]]],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\psi(x_n) = 0$ at $n = 3$",
+        group: "digamma-vanishes",
+      },
+      {
+        expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 4]]]],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\psi(x_n) = 0$ at $n = 4$",
+        group: "digamma-vanishes",
       },
     ],
     primitive: "numeric",
@@ -1547,6 +1610,15 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["MultiZetaValue", 1, 2],
         category: "Possible issues",
         caption: "$s_1 < 2$ stays symbolic — outside the depth-2, both-weights-$\\ge2$ scope",
+      },
+      {
+        expr: [
+          "Chop",
+          ["Subtract", ["N", ["MultiZetaValue", 2, 2]], ["Multiply", 0.75, ["N", ["Zeta", 4]]]],
+        ],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\zeta(2, 2) = \\tfrac34\\zeta(4)$, one of Fungrim's exact closed forms",
       },
     ],
     primitive: "numeric",
@@ -1655,6 +1727,62 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["SloaneA", "'A060691'", 5],
         category: "Possible issues",
         caption: "An OEIS id outside the declared alias table stays symbolic",
+      },
+      {
+        expr: ["SloaneA", "'A000040'", 5],
+        expected: 11,
+        category: "Scope",
+        caption: "A000040(5) = 11, the 5th prime.",
+        group: "oeis-lookup",
+      },
+      {
+        expr: ["SloaneA", "'A000041'", 10],
+        expected: 42,
+        category: "Scope",
+        caption: "A000041(10) = 42, the number of partitions of 10.",
+        group: "oeis-lookup",
+      },
+      {
+        expr: ["SloaneA", "'A000110'", 5],
+        expected: 52,
+        category: "Scope",
+        caption: "A000110(5) = 52, the 5th Bell number.",
+        group: "oeis-lookup",
+      },
+      {
+        expr: ["SloaneA", "'A000142'", 5],
+        expected: 120,
+        category: "Scope",
+        caption: "A000142(5) = 120 = 5!.",
+        group: "oeis-lookup",
+      },
+      {
+        expr: ["SloaneA", "'A000720'", 20],
+        expected: 8,
+        category: "Scope",
+        caption: "A000720(20) = 8: $\\pi(20)$, the prime-counting function.",
+        group: "oeis-lookup",
+      },
+      {
+        expr: ["SloaneA", "'A027641'", 12],
+        expected: -691,
+        category: "Scope",
+        caption: "A027641(12) = −691, $B_{12}$'s numerator.",
+        group: "bernoulli-fraction",
+      },
+      {
+        expr: ["SloaneA", "'A027642'", 12],
+        expected: 2730,
+        category: "Scope",
+        caption: "A027642(12) = 2730, $B_{12}$'s denominator.",
+        group: "bernoulli-fraction",
+      },
+      {
+        expr: ["SloaneA", "'A000793'", 15],
+        expected: 105,
+        category: "Scope",
+        caption: "A000793(15) = 105, Landau's function $g(15)$.",
+        group: "oeis-lookup",
       },
     ],
     primitive: "numeric",
@@ -2079,6 +2207,18 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 0.1471797367221067,
         caption: "$b = -1$ is a pole of $\\Gamma$, but the regularized form is finite there",
       },
+      {
+        expr: ["N", ["Hypergeometric0F1Regularized", -1, 2]],
+        expected: 3.7150355604584364,
+        category: "Basic",
+        caption: "At the pole $b = -1$ under N",
+      },
+      {
+        expr: ["Hypergeometric0F1Regularized", -1, 2],
+        expected: ["Hypergeometric0F1Regularized", -1, 2],
+        category: "Possible issues",
+        caption: "Exact arguments stay unevaluated; N gives the number",
+      },
     ],
     primitive: "numeric",
     implementations: [
@@ -2171,6 +2311,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Hypergeometric2F1Regularized", 1, 1, 2, 1.5],
         category: "Possible issues",
         caption: "$|z| \\ge 1$ stays symbolic — no continuation past the unit disc",
+      },
+      {
+        expr: ["N", ["Hypergeometric2F1Regularized", 1, 1, -1, 0.3]],
+        expected: 0.5247813411078712,
+        category: "Properties",
+        caption:
+          "stays finite at a nonpositive-integer lower parameter, since $1/\\Gamma$ vanishes there",
       },
     ],
     primitive: "numeric",
@@ -2351,6 +2498,12 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Continued off the integers",
       },
+      {
+        expr: ["Hyperfactorial", 10],
+        expected: { num: "215779412229418562091680268288e+15" },
+        category: "Scope",
+        caption: "$H(10)$, well past double range — exact bigint arithmetic, not a rounded double.",
+      },
     ],
     primitive: "numeric",
     implementations: [
@@ -2475,6 +2628,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Complex", -4.645279174278859, -13.812745325218817],
         category: "Scope",
         caption: "A branch other than 0 or -1, checked against `N[ProductLog[-3, -0.14], 16]`",
+      },
+      {
+        expr: ["N", ["LambertW", 1, 1]],
+        expected: ["Complex", -1.5339133197935744, 4.375185153061898],
+        category: "Scope",
+        caption:
+          "The branch $k = 1$, written in compute-engine's $(z, k)$ order — Wolfram's <code>ProductLog[1, 1]</code>",
+      },
+      {
+        expr: ["N", ["LambertW", -0.2, -1]],
+        expected: { num: "-2.54264135777352642429" },
+        category: "Scope",
+        caption: "The real branch $k = -1$ on $-1/e < z < 0$",
       },
     ],
     primitive: "kernel",
@@ -2899,6 +3065,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 1,
         category: "Scope",
         caption: "Exact at the elliptic point $i$",
+      },
+      {
+        expr: [
+          "N",
+          [
+            "KleinInvariantJ",
+            ["Multiply", ["Rational", 1, 2], ["Add", 1, ["Complex", 0, ["Sqrt", 163]]]],
+          ],
+        ],
+        expected: -151931373055998.97,
+        category: "Neat examples",
+        caption:
+          "Heegner number 163: $J\\bigl(\\tfrac{1+i\\sqrt{163}}2\\bigr) = -640320^3/1728$, to double precision",
       },
     ],
     primitive: "kernel",
@@ -3350,6 +3529,46 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "The absolute value of an interval straddling 0",
       },
+      {
+        expr: ["Cos", ["Interval", -1, 4]],
+        expected: ["Interval", -1, 1],
+        category: "Scope",
+        caption:
+          "A periodic head over an interval that contains a full swing covers its whole range",
+      },
+      {
+        expr: ["Sin", ["Interval", 1, 2]],
+        expected: ["Interval", ["Sin", 1], 1],
+        category: "Scope",
+        caption: "An interior maximum at $\\pi/2$ becomes the upper end",
+      },
+      {
+        expr: ["N", ["Gamma", ["Interval", 0.5, 3]]],
+        expected: ["Interval", { num: "0.885603194410888805432" }, 2],
+        category: "Scope",
+        caption: "$\\Gamma$ dips to its minimum $0.8856\\ldots$ inside $[0.5, 3]$",
+      },
+      {
+        expr: ["Zeta", ["Interval", 2, 3]],
+        expected: ["Interval", ["Zeta", 3], ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]],
+        category: "Scope",
+        caption: "$\\zeta$ is decreasing on $[2, 3]$, so the ends swap",
+      },
+      {
+        expr: ["Arctan", ["Interval", -1, 3]],
+        expected: ["Interval", ["Multiply", ["Rational", -1, 4], "Pi"], ["Arctan", 3]],
+        category: "Scope",
+      },
+      {
+        expr: ["Exp", ["Interval", -1, ["Ln", 2]]],
+        expected: ["Interval", ["Divide", 1, "ExponentialE"], 2],
+        category: "Scope",
+      },
+      {
+        expr: ["Max", ["Interval", 1, 3], ["Interval", -3, 5]],
+        expected: ["Interval", 1, 5],
+        category: "Scope",
+      },
     ],
     seeAlso: ["CenteredInterval", "Around"],
   },
@@ -3506,6 +3725,17 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Around", 0.9953222650189527, 0.00020666985354092054],
         category: "Scope",
         caption: "Through a special function, with its derivative as slope",
+      },
+      {
+        expr: ["N", ["Sin", ["Around", 1, 0.1]]],
+        expected: ["Around", 0.8414709848078965, 0.05403023058681398],
+        category: "Scope",
+        caption: "First-order propagation: the uncertainty scales by $|\\cos 1|$",
+      },
+      {
+        expr: ["Ln", ["Around", 2, 0.01]],
+        expected: ["Around", 0.6931471805599453, 0.005],
+        category: "Scope",
       },
     ],
     seeAlso: ["Interval", "CenteredInterval"],

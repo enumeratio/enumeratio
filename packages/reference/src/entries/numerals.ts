@@ -1062,6 +1062,49 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "composite base: 2 is not a unit of $\\mathbb{Z}_{10}$, so this declines",
         category: "Possible issues",
       },
+      {
+        expr: [
+          "Add",
+          ["AdicNumeral", 10, ["Rational", 1, 3], 8],
+          ["AdicNumeral", 10, ["Rational", 1, 3], 5],
+        ],
+        expected: ["AdicNumeral", 10, 33334, 5],
+        category: "Properties",
+        caption: "Adding two capped numerals keeps only the weaker operand's precision",
+      },
+      {
+        expr: ["Multiply", ["AdicNumeral", 5, 3, 6], 25],
+        expected: ["AdicNumeral", 5, 75, 8],
+        category: "Properties",
+        caption: "Multiplying by $p^2$ raises the absolute precision by 2 along with the value",
+      },
+      {
+        expr: ["Power", ["AdicNumeral", 10, 3], -1],
+        expected: ["AdicNumeral", 10, ["Rational", 1, 3]],
+        category: "Scope",
+        caption: "A negative power inverts exactly: $3^{-1}=1/3$ in $\\mathbf{Z}_{10}$",
+      },
+      {
+        expr: ["Add", ["AdicNumeral", 7, 2], ["AdicNumeral", 5, 2]],
+        expected: ["Add", ["AdicNumeral", 7, 2], ["AdicNumeral", 5, 2]],
+        category: "Possible issues",
+        caption: "Numerals over different bases never combine and stay unevaluated",
+      },
+      {
+        expr: ["AdicValuation", ["AdicNumeral", 10, 0]],
+        expected: "PositiveInfinity",
+        category: "Possible issues",
+        caption: "The exact zero has infinite valuation",
+        group: "zero-valuation",
+      },
+      {
+        expr: ["AdicValuation", ["AdicNumeral", 10, 0, 8]],
+        expected: 8,
+        category: "Possible issues",
+        caption:
+          "A capped zero is only $O(b^{\\mathrm{prec}})$, so its valuation is the precision itself",
+        group: "zero-valuation",
+      },
     ],
     seeAlso: ["AdicExpansion", "AdicValuation", "AdicSqrt", "HenselLift", "IntegerDigits"],
   },
@@ -1109,6 +1152,31 @@ export const numerals: readonly ReferenceEntry[] = [
         expr: ["AdicDigits", ["AdicNumeral", 10, ["Rational", 1, 3]], 6],
         expected: L(7, 6, 6, 6, 6, 6),
         caption: "as a list, least significant first",
+      },
+      {
+        expr: ["AdicExpansion", ["AdicNumeral", 10, 42]],
+        expected: "'42'",
+        category: "Scope",
+        caption: "A plain non-negative integer terminates with no infinite tail",
+      },
+      {
+        expr: ["AdicExpansion", ["AdicNumeral", 10, -1], 6],
+        expected: "'…999999'",
+        category: "Scope",
+        caption: "$-1$ is the all-9s repeating tail, since $-1=\\dots999$ in $\\mathbf{Z}_{10}$",
+      },
+      {
+        expr: ["AdicExpansion", ["AdicNumeral", 16, -1], 3],
+        expected: "'…[15][15][15]'",
+        category: "Scope",
+        caption:
+          "Digits at or above 10 print bracketed, as in $[15]$ for hexadecimal $-1$'s repeating digit",
+      },
+      {
+        expr: ["AdicDigits", ["AdicNumeral", 10, -1], 4],
+        expected: ["List", 9, 9, 9, 9],
+        category: "Scope",
+        caption: "Digits run least-significant first: $-1$'s first four 10-adic digits are all 9",
       },
     ],
     seeAlso: ["AdicNumeral", "IntegerDigits"],
@@ -1201,6 +1269,37 @@ export const numerals: readonly ReferenceEntry[] = [
         expected: ["AdicSqrt", ["AdicNumeral", 7, 3]],
         caption: "3 is not a square mod 7, so it has no 7-adic square root",
         category: "Possible issues",
+      },
+      {
+        expr: ["HenselLift", ["Subtract", ["Power", "x", 3], "x"], 1, 2, 6],
+        expected: ["HenselLift", ["Add", ["Power", "x", 3], ["Negate", "x"]], 1, 2, 6],
+        category: "Possible issues",
+        caption:
+          "Declines at a non-simple root: $f'(1)=2$ is not a unit mod 2, so Newton's step can't lift",
+      },
+      {
+        expr: [
+          "Multiply",
+          ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 5, 10, 8],
+          ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 6, 10, 8],
+        ],
+        expected: ["AdicNumeral", 10, 0, 8],
+        category: "Neat examples",
+        caption:
+          "The two roots of $x^2=x$ lifted in $\\mathbf{Z}_{10}$ are orthogonal idempotents: their product is 0",
+        group: "z10-idempotents",
+      },
+      {
+        expr: [
+          "Add",
+          ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 5, 10, 8],
+          ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 6, 10, 8],
+        ],
+        expected: ["AdicNumeral", 10, 1, 8],
+        category: "Neat examples",
+        caption:
+          "…and they sum to 1, splitting $\\mathbf{Z}_{10}$ via $\\mathbf{Z}_{10}\\cong\\mathbf{Z}_2\\times\\mathbf{Z}_5$",
+        group: "z10-idempotents",
       },
     ],
     seeAlso: ["AdicNumeral", "AdicExpansion"],

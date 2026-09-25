@@ -9757,7 +9757,7 @@
       "output": false
     }
   },
-  "special-functions/HurwitzZeta#21": {
+  "special-functions/HurwitzZeta#26": {
     "ours": {
       "input": "N(\\zeta(2, 1))",
       "output": "1.644\\,934\\,066\\,848\\,226\\,436\\,47"
@@ -9771,7 +9771,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#22": {
+  "special-functions/HurwitzZeta#27": {
     "ours": {
       "input": "N(\\zeta(2, 2))",
       "output": "0.644\\,934\\,066\\,848\\,226\\,436\\,47"
@@ -9785,7 +9785,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#23": {
+  "special-functions/HurwitzZeta#28": {
     "ours": {
       "input": "N(\\zeta(2, 3))",
       "output": "0.394\\,934\\,066\\,848\\,226\\,436\\,47"
@@ -9799,7 +9799,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#24": {
+  "special-functions/HurwitzZeta#29": {
     "ours": {
       "input": "N(\\zeta(2, 0.5))",
       "output": "4.934\\,802\\,200\\,544\\,679\\,309\\,42"
@@ -9813,7 +9813,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#25": {
+  "special-functions/HurwitzZeta#30": {
     "ours": {
       "input": "N(\\zeta(2, 0.25))",
       "output": "17.197\\,329\\,154\\,507\\,110\\,739\\,3"
@@ -9827,7 +9827,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#26": {
+  "special-functions/HurwitzZeta#31": {
     "ours": {
       "input": "N(\\zeta(2, 1.3))",
       "output": "1.134\\,253\\,434\\,996\\,619\\,354\\,36"
@@ -9841,7 +9841,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#27": {
+  "special-functions/HurwitzZeta#32": {
     "ours": {
       "input": "N(\\zeta(2, \\frac{7}{3}))",
       "output": "0.533\\,097\\,125\\,427\\,094\\,081\\,793"
@@ -9855,7 +9855,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#28": {
+  "special-functions/HurwitzZeta#33": {
     "ours": {
       "input": "N(\\zeta(2, 1+i))",
       "output": "0.463\\,000\\,096\\,622\\,763\\,76-0.794\\,233\\,542\\,759\\,319i"
@@ -9869,7 +9869,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#29": {
+  "special-functions/HurwitzZeta#34": {
     "ours": {
       "input": "N(\\zeta(2, 2-0.5i))",
       "output": "0.588\\,197\\,890\\,950\\,061\\,5+0.185\\,041\\,972\\,433\\,790\\,86i"
@@ -9883,7 +9883,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#30": {
+  "special-functions/HurwitzZeta#35": {
     "ours": {
       "input": "N(\\zeta(2, -0.5))",
       "output": "8.934\\,802\\,200\\,544\\,679"
@@ -9897,7 +9897,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#31": {
+  "special-functions/HurwitzZeta#36": {
     "ours": {
       "input": "N(\\zeta(2, -1.5))",
       "output": "9.379\\,246\\,644\\,989\\,124"
@@ -9911,7 +9911,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#32": {
+  "special-functions/HurwitzZeta#37": {
     "ours": {
       "input": "N(\\zeta(3, 1))",
       "output": "1.202\\,056\\,903\\,159\\,594\\,285\\,4"
@@ -9925,7 +9925,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#33": {
+  "special-functions/HurwitzZeta#38": {
     "ours": {
       "input": "N(\\zeta(3, 2))",
       "output": "0.202\\,056\\,903\\,159\\,594\\,285\\,4"
@@ -9939,7 +9939,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#34": {
+  "special-functions/HurwitzZeta#39": {
     "ours": {
       "input": "N(\\zeta(3, 3))",
       "output": "0.077\\,056\\,903\\,159\\,594\\,285\\,4"
@@ -9953,7 +9953,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#35": {
+  "special-functions/HurwitzZeta#40": {
     "ours": {
       "input": "N(\\zeta(3, 0.5))",
       "output": "8.414\\,398\\,322\\,117\\,159\\,997\\,8"
@@ -9967,7 +9967,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#36": {
+  "special-functions/HurwitzZeta#41": {
     "ours": {
       "input": "N(\\zeta(3, 0.25))",
       "output": "64.663\\,869\\,968\\,768\\,460\\,166\\,5"
@@ -9981,7 +9981,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#37": {
+  "special-functions/HurwitzZeta#42": {
     "ours": {
       "input": "N(\\zeta(3, 1.3))",
       "output": "0.599\\,231\\,257\\,325\\,978\\,296\\,35"
@@ -9995,7 +9995,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#38": {
+  "special-functions/HurwitzZeta#43": {
     "ours": {
       "input": "N(\\zeta(3, \\frac{7}{3}))",
       "output": "0.139\\,186\\,199\\,700\\,803\\,776\\,228"
@@ -10009,7 +10009,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#39": {
+  "special-functions/HurwitzZeta#44": {
     "ours": {
       "input": "N(\\zeta(3, 1+i))",
       "output": "-0.184\\,276\\,465\\,793\\,967\\,61-0.383\\,326\\,425\\,172\\,533\\,3i"
@@ -10023,7 +10023,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#40": {
+  "special-functions/HurwitzZeta#45": {
     "ours": {
       "input": "N(\\zeta(3, 2-0.5i))",
       "output": "0.153\\,693\\,633\\,730\\,308\\,25+0.104\\,226\\,347\\,413\\,732\\,64i"
@@ -10037,7 +10037,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#41": {
+  "special-functions/HurwitzZeta#46": {
     "ours": {
       "input": "N(\\zeta(3, -0.5))",
       "output": "0.414\\,398\\,322\\,117\\,16"
@@ -10051,7 +10051,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#42": {
+  "special-functions/HurwitzZeta#47": {
     "ours": {
       "input": "N(\\zeta(3, -1.5))",
       "output": "0.118\\,102\\,025\\,820\\,863\\,7"
@@ -10065,7 +10065,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#43": {
+  "special-functions/HurwitzZeta#48": {
     "ours": {
       "input": "N(\\zeta(5, 1))",
       "output": "1.036\\,927\\,755\\,143\\,369\\,926\\,33"
@@ -10079,7 +10079,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#44": {
+  "special-functions/HurwitzZeta#49": {
     "ours": {
       "input": "N(\\zeta(5, 2))",
       "output": "0.036\\,927\\,755\\,143\\,369\\,926\\,33"
@@ -10093,7 +10093,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#45": {
+  "special-functions/HurwitzZeta#50": {
     "ours": {
       "input": "N(\\zeta(5, 3))",
       "output": "0.005\\,677\\,755\\,143\\,369\\,926\\,33"
@@ -10107,7 +10107,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#46": {
+  "special-functions/HurwitzZeta#51": {
     "ours": {
       "input": "N(\\zeta(5, 0.5))",
       "output": "32.144\\,760\\,409\\,444\\,467\\,716\\,3"
@@ -10121,7 +10121,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#47": {
+  "special-functions/HurwitzZeta#52": {
     "ours": {
       "input": "N(\\zeta(5, 0.25))",
       "output": "1\\,024.348\\,974\\,526\\,580\\,572\\,23"
@@ -10135,7 +10135,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#48": {
+  "special-functions/HurwitzZeta#53": {
     "ours": {
       "input": "N(\\zeta(5, 1.3))",
       "output": "0.288\\,556\\,067\\,518\\,526\\,559\\,52"
@@ -10149,7 +10149,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#49": {
+  "special-functions/HurwitzZeta#54": {
     "ours": {
       "input": "N(\\zeta(5, \\frac{7}{3}))",
       "output": "0.017\\,985\\,276\\,918\\,875\\,062\\,236\\,9"
@@ -10163,7 +10163,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#50": {
+  "special-functions/HurwitzZeta#55": {
     "ours": {
       "input": "N(\\zeta(5, 1+i))",
       "output": "-0.136\\,646\\,173\\,710\\,168\\,74+0.107\\,525\\,502\\,140\\,081\\,97i"
@@ -10177,7 +10177,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#51": {
+  "special-functions/HurwitzZeta#56": {
     "ours": {
       "input": "N(\\zeta(5, 2-0.5i))",
       "output": "0.012\\,993\\,573\\,083\\,069\\,943+0.028\\,877\\,271\\,795\\,314\\,092i"
@@ -10191,7 +10191,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#52": {
+  "special-functions/HurwitzZeta#57": {
     "ours": {
       "input": "N(\\zeta(5, -0.5))",
       "output": "0.144\\,760\\,409\\,444\\,467\\,716\\,272"
@@ -10205,7 +10205,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#53": {
+  "special-functions/HurwitzZeta#58": {
     "ours": {
       "input": "N(\\zeta(5, -1.5))",
       "output": "0.013\\,073\\,166\\,646\\,113\\,806\\,807\\,3"
@@ -10219,7 +10219,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#54": {
+  "special-functions/HurwitzZeta#59": {
     "ours": {
       "input": "N(\\zeta(-1, 1))",
       "output": "-0.08\\overline{3}"
@@ -10233,7 +10233,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#55": {
+  "special-functions/HurwitzZeta#60": {
     "ours": {
       "input": "N(\\zeta(-1, 2))",
       "output": "-1.08\\overline{3}"
@@ -10247,7 +10247,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#56": {
+  "special-functions/HurwitzZeta#61": {
     "ours": {
       "input": "N(\\zeta(-1, 3))",
       "output": "-3.08\\overline{3}"
@@ -10261,7 +10261,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#57": {
+  "special-functions/HurwitzZeta#62": {
     "ours": {
       "input": "N(\\zeta(-1, 0.5))",
       "output": "0.041\\overline{6}"
@@ -10275,7 +10275,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#58": {
+  "special-functions/HurwitzZeta#63": {
     "ours": {
       "input": "N(\\zeta(-1, 0.25))",
       "output": "0.010\\,41\\overline{6}"
@@ -10289,7 +10289,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#59": {
+  "special-functions/HurwitzZeta#64": {
     "ours": {
       "input": "N(\\zeta(-1, 1.3))",
       "output": "-0.278\\overline{3}"
@@ -10303,7 +10303,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#60": {
+  "special-functions/HurwitzZeta#65": {
     "ours": {
       "input": "N(\\zeta(-1, \\frac{7}{3}))",
       "output": "-1.63\\overline{8}"
@@ -10317,7 +10317,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#61": {
+  "special-functions/HurwitzZeta#66": {
     "ours": {
       "input": "N(\\zeta(-1, 1+i))",
       "output": "0.41\\overline{6}-0.5i"
@@ -10331,7 +10331,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#62": {
+  "special-functions/HurwitzZeta#67": {
     "ours": {
       "input": "N(\\zeta(-1, 2-0.5i))",
       "output": "-0.958\\,333\\,333\\,333\\,333\\,35+0.75i"
@@ -10345,7 +10345,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#63": {
+  "special-functions/HurwitzZeta#68": {
     "ours": {
       "input": "N(\\zeta(-1, -0.5))",
       "output": "-0.458\\overline{3}"
@@ -10359,7 +10359,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#64": {
+  "special-functions/HurwitzZeta#69": {
     "ours": {
       "input": "N(\\zeta(-1, -1.5))",
       "output": "-1.958\\overline{3}"
@@ -10373,7 +10373,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#65": {
+  "special-functions/HurwitzZeta#70": {
     "ours": {
       "input": "N(\\zeta(-2, 1))",
       "output": "0"
@@ -10387,7 +10387,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#66": {
+  "special-functions/HurwitzZeta#71": {
     "ours": {
       "input": "N(\\zeta(-2, 2))",
       "output": "-1"
@@ -10401,7 +10401,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#67": {
+  "special-functions/HurwitzZeta#72": {
     "ours": {
       "input": "N(\\zeta(-2, 3))",
       "output": "-5"
@@ -10415,7 +10415,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#68": {
+  "special-functions/HurwitzZeta#73": {
     "ours": {
       "input": "N(\\zeta(-2, 0.5))",
       "output": "0"
@@ -10429,7 +10429,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#69": {
+  "special-functions/HurwitzZeta#74": {
     "ours": {
       "input": "N(\\zeta(-2, 0.25))",
       "output": "-0.015\\,625"
@@ -10443,7 +10443,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#70": {
+  "special-functions/HurwitzZeta#75": {
     "ours": {
       "input": "N(\\zeta(-2, 1.3))",
       "output": "-0.104"
@@ -10457,7 +10457,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#71": {
+  "special-functions/HurwitzZeta#76": {
     "ours": {
       "input": "N(\\zeta(-2, \\frac{7}{3}))",
       "output": "-1.901\\,234\\,567\\,901\\,234\\,567\\,87"
@@ -10471,7 +10471,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#72": {
+  "special-functions/HurwitzZeta#77": {
     "ours": {
       "input": "N(\\zeta(-2, 1+i))",
       "output": "0.5+0.166\\,666\\,666\\,666\\,666\\,66i"
@@ -10485,7 +10485,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#73": {
+  "special-functions/HurwitzZeta#78": {
     "ours": {
       "input": "N(\\zeta(-2, 2-0.5i))",
       "output": "-0.624\\overline{9}+1.041\\,666\\,666\\,666\\,666\\,3i"
@@ -10499,7 +10499,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#74": {
+  "special-functions/HurwitzZeta#79": {
     "ours": {
       "input": "N(\\zeta(-2, -0.5))",
       "output": "0.25"
@@ -10513,7 +10513,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#75": {
+  "special-functions/HurwitzZeta#80": {
     "ours": {
       "input": "N(\\zeta(-2, -1.5))",
       "output": "2.5"
@@ -10527,7 +10527,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#76": {
+  "special-functions/HurwitzZeta#81": {
     "ours": {
       "input": "N(\\zeta(-3, 1))",
       "output": "0.008\\overline{3}"
@@ -10541,7 +10541,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#77": {
+  "special-functions/HurwitzZeta#82": {
     "ours": {
       "input": "N(\\zeta(-3, 2))",
       "output": "-0.991\\overline{6}"
@@ -10555,7 +10555,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#78": {
+  "special-functions/HurwitzZeta#83": {
     "ours": {
       "input": "N(\\zeta(-3, 3))",
       "output": "-8.991\\overline{6}"
@@ -10569,7 +10569,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#79": {
+  "special-functions/HurwitzZeta#84": {
     "ours": {
       "input": "N(\\zeta(-3, 0.5))",
       "output": "-0.007\\,291\\overline{6}"
@@ -10583,7 +10583,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#80": {
+  "special-functions/HurwitzZeta#85": {
     "ours": {
       "input": "N(\\zeta(-3, 0.25))",
       "output": "-0.000\\,455\\,729\\,166\\,666\\,666\\,666\\,675"
@@ -10597,7 +10597,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#81": {
+  "special-functions/HurwitzZeta#86": {
     "ours": {
       "input": "N(\\zeta(-3, 1.3))",
       "output": "-0.029\\,691\\,666\\,666\\,666\\,666\\,666\\,7"
@@ -10611,7 +10611,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#82": {
+  "special-functions/HurwitzZeta#87": {
     "ours": {
       "input": "N(\\zeta(-3, \\frac{7}{3}))",
       "output": "-2.411\\,419\\,753\\,086\\,419\\,753\\,1"
@@ -10625,7 +10625,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#83": {
+  "special-functions/HurwitzZeta#88": {
     "ours": {
       "input": "N(\\zeta(-3, 1+i))",
       "output": "0.008\\overline{3}+0.5i"
@@ -10639,7 +10639,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#84": {
+  "special-functions/HurwitzZeta#89": {
     "ours": {
       "input": "N(\\zeta(-3, 2-0.5i))",
       "output": "-0.194\\,791\\,666\\,666\\,666\\,175+1.312\\,499\\,999\\,999\\,999\\,6i"
@@ -10653,7 +10653,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#85": {
+  "special-functions/HurwitzZeta#90": {
     "ours": {
       "input": "N(\\zeta(-3, -0.5))",
       "output": "-0.132\\,291\\,666\\,666\\,666\\,666\\,667"
@@ -10667,7 +10667,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#86": {
+  "special-functions/HurwitzZeta#91": {
     "ours": {
       "input": "N(\\zeta(-3, -1.5))",
       "output": "-3.507\\,291\\,666\\,666\\,666\\,666\\,67"
@@ -10681,7 +10681,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#87": {
+  "special-functions/HurwitzZeta#92": {
     "ours": {
       "input": "N(\\zeta(0.5, 1))",
       "output": "-1.460\\,354\\,508\\,809\\,586\\,812\\,89"
@@ -10695,7 +10695,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#88": {
+  "special-functions/HurwitzZeta#93": {
     "ours": {
       "input": "N(\\zeta(0.5, 2))",
       "output": "-2.460\\,354\\,508\\,809\\,586\\,812\\,89"
@@ -10709,7 +10709,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#89": {
+  "special-functions/HurwitzZeta#94": {
     "ours": {
       "input": "N(\\zeta(0.5, 3))",
       "output": "-3.167\\,461\\,289\\,996\\,134\\,337\\,29"
@@ -10723,7 +10723,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#90": {
+  "special-functions/HurwitzZeta#95": {
     "ours": {
       "input": "N(\\zeta(0.5, 0.5))",
       "output": "-0.604\\,898\\,643\\,421\\,630\\,370\\,25"
@@ -10737,7 +10737,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#91": {
+  "special-functions/HurwitzZeta#96": {
     "ours": {
       "input": "N(\\zeta(0.5, 0.25))",
       "output": "0.239\\,963\\,524\\,495\\,630\\,955\\,345"
@@ -10751,7 +10751,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#92": {
+  "special-functions/HurwitzZeta#97": {
     "ours": {
       "input": "N(\\zeta(0.5, 1.3))",
       "output": "-1.814\\,589\\,078\\,040\\,583\\,901\\,17"
@@ -10765,7 +10765,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#93": {
+  "special-functions/HurwitzZeta#98": {
     "ours": {
       "input": "N(\\zeta(0.5, \\frac{7}{3}))",
       "output": "-2.716\\,159\\,539\\,287\\,537\\,659\\,38"
@@ -10779,7 +10779,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#94": {
+  "special-functions/HurwitzZeta#99": {
     "ours": {
       "input": "N(\\zeta(0.5, 1+i))",
       "output": "-1.798\\,813\\,744\\,486\\,485\\,1-1.093\\,576\\,875\\,721\\,108i"
@@ -10793,7 +10793,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#95": {
+  "special-functions/HurwitzZeta#100": {
     "ours": {
       "input": "N(\\zeta(0.5, 2-0.5i))",
       "output": "-2.491\\,474\\,235\\,288\\,009\\,7+0.398\\,328\\,078\\,684\\,049\\,24i"
@@ -10807,7 +10807,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#96": {
+  "special-functions/HurwitzZeta#101": {
     "ours": {
       "input": "N(\\zeta(0.5, -0.5))",
       "output": "-0.604\\,898\\,643\\,421\\,629\\,9-1.414\\,213\\,562\\,373\\,095i"
@@ -10821,7 +10821,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#97": {
+  "special-functions/HurwitzZeta#102": {
     "ours": {
       "input": "N(\\zeta(0.5, -1.5))",
       "output": "-0.604\\,898\\,643\\,421\\,629\\,9-2.230\\,710\\,143\\,300\\,821i"
@@ -10835,7 +10835,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#98": {
+  "special-functions/HurwitzZeta#103": {
     "ours": {
       "input": "N(\\zeta(1.5, 1))",
       "output": "2.612\\,375\\,348\\,685\\,488\\,343\\,35"
@@ -10849,7 +10849,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#99": {
+  "special-functions/HurwitzZeta#104": {
     "ours": {
       "input": "N(\\zeta(1.5, 2))",
       "output": "1.612\\,375\\,348\\,685\\,488\\,343\\,35"
@@ -10863,7 +10863,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#100": {
+  "special-functions/HurwitzZeta#105": {
     "ours": {
       "input": "N(\\zeta(1.5, 3))",
       "output": "1.258\\,821\\,958\\,092\\,214\\,581\\,15"
@@ -10877,7 +10877,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#101": {
+  "special-functions/HurwitzZeta#106": {
     "ours": {
       "input": "N(\\zeta(1.5, 0.5))",
       "output": "4.776\\,537\\,947\\,554\\,833\\,248\\,57"
@@ -10891,7 +10891,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#102": {
+  "special-functions/HurwitzZeta#107": {
     "ours": {
       "input": "N(\\zeta(1.5, 0.25))",
       "output": "10.213\\,055\\,360\\,466\\,600\\,738\\,9"
@@ -10905,7 +10905,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#103": {
+  "special-functions/HurwitzZeta#108": {
     "ours": {
       "input": "N(\\zeta(1.5, 1.3))",
       "output": "2.151\\,955\\,476\\,957\\,877\\,364\\,69"
@@ -10919,7 +10919,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#104": {
+  "special-functions/HurwitzZeta#109": {
     "ours": {
       "input": "N(\\zeta(1.5, \\frac{7}{3}))",
       "output": "1.464\\,254\\,249\\,199\\,488\\,108\\,37"
@@ -10933,7 +10933,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#105": {
+  "special-functions/HurwitzZeta#110": {
     "ours": {
       "input": "N(\\zeta(1.5, 1+i))",
       "output": "1.650\\,934\\,751\\,949\\,365-0.967\\,357\\,065\\,698\\,767\\,9i"
@@ -10947,7 +10947,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#106": {
+  "special-functions/HurwitzZeta#111": {
     "ours": {
       "input": "N(\\zeta(1.5, 2-0.5i))",
       "output": "1.556\\,595\\,777\\,765\\,751\\,3+0.242\\,106\\,322\\,325\\,134\\,4i"
@@ -10961,7 +10961,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#107": {
+  "special-functions/HurwitzZeta#112": {
     "ours": {
       "input": "N(\\zeta(1.5, -0.5))",
       "output": "4.776\\,537\\,947\\,554\\,832+2.828\\,427\\,124\\,746\\,19i"
@@ -10975,7 +10975,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#108": {
+  "special-functions/HurwitzZeta#113": {
     "ours": {
       "input": "N(\\zeta(1.5, -1.5))",
       "output": "4.776\\,537\\,947\\,554\\,832+3.372\\,758\\,178\\,698\\,007i"
@@ -10989,7 +10989,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#109": {
+  "special-functions/HurwitzZeta#114": {
     "ours": {
       "input": "N(\\zeta(2.5, 1))",
       "output": "1.341\\,487\\,257\\,250\\,917\\,179\\,76"
@@ -11003,7 +11003,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#110": {
+  "special-functions/HurwitzZeta#115": {
     "ours": {
       "input": "N(\\zeta(2.5, 2))",
       "output": "0.341\\,487\\,257\\,250\\,917\\,179\\,76"
@@ -11017,7 +11017,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#111": {
+  "special-functions/HurwitzZeta#116": {
     "ours": {
       "input": "N(\\zeta(2.5, 3))",
       "output": "0.164\\,710\\,561\\,954\\,280\\,298\\,66"
@@ -11031,7 +11031,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#112": {
+  "special-functions/HurwitzZeta#117": {
     "ours": {
       "input": "N(\\zeta(2.5, 0.5))",
       "output": "6.247\\,110\\,634\\,568\\,811\\,485\\,29"
@@ -11045,7 +11045,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#113": {
+  "special-functions/HurwitzZeta#118": {
     "ours": {
       "input": "N(\\zeta(2.5, 0.25))",
       "output": "32.847\\,451\\,954\\,697\\,685\\,862\\,7"
@@ -11059,7 +11059,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#114": {
+  "special-functions/HurwitzZeta#119": {
     "ours": {
       "input": "N(\\zeta(2.5, 1.3))",
       "output": "0.783\\,218\\,553\\,908\\,237\\,343\\,364"
@@ -11073,7 +11073,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#115": {
+  "special-functions/HurwitzZeta#120": {
     "ours": {
       "input": "N(\\zeta(2.5, \\frac{7}{3}))",
       "output": "0.257\\,447\\,605\\,150\\,205\\,592\\,649"
@@ -11087,7 +11087,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#116": {
+  "special-functions/HurwitzZeta#121": {
     "ours": {
       "input": "N(\\zeta(2.5, 1+i))",
       "output": "0.018\\,739\\,837\\,095\\,718\\,206-0.589\\,547\\,708\\,338\\,161\\,3i"
@@ -11101,7 +11101,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#117": {
+  "special-functions/HurwitzZeta#122": {
     "ours": {
       "input": "N(\\zeta(2.5, 2-0.5i))",
       "output": "0.287\\,820\\,164\\,365\\,366\\,45+0.139\\,696\\,684\\,393\\,935\\,65i"
@@ -11115,7 +11115,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#118": {
+  "special-functions/HurwitzZeta#123": {
     "ours": {
       "input": "N(\\zeta(2.5, -0.5))",
       "output": "6.247\\,110\\,634\\,568\\,814\\,5-5.656\\,854\\,249\\,492\\,38i"
@@ -11129,7 +11129,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#119": {
+  "special-functions/HurwitzZeta#124": {
     "ours": {
       "input": "N(\\zeta(2.5, -1.5))",
       "output": "6.247\\,110\\,634\\,568\\,814\\,5-6.019\\,741\\,618\\,793\\,591i"
@@ -11143,7 +11143,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#120": {
+  "special-functions/HurwitzZeta#125": {
     "ours": {
       "input": "N(\\zeta(-0.5, 1))",
       "output": "-0.207\\,886\\,224\\,977\\,354\\,566\\,017"
@@ -11157,7 +11157,7 @@
       "output": false
     }
   },
-  "special-functions/HurwitzZeta#121": {
+  "special-functions/HurwitzZeta#126": {
     "ours": {
       "input": "N(\\zeta(-0.5, 2))",
       "output": "-1.207\\,886\\,224\\,977\\,354\\,566\\,02"
@@ -11171,7 +11171,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#122": {
+  "special-functions/HurwitzZeta#127": {
     "ours": {
       "input": "N(\\zeta(-0.5, 3))",
       "output": "-2.622\\,099\\,787\\,350\\,449\\,614\\,82"
@@ -11185,7 +11185,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#123": {
+  "special-functions/HurwitzZeta#128": {
     "ours": {
       "input": "N(\\zeta(-0.5, 0.5))",
       "output": "0.060\\,888\\,465\\,580\\,594\\,919\\,998\\,8"
@@ -11199,7 +11199,7 @@
       "output": false
     }
   },
-  "special-functions/HurwitzZeta#124": {
+  "special-functions/HurwitzZeta#129": {
     "ours": {
       "input": "N(\\zeta(-0.5, 0.25))",
       "output": "0.090\\,322\\,258\\,761\\,246\\,243\\,978\\,7"
@@ -11213,7 +11213,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#125": {
+  "special-functions/HurwitzZeta#130": {
     "ours": {
       "input": "N(\\zeta(-0.5, 1.3))",
       "output": "-0.454\\,363\\,742\\,420\\,250\\,792\\,944"
@@ -11227,7 +11227,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#126": {
+  "special-functions/HurwitzZeta#131": {
     "ours": {
       "input": "N(\\zeta(-0.5, \\frac{7}{3}))",
       "output": "-1.639\\,604\\,524\\,699\\,008\\,349\\,52"
@@ -11241,7 +11241,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#127": {
+  "special-functions/HurwitzZeta#132": {
     "ours": {
       "input": "N(\\zeta(-0.5, 1+i))",
       "output": "0.087\\,845\\,927\\,820\\,186\\,56-0.795\\,101\\,413\\,593\\,405\\,8i"
@@ -11255,7 +11255,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#128": {
+  "special-functions/HurwitzZeta#133": {
     "ours": {
       "input": "N(\\zeta(-0.5, 2-0.5i))",
       "output": "-1.157\\,801\\,113\\,527\\,324\\,3+0.617\\,711\\,202\\,310\\,647\\,9i"
@@ -11269,7 +11269,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#129": {
+  "special-functions/HurwitzZeta#134": {
     "ours": {
       "input": "N(\\zeta(-0.5, -0.5))",
       "output": "0.060\\,888\\,465\\,580\\,597\\,545+0.707\\,106\\,781\\,186\\,547\\,5i"
@@ -11283,7 +11283,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#130": {
+  "special-functions/HurwitzZeta#135": {
     "ours": {
       "input": "N(\\zeta(-0.5, -1.5))",
       "output": "0.060\\,888\\,465\\,580\\,597\\,545+1.931\\,851\\,652\\,578\\,136\\,4i"
@@ -11297,7 +11297,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#131": {
+  "special-functions/HurwitzZeta#136": {
     "ours": {
       "input": "N(\\zeta(2+i, 1))",
       "output": "1.150\\,355\\,703\\,254\\,902\\,6-0.437\\,530\\,865\\,919\\,607\\,9i"
@@ -11311,7 +11311,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#132": {
+  "special-functions/HurwitzZeta#137": {
     "ours": {
       "input": "N(\\zeta(2+i, 2))",
       "output": "0.150\\,355\\,703\\,254\\,902\\,6-0.437\\,530\\,865\\,919\\,607\\,9i"
@@ -11325,7 +11325,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#133": {
+  "special-functions/HurwitzZeta#138": {
     "ours": {
       "input": "N(\\zeta(2+i, 3))",
       "output": "-0.041\\,954\\,022\\,086\\,090\\,365-0.277\\,790\\,546\\,841\\,199\\,2i"
@@ -11339,7 +11339,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#134": {
+  "special-functions/HurwitzZeta#139": {
     "ours": {
       "input": "N(\\zeta(2+i, 0.5))",
       "output": "3.507\\,498\\,848\\,201\\,83+2.031\\,398\\,808\\,933\\,987i"
@@ -11353,7 +11353,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#135": {
+  "special-functions/HurwitzZeta#140": {
     "ours": {
       "input": "N(\\zeta(2+i, 0.25))",
       "output": "3.634\\,220\\,798\\,824\\,735+15.195\\,370\\,185\\,570\\,54i"
@@ -11367,7 +11367,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#136": {
+  "special-functions/HurwitzZeta#141": {
     "ours": {
       "input": "N(\\zeta(2+i, 1.3))",
       "output": "0.634\\,178\\,650\\,268\\,899\\,9-0.536\\,110\\,383\\,539\\,212\\,5i"
@@ -11381,7 +11381,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#137": {
+  "special-functions/HurwitzZeta#142": {
     "ours": {
       "input": "N(\\zeta(2+i, \\frac{7}{3}))",
       "output": "0.055\\,133\\,389\\,636\\,795\\,21-0.376\\,862\\,655\\,048\\,367\\,3i"
@@ -11395,7 +11395,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#138": {
+  "special-functions/HurwitzZeta#143": {
     "ours": {
       "input": "N(\\zeta(2+i, 1+i))",
       "output": "-0.635\\,304\\,343\\,440\\,011\\,7-1.658\\,848\\,643\\,605\\,894\\,5i"
@@ -11409,7 +11409,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#139": {
+  "special-functions/HurwitzZeta#144": {
     "ours": {
       "input": "N(\\zeta(2+i, 2-0.5i))",
       "output": "0.185\\,393\\,489\\,012\\,994\\,57-0.270\\,373\\,692\\,422\\,873\\,57i"
@@ -11423,7 +11423,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#140": {
+  "special-functions/HurwitzZeta#145": {
     "ours": {
       "input": "N(\\zeta(2+i, -0.5))",
       "output": "74.710\\,382\\,758\\,763\\,76+61.175\\,424\\,806\\,622\\,686i"
@@ -11437,7 +11437,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#141": {
+  "special-functions/HurwitzZeta#146": {
     "ours": {
       "input": "N(\\zeta(2+i, -1.5))",
       "output": "84.161\\,237\\,415\\,055\\,38+57.118\\,643\\,354\\,285\\,85i"
@@ -11451,7 +11451,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#142": {
+  "special-functions/HurwitzZeta#147": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 1))",
       "output": "0.532\\,736\\,670\\,974\\,232\\,4-0.078\\,896\\,513\\,425\\,832\\,66i"
@@ -11465,7 +11465,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#143": {
+  "special-functions/HurwitzZeta#148": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 2))",
       "output": "-0.467\\,263\\,329\\,025\\,767\\,45-0.078\\,896\\,513\\,425\\,832\\,66i"
@@ -11479,7 +11479,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#144": {
+  "special-functions/HurwitzZeta#149": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 3))",
       "output": "-0.122\\,906\\,273\\,682\\,167\\,75+0.538\\,694\\,142\\,619\\,970\\,2i"
@@ -11493,7 +11493,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#145": {
+  "special-functions/HurwitzZeta#150": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 0.5))",
       "output": "-0.802\\,188\\,434\\,581\\,936\\,7+0.791\\,260\\,035\\,759\\,494\\,3i"
@@ -11507,7 +11507,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#146": {
+  "special-functions/HurwitzZeta#151": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 0.25))",
       "output": "-0.821\\,315\\,995\\,611\\,799\\,2-2.117\\,913\\,546\\,901\\,069i"
@@ -11521,7 +11521,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#147": {
+  "special-functions/HurwitzZeta#152": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 1.3))",
       "output": "0.157\\,370\\,174\\,830\\,998\\,36-0.442\\,640\\,214\\,770\\,041\\,1i"
@@ -11535,7 +11535,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#148": {
+  "special-functions/HurwitzZeta#153": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, \\frac{7}{3}))",
       "output": "-0.453\\,727\\,021\\,657\\,171\\,05+0.204\\,440\\,194\\,003\\,099\\,37i"
@@ -11549,7 +11549,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#149": {
+  "special-functions/HurwitzZeta#154": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 1+i))",
       "output": "-1.417\\,301\\,505\\,929\\,129\\,4-8.335\\,643\\,562\\,213\\,376i"
@@ -11563,7 +11563,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#150": {
+  "special-functions/HurwitzZeta#155": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, 2-0.5i))",
       "output": "-0.181\\,016\\,361\\,585\\,113\\,64+0.009\\,312\\,340\\,272\\,338\\,617i"
@@ -11577,7 +11577,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#151": {
+  "special-functions/HurwitzZeta#156": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, -0.5))",
       "output": "15\\,305.129\\,609\\,925\\,008+8\\,535.093\\,960\\,014\\,086i"
@@ -11591,7 +11591,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#152": {
+  "special-functions/HurwitzZeta#157": {
     "ours": {
       "input": "N(\\zeta(0.5+3i, -1.5))",
       "output": "5\\,816.163\\,167\\,011\\,819+5\\,023.948\\,927\\,089\\,383i"
@@ -11605,7 +11605,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#153": {
+  "special-functions/HurwitzZeta#158": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 1))",
       "output": "-0.000\\,817\\,893\\,132\\,952\\,607\\,3-0.223\\,071\\,688\\,697\\,779\\,1i"
@@ -11619,7 +11619,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#154": {
+  "special-functions/HurwitzZeta#159": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 2))",
       "output": "-1.000\\,817\\,893\\,132\\,952\\,6-0.223\\,071\\,688\\,697\\,779\\,1i"
@@ -11633,7 +11633,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#155": {
+  "special-functions/HurwitzZeta#160": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 3))",
       "output": "-2.088\\,685\\,980\\,146\\,861\\,4+0.680\\,556\\,014\\,096\\,185\\,7i"
@@ -11647,7 +11647,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#156": {
+  "special-functions/HurwitzZeta#161": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 0.5))",
       "output": "0.101\\,159\\,892\\,022\\,168\\,85+0.101\\,365\\,867\\,626\\,050\\,52i"
@@ -11661,7 +11661,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#157": {
+  "special-functions/HurwitzZeta#162": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 0.25))",
       "output": "-0.105\\,599\\,710\\,390\\,193\\,72+0.172\\,605\\,566\\,681\\,918\\,07i"
@@ -11675,7 +11675,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#158": {
+  "special-functions/HurwitzZeta#163": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 1.3))",
       "output": "-0.243\\,310\\,938\\,687\\,756\\,58-0.330\\,441\\,278\\,258\\,429\\,45i"
@@ -11689,7 +11689,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#159": {
+  "special-functions/HurwitzZeta#164": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, \\frac{7}{3}))",
       "output": "-1.382\\,185\\,144\\,087\\,135\\,3-0.009\\,056\\,308\\,250\\,057\\,337i"
@@ -11703,7 +11703,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#160": {
+  "special-functions/HurwitzZeta#165": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 1+i))",
       "output": "1.040\\,957\\,543\\,118\\,520\\,7-1.799\\,910\\,432\\,336\\,835\\,6i"
@@ -11717,7 +11717,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#161": {
+  "special-functions/HurwitzZeta#166": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, 2-0.5i))",
       "output": "-0.746\\,153\\,397\\,257\\,609\\,8+0.249\\,257\\,816\\,033\\,066\\,35i"
@@ -11731,7 +11731,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#162": {
+  "special-functions/HurwitzZeta#167": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, -0.5))",
       "output": "-10.354\\,125\\,570\\,387\\,61+12.688\\,376\\,380\\,925\\,272i"
@@ -11745,7 +11745,7 @@
       "output": true
     }
   },
-  "special-functions/HurwitzZeta#163": {
+  "special-functions/HurwitzZeta#168": {
     "ours": {
       "input": "N(\\zeta(-0.5+i, -1.5))",
       "output": "0.825\\,049\\,555\\,351\\,038\\,5+38.731\\,869\\,364\\,686\\,36i"
@@ -11871,7 +11871,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#24": {
+  "special-functions/LerchPhi#29": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, 1))",
       "output": "1.164\\,481\\,052\\,930\\,025"
@@ -11885,7 +11885,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#25": {
+  "special-functions/LerchPhi#30": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, 2))",
       "output": "0.328\\,962\\,105\\,860\\,049\\,87"
@@ -11899,7 +11899,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#26": {
+  "special-functions/LerchPhi#31": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, 0.5))",
       "output": "4.277\\,145\\,500\\,580\\,949"
@@ -11913,7 +11913,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#27": {
+  "special-functions/LerchPhi#32": {
     "ours": {
       "input": "N(\\Phi(0.5, 2, \\frac{5}{2}))",
       "output": "0.219\\,693\\,113\\,434\\,910\\,27"
@@ -11927,7 +11927,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#28": {
+  "special-functions/LerchPhi#33": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, 1))",
       "output": "1.074\\,426\\,387\\,216\\,080\\,6"
@@ -11941,7 +11941,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#29": {
+  "special-functions/LerchPhi#34": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, 2))",
       "output": "0.148\\,852\\,774\\,432\\,160\\,77"
@@ -11955,7 +11955,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#30": {
+  "special-functions/LerchPhi#35": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, 0.5))",
       "output": "8.168\\,022\\,726\\,140\\,352"
@@ -11969,7 +11969,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#31": {
+  "special-functions/LerchPhi#36": {
     "ours": {
       "input": "N(\\Phi(0.5, 3, \\frac{5}{2}))",
       "output": "0.079\\,498\\,311\\,968\\,809\\,95"
@@ -11983,7 +11983,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#32": {
+  "special-functions/LerchPhi#37": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, 1))",
       "output": "1.612\\,253\\,446\\,085\\,704\\,3"
@@ -11997,7 +11997,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#33": {
+  "special-functions/LerchPhi#38": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, 2))",
       "output": "1.224\\,506\\,892\\,171\\,409"
@@ -12011,7 +12011,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#34": {
+  "special-functions/LerchPhi#39": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, 0.5))",
       "output": "2.101\\,712\\,462\\,489\\,351\\,3"
@@ -12025,7 +12025,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#35": {
+  "special-functions/LerchPhi#40": {
     "ours": {
       "input": "N(\\Phi(0.5, 0.5, \\frac{5}{2}))",
       "output": "1.117\\,002\\,438\\,609\\,575\\,2"
@@ -12039,7 +12039,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#36": {
+  "special-functions/LerchPhi#41": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, 1))",
       "output": "3.999\\,999\\,999\\,999\\,999\\,6"
@@ -12053,7 +12053,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#37": {
+  "special-functions/LerchPhi#42": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, 2))",
       "output": "5.999\\,999\\,999\\,999\\,999"
@@ -12067,7 +12067,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#38": {
+  "special-functions/LerchPhi#43": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, 0.5))",
       "output": "2.999\\,999\\,999\\,999\\,999"
@@ -12081,7 +12081,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#39": {
+  "special-functions/LerchPhi#44": {
     "ours": {
       "input": "N(\\Phi(0.5, -1, \\frac{5}{2}))",
       "output": "7.000\\,000\\,000\\,000\\,001"
@@ -12095,7 +12095,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#40": {
+  "special-functions/LerchPhi#45": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, 1))",
       "output": "1.109\\,707\\,090\\,706\\,641-0.116\\,099\\,123\\,583\\,394\\,3i"
@@ -12109,7 +12109,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#41": {
+  "special-functions/LerchPhi#46": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, 2))",
       "output": "0.219\\,414\\,181\\,413\\,281\\,26-0.232\\,198\\,247\\,166\\,788\\,55i"
@@ -12123,7 +12123,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#42": {
+  "special-functions/LerchPhi#47": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, 0.5))",
       "output": "3.308\\,545\\,670\\,420\\,987+2.422\\,109\\,611\\,421\\,262i"
@@ -12137,7 +12137,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#43": {
+  "special-functions/LerchPhi#48": {
     "ours": {
       "input": "N(\\Phi(0.5, 2+i, \\frac{5}{2}))",
       "output": "0.109\\,543\\,338\\,580\\,833\\,94-0.184\\,323\\,131\\,142\\,563\\,82i"
@@ -12151,7 +12151,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#44": {
+  "special-functions/LerchPhi#49": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, 1))",
       "output": "0.896\\,828\\,413\\,847\\,292\\,4"
@@ -12165,7 +12165,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#45": {
+  "special-functions/LerchPhi#50": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, 2))",
       "output": "0.206\\,343\\,172\\,305\\,415\\,18"
@@ -12179,7 +12179,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#46": {
+  "special-functions/LerchPhi#51": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, 0.5))",
       "output": "3.809\\,896\\,676\\,518\\,156"
@@ -12193,7 +12193,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#47": {
+  "special-functions/LerchPhi#52": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2, \\frac{5}{2}))",
       "output": "0.128\\,475\\,594\\,961\\,513\\,03"
@@ -12207,7 +12207,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#48": {
+  "special-functions/LerchPhi#53": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, 1))",
       "output": "0.945\\,195\\,689\\,317\\,793\\,7"
@@ -12221,7 +12221,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#49": {
+  "special-functions/LerchPhi#54": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, 2))",
       "output": "0.109\\,608\\,621\\,364\\,412\\,52"
@@ -12235,7 +12235,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#50": {
+  "special-functions/LerchPhi#55": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, 0.5))",
       "output": "7.865\\,477\\,514\\,353\\,38"
@@ -12249,7 +12249,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#51": {
+  "special-functions/LerchPhi#56": {
     "ours": {
       "input": "N(\\Phi(-0.5, 3, \\frac{5}{2}))",
       "output": "0.054\\,502\\,650\\,006\\,118\\,85"
@@ -12263,7 +12263,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#52": {
+  "special-functions/LerchPhi#57": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, 1))",
       "output": "0.747\\,504\\,475\\,961\\,946"
@@ -12277,7 +12277,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#53": {
+  "special-functions/LerchPhi#58": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, 2))",
       "output": "0.504\\,991\\,048\\,076\\,108"
@@ -12291,7 +12291,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#54": {
+  "special-functions/LerchPhi#59": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, 0.5))",
       "output": "1.117\\,587\\,668\\,909\\,633\\,8"
@@ -12305,7 +12305,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#55": {
+  "special-functions/LerchPhi#60": {
     "ours": {
       "input": "N(\\Phi(-0.5, 0.5, \\frac{5}{2}))",
       "output": "0.446\\,489\\,588\\,001\\,608\\,5"
@@ -12319,7 +12319,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#56": {
+  "special-functions/LerchPhi#61": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, 1))",
       "output": "0.444\\,444\\,444\\,444\\,444\\,4"
@@ -12333,7 +12333,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#57": {
+  "special-functions/LerchPhi#62": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, 2))",
       "output": "1.111\\,111\\,111\\,111\\,111\\,2"
@@ -12347,7 +12347,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#58": {
+  "special-functions/LerchPhi#63": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, 0.5))",
       "output": "0.\\overline{1}"
@@ -12361,7 +12361,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#59": {
+  "special-functions/LerchPhi#64": {
     "ours": {
       "input": "N(\\Phi(-0.5, -1, \\frac{5}{2}))",
       "output": "1.444\\,444\\,444\\,444\\,444\\,4"
@@ -12375,7 +12375,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#60": {
+  "special-functions/LerchPhi#65": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, 1))",
       "output": "0.915\\,063\\,092\\,151\\,170\\,4+0.060\\,942\\,039\\,339\\,614\\,22i"
@@ -12389,7 +12389,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#61": {
+  "special-functions/LerchPhi#66": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, 2))",
       "output": "0.169\\,873\\,815\\,697\\,659\\,08-0.121\\,884\\,078\\,679\\,228\\,44i"
@@ -12403,7 +12403,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#62": {
+  "special-functions/LerchPhi#67": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, 0.5))",
       "output": "2.894\\,185\\,202\\,891\\,337\\,7+2.619\\,141\\,408\\,581\\,271i"
@@ -12417,7 +12417,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#63": {
+  "special-functions/LerchPhi#68": {
     "ours": {
       "input": "N(\\Phi(-0.5, 2+i, \\frac{5}{2}))",
       "output": "0.085\\,735\\,311\\,021\\,356-0.097\\,433\\,630\\,883\\,612\\,38i"
@@ -12431,7 +12431,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#64": {
+  "special-functions/LerchPhi#69": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, 1))",
       "output": "0.835\\,736\\,865\\,796\\,957\\,4"
@@ -12445,7 +12445,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#65": {
+  "special-functions/LerchPhi#70": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, 2))",
       "output": "0.182\\,514\\,593\\,558\\,936\\,32"
@@ -12459,7 +12459,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#66": {
+  "special-functions/LerchPhi#71": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, 0.5))",
       "output": "3.690\\,522\\,475\\,693\\,304\\,4"
@@ -12473,7 +12473,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#67": {
+  "special-functions/LerchPhi#72": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2, \\frac{5}{2}))",
       "output": "0.111\\,756\\,142\\,831\\,241\\,72"
@@ -12487,7 +12487,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#68": {
+  "special-functions/LerchPhi#73": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, 1))",
       "output": "0.909\\,598\\,001\\,715\\,959\\,7"
@@ -12501,7 +12501,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#69": {
+  "special-functions/LerchPhi#74": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, 2))",
       "output": "0.100\\,446\\,664\\,760\\,044\\,64"
@@ -12515,7 +12515,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#70": {
+  "special-functions/LerchPhi#75": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, 0.5))",
       "output": "7.773\\,051\\,219\\,077\\,413"
@@ -12529,7 +12529,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#71": {
+  "special-functions/LerchPhi#76": {
     "ours": {
       "input": "N(\\Phi(-0.9, 3, \\frac{5}{2}))",
       "output": "0.049\\,034\\,426\\,844\\,542\\,13"
@@ -12543,7 +12543,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#72": {
+  "special-functions/LerchPhi#77": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, 1))",
       "output": "0.628\\,362\\,164\\,954\\,058\\,4"
@@ -12557,7 +12557,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#73": {
+  "special-functions/LerchPhi#78": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, 2))",
       "output": "0.412\\,930\\,927\\,828\\,823\\,9"
@@ -12571,7 +12571,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#74": {
+  "special-functions/LerchPhi#79": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, 0.5))",
       "output": "0.973\\,146\\,783\\,413\\,905\\,5"
@@ -12585,7 +12585,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#75": {
+  "special-functions/LerchPhi#80": {
     "ours": {
       "input": "N(\\Phi(-0.9, 0.5, \\frac{5}{2}))",
       "output": "0.362\\,691\\,535\\,649\\,091\\,3"
@@ -12599,7 +12599,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#76": {
+  "special-functions/LerchPhi#81": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, 1))",
       "output": "0.277\\,008\\,310\\,249\\,307\\,7"
@@ -12613,7 +12613,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#77": {
+  "special-functions/LerchPhi#82": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, 2))",
       "output": "0.803\\,324\\,099\\,722\\,991\\,2"
@@ -12627,7 +12627,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#78": {
+  "special-functions/LerchPhi#83": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, 0.5))",
       "output": "0.013\\,850\\,415\\,512\\,466\\,406"
@@ -12641,7 +12641,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#79": {
+  "special-functions/LerchPhi#84": {
     "ours": {
       "input": "N(\\Phi(-0.9, -1, \\frac{5}{2}))",
       "output": "1.066\\,481\\,994\\,459\\,834"
@@ -12655,7 +12655,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#80": {
+  "special-functions/LerchPhi#85": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, 1))",
       "output": "0.860\\,049\\,165\\,313\\,704\\,9+0.092\\,034\\,574\\,701\\,526\\,2i"
@@ -12669,7 +12669,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#81": {
+  "special-functions/LerchPhi#86": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, 2))",
       "output": "0.155\\,500\\,927\\,429\\,216\\,56-0.102\\,260\\,638\\,557\\,251\\,33i"
@@ -12683,7 +12683,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#82": {
+  "special-functions/LerchPhi#87": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, 0.5))",
       "output": "2.772\\,631\\,950\\,915\\,932\\,3+2.646\\,993\\,091\\,751\\,072\\,7i"
@@ -12697,7 +12697,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#83": {
+  "special-functions/LerchPhi#88": {
     "ours": {
       "input": "N(\\Phi(-0.9, 2+i, \\frac{5}{2}))",
       "output": "0.078\\,078\\,963\\,007\\,215\\,56-0.082\\,259\\,868\\,381\\,738\\,78i"
@@ -12711,7 +12711,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#84": {
+  "special-functions/LerchPhi#89": {
     "ours": {
       "input": "N(\\Phi(-1, 2, 1))",
       "output": "0.822\\,467\\,033\\,424\\,113\\,2"
@@ -12725,7 +12725,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#85": {
+  "special-functions/LerchPhi#90": {
     "ours": {
       "input": "N(\\Phi(-1, 2, 2))",
       "output": "0.177\\,532\\,966\\,575\\,886\\,8"
@@ -12739,7 +12739,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#86": {
+  "special-functions/LerchPhi#91": {
     "ours": {
       "input": "N(\\Phi(-1, 2, 0.5))",
       "output": "3.663\\,862\\,376\\,708\\,875"
@@ -12753,7 +12753,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#87": {
+  "special-functions/LerchPhi#92": {
     "ours": {
       "input": "N(\\Phi(-1, 2, \\frac{5}{2}))",
       "output": "0.108\\,306\\,821\\,153\\,320\\,53"
@@ -12767,7 +12767,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#88": {
+  "special-functions/LerchPhi#93": {
     "ours": {
       "input": "N(\\Phi(-1, 3, 1))",
       "output": "0.901\\,542\\,677\\,369\\,695\\,5"
@@ -12781,7 +12781,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#89": {
+  "special-functions/LerchPhi#94": {
     "ours": {
       "input": "N(\\Phi(-1, 3, 2))",
       "output": "0.098\\,457\\,322\\,630\\,304\\,28"
@@ -12795,7 +12795,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#90": {
+  "special-functions/LerchPhi#95": {
     "ours": {
       "input": "N(\\Phi(-1, 3, 0.5))",
       "output": "7.751\\,569\\,170\\,074\\,954"
@@ -12809,7 +12809,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#91": {
+  "special-functions/LerchPhi#96": {
     "ours": {
       "input": "N(\\Phi(-1, 3, \\frac{5}{2}))",
       "output": "0.047\\,865\\,466\\,371\\,251\\,345"
@@ -12823,7 +12823,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#92": {
+  "special-functions/LerchPhi#97": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, 1))",
       "output": "0.604\\,898\\,643\\,421\\,630\\,2"
@@ -12837,7 +12837,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#93": {
+  "special-functions/LerchPhi#98": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, 2))",
       "output": "0.395\\,101\\,356\\,578\\,369\\,7"
@@ -12851,7 +12851,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#94": {
+  "special-functions/LerchPhi#99": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, 0.5))",
       "output": "0.944\\,258\\,314\\,238\\,200\\,2"
@@ -12865,7 +12865,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#95": {
+  "special-functions/LerchPhi#100": {
     "ours": {
       "input": "N(\\Phi(-1, 0.5, \\frac{5}{2}))",
       "output": "0.346\\,541\\,332\\,792\\,831\\,2"
@@ -12879,7 +12879,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#96": {
+  "special-functions/LerchPhi#101": {
     "ours": {
       "input": "N(\\Phi(-1, -1, 1))",
       "output": "0.25"
@@ -12893,7 +12893,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#97": {
+  "special-functions/LerchPhi#102": {
     "ours": {
       "input": "N(\\Phi(-1, -1, 2))",
       "output": "0.75"
@@ -12907,7 +12907,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#98": {
+  "special-functions/LerchPhi#103": {
     "ours": {
       "input": "N(\\Phi(-1, -1, 0.5))",
       "output": "0"
@@ -12921,7 +12921,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#99": {
+  "special-functions/LerchPhi#104": {
     "ours": {
       "input": "N(\\Phi(-1, -1, \\frac{5}{2}))",
       "output": "1"
@@ -12935,7 +12935,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#100": {
+  "special-functions/LerchPhi#105": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, 1))",
       "output": "0.847\\,689\\,164\\,837\\,414+0.098\\,268\\,389\\,570\\,016\\,2i"
@@ -12949,7 +12949,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#101": {
+  "special-functions/LerchPhi#106": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, 2))",
       "output": "0.152\\,310\\,835\\,162\\,586\\,56-0.098\\,268\\,389\\,570\\,016\\,2i"
@@ -12963,7 +12963,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#102": {
+  "special-functions/LerchPhi#107": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, 0.5))",
       "output": "2.744\\,919\\,723\\,014\\,342\\,5+2.651\\,972\\,944\\,738\\,276\\,3i"
@@ -12977,7 +12977,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#103": {
+  "special-functions/LerchPhi#108": {
     "ours": {
       "input": "N(\\Phi(-1, 2+i, \\frac{5}{2}))",
       "output": "0.076\\,372\\,578\\,198\\,229\\,92-0.079\\,181\\,582\\,611\\,533\\,77i"
@@ -12991,7 +12991,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#104": {
+  "special-functions/LerchPhi#109": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, 1))",
       "output": "1.070\\,610\\,556\\,330\\,93"
@@ -13005,7 +13005,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#105": {
+  "special-functions/LerchPhi#110": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, 2))",
       "output": "0.282\\,442\\,225\\,323\\,721\\,7"
@@ -13019,7 +13019,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#106": {
+  "special-functions/LerchPhi#111": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, 0.5))",
       "output": "4.122\\,618\\,933\\,554\\,635"
@@ -13033,7 +13033,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#107": {
+  "special-functions/LerchPhi#112": {
     "ours": {
       "input": "N(\\Phi(0.25, 2, \\frac{5}{2}))",
       "output": "0.184\\,125\\,159\\,096\\,379\\,58"
@@ -13047,7 +13047,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#108": {
+  "special-functions/LerchPhi#113": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, 1))",
       "output": "1.033\\,845\\,583\\,186\\,293"
@@ -13061,7 +13061,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#109": {
+  "special-functions/LerchPhi#114": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, 2))",
       "output": "0.135\\,382\\,332\\,745\\,172\\,86"
@@ -13075,7 +13075,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#110": {
+  "special-functions/LerchPhi#115": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, 0.5))",
       "output": "8.078\\,488\\,306\\,135\\,496"
@@ -13089,7 +13089,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#111": {
+  "special-functions/LerchPhi#116": {
     "ours": {
       "input": "N(\\Phi(0.25, 3, \\frac{5}{2}))",
       "output": "0.070\\,627\\,712\\,982\\,760\\,51"
@@ -13103,7 +13103,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#112": {
+  "special-functions/LerchPhi#117": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, 1))",
       "output": "1.222\\,939\\,721\\,597\\,185\\,6"
@@ -13117,7 +13117,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#113": {
+  "special-functions/LerchPhi#118": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, 2))",
       "output": "0.891\\,758\\,886\\,388\\,742\\,3"
@@ -13131,7 +13131,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#114": {
+  "special-functions/LerchPhi#119": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, 0.5))",
       "output": "1.668\\,600\\,828\\,638\\,570\\,3"
@@ -13145,7 +13145,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#115": {
+  "special-functions/LerchPhi#120": {
     "ours": {
       "input": "N(\\Phi(0.25, 0.5, \\frac{5}{2}))",
       "output": "0.804\\,209\\,936\\,536\\,697\\,8"
@@ -13159,7 +13159,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#116": {
+  "special-functions/LerchPhi#121": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, 1))",
       "output": "1.777\\,777\\,777\\,777\\,777\\,7"
@@ -13173,7 +13173,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#117": {
+  "special-functions/LerchPhi#122": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, 2))",
       "output": "3.111\\,111\\,111\\,111\\,111"
@@ -13187,7 +13187,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#118": {
+  "special-functions/LerchPhi#123": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, 0.5))",
       "output": "1.111\\,111\\,111\\,111\\,111"
@@ -13201,7 +13201,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#119": {
+  "special-functions/LerchPhi#124": {
     "ours": {
       "input": "N(\\Phi(0.25, -1, \\frac{5}{2}))",
       "output": "3.777\\,777\\,777\\,777\\,777\\,7"
@@ -13215,7 +13215,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#120": {
+  "special-functions/LerchPhi#125": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, 1))",
       "output": "1.051\\,400\\,732\\,108\\,945-0.047\\,267\\,887\\,677\\,210\\,255i"
@@ -13229,7 +13229,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#121": {
+  "special-functions/LerchPhi#126": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, 2))",
       "output": "0.205\\,602\\,928\\,435\\,778\\,51-0.189\\,071\\,550\\,708\\,841\\,02i"
@@ -13243,7 +13243,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#122": {
+  "special-functions/LerchPhi#127": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, 0.5))",
       "output": "3.185\\,550\\,463\\,844\\,432+2.502\\,641\\,530\\,788\\,986i"
@@ -13257,7 +13257,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#123": {
+  "special-functions/LerchPhi#128": {
     "ours": {
       "input": "N(\\Phi(0.25, 2+i, \\frac{5}{2}))",
       "output": "0.103\\,883\\,891\\,657\\,583\\,91-0.150\\,019\\,503\\,067\\,757\\,21i"
@@ -13271,7 +13271,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#124": {
+  "special-functions/LerchPhi#129": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, 1))",
       "output": "1.444\\,127\\,470\\,005\\,508\\,5"
@@ -13285,7 +13285,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#125": {
+  "special-functions/LerchPhi#130": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, 2))",
       "output": "0.493\\,474\\,966\\,672\\,788\\,2"
@@ -13299,7 +13299,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#126": {
+  "special-functions/LerchPhi#131": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, 0.5))",
       "output": "4.686\\,783\\,273\\,082\\,932"
@@ -13313,7 +13313,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#127": {
+  "special-functions/LerchPhi#132": {
     "ours": {
       "input": "N(\\Phi(0.9, 2, \\frac{5}{2}))",
       "output": "0.354\\,053\\,423\\,559\\,173\\,46"
@@ -13327,7 +13327,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#128": {
+  "special-functions/LerchPhi#133": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, 1))",
       "output": "1.166\\,287\\,722\\,429\\,376"
@@ -13341,7 +13341,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#129": {
+  "special-functions/LerchPhi#134": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, 2))",
       "output": "0.184\\,764\\,136\\,032\\,641\\,63"
@@ -13355,7 +13355,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#130": {
+  "special-functions/LerchPhi#135": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, 0.5))",
       "output": "8.351\\,549\\,851\\,360\\,646"
@@ -13369,7 +13369,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#131": {
+  "special-functions/LerchPhi#136": {
     "ours": {
       "input": "N(\\Phi(0.9, 3, \\frac{5}{2}))",
       "output": "0.104\\,794\\,055\\,177\\,760\\,89"
@@ -13383,7 +13383,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#132": {
+  "special-functions/LerchPhi#137": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, 1))",
       "output": "4.468\\,833\\,808\\,303\\,737"
@@ -13397,7 +13397,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#133": {
+  "special-functions/LerchPhi#138": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, 2))",
       "output": "3.854\\,259\\,787\\,004\\,146\\,6"
@@ -13411,7 +13411,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#134": {
+  "special-functions/LerchPhi#139": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, 0.5))",
       "output": "5.111\\,636\\,244\\,963\\,35"
@@ -13425,7 +13425,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#135": {
+  "special-functions/LerchPhi#140": {
     "ours": {
       "input": "N(\\Phi(0.9, 0.5, \\frac{5}{2}))",
       "output": "3.657\\,500\\,937\\,969\\,502\\,7"
@@ -13439,7 +13439,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#136": {
+  "special-functions/LerchPhi#141": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, 1))",
       "output": "100.000\\,000\\,000\\,000\\,01"
@@ -13453,7 +13453,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#137": {
+  "special-functions/LerchPhi#142": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, 2))",
       "output": "110.000\\,000\\,000\\,000\\,04"
@@ -13467,7 +13467,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#138": {
+  "special-functions/LerchPhi#143": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, 0.5))",
       "output": "94.999\\,999\\,999\\,999\\,94"
@@ -13481,7 +13481,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#139": {
+  "special-functions/LerchPhi#144": {
     "ours": {
       "input": "N(\\Phi(0.9, -1, \\frac{5}{2}))",
       "output": "114.999\\,999\\,999\\,999\\,89"
@@ -13495,7 +13495,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#140": {
+  "special-functions/LerchPhi#145": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, 1))",
       "output": "1.192\\,928\\,775\\,865\\,743\\,2-0.340\\,556\\,246\\,338\\,811i"
@@ -13509,7 +13509,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#141": {
+  "special-functions/LerchPhi#146": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, 2))",
       "output": "0.214\\,365\\,306\\,517\\,492\\,17-0.378\\,395\\,829\\,265\\,345\\,93i"
@@ -13523,7 +13523,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#142": {
+  "special-functions/LerchPhi#147": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, 0.5))",
       "output": "3.516\\,191\\,661\\,909\\,127+2.152\\,254\\,681\\,274\\,930\\,4i"
@@ -13537,7 +13537,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#143": {
+  "special-functions/LerchPhi#148": {
     "ours": {
       "input": "N(\\Phi(0.9, 2+i, \\frac{5}{2}))",
       "output": "0.088\\,479\\,557\\,873\\,380\\,69-0.303\\,471\\,535\\,918\\,346\\,14i"
@@ -13551,7 +13551,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#144": {
+  "special-functions/LerchPhi#149": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, 1))",
       "output": "1.098\\,639\\,689\\,931\\,190\\,5"
@@ -13565,7 +13565,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#145": {
+  "special-functions/LerchPhi#150": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, 2))",
       "output": "0.295\\,919\\,069\\,793\\,571\\,47"
@@ -13579,7 +13579,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#146": {
+  "special-functions/LerchPhi#151": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, 0.5))",
       "output": "4.169\\,738\\,543\\,014\\,327\\,4"
@@ -13593,7 +13593,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#147": {
+  "special-functions/LerchPhi#152": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2, \\frac{5}{2}))",
       "output": "0.194\\,313\\,553\\,795\\,602\\,78"
@@ -13607,7 +13607,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#148": {
+  "special-functions/LerchPhi#153": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, 1))",
       "output": "1.046\\,483\\,583\\,464\\,519\\,9"
@@ -13621,7 +13621,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#149": {
+  "special-functions/LerchPhi#154": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, 2))",
       "output": "0.139\\,450\\,750\\,393\\,560\\,7"
@@ -13635,7 +13635,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#150": {
+  "special-functions/LerchPhi#155": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, 0.5))",
       "output": "8.106\\,907\\,002\\,058\\,708"
@@ -13649,7 +13649,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#151": {
+  "special-functions/LerchPhi#156": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 3, \\frac{5}{2}))",
       "output": "0.073\\,274\\,129\\,639\\,514\\,02"
@@ -13663,7 +13663,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#152": {
+  "special-functions/LerchPhi#157": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, 1))",
       "output": "1.326\\,326\\,505\\,842\\,026\\,4"
@@ -13677,7 +13677,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#153": {
+  "special-functions/LerchPhi#158": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, 2))",
       "output": "0.978\\,979\\,517\\,526\\,079\\,3"
@@ -13691,7 +13691,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#154": {
+  "special-functions/LerchPhi#159": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, 0.5))",
       "output": "1.784\\,805\\,043\\,725\\,763\\,2"
@@ -13705,7 +13705,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#155": {
+  "special-functions/LerchPhi#160": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 0.5, \\frac{5}{2}))",
       "output": "0.885\\,833\\,589\\,390\\,835\\,9"
@@ -13719,7 +13719,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#156": {
+  "special-functions/LerchPhi#161": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, 1))",
       "output": "2.249\\,999\\,999\\,999\\,999\\,6"
@@ -13733,7 +13733,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#157": {
+  "special-functions/LerchPhi#162": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, 2))",
       "output": "3.749\\,999\\,999\\,999\\,999"
@@ -13747,7 +13747,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#158": {
+  "special-functions/LerchPhi#163": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, 0.5))",
       "output": "1.499\\,999\\,999\\,999\\,999\\,3"
@@ -13761,7 +13761,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#159": {
+  "special-functions/LerchPhi#164": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, -1, \\frac{5}{2}))",
       "output": "4.499\\,999\\,999\\,999\\,998"
@@ -13775,7 +13775,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#160": {
+  "special-functions/LerchPhi#165": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, 1))",
       "output": "1.070\\,083\\,668\\,602\\,141\\,3-0.067\\,156\\,386\\,953\\,886\\,16i"
@@ -13789,7 +13789,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#161": {
+  "special-functions/LerchPhi#166": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, 2))",
       "output": "0.210\\,251\\,005\\,806\\,421\\,78-0.201\\,469\\,160\\,861\\,658\\,53i"
@@ -13803,7 +13803,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#162": {
+  "special-functions/LerchPhi#167": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, 0.5))",
       "output": "3.224\\,867\\,422\\,277\\,603+2.479\\,648\\,998\\,974\\,589\\,3i"
@@ -13817,7 +13817,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#163": {
+  "special-functions/LerchPhi#168": {
     "ours": {
       "input": "N(\\Phi(\\frac{1}{3}, 2+i, \\frac{5}{2}))",
       "output": "0.105\\,980\\,969\\,476\\,094\\,92-0.159\\,836\\,690\\,233\\,729\\,48i"
@@ -13831,7 +13831,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#164": {
+  "special-functions/LerchPhi#169": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, 1))",
       "output": "1.101\\,836\\,588\\,740\\,841+0.109\\,880\\,454\\,004\\,132\\,04i"
@@ -13845,7 +13845,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#165": {
+  "special-functions/LerchPhi#170": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, 2))",
       "output": "0.294\\,795\\,086\\,790\\,303\\,1+0.053\\,604\\,819\\,917\\,602\\,74i"
@@ -13859,7 +13859,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#166": {
+  "special-functions/LerchPhi#171": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, 0.5))",
       "output": "4.181\\,499\\,243\\,636\\,333+0.182\\,432\\,562\\,673\\,989\\,36i"
@@ -13873,7 +13873,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#167": {
+  "special-functions/LerchPhi#172": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2, \\frac{5}{2}))",
       "output": "0.192\\,709\\,082\\,429\\,705\\,75+0.040\\,700\\,707\\,964\\,669\\,71i"
@@ -13887,7 +13887,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#168": {
+  "special-functions/LerchPhi#173": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, 1))",
       "output": "1.051\\,306\\,692\\,352\\,460\\,8+0.048\\,424\\,577\\,070\\,355\\,32i"
@@ -13901,7 +13901,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#169": {
+  "special-functions/LerchPhi#174": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, 2))",
       "output": "0.140\\,200\\,200\\,248\\,363\\,58+0.015\\,911\\,292\\,489\\,615\\,658i"
@@ -13915,7 +13915,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#170": {
+  "special-functions/LerchPhi#175": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, 0.5))",
       "output": "8.121\\,165\\,761\\,843\\,056+0.107\\,270\\,303\\,911\\,863\\,24i"
@@ -13929,7 +13929,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#171": {
+  "special-functions/LerchPhi#176": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 3, \\frac{5}{2}))",
       "output": "0.073\\,549\\,546\\,211\\,705+0.010\\,421\\,770\\,459\\,496\\,018i"
@@ -13943,7 +13943,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#172": {
+  "special-functions/LerchPhi#177": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, 1))",
       "output": "1.261\\,409\\,136\\,988\\,254\\,3+0.415\\,428\\,785\\,308\\,441\\,46i"
@@ -13957,7 +13957,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#173": {
+  "special-functions/LerchPhi#178": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, 2))",
       "output": "0.916\\,769\\,161\\,551\\,338\\,1+0.350\\,995\\,092\\,107\\,600\\,1i"
@@ -13971,7 +13971,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#174": {
+  "special-functions/LerchPhi#179": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, 0.5))",
       "output": "1.719\\,728\\,639\\,919\\,129\\,8+0.466\\,007\\,643\\,699\\,248\\,13i"
@@ -13985,7 +13985,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#175": {
+  "special-functions/LerchPhi#180": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 0.5, \\frac{5}{2}))",
       "output": "0.825\\,251\\,709\\,172\\,310\\,4+0.328\\,546\\,560\\,279\\,657\\,6i"
@@ -13999,7 +13999,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#176": {
+  "special-functions/LerchPhi#181": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, 1))",
       "output": "1.333\\,333\\,333\\,333\\,333+1.777\\,777\\,777\\,777\\,778i"
@@ -14013,7 +14013,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#177": {
+  "special-functions/LerchPhi#182": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, 2))",
       "output": "2.666\\,666\\,666\\,666\\,667\\,4+2.444\\,444\\,444\\,444\\,442\\,4i"
@@ -14027,7 +14027,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#178": {
+  "special-functions/LerchPhi#183": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, 0.5))",
       "output": "0.666\\,666\\,666\\,666\\,666\\,6+1.444\\,444\\,444\\,444\\,444\\,2i"
@@ -14041,7 +14041,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#179": {
+  "special-functions/LerchPhi#184": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, -1, \\frac{5}{2}))",
       "output": "3.333\\,333\\,333\\,333\\,335\\,7+2.777\\,777\\,777\\,777\\,777\\,7i"
@@ -14055,7 +14055,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#180": {
+  "special-functions/LerchPhi#185": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, 1))",
       "output": "1.160\\,096\\,753\\,413\\,701\\,9+0.006\\,328\\,927\\,692\\,369\\,448i"
@@ -14069,7 +14069,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#181": {
+  "special-functions/LerchPhi#186": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, 2))",
       "output": "0.263\\,749\\,518\\,692\\,765\\,36-0.181\\,989\\,819\\,788\\,650\\,53i"
@@ -14083,7 +14083,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#182": {
+  "special-functions/LerchPhi#187": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, 0.5))",
       "output": "3.339\\,347\\,509\\,082\\,892+2.633\\,280\\,560\\,224\\,704\\,5i"
@@ -14097,7 +14097,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#183": {
+  "special-functions/LerchPhi#188": {
     "ours": {
       "input": "N(\\Phi(0.4+0.3i, 2+i, \\frac{5}{2}))",
       "output": "0.148\\,148\\,848\\,638\\,359\\,7-0.150\\,271\\,972\\,240\\,938\\,77i"
@@ -14111,7 +14111,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#184": {
+  "special-functions/LerchPhi#189": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, 1))",
       "output": "0.916\\,798\\,675\\,997\\,154\\,6+0.094\\,679\\,114\\,867\\,490\\,02i"
@@ -14125,7 +14125,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#185": {
+  "special-functions/LerchPhi#190": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, 2))",
       "output": "0.212\\,646\\,925\\,395\\,878\\,4+0.038\\,814\\,492\\,768\\,163\\,93i"
@@ -14139,7 +14139,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#186": {
+  "special-functions/LerchPhi#191": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, 0.5))",
       "output": "3.853\\,772\\,051\\,558\\,024+0.178\\,041\\,438\\,629\\,279\\,13i"
@@ -14153,7 +14153,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#187": {
+  "special-functions/LerchPhi#192": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2, \\frac{5}{2}))",
       "output": "0.132\\,503\\,230\\,927\\,905\\,86+0.027\\,686\\,339\\,466\\,071\\,092i"
@@ -14167,7 +14167,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#188": {
+  "special-functions/LerchPhi#193": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, 1))",
       "output": "0.959\\,105\\,606\\,130\\,840\\,6+0.052\\,063\\,804\\,773\\,610\\,99i"
@@ -14181,7 +14181,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#189": {
+  "special-functions/LerchPhi#194": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, 2))",
       "output": "0.112\\,647\\,707\\,492\\,804\\,06+0.014\\,200\\,163\\,242\\,636\\,779i"
@@ -14195,7 +14195,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#190": {
+  "special-functions/LerchPhi#195": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, 0.5))",
       "output": "7.904\\,718\\,153\\,248\\,676+0.129\\,909\\,102\\,799\\,358\\,47i"
@@ -14209,7 +14209,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#191": {
+  "special-functions/LerchPhi#196": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 3, \\frac{5}{2}))",
       "output": "0.056\\,181\\,547\\,254\\,558\\,15+0.008\\,653\\,632\\,327\\,637\\,262i"
@@ -14223,7 +14223,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#192": {
+  "special-functions/LerchPhi#197": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, 1))",
       "output": "0.763\\,797\\,454\\,910\\,583\\,2+0.208\\,115\\,821\\,035\\,190\\,83i"
@@ -14237,7 +14237,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#193": {
+  "special-functions/LerchPhi#198": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, 2))",
       "output": "0.514\\,466\\,688\\,365\\,942+0.163\\,725\\,077\\,159\\,268\\,07i"
@@ -14251,7 +14251,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#194": {
+  "special-functions/LerchPhi#199": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, 0.5))",
       "output": "1.141\\,526\\,793\\,353\\,947\\,5+0.248\\,011\\,499\\,868\\,293\\,54i"
@@ -14265,7 +14265,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#195": {
+  "special-functions/LerchPhi#200": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 0.5, \\frac{5}{2}))",
       "output": "0.454\\,230\\,833\\,366\\,813\\,86+0.149\\,797\\,128\\,659\\,533\\,26i"
@@ -14279,7 +14279,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#196": {
+  "special-functions/LerchPhi#201": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, 1))",
       "output": "0.382\\,612\\,392\\,390\\,264\\,73+0.345\\,413\\,965\\,352\\,322\\,5i"
@@ -14293,7 +14293,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#197": {
+  "special-functions/LerchPhi#202": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, 2))",
       "output": "1.052\\,715\\,485\\,173\\,771+0.603\\,145\\,924\\,115\\,209\\,6i"
@@ -14307,7 +14307,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#198": {
+  "special-functions/LerchPhi#203": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, 0.5))",
       "output": "0.047\\,560\\,845\\,998\\,512\\,21+0.216\\,547\\,985\\,970\\,878\\,9i"
@@ -14321,7 +14321,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#199": {
+  "special-functions/LerchPhi#204": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, -1, \\frac{5}{2}))",
       "output": "1.387\\,767\\,031\\,565\\,522\\,2+0.732\\,011\\,903\\,496\\,652\\,2i"
@@ -14335,7 +14335,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#200": {
+  "special-functions/LerchPhi#205": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, 1))",
       "output": "0.989\\,784\\,607\\,429\\,555\\,7+0.135\\,628\\,774\\,098\\,336\\,1i"
@@ -14349,7 +14349,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#201": {
+  "special-functions/LerchPhi#206": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, 2))",
       "output": "0.208\\,467\\,661\\,236\\,180\\,07-0.104\\,649\\,811\\,600\\,819\\,54i"
@@ -14363,7 +14363,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#202": {
+  "special-functions/LerchPhi#207": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, 0.5))",
       "output": "2.996\\,994\\,256\\,247\\,417\\,4+2.792\\,584\\,815\\,694\\,764\\,4i"
@@ -14377,7 +14377,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#203": {
+  "special-functions/LerchPhi#208": {
     "ours": {
       "input": "N(\\Phi(-0.3+0.5i, 2+i, \\frac{5}{2}))",
       "output": "0.114\\,465\\,116\\,632\\,712\\,36-0.089\\,263\\,678\\,009\\,800\\,35i"
@@ -14391,7 +14391,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#204": {
+  "special-functions/LerchPhi#209": {
     "ours": {
       "input": "N(\\Phi(2, 2, 1))",
       "output": "1.233\\,700\\,550\\,136\\,169\\,7-1.088\\,793\\,045\\,151\\,800\\,9i"
@@ -14405,7 +14405,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#205": {
+  "special-functions/LerchPhi#210": {
     "ours": {
       "input": "N(\\Phi(2, 2, 2))",
       "output": "0.116\\,850\\,275\\,068\\,084\\,99-0.544\\,396\\,522\\,575\\,900\\,4i"
@@ -14419,7 +14419,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#206": {
+  "special-functions/LerchPhi#211": {
     "ours": {
       "input": "N(\\Phi(2, 2, 0.5))",
       "output": "4.840\\,291\\,449\\,348\\,404-1.539\\,785\\,891\\,071\\,178\\,6i"
@@ -14433,7 +14433,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#207": {
+  "special-functions/LerchPhi#212": {
     "ours": {
       "input": "N(\\Phi(2, 2, \\frac{5}{2}))",
       "output": "-0.012\\,149\\,359\\,885\\,121\\,095-0.384\\,946\\,472\\,767\\,794\\,6i"
@@ -14447,7 +14447,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#208": {
+  "special-functions/LerchPhi#213": {
     "ours": {
       "input": "N(\\Phi(2, 2, -2.5))",
       "output": "55.771\\,220\\,483\\,676\\,125-12.318\\,287\\,128\\,569\\,425i"
@@ -14461,7 +14461,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#209": {
+  "special-functions/LerchPhi#214": {
     "ours": {
       "input": "N(\\Phi(2, 3, 1))",
       "output": "1.381\\,035\\,953\\,114\\,462-0.377\\,346\\,914\\,730\\,124\\,05i"
@@ -14475,7 +14475,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#210": {
+  "special-functions/LerchPhi#215": {
     "ours": {
       "input": "N(\\Phi(2, 3, 2))",
       "output": "0.190\\,517\\,976\\,557\\,231\\,04-0.188\\,673\\,457\\,365\\,062i"
@@ -14489,7 +14489,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#211": {
+  "special-functions/LerchPhi#216": {
     "ours": {
       "input": "N(\\Phi(2, 3, 0.5))",
       "output": "8.921\\,391\\,406\\,560\\,604-0.533\\,649\\,124\\,530\\,985\\,2i"
@@ -14503,7 +14503,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#212": {
+  "special-functions/LerchPhi#217": {
     "ours": {
       "input": "N(\\Phi(2, 3, \\frac{5}{2}))",
       "output": "0.082\\,199\\,703\\,492\\,002\\,81-0.133\\,412\\,281\\,132\\,746\\,25i"
@@ -14517,7 +14517,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#213": {
+  "special-functions/LerchPhi#218": {
     "ours": {
       "input": "N(\\Phi(2, 3, -2.5))",
       "output": "38.714\\,538\\,659\\,892\\,24-4.269\\,192\\,996\\,247\\,894i"
@@ -14531,7 +14531,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#214": {
+  "special-functions/LerchPhi#219": {
     "ours": {
       "input": "N(\\Phi(2, 0.5, 1))",
       "output": "-0.805\\,030\\,764\\,933\\,742\\,9-1.064\\,467\\,019\\,431\\,226i"
@@ -14545,7 +14545,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#215": {
+  "special-functions/LerchPhi#220": {
     "ours": {
       "input": "N(\\Phi(2, 0.5, 2))",
       "output": "-0.902\\,515\\,382\\,466\\,871\\,7-0.532\\,233\\,509\\,715\\,613\\,1i"
@@ -14559,7 +14559,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#216": {
+  "special-functions/LerchPhi#221": {
     "ours": {
       "input": "N(\\Phi(2, 0.5, 0.5))",
       "output": "-0.395\\,385\\,888\\,231\\,945\\,2-1.505\\,383\\,695\\,578\\,505i"
@@ -14573,7 +14573,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#217": {
+  "special-functions/LerchPhi#222": {
     "ours": {
       "input": "N(\\Phi(2, 0.5, \\frac{5}{2}))",
       "output": "-0.860\\,648\\,153\\,115\\,123\\,2-0.376\\,345\\,923\\,894\\,626\\,2i"
@@ -14587,7 +14587,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#218": {
+  "special-functions/LerchPhi#223": {
     "ours": {
       "input": "N(\\Phi(2, 0.5, -2.5))",
       "output": "-3.163\\,087\\,105\\,855\\,561\\,6-19.965\\,372\\,508\\,009\\,548i"
@@ -14601,7 +14601,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#219": {
+  "special-functions/LerchPhi#224": {
     "ours": {
       "input": "N(\\Phi(2, 2+i, 1))",
       "output": "0.782\\,103\\,519\\,638\\,317\\,3-0.589\\,814\\,387\\,785\\,094\\,2i"
@@ -14615,7 +14615,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#220": {
+  "special-functions/LerchPhi#225": {
     "ours": {
       "input": "N(\\Phi(2, 2+i, 2))",
       "output": "-0.108\\,948\\,240\\,180\\,841\\,43-0.294\\,907\\,193\\,892\\,547\\,1i"
@@ -14629,7 +14629,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#221": {
+  "special-functions/LerchPhi#226": {
     "ours": {
       "input": "N(\\Phi(2, 2+i, 0.5))",
       "output": "3.266\\,346\\,588\\,775\\,548\\,3+1.581\\,423\\,998\\,076\\,357\\,6i"
@@ -14643,7 +14643,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#222": {
+  "special-functions/LerchPhi#227": {
     "ours": {
       "input": "N(\\Phi(2, 2+i, \\frac{5}{2}))",
       "output": "-0.156\\,856\\,484\\,489\\,973\\,86-0.155\\,950\\,565\\,746\\,909\\,55i"
@@ -14657,7 +14657,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#223": {
+  "special-functions/LerchPhi#228": {
     "ours": {
       "input": "N(\\Phi(2, 2+i, -2.5))",
       "output": "332.097\\,984\\,373\\,651\\,7+238.176\\,549\\,803\\,584\\,46i"
@@ -14671,7 +14671,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#224": {
+  "special-functions/LerchPhi#229": {
     "ours": {
       "input": "N(\\Phi(-2, 2, 1))",
       "output": "0.718\\,373\\,183\\,441\\,839\\,4"
@@ -14685,7 +14685,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#225": {
+  "special-functions/LerchPhi#230": {
     "ours": {
       "input": "N(\\Phi(-2, 2, 2))",
       "output": "0.140\\,813\\,408\\,279\\,077\\,3"
@@ -14699,7 +14699,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#226": {
+  "special-functions/LerchPhi#231": {
     "ours": {
       "input": "N(\\Phi(-2, 2, 0.5))",
       "output": "3.444\\,734\\,229\\,330\\,254"
@@ -14713,7 +14713,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#227": {
+  "special-functions/LerchPhi#232": {
     "ours": {
       "input": "N(\\Phi(-2, 2, \\frac{5}{2}))",
       "output": "0.083\\,405\\,779\\,554\\,794\\,63"
@@ -14727,7 +14727,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#228": {
+  "special-functions/LerchPhi#233": {
     "ours": {
       "input": "N(\\Phi(-2, 2, -2.5))",
       "output": "-12.286\\,762\\,723\\,530\\,918"
@@ -14741,7 +14741,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#229": {
+  "special-functions/LerchPhi#234": {
     "ours": {
       "input": "N(\\Phi(-2, 3, 1))",
       "output": "0.834\\,141\\,681\\,983\\,285\\,5"
@@ -14755,7 +14755,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#230": {
+  "special-functions/LerchPhi#235": {
     "ours": {
       "input": "N(\\Phi(-2, 3, 2))",
       "output": "0.082\\,929\\,159\\,008\\,355\\,8"
@@ -14769,7 +14769,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#231": {
+  "special-functions/LerchPhi#236": {
     "ours": {
       "input": "N(\\Phi(-2, 3, 0.5))",
       "output": "7.563\\,284\\,617\\,347\\,448"
@@ -14783,7 +14783,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#232": {
+  "special-functions/LerchPhi#237": {
     "ours": {
       "input": "N(\\Phi(-2, 3, \\frac{5}{2}))",
       "output": "0.038\\,969\\,302\\,485\\,020\\,396+11\\,518\\,563\\,880\\,485\\,999\\cdot10^{-30}i"
@@ -14797,7 +14797,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#233": {
+  "special-functions/LerchPhi#238": {
     "ours": {
       "input": "N(\\Phi(-2, 3, -2.5))",
       "output": "-91.977\\,684\\,346\\,186\\,99"
@@ -14811,7 +14811,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#234": {
+  "special-functions/LerchPhi#239": {
     "ours": {
       "input": "N(\\Phi(-2, 0.5, 1))",
       "output": "0.445\\,644\\,355\\,776\\,061\\,2"
@@ -14825,7 +14825,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#235": {
+  "special-functions/LerchPhi#240": {
     "ours": {
       "input": "N(\\Phi(-2, 0.5, 2))",
       "output": "0.277\\,177\\,822\\,111\\,969\\,2"
@@ -14839,7 +14839,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#236": {
+  "special-functions/LerchPhi#241": {
     "ours": {
       "input": "N(\\Phi(-2, 0.5, 0.5))",
       "output": "0.743\\,192\\,432\\,028\\,837\\,6"
@@ -14853,7 +14853,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#237": {
+  "special-functions/LerchPhi#242": {
     "ours": {
       "input": "N(\\Phi(-2, 0.5, \\frac{5}{2}))",
       "output": "0.240\\,493\\,007\\,877\\,888\\,96+23\\,564\\,483\\,697\\,668\\,948\\cdot10^{-30}i"
@@ -14867,7 +14867,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#238": {
+  "special-functions/LerchPhi#243": {
     "ours": {
       "input": "N(\\Phi(-2, 0.5, -2.5))",
       "output": "-5.945\\,539\\,456\\,230\\,700\\,5-4.656\\,316\\,619\\,670\\,605i"
@@ -14881,7 +14881,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#239": {
+  "special-functions/LerchPhi#244": {
     "ours": {
       "input": "N(\\Phi(-2, 2+i, 1))",
       "output": "0.746\\,276\\,670\\,223\\,342\\,1+0.140\\,408\\,686\\,389\\,413\\,06i"
@@ -14895,7 +14895,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#240": {
+  "special-functions/LerchPhi#245": {
     "ours": {
       "input": "N(\\Phi(-2, 2+i, 2))",
       "output": "0.126\\,861\\,664\\,888\\,331\\,84-0.070\\,204\\,343\\,194\\,693\\,51i"
@@ -14909,7 +14909,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#241": {
+  "special-functions/LerchPhi#246": {
     "ours": {
       "input": "N(\\Phi(-2, 2+i, 0.5))",
       "output": "2.511\\,183\\,002\\,874\\,043+2.676\\,051\\,142\\,848\\,453\\,7i"
@@ -14923,7 +14923,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#242": {
+  "special-functions/LerchPhi#247": {
     "ours": {
       "input": "N(\\Phi(-2, 2+i, \\frac{5}{2}))",
       "output": "0.062\\,761\\,079\\,674\\,356\\,96-0.057\\,603\\,201\\,649\\,033\\,57i"
@@ -14937,7 +14937,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#243": {
+  "special-functions/LerchPhi#248": {
     "ours": {
       "input": "N(\\Phi(-2, 2+i, -2.5))",
       "output": "248.074\\,329\\,015\\,288\\,44+220.343\\,874\\,485\\,533\\,3i"
@@ -14951,7 +14951,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#244": {
+  "special-functions/LerchPhi#249": {
     "ours": {
       "input": "N(\\Phi(3, 2, 1))",
       "output": "0.773\\,393\\,474\\,437\\,699\\,1-1.150\\,464\\,098\\,407\\,734i"
@@ -14965,7 +14965,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#245": {
+  "special-functions/LerchPhi#250": {
     "ours": {
       "input": "N(\\Phi(3, 2, 2))",
       "output": "-0.075\\,535\\,508\\,520\\,766\\,99-0.383\\,488\\,032\\,802\\,578i"
@@ -14979,7 +14979,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#246": {
+  "special-functions/LerchPhi#251": {
     "ours": {
       "input": "N(\\Phi(3, 2, 0.5))",
       "output": "4.308\\,305\\,910\\,092\\,613\\,5-1.992\\,662\\,270\\,726\\,116\\,3i"
@@ -14993,7 +14993,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#247": {
+  "special-functions/LerchPhi#252": {
     "ours": {
       "input": "N(\\Phi(3, 2, \\frac{5}{2}))",
       "output": "-0.113\\,891\\,935\\,915\\,635\\,43-0.221\\,406\\,918\\,969\\,568\\,35i"
@@ -15007,7 +15007,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#248": {
+  "special-functions/LerchPhi#253": {
     "ours": {
       "input": "N(\\Phi(3, 2, -2.5))",
       "output": "153.817\\,592\\,905\\,833\\,92-53.801\\,881\\,309\\,605\\,13i"
@@ -15021,7 +15021,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#249": {
+  "special-functions/LerchPhi#254": {
     "ours": {
       "input": "N(\\Phi(3, 3, 1))",
       "output": "1.247\\,374\\,198\\,080\\,243\\,7-0.631\\,956\\,998\\,091\\,107\\,1i"
@@ -15035,7 +15035,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#250": {
+  "special-functions/LerchPhi#255": {
     "ours": {
       "input": "N(\\Phi(3, 3, 2))",
       "output": "0.082\\,458\\,066\\,026\\,747\\,85-0.210\\,652\\,332\\,697\\,035\\,62i"
@@ -15049,7 +15049,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#251": {
+  "special-functions/LerchPhi#256": {
     "ours": {
       "input": "N(\\Phi(3, 3, 0.5))",
       "output": "8.962\\,435\\,484\\,818\\,293-1.094\\,581\\,628\\,892\\,505\\,4i"
@@ -15063,7 +15063,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#252": {
+  "special-functions/LerchPhi#257": {
     "ours": {
       "input": "N(\\Phi(3, 3, \\frac{5}{2}))",
       "output": "0.008\\,171\\,843\\,992\\,156\\,041-0.121\\,620\\,180\\,988\\,056\\,09i"
@@ -15077,7 +15077,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#253": {
+  "special-functions/LerchPhi#258": {
     "ours": {
       "input": "N(\\Phi(3, 3, -2.5))",
       "output": "169.032\\,869\\,201\\,205\\,05-29.553\\,703\\,980\\,097\\,676i"
@@ -15091,7 +15091,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#254": {
+  "special-functions/LerchPhi#259": {
     "ours": {
       "input": "N(\\Phi(3, 0.5, 1))",
       "output": "-0.567\\,338\\,449\\,754\\,659\\,9-0.563\\,678\\,480\\,792\\,821\\,2i"
@@ -15105,7 +15105,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#255": {
+  "special-functions/LerchPhi#260": {
     "ours": {
       "input": "N(\\Phi(3, 0.5, 2))",
       "output": "-0.522\\,446\\,149\\,918\\,219\\,7-0.187\\,892\\,826\\,930\\,940\\,4i"
@@ -15119,7 +15119,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#256": {
+  "special-functions/LerchPhi#261": {
     "ours": {
       "input": "N(\\Phi(3, 0.5, 0.5))",
       "output": "-0.305\\,888\\,418\\,127\\,713\\,3-0.976\\,319\\,767\\,866\\,404i"
@@ -15133,7 +15133,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#257": {
+  "special-functions/LerchPhi#262": {
     "ours": {
       "input": "N(\\Phi(3, 0.5, \\frac{5}{2}))",
       "output": "-0.463\\,287\\,969\\,253\\,775\\,7-0.108\\,479\\,974\\,207\\,378\\,18i"
@@ -15147,7 +15147,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#258": {
+  "special-functions/LerchPhi#263": {
     "ours": {
       "input": "N(\\Phi(3, 0.5, -2.5))",
       "output": "-8.258\\,987\\,289\\,448\\,257-42.170\\,501\\,068\\,567\\,62i"
@@ -15161,7 +15161,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#259": {
+  "special-functions/LerchPhi#264": {
     "ours": {
       "input": "N(\\Phi(3, 2+i, 1))",
       "output": "0.601\\,415\\,572\\,990\\,860\\,5-0.572\\,691\\,588\\,995\\,903\\,8i"
@@ -15175,7 +15175,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#260": {
+  "special-functions/LerchPhi#265": {
     "ours": {
       "input": "N(\\Phi(3, 2+i, 2))",
       "output": "-0.132\\,861\\,475\\,669\\,713\\,2-0.190\\,897\\,196\\,331\\,967\\,94i"
@@ -15189,7 +15189,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#261": {
+  "special-functions/LerchPhi#266": {
     "ours": {
       "input": "N(\\Phi(3, 2+i, 0.5))",
       "output": "3.074\\,330\\,146\\,279\\,176+1.382\\,090\\,656\\,931\\,817\\,2i"
@@ -15203,7 +15203,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#262": {
+  "special-functions/LerchPhi#267": {
     "ours": {
       "input": "N(\\Phi(3, 2+i, \\frac{5}{2}))",
       "output": "-0.136\\,427\\,871\\,232\\,893\\,9-0.071\\,980\\,686\\,892\\,989\\,73i"
@@ -15217,7 +15217,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#263": {
+  "special-functions/LerchPhi#268": {
     "ours": {
       "input": "N(\\Phi(3, 2+i, -2.5))",
       "output": "754.439\\,399\\,822\\,086\\,3+554.504\\,954\\,092\\,239\\,2i"
@@ -15231,7 +15231,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#264": {
+  "special-functions/LerchPhi#269": {
     "ours": {
       "input": "N(\\Phi(1.5, 2, 1))",
       "output": "1.582\\,930\\,180\\,181\\,653-0.849\\,204\\,136\\,613\\,066\\,8i"
@@ -15245,7 +15245,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#265": {
+  "special-functions/LerchPhi#270": {
     "ours": {
       "input": "N(\\Phi(1.5, 2, 2))",
       "output": "0.388\\,620\\,120\\,121\\,102\\,25-0.566\\,136\\,091\\,075\\,377\\,9i"
@@ -15259,7 +15259,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#266": {
+  "special-functions/LerchPhi#271": {
     "ours": {
       "input": "N(\\Phi(1.5, 2, 0.5))",
       "output": "5.118\\,490\\,668\\,726\\,073-1.040\\,058\\,411\\,081\\,376i"
@@ -15273,7 +15273,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#267": {
+  "special-functions/LerchPhi#272": {
     "ours": {
       "input": "N(\\Phi(1.5, 2, \\frac{5}{2}))",
       "output": "0.200\\,810\\,667\\,581\\,958\\,37-0.462\\,248\\,182\\,702\\,833\\,63i"
@@ -15287,7 +15287,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#268": {
+  "special-functions/LerchPhi#273": {
     "ours": {
       "input": "N(\\Phi(1.5, 2, -2.5))",
       "output": "27.101\\,572\\,673\\,617\\,163-3.510\\,197\\,137\\,399\\,641\\,7i"
@@ -15301,7 +15301,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#269": {
+  "special-functions/LerchPhi#274": {
     "ours": {
       "input": "N(\\Phi(1.5, 3, 1))",
       "output": "1.373\\,918\\,338\\,213\\,52-0.172\\,161\\,323\\,528\\,858\\,8i"
@@ -15315,7 +15315,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#270": {
+  "special-functions/LerchPhi#275": {
     "ours": {
       "input": "N(\\Phi(1.5, 3, 2))",
       "output": "0.249\\,278\\,892\\,142\\,347-0.114\\,774\\,215\\,685\\,905\\,83i"
@@ -15329,7 +15329,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#271": {
+  "special-functions/LerchPhi#276": {
     "ours": {
       "input": "N(\\Phi(1.5, 3, 0.5))",
       "output": "8.758\\,392\\,281\\,291\\,254-0.210\\,853\\,698\\,043\\,957\\,9i"
@@ -15343,7 +15343,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#272": {
+  "special-functions/LerchPhi#277": {
     "ours": {
       "input": "N(\\Phi(1.5, 3, \\frac{5}{2}))",
       "output": "0.139\\,532\\,371\\,931\\,915\\,23-0.093\\,712\\,754\\,686\\,203\\,48i"
@@ -15357,7 +15357,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#273": {
+  "special-functions/LerchPhi#278": {
     "ours": {
       "input": "N(\\Phi(1.5, 3, -2.5))",
       "output": "11.051\\,129\\,504\\,913\\,542-0.711\\,631\\,230\\,898\\,364\\,7i"
@@ -15371,7 +15371,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#274": {
+  "special-functions/LerchPhi#279": {
     "ours": {
       "input": "N(\\Phi(1.5, 0.5, 1))",
       "output": "-1.031\\,093\\,801\\,626\\,106\\,4-1.855\\,696\\,435\\,774\\,015\\,8i"
@@ -15385,7 +15385,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#275": {
+  "special-functions/LerchPhi#280": {
     "ours": {
       "input": "N(\\Phi(1.5, 0.5, 2))",
       "output": "-1.354\\,062\\,534\\,417\\,405-1.237\\,130\\,957\\,182\\,677i"
@@ -15399,7 +15399,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#276": {
+  "special-functions/LerchPhi#281": {
     "ours": {
       "input": "N(\\Phi(1.5, 0.5, 0.5))",
       "output": "-0.472\\,701\\,238\\,866\\,762\\,4-2.272\\,754\\,692\\,573\\,877i"
@@ -15413,7 +15413,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#277": {
+  "special-functions/LerchPhi#282": {
     "ours": {
       "input": "N(\\Phi(1.5, 0.5, \\frac{5}{2}))",
       "output": "-1.382\\,959\\,854\\,502\\,865-1.010\\,113\\,196\\,699\\,500\\,7i"
@@ -15427,7 +15427,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#278": {
+  "special-functions/LerchPhi#283": {
     "ours": {
       "input": "N(\\Phi(1.5, 0.5, -2.5))",
       "output": "-1.595\\,366\\,681\\,175\\,322\\,7-12.709\\,728\\,006\\,201\\,562i"
@@ -15441,7 +15441,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#279": {
+  "special-functions/LerchPhi#284": {
     "ours": {
       "input": "N(\\Phi(1.5, 2+i, 1))",
       "output": "0.928\\,830\\,673\\,042\\,347\\,2-0.565\\,207\\,572\\,193\\,658\\,6i"
@@ -15455,7 +15455,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#280": {
+  "special-functions/LerchPhi#285": {
     "ours": {
       "input": "N(\\Phi(1.5, 2+i, 2))",
       "output": "-0.047\\,446\\,217\\,971\\,768\\,59-0.376\\,805\\,048\\,129\\,105\\,87i"
@@ -15469,7 +15469,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#281": {
+  "special-functions/LerchPhi#286": {
     "ours": {
       "input": "N(\\Phi(1.5, 2+i, 0.5))",
       "output": "3.383\\,048\\,389\\,778\\,828+1.747\\,983\\,484\\,353\\,337\\,5i"
@@ -15483,7 +15483,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#282": {
+  "special-functions/LerchPhi#287": {
     "ours": {
       "input": "N(\\Phi(1.5, 2+i, \\frac{5}{2}))",
       "output": "-0.136\\,231\\,069\\,616\\,323\\,14-0.242\\,176\\,661\\,225\\,908\\,45i"
@@ -15497,7 +15497,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#283": {
+  "special-functions/LerchPhi#288": {
     "ours": {
       "input": "N(\\Phi(1.5, 2+i, -2.5))",
       "output": "188.054\\,525\\,807\\,321\\,62+129.950\\,947\\,308\\,879\\,28i"
@@ -15511,7 +15511,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#284": {
+  "special-functions/LerchPhi#289": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2, 1))",
       "output": "0.764\\,920\\,440\\,250\\,381\\,9"
@@ -15525,7 +15525,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#285": {
+  "special-functions/LerchPhi#290": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2, 2))",
       "output": "0.156\\,719\\,706\\,499\\,745\\,3"
@@ -15539,7 +15539,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#286": {
+  "special-functions/LerchPhi#291": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2, 0.5))",
       "output": "3.545\\,004\\,558\\,874\\,94"
@@ -15553,7 +15553,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#287": {
+  "special-functions/LerchPhi#292": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2, \\frac{5}{2}))",
       "output": "0.094\\,076\\,100\\,240\\,723\\,02"
@@ -15567,7 +15567,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#288": {
+  "special-functions/LerchPhi#293": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2, -2.5))",
       "output": "-3.471\\,057\\,052\\,869\\,589\\,7"
@@ -15581,7 +15581,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#289": {
+  "special-functions/LerchPhi#294": {
     "ours": {
       "input": "N(\\Phi(-1.5, 3, 1))",
       "output": "0.865\\,224\\,966\\,770\\,831\\,8"
@@ -15595,7 +15595,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#290": {
+  "special-functions/LerchPhi#295": {
     "ours": {
       "input": "N(\\Phi(-1.5, 3, 2))",
       "output": "0.089\\,850\\,022\\,152\\,777\\,51"
@@ -15609,7 +15609,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#291": {
+  "special-functions/LerchPhi#296": {
     "ours": {
       "input": "N(\\Phi(-1.5, 3, 0.5))",
       "output": "7.652\\,044\\,367\\,963\\,557\\,5"
@@ -15623,7 +15623,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#292": {
+  "special-functions/LerchPhi#297": {
     "ours": {
       "input": "N(\\Phi(-1.5, 3, \\frac{5}{2}))",
       "output": "0.042\\,883\\,916\\,625\\,780\\,595+16\\,178\\,031\\,136\\,959\\,703\\cdot10^{-30}i"
@@ -15637,7 +15637,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#293": {
+  "special-functions/LerchPhi#298": {
     "ours": {
       "input": "N(\\Phi(-1.5, 3, -2.5))",
       "output": "-43.445\\,205\\,297\\,432\\,56"
@@ -15651,7 +15651,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#294": {
+  "special-functions/LerchPhi#299": {
     "ours": {
       "input": "N(\\Phi(-1.5, 0.5, 1))",
       "output": "0.511\\,802\\,181\\,247\\,576\\,1"
@@ -15665,7 +15665,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#295": {
+  "special-functions/LerchPhi#300": {
     "ours": {
       "input": "N(\\Phi(-1.5, 0.5, 2))",
       "output": "0.325\\,465\\,212\\,501\\,622\\,86"
@@ -15679,7 +15679,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#296": {
+  "special-functions/LerchPhi#301": {
     "ours": {
       "input": "N(\\Phi(-1.5, 0.5, 0.5))",
       "output": "0.827\\,894\\,231\\,949\\,178"
@@ -15693,7 +15693,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#297": {
+  "special-functions/LerchPhi#302": {
     "ours": {
       "input": "N(\\Phi(-1.5, 0.5, \\frac{5}{2}))",
       "output": "0.283\\,744\\,684\\,874\\,486\\,5-5\\,362\\,377\\,208\\,939\\,506\\cdot10^{-29}i"
@@ -15707,7 +15707,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#298": {
+  "special-functions/LerchPhi#303": {
     "ours": {
       "input": "N(\\Phi(-1.5, 0.5, -2.5))",
       "output": "-2.794\\,143\\,032\\,828\\,476-2.589\\,691\\,175\\,981\\,552i"
@@ -15721,7 +15721,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#299": {
+  "special-functions/LerchPhi#304": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2+i, 1))",
       "output": "0.792\\,548\\,965\\,722\\,148\\,8+0.123\\,074\\,546\\,469\\,527\\,56i"
@@ -15735,7 +15735,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#300": {
+  "special-functions/LerchPhi#305": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2+i, 2))",
       "output": "0.138\\,300\\,689\\,518\\,559\\,8-0.082\\,049\\,697\\,646\\,360\\,73i"
@@ -15749,7 +15749,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#301": {
+  "special-functions/LerchPhi#306": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2+i, 0.5))",
       "output": "2.619\\,306\\,075\\,593\\,21+2.668\\,732\\,631\\,457\\,893i"
@@ -15763,7 +15763,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#302": {
+  "special-functions/LerchPhi#307": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2+i, \\frac{5}{2}))",
       "output": "0.068\\,872\\,516\\,043\\,113\\,7-0.066\\,700\\,714\\,195\\,388\\,52i"
@@ -15777,7 +15777,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#303": {
+  "special-functions/LerchPhi#308": {
     "ours": {
       "input": "N(\\Phi(-1.5, 2+i, -2.5))",
       "output": "139.444\\,015\\,517\\,816\\,1+127.214\\,874\\,775\\,026\\,89i"
@@ -15791,7 +15791,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#304": {
+  "special-functions/LerchPhi#309": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2, 1))",
       "output": "0.817\\,164\\,228\\,975\\,140\\,8+0.438\\,319\\,513\\,824\\,475\\,2i"
@@ -15805,7 +15805,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#305": {
+  "special-functions/LerchPhi#310": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2, 2))",
       "output": "0.138\\,760\\,651\\,324\\,817\\,96+0.160\\,798\\,211\\,174\\,838\\,64i"
@@ -15819,7 +15819,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#306": {
+  "special-functions/LerchPhi#311": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2, 0.5))",
       "output": "3.792\\,114\\,260\\,846\\,786\\,6+0.856\\,074\\,806\\,978\\,553\\,3i"
@@ -15833,7 +15833,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#307": {
+  "special-functions/LerchPhi#312": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2, \\frac{5}{2}))",
       "output": "0.073\\,029\\,368\\,926\\,065\\,17+0.108\\,310\\,519\\,204\\,865\\,63i"
@@ -15847,7 +15847,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#308": {
+  "special-functions/LerchPhi#313": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2, -2.5))",
       "output": "-51.396\\,662\\,810\\,913\\,11-0.112\\,162\\,509\\,568\\,774\\,38i"
@@ -15861,7 +15861,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#309": {
+  "special-functions/LerchPhi#314": {
     "ours": {
       "input": "N(\\Phi(1+2i, 3, 1))",
       "output": "0.960\\,539\\,329\\,125\\,924\\,5+0.262\\,023\\,760\\,613\\,251\\,3i"
@@ -15875,7 +15875,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#310": {
+  "special-functions/LerchPhi#315": {
     "ours": {
       "input": "N(\\Phi(1+2i, 3, 2))",
       "output": "0.096\\,917\\,370\\,070\\,485\\,22+0.068\\,189\\,020\\,472\\,280\\,32i"
@@ -15889,7 +15889,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#311": {
+  "special-functions/LerchPhi#316": {
     "ours": {
       "input": "N(\\Phi(1+2i, 3, 0.5))",
       "output": "8.006\\,976\\,954\\,441\\,546+0.645\\,737\\,139\\,237\\,068\\,8i"
@@ -15903,7 +15903,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#312": {
+  "special-functions/LerchPhi#317": {
     "ours": {
       "input": "N(\\Phi(1+2i, 3, \\frac{5}{2}))",
       "output": "0.043\\,221\\,448\\,485\\,686\\,27+0.039\\,913\\,749\\,099\\,422\\,996i"
@@ -15917,7 +15917,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#313": {
+  "special-functions/LerchPhi#318": {
     "ours": {
       "input": "N(\\Phi(1+2i, 3, -2.5))",
       "output": "-63.145\\,568\\,516\\,679\\,16-55.709\\,655\\,033\\,083\\,43i"
@@ -15931,7 +15931,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#314": {
+  "special-functions/LerchPhi#319": {
     "ours": {
       "input": "N(\\Phi(1+2i, 0.5, 1))",
       "output": "0.251\\,873\\,370\\,548\\,447\\,3+0.594\\,237\\,244\\,072\\,761\\,8i"
@@ -15945,7 +15945,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#315": {
+  "special-functions/LerchPhi#320": {
     "ours": {
       "input": "N(\\Phi(1+2i, 0.5, 2))",
       "output": "0.088\\,069\\,571\\,738\\,793\\,93+0.418\\,098\\,100\\,595\\,173\\,77i"
@@ -15959,7 +15959,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#316": {
+  "special-functions/LerchPhi#321": {
     "ours": {
       "input": "N(\\Phi(1+2i, 0.5, 0.5))",
       "output": "0.577\\,382\\,043\\,614\\,928\\,2+0.768\\,409\\,107\\,754\\,766\\,5i"
@@ -15973,7 +15973,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#317": {
+  "special-functions/LerchPhi#322": {
     "ours": {
       "input": "N(\\Phi(1+2i, 0.5, \\frac{5}{2}))",
       "output": "0.060\\,065\\,923\\,306\\,197\\,685+0.368\\,282\\,582\\,441\\,825i"
@@ -15987,7 +15987,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#318": {
+  "special-functions/LerchPhi#323": {
     "ours": {
       "input": "N(\\Phi(1+2i, 0.5, -2.5))",
       "output": "2.475\\,463\\,147\\,093\\,155-6.813\\,575\\,698\\,374\\,405i"
@@ -16001,7 +16001,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#319": {
+  "special-functions/LerchPhi#324": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2+i, 1))",
       "output": "1.126\\,028\\,536\\,312\\,937\\,6+0.641\\,355\\,365\\,959\\,258\\,2i"
@@ -16015,7 +16015,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#320": {
+  "special-functions/LerchPhi#325": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2+i, 2))",
       "output": "0.281\\,747\\,853\\,646\\,291\\,07+0.077\\,859\\,658\\,666\\,677\\,1i"
@@ -16029,7 +16029,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#321": {
+  "special-functions/LerchPhi#326": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2+i, 0.5))",
       "output": "3.192\\,905\\,834\\,798\\,345+3.788\\,497\\,113\\,005\\,995\\,2i"
@@ -16043,7 +16043,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#322": {
+  "special-functions/LerchPhi#327": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2+i, \\frac{5}{2}))",
       "output": "0.171\\,752\\,370\\,429\\,291\\,12+0.031\\,954\\,991\\,049\\,997\\,425i"
@@ -16057,7 +16057,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#323": {
+  "special-functions/LerchPhi#328": {
     "ours": {
       "input": "N(\\Phi(1+2i, 2+i, -2.5))",
       "output": "-457.911\\,341\\,409\\,628\\,85+71.227\\,722\\,329\\,657\\,85i"
@@ -16071,7 +16071,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#324": {
+  "special-functions/LerchPhi#329": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2, 1))",
       "output": "0.744\\,689\\,766\\,677\\,463\\,1+0.097\\,676\\,893\\,344\\,289\\,08i"
@@ -16085,7 +16085,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#325": {
+  "special-functions/LerchPhi#330": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2, 2))",
       "output": "0.147\\,889\\,921\\,024\\,028\\,37+0.033\\,475\\,351\\,786\\,492\\,316i"
@@ -16099,7 +16099,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#326": {
+  "special-functions/LerchPhi#331": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2, 0.5))",
       "output": "3.510\\,343\\,411\\,490\\,998+0.209\\,338\\,331\\,082\\,416\\,73i"
@@ -16113,7 +16113,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#327": {
+  "special-functions/LerchPhi#332": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2, \\frac{5}{2}))",
       "output": "0.087\\,723\\,639\\,080\\,065\\,42+0.022\\,451\\,843\\,102\\,527\\,576i"
@@ -16127,7 +16127,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#328": {
+  "special-functions/LerchPhi#333": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2, -2.5))",
       "output": "7.238\\,774\\,267\\,536\\,812\\,5+8.864\\,424\\,682\\,985\\,405i"
@@ -16141,7 +16141,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#329": {
+  "special-functions/LerchPhi#334": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 3, 1))",
       "output": "0.855\\,338\\,745\\,722\\,699\\,1+0.064\\,892\\,989\\,018\\,154\\,07i"
@@ -16155,7 +16155,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#330": {
+  "special-functions/LerchPhi#335": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 3, 2))",
       "output": "0.086\\,733\\,806\\,287\\,417\\,96+0.014\\,560\\,544\\,846\\,174\\,24i"
@@ -16169,7 +16169,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#331": {
+  "special-functions/LerchPhi#336": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 3, 0.5))",
       "output": "7.631\\,459\\,552\\,290\\,882+0.183\\,812\\,993\\,821\\,418\\,47i"
@@ -16183,7 +16183,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#332": {
+  "special-functions/LerchPhi#337": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 3, \\frac{5}{2}))",
       "output": "0.040\\,930\\,641\\,736\\,692\\,38+0.008\\,246\\,898\\,188\\,157\\,391i"
@@ -16197,7 +16197,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#333": {
+  "special-functions/LerchPhi#338": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 3, -2.5))",
       "output": "-2.091\\,088\\,273\\,701\\,476\\,7+67.791\\,385\\,747\\,425\\,37i"
@@ -16211,7 +16211,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#334": {
+  "special-functions/LerchPhi#339": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 0.5, 1))",
       "output": "0.465\\,538\\,805\\,671\\,105\\,84+0.138\\,214\\,644\\,414\\,363\\,76i"
@@ -16225,7 +16225,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#335": {
+  "special-functions/LerchPhi#340": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 0.5, 2))",
       "output": "0.289\\,201\\,980\\,279\\,298\\,6+0.100\\,658\\,223\\,909\\,954\\,41i"
@@ -16239,7 +16239,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#336": {
+  "special-functions/LerchPhi#341": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 0.5, 0.5))",
       "output": "0.773\\,036\\,344\\,755\\,627+0.177\\,108\\,997\\,856\\,830\\,46i"
@@ -16253,7 +16253,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#337": {
+  "special-functions/LerchPhi#342": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 0.5, \\frac{5}{2}))",
       "output": "0.250\\,662\\,467\\,827\\,747\\,3+0.090\\,079\\,856\\,329\\,816\\,72i"
@@ -16267,7 +16267,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#338": {
+  "special-functions/LerchPhi#343": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 0.5, -2.5))",
       "output": "-3.574\\,854\\,956\\,018\\,253+3.468\\,728\\,991\\,325\\,334i"
@@ -16281,7 +16281,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#339": {
+  "special-functions/LerchPhi#344": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2+i, 1))",
       "output": "0.812\\,564\\,848\\,672\\,117\\,8+0.233\\,563\\,704\\,705\\,404\\,38i"
@@ -16295,7 +16295,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#340": {
+  "special-functions/LerchPhi#345": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2+i, 2))",
       "output": "0.158\\,374\\,286\\,676\\,068\\,18-0.050\\,126\\,278\\,686\\,223\\,436i"
@@ -16309,7 +16309,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#341": {
+  "special-functions/LerchPhi#346": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2+i, 0.5))",
       "output": "2.603\\,018\\,482\\,399\\,761\\,5+2.911\\,418\\,398\\,487\\,827i"
@@ -16323,7 +16323,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#342": {
+  "special-functions/LerchPhi#347": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2+i, \\frac{5}{2}))",
       "output": "0.085\\,359\\,108\\,535\\,713\\,03-0.047\\,777\\,579\\,953\\,800\\,55i"
@@ -16337,7 +16337,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#343": {
+  "special-functions/LerchPhi#348": {
     "ours": {
       "input": "N(\\Phi(-1.5+i, 2+i, -2.5))",
       "output": "244.757\\,889\\,059\\,178\\,92-108.837\\,273\\,694\\,788\\,2i"
@@ -16351,7 +16351,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#344": {
+  "special-functions/LerchPhi#349": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2, 1))",
       "output": "1.051\\,275\\,353\\,558\\,639\\,2+0.352\\,340\\,198\\,251\\,735\\,24i"
@@ -16365,7 +16365,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#345": {
+  "special-functions/LerchPhi#350": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2, 2))",
       "output": "0.246\\,983\\,766\\,395\\,498\\,66+0.162\\,568\\,510\\,619\\,732\\,57i"
@@ -16379,7 +16379,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#346": {
+  "special-functions/LerchPhi#351": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2, 0.5))",
       "output": "4.157\\,406\\,968\\,302\\,781+0.596\\,428\\,896\\,905\\,385\\,7i"
@@ -16393,7 +16393,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#347": {
+  "special-functions/LerchPhi#352": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2, \\frac{5}{2}))",
       "output": "0.150\\,555\\,467\\,955\\,636\\,76+0.119\\,829\\,276\\,180\\,774\\,92i"
@@ -16407,7 +16407,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#348": {
+  "special-functions/LerchPhi#353": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2, -2.5))",
       "output": "-6.713\\,683\\,691\\,062\\,509+9.459\\,163\\,380\\,965\\,968i"
@@ -16421,7 +16421,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#349": {
+  "special-functions/LerchPhi#354": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 3, 1))",
       "output": "1.060\\,018\\,393\\,069\\,489\\,5+0.163\\,727\\,323\\,847\\,861\\,65i"
@@ -16435,7 +16435,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#350": {
+  "special-functions/LerchPhi#355": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 3, 2))",
       "output": "0.134\\,737\\,452\\,357\\,701\\,38+0.053\\,079\\,520\\,907\\,412\\,97i"
@@ -16449,7 +16449,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#351": {
+  "special-functions/LerchPhi#356": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 3, 0.5))",
       "output": "8.176\\,233\\,084\\,955\\,843+0.358\\,637\\,797\\,014\\,528\\,14i"
@@ -16463,7 +16463,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#352": {
+  "special-functions/LerchPhi#357": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 3, \\frac{5}{2}))",
       "output": "0.067\\,907\\,300\\,620\\,558\\,26+0.034\\,208\\,132\\,622\\,012\\,555i"
@@ -16477,7 +16477,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#353": {
+  "special-functions/LerchPhi#358": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 3, -2.5))",
       "output": "-11.007\\,681\\,973\\,911\\,316-4.132\\,179\\,140\\,120\\,582i"
@@ -16491,7 +16491,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#354": {
+  "special-functions/LerchPhi#359": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 0.5, 1))",
       "output": "0.646\\,848\\,782\\,818\\,905\\,3+0.904\\,298\\,262\\,704\\,088\\,3i"
@@ -16505,7 +16505,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#355": {
+  "special-functions/LerchPhi#360": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 0.5, 2))",
       "output": "0.366\\,446\\,525\\,992\\,278\\,1+0.718\\,120\\,486\\,638\\,797\\,6i"
@@ -16519,7 +16519,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#356": {
+  "special-functions/LerchPhi#361": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 0.5, 0.5))",
       "output": "1.070\\,316\\,852\\,556\\,094\\,7+1.058\\,323\\,277\\,527\\,613i"
@@ -16533,7 +16533,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#357": {
+  "special-functions/LerchPhi#362": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 0.5, \\frac{5}{2}))",
       "output": "0.302\\,169\\,762\\,869\\,199\\,2+0.656\\,753\\,551\\,994\\,039\\,7i"
@@ -16547,7 +16547,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#358": {
+  "special-functions/LerchPhi#363": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 0.5, -2.5))",
       "output": "0.181\\,355\\,765\\,541\\,796\\,78-1.491\\,508\\,888\\,888\\,433\\,8i"
@@ -16561,7 +16561,7 @@
       "output": false
     }
   },
-  "special-functions/LerchPhi#359": {
+  "special-functions/LerchPhi#364": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2+i, 1))",
       "output": "1.362\\,388\\,391\\,030\\,094\\,5+0.286\\,239\\,732\\,263\\,093\\,74i"
@@ -16575,7 +16575,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#360": {
+  "special-functions/LerchPhi#365": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2+i, 2))",
       "output": "0.377\\,604\\,463\\,352\\,317\\,1-0.067\\,005\\,355\\,942\\,489\\,92i"
@@ -16589,7 +16589,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#361": {
+  "special-functions/LerchPhi#366": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2+i, 0.5))",
       "output": "3.622\\,328\\,102\\,519\\,780\\,7+3.137\\,422\\,391\\,303\\,859\\,5i"
@@ -16603,7 +16603,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#362": {
+  "special-functions/LerchPhi#367": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2+i, \\frac{5}{2}))",
       "output": "0.237\\,708\\,893\\,651\\,532\\,1-0.070\\,331\\,778\\,185\\,476\\,47i"
@@ -16617,7 +16617,7 @@
       "output": true
     }
   },
-  "special-functions/LerchPhi#363": {
+  "special-functions/LerchPhi#368": {
     "ours": {
       "input": "N(\\Phi(0.8+0.9i, 2+i, -2.5))",
       "output": "-92.127\\,592\\,772\\,435\\,4+93.926\\,546\\,083\\,357\\,69i"
