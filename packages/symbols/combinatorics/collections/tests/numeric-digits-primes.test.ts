@@ -354,6 +354,14 @@ test("Take(TwinPrimes, 5) gives the first five lesser twin primes (Count NaN doe
   expect(ce.box(["Take", "TwinPrimes", 5]).evaluate().toString()).toBe("[3,5,11,17,29]");
 });
 
+test("TwinPrimes has no element at a negative index: there is no last one to count back from", () => {
+  // compute-engine resolves `At(TwinPrimes, -1)` itself; the handler is reached directly.
+  const definition = ce.lookupDefinition("TwinPrimes") as unknown as {
+    value: { collection: { at: (c: unknown, index: number) => unknown } };
+  };
+  expect(definition.value.collection.at(ce.box("TwinPrimes"), -1)).toBeUndefined();
+});
+
 test("Count(TwinPrimes) is NaN through the engine", () => {
   expect(ce.box(["Count", "TwinPrimes"]).evaluate().toString()).toBe("NaN");
 });

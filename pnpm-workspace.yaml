@@ -8,6 +8,7 @@ catalogMode: prefer
 
 catalog:
   "@types/node": ^24
+  ajv: ^8.20.0
   ts-morph: ^28.0.0
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@0.3.1
