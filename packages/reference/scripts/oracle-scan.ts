@@ -246,6 +246,7 @@ interface OtherRow {
   readonly kind?: string;
   readonly note?: string;
   readonly tolerance?: number;
+  readonly issue?: number;
 }
 type Sidecar = {
   kernels: Record<string, string>;
@@ -324,6 +325,7 @@ for (const system of systems) {
             : {
                 kind: same ? (prior?.kind ?? "unclassified") : "unclassified",
                 note: same ? (prior?.note ?? "") : "",
+                ...(same && prior?.issue !== undefined ? { issue: prior.issue } : {}),
               }),
           ...(prior?.tolerance === undefined
             ? {}

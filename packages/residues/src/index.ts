@@ -7,7 +7,9 @@ export {
   discreteLog,
   MAX_PRIMITIVE_ROOTS,
   multiplicativeOrder,
+  primitiveRootCount,
   primitiveRootList,
+  primitiveRoots,
 } from "./logs.ts";
 export * as integerMod from "./integer-mod.ts";
 export type { IntegerMod } from "./integer-mod.ts";

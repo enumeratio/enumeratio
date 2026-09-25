@@ -1047,16 +1047,12 @@
         "sage": {
           "input": "len(enumeratio_primitive_root_list(1000003))",
           "output": "333332",
-          "verdict": "inconclusive",
-          "kind": "unevaluated",
-          "note": "Sage enumerates all 333332 primitive roots of 1000003; compute-engine's PrimitiveRootList leaves a modulus this large unevaluated."
+          "verdict": "agree"
         },
         "wolfram": {
           "input": "Length[PrimitiveRootList[1000003]]",
           "output": "333332",
-          "verdict": "disagree",
-          "kind": "domain",
-          "note": "We cap the built list at 100,000 roots and leave Length of it unevaluated past that; Wolfram computes phi(phi(1000003)) = 333332 directly without materializing the list."
+          "verdict": "agree"
         }
       }
     }

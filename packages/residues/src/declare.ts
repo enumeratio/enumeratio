@@ -1,7 +1,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/boxed";
 import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
-import { discreteLog, multiplicativeOrder, primitiveRootList } from "./logs.ts";
+import {
+  discreteLog,
+  multiplicativeOrder,
+  primitiveRootCount,
+  primitiveRootList,
+  primitiveRoots,
+} from "./logs.ts";
 import { powerModList } from "./roots.ts";
 
 // Wiring ℤ/m to compute-engine. Every head answers over bigints and stays unevaluated —
@@ -96,6 +102,38 @@ export function declareResidues(ce: ComputeEngine): void {
       const n = bigIntegerAt(ops[0]);
       const found = n === undefined ? undefined : primitiveRootList(n);
       return found === undefined ? undefined : list(found);
+    },
+    // Past the listing cap the head stays unevaluated but is still a collection: Length and
+    // At answer from φ(φ(n)) and an ascending scan, without the whole list.
+    collection: {
+      count: (c) => {
+        const n = bigIntegerAt(operandsOf(c)[0]);
+        const count = n === undefined ? undefined : primitiveRootCount(n);
+        return count === undefined || count > BigInt(Number.MAX_SAFE_INTEGER)
+          ? undefined
+          : Number(count);
+      },
+      isFinite: () => true,
+      isLazy: () => true,
+      iterator: (c) => {
+        const n = bigIntegerAt(operandsOf(c)[0]);
+        const roots = n === undefined ? undefined : primitiveRoots(n);
+        return {
+          next: () => {
+            const next = roots?.next();
+            return next === undefined || next.done === true
+              ? { value: undefined, done: true }
+              : { value: ce.number(next.value), done: false };
+          },
+        };
+      },
+      at: (c, index) => {
+        const n = bigIntegerAt(operandsOf(c)[0]);
+        if (n === undefined || typeof index !== "number" || index < 1) return undefined;
+        let k = 0;
+        for (const g of primitiveRoots(n)) if (++k === index) return ce.number(g);
+        return undefined;
+      },
     },
   });
 
