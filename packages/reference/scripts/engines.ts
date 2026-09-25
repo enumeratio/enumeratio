@@ -41,9 +41,13 @@ const LIBRARY_DECLARATIONS = [
   declareHopf,
   declareGroupAlgebra,
   declareModular,
-  declareNumberTheory,
   declareAdeles,
   declareBraid,
+  // Last: adeles' Fibonacci/LucasL widening (`(integer | value) -> integer | value`, no
+  // second argument) would otherwise clobber this package's wider signature for the real
+  // index and the two-argument polynomial form -- `widenSignature` just assigns the
+  // operator's `signature` field, so whichever call runs last wins.
+  declareNumberTheory,
 ];
 
 /** Every library we ship, in the order the reference tests declare them. */

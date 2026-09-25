@@ -97,5 +97,6 @@ export function declareLambertW(ce: ComputeEngine): void {
       if (exact !== undefined) return options.numericApproximation ? exact.N() : exact;
       return r;
     },
+    { min: 1, max: 2 },
   );
 }

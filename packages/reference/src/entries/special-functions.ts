@@ -1204,6 +1204,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "Pole at $s = 1$: $\\zeta(1, a) = \\text{ComplexInfinity}$ for every $a$.",
       "Poles at $a = 0, -1, -2, \\dots$: the $(n+a)=0$ term is singular. (The two-argument [[Zeta]] drops that term instead, staying finite there.)",
       "Numeric evaluation (under N()) is Euler–Maclaurin summation and supports complex $s$ and $a$; it is aligned with Wolfram's $\\mathrm{HurwitzZeta}[s, a]$. Left of $\\operatorname{Re}(s) = 0$, where those direct terms cancel, $a$ near the real axis goes through $\\zeta(s, 1+h) = \\sum_k \\binom{-s}{k} h^k \\zeta(s+k)$ instead, each $\\zeta(s+k)$ from the functional equation.",
+      "That Euler–Maclaurin sum runs in arbitrary precision (as many digits as `ce.precision` asks for, checked against mpmath at 30 and 50 digits) whenever $s$ and $a$ are both real; a genuinely complex $s$ or $a$ is correct to the same number of digits internally, but the returned value is still one of compute-engine's own complex numbers, which is a pair of doubles -- so asking N() for 30 or 50 digits of a complex result gives back the same ~15-17 correct digits either way, a ceiling of compute-engine's complex-number representation rather than of this computation.",
     ],
     examples: [
       {

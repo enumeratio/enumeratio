@@ -199,8 +199,9 @@ export function declareListFunctional(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["FixedPoint", 1, 1],
-    (ops) => ops.length === 2,
+    () => true,
     () => (ops) => fixedPointValue(ce, ops[0], ops[1]),
+    2,
   );
 
   ce.declare("Outer", {
@@ -332,8 +333,9 @@ export function declareListFunctional(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Length", 1],
-    (ops) => ops.length === 1 && isAssociation(ops),
+    (ops) => isAssociation(ops),
     () => (ops) => ce.number(operandsOf(ops[0]).length),
+    1,
   );
 
   // 1 or 2 arguments only: `First`/`Last` were widened (see list-heads.ts) to accept a
@@ -347,30 +349,32 @@ export function declareListFunctional(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["First", 1, 1],
-    (ops) => (ops.length === 1 || ops.length === 2) && isAssociation(ops),
+    (ops) => isAssociation(ops),
     () => (ops) => {
       const first = operandsOf(ops[0])[0];
       if (first !== undefined) return operandsOf(first)[1];
       return ops.length === 2 ? ops[1] : undefined;
     },
+    { min: 1, max: 2 },
   );
 
   wrapOperator(
     ce,
     ["Last", 1, 1],
-    (ops) => (ops.length === 1 || ops.length === 2) && isAssociation(ops),
+    (ops) => isAssociation(ops),
     () => (ops) => {
       const rules = operandsOf(ops[0]);
       const last = rules[rules.length - 1];
       if (last !== undefined) return operandsOf(last)[1];
       return ops.length === 2 ? ops[1] : undefined;
     },
+    { min: 1, max: 2 },
   );
 
   wrapOperator(
     ce,
     ["Join", 1, 1],
-    (ops) => ops.length >= 2 && ops.every((op) => op.operator === "Association"),
+    (ops) => ops.every((op) => op.operator === "Association"),
     () => (ops) => {
       const order: string[] = [];
       const keyExprs = new Map<string, BoxedExpression>();
@@ -390,6 +394,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
         ...order.map((keyId) => ce.box(["Rule", keyExprs.get(keyId)!, values.get(keyId)!])),
       ]);
     },
+    { min: 2 },
   );
 
   // Ascending order BY VALUE, the way Wolfram's Sort orders an Association — plain
@@ -397,7 +402,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Sort", 1],
-    (ops) => ops.length === 1 && isAssociation(ops),
+    (ops) => isAssociation(ops),
     () => (ops) => {
       const sorted = [...operandsOf(ops[0])].sort((ruleA, ruleB) => {
         const valueA = operandsOf(ruleA)[1];
@@ -409,6 +414,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
       });
       return ce.box(["Association", ...sorted]);
     },
+    1,
   );
 
   ce.declare("GeometricMean", {

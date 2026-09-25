@@ -56,19 +56,21 @@ function declareRoundingHead(
   wrapOperator(
     ce,
     [name, 1],
-    (ops) => ops.length === 1 && ops[0]?.operator === name,
+    (ops) => ops[0]?.operator === name,
     () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
+    1,
   );
   // An exact constant expression: evaluate it numerically and round that.
   wrapOperator(
     ce,
     [name, 1],
-    (ops) => ops.length === 1 && ops[0] !== undefined && looksConstant(ops[0]),
+    (ops) => ops[0] !== undefined && looksConstant(ops[0]),
     () => (ops) => {
       const n = ops[0]!.N();
       if (n.im !== 0 || !Number.isFinite(n.re)) return undefined;
       return ce.number(round(n.re));
     },
+    1,
   );
 }
 
@@ -91,8 +93,9 @@ function declareExtremum(
   wrapOperator(
     ce,
     [name, 2],
-    (ops) => ops.length >= 2 && ops.every((op) => op === ops[0] || op.isSame(ops[0])),
+    (ops) => ops.every((op) => op === ops[0] || op.isSame(ops[0])),
     () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
+    { min: 2 },
   );
   // A pool of exact constants (Pi, E, ...): compare numerically, keep the exact form.
   wrapOperator(
@@ -113,6 +116,7 @@ function declareExtremum(
       if (best === undefined) return undefined;
       return options.numericApproximation ? best.op.N() : best.op;
     },
+    { min: 1 },
   );
 }
 
@@ -127,11 +131,12 @@ export function declareConstantRounding(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["IsOdd", 1],
-    (ops) => ops.length === 1 && ops[0] !== undefined && looksConstant(ops[0]),
+    (ops) => ops[0] !== undefined && looksConstant(ops[0]),
     () => (ops) => {
       const n = ops[0]!.N();
       if (n.im !== 0 || !Number.isFinite(n.re) || Number.isInteger(n.re)) return undefined;
       return ce.False;
     },
+    1,
   );
 }

@@ -1571,12 +1571,6 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "IntegerDigits[6345354, 10, 4]",
     "IntegerDigits[137, MixedRadix[{3, 12}]]",
   ],
-  IntegerPartitions: [
-    "IntegerPartitions[5]",
-    "IntegerPartitions[8, 3]",
-    "IntegerPartitions[8, {3}]",
-    "IntegerPartitions[8, All, {1, 2, 5}]",
-  ],
   IntegerString: [
     'IntegerString[1988, "Roman"]',
     'IntegerString[8500000, "JapaneseFinancial"]',
@@ -1923,11 +1917,6 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "PowerMod[2, {10, 11, 12, 13, 14}, 5]",
   ],
   PowerModList: ["PowerModList[3, 1/2, 11]"],
-  Prepend: [
-    "Prepend[{a, b, c, d}, x]",
-    "Prepend[Association[1 -> a, 2 -> b], 3 -> d]",
-    "Prepend[Association[1 -> a, 2 -> b], {3 -> d, 4 -> e}]",
-  ],
   Prime: ["Prime[100]", "Prime[10]", "Prime[10^10]", "Prime[{1, 3, 4, 10}]"],
   PrimeNu: [
     "PrimeNu[24]",

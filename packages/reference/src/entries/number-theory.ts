@@ -2362,10 +2362,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
           ["Count", ["IntegerPartitions", 12, "All", ["List", 1, 3, 5, 7, 9, 11]]],
         ],
         expected: "True",
-        aspirational: true,
         category: "Properties",
         caption:
-          "Euler: as many partitions into odd parts as into distinct parts; not yet, since [[IntegerPartitions]] does not take a part-restriction argument",
+          "Euler: as many partitions into odd parts as into distinct parts, counted with [[IntegerPartitions]]' part restriction",
       },
     ],
     seeAlso: ["DistinctPartitions", "IntegerPartitions"],

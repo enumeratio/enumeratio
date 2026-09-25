@@ -31,7 +31,7 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), moving them
   // from "compute-engine" to "override" — the threshold tracks that, well below the current
   // count so it still catches a real regression.
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(30);
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(25);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -141,6 +141,13 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * native pair round a big argument through a double — `GCD(20!, 10^100+3)` came back
  * 163840000 instead of 7 — so this is a correction, not only an addition), plus threading a
  * single list argument against the rest (`declare-widened.ts`, number-theory).
+ * Also from #113: `Chop`'s second-argument tolerance, `Stirling`/`StirlingS1` at k > n
+ * (0, past the diagonal) and threading `Stirling` over a list, `Binomial`/`CatalanNumber`/
+ * `Multinomial`/`Factorial2`/`Subfactorial`/`Pochhammer` through Gamma for real and complex
+ * arguments, `Fibonacci`/`LucasL` at a real index and as the two-argument polynomial (and
+ * `BellNumber`'s own Touchard-polynomial form), `IntegerString`'s bigint arithmetic, and
+ * `FromDigits`'s symbolic/negative base and Roman-numeral reading -- all in number-theory,
+ * numerals or collections, additive in the same way: native for anything not ours.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -166,6 +173,7 @@ const OVERRIDDEN = [
   "CatalanNumber",
   "Ceil",
   "ChineseRemainder",
+  "Chop",
   "Clamp",
   "ContinuedFraction",
   "Cos",
@@ -213,6 +221,7 @@ const OVERRIDDEN = [
   "Ln",
   "LucasL",
   "MatrixPower",
+  "MatrixRank",
   "Max",
   "Mean",
   "Median",
@@ -238,6 +247,7 @@ const OVERRIDDEN = [
   "PrimeOmega",
   "PrimePi",
   "QuotientRing",
+  "Rank",
   "Rationalize",
   "Round",
   "Sec",
@@ -246,9 +256,14 @@ const OVERRIDDEN = [
   "Sinh",
   "Sort",
   "Sqrt",
+  "Stirling",
   "StirlingS1",
   "Subfactorial",
   "Subtract",
+  // Not itself overridden -- the StirlingS1/Stirling orthogonality identity sums a term
+  // that used to stay unevaluated (S(1, 2), past the k > n boundary); Sum is the corpus
+  // expression's own outer head, the same reason Add is here.
+  "Sum",
   "Tan",
   "Tanh",
   "Totient",
@@ -435,6 +450,10 @@ const NOVEL = [
   "Braid",
   "AlexanderPolynomial",
   "JonesPolynomial",
+  // Prepend exists in Wolfram (crosswalk-data.ts has the alias), but that isn't confirmed
+  // by an external kernel here -- collect-coverage.ts's "elsewhere" column needs
+  // wolframscript/sympy/mpmath, which this offline pass doesn't have.
+  "Prepend",
   "Commonest",
   "Nest",
   "NestList",

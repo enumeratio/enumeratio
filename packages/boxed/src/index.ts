@@ -96,8 +96,24 @@ export type EvaluateHandler = (
 ) => BoxedExpression | undefined;
 
 /**
+ * How many operands a `wrapOperator` handler answers: exactly `n`, or a `min`–`max` range
+ * (`max` omitted for no upper bound).
+ */
+export type Arity = number | { readonly min: number; readonly max?: number };
+
+const fitsArity = (arity: Arity | undefined, n: number): boolean =>
+  arity === undefined ||
+  (typeof arity === "number" ? n === arity : n >= arity.min && n <= (arity.max ?? Infinity));
+
+/**
  * Attach to an operator the engine already defines so that `handler` answers whenever
  * `applies(ops)` holds, and the handler that was there before answers otherwise.
+ *
+ * `probe` only names the head to look up — its operands are ignored. `applies` sees every
+ * call of that head, whatever its operand count, so a rule written for one arity must say
+ * so in `arity`: a head another library widens (PolyLog's 3-argument Nielsen form, Mod's
+ * offset) otherwise reaches a predicate that only looked at `ops[0]` and `ops[1]`. A call
+ * outside `arity` goes straight to the fallback without consulting `applies`.
  *
  * Attached IN PLACE rather than re-declared: `ce.declare` on a built-in head throws once
  * a second library tries it ("already declared in this scope"), and replacing the whole
@@ -107,14 +123,20 @@ export type EvaluateHandler = (
  *
  * A lazy head (`Add`, `Multiply`) hands its handler the operands as written; `applies`
  * and `handler` get them evaluated so they see values, while the native fallback gets
- * what it expected. Layering is by capture: each attach takes whatever `evaluate` is
- * current as its fallback, so libraries chain in declaration order.
+ * what it expected. That costs a full evaluation of every operand, per wrapper, on every
+ * call that fits `arity` — before `applies` has a say, and again in the fallback when it
+ * declines. On a hot lazy head keep `applies` O(n) over operator names (`ops.some(op =>
+ * op.operator === HEAD)`), never a walk into each operand.
+ *
+ * Layering is by capture: each attach takes whatever `evaluate` is current as its
+ * fallback, so libraries chain in declaration order.
  */
 export function wrapOperator(
   ce: ComputeEngine,
   probe: readonly [string, ...unknown[]],
   applies: (ops: readonly BoxedExpression[]) => boolean,
   build: (native: NativeEvaluate) => EvaluateHandler,
+  arity?: Arity,
 ): void {
   const definition = ce.lookupDefinition(probe[0]);
   const operator =
@@ -124,6 +146,7 @@ export function wrapOperator(
   const handler = build(native);
   const lazy = operator.lazy === true;
   operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+    if (!fitsArity(arity, ops.length)) return native?.(ops, options);
     const values = lazy ? ops.map((op) => op.evaluate()) : ops;
     return applies(values) ? handler(values, options) : native?.(ops, options);
   };

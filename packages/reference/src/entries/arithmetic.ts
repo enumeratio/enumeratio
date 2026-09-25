@@ -636,6 +636,12 @@ export const arithmetic: readonly ReferenceEntry[] = [
     summary: "The greatest integer less than or equal to x: $\\lfloor x \\rfloor$.",
     signatures: [
       { call: "Floor(x)", description: "the greatest integer $\\le x$, $\\lfloor x \\rfloor$." },
+      {
+        call: "Floor(x, step)",
+        description:
+          "the greatest multiple of `step` at or below x, $\\mathrm{step}\\cdot\\lfloor x/\\mathrm{step}\\rfloor$.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "The greatest integer $\\le x$: $\\lfloor x \\rfloor$.",
@@ -643,7 +649,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "For a non-integer x, $\\lceil x \\rceil = \\lfloor x \\rfloor + 1$. See [[Ceil]].",
       "$\\lfloor -x \\rfloor = -\\lceil x \\rceil$.",
       "Threads element-wise over a list.",
-      "compute-engine's Floor takes a single argument; only [[Round]] supports rounding to a given number of decimal places.",
+      "A second argument floors to the nearest multiple of it -- the step needn't be an integer.",
     ],
     examples: [
       { expr: ["Floor", ["Rational", 7, 2]], expected: 3 },
@@ -713,26 +719,22 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Floor", 226, 10],
         expected: 220,
-        aspirational: true,
         category: "Scope",
         caption:
-          "A second argument should floor to a multiple of it -- the nearest multiple of 10 below 226; Floor takes one argument",
+          "A second argument floors to a multiple of it -- the nearest multiple of 10 below 226",
       },
       {
         expr: ["Floor", -10.3, 3.5],
         expected: -10.5,
-        aspirational: true,
         category: "Scope",
         caption:
-          "...the step needn't be an integer: $3.5 \\cdot \\lfloor -10.3/3.5 \\rfloor = -10.5$; not yet",
+          "...the step needn't be an integer: $3.5 \\cdot \\lfloor -10.3/3.5 \\rfloor = -10.5$",
       },
       {
         expr: ["Floor", ["Subtract", ["Multiply", 2, "Pi"], "ExponentialE"], ["Rational", 5, 4]],
         expected: ["Rational", 5, 2],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "...nor rational: $2\\pi - e \\approx 3.57$ floors to the multiple $5/2$ of $5/4$; not yet",
+        caption: "...nor rational: $2\\pi - e \\approx 3.57$ floors to the multiple $5/2$ of $5/4$",
       },
       {
         expr: ["Floor", ["Complex", 5.37, -1.3]],
@@ -778,6 +780,12 @@ export const arithmetic: readonly ReferenceEntry[] = [
     summary: "The least integer greater than or equal to x: $\\lceil x \\rceil$.",
     signatures: [
       { call: "Ceil(x)", description: "the least integer $\\ge x$, $\\lceil x \\rceil$." },
+      {
+        call: "Ceil(x, step)",
+        description:
+          "the least multiple of `step` at or above x, $\\mathrm{step}\\cdot\\lceil x/\\mathrm{step}\\rceil$.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "The least integer $\\ge x$: $\\lceil x \\rceil$.",
@@ -785,7 +793,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "For a non-integer x, $\\lceil x \\rceil = \\lfloor x \\rfloor + 1$. See [[Floor]].",
       "Agrees with [[Floor]] exactly on integers.",
       "Threads element-wise over a list.",
-      "compute-engine's Ceil takes a single argument; only [[Round]] supports rounding to a given number of decimal places.",
+      "A second argument rounds up to the nearest multiple of it -- the step needn't be an integer.",
     ],
     examples: [
       { expr: ["Ceil", ["Rational", 7, 2]], expected: 4 },
@@ -849,26 +857,22 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Ceil", 226, 10],
         expected: 230,
-        aspirational: true,
         category: "Scope",
         caption:
-          "A second argument should round up to a multiple of it -- the next multiple of 10 above 226; Ceil takes one argument",
+          "A second argument rounds up to a multiple of it -- the next multiple of 10 above 226",
       },
       {
         expr: ["Ceil", -10.3, 3.5],
         expected: -7,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "...the step needn't be an integer: $3.5 \\cdot \\lceil -10.3/3.5 \\rceil = -7$; not yet",
+        caption: "...the step needn't be an integer: $3.5 \\cdot \\lceil -10.3/3.5 \\rceil = -7$",
       },
       {
         expr: ["Ceil", ["Subtract", ["Multiply", 2, "Pi"], "ExponentialE"], ["Rational", 5, 4]],
         expected: ["Rational", 15, 4],
-        aspirational: true,
         category: "Scope",
         caption:
-          "...nor rational: $2\\pi - e \\approx 3.57$ rounds up to the multiple $15/4$ of $5/4$; not yet",
+          "...nor rational: $2\\pi - e \\approx 3.57$ rounds up to the multiple $15/4$ of $5/4$",
       },
       {
         expr: ["Ceil", ["Complex", 5.37, -1.3]],
@@ -1039,6 +1043,12 @@ export const arithmetic: readonly ReferenceEntry[] = [
         description: "x clamped to the default range $[-1, 1]$, Wolfram's Clip[x].",
         library: "enumeratio-collections",
       },
+      {
+        call: "Clamp(x, lower, upper, vLower, vUpper)",
+        description:
+          "Wolfram's Clip[x, {lower, upper}, {vLower, vUpper}]: a replacement value outside the range, rather than the nearer bound.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Constrains a value to $[\\mathrm{lower}, \\mathrm{upper}]$: below lower it returns lower, above upper it returns upper, otherwise x unchanged.",
@@ -1107,10 +1117,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Clamp", 5, 0, 3, -1, 10],
         expected: 10,
-        aspirational: true,
         category: "Scope",
         caption:
-          "Wolfram's $\\mathrm{Clip}[x, \\{min, max\\}, \\{v_{min}, v_{max}\\}]$ returns replacement values outside the range -- here 10 above it; not yet supported",
+          "Wolfram's $\\mathrm{Clip}[x, \\{min, max\\}, \\{v_{min}, v_{max}\\}]$ returns replacement values outside the range -- here 10 above it",
       },
     ],
     seeAlso: ["Min", "Max"],
@@ -1125,12 +1134,17 @@ export const arithmetic: readonly ReferenceEntry[] = [
         call: "Chop(x)",
         description: "0 if $|x|$ is smaller than about $10^{-10}$, else x unchanged.",
       },
+      {
+        call: "Chop(x, tolerance)",
+        description: "0 if $|x|$ is smaller than `tolerance`, else x unchanged.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Replaces a value smaller in magnitude than about $10^{-10}$ with exact 0 -- cleanup for the floating-point noise left over from a numeric computation.",
       "Chops the real and imaginary parts of a complex number independently.",
       "Only the value's own magnitude matters -- $\\mathrm{Chop}(1.000000000001)$ stays as is, since it isn't close to 0, even though it's close to the integer 1.",
-      "Takes a single argument; there's no way to override the $10^{-10}$ threshold.",
+      "A second argument overrides the default $10^{-10}$ threshold.",
     ],
     examples: [
       {
@@ -1197,17 +1211,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Chop", 0.001, 0.01],
         expected: 0,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A second argument should set the tolerance, here chopping anything below 0.01; Chop takes one argument",
+        caption: "A second argument sets the tolerance, here chopping anything below 0.01",
       },
       {
         expr: ["Chop", 1e-15, 1e-20],
         expected: 1e-15,
-        aspirational: true,
         category: "Scope",
-        caption: "...and a tighter tolerance should keep a value the default would chop; not yet",
+        caption: "...and a tighter tolerance keeps a value the default would chop",
       },
       {
         expr: ["Chop", ["Power", 10, -20]],
@@ -1306,10 +1317,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Rationalize", "Pi", 0.001],
         expected: ["Rational", 201, 64],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Should give the rational with the smallest denominator within 0.001 of $\\pi$, $201/64$; compute-engine returns the closer continued-fraction convergent $333/106$",
+          "The rational with the smallest denominator within 0.001 of $\\pi$ -- $201/64$, not compute-engine's own closer-but-larger-denominator continued-fraction convergent $333/106$",
       },
       {
         expr: ["Rationalize", ["Add", 1.2, ["Multiply", 6.7, "x"]]],
@@ -1482,6 +1492,11 @@ export const arithmetic: readonly ReferenceEntry[] = [
     signatures: [
       { call: "Min(a, b, …)", description: "the smallest of two or more values." },
       { call: "Min(list)", description: "the smallest value in a list." },
+      {
+        call: "Min()",
+        description: "the identity element $+\\infty$, for a call with no arguments at all.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "The smallest of its arguments, or of a single list argument.",
@@ -1489,6 +1504,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "Commutative and associative: order and grouping don't matter.",
       "$\\min(a,b) + \\max(a,b) = a + b$ for any two values. See [[Max]].",
       "Infinities participate directly in the comparison.",
+      "With no arguments at all, returns the identity element $+\\infty$.",
     ],
     examples: [
       { expr: ["Min", 3, 1, 4, 1, 5], expected: 1 },
@@ -1581,10 +1597,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Min"],
         expected: "PositiveInfinity",
-        aspirational: true,
         category: "Possible issues",
         caption:
-          "With no arguments it should return the identity element $+\\infty$; compute-engine reports a missing argument (and [[Max]] returns NaN)",
+          "With no arguments it returns the identity element $+\\infty$ (Max, whose identity is $-\\infty$, still returns NaN)",
       },
       {
         expr: ["Min", ["List"]],

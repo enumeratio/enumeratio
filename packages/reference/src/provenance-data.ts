@@ -103,7 +103,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Stirling",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "StirlingS2",
     elsewhere: [],
@@ -572,7 +572,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Chop",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Chop",
     elsewhere: ["wolfram", "mpmath"],
@@ -782,14 +782,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Rank",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "ArrayDepth",
     elsewhere: [],
   },
   {
     name: "MatrixRank",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "MatrixRank",
     elsewhere: [],
@@ -1787,6 +1787,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: null,
     wolframAlias: "Append",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "Prepend",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Prepend",
+    elsewhere: [],
   },
   {
     name: "Partition",

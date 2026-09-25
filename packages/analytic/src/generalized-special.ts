@@ -126,7 +126,7 @@ export function declareGeneralizedBetaRegularized(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["BetaRegularized", 0.2, 0.5, 2, 3],
-    (ops) => ops.length === 4,
+    () => true,
     () => (ops, options) => {
       const [z0, z1, a, b] = ops;
       const expr = ce.function("Subtract", [
@@ -135,6 +135,7 @@ export function declareGeneralizedBetaRegularized(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
+    4,
   );
 }
 
@@ -213,7 +214,7 @@ export function declareOneArgumentPolyGamma(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyGamma", 1, 1],
-    (ops) => ops.length === 1,
+    () => true,
     (native) => (ops, options) => {
       const z = ops[0];
       // Digamma carries the exact-integer closed form (widened.ts) and evaluates real z
@@ -223,6 +224,7 @@ export function declareOneArgumentPolyGamma(ce: ComputeEngine): void {
       if (viaDigamma.operator !== "Digamma") return viaDigamma;
       return native?.([ce.Zero, z], options);
     },
+    1,
   );
 }
 
@@ -301,7 +303,7 @@ export function declareNielsenPolyLog(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyLog", 1, 2, 1],
-    (ops) => ops.length === 3,
+    () => true,
     () => (ops, options) => {
       const [n, p, z] = ops;
       if (!isRealInt(n) || !isRealInt(p) || n.re < 1 || p.re < 1) return undefined;
@@ -325,6 +327,7 @@ export function declareNielsenPolyLog(ce: ComputeEngine): void {
       if (z.im !== 0 || !Number.isFinite(z.re) || z.re > 1) return undefined;
       return ce.number(nielsenNumeric(n.re, p.re, z.re));
     },
+    3,
   );
 }
 
