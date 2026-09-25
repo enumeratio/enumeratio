@@ -2859,4 +2859,32 @@ export const provenance: readonly HeadRecord[] = [
     wolframAlias: null,
     elsewhere: [],
   },
+  {
+    name: "DiscreteRatio",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "DiscreteRatio",
+    elsewhere: [],
+  },
+  {
+    name: "GeneratingFunction",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "GeneratingFunction",
+    elsewhere: [],
+  },
+  {
+    name: "ExponentialGeneratingFunction",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "ExponentialGeneratingFunction",
+    elsewhere: [],
+  },
+  {
+    name: "FindSequenceFunction",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "FindSequenceFunction",
+    elsewhere: [],
+  },
 ];

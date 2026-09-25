@@ -145,14 +145,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 22,
   },
   {
-    head: "ExponentialGeneratingFunction",
-    uses: 21,
-  },
-  {
-    head: "GeneratingFunction",
-    uses: 21,
-  },
-  {
     head: "Module",
     uses: 21,
   },
@@ -173,16 +165,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 19,
   },
   {
-    head: "FindSequenceFunction",
-    uses: 18,
-  },
-  {
     head: "Fourier",
     uses: 18,
-  },
-  {
-    head: "DiscreteRatio",
-    uses: 17,
   },
   {
     head: "InputForm",
