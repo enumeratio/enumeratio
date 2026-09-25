@@ -137,9 +137,8 @@ examples:
   - id: to-25-significant-digits-not-yet-only-the-first
     expr: [N, [PolyGamma, 3, 5], 25]
     expected: {num: '0.02142782819275507502194811'}
-    aspirational: true
     category: Scope
-    caption: To 25 significant digits; not yet -- only the first 20 are right
+    caption: To 25 significant digits, every one of them right
   - hidden: true
     id: n-polygamma-1-1
     expr: [N, [PolyGamma, 1, 1]]

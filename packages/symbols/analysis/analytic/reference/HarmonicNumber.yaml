@@ -117,9 +117,8 @@ examples:
   - id: to-exactly-30-significant-digits-not-yet-31-come
     expr: [N, [HarmonicNumber, [Rational, 1, 2]], 30]
     expected: {num: '0.613705638880109381165535757084'}
-    aspirational: true
     category: Scope
-    caption: To exactly 30 significant digits; not yet -- 31 come back, and the last of the first 30 is not correctly rounded
+    caption: To exactly 30 significant digits, the last one correctly rounded
   - id: order-1-gives-h-z-itself-not-the-zeta-1-pole
     expr: [N, [HarmonicNumber, 2.5, 1]]
     expected: {num: '1.680372305546776047837'}

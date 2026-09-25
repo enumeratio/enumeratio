@@ -1,6 +1,13 @@
 import { registerAlgebra } from "@enumeratio/algebra";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, wrapOperator } from "@enumeratio/boxed";
+import {
+  integerAt,
+  operandsOf,
+  stringAt,
+  symbolNameOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/boxed";
 import {
   basisElement,
   classSum,
@@ -15,6 +22,17 @@ import {
   multiplyElements,
   order,
 } from "./group.ts";
+import {
+  applyPermutation,
+  type Cycle,
+  cyclesAreValid,
+  cyclesToPermutation,
+  dropFixedCycles,
+  identityPermutation,
+  invertPermutation,
+  permutationGroupClosure,
+  permutationToCycles,
+} from "./permutations.ts";
 
 // Wiring k[G] to compute-engine.
 //
@@ -56,6 +74,91 @@ function groupOf(expr: BoxedExpression): Group | undefined {
   }
   return undefined;
 }
+
+// ── permutations: Cycles, Permute, PermutationGroup ────────────────────────────────
+
+/** Read one cycle `List(i1, i2, …)` as a plain number array, or `undefined` if malformed. */
+function cycleOf(expr: BoxedExpression): Cycle | undefined {
+  if (expr.operator !== "List") return undefined;
+  const entries = operandsOf(expr).map(integerAt);
+  return entries.every((x): x is number => x !== undefined) ? entries : undefined;
+}
+
+/** Read `List(cycle, cycle, …)` — the argument `Cycles` and `PermutationCycles` both take. */
+function cycleListOf(listExpr: BoxedExpression): Cycle[] | undefined {
+  if (listExpr.operator !== "List") return undefined;
+  const cycles = operandsOf(listExpr).map(cycleOf);
+  return cycles.every((c): c is Cycle => c !== undefined) ? cycles : undefined;
+}
+
+/** Read `Cycles(List(cycle, cycle, …))` as an array of cycles. */
+function cyclesOf(expr: BoxedExpression): Cycle[] | undefined {
+  if (expr.operator !== "Cycles") return undefined;
+  const listExpr = operandsOf(expr)[0];
+  return listExpr === undefined ? undefined : cycleListOf(listExpr);
+}
+
+/** Read a plain one-line permutation `List(sigma(1), sigma(2), …)`. */
+function oneLineOf(expr: BoxedExpression): number[] | undefined {
+  if (expr.operator !== "List") return undefined;
+  const entries = operandsOf(expr).map(integerAt);
+  return entries.every((x): x is number => x !== undefined) ? entries : undefined;
+}
+
+/** The largest point a set of cycles mentions. */
+const maxSupport = (cycles: readonly Cycle[]): number =>
+  cycles.reduce((m, cycle) => cycle.reduce((mm, x) => Math.max(mm, x), m), 0);
+
+/** Either notation for a permutation, widened to degree `n` (identity past its own support). */
+function permutationOf(expr: BoxedExpression, n?: number): number[] | undefined {
+  const cycles = cyclesOf(expr);
+  if (cycles !== undefined) {
+    if (!cyclesAreValid(cycles)) return undefined;
+    return cyclesToPermutation(cycles, Math.max(n ?? 0, maxSupport(cycles)));
+  }
+  const oneLine = oneLineOf(expr);
+  if (oneLine === undefined) return undefined;
+  if (n === undefined || n <= oneLine.length) return oneLine;
+  return oneLine.concat(identityPermutation(n).slice(oneLine.length));
+}
+
+const cyclesExpression = (ce: ComputeEngine, cycles: readonly Cycle[]): BoxedExpression =>
+  ce.function("Cycles", [
+    ce.function(
+      "List",
+      cycles.map((cycle) =>
+        ce.function(
+          "List",
+          cycle.map((x) => ce.number(x)),
+        ),
+      ),
+    ),
+  ]);
+
+/** `PermutationGroup(List(Cycles(...), …))` or `PermutationGroup(List(...), n)`. */
+function permutationGroupOf(
+  expr: BoxedExpression,
+): { readonly degree: number; readonly generators: readonly number[][] } | undefined {
+  if (expr.operator !== "PermutationGroup") return undefined;
+  const ops = operandsOf(expr);
+  const gensExpr = ops[0];
+  if (gensExpr === undefined || gensExpr.operator !== "List") return undefined;
+  const generatorCycles = operandsOf(gensExpr).map(cyclesOf);
+  if (!generatorCycles.every((g): g is Cycle[] => g !== undefined && cyclesAreValid(g))) {
+    return undefined;
+  }
+  const explicitDegree = integerAt(ops[1]) ?? 0;
+  const degree = generatorCycles.reduce((m, g) => Math.max(m, maxSupport(g)), explicitDegree);
+  const generators = generatorCycles.map((cycles) => cyclesToPermutation(cycles, degree));
+  return { degree, generators };
+}
+
+/** A 1-based, possibly-negative (Part-style) index into a list of length `n`. */
+const resolvePosition = (index: number, n: number): number | undefined => {
+  if (index >= 1 && index <= n) return index - 1;
+  if (index <= -1 && -index <= n) return n + index;
+  return undefined;
+};
 
 /** `GroupAlgebra(group)` → its group. */
 const algebraOf = (expr: BoxedExpression): Group | undefined =>
@@ -154,6 +257,21 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     },
     1,
   );
+  // GroupOrder(PermutationGroup(gens)) -> |⟨gens⟩|, by BFS closure. No Cayley table exists
+  // up front here — only generators — so this sidesteps `groupOf` entirely, same reasoning
+  // as the SymmetricGroup wrapper just above.
+  wrapOperator(
+    ce,
+    ["GroupOrder", ["PermutationGroup", 1]],
+    (ops) => ops[0]?.operator === "PermutationGroup",
+    () => (ops) => {
+      const group = permutationGroupOf(ops[0]!);
+      if (group === undefined) return undefined;
+      const closure = permutationGroupClosure(group.generators, group.degree);
+      return closure === undefined ? undefined : ce.number(closure.length);
+    },
+    1,
+  );
   aboutGroup("GroupIsAbelian", "(value) -> boolean", (g) =>
     ce.symbol(isAbelian(g) ? "True" : "False"),
   );
@@ -162,6 +280,39 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       "List",
       g.elements.map((_, i) => basisExpression(g, i)),
     ),
+  );
+  // GroupElements(PermutationGroup(gens)) prints elements as Cycles(...), not GroupBasis
+  // labels -- so it bypasses `aboutGroup`/`basisExpression`, which are tied to the
+  // Cayley-table Group's string labels. A second, list argument selects elements by
+  // POSITION in the (sorted) closure -- Part semantics, negative counts from the end --
+  // rather than picking points of the domain, matching Wolfram's own GroupElements(g, list).
+  widenSignature(ce, "GroupElements", "(value, value?) -> list");
+  wrapOperator(
+    ce,
+    ["GroupElements", ["PermutationGroup", 1]],
+    (ops) => ops[0]?.operator === "PermutationGroup",
+    () => (ops) => {
+      const group = permutationGroupOf(ops[0]!);
+      if (group === undefined) return undefined;
+      const closure = permutationGroupClosure(group.generators, group.degree);
+      if (closure === undefined) return undefined;
+      const elements = closure.map((sigma) => permutationToCycles(sigma));
+      if (ops[1] === undefined) {
+        return ce.function(
+          "List",
+          elements.map((cycles) => cyclesExpression(ce, cycles)),
+        );
+      }
+      const positions = oneLineOf(ops[1]);
+      if (positions === undefined) return undefined;
+      const picked = positions.map((p) => resolvePosition(p, elements.length));
+      if (!picked.every((p): p is number => p !== undefined)) return undefined;
+      return ce.function(
+        "List",
+        picked.map((i) => cyclesExpression(ce, elements[i]!)),
+      );
+    },
+    { min: 1, max: 2 },
   );
   aboutGroup("ConjugacyClasses", "(value) -> list", (g) =>
     ce.function(
@@ -213,6 +364,126 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       const b = ops[2] === undefined ? undefined : toElement(g, ops[2]);
       if (a === undefined || b === undefined) return undefined;
       return toExpression(g, multiplyElements(g, a, b));
+    },
+  });
+
+  // ── permutations: Cycles, PermutationCycles, InversePermutation, Permute, PermutationGroup ──
+
+  /** `Cycles(List(cycle, …))` — a carrier for a permutation in disjoint-cycle notation.
+   *  Canonicalises by dropping fixed points (singleton cycles), same as Wolfram's own. */
+  ce.declare("Cycles", {
+    signature: "(list) -> value",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const cycles = ops[0] === undefined ? undefined : cycleListOf(ops[0]);
+      if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
+      const trimmed = dropFixedCycles(cycles);
+      if (trimmed.length === cycles.length) return undefined; // already canonical
+      return cyclesExpression(ce, trimmed);
+    },
+  });
+
+  /** `PermutationCycles(perm)` -> cycle notation; `PermutationCycles(perm, f)` wraps EVERY
+   *  position (fixed points included) with `f` instead of `Cycles`. */
+  ce.declare("PermutationCycles", {
+    signature: "(value, any?) -> value",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const input = ops[0];
+      if (input === undefined) return undefined;
+      const head = ops[1];
+      if (head === undefined) {
+        // Cycles(...) is already in cycle notation -- pass it through unchanged.
+        if (input.operator === "Cycles") return input;
+        const perm = oneLineOf(input);
+        if (perm === undefined) return undefined;
+        return cyclesExpression(ce, permutationToCycles(perm));
+      }
+      const headName = symbolNameOf(head);
+      if (headName === undefined) return undefined;
+      const perm = permutationOf(input);
+      if (perm === undefined) return undefined;
+      const cycles = permutationToCycles(perm, true);
+      return ce.function(headName, [
+        ce.function(
+          "List",
+          cycles.map((cycle) =>
+            ce.function(
+              "List",
+              cycle.map((x) => ce.number(x)),
+            ),
+          ),
+        ),
+      ]);
+    },
+  });
+
+  /** `InversePermutation(perm)`, in either notation. */
+  ce.declare("InversePermutation", {
+    signature: "(value) -> value",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const input = ops[0];
+      if (input === undefined) return undefined;
+      if (input.operator === "Cycles") {
+        const cycles = cyclesOf(input);
+        if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
+        // Reverse the traversal but keep each cycle's own starting point, matching
+        // Wolfram: (i1 i2 … ik)⁻¹ is written (i1 ik … i2), not the bare array reversal.
+        return cyclesExpression(
+          ce,
+          cycles.map((cycle) => [cycle[0]!, ...cycle.slice(1).reverse()]),
+        );
+      }
+      const perm = oneLineOf(input);
+      return perm === undefined
+        ? undefined
+        : ce.function(
+            "List",
+            invertPermutation(perm).map((x) => ce.number(x)),
+          );
+    },
+  });
+
+  /** `Permute(list, perm)` moves the item at position `i` to position `perm(i)`; `perm`
+   *  in either notation. `Permute(list, group)` (a `PermutationGroup`) instead returns
+   *  the list permuted by EVERY element of the group. */
+  ce.declare("Permute", {
+    signature: "(list, value) -> value",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const listExpr = ops[0];
+      const permExpr = ops[1];
+      if (listExpr === undefined || permExpr === undefined || listExpr.operator !== "List") {
+        return undefined;
+      }
+      const items = operandsOf(listExpr);
+      const group = permutationGroupOf(permExpr);
+      if (group !== undefined) {
+        const closure = permutationGroupClosure(group.generators, group.degree);
+        if (closure === undefined) return undefined;
+        return ce.function(
+          "List",
+          closure.map((sigma) => ce.function("List", applyPermutation(items, sigma))),
+        );
+      }
+      const perm = permutationOf(permExpr, items.length);
+      if (perm === undefined || perm.length > items.length) return undefined;
+      return ce.function("List", applyPermutation(items, perm));
+    },
+  });
+
+  // PermutationGroup(List(Cycles(...), …)) and PermutationGroup(List(...), n) are pure
+  // carriers, read by `permutationGroupOf` above -- same shape as CyclicGroup/DihedralGroup,
+  // which stay symbolic rather than evaluating to anything.
+  ce.declare("PermutationGroup", { signature: "(list, integer?) -> value" });
+
+  /** `GroupGenerators(PermutationGroup(gens))` -> the given generators, in cycle notation. */
+  ce.declare("GroupGenerators", {
+    signature: "(value) -> list",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const group = ops[0] === undefined ? undefined : permutationGroupOf(ops[0]);
+      if (group === undefined) return undefined;
+      return ce.function(
+        "List",
+        group.generators.map((sigma) => cyclesExpression(ce, permutationToCycles(sigma))),
+      );
     },
   });
 

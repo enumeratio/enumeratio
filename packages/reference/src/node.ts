@@ -305,8 +305,11 @@ export function entryFiles(
   data: ReferenceData = referenceData(),
 ): { stem: string; entries: ReferenceEntry[] }[] {
   const byStem = new Map<string, ReferenceEntry[]>();
+  const held = new Map<string, string>();
+  for (const [stem, sidecar] of Object.entries(data.sidecars))
+    for (const head of Object.keys(sidecar.examples ?? {})) held.set(head, stem);
   for (const entry of referenceEntries(data)) {
-    const stem = STEMS[entry.name] ?? UNFILED;
+    const stem = STEMS[entry.name] ?? held.get(entry.name) ?? UNFILED;
     byStem.set(stem, [...(byStem.get(stem) ?? []), entry]);
   }
   return [...byStem]

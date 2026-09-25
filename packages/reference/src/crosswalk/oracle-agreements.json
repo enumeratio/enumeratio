@@ -1093,14 +1093,14 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 56,
-      "disagree": 2
+      "agree": 57,
+      "disagree": 1
     },
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 54,
-      "disagree": 2
+      "agree": 55,
+      "disagree": 1
     }
   ],
   "PowerMod": [

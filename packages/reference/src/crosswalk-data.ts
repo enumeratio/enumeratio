@@ -134,6 +134,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Accumulate",
+    wolfram: "Accumulate",
+  },
+  {
     name: "Add",
     wolfram: "Plus",
   },
@@ -349,6 +353,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Around",
     wolfram: "Around",
+  },
+  {
+    name: "Array",
+    wolfram: "Array",
   },
   {
     name: "Arsech",
@@ -655,6 +663,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "CarmichaelLambda",
   },
   {
+    name: "Cases",
+    wolfram: "Cases",
+  },
+  {
     name: "CatalanConstant",
     wolfram: "Catalan",
   },
@@ -958,6 +970,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "CubeRoot",
   },
   {
+    name: "Cycles",
+    wolfram: "Cycles",
+  },
+  {
     name: "DedekindEta",
     fungrimEntries: [
       "02d14f",
@@ -1227,6 +1243,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "DirichletL",
     fungrimEntries: ["3b8c97", "a07d28", "a9337b", "c9d117", "d83109", "ff8254"],
     wolfram: "DirichletL",
+  },
+  {
+    name: "DiscreteRatio",
+    wolfram: "DiscreteRatio",
   },
   {
     name: "Divide",
@@ -1659,6 +1679,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "E",
   },
   {
+    name: "ExponentialGeneratingFunction",
+    wolfram: "ExponentialGeneratingFunction",
+  },
+  {
     name: "ExtendedGCD",
     wolfram: "ExtendedGCD",
   },
@@ -1846,6 +1870,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Select",
   },
   {
+    name: "FindSequenceFunction",
+    wolfram: "FindSequenceFunction",
+  },
+  {
     name: "First",
     wolfram: "First",
   },
@@ -1904,6 +1932,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Fold",
     wolfram: "Fold",
+  },
+  {
+    name: "FoldList",
+    wolfram: "FoldList",
   },
   {
     name: "FractionalPart",
@@ -2166,6 +2198,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "GatherBy",
   },
   {
+    name: "GeneratingFunction",
+    wolfram: "GeneratingFunction",
+  },
+  {
     name: "GeometricMean",
     wolfram: "GeometricMean",
   },
@@ -2187,6 +2223,25 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "oscar",
         call: "EnumeratioBasis($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
+    name: "GroupElements",
+    wolfram: "GroupElements",
+  },
+  {
+    name: "GroupGenerators",
+    wolfram: "GroupGenerators",
+  },
+  {
+    name: "GroupOrder",
+    wolfram: "GroupOrder",
+    oracle: [
+      {
+        system: "oscar",
+        call: "order(($1).G)",
         arity: 1,
       },
     ],
@@ -2505,6 +2560,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "InverseGammaRegularized",
   },
   {
+    name: "InversePermutation",
+    wolfram: "InversePermutation",
+  },
+  {
     name: "IsComposite",
     wolfram: "CompositeQ",
   },
@@ -2516,6 +2575,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "IsEven",
     fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
     wolfram: "EvenQ",
+  },
+  {
+    name: "IsMachineNumber",
+    wolfram: "MachineNumberQ",
+  },
+  {
+    name: "IsNumeric",
+    wolfram: "NumericQ",
   },
   {
     name: "IsOdd",
@@ -2917,18 +2984,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Length",
     wolfram: "Length",
-    oracle: [
-      {
-        system: "sympy",
-        call: "len($1)",
-        arity: 1,
-      },
-      {
-        system: "sage",
-        call: "len($1)",
-        arity: 1,
-      },
-    ],
   },
   {
     name: "LerchPhi",
@@ -3200,7 +3255,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     oracle: [
       {
         system: "sympy",
-        call: "Max($*,)",
+        call: "enumeratio_max($*,)",
       },
       {
         system: "sage",
@@ -3231,7 +3286,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     oracle: [
       {
         system: "sympy",
-        call: "Min($*,)",
+        call: "enumeratio_min($*,)",
       },
       {
         system: "sage",
@@ -3475,6 +3530,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "PerfectNumber",
   },
   {
+    name: "PermutationCycles",
+    wolfram: "PermutationCycles",
+  },
+  {
+    name: "PermutationGroup",
+    wolfram: "PermutationGroup",
+  },
+  {
+    name: "Permute",
+    wolfram: "Permute",
+  },
+  {
     name: "Pi",
     wolfram: "Pi",
   },
@@ -3610,6 +3677,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "PowersRepresentations",
   },
   {
+    name: "Precision",
+    wolfram: "Precision",
+  },
+  {
     name: "Prepend",
     wolfram: "Prepend",
   },
@@ -3714,6 +3785,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Random",
     wolfram: "RandomReal",
+  },
+  {
+    name: "RandomInteger",
+    wolfram: "RandomInteger",
   },
   {
     name: "Range",
@@ -3842,6 +3917,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Sech",
     wolfram: "Sech",
+  },
+  {
+    name: "SeedRandom",
+    wolfram: "SeedRandom",
   },
   {
     name: "SetMinus",
@@ -4103,6 +4182,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Span",
     wolfram: "Span",
+  },
+  {
+    name: "SparseArray",
+    wolfram: "SparseArray",
   },
   {
     name: "Split",

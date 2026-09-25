@@ -132,9 +132,8 @@ examples:
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [LerchPhi, [Rational, 1, 2], 2, [Rational, 1, 3]], 30]
     expected: {num: '9.34347465937593951855554965804'}
-    aspirational: true
     category: Scope
-    caption: To 30 significant digits; not yet -- the requested precision is ignored and a double comes back
+    caption: To 30 significant digits, past a double's reach
   - id: phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet
     expr: [LerchPhi, -1, 3, [Rational, 1, 2]]
     expected: [Multiply, [Rational, 1, 4], [Power, Pi, 3]]
@@ -211,19 +210,19 @@ examples:
   - hidden: true
     id: n-lerchphi-0p5-neg-1-1
     expr: [N, [LerchPhi, 0.5, -1, 1]]
-    expected: 3.9999999999999996
+    expected: 4
   - hidden: true
     id: n-lerchphi-0p5-neg-1-2
     expr: [N, [LerchPhi, 0.5, -1, 2]]
-    expected: 5.999999999999999
+    expected: 6
   - hidden: true
     id: n-lerchphi-0p5-neg-1-0p5
     expr: [N, [LerchPhi, 0.5, -1, 0.5]]
-    expected: 2.999999999999999
+    expected: 3
   - hidden: true
     id: n-lerchphi-0p5-neg-1-5-over-2
     expr: [N, [LerchPhi, 0.5, -1, [Rational, 5, 2]]]
-    expected: 7.000000000000001
+    expected: 7
   - hidden: true
     id: n-lerchphi-0p5-2-plus-i-1
     expr: [N, [LerchPhi, 0.5, [Complex, 2, 1], 1]]
@@ -611,19 +610,19 @@ examples:
   - hidden: true
     id: n-lerchphi-0p9-neg-1-1
     expr: [N, [LerchPhi, 0.9, -1, 1]]
-    expected: 100.00000000000001
+    expected: 100
   - hidden: true
     id: n-lerchphi-0p9-neg-1-2
     expr: [N, [LerchPhi, 0.9, -1, 2]]
-    expected: 110.00000000000004
+    expected: 110
   - hidden: true
     id: n-lerchphi-0p9-neg-1-0p5
     expr: [N, [LerchPhi, 0.9, -1, 0.5]]
-    expected: 94.99999999999994
+    expected: 95
   - hidden: true
     id: n-lerchphi-0p9-neg-1-5-over-2
     expr: [N, [LerchPhi, 0.9, -1, [Rational, 5, 2]]]
-    expected: 114.99999999999989
+    expected: 115
   - hidden: true
     id: n-lerchphi-0p9-2-plus-i-1
     expr: [N, [LerchPhi, 0.9, [Complex, 2, 1], 1]]
