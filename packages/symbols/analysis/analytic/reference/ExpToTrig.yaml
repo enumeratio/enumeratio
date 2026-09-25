@@ -28,11 +28,7 @@ examples:
         ExpToTrig,
         [
           Divide,
-          [
-            Subtract,
-            [Exp, [Multiply, ImaginaryUnit, x]],
-            [Exp, [Negate, [Multiply, ImaginaryUnit, x]]],
-          ],
+          [Subtract, [Exp, [Multiply, ImaginaryUnit, x]], [Exp, [Negate, [Multiply, ImaginaryUnit, x]]]],
           [Multiply, 2, ImaginaryUnit],
         ],
       ]

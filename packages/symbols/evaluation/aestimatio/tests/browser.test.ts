@@ -1,6 +1,6 @@
 // Host-side logic of `evaluateInWorker`, exercised without a real browser: a fake
 // `Worker` stands in (`createWorker`), so this never spawns anything and runs anywhere
-// `vp test` does. See design/aestimatio.md §3 and ./browser.ts's own comments.
+// `vp test` does. See design/computation.md §5.3 and ./browser.ts's own comments.
 import { expect, test } from "vite-plus/test";
 import { evaluateInWorker, type WorkerLike } from "../src/browser.ts";
 
@@ -27,8 +27,7 @@ function fakeWorker(options: { autoStart?: boolean } = {}) {
     worker,
     posted,
     terminatedCount: () => terminated,
-    respond: (response: { ok: boolean; json?: unknown; error?: string }) =>
-      worker.onmessage?.({ data: response }),
+    respond: (response: { ok: boolean; json?: unknown; error?: string }) => worker.onmessage?.({ data: response }),
     fail: () => worker.onerror?.({ message: "boom" }),
   };
 }
@@ -117,9 +116,7 @@ test("evaluateInWorker passes setup through to the worker request", async () => 
     createWorker: () => fake.worker,
     setup: "https://example.test/configure.mjs",
   });
-  expect(fake.posted).toEqual([
-    { json: ["Add", 1, 1], setup: "https://example.test/configure.mjs" },
-  ]);
+  expect(fake.posted).toEqual([{ json: ["Add", 1, 1], setup: "https://example.test/configure.mjs" }]);
   fake.respond({ ok: true, json: 2 });
   await expect(done).resolves.toBe(2);
 });

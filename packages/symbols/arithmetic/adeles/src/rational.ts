@@ -36,8 +36,7 @@ export function floor(x: Q): bigint {
 /** The generator of the fractional ideal xℤ + yℤ: gcd(a/b, c/d) = gcd(ad, cb)/(bd). */
 export const gcdQ = (x: Q, y: Q): Q => q(gcd(x[0] * y[1], y[0] * x[1]), x[1] * y[1]);
 
-export const lcm = (a: bigint, b: bigint): bigint =>
-  a === 0n || b === 0n ? 0n : (a / gcd(a, b)) * b;
+export const lcm = (a: bigint, b: bigint): bigint => (a === 0n || b === 0n ? 0n : (a / gcd(a, b)) * b);
 
 /** The exponent of the prime p in x (x ≠ 0). */
 export function valuationQ(x: Q, p: bigint): number {

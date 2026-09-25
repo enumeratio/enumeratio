@@ -46,8 +46,7 @@ const TYPE_LATEX: Record<string, string> = {
   boolean: "\\mathbb{B}",
 };
 
-const typeLatex = (type: string): string =>
-  TYPE_LATEX[type] ?? `\\mathrm{${type.replace(/_/g, "\\_")}}`;
+const typeLatex = (type: string): string => TYPE_LATEX[type] ?? `\\mathrm{${type.replace(/_/g, "\\_")}}`;
 
 /** The assignment operators a bound cell may be written with. */
 const ASSIGN = /\\coloneqq?|:=/;
@@ -207,8 +206,7 @@ export class NotatioIn extends LitElement {
       setLoop: (loop) => (this.loop = loop),
       rate: () => (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
       setRate: (rate) => (this.rate = rate),
-      interval: () =>
-        Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace,
+      interval: () => (Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace),
       onState: () => (this._playing = this.#sweep.playing),
     },
     openPlaybackMenu,
@@ -368,9 +366,7 @@ export class NotatioIn extends LitElement {
       const latex = this.bind.trim() ? this.#declaration + valuePart(this.value) : this.value;
       this._markup = latex.trim() ? convert(latex) : "";
     } catch (err) {
-      this._markup = `<span class="notatio-error">${
-        err instanceof Error ? err.message : String(err)
-      }</span>`;
+      this._markup = `<span class="notatio-error">${err instanceof Error ? err.message : String(err)}</span>`;
     }
   }
 

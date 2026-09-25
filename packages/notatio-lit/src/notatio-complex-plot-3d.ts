@@ -291,10 +291,7 @@ export class NotatioComplexPlot3D extends LitElement {
     const el = this.querySelector("svg, canvas");
     if (!el) return undefined;
     const rect = el.getBoundingClientRect();
-    return [
-      ((e.clientX - rect.left) / (rect.width || 1)) * W,
-      ((e.clientY - rect.top) / (rect.height || 1)) * H,
-    ];
+    return [((e.clientX - rect.left) / (rect.width || 1)) * W, ((e.clientY - rect.top) / (rect.height || 1)) * H];
   }
 
   #onPointerMove = (e: PointerEvent): void => {
@@ -318,11 +315,7 @@ export class NotatioComplexPlot3D extends LitElement {
         @dblclick=${this.#orbit.onDblClick}
         @wheel=${this.#orbit.onWheel}
         title=${ORBIT_HINT}
-        >${
-          this._dense
-            ? html`<canvas role="img" aria-label="surface plot"></canvas>`
-            : unsafeHTML(this._svg)
-        }</span
+        >${this._dense ? html`<canvas role="img" aria-label="surface plot"></canvas>` : unsafeHTML(this._svg)}</span
       >${
         this.#usedGpu
           ? html`<div class="notatio-toolbar">

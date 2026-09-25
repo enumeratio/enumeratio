@@ -62,10 +62,7 @@ Structural:
 
 ```js
 h("notatio-add", {}, [
-  h("notatio-power", {}, [
-    h("notatio-sin", {}, [h("notatio-symbol", {}, "x")]),
-    h("notatio-integer", {}, "2"),
-  ]),
+  h("notatio-power", {}, [h("notatio-sin", {}, [h("notatio-symbol", {}, "x")]), h("notatio-integer", {}, "2")]),
   h("notatio-integer", {}, "1"),
 ]);
 ```
@@ -83,14 +80,8 @@ Structural:
 
 ```js
 h("notatio-plot", {}, [
-  h("notatio-sin", {}, [
-    h("notatio-multiply", {}, [h("notatio-symbol", {}, "k"), h("notatio-symbol", {}, "x")]),
-  ]),
-  h("notatio-tuple", {}, [
-    h("notatio-symbol", {}, "x"),
-    h("notatio-integer", {}, "0"),
-    h("notatio-integer", {}, "10"),
-  ]),
+  h("notatio-sin", {}, [h("notatio-multiply", {}, [h("notatio-symbol", {}, "k"), h("notatio-symbol", {}, "x")])]),
+  h("notatio-tuple", {}, [h("notatio-symbol", {}, "x"), h("notatio-integer", {}, "0"), h("notatio-integer", {}, "10")]),
 ]);
 ```
 
@@ -153,9 +144,7 @@ h("notatio-row", {}, [
       h("notatio-tuple", {}, [h("notatio-symbol", {}, "k"), h("notatio-integer", {}, "2")]),
       h("notatio-tuple", {}, [h("notatio-integer", {}, "0"), h("notatio-integer", {}, "5")]),
     ]),
-    h("notatio-dynamic", {}, [
-      h("notatio-power", {}, [h("notatio-symbol", {}, "k"), h("notatio-integer", {}, "2")]),
-    ]),
+    h("notatio-dynamic", {}, [h("notatio-power", {}, [h("notatio-symbol", {}, "k"), h("notatio-integer", {}, "2")])]),
   ]),
 ]);
 ```

@@ -44,11 +44,7 @@ examples:
     caption: Functional equation $\Gamma(z+1) = z\,\Gamma(z)$, here at $z = 5$
   - id: reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z
     expr:
-      [
-        Equal,
-        [Multiply, [Gamma, [Rational, 1, 3]], [Gamma, [Rational, 2, 3]]],
-        [Divide, Pi, [Sin, [Divide, Pi, 3]]],
-      ]
+      [Equal, [Multiply, [Gamma, [Rational, 1, 3]], [Gamma, [Rational, 2, 3]]], [Divide, Pi, [Sin, [Divide, Pi, 3]]]]
     expected: True
     category: Properties
     caption: Reflection formula $\Gamma(z)\Gamma(1-z) = \pi/\sin(\pi z)$, here at $z = 1/3$

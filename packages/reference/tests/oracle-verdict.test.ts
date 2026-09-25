@@ -12,12 +12,8 @@ test("an example asks for digits when it is N with a digit count", () => {
 });
 
 test("digits are compared significant digit for significant digit", () => {
-  expect(
-    sameDigits({ num: "1.17520119364380145688238185060" }, "1.175201193643801456882381850600"),
-  ).toBe(true);
-  expect(
-    sameDigits({ num: "1.1752011936438014568823818506" }, "1.17520119364380145688238185059"),
-  ).toBe(false);
+  expect(sameDigits({ num: "1.17520119364380145688238185060" }, "1.175201193643801456882381850600")).toBe(true);
+  expect(sameDigits({ num: "1.1752011936438014568823818506" }, "1.17520119364380145688238185059")).toBe(false);
   expect(sameDigits(0.12, "0.13")).toBe(false);
   expect(sameDigits(["List", 3.1416, 2.7183], "{3.1416, 2.7183}")).toBe(true);
   expect(sameDigits(["Complex", 0.25, -1.5], "0.25 - 1.5 I")).toBe(true);

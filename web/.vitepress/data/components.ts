@@ -4,10 +4,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  type ComponentDoc as Reflected,
-  collectComponents as reflect,
-} from "@enumeratio/notatio/reflect";
+import { type ComponentDoc as Reflected, collectComponents as reflect } from "@enumeratio/notatio/reflect";
 
 export type { AttributeDoc } from "@enumeratio/notatio/reflect";
 
@@ -24,8 +21,7 @@ const playgroundDir = resolve(here, "../../playground");
 function playgroundFiles(dir = playgroundDir, prefix = ""): string[] {
   const found: string[] = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (entry.isDirectory())
-      found.push(...playgroundFiles(join(dir, entry.name), `${prefix}${entry.name}/`));
+    if (entry.isDirectory()) found.push(...playgroundFiles(join(dir, entry.name), `${prefix}${entry.name}/`));
     else if (entry.name.endsWith(".md")) found.push(prefix + entry.name);
   }
   return found;
@@ -36,9 +32,7 @@ function playgroundPages(): Map<string, string> {
   const pages = new Map<string, string>();
   // A page named for the component wins; an index page, which mentions many of them,
   // is the last resort.
-  const files = playgroundFiles().sort(
-    (a, b) => Number(a.endsWith("index.md")) - Number(b.endsWith("index.md")),
-  );
+  const files = playgroundFiles().sort((a, b) => Number(a.endsWith("index.md")) - Number(b.endsWith("index.md")));
   for (const file of files) {
     const text = readFileSync(join(playgroundDir, file), "utf8");
     const slug = file.replace(/(?:\/?index)?\.md$/, "");

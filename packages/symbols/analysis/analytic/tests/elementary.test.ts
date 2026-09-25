@@ -25,9 +25,7 @@ interface GoldenCase {
 const ce = new ComputeEngine();
 declareAnalytic(ce);
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./elementary.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./elementary.golden.json", import.meta.url), "utf8"));
 
 test("Gudermannian and Hyperfactorial: every golden case matches the oracles under N()", () => {
   const off: string[] = [];

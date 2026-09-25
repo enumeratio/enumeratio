@@ -154,11 +154,7 @@ export function declareStats(ce: ComputeEngine, options: StatsOptions = {}): voi
   const { permutationType: type, permutationCarrier: carrier = "Permutation" } = options;
   const declare = (head: string, fn: (p: number[]) => number, alsoOnList: boolean): void => {
     const signature =
-      type === undefined
-        ? "(list) -> integer"
-        : alsoOnList
-          ? `(${type} | list) -> integer`
-          : `(${type}) -> integer`;
+      type === undefined ? "(list) -> integer" : alsoOnList ? `(${type} | list) -> integer` : `(${type}) -> integer`;
     ce.declare(head, {
       signature,
       evaluate: (args: readonly BoxedExpression[]) => {

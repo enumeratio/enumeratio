@@ -32,11 +32,7 @@ function flattenConditions(cond: BoxedExpression): BoxedExpression[] {
 
 /** Assume every condition in a fresh scope, run `body`, then restore no matter what
  * `body` does (including throwing). */
-function withAssumptions<T>(
-  ce: ComputeEngine,
-  conds: readonly BoxedExpression[],
-  body: () => T,
-): T {
+function withAssumptions<T>(ce: ComputeEngine, conds: readonly BoxedExpression[], body: () => T): T {
   ce.pushScope();
   try {
     for (const c of conds) ce.assume(c);

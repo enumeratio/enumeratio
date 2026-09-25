@@ -107,10 +107,7 @@ function checkContainment(
       const value = ce.box(pointCall(x) as never).N().re;
       if (!Number.isFinite(value)) continue; // a pole the sample happened to land on
       const inside = pieces.some(([a, b]) => value >= a - eps && value <= b + eps);
-      expect(
-        inside,
-        `${label}: f(${x}) = ${value} outside ${shown} from Interval(${l}, ${h})`,
-      ).toBe(true);
+      expect(inside, `${label}: f(${x}) = ${value} outside ${shown} from Interval(${l}, ${h})`).toBe(true);
     }
   }
   // Every head must actually be exercised — an always-declining rule would pass vacuously.

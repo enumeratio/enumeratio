@@ -17,12 +17,7 @@ PowerMod:
       tags: [number-theory, big-integer]
       source: RSA-sized modular exponentiation
       precision: exact
-      sample:
-        {
-          seed: 20260925,
-          count: 8,
-          draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] },
-        }
+      sample: { seed: 20260925, count: 8, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
 PrimePi:
   - id: primepi-10-to-the-7
     role: bench

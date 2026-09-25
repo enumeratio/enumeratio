@@ -141,7 +141,5 @@ test("determinism: the same view projects identically twice", () => {
   const a = camera({ azimuth: 33, elevation: 17, zoom: 1.4 });
   const b = camera({ azimuth: 33, elevation: 17, zoom: 1.4 });
   expect(a.at(0.31, 0.62, 0.17)).toEqual(b.at(0.31, 0.62, 0.17));
-  expect(axisBoxSvg(a, { xEnd: 1, yEnd: 2, zEnd: 3 })).toBe(
-    axisBoxSvg(b, { xEnd: 1, yEnd: 2, zEnd: 3 }),
-  );
+  expect(axisBoxSvg(a, { xEnd: 1, yEnd: 2, zEnd: 3 })).toBe(axisBoxSvg(b, { xEnd: 1, yEnd: 2, zEnd: 3 }));
 });

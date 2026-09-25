@@ -20,10 +20,7 @@ function pair(ce: ComputeEngine, value: BoxedExpression, cond: BoxedExpression):
   return ce.box(["List", value.json, cond.json] as never);
 }
 
-function evaluatePiecewise(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-): BoxedExpression | undefined {
+function evaluatePiecewise(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   const [clauses, defaultArg] = ops;
   if (!clauses || clauses.operator !== "List") return undefined;
   const originalClauses = operandsOf(clauses);
@@ -63,11 +60,7 @@ function expandOne(ce: ComputeEngine, e: BoxedExpression): BoxedExpression | und
   const ops = operandsOf(e);
   if (op === "Abs" && ops.length === 1 && isKnownReal(ce, ops[0])) {
     const v = ops[0];
-    return ce.box([
-      "Piecewise",
-      ["List", ["List", ["Negate", v.json], ["Less", v.json, 0]]],
-      v.json,
-    ] as never);
+    return ce.box(["Piecewise", ["List", ["List", ["Negate", v.json], ["Less", v.json, 0]]], v.json] as never);
   }
   if (op === "Sign" && ops.length === 1 && isKnownReal(ce, ops[0])) {
     const v = ops[0];
@@ -87,22 +80,14 @@ function expandOne(ce: ComputeEngine, e: BoxedExpression): BoxedExpression | und
     if (!lo || !hi) return undefined;
     return ce.box([
       "Piecewise",
-      [
-        "List",
-        ["List", lo.json, ["Less", v.json, lo.json]],
-        ["List", hi.json, ["Greater", v.json, hi.json]],
-      ],
+      ["List", ["List", lo.json, ["Less", v.json, lo.json]], ["List", hi.json, ["Greater", v.json, hi.json]]],
       v.json,
     ] as never);
   }
   if ((op === "Max" || op === "Min") && ops.length === 2 && ops.every((o) => isKnownReal(ce, o))) {
     const [a, b] = ops;
     const cmp = op === "Max" ? "GreaterEqual" : "LessEqual";
-    return ce.box([
-      "Piecewise",
-      ["List", ["List", a.json, [cmp, a.json, b.json]]],
-      b.json,
-    ] as never);
+    return ce.box(["Piecewise", ["List", ["List", a.json, [cmp, a.json, b.json]]], b.json] as never);
   }
   return undefined;
 }
@@ -110,8 +95,7 @@ function expandOne(ce: ComputeEngine, e: BoxedExpression): BoxedExpression | und
 /** Recursively rewrite every eligible subexpression, innermost first. */
 function expand(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
   const ops = operandsOf(e);
-  const rebuilt =
-    ops.length > 0 ? ce.box([e.operator, ...ops.map((o) => expand(ce, o).json)] as never) : e;
+  const rebuilt = ops.length > 0 ? ce.box([e.operator, ...ops.map((o) => expand(ce, o).json)] as never) : e;
   return expandOne(ce, rebuilt) ?? rebuilt;
 }
 

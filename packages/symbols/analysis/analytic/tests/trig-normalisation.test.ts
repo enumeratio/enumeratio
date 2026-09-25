@@ -28,11 +28,7 @@ test("Sin is odd: Sin(-x) = -Sin(x)", () => {
 });
 
 test("Sin(i*t) = i*Sinh(t), for any real coefficient folded into the imaginary literal", () => {
-  expect(evalJson(["Sin", ["Multiply", "ImaginaryUnit", "x"]])).toEqual([
-    "Multiply",
-    ["Complex", 0, 1],
-    ["Sinh", "x"],
-  ]);
+  expect(evalJson(["Sin", ["Multiply", "ImaginaryUnit", "x"]])).toEqual(["Multiply", ["Complex", 0, 1], ["Sinh", "x"]]);
   expect(evalJson(["Sin", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]])).toEqual([
     "Multiply",
     ["Complex", 0, 1],
@@ -50,10 +46,7 @@ test("N() decimalizes Sin(i*t), not just evaluate()", () => {
 });
 
 test("Sin(Arccos(x)) = Sqrt(1 - x^2)", () => {
-  expect(evalJson(["Sin", ["Arccos", "x"]])).toEqual([
-    "Sqrt",
-    ["Add", ["Negate", ["Power", "x", 2]], 1],
-  ]);
+  expect(evalJson(["Sin", ["Arccos", "x"]])).toEqual(["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]]);
 });
 
 test("a plain or special-angle Sin call is untouched", () => {

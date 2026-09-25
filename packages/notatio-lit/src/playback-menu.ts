@@ -59,8 +59,7 @@ export function openPlaybackMenu(options: PlaybackMenuOptions): () => void {
       line.append(b);
       return b;
     });
-    for (const [i, b] of buttons.entries())
-      b.setAttribute("aria-checked", String(values[i] === current()));
+    for (const [i, b] of buttons.entries()) b.setAttribute("aria-checked", String(values[i] === current()));
     panel.append(line);
     return buttons;
   };
@@ -93,10 +92,8 @@ export function openPlaybackMenu(options: PlaybackMenuOptions): () => void {
     let target: HTMLButtonElement | undefined;
     if (event.key === "ArrowRight") target = rows[r][c + 1];
     else if (event.key === "ArrowLeft") target = rows[r][c - 1];
-    else if (event.key === "ArrowDown")
-      target = rows[r + 1]?.[Math.min(c, (rows[r + 1]?.length ?? 1) - 1)];
-    else if (event.key === "ArrowUp")
-      target = rows[r - 1]?.[Math.min(c, (rows[r - 1]?.length ?? 1) - 1)];
+    else if (event.key === "ArrowDown") target = rows[r + 1]?.[Math.min(c, (rows[r + 1]?.length ?? 1) - 1)];
+    else if (event.key === "ArrowUp") target = rows[r - 1]?.[Math.min(c, (rows[r - 1]?.length ?? 1) - 1)];
     if (!target) return;
     target.focus();
     event.preventDefault();

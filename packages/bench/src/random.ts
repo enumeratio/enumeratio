@@ -26,9 +26,7 @@ function randomBits(next: () => number, bits: number): bigint {
 
 /** An integer as MathJSON: a number while it is exact as a double, a numeric string past that. */
 const integer = (n: bigint): MathJSON =>
-  n >= BigInt(Number.MIN_SAFE_INTEGER) && n <= BigInt(Number.MAX_SAFE_INTEGER)
-    ? Number(n)
-    : { num: n.toString() };
+  n >= BigInt(Number.MIN_SAFE_INTEGER) && n <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(n) : { num: n.toString() };
 
 export function drawOne(next: () => number, draw: Draw): MathJSON {
   switch (draw[0]) {

@@ -19,9 +19,7 @@ export function trim(p: Laurent): Laurent {
   let high = p.coefficients.length;
   while (low < high && p.coefficients[low] === 0) low++;
   while (high > low && p.coefficients[high - 1] === 0) high--;
-  return low === high
-    ? ZERO
-    : { offset: p.offset + low, coefficients: p.coefficients.slice(low, high) };
+  return low === high ? ZERO : { offset: p.offset + low, coefficients: p.coefficients.slice(low, high) };
 }
 
 /** The monomial c·t^k. */
@@ -36,8 +34,7 @@ export function add(p: Laurent, q: Laurent): Laurent {
   if (a.coefficients.length === 0) return b;
   if (b.coefficients.length === 0) return a;
   const offset = Math.min(a.offset, b.offset);
-  const length =
-    Math.max(a.offset + a.coefficients.length, b.offset + b.coefficients.length) - offset;
+  const length = Math.max(a.offset + a.coefficients.length, b.offset + b.coefficients.length) - offset;
   const coefficients = new Array<number>(length).fill(0);
   for (const [source, list] of [
     [a.offset - offset, a.coefficients],
@@ -144,9 +141,7 @@ export function format(p: Laurent): string {
     const exponent = trimmed.offset + i;
     const magnitude = Math.abs(c);
     const body =
-      exponent === 0
-        ? `${magnitude}`
-        : `${magnitude === 1 ? "" : magnitude}t${exponent === 1 ? "" : `^${exponent}`}`;
+      exponent === 0 ? `${magnitude}` : `${magnitude === 1 ? "" : magnitude}t${exponent === 1 ? "" : `^${exponent}`}`;
     out += out === "" ? (c < 0 ? `-${body}` : body) : `${c < 0 ? " - " : " + "}${body}`;
   });
   return out;
@@ -157,9 +152,7 @@ export function format(p: Laurent): string {
 export type LaurentMatrix = readonly (readonly Laurent[])[];
 
 export const identityMatrix = (n: number): LaurentMatrix =>
-  Array.from({ length: n }, (_, i) =>
-    Array.from({ length: n }, (_, j) => (i === j ? constant(1) : ZERO)),
-  );
+  Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? constant(1) : ZERO)));
 
 export function multiplyMatrices(a: LaurentMatrix, b: LaurentMatrix): LaurentMatrix | undefined {
   const n = a.length;

@@ -46,11 +46,7 @@ export const DRIFT: DriftOptions = { ratio: 1.5, floorNs: 1e6, minRuns: 5, windo
  * Cases in `current` that got slower than the trailing median of the same system's earlier
  * reports, `prior` oldest first. Only `ok` results count on either side.
  */
-export function detectDrift(
-  current: Report,
-  prior: readonly Report[],
-  options: DriftOptions = DRIFT,
-): Drift[] {
+export function detectDrift(current: Report, prior: readonly Report[], options: DriftOptions = DRIFT): Drift[] {
   const history = new Map<string, number[]>();
   for (const report of prior.slice(-options.window)) {
     for (const r of report.results) {

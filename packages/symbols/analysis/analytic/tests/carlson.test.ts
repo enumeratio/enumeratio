@@ -28,13 +28,10 @@ interface GoldenCase {
   wolfram?: [number, number];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./carlson.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./carlson.golden.json", import.meta.url), "utf8"));
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 const byHead = new Map<string, GoldenCase[]>();
 for (const g of goldens) byHead.set(g.head, [...(byHead.get(g.head) ?? []), g]);
@@ -61,9 +58,7 @@ for (const [head, cases] of byHead) {
 
 test("the golden file covers every head", () => {
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(
-    ["CarlsonRC", "CarlsonRD", "CarlsonRF", "CarlsonRG", "CarlsonRJ"].sort(),
-  );
+  expect([...heads].sort()).toEqual(["CarlsonRC", "CarlsonRD", "CarlsonRF", "CarlsonRG", "CarlsonRJ"].sort());
 });
 
 // --- Elementary identities, checked directly against the kernels (not just the grid) ---
@@ -158,12 +153,7 @@ test("CarlsonRF/RC/RD/RJ/RG evaluate through compute-engine, complex included", 
 });
 
 test("stays symbolic under plain evaluate; a float argument evaluates numerically", () => {
-  expect(ce.box(["CarlsonRF", "x", "y", "z"]).evaluate().json).toEqual([
-    "CarlsonRF",
-    "x",
-    "y",
-    "z",
-  ]);
+  expect(ce.box(["CarlsonRF", "x", "y", "z"]).evaluate().json).toEqual(["CarlsonRF", "x", "y", "z"]);
   expect(ce.box(["CarlsonRF", 1, 2, 3]).evaluate().json).toEqual(["CarlsonRF", 1, 2, 3]);
   expect(num(["CarlsonRF", 1.0, 2, 3])).toBeCloseTo(0.7269459354689082, 12);
 });

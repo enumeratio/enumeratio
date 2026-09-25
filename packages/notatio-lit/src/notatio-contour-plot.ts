@@ -1,11 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import {
-  hurwitzZetaReal,
-  lerchPhiReal,
-  polyLogReal,
-  zetaGeneralizedReal,
-} from "@enumeratio/analytic/src";
+import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
@@ -39,8 +34,7 @@ const isNumber = (v: unknown): v is number => typeof v === "number" && Number.is
 
 /** A 2-D numeric matrix (for `data`, the ListContourPlot path). */
 function toMatrix(data: unknown): number[][] | undefined {
-  if (!Array.isArray(data) || data.length === 0 || !data.every((r) => Array.isArray(r)))
-    return undefined;
+  if (!Array.isArray(data) || data.length === 0 || !data.every((r) => Array.isArray(r))) return undefined;
   const rows = (data as unknown[][]).map((r) => r.filter(isNumber));
   return rows.every((r) => r.length === rows[0].length) ? rows : undefined;
 }
@@ -213,9 +207,7 @@ export class NotatioContourPlot extends LitElement {
           const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string };
           if (!r?.success || !r.code) return undefined;
           // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-          const g = new Function("_", `"use strict"; return (${r.code});`) as (
-            s: Record<string, unknown>,
-          ) => unknown;
+          const g = new Function("_", `"use strict"; return (${r.code});`) as (s: Record<string, unknown>) => unknown;
           const scope: Record<string, unknown> = { ...RUNTIME };
           return (x, y) => {
             scope[vx] = x;

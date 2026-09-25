@@ -35,27 +35,19 @@ test("an evaluation error is ok:false, not a crash", () => {
 });
 
 test("GET /formats and /mime introspect the registry", () => {
-  expect(
-    json(handleRequest("GET", "/formats", q(), {})).formats.some(
-      (f: { name: string }) => f.name === "WL",
-    ),
-  ).toBe(true);
+  expect(json(handleRequest("GET", "/formats", q(), {})).formats.some((f: { name: string }) => f.name === "WL")).toBe(
+    true,
+  );
 });
 
 test("/mime keeps `+` and `/` literal (and still accepts %2B/%2F)", () => {
   expect(json(handleRequest("GET", "/mime", "type=image/svg+xml", {})).formats).toContain("SVG");
-  expect(json(handleRequest("GET", "/mime", "type=image%2Fsvg%2Bxml", {})).formats).toContain(
-    "SVG",
-  );
+  expect(json(handleRequest("GET", "/mime", "type=image%2Fsvg%2Bxml", {})).formats).toContain("SVG");
 });
 
 test("/eval resolves partial form and syntax names", () => {
-  expect(json(handleRequest("POST", "/eval", q(), { input: "x^2", form: "wolf" })).result).toBe(
-    "Power[x, 2]",
-  );
-  expect(
-    json(handleRequest("POST", "/eval", q(), { input: "Binomial[10,3]", syntax: "wolf" })).result,
-  ).toBe("120");
+  expect(json(handleRequest("POST", "/eval", q(), { input: "x^2", form: "wolf" })).result).toBe("Power[x, 2]");
+  expect(json(handleRequest("POST", "/eval", q(), { input: "Binomial[10,3]", syntax: "wolf" })).result).toBe("120");
 });
 
 test("unknown routes 404", () => {

@@ -19,10 +19,7 @@ export const UNITS: readonly Gaussian[] = [ONE, I, [-1n, 0n], [0n, -1n]];
 
 export const add = (a: Gaussian, b: Gaussian): Gaussian => [a[0] + b[0], a[1] + b[1]];
 export const sub = (a: Gaussian, b: Gaussian): Gaussian => [a[0] - b[0], a[1] - b[1]];
-export const mul = (a: Gaussian, b: Gaussian): Gaussian => [
-  a[0] * b[0] - a[1] * b[1],
-  a[0] * b[1] + a[1] * b[0],
-];
+export const mul = (a: Gaussian, b: Gaussian): Gaussian => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
 export const conj = (a: Gaussian): Gaussian => [a[0], -a[1]];
 export const norm = (a: Gaussian): bigint => a[0] * a[0] + a[1] * a[1];
 export const equal = (a: Gaussian, b: Gaussian): boolean => a[0] === b[0] && a[1] === b[1];
@@ -224,9 +221,8 @@ export function divisorsGaussian(z: Gaussian): Gaussian[] | undefined {
 }
 
 /** The prime factors of `factorGaussian`, less the leading unit entry it carries for a non-associate z. */
-const primeFactorsOf = (
-  factors: readonly (readonly [Gaussian, number])[],
-): (readonly [Gaussian, number])[] => factors.filter(([p]) => !isUnit(p));
+const primeFactorsOf = (factors: readonly (readonly [Gaussian, number])[]): (readonly [Gaussian, number])[] =>
+  factors.filter(([p]) => !isUnit(p));
 
 /** Wolfram's `PrimeNu[z, GaussianIntegers -> True]`: count of distinct Gaussian prime factors. */
 export function primeNuGaussian(z: Gaussian): number | undefined {
@@ -237,9 +233,7 @@ export function primeNuGaussian(z: Gaussian): number | undefined {
 /** Wolfram's `PrimeOmega[z, GaussianIntegers -> True]`: Gaussian prime factors, with multiplicity. */
 export function primeOmegaGaussian(z: Gaussian): number | undefined {
   const factors = factorGaussian(z);
-  return factors === undefined
-    ? undefined
-    : primeFactorsOf(factors).reduce((total, [, e]) => total + e, 0);
+  return factors === undefined ? undefined : primeFactorsOf(factors).reduce((total, [, e]) => total + e, 0);
 }
 
 /** Wolfram's `MoebiusMu[z, GaussianIntegers -> True]`: 0 if not squarefree, else (−1)^(number of prime factors). */

@@ -9,8 +9,7 @@ import { ref } from "vue";
 const KEY = "review-mode";
 
 /** Build-time: false in a prod build, so the panel's chunk is never even requested there. */
-export const REVIEW_AVAILABLE: boolean =
-  import.meta.env.DEV || import.meta.env["VITE_REVIEW"] === "1";
+export const REVIEW_AVAILABLE: boolean = import.meta.env.DEV || import.meta.env["VITE_REVIEW"] === "1";
 
 function readStored(): boolean | undefined {
   try {

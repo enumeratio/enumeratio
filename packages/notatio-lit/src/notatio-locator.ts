@@ -103,17 +103,13 @@ export class NotatioLocator extends LitElement {
   }
 
   get binding(): MathJsonExpression {
-    return this.complex
-      ? numberJson(this._x, this._y)
-      : (["List", this._x, this._y] as MathJsonExpression);
+    return this.complex ? numberJson(this._x, this._y) : (["List", this._x, this._y] as MathJsonExpression);
   }
 
   protected override willUpdate(changed: PropertyValues): void {
     if (changed.has("value")) {
       const point = this.complex ? parseComplex(this.value) : undefined;
-      const parts = point
-        ? [point.re, point.im]
-        : this.value.split(",").map((s) => Number(s.trim().replace(/_/g, "")));
+      const parts = point ? [point.re, point.im] : this.value.split(",").map((s) => Number(s.trim().replace(/_/g, "")));
       this._x = Number.isFinite(parts[0]) ? parts[0] : 0;
       this._y = Number.isFinite(parts[1]) ? parts[1] : 0;
     }

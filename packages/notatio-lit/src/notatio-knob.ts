@@ -201,8 +201,7 @@ export class NotatioKnob extends LitElement {
       setLoop: (loop) => (this.loop = loop),
       rate: () => (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
       setRate: (rate) => (this.rate = rate),
-      interval: () =>
-        Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace,
+      interval: () => (Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace),
       onState: () => (this._playing = this.#sweep.playing),
     },
     openPlaybackMenu,
@@ -318,11 +317,7 @@ export class NotatioKnob extends LitElement {
 
   /** `autoplay`: sweep while on screen, and only then. */
   #watchView(): void {
-    if (
-      !this.autoplay ||
-      this.#inView !== undefined ||
-      typeof IntersectionObserver === "undefined"
-    ) {
+    if (!this.autoplay || this.#inView !== undefined || typeof IntersectionObserver === "undefined") {
       return;
     }
     this.#inView = new IntersectionObserver(
@@ -399,8 +394,7 @@ export class NotatioKnob extends LitElement {
     if (this.discrete) {
       const at = this.#entries.indexOf(this.value.trim());
       const asIndex = Number(this.value);
-      this._index =
-        at >= 0 ? at : Number.isInteger(asIndex) ? clamp(asIndex, 0, this.#entries.length - 1) : 0;
+      this._index = at >= 0 ? at : Number.isInteger(asIndex) ? clamp(asIndex, 0, this.#entries.length - 1) : 0;
       return;
     }
     const parsed = parseComplex(this.value);
@@ -412,9 +406,7 @@ export class NotatioKnob extends LitElement {
   get latex(): string {
     if (this.discrete) return this.entry ?? "";
     const { step } = this.range;
-    return this.complex || this._im !== 0
-      ? complexLatex(this._re, this._im, step)
-      : numberLatex(this._re, step);
+    return this.complex || this._im !== 0 ? complexLatex(this._re, this._im, step) : numberLatex(this._re, step);
   }
 
   async #typeset(): Promise<void> {
@@ -467,9 +459,7 @@ export class NotatioKnob extends LitElement {
     // is up the ladder.
     const across = this.axis === "y" ? event.clientX - from.ox : from.oy - event.clientY;
 
-    const gear =
-      modifierGear(event) ??
-      (this.#secondFinger ? "fine" : this.#hasLadder ? ladderGear(across) : "normal");
+    const gear = modifierGear(event) ?? (this.#secondFinger ? "fine" : this.#hasLadder ? ladderGear(across) : "normal");
     if (gear !== this._gear) {
       // Re-anchor: the value is where it is, and the new gain applies from here.
       this._gear = gear;
@@ -563,9 +553,7 @@ export class NotatioKnob extends LitElement {
     this.#stop();
     this.#repeats = event.repeat ? this.#repeats + 1 : 0;
     const gear: Gear =
-      event.key === "PageUp" || event.key === "PageDown"
-        ? "coarse"
-        : (modifierGear(event) ?? "normal");
+      event.key === "PageUp" || event.key === "PageDown" ? "coarse" : (modifierGear(event) ?? "normal");
     const { step } = this.#gearing(gear);
     const count = holdMultiplier(this.#repeats);
     const range = this.range;
@@ -604,9 +592,7 @@ export class NotatioKnob extends LitElement {
         return this.discrete ? this.#commit({ index: 0 }) : this.#commit({ re: range.min });
       case "End":
         event.preventDefault();
-        return this.discrete
-          ? this.#commit({ index: this.#entries.length - 1 })
-          : this.#commit({ re: range.max });
+        return this.discrete ? this.#commit({ index: this.#entries.length - 1 }) : this.#commit({ re: range.max });
       case "Enter":
       case "F2":
         event.preventDefault();
@@ -757,8 +743,7 @@ export class NotatioKnob extends LitElement {
     };
     return html`<span class="notatio-knob-ladder" data-notatio-knob aria-hidden="true"
       >${(["coarse", "normal", "fine"] as const).map(
-        (gear) =>
-          html`<span data-gear=${gear} ?data-live=${gear === this._gear}>${label(gear)}</span>`,
+        (gear) => html`<span data-gear=${gear} ?data-live=${gear === this._gear}>${label(gear)}</span>`,
       )}</span
     >`;
   }

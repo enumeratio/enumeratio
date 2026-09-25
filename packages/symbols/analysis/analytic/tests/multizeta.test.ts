@@ -20,9 +20,7 @@ interface GoldenCase {
   mpmath: [number, number];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./multizeta.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./multizeta.golden.json", import.meta.url), "utf8"));
 
 test("MultiZetaValue matches the oracle partial-sum", () => {
   const off: string[] = [];

@@ -92,12 +92,7 @@ examples:
     category: Properties
     caption: "The Bell polynomial at 1 is the Bell number: $B_n(1) = B_n$"
   - id: dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac
-    expr:
-      [
-        Divide,
-        [Sum, [Divide, [Power, k, 5], [Factorial, k]], [Tuple, k, 0, PositiveInfinity]],
-        ExponentialE,
-      ]
+    expr: [Divide, [Sum, [Divide, [Power, k, 5], [Factorial, k]], [Tuple, k, 0, PositiveInfinity]], ExponentialE]
     expected: 52
     category: Properties
     caption: Dobinski's formula $B_n = \frac{1}{e}\sum_{k \ge 0} \frac{k^n}{k!}$

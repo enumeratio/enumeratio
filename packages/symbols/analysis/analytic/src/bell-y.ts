@@ -21,8 +21,7 @@ const binom = (n: number, k: number): bigint => {
   return num / den;
 };
 
-const bigNumber = (ce: ComputeEngine, v: bigint): BoxedExpression =>
-  ce.number([v, 1n] as unknown as [number, number]);
+const bigNumber = (ce: ComputeEngine, v: bigint): BoxedExpression => ce.number([v, 1n] as unknown as [number, number]);
 
 function bellYExpr(
   ce: ComputeEngine,
@@ -42,8 +41,7 @@ function bellYExpr(
     if (coeff === 0n) continue;
     const inner = bellYExpr(ce, xs, memo, n - i, k - 1);
     if (inner.re === 0 && inner.im === 0) continue; // a literal zero subterm — drop it
-    const factors: BoxedExpression[] =
-      coeff === 1n ? [xs[i - 1], inner] : [bigNumber(ce, coeff), xs[i - 1], inner];
+    const factors: BoxedExpression[] = coeff === 1n ? [xs[i - 1], inner] : [bigNumber(ce, coeff), xs[i - 1], inner];
     terms.push(ce.function("Multiply", factors));
   }
   const result = (terms.length === 0 ? ce.Zero : ce.function("Add", terms)).evaluate();

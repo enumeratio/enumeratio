@@ -51,16 +51,8 @@ export function lorenzCurve(options: LorenzOptions = {}): Point3[] {
   const sigma = options.sigma ?? 10;
   const rho = options.rho ?? 28;
   const beta = options.beta ?? 8 / 3;
-  const f = (v: Point3): Point3 => [
-    sigma * (v[1] - v[0]),
-    v[0] * (rho - v[2]) - v[1],
-    v[0] * v[1] - beta * v[2],
-  ];
-  const step = (v: Point3, k: Point3, h: number): Point3 => [
-    v[0] + k[0] * h,
-    v[1] + k[1] * h,
-    v[2] + k[2] * h,
-  ];
+  const f = (v: Point3): Point3 => [sigma * (v[1] - v[0]), v[0] * (rho - v[2]) - v[1], v[0] * v[1] - beta * v[2]];
+  const step = (v: Point3, k: Point3, h: number): Point3 => [v[0] + k[0] * h, v[1] + k[1] * h, v[2] + k[2] * h];
   const settle = Math.round(steps * 0.15);
   const out: Point3[] = [];
   let v: Point3 = options.start ?? [1, 1, 20];

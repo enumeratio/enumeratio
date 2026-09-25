@@ -40,9 +40,7 @@ for (const { label, z, s, a, mpmath } of GOLDEN) {
   });
 
   test(`LerchPhi(N): ${label}`, () => {
-    const r = ce
-      .box(["N", ["LerchPhi", ["Complex", ...z], ["Complex", ...s], ["Complex", ...a]]])
-      .evaluate();
+    const r = ce.box(["N", ["LerchPhi", ["Complex", ...z], ["Complex", ...s], ["Complex", ...a]]]).evaluate();
     expect(r.re).toBeCloseTo(mpmath[0], 9);
     expect((r.im ?? 0) as number).toBeCloseTo(mpmath[1], 9);
   });

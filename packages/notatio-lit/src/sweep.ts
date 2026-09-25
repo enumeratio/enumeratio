@@ -3,14 +3,7 @@
 // package's `playback.ts`; this is the part that owns a `requestAnimationFrame` and a
 // long press.
 
-import {
-  advancePlayback,
-  type Direction,
-  iterate,
-  type Loop,
-  rewindFor,
-  type Span,
-} from "@enumeratio/notatio";
+import { advancePlayback, type Direction, iterate, type Loop, rewindFor, type Span } from "@enumeratio/notatio";
 import { LongPress } from "./popover.ts";
 
 export class Playback {
@@ -189,14 +182,7 @@ export class SliderPlayback {
       const interval = this.host.interval / this.rate(name);
       const direction = this.#direction.get(name) ?? 1;
       if (this.host.motion === "continuous") {
-        const next = advancePlayback(
-          this.#phase.get(name) ?? c.value,
-          c,
-          dt,
-          interval,
-          loop,
-          direction,
-        );
+        const next = advancePlayback(this.#phase.get(name) ?? c.value, c, dt, interval, loop, direction);
         this.#phase.set(name, next.phase);
         this.#direction.set(name, next.direction);
         this.host.set(name, quantizeOnGrid(next.phase, c.step));

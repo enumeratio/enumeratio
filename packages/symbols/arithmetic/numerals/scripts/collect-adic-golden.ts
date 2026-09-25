@@ -80,9 +80,7 @@ for (const c of golden.expansions) {
     disagree.push(`valuation ${c.p}-adic ${c.x}: ours=${ours.start} sage=${c.valuation}`);
   }
   if (JSON.stringify(ours.digits) !== JSON.stringify(c.digits)) {
-    disagree.push(
-      `digits ${c.p}-adic ${c.x}: ours=${ours.digits.join("")} sage=${c.digits.join("")}`,
-    );
+    disagree.push(`digits ${c.p}-adic ${c.x}: ours=${ours.digits.join("")} sage=${c.digits.join("")}`);
   }
 }
 
@@ -96,10 +94,7 @@ for (const c of golden.sqrts) {
   }
 }
 
-writeFileSync(
-  new URL("../tests/adic.golden.json", import.meta.url),
-  JSON.stringify(golden, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/adic.golden.json", import.meta.url), JSON.stringify(golden, null, 2) + "\n");
 
 const total = golden.expansions.length + golden.sqrts.length;
 console.log(`cases ${total}  |  agree ${total - disagree.length}  disagree ${disagree.length}`);

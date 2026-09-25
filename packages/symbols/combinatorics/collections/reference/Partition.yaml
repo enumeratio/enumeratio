@@ -44,13 +44,7 @@ examples:
     category: Scope
     caption: An offset larger than the size skips elements between chunks
   - id: a-list-of-sizes-cuts-a-matrix-into-overlapping-2
-    expr:
-      [
-        Partition,
-        [List, [List, 11, 12, 13], [List, 21, 22, 23], [List, 31, 32, 33]],
-        [List, 2, 2],
-        1,
-      ]
+    expr: [Partition, [List, [List, 11, 12, 13], [List, 21, 22, 23], [List, 31, 32, 33]], [List, 2, 2], 1]
     expected:
       [
         List,
@@ -99,29 +93,13 @@ examples:
   - id: a-padding-element-fills-the-overhang-instead-of
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 3, 1, [List, 1, 1], x]
     expected:
-      [
-        List,
-        [List, 1, 2, 3],
-        [List, 2, 3, 4],
-        [List, 3, 4, 5],
-        [List, 4, 5, 6],
-        [List, 5, 6, x],
-        [List, 6, x, x],
-      ]
+      [List, [List, 1, 2, 3], [List, 2, 3, 4], [List, 3, 4, 5], [List, 4, 5, 6], [List, 5, 6, x], [List, 6, x, x]]
     category: Scope
     caption: A padding element fills the overhang instead of wrapping around
   - id: padding-on-the-left-with-overhangs-1-1
     expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 3, 1, [List, -1, -1], x]
     expected:
-      [
-        List,
-        [List, x, x, 1],
-        [List, x, 1, 2],
-        [List, 1, 2, 3],
-        [List, 2, 3, 4],
-        [List, 3, 4, 5],
-        [List, 4, 5, 6],
-      ]
+      [List, [List, x, x, 1], [List, x, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4], [List, 3, 4, 5], [List, 4, 5, 6]]
     category: Scope
     caption: Padding on the left, with overhangs $\{-1, -1\}$
   - id: padding-on-both-sides-with-overhangs-1-1

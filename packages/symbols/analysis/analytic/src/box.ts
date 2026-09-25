@@ -13,8 +13,7 @@ export type EvalOptions = Parameters<NonNullable<NativeEval>>[1];
 export const isRealInt = (x: BoxedExpression): boolean => x.im === 0 && Number.isInteger(x.re);
 
 /** A concrete (finite) numeric operand — as opposed to a symbolic one (NaN re/im). */
-export const isFiniteNum = (x: BoxedExpression): boolean =>
-  Number.isFinite(x.re) && Number.isFinite(x.im);
+export const isFiniteNum = (x: BoxedExpression): boolean => Number.isFinite(x.re) && Number.isFinite(x.im);
 
 /** Box a complex result, collapsing to a real number when the imaginary part vanishes. */
 export const numberResult = (ce: ComputeEngine, r: Cx): BoxedExpression => {
@@ -35,8 +34,7 @@ export const numberResult = (ce: ComputeEngine, r: Cx): BoxedExpression => {
  * non-literal operand has no float to lose and counts as exact.
  */
 export const wantsNumber = (ops: readonly BoxedExpression[], options: EvalOptions): boolean =>
-  (options.numericApproximation ?? false) ||
-  ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false);
+  (options.numericApproximation ?? false) || ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false);
 
 /**
  * Did the captured native handler decline to evaluate — i.e. hand back the same
@@ -68,7 +66,6 @@ export const realCompile =
     if (ops.length < arity || ops.some((o) => o === undefined)) return undefined;
     const cs = ops.map(compile);
     if (ctx.language === "javascript" && emit.js) return `_.${emit.js}(${cs.join(", ")})`;
-    if (ctx.language === "wgsl" && emit.wgsl)
-      return `${emit.wgsl}(${cs.map((c) => `vec2f(${c}, 0.0)`).join(", ")}).x`;
+    if (ctx.language === "wgsl" && emit.wgsl) return `${emit.wgsl}(${cs.map((c) => `vec2f(${c}, 0.0)`).join(", ")}).x`;
     return undefined;
   };

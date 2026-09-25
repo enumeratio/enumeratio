@@ -15,8 +15,7 @@ const BG = "var(--notatio-bg, var(--vp-c-bg, #ffffff))";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const frame = (w: number, h: number, body: string, ariaLabel: string): string =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n2(w)} ${n2(h)}" role="img" aria-label="${ariaLabel}">${body}</svg>`;
@@ -257,10 +256,7 @@ const LAYER_UNIT_Y = 64;
  * whatever layer they last reached (never revisited) -- deterministic, no
  * infinite loop, and malformed/cyclic input still renders instead of throwing.
  */
-function computeLayers(
-  ids: readonly string[],
-  edges: readonly (readonly [string, string])[],
-): Map<string, number> {
+function computeLayers(ids: readonly string[], edges: readonly (readonly [string, string])[]): Map<string, number> {
   const adj = new Map<string, string[]>(ids.map((id) => [id, []]));
   const indeg = new Map<string, number>(ids.map((id) => [id, 0]));
   for (const [a, b] of edges) {
@@ -290,10 +286,7 @@ export interface LayeredGraphPlotOptions {
 }
 
 /** A DAG laid out top-to-bottom by longest-path layer, nodes ordered deterministically within each layer. */
-export function layeredGraphPlotSvg(
-  data: GraphData | undefined,
-  opts: LayeredGraphPlotOptions = {},
-): string {
+export function layeredGraphPlotSvg(data: GraphData | undefined, opts: LayeredGraphPlotOptions = {}): string {
   const edges = data?.edges ?? [];
   const ids = data ? collectNodes(data) : [];
   if (ids.length === 0) return emptyFrame("layered graph plot");
@@ -381,9 +374,7 @@ function layoutDendrogram(node: TreeNode, leafCounter: { n: number }): DendroPla
   const x = placedKids.reduce((s, k) => s + k.x, 0) / placedKids.length;
   const childMax = Math.max(...placedKids.map((k) => k.height));
   const height =
-    typeof node.height === "number" && Number.isFinite(node.height)
-      ? Math.max(node.height, childMax)
-      : childMax + 1;
+    typeof node.height === "number" && Number.isFinite(node.height) ? Math.max(node.height, childMax) : childMax + 1;
   return { x, height, label: node.label ?? "", children: placedKids };
 }
 

@@ -61,8 +61,7 @@ const keepsShape = (system: NumeralSystem, values: readonly number[]): void => {
     digits,
     width,
   } = system.shape;
-  const within = (d: number, [least, most]: DigitBound) =>
-    d >= least && (most === undefined || d <= most);
+  const within = (d: number, [least, most]: DigitBound) => d >= least && (most === undefined || d <= most);
   for (const n of values) {
     const inRange = (lo === undefined || BigInt(n) >= lo) && (hi === undefined || BigInt(n) <= hi);
     const spelled = system.toDigits(n);
@@ -164,8 +163,7 @@ test("negative base: digits are ordinary, the place values alternate", () => {
 
 test("bijective base 26 is spreadsheet column lettering", () => {
   const system = bijectiveRadix(26)!;
-  const letters = (n: number) =>
-    (system.toDigits(n) ?? []).map((d) => String.fromCharCode(64 + d)).join("");
+  const letters = (n: number) => (system.toDigits(n) ?? []).map((d) => String.fromCharCode(64 + d)).join("");
   expect(letters(1)).toBe("A");
   expect(letters(26)).toBe("Z");
   expect(letters(27)).toBe("AA");

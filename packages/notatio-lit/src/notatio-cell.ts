@@ -311,13 +311,7 @@ export class NotatioCell extends LitElement {
     this._editForm = editForm;
     // Fast path: LaTeX in, a LaTeX-native editor, nothing that needs an evaluated
     // result -- skip the engine entirely, matching notatio-out's own no-engine path.
-    if (
-      format === "latex" &&
-      SYNTAX_OF[editForm] === "latex" &&
-      !this.evaluate &&
-      !this.box &&
-      !this.expect
-    ) {
+    if (format === "latex" && SYNTAX_OF[editForm] === "latex" && !this.evaluate && !this.box && !this.expect) {
       this._json = undefined;
       this._raw = this.value;
       return;
@@ -326,8 +320,7 @@ export class NotatioCell extends LitElement {
       const json = await parseSyntax(format, this.value);
       if (token !== this.#token) return;
       this._json = json;
-      this._raw =
-        SYNTAX_OF[editForm] === format ? this.value : await textInSyntax(SYNTAX_OF[editForm], json);
+      this._raw = SYNTAX_OF[editForm] === format ? this.value : await textInSyntax(SYNTAX_OF[editForm], json);
     } catch (err) {
       if (token !== this.#token) return;
       this._json = undefined;
@@ -352,8 +345,7 @@ export class NotatioCell extends LitElement {
     }
     this._editForm = form;
     const format = this.format || "notatio";
-    this._raw =
-      SYNTAX_OF[form] === format ? this.value : await textInSyntax(SYNTAX_OF[form], this._json);
+    this._raw = SYNTAX_OF[form] === format ? this.value : await textInSyntax(SYNTAX_OF[form], this._json);
     // Switching editors re-renders the current value, not a new one -- nothing pending.
     this.pending = false;
     this.#uncommitted = false;
@@ -388,9 +380,7 @@ export class NotatioCell extends LitElement {
   }
 
   #fireDirty(dirty: boolean): void {
-    this.dispatchEvent(
-      new CustomEvent("notatio-dirty", { detail: { dirty }, bubbles: true, composed: true }),
-    );
+    this.dispatchEvent(new CustomEvent("notatio-dirty", { detail: { dirty }, bubbles: true, composed: true }));
   }
 
   async #emitChange(): Promise<void> {
@@ -442,18 +432,10 @@ export class NotatioCell extends LitElement {
 
   #inMenu(): unknown {
     const current = EDIT_FORMS.find((f) => f.form === this._editForm) ?? EDIT_FORMS[0];
-    return html`<details
-      class="notatio-menu is-on-label notatio-in-menu"
-      @toggle=${this.#onMenuToggle}
-    >
-      <summary
-        class="notatio-io-label notatio-label-btn"
-        title=${`${current.label} — click for input forms`}
-      >
+    return html`<details class="notatio-menu is-on-label notatio-in-menu" @toggle=${this.#onMenuToggle}>
+      <summary class="notatio-io-label notatio-label-btn" title=${`${current.label} — click for input forms`}>
         In${this._n === undefined ? "" : `[${this._n}]`}${
-          current.form === "standard"
-            ? ""
-            : html`<span class="notatio-label-form">${current.label}</span>`
+          current.form === "standard" ? "" : html`<span class="notatio-label-form">${current.label}</span>`
         }
       </summary>
       <div class="notatio-menu-list" role="menu">
@@ -520,10 +502,7 @@ export class NotatioCell extends LitElement {
   // cleared `#uncommitted` by then, so that echo is a no-op rather than a second run.
   #onTextCommit = (event: FocusEvent): void => {
     if (!this.#uncommitted) return;
-    void this.#commit(
-      this._editForm,
-      (event.target as HTMLInputElement | HTMLTextAreaElement).value,
-    );
+    void this.#commit(this._editForm, (event.target as HTMLInputElement | HTMLTextAreaElement).value);
   };
 
   #editor(): unknown {
@@ -617,19 +596,12 @@ export class NotatioCell extends LitElement {
           <span class="notatio-render">${this.#editor()}</span>
           ${
             this.dirty
-              ? html`<button type="button" class="notatio-reset" @click=${this.#reset}>
-                  edited · reset
-                </button>`
+              ? html`<button type="button" class="notatio-reset" @click=${this.#reset}>edited · reset</button>`
               : ""
           }
         </div>
         <div class="notatio-row">
-          ${this.#output()}
-          ${
-            this.pending
-              ? html`<span class="notatio-uncommitted-hint">edited — ↵ to run</span>`
-              : ""
-          }
+          ${this.#output()} ${this.pending ? html`<span class="notatio-uncommitted-hint">edited — ↵ to run</span>` : ""}
           <span class="notatio-aside" ?hidden=${this.dirty}></span>
         </div>
       </div>

@@ -22,8 +22,7 @@ examples:
     caption: A symbolic function shows the indices
   - id: a-2-3-grid
     expr: [Tabulate, f, 2, 3]
-    expected:
-      [List, [List, [f, 1, 1], [f, 1, 2], [f, 1, 3]], [List, [f, 2, 1], [f, 2, 2], [f, 2, 3]]]
+    expected: [List, [List, [f, 1, 1], [f, 1, 2], [f, 1, 3]], [List, [f, 2, 1], [f, 2, 2], [f, 2, 3]]]
     category: Scope
     caption: A 2×3 grid
   - id: tabulate-add-2-2

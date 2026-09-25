@@ -75,13 +75,7 @@ function quadraticRank(a: bigint, b: bigint, c: bigint, denom: bigint, x: bigint
   return n >= 1n ? Number(n - 1n) : -1;
 }
 
-function quadraticFamily(
-  head: string,
-  a: bigint,
-  b: bigint,
-  c: bigint,
-  denom: bigint,
-): FamilyKernel {
+function quadraticFamily(head: string, a: bigint, b: bigint, c: bigint, denom: bigint): FamilyKernel {
   return {
     head,
     paramCount: 0,

@@ -27,10 +27,7 @@ function evaluateRealAbs(
   return options.numericApproximation ? expr.N() : expr.evaluate();
 }
 
-function evaluateRealSign(
-  ce: ComputeEngine,
-  x: BoxedExpression | undefined,
-): BoxedExpression | undefined {
+function evaluateRealSign(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
   if (x === undefined) return undefined;
   if (isConcretelyComplex(x)) return undefined; // real domain only
   const q = bigRationalAt(x);
@@ -44,8 +41,7 @@ export function declareRealAbsSign(ce: ComputeEngine): void {
   ce.declare("RealAbs", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateRealAbs(ce, ops[0], options),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateRealAbs(ce, ops[0], options),
   });
 
   ce.declare("RealSign", {

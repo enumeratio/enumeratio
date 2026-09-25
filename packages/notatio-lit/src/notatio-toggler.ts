@@ -106,9 +106,7 @@ export class NotatioToggler extends LitElement {
       rate: () => (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
       setRate: (rate) => (this.rate = rate),
       interval: () =>
-        Number.isFinite(this.interval) && this.interval > 0
-          ? this.interval
-          : sweepInterval(this.#choices.length),
+        Number.isFinite(this.interval) && this.interval > 0 ? this.interval : sweepInterval(this.#choices.length),
       onState: () => (this._playing = this.#sweep.playing),
     },
     openPlaybackMenu,
@@ -210,11 +208,7 @@ export class NotatioToggler extends LitElement {
   }
 
   #watchView(): void {
-    if (
-      !this.autoplay ||
-      this.#inView !== undefined ||
-      typeof IntersectionObserver === "undefined"
-    ) {
+    if (!this.autoplay || this.#inView !== undefined || typeof IntersectionObserver === "undefined") {
       return;
     }
     this.#inView = new IntersectionObserver(
@@ -325,10 +319,7 @@ export class NotatioToggler extends LitElement {
     }
     this.#sweep.stop();
     this.#repeats = event.repeat ? this.#repeats + 1 : 0;
-    const gear =
-      event.key === "PageUp" || event.key === "PageDown"
-        ? "coarse"
-        : (modifierGear(event) ?? "normal");
+    const gear = event.key === "PageUp" || event.key === "PageDown" ? "coarse" : (modifierGear(event) ?? "normal");
     const delta = gearing(1, 1, gear, true).step * holdMultiplier(this.#repeats);
     const last = this.#choices.length - 1;
     // Left/right only: a toggler is a line of entries, not a column of them.

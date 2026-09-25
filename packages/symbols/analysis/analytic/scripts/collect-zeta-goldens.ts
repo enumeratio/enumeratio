@@ -97,8 +97,7 @@ for (const line of out.split("\n")) {
 }
 
 const relErr = (ours: Pair, ref: Pair): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 /** Within one unit in the 39th significant digit — each side is rounded to 40. */
 const agrees40 = (ours: BigDecimal, ref: string): boolean => {
@@ -115,30 +114,21 @@ const disagree: string[] = [];
 for (const [k, [s, a, tol = TOL]] of grid.entries()) {
   const ref40 = mp.get(k);
   const ref = ref40?.map(Number) as Pair | undefined;
-  if (!ref40 || !ref || !ref.every(Number.isFinite))
-    throw new Error(`mpmath gave no value for case ${k}`);
+  if (!ref40 || !ref || !ref.every(Number.isFinite)) throw new Error(`mpmath gave no value for case ${k}`);
   const sLabel = s[1] === 0 ? `${s[0]}` : `${s[0]}${s[1] < 0 ? "" : "+"}${s[1]}i`;
   const label = a === 1 ? `ζ(${sLabel})` : `ζ(${sLabel}, ${a})`;
   const r = hurwitzZeta({ re: s[0], im: s[1] }, { re: a, im: 0 });
   const ours: Pair = [r.re, r.im];
   const err = relErr(ours, ref);
   if (!(err <= tol))
-    disagree.push(
-      `${label}: ours=(${ours.join(", ")}) mpmath=(${ref.join(", ")}) relerr=${err.toExponential(2)}`,
-    );
+    disagree.push(`${label}: ours=(${ours.join(", ")}) mpmath=(${ref.join(", ")}) relerr=${err.toExponential(2)}`);
   const big = hurwitzZetaBig(bigCx(...s), bigCx(a), 40);
   const off40 = !big || !agrees40(big.re, ref40[0]) || !agrees40(big.im, ref40[1]);
-  if (off40)
-    disagree.push(
-      `${label} @40: ours=(${String(big?.re)}, ${String(big?.im)}) mpmath=(${ref40.join(", ")})`,
-    );
+  if (off40) disagree.push(`${label} @40: ours=(${String(big?.re)}, ${String(big?.im)}) mpmath=(${ref40.join(", ")})`);
   goldens.push({ s, a, label, tol, mpmath: ref, mpmath40: ref40 });
 }
 
-writeFileSync(
-  new URL("../tests/zeta.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/zeta.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 
 console.log(`cases ${goldens.length}  |  disagree ${disagree.length}`);
 if (disagree.length) {

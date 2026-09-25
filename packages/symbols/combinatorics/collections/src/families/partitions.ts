@@ -39,8 +39,7 @@ const ints = (
 const sum = (parts: readonly number[]): number => parts.reduce((a, b) => a + b, 0);
 const isPositiveIntArray = (e: unknown): e is number[] =>
   Array.isArray(e) && e.every((v) => Number.isInteger(v) && v >= 1);
-const isWeaklyDecreasing = (parts: readonly number[]): boolean =>
-  parts.every((v, i) => i === 0 || parts[i - 1] >= v);
+const isWeaklyDecreasing = (parts: readonly number[]): boolean => parts.every((v, i) => i === 0 || parts[i - 1] >= v);
 
 // ─── generic builder: partitions with every part drawn from an allowed set S ⊆ {1,2,…} ─────────
 // count(m, cap) = #partitions of m with every part ≤ cap and in S. Recurrence splits on whether

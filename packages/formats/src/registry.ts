@@ -46,8 +46,7 @@ export function isImageValue(value: unknown): value is ImageValue {
 const REGISTRY = new Map<string, Format>(); // key: lowercased name or alias
 
 export function registerFormat(format: Format): void {
-  for (const key of [format.name, ...(format.aliases ?? [])])
-    REGISTRY.set(key.toLowerCase(), format);
+  for (const key of [format.name, ...(format.aliases ?? [])]) REGISTRY.set(key.toLowerCase(), format);
 }
 
 export function getFormat(format: string | Format): Format | undefined {
@@ -108,22 +107,14 @@ function resolve(format: string | Format): Format {
 }
 
 /** Export: serialize `value` in `format`. */
-export function exportTo(
-  value: unknown,
-  format: string | Format,
-  opts?: FormatOptions,
-): string | Uint8Array {
+export function exportTo(value: unknown, format: string | Format, opts?: FormatOptions): string | Uint8Array {
   const f = resolve(format);
   if (!f.encode) throw new Error(`${f.name} is not exportable`);
   return f.encode(value, opts);
 }
 
 /** Import: parse `data` as `format`. */
-export function importFrom(
-  data: string | Uint8Array,
-  format: string | Format,
-  opts?: FormatOptions,
-): unknown {
+export function importFrom(data: string | Uint8Array, format: string | Format, opts?: FormatOptions): unknown {
   const f = resolve(format);
   if (!f.decode) throw new Error(`${f.name} is not importable`);
   return f.decode(data, opts);

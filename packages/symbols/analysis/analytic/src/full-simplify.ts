@@ -30,12 +30,7 @@ function gammaRatio(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
   const [num, den] = ops;
   const numOps = operandsOf(num);
   const denOps = operandsOf(den);
-  if (
-    num.operator !== "Gamma" ||
-    den.operator !== "Gamma" ||
-    numOps.length === 0 ||
-    denOps.length === 0
-  ) {
+  if (num.operator !== "Gamma" || den.operator !== "Gamma" || numOps.length === 0 || denOps.length === 0) {
     return e;
   }
   const a = numOps[0];
@@ -63,10 +58,7 @@ export function hyperbolicPythagoras(e: BoxedExpression, ce: ComputeEngine): Box
   const coshSquared = (t: BoxedExpression): BoxedExpression | undefined => {
     const tOps = operandsOf(t);
     const inner = operandsOf(tOps[0]);
-    return t.operator === "Power" &&
-      tOps.length === 2 &&
-      tOps[0].operator === "Cosh" &&
-      tOps[1].isSame(2)
+    return t.operator === "Power" && tOps.length === 2 && tOps[0].operator === "Cosh" && tOps[1].isSame(2)
       ? inner[0]
       : undefined;
   };

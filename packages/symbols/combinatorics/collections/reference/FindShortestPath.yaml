@@ -16,11 +16,7 @@ examples:
     expr:
       [
         FindShortestPath,
-        [
-          Graph,
-          [List, 1, 2, 3, 4],
-          [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 3], [UndirectedEdge, 3, 4]],
-        ],
+        [Graph, [List, 1, 2, 3, 4], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]],
         4,
         1,
       ]

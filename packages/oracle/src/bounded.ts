@@ -48,11 +48,7 @@ export function groupRssMb(pgid: number): number {
   return kb / 1024;
 }
 
-export function runBounded(
-  command: string,
-  args: readonly string[],
-  bounds: Bounds = {},
-): Promise<BoundedResult> {
+export function runBounded(command: string, args: readonly string[], bounds: Bounds = {}): Promise<BoundedResult> {
   const cap = bounds.memoryMb ?? memoryCapMb();
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
@@ -82,10 +78,7 @@ export function runBounded(
       peakMb = Math.max(peakMb, mb);
       if (mb > cap) stop("memory");
     }, POLL_MS);
-    const timer =
-      bounds.timeoutMs === undefined
-        ? undefined
-        : setTimeout(() => stop("timeout"), bounds.timeoutMs);
+    const timer = bounds.timeoutMs === undefined ? undefined : setTimeout(() => stop("timeout"), bounds.timeoutMs);
     // An interrupted scan must not leave a kernel holding gigabytes. The child leads its own
     // group, so a Ctrl-C never reaches it: kill it, then let the signal take its default course.
     const onExit = () => stop("interrupted");
@@ -126,11 +119,7 @@ export class KernelKilled extends Error {
 
 /** `runBounded` for a script, failing as `execFileSync` would: the stdout, or a throw when
  * the kernel was killed or exited non-zero. */
-export async function runKernel(
-  command: string,
-  args: readonly string[],
-  bounds: Bounds = {},
-): Promise<string> {
+export async function runKernel(command: string, args: readonly string[], bounds: Bounds = {}): Promise<string> {
   const result = await runBounded(command, args, bounds);
   if (result.killed !== undefined) throw new KernelKilled(command, result);
   if (result.code !== 0) {

@@ -33,11 +33,7 @@ const INDEPENDENT: Record<string, bigint[]> = {
   // Pₙ = 2Pₙ₋₁ + Pₙ₋₂, P0=0, P1=1 (A000129).
   PellNumbers: iterate([0n, 1n], (t) => 2n * t[t.length - 1] + t[t.length - 2], TERMS),
   // Tₙ = Tₙ₋₁ + Tₙ₋₂ + Tₙ₋₃, T0=0, T1=0, T2=1 (A000073).
-  TribonacciNumbers: iterate(
-    [0n, 0n, 1n],
-    (t) => t[t.length - 1] + t[t.length - 2] + t[t.length - 3],
-    TERMS,
-  ),
+  TribonacciNumbers: iterate([0n, 0n, 1n], (t) => t[t.length - 1] + t[t.length - 2] + t[t.length - 3], TERMS),
   // Pₙ = Pₙ₋₂ + Pₙ₋₃, a(0)=1, a(1)=a(2)=0 (A000931).
   PadovanSequence: iterate([1n, 0n, 0n], (t) => t[t.length - 2] + t[t.length - 3], TERMS),
   // Pₙ = Pₙ₋₂ + Pₙ₋₃, P0=3, P1=0, P2=2 (A001608).
@@ -52,8 +48,7 @@ function sternRecursive(n: number): bigint {
   if (n === 1) return 1n;
   const cached = sternMemo.get(n);
   if (cached !== undefined) return cached;
-  const v =
-    n % 2 === 0 ? sternRecursive(n / 2) : sternRecursive((n - 1) / 2) + sternRecursive((n + 1) / 2);
+  const v = n % 2 === 0 ? sternRecursive(n / 2) : sternRecursive((n - 1) / 2) + sternRecursive((n + 1) / 2);
   sternMemo.set(n, v);
   return v;
 }
@@ -275,15 +270,11 @@ test("At(BellNumbers, 5) is Bell(4) = 15 (1-indexed At, 0-indexed term)", () => 
 });
 
 test("Take(CatalanNumbers, 10) gives the first ten Catalan numbers", () => {
-  expect(ce.box(["Take", "CatalanNumbers", 10]).evaluate().toString()).toBe(
-    "[1,1,2,5,14,42,132,429,1430,4862]",
-  );
+  expect(ce.box(["Take", "CatalanNumbers", 10]).evaluate().toString()).toBe("[1,1,2,5,14,42,132,429,1430,4862]");
 });
 
 test("Take(PadovanSequence, 10) gives the first ten Padovan terms", () => {
-  expect(ce.box(["Take", "PadovanSequence", 10]).evaluate().toString()).toBe(
-    "[1,0,0,1,0,1,1,1,2,2]",
-  );
+  expect(ce.box(["Take", "PadovanSequence", 10]).evaluate().toString()).toBe("[1,0,0,1,0,1,1,1,2,2]");
 });
 
 for (const head of Object.keys(OEIS)) {

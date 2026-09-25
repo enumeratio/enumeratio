@@ -2,18 +2,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { expect, test } from "vite-plus/test";
 import { gaussianRoots } from "../src/gaussian-roots.ts";
-import {
-  add,
-  equal,
-  extendedGcd,
-  type Gaussian,
-  mod,
-  mul,
-  norm,
-  ONE,
-  powerMod,
-  powerModRaw,
-} from "../src/gaussian.ts";
+import { add, equal, extendedGcd, type Gaussian, mod, mul, norm, ONE, powerMod, powerModRaw } from "../src/gaussian.ts";
 import { type GoldenCase, ours } from "./gaussian-cases.ts";
 
 // Pinned against a Wolfram kernel over a seeded random corpus. Regenerate with

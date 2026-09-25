@@ -35,11 +35,7 @@ function channelOf(ce: ComputeEngine): Channel {
 }
 
 /** `head::code = template`, for each code. Slots are `` `1` ``, `` `2` ``, … as in Wolfram. */
-export function defineMessages(
-  ce: ComputeEngine,
-  head: string,
-  templates: Readonly<Record<string, string>>,
-): void {
+export function defineMessages(ce: ComputeEngine, head: string, templates: Readonly<Record<string, string>>): void {
   const { templates: table } = channelOf(ce);
   for (const [code, template] of Object.entries(templates)) table.set(`${head}::${code}`, template);
 }
@@ -87,10 +83,7 @@ export function emit(
 }
 
 /** Run `fn`, returning what it returned and every message emitted on `ce` meanwhile. */
-export function collectMessages<T>(
-  ce: ComputeEngine,
-  fn: () => T,
-): { value: T; messages: readonly Message[] } {
+export function collectMessages<T>(ce: ComputeEngine, fn: () => T): { value: T; messages: readonly Message[] } {
   const { sinks } = channelOf(ce);
   const sink: Message[] = [];
   sinks.push(sink);

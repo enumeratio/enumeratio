@@ -20,12 +20,9 @@ interface GoldenCase {
   wolfram?: number;
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./q-series.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./q-series.golden.json", import.meta.url), "utf8"));
 
-const argExpr = (a: number | [number, number]): unknown =>
-  Array.isArray(a) ? ["Rational", a[0], a[1]] : a;
+const argExpr = (a: number | [number, number]): unknown => (Array.isArray(a) ? ["Rational", a[0], a[1]] : a);
 
 test("q-series: every golden case matches the oracles under N()", () => {
   const off: string[] = [];
@@ -47,20 +44,18 @@ test("q-series: every golden case matches the oracles under N()", () => {
 // Exact-arithmetic cases: plain evaluate() (no N()), pinned to exact rationals/integers.
 test("QPochhammer: exact rational arithmetic, no N() needed", () => {
   expect(ce.box(["QPochhammer", 2, 3, 3]).evaluate().json).toEqual(-85);
-  expect(
-    ce.box(["QPochhammer", ["Rational", 1, 2], ["Rational", 1, 2], 3]).evaluate().json,
-  ).toEqual(["Rational", 21, 64]);
+  expect(ce.box(["QPochhammer", ["Rational", 1, 2], ["Rational", 1, 2], 3]).evaluate().json).toEqual([
+    "Rational",
+    21,
+    64,
+  ]);
   expect(ce.box(["QPochhammer", "a", "q", 0]).evaluate().json).toEqual(1);
 });
 
 test("QFactorial: exact rational arithmetic and the q=1 reduction to n!", () => {
   expect(ce.box(["QFactorial", 3, 2]).evaluate().json).toEqual(21);
   expect(ce.box(["QFactorial", 4, 2]).evaluate().json).toEqual(315);
-  expect(ce.box(["QFactorial", 3, ["Rational", 1, 2]]).evaluate().json).toEqual([
-    "Rational",
-    21,
-    8,
-  ]);
+  expect(ce.box(["QFactorial", 3, ["Rational", 1, 2]]).evaluate().json).toEqual(["Rational", 21, 8]);
   expect(ce.box(["QFactorial", 5, 1]).evaluate().json).toEqual(120);
 });
 

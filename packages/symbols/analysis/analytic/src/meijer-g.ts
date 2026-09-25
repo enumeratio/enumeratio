@@ -49,13 +49,7 @@ function listPair(expr: BoxedExpression | undefined): [Cx[], Cx[]] | undefined {
  * double (m ≥ 1, p ≤ q, pairwise-simple poles) before handing the arithmetic itself to
  * `meijerGSeriesBig`.
  */
-function meijerGSeries(
-  a: readonly Cx[],
-  b: readonly Cx[],
-  m: number,
-  n: number,
-  z: Cx,
-): Cx | undefined {
+function meijerGSeries(a: readonly Cx[], b: readonly Cx[], m: number, n: number, z: Cx): Cx | undefined {
   const p = a.length;
   const q = b.length;
   if (m < 1 || p > q) return undefined;
@@ -74,8 +68,7 @@ export function declareMeijerG(ce: ComputeEngine): void {
     signature: "(list, list, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const [upperExpr, lowerExpr, zExpr] = ops;
-      if (upperExpr === undefined || lowerExpr === undefined || zExpr === undefined)
-        return undefined;
+      if (upperExpr === undefined || lowerExpr === undefined || zExpr === undefined) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(zExpr)) return undefined;
       const upper = listPair(upperExpr);
       const lower = listPair(lowerExpr);

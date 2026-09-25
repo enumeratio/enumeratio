@@ -24,11 +24,7 @@ export function functionExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpr
   // η(s) = (1 − 2^(1−s))·ζ(s).
   if (op === "DirichletEta") {
     const s = ops[0].json;
-    return ce.box([
-      "Multiply",
-      ["Subtract", 1, ["Power", 2, ["Subtract", 1, s]]],
-      ["Zeta", s],
-    ] as never);
+    return ce.box(["Multiply", ["Subtract", 1, ["Power", 2, ["Subtract", 1, s]]], ["Zeta", s]] as never);
   }
   // β(s) = 4^(−s)·(ζ(s, ¼) − ζ(s, ¾)).
   if (op === "DirichletBeta") {
@@ -53,21 +49,12 @@ export function functionExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpr
   if (op === "Sin" && ops[0]?.isSame(ce.function("Divide", [ce.Pi, 15]).evaluate())) {
     return ce.box([
       "Divide",
-      [
-        "Add",
-        ["Sqrt", ["Add", 10, ["Multiply", 2, ["Sqrt", 5]]]],
-        ["Negate", ["Sqrt", 15]],
-        ["Sqrt", 3],
-      ],
+      ["Add", ["Sqrt", ["Add", 10, ["Multiply", 2, ["Sqrt", 5]]]], ["Negate", ["Sqrt", 15]], ["Sqrt", 3]],
       8,
     ] as never);
   }
   if (op === "Cos" && ops[0]?.isSame(ce.function("Divide", [ce.Pi, 24]).evaluate())) {
-    return ce.box([
-      "Divide",
-      ["Sqrt", ["Add", 2, ["Divide", ["Add", ["Sqrt", 2], ["Sqrt", 6]], 2]]],
-      2,
-    ] as never);
+    return ce.box(["Divide", ["Sqrt", ["Add", 2, ["Divide", ["Add", ["Sqrt", 2], ["Sqrt", 6]], 2]]], 2] as never);
   }
   return e; // no identity known: leave the input alone (see the head's `details`)
 }

@@ -54,11 +54,7 @@ export function hrefOf(reference: Reference): string | undefined {
   return reference.url ?? SOURCES[reference.system].href?.(reference.identity);
 }
 
-const resolve = (
-  reference: Reference,
-  origin: ReferenceOrigin,
-  via?: string,
-): ResolvedReference => ({
+const resolve = (reference: Reference, origin: ReferenceOrigin, via?: string): ResolvedReference => ({
   ...reference,
   label: SOURCES[reference.system].label,
   ...(hrefOf(reference) === undefined ? {} : { href: hrefOf(reference) }),
@@ -69,10 +65,7 @@ const resolve = (
 /** The catalog's rows about `subject`, as references -- any kind, any carrier. */
 function catalogRows(subject: string, on?: string): ResolvedReference[] {
   return REFERENCES.filter(
-    (row) =>
-      row.subject === subject &&
-      (on === undefined || row.on === on) &&
-      isCrosswalkSystem(row.system),
+    (row) => row.subject === subject && (on === undefined || row.on === on) && isCrosswalkSystem(row.system),
   ).map((row) =>
     resolve(
       {
@@ -123,9 +116,7 @@ function merge(groups: readonly (readonly ResolvedReference[])[]): ResolvedRefer
   }
   // A pointer known at a specific arity is the same pointer known head-wide, said better;
   // and a DLMF section is the equation inside it, said worse.
-  const specific = new Set(
-    out.filter((r) => r.arity !== undefined).map((r) => `${r.system} ${r.identity}`),
-  );
+  const specific = new Set(out.filter((r) => r.arity !== undefined).map((r) => `${r.system} ${r.identity}`));
   const equations = out.filter((r) => r.system === "dlmf" && r.identity.includes("#"));
   const coarser = (r: ResolvedReference): boolean =>
     (r.arity === undefined && specific.has(`${r.system} ${r.identity}`)) ||
@@ -163,10 +154,7 @@ export function crosswalkFor(name: string, entry?: ReferenceEntry): ResolvedRefe
     ...(entry?.references ?? []).map((reference) => resolve(reference, "entry")),
     ...(entry?.signatures ?? []).flatMap((signature) =>
       (signature.references ?? []).map((reference) =>
-        resolve(
-          { ...reference, ...(signature.arity === undefined ? {} : { arity: signature.arity }) },
-          "entry",
-        ),
+        resolve({ ...reference, ...(signature.arity === undefined ? {} : { arity: signature.arity }) }, "entry"),
       ),
     ),
   ];
@@ -237,9 +225,7 @@ export function crosswalkFor(name: string, entry?: ReferenceEntry): ResolvedRefe
             identity: id,
             ...(checked?.verdict === "disagree" && checked.detail
               ? {
-                  note: [`disagrees when evaluated — ${checked.detail}`, KNOWN_CAUSES[id]]
-                    .filter(Boolean)
-                    .join(" · "),
+                  note: [`disagrees when evaluated — ${checked.detail}`, KNOWN_CAUSES[id]].filter(Boolean).join(" · "),
                 }
               : {}),
           },
@@ -257,9 +243,7 @@ export function crosswalkFor(name: string, entry?: ReferenceEntry): ResolvedRefe
       };
     }),
   ];
-  const wolfram = record?.wolfram
-    ? [resolve({ system: "wolfram", identity: record.wolfram }, "wolfram")]
-    : [];
+  const wolfram = record?.wolfram ? [resolve({ system: "wolfram", identity: record.wolfram }, "wolfram")] : [];
   // A scan has run these examples in that kernel; the chip carries the score.
   const scored = new Map(oracleAgreements(name).map((row) => [row.system, row]));
   const oracle = (record?.oracle ?? [])
@@ -289,9 +273,7 @@ export function crosswalkFor(name: string, entry?: ReferenceEntry): ResolvedRefe
   // ones (`Permutahedron`) add what it did not say.
   const carried = COLLECTIONS.filter((collection) => collection.carrier === name)
     .sort((a, b) => Number(b.name === `${name}s`) - Number(a.name === `${name}s`))
-    .flatMap((collection) =>
-      catalogRows(collection.name).map((row) => ({ ...row, via: collection.name })),
-    );
+    .flatMap((collection) => catalogRows(collection.name).map((row) => ({ ...row, via: collection.name })));
 
   // Derived rows outrank the catalog's for the same pointer: the engine's Wikidata id and
   // the transpiler's Wolfram symbol are claims we execute against, not notes.
@@ -351,9 +333,7 @@ function foundByValue(head: string, carrier: string): ResolvedReference[] {
 function foundByCount(head: string): ResolvedReference[] {
   const found = oeis.filter((m) => m.head === head);
   if (!found.length) return [];
-  const recorded = new Set(
-    REFERENCES.filter((r) => r.subject === head && r.system === "oeis").map((r) => r.identity),
-  );
+  const recorded = new Set(REFERENCES.filter((r) => r.subject === head && r.system === "oeis").map((r) => r.identity));
   const rank = (m: (typeof found)[number]): number =>
     (recorded.has(m.oeis) ? 0 : 100) + Math.abs(m.shift) * 2 + (m.atZero ? 1 : 0);
   const sorted = [...found].sort((a, b) => rank(a) - rank(b));
@@ -371,9 +351,7 @@ function foundByCount(head: string): ResolvedReference[] {
                   : ""
               }`
             : `agrees on ${m.terms} terms${m.shift ? ` (their index is ours ${m.shift > 0 ? "+" : "-"} ${Math.abs(m.shift)})` : ""}`,
-          m.atZero
-            ? `except the empty object: ${m.atZero.ours} here, ${m.atZero.theirs} there`
-            : undefined,
+          m.atZero ? `except the empty object: ${m.atZero.ours} here, ${m.atZero.theirs} there` : undefined,
         ]
           .filter(Boolean)
           .join(" · "),
@@ -397,10 +375,7 @@ function catalogRowsChecked(subject: string): ResolvedReference[] {
   const byCount = foundByCount(subject);
   const decisive = byCount.length > 0 && oeis.every((m) => m.head !== subject || !m.triangle);
   return catalogRows(subject).filter(
-    (row) =>
-      row.system !== "oeis" ||
-      !decisive ||
-      byCount.some((found) => found.identity === row.identity),
+    (row) => row.system !== "oeis" || !decisive || byCount.some((found) => found.identity === row.identity),
   );
 }
 
@@ -414,16 +389,9 @@ export function crosswalkForStatistic(head: string, carrier: string): ResolvedRe
   // bear out is wrong for our definition and is not shown; the test pins each such case
   // until the catalog's row is fixed (`@enumeratio/catalog` reference-fixes.ts).
   const recorded = catalogRows(head, carrier).filter(
-    (row) =>
-      row.system !== "findstat" ||
-      !byValue.length ||
-      byValue.some((found) => found.identity === row.identity),
+    (row) => row.system !== "findstat" || !byValue.length || byValue.some((found) => found.identity === row.identity),
   );
-  return merge([
-    recorded,
-    byValue,
-    (CURATED[head] ?? []).map((reference) => resolve(reference, "curated")),
-  ]);
+  return merge([recorded, byValue, (CURATED[head] ?? []).map((reference) => resolve(reference, "curated"))]);
 }
 
 /** The references recorded for one map -- `name` from `carrier` -- plus the map's own. */

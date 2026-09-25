@@ -19,21 +19,11 @@ examples:
     expected: [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [LessEqual, 0, x]]]]
     caption: with $x$ still symbolic, both branches are undecided and the call stays as-is
   - id: evaluated-at-a-concrete-point-below-zero
-    expr:
-      [
-        ReplaceAll,
-        [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]],
-        [Rule, x, -5],
-      ]
+    expr: [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [Rule, x, -5]]
     expected: 1
     caption: at $x = -5$ the first condition is `True`
   - id: evaluated-at-a-concrete-point-at-or-above-zero
-    expr:
-      [
-        ReplaceAll,
-        [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]],
-        [Rule, x, 5],
-      ]
+    expr: [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [Rule, x, 5]]
     expected: 2
     caption: at $x = 5$ the second condition is `True`
   - id: falls-through-to-the-explicit-default

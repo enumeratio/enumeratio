@@ -40,9 +40,7 @@ export interface VisualSymbol {
    * `PlotLabel` is the plot's `label`, `AxesLabel` is two attributes. A string names
    * the attribute; a function returns the attributes.
    */
-  readonly options?: Readonly<
-    Record<string, string | ((value: MathJsonExpression) => Record<string, string>)>
-  >;
+  readonly options?: Readonly<Record<string, string | ((value: MathJsonExpression) => Record<string, string>)>>;
   /** For a control: the shape of what it binds, which is how `reduce` reads it statically. */
   readonly control?: ControlKind;
 }
@@ -198,8 +196,7 @@ function twoVariables(
   return out;
 }
 
-const dataOnly = (ops: readonly Json[]): Record<string, string> =>
-  ops[0] === undefined ? {} : { data: json(ops[0]) };
+const dataOnly = (ops: readonly Json[]): Record<string, string> => (ops[0] === undefined ? {} : { data: json(ops[0]) });
 
 /** A family member: the family tag with the member's attribute fixed. */
 const chart = (head: string, type: string): VisualSymbol => ({
@@ -267,9 +264,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       PlotRange: (value): Record<string, string> => {
         const parts = tupleOf(value);
         if (parts === undefined) return {};
-        const y =
-          tupleOf(parts[1]) ??
-          (parts.length === 2 && tupleOf(parts[0]) === undefined ? parts : undefined);
+        const y = tupleOf(parts[1]) ?? (parts.length === 2 && tupleOf(parts[0]) === undefined ? parts : undefined);
         return y === undefined ? {} : { "plot-range": y.map(clean).join(",") };
       },
     },
@@ -383,8 +378,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   {
     head: "CollectionTable",
     tag: "notatio-collection-table",
-    attributes: (ops): Record<string, string> =>
-      ops[0] === undefined ? {} : { expr: notatio(ops[0]) },
+    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { expr: notatio(ops[0]) }),
   },
   {
     // `Manipulate(body, (a, 0, 5), …)`: the controls become `params`, and the body is a
@@ -426,8 +420,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     options: {
       ExpectedOutput: (value): Record<string, string> =>
         symOf(value) === "Missing" ? {} : { expected: notatio(value) },
-      ActualOutput: (value): Record<string, string> =>
-        symOf(value) === "Missing" ? {} : { actual: notatio(value) },
+      ActualOutput: (value): Record<string, string> => (symOf(value) === "Missing" ? {} : { actual: notatio(value) }),
       AbsoluteTimeUsed: (value): Record<string, string> => ({ time: notatio(value) }),
     },
   },
@@ -491,11 +484,7 @@ function entryOf(node: Json): string {
   if (headOf(node) === "Labeled") {
     const [value, label] = opsOf(node);
     const text = label === undefined ? undefined : (strOf(label) ?? notatio(label));
-    return value === undefined
-      ? ""
-      : text === undefined
-        ? notatio(value)
-        : `${notatio(value)} -> ${text}`;
+    return value === undefined ? "" : text === undefined ? notatio(value) : `${notatio(value)} -> ${text}`;
   }
   // A string binds as the string it is, and shows as its words.
   const text = strOf(node);
@@ -503,8 +492,7 @@ function entryOf(node: Json): string {
 }
 
 /** A list of entries as the `|`-separated `values` attribute. */
-const entries = (node: Json | undefined): string | undefined =>
-  tupleOf(node)?.map(entryOf).join("|");
+const entries = (node: Json | undefined): string | undefined => tupleOf(node)?.map(entryOf).join("|");
 
 /** A control over a range: name, start, and `(min, max, step)`. */
 const ranged = (head: string, tag: string, extra: Record<string, string> = {}): VisualSymbol => ({
@@ -536,9 +524,7 @@ const listed = (head: string, tag: string, extra: Record<string, string> = {}): 
       // A starting selection is one entry, or a list of them for a multiple choice.
       const many = tupleOf(init);
       out.value =
-        many === undefined
-          ? entryOf(init).split(" -> ")[0]
-          : many.map((v) => entryOf(v).split(" -> ")[0]).join("|");
+        many === undefined ? entryOf(init).split(" -> ")[0] : many.map((v) => entryOf(v).split(" -> ")[0]).join("|");
     }
     const values = entries(ops[1]);
     if (values !== undefined) out.values = values;
@@ -625,14 +611,11 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
   {
     head: "Dynamic",
     tag: "notatio-dynamic",
-    attributes: (ops): Record<string, string> =>
-      ops[0] === undefined ? {} : { value: notatio(ops[0]) },
+    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { value: notatio(ops[0]) }),
   },
 ];
 
-export const CONTROL_HEADS = new Set(
-  CONTROL_SYMBOLS.filter((c) => c.head !== "Dynamic").map((c) => c.head),
-);
+export const CONTROL_HEADS = new Set(CONTROL_SYMBOLS.filter((c) => c.head !== "Dynamic").map((c) => c.head));
 
 // --- layout ---------------------------------------------------------------------------
 
@@ -700,7 +683,7 @@ const trackedSymbolsOption = (value: Json): Record<string, string> => {
 
 /**
  * `Evaluator -> "Local" | "Worker"` -- Wolfram's own option name, borrowed from
- * `Dynamic` (design/aestimatio.md): which kernel a `DynamicModule`'s cells evaluate
+ * `Dynamic` (design/computation.md): which kernel a `DynamicModule`'s cells evaluate
  * against. `"Local"` (the default, and anything not recognised as `"Worker"`) leaves
  * the attribute unset -- today's in-page evaluation; `"Worker"` sets it, routing
  * evaluation to the module's own `@enumeratio/aestimatio/browser` session instead
@@ -740,8 +723,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     // output. The forms pick the editor and the rendering; `Expected` is the assertion.
     head: "Cell",
     tag: "notatio-cell",
-    attributes: (ops): Record<string, string> =>
-      ops[0] === undefined ? {} : { value: notatio(ops[0]) },
+    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { value: notatio(ops[0]) }),
     options: {
       InForm: (value): Record<string, string> => {
         const id = formId(value);
@@ -753,9 +735,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
       },
       // Parser bookkeeping is not part of the value.
       Expected: (value) => ({
-        expect: JSON.stringify(value, (key, v: unknown) =>
-          key === "sourceOffsets" ? undefined : v,
-        ),
+        expect: JSON.stringify(value, (key, v: unknown) => (key === "sourceOffsets" ? undefined : v)),
       }),
     },
   },
@@ -790,8 +770,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
 ];
 
 /** `PlotRange` -> `plot-range`: an option's attribute when the symbol says nothing. */
-export const optionAttribute = (name: string): string =>
-  name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+export const optionAttribute = (name: string): string => name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 
 /** An option's value as attribute text: a string bare, `True` as `true`, the rest notatio. */
 function optionText(value: Json): string | undefined {
@@ -831,11 +810,7 @@ export function lowerOptions(
   return { attributes, children };
 }
 
-const ALL_SYMBOLS: readonly VisualSymbol[] = [
-  ...VISUAL_SYMBOLS,
-  ...CONTROL_SYMBOLS,
-  ...LAYOUT_SYMBOLS,
-];
+const ALL_SYMBOLS: readonly VisualSymbol[] = [...VISUAL_SYMBOLS, ...CONTROL_SYMBOLS, ...LAYOUT_SYMBOLS];
 
 const BY_HEAD = new Map(ALL_SYMBOLS.map((s) => [s.head, s]));
 
@@ -909,9 +884,7 @@ export function renderingOf(expr: Json, inManipulate = false): Rendering | undef
     const names = controlNames(expr);
     if (names.size > 0) {
       const inner = render(slottedExceptDeclarations(expr, names), true);
-      return inner === undefined
-        ? undefined
-        : { tag: "notatio-dynamic-module", attributes: {}, children: [inner] };
+      return inner === undefined ? undefined : { tag: "notatio-dynamic-module", attributes: {}, children: [inner] };
     }
   }
   return render(expr, inManipulate);
@@ -944,14 +917,11 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
     ) ?? []),
     ...lowered.children,
   ];
-  return children.length === 0
-    ? { tag: symbol.tag, attributes }
-    : { tag: symbol.tag, attributes, children };
+  return children.length === 0 ? { tag: symbol.tag, attributes } : { tag: symbol.tag, attributes, children };
 }
 
 /** Escape a value for a double-quoted HTML attribute. */
-const attr = (value: string): string =>
-  value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const attr = (value: string): string => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 /** A rendering as markup, for a host that can only take HTML. */
 export function markupOf(rendering: Rendering): string {

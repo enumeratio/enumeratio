@@ -261,9 +261,7 @@ export class NotatioWorksheet extends LitElement {
     } catch (err) {
       // Swallowing this leaves an empty sheet and no hint why. The usual cause is a
       // single backslash in a LaTeX seed: `"\\coloneq"` is a JSON escape, `"\coloneq"` is not.
-      this._seedError = `seed is not valid JSON (${
-        err instanceof Error ? err.message : String(err)
-      })`;
+      this._seedError = `seed is not valid JSON (${err instanceof Error ? err.message : String(err)})`;
     }
     if (this.inForm === "latex" && seeded.length > 0) {
       const engine = await loadEngine();
@@ -309,9 +307,7 @@ export class NotatioWorksheet extends LitElement {
     this._cells = cells;
     // Focus the new cell once it exists, so typing continues where the caret went.
     void this.updateComplete.then(() => {
-      const el = this.querySelector<HTMLElement>(
-        `[data-cell="${fresh.id}"] notatio-cell notatio-in`,
-      );
+      const el = this.querySelector<HTMLElement>(`[data-cell="${fresh.id}"] notatio-cell notatio-in`);
       el?.focus();
     });
   }
@@ -629,8 +625,7 @@ export class NotatioWorksheet extends LitElement {
           title="Lower bound"
           aria-label="Lower bound"
           .value=${String(first.min)}
-          @change=${(e: Event) =>
-            this.#setRange(cell, { min: Number((e.target as HTMLInputElement).value) })}
+          @change=${(e: Event) => this.#setRange(cell, { min: Number((e.target as HTMLInputElement).value) })}
         />
         <span class="ws-bound-sep">to</span>
         <input
@@ -639,8 +634,7 @@ export class NotatioWorksheet extends LitElement {
           title="Upper bound"
           aria-label="Upper bound"
           .value=${String(first.max)}
-          @change=${(e: Event) =>
-            this.#setRange(cell, { max: Number((e.target as HTMLInputElement).value) })}
+          @change=${(e: Event) => this.#setRange(cell, { max: Number((e.target as HTMLInputElement).value) })}
         />
         ${
           cell.range
@@ -732,9 +726,7 @@ export class NotatioWorksheet extends LitElement {
     if (this._draw.length === 0) return "";
     const visible = this._draw.filter((d) => !this._cells.find((c) => c.id === d.id)?.hidden);
     const layers = stackLayers(visible, (d) => d.kind);
-    const height = layers.length
-      ? Math.max(...layers.map((l) => this._views[l.item.kind]?.height ?? 320))
-      : 0;
+    const height = layers.length ? Math.max(...layers.map((l) => this._views[l.item.kind]?.height ?? 320)) : 0;
     const side = this.#sideBySide();
     return html`<div class="ws-stage" data-side=${side ? "true" : "false"}>
       <div
@@ -791,10 +783,7 @@ export class NotatioWorksheet extends LitElement {
     const startHeight = screen.getBoundingClientRect().height;
     grip.setPointerCapture(event.pointerId);
     const move = (m: PointerEvent) => {
-      this._height = Math.min(
-        MAX_SCREEN_PX,
-        Math.max(MIN_SCREEN_PX, startHeight + (m.clientY - startY)),
-      );
+      this._height = Math.min(MAX_SCREEN_PX, Math.max(MIN_SCREEN_PX, startHeight + (m.clientY - startY)));
     };
     const up = () => {
       grip.removeEventListener("pointermove", move);
@@ -817,11 +806,7 @@ export class NotatioWorksheet extends LitElement {
     return html`<div class="notatio-worksheet" data-screen=${this.screen}>
       <div class="ws-toolbar">
         <button type="button" title="Reset every view" @click=${this.#resetViews}>⟲ reset</button>
-        ${
-          this.#fixed
-            ? ""
-            : html`<button type="button" title="Add a cell" @click=${this.#addCell}>+ cell</button>`
-        }
+        ${this.#fixed ? "" : html`<button type="button" title="Add a cell" @click=${this.#addCell}>+ cell</button>`}
         <span class="ws-toolbar-spacer"></span>
       </div>
       <div class="ws-body">

@@ -25,13 +25,7 @@ function evalAt(
 }
 
 /** The same, but as a plain double — for derivative sampling and sign checks only. */
-function numAt(
-  ce: ComputeEngine,
-  head: string,
-  ops: readonly BoxedExpression[],
-  argIndex: number,
-  x: number,
-): number {
+function numAt(ce: ComputeEngine, head: string, ops: readonly BoxedExpression[], argIndex: number, x: number): number {
   const args = ops.map((o, i) => (i === argIndex ? ce.number(x) : o));
   return ce.function(head, args).N().re;
 }
@@ -192,10 +186,7 @@ export function imageOverArg(
   // which side of it the extremum falls on.
   const signs = derivatives.map((d) => ((d as number) > 0 ? 1 : -1));
 
-  const candidates: BoxedExpression[] = [
-    evalAt(ce, head, ops, argIndex, l),
-    evalAt(ce, head, ops, argIndex, h),
-  ];
+  const candidates: BoxedExpression[] = [evalAt(ce, head, ops, argIndex, l), evalAt(ce, head, ops, argIndex, h)];
   let signChanges = 0;
   for (let i = 1; i < signs.length; i++) {
     if (signs[i] === signs[i - 1]) continue;

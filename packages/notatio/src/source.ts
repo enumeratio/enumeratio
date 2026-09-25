@@ -26,11 +26,7 @@ export interface EditorLatexOptions {
  * canonicalising, so the LaTeX spells what was written (`a - b`, not `a + -b`) and
  * re-parses to the same expression the notatio meant. Never throws.
  */
-export function toEditorLatex(
-  engine: ComputeEngine,
-  source: string,
-  options: EditorLatexOptions = {},
-): EditorLatex {
+export function toEditorLatex(engine: ComputeEngine, source: string, options: EditorLatexOptions = {}): EditorLatex {
   if (!source.trim()) return { latex: "", errors: [] };
   const { json, errors } = parseNotatio(source, {
     parseLatex: (tex) => engine.parse(tex).json,

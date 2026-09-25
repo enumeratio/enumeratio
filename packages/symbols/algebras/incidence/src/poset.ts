@@ -31,15 +31,9 @@ export interface Poset {
  * below each one. That IS a linear extension, because x < y forces {z : z ≤ x} to be a
  * proper subset of {z : z ≤ y}, so the count strictly increases along the order.
  */
-function build(
-  name: string,
-  labels: readonly string[],
-  leq: (a: string, b: string) => boolean,
-): Poset {
+function build(name: string, labels: readonly string[], leq: (a: string, b: string) => boolean): Poset {
   const below = new Map(labels.map((a) => [a, labels.filter((b) => leq(b, a)).length]));
-  const sorted = [...labels].sort(
-    (a, b) => (below.get(a) ?? 0) - (below.get(b) ?? 0) || a.localeCompare(b),
-  );
+  const sorted = [...labels].sort((a, b) => (below.get(a) ?? 0) - (below.get(b) ?? 0) || a.localeCompare(b));
   return {
     name,
     elements: sorted,
@@ -109,14 +103,10 @@ export function moebius(poset: Poset, from: number, to: number): number {
 }
 
 /** ζ(x, y) — one on every interval, zero elsewhere. */
-export const zeta = (poset: Poset, from: number, to: number): number =>
-  poset.leq(from, to) ? 1 : 0;
+export const zeta = (poset: Poset, from: number, to: number): number => (poset.leq(from, to) ? 1 : 0);
 
 /** A function on intervals as a square matrix over the elements. */
-export function matrixOf(
-  poset: Poset,
-  f: (poset: Poset, i: number, j: number) => number,
-): number[][] {
+export function matrixOf(poset: Poset, f: (poset: Poset, i: number, j: number) => number): number[][] {
   const n = poset.elements.length;
   return Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => f(poset, i, j)));
 }

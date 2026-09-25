@@ -98,14 +98,12 @@ function bruteSsytFillings(shape: number[], k: number): number[][][] {
   cell(0, 0);
   return out;
 }
-const asKey = (rows: number[][]) =>
-  JSON.stringify(rows.map((r) => r.length)) + "|" + JSON.stringify(rows.flat());
+const asKey = (rows: number[][]) => JSON.stringify(rows.map((r) => r.length)) + "|" + JSON.stringify(rows.flat());
 test("SemistandardTableaux(n,k) matches an independent brute-force enumeration for small n,k", () => {
   for (let n = 0; n <= 4; n++)
     for (let k = 1; k <= 3; k++) {
       const expected = new Set<string>();
-      for (const shape of bruteIntPartitions(n))
-        for (const f of bruteSsytFillings(shape, k)) expected.add(asKey(f));
+      for (const shape of bruteIntPartitions(n)) for (const f of bruteSsytFillings(shape, k)) expected.add(asKey(f));
       if (n === 0) expected.add(asKey([]));
       const entry = byHead.get("SemistandardTableaux")!;
       const total = entry.count([n, k]);
@@ -218,8 +216,7 @@ test("SkewPartitions(n) matches an independent brute-force filter, n<=3", () => 
     const cands = brutePartitionsUpTo(n + 1, n + 1);
     const expected = new Set<string>();
     for (const lam of cands)
-      for (const mu of cands)
-        if (isReducedSkew(lam, mu, n)) expected.add(JSON.stringify([lam, mu]));
+      for (const mu of cands) if (isReducedSkew(lam, mu, n)) expected.add(JSON.stringify([lam, mu]));
     const total = entry.count([n]);
     const got = new Set<string>();
     for (let r = 0; r < total; r++) got.add(JSON.stringify(entry.unrank([n], r)));

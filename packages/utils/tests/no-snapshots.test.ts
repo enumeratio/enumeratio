@@ -31,8 +31,7 @@ function repoRoot(start: string): string {
 
 function testFiles(dir: string, out: string[] = []): string[] {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name === "node_modules" || entry.name === "dist" || entry.name.startsWith("."))
-      continue;
+    if (entry.name === "node_modules" || entry.name === "dist" || entry.name.startsWith(".")) continue;
     const path = join(dir, entry.name);
     if (entry.isDirectory()) testFiles(path, out);
     else if (/\.test\.[cm]?tsx?$/.test(entry.name)) out.push(path);

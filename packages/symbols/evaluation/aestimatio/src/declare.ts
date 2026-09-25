@@ -35,8 +35,7 @@ export function declareAestimatio(ce: ComputeEngine): void {
   // lazy-operator trap — see compute-engine's types-definitions.d.ts): canonicalize each
   // held operand before evaluating it.
   ce.declare("TimeConstrained", {
-    description:
-      "Evaluates expr, but aborts after t seconds and returns failexpr (default $Aborted).",
+    description: "Evaluates expr, but aborts after t seconds and returns failexpr (default $Aborted).",
     signature: "(any, number, any?) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -45,8 +44,7 @@ export function declareAestimatio(ce: ComputeEngine): void {
       const seconds = secondsExpr.canonical.evaluate().re;
       if (seconds === undefined || Number.isNaN(seconds)) return undefined;
       const ms = msOf(seconds);
-      const fail = (): BoxedExpression =>
-        failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate();
+      const fail = (): BoxedExpression => (failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate());
       try {
         return withDeadline(ms, () =>
           ce.withTimeLimit({ ms, label: "TimeConstrained" }, () => held.canonical.evaluate()),
@@ -62,11 +60,9 @@ export function declareAestimatio(ce: ComputeEngine): void {
       const seconds = secondsExpr.canonical.evaluate().re;
       if (seconds === undefined || Number.isNaN(seconds)) return undefined;
       const ms = msOf(seconds);
-      const fail = (): BoxedExpression =>
-        failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate();
+      const fail = (): BoxedExpression => (failExpr === undefined ? ce.symbol(ABORTED) : failExpr.canonical.evaluate());
       const timeoutSignal = AbortSignal.timeout(ms);
-      const signals =
-        options.signal === undefined ? [timeoutSignal] : [timeoutSignal, options.signal];
+      const signals = options.signal === undefined ? [timeoutSignal] : [timeoutSignal, options.signal];
       const anyFn = (AbortSignal as unknown as { any?: (s: AbortSignal[]) => AbortSignal }).any;
       const signal = anyFn !== undefined ? anyFn(signals) : timeoutSignal;
       try {
@@ -95,8 +91,7 @@ export function declareAestimatio(ce: ComputeEngine): void {
     },
   });
   defineMessages(ce, "MemoryConstrained", {
-    isolated:
-      "a limit of `1` bytes is enforced only by the isolated evaluator; here the call stays unevaluated.",
+    isolated: "a limit of `1` bytes is enforced only by the isolated evaluator; here the call stays unevaluated.",
   });
 
   declareVerificationTest(ce);
@@ -120,20 +115,12 @@ function declareVerificationTest(ce: ComputeEngine): void {
       if (input === undefined) return undefined;
       const expected = expectedRaw?.canonical;
       const { options } = optionsOf(["VerificationTest", ...rest.map((op) => op.json)] as never);
-      const sameTestExpr =
-        options.SameTest !== undefined ? ce.box(options.SameTest as never) : undefined;
+      const sameTestExpr = options.SameTest !== undefined ? ce.box(options.SameTest as never) : undefined;
       const timeConstraint =
-        options.TimeConstraint !== undefined
-          ? ce.box(options.TimeConstraint as never).evaluate().re
-          : undefined;
-      const testId =
-        options.TestID !== undefined
-          ? stringAt(ce.box(options.TestID as never).evaluate())
-          : undefined;
+        options.TimeConstraint !== undefined ? ce.box(options.TimeConstraint as never).evaluate().re : undefined;
+      const testId = options.TestID !== undefined ? stringAt(ce.box(options.TestID as never).evaluate()) : undefined;
       const memoryConstraint =
-        options.MemoryConstraint !== undefined
-          ? ce.box(options.MemoryConstraint as never).evaluate().re
-          : undefined;
+        options.MemoryConstraint !== undefined ? ce.box(options.MemoryConstraint as never).evaluate().re : undefined;
 
       const sameTest =
         sameTestExpr === undefined

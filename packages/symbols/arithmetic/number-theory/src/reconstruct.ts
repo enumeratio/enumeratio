@@ -26,8 +26,7 @@ export function rationalReconstruction(
   const balanced = isqrt((m - 1n) / 2n);
   const bound = numeratorBound ?? balanced;
   const denominatorLimit =
-    denominatorBound ??
-    (numeratorBound === undefined || bound === 0n ? balanced : (m - 1n) / (2n * bound));
+    denominatorBound ?? (numeratorBound === undefined || bound === 0n ? balanced : (m - 1n) / (2n * bound));
   let [r0, r1] = [m, mod(a, m)];
   let [t0, t1] = [0n, 1n];
   while (r1 > bound) {

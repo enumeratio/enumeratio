@@ -14,8 +14,7 @@ declareAnalytic(ce);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 
-const exactJson = (input: Expr, expected: unknown) =>
-  expect(ce.box(input).evaluate().json).toEqual(expected);
+const exactJson = (input: Expr, expected: unknown) => expect(ce.box(input).evaluate().json).toEqual(expected);
 const sameExact = (input: Expr, expected: Expr) =>
   expect(ce.box(input).evaluate().json).toEqual(ce.box(expected).evaluate().json);
 
@@ -33,8 +32,7 @@ const goldens: GoldenCase[] = JSON.parse(
 );
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 test("matches a Wolfram kernel on every golden case", () => {
   const off: string[] = [];
@@ -59,10 +57,7 @@ test("low-degree ChebyshevT / ChebyshevU polynomials, exactly, at a symbol", () 
   sameExact(["ChebyshevT", 0, "x"], 1);
   sameExact(["ChebyshevT", 1, "x"], "x");
   sameExact(["ChebyshevT", 2, "x"], ["Subtract", ["Multiply", 2, ["Power", "x", 2]], 1]);
-  sameExact(
-    ["ChebyshevT", 3, "x"],
-    ["Subtract", ["Multiply", 4, ["Power", "x", 3]], ["Multiply", 3, "x"]],
-  );
+  sameExact(["ChebyshevT", 3, "x"], ["Subtract", ["Multiply", 4, ["Power", "x", 3]], ["Multiply", 3, "x"]]);
   sameExact(["ChebyshevU", 0, "x"], 1);
   sameExact(["ChebyshevU", 1, "x"], ["Multiply", 2, "x"]);
   sameExact(["ChebyshevU", 2, "x"], ["Subtract", ["Multiply", 4, ["Power", "x", 2]], 1]);
@@ -94,11 +89,7 @@ test("low-degree LegendrePolynomial, exactly, at a symbol", () => {
   );
   exactJson(
     ["LegendrePolynomial", 3, "x"],
-    [
-      "Add",
-      ["Multiply", ["Rational", 5, 2], ["Power", "x", 3]],
-      ["Multiply", ["Rational", -3, 2], "x"],
-    ],
+    ["Add", ["Multiply", ["Rational", 5, 2], ["Power", "x", 3]], ["Multiply", ["Rational", -3, 2], "x"]],
   );
 });
 

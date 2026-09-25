@@ -32,9 +32,7 @@ declareDomains(ce);
 // A guard may read a statistic (KrewerasComplement's counts cycles), so the statistics go in
 // before the maps — the same order tests/entries.test.ts uses.
 declareStatistics(ce, ALL_STATISTICS, {
-  domainTypes: Object.fromEntries(
-    DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),
-  ),
+  domainTypes: Object.fromEntries(DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type])),
 });
 declareMaps(ce, constructorFor);
 
@@ -52,9 +50,7 @@ const withIds = (examples: readonly { caption?: string }[]): unknown[] => {
 /** The carrier name a signature reads, as the constructor spells it. */
 const carrier = (type: string): string => constructorFor[type] ?? type;
 
-function exampleFor(
-  map: CombinatorialMap,
-): { expr: unknown; expected: unknown; caption?: string }[] {
+function exampleFor(map: CombinatorialMap): { expr: unknown; expected: unknown; caption?: string }[] {
   const sample = SAMPLES[map.from];
   if (sample === undefined) return [];
   const subject = [carrier(map.from), sample.contents];

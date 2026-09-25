@@ -20,8 +20,7 @@ import { PartitionsP, IntegerPartitionUnrank } from "./kernels-combinatorics.ts"
 import { PartitionsQ, DistinctPartitionUnrank, DistinctPartitionRank } from "./kernels-extra.ts";
 import { IsStandardTableauOf } from "./tableaux-trees.ts";
 
-const normRank = (r: number, total: number): number =>
-  total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
 const cmpNumArrays = (a: readonly number[], b: readonly number[]): number => {
   const len = Math.min(a.length, b.length);
@@ -58,8 +57,7 @@ function indexedFamily<E>(generate: (key: string) => E[]) {
   return {
     count: (key: string) => elementsOf(key).length,
     unrank: (key: string, rank: number) => elementsOf(key)[normRank(rank, elementsOf(key).length)],
-    rank: (key: string, element: unknown) =>
-      elementsOf(key).findIndex((e) => keyOf(e) === keyOf(element)),
+    rank: (key: string, element: unknown) => elementsOf(key).findIndex((e) => keyOf(e) === keyOf(element)),
   };
 }
 
@@ -110,15 +108,13 @@ function ssytFillingsOfShape(shape: number[], k: number): number[][][] {
 }
 export function SemistandardTableauxCount(n: number, k: number): number {
   let total = 0;
-  for (let idx = 0; idx < PartitionsP(n); idx++)
-    total += hookContentCount(IntegerPartitionUnrank(n, idx), k);
+  for (let idx = 0; idx < PartitionsP(n); idx++) total += hookContentCount(IntegerPartitionUnrank(n, idx), k);
   return total;
 }
 const ssyt = indexedFamily<number[][]>((key) => {
   const [n, k] = key.split("|").map(Number);
   const out: number[][][] = [];
-  for (let idx = 0; idx < PartitionsP(n); idx++)
-    out.push(...ssytFillingsOfShape(IntegerPartitionUnrank(n, idx), k));
+  for (let idx = 0; idx < PartitionsP(n); idx++) out.push(...ssytFillingsOfShape(IntegerPartitionUnrank(n, idx), k));
   out.sort(cmpRowsShapeThenEntries);
   return out;
 });
@@ -167,11 +163,7 @@ function gtRowsBelow(above: number[] | null, len: number, k: number): number[][]
       out.push(cur.slice());
       return;
     }
-    const hi = above
-      ? Math.min(above[idx], idx > 0 ? cur[idx - 1] : above[idx])
-      : idx > 0
-        ? cur[idx - 1]
-        : k;
+    const hi = above ? Math.min(above[idx], idx > 0 ? cur[idx - 1] : above[idx]) : idx > 0 ? cur[idx - 1] : k;
     const lo = above ? above[idx + 1] : 0;
     for (let v = lo; v <= hi; v++) {
       cur.push(v);
@@ -422,14 +414,10 @@ const skewStd = indexedFamily<[number[], number[], number[]]>((key) => {
   const out: [number[], number[], number[]][] = [];
   const shapeList: [number[], number[]][] = [];
   for (let r = 0; r < skewPart.count(String(n)); r++) shapeList.push(skewPart.unrank(String(n), r));
-  for (const [lam, mu] of shapeList)
-    for (const w of skewFillingsOfShape(lam, mu)) out.push([lam, mu, w]);
+  for (const [lam, mu] of shapeList) for (const w of skewFillingsOfShape(lam, mu)) out.push([lam, mu, w]);
   return out;
 });
-export function SkewStandardTableauxUnrank(
-  n: number,
-  rank: number,
-): [number[], number[], number[]] {
+export function SkewStandardTableauxUnrank(n: number, rank: number): [number[], number[], number[]] {
   return skewStd.unrank(String(n), rank);
 }
 export function SkewStandardTableauxRank(e: [number[], number[], number[]], n: number): number {
@@ -451,8 +439,7 @@ export function IsSkewStandardTableauOf(e: unknown, n: number): boolean {
       const newcol = mr + counts[r] + 1;
       const aboveMu = mu[r - 1] ?? 0;
       const aboveLam = lam[r - 1];
-      if (!(newcol <= aboveMu || newcol > aboveLam) && counts[r - 1] < newcol - aboveMu)
-        return false;
+      if (!(newcol <= aboveMu || newcol > aboveLam) && counts[r - 1] < newcol - aboveMu) return false;
     }
     counts[r]++;
   }
@@ -525,8 +512,7 @@ function shiftedSytRankShape(rows: readonly number[][]): number {
 }
 export function ShiftedStandardTableauxCount(n: number): number {
   let total = 0;
-  for (let idx = 0; idx < PartitionsQ(n); idx++)
-    total += shiftedSytCountForShape(DistinctPartitionUnrank(n, idx));
+  for (let idx = 0; idx < PartitionsQ(n); idx++) total += shiftedSytCountForShape(DistinctPartitionUnrank(n, idx));
   return total;
 }
 export function ShiftedStandardTableauxUnrank(n: number, rank: number): number[][] {
@@ -779,12 +765,7 @@ const boxedPlanePart = indexedFamily<number[][]>((key) => {
   results.sort(cmpRowsShapeThenEntries);
   return results;
 });
-export function BoxedPlanePartitionsUnrank(
-  a: number,
-  b: number,
-  c: number,
-  rank: number,
-): number[][] {
+export function BoxedPlanePartitionsUnrank(a: number, b: number, c: number, rank: number): number[][] {
   return boxedPlanePart.unrank(`${a}|${b}|${c}`, rank);
 }
 export function BoxedPlanePartitionsRank(e: number[][], a: number, b: number, c: number): number {

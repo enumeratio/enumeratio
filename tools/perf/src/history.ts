@@ -45,17 +45,10 @@ export function appendRun(history: History, run: RunRecord, maxRuns = 60): Histo
 }
 
 /** Every prior duration recorded for this exact (package, file, test), oldest first. */
-export function trailingDurations(
-  history: History,
-  packageName: string,
-  file: string,
-  testName: string,
-): number[] {
+export function trailingDurations(history: History, packageName: string, file: string, testName: string): number[] {
   const out: number[] = [];
   for (const run of history.runs) {
-    const found = run.packages[packageName]?.tests.find(
-      (t) => t.file === file && t.name === testName,
-    );
+    const found = run.packages[packageName]?.tests.find((t) => t.file === file && t.name === testName);
     if (found) out.push(found.durationMs);
   }
   return out;
@@ -93,11 +86,7 @@ export interface DriftFlag {
  * median for every test it contains. Returns one flag per test that drifted past both
  * thresholds. `priorHistory` is the history *before* this run — call this before appendRun.
  */
-export function detectDrift(
-  current: RunRecord,
-  priorHistory: History,
-  options: DriftOptions = {},
-): DriftFlag[] {
+export function detectDrift(current: RunRecord, priorHistory: History, options: DriftOptions = {}): DriftFlag[] {
   const opts = { ...DEFAULT_DRIFT_OPTIONS, ...options };
   const flags: DriftFlag[] = [];
   for (const [packageName, pkgRun] of Object.entries(current.packages)) {
@@ -126,10 +115,7 @@ export function detectDrift(
 }
 
 /** The slowest N files in a run, across all packages, by wall time. For the --cpu-prof step. */
-export function slowestFiles(
-  run: RunRecord,
-  n = 3,
-): Array<{ package: string; file: string; durationMs: number }> {
+export function slowestFiles(run: RunRecord, n = 3): Array<{ package: string; file: string; durationMs: number }> {
   const all: Array<{ package: string; file: string; durationMs: number }> = [];
   for (const [packageName, pkgRun] of Object.entries(run.packages)) {
     for (const [file, durationMs] of Object.entries(pkgRun.files)) {

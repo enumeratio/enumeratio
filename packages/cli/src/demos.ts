@@ -122,11 +122,7 @@ export const DEMOS: readonly Demo[] = [
     category: "Permutation statistics",
     // Ascents compares entries with each other, so a bare list is a fair question. Excedances
     // and FixedPoints compare a value with its POSITION, so they need the permutation.
-    lines: [
-      "Ascents([1, 3, 2, 5, 4])",
-      "Excedances(Permutation([3, 1, 2]))",
-      "FixedPoints(Permutation([1, 3, 2]))",
-    ],
+    lines: ["Ascents([1, 3, 2, 5, 4])", "Excedances(Permutation([3, 1, 2]))", "FixedPoints(Permutation([1, 3, 2]))"],
     tags: ["combinatorics", "enumeratio"],
   },
 
@@ -134,8 +130,7 @@ export const DEMOS: readonly Demo[] = [
   {
     id: "syntaxes",
     title: "Epsil, LaTeX islands, and pragmas",
-    description:
-      "Epsil is the default; $…$ embeds LaTeX; :latex / :wolfram / :mathjson force a syntax.",
+    description: "Epsil is the default; $…$ embeds LaTeX; :latex / :wolfram / :mathjson force a syntax.",
     category: "Syntaxes",
     lines: [
       "Binomial(10, 3)",
@@ -160,13 +155,7 @@ export const DEMOS: readonly Demo[] = [
     title: "Switch the default syntax",
     description: ":in changes the default so a whole session can be LaTeX (or Wolfram).",
     category: "Syntaxes",
-    lines: [
-      ":in latex",
-      "\\binom{6}{2}",
-      "\\frac{1}{2} + \\frac{1}{3}",
-      ":in epsil",
-      "Binomial(6, 2)",
-    ],
+    lines: [":in latex", "\\binom{6}{2}", "\\frac{1}{2} + \\frac{1}{3}", ":in epsil", "Binomial(6, 2)"],
     tags: ["syntax"],
   },
 
@@ -384,23 +373,14 @@ export const CLI_DEMOS: readonly Demo[] = [
     title: "Pick an output form",
     description: "-f / --form compiles to a target language.",
     category: "Output forms",
-    lines: [
-      '-f wolfram "x^2 + 1"',
-      '-f numpy "Sqrt(x^2 + 1)"',
-      '-f js "Sin(x) + 1"',
-      '-f glsl "Sin(x) * Cos(x)"',
-    ],
+    lines: ['-f wolfram "x^2 + 1"', '-f numpy "Sqrt(x^2 + 1)"', '-f js "Sin(x) + 1"', '-f glsl "Sin(x) * Cos(x)"'],
   },
   {
     id: "cli-wolfram-form-names",
     title: "Wolfram form names",
     description: "The *Form symbols resolve too, and -f repeats for several forms at once.",
     category: "Output forms",
-    lines: [
-      '-f TeXForm "1/2 + 1/3"',
-      '-f FullForm "x^2 + 1"',
-      '-f InputForm -f tex -f wolfram "Sqrt(2)"',
-    ],
+    lines: ['-f TeXForm "1/2 + 1/3"', '-f FullForm "x^2 + 1"', '-f InputForm -f tex -f wolfram "Sqrt(2)"'],
   },
   {
     id: "cli-json",

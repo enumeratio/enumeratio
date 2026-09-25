@@ -35,10 +35,6 @@ export async function loadPlan(base: string, runId: string): Promise<Plan> {
   return getJson<Plan>(`${base}runs/${runId}/plan.json`);
 }
 
-export async function loadReport(
-  base: string,
-  runId: string,
-  system: BenchSystem,
-): Promise<Report> {
+export async function loadReport(base: string, runId: string, system: BenchSystem): Promise<Report> {
   return getJson<Report>(`${base}runs/${runId}/${system}.json`);
 }

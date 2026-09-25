@@ -34,8 +34,7 @@ export function factorize(n: number): [number, number][] {
 /** ω(m) — the number of DISTINCT prime factors. */
 export const distinctPrimeCount = (m: number): number => factorize(m).length;
 
-const mulMod = (a: number, b: number, m: number): number =>
-  Number((BigInt(a) * BigInt(b)) % BigInt(m));
+const mulMod = (a: number, b: number, m: number): number => Number((BigInt(a) * BigInt(b)) % BigInt(m));
 
 /** Modular inverse by extended Euclid, or undefined when gcd(a, m) ≠ 1. */
 function invMod(a: number, m: number): number | undefined {
@@ -140,8 +139,5 @@ export const imaginaryUnitsMod = (m: number): number[] => rootsOf(-1, m);
 export function splitUnitCountMod(m: number): number {
   if (!Number.isInteger(m) || m < 1) return 0;
   if (m === 1) return 1;
-  return factorize(m).reduce(
-    (total, [p, a]) => total * (p !== 2 ? 2 : a === 1 ? 1 : a === 2 ? 2 : 4),
-    1,
-  );
+  return factorize(m).reduce((total, [p, a]) => total * (p !== 2 ? 2 : a === 1 ? 1 : a === 2 ? 2 : 4), 1);
 }

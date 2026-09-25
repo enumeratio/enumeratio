@@ -40,8 +40,7 @@ export interface HeadProvenance {
   readonly divergences: readonly Divergence[];
 }
 
-const isCall = (value: MathJSON): value is readonly MathJSON[] =>
-  Array.isArray(value) && typeof value[0] === "string";
+const isCall = (value: MathJSON): value is readonly MathJSON[] => Array.isArray(value) && typeof value[0] === "string";
 
 /** Every operator name appearing anywhere in an expression. */
 export function operatorsIn(expr: MathJSON, into = new Set<string>()): Set<string> {
@@ -95,11 +94,7 @@ export const bareUnderstands = (bare: ComputeEngine, expr: MathJSON): boolean =>
  * understands. An empty result is the claim that declaring our libraries changes nothing
  * about vanilla compute-engine.
  */
-export function divergences(
-  bare: ComputeEngine,
-  ours: ComputeEngine,
-  corpus: readonly MathJSON[],
-): Divergence[] {
+export function divergences(bare: ComputeEngine, ours: ComputeEngine, corpus: readonly MathJSON[]): Divergence[] {
   const out: Divergence[] = [];
   for (const expression of corpus) {
     if (!bareUnderstands(bare, expression)) continue;
@@ -122,11 +117,7 @@ export function declaredLibrary(entry: ReferenceEntry): string | undefined {
 }
 
 /** Classify one entry's head by what the two engines do with its own examples. */
-export function classify(
-  bare: ComputeEngine,
-  ours: ComputeEngine,
-  entry: ReferenceEntry,
-): HeadProvenance {
+export function classify(bare: ComputeEngine, ours: ComputeEngine, entry: ReferenceEntry): HeadProvenance {
   const calls = entry.examples
     .map((example) => findCall(example.expr, entry.name))
     .filter((call): call is MathJSON => call !== undefined);
@@ -165,11 +156,7 @@ export function classify(
  * corpus rather than from entries: `Element` is overridden by the algebra seam and has no
  * entry of its own, so an entry-keyed answer would miss it.
  */
-export function divergingHeads(
-  bare: ComputeEngine,
-  ours: ComputeEngine,
-  corpus: readonly MathJSON[],
-): string[] {
+export function divergingHeads(bare: ComputeEngine, ours: ComputeEngine, corpus: readonly MathJSON[]): string[] {
   const heads = new Set<string>();
   for (const divergence of divergences(bare, ours, corpus)) {
     // `N(f(…))` diverges because f does; N only asks for the number.

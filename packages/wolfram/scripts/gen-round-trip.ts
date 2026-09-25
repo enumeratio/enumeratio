@@ -54,9 +54,6 @@ for (const entry of entries) {
   }
 }
 
-writeFileSync(
-  new URL("../tests/golden/round-trip.json", import.meta.url),
-  `${JSON.stringify(golden, null, 2)}\n`,
-);
+writeFileSync(new URL("../tests/golden/round-trip.json", import.meta.url), `${JSON.stringify(golden, null, 2)}\n`);
 const lossy = golden.filter((g) => g.back !== undefined).length;
 console.log(`round-trip golden: ${golden.length} cases (${lossy} lossy)`);

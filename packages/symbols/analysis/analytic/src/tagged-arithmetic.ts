@@ -75,8 +75,7 @@ export function registerTaggedHead(
 ): void {
   if (resolvers.length === 0) return;
   const definition = ce.lookupDefinition(head);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   const native = operator.evaluate;
   const gates: readonly Gate[] = [hasTaggedOperand, ...extraGates];
@@ -107,9 +106,7 @@ export function registerTaggedHeads(
   ...resolverMaps: readonly Readonly<Record<string, Resolver | undefined>>[]
 ): void {
   for (const head of heads) {
-    const resolvers = resolverMaps
-      .map((map) => map[head])
-      .filter((r): r is Resolver => r !== undefined);
+    const resolvers = resolverMaps.map((map) => map[head]).filter((r): r is Resolver => r !== undefined);
     const gate = extraGates[head];
     registerTaggedHead(ce, head, resolvers, gate ? [gate] : []);
   }

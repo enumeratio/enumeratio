@@ -20,13 +20,7 @@ examples:
     caption: λ₀ = 0, exact under plain evaluation
   - id: lambda1-s-closed-form-exact-under-plain
     expr: [KeiperLiLambda, 1]
-    expected:
-      [
-        Add,
-        1,
-        [Multiply, [Rational, -1, 2], [Ln, [Multiply, 4, Pi]]],
-        [Multiply, [Rational, 1, 2], EulerGamma],
-      ]
+    expected: [Add, 1, [Multiply, [Rational, -1, 2], [Ln, [Multiply, 4, Pi]]], [Multiply, [Rational, 1, 2], EulerGamma]]
     caption: λ₁'s closed form, exact under plain evaluation
   - id: n-forces-the-closed-form-to-a-decimal
     expr: [N, [KeiperLiLambda, 1]]
@@ -51,14 +45,7 @@ examples:
         [
           Subtract,
           [N, [KeiperLiLambda, 1]],
-          [
-            N,
-            [
-              Subtract,
-              [Add, 1, [Divide, EulerGamma, 2]],
-              [Multiply, [Rational, 1, 2], [Ln, [Multiply, 4, Pi]]],
-            ],
-          ],
+          [N, [Subtract, [Add, 1, [Divide, EulerGamma, 2]], [Multiply, [Rational, 1, 2], [Ln, [Multiply, 4, Pi]]]]],
         ],
       ]
     expected: 0

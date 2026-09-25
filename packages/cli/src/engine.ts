@@ -45,17 +45,7 @@ export function classifyInput(src: string, fallback: Syntax = "epsil"): Classifi
   return { syntax: fallback, body: t };
 }
 
-export const FORMS = [
-  "notatio",
-  "tex",
-  "mathjson",
-  "wolfram",
-  "epsil",
-  "numpy",
-  "glsl",
-  "wgsl",
-  "js",
-] as const;
+export const FORMS = ["notatio", "tex", "mathjson", "wolfram", "epsil", "numpy", "glsl", "wgsl", "js"] as const;
 export type Form = (typeof FORMS)[number];
 
 export const FORM_LABEL: Record<Form, string> = {
@@ -175,9 +165,7 @@ export interface Parsed {
 }
 
 /** Each carrier type mapped to the head that constructs it -- what `declareMaps` wraps with. */
-const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(
-  DOMAINS.map((d) => [d.type, d.name]),
-);
+const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
 
 /**
  * Carrier name to minted type, for the statistics. SetPartition is held back: domains treats
@@ -237,8 +225,7 @@ export class Session {
   private declareHistory(): void {
     const at = (ops: readonly BoxedExpression[], what: string): EvalResult => {
       const n = ops[0]?.re;
-      if (n === undefined || !Number.isInteger(n) || n === 0)
-        throw new Error(`${what} takes a line number`);
+      if (n === undefined || !Number.isInteger(n) || n === 0) throw new Error(`${what} takes a line number`);
       const res = n > 0 ? this.history[n - 1] : this.history.at(n);
       if (!res) throw new Error(`no line ${n}`);
       return res;
@@ -340,9 +327,7 @@ export class Session {
       case "mathjson":
         return this.ce.box(importFrom(body, "MathJSON") as Parameters<ComputeEngine["box"]>[0]);
       case "epsil":
-        return this.ce.box(
-          importFrom(body, "Epsil", { ce: this.ce }) as Parameters<ComputeEngine["box"]>[0],
-        );
+        return this.ce.box(importFrom(body, "Epsil", { ce: this.ce }) as Parameters<ComputeEngine["box"]>[0]);
     }
   }
 
@@ -354,9 +339,7 @@ export class Session {
     if (syntax !== "wolfram") return body;
     return body.replace(/%(\d+)|%+/g, (tok) => {
       const numbered = /^%(\d+)$/.exec(tok);
-      const ref = numbered
-        ? this.history[Number(numbered[1]) - 1]
-        : this.history[this.history.length - tok.length];
+      const ref = numbered ? this.history[Number(numbered[1]) - 1] : this.history[this.history.length - tok.length];
       if (!ref) throw new Error(`no result for ${tok}`);
       return this.serialize(ref.expr, syntax);
     });

@@ -66,8 +66,7 @@ examples:
       wolfram: Wolfram keeps Pochhammer[n, 5] unexpanded until FunctionExpand.
   - id: a-negative-order-expands-to-the-reciprocal
     expr: [Pochhammer, n, -5]
-    expected:
-      [Divide, 1, [Multiply, [Add, n, -1], [Add, n, -2], [Add, n, -3], [Add, n, -4], [Add, n, -5]]]
+    expected: [Divide, 1, [Multiply, [Add, n, -1], [Add, n, -2], [Add, n, -3], [Add, n, -4], [Add, n, -5]]]
     category: Scope
     caption: A negative order expands to the reciprocal falling product
     divergence:

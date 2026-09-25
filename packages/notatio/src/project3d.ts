@@ -14,8 +14,7 @@ const FG = "var(--notatio-fg, currentColor)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** Axis-range label formatting, matching the 2-D plotters. */
 export function axisLabel(v: number): string {
@@ -162,9 +161,7 @@ export function farCorner(cam: Camera): [number, number] {
     [1, 1],
     [0, 1],
   ];
-  return corners.reduce((far, c) =>
-    cam.at(c[0], c[1], 0).depth < cam.at(far[0], far[1], 0).depth ? c : far,
-  );
+  return corners.reduce((far, c) => (cam.at(c[0], c[1], 0).depth < cam.at(far[0], far[1], 0).depth ? c : far));
 }
 
 /**
@@ -192,10 +189,7 @@ export function axisBoxSvg(cam: Camera, opts: AxisBoxOptions = {}): string {
       .join(" ");
     out += `<polygon points="${pts}" fill="none" stroke="${EDGE}" stroke-width="1" opacity="0.35"/>`;
   }
-  out +=
-    line(o, cam.at(1 - bx, by, 0), 0.5) +
-    line(o, cam.at(bx, 1 - by, 0), 0.5) +
-    line(o, cam.at(bx, by, 1), 0.5);
+  out += line(o, cam.at(1 - bx, by, 0), 0.5) + line(o, cam.at(bx, 1 - by, 0), 0.5) + line(o, cam.at(bx, by, 1), 0.5);
 
   const tick = (p: ScreenPoint, anchor: string, text: string): string =>
     text

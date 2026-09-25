@@ -41,9 +41,7 @@ const reduced = computed(() => {
     ? out
     : evaluateReadouts(out, (e) => ce.box(e).evaluate().json);
 });
-const notatio = computed(() =>
-  reduced.value === undefined ? "" : serializeNotatio(reduced.value),
-);
+const notatio = computed(() => (reduced.value === undefined ? "" : serializeNotatio(reduced.value)));
 const json = computed(() => (reduced.value === undefined ? "" : JSON.stringify(reduced.value)));
 const textOnly = computed(() => environment.value.surface.every((s) => s === "text"));
 

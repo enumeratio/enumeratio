@@ -11,6 +11,7 @@
 import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { format } from "oxfmt";
+import { FORMAT } from "./format.ts";
 import type { ReferenceEntry } from "./types.ts";
 import { parseYaml, type StringifyOptions, stringifyYaml } from "./yaml.ts";
 
@@ -25,17 +26,13 @@ export function readEntries(dir: string | URL): ReferenceEntry[] {
 
 /** `value` as a record's text: the writer's structure, laid out by oxfmt. */
 export async function formatYaml(value: unknown, options?: StringifyOptions): Promise<string> {
-  const { code, errors } = await format("record.yaml", stringifyYaml(value, options));
+  const { code, errors } = await format("record.yaml", stringifyYaml(value, options), FORMAT);
   if (errors.length > 0) throw new Error(`oxfmt: ${JSON.stringify(errors)}`);
   return code;
 }
 
 /** Write `value` to `path` as a record. */
-export async function writeYaml(
-  path: string,
-  value: unknown,
-  options?: StringifyOptions,
-): Promise<void> {
+export async function writeYaml(path: string, value: unknown, options?: StringifyOptions): Promise<void> {
   writeFileSync(path, await formatYaml(value, options));
 }
 
@@ -47,16 +44,11 @@ export async function isWrittenYaml(path: string, options?: StringifyOptions): P
 
 /** Write `entries` as `dir/<Head>.yaml`, one per entry, and remove any other record there:
  * how a generator (statistics, domains) owns its package's reference directory. */
-export async function writeEntries(
-  dir: string | URL,
-  entries: readonly ReferenceEntry[],
-): Promise<void> {
+export async function writeEntries(dir: string | URL, entries: readonly ReferenceEntry[]): Promise<void> {
   const path = typeof dir === "string" ? dir : dir.pathname;
   mkdirSync(path, { recursive: true });
   const names = new Set(entries.map((e) => `${e.name}.yaml`));
-  for (const entry of entries)
-    await writeYaml(join(path, `${entry.name}.yaml`), JSON.parse(JSON.stringify(entry)));
+  for (const entry of entries) await writeYaml(join(path, `${entry.name}.yaml`), JSON.parse(JSON.stringify(entry)));
   for (const file of readdirSync(path))
-    if (file.endsWith(".yaml") && !file.endsWith(".implementations.yaml") && !names.has(file))
-      rmSync(join(path, file));
+    if (file.endsWith(".yaml") && !file.endsWith(".implementations.yaml") && !names.has(file)) rmSync(join(path, file));
 }

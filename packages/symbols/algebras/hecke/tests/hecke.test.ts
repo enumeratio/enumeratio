@@ -28,8 +28,7 @@ const polynomials: Coefficients<Poly> = {
   one: [1],
   q: [0, 1],
   qMinusOne: [-1, 1],
-  add: (a, b) =>
-    trim(Array.from({ length: Math.max(a.length, b.length) }, (_, i) => (a[i] ?? 0) + (b[i] ?? 0))),
+  add: (a, b) => trim(Array.from({ length: Math.max(a.length, b.length) }, (_, i) => (a[i] ?? 0) + (b[i] ?? 0))),
   multiply: (a, b) => {
     const out = Array.from({ length: a.length + b.length }, () => 0);
     a.forEach((x, i) => b.forEach((y, j) => (out[i + j] += x * y)));
@@ -57,10 +56,7 @@ test("length and reduced words agree", () => {
       const word = reducedWord(w);
       expect(word.length, `length of ${String(w)}`).toBe(length(w));
       // The word really does spell w.
-      const spelled = word.reduce(
-        (acc, i) => compose(acc, simpleReflection(n, i)),
-        identityPermutation(n),
-      );
+      const spelled = word.reduce((acc, i) => compose(acc, simpleReflection(n, i)), identityPermutation(n));
       expect(permutationKey(spelled)).toBe(permutationKey(w));
     }
   }
@@ -73,22 +69,13 @@ test("the quadratic relation: T_s² = q + (q−1)T_s", () => {
       const square = times(T(s), T(s));
       const expected = add(polynomials, [
         // q·T_identity
-        new Map([
-          [
-            permutationKey(identityPermutation(n)),
-            { w: identityPermutation(n), coefficient: polynomials.q },
-          ],
-        ]),
+        new Map([[permutationKey(identityPermutation(n)), { w: identityPermutation(n), coefficient: polynomials.q }]]),
         new Map([[permutationKey(s), { w: s, coefficient: polynomials.qMinusOne }]]),
       ]);
       expect(
-        [...square]
-          .map(([k, v]) => [k, v.coefficient])
-          .sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
+        [...square].map(([k, v]) => [k, v.coefficient]).sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
       ).toEqual(
-        [...expected]
-          .map(([k, v]) => [k, v.coefficient])
-          .sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
+        [...expected].map(([k, v]) => [k, v.coefficient]).sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
       );
     }
   }
@@ -97,11 +84,7 @@ test("the quadratic relation: T_s² = q + (q−1)T_s", () => {
 test("the braid relations hold", () => {
   const n = 5;
   const key = (e: Element<Poly>) =>
-    JSON.stringify(
-      [...e]
-        .map(([k, v]) => [k, v.coefficient])
-        .sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
-    );
+    JSON.stringify([...e].map(([k, v]) => [k, v.coefficient]).sort((a, b) => String(a[0]).localeCompare(String(b[0]))));
   for (let i = 1; i < n - 1; i++) {
     const s = T(simpleReflection(n, i));
     const t = T(simpleReflection(n, i + 1));
@@ -140,11 +123,7 @@ test("at q ≠ 1 it is NOT the group algebra", () => {
 test("the product is associative", () => {
   const n = 4;
   const key = (e: Element<Poly>) =>
-    JSON.stringify(
-      [...e]
-        .map(([k, v]) => [k, v.coefficient])
-        .sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
-    );
+    JSON.stringify([...e].map(([k, v]) => [k, v.coefficient]).sort((a, b) => String(a[0]).localeCompare(String(b[0]))));
   const sample = permutations(n).slice(0, 10);
   for (const u of sample) {
     for (const v of sample) {
@@ -160,17 +139,11 @@ test("T_w is the product over ANY reduced word for w", () => {
   // basis would be ill-defined.
   const n = 4;
   const key = (e: Element<Poly>) =>
-    JSON.stringify(
-      [...e]
-        .map(([k, v]) => [k, v.coefficient])
-        .sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
-    );
+    JSON.stringify([...e].map(([k, v]) => [k, v.coefficient]).sort((a, b) => String(a[0]).localeCompare(String(b[0]))));
   for (const w of permutations(n)) {
     const word = reducedWord(w);
     const spelled =
-      word.length === 0
-        ? T(identityPermutation(n))
-        : times(...word.map((i) => T(simpleReflection(n, i))));
+      word.length === 0 ? T(identityPermutation(n)) : times(...word.map((i) => T(simpleReflection(n, i))));
     expect(key(spelled), `T of ${String(w)}`).toBe(key(T(w)));
   }
 });

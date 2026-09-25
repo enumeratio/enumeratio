@@ -23,8 +23,7 @@ import {
 } from "./kernels-extra.ts";
 import type { FamilyKernel } from "./types.ts";
 
-const normRank = (r: number, total: number): number =>
-  total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
 // ─── BinaryWordsByWeight(n, k): length-n binary words with exactly k ones, in lexicographic order
 // (0 preferred over 1 at each position). Count = C(n,k). Standard combinatorial-number-system walk:
@@ -319,8 +318,7 @@ function necklacesRank(w: number[], n: number, k: number): number {
 }
 function necklacesValid(w: unknown, n: number, k: number): boolean {
   if (!Array.isArray(w) || w.length !== n) return false;
-  for (const v of w)
-    if (typeof v !== "number" || !Number.isInteger(v) || v < 1 || v > k) return false;
+  for (const v of w) if (typeof v !== "number" || !Number.isInteger(v) || v < 1 || v > k) return false;
   if (n === 0) return true;
   for (let s = 1; s < n; s++) if (compareArrays(w, rotateLeft(w, s)) > 0) return false; // <= every rotation
   return true;
@@ -336,8 +334,7 @@ function lyndonWordsRank(w: number[], n: number, k: number): number {
 }
 function lyndonWordsValid(w: unknown, n: number, k: number): boolean {
   if (!Array.isArray(w) || w.length !== n) return false;
-  for (const v of w)
-    if (typeof v !== "number" || !Number.isInteger(v) || v < 1 || v > k) return false;
+  for (const v of w) if (typeof v !== "number" || !Number.isInteger(v) || v < 1 || v > k) return false;
   if (n === 0) return false; // no length-0 Lyndon word
   for (let s = 1; s < n; s++) if (compareArrays(w, rotateLeft(w, s)) >= 0) return false; // strictly <
   return true;

@@ -27,11 +27,7 @@ examples:
     caption: Works on any collection, not just $List$
   - id: length-join-a-b-length-a-length-b-see-join
     expr:
-      [
-        Equal,
-        [Length, [Join, [List, 1, 2, 3], [List, 4, 5]]],
-        [Add, [Length, [List, 1, 2, 3]], [Length, [List, 4, 5]]],
-      ]
+      [Equal, [Length, [Join, [List, 1, 2, 3], [List, 4, 5]]], [Add, [Length, [List, 1, 2, 3]], [Length, [List, 4, 5]]]]
     expected: True
     category: Properties
     caption: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]

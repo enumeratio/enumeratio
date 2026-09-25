@@ -59,8 +59,7 @@ export function isIndefinite(f: Form): boolean {
 }
 
 /** Evaluate the form at a point. */
-export const evaluateForm = ({ a, b, c }: Form, x: number, y: number): number =>
-  a * x * x + b * x * y + c * y * y;
+export const evaluateForm = ({ a, b, c }: Form, x: number, y: number): number => a * x * x + b * x * y + c * y * y;
 
 /**
  * The action of SL(2,Z): substitute (x, y) ↦ (px + qy, rx + sy). The discriminant is

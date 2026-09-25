@@ -42,11 +42,7 @@ examples:
     caption: the same as [[PowerMod]] with exponent $-1$
   - id: a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2
     expr:
-      [
-        Mod,
-        [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]],
-        [Subtract, [Power, 2, 61], 1],
-      ]
+      [Mod, [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]], [Subtract, [Power, 2, 61], 1]]
     expected: 1
     category: Properties
     caption: $a \cdot a^{-1} \equiv 1$, modulo the Mersenne prime $2^{61} - 1$

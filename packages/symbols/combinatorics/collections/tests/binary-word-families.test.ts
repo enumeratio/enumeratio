@@ -135,10 +135,7 @@ for (let n = 0; n <= 8; n++) {
   test(`BinaryBracelets(${n}) matches an independent brute-force predicate`, () => {
     const entry = byHead.get("BinaryBracelets")!;
     const total = entry.count([n]);
-    const kernelElements = Array.from(
-      { length: total },
-      (_, r) => entry.unrank([n], r) as number[],
-    );
+    const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
     const seenOrbits = new Set<string>();
     const canonical: number[][] = [];
     for (const w of allWords(n, 2)) {
@@ -154,10 +151,7 @@ for (let n = 0; n <= 8; n++) {
   test(`TriStrings(${n}) matches an independent brute-force predicate`, () => {
     const entry = byHead.get("TriStrings")!;
     const total = entry.count([n]);
-    const kernelElements = Array.from(
-      { length: total },
-      (_, r) => entry.unrank([n], r) as number[],
-    );
+    const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
     const all = Array.from(allWords(n, 2));
     expect(asSet(kernelElements)).toEqual(asSet(all.filter((w) => hasNoRunOfK(w, 3))));
     expect(kernelElements.length).toBe(total);
@@ -167,10 +161,7 @@ for (let n = 0; n <= 8; n++) {
     test(`PrimitiveBinaryStrings(${n}) matches an independent brute-force predicate`, () => {
       const entry = byHead.get("PrimitiveBinaryStrings")!;
       const total = entry.count([n]);
-      const kernelElements = Array.from(
-        { length: total },
-        (_, r) => entry.unrank([n], r) as number[],
-      );
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
       const all = Array.from(allWords(n, 2));
       expect(asSet(kernelElements)).toEqual(asSet(all.filter(isPrimitive)));
       expect(kernelElements.length).toBe(total);
@@ -198,10 +189,7 @@ for (let n = 1; n <= 4; n++) {
     test(`KBracelets(${n}, ${k}) matches an independent brute-force predicate`, () => {
       const entry = byHead.get("KBracelets")!;
       const total = entry.count([n, k]);
-      const kernelElements = Array.from(
-        { length: total },
-        (_, r) => entry.unrank([n, k], r) as number[],
-      );
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], r) as number[]);
       const seenOrbits = new Set<string>();
       const canonical: number[][] = [];
       for (const w of allWords(n, k)) {
@@ -220,10 +208,7 @@ for (let n = 1; n <= 4; n++) {
   test(`StirlingPermutations(${n}) matches an independent brute-force predicate`, () => {
     const entry = byHead.get("StirlingPermutations")!;
     const total = entry.count([n]);
-    const kernelElements = Array.from(
-      { length: total },
-      (_, r) => entry.unrank([n], r) as number[],
-    );
+    const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
     const all = permutationsOfMultiset(n);
     expect(asSet(kernelElements)).toEqual(asSet(all.filter((w) => isStirlingPermutation(w, n))));
     expect(kernelElements.length).toBe(total);
@@ -235,9 +220,7 @@ const countsOf = (head: string, ps: number[][]) => ps.map((p) => byHead.get(head
 const range = (n: number) => Array.from({ length: n }, (_, i) => [i]);
 
 test("BinaryBracelets count (A000029), n=0..12", () => {
-  expect(countsOf("BinaryBracelets", range(13))).toEqual([
-    1, 2, 3, 4, 6, 8, 13, 18, 30, 46, 78, 126, 224,
-  ]);
+  expect(countsOf("BinaryBracelets", range(13))).toEqual([1, 2, 3, 4, 6, 8, 13, 18, 30, 46, 78, 126, 224]);
 });
 
 test("TriStrings count (tribonacci-like, A000073 shifted), n=0..10", () => {
@@ -245,9 +228,7 @@ test("TriStrings count (tribonacci-like, A000073 shifted), n=0..10", () => {
 });
 
 test("PrimitiveBinaryStrings count (A027375), n=1..10", () => {
-  expect(countsOf("PrimitiveBinaryStrings", range(11).slice(1))).toEqual([
-    2, 2, 6, 12, 30, 54, 126, 240, 504, 990,
-  ]);
+  expect(countsOf("PrimitiveBinaryStrings", range(11).slice(1))).toEqual([2, 2, 6, 12, 30, 54, 126, 240, 504, 990]);
 });
 
 test("TernaryGrayCodes count = 3^n, n=0..6", () => {
@@ -255,9 +236,7 @@ test("TernaryGrayCodes count = 3^n, n=0..6", () => {
 });
 
 test("StirlingPermutations count = (2n-1)!! (A001147), n=1..7", () => {
-  expect(countsOf("StirlingPermutations", range(8).slice(1))).toEqual([
-    1, 3, 15, 105, 945, 10395, 135135,
-  ]);
+  expect(countsOf("StirlingPermutations", range(8).slice(1))).toEqual([1, 3, 15, 105, 945, 10395, 135135]);
 });
 
 test("KBracelets(n, 2) agrees with BinaryBracelets(n)", () => {

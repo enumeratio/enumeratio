@@ -42,10 +42,7 @@ test("the map to the symmetric group, and the closure's components", () => {
 test("the Alexander polynomial comes back as algebra, not a coefficient list", () => {
   same(["AlexanderPolynomial", B(2, 1, 1, 1)], ["Add", 1, ["Negate", "t"], ["Square", "t"]]);
   // The figure-eight knot.
-  same(
-    ["AlexanderPolynomial", ["BraidPower", B(3, 1, -2), 2]],
-    ["Add", 1, ["Multiply", -3, "t"], ["Square", "t"]],
-  );
+  same(["AlexanderPolynomial", ["BraidPower", B(3, 1, -2), 2]], ["Add", 1, ["Multiply", -3, "t"], ["Square", "t"]]);
   // Being an expression in `t`, it can just be evaluated — Δ(−1) is the knot determinant,
   // which is 3 for the trefoil and 5 for the figure-eight.
   const at = (input: Expr, value: number) => {
@@ -69,10 +66,9 @@ test("Burau and the closed form agree on torus knots", () => {
   ] as const) {
     // One head, two routes: naming the knot takes the closed form, naming a braid for
     // it goes through Burau. They have to agree.
-    expect(
-      ce.box(["AlexanderPolynomial", ["TorusBraid", p, q]]).evaluate().json,
-      `T(${p},${q})`,
-    ).toEqual(ce.box(["AlexanderPolynomial", T(p, q)]).evaluate().json);
+    expect(ce.box(["AlexanderPolynomial", ["TorusBraid", p, q]]).evaluate().json, `T(${p},${q})`).toEqual(
+      ce.box(["AlexanderPolynomial", T(p, q)]).evaluate().json,
+    );
   }
   same(["SeifertGenus", ["TorusBraid", 3, 4]], 3); // (3−1)(4−1)/2
   same(["SeifertGenus", ["TorusBraid", 2, 7]], 3);
@@ -115,22 +111,14 @@ test("the Jones polynomial, from the Temperley-Lieb image", () => {
     [3, 4],
     [3, 5],
   ] as const) {
-    expect(
-      ce.box(["JonesPolynomial", ["TorusBraid", p, q]]).evaluate().json,
-      `T(${p},${q})`,
-    ).toEqual(ce.box(["JonesPolynomial", T(p, q)]).evaluate().json);
+    expect(ce.box(["JonesPolynomial", ["TorusBraid", p, q]]).evaluate().json, `T(${p},${q})`).toEqual(
+      ce.box(["JonesPolynomial", T(p, q)]).evaluate().json,
+    );
   }
   // The figure-eight knot is amphichiral: V is its own mirror.
   same(
     ["JonesPolynomial", ["BraidPower", B(3, 1, -2), 2]],
-    [
-      "Add",
-      ["Power", "t", -2],
-      ["Negate", ["Power", "t", -1]],
-      1,
-      ["Negate", "t"],
-      ["Square", "t"],
-    ],
+    ["Add", ["Power", "t", -2], ["Negate", ["Power", "t", -1]], 1, ["Negate", "t"], ["Square", "t"]],
   );
 });
 
@@ -185,16 +173,10 @@ test("the twist knot family, and the figure-eight under its own name", () => {
   same(["SeifertGenus", TW(1)], 1);
   same(["SeifertGenus", TW(4)], 1); // genus never grows with the number of half-twists
   // Wolfram's Stevedore knot (6_1) is the twist knot with two half-twists.
-  same(
-    ["AlexanderPolynomial", TW(2)],
-    ["Add", 2, ["Multiply", -5, "t"], ["Multiply", 2, ["Square", "t"]]],
-  );
+  same(["AlexanderPolynomial", TW(2)], ["Add", 2, ["Multiply", -5, "t"], ["Multiply", 2, ["Square", "t"]]]);
   // The figure-eight and the trefoil both carry the known braid for their own case, so
   // JonesPolynomial goes through it rather than declining.
-  same(
-    ["JonesPolynomial", ["FigureEightKnot"]],
-    ["JonesPolynomial", ["BraidPower", B(3, 1, -2), 2]],
-  );
+  same(["JonesPolynomial", ["FigureEightKnot"]], ["JonesPolynomial", ["BraidPower", B(3, 1, -2), 2]]);
   same(["JonesPolynomial", TW(-1)], ["JonesPolynomial", B(2, 1, 1, 1)]);
   // No general braid-word family is known for twist knots, so the closed forms are all
   // a knot with |n| ≥ 2 (other than the two special cases above) has to answer with.

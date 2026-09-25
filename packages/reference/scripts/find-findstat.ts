@@ -21,9 +21,7 @@ import { ALL_STATISTICS, applyDefinition } from "@enumeratio/statistics/src";
 import type { FindStatMatch } from "../src/findstat-data.ts";
 
 const API = "https://www.findstat.org/api/StatisticsDatabase/";
-const only = process.argv.includes("--only")
-  ? process.argv[process.argv.indexOf("--only") + 1]
-  : undefined;
+const only = process.argv.includes("--only") ? process.argv[process.argv.indexOf("--only") + 1] : undefined;
 
 // ── enumeration, per carrier, in FindStat's own spelling ─────────────────────────────────
 
@@ -117,8 +115,7 @@ const CARRIERS: Readonly<Record<string, Carrier>> = {
     small: [1, 2, 3, 4],
     objects: setPartitions,
     spell: (blocks) => `{${(blocks as number[][]).map((b) => `{${b.join(",")}}`).join(",")}}`,
-    box: (ce, blocks) =>
-      ce.box(["List", ...(blocks as number[][]).map((b) => ["List", ...b])] as never),
+    box: (ce, blocks) => ce.box(["List", ...(blocks as number[][]).map((b) => ["List", ...b])] as never),
   },
 };
 

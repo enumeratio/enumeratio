@@ -24,9 +24,7 @@ import { writeFileSync } from "node:fs";
 import { allEntries } from "@enumeratio/collections/src";
 import type { OeisMatch } from "../src/oeis-data.ts";
 
-const only = process.argv.includes("--only")
-  ? process.argv[process.argv.indexOf("--only") + 1]
-  : undefined;
+const only = process.argv.includes("--only") ? process.argv[process.argv.indexOf("--only") + 1] : undefined;
 
 /** Terms we can trust: exact in a double, and not so many the search string is silly. */
 const MAX_TERMS = 16;

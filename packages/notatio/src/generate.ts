@@ -21,13 +21,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  type AttributeDoc,
-  collectComponents,
-  type ComponentDoc,
-  propType,
-  wrapperName,
-} from "./reflect.ts";
+import { type AttributeDoc, collectComponents, type ComponentDoc, propType, wrapperName } from "./reflect.ts";
 import { VISUAL_SYMBOLS } from "./symbols.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -38,14 +32,12 @@ export const defaultSrcDir = resolve(here, "../../notatio-lit/src");
 export type Framework = "vue" | "react";
 
 /** Where a framework's components are written. */
-export const generatedPath = (framework: Framework): string =>
-  resolve(here, `./${framework}-generated.ts`);
+export const generatedPath = (framework: Framework): string => resolve(here, `./${framework}-generated.ts`);
 
 /** Escape for a JSDoc line inside the generated file. */
 const doc = (text: string): string => text.replace(/\*\//g, "*\\/").replace(/\n+/g, " ");
 
-const vueType = (a: AttributeDoc): string =>
-  ({ boolean: "Boolean", number: "Number", string: "String" })[propType(a)];
+const vueType = (a: AttributeDoc): string => ({ boolean: "Boolean", number: "Number", string: "String" })[propType(a)];
 
 const vueComponent = (
   name: string,

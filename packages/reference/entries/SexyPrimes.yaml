@@ -13,8 +13,7 @@ details:
 examples:
   - id: the-first-20-lesser-sexy-primes-oeis-a023201
     expr: [Take, SexyPrimes, 20]
-    expected:
-      [List, 5, 7, 11, 13, 17, 23, 31, 37, 41, 47, 53, 61, 67, 73, 83, 97, 101, 103, 107, 131]
+    expected: [List, 5, 7, 11, 13, 17, 23, 31, 37, 41, 47, 53, 61, 67, 73, 83, 97, 101, 103, 107, 131]
     caption: The first 20 lesser sexy primes, OEIS A023201
 enumerate:
   expr: Take(SexyPrimes, 20)

@@ -118,12 +118,7 @@ export const isDiscrete = (step: number): boolean => Number.isInteger(step) && M
  * fraction of a step each frame contributes, and at a high refresh rate the axis would
  * never advance at all. Quantise on the way out, with `quantizeValue`.
  */
-export function advancePhase(
-  phase: number,
-  c: SliderControl,
-  dt: number,
-  interval: number,
-): number {
+export function advancePhase(phase: number, c: SliderControl, dt: number, interval: number): number {
   const span = c.max - c.min;
   if (!(span > 0) || !(dt > 0)) return phase;
   const next = phase + (c.step * dt) / interval;

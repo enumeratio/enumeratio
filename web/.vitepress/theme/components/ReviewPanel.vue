@@ -64,9 +64,7 @@ watch(
 function onKeydown(e: KeyboardEvent): void {
   if (!store.isOpen.value) return;
   const target = e.target as HTMLElement | null;
-  const typing =
-    !!target &&
-    (target.tagName === "TEXTAREA" || target.tagName === "INPUT" || target.isContentEditable);
+  const typing = !!target && (target.tagName === "TEXTAREA" || target.tagName === "INPUT" || target.isContentEditable);
   if (typing) return;
   if (e.key === "j" || e.key === "k") {
     const list = store.filtered.value;
@@ -140,8 +138,7 @@ watch(
   // `.link` too, not just `.id` -- a live reload from the file watcher (Dean editing
   // REVIEW.md, or another tab syncing localStorage) can change the already-selected
   // item's link in place without changing which item is selected.
-  () =>
-    [store.isOpen.value, store.selected.value?.id, store.selected.value?.link, route.path] as const,
+  () => [store.isOpen.value, store.selected.value?.id, store.selected.value?.link, route.path] as const,
   () => updateHighlight(),
   { immediate: true },
 );
@@ -230,14 +227,13 @@ onBeforeUnmount(() => {
       <details class="review-help">
         <summary>Help</summary>
         <p>
-          Review mode exists under <code>vitepress dev</code> (or a build made with
-          <code>VITE_REVIEW=1</code>), where it's on by default. <code>?review=off</code> turns it
-          off for this browser, and <code>?review</code> back on. The panel starts collapsed.
+          Review mode exists under <code>vitepress dev</code> (or a build made with <code>VITE_REVIEW=1</code>), where
+          it's on by default. <code>?review=off</code> turns it off for this browser, and <code>?review</code> back on.
+          The panel starts collapsed.
         </p>
         <p>
-          Alt + Cmd-click (macOS) or Alt + Ctrl-click (elsewhere) on any anchored element -- an
-          example, a heading, an implementation section -- opens this panel on its review item,
-          creating one if it doesn't exist yet.
+          Alt + Cmd-click (macOS) or Alt + Ctrl-click (elsewhere) on any anchored element -- an example, a heading, an
+          implementation section -- opens this panel on its review item, creating one if it doesn't exist yet.
         </p>
       </details>
       <div class="review-filters">
@@ -252,12 +248,7 @@ onBeforeUnmount(() => {
           <option v-for="a in store.areas.value" :key="a" :value="a">{{ a }}</option>
         </select>
       </div>
-      <input
-        v-model="store.search.value"
-        class="review-search"
-        type="search"
-        placeholder="Search…"
-      />
+      <input v-model="store.search.value" class="review-search" type="search" placeholder="Search…" />
       <ul class="review-list">
         <li
           v-for="item in store.filtered.value"
@@ -265,9 +256,7 @@ onBeforeUnmount(() => {
           :class="['review-list-item', { active: item.id === store.selectedId.value }]"
           @click="choose(item.id)"
         >
-          <span class="review-glyph" :class="`status-${item.status}`">{{
-            STATUS_GLYPH[item.status]
-          }}</span>
+          <span class="review-glyph" :class="`status-${item.status}`">{{ STATUS_GLYPH[item.status] }}</span>
           <span class="review-title">{{ item.title }}</span>
           <span class="review-meta">{{ prField(item, 0) }} · {{ area(item) }}</span>
         </li>
@@ -300,16 +289,10 @@ onBeforeUnmount(() => {
           </template>
         </p>
         <div class="review-status-buttons">
-          <button
-            :class="{ active: store.selected.value.status === 'open' }"
-            @click="store.setStatus('open')"
-          >
+          <button :class="{ active: store.selected.value.status === 'open' }" @click="store.setStatus('open')">
             1 · Open
           </button>
-          <button
-            :class="{ active: store.selected.value.status === 'reviewed' }"
-            @click="store.setStatus('reviewed')"
-          >
+          <button :class="{ active: store.selected.value.status === 'reviewed' }" @click="store.setStatus('reviewed')">
             2 · Reviewed
           </button>
           <button

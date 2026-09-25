@@ -47,9 +47,7 @@ async function askWolfram(heads: readonly string[]): Promise<Set<string>> {
 }
 
 /** Which names SymPy and mpmath expose, under our spelling or its snake_case form. */
-async function askPython(
-  heads: readonly string[],
-): Promise<{ sympy: Set<string>; mpmath: Set<string> }> {
+async function askPython(heads: readonly string[]): Promise<{ sympy: Set<string>; mpmath: Set<string> }> {
   const program = `
 import json, sys
 names = json.loads(sys.stdin.read())
@@ -102,11 +100,8 @@ const updated = source.replace(
 );
 writeFileSync(dataPath, updated);
 
-const report = (label: string, found: Set<string>): string =>
-  `${label} ${found.size}/${names.length}`;
-process.stdout.write(
-  `${report("wolfram", wolfram)}  ${report("sympy", sympy)}  ${report("mpmath", mpmath)}\n`,
-);
+const report = (label: string, found: Set<string>): string => `${label} ${found.size}/${names.length}`;
+process.stdout.write(`${report("wolfram", wolfram)}  ${report("sympy", sympy)}  ${report("mpmath", mpmath)}\n`);
 process.stdout.write(
   `heads no system has: ${names.filter((n) => !wolfram.has(n) && !sympy.has(n) && !mpmath.has(n)).length}\n`,
 );

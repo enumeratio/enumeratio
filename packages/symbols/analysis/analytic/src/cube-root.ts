@@ -21,7 +21,6 @@ export function declareCubeRoot(ce: ComputeEngine): void {
   ce.declare("CubeRoot", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateCubeRoot(ce, ops[0], options),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateCubeRoot(ce, ops[0], options),
   });
 }

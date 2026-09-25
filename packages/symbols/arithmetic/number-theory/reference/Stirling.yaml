@@ -67,11 +67,7 @@ examples:
         [Stirling, 6, 3],
         [
           Divide,
-          [
-            Sum,
-            [Multiply, [Power, -1, [Subtract, 3, j]], [Binomial, 3, j], [Power, j, 6]],
-            [Tuple, j, 0, 3],
-          ],
+          [Sum, [Multiply, [Power, -1, [Subtract, 3, j]], [Binomial, 3, j], [Power, j, 6]], [Tuple, j, 0, 3]],
           [Factorial, 3],
         ],
       ]

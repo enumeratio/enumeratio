@@ -13,11 +13,8 @@ import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/boxed
 
 /** Call a (possibly `Function`-headed) expression as an operator over `args` — same
  *  technique as `list-frontier.ts`'s own `invoke`, duplicated locally. */
-const invoke = (
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  args: readonly BoxedExpression[],
-): BoxedExpression => ce.box([f, ...args] as never).evaluate();
+const invoke = (ce: ComputeEngine, f: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
+  ce.box([f, ...args] as never).evaluate();
 
 // --- Thread ------------------------------------------------------------------------------------
 
@@ -218,9 +215,7 @@ function declareFactorialPower(ce: ComputeEngine): void {
         return ce
           .function("Divide", [
             ce.function("Gamma", [ce.function("Add", [x, ce.One])]),
-            ce.function("Gamma", [
-              ce.function("Add", [ce.function("Subtract", [x, nExpr]), ce.One]),
-            ]),
+            ce.function("Gamma", [ce.function("Add", [ce.function("Subtract", [x, nExpr]), ce.One])]),
           ])
           .evaluate();
       }
@@ -381,9 +376,7 @@ function declareCellularAutomaton(ce: ComputeEngine): void {
       const parsed = parseCAInit(initExpr);
       if (parsed === undefined) return undefined;
       const { cells, background } = parsed;
-      const activePositions = cells
-        .map((c, i) => (c !== background ? i : -1))
-        .filter((i) => i >= 0);
+      const activePositions = cells.map((c, i) => (c !== background ? i : -1)).filter((i) => i >= 0);
       const minPos = activePositions.length > 0 ? Math.min(...activePositions) : 0;
       const maxPos = activePositions.length > 0 ? Math.max(...activePositions) : cells.length - 1;
       const left = minPos - t;

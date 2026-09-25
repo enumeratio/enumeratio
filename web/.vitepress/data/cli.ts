@@ -82,8 +82,7 @@ const flags = rows(block(USAGE, "Options:"), (line) => {
 // completion scripts offer must be documented in USAGE, and every subcommand too.
 const documented = new Set(flags.flatMap((f) => f.spec.split(/[,\s]+/)));
 const undocumented = FLAGS.filter((f) => !documented.has(f));
-if (undocumented.length > 0)
-  throw new Error(`cli.ts: flags missing from USAGE Options: ${undocumented.join(", ")}`);
+if (undocumented.length > 0) throw new Error(`cli.ts: flags missing from USAGE Options: ${undocumented.join(", ")}`);
 
 /** `notatio forms | formats` documents two subcommands on one line, description included. */
 function share(name: string, row: CliRow): string {

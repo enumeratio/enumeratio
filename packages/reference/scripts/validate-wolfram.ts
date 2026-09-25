@@ -21,11 +21,7 @@ const entries = referenceEntries();
 type Expected = unknown;
 
 const asNumber = (v: Expected): number | null =>
-  typeof v === "number"
-    ? v
-    : v && typeof v === "object" && "num" in v
-      ? Number((v as { num: string }).num)
-      : null;
+  typeof v === "number" ? v : v && typeof v === "object" && "num" in v ? Number((v as { num: string }).num) : null;
 
 interface Case {
   label: string;
@@ -56,10 +52,7 @@ for (const entry of entries) {
 // `ToExpression` as a string so one syntax error yields `$Failed` for that case instead of
 // aborting the whole batch (which silently zeroed everything after it, once).
 const code = cases
-  .map(
-    (c, k) =>
-      `Print["${k}|", ToString[N[Quiet[ToExpression[${JSON.stringify(c.wl)}]]], InputForm]]`,
-  )
+  .map((c, k) => `Print["${k}|", ToString[N[Quiet[ToExpression[${JSON.stringify(c.wl)}]]], InputForm]]`)
   .join(";\n");
 const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 180_000 });
 
@@ -95,6 +88,4 @@ console.log(
 );
 console.log("\n--- DISAGREEMENTS (transpiler gap or genuine CE-vs-Wolfram divergence) ---");
 for (const d of disagree) console.log("  " + d);
-console.log(
-  `\n--- WL-UNSUPPORTED: ${unsupported.length} (our extension heads / WL stays symbolic) ---`,
-);
+console.log(`\n--- WL-UNSUPPORTED: ${unsupported.length} (our extension heads / WL stays symbolic) ---`);

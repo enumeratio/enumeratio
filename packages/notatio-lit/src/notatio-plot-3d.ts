@@ -1,11 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import {
-  hurwitzZetaReal,
-  lerchPhiReal,
-  polyLogReal,
-  zetaGeneralizedReal,
-} from "@enumeratio/analytic/src";
+import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { html, LitElement, type PropertyValues } from "lit";
 
@@ -261,9 +256,7 @@ export class NotatioPlot3D extends LitElement {
       const parsed = engine.box(json);
       // Bind Manipulate parameters first (control `k` fills the wildcard `_k`);
       // the surface variables are the two free symbols that remain.
-      const paramSubs = Object.fromEntries(
-        this._controls.map((c) => [`_${c.name}`, engine.number(c.value)]),
-      );
+      const paramSubs = Object.fromEntries(this._controls.map((c) => [`_${c.name}`, engine.number(c.value)]));
       const expr = this._controls.length > 0 ? parsed.subs(paramSubs) : parsed;
       // A list of expressions overlays several surfaces on a shared scale.
       const items = (LIST_HEADS.has(expr.operator) && opsOf(expr)) || [expr];
@@ -284,9 +277,7 @@ export class NotatioPlot3D extends LitElement {
           if (!r?.success || !r.code) return undefined;
           // `code` is an expression over a scope object `_` (e.g. `Math.sin(_.x)`).
           // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-          const g = new Function("_", `"use strict"; return (${r.code});`) as (
-            s: Record<string, unknown>,
-          ) => unknown;
+          const g = new Function("_", `"use strict"; return (${r.code});`) as (s: Record<string, unknown>) => unknown;
           const scope: Record<string, unknown> = { ...RUNTIME };
           return (x, y) => {
             scope[vx] = x;
@@ -370,10 +361,7 @@ export class NotatioPlot3D extends LitElement {
     if (!svg) return undefined;
     const rect = svg.getBoundingClientRect();
     const [, , vw, vh] = (svg.getAttribute("viewBox") ?? "0 0 360 260").split(" ").map(Number);
-    return [
-      ((e.clientX - rect.left) / (rect.width || 1)) * vw,
-      ((e.clientY - rect.top) / (rect.height || 1)) * vh,
-    ];
+    return [((e.clientX - rect.left) / (rect.width || 1)) * vw, ((e.clientY - rect.top) / (rect.height || 1)) * vh];
   }
 
   #onPointerMove = (e: PointerEvent): void => {

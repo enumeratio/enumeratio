@@ -76,9 +76,7 @@ const dump: Dump = JSON.parse(readFileSync(dumpPath, "utf8"));
 // Collections are one row each. Stats and maps are NOT: the dump has one row per
 // (collection, stat), but a stat is a single name defined on several carriers. Fold the
 // rows into names carrying their overload set — 1051 stat rows become 242 stat names.
-const carrierOf = new Map(
-  dump.collections.map((c) => [c.id, c.carrier ? pascal(c.carrier) : null]),
-);
+const carrierOf = new Map(dump.collections.map((c) => [c.id, c.carrier ? pascal(c.carrier) : null]));
 
 const fold = <T extends { collection: string }>(
   rows: T[],

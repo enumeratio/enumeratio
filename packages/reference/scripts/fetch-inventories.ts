@@ -14,12 +14,7 @@ import { writeFileSync } from "node:fs";
 import { inflateSync } from "node:zlib";
 import { REFERENCES } from "@enumeratio/catalog/src";
 import { MAPPINGS } from "@enumeratio/oracle/src";
-import {
-  bareName,
-  documents,
-  INVENTORIES,
-  type InventorySystem,
-} from "../src/crosswalk/inventory.ts";
+import { bareName, documents, INVENTORIES, type InventorySystem } from "../src/crosswalk/inventory.ts";
 import { CURATED } from "../src/crosswalk/curated.ts";
 import { referenceEntries } from "../src/node.ts";
 
@@ -36,8 +31,7 @@ interface Entry {
 function parse(system: InventorySystem, base: string, bytes: Buffer): Entry[] {
   let offset = 0;
   for (let line = 0; line < 4; line++) offset = bytes.indexOf(0x0a, offset) + 1;
-  if (!bytes.subarray(0, offset).includes("version 2"))
-    throw new Error(`${system}: not a v2 inventory`);
+  if (!bytes.subarray(0, offset).includes("version 2")) throw new Error(`${system}: not a v2 inventory`);
   const text = inflateSync(bytes.subarray(offset)).toString("utf8");
   const out: Entry[] = [];
   for (const row of text.split("\n")) {
@@ -67,10 +61,7 @@ for (const mapping of MAPPINGS) {
 for (const row of REFERENCES) want(row.system, row.identity);
 const written = [
   ...Object.values(CURATED).flat(),
-  ...entries.flatMap((e) => [
-    ...(e.references ?? []),
-    ...(e.signatures ?? []).flatMap((s) => s.references ?? []),
-  ]),
+  ...entries.flatMap((e) => [...(e.references ?? []), ...(e.signatures ?? []).flatMap((s) => s.references ?? [])]),
 ];
 for (const reference of written) want(reference.system, reference.identity);
 
@@ -92,9 +83,7 @@ for (const [system, { inventories }] of Object.entries(INVENTORIES) as [
       }
     }
   }
-  process.stdout.write(
-    `${system}: ${total} objects, ${kept.filter((e) => e.system === system).length} kept\n`,
-  );
+  process.stdout.write(`${system}: ${total} objects, ${kept.filter((e) => e.system === system).length} kept\n`);
 }
 kept.sort((a, b) => a.system.localeCompare(b.system) || a.name.localeCompare(b.name));
 

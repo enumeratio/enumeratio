@@ -30,12 +30,7 @@ examples:
     expected: 120
     caption: $5!$
   - id: a-cup-cap-is-not-a-permutation
-    expr:
-      [
-        Element,
-        [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]],
-        [SymmetricGroupAlgebra, 3],
-      ]
+    expr: [Element, [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]], [SymmetricGroupAlgebra, 3]]
     expected: False
     caption: a cup-cap is not a permutation
     category: Properties

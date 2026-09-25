@@ -302,11 +302,7 @@ export function diagramSvg(rgs: number[], unit = 26): string {
   }
   // Arcs bow INWARD, so the drawing occupies the box and a little margin — no more.
   const pad = unit * 0.26;
-  return svg(
-    `${n2(-unit / 2)} ${n2(-pad)} ${n2(n * unit)} ${n2(height + 2 * pad)}`,
-    "diagram",
-    body,
-  );
+  return svg(`${n2(-unit / 2)} ${n2(-pad)} ${n2(n * unit)} ${n2(height + 2 * pad)}`, "diagram", body);
 }
 
 /**

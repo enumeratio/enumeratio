@@ -1,13 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
 import { registerAlgebra } from "@enumeratio/algebra";
-import {
-  containsGenerator,
-  generatorsOf,
-  multiplyMultivectors,
-  toExpression,
-  toMultivector,
-} from "./multivector.ts";
+import { containsGenerator, generatorsOf, multiplyMultivectors, toExpression, toMultivector } from "./multivector.ts";
 import { FAMILIES, type Generator, generatorSymbol } from "./units.ts";
 
 // Naming a whole algebra, the way Wolfram's `CliffordAlgebra` does.
@@ -57,9 +51,7 @@ export const NAMED_ALGEBRAS: readonly string[] = Object.keys(NAMED);
 
 /** A non-negative integer operand, or undefined. */
 const count = (expr: BoxedExpression | undefined): number | undefined =>
-  expr !== undefined && expr.im === 0 && Number.isInteger(expr.re) && expr.re >= 0
-    ? expr.re
-    : undefined;
+  expr !== undefined && expr.im === 0 && Number.isInteger(expr.re) && expr.re >= 0 ? expr.re : undefined;
 
 /**
  * Read an expression as an algebra:
@@ -93,9 +85,7 @@ export function algebraOf(expr: BoxedExpression): Algebra | undefined {
   const single = SINGLE_FAMILY[expr.operator];
   if (single !== undefined) {
     const n = count(ops[0]);
-    return n === undefined
-      ? undefined
-      : { generators: run(single.prefix, n), label: single.label(n) };
+    return n === undefined ? undefined : { generators: run(single.prefix, n), label: single.label(n) };
   }
   return undefined;
 }
@@ -110,8 +100,7 @@ export function basisBlades(algebra: Algebra): Generator[][] {
   for (let mask = 0; mask < 2 ** n; mask++) {
     blades.push(algebra.generators.filter((_, k) => (mask >> k) & 1));
   }
-  const order = (blade: readonly Generator[]) =>
-    blade.map((g) => algebra.generators.indexOf(g)).join(",");
+  const order = (blade: readonly Generator[]) => blade.map((g) => algebra.generators.indexOf(g)).join(",");
   return blades.sort((a, b) => a.length - b.length || order(a).localeCompare(order(b)));
 }
 
@@ -175,9 +164,7 @@ export function declareAlgebras(ce: ComputeEngine): void {
     name: "hypercomplex",
     basis: (expr) => {
       const algebra = algebraOf(expr);
-      return algebra === undefined
-        ? undefined
-        : ce.function("List", basisBlades(algebra).map(blade));
+      return algebra === undefined ? undefined : ce.function("List", basisBlades(algebra).map(blade));
     },
     dimension: (expr) => {
       const algebra = algebraOf(expr);

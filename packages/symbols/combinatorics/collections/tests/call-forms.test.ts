@@ -32,8 +32,7 @@ function elementsOf(expr: unknown): unknown[] {
   return out;
 }
 
-const canon = (rows: readonly (readonly number[])[]): string[] =>
-  rows.map((r) => JSON.stringify(r)).sort();
+const canon = (rows: readonly (readonly number[])[]): string[] => rows.map((r) => JSON.stringify(r)).sort();
 
 // ─── independent generators ──────────────────────────────────────────────────────────
 
@@ -96,9 +95,7 @@ function bruteForceSetPartitions(n: number): number[][][] {
 
 const canonBlocks = (partitions: readonly (readonly (readonly number[])[])[]): string[] =>
   partitions
-    .map((blocks) =>
-      JSON.stringify([...blocks].map((b) => [...b]).sort((a, b) => (a[0] ?? 0) - (b[0] ?? 0))),
-    )
+    .map((blocks) => JSON.stringify([...blocks].map((b) => [...b]).sort((a, b) => (a[0] ?? 0) - (b[0] ?? 0))))
     .sort();
 
 // ─── IntegerPartitions(n, k) -- at most k parts ──────────────────────────────────────
@@ -229,16 +226,7 @@ test("Subsets(n, {kmin, kmax}) defaults its step to 1", () => {
 test("Subsets(list) is Subsets(n) unranked in the same binary-mask order, elements swapped in for positions", () => {
   const expr = ["Subsets", ["List", "a", "b", "c"]];
   expect(countOf(expr)).toBe(8);
-  expect(elementsOf(expr)).toEqual([
-    [],
-    ["a"],
-    ["b"],
-    ["a", "b"],
-    ["c"],
-    ["a", "c"],
-    ["b", "c"],
-    ["a", "b", "c"],
-  ]);
+  expect(elementsOf(expr)).toEqual([[], ["a"], ["b"], ["a", "b"], ["c"], ["a", "c"], ["b", "c"], ["a", "b", "c"]]);
 });
 
 test("Count(Subsets(list)) is 2^n for an n-element list", () => {

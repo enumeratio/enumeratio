@@ -61,9 +61,7 @@ export function crt(channels: readonly (readonly [bigint, bigint])[]): bigint {
  * The x mod lcm(mᵢ) agreeing with every (residue, modulus), as [x, lcm], for moduli that need
  * not be coprime — or undefined when two channels disagree on a shared factor.
  */
-export function crtSolve(
-  channels: readonly (readonly [bigint, bigint])[],
-): [bigint, bigint] | undefined {
+export function crtSolve(channels: readonly (readonly [bigint, bigint])[]): [bigint, bigint] | undefined {
   let [x, m] = [0n, 1n];
   for (const [residue, modulus] of channels) {
     const g = gcd(m, modulus);

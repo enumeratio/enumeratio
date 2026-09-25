@@ -7,16 +7,7 @@
 // The snippet is printed from the body itself -- the default slot's vnodes, written
 // back out as markup -- so the components are authored once and the source cannot
 // drift from what is rendered. Bound props print as their values.
-import {
-  Comment,
-  computed,
-  Fragment,
-  getCurrentInstance,
-  ref,
-  Text,
-  type VNode,
-  useSlots,
-} from "vue";
+import { Comment, computed, Fragment, getCurrentInstance, ref, Text, type VNode, useSlots } from "vue";
 
 const props = defineProps<{ title?: string; id?: string }>();
 const slots = useSlots();
@@ -34,21 +25,15 @@ const slug = computed(() =>
 /** An attribute's value, in whichever quote it does not contain. */
 function quoted(value: unknown): string {
   const text = typeof value === "string" ? value : JSON.stringify(value);
-  return text.includes('"') && !text.includes("'")
-    ? `'${text}'`
-    : `"${text.replace(/"/g, "&quot;")}"`;
+  return text.includes('"') && !text.includes("'") ? `'${text}'` : `"${text.replace(/"/g, "&quot;")}"`;
 }
 
 /** The attributes of a vnode as source: listeners, keys and refs are not markup. */
 function attributes(vnodeProps: Record<string, unknown> | null): string {
   if (!vnodeProps) return "";
   return Object.entries(vnodeProps)
-    .filter(
-      ([key, value]) => !/^on[A-Z]/.test(key) && key !== "key" && key !== "ref" && value !== null,
-    )
-    .map(([key, value]) =>
-      value === "" || value === true ? ` ${key}` : ` ${key}=${quoted(value)}`,
-    )
+    .filter(([key, value]) => !/^on[A-Z]/.test(key) && key !== "key" && key !== "ref" && value !== null)
+    .map(([key, value]) => (value === "" || value === true ? ` ${key}` : ` ${key}=${quoted(value)}`))
     .join("");
 }
 
@@ -123,10 +108,7 @@ const live = computed((): string => {
   if (edited.value === undefined) return "";
   const template = document.createElement("template");
   // HTML has no self-closing custom elements: `<x />` would swallow what follows it.
-  template.innerHTML = edited.value.replace(
-    /<([a-z][\w-]*)((?:[^<>"']|"[^"]*"|'[^']*')*?)\s*\/>/g,
-    "<$1$2></$1>",
-  );
+  template.innerHTML = edited.value.replace(/<([a-z][\w-]*)((?:[^<>"']|"[^"]*"|'[^']*')*?)\s*\/>/g, "<$1$2></$1>");
   for (const el of template.content.querySelectorAll("[expect], [planned]")) {
     el.removeAttribute("expect");
     el.removeAttribute("planned");
@@ -153,9 +135,7 @@ const live = computed((): string => {
     <details v-if="$slots.default" class="story-code">
       <summary>
         source<template v-if="editable()"> · editable</template>
-        <button v-if="edited !== undefined" class="story-reset" @click.prevent="reset">
-          edited · reset
-        </button>
+        <button v-if="edited !== undefined" class="story-reset" @click.prevent="reset">edited · reset</button>
       </summary>
       <textarea
         v-if="editable()"

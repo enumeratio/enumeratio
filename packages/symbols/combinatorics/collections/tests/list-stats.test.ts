@@ -29,9 +29,7 @@ test("Mean(exact constants) stays exact", () => {
   ]);
 });
 test("Mean(matrix of symbols) is column-wise and exact", () => {
-  expect(
-    run(["Mean", ["List", ["List", "a", "u"], ["List", "b", "v"], ["List", "c", "w"]]]),
-  ).toEqual([
+  expect(run(["Mean", ["List", ["List", "a", "u"], ["List", "b", "v"], ["List", "c", "w"]]])).toEqual([
     "List",
     ["Multiply", ["Rational", 1, 3], ["Add", "a", "b", "c"]],
     ["Multiply", ["Rational", 1, 3], ["Add", "u", "v", "w"]],
@@ -117,11 +115,7 @@ test("Tabulate(f, n, m) at two dimensions is unaffected", () => {
 // Unique(xs, test): a second argument saying when two elements count as duplicates.
 test("Unique(xs, test) drops an element matching an already-kept one", () => {
   expect(
-    run([
-      "Unique",
-      ["List", 1, 2, 3, 4, 5, 6],
-      ["Function", ["Less", ["Abs", ["Subtract", "_1", "_2"]], 2]],
-    ]),
+    run(["Unique", ["List", 1, 2, 3, 4, 5, 6], ["Function", ["Less", ["Abs", ["Subtract", "_1", "_2"]], 2]]]),
   ).toEqual(["List", 1, 3, 5]);
 });
 test("Unique(xs) with no test is unaffected", () => {

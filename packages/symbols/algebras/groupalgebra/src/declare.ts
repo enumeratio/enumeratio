@@ -1,13 +1,6 @@
 import { registerAlgebra } from "@enumeratio/algebra";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  integerAt,
-  operandsOf,
-  stringAt,
-  symbolNameOf,
-  widenSignature,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
 import {
   basisElement,
   classSum,
@@ -230,11 +223,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   };
 
   /** A head taking a group and returning a plain value. */
-  const aboutGroup = (
-    head: string,
-    signature: string,
-    answer: (g: Group) => BoxedExpression | undefined,
-  ): void => {
+  const aboutGroup = (head: string, signature: string, answer: (g: Group) => BoxedExpression | undefined): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -279,9 +268,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     },
     1,
   );
-  aboutGroup("GroupIsAbelian", "(value) -> boolean", (g) =>
-    ce.symbol(isAbelian(g) ? "True" : "False"),
-  );
+  aboutGroup("GroupIsAbelian", "(value) -> boolean", (g) => ce.symbol(isAbelian(g) ? "True" : "False"));
   aboutGroup("GroupElements", "(value) -> list", (g) =>
     ce.function(
       "List",
@@ -333,9 +320,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     ),
   );
   // The dimension of the centre — and the number of irreducible characters of G.
-  aboutGroup("GroupCentreDimension", "(value) -> integer", (g) =>
-    ce.number(conjugacyClasses(g).length),
-  );
+  aboutGroup("GroupCentreDimension", "(value) -> integer", (g) => ce.number(conjugacyClasses(g).length));
 
   /** The k-th class sum: a basis element of the centre of k[G]. */
   ce.declare("ClassSum", {
@@ -427,11 +412,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     });
   } else {
     // @enumeratio/domains' carrier constructor got the name first; a second declare throws.
-    widenSignature(
-      ce,
-      "PermutationCycles",
-      `(${String(existing.operator.signature)}) & ((value, any?) -> value)`,
-    );
+    widenSignature(ce, "PermutationCycles", `(${String(existing.operator.signature)}) & ((value, any?) -> value)`);
     wrapOperator(
       ce,
       ["PermutationCycles"],

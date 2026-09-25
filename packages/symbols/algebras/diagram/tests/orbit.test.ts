@@ -18,8 +18,7 @@ const show = (e: AlgebraElement) =>
   [...e.values()]
     .map(({ diagram: d, coefficient }) => [diagramKey(d), coefficient] as const)
     .sort(([a], [b]) => (a < b ? -1 : 1));
-const same = (a: AlgebraElement, b: AlgebraElement) =>
-  expect(JSON.stringify(show(a))).toBe(JSON.stringify(show(b)));
+const same = (a: AlgebraElement, b: AlgebraElement) => expect(JSON.stringify(show(a))).toBe(JSON.stringify(show(b)));
 
 const partitions = (n: number): Diagram[] => enumerateDiagrams("partition", n);
 

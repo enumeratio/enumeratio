@@ -285,10 +285,7 @@ function automorphicNumbersTable(): number[] {
     let branches: [bigint, bigint] = [5n, 6n]; // the two nontrivial idempotents mod 10
     table.push(1, 5, 6); // 1 is the trivial idempotent (1^2 = 1); it never grows a new digit
     for (let k = 1; branches[0] <= limit || branches[1] <= limit; k++) {
-      const next: [bigint, bigint] = [
-        liftIdempotent(branches[0], k),
-        liftIdempotent(branches[1], k),
-      ];
+      const next: [bigint, bigint] = [liftIdempotent(branches[0], k), liftIdempotent(branches[1], k)];
       for (let i = 0; i < 2; i++) {
         if (next[i] !== branches[i] && next[i] <= limit) table.push(Number(next[i]));
       }
@@ -569,8 +566,7 @@ export const entries: FamilyKernel[] = [
     paramCount: 0,
     kind: "scalar",
     count: () => NARCISSISTIC_COUNT,
-    unrank: (_p, r) =>
-      r >= 0 && r < NARCISSISTIC_NUMBERS.length ? narrow(NARCISSISTIC_NUMBERS[r]) : Number.NaN,
+    unrank: (_p, r) => (r >= 0 && r < NARCISSISTIC_NUMBERS.length ? narrow(NARCISSISTIC_NUMBERS[r]) : Number.NaN),
     valid: (element) => {
       const x = toBigNarcissistic(element);
       return x !== undefined && isNarcissisticBig(x);
