@@ -122,14 +122,47 @@ const sectionsOpen = ref(true);
 
 /** A section's anchor: `Possible issues` → `#possible-issues`. */
 const sectionId = (category: string): string => category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-// A linked section opens even under "close all", and is scrolled to once the client-only
-// sections exist (the browser's own hash scroll runs before they render).
+// A linked section opens even under "close all" (`targeted`), and any other section that
+// merely happens to contain the current deep-link target -- an `example-N` anchor, say --
+// opens too (`openSections`), without forcing every section open.
 const targeted = ref("");
+const openSections = ref(new Set<string>());
+
+const HIGHLIGHT_CLASS = "ref-target-highlight";
+const HIGHLIGHT_MS = 1600;
+
+/** Open any closed `<details class="ref-section">` ancestor of `id`, so a deep link into a
+ * collapsed example category still lands on visible content. */
+function openAncestorSections(id: string): void {
+  const el = document.getElementById(id);
+  const details = el?.closest("details.ref-section");
+  if (details?.id) openSections.value.add(details.id);
+}
+
+/** Scroll the target into view and flash it -- a CSS animation that honours
+ * prefers-reduced-motion (see the .ref-target-highlight rule below); the class is
+ * removed after the same window either way, so the highlight is always brief. */
+function highlight(id: string): void {
+  const el = document.getElementById(id);
+  if (!el) return;
+  requestAnimationFrame(() => {
+    el.scrollIntoView({ block: "center" });
+    el.classList.add(HIGHLIGHT_CLASS);
+    setTimeout(() => el.classList.remove(HIGHLIGHT_CLASS), HIGHLIGHT_MS);
+  });
+}
+
+// Sections are scrolled to once the client-only sections exist (the browser's own hash
+// scroll runs before they render), and the same path runs again on same-page hash
+// navigation (VitePress's router doesn't reload the page for those).
 const followHash = async (): Promise<void> => {
-  targeted.value = decodeURIComponent(location.hash.slice(1));
-  if (targeted.value === "") return;
+  const id = decodeURIComponent(location.hash.slice(1));
+  targeted.value = id;
+  if (id === "") return;
   await nextTick();
-  document.getElementById(targeted.value)?.scrollIntoView();
+  openAncestorSections(id);
+  await nextTick();
+  highlight(id);
 };
 onMounted(() => {
   void followHash();
@@ -185,7 +218,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 
     <Crosswalk :references="headwide" />
 
-    <div v-if="entry.signatures?.length" class="ref-signatures">
+    <div v-if="entry.signatures?.length" id="signatures" class="ref-signatures">
       <div v-for="(sig, i) in entry.signatures" :key="i" class="ref-signature">
         <code>{{ sig.call }}</code>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
@@ -193,7 +226,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         <Crosswalk v-if="forSignature(sig).length" :references="forSignature(sig)" inline />
       </div>
     </div>
-    <p v-else class="ref-sig">
+    <p v-else id="signatures" class="ref-sig">
       <code>{{ entry.signature }}</code>
     </p>
 
@@ -201,7 +234,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
       <span>Domain: {{ entry.domain }}</span>
     </p>
 
-    <details v-if="entry.details?.length" class="ref-details" open>
+    <details v-if="entry.details?.length" id="details" class="ref-details" open>
       <summary>Details</summary>
       <ul>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
@@ -209,7 +242,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
       </ul>
     </details>
 
-    <template v-if="entry.enumerate">
+    <section v-if="entry.enumerate" id="enumeration">
       <h2>Enumeration</h2>
       <ClientOnly>
         <notatio-collection-table
@@ -219,7 +252,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
           :page-size="entry.enumerate.pageSize ?? 10"
         ></notatio-collection-table>
       </ClientOnly>
-    </template>
+    </section>
 
     <div v-if="grouped.length" class="ref-examples-head">
       <h2>Examples</h2>
@@ -239,7 +272,11 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         class="ref-section"
         :class="{ 'is-bare': grouped.length <= 1 }"
         :id="sectionId(group.category)"
-        :open="sectionsOpen || sectionId(group.category) === targeted"
+        :open="
+          sectionsOpen ||
+          sectionId(group.category) === targeted ||
+          openSections.has(sectionId(group.category))
+        "
       >
         <summary class="ref-category">
           {{ group.category }}
@@ -253,6 +290,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         <div
           v-for="{ ex, i } in group.items"
           :key="i"
+          :id="`example-${i + 1}`"
           class="ref-example"
           :class="{
             'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && !dirty[i],
@@ -304,7 +342,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
       </details>
     </ClientOnly>
 
-    <template v-if="entry.primitive || entry.implementations?.length">
+    <section v-if="entry.primitive || entry.implementations?.length" id="implementation">
       <h2>Implementation</h2>
       <p v-if="entry.primitive" class="ref-primitive">
         <span class="ref-badge is-primitive">primitive · {{ entry.primitive }}</span>
@@ -351,7 +389,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
         <p v-if="impl.note" class="ref-impl-note" v-html="linkify(impl.note)"></p>
       </div>
-    </template>
+    </section>
 
     <p v-if="entry.seeAlso?.length" class="ref-see">
       See also:
@@ -427,6 +465,36 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 }
 .ref-section {
   scroll-margin-top: calc(var(--vp-nav-height) + 1rem);
+}
+/* Deep-link targets (example-N, signatures, details, enumeration, implementation):
+   space for the fixed nav bar, and a brief flash when landed on via hash. */
+#signatures,
+#details,
+#enumeration,
+#implementation,
+.ref-example {
+  scroll-margin-top: calc(var(--vp-nav-height) + 1rem);
+}
+.ref-target-highlight {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+  border-radius: 6px;
+  animation: ref-target-fade 1.6s ease-out forwards;
+}
+@keyframes ref-target-fade {
+  from {
+    outline-color: var(--vp-c-brand-1);
+    background-color: var(--vp-c-brand-soft);
+  }
+  to {
+    outline-color: transparent;
+    background-color: transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ref-target-highlight {
+    animation: none;
+  }
 }
 .ref-section.is-bare > summary {
   display: none;
