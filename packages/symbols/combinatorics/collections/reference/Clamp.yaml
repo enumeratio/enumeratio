@@ -81,6 +81,10 @@ examples:
     expected: -1
     role: test
     caption: Returns the lower replacement value below the range
+  - id: replacement-values-leave-x-inside-the-range
+    expr: [Clamp, 2, 0, 3, -1, 10]
+    expected: 2
+    role: test
 seeAlso:
   - Min
   - Max
