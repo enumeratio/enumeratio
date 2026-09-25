@@ -37,6 +37,8 @@ import adelesOracle from "./entries/adeles.oracle.json" with { type: "json" };
 import numberTheoryOracle from "./entries/number-theory.oracle.json" with { type: "json" };
 import { residues } from "./entries/residues.ts";
 import residuesOracle from "./entries/residues.oracle.json" with { type: "json" };
+import { linearAlgebra } from "./entries/linear-algebra.ts";
+import linearAlgebraOracle from "./entries/linear-algebra.oracle.json" with { type: "json" };
 import { sequences } from "./entries/sequences.ts";
 import sequencesOracle from "./entries/sequences.oracle.json" with { type: "json" };
 import { specialFunctions } from "./entries/special-functions.ts";
@@ -93,6 +95,7 @@ const SIDECARS: readonly OracleSidecar[] = [
   residuesOracle,
   adelesOracle,
   sequencesOracle,
+  linearAlgebraOracle,
   specialFunctionsOracle,
   analyticSpecialOracle,
 ];
@@ -125,6 +128,7 @@ export const oracleSidecars: Readonly<Record<string, OracleSidecar>> = {
   residues: residuesOracle,
   adeles: adelesOracle,
   sequences: sequencesOracle,
+  "linear-algebra": linearAlgebraOracle,
   "special-functions": specialFunctionsOracle,
   "analytic-special": analyticSpecialOracle,
 };
@@ -140,6 +144,7 @@ export const entryFiles: readonly { stem: string; entries: readonly ReferenceEnt
   { stem: "adeles", entries: attach(adelesOracle, adeles) },
   { stem: "arithmetic", entries: attach(arithmeticOracle, arithmetic) },
   { stem: "elementary", entries: attach(elementaryOracle, elementary) },
+  { stem: "linear-algebra", entries: attach(linearAlgebraOracle, linearAlgebra) },
   { stem: "special-functions", entries: attach(specialFunctionsOracle, specialFunctions) },
   { stem: "analytic-special", entries: attach(analyticSpecialOracle, analyticSpecial) },
   { stem: "hypercomplex", entries: attach(hypercomplexOracle, hypercomplex) },

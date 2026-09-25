@@ -19,6 +19,7 @@ export * from "./gpu-eval.ts";
 export * from "./graph.ts";
 export * from "./heads.ts";
 export * from "./highlight.ts";
+export * from "./conventional-latex.ts";
 export * from "./listplot3d.ts";
 export * from "./manipulate.ts";
 export * from "./orbit.ts";

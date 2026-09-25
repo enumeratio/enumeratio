@@ -124,10 +124,6 @@ the statistics and maps frontiers, which are the same discipline at a smaller sc
   object with structure rather than a digit list, and the systems become mappable onto the
   other structures they secretly are (factoradic is the Lehmer code; the combinatorial system
   is subset unranking).
-- **The statistics reference.** A statistic wants to be readable two ways: as one head with
-  an overload set, and as a combinatorial statistic in its own right, linking out to its
-  FindStat id. The catalog carries the name, the carriers and the title but not the id, so
-  the extractor has to carry it through before the second view can exist.
 - **`modular` is the least normalised package** — 34 heads, heavily prefixed (`Form*`,
   `Modular*`), several of them (`FormRho`, `LinkingWithTrefoil`, `WordSymbol`) named for the
   implementation rather than the mathematics. No Wolfram counterpart to align against, which
