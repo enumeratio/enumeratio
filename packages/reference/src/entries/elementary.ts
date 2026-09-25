@@ -1319,6 +1319,10 @@ export const elementary: readonly ReferenceEntry[] = [
         category: "Scope",
         caption:
           "Outside $[-1, 1]$, reduces to the exact closed form $\\frac{\\pi}{2} - i\\ln(2+\\sqrt3)$ -- the branch compute-engine's own $N(\\mathrm{Arcsin}(2))$ already takes, overriding its plain policy of leaving the call symbolic",
+        divergence: {
+          wolfram:
+            "Wolfram leaves ArcSin[2] unevaluated; its N[ArcSin[2]] is the same principal value, 1.5708 - 1.31696 I, since ArcSin[z] = -I Log[I z + Sqrt[1 - z^2]].",
+        },
       },
       {
         expr: ["Arcsin", 0.4],

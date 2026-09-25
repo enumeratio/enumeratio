@@ -131,6 +131,20 @@ test("Log arg-swap reverses cleanly for the explicit-base form", () => {
   expect(fromWolfram("Log[2, x]")).toEqual(["Log", "x", 2]); // base-first -> value-first
 });
 
+test("a blank pattern comes back as the wildcard string toWolfram passed through", () => {
+  expect(fromWolfram("Count[List[1, a, 2, b], _Integer]")).toEqual([
+    "Count",
+    ["List", 1, "a", 2, "b"],
+    "_Integer",
+  ]);
+  expect(fromWolfram(toWolfram(["Count", ["List", 1, 2], "_Integer"]))).toEqual([
+    "Count",
+    ["List", 1, 2],
+    "_Integer",
+  ]);
+  expect(fromWolfram("f[__, ___Real]")).toEqual(["f", "__", "___Real"]);
+});
+
 test("structural forms with an unambiguous shape are reversed", () => {
   expect(fromWolfram("Slot[1]")).toBe("_1");
   expect(fromWolfram(toWolfram(["Function", ["Power", "_", 2]]))).toEqual([
