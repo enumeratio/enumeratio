@@ -1139,7 +1139,11 @@
         "wolfram": {
           "input": "N[Zeta[Complex[0.5, 14]]]",
           "output": "0.022241142609994033 - 0.10325812326645277*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\zeta (0.5\\, +14 i)]",
+            "output": "0.0222411\\, -0.103258 i"
+          }
         }
       }
     },

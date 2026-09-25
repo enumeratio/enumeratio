@@ -61,7 +61,7 @@ const GOLDEN = fileURLToPath(new URL("./texform-alignment.golden.json", import.m
 
 test("our TeXForm beside Wolfram's, per example", () => {
   if (process.env.UPDATE_TEXFORM === "1") {
-    writeFileSync(GOLDEN, `${JSON.stringify(rows, null, 1)}\n`);
+    writeFileSync(GOLDEN, `${JSON.stringify(rows, null, 2)}\n`);
     return;
   }
   expect(rows).toEqual(JSON.parse(readFileSync(GOLDEN, "utf8")));
