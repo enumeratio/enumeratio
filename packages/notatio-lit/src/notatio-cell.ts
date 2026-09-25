@@ -128,6 +128,10 @@ export class NotatioCell extends LitElement {
     planned: { type: Boolean },
     /** Forwarded to the Out: a preset its picture reduces for, else the page's own. */
     env: { type: String },
+    /** Forwarded to the Out: describe a long `List` result rather than typeset it. */
+    elideAbove: { type: Number, attribute: "elide-above" },
+    /** Forwarded to the Out: also report the substituted-but-unevaluated input. */
+    plot: { type: Boolean },
     /**
      * Pin the `standard` editor to a binding, forwarded to `<notatio-in>`: the symbol
      * name and its `\coloneq` become fixed chrome, and only the value can be edited. A
@@ -146,9 +150,20 @@ export class NotatioCell extends LitElement {
     pending: { type: Boolean, reflect: true },
     /** Property only: forwarded to the In and Out `notatio-out`s' `resolveHead`. */
     resolveHead: { attribute: false },
+    /**
+     * Property only: a driver (a worksheet's slider) sets this to override what the Out
+     * evaluates, in `format`'s syntax, WITHOUT touching `value`/the editor field -- so a
+     * drag redraws the result every frame without MathLive re-typesetting the input it
+     * is bound to, which measured 11-31ms of synchronous work each and was what froze a
+     * dragged worksheet outright. `undefined` (the default) means the Out evaluates
+     * `value` as normal; the driver clears it back to `undefined` and writes the settled
+     * value into `value` once, on release.
+     */
+    liveValue: { attribute: false },
     _editForm: { state: true },
     _raw: { state: true },
     _json: { state: true },
+    _liveJson: { state: true },
     _error: { state: true },
     _n: { state: true },
   };
@@ -162,17 +177,22 @@ export class NotatioCell extends LitElement {
   declare expect: string;
   declare planned: boolean;
   declare env: string;
+  declare elideAbove: number;
+  declare plot: boolean;
   declare bind: string;
   declare domain: string;
   declare dirty: boolean;
   declare pending: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
+  declare liveValue: string | undefined;
   /** The editor currently shown -- starts at `inForm`, changed live via the In menu. */
   declare _editForm: EditForm;
   /** The text (or LaTeX) currently in the active editor, unparsed. */
   declare _raw: string;
   /** The last successfully parsed MathJSON, or `undefined` for a blank/unparsed cell. */
   declare _json: unknown;
+  /** `liveValue` parsed, when set; takes over from `_json` for the Out only. */
+  declare _liveJson: unknown;
   /** Why `_raw` did not parse, when it did not. */
   declare _error: string;
   /** This cell's `In[n]`/`Out[n]` line number, read off the Out's own transcript result. */
@@ -200,6 +220,10 @@ export class NotatioCell extends LitElement {
     this.expect = "";
     this.planned = false;
     this.env = "";
+    this.elideAbove = 0;
+    this.plot = false;
+    this.liveValue = undefined;
+    this._liveJson = undefined;
     this.bind = "";
     this.domain = "";
     this.dirty = false;
@@ -246,6 +270,33 @@ export class NotatioCell extends LitElement {
       changed.has("expect")
     ) {
       void this.#load();
+    }
+    if (changed.has("liveValue")) void this.#loadLive();
+  }
+
+  /**
+   * `liveValue`'s own staleness ticket -- separate from `#token`. A slider's commit
+   * changes `value` AND clears `liveValue` in the same update; sharing one counter
+   * would have `#loadLive`'s own bump (below) invalidate the `#load` this same
+   * `willUpdate` just started, so the settled value it committed never actually
+   * landed in `_json` -- the Out went blank on every release.
+   */
+  #liveToken = 0;
+
+  /** Parse `liveValue`, when set, into `_liveJson` -- the Out's override. See its own doc. */
+  async #loadLive(): Promise<void> {
+    const token = ++this.#liveToken;
+    if (this.liveValue === undefined) {
+      this._liveJson = undefined;
+      return;
+    }
+    try {
+      const json = await parseSyntax(this.format || "notatio", this.liveValue);
+      if (token !== this.#liveToken) return;
+      this._liveJson = json;
+    } catch {
+      // An override that briefly fails to parse (a slider between valid digits) leaves
+      // the Out on its last good value rather than erroring out from under a drag.
     }
   }
 
@@ -511,6 +562,13 @@ export class NotatioCell extends LitElement {
 
   /** What to hand the Out: the fast-path LaTeX text, or the parsed MathJSON. */
   get #out(): { value: string; format: "latex" | "mathjson" } {
+    // A live override takes over the Out only -- `_raw`/the editor stays on `value`.
+    if (this.liveValue !== undefined) {
+      return {
+        value: this._liveJson === undefined ? "" : JSON.stringify(this._liveJson),
+        format: "mathjson",
+      };
+    }
     if (this._json === undefined && !this._error && (this.format || "notatio") === "latex") {
       return { value: this._raw, format: "latex" };
     }
@@ -537,6 +595,8 @@ export class NotatioCell extends LitElement {
       expect=${this.dirty ? "" : this.expect}
       ?planned=${!this.dirty && this.planned}
       env=${this.env}
+      elide-above=${this.elideAbove || 0}
+      ?plot=${this.plot}
       .resolveHead=${this.resolveHead}
       @notatio-result=${this.#onResult}
     ></notatio-out>`;

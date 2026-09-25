@@ -13,17 +13,85 @@ import { loadEngine, loadMarkup } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import { visualMarkup } from "./visual.ts";
 import {
+  boundName,
   collectErrors,
   deepEqual,
+  elideResult,
   type Environment,
   environmentNamed,
   highlightCode,
   latexOf,
   pageEnvironment,
+  substitutedForm,
   toTraditionalLatex,
   type Transcript,
   watchPageEnvironment,
 } from "@enumeratio/notatio";
+
+/**
+ * Typeset markup by the LaTeX that produced it, shared by every `<notatio-out>` on the
+ * page. Converting LaTeX to markup is the expensive part of a re-render, and a control
+ * driving a cell (a worksheet's slider) re-renders every frame -- so without this, a
+ * dragged control re-typesets every *unchanged* result on the page too, dozens of times
+ * a second, which measured as a frozen renderer rather than a merely slow one. General,
+ * not worksheet-specific: any `<notatio-out>` benefits, since a hit costs nothing and a
+ * distinct LaTeX result is not one worth losing sleep over.
+ */
+const markupCache = new Map<string, string>();
+const MARKUP_CACHE_LIMIT = 256;
+
+function cachedMarkup(convert: (latex: string) => string, latex: string): string {
+  const hit = markupCache.get(latex);
+  if (hit !== undefined) return hit;
+  const made = convert(latex);
+  // Bounded: a swept parameter produces a new result every frame, and those are
+  // exactly the ones least worth keeping once the cache is full.
+  if (markupCache.size > MARKUP_CACHE_LIMIT) markupCache.clear();
+  markupCache.set(latex, made);
+  return made;
+}
+
+/**
+ * What a cell draws its input FROM, when `plot` asks for it: the expression with every
+ * currently-bound name substituted but not evaluated, and the free names left over --
+ * `reactive.ts`'s `substitutedForm`/`PassCell.plot`, generalised off any `Transcript`'s
+ * live scope rather than a worksheet pass's own tracked bindings.
+ */
+interface PlotInfo {
+  /** InputForm -- notatio a plot element can re-parse (`toInputForm`, round-trips). */
+  readonly source: string;
+  /** The names still free after substitution, sorted. */
+  readonly free: readonly string[];
+}
+
+/**
+ * Claim `name` in `engine`'s CURRENT (innermost pushed) scope before an `Assign`
+ * evaluates it, the way `reactive.ts`'s `runPass` already does for a worksheet's own
+ * pass -- see that function's comment for why this is load-bearing rather than tidy.
+ * A no-op when `name` is `undefined` (not an assignment) or already declared there.
+ */
+function declareLocal(engine: ComputeEngine, name: string | undefined): void {
+  if (name === undefined) return;
+  try {
+    engine.declare(name, "unknown");
+  } catch {
+    // Already declared locally (a re-run of this same cell), or a protected name --
+    // either way there is nothing to claim.
+  }
+}
+
+/** `PlotInfo` for `raw` (parsed, unevaluated), read against `engine`'s current scope. */
+function plotOf(engine: ComputeEngine, raw: BoxedExpression): PlotInfo | undefined {
+  try {
+    const substituted = substitutedForm(engine, raw);
+    return {
+      source: toInputForm(substituted.json as MathJsonExpression),
+      free: [...substituted.unknowns].sort(),
+    };
+  } catch {
+    return undefined;
+  }
+}
 
 type Format = "latex" | "mathjson" | "notatio";
 type Status = "" | "ok" | "mismatch" | "error";
@@ -245,6 +313,23 @@ export class NotatioOut extends LitElement {
     /** A preset to reduce the picture for (`print`, `pipe`, …); by default the page's own, as it changes. */
     env: { type: String },
     /**
+     * Above this many operands, describe a `List` result rather than typeset it (`0`,
+     * the default, never elides). A long numeric result costs real time to serialize and
+     * typeset for an output line that exists to be *drawn*, not read -- see
+     * `elideResult`. General: any cell over a control that can grow a long result can
+     * set this, not only a worksheet's.
+     */
+    elideAbove: { type: Number, attribute: "elide-above" },
+    /**
+     * Also report the substituted-but-unevaluated form of the input, in the
+     * `notatio-result` event's `plot` detail, for a consumer that draws the INPUT rather
+     * than the fully-evaluated output -- so a complex portrait or plot doesn't collapse
+     * at a pole a bound parameter crosses (`substitutedForm`). Only meaningful for a cell
+     * inside a `<notatio-dynamic-module>` (`evaluate` and a shared scope); ignored
+     * otherwise.
+     */
+    plot: { type: Boolean },
+    /**
      * Read-only: set while the value is being evaluated or typeset (the engine loads
      * lazily, so the first one can take a moment). Styled as a pending state; a script
      * can wait for `:not([busy])`.
@@ -294,6 +379,8 @@ export class NotatioOut extends LitElement {
   declare form: Form;
   declare label: string;
   declare env: string;
+  declare elideAbove: number;
+  declare plot: boolean;
   declare labelMenu: boolean;
   declare busy: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
@@ -340,6 +427,8 @@ export class NotatioOut extends LitElement {
     this.display = false;
     this.label = "";
     this.env = "";
+    this.elideAbove = 0;
+    this.plot = false;
     this.labelMenu = false;
     this.busy = false;
     this._markup = "";
@@ -381,7 +470,9 @@ export class NotatioOut extends LitElement {
       changed.has("box") ||
       changed.has("raw") ||
       changed.has("display") ||
-      changed.has("expect")
+      changed.has("expect") ||
+      changed.has("elideAbove") ||
+      changed.has("plot")
     ) {
       void this.#recompute();
     } else if (changed.has("form") && !this._input) {
@@ -398,7 +489,14 @@ export class NotatioOut extends LitElement {
     }
   }
 
-  async #evaluate(): Promise<{ latex: string; json: unknown; messages: readonly Message[] }> {
+  async #evaluate(): Promise<{
+    latex: string;
+    json: unknown;
+    messages: readonly Message[];
+    /** The bound symbol, when the input is an assignment (`a := …`). */
+    name?: string;
+    plot?: PlotInfo;
+  }> {
     const source = this.value ?? "";
     if (!source.trim()) return { latex: "", json: undefined, messages: [] };
     // Fast path: render given LaTeX as-is, no engine, when nothing needs it.
@@ -450,6 +548,8 @@ export class NotatioOut extends LitElement {
       return { latex: latexOf(engine, value), json: value.json, messages: [] };
     }
 
+    let parsed: BoxedExpression | undefined;
+    let plotInfo: PlotInfo | undefined;
     const { value: result, messages } = collectMessages(engine, () => {
       if (transcript && this.evaluate) {
         // `InString(n)` reads back what the reader typed. Read the JSON *before* boxing:
@@ -460,16 +560,35 @@ export class NotatioOut extends LitElement {
         // next `In[n]`/`Out[n]`.
         return transcript.run(() => {
           const boxed = parseText();
+          parsed = boxed;
+          // Claim the name locally before it assigns, the way `runPass` already does
+          // for a worksheet's own pass (see that function's comment) -- an `Assign`
+          // with nothing declared here yet has nowhere of its own to land. This closes
+          // the common case (nothing else on the page has touched the name yet); it is
+          // NOT a complete fix for two sheets sharing a name once BOTH have assigned to
+          // it at least once -- that residual cross-scope leak is tracked separately
+          // (PR description) rather than solved here.
+          declareLocal(engine, boundName(boxed.json));
           const value = boxed.evaluate();
           this.#historyN = transcript.record(input, boxed, value);
+          // Read from the scope after `boxed.evaluate()` has had its chance to bind --
+          // an `Assign` is not itself substitutable for, so this is only ever something
+          // ELSE in the cell reading a binding another cell (or an earlier pass) made.
+          if (this.plot) plotInfo = plotOf(engine, boxed);
           return value;
         });
       }
       this.#historyN = undefined;
       const boxed = parseText();
+      parsed = boxed;
       return this.evaluate ? boxed.evaluate() : boxed;
     });
-    return { latex: latexOf(engine, result), json: result.json, messages };
+    const name = parsed ? boundName(parsed.json) : undefined;
+    const latex =
+      this.elideAbove > 0
+        ? (elideResult(result, this.elideAbove) ?? latexOf(engine, result))
+        : latexOf(engine, result);
+    return { latex, json: result.json, messages, name, plot: plotInfo };
   }
 
   /** `value` as MathJSON, for the two encodings that are not LaTeX. A notatio diagnostic throws. */
@@ -617,7 +736,7 @@ export class NotatioOut extends LitElement {
   // so a slow earlier evaluation can't overwrite it when it finally lands.
   async #compute(run: number): Promise<void> {
     try {
-      const { latex, json, messages } = await this.#evaluate();
+      const { latex, json, messages, name, plot } = await this.#evaluate();
       const convert = await loadMarkup();
       if (run !== this.#runs) return;
       this._messages = messages;
@@ -626,7 +745,9 @@ export class NotatioOut extends LitElement {
       this._folded = new Map();
       this._latex = latex;
       this._json = json === undefined ? "" : JSON.stringify(json);
-      this._markup = latex ? convert(latex) : "";
+      this._markup = latex ? cachedMarkup(convert, latex) : "";
+      this.#name = name;
+      this.#plot = plot;
       this.#value = json as MathJsonExpression | undefined;
       this.#visualize();
       this._wolfram = json === undefined ? "" : toWolfram(json as Parameters<typeof toWolfram>[0]);
@@ -667,6 +788,8 @@ export class NotatioOut extends LitElement {
       this._messages = [];
       this._status = "error";
       this._detail = err instanceof Error ? err.message : String(err);
+      this.#name = undefined;
+      this.#plot = undefined;
     }
     // Let containers (e.g. a reference cell) react to the assertion outcome.
     this.dispatchEvent(
@@ -679,10 +802,18 @@ export class NotatioOut extends LitElement {
     // Expose the evaluated result so a notebook can reference it (e.g. REPL `%n`).
     // Empty on error/blank; the LaTeX round-trips back into a downstream input. `n` is
     // this line's transcript number, when it evaluated inside one -- a `<notatio-cell>`
-    // reads it back to label itself `In[n]` / `Out[n]`.
+    // reads it back to label itself `In[n]` / `Out[n]`. `name`/`plot` are `undefined`
+    // unless the input is an assignment / `plot` was asked for -- a worksheet-like
+    // consumer reads them to infer a control or a drawing without evaluating again.
     this.dispatchEvent(
       new CustomEvent("notatio-result", {
-        detail: { latex: this._latex, json: this._json, n: this.#historyN },
+        detail: {
+          latex: this._latex,
+          json: this._json,
+          n: this.#historyN,
+          name: this.#name,
+          plot: this.#plot,
+        },
         bubbles: true,
         composed: true,
       }),
@@ -760,6 +891,10 @@ export class NotatioOut extends LitElement {
   // This evaluation's `In[n]`/`Out[n]` line number, when it ran inside a transcript --
   // `undefined` outside one, or before the first evaluation.
   #historyN: number | undefined;
+  // The bound symbol, when the input is an assignment -- surfaced on `notatio-result`.
+  #name: string | undefined;
+  // `PlotInfo`, when `plot` asked for it -- surfaced on `notatio-result`.
+  #plot: PlotInfo | undefined;
 
   // The value the picture is drawn from, kept so a change of environment redraws it
   // without evaluating again.
