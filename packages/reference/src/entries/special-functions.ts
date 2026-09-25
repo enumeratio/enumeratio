@@ -676,7 +676,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "Nonpositive integer $s$: $\\zeta(-n, a) = -B_{n+1}(a)/(n+1)$, a Bernoulli polynomial in $a$ -- so $\\zeta(0, a) = \\tfrac12 - a$ and $\\zeta(-1, a) = -\\tfrac{1}{12}(6a^2 - 6a + 1)$. See [[BernoulliB]].",
       "Pole at $s = 1$: $\\zeta(1, a) = \\text{ComplexInfinity}$ for every $a$.",
       "Poles at $a = 0, -1, -2, \\dots$: the $(n+a)=0$ term is singular. (The two-argument [[Zeta]] drops that term instead, staying finite there.)",
-      "Numeric evaluation (under N()) is Euler–Maclaurin summation and supports complex $s$ and $a$; it is aligned with Wolfram's $\\mathrm{HurwitzZeta}[s, a]$.",
+      "Numeric evaluation (under N()) is Euler–Maclaurin summation and supports complex $s$ and $a$; it is aligned with Wolfram's $\\mathrm{HurwitzZeta}[s, a]$. Left of $\\operatorname{Re}(s) = 0$, where those direct terms cancel, $a$ near the real axis goes through $\\zeta(s, 1+h) = \\sum_k \\binom{-s}{k} h^k \\zeta(s+k)$ instead, each $\\zeta(s+k)$ from the functional equation.",
     ],
     examples: [
       {

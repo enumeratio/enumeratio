@@ -216,10 +216,10 @@ test("one-argument Zeta compiles to the generalized kernel at a = 1 (JS + WGSL)"
   expect(g({ x: 3, __zg: zetaGeneralizedReal })).toBeCloseTo(1.2020569031595942, 13);
 });
 
-// --- ζ(s, m) against mpmath: complex s, and real s left of the strip -----------------
+// --- ζ(s, a) against mpmath: complex s, and left of the strip ------------------------
 
 // compute-engine's native Zeta evaluates real s only; complex s is filled from ζ(s, 1).
-// Left of Re(s) = 0 at a small positive integer a the kernel reflects instead of summing.
+// Left of Re(s) = 0 the kernel sums a Taylor series in a over reflected ζ(s + k) instead.
 // Oracle values are pinned in zeta.golden.json (scripts/collect-zeta-goldens.ts, mpmath).
 interface ZetaGolden {
   s: [number, number];
@@ -249,7 +249,7 @@ const complexRiemann = zetaGoldens.filter((g) => g.a === 1 && g.s[1] !== 0);
 const viaN = (engine: ComputeEngine, head: Expr[]) => (g: ZetaGolden) =>
   engine.box([head[0], ["Complex", ...g.s], ...head.slice(1)] as never).N();
 
-test("the ζ(s, m) kernel matches mpmath, complex s and real s ≪ 0", () => {
+test("the ζ(s, a) kernel matches mpmath, complex s and left of the strip", () => {
   expect(offBy(zetaGoldens, (g) => hurwitzZeta(cx(...g.s), cx(g.a)))).toEqual([]);
 });
 
@@ -268,7 +268,7 @@ test("Zeta(s) at complex s holds with the engine at 40 digits", () => {
   expect(offBy(complexRiemann, viaN(engine, ["Zeta"]))).toEqual([]);
 });
 
-test("compiled Zeta(x) and HurwitzZeta(x, m) hold left of the strip", () => {
+test("compiled Zeta(x, a) and HurwitzZeta(x, a) hold left of the strip", () => {
   // The real-scalar wrappers the plot elements inject for `_.__zg` / `_.__hz`.
   const real = zetaGoldens.filter((g) => g.s[1] === 0);
   expect(offBy(real, (g) => cx(zetaGeneralizedReal(g.s[0], g.a)))).toEqual([]);

@@ -1,9 +1,9 @@
-// Collect mpmath values for ζ(s, a) at a positive integer a — complex s, which
-// compute-engine's native Zeta declines and ours fills from ζ(s, 1), and real s left of
-// Re(s) = 0, where the kernel reflects rather than direct-summing — and write them to
-// tests/zeta.golden.json. The test suite checks the kernel, N() and the compiled real path
-// against those pinned values, so `vp test` doesn't need mpmath; this script does, and
-// exits nonzero on a disagreement.
+// Collect mpmath values for ζ(s, a) — at a positive integer a, complex s, which
+// compute-engine's native Zeta declines and ours fills from ζ(s, 1); and left of Re(s) = 0,
+// where the kernel reflects or sums a Taylor series in a rather than direct-summing — and
+// write them to tests/zeta.golden.json. The test suite checks the kernel, N() and the
+// compiled real path against those pinned values, so `vp test` doesn't need mpmath; this
+// script does, and exits nonzero on a disagreement.
 //
 // Requires python3 + mpmath on PATH. Run from the package:
 //   node scripts/collect-zeta-goldens.ts
@@ -24,10 +24,13 @@ export interface ZetaGolden {
 }
 
 // On the critical line (the first zero, near it, and higher up) and off it, both sides of
-// the strip and past the Re(s) < 0 reflection line; then real s ≪ 0, and a few a > 1.
-// Every row holds to 1e-13; the worst sits near 1e-14 (high on the critical line).
+// the strip and past the Re(s) < 0 reflection line; then real s ≪ 0, a few a > 1, and
+// non-integer a left of the strip, integer s among them (the kernel, not the Bernoulli form).
+// Rows hold to 1e-13 unless they carry their own; the worst of those sits near 1e-14 (high on
+// the critical line). Far left, each reflected ζ(s + k) in the Taylor series in a gives up a
+// little to its Γ(1 − s − k), and together they come to a few parts in 1e13.
 const TOL = 1e-13;
-const grid: [Pair, number][] = [
+const grid: [Pair, number, number?][] = [
   [[0.5, 14], 1],
   [[0.5, 14.134725141734693], 1], // first nontrivial zero
   [[0.5, -7], 1],
@@ -56,6 +59,17 @@ const grid: [Pair, number][] = [
   [[-5.5, 0], 3],
   [[-20.5, 0], 5],
   [[-3, 2], 3],
+  [[-20, 0], 0.7],
+  [[-21, 0], 0.5],
+  [[-10.5, 0], 0.3],
+  [[-2.5, 0], 0.3],
+  [[-0.5, 0], 0.05],
+  [[-40.5, 0], 0.4],
+  [[-80.5, 0], 0.7, 1e-12],
+  [[-5.5, 3], 0.5],
+  [[-20.5, 3], 2.7],
+  [[-10.5, 0], 7.4],
+  [[-3, 0], 1.3],
 ];
 
 const py = `
@@ -80,7 +94,7 @@ const relErr = (ours: Pair, ref: Pair): number =>
 
 const goldens: ZetaGolden[] = [];
 const disagree: string[] = [];
-for (const [k, [s, a]] of grid.entries()) {
+for (const [k, [s, a, tol = TOL]] of grid.entries()) {
   const ref = mp.get(k);
   if (!ref || !ref.every(Number.isFinite)) throw new Error(`mpmath gave no value for case ${k}`);
   const sLabel = s[1] === 0 ? `${s[0]}` : `${s[0]}${s[1] < 0 ? "" : "+"}${s[1]}i`;
@@ -88,11 +102,11 @@ for (const [k, [s, a]] of grid.entries()) {
   const r = hurwitzZeta({ re: s[0], im: s[1] }, { re: a, im: 0 });
   const ours: Pair = [r.re, r.im];
   const err = relErr(ours, ref);
-  if (!(err <= TOL))
+  if (!(err <= tol))
     disagree.push(
       `${label}: ours=(${ours.join(", ")}) mpmath=(${ref.join(", ")}) relerr=${err.toExponential(2)}`,
     );
-  goldens.push({ s, a, label, tol: TOL, mpmath: ref });
+  goldens.push({ s, a, label, tol, mpmath: ref });
 }
 
 writeFileSync(

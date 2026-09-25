@@ -27,7 +27,8 @@ import { declareSpecialFunctions } from "./special-functions.ts";
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
 // terms directly (which also shifts a into the right half-plane), then add the
-// tail's integral, endpoint, and Bernoulli-number correction terms. Exact
+// tail's integral, endpoint, and Bernoulli-number correction terms — or, left of
+// Re(s) = 0, a Taylor series in a over Riemann zetas (see `hurwitzZeta`). Exact
 // closed forms are returned symbolically where Wolfram has them: the s=1 pole,
 // the ζ(−n, a) Bernoulli-polynomial values, and the ζ(s, m) reduction to the
 // Riemann ζ that makes ζ(s, 1) = ζ(s).
@@ -91,8 +92,7 @@ function hurwitzEM(s: Cx, a: Cx): Cx {
   const aIm = a.im;
   // Direct terms push a into Re(a)+N large relative to |s|, where the asymptotic
   // tail is accurate; a few more than |s| keeps the truncated series converging.
-  const targetRe = Math.max(12, Math.ceil(Math.abs(sRe) + Math.abs(sIm)) + 6);
-  const n = Math.max(8, Math.ceil(targetRe - aRe));
+  const n = Math.max(8, Math.ceil(emEdge(s) - aRe));
   const negSr = -sRe;
   const negSi = -sIm;
 
@@ -147,25 +147,92 @@ function hurwitzEM(s: Cx, a: Cx): Cx {
   return { re: sumR, im: sumI };
 }
 
-/** Below this a, a positive integer, Re(s) < 0 reflects rather than direct-summing. */
-const REFLECT_MAX_A = 32;
+/** How far from 1 (once shifted by an integer) a may sit for the Taylor series in a. */
+const TAYLOR_RADIUS = 0.75;
+
+/**
+ * Past this many times `emEdge`, Euler–Maclaurin takes over from the Taylor series left of
+ * the strip. Its direct terms stop cancelling at 1×, but its big tail still costs it a digit
+ * or two out to ~4×, where walking a down to 1 + h stops being cheap.
+ */
+const EM_BEYOND = 4;
 
 /**
  * Numeric ζ(s, a) for complex s, a. Terms where (n+a)=0 (a a nonpositive integer) are
  * dropped, matching Wolfram's `HurwitzZeta`, which omits the singular term rather than
  * diverging there. Returns a non-finite part at the s=1 pole.
  *
- * Euler–Maclaurin (`hurwitzEM`), except left of Re(s) = 0 at a small positive integer a:
- * there the direct terms grow like N^(−Re s) and cancel down to an O(1) result, so
- * ζ(s, m) = ζ(s) − Σ_{k<m} k^(−s) takes ζ(s) from the functional equation instead.
+ * Euler–Maclaurin (`hurwitzEM`), except left of Re(s) = 0 with a near the real axis and not
+ * far past where its direct terms end: there those terms grow like N^(−Re s) and cancel down
+ * to an O(1) result. Instead a is shifted by an integer to b = 1 + h, |Re h| ≤ ½, and
+ * ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k) sums Riemann zetas, each from the functional
+ * equation, with no cancellation to speak of: the terms fall off like (2πh)ᵏ/k! against
+ * ζ(s)'s own scale, so at most e^π of it is lost. An integer a is h = 0, ζ(s) alone.
  */
 export function hurwitzZeta(s: Cx, a: Cx): Cx {
-  if (s.re >= 0 || a.im !== 0 || !Number.isInteger(a.re) || a.re < 1 || a.re > REFLECT_MAX_A)
-    return hurwitzEM(s, a);
-  let z = reflectedZeta(s);
-  for (let k = 1; k < a.re; k++) {
+  if (s.re >= 0 || a.re >= EM_BEYOND * emEdge(s)) return hurwitzEM(s, a);
+  const m = Math.floor(a.re - 0.5); // a − m has real part in [½, 3/2)
+  const h = cx(a.re - m - 1, a.im);
+  if (!(Math.hypot(h.re, h.im) <= TAYLOR_RADIUS)) return hurwitzEM(s, a); // NaN included
+  // ζ(s, a) = ζ(s, a+1) + a^(−s): walk a to 1 + h, carrying the terms passed over.
+  let z = zetaNearOne(s, h);
+  for (let j = 0; j < Math.abs(m); j++) {
+    const br = m > 0 ? h.re + 1 + j : a.re + j;
+    if (br === 0 && a.im === 0) continue; // the dropped (n+a)=0 term
+    cpowInto(br, a.im, -s.re, -s.im);
+    z = m > 0 ? cx(z.re - _pr, z.im - _pi) : cx(z.re + _pr, z.im + _pi);
+  }
+  return z;
+}
+
+/** Where `hurwitzEM` starts its asymptotic tail; a at or past it sums no cancelling terms. */
+function emEdge(s: Cx): number {
+  return Math.max(12, Math.ceil(Math.abs(s.re) + Math.abs(s.im)) + 6);
+}
+
+/** ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k) for |h| < 1 — see `hurwitzZeta`. */
+function zetaNearOne(s: Cx, h: Cx): Cx {
+  let sum = riemannZeta(s);
+  let c = cx(1, 0); // C(−s, k)
+  let hk = cx(1, 0); // hᵏ
+  let largest = Math.hypot(sum.re, sum.im);
+  let small = 0;
+  const cap = Math.ceil(Math.abs(s.re)) + 200;
+  for (let k = 1; k < cap; k++) {
+    hk = mul(hk, h);
+    if (hk.re === 0 && hk.im === 0) break;
+    const f = cx(-s.re - k + 1, -s.im);
+    if (f.re === 0 && f.im === 0) {
+      // s = 1 − k, an integer: C(−s, k) → 0 as ζ(s + k) → ∞, and their product → −C(−s, k−1)/k.
+      // Every later C(−s, k) is 0, so the series ends here (a Bernoulli polynomial).
+      const t = scale(mul(c, hk), -1 / k);
+      return add(sum, t);
+    }
+    c = scale(mul(c, f), 1 / k);
+    const t = mul(mul(c, hk), riemannZeta(cx(s.re + k, s.im)));
+    sum = add(sum, t);
+    const size = Math.hypot(t.re, t.im);
+    largest = Math.max(largest, size);
+    // Two in a row, since ζ at a negative even integer makes every other term vanish.
+    if (size <= 1e-17 * largest) {
+      if (++small === 2) break;
+    } else small = 0;
+  }
+  return sum;
+}
+
+/**
+ * ζ(s): the functional equation left of Re(s) = 0, Euler–Maclaurin across the strip, and far
+ * right the bare series, whose nᵗʰ term is already below a double's reach by n = 10^(17/Re s).
+ */
+function riemannZeta(s: Cx): Cx {
+  if (s.re < 0) return reflectedZeta(s);
+  if (s.re < 16) return hurwitzEM(s, cx(1, 0));
+  const n = Math.ceil(10 ** (17 / s.re));
+  let z = cx(1, 0);
+  for (let k = 2; k <= n; k++) {
     cpowInto(k, 0, -s.re, -s.im);
-    z = cx(z.re - _pr, z.im - _pi);
+    z = cx(z.re + _pr, z.im + _pi);
   }
   return z;
 }
