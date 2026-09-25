@@ -3474,24 +3474,51 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     domain: "Interval arithmetic",
     signature: "Interval(a, b)",
     summary:
-      "Arithmetic over compute-engine's native `Interval(a, b)` -- extended in place by `@enumeratio/analytic`, since compute-engine declares it only as a real set with no arithmetic of its own.",
+      "Arithmetic over compute-engine's native `Interval(a, b)` -- extended in place by `@enumeratio/analytic`, since compute-engine declares it only as a real set with no arithmetic of its own. A result contains every value the operation takes on its inputs.",
     signatures: [
       {
         call: "Interval(a, b)",
         description:
-          "the real interval [a, b], now with Add, Multiply, Divide, integer Power, Abs and a monotonic Sin.",
+          "the real interval [a, b], carried through arithmetic and the elementary and special functions: each result encloses the true image.",
       },
     ],
     details: [
-      "Covers exactly the operations the reference examples use: Add, Negate (which is what Subtract runs through -- compute-engine canonicalizes Subtract(a,b) to Add(a, Negate(b)) before any hook sees a Subtract head), Multiply, Divide (via the reciprocal of an interval not containing 0), integer Power (odd powers are monotonic; an even power folds to [0, …] once the interval straddles 0), Abs, and Sin restricted to an interval inside [−π/2, π/2].",
+      "Rigorous containment, as Wolfram's Interval promises: an exact endpoint is exactly right, and an inexact one is rounded outward -- a lower bound down, an upper bound up. Decimal arithmetic is exact in compute-engine, so Interval(1.4, 1.5) + 1 is exactly Interval(2.4, 2.5); a function value at an inexact point is rounded one double outward from its value at working precision.",
+      "A function's image is its least and greatest value at the endpoints and at every critical point inside. Sin, Cos, Tan, Cot, Sec and Csc enumerate theirs period by period; Arcsin, Arccos, Arctan, Sinh, Cosh, Tanh, Exp, Ln, Log, Sqrt, Erf, Erfc and ErfInv, and Gamma, GammaLn, LogGamma and Digamma on the positive reals, have a known shape (monotonic, or a single minimum: Cosh's at 0, Γ's at 1.4616…), so their images are exact when the endpoints are.",
+      "Across a pole the image comes in unbounded pieces, returned as a [[Union]] of intervals: Cot(Interval(-π/4, π/4)) is (-∞, -1] ∪ [1, ∞), and pieces that meet merge, so Tan(Interval(0, π)) is all of ℝ.",
+      "Not rigorous: BarnesG, LogBarnesG, DirichletEta, DirichletBeta, Zeta, CatalanNumber, and the multi-argument StieltjesGamma, HarmonicNumber, DirichletL, PolyGamma, PolyLog, GammaRegularized, BetaRegularized and Binomial. Their critical points aren't known, so their images come from sampling the derivative's sign, which can miss a pair of extrema between two samples.",
       "The 'dependency problem' is not modeled: Interval(1,2) − Interval(1,2) is Interval(-1,1), not Interval(0,0), because the two copies are treated as independent quantities, exactly as Wolfram's own interval arithmetic does.",
-      "Endpoints stay exact boxed expressions throughout -- Interval(1,2) + Interval(3,4) is Interval(4,6), not a floating-point approximation.",
     ],
     examples: [
       {
         expr: ["Add", ["Interval", 1, 2], ["Interval", 3, 4]],
         expected: ["Interval", 4, 6],
         caption: "Endpoints add",
+      },
+      {
+        expr: ["Add", ["Interval", 1.4, 1.5], 1],
+        expected: ["Interval", 2.4, 2.5],
+        caption: "Decimal arithmetic is exact, so nothing needs rounding",
+      },
+      {
+        expr: ["Sin", ["Interval", 1.4, 1.5]],
+        expected: ["Interval", 0.98544972998846, 0.9974949866040546],
+        category: "Scope",
+        caption:
+          "At an inexact endpoint the value is rounded outward: $\\sin 1.4 = 0.98544972998846018\\ldots$ lies inside",
+      },
+      {
+        expr: ["Gamma", ["Interval", 1, 2]],
+        expected: ["Interval", 0.8856031944108886, 1],
+        category: "Scope",
+        caption:
+          "$\\Gamma$'s minimum at $1.4616\\ldots$ lies inside, so it is the lower bound, rounded down; the upper bound, $\\Gamma(1) = \\Gamma(2) = 1$, stays exact",
+      },
+      {
+        expr: ["Tan", ["Interval", 0, "Pi"]],
+        expected: ["Interval", "NegativeInfinity", "PositiveInfinity"],
+        category: "Scope",
+        caption: "Across the pole at $\\pi/2$ the two pieces cover every real, so they merge",
       },
       {
         expr: ["Multiply", ["Interval", 1, 2], ["Interval", -1, 3]],
@@ -3644,8 +3671,9 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
     ],
     details: [
-      "Add sums several independent uncertainties in quadrature (√Σdxᵢ²); a scalar Multiply scales the uncertainty linearly; several Around factors multiplied together combine their RELATIVE uncertainties in quadrature (the same rule, since d(∏xᵢ) = Σⱼ(∏_{i≠j}xᵢ)dxⱼ in quadrature, divided back out by the product); Power with a concrete exponent and Exp (Wolfram's Exp, canonicalized to Power(E, ·)) use their own closed-form derivatives; Sqrt and Erf go through compute-engine's own symbolic D.",
-      "Multinomial(Around(x, dx), k) is NOT covered: Multinomial is declared over integers only, so there is no nearby point to take a derivative at without first widening it to the Gamma-based real domain, which is out of scope for Around itself.",
+      "Add sums several independent uncertainties in quadrature (√Σdxᵢ²); a scalar Multiply scales the uncertainty linearly; several Around factors multiplied together combine their RELATIVE uncertainties in quadrature (the same rule, since d(∏xᵢ) = Σⱼ(∏_{i≠j}xᵢ)dxⱼ in quadrature, divided back out by the product); Power with a concrete exponent and Exp (Wolfram's Exp, canonicalized to Power(E, ·)) use their own closed-form derivatives.",
+      "Every other function -- the elementary heads, Log in any base, and the special functions -- takes f′ from compute-engine's symbolic D where it resolves, and from a central difference where it doesn't.",
+      "A head is propagated through as ONE function of its uncertain argument, before its own definition expands it: Multinomial(Around(2, 0.01), 2) is (a+2)(a+1)/2 at a = 2 ± 0.01, so 6 ± 0.035. Expanding first would count the same uncertainty in a numerator and a denominator as if they were independent.",
     ],
     examples: [
       {
@@ -3681,10 +3709,9 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         expr: ["Multinomial", ["Around", 2, 0.01], 2],
         expected: ["Around", 6, 0.035],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Through a function: $f'(2) = 3.5$ -- not yet, Multinomial has no real-argument domain to differentiate on",
+          "Through a function, to first order: $f'(2) = 3.5$, so $\\mathrm{Multinomial}(2 \\pm 0.01, 2) = 6 \\pm 0.035$",
       },
       {
         expr: ["Add", ["Around", 5, 0.1], ["Around", 3, 0.2]],

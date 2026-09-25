@@ -300,10 +300,9 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Multinomial", ["Around", 2, 0.01], 2],
         expected: ["Around", 6, 0.035],
-        aspirational: true,
         category: "Scope",
         caption:
-          "An Around argument should propagate its uncertainty: $\\frac{(a+2)(a+1)}{2}$ at $a = 2 \\pm 0.01$ is $6 \\pm 0.035$; Around is not yet a head",
+          "An Around argument propagates its uncertainty through the head as one function: $\\frac{(a+2)(a+1)}{2}$ at $a = 2 \\pm 0.01$ is $6 \\pm 0.035$",
       },
       {
         expr: [
@@ -677,9 +676,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["CatalanNumber", ["Interval", 0.5, 0.6]],
         expected: ["Interval", 0.8488263631567751, 0.8625409688734523],
-        aspirational: true,
         category: "Scope",
-        caption: "An Interval argument should give an enclosing Interval; currently a type error",
+        caption: "An Interval argument gives an enclosing Interval",
       },
     ],
     seeAlso: ["Binomial", "BellNumber"],

@@ -543,6 +543,17 @@ alone. The fix is a save and restore around the `N` handler; until then
 `packages/aestimatio/src/cooperative-evaluate.ts` restores it after each evaluation, which is
 what made the reference tests order-independent again (seen in 0.134).
 
+**The interval kernel's Γ is not rigorous.** `@cortex-js/compute-engine/interval` promises
+outward-rounded enclosures, and two of its Γ functions break that. `gamma({lo: 2.5, hi: 2.5})`
+is `[1.3293403881791377, 1.3293403881791381]`, but Γ(2.5) = 1.32934038817913702…, below the
+lower bound; 1.4, 1.82 and 3.7 miss by a few ulps the same way, so the approximation's error
+exceeds the one ulp the kernel rounds out by. And `gammaln` evaluates its endpoints as though
+ln Γ were increasing everywhere: `gammaln({lo: 0.41, hi: 0.42})` returns `lo = 0.7714 > hi =
+0.7469`, on (0, 1.4616…) where ln Γ decreases. `packages/analytic/src/interval.ts` uses neither
+-- Γ's shape is known, so it takes the image from its endpoints and its minimum -- and the
+strict containment test in `packages/analytic/tests/interval-containment.test.ts` is what
+caught both (seen in 0.134).
+
 **`Hypergeometric2F1` is off by 5.2e-6 relative at complex argument** — Fungrim 16d2e1 at
 m = 1.17 + 0.45i, against mpmath's `hyp2f1`.
 

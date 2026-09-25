@@ -249,29 +249,36 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // native handler still only ever runs on the integer (or, for Binomial/Pochhammer, real)
   // arguments it already handled -- anything else reaches the wrapper below instead.
   const isInteger = (op: BoxedExpression): boolean => integerAt(op) !== undefined;
-  // Excludes an exact rational too, not just an integer -- CatalanNumber(1/2) and kin
-  // already have an exact closed form elsewhere (analytic continuation via reflection),
-  // so these Gamma-ratio `.N()` wrappers must not shadow that with a decimal approximation.
-  const notExact = (op: BoxedExpression): boolean =>
-    integerAt(op) === undefined && bigRationalAt(op) === undefined;
-  // The nativeAccepts gate below has to admit an exact rational too, not just an integer --
-  // otherwise it blocks the call before it ever reaches that same pre-existing exact-rational
-  // handler (declared earlier, so captured as part of `native`), the same way it protects the
-  // true native integer-only recurrence.
+  // An inexact number -- `2.3`, `1.5 + 0.7i` -- is what the Gamma-ratio wrappers below are for.
+  // Not an exact rational: CatalanNumber(1/2) and kin already have an exact closed form
+  // elsewhere (analytic continuation via reflection), which a decimal approximation must not
+  // shadow. And not a non-number either: a symbol, an `Interval`, an `Around` or a
+  // `ProfiniteNumber` goes on down the handler chain, where whatever knows that kind of value
+  // (analytic's tagged arithmetic, adeles) answers it -- rather than having a Gamma formula
+  // built around it.
+  const inexactNumber = (op: BoxedExpression): boolean =>
+    (op as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true &&
+    integerAt(op) === undefined &&
+    bigRationalAt(op) === undefined;
+  // The native handler takes everything the wrappers don't: integers and exact rationals, as
+  // before, and every non-number, so the handlers beneath it still see those.
+  const nativeTakes = (op: BoxedExpression): boolean => !inexactNumber(op);
+  // Two exact numbers, for the Binomial gate below.
   const isExact = (op: BoxedExpression): boolean =>
     integerAt(op) !== undefined || bigRationalAt(op) !== undefined;
-  widenSignature(ce, "CatalanNumber", "(any) -> any", isExact);
-  widenSignature(ce, "Subfactorial", "(any) -> any", isExact);
-  widenSignature(ce, "Factorial2", "(any) -> any", isExact);
+  widenSignature(ce, "CatalanNumber", "(any) -> any", nativeTakes);
+  widenSignature(ce, "Subfactorial", "(any) -> any", nativeTakes);
+  widenSignature(ce, "Factorial2", "(any) -> any", nativeTakes);
   // Now zero-or-more arguments: Multinomial() is the empty product, 1, same convention as
   // Factorial(0) -- see the wrapOperator right below, which answers that specific call.
-  widenSignature(ce, "Multinomial", "(any*) -> any", isExact);
+  widenSignature(ce, "Multinomial", "(any*) -> any", nativeTakes);
 
-  // Multinomial() -- the empty product, by the same convention as Factorial(0) = 1.
+  // Multinomial() -- the empty product, by the same convention as Factorial(0) = 1 -- and
+  // Multinomial(x) for any single x, symbolic or not: x!/x! = 1.
   wrapOperator(
     ce,
     ["Multinomial"],
-    (ops) => ops.length === 0,
+    (ops) => ops.length <= 1,
     () => () => ce.One,
   );
 
@@ -295,7 +302,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["CatalanNumber", 2.3],
-    (ops) => notExact(ops[0]),
+    (ops) => inexactNumber(ops[0]),
     () => (ops) => {
       const n = ops[0];
       return div(gamma(add(mul(2, n), 1)), mul(gamma(add(n, 1)), gamma(add(n, 2)))).N();
@@ -343,7 +350,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     (ops) => {
       const exactRational = (op: BoxedExpression) =>
         integerAt(op) === undefined && bigRationalAt(op) !== undefined;
-      return ops.some(notExact) && !ops.some(exactRational);
+      return ops.some(inexactNumber) && !ops.some(exactRational);
     },
     () => (ops) => {
       const total = ce.function("Add", [...ops]);
@@ -360,7 +367,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Factorial2", 2.5],
-    (ops) => notExact(ops[0]) && !isNonReal(ops[0]),
+    (ops) => inexactNumber(ops[0]) && !isNonReal(ops[0]),
     () => (ops) => {
       const x = ops[0];
       const pi = ce.symbol("Pi");
@@ -376,7 +383,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Subfactorial", 4.5],
-    (ops) => notExact(ops[0]),
+    (ops) => inexactNumber(ops[0]),
     () => (ops) => {
       const n = ops[0];
       const incomplete = ce.function("Gamma", [add(n, 1), -1]);
@@ -430,7 +437,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Fibonacci", 1.5],
-    (ops) => notExact(ops[0]) && !isProfinite(ops[0]),
+    (ops) => inexactNumber(ops[0]) && !isProfinite(ops[0]),
     () => (ops) => {
       const nu = ops[0];
       return div(
@@ -444,7 +451,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["LucasL", 2.5],
-    (ops) => notExact(ops[0]) && !isProfinite(ops[0]),
+    (ops) => inexactNumber(ops[0]) && !isProfinite(ops[0]),
     () => (ops) => {
       const nu = ops[0];
       return add(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)).N();
