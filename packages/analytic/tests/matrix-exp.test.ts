@@ -158,6 +158,53 @@ test("MatrixExp: rejects a non-square matrix, like native Inverse/Eigenvalues/â€
   expect(r.operator).toBe("Error");
 });
 
+test("MatrixExp: a skew-symmetric 2x2 generator reduces to a rotation, in Cos/Sin (#113)", () => {
+  const r = ce
+    .box([
+      "MatrixExp",
+      matrixExpr([
+        [0, 1],
+        [-1, 0],
+      ]),
+    ] as never)
+    .evaluate();
+  expect(r.toString()).toBe("[[cos(1),sin(1)],[-sin(1),cos(1)]]");
+});
+
+test("MatrixExp: Euler's identity for matrices -- rotation by pi is -I (#113)", () => {
+  const r = ce
+    .box(["MatrixExp", ["List", ["List", 0, ["Negate", "Pi"]], ["List", "Pi", 0]]] as never)
+    .evaluate();
+  expect(r.toString()).toBe("[[-1,0],[0,-1]]");
+});
+
+test("MatrixExp(A, v): e^A v, without a separate MatrixExp(A) call (#113)", () => {
+  const r = ce
+    .box([
+      "MatrixExp",
+      matrixExpr([
+        [0, 1],
+        [0, 0],
+      ]),
+      ["List", 1, 1],
+    ] as never)
+    .evaluate();
+  expect(r.toString()).toBe("[2,1]");
+});
+
+test("MatrixExp(A, v) agrees with MatrixExp(A) times v, on a golden case, under N() (#113)", () => {
+  const g = goldens[0];
+  const v = [1, 2, 3].slice(0, g.matrix.length);
+  const whole = ce.box(["MatrixExp", matrixExpr(g.matrix)] as never).N();
+  const rows = toRows(whole);
+  const expected = rows.map((row) => row.reduce((s, x, j) => s + x * v[j], 0));
+  const r = ce.box(["MatrixExp", matrixExpr(g.matrix), ["List", ...v]] as never).N();
+  const ours = operandsOf(r).map((e) => e.re);
+  for (let i = 0; i < expected.length; i++) {
+    expect(Math.abs(ours[i] - expected[i])).toBeLessThan(1e-8);
+  }
+});
+
 test("MatrixExp: a generic (non-structured) matrix stays symbolic without N()", () => {
   const r = ce
     .box([

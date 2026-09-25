@@ -235,18 +235,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Gamma", ["Interval", 1.4, 1.5]],
         expected: ["Interval", 0.8856031944108887, 0.8872638175030753],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Interval arithmetic: the image of $[1.4, 1.5]$, whose lower end is $\\Gamma$'s minimum at $x_0 = 1.4616\\ldots$; not yet",
+          "Interval arithmetic: the image of $[1.4, 1.5]$, whose lower end is $\\Gamma$'s minimum at $x_0 = 1.4616\\ldots$",
       },
       {
         expr: ["Gamma", ["Around", 2.5, 0.01]],
         expected: ["Around", 1.329340388179137, 0.009347345216260856],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\Gamma(2.5 \\pm 0.01) = 1.3293 \\pm 0.0093$; `Around` is not declared",
+        caption: "Uncertainty propagation: $\\Gamma(2.5 \\pm 0.01) = 1.3293 \\pm 0.0093$",
       },
       {
         expr: ["Gamma", "a", 0],
@@ -405,10 +402,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaLn", ["Around", 1.2, 0.01]],
         expected: ["Around", -0.08537409000331583, 0.002890398965921884],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation through $\\ln\\Gamma$, with slope $\\psi(1.2)$; `Around` is not declared",
+        caption: "Uncertainty propagation through $\\ln\\Gamma$, with slope $\\psi(1.2)$",
       },
       {
         expr: ["D", ["GammaLn", "x"], "x"],
@@ -649,10 +644,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erf", ["Interval", -2.1, -1.9]],
         expected: ["Interval", -0.997020533343667, -0.9927904292352575],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Interval arithmetic: Erf is increasing, so the image of an interval is the interval of the endpoint images; today a type error",
+          "Interval arithmetic: Erf is increasing, so the image of an interval is the interval of the endpoint images",
       },
       {
         expr: ["Erf", ["Around", 2, 0.01]],
@@ -784,17 +778,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erfc", ["Interval", 0.2, 0.3]],
         expected: ["Interval", 0.6713732405408726, 0.7772974107895215],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Interval arithmetic: Erfc is decreasing, so the endpoints swap; today a type error",
+        caption: "Interval arithmetic: Erfc is decreasing, so the endpoints swap",
       },
       {
         expr: ["Erfc", ["Around", 2, 0.01]],
         expected: ["Around", 0.004677734981047266, 0.00020666985354092054],
-        aspirational: true,
         category: "Scope",
-        caption: "Uncertainty propagation; `Around` is not declared",
+        caption: "Uncertainty propagation",
       },
       {
         expr: ["Erfc", ["Negate", "x"]],
@@ -897,17 +888,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["ErfInv", ["Interval", 0.5, 0.6]],
         expected: ["Interval", 0.4769362762044699, 0.5951160814499948],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Interval arithmetic: the inverse is increasing, so endpoints map to endpoints; today a type error",
+        caption: "Interval arithmetic: the inverse is increasing, so endpoints map to endpoints",
       },
       {
         expr: ["ErfInv", ["Around", 0.5, 0.01]],
         expected: ["Around", 0.4769362762044699, 0.011125848189719498],
-        aspirational: true,
         category: "Scope",
-        caption: "Uncertainty propagation; `Around` is not declared",
+        caption: "Uncertainty propagation",
       },
       {
         expr: ["Multiply", ["Sqrt", 2], ["ErfInv", 0.95]],
@@ -1171,17 +1159,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Zeta", ["Interval", 1.1, 1.2]],
         expected: ["Interval", 5.591582441177752, 10.584448464950801],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: $\\zeta$ is decreasing on $(1, \\infty)$; not yet",
+        caption: "Interval arithmetic: $\\zeta$ is decreasing on $(1, \\infty)$",
       },
       {
         expr: ["Zeta", ["Rational", 1, 2], ["Around", 0.5, 0.01]],
         expected: ["Around", -0.6048986434216304, 0.023882689737774167],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Uncertainty in $a$, propagated with $\\partial_a\\zeta(s, a) = -s\\,\\zeta(s+1, a)$; `Around` is not declared",
+          "Uncertainty in $a$, propagated with $\\partial_a\\zeta(s, a) = -s\\,\\zeta(s+1, a)$",
       },
       {
         expr: ["Zeta", "s", 1],
@@ -1289,9 +1275,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["HurwitzZeta", 2, ["Around", 0.5, 0.01]],
         expected: ["Around", 4.934802200544679, 0.1682879664423432],
-        aspirational: true,
         category: "Scope",
-        caption: "Uncertainty in $a$; `Around` is not declared",
+        caption: "Uncertainty in $a$",
       },
       {
         expr: ["HurwitzZeta", 2, ["Rational", 1, 2]],
@@ -1494,9 +1479,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["LerchPhi", ["Around", 0.5, 0.01], 1, 2],
         expected: ["Around", 0.7725887222397811, 0.00909645111040875],
-        aspirational: true,
         category: "Scope",
-        caption: "Uncertainty in $z$; `Around` is not declared",
+        caption: "Uncertainty in $z$",
       },
       {
         expr: ["LerchPhi", 0, "s", "a"],
@@ -1767,9 +1751,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyLog", 2, ["Interval", 0.7, 0.8]],
         expected: ["Interval", 0.8893776242860387, 1.0747946000082484],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic; not yet",
+        caption: "Interval arithmetic",
       },
       {
         expr: ["PolyLog", 1, 2, 1],
@@ -1944,9 +1927,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyGamma", 1, ["Interval", 3.45, 3.46]],
         expected: ["Interval", 0.3347428975404412, 0.3358572806118117],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: the trigamma is decreasing; not yet",
+        caption: "Interval arithmetic: the trigamma is decreasing",
       },
       {
         expr: ["PolyGamma", 0, 1],
@@ -2121,9 +2103,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Digamma", ["Interval", 1.23, 1.24]],
         expected: ["Interval", -0.2516694306961001, -0.2394936791259368],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: $\\psi$ is increasing on $(0, \\infty)$; not yet",
+        caption: "Interval arithmetic: $\\psi$ is increasing on $(0, \\infty)$",
       },
       {
         expr: ["D", ["Digamma", "x"], "x"],
@@ -2277,9 +2258,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaRegularized", ["Rational", 2, 5], ["Interval", 0.21, 0.22]],
         expected: ["Interval", 0.42124489579195323, 0.4303906669405995],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: $Q$ is decreasing in $z$; today a type error",
+        caption: "Interval arithmetic: $Q$ is decreasing in $z$",
       },
       {
         expr: ["Subtract", 1, ["GammaRegularized", 0.5, 1.9207294103470425]],
@@ -2420,16 +2400,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["BetaRegularized", ["Interval", 0.2, 0.3], 2, 1],
         expected: ["Interval", 0.04, 0.09],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: $I_x(2, 1) = x^2$; today a type error",
+        caption: "Interval arithmetic: $I_x(2, 1) = x^2$",
       },
       {
         expr: ["BetaRegularized", ["Around", 0.3, 0.01], 1, 2],
         expected: ["Around", 0.51, 0.014],
-        aspirational: true,
         category: "Scope",
-        caption: "Uncertainty propagation; `Around` is not declared",
+        caption: "Uncertainty propagation",
       },
       {
         expr: ["BetaRegularized", 0.2111111111111111, 5, 1],

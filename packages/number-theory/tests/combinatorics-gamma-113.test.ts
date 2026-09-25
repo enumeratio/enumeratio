@@ -125,3 +125,76 @@ test("Multinomial through Gamma reduces to Binomial's Gamma form at two real par
   const b = 1.5;
   expect(run(["Multinomial", a, b]).re).toBeCloseTo(run(["Binomial", a + b, a]).re!, 6);
 });
+
+// #113 §7 follow-up: Binomial(n, n) -> 1, Multinomial() -> 1, and Pochhammer at a
+// rational order through Gamma, exactly.
+test("Binomial(n, n) is 1 for symbolic n", () => {
+  expect(json(["Binomial", "n", "n"])).toEqual(1);
+  expect(json(["Binomial", "m", "m"])).toEqual(1);
+});
+test("Binomial(5, 5) still answers the plain integer case", () => {
+  expect(json(["Binomial", 5, 5])).toEqual(1);
+});
+test("Multinomial() is the empty product, 1", () => {
+  expect(json(["Multinomial"])).toEqual(1);
+});
+test("Multinomial(n) with one argument is still 1", () => {
+  expect(json(["Multinomial", 5])).toEqual(1);
+  expect(json(["Multinomial", "n"])).toEqual(1);
+});
+test("Pochhammer at a rational order routes through Gamma via evaluate, not N", () => {
+  // (3/2)_(1/2) = Gamma(2)/Gamma(3/2), left as the Gamma ratio here -- this file
+  // declares only @enumeratio/number-theory, and the ratio's further exact reduction to
+  // 2/sqrt(pi) is @enumeratio/analytic's Gamma simplification (see the full reference
+  // engine's equivalent example, which pins that exact form end to end). The point this
+  // test pins is narrower: the call reaches `.evaluate()`, not `.N()` -- so it stays
+  // exact wherever the engine CAN simplify it further, instead of a decimal.
+  expect(json(["Pochhammer", ["Rational", 3, 2], ["Rational", 1, 2]])).toEqual([
+    "Divide",
+    ["Gamma", 2],
+    ["Gamma", ["Rational", 3, 2]],
+  ]);
+});
+test("Pochhammer at a rational order matches the direct Gamma ratio numerically", () => {
+  for (const [a, n] of [
+    [1.5, 0.5],
+    [2.5, 1.5],
+    [3, 0.5],
+  ] as const) {
+    const expected = ce.box(["Divide", ["Gamma", ["Add", a, n]], ["Gamma", a]]).N().re;
+    expect(run(["Pochhammer", a, n]).N().re).toBeCloseTo(expected!, 9);
+  }
+});
+test("Pochhammer with a nonnegative integer order is untouched (falling-factorial product)", () => {
+  expect(json(["Pochhammer", ["Rational", 1, 2], 3])).toEqual(["Rational", 15, 8]);
+});
+
+// Fibonacci(nu, x) at a real order and real argument: the two-variable Binet formula,
+// cross-checked against the direct root computation and against the plain Binet formula
+// (Fibonacci(nu)) at x = 1.
+function fibonacciBinetX(nu: number, x: number): number {
+  const disc = Math.sqrt(x * x + 4);
+  const r = (x + disc) / 2;
+  return (r ** nu - Math.cos(Math.PI * nu) * r ** -nu) / disc;
+}
+test("Fibonacci(nu, x) at a real order and argument matches the two-variable Binet formula", () => {
+  for (const nu of [1.5, 5.8, -2.25]) {
+    for (const x of [1, 2, 3, -0.5]) {
+      expect(run(["Fibonacci", nu, x]).re, `F_${nu}(${x})`).toBeCloseTo(fibonacciBinetX(nu, x), 6);
+    }
+  }
+});
+test("Fibonacci(nu, 1) at a real order matches the plain Binet formula Fibonacci(nu)", () => {
+  for (const nu of [1.5, 2.75, 5.8]) {
+    expect(run(["Fibonacci", nu, 1]).re).toBeCloseTo(run(["Fibonacci", nu]).re!, 6);
+  }
+});
+test("Fibonacci(n, x) with a nonnegative integer order still uses the exact recurrence", () => {
+  expect(json(["Fibonacci", 7, "x"])).toEqual([
+    "Add",
+    ["Power", "x", 6],
+    ["Multiply", 5, ["Power", "x", 4]],
+    ["Multiply", 6, ["Power", "x", 2]],
+    1,
+  ]);
+});

@@ -2119,12 +2119,19 @@ export const collections: readonly ReferenceEntry[] = [
         call: "Product(collection)",
         description: "the product of all elements in the collection.",
       },
+      {
+        call: "Product(body, Tuple(index, lo, hi))",
+        description:
+          "a symbolic product over a range, closed-form whenever `body` is a power of the index (a factorial power) or a power WITH the index in the exponent (folds to a single power via a closed-form sum of the exponent); nested `Tuple` clauses reduce inner-first, so an inner limit depending on the outer index still closes.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "The empty product is 1 by convention, matching $Factorial(0)$. See [[Factorial]].",
       "The product of $1$ through $n$ is $n!$: $Product(Range(1, n)) = Factorial(n)$.",
       "Applies $\\mathrm{Times}$ across the list's elements (the product of a list).",
       "Forces evaluation of a lazy collection like [[Range]], which otherwise stays unevaluated on its own.",
+      "A symbolic bound closes in two general shapes: $\\prod i^m = (\\prod i)^m$ for $m$ free of the index (a factorial power), and $\\prod c^{f(i)} = c^{\\sum f(i)}$ for $c$ free of the index, the sum found by Faulhaber's formula for any polynomial $f$. A product with more than one `Tuple` clause reduces inner-first, so a triangular product (an inner limit depending on the outer index) closes too, once the inner reduction leaves a shape the outer sum recognises.",
     ],
     examples: [
       { expr: ["Product", ["List", 1, 2, 3, 4]], expected: 24 },
@@ -2153,8 +2160,7 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Product", ["Power", "i", 2], ["Tuple", "i", 1, "n"]],
         expected: ["Power", ["Factorial", "n"], 2],
-        aspirational: true,
-        caption: "A symbolic upper limit: $\\prod_{i=1}^{n} i^2 = (n!)^2$; not yet",
+        caption: "A symbolic upper limit: $\\prod_{i=1}^{n} i^2 = (n!)^2$",
       },
       {
         expr: ["Product", "k", ["Tuple", "k", 1, "n"]],
@@ -2165,9 +2171,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Product", ["Power", "x", "k"], ["Tuple", "k", 1, "n"]],
         expected: ["Power", "x", ["Multiply", ["Rational", 1, 2], "n", ["Add", "n", 1]]],
-        aspirational: true,
         category: "Scope",
-        caption: "Exponents add: $\\prod_{k=1}^{n} x^k = x^{n(n+1)/2}$; not yet",
+        caption: "Exponents add: $\\prod_{k=1}^{n} x^k = x^{n(n+1)/2}$",
       },
       {
         expr: ["Product", ["Divide", ["Add", "k", 1], "k"], ["Tuple", "k", 1, "n"]],
@@ -2208,9 +2213,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Product", ["Add", "i", "j"], ["Tuple", "i", 1, 3], ["Tuple", "j", 1, "i"]],
         expected: 2880,
-        aspirational: true,
         category: "Scope",
-        caption: "An inner limit that depends on the outer index, a triangular product; not yet",
+        caption: "An inner limit that depends on the outer index, a triangular product",
       },
       {
         expr: [
@@ -2224,10 +2228,9 @@ export const collections: readonly ReferenceEntry[] = [
           2,
           ["Multiply", ["Rational", 1, 2], "p", ["Power", ["Add", "p", 1], 2]],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "A symbolic triangular product: $\\prod_{i=1}^{p}\\prod_{j=1}^{i} 2^{i+j} = 2^{p(p+1)^2/2}$; not yet",
+          "A symbolic triangular product: $\\prod_{i=1}^{p}\\prod_{j=1}^{i} 2^{i+j} = 2^{p(p+1)^2/2}$",
       },
       {
         expr: [
