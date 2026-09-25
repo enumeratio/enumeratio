@@ -8,9 +8,10 @@ import {
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
-import { factorInteger, invMod, isPrime } from "@enumeratio/residues";
+import { factorInteger, gcd as bigGcd, invMod, isPrime } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
+  divideExact,
   divisorsGaussian,
   divisorSigmaGaussian,
   extendedGcd,
@@ -351,3 +352,83 @@ export function declareIntegerExponentGaussian(ce: ComputeEngine): void {
     2,
   );
 }
+
+// ─── GCD/LCM of Gaussian rationals ──────────────────────────────────────────────────────
+//
+// The same generalization Wolfram gives plain rationals -- gcd(p1/q1, p2/q2) =
+// gcd(p1,p2)/lcm(q1,q2), lcm(p1/q1, p2/q2) = lcm(p1,p2)/gcd(q1,q2), for p/q already in
+// lowest terms -- carried into ℤ[i]. Every Gaussian rational a+bi (a, b ∈ ℚ) has a unique
+// (up to unit) numerator n ∈ ℤ[i] and denominator d ∈ ℤ⁺ with a+bi = n/d and d the LCM of
+// a and b's own denominators: `numeratorDenominator` reads that pair straight off the
+// boxed expression, and the fold below is the plain-rational identity above, over ℤ[i]'s
+// own gcd/lcm (gaussian.ts) instead of ℤ's.
+//
+// Disjoint from the pure-Gaussian-integer wrapper earlier in this file: gated on at least
+// one operand actually carrying a denominator > 1, so a call every operand of which is
+// already a Gaussian integer still reaches that handler (attached first, captured as this
+// wrapper's `native` fallback) unchanged.
+
+interface GaussianRational {
+  readonly n: Gaussian; // numerator, a Gaussian integer
+  readonly d: bigint; // denominator, a positive rational integer -- lcm(denom(re), denom(im))
+}
+
+/** `a+bi` (a, b ∈ ℚ) as a numerator/denominator pair, or `undefined` if either part isn't
+ *  an exact rational (a float, a free variable, an irrational constant, …). */
+function numeratorDenominator(
+  ce: ComputeEngine,
+  expr: BoxedExpression | undefined,
+): GaussianRational | undefined {
+  if (expr === undefined) return undefined;
+  let reRat = bigRationalAt(expr);
+  let imRat: readonly [bigint, bigint] | undefined = [0n, 1n];
+  if (reRat === undefined) {
+    const json = expr.json;
+    if (!Array.isArray(json) || json[0] !== "Complex") return undefined;
+    reRat = bigRationalAt(ce.box(json[1] as never));
+    imRat = bigRationalAt(ce.box(json[2] as never));
+  }
+  if (reRat === undefined || imRat === undefined) return undefined;
+  const [reN, reD] = reRat;
+  const [imN, imD] = imRat;
+  const d = (reD * imD) / bigGcd(reD, imD); // lcm(reD, imD)
+  return { n: [reN * (d / reD), imN * (d / imD)], d };
+}
+
+function declareGaussianRationalGcdLcm(ce: ComputeEngine): void {
+  const parse = (expr: BoxedExpression): GaussianRational | undefined =>
+    numeratorDenominator(ce, expr);
+  const applies = (ops: readonly BoxedExpression[]): boolean => {
+    if (ops.length < 2) return false;
+    const parsed = ops.map(parse);
+    if (parsed.some((r) => r === undefined)) return false;
+    return parsed.some((r) => r!.d !== 1n); // otherwise the plain Gaussian-integer path answers it
+  };
+
+  wrapOperator(ce, ["GCD", 1, 1], applies, () => (ops) => {
+    const rs = ops.map(parse) as GaussianRational[];
+    const n = rs.map((r) => r.n).reduce((a, b) => gcd(a, b));
+    const d = rs.map((r) => r.d).reduce((a, b) => (a * b) / bigGcd(a, b)); // lcm of denominators
+    const scaled = divideExact(n, [d, 0n]);
+    return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
+  });
+
+  wrapOperator(ce, ["LCM", 1, 1], applies, () => (ops) => {
+    const rs = ops.map(parse) as GaussianRational[];
+    const n = rs.map((r) => r.n).reduce((a, b) => lcm(a, b));
+    const d = rs.map((r) => r.d).reduce((a, b) => bigGcd(a, b)); // gcd of denominators
+    const scaled = divideExact(n, [d, 0n]);
+    return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
+  });
+}
+
+/** `n/d` as a `Complex(Rational, Rational)`, for when `d` doesn't divide `n` evenly in ℤ[i]. */
+function rationalGaussianExpr(ce: ComputeEngine, n: Gaussian, d: bigint): BoxedExpression {
+  const part = (num: bigint): BoxedExpression =>
+    d === 1n ? ce.number(num) : ce.function("Rational", [ce.number(num), ce.number(d)]).evaluate();
+  const re = part(n[0]);
+  const im = part(n[1]);
+  return n[1] === 0n ? re : ce.function("Complex", [re, im]);
+}
+
+export { declareGaussianRationalGcdLcm };

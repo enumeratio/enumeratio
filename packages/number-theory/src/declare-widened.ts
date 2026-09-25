@@ -140,6 +140,30 @@ export function declareWidened(ce: ComputeEngine): void {
     2,
   );
 
+  // DivisorSigma with a non-integer rational k: the exact sum Σ dᵏ over the divisors of n
+  // — d^(1/2) for a non-square d is a genuine radical (Sqrt(2), Sqrt(3), …), so this stays
+  // symbolic the same way the free-symbol-k wrapper above does, just for a concrete k that
+  // happens not to be an integer instead of a free variable.
+  wrapOperator(
+    ce,
+    ["DivisorSigma", 1, 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[1]);
+      const k = bigRationalAt(ops[0]);
+      return ops.length === 2 && n !== undefined && n > 0n && k !== undefined && k[1] !== 1n;
+    },
+    () => (ops) => {
+      const divisors = operandsOf(ce.function("Divisors", [ops[1]!]).evaluate());
+      if (divisors.length === 0) return undefined;
+      return ce
+        .function(
+          "Add",
+          divisors.map((d) => ce.function("Power", [d, ops[0]!])),
+        )
+        .evaluate();
+    },
+  );
+
   // Over the rationals: gcd(p/q, …) = gcd(p, …)/lcm(q, …), and lcm(p/q, …) = lcm(p, …)/gcd(q, …) —
   // the largest rational whose integer multiples include all of them, and the smallest
   // positive one that is an integer multiple of each.
@@ -198,6 +222,38 @@ export function declareWidened(ce: ComputeEngine): void {
       return ce.symbol(squareFree ? "True" : "False");
     },
     1,
+  );
+
+  // IsSquareFree of a polynomial: gcd(f, ∂f/∂x) = 1 for every variable x present -- a
+  // repeated factor p (multiplicity ≥ 2) divides ∂f/∂x for any x that p itself depends
+  // on, so ONE variable finding a non-unit gcd is enough to answer False; concluding True
+  // needs every variable to come back a unit. `IsSquareFree(f, x)` (Wolfram's variable
+  // form) checks only that one x, treating every other symbol in f as a coefficient --
+  // which is exactly what `PolynomialGCD(f, g, x)` itself already does. Both `D` and
+  // `PolynomialGCD` are compute-engine's own; multivariate GCD (`x^3 - x^2 y`) and content
+  // extraction are handled by its own `polynomialGCDMulti`/`PolynomialGCD` machinery, not
+  // reimplemented here.
+  widenSignature(ce, "IsSquareFree", "(any, any?) -> boolean");
+  wrapOperator(
+    ce,
+    ["IsSquareFree", 1, 1],
+    (ops) => {
+      if (ops.length < 1 || ops.length > 2 || ops[0] === undefined) return false;
+      if (ops[0].unknowns.length === 0) return false; // a plain number: leave to the other wrappers
+      if (ops.length === 2 && symbolNameOf(ops[1]!) === undefined) return false;
+      return true;
+    },
+    () => (ops) => {
+      const f = ops[0]!;
+      const variables = ops.length === 2 ? [symbolNameOf(ops[1]!)!] : f.unknowns;
+      if (variables.length === 0) return undefined;
+      for (const v of variables) {
+        const derivative = ce.function("D", [f, ce.symbol(v)]).evaluate();
+        const g = ce.function("PolynomialGCD", [f, derivative, ce.symbol(v)]).evaluate();
+        if (g.unknowns.length > 0) return ce.False; // a non-unit gcd: a repeated factor in v
+      }
+      return ce.True;
+    },
   );
 
   // FactorInteger of a rational p/q: the prime factors of p, and of q with their exponents

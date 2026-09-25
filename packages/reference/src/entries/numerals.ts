@@ -262,6 +262,12 @@ export const numerals: readonly ReferenceEntry[] = [
         description: "a negative base reads with the same Horner reduction as a positive one.",
         library: "enumeratio-numerals",
       },
+      {
+        call: "FromDigits({digits, exponent})",
+        description:
+          "reads the single `{digits, exponent}` pair [[RealDigits]] itself returns, base 10.",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies",
@@ -352,10 +358,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["FromDigits", ["List", L(1, 4, 1, 5), 1]],
         expected: ["Rational", 283, 200],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "a `{digits, exponent}` pair — the shape `RealDigits` gives — reads as $1.415$; not yet supported",
+        caption: "a `{digits, exponent}` pair — the shape `RealDigits` gives — reads as $1.415$",
       },
       {
         expr: ["FromDigits", ["IntegerDigits", 58127, 2], 2],
