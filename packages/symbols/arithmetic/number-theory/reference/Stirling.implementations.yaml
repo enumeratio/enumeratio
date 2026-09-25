@@ -22,11 +22,11 @@ stirling-5-2:
   sage:
     in: stirling_number2(5, 2)
     out: "15"
-  julia:
-    in: Combinatorics.stirlings2(5, 2)
-    out: "15"
   mathlib4:
     in: (Nat.stirlingSecond 5 2)
+    out: "15"
+  julia:
+    in: Combinatorics.stirlings2(big(5), 2)
     out: "15"
 stirling-6-3:
   epsil:
@@ -52,11 +52,11 @@ stirling-6-3:
   sage:
     in: stirling_number2(6, 3)
     out: "90"
-  julia:
-    in: Combinatorics.stirlings2(6, 3)
-    out: "90"
   mathlib4:
     in: (Nat.stirlingSecond 6 3)
+    out: "90"
+  julia:
+    in: Combinatorics.stirlings2(big(6), 3)
     out: "90"
 one-block-means-one-partition-s-n-1-1:
   epsil:
@@ -82,11 +82,11 @@ one-block-means-one-partition-s-n-1-1:
   sage:
     in: stirling_number2(5, 1)
     out: "1"
-  julia:
-    in: Combinatorics.stirlings2(5, 1)
-    out: "1"
   mathlib4:
     in: (Nat.stirlingSecond 5 1)
+    out: "1"
+  julia:
+    in: Combinatorics.stirlings2(big(5), 1)
     out: "1"
 singletons-only-s-n-n-1:
   epsil:
@@ -112,11 +112,11 @@ singletons-only-s-n-n-1:
   sage:
     in: stirling_number2(5, 5)
     out: "1"
-  julia:
-    in: Combinatorics.stirlings2(5, 5)
-    out: "1"
   mathlib4:
     in: (Nat.stirlingSecond 5 5)
+    out: "1"
+  julia:
+    in: Combinatorics.stirlings2(big(5), 5)
     out: "1"
 row-sums-give-the-bell-numbers:
   epsil:
@@ -160,11 +160,11 @@ the-empty-set-has-one-partition-into-no-blocks:
   sage:
     in: stirling_number2(0, 0)
     out: "1"
-  julia:
-    in: Combinatorics.stirlings2(0, 0)
-    out: "1"
   mathlib4:
     in: (Nat.stirlingSecond 0 0)
+    out: "1"
+  julia:
+    in: Combinatorics.stirlings2(big(0), 0)
     out: "1"
 stirling-20-10:
   epsil:
@@ -184,10 +184,11 @@ stirling-20-10:
     in: stirling(20, 10)
   sage:
     in: stirling_number2(20, 10)
-  julia:
-    in: Combinatorics.stirlings2(20, 10)
   mathlib4:
     in: (Nat.stirlingSecond 20 10)
+  julia:
+    in: Combinatorics.stirlings2(big(20), 10)
+    out: "5917584964655"
 exact-for-large-n:
   epsil:
     in: Stirling(50, 2)
@@ -206,10 +207,11 @@ exact-for-large-n:
     in: stirling(50, 2)
   sage:
     in: stirling_number2(50, 2)
-  julia:
-    in: Combinatorics.stirlings2(50, 2)
   mathlib4:
     in: (Nat.stirlingSecond 50 2)
+  julia:
+    in: Combinatorics.stirlings2(big(50), 2)
+    out: "562949953421311"
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: Stirling([2, 4, 6], 2)
@@ -225,10 +227,11 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: stirling([2, 4, 6], 2)
   sage:
     in: stirling_number2([2, 4, 6], 2)
-  julia:
-    in: Combinatorics.stirlings2([2, 4, 6], 2)
   mathlib4:
     in: (Nat.stirlingSecond [2, 4, 6] 2)
+  julia:
+    in: "[Combinatorics.stirlings2(big(2), 2), Combinatorics.stirlings2(big(4), 2), Combinatorics.stirlings2(big(6), 2)]"
+    out: "[1, 7, 31]"
 two-blocks-s-n-2-2-n-1-1:
   epsil:
     in: Stirling(10, 2) == 2 ^ 9 - 1
@@ -247,10 +250,11 @@ two-blocks-s-n-2-2-n-1-1:
     in: enumeratio_equal(stirling(10, 2), ((2**9) - 1))
   sage:
     in: bool(stirling_number2(10, 2) == ((2^9) - 1))
-  julia:
-    in: (Combinatorics.stirlings2(10, 2) == ((big(2)^9) - 1))
   mathlib4:
     in: (decide ((Nat.stirlingSecond 10 2) = ((2 ^ 9) - 1)))
+  julia:
+    in: (Combinatorics.stirlings2(big(10), 2) == ((big(2)^9) - 1))
+    out: "true"
 s-n-n-1-binom-n-2-one-block-is-a-pair:
   epsil:
     in: Stirling(6, 5) == Binomial(6, 2)
@@ -269,10 +273,11 @@ s-n-n-1-binom-n-2-one-block-is-a-pair:
     in: enumeratio_equal(stirling(6, 5), binomial(6, 2))
   sage:
     in: bool(stirling_number2(6, 5) == binomial(6, 2))
-  julia:
-    in: (Combinatorics.stirlings2(6, 5) == binomial(ZZ(6), ZZ(2)))
   mathlib4:
     in: (decide ((Nat.stirlingSecond 6 5) = (Nat.choose 6 2)))
+  julia:
+    in: (Combinatorics.stirlings2(big(6), 5) == binomial(ZZ(6), ZZ(2)))
+    out: "true"
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j:
   epsil:
     in: Stirling(6, 3) == Sum((-1) ^ (3 - j) * Binomial(3, j) * j ^ 6, (j, 0, 3)) / 3!
@@ -319,10 +324,11 @@ the-ways-to-split-10-distinct-items-among-3:
     in: stirling(10, 3)
   sage:
     in: stirling_number2(10, 3)
-  julia:
-    in: Combinatorics.stirlings2(10, 3)
   mathlib4:
     in: (Nat.stirlingSecond 10 3)
+  julia:
+    in: Combinatorics.stirlings2(big(10), 3)
+    out: "9330"
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0:
   epsil:
     in: Stirling(5, 0)
@@ -341,10 +347,11 @@ no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0:
     in: stirling(5, 0)
   sage:
     in: stirling_number2(5, 0)
-  julia:
-    in: Combinatorics.stirlings2(5, 0)
   mathlib4:
     in: (Nat.stirlingSecond 5 0)
+  julia:
+    in: Combinatorics.stirlings2(big(5), 0)
+    out: "0"
 k-n-is-0:
   epsil:
     in: Stirling(3, 5)
@@ -363,7 +370,8 @@ k-n-is-0:
     in: stirling(3, 5)
   sage:
     in: stirling_number2(3, 5)
-  julia:
-    in: Combinatorics.stirlings2(3, 5)
   mathlib4:
     in: (Nat.stirlingSecond 3 5)
+  julia:
+    in: Combinatorics.stirlings2(big(3), 5)
+    out: "0"

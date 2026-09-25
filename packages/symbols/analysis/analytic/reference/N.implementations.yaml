@@ -62,10 +62,14 @@ an-exact-tie-rounds-to-the-even-digit-0-125:
     in: N((1/8))
   oscar:
     in: ((1 // 8))
-  julia:
-    in: ((1 // 8))
   rust:
     in: nf(rational(n(1), n(8)))
+  julia:
+    in: ((1 // 8))
+    out: "0.125"
+    verdict: disagree
+    kind: rounding-mode
+    note: N's digit count is dropped for Julia — it's numeric already, per the mapping's own note. At this exact tie the untruncated 0.125 differs from our round-half-to-even N(1/8, 2) = 0.12.
 and-0-375-to-0-38:
   epsil:
     in: N(3 / 8, 2)
@@ -83,7 +87,11 @@ and-0-375-to-0-38:
     in: N((3/8))
   oscar:
     in: ((3 // 8))
-  julia:
-    in: ((3 // 8))
   rust:
     in: nf(rational(n(3), n(8)))
+  julia:
+    in: ((3 // 8))
+    out: "0.375"
+    verdict: disagree
+    kind: rounding-mode
+    note: N's digit count is dropped for Julia — it's numeric already, per the mapping's own note. At this exact tie the untruncated 0.375 differs from our round-half-to-even N(3/8, 2) = 0.38.

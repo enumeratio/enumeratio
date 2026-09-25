@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1417, disagree 70, inconclusive 0, error 3
+## wolfram — agree 1417, disagree 69, inconclusive 0, error 3
 
 | example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
 | ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -21,7 +21,6 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `At/an-out-of-range-index-evaluates-to-nan-rather`                 | undefined-form | `NaN`                                                                                        | `{1, 2, 3}[[10]]`                                                                            |
 | `BarnesG/an-exact-non-integer-argument-stays-symbolic`             | unevaluated    | `["BarnesG",["Rational",5,2]]`                                                               | `(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))`                                              |
 | `BetaRegularized/an-x-outside-0-1-is-left-unevaluated-rather-than` | domain         | `["BetaRegularized",2,2,3]`                                                                  | `8`                                                                                          |
-| `CatalanNumber/a-negative-argument-is-left-unevaluated`            | domain         | `["CatalanNumber",-1]`                                                                       | `-1`                                                                                         |
 | `DirichletBeta/even-s-ge-4-has-no-closed-form-and-stays`           | unevaluated    | `["DirichletBeta",4]`                                                                        | `(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16`                                                     |
 | `DirichletEta/an-exact-non-integer-argument-stays-symbolic`        | unevaluated    | `["DirichletEta",["Rational",1,2]]`                                                          | `(1 - Sqrt[2])*Zeta[1/2]`                                                                    |
 | `DirichletL/and-keeps-zeta-s-pole-a-non-principal-l-is`            | undefined-form | `ComplexInfinity`                                                                            | `DirichletL[12, 1, 1]`                                                                       |
@@ -98,7 +97,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 827, disagree 10, inconclusive 4, error 40
+## sympy — agree 827, disagree 10, inconclusive 3, error 40
 
 | example                                                    | kind           | ours                                                | theirs                               |
 | ---------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------ |
@@ -177,7 +176,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 546, disagree 19, inconclusive 6, error 49
+## sage — agree 546, disagree 19, inconclusive 5, error 49
 
 | example                                                          | kind           | ours                                                                                         | theirs                                                                                       |
 | ---------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -282,39 +281,74 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## julia — agree 105, disagree 2, inconclusive 0, error 18
+## julia — agree 161, disagree 7, inconclusive 0, error 48
 
-| example                                  | kind       | ours      | theirs   |
-| ---------------------------------------- | ---------- | --------- | -------- |
-| `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9` | convention | `-362880` | `362880` |
-| `StirlingS1/stirlings1-5-2`              | convention | `-50`     | `50`     |
+| example                                                    | kind          | ours      | theirs   |
+| ---------------------------------------------------------- | ------------- | --------- | -------- |
+| `Binomial/both-arguments-negative-integers-the-limiting`   | convention    | `6`       | `0`      |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s` | convention    | `true`    | `false`  |
+| `N/an-exact-tie-rounds-to-the-even-digit-0-125`            | rounding-mode | `0.12`    | `0.125`  |
+| `N/and-0-375-to-0-38`                                      | rounding-mode | `0.38`    | `0.375`  |
+| `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9`                   | convention    | `-362880` | `362880` |
+| `StirlingS1/s-n-n-1-binom-n-2`                             | convention    | `true`    | `false`  |
+| `StirlingS1/stirlings1-5-2`                                | convention    | `-50`     | `50`     |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                                                      | message                                                                                      |
-| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| `BellNumber/a-negative-argument-is-left-unevaluated`         | `DomainError with -1: Argument must be non-negative`                                         |
-| `CatalanNumber/a-negative-argument-is-left-unevaluated`      | `DomainError with -1: n must be nonnegative`                                                 |
-| `Factorial/extends-to-non-integers-via-the-gamma-function`   | `AssertionError: denominator(x) == 1`                                                        |
-| `Factorial/negative-integers-are-poles-of-the-gamma`         | `DomainError with -1: Argument must be non-negative`                                         |
-| `Factorial/threads-element-wise-over-a-list`                 | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `GCD/gaussian-integers-the-associate-in-the-first`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `GCD/lists-aren-t-threaded-element-wise-they-re`             | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `IsPrime/a-gaussian-prime-its-norm-5-is-prime`               | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `IsPrime/threads-element-wise-over-a-list`                   | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `LCM/1-3i-i-3-i-associates-share-their-multiples`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `LucasL/negative-indices-are-supported-via-l-n-1-n-l-n`      | `DomainError with -1: n must be nonnegative`                                                 |
-| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                      | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
-| `Mod/division-by-a-0-modulus-yields-nan-rather-than`         | `DivideError: integer division error`                                                        |
-| `Mod/exact-in-both-parts-past-2-53`                          | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
-| `Mod/gaussian-integers-the-quotient-rounds-so-each`          | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`        | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `Mod/threads-element-wise-over-a-list`                       | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
-| `MoebiusMu/mu-is-only-defined-for-positive-integers-compute` | `DomainError with 0: Argument must be positive`                                              |
+| example                                                          | message                                                                                      |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `BellNumber/a-negative-argument-is-left-unevaluated`             | `DomainError with -1: Argument must be non-negative`                                         |
+| `Binomial/a-gaussian-integer-n-binom-1-i-5-frac-1-i-12`          | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `Binomial/a-rational-n-with-integer-k-gives-the-exact`           | `AssertionError: denominator(x) == 1`                                                        |
+| `Binomial/a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0`          | `InexactError: convert(ZZRingElem, 0.5)`                                                     |
+| `Binomial/binom-1-2-3-frac-5-16-the-central-binomial`            | `AssertionError: denominator(x) == 1`                                                        |
+| `Binomial/complex-n-and-k-evaluate-through-the-gamma`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `Binomial/half-integer-arguments-evaluate-exactly-through`       | `AssertionError: denominator(x) == 1`                                                        |
+| `Binomial/real-arguments-evaluate-through-the-gamma`             | `InexactError: convert(ZZRingElem, 8.5)`                                                     |
+| `CatalanNumber/c-1-2-frac-8-3-pi-by-analytic-continuation`       | `MethodError: no method matching catalannum(::Rational{Int64}) The function 'catalannum' ex` |
+| `CatalanNumber/catalannumber-0-past-neg-1`                       | `DomainError with -2: n must be nonnegative`                                                 |
+| `CatalanNumber/catalannumber-neg-1-is-neg-1`                     | `DomainError with -1: n must be nonnegative`                                                 |
+| `CatalanNumber/catalannumber-neg-5-is-also-0`                    | `DomainError with -5: n must be nonnegative`                                                 |
+| `CatalanNumber/complex-arguments-evaluate-through-the-same`      | `MethodError: no method matching catalannum(::ComplexF64) The function 'catalannum' exists,` |
+| `CatalanNumber/half-integer-arguments-evaluate-exactly-through`  | `MethodError: no method matching catalannum(::Rational{Int64}) The function 'catalannum' ex` |
+| `CatalanNumber/real-arguments-evaluate-as-frac-gamma-2n-1-gamma` | `MethodError: no method matching catalannum(::Float64) The function 'catalannum' exists, bu` |
+| `Factorial/complex-arguments-1-i-gamma-2-i`                      | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `Factorial/extends-to-non-integers-via-the-gamma-function`       | `AssertionError: denominator(x) == 1`                                                        |
+| `Factorial/frac-12-gamma-frac-12-sqrt-pi-returned-as-a`          | `AssertionError: denominator(x) == 1`                                                        |
+| `Factorial/negative-integers-are-poles-of-the-gamma`             | `DomainError with -1: Argument must be non-negative`                                         |
+| `Factorial/negative-non-integers-are-defined-too-2-5-gamma`      | `InexactError: convert(ZZRingElem, -2.5)`                                                    |
+| `Factorial/real-arguments-evaluate-as-gamma-n-1`                 | `InexactError: convert(ZZRingElem, 3.5)`                                                     |
+| `Factorial/threads-element-wise-over-a-list`                     | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `Fibonacci/a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu`      | `InexactError: convert(ZZRingElem, 1.5)`                                                     |
+| `GCD/gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `GCD/gaussian-integers-the-associate-in-the-first`               | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `GCD/gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2`                 | `MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type ` |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`                 | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `IsPrime/a-gaussian-prime-its-norm-5-is-prime`                   | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `IsPrime/non-integers-are-not-prime`                             | `AssertionError: denominator(x) == 1`                                                        |
+| `IsPrime/threads-element-wise-over-a-list`                       | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `LCM/1-3i-i-3-i-associates-share-their-multiples`                | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `LCM/gaussian-primes-of-norm-41-and-13-the-lcm-is-the`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `LCM/gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3`                  | `MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type ` |
+| `LucasL/a-real-index-uses-l-nu-varphi-nu-cos-pi-nu`              | `MethodError: no method matching lucasnum(::Float64) The function 'lucasnum' exists, but no` |
+| `LucasL/an-odd-negative-index-flips-the-sign-l-11-l-11`          | `DomainError with -11: n must be nonnegative`                                                |
+| `LucasL/negative-indices-are-supported-via-l-n-1-n-l-n`          | `DomainError with -1: n must be nonnegative`                                                 |
+| `Mod/1-i-divides-5-3i-1-i-4-i`                                   | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
+| `Mod/a-gaussian-integer-5-3i-2-2-2i`                             | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                          | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
+| `Mod/division-by-a-0-modulus-yields-nan-rather-than`             | `DivideError: integer division error`                                                        |
+| `Mod/exact-in-both-parts-past-2-53`                              | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
+| `Mod/gaussian-integers-the-quotient-rounds-so-each`              | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`            | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `Mod/threads-element-wise-over-a-list`                           | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
+| `MoebiusMu/gaussian-integers-5-6i-is-a-gaussian-prime-norm`      | `MethodError: no method matching moebius_mu(::Complex{Int64}) The function 'moebius_mu' exi` |
+| `MoebiusMu/mu-is-only-defined-for-positive-integers-compute`     | `DomainError with 0: Argument must be positive`                                              |
+| `Totient/negative-n-varphi-n-varphi-n`                           | `DomainError with -10: Argument must be positive`                                            |
+| `Totient/varphi-0-0-as-in-wolfram`                               | `DomainError with 0: Argument must be positive`                                              |
 
 </details>
 
-## mathlib4 — agree 89, disagree 2, inconclusive 2, error 11
+## mathlib4 — agree 89, disagree 2, inconclusive 2, error 10
 
 | example                                  | kind       | ours      | theirs   |
 | ---------------------------------------- | ---------- | --------- | -------- |
@@ -327,7 +361,6 @@ Counts cover mapped examples only; unmapped ones have no row.
 | ------------------------------------------------------------ | --------------------------------------------- |
 | `Binomial/a-negative-k-also-gives-0`                         | `failed to synthesize instance of type class` |
 | `Binomial/a-negative-n-uses-the-generalized-formula-binom`   | `failed to synthesize instance of type class` |
-| `CatalanNumber/a-negative-argument-is-left-unevaluated`      | `failed to synthesize instance of type class` |
 | `Factorial/extends-to-non-integers-via-the-gamma-function`   | `Type mismatch`                               |
 | `Factorial/negative-integers-are-poles-of-the-gamma`         | `failed to synthesize instance of type class` |
 | `Factorial/threads-element-wise-over-a-list`                 | `Application type mismatch: The argument`     |

@@ -25,11 +25,11 @@ moebiusmu-1:
   oscar:
     in: moebius_mu(1)
     out: "1"
-  julia:
-    in: moebius_mu(1)
-    out: "1"
   mathlib4:
     in: (ArithmeticFunction.moebius 1)
+    out: "1"
+  julia:
+    in: moebius_mu(1)
     out: "1"
 moebiusmu-11:
   epsil:
@@ -58,11 +58,11 @@ moebiusmu-11:
   oscar:
     in: moebius_mu(11)
     out: "-1"
-  julia:
-    in: moebius_mu(11)
-    out: "-1"
   mathlib4:
     in: (ArithmeticFunction.moebius 11)
+    out: "-1"
+  julia:
+    in: moebius_mu(11)
     out: "-1"
 12-22-3-is-not-squarefree:
   epsil:
@@ -91,11 +91,11 @@ moebiusmu-11:
   oscar:
     in: moebius_mu(12)
     out: "0"
-  julia:
-    in: moebius_mu(12)
-    out: "0"
   mathlib4:
     in: (ArithmeticFunction.moebius 12)
+    out: "0"
+  julia:
+    in: moebius_mu(12)
     out: "0"
 10-2-5-a-product-of-an-even-number-of-distinct:
   epsil:
@@ -124,11 +124,11 @@ moebiusmu-11:
   oscar:
     in: moebius_mu(10)
     out: "1"
-  julia:
-    in: moebius_mu(10)
-    out: "1"
   mathlib4:
     in: (ArithmeticFunction.moebius 10)
+    out: "1"
+  julia:
+    in: moebius_mu(10)
     out: "1"
 sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind:
   epsil:
@@ -159,11 +159,11 @@ sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind:
   oscar:
     in: (moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))
     out: "0"
-  julia:
-    in: (moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))
-    out: "0"
   mathlib4:
     in: ((ArithmeticFunction.moebius 1) + (ArithmeticFunction.moebius 2) + (ArithmeticFunction.moebius 3) + (ArithmeticFunction.moebius 4) + (ArithmeticFunction.moebius 6) + (ArithmeticFunction.moebius 12))
+    out: "0"
+  julia:
+    in: (moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))
     out: "0"
 mu-is-only-defined-for-positive-integers-compute:
   epsil:
@@ -204,18 +204,18 @@ mu-is-only-defined-for-positive-integers-compute:
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers ["MoebiusMu", 0] and Oscar raises an error.'
-  julia:
-    in: moebius_mu(0)
-    out: "DomainError with 0: Argument must be positive"
-    verdict: error
-    kind: undefined-form
-    note: 'Both decline: compute-engine answers ["MoebiusMu", 0] and Nemo/Combinatorics.jl raises an error.'
   mathlib4:
     in: (ArithmeticFunction.moebius 0)
     out: "0"
     verdict: inconclusive
     kind: domain
     note: Mathlib defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated.
+  julia:
+    in: moebius_mu(0)
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["MoebiusMu", 0] and Nemo/Combinatorics.jl raises an error.'
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: MoebiusMu([1, 2, 3, 4])
@@ -241,10 +241,11 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: "[moebius(1), moebius(2), moebius(3), moebius(4)]"
   oscar:
     in: moebius_mu([1, 2, 3, 4])
-  julia:
-    in: moebius_mu([1, 2, 3, 4])
   mathlib4:
     in: (ArithmeticFunction.moebius [1, 2, 3, 4])
+  julia:
+    in: "[moebius_mu(1), moebius_mu(2), moebius_mu(3), moebius_mu(4)]"
+    out: "[1, -1, -1, 0]"
 gaussian-integers-5-6i-is-a-gaussian-prime-norm:
   epsil:
     in: MoebiusMu(5 + 6i)
@@ -267,6 +268,10 @@ gaussian-integers-5-6i-is-a-gaussian-prime-norm:
     in: moebius_mu(complex(5, 6))
   julia:
     in: moebius_mu(complex(5, 6))
+    out: "MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n"
+    verdict: error
+    kind: domain
+    note: Nemo's moebius_mu is rational-integer only, no Gaussian integers; ours extends μ through the Gaussian-prime factorization.
 listable-threads-over-a-list:
   epsil:
     in: MoebiusMu([4, 10, 17, 20])
@@ -284,10 +289,11 @@ listable-threads-over-a-list:
     in: "[moebius(4), moebius(10), moebius(17), moebius(20)]"
   oscar:
     in: moebius_mu([4, 10, 17, 20])
-  julia:
-    in: moebius_mu([4, 10, 17, 20])
   mathlib4:
     in: (ArithmeticFunction.moebius [4, 10, 17, 20])
+  julia:
+    in: "[moebius_mu(4), moebius_mu(10), moebius_mu(17), moebius_mu(20)]"
+    out: "[0, 1, -1, 0]"
 listable-over-a-range:
   epsil:
     in: MoebiusMu(Range(20))

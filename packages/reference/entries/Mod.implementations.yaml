@@ -22,14 +22,14 @@
   oscar:
     in: mod(17, 5)
     out: "2"
-  julia:
-    in: mod(17, 5)
-    out: "2"
   mathlib4:
     in: "((17 : ℤ) % 5)"
     out: "2"
   rust:
     in: mod_floor(n(17), n(5))
+    out: "2"
+  julia:
+    in: mod(17, 5)
     out: "2"
 100-mod-7:
   epsil:
@@ -55,14 +55,14 @@
   oscar:
     in: mod(100, 7)
     out: "2"
-  julia:
-    in: mod(100, 7)
-    out: "2"
   mathlib4:
     in: "((100 : ℤ) % 7)"
     out: "2"
   rust:
     in: mod_floor(n(100), n(7))
+    out: "2"
+  julia:
+    in: mod(100, 7)
     out: "2"
 the-result-takes-the-sign-of-the-modulus:
   epsil:
@@ -88,14 +88,14 @@ the-result-takes-the-sign-of-the-modulus:
   oscar:
     in: mod(-7, 3)
     out: "2"
-  julia:
-    in: mod(-7, 3)
-    out: "2"
   mathlib4:
     in: "(((-7) : ℤ) % 3)"
     out: "2"
   rust:
     in: mod_floor(n(-7), n(3))
+    out: "2"
+  julia:
+    in: mod(-7, 3)
     out: "2"
 threads-element-wise-over-a-list:
   epsil:
@@ -130,12 +130,6 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Mod is Listable and threads over the list; Oscar's takes scalars only.
-  julia:
-    in: mod([1, 2, 3, 4, 5], 3)
-    out: "MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function `mod` exists, but no meth"
-    verdict: error
-    kind: threading
-    note: compute-engine's Mod is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.
   mathlib4:
     in: "(([1, 2, 3, 4, 5] : ℤ) % 3)"
     out: Type mismatch
@@ -148,6 +142,12 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars.
+  julia:
+    in: mod([1, 2, 3, 4, 5], 3)
+    out: "MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function `mod` exists, but no meth"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.
 division-by-a-0-modulus-yields-nan-rather-than:
   epsil:
     in: 5 % 0
@@ -181,12 +181,6 @@ division-by-a-0-modulus-yields-nan-rather-than:
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers "NaN" and Oscar raises an error.'
-  julia:
-    in: mod(5, 0)
-    out: "DivideError: integer division error"
-    verdict: error
-    kind: undefined-form
-    note: 'Both decline: compute-engine answers "NaN" and Nemo/Combinatorics.jl raises an error.'
   mathlib4:
     in: "((5 : ℤ) % 0)"
     out: "5"
@@ -199,6 +193,12 @@ division-by-a-0-modulus-yields-nan-rather-than:
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers "NaN", and Rust gives panic: attempt to divide by zero.'
+  julia:
+    in: mod(5, 0)
+    out: "DivideError: integer division error"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" and Nemo/Combinatorics.jl raises an error.'
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer:
   epsil:
     in: 17 % 5 == (17 + 3 * 5) % 5
@@ -226,14 +226,14 @@ periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer:
   oscar:
     in: (mod(17, 5) == mod((17 + (3 * 5)), 5))
     out: "true"
-  julia:
-    in: (mod(17, 5) == mod((17 + (3 * 5)), 5))
-    out: "true"
   mathlib4:
     in: "(decide (((17 : ℤ) % 5) = (((17 + (3 * 5)) : ℤ) % 5)))"
     out: "true"
   rust:
     in: equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))
+    out: "true"
+  julia:
+    in: (mod(17, 5) == mod((17 + (3 * 5)), 5))
     out: "true"
 a-third-argument-offsets-the-range-the-result:
   epsil:
@@ -280,12 +280,13 @@ rationals-are-reduced-exactly:
     in: ((5/2) % 2)
   oscar:
     in: mod((5 // 2), 2)
-  julia:
-    in: mod((5 // 2), 2)
   mathlib4:
     in: "((((5 : ℚ) / 2) : ℤ) % 2)"
   rust:
     in: mod_floor(rational(n(5), n(2)), n(2))
+  julia:
+    in: mod((5 // 2), 2)
+    out: "0.5"
 3p14-mod-2:
   epsil:
     in: 3.14 % 2
@@ -303,12 +304,13 @@ rationals-are-reduced-exactly:
     in: (3.14 % 2)
   oscar:
     in: mod(3.14, 2)
-  julia:
-    in: mod(3.14, 2)
   mathlib4:
     in: "((3.14 : ℤ) % 2)"
   rust:
     in: mod_floor(x(3.14), n(2))
+  julia:
+    in: mod(3.14, 2)
+    out: "1.1400000000000001"
 an-exact-irrational-reduces-exactly-to-2-sqrt-7:
   epsil:
     in: Sqrt(28) % 3
@@ -360,12 +362,13 @@ a-10-001-digit-dividend:
     in: ((10^10000) % 10007)
   oscar:
     in: mod((big(10)^10000), 10007)
-  julia:
-    in: mod((big(10)^10000), 10007)
   mathlib4:
     in: "(((10 ^ 10000) : ℤ) % 10007)"
   rust:
     in: mod_floor(power(n(10), n(10000)), n(10007))
+  julia:
+    in: mod((big(10)^10000), 10007)
+    out: "6333"
 threads-over-a-list-of-moduli:
   epsil:
     in: 10 % [3, 4, 7]
@@ -383,12 +386,13 @@ threads-over-a-list-of-moduli:
     in: "[(10 % 3), (10 % 4), (10 % 7)]"
   oscar:
     in: mod(10, [3, 4, 7])
-  julia:
-    in: mod(10, [3, 4, 7])
   mathlib4:
     in: "((10 : ℤ) % [3, 4, 7])"
   rust:
     in: mod_floor(n(10), list(vec![n(3), n(4), n(7)]))
+  julia:
+    in: "[mod(10, 3), mod(10, 4), mod(10, 7)]"
+    out: "[1, 2, 3]"
 a-gaussian-integer-5-3i-2-2-2i:
   epsil:
     in: (5 + 3i) % 2
@@ -408,6 +412,10 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: mod(complex(5, 3), 2)
   julia:
     in: mod(complex(5, 3), 2)
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
+    verdict: error
+    kind: domain
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a rational integer.
 1-i-divides-5-3i-1-i-4-i:
   epsil:
     in: (5 + 3i) % (1 + i)
@@ -427,6 +435,10 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: mod(complex(5, 3), complex(1, 1))
   julia:
     in: mod(complex(5, 3), complex(1, 1))
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
+    verdict: error
+    kind: domain
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a Gaussian modulus too.
 a-negative-modulus-gives-a-result-in-n-0:
   epsil:
     in: -5 % -3
@@ -444,12 +456,13 @@ a-negative-modulus-gives-a-result-in-n-0:
     in: (-5 % -3)
   oscar:
     in: mod(-5, -3)
-  julia:
-    in: mod(-5, -3)
   mathlib4:
     in: "(((-5) : ℤ) % (-3))"
   rust:
     in: mod_floor(n(-5), n(-3))
+  julia:
+    in: mod(-5, -3)
+    out: "-2"
 gaussian-integers-the-quotient-rounds-so-each:
   epsil:
     in: (7 + 5i) % 3

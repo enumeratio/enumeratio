@@ -22,14 +22,14 @@ binomial-5-2:
   oscar:
     in: binomial(ZZ(5), ZZ(2))
     out: "10"
-  julia:
-    in: binomial(ZZ(5), ZZ(2))
-    out: "10"
   mathlib4:
     in: (Nat.choose 5 2)
     out: "10"
   rust:
     in: binomial(n(5), n(2))
+    out: "10"
+  julia:
+    in: binomial(ZZ(5), ZZ(2))
     out: "10"
 binomial-10-3:
   epsil:
@@ -55,14 +55,14 @@ binomial-10-3:
   oscar:
     in: binomial(ZZ(10), ZZ(3))
     out: "120"
-  julia:
-    in: binomial(ZZ(10), ZZ(3))
-    out: "120"
   mathlib4:
     in: (Nat.choose 10 3)
     out: "120"
   rust:
     in: binomial(n(10), n(3))
+    out: "120"
+  julia:
+    in: binomial(ZZ(10), ZZ(3))
     out: "120"
 binomial-4-2:
   epsil:
@@ -88,14 +88,14 @@ binomial-4-2:
   oscar:
     in: binomial(ZZ(4), ZZ(2))
     out: "6"
-  julia:
-    in: binomial(ZZ(4), ZZ(2))
-    out: "6"
   mathlib4:
     in: (Nat.choose 4 2)
     out: "6"
   rust:
     in: binomial(n(4), n(2))
+    out: "6"
+  julia:
+    in: binomial(ZZ(4), ZZ(2))
     out: "6"
 choosing-none-of-n-is-always-1-way:
   epsil:
@@ -121,14 +121,14 @@ choosing-none-of-n-is-always-1-way:
   oscar:
     in: binomial(ZZ(5), ZZ(0))
     out: "1"
-  julia:
-    in: binomial(ZZ(5), ZZ(0))
-    out: "1"
   mathlib4:
     in: (Nat.choose 5 0)
     out: "1"
   rust:
     in: binomial(n(5), n(0))
+    out: "1"
+  julia:
+    in: binomial(ZZ(5), ZZ(0))
     out: "1"
 choosing-all-of-n-is-always-1-way:
   epsil:
@@ -154,14 +154,14 @@ choosing-all-of-n-is-always-1-way:
   oscar:
     in: binomial(ZZ(5), ZZ(5))
     out: "1"
-  julia:
-    in: binomial(ZZ(5), ZZ(5))
-    out: "1"
   mathlib4:
     in: (Nat.choose 5 5)
     out: "1"
   rust:
     in: binomial(n(5), n(5))
+    out: "1"
+  julia:
+    in: binomial(ZZ(5), ZZ(5))
     out: "1"
 symmetry-binom-n-k-binom-n-n-k:
   epsil:
@@ -190,14 +190,14 @@ symmetry-binom-n-k-binom-n-n-k:
   oscar:
     in: (binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))
     out: "true"
-  julia:
-    in: (binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))
-    out: "true"
   mathlib4:
     in: (decide ((Nat.choose 10 3) = (Nat.choose 10 7)))
     out: "true"
   rust:
     in: equal(binomial(n(10), n(3)), binomial(n(10), n(7)))
+    out: "true"
+  julia:
+    in: (binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))
     out: "true"
 pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n:
   epsil:
@@ -226,14 +226,14 @@ pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n:
   oscar:
     in: ((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))
     out: "true"
-  julia:
-    in: ((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))
-    out: "true"
   mathlib4:
     in: (decide (((Nat.choose 9 2) + (Nat.choose 9 3)) = (Nat.choose 10 3)))
     out: "true"
   rust:
     in: equal((binomial(n(9), n(2)) + binomial(n(9), n(3))), binomial(n(10), n(3)))
+    out: "true"
+  julia:
+    in: ((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))
     out: "true"
 row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4:
   epsil:
@@ -264,14 +264,14 @@ row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4:
   oscar:
     in: ((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))
     out: "true"
-  julia:
-    in: ((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))
-    out: "true"
   mathlib4:
     in: (decide (((Nat.choose 4 0) + (Nat.choose 4 1) + (Nat.choose 4 2) + (Nat.choose 4 3) + (Nat.choose 4 4)) = (2 ^ 4)))
     out: "true"
   rust:
     in: equal((binomial(n(4), n(0)) + binomial(n(4), n(1)) + binomial(n(4), n(2)) + binomial(n(4), n(3)) + binomial(n(4), n(4))), power(n(2), n(4)))
+    out: "true"
+  julia:
+    in: ((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))
     out: "true"
 the-number-of-distinct-5-card-hands-dealt-from-a:
   epsil:
@@ -297,14 +297,14 @@ the-number-of-distinct-5-card-hands-dealt-from-a:
   oscar:
     in: binomial(ZZ(52), ZZ(5))
     out: "2598960"
-  julia:
-    in: binomial(ZZ(52), ZZ(5))
-    out: "2598960"
   mathlib4:
     in: (Nat.choose 52 5)
     out: "2598960"
   rust:
     in: binomial(n(52), n(5))
+    out: "2598960"
+  julia:
+    in: binomial(ZZ(52), ZZ(5))
     out: "2598960"
 choosing-more-elements-than-available-k-n-gives:
   epsil:
@@ -330,14 +330,14 @@ choosing-more-elements-than-available-k-n-gives:
   oscar:
     in: binomial(ZZ(5), ZZ(7))
     out: "0"
-  julia:
-    in: binomial(ZZ(5), ZZ(7))
-    out: "0"
   mathlib4:
     in: (Nat.choose 5 7)
     out: "0"
   rust:
     in: binomial(n(5), n(7))
+    out: "0"
+  julia:
+    in: binomial(ZZ(5), ZZ(7))
     out: "0"
 a-negative-k-also-gives-0:
   epsil:
@@ -363,9 +363,6 @@ a-negative-k-also-gives-0:
   oscar:
     in: binomial(ZZ(5), ZZ(-1))
     out: "0"
-  julia:
-    in: binomial(ZZ(5), ZZ(-1))
-    out: "0"
   mathlib4:
     in: (Nat.choose 5 (-1))
     out: failed to synthesize instance of type class
@@ -378,6 +375,9 @@ a-negative-k-also-gives-0:
     verdict: disagree
     kind: domain
     note: num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones.
+  julia:
+    in: binomial(ZZ(5), ZZ(-1))
+    out: "0"
 a-negative-n-uses-the-generalized-formula-binom:
   epsil:
     in: Binomial(-5, 2)
@@ -402,9 +402,6 @@ a-negative-n-uses-the-generalized-formula-binom:
   oscar:
     in: binomial(ZZ(-5), ZZ(2))
     out: "15"
-  julia:
-    in: binomial(ZZ(-5), ZZ(2))
-    out: "15"
   mathlib4:
     in: (Nat.choose (-5) 2)
     out: failed to synthesize instance of type class
@@ -417,6 +414,9 @@ a-negative-n-uses-the-generalized-formula-binom:
     verdict: disagree
     kind: domain
     note: num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones.
+  julia:
+    in: binomial(ZZ(-5), ZZ(2))
+    out: "15"
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: Binomial([2, 3, 5, 7, 11], 3)
@@ -442,8 +442,6 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
   oscar:
     in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
-  julia:
-    in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
   mathlib4:
     in: (Nat.choose [2, 3, 5, 7, 11] 3)
   rust:
@@ -452,6 +450,9 @@ threads-element-wise-over-a-list-as-wolfram-s:
     verdict: error
     kind: threading
     note: compute-engine's Binomial is Listable and threads over the list; the Rust crate takes scalars only.
+  julia:
+    in: "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]"
+    out: "[0, 1, 10, 35, 165]"
 half-integer-arguments-evaluate-exactly-through:
   epsil:
     in: Binomial(9 / 2, 7 / 2)
@@ -474,8 +475,6 @@ half-integer-arguments-evaluate-exactly-through:
     in: binomial((9/2), (7/2))
   oscar:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
-  julia:
-    in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
   mathlib4:
     in: "(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))"
   rust:
@@ -484,6 +483,12 @@ half-integer-arguments-evaluate-exactly-through:
     verdict: error
     kind: domain
     note: compute-engine's Binomial extends to non-integer arguments via Gamma; the Rust crate takes integers only.
+  julia:
+    in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is integers only; it can't hold a half-integer argument. Ours evaluates a half-integer Binomial exactly through the Gamma function.
 binomial-8-4:
   epsil:
     in: Binomial(8, 4)
@@ -501,12 +506,13 @@ binomial-8-4:
     in: binomial(8, 4)
   oscar:
     in: binomial(ZZ(8), ZZ(4))
-  julia:
-    in: binomial(ZZ(8), ZZ(4))
   mathlib4:
     in: (Nat.choose 8 4)
   rust:
     in: binomial(n(8), n(4))
+  julia:
+    in: binomial(ZZ(8), ZZ(4))
+    out: "70"
 symbolic-n-binom-n-0-1-for-any-n:
   epsil:
     in: Binomial(n, 0)
@@ -551,12 +557,16 @@ real-arguments-evaluate-through-the-gamma:
     in: binomial(8.5, -4.2)
   oscar:
     in: binomial(ZZ(8.5), ZZ(-4.2))
-  julia:
-    in: binomial(ZZ(8.5), ZZ(-4.2))
   mathlib4:
     in: (Nat.choose 8.5 (-4.2))
   rust:
     in: binomial(x(8.5), x(-4.2))
+  julia:
+    in: binomial(ZZ(8.5), ZZ(-4.2))
+    out: "InexactError: convert(ZZRingElem, 8.5)"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ can't hold a non-integer real; ours extends Binomial to real n and k through the Gamma function.
 a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
   epsil:
     in: Binomial(0.5, 3)
@@ -574,12 +584,16 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     in: binomial(0.5, 3)
   oscar:
     in: binomial(ZZ(0.5), ZZ(3))
-  julia:
-    in: binomial(ZZ(0.5), ZZ(3))
   mathlib4:
     in: (Nat.choose 0.5 3)
   rust:
     in: binomial(x(0.5), n(3))
+  julia:
+    in: binomial(ZZ(0.5), ZZ(3))
+    out: "InexactError: convert(ZZRingElem, 0.5)"
+    verdict: error
+    kind: domain
+    note: ZZ(0.5) has no exact integer value; ours extends Binomial to a real n through the Gamma function.
 a-rational-n-with-integer-k-gives-the-exact:
   epsil:
     in: Binomial(1 / 2, 2)
@@ -597,12 +611,16 @@ a-rational-n-with-integer-k-gives-the-exact:
     in: binomial((1/2), 2)
   oscar:
     in: binomial(ZZ((1 // 2)), ZZ(2))
-  julia:
-    in: binomial(ZZ((1 // 2)), ZZ(2))
   mathlib4:
     in: "(Nat.choose ((1 : ℚ) / 2) 2)"
   rust:
     in: binomial(rational(n(1), n(2)), n(2))
+  julia:
+    in: binomial(ZZ((1 // 2)), ZZ(2))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: ZZ needs an integer; ours extends Binomial to a rational n through the Gamma function.
 binom-1-2-3-frac-5-16-the-central-binomial:
   epsil:
     in: Binomial(-1 / 2, 3)
@@ -620,12 +638,16 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     in: binomial((-1/2), 3)
   oscar:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
-  julia:
-    in: binomial(ZZ((-1 // 2)), ZZ(3))
   mathlib4:
     in: "(Nat.choose (((-1) : ℚ) / 2) 3)"
   rust:
     in: binomial(rational(n(-1), n(2)), n(3))
+  julia:
+    in: binomial(ZZ((-1 // 2)), ZZ(3))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: ZZ needs an integer; ours extends Binomial to a negative rational n through the Gamma function.
 binom-n-n-1-for-symbolic-n:
   epsil:
     in: Binomial(n, n)
@@ -654,6 +676,10 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
   julia:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours extends Binomial to a complex n through the Gamma function.
 complex-n-and-k-evaluate-through-the-gamma:
   epsil:
     in: Binomial(2 + i, 7 + -3 * i)
@@ -673,6 +699,10 @@ complex-n-and-k-evaluate-through-the-gamma:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
   julia:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours extends Binomial to complex n and k through the Gamma function.
 interval-arithmetic-in-k-binom-1-2-k-is:
   epsil:
     in: Binomial(1 / 2, Interval(0.5, 0.6))
@@ -743,12 +773,13 @@ the-factorial-form-binom-n-k-frac-n-k-n-k-see:
     in: bool(binomial(7, 3) == (factorial(7) / (factorial(3) * factorial(4))))
   oscar:
     in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
-  julia:
-    in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
   mathlib4:
     in: "(decide ((Nat.choose 7 3) = (((Nat.factorial 7) : ℚ) / ((Nat.factorial 3) * (Nat.factorial 4)))))"
   rust:
     in: equal(binomial(n(7), n(3)), (factorial(n(7)) / (factorial(n(3)) * factorial(n(4)))))
+  julia:
+    in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
+    out: "true"
 the-probability-of-exactly-3-heads-in-10-fair:
   epsil:
     in: Binomial(10, 3) / 2 ^ 10
@@ -766,12 +797,13 @@ the-probability-of-exactly-3-heads-in-10-fair:
     in: (binomial(10, 3) / (2^10))
   oscar:
     in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
-  julia:
-    in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
   mathlib4:
     in: "(((Nat.choose 10 3) : ℚ) / (2 ^ 10))"
   rust:
     in: (binomial(n(10), n(3)) / power(n(2), n(10)))
+  julia:
+    in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
+    out: "0.1171875"
 both-arguments-negative-integers-the-limiting:
   epsil:
     in: Binomial(-3, -5)
@@ -789,12 +821,16 @@ both-arguments-negative-integers-the-limiting:
     in: binomial(-3, -5)
   oscar:
     in: binomial(ZZ(-3), ZZ(-5))
-  julia:
-    in: binomial(ZZ(-3), ZZ(-5))
   mathlib4:
     in: (Nat.choose (-3) (-5))
   rust:
     in: binomial(n(-3), n(-5))
+  julia:
+    in: binomial(ZZ(-3), ZZ(-5))
+    out: "0"
+    verdict: disagree
+    kind: convention
+    note: Nemo's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n; ours extends through the reflection identities (Wolfram's convention), giving 6 — see the mapping's note.
 the-central-binomial-coefficient-binom-100-50:
   epsil:
     in: Binomial(100, 50)
@@ -812,9 +848,10 @@ the-central-binomial-coefficient-binom-100-50:
     in: binomial(100, 50)
   oscar:
     in: binomial(ZZ(100), ZZ(50))
-  julia:
-    in: binomial(ZZ(100), ZZ(50))
   mathlib4:
     in: (Nat.choose 100 50)
   rust:
     in: binomial(n(100), n(50))
+  julia:
+    in: binomial(ZZ(100), ZZ(50))
+    out: "100891344545564193334812497256"

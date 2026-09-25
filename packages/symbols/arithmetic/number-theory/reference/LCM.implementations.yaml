@@ -22,14 +22,14 @@ lcm-4-6:
   oscar:
     in: lcm(ZZ(4), ZZ(6))
     out: "12"
-  julia:
-    in: lcm(ZZ(4), ZZ(6))
-    out: "12"
   mathlib4:
     in: (Int.lcm 4 6)
     out: "12"
   rust:
     in: lcm(n(4), n(6))
+    out: "12"
+  julia:
+    in: lcm(ZZ(4), ZZ(6))
     out: "12"
 lcm-is-variadic-it-accepts-any-number-of:
   epsil:
@@ -85,14 +85,14 @@ a-single-argument-is-returned-unchanged:
   oscar:
     in: lcm(ZZ(0), ZZ(5))
     out: "0"
-  julia:
-    in: lcm(ZZ(0), ZZ(5))
-    out: "0"
   mathlib4:
     in: (Int.lcm 0 5)
     out: "0"
   rust:
     in: lcm(n(0), n(5))
+    out: "0"
+  julia:
+    in: lcm(ZZ(0), ZZ(5))
     out: "0"
 signs-are-discarded-before-computing-the-lcm:
   epsil:
@@ -118,14 +118,14 @@ signs-are-discarded-before-computing-the-lcm:
   oscar:
     in: lcm(ZZ(-3), ZZ(7))
     out: "21"
-  julia:
-    in: lcm(ZZ(-3), ZZ(7))
-    out: "21"
   mathlib4:
     in: (Int.lcm (-3) 7)
     out: "21"
   rust:
     in: lcm(n(-3), n(7))
+    out: "21"
+  julia:
+    in: lcm(ZZ(-3), ZZ(7))
     out: "21"
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd:
   epsil:
@@ -154,14 +154,14 @@ gcd-a-b-cdot-lcm-a-b-ab-see-gcd:
   oscar:
     in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
     out: "true"
-  julia:
-    in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
-    out: "true"
   mathlib4:
     in: (decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))
     out: "true"
   rust:
     in: equal((gcd(n(27), n(81)) * lcm(n(27), n(81))), (n(27) * n(81)))
+    out: "true"
+  julia:
+    in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
     out: "true"
 over-the-rationals-the-lcm-of-the-numerators:
   epsil:
@@ -269,6 +269,10 @@ gaussian-primes-of-norm-41-and-13-the-lcm-is-the:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
   julia:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian lcm directly.
 gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
   epsil:
     in: LCM(1 / 2 + 3 / 5 * i, 1 / 3 + i)
@@ -288,6 +292,10 @@ gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
   julia:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian lcm for a Gaussian-rational argument too.
 big-integers-the-exact-118-digit-lcm-past-where:
   epsil:
     in: LCM(20!, 10 ^ 100 + 3)
@@ -305,12 +313,13 @@ big-integers-the-exact-118-digit-lcm-past-where:
     in: lcm(factorial(20), ((10^100) + 3))
   oscar:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
-  julia:
-    in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
   mathlib4:
     in: (Int.lcm (Nat.factorial 20) ((10 ^ 100) + 3))
   rust:
     in: lcm(factorial(n(20)), (power(n(10), n(100)) + n(3)))
+  julia:
+    in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
 listable-a-single-list-argument-threads-element:
   epsil:
     in: LCM(12, [3, 7, 40])
@@ -328,9 +337,10 @@ listable-a-single-list-argument-threads-element:
     in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
   oscar:
     in: lcm(ZZ(12), ZZ([3, 7, 40]))
-  julia:
-    in: lcm(ZZ(12), ZZ([3, 7, 40]))
   mathlib4:
     in: (Int.lcm 12 [3, 7, 40])
   rust:
     in: lcm(n(12), list(vec![n(3), n(7), n(40)]))
+  julia:
+    in: "[lcm(ZZ(12), ZZ(3)), lcm(ZZ(12), ZZ(7)), lcm(ZZ(12), ZZ(40))]"
+    out: "[12, 84, 120]"
