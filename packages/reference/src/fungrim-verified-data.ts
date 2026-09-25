@@ -990,6 +990,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "373aa1",
+    heads: ["Fibonacci", "SloaneA"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "382679",
     heads: ["ChebyshevT", "Hypergeometric2F1"],
     verdict: "agree",
@@ -1024,6 +1030,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["CarlsonRC", "Ln"],
     verdict: "agree",
     samples: 3,
+  },
+  {
+    entry: "3a5167",
+    heads: ["MultiZetaValue", "Zeta"],
+    verdict: "agree",
+    samples: 1,
   },
   {
     entry: "3a56d8",
@@ -1136,6 +1148,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "3f1547",
     heads: ["CarlsonRG", "Gamma"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
+    entry: "3f15eb",
+    heads: ["Digamma", "DigammaFunctionZero"],
     verdict: "agree",
     samples: 3,
   },
@@ -1443,6 +1461,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "4fa169",
+    heads: ["PrimePi", "SloaneA"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "506d0c",
     heads: ["Sin"],
     verdict: "agree",
@@ -1732,6 +1756,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "60dc3e",
+    heads: ["BellNumber", "SloaneA"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "61375f",
     heads: ["ChebyshevU"],
     verdict: "agree",
@@ -1778,6 +1808,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["Factorial", "Gamma"],
     verdict: "agree",
     samples: 3,
+  },
+  {
+    entry: "62de01",
+    heads: ["MultiZetaValue", "Zeta"],
+    verdict: "agree",
+    samples: 1,
   },
   {
     entry: "62ffb3",
@@ -2374,6 +2410,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "856317",
+    heads: ["MultiZetaValue", "Zeta"],
+    verdict: "agree",
+    samples: 1,
+  },
+  {
     entry: "859445",
     heads: ["Binomial", "Hypergeometric2F1", "LegendrePolynomial"],
     verdict: "agree",
@@ -2520,6 +2562,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "8e6867",
     heads: ["Real"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
+    entry: "8eed2c",
+    heads: ["NPartition", "SloaneA"],
     verdict: "agree",
     samples: 3,
   },
@@ -2770,6 +2818,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "9d0839",
+    heads: ["PrimeNumber", "SloaneA"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "9d84d8",
     heads: ["AGM"],
     verdict: "agree",
@@ -2898,6 +2952,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "a498dd",
     heads: ["ModularJ"],
+    verdict: "agree",
+    samples: 1,
+  },
+  {
+    entry: "a5e52e",
+    heads: ["MultiZetaValue", "Zeta"],
     verdict: "agree",
     samples: 1,
   },
@@ -3262,6 +3322,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "b6111c",
+    heads: ["BernoulliB", "SloaneA"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "b62aae",
     heads: ["IncompleteEllipticE"],
     verdict: "agree",
@@ -3604,6 +3670,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "cb93ea",
+    heads: ["Erf", "Exp", "HypergeometricUStar"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "cbfe21",
     heads: ["Fibonacci"],
     verdict: "agree",
@@ -3716,6 +3788,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["LambertW"],
     verdict: "agree",
     samples: 1,
+  },
+  {
+    entry: "d12aa0",
+    heads: ["Factorial", "SloaneA"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "d15f11",
@@ -3876,6 +3954,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "da58f7",
     heads: ["Cos", "Sin"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
+    entry: "da71d3",
+    heads: ["MultiZetaValue", "Zeta"],
     verdict: "agree",
     samples: 3,
   },
@@ -4162,6 +4246,18 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "ef2c71",
+    heads: ["MultiZetaValue", "Zeta"],
+    verdict: "agree",
+    samples: 1,
+  },
+  {
+    entry: "ef8b17",
+    heads: ["MultiZetaValue", "Zeta"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "efc7a4",
     heads: ["IncompleteEllipticE"],
     verdict: "agree",
@@ -4410,22 +4506,7 @@ export const fungrimFrontier: readonly {
   readonly declared: boolean;
 }[] = [
   {
-    head: "SloaneA",
-    identities: 9,
-    declared: false,
-  },
-  {
     head: "Hypergeometric0F1",
-    identities: 7,
-    declared: false,
-  },
-  {
-    head: "HypergeometricUStar",
-    identities: 7,
-    declared: false,
-  },
-  {
-    head: "MultiZetaValue",
     identities: 7,
     declared: false,
   },
@@ -4452,16 +4533,6 @@ export const fungrimFrontier: readonly {
   {
     head: "ModularLambdaFundamentalDomain",
     identities: 3,
-    declared: false,
-  },
-  {
-    head: "BesselJZero",
-    identities: 2,
-    declared: false,
-  },
-  {
-    head: "DigammaFunctionZero",
-    identities: 2,
     declared: false,
   },
   {
@@ -4641,7 +4712,7 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Exp",
-    identities: 22,
+    identities: 21,
     declared: true,
   },
   {
@@ -4670,17 +4741,17 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Factorial",
-    identities: 13,
-    declared: true,
-  },
-  {
     head: "AiryAi",
     identities: 12,
     declared: true,
   },
   {
     head: "BesselI",
+    identities: 12,
+    declared: true,
+  },
+  {
+    head: "Factorial",
     identities: 12,
     declared: true,
   },
@@ -4720,11 +4791,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Zeta",
-    identities: 10,
-    declared: true,
-  },
-  {
     head: "AiryBi",
     identities: 9,
     declared: true,
@@ -4735,11 +4801,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Digamma",
-    identities: 8,
-    declared: true,
-  },
-  {
     head: "DirichletCharacter",
     identities: 8,
     declared: true,
@@ -4747,6 +4808,11 @@ export const fungrimFrontier: readonly {
   {
     head: "XGCD",
     identities: 8,
+    declared: true,
+  },
+  {
+    head: "Digamma",
+    identities: 7,
     declared: true,
   },
   {
@@ -4765,7 +4831,7 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Fibonacci",
+    head: "HypergeometricUStar",
     identities: 6,
     declared: true,
   },
@@ -4790,7 +4856,7 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Erf",
+    head: "Fibonacci",
     identities: 5,
     declared: true,
   },
@@ -4811,6 +4877,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Conjugate",
+    identities: 4,
+    declared: true,
+  },
+  {
+    head: "Erf",
     identities: 4,
     declared: true,
   },
@@ -4880,6 +4951,11 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
+    head: "Zeta",
+    identities: 3,
+    declared: true,
+  },
+  {
     head: "AGM",
     identities: 2,
     declared: true,
@@ -4891,6 +4967,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "ArgMin",
+    identities: 2,
+    declared: true,
+  },
+  {
+    head: "BesselJZero",
     identities: 2,
     declared: true,
   },
@@ -4935,12 +5016,7 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "NPartition",
-    identities: 2,
-    declared: true,
-  },
-  {
-    head: "PrimePi",
+    head: "SloaneA",
     identities: 2,
     declared: true,
   },
@@ -4960,17 +5036,12 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "BellNumber",
-    identities: 1,
-    declared: true,
-  },
-  {
-    head: "BernoulliB",
-    identities: 1,
-    declared: true,
-  },
-  {
     head: "Cot",
+    identities: 1,
+    declared: true,
+  },
+  {
+    head: "DigammaFunctionZero",
     identities: 1,
     declared: true,
   },
@@ -5025,12 +5096,17 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
+    head: "NPartition",
+    identities: 1,
+    declared: true,
+  },
+  {
     head: "PolyGamma",
     identities: 1,
     declared: true,
   },
   {
-    head: "PrimeNumber",
+    head: "PrimePi",
     identities: 1,
     declared: true,
   },
