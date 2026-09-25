@@ -84,14 +84,14 @@ cheap way to do these: fold the new name into whatever work already touches the 
 
 ### Represents no single symbol
 
-| Component           | Why                                                                                                                                                      |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `notatio-cell`      | an In/Out pair — though `Cell` _is_ a Wolfram symbol (a notebook cell), so this row is closer to aligned than it looks; see components-and-symbols.md §7 |
-| `notatio-worksheet` | ours; named expressions and a shared view                                                                                                                |
-| `notatio-code`      | a source box; the language is an attribute                                                                                                               |
-| `notatio-terminal`  | a REPL surface                                                                                                                                           |
-| `notatio-figure`    | eleven glyph kinds behind one `kind` attribute (see below)                                                                                               |
-| `notatio-tex`       | retired: `<notatio-out inline format="latex">` renders prose math now                                                                                    |
+| Component           | Why                                                                                                                    |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `notatio-cell`      | an In/Out pair — though `Cell` _is_ a Wolfram symbol (a notebook cell), so this row is closer to aligned than it looks |
+| `notatio-worksheet` | ours; named expressions and a shared view                                                                              |
+| `notatio-code`      | a source box; the language is an attribute                                                                             |
+| `notatio-terminal`  | a REPL surface                                                                                                         |
+| `notatio-figure`    | eleven glyph kinds behind one `kind` attribute (see below)                                                             |
+| `notatio-tex`       | retired: `<notatio-out inline format="latex">` renders prose math now                                                  |
 
 ## 5. The glitches worth indexing
 

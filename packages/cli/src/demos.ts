@@ -211,10 +211,10 @@ export const DEMOS: readonly Demo[] = [
   // --- Session ------------------------------------------------------------
   {
     id: "history",
-    title: "Result history with %",
-    description: "% is the last result, %% the one before, %n the n-th.",
+    title: "Result history with Out",
+    description: "Out(-1) is the last result, Out(-2) the one before, Out(n) the n-th.",
     category: "Session",
-    lines: ["1/2", "% * 6", "% + 1", "%1 + %2"],
+    lines: ["1/2", "Out(-1) * 6", "Out(-1) + 1", "Out(1) + Out(2)"],
     tags: ["history"],
     highlight: true,
   },

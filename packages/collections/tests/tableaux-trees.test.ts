@@ -1,6 +1,6 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/packs/tableaux-trees.ts";
-import { CatalanNumber, InvolutionCount, LabeledTreeCount } from "../src/packs/kernels-extra.ts";
+import { entries } from "../src/families/tableaux-trees.ts";
+import { CatalanNumber, InvolutionCount, LabeledTreeCount } from "../src/families/kernels-extra.ts";
 
 // Self-cert every tableaux-trees.ts family: for every rank r in [0, count), unrank produces a
 // valid element and rank(unrank(r)) === r. Sizes kept small so counts stay well under ~5000.

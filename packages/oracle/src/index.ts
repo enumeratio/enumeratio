@@ -21,5 +21,13 @@ export {
   parsePython,
   type Verdict,
 } from "./compare.ts";
-export { compareTrees, type Leaf, reduce, symbolic, type Tree } from "./structural.ts";
+export {
+  compareTrees,
+  isNumericValue,
+  type Leaf,
+  reduce,
+  symbolic,
+  type Tree,
+  valuesOnly,
+} from "./structural.ts";
 export { DIVERGENCE_KINDS, type Divergence, type DivergenceKind } from "./divergence.ts";

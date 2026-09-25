@@ -23,7 +23,7 @@ const ITEM_SECONDS = 30;
 const MAX_BYTES = 1024 ** 3;
 
 export type Result =
-  | { readonly value: string; readonly display?: string }
+  | { readonly value: string; readonly display?: string; readonly numeric?: string }
   | { readonly error: string };
 
 // A time cap cannot stop C code (PARI) that only grows, and a thread inside the kernel cannot
@@ -102,13 +102,17 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
 
 /** Wolfram: evaluate each source once, printing its `FullForm` — uniform `Head[args]` that
  * `fromWolfram` parses, so the answer can be compared structurally rather than as text —
- * and its `InputForm` on a second, `|`-marked line as `display`, for a reader. Each source
+ * the `FullForm` of its `N` on a `#`-marked line as `numeric`, Wolfram's own number for an
+ * exact value like `Zeta[3]`, and its `InputForm` on a `|`-marked line as `display`, for a
+ * reader. Each source
  * is handed to `ToExpression` as a string: a syntax error then yields `$Failed` for that
  * item instead of aborting the batch, which used to silently zero every item after the
- * first bad one. */
+ * first bad one. A `TestObject` keeps only its outcome fields: the rest (timestamps, IDs,
+ * timings, memory) change every run and would rewrite its sidecar row on every scan. */
 async function runWolfram(sources: readonly string[]): Promise<Result[]> {
   const list = sources.map((source) => JSON.stringify(source)).join(", ");
-  const code = `Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]]}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]], {i, 1, ${sources.length}}]`;
+  const stable = `/. TestObject[a_Association] :> TestObject[KeyTake[a, {"Outcome", "Input", "ExpectedOutput", "ActualOutput"}]]`;
+  const code = `Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]], {i, 1, ${sources.length}}]`;
   const run = await transcript("wolframscript", ["-code", code], { timeoutMs: 600_000 });
   return "out" in run
     ? collectWolfram(run.out, sources.length)
@@ -261,16 +265,18 @@ function collect(output: string, count: number): Result[] {
   return results;
 }
 
-/** Like `collect`, plus the `<<n|>>` `InputForm` line as each value result's `display`. */
+/** Like `collect`, plus the `<<n|>>` `InputForm` line as each value result's `display`
+ * and the `<<n#>>` line as its `numeric`. */
 function collectWolfram(output: string, count: number): Result[] {
   const results = collect(output, count);
   for (const line of output.split("\n")) {
-    const match = /^<<(\d+)\|>>(.*)$/.exec(line);
+    const match = /^<<(\d+)([|#])>>(.*)$/.exec(line);
     if (match === null) continue;
     const index = Number(match[1]) - 1;
     const result = results[index];
     if (index >= 0 && index < count && result !== undefined && "value" in result) {
-      results[index] = { ...result, display: (match[2] as string).trim() };
+      const field = match[2] === "|" ? "display" : "numeric";
+      results[index] = { ...result, [field]: (match[3] as string).trim() };
     }
   }
   return results;

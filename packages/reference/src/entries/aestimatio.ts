@@ -77,6 +77,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         expected: ["MemoryConstrained", ["Add", 1, 2], 1_000_000],
         caption:
           "In-process, the call simply does not reduce — see evaluateIsolated for the real cap",
+        divergence: { wolfram: "Wolfram enforces the cap in-kernel and evaluates to 3." },
       },
     ],
   },
@@ -121,6 +122,10 @@ export const aestimatio: readonly ReferenceEntry[] = [
         ],
         caption: "input matches expected",
         volatile: ["AbsoluteTimeUsed"],
+        divergence: {
+          wolfram:
+            "Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.",
+        },
       },
       {
         expr: ["VerificationTest", ["Add", 2, 3], 6],
@@ -134,6 +139,10 @@ export const aestimatio: readonly ReferenceEntry[] = [
         ],
         caption: "input evaluates but does not match expected",
         volatile: ["AbsoluteTimeUsed"],
+        divergence: {
+          wolfram:
+            "Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.",
+        },
       },
       {
         expr: [

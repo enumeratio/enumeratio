@@ -1,8 +1,9 @@
 # Design: namespaces, resources, and the shape of a 1500-name catalog
 
-Status: **§1–§5 are the argument, §6 is history plus what stands, §7–§8 are current.** Counts
-in this file are as of the day they were written; anything a test pins is cited by the test
-rather than repeated (see [roadmap.md](./roadmap.md) §1 for the rule).
+Status: **§1–§5 are the argument, §6 is history plus what stands, §8 is current.** Open
+questions moved to speculative/namespaces.md. Counts in this file are as of the day they
+were written; anything a test pins is cited by the test rather than repeated (see
+[roadmap.md](./roadmap.md) §1 for the rule).
 
 Companion to [upstreaming.md](./upstreaming.md). That document asks what compute-engine
 would have to change for our heads to be droppable upstream. This one asks the question
@@ -555,23 +556,7 @@ compute-engine, or a cardinality answered by `Count` — and the frontier is emp
 and are not repeated here, because the last two copies of that table in this file were both
 wrong within a month.
 
-## 7. Open
-
-- **String identifier vs context path.** §4 argues for the path on promotion-cost grounds.
-  Not settled, and the cheapest moment to settle it is now.
-- **Which separator character.** §3.3 — only `_` is legal today and it collides with the
-  subscript convention. `~` is semantically right and currently taken by LaTeX.
-- **Where the frontier sits.** §6.1 — the primitive set is a decision, and everything in §6
-  depends on it.
-- **Does a resolved resource keep identity across sessions?** Wolfram resources have a UUID
-  behind the name. If promotion is a rename, something stable underneath has to survive it.
-- **Where the registry lives.** Today it would be extracted enumeratio data committed into
-  notatio. The aspiration is fetched-on-demand. The shape should not assume either.
-- **The 53 multi-carrier stats need the domain-keyed signature** to exist first. The other
-  189 need only carrier-scoped definitions, which is ours to build; the 53 are a hard
-  dependency on the upstream question pile rather than something we can route around.
-- **Aggregates** are not counted above — they were not in the extraction. They need the same
-  census before being placed in one of the three populations.
+Open questions moved to speculative/namespaces.md.
 
 ## 8. What is built
 

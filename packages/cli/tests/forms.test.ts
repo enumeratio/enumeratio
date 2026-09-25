@@ -27,6 +27,13 @@ test("evaluate records history and honours % references", () => {
   expect(b.expr.toString()).toBe("20");
 });
 
+test("% is Wolfram's history shorthand only in Wolfram syntax; in notatio it is Mod", () => {
+  const s = new Session();
+  s.evaluate("10");
+  expect(s.evaluate("7 % 3").expr.toString()).toBe("1");
+  expect(s.evaluate(":wl Times[%, 4]").expr.toString()).toBe("4");
+});
+
 test("let binds a variable that later input resolves", () => {
   const s = new Session();
   s.assign("a", ":wl 7");

@@ -2,9 +2,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { afterAll, expect, test } from "vite-plus/test";
 import { check, checkFamily, random } from "../scripts/properties.ts";
-import { entries } from "../src/packs/paths-partitions.ts";
+import { entries } from "../src/families/paths-partitions.ts";
 
-// Self-cert every family in this pack (mirrors tests/packs.test.ts): for every rank r in
+// Self-cert every family in this module (mirrors tests/subsets.test.ts): for every rank r in
 // [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r. Params are kept
 // small so counts stay well under ~1000.
 const PARAMS: Record<string, number[]> = {

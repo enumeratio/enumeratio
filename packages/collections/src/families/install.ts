@@ -47,7 +47,7 @@ function gradedHandlers(ce: ComputeEngine, spec: FamilySpec): CollectionHandlers
 }
 
 /** Declare every pack family as a lazy indexed collection head on `ce`. */
-export function installPacks(ce: ComputeEngine): void {
+export function installFamilies(ce: ComputeEngine): void {
   for (const entry of allEntries) {
     const spec = adaptEntry(entry);
     ce.declare(entry.head, {

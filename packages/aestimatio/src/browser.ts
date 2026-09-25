@@ -120,12 +120,9 @@ export async function probeMemoryBytes(): Promise<number | undefined> {
  * contract as `./node`'s `evaluateIsolated`: a caller should not have to distinguish
  * "the answer is $Aborted" from "the call itself failed".
  *
- * One worker per call, spawned and torn down here directly, UNLESS the caller injects
- * `createWorker` or `measureMemory` (as the tests do): that's a request for full control
- * over this one call's worker, so it bypasses `createEvaluatorPool`'s shared default
- * pool below rather than being handed a worker some earlier, unrelated test left idle in
- * it. A caller that wants pooling *and* injected fakes should call
- * `createEvaluatorPool({ createWorker })` directly instead.
+ * Routed through the shared default pool, unless the caller injects `createWorker` or
+ * `measureMemory` (as the tests do): that asks for control of this one call's worker, so it
+ * gets its own. For pooling with injected fakes, use `createEvaluatorPool({ createWorker })`.
  */
 export function evaluateInWorker(
   json: unknown,

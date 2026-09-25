@@ -46,26 +46,15 @@ setup })` runs one evaluation in a `worker_threads` Worker with `resourceLimits`
   best-effort memory only (browsers expose no per-worker cap, so this polls the page's own
   memory instead — see `probeMemoryBytes`).
 
-Both hosts route through a reusable worker pool (`createEvaluatorPool`, `./pool.ts`'s
-host-agnostic core underneath): workers are checked out per call and either reused (finished
-cleanly) or replaced — destroyed, a fresh one takes the slot — when killed for time or
-memory, or otherwise errored. Node keys its idle lists by memory limit, since a worker's
-`resourceLimits` are fixed at spawn; the browser has no such split. `evaluateIsolated` and
-`evaluateInWorker` route through a lazily-created default pool, so the two keep their
-existing one-call signatures while no longer paying a spawn per call. Idle Node pool workers
-are `unref()`d so a short-lived process can still exit.
+Both hosts evaluate through a worker pool (`createEvaluatorPool`): a worker that finished
+cleanly is reused; one killed for time or memory, or errored, is replaced. Node keys idle
+workers by memory limit, since `resourceLimits` are fixed at spawn. `evaluateIsolated` and
+`evaluateInWorker` use a default pool.
 
-A **session** (`openSession`, both hosts) holds ONE worker and ONE `ComputeEngine` across
-`evaluate` calls instead of one worker per call — for a notebook evaluating off its own
-thread, where `:=` bindings need to survive from one cell to the next. A `timeMs` kill on a
-runaway call still terminates the worker (the only reliable cancel against a tight,
-uncooperative loop), but for a session that means the bindings made before it are gone: a
-fresh worker with a fresh engine takes over, and that call's own result carries `reset:
-true` rather than pretending nothing happened. On the browser, `openSession` prefers a
-`SharedWorker` (tabs passing the same `name` join one engine and its bindings) and falls
-back to a dedicated `Worker` where `SharedWorker` isn't available; a `SharedWorker`'s
-`timeMs` can only give up locally (`reset` stays `false`) since there is no way from one tab
-to safely kill a context other tabs may be using.
+A **session** (`openSession`) keeps one worker and one engine across calls, so `:=` bindings
+survive from one evaluation to the next. A `timeMs` kill still terminates the worker; the
+bindings are gone and that call's result says `reset: true`. In the browser a session prefers
+a `SharedWorker` (tabs with the same `name` share it), falling back to a dedicated `Worker`.
 
 Lessons carried from the archived async-engines design: `AbortSignal` from day one, and
 `terminate()` is the only cancel that always works against a tight loop.
@@ -79,12 +68,5 @@ TestID -> "…")` holds `input`, evaluates it under the constraints, compares wi
 `ExpectedOutput`, `AbsoluteTimeUsed` and `TestID`. It draws as a cell with an outcome badge.
 Reference examples are, in effect, verification tests; they may be expressed this way later.
 
-## 5. Later
-
-- Wiring a `DynamicModule`'s reactive/transcript evaluation through a session, so a
-  notebook's cells run off its own thread with state that survives between them — not done
-  yet, just left as the obvious next consumer of §3's `openSession`.
-- Running our own test suites inside a notatio evaluation process — per-test time and memory
-  constraints, as the oracle scans already are (roadmap).
-- `AbsoluteTiming`, `CheckAbort`, and evaluation history (`In`/`Out`) where a notebook needs it.
-- A test-suite runner (per §3's pool/session groundwork) is next.
+Future work (running our own test suites under aestimatio,
+`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to speculative/aestimatio.md.

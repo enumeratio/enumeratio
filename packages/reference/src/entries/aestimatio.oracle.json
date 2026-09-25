@@ -1,6 +1,48 @@
 {
   "kernels": {
-    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04",
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)"
   },
-  "examples": {}
+  "examples": {
+    "TimeConstrained": {
+      "[\"TimeConstrained\",[\"Sum\",\"k\",[\"Tuple\",\"k\",1,10]],1]": {
+        "wolfram": {
+          "input": "TimeConstrained[Sum[k, List[k, 1, 10]], 1]",
+          "output": "55",
+          "verdict": "agree"
+        }
+      }
+    },
+    "MemoryConstrained": {
+      "[\"MemoryConstrained\",[\"Add\",1,2],1000000]": {
+        "wolfram": {
+          "input": "MemoryConstrained[Plus[1, 2], 1000000]",
+          "output": "3",
+          "verdict": "disagree",
+          "kind": "unevaluated",
+          "note": "In-process, MemoryConstrained stays unevaluated because JavaScript cannot cap a synchronous computation's memory; Wolfram enforces the cap and evaluates 1 + 2 = 3."
+        }
+      }
+    },
+    "VerificationTest": {
+      "[\"VerificationTest\",[\"Add\",2,3],5]": {
+        "wolfram": {
+          "input": "VerificationTest[Plus[2, 3], 5]",
+          "output": "TestObject[<|\"Outcome\" -> \"Success\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[5], \"ActualOutput\" -> HoldForm[5]|>]",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput)."
+        }
+      },
+      "[\"VerificationTest\",[\"Add\",2,3],6]": {
+        "wolfram": {
+          "input": "VerificationTest[Plus[2, 3], 6]",
+          "output": "TestObject[<|\"Outcome\" -> \"Failure\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[6], \"ActualOutput\" -> HoldForm[5]|>]",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput)."
+        }
+      }
+    }
+  }
 }

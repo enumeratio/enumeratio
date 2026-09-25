@@ -6,7 +6,7 @@ type Scope = ReturnType<ComputeEngine["createScope"]>;
 
 // A `DynamicModule([Cell(...), Cell(...), ...])` (or its alias `Notebook`) is Wolfram's
 // $Line transcript: cells share one binding scope and evaluate in document order, and
-// `Out(n)` / `In(n)` / `InString(n)` and their `%` / `%%` shorthands read back a history
+// `Out(n)` / `In(n)` / `InString(n)` read back a history
 // keyed by EVALUATION COUNT, not cell position -- re-evaluating cell 2 gives it a new,
 // higher line number rather than overwriting its old one.
 //
@@ -16,7 +16,7 @@ type Scope = ReturnType<ComputeEngine["createScope"]>;
 // way a Cell already finds a forced `env`).
 //
 // It is deliberately the same shape as the CLI's own history (`packages/cli/src/engine.ts`
-// `declareHistory` / `substitute`) -- re-declared here rather than shared because the CLI's
+// `declareHistory`) -- re-declared here rather than shared because the CLI's
 // lives on its `Session` and reads plain-text input, while this lives on a scope and reads
 // LaTeX; the Wolfram semantics (`Out` re-reads a value, `In` re-evaluates, `InString` is the
 // literal text) are the same in both.
@@ -28,14 +28,14 @@ export interface TranscriptEntry {
   readonly input: string;
   /** Parsed but not evaluated (for `In(n)`, which Wolfram gives a delayed value). */
   readonly raw: BoxedExpression;
-  /** Evaluated (for `Out(n)` and `%` / `%%` / `%n`). */
+  /** Evaluated (for `Out(n)`). */
   readonly value: BoxedExpression;
 }
 
 /** `new Transcript(engine, options)`'s options. */
 export interface TranscriptOptions {
   /**
-   * `Out`/`In`/`InString`/`%` and `In[n]`/`Out[n]` line numbers -- on by default. A
+   * `Out`/`In`/`InString` and `In[n]`/`Out[n]` line numbers -- on by default. A
    * reactive `DynamicModule` (`TrackedSymbols` set) turns this off: cells can be
    * understood in any order there, so a position-keyed history would be misleading, and
    * `tracked-symbols.ts`'s own schedule already rejects an ordinal reference outright.
@@ -103,21 +103,6 @@ export class Transcript {
     } finally {
       this.#engine.popScope();
     }
-  }
-
-  /**
-   * `%`, `%%`, `%n` -- Wolfram's shorthand for `Out(-1)`, `Out(-2)`, `Out(n)` -- replaced by
-   * the referenced line's LaTeX before parsing. Text-level, like the CLI's own
-   * `substitute`, because a cell's source is LaTeX and `%` means nothing to
-   * compute-engine's parser.
-   */
-  substitute(latex: string): string {
-    return latex.replace(/%(\d+)|%+/g, (tok) => {
-      const numbered = /^%(\d+)$/.exec(tok);
-      const entry = numbered ? this.history[Number(numbered[1]) - 1] : this.history.at(-tok.length);
-      if (!entry) throw new Error(`no result for ${tok}`);
-      return entry.value.latex;
-    });
   }
 
   /**

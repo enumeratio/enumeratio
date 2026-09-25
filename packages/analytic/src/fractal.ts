@@ -4,8 +4,8 @@ import type { Cx } from "./complex.ts";
 
 // Iterated quadratic maps -- the Mandelbrot and Julia sets, as expressions.
 //
-// Not special functions, and this is not their permanent home (see
-// design/graphics-and-space.md); they are here because the complex GPU kernel and the
+// Not special functions, and this is not their permanent home -- graphics objects have
+// no package of their own yet; they are here because the complex GPU kernel and the
 // compile handlers are, and splitting them out before the graphics seam exists would
 // only move the problem.
 //

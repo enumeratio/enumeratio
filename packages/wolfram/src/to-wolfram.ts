@@ -153,7 +153,8 @@ export const HEADS: Record<string, string> = {
   ModularInverse: "ModularInverse",
   ChineseRemainder: "ChineseRemainder",
   JacobiSymbol: "JacobiSymbol",
-  LegendreSymbol: "LegendreSymbol",
+  // Wolfram has no LegendreSymbol; on its domain (p an odd prime) it is the Jacobi symbol.
+  LegendreSymbol: "JacobiSymbol",
   KroneckerSymbol: "KroneckerSymbol",
   IntegerExponent: "IntegerExponent",
   HermiteDecomposition: "HermiteDecomposition",
