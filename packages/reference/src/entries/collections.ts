@@ -510,6 +510,12 @@ export const collections: readonly ReferenceEntry[] = [
           "the submatrix at the given rows and columns; `rows` (or `columns`) as `All` takes every row (or column).",
         library: "enumeratio-collections",
       },
+      {
+        call: "At(expr, index)",
+        description:
+          "a part of ANY expression, not just a collection's — the second term of a sum, say.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Negative indices count from the end: $At(c, -1)$ is the last element. See [[Last]].",
@@ -518,6 +524,7 @@ export const collections: readonly ReferenceEntry[] = [
       "Index 0 is the collection's own head, matching Wolfram's Part[c, 0] — compute-engine gave $NaN$ before.",
       "Positional element access, 1-based; negative indices count from the end.",
       "Two index lists at the row and column positions extract a submatrix; a $Span$ takes a contiguous (optionally stepped or reversed) slice.",
+      "Works on the operands of any expression, not just a collection's — Wolfram's Part reaches into any head.",
     ],
     examples: [
       { expr: ["At", ["List", 1, 2, 3, 4], 2], expected: 2 },
@@ -644,9 +651,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["At", ["Add", "a", "b", "c"], 2],
         expected: "b",
-        aspirational: true,
         category: "Scope",
-        caption: "Parts of any expression, not just lists: the second term of a sum; not yet",
+        caption: "Parts of any expression, not just lists: the second term of a sum",
       },
     ],
     seeAlso: ["First", "Last", "IndexOf", "Span"],
@@ -707,14 +713,51 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", ["List", "a", "a", "b"], ["List", "b", "a", "a"], ["List", "a", "b", "a"]],
           "b",
         ],
-        expected: ["List", 1, 3],
-        aspirational: true,
-        category: "Scope",
-        caption:
-          "Searching nested levels, as Wolfram's $FirstPosition$ does, gives the position $\\{1, 3\\}$; compute-engine's IndexOf looks only at the top level",
+        expected: 0,
+        category: "Possible issues",
+        caption: "IndexOf stays at the top level, where this value doesn't occur at all",
+        divergence: {
+          wolfram:
+            "Wolfram's $FirstPosition$ searches every level and gives $\\{1, 3\\}$; see [[FirstPosition]].",
+        },
       },
     ],
-    seeAlso: ["At", "Count", "Position"],
+    seeAlso: ["At", "Count", "Position", "FirstPosition"],
+  },
+  {
+    name: "FirstPosition",
+    domain: "Collections",
+    signature: "FirstPosition(collection, value)",
+    summary: "The position of the first occurrence of value, searching every level.",
+    signatures: [
+      {
+        call: "FirstPosition(collection, value)",
+        description:
+          "the position of the first occurrence of `value`, searching every level rather than just the top one.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Unlike [[IndexOf]] and [[Position]], which only look at the top level, FirstPosition descends into nested collections — depth-first, outer to inner, left to right.",
+      "The empty $List$ when the value isn't found anywhere.",
+    ],
+    examples: [
+      {
+        expr: [
+          "FirstPosition",
+          ["List", ["List", "a", "a", "b"], ["List", "b", "a", "a"], ["List", "a", "b", "a"]],
+          "b",
+        ],
+        expected: ["List", 1, 3],
+        caption: "The first occurrence of $b$, nested inside the first sublist",
+      },
+      {
+        expr: ["FirstPosition", ["List", "a", ["List", "a", "c"]], "b"],
+        expected: ["List"],
+        caption: "The empty list when the value isn't found anywhere",
+      },
+    ],
+    seeAlso: ["IndexOf", "Position", "At"],
   },
   {
     name: "Position",
@@ -1063,11 +1106,18 @@ export const collections: readonly ReferenceEntry[] = [
     summary: "The number of elements equal to value in the collection.",
     signatures: [
       { call: "Count(collection, value)", description: "the number of elements equal to `value`." },
+      {
+        call: "Count(collection, value, level)",
+        description:
+          "matches counted down to `level` (levels 1 through `level`), or — with `level` written as $\\{level\\}$ — at that level only.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A value absent from the collection counts as 0.",
       "Tests exact equality against a fixed value — not a Wolfram-style typed pattern like `_Integer`.",
       "See [[Length]] for the total element count, and [[IndexOf]] for a single matching position.",
+      "A bare integer level spec counts matches at every level from 1 through it; $\\{level\\}$ counts that level only.",
     ],
     examples: [
       { expr: ["Count", ["List", 1, 2, 2, 3, 2], 2], expected: 3 },
@@ -1109,9 +1159,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Count", ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]], "b", 2],
         expected: 3,
-        aspirational: true,
         category: "Scope",
-        caption: "A level spec counts matches down to level 2; not yet",
+        caption: "A bare level spec counts matches down through level 2",
       },
       {
         expr: [
@@ -1121,16 +1170,18 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", 2],
         ],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "$\\{2\\}$ counts matches at level 2 only; not yet",
+        caption: "$\\{2\\}$ counts matches at level 2 only",
       },
       {
         expr: ["Count", ["List", "a", 2, "a", "a", 1, "c", "b", 3, 3], "_Integer"],
-        expected: 4,
-        aspirational: true,
-        category: "Scope",
-        caption: "A pattern $\\_Integer$ counts the integers among symbols; not yet",
+        expected: 0,
+        category: "Possible issues",
+        caption: "Count tests exact equality, so a pattern like $\\_Integer$ matches nothing",
+        divergence: {
+          wolfram:
+            "Wolfram's `_Integer` pattern counts every integer element, here 4 (2, 1, 3, 3).",
+        },
       },
       {
         expr: [
@@ -1258,16 +1309,14 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Join", ["List", ["List", "x"]], ["List", ["List", 1, 2], ["List", 3, 4]], 2],
         expected: ["List", ["List", "x", 1, 2], ["List", 3, 4]],
-        aspirational: true,
         category: "Scope",
-        caption: "Rows missing from the shorter array are taken as empty; not yet",
+        caption: "A row missing from the shorter array simply isn't merged in",
       },
       {
         expr: ["Join", ["f", "a"], ["f", "b"]],
         expected: ["f", "a", "b"],
-        aspirational: true,
         category: "Scope",
-        caption: "Any head, as long as all the arguments share it; not yet",
+        caption: "Any head, as long as all the arguments share it",
       },
       {
         expr: [
@@ -1290,12 +1339,28 @@ export const collections: readonly ReferenceEntry[] = [
     signatures: [
       { call: "Flatten(collection)", description: "every level of nested lists merged into one." },
       { call: "Flatten(collection, n)", description: "flattening limited to the top `n` levels." },
+      {
+        call: "Flatten(collection, PositiveInfinity)",
+        description: "an explicit infinite depth, the same as the default.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Flatten(collection, {{p1}, {p2}, …})",
+        description:
+          "a permutation-shaped list of levels regroups the array's dimensions — transposing a matrix, say.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Flatten(expr)",
+        description: "nested calls of any one head flatten, not just $List$'s.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Undoes [[Partition]]: chunking and then re-flattening recovers the original list.",
       "Simply deletes inner braces/levels; it doesn't otherwise reorder or transform elements.",
       "A depth argument limits flattening to that many levels, leaving deeper nesting intact.",
-      "compute-engine's Flatten is $List$-only.",
+      "Any single head's nested calls flatten, not just $List$'s.",
     ],
     examples: [
       {
@@ -1440,10 +1505,8 @@ export const collections: readonly ReferenceEntry[] = [
           "PositiveInfinity",
         ],
         expected: ["List", 0, 1, 2, -2, 3, -3, 4],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An infinite depth flattens every level, like the default; compute-engine wants an integer depth",
+        caption: "An explicit infinite depth flattens every level, like the default",
       },
       {
         expr: [
@@ -1452,16 +1515,14 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", ["List", 2], ["List", 1]],
         ],
         expected: ["List", ["List", 1, 3], ["List", 2, 4]],
-        aspirational: true,
         category: "Scope",
-        caption: "Lists of levels regroup the dimensions, here into a transpose; not yet",
+        caption: "A list of levels regroups the dimensions, here into a transpose",
       },
       {
         expr: ["Flatten", ["f", "a", ["f", "b", ["f", "c"]]]],
         expected: ["f", "a", "b", "c"],
-        aspirational: true,
         category: "Scope",
-        caption: "Nested calls of any one head flatten, not just lists; not yet",
+        caption: "Nested calls of any one head flatten, not just lists",
       },
       {
         expr: ["Flatten", ["List", 1, 2, 3]],
@@ -1640,11 +1701,25 @@ export const collections: readonly ReferenceEntry[] = [
         call: "Partition(collection, n, d)",
         description: "overlapping sliding windows of length `n`, offset by `d` between windows.",
       },
+      {
+        call: "Partition(collection, {n1, n2, …}, d)",
+        description:
+          "a rank-k array cut into rectangular blocks of shape $\\{n_1, n_2, …\\}$, offset by `d` (shared, or one per dimension) between windows — a matrix into overlapping 2×2 blocks, say.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Partition(collection, n, d, {kL, kR}, pad?)",
+        description:
+          "sliding windows whose overhang past either end of the collection wraps around cyclically, or — with a trailing `pad` — is filled with `pad` instead.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "[[Flatten]] undoes Partition: chunking and re-flattening recovers the original list — when the length divides evenly.",
       "With $d < n$, windows overlap; the two-argument form is equivalent to $d = n$, giving non-overlapping chunks.",
       "A ragged remainder, shorter than $n$, is dropped rather than kept as a partial chunk.",
+      "A list of sizes generalizes chunking to a rank-k array: each dimension gets its own window size (and, optionally, its own offset).",
+      "The overhang pair $\\{k_L, k_R\\}$ pins where the first window starts and the last one ends, each counted from the near end of the collection — 1-based, negative counting from the far end of the WINDOW instead. Without a padding element, an overhang past either end wraps around cyclically.",
     ],
     examples: [
       {
@@ -1701,9 +1776,8 @@ export const collections: readonly ReferenceEntry[] = [
             ["List", ["List", 22, 23], ["List", 32, 33]],
           ],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "A list of sizes cuts a matrix into overlapping $2 \\times 2$ blocks; not yet",
+        caption: "A list of sizes cuts a matrix into overlapping $2 \\times 2$ blocks",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 4]],
@@ -1722,10 +1796,9 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", 5, 6, 1, 2, 3],
           ["List", 6, 1, 2, 3, 4],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Overhangs $\\{1, 1\\}$ wrap cyclically until the last window starts at the last element; not yet",
+          "Overhangs $\\{1, 1\\}$ wrap cyclically until the last window starts at the last element",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 5, 1, ["List", -1, 1]],
@@ -1742,10 +1815,9 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", 5, 6, 1, 2, 3],
           ["List", 6, 1, 2, 3, 4],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Overhangs $\\{-1, 1\\}$: the first window ends at the first element, the last starts at the last; not yet",
+          "Overhangs $\\{-1, 1\\}$: the first window ends at the first element, the last starts at the last",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 3, 1, ["List", 1, 1], "x"],
@@ -1758,9 +1830,8 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", 5, 6, "x"],
           ["List", 6, "x", "x"],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "A padding element fills the overhang instead of wrapping around; not yet",
+        caption: "A padding element fills the overhang instead of wrapping around",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 3, 1, ["List", -1, -1], "x"],
@@ -1773,9 +1844,8 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", 3, 4, 5],
           ["List", 4, 5, 6],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Padding on the left, with overhangs $\\{-1, -1\\}$; not yet",
+        caption: "Padding on the left, with overhangs $\\{-1, -1\\}$",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 3, 1, ["List", -1, 1], "x"],
@@ -1790,9 +1860,8 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", 5, 6, "x"],
           ["List", 6, "x", "x"],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Padding on both sides, with overhangs $\\{-1, 1\\}$; not yet",
+        caption: "Padding on both sides, with overhangs $\\{-1, 1\\}$",
       },
       {
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9], 3],

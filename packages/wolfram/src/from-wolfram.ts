@@ -19,7 +19,7 @@ const REVERSE_SYMBOLS: Record<string, string> = Object.fromEntries(
 /** Wolfram head → compute-engine head. Reverse of `HEADS`. Where two compute-engine
  * heads share a Wolfram spelling (`Log2`/`Lb` both → `Log2`, `List`/`Tuple`), the
  * first entry in `HEADS` wins, since object insertion order is preserved. */
-const REVERSE_HEADS: Record<string, string> = {};
+export const REVERSE_HEADS: Record<string, string> = {};
 for (const [ce, wl] of Object.entries(HEADS)) {
   if (!(wl in REVERSE_HEADS)) REVERSE_HEADS[wl] = ce;
 }
@@ -61,6 +61,7 @@ function parseExpr(): MathJson {
     return "NegativeInfinity";
   }
   if (/[A-Za-z$]/.test(ch)) return parseSymbolOrCall();
+  if (ch === "_") return parseBlank();
 
   throw new Error(`fromWolfram: unexpected character ${JSON.stringify(ch)} at ${pos}`);
 }
@@ -89,6 +90,17 @@ function parseString(): MathJson {
   expect('"');
   // `toWolfram` writes strings via JSON.stringify, so JSON.parse is the exact inverse.
   return `'${JSON.parse(`"${out}"`)}'`;
+}
+
+/** A blank pattern with no pattern name — `_`, `__`, `___`, each optionally with a head
+ * (`_Integer`). `toWolfram` passes such a MathJSON wildcard through as written (see
+ * `symbolToWolfram`), so it comes back as the same string. */
+function parseBlank(): MathJson {
+  const re = /_{1,3}(?:[A-Za-z$][A-Za-z0-9$]*)?/y;
+  re.lastIndex = pos;
+  const m = re.exec(src)!;
+  pos = re.lastIndex;
+  return m[0];
 }
 
 function parseList(): MathJson {

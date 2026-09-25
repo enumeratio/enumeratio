@@ -29,11 +29,12 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
   // Trails the actual count: heads move to extension (or override) as we widen them.
   // Interval/CenteredInterval/Around now genuinely diverge bare compute-engine's Sin, Cos,
-  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), and issue
-  // #113's elementary backlog (elementary-remaining.ts) separately moved Cos/Tan/Cot/Sec/
-  // Csc/Arccos/Arctan/Arcoth/Arcsch/Arsech/Log2/Log10/Lb/TrigToExp there too — the
-  // threshold tracks the combined drop, well below the current count so it still catches
-  // a real regression.
+  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2);
+  // All/Any/Count/Flatten now genuinely diverge it too (level arguments, infinite depth,
+  // dimension permutation, any-head nesting — #113 §7); and #113's elementary backlog
+  // (elementary-remaining.ts) moved Cos/Tan/Cot/Sec/Csc/Arccos/Arctan/Arcoth/Arcsch/Arsech/
+  // Log2/Log10/Lb/TrigToExp there as well. The threshold tracks the combined drop, well
+  // below the current count so it still catches a real regression.
   expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(10);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
@@ -182,6 +183,8 @@ const OVERRIDDEN = [
   // formula, and the decimal-digit-count identity), so Add is the corpus expression's own
   // outer head even though the divergence is Floor's.
   "Add",
+  "All",
+  "Any",
   "Arccos",
   "Arccot",
   "Arccsc",
@@ -207,6 +210,7 @@ const OVERRIDDEN = [
   "Cos",
   "Cosh",
   "Cot",
+  "Count",
   "Csc",
   "Digamma",
   "DigitCount",
@@ -226,6 +230,7 @@ const OVERRIDDEN = [
   "Fibonacci",
   "First",
   "FixedPoint",
+  "Flatten",
   "Floor",
   "FromContinuedFraction",
   "FromDigits",
@@ -486,6 +491,9 @@ const NOVEL = [
   "Braid",
   "AlexanderPolynomial",
   "JonesPolynomial",
+  // FirstPosition exists in Wolfram (system-names.ts has it), but that isn't confirmed by
+  // an external kernel here -- same story as Prepend, just below.
+  "FirstPosition",
   // Prepend exists in Wolfram (crosswalk-data.ts has the alias), but that isn't confirmed
   // by an external kernel here -- collect-coverage.ts's "elsewhere" column needs
   // wolframscript/sympy/mpmath, which this offline pass doesn't have.

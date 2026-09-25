@@ -240,6 +240,7 @@ export const HEADS: Record<string, string> = {
   Length: "Length",
   Count: "Count",
   Position: "Position",
+  FirstPosition: "FirstPosition",
   Reverse: "Reverse",
   Sort: "Sort",
   Ordering: "Ordering",

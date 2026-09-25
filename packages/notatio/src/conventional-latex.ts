@@ -145,6 +145,36 @@ const square: Entry = {
   serialize: (serializer, expr) => serializer.serialize(["Power", operands(expr)[0] ?? null, 2]),
 };
 
+/** A pure-imaginary `Complex(0, b)` factor of a product as `b` times the unit, which native
+ *  `Multiply` writes bare (`\imaginaryI\pi`, `-\imaginaryI x`) and native `Add` reads the
+ *  sign of (`a-\imaginaryI b`), instead of the bracketed `(-\imaginaryI)x`. */
+const unitFactors = (expr: MathJsonExpression): MathJsonExpression => {
+  if (!Array.isArray(expr) || expr[0] !== "Multiply") return expr;
+  const imaginary = (x: MathJsonExpression): x is ["Complex", 0, number] =>
+    Array.isArray(x) && x[0] === "Complex" && x[1] === 0 && typeof x[2] === "number";
+  const factors = operands(expr);
+  if (!factors.some(imaginary)) return expr;
+  return [
+    "Multiply",
+    ...factors.flatMap((x): MathJsonExpression[] =>
+      !imaginary(x) ? [x] : x[2] === 1 ? ["ImaginaryUnit"] : [x[2], "ImaginaryUnit"],
+    ),
+  ];
+};
+
+const multiply: Entry = {
+  ...native("Multiply"),
+  name: "Multiply",
+  serialize: (serializer, expr) => native("Multiply").serialize(serializer, unitFactors(expr)),
+};
+
+const add: Entry = {
+  ...native("Add"),
+  name: "Add",
+  serialize: (serializer, expr) =>
+    native("Add").serialize(serializer, ["Add", ...operands(expr).map(unitFactors)]),
+};
+
 /** Euler's constant as `\\gamma`, which it already parses from, not `\\operatorname{EulerGamma}`. */
 const eulerGamma: Entry = {
   ...native("EulerGamma"),
@@ -166,6 +196,8 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   signOut("Divide"),
   signOut("Rational"),
   negate,
+  multiply,
+  add,
   logBase("Log", 10),
   logBase("Log2", 2),
   logBase("Log10", 10),
