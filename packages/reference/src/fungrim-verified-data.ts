@@ -3550,12 +3550,6 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
-    entry: "c331da",
-    heads: ["Ln"],
-    verdict: "agree",
-    samples: 1,
-  },
-  {
     entry: "c40be0",
     heads: ["Abs", "GCD"],
     verdict: "agree",
@@ -4765,6 +4759,11 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
+    head: "Ln",
+    identities: 12,
+    declared: true,
+  },
+  {
     head: "BesselY",
     identities: 11,
     declared: true,
@@ -4776,11 +4775,6 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Filter",
-    identities: 11,
-    declared: true,
-  },
-  {
-    head: "Ln",
     identities: 11,
     declared: true,
   },
