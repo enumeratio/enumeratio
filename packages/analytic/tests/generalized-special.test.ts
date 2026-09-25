@@ -111,9 +111,13 @@ test("PolyGamma(z): the one-argument digamma", () => {
   const c = ce.box(["PolyGamma", ["Complex", 2.5, 3]]).evaluate();
   expect(c.re).toBeCloseTo(1.2812739190662314, 9);
   expect(c.im).toBeCloseTo(0.9798053153445596, 9);
-  // Untouched: the two-argument form still declines to reduce an exact order/argument pair
-  // it didn't already handle.
-  expect(evalJson(["PolyGamma", 3, 5])).toEqual(["PolyGamma", 3, 5]);
+  // PolyGamma(3, 5): now closed (special-functions-remaining.ts) via
+  // psi^(m)(n) = (-1)^(m+1) m! (zeta(m+1) - sum_{k<n} k^-(m+1)) at integer order/argument.
+  expect(evalJson(["PolyGamma", 3, 5])).toEqual([
+    "Multiply",
+    ["Rational", 1, 17280],
+    ["Add", -111845, ["Multiply", 1152, ["Power", "Pi", 4]]],
+  ]);
 });
 
 test("PolyLog(n, p, z): the Nielsen generalized polylogarithm", () => {

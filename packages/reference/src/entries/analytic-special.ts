@@ -111,8 +111,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["BarnesG", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
-        caption: "$G(\\infty) = \\infty$ — the limit at infinity is not taken yet",
-        aspirational: true,
+        caption: "$G(\\infty) = \\infty$",
       },
       {
         expr: ["BarnesG", ["Interval", 1.17, 1.18]],
@@ -264,8 +263,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["LogBarnesG", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
-        caption: "$\\ln G(\\infty) = \\infty$; the limit is not taken yet",
-        aspirational: true,
+        caption: "$\\ln G(\\infty) = \\infty$",
       },
     ],
     implementations: [
@@ -397,8 +395,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["LogGamma", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Scope",
-        caption: "$\\ln\\Gamma(\\infty) = \\infty$; the limit is not taken yet",
-        aspirational: true,
+        caption: "$\\ln\\Gamma(\\infty) = \\infty$",
       },
       {
         expr: ["N", ["LogGamma", ["Power", 10, 300]]],
@@ -623,8 +620,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["DirichletEta", "PositiveInfinity"],
         expected: 1,
         category: "Scope",
-        caption: "$\\eta(s) \\to 1$ as $s \\to \\infty$; the limit is not taken yet",
-        aspirational: true,
+        caption: "$\\eta(s) \\to 1$ as $s \\to \\infty$",
       },
       {
         expr: ["DirichletEta", ["Interval", 1.5, 1.6]],
@@ -766,8 +762,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["DirichletBeta", "PositiveInfinity"],
         expected: 1,
         category: "Scope",
-        caption: "$\\beta(s) \\to 1$ as $s \\to \\infty$; the limit is not taken yet",
-        aspirational: true,
+        caption: "$\\beta(s) \\to 1$ as $s \\to \\infty$",
       },
       {
         expr: ["DirichletBeta", ["Around", 2, 0.01]],
@@ -911,8 +906,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Add", "EulerGamma", ["Multiply", 2, ["Ln", 2]]],
         category: "Properties",
         caption:
-          "$\\gamma_0(\\tfrac12) = -\\psi(\\tfrac12) = \\gamma + 2\\ln 2$; stops at $-\\psi(\\tfrac12)$",
-        aspirational: true,
+          "$\\gamma_0(\\tfrac12) = -\\psi(\\tfrac12) = \\gamma + 2\\ln 2$, now that $\\psi(\\tfrac12)$ itself has a closed form",
       },
     ],
     // \u03b3\u2099(a) IS a Laurent coefficient of \u03b6(s, a) at s = 1, so its definition is a limit of an
@@ -1326,15 +1320,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["HarmonicNumber", "PositiveInfinity"],
         expected: "PositiveInfinity",
         category: "Properties",
-        caption: "The harmonic series diverges; the limit is not taken yet",
-        aspirational: true,
+        caption: "The harmonic series diverges",
       },
       {
         expr: ["HarmonicNumber", "PositiveInfinity", 2],
         expected: ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
         category: "Properties",
-        caption: "$H_\\infty^{(r)} = \\zeta(r)$ for $r > 1$: the Basel sum; not yet",
-        aspirational: true,
+        caption: "$H_\\infty^{(r)} = \\zeta(r)$ for $r > 1$: the Basel sum",
       },
       {
         expr: ["HarmonicNumber", 0.2, ["Interval", 2.1, 2.2]],
