@@ -5,7 +5,7 @@
 //
 // Every term is computed over `bigint` and only narrowed to a plain `number` when it's
 // still exact there (`Number.isSafeInteger`); past that the raw bigint is returned instead
-// (cast through the `FamilyKernel` element type, which predates bigint support and can't be
+// (cast through the `NumberKernel` element type, which predates bigint support and can't be
 // widened here — see the FILES boundary in the task that produced this file). `ce.box`
 // accepts a bigint directly, so `At`/`Take` on fast-growing sequences (FactorialNumbers,
 // PrimorialNumbers, …) stay exact well past 2^53. The one place precision is unavoidably
@@ -14,14 +14,14 @@
 // file doesn't own. `Element(hugeValue, FactorialNumbers)` is therefore only reliable
 // within that range; direct kernel calls (as in this package's tests) can still pass a
 // bigint straight through.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
 const MIN_SAFE_BIG = BigInt(Number.MIN_SAFE_INTEGER);
 
 /** bigint -> plain number when exact there, else the bigint itself (still an exact integer,
  *  just not representable as an IEEE double without loss). Cast at the call site, since
- *  `FamilyKernel`'s scalar element type is `number` and this package's FILES boundary
+ *  `NumberKernel`'s scalar element type is `number` and this package's FILES boundary
  *  excludes touching types.ts. */
 function narrow(x: bigint): number {
   return x >= MIN_SAFE_BIG && x <= MAX_SAFE_BIG ? Number(x) : (x as unknown as number);
@@ -75,7 +75,7 @@ function quadraticRank(a: bigint, b: bigint, c: bigint, denom: bigint, x: bigint
   return n >= 1n ? Number(n - 1n) : -1;
 }
 
-function quadraticFamily(head: string, a: bigint, b: bigint, c: bigint, denom: bigint): FamilyKernel {
+function quadraticFamily(head: string, a: bigint, b: bigint, c: bigint, denom: bigint): NumberKernel {
   return {
     head,
     paramCount: 0,
@@ -119,7 +119,7 @@ function bisectRank(term: (n: bigint) => bigint, x: bigint): number {
   return term(lo) === x ? Number(lo - 1n) : -1;
 }
 
-function monotoneFamily(head: string, term: (n: bigint) => bigint): FamilyKernel {
+function monotoneFamily(head: string, term: (n: bigint) => bigint): NumberKernel {
   return {
     head,
     paramCount: 0,
@@ -165,7 +165,7 @@ function scanRank(term: (n: number) => bigint, x: bigint): number {
   return v === x ? n - 1 : -1;
 }
 
-function scanFamily(head: string, term: (n: number) => bigint): FamilyKernel {
+function scanFamily(head: string, term: (n: number) => bigint): NumberKernel {
   return {
     head,
     paramCount: 0,
@@ -206,7 +206,7 @@ const primorialAt = growingSequence((_index0, prev) => {
   return prev * BigInt(candidate);
 });
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   // ---- figurate numbers: all k-gonal, P(k, n) = ((k-2)n^2 - (k-4)n)/2. ----
   quadraticFamily("TriangularNumbers", 1n, 1n, 0n, 2n), // P(3, n) = n(n+1)/2, A000217
   quadraticFamily("PentagonalNumbers", 3n, -1n, 0n, 2n), // P(5, n) = n(3n-1)/2, A000326

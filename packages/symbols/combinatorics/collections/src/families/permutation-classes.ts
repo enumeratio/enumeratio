@@ -20,7 +20,7 @@ import {
   KSubsetUnrank,
   SchroederCount,
 } from "./kernels-extra.ts";
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors permutations.ts's private `ints`.
 const ints = (
@@ -30,7 +30,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -348,7 +348,7 @@ const smoothClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["3412", 
 // ─── VexillaryPermutations(n): Av(2143) — A005802.
 const vexillaryClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["2143"]));
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   ints(
     "BaxterPermutations",
     1,

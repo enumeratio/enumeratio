@@ -1,4 +1,4 @@
-// Recurrence-defined numeric sequences as FamilyKernel "scalar" entries (element = a single
+// Recurrence-defined numeric sequences as NumberKernel "scalar" entries (element = a single
 // integer, a term of the sequence). Same shape as numeric-sets.ts's Primes/SquareNumbers/
 // AbundantNumbers/SmoothNumbers, but every term here is a bigint: several of these grow past
 // Number.MAX_SAFE_INTEGER well within the first 30 terms (BellNumbers, FubiniNumbers,
@@ -8,7 +8,7 @@
 // it lines up with the OEIS offset -- see the reference entries at the end of
 // packages/reference/src/entries/enumerable-families.ts for the definitive statement per
 // sequence; the comments here are the implementation-level version of the same facts.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 // ---- shared: bigint decode + a bounded forward scan for membership/rank. ----
 
@@ -199,11 +199,11 @@ function thueMorse(n: number): bigint {
   return BigInt(parity);
 }
 
-// ---- FamilyKernel entries. `unrank` returns a bigint cast through Element's `number` slot
+// ---- NumberKernel entries. `unrank` returns a bigint cast through Element's `number` slot
 // (types.ts is out of bounds for this task; declare.ts's `element()` already casts the
 // unrank result `as never` before boxing, so the runtime bigint reaches `ce.box` untouched). ----
 
-function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: number): FamilyKernel {
+function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: number): NumberKernel {
   const scan = scanMembership(nth, monotoneFrom);
   return {
     head,
@@ -222,7 +222,7 @@ function scalarEntry(head: string, nth: (k: number) => bigint, monotoneFrom: num
   };
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   scalarEntry("FibonacciNumbers", (k) => fibonacci.nth(k), 0),
   scalarEntry("LucasNumbers", (k) => lucas.nth(k), 1),
   scalarEntry("JacobsthalNumbers", (k) => jacobsthal.nth(k), 0),

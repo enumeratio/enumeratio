@@ -14,7 +14,7 @@
 // filling, or a pair of tableaux) are packed as extra "rows" in the same number[][] — e.g. SkewPartitions
 // is `[lam, mu]`, SkewStandardTableaux is `[lam, mu, rowWord]` — except StandardTableauPairs, whose two
 // same-shape tableaux don't share a row count with anything else and so use kind "nested" as `[P, Q]`.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 import { Factorial, PermutationRank, PermutationUnrank } from "./kernels.ts";
 import { PartitionsP, IntegerPartitionUnrank } from "./kernels-combinatorics.ts";
 import { PartitionsQ, DistinctPartitionUnrank, DistinctPartitionRank } from "./kernels-extra.ts";
@@ -789,7 +789,7 @@ export function IsBoxedPlanePartitionOf(e: unknown, a: number, b: number, c: num
   return true;
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   {
     head: "SemistandardTableaux",
     paramCount: 2,

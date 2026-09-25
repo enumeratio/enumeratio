@@ -10,7 +10,7 @@
 //   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
 
 import { allEntries } from "../src/families/index.ts";
-import { check, checkFamily, type Failure, shrink, streamFor } from "./properties.ts";
+import { check, checkFamily, type Failure, needsBigint, randomBelow, shrink, streamFor } from "./properties.ts";
 
 const POINTS = Number(process.env.PLAUSIBLE_POINTS ?? 8);
 const PARAM_CAP = Number(process.env.PLAUSIBLE_PARAM_CAP ?? 7);
@@ -42,7 +42,7 @@ const SMALL_PARAM_CAP = 4;
 // BoxedPlanePartitions at 232,848 elements — an order of magnitude past its siblings' worst case.
 // If a future param cap or a new full-enumeration family turns out too generous, fail that one
 // param draw as a finding instead of materializing an OOM.
-const MAX_MATERIALIZED = 2_000_000;
+const MAX_MATERIALIZED = 2_000_000n;
 
 // ── the run ─────────────────────────────────────────────────────────────────────
 
@@ -61,6 +61,7 @@ if (families.length === 0) {
 }
 
 const failures: Failure[] = [];
+const unrepresentable = new Set<string>();
 let checked = 0;
 
 for (const entry of families) {
@@ -69,26 +70,30 @@ for (const entry of families) {
   const paramCap = fullEnumeration ? SMALL_PARAM_CAP : PARAM_CAP;
   for (let attempt = 0; attempt < POINTS; attempt++) {
     const params = Array.from({ length: entry.paramCount }, () => Math.floor(draw() * (paramCap + 1)));
-    let total: number;
+    let total: bigint | number;
     try {
       total = entry.count(params);
     } catch (error) {
+      if (needsBigint(error)) {
+        unrepresentable.add(entry.head);
+        continue;
+      }
       failures.push({
         family: entry.head,
         property: "count",
         params,
-        rank: -1,
+        rank: -1n,
         detail: `count threw: ${String(error).slice(0, 120)}`,
       });
       continue;
     }
-    if (!Number.isFinite(total) || total <= 0) continue; // an empty family proves nothing
+    if (typeof total !== "bigint" || total <= 0n) continue; // an empty family proves nothing
     if (fullEnumeration && total > MAX_MATERIALIZED) {
       failures.push({
         family: entry.head,
         property: "count",
         params,
-        rank: -1,
+        rank: -1n,
         detail: `count ${total.toLocaleString()} exceeds the ${MAX_MATERIALIZED.toLocaleString()}-element materialization guard`,
       });
       continue;
@@ -99,7 +104,7 @@ for (const entry of families) {
       failures.push(shrink(entry, familyFailure));
       break;
     }
-    const rank = Math.floor(draw() * Math.min(total, 10_000));
+    const rank = randomBelow(draw, total < 10_000n ? total : 10_000n);
     const failure = check(entry, params, rank);
     checked++;
     if (failure !== undefined) {
@@ -110,9 +115,12 @@ for (const entry of families) {
 }
 
 process.stdout.write(`${checked} points checked, ${failures.length} families failing\n`);
+if (unrepresentable.size > 0) {
+  process.stdout.write(`skipped past 2^53, kernel not bigint yet: ${[...unrepresentable].join(", ")}\n`);
+}
 for (const failure of failures) {
   process.stdout.write(
-    `\n  ${failure.family}(${failure.params.join(", ")})${failure.rank >= 0 ? ` at rank ${failure.rank}` : ""}\n` +
+    `\n  ${failure.family}(${failure.params.join(", ")})${failure.rank >= 0n ? ` at rank ${failure.rank}` : ""}\n` +
       `    ${failure.property}: ${failure.detail}\n` +
       `    replay: vp node packages/symbols/combinatorics/collections/scripts/plausible.ts ${failure.family} ${seed}\n`,
   );

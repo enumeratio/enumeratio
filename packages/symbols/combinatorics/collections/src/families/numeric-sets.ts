@@ -1,9 +1,9 @@
-// Spike: four numeric sets/sequences as FamilyKernel "scalar" entries (element = a single
+// Spike: four numeric sets/sequences as NumberKernel "scalar" entries (element = a single
 // integer, not a list). Proves out kind:"scalar" / paramCount:0 in declare.ts against a mix
 // of a sieve-backed value (Primes), a closed form (SquareNumbers), a predicate scan
 // (AbundantNumbers), and a one-parameter operator (SmoothNumbers(k)) — not the full 88-set
 // catalogue; see design/rendering-environments-planning or the spike report for the rest.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 // ---- Primes: incremental sieve, grown on demand and cached across calls. ----
 
@@ -118,7 +118,7 @@ function smoothCacheFor(k: number): ReturnType<typeof nthMatchCache> {
   return cache;
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   {
     head: "Primes",
     paramCount: 0,
