@@ -4676,11 +4676,6 @@ export const fungrimFrontier: readonly {
     declared: false,
   },
   {
-    head: "RiemannZetaZero",
-    identities: 1,
-    declared: false,
-  },
-  {
     head: "Solutions",
     identities: 1,
     declared: false,
@@ -5132,6 +5127,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Primes",
+    identities: 1,
+    declared: true,
+  },
+  {
+    head: "RiemannZetaZero",
     identities: 1,
     declared: true,
   },
