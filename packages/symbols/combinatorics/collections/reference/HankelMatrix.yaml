@@ -7,10 +7,11 @@ signatures:
     description: the n×n Hankel matrix with first column and first row c, zero-padded past c's reach
     library: enumeratio-collections
   - call: HankelMatrix(c, r)
-    description: the n×m Hankel matrix (n = Length(c), m = Length(r)) filled past c's reach from r
+    description: the n×m Hankel matrix (n = Length(c), m = Length(r)) with r as the last row
     library: enumeratio-collections
 details:
   - 'A Hankel matrix is constant along each anti-diagonal: M(i, j) depends only on i + j.'
+  - "r's first element coincides with c's last (both are the matrix's shared corner), so it never surfaces on its own."
 examples:
   - id: single-arg
     expr: [HankelMatrix, [List, 1, 2, 3]]
@@ -18,6 +19,6 @@ examples:
     caption: Past c's reach, the matrix is zero-padded
   - id: with-last-row
     expr: [HankelMatrix, [List, 1, 2, 3], [List, 3, 4, 5]]
-    expected: [List, [List, 1, 2, 3], [List, 2, 3, 3], [List, 3, 3, 4]]
+    expected: [List, [List, 1, 2, 3], [List, 2, 3, 4], [List, 3, 4, 5]]
     category: Scope
-    caption: A second argument fills the region past c's reach from r instead of zero
+    caption: A second argument becomes the matrix's last row

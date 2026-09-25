@@ -76,23 +76,17 @@ test("LetterNumber of a string gives one position per character", () => {
 });
 
 // FactorialPower(x, n) / FactorialPower(x, n, h)
-test("FactorialPower(x, 3) is the falling factorial", () => {
-  expect(run(["FactorialPower", "x", 3])).toEqual([
-    "Multiply",
-    "x",
-    ["Add", "x", -2],
-    ["Add", "x", -1],
-  ]);
+test("FactorialPower(x, 3) stays unevaluated for a symbolic x, matching Wolfram (only FunctionExpand opens the product)", () => {
+  expect(run(["FactorialPower", "x", 3])).toEqual(["FactorialPower", "x", 3]);
 });
 test("FactorialPower(5, 3) evaluates numerically", () => {
   expect(run(["FactorialPower", 5, 3])).toEqual(60);
 });
-test("FactorialPower(x, 2, h) steps by h instead of 1", () => {
-  expect(run(["FactorialPower", "x", 2, "h"])).toEqual([
-    "Multiply",
-    "x",
-    ["Add", ["Negate", "h"], "x"],
-  ]);
+test("FactorialPower(x, 2, h) also stays unevaluated for a symbolic x", () => {
+  expect(run(["FactorialPower", "x", 2, "h"])).toEqual(["FactorialPower", "x", 2, "h"]);
+});
+test("FactorialPower(x, 0) is always 1, even for a symbolic x", () => {
+  expect(run(["FactorialPower", "x", 0])).toEqual(1);
 });
 
 // HankelMatrix(c) / HankelMatrix(c, r)
@@ -104,10 +98,18 @@ test("HankelMatrix(c) is constant along anti-diagonals, zero-padded", () => {
     ["List", 3, 0, 0],
   ]);
 });
+test("HankelMatrix(c, r) uses r as the matrix's last row", () => {
+  expect(run(["HankelMatrix", ["List", 1, 2, 3], ["List", 3, 4, 5]])).toEqual([
+    "List",
+    ["List", 1, 2, 3],
+    ["List", 2, 3, 4],
+    ["List", 3, 4, 5],
+  ]);
+});
 
-// MovingMap(f, list, r)
-test("MovingMap keeps the input length, clipping the window at the edges", () => {
-  expect(run(["MovingMap", "Length", ["List", 1, 2, 3, 4], 1])).toEqual(["List", 2, 3, 3, 2]);
+// MovingMap(f, list, w): width-(w+1) windows, no padding, Length(list) - w results.
+test("MovingMap(Length, {1,2,3,4}, 1) maps over width-2 windows", () => {
+  expect(run(["MovingMap", "Length", ["List", 1, 2, 3, 4], 1])).toEqual(["List", 2, 2, 2]);
 });
 
 // PascalBinomial(n, m)
@@ -124,12 +126,23 @@ test("PascalBinomial satisfies Pascal's recurrence for a negative n", () => {
   expect(p(-1, 3) === p(-2, 2) + p(-2, 3)).toBe(true);
 });
 
-// CellularAutomaton(rule, init, t)
-test("CellularAutomaton(30, 1, 2) grows the classic rule-30 triangle from a single seed", () => {
-  expect(run(["CellularAutomaton", 30, 1, 2])).toEqual([
+// CellularAutomaton(rule, init, t): fixed-width rows, centred on init's non-background
+// cells, padded by t on each side. `1` alone isn't valid init (Wolfram's initn message) --
+// {{1}, 0} is the single-seed form.
+test("CellularAutomaton(30, {{1}, 0}, 3) is the classic rule-30 triangle, fixed-width", () => {
+  expect(run(["CellularAutomaton", 30, ["List", ["List", 1], 0], 3])).toEqual([
     "List",
-    ["List", 1],
-    ["List", 1, 1, 1],
-    ["List", 1, 1, 0, 0, 1],
+    ["List", 0, 0, 0, 1, 0, 0, 0],
+    ["List", 0, 0, 1, 1, 1, 0, 0],
+    ["List", 0, 1, 1, 0, 0, 1, 0],
+    ["List", 1, 1, 0, 1, 1, 1, 1],
+  ]);
+});
+test("CellularAutomaton(90, {{1, 0, 0}, 0}, 2) treats a seed among background cells as a single active position, not a 3-wide region", () => {
+  expect(run(["CellularAutomaton", 90, ["List", ["List", 1, 0, 0], 0], 2])).toEqual([
+    "List",
+    ["List", 0, 0, 1, 0, 0],
+    ["List", 0, 1, 0, 1, 0],
+    ["List", 1, 0, 0, 0, 1],
   ]);
 });

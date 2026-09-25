@@ -187,7 +187,16 @@ function declareLetterNumber(ce: ComputeEngine): void {
 
 // --- FactorialPower --------------------------------------------------------------------------
 
-/** `FactorialPower[x, n]`: the falling factorial `x(x-1)…(x-n+1)` (`n` factors).
+/** True for an actual number literal (Integer/Rational/Real/Complex) — the concrete-value
+ *  case `FactorialPower` expands. A symbolic `x` is left unevaluated instead: Wolfram itself
+ *  doesn't expand `FactorialPower(x, 3)` into a product (only `FunctionExpand` does), so
+ *  matching it means NOT expanding here either. */
+const isNumberLiteral = (x: BoxedExpression): boolean =>
+  (x as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true;
+
+/** `FactorialPower[x, n]`: the falling factorial `x(x-1)…(x-n+1)` (`n` factors), for a
+ *  concrete-number `x` only — a symbolic `x` is left unevaluated, matching Wolfram (which
+ *  needs `FunctionExpand` to open the product out).
  *  `FactorialPower[x, n, h]`: step `h` instead of 1 — `x(x-h)…(x-(n-1)h)`.
  *  A negative integer `n` inverts: `1 / ((x+h)(x+2h)…(x+|n|h))`. A non-integer `n` (step 1
  *  only) generalizes via `Gamma(x+1)/Gamma(x-n+1)`. */
@@ -196,11 +205,14 @@ function declareFactorialPower(ce: ComputeEngine): void {
     signature: "(any, any, any?) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const x = ops[0];
+      const xExpr = ops[0];
       const nExpr = ops[1];
-      if (x === undefined || nExpr === undefined) return undefined;
+      if (xExpr === undefined || nExpr === undefined) return undefined;
       const h = ops[2] ?? ce.One;
       const n = integerAt(nExpr.evaluate());
+      if (n === 0) return ce.One; // the empty product is 1 regardless of x
+      const x = xExpr.evaluate();
+      if (!isNumberLiteral(x)) return undefined; // symbolic x: leave unevaluated, like Wolfram
       if (n === undefined) {
         if (h.isEqual(ce.One) !== true) return undefined;
         return ce
@@ -212,7 +224,6 @@ function declareFactorialPower(ce: ComputeEngine): void {
           ])
           .evaluate();
       }
-      if (n === 0) return ce.One;
       const m = Math.abs(n);
       const factors: BoxedExpression[] = [];
       for (let k = 0; k < m; k++) {
@@ -233,8 +244,9 @@ function declareFactorialPower(ce: ComputeEngine): void {
 
 /** `HankelMatrix[c]`: the `n×n` Hankel matrix (constant on anti-diagonals) with first column
  *  and first row `c`, zero-padded past `c`'s reach. `HankelMatrix[c, r]`: `n×m` (`n = Length(c)`,
- *  `m = Length(r)`), the entries past `c`'s reach taken from `r` (`M(i,j) = c(i+j-1)` while
- *  `i+j-1 ≤ n`, else `r(i+j-1-n)`). */
+ *  `m = Length(r)`), with `r` as the LAST ROW of the matrix (`r[1]` coincides with `c[n]`, the
+ *  shared corner, so `r[1]` itself never surfaces elsewhere: `M(i,j) = c(i+j-1)` while
+ *  `i+j-1 ≤ n`, else `r(i+j-n)`). */
 function declareHankelMatrix(ce: ComputeEngine): void {
   ce.declare("HankelMatrix", {
     signature: "(collection<any>, collection<any>?) -> any",
@@ -249,7 +261,7 @@ function declareHankelMatrix(ce: ComputeEngine): void {
       const at = (i: number, j: number): BoxedExpression => {
         const idx = i + j - 1;
         if (idx <= n) return col[idx - 1]!;
-        const k = idx - n;
+        const k = idx - n + 1;
         return rowSpec !== undefined && k >= 1 && k <= rowSpec.length ? rowSpec[k - 1]! : ce.Zero;
       };
       const rows: BoxedExpression[] = [];
@@ -265,9 +277,8 @@ function declareHankelMatrix(ce: ComputeEngine): void {
 
 // --- MovingMap -------------------------------------------------------------------------------
 
-/** `MovingMap[f, list, r]`: `f` applied to the window of radius `r` around each element —
- *  same length as `list`, unlike `MovingAverage`, since the window is clipped rather than
- *  dropped at the boundary. */
+/** `MovingMap[f, list, w]`: `f` applied to each width-`(w+1)` window of `list`, sliding by 1
+ *  with no padding — `Length(list) - w` results, same as `Map(f, Partition(list, w+1, 1))`. */
 function declareMovingMap(ce: ComputeEngine): void {
   ce.declare("MovingMap", {
     signature: "((collection<any>) -> any, collection<any>, any) -> collection",
@@ -275,13 +286,16 @@ function declareMovingMap(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const f = ops[0];
       const list = ops[1]?.evaluate();
-      const r = ops[2] !== undefined ? integerAt(ops[2].evaluate()) : undefined;
-      if (f === undefined || list === undefined || r === undefined || r < 0) return undefined;
+      const w = ops[2] !== undefined ? integerAt(ops[2].evaluate()) : undefined;
+      if (f === undefined || list === undefined || w === undefined || w < 0) return undefined;
       const items = operandsOf(list);
-      const results = items.map((_, i) => {
-        const window = items.slice(Math.max(0, i - r), Math.min(items.length, i + r + 1));
-        return invoke(ce, f, [ce.function("List", window)]);
-      });
+      const windowSize = w + 1;
+      if (windowSize > items.length) return ce.function("List", []);
+      const results: BoxedExpression[] = [];
+      for (let i = 0; i + windowSize <= items.length; i++) {
+        const window = items.slice(i, i + windowSize);
+        results.push(invoke(ce, f, [ce.function("List", window)]));
+      }
       return ce.function("List", results);
     },
   });
@@ -347,8 +361,12 @@ function parseCAInit(initExpr: BoxedExpression): CAInit | undefined {
 }
 
 /** `CellularAutomaton[rule, init, t]`: `t+1` generations of the elementary (`k = 2`, radius 1)
- *  rule numbered `rule` (0–255, Wolfram's convention) starting from `init`, each generation
- *  wider than the last by one cell on each side — the region `t` steps could possibly reach.
+ *  rule numbered `rule` (0–255, Wolfram's convention) starting from `init`. Every generation
+ *  is the SAME fixed width — `init`'s non-background cells span `[minPos, maxPos]`, and the
+ *  displayed window is `[minPos - t, maxPos + t]`, the widest region `t` steps could possibly
+ *  reach from there; positions outside `init`'s cells read as `background`. (Cells of `init`
+ *  that already equal `background` don't widen that span — a `{{1, 0, 0}, 0}` seed behaves
+ *  exactly like a single seed cell at position 0, not like a 3-wide active region.)
  *  Totalistic/multi-color rule specs and nested-list `{{rule, k, r}, …}` forms are left
  *  unevaluated. */
 function declareCellularAutomaton(ce: ComputeEngine): void {
@@ -362,14 +380,19 @@ function declareCellularAutomaton(ce: ComputeEngine): void {
       if (initExpr === undefined || t === undefined || t < 0) return undefined;
       const parsed = parseCAInit(initExpr);
       if (parsed === undefined) return undefined;
-      let row = parsed.cells.slice();
+      const { cells, background } = parsed;
+      const activePositions = cells
+        .map((c, i) => (c !== background ? i : -1))
+        .filter((i) => i >= 0);
+      const minPos = activePositions.length > 0 ? Math.min(...activePositions) : 0;
+      const maxPos = activePositions.length > 0 ? Math.max(...activePositions) : cells.length - 1;
+      const left = minPos - t;
+      const right = maxPos + t;
+      const at0 = (p: number): number => (p >= 0 && p < cells.length ? cells[p]! : background);
+      let row = Array.from({ length: right - left + 1 }, (_, k) => at0(left + k));
       const history: number[][] = [row.slice()];
       for (let step = 0; step < t; step++) {
-        row = elementaryStep(
-          rule,
-          [parsed.background, ...row, parsed.background],
-          parsed.background,
-        );
+        row = elementaryStep(rule, row, background);
         history.push(row.slice());
       }
       return ce.function(
