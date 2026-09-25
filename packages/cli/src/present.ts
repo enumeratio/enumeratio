@@ -22,31 +22,33 @@ export interface Presented {
   settle(pinned: Json): string;
 }
 
-/** Evaluate `input` for `env`; `screen` is where a driver, if there is one, draws. */
+/**
+ * Evaluate `input` for `env`; `screen` is where a driver, if there is one, draws.
+ * `plotHeight` is the rows a plot takes, for a screen shorter than a terminal's.
+ */
 export function present(
   input: string,
   env: Environment,
   screen: Omit<DriveScreen, "show" | "color">,
+  plotHeight = 12,
 ): Presented {
   const color = env.colour !== "mono";
   const repl = new Repl({ color, environment: env });
   const echo = repl.prompt() + input;
   const { session } = repl;
   const out = repl.eval(input);
+  const text = (json: Json): string => textOf(session, json as never, 60, plotHeight);
   const last = session.history.at(-1);
   const settle = (pinned: Json): string =>
-    repl.formatOut(
-      last?.n ?? 1,
-      textOf(session, session.ce.box(pinned as never).evaluate().json as never),
-    );
+    repl.formatOut(last?.n ?? 1, text(session.ce.box(pinned as never).evaluate().json as Json));
   if (last === undefined) return { echo, out: out.text || red("  no result", color), settle };
   const json = last.expr.json as Json;
   if (can.drive(env) && drivable(json)) {
-    const d = driver(json, { ...screen, color, show: (e) => textOf(session, e as never) });
+    const d = driver(json, { ...screen, color, show: text });
     if (d !== undefined) return { echo, out: "", driver: d, settle };
   }
   const reduced = repl.reduced(last.expr).json as Json;
-  return { echo, out: repl.formatOut(last.n, textOf(session, reduced as never)), settle };
+  return { echo, out: repl.formatOut(last.n, text(reduced)), settle };
 }
 
 /** The line under a driven result that says how to pick the controls back up. */
