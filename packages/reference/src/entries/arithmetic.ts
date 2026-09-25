@@ -1332,17 +1332,15 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Rationalize", ["Add", 1.2, ["Multiply", 6.7, "x"]]],
         expected: ["Add", ["Multiply", ["Rational", 67, 10], "x"], ["Rational", 6, 5]],
-        aspirational: true,
         category: "Scope",
-        caption: "Should rationalize every approximate number inside an expression; not yet",
+        caption: "Rationalizes every approximate number inside an expression",
       },
       {
         expr: ["Rationalize", ["List", 0.5, 0.25, 0.2]],
         expected: ["List", ["Rational", 1, 2], ["Rational", 1, 4], ["Rational", 1, 5]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Should thread element-wise over a list; compute-engine's Rationalize takes a single real",
+          "Threads element-wise over a list; compute-engine's own Rationalize takes only a single real",
       },
       {
         expr: ["Rationalize", ["N", "Pi"], 0],

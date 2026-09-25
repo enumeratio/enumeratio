@@ -196,17 +196,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Gamma", 2, "x"],
         expected: ["Multiply", ["Add", "x", 1], ["Power", "ExponentialE", ["Negate", "x"]]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An integer order should reduce to a closed form, $\\Gamma(2, x) = (1 + x)e^{-x}$; only $s = 1$ does today",
+        caption: "An integer order reduces to a closed form, $\\Gamma(2, x) = (1 + x)e^{-x}$",
       },
       {
         expr: ["Gamma", 2, 1],
         expected: ["Divide", 2, "ExponentialE"],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\Gamma(2, 1) = 2/e$; not yet -- exact arguments stay symbolic",
+        caption: "$\\Gamma(2, 1) = 2/e$",
       },
       {
         expr: [
@@ -218,19 +215,18 @@ export const specialFunctions: readonly ReferenceEntry[] = [
           "List",
           [
             "List",
-            ["Multiply", ["Rational", 9, 2], ["Power", "ExponentialE", ["Rational", -7, 2]]],
+            ["Divide", 9, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 7, 2]]]],
             1,
           ],
           [
             "List",
             1,
-            ["Multiply", ["Rational", 15, 2], ["Power", "ExponentialE", ["Rational", -13, 2]]],
+            ["Divide", 15, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 13, 2]]]],
           ],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Listable: threads elementwise over a matrix, and each entry should reduce ($\\Gamma(2, 0) = 1$); today the threading happens but the entries stay symbolic",
+          "Listable: threads elementwise over a matrix, and each entry reduces ($\\Gamma(2, 0) = 1$)",
       },
       {
         expr: ["Gamma", ["Interval", 1.4, 1.5]],
@@ -354,10 +350,10 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["GammaLn", 5],
-        expected: ["GammaLn", 5],
-        category: "Possible issues",
+        expected: ["Add", ["Multiply", 3, ["Ln", 2]], ["Ln", 3]],
+        category: "Properties",
         caption:
-          "An exact integer argument is left unevaluated under plain evaluation -- pair with N() or use an inexact argument like 2.5 for a decimal. See [[Gamma]]",
+          "An exact positive integer now reduces too, matching Wolfram's LogGamma[5] = Log[24] ($\\ln 24 = 3\\ln 2 + \\ln 3$, compute-engine's own factored form for $\\ln$ of a composite)",
       },
       {
         expr: ["Equal", ["GammaLn", 101], ["Ln", ["Factorial", 100]]],
@@ -400,10 +396,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaLn", ["List", 1, 2, 3]],
         expected: ["List", 0, 0, ["Ln", 2]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Threads over a list, and the integer points should reduce to $\\ln((n-1)!)$; today each element stays symbolic",
+          "Threads over a list, and the integer points reduce to $\\ln((n-1)!)$, matching Wolfram's LogGamma[5] = Log[24]",
       },
       {
         expr: ["GammaLn", ["Around", 1.2, 0.01]],
@@ -1304,9 +1299,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["HurwitzZeta", ["List", 2, 3, 4], 0.5],
         expected: ["List", 4.934802200544679, 8.41439832211716, 16.234848505667074],
-        aspirational: true,
         category: "Scope",
-        caption: "Listable: threads over a list of orders; today a type error",
+        caption: "Listable: threads over a list of orders",
       },
       {
         expr: ["HurwitzZeta", 2, ["Around", 0.5, 0.01]],
@@ -1318,16 +1312,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["HurwitzZeta", 2, ["Rational", 1, 2]],
         expected: ["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\zeta(2, 1/2) = \\pi^2/2$; not yet -- rational $a$ stays symbolic",
+        caption:
+          "$\\zeta(2, 1/2) = \\pi^2/2$, from $\\zeta(s, 1/2) = (2^s - 1)\\zeta(s)$ at a numeric $s$",
       },
       {
         expr: ["HurwitzZeta", 2, ["Rational", 1, 4]],
-        expected: ["Add", ["Power", "Pi", 2], ["Multiply", 8, "Catalan"]],
-        aspirational: true,
+        expected: ["Add", ["Multiply", 8, "Catalan"], ["Power", "Pi", 2]],
         category: "Scope",
-        caption: "$\\zeta(2, 1/4) = \\pi^2 + 8G$, with Catalan's constant $G$; not yet",
+        caption: "$\\zeta(2, 1/4) = \\pi^2 + 8G$, with Catalan's constant $G$",
       },
       {
         expr: ["HurwitzZeta", "s", ["Rational", 1, 2]],
@@ -1738,13 +1731,12 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         expr: ["PolyLog", 3, ["Rational", 1, 2]],
         expected: [
           "Add",
-          ["Multiply", ["Rational", 7, 8], ["Zeta", 3]],
-          ["Multiply", ["Rational", -1, 12], ["Power", "Pi", 2], ["Ln", 2]],
+          ["Multiply", ["Rational", -1, 12], ["Ln", 2], ["Power", "Pi", 2]],
           ["Multiply", ["Rational", 1, 6], ["Power", ["Ln", 2], 3]],
+          ["Multiply", ["Rational", 7, 8], ["Zeta", 3]],
         ],
-        aspirational: true,
         caption:
-          "$\\operatorname{Li}_3(1/2) = \\frac78\\zeta(3) - \\frac{\\pi^2}{12}\\ln 2 + \\frac16\\ln^3 2$; not yet",
+          "$\\operatorname{Li}_3(1/2) = \\frac78\\zeta(3) - \\frac{\\pi^2}{12}\\ln 2 + \\frac16\\ln^3 2$",
       },
       {
         expr: ["PolyLog", ["Complex", 0.2, 1], ["Complex", 0.5, -0.5]],
@@ -1767,13 +1759,12 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyLog", 2, 2],
         expected: [
-          "Subtract",
+          "Add",
+          ["Multiply", ["Complex", 0, -1], "Pi", ["Ln", 2]],
           ["Multiply", ["Rational", 1, 4], ["Power", "Pi", 2]],
-          ["Multiply", "ImaginaryUnit", "Pi", ["Ln", 2]],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\operatorname{Li}_2(2) = \\pi^2/4 - i\\pi\\ln 2$ exactly; not yet",
+        caption: "$\\operatorname{Li}_2(2) = \\pi^2/4 - i\\pi\\ln 2$ exactly",
       },
       {
         expr: ["PolyLog", "n", -1],
@@ -1993,9 +1984,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyGamma", 0, 1],
         expected: ["Negate", "EulerGamma"],
-        aspirational: true,
         category: "Properties",
-        caption: "$\\psi^{(0)}(1) = -\\gamma$; not yet",
+        caption:
+          "$\\psi^{(0)}(1) = -\\gamma$ -- PolyGamma(0, z) routes through Digamma(z) (#113) whenever Digamma has an exact value",
       },
       {
         expr: ["PolyGamma", 0, ["Rational", 1, 2]],
@@ -2013,10 +2004,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["PolyGamma", 1, ["Rational", 1, 4]],
-        expected: ["Add", ["Power", "Pi", 2], ["Multiply", 8, "Catalan"]],
-        aspirational: true,
+        expected: ["Add", ["Multiply", 8, "Catalan"], ["Power", "Pi", 2]],
         category: "Properties",
-        caption: "$\\psi'(1/4) = \\pi^2 + 8G$; not yet",
+        caption: "$\\psi'(1/4) = \\pi^2 + 8G$",
       },
       {
         expr: ["D", ["PolyGamma", "n", "x"], "x"],
@@ -2145,25 +2135,23 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         expr: ["Digamma", ["Rational", 1, 4]],
         expected: [
           "Add",
-          ["Negate", "EulerGamma"],
-          ["Multiply", ["Rational", -1, 2], "Pi"],
           ["Multiply", -3, ["Ln", 2]],
+          ["Multiply", ["Rational", -1, 2], "Pi"],
+          ["Negate", "EulerGamma"],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Gauss's digamma theorem: $\\psi(1/4) = -\\gamma - \\pi/2 - 3\\ln 2$; not yet",
+        caption: "Gauss's digamma theorem: $\\psi(1/4) = -\\gamma - \\pi/2 - 3\\ln 2$",
       },
       {
         expr: ["Digamma", ["Rational", 1, 3]],
         expected: [
           "Add",
-          ["Negate", "EulerGamma"],
-          ["Negate", ["Divide", "Pi", ["Multiply", 2, ["Sqrt", 3]]]],
           ["Multiply", ["Rational", -3, 2], ["Ln", 3]],
+          ["Multiply", ["Negate", ["Divide", ["Sqrt", 3], 6]], "Pi"],
+          ["Negate", "EulerGamma"],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\psi(1/3) = -\\gamma - \\frac{\\pi}{2\\sqrt3} - \\frac32\\ln 3$; not yet",
+        caption: "$\\psi(1/3) = -\\gamma - \\frac{\\pi}{2\\sqrt3} - \\frac32\\ln 3$",
       },
       {
         expr: ["Digamma", ["Interval", 1.23, 1.24]],
@@ -2319,9 +2307,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaRegularized", 2, ["List", ["List", 3.5, 0], ["List", 0, 6.5]]],
         expected: ["List", ["List", 0.13588822540043324, 1], ["List", 1, 0.011275793947331794]],
-        aspirational: true,
         category: "Scope",
-        caption: "Listable: threads elementwise over a matrix; today a type error",
+        caption: "Listable: threads elementwise over a matrix",
       },
       {
         expr: ["GammaRegularized", ["Rational", 2, 5], ["Interval", 0.21, 0.22]],
@@ -2451,8 +2438,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["BetaRegularized", ["Rational", 1, 2], 2, 3],
         expected: ["Rational", 11, 16],
-        aspirational: true,
-        caption: "$I_{1/2}(2, 3) = 11/16$ exactly; not yet -- exact $x$ stays symbolic",
+        caption: "$I_{1/2}(2, 3) = 11/16$ exactly",
       },
       {
         expr: ["BetaRegularized", 2, 0.5, 5],

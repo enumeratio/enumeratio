@@ -88,10 +88,8 @@ export const residues: readonly ReferenceEntry[] = [
       {
         expr: ["Mod", ["Sqrt", 28], 3],
         expected: ["Add", -3, ["Multiply", 2, ["Sqrt", 7]]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An exact irrational should reduce exactly to $2\\sqrt7 - 3$; compute-engine answers with a float",
+        caption: "An exact irrational reduces exactly to $2\\sqrt7 - 3$",
       },
       {
         expr: ["Mod", "Pi", 2],

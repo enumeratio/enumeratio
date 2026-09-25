@@ -384,20 +384,18 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Ln", ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"]]],
         category: "Properties",
         caption:
-          "Half-integers past $\\tfrac12$: $\\ln\\Gamma(\\tfrac32) = \\ln\\tfrac{\\sqrt\\pi}{2}$; stays symbolic",
-        aspirational: true,
+          "Half-integers past $\\tfrac12$: $\\ln\\Gamma(\\tfrac32) = \\ln\\tfrac{\\sqrt\\pi}{2}$",
       },
       {
         expr: ["LogGamma", ["Rational", -3, 2]],
         expected: [
-          "Subtract",
+          "Add",
+          ["Multiply", ["Complex", 0, -2], "Pi"],
           ["Ln", ["Multiply", ["Rational", 4, 3], ["Sqrt", "Pi"]]],
-          ["Multiply", 2, "ImaginaryUnit", "Pi"],
         ],
         category: "Scope",
         caption:
-          "Exact negative half-integers: $\\ln\\Gamma(-\\tfrac32) = \\ln\\tfrac{4\\sqrt\\pi}{3} - 2\\pi i$; stays symbolic",
-        aspirational: true,
+          "Exact negative half-integers: $\\ln\\Gamma(-\\tfrac32) = \\ln\\tfrac{4\\sqrt\\pi}{3} - 2\\pi i$",
       },
       {
         expr: ["LogGamma", "PositiveInfinity"],
@@ -897,8 +895,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["StieltjesGamma", ["List", 1, 2, 3], 0.5],
         expected: ["List", -1.3534596808049415, 0.9688644752202907, -0.6674242737113807],
         category: "Scope",
-        caption: "Listable in the order $n$: threads over a list; not yet (a type error today)",
-        aspirational: true,
+        caption: "Listable in the order $n$: threads over a list",
       },
       {
         expr: ["StieltjesGamma", 2, ["Interval", 2.34, 2.35]],
@@ -911,15 +908,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["StieltjesGamma", 1, 1],
         expected: ["StieltjesGamma", 1],
         category: "Properties",
-        caption: "$\\gamma_n(1) = \\gamma_n$; the two-argument form does not reduce to it yet",
-        aspirational: true,
+        caption: "$\\gamma_n(1) = \\gamma_n$: the two-argument form reduces to it",
       },
       {
         expr: ["StieltjesGamma", 0, 1],
         expected: "EulerGamma",
         category: "Properties",
-        caption: "$\\gamma_0(1) = -\\psi(1) = \\gamma$; stops at $-\\psi(1)$",
-        aspirational: true,
+        caption:
+          "$\\gamma_0(1) = -\\psi(1) = \\gamma$ -- PolyGamma(0, z) routes through Digamma(z) (#113), which has $\\psi(1) = -\\gamma$ exactly",
       },
       {
         expr: ["StieltjesGamma", 0, ["Rational", 1, 2]],
@@ -1022,9 +1018,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expr: ["DirichletCharacter", 3, 2, ["List", 1, 2, 3, 4, 5]],
         expected: ["List", 1, -1, 0, 1, -1],
         category: "Scope",
-        caption:
-          "Listable in $n$: the nontrivial character mod 3 over $1, \\dots, 5$; not yet (a type error today)",
-        aspirational: true,
+        caption: "Listable in $n$: the nontrivial character mod 3 over $1, \\dots, 5$",
       },
     ],
     primitive: "kernel",
@@ -1158,11 +1152,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
       {
         expr: ["DirichletL", 3, 2, 1],
-        expected: ["Divide", "Pi", ["Multiply", 3, ["Sqrt", 3]]],
+        expected: ["Multiply", ["Divide", ["Sqrt", 3], 9], "Pi"],
         category: "Properties",
         caption:
-          "$L(1, \\chi_{-3}) = \\pi/(3\\sqrt3)$: $s = 1$ for an odd character has a closed form; stays symbolic",
-        aspirational: true,
+          "$L(1, \\chi_{-3}) = \\pi/(3\\sqrt3)$: $s = 1$ for a real (quadratic) odd character has a closed form, from the Fourier expansion of $\\sum \\chi(n)/n$",
       },
       {
         expr: ["DirichletL", 1, 1, ["List", 1, 2, 3, 4]],
@@ -1174,8 +1167,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           ["Multiply", ["Rational", 1, 90], ["Power", "Pi", 4]],
         ],
         category: "Scope",
-        caption: "Listable in $s$: threads over a list; not yet (a type error today)",
-        aspirational: true,
+        caption: "Listable in $s$: threads over a list",
       },
       {
         expr: ["DirichletL", 5, 1, ["Interval", 1.23, 1.24]],
@@ -1305,8 +1297,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           ["Rational", 83711, 27720],
         ],
         category: "Scope",
-        caption: "Listable: threads over a list; not yet (a type error today)",
-        aspirational: true,
+        caption: "Listable: threads over a list",
       },
       {
         expr: [
@@ -1326,18 +1317,15 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
       {
         expr: ["HarmonicNumber", ["Rational", 1, 2]],
-        expected: ["Subtract", 2, ["Multiply", 2, ["Ln", 2]]],
+        expected: ["Add", 2, ["Multiply", -2, ["Ln", 2]]],
         category: "Properties",
-        caption:
-          "$H_{1/2} = 2 - 2\\ln 2$: exact at rational arguments by Gauss's digamma theorem; stays symbolic",
-        aspirational: true,
+        caption: "$H_{1/2} = 2 - 2\\ln 2$: exact at rational arguments by Gauss's digamma theorem",
       },
       {
         expr: ["HarmonicNumber", ["Rational", 1, 4]],
-        expected: ["Subtract", ["Subtract", 4, ["Divide", "Pi", 2]], ["Multiply", 3, ["Ln", 2]]],
+        expected: ["Add", 4, ["Multiply", -3, ["Ln", 2]], ["Multiply", ["Rational", -1, 2], "Pi"]],
         category: "Properties",
-        caption: "$H_{1/4} = 4 - \\tfrac{\\pi}{2} - 3\\ln 2$; stays symbolic",
-        aspirational: true,
+        caption: "$H_{1/4} = 4 - \\tfrac{\\pi}{2} - 3\\ln 2$",
       },
       {
         expr: ["HarmonicNumber", "n", -1],

@@ -304,9 +304,12 @@ export const modular: readonly ReferenceEntry[] = [
       {
         expr: ["FromContinuedFraction", ["List", "a", "b", "c"]],
         expected: ["Add", "a", ["Divide", 1, ["Add", "b", ["Divide", 1, "c"]]]],
-        caption: "symbolic terms build the nested fraction; stays unevaluated",
+        caption: "symbolic terms build the nested fraction, left uncombined",
         category: "Scope",
-        aspirational: true,
+        divergence: {
+          wolfram:
+            "Wolfram's own FromContinuedFraction[{a,b,c}] combines it into the single ratio (a + (1+ab)c)/(1+bc); we leave the nested a + 1/(b + 1/c) form, matching what a reader would write down term by term.",
+        },
       },
       {
         expr: ["Convergents", ["List", 3, 7, 15, 1]],

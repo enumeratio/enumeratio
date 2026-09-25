@@ -467,7 +467,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Rationalize",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Rationalize",
     elsewhere: ["wolfram"],
@@ -698,7 +698,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "GammaLn",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "LogGamma",
     elsewhere: [],
