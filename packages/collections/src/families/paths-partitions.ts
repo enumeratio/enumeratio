@@ -1,6 +1,6 @@
 // Lattice-path variants and non-crossing/non-nesting set-partition families. Pure rank/unrank
 // kernels over plain JS numbers/arrays (no compute-engine dependency) — same contract as every
-// other pack: rank(unrank(p, r), p) === r, valid(unrank(p, r), p) === true for all r in
+// other family: rank(unrank(p, r), p) === r, valid(unrank(p, r), p) === true for all r in
 // [0, count(p)). Kept in its own file (registered via install.ts) so parallel roadmap batches
 // don't collide with core.ts.
 import type { FamilyKernel } from "./types.ts";
