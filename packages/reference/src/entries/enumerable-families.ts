@@ -117,4 +117,91 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     },
     seeAlso: ["BellNumber", "Stirling", "Count", "At"],
   },
+  {
+    name: "RootedUnlabeledTrees",
+    domain: "Collections",
+    signature: "RootedUnlabeledTrees(n)",
+    summary:
+      "The rooted trees on $n$ unlabelled nodes, up to isomorphism, as a lazy indexed family.",
+    signatures: [
+      {
+        call: "RootedUnlabeledTrees(n)",
+        description:
+          "every rooted tree on $n$ nodes with unordered children, one per isomorphism class.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count is $A000081(n)$ — $A000081(6) = 20$ — with no elementary closed form, computed via the Euler transform over smaller rooted-tree counts (a multiset of subtrees hangs off the root).",
+      "Each element is the level sequence: node depths in canonical preorder, root first at depth 0. Canonical means a node's children are generated weight-descending, ties broken by ascending own rank — the order `At` unranks in, so isomorphic labellings collapse to one entry.",
+      "$UnlabeledFreeTrees(n)$ is the unrooted counterpart: a free tree canonically rooted at its centroid uses the same level-sequence encoding.",
+    ],
+    examples: [],
+    enumerate: { expr: "RootedUnlabeledTrees(6)", columns: "Max" },
+    seeAlso: ["UnlabeledFreeTrees", "Count", "At"],
+  },
+  {
+    name: "UnlabeledFreeTrees",
+    domain: "Collections",
+    signature: "UnlabeledFreeTrees(n)",
+    summary: "The free (unrooted) trees on $n$ unlabelled nodes, up to isomorphism.",
+    signatures: [
+      {
+        call: "UnlabeledFreeTrees(n)",
+        description:
+          "every tree on $n$ unlabelled nodes with no distinguished root, one per isomorphism class.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count is $A000055(n)$ — $A000055(7) = 11$ — obtained by canonically rooting each free tree at its centroid: every branch must weigh at most $\\lfloor n/2 \\rfloor$, then a correction $\\binom{T(m), 2}$ (Otter 1948) removes the double count from trees split by a central edge into two non-isomorphic halves.",
+      "Each element is a level sequence, exactly as for $RootedUnlabeledTrees$, but rooted at the tree's centroid rather than an arbitrary node.",
+      "See [[Binomial]] for the correction term and [[RootedUnlabeledTrees]] for the shared encoding and children-multiset kernel.",
+    ],
+    examples: [],
+    enumerate: { expr: "UnlabeledFreeTrees(7)", columns: "Max" },
+    seeAlso: ["RootedUnlabeledTrees", "Binomial", "Count", "At"],
+  },
+  {
+    name: "PhylogeneticTrees",
+    domain: "Collections",
+    signature: "PhylogeneticTrees(n)",
+    summary:
+      "The rooted binary trees on $n$ labeled leaves with unlabeled internal nodes, as a lazy indexed family.",
+    signatures: [
+      {
+        call: "PhylogeneticTrees(n)",
+        description:
+          "every rooted binary tree with leaves labeled $1, …, n$ and unlabeled internal nodes.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count is $(2n-3)!! = A001147(n-2)$ — $PhylogeneticTrees(5)$ has $105$ elements. See [[Factorial2]].",
+      "Built by successive insertion: start from the cherry $\\{1,2\\}$, then for $k = 3, …, n$ attach leaf $k$ at one of $2k-3$ places — above the current root, or subdividing one of the tree's edges.",
+      "Each element is the digit sequence $(d_3, …, d_n)$ with $d_k \\in [0, 2k-3)$ recording that insertion choice at each step; $At$ unranks it as a mixed-radix number in those insertion-step radices.",
+    ],
+    examples: [],
+    enumerate: { expr: "PhylogeneticTrees(5)", columns: "Max" },
+    seeAlso: ["Factorial2", "Count", "At"],
+  },
+  {
+    name: "NonCrossingTrees",
+    domain: "Collections",
+    signature: "NonCrossingTrees(n)",
+    summary:
+      "The spanning trees on $n+1$ circle-labeled points whose edges, drawn as chords, never cross.",
+    signatures: [
+      {
+        call: "NonCrossingTrees(n)",
+        description:
+          "every spanning tree on $n+1$ points around a circle with no two edges crossing.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection; the count is the Fuss–Catalan number $\\binom{3n}{n} / (2n+1) = A001764(n)$ — $NonCrossingTrees(3)$ has $12$ elements. See [[Binomial]].",
+      "In bijection (Flajolet & Noy 1999) with the ternary trees on $n$ internal nodes; each element reuses that encoding as its flat preorder arity word — $3n+1$ entries, each $0$ (leaf) or $3$ (internal node, followed in preorder by its three children).",
+      "The $tree$ glyph draws an element directly from this word, since it is already a preorder child-count sequence.",
+    ],
+    examples: [],
+    enumerate: { expr: "NonCrossingTrees(3)", glyph: "tree" },
+    seeAlso: ["Binomial", "CatalanNumber", "Count", "At"],
+  },
 ];
