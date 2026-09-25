@@ -46,15 +46,14 @@ export function samplePlot(session: Session, json: Json): PlotPoint[] | undefine
  * The result as text: a plot drawn on cells, else the session's rendering. A plot a
  * pipe pinned comes back `Labeled` with its caption, and keeps it under the cells.
  */
-export function textOf(session: Session, json: Json, width = 60): string {
+export function textOf(session: Session, json: Json, width = 60, height = 12): string {
   if (headOf(json) === "Labeled") {
     const [body, label] = opsOf(json);
     const caption = strOf(label);
     if (body !== undefined && caption !== undefined && plotOf(body) !== undefined)
-      return `${textOf(session, body, width)}\n  ${caption}`;
+      return `${textOf(session, body, width, height)}\n  ${caption}`;
   }
   const points = samplePlot(session, json);
-  if (points !== undefined)
-    return textPlot(points, { width, height: 12, marks: plotOf(json)?.marks });
+  if (points !== undefined) return textPlot(points, { width, height, marks: plotOf(json)?.marks });
   return session.render(session.ce.box(json as never).evaluate());
 }

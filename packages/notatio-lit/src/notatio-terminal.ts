@@ -116,7 +116,7 @@ function ensureTerminalStyles(): void {
 export class NotatioTerminal extends LitElement {
   static properties = {
     /** `repl` for the interactive session, `cli` for the command-line transcript, `show` for one expression. */
-    mode: { type: String },
+    mode: { type: String, reflect: true },
     /** In `show` mode, the expression, in notatio. */
     value: { type: String },
     /** In `show` mode, the environment it is shown for: `tty` or `pipe`. */
@@ -145,7 +145,10 @@ export class NotatioTerminal extends LitElement {
   private readonly hist: string[] = [];
   private histIdx = 0;
   private exited = false;
-  private static readonly SHOW_ROWS = 60;
+  // One height for every shown result, so switching environments does not move the page;
+  // a driven frame (strip, hint, an 8-row plot) fits it, and a settled Out scrolls.
+  private static readonly SHOW_ROWS = 18;
+  private static readonly SHOW_PLOT_ROWS = 8;
   private shown?: Presented;
   private driving?: Driver;
 
@@ -262,28 +265,23 @@ export class NotatioTerminal extends LitElement {
     term.resize(term.cols, NotatioTerminal.SHOW_ROWS);
     // `convertEol` makes each `\n` a line break, as a TTY's own line discipline does.
     const write = (text: string): void => term.write(text);
-    this.shown = present(this.value, environmentNamed(this.env) ?? TTY, {
-      write,
-      mouse: true,
-      cursorRow: () => term.buffer.active.cursorY + 1,
-      columns: () => term.cols,
-    });
+    this.shown = present(
+      this.value,
+      environmentNamed(this.env) ?? TTY,
+      {
+        write,
+        mouse: true,
+        cursorRow: () => term.buffer.active.cursorY + 1,
+        columns: () => term.cols,
+      },
+      NotatioTerminal.SHOW_PLOT_ROWS,
+    );
     write(`${this.shown.echo}\n`);
     this.driving = this.shown.driver;
     // A cursor only where there is something to key: a pipe is output, not a prompt.
     write(this.driving ? SHOW_CURSOR : HIDE_CURSOR);
     if (this.driving) this.driving.draw();
     else write(this.shown.out);
-    // Writes are parsed asynchronously; the callback runs once they all have been.
-    term.write("", () => this.fitRows());
-  }
-
-  /** Shrink the screen to the rows in use; a redraw then stays within the viewport. */
-  private fitRows(): void {
-    const term = this.term;
-    if (!term) return;
-    const b = term.buffer.active;
-    term.resize(term.cols, Math.max(4, b.baseY + b.cursorY + 1));
   }
 
   private onShowData(data: string): void {
@@ -299,8 +297,7 @@ export class NotatioTerminal extends LitElement {
       d.stop();
       this.driving = undefined;
       const out = this.shown!.settle(d.pinned());
-      this.term?.resize(this.term.cols, NotatioTerminal.SHOW_ROWS);
-      this.term?.write(`${HIDE_CURSOR}${out}\n\n${resumeHint(true)}`, () => this.fitRows());
+      this.term?.write(`${HIDE_CURSOR}${out}\n\n${resumeHint(true)}`);
       return;
     }
   }

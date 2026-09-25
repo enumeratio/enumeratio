@@ -63,9 +63,10 @@ evaluates on its own and reduces there, for the environment around it.
 <Story
   title="A choice, enumerated">
 <template #description>
-A toggler's entries are the sample: one cell per choice, labelled.
+A toggler's entries are the sample: one cell per choice, labelled. Each entry shows a
+word and binds a number, and the readout beside it computes from the number.
 </template>
-<EnvironmentPreview expr='Row([Toggler((size, "several"), ["a few", "several", "many"]), size])' />
+<EnvironmentPreview expr='Row([Toggler((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon"), Labeled(8, "octagon")]), "has interior angles of", Dynamic(180 - 360/n), "degrees"])' />
 </Story>
 
 <Story
