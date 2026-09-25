@@ -4,7 +4,7 @@
 // (`<Head>/<id>`) on stdin, `<<name>>{json}` on stdout. Names, not positions, so a
 // generated harness holding the whole catalogue serves any filtered plan.
 
-import { type ChildProcess, spawn } from "node:child_process";
+import { type ChildProcess, spawn, spawnSync } from "node:child_process";
 import { type AddressInfo, createServer } from "node:net";
 import { createInterface } from "node:readline";
 import { agrees } from "./agree.ts";
@@ -36,6 +36,8 @@ export interface HarnessCommand {
    * can't see our stdin (wolframscript runs its kernel over a link).
    */
   readonly socket?: boolean;
+  /** Run once, in `cwd`, before the first case (a build), with no deadline of its own. */
+  readonly prepare?: { readonly command: string; readonly args: readonly string[] };
 }
 
 /** Seconds past a case's budget before the coordinator kills its harness. */
@@ -185,8 +187,17 @@ export async function runPlan(
 ): Promise<Map<BenchSystem, CaseResult[]>> {
   const harnesses = new Map<BenchSystem, Harness>();
   for (const system of systems) {
-    const start = HARNESSES[system];
-    if (start !== undefined) harnesses.set(system, new Harness(start()));
+    const start = HARNESSES[system]?.();
+    if (start === undefined) continue;
+    if (start.prepare !== undefined) {
+      const { command, args } = start.prepare;
+      const built = spawnSync(command, [...args], { cwd: start.cwd, stdio: "inherit" });
+      if (built.status !== 0) {
+        console.error(`${system}: \`${command} ${args.join(" ")}\` failed; skipping ${system}`);
+        continue;
+      }
+    }
+    harnesses.set(system, new Harness(start));
   }
   const results = new Map<BenchSystem, CaseResult[]>(systems.map((s) => [s, []]));
   try {

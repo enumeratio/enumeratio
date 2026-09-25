@@ -4,6 +4,7 @@
 // protocol.ts. Depends on `packages/oracle/rust` (the `V` adapters) by path; never edit that
 // crate from here.
 
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Generator } from "../generate.ts";
 import { planned } from "../generate.ts";
@@ -269,12 +270,13 @@ profile = "minimal"
 const here = (path: string): string => fileURLToPath(new URL(path, import.meta.url));
 const CRATE_DIR = here("../../generated/rust");
 
-/** `cargo build`, once, then exec the binary directly (so a SIGKILL past budget lands on the
- * harness itself, not on a `cargo run` parent). */
+/** Built once before the run, then the binary runs directly, so a SIGKILL past budget lands
+ * on the harness itself and no build time counts against a case. */
 export function harnessRust(): HarnessCommand {
   return {
-    command: "sh",
-    args: ["-c", "cargo build --release --quiet && exec ./target/release/bench"],
+    command: join(CRATE_DIR, "target", "release", "bench"),
+    args: [],
     cwd: CRATE_DIR,
+    prepare: { command: "cargo", args: ["build", "--release", "--quiet"] },
   };
 }
