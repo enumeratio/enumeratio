@@ -708,7 +708,7 @@
         },
         "rust": {
           "input": "tan((x(std::f64::consts::PI) / n(6)))",
-          "output": "0.5773502691896256",
+          "output": "0.5773502691896257",
           "verdict": "agree"
         },
         "sympy": {
@@ -926,7 +926,7 @@
         },
         "rust": {
           "input": "tan(n(1))",
-          "output": "1.557407724654902",
+          "output": "1.5574077246549023",
           "verdict": "agree"
         },
         "mpmath": {
@@ -1699,6 +1699,22 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Exp threads over (or pools) the list; SymPy's takes scalars."
+        }
+      },
+      "[\"Exp\",[\"List\",[\"List\",0,1],[\"List\",1,0]]]": {
+        "sympy": {
+          "input": "exp([[0, 1], [1, 0]])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Exp of a matrix stays element-wise, threading over the nested list; SymPy's exp() takes scalars only."
+        },
+        "rust": {
+          "input": "exp(list(vec![list(vec![n(0), n(1)]), list(vec![n(1), n(0)])]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Exp of a matrix stays element-wise, threading over the nested list; the Rust crate takes scalars only."
         }
       }
     },

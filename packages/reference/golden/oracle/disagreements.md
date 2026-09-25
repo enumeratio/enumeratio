@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1416, disagree 71, inconclusive 0, error 3
+## wolfram — agree 1415, disagree 71, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                         | theirs                                                                                       |
 | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -28,7 +28,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `arithmetic/Root#3`                     | convention     | `-2`                                                                                         | `2*(-1)^(1/3)`                                                                               |
 | `arithmetic/Round#10`                   | rounding-mode  | `-3`                                                                                         | `-2`                                                                                         |
 | `arithmetic/Round#9`                    | rounding-mode  | `3`                                                                                          | `2`                                                                                          |
-| `collections/At#7`                      | undefined-form | `NaN`                                                                                        | `{1, 2, 3}[[10]]`                                                                            |
+| `collections/At#8`                      | undefined-form | `NaN`                                                                                        | `{1, 2, 3}[[10]]`                                                                            |
 | `collections/First#4`                   | undefined-form | `Missing`                                                                                    | `First[{}]`                                                                                  |
 | `collections/Intersection#6`            | shape          | `EmptySet`                                                                                   | `{}`                                                                                         |
 | `collections/SetMinus#5`                | shape          | `EmptySet`                                                                                   | `{}`                                                                                         |
@@ -43,9 +43,9 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/ExtendedGCD#2`           | shape          | `["Tuple",6,-1,1]`                                                                           | `{6, {-1, 1}}`                                                                               |
 | `number-theory/ExtendedGCD#3`           | shape          | `["Tuple",1,4,-1]`                                                                           | `{1, {4, -1}}`                                                                               |
 | `number-theory/ExtendedGCD#4`           | shape          | `["Tuple",5,0,1]`                                                                            | `{5, {0, 1}}`                                                                                |
-| `number-theory/ExtendedGCD#6`           | shape          | `["Tuple",1,["Complex",-1,-2],["Complex",-2,2]]`                                             | `{1, {-1 - 2*I, -2 + 2*I}}`                                                                  |
+| `number-theory/ExtendedGCD#7`           | shape          | `["Tuple",1,["Complex",-1,-2],["Complex",-2,2]]`                                             | `{1, {-1 - 2*I, -2 + 2*I}}`                                                                  |
 | `number-theory/GCD#8`                   | convention     | `2`                                                                                          | `{2, 4}`                                                                                     |
-| `number-theory/IsSquareFree#7`          | unclassified   | `[true, false, false]`                                                                       | `SquareFreeQ[{10, 4, 12}]`                                                                   |
+| `number-theory/IsSquareFree#7`          | domain         | `[true, false, false]`                                                                       | `SquareFreeQ[{10, 4, 12}]`                                                                   |
 | `number-theory/MoebiusMu#6`             | domain         | `["MoebiusMu",0]`                                                                            | `0`                                                                                          |
 | `numerals/FromDigits#5`                 | domain         | `["FromDigits",["List"]]`                                                                    | `0`                                                                                          |
 | `numerals/IntegerString#5`              | convention     | `'-42'`                                                                                      | `"42"`                                                                                       |
@@ -99,12 +99,13 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 824, disagree 9, inconclusive 4, error 27
+## sympy — agree 826, disagree 10, inconclusive 4, error 40
 
 | example                        | kind           | ours                | theirs                               |
 | ------------------------------ | -------------- | ------------------- | ------------------------------------ |
 | `arithmetic/Max#8`             | convention     | `NaN`               | `-oo`                                |
 | `elementary/Ln#3`              | undefined-form | `NegativeInfinity`  | `zoo`                                |
+| `number-theory/IsPrime#9`      | convention     | `true`              | `False`                              |
 | `number-theory/LCM#8`          | convention     | `{"re":3,"im":1}`   | `-1 + 3*I`                           |
 | `residues/Mod#12`              | domain         | `[1, -1]`           | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]` |
 | `residues/Mod#8`               | domain         | `{"re":1,"im":-1}`  | `Mod(1 + 5*I, 3)`                    |
@@ -127,19 +128,32 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `arithmetic/Negate#5`             | `TypeError: bad operand type for unary -: 'list'`                          |
 | `arithmetic/Sign#6`               | `AttributeError: 'list' object has no attribute 'is_Mul'`                  |
 | `arithmetic/Square#5`             | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'` |
+| `collections/Length#5`            | `TypeError: object of type 'int' has no len()`                             |
 | `combinatorics/BellNumber#8`      | `ValueError: a non-negative integer expected`                              |
+| `combinatorics/BellNumber#9`      | `AttributeError: 'list' object has no attribute 'is_negative'`             |
+| `combinatorics/Binomial#13`       | `TypeError: unsupported operand type(s) for -: 'list' and 'Integer'`       |
+| `combinatorics/CatalanNumber#12`  | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
 | `combinatorics/Factorial#5`       | `AttributeError: 'list' object has no attribute 'is_Number'`               |
 | `elementary/Cos#9`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
 | `elementary/Exp#6`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `elementary/Exp#7`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
 | `elementary/Sin#10`               | `AttributeError: 'list' object has no attribute 'is_Number'`               |
 | `elementary/Tan#8`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
 | `number-theory/GCD#8`             | `AttributeError: 'int' object has no attribute 'is_commutative'`           |
 | `number-theory/IntegerExponent#3` | `ValueError: no such integer exists: multiplicity of 0 is not-defined`     |
+| `number-theory/IsPrime#10`        | `ValueError: 2 + I is not an integer`                                      |
 | `number-theory/IsPrime#8`         | `ValueError: [1, 2, 3, 4, 5, 6] is not an integer`                         |
-| `number-theory/IsPrime#9`         | `ValueError: 2 + I is not an integer`                                      |
 | `number-theory/MoebiusMu#6`       | `ValueError: n should be a positive integer`                               |
+| `number-theory/MoebiusMu#7`       | `AttributeError: 'list' object has no attribute 'is_integer'`              |
+| `number-theory/PrimePi#6`         | `AttributeError: 'list' object has no attribute 'is_real'`                 |
+| `number-theory/Totient#7`         | `ValueError: n should be a positive integer`                               |
+| `number-theory/Totient#8`         | `AttributeError: 'list' object has no attribute 'is_integer'`              |
 | `residues/Mod#4`                  | `TypeError: unsupported operand type(s) for %: 'list' and 'int'`           |
 | `residues/Mod#5`                  | `ZeroDivisionError: integer modulo by zero`                                |
+| `sequences/BernoulliB#10`         | `AttributeError: 'list' object has no attribute 'is_zero'`                 |
+| `sequences/Fibonacci#10`          | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| `sequences/LucasL#10`             | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| `special-functions/Gamma#10`      | `AttributeError: 'list' object has no attribute 'is_Number'`               |
 | `special-functions/Gamma#3`       | `AttributeError: 'list' object has no attribute 'is_Number'`               |
 | `special-functions/PolyGamma#8`   | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
 | `special-functions/PolyLog#10`    | `AttributeError: 'list' object has no attribute 'is_number'`               |
@@ -258,8 +272,8 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#9`  | `DomainError with -1: Argument must be non-negative`                                         |
 | `number-theory/GCD#12`       | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/GCD#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `number-theory/IsPrime#10`   | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/IsPrime#8`    | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/IsPrime#9`    | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/LCM#8`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/MoebiusMu#6`  | `DomainError with 0: Argument must be positive`                                              |
 | `residues/Mod#10`            | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
@@ -289,8 +303,8 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#9`      | `DomainError with -1: Argument must be non-negative`                                         |
 | `number-theory/GCD#12`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/GCD#8`            | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `number-theory/IsPrime#10`       | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/IsPrime#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/IsPrime#9`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/LCM#8`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/MoebiusMu#6`      | `DomainError with 0: Argument must be positive`                                              |
 | `residues/Mod#10`                | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
@@ -328,7 +342,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## rust — agree 133, disagree 7, inconclusive 1, error 26
+## rust — agree 133, disagree 7, inconclusive 1, error 32
 
 | example                     | kind           | ours                               | theirs             |
 | --------------------------- | -------------- | ---------------------------------- | ------------------ |
@@ -342,33 +356,39 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                     | message                                                   |
-| --------------------------- | --------------------------------------------------------- |
-| `arithmetic/Abs#6`          | `panic: threading: a list where the crate takes a scalar` |
-| `arithmetic/Ceil#4`         | `panic: threading: a list where the crate takes a scalar` |
-| `arithmetic/Floor#4`        | `panic: threading: a list where the crate takes a scalar` |
-| `arithmetic/Negate#5`       | `panic: negating [1, -2, 3]`                              |
-| `combinatorics/Factorial#5` | `panic: threading: a list where the crate takes a scalar` |
-| `combinatorics/Factorial#7` | `panic: an integer, not 1/2`                              |
-| `combinatorics/Factorial#9` | `panic: a non-negative integer`                           |
-| `elementary/Cos#9`          | `panic: threading: a list where the crate takes a scalar` |
-| `elementary/Exp#6`          | `panic: threading: a list where the crate takes a scalar` |
-| `elementary/Sin#10`         | `panic: threading: a list where the crate takes a scalar` |
-| `elementary/Tan#8`          | `panic: threading: a list where the crate takes a scalar` |
-| `number-theory/GCD#8`       | `panic: threading: a list where the crate takes a scalar` |
-| `number-theory/IsPrime#8`   | `panic: threading: a list where the crate takes a scalar` |
-| `numerals/AdicNumeral#1`    | `panic: the adic crate takes a prime base, not 10`        |
-| `numerals/AdicNumeral#2`    | `panic: the adic crate takes a prime base, not 10`        |
-| `numerals/AdicNumeral#5`    | `panic: the adic crate takes a prime base, not 10`        |
-| `residues/Mod#4`            | `panic: threading: a list where the crate takes a scalar` |
-| `residues/Mod#5`            | `panic: attempt to divide by zero`                        |
-| `residues/PowerMod#10`      | `panic: an integer, not 1/2`                              |
-| `residues/PowerMod#11`      | `panic: an integer, not 2/3`                              |
-| `residues/PowerMod#18`      | `panic: an integer, not 1/2`                              |
-| `residues/PowerMod#3`       | `panic: negative exponentiation is not supported!`        |
-| `residues/PowerMod#6`       | `panic: negative exponentiation is not supported!`        |
-| `residues/PowerMod#7`       | `panic: an integer, not 1/2`                              |
-| `residues/PowerMod#8`       | `panic: threading: a list where the crate takes a scalar` |
-| `special-functions/Gamma#3` | `panic: threading: a list where the crate takes a scalar` |
+| example                      | message                                                   |
+| ---------------------------- | --------------------------------------------------------- |
+| `arithmetic/Abs#6`           | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Ceil#4`          | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Floor#4`         | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Negate#5`        | `panic: negating [1, -2, 3]`                              |
+| `combinatorics/Binomial#13`  | `panic: threading: a list where the crate takes a scalar` |
+| `combinatorics/Binomial#14`  | `panic: an integer, not 9/2`                              |
+| `combinatorics/Factorial#5`  | `panic: threading: a list where the crate takes a scalar` |
+| `combinatorics/Factorial#7`  | `panic: an integer, not 1/2`                              |
+| `combinatorics/Factorial#9`  | `panic: a non-negative integer`                           |
+| `elementary/Cos#9`           | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Exp#6`           | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Exp#7`           | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Sin#10`          | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Tan#8`           | `panic: threading: a list where the crate takes a scalar` |
+| `number-theory/GCD#8`        | `panic: threading: a list where the crate takes a scalar` |
+| `number-theory/IsPrime#8`    | `panic: threading: a list where the crate takes a scalar` |
+| `number-theory/IsPrime#9`    | `panic: a non-negative integer`                           |
+| `number-theory/PrimePi#6`    | `panic: threading: a list where the crate takes a scalar` |
+| `numerals/AdicNumeral#1`     | `panic: the adic crate takes a prime base, not 10`        |
+| `numerals/AdicNumeral#2`     | `panic: the adic crate takes a prime base, not 10`        |
+| `numerals/AdicNumeral#5`     | `panic: the adic crate takes a prime base, not 10`        |
+| `residues/Mod#4`             | `panic: threading: a list where the crate takes a scalar` |
+| `residues/Mod#5`             | `panic: attempt to divide by zero`                        |
+| `residues/PowerMod#10`       | `panic: an integer, not 1/2`                              |
+| `residues/PowerMod#11`       | `panic: an integer, not 2/3`                              |
+| `residues/PowerMod#18`       | `panic: an integer, not 1/2`                              |
+| `residues/PowerMod#3`        | `panic: negative exponentiation is not supported!`        |
+| `residues/PowerMod#6`        | `panic: negative exponentiation is not supported!`        |
+| `residues/PowerMod#7`        | `panic: an integer, not 1/2`                              |
+| `residues/PowerMod#8`        | `panic: threading: a list where the crate takes a scalar` |
+| `special-functions/Gamma#10` | `panic: threading: a list where the crate takes a scalar` |
+| `special-functions/Gamma#3`  | `panic: threading: a list where the crate takes a scalar` |
 
 </details>
