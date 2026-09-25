@@ -200,6 +200,16 @@ notatio-cell[data-reactive-error] {
   cursor: pointer;
 }
 .notatio-reset:hover { color: var(--vp-c-brand-1, #3451b2); }
+/* Inside a transcript, an edit sits pending until Enter/blur commits it -- dim the
+   now-stale Out (reusing notatio-out's own [busy] dimming) and hint that it's waiting. */
+notatio-cell[pending] .notatio-row:last-of-type notatio-out .notatio-render { opacity: 0.5; }
+.notatio-uncommitted-hint {
+  flex: 0 0 auto;
+  margin-left: 0.5rem;
+  color: var(--vp-c-text-3, #aaa);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
 /* slot="aside" children (badges, alternatives), relocated here in light DOM;
    hidden while the cell is dirty, since they describe the original value. Wraps,
    so a panel like ExampleAlternatives' can drop to a full-width row below. */

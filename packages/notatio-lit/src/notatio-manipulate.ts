@@ -1,5 +1,5 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
@@ -103,6 +103,7 @@ export class NotatioManipulate extends LitElement {
   #host!: HTMLElement;
   #engine: ComputeEngine | undefined;
   #templates: Template[] = [];
+  #captured = false;
   #playback = new SliderPlayback(
     {
       slider: (name) => {
@@ -156,8 +157,11 @@ export class NotatioManipulate extends LitElement {
     this.#setControl(event.detail.name, String(event.detail.re));
   };
 
+  protected override willUpdate(changed: PropertyValues): void {
+    if (changed.has("params")) this._controls = parseControls(this.params);
+  }
+
   protected override firstUpdated(): void {
-    this._controls = parseControls(this.params);
     // The engine is needed to parse the notatio slots; once captured, apply the
     // initial values (later control moves re-apply via `updated`). A prose panel's
     // readouts only exist once the controls have rendered, hence the wait.
@@ -168,10 +172,17 @@ export class NotatioManipulate extends LitElement {
   // notatio expression carrying a named wildcard matching a control -- those are the
   // templates. The controls host and its subtree are skipped -- unless the panel is
   // prose, whose readouts are templates like any other.
-  async #capture(): Promise<void> {
+  async #capture(more = false): Promise<void> {
+    this.#captured = true;
     const engine = (this.#engine ??= await loadEngine());
     const names = new Set(this._controls.map((c) => c.name));
-    this.#templates = captureTemplates(this, names, engine, this.prose ? undefined : this.#host);
+    const found = captureTemplates(this, names, engine, this.prose ? undefined : this.#host);
+    // A template already applied no longer reads as one; keep it rather than lose it.
+    const slot = (t: Template): string => ("attr" in t ? `@${t.attr}` : t.prop);
+    const fresh = found.filter(
+      (t) => !this.#templates.some((o) => o.el === t.el && slot(o) === slot(t)),
+    );
+    this.#templates = more ? [...this.#templates, ...fresh] : found;
   }
 
   // Fill each template's `_name` wildcards with the current control values and
@@ -292,8 +303,14 @@ export class NotatioManipulate extends LitElement {
     );
   }
 
-  // Re-apply after each render so animation frames reach the slotted content.
-  protected override updated(): void {
+  // Re-apply after each render so animation frames reach the slotted content. Params
+  // that arrive late (a structural Manipulate is lowered after it first renders) bring
+  // their body with them, so its templates are captured then.
+  protected override updated(changed: PropertyValues): void {
+    if (changed.has("params") && this.#captured) {
+      void this.#capture(true).then(() => this.#apply());
+      return;
+    }
     this.#apply();
   }
 }

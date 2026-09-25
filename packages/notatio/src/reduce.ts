@@ -301,8 +301,13 @@ function substitute(node: Json, values: ReadonlyMap<string, Json>, unwrap = fals
  */
 export function pin(expr: Json, values: ReadonlyMap<string, Json>): Json {
   const r = substitute(expr, values, true);
-  if (!isRemoved(r)) return r;
-  return r.name === "" ? expr : (values.get(r.name) ?? (r.name as Json));
+  let body = !isRemoved(r) ? r : r.name === "" ? expr : (values.get(r.name) ?? (r.name as Json));
+  // A Locator pinned is a mark on its plot, as a static reading leaves it.
+  for (const d of declarations(expr)) {
+    const point = d.kind === "locator" ? values.get(d.name) : undefined;
+    if (point !== undefined) body = markLocator(body, point).node;
+  }
+  return body;
 }
 
 /**

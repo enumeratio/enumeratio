@@ -120,6 +120,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
           ["Tuple", "'AbsoluteTimeUsed'", 0],
         ],
         caption: "input matches expected",
+        volatile: ["AbsoluteTimeUsed"],
       },
       {
         expr: ["VerificationTest", ["Add", 2, 3], 6],
@@ -132,6 +133,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
           ["Tuple", "'AbsoluteTimeUsed'", 0],
         ],
         caption: "input evaluates but does not match expected",
+        volatile: ["AbsoluteTimeUsed"],
       },
       {
         expr: [
@@ -150,6 +152,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         ],
         category: "Possible issues",
         caption: "MemoryConstraint in-process is an Error, not a silently-ignored option",
+        volatile: ["AbsoluteTimeUsed"],
       },
     ],
   },
