@@ -34,7 +34,6 @@ const LOSSY = new Set([
   "Round",
   "Set",
   "IndexOf",
-  "DigitSum",
   "Degrees",
   // Wolfram has no LegendreSymbol; it lowers to JacobiSymbol (see to-wolfram.ts).
   "LegendreSymbol",

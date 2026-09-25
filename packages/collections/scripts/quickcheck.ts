@@ -15,6 +15,22 @@ import { check, checkFamily, type Failure, random, shrink } from "./properties.t
 const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 8);
 const PARAM_CAP = Number(process.env.QUICKCHECK_PARAM_CAP ?? 7);
 
+// Families backed by tableaux-plane.ts's `indexedFamily` engine: unrank/rank (and, for three of
+// them, count itself) fully materialize every element of the family before answering. That
+// file's own comment assumes sizes "stay small enough that full enumeration is cheap and
+// safe" — an assumption PARAM_CAP (let alone the nightly deep sample's 9) blows past:
+// GelfandTsetlin(5, 5) alone is 151,008 elements, GelfandTsetlin(9, 3) is 8.6M. Sampled at a
+// much smaller cap so they're still exercised without materializing the whole family.
+const FULL_ENUMERATION_FAMILIES = new Set([
+  "SemistandardTableaux",
+  "GelfandTsetlin",
+  "AlternatingSignMatrices",
+  "SkewPartitions",
+  "SkewStandardTableaux",
+  "PlanePartitions",
+]);
+const SMALL_PARAM_CAP = 4;
+
 // ── the run ─────────────────────────────────────────────────────────────────────
 
 const args = process.argv.slice(2);
@@ -38,9 +54,10 @@ const failures: Failure[] = [];
 let checked = 0;
 
 for (const entry of families) {
+  const paramCap = FULL_ENUMERATION_FAMILIES.has(entry.head) ? SMALL_PARAM_CAP : PARAM_CAP;
   for (let attempt = 0; attempt < POINTS; attempt++) {
     const params = Array.from({ length: entry.paramCount }, () =>
-      Math.floor(draw() * (PARAM_CAP + 1)),
+      Math.floor(draw() * (paramCap + 1)),
     );
     let total: number;
     try {

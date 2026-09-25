@@ -257,19 +257,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 16,
   },
   {
-    head: "RealDigits",
-    uses: 16,
-  },
-  {
     head: "RootReduce",
     uses: 16,
   },
   {
     head: "DifferenceDelta",
-    uses: 15,
-  },
-  {
-    head: "DivisorSum",
     uses: 15,
   },
   {
@@ -505,10 +497,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "UpTo",
-    uses: 7,
-  },
-  {
     head: "ArrayMesh",
     uses: 6,
   },
@@ -641,10 +629,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "MangoldtLambda",
-    uses: 5,
-  },
-  {
     head: "MatrixQ",
     uses: 5,
   },
@@ -761,15 +745,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "IntegerReverse",
-    uses: 4,
-  },
-  {
     head: "JacobiCD",
-    uses: 4,
-  },
-  {
-    head: "LiouvilleLambda",
     uses: 4,
   },
   {
@@ -810,10 +786,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ReIm",
-    uses: 4,
-  },
-  {
-    head: "Riffle",
     uses: 4,
   },
   {
@@ -862,10 +834,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "CentralMoment",
-    uses: 3,
-  },
-  {
-    head: "ContinuedFractionK",
     uses: 3,
   },
   {
@@ -961,10 +929,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "MersennePrimeExponent",
-    uses: 3,
-  },
-  {
     head: "MersennePrimeExponentQ",
     uses: 3,
   },
@@ -981,19 +945,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "PadLeft",
-    uses: 3,
-  },
-  {
     head: "Parallelepiped",
     uses: 3,
   },
   {
     head: "PauliMatrix",
-    uses: 3,
-  },
-  {
-    head: "PowersRepresentations",
     uses: 3,
   },
   {
@@ -1018,18 +974,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "SetSharedVariable",
-    uses: 3,
-  },
-  {
-    head: "SortBy",
-    uses: 3,
-  },
-  {
-    head: "Split",
-    uses: 3,
-  },
-  {
-    head: "SquaresR",
     uses: 3,
   },
   {

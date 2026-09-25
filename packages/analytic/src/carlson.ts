@@ -115,29 +115,41 @@ export function carlsonRD(x0: Cx, y0: Cx, z0: Cx): Cx {
 
 /**
  * RJ(x,y,z,p) = (3/2)∫₀^∞ dt / [(t+p)√((t+x)(t+y)(t+z))] — symmetric in x, y, z; the
- * fourth argument p plays z's role in RD (RD(x,y,z) = RJ(x,y,z,z)). Unlike RD's sum,
- * whose per-step term is an elementary reciprocal, RJ's per-step term is itself an
- * `RC` call (DLMF 19.26.7):
- *   α_m = (p_m(√x_m+√y_m+√z_m) + √x_m√y_m√z_m)²,   β_m = p_m(p_m+λ_m)²,
- *   RJ(x0,y0,z0,p0) = 3 Σ_{m=0}^∞ 4^{-m}·RC(α_m, β_m).
- * (A naive analogue of RD's own reciprocal term, 6·4^{-m}/[(√p+√x)(√p+√y)(√p+√z)], is
- * close but not this — RC's own duplication does real work here, not just packaging a
- * reciprocal.) p converges to the common limit only linearly, so this needs the
- * (x,y,z,p)-convergence check, same as the loop below; once that holds, `fac` is already
- * negligible and the partial sum needs no separate closing term.
+ * fourth argument p plays z's role in RD (RD(x,y,z) = RJ(x,y,z,z)).
+ *
+ * The per-step term (Carlson 1995 §3; DLMF 19.36.2 — the same normal form mpmath's
+ * `elliprj` uses) needs √p_m itself, not just the (x,y,z)-symmetric λ:
+ *   d_m = (√p_m+√x_m)(√p_m+√y_m)(√p_m+√z_m),   e_m = δ·4^{3m} / d_m²   (δ = (p₀−x₀)(p₀−y₀)(p₀−z₀)
+ *   fixed, from the ORIGINAL arguments — not recomputed per step),
+ *   RJ(x0,y0,z0,p0) = 6 Σ_{m=0}^∞ 4^{-m}·RC(1, 1+e_m)/d_m.
+ * This close cousin — DLMF 19.26.7's sum of `RC(α_m, β_m)` built from α_m = (p_m·(√x_m+
+ * √y_m+√z_m) + √x_m√y_m√z_m)² and β_m = p_m(p_m+λ_m)², entirely avoiding √p_m — LOOKS
+ * equivalent (both are exact identities for RJ) but is not numerically interchangeable:
+ * 19.26.7 squares away p_m's own sign before ever taking a root, so nothing in that sum
+ * "sees" which side of `csqrt`'s branch cut p_m's square root belongs on. That is invisible
+ * whenever p stays in the right half-plane (α_m, β_m end up wherever the correct branch
+ * would have put them anyway) but wrong whenever p0 starts with Re < 0 and only ONE of the
+ * four arguments does — `RJ(0, 0.7, 1, −0.17−0.45i)` came back an order of magnitude off
+ * against mpmath's `elliprj` under 19.26.7, while this d_m/e_m form (needing an explicit,
+ * correctly-branched √p_m every step) matches mpmath there and across a 3000-point
+ * complex grid with at most one argument at Re < 0 to machine precision. `fac` (≡ 4^-m)
+ * decays geometrically regardless of convergence, same reasoning as before, so this still
+ * runs a fixed `RJ_ITERS` rather than a convergence-gated loop — no separate closing term
+ * needed at double precision.
  *
  * All four arguments real and ≤ 0 (not all zero) is the reflection RJ(−x,−y,−z,−w) =
  * i·RJ(x,y,z,w), x,y,z,w ≥ 0 (DLMF 19.7.5's sign-reflection specialized to RJ; confirmed
  * against mpmath at both boundary and generic points). Duplicating negative reals directly
- * lands every √ exactly on `csqrt`'s branch cut, where the accumulated per-step branch
- * choice in the sum below does not actually reduce to this value — reflecting first avoids
- * the cut entirely.
+ * lands every √ exactly on `csqrt`'s branch cut, where the per-step sum does not actually
+ * reduce to this value — reflecting first avoids the cut entirely.
  *
  * Real p < 0, with x, y, z real, nonnegative and at most one 0, is the Cauchy principal
  * value (Carlson 1995 eq. (33); DLMF 19.20.14) rather than whatever the direct duplication
- * would produce off the branch point at t = −p. Permuting x, y, z so that y is the median
- * value — `(z−y)(y−x) ≥ 0`, which sorting ascending always satisfies — lets a positive
- * substitute `p` stand in:
+ * would produce off the branch point at t = −p (the d_m/e_m form above still lands √p_m
+ * exactly on the branch cut there — a genuinely two-valued point, not a numerical bug — so
+ * this needs its own case regardless of the per-step formula). Permuting x, y, z so that y
+ * is the median value — `(z−y)(y−x) ≥ 0`, which sorting ascending always satisfies — lets a
+ * positive substitute `p` stand in:
  *   p = y + (z−y)(y−x)/(y+q),   q = −p₀,
  *   (y+q)·RJ(x,y,z,−q) = (p−y)·RJ(x,y,z,p) − 3·RF(x,y,z) + 3√(xyz/(xz+pq))·RC(xz+pq, pq).
  * RJ is fully symmetric in its first three arguments (unlike RD), so relabeling them by
@@ -187,6 +199,9 @@ export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
   let p = p0;
   let sum = cx(0);
   let fac = cx(1);
+  // δ is fixed at the ORIGINAL arguments — recomputing (p_m−x_m)(p_m−y_m)(p_m−z_m) each
+  // step would silently converge it to 0 and is not the identity this implements.
+  const delta = mul(mul(sub(p0, x0), sub(p0, y0)), sub(p0, z0));
   // RJ's answer lives entirely in this sum, whose terms shrink by exactly 4× a step
   // (fac = 4^−m) REGARDLESS of whether x, y, z, p have converged — unlike RF/RD, there
   // is no elementary closing value at the common limit to fall back on, so an
@@ -199,18 +214,19 @@ export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
     const sx = csqrt(x);
     const sy = csqrt(y);
     const sz = csqrt(z);
+    const sp = csqrt(p); // the branch info 19.26.7's α/β form throws away — see above
     const lam = add(add(mul(sx, sy), mul(sy, sz)), mul(sz, sx));
-    const alpha = add(mul(p, add(add(sx, sy), sz)), mul(sx, mul(sy, sz)));
-    const alphaSq = mul(alpha, alpha);
-    const beta = mul(p, mul(add(p, lam), add(p, lam)));
-    sum = add(sum, mul(fac, carlsonRC(alphaSq, beta)));
+    const dm = mul(mul(add(sp, sx), add(sp, sy)), add(sp, sz));
+    const facCubed = mul(mul(fac, fac), fac);
+    const em = div(mul(delta, facCubed), mul(dm, dm));
+    sum = add(sum, div(mul(fac, carlsonRC(cx(1), add(cx(1), em))), dm));
     fac = scale(fac, 0.25);
     x = scale(add(x, lam), 0.25);
     y = scale(add(y, lam), 0.25);
     z = scale(add(z, lam), 0.25);
     p = scale(add(p, lam), 0.25);
   }
-  return scale(sum, 3);
+  return scale(sum, 6);
 }
 
 /**
@@ -254,13 +270,25 @@ export function carlsonRG(x: Cx, y: Cx, z: Cx): Cx {
  * checks out against mpmath in every case tested). Everything else that touches a branch
  * cut is unverified: real arguments split across zero in a shape the CPV formula doesn't
  * cover (e.g. a negative x, y or z with p ≥ 0), or genuinely complex arguments with two or
- * more of x, y, z, p on the wrong side of the cut (Re < 0) at once, where the per-step
- * α/β/`RC` sum's implicit branch choice has been observed to disagree with mpmath's
- * `elliprj`. Declining there keeps the declared head from asserting a number it hasn't
- * earned; the underlying `carlsonRJ` above is unchanged for internal callers.
+ * more of x, y, z, p on the wrong side of the cut (Re < 0) at once — confirmed (a 1000+ point
+ * complex grid, see `tests/carlson.test.ts`) even after the d_m/e_m fix above: at most one
+ * argument at Re < 0 matches mpmath's `elliprj` to machine precision, two or more generally
+ * does not. The one exception: `p` exactly equal to `x`, `y`, or `z` — δ = (p−x)(p−y)(p−z)
+ * has a zero factor there, RJ degenerates to RD(x,y,z) (RJ(x,y,z,z) = RD(x,y,z), and RJ is
+ * symmetric in its first three arguments so this holds regardless of which of x,y,z p equals),
+ * and the d_m/e_m algorithm reproduces that value to machine precision no matter how many of
+ * the four are at Re < 0 (checked, 1000-point grid) — the branch risk above comes from δ's
+ * own sign, which a zero factor forecloses. This is the same exemption mpmath's `elliprj`
+ * grants (its `x == p or y == p or z == p` check). Declining outside all of this keeps the
+ * declared head from asserting a number it hasn't earned; the underlying `carlsonRJ` above is
+ * unchanged for internal callers. Exported so callers building on `carlsonRJ` directly (e.g.
+ * `elliptic.ts`'s `IncompleteEllipticPi`) share this same, up-to-date boundary rather than
+ * keeping their own copy.
  */
-function carlsonRJDeclines(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
+export function carlsonRJDeclines(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
   const args = [x, y, z, p];
+  const pEqualsOne = [x, y, z].some((v) => v.re === p.re && v.im === p.im);
+  if (pEqualsOne) return false; // RJ(x,y,z,z) = RD(x,y,z) — no branch risk, any sign pattern
   if (args.every((v) => v.im === 0)) {
     if (args.every((v) => v.re >= 0)) return false; // no cut in reach
     if (args.every((v) => v.re <= 0) && args.some((v) => v.re !== 0)) return false; // reflection

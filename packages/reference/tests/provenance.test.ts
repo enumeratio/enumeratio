@@ -137,6 +137,10 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `Rationalize` (threads over a list or a symbolic expression, `threading-113.ts`) and
  * `FromContinuedFraction` (a list of plain symbols builds the nested fraction,
  * `closed-forms-113.ts`) — each additive the same way, native for anything not exact.
+ * #113 also adds `GCD` and `LCM`: every plain-integer call now goes through bigints (the
+ * native pair round a big argument through a double — `GCD(20!, 10^100+3)` came back
+ * 163840000 instead of 7 — so this is a correction, not only an addition), plus threading a
+ * single list argument against the rest (`declare-widened.ts`, number-theory).
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -158,10 +162,12 @@ const OVERRIDDEN = [
   "Beta",
   "BetaRegularized",
   "Binomial",
+  "CarmichaelLambda",
   "CatalanNumber",
   "Ceil",
   "ChineseRemainder",
   "Clamp",
+  "ContinuedFraction",
   "Cos",
   "Cosh",
   "Csc",
@@ -186,6 +192,7 @@ const OVERRIDDEN = [
   "Floor",
   "FromContinuedFraction",
   "FromDigits",
+  "GCD",
   "Gamma",
   "GammaLn",
   "GammaRegularized",
@@ -193,12 +200,15 @@ const OVERRIDDEN = [
   "IntegerString",
   "Inverse",
   "IsOdd",
+  "IsPerfect",
   "IsPrime",
   "IsSquareFree",
   "JacobiSymbol",
   "Join",
+  "LCM",
   "LambertW",
   "Last",
+  "LegendreSymbol",
   "Length",
   "Ln",
   "LucasL",
@@ -290,15 +300,18 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * expose (`rational_reconstruction`, `iratrecon`). IntegerMod and IntegerModRing are Sage's
  * `Mod(a, m)` and `Zmod(m)`.
  *
- * TimeConstrained, MemoryConstrained, VerificationTest and Commonest are genuinely Wolfram's
- * own (see `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled
- * in by the external-kernel coverage script, which needs a Wolfram kernel this offline test
- * suite doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
- * BesselJZero (Wolfram, mpmath) waits on the same run, and so do IntegerPartitions (Wolfram)
- * and SetPartitions (SymPy's `multiset_partitions`): the collection families read as
- * `unknown` until their entries carried examples. IncompleteEllipticPi (Wolfram's own
- * EllipticPi[n, φ, m], mpmath's ellippi) waits too; KeiperLiLambda has no known
- * equivalent elsewhere and should stay novel even after a coverage run.
+ * TimeConstrained, MemoryConstrained, VerificationTest, Commonest, and the Wolfram-sweep list
+ * heads (Span, UpTo, Riffle, Gather, GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight,
+ * NoneTrue, Nest, NestList, Outer, LinearRecurrence, RecurrenceTable, Association,
+ * GeometricMean, HarmonicMean) are genuinely Wolfram's own (see `HEADS` in @enumeratio/wolfram)
+ * — they land here only because `elsewhere` is filled in by the external-kernel coverage
+ * script, which needs a Wolfram kernel this offline test suite doesn't have. Remove them once
+ * a coverage run records `elsewhere: ["wolfram"]`. BesselJZero (Wolfram, mpmath) waits on the
+ * same run, and so do IntegerPartitions (Wolfram) and SetPartitions (SymPy's
+ * `multiset_partitions`): the collection families read as `unknown` until their entries
+ * carried examples. IncompleteEllipticPi (Wolfram's own EllipticPi[n, φ, m], mpmath's
+ * ellippi) waits too; KeiperLiLambda has no known equivalent elsewhere and should stay novel
+ * even after a coverage run.
  *
  * ExpIntegralE, InverseErfc, InverseGammaRegularized, InverseBetaRegularized, BellY,
  * NorlundB, PrimeZetaP, HypergeometricPFQ and KleinInvariantJ are the same story: all nine
@@ -312,6 +325,23 @@ const NOVEL = [
   "IntegerMod",
   "IntegerModRing",
   "RationalReconstruction",
+  // The Wolfram-sweep backlog (packages/reference/src/backlog.json), landed in number-theory:
+  // Wolfram has every one of these (see HEADS in @enumeratio/wolfram), but this offline suite
+  // has no kernel to confirm it, so they land here rather than in the "known" list below.
+  "DivisorSum",
+  "IsCoprime",
+  "IsPrimePower",
+  "LiouvilleLambda",
+  "MangoldtLambda",
+  "MersennePrimeExponent",
+  "PartitionsQ",
+  "PerfectNumber",
+  "PowersRepresentations",
+  "RamanujanTau",
+  "SquaresR",
+  "EulerE",
+  "FrobeniusSolve",
+  "FrobeniusNumber",
   "ProfiniteNumber",
   "Adele",
   "Idele",
@@ -372,6 +402,11 @@ const NOVEL = [
   "TemperleyLiebAlgebra",
   "MotzkinAlgebra",
   "NumeralSystemShape",
+  "IntegerLength",
+  "IntegerReverse",
+  "NumberExpand",
+  "RomanNumeral",
+  "RealDigits",
   "AdicNumeral",
   "AdicExpansion",
   "AdicValuation",
@@ -391,6 +426,9 @@ const NOVEL = [
   "ClassSum",
   "ModularMatrix",
   "ModularWord",
+  "Convergents",
+  "ContinuedFractionK",
+  "IsQuadraticIrrational",
   "ModularClasses",
   "RademacherSymbol",
   "FormClassNumber",
@@ -406,6 +444,17 @@ const NOVEL = [
   "Association",
   "GeometricMean",
   "HarmonicMean",
+  "Span",
+  "UpTo",
+  "Riffle",
+  "Gather",
+  "GatherBy",
+  "Split",
+  "SplitBy",
+  "SortBy",
+  "PadLeft",
+  "PadRight",
+  "NoneTrue",
   "IntegerPartitions",
   "SetPartitions",
 ];

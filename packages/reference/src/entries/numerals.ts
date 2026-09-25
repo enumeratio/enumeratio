@@ -726,6 +726,271 @@ export const numerals: readonly ReferenceEntry[] = [
     seeAlso: ["IntegerDigits", "FromDigits"],
   },
   {
+    name: "IntegerLength",
+    domain: DOMAIN,
+    signature: "IntegerLength(n, base?)",
+    summary: "The number of digits of $n$ in the given base — base 10 by default.",
+    signatures: [
+      {
+        call: "IntegerLength(n)",
+        description: "the number of base-10 digits of $n$",
+        library: "enumeratio-numerals",
+      },
+      { call: "IntegerLength(n, base)", description: "the number of digits in the given base" },
+    ],
+    details: [
+      "The sign of $n$ is not counted — `IntegerLength(-123)` is 3, same as `IntegerLength(123)`",
+      "`IntegerLength(0)` is 0, unlike [[IntegerDigits]]'s one-element `{0}` — there is no shortest numeral for 0, only the empty one",
+    ],
+    examples: [
+      { expr: ["IntegerLength", 12345], expected: 5 },
+      {
+        expr: ["IntegerLength", ["Power", 2, 100]],
+        expected: 31,
+        category: "Scope",
+      },
+      {
+        expr: ["IntegerLength", 255, 16],
+        expected: 2,
+        category: "Scope",
+        caption: "$255 = \\mathrm{ff}_{16}$",
+      },
+      {
+        expr: ["IntegerLength", -123],
+        expected: 3,
+        category: "Possible issues",
+        caption: "the sign is not counted",
+      },
+      {
+        expr: ["IntegerLength", 0],
+        expected: 0,
+        category: "Possible issues",
+        caption: "0 has length 0, unlike its one-element [[IntegerDigits]]",
+      },
+      {
+        expr: ["IntegerLength", L(1, 10, 100)],
+        expected: L(1, 2, 3),
+        category: "Scope",
+        caption: "Listable",
+      },
+    ],
+    seeAlso: ["IntegerDigits", "IntegerReverse", "IntegerString"],
+  },
+  {
+    name: "IntegerReverse",
+    domain: DOMAIN,
+    signature: "IntegerReverse(n, base?, len?)",
+    summary: "The integer whose digits are those of $n$ in reverse order.",
+    signatures: [
+      {
+        call: "IntegerReverse(n)",
+        description: "the base-10 digits of $n$, reversed",
+        library: "enumeratio-numerals",
+      },
+      { call: "IntegerReverse(n, base)", description: "reversed in the given base" },
+      {
+        call: "IntegerReverse(n, base, len)",
+        description: "padded to `len` digits (leading zeros) before reversing",
+      },
+    ],
+    details: [
+      "A trailing zero of $n$ becomes a leading zero of the reversal, which then simply vanishes — `IntegerReverse(1200)` is 21, not 0021",
+      "The sign of $n$ is not carried through; the digits reverse as if $n$ were non-negative",
+    ],
+    examples: [
+      {
+        expr: ["IntegerReverse", 1234],
+        expected: 4321,
+        caption: "the base-10 digits reversed",
+      },
+      {
+        expr: ["IntegerReverse", 1234, 2],
+        expected: 601,
+        category: "Scope",
+        caption: "$1234 = 10011010010_2$ reversed is $1001011001_2 = 601$",
+      },
+      {
+        expr: ["IntegerReverse", 1200],
+        expected: 21,
+        category: "Possible issues",
+        caption: "trailing zeros become leading zeros and vanish",
+      },
+      {
+        expr: ["IntegerReverse", 123, 10, 5],
+        expected: 32100,
+        category: "Scope",
+        caption: "padded to 5 digits first: $00123$ reversed",
+      },
+      {
+        expr: ["IntegerReverse", L(12, 345)],
+        expected: L(21, 543),
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["IntegerReverse", 12321],
+        expected: 12321,
+        category: "Applications",
+        caption: "a palindrome is its own reversal",
+      },
+    ],
+    seeAlso: ["IntegerDigits", "IntegerLength"],
+  },
+  {
+    name: "NumberExpand",
+    domain: DOMAIN,
+    signature: "NumberExpand(n, base?, len?)",
+    summary: "The place-value terms of $n$: each digit times its power of the base.",
+    signatures: [
+      {
+        call: "NumberExpand(n)",
+        description: "the base-10 place-value terms of $n$",
+        library: "enumeratio-numerals",
+      },
+      { call: "NumberExpand(n, base)", description: "place-value terms in the given base" },
+      {
+        call: "NumberExpand(n, base, len)",
+        description: "padded to `len` digits (leading zero terms) first",
+      },
+    ],
+    details: [
+      "The terms sum back to $n$: `Total(NumberExpand(n))` is $n$",
+      "Every term carries the sign of $n$, not just the leading one",
+    ],
+    examples: [
+      { expr: ["NumberExpand", 1234], expected: L(1000, 200, 30, 4) },
+      {
+        expr: ["NumberExpand", 10, 2],
+        expected: L(8, 0, 2, 0),
+        category: "Scope",
+        caption: "base 2, zero terms kept",
+      },
+      {
+        expr: ["NumberExpand", -123],
+        expected: L(-100, -20, -3),
+        category: "Scope",
+        caption: "every term carries the sign",
+      },
+    ],
+    seeAlso: ["IntegerDigits", "IntegerLength"],
+  },
+  {
+    name: "RomanNumeral",
+    domain: DOMAIN,
+    signature: "RomanNumeral(n)",
+    summary: "The Roman numeral for a non-negative integer, as a string.",
+    signatures: [
+      {
+        call: "RomanNumeral(n)",
+        description:
+          "the Roman numeral for $0 \\le n \\le 3999$, the largest with the standard symbols",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "Written subtractively: 4 is `IV`, not `IIII`; 1988 is `MCMLXXXVIII`",
+      "0 is `N`, for the Latin *nulla* — Roman numerals otherwise have no zero",
+    ],
+    examples: [
+      { expr: ["RomanNumeral", 1988], expected: "'MCMLXXXVIII'" },
+      {
+        expr: ["RomanNumeral", 3999],
+        expected: "'MMMCMXCIX'",
+        category: "Scope",
+        caption: "the largest with standard symbols",
+      },
+      { expr: ["RomanNumeral", 2024], expected: "'MMXXIV'" },
+      {
+        expr: ["RomanNumeral", L(1, 2, 3, 4)],
+        expected: ["List", "'I'", "'II'", "'III'", "'IV'"],
+        category: "Scope",
+        caption: "Listable; 4 is written subtractively",
+      },
+      {
+        expr: ["RomanNumeral", 0],
+        expected: "'N'",
+        category: "Possible issues",
+        caption: "zero is written N, for nulla",
+      },
+    ],
+    seeAlso: ["IntegerString"],
+  },
+  {
+    name: "RealDigits",
+    domain: DOMAIN,
+    signature: "RealDigits(x, base?, len?)",
+    summary:
+      "The digits of a real number and the position of its decimal point, with the repeating block of a rational marked as a sublist.",
+    signatures: [
+      {
+        call: "RealDigits(x)",
+        description:
+          "the exact digits of a rational (integers included), any repeating block nested",
+        library: "enumeratio-numerals",
+      },
+      { call: "RealDigits(x, base)", description: "the same, in the given base" },
+      {
+        call: "RealDigits(x, base, len)",
+        description:
+          "`len` digits — the exact expansion for a rational, or `len` digits of a numeric approximation (base 10 only) for anything else",
+      },
+    ],
+    details: [
+      "The result is `{{d₁, d₂, ...}, n}`: the value is `0.d₁d₂d₃... × baseⁿ`, so `n` is the count of digits before the point",
+      "A rational's expansion is EXACT: a terminating one stops, a repeating one nests its period as the list's last element — `RealDigits(1/7)` is `{{{1,4,2,8,5,7}}, 0}`",
+      "When the integer part is 0, leading fractional zeros are dropped from the digit list and folded into a more negative exponent instead of spelled out — `RealDigits(1/8, 2)` is `{{1}, -2}`, not `{{0,0,1}, 0}`",
+      "For anything without an exact rational value — `Pi`, a `Sqrt`, `ExponentialE` — `len` is required, and the digits are TRUNCATED, not rounded, from a numeric approximation computed a little beyond `len` digits",
+      "Sign is dropped, like every other digit head here",
+    ],
+    examples: [
+      {
+        expr: ["RealDigits", ["Rational", 1, 7]],
+        expected: ["List", ["List", ["List", 1, 4, 2, 8, 5, 7]], 0],
+        caption: "the repeating block of $1/7 = 0.\\overline{142857}$",
+      },
+      {
+        expr: ["RealDigits", ["Rational", 19, 7]],
+        expected: ["List", ["List", 2, ["List", 7, 1, 4, 2, 8, 5]], 1],
+        category: "Scope",
+        caption: "$19/7 = 2.\\overline{714285}$, one digit before the point",
+      },
+      {
+        expr: ["RealDigits", ["Rational", 5, 4]],
+        expected: ["List", L(1, 2, 5), 1],
+        category: "Scope",
+        caption: "a terminating rational",
+      },
+      {
+        expr: ["RealDigits", ["Rational", 1, 8], 2],
+        expected: ["List", L(1), -2],
+        category: "Scope",
+        caption: "$1/8 = 0.001_2$",
+      },
+      {
+        expr: ["RealDigits", "Pi", 10, 10],
+        expected: ["List", L(3, 1, 4, 1, 5, 9, 2, 6, 5, 3), 1],
+        caption: "the first 10 digits of $\\pi$ (truncated, not rounded)",
+      },
+      {
+        expr: ["RealDigits", ["Sqrt", 2], 10, 5],
+        expected: ["List", L(1, 4, 1, 4, 2), 1],
+        category: "Scope",
+      },
+      {
+        expr: ["RealDigits", "ExponentialE", 10, 5],
+        expected: ["List", L(2, 7, 1, 8, 2), 1],
+        category: "Scope",
+      },
+      {
+        expr: ["RealDigits", 123456],
+        expected: ["List", L(1, 2, 3, 4, 5, 6), 6],
+        category: "Scope",
+        caption: "an integer: six digits before the point",
+      },
+    ],
+    seeAlso: ["IntegerDigits", "FromDigits"],
+  },
+  {
     name: "AdicNumeral",
     domain: DOMAIN,
     signature: "AdicNumeral(b, x, prec?)",

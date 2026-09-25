@@ -686,9 +686,8 @@ export const residues: readonly ReferenceEntry[] = [
       {
         expr: ["ModularInverse", ["List", 2, 3, 4], 11],
         expected: ["List", 6, 4, 3],
-        aspirational: true,
         category: "Scope",
-        caption: "Listable: should thread over a list; not yet",
+        caption: "Listable: threads over a list",
       },
       {
         expr: ["Equal", ["ModularInverse", 3, 7], ["PowerMod", 3, -1, 7]],

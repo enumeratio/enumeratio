@@ -155,12 +155,24 @@ export const modular: readonly ReferenceEntry[] = [
         description: "the partial quotients of a rational — compute-engine's own head",
       },
       {
+        call: "ContinuedFraction(x)",
+        description:
+          "for a quadratic irrational, the exact eventually-periodic expansion $[a_0, \\overline{a_1,\\dots,a_k}]$, the period written as a nested list",
+        library: "enumeratio-modular",
+      },
+      {
         call: "ContinuedFraction(x, n)",
-        description: "the first $n$ terms, for an irrational — also compute-engine's",
+        description:
+          "the first $n$ terms — exact for a quadratic irrational, certified-precision otherwise (compute-engine's own signature, extended)",
       },
       {
         call: "FromContinuedFraction(list)",
         description: "back to the rational — compute-engine's own",
+      },
+      {
+        call: "FromContinuedFraction([a0, [period]])",
+        description: "back to the quadratic irrational, from its periodic-tail shape",
+        library: "enumeratio-modular",
       },
       {
         call: "SternBrocotPath(p, q)",
@@ -174,7 +186,8 @@ export const modular: readonly ReferenceEntry[] = [
       },
     ],
     details: [
-      '`ContinuedFraction` and `FromContinuedFraction` are compute-engine\'s, not ours — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"',
+      '`ContinuedFraction` and `FromContinuedFraction` are compute-engine\'s heads, extended in place rather than redeclared — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"',
+      "For a quadratic irrational $(a+b\\sqrt d)/c$, the one-argument form runs the exact PQa algorithm over bigints and returns the eventually-periodic expansion; the two-argument form truncates it. Anything else irrational — $\\pi$, $e$, a cube root, a sum of surds, the named `GoldenRatio` — goes through a BigDecimal extraction certified by agreement across two working precisions, so it isn't limited to double precision",
       "The expansion is made unique by never ending in $1$: $[\\ldots, k, 1]$ is rewritten $[\\ldots, k+1]$",
       "The path is $R^{a_0}L^{a_1}R^{a_2}\\cdots$ with the LAST exponent one short — the final step is the arrival, not a turn",
       "Consecutive Farey fractions satisfy $ps - qr = -1$, which is a determinant, which is a group element",
@@ -249,57 +262,51 @@ export const modular: readonly ReferenceEntry[] = [
       {
         expr: ["ContinuedFraction", "Pi", 20],
         expected: ["List", 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2],
-        caption: "20 terms of $\\pi$ need more than double precision; only 13 come back today",
-        aspirational: true,
+        caption:
+          "20 terms of $\\pi$, past the 13-term double-precision wall — certified BigDecimal",
       },
       {
         expr: ["ContinuedFraction", ["Sqrt", 13]],
         expected: ["List", 3, ["List", 1, 1, 1, 1, 6]],
         caption:
-          "a quadratic irrational's exact expansion is eventually periodic, written with the period as a nested list; today it is truncated to 20 terms",
-        aspirational: true,
+          "a quadratic irrational's exact expansion is eventually periodic, written with the period as a nested list",
       },
       {
         expr: ["ContinuedFraction", ["Divide", ["Add", 1, ["Sqrt", 5]], 2]],
         expected: ["List", 1, ["List", 1]],
-        caption: "$\\varphi = [1; \\overline{1}]$; stays unevaluated",
+        caption: "$\\varphi = [1; \\overline{1}]$ — purely periodic, so the period is all there is",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["ContinuedFraction", "GoldenRatio", 10],
         expected: ["List", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        caption: "the named constant; stays unevaluated",
+        caption: "the named constant, unfolded to $(1+\\sqrt5)/2$ first",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["ContinuedFraction", ["Add", 1, ["Sqrt", 2]], 5],
         expected: ["List", 2, 2, 2, 2, 2],
-        caption: "a sum of surds; stays unevaluated (a bare $\\sqrt2$ works)",
+        caption: "a sum of surds — still a quadratic irrational, exact via PQa",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["ContinuedFraction", ["Power", 2, ["Rational", 1, 3]], 10],
         expected: ["List", 1, 3, 1, 5, 1, 1, 4, 1, 1, 8],
-        caption: "a cube root, which is not periodic; stays unevaluated",
+        caption:
+          "a cube root, algebraic degree 3 — not periodic, so a certified BigDecimal expansion",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["FromContinuedFraction", ["List", 3, ["List", 1, 1, 1, 1, 6]]],
         expected: ["Sqrt", 13],
-        caption: "a periodic tail rebuilds the quadratic irrational; stays unevaluated",
+        caption: "a periodic tail rebuilds the quadratic irrational",
         category: "Properties",
-        aspirational: true,
       },
       {
         expr: ["FromContinuedFraction", ["List", 1, ["List", 2]]],
         expected: ["Sqrt", 2],
-        caption: "$[1; \\overline{2}] = \\sqrt2$; stays unevaluated",
+        caption: "$[1; \\overline{2}] = \\sqrt2$",
         category: "Properties",
-        aspirational: true,
       },
       {
         expr: ["FromContinuedFraction", ["List", "a", "b", "c"]],
@@ -311,15 +318,160 @@ export const modular: readonly ReferenceEntry[] = [
             "Wolfram's own FromContinuedFraction[{a,b,c}] combines it into the single ratio (a + (1+ab)c)/(1+bc); we leave the nested a + 1/(b + 1/c) form, matching what a reader would write down term by term.",
         },
       },
+    ],
+    seeAlso: ["ModularWord", "IntegerDigits", "Convergents"],
+  },
+  {
+    name: "Convergents",
+    domain: DOMAIN,
+    signature: "Convergents(list) / Convergents(x, n)",
+    summary:
+      "The successive convergents $p_k/q_k$ of a continued fraction, given as its list of terms or as the number itself.",
+    signatures: [
+      {
+        call: "Convergents(list)",
+        description: "the convergents of a term list, such as one `ContinuedFraction` returns",
+        library: "enumeratio-modular",
+      },
+      {
+        call: "Convergents(x)",
+        description: "every convergent of a rational $x$ — the last one is $x$ itself",
+        library: "enumeratio-modular",
+      },
+      {
+        call: "Convergents(x, n)",
+        description: "the first $n$ convergents of $x$, via `ContinuedFraction(x, n)`",
+        library: "enumeratio-modular",
+      },
+    ],
+    details: [
+      "The two-term recurrence $p_k = a_k p_{k-1} + p_{k-2}$, $q_k = a_k q_{k-1} + q_{k-2}$, seeded $p_{-1}=1, p_{-2}=0, q_{-1}=0, q_{-2}=1$ — the same recurrence [[ModularMatrix]] multiplication runs, one $T^{a_k}S$ at a time",
+      "Every convergent is in lowest terms, and each is a better rational approximation of $x$ than any fraction with a smaller denominator",
+      "`Convergents(x)` (no `n`) needs a RATIONAL $x$, since `ContinuedFraction(x)` alone does; an irrational needs `Convergents(x, n)`",
+    ],
+    examples: [
       {
         expr: ["Convergents", ["List", 3, 7, 15, 1]],
         expected: ["List", 3, ["Rational", 22, 7], ["Rational", 333, 106], ["Rational", 355, 113]],
-        caption: "the convergents of $\\pi$'s first terms — needs a `Convergents` head",
+        caption: "from a list of terms",
+      },
+      {
+        expr: ["Convergents", "Pi", 5],
+        expected: [
+          "List",
+          3,
+          ["Rational", 22, 7],
+          ["Rational", 333, 106],
+          ["Rational", 355, 113],
+          ["Rational", 103993, 33102],
+        ],
+        caption: "the first five convergents of $\\pi$",
+      },
+      {
+        expr: ["Convergents", ["Rational", 47, 17]],
+        expected: ["List", 2, 3, ["Rational", 11, 4], ["Rational", 47, 17]],
+        category: "Scope",
+        caption: "a rational: the last convergent is the number itself",
+      },
+      {
+        expr: ["Convergents", ["Sqrt", 2], 5],
+        expected: [
+          "List",
+          1,
+          ["Rational", 3, 2],
+          ["Rational", 7, 5],
+          ["Rational", 17, 12],
+          ["Rational", 41, 29],
+        ],
         category: "Applications",
-        aspirational: true,
+        caption: "convergents of $\\sqrt2$ solve Pell's equations $p^2 - 2q^2 = \\pm1$",
       },
     ],
-    seeAlso: ["ModularWord", "IntegerDigits"],
+    seeAlso: ["ContinuedFraction", "ContinuedFractionK"],
+  },
+  {
+    name: "ContinuedFractionK",
+    domain: DOMAIN,
+    signature: "ContinuedFractionK(f, g, (i, imin, imax))",
+    summary:
+      "The continued fraction $f_1/(g_1 + f_2/(g_2 + \\cdots))$ over an index range, finite or infinite.",
+    signatures: [
+      {
+        call: "ContinuedFractionK(f, g, (i, imin, imax))",
+        description: "the finite continued fraction, exact, for `imin ≤ i ≤ imax`",
+        library: "enumeratio-modular",
+      },
+      {
+        call: "ContinuedFractionK(f, g, (i, imin, PositiveInfinity))",
+        description: "the infinite fraction, when $f$ and $g$ do not depend on $i$",
+        library: "enumeratio-modular",
+      },
+    ],
+    details: [
+      "The iterator is written the same way `Sum` and `Product` write theirs: `Tuple(i, imin, imax)`",
+      "The finite fraction is built right to left: $f_{imax}/g_{imax}$ first, then each $f_i/(g_i + \\text{that})$ down to $i = imin$",
+      "The infinite case is solved algebraically, not truncated: constant $f, g$ make $x = f/(g+x)$, whose positive root $x = (-g + \\sqrt{g^2+4f})/2$ is the fraction's value — an $f$ or $g$ that depends on $i$ has no such closed form here, and the call stays unevaluated",
+    ],
+    examples: [
+      {
+        expr: ["ContinuedFractionK", 1, "k", ["Tuple", "k", 1, 5]],
+        expected: ["Rational", 157, 225],
+        caption: "$\\cfrac{1}{1 + \\cfrac{1}{2 + \\cfrac{1}{3 + \\cfrac{1}{4 + \\cfrac15}}}}$",
+      },
+      {
+        expr: ["ContinuedFractionK", 1, 1, ["Tuple", "k", 1, "PositiveInfinity"]],
+        expected: ["Multiply", ["Rational", 1, 2], ["Add", -1, ["Sqrt", 5]]],
+        category: "Scope",
+        caption: "the infinite all-ones fraction is $1/\\varphi$ — $(\\sqrt5 - 1)/2$",
+      },
+    ],
+    seeAlso: ["Convergents", "ContinuedFraction"],
+  },
+  {
+    name: "IsQuadraticIrrational",
+    domain: DOMAIN,
+    signature: "IsQuadraticIrrational(x)",
+    summary:
+      "True when $x$ is an irrational root of a quadratic with integer coefficients — exactly the numbers with an eventually periodic continued fraction.",
+    signatures: [
+      {
+        call: "IsQuadraticIrrational(x)",
+        description: "whether $x$ is a quadratic irrational",
+        library: "enumeratio-modular",
+      },
+    ],
+    details: [
+      "Recognised structurally: a rational affine combination with exactly one irrational `Sqrt` term, at any rational scale — $\\sqrt n$, $3\\sqrt2$, $1+\\sqrt5$, $(1+\\sqrt5)/2$, $1-\\sqrt3$",
+      "A rational is not irrational, so it is `False`, not merely unrecognised",
+      "Wolfram calls this `QuadraticIrrationalQ`; the name here follows compute-engine's own `Is…` convention instead",
+      "Every quadratic irrational's continued fraction is eventually periodic (Lagrange's theorem), and conversely — see [[ContinuedFraction]]",
+    ],
+    examples: [
+      { expr: ["IsQuadraticIrrational", ["Sqrt", 2]], expected: "True" },
+      {
+        expr: ["IsQuadraticIrrational", ["Divide", ["Add", 1, ["Sqrt", 5]], 2]],
+        expected: "True",
+        caption: "the golden ratio",
+      },
+      {
+        expr: ["IsQuadraticIrrational", ["Power", 2, ["Rational", 1, 3]]],
+        expected: "False",
+        caption: "a cube root is algebraic of degree 3",
+      },
+      {
+        expr: ["IsQuadraticIrrational", ["Rational", 3, 4]],
+        expected: "False",
+        category: "Possible issues",
+        caption: "a rational is not irrational",
+      },
+      {
+        expr: ["IsQuadraticIrrational", "Pi"],
+        expected: "False",
+        category: "Scope",
+        caption: "transcendental",
+      },
+    ],
+    seeAlso: ["ContinuedFraction", "Convergents"],
   },
   {
     name: "ModularClasses",

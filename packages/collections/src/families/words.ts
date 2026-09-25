@@ -247,11 +247,17 @@ function fkmLyndonWordsUpTo(n: number, k: number): number[][] {
   return out;
 }
 /** Lyndon words of length EXACTLY n over alphabet {1..k}, lex order (1-indexed letters). */
+const lyndonWordsExactCache = new Map<string, number[][]>();
 function lyndonWordsExact(n: number, k: number): number[][] {
   if (n <= 0 || k <= 0) return [];
-  return fkmLyndonWordsUpTo(n, k)
+  const key = `${n},${k}`;
+  const cached = lyndonWordsExactCache.get(key);
+  if (cached) return cached;
+  const words = fkmLyndonWordsUpTo(n, k)
     .filter((w) => w.length === n)
     .map((w) => w.map((x) => x + 1));
+  lyndonWordsExactCache.set(key, words);
+  return words;
 }
 /** |{Lyndon words of length n over a k-ary alphabet}| = (1/n) Σ_{d|n} μ(d)·k^(n/d). */
 function lyndonCount(n: number, k: number): number {
