@@ -1859,3 +1859,18 @@ polylog-rim-theta-2p4-s-1p5-z:
     in: (polylog(1.5, mpc(-0.7373937155412454, 0.675463180551151)))
   sage:
     in: N(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)))
+order-one-half-at-1-is-zeta-one-half:
+  epsil:
+    in: N(PolyLog(1 / 2, 1))
+    out: -1.460_354_508_809_586_8
+  tex:
+    in: N(\operatorname{Li}_{\frac{1}{2}}(1))
+    out: -1.460\,354\,508\,809\,586\,8
+  fullform:
+    in: N[PolyLog[Rational[1, 2], 1]]
+  wolfram:
+    in: N[PolyLog[Rational[1, 2], 1]]
+  sympy:
+    in: N(polylog(Rational(1, 2), 1), 30)
+  sage:
+    in: N(polylog((1/2), 1))

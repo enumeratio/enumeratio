@@ -22,13 +22,6 @@ type Expr = number | string | readonly [string, ...Expr[]];
 /** Numeric value of an expression via .N(). */
 const num = (input: Expr): number => ce.box(input).N().re;
 
-// --- Exact closed forms (symbolic, no tolerance) --------------------------------
-// The concrete closed-form checks at fixed (s, a) moved to role: test examples on
-// HurwitzZeta's own record (packages/symbols/analysis/analytic/reference/HurwitzZeta.yaml):
-// ζ(2,1), ζ(2,2), ζ(4,2), ζ(s,1), ζ(0,a) symbolic and at a = 3, 5/2, ζ(−1,a) at a = 3, 5/2,
-// 7/3, ζ(−n,a) for n = 2,3,4 at a = 5/2, and the pole at s = 1 for both an exact and a
-// symbolic a.
-
 // --- Numeric evaluation vs known values (Euler–Maclaurin) -----------------------
 
 test("ζ(3,1) numerically equals the ordinary ζ(3) (Apéry's constant)", () => {
@@ -82,9 +75,6 @@ test("complex argument: ζ(2, 1+i) matches an independent tail-corrected sum", (
 });
 
 // --- Two-argument Zeta (Wolfram generalized zeta), and native 1-arg preserved ------
-// The exact 1-arg closed forms and the exact-a two-arg reductions moved to role: test
-// examples on Zeta's own record; kept here are the cross-checks between Zeta and
-// HurwitzZeta / the raw kernels, which pin a relationship rather than a single value.
 
 test("Zeta(s,a) = HurwitzZeta(s,a) for Re(a) > 0", () => {
   expect(Math.abs(num(["Zeta", ["Rational", 1, 2], 2]) - num(["HurwitzZeta", ["Rational", 1, 2], 2]))).toBeLessThan(
@@ -234,10 +224,6 @@ test("compiled Zeta(x, a) and HurwitzZeta(x, a) hold left of the strip", () => {
 
 // --- LerchPhi Φ(z, s, a) = Σ zⁿ (n+a)^(−s) -----------------------------------------
 
-// LerchPhi's exact reductions (Φ(1,2,1)=ζ(2), Φ(1,2,2)=ζ(2,2), Φ(z,0,a)=1/(1−z)) and the
-// numeric grid at z ∈ {1/2, −1/2, 0.3}, and the z = −1 rim (η(1), η(2), 4·Catalan, ¾ζ(3),
-// η(1/2)) all moved to role: test examples on LerchPhi's own record.
-
 test("LerchPhi complex z matches the raw kernel", () => {
   const r = lerchPhi({ re: 0.4, im: 0.3 }, { re: 2, im: 0 }, { re: 1, im: 0 });
   expect(r.re).toBeCloseTo(1.1018365887408, 10);
@@ -270,19 +256,9 @@ test("a negative real base's phase is exact: ζ(1.5, −10⁻¹²) keeps the rea
   expect(hurwitzZeta({ re: 5, im: 0 }, { re: -0.5, im: 0 }).im).toBe(0);
 });
 
-// The remaining continuation values (past |z| = 1, at a negative a, and where the terms
-// cancel below double precision), Φ(0,s,a) at a concrete point, and the HurwitzZeta pole
-// at a nonpositive integer a (both exact and inexact s) moved to role: test examples on
-// LerchPhi's, HurwitzZeta's and Zeta's own records.
-
 test("HurwitzZeta(s,a) stays finite at a nonpositive integer when Re(s) < 0", () => {
   // 0^(−s) for Re(s) < 0 is 0, not a pole, so no guard is needed there (mpmath agrees).
   const z = hurwitzZeta({ re: -1.5, im: 0 }, { re: -2, im: 0 });
   expect(z.re).toBeCloseTo(-0.025485201889833036, 12);
   expect(z.im).toBeCloseTo(-3.8284271247461903, 12);
 });
-
-// LerchPhi on the |z|=1 rim, both the single Re(s) ≤ 1 case and the full golden grid at
-// every Re(s) (a term at n = 200,000 is still ~n^(1−Re(s)), only ~1e-8 at Re(s) = 1.5, so
-// every Re(s) on the rim routes through the continuation) moved to role: test examples on
-// LerchPhi's own record.

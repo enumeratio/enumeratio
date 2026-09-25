@@ -10,10 +10,6 @@ import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 const ce = new ComputeEngine();
 declareAnalytic(ce);
 
-// HarmonicNumber(z, 1) routing to H_z rather than the ζ(1) pole, and order 1 agreeing
-// with the exact one-argument case at an integer, moved to role: test examples on
-// HarmonicNumber's own record.
-
 test("LogGamma(10^300) uses Stirling directly, not Gamma(10^300) first", () => {
   ce.precision = 15;
   // wolframscript: N[LogGamma[10^300], 30] = 6.897755278982137052053974364...e302
@@ -27,7 +23,3 @@ test("LogGamma(10^300) uses Stirling directly, not Gamma(10^300) first", () => {
   expect(ce.box(["LogGamma", 0]).evaluate().json).toEqual("PositiveInfinity");
   expect(ce.box(["LogGamma", -3]).evaluate().json).toEqual("PositiveInfinity");
 });
-
-// Rationalize(Pi, tolerance)'s smallest-denominator behaviour, the convergent-agrees
-// cases, the loose-tolerance snap to an integer, and the already-exact pass-through all
-// moved to role: test examples on Rationalize's own record (packages/reference/entries).

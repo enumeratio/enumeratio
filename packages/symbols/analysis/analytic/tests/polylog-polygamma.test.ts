@@ -21,9 +21,6 @@ const ZETA3 = 1.2020569031595942854;
 const CATALAN = 0.915965594177219015;
 
 // --- PolyLog Liₛ(z) = z·Φ(z, s, 1) ------------------------------------------------
-// The closed forms and the numeric grid across integer, non-integer and complex order s
-// (including Liₛ(1) at the non-integer orders the native handler declines) moved to
-// role: test examples on PolyLog's own record.
 
 test("Li₂(i) = −π²/48 + iG — complex rim, direct summation's accuracy floor", () => {
   // |z| = 1 off the negative real axis is summed directly (the Euler transform in
@@ -33,19 +30,9 @@ test("Li₂(i) = −π²/48 + iG — complex rim, direct summation's accuracy fl
   expect(r.im).toBeCloseTo(CATALAN, 10);
 });
 
-// native |z| > 1 continuation (Li₂(2) = π²/4 − iπ·ln2), the non-integer-order continuation
-// past |z| = 1, and the single Re(s) ≤ 1 rim point all moved to role: test examples on
-// PolyLog's own record; kept below is the raw-kernel check that `polyLogReal` itself still
-// doesn't continue past |z| = 1 (it's `evaluatePolyLog`, not the kernel, that now does).
 test("Liₛ(z) outside |z| ≤ 1 at non-integer s continues via the Lerch integral (mpmath value)", () => {
   expect(Number.isNaN(polyLogReal(2.5, 2))).toBe(true); // the raw kernel still doesn't continue
 });
-
-// Every Re(s) on the rim routes through the continuation, not just Re(s) ≤ 1: the rim's
-// own series converges too slowly past that to trust at double precision (a term at
-// n = 200,000 is still ~1e-8 at Re(s) = 1.5 — this is what the oracle quickcheck's
-// PolyLog(1.5, 0.6+0.8i) caught, wrong from the 9th digit). The golden grid at e^(iθ),
-// against mpmath at dps = 30, moved to role: test examples on PolyLog's own record.
 
 // --- PolyGamma ψ⁽ᵐ⁾(z) = (−1)^(m+1) m! ζ(m+1, z) ----------------------------------
 

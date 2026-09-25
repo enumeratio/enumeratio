@@ -411,6 +411,10 @@ examples:
     id: polylog-rim-theta-2p4-s-1p5-z
     expr: [N, [PolyLog, 1.5, [Complex, -0.7373937155412454, 0.675463180551151]]]
     expected: [Complex, -0.6594860880900733, 0.4403355254247001]
+  - role: test
+    id: order-one-half-at-1-is-zeta-one-half
+    expr: [N, [PolyLog, [Rational, 1, 2], 1]]
+    expected: -1.4603545088095868
 seeAlso:
   - LerchPhi
   - Zeta

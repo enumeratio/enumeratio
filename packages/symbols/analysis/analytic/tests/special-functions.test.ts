@@ -107,8 +107,6 @@ test("G(n) is the superfactorial at positive integers, exactly", () => {
 test("G vanishes at the nonpositive integers; ln G is −∞ there", () => {
   exactJson(["BarnesG", 0], 0);
   exactJson(["BarnesG", -3], 0);
-  // LogBarnesG(0) = -Infinity, and LogBarnesG(4) = ln 2, LogBarnesG(3) = 0 (ln G reduces
-  // through the integer value) moved to role: test examples on LogBarnesG's own record.
   expect(barnesG({ re: -2, im: 0 })).toEqual({ re: 0, im: 0 });
 });
 
@@ -151,10 +149,6 @@ test("LogGamma is the continuation, not the principal log of Γ (Wolfram convent
 
 // --- ClausenCl -----------------------------------------------------------------------
 
-// Cl₂(π/2) = Catalan, Cl₂(π) = 0, Cl₂(0) = 0, the odd-order cosine series (Cl₃(0) = ζ(3),
-// Cl₃(π) = −η(3), Cl₃(π/2) = −η(3)/8), Cl₁'s pole, and Cl₄(π/2) = β(4) all moved to
-// role: test examples on ClausenCl's own record.
-
 test("the kernel's 2π periodicity / oddness", () => {
   expect(clausen(2, 1 + 2 * Math.PI)).toBeCloseTo(clausen(2, 1), 14);
   expect(clausen(2, -1)).toBeCloseTo(-clausen(2, 1), 14);
@@ -168,15 +162,7 @@ test("Cl₂(π/3) = 1.0149416064096536…, the maximum of Cl₂", () => {
 
 // --- DirichletEta / DirichletBeta ----------------------------------------------------
 
-// η at the integers, β at the integers (positive and nonpositive), and the numeric
-// identities η(s) = (1 − 2^{1−s}) ζ(s) and β(s) = 4^{−s}(ζ(s,¼) − ζ(s,¾)) all moved to
-// role: test examples on DirichletEta's and DirichletBeta's own records.
-
 // --- StieltjesGamma ------------------------------------------------------------------
-
-// γ₀ = EulerGamma, γ₀(a) = −ψ(a), poles at a ∈ {0, −1, …}, no closed form past γ₀, γ₁ and
-// γ₂'s values, and orders past 30 staying symbolic all moved to role: test examples on
-// StieltjesGamma's own record.
 
 test("the shift identity γ_n(a+1) = γ_n(a) − lnⁿ(a)/a", () => {
   // ζ(s, a+1) = ζ(s, a) − a^{−s} ⇒ γ_n(a+1) = γ_n(a) − lnⁿ(a)/a; at a = 1 the correction is 0 for n ≥ 1.
@@ -187,12 +173,6 @@ test("the shift identity γ_n(a+1) = γ_n(a) − lnⁿ(a)/a", () => {
 
 // --- HarmonicNumber --------------------------------------------------------------------
 
-// The exact rational sums (one- and two-argument, including the negative-order,
-// zero-order and negative-n pole cases), the symbolic stays for a symbol or non-integer
-// order, and the off-the-integer numeric identities (both H_z = ψ(z+1) + γ and
-// H_z^{(r)} = ζ(r) − ζ(r, z+1), complex z included) all moved to role: test examples on
-// HarmonicNumber's own record.
-
 // --- Catalan -------------------------------------------------------------------------
 
 test("Catalan is a held numeric constant, like EulerGamma", () => {
@@ -202,8 +182,6 @@ test("Catalan is a held numeric constant, like EulerGamma", () => {
 
 // --- DirichletCharacter / DirichletL ------------------------------------------------
 
-// χ_1 principal, χ_j vanishing off the units, and the out-of-range-j case all moved to
-// role: test examples on DirichletCharacter's own record.
 test("the table is orthogonal: Σ_n χ_j(n) = 0 for a non-principal χ, φ(k) for the principal one", () => {
   // Σ_n χ_j(n) = 0 for a non-principal χ, and φ(k) for the principal one.
   for (const k of [5, 8, 12, 15]) {
@@ -234,11 +212,6 @@ test("χ is completely multiplicative", () => {
   }
 });
 
-// L(s,χ)'s reductions (ζ for k = 1, the beta function mod 4, the ζ-product for principal
-// χ, and the pole surviving at s = 1), the exact values at nonpositive integers, and the
-// numeric values (critical strip and near the removable point at s = 1) all moved to
-// role: test examples on DirichletL's own record.
-
 // --- The third argument on Gamma / GammaRegularized ---------------------------------
 
 test("Gamma keeps its native one- and two-argument behaviour", () => {
@@ -255,9 +228,6 @@ test("Γ(s, z₀, z₁) = Γ(s, z₀) − Γ(s, z₁); z₀ = 0 is the LOWER inc
   // γ(5/2, 3/2) = Γ(5/2) − Γ(5/2, 3/2) = 0.3988209453923446…
   expect(num(["Gamma", 2.5, 0, 1.5])).toBeCloseTo(0.3988209453923446, 13);
   expect(num(["Gamma", 2.5, 1.5, 3.0])).toBeCloseTo(0.5234502669154886, 13);
-  // GammaRegularized(-1.5,0,1.5) and (2.5,0,1.5) — negative s where Γ(s,0) and Γ(s) are
-  // both infinite but the regularized ratio is 1 — moved to role: test examples on
-  // GammaRegularized's own record.
 });
 
 test("Γ(1, z) = e^{−z}, so Γ(1, 0, z) collapses to 1 − e^{−z} (Wolfram's reduction)", () => {
@@ -274,6 +244,3 @@ test("a three-argument call that cannot reduce keeps its own form", () => {
 test("Γ(2, 0, z) now reduces through Γ(2, z) = (1+z)e^{-z} (see generalized-special.ts)", () => {
   sameExact(["Gamma", 2, 0, "z"], ["Subtract", 1, ["Multiply", ["Add", "z", 1], ["Exp", ["Negate", "z"]]]]);
 });
-
-// Q(s, z) at a complex order — the case the native two-argument handler declines — moved
-// to a role: test example on GammaRegularized's own record.

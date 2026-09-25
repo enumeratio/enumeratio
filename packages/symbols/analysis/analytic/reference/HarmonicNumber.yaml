@@ -190,6 +190,10 @@ examples:
     category: Scope
     caption: At an integer, order 1 agrees exactly with the one-argument $H_{10}$.
     group: harmonic-order-one
+  - role: test
+    id: h-2-is-three-halves
+    expr: [HarmonicNumber, 2]
+    expected: [Rational, 3, 2]
 implementations:
   - origin: reference
     form: notatio

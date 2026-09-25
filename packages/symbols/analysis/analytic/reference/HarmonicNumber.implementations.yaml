@@ -516,3 +516,17 @@ at-an-integer-order-1-agrees-exactly-with-the:
     in: HarmonicNumber[10, 1]
   wolfram:
     in: HarmonicNumber[10, 1]
+h-2-is-three-halves:
+  epsil:
+    in: HarmonicNumber(2)
+    out: 3 / 2
+  tex:
+    in: \mathrm{HarmonicNumber}(2)
+    out: \frac{3}{2}
+  traditional:
+    in: H_{2}
+    out: \frac{3}{2}
+  fullform:
+    in: HarmonicNumber[2]
+  wolfram:
+    in: HarmonicNumber[2]
