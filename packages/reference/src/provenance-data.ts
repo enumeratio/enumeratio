@@ -1669,4 +1669,11 @@ export const provenance: readonly HeadRecord[] = [
     wolframAlias: null,
     elsewhere: [],
   },
+  {
+    name: "BoxedPlanePartitions",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
 ];

@@ -27,7 +27,7 @@ type Element = number[] | number[][] | NestedTree | number;
  *  `p` is the (possibly empty) parameter tuple. */
 export interface FamilyKernel {
   readonly head: string;
-  readonly paramCount: 0 | 1 | 2;
+  readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";
   readonly count: (p: number[]) => number;
   readonly unrank: (p: number[], r: number) => Element;
