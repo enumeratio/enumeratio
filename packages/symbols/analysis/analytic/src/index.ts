@@ -87,4 +87,6 @@ export { declareSeriesCoefficient } from "./series-coefficient.ts";
 export { declareTransforms, matchLaplace, matchFourier } from "./transforms.ts";
 export { declareMeijerG } from "./meijer-g.ts";
 export { declareMeijerGReduce } from "./meijer-g-reduce.ts";
+export { declareInequality } from "./inequality.ts";
+export { declareFindInstance } from "./find-instance.ts";
 export { declareSignals } from "./signals.ts";
