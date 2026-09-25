@@ -743,6 +743,112 @@ pole-at-a-0-re-s-positive:
     note: Both decline at the pole -- ours answers ComplexInfinity (see the caption), mpmath raises.
   sage:
     in: N(hurwitz_zeta(3, 0))
+re-s-0-a-0-is-indeterminate:
+  epsil:
+    in: N(HurwitzZeta(-1 * i, 0))
+    out: "`NaN`"
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-i, 0))
+    out: \operatorname{NaN}
+  traditional:
+    in: N(\zeta(-i, 0))
+    out: \operatorname{NaN}
+  fullform:
+    in: N[HurwitzZeta[Complex[0, -1], 0]]
+  wolfram:
+    in: N[HurwitzZeta[Complex[0, -1], 0]]
+  sympy:
+    in: N(zeta((0 + (-1)*I), 0), 30)
+    out: nan
+  mpmath:
+    in: (zeta(mpc(0, (-1)), 0))
+    out: (1.00330022368532410287421711421 + 0.418155449141321676689274239843j)
+    verdict: disagree
+    kind: convention
+    note: mpmath's zeta counts the dropped term's 0^(-s) as 1 when Re(s)=0 (off by exactly that from ours); Wolfram calls this Indeterminate instead, which is the convention we follow (see the caption).
+  sage:
+    in: N(hurwitz_zeta((0 + (-1)*I), 0))
+re-s-0-a-neg-1-is-indeterminate:
+  epsil:
+    in: N(HurwitzZeta(-1 * i, -1))
+    out: "`NaN`"
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-i, -1))
+    out: \operatorname{NaN}
+  traditional:
+    in: N(\zeta(-i, -1))
+    out: \operatorname{NaN}
+  fullform:
+    in: N[HurwitzZeta[Complex[0, -1], -1]]
+  wolfram:
+    in: N[HurwitzZeta[Complex[0, -1], -1]]
+  sympy:
+    in: N(zeta((0 + (-1)*I), (-1)), 30)
+    out: nan
+  mpmath:
+    in: (zeta(mpc(0, (-1)), (-1)))
+    out: "ComplexResult: logarithm of a negative number"
+    verdict: error
+    kind: convention
+    note: Same underlying gap as a=0 above -- mpmath's zeta doesn't treat 0^(-s) at Re(s)=0 as indeterminate the way Wolfram (and we) do, and its own algorithm fails differently here.
+  sage:
+    in: N(hurwitz_zeta((0 + (-1)*I), (-1)))
+re-s-negative-a-drops-the-term-cleanly:
+  epsil:
+    in: N(HurwitzZeta(-1.5 + 0.5i, -2))
+    out: -4.632_252_692_594_817 + -17.642_470_807_480_51 * i
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-1.5+0.5i, -2))
+    out: -4.632\,252\,692\,594\,817-17.642\,470\,807\,480\,51i
+  traditional:
+    in: N(\zeta(-1.5+0.5i, -2))
+    out: -4.632\,252\,692\,594\,817-17.642\,470\,807\,480\,51i
+  fullform:
+    in: N[HurwitzZeta[Complex[-1.5, 0.5], -2]]
+  wolfram:
+    in: N[HurwitzZeta[Complex[-1.5, 0.5], -2]]
+  sympy:
+    in: N(zeta(((-1.5) + 0.5*I), (-2)), 30)
+    out: nan
+    verdict: disagree
+    kind: domain
+    note: Same gap as the mpmath row -- SymPy's zeta also gives up at this nonpositive-integer a rather than drop the singular term.
+  mpmath:
+    in: (zeta(mpc((-1.5), 0.5), (-2)))
+    out: (nan + nanj)
+    verdict: disagree
+    kind: domain
+    note: mpmath's zeta(s,a) gives up at a nonpositive integer a combined with a non-integer complex s; ours computes it by dropping the (cleanly zero) singular term. Cross-checked against the recursion zeta(s,a)=zeta(s,a+1)+a^-s down to the 1-argument zeta(s), which mpmath computes fine and agrees with ours.
+  sage:
+    in: N(hurwitz_zeta(((-1.5) + 0.5*I), (-2)))
+re-s-positive-complex-s-is-a-pole:
+  epsil:
+    in: N(HurwitzZeta(2 + i, 0))
+    out: ComplexInfinity
+  tex:
+    in: N(\mathrm{HurwitzZeta}(2+i, 0))
+    out: \tilde\infty
+  traditional:
+    in: N(\zeta(2+i, 0))
+    out: \tilde\infty
+  fullform:
+    in: N[HurwitzZeta[Complex[2, 1], 0]]
+  wolfram:
+    in: N[HurwitzZeta[Complex[2, 1], 0]]
+  sympy:
+    in: N(zeta((2 + 1*I), 0), 30)
+    out: nan
+    verdict: disagree
+    kind: undefined-form
+    note: Both decline at the pole -- ours answers ComplexInfinity, SymPy gives nan.
+  mpmath:
+    in: (zeta(mpc(2, 1), 0))
+    out: (2.15035570325490267174284993474 - 0.437530865919607881117527898593j)
+    verdict: disagree
+    kind: domain
+    note: mpmath's zeta doesn't treat a=0 (the dropped-term pole) as singular when Re(s)>0 the way Wolfram (and we) do -- it just computes a value from its own series.
+  sage:
+    in: N(hurwitz_zeta((2 + 1*I), 0))
 n-hurwitzzeta-2-1:
   epsil:
     in: N(HurwitzZeta(2, 1))

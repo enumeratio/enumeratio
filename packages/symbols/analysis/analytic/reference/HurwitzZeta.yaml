@@ -201,6 +201,28 @@ examples:
     expr: [N, [HurwitzZeta, 3, 0]]
     expected: ComplexInfinity
   - role: test
+    id: re-s-0-a-0-is-indeterminate
+    expr: [N, [HurwitzZeta, [Complex, 0, -1], 0]]
+    expected: NaN
+    category: Possible issues
+    caption: At a nonpositive integer with $\operatorname{Re}(s) = 0$ ($s \neq 0$), the dropped term $0^{-s}$ does not converge -- neither the pole at $\operatorname{Re}(s) > 0$ nor the clean $0$ at $\operatorname{Re}(s) < 0$
+  - role: test
+    id: re-s-0-a-neg-1-is-indeterminate
+    expr: [N, [HurwitzZeta, [Complex, 0, -1], -1]]
+    expected: NaN
+    caption: Same at $a = -1$
+  - role: test
+    id: re-s-negative-a-drops-the-term-cleanly
+    expr: [N, [HurwitzZeta, [Complex, -1.5, 0.5], -2]]
+    expected: [Complex, -4.632252692594817, -17.64247080748051]
+    category: Possible issues
+    caption: Unlike $\operatorname{Re}(s) = 0$, a genuinely negative $\operatorname{Re}(s)$ drops the term cleanly ($0^{-s} = 0$)
+  - role: test
+    id: re-s-positive-complex-s-is-a-pole
+    expr: [N, [HurwitzZeta, [Complex, 2, 1], 0]]
+    expected: ComplexInfinity
+    caption: The $\operatorname{Re}(s) > 0$ pole holds for complex $s$ too
+  - role: test
     id: n-hurwitzzeta-2-1
     expr: [N, [HurwitzZeta, 2, 1]]
     expected: { num: "1.64493406684822643647" }
