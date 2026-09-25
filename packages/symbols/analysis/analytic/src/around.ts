@@ -184,6 +184,12 @@ function aroundInAnySlot(
 /** Heads whose `Around` may sit in any argument -- see `aroundInAnySlot`. */
 const ANY_SLOT_HEADS = ["Multinomial"] as const;
 
+/** The head itself, inert: every operation on it goes through the resolvers below. Declared
+ *  so `Around` is a binding like any other head, not just a name the resolvers recognise. */
+export function declareAround(ce: ComputeEngine): void {
+  ce.declare("Around", { signature: "(value, value?) -> number" });
+}
+
 /** This module's resolvers, one per head it extends — see the file header. */
 export function aroundResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
   const resolvers: Record<string, Resolver> = {
