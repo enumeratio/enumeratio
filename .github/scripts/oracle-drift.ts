@@ -44,7 +44,7 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith(".oracle.json"))) {
     const [b, a] = [before.get(id), after.get(id)];
     if (said(b) !== said(a)) changed.push(`${file} ${id}\n  was: ${said(b)}\n  now: ${said(a)}`);
     else if (b?.["output"] !== a?.["output"])
-      printed.push(`${file} ${id}: ${b?.["output"]} → ${a?.["output"]}`);
+      printed.push(`${file} ${id}: ${String(b?.["output"])} → ${String(a?.["output"])}`);
   }
 }
 
