@@ -1,11 +1,37 @@
 erf-0:
+  epsil:
+    in: Erf(0)
+    out: "0"
+  tex:
+    in: \operatorname{erf}(0)
+    out: "0"
+  fullform:
+    in: Erf[0]
   wolfram:
     in: Erf[0]
     out: "0"
     tex:
       in: \text{erf}(0)
       out: "0"
+erf-infinity:
+  epsil:
+    in: Erf(`Infinity`)
+    out: "1"
+  tex:
+    in: \operatorname{erf}(\infty)
+    out: "1"
+  fullform:
+    in: Erf[Infinity]
+    back: [Erf, PositiveInfinity]
 erf-negativeinfinity:
+  epsil:
+    in: Erf(NegativeInfinity)
+    out: "-1"
+  tex:
+    in: \operatorname{erf}(-\infty)
+    out: "-1"
+  fullform:
+    in: Erf[-Infinity]
   wolfram:
     in: Erf[-Infinity]
     out: "-1"
@@ -13,6 +39,14 @@ erf-negativeinfinity:
       in: \text{erf}(-\infty )
       out: "-1"
 a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: Erf(0.5)
+    out: 0.520_499_877_813_046_537_683
+  tex:
+    in: \operatorname{erf}(0.5)
+    out: 0.520\,499\,877\,813\,046\,537\,683
+  fullform:
+    in: Erf[0.5]
   wolfram:
     in: Erf[0.5]
     out: "0.5204998778130465"
@@ -20,6 +54,17 @@ a-floating-point-argument-evaluates-directly-to:
       in: \text{erf}(0.5)
       out: "0.5205"
 odd-function-erf-z-erf-z-here-at-z-2:
+  epsil:
+    in: Erf(2) + Erf(-2) == 0
+    out: True
+  tex:
+    in: \operatorname{erf}(2)+\operatorname{erf}(-2)=0
+    out: \top
+  traditional:
+    in: \operatorname{erf}(2)+\operatorname{erf}(-2)=0
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Erf[2], Erf[-2]], 0]
   wolfram:
     in: (Plus[Erf[2], Erf[-2]] == 0)
     out: True
@@ -27,6 +72,17 @@ odd-function-erf-z-erf-z-here-at-z-2:
       in: \text{erf}(2)+\text{erf}(-2)=0
       out: \text{True}
 complementary-with-erfc-erf-z-erfc-z-1-see-erfc:
+  epsil:
+    in: Erf(2) + Erfc(2) == 1
+    out: True
+  tex:
+    in: \operatorname{erf}(2)+\mathrm{Erfc}(2)=1
+    out: \top
+  traditional:
+    in: \operatorname{erf}(2)+\operatorname{erfc}(2)=1
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Erf[2], Erfc[2]], 1]
   wolfram:
     in: (Plus[Erf[2], Erfc[2]] == 1)
     out: Erf[2] + Erfc[2] == 1
@@ -34,6 +90,14 @@ complementary-with-erfc-erf-z-erfc-z-1-see-erfc:
       in: \text{erf}(2)+\text{erfc}(2)=1
       out: \text{erf}(2)+\text{erfc}(2)=1
 erf-1-sqrt-2-approx-0-6827-the-68-in-the:
+  epsil:
+    in: Erf(0.707_106_781_186_547_6)
+    out: 0.682_689_492_137_085_948_91
+  tex:
+    in: \operatorname{erf}(0.707\,106\,781\,186\,547\,6)
+    out: 0.682\,689\,492\,137\,085\,948\,91
+  fullform:
+    in: Erf[0.7071067811865476]
   wolfram:
     in: Erf[0.7071067811865476]
     out: "0.6826894921370861"
@@ -41,6 +105,14 @@ erf-1-sqrt-2-approx-0-6827-the-68-in-the:
       in: \text{erf}(0.707107)
       out: "0.682689"
 an-exact-integer-argument-is-left-unevaluated:
+  epsil:
+    in: Erf(1)
+    out: Erf(1)
+  tex:
+    in: \operatorname{erf}(1)
+    out: \operatorname{erf}(1)
+  fullform:
+    in: Erf[1]
   wolfram:
     in: Erf[1]
     out: Erf[1]
@@ -48,6 +120,14 @@ an-exact-integer-argument-is-left-unevaluated:
       in: \text{erf}(1)
       out: \text{erf}(1)
 by-z-3-5-erf-is-already-within-10-6-of-its-limit:
+  epsil:
+    in: Erf(3.5)
+    out: 0.999_999_256_901_627_658_587
+  tex:
+    in: \operatorname{erf}(3.5)
+    out: 0.999\,999\,256\,901\,627\,658\,587
+  fullform:
+    in: Erf[3.5]
   wolfram:
     in: Erf[3.5]
     out: "0.9999992569016276"
@@ -55,9 +135,146 @@ by-z-3-5-erf-is-already-within-10-6-of-its-limit:
       in: \text{erf}(3.5)
       out: "0.999999"
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: Erf([0, 1])
+    out: "[0, Erf(1)]"
+  tex:
+    in: \operatorname{erf}(\bigl\lbrack0, 1\bigr\rbrack)
+    out: \bigl\lbrack0, \operatorname{erf}(1)\bigr\rbrack
+  fullform:
+    in: Erf[List[0, 1]]
   wolfram:
     in: Erf[List[0, 1]]
     out: "{0, Erf[1]}"
     tex:
       in: \text{erf}(\{0,1\})
       out: \{0,\text{erf}(1)\}
+a-machine-precision-argument:
+  epsil:
+    in: Erf(0.95)
+    out: 0.820_890_807_273_277_941_908
+  tex:
+    in: \operatorname{erf}(0.95)
+    out: 0.820\,890\,807\,273\,277\,941\,908
+  fullform:
+    in: Erf[0.95]
+  wolfram:
+    in: Erf[0.95]
+complex-arguments-evaluate-directly:
+  epsil:
+    in: Erf(1.5 + -1 * i)
+    out: 1.078_399_207_498_933_5 + 0.027_963_711_238_655_833i
+  tex:
+    in: \operatorname{erf}(1.5-i)
+    out: 1.078\,399\,207\,498\,933\,5+0.027\,963\,711\,238\,655\,833i
+  fullform:
+    in: Erf[Complex[1.5, -1]]
+  wolfram:
+    in: Erf[Complex[1.5, -1]]
+two-arguments-the-generalized-erf-z-0-z-1-erf-z:
+  epsil:
+    in: Erf(0.5, 1.5)
+    out: 0.445_605_268_662_264_2
+  tex:
+    in: \operatorname{erf}(0.5, 1.5)
+    out: 0.445\,605\,268\,662\,264\,2
+  fullform:
+    in: Erf[0.5, 1.5]
+  wolfram:
+    in: Erf[0.5, 1.5]
+which-with-exact-arguments-is-the-difference-erf:
+  epsil:
+    in: Erf(1, 2)
+    out: -Erf(1) + Erf(2)
+  tex:
+    in: \operatorname{erf}(1, 2)
+    out: \operatorname{erf}(2)-\operatorname{erf}(1)
+  fullform:
+    in: Erf[1, 2]
+  wolfram:
+    in: Erf[1, 2]
+interval-arithmetic-erf-is-increasing-so-the:
+  epsil:
+    in: Erf(Interval(-2.1, -1.9))
+    out: Interval(-0.997_020_533_343_667, -0.992_790_429_235_257_5)
+  tex:
+    in: \operatorname{erf}(\mathrm{Interval}(-2.1, -1.9))
+    out: \mathrm{Interval}(-0.997\,020\,533\,343\,667, -0.992\,790\,429\,235\,257\,5)
+  fullform:
+    in: Erf[Interval[List[-2.1, -1.9]]]
+  wolfram:
+    in: Erf[Interval[List[-2.1, -1.9]]]
+uncertainty-propagation-with-slope-frac-2-sqrt:
+  epsil:
+    in: Erf(Around(2, 0.01))
+    out: Around(0.995_322_265_018_952_7, 0.000_206_669_853_540_920_54)
+  tex:
+    in: \operatorname{erf}(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.995\,322\,265\,018\,952\,7, 0.000\,206\,669\,853\,540\,920\,54)
+  fullform:
+    in: Erf[Around[2, 0.01]]
+  wolfram:
+    in: Erf[Around[2, 0.01]]
+the-standard-normal-cdf-phi-x-frac-12-1-erf-x:
+  epsil:
+    in: 0.5 * (1 + Erf(1.96 / Sqrt(2)))
+    out: 0.975_002_104_851_779_565_863_5
+  tex:
+    in: 0.5(1+\operatorname{erf}(\frac{1.96}{\sqrt{2}}))
+    out: 0.975\,002\,104\,851\,779\,565\,864
+  fullform:
+    in: Times[0.5, Plus[1, Erf[Divide[1.96, Sqrt[2]]]]]
+  wolfram:
+    in: Times[0.5, Plus[1, Erf[Divide[1.96, Sqrt[2]]]]]
+oddness-applied-symbolically-erf-x-erf-x:
+  epsil:
+    in: Erf(-x)
+    out: -Erf(x)
+  tex:
+    in: \operatorname{erf}(-x)
+    out: -\operatorname{erf}(x)
+  fullform:
+    in: Erf[Minus[x]]
+erf-erfinv-x-x-symbolically-see-erfinv:
+  epsil:
+    in: Erf(ErfInv(x))
+    out: x
+  tex:
+    in: \operatorname{erf}(\mathrm{ErfInv}(x))
+    out: x
+  traditional:
+    in: \operatorname{erf}(\operatorname{erf}^{-1}(x))
+    out: x
+  fullform:
+    in: Erf[InverseErf[x]]
+on-the-imaginary-axis-erf-i-i-erfi-1:
+  epsil:
+    in: Erf(ImaginaryUnit)
+    out: i * Erfi(1)
+  tex:
+    in: \operatorname{erf}(i)
+    out: i\mathrm{Erfi}(1)
+  fullform:
+    in: Erf[I]
+  wolfram:
+    in: Erf[I]
+frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the:
+  epsil:
+    in: D(Erf(x), x)
+    out: 2 * ExponentialE ^ (-x ^ 2) / Sqrt(Pi)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\operatorname{erf}(x)
+    out: \frac{2}{e^{x^2}}/\sqrt{\pi}
+  fullform:
+    in: D[Erf[x], x]
+to-40-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Erf(1), 40)
+    out: 0.842_700_792_949_714_869_341_220_635_082_609_259_296_1
+  tex:
+    in: N(\operatorname{erf}(1), 40)
+    out: 0.842\,700\,792\,949\,714\,869\,341
+  fullform:
+    in: N[Erf[1], 40]
+  wolfram:
+    in: N[Erf[1], 40]

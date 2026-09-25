@@ -1,0 +1,22 @@
+single-letter:
+  epsil:
+    in: LetterNumber("d")
+    out: "4"
+  tex:
+    in: \mathrm{LetterNumber}(\text{d})
+    out: "4"
+  fullform:
+    in: LetterNumber["d"]
+  wolfram:
+    in: LetterNumber["d"]
+string:
+  epsil:
+    in: LetterNumber("cab")
+    out: "[3, 1, 2]"
+  tex:
+    in: \mathrm{LetterNumber}(\text{cab})
+    out: \bigl\lbrack3, 1, 2\bigr\rbrack
+  fullform:
+    in: LetterNumber["cab"]
+  wolfram:
+    in: LetterNumber["cab"]

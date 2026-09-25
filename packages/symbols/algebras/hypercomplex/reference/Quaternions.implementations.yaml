@@ -1,0 +1,33 @@
+ijk-1:
+  epsil:
+    in: NonCommutativeMultiply(f_1, f_2, f_1 * f_2)
+    out: "-1"
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(f_1, f_2, f_1f_2)
+    out: "-1"
+  fullform:
+    in: NonCommutativeMultiply[Subscript[f, 1], Subscript[f, 2], Times[Subscript[f, 1], Subscript[f, 2]]]
+k-in-h:
+  epsil:
+    in: f_1 * f_2 in Quaternions
+    out: True
+  tex:
+    in: f_1f_2\in\mathrm{Quaternions}
+    out: \top
+  traditional:
+    in: f_1f_2\in\mathrm{Quaternions}
+    out: \mathrm{True}
+  fullform:
+    in: Element[Times[Subscript[f, 1], Subscript[f, 2]], Quaternions]
+a-multicomplex-unit-is-not-a-quaternion:
+  epsil:
+    in: i_1 in Quaternions
+    out: False
+  tex:
+    in: i_1\in\mathrm{Quaternions}
+    out: \bot
+  traditional:
+    in: i_1\in\mathrm{Quaternions}
+    out: \mathrm{False}
+  fullform:
+    in: Element[Subscript[i, 1], Quaternions]

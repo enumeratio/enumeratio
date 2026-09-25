@@ -1,0 +1,91 @@
+integerpart-2p4:
+  epsil:
+    in: IntegerPart(2.4)
+    out: "2"
+  tex:
+    in: \mathrm{IntegerPart}(2.4)
+    out: "2"
+  fullform:
+    in: IntegerPart[2.4]
+  wolfram:
+    in: IntegerPart[2.4]
+truncates-toward-0-unlike-floor:
+  epsil:
+    in: IntegerPart(-2.4)
+    out: "-2"
+  tex:
+    in: \mathrm{IntegerPart}(-2.4)
+    out: "-2"
+  fullform:
+    in: IntegerPart[-2.4]
+  wolfram:
+    in: IntegerPart[-2.4]
+integerpart-7-over-2:
+  epsil:
+    in: IntegerPart(7 / 2)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerPart}(\frac{7}{2})
+    out: "3"
+  fullform:
+    in: IntegerPart[Rational[7, 2]]
+  wolfram:
+    in: IntegerPart[Rational[7, 2]]
+integerpart-neg-7-over-2:
+  epsil:
+    in: IntegerPart(-7 / 2)
+    out: "-3"
+  tex:
+    in: \mathrm{IntegerPart}(-\frac{7}{2})
+    out: "-3"
+  fullform:
+    in: IntegerPart[Rational[-7, 2]]
+  wolfram:
+    in: IntegerPart[Rational[-7, 2]]
+exact-numeric-arguments-stay-exact:
+  epsil:
+    in: IntegerPart(Pi)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerPart}(\pi)
+    out: "3"
+  fullform:
+    in: IntegerPart[Pi]
+  wolfram:
+    in: IntegerPart[Pi]
+threads-element-wise-over-a-list:
+  epsil:
+    in: IntegerPart([2.5, -2.5])
+    out: "[2, -2]"
+  tex:
+    in: \mathrm{IntegerPart}(\bigl\lbrack2.5, -2.5\bigr\rbrack)
+    out: \bigl\lbrack2, -2\bigr\rbrack
+  fullform:
+    in: IntegerPart[List[2.5, -2.5]]
+  wolfram:
+    in: IntegerPart[List[2.5, -2.5]]
+complex-numbers-real-and-imaginary-parts:
+  epsil:
+    in: IntegerPart(2.5 + 3.7i)
+    out: 2 + 3i
+  tex:
+    in: \mathrm{IntegerPart}(2.5+3.7i)
+    out: 2+3i
+  fullform:
+    in: IntegerPart[Complex[2.5, 3.7]]
+  wolfram:
+    in: IntegerPart[Complex[2.5, 3.7]]
+x-integerpart-x-fractionalpart-x:
+  epsil:
+    in: IntegerPart(-7 / 2) + FractionalPart(-7 / 2) == -7 / 2
+    out: True
+  tex:
+    in: \mathrm{IntegerPart}(-\frac{7}{2})+\mathrm{FractionalPart}(-\frac{7}{2})=-\frac{7}{2}
+    out: \top
+  traditional:
+    in: \mathrm{IntegerPart}(-\frac{7}{2})+\mathrm{FractionalPart}(-\frac{7}{2})=-\frac{7}{2}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[IntegerPart[Rational[-7, 2]], FractionalPart[Rational[-7, 2]]], Rational[-7, 2]]
+  wolfram:
+    in: (Plus[IntegerPart[Rational[-7, 2]], FractionalPart[Rational[-7, 2]]] == Rational[-7, 2])

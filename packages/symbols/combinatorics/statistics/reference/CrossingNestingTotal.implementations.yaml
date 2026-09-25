@@ -1,0 +1,9 @@
+the-partition-1-3-mid-2-as-a-plain-list:
+  epsil:
+    in: CrossingNestingTotal([[1, 3], [2]])
+    out: "0"
+  tex:
+    in: \mathrm{CrossingNestingTotal}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack)
+    out: "0"
+  fullform:
+    in: CrossingNestingTotal[List[List[1, 3], List[2]]]

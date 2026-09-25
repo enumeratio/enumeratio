@@ -2,7 +2,7 @@ name: Nightly
 
 # Scheduled, non-blocking sweeps that need something a PR gate should not wait on — an external oracle, the
 # network — or that are only worth running once a day. Never a required check; the nightly-fixup routine reads
-# these runs (06:15 UTC) and files what failed. Quickcheck's deep sample is its own workflow (quickcheck.yml).
+# these runs (06:15 UTC) and files what failed. Plausible's deep sample is its own workflow (plausible.yml).
 
 on:
   schedule:
@@ -22,7 +22,7 @@ on:
 
 permissions:
   contents: read
-  issues: write # the oracle quickcheck's tracking issues
+  issues: write # the oracle Plausible's tracking issues
 
 concurrency:
   group: nightly
@@ -53,7 +53,7 @@ jobs:
         with:
           system: sympy
       - if: ${{ !cancelled() }} # sample even when the rescan above drifted
-        uses: ./.github/actions/oracle-quickcheck
+        uses: ./.github/actions/oracle-plausible
         with:
           systems: mpmath sympy
           ecosystem: Python
@@ -79,7 +79,7 @@ jobs:
         with:
           system: julia
       - if: ${{ !cancelled() }} # sample even when the rescan above drifted
-        uses: ./.github/actions/oracle-quickcheck
+        uses: ./.github/actions/oracle-plausible
         with:
           systems: julia
           ecosystem: Julia
@@ -102,7 +102,7 @@ jobs:
         with:
           system: rust
       - if: ${{ !cancelled() }} # sample even when the rescan above drifted
-        uses: ./.github/actions/oracle-quickcheck
+        uses: ./.github/actions/oracle-plausible
         with:
           systems: rust
           ecosystem: Rust

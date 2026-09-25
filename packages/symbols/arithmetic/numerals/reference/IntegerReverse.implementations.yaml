@@ -1,0 +1,66 @@
+the-base-10-digits-reversed:
+  epsil:
+    in: IntegerReverse(1_234)
+    out: 4_321
+  tex:
+    in: \mathrm{IntegerReverse}(1\,234)
+    out: 4\,321
+  fullform:
+    in: IntegerReverse[1234]
+  wolfram:
+    in: IntegerReverse[1234]
+1234-10011010010-2-reversed-is-1001011001-2-601:
+  epsil:
+    in: IntegerReverse(1_234, 2)
+    out: "601"
+  tex:
+    in: \mathrm{IntegerReverse}(1\,234, 2)
+    out: "601"
+  fullform:
+    in: IntegerReverse[1234, 2]
+  wolfram:
+    in: IntegerReverse[1234, 2]
+trailing-zeros-become-leading-zeros-and-vanish:
+  epsil:
+    in: IntegerReverse(1_200)
+    out: "21"
+  tex:
+    in: \mathrm{IntegerReverse}(1\,200)
+    out: "21"
+  fullform:
+    in: IntegerReverse[1200]
+  wolfram:
+    in: IntegerReverse[1200]
+padded-to-5-digits-first-00123-reversed:
+  epsil:
+    in: IntegerReverse(123, 10, 5)
+    out: 32_100
+  tex:
+    in: \mathrm{IntegerReverse}(123, 10, 5)
+    out: 32\,100
+  fullform:
+    in: IntegerReverse[123, 10, 5]
+  wolfram:
+    in: IntegerReverse[123, 10, 5]
+listable:
+  epsil:
+    in: IntegerReverse([12, 345])
+    out: "[21, 543]"
+  tex:
+    in: \mathrm{IntegerReverse}(\bigl\lbrack12, 345\bigr\rbrack)
+    out: \bigl\lbrack21, 543\bigr\rbrack
+  fullform:
+    in: IntegerReverse[List[12, 345]]
+  wolfram:
+    in: IntegerReverse[List[12, 345]]
+a-palindrome-is-its-own-reversal:
+  epsil:
+    in: IntegerReverse(12_321)
+    out: 12_321
+  tex:
+    in: \mathrm{IntegerReverse}(12\,321)
+    out: 12\,321
+  fullform:
+    in: IntegerReverse[12321]
+  wolfram:
+    in: IntegerReverse[12321]

@@ -1,0 +1,47 @@
+length-counts-the-key-value-pairs:
+  epsil:
+    in: Length(Association(Rule(1, 2), Rule(3, 4)))
+    out: "2"
+  tex:
+    in: \mathrm{Length}(\mathrm{Association}(\mathrm{Rule}(1, 2), \mathrm{Rule}(3, 4)))
+    out: "2"
+  fullform:
+    in: Length[Association[Rule[1, 2], Rule[3, 4]]]
+  wolfram:
+    in: Length[Association[Rule[1, 2], Rule[3, 4]]]
+first-is-the-first-value-not-the-first-rule:
+  epsil:
+    in: First(Association(Rule(1, a), Rule(2, b)))
+    out: a
+  tex:
+    in: \mathrm{First}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)))
+    out: a
+  fullform:
+    in: First[Association[Rule[1, a], Rule[2, b]]]
+last-is-the-last-value:
+  epsil:
+    in: Last(Association(Rule(1, a), Rule(2, b)))
+    out: b
+  tex:
+    in: \mathrm{Last}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)))
+    out: b
+  fullform:
+    in: Last[Association[Rule[1, a], Rule[2, b]]]
+join-merges-keys-a-later-value-for-a-repeated:
+  epsil:
+    in: Join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))
+    out: Association(Rule(a, f), Rule(c, d))
+  tex:
+    in: \mathrm{Join}(\mathrm{Association}(\mathrm{Rule}(a, b)), \mathrm{Association}(\mathrm{Rule}(c, d), \mathrm{Rule}(a, f)))
+    out: \mathrm{Association}(\mathrm{Rule}(a, f), \mathrm{Rule}(c, d))
+  fullform:
+    in: Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]
+sort-orders-the-entries-by-value:
+  epsil:
+    in: Sort(Association(Rule(a, 4), Rule(b, 1), Rule(c, 3)))
+    out: Association(Rule(b, 1), Rule(c, 3), Rule(a, 4))
+  tex:
+    in: \mathrm{Sort}(\mathrm{Association}(\mathrm{Rule}(a, 4), \mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3)))
+    out: \mathrm{Association}(\mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3), \mathrm{Rule}(a, 4))
+  fullform:
+    in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]

@@ -1,0 +1,20 @@
+degrees-around-a-path:
+  epsil:
+    in: VertexDegree(PathGraph(5))
+    out: "[1, 2, 2, 2, 1]"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{PathGraph}(5))
+    out: \bigl\lbrack1, 2, 2, 2, 1\bigr\rbrack
+  fullform:
+    in: VertexDegree[enumeratio`PathGraph[5]]
+the-degree-of-one-vertex:
+  epsil:
+    in: VertexDegree(StarGraph(6), 1)
+    out: "5"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{StarGraph}(6), 1)
+    out: "5"
+  fullform:
+    in: VertexDegree[StarGraph[6], 1]
+  wolfram:
+    in: VertexDegree[StarGraph[6], 1]

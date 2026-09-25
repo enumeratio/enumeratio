@@ -1,0 +1,44 @@
+3-1-frac-12-frac-14-frac-12-7:
+  epsil:
+    in: HarmonicMean([1, 2, 4])
+    out: 12 / 7
+  tex:
+    in: \mathrm{HarmonicMean}(\bigl\lbrack1, 2, 4\bigr\rbrack)
+    out: \frac{12}{7}
+  fullform:
+    in: HarmonicMean[List[1, 2, 4]]
+  wolfram:
+    in: HarmonicMean[List[1, 2, 4]]
+frac-12-5:
+  epsil:
+    in: HarmonicMean([2, 3])
+    out: 12 / 5
+  tex:
+    in: \mathrm{HarmonicMean}(\bigl\lbrack2, 3\bigr\rbrack)
+    out: \frac{12}{5}
+  fullform:
+    in: HarmonicMean[List[2, 3]]
+  wolfram:
+    in: HarmonicMean[List[2, 3]]
+driving-equal-distances-at-40-and-60-averages-48:
+  epsil:
+    in: HarmonicMean([40, 60])
+    out: "48"
+  tex:
+    in: \mathrm{HarmonicMean}(\bigl\lbrack40, 60\bigr\rbrack)
+    out: "48"
+  fullform:
+    in: HarmonicMean[List[40, 60]]
+  wolfram:
+    in: HarmonicMean[List[40, 60]]
+equal-values-are-their-own-harmonic-mean:
+  epsil:
+    in: HarmonicMean([5, 5, 5])
+    out: "5"
+  tex:
+    in: \mathrm{HarmonicMean}(\bigl\lbrack5, 5, 5\bigr\rbrack)
+    out: "5"
+  fullform:
+    in: HarmonicMean[List[5, 5, 5]]
+  wolfram:
+    in: HarmonicMean[List[5, 5, 5]]

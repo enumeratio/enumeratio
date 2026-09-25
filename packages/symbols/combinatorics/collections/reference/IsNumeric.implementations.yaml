@@ -1,0 +1,54 @@
+isnumeric-pi:
+  epsil:
+    in: IsNumeric(Pi)
+    out: True
+  tex:
+    in: \mathrm{IsNumeric}(\pi)
+    out: \top
+  traditional:
+    in: \mathrm{IsNumeric}(\pi)
+    out: \mathrm{True}
+  fullform:
+    in: NumericQ[Pi]
+  wolfram:
+    in: NumericQ[Pi]
+isnumeric-plain-symbol:
+  epsil:
+    in: IsNumeric(x)
+    out: False
+  tex:
+    in: \mathrm{IsNumeric}(x)
+    out: \bot
+  traditional:
+    in: \mathrm{IsNumeric}(x)
+    out: \mathrm{False}
+  fullform:
+    in: NumericQ[x]
+isnumeric-sqrt-2:
+  epsil:
+    in: IsNumeric(Sqrt(2))
+    out: True
+  tex:
+    in: \mathrm{IsNumeric}(\sqrt{2})
+    out: \top
+  traditional:
+    in: \mathrm{IsNumeric}(\sqrt{2})
+    out: \mathrm{True}
+  fullform:
+    in: NumericQ[Sqrt[2]]
+  wolfram:
+    in: NumericQ[Sqrt[2]]
+isnumeric-literal:
+  epsil:
+    in: IsNumeric(5)
+    out: True
+  tex:
+    in: \mathrm{IsNumeric}(5)
+    out: \top
+  traditional:
+    in: \mathrm{IsNumeric}(5)
+    out: \mathrm{True}
+  fullform:
+    in: NumericQ[5]
+  wolfram:
+    in: NumericQ[5]

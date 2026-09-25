@@ -1,0 +1,123 @@
+// The runner: sample the catalogue, report, and print the seed that replays it.
+//
+// Every property lives in `properties.ts`, which has no side effects and is unit-tested
+// against deliberately broken kernels — because a harness that reports "0 failing" is only
+// worth anything if it has been shown to fail on something.
+//
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts             # everything, fresh seed
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm        # families matching "perm"
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
+//   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
+
+import { allEntries } from "../src/families/index.ts";
+import { check, checkFamily, type Failure, shrink, streamFor } from "./properties.ts";
+
+const POINTS = Number(process.env.PLAUSIBLE_POINTS ?? 8);
+const PARAM_CAP = Number(process.env.PLAUSIBLE_PARAM_CAP ?? 7);
+
+// Families backed by tableaux-plane.ts's `indexedFamily` engine: unrank/rank (and, for three of
+// them, count itself) fully materialize every element of the family before answering. That
+// file's own comment assumes sizes "stay small enough that full enumeration is cheap and
+// safe" — an assumption PARAM_CAP (let alone the nightly deep sample's 9) blows past:
+// GelfandTsetlin(5, 5) alone is 151,008 elements, GelfandTsetlin(9, 3) is 8.6M. Sampled at a
+// much smaller cap so they're still exercised without materializing the whole family.
+//
+// BoxedPlanePartitions was missed here (issue #90): its count() is closed-form (MacMahon's box
+// formula), so the `total <= 0` guard below never catches it, but unrank/rank still enumerate
+// the whole box through the same indexedFamily cache. Three independent params compound faster
+// than the rest of this set's one or two: BoxedPlanePartitions(7,7,7) is 3.9e16 elements, which
+// is what actually OOM'd — a 4GB heap dies partway through materializing that one box.
+const FULL_ENUMERATION_FAMILIES = new Set([
+  "SemistandardTableaux",
+  "GelfandTsetlin",
+  "AlternatingSignMatrices",
+  "SkewPartitions",
+  "SkewStandardTableaux",
+  "PlanePartitions",
+  "BoxedPlanePartitions",
+]);
+const SMALL_PARAM_CAP = 4;
+
+// Belt-and-suspenders for the families above: even at SMALL_PARAM_CAP, (4,4,4) puts
+// BoxedPlanePartitions at 232,848 elements — an order of magnitude past its siblings' worst case.
+// If a future param cap or a new full-enumeration family turns out too generous, fail that one
+// param draw as a finding instead of materializing an OOM.
+const MAX_MATERIALIZED = 2_000_000;
+
+// ── the run ─────────────────────────────────────────────────────────────────────
+
+const args = process.argv.slice(2);
+const filter = args.find((argument) => !/^\d+$/.test(argument)) ?? "";
+const seed = Number(args.find((argument) => /^\d+$/.test(argument)) ?? Date.now() % 1_000_000);
+
+const families = allEntries.filter((entry) =>
+  filter === "" ? true : entry.head.toLowerCase().includes(filter.toLowerCase()),
+);
+
+process.stdout.write(`plausible seed ${seed} — ${families.length} families, ${POINTS} points each\n`);
+if (families.length === 0) {
+  process.stdout.write(`no family matches ${JSON.stringify(filter)}\n`);
+  process.exit(1);
+}
+
+const failures: Failure[] = [];
+let checked = 0;
+
+for (const entry of families) {
+  const draw = streamFor(seed, entry.head);
+  const fullEnumeration = FULL_ENUMERATION_FAMILIES.has(entry.head);
+  const paramCap = fullEnumeration ? SMALL_PARAM_CAP : PARAM_CAP;
+  for (let attempt = 0; attempt < POINTS; attempt++) {
+    const params = Array.from({ length: entry.paramCount }, () => Math.floor(draw() * (paramCap + 1)));
+    let total: number;
+    try {
+      total = entry.count(params);
+    } catch (error) {
+      failures.push({
+        family: entry.head,
+        property: "count",
+        params,
+        rank: -1,
+        detail: `count threw: ${String(error).slice(0, 120)}`,
+      });
+      continue;
+    }
+    if (!Number.isFinite(total) || total <= 0) continue; // an empty family proves nothing
+    if (fullEnumeration && total > MAX_MATERIALIZED) {
+      failures.push({
+        family: entry.head,
+        property: "count",
+        params,
+        rank: -1,
+        detail: `count ${total.toLocaleString()} exceeds the ${MAX_MATERIALIZED.toLocaleString()}-element materialization guard`,
+      });
+      continue;
+    }
+
+    const familyFailure = checkFamily(entry, params, draw);
+    if (familyFailure !== undefined) {
+      failures.push(shrink(entry, familyFailure));
+      break;
+    }
+    const rank = Math.floor(draw() * Math.min(total, 10_000));
+    const failure = check(entry, params, rank);
+    checked++;
+    if (failure !== undefined) {
+      failures.push(shrink(entry, failure));
+      break;
+    }
+  }
+}
+
+process.stdout.write(`${checked} points checked, ${failures.length} families failing\n`);
+for (const failure of failures) {
+  process.stdout.write(
+    `\n  ${failure.family}(${failure.params.join(", ")})${failure.rank >= 0 ? ` at rank ${failure.rank}` : ""}\n` +
+      `    ${failure.property}: ${failure.detail}\n` +
+      `    replay: vp node packages/symbols/combinatorics/collections/scripts/plausible.ts ${failure.family} ${seed}\n`,
+  );
+}
+
+// Advisory: a fresh seed each run means a red result is a finding to triage, not a broken
+// build. The exit code still reports it, so a deliberate run can be gated if we want one.
+process.exit(failures.length > 0 ? 1 : 0);

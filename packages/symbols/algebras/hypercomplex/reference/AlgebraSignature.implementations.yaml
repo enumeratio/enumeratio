@@ -1,0 +1,30 @@
+algebrasignature-quaternions:
+  epsil:
+    in: AlgebraSignature(Quaternions)
+    out: "[-1, -1]"
+  tex:
+    in: \mathrm{AlgebraSignature}(\mathrm{Quaternions})
+    out: \bigl\lbrack-1, -1\bigr\rbrack
+  fullform:
+    in: AlgebraSignature[Quaternions]
+cl-2-1:
+  epsil:
+    in: AlgebraSignature(CliffordAlgebra(2, 1))
+    out: "[1, 1, -1]"
+  tex:
+    in: \mathrm{AlgebraSignature}(\mathrm{CliffordAlgebra}(2, 1))
+    out: \bigl\lbrack1, 1, -1\bigr\rbrack
+  traditional:
+    in: \mathrm{AlgebraSignature}(\operatorname{Cl}_{2,1}(\mathbb{R}))
+    out: \bigl\lbrack1, 1, -1\bigr\rbrack
+  fullform:
+    in: AlgebraSignature[CliffordAlgebra[2, 1]]
+nilpotent:
+  epsil:
+    in: AlgebraSignature(DualNumbers)
+    out: "[0]"
+  tex:
+    in: \mathrm{AlgebraSignature}(\mathrm{DualNumbers})
+    out: \bigl\lbrack0\bigr\rbrack
+  fullform:
+    in: AlgebraSignature[DualNumbers]

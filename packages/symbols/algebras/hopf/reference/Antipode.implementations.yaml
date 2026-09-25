@@ -1,0 +1,36 @@
+s-m-1-m-1:
+  epsil:
+    in: Antipode(QSymM([1]))
+    out: -QSymM([1])
+  tex:
+    in: \mathrm{Antipode}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack))
+    out: -\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack)
+  traditional:
+    in: S(M_{(1)})
+    out: -M_{(1)}
+  fullform:
+    in: Antipode[QSymM[List[1]]]
+s-2-id-since-qsym-is-commutative:
+  epsil:
+    in: Antipode(Antipode(QSymM([1, 2])))
+    out: QSymM([1, 2])
+  tex:
+    in: \mathrm{Antipode}(\mathrm{Antipode}(\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack)))
+    out: \mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack)
+  traditional:
+    in: S(S(M_{(1,2)}))
+    out: M_{(1,2)}
+  fullform:
+    in: Antipode[Antipode[QSymM[List[1, 2]]]]
+the-product-is-homogeneous-so-degrees-add:
+  epsil:
+    in: HopfDegree(NonCommutativeMultiply(QSymM([1]), QSymM([2])))
+    out: "3"
+  tex:
+    in: \mathrm{HopfDegree}(\mathrm{NonCommutativeMultiply}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack)))
+    out: "3"
+  traditional:
+    in: \mathrm{HopfDegree}(\mathrm{NonCommutativeMultiply}(M_{(1)}, M_{(2)}))
+    out: "3"
+  fullform:
+    in: HopfDegree[NonCommutativeMultiply[QSymM[List[1]], QSymM[List[2]]]]

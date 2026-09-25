@@ -72,6 +72,15 @@ export const HEADS: Record<string, string> = {
   Greater: "Greater",
   LessEqual: "LessEqual",
   GreaterEqual: "GreaterEqual",
+  // Wolfram's chained-comparison form -- our `Inequality` takes the identical
+  // value/operator/value/... shape, operator names included (they go through this same
+  // map, since `symbolToWolfram` falls back to `HEADS`), so a straight rename round-trips.
+  Inequality: "Inequality",
+  // `x -> 1`: also how `FindInstance`'s `{{x -> 1}}` is built (a `List` of `List`s of
+  // `Rule`s) -- see @enumeratio/analytic's find-instance.ts.
+  Rule: "Rule",
+  // Same argument order both sides: expr, vars, [domain], [n].
+  FindInstance: "FindInstance",
   And: "And",
   Or: "Or",
   Not: "Not",
@@ -334,6 +343,38 @@ export const HEADS: Record<string, string> = {
   BinomialDistribution: "BinomialDistribution",
   PDF: "PDF",
   CDF: "CDF",
+  // Second-wave distributions (@enumeratio/statistics/src/distributions-2.ts) and the
+  // property functions that read any distribution — identity here already.
+  GeometricDistribution: "GeometricDistribution",
+  BernoulliDistribution: "BernoulliDistribution",
+  DiscreteUniformDistribution: "DiscreteUniformDistribution",
+  TriangularDistribution: "TriangularDistribution",
+  ChiSquareDistribution: "ChiSquareDistribution",
+  LogNormalDistribution: "LogNormalDistribution",
+  NegativeBinomialDistribution: "NegativeBinomialDistribution",
+  CauchyDistribution: "CauchyDistribution",
+  StudentTDistribution: "StudentTDistribution",
+  WeibullDistribution: "WeibullDistribution",
+  LaplaceDistribution: "LaplaceDistribution",
+  HypergeometricDistribution: "HypergeometricDistribution",
+  RayleighDistribution: "RayleighDistribution",
+  ParetoDistribution: "ParetoDistribution",
+  LogisticDistribution: "LogisticDistribution",
+  ErlangDistribution: "ErlangDistribution",
+  ChiDistribution: "ChiDistribution",
+  HalfNormalDistribution: "HalfNormalDistribution",
+  MaxwellDistribution: "MaxwellDistribution",
+  SurvivalFunction: "SurvivalFunction",
+  HazardFunction: "HazardFunction",
+  Moment: "Moment",
+  CentralMoment: "CentralMoment",
+  FactorialMoment: "FactorialMoment",
+  Cumulant: "Cumulant",
+  InverseCDF: "InverseCDF",
+  // Third-wave distribution heads (@enumeratio/statistics/src/distributions-3.ts) —
+  // identity here already.
+  CharacteristicFunction: "CharacteristicFunction",
+  MomentGeneratingFunction: "MomentGeneratingFunction",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
@@ -441,6 +482,15 @@ export const HEADS: Record<string, string> = {
   // FourierParameters -> {0, 1}, which is all this transpiler's own heads implement.
   FourierTransform: "FourierTransform",
   InverseFourierTransform: "InverseFourierTransform",
+  // Fourier[list] / InverseFourier[list]: same argument order, same default
+  // FourierParameters -> {0, 1}, and an optional trailing FourierParameters rule both
+  // sides read the same way.
+  Fourier: "Fourier",
+  InverseFourier: "InverseFourier",
+  // FourierSeries[f, x, n] / FourierCoefficient[f, x, n]: same order, both always on
+  // [-Pi, Pi] (no period argument on either side).
+  FourierSeries: "FourierSeries",
+  FourierCoefficient: "FourierCoefficient",
   // MeijerG[{{a..},{a..}}, {{b..},{b..}}, z] — same nested-list shape and argument order.
   MeijerG: "MeijerG",
   // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized
@@ -474,6 +524,21 @@ export const HEADS: Record<string, string> = {
   Assuming: "Assuming",
   Piecewise: "Piecewise",
   PiecewiseExpand: "PiecewiseExpand",
+  // The signal/piecewise-waveform family declared in signals.ts -- same names and meaning
+  // as Wolfram's, boundary values included.
+  UnitBox: "UnitBox",
+  UnitTriangle: "UnitTriangle",
+  HeavisideTheta: "HeavisideTheta",
+  HeavisideLambda: "HeavisideLambda",
+  HeavisidePi: "HeavisidePi",
+  Ramp: "Ramp",
+  SawtoothWave: "SawtoothWave",
+  TriangleWave: "TriangleWave",
+  SquareWave: "SquareWave",
+  Rescale: "Rescale",
+  DiracDelta: "DiracDelta",
+  DiscreteDelta: "DiscreteDelta",
+  DiscreteShift: "DiscreteShift",
   // SeriesCoefficient(f, {x, x0, n}) — the argument shape matches Wolfram's directly (see
   // series-coefficient.ts), so this is a plain rename, not a SPECIAL reordering.
   SeriesCoefficient: "SeriesCoefficient",
@@ -538,6 +603,34 @@ export const HEADS: Record<string, string> = {
   IsBipartiteGraph: "BipartiteGraphQ",
   NeighborhoodGraph: "NeighborhoodGraph",
   Subgraph: "Subgraph",
+
+  // Second wave (packages/symbols/combinatorics/collections/src/graphs-2.ts): distance
+  // measures, more `Is…`-for-`…Q` predicates, and a few more named/random constructors.
+  // Same plain-rename story as the block above -- every one of these is Wolfram's own name.
+  GraphDistanceMatrix: "GraphDistanceMatrix",
+  VertexEccentricity: "VertexEccentricity",
+  GraphRadius: "GraphRadius",
+  GraphDiameter: "GraphDiameter",
+  GraphCenter: "GraphCenter",
+  GraphPeriphery: "GraphPeriphery",
+  VertexIndex: "VertexIndex",
+  VertexInDegree: "VertexInDegree",
+  VertexOutDegree: "VertexOutDegree",
+  ClosenessCentrality: "ClosenessCentrality",
+  EigenvectorCentrality: "EigenvectorCentrality",
+  IsPathGraph: "PathGraphQ",
+  IsAcyclicGraph: "AcyclicGraphQ",
+  IsCompleteGraph: "CompleteGraphQ",
+  IsLoopFreeGraph: "LoopFreeGraphQ",
+  IsSimpleGraph: "SimpleGraphQ",
+  IsIsomorphicGraph: "IsomorphicGraphQ",
+  WheelGraph: "WheelGraph",
+  CirculantGraph: "CirculantGraph",
+  TuranGraph: "TuranGraph",
+  HararyGraph: "HararyGraph",
+  LineGraph: "LineGraph",
+  AdjacencyGraph: "AdjacencyGraph",
+  RandomGraph: "RandomGraph",
 
   // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
   //
@@ -609,6 +702,7 @@ export const HEADS: Record<string, string> = {
  *  the same way it excludes a plain rename. */
 export const STRUCTURAL: Record<string, string> = {
   Total: "Sum",
+  Clip: "Clamp",
 };
 
 /** The context our heads emit into when Wolfram has the name for something else.

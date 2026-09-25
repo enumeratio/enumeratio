@@ -1,88 +1,151 @@
 exp-0:
+  epsil:
+    in: Exp(0)
+    out: "1"
+  tex:
+    in: e^{0}
+    out: "1"
+  fullform:
+    in: Exp[0]
   wolfram:
     in: Exp[0]
     out: "1"
     tex:
       in: \exp (0)
       out: "1"
+  sympy:
+    in: exp(0)
+    out: "1"
+  mpmath:
+    in: exp(0)
+    out: "1.0"
   sage:
     in: exp(0)
     out: "1"
   rust:
     in: exp(n(0))
     out: "1.0"
-  mpmath:
-    in: exp(0)
-    out: "1.0"
-  sympy:
-    in: exp(0)
-    out: "1"
 stays-the-exact-constant-rather-than:
+  epsil:
+    in: Exp(1)
+    out: ExponentialE
+  tex:
+    in: e^{1}
+    out: e
+  fullform:
+    in: Exp[1]
   wolfram:
     in: Exp[1]
     out: E
     tex:
       in: \exp (1)
       out: e
+  sympy:
+    in: exp(1)
+    out: E
+  mpmath:
+    in: exp(1)
+    out: "2.71828182845904523536028747135"
   sage:
     in: exp(1)
     out: e
   rust:
     in: exp(n(1))
     out: "2.718281828459045"
-  mpmath:
-    in: exp(1)
-    out: "2.71828182845904523536028747135"
-  sympy:
-    in: exp(1)
-    out: E
+compute-engine-represents-exp-x-as-e-x-once-the:
+  epsil:
+    in: Exp(x)
+    out: ExponentialE ^ x
+  tex:
+    in: e^{x}
+    out: e^{x}
+  fullform:
+    in: Exp[x]
 inverse-of-ln-e-ln-x-x:
+  epsil:
+    in: Exp(Ln(5)) == 5
+    out: True
+  tex:
+    in: \exp(\ln(5))=5
+    out: \top
+  traditional:
+    in: \exp(\ln(5))=5
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Exp[Log[5]], 5]
   wolfram:
     in: (Exp[Log[5]] == 5)
     out: True
     tex:
       in: \exp (\log (5))=5
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(exp(log(5)), 5)
+    out: True
+  mpmath:
+    in: almosteq(exp(log(5)), 5, 1e-20)
+    out: True
   sage:
     in: bool(exp(log(5)) == 5)
     out: True
   rust:
     in: equal(exp(ln(n(5))), n(5))
     out: "true"
-  mpmath:
-    in: almosteq(exp(log(5)), 5, 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal(exp(log(5)), 5)
-    out: True
 e-a-e-b-e-a-b:
+  epsil:
+    in: Exp(2) * Exp(3) == Exp(5)
+    out: True
+  tex:
+    in: e^{2}e^{3}=e^{5}
+    out: \top
+  traditional:
+    in: e^{2}e^{3}=e^{5}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Times[Exp[2], Exp[3]], Exp[5]]
   wolfram:
     in: (Times[Exp[2], Exp[3]] == Exp[5])
     out: True
     tex:
       in: \exp (2) \exp (3)=\exp (5)
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((exp(2) * exp(3)), exp(5))
+    out: True
+  mpmath:
+    in: almosteq((exp(2) * exp(3)), exp(5), 1e-20)
+    out: True
   sage:
     in: bool((exp(2) * exp(3)) == exp(5))
     out: True
   rust:
     in: equal((exp(n(2)) * exp(n(3))), exp(n(5)))
     out: "true"
-  mpmath:
-    in: almosteq((exp(2) * exp(3)), exp(5), 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal((exp(2) * exp(3)), exp(5))
-    out: True
 threads-element-wise-over-a-list:
+  epsil:
+    in: Exp([0, 1])
+    out: "[1, ExponentialE]"
+  tex:
+    in: \exp\bigl\lbrack0, 1\bigr\rbrack
+    out: \bigl\lbrack1, e\bigr\rbrack
+  fullform:
+    in: Exp[List[0, 1]]
   wolfram:
     in: Exp[List[0, 1]]
     out: "{1, E}"
     tex:
       in: \exp (\{0,1\})
       out: \{1,e\}
+  sympy:
+    in: "[exp(0), exp(1)]"
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Exp threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: "[exp(0), exp(1)]"
   sage:
-    in: exp([0, 1])
+    in: "[exp(0), exp(1)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
     kind: threading
@@ -93,96 +156,338 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Exp is Listable and threads over the list; the Rust crates take scalars.
-  mpmath:
-    in: "[exp(0), exp(1)]"
-    out: "[mpf('1.0'), mpf('2.71828182845904523536028747135281')]"
-  sympy:
-    in: "[exp(0), exp(1)]"
-    out: "[1, E]"
 broadcasts-element-wise-giving-begin-pmatrix-1-e:
+  epsil:
+    in: Exp([[0, 1], [1, 0]])
+    out: "[[1, ExponentialE], [ExponentialE, 1]]"
+  tex:
+    in: \exp\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack
+    out: \bigl\lbrack\bigl\lbrack1, e\bigr\rbrack, \bigl\lbracke, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Exp[List[List[0, 1], List[1, 0]]]
+  wolfram:
+    in: Exp[List[List[0, 1], List[1, 0]]]
+    note: Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.
+  sympy:
+    in: "[[exp(0), exp(1)], [exp(1), exp(0)]]"
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Exp of a matrix stays element-wise, threading over the nested list; SymPy's exp() takes scalars only.
+  mpmath:
+    in: "[[exp(0), exp(1)], [exp(1), exp(0)]]"
+  sage:
+    in: "[[exp(0), exp(1)], [exp(1), exp(0)]]"
   rust:
     in: exp(list(vec![list(vec![n(0), n(1)]), list(vec![n(1), n(0)])]))
     out: "panic: threading: a list where the crate takes a scalar"
     verdict: error
     kind: threading
     note: compute-engine's Exp of a matrix stays element-wise, threading over the nested list; the Rust crate takes scalars only.
+a-machine-precision-argument-evaluates:
+  epsil:
+    in: Exp(3.4)
+    out: 29.964_100_047_397_013_348_2
+  tex:
+    in: e^{3.4}
+    out: 29.964\,100\,047\,397\,013\,348\,2
+  fullform:
+    in: Exp[3.4]
   wolfram:
-    in: Exp[List[List[0, 1], List[1, 0]]]
-    note: Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.
-  mpmath:
-    in: "[[exp(0), exp(1)], [exp(1), exp(0)]]"
-    out: "[[mpf('1.0'), mpf('2.71828182845904523536028747135281')], [mpf('2.71828182845904523536028747135281'), mpf('1.0')]]"
+    in: Exp[3.4]
   sympy:
-    in: "[[exp(0), exp(1)], [exp(1), exp(0)]]"
-    out: "[[1, E], [E, 1]]"
+    in: exp(3.4)
+  mpmath:
+    in: exp(3.4)
+  sage:
+    in: exp(3.4)
+  rust:
+    in: exp(x(3.4))
+arbitrary-precision-via-n:
+  epsil:
+    in: N(Exp(8 / 5))
+    out: 4.953_032_424_395_114_803_65
+  tex:
+    in: N(\exp(\frac{8}{5}))
+    out: 4.953\,032\,424\,395\,114\,803\,65
+  fullform:
+    in: N[Exp[Rational[8, 5]]]
+  wolfram:
+    in: N[Exp[Rational[8, 5]]]
+  sympy:
+    in: N(exp(Rational(8, 5)), 30)
+  sage:
+    in: N(exp((8/5)))
+  rust:
+    in: nf(exp(rational(n(8), n(5))))
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Exp(2.5 + i)
+    out: 6.582_229_578_192_772_984_4 + 10.251_215_190_529_404i
+  tex:
+    in: \exp(2.5+i)
+    out: 6.582\,229\,578\,192\,772\,984\,4+10.251\,215\,190\,529\,404i
+  fullform:
+    in: Exp[Complex[2.5, 1]]
+  wolfram:
+    in: Exp[Complex[2.5, 1]]
+  sympy:
+    in: exp((2.5 + 1*I))
+  mpmath:
+    in: exp(mpc(2.5, 1))
+  sage:
+    in: exp((2.5 + 1*I))
+euler-s-identity-e-i-pi-1:
+  epsil:
+    in: Exp(ImaginaryUnit * Pi)
+    out: "-1"
+  tex:
+    in: \exp(i\pi)
+    out: "-1"
+  fullform:
+    in: Exp[Times[I, Pi]]
+  wolfram:
+    in: Exp[Times[I, Pi]]
+  sympy:
+    in: exp((I * pi))
+  mpmath:
+    in: exp((mpc(0,1) * pi))
+  sage:
+    in: exp((I * pi))
+exp-imaginaryunit-times-pi-over-2:
+  epsil:
+    in: Exp(ImaginaryUnit * (Pi / 2))
+    out: i
+  tex:
+    in: \exp(\frac{i\pi}{2})
+    out: i
+  fullform:
+    in: Exp[Times[I, Divide[Pi, 2]]]
+  wolfram:
+    in: Exp[Times[I, Divide[Pi, 2]]]
+  sympy:
+    in: exp((I * (S(pi) / 2)))
+  sage:
+    in: exp((I * (pi / 2)))
 a-special-imaginary-argument-folds-through-e-i:
+  epsil:
+    in: Exp(ImaginaryUnit * (Pi / 5))
+    out: 1 / 4 + Sqrt(5) / 4 + Sqrt(2) / 4 * i * Sqrt(5 - Sqrt(5))
+  tex:
+    in: \exp(\frac{i\pi}{5})
+    out: \frac{1}{4}+\frac{\sqrt{5}}{4}+(\frac{\sqrt{2}}{4}i)\sqrt{5-\sqrt{5}}
+  fullform:
+    in: Exp[Times[I, Divide[Pi, 5]]]
   wolfram:
     in: Exp[Times[I, Divide[Pi, 5]]]
     note: Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.
   sympy:
     in: exp((I * (S(pi) / 5)))
-    out: exp(I*pi/5)
+  sage:
+    in: exp((I * (pi / 5)))
+exp-ln-2:
+  epsil:
+    in: Exp(Ln(2))
+    out: "2"
+  tex:
+    in: \exp(\ln(2))
+    out: "2"
+  fullform:
+    in: Exp[Log[2]]
+  wolfram:
+    in: Exp[Log[2]]
+  sympy:
+    in: exp(log(2))
+  mpmath:
+    in: exp(log(2))
+  sage:
+    in: exp(log(2))
+  rust:
+    in: exp(ln(n(2)))
+inverse-of-ln-symbolically:
+  epsil:
+    in: Exp(Ln(x))
+    out: x
+  tex:
+    in: \exp(\ln(x))
+    out: x
+  fullform:
+    in: Exp[Log[x]]
+exp-ln-of-a-complex-argument-is-that-argument:
+  epsil:
+    in: Exp(Ln(1 + 2i))
+    out: 1 + 2i
+  tex:
+    in: \exp(\ln(1+2i))
+    out: 1+2i
+  fullform:
+    in: Exp[Log[Complex[1, 2]]]
+  wolfram:
+    in: Exp[Log[Complex[1, 2]]]
+  sympy:
+    in: exp(log((1 + 2*I)))
+  mpmath:
+    in: exp(log(mpc(1, 2)))
+  sage:
+    in: exp(log((1 + 2*I)))
 exp-ln-of-a-negative-real-is-left-unevaluated:
+  epsil:
+    in: Exp(Ln(-2))
+    out: ExponentialE ^ (i * Pi + Ln(2))
+  tex:
+    in: \exp(\ln(-2))
+    out: e^{i\pi+\ln(2)}
+  fullform:
+    in: Exp[Log[-2]]
   wolfram:
     in: Exp[Log[-2]]
     note: Wolfram folds Exp[Log[-2]] to -2 (and native compute-engine does too, checked against a bare engine with nothing declared) -- this package's own Ln(-q) = Ln(q) + i*pi rule (widened.ts, a deliberate, documented choice, see Ln.yaml) evaluates the negative-real Ln away before Exp's native e^(ln z) = z fold ever sees a literal Ln node to recognize, since Exp(z) canonicalizes straight to Power(ExponentialE, z) inside compute-engine's own box() step without ever consulting a customizable canonical hook (confirmed by patching Power's canonical and evaluate directly and observing neither intercepts in time). N(Exp(Ln(-2))) is unaffected, still -2.
+  sympy:
+    in: exp(log(-2))
   mpmath:
-    in: exp(log((-2)))
-    out: (-2.0 + 3.39137106414755985758348058775e-31j)
-  sympy:
-    in: exp(log((-2)))
-    out: "-2"
-a-machine-precision-argument-evaluates:
-  mpmath:
-    in: exp(3.4)
-    out: "29.9641000473970106868160502504"
-  sympy:
-    in: exp(3.4)
-    out: "29.9641000473970"
-evaluates-at-a-complex-argument:
-  mpmath:
-    in: exp(mpc(2.5, 1))
-    out: (6.58222957819277298437932116841 + 10.251215190529403439318317104j)
-  sympy:
-    in: exp((2.5 + 1*I))
-    out: 12.1824939607035*exp(I)
-euler-s-identity-e-i-pi-1:
-  mpmath:
-    in: exp((mpc(0,1) * pi))
-    out: (-1.0 + 1.69568553207377992879174029388e-31j)
-  sympy:
-    in: exp((I * pi))
-    out: "-1"
-exp-ln-2:
-  mpmath:
-    in: exp(log(2))
-    out: "2.0"
-  sympy:
-    in: exp(log(2))
-    out: "2"
-exp-ln-of-a-complex-argument-is-that-argument:
-  mpmath:
-    in: exp(log(mpc(1, 2)))
-    out: (1.0 + 2.0j)
-  sympy:
-    in: exp(log((1 + 2*I)))
-    out: 1 + 2*I
-to-50-significant-digits-every-one-correctly:
-  mpmath:
-    in: (exp(1))
-    out: "2.71828182845904523536028747135"
-  sympy:
-    in: N(exp(1), 30)
-    out: "2.71828182845904523536028747135"
-arbitrary-precision-via-n:
-  sympy:
-    in: N(exp(Rational(8, 5)), 30)
-    out: "4.95303242439511480365428635642"
-exp-imaginaryunit-times-pi-over-2:
-  sympy:
-    in: exp((I * (S(pi) / 2)))
-    out: I
+    in: exp(log(-2))
+  sage:
+    in: exp(log(-2))
+  rust:
+    in: exp(ln(n(-2)))
+exp-negativeinfinity:
+  epsil:
+    in: Exp(NegativeInfinity)
+    out: "0"
+  tex:
+    in: e^{-\infty}
+    out: "0"
+  fullform:
+    in: Exp[-Infinity]
+  wolfram:
+    in: Exp[-Infinity]
+exp-positiveinfinity:
+  epsil:
+    in: Exp(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: e^{\infty}
+    out: \infty
+  fullform:
+    in: Exp[Infinity]
+  wolfram:
+    in: Exp[Infinity]
 element-wise-over-a-matrix-not-the-matrix:
+  epsil:
+    in: Exp([[1, ImaginaryUnit * (Pi / 2)], [0, 1]])
+    out: "[[ExponentialE, i], [1, ExponentialE]]"
+  tex:
+    in: \exp\bigl\lbrack\bigl\lbrack1, \frac{i\pi}{2}\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+    out: \bigl\lbrack\bigl\lbracke, i\bigr\rbrack, \bigl\lbrack1, e\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Exp[List[List[1, Times[I, Divide[Pi, 2]]], List[0, 1]]]
+  wolfram:
+    in: Exp[List[List[1, Times[I, Divide[Pi, 2]]], List[0, 1]]]
   sympy:
     in: "[[exp(1), exp((I * (S(pi) / 2)))], [exp(0), exp(1)]]"
-    out: "[[E, I], [1, E]]"
+  sage:
+    in: "[[exp(1), exp((I * (pi / 2)))], [exp(0), exp(1)]]"
+interval-arithmetic-exp-1-ln-2-e-1-2:
+  epsil:
+    in: Exp(Interval(-1, Ln(2)))
+    out: Interval(1 / ExponentialE, 2)
+  tex:
+    in: \exp(\mathrm{Interval}(-1, \ln(2)))
+    out: \mathrm{Interval}(\frac{1}{e}, 2)
+  fullform:
+    in: Exp[Interval[List[-1, Log[2]]]]
+  wolfram:
+    in: Exp[Interval[List[-1, Log[2]]]]
+uncertainty-propagation-e-2-pm-0-01-approx-7-389:
+  epsil:
+    in: Exp(Around(2, 0.01))
+    out: Around(7.389_056_098_930_65, 0.073_890_560_989_306_5)
+  tex:
+    in: \exp(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(7.389\,056\,098\,930\,65, 0.073\,890\,560\,989\,306\,5)
+  fullform:
+    in: Exp[Around[2, 0.01]]
+  wolfram:
+    in: Exp[Around[2, 0.01]]
+its-own-derivative:
+  epsil:
+    in: D(Exp(x), x)
+    out: ExponentialE ^ x
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}e^{x}
+    out: e^{x}
+  fullform:
+    in: D[Exp[x], x]
+its-own-antiderivative:
+  epsil:
+    in: Integrate(Exp(x), x)
+    out: ExponentialE ^ x
+  tex:
+    in: \int\!e^{x}\, \mathrm{d}x
+    out: e^{x}
+  fullform:
+    in: Integrate[Exp[x], x]
+taylor-series-about-0:
+  epsil:
+    in: Series(Exp(x), x, 0, 4)
+    out: 1 / 24 * x ^ 4 + 1 / 6 * x ^ 3 + 1 / 2 * x ^ 2 + x + BigO(x ^ 5) + 1
+  tex:
+    in: \operatorname{Series}(e^{x}, x, 0, 4)
+    out: 1+x+\frac{x^2}{2}+\frac{x^3}{6}+\frac{x^4}{24}+O\left(x^5\right)
+  fullform:
+    in: Series[Exp[x], x, 0, 4]
+e-as-the-limit-lim-x-to-infty-1-1-x-x:
+  epsil:
+    in: Limit((1 + 1 / x) ^ x, PositiveInfinity)
+    out: ExponentialE
+  tex:
+    in: \lim_{x\to\infty}(1+\frac{1}{x})^{x}
+    out: e
+  fullform:
+    in: Limit[Function[Power[Plus[1, Divide[1, x]], x], x], Infinity]
+lim-x-to-0-frac-e-x-1-x-1:
+  epsil:
+    in: Limit((Exp(x) - 1) / x, 0)
+    out: "1"
+  tex:
+    in: \lim_{x\to0}\frac{e^{x}-1}{x}
+    out: "1"
+  fullform:
+    in: Limit[Function[Divide[Subtract[Exp[x], 1], x], x], 0]
+a-product-of-exponentials-should-combine-e-x-e-y:
+  epsil:
+    in: Exp(x) * Exp(y)
+    out: ExponentialE ^ (x + y)
+  tex:
+    in: e^{x}e^{y}
+    out: e^{x+y}
+  fullform:
+    in: Times[Exp[x], Exp[y]]
+euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
+  epsil:
+    in: ExpToTrig(Exp(ImaginaryUnit * x))
+    out: i * Sin(x) + Cos(x)
+  tex:
+    in: \mathrm{ExpToTrig}(\exp(i x))
+    out: i\sin(x)+\cos(x)
+  fullform:
+    in: ExpToTrig[Exp[Times[I, x]]]
+to-50-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Exp(1), 50)
+    out: 2.718_281_828_459_045_235_360_287_471_352_662_497_757_247_093_700_0
+  tex:
+    in: N(e^{1}, 50)
+    out: 2.718\,281\,828\,459\,045\,235\,36
+  fullform:
+    in: N[Exp[1], 50]
+  wolfram:
+    in: N[Exp[1], 50]
+  sympy:
+    in: N(exp(1), 30)
+  mpmath:
+    in: (exp(1))
+  sage:
+    in: N(exp(1))
+  rust:
+    in: nf(exp(n(1)))

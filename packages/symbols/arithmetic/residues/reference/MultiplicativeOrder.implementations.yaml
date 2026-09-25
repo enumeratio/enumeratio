@@ -1,4 +1,15 @@
 multiplicativeorder-5-8:
+  epsil:
+    in: MultiplicativeOrder(5, 8)
+    out: "2"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(5, 8)
+    out: "2"
+  traditional:
+    in: \operatorname{ord}_{8}(5)
+    out: "2"
+  fullform:
+    in: MultiplicativeOrder[5, 8]
   wolfram:
     in: MultiplicativeOrder[5, 8]
     out: "2"
@@ -9,6 +20,17 @@ multiplicativeorder-5-8:
     in: Mod(5, 8).multiplicative_order()
     out: "2"
 multiplicativeorder-3-7:
+  epsil:
+    in: MultiplicativeOrder(3, 7)
+    out: "6"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(3, 7)
+    out: "6"
+  traditional:
+    in: \operatorname{ord}_{7}(3)
+    out: "6"
+  fullform:
+    in: MultiplicativeOrder[3, 7]
   wolfram:
     in: MultiplicativeOrder[3, 7]
     out: "6"
@@ -18,7 +40,93 @@ multiplicativeorder-3-7:
   sage:
     in: Mod(3, 7).multiplicative_order()
     out: "6"
+multiplicativeorder-5-7:
+  epsil:
+    in: MultiplicativeOrder(5, 7)
+    out: "6"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(5, 7)
+    out: "6"
+  traditional:
+    in: \operatorname{ord}_{7}(5)
+    out: "6"
+  fullform:
+    in: MultiplicativeOrder[5, 7]
+  wolfram:
+    in: MultiplicativeOrder[5, 7]
+  sage:
+    in: Mod(5, 7).multiplicative_order()
+a-negative-base-5-equiv-2-pmod-7:
+  epsil:
+    in: MultiplicativeOrder(-5, 7)
+    out: "3"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(-5, 7)
+    out: "3"
+  traditional:
+    in: \operatorname{ord}_{7}(-5)
+    out: "3"
+  fullform:
+    in: MultiplicativeOrder[-5, 7]
+  wolfram:
+    in: MultiplicativeOrder[-5, 7]
+  sage:
+    in: Mod(-5, 7).multiplicative_order()
+the-first-power-of-5-to-reach-3-or-11-equiv-4-5:
+  epsil:
+    in: MultiplicativeOrder(5, 7, [3, 11])
+    out: "2"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(5, 7, \bigl\lbrack3, 11\bigr\rbrack)
+    out: "2"
+  fullform:
+    in: MultiplicativeOrder[5, 7, List[3, 11]]
+  wolfram:
+    in: MultiplicativeOrder[5, 7, List[3, 11]]
+a-10-001-digit-base-modulo-the-prime-7919:
+  epsil:
+    in: MultiplicativeOrder(10 ^ 10_000, 7_919)
+    out: 3_959
+  tex:
+    in: \mathrm{MultiplicativeOrder}(10^{10\,000}, 7\,919)
+    out: 3\,959
+  traditional:
+    in: \operatorname{ord}_{7\,919}(10^{10\,000})
+    out: 3\,959
+  fullform:
+    in: MultiplicativeOrder[Power[10, 10000], 7919]
+  wolfram:
+    in: MultiplicativeOrder[Power[10, 10000], 7919]
+  sage:
+    in: Mod((10^10000), 7919).multiplicative_order()
+1-is-the-only-element-of-order-1:
+  epsil:
+    in: MultiplicativeOrder(1, 7)
+    out: "1"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(1, 7)
+    out: "1"
+  traditional:
+    in: \operatorname{ord}_{7}(1)
+    out: "1"
+  fullform:
+    in: MultiplicativeOrder[1, 7]
+  wolfram:
+    in: MultiplicativeOrder[1, 7]
+  sage:
+    in: Mod(1, 7).multiplicative_order()
 2-3-8-equiv-1-pmod-7-and-no-smaller-power-works:
+  epsil:
+    in: MultiplicativeOrder(2, 7)
+    out: "3"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(2, 7)
+    out: "3"
+  traditional:
+    in: \operatorname{ord}_{7}(2)
+    out: "3"
+  fullform:
+    in: MultiplicativeOrder[2, 7]
   wolfram:
     in: MultiplicativeOrder[2, 7]
     out: "3"
@@ -29,6 +137,17 @@ multiplicativeorder-3-7:
     in: Mod(2, 7).multiplicative_order()
     out: "3"
 the-multiplicative-order-always-divides-varphi-n:
+  epsil:
+    in: Totient(7) % MultiplicativeOrder(3, 7) == 0
+    out: True
+  tex:
+    in: \mathrm{Totient}(7)\bmod\mathrm{MultiplicativeOrder}(3, 7)=0
+    out: \top
+  traditional:
+    in: \varphi(7)\bmod\operatorname{ord}_{7}(3)=0
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Mod[EulerPhi[7], MultiplicativeOrder[3, 7]], 0]
   wolfram:
     in: (Mod[EulerPhi[7], MultiplicativeOrder[3, 7]] == 0)
     out: True
@@ -39,6 +158,17 @@ the-multiplicative-order-always-divides-varphi-n:
     in: bool((euler_phi(7) % Mod(3, 7).multiplicative_order()) == 0)
     out: True
 no-order-exists-when-gcd-a-n-neq-1-here-gcd-10:
+  epsil:
+    in: MultiplicativeOrder(10, 22)
+    out: MultiplicativeOrder(10, 22)
+  tex:
+    in: \mathrm{MultiplicativeOrder}(10, 22)
+    out: \mathrm{MultiplicativeOrder}(10, 22)
+  traditional:
+    in: \operatorname{ord}_{22}(10)
+    out: \operatorname{ord}_{22}(10)
+  fullform:
+    in: MultiplicativeOrder[10, 22]
   wolfram:
     in: MultiplicativeOrder[10, 22]
     out: MultiplicativeOrder[10, 22]
@@ -52,6 +182,14 @@ no-order-exists-when-gcd-a-n-neq-1-here-gcd-10:
     kind: undefined-form
     note: 'Both decline: compute-engine answers ["MultiplicativeOrder", 10, 22] and Sage raises an error.'
 the-first-power-of-3-to-reach-pm-1-3-3-27-equiv:
+  epsil:
+    in: MultiplicativeOrder(3, 7, [-1, 1])
+    out: "3"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(3, 7, \bigl\lbrack-1, 1\bigr\rbrack)
+    out: "3"
+  fullform:
+    in: MultiplicativeOrder[3, 7, List[-1, 1]]
   wolfram:
     in: MultiplicativeOrder[3, 7, List[-1, 1]]
     out: "3"
@@ -59,6 +197,14 @@ the-first-power-of-3-to-reach-pm-1-3-3-27-equiv:
       in: \text{MultiplicativeOrder}[3,7,\{-1,1\}]
       out: "3"
 5-2-25-equiv-4:
+  epsil:
+    in: MultiplicativeOrder(5, 7, [2, 3, 4])
+    out: "2"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(5, 7, \bigl\lbrack2, 3, 4\bigr\rbrack)
+    out: "2"
+  fullform:
+    in: MultiplicativeOrder[5, 7, List[2, 3, 4]]
   wolfram:
     in: MultiplicativeOrder[5, 7, List[2, 3, 4]]
     out: "2"
@@ -66,6 +212,14 @@ the-first-power-of-3-to-reach-pm-1-3-3-27-equiv:
       in: \text{MultiplicativeOrder}[5,7,\{2,3,4\}]
       out: "2"
 a-discrete-log-mod-the-mersenne-prime-2-61-1:
+  epsil:
+    in: MultiplicativeOrder(3, 2 ^ 61 - 1, [2])
+    out: 159_602_976_958_324_900
+  tex:
+    in: \mathrm{MultiplicativeOrder}(3, 2^{61}-1, \bigl\lbrack2\bigr\rbrack)
+    out: 159\,602\,976\,958\,324\,900
+  fullform:
+    in: MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]]
   wolfram:
     in: MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]]
     out: $Aborted
@@ -73,16 +227,38 @@ a-discrete-log-mod-the-mersenne-prime-2-61-1:
     kind: resource
     note: Wolfram hit the scan's per-item time or memory cap on this input; we answer it.
 3-has-order-p-1-3-modulo-2-127-1:
-  sage:
-    in: Mod(3, ((2^127) - 1)).multiplicative_order()
-    out: "56713727820156410577229101238628035242"
+  epsil:
+    in: MultiplicativeOrder(3, 2 ^ 127 - 1)
+    out: 56_713_727_820_156_410_577_229_101_238_628_035_242
+  tex:
+    in: \mathrm{MultiplicativeOrder}(3, 2^{127}-1)
+    out: 56\,713\,727\,820\,156\,410\,577\,229\,101\,238\,628\,035\,242
+  traditional:
+    in: \operatorname{ord}_{2^{127}-1}(3)
+    out: 56\,713\,727\,820\,156\,410\,577\,229\,101\,238\,628\,035\,242
+  fullform:
+    in: MultiplicativeOrder[3, Subtract[Power[2, 127], 1]]
   wolfram:
     in: MultiplicativeOrder[3, Subtract[Power[2, 127], 1]]
     out: "56713727820156410577229101238628035242"
     tex:
       in: \text{ord}_{2^{127}-1}(3)
       out: "56713727820156410577229101238628035242"
+  sage:
+    in: Mod(3, ((2^127) - 1)).multiplicative_order()
+    out: "56713727820156410577229101238628035242"
 the-discrete-log-inverts-powermod:
+  epsil:
+    in: PowerMod(3, MultiplicativeOrder(3, 2 ^ 61 - 1, [2]), 2 ^ 61 - 1)
+    out: "2"
+  tex:
+    in: \mathrm{PowerMod}(3, \mathrm{MultiplicativeOrder}(3, 2^{61}-1, \bigl\lbrack2\bigr\rbrack), 2^{61}-1)
+    out: "2"
+  traditional:
+    in: \left(3^{\mathrm{MultiplicativeOrder}(3, 2^{61}-1, \bigl\lbrack2\bigr\rbrack)}\bmod 2^{61}-1\right)
+    out: "2"
+  fullform:
+    in: PowerMod[3, MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]], Subtract[Power[2, 61], 1]]
   wolfram:
     in: PowerMod[3, MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]], Subtract[Power[2, 61], 1]]
     out: $Aborted
@@ -90,6 +266,14 @@ the-discrete-log-inverts-powermod:
     kind: resource
     note: Wolfram hit the scan's per-item time or memory cap on this input; we answer it.
 3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4:
+  epsil:
+    in: MultiplicativeOrder(2, 7, [3])
+    out: MultiplicativeOrder(2, 7, [3])
+  tex:
+    in: \mathrm{MultiplicativeOrder}(2, 7, \bigl\lbrack3\bigr\rbrack)
+    out: \mathrm{MultiplicativeOrder}(2, 7, \bigl\lbrack3\bigr\rbrack)
+  fullform:
+    in: MultiplicativeOrder[2, 7, List[3]]
   wolfram:
     in: MultiplicativeOrder[2, 7, List[3]]
     out: MultiplicativeOrder[2, 7, {3}]

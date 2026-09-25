@@ -1,0 +1,44 @@
+asking-for-up-to-5-of-3-elements-takes-all-3:
+  epsil:
+    in: Take([1, 2, 3], UpTo(5))
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{Take}(\bigl\lbrack1, 2, 3\bigr\rbrack, \mathrm{UpTo}(5))
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Take[List[1, 2, 3], UpTo[5]]
+  wolfram:
+    in: Take[List[1, 2, 3], UpTo[5]]
+when-enough-elements-are-available-exactly-n-is:
+  epsil:
+    in: Take([1, 2, 3, 4, 5, 6], UpTo(2))
+    out: "[1, 2]"
+  tex:
+    in: \mathrm{Take}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \mathrm{UpTo}(2))
+    out: \bigl\lbrack1, 2\bigr\rbrack
+  fullform:
+    in: Take[List[1, 2, 3, 4, 5, 6], UpTo[2]]
+  wolfram:
+    in: Take[List[1, 2, 3, 4, 5, 6], UpTo[2]]
+in-partition-a-shorter-final-chunk-is-allowed:
+  epsil:
+    in: Partition([1, 2, 3, 4, 5, 6], UpTo(4))
+    out: "[[1, 2, 3, 4], [5, 6]]"
+  tex:
+    in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \mathrm{UpTo}(4))
+    out: \bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], UpTo[4]]
+  wolfram:
+    in: Partition[List[1, 2, 3, 4, 5, 6], UpTo[4]]
+in-ordering-at-most-6-positions-of-a-5-element:
+  epsil:
+    in: Ordering([2, 6, 1, 9, 2], UpTo(6))
+    out: "[3, 1, 5, 2, 4]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 2\bigr\rbrack, \mathrm{UpTo}(6))
+    out: \bigl\lbrack3, 1, 5, 2, 4\bigr\rbrack
+  fullform:
+    in: Ordering[List[2, 6, 1, 9, 2], UpTo[6]]
+  wolfram:
+    in: Ordering[List[2, 6, 1, 9, 2], UpTo[6]]

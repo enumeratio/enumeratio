@@ -3,7 +3,7 @@
 // continuations take — kept as reference examples, as data, at the end of each head's
 // reference YAML. Each is `N(head(args))` with our value as its
 // `expected`, so the reference tests pin it and every oracle lane (mpmath, SymPy, Sage,
-// Wolfram, Julia, Rust) checks it from the same MathJSON. They are `hidden`: too many to
+// Wolfram, Julia, Rust) checks it from the same MathJSON. They are `role: test`: too many to
 // render, but data like any other example.
 //
 // Regenerate after a change to the heads or the grids:
@@ -29,7 +29,7 @@ const toCE = (v: Val): unknown =>
 interface Example {
   expr: unknown;
   expected: unknown;
-  hidden: true;
+  role: "test";
   /** Wolfram parts ways here: the note its implementations row carries. */
   wolframNote?: string;
 }
@@ -48,7 +48,7 @@ const add = (call: unknown[], valueOnly = false): void => {
   (byHead[call[0] as string] ??= []).push({
     expr,
     expected,
-    hidden: true,
+    role: "test",
     ...(negativeA ? { wolframNote: LERCH_NEGATIVE_A } : {}),
   });
 };
@@ -101,10 +101,10 @@ for (const m of [1, 2, 3, 5] as Val[]) {
   }
 }
 
-// Each head's grid is the tail of its hidden `N(head(…))` examples. It's replaced wholesale,
+// Each head's grid is the tail of its `role: test` `N(head(…))` examples. It's replaced wholesale,
 // keeping the id of any point that survives so links and oracle rows stay put.
 const isGridPoint = (head: string, e: ReferenceExample): boolean =>
-  e.hidden === true && Array.isArray(e.expr) && e.expr[0] === "N" && Array.isArray(e.expr[1]) && e.expr[1][0] === head;
+  e.role === "test" && Array.isArray(e.expr) && e.expr[0] === "N" && Array.isArray(e.expr[1]) && e.expr[1][0] === head;
 const { heads } = loadReferenceData(PACKAGES);
 for (const [head, grid] of Object.entries(byHead)) {
   const { entry, entryPath, implementations } = heads.find((h) => h.head === head)!;

@@ -1,0 +1,9 @@
+count-planepartitions-4-13-a000219:
+  epsil:
+    in: Count(PlanePartitions(4))
+    out: "13"
+  tex:
+    in: \mathrm{Count}(\mathrm{PlanePartitions}(4))
+    out: "13"
+  fullform:
+    in: Count[PlanePartitions[4]]

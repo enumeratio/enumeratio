@@ -1,0 +1,44 @@
+powersrepresentations-25-2-2:
+  epsil:
+    in: PowersRepresentations(25, 2, 2)
+    out: "[[0, 5], [3, 4]]"
+  tex:
+    in: \mathrm{PowersRepresentations}(25, 2, 2)
+    out: \bigl\lbrack\bigl\lbrack0, 5\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: PowersRepresentations[25, 2, 2]
+  wolfram:
+    in: PowersRepresentations[25, 2, 2]
+the-smallest-number-that-is-a-sum-of-two:
+  epsil:
+    in: PowersRepresentations(50, 2, 2)
+    out: "[[1, 7], [5, 5]]"
+  tex:
+    in: \mathrm{PowersRepresentations}(50, 2, 2)
+    out: \bigl\lbrack\bigl\lbrack1, 7\bigr\rbrack, \bigl\lbrack5, 5\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: PowersRepresentations[50, 2, 2]
+  wolfram:
+    in: PowersRepresentations[50, 2, 2]
+powersrepresentations-100-3-2:
+  epsil:
+    in: PowersRepresentations(100, 3, 2)
+    out: "[[0, 0, 10], [0, 6, 8]]"
+  tex:
+    in: \mathrm{PowersRepresentations}(100, 3, 2)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 10\bigr\rbrack, \bigl\lbrack0, 6, 8\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: PowersRepresentations[100, 3, 2]
+  wolfram:
+    in: PowersRepresentations[100, 3, 2]
+the-taxicab-number-1729-1-3-12-3-9-3-10-3:
+  epsil:
+    in: PowersRepresentations(1_729, 2, 3)
+    out: "[[1, 12], [9, 10]]"
+  tex:
+    in: \mathrm{PowersRepresentations}(1\,729, 2, 3)
+    out: \bigl\lbrack\bigl\lbrack1, 12\bigr\rbrack, \bigl\lbrack9, 10\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: PowersRepresentations[1729, 2, 3]
+  wolfram:
+    in: PowersRepresentations[1729, 2, 3]

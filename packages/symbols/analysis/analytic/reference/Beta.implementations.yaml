@@ -1,4 +1,12 @@
 beta-2-3:
+  epsil:
+    in: Beta(2, 3)
+    out: 1 / 12
+  tex:
+    in: \mathrm{B}(2, 3)
+    out: \frac{1}{12}
+  fullform:
+    in: Beta[2, 3]
   wolfram:
     in: Beta[2, 3]
     out: 1/12
@@ -6,6 +14,14 @@ beta-2-3:
       in: B(2,3)
       out: \frac{1}{12}
 the-unit-square-case-int-0-1-1-dt-1:
+  epsil:
+    in: Beta(1, 1)
+    out: "1"
+  tex:
+    in: \mathrm{B}(1, 1)
+    out: "1"
+  fullform:
+    in: Beta[1, 1]
   wolfram:
     in: Beta[1, 1]
     out: "1"
@@ -13,6 +29,14 @@ the-unit-square-case-int-0-1-1-dt-1:
       in: B(1,1)
       out: "1"
 beta-3-3:
+  epsil:
+    in: Beta(3, 3)
+    out: 1 / 30
+  tex:
+    in: \mathrm{B}(3, 3)
+    out: \frac{1}{30}
+  fullform:
+    in: Beta[3, 3]
   wolfram:
     in: Beta[3, 3]
     out: 1/30
@@ -20,6 +44,14 @@ beta-3-3:
       in: B(3,3)
       out: \frac{1}{30}
 threads-element-wise-over-a-list-argument:
+  epsil:
+    in: Beta([1, 2], 2)
+    out: "[1 / 2, 1 / 6]"
+  tex:
+    in: \mathrm{B}(\bigl\lbrack1, 2\bigr\rbrack, 2)
+    out: \bigl\lbrack\frac{1}{2}, \frac{1}{6}\bigr\rbrack
+  fullform:
+    in: Beta[List[1, 2], 2]
   wolfram:
     in: Beta[List[1, 2], 2]
     out: "{1/2, 1/6}"
@@ -27,6 +59,17 @@ threads-element-wise-over-a-list-argument:
       in: B(\{1,2\},2)
       out: \left\{\frac{1}{2},\frac{1}{6}\right\}
 symmetric-b-a-b-b-b-a:
+  epsil:
+    in: Beta(2, 5) == Beta(5, 2)
+    out: True
+  tex:
+    in: \mathrm{B}(2, 5)=\mathrm{B}(5, 2)
+    out: \top
+  traditional:
+    in: \mathrm{B}(2, 5)=\mathrm{B}(5, 2)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Beta[2, 5], Beta[5, 2]]
   wolfram:
     in: (Beta[2, 5] == Beta[5, 2])
     out: True
@@ -34,6 +77,17 @@ symmetric-b-a-b-b-b-a:
       in: B(2,5)=B(5,2)
       out: \text{True}
 ties-to-binomial-b-k-1-n-k-1-frac-1-n-1-binom-n:
+  epsil:
+    in: 9 * Beta(4, 6) * Binomial(8, 3) == 1
+    out: True
+  tex:
+    in: 9\mathrm{B}(4, 6)\binom{8}{3}=1
+    out: \top
+  traditional:
+    in: 9\mathrm{B}(4, 6)\binom{8}{3}=1
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Times[9, Times[Beta[4, 6], Binomial[8, 3]]], 1]
   wolfram:
     in: (Times[9, Times[Beta[4, 6], Binomial[8, 3]]] == 1)
     out: True
@@ -41,6 +95,14 @@ ties-to-binomial-b-k-1-n-k-1-frac-1-n-1-binom-n:
       in: 9 (B(4,6) \binom{8}{3})=1
       out: \text{True}
 b-1-2-1-2-pi-underlies-the-arcsine-distribution:
+  epsil:
+    in: Beta(0.5, 0.5)
+    out: 3.141_592_653_589_793_238_46
+  tex:
+    in: \mathrm{B}(0.5, 0.5)
+    out: 3.141\,592\,653\,589\,793\,238\,46
+  fullform:
+    in: Beta[0.5, 0.5]
   wolfram:
     in: Beta[0.5, 0.5]
     out: "3.1415926535897936"
@@ -48,6 +110,14 @@ b-1-2-1-2-pi-underlies-the-arcsine-distribution:
       in: B(0.5,0.5)
       out: "3.14159"
 a-nonpositive-integer-argument-is-a-pole-of-the:
+  epsil:
+    in: Beta(-1, 2)
+    out: ComplexInfinity
+  tex:
+    in: \mathrm{B}(-1, 2)
+    out: \tilde\infty
+  fullform:
+    in: Beta[-1, 2]
   wolfram:
     in: Beta[-1, 2]
     out: ComplexInfinity
@@ -55,9 +125,124 @@ a-nonpositive-integer-argument-is-a-pole-of-the:
       in: B(-1,2)
       out: \text{ComplexInfinity}
 half-integer-arguments-evaluate-exactly-through:
+  epsil:
+    in: Beta(9 / 2, 7 / 2)
+    out: 5 / 2_048 * Pi
+  tex:
+    in: \mathrm{B}(\frac{9}{2}, \frac{7}{2})
+    out: \frac{5\pi}{2\,048}
+  fullform:
+    in: Beta[Rational[9, 2], Rational[7, 2]]
   wolfram:
     in: Beta[Rational[9, 2], Rational[7, 2]]
     out: (5*Pi)/2048
     tex:
       in: B\left(\frac{9}{2},\frac{7}{2}\right)
       out: \frac{5 \pi }{2048}
+b-5-4-frac-4-3-8-frac-1-280:
+  epsil:
+    in: Beta(5, 4)
+    out: 1 / 280
+  tex:
+    in: \mathrm{B}(5, 4)
+    out: \frac{1}{280}
+  fullform:
+    in: Beta[5, 4]
+  wolfram:
+    in: Beta[5, 4]
+machine-precision-arguments:
+  epsil:
+    in: Beta(2.3, 3.2)
+    out: 0.054_029_791_748_357_237_815_4
+  tex:
+    in: \mathrm{B}(2.3, 3.2)
+    out: 0.054\,029\,791\,748\,357\,237\,815\,4
+  fullform:
+    in: Beta[2.3, 3.2]
+  wolfram:
+    in: Beta[2.3, 3.2]
+b-5-2-7-2-frac-3-pi-256-from-the-half-integer:
+  epsil:
+    in: Beta(5 / 2, 7 / 2)
+    out: 3 / 256 * Pi
+  tex:
+    in: \mathrm{B}(\frac{5}{2}, \frac{7}{2})
+    out: \frac{3\pi}{256}
+  fullform:
+    in: Beta[Rational[5, 2], Rational[7, 2]]
+  wolfram:
+    in: Beta[Rational[5, 2], Rational[7, 2]]
+complex-arguments-should-evaluate-numerically:
+  epsil:
+    in: Beta(2.5 + i, 1 + -1 * i)
+    out: 0.083_107_783_669_911_63 + 0.142_163_944_255_870_34i
+  tex:
+    in: \mathrm{B}(2.5+i, 1-i)
+    out: 0.083\,107\,783\,669\,911\,63+0.142\,163\,944\,255\,870\,34i
+  fullform:
+    in: Beta[Complex[2.5, 1], Complex[1, -1]]
+  wolfram:
+    in: Beta[Complex[2.5, 1], Complex[1, -1]]
+three-arguments-the-incomplete-beta-b-z-a-b-int:
+  epsil:
+    in: Beta(1 / 2, 2, 3)
+    out: 11 / 192
+  tex:
+    in: \mathrm{B}(\frac{1}{2}, 2, 3)
+    out: \frac{11}{192}
+  fullform:
+    in: Beta[Rational[1, 2], 2, 3]
+  wolfram:
+    in: Beta[Rational[1, 2], 2, 3]
+four-arguments-the-generalized-incomplete-beta-b:
+  epsil:
+    in: Beta(1 / 4, 1 / 2, 2, 3)
+    out: 109 / 3_072
+  tex:
+    in: \mathrm{B}(\frac{1}{4}, \frac{1}{2}, 2, 3)
+    out: \frac{109}{3\,072}
+  fullform:
+    in: Beta[Rational[1, 4], Rational[1, 2], 2, 3]
+  wolfram:
+    in: Beta[Rational[1, 4], Rational[1, 2], 2, 3]
+b-a-1-1-a-for-symbolic-a:
+  epsil:
+    in: Beta(a, 1)
+    out: 1 / a
+  tex:
+    in: \mathrm{B}(a, 1)
+    out: \frac{1}{a}
+  fullform:
+    in: Beta[a, 1]
+b-2-b-frac-1-b-b-1-not-yet:
+  epsil:
+    in: Beta(2, b)
+    out: 1 / (b * (b + 1))
+  tex:
+    in: \mathrm{B}(2, b)
+    out: \frac{1}{b\times(b+1)}
+  fullform:
+    in: Beta[2, b]
+partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the:
+  epsil:
+    in: D(Beta(a, b), a)
+    out: (Digamma(a) - Digamma(a + b)) * Beta(a, b)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}a}\mathrm{B}(a, b)
+    out: (\mathrm{Digamma}(a)-\mathrm{Digamma}(a+b))\mathrm{B}(a, b)
+  traditional:
+    in: \frac{\mathrm{d}}{\mathrm{d}a}\mathrm{B}(a, b)
+    out: (\psi(a)-\psi(a+b))\mathrm{B}(a, b)
+  fullform:
+    in: D[Beta[a, b], a]
+to-30-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Beta(1 / 3, 1 / 4), 30)
+    out: 6.353_586_485_553_421_530_528_788_972_02
+  tex:
+    in: N(\mathrm{B}(\frac{1}{3}, \frac{1}{4}), 30)
+    out: 6.353\,586\,485\,553\,421\,530\,53
+  fullform:
+    in: N[Beta[Rational[1, 3], Rational[1, 4]], 30]
+  wolfram:
+    in: N[Beta[Rational[1, 3], Rational[1, 4]], 30]

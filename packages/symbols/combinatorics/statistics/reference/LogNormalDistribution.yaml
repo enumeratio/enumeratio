@@ -1,0 +1,31 @@
+name: LogNormalDistribution
+domain: Statistics
+signature: LogNormalDistribution(mu, sigma)
+summary: 'The log-normal distribution: $\log X \sim NormalDistribution(\mu, \sigma)$.'
+signatures:
+  - call: LogNormalDistribution(mu, sigma)
+    description: an inert distribution object — carries $\mu, \sigma$, unevaluated.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = PDF(NormalDistribution(\mu,\sigma), \log x) / x$ — delegates to compute-engine's native Normal PDF rather than writing out the Gaussian by hand.
+  - $CDF(x) = CDF(NormalDistribution(\mu,\sigma), \log x)$, same delegation.
+  - $Mean = e^{\mu+\sigma^2/2}$, $Variance = (e^{\sigma^2}-1)e^{2\mu+\sigma^2}$, both exact.
+  - '[[RandomVariate]] draws $e^{\mu + \sigma Z}$ for a standard normal $Z$.'
+examples:
+  - id: lognormal-pdf-exact
+    expr: [PDF, [LogNormalDistribution, 0, 1], 1]
+    expected: [Sqrt, [Divide, 1, [Multiply, 2, Pi]]]
+  - id: lognormal-cdf-exact
+    expr: [CDF, [LogNormalDistribution, 0, 1], 1]
+    expected: [Rational, 1, 2]
+  - id: lognormal-mean-exact
+    expr: [Mean, [LogNormalDistribution, 0, 1]]
+    expected: [Sqrt, ExponentialE]
+  - id: lognormal-variance-exact
+    expr: [Variance, [LogNormalDistribution, 0, 1]]
+    expected: [Multiply, ExponentialE, [Add, -1, ExponentialE]]
+    caption: Cross-checked against wolframscript's N[Variance[LogNormalDistribution[0, 1]]]
+seeAlso:
+  - NormalDistribution
+  - PDF
+  - CDF

@@ -1,0 +1,47 @@
+array-f-5:
+  epsil:
+    in: Array(f, 5)
+    out: "[f(1), f(2), f(3), f(4), f(5)]"
+  tex:
+    in: \mathrm{Array}(f, 5)
+    out: \bigl\lbrack f(1), f(2), f(3), f(4), f(5)\bigr\rbrack
+  fullform:
+    in: Array[f, 5]
+array-f-2-2:
+  epsil:
+    in: Array(f, [2, 2])
+    out: "[[f(1, 1), f(1, 2)], [f(2, 1), f(2, 2)]]"
+  tex:
+    in: \mathrm{Array}(f, \bigl\lbrack2, 2\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack f(1, 1), f(1, 2)\bigr\rbrack, \bigl\lbrack f(2, 1), f(2, 2)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Array[f, List[2, 2]]
+array-f-3-0:
+  epsil:
+    in: Array(f, 3, 0)
+    out: "[f(0), f(1), f(2)]"
+  tex:
+    in: \mathrm{Array}(f, 3, 0)
+    out: \bigl\lbrack f(0), f(1), f(2)\bigr\rbrack
+  fullform:
+    in: Array[f, 3, 0]
+array-f-3-1-g:
+  epsil:
+    in: Array(f, 3, 1, g)
+    out: g(f(1), f(2), f(3))
+  tex:
+    in: \mathrm{Array}(f, 3, 1, g)
+    out: g(f(1), f(2), f(3))
+  fullform:
+    in: Array[f, 3, 1, g]
+array-squares:
+  epsil:
+    in: Array(Function(_1 ^ 2), 5)
+    out: "[1, 4, 9, 16, 25]"
+  tex:
+    in: \mathrm{Array}(()\mapsto\operatorname{\_1}^2, 5)
+    out: \bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack
+  fullform:
+    in: Array[Function[Power[Slot[1], 2]], 5]
+  wolfram:
+    in: Array[Function[Power[Slot[1], 2]], 5]

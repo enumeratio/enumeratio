@@ -1,64 +1,102 @@
 ceil-7-over-2:
+  epsil:
+    in: Ceil(7 / 2)
+    out: "4"
+  tex:
+    in: \lceil\frac{7}{2}\rceil
+    out: "4"
+  fullform:
+    in: Ceiling[Rational[7, 2]]
   wolfram:
     in: Ceiling[Rational[7, 2]]
     out: "4"
     tex:
       in: \left\lceil \frac{7}{2}\right\rceil
       out: "4"
+  sympy:
+    in: ceiling(Rational(7, 2))
+    out: "4"
   sage:
     in: ceil((7/2))
     out: "4"
   rust:
     in: ceil(rational(n(7), n(2)))
     out: "4"
-  sympy:
-    in: ceiling(Rational(7, 2))
-    out: "4"
 ceil-3p2:
+  epsil:
+    in: Ceil(3.2)
+    out: "4"
+  tex:
+    in: \lceil3.2\rceil
+    out: "4"
+  fullform:
+    in: Ceiling[3.2]
   wolfram:
     in: Ceiling[3.2]
     out: "4"
     tex:
       in: \lceil 3.2\rceil
       out: "4"
+  sympy:
+    in: ceiling(3.2)
+    out: "4"
+  mpmath:
+    in: ceil(3.2)
+    out: "4.0"
   sage:
     in: ceil(3.2)
     out: "4"
   rust:
     in: ceil(x(3.2))
     out: "4.0"
-  mpmath:
-    in: ceil(3.2)
-    out: "4.0"
-  sympy:
-    in: ceiling(3.2)
-    out: "4"
 integers-pass-through-unchanged:
+  epsil:
+    in: Ceil(5)
+    out: "5"
+  tex:
+    in: \lceil5\rceil
+    out: "5"
+  fullform:
+    in: Ceiling[5]
   wolfram:
     in: Ceiling[5]
     out: "5"
     tex:
       in: \lceil 5\rceil
       out: "5"
+  sympy:
+    in: ceiling(5)
+    out: "5"
+  mpmath:
+    in: ceil(5)
+    out: "5.0"
   sage:
     in: ceil(5)
     out: "5"
   rust:
     in: ceil(n(5))
     out: "5"
-  mpmath:
-    in: ceil(5)
-    out: "5.0"
-  sympy:
-    in: ceiling(5)
-    out: "5"
 threads-element-wise-over-a-list:
+  epsil:
+    in: Ceil([1.2, -1.2, 3.7])
+    out: "[2, -1, 4]"
+  tex:
+    in: \lceil\bigl\lbrack1.2, -1.2, 3.7\bigr\rbrack\rceil
+    out: \bigl\lbrack2, -1, 4\bigr\rbrack
+  fullform:
+    in: Ceiling[List[1.2, -1.2, 3.7]]
   wolfram:
     in: Ceiling[List[1.2, -1.2, 3.7]]
     out: "{2, -1, 4}"
     tex:
       in: \lceil \{1.2,-1.2,3.7\}\rceil
       out: \{2,-1,4\}
+  sympy:
+    in: ceiling([1.2, -1.2, 3.7])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: ceil([1.2, -1.2, 3.7])
     out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
@@ -71,83 +109,123 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Ceil is Listable and threads over the list; the Rust crates take scalars.
-  sympy:
-    in: ceiling([1.2, (-1.2), 3.7])
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer:
+  epsil:
+    in: Ceil(7 / 2) == Floor(7 / 2) + 1
+    out: True
+  tex:
+    in: \lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1
+    out: \top
+  traditional:
+    in: \lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Ceiling[Rational[7, 2]], Plus[Floor[Rational[7, 2]], 1]]
   wolfram:
     in: (Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])
     out: True
     tex:
       in: \left\lceil \frac{7}{2}\right\rceil =\left\lfloor \frac{7}{2}\right\rfloor +1
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))
+    out: True
   sage:
     in: bool(ceil((7/2)) == (floor((7/2)) + 1))
     out: True
   rust:
     in: equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))
     out: "true"
-  sympy:
-    in: enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))
-    out: True
 floor-and-ceil-agree-exactly-on-integers:
+  epsil:
+    in: Ceil(5) == Floor(5)
+    out: True
+  tex:
+    in: \lceil5\rceil=\lfloor5\rfloor
+    out: \top
+  traditional:
+    in: \lceil5\rceil=\lfloor5\rfloor
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Ceiling[5], Floor[5]]
   wolfram:
     in: (Ceiling[5] == Floor[5])
     out: True
     tex:
       in: \lceil 5\rceil =\lfloor 5\rfloor
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(ceiling(5), floor(5))
+    out: True
+  mpmath:
+    in: almosteq(ceil(5), floor(5), 1e-20)
+    out: True
   sage:
     in: bool(ceil(5) == floor(5))
     out: True
   rust:
     in: equal(ceil(n(5)), floor(n(5)))
     out: "true"
-  mpmath:
-    in: almosteq(ceil(5), floor(5), 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal(ceiling(5), floor(5))
-    out: True
 how-many-5-seat-vans-are-needed-to-carry-17:
+  epsil:
+    in: Ceil(17 / 5)
+    out: "4"
+  tex:
+    in: \lceil\frac{17}{5}\rceil
+    out: "4"
+  fullform:
+    in: Ceiling[Divide[17, 5]]
   wolfram:
     in: Ceiling[Divide[17, 5]]
     out: "4"
     tex:
       in: \left\lceil \frac{17}{5}\right\rceil
       out: "4"
+  sympy:
+    in: ceiling((S(17) / 5))
+    out: "4"
   sage:
     in: ceil((17 / 5))
     out: "4"
   rust:
     in: ceil((n(17) / n(5)))
     out: "4"
-  sympy:
-    in: ceiling((S(17) / 5))
-    out: "4"
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3:
+  epsil:
+    in: Ceil(-3.7)
+    out: "-3"
+  tex:
+    in: \lceil-3.7\rceil
+    out: "-3"
+  fullform:
+    in: Ceiling[-3.7]
   wolfram:
     in: Ceiling[-3.7]
     out: "-3"
     tex:
       in: \lceil -3.7\rceil
       out: "-3"
+  sympy:
+    in: ceiling(-3.7)
+    out: "-3"
+  mpmath:
+    in: ceil(-3.7)
+    out: "-3.0"
   sage:
     in: ceil(-3.7)
     out: "-3"
   rust:
     in: ceil(x(-3.7))
     out: "-3.0"
-  mpmath:
-    in: ceil((-3.7))
-    out: "-3.0"
-  sympy:
-    in: ceiling((-3.7))
-    out: "-3"
 nan-propagates-rather-than-erroring:
+  epsil:
+    in: Ceil(`NaN`)
+    out: "`NaN`"
+  tex:
+    in: \lceil\operatorname{NaN}\rceil
+    out: \operatorname{NaN}
+  fullform:
+    in: Ceiling[Indeterminate]
   wolfram:
     in: Ceiling[Indeterminate]
     out: Indeterminate
@@ -155,37 +233,148 @@ nan-propagates-rather-than-erroring:
       in: \lceil \text{Indeterminate}\rceil
       out: \text{Indeterminate}
 ceil-2p4:
-  mpmath:
-    in: ceil(2.4)
-    out: "3.0"
+  epsil:
+    in: Ceil(2.4)
+    out: "3"
+  tex:
+    in: \lceil2.4\rceil
+    out: "3"
+  fullform:
+    in: Ceiling[2.4]
+  wolfram:
+    in: Ceiling[2.4]
   sympy:
     in: ceiling(2.4)
-    out: "3"
-ceil-2p6:
   mpmath:
-    in: ceil(2.6)
-    out: "3.0"
+    in: ceil(2.4)
+  sage:
+    in: ceil(2.4)
+  rust:
+    in: ceil(x(2.4))
+ceil-2p6:
+  epsil:
+    in: Ceil(2.6)
+    out: "3"
+  tex:
+    in: \lceil2.6\rceil
+    out: "3"
+  fullform:
+    in: Ceiling[2.6]
+  wolfram:
+    in: Ceiling[2.6]
   sympy:
     in: ceiling(2.6)
-    out: "3"
-exact-radicals-are-decided-numerically:
   mpmath:
-    in: ceil(sqrt(50))
-    out: "8.0"
+    in: ceil(2.6)
+  sage:
+    in: ceil(2.6)
+  rust:
+    in: ceil(x(2.6))
+stays-symbolic:
+  epsil:
+    in: Ceil(x)
+    out: Ceil(x)
+  tex:
+    in: \lceil x\rceil
+    out: \lceil x\rceil
+  fullform:
+    in: Ceiling[x]
+exact-radicals-are-decided-numerically:
+  epsil:
+    in: Ceil(Sqrt(50))
+    out: "8"
+  tex:
+    in: \lceil\sqrt{50}\rceil
+    out: "8"
+  fullform:
+    in: Ceiling[Sqrt[50]]
+  wolfram:
+    in: Ceiling[Sqrt[50]]
   sympy:
     in: ceiling(sqrt(50))
-    out: "8"
-evaluates-at-an-exact-constant-lceil-pi-rceil-4:
   mpmath:
-    in: ceil(pi)
-    out: "4.0"
+    in: ceil(sqrt(50))
+  sage:
+    in: ceil(sqrt(50))
+  rust:
+    in: ceil(sqrt(n(50)))
+evaluates-at-an-exact-constant-lceil-pi-rceil-4:
+  epsil:
+    in: Ceil(Pi)
+    out: "4"
+  tex:
+    in: \lceil\pi\rceil
+    out: "4"
+  fullform:
+    in: Ceiling[Pi]
+  wolfram:
+    in: Ceiling[Pi]
   sympy:
     in: ceiling(pi)
-    out: "4"
-rounds-the-real-and-imaginary-parts-up:
   mpmath:
-    in: ceil(mpc(5.37, (-1.3)))
-    out: (6.0 - 1.0j)
+    in: ceil(pi)
+  sage:
+    in: ceil(pi)
+  rust:
+    in: ceil(x(std::f64::consts::PI))
+a-second-argument-rounds-up-to-a-multiple-of-it:
+  epsil:
+    in: Ceil(226, 10)
+    out: "230"
+  tex:
+    in: \lceil226\rceil
+    out: "230"
+  fullform:
+    in: Ceiling[226, 10]
+  wolfram:
+    in: Ceiling[226, 10]
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10:
+  epsil:
+    in: Ceil(-10.3, 3.5)
+    out: "-7"
+  tex:
+    in: \lceil-10.3\rceil
+    out: "-7"
+  fullform:
+    in: Ceiling[-10.3, 3.5]
+  wolfram:
+    in: Ceiling[-10.3, 3.5]
+nor-rational-2-pi-e-approx-3-57-rounds-up-to-the:
+  epsil:
+    in: Ceil(2Pi - ExponentialE, 5 / 4)
+    out: 15 / 4
+  tex:
+    in: \lceil2\pi-e\rceil
+    out: \frac{15}{4}
+  fullform:
+    in: Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]
+  wolfram:
+    in: Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]
+rounds-the-real-and-imaginary-parts-up:
+  epsil:
+    in: Ceil(5.37 + -1.3 * i)
+    out: 6 + -1 * i
+  tex:
+    in: \lceil5.37-1.3i\rceil
+    out: 6-i
+  fullform:
+    in: Ceiling[Complex[5.37, -1.3]]
+  wolfram:
+    in: Ceiling[Complex[5.37, -1.3]]
   sympy:
-    in: ceiling((5.37 + (-1.3)*I))
-    out: 6 - I
+    in: ceiling((5.37 + -1.3*I))
+  mpmath:
+    in: ceil(mpc(5.37, -1.3))
+  sage:
+    in: ceil((5.37 + -1.3*I))
+ten-bits-are-enough-to-number-1000-items-lceil:
+  epsil:
+    in: Ceil(Log(1_000, 2))
+    out: "10"
+  tex:
+    in: \lceil\log_{2}(1\,000)\rceil
+    out: "10"
+  fullform:
+    in: Ceiling[Log[2, 1000]]
+  wolfram:
+    in: Ceiling[Log[2, 1000]]

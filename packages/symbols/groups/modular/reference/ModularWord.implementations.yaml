@@ -1,0 +1,144 @@
+the-shortest-geodesic:
+  epsil:
+    in: ModularWord(ModularMatrix(1, 1, 1, 2))
+    out: '"LR"'
+  tex:
+    in: \mathrm{ModularWord}(\mathrm{ModularMatrix}(1, 1, 1, 2))
+    out: \text{LR}
+  traditional:
+    in: \mathrm{ModularWord}(\begin{pmatrix}1&1\\1&2\end{pmatrix})
+    out: \text{LR}
+  fullform:
+    in: ModularWord[ModularMatrix[1, 1, 1, 2]]
+a-word-evaluates-as-its-matrix:
+  epsil:
+    in: ModularTrace("LRLR")
+    out: "7"
+  tex:
+    in: \mathrm{ModularTrace}(\text{LRLR})
+    out: "7"
+  fullform:
+    in: ModularTrace["LRLR"]
+t-5-fixes-a-cusp:
+  epsil:
+    in: ModularKind(ModularMatrix(1, 5, 0, 1))
+    out: '"Parabolic"'
+  tex:
+    in: \mathrm{ModularKind}(\mathrm{ModularMatrix}(1, 5, 0, 1))
+    out: \text{Parabolic}
+  traditional:
+    in: \mathrm{ModularKind}(\begin{pmatrix}1&5\\0&1\end{pmatrix})
+    out: \text{Parabolic}
+  fullform:
+    in: ModularKind[ModularMatrix[1, 5, 0, 1]]
+the-s-t-exponents-are-a-continued-fraction:
+  epsil:
+    in: ModularSTWord(ModularMatrix(1, 5, 0, 1))
+    out: "[5]"
+  tex:
+    in: \mathrm{ModularSTWord}(\mathrm{ModularMatrix}(1, 5, 0, 1))
+    out: \bigl\lbrack5\bigr\rbrack
+  traditional:
+    in: \mathrm{ModularSTWord}(\begin{pmatrix}1&5\\0&1\end{pmatrix})
+    out: \bigl\lbrack5\bigr\rbrack
+  fullform:
+    in: ModularSTWord[ModularMatrix[1, 5, 0, 1]]
+the-identity-matrix:
+  epsil:
+    in: ModularKind(ModularMatrix(1, 0, 0, 1))
+    out: '"Identity"'
+  tex:
+    in: \mathrm{ModularKind}(\mathrm{ModularMatrix}(1, 0, 0, 1))
+    out: \text{Identity}
+  traditional:
+    in: \mathrm{ModularKind}(\begin{pmatrix}1&0\\0&1\end{pmatrix})
+    out: \text{Identity}
+  fullform:
+    in: ModularKind[ModularMatrix[1, 0, 0, 1]]
+s-is-elliptic:
+  epsil:
+    in: ModularKind(ModularMatrix(0, -1, 1, 0))
+    out: '"Elliptic"'
+  tex:
+    in: \mathrm{ModularKind}(\mathrm{ModularMatrix}(0, -1, 1, 0))
+    out: \text{Elliptic}
+  traditional:
+    in: \mathrm{ModularKind}(\begin{pmatrix}0&-1\\1&0\end{pmatrix})
+    out: \text{Elliptic}
+  fullform:
+    in: ModularKind[ModularMatrix[0, -1, 1, 0]]
+t-is-parabolic:
+  epsil:
+    in: ModularKind(ModularMatrix(1, 1, 0, 1))
+    out: '"Parabolic"'
+  tex:
+    in: \mathrm{ModularKind}(\mathrm{ModularMatrix}(1, 1, 0, 1))
+    out: \text{Parabolic}
+  traditional:
+    in: \mathrm{ModularKind}(\begin{pmatrix}1&1\\0&1\end{pmatrix})
+    out: \text{Parabolic}
+  fullform:
+    in: ModularKind[ModularMatrix[1, 1, 0, 1]]
+lr-is-hyperbolic:
+  epsil:
+    in: ModularKind(ModularMatrix(1, 1, 1, 2))
+    out: '"Hyperbolic"'
+  tex:
+    in: \mathrm{ModularKind}(\mathrm{ModularMatrix}(1, 1, 1, 2))
+    out: \text{Hyperbolic}
+  traditional:
+    in: \mathrm{ModularKind}(\begin{pmatrix}1&1\\1&2\end{pmatrix})
+    out: \text{Hyperbolic}
+  fullform:
+    in: ModularKind[ModularMatrix[1, 1, 1, 2]]
+the-trace-of-a-plain-matrix:
+  epsil:
+    in: ModularTrace(ModularMatrix(1, 1, 1, 2))
+    out: "3"
+  tex:
+    in: \mathrm{ModularTrace}(\mathrm{ModularMatrix}(1, 1, 1, 2))
+    out: "3"
+  traditional:
+    in: \mathrm{ModularTrace}(\begin{pmatrix}1&1\\1&2\end{pmatrix})
+    out: "3"
+  fullform:
+    in: ModularTrace[ModularMatrix[1, 1, 1, 2]]
+the-trace-of-a-bare-word:
+  epsil:
+    in: ModularTrace("LR")
+    out: "3"
+  tex:
+    in: \mathrm{ModularTrace}(\text{LR})
+    out: "3"
+  fullform:
+    in: ModularTrace["LR"]
+a-word-wrapped-as-modularmatrix:
+  epsil:
+    in: ModularTrace(ModularMatrix("LRLR"))
+    out: "7"
+  tex:
+    in: \mathrm{ModularTrace}(\mathrm{ModularMatrix}(\text{LRLR}))
+    out: "7"
+  fullform:
+    in: ModularTrace[ModularMatrix["LRLR"]]
+a-nested-list-matrix-works-too:
+  epsil:
+    in: ModularTrace([[1, 1], [1, 2]])
+    out: "3"
+  tex:
+    in: \mathrm{ModularTrace}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack)
+    out: "3"
+  fullform:
+    in: ModularTrace[List[List[1, 1], List[1, 2]]]
+the-s-t-round-trip-can-negate:
+  epsil:
+    in: ModularTrace(ModularFromSTWord(ModularSTWord(ModularMatrix(3, 2, 4, 3))))
+    out: "-6"
+  tex:
+    in: \mathrm{ModularTrace}(\mathrm{ModularFromSTWord}(\mathrm{ModularSTWord}(\mathrm{ModularMatrix}(3, 2, 4, 3))))
+    out: "-6"
+  traditional:
+    in: \mathrm{ModularTrace}(\mathrm{ModularFromSTWord}(\mathrm{ModularSTWord}(\begin{pmatrix}3&2\\4&3\end{pmatrix})))
+    out: "-6"
+  fullform:
+    in: ModularTrace[ModularFromSTWord[ModularSTWord[ModularMatrix[3, 2, 4, 3]]]]

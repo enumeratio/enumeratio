@@ -1,0 +1,31 @@
+name: Ramp
+domain: Elementary functions
+signature: Ramp(x)
+summary: "The ramp function: x for x >= 0, 0 for x < 0."
+signatures:
+  - call: Ramp(x)
+    description: max(x, 0).
+    library: "@enumeratio/analytic"
+details:
+  - Ramp(x) = x * UnitStep(x) -- continuous, so Ramp(0) = 0 needs no special case.
+  - D(Ramp(x), x) = Piecewise({{0, x < 0}, {1, x > 0}}, Indeterminate) -- NOT [[UnitStep]](x), which would be defined (as 1) at x = 0; Ramp's own slope there is undefined.
+examples:
+  - id: ramp-negative
+    expr: [Ramp, -2]
+    expected: 0
+  - id: ramp-positive
+    expr: [Ramp, 3]
+    expected: 3
+  - id: ramp-zero
+    expr: [Ramp, 0]
+    expected: 0
+  - id: ramp-equals-x-times-unitstep
+    expr: [Equal, [Ramp, 5], [Multiply, 5, [UnitStep, 5]]]
+    expected: True
+    category: Properties
+    caption: Ramp(x) = x * [[UnitStep]](x)
+  - id: ramp-derivative
+    expr: [D, [Ramp, x], x]
+    expected: [Piecewise, [List, [List, 0, [Less, x, 0]], [List, 1, [Less, 0, x]]], Indeterminate]
+    category: Properties
+    caption: 0 or 1 away from the kink, undefined at x = 0

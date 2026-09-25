@@ -1,4 +1,12 @@
 digitcount-2-147:
+  epsil:
+    in: DigitCount(2_147)
+    out: "[1, 1, 0, 1, 0, 0, 1, 0, 0, 0]"
+  tex:
+    in: \mathrm{DigitCount}(2\,147)
+    out: \bigl\lbrack1, 1, 0, 1, 0, 0, 1, 0, 0, 0\bigr\rbrack
+  fullform:
+    in: DigitCount[2147]
   wolfram:
     in: DigitCount[2147]
     out: "{1, 1, 0, 1, 0, 0, 1, 0, 0, 0}"
@@ -6,6 +14,14 @@ digitcount-2-147:
       in: \text{DigitCount}[2147]
       out: \{1,1,0,1,0,0,1,0,0,0\}
 in-base-2-counts-of-digit-1-then-digit-0:
+  epsil:
+    in: DigitCount(2_147, 2)
+    out: "[5, 7]"
+  tex:
+    in: \mathrm{DigitCount}(2\,147, 2)
+    out: \bigl\lbrack5, 7\bigr\rbrack
+  fullform:
+    in: DigitCount[2147, 2]
   wolfram:
     in: DigitCount[2147, 2]
     out: "{5, 7}"
@@ -13,6 +29,14 @@ in-base-2-counts-of-digit-1-then-digit-0:
       in: \text{DigitCount}[2147,2]
       out: \{5,7\}
 the-3-argument-form-isolates-a-single-digit-s:
+  epsil:
+    in: DigitCount(2_147, 10, 1)
+    out: "1"
+  tex:
+    in: \mathrm{DigitCount}(2\,147, 10, 1)
+    out: "1"
+  fullform:
+    in: DigitCount[2147, 10, 1]
   wolfram:
     in: DigitCount[2147, 10, 1]
     out: "1"
@@ -20,13 +44,117 @@ the-3-argument-form-isolates-a-single-digit-s:
       in: \text{DigitCount}[2147,10,1]
       out: "1"
 three-trailing-zeros-not-four-122000-has-digits:
+  epsil:
+    in: DigitCount(122_000, 10, 0)
+    out: "3"
+  tex:
+    in: \mathrm{DigitCount}(122\,000, 10, 0)
+    out: "3"
+  fullform:
+    in: DigitCount[122000, 10, 0]
   wolfram:
     in: DigitCount[122000, 10, 0]
     out: "3"
     tex:
       in: \text{DigitCount}[122000,10,0]
       out: "3"
+2147-100001100011-2-has-five-1-bits:
+  epsil:
+    in: DigitCount(2_147, 2, 1)
+    out: "5"
+  tex:
+    in: \mathrm{DigitCount}(2\,147, 2, 1)
+    out: "5"
+  fullform:
+    in: DigitCount[2147, 2, 1]
+  wolfram:
+    in: DigitCount[2147, 2, 1]
+digitcount-122-000:
+  epsil:
+    in: DigitCount(122_000)
+    out: "[1, 2, 0, 0, 0, 0, 0, 0, 0, 3]"
+  tex:
+    in: \mathrm{DigitCount}(122\,000)
+    out: \bigl\lbrack1, 2, 0, 0, 0, 0, 0, 0, 0, 3\bigr\rbrack
+  fullform:
+    in: DigitCount[122000]
+  wolfram:
+    in: DigitCount[122000]
+an-explicit-base-10-is-the-default:
+  epsil:
+    in: DigitCount(122_000, 10)
+    out: "[1, 2, 0, 0, 0, 0, 0, 0, 0, 3]"
+  tex:
+    in: \mathrm{DigitCount}(122\,000, 10)
+    out: \bigl\lbrack1, 2, 0, 0, 0, 0, 0, 0, 0, 3\bigr\rbrack
+  fullform:
+    in: DigitCount[122000, 10]
+  wolfram:
+    in: DigitCount[122000, 10]
+the-digits-of-100-30-of-them-zeros:
+  epsil:
+    in: DigitCount(100!)
+    out: "[15, 19, 10, 10, 14, 19, 7, 14, 20, 30]"
+  tex:
+    in: \mathrm{DigitCount}(100!)
+    out: \bigl\lbrack15, 19, 10, 10, 14, 19, 7, 14, 20, 30\bigr\rbrack
+  fullform:
+    in: DigitCount[Factorial[100]]
+  wolfram:
+    in: DigitCount[Factorial[100]]
+a-width-counts-padding-zeros-too-000122000-has:
+  epsil:
+    in: DigitCount(122_000, 10, 0, 9)
+    out: "6"
+  tex:
+    in: \mathrm{DigitCount}(122\,000, 10, 0, 9)
+    out: "6"
+  fullform:
+    in: DigitCount[122000, 10, 0, 9]
+  wolfram:
+    in: DigitCount[122000, 10, 0, 9]
+a-list-of-digit-values-gives-one-count-each:
+  epsil:
+    in: DigitCount(242_442_422, 3, [1, 2])
+    out: "[6, 7]"
+  tex:
+    in: \mathrm{DigitCount}(242\,442\,422, 3, \bigl\lbrack1, 2\bigr\rbrack)
+    out: \bigl\lbrack6, 7\bigr\rbrack
+  fullform:
+    in: DigitCount[242442422, 3, List[1, 2]]
+  wolfram:
+    in: DigitCount[242442422, 3, List[1, 2]]
+counts-over-the-12-least-significant-base-3:
+  epsil:
+    in: DigitCount(242_442_422, 3, [1, 2], 12)
+    out: "[4, 4]"
+  tex:
+    in: \mathrm{DigitCount}(242\,442\,422, 3, \bigl\lbrack1, 2\bigr\rbrack, 12)
+    out: \bigl\lbrack4, 4\bigr\rbrack
+  fullform:
+    in: DigitCount[242442422, 3, List[1, 2], 12]
+  wolfram:
+    in: DigitCount[242442422, 3, List[1, 2], 12]
+0-has-one-digit-a-zero:
+  epsil:
+    in: DigitCount(0)
+    out: "[0, 0, 0, 0, 0, 0, 0, 0, 0, 1]"
+  tex:
+    in: \mathrm{DigitCount}(0)
+    out: \bigl\lbrack0, 0, 0, 0, 0, 0, 0, 0, 0, 1\bigr\rbrack
+  fullform:
+    in: DigitCount[0]
+  wolfram:
+    in: DigitCount[0]
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: DigitCount([23, 45])
+    out: "[[0, 1, 1, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0]]"
+  tex:
+    in: \mathrm{DigitCount}(\bigl\lbrack23, 45\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack0, 1, 1, 0, 0, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1, 0, 0, 0, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: DigitCount[List[23, 45]]
   wolfram:
     in: DigitCount[List[23, 45]]
     out: "{{0, 1, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 0, 0, 0, 0, 0}}"

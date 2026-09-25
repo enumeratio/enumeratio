@@ -1,0 +1,56 @@
+the-pythagorean-identity:
+  epsil:
+    in: FullSimplify(Sin(x) ^ 2 + Cos(x) ^ 2)
+    out: "1"
+  tex:
+    in: \mathrm{FullSimplify}(\sin(x)^2+\cos(x)^2)
+    out: "1"
+  fullform:
+    in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
+recognizes-the-definition-of-sinh:
+  epsil:
+    in: FullSimplify((Exp(x) - Exp(-x)) / 2)
+    out: Sinh(x)
+  tex:
+    in: \mathrm{FullSimplify}(\frac{1}{2}(e^{x}-\exp(-x)))
+    out: \sinh(x)
+  fullform:
+    in: FullSimplify[Divide[Subtract[Exp[x], Exp[Minus[x]]], 2]]
+folds-the-double-angle-product:
+  epsil:
+    in: FullSimplify(2 * Sin(x) * Cos(x))
+    out: Sin(2x)
+  tex:
+    in: \mathrm{FullSimplify}(2\sin(x)\cos(x))
+    out: \sin(2x)
+  fullform:
+    in: FullSimplify[Times[2, Sin[x], Cos[x]]]
+the-functional-equation-of-gamma:
+  epsil:
+    in: FullSimplify(Gamma(x + 1) / Gamma(x))
+    out: x
+  tex:
+    in: \mathrm{FullSimplify}(\frac{\Gamma(x+1)}{\Gamma(x)})
+    out: x
+  fullform:
+    in: FullSimplify[Divide[Gamma[Plus[x, 1]], Gamma[x]]]
+denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3:
+  epsil:
+    in: FullSimplify(Sqrt(2) + Sqrt(3) - Sqrt(5 + 2 * Sqrt(6)))
+    out: "0"
+  tex:
+    in: \mathrm{FullSimplify}((\sqrt{2}+\sqrt{3})-\sqrt{5+2\sqrt{6}})
+    out: "0"
+  fullform:
+    in: FullSimplify[Subtract[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]]
+  wolfram:
+    in: FullSimplify[Subtract[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]]
+the-hyperbolic-pythagorean-identity:
+  epsil:
+    in: FullSimplify(Cosh(x) ^ 2 - Sinh(x) ^ 2)
+    out: "1"
+  tex:
+    in: \mathrm{FullSimplify}(\cosh(x)^2-\sinh(x)^2)
+    out: "1"
+  fullform:
+    in: FullSimplify[Subtract[Power[Cosh[x], 2], Power[Sinh[x], 2]]]

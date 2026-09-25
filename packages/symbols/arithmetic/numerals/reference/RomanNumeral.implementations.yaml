@@ -1,0 +1,55 @@
+romannumeral-1-988:
+  epsil:
+    in: RomanNumeral(1_988)
+    out: '"MCMLXXXVIII"'
+  tex:
+    in: \mathrm{RomanNumeral}(1\,988)
+    out: \text{MCMLXXXVIII}
+  fullform:
+    in: RomanNumeral[1988]
+  wolfram:
+    in: RomanNumeral[1988]
+the-largest-with-standard-symbols:
+  epsil:
+    in: RomanNumeral(3_999)
+    out: '"MMMCMXCIX"'
+  tex:
+    in: \mathrm{RomanNumeral}(3\,999)
+    out: \text{MMMCMXCIX}
+  fullform:
+    in: RomanNumeral[3999]
+  wolfram:
+    in: RomanNumeral[3999]
+romannumeral-2-024:
+  epsil:
+    in: RomanNumeral(2_024)
+    out: '"MMXXIV"'
+  tex:
+    in: \mathrm{RomanNumeral}(2\,024)
+    out: \text{MMXXIV}
+  fullform:
+    in: RomanNumeral[2024]
+  wolfram:
+    in: RomanNumeral[2024]
+listable-4-is-written-subtractively:
+  epsil:
+    in: RomanNumeral([1, 2, 3, 4])
+    out: '["I", "II", "III", "IV"]'
+  tex:
+    in: \mathrm{RomanNumeral}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack\text{I}, \text{II}, \text{III}, \text{IV}\bigr\rbrack
+  fullform:
+    in: RomanNumeral[List[1, 2, 3, 4]]
+  wolfram:
+    in: RomanNumeral[List[1, 2, 3, 4]]
+zero-is-written-n-for-nulla:
+  epsil:
+    in: RomanNumeral(0)
+    out: '"N"'
+  tex:
+    in: \mathrm{RomanNumeral}(0)
+    out: \text{N}
+  fullform:
+    in: RomanNumeral[0]
+  wolfram:
+    in: RomanNumeral[0]

@@ -1,4 +1,15 @@
 2000-5-3-cdot-16:
+  epsil:
+    in: IntegerExponent(2_000, 5)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerExponent}(2\,000, 5)
+    out: "3"
+  traditional:
+    in: v_{5}(2\,000)
+    out: "3"
+  fullform:
+    in: IntegerExponent[2000, 5]
   wolfram:
     in: IntegerExponent[2000, 5]
     out: "3"
@@ -9,6 +20,17 @@
     in: multiplicity(5, 2000)
     out: "3"
 base-10-by-default:
+  epsil:
+    in: IntegerExponent(2_000)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerExponent}(2\,000)
+    out: "3"
+  traditional:
+    in: v_{10}(2\,000)
+    out: "3"
+  fullform:
+    in: IntegerExponent[2000]
   wolfram:
     in: IntegerExponent[2000]
     out: "3"
@@ -16,6 +38,17 @@ base-10-by-default:
       in: \text{IntegerExponent}[2000]
       out: "3"
 integerexponent-0-5:
+  epsil:
+    in: IntegerExponent(0, 5)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{IntegerExponent}(0, 5)
+    out: \infty
+  traditional:
+    in: v_{5}(0)
+    out: \infty
+  fullform:
+    in: IntegerExponent[0, 5]
   wolfram:
     in: IntegerExponent[0, 5]
     out: Infinity
@@ -28,29 +61,136 @@ integerexponent-0-5:
     verdict: error
     kind: domain
     note: compute-engine answers ∞ for the multiplicity of p in 0; SymPy's multiplicity declines.
+trailing-zeros-in-base-10:
+  epsil:
+    in: IntegerExponent(1_230_000)
+    out: "4"
+  tex:
+    in: \mathrm{IntegerExponent}(1\,230\,000)
+    out: "4"
+  traditional:
+    in: v_{10}(1\,230\,000)
+    out: "4"
+  fullform:
+    in: IntegerExponent[1230000]
+  wolfram:
+    in: IntegerExponent[1230000]
 integerexponent-2-pow-10-times-3-pow-4-2:
+  epsil:
+    in: IntegerExponent(2 ^ 10 * 3 ^ 4, 2)
+    out: "10"
+  tex:
+    in: \mathrm{IntegerExponent}(2^{10}\times3^4, 2)
+    out: "10"
+  traditional:
+    in: v_{2}(2^{10}\times3^4)
+    out: "10"
+  fullform:
+    in: IntegerExponent[Times[Power[2, 10], Power[3, 4]], 2]
+  wolfram:
+    in: IntegerExponent[Times[Power[2, 10], Power[3, 4]], 2]
   sympy:
     in: multiplicity(2, ((2**10) * (3**4)))
-    out: "10"
 composite-base-1728-2-6-3-3-so-6-3-divides-it:
+  epsil:
+    in: IntegerExponent(1_728, 6)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerExponent}(1\,728, 6)
+    out: "3"
+  traditional:
+    in: v_{6}(1\,728)
+    out: "3"
+  fullform:
+    in: IntegerExponent[1728, 6]
+  wolfram:
+    in: IntegerExponent[1728, 6]
   sympy:
     in: multiplicity(6, 1728)
+negative-integers:
+  epsil:
+    in: IntegerExponent(-1_000)
     out: "3"
+  tex:
+    in: \mathrm{IntegerExponent}(-1\,000)
+    out: "3"
+  traditional:
+    in: v_{10}(-1\,000)
+    out: "3"
+  fullform:
+    in: IntegerExponent[-1000]
+  wolfram:
+    in: IntegerExponent[-1000]
+threads-over-a-list:
+  epsil:
+    in: IntegerExponent([10, 100, 1_000])
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{IntegerExponent}(\bigl\lbrack10, 100, 1\,000\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: IntegerExponent[List[10, 100, 1000]]
+  wolfram:
+    in: IntegerExponent[List[10, 100, 1000]]
 gaussian-integers-8i-i-cdot-i-3-1-i-6:
+  epsil:
+    in: IntegerExponent(8i, 1 + i)
+    out: "6"
+  tex:
+    in: \mathrm{IntegerExponent}(8i, 1+i)
+    out: "6"
+  traditional:
+    in: v_{1+i}(8i)
+    out: "6"
+  fullform:
+    in: IntegerExponent[Complex[0, 8], Complex[1, 1]]
+  wolfram:
+    in: IntegerExponent[Complex[0, 8], Complex[1, 1]]
   sympy:
     in: multiplicity((1 + 1*I), (0 + 8*I))
-    out: "ValueError: expecting ints or fractions, got 1 + I and 8*I"
-    verdict: error
-    kind: domain
-    note: SymPy's multiplicity only takes plain integers or fractions; ours supports Gaussian-integer valuation deliberately (see this head's Scope examples).
+the-trailing-zeros-of-100:
+  epsil:
+    in: IntegerExponent(100!)
+    out: "24"
+  tex:
+    in: \mathrm{IntegerExponent}(100!)
+    out: "24"
+  traditional:
+    in: v_{10}(100!)
+    out: "24"
+  fullform:
+    in: IntegerExponent[Factorial[100]]
+  wolfram:
+    in: IntegerExponent[Factorial[100]]
 legendre-s-formula-lfloor-100-7-rfloor-lfloor:
+  epsil:
+    in: IntegerExponent(100!, 7)
+    out: "16"
+  tex:
+    in: \mathrm{IntegerExponent}(100!, 7)
+    out: "16"
+  traditional:
+    in: v_{7}(100!)
+    out: "16"
+  fullform:
+    in: IntegerExponent[Factorial[100], 7]
+  wolfram:
+    in: IntegerExponent[Factorial[100], 7]
   sympy:
     in: multiplicity(7, factorial(100))
-    out: "16"
 base-1-has-no-well-defined-p-adic-valuation-so:
+  epsil:
+    in: IntegerExponent(10, 1)
+    out: IntegerExponent(10, 1)
+  tex:
+    in: \mathrm{IntegerExponent}(10, 1)
+    out: \mathrm{IntegerExponent}(10, 1)
+  traditional:
+    in: v_{1}(10)
+    out: v_{1}(10)
+  fullform:
+    in: IntegerExponent[10, 1]
+  wolfram:
+    in: IntegerExponent[10, 1]
   sympy:
     in: multiplicity(1, 10)
-    out: "ValueError: factor must be > 1"
-    verdict: error
-    kind: undefined-form
-    note: Both decline at base 1 -- ours stays unevaluated (see the caption), SymPy's multiplicity raises.

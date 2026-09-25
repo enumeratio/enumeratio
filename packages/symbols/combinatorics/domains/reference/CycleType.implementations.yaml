@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: CycleType(Permutation([2, 3, 1]))
+    out: IntegerPartition([3])
+  tex:
+    in: \mathrm{CycleType}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{IntegerPartition}(\bigl\lbrack3\bigr\rbrack)
+  fullform:
+    in: CycleType[Permutation[List[2, 3, 1]]]

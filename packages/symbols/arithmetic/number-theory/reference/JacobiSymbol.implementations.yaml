@@ -1,4 +1,15 @@
 0-whenever-n-and-m-share-a-factor:
+  epsil:
+    in: JacobiSymbol(10, 5)
+    out: "0"
+  tex:
+    in: \mathrm{JacobiSymbol}(10, 5)
+    out: "0"
+  traditional:
+    in: \left(\frac{10}{5}\right)
+    out: "0"
+  fullform:
+    in: JacobiSymbol[10, 5]
   wolfram:
     in: JacobiSymbol[10, 5]
     out: "0"
@@ -6,6 +17,17 @@
       in: \left(\frac{10}{5}\right)
       out: "0"
 3-is-not-a-quadratic-residue-mod-5-the-residues:
+  epsil:
+    in: JacobiSymbol(3, 5)
+    out: "-1"
+  tex:
+    in: \mathrm{JacobiSymbol}(3, 5)
+    out: "-1"
+  traditional:
+    in: \left(\frac{3}{5}\right)
+    out: "-1"
+  fullform:
+    in: JacobiSymbol[3, 5]
   wolfram:
     in: JacobiSymbol[3, 5]
     out: "-1"
@@ -13,6 +35,17 @@
       in: \left(\frac{3}{5}\right)
       out: "-1"
 jacobisymbol-1-001-9-907:
+  epsil:
+    in: JacobiSymbol(1_001, 9_907)
+    out: "-1"
+  tex:
+    in: \mathrm{JacobiSymbol}(1\,001, 9\,907)
+    out: "-1"
+  traditional:
+    in: \left(\frac{1\,001}{9\,907}\right)
+    out: "-1"
+  fullform:
+    in: JacobiSymbol[1001, 9907]
   wolfram:
     in: JacobiSymbol[1001, 9907]
     out: "-1"
@@ -20,6 +53,17 @@ jacobisymbol-1-001-9-907:
       in: \left(\frac{1001}{9907}\right)
       out: "-1"
 by-convention-the-symbol-is-1-whenever-m-1:
+  epsil:
+    in: JacobiSymbol(0, 1)
+    out: "1"
+  tex:
+    in: \mathrm{JacobiSymbol}(0, 1)
+    out: "1"
+  traditional:
+    in: \left(\frac{0}{1}\right)
+    out: "1"
+  fullform:
+    in: JacobiSymbol[0, 1]
   wolfram:
     in: JacobiSymbol[0, 1]
     out: "1"
@@ -27,6 +71,17 @@ by-convention-the-symbol-is-1-whenever-m-1:
       in: \left(\frac{0}{1}\right)
       out: "1"
 completely-multiplicative-in-the-top-argument-a:
+  epsil:
+    in: JacobiSymbol(3, 7) * JacobiSymbol(5, 7) == JacobiSymbol(3 * 5, 7)
+    out: True
+  tex:
+    in: \mathrm{JacobiSymbol}(3, 7)\mathrm{JacobiSymbol}(5, 7)=\mathrm{JacobiSymbol}(3\times5, 7)
+    out: \top
+  traditional:
+    in: \left(\frac{3}{7}\right)\left(\frac{5}{7}\right)=\left(\frac{3\times5}{7}\right)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Times[JacobiSymbol[3, 7], JacobiSymbol[5, 7]], JacobiSymbol[Times[3, 5], 7]]
   wolfram:
     in: (Times[JacobiSymbol[3, 7], JacobiSymbol[5, 7]] == JacobiSymbol[Times[3, 5], 7])
     out: True
@@ -34,9 +89,73 @@ completely-multiplicative-in-the-top-argument-a:
       in: \left(\frac{3}{7}\right) \left(\frac{5}{7}\right)=\left(\frac{3\ 5}{7}\right)
       out: \text{True}
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: JacobiSymbol([2, 3, 5, 7, 11], 3)
+    out: "[-1, 0, -1, 1, -1]"
+  tex:
+    in: \mathrm{JacobiSymbol}(\bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack, 3)
+    out: \bigl\lbrack-1, 0, -1, 1, -1\bigr\rbrack
+  fullform:
+    in: JacobiSymbol[List[2, 3, 5, 7, 11], 3]
   wolfram:
     in: JacobiSymbol[List[2, 3, 5, 7, 11], 3]
     out: "{-1, 0, -1, 1, -1}"
     tex:
       in: \left(\frac{\{2,3,5,7,11\}}{3}\right)
       out: \{-1,0,-1,1,-1\}
+larger-arguments-10-10-1-against-the-1000th:
+  epsil:
+    in: JacobiSymbol(10 ^ 10 + 1, NthPrime(1_000))
+    out: "1"
+  tex:
+    in: \mathrm{JacobiSymbol}(10^{10}+1, \mathrm{NthPrime}(1\,000))
+    out: "1"
+  traditional:
+    in: \left(\frac{10^{10}+1}{p_{1\,000}}\right)
+    out: "1"
+  fullform:
+    in: JacobiSymbol[Plus[Power[10, 10], 1], Prime[1000]]
+  wolfram:
+    in: JacobiSymbol[Plus[Power[10, 10], 1], Prime[1000]]
+quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac:
+  epsil:
+    in: JacobiSymbol(3, 7) * JacobiSymbol(7, 3)
+    out: "-1"
+  tex:
+    in: \mathrm{JacobiSymbol}(3, 7)\mathrm{JacobiSymbol}(7, 3)
+    out: "-1"
+  traditional:
+    in: \left(\frac{3}{7}\right)\left(\frac{7}{3}\right)
+    out: "-1"
+  fullform:
+    in: Times[JacobiSymbol[3, 7], JacobiSymbol[7, 3]]
+  wolfram:
+    in: Times[JacobiSymbol[3, 7], JacobiSymbol[7, 3]]
+1-m-1-m-1-2:
+  epsil:
+    in: JacobiSymbol(-1, 7)
+    out: "-1"
+  tex:
+    in: \mathrm{JacobiSymbol}(-1, 7)
+    out: "-1"
+  traditional:
+    in: \left(\frac{-1}{7}\right)
+    out: "-1"
+  fullform:
+    in: JacobiSymbol[-1, 7]
+  wolfram:
+    in: JacobiSymbol[-1, 7]
+2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15:
+  epsil:
+    in: JacobiSymbol(2, 15)
+    out: "1"
+  tex:
+    in: \mathrm{JacobiSymbol}(2, 15)
+    out: "1"
+  traditional:
+    in: \left(\frac{2}{15}\right)
+    out: "1"
+  fullform:
+    in: JacobiSymbol[2, 15]
+  wolfram:
+    in: JacobiSymbol[2, 15]

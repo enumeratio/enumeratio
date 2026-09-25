@@ -1,0 +1,156 @@
+four-classes-of-discriminant-60:
+  epsil:
+    in: FormClassNumber(60)
+    out: "4"
+  tex:
+    in: \mathrm{FormClassNumber}(60)
+    out: "4"
+  traditional:
+    in: h(60)
+    out: "4"
+  fullform:
+    in: FormClassNumber[60]
+the-action-preserves-the-discriminant:
+  epsil:
+    in: FormDiscriminant(FormAction(QuadraticForm(1, 1, -1), ModularMatrix(1, 1, 0, 1)))
+    out: "5"
+  tex:
+    in: \mathrm{FormDiscriminant}(\mathrm{FormAction}(\mathrm{QuadraticForm}(1, 1, -1), \mathrm{ModularMatrix}(1, 1, 0, 1)))
+    out: "5"
+  traditional:
+    in: \mathrm{FormDiscriminant}(\mathrm{FormAction}(\mathrm{QuadraticForm}(1, 1, -1), \begin{pmatrix}1&1\\0&1\end{pmatrix}))
+    out: "5"
+  fullform:
+    in: FormDiscriminant[FormAction[QuadraticForm[1, 1, -1], ModularMatrix[1, 1, 0, 1]]]
+3-2-5-cdot-1-2-4:
+  epsil:
+    in: PellSolution(5)
+    out: "[3, 1]"
+  tex:
+    in: \mathrm{PellSolution}(5)
+    out: \bigl\lbrack3, 1\bigr\rbrack
+  fullform:
+    in: PellSolution[5]
+the-class-read-back-as-a-geodesic:
+  epsil:
+    in: ModularWord(FormAutomorph(QuadraticForm(1, 1, -1)))
+    out: '"LR"'
+  tex:
+    in: \mathrm{ModularWord}(\mathrm{FormAutomorph}(\mathrm{QuadraticForm}(1, 1, -1)))
+    out: \text{LR}
+  fullform:
+    in: ModularWord[FormAutomorph[QuadraticForm[1, 1, -1]]]
+the-discriminant-of-a-form:
+  epsil:
+    in: FormDiscriminant(QuadraticForm(1, 1, -1))
+    out: "5"
+  tex:
+    in: \mathrm{FormDiscriminant}(\mathrm{QuadraticForm}(1, 1, -1))
+    out: "5"
+  fullform:
+    in: FormDiscriminant[QuadraticForm[1, 1, -1]]
+indefinite-when-d-5:
+  epsil:
+    in: IsIndefinite(QuadraticForm(1, 1, -1))
+    out: True
+  tex:
+    in: \mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 1, -1))
+    out: \top
+  traditional:
+    in: \mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 1, -1))
+    out: \mathrm{True}
+  fullform:
+    in: IsIndefinite[QuadraticForm[1, 1, -1]]
+definite-when-d-4:
+  epsil:
+    in: IsIndefinite(QuadraticForm(1, 0, 1))
+    out: False
+  tex:
+    in: \mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 0, 1))
+    out: \bot
+  traditional:
+    in: \mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 0, 1))
+    out: \mathrm{False}
+  fullform:
+    in: IsIndefinite[QuadraticForm[1, 0, 1]]
+already-reduced:
+  epsil:
+    in: IsReducedForm(QuadraticForm(1, 1, -1))
+    out: True
+  tex:
+    in: \mathrm{IsReducedForm}(\mathrm{QuadraticForm}(1, 1, -1))
+    out: \top
+  traditional:
+    in: \mathrm{IsReducedForm}(\mathrm{QuadraticForm}(1, 1, -1))
+    out: \mathrm{True}
+  fullform:
+    in: IsReducedForm[QuadraticForm[1, 1, -1]]
+evaluate-a-form-at-a-point:
+  epsil:
+    in: EvaluateForm(QuadraticForm(1, 1, -1), 2, 3)
+    out: "1"
+  tex:
+    in: \mathrm{EvaluateForm}(\mathrm{QuadraticForm}(1, 1, -1), 2, 3)
+    out: "1"
+  fullform:
+    in: EvaluateForm[QuadraticForm[1, 1, -1], 2, 3]
+one-class-of-discriminant-5:
+  epsil:
+    in: FormClassNumber(5)
+    out: "1"
+  tex:
+    in: \mathrm{FormClassNumber}(5)
+    out: "1"
+  traditional:
+    in: h(5)
+    out: "1"
+  fullform:
+    in: FormClassNumber[5]
+two-classes-of-discriminant-12:
+  epsil:
+    in: FormClassNumber(12)
+    out: "2"
+  tex:
+    in: \mathrm{FormClassNumber}(12)
+    out: "2"
+  traditional:
+    in: h(12)
+    out: "2"
+  fullform:
+    in: FormClassNumber[12]
+4-2-12-cdot-1-2-4:
+  epsil:
+    in: PellSolution(12)
+    out: "[4, 1]"
+  tex:
+    in: \mathrm{PellSolution}(12)
+    out: \bigl\lbrack4, 1\bigr\rbrack
+  fullform:
+    in: PellSolution[12]
+the-automorph-fixes-the-form:
+  epsil:
+    in: FormAction(QuadraticForm(1, 1, -1), FormAutomorph(QuadraticForm(1, 1, -1)))
+    out: QuadraticForm(1, 1, -1)
+  tex:
+    in: \mathrm{FormAction}(\mathrm{QuadraticForm}(1, 1, -1), \mathrm{FormAutomorph}(\mathrm{QuadraticForm}(1, 1, -1)))
+    out: \mathrm{QuadraticForm}(1, 1, -1)
+  fullform:
+    in: FormAction[QuadraticForm[1, 1, -1], FormAutomorph[QuadraticForm[1, 1, -1]]]
+the-automorph-is-hyperbolic:
+  epsil:
+    in: ModularTrace(FormAutomorph(QuadraticForm(1, 1, -1)))
+    out: "3"
+  tex:
+    in: \mathrm{ModularTrace}(\mathrm{FormAutomorph}(\mathrm{QuadraticForm}(1, 1, -1)))
+    out: "3"
+  fullform:
+    in: ModularTrace[FormAutomorph[QuadraticForm[1, 1, -1]]]
+confirmed-by-modularkind:
+  epsil:
+    in: ModularKind(FormAutomorph(QuadraticForm(1, 1, -1)))
+    out: '"Hyperbolic"'
+  tex:
+    in: \mathrm{ModularKind}(\mathrm{FormAutomorph}(\mathrm{QuadraticForm}(1, 1, -1)))
+    out: \text{Hyperbolic}
+  fullform:
+    in: ModularKind[FormAutomorph[QuadraticForm[1, 1, -1]]]

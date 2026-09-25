@@ -1,0 +1,126 @@
+isquadraticirrational-sqrt-2:
+  epsil:
+    in: IsQuadraticIrrational(Sqrt(2))
+    out: True
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(\sqrt{2})
+    out: \top
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(\sqrt{2})
+    out: \mathrm{True}
+  fullform:
+    in: QuadraticIrrationalQ[Sqrt[2]]
+  wolfram:
+    in: QuadraticIrrationalQ[Sqrt[2]]
+the-golden-ratio:
+  epsil:
+    in: IsQuadraticIrrational((1 + Sqrt(5)) / 2)
+    out: True
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(\frac{1+\sqrt{5}}{2})
+    out: \top
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(\frac{1+\sqrt{5}}{2})
+    out: \mathrm{True}
+  fullform:
+    in: QuadraticIrrationalQ[Divide[Plus[1, Sqrt[5]], 2]]
+  wolfram:
+    in: QuadraticIrrationalQ[Divide[Plus[1, Sqrt[5]], 2]]
+a-cube-root-is-algebraic-of-degree-3:
+  epsil:
+    in: IsQuadraticIrrational(2 ^ (1 / 3))
+    out: False
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(\sqrt[3]{2})
+    out: \bot
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(\sqrt[3]{2})
+    out: \mathrm{False}
+  fullform:
+    in: QuadraticIrrationalQ[Power[2, Rational[1, 3]]]
+  wolfram:
+    in: QuadraticIrrationalQ[Power[2, Rational[1, 3]]]
+a-rational-is-not-irrational:
+  epsil:
+    in: IsQuadraticIrrational(3 / 4)
+    out: False
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(\frac{3}{4})
+    out: \bot
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(\frac{3}{4})
+    out: \mathrm{False}
+  fullform:
+    in: QuadraticIrrationalQ[Rational[3, 4]]
+  wolfram:
+    in: QuadraticIrrationalQ[Rational[3, 4]]
+transcendental:
+  epsil:
+    in: IsQuadraticIrrational(Pi)
+    out: False
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(\pi)
+    out: \bot
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(\pi)
+    out: \mathrm{False}
+  fullform:
+    in: QuadraticIrrationalQ[Pi]
+  wolfram:
+    in: QuadraticIrrationalQ[Pi]
+sqrt-4-is-rational-once-simplified:
+  epsil:
+    in: IsQuadraticIrrational(Sqrt(4))
+    out: False
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(\sqrt{4})
+    out: \bot
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(\sqrt{4})
+    out: \mathrm{False}
+  fullform:
+    in: QuadraticIrrationalQ[Sqrt[4]]
+  wolfram:
+    in: QuadraticIrrationalQ[Sqrt[4]]
+a-plain-integer:
+  epsil:
+    in: IsQuadraticIrrational(5)
+    out: False
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(5)
+    out: \bot
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(5)
+    out: \mathrm{False}
+  fullform:
+    in: QuadraticIrrationalQ[5]
+  wolfram:
+    in: QuadraticIrrationalQ[5]
+a-rational-multiple-of-a-surd:
+  epsil:
+    in: IsQuadraticIrrational(3 * Sqrt(2))
+    out: True
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(3\sqrt{2})
+    out: \top
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(3\sqrt{2})
+    out: \mathrm{True}
+  fullform:
+    in: QuadraticIrrationalQ[Times[3, Sqrt[2]]]
+  wolfram:
+    in: QuadraticIrrationalQ[Times[3, Sqrt[2]]]
+a-surd-subtracted-from-a-rational:
+  epsil:
+    in: IsQuadraticIrrational(1 - Sqrt(3))
+    out: True
+  tex:
+    in: \mathrm{IsQuadraticIrrational}(1-\sqrt{3})
+    out: \top
+  traditional:
+    in: \mathrm{IsQuadraticIrrational}(1-\sqrt{3})
+    out: \mathrm{True}
+  fullform:
+    in: QuadraticIrrationalQ[Subtract[1, Sqrt[3]]]
+  wolfram:
+    in: QuadraticIrrationalQ[Subtract[1, Sqrt[3]]]

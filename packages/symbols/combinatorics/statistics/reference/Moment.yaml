@@ -1,0 +1,34 @@
+name: Moment
+domain: Statistics
+signature: Moment(dist, r)
+summary: The raw moment $E[X^r]$.
+signatures:
+  - call: Moment(dist, r)
+    description: exact for $r=0,1,2$ via [[Mean]]/[[Variance]] ($E[X^2]=Variance+Mean^2$); $r\geq 3$ stays unevaluated for every distribution EXCEPT [[BernoulliDistribution]], which has an order-independent identity — a distribution-specific formula this generic layer doesn't otherwise have, not an approximation.
+    library: enumeratio-statistics
+details:
+  - Generic over every distribution this package's [[Mean]]/[[Variance]] answer, old or new.
+  - '[[BernoulliDistribution]]($p$): $X\in\{0,1\}$ so $X^r=X$ identically for any $r\geq1$, giving $Moment(r) = p$ at every order, not just $r\leq2$.'
+examples:
+  - id: moment-order-0
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 0]
+    expected: 1
+  - id: moment-order-1-is-mean
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 1]
+    expected: 3
+  - id: moment-order-2
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 2]
+    expected: 21
+  - id: moment-order-3-unevaluated
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 3]
+    expected: [Moment, [GeometricDistribution, [Rational, 1, 4]], 3]
+    category: Possible issues
+  - id: moment-bernoulli-order-5
+    expr: [Moment, [BernoulliDistribution, [Rational, 2, 5]], 5]
+    expected: [Rational, 2, 5]
+seeAlso:
+  - CentralMoment
+  - FactorialMoment
+  - Cumulant
+  - Mean
+  - Variance

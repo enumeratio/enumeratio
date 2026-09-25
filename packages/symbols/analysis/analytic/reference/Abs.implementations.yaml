@@ -1,101 +1,157 @@
 abs-neg-5:
+  epsil:
+    in: Abs(-5)
+    out: "5"
+  tex:
+    in: \vert-5\vert
+    out: "5"
+  fullform:
+    in: Abs[-5]
   wolfram:
     in: Abs[-5]
     out: "5"
     tex:
       in: "| -5|"
       out: "5"
+  sympy:
+    in: Abs(-5)
+    out: "5"
+  mpmath:
+    in: fabs(-5)
+    out: "5.0"
   sage:
     in: abs(-5)
     out: "5"
   rust:
     in: abs(n(-5))
     out: "5"
-  mpmath:
-    in: fabs((-5))
-    out: "5.0"
-  sympy:
-    in: Abs((-5))
-    out: "5"
 abs-5:
+  epsil:
+    in: Abs(5)
+    out: "5"
+  tex:
+    in: \vert5\vert
+    out: "5"
+  fullform:
+    in: Abs[5]
   wolfram:
     in: Abs[5]
     out: "5"
     tex:
       in: "| 5|"
       out: "5"
+  sympy:
+    in: Abs(5)
+    out: "5"
+  mpmath:
+    in: fabs(5)
+    out: "5.0"
   sage:
     in: abs(5)
     out: "5"
   rust:
     in: abs(n(5))
     out: "5"
-  mpmath:
-    in: fabs(5)
-    out: "5.0"
-  sympy:
-    in: Abs(5)
-    out: "5"
 0-is-the-only-value-with-x-0:
+  epsil:
+    in: Abs(0)
+    out: "0"
+  tex:
+    in: \vert0\vert
+    out: "0"
+  fullform:
+    in: Abs[0]
   wolfram:
     in: Abs[0]
     out: "0"
     tex:
       in: "| 0|"
       out: "0"
+  sympy:
+    in: Abs(0)
+    out: "0"
+  mpmath:
+    in: fabs(0)
+    out: "0.0"
   sage:
     in: abs(0)
     out: "0"
   rust:
     in: abs(n(0))
     out: "0"
-  mpmath:
-    in: fabs(0)
-    out: "0.0"
-  sympy:
-    in: Abs(0)
-    out: "0"
 abs-neg-7-over-2:
+  epsil:
+    in: Abs(-7 / 2)
+    out: 7 / 2
+  tex:
+    in: \vert-\frac{7}{2}\vert
+    out: \frac{7}{2}
+  fullform:
+    in: Abs[Rational[-7, 2]]
   wolfram:
     in: Abs[Rational[-7, 2]]
     out: 7/2
     tex:
       in: \left| -\frac{7}{2}\right|
       out: \frac{7}{2}
+  sympy:
+    in: Abs(Rational(-7, 2))
+    out: 7/2
   sage:
     in: abs((-7/2))
     out: 7/2
   rust:
     in: abs(rational(n(-7), n(2)))
     out: 7/2
-  sympy:
-    in: Abs(Rational((-7), 2))
-    out: 7/2
 the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4:
+  epsil:
+    in: Abs(3 + 4i)
+    out: "5"
+  tex:
+    in: \vert3+4i\vert
+    out: "5"
+  fullform:
+    in: Abs[Complex[3, 4]]
   wolfram:
     in: Abs[Complex[3, 4]]
     out: "5"
     tex:
       in: "| 3+4 i|"
       out: "5"
-  sage:
-    in: abs((3 + 4*I))
+  sympy:
+    in: Abs((3 + 4*I))
     out: "5"
   mpmath:
     in: fabs(mpc(3, 4))
     out: "5.0"
-  sympy:
-    in: Abs((3 + 4*I))
+  sage:
+    in: abs((3 + 4*I))
     out: "5"
 threads-element-wise-over-a-list:
+  epsil:
+    in: Abs([-1, 2, -3])
+    out: "[1, 2, 3]"
+  tex:
+    in: \vert\bigl\lbrack-1, 2, -3\bigr\rbrack\vert
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Abs[List[-1, 2, -3]]
   wolfram:
     in: Abs[List[-1, 2, -3]]
     out: "{1, 2, 3}"
     tex:
       in: '| \{-1,2,-3\}|'
       out: \{1,2,3\}
+  sympy:
+    in: "[Abs(-1), Abs(2), Abs(-3)]"
+    out: "TypeError: Bad argument type for Abs(): <class 'list'>"
+    verdict: error
+    kind: threading
+    note: compute-engine's Abs threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: "[fabs(-1), fabs(2), fabs(-3)]"
   sage:
-    in: abs([-1, 2, -3])
+    in: "[abs(-1), abs(2), abs(-3)]"
     out: "TypeError: bad operand type for abs(): 'list'"
     verdict: error
     kind: threading
@@ -106,32 +162,48 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars.
-  mpmath:
-    in: "[fabs((-1)), fabs(2), fabs((-3))]"
-    out: "[mpf('1.0'), mpf('2.0'), mpf('3.0')]"
-  sympy:
-    in: "[Abs((-1)), Abs(2), Abs((-3))]"
-    out: "[1, 2, 3]"
 even-function-x-x:
+  epsil:
+    in: Abs(-8) == Abs(8)
+    out: True
+  tex:
+    in: \vert-8\vert=\vert8\vert
+    out: \top
+  traditional:
+    in: \vert-8\vert=\vert8\vert
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Abs[-8], Abs[8]]
   wolfram:
     in: (Abs[-8] == Abs[8])
     out: True
     tex:
       in: "| -8| =| 8|"
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(Abs(-8), Abs(8))
+    out: True
+  mpmath:
+    in: almosteq(fabs(-8), fabs(8), 1e-20)
+    out: True
   sage:
     in: bool(abs(-8) == abs(8))
     out: True
   rust:
     in: equal(abs(n(-8)), abs(n(8)))
     out: "true"
-  mpmath:
-    in: almosteq(fabs((-8)), fabs(8), 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal(Abs((-8)), Abs(8))
-    out: True
 triangle-inequality-a-b-le-a-b:
+  epsil:
+    in: Abs(3 - 8) <= Abs(3) + Abs(-8)
+    out: True
+  tex:
+    in: \vert3-8\vert\le\vert3\vert+\vert-8\vert
+    out: \top
+  traditional:
+    in: \vert3-8\vert\le\vert3\vert+\vert-8\vert
+    out: \mathrm{True}
+  fullform:
+    in: LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]
   wolfram:
     in: LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]
     out: True
@@ -139,85 +211,260 @@ triangle-inequality-a-b-le-a-b:
       in: '| 3-8| \leq | 3| +| -8|'
       out: \text{True}
 the-gap-between-two-temperatures-70-and-95:
+  epsil:
+    in: Abs(70 - 95)
+    out: "25"
+  tex:
+    in: \vert70-95\vert
+    out: "25"
+  fullform:
+    in: Abs[Subtract[70, 95]]
   wolfram:
     in: Abs[Subtract[70, 95]]
     out: "25"
     tex:
       in: "| 70-95|"
       out: "25"
+  sympy:
+    in: Abs((70 - 95))
+    out: "25"
+  mpmath:
+    in: fabs((70 - 95))
+    out: "25.0"
   sage:
     in: abs((70 - 95))
     out: "25"
   rust:
     in: abs((n(70) - n(95)))
     out: "25"
-  mpmath:
-    in: fabs((70 - 95))
-    out: "25.0"
-  sympy:
-    in: Abs((70 - 95))
-    out: "25"
+doesn-t-factor-constants-out-of-a-symbolic:
+  epsil:
+    in: Abs(-3 * x)
+    out: Abs(-3 * x)
+  tex:
+    in: \vert-3x\vert
+    out: \vert-3x\vert
+  fullform:
+    in: Abs[Times[-3, x]]
 abs-neg-2p5:
-  mpmath:
-    in: fabs((-2.5))
+  epsil:
+    in: Abs(-2.5)
     out: "2.5"
+  tex:
+    in: \vert-2.5\vert
+    out: "2.5"
+  fullform:
+    in: Abs[-2.5]
+  wolfram:
+    in: Abs[-2.5]
   sympy:
-    in: Abs((-2.5))
-    out: "2.50000000000000"
-the-modulus-of-a-complex-number-with-approximate:
+    in: Abs(-2.5)
   mpmath:
-    in: fabs(mpc(1.4, 2.3))
-    out: "2.69258240356725181770864483644"
+    in: fabs(-2.5)
+  sage:
+    in: abs(-2.5)
+  rust:
+    in: abs(x(-2.5))
+the-modulus-of-a-complex-number-with-approximate:
+  epsil:
+    in: Abs(1.4 + 2.3i)
+    out: 2.692_582_403_567_252_015_63
+  tex:
+    in: \vert1.4+2.3i\vert
+    out: 2.692\,582\,403\,567\,252\,015\,63
+  fullform:
+    in: Abs[Complex[1.4, 2.3]]
+  wolfram:
+    in: Abs[Complex[1.4, 2.3]]
   sympy:
     in: Abs((1.4 + 2.3*I))
-    out: "2.69258240356725"
-exact-numeric-constants:
   mpmath:
-    in: fabs((-pi))
-    out: "3.14159265358979323846264338328"
+    in: fabs(mpc(1.4, 2.3))
+  sage:
+    in: abs((1.4 + 2.3*I))
+threads-over-a-matrix-entry-by-entry:
+  epsil:
+    in: Abs([[1 / 2, -1], [-5 / 3, 1 / 2]])
+    out: "[[1 / 2, 1], [5 / 3, 1 / 2]]"
+  tex:
+    in: \vert\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack\vert
+    out: \bigl\lbrack\bigl\lbrack\frac{1}{2}, 1\bigr\rbrack, \bigl\lbrack\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Abs[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
+  wolfram:
+    in: Abs[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
+  sympy:
+    in: "[[Abs(Rational(1, 2)), Abs(-1)], [Abs(Rational(-5, 3)), Abs(Rational(1, 2))]]"
+  sage:
+    in: "[[abs((1/2)), abs(-1)], [abs((-5/3)), abs((1/2))]]"
+  rust:
+    in: abs(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![rational(n(-5), n(3)), rational(n(1), n(2))])]))
+exact-numeric-constants:
+  epsil:
+    in: Abs(-Pi)
+    out: Pi
+  tex:
+    in: \vert-\pi\vert
+    out: \pi
+  fullform:
+    in: Abs[Minus[Pi]]
+  wolfram:
+    in: Abs[Minus[Pi]]
   sympy:
     in: Abs((-pi))
-    out: pi
-an-exact-complex-number-gives-an-exact-radical:
   mpmath:
-    in: fabs(mpc(1, 1))
-    out: "1.41421356237309504880168872421"
+    in: fabs((-pi))
+  sage:
+    in: abs((-pi))
+  rust:
+    in: abs((-(x(std::f64::consts::PI))))
+an-exact-complex-number-gives-an-exact-radical:
+  epsil:
+    in: Abs(1 + i)
+    out: Sqrt(2)
+  tex:
+    in: \vert1+i\vert
+    out: \sqrt{2}
+  fullform:
+    in: Abs[Complex[1, 1]]
+  wolfram:
+    in: Abs[Complex[1, 1]]
   sympy:
     in: Abs((1 + 1*I))
-    out: sqrt(2)
-abs-imaginaryunit:
   mpmath:
-    in: fabs(mpc(0,1))
-    out: "1.0"
+    in: fabs(mpc(1, 1))
+  sage:
+    in: abs((1 + 1*I))
+abs-imaginaryunit:
+  epsil:
+    in: Abs(ImaginaryUnit)
+    out: "1"
+  tex:
+    in: \verti\vert
+    out: "1"
+  fullform:
+    in: Abs[I]
+  wolfram:
+    in: Abs[I]
   sympy:
     in: Abs(I)
-    out: "1"
-decides-the-sign-of-an-exact-numeric-expression:
   mpmath:
-    in: fabs((sqrt(2) - 2))
-    out: "0.58578643762690495119831127579"
-  sympy:
-    in: Abs((sqrt(2) - 2))
-    out: 2 - sqrt(2)
-multiplicative-ab-a-b:
-  mpmath:
-    in: almosteq(fabs((mpc(1, 2) * mpc(3, (-1)))), (fabs(mpc(1, 2)) * fabs(mpc(3, (-1)))), 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal(Abs(((1 + 2*I) * (3 + (-1)*I))), (Abs((1 + 2*I)) * Abs((3 + (-1)*I))))
-    out: True
-the-distance-between-the-points-1-i-and-4-5i-of:
-  mpmath:
-    in: fabs((mpc(1, 1) - mpc(4, 5)))
-    out: "5.0"
-  sympy:
-    in: Abs(((1 + 1*I) - (4 + 5*I)))
-    out: "5"
-threads-over-a-matrix-entry-by-entry:
-  sympy:
-    in: "[[Abs(Rational(1, 2)), Abs((-1))], [Abs(Rational((-5), 3)), Abs(Rational(1, 2))]]"
-    out: "[[1/2, 1], [5/3, 1/2]]"
+    in: fabs(mpc(0,1))
+  sage:
+    in: abs(I)
 e-i-pi-3-lies-on-the-unit-circle:
+  epsil:
+    in: Abs(Exp(ImaginaryUnit * (Pi / 3)))
+    out: "1"
+  tex:
+    in: \vert\exp(\frac{i\pi}{3})\vert
+    out: "1"
+  fullform:
+    in: Abs[Exp[Times[I, Divide[Pi, 3]]]]
+  wolfram:
+    in: Abs[Exp[Times[I, Divide[Pi, 3]]]]
   sympy:
     in: Abs(exp((I * (S(pi) / 3))))
-    out: "1"
+  sage:
+    in: abs(exp((I * (pi / 3))))
+abs-negativeinfinity:
+  epsil:
+    in: Abs(NegativeInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \vert-\infty\vert
+    out: \infty
+  fullform:
+    in: Abs[-Infinity]
+  wolfram:
+    in: Abs[-Infinity]
+complex-infinity-has-infinite-magnitude-in-every:
+  epsil:
+    in: Abs(ComplexInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \vert\tilde\infty\vert
+    out: \infty
+  fullform:
+    in: Abs[ComplexInfinity]
+  wolfram:
+    in: Abs[ComplexInfinity]
+an-interval-maps-to-the-interval-of-absolute:
+  epsil:
+    in: Abs(Interval(-3, 5))
+    out: Interval(0, 5)
+  tex:
+    in: \vert\mathrm{Interval}(-3, 5)\vert
+    out: \mathrm{Interval}(0, 5)
+  fullform:
+    in: Abs[Interval[List[-3, 5]]]
+  wolfram:
+    in: Abs[Interval[List[-3, 5]]]
+decides-the-sign-of-an-exact-numeric-expression:
+  epsil:
+    in: Abs(Sqrt(2) - 2)
+    out: 2 - Sqrt(2)
+  tex:
+    in: \vert\sqrt{2}-2\vert
+    out: 2-\sqrt{2}
+  fullform:
+    in: Abs[Subtract[Sqrt[2], 2]]
+  wolfram:
+    in: Abs[Subtract[Sqrt[2], 2]]
+  sympy:
+    in: Abs((sqrt(2) - 2))
+  mpmath:
+    in: fabs((sqrt(2) - 2))
+  sage:
+    in: abs((sqrt(2) - 2))
+  rust:
+    in: abs((sqrt(n(2)) - n(2)))
+z-2-z-bar-z:
+  epsil:
+    in: Abs(3 + 4i) ^ 2 == (3 + 4i) * Conjugate(3 + 4i)
+    out: True
+  tex:
+    in: \vert3+4i\vert^2=(3+4i)\overline{3+4i}
+    out: \top
+  traditional:
+    in: \vert3+4i\vert^2=(3+4i)\overline{3+4i}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Power[Abs[Complex[3, 4]], 2], Times[Complex[3, 4], Conjugate[Complex[3, 4]]]]
+multiplicative-ab-a-b:
+  epsil:
+    in: Abs((1 + 2i) * (3 + -1 * i)) == Abs(1 + 2i) * Abs(3 + -1 * i)
+    out: True
+  tex:
+    in: \vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert
+    out: \top
+  traditional:
+    in: \vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Abs[Times[Complex[1, 2], Complex[3, -1]]], Times[Abs[Complex[1, 2]], Abs[Complex[3, -1]]]]
+  wolfram:
+    in: (Abs[Times[Complex[1, 2], Complex[3, -1]]] == Times[Abs[Complex[1, 2]], Abs[Complex[3, -1]]])
+  sympy:
+    in: enumeratio_equal(Abs(((1 + 2*I) * (3 + -1*I))), (Abs((1 + 2*I)) * Abs((3 + -1*I))))
+  mpmath:
+    in: almosteq(fabs((mpc(1, 2) * mpc(3, -1))), (fabs(mpc(1, 2)) * fabs(mpc(3, -1))), 1e-20)
+  sage:
+    in: bool(abs(((1 + 2*I) * (3 + -1*I))) == (abs((1 + 2*I)) * abs((3 + -1*I))))
+the-distance-between-the-points-1-i-and-4-5i-of:
+  epsil:
+    in: Abs(1 + i - (4 + 5i))
+    out: "5"
+  tex:
+    in: \vert(1+i)-(4+5i)\vert
+    out: "5"
+  fullform:
+    in: Abs[Subtract[Complex[1, 1], Complex[4, 5]]]
+  wolfram:
+    in: Abs[Subtract[Complex[1, 1], Complex[4, 5]]]
+  sympy:
+    in: Abs(((1 + 1*I) - (4 + 5*I)))
+  mpmath:
+    in: fabs((mpc(1, 1) - mpc(4, 5)))
+  sage:
+    in: abs(((1 + 1*I) - (4 + 5*I)))

@@ -1,0 +1,27 @@
+abs-resolves-once-the-sign-is-known:
+  epsil:
+    in: Assuming(x > 0, Abs(x))
+    out: x
+  tex:
+    in: \mathrm{Assuming}(x\gt0, \vert x\vert)
+    out: x
+  fullform:
+    in: Assuming[Greater[x, 0], Abs[x]]
+sign-of-x-plus-sign-of-y-under-opposite-signs:
+  epsil:
+    in: Assuming([x > 0, y < 0], Sign(x) + Sign(y))
+    out: "0"
+  tex:
+    in: \mathrm{Assuming}(\begin{cases}x\gt0\\y\lt0\end{cases}, \mathrm{sgn}(x)+\mathrm{sgn}(y))
+    out: "0"
+  fullform:
+    in: Assuming[List[Greater[x, 0], Less[y, 0]], Plus[Sign[x], Sign[y]]]
+the-assumption-does-not-leak:
+  epsil:
+    in: "[Assuming(z > 0, Sign(z)), Sign(z)]"
+    out: "[1, Sign(z)]"
+  tex:
+    in: \bigl\lbrack\mathrm{Assuming}(z\gt0, \mathrm{sgn}(z)), \mathrm{sgn}(z)\bigr\rbrack
+    out: \bigl\lbrack1, \mathrm{sgn}(z)\bigr\rbrack
+  fullform:
+    in: List[Assuming[Greater[z, 0], Sign[z]], Sign[z]]

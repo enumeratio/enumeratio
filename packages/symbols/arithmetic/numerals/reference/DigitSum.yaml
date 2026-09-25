@@ -61,5 +61,23 @@ examples:
     expected: 18
     category: Scope
     caption: Just the first 4 digits, $6+3+4+5=18$, not the full digit sum (30)
+  - id: a-negative-k-sums-the-last-3-digits-instead
+    expr: [DigitSum, 6345354, 10, -3]
+    expected: 12
+    caption: "a negative $k$ sums the last 3 digits instead: $3+5+4=12$"
+    role: test
+    category: Scope
+  - id: k-at-least-the-digit-count-is-the-plain-sum
+    expr: [DigitSum, 6345354, 10, 7]
+    expected: 30
+    caption: $k$ at least the digit count is the plain digit sum
+    role: test
+    category: Scope
+  - id: sign-is-discarded-in-the-3-argument-form-too
+    expr: [DigitSum, -6345354, 10, 4]
+    expected: 18
+    caption: the sign is discarded in the 3-argument form too
+    role: test
+    category: Possible issues
 seeAlso:
   - DigitCount

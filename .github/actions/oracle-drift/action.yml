@@ -9,7 +9,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: node packages/reference/scripts/oracle-scan.ts ${{ inputs.system }}
+    - run: node packages/reference/scripts/oracle-scan.ts --accept ${{ inputs.system }}
       shell: bash
     - name: ${{ inputs.system }} rows match the committed records
       shell: bash

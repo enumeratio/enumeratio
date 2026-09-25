@@ -176,6 +176,113 @@ examples:
     expected: [IntegerDigits, -3, FactorialNumerals]
     caption: no numeral for a negative in a system that spells only $n \ge 0$; the message says which integers it does spell
     category: Possible issues
+  - id: factoradic-5-is-the-lehmer-code-2-1-0
+    expr: [IntegerDigits, 5, FactorialNumerals]
+    expected: [List, 2, 1, 0]
+    role: test
+    category: Scope
+  - id: factoradic-463-a-longer-lehmer-code
+    expr: [IntegerDigits, 463, FactorialNumerals]
+    expected: [List, 3, 4, 1, 0, 1, 0]
+    role: test
+    category: Scope
+  - id: balanced-ternary-5-is-1-1-1
+    expr: [IntegerDigits, 5, [BalancedNumerals, 3]]
+    expected: [List, 1, -1, -1]
+    role: test
+    category: Scope
+  - id: negativenumerals-2-3-is-1-1-1
+    expr: [IntegerDigits, 3, [NegativeNumerals, 2]]
+    expected: [List, 1, 1, 1]
+    caption: "in base $-2$: $4-2+1=3$"
+    role: test
+    category: Scope
+  - id: negativenumerals-2-minus-2-is-1-0
+    expr: [IntegerDigits, -2, [NegativeNumerals, 2]]
+    expected: [List, 1, 0]
+    role: test
+    category: Scope
+  - id: fixed-base-2-drops-the-sign-of-minus-5
+    expr: [IntegerDigits, -5, 2]
+    expected: [List, 1, 0, 1]
+    caption: fixed radix drops the sign, unlike the signless systems above
+    role: test
+    category: Possible issues
+  - id: positionalnumerals-declines-a-negative
+    expr: [IntegerDigits, -5, [PositionalNumerals, 2]]
+    expected: [IntegerDigits, -5, [PositionalNumerals, 2]]
+    caption: as a system value it declines instead of dropping the sign, unlike the native handler above
+    role: test
+    category: Possible issues
+  - id: combinatorial-base-3-zero-is-2-1-0
+    expr: [IntegerDigits, 0, [CombinatorialNumerals, 3]]
+    expected: [List, 2, 1, 0]
+    role: test
+    category: Scope
+  - id: primorial-base-30-is-1-0-0-0
+    expr: [IntegerDigits, 30, PrimorialNumerals]
+    expected: [List, 1, 0, 0, 0]
+    role: test
+    category: Scope
+  - id: an-even-balanced-base-declines
+    expr: [IntegerDigits, 10, [BalancedNumerals, 4]]
+    expected: [IntegerDigits, 10, [BalancedNumerals, 4]]
+    caption: BalancedNumerals needs an odd base
+    role: test
+    category: Possible issues
+  - id: an-unrecognized-system-symbol-leaves-the-call
+    expr: [IntegerDigits, 10, NotASystem]
+    expected: [IntegerDigits, 10, NotASystem]
+    caption: an unrecognized system symbol leaves the call standing
+    role: test
+    category: Possible issues
+  - id: ostrowski-12-over-all-ones-convergents
+    expr: [IntegerDigits, 12, [OstrowskiNumerals, [List, 1, 1, 1, 1, 1, 1, 1, 1]]]
+    expected: [List, 0, 0, 1, 0, 1, 0, 1, 0]
+    caption: $12 = 8 + 3 + 1$, over the all-ones convergents
+    role: test
+    category: Scope
+  - id: zeckendorf-12-is-8-3-1
+    expr: [IntegerDigits, 12, ZeckendorfNumerals]
+    expected: [List, 1, 0, 1, 0, 1]
+    caption: $12 = 8 + 3 + 1$
+    role: test
+    category: Scope
+  - id: ostrowski-9-over-2-2-2-is-1-2-0
+    expr: [IntegerDigits, 9, [OstrowskiNumerals, [List, 2, 2, 2]]]
+    expected: [List, 1, 2, 0]
+    role: test
+    category: Scope
+  - id: ostrowski-declines-past-its-ceiling
+    expr: [IntegerDigits, 12, [OstrowskiNumerals, [List, 2, 2, 2]]]
+    expected: [IntegerDigits, 12, [OstrowskiNumerals, [List, 2, 2, 2]]]
+    caption: "out of range: the third convergent denominator is 12"
+    role: test
+    category: Possible issues
+  - id: past-the-product-there-is-no-residue-numeral
+    expr: [IntegerDigits, 105, [ResidueNumerals, [List, 3, 5, 7]]]
+    expected: [IntegerDigits, 105, [ResidueNumerals, [List, 3, 5, 7]]]
+    caption: past $3\cdot5\cdot7=105$ there is no numeral
+    role: test
+    category: Possible issues
+  - id: bijective-base-26-27-is-aa
+    expr: [IntegerDigits, 27, [BijectiveNumerals, 26]]
+    expected: [List, 1, 1]
+    caption: spreadsheet column AA
+    role: test
+    category: Scope
+  - id: bijective-base-26-702-is-zz
+    expr: [IntegerDigits, 702, [BijectiveNumerals, 26]]
+    expected: [List, 26, 26]
+    caption: spreadsheet column ZZ
+    role: test
+    category: Scope
+  - id: bijective-base-26-zero-is-the-empty-numeral
+    expr: [IntegerDigits, 0, [BijectiveNumerals, 26]]
+    expected: [List]
+    caption: zero is the empty numeral, over the alphabet 1..26
+    role: test
+    category: Possible issues
 seeAlso:
   - FromDigits
   - NumeralSystemShape

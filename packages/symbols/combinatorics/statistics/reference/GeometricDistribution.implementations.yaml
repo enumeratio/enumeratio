@@ -1,0 +1,44 @@
+geometric-pdf-exact:
+  epsil:
+    in: PDF(GeometricDistribution(1 / 4), 2)
+    out: 9 / 64
+  tex:
+    in: \operatorname{PDF}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)
+    out: \frac{9}{64}
+  fullform:
+    in: PDF[GeometricDistribution[Rational[1, 4]], 2]
+  wolfram:
+    in: PDF[GeometricDistribution[Rational[1, 4]], 2]
+geometric-cdf-exact:
+  epsil:
+    in: CDF(GeometricDistribution(1 / 4), 2)
+    out: 37 / 64
+  tex:
+    in: \operatorname{CDF}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)
+    out: \frac{37}{64}
+  fullform:
+    in: CDF[GeometricDistribution[Rational[1, 4]], 2]
+  wolfram:
+    in: CDF[GeometricDistribution[Rational[1, 4]], 2]
+geometric-mean-exact:
+  epsil:
+    in: Mean(GeometricDistribution(1 / 4))
+    out: "3"
+  tex:
+    in: \mathrm{mean}(\mathrm{GeometricDistribution}(\frac{1}{4}))
+    out: "3"
+  fullform:
+    in: Mean[GeometricDistribution[Rational[1, 4]]]
+  wolfram:
+    in: Mean[GeometricDistribution[Rational[1, 4]]]
+geometric-variance-exact:
+  epsil:
+    in: Variance(GeometricDistribution(1 / 4))
+    out: "12"
+  tex:
+    in: \mathrm{Variance}(\mathrm{GeometricDistribution}(\frac{1}{4}))
+    out: "12"
+  fullform:
+    in: Variance[GeometricDistribution[Rational[1, 4]]]
+  wolfram:
+    in: Variance[GeometricDistribution[Rational[1, 4]]]

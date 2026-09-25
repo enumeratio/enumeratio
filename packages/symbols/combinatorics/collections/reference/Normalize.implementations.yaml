@@ -1,0 +1,22 @@
+3-4-5:
+  epsil:
+    in: Normalize([3, 4])
+    out: "[3 / 5, 4 / 5]"
+  tex:
+    in: \mathrm{Normalize}(\bigl\lbrack3, 4\bigr\rbrack)
+    out: \bigl\lbrack\frac{3}{5}, \frac{4}{5}\bigr\rbrack
+  fullform:
+    in: Normalize[List[3, 4]]
+  wolfram:
+    in: Normalize[List[3, 4]]
+zero-vector:
+  epsil:
+    in: Normalize([0, 0])
+    out: "[0, 0]"
+  tex:
+    in: \mathrm{Normalize}(\bigl\lbrack0, 0\bigr\rbrack)
+    out: \bigl\lbrack0, 0\bigr\rbrack
+  fullform:
+    in: Normalize[List[0, 0]]
+  wolfram:
+    in: Normalize[List[0, 0]]

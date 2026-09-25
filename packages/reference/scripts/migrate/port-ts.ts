@@ -126,7 +126,7 @@ function withJsonExamples(path: string, entries: readonly ReferenceEntry[], rev?
           ...entry,
           examples: [
             ...entry.examples,
-            ...extra.map((e) => ({ hidden: true, ...e }) as ReferenceEntry["examples"][number]),
+            ...extra.map((e) => ({ hidden: true, ...e }) as unknown as ReferenceEntry["examples"][number]),
           ],
         };
   });

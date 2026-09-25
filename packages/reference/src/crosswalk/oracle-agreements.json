@@ -1,15 +1,15 @@
 {
   "Abs": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 7,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
       "disagree": 0
     }
   ],
@@ -127,29 +127,29 @@
   ],
   "BellNumber": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 7,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
       "disagree": 0
     }
   ],
   "BernoulliB": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 10,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 8,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 10,
       "disagree": 0
     }
   ],
@@ -171,15 +171,15 @@
   ],
   "Binomial": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 14,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 12,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 14,
       "disagree": 0
     }
   ],
@@ -193,29 +193,29 @@
   ],
   "CatalanNumber": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 12,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 10,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 12,
       "disagree": 0
     }
   ],
   "Ceil": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 7,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
       "disagree": 0
     }
   ],
@@ -253,29 +253,29 @@
   ],
   "ContinuedFraction": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 1,
       "disagree": 0
     },
     {
-      "system": "sage",
-      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 1,
       "disagree": 0
     }
   ],
   "Cos": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 11,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 10,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 11,
       "disagree": 0
     }
   ],
@@ -377,16 +377,16 @@
   ],
   "Divisors": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 8,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 5,
       "disagree": 1
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
+      "disagree": 0
     }
   ],
   "DivisorSigma": [
@@ -423,43 +423,43 @@
   ],
   "Exp": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 5,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 4,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 5,
       "disagree": 0
     }
   ],
   "ExtendedGCD": [
     {
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "agree": 1,
+      "disagree": 0
+    },
+    {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 1,
       "disagree": 5
-    },
-    {
-      "system": "sage",
-      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 1,
-      "disagree": 0
     }
   ],
   "Factorial": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 10,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 8,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 10,
       "disagree": 0
     }
   ],
@@ -473,29 +473,29 @@
   ],
   "FactorInteger": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 10,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 4,
       "disagree": 4
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 10,
+      "disagree": 0
     }
   ],
   "Fibonacci": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 11,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 10,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 11,
       "disagree": 0
     }
   ],
@@ -517,15 +517,15 @@
   ],
   "Floor": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 7,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
       "disagree": 0
     }
   ],
@@ -534,6 +534,30 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 2,
+      "disagree": 0
+    }
+  ],
+  "Fourier": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 5,
+      "disagree": 0
+    }
+  ],
+  "FourierCoefficient": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
+      "disagree": 0
+    }
+  ],
+  "FourierSeries": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 5,
       "disagree": 0
     }
   ],
@@ -547,16 +571,16 @@
   ],
   "Gamma": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 12,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 7,
       "disagree": 2
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 12,
+      "disagree": 0
     }
   ],
   "GammaLn": [
@@ -577,16 +601,16 @@
   ],
   "GCD": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 11,
-      "disagree": 1
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 5,
       "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 11,
+      "disagree": 1
     }
   ],
   "HarmonicNumber": [
@@ -607,16 +631,16 @@
   ],
   "HurwitzZeta": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 147,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 146,
       "disagree": 1
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 147,
+      "disagree": 0
     }
   ],
   "IndexOf": [
@@ -659,6 +683,14 @@
       "disagree": 1
     }
   ],
+  "InverseFourier": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 5,
+      "disagree": 0
+    }
+  ],
   "IsEven": [
     {
       "system": "wolfram",
@@ -677,15 +709,15 @@
   ],
   "IsPrime": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 8,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
       "disagree": 0
     }
   ],
@@ -739,15 +771,15 @@
   ],
   "LCM": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 8,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 4,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
       "disagree": 0
     }
   ],
@@ -761,15 +793,15 @@
   ],
   "Length": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 4,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 2,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 4,
       "disagree": 0
     }
   ],
@@ -783,16 +815,16 @@
   ],
   "Ln": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 6,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 4,
       "disagree": 2
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 6,
+      "disagree": 0
     }
   ],
   "Log": [
@@ -837,15 +869,15 @@
   ],
   "LucasL": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 11,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 10,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 11,
       "disagree": 0
     }
   ],
@@ -859,16 +891,16 @@
   ],
   "Max": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 8,
-      "disagree": 1
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 7,
       "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
+      "disagree": 1
     }
   ],
   "Mean": [
@@ -897,29 +929,29 @@
   ],
   "Min": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 8,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
       "disagree": 0
     }
   ],
   "Mod": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 12,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 4,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 12,
       "disagree": 0
     }
   ],
@@ -955,16 +987,16 @@
   ],
   "MoebiusMu": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 6,
-      "disagree": 1
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 5,
       "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 6,
+      "disagree": 1
     }
   ],
   "MotzkinAlgebra": [
@@ -985,29 +1017,29 @@
   ],
   "MultiplicativeOrder": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 5,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
       "disagree": 0
     }
   ],
   "Negate": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 7,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 5,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 7,
       "disagree": 0
     }
   ],
@@ -1077,58 +1109,58 @@
   ],
   "PolyGamma": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 41,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 39,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 41,
       "disagree": 0
     }
   ],
   "PolyLog": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 57,
-      "disagree": 1
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 55,
+      "disagree": 1
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 57,
       "disagree": 1
     }
   ],
   "PowerMod": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 16,
-      "disagree": 2
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 10,
       "disagree": 0
-    }
-  ],
-  "PowerModList": [
+    },
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 20,
-      "disagree": 7
-    },
+      "agree": 16,
+      "disagree": 2
+    }
+  ],
+  "PowerModList": [
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 19,
       "disagree": 1
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 20,
+      "disagree": 7
     }
   ],
   "PrimeNu": [
@@ -1149,15 +1181,15 @@
   ],
   "PrimePi": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 6,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 4,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 6,
       "disagree": 0
     }
   ],
@@ -1257,29 +1289,29 @@
   ],
   "Sign": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 10,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 7,
       "disagree": 1
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 10,
+      "disagree": 0
     }
   ],
   "Sin": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 13,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 11,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 13,
       "disagree": 0
     }
   ],
@@ -1301,29 +1333,29 @@
   ],
   "Sqrt": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 10,
       "disagree": 0
     },
     {
-      "system": "sage",
-      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 10,
       "disagree": 0
     }
   ],
   "Square": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 8,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 6,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
       "disagree": 0
     }
   ],
@@ -1337,30 +1369,30 @@
   ],
   "Stirling": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 6,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 5,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 6,
       "disagree": 0
     }
   ],
   "StirlingS1": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 5,
       "disagree": 2
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
+      "disagree": 0
     }
   ],
   "Subfactorial": [
@@ -1381,16 +1413,16 @@
   ],
   "Tan": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 10,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 8,
       "disagree": 1
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 10,
+      "disagree": 0
     }
   ],
   "Tanh": [
@@ -1419,15 +1451,15 @@
   ],
   "Totient": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 8,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 6,
+      "disagree": 0
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
       "disagree": 0
     }
   ],
@@ -1457,16 +1489,16 @@
   ],
   "Zeta": [
     {
-      "system": "wolfram",
-      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 15,
-      "disagree": 0
-    },
-    {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 11,
       "disagree": 1
+    },
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 15,
+      "disagree": 0
     }
   ]
 }

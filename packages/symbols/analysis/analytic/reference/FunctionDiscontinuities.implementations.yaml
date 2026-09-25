@@ -1,0 +1,30 @@
+a-pole-is-a-discontinuity:
+  epsil:
+    in: FunctionDiscontinuities(1 / x, x)
+    out: x == 0
+  tex:
+    in: \mathrm{FunctionDiscontinuities}(\frac{1}{x}, x)
+    out: x=0
+  fullform:
+    in: FunctionDiscontinuities[Divide[1, x], x]
+tangent-s-poles:
+  epsil:
+    in: FunctionDiscontinuities(Tan(x), x)
+    out: Cos(x) == 0
+  tex:
+    in: \mathrm{FunctionDiscontinuities}(\tan(x), x)
+    out: \cos(x)=0
+  fullform:
+    in: FunctionDiscontinuities[Tan[x], x]
+a-polynomial-is-continuous-everywhere:
+  epsil:
+    in: FunctionDiscontinuities(x ^ 2, x)
+    out: False
+  tex:
+    in: \mathrm{FunctionDiscontinuities}(x^2, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionDiscontinuities}(x^2, x)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionDiscontinuities[Power[x, 2], x]

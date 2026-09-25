@@ -1,116 +1,204 @@
 square-5:
+  epsil:
+    in: Square(5)
+    out: "25"
+  tex:
+    in: 5^2
+    out: "25"
+  fullform:
+    in: Power[5, 2]
+    back: [Power, 5, 2]
   wolfram:
     in: (5)^2
     out: "25"
     tex:
       in: 5^2
       out: "25"
-  sage:
-    in: (5)^2
+  sympy:
+    in: (5)**2
     out: "25"
   mpmath:
     in: (5)**2
     out: "25"
-  sympy:
-    in: (5)**2
+  sage:
+    in: (5)^2
     out: "25"
 same-result-for-x-and-x:
+  epsil:
+    in: Square(-5)
+    out: "25"
+  tex:
+    in: (-5)^2
+    out: "25"
+  fullform:
+    in: Power[-5, 2]
+    back: [Power, -5, 2]
   wolfram:
     in: (-5)^2
     out: "25"
     tex:
       in: (-5)^2
       out: "25"
+  sympy:
+    in: (-5)**2
+    out: "25"
+  mpmath:
+    in: (-5)**2
+    out: "25"
   sage:
     in: (-5)^2
     out: "25"
-  mpmath:
-    in: ((-5))**2
-    out: "25"
-  sympy:
-    in: ((-5))**2
-    out: "25"
 square-2-over-3:
+  epsil:
+    in: Square(2 / 3)
+    out: 4 / 9
+  tex:
+    in: \left(\frac{2}{3}\right)^2
+    out: \frac{4}{9}
+  fullform:
+    in: Power[Rational[2, 3], 2]
+    back: [Power, [Rational, 2, 3], 2]
   wolfram:
     in: (Rational[2, 3])^2
     out: 4/9
     tex:
       in: \left(\frac{2}{3}\right)^2
       out: \frac{4}{9}
-  sage:
-    in: ((2/3))^2
-    out: 4/9
   sympy:
     in: (Rational(2, 3))**2
     out: 4/9
+  sage:
+    in: ((2/3))^2
+    out: 4/9
+canonicalizes-to-x-2:
+  epsil:
+    in: Square(x)
+    out: x ^ 2
+  tex:
+    in: x^2
+    out: x^2
+  fullform:
+    in: Power[x, 2]
+    back: [Power, x, 2]
 threads-element-wise-over-a-list:
+  epsil:
+    in: Square([2, 3, -4])
+    out: "[4, 9, 16]"
+  tex:
+    in: \bigl\lbrack2, 3, -4\bigr\rbrack^2
+    out: \bigl\lbrack4, 9, 16\bigr\rbrack
+  fullform:
+    in: Power[List[2, 3, -4], 2]
+    back: [Power, [List, 2, 3, -4], 2]
   wolfram:
     in: (List[2, 3, -4])^2
     out: "{4, 9, 16}"
     tex:
       in: \{2,3,-4\}^2
       out: \{4,9,16\}
+  sympy:
+    in: ([2, 3, -4])**2
+    out: "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Square threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: ([2, 3, -4])^2
     out: "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'"
     verdict: error
     kind: threading
     note: compute-engine's Square is Listable and threads over the list; Sage's takes scalars only.
-  sympy:
-    in: ([2, 3, (-4)])**2
-    out: "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Square threads over (or pools) the list; SymPy's takes scalars.
 even-function-x-2-x-2:
+  epsil:
+    in: Square(-5) == Square(5)
+    out: True
+  tex:
+    in: (-5)^2=5^2
+    out: \top
+  traditional:
+    in: (-5)^2=5^2
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Power[-5, 2], Power[5, 2]]
+    back: [Equal, [Power, -5, 2], [Power, 5, 2]]
   wolfram:
     in: ((-5)^2 == (5)^2)
     out: True
     tex:
       in: (-5)^2=5^2
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((-5)**2, (5)**2)
+    out: True
+  mpmath:
+    in: almosteq((-5)**2, (5)**2, 1e-20)
+    out: True
   sage:
     in: bool((-5)^2 == (5)^2)
     out: True
-  mpmath:
-    in: almosteq(((-5))**2, (5)**2, 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal(((-5))**2, (5)**2)
-    out: True
 1-i-2-2i-squaring-a-complex-number-needn-t-stay:
+  epsil:
+    in: Square(1 + i) == 2i
+    out: True
+  tex:
+    in: \left(1+i\right)^2=2i
+    out: \top
+  traditional:
+    in: \left(1+i\right)^2=2i
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Power[Complex[1, 1], 2], Complex[0, 2]]
+    back: [Equal, [Power, [Complex, 1, 1], 2], [Complex, 0, 2]]
   wolfram:
     in: ((Complex[1, 1])^2 == Complex[0, 2])
     out: True
     tex:
       in: (1+i)^2=2 i
       out: \text{True}
-  sage:
-    in: bool(((1 + 1*I))^2 == (0 + 2*I))
+  sympy:
+    in: enumeratio_equal(((1 + 1*I))**2, (0 + 2*I))
     out: True
   mpmath:
     in: almosteq((mpc(1, 1))**2, mpc(0, 2), 1e-20)
     out: True
-  sympy:
-    in: enumeratio_equal(((1 + 1*I))**2, (0 + 2*I))
+  sage:
+    in: bool(((1 + 1*I))^2 == (0 + 2*I))
     out: True
 the-area-of-a-3-3-square-tile:
+  epsil:
+    in: Square(3)
+    out: "9"
+  tex:
+    in: 3^2
+    out: "9"
+  fullform:
+    in: Power[3, 2]
+    back: [Power, 3, 2]
   wolfram:
     in: (3)^2
     out: "9"
     tex:
       in: 3^2
       out: "9"
-  sage:
-    in: (3)^2
+  sympy:
+    in: (3)**2
     out: "9"
   mpmath:
     in: (3)**2
     out: "9"
-  sympy:
-    in: (3)**2
+  sage:
+    in: (3)^2
     out: "9"
 infinity-squared-stays-infinite-rather-than:
+  epsil:
+    in: Square(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \infty^2
+    out: \infty
+  fullform:
+    in: Power[Infinity, 2]
+    back: [Power, PositiveInfinity, 2]
   wolfram:
     in: (Infinity)^2
     out: Infinity

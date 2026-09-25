@@ -1,0 +1,44 @@
+discretedelta-zero:
+  epsil:
+    in: DiscreteDelta(0)
+    out: "1"
+  tex:
+    in: \mathrm{DiscreteDelta}(0)
+    out: "1"
+  fullform:
+    in: DiscreteDelta[0]
+  wolfram:
+    in: DiscreteDelta[0]
+discretedelta-nonzero:
+  epsil:
+    in: DiscreteDelta(1)
+    out: "0"
+  tex:
+    in: \mathrm{DiscreteDelta}(1)
+    out: "0"
+  fullform:
+    in: DiscreteDelta[1]
+  wolfram:
+    in: DiscreteDelta[1]
+discretedelta-multi-all-zero:
+  epsil:
+    in: DiscreteDelta(0, 0)
+    out: "1"
+  tex:
+    in: \mathrm{DiscreteDelta}(0, 0)
+    out: "1"
+  fullform:
+    in: DiscreteDelta[0, 0]
+  wolfram:
+    in: DiscreteDelta[0, 0]
+discretedelta-multi-one-nonzero:
+  epsil:
+    in: DiscreteDelta(1, 0)
+    out: "0"
+  tex:
+    in: \mathrm{DiscreteDelta}(1, 0)
+    out: "0"
+  fullform:
+    in: DiscreteDelta[1, 0]
+  wolfram:
+    in: DiscreteDelta[1, 0]

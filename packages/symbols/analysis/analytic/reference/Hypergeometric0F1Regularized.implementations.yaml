@@ -1,0 +1,44 @@
+matches-hypergeometric0f1-2-0-5-gamma-2:
+  epsil:
+    in: Hypergeometric0F1Regularized(2, 0.5)
+    out: 1.271_723_456_312_136_5
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(2, 0.5)
+    out: 1.271\,723\,456\,312\,136\,5
+  fullform:
+    in: Hypergeometric0F1Regularized[2, 0.5]
+  wolfram:
+    in: Hypergeometric0F1Regularized[2, 0.5]
+b-1-is-a-pole-of-gamma-but-the-regularized-form:
+  epsil:
+    in: Hypergeometric0F1Regularized(-1, 0.5)
+    out: 0.147_179_736_722_106_7
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(-1, 0.5)
+    out: 0.147\,179\,736\,722\,106\,7
+  fullform:
+    in: Hypergeometric0F1Regularized[-1, 0.5]
+  wolfram:
+    in: Hypergeometric0F1Regularized[-1, 0.5]
+at-the-pole-b-1-under-n:
+  epsil:
+    in: N(Hypergeometric0F1Regularized(-1, 2))
+    out: 3.715_035_560_458_436_4
+  tex:
+    in: N(\mathrm{Hypergeometric0F1Regularized}(-1, 2))
+    out: 3.715\,035\,560\,458\,436\,4
+  fullform:
+    in: N[Hypergeometric0F1Regularized[-1, 2]]
+  wolfram:
+    in: N[Hypergeometric0F1Regularized[-1, 2]]
+exact-arguments-stay-unevaluated-n-gives-the:
+  epsil:
+    in: Hypergeometric0F1Regularized(-1, 2)
+    out: Hypergeometric0F1Regularized(-1, 2)
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(-1, 2)
+    out: \mathrm{Hypergeometric0F1Regularized}(-1, 2)
+  fullform:
+    in: Hypergeometric0F1Regularized[-1, 2]
+  wolfram:
+    in: Hypergeometric0F1Regularized[-1, 2]

@@ -1,0 +1,9 @@
+count-primitivebinarystrings-6-54-a027375:
+  epsil:
+    in: Count(PrimitiveBinaryStrings(6))
+    out: "54"
+  tex:
+    in: \mathrm{Count}(\mathrm{PrimitiveBinaryStrings}(6))
+    out: "54"
+  fullform:
+    in: Count[PrimitiveBinaryStrings[6]]

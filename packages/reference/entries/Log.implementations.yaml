@@ -1,4 +1,13 @@
 default-base-is-10:
+  epsil:
+    in: Log(100)
+    out: "2"
+  tex:
+    in: \log_{10}(100)
+    out: "2"
+  fullform:
+    in: Log[10, 100]
+    back: [Log, 100, 10]
   wolfram:
     in: Log[10, 100]
     out: "2"
@@ -6,6 +15,14 @@ default-base-is-10:
       in: \log _{10}(100)
       out: "2"
 same-result-written-with-an-explicit-base:
+  epsil:
+    in: Log(100, 10)
+    out: "2"
+  tex:
+    in: \log_{10}(100)
+    out: "2"
+  fullform:
+    in: Log[10, 100]
   wolfram:
     in: Log[10, 100]
     out: "2"
@@ -13,6 +30,14 @@ same-result-written-with-an-explicit-base:
       in: \log _{10}(100)
       out: "2"
 base-2-via-the-explicit-second-argument:
+  epsil:
+    in: Log(8, 2)
+    out: "3"
+  tex:
+    in: \log_{2}(8)
+    out: "3"
+  fullform:
+    in: Log[2, 8]
   wolfram:
     in: Log[2, 8]
     out: "3"
@@ -20,6 +45,18 @@ base-2-via-the-explicit-second-argument:
       in: \log _2(8)
       out: "3"
 confirms-the-default-base-is-10:
+  epsil:
+    in: Log(100) == Log(100, 10)
+    out: True
+  tex:
+    in: \log_{10}(100)=\log_{10}(100)
+    out: \top
+  traditional:
+    in: \log_{10}(100)=\log_{10}(100)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Log[10, 100], Log[10, 100]]
+    back: [Equal, [Log, 100, 10], [Log, 100, 10]]
   wolfram:
     in: (Log[10, 100] == Log[10, 100])
     out: True
@@ -27,6 +64,17 @@ confirms-the-default-base-is-10:
       in: \log _{10}(100)=\log _{10}(100)
       out: \text{True}
 product-rule-log-b-xy-log-b-x-log-b-y:
+  epsil:
+    in: Log(8 * 4, 2) == Log(8, 2) + Log(4, 2)
+    out: True
+  tex:
+    in: \log_{2}(8\times4)=\log_{2}(8)+\log_{2}(4)
+    out: \top
+  traditional:
+    in: \log_{2}(8\times4)=\log_{2}(8)+\log_{2}(4)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Log[2, Times[8, 4]], Plus[Log[2, 8], Log[2, 4]]]
   wolfram:
     in: (Log[2, Times[8, 4]] == Plus[Log[2, 8], Log[2, 4]])
     out: True
@@ -34,6 +82,17 @@ product-rule-log-b-xy-log-b-x-log-b-y:
       in: \log _2(8\ 4)=\log _2(8)+\log _2(4)
       out: \text{True}
 power-rule-log-b-x-k-k-log-b-x:
+  epsil:
+    in: Log(2 ^ 5, 2) == 5 * Log(2, 2)
+    out: True
+  tex:
+    in: \log_{2}(2^5)=5\log_{2}(2)
+    out: \top
+  traditional:
+    in: \log_{2}(2^5)=5\log_{2}(2)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Log[2, Power[2, 5]], Times[5, Log[2, 2]]]
   wolfram:
     in: (Log[2, Power[2, 5]] == Times[5, Log[2, 2]])
     out: True
@@ -41,6 +100,15 @@ power-rule-log-b-x-k-k-log-b-x:
       in: \log _2\left(2^5\right)=5 \log _2(2)
       out: \text{True}
 log-10-0-infty:
+  epsil:
+    in: Log(0)
+    out: NegativeInfinity
+  tex:
+    in: \log_{10}(0)
+    out: -\infty
+  fullform:
+    in: Log[10, 0]
+    back: [Log, 0, 10]
   wolfram:
     in: Log[10, 0]
     out: -Infinity
@@ -48,9 +116,87 @@ log-10-0-infty:
       in: \log _{10}(0)
       out: -\infty
 a-negative-argument-stays-symbolic-with-the:
+  epsil:
+    in: Log(-5)
+    out: Log(-5, 10)
+  tex:
+    in: \log_{10}(-5)
+    out: \log_{10}(-5)
+  fullform:
+    in: Log[10, -5]
+    back: [Log, -5, 10]
   wolfram:
     in: Log[10, -5]
     out: (I*Pi + Log[5])/Log[10]
     tex:
       in: \log _{10}(-5)
       out: \frac{\log (5)+i \pi }{\log (10)}
+log-3-1-5-at-machine-precision:
+  epsil:
+    in: Log(1.5, 3)
+    out: 0.369_070_246_428_542_562_9
+  tex:
+    in: \log_{3}(1.5)
+    out: 0.369\,070\,246\,428\,542\,562\,9
+  fullform:
+    in: Log[3, 1.5]
+  wolfram:
+    in: Log[3, 1.5]
+log-9-3:
+  epsil:
+    in: Log(9, 3)
+    out: "2"
+  tex:
+    in: \log_{3}(9)
+    out: "2"
+  fullform:
+    in: Log[3, 9]
+  wolfram:
+    in: Log[3, 9]
+threads-over-a-list-of-values:
+  epsil:
+    in: Log([2, 4, 8], 2)
+    out: "[1, 2, 3]"
+  tex:
+    in: \log_{2}(\bigl\lbrack2, 4, 8\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Log[2, List[2, 4, 8]]
+  wolfram:
+    in: Log[2, List[2, 4, 8]]
+threads-over-a-list-of-bases:
+  epsil:
+    in: Log(2.5, [2, ExponentialE, 10])
+    out: |-
+      [
+        1.321_928_094_887_362_347_87,
+        0.916_290_731_874_155_144_52,
+        0.397_940_008_672_037_609_573,
+      ]
+  tex:
+    in: \log_{\bigl\lbrack2, e, 10\bigr\rbrack}(2.5)
+    out: \bigl\lbrack1.321\,928\,094\,887\,362\,347\,87, 0.916\,290\,731\,874\,155\,144\,52, 0.397\,940\,008\,672\,037\,609\,573\bigr\rbrack
+  fullform:
+    in: Log[List[2, E, 10], 2.5]
+  wolfram:
+    in: Log[List[2, E, 10], 2.5]
+derivative-in-base-3-frac-1-x-ln-3:
+  epsil:
+    in: D(Log(x, 3), x)
+    out: 1 / (x * Ln(3))
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\log_{3}(x)
+    out: \frac{1}{x\ln(3)}
+  fullform:
+    in: D[Log[3, x], x]
+log-2-frac-18-3-an-exact-negative-power-of-the:
+  epsil:
+    in: Log(1 / 8, 2)
+    out: "-3"
+  tex:
+    in: \log_{2}(\frac{1}{8})
+    out: "-3"
+  fullform:
+    in: Log[2, Rational[1, 8]]
+  wolfram:
+    in: Log[2, Rational[1, 8]]

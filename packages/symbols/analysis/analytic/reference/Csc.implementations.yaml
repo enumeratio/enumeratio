@@ -1,4 +1,12 @@
 csc-pi-over-6:
+  epsil:
+    in: Csc(Pi / 6)
+    out: "2"
+  tex:
+    in: \csc(\frac{\pi}{6})
+    out: "2"
+  fullform:
+    in: Csc[Divide[Pi, 6]]
   wolfram:
     in: Csc[Divide[Pi, 6]]
     out: "2"
@@ -6,6 +14,14 @@ csc-pi-over-6:
       in: \csc \left(\frac{\pi }{6}\right)
       out: "2"
 csc-pi-over-4:
+  epsil:
+    in: Csc(Pi / 4)
+    out: Sqrt(2)
+  tex:
+    in: \csc(\frac{\pi}{4})
+    out: \sqrt{2}
+  fullform:
+    in: Csc[Divide[Pi, 4]]
   wolfram:
     in: Csc[Divide[Pi, 4]]
     out: Sqrt[2]
@@ -13,6 +29,14 @@ csc-pi-over-4:
       in: \csc \left(\frac{\pi }{4}\right)
       out: \sqrt{2}
 csc-pi-over-2:
+  epsil:
+    in: Csc(Pi / 2)
+    out: "1"
+  tex:
+    in: \csc(\frac{\pi}{2})
+    out: "1"
+  fullform:
+    in: Csc[Divide[Pi, 2]]
   wolfram:
     in: Csc[Divide[Pi, 2]]
     out: "1"
@@ -20,6 +44,17 @@ csc-pi-over-2:
       in: \csc \left(\frac{\pi }{2}\right)
       out: "1"
 reciprocal-of-sin-csc-x-frac-1-sin-x:
+  epsil:
+    in: Csc(Pi / 6) == 1 / Sin(Pi / 6)
+    out: True
+  tex:
+    in: \csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}
+    out: \top
+  traditional:
+    in: \csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Csc[Divide[Pi, 6]], Divide[1, Sin[Divide[Pi, 6]]]]
   wolfram:
     in: (Csc[Divide[Pi, 6]] == Divide[1, Sin[Divide[Pi, 6]]])
     out: True
@@ -27,9 +62,155 @@ reciprocal-of-sin-csc-x-frac-1-sin-x:
       in: \csc \left(\frac{\pi }{6}\right)=\frac{1}{\sin \left(\frac{\pi }{6}\right)}
       out: \text{True}
 a-pole-sin-0-0:
+  epsil:
+    in: Csc(0)
+    out: ComplexInfinity
+  tex:
+    in: \csc(0)
+    out: \tilde\infty
+  fullform:
+    in: Csc[0]
   wolfram:
     in: Csc[0]
     out: ComplexInfinity
     tex:
       in: \csc (0)
       out: \text{ComplexInfinity}
+csc-60-circ-frac-2-sqrt-3-3-exactly:
+  epsil:
+    in: Csc(Degrees(60))
+    out: 2 / 3 * Sqrt(3)
+  tex:
+    in: \csc(60^{\circ})
+    out: \frac{2\sqrt{3}}{3}
+  fullform:
+    in: Csc[Times[60, Degree]]
+    back: [Csc, [Multiply, 60, Degree]]
+  wolfram:
+    in: Csc[Times[60, Degree]]
+a-machine-precision-argument-evaluates:
+  epsil:
+    in: Csc(1.2)
+    out: 1.072_916_377_709_897_228_71
+  tex:
+    in: \csc(1.2)
+    out: 1.072\,916\,377\,709\,897\,228\,71
+  fullform:
+    in: Csc[1.2]
+  wolfram:
+    in: Csc[1.2]
+n-of-an-exact-argument-gives-an-arbitrary:
+  epsil:
+    in: N(Csc(6 / 5))
+    out: 1.072_916_377_709_897_228_71
+  tex:
+    in: N(\csc(\frac{6}{5}))
+    out: 1.072\,916\,377\,709\,897\,228\,71
+  fullform:
+    in: N[Csc[Rational[6, 5]]]
+  wolfram:
+    in: N[Csc[Rational[6, 5]]]
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Csc(2.5 + i)
+    out: 0.530_965_577_621_174_2 + 0.541_322_906_190_002_5i
+  tex:
+    in: \csc(2.5+i)
+    out: 0.530\,965\,577\,621\,174\,2+0.541\,322\,906\,190\,002\,5i
+  fullform:
+    in: Csc[Complex[2.5, 1]]
+  wolfram:
+    in: Csc[Complex[2.5, 1]]
+threads-element-wise-over-a-matrix-with:
+  epsil:
+    in: Csc([[Pi / 3, Pi], [Pi / 6, -(Pi / 2)]])
+    out: "[[2 / 3 * Sqrt(3), ComplexInfinity], [2, -1]]"
+  tex:
+    in: \csc(\bigl\lbrack\bigl\lbrack\frac{\pi}{3}, \pi\bigr\rbrack, \bigl\lbrack\frac{\pi}{6}, -\pi/2\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\frac{2\sqrt{3}}{3}, \tilde\infty\bigr\rbrack, \bigl\lbrack2, -1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Csc[List[List[Divide[Pi, 3], Pi], List[Divide[Pi, 6], Minus[Divide[Pi, 2]]]]]
+  wolfram:
+    in: Csc[List[List[Divide[Pi, 3], Pi], List[Divide[Pi, 6], Minus[Divide[Pi, 2]]]]]
+csc-pi-12-sqrt-6-sqrt-2:
+  epsil:
+    in: Csc(Pi / 12)
+    out: Sqrt(2) + Sqrt(6)
+  tex:
+    in: \csc(\frac{\pi}{12})
+    out: \sqrt{2}+\sqrt{6}
+  fullform:
+    in: Csc[Divide[Pi, 12]]
+  wolfram:
+    in: Csc[Divide[Pi, 12]]
+csc-pi-10-1-sqrt-5:
+  epsil:
+    in: Csc(Pi / 10)
+    out: 1 + Sqrt(5)
+  tex:
+    in: \csc(\frac{\pi}{10})
+    out: 1+\sqrt{5}
+  fullform:
+    in: Csc[Divide[Pi, 10]]
+  wolfram:
+    in: Csc[Divide[Pi, 10]]
+csc-pi-over-5:
+  epsil:
+    in: Csc(Pi / 5)
+    out: Sqrt(10) / 5 * Sqrt(5 + Sqrt(5))
+  tex:
+    in: \csc(\frac{\pi}{5})
+    out: \frac{1}{5}(\sqrt{10}\sqrt{5+\sqrt{5}})
+  fullform:
+    in: Csc[Divide[Pi, 5]]
+  wolfram:
+    in: Csc[Divide[Pi, 5]]
+interval-arithmetic-the-image-of-pi-6-pi-3-is:
+  epsil:
+    in: Csc(Interval(Pi / 6, Pi / 3))
+    out: Interval(2 / 3 * Sqrt(3), 2)
+  tex:
+    in: \csc(\mathrm{Interval}(\frac{\pi}{6}, \frac{\pi}{3}))
+    out: \mathrm{Interval}(\frac{2\sqrt{3}}{3}, 2)
+  fullform:
+    in: Csc[Interval[List[Divide[Pi, 6], Divide[Pi, 3]]]]
+  wolfram:
+    in: Csc[Interval[List[Divide[Pi, 6], Divide[Pi, 3]]]]
+uncertainty-propagation-csc-2-pm-0-01-approx-1:
+  epsil:
+    in: Csc(Around(2, 0.01))
+    out: Around(1.099_750_170_294_616_4, 0.005_033_089_733_443_42)
+  tex:
+    in: \csc(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(1.099\,750\,170\,294\,616\,4, 0.005\,033\,089\,733\,443\,42)
+  fullform:
+    in: Csc[Around[2, 0.01]]
+  wolfram:
+    in: Csc[Around[2, 0.01]]
+oddness-pulls-the-sign-out-of-a-symbolic:
+  epsil:
+    in: Csc(-x)
+    out: -Csc(x)
+  tex:
+    in: \csc(-x)
+    out: -\csc(x)
+  fullform:
+    in: Csc[Minus[x]]
+derivative-csc-x-cot-x:
+  epsil:
+    in: D(Csc(x), x)
+    out: -(Csc(x) * Cot(x))
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\csc(x)
+    out: -(\csc(x)\cot(x))
+  fullform:
+    in: D[Csc[x], x]
+antiderivative-ln-csc-x-cot-x:
+  epsil:
+    in: Integrate(Csc(x), x)
+    out: -Ln(Abs(Csc(x) + Cot(x)))
+  tex:
+    in: \int\!\csc(x)\, \mathrm{d}x
+    out: -\ln(\vert\csc(x)+\cot(x)\vert)
+  fullform:
+    in: Integrate[Csc[x], x]

@@ -370,6 +370,11 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * NorlundB, PrimeZetaP, HypergeometricPFQ and KleinInvariantJ are the same story: all nine
  * are genuinely Wolfram's own names (BellY and NorlundB also have a mpmath/sympy analogue in
  * some form), waiting on the same coverage run to fill in `elsewhere`.
+ *
+ * UnitBox, UnitTriangle, HeavisideTheta, HeavisideLambda, HeavisidePi, Ramp, SawtoothWave,
+ * TriangleWave, SquareWave, Rescale, DiracDelta, DiscreteDelta and DiscreteShift (signals.ts)
+ * are the same story again: all thirteen are genuinely Wolfram's own names (see `HEADS` in
+ * @enumeratio/wolfram), waiting on the same coverage run to fill in `elsewhere`.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -448,6 +453,10 @@ const NOVEL = [
   "InverseLaplaceTransform",
   "FourierTransform",
   "InverseFourierTransform",
+  "Fourier",
+  "InverseFourier",
+  "FourierSeries",
+  "FourierCoefficient",
   "MeijerG",
   "MeijerGReduce",
   "CubeRoot",
@@ -457,6 +466,19 @@ const NOVEL = [
   "RealSign",
   "UnitStep",
   "Gudermannian",
+  "UnitBox",
+  "UnitTriangle",
+  "HeavisideTheta",
+  "HeavisideLambda",
+  "HeavisidePi",
+  "Ramp",
+  "SawtoothWave",
+  "TriangleWave",
+  "SquareWave",
+  "Rescale",
+  "DiracDelta",
+  "DiscreteDelta",
+  "DiscreteShift",
   // The Function* real-analysis property family (function-properties.ts) — genuine Wolfram
   // heads (see to-wolfram.ts HEADS), but not yet run through the oracle sweep, so `elsewhere`
   // is still empty here (see collect-provenance.ts's docstring on how it's carried forward).
@@ -653,6 +675,38 @@ const NOVEL = [
   "IsBipartiteGraph",
   "NeighborhoodGraph",
   "Subgraph",
+  // Inequality and FindInstance (@enumeratio/analytic): genuine Wolfram heads (see HEADS
+  // in @enumeratio/wolfram), waiting on the same offline-kernel-less story as the rest of
+  // this list for `elsewhere` to fill in.
+  "Inequality",
+  "FindInstance",
+  // Second wave (packages/symbols/combinatorics/collections/src/graphs-2.ts): same story --
+  // every one of these is genuinely Wolfram's own (see HEADS in @enumeratio/wolfram), this
+  // offline suite just has no kernel to confirm it.
+  "GraphDistanceMatrix",
+  "VertexEccentricity",
+  "GraphRadius",
+  "GraphDiameter",
+  "GraphCenter",
+  "GraphPeriphery",
+  "VertexIndex",
+  "VertexInDegree",
+  "VertexOutDegree",
+  "ClosenessCentrality",
+  "EigenvectorCentrality",
+  "IsPathGraph",
+  "IsAcyclicGraph",
+  "IsCompleteGraph",
+  "IsLoopFreeGraph",
+  "IsSimpleGraph",
+  "IsIsomorphicGraph",
+  "WheelGraph",
+  "CirculantGraph",
+  "TuranGraph",
+  "HararyGraph",
+  "LineGraph",
+  "AdjacencyGraph",
+  "RandomGraph",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

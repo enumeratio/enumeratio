@@ -19,7 +19,7 @@
 // Nothing here is a gate: it needs external kernels. Run it, read it, classify any new
 // `unclassified` rows the records pick up, commit the records.
 //
-//   vp node packages/reference/scripts/oracle-scan.ts                    # everything wired
+//   vp node packages/reference/scripts/oracle-scan.ts --accept           # everything wired, written
 //   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
@@ -63,6 +63,9 @@ const headFilter = headIndex >= 0 ? args[headIndex + 1] : undefined;
 const requested = args.filter((argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head");
 // `--digest` scans nothing: it rebuilds `disagreements.md` from the committed records.
 const digestOnly = args.includes("--digest");
+// Without `--accept` a scan only reports (report.json, stderr); with it, what the kernels said
+// goes into the records, and the digest follows. The explicit write is what a fixup PR carries.
+const accept = args.includes("--accept");
 const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
 
 const cases: Case[] = referenceEntries(data).flatMap((entry) =>
@@ -249,14 +252,15 @@ for (const system of systems) {
 // An unchanged record is left as it is on disk, so a rescan that finds nothing new leaves the
 // tree clean (the nightly lanes fail on drift).
 const written: string[] = [];
-for (const [head, record] of records) {
-  if (isDeepStrictEqual(record, loaded.get(head))) continue;
-  const path = recordPathOf.get(head)!;
-  if (Object.keys(record).length === 0) {
-    if (existsSync(path)) rmSync(path);
-  } else await writeYaml(path, record as HeadImplementations);
-}
-if (!isDeepStrictEqual(kernels, data.kernels))
+if (accept)
+  for (const [head, record] of records) {
+    if (isDeepStrictEqual(record, loaded.get(head))) continue;
+    const path = recordPathOf.get(head)!;
+    if (Object.keys(record).length === 0) {
+      if (existsSync(path)) rmSync(path);
+    } else await writeYaml(path, record as HeadImplementations);
+  }
+if (accept && !isDeepStrictEqual(kernels, data.kernels))
   writeFileSync(KERNELS, `${JSON.stringify(Object.fromEntries(Object.entries(kernels).sort()), null, 2)}\n`);
 
 const fresh = [...records].flatMap(([head, record]) =>
@@ -348,9 +352,13 @@ for (const system of scanned) {
   }
 }
 const digestUrl = new URL("../golden/oracle/disagreements.md", import.meta.url);
-writeFileSync(digestUrl, `${lines.join("\n")}\n`);
-written.push(fileURLToPath(digestUrl));
-execFileSync("pnpm", ["exec", "vp", "fmt", ...written], { stdio: "inherit" });
+if (accept || digestOnly) {
+  writeFileSync(digestUrl, `${lines.join("\n")}\n`);
+  written.push(fileURLToPath(digestUrl));
+  execFileSync("pnpm", ["exec", "vp", "fmt", ...written], { stdio: "inherit" });
+} else if (systems.length > 0) {
+  process.stderr.write("\nreport only: rerun with --accept to write the records\n");
+}
 
 process.stderr.write(`\nmost-wanted mappings:\n`);
 for (const [head, count] of queue.slice(0, 12)) {

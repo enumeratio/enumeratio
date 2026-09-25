@@ -1,4 +1,12 @@
 integerdigits-1-234:
+  epsil:
+    in: IntegerDigits(1_234)
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{IntegerDigits}(1\,234)
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: IntegerDigits[1234]
   wolfram:
     in: IntegerDigits[1234]
     out: "{1, 2, 3, 4}"
@@ -6,6 +14,14 @@ integerdigits-1-234:
       in: \text{IntegerDigits}[1234]
       out: \{1,2,3,4\}
 integerdigits-2-147-2:
+  epsil:
+    in: IntegerDigits(2_147, 2)
+    out: "[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(2\,147, 2)
+    out: \bigl\lbrack1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[2147, 2]
   wolfram:
     in: IntegerDigits[2147, 2]
     out: "{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}"
@@ -13,6 +29,14 @@ integerdigits-2-147-2:
       in: \text{IntegerDigits}[2147,2]
       out: \{1,0,0,0,0,1,1,0,0,0,1,1\}
 unlike-integerstring-there-s-always-at-least-one:
+  epsil:
+    in: IntegerDigits(0)
+    out: "[0]"
+  tex:
+    in: \mathrm{IntegerDigits}(0)
+    out: \bigl\lbrack0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[0]
   wolfram:
     in: IntegerDigits[0]
     out: "{0}"
@@ -20,6 +44,14 @@ unlike-integerstring-there-s-always-at-least-one:
       in: \text{IntegerDigits}[0]
       out: \{0\}
 the-sign-is-discarded:
+  epsil:
+    in: IntegerDigits(-3_134)
+    out: "[3, 1, 3, 4]"
+  tex:
+    in: \mathrm{IntegerDigits}(-3\,134)
+    out: \bigl\lbrack3, 1, 3, 4\bigr\rbrack
+  fullform:
+    in: IntegerDigits[-3134]
   wolfram:
     in: IntegerDigits[-3134]
     out: "{3, 1, 3, 4}"
@@ -27,13 +59,151 @@ the-sign-is-discarded:
       in: \text{IntegerDigits}[-3134]
       out: \{3,1,3,4\}
 the-3-argument-form-keeps-only-the-4-least:
+  epsil:
+    in: IntegerDigits(6_345_354, 10, 4)
+    out: "[5, 3, 5, 4]"
+  tex:
+    in: \mathrm{IntegerDigits}(6\,345\,354, 10, 4)
+    out: \bigl\lbrack5, 3, 5, 4\bigr\rbrack
+  fullform:
+    in: IntegerDigits[6345354, 10, 4]
   wolfram:
     in: IntegerDigits[6345354, 10, 4]
     out: "{5, 3, 5, 4}"
     tex:
       in: \text{IntegerDigits}[6345354,10,4]
       out: \{5,3,5,4\}
+integerdigits-58-127:
+  epsil:
+    in: IntegerDigits(58_127)
+    out: "[5, 8, 1, 2, 7]"
+  tex:
+    in: \mathrm{IntegerDigits}(58\,127)
+    out: \bigl\lbrack5, 8, 1, 2, 7\bigr\rbrack
+  fullform:
+    in: IntegerDigits[58127]
+  wolfram:
+    in: IntegerDigits[58127]
+integerdigits-58-127-2:
+  epsil:
+    in: IntegerDigits(58_127, 2)
+    out: "[1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(58\,127, 2)
+    out: \bigl\lbrack1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[58127, 2]
+  wolfram:
+    in: IntegerDigits[58127, 2]
+digits-past-9-are-plain-integers-58127-e30f-16:
+  epsil:
+    in: IntegerDigits(58_127, 16)
+    out: "[14, 3, 0, 15]"
+  tex:
+    in: \mathrm{IntegerDigits}(58\,127, 16)
+    out: \bigl\lbrack14, 3, 0, 15\bigr\rbrack
+  fullform:
+    in: IntegerDigits[58127, 16]
+  wolfram:
+    in: IntegerDigits[58127, 16]
+a-mixed-radix-spelled-mixedradix-102-341-seconds:
+  epsil:
+    in: IntegerDigits(102_341, MixedRadix([24, 60, 60]))
+    out: "[1, 4, 25, 41]"
+  tex:
+    in: \mathrm{IntegerDigits}(102\,341, \mathrm{MixedRadix}(\bigl\lbrack24, 60, 60\bigr\rbrack))
+    out: \bigl\lbrack1, 4, 25, 41\bigr\rbrack
+  fullform:
+    in: IntegerDigits[102341, MixedRadix[List[24, 60, 60]]]
+    back: [IntegerDigits, 102341, [MixedRadixNumerals, [List, 24, 60, 60]]]
+  wolfram:
+    in: IntegerDigits[102341, MixedRadix[List[24, 60, 60]]]
+the-leading-digit-is-unbounded-137-3-cdot-3-2:
+  epsil:
+    in: IntegerDigits(137, MixedRadix([3, 12]))
+    out: "[3, 2, 5]"
+  tex:
+    in: \mathrm{IntegerDigits}(137, \mathrm{MixedRadix}(\bigl\lbrack3, 12\bigr\rbrack))
+    out: \bigl\lbrack3, 2, 5\bigr\rbrack
+  fullform:
+    in: IntegerDigits[137, MixedRadix[List[3, 12]]]
+    back: [IntegerDigits, 137, [MixedRadixNumerals, [List, 3, 12]]]
+  wolfram:
+    in: IntegerDigits[137, MixedRadix[List[3, 12]]]
+a-width-longer-than-the-numeral-pads-with:
+  epsil:
+    in: IntegerDigits(5, 2, 8)
+    out: "[0, 0, 0, 0, 0, 1, 0, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(5, 2, 8)
+    out: \bigl\lbrack0, 0, 0, 0, 0, 1, 0, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[5, 2, 8]
+  wolfram:
+    in: IntegerDigits[5, 2, 8]
+listable-in-the-base-one-digit-list-per-base:
+  epsil:
+    in: IntegerDigits(7, [2, 3, 4])
+    out: "[[1, 1, 1], [2, 1], [1, 3]]"
+  tex:
+    in: \mathrm{IntegerDigits}(7, \bigl\lbrack2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: IntegerDigits[7, List[2, 3, 4]]
+  wolfram:
+    in: IntegerDigits[7, List[2, 3, 4]]
+listable-threads-over-a-range-of-integers:
+  epsil:
+    in: IntegerDigits(Range(0, 7), 2)
+    out: "[[0], [1], [1, 0], [1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]]"
+  tex:
+    in: \mathrm{IntegerDigits}(0..7, 2)
+    out: \bigl\lbrack\bigl\lbrack0\bigr\rbrack, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: IntegerDigits[Range[0, 7], 2]
+  wolfram:
+    in: IntegerDigits[Range[0, 7], 2]
+all-3-bit-words-by-threading-a-padded-form-over:
+  epsil:
+    in: IntegerDigits(Range(0, 7), 2, 3)
+    out: |-
+      [
+        [0, 0, 0],
+        [0, 0, 1],
+        [0, 1, 0],
+        [0, 1, 1],
+        [1, 0, 0],
+        [1, 0, 1],
+        [1, 1, 0],
+        [1, 1, 1],
+      ]
+  tex:
+    in: \mathrm{IntegerDigits}(0..7, 2, 3)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: IntegerDigits[Range[0, 7], 2, 3]
+  wolfram:
+    in: IntegerDigits[Range[0, 7], 2, 3]
+100-has-158-digits:
+  epsil:
+    in: Length(IntegerDigits(100!))
+    out: "158"
+  tex:
+    in: \mathrm{Length}(\mathrm{IntegerDigits}(100!))
+    out: "158"
+  fullform:
+    in: Length[IntegerDigits[Factorial[100]]]
+  wolfram:
+    in: Length[IntegerDigits[Factorial[100]]]
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: IntegerDigits([6, 7, 2], 2)
+    out: "[[1, 1, 0], [1, 1, 1], [1, 0]]"
+  tex:
+    in: \mathrm{IntegerDigits}(\bigl\lbrack6, 7, 2\bigr\rbrack, 2)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: IntegerDigits[List[6, 7, 2], 2]
   wolfram:
     in: IntegerDigits[List[6, 7, 2], 2]
     out: "{{1, 1, 0}, {1, 1, 1}, {1, 0}}"
@@ -41,6 +211,15 @@ threads-element-wise-over-a-list-as-wolfram-s:
       in: \text{IntegerDigits}[\{6,7,2\},2]
       out: \{\{1,1,0\},\{1,1,1\},\{1,0\}\}
 ordinary-base-2-as-a-system-value-same-digits-as:
+  epsil:
+    in: IntegerDigits(2_147, PositionalNumerals(2))
+    out: "[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(2\,147, \mathrm{PositionalNumerals}(2))
+    out: \bigl\lbrack1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[2147, 2]
+    back: [IntegerDigits, 2147, 2]
   wolfram:
     in: IntegerDigits[2147, 2]
     out: "{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}"
@@ -48,16 +227,280 @@ ordinary-base-2-as-a-system-value-same-digits-as:
       in: \text{IntegerDigits}[2147,2]
       out: \{1,0,0,0,0,1,1,0,0,0,1,1\}
 93-784-seconds-as-days-hours-minutes-seconds:
+  epsil:
+    in: IntegerDigits(93_784, MixedRadixNumerals([24, 60, 60]))
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{IntegerDigits}(93\,784, \mathrm{MixedRadixNumerals}(\bigl\lbrack24, 60, 60\bigr\rbrack))
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]
   wolfram:
     in: IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]
     out: "{1, 2, 3, 4}"
     tex:
       in: \text{IntegerDigits}[93784,\text{MixedRadix}[\{24,60,60\}]]
       out: \{1,2,3,4\}
+the-lehmer-code-of-the-6th-permutation-of-four:
+  epsil:
+    in: IntegerDigits(5, FactorialNumerals, 4)
+    out: "[0, 2, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(5, \mathrm{FactorialNumerals}, 4)
+    out: \bigl\lbrack0, 2, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[5, FactorialNumerals, 4]
+100-89-8-3-with-no-two-adjacent-ones:
+  epsil:
+    in: IntegerDigits(100, ZeckendorfNumerals)
+    out: "[1, 0, 0, 0, 0, 1, 0, 1, 0, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(100, \mathrm{ZeckendorfNumerals})
+    out: \bigl\lbrack1, 0, 0, 0, 0, 1, 0, 1, 0, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[100, ZeckendorfNumerals]
+the-same-20-13-5-2-over-a-continued-fraction-s:
+  epsil:
+    in: IntegerDigits(20, OstrowskiNumerals([1, 1, 1, 1, 1, 1, 1, 1]))
+    out: "[0, 1, 0, 1, 0, 1, 0, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(20, \mathrm{OstrowskiNumerals}(\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack))
+    out: \bigl\lbrack0, 1, 0, 1, 0, 1, 0, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[20, OstrowskiNumerals[List[1, 1, 1, 1, 1, 1, 1, 1]]]
+a-negative-integer-with-no-sign:
+  epsil:
+    in: IntegerDigits(-5, BalancedNumerals(3))
+    out: "[-1, 1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(-5, \mathrm{BalancedNumerals}(3))
+    out: \bigl\lbrack-1, 1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[-5, BalancedNumerals[3]]
+spreadsheet-column-aaa:
+  epsil:
+    in: IntegerDigits(703, BijectiveNumerals(26))
+    out: "[1, 1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(703, \mathrm{BijectiveNumerals}(26))
+    out: \bigl\lbrack1, 1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[703, BijectiveNumerals[26]]
+independent-residues-no-place-values:
+  epsil:
+    in: IntegerDigits(23, ResidueNumerals([3, 5, 7]))
+    out: "[2, 3, 2]"
+  tex:
+    in: \mathrm{IntegerDigits}(23, \mathrm{ResidueNumerals}(\bigl\lbrack3, 5, 7\bigr\rbrack))
+    out: \bigl\lbrack2, 3, 2\bigr\rbrack
+  fullform:
+    in: IntegerDigits[23, ResidueNumerals[List[3, 5, 7]]]
+the-10-adic-truncation-a-negative-is-spelled-by:
+  epsil:
+    in: IntegerDigits(-3, AdicNumerals(10, 6))
+    out: "[9, 9, 9, 9, 9, 7]"
+  tex:
+    in: \mathrm{IntegerDigits}(-3, \mathrm{AdicNumerals}(10, 6))
+    out: \bigl\lbrack9, 9, 9, 9, 9, 7\bigr\rbrack
+  fullform:
+    in: IntegerDigits[-3, AdicNumerals[10, 6]]
 an-integer-base-is-still-the-native-handler:
+  epsil:
+    in: IntegerDigits(255, 16)
+    out: "[15, 15]"
+  tex:
+    in: \mathrm{IntegerDigits}(255, 16)
+    out: \bigl\lbrack15, 15\bigr\rbrack
+  fullform:
+    in: IntegerDigits[255, 16]
   wolfram:
     in: IntegerDigits[255, 16]
     out: "{15, 15}"
     tex:
       in: \text{IntegerDigits}[255,16]
       out: \{15,15\}
+no-numeral-for-a-negative-in-a-system-that:
+  epsil:
+    in: IntegerDigits(-3, FactorialNumerals)
+    out: IntegerDigits(-3, FactorialNumerals)
+  tex:
+    in: \mathrm{IntegerDigits}(-3, \mathrm{FactorialNumerals})
+    out: \mathrm{IntegerDigits}(-3, \mathrm{FactorialNumerals})
+  fullform:
+    in: IntegerDigits[-3, FactorialNumerals]
+factoradic-5-is-the-lehmer-code-2-1-0:
+  epsil:
+    in: IntegerDigits(5, FactorialNumerals)
+    out: "[2, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(5, \mathrm{FactorialNumerals})
+    out: \bigl\lbrack2, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[5, FactorialNumerals]
+factoradic-463-a-longer-lehmer-code:
+  epsil:
+    in: IntegerDigits(463, FactorialNumerals)
+    out: "[3, 4, 1, 0, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(463, \mathrm{FactorialNumerals})
+    out: \bigl\lbrack3, 4, 1, 0, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[463, FactorialNumerals]
+balanced-ternary-5-is-1-1-1:
+  epsil:
+    in: IntegerDigits(5, BalancedNumerals(3))
+    out: "[1, -1, -1]"
+  tex:
+    in: \mathrm{IntegerDigits}(5, \mathrm{BalancedNumerals}(3))
+    out: \bigl\lbrack1, -1, -1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[5, BalancedNumerals[3]]
+negativenumerals-2-3-is-1-1-1:
+  epsil:
+    in: IntegerDigits(3, NegativeNumerals(2))
+    out: "[1, 1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(3, \mathrm{NegativeNumerals}(2))
+    out: \bigl\lbrack1, 1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[3, NegativeNumerals[2]]
+negativenumerals-2-minus-2-is-1-0:
+  epsil:
+    in: IntegerDigits(-2, NegativeNumerals(2))
+    out: "[1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(-2, \mathrm{NegativeNumerals}(2))
+    out: \bigl\lbrack1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[-2, NegativeNumerals[2]]
+fixed-base-2-drops-the-sign-of-minus-5:
+  epsil:
+    in: IntegerDigits(-5, 2)
+    out: "[1, 0, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(-5, 2)
+    out: \bigl\lbrack1, 0, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[-5, 2]
+  wolfram:
+    in: IntegerDigits[-5, 2]
+positionalnumerals-declines-a-negative:
+  epsil:
+    in: IntegerDigits(-5, PositionalNumerals(2))
+    out: IntegerDigits(-5, PositionalNumerals(2))
+  tex:
+    in: \mathrm{IntegerDigits}(-5, \mathrm{PositionalNumerals}(2))
+    out: \mathrm{IntegerDigits}(-5, \mathrm{PositionalNumerals}(2))
+  fullform:
+    in: IntegerDigits[-5, 2]
+    back: [IntegerDigits, -5, 2]
+  wolfram:
+    in: IntegerDigits[-5, 2]
+combinatorial-base-3-zero-is-2-1-0:
+  epsil:
+    in: IntegerDigits(0, CombinatorialNumerals(3))
+    out: "[2, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(0, \mathrm{CombinatorialNumerals}(3))
+    out: \bigl\lbrack2, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[0, CombinatorialNumerals[3]]
+primorial-base-30-is-1-0-0-0:
+  epsil:
+    in: IntegerDigits(30, PrimorialNumerals)
+    out: "[1, 0, 0, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(30, \mathrm{PrimorialNumerals})
+    out: \bigl\lbrack1, 0, 0, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[30, PrimorialNumerals]
+an-even-balanced-base-declines:
+  epsil:
+    in: IntegerDigits(10, BalancedNumerals(4))
+    out: IntegerDigits(10, BalancedNumerals(4))
+  tex:
+    in: \mathrm{IntegerDigits}(10, \mathrm{BalancedNumerals}(4))
+    out: \mathrm{IntegerDigits}(10, \mathrm{BalancedNumerals}(4))
+  fullform:
+    in: IntegerDigits[10, BalancedNumerals[4]]
+an-unrecognized-system-symbol-leaves-the-call:
+  epsil:
+    in: IntegerDigits(10, NotASystem)
+    out: IntegerDigits(10, NotASystem)
+  tex:
+    in: \mathrm{IntegerDigits}(10, \mathrm{NotASystem})
+    out: \mathrm{IntegerDigits}(10, \mathrm{NotASystem})
+  fullform:
+    in: IntegerDigits[10, NotASystem]
+ostrowski-12-over-all-ones-convergents:
+  epsil:
+    in: IntegerDigits(12, OstrowskiNumerals([1, 1, 1, 1, 1, 1, 1, 1]))
+    out: "[0, 0, 1, 0, 1, 0, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(12, \mathrm{OstrowskiNumerals}(\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack))
+    out: \bigl\lbrack0, 0, 1, 0, 1, 0, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[12, OstrowskiNumerals[List[1, 1, 1, 1, 1, 1, 1, 1]]]
+zeckendorf-12-is-8-3-1:
+  epsil:
+    in: IntegerDigits(12, ZeckendorfNumerals)
+    out: "[1, 0, 1, 0, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(12, \mathrm{ZeckendorfNumerals})
+    out: \bigl\lbrack1, 0, 1, 0, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[12, ZeckendorfNumerals]
+ostrowski-9-over-2-2-2-is-1-2-0:
+  epsil:
+    in: IntegerDigits(9, OstrowskiNumerals([2, 2, 2]))
+    out: "[1, 2, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(9, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+    out: \bigl\lbrack1, 2, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[9, OstrowskiNumerals[List[2, 2, 2]]]
+ostrowski-declines-past-its-ceiling:
+  epsil:
+    in: IntegerDigits(12, OstrowskiNumerals([2, 2, 2]))
+    out: IntegerDigits(12, OstrowskiNumerals([2, 2, 2]))
+  tex:
+    in: \mathrm{IntegerDigits}(12, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+    out: \mathrm{IntegerDigits}(12, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+  fullform:
+    in: IntegerDigits[12, OstrowskiNumerals[List[2, 2, 2]]]
+past-the-product-there-is-no-residue-numeral:
+  epsil:
+    in: IntegerDigits(105, ResidueNumerals([3, 5, 7]))
+    out: IntegerDigits(105, ResidueNumerals([3, 5, 7]))
+  tex:
+    in: \mathrm{IntegerDigits}(105, \mathrm{ResidueNumerals}(\bigl\lbrack3, 5, 7\bigr\rbrack))
+    out: \mathrm{IntegerDigits}(105, \mathrm{ResidueNumerals}(\bigl\lbrack3, 5, 7\bigr\rbrack))
+  fullform:
+    in: IntegerDigits[105, ResidueNumerals[List[3, 5, 7]]]
+bijective-base-26-27-is-aa:
+  epsil:
+    in: IntegerDigits(27, BijectiveNumerals(26))
+    out: "[1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(27, \mathrm{BijectiveNumerals}(26))
+    out: \bigl\lbrack1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[27, BijectiveNumerals[26]]
+bijective-base-26-702-is-zz:
+  epsil:
+    in: IntegerDigits(702, BijectiveNumerals(26))
+    out: "[26, 26]"
+  tex:
+    in: \mathrm{IntegerDigits}(702, \mathrm{BijectiveNumerals}(26))
+    out: \bigl\lbrack26, 26\bigr\rbrack
+  fullform:
+    in: IntegerDigits[702, BijectiveNumerals[26]]
+bijective-base-26-zero-is-the-empty-numeral:
+  epsil:
+    in: IntegerDigits(0, BijectiveNumerals(26))
+    out: "[]"
+  tex:
+    in: \mathrm{IntegerDigits}(0, \mathrm{BijectiveNumerals}(26))
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: IntegerDigits[0, BijectiveNumerals[26]]

@@ -1,4 +1,12 @@
 nextprime-10:
+  epsil:
+    in: NextPrime(10)
+    out: "11"
+  tex:
+    in: \mathrm{NextPrime}(10)
+    out: "11"
+  fullform:
+    in: NextPrime[10]
   wolfram:
     in: NextPrime[10]
     out: "11"
@@ -6,6 +14,14 @@ nextprime-10:
       in: \text{NextPrime}[10]
       out: "11"
 nextprime-100:
+  epsil:
+    in: NextPrime(100)
+    out: "101"
+  tex:
+    in: \mathrm{NextPrime}(100)
+    out: "101"
+  fullform:
+    in: NextPrime[100]
   wolfram:
     in: NextPrime[100]
     out: "101"
@@ -13,6 +29,14 @@ nextprime-100:
       in: \text{NextPrime}[100]
       out: "101"
 the-second-prime-after-10:
+  epsil:
+    in: NextPrime(10, 2)
+    out: "13"
+  tex:
+    in: \mathrm{NextPrime}(10, 2)
+    out: "13"
+  fullform:
+    in: NextPrime[10, 2]
   wolfram:
     in: NextPrime[10, 2]
     out: "13"
@@ -20,6 +44,14 @@ the-second-prime-after-10:
       in: \text{NextPrime}[10,2]
       out: "13"
 a-negative-k-walks-backward-giving-the-prime:
+  epsil:
+    in: NextPrime(10, -1)
+    out: "7"
+  tex:
+    in: \mathrm{NextPrime}(10, -1)
+    out: "7"
+  fullform:
+    in: NextPrime[10, -1]
   wolfram:
     in: NextPrime[10, -1]
     out: "7"
@@ -27,9 +59,108 @@ a-negative-k-walks-backward-giving-the-prime:
       in: \text{NextPrime}[10,-1]
       out: "7"
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: NextPrime([1, 5, 10, 15])
+    out: "[2, 7, 11, 17]"
+  tex:
+    in: \mathrm{NextPrime}(\bigl\lbrack1, 5, 10, 15\bigr\rbrack)
+    out: \bigl\lbrack2, 7, 11, 17\bigr\rbrack
+  fullform:
+    in: NextPrime[List[1, 5, 10, 15]]
   wolfram:
     in: NextPrime[List[1, 5, 10, 15]]
     out: "{2, 7, 11, 17}"
     tex:
       in: \text{NextPrime}[\{1,5,10,15\}]
       out: \{2,7,11,17\}
+nextprime-6:
+  epsil:
+    in: NextPrime(6)
+    out: "7"
+  tex:
+    in: \mathrm{NextPrime}(6)
+    out: "7"
+  fullform:
+    in: NextPrime[6]
+  wolfram:
+    in: NextPrime[6]
+the-second-prime-after-50:
+  epsil:
+    in: NextPrime(50, 2)
+    out: "59"
+  tex:
+    in: \mathrm{NextPrime}(50, 2)
+    out: "59"
+  fullform:
+    in: NextPrime[50, 2]
+  wolfram:
+    in: NextPrime[50, 2]
+the-largest-prime-below-50:
+  epsil:
+    in: NextPrime(50, -1)
+    out: "47"
+  tex:
+    in: \mathrm{NextPrime}(50, -1)
+    out: "47"
+  fullform:
+    in: NextPrime[50, -1]
+  wolfram:
+    in: NextPrime[50, -1]
+large-integers-the-first-prime-past-a-googol-is:
+  epsil:
+    in: NextPrime(10 ^ 100)
+    out: 10_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_267
+  tex:
+    in: \mathrm{NextPrime}(10^{100})
+    out: 10\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,267
+  fullform:
+    in: NextPrime[Power[10, 100]]
+  wolfram:
+    in: NextPrime[Power[10, 100]]
+rational-n-the-next-prime-above-7-2:
+  epsil:
+    in: NextPrime(7 / 2)
+    out: "5"
+  tex:
+    in: \mathrm{NextPrime}(\frac{7}{2})
+    out: "5"
+  fullform:
+    in: NextPrime[Rational[7, 2]]
+  wolfram:
+    in: NextPrime[Rational[7, 2]]
+real-n-the-next-prime-above-100-5:
+  epsil:
+    in: NextPrime(100.5)
+    out: "101"
+  tex:
+    in: \mathrm{NextPrime}(100.5)
+    out: "101"
+  fullform:
+    in: NextPrime[100.5]
+  wolfram:
+    in: NextPrime[100.5]
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime:
+  epsil:
+    in: NextPrime(NthPrime(20)) == NthPrime(21)
+    out: True
+  tex:
+    in: \mathrm{NextPrime}(\mathrm{NthPrime}(20))=\mathrm{NthPrime}(21)
+    out: \top
+  traditional:
+    in: \mathrm{NextPrime}(p_{20})=p_{21}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[NextPrime[Prime[20]], Prime[21]]
+  wolfram:
+    in: (NextPrime[Prime[20]] == Prime[21])
+negative-n-wolfram-counts-7-as-prime-and-returns:
+  epsil:
+    in: NextPrime(-10)
+    out: "-7"
+  tex:
+    in: \mathrm{NextPrime}(-10)
+    out: "-7"
+  fullform:
+    in: NextPrime[-10]
+  wolfram:
+    in: NextPrime[-10]

@@ -1,4 +1,67 @@
 the-documented-subsets-collection-form-listed-in:
+  epsil:
+    in: Subsets([a, b, c])
+    out: "[[], [a], [b], [a, b], [c], [a, c], [b, c], [a, b, c]]"
+  tex:
+    in: \mathrm{Subsets}(\bigl\lbrack a, b, c\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack \bigr\rbrack, \bigl\lbrack a\bigr\rbrack, \bigl\lbrack b\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack, \bigl\lbrack a, c\bigr\rbrack, \bigl\lbrack b, c\bigr\rbrack, \bigl\lbrack a, b, c\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Subsets[List[a, b, c]]
   wolfram:
     in:
     note: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …"
+a-size-bound-the-subsets-with-at-most-2-elements:
+  epsil:
+    in: Count(Subsets(4, 2))
+    out: "11"
+  tex:
+    in: \mathrm{Count}(\mathrm{Subsets}(4, 2))
+    out: "11"
+  fullform:
+    in: Count[Subsets[4, 2]]
+  wolfram:
+    in: Count[Subsets[4, 2]]
+an-exact-size-2-binom-4-2-subsets:
+  epsil:
+    in: Count(Subsets(4, [2]))
+    out: "6"
+  tex:
+    in: \mathrm{Count}(\mathrm{Subsets}(4, \bigl\lbrack2\bigr\rbrack))
+    out: "6"
+  fullform:
+    in: Count[Subsets[4, List[2]]]
+  wolfram:
+    in: Count[Subsets[4, List[2]]]
+a-size-range-0-5-2-the-even-size-subsets-2-4-of:
+  epsil:
+    in: Count(Subsets(5, [0, 5, 2]))
+    out: "16"
+  tex:
+    in: \mathrm{Count}(\mathrm{Subsets}(5, \bigl\lbrack0, 5, 2\bigr\rbrack))
+    out: "16"
+  fullform:
+    in: Count[Subsets[5, List[0, 5, 2]]]
+  wolfram:
+    in: Count[Subsets[5, List[0, 5, 2]]]
+a-set-of-n-elements-has-2-n-subsets-count:
+  epsil:
+    in: Length(Subsets(Range(1, 10)))
+    out: 1_024
+  tex:
+    in: \mathrm{Length}(\mathrm{Subsets}(1..10))
+    out: 1\,024
+  fullform:
+    in: Length[Subsets[Range[1, 10]]]
+  wolfram:
+    in: Length[Subsets[Range[1, 10]]]
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of:
+  epsil:
+    in: Sum(Binomial(5, k), (k, 0, 5))
+    out: "32"
+  tex:
+    in: \sum_{k=0}^5\binom{5}{k}
+    out: "32"
+  fullform:
+    in: Sum[Binomial[5, k], List[k, 0, 5]]
+  wolfram:
+    in: Sum[Binomial[5, k], List[k, 0, 5]]
