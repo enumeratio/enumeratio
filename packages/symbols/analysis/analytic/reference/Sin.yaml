@@ -145,9 +145,8 @@ examples:
   - id: wolfram-answers-sin-infty-with-the-range-of-its
     expr: [Sin, PositiveInfinity]
     expected: [Interval, -1, 1]
-    aspirational: true
     category: Scope
-    caption: Wolfram answers $\sin(\infty)$ with the range of its oscillation, $[-1, 1]$; compute-engine returns a type error
+    caption: As Wolfram does, $\sin(\infty)$ is the range of its oscillation, $[-1, 1]$
   - id: uncertainty-propagation-sin-2-pm-0-01-approx-0
     expr: [Sin, [Around, 2, 0.01]]
     expected: [Around, 0.9092974268256817, 0.004161468365471424]

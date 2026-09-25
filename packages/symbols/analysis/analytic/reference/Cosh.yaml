@@ -29,9 +29,8 @@ examples:
     caption: 'Hyperbolic Pythagorean identity: $\cosh^2 x - \sinh^2 x = 1$'
   - id: stays-symbolic-even-at-0-same-as-sinh-wrap-in-n
     expr: [Cosh, 0]
-    expected: [Cosh, 0]
-    category: Possible issues
-    caption: Stays symbolic even at 0, same as [[Sinh]]; wrap in N(...) as above
+    expected: 1
+    caption: Exact at 0, as [[Cos]] is
   - id: a-float-argument-evaluates-directly-no-n-needed
     expr: [Cosh, 1.2]
     expected: { num: "1.81065556732437479309" }
@@ -66,15 +65,13 @@ examples:
         ],
       ]
     expected: [List, [List, [Rational, 1, 2], [Rational, 1, 2]], [List, 1, [Divide, [Sqrt, 3], 2]]]
-    aspirational: true
     category: Scope
-    caption: Element-wise over a matrix of imaginary multiples of $\pi$, which should fold through $\cosh(ix) = \cos x$; stays symbolic
+    caption: Element-wise over a matrix of imaginary multiples of $\pi$, folding through $\cosh(ix) = \cos x$
   - id: interval-arithmetic-cosh-0-ln-3-1-frac-53-not
     expr: [Cosh, [Interval, 0, [Ln, 3]]]
     expected: [Interval, 1, [Rational, 5, 3]]
-    aspirational: true
     category: Scope
-    caption: 'Interval arithmetic: $\cosh[0, \ln 3] = [1, \tfrac53]$, the minimum at 0 included; the image comes back as $[\cosh 0, \cosh(\ln 3)]$, since neither value folds on its own yet (see the $\cosh 0$ example)'
+    caption: 'Interval arithmetic: $\cosh[0, \ln 3] = [1, \tfrac53]$, the minimum at 0 included'
   - id: uncertainty-propagation-cosh-2-sqrt-3-pm-0-1
     expr: [Cosh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]
     expected: [Around, 1.744112480153778, 0.14289605814815756]
@@ -112,9 +109,8 @@ examples:
   - id: cosh-2-x-sinh-2-x-should-simplify-to-1
     expr: [Simplify, [Subtract, [Power, [Cosh, x], 2], [Power, [Sinh, x], 2]]]
     expected: 1
-    aspirational: true
     category: Properties
-    caption: $\cosh^2 x - \sinh^2 x$ should simplify to 1 symbolically, as the circular identity does; left as is
+    caption: $\cosh^2 x - \sinh^2 x$ simplifies to 1, as the circular identity does
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Cosh, 1], 30]
     expected: { num: "1.54308063481524377847790562076" }

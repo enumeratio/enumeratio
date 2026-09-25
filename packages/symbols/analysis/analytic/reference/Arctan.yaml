@@ -155,17 +155,19 @@ examples:
     category: Properties
     caption: 'As logarithms: $\arctan x = \tfrac{i}{2}\ln(1 - ix) - \tfrac{i}{2}\ln(1 + ix)$'
   - id: euler-s-machin-like-identity-arctan-frac-12
-    expr: [Add, [Arctan, [Rational, 1, 2]], [Arctan, [Rational, 1, 3]]]
+    expr: [FullSimplify, [Add, [Arctan, [Rational, 1, 2]], [Arctan, [Rational, 1, 3]]]]
     expected: [Multiply, [Rational, 1, 4], Pi]
-    aspirational: true
     category: Neat examples
-    caption: Euler's Machin-like identity $\arctan\tfrac12 + \arctan\tfrac13 = \tfrac{\pi}{4}$; the sum is not combined
+    caption: Euler's Machin-like identity $\arctan\tfrac12 + \arctan\tfrac13 = \tfrac{\pi}{4}$, by [[FullSimplify]]; the bare sum stays as written, as in Wolfram
   - id: machin-s-formula-4-arctan-frac-15-arctan-frac-1
-    expr: [Subtract, [Multiply, 4, [Arctan, [Rational, 1, 5]]], [Arctan, [Rational, 1, 239]]]
+    expr:
+      [
+        FullSimplify,
+        [Subtract, [Multiply, 4, [Arctan, [Rational, 1, 5]]], [Arctan, [Rational, 1, 239]]],
+      ]
     expected: [Multiply, [Rational, 1, 4], Pi]
-    aspirational: true
     category: Neat examples
-    caption: Machin's formula $4\arctan\tfrac15 - \arctan\tfrac1{239} = \tfrac{\pi}{4}$; not combined
+    caption: Machin's formula $4\arctan\tfrac15 - \arctan\tfrac1{239} = \tfrac{\pi}{4}$, by [[FullSimplify]]
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Arctan, [Rational, 1, 2]], 30]
     expected: { num: "0.463647609000806116214256231461" }

@@ -77,10 +77,9 @@ examples:
   - id: frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2
     expr: [D, [ErfInv, x], x]
     expected:
-      [Multiply, [Rational, 1, 2], [Sqrt, Pi], [Power, ExponentialE, [Power, [ErfInv, x], 2]]]
-    aspirational: true
+      [Multiply, [Rational, 1, 2], [Power, ExponentialE, [Power, [ErfInv, x], 2]], [Sqrt, Pi]]
     category: Properties
-    caption: $\frac{d}{dx}\operatorname{erfinv}(x) = \frac{\sqrt\pi}{2}e^{\operatorname{erfinv}(x)^2}$; today the derivative stays an unapplied `Derivative`
+    caption: $\frac{d}{dx}\operatorname{erfinv}(x) = \frac{\sqrt\pi}{2}e^{\operatorname{erfinv}(x)^2}$
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [ErfInv, [Rational, 1, 2]], 30]
     expected: { num: "0.476936276204469873381418353643" }

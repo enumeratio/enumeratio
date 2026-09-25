@@ -18,6 +18,9 @@ export interface OtherSystemRun {
   readonly tolerance?: number;
   /** `ours` only: the GitHub issue tracking the gap. */
   readonly issue?: number;
+  /** Wolfram only: the digits it displays for an arbitrary-precision value -- its `N[x, d]`
+   * holds more than it shows, and `output` is its `InputForm`, which prints them all. */
+  readonly shown?: string;
   /** Wolfram only: its `TeXForm` of the input as written and of the value. */
   readonly tex?: { readonly input: string; readonly output: string };
 }
@@ -280,6 +283,9 @@ export interface EvaluationMessage {
 export interface SystemImplementation {
   readonly in: string;
   readonly out?: string;
+  /** Wolfram only: the digits it displays for an arbitrary-precision `out`, which it holds
+   * more digits of than it shows. */
+  readonly shown?: string;
   /** Wolfram (and any system that has one): its TeXForm of `in` and of `out`. */
   readonly tex?: RenderedForm;
   readonly verdict?: OtherSystemVerdict;

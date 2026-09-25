@@ -67,9 +67,8 @@ examples:
   - id: complex-arguments-should-evaluate-numerically
     expr: [Beta, [Complex, 2.5, 1], [Complex, 1, -1]]
     expected: [Complex, 0.08310778366991163, 0.14216394425587034]
-    aspirational: true
     category: Scope
-    caption: Complex arguments should evaluate numerically; left unevaluated today, even under N()
+    caption: Inexact complex arguments evaluate numerically, through $\ln\Gamma$
   - id: three-arguments-the-incomplete-beta-b-z-a-b-int
     expr: [Beta, [Rational, 1, 2], 2, 3]
     expected: [Rational, 11, 192]
@@ -88,15 +87,13 @@ examples:
   - id: b-2-b-frac-1-b-b-1-not-yet
     expr: [Beta, 2, b]
     expected: [Divide, 1, [Multiply, b, [Add, b, 1]]]
-    aspirational: true
     category: Properties
-    caption: $B(2, b) = \frac{1}{b(b+1)}$; not yet
+    caption: $B(2, b) = \frac{1}{b(b+1)}$; Wolfram leaves this to FunctionExpand
   - id: partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the
     expr: [D, [Beta, a, b], a]
-    expected: [Multiply, [Beta, a, b], [Subtract, [Digamma, a], [Digamma, [Add, a, b]]]]
-    aspirational: true
+    expected: [Multiply, [Add, [Digamma, a], [Negate, [Digamma, [Add, a, b]]]], [Beta, a, b]]
     category: Properties
-    caption: $\partial_a B(a, b) = B(a, b)\,(\psi(a) - \psi(a+b))$; today the derivative stays an unapplied `Derivative`
+    caption: $\partial_a B(a, b) = B(a, b)\,(\psi(a) - \psi(a+b))$
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Beta, [Rational, 1, 3], [Rational, 1, 4]], 30]
     expected: { num: "6.35358648555342153052878897202" }

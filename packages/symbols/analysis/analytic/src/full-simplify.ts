@@ -1,16 +1,18 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, operandsOf } from "@enumeratio/boxed";
 import type { EvalOptions } from "./box.ts";
 import { evaluateExpToTrig } from "./exp-to-trig.ts";
 
 // FullSimplify(expr) — compute-engine's own `simplify()` (the Pythagorean identity and the
-// double-angle product already fold there) plus four extra passes, each aimed at one class of
+// double-angle product already fold there) plus five extra passes, each aimed at one class of
 // backlog example:
 //  - the Gamma functional equation, `Γ(a)/Γ(b) = ∏(b..a−1)` for a concrete integer `a − b`;
 //  - the hyperbolic Pythagorean identity `cosh²(u) − sinh²(u) = 1`, recognized after
 //    `simplify()` has already rearranged the difference into an `Add`;
 //  - denesting `Sqrt(a + 2·Sqrt(b))` into `Sqrt(x) + Sqrt(y)` for concrete rational `a, b`
 //    with a rational discriminant;
+//  - a sum of integer multiples of arctangents of rationals that is a multiple of π/4
+//    (Machin's formula);
 //  - ExpToTrig everywhere in the tree, which is how a `(e^x − e^(−x))/2` shows up as `Sinh(x)`
 //    rather than needing its own "recognize a hyperbolic definition" rule.
 //
@@ -54,7 +56,7 @@ function gammaRatio(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
 
 /** cosh(u)² − sinh(u)² = 1, recognized once `simplify()` has rearranged the difference into
  * an `Add` of `cosh(u)²` and `−sinh(u)²` for the SAME `u`. */
-function hyperbolicPythagoras(e: BoxedExpression, ce: ComputeEngine): BoxedExpression {
+export function hyperbolicPythagoras(e: BoxedExpression, ce: ComputeEngine): BoxedExpression {
   const ops = operandsOf(e);
   if (e.operator !== "Add" || ops.length !== 2) return e;
   const [x, y] = ops;
@@ -131,6 +133,55 @@ function denestSqrtJson(json: unknown): unknown {
   return ["Add", ["Sqrt", x], ["Sqrt", y]];
 }
 
+/** One term of an arctangent sum: c·arctan(p/q), c an integer. */
+interface ArctanTerm {
+  readonly c: bigint;
+  readonly p: bigint;
+  readonly q: bigint;
+}
+
+function arctanTerm(t: BoxedExpression): ArctanTerm | undefined {
+  let c = 1n;
+  let inner = t;
+  if (t.operator === "Negate") {
+    c = -1n;
+    inner = operandsOf(t)[0]!;
+  } else if (t.operator === "Multiply" && operandsOf(t).length === 2) {
+    const [k, a] = operandsOf(t);
+    const n = bigIntegerAt(k);
+    if (n === undefined) return undefined;
+    c = n;
+    inner = a!;
+  }
+  if (inner.operator !== "Arctan") return undefined;
+  const r = bigRationalAt(operandsOf(inner)[0]);
+  return r === undefined ? undefined : { c, p: r[0], q: r[1] };
+}
+
+/**
+ * Σ cᵢ·arctan(rᵢ) over rationals, when it is a multiple of π/4 -- Machin's formula and its
+ * kin. The sum is the argument of ∏(qᵢ + i·pᵢ)^cᵢ, an exact Gaussian integer X + iY; the
+ * angle is a multiple of π/4 exactly when X = 0, Y = 0 or |X| = |Y|, and the double sum
+ * picks which one.
+ */
+function arctanSum(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+  if (e.operator !== "Add") return e;
+  const terms = operandsOf(e).map(arctanTerm);
+  if (terms.length < 2 || terms.some((t) => t === undefined || t.c > 64n || t.c < -64n)) return e;
+  let [x, y] = [1n, 0n];
+  let angle = 0;
+  for (const { c, p, q } of terms as ArctanTerm[]) {
+    const [a, b] = c < 0n ? [q, -p] : [q, p]; // a negative power turns by the conjugate
+    for (let k = 0n; k < (c < 0n ? -c : c); k++) [x, y] = [x * a - y * b, x * b + y * a];
+    angle += Number(c) * Math.atan(Number(p) / Number(q));
+  }
+  const abs = (n: bigint) => (n < 0n ? -n : n);
+  if (x !== 0n && y !== 0n && abs(x) !== abs(y)) return e;
+  const m = Math.round(angle / (Math.PI / 4));
+  if (Math.abs(angle - (m * Math.PI) / 4) > 1e-9) return e;
+  return ce.function("Multiply", [ce.number([m, 4]), ce.Pi]).evaluate();
+}
+
 const denestSqrt = (ce: ComputeEngine, e: BoxedExpression): BoxedExpression =>
   ce.box(denestSqrtJson(e.json) as never).evaluate();
 
@@ -138,6 +189,7 @@ export function fullSimplify(ce: ComputeEngine, expr: BoxedExpression): BoxedExp
   let e = expr.simplify();
   e = gammaRatio(ce, e).simplify();
   e = hyperbolicPythagoras(e, ce);
+  e = arctanSum(ce, e);
   e = denestSqrt(ce, e).simplify();
   e = (evaluateExpToTrig(ce, [e]) ?? e).simplify();
   return e;

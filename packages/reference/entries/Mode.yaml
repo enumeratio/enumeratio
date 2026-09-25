@@ -35,10 +35,9 @@ examples:
     caption: Exact rationals
   - id: symbols-and-numbers-mixed-three-way-tie-wolfram
     expr: [Mode, [List, b, a, c, 2, a, b, 1, 2]]
-    expected: [List, b, a, 2]
-    aspirational: true
+    expected: b
     category: Scope
-    caption: "Symbols and numbers mixed, three-way tie: Wolfram's $Commonest$ lists $b$, $a$, $2$ in order of first appearance; compute-engine's Mode needs numbers"
+    caption: "Symbols and numbers mixed, three-way tie: the first to appear wins; [[Commonest]] lists all three, $b$, $a$, $2$, as Wolfram's does"
   - id: empty-data-has-no-mode-compute-engine-returns
     expr: [Mode, [List]]
     expected: NaN

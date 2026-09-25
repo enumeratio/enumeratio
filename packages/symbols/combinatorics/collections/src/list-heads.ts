@@ -22,6 +22,9 @@ import {
  *  alphabetical by name for symbols (Wolfram's canonical order — compute-engine's own
  *  `isLess`/`isGreater` don't compare two symbols, so without this they tie and the
  *  ordering falls back to input position). */
+/** Largest Range SetMinus lists out as a set. */
+const SET_MINUS_RANGE_MAX = 100_000;
+
 const naturalCompare = (a: BoxedExpression, b: BoxedExpression): number => {
   const as = stringAt(a);
   const bs = stringAt(b);
@@ -624,26 +627,42 @@ export function declareListHeads(ce: ComputeEngine): void {
     }
   }
 
-  // SetMinus(list, list, …): Wolfram's Complement also takes lists, not just sets — a
-  // `List` operand is read as the set of its elements before delegating to the native
-  // set-difference computation, which already handles any number of operands.
+  // SetMinus(list, list, …): Wolfram's Complement also takes lists, not just sets, and a
+  // finite Range as the universe. Each such operand is read as the set of its elements
+  // before the native set difference, which already handles any number of operands.
   //
-  // Widened first: compute-engine's native signature types the first parameter strictly
-  // as `set<any>`, so boxing `SetMinus(List(...), …)` coerces the `List` operand into an
-  // `Error` at BOX time — before this operator's `applies` guard, or even `evaluate`,
-  // ever sees it (the same box-time coercion `At`'s `All`/`Span` cases ran into). Loosening
-  // the parameter type to `any` avoids that eager coercion; the guard below still only
-  // fires for an actual `List` operand.
-  widenSignature(ce, "SetMinus", "(any, any*) -> set");
-  wrapOperator(
-    ce,
-    ["SetMinus", 1, 1],
-    (ops) => ops.some((op) => op.operator === "List"),
-    (native) => (ops, options) =>
-      native?.(
-        ops.map((op) => (op.operator === "List" ? ce.box(["Set", ...operandsOf(op)]) : op)),
-        options,
-      ),
-    { min: 2 },
-  );
+  // Patched on `canonical`: compute-engine's native canonical handler type-checks against
+  // its own hard-coded `(set<any>, value*) -> set`, so a `List` operand becomes an `Error`
+  // there, whatever the declared signature says.
+  {
+    const definition = ce.lookupDefinition("SetMinus");
+    const operator =
+      definition !== undefined && "operator" in definition
+        ? (
+            definition as {
+              operator: {
+                canonical?: (
+                  ops: readonly BoxedExpression[],
+                  options: unknown,
+                ) => BoxedExpression | undefined;
+              };
+            }
+          ).operator
+        : undefined;
+    const asSet = (op: BoxedExpression): BoxedExpression => {
+      const c = op.canonical;
+      if (c.operator === "List") return ce.function("Set", [...operandsOf(c)]);
+      if (c.operator === "Range" && c.isFiniteCollection === true) {
+        const count = c.count;
+        if (count !== undefined && count <= SET_MINUS_RANGE_MAX)
+          return ce.function("Set", [...c.each()]);
+      }
+      return c;
+    };
+    if (operator !== undefined) {
+      const nativeCanonical = operator.canonical;
+      operator.canonical = (ops, options) =>
+        nativeCanonical?.call(operator, ops.map(asSet), options);
+    }
+  }
 }

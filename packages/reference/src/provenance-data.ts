@@ -964,7 +964,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Mode",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: ["wolfram"],

@@ -57,7 +57,8 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     ["GammaLn", 1],
     (ops) => {
       const n = bigIntegerAt(ops[0]);
-      return n !== undefined && n >= 1n;
+      // Exact only: GammaLn(1e20) is a float asking for a float, not ln((10²⁰ − 1)!).
+      return n !== undefined && n >= 1n && (ops[0] as { isExact?: boolean }).isExact !== false;
     },
     () => (ops, options) => {
       const n = bigIntegerAt(ops[0])!;

@@ -59,6 +59,7 @@ const OTHER_SYSTEM_RUN: JsonSchema = {
     note: { type: "string" },
     tolerance: { type: "number" },
     issue: { type: "integer" },
+    shown: { type: "string" },
     tex: {
       type: "object",
       properties: { input: { type: "string" }, output: { type: "string" } },
@@ -220,6 +221,7 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
   properties: {
     in: { type: "string" },
     out: { type: "string" },
+    shown: { type: "string" },
     tex: { $ref: "#/$defs/RenderedForm" },
     verdict: OTHER_SYSTEM_VERDICT,
     kind: { type: "string" },

@@ -11,7 +11,7 @@ signatures:
     library: enumeratio-collections
     arity: 2
 details:
-  - '`levels` counts LEVELS, not vertices (kernel-verified): `CompleteKaryTree(1, 2)` is a single vertex, `CompleteKaryTree(3, 2)` has 7.'
+  - "`levels` counts LEVELS, not vertices (kernel-verified): `CompleteKaryTree(1, 2)` is a single vertex, `CompleteKaryTree(3, 2)` has 7."
 examples:
   - id: a-3-level-binary-tree-has-7-vertices
     expr: [VertexCount, [CompleteKaryTree, 3, 2]]
