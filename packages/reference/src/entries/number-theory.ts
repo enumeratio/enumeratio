@@ -912,7 +912,11 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expr: ["IsSquareFree", ["List", 10, 4, 12]],
         expected: ["List", "True", "False", "False"],
         category: "Scope",
-        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
+        caption: "Threads element-wise over a list",
+        divergence: {
+          wolfram:
+            "We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.",
+        },
       },
     ],
     seeAlso: ["MoebiusMu", "FactorInteger"],
