@@ -59,7 +59,7 @@ examples:
     expr: [CatalanNumber, 15]
     expected: 9694845
     category: Neat examples
-    caption: 'They grow fast: $C_{15}$ already passes nine million'
+    caption: "They grow fast: $C_{15}$ already passes nine million"
   - id: threads-element-wise-over-a-list-as-wolfram-s
     expr: [CatalanNumber, [List, 1, 2, 3, 4]]
     expected: [List, 1, 2, 5, 14]
@@ -74,7 +74,12 @@ examples:
     expr: [CatalanNumber, 30]
     expected: 3814986502092304
   - id: segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i
-    expr: [Equal, [CatalanNumber, 4], [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]]]
+    expr:
+      [
+        Equal,
+        [CatalanNumber, 4],
+        [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]],
+      ]
     expected: True
     category: Properties
     caption: Segner's recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$, here at $n = 3$

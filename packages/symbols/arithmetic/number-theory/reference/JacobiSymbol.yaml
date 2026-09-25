@@ -29,10 +29,15 @@ examples:
     category: Possible issues
     caption: By convention the symbol is 1 whenever $m=1$
   - id: completely-multiplicative-in-the-top-argument-a
-    expr: [Equal, [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 5, 7]], [JacobiSymbol, [Multiply, 3, 5], 7]]
+    expr:
+      [
+        Equal,
+        [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 5, 7]],
+        [JacobiSymbol, [Multiply, 3, 5], 7],
+      ]
     expected: True
     category: Properties
-    caption: 'Completely multiplicative in the top argument: $(a/m)(b/m)=(ab/m)$'
+    caption: "Completely multiplicative in the top argument: $(a/m)(b/m)=(ab/m)$"
   - id: threads-element-wise-over-a-list-as-wolfram-s
     expr: [JacobiSymbol, [List, 2, 3, 5, 7, 11], 3]
     expected: [List, -1, 0, -1, 1, -1]
@@ -42,7 +47,7 @@ examples:
     expr: [JacobiSymbol, [Add, [Power, 10, 10], 1], [NthPrime, 1000]]
     expected: 1
     category: Scope
-    caption: 'Larger arguments: $10^{10}+1$ against the 1000th prime, 7919'
+    caption: "Larger arguments: $10^{10}+1$ against the 1000th prime, 7919"
   - id: quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac
     expr: [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 7, 3]]
     expected: -1

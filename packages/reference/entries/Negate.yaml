@@ -1,21 +1,21 @@
 name: Negate
 domain: Arithmetic
 signature: Negate(x)
-summary: 'The additive inverse of x: $-x$.'
+summary: "The additive inverse of x: $-x$."
 signatures:
   - call: Negate(x)
     description: the additive inverse $-x$.
 details:
   - 'The additive inverse: $\operatorname{Negate}(x) = -x$.'
-  - 'Double negation cancels: $-(-x) = x$.'
-  - 'Distributes over a sum: $-(a+b) = -a - b$.'
+  - "Double negation cancels: $-(-x) = x$."
+  - "Distributes over a sum: $-(a+b) = -a - b$."
   - Threads element-wise over a list.
   - compute-engine keeps Negate as its own head rather than rewriting to $\mathrm{Multiply}(-1, x)$.
 examples:
   - id: neg-5
     expr: [Negate, 5]
     expected: -5
-  - id: '5'
+  - id: "5"
     expr: [Negate, -5]
     expected: 5
   - id: its-own-negation
@@ -33,12 +33,12 @@ examples:
     expr: [Negate, [Negate, x]]
     expected: x
     category: Properties
-    caption: 'Double negation cancels: $-(-x) = x$'
+    caption: "Double negation cancels: $-(-x) = x$"
   - id: distributes-over-a-sum-a-b-a-b
     expr: [Equal, [Negate, [Add, a, b]], [Add, [Negate, a], [Negate, b]]]
     expected: True
     category: Properties
-    caption: 'Distributes over a sum: $-(a+b) = -a - b$'
+    caption: "Distributes over a sum: $-(a+b) = -a - b$"
   - id: recording-a-42-50-charge-as-a-negative-balance
     expr: [Negate, 42.5]
     expected: -42.5
@@ -76,7 +76,7 @@ examples:
     expr: [Add, [Negate, x], x]
     expected: 0
     category: Properties
-    caption: 'The additive inverse: $x + (-x) = 0$'
+    caption: "The additive inverse: $x + (-x) = 0$"
 seeAlso:
   - Abs
   - Sign

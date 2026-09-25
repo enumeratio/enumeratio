@@ -6,10 +6,10 @@ signatures:
   - call: IdonealNumbers
     description: Euler's idoneal numbers, an indexed collection of unknown count.
 details:
-  - '$Count(IdonealNumbers) = NaN$: the 65 known idoneal numbers are exhaustive assuming the generalized Riemann hypothesis; unconditionally, at most one more (necessarily $> 1848$) could exist.'
+  - "$Count(IdonealNumbers) = NaN$: the 65 known idoneal numbers are exhaustive assuming the generalized Riemann hypothesis; unconditionally, at most one more (necessarily $> 1848$) could exist."
   - $At$ reads off Euler's table of 65; past it, returns unevaluated rather than asserting a completeness the field doesn't unconditionally have.
   - OEIS A000926. $n$ is idoneal iff every genus of binary quadratic forms of discriminant $-4n$ contains only one class -- equivalently, $n$'s only representations $n = x^2 + m y^2$ (for each $m$ coprime to $n$) force $\gcd(x, y) = 1$ or similar; the list traces to Euler's search for primality-testing moduli.
-  - 'Membership goes through [[Element]]: $Element(120, IdonealNumbers)$ is true, $Element(11, IdonealNumbers)$ is false.'
+  - "Membership goes through [[Element]]: $Element(120, IdonealNumbers)$ is true, $Element(11, IdonealNumbers)$ is false."
 examples: []
 enumerate:
   expr: Take(IdonealNumbers, 20)

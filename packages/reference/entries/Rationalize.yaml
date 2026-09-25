@@ -31,7 +31,7 @@ examples:
     expr: [Equal, [Rationalize, Pi, 0.01], [Rational, 22, 7]]
     expected: True
     category: Properties
-    caption: 'With an explicit tolerance, recovers a classic approximation: 22/7 is within 0.01 of π'
+    caption: "With an explicit tolerance, recovers a classic approximation: 22/7 is within 0.01 of π"
   - id: milu-zu-chongzhi-s-5th-century-approximation-of
     expr: [Rationalize, Pi, 0.000001]
     expected: [Rational, 355, 113]

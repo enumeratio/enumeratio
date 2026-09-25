@@ -1,7 +1,7 @@
 name: RskShape
 domain: Combinatorial maps
 signature: RskShape(Permutation)
-summary: 'The common shape of the RSK tableaux: the row lengths, as a partition of n.'
+summary: "The common shape of the RSK tableaux: the row lengths, as a partition of n."
 details:
   - Takes a `Permutation` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - By Schensted, its first part is the longest increasing subsequence and its first COLUMN is the longest decreasing one — two statistics readable off this map.

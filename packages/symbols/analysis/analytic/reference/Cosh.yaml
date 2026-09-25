@@ -8,7 +8,7 @@ signatures:
 details:
   - 'Defined in terms of [[Exp]]: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
   - 'Even function: $\cosh(-x) = \cosh(x)$.'
-  - 'Same fold-only-with-N(...) behavior as [[Sinh]]: plain evaluation leaves Cosh symbolic even at $x = 0$.'
+  - "Same fold-only-with-N(...) behavior as [[Sinh]]: plain evaluation leaves Cosh symbolic even at $x = 0$."
 examples:
   - id: n-forces-the-numeric-result-that-plain
     expr: [N, [Cosh, 0]]
@@ -16,7 +16,7 @@ examples:
     caption: N(...) forces the numeric result that plain evaluation withholds
   - id: n-cosh-1
     expr: [N, [Cosh, 1]]
-    expected: {num: '1.54308063481524377848'}
+    expected: { num: "1.54308063481524377848" }
   - id: even-function-cosh-x-cosh-x
     expr: [Equal, [Cosh, [Negate, 1]], [Cosh, 1]]
     expected: True
@@ -34,11 +34,11 @@ examples:
     caption: Stays symbolic even at 0, same as [[Sinh]]; wrap in N(...) as above
   - id: a-float-argument-evaluates-directly-no-n-needed
     expr: [Cosh, 1.2]
-    expected: {num: '1.81065556732437479309'}
+    expected: { num: "1.81065556732437479309" }
     caption: A float argument evaluates directly, no N(...) needed
   - id: arbitrary-precision-via-n
     expr: [N, [Cosh, [Rational, 6, 5]]]
-    expected: {num: '1.81065556732437479309'}
+    expected: { num: "1.81065556732437479309" }
     category: Scope
     caption: Arbitrary precision via N(...)
   - id: evaluates-at-a-complex-argument
@@ -52,7 +52,19 @@ examples:
     category: Scope
     caption: $\cosh(i\pi) = \cos\pi = -1$
   - id: element-wise-over-a-matrix-of-imaginary
-    expr: [Cosh, [List, [List, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]], [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]]]], [List, 0, [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 6]]]]]]
+    expr:
+      [
+        Cosh,
+        [
+          List,
+          [
+            List,
+            [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]],
+            [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]]],
+          ],
+          [List, 0, [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 6]]]],
+        ],
+      ]
     expected: [List, [List, [Rational, 1, 2], [Rational, 1, 2]], [List, 1, [Divide, [Sqrt, 3], 2]]]
     aspirational: true
     category: Scope
@@ -89,7 +101,12 @@ examples:
     caption: Antiderivative
   - id: the-definition-cosh-x-frac-e-x-e-x-2
     expr: [TrigToExp, [Cosh, x]]
-    expected: [Multiply, [Rational, 1, 2], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]
+    expected:
+      [
+        Multiply,
+        [Rational, 1, 2],
+        [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]],
+      ]
     category: Properties
     caption: The definition $\cosh x = \frac{e^x + e^{-x}}{2}$
   - id: cosh-2-x-sinh-2-x-should-simplify-to-1
@@ -100,7 +117,7 @@ examples:
     caption: $\cosh^2 x - \sinh^2 x$ should simplify to 1 symbolically, as the circular identity does; left as is
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Cosh, 1], 30]
-    expected: {num: '1.54308063481524377847790562076'}
+    expected: { num: "1.54308063481524377847790562076" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

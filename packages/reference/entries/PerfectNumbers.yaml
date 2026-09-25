@@ -6,9 +6,9 @@ signatures:
   - call: PerfectNumbers
     description: the $n$ with $\sigma(n) = 2n$, an indexed collection of unknown count.
 details:
-  - '$Count(PerfectNumbers) = NaN$: every even perfect number is $2^{p-1}(2^p - 1)$ for a Mersenne prime exponent $p$ (Euclid–Euler), but whether any odd perfect number exists -- and so whether the family is even finite or infinite -- is open.'
+  - "$Count(PerfectNumbers) = NaN$: every even perfect number is $2^{p-1}(2^p - 1)$ for a Mersenne prime exponent $p$ (Euclid–Euler), but whether any odd perfect number exists -- and so whether the family is even finite or infinite -- is open."
   - $At$ reads off a table of the known even perfect numbers that fit an exact JS integer ($p = 2, 3, 5, 7, 13, 17, 19$); past that table it returns unevaluated rather than scanning forever, since no predicate here could safely keep searching.
-  - 'OEIS A000396. Membership goes through [[Element]]: $Element(28, PerfectNumbers)$ is true, $Element(24, PerfectNumbers)$ is false (abundant, not perfect).'
+  - "OEIS A000396. Membership goes through [[Element]]: $Element(28, PerfectNumbers)$ is true, $Element(24, PerfectNumbers)$ is false (abundant, not perfect)."
 examples: []
 enumerate:
   expr: Take(PerfectNumbers, 7)

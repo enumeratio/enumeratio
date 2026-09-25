@@ -8,7 +8,7 @@ signatures:
     library: enumeratio-number-theory
 details:
   - From a fixed table of the first 20 known Mersenne prime exponents, proven complete this far since the 1950s — well short of GIMPS's ongoing search. Past the table the call stays unevaluated rather than searching.
-  - 'Feeds [[PerfectNumber]]: the $n$th even perfect number is $2^{p-1}(2^p-1)$.'
+  - "Feeds [[PerfectNumber]]: the $n$th even perfect number is $2^{p-1}(2^p-1)$."
 examples:
   - id: mersenneprimeexponent-1
     expr: [MersennePrimeExponent, 1]

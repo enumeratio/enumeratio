@@ -19,12 +19,26 @@ examples:
     expected: 6
     caption: lcm(3, 2) — one 3-cycle and one 2-cycle in the single generator
   - id: s4-from-two-generators
-    expr: [GroupOrder, [PermutationGroup, [List, [Cycles, [List, [List, 1, 2, 3, 4]]], [Cycles, [List, [List, 1, 2]]]]]]
+    expr:
+      [
+        GroupOrder,
+        [
+          PermutationGroup,
+          [List, [Cycles, [List, [List, 1, 2, 3, 4]]], [Cycles, [List, [List, 1, 2]]]],
+        ],
+      ]
     expected: 24
     caption: a 4-cycle and a transposition generate all of $S_4$
     category: Applications
   - id: the-dihedral-group-of-the-square
-    expr: [GroupOrder, [PermutationGroup, [List, [Cycles, [List, [List, 1, 2, 3, 4]]], [Cycles, [List, [List, 1, 3]]]]]]
+    expr:
+      [
+        GroupOrder,
+        [
+          PermutationGroup,
+          [List, [Cycles, [List, [List, 1, 2, 3, 4]]], [Cycles, [List, [List, 1, 3]]]],
+        ],
+      ]
     expected: 8
     caption: rotation + a flip generate the dihedral group of order 8
     category: Applications

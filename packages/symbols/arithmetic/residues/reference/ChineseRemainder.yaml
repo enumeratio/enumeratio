@@ -44,7 +44,12 @@ examples:
     category: Scope
     caption: 'the least solution $\ge 200$: $52 + 2 \cdot 105$'
   - id: verifies-the-solution-satisfies-both-congruences
-    expr: [And, [Equal, [Mod, [ChineseRemainder, [List, 3, 4], [List, 4, 5]], 4], 3], [Equal, [Mod, [ChineseRemainder, [List, 3, 4], [List, 4, 5]], 5], 4]]
+    expr:
+      [
+        And,
+        [Equal, [Mod, [ChineseRemainder, [List, 3, 4], [List, 4, 5]], 4], 3],
+        [Equal, [Mod, [ChineseRemainder, [List, 3, 4], [List, 4, 5]], 5], 4],
+      ]
     expected: True
     category: Properties
     caption: Verifies the solution satisfies both congruences via [[Mod]]

@@ -7,7 +7,7 @@ signatures:
     description: the collection with `value` added as its first element.
     library: enumeratio-collections
   - call: Prepend(association, rule)
-    description: '`association` with `rule` (or a list of rules) inserted at the front; a prepended key displaces any later entry for the same key.'
+    description: "`association` with `rule` (or a list of rules) inserted at the front; a prepended key displaces any later entry for the same key."
     library: enumeratio-collections
 details:
   - $Prepend(c, x) = Join(\{x\}, c)$. See [[Join]].

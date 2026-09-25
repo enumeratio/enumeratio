@@ -5,7 +5,7 @@ summary: The Dirichlet beta function $\beta(s) = \sum_{n\ge0} (-1)^n (2n+1)^{-s}
 signatures:
   - call: DirichletBeta(s)
     description: the Dirichlet beta function $\beta(s)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - $\beta(s) = 4^{-s}\left(\zeta(s, \tfrac14) - \zeta(s, \tfrac34)\right)$ in terms of [[HurwitzZeta]], which is how it is evaluated numerically (complex $s$ included).
   - 'Odd positive integers have closed forms in $\pi$ and the Euler numbers: $\beta(2k+1) = (-1)^k E_{2k}\,\pi^{2k+1} / (4^{k+1}(2k)!)$ — $\beta(1) = \pi/4$ (Leibniz), $\beta(3) = \pi^3/32$, $\beta(5) = 5\pi^5/1536$.'
@@ -44,7 +44,7 @@ examples:
       wolfram: Stays symbolic here; Wolfram rewrites it via $\zeta(4, 1/4)$ and $\zeta(4, 3/4)$ instead of a further-reduced number.
   - id: numeric-for-a-floating-point-argument-through-4
     expr: [DirichletBeta, 2.5]
-    expected: {num: '0.948622174037054707445'}
+    expected: { num: "0.948622174037054707445" }
     caption: Numeric for a floating-point argument — through $4^{-s}(\zeta(s,\tfrac14) - \zeta(s,\tfrac34))$, so it answers to the engine's working precision rather than a double's
   - id: a-symbolic-argument-stays-symbolic
     expr: [DirichletBeta, s]
@@ -62,7 +62,12 @@ examples:
     caption: Complex arguments, here on the critical line
   - id: threads-elementwise-over-an-array
     expr: [DirichletBeta, [List, [List, 1, -1], [List, -1, 1]]]
-    expected: [List, [List, [Multiply, [Rational, 1, 4], Pi], 0], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]
+    expected:
+      [
+        List,
+        [List, [Multiply, [Rational, 1, 4], Pi], 0],
+        [List, 0, [Multiply, [Rational, 1, 4], Pi]],
+      ]
     category: Scope
     caption: Threads elementwise over an array
   - id: beta-s-to-1-as-s-to-infty
@@ -77,14 +82,19 @@ examples:
     caption: 'Uncertainty propagation: $\beta(2 \pm 0.01) = G \pm 0.00082$'
   - id: to-exactly-40-significant-digits-not-yet-85-come
     expr: [N, [DirichletBeta, 2], 40]
-    expected: {num: '0.9159655941772190150546035149323841107741'}
+    expected: { num: "0.9159655941772190150546035149323841107741" }
     category: Scope
     caption: To exactly 40 significant digits, as many as asked for
 implementations:
   - origin: reference
     form: notatio
     environment: engine
-    expr: [Multiply, [Power, 4, [Negate, _s]], [Subtract, [HurwitzZeta, _s, [Rational, 1, 4]], [HurwitzZeta, _s, [Rational, 3, 4]]]]
+    expr:
+      [
+        Multiply,
+        [Power, 4, [Negate, _s]],
+        [Subtract, [HurwitzZeta, _s, [Rational, 1, 4]], [HurwitzZeta, _s, [Rational, 3, 4]]],
+      ]
   - origin: native
     form: typescript
     environment: engine

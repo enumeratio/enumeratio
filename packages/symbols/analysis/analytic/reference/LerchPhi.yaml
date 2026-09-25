@@ -5,7 +5,7 @@ summary: The Lerch transcendent $\Phi(z, s, a) = \sum_{n=0}^{\infty} \dfrac{z^n}
 signatures:
   - call: LerchPhi(z, s, a)
     description: the Lerch transcendent $\Phi(z, s, a)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - 'At $z = 1$ it is the Hurwitz zeta: $\Phi(1, s, a) = \zeta(s, a)$, so $\Phi(1, s, 1) = \zeta(s)$. See [[HurwitzZeta]].'
   - 'It carries the polylogarithm: $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ — e.g. $\operatorname{Li}_2(1/2) = \tfrac12\Phi(1/2, 2, 1) = \pi^2/12 - (\ln 2)^2/2$.'
@@ -50,7 +50,7 @@ examples:
     expr: [N, [LerchPhi, [Complex, 1, 2], [Complex, 3, -1], [Complex, 4, 2]]]
     expected: [Complex, 0.002025009957012008, 0.0033278975368131974]
     category: Scope
-    caption: 'past the unit disk, by the integral representation (mpmath: 0.00202500995700991 + 0.00332789753681356i)'
+    caption: "past the unit disk, by the integral representation (mpmath: 0.00202500995700991 + 0.00332789753681356i)"
     divergence:
       wolfram: Wolfram's machine-precision N drifts from the sixth digit here (0.00202501519…); N[LerchPhi[1 + 2 I, 3 - I, 4 + 2 I], 30] agrees with this value, as do mpmath and SymPy.
   - id: phi-2-0-7-1-1-2-1-the-s-0-closed-form-holds-past
@@ -75,9 +75,9 @@ examples:
     caption: Inexact arguments should evaluate numerically without N(); left unevaluated today
   - id: s-0-far-outside-the-unit-disk-1-1-49-5
     expr: [LerchPhi, 49.5, 0, 2]
-    expected: {num: '-0.0206185567010309278351'}
+    expected: { num: "-0.0206185567010309278351" }
     category: Scope
-    caption: '$s = 0$ far outside the unit disk: $1/(1 - 49.5)$'
+    caption: "$s = 0$ far outside the unit disk: $1/(1 - 49.5)$"
   - id: z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z
     expr: [LerchPhi, 7.5, 1, 2]
     expected: [Complex, -0.16660981647825052, -0.05585053606381855]
@@ -131,7 +131,7 @@ examples:
     caption: ...though N() gets $4G = 3.66386\ldots$
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [LerchPhi, [Rational, 1, 2], 2, [Rational, 1, 3]], 30]
-    expected: {num: '9.34347465937593951855554965804'}
+    expected: { num: "9.34347465937593951855554965804" }
     category: Scope
     caption: To 30 significant digits, past a double's reach
   - id: phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet
@@ -1587,7 +1587,12 @@ implementations:
   - origin: reference
     form: notatio
     environment: engine
-    expr: [Sum, [Multiply, [Power, _z, n], [Exp, [Multiply, [Negate, _s], [Ln, [Add, n, _a]]]]], [Triple, n, 0, Infinity]]
+    expr:
+      [
+        Sum,
+        [Multiply, [Power, _z, n], [Exp, [Multiply, [Negate, _s], [Ln, [Add, n, _a]]]]],
+        [Triple, n, 0, Infinity],
+      ]
     note: The defining series, converging for |z| < 1 (and for |z| = 1 with Re(s) > 1); ζ(s, a) is its z = 1 edge and Li_s(z) its a = 1 slice.
   - origin: native
     form: typescript

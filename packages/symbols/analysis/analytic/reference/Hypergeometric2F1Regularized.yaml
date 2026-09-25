@@ -5,7 +5,7 @@ summary: The regularized Gauss hypergeometric function ${}_2F_1(a,b,c;z) / \Gamm
 signatures:
   - call: Hypergeometric2F1Regularized(a, b, c, z)
     description: ${}_2F_1(a,b,c;z) / \Gamma(c)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Computed by the $1/\Gamma$-per-term series ($p = q + 1$ here), so it stays finite at $c$ a nonpositive integer rather than dividing `Hypergeometric2F1` by `Gamma(c)`'s pole there.
   - The series only converges for $|z| < 1$; outside the unit disc this stays symbolic rather than answering with a guessed analytic continuation. Several of Fungrim's own identities for this head (e.g. fungrim:90ac58) rewrite to a different argument first — that rewrite belongs in the identity layer, not here.

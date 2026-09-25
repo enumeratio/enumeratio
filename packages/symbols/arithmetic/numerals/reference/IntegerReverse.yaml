@@ -32,7 +32,7 @@ examples:
     expr: [IntegerReverse, 123, 10, 5]
     expected: 32100
     category: Scope
-    caption: 'padded to 5 digits first: $00123$ reversed'
+    caption: "padded to 5 digits first: $00123$ reversed"
   - id: listable
     expr: [IntegerReverse, [List, 12, 345]]
     expected: [List, 21, 543]

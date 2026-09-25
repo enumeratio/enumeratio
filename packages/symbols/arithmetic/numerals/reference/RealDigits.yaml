@@ -9,9 +9,9 @@ signatures:
   - call: RealDigits(x, base)
     description: the same, in the given base
   - call: RealDigits(x, base, len)
-    description: '`len` digits — the exact expansion for a rational, or `len` digits of a numeric approximation (base 10 only) for anything else'
+    description: "`len` digits — the exact expansion for a rational, or `len` digits of a numeric approximation (base 10 only) for anything else"
 details:
-  - 'The result is `{{d₁, d₂, ...}, n}`: the value is `0.d₁d₂d₃... × baseⁿ`, so `n` is the count of digits before the point'
+  - "The result is `{{d₁, d₂, ...}, n}`: the value is `0.d₁d₂d₃... × baseⁿ`, so `n` is the count of digits before the point"
   - "A rational's expansion is EXACT: a terminating one stops, a repeating one nests its period as the list's last element — `RealDigits(1/7)` is `{{{1,4,2,8,5,7}}, 0}`"
   - When the integer part is 0, leading fractional zeros are dropped from the digit list and folded into a more negative exponent instead of spelled out — `RealDigits(1/8, 2)` is `{{1}, -2}`, not `{{0,0,1}, 0}`
   - For anything without an exact rational value — `Pi`, a `Sqrt`, `ExponentialE` — `len` is required, and the digits are TRUNCATED, not rounded, from a numeric approximation computed a little beyond `len` digits
@@ -52,7 +52,7 @@ examples:
     expr: [RealDigits, 123456]
     expected: [List, [List, 1, 2, 3, 4, 5, 6], 6]
     category: Scope
-    caption: 'an integer: six digits before the point'
+    caption: "an integer: six digits before the point"
 seeAlso:
   - IntegerDigits
   - FromDigits

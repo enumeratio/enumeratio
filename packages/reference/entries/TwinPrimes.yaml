@@ -1,19 +1,42 @@
 name: TwinPrimes
 domain: Collections
 signature: TwinPrimes
-summary: 'The (lesser) twin primes $3, 5, 11, 17, 29, …$: primes $p$ with $p+2$ also prime.'
+summary: "The (lesser) twin primes $3, 5, 11, 17, 29, …$: primes $p$ with $p+2$ also prime."
 signatures:
   - call: TwinPrimes
     description: the lesser prime $p$ of a twin pair $(p, p+2)$, an indexed collection of open infinitude.
 details:
   - A lazy indexed collection; whether there are infinitely many is the open twin-prime conjecture, so $Count(TwinPrimes) = NaN$ rather than $+\infty$ -- a deliberately different answer from every $+\infty$ family in this library, marking a genuinely open question rather than a known-infinite one. OEIS A001359 (the LESSER member; A001097 lists both members of each pair instead).
   - $At(TwinPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+2$ -- $At(TwinPrimes, 3) = 11$.
-  - 'Membership goes through [[Element]]: $Element(11, TwinPrimes)$ is true ($11, 13$ both prime), $Element(13, TwinPrimes)$ is false ($15$ is not).'
+  - "Membership goes through [[Element]]: $Element(11, TwinPrimes)$ is true ($11, 13$ both prime), $Element(13, TwinPrimes)$ is false ($15$ is not)."
   - $TwinPrimes$ is $PrimePairs(2)$ verbatim.
 examples:
   - id: the-first-20-lesser-twin-primes-oeis-a001359
     expr: [Take, TwinPrimes, 20]
-    expected: [List, 3, 5, 11, 17, 29, 41, 59, 71, 101, 107, 137, 149, 179, 191, 197, 227, 239, 269, 281, 311]
+    expected:
+      [
+        List,
+        3,
+        5,
+        11,
+        17,
+        29,
+        41,
+        59,
+        71,
+        101,
+        107,
+        137,
+        149,
+        179,
+        191,
+        197,
+        227,
+        239,
+        269,
+        281,
+        311,
+      ]
     caption: The first 20 lesser twin primes, OEIS A001359
   - id: count-twinprimes-is-unknown-but-the-first-20
     expr: [Count, [Take, TwinPrimes, 20]]

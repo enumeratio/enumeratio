@@ -20,7 +20,7 @@ signatures:
     library: enumeratio-braid
 details:
   - $\sigma_i \mapsto A\cdot 1 + A^{-1}e_i$ and $\sigma_i^{-1} \mapsto A^{-1}\cdot 1 + A e_i$ — the two images ARE the two smoothings of a crossing
-  - 'The raw bracket is not an invariant: one positive crossing on an unknot leaves $-A^3$ behind, which the writhe correction divides out'
+  - "The raw bracket is not an invariant: one positive crossing on an unknot leaves $-A^3$ behind, which the writhe correction divides out"
   - $V(t)$ follows by substituting $A = t^{1/4}$; the SIGN of that exponent is the handedness convention, and getting it backwards mirrors every answer
   - A link with an even number of components needs a square root of $t$, so `JonesPolynomial` declines and the bracket is what to ask for
   - The knot determinant is both $|\Delta(-1)|$ and $|V(-1)|$ — one from Burau matrices, the other from diagrams, which is how each checks the other

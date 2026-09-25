@@ -5,10 +5,10 @@ summary: A ball c ± r with center-radius arithmetic -- the complex-capable sibl
 signatures:
   - call: CenteredInterval(c, r)
     description: the ball of radius r centered at c.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
   - call: CenteredInterval(interval)
     description: an [[Interval]] converted to center-radius form.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Covers Add (centers add, radii add) and a scalar Multiply (the center scales by the factor, the radius by its absolute value). Subtraction runs through Add and Negate the same way Interval's does, which is why radii add under subtraction too, not cancel.
   - Does NOT round outward the way Wolfram's rigorous interval arithmetic does -- that needs a kernel to pin the rounding direction (see enumeratio/enumeratio#113 §2), so every example here uses exact endpoints, where there is nothing to round.
@@ -28,7 +28,8 @@ examples:
     category: Scope
     caption: Converts an [[Interval]] to center-radius form
   - id: radii-add-under-subtraction-too
-    expr: [Subtract, [CenteredInterval, 5, [Rational, 1, 4]], [CenteredInterval, 1, [Rational, 1, 4]]]
+    expr:
+      [Subtract, [CenteredInterval, 5, [Rational, 1, 4]], [CenteredInterval, 1, [Rational, 1, 4]]]
     expected: [CenteredInterval, 4, [Rational, 1, 2]]
     category: Scope
     caption: Radii add under subtraction too

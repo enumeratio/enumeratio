@@ -5,7 +5,7 @@ summary: The $n$-th term of an OEIS sequence, `id` a quoted A-number — scoped 
 signatures:
   - call: SloaneA(id, n)
     description: the $n$-th term of OEIS sequence `id`.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "A general OEIS lookup is out of reach — most sequences have no closed form at all — so this aliases exactly the A-numbers Fungrim's identities use: A000045 ([[Fibonacci]]), A000040 (the primes, via `PrimeNumber`), A000720 (`PrimePi`), A000041 (`NPartition`), A000110 (`BellNumber`), A000142 (`Factorial`), A027641/A027642 (the numerator/denominator of [[BernoulliB]]), and A000793 (Landau's function $g(n)$, the largest order of an element of $S_n$ — computed directly, since compute-engine's `LandauG` is a symbolic stub with no numeric evaluator)."
   - An id this package does not carry stays symbolic rather than guessing (e.g. A060691, which Fungrim cites only inside a derivative formula for AGM's Taylor coefficients, not as an equation for the sequence's value).
@@ -13,7 +13,7 @@ examples:
   - id: a000045-is-the-fibonacci-numbers-the-10th-is-55
     expr: [SloaneA, "'A000045'", 10]
     expected: 55
-    caption: 'A000045 is the Fibonacci numbers: the 10th is 55'
+    caption: "A000045 is the Fibonacci numbers: the 10th is 55"
   - id: a000793-landau-s-function-g-10-30
     expr: [SloaneA, "'A000793'", 10]
     expected: 30

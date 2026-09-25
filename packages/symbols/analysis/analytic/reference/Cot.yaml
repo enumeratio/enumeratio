@@ -45,11 +45,11 @@ examples:
     caption: $\cot 60^\circ = \frac{\sqrt3}{3}$, exactly
   - id: a-machine-precision-argument-evaluates
     expr: [Cot, 1.2]
-    expected: {num: '0.388779569368204911634'}
+    expected: { num: "0.388779569368204911634" }
     caption: A machine-precision argument evaluates numerically
   - id: n-of-an-exact-argument-gives-an-arbitrary
     expr: [N, [Cot, [Rational, 6, 5]]]
-    expected: {num: '0.388779569368204911634'}
+    expected: { num: "0.388779569368204911634" }
     category: Scope
     caption: N(...) of an exact argument gives an arbitrary-precision value
   - id: evaluates-at-a-complex-argument
@@ -58,7 +58,15 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr: [Cot, [List, [List, [Multiply, 5, [Divide, Pi, 6]], [Divide, Pi, 2]], [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 6]]]]]
+    expr:
+      [
+        Cot,
+        [
+          List,
+          [List, [Multiply, 5, [Divide, Pi, 6]], [Divide, Pi, 2]],
+          [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 6]]],
+        ],
+      ]
     expected: [List, [List, [Negate, [Sqrt, 3]], 0], [List, 0, [Negate, [Sqrt, 3]]]]
     category: Scope
     caption: Threads element-wise over a matrix

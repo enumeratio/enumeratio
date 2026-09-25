@@ -7,7 +7,7 @@ signatures:
     description: the polygamma $\psi^{(m)}(z)$ at real $z$.
   - call: PolyGamma(m, z)
     description: extends the same call to complex $z$, for integer order $m \geq 1$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - $\psi^{(0)}$ is the digamma — see [[Digamma]] — and $\psi^{(1)}$ the trigamma.
   - 'For $m \geq 1$ it is a Hurwitz zeta in disguise: $\psi^{(m)}(z) = (-1)^{m+1}\, m!\, \zeta(m+1, z)$. See [[HurwitzZeta]].'
@@ -37,7 +37,7 @@ examples:
     caption: "Recurrence at $m = 1$, $z = 1$: $\\psi'(z) - \\psi'(z+1) = z^{-2}$"
   - id: an-inexact-argument-evaluates-to-a-decimal-psi-1
     expr: [PolyGamma, 1, 0.5]
-    expected: {num: '4.93480220054467930942'}
+    expected: { num: "4.93480220054467930942" }
     caption: "An inexact argument evaluates to a decimal: $\\psi'(1/2) = 4.93480\\ldots$"
   - id: a-pole-of-gamma-still-a-pole-after
     expr: [PolyGamma, 1, 0]
@@ -68,11 +68,11 @@ examples:
     caption: $\psi^{(3)}(5) = \pi^4/15 - 22369/3456$
   - id: numerically
     expr: [N, [PolyGamma, 3, 5]]
-    expected: {num: '0.0214278281927550750219'}
+    expected: { num: "0.0214278281927550750219" }
     caption: ...numerically
   - id: psi-1-2-14-zeta-3
     expr: [PolyGamma, 2, 0.5]
-    expected: {num: '-16.8287966442343199956'}
+    expected: { num: "-16.8287966442343199956" }
     caption: $\psi''(1/2) = -14\zeta(3)$
   - id: one-argument-digamma-at-a-machine-precision
     expr: [PolyGamma, 100.5]
@@ -91,7 +91,7 @@ examples:
     caption: Complex argument, integer order
   - id: between-poles-psi-1-2-pi-2-2-4
     expr: [PolyGamma, 1, -0.5]
-    expected: {num: '8.93480220054467930942'}
+    expected: { num: "8.93480220054467930942" }
     category: Scope
     caption: "Between poles: $\\psi'(-1/2) = \\pi^2/2 + 4$"
   - id: psi-infty-0
@@ -103,7 +103,7 @@ examples:
     expr: [PolyGamma, 1, [Interval, 3.45, 3.46]]
     expected: [Interval, 0.3347428975404412, 0.3358572806118117]
     category: Scope
-    caption: 'Interval arithmetic: the trigamma is decreasing'
+    caption: "Interval arithmetic: the trigamma is decreasing"
   - id: psi-0-1-gamma-polygamma-0-z-routes-through
     expr: [PolyGamma, 0, 1]
     expected: [Negate, EulerGamma]
@@ -131,34 +131,34 @@ examples:
     caption: $\frac{d}{dx}\psi^{(n)}(x) = \psi^{(n+1)}(x)$
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [PolyGamma, 1, [Rational, 1, 3]], 30]
-    expected: {num: '10.0955971254270940817920040999'}
+    expected: { num: "10.0955971254270940817920040999" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
   - id: to-25-significant-digits-not-yet-only-the-first
     expr: [N, [PolyGamma, 3, 5], 25]
-    expected: {num: '0.02142782819275507502194811'}
+    expected: { num: "0.02142782819275507502194811" }
     category: Scope
     caption: To 25 significant digits, every one of them right
   - hidden: true
     id: n-polygamma-1-1
     expr: [N, [PolyGamma, 1, 1]]
-    expected: {num: '1.64493406684822643647'}
+    expected: { num: "1.64493406684822643647" }
   - hidden: true
     id: n-polygamma-1-2
     expr: [N, [PolyGamma, 1, 2]]
-    expected: {num: '0.644934066848226436472'}
+    expected: { num: "0.644934066848226436472" }
   - hidden: true
     id: n-polygamma-1-0p5
     expr: [N, [PolyGamma, 1, 0.5]]
-    expected: {num: '4.93480220054467930942'}
+    expected: { num: "4.93480220054467930942" }
   - hidden: true
     id: n-polygamma-1-1p3
     expr: [N, [PolyGamma, 1, 1.3]]
-    expected: {num: '1.13425343499661935436'}
+    expected: { num: "1.13425343499661935436" }
   - hidden: true
     id: n-polygamma-1-7-over-3
     expr: [N, [PolyGamma, 1, [Rational, 7, 3]]]
-    expected: {num: '0.533097125427094081793'}
+    expected: { num: "0.533097125427094081793" }
   - hidden: true
     id: n-polygamma-1-1-plus-i
     expr: [N, [PolyGamma, 1, [Complex, 1, 1]]]
@@ -174,23 +174,23 @@ examples:
   - hidden: true
     id: n-polygamma-2-1
     expr: [N, [PolyGamma, 2, 1]]
-    expected: {num: '-2.4041138063191885708'}
+    expected: { num: "-2.4041138063191885708" }
   - hidden: true
     id: n-polygamma-2-2
     expr: [N, [PolyGamma, 2, 2]]
-    expected: {num: '-0.404113806319188570799'}
+    expected: { num: "-0.404113806319188570799" }
   - hidden: true
     id: n-polygamma-2-0p5
     expr: [N, [PolyGamma, 2, 0.5]]
-    expected: {num: '-16.8287966442343199956'}
+    expected: { num: "-16.8287966442343199956" }
   - hidden: true
     id: n-polygamma-2-1p3
     expr: [N, [PolyGamma, 2, 1.3]]
-    expected: {num: '-1.1984625146519565927'}
+    expected: { num: "-1.1984625146519565927" }
   - hidden: true
     id: n-polygamma-2-7-over-3
     expr: [N, [PolyGamma, 2, [Rational, 7, 3]]]
-    expected: {num: '-0.278372399401607552457'}
+    expected: { num: "-0.278372399401607552457" }
   - hidden: true
     id: n-polygamma-2-1-plus-i
     expr: [N, [PolyGamma, 2, [Complex, 1, 1]]]
@@ -206,23 +206,23 @@ examples:
   - hidden: true
     id: n-polygamma-3-1
     expr: [N, [PolyGamma, 3, 1]]
-    expected: {num: '6.4939394022668291491'}
+    expected: { num: "6.4939394022668291491" }
   - hidden: true
     id: n-polygamma-3-2
     expr: [N, [PolyGamma, 3, 2]]
-    expected: {num: '0.493939402266829149096'}
+    expected: { num: "0.493939402266829149096" }
   - hidden: true
     id: n-polygamma-3-0p5
     expr: [N, [PolyGamma, 3, 0.5]]
-    expected: {num: '97.4090910340024372364'}
+    expected: { num: "97.4090910340024372364" }
   - hidden: true
     id: n-polygamma-3-1p3
     expr: [N, [PolyGamma, 3, 1.3]]
-    expected: {num: '2.40102391430892661856'}
+    expected: { num: "2.40102391430892661856" }
   - hidden: true
     id: n-polygamma-3-7-over-3
     expr: [N, [PolyGamma, 3, [Rational, 7, 3]]]
-    expected: {num: '0.285379043814241755772'}
+    expected: { num: "0.285379043814241755772" }
   - hidden: true
     id: n-polygamma-3-1-plus-i
     expr: [N, [PolyGamma, 3, [Complex, 1, 1]]]
@@ -238,23 +238,23 @@ examples:
   - hidden: true
     id: n-polygamma-5-1
     expr: [N, [PolyGamma, 5, 1]]
-    expected: {num: '122.081167438133896766'}
+    expected: { num: "122.081167438133896766" }
   - hidden: true
     id: n-polygamma-5-2
     expr: [N, [PolyGamma, 5, 2]]
-    expected: {num: '2.08116743813389676574'}
+    expected: { num: "2.08116743813389676574" }
   - hidden: true
     id: n-polygamma-5-0p5
     expr: [N, [PolyGamma, 5, 0.5]]
-    expected: {num: '7691.11354860243549624'}
+    expected: { num: "7691.11354860243549624" }
   - hidden: true
     id: n-polygamma-5-1p3
     expr: [N, [PolyGamma, 5, 1.3]]
-    expected: {num: '25.7926012806130505379'}
+    expected: { num: "25.7926012806130505379" }
   - hidden: true
     id: n-polygamma-5-7-over-3
     expr: [N, [PolyGamma, 5, [Rational, 7, 3]]]
-    expected: {num: '0.857814321602379528571'}
+    expected: { num: "0.857814321602379528571" }
   - hidden: true
     id: n-polygamma-5-1-plus-i
     expr: [N, [PolyGamma, 5, [Complex, 1, 1]]]

@@ -5,7 +5,7 @@ summary: 'The inverse complementary error function: solves $\operatorname{erfc}(
 signatures:
   - call: InverseErfc(s)
     description: solves $\operatorname{erfc}(y) = s$ for $y$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Built on compute-engine's native `ErfInv`, but $1 - s$ is computed as a compute-engine expression (exact rational/bignum arithmetic) rather than a plain double, so the final `N()` sees a fully precise argument even at $s = 10^{-10}$ — where `ErfInv` of a *literal* double $1-s$ would already have dropped several digits.
   - 'For $s > 1$, uses $\operatorname{erfc}(-y) = 2 - \operatorname{erfc}(y)$ to reduce to the $s \le 1$ case: $\operatorname{InverseErfc}(s) = -\operatorname{InverseErfc}(2-s)$.'
@@ -45,7 +45,7 @@ examples:
     category: Applications
     caption: $\sqrt2$ times this, $2.5758\ldots$, is the two-sided 99% normal critical value
   - id: deep-in-the-tail-it-keeps-full-precision-where
-    expr: [InverseErfc, {num: '1e-10'}]
+    expr: [InverseErfc, { num: "1e-10" }]
     expected: 4.572824967389485
     category: Possible issues
     caption: Deep in the tail it keeps full precision, where $\operatorname{erf}^{-1}(1 - s)$ would lose it

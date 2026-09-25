@@ -1,7 +1,7 @@
 name: DyckPaths
 domain: Combinatorial collections
 signature: DyckPaths(n)
-summary: 'The Dyck paths of semilength $n$: balanced up/down step sequences that stay non-negative.'
+summary: "The Dyck paths of semilength $n$: balanced up/down step sequences that stay non-negative."
 signatures:
   - call: DyckPaths(n)
     description: the Dyck paths of semilength $n$

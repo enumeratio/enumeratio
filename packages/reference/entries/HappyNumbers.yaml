@@ -1,7 +1,7 @@
 name: HappyNumbers
 domain: Collections
 signature: HappyNumbers
-summary: 'The happy numbers $1, 7, 10, 13, 19, …$: iterating sum-of-squared-digits reaches 1.'
+summary: "The happy numbers $1, 7, 10, 13, 19, …$: iterating sum-of-squared-digits reaches 1."
 signatures:
   - call: HappyNumbers
     description: the $n$ whose sum-of-squared-digits iteration reaches 1 (rather than the other cycle, $\{4,16,37,58,89,145,42,20\}$), an infinite indexed collection.

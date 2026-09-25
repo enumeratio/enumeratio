@@ -8,21 +8,21 @@ signatures:
     library: enumeratio-collections
 details:
   - "Its own operator, not compute-engine's $Dictionary$: $Dictionary$'s keys are strings only, and every example here keys on a plain number."
-  - '[[Length]], [[First]], [[Last]], [[Join]] and [[Sort]] are extended to recognize an $Association$ and answer in terms of its values, falling through to their ordinary list handling otherwise.'
+  - "[[Length]], [[First]], [[Last]], [[Join]] and [[Sort]] are extended to recognize an $Association$ and answer in terms of its values, falling through to their ordinary list handling otherwise."
   - "Not a general replacement for $Dictionary$ or a full port of Wolfram's Association: only the operations the examples below exercise are implemented."
 examples:
   - id: length-counts-the-key-value-pairs
     expr: [Length, [Association, [Rule, 1, 2], [Rule, 3, 4]]]
     expected: 2
-    caption: '[[Length]] counts the key-value pairs'
+    caption: "[[Length]] counts the key-value pairs"
   - id: first-is-the-first-value-not-the-first-rule
     expr: [First, [Association, [Rule, 1, a], [Rule, 2, b]]]
     expected: a
-    caption: '[[First]] is the first value, not the first rule'
+    caption: "[[First]] is the first value, not the first rule"
   - id: last-is-the-last-value
     expr: [Last, [Association, [Rule, 1, a], [Rule, 2, b]]]
     expected: b
-    caption: '[[Last]] is the last value'
+    caption: "[[Last]] is the last value"
   - id: join-merges-keys-a-later-value-for-a-repeated
     expr: [Join, [Association, [Rule, a, b]], [Association, [Rule, c, d], [Rule, a, f]]]
     expected: [Association, [Rule, a, f], [Rule, c, d]]
@@ -32,7 +32,7 @@ examples:
     expr: [Sort, [Association, [Rule, a, 4], [Rule, b, 1], [Rule, c, 3]]]
     expected: [Association, [Rule, b, 1], [Rule, c, 3], [Rule, a, 4]]
     category: Scope
-    caption: '[[Sort]] orders the entries by value'
+    caption: "[[Sort]] orders the entries by value"
 seeAlso:
   - Length
   - First

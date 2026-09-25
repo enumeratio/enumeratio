@@ -9,7 +9,7 @@ signatures:
 details:
   - C-finite sequences (satisfying a constant-coefficient linear recurrence -- Fibonacci-like sequences, fixed-$k$ binomials, polynomials in $n$, geometric terms, and any combination of those) get a rational generating function, found from the recurrence by Berlekamp--Massey -- there is no family-specific code.
   - 'A handful of named, non-C-finite sequences are recognised directly by value, not by name: the Catalan numbers have the algebraic generating function $(1-\sqrt{1-4x})/(2x)$.'
-  - '`Count(Family(n))` is not special-cased either: it is sampled numerically like any other sequence, so a family whose cardinality happens to be Catalan (or any C-finite sequence) gets the matching closed form automatically.'
+  - "`Count(Family(n))` is not special-cased either: it is sampled numerically like any other sequence, so a family whose cardinality happens to be Catalan (or any C-finite sequence) gets the matching closed form automatically."
   - Falls back to staying symbolic when no closed form is found (e.g. $n!$ has none), the same as Wolfram.
 examples:
   - id: fibonacci
@@ -26,7 +26,19 @@ examples:
     caption: the same Catalan generating function, reached through a collection's cardinality rather than CatalanNumber directly
   - id: fixed-k-binomial
     expr: [GeneratingFunction, [Binomial, n, 3], n, x]
-    expected: [Divide, [Power, x, 3], [Add, [Power, x, 4], [Multiply, -4, [Power, x, 3]], [Multiply, 6, [Power, x, 2]], [Multiply, -4, x], 1]]
+    expected:
+      [
+        Divide,
+        [Power, x, 3],
+        [
+          Add,
+          [Power, x, 4],
+          [Multiply, -4, [Power, x, 3]],
+          [Multiply, 6, [Power, x, 2]],
+          [Multiply, -4, x],
+          1,
+        ],
+      ]
     caption: $x^3/(1-x)^4$
   - id: geometric
     expr: [GeneratingFunction, [Power, 2, n], n, x]

@@ -46,19 +46,22 @@ examples:
     caption: The largest prime below 50
   - id: large-integers-the-first-prime-past-a-googol-is
     expr: [NextPrime, [Power, 10, 100]]
-    expected: {num: '10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267'}
+    expected:
+      {
+        num: "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267",
+      }
     category: Scope
-    caption: 'Large integers: the first prime past a googol is $10^{100}+267$'
+    caption: "Large integers: the first prime past a googol is $10^{100}+267$"
   - id: rational-n-the-next-prime-above-7-2
     expr: [NextPrime, [Rational, 7, 2]]
     expected: 5
     category: Scope
-    caption: 'Rational $n$: the next prime above $7/2$'
+    caption: "Rational $n$: the next prime above $7/2$"
   - id: real-n-the-next-prime-above-100-5
     expr: [NextPrime, 100.5]
     expected: 101
     category: Scope
-    caption: 'Real $n$: the next prime above $100.5$'
+    caption: "Real $n$: the next prime above $100.5$"
   - id: nextprime-steps-from-p-n-to-p-n-1-see-nthprime
     expr: [Equal, [NextPrime, [NthPrime, 20]], [NthPrime, 21]]
     expected: True
@@ -68,7 +71,7 @@ examples:
     expr: [NextPrime, -10]
     expected: -7
     category: Possible issues
-    caption: 'Negative $n$: Wolfram counts $-7$ as prime and returns it'
+    caption: "Negative $n$: Wolfram counts $-7$ as prime and returns it"
 seeAlso:
   - NthPrime
   - PrimePi

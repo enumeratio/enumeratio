@@ -5,7 +5,7 @@ summary: "The inverse of the regularized incomplete gamma $Q(a, z)$ in $z$: solv
 signatures:
   - call: InverseGammaRegularized(a, s)
     description: solves $s = Q(a, z)$ for $z$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - $Q(a, 0) = 1$ and $Q(a, \infty) = 0$ hold for any $a$, even a symbolic one, so `InverseGammaRegularized(a, 1) = 0` and `InverseGammaRegularized(a, 0) = \infty` are exact regardless.
   - $Q(1, z) = e^{-z}$ inverts exactly to $-\ln s$, symbolic $s$ included.

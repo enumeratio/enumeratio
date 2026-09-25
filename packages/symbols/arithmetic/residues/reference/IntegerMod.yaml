@@ -54,7 +54,7 @@ examples:
   - id: odd-mod-4-and-even-mod-6-at-once-no-such-class
     expr: [ChineseRemainder, [IntegerMod, 1, 4], [IntegerMod, 2, 6]]
     expected: [ChineseRemainder, [IntegerMod, 1, 4], [IntegerMod, 2, 6]]
-    caption: 'odd mod 4 and even mod 6 at once: no such class'
+    caption: "odd mod 4 and even mod 6 at once: no such class"
     category: Possible issues
 seeAlso:
   - IntegerModRing
