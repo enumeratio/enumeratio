@@ -2870,10 +2870,10 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Ln", ["Interval", ["Rational", 1, 3], "ExponentialE"]],
-        expected: ["Interval", ["Ln", ["Rational", 1, 3]], 1],
+        expected: ["Interval", ["Negate", ["Ln", 3]], 1],
         category: "Scope",
         caption:
-          "Interval arithmetic: $\\ln$ is increasing, so $\\ln[\\tfrac13, e]$ is the interval of the endpoint values -- $\\ln(1/3) = -\\ln 3$ isn't folded to the negated form on its own (see the unit-fraction example above)",
+          "Interval arithmetic: $\\ln$ is increasing, so $\\ln[\\tfrac13, e]$ is the interval of the endpoint values -- $\\ln(1/3)$ folds to $-\\ln 3$ (see the unit-fraction example above)",
       },
       {
         expr: ["Ln", ["Around", 2, 0.01]],
