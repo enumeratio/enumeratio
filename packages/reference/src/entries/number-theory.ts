@@ -385,7 +385,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "A prime has no positive divisors other than 1 and itself; 1 itself is not prime.",
       'Returns False unless n is provably prime -- there\'s no third "unknown" outcome.',
       "Threads element-wise over a list argument.",
-      "compute-engine's IsPrime requires a positive integer and returns False for negatives.",
+      "A negative n is prime when its absolute value is, matching Wolfram's PrimeQ (which counts a prime's associates); compute-engine's native IsPrime returns False there instead.",
     ],
     examples: [
       { expr: ["IsPrime", 1], expected: "False", caption: "1 is not prime by definition" },
@@ -413,9 +413,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["IsPrime", -7],
         expected: "True",
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's IsPrime requires a positive integer and returns False",
+        caption: "-7 is prime: its associate 7 is, matching Wolfram's PrimeQ",
       },
       {
         expr: ["IsPrime", ["Complex", 2, 1]],
@@ -1062,21 +1061,26 @@ export const numberTheory: readonly ReferenceEntry[] = [
   {
     name: "ExtendedGCD",
     domain: "Number theory",
-    signature: "ExtendedGCD(a, b)",
+    signature: "ExtendedGCD(a, b, …)",
     summary:
-      "The GCD of a and b together with Bézout coefficients x, y such that a·x + b·y = GCD(a, b).",
+      "The GCD of the arguments together with Bézout coefficients x₁, x₂, … such that a₁·x₁ + a₂·x₂ + … = GCD(a₁, a₂, …).",
     signatures: [
       {
         call: "ExtendedGCD(a, b)",
         description:
           "$\\gcd(a,b)$ together with Bézout coefficients $x,y$ satisfying $ax+by=\\gcd(a,b)$.",
       },
+      {
+        call: "ExtendedGCD(a, b, c, …)",
+        description:
+          "$\\gcd$ of any number of arguments, together with one Bézout coefficient per argument, folded pairwise from the two-argument case.",
+        library: "enumeratio-number-theory",
+      },
     ],
     details: [
       "Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].",
-      "The coefficients $x,y$ are not unique; the algorithm returns one particular solution pair.",
+      "The coefficients are not unique; the algorithm returns one particular solution, by folding the two-argument case pairwise across the arguments left to right.",
       "When $a=0$, the coefficients reduce to $x=0,\\,y=1$.",
-      "compute-engine only accepts two.",
     ],
     examples: [
       {
@@ -1119,10 +1123,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
       },
       {
         expr: ["ExtendedGCD", 6, 15, 30],
-        expected: ["Tuple", 3, 1, -1, 1],
-        aspirational: true,
+        expected: ["Tuple", 3, -2, 1, 0],
         category: "Scope",
-        caption: "compute-engine only accepts two arguments",
+        caption:
+          "Any number of arguments: folding pairwise, $6\\times(-2)+15\\times1+30\\times0=3=\\gcd(6,15,30)$",
+        divergence: {
+          wolfram:
+            "Same values: ours is the flat Tuple (g, x₁, x₂, x₃), Wolfram's is {g, {x₁, x₂, x₃}}.",
+        },
       },
       {
         expr: ["ExtendedGCD", ["Complex", 7, 2], ["Complex", 3, -5]],

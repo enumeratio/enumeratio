@@ -327,7 +327,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "ExtendedGCD",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "ExtendedGCD",
     elsewhere: ["wolfram"],
@@ -999,7 +999,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "DigitSum",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: ["wolfram"],
