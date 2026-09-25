@@ -1,0 +1,33 @@
+an-actual-path-is-a-path:
+  epsil:
+    in: |-
+      IsPathGraph(Graph([1, 2, 3, 4], [
+                                        UndirectedEdge(1, 2),
+                                        UndirectedEdge(2, 3),
+                                        UndirectedEdge(3, 4),
+                                      ]))
+    out: True
+  tex:
+    in: \mathrm{IsPathGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
+    out: \top
+  traditional:
+    in: \mathrm{IsPathGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
+    out: \mathrm{True}
+  fullform:
+    in: PathGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
+  wolfram:
+    in: PathGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
+a-cycle-is-not-a-path:
+  epsil:
+    in: IsPathGraph(CycleGraph(4))
+    out: False
+  tex:
+    in: \mathrm{IsPathGraph}(\mathrm{CycleGraph}(4))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPathGraph}(\mathrm{CycleGraph}(4))
+    out: \mathrm{False}
+  fullform:
+    in: PathGraphQ[CycleGraph[4]]
+  wolfram:
+    in: PathGraphQ[CycleGraph[4]]

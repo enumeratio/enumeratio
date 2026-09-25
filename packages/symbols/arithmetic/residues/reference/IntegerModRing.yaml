@@ -26,5 +26,21 @@ examples:
     expr: [Element, [IntegerMod, 3, 5], [IntegerModRing, 5]]
     expected: True
     category: Properties
+  - id: z-5-z
+    expr: [QuotientRing, Integers, 5]
+    expected: [IntegerModRing, 5]
+    caption: $\mathbb{Z}/5\mathbb{Z}$
+    category: Scope
+    role: test
+  - id: count-integermodring-5
+    expr: [Count, [IntegerModRing, 5]]
+    expected: 5
+    role: test
+  - id: integermod-3-7-not-in-integermodring-5
+    expr: [Element, [IntegerMod, 3, 7], [IntegerModRing, 5]]
+    expected: False
+    category: Properties
+    caption: different modulus, so it is not a member
+    role: test
 seeAlso:
   - IntegerMod

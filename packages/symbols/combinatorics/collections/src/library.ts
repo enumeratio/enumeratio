@@ -4,6 +4,7 @@ import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
 import { declareGeneratingFunctions } from "./generating-functions.ts";
 import { declareGraphs } from "./graphs.ts";
+import { declareGraphs2 } from "./graphs-2.ts";
 import { declareInfiniteProducts } from "./infinite-products.ts";
 import { declareListFrontier } from "./list-frontier.ts";
 import { declareListFrontier2 } from "./list-frontier-2.ts";
@@ -45,4 +46,5 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareStats(ce, options);
   declareGeneratingFunctions(ce);
   declareGraphs(ce);
+  declareGraphs2(ce);
 }
