@@ -18,7 +18,9 @@ import { crosswalkFor } from "../src/crosswalk/index.ts";
 import { isInventorySystem } from "../src/crosswalk/inventory.ts";
 import type { CrosswalkSystem } from "../src/crosswalk/sources.ts";
 import { engineSymbols } from "../src/engine-symbols-data.ts";
-import { entries } from "../src/entries.ts";
+import { referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
 
 const args = process.argv.slice(2);
 const option = (flag: string): string | undefined => {

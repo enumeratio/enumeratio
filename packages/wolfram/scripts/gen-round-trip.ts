@@ -7,9 +7,11 @@
 //   vp node packages/wolfram/scripts/gen-round-trip.ts
 
 import { writeFileSync } from "node:fs";
-import { entries } from "../../reference/src/entries.ts";
+import { referenceEntries } from "../../reference/src/node.ts";
 import { fromWolfram } from "../src/from-wolfram.ts";
 import { type MathJson, toWolfram } from "../src/to-wolfram.ts";
+
+const entries = referenceEntries();
 
 interface Golden {
   readonly id: string;

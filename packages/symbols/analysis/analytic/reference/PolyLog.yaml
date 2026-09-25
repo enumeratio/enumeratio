@@ -152,9 +152,8 @@ examples:
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [PolyLog, 2, [Rational, 1, 2]], 30]
     expected: {num: '0.582240526465012505902656320160'}
-    aspirational: true
     category: Scope
-    caption: To 30 significant digits; not yet -- the requested precision is ignored and a double comes back
+    caption: To 30 significant digits, past a double's reach
   - hidden: true
     id: n-polylog-2-0p5
     expr: [N, [PolyLog, 2, 0.5]]

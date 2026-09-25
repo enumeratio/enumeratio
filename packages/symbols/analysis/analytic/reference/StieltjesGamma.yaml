@@ -88,9 +88,8 @@ examples:
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [StieltjesGamma, 1], 30]
     expected: {num: '-0.0728158454836767248605863758749'}
-    aspirational: true
     category: Scope
-    caption: To 30 significant digits; not yet -- the requested precision is ignored and a double comes back
+    caption: To 30 significant digits, past a double's reach
   - id: gamma-3-1-gamma-3-order-1-at-a-1-is-just-the
     expr: [StieltjesGamma, 3, 1]
     expected: [StieltjesGamma, 3]

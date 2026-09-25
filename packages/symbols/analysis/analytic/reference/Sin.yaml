@@ -266,6 +266,11 @@ examples:
     expected: {num: '0.841470984807896506652502321630'}
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
+  - id: a-huge-24-40-argument-reduces-exactly-mod-2-pi
+    expr: [N, [Sin, [Power, 24, 40]]]
+    expected: {num: '0.400083152719766047071'}
+    category: Scope
+    caption: $24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\pi$ before Sin sees it, not rounded to working precision first
 seeAlso:
   - Cos
   - Tan

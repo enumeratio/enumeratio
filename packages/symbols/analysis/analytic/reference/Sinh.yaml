@@ -112,9 +112,8 @@ examples:
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [Sinh, 1], 30]
     expected: {num: '1.17520119364380145688238185060'}
-    aspirational: true
     category: Scope
-    caption: To 30 significant digits; not yet -- the last digit is not correctly rounded
+    caption: To 30 significant digits, the last one correctly rounded
 seeAlso:
   - Cosh
   - Tanh

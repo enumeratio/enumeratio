@@ -17,8 +17,10 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
 import { MAPPINGS } from "@enumeratio/oracle/src";
 import { HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
-import { entries } from "../src/entries.ts";
+import { referenceEntries } from "../src/node.ts";
 import { crosswalk, engineSymbols } from "./crosswalk.ts";
+
+const entries = referenceEntries();
 
 const symbols = engineSymbols(new ComputeEngine());
 const records = crosswalk(

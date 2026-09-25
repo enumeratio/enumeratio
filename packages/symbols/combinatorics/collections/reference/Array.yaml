@@ -1,0 +1,47 @@
+name: Array
+domain: Collections
+signature: Array(f, n)
+summary: f applied over every point of an n-dimensional index range.
+signatures:
+  - call: Array(f, n)
+    description: $\{f(1), \ldots, f(n)\}$.
+    library: enumeratio-collections
+  - call: Array(f, {n1, …, nk})
+    description: the $n_1 \times \cdots \times n_k$ array with $f$ applied to every index tuple.
+    library: enumeratio-collections
+  - call: Array(f, n, r)
+    description: like $Array(f, n)$, but the index range starts at $r$ instead of 1.
+    library: enumeratio-collections
+  - call: Array(f, {n1, …, nk}, {r1, …, rk})
+    description: like the multi-dimensional form, with each dimension's index range starting at its own origin.
+    library: enumeratio-collections
+  - call: Array(f, n, r, h)
+    description: like $Array(f, n, r)$, wrapped in $h$ at every level instead of $List$.
+    library: enumeratio-collections
+details:
+  - The scalar forms of $n$ and $r$ are shorthand for $\{n\}$ and every dimension sharing origin $r$.
+  - See [[Tabulate]] for a lazy array read without materialising it.
+examples:
+  - id: array-f-5
+    expr: [Array, f, 5]
+    expected: [List, [f, 1], [f, 2], [f, 3], [f, 4], [f, 5]]
+  - id: array-f-2-2
+    expr: [Array, f, [List, 2, 2]]
+    expected: [List, [List, [f, 1, 1], [f, 1, 2]], [List, [f, 2, 1], [f, 2, 2]]]
+    category: Scope
+    caption: A list of dimensions builds a multi-dimensional array
+  - id: array-f-3-0
+    expr: [Array, f, 3, 0]
+    expected: [List, [f, 0], [f, 1], [f, 2]]
+    category: Scope
+    caption: A third argument pins where the index range starts
+  - id: array-f-3-1-g
+    expr: [Array, f, 3, 1, g]
+    expected: [g, [f, 1], [f, 2], [f, 3]]
+    category: Scope
+    caption: A fourth argument wraps the result in that head instead of List
+  - id: array-squares
+    expr: [Array, [Function, [Power, _1, 2]], 5]
+    expected: [List, 1, 4, 9, 16, 25]
+seeAlso:
+  - Tabulate
