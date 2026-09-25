@@ -21,10 +21,6 @@ export interface FrontierEntry {
 
 export const FRONTIER: readonly FrontierEntry[] = [
   {
-    head: "UndirectedEdge",
-    uses: 756,
-  },
-  {
     head: "Graphics",
     uses: 450,
   },
@@ -127,10 +123,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Callout",
     uses: 82,
-  },
-  {
-    head: "DirectedEdge",
-    uses: 69,
   },
   {
     head: "SeriesCoefficient",
@@ -673,10 +665,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 9,
   },
   {
-    head: "Graph",
-    uses: 9,
-  },
-  {
     head: "GraphicsComplex",
     uses: 9,
   },
@@ -921,10 +909,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "VertexList",
-    uses: 7,
-  },
-  {
     head: "AbortProtect",
     uses: 6,
   },
@@ -1073,19 +1057,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "CompleteKaryTree",
-    uses: 5,
-  },
-  {
     head: "DateHistogram",
     uses: 5,
   },
   {
     head: "DiscreteDelta",
-    uses: 5,
-  },
-  {
-    head: "EdgeList",
     uses: 5,
   },
   {
@@ -1154,10 +1130,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "OrthogonalMatrixQ",
-    uses: 5,
-  },
-  {
-    head: "PathGraph",
     uses: 5,
   },
   {
@@ -1242,10 +1214,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "CheckAbort",
-    uses: 4,
-  },
-  {
-    head: "CompleteGraph",
     uses: 4,
   },
   {
@@ -1401,10 +1369,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "TreeGraphQ",
-    uses: 4,
-  },
-  {
     head: "TrigFactorList",
     uses: 4,
   },
@@ -1482,10 +1446,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Except",
-    uses: 3,
-  },
-  {
-    head: "FindShortestPath",
     uses: 3,
   },
   {
@@ -1658,10 +1618,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Spacer",
-    uses: 3,
-  },
-  {
-    head: "StarGraph",
     uses: 3,
   },
   {
