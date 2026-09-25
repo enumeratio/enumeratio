@@ -6,6 +6,7 @@
 // its own build entry, never imported by `./index.ts`.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 import { declareAestimatio } from "./declare.ts";
 
 interface HandshakeRequest {
@@ -17,6 +18,10 @@ interface HandshakeRequest {
 interface EvaluateRequest {
   readonly id: number;
   readonly json: unknown;
+  /** The host's `timeMs`, tried cooperatively here first — see ./cooperative-evaluate.ts.
+   * A call that stops this way keeps every port's bindings, including a SharedWorker's
+   * other tabs'; only an uncooperative loop needs the host's own hard kill. */
+  readonly timeMs?: number;
 }
 interface EvaluateResponse {
   readonly id: number;
@@ -51,15 +56,10 @@ function attachEvaluateHandler(port: PortLike): void {
   port.onmessage = (event) => {
     const request = event.data as EvaluateRequest;
     void (engine as Promise<ComputeEngine>).then((ce) => {
-      const { id, json } = request;
-      try {
-        // Bound to the session's one persistent `ce`: a `:=` here is visible to the next
-        // call, on this port and (on a SharedWorker) any other tab's port too.
-        const result = ce.box(json as never).evaluate();
-        port.postMessage({ id, ok: true, json: result.json });
-      } catch (e) {
-        port.postMessage({ id, ok: false, error: e instanceof Error ? e.message : String(e) });
-      }
+      const { id, json, timeMs } = request;
+      // Bound to the session's one persistent `ce`: a `:=` here is visible to the next
+      // call, on this port and (on a SharedWorker) any other tab's port too.
+      port.postMessage({ id, ...evaluateCooperatively(ce, json, timeMs) });
     });
   };
 }

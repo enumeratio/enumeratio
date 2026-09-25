@@ -10,6 +10,15 @@ import { createPool } from "./pool.ts";
 /** MathJSON for `declareAestimatio`'s `Aborted` symbol (Wolfram's `$Aborted` — see declare.ts). */
 const ABORTED = "Aborted";
 
+/**
+ * The worker is asked to stop cooperatively at `timeMs` first (`./cooperative-evaluate.ts`,
+ * via `ce.withTimeLimit`/`checkpoint()`) — this call's own hard kill only fires this much
+ * later, giving that a chance to land first. When it does, the worker answers normally
+ * (reused; a session keeps its bindings); the hard kill only ever catches a tight,
+ * uncooperative loop the cooperative deadline couldn't reach.
+ */
+const COOPERATIVE_GRACE_MS = 200;
+
 function workerUrl(name: string): URL {
   // Loading `./<name>.ts` when this module is still its TypeScript source (tests run
   // against `../src/node.ts` before a build) and `./<name>.mjs` once packed — the built
@@ -54,7 +63,9 @@ export interface EvaluateIsolatedOptions {
   /** Sized into the worker's `resourceLimits.maxOldGenerationSizeMb` — a real heap cap.
    * Workers are keyed by this (rounded) limit, since `resourceLimits` are fixed at spawn. */
   readonly memoryBytes?: number;
-  /** Hard-killed with `terminate()` after this many milliseconds. */
+  /** Tried cooperatively inside the worker first, then hard-killed with `terminate()`
+   * `COOPERATIVE_GRACE_MS` past this if that didn't stop it — see
+   * `./cooperative-evaluate.ts`. */
   readonly timeMs?: number;
   /** Module URL whose `configure(ce)` declares the libraries the host engine has. */
   readonly setup?: string;
@@ -140,9 +151,11 @@ export function createEvaluatorPool(options: EvaluatorPoolOptions = {}): Evaluat
           worker.on("message", onMessage);
           worker.once("error", onError);
           worker.once("exit", onExit);
-          if (timeMs !== undefined) timer = setTimeout(() => finish(ABORTED, "replace"), timeMs);
+          if (timeMs !== undefined) {
+            timer = setTimeout(() => finish(ABORTED, "replace"), timeMs + COOPERATIVE_GRACE_MS);
+          }
           worker.ref();
-          worker.postMessage({ id, json, setup });
+          worker.postMessage({ id, json, setup, timeMs });
         }),
     );
   }
@@ -180,15 +193,24 @@ export function evaluateIsolated(
 // for a notebook evaluating off the caller's own thread. See design/aestimatio.md §5.
 // ---------------------------------------------------------------------------------------
 
+export type NodeSessionWorkerFactory = (
+  url: URL,
+  options: { workerData?: unknown },
+) => NodeWorkerLike;
+
 export interface SessionOptions {
   /** Module URL whose `configure(ce)` declares the libraries the session's engine has.
    * Applied once, when the session (or its post-reset replacement worker) starts. */
   readonly setup?: string;
+  /** Injectable for tests; defaults to spawning a real `worker_threads.Worker`. */
+  readonly createWorker?: NodeSessionWorkerFactory;
 }
 
 export interface EvaluateSessionOptions {
-  /** Hard-killed with `terminate()` after this many milliseconds — see `Session`'s own
-   * comment on what that does to the session's state. */
+  /** Tried cooperatively inside the worker first (`./cooperative-evaluate.ts`) — a call
+   * that stops that way keeps the session's bindings. Only past `timeMs +
+   * COOPERATIVE_GRACE_MS` does this hard-kill the worker with `terminate()`; see
+   * `Session`'s own comment on what THAT does to the session's state. */
   readonly timeMs?: number;
   /** Aborting rejects this call; unlike `timeMs`, it does not touch the worker — another
    * call, or the session itself, may still be using it. */
@@ -224,8 +246,9 @@ export interface Session {
 export function openSession(options: SessionOptions = {}): Session {
   const { setup } = options;
   const url = workerUrl("session-worker");
-  const spawn = (): NodeWorkerLike =>
-    new Worker(url, { workerData: { setup } }) as unknown as NodeWorkerLike;
+  const createWorker: NodeSessionWorkerFactory =
+    options.createWorker ?? ((u, o) => new Worker(u, o) as unknown as NodeWorkerLike);
+  const spawn = (): NodeWorkerLike => createWorker(url, { workerData: { setup } });
   let worker: NodeWorkerLike = spawn();
   let nextId = 0;
   let closed = false;
@@ -275,10 +298,10 @@ export function openSession(options: SessionOptions = {}): Session {
           void worker.terminate();
           worker = spawn();
           resolve({ value: ABORTED, reset: true });
-        }, timeMs);
+        }, timeMs + COOPERATIVE_GRACE_MS);
       }
 
-      worker.postMessage({ id, json });
+      worker.postMessage({ id, json, timeMs });
     });
   }
 

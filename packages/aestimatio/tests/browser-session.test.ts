@@ -29,12 +29,21 @@ function fakeWorker() {
 
 function fakePort() {
   const posted: unknown[] = [];
+  let closed = 0;
   const port: MessagePortLike = {
     postMessage: (message) => posted.push(message),
     onmessage: null,
     start: () => {},
+    close: () => {
+      closed++;
+    },
   };
-  return { port, posted, respond: (response: unknown) => port.onmessage?.({ data: response }) };
+  return {
+    port,
+    posted,
+    closedCount: () => closed,
+    respond: (response: unknown) => port.onmessage?.({ data: response }),
+  };
 }
 
 test("openSession (dedicated-Worker fallback) sends a handshake and persists state", async () => {
@@ -96,14 +105,57 @@ test("openSession over a SharedWorker sends the handshake and evaluates over its
   session.close();
 });
 
-test("openSession's timeMs on a SharedWorker only gives up locally: reset stays false", async () => {
+test("a cooperative stop over a SharedWorker keeps reset: false (no poisoning)", async () => {
   const fake = fakePort();
   const session = openSession({
     createSharedWorker: (): SharedWorkerLike => ({ port: fake.port }),
   });
 
-  const timedOut = session.evaluate(["Sum", "k"], { timeMs: 5 });
-  await expect(timedOut).resolves.toEqual({ value: "Aborted", reset: false });
+  const stopped = session.evaluate(["Sum", "k"], { timeMs: 5 });
+  // The worker answers cooperatively -- ok:true with the "Aborted" value -- well inside
+  // the host's own (much later) hard-kill timer, same message path as any other answer.
+  fake.respond({ id: 0, ok: true, json: "Aborted" });
+  await expect(stopped).resolves.toEqual({ value: "Aborted", reset: false });
+  expect(fake.closedCount()).toBe(0);
+
+  // Still the same shared port -- a later call needs no fresh handshake.
+  const next = session.evaluate(["Add", 1, 1]);
+  fake.respond({ id: 1, ok: true, json: 2 });
+  await expect(next).resolves.toEqual({ value: 2, reset: false });
+  expect(fake.posted).toHaveLength(3); // handshake + 2 evaluate calls, all on one port
+});
+
+test("an uncooperative SharedWorker call poisons this tab's session: switches to a dedicated worker, reset: true", async () => {
+  const shared = fakePort();
+  const dedicatedWorkers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    name: "notebook",
+    createSharedWorker: (): SharedWorkerLike => ({ port: shared.port }),
+    createWorker: () => {
+      const fake = fakeWorker();
+      dedicatedWorkers.push(fake);
+      return fake.worker;
+    },
+  });
+  expect(shared.posted).toEqual([{ setup: undefined }]);
+
+  // The shared worker never answers -- an uncooperative call the host can't safely kill.
+  const poisoned = session.evaluate(["Sum", "k"], { timeMs: 5 });
+  await expect(poisoned).resolves.toEqual({ value: "Aborted", reset: true });
+  expect(shared.closedCount()).toBe(1); // this tab's handle to it is dropped...
+  expect(dedicatedWorkers).toHaveLength(1); // ...and replaced with a private worker
+  expect(dedicatedWorkers[0]!.posted).toEqual([{ setup: undefined }]); // fresh handshake
+
+  // Later calls go to the dedicated worker, not the (still poisoned) shared port.
+  const next = session.evaluate(["Add", 1, 1]);
+  dedicatedWorkers[0]!.respond({ id: 1, ok: true, json: 2 });
+  await expect(next).resolves.toEqual({ value: 2, reset: false });
+  // The shared port only ever heard the handshake and the one call that got poisoned --
+  // the "next" call above went to the dedicated worker instead.
+  expect(shared.posted).toHaveLength(2);
+
+  session.close();
+  expect(dedicatedWorkers[0]!.terminatedCount()).toBe(1);
 });
 
 test("openSession passes its name through to createSharedWorker", () => {

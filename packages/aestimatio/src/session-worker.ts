@@ -5,6 +5,7 @@
 
 import { parentPort, workerData } from "node:worker_threads";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 import { declareAestimatio } from "./declare.ts";
 
 interface SessionWorkerData {
@@ -16,6 +17,10 @@ interface SessionWorkerData {
 interface EvaluateRequest {
   readonly id: number;
   readonly json: unknown;
+  /** The host's `timeMs`, tried cooperatively here first (./cooperative-evaluate.ts). A
+   * call that stops this way keeps the session's bindings; only an uncooperative loop
+   * that outruns the host's own (longer) hard-kill timer loses them. */
+  readonly timeMs?: number;
 }
 
 interface EvaluateResponse {
@@ -36,16 +41,12 @@ async function main(): Promise<void> {
   // Messages sent before this listener attaches (the caller can `postMessage` right after
   // spawning) are queued by the port, not lost — safe to configure asynchronously above.
   parentPort?.on("message", (request: EvaluateRequest) => {
-    const { id, json } = request;
-    const respond = (partial: Omit<EvaluateResponse, "id">): void =>
-      parentPort?.postMessage({ id, ...partial });
-    try {
-      // Bound to the session's one persistent `ce`: a `:=` here is visible next call.
-      const result = ce.box(json as never).evaluate();
-      respond({ ok: true, json: result.json });
-    } catch (e) {
-      respond({ ok: false, error: e instanceof Error ? e.message : String(e) });
-    }
+    const { id, json, timeMs } = request;
+    // Bound to the session's one persistent `ce`: a `:=` here is visible next call.
+    parentPort?.postMessage({
+      id,
+      ...evaluateCooperatively(ce, json, timeMs),
+    } satisfies EvaluateResponse);
   });
 }
 

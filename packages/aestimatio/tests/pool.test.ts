@@ -1,6 +1,7 @@
 // Node pool logic, exercised with fake `worker_threads`-shaped workers: no real thread is
 // spawned, so this stays fast and cheap (see the isolated-evaluator tests for the real
 // thing). Mirrors ./browser-pool.test.ts's fake-Worker approach.
+import { Worker } from "node:worker_threads";
 import { expect, test } from "vite-plus/test";
 import { createEvaluatorPool, type NodeWorkerLike } from "../src/node.ts";
 
@@ -154,6 +155,34 @@ test("createEvaluatorPool queues a call past its size cap and reuses the release
   created[0]!.respond({ ok: true, json: 4 });
   await expect(second).resolves.toBe(4);
   pool.close();
+});
+
+test("a cooperative timeMs stop keeps the pool worker reused (real worker.ts)", async () => {
+  // Unlike the fakes above, this wraps the REAL `worker_threads.Worker` so `worker.ts`
+  // actually runs compute-engine -- proving the cooperative deadline (evaluateCooperatively
+  // -> ce.withTimeLimit/checkpoint) lets the worker answer normally instead of needing the
+  // hard kill. Still fast: the loop is long enough to outrun 50ms, not long enough to matter.
+  const created: NodeWorkerLike[] = [];
+  const pool = createEvaluatorPool({
+    size: 1,
+    createWorker: (url, options) => {
+      const worker = new Worker(url, options) as unknown as NodeWorkerLike;
+      created.push(worker);
+      return worker;
+    },
+  });
+  try {
+    const slow = ["Sum", ["Mod", "k", 97], ["Tuple", "k", 1, 2_000_000_000]];
+    const stopped = await pool.evaluate(slow, { timeMs: 50 });
+    expect(stopped).toBe("Aborted");
+    expect(created).toHaveLength(1); // answered cooperatively -- no replacement needed
+
+    const next = await pool.evaluate(["Add", 1, 1]);
+    expect(next).toBe(2);
+    expect(created).toHaveLength(1); // same worker, reused
+  } finally {
+    pool.close();
+  }
 });
 
 test("createEvaluatorPool keys workers by memory limit separately from the default", async () => {
