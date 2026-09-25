@@ -148,6 +148,16 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `BellNumber`'s own Touchard-polynomial form), `IntegerString`'s bigint arithmetic, and
  * `FromDigits`'s symbolic/negative base and Roman-numeral reading -- all in number-theory,
  * numerals or collections, additive in the same way: native for anything not ours.
+ * The #113 list-stats sweep (`list-stats.ts`) adds `Tabulate` at three or more dimensions,
+ * or a literal 0 in any dimension (materialized directly rather than left truncated or
+ * unevaluated), and `Unique`'s second-argument sameness test — both additive, native for
+ * anything not ours. `Mean`/`Median` on symbolic or exact-constant data is the same sweep,
+ * already covered above since those heads were already overridden for their matrix form.
+ * `Take(xs, UpTo(n))` and `Fold`'s unseeded 2-argument form are ALSO from that sweep but
+ * don't appear here: a bare engine's own `.json` for the unmaterialized/rejected call is
+ * textually identical to (`Take`) or excluded from comparison by (`Fold`, whose malformed
+ * 2-argument call a bare engine's own canonical fails to validate) this ledger's plain,
+ * non-materializing comparison — see their own overrides' comments in `list-stats.ts`.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -265,10 +275,12 @@ const OVERRIDDEN = [
   // that used to stay unevaluated (S(1, 2), past the k > n boundary); Sum is the corpus
   // expression's own outer head, the same reason Add is here.
   "Sum",
+  "Tabulate",
   "Tan",
   "Tanh",
   "Totient",
   "Union",
+  "Unique",
   "Zeta",
 ];
 

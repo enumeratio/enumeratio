@@ -2000,7 +2000,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Tabulate",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -2021,7 +2021,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Unique",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "DeleteDuplicates",
     elsewhere: [],
