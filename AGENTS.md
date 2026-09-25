@@ -107,15 +107,15 @@ release. Add a tool name to select part of the graph. For example, run
   nightly deletes a PR's previews a day after it closes, and untagged previews older than 30
   days; a tagged commit's preview stays. Needs repo secrets
   `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`.
-- **Advisory sweeps** — never required checks. `quickcheck.yml` samples the collection
+- **Advisory sweeps** — never required checks. `plausible.yml` (Plausible, after Lean 4's; `design/plausible.md`) samples the collection
   kernels on every push touching them and deeply each night; a failure files/reopens one
-  rolling issue, `quickcheck sampling regression`, labelled `nightly-fixup`. `nightly.yml`
+  rolling issue, `plausible sampling regression`, labelled `nightly-fixup`. `nightly.yml`
   rescans the light oracle lanes against the committed sidecars nightly, one job per
   ecosystem: Python (mpmath, SymPy), Julia (Nemo, Combinatorics.jl) and Rust (num, primal,
-  statrs, adic). Each also runs the oracle quickcheck (`reference/scripts/oracle-quickcheck.ts`):
+  statrs, adic). Each also runs the oracle Plausible (`reference/scripts/oracle-plausible.ts`):
   samples resampled from the documented examples toward the edges of each domain, seeded by the
   date so every job draws the same ones, checked against that ecosystem's lanes; what no
-  classified example explains goes to a rolling `oracle quickcheck findings: <ecosystem>` issue
+  classified example explains goes to a rolling `oracle Plausible findings: <ecosystem>` issue
   for triage. Weekly it rescans the Oscar, Mathlib, Sage (in Docker, with the adeles and
   adic goldens) and Wolfram lanes the same way and follows every crosswalk link. Examples
   too many to render (grid points, edge cases) are still data: `hidden` examples in the

@@ -29,10 +29,10 @@
 // Advisory, never a gate: a fresh seed each run means a red result is a finding to triage,
 // not a broken build.
 //
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts             # everything, fresh seed
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts perm        # families matching "perm"
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts perm 123456 # replay exactly
-//   QUICKCHECK_POINTS=20 vp node …/quickcheck.ts                   # more points per family
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts             # everything, fresh seed
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm        # families matching "perm"
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
+//   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
 
 import type { FamilyKernel } from "../src/families/types.ts";
 /** Counts past this are sampled but never enumerated — property 5 would not finish. */

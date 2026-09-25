@@ -65,7 +65,7 @@ test("native |z| > 1 continuation survives the extension", () => {
   expect(r.im).toBeCloseTo(-Math.PI * Math.LN2, 10);
 });
 
-// Found by the oracle quickcheck: this used to stay unevaluated (`polyLogReal` NaNs by
+// Found by the oracle Plausible: this used to stay unevaluated (`polyLogReal` NaNs by
 // design — no ce/Gamma access outside the boxed evaluator — but `evaluatePolyLog` now
 // continues past |z| = 1 the same way LerchPhi does).
 test("Liₛ(z) outside |z| ≤ 1 at non-integer s continues via the Lerch integral (mpmath value)", () => {
@@ -85,7 +85,7 @@ test("PolyLog on the |z|=1 rim continues once Re(s) ≤ 1, like LerchPhi", () =>
 
 // Every Re(s) on the rim routes through the continuation, not just Re(s) ≤ 1: the rim's
 // own series converges too slowly past that to trust at double precision (a term at
-// n = 200,000 is still ~1e-8 at Re(s) = 1.5 — this is what the oracle quickcheck's
+// n = 200,000 is still ~1e-8 at Re(s) = 1.5 — this is what the oracle Plausible's
 // PolyLog(1.5, 0.6+0.8i) caught, wrong from the 9th digit). Golden grid at e^(iθ), against
 // mpmath at dps = 30 (`mp.polylog(s, mp.e**(1j*theta))`).
 const POLYLOG_RIM_GOLDEN: readonly [number, number, number, number][] = [
@@ -148,7 +148,7 @@ test("complex argument — the case the native handler declines (mpmath values)"
   expect(b.im).toBeCloseTo(10.451822205943449, 11);
 });
 
-// --- Found by the oracle quickcheck: PolyGamma(-1, z) was unevaluated ------------
+// --- Found by the oracle Plausible: PolyGamma(-1, z) was unevaluated ------------
 
 test("ψ⁽⁻¹⁾(z) = LogGamma(z), matching Wolfram's PolyGamma[-1, z] (mpmath has no negative order)", () => {
   expect(num(["PolyGamma", -1, 2])).toBeCloseTo(0, 13); // LogGamma(2) = log(1!) = 0
