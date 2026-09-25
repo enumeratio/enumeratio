@@ -250,28 +250,25 @@ export interface RenderedForm {
 }
 
 /**
- * One classification of a `SystemImplementation` whose `verdict` isn't `agree` -- written by
- * hand, and carried forward by the scan while the verdict holds (design/examples-as-data.md
- * §6). A row may need more than one (a divergence AND a tolerance note), hence the list.
+ * One message an evaluation itself emitted for this example -- compute-engine's `Head::code`
+ * messages, or a kernel's own warnings and errors. Distinct from the hand classification
+ * below: this is what running it produced, not what a person concluded about the verdict.
  */
-export interface ImplementationMessage {
-  /** One of `DIVERGENCE_KINDS` (`@enumeratio/oracle`). */
-  readonly kind: string;
-  readonly note?: string;
-  /** `ours` only: the GitHub issue tracking the gap. */
-  readonly issue?: number;
-  /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
-  readonly tolerance?: number;
+export interface EvaluationMessage {
+  readonly code: string;
+  readonly text: string;
+  readonly severity?: "warning" | "error";
 }
 
 /**
  * One system's writing of one example and, unless it's one of our own forms, its answer.
  *
- * | Field                | Written by                                              |
- * | -------------------- | -------------------------------------------------------- |
- * | `in`                 | `UPDATE_FORMS=1` -- what our transpiler emits for it      |
- * | `out`, `tex`, `verdict` | the scan's `--accept`; absent for an own form, or until scanned |
- * | `messages`           | hand, the classification of a non-`agree` verdict          |
+ * | Field                                          | Written by            | Meaning |
+ * | ----------------------------------------------- | --------------------- | ------- |
+ * | `in`                                            | `UPDATE_FORMS=1`      | what our transpiler emits for it |
+ * | `out`, `tex`, `verdict`                         | the scan's `--accept` | absent for an own form, or until scanned |
+ * | `kind`, `note`, `issue`, `tolerance`             | hand                  | the classification of a non-`agree` verdict, carried forward by the scan while it holds |
+ * | `messages`                                      | the scan               | what the evaluation itself emitted running it |
  */
 export interface SystemImplementation {
   readonly in: string;
@@ -279,7 +276,14 @@ export interface SystemImplementation {
   /** Wolfram (and any system that has one): its TeXForm of `in` and of `out`. */
   readonly tex?: RenderedForm;
   readonly verdict?: OtherSystemVerdict;
-  readonly messages?: readonly ImplementationMessage[];
+  /** One of `DIVERGENCE_KINDS` (`@enumeratio/oracle`). Any verdict but `agree` needs one. */
+  readonly kind?: string;
+  readonly note?: string;
+  /** `ours` only: the GitHub issue tracking the gap. */
+  readonly issue?: number;
+  /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
+  readonly tolerance?: number;
+  readonly messages?: readonly EvaluationMessage[];
 }
 
 /**

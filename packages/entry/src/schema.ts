@@ -198,15 +198,14 @@ const RENDERED_FORM: JsonSchema = {
   additionalProperties: false,
 };
 
-const IMPLEMENTATION_MESSAGE: JsonSchema = {
+const EVALUATION_MESSAGE: JsonSchema = {
   type: "object",
   properties: {
-    kind: { type: "string" },
-    note: { type: "string" },
-    issue: { type: "integer" },
-    tolerance: { type: "number" },
+    code: { type: "string" },
+    text: { type: "string" },
+    severity: { enum: ["warning", "error"] },
   },
-  required: ["kind"],
+  required: ["code", "text"],
   additionalProperties: false,
 };
 
@@ -217,7 +216,11 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
     out: { type: "string" },
     tex: { $ref: "#/$defs/RenderedForm" },
     verdict: OTHER_SYSTEM_VERDICT,
-    messages: { type: "array", items: { $ref: "#/$defs/ImplementationMessage" } },
+    kind: { type: "string" },
+    note: { type: "string" },
+    issue: { type: "integer" },
+    tolerance: { type: "number" },
+    messages: { type: "array", items: { $ref: "#/$defs/EvaluationMessage" } },
   },
   required: ["in"],
   additionalProperties: false,
@@ -241,7 +244,7 @@ export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
   },
   $defs: {
     RenderedForm: RENDERED_FORM,
-    ImplementationMessage: IMPLEMENTATION_MESSAGE,
+    EvaluationMessage: EVALUATION_MESSAGE,
     SystemImplementation: SYSTEM_IMPLEMENTATION,
   },
 };

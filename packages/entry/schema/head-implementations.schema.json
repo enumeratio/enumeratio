@@ -24,23 +24,20 @@
       "required": ["in", "out"],
       "additionalProperties": false
     },
-    "ImplementationMessage": {
+    "EvaluationMessage": {
       "type": "object",
       "properties": {
-        "kind": {
+        "code": {
           "type": "string"
         },
-        "note": {
+        "text": {
           "type": "string"
         },
-        "issue": {
-          "type": "integer"
-        },
-        "tolerance": {
-          "type": "number"
+        "severity": {
+          "enum": ["warning", "error"]
         }
       },
-      "required": ["kind"],
+      "required": ["code", "text"],
       "additionalProperties": false
     },
     "SystemImplementation": {
@@ -58,10 +55,22 @@
         "verdict": {
           "enum": ["agree", "disagree", "inconclusive", "error"]
         },
+        "kind": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "issue": {
+          "type": "integer"
+        },
+        "tolerance": {
+          "type": "number"
+        },
         "messages": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/ImplementationMessage"
+            "$ref": "#/$defs/EvaluationMessage"
           }
         }
       },
