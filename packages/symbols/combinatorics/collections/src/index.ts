@@ -1,6 +1,15 @@
 export { declareCollections } from "./library.ts";
 export { allEntries } from "./families/index.ts";
-export { type Count, countNumber, type FamilyKernel, type NumberKernel, numberKernel } from "./families/types.ts";
+export {
+  type Cost,
+  type Count,
+  countNumber,
+  type Declared,
+  type FamilyKernel,
+  type NumberKernel,
+  numberKernel,
+  type Param,
+} from "./families/types.ts";
 export { declareStats, type StatsOptions } from "./stats.ts";
 
 // Reference entries live at the buildless `@enumeratio/collections/reference`

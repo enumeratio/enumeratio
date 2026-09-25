@@ -31,6 +31,7 @@
     "@enumeratio/boxed": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/formats": "workspace:*",
+    "@enumeratio/plausible": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

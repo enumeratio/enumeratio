@@ -28,11 +28,43 @@ export type Element = number[] | number[][] | NestedTree | number;
  *  and `NaN` (unknown — a declared open problem, e.g. TwinPrimes). */
 export type Count = bigint | number;
 
+/** What an operation costs (design/plausible.md §3.3): arithmetic in the params and rank;
+ *  tables polynomial in the params; time and memory in the elements it generates; or growing
+ *  with the element's value (an nth-match scan of an infinite sequence). */
+export type Cost = "closed" | "polynomial" | "enumerative" | "scan";
+
+/** A parameter. An axis grows with Plausible's size; a param selects which collection and is
+ *  drawn from a small range of its own. `max` marks representability, not budget. */
+export interface Param {
+  readonly name: string;
+  readonly role: "axis" | "param";
+  readonly min: number;
+  readonly max?: number;
+}
+
+/** What a family tells Plausible about itself (design/plausible.md §3). Optional while the
+ *  families migrate; the contract test ratchets the ones still undeclared. */
+export interface Declared {
+  /** The domain its elements inhabit — the catalogue's carrier, e.g. "Permutation". */
+  readonly carrier: string;
+  readonly params: readonly Param[];
+  readonly cost: { readonly count: Cost; readonly unrank: Cost; readonly rank: Cost; readonly valid: Cost };
+  /** Elements the enumeration generates at `p`; required when any cost is enumerative. The
+   *  helper that enumerates supplies it: count(p) for enumerate-and-index, n! for filtering
+   *  the permutations of n, k^n for words. */
+  readonly work?: (p: number[]) => bigint;
+  /** A scan's largest cheap rank at this size (default: the size itself). */
+  readonly sized?: (p: number[], size: number) => bigint;
+  /** How many elements an open-problem family (count NaN) can actually produce. */
+  readonly known?: (p: number[]) => bigint;
+}
+
 interface Family {
   readonly head: string;
   readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";
   readonly valid: (element: unknown, p: number[]) => boolean;
+  readonly declared?: Declared;
 }
 
 /** A pure combinatorial family: count + rank/unrank/valid kernels, positions in bigint.
@@ -67,6 +99,7 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
     paramCount: k.paramCount,
     kind: k.kind,
     valid: k.valid,
+    ...(k.declared === undefined ? {} : { declared: k.declared }),
     count: (p) => {
       const c = k.count(p);
       return Number.isNaN(c) || c === Number.POSITIVE_INFINITY ? c : exact(k.head, "count", c, p);
