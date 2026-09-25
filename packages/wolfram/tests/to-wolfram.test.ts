@@ -66,6 +66,32 @@ test("Divides(a, b) swaps to Wolfram's Divisible(n, m)", () => {
   expect(toWolfram(["Divides", 2, 4])).toBe("Divisible[4, 2]");
 });
 
+test("All/Any rename to AllTrue/AnyTrue; the no-predicate form is inert on both sides", () => {
+  expect(toWolfram(["All", ["List", 1, 2, 3], "Positive"])).toBe(
+    "AllTrue[List[1, 2, 3], Positive]",
+  );
+  expect(toWolfram(["Any", ["List", 1, 2, 3], "Negative"])).toBe(
+    "AnyTrue[List[1, 2, 3], Negative]",
+  );
+});
+
+test("Fold keeps the same (f, init, xs) order as Wolfram's Fold[f, x, list]", () => {
+  expect(toWolfram(["Fold", "Add", 0, ["List", 1, 2, 3]])).toBe("Fold[Plus, 0, List[1, 2, 3]]");
+});
+
+test("Tabulate(f, n) renames to Array; the multi-dim form reshapes dims into a list", () => {
+  expect(toWolfram(["Tabulate", "f", 3])).toBe("Array[f, 3]");
+  expect(toWolfram(["Tabulate", "f", 2, 3])).toBe("Array[f, List[2, 3]]");
+});
+
+test("Scan(xs, f) reorders to Wolfram's no-seed FoldList[f, list]; the seeded form doesn't map", () => {
+  expect(toWolfram(["Scan", ["List", 1, 2, 3], "Add"])).toBe("FoldList[Plus, List[1, 2, 3]]");
+  // Seeded form: length-preserving on our side, length+1 on Wolfram's — left unmapped.
+  expect(toWolfram(["Scan", ["List", 1, 2, 3], "Add", 10])).toBe(
+    "enumeratio`Scan[List[1, 2, 3], Plus, 10]",
+  );
+});
+
 test("special forms: log base and n-th root", () => {
   expect(toWolfram(["Ln", "x"])).toBe("Log[x]"); // natural log
   expect(toWolfram(["Log", "x"])).toBe("Log[10, x]"); // CE Log is base-10
@@ -94,6 +120,7 @@ test("special forms: anonymous functions use slots", () => {
   expect(toWolfram(["Sort", ["List", 3, 1, 2], ["Function", ["Greater", "_1", "_2"]]])).toBe(
     "Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]",
   );
+  expect(toWolfram(["Function", ["Power", "_", 2]])).toBe("Function[Power[Slot[1], 2]]");
 });
 
 test("special forms lowered to a Wolfram expression with no head of its own", () => {

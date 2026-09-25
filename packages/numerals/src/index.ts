@@ -1,4 +1,4 @@
-export { declareNumerals, SYSTEM_HEADS, systemOf } from "./declare.ts";
+export { declareNumerals, NUMERAL_ALIASES, SYSTEM_HEADS, systemOf } from "./declare.ts";
 export * as adic from "./adic.ts";
 export { ADIC, adicOf, declareAdic } from "./adic-declare.ts";
 export {

@@ -4,7 +4,7 @@
 // mapping for `RademacherSymbol` at arity 1" tells you which row to add next, and a scan
 // that counts those is a work queue rather than a verdict.
 
-import { isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
+import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
 import { mappingFor } from "./mappings.ts";
 import type { System } from "./systems.ts";
 
@@ -86,8 +86,10 @@ export function emit(expr: MathJSON, system: System): Emitted {
       if (/^'.*'$/s.test(node)) return JSON.stringify(node.slice(1, -1));
       const constant = CONSTANTS[node]?.[system];
       if (constant !== undefined) return constant;
-      // Wolfram also knows the rest of the constants, and the slots a Function binds.
-      if (system === "wolfram" && (node in SYMBOLS || /^_\d+$/.test(node))) return toWolfram(node);
+      // Wolfram also knows the rest of the constants, the slots a Function binds, and a
+      // mapped head passed as a value (`Fold(Add, 0, xs)`).
+      if (system === "wolfram" && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node)))
+        return toWolfram(node);
       // An unknown bare symbol is a free variable; emitting it is fine for SymPy and Sage
       // but meaningless numerically, so treat it as missing rather than guess.
       if (!bound.has(node)) missing.push(`symbol:${node}`);

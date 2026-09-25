@@ -128,6 +128,14 @@ export class NotatioCell extends LitElement {
     planned: { type: Boolean },
     /** Forwarded to the Out: a preset its picture reduces for, else the page's own. */
     env: { type: String },
+    /**
+     * Pin the `standard` editor to a binding, forwarded to `<notatio-in>`: the symbol
+     * name and its `\coloneq` become fixed chrome, and only the value can be edited. A
+     * page *about* p keeps a p bound to something, whatever the reader types into it.
+     */
+    bind: { type: String },
+    /** The domain asserted for `bind` (`integer`, `real`, `complex`, ...); see `notatio-in`. */
+    domain: { type: String },
     /** Set once the reader has made an edit; reflected so a stylesheet can key on it. */
     dirty: { type: Boolean, reflect: true },
     /**
@@ -154,6 +162,8 @@ export class NotatioCell extends LitElement {
   declare expect: string;
   declare planned: boolean;
   declare env: string;
+  declare bind: string;
+  declare domain: string;
   declare dirty: boolean;
   declare pending: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
@@ -190,6 +200,8 @@ export class NotatioCell extends LitElement {
     this.expect = "";
     this.planned = false;
     this.env = "";
+    this.bind = "";
+    this.domain = "";
     this.dirty = false;
     this.pending = false;
     this._editForm = "standard";
@@ -467,6 +479,8 @@ export class NotatioCell extends LitElement {
     if (this._editForm === "standard") {
       return html`<notatio-in
         .value=${this._raw}
+        .bind=${this.bind}
+        .domain=${this.domain}
         @notatio-change=${this.#onStandardChange}
         @notatio-commit=${this.#onStandardCommit}
       ></notatio-in>`;

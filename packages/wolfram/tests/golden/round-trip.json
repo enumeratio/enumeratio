@@ -1916,58 +1916,58 @@
   },
   {
     "id": "IntegerDigits#1",
-    "expr": ["IntegerDigits", 93784, ["MixedRadix", ["List", 24, 60, 60]]],
+    "expr": ["IntegerDigits", 93784, ["MixedRadixNumerals", ["List", 24, 60, 60]]],
     "wolfram": "IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]"
   },
   {
     "id": "IntegerDigits#4",
-    "expr": ["IntegerDigits", 20, ["Ostrowski", ["List", 1, 1, 1, 1, 1, 1, 1, 1]]],
-    "wolfram": "IntegerDigits[20, Ostrowski[List[1, 1, 1, 1, 1, 1, 1, 1]]]"
+    "expr": ["IntegerDigits", 20, ["OstrowskiNumerals", ["List", 1, 1, 1, 1, 1, 1, 1, 1]]],
+    "wolfram": "IntegerDigits[20, OstrowskiNumerals[List[1, 1, 1, 1, 1, 1, 1, 1]]]"
   },
   {
     "id": "IntegerDigits#5",
-    "expr": ["IntegerDigits", -5, ["BalancedRadix", 3]],
-    "wolfram": "IntegerDigits[-5, BalancedRadix[3]]"
+    "expr": ["IntegerDigits", -5, ["BalancedNumerals", 3]],
+    "wolfram": "IntegerDigits[-5, BalancedNumerals[3]]"
   },
   {
     "id": "IntegerDigits#6",
-    "expr": ["IntegerDigits", 703, ["BijectiveRadix", 26]],
-    "wolfram": "IntegerDigits[703, BijectiveRadix[26]]"
+    "expr": ["IntegerDigits", 703, ["BijectiveNumerals", 26]],
+    "wolfram": "IntegerDigits[703, BijectiveNumerals[26]]"
   },
   {
     "id": "IntegerDigits#7",
-    "expr": ["IntegerDigits", 23, ["ResidueSystem", ["List", 3, 5, 7]]],
-    "wolfram": "IntegerDigits[23, ResidueSystem[List[3, 5, 7]]]"
+    "expr": ["IntegerDigits", 23, ["ResidueNumerals", ["List", 3, 5, 7]]],
+    "wolfram": "IntegerDigits[23, ResidueNumerals[List[3, 5, 7]]]"
   },
   {
     "id": "FromDigits#1",
-    "expr": ["FromDigits", ["List", 1, 2, 3, 4], ["MixedRadix", ["List", 24, 60, 60]]],
+    "expr": ["FromDigits", ["List", 1, 2, 3, 4], ["MixedRadixNumerals", ["List", 24, 60, 60]]],
     "wolfram": "FromDigits[List[1, 2, 3, 4], MixedRadix[List[24, 60, 60]]]"
   },
   {
     "id": "FromDigits#2",
-    "expr": ["FromDigits", ["List", 0, 2, 1, 0], "Factoradic"],
-    "wolfram": "FromDigits[List[0, 2, 1, 0], Factoradic]"
+    "expr": ["FromDigits", ["List", 0, 2, 1, 0], "FactorialNumerals"],
+    "wolfram": "FromDigits[List[0, 2, 1, 0], FactorialNumerals]"
   },
   {
     "id": "FromDigits#3",
-    "expr": ["FromDigits", ["List", 2, 3, 2], ["ResidueSystem", ["List", 3, 5, 7]]],
-    "wolfram": "FromDigits[List[2, 3, 2], ResidueSystem[List[3, 5, 7]]]"
+    "expr": ["FromDigits", ["List", 2, 3, 2], ["ResidueNumerals", ["List", 3, 5, 7]]],
+    "wolfram": "FromDigits[List[2, 3, 2], ResidueNumerals[List[3, 5, 7]]]"
   },
   {
     "id": "FromDigits#4",
-    "expr": ["FromDigits", ["List", 1, 1], "Zeckendorf"],
-    "wolfram": "FromDigits[List[1, 1], Zeckendorf]"
+    "expr": ["FromDigits", ["List", 1, 1], "ZeckendorfNumerals"],
+    "wolfram": "FromDigits[List[1, 1], ZeckendorfNumerals]"
   },
   {
     "id": "NumeralSystemShape#1",
-    "expr": ["NumeralSystemShape", "Zeckendorf"],
-    "wolfram": "NumeralSystemShape[Zeckendorf]"
+    "expr": ["NumeralSystemShape", "ZeckendorfNumerals"],
+    "wolfram": "NumeralSystemShape[ZeckendorfNumerals]"
   },
   {
     "id": "NumeralSystemShape#2",
-    "expr": ["NumeralSystemShape", ["BijectiveRadix", 26]],
-    "wolfram": "NumeralSystemShape[BijectiveRadix[26]]"
+    "expr": ["NumeralSystemShape", ["BijectiveNumerals", 26]],
+    "wolfram": "NumeralSystemShape[BijectiveNumerals[26]]"
   },
   {
     "id": "HeckeT#1",

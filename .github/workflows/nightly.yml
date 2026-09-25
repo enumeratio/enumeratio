@@ -22,6 +22,7 @@ on:
 
 permissions:
   contents: read
+  issues: write # the oracle quickcheck's tracking issues
 
 concurrency:
   group: nightly
@@ -51,6 +52,11 @@ jobs:
       - uses: ./.github/actions/oracle-drift
         with:
           system: sympy
+      - if: ${{ !cancelled() }} # sample even when the rescan above drifted
+        uses: ./.github/actions/oracle-quickcheck
+        with:
+          systems: mpmath sympy
+          ecosystem: Python
 
   # The combinatorial counts and FLINT number theory against Nemo + Combinatorics.jl, the Julia lane light enough
   # to install here. Rescans the committed julia rows in the entry sidecars and fails on any drift: a verdict that
@@ -72,6 +78,11 @@ jobs:
       - uses: ./.github/actions/oracle-drift
         with:
           system: julia
+      - if: ${{ !cancelled() }} # sample even when the rescan above drifted
+        uses: ./.github/actions/oracle-quickcheck
+        with:
+          systems: julia
+          ecosystem: Julia
 
   # The numeric and number-theory crates a Rust user would reach for (num, primal, statrs) and the adic crate,
   # nightly: rustup takes the pinned toolchain from packages/oracle/rust/rust-toolchain.toml.
@@ -90,6 +101,11 @@ jobs:
       - uses: ./.github/actions/oracle-drift
         with:
           system: rust
+      - if: ${{ !cancelled() }} # sample even when the rescan above drifted
+        uses: ./.github/actions/oracle-quickcheck
+        with:
+          systems: rust
+          ecosystem: Rust
 
   # The group and diagram algebras (and a few counts) against Oscar, weekly: a multi-GB install whose precompile
   # julia-actions/cache keeps between runs. The kernel is 2-3 GB resident, so the watchdog cap is raised to fit

@@ -46,7 +46,7 @@ export const entries: readonly ReferenceEntry[] = [
     details: [
       "Count is the binomial coefficient $\\binom{n}{k}$",
       "Elements are the k-combinations in COLEXICOGRAPHIC order: compare the largest element first, so $\\{2,3\\}$ precedes $\\{1,4\\}$",
-      "That is the order [[IntegerDigits]] with `CombinatorialSystem(k)` unranks in — the two are the same map",
+      "That is the order [[IntegerDigits]] with `CombinatorialNumerals(k)` unranks in — the two are the same map",
       "$k = 0$ gives the single empty subset; $k > n$ gives an empty family",
     ],
     examples: [

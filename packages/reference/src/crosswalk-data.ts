@@ -199,8 +199,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "All",
+    wolfram: "AllTrue",
+  },
+  {
     name: "And",
     wolfram: "And",
+  },
+  {
+    name: "Any",
+    wolfram: "AnyTrue",
   },
   {
     name: "Append",
@@ -1791,6 +1799,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "Fold",
+    wolfram: "Fold",
   },
   {
     name: "FromDigits",

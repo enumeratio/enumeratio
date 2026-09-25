@@ -27,29 +27,18 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
-import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
-  compare,
-  compareCombination,
-  compareCombinations,
-  comparePythonStructured,
-  compareTrees,
   emit,
-  type Leaf,
   type MathJSON,
-  reduce,
   runIn,
   runKernel,
-  symbolic,
   SYSTEMS,
   type System,
-  type Tree,
   type Verdict,
-  valuesOnly,
   wiredSystems,
 } from "@enumeratio/oracle/src";
-import { fromWolfram } from "@enumeratio/wolfram/src";
 import { entryFiles } from "../src/entries.ts";
+import { show, verdictOf } from "./oracle-verdict.ts";
 
 interface Case {
   readonly id: string;
@@ -59,45 +48,6 @@ interface Case {
   readonly expr: MathJSON;
   readonly expected: MathJSON;
 }
-
-const ce = new ComputeEngine();
-
-/**
- * A leaf of the comparison: the number an expression has, else its symbolic text.
- *
- * The pinned `expected` is MathJSON, and the first version of this compared it as raw text
- * against a system's printed output — so `["Rational",-1,2]` "disagreed" with `-1/2`, and
- * `["Multiply",["Rational",1,6],["Power","Pi",2]]` with `Pi^2/6`. Those inflated the count
- * with pure notation and buried the real divergences.
- */
-const leaf = (expr: MathJSON): Leaf => {
-  try {
-    const boxed = ce.box(expr as Parameters<ComputeEngine["box"]>[0]).N();
-    // `.symbol` lives on the narrowed SymbolInterface, with no typed route from the union.
-    const name = (boxed as { symbol?: unknown }).symbol;
-    if (name === "True") return true;
-    if (name === "False") return false;
-    const { re, im } = boxed;
-    if (typeof re === "number" && Number.isFinite(re)) {
-      return typeof im === "number" && im !== 0 && Number.isFinite(im) ? { re, im } : re;
-    }
-  } catch {
-    // fall through to the textual form
-  }
-  return symbolic(expr);
-};
-
-/** Our side of a TEXT comparison (the Python-family systems): the number, else the JSON. */
-const show = (expr: MathJSON): string => {
-  // A list prints as the systems print one, element by element.
-  if (Array.isArray(expr) && expr[0] === "List") return `[${expr.slice(1).map(show).join(", ")}]`;
-  const value = leaf(expr);
-  return typeof value === "number"
-    ? String(value)
-    : typeof value === "string"
-      ? value
-      : JSON.stringify(value);
-};
 
 /** Keep a table cell readable, and never let a backtick break the markdown. */
 const trim = (text: string): string => text.replace(/`/g, "'").replace(/\|/g, "/").slice(0, 90);
@@ -137,15 +87,6 @@ type Outcome = {
 
 const report: Record<string, Outcome[]> = {};
 const missingBySystem: Record<string, Record<string, number>> = {};
-
-/** Wolfram's answer, parsed and reduced by `evaluate`; `undefined` when it cannot be read. */
-const theirTree = (fullForm: string, evaluate: (expr: MathJSON) => Leaf): Tree | undefined => {
-  try {
-    return reduce(fromWolfram(fullForm) as MathJSON, evaluate);
-  } catch {
-    return undefined;
-  }
-};
 
 /** A committed row's `tolerance`, read before the sidecars are loaded for rewriting. */
 const toleranceOf = (() => {
@@ -197,41 +138,7 @@ for (const system of systems) {
     }
     const theirs = result.value ?? "";
     const tolerance = toleranceOf(row.item, system);
-    let verdict: Verdict;
-    if (system === "wolfram") {
-      // Wolfram's answer is never evaluated by our engine on its behalf, or a call it
-      // declined (`MatrixRank[{1, 2, 3}]`) comes back as our own answer and agrees. So its
-      // exact form is compared as text — an unevaluated form we pinned too — and its
-      // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
-      const ours = reduce(row.item.expected, leaf);
-      const trees = [
-        theirTree(theirs, symbolic),
-        result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf)),
-      ].filter((tree) => tree !== undefined);
-      const verdicts = trees.map((tree) => compareTrees(ours, tree, tolerance));
-      verdict =
-        verdicts.length === 0
-          ? "inconclusive"
-          : verdicts.includes("agree")
-            ? "agree"
-            : (verdicts[0] as Verdict);
-    } else if (theirs.startsWith("combination:")) {
-      verdict = compareCombination(row.item.expected, theirs);
-    } else if (theirs.startsWith("combinations:")) {
-      verdict = compareCombinations(row.item.expected, theirs);
-    } else {
-      verdict = compare(show(row.item.expected), theirs, tolerance);
-      // A text comparison that disagrees or can't decide (a complex against a real, say)
-      // gets a second, structural look.
-      if (verdict !== "agree") {
-        const structured = comparePythonStructured(
-          reduce(row.item.expected, leaf),
-          theirs,
-          tolerance,
-        );
-        if (structured === "agree") verdict = structured;
-      }
-    }
+    const verdict = verdictOf(system, row.item.expected, result, tolerance);
     outcomes.push({ id: row.item.id, source, verdict, theirs, display: result.display ?? theirs });
   });
   report[system] = outcomes;

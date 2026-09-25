@@ -194,7 +194,12 @@ pub fn equal(a: V, b: V) -> V {
         // A float identity holds to the scan's own tolerance, not to the last bit.
         (Float(_), _) | (_, Float(_)) => {
             let (p, q) = (a.f64(), b.f64());
-            (p - q).abs() <= 1e-9 * p.abs().max(q.abs()).max(1.0)
+            // Infinities and NaN compare exactly: a relative tolerance of ∞ is no tolerance.
+            if !p.is_finite() || !q.is_finite() {
+                p == q
+            } else {
+                (p - q).abs() <= 1e-9 * p.abs().max(q.abs()).max(1.0)
+            }
         }
         (Adic(p), Adic(q)) => p == q,
         _ => a.rat() == b.rat(),
