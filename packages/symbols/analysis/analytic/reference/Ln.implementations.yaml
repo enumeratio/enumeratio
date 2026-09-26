@@ -665,6 +665,8 @@ n-of-a-negative-rational-argument:
     in: N[Log[Rational[-1, 2]]]
   sympy:
     in: N(log(Rational(-1, 2)), 30)
+  mpmath:
+    in: (log((mpf(-1)/2)))
   sage:
     in: N(log((-1/2)))
   rust:

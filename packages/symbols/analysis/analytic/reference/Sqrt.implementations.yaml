@@ -732,6 +732,8 @@ sqrt-neg-4-over-9:
     in: Sqrt[Rational[-4, 9]]
   sympy:
     in: sqrt(Rational(-4, 9))
+  mpmath:
+    in: sqrt((mpf(-4)/9))
   sage:
     in: sqrt((-4/9))
   rust:
@@ -753,6 +755,8 @@ sqrt-neg-1-half:
     in: Sqrt[Rational[-1, 2]]
   sympy:
     in: sqrt(Rational(-1, 2))
+  mpmath:
+    in: sqrt((mpf(-1)/2))
   sage:
     in: sqrt((-1/2))
   rust:
@@ -797,6 +801,8 @@ sqrt-neg-12-over-5:
     in: Sqrt[Rational[-12, 5]]
   sympy:
     in: sqrt(Rational(-12, 5))
+  mpmath:
+    in: sqrt((mpf(-12)/5))
   sage:
     in: sqrt((-12/5))
   rust:
