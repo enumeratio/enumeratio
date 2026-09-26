@@ -225,10 +225,10 @@ As built (`domains/src/laws.ts`, `domains/tests/laws.test.ts`):
   from that family's derived instance, seeded per map.
 - A family's carrier is its declared one, falling back to the catalogue's while the ratchet
   exists.
-- A kernel element becomes a carrier value through a small per-carrier table: Permutation
-  today. Carriers whose storage differs from the kernel's (SetPartition's growth string against
-  the kernel's blocks) join as they're written, and a map with declared laws on a carrier
-  without an entry fails the test.
+- A kernel element becomes a carrier value through a small per-carrier table: Permutations
+  today. Carriers whose storage differs from the kernel's (SetPartitions's growth string
+  against the kernel's blocks) join as they're written, and a map with declared laws on a
+  carrier without an entry fails the test.
 - A guarded map that declines a subject (KrewerasComplement off the non-crossing permutations)
   counts as a decline, not a failure.
 - The empty permutation isn't constructible yet: compute-engine types `[]` as `list<missing>`.

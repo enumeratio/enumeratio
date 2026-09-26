@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: DescentSet(Permutation([2, 3, 1]))
-    out: Finset(([2], 3))
+    in: DescentSet(Permutations([2, 3, 1]))
+    out: Finsets(([2], 3))
   tex:
-    in: \mathrm{DescentSet}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{Finset}((\bigl\lbrack2\bigr\rbrack,3))
+    in: \mathrm{DescentSet}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Finsets}((\bigl\lbrack2\bigr\rbrack,3))
   fullform:
-    in: DescentSet[Permutation[List[2, 3, 1]]]
+    in: DescentSet[Permutations[List[2, 3, 1]]]

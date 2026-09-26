@@ -1,18 +1,18 @@
 the-step-word-uuddud:
   epsil:
-    in: InteriorReturns(DyckPath([1, 1, 0, 0, 1, 0]))
+    in: InteriorReturns(DyckPaths([1, 1, 0, 0, 1, 0]))
     out: "1"
   tex:
-    in: \mathrm{InteriorReturns}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
+    in: \mathrm{InteriorReturns}(\mathrm{DyckPaths}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
     out: "1"
   fullform:
-    in: InteriorReturns[DyckPath[List[1, 1, 0, 0, 1, 0]]]
+    in: InteriorReturns[DyckPaths[List[1, 1, 0, 0, 1, 0]]]
 the-step-word-uduudd:
   epsil:
-    in: InteriorReturns(DyckPath([1, 0, 1, 1, 0, 0]))
+    in: InteriorReturns(DyckPaths([1, 0, 1, 1, 0, 0]))
     out: "1"
   tex:
-    in: \mathrm{InteriorReturns}(\mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
+    in: \mathrm{InteriorReturns}(\mathrm{DyckPaths}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
     out: "1"
   fullform:
-    in: InteriorReturns[DyckPath[List[1, 0, 1, 1, 0, 0]]]
+    in: InteriorReturns[DyckPaths[List[1, 0, 1, 1, 0, 0]]]

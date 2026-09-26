@@ -1,18 +1,18 @@
 the-step-word-uuddud:
   epsil:
-    in: Area(DyckPath([1, 1, 0, 0, 1, 0]))
+    in: Area(DyckPaths([1, 1, 0, 0, 1, 0]))
     out: "5"
   tex:
-    in: \mathrm{Area}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
+    in: \mathrm{Area}(\mathrm{DyckPaths}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
     out: "5"
   fullform:
-    in: enumeratio`Area[DyckPath[List[1, 1, 0, 0, 1, 0]]]
+    in: enumeratio`Area[DyckPaths[List[1, 1, 0, 0, 1, 0]]]
 the-step-word-uduudd:
   epsil:
-    in: Area(DyckPath([1, 0, 1, 1, 0, 0]))
+    in: Area(DyckPaths([1, 0, 1, 1, 0, 0]))
     out: "5"
   tex:
-    in: \mathrm{Area}(\mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
+    in: \mathrm{Area}(\mathrm{DyckPaths}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
     out: "5"
   fullform:
-    in: enumeratio`Area[DyckPath[List[1, 0, 1, 1, 0, 0]]]
+    in: enumeratio`Area[DyckPaths[List[1, 0, 1, 1, 0, 0]]]

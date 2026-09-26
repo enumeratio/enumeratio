@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: KrewerasComplement(Permutation([2, 3, 1]))
-    out: Permutation([1, 2, 3])
+    in: KrewerasComplement(Permutations([2, 3, 1]))
+    out: Permutations([1, 2, 3])
   tex:
-    in: \mathrm{KrewerasComplement}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{Permutation}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    in: \mathrm{KrewerasComplement}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Permutations}(\bigl\lbrack1, 2, 3\bigr\rbrack)
   fullform:
-    in: KrewerasComplement[Permutation[List[2, 3, 1]]]
+    in: KrewerasComplement[Permutations[List[2, 3, 1]]]

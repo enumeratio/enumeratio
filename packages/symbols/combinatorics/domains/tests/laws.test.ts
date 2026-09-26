@@ -19,10 +19,10 @@ const catalogCarrier = new Map(COLLECTIONS.map((c) => [c.name, c.carrier]));
 const carrierOf = (f: FamilyKernel): string | undefined => f.declared?.carrier ?? catalogCarrier.get(f.head);
 
 /** How a family's kernel element becomes a value of its carrier. Carriers whose storage differs
- *  from the kernel's (SetPartition is a growth string, the kernel's blocks) join as they're
+ *  from the kernel's (SetPartitions is a growth string, the kernel's blocks) join as they're
  *  written. */
 const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
-  Permutation: (element) => ["Permutation", ["List", ...(element as number[])]],
+  Permutations: (element) => ["Permutations", ["List", ...(element as number[])]],
 };
 
 const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));
@@ -58,12 +58,16 @@ for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== un
   );
 }
 
-test("the empty permutation isn't a Permutation value yet", () => {
-  // S₀ has one element and every permutation family draws it at n = 0, but compute-engine types
-  // `["List"]` as list<missing>, so the constructor rejects it and every map errors. Pinned so
-  // the day it's fixed this fails and the laws above can take n = 0 too.
-  const empty = ce.box(["Reverse", ["Permutation", ["List"]]] as never).evaluate();
-  expect(empty.operator).toBe("Error");
+test("the empty permutation isn't a Permutations value yet", () => {
+  // S₀ has one element and every permutation family draws it at n = 0, but compute-engine
+  // types `["List"]` as list<missing>, which doesn't match our `(list<integer>) -> permutation`
+  // arm -- so overload resolution falls through to compute-engine's OWN native `Permutations`
+  // reading (the carrier and the collection are the same head now) instead of erroring outright.
+  // Still not a usable value -- still pinned, so the day it's fixed this fails and the laws
+  // above can take n = 0 too -- just a different non-value than before the carrier and the
+  // collection merged.
+  const empty = ce.box(["Reverse", ["Permutations", ["List"]]] as never).evaluate();
+  expect(empty.operator).toBe("Permutations");
 });
 
 test("every map that declares laws gets them checked", () => {

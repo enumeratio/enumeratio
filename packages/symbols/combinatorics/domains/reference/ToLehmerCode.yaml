@@ -3,10 +3,10 @@ domain: Combinatorial maps
 signature: ToLehmerCode(Permutation)
 summary: Entry i counts the later entries smaller than p(i).
 details:
-  - Takes a `Permutation` and returns a `SubexcedantSeq` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutations` and returns a `SubexcedantSeqs` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - Its total is the inversion count, which is the Lehmer code's whole point.
 examples:
   - id: the-one-line-word-231
-    expr: [ToLehmerCode, [Permutation, [List, 2, 3, 1]]]
-    expected: [SubexcedantSeq, [List, 1, 1, 0]]
+    expr: [ToLehmerCode, [Permutations, [List, 2, 3, 1]]]
+    expected: [SubexcedantSeqs, [List, 1, 1, 0]]
     caption: the one-line word $231$

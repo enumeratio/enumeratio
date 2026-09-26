@@ -3,12 +3,12 @@ domain: Combinatorial maps
 signature: PermutahedronVertex(Permutation)
 summary: "Not a geometric embedding this repo's carriers can hold honestly: the vertex (σ(1), …, σ(n)) — or the Loday point packages/symbols/combinatorics/polytope/src/permutahedron.ts already computes — is an ORDERED tuple of coordinates, and `finset` (domain-data.ts: `tuple<list<integer>, integer>`) is an unordered SET of positions, the same carrier DescentSet and PeakSet use. Reordering the coordinates gives a different vertex but the same finset, so the map would not even be injective, let alone honest. A `finset`-valued PermutahedronVertex is a type mismatch dressed as a definition, not a gap to close. Not yet defined."
 details:
-  - Would take a `Permutation` to a `Finset`.
+  - Would take a `Permutations` to a `Finsets`.
   - "On the map frontier: Not a geometric embedding this repo's carriers can hold honestly: the vertex (σ(1), …, σ(n)) — or the Loday point packages/symbols/combinatorics/polytope/src/permutahedron.ts already computes — is an ORDERED tuple of coordinates, and `finset` (domain-data.ts: `tuple<list<integer>, integer>`) is an unordered SET of positions, the same carrier DescentSet and PeakSet use. Reordering the coordinates gives a different vertex but the same finset, so the map would not even be injective, let alone honest. A `finset`-valued PermutahedronVertex is a type mismatch dressed as a definition, not a gap to close."
   - Listed in `UNDEFINED_MAPS` (@enumeratio/domains) with that reason — a claim to be justified, not a place to put anything inconvenient.
 examples:
   - id: the-one-line-word-231-once-there-is-a-definition
-    expr: [PermutahedronVertex, [Permutation, [List, 2, 3, 1]]]
+    expr: [PermutahedronVertex, [Permutations, [List, 2, 3, 1]]]
     expected: [List]
     caption: the one-line word $231$ — once there is a definition to evaluate
     aspirational: true
