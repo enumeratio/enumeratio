@@ -442,6 +442,16 @@ export const HEADS: Record<string, string> = {
   ProbabilityDistribution: "ProbabilityDistribution",
   ParameterMixtureDistribution: "ParameterMixtureDistribution",
   HistogramDistribution: "HistogramDistribution",
+  // Random-process heads (@enumeratio/statistics/src/processes.ts) — identity here already.
+  // `RandomFunction` diverges in RESULT SHAPE (a plain list of {t, x} pairs, not a
+  // `TemporalData` object) and `SliceDistribution` is our bridge for Wolfram's `proc[t]`
+  // application, but both are the same Wolfram head used the same way, so `HEADS` (not
+  // `FOREIGN`) is still the right list — see each head's own reference entry for the
+  // divergence.
+  WienerProcess: "WienerProcess",
+  PoissonProcess: "PoissonProcess",
+  SliceDistribution: "SliceDistribution",
+  RandomFunction: "RandomFunction",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
@@ -491,6 +501,7 @@ export const HEADS: Record<string, string> = {
   MixedRadix: "MixedRadix",
   Coproduct: "Coproduct",
   SymmetricGroup: "SymmetricGroup",
+  AlternatingGroup: "AlternatingGroup",
   CyclicGroup: "CyclicGroup",
   DihedralGroup: "DihedralGroup",
   GroupOrder: "GroupOrder",
@@ -505,6 +516,8 @@ export const HEADS: Record<string, string> = {
   Subsets: "Subsets",
   Tuples: "Tuples",
   PermutationCycles: "PermutationCycles",
+  PermutationList: "PermutationList",
+  PermutationReplace: "PermutationReplace",
   Rasterize: "Rasterize",
   // The analytic heads. `LogGamma` is also what `GammaLn` lowers to, so the reverse map
   // keeps `GammaLn` (first entry wins) and this direction is one-way.
@@ -716,6 +729,12 @@ export const HEADS: Record<string, string> = {
   LineGraph: "LineGraph",
   AdjacencyGraph: "AdjacencyGraph",
   RandomGraph: "RandomGraph",
+
+  // Edge weights (graph-weights.ts): `EdgeWeight` is Wolfram's own option name, same call
+  // shape (`Graph(edges, EdgeWeight -> {…})` is legal WL too), so no SPECIAL entry is
+  // needed for Graph itself; WeightedAdjacencyMatrix is a plain rename like the rest of
+  // this file's graph heads.
+  WeightedAdjacencyMatrix: "WeightedAdjacencyMatrix",
 
   // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
   //

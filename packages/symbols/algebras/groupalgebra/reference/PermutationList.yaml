@@ -1,0 +1,20 @@
+name: PermutationList
+domain: Permutations
+signature: PermutationList(perm)
+summary: '[[Cycles]] back to a one-line word: the image list $\{\sigma(1), \sigma(2), \dots\}$. `PermutationList(perm, n)` pads that list with fixed points out to length $n$.'
+signatures:
+  - call: PermutationList(perm)
+    description: the one-line word, as long as `perm`'s own support
+    library: enumeratio-groupalgebra
+  - call: PermutationList(perm, n)
+    description: the one-line word, padded with fixed points to length $n$
+    library: enumeratio-groupalgebra
+details:
+  - Only takes [[Cycles]] — a one-line word is already this head's own answer, so there is nothing to convert
+  - "`n` shorter than the cycles' own largest point leaves the call unevaluated — there is no room for that point in the result"
+  - The inverse of [[PermutationCycles]]'s no-argument form, which reads a one-line word back into cycle notation
+seeAlso:
+  - Cycles
+  - PermutationCycles
+  - Permute
+  - PermutationReplace

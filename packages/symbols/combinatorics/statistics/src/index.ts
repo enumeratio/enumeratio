@@ -5,6 +5,7 @@ export { declareDistributions3 } from "./distributions-3.ts";
 export { declareDistributions4 } from "./distributions-4.ts";
 export { declareDistributions5 } from "./distributions-5.ts";
 export { declareDistributions6 } from "./distributions-6.ts";
+export { declareProcesses } from "./processes.ts";
 export { blessedName, RENAMED } from "./naming.ts";
 export { CARDINALITIES, type Cardinality } from "./cardinalities.ts";
 export { core, cycles, headUsage, tower } from "./core.ts";

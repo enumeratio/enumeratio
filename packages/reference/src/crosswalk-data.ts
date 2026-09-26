@@ -209,6 +209,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "AllTrue",
   },
   {
+    name: "AlternatingGroup",
+    wolfram: "AlternatingGroup",
+  },
+  {
     name: "And",
     wolfram: "And",
   },
@@ -4057,6 +4061,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "PermutationGroup",
   },
   {
+    name: "PermutationList",
+    wolfram: "PermutationList",
+  },
+  {
+    name: "PermutationReplace",
+    wolfram: "PermutationReplace",
+  },
+  {
     name: "Permute",
     wolfram: "Permute",
   },
@@ -5165,6 +5177,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "VertexOutDegree",
     wolfram: "VertexOutDegree",
+  },
+  {
+    name: "WeightedAdjacencyMatrix",
+    wolfram: "WeightedAdjacencyMatrix",
   },
   {
     name: "WheelGraph",

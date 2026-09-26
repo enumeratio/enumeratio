@@ -2293,6 +2293,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "WeightedAdjacencyMatrix",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "WeightedAdjacencyMatrix",
+    elsewhere: [],
+  },
+  {
     name: "WeirdNumbers",
     provenance: "unknown",
     declared: null,
@@ -3637,6 +3644,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "AlternatingGroup",
+    provenance: "extension",
+    declared: "enumeratio-groupalgebra",
+    wolframAlias: "AlternatingGroup",
+    elsewhere: [],
+  },
+  {
     name: "Cycles",
     provenance: "extension",
     declared: "enumeratio-groupalgebra",
@@ -3683,6 +3697,20 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-groupalgebra",
     wolframAlias: "PermutationGroup",
+    elsewhere: [],
+  },
+  {
+    name: "PermutationList",
+    provenance: "extension",
+    declared: "enumeratio-groupalgebra",
+    wolframAlias: "PermutationList",
+    elsewhere: [],
+  },
+  {
+    name: "PermutationReplace",
+    provenance: "extension",
+    declared: "enumeratio-groupalgebra",
+    wolframAlias: "PermutationReplace",
     elsewhere: [],
   },
   {

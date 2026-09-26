@@ -1,0 +1,33 @@
+wiener-slice-mean:
+  epsil:
+    in: Mean(SliceDistribution(WienerProcess(2, 3), 5))
+    out: "10"
+  tex:
+    in: \mathrm{mean}(\mathrm{SliceDistribution}(\mathrm{WienerProcess}(2, 3), 5))
+    out: "10"
+  fullform:
+    in: Mean[SliceDistribution[WienerProcess[2, 3], 5]]
+  wolfram:
+    in: Mean[SliceDistribution[WienerProcess[2, 3], 5]]
+wiener-slice-variance:
+  epsil:
+    in: Variance(SliceDistribution(WienerProcess(0, 3), 4))
+    out: "36"
+  tex:
+    in: \mathrm{Variance}(\mathrm{SliceDistribution}(\mathrm{WienerProcess}(0, 3), 4))
+    out: "36"
+  fullform:
+    in: Variance[SliceDistribution[WienerProcess[0, 3], 4]]
+  wolfram:
+    in: Variance[SliceDistribution[WienerProcess[0, 3], 4]]
+wiener-default-slice:
+  epsil:
+    in: SliceDistribution(WienerProcess(), 4)
+    out: NormalDistribution(0, 2)
+  tex:
+    in: \mathrm{SliceDistribution}(\mathrm{WienerProcess}(), 4)
+    out: \operatorname{NormalDistribution}(0, 2)
+  fullform:
+    in: SliceDistribution[WienerProcess[], 4]
+  wolfram:
+    in: SliceDistribution[WienerProcess[], 4]
