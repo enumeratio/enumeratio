@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [DescentComposition, [Permutations, [List, 2, 3, 1]]]
-  expected: [Compositions, [List, 2, 1]]
+  expr: [DescentComposition, [Permutation, [List, 2, 3, 1]]]
+  expected: [Composition, [List, 2, 1]]
   caption: the one-line word $231$

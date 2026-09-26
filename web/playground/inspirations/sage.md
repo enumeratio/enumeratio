@@ -85,10 +85,10 @@ Sage has is just as good a precedent, and often the same one. Where we depart fr
 both it is for consistency with ourselves. Sage has `SetPartitions` and
 `OrderedSetPartitions`; we have <Symbol>SetPartitions</Symbol> and <Symbol
 type="sage">SetCompositions</Symbol>, because a <Symbol
-type="wikipedia">SetCompositions</Symbol> stands to a <Symbol
-type="wikipedia">SetPartitions</Symbol> exactly as a <Symbol
-type="wikipedia">Compositions</Symbol> stands to an <Symbol
-type="wikipedia">IntegerPartitions</Symbol>, and the names should say so. Each of those
+type="wikipedia">SetComposition</Symbol> stands to a <Symbol
+type="wikipedia">SetPartition</Symbol> exactly as a <Symbol
+type="wikipedia">Composition</Symbol> stands to an <Symbol
+type="wikipedia">IntegerPartition</Symbol>, and the names should say so. Each of those
 links is the crosswalk at work: the name is ours, and its reference page says what
 Sage, Wikipedia and the rest call the same thing.
 

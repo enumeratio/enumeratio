@@ -1,8 +1,8 @@
 - id: the-partition-4-2-1-of-7
-  expr: [Perimeter, [IntegerPartitions, [List, 4, 2, 1]]]
+  expr: [Perimeter, [IntegerPartition, [List, 4, 2, 1]]]
   expected: 7
   caption: the partition $4 + 2 + 1$ of $7$
 - id: the-partition-3-3-1-of-7
-  expr: [Perimeter, [IntegerPartitions, [List, 3, 3, 1]]]
+  expr: [Perimeter, [IntegerPartition, [List, 3, 3, 1]]]
   expected: 6
   caption: the partition $3 + 3 + 1$ of $7$

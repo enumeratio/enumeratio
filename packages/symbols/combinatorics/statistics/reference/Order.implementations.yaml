@@ -1,18 +1,18 @@
 the-one-line-word-312:
   epsil:
-    in: Order(Permutations([3, 1, 2]))
+    in: Order(Permutation([3, 1, 2]))
     out: "3"
   tex:
-    in: \mathrm{Order}(\mathrm{Permutations}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    in: \mathrm{Order}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
     out: "3"
   fullform:
-    in: enumeratio`Order[Permutations[List[3, 1, 2]]]
+    in: enumeratio`Order[Permutation[List[3, 1, 2]]]
 the-one-line-word-2413:
   epsil:
-    in: Order(Permutations([2, 4, 1, 3]))
+    in: Order(Permutation([2, 4, 1, 3]))
     out: "4"
   tex:
-    in: \mathrm{Order}(\mathrm{Permutations}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
+    in: \mathrm{Order}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
     out: "4"
   fullform:
-    in: enumeratio`Order[Permutations[List[2, 4, 1, 3]]]
+    in: enumeratio`Order[Permutation[List[2, 4, 1, 3]]]

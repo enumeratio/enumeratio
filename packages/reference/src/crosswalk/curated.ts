@@ -344,13 +344,14 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
   SetPartitions: [wp("Partition of a set"), mw("SetPartition"), oeis("A000110")],
   DyckPaths: [wp("Dyck language"), mw("DyckPath"), oeis("A000108")],
   BinaryTrees: [wp("Binary tree"), mw("BinaryTree"), oeis("A000108")],
-  // Permutation, IntegerPartition, SetPartition and DyckPath used to have their own rows
-  // here (the carrier's, separate from the collection's) -- folded into the plural rows
-  // above now that the carrier and the collection are the same head.
-  Compositions: [wp("Composition (combinatorics)"), mw("Composition")],
-  SetCompositions: [wp("Weak ordering")],
-  StandardTableaux: [wp("Young tableau"), mw("YoungTableau")],
-  SemistandardTableaux: [wp("Young tableau"), mw("YoungTableau")],
+  Permutation: [wp("Permutation"), mw("Permutation")],
+  IntegerPartition: [wp("Integer partition"), mw("Partition")],
+  Composition: [wp("Composition (combinatorics)"), mw("Composition")],
+  SetPartition: [wp("Partition of a set"), mw("SetPartition")],
+  SetComposition: [wp("Weak ordering")],
+  DyckPath: [wp("Dyck language"), mw("DyckPath")],
+  StandardTableau: [wp("Young tableau"), mw("YoungTableau")],
+  SemistandardTableau: [wp("Young tableau"), mw("YoungTableau")],
   Quaternions: [wp("Quaternion"), mw("Quaternion")],
 
   // ── statistics ─────────────────────────────────────────────────────────────

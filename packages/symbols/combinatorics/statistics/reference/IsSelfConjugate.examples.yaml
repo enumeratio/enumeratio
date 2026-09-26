@@ -1,8 +1,8 @@
 - id: the-partition-4-2-1-of-7
-  expr: [IsSelfConjugate, [IntegerPartitions, [List, 4, 2, 1]]]
+  expr: [IsSelfConjugate, [IntegerPartition, [List, 4, 2, 1]]]
   expected: 0
   caption: the partition $4 + 2 + 1$ of $7$
 - id: the-partition-3-3-1-of-7
-  expr: [IsSelfConjugate, [IntegerPartitions, [List, 3, 3, 1]]]
+  expr: [IsSelfConjugate, [IntegerPartition, [List, 3, 3, 1]]]
   expected: 0
   caption: the partition $3 + 3 + 1$ of $7$
