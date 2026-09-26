@@ -98,7 +98,7 @@ What the seed cannot say yet, and a saved worksheet must:
 View settings do _not_ need a field: they are already cells (`$\mathsf{extent}$ := 1.2`).
 That is the test for any new field — if it can be a cell, it is a cell.
 
-Sources stay **notatio** in the file, whatever `in-form` the page used, because notatio is
+Sources stay **Epsil** in the file, whatever `in-form` the page used, because Epsil is
 what the cells hold internally and what reads back identically in five years.
 
 ### 3.2 A saved notebook keeps its outputs

@@ -2,14 +2,14 @@
 //
 // One expression goes on the clipboard in two flavours:
 //
-// - `text/plain` is its InputForm: notatio you can retype, paste into a text cell, or send
+// - `text/plain` is its InputForm: Epsil you can retype, paste into a text cell, or send
 //   to someone (a person, or a chat) as plain text that reads back as the same expression.
 // - `application/x-latex` is its LaTeX, which a MathLive field reads first on paste, so
 //   field-to-field keeps the typeset form exactly.
 //
 // A math field copies both by itself -- MathLive writes the LaTeX, and its `onExport` hook
 // supplies the plain text. Pasting reverses it: a math field is handed LaTeX (converted
-// from notatio text if that is all there is), a text editor is handed its own syntax
+// from Epsil text if that is all there is), a text editor is handed its own syntax
 // (converted from LaTeX when that is what arrived). This module is the deciding; the
 // elements do the converting, since that needs the engine.
 
@@ -48,16 +48,16 @@ export function unwrapLatex(text: string): string | undefined {
   return inner || undefined;
 }
 
-/** A LaTeX control word -- `\frac`, `\pi` -- which notatio has no use for outside a string. */
+/** A LaTeX control word -- `\frac`, `\pi` -- which Epsil has no use for outside a string. */
 const CONTROL_WORD = /\\[A-Za-z]+/;
 
 /**
  * The LaTeX a paste into a math field should insert, or undefined to leave the paste to
  * MathLive -- which already reads LaTeX, delimited or not, and its own flavours. What it
- * can't read is notatio: `Sin(x) ^ 2` read as LaTeX is S·i·n·(x)², so plain text that
- * parses as notatio (`toLatex` answers) goes in as that expression's LaTeX.
+ * can't read is Epsil: `Sin(x) ^ 2` read as LaTeX is S·i·n·(x)², so plain text that
+ * parses as Epsil (`toLatex` answers) goes in as that expression's LaTeX.
  */
-export function latexForField(pasted: Pasted, toLatex: (notatio: string) => string | undefined): string | undefined {
+export function latexForField(pasted: Pasted, toLatex: (epsil: string) => string | undefined): string | undefined {
   const text = pasted.text?.trim();
   if (pasted.latex !== undefined || !text) return undefined;
   if (unwrapLatex(text) !== undefined || CONTROL_WORD.test(text)) return undefined;

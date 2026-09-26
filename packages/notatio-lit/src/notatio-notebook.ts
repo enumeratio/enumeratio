@@ -22,7 +22,7 @@ interface NbCell {
  * A cell binds a variable with `:=` (`a := 5`, `f(x) := x^2`); later cells use that
  * name, in either direction -- `TrackedSymbols -> All` schedules by dependency, not
  * document position, which is what makes reordering safe. `seed` is an optional JSON
- * array of cell sources, notatio unless `in-form="latex"`.
+ * array of cell sources, Epsil unless `in-form="latex"`.
  *
  * Variable-centric and Desmos-like: cells can be reordered (drag the ordinal), so
  * references are by name only -- a cell-number reference draws a diagnostic (the
@@ -33,7 +33,7 @@ export class NotatioNotebook extends LitElement {
   static properties = {
     /** A JSON array of cell sources, used as the notebook's initial cells. */
     seed: { type: String },
-    /** The seed's syntax: `notatio` (default) or `latex`, the syntax `notatio-cell` reads. */
+    /** The seed's syntax: `epsil` (default) or `latex`, the syntax `notatio-cell` reads. */
     inForm: { type: String, attribute: "in-form" },
     _cells: { state: true },
     _dragId: { state: true },
@@ -52,7 +52,7 @@ export class NotatioNotebook extends LitElement {
   constructor() {
     super();
     this.seed = "";
-    this.inForm = "notatio";
+    this.inForm = "epsil";
     this._cells = [];
     this._dragId = undefined;
     this._dropId = undefined;
@@ -83,16 +83,16 @@ export class NotatioNotebook extends LitElement {
   }
 
   /** `format` this notebook's syntax maps to on `<notatio-cell>`. */
-  get #format(): "notatio" | "latex" {
-    return this.inForm === "latex" ? "latex" : "notatio";
+  get #format(): "epsil" | "latex" {
+    return this.inForm === "latex" ? "latex" : "epsil";
   }
 
   // Keep exactly one trailing blank cell; committing the last one grows the notebook.
   #onChange(id: number, event: Event): void {
-    const notatio = (event as CustomEvent<{ notatio: string }>).detail.notatio;
-    const cells = this._cells.map((c) => (c.id === id ? { ...c, value: notatio } : c));
+    const epsil = (event as CustomEvent<{ epsil: string }>).detail.epsil;
+    const cells = this._cells.map((c) => (c.id === id ? { ...c, value: epsil } : c));
     const last = cells[cells.length - 1];
-    if (last.id === id && notatio.trim()) cells.push(this.#cell());
+    if (last.id === id && epsil.trim()) cells.push(this.#cell());
     this._cells = cells;
   }
 

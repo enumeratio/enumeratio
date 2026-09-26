@@ -37,7 +37,7 @@ function evaluate(body: Record<string, unknown>): Reply {
   }
 
   // The primary form first, then the interchange forms every reply carries.
-  const forms: Form[] = [outForm ?? "notatio", "notatio", "tex", "mathjson", "wolfram"];
+  const forms: Form[] = [outForm ?? "inputform", "inputform", "tex", "mathjson", "wolfram"];
   const res = evaluateCommand({ input, syntax, forms });
   return { status: 200, json: toWire(res) };
 }

@@ -86,10 +86,10 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
   into it: [upstreaming.md](./upstreaming.md). [§8](./upstreaming.md) is what is ready to
   send today, each with its reproduction.
 - **The name split** — `enumeratio` is the symbol definitions and their evaluation on
-  compute-engine and Epsil; `notatio` is the notebook, explorer and tools around them, and
-  the notation they read and write ([README](../README.md)). Package and folder
-  names do not all say so yet; renaming waits for a quiet moment, and
-  [component-naming.md](./component-naming.md) is how the last one went.
+  compute-engine and Epsil; `notatio` is the notebook, explorer and tools around them
+  ([README](../README.md)). Package and folder names do not all say so yet; renaming
+  waits for a quiet moment, and [component-naming.md](./component-naming.md) is how the
+  last one went.
 
 - **Run our own test suites under aestimatio** — a notatio/aestimatio evaluation process,
   per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped

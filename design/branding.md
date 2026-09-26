@@ -16,8 +16,9 @@ unwritten when the idea moves — which it will.
 So, in user-facing docs:
 
 - **enumeratio** is the project and the site.
-- **notatio** keeps the meaning `AGENTS.md` gives it — the interface and the syntax it reads
-  and writes — because that is already a real, distinct thing people type and see.
+- **notatio** keeps the meaning `AGENTS.md` gives it — the interface, and how it writes an
+  expression back (InputForm, the `*Form` heads) — because that is already a real, distinct
+  thing people type and see.
 - Nothing else below is mentioned as a layer, a pillar or a product.
 
 ## Candidate names
@@ -29,7 +30,7 @@ recorded so the guesses can be compared, not a plan.
 | -------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **nucleus**    | a kernel, the nut's core   | the computation kernel: evaluation (bounded, cancellable, isolated in workers) and compilation (the `js`/`glsl`/`wgsl` code forms, the GPU paths)                                                                                                                                                                                                                           |
 | **aestimatio** | a valuation, an estimate   | the mathematical core: arithmetic that knows where a number lives (residues, valuations, adèles, numerals) and numerics with honest error (special functions to arbitrary precision). Or — as the package of that name has it today — the evaluation-control layer, which is the nucleus reading above. The two readings compete.                                           |
-| **notatio**    | a marking, a designation   | already in use: the interface and its syntax (see `AGENTS.md`)                                                                                                                                                                                                                                                                                                              |
+| **notatio**    | a marking, a designation   | already in use: the interface (see `AGENTS.md`)                                                                                                                                                                                                                                                                                                                             |
 | **computatio** | a reckoning, a calculation | everything `design/computation.md` covers, in its three stages: **interpretatio** (reading the input: parsing and canonicalising), **evaluatio** (pushing the expression down to compute-engine and our kernels, symbolic and numeric alike, which matches the code's `.evaluate()` and `N`), and **compilatio** (lowering it to code). Overlaps the nucleus reading above. |
 | **enumeratio** | a counting out, a listing  | the whole project; or, more narrowly, the catalogue — collections with an index for every object, crosswalks, checked claims — that gives each object a permanent home                                                                                                                                                                                                      |
 

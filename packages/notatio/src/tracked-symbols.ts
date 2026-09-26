@@ -6,7 +6,7 @@ import { headOf, opsOf, symOf } from "./symbols.ts";
 /**
  * The symbol a cell assigns, if it is `name := ...`. Like `reactive.ts`'s `boundName`,
  * but read through `symbols.ts`'s generic `headOf`/`opsOf`/`symOf` rather than assuming
- * a plain-array MathJSON tree -- a cell's json here comes from `parseNotatio` (Epsil's
+ * a plain-array MathJSON tree -- a cell's json here comes from `parseExpression` (Epsil's
  * own decorated tree, `{ fn: [...] }` / `{ sym, sourceOffsets }`), where `reactive.ts`'s
  * worksheet always has the canonical array tree `engine.parse(...).json` already gives.
  */

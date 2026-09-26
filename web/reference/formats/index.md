@@ -5,7 +5,7 @@ worked examples and the footguns each one carries.
 
 ## InputForm
 
-- [InputForm](/reference/formats/inputform) — an expression printed as notatio you
+- [InputForm](/reference/formats/inputform) — an expression printed as Epsil you
   could have typed. What the components copy out, what the REPL prints, and the
   `InputForm` entry in any Out menu.
 
@@ -19,10 +19,10 @@ The ways to write an expression.
 - [AsciiMath](/reference/formats/asciimath) — a note on where it fits (compute-engine
   emits it, but does not yet parse it).
 
-notatio itself — the restricted-Epsil subset the components take in their expression
+Epsil itself — the syntax the components take in their expression
 attributes — is documented with the components, in the
 [component reference](/reference/components/); printing an expression back out
-as notatio is [InputForm](/reference/formats/inputform).
+as Epsil is [InputForm](/reference/formats/inputform).
 
 ## Output syntax
 

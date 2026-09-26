@@ -109,8 +109,8 @@ test("the closed forms a slider actually lands on all lower", () => {
   }
 });
 
-test("a lowercase head from the notatio round trip still resolves", () => {
-  // `PolyLog(1, z)` evaluates to -ln(1 - z), and the round trip through notatio hands
+test("a lowercase head from the Epsil round trip still resolves", () => {
+  // `PolyLog(1, z)` evaluates to -ln(1 - z), and the round trip through Epsil hands
   // back `ln`, not `Ln`.
   expect(emitComplexWGSL(["Negate", ["ln", ["Subtract", 1, "z"]]] as Json)?.code).toBe("cneg(clog((prm.p[0].xy - z)))");
   expect(emitComplexWGSL(["sin", "z"] as Json)?.code).toBe("csin(z)");

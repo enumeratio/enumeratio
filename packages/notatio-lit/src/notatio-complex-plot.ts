@@ -1,7 +1,7 @@
 /// <reference types="@webgpu/types" />
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { emitComplexWGSL } from "@enumeratio/analytic/src";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
@@ -35,11 +35,11 @@ import {
  * is part of the story (the polylog's |z| < 1). Drag to pan, scroll to zoom.
  *
  * Framing is manipulable too: `extent="_e"` takes a wildcard directly, and `center`
- * accepts the notatio list form `[_c, 0]` as well as a bare `re,im`.
+ * accepts the Epsil list form `[_c, 0]` as well as a bare `re,im`.
  */
 export class NotatioComplexPlot extends LitElement {
   static properties = {
-    /** The complex-valued expression to colour, in notatio. */
+    /** The complex-valued expression to colour, in Epsil. */
     value: { type: String },
     /** The complex variable; defaults to `z`. */
     var: { type: String },
@@ -129,7 +129,7 @@ export class NotatioComplexPlot extends LitElement {
 
   /**
    * Re-read the framing attributes into the live view. `center` takes either a bare
-   * `re,im` pair or a notatio list `[re, im]` — the latter so a Manipulate wildcard can
+   * `re,im` pair or an Epsil list `[re, im]` — the latter so a Manipulate wildcard can
    * drive it, since a bare `_c, 0` is not a parseable expression and would be skipped.
    */
   #readView(): void {
@@ -148,7 +148,7 @@ export class NotatioComplexPlot extends LitElement {
     const renderer = this.#renderer;
     if (!engine || !renderer || !this.value.trim()) return;
     const parseLatex = (tex: string) => engine.parse(tex).json;
-    const { json, errors } = parseNotatio(this.value, { parseLatex });
+    const { json, errors } = parseExpression(this.value, { parseLatex });
     if (errors.length) {
       this._status = `Could not parse: ${this.value}`;
       return;

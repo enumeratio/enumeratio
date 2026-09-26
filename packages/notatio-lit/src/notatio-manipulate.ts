@@ -26,7 +26,7 @@ import { SliderPlayback } from "./sweep.ts";
  * `<notatio-manipulate params="{a, 1, 5}">` -- a generic Wolfram-style
  * `Manipulate`: it renders a slider (or setter) per parameter and re-binds those
  * parameters into its slotted content live. Any descendant attribute that is a
- * **notatio** expression containing a **named wildcard** (`_a`) is treated as a
+ * **Epsil** expression containing a **named wildcard** (`_a`) is treated as a
  * template: the wildcard is compute-engine's slot notation, filled from the
  * control `a` and re-evaluated on every change. So the same wrapper drives a
  * plot, a glyph, several elements at once, or plain markup:
@@ -38,7 +38,7 @@ import { SliderPlayback } from "./sweep.ts";
  * </notatio-manipulate>
  * ```
  *
- * A slot body is any notatio expression over the parameter wildcards (`_n * 20`),
+ * A slot body is any Epsil expression over the parameter wildcards (`_n * 20`),
  * evaluated through the engine. Every slider carries a play button (▶) that
  * animates it on a loop. Plots/surfaces also accept a `params` attribute directly
  * as a shorthand for the single-child case.
@@ -162,14 +162,14 @@ export class NotatioManipulate extends LitElement {
   }
 
   protected override firstUpdated(): void {
-    // The engine is needed to parse the notatio slots; once captured, apply the
+    // The engine is needed to parse the Epsil slots; once captured, apply the
     // initial values (later control moves re-apply via `updated`). A prose panel's
     // readouts only exist once the controls have rendered, hence the wait.
     void this.updateComplete.then(() => this.#capture()).then(() => this.#apply());
   }
 
-  // Record every descendant attribute (or custom-element string property) that is a
-  // notatio expression carrying a named wildcard matching a control -- those are the
+  // Record every descendant attribute (or custom-element string property) that is an
+  // Epsil expression carrying a named wildcard matching a control -- those are the
   // templates. The controls host and its subtree are skipped -- unless the panel is
   // prose, whose readouts are templates like any other.
   async #capture(more = false): Promise<void> {
@@ -184,7 +184,7 @@ export class NotatioManipulate extends LitElement {
   }
 
   // Fill each template's `_name` wildcards with the current control values and
-  // write the re-serialized notatio back to the attribute/property.
+  // write the re-serialized Epsil back to the attribute/property.
   #apply(): void {
     const engine = this.#engine;
     if (!engine) return;

@@ -1,7 +1,7 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 
 // Real-valued kernels for the compiled fast path: compute-engine's `compile`
@@ -42,7 +42,7 @@ const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
 /**
  * `<notatio-plot-3d value="Sin(x) * Cos(y)" x-domain="-3,3" y-domain="-3,3">` --
  * a surface plot of a bivariate expression, projected to SVG. `value` is
- * **notatio**; LaTeX is accepted inside a `$…$` island.
+ * **Epsil**; LaTeX is accepted inside a `$…$` island.
  * Samples an `n`×`n` grid by substituting the two free variables (defaulting to
  * the first two unknowns) and drawing the height field. compute-engine loads on
  * demand. The view is interactive: drag rotates (`azimuth` / `elevation`), and
@@ -55,7 +55,7 @@ const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
  */
 export class NotatioPlot3D extends LitElement {
   static properties = {
-    /** The surface, in notatio. A list (`{f, g}`) overlays several on one scale. */
+    /** The surface, in Epsil. A list (`{f, g}`) overlays several on one scale. */
     value: { type: String },
     /** The variable on the x axis; defaults to the expression's first unknown. */
     xvar: { type: String },
@@ -245,11 +245,11 @@ export class NotatioPlot3D extends LitElement {
     }
     try {
       const engine = await loadEngine();
-      const { json, errors } = parseNotatio(raw, {
+      const { json, errors } = parseExpression(raw, {
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length) {
-        log("value is not notatio", raw, errors);
+        log("value is not Epsil", raw, errors);
         this._svg = "";
         return;
       }

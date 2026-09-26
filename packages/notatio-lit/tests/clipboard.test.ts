@@ -1,7 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { latexForField, latexForText, unwrapLatex } from "../src/clipboard.ts";
 
-const asLatex = (notatio: string) => (notatio === "Sin(x) ^ 2" ? "\\sin(x)^2" : undefined);
+const asLatex = (epsil: string) => (epsil === "Sin(x) ^ 2" ? "\\sin(x)^2" : undefined);
 
 test("delimited math unwraps to its LaTeX", () => {
   expect(unwrapLatex("$\\frac{1}{2}$")).toBe("\\frac{1}{2}");
@@ -12,15 +12,15 @@ test("delimited math unwraps to its LaTeX", () => {
   expect(unwrapLatex("$$")).toBeUndefined();
 });
 
-test("a math field converts only plain notatio text", () => {
-  // Notatio text becomes its LaTeX...
+test("a math field converts only plain Epsil text", () => {
+  // Epsil text becomes its LaTeX...
   expect(latexForField({ text: "Sin(x) ^ 2" }, asLatex)).toBe("\\sin(x)^2");
   // ...but a math field's own copy, delimited math and bare LaTeX go to MathLive untouched,
   expect(latexForField({ latex: "x^2", text: "Sin(x) ^ 2" }, asLatex)).toBeUndefined();
   expect(latexForField({ text: "$\\sin(x)^2$" }, asLatex)).toBeUndefined();
   expect(latexForField({ text: "\\frac{1}{2}" }, asLatex)).toBeUndefined();
-  // as does text that isn't notatio at all.
-  expect(latexForField({ text: "not notatio" }, asLatex)).toBeUndefined();
+  // as does text that isn't Epsil at all.
+  expect(latexForField({ text: "not epsil" }, asLatex)).toBeUndefined();
   expect(latexForField({}, asLatex)).toBeUndefined();
 });
 
