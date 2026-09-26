@@ -1,18 +1,18 @@
 the-step-word-uuddud:
   epsil:
-    in: InitialRise(DyckPath([1, 1, 0, 0, 1, 0]))
+    in: InitialRise(DyckPaths([1, 1, 0, 0, 1, 0]))
     out: "2"
   tex:
-    in: \mathrm{InitialRise}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
+    in: \mathrm{InitialRise}(\mathrm{DyckPaths}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
     out: "2"
   fullform:
-    in: InitialRise[DyckPath[List[1, 1, 0, 0, 1, 0]]]
+    in: InitialRise[DyckPaths[List[1, 1, 0, 0, 1, 0]]]
 the-step-word-uduudd:
   epsil:
-    in: InitialRise(DyckPath([1, 0, 1, 1, 0, 0]))
+    in: InitialRise(DyckPaths([1, 0, 1, 1, 0, 0]))
     out: "1"
   tex:
-    in: \mathrm{InitialRise}(\mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
+    in: \mathrm{InitialRise}(\mathrm{DyckPaths}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
     out: "1"
   fullform:
-    in: InitialRise[DyckPath[List[1, 0, 1, 1, 0, 0]]]
+    in: InitialRise[DyckPaths[List[1, 0, 1, 1, 0, 0]]]

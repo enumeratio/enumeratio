@@ -42,7 +42,7 @@ export interface DeclareOptions {
    * before evaluating. Pass `@enumeratio/domains`' type names, keyed by carrier.
    *
    * This is the intended mode: a combinatorial statistic is a function OF a carrier, so
-   * `Cycles(Permutation([2,1,3]))` is the question and `Cycles([2,1,3])` is a type error —
+   * `Cycles(Permutations([2,1,3]))` is the question and `Cycles([2,1,3])` is a type error —
    * which is the whole reason the domains exist. A definition marked `alsoOnList` additionally
    * accepts a bare list, because that reading stands on its own (see `Definition.alsoOnList`).
    *
@@ -67,7 +67,7 @@ export interface DeclareOptions {
  * unreachable type error.
  */
 const BARE_SHAPE: Readonly<Record<string, string>> = {
-  SetPartition: "list<list<integer>>",
+  SetPartitions: "list<list<integer>>",
 };
 
 /** The argument type a statistic accepts, given how the caller wired the carriers. */
@@ -100,7 +100,7 @@ export function declareStatistics(
         const subject = ops[0];
         if (subject === undefined) return undefined;
         // Unwrap only an actual carrier. `definition.on` IS the constructor head's spelling,
-        // so this is what tells a `Permutation([3,1,2])` from the bare `[3,1,2]` that the
+        // so this is what tells a `Permutations([3,1,2])` from the bare `[3,1,2]` that the
         // `alsoOnList` arm of the union lets through.
         const inner = subject.operator === definition.on ? (operandsOf(subject)[0] ?? subject) : subject;
         return applyDefinition(ce, definition, inner);
