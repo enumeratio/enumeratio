@@ -16,21 +16,15 @@
 //      titles say "the number of", which is where the catalog spelling comes from, and a
 //      title is not a symbol.
 //
-// The list should stay short, and every entry should fail one of those tests.
+// The list should stay short, and every entry should fail one of those tests. The renames
+// made under it are data now, not a table here: each head's own `formerly:` field
+// (design/speculative/symbol-metadata.md) names the catalog spelling it replaced --
+// `CycleCount`'s says `Cycles` (rule 1: returns the NUMBER of cycles, not the cycles, leaving
+// `Cycles` free for the cycle decomposition Wolfram's own `Cycles` holds); `TwoCycleCount`,
+// `ThreeCycleCount`, `OccurrencesOf213`, `StandardTableauCount` and `TouchPointCount` all say
+// their old `NumberOf…`/`NumberOfOccurrencesOf…` spelling (rule 2).
 
-/** Catalog stat name → the head we actually declare, with the reason in the comment. */
-export const RENAMED: Readonly<Record<string, string>> = {
-  // Returns the NUMBER of cycles, not the cycles — and leaves `Cycles` free for the cycle
-  // decomposition itself, which is the value Wolfram's `Cycles` holds.
-  Cycles: "CycleCount",
-  // `NumberOf…` → `…Count`, rule 2. `OccurrencesOf213` follows its siblings
-  // `OccurrencesOf123` and `OccurrencesOf132`, which the catalog already spells that way.
-  NumberOfCyclesOfLength2: "TwoCycleCount",
-  NumberOfCyclesOfLength3: "ThreeCycleCount",
-  NumberOfOccurrencesOf213: "OccurrencesOf213",
-  NumberOfStandardTableaux: "StandardTableauCount",
-  NumberOfTouchPoints: "TouchPointCount",
-};
+import { RENAMED_DATA } from "./naming-data.ts";
 
-/** The head a catalog name is declared under. Identity for all but the listed few. */
-export const blessedName = (catalogName: string): string => RENAMED[catalogName] ?? catalogName;
+/** The head a catalog name is declared under. Identity for all but the renamed few. */
+export const blessedName = (catalogName: string): string => RENAMED_DATA[catalogName] ?? catalogName;
