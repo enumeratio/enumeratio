@@ -74,6 +74,7 @@ symmetry-i-x-a-b-i-1-x-b-a-1:
   epsil:
     in: BetaRegularized(0.3, 2, 3) + BetaRegularized(0.7, 3, 2) == 1
     out: True
+    back: [Equal, [Add, [BetaRegularized, 0.30000000000000004, 2, 3], [BetaRegularized, 0.7000000000000001, 3, 2]], 1]
   tex:
     in: \operatorname{BetaRegularized}(0.3, 2, 3)+\operatorname{BetaRegularized}(0.7, 3, 2)=1
     out: \top
@@ -110,6 +111,16 @@ binomial-cdf-via-the-regularized-beta-for-x-sim:
   epsil:
     in: BetaRegularized(0.7, 3, 2) == 0.7 ^ 4 + 4 * 0.3 * 0.7 ^ 3
     out: True
+    back:
+      [
+        Equal,
+        [BetaRegularized, 0.7000000000000001, 3, 2],
+        [
+          Add,
+          [Power, 0.7000000000000001, 4],
+          [Multiply, [Multiply, 4, 0.30000000000000004], [Power, 0.7000000000000001, 3]],
+        ],
+      ]
   tex:
     in: \operatorname{BetaRegularized}(0.7, 3, 2)=0.7^4+4\times0.3\times0.7^3
     out: \top
@@ -217,6 +228,7 @@ interval-arithmetic-i-x-2-1-x-2:
   epsil:
     in: BetaRegularized(Interval(0.2, 0.3), 2, 1)
     out: Interval(0.04, 0.09)
+    back: [BetaRegularized, [Interval, 0.2, 0.30000000000000004], 2, 1]
   tex:
     in: \operatorname{BetaRegularized}(\mathrm{Interval}(0.2, 0.3), 2, 1)
     out: \mathrm{Interval}(0.04, 0.09)
@@ -231,6 +243,7 @@ uncertainty-propagation:
   epsil:
     in: BetaRegularized(Around(0.3, 0.01), 1, 2)
     out: Around(0.51, 0.014)
+    back: [BetaRegularized, [Around, 0.30000000000000004, 0.01], 1, 2]
   tex:
     in: \operatorname{BetaRegularized}(\mathrm{Around}(0.3, 0.01), 1, 2)
     out: \mathrm{Around}(0.51, 0.014)

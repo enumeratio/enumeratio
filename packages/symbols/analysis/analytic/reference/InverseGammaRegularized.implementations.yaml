@@ -24,6 +24,7 @@ inversegammaregularized-2p5-0p3:
   epsil:
     in: InverseGammaRegularized(2.5, 0.3)
     out: 3.032_214_992_077_453
+    back: [InverseGammaRegularized, 2.5, 0.30000000000000004]
   tex:
     in: \mathrm{InverseGammaRegularized}(2.5, 0.3)
     out: 3.032\,214\,992\,077\,453

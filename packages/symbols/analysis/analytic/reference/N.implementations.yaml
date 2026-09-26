@@ -85,8 +85,8 @@ an-exact-tie-rounds-to-the-even-digit-0-125:
     in: ((1 // 8))
     out: "0.125"
     verdict: disagree
-    kind: precision
-    note: The mapping evaluates at the system's own precision and drops N's digit count, so 1/8 prints 0.125 where N(1/8, 2) rounds to even, 0.12.
+    kind: rounding-mode
+    note: N's digit count is dropped for Julia — it's numeric already, per the mapping's own note. At this exact tie the untruncated 0.125 differs from our round-half-to-even N(1/8, 2) = 0.12.
   rust:
     in: nf(rational(n(1), n(8)))
     out: "0.125"
@@ -120,8 +120,8 @@ and-0-375-to-0-38:
     in: ((3 // 8))
     out: "0.375"
     verdict: disagree
-    kind: precision
-    note: The mapping evaluates at the system's own precision and drops N's digit count, so 3/8 prints 0.375 where N(3/8, 2) is 0.38.
+    kind: rounding-mode
+    note: N's digit count is dropped for Julia — it's numeric already, per the mapping's own note. At this exact tie the untruncated 0.375 differs from our round-half-to-even N(3/8, 2) = 0.38.
   rust:
     in: nf(rational(n(3), n(8)))
     out: "0.375"

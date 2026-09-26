@@ -40,6 +40,7 @@ details:
   - Odd integers $\geq 3$ (Apéry's constant $\zeta(3)$, and beyond) have no known closed form and stay numeric-only.
   - compute-engine reduces Zeta to an exact closed form at these special integer points -- even under plain evaluation, and even threaded over a list -- but leaves other reals, like $\zeta(3)$, symbolic pending N().
   - "The two-argument form $\\zeta(s, a) = \\sum_{n\\geq 0} (n+a)^{-s}$ is provided by `@enumeratio/analytic` (compute-engine's built-in Zeta is single-argument). It equals [[HurwitzZeta]] for $\\operatorname{Re}(a) > 0$ but follows Wolfram's generalized-zeta convention for $a \\leq 0$: the terms off the positive axis use $((n+a)^2)^{-s/2}$ and the $n+a=0$ term is dropped, so $\\zeta(s, a)$ stays finite at $a = 0, -1, -2, \\dots$ -- in particular $\\zeta(s, 0) = \\zeta(s)$ -- where [[HurwitzZeta]] has poles."
+  - 'Certified digits: at an exact real $s \ne 1$ (an integer, a rational or a decimal), $\mathrm{N}(\zeta(s), d)$ is proven, not just agreed on, and so is $\mathrm{N}(\zeta(s, a), d)$ for an exact $a > 0$. See [[HurwitzZeta]] for the bound, and [[N]].'
 examples:
   - id: zeta-2
     expr: [Zeta, 2]
@@ -177,7 +178,7 @@ examples:
     caption: $\zeta(2, 1/2) = 3\zeta(2) = \pi^2/2$
   - id: interval-arithmetic-zeta-is-decreasing-on-1
     expr: [Zeta, [Interval, 1.1, 1.2]]
-    expected: [Interval, 5.591582441177752, 10.584448464950801]
+    expected: [Interval, 5.59158244117775, 10.584448464950812]
     category: Scope
     caption: 'Interval arithmetic: $\zeta$ is decreasing on $(1, \infty)$'
   - id: uncertainty-in-a-propagated-with-partial-a-zeta
@@ -205,6 +206,11 @@ examples:
     expected: { num: "2.91666666666666666667" }
     category: Possible issues
     caption: $\zeta(-1, -2) = 35/12$ exactly, but at a negative $a$ this stays symbolic without N()
+  - id: certified-digits-zeta-3
+    expr: [N, [Zeta, 3], 40]
+    expected: { num: "1.202056903159594285399738161511449990765" }
+    category: Applications
+    caption: "Apéry's constant $\\zeta(3)$ to 40 digits, proven: both ends of the enclosure round to these digits"
   - role: test
     id: zeta-symbolic-s-under-n-stays-symbolic
     expr: [N, [Zeta, s]]

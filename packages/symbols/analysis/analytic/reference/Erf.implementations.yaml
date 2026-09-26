@@ -153,6 +153,7 @@ a-machine-precision-argument:
   epsil:
     in: Erf(0.95)
     out: 0.820_890_807_273_277_941_908
+    back: [Erf, 0.9500000000000001]
   tex:
     in: \operatorname{erf}(0.95)
     out: 0.820\,890\,807\,273\,277\,941\,908

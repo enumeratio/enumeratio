@@ -440,11 +440,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   oscar:
     in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
   julia:
-    in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
-    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
-    verdict: error
-    kind: threading
-    note: compute-engine's Binomial is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]"
+    out: "[0, 1, 10, 35, 165]"
   mathlib4:
     in: (Nat.choose [2, 3, 5, 7, 11] 3)
   rust:
@@ -480,7 +477,7 @@ half-integer-arguments-evaluate-exactly-through:
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+    note: Nemo's ZZ is integers only; it can't hold a half-integer argument. Ours evaluates a half-integer Binomial exactly through the Gamma function.
   mathlib4:
     in: "(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))"
   rust:
@@ -574,7 +571,7 @@ real-arguments-evaluate-through-the-gamma:
     out: "InexactError: convert(ZZRingElem, 8.5)"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+    note: Nemo's ZZ can't hold a non-integer real; ours extends Binomial to real n and k through the Gamma function.
   mathlib4:
     in: (Nat.choose 8.5 (-4.2))
   rust:
@@ -606,7 +603,7 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     out: "InexactError: convert(ZZRingElem, 0.5)"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+    note: ZZ(0.5) has no exact integer value; ours extends Binomial to a real n through the Gamma function.
   mathlib4:
     in: (Nat.choose 0.5 3)
   rust:
@@ -638,7 +635,7 @@ a-rational-n-with-integer-k-gives-the-exact:
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+    note: ZZ needs an integer; ours extends Binomial to a rational n through the Gamma function.
   mathlib4:
     in: "(Nat.choose ((1 : ℚ) / 2) 2)"
   rust:
@@ -670,7 +667,7 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+    note: ZZ needs an integer; ours extends Binomial to a negative rational n through the Gamma function.
   mathlib4:
     in: "(Nat.choose (((-1) : ℚ) / 2) 3)"
   rust:
@@ -720,7 +717,7 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours extends Binomial to a complex n through the Gamma function.
 complex-n-and-k-evaluate-through-the-gamma:
   epsil:
     in: Binomial(2 + i, 7 + -3 * i)
@@ -744,11 +741,12 @@ complex-n-and-k-evaluate-through-the-gamma:
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours extends Binomial to complex n and k through the Gamma function.
 interval-arithmetic-in-k-binom-1-2-k-is:
   epsil:
     in: Binomial(1 / 2, Interval(0.5, 0.6))
     out: Interval(0.928_145_553_850_705_4, 1)
+    back: [Binomial, [Divide, 1, 2], [Interval, 0.5, 0.6000000000000001]]
   tex:
     in: \binom{\frac{1}{2}}{\mathrm{Interval}(0.5, 0.6)}
     out: \mathrm{Interval}(0.928\,145\,553\,850\,705\,4, 1)
@@ -876,7 +874,7 @@ both-arguments-negative-integers-the-limiting:
     out: "0"
     verdict: disagree
     kind: convention
-    note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Γ; Nemo gives 0.
+    note: Nemo's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n; ours extends through the reflection identities (Wolfram's convention), giving 6 — see the mapping's note.
   mathlib4:
     in: (Nat.choose (-3) (-5))
   rust:

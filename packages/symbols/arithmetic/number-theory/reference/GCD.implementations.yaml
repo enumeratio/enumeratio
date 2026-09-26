@@ -194,7 +194,7 @@ lists-aren-t-threaded-element-wise-they-re:
     kind: threading
     note: compute-engine's GCD pools the elements of list arguments; Oscar's gcd takes scalars only.
   julia:
-    in: gcd(ZZ([2, 4]), ZZ([6, 8]))
+    in: "[gcd(ZZ([2, 4]), ZZ(6)), gcd(ZZ([2, 4]), ZZ(8))]"
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
     kind: threading
@@ -394,7 +394,7 @@ gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's GCD extends to rational, real and complex arguments.
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd directly.
 gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
   epsil:
     in: GCD(5 + 10 / 3 * i, 3 / 2 + i)
@@ -418,7 +418,7 @@ gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
     out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's GCD extends to rational, real and complex arguments.
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd for a Gaussian-rational argument too.
 big-integers-gcd-20-10-100-3-7-exact-past-where:
   epsil:
     in: GCD(20!, 10 ^ 100 + 3)
@@ -467,11 +467,8 @@ listable-a-single-list-argument-threads-element:
   oscar:
     in: gcd(ZZ(12), ZZ([3, 7, 40]))
   julia:
-    in: gcd(ZZ(12), ZZ([3, 7, 40]))
-    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
-    verdict: error
-    kind: threading
-    note: compute-engine's GCD is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]"
+    out: "[3, 1, 4]"
   mathlib4:
     in: (Int.gcd 12 [3, 7, 40])
   rust:
@@ -502,7 +499,7 @@ gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci:
   oscar:
     in: gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18)))
   julia:
-    in: gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18)))
+    in: gcd(ZZ(BigInt(fibonacci(ZZ(12)))), ZZ(BigInt(fibonacci(ZZ(18)))))
     out: "8"
   mathlib4:
     in: (Int.gcd (Nat.fib 12) (Nat.fib 18))

@@ -637,10 +637,10 @@ zeta-2-1-2-3-zeta-2-pi-2-2:
 interval-arithmetic-zeta-is-decreasing-on-1:
   epsil:
     in: Zeta(Interval(1.1, 1.2))
-    out: Interval(5.591_582_441_177_752, 10.584_448_464_950_801)
+    out: Interval(5.591_582_441_177_75, 10.584_448_464_950_812)
   tex:
     in: \zeta(\mathrm{Interval}(1.1, 1.2))
-    out: \mathrm{Interval}(5.591\,582\,441\,177\,752, 10.584\,448\,464\,950\,801)
+    out: \mathrm{Interval}(5.591\,582\,441\,177\,75, 10.584\,448\,464\,950\,812)
   fullform:
     in: Zeta[Interval[List[1.1, 1.2]]]
   wolfram:
@@ -730,6 +730,23 @@ zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
     note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
   sage:
     in: N(hurwitz_zeta(-1, -2))
+certified-digits-zeta-3:
+  epsil:
+    in: N(Zeta(3), 40)
+    out: 1.202_056_903_159_594_285_399_738_161_511_449_990_765
+  tex:
+    in: N(\zeta(3), 40)
+    out: 1.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[Zeta[3], 40]
+  wolfram:
+    in: N[Zeta[3], 40]
+  sympy:
+    in: N(zeta(3), 30)
+  mpmath:
+    in: (zeta(3))
+  sage:
+    in: N(zeta(3))
 zeta-symbolic-s-under-n-stays-symbolic:
   epsil:
     in: N(Zeta(s))

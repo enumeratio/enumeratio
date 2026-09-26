@@ -269,3 +269,31 @@ gamma-3-1-gamma-3-order-1-at-a-1-is-just-the:
     in: StieltjesGamma[3, 1]
   wolfram:
     in: StieltjesGamma[3, 1]
+certified-digits-gamma-1:
+  epsil:
+    in: N(StieltjesGamma(1), 40)
+    out: -0.072_815_845_483_676_724_860_586_375_874_901_319_137_74
+  tex:
+    in: N(\mathrm{StieltjesGamma}(1), 40)
+    out: -0.072\,815\,845\,483\,676\,724\,860\,6
+  traditional:
+    in: N(\gamma_{1}, 40)
+    out: -0.072\,815\,845\,483\,676\,724\,860\,6
+  fullform:
+    in: N[StieltjesGamma[1], 40]
+  wolfram:
+    in: N[StieltjesGamma[1], 40]
+certified-digits-gamma-2-1-3:
+  epsil:
+    in: N(StieltjesGamma(2, 1 / 3), 40)
+    out: 3.619_163_909_618_963_629_887_182_216_185_941_703_294
+  tex:
+    in: N(\mathrm{StieltjesGamma}(2, \frac{1}{3}), 40)
+    out: 3.619\,163\,909\,618\,963\,629\,89
+  traditional:
+    in: N(\gamma_{2}(\frac{1}{3}), 40)
+    out: 3.619\,163\,909\,618\,963\,629\,89
+  fullform:
+    in: N[StieltjesGamma[2, Rational[1, 3]], 40]
+  wolfram:
+    in: N[StieltjesGamma[2, Rational[1, 3]], 40]

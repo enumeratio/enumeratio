@@ -68,6 +68,7 @@ a-custom-comparator-sorts-in-a-different-order:
   epsil:
     in: Sort([3, 1, 2], Function(_1 > _2))
     out: "[3, 2, 1]"
+    back: Unreadable
   tex:
     in: \mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt\operatorname{\_2})
     out: \bigl\lbrack3, 2, 1\bigr\rbrack
@@ -146,6 +147,7 @@ sorting-pairs-by-their-second-element-with-a:
   epsil:
     in: Sort([[a, 2], [c, 1], [d, 3]], Function(_1[2] < _2[2]))
     out: "[[c, 1], [a, 2], [d, 3]]"
+    back: Unreadable
   tex:
     in: \mathrm{Sort}(\bigl\lbrack\bigl\lbrack a, 2\bigr\rbrack, \bigl\lbrack c, 1\bigr\rbrack, \bigl\lbrack d, 3\bigr\rbrack\bigr\rbrack, ()\mapsto\operatorname{\_1}[2]\lt\operatorname{\_2}[2])
     out: \bigl\lbrack\bigl\lbrack c, 1\bigr\rbrack, \bigl\lbrack a, 2\bigr\rbrack, \bigl\lbrack d, 3\bigr\rbrack\bigr\rbrack

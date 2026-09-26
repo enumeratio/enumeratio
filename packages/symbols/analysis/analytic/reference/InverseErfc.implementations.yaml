@@ -79,6 +79,7 @@ deep-in-the-tail-it-keeps-full-precision-where:
   epsil:
     in: InverseErfc(e-10)
     out: 4.572_824_967_389_485
+    back: [InverseErfc, [Subtract, e, 10]]
   tex:
     in: \mathrm{InverseErfc}(10^{-10})
     out: 4.572\,824\,967\,389\,485

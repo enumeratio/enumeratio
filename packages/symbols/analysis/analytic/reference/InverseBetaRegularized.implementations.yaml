@@ -13,6 +13,7 @@ inversebetaregularized-0p3-2p5-1p5:
   epsil:
     in: InverseBetaRegularized(0.3, 2.5, 1.5)
     out: 0.509_497_412_428_341_3
+    back: [InverseBetaRegularized, 0.30000000000000004, 2.5, 1.5]
   tex:
     in: \mathrm{InverseBetaRegularized}(0.3, 2.5, 1.5)
     out: 0.509\,497\,412\,428\,341\,3

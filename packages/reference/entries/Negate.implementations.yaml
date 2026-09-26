@@ -172,7 +172,7 @@ threads-element-wise-over-a-list:
     in: (-([1, -2, 3]))
     out: "[-1, 2, -3]"
   julia:
-    in: (-([1, -2, 3]))
+    in: "[(-(1)), (-(-2)), (-(3))]"
     out: "[-1, 2, -3]"
   mathlib4:
     in: (-([1, (-2), 3]))
@@ -287,10 +287,7 @@ neg-1-plus-2i:
     in: (-(complex(1, 2)))
   julia:
     in: (-(complex(1, 2)))
-    out: -1 - 2im
-    verdict: disagree
-    kind: shape
-    note: "The same value: the scan doesn't read Julia's `-1 - 2im` as a complex number."
+    out: (-1-2j)
 threads-over-a-matrix-entry-by-entry:
   epsil:
     in: -[[1, -2], [3, 4]]
@@ -313,7 +310,7 @@ threads-over-a-matrix-entry-by-entry:
   oscar:
     in: (-([[1, -2], [3, 4]]))
   julia:
-    in: (-([[1, -2], [3, 4]]))
+    in: "[[(-(1)), (-(-2))], [(-(3)), (-(4))]]"
     out: "[[-1, 2], [-3, -4]]"
   mathlib4:
     in: (-([[1, (-2)], [3, 4]]))

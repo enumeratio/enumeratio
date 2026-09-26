@@ -106,6 +106,7 @@ a-machine-precision-argument-evaluates:
   epsil:
     in: Log2(1.414_2)
     out: 0.499_986_164_421_874_256_467
+    back: [Log2, 1.4142000000000001]
   tex:
     in: \log_{2}(1.414\,2)
     out: 0.499\,986\,164\,421\,874\,256\,467

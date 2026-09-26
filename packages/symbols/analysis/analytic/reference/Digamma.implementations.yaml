@@ -270,6 +270,7 @@ reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot:
   epsil:
     in: Digamma(0.7) - Digamma(0.3)
     out: 2.282_500_668_502_198_374_21
+    back: [Subtract, [Digamma, 0.7000000000000001], [Digamma, 0.30000000000000004]]
   tex:
     in: \mathrm{Digamma}(0.7)-\mathrm{Digamma}(0.3)
     out: 2.282\,500\,668\,502\,198\,374\,21

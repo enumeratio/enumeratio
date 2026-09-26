@@ -467,6 +467,12 @@ export class NotatioOut extends LitElement {
     if ((this.inline || this.display) && changed.has("value") && this.value) {
       if (this.getAttribute("value") !== this.value) this.setAttribute("value", this.value);
     }
+    // Any other Out keeps its InputForm there, for the same reason: a selection that
+    // spans it copies it as notatio you can paste back in.
+    if (changed.has("_input")) {
+      if (this._input) this.setAttribute("input-form", this._input);
+      else this.removeAttribute("input-form");
+    }
     if (
       changed.has("value") ||
       changed.has("format") ||
@@ -954,6 +960,11 @@ export class NotatioOut extends LitElement {
     globalThis.document?.removeEventListener("keydown", this.#onKeydown);
     clearTimeout(this.#closeTimer);
     super.disconnectedCallback();
+  }
+
+  /** What copying this Out puts on the clipboard: its InputForm, and its LaTeX. */
+  get expression(): { inputForm: string; latex: string } {
+    return { inputForm: this._input, latex: this._latex };
   }
 
   #setForm(form: Form): void {

@@ -124,6 +124,7 @@ non-integer-arguments-via-psi-z-1-gamma:
   epsil:
     in: HarmonicNumber(0.33)
     out: 0.441_523_646_937_363_528_111
+    back: [HarmonicNumber, 0.33000000000000007]
   tex:
     in: \mathrm{HarmonicNumber}(0.33)
     out: 0.441\,523\,646\,937\,363\,528\,111

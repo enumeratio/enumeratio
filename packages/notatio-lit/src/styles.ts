@@ -210,6 +210,17 @@ notatio-cell[pending] .notatio-row:last-of-type notatio-out .notatio-render { op
   font-size: 0.72rem;
   white-space: nowrap;
 }
+/* What the text in a cell's editor fails to parse as, while it is being typed -- gone on
+   the next keystroke that fixes it, and on commit (where the Out takes over). */
+.notatio-cell-hint {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: 0.5rem;
+  color: var(--vp-c-warning-1, #b7791f);
+  font-family: var(--notatio-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  overflow-wrap: anywhere;
+}
 /* slot="aside" children (badges, alternatives), relocated here in light DOM;
    hidden while the cell is dirty, since they describe the original value. Wraps,
    so a panel like ExampleAlternatives' can drop to a full-width row below. */

@@ -79,6 +79,7 @@ a-predicate-counts-the-elements-satisfying-it:
   epsil:
     in: Count([1, 2, 3, 4], Function(_1 > 2))
     out: "2"
+    back: Unreadable
   tex:
     in: \mathrm{Count}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt2)
     out: "2"

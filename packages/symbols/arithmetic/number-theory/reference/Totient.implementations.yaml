@@ -229,7 +229,7 @@ varphi-0-0-as-in-wolfram:
     out: "DomainError with 0: Argument must be positive"
     verdict: error
     kind: domain
-    note: compute-engine takes φ(0) = 0, as Wolfram does; Nemo's euler_phi requires a positive argument.
+    note: Nemo's euler_phi declines n ≤ 0; ours follows Wolfram's convention EulerPhi(0) = 0.
   mathlib4:
     in: (Nat.totient 0)
 threads-element-wise-over-a-list-as-wolfram-s:
@@ -255,11 +255,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   oscar:
     in: euler_phi(ZZ([2, 4, 6]))
   julia:
-    in: euler_phi(ZZ([2, 4, 6]))
-    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
-    verdict: error
-    kind: threading
-    note: compute-engine's Totient is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[euler_phi(ZZ(2)), euler_phi(ZZ(4)), euler_phi(ZZ(6))]"
+    out: "[1, 2, 2]"
   mathlib4:
     in: (Nat.totient [2, 4, 6])
 totient-10:
@@ -343,7 +340,7 @@ negative-n-varphi-n-varphi-n:
     out: "DomainError with -10: Argument must be positive"
     verdict: error
     kind: domain
-    note: compute-engine takes φ(-n) = φ(n), as Wolfram does; Nemo's euler_phi requires a positive argument.
+    note: Nemo's euler_phi declines a negative n; ours follows Wolfram's convention Totient(-n) = Totient(n).
   mathlib4:
     in: (Nat.totient (-10))
 varphi-p-p-1-for-a-prime-p:

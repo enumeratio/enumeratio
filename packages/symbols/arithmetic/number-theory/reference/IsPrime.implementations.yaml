@@ -336,7 +336,7 @@ threads-element-wise-over-a-list:
     out: "false"
     verdict: disagree
     kind: convention
-    note: compute-engine, like Wolfram's PrimeQ, calls -7 prime, an associate of 7; Nemo's is_prime takes only positive primes.
+    note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; Nemo's is_prime only accepts non-negative integers.
   mathlib4:
     in: (decide (Nat.Prime (-7)))
   rust:
@@ -527,7 +527,7 @@ non-integers-are-not-prime:
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's IsPrime extends to rational, real and complex arguments.
+    note: Nemo's ZZ needs an integer; ours declines to prime a non-integer by returning False rather than erroring.
   mathlib4:
     in: "(decide (Nat.Prime ((1 : ℚ) / 2)))"
   rust:
@@ -606,7 +606,7 @@ threads-element-wise-over-a-short-list:
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
     kind: threading
-    note: compute-engine's IsPrime is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    note: compute-engine's IsPrime is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.
   mathlib4:
     in: (decide (Nat.Prime [2, 3, 4]))
   rust:
@@ -708,7 +708,7 @@ isprime-neg-2-is-true:
     out: "false"
     verdict: disagree
     kind: convention
-    note: compute-engine, like Wolfram's PrimeQ, calls -2 prime, an associate of 2; Nemo's is_prime takes only positive primes.
+    note: compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Nemo's is_prime only accepts non-negative integers.
   mathlib4:
     in: (decide (Nat.Prime (-2)))
   rust:

@@ -244,6 +244,7 @@ interval-arithmetic-q-is-decreasing-in-z:
   epsil:
     in: GammaRegularized(2 / 5, Interval(0.21, 0.22))
     out: Interval(0.421_244_895_791_953_23, 0.430_390_666_940_599_5)
+    back: [GammaRegularized, [Divide, 2, 5], [Interval, 0.21000000000000002, 0.22]]
   tex:
     in: \operatorname{GammaRegularized}(\frac{2}{5}, \mathrm{Interval}(0.21, 0.22))
     out: \mathrm{Interval}(0.421\,244\,895\,791\,953\,23, 0.430\,390\,666\,940\,599\,5)

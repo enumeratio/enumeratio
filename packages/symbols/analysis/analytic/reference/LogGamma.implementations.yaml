@@ -249,6 +249,7 @@ interval-arithmetic-decreasing-here-so-the:
   epsil:
     in: LogGamma(Interval(0.41, 0.42))
     out: Interval(0.746_863_727_128_014_2, 0.771_422_463_394_746_8)
+    back: [LogGamma, [Interval, 0.41000000000000003, 0.42000000000000004]]
   tex:
     in: \mathrm{LogGamma}(\mathrm{Interval}(0.41, 0.42))
     out: \mathrm{Interval}(0.746\,863\,727\,128\,014\,2, 0.771\,422\,463\,394\,746\,8)

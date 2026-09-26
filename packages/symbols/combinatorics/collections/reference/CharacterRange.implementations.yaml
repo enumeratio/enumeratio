@@ -2,6 +2,7 @@ letters-a-through-e:
   epsil:
     in: CharacterRange("\(a)", "\(e)")
     out: '["a", "b", "c", "d", "e"]'
+    back: [CharacterRange, [String, "''", a], [String, "''", e]]
   tex:
     in: \mathrm{CharacterRange}(\text{a}, \text{e})
     out: \bigl\lbrack\text{a}, \text{b}, \text{c}, \text{d}, \text{e}\bigr\rbrack

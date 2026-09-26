@@ -198,6 +198,7 @@ interval-arithmetic-erfc-is-decreasing-so-the:
   epsil:
     in: Erfc(Interval(0.2, 0.3))
     out: Interval(0.671_373_240_540_872_6, 0.777_297_410_789_521_5)
+    back: [Erfc, [Interval, 0.2, 0.30000000000000004]]
   tex:
     in: \mathrm{Erfc}(\mathrm{Interval}(0.2, 0.3))
     out: \mathrm{Interval}(0.671\,373\,240\,540\,872\,6, 0.777\,297\,410\,789\,521\,5)

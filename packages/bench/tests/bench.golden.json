@@ -1676,7 +1676,7 @@
           },
           "julia": {
             "sources": [
-              "[mod(fibonacci(99551), 1000000007), mod(fibonacci(99355), 1000000007), mod(fibonacci(99996), 1000000007), mod(fibonacci(99903), 1000000007), mod(fibonacci(99693), 1000000007), mod(fibonacci(99241), 1000000007), mod(fibonacci(99206), 1000000007), mod(fibonacci(99929), 1000000007)]"
+              "[mod(BigInt(fibonacci(ZZ(99551))), 1000000007), mod(BigInt(fibonacci(ZZ(99355))), 1000000007), mod(BigInt(fibonacci(ZZ(99996))), 1000000007), mod(BigInt(fibonacci(ZZ(99903))), 1000000007), mod(BigInt(fibonacci(ZZ(99693))), 1000000007), mod(BigInt(fibonacci(ZZ(99241))), 1000000007), mod(BigInt(fibonacci(ZZ(99206))), 1000000007), mod(BigInt(fibonacci(ZZ(99929))), 1000000007)]"
             ]
           },
           "rust": {
@@ -1741,7 +1741,7 @@
           },
           "julia": {
             "sources": [
-              "[mod(fibonacci(999551), 1000000007), mod(fibonacci(999355), 1000000007), mod(fibonacci(999996), 1000000007), mod(fibonacci(999903), 1000000007)]"
+              "[mod(BigInt(fibonacci(ZZ(999551))), 1000000007), mod(BigInt(fibonacci(ZZ(999355))), 1000000007), mod(BigInt(fibonacci(ZZ(999996))), 1000000007), mod(BigInt(fibonacci(ZZ(999903))), 1000000007)]"
             ]
           },
           "rust": {
@@ -1789,7 +1789,9 @@
             "sources": ["[mod(fibonacci(9999551), 1000000007), mod(fibonacci(9999355), 1000000007)]"]
           },
           "julia": {
-            "sources": ["[mod(fibonacci(9999551), 1000000007), mod(fibonacci(9999355), 1000000007)]"]
+            "sources": [
+              "[mod(BigInt(fibonacci(ZZ(9999551))), 1000000007), mod(BigInt(fibonacci(ZZ(9999355))), 1000000007)]"
+            ]
           },
           "rust": {
             "reason": "unmapped",
@@ -1988,7 +1990,7 @@
           },
           "julia": {
             "sources": [
-              "[mod(Combinatorics.stirlings1(235, 124), 1000000007), mod(Combinatorics.stirlings1(291, 160), 1000000007), mod(Combinatorics.stirlings1(224, 136), 1000000007), mod(Combinatorics.stirlings1(293, 96), 1000000007), mod(Combinatorics.stirlings1(225, 122), 1000000007), mod(Combinatorics.stirlings1(300, 99), 1000000007), mod(Combinatorics.stirlings1(295, 83), 1000000007), mod(Combinatorics.stirlings1(224, 93), 1000000007)]"
+              "[mod(Combinatorics.stirlings1(big(235), 124), 1000000007), mod(Combinatorics.stirlings1(big(291), 160), 1000000007), mod(Combinatorics.stirlings1(big(224), 136), 1000000007), mod(Combinatorics.stirlings1(big(293), 96), 1000000007), mod(Combinatorics.stirlings1(big(225), 122), 1000000007), mod(Combinatorics.stirlings1(big(300), 99), 1000000007), mod(Combinatorics.stirlings1(big(295), 83), 1000000007), mod(Combinatorics.stirlings1(big(224), 93), 1000000007)]"
             ]
           },
           "rust": {
@@ -2052,7 +2054,7 @@
           },
           "julia": {
             "sources": [
-              "[mod(Combinatorics.stirlings1(1035, 510), 1000000007), mod(Combinatorics.stirlings1(1091, 599), 1000000007), mod(Combinatorics.stirlings1(1024, 539), 1000000007), mod(Combinatorics.stirlings1(1093, 441), 1000000007)]"
+              "[mod(Combinatorics.stirlings1(big(1035), 510), 1000000007), mod(Combinatorics.stirlings1(big(1091), 599), 1000000007), mod(Combinatorics.stirlings1(big(1024), 539), 1000000007), mod(Combinatorics.stirlings1(big(1093), 441), 1000000007)]"
             ]
           },
           "rust": {

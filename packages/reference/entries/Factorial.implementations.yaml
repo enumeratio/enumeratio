@@ -408,7 +408,7 @@ real-arguments-evaluate-as-gamma-n-1:
     out: "InexactError: convert(ZZRingElem, 3.5)"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
+    note: Nemo's ZZ is integers only; ours evaluates a real argument through Gamma(n+1).
   mathlib4:
     in: (Nat.factorial 3.5)
   rust:
@@ -440,7 +440,7 @@ negative-non-integers-are-defined-too-2-5-gamma:
     out: "InexactError: convert(ZZRingElem, -2.5)"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
+    note: Nemo's ZZ is integers only; ours evaluates a negative non-integer argument through Gamma(n+1) too.
   mathlib4:
     in: (Nat.factorial (-2.5))
   rust:
@@ -472,7 +472,7 @@ complex-arguments-1-i-gamma-2-i:
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
+    note: Nemo's ZZ has no Gaussian integers; ours evaluates a complex argument through Gamma(n+1).
 frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
   epsil:
     in: (-1 / 2)!
@@ -497,7 +497,7 @@ frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
-    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
+    note: ZZ needs an integer; ours reaches (-1/2)! = sqrt(pi) through Gamma(n+1).
   mathlib4:
     in: "(Nat.factorial (((-1) : ℚ) / 2))"
   rust:

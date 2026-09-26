@@ -47,3 +47,24 @@ test("a Cell's input may be one := binding; nowhere else", () => {
   expect(parseNotatio("Cell(b := (c := 1))").errors.length).toBeGreaterThan(0);
   expect(parseNotatio("f(a := 1)").errors.length).toBeGreaterThan(0);
 });
+
+test("a decimal reads as the digits it was typed with", () => {
+  // compute-engine's own `parseEpsil` reads `0.3` as 0.30000000000000004.
+  for (const [src, value] of [
+    ["0.3", 0.3],
+    ["-0.3", -0.3],
+    ["5.56", 5.56],
+    ["0.000_001", 0.000001],
+    ["1.414_2", 1.4142],
+    ["10e-17", 1e-16],
+  ] as const) {
+    expect(ce.box(parseNotatio(src).json).re, src).toBe(value);
+  }
+});
+
+test("a diagnostic carries the span it is about", () => {
+  const { errors, diagnostics } = parseNotatio("10^-16");
+  expect(errors.length).toBeGreaterThan(0);
+  expect(diagnostics[0]).toEqual({ message: errors[0], range: [2, 4] });
+  expect(parseNotatio("f := 1").diagnostics[0]).toEqual({ message: "notatio: Assign is not allowed", range: [0, 6] });
+});

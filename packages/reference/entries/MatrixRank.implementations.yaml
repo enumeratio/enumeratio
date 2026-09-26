@@ -238,6 +238,7 @@ the-4-4-hilbert-matrix-is-badly-conditioned-but:
   epsil:
     in: MatrixRank(Tabulate(Function(1 / (_1 + _2 - 1)), 4, 4))
     out: "4"
+    back: Unreadable
   tex:
     in: \operatorname{rank}(\mathrm{Tabulate}(()\mapsto\frac{1}{(\operatorname{\_1}+\operatorname{\_2})-1}, 4, 4))
     out: "4"

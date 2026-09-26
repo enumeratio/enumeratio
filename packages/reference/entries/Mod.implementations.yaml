@@ -239,6 +239,7 @@ a-third-argument-offsets-the-range-the-result:
   epsil:
     in: 17 % 5 % 1
     out: "2"
+    back: [Mod, [Mod, 17, 5], 1]
   tex:
     in:
     out: "2"
@@ -255,6 +256,7 @@ with-offset-1-the-residues-run-1-2-3-rather-than:
   epsil:
     in: 5 % 3 % 1
     out: "2"
+    back: [Mod, [Mod, 5, 3], 1]
   tex:
     in:
     out: "2"
@@ -410,11 +412,8 @@ threads-over-a-list-of-moduli:
   oscar:
     in: mod(10, [3, 4, 7])
   julia:
-    in: mod(10, [3, 4, 7])
-    out: "MethodError: no method matching mod(::Int64, ::Vector{Int64}) The function `mod` exists, but no meth"
-    verdict: error
-    kind: threading
-    note: compute-engine's Mod is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[mod(10, 3), mod(10, 4), mod(10, 7)]"
+    out: "[1, 2, 3]"
   mathlib4:
     in: "((10 : ℤ) % [3, 4, 7])"
   rust:
@@ -449,7 +448,7 @@ a-gaussian-integer-5-3i-2-2-2i:
     out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
     verdict: error
     kind: domain
-    note: compute-engine's Mod reduces Gaussian integers; Julia's mod is real-only.
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a rational integer.
 1-i-divides-5-3i-1-i-4-i:
   epsil:
     in: (5 + 3i) % (1 + i)
@@ -476,7 +475,7 @@ a-gaussian-integer-5-3i-2-2-2i:
     out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
     verdict: error
     kind: domain
-    note: compute-engine's Mod reduces Gaussian integers; Julia's mod is real-only.
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a Gaussian modulus too.
 a-negative-modulus-gives-a-result-in-n-0:
   epsil:
     in: -5 % -3

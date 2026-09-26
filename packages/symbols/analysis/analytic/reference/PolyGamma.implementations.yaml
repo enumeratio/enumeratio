@@ -731,6 +731,7 @@ n-polygamma-1-0p5-plus-0p3i:
   epsil:
     in: N(PolyGamma(1, 0.5 + 0.3i))
     out: 2.259_034_075_905_333_3 + -2.828_996_786_115_696_6 * i
+    back: [N, [PolyGamma, 1, [Add, 0.5, [Multiply, 0.30000000000000004, i]]]]
   tex:
     in: N(\mathrm{PolyGamma}(1, 0.5+0.3i))
     out: 2.259\,034\,075\,905\,333\,3-2.828\,996\,786\,115\,696\,6i
@@ -946,6 +947,7 @@ n-polygamma-2-0p5-plus-0p3i:
   epsil:
     in: N(PolyGamma(2, 0.5 + 0.3i))
     out: -0.177_259_899_890_065_55 + 10.451_822_205_943_445i
+    back: [N, [PolyGamma, 2, [Add, 0.5, [Multiply, 0.30000000000000004, i]]]]
   tex:
     in: N(\mathrm{PolyGamma}(2, 0.5+0.3i))
     out: -0.177\,259\,899\,890\,065\,55+10.451\,822\,205\,943\,445i
@@ -1161,6 +1163,7 @@ n-polygamma-3-0p5-plus-0p3i:
   epsil:
     in: N(PolyGamma(3, 0.5 + 0.3i))
     out: -27.944_271_157_846_87 + -43.969_408_839_814_47 * i
+    back: [N, [PolyGamma, 3, [Add, 0.5, [Multiply, 0.30000000000000004, i]]]]
   tex:
     in: N(\mathrm{PolyGamma}(3, 0.5+0.3i))
     out: -27.944\,271\,157\,846\,87-43.969\,408\,839\,814\,47i
@@ -1376,6 +1379,7 @@ n-polygamma-5-0p5-plus-0p3i:
   epsil:
     in: N(PolyGamma(5, 0.5 + 0.3i))
     out: -3_033.627_950_298_733 + 298.588_513_636_672_4i
+    back: [N, [PolyGamma, 5, [Add, 0.5, [Multiply, 0.30000000000000004, i]]]]
   tex:
     in: N(\mathrm{PolyGamma}(5, 0.5+0.3i))
     out: -3\,033.627\,950\,298\,733+298.588\,513\,636\,672\,4i

@@ -80,6 +80,7 @@ milu-zu-chongzhi-s-5th-century-approximation-of:
   epsil:
     in: Rationalize(Pi, 0.000_001)
     out: 355 / 113
+    back: [Rationalize, Pi, 0.0000010000000000000002]
   tex:
     in: \mathrm{Rationalize}(\pi, 0.000\,001)
     out: \frac{355}{113}
@@ -95,6 +96,7 @@ recovers-a-simple-fraction-from-a-decimal:
   epsil:
     in: Rationalize(0.75)
     out: 3 / 4
+    back: [Rationalize, 0.7500000000000001]
   tex:
     in: \mathrm{Rationalize}(0.75)
     out: \frac{3}{4}
@@ -110,6 +112,7 @@ without-enough-repeating-digits-to-reach-machine:
   epsil:
     in: Rationalize(0.333_333)
     out: 333_333 / 1_000_000
+    back: [Rationalize, 0.33333300000000005]
   tex:
     in: \mathrm{Rationalize}(0.333\,333)
     out: \frac{333\,333}{1\,000\,000}
@@ -202,6 +205,18 @@ the-rational-with-the-smallest-denominator:
     in: Rationalize[Pi, 0.001]
   wolfram:
     in: Rationalize[Pi, 0.001]
+a-tolerance-finer-than-a-double:
+  epsil:
+    in: Rationalize(Pi, e-16)
+    out: 245_850_922 / 78_256_779
+    back: [Rationalize, Pi, [Subtract, e, 16]]
+  tex:
+    in: \mathrm{Rationalize}(\pi, 10^{-16})
+    out: \frac{245\,850\,922}{78\,256\,779}
+  fullform:
+    in: Rationalize[Pi, 1*^-16]
+  wolfram:
+    in: Rationalize[Pi, 1*^-16]
 rationalizes-every-approximate-number-inside-an:
   epsil:
     in: Rationalize(1.2 + 6.7x)
@@ -237,6 +252,7 @@ recognizes-a-ratio-of-consecutive-fibonacci:
   epsil:
     in: Rationalize(0.618_034, 0.000_1)
     out: 55 / 89
+    back: [Rationalize, 0.6180340000000001, 0.0001]
   tex:
     in: \mathrm{Rationalize}(0.618\,034, 0.000\,1)
     out: \frac{55}{89}

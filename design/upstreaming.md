@@ -101,6 +101,13 @@ generic `where` clauses.
   `'"s0"'` — single quotes for the literal, inner double quotes because it is non-numeric —
   while `["String", "2"]` becomes `'2'`. A naive reader works on numeric labels and fails
   silently on every other one. That cost a real debugging cycle in the group algebras.
+- **Epsil does not round-trip numbers.** `serializeEpsil` drops a mantissa of exactly 1
+  (`1e-16` prints `e-16`, which reads back as Euler's e minus 16), and `parseEpsil` works a
+  short decimal out in doubles (`0.3` reads as `0.30000000000000004`; a long one is kept as
+  written). `toInputForm` respells the first as `10e-17` and `parseNotatio` re-reads each
+  literal from its source span; both are no-ops once upstream is fixed. It also prints a
+  three-argument `Mod(17, 5, 1)` as `17 % 5 % 1`, which reads back as `Mod(Mod(17, 5), 1)` --
+  still open, and visible as `epsil.back` in the `Mod` sidecar.
 - **Canonical `Add` ordering** is not the order anyone writes, which makes pinned
   expectations in tests and reference entries fragile unless they are dumped rather than
   hand-written.
@@ -578,3 +585,29 @@ round-trips. Seen once the editable components started handing the engine's own 
 the field (`packages/notatio/src/source.ts`); `Gamma` → `\Gamma` is right, this one is
 not. Patched locally for every engine we build (`packages/notatio/src/latex.ts`), alongside
 the same fix for `LCM`, `Rank` and `Erf`, pending upstreaming.
+
+## 9. Certified digits: what we would ask for
+
+`N(x, d)` proves its digits for the heads whose kernels bound their own error
+(`packages/symbols/analysis/analytic/src/certified.ts`, enumeratio/enumeratio#113 step 3 (b)).
+The proof is ball arithmetic (`src/ball.ts`) on compute-engine's BigDecimal, and it leans on
+BigDecimal only where BigDecimal promises something: `+`, `−` and `×` are exact, and
+`divToward`, `sqrtToward` and `toPrecisionToward` round in a stated direction. Where it promises
+nothing, we wrote our own. This is the running list of those, each a candidate to send
+upstream -- and, once there, to delete here.
+
+- **`exp` with a bound.** BigDecimal's `exp` documents no error. Ours (`expExact`) sums the
+  Taylor series in binary fixed point, as Arb and mpmath do, and counts its error in units of
+  the last bit: under 3 units a term, one more for each squaring. It runs at about the speed of
+  the native `exp`. The ask: an `expToward(direction)`, or a stated bound ("within 1 ulp") on
+  `exp` itself.
+- **`ln` with a bound.** Ours (`lnExact`) takes BigDecimal's `ln` as a guess y and proves it:
+  ln m = y + ln(m·e^{−y}), and the second term is tiny and bounded. That costs one of our
+  `exp`s on top of the native `ln`, which is why a non-integer power costs about three times
+  what the native `ln` and `exp` did. A `lnToward`, or a stated bound, would remove it.
+- **`pow` with a bound**, which follows from the two above.
+- **Constants with a bound.** `BigDecimal.PI` is a literal of published digits, rounded, so
+  good to half a unit; we take it at that, up to 1090 digits, and a test checks the literal
+  against mpmath. `EULER_GAMMA` is computed, with no stated error, so Barnes G's kernel takes
+  γ = γ₀(1) from our certified Stieltjes kernel instead. The ask: a stated bound on each
+  constant BigDecimal offers.

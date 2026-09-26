@@ -23,7 +23,7 @@ stirling-5-2:
     in: stirling_number2(5, 2)
     out: "15"
   julia:
-    in: Combinatorics.stirlings2(5, 2)
+    in: Combinatorics.stirlings2(big(5), 2)
     out: "15"
   mathlib4:
     in: (Nat.stirlingSecond 5 2)
@@ -53,7 +53,7 @@ stirling-6-3:
     in: stirling_number2(6, 3)
     out: "90"
   julia:
-    in: Combinatorics.stirlings2(6, 3)
+    in: Combinatorics.stirlings2(big(6), 3)
     out: "90"
   mathlib4:
     in: (Nat.stirlingSecond 6 3)
@@ -83,7 +83,7 @@ one-block-means-one-partition-s-n-1-1:
     in: stirling_number2(5, 1)
     out: "1"
   julia:
-    in: Combinatorics.stirlings2(5, 1)
+    in: Combinatorics.stirlings2(big(5), 1)
     out: "1"
   mathlib4:
     in: (Nat.stirlingSecond 5 1)
@@ -113,7 +113,7 @@ singletons-only-s-n-n-1:
     in: stirling_number2(5, 5)
     out: "1"
   julia:
-    in: Combinatorics.stirlings2(5, 5)
+    in: Combinatorics.stirlings2(big(5), 5)
     out: "1"
   mathlib4:
     in: (Nat.stirlingSecond 5 5)
@@ -161,7 +161,7 @@ the-empty-set-has-one-partition-into-no-blocks:
     in: stirling_number2(0, 0)
     out: "1"
   julia:
-    in: Combinatorics.stirlings2(0, 0)
+    in: Combinatorics.stirlings2(big(0), 0)
     out: "1"
   mathlib4:
     in: (Nat.stirlingSecond 0 0)
@@ -186,7 +186,7 @@ stirling-20-10:
   sage:
     in: stirling_number2(20, 10)
   julia:
-    in: Combinatorics.stirlings2(20, 10)
+    in: Combinatorics.stirlings2(big(20), 10)
     out: "5917584964655"
   mathlib4:
     in: (Nat.stirlingSecond 20 10)
@@ -210,7 +210,7 @@ exact-for-large-n:
   sage:
     in: stirling_number2(50, 2)
   julia:
-    in: Combinatorics.stirlings2(50, 2)
+    in: Combinatorics.stirlings2(big(50), 2)
     out: "562949953421311"
   mathlib4:
     in: (Nat.stirlingSecond 50 2)
@@ -226,19 +226,16 @@ threads-element-wise-over-a-list-as-wolfram-s:
   wolfram:
     in: StirlingS2[List[2, 4, 6], 2]
   sympy:
-    in: stirling([2, 4, 6], 2)
+    in: "[stirling(2, 2), stirling(4, 2), stirling(6, 2)]"
     out: "ValueError: [2, 4, 6] is not an integer"
     verdict: error
     kind: threading
     note: compute-engine's Stirling is Listable and threads over the list; SymPy takes scalars only.
   sage:
-    in: stirling_number2([2, 4, 6], 2)
+    in: "[stirling_number2(2, 2), stirling_number2(4, 2), stirling_number2(6, 2)]"
   julia:
-    in: Combinatorics.stirlings2([2, 4, 6], 2)
-    out: "MethodError: no method matching stirlings2(::Vector{Int64}, ::Int64) The function `stirlings2` exist"
-    verdict: error
-    kind: threading
-    note: compute-engine's Stirling is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[Combinatorics.stirlings2(big(2), 2), Combinatorics.stirlings2(big(4), 2), Combinatorics.stirlings2(big(6), 2)]"
+    out: "[1, 7, 31]"
   mathlib4:
     in: (Nat.stirlingSecond [2, 4, 6] 2)
 two-blocks-s-n-2-2-n-1-1:
@@ -261,7 +258,7 @@ two-blocks-s-n-2-2-n-1-1:
   sage:
     in: bool(stirling_number2(10, 2) == ((2^9) - 1))
   julia:
-    in: (Combinatorics.stirlings2(10, 2) == ((big(2)^9) - 1))
+    in: (Combinatorics.stirlings2(big(10), 2) == ((big(2)^9) - 1))
     out: "true"
   mathlib4:
     in: (decide ((Nat.stirlingSecond 10 2) = ((2 ^ 9) - 1)))
@@ -285,7 +282,7 @@ s-n-n-1-binom-n-2-one-block-is-a-pair:
   sage:
     in: bool(stirling_number2(6, 5) == binomial(6, 2))
   julia:
-    in: (Combinatorics.stirlings2(6, 5) == binomial(ZZ(6), ZZ(2)))
+    in: (Combinatorics.stirlings2(big(6), 5) == binomial(ZZ(6), ZZ(2)))
     out: "true"
   mathlib4:
     in: (decide ((Nat.stirlingSecond 6 5) = (Nat.choose 6 2)))
@@ -337,7 +334,7 @@ the-ways-to-split-10-distinct-items-among-3:
   sage:
     in: stirling_number2(10, 3)
   julia:
-    in: Combinatorics.stirlings2(10, 3)
+    in: Combinatorics.stirlings2(big(10), 3)
     out: "9330"
   mathlib4:
     in: (Nat.stirlingSecond 10 3)
@@ -361,7 +358,7 @@ no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0:
   sage:
     in: stirling_number2(5, 0)
   julia:
-    in: Combinatorics.stirlings2(5, 0)
+    in: Combinatorics.stirlings2(big(5), 0)
     out: "0"
   mathlib4:
     in: (Nat.stirlingSecond 5 0)
@@ -385,7 +382,7 @@ k-n-is-0:
   sage:
     in: stirling_number2(3, 5)
   julia:
-    in: Combinatorics.stirlings2(3, 5)
+    in: Combinatorics.stirlings2(big(3), 5)
     out: "0"
   mathlib4:
     in: (Nat.stirlingSecond 3 5)
@@ -409,7 +406,7 @@ stirling-0-1-is-also-0:
   sage:
     in: stirling_number2(0, 1)
   julia:
-    in: Combinatorics.stirlings2(0, 1)
+    in: Combinatorics.stirlings2(big(0), 1)
     out: "0"
   mathlib4:
     in: (Nat.stirlingSecond 0 1)
