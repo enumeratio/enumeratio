@@ -16,13 +16,13 @@ bellnumber-0:
     tex:
       in: B_0
       out: "1"
+  sympy:
+    in: bell(0)
+    out: "1"
   sage:
     in: bell_number(0)
     out: "1"
   oscar:
-    in: bell(0)
-    out: "1"
-  sympy:
     in: bell(0)
     out: "1"
   julia:
@@ -46,13 +46,13 @@ bellnumber-1:
     tex:
       in: B_1
       out: "1"
+  sympy:
+    in: bell(1)
+    out: "1"
   sage:
     in: bell_number(1)
     out: "1"
   oscar:
-    in: bell(1)
-    out: "1"
-  sympy:
     in: bell(1)
     out: "1"
   julia:
@@ -76,13 +76,13 @@ bellnumber-3:
     tex:
       in: B_3
       out: "5"
+  sympy:
+    in: bell(3)
+    out: "5"
   sage:
     in: bell_number(3)
     out: "5"
   oscar:
-    in: bell(3)
-    out: "5"
-  sympy:
     in: bell(3)
     out: "5"
   julia:
@@ -106,13 +106,13 @@ bellnumber-5:
     tex:
       in: B_5
       out: "52"
+  sympy:
+    in: bell(5)
+    out: "52"
   sage:
     in: bell_number(5)
     out: "52"
   oscar:
-    in: bell(5)
-    out: "52"
-  sympy:
     in: bell(5)
     out: "52"
   julia:
@@ -136,13 +136,13 @@ bellnumber-10:
     tex:
       in: B_{10}
       out: "115975"
+  sympy:
+    in: bell(10)
+    out: "115975"
   sage:
     in: bell_number(10)
     out: "115975"
   oscar:
-    in: bell(10)
-    out: "115975"
-  sympy:
     in: bell(10)
     out: "115975"
   julia:
@@ -169,15 +169,15 @@ recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
     tex:
       in: B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(bell(5), ((binomial(4, 0) * bell(0)) + (binomial(4, 1) * bell(1)) + (binomial(4, 2) * bell(2)) + (binomial(4, 3) * bell(3)) + (binomial(4, 4) * bell(4))))
+    out: True
   sage:
     in: bool(bell_number(5) == ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))
     out: True
   oscar:
     in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
     out: "true"
-  sympy:
-    in: enumeratio_equal(bell(5), ((binomial(4, 0) * bell(0)) + (binomial(4, 1) * bell(1)) + (binomial(4, 2) * bell(2)) + (binomial(4, 3) * bell(3)) + (binomial(4, 4) * bell(4))))
-    out: True
   julia:
     in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
     out: "true"
@@ -199,13 +199,13 @@ the-number-of-ways-to-partition-a-4-element-set:
     tex:
       in: B_4
       out: "15"
+  sympy:
+    in: bell(4)
+    out: "15"
   sage:
     in: bell_number(4)
     out: "15"
   oscar:
-    in: bell(4)
-    out: "15"
-  sympy:
     in: bell(4)
     out: "15"
   julia:
@@ -229,6 +229,12 @@ a-negative-argument-is-left-unevaluated:
     tex:
       in: B_{-1}
       out: B_{-1}
+  sympy:
+    in: bell(-1)
+    out: "ValueError: a non-negative integer expected"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
   sage:
     in: bell_number(-1)
     out: "ArithmeticError: Bell numbers not defined for negative indices"
@@ -241,12 +247,6 @@ a-negative-argument-is-left-unevaluated:
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers ["BellNumber", -1] and Oscar raises an error.'
-  sympy:
-    in: bell(-1)
-    out: "ValueError: a non-negative integer expected"
-    verdict: error
-    kind: undefined-form
-    note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
   julia:
     in: bell(-1)
     out: "DomainError with -1: Argument must be non-negative"
@@ -268,13 +268,13 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: B_{\{1,2,3,4\}}
       out: \{1,2,5,15\}
+  sympy:
+    in: "[bell(1), bell(2), bell(3), bell(4)]"
+    out: "[1, 2, 5, 15]"
   sage:
     in: "[bell_number(1), bell_number(2), bell_number(3), bell_number(4)]"
   oscar:
     in: bell([1, 2, 3, 4])
-  sympy:
-    in: "[bell(1), bell(2), bell(3), bell(4)]"
-    out: "[1, 2, 5, 15]"
   julia:
     in: bell([1, 2, 3, 4])
     out: "MethodError: no method matching bell(::Vector{Int64}) The function `bell` exists, but no method is d"
@@ -295,13 +295,13 @@ exact-for-large-n:
     in: BellB[30]
   wolfram:
     in: BellB[30]
+  sympy:
+    in: bell(30)
+    out: "846749014511809332450147"
   sage:
     in: bell_number(30)
   oscar:
     in: bell(30)
-  sympy:
-    in: bell(30)
-    out: "846749014511809332450147"
   julia:
     in: bell(30)
     out: "InexactError: convert(Int64, 846749014511809332450147)"
@@ -373,13 +373,13 @@ touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
     in: Equal[Mod[BellB[9], 7], Mod[Plus[BellB[2], BellB[3]], 7]]
   wolfram:
     in: (Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])
+  sympy:
+    in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
+    out: True
   sage:
     in: bool((bell_number(9) % 7) == ((bell_number(2) + bell_number(3)) % 7))
   oscar:
     in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
-  sympy:
-    in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
-    out: True
   julia:
     in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
     out: "true"

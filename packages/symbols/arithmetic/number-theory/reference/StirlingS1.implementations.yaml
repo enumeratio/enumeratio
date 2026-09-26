@@ -22,18 +22,18 @@ stirlings1-5-2:
     verdict: disagree
     kind: convention
     note: Signed here (s(5,2) = -50); Sage's stirling_number1 is unsigned by definition and returns 50 -- documented in mappings.ts, not a bug.
-  mathlib4:
-    in: (Nat.stirlingFirst 5 2)
-    out: "50"
-    verdict: disagree
-    kind: convention
-    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
   julia:
     in: Combinatorics.stirlings1(5, 2)
     out: "50"
     verdict: disagree
     kind: convention
     note: Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+  mathlib4:
+    in: (Nat.stirlingFirst 5 2)
+    out: "50"
+    verdict: disagree
+    kind: convention
+    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
 stirlings1-4-2:
   epsil:
     in: StirlingS1(4, 2)
@@ -55,11 +55,11 @@ stirlings1-4-2:
   sage:
     in: stirling_number1(4, 2)
     out: "11"
-  mathlib4:
-    in: (Nat.stirlingFirst 4 2)
-    out: "11"
   julia:
     in: Combinatorics.stirlings1(4, 2)
+    out: "11"
+  mathlib4:
+    in: (Nat.stirlingFirst 4 2)
     out: "11"
 s-n-n-is-always-1:
   epsil:
@@ -82,11 +82,11 @@ s-n-n-is-always-1:
   sage:
     in: stirling_number1(3, 3)
     out: "1"
-  mathlib4:
-    in: (Nat.stirlingFirst 3 3)
-    out: "1"
   julia:
     in: Combinatorics.stirlings1(3, 3)
+    out: "1"
+  mathlib4:
+    in: (Nat.stirlingFirst 3 3)
     out: "1"
 s-n-0-is-0-for-n-0:
   epsil:
@@ -109,11 +109,11 @@ s-n-0-is-0-for-n-0:
   sage:
     in: stirling_number1(5, 0)
     out: "0"
-  mathlib4:
-    in: (Nat.stirlingFirst 5 0)
-    out: "0"
   julia:
     in: Combinatorics.stirlings1(5, 0)
+    out: "0"
+  mathlib4:
+    in: (Nat.stirlingFirst 5 0)
     out: "0"
 the-unsigned-values-in-a-row-sum-to-n:
   epsil:
@@ -154,11 +154,11 @@ the-number-of-permutations-of-5-elements-with:
   sage:
     in: stirling_number1(5, 3)
     out: "35"
-  mathlib4:
-    in: (Nat.stirlingFirst 5 3)
-    out: "35"
   julia:
     in: Combinatorics.stirlings1(5, 3)
+    out: "35"
+  mathlib4:
+    in: (Nat.stirlingFirst 5 3)
     out: "35"
 the-empty-case-s-0-0-1-by-convention-distinct:
   epsil:
@@ -181,11 +181,11 @@ the-empty-case-s-0-0-1-by-convention-distinct:
   sage:
     in: stirling_number1(0, 0)
     out: "1"
-  mathlib4:
-    in: (Nat.stirlingFirst 0 0)
-    out: "1"
   julia:
     in: Combinatorics.stirlings1(0, 0)
+    out: "1"
+  mathlib4:
+    in: (Nat.stirlingFirst 0 0)
     out: "1"
 s-n-1-1-n-1-n-1-so-s-10-1-9:
   epsil:
@@ -211,18 +211,18 @@ s-n-1-1-n-1-n-1-so-s-10-1-9:
     verdict: disagree
     kind: convention
     note: "Same unsigned-vs-signed convention: s(10,1) = -362880 here, Sage's unsigned stirling_number1 gives 362880."
-  mathlib4:
-    in: (Nat.stirlingFirst 10 1)
-    out: "362880"
-    verdict: disagree
-    kind: convention
-    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
   julia:
     in: Combinatorics.stirlings1(10, 1)
     out: "362880"
     verdict: disagree
     kind: convention
     note: Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+  mathlib4:
+    in: (Nat.stirlingFirst 10 1)
+    out: "362880"
+    verdict: disagree
+    kind: convention
+    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: StirlingS1([2, 4, 6], 2)
@@ -240,14 +240,14 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{1,11,274\}
   sage:
     in: stirling_number1([2, 4, 6], 2)
-  mathlib4:
-    in: (Nat.stirlingFirst [2, 4, 6] 2)
   julia:
     in: Combinatorics.stirlings1([2, 4, 6], 2)
     out: "MethodError: no method matching stirlings1(::Vector{Int64}, ::Int64) The function `stirlings1` exist"
     verdict: error
     kind: threading
     note: compute-engine's StirlingS1 is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+  mathlib4:
+    in: (Nat.stirlingFirst [2, 4, 6] 2)
 stirlings1-20-10:
   epsil:
     in: StirlingS1(20, 10)
@@ -264,11 +264,11 @@ stirlings1-20-10:
     in: StirlingS1[20, 10]
   sage:
     in: stirling_number1(20, 10)
-  mathlib4:
-    in: (Nat.stirlingFirst 20 10)
   julia:
     in: Combinatorics.stirlings1(20, 10)
     out: "381922055502195"
+  mathlib4:
+    in: (Nat.stirlingFirst 20 10)
 exact-for-large-n:
   epsil:
     in: StirlingS1(50, 2)
@@ -285,14 +285,14 @@ exact-for-large-n:
     in: StirlingS1[50, 2]
   sage:
     in: stirling_number1(50, 2)
-  mathlib4:
-    in: (Nat.stirlingFirst 50 2)
   julia:
     in: Combinatorics.stirlings1(50, 2)
     out: "OverflowError: 21 is too large to look up in the table; consider using `factorial(big(21))` instead"
     verdict: error
     kind: domain
     note: Combinatorics.jl computes StirlingS1 in Int64, which overflows here; compute-engine is exact.
+  mathlib4:
+    in: (Nat.stirlingFirst 50 2)
 the-signed-row-sum-vanishes-for-n-ge-2:
   epsil:
     in: Sum(StirlingS1(6, k), (k, 0, 6))
@@ -323,14 +323,14 @@ s-n-n-1-binom-n-2:
     in: (StirlingS1[6, 5] == Minus[Binomial[6, 2]])
   sage:
     in: bool(stirling_number1(6, 5) == (-binomial(6, 2)))
-  mathlib4:
-    in: (decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))
   julia:
     in: (Combinatorics.stirlings1(6, 5) == (-(binomial(ZZ(6), ZZ(2)))))
     out: "false"
     verdict: disagree
     kind: convention
     note: Combinatorics.jl's stirlings1 is unsigned; compute-engine's StirlingS1, like Wolfram's, is signed.
+  mathlib4:
+    in: (decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x:
   epsil:
     in: |-
@@ -361,8 +361,8 @@ k-n-is-0:
     in: StirlingS1[5, 6]
   sage:
     in: stirling_number1(5, 6)
-  mathlib4:
-    in: (Nat.stirlingFirst 5 6)
   julia:
     in: Combinatorics.stirlings1(5, 6)
     out: "0"
+  mathlib4:
+    in: (Nat.stirlingFirst 5 6)

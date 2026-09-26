@@ -16,20 +16,20 @@
     tex:
       in: \text{PrimeQ}[1]
       out: \text{False}
+  sympy:
+    in: isprime(1)
+    out: False
   sage:
     in: is_prime(1)
     out: False
   oscar:
     in: is_prime(ZZ(1))
     out: "false"
-  mathlib4:
-    in: (decide (Nat.Prime 1))
-    out: "false"
-  sympy:
-    in: isprime(1)
-    out: False
   julia:
     in: is_prime(ZZ(1))
+    out: "false"
+  mathlib4:
+    in: (decide (Nat.Prime 1))
     out: "false"
   rust:
     in: is_prime(n(1))
@@ -52,20 +52,20 @@
     tex:
       in: \text{PrimeQ}[2]
       out: \text{True}
+  sympy:
+    in: isprime(2)
+    out: True
   sage:
     in: is_prime(2)
     out: True
   oscar:
     in: is_prime(ZZ(2))
     out: "true"
-  mathlib4:
-    in: (decide (Nat.Prime 2))
-    out: "true"
-  sympy:
-    in: isprime(2)
-    out: True
   julia:
     in: is_prime(ZZ(2))
+    out: "true"
+  mathlib4:
+    in: (decide (Nat.Prime 2))
     out: "true"
   rust:
     in: is_prime(n(2))
@@ -88,20 +88,20 @@ isprime-13:
     tex:
       in: \text{PrimeQ}[13]
       out: \text{True}
+  sympy:
+    in: isprime(13)
+    out: True
   sage:
     in: is_prime(13)
     out: True
   oscar:
     in: is_prime(ZZ(13))
     out: "true"
-  mathlib4:
-    in: (decide (Nat.Prime 13))
-    out: "true"
-  sympy:
-    in: isprime(13)
-    out: True
   julia:
     in: is_prime(ZZ(13))
+    out: "true"
+  mathlib4:
+    in: (decide (Nat.Prime 13))
     out: "true"
   rust:
     in: is_prime(n(13))
@@ -124,20 +124,20 @@ isprime-4:
     tex:
       in: \text{PrimeQ}[4]
       out: \text{False}
+  sympy:
+    in: isprime(4)
+    out: False
   sage:
     in: is_prime(4)
     out: False
   oscar:
     in: is_prime(ZZ(4))
     out: "false"
-  mathlib4:
-    in: (decide (Nat.Prime 4))
-    out: "false"
-  sympy:
-    in: isprime(4)
-    out: False
   julia:
     in: is_prime(ZZ(4))
+    out: "false"
+  mathlib4:
+    in: (decide (Nat.Prime 4))
     out: "false"
   rust:
     in: is_prime(n(4))
@@ -160,20 +160,20 @@ isprime-97:
     tex:
       in: \text{PrimeQ}[97]
       out: \text{True}
+  sympy:
+    in: isprime(97)
+    out: True
   sage:
     in: is_prime(97)
     out: True
   oscar:
     in: is_prime(ZZ(97))
     out: "true"
-  mathlib4:
-    in: (decide (Nat.Prime 97))
-    out: "true"
-  sympy:
-    in: isprime(97)
-    out: True
   julia:
     in: is_prime(ZZ(97))
+    out: "true"
+  mathlib4:
+    in: (decide (Nat.Prime 97))
     out: "true"
   rust:
     in: is_prime(n(97))
@@ -196,10 +196,16 @@ the-mersenne-prime-2-31-1:
     tex:
       in: \text{PrimeQ}\left[2^{31}-1\right]
       out: \text{True}
+  sympy:
+    in: isprime(((2**31) + -1))
+    out: True
   sage:
     in: is_prime(((2^31) + -1))
     out: True
   oscar:
+    in: is_prime(ZZ(((big(2)^31) + -1)))
+    out: "true"
+  julia:
     in: is_prime(ZZ(((big(2)^31) + -1)))
     out: "true"
   mathlib4:
@@ -208,12 +214,6 @@ the-mersenne-prime-2-31-1:
     verdict: error
     kind: domain
     note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends IsPrime to this argument.
-  sympy:
-    in: isprime(((2**31) + -1))
-    out: True
-  julia:
-    in: is_prime(ZZ(((big(2)^31) + -1)))
-    out: "true"
   rust:
     in: is_prime((power(n(2), n(31)) + n(-1)))
     out: "true"
@@ -235,20 +235,20 @@ a-common-choice-of-prime-modulus-for-hashing:
     tex:
       in: \text{PrimeQ}[1000000007]
       out: \text{True}
+  sympy:
+    in: isprime(1000000007)
+    out: True
   sage:
     in: is_prime(1000000007)
     out: True
   oscar:
     in: is_prime(ZZ(1000000007))
     out: "true"
-  mathlib4:
-    in: (decide (Nat.Prime 1000000007))
-    out: "true"
-  sympy:
-    in: isprime(1000000007)
-    out: True
   julia:
     in: is_prime(ZZ(1000000007))
+    out: "true"
+  mathlib4:
+    in: (decide (Nat.Prime 1000000007))
     out: "true"
   rust:
     in: is_prime(n(1000000007))
@@ -271,6 +271,12 @@ threads-element-wise-over-a-list:
     tex:
       in: \text{PrimeQ}[\{1,2,3,4,5,6\}]
       out: \{\text{False},\text{True},\text{True},\text{False},\text{True},\text{False}\}
+  sympy:
+    in: isprime([1, 2, 3, 4, 5, 6])
+    out: "ValueError: [1, 2, 3, 4, 5, 6] is not an integer"
+    verdict: error
+    kind: threading
+    note: compute-engine's IsPrime threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: is_prime([1, 2, 3, 4, 5, 6])
     out: "TypeError: unable to coerce <class 'list'> to an integer"
@@ -283,24 +289,18 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's IsPrime is Listable and threads over the list; Oscar's takes scalars only.
-  mathlib4:
-    in: (decide (Nat.Prime [1, 2, 3, 4, 5, 6]))
-    out: "Application type mismatch: The argument"
-    verdict: error
-    kind: threading
-    note: compute-engine's IsPrime is Listable and threads over the list; Mathlib's takes scalars only.
-  sympy:
-    in: isprime([1, 2, 3, 4, 5, 6])
-    out: "ValueError: [1, 2, 3, 4, 5, 6] is not an integer"
-    verdict: error
-    kind: threading
-    note: compute-engine's IsPrime threads over (or pools) the list; SymPy's takes scalars.
   julia:
     in: is_prime(ZZ([1, 2, 3, 4, 5, 6]))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
     kind: threading
     note: compute-engine's IsPrime is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.
+  mathlib4:
+    in: (decide (Nat.Prime [1, 2, 3, 4, 5, 6]))
+    out: "Application type mismatch: The argument"
+    verdict: error
+    kind: threading
+    note: compute-engine's IsPrime is Listable and threads over the list; Mathlib's takes scalars only.
   rust:
     in: is_prime(list(vec![n(1), n(2), n(3), n(4), n(5), n(6)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -321,24 +321,24 @@ threads-element-wise-over-a-list:
     in: PrimeQ[-7]
   wolfram:
     in: PrimeQ[-7]
-  sage:
-    in: is_prime(-7)
-  oscar:
-    in: is_prime(ZZ(-7))
-  mathlib4:
-    in: (decide (Nat.Prime (-7)))
   sympy:
     in: isprime(-7)
     out: False
     verdict: disagree
     kind: convention
     note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; SymPy's isprime() only accepts positive primes.
+  sage:
+    in: is_prime(-7)
+  oscar:
+    in: is_prime(ZZ(-7))
   julia:
     in: is_prime(ZZ(-7))
     out: "false"
     verdict: disagree
     kind: convention
     note: compute-engine, like Wolfram's PrimeQ, calls -7 prime, an associate of 7; Nemo's is_prime takes only positive primes.
+  mathlib4:
+    in: (decide (Nat.Prime (-7)))
   rust:
     in: is_prime(n(-7))
     out: "panic: a non-negative integer"
@@ -363,6 +363,12 @@ a-gaussian-prime-its-norm-5-is-prime:
     tex:
       in: \text{PrimeQ}[2+i]
       out: \text{True}
+  sympy:
+    in: isprime((2 + 1*I))
+    out: "ValueError: 2 + I is not an integer"
+    verdict: error
+    kind: domain
+    note: SymPy's isprime takes rational integers only; compute-engine also answers Gaussian primality.
   sage:
     in: is_prime((2 + 1*I))
     out: True
@@ -372,12 +378,6 @@ a-gaussian-prime-its-norm-5-is-prime:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so IsPrime over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
-  sympy:
-    in: isprime((2 + 1*I))
-    out: "ValueError: 2 + I is not an integer"
-    verdict: error
-    kind: domain
-    note: SymPy's isprime takes rational integers only; compute-engine also answers Gaussian primality.
   julia:
     in: is_prime(ZZ(complex(2, 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -422,18 +422,18 @@ isprime-5:
     in: PrimeQ[5]
   wolfram:
     in: PrimeQ[5]
+  sympy:
+    in: isprime(5)
+    out: True
   sage:
     in: is_prime(5)
   oscar:
     in: is_prime(ZZ(5))
-  mathlib4:
-    in: (decide (Nat.Prime 5))
-  sympy:
-    in: isprime(5)
-    out: True
   julia:
     in: is_prime(ZZ(5))
     out: "true"
+  mathlib4:
+    in: (decide (Nat.Prime 5))
   rust:
     in: is_prime(n(5))
     out: "true"
@@ -451,18 +451,18 @@ large-integers-10-3000-1-is-divisible-by-10-8-1:
     in: PrimeQ[Plus[Power[10, 3000], 1]]
   wolfram:
     in: PrimeQ[Plus[Power[10, 3000], 1]]
+  sympy:
+    in: isprime(((10**3000) + 1))
+    out: False
   sage:
     in: is_prime(((10^3000) + 1))
   oscar:
     in: is_prime(ZZ(((big(10)^3000) + 1)))
-  mathlib4:
-    in: (decide (Nat.Prime ((10 ^ 3000) + 1)))
-  sympy:
-    in: isprime(((10**3000) + 1))
-    out: False
   julia:
     in: is_prime(ZZ(((big(10)^3000) + 1)))
     out: "false"
+  mathlib4:
+    in: (decide (Nat.Prime ((10 ^ 3000) + 1)))
   rust:
     in: is_prime((power(n(10), n(3000)) + n(1)))
     out: "panic: a non-negative integer"
@@ -483,18 +483,18 @@ the-fermat-number-f-5-2-32-1-is-composite-641:
     in: PrimeQ[Plus[Power[2, 32], 1]]
   wolfram:
     in: PrimeQ[Plus[Power[2, 32], 1]]
+  sympy:
+    in: isprime(((2**32) + 1))
+    out: False
   sage:
     in: is_prime(((2^32) + 1))
   oscar:
     in: is_prime(ZZ(((big(2)^32) + 1)))
-  mathlib4:
-    in: (decide (Nat.Prime ((2 ^ 32) + 1)))
-  sympy:
-    in: isprime(((2**32) + 1))
-    out: False
   julia:
     in: is_prime(ZZ(((big(2)^32) + 1)))
     out: "false"
+  mathlib4:
+    in: (decide (Nat.Prime ((2 ^ 32) + 1)))
   rust:
     in: is_prime((power(n(2), n(32)) + n(1)))
     out: "false"
@@ -512,24 +512,24 @@ non-integers-are-not-prime:
     in: PrimeQ[Rational[1, 2]]
   wolfram:
     in: PrimeQ[Rational[1, 2]]
-  sage:
-    in: is_prime((1/2))
-  oscar:
-    in: is_prime(ZZ((1 // 2)))
-  mathlib4:
-    in: "(decide (Nat.Prime ((1 : ℚ) / 2)))"
   sympy:
     in: isprime(Rational(1, 2))
     out: "ValueError: 1/2 is not an integer"
     verdict: error
     kind: domain
     note: compute-engine answers False for a non-integer; SymPy's isprime raises.
+  sage:
+    in: is_prime((1/2))
+  oscar:
+    in: is_prime(ZZ((1 // 2)))
   julia:
     in: is_prime(ZZ((1 // 2)))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
     note: The Julia mapping converts to ZZ, integers only; compute-engine's IsPrime extends to rational, real and complex arguments.
+  mathlib4:
+    in: "(decide (Nat.Prime ((1 : ℚ) / 2)))"
   rust:
     in: is_prime(rational(n(1), n(2)))
     out: "panic: an integer, not 1/2"
@@ -562,18 +562,18 @@ isprime-7:
     in: PrimeQ[7]
   wolfram:
     in: PrimeQ[7]
+  sympy:
+    in: isprime(7)
+    out: True
   sage:
     in: is_prime(7)
   oscar:
     in: is_prime(ZZ(7))
-  mathlib4:
-    in: (decide (Nat.Prime 7))
-  sympy:
-    in: isprime(7)
-    out: True
   julia:
     in: is_prime(ZZ(7))
     out: "true"
+  mathlib4:
+    in: (decide (Nat.Prime 7))
   rust:
     in: is_prime(n(7))
     out: "true"
@@ -591,24 +591,24 @@ threads-element-wise-over-a-short-list:
     in: PrimeQ[List[2, 3, 4]]
   wolfram:
     in: PrimeQ[List[2, 3, 4]]
-  sage:
-    in: is_prime([2, 3, 4])
-  oscar:
-    in: is_prime(ZZ([2, 3, 4]))
-  mathlib4:
-    in: (decide (Nat.Prime [2, 3, 4]))
   sympy:
     in: isprime([2, 3, 4])
     out: "ValueError: [2, 3, 4] is not an integer"
     verdict: error
     kind: threading
     note: compute-engine's IsPrime is Listable and threads over the list; SymPy takes scalars only.
+  sage:
+    in: is_prime([2, 3, 4])
+  oscar:
+    in: is_prime(ZZ([2, 3, 4]))
   julia:
     in: is_prime(ZZ([2, 3, 4]))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
     kind: threading
     note: compute-engine's IsPrime is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+  mathlib4:
+    in: (decide (Nat.Prime [2, 3, 4]))
   rust:
     in: is_prime(list(vec![n(2), n(3), n(4)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -629,18 +629,18 @@ isprime-neg-1-is-false:
     in: PrimeQ[-1]
   wolfram:
     in: PrimeQ[-1]
+  sympy:
+    in: isprime(-1)
+    out: False
   sage:
     in: is_prime(-1)
   oscar:
     in: is_prime(ZZ(-1))
-  mathlib4:
-    in: (decide (Nat.Prime (-1)))
-  sympy:
-    in: isprime(-1)
-    out: False
   julia:
     in: is_prime(ZZ(-1))
     out: "false"
+  mathlib4:
+    in: (decide (Nat.Prime (-1)))
   rust:
     in: is_prime(n(-1))
     out: "panic: a non-negative integer"
@@ -661,18 +661,18 @@ isprime-neg-4-is-false:
     in: PrimeQ[-4]
   wolfram:
     in: PrimeQ[-4]
+  sympy:
+    in: isprime(-4)
+    out: False
   sage:
     in: is_prime(-4)
   oscar:
     in: is_prime(ZZ(-4))
-  mathlib4:
-    in: (decide (Nat.Prime (-4)))
-  sympy:
-    in: isprime(-4)
-    out: False
   julia:
     in: is_prime(ZZ(-4))
     out: "false"
+  mathlib4:
+    in: (decide (Nat.Prime (-4)))
   rust:
     in: is_prime(n(-4))
     out: "panic: a non-negative integer"
@@ -693,24 +693,24 @@ isprime-neg-2-is-true:
     in: PrimeQ[-2]
   wolfram:
     in: PrimeQ[-2]
-  sage:
-    in: is_prime(-2)
-  oscar:
-    in: is_prime(ZZ(-2))
-  mathlib4:
-    in: (decide (Nat.Prime (-2)))
   sympy:
     in: isprime(-2)
     out: False
     verdict: disagree
     kind: convention
     note: compute-engine, like Wolfram's PrimeQ, calls -2 prime, an associate of 2; SymPy's isprime takes only positive primes.
+  sage:
+    in: is_prime(-2)
+  oscar:
+    in: is_prime(ZZ(-2))
   julia:
     in: is_prime(ZZ(-2))
     out: "false"
     verdict: disagree
     kind: convention
     note: compute-engine, like Wolfram's PrimeQ, calls -2 prime, an associate of 2; Nemo's is_prime takes only positive primes.
+  mathlib4:
+    in: (decide (Nat.Prime (-2)))
   rust:
     in: is_prime(n(-2))
     out: "panic: a non-negative integer"

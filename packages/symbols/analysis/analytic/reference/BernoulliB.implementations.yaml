@@ -16,10 +16,10 @@ bernoullib-0:
     tex:
       in: B_0
       out: "1"
-  sage:
+  sympy:
     in: bernoulli(0)
     out: "1"
-  sympy:
+  sage:
     in: bernoulli(0)
     out: "1"
 bernoullib-1:
@@ -40,15 +40,15 @@ bernoullib-1:
     tex:
       in: B_1
       out: -\frac{1}{2}
-  sage:
-    in: bernoulli(1)
-    out: -1/2
   sympy:
     in: bernoulli(1)
     out: 1/2
     verdict: disagree
     kind: convention
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does.
+  sage:
+    in: bernoulli(1)
+    out: -1/2
 bernoullib-2:
   epsil:
     in: BernoulliB(2)
@@ -67,10 +67,10 @@ bernoullib-2:
     tex:
       in: B_2
       out: \frac{1}{6}
-  sage:
+  sympy:
     in: bernoulli(2)
     out: 1/6
-  sympy:
+  sage:
     in: bernoulli(2)
     out: 1/6
 bernoullib-4:
@@ -91,10 +91,10 @@ bernoullib-4:
     tex:
       in: B_4
       out: -\frac{1}{30}
-  sage:
+  sympy:
     in: bernoulli(4)
     out: -1/30
-  sympy:
+  sage:
     in: bernoulli(4)
     out: -1/30
 bernoullib-12:
@@ -115,10 +115,10 @@ bernoullib-12:
     tex:
       in: B_{12}
       out: -\frac{691}{2730}
-  sage:
+  sympy:
     in: bernoulli(12)
     out: -691/2730
-  sympy:
+  sage:
     in: bernoulli(12)
     out: -691/2730
 bernoullib-10:
@@ -135,11 +135,11 @@ bernoullib-10:
     in: BernoulliB[10]
   wolfram:
     in: BernoulliB[10]
-  sage:
-    in: bernoulli(10)
   sympy:
     in: bernoulli(10)
     out: 5/66
+  sage:
+    in: bernoulli(10)
 exact-rationals-at-any-index:
   epsil:
     in: BernoulliB(60)
@@ -154,11 +154,11 @@ exact-rationals-at-any-index:
     in: BernoulliB[60]
   wolfram:
     in: BernoulliB[60]
-  sage:
-    in: bernoulli(60)
   sympy:
     in: bernoulli(60)
     out: -1215233140483755572040304994079820246041491/56786730
+  sage:
+    in: bernoulli(60)
 listable-b-n-threads-over-a-list-of-indices:
   epsil:
     in: BernoulliB([2, 4, 6])
@@ -170,11 +170,11 @@ listable-b-n-threads-over-a-list-of-indices:
     in: BernoulliB[List[2, 4, 6]]
   wolfram:
     in: BernoulliB[List[2, 4, 6]]
-  sage:
-    in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
   sympy:
     in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
     out: "[1/6, -1/30, 1/42]"
+  sage:
+    in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
 the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac:
   epsil:
     in: BernoulliB(4, x)
@@ -241,11 +241,11 @@ zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see:
     in: Equal[Zeta[-3], Minus[Divide[BernoulliB[4], 4]]]
   wolfram:
     in: (Zeta[-3] == Minus[Divide[BernoulliB[4], 4]])
-  sage:
-    in: bool(zeta(-3) == (-(bernoulli(4) / 4)))
   sympy:
     in: enumeratio_equal(zeta(-3), (-(S(bernoulli(4)) / 4)))
     out: True
+  sage:
+    in: bool(zeta(-3) == (-(bernoulli(4) / 4)))
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
   epsil:
     in: |-
@@ -264,14 +264,14 @@ the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
     in: Plus[Times[Binomial[5, 0], BernoulliB[0]], Times[Binomial[5, 1], BernoulliB[1]], Times[Binomial[5, 2], BernoulliB[2]], Times[Binomial[5, 3], BernoulliB[3]], Times[Binomial[5, 4], BernoulliB[4]]]
   wolfram:
     in: Plus[Times[Binomial[5, 0], BernoulliB[0]], Times[Binomial[5, 1], BernoulliB[1]], Times[Binomial[5, 2], BernoulliB[2]], Times[Binomial[5, 3], BernoulliB[3]], Times[Binomial[5, 4], BernoulliB[4]]]
-  sage:
-    in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
   sympy:
     in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
     out: "5"
     verdict: disagree
     kind: convention
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2, so the recurrence sums differ.
+  sage:
+    in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
 b-n-0-for-every-odd-n-1:
   epsil:
     in: BernoulliB(5) == 0
@@ -290,11 +290,11 @@ b-n-0-for-every-odd-n-1:
     tex:
       in: B_5=0
       out: \text{True}
-  sage:
-    in: bool(bernoulli(5) == 0)
-    out: True
   sympy:
     in: enumeratio_equal(bernoulli(5), 0)
+    out: True
+  sage:
+    in: bool(bernoulli(5) == 0)
     out: True
 faulhaber-s-formula-recovers-sum-k-0-4-k-2-30:
   epsil:
@@ -316,15 +316,15 @@ faulhaber-s-formula-recovers-sum-k-0-4-k-2-30:
     tex:
       in: \frac{\binom{3}{0} B_0 5^3+\binom{3}{1} B_1 5^2+\binom{3}{2} B_2 5^1}{3}
       out: "30"
-  sage:
-    in: (((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)
-    out: "30"
   sympy:
     in: (S(((binomial(3, 0) * bernoulli(0) * (5**3)) + (binomial(3, 1) * bernoulli(1) * (5**2)) + (binomial(3, 2) * bernoulli(2) * (5**1)))) / 3)
     out: "55"
     verdict: disagree
     kind: convention
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does.
+  sage:
+    in: (((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)
+    out: "30"
 bernoulli-numbers-are-only-defined-for-n-ge-0-a:
   epsil:
     in: BernoulliB(-1)
@@ -343,18 +343,18 @@ bernoulli-numbers-are-only-defined-for-n-ge-0-a:
     tex:
       in: B_{-1}
       out: B_{-1}
-  sage:
-    in: bernoulli(-1)
-    out: "OverflowError: can't convert negative value to unsigned long"
-    verdict: error
-    kind: undefined-form
-    note: 'Both decline: compute-engine answers ["BernoulliB", -1] and Sage raises an error.'
   sympy:
     in: bernoulli(-1)
     out: bernoulli(-1)
     verdict: inconclusive
     kind: undefined-form
     note: "Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated."
+  sage:
+    in: bernoulli(-1)
+    out: "OverflowError: can't convert negative value to unsigned long"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BernoulliB", -1] and Sage raises an error.'
 with-a-second-argument-the-bernoulli-polynomial:
   epsil:
     in: BernoulliB(1, x)
@@ -382,14 +382,14 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: B_{\{1,2,3\}}
       out: \left\{-\frac{1}{2},\frac{1}{6},0\right\}
-  sage:
-    in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
   sympy:
     in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
     out: "[1/2, 1/6, 0]"
     verdict: disagree
     kind: convention
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2.
+  sage:
+    in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
 numerators-and-denominators-grow-quickly-b-20:
   epsil:
     in: BernoulliB(20)
@@ -408,9 +408,9 @@ numerators-and-denominators-grow-quickly-b-20:
     tex:
       in: B_{20}
       out: -\frac{174611}{330}
-  sage:
+  sympy:
     in: bernoulli(20)
     out: -174611/330
-  sympy:
+  sage:
     in: bernoulli(20)
     out: -174611/330

@@ -13,11 +13,11 @@ pi-s-famous-convergent:
     tex:
       in: \text{ContinuedFraction}\left[\frac{355}{113}\right]
       out: \{3,7,16\}
-  sage:
-    in: list(continued_fraction((355/113)))
-    out: "[3, 7, 16]"
   sympy:
     in: list(continued_fraction(Rational(355, 113)))
+    out: "[3, 7, 16]"
+  sage:
+    in: list(continued_fraction((355/113)))
     out: "[3, 7, 16]"
 5-3-1-1-2:
   epsil:
@@ -60,11 +60,11 @@ and-back-again:
     in: ContinuedFraction[Rational[47, 17]]
   wolfram:
     in: ContinuedFraction[Rational[47, 17]]
-  sage:
-    in: list(continued_fraction((47/17)))
   sympy:
     in: list(continued_fraction(Rational(47, 17)))
     out: "[2, 1, 3, 4]"
+  sage:
+    in: list(continued_fraction((47/17)))
 the-first-20-terms-of-a-quadratic-irrational:
   epsil:
     in: ContinuedFraction(Sqrt(13), 20)
@@ -109,14 +109,14 @@ a-floating-point-number-read-as-the-rational-it:
     in: ContinuedFraction[3.245]
   wolfram:
     in: ContinuedFraction[3.245]
-  sage:
-    in: list(continued_fraction(3.245))
   sympy:
     in: list(continued_fraction(3.245))
     out: "ValueError: expecting a rational or quadratic irrational, not 3.24500000000000"
     verdict: error
     kind: domain
     note: SymPy's continued_fraction takes rationals and quadratic irrationals, not floats; compute-engine reads 3.245 exactly.
+  sage:
+    in: list(continued_fraction(3.245))
 negative-a-floor-for-a-0-then-positive-terms-3-1:
   epsil:
     in: ContinuedFraction(-47 / 17)
@@ -129,11 +129,11 @@ negative-a-floor-for-a-0-then-positive-terms-3-1:
   wolfram:
     in: ContinuedFraction[Rational[-47, 17]]
     note: Wolfram negates every term instead, giving {-2, -1, -3, -4}.
-  sage:
-    in: list(continued_fraction((-47/17)))
   sympy:
     in: list(continued_fraction(Rational(-47, 17)))
     out: "[-3, 4, 4]"
+  sage:
+    in: list(continued_fraction((-47/17)))
 fromcontinuedfraction-inverts-it:
   epsil:
     in: FromContinuedFraction(ContinuedFraction(47 / 17))
@@ -165,11 +165,11 @@ a-quadratic-irrational-s-exact-expansion-is:
     in: ContinuedFraction[Sqrt[13]]
   wolfram:
     in: ContinuedFraction[Sqrt[13]]
-  sage:
-    in: list(continued_fraction(sqrt(13)))
   sympy:
     in: list(continued_fraction(sqrt(13)))
     out: "[3, [1, 1, 1, 1, 6]]"
+  sage:
+    in: list(continued_fraction(sqrt(13)))
 varphi-1-overline-1-purely-periodic-so-the:
   epsil:
     in: ContinuedFraction((1 + Sqrt(5)) / 2)
@@ -181,14 +181,14 @@ varphi-1-overline-1-purely-periodic-so-the:
     in: ContinuedFraction[Divide[Plus[1, Sqrt[5]], 2]]
   wolfram:
     in: ContinuedFraction[Divide[Plus[1, Sqrt[5]], 2]]
-  sage:
-    in: list(continued_fraction(((1 + sqrt(5)) / 2)))
   sympy:
     in: list(continued_fraction((S((1 + sqrt(5))) / 2)))
     out: "[[1]]"
     verdict: disagree
     kind: shape
     note: "The same expansion: SymPy prints the purely periodic one as [[1]], compute-engine as [1, [1]]."
+  sage:
+    in: list(continued_fraction(((1 + sqrt(5)) / 2)))
 the-named-constant-unfolded-to-1-sqrt-5-2-first:
   epsil:
     in: ContinuedFraction(GoldenRatio, 10)
@@ -304,11 +304,11 @@ sqrt-2-is-1-overline-2:
     in: ContinuedFraction[Sqrt[2]]
   wolfram:
     in: ContinuedFraction[Sqrt[2]]
-  sage:
-    in: list(continued_fraction(sqrt(2)))
   sympy:
     in: list(continued_fraction(sqrt(2)))
     out: "[1, [2]]"
+  sage:
+    in: list(continued_fraction(sqrt(2)))
 25-terms-past-the-double-precision-wall:
   epsil:
     in: ContinuedFraction(GoldenRatio, 25)

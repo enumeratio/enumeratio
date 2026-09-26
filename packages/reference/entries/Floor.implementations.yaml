@@ -13,11 +13,13 @@ floor-7-over-2:
     tex:
       in: \left\lfloor \frac{7}{2}\right\rfloor
       out: "3"
-  sage:
-    in: floor((7/2))
-    out: "3"
   sympy:
     in: floor(Rational(7, 2))
+    out: "3"
+  mpmath:
+    in: floor((mpf(7)/2))
+  sage:
+    in: floor((7/2))
     out: "3"
   rust:
     in: floor(rational(n(7), n(2)))
@@ -37,13 +39,13 @@ floor-3p7:
     tex:
       in: \lfloor 3.7\rfloor
       out: "3"
-  sage:
+  sympy:
     in: floor(3.7)
     out: "3"
   mpmath:
     in: floor(3.7)
     out: "3.0"
-  sympy:
+  sage:
     in: floor(3.7)
     out: "3"
   rust:
@@ -64,13 +66,13 @@ integers-pass-through-unchanged:
     tex:
       in: \lfloor 5\rfloor
       out: "5"
-  sage:
+  sympy:
     in: floor(5)
     out: "5"
   mpmath:
     in: floor(5)
     out: "5.0"
-  sympy:
+  sage:
     in: floor(5)
     out: "5"
   rust:
@@ -91,18 +93,20 @@ threads-element-wise-over-a-list:
     tex:
       in: \lfloor \{1.2,-1.2,3.7\}\rfloor
       out: \{1,-2,3\}
-  sage:
-    in: floor([1.2, -1.2, 3.7])
-    out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
-    verdict: error
-    kind: threading
-    note: compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only.
   sympy:
     in: floor([1.2, -1.2, 3.7])
     out: "AttributeError: 'list' object has no attribute 'is_Number'"
     verdict: error
     kind: threading
     note: compute-engine's Floor threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: floor([1.2, -1.2, 3.7])
+  sage:
+    in: floor([1.2, -1.2, 3.7])
+    out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
+    verdict: error
+    kind: threading
+    note: compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only.
   rust:
     in: floor(list(vec![x(1.2), x(-1.2), x(3.7)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -127,11 +131,13 @@ for-a-non-integer-x-lceil-x-rceil-lfloor-x:
     tex:
       in: \left\lfloor \frac{7}{2}\right\rfloor +1=\left\lceil \frac{7}{2}\right\rceil
       out: \text{True}
-  sage:
-    in: bool((floor((7/2)) + 1) == ceil((7/2)))
-    out: True
   sympy:
     in: enumeratio_equal((floor(Rational(7, 2)) + 1), ceiling(Rational(7, 2)))
+    out: True
+  mpmath:
+    in: almosteq((floor((mpf(7)/2)) + 1), ceil((mpf(7)/2)), 1e-20)
+  sage:
+    in: bool((floor((7/2)) + 1) == ceil((7/2)))
     out: True
   rust:
     in: equal((floor(rational(n(7), n(2))) + n(1)), ceil(rational(n(7), n(2))))
@@ -154,11 +160,13 @@ lfloor-x-rfloor-lceil-x-rceil:
     tex:
       in: \left\lfloor -\frac{7}{2}\right\rfloor =-\left\lceil \frac{7}{2}\right\rceil
       out: \text{True}
-  sage:
-    in: bool(floor((-7/2)) == (-ceil((7/2))))
-    out: True
   sympy:
     in: enumeratio_equal(floor(Rational(-7, 2)), (-ceiling(Rational(7, 2))))
+    out: True
+  mpmath:
+    in: almosteq(floor((mpf(-7)/2)), (-ceil((mpf(7)/2))), 1e-20)
+  sage:
+    in: bool(floor((-7/2)) == (-ceil((7/2))))
     out: True
   rust:
     in: equal(floor(rational(n(-7), n(2))), (-(ceil(rational(n(7), n(2))))))
@@ -178,11 +186,11 @@ how-many-full-5-item-packs-fit-in-17-items:
     tex:
       in: \left\lfloor \frac{17}{5}\right\rfloor
       out: "3"
-  sage:
-    in: floor((17 / 5))
-    out: "3"
   sympy:
     in: floor((S(17) / 5))
+    out: "3"
+  sage:
+    in: floor((17 / 5))
     out: "3"
   rust:
     in: floor((n(17) / n(5)))
@@ -202,13 +210,13 @@ rounds-toward-infty-not-toward-0-floor-3-2-is-4:
     tex:
       in: \lfloor -3.2\rfloor
       out: "-4"
-  sage:
+  sympy:
     in: floor(-3.2)
     out: "-4"
   mpmath:
     in: floor(-3.2)
     out: "-4.0"
-  sympy:
+  sage:
     in: floor(-3.2)
     out: "-4"
   rust:
@@ -240,14 +248,14 @@ floor-2p4:
     in: Floor[2.4]
   wolfram:
     in: Floor[2.4]
-  sage:
-    in: floor(2.4)
-  mpmath:
-    in: floor(2.4)
-    out: "2.0"
   sympy:
     in: floor(2.4)
     out: "2"
+  mpmath:
+    in: floor(2.4)
+    out: "2.0"
+  sage:
+    in: floor(2.4)
   rust:
     in: floor(x(2.4))
     out: "2.0"
@@ -262,14 +270,14 @@ floor-2p6:
     in: Floor[2.6]
   wolfram:
     in: Floor[2.6]
-  sage:
-    in: floor(2.6)
-  mpmath:
-    in: floor(2.6)
-    out: "2.0"
   sympy:
     in: floor(2.6)
     out: "2"
+  mpmath:
+    in: floor(2.6)
+    out: "2.0"
+  sage:
+    in: floor(2.6)
   rust:
     in: floor(x(2.6))
     out: "2.0"
@@ -293,14 +301,14 @@ exact-radicals-are-decided-numerically:
     in: Floor[Sqrt[50]]
   wolfram:
     in: Floor[Sqrt[50]]
-  sage:
-    in: floor(sqrt(50))
-  mpmath:
-    in: floor(sqrt(50))
-    out: "7.0"
   sympy:
     in: floor(sqrt(50))
     out: "7"
+  mpmath:
+    in: floor(sqrt(50))
+    out: "7.0"
+  sage:
+    in: floor(sqrt(50))
   rust:
     in: floor(sqrt(n(50)))
     out: "7.0"
@@ -315,14 +323,14 @@ evaluates-at-an-exact-constant-lfloor-pi-rfloor:
     in: Floor[Pi]
   wolfram:
     in: Floor[Pi]
-  sage:
-    in: floor(pi)
-  mpmath:
-    in: floor(pi)
-    out: "3.0"
   sympy:
     in: floor(pi)
     out: "3"
+  mpmath:
+    in: floor(pi)
+    out: "3.0"
+  sage:
+    in: floor(pi)
   rust:
     in: floor(x(std::f64::consts::PI))
     out: "3.0"
@@ -337,14 +345,14 @@ and-at-its-negative-lfloor-pi-rfloor-4:
     in: Floor[Minus[Pi]]
   wolfram:
     in: Floor[Minus[Pi]]
-  sage:
-    in: floor((-pi))
-  mpmath:
-    in: floor((-pi))
-    out: "-4.0"
   sympy:
     in: floor((-pi))
     out: "-4"
+  mpmath:
+    in: floor((-pi))
+    out: "-4.0"
+  sage:
+    in: floor((-pi))
   rust:
     in: floor((-(x(std::f64::consts::PI))))
     out: "-4.0"
@@ -392,14 +400,14 @@ floors-the-real-and-imaginary-parts-separately:
     in: Floor[Complex[5.37, -1.3]]
   wolfram:
     in: Floor[Complex[5.37, -1.3]]
-  sage:
-    in: floor((5.37 + -1.3*I))
-  mpmath:
-    in: floor(mpc(5.37, -1.3))
-    out: (5.0 - 2.0j)
   sympy:
     in: floor((5.37 + -1.3*I))
     out: 5 - 2*I
+  mpmath:
+    in: floor(mpc(5.37, -1.3))
+    out: (5.0 - 2.0j)
+  sage:
+    in: floor((5.37 + -1.3*I))
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor:
   epsil:
     in: Floor(Floor(x))
@@ -420,11 +428,11 @@ legendre-s-formula-100-ends-in-lfloor-100-5:
     in: Plus[Floor[Divide[100, 5]], Floor[Divide[100, 25]]]
   wolfram:
     in: Plus[Floor[Divide[100, 5]], Floor[Divide[100, 25]]]
-  sage:
-    in: (floor((100 / 5)) + floor((100 / 25)))
   sympy:
     in: (floor((S(100) / 5)) + floor((S(100) / 25)))
     out: "24"
+  sage:
+    in: (floor((100 / 5)) + floor((100 / 25)))
   rust:
     in: (floor((n(100) / n(5))) + floor((n(100) / n(25))))
     out: "24"
@@ -451,14 +459,14 @@ the-first-four-digits-of-e:
     in: Floor[Times[1000, E]]
   wolfram:
     in: Floor[Times[1000, E]]
-  sage:
-    in: floor((1000 * e))
-  mpmath:
-    in: floor((1000 * e))
-    out: "2718.0"
   sympy:
     in: floor((1000 * E))
     out: "2718"
+  mpmath:
+    in: floor((1000 * e))
+    out: "2718.0"
+  sage:
+    in: floor((1000 * e))
   rust:
     in: floor((n(1000) * x(std::f64::consts::E)))
     out: "2718.0"
@@ -473,14 +481,14 @@ floor-2p7:
     in: Floor[2.7]
   wolfram:
     in: Floor[2.7]
-  sage:
-    in: floor(2.7)
-  mpmath:
-    in: floor(2.7)
-    out: "2.0"
   sympy:
     in: floor(2.7)
     out: "2"
+  mpmath:
+    in: floor(2.7)
+    out: "2.0"
+  sage:
+    in: floor(2.7)
   rust:
     in: floor(x(2.7))
     out: "2.0"

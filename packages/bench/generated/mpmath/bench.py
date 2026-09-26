@@ -68,97 +68,73 @@ def _clear():
 
 
 def _b0_0():
-    return zeta(3.5)
+    return zeta((mpf(3)/7))
 def _b1_0():
-    return polylog(3, 0.25)
+    return [zeta((mpf(39)/6)), zeta((mpf(60)/12)), zeta((mpf(46)/5)), zeta((mpf(23)/13)), zeta((mpf(38)/5)), zeta((mpf(25)/13)), zeta((mpf(15)/13)), zeta((mpf(21)/5))]
 def _b2_0():
-    return zeta(4.403285405947827, 2.4288888204842807)
-def _b2_1():
-    return zeta(9.448154343175702, 3.8892513725673785)
-def _b2_2():
-    return zeta(2.558750191004947, 4.493130763736554)
-def _b2_3():
-    return zeta(5.368294674553908, 4.932550377189182)
-def _b2_4():
-    return zeta(7.5256652008974925, 4.856984421564266)
-def _b2_5():
-    return zeta(1.9638558109290898, 2.9379101314581932)
-def _b2_6():
-    return zeta(7.21723051846493, 2.4472744461381812)
-def _b2_7():
-    return zeta(7.548660124186426, 1.3300802856683733)
-def _b2_8():
-    return zeta(2.662446933449246, 4.8475876000477)
-def _b2_9():
-    return zeta(5.546103833592497, 1.1366007893811914)
-def _b2_10():
-    return zeta(9.883344191475771, 2.583231095853262)
-def _b2_11():
-    return zeta(3.37750693236012, 4.0169520172989)
-def _b2_12():
-    return zeta(9.639665072201751, 2.204721057927236)
-def _b2_13():
-    return zeta(2.5927319991169497, 4.65562820143532)
-def _b2_14():
-    return zeta(7.099468858446926, 3.200434206426144)
-def _b2_15():
-    return zeta(5.566479127970524, 1.1445297228638085)
+    return [zeta((mpf(7)/19)), zeta((mpf(12)/28)), zeta((mpf(9)/17)), zeta((mpf(3)/28)), zeta((mpf(7)/17)), zeta((mpf(3)/29)), zeta((mpf(1)/29)), zeta((mpf(2)/17))]
 def _b3_0():
-    return zeta(2.5, 0.3)
+    return [zeta((mpf(39)/6)), zeta((mpf(60)/12)), zeta((mpf(46)/5)), zeta((mpf(23)/13)), zeta((mpf(38)/5)), zeta((mpf(25)/13)), zeta((mpf(15)/13)), zeta((mpf(21)/5))]
 def _b4_0():
-    return gamma(24.026529921218753)
-def _b4_1():
-    return gamma(17.407367952284403)
-def _b4_2():
-    return gamma(38.77917202899698)
-def _b4_3():
-    return gamma(46.78631058672909)
-def _b4_4():
-    return gamma(44.87958628672641)
-def _b4_5():
-    return gamma(6.665662877028808)
-def _b4_6():
-    return gamma(49.318621157319285)
-def _b4_7():
-    return gamma(23.027127810637467)
-def _b4_8():
-    return gamma(48.55525078927167)
-def _b4_9():
-    return gamma(35.59063852287363)
-def _b4_10():
-    return gamma(29.168683981057256)
-def _b4_11():
-    return gamma(3.201277957763523)
-def _b4_12():
-    return gamma(24.212262262008153)
-def _b4_13():
-    return gamma(33.7944600781193)
-def _b4_14():
-    return gamma(12.926321253180504)
-def _b4_15():
-    return gamma(35.72455013496801)
+    return [zeta(mpc(0.5, 1055.0729513168335)), zeta(mpc(0.5, 1035.4949653847143)), zeta(mpc(0.5, 1099.5005621109158)), zeta(mpc(0.5, 1090.2323614107445)), zeta(mpc(0.5, 1069.3212928948924)), zeta(mpc(0.5, 1024.0999207133427)), zeta(mpc(0.5, 1020.6491060787812)), zeta(mpc(0.5, 1092.887432128191))]
 def _b5_0():
-    return gamma(20.5)
+    return [zeta(mpc(0.5, 10055.072951316833)), zeta(mpc(0.5, 10035.494965384714)), zeta(mpc(0.5, 10099.500562110916)), zeta(mpc(0.5, 10090.232361410744))]
 def _b6_0():
-    return psi(1, 3.5)
+    return [zeta(mpc(0.5, 100055.07295131683)), zeta(mpc(0.5, 100035.49496538471)), zeta(mpc(0.5, 100099.50056211092)), zeta(mpc(0.5, 100090.23236141074))]
 def _b7_0():
-    return lerchphi(0.5, 2, 0.75)
+    return [zeta(((mpf(5)/10) + mpc(0, 135))), zeta(((mpf(9)/10) + mpc(0, 191))), zeta(((mpf(7)/10) + mpc(0, 124))), zeta(((mpf(2)/10) + mpc(0, 193)))]
 def _b8_0():
-    return sin((24**40))
+    return [polylog(5, (mpf(5)/13)), polylog(2, (mpf(9)/17)), polylog(4, (mpf(2)/20)), polylog(5, (mpf(3)/12)), polylog(2, (mpf(1)/20)), polylog(5, (mpf(3)/18)), polylog(3, (mpf(9)/19)), polylog(3, (mpf(9)/17))]
 def _b9_0():
+    return polylog(3, (mpf(1)/2))
+def _b10_0():
+    return [zeta(4.403285405947827, 2.4288888204842807), zeta(9.448154343175702, 3.8892513725673785), zeta(2.558750191004947, 4.493130763736554), zeta(5.368294674553908, 4.932550377189182), zeta(7.5256652008974925, 4.856984421564266), zeta(1.9638558109290898, 2.9379101314581932), zeta(7.21723051846493, 2.4472744461381812), zeta(7.548660124186426, 1.3300802856683733), zeta(2.662446933449246, 4.8475876000477), zeta(5.546103833592497, 1.1366007893811914), zeta(9.883344191475771, 2.583231095853262), zeta(3.37750693236012, 4.0169520172989), zeta(9.639665072201751, 2.204721057927236), zeta(2.5927319991169497, 4.65562820143532), zeta(7.099468858446926, 3.200434206426144), zeta(5.566479127970524, 1.1445297228638085)]
+def _b11_0():
+    return zeta(2.5, 0.3)
+def _b12_0():
+    return [zeta((mpf(19)/2), (mpf(23)/9)), zeta((mpf(7)/2), (mpf(37)/11)), zeta((mpf(11)/2), (mpf(9)/13)), zeta((mpf(19)/2), (mpf(11)/8)), zeta((mpf(5)/2), (mpf(2)/13)), zeta((mpf(15)/2), (mpf(10)/12)), zeta((mpf(9)/2), (mpf(36)/13)), zeta((mpf(7)/2), (mpf(37)/12))]
+def _b13_0():
+    return [gamma(24.026529921218753), gamma(17.407367952284403), gamma(38.77917202899698), gamma(46.78631058672909), gamma(44.87958628672641), gamma(6.665662877028808), gamma(49.318621157319285), gamma(23.027127810637467), gamma(48.55525078927167), gamma(35.59063852287363), gamma(29.168683981057256), gamma(3.201277957763523), gamma(24.212262262008153), gamma(33.7944600781193), gamma(12.926321253180504), gamma(35.72455013496801)]
+def _b14_0():
+    return [gamma((mpf(221)/4)), gamma((mpf(399)/9)), gamma((mpf(278)/3)), gamma((mpf(83)/9)), gamma((mpf(211)/4)), gamma((mpf(96)/9)), gamma((mpf(16)/9)), gamma((mpf(66)/3))]
+def _b15_0():
+    return gamma(20.5)
+def _b16_0():
+    return [gamma((mpf(221)/4)), gamma((mpf(399)/9)), gamma((mpf(278)/3)), gamma((mpf(83)/9))]
+def _b17_0():
+    return [psi(1, (mpf(34)/4)), psi(1, (mpf(60)/9)), psi(1, (mpf(42)/3)), psi(1, (mpf(13)/9)), psi(1, (mpf(32)/4)), psi(1, (mpf(15)/9)), psi(1, (mpf(3)/9)), psi(1, (mpf(10)/3))]
+def _b18_0():
+    return lerchphi(0.5, 2, 0.75)
+def _b19_0():
+    return sin((24**40))
+def _b20_0():
+    return [sin(10562519564731876302437820256387910391630374259350038954249716283818701136689893688734973660323309288079506412740283063283758807448698083828615471501618432556409503848050265725799448909852722686591596771551343078385755651852276585748333694475900227544097353975282752025964207834568962571902938288147401), sin(9692287351868644578711841697919640800680081041197623598055407272213185377493204521019773646741061338296695396684995662370467400622626606929570724498561679166112161960294060314606909811262540652499738890730080290613417107650214418105752907088799466886559416515529083943960576034550817701357651335815848), sin(8162568565364368636162944761099472141042358410096419177674283420854291495137377074990848721129361989660967997912735906674929518431969411146546291284295180696877310611495057046836154578904322117691558909131065600422051373883686555620874580832726538996014797995170158342571074974012271611281352401018807), sin(9932334576958846524934317974470914486707113656712655152712926274970704944428659202118283214466731804594890673876910817214794052183907488510207884200238303954412727070097503583796069450598664386590235118036276335303835572189523951324743699771359601801369423817392017225516309210149198268437684271590269), sin(8771154489178305840888332024575160122329478588612842245850741044567979093789833993356596645131283308823159578980292038032909125409165912129014108055606466494963282834375743689840264933857309282536140705138434075935442277230457203177298242983992826936529313217698977349569978063620084022535056844127202), sin(5939892736641919916722497880066438212100152026610593046483136288864669071752241375139732557438843397562587170746248620186346473899192690716061388911685121914626417174619972009953033551870799445482686469087363882736160449501351788345860304427965769524111821817100609959260419596494803730589874327375307), sin(7461735733167863811003692465016450212471900206715008902431345442420751273832546733613166402982435500064386631459324395504422853960588774628002831706618051501260270846230937553718218220450074684971409171169743952313775058708660626676111658909428133675336979250660439085945132546932567003136524811511540), sin(8873587144994596671866164024925641835035555246242448597865932785617691423978370914297972331557903002029633274617469167889431704485875419579556109953616143531015871176046840845202874083541666304710896784131831185516463738795152980407370807931216895089056075776447254119140461119038964853314215535337597)]
+def _b21_0():
     return cos((10**100))
 
 CASES = {
-    "Zeta/zeta-3p5-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b0_0]},
-    "PolyLog/polylog-3-one-quarter-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b1_0]},
-    "HurwitzZeta/hurwitz-zeta-random-machine": {"precision": "machine", "budget": 10, "fns": [_b2_0, _b2_1, _b2_2, _b2_3, _b2_4, _b2_5, _b2_6, _b2_7, _b2_8, _b2_9, _b2_10, _b2_11, _b2_12, _b2_13, _b2_14, _b2_15]},
-    "HurwitzZeta/hurwitz-zeta-machine": {"precision": "machine", "budget": 10, "fns": [_b3_0]},
-    "Gamma/gamma-random-reals-machine": {"precision": "machine", "budget": 10, "fns": [_b4_0, _b4_1, _b4_2, _b4_3, _b4_4, _b4_5, _b4_6, _b4_7, _b4_8, _b4_9, _b4_10, _b4_11, _b4_12, _b4_13, _b4_14, _b4_15]},
-    "Gamma/gamma-20p5-to-100-digits": {"precision": 100, "budget": 10, "fns": [_b5_0]},
-    "PolyGamma/trigamma-3p5-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b6_0]},
-    "LerchPhi/lerchphi-half-2-three-quarters-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b7_0]},
-    "Sin/sin-24-to-the-40": {"precision": "machine", "budget": 10, "fns": [_b8_0]},
-    "Cos/cos-10-to-the-100": {"precision": "machine", "budget": 10, "fns": [_b9_0]},
+    "Zeta/zeta-3-sevenths-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b0_0]},
+    "Zeta/zeta-random-rationals-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b1_0]},
+    "Zeta/zeta-strip-rationals-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b2_0]},
+    "Zeta/zeta-random-rationals-to-100-digits": {"precision": 100, "budget": 10, "fns": [_b3_0]},
+    "Zeta/zeta-critical-line-near-1000-machine": {"precision": "machine", "budget": 10, "fns": [_b4_0]},
+    "Zeta/zeta-critical-line-near-10-to-the-4-machine": {"precision": "machine", "budget": 10, "fns": [_b5_0]},
+    "Zeta/zeta-critical-line-near-10-to-the-5-machine": {"precision": "machine", "budget": 30, "fns": [_b6_0]},
+    "Zeta/zeta-critical-strip-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b7_0]},
+    "PolyLog/polylog-random-rationals-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b8_0]},
+    "PolyLog/polylog-3-one-half-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b9_0]},
+    "HurwitzZeta/hurwitz-zeta-random-machine": {"precision": "machine", "budget": 10, "fns": [_b10_0]},
+    "HurwitzZeta/hurwitz-zeta-machine": {"precision": "machine", "budget": 10, "fns": [_b11_0]},
+    "HurwitzZeta/hurwitz-zeta-random-rationals-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b12_0]},
+    "Gamma/gamma-random-reals-machine": {"precision": "machine", "budget": 10, "fns": [_b13_0]},
+    "Gamma/gamma-random-rationals-to-50-digits": {"precision": 50, "budget": 10, "fns": [_b14_0]},
+    "Gamma/gamma-20p5-to-100-digits": {"precision": 100, "budget": 10, "fns": [_b15_0]},
+    "Gamma/gamma-random-rationals-to-1000-digits": {"precision": 1000, "budget": 30, "fns": [_b16_0]},
+    "PolyGamma/trigamma-random-rationals-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b17_0]},
+    "LerchPhi/lerchphi-half-2-three-quarters-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b18_0]},
+    "Sin/sin-24-to-the-40": {"precision": "machine", "budget": 10, "fns": [_b19_0]},
+    "Sin/sin-random-1000-bit-integers-machine": {"precision": "machine", "budget": 10, "fns": [_b20_0]},
+    "Cos/cos-10-to-the-100": {"precision": "machine", "budget": 10, "fns": [_b21_0]},
 }
 
 

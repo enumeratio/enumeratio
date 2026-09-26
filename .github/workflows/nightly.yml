@@ -142,6 +142,7 @@ jobs:
           systems: ts,oscar
           job: oscar-weekly
           token: ${{ github.token }}
+          suite: deep
 
   # The discrete heads against Lean 4 + Mathlib, weekly: the pinned toolchain from elan, and mathlib's prebuilt
   # oleans (~5 GB) from its cache, kept between runs.
@@ -207,6 +208,7 @@ jobs:
           systems: ts,sage
           job: sage-weekly
           token: ${{ github.token }}
+          suite: deep
 
   # Wolfram, weekly, from the official Wolfram Engine image on an on-demand license: billed per kernel-hour against
   # the repo secret WOLFRAMSCRIPT_ENTITLEMENTID (a LicenseEntitlementObject, renewed yearly). Skips without it.

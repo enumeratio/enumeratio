@@ -237,7 +237,7 @@ export async function runPlan(
     if (result === undefined) {
       const reply = await harness!.ask(c.name, c.budget * 4 + GRACE_SECONDS);
       if (reply.version !== undefined) options.onVersion?.(system, reply.version);
-      result = judge(c.name, reply, c.expected, c.precision);
+      result = { ...judge(c.name, reply, c.expected, c.precision), formula: c.formula };
     }
     results.get(system)!.push(result);
     options.onResult?.(system, result);

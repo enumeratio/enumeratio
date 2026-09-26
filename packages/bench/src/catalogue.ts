@@ -8,9 +8,26 @@ import { fileURLToPath } from "node:url";
 import { EXAMPLE_ID, EXAMPLE_ID_MAX, parseYaml } from "@enumeratio/entry";
 import type { MathJSON } from "@enumeratio/oracle/src";
 import { drawSample, substitute } from "./random.ts";
+import { SUITES } from "./suites.ts";
 import type { BenchCase, ConcreteCase } from "./types.ts";
 
 export const CATALOGUE_DIR = fileURLToPath(new URL("../catalogue/", import.meta.url));
+
+/**
+ * Answers pinned by `scripts/pin.ts` for cases the YAML gives none (sampled ones), each with
+ * the formula it was computed for: a pin whose formula has moved on no longer counts.
+ */
+export const PINS_FILE = join(CATALOGUE_DIR, "pinned.json");
+
+export type Pins = Readonly<Record<string, { readonly formula: string; readonly answer: string }>>;
+
+export function loadPins(file = PINS_FILE): Pins {
+  try {
+    return JSON.parse(readFileSync(file, "utf8")) as Pins;
+  } catch {
+    return {};
+  }
+}
 
 export function loadCatalogue(dir = CATALOGUE_DIR): BenchCase[] {
   const cases: BenchCase[] = [];
@@ -42,13 +59,17 @@ function validate(c: BenchCase): string | undefined {
   if (c.bench === undefined) return "no bench block";
   const p = c.bench.precision;
   if (p !== "exact" && p !== "machine" && !(Number.isInteger(p) && p > 0)) return `bad precision ${JSON.stringify(p)}`;
-  if (c.bench.sample === undefined && c.expected === undefined) return "no expected";
+  if (c.bench.sample !== undefined && c.expected !== undefined) return "a sampled case's answer is pinned, not written";
+  if (c.bench.tier !== undefined && !SUITES.deep.includes(c.bench.tier))
+    return `bad tier ${JSON.stringify(c.bench.tier)}`;
   return undefined;
 }
 
-/** Substitute each case's seeded draws, giving the concrete inputs every system runs. */
+/** Substitute each case's seeded draws: the one input every system runs, a `List` for a sample. */
 export function concretise(c: BenchCase): ConcreteCase {
   const inputs: MathJSON[] =
-    c.bench.sample === undefined ? [c.expr] : drawSample(c.bench.sample).map((binding) => substitute(c.expr, binding));
+    c.bench.sample === undefined
+      ? [c.expr]
+      : [["List", ...drawSample(c.bench.sample).map((binding) => substitute(c.expr, binding))]];
   return { name: `${c.head}/${c.id}`, case: c, inputs };
 }

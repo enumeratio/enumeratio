@@ -67,6 +67,8 @@ square-2-over-3:
   sympy:
     in: (Rational(2, 3))**2
     out: 4/9
+  mpmath:
+    in: ((mpf(2)/3))**2
   sage:
     in: ((2/3))^2
     out: 4/9
@@ -102,6 +104,8 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Square threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: ([2, 3, -4])**2
   sage:
     in: ([2, 3, -4])^2
     out: "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'"

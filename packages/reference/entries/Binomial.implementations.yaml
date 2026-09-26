@@ -13,20 +13,20 @@ binomial-5-2:
     tex:
       in: \binom{5}{2}
       out: "10"
+  sympy:
+    in: binomial(5, 2)
+    out: "10"
   sage:
     in: binomial(5, 2)
     out: "10"
   oscar:
     in: binomial(ZZ(5), ZZ(2))
     out: "10"
-  mathlib4:
-    in: (Nat.choose 5 2)
-    out: "10"
-  sympy:
-    in: binomial(5, 2)
-    out: "10"
   julia:
     in: binomial(ZZ(5), ZZ(2))
+    out: "10"
+  mathlib4:
+    in: (Nat.choose 5 2)
     out: "10"
   rust:
     in: binomial(n(5), n(2))
@@ -46,20 +46,20 @@ binomial-10-3:
     tex:
       in: \binom{10}{3}
       out: "120"
+  sympy:
+    in: binomial(10, 3)
+    out: "120"
   sage:
     in: binomial(10, 3)
     out: "120"
   oscar:
     in: binomial(ZZ(10), ZZ(3))
     out: "120"
-  mathlib4:
-    in: (Nat.choose 10 3)
-    out: "120"
-  sympy:
-    in: binomial(10, 3)
-    out: "120"
   julia:
     in: binomial(ZZ(10), ZZ(3))
+    out: "120"
+  mathlib4:
+    in: (Nat.choose 10 3)
     out: "120"
   rust:
     in: binomial(n(10), n(3))
@@ -79,20 +79,20 @@ binomial-4-2:
     tex:
       in: \binom{4}{2}
       out: "6"
+  sympy:
+    in: binomial(4, 2)
+    out: "6"
   sage:
     in: binomial(4, 2)
     out: "6"
   oscar:
     in: binomial(ZZ(4), ZZ(2))
     out: "6"
-  mathlib4:
-    in: (Nat.choose 4 2)
-    out: "6"
-  sympy:
-    in: binomial(4, 2)
-    out: "6"
   julia:
     in: binomial(ZZ(4), ZZ(2))
+    out: "6"
+  mathlib4:
+    in: (Nat.choose 4 2)
     out: "6"
   rust:
     in: binomial(n(4), n(2))
@@ -112,20 +112,20 @@ choosing-none-of-n-is-always-1-way:
     tex:
       in: \binom{5}{0}
       out: "1"
+  sympy:
+    in: binomial(5, 0)
+    out: "1"
   sage:
     in: binomial(5, 0)
     out: "1"
   oscar:
     in: binomial(ZZ(5), ZZ(0))
     out: "1"
-  mathlib4:
-    in: (Nat.choose 5 0)
-    out: "1"
-  sympy:
-    in: binomial(5, 0)
-    out: "1"
   julia:
     in: binomial(ZZ(5), ZZ(0))
+    out: "1"
+  mathlib4:
+    in: (Nat.choose 5 0)
     out: "1"
   rust:
     in: binomial(n(5), n(0))
@@ -145,20 +145,20 @@ choosing-all-of-n-is-always-1-way:
     tex:
       in: \binom{5}{5}
       out: "1"
+  sympy:
+    in: binomial(5, 5)
+    out: "1"
   sage:
     in: binomial(5, 5)
     out: "1"
   oscar:
     in: binomial(ZZ(5), ZZ(5))
     out: "1"
-  mathlib4:
-    in: (Nat.choose 5 5)
-    out: "1"
-  sympy:
-    in: binomial(5, 5)
-    out: "1"
   julia:
     in: binomial(ZZ(5), ZZ(5))
+    out: "1"
+  mathlib4:
+    in: (Nat.choose 5 5)
     out: "1"
   rust:
     in: binomial(n(5), n(5))
@@ -181,20 +181,20 @@ symmetry-binom-n-k-binom-n-n-k:
     tex:
       in: \binom{10}{3}=\binom{10}{7}
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(binomial(10, 3), binomial(10, 7))
+    out: True
   sage:
     in: bool(binomial(10, 3) == binomial(10, 7))
     out: True
   oscar:
     in: (binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))
     out: "true"
-  mathlib4:
-    in: (decide ((Nat.choose 10 3) = (Nat.choose 10 7)))
-    out: "true"
-  sympy:
-    in: enumeratio_equal(binomial(10, 3), binomial(10, 7))
-    out: True
   julia:
     in: (binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))
+    out: "true"
+  mathlib4:
+    in: (decide ((Nat.choose 10 3) = (Nat.choose 10 7)))
     out: "true"
   rust:
     in: equal(binomial(n(10), n(3)), binomial(n(10), n(7)))
@@ -217,20 +217,20 @@ pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n:
     tex:
       in: \binom{9}{2}+\binom{9}{3}=\binom{10}{3}
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((binomial(9, 2) + binomial(9, 3)), binomial(10, 3))
+    out: True
   sage:
     in: bool((binomial(9, 2) + binomial(9, 3)) == binomial(10, 3))
     out: True
   oscar:
     in: ((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))
     out: "true"
-  mathlib4:
-    in: (decide (((Nat.choose 9 2) + (Nat.choose 9 3)) = (Nat.choose 10 3)))
-    out: "true"
-  sympy:
-    in: enumeratio_equal((binomial(9, 2) + binomial(9, 3)), binomial(10, 3))
-    out: True
   julia:
     in: ((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))
+    out: "true"
+  mathlib4:
+    in: (decide (((Nat.choose 9 2) + (Nat.choose 9 3)) = (Nat.choose 10 3)))
     out: "true"
   rust:
     in: equal((binomial(n(9), n(2)) + binomial(n(9), n(3))), binomial(n(10), n(3)))
@@ -255,20 +255,20 @@ row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4:
     tex:
       in: \binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), (2**4))
+    out: True
   sage:
     in: bool((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)) == (2^4))
     out: True
   oscar:
     in: ((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))
     out: "true"
-  mathlib4:
-    in: (decide (((Nat.choose 4 0) + (Nat.choose 4 1) + (Nat.choose 4 2) + (Nat.choose 4 3) + (Nat.choose 4 4)) = (2 ^ 4)))
-    out: "true"
-  sympy:
-    in: enumeratio_equal((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), (2**4))
-    out: True
   julia:
     in: ((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))
+    out: "true"
+  mathlib4:
+    in: (decide (((Nat.choose 4 0) + (Nat.choose 4 1) + (Nat.choose 4 2) + (Nat.choose 4 3) + (Nat.choose 4 4)) = (2 ^ 4)))
     out: "true"
   rust:
     in: equal((binomial(n(4), n(0)) + binomial(n(4), n(1)) + binomial(n(4), n(2)) + binomial(n(4), n(3)) + binomial(n(4), n(4))), power(n(2), n(4)))
@@ -288,20 +288,20 @@ the-number-of-distinct-5-card-hands-dealt-from-a:
     tex:
       in: \binom{52}{5}
       out: "2598960"
+  sympy:
+    in: binomial(52, 5)
+    out: "2598960"
   sage:
     in: binomial(52, 5)
     out: "2598960"
   oscar:
     in: binomial(ZZ(52), ZZ(5))
     out: "2598960"
-  mathlib4:
-    in: (Nat.choose 52 5)
-    out: "2598960"
-  sympy:
-    in: binomial(52, 5)
-    out: "2598960"
   julia:
     in: binomial(ZZ(52), ZZ(5))
+    out: "2598960"
+  mathlib4:
+    in: (Nat.choose 52 5)
     out: "2598960"
   rust:
     in: binomial(n(52), n(5))
@@ -321,20 +321,20 @@ choosing-more-elements-than-available-k-n-gives:
     tex:
       in: \binom{5}{7}
       out: "0"
+  sympy:
+    in: binomial(5, 7)
+    out: "0"
   sage:
     in: binomial(5, 7)
     out: "0"
   oscar:
     in: binomial(ZZ(5), ZZ(7))
     out: "0"
-  mathlib4:
-    in: (Nat.choose 5 7)
-    out: "0"
-  sympy:
-    in: binomial(5, 7)
-    out: "0"
   julia:
     in: binomial(ZZ(5), ZZ(7))
+    out: "0"
+  mathlib4:
+    in: (Nat.choose 5 7)
     out: "0"
   rust:
     in: binomial(n(5), n(7))
@@ -354,10 +354,16 @@ a-negative-k-also-gives-0:
     tex:
       in: \binom{5}{-1}
       out: "0"
+  sympy:
+    in: binomial(5, -1)
+    out: "0"
   sage:
     in: binomial(5, -1)
     out: "0"
   oscar:
+    in: binomial(ZZ(5), ZZ(-1))
+    out: "0"
+  julia:
     in: binomial(ZZ(5), ZZ(-1))
     out: "0"
   mathlib4:
@@ -366,12 +372,6 @@ a-negative-k-also-gives-0:
     verdict: error
     kind: domain
     note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
-  sympy:
-    in: binomial(5, -1)
-    out: "0"
-  julia:
-    in: binomial(ZZ(5), ZZ(-1))
-    out: "0"
   rust:
     in: binomial(n(5), n(-1))
     out: "1"
@@ -393,10 +393,16 @@ a-negative-n-uses-the-generalized-formula-binom:
     tex:
       in: \binom{-5}{2}
       out: "15"
+  sympy:
+    in: binomial(-5, 2)
+    out: "15"
   sage:
     in: binomial(-5, 2)
     out: "15"
   oscar:
+    in: binomial(ZZ(-5), ZZ(2))
+    out: "15"
+  julia:
     in: binomial(ZZ(-5), ZZ(2))
     out: "15"
   mathlib4:
@@ -405,12 +411,6 @@ a-negative-n-uses-the-generalized-formula-binom:
     verdict: error
     kind: domain
     note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
-  sympy:
-    in: binomial(-5, 2)
-    out: "15"
-  julia:
-    in: binomial(ZZ(-5), ZZ(2))
-    out: "15"
   rust:
     in: binomial(n(-5), n(2))
     out: "0"
@@ -432,21 +432,21 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: \binom{\{2,3,5,7,11\}}{3}
       out: \{0,1,10,35,165\}
+  sympy:
+    in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
+    out: "[0, 1, 10, 35, 165]"
   sage:
     in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
   oscar:
     in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
-  mathlib4:
-    in: (Nat.choose [2, 3, 5, 7, 11] 3)
-  sympy:
-    in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
-    out: "[0, 1, 10, 35, 165]"
   julia:
     in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
     kind: threading
     note: compute-engine's Binomial is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+  mathlib4:
+    in: (Nat.choose [2, 3, 5, 7, 11] 3)
   rust:
     in: binomial(list(vec![n(2), n(3), n(5), n(7), n(11)]), n(3))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -468,21 +468,21 @@ half-integer-arguments-evaluate-exactly-through:
     tex:
       in: \binom{\frac{9}{2}}{\frac{7}{2}}
       out: \frac{9}{2}
+  sympy:
+    in: binomial(Rational(9, 2), Rational(7, 2))
+    out: 9/2
   sage:
     in: binomial((9/2), (7/2))
   oscar:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
-  mathlib4:
-    in: "(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))"
-  sympy:
-    in: binomial(Rational(9, 2), Rational(7, 2))
-    out: 9/2
   julia:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
     note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+  mathlib4:
+    in: "(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))"
   rust:
     in: binomial(rational(n(9), n(2)), rational(n(7), n(2)))
     out: "panic: an integer, not 9/2"
@@ -500,18 +500,18 @@ binomial-8-4:
     in: Binomial[8, 4]
   wolfram:
     in: Binomial[8, 4]
+  sympy:
+    in: binomial(8, 4)
+    out: "70"
   sage:
     in: binomial(8, 4)
   oscar:
     in: binomial(ZZ(8), ZZ(4))
-  mathlib4:
-    in: (Nat.choose 8 4)
-  sympy:
-    in: binomial(8, 4)
-    out: "70"
   julia:
     in: binomial(ZZ(8), ZZ(4))
     out: "70"
+  mathlib4:
+    in: (Nat.choose 8 4)
   rust:
     in: binomial(n(8), n(4))
     out: "70"
@@ -562,21 +562,21 @@ real-arguments-evaluate-through-the-gamma:
     in: Binomial[8.5, -4.2]
   wolfram:
     in: Binomial[8.5, -4.2]
+  sympy:
+    in: binomial(8.5, -4.2)
+    out: "6.04992484022837e-5"
   sage:
     in: binomial(8.5, -4.2)
   oscar:
     in: binomial(ZZ(8.5), ZZ(-4.2))
-  mathlib4:
-    in: (Nat.choose 8.5 (-4.2))
-  sympy:
-    in: binomial(8.5, -4.2)
-    out: "6.04992484022837e-5"
   julia:
     in: binomial(ZZ(8.5), ZZ(-4.2))
     out: "InexactError: convert(ZZRingElem, 8.5)"
     verdict: error
     kind: domain
     note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+  mathlib4:
+    in: (Nat.choose 8.5 (-4.2))
   rust:
     in: binomial(x(8.5), x(-4.2))
     out: "panic: an integer, not 8.5"
@@ -594,21 +594,21 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     in: Binomial[0.5, 3]
   wolfram:
     in: Binomial[0.5, 3]
+  sympy:
+    in: binomial(0.5, 3)
+    out: "0.0625000000000000"
   sage:
     in: binomial(0.5, 3)
   oscar:
     in: binomial(ZZ(0.5), ZZ(3))
-  mathlib4:
-    in: (Nat.choose 0.5 3)
-  sympy:
-    in: binomial(0.5, 3)
-    out: "0.0625000000000000"
   julia:
     in: binomial(ZZ(0.5), ZZ(3))
     out: "InexactError: convert(ZZRingElem, 0.5)"
     verdict: error
     kind: domain
     note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+  mathlib4:
+    in: (Nat.choose 0.5 3)
   rust:
     in: binomial(x(0.5), n(3))
     out: "panic: an integer, not 0.5"
@@ -626,21 +626,21 @@ a-rational-n-with-integer-k-gives-the-exact:
     in: Binomial[Rational[1, 2], 2]
   wolfram:
     in: Binomial[Rational[1, 2], 2]
+  sympy:
+    in: binomial(Rational(1, 2), 2)
+    out: -1/8
   sage:
     in: binomial((1/2), 2)
   oscar:
     in: binomial(ZZ((1 // 2)), ZZ(2))
-  mathlib4:
-    in: "(Nat.choose ((1 : ℚ) / 2) 2)"
-  sympy:
-    in: binomial(Rational(1, 2), 2)
-    out: -1/8
   julia:
     in: binomial(ZZ((1 // 2)), ZZ(2))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
     note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+  mathlib4:
+    in: "(Nat.choose ((1 : ℚ) / 2) 2)"
   rust:
     in: binomial(rational(n(1), n(2)), n(2))
     out: "panic: an integer, not 1/2"
@@ -658,21 +658,21 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     in: Binomial[Rational[-1, 2], 3]
   wolfram:
     in: Binomial[Rational[-1, 2], 3]
+  sympy:
+    in: binomial(Rational(-1, 2), 3)
+    out: -5/16
   sage:
     in: binomial((-1/2), 3)
   oscar:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
-  mathlib4:
-    in: "(Nat.choose (((-1) : ℚ) / 2) 3)"
-  sympy:
-    in: binomial(Rational(-1, 2), 3)
-    out: -5/16
   julia:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
     kind: domain
     note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
+  mathlib4:
+    in: "(Nat.choose (((-1) : ℚ) / 2) 3)"
   rust:
     in: binomial(rational(n(-1), n(2)), n(3))
     out: "panic: an integer, not -1/2"
@@ -708,13 +708,13 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     in: Binomial[Complex[1, 1], 5]
   wolfram:
     in: Binomial[Complex[1, 1], 5]
+  sympy:
+    in: binomial((1 + 1*I), 5)
+    out: -1/12 - I/12
   sage:
     in: binomial((1 + 1*I), 5)
   oscar:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
-  sympy:
-    in: binomial((1 + 1*I), 5)
-    out: -1/12 - I/12
   julia:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -732,13 +732,13 @@ complex-n-and-k-evaluate-through-the-gamma:
     in: Binomial[Complex[2, 1], Complex[7, -3]]
   wolfram:
     in: Binomial[Complex[2, 1], Complex[7, -3]]
+  sympy:
+    in: binomial((2 + 1*I), (7 + -3*I))
+    out: gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))
   sage:
     in: binomial((2 + 1*I), (7 + -3*I))
   oscar:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
-  sympy:
-    in: binomial((2 + 1*I), (7 + -3*I))
-    out: gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))
   julia:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -809,18 +809,18 @@ the-factorial-form-binom-n-k-frac-n-k-n-k-see:
     in: Equal[Binomial[7, 3], Divide[Factorial[7], Times[Factorial[3], Factorial[4]]]]
   wolfram:
     in: (Binomial[7, 3] == Divide[Factorial[7], Times[Factorial[3], Factorial[4]]])
+  sympy:
+    in: enumeratio_equal(binomial(7, 3), (S(factorial(7)) / (factorial(3) * factorial(4))))
+    out: True
   sage:
     in: bool(binomial(7, 3) == (factorial(7) / (factorial(3) * factorial(4))))
   oscar:
     in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
-  mathlib4:
-    in: "(decide ((Nat.choose 7 3) = (((Nat.factorial 7) : ℚ) / ((Nat.factorial 3) * (Nat.factorial 4)))))"
-  sympy:
-    in: enumeratio_equal(binomial(7, 3), (S(factorial(7)) / (factorial(3) * factorial(4))))
-    out: True
   julia:
     in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
     out: "true"
+  mathlib4:
+    in: "(decide ((Nat.choose 7 3) = (((Nat.factorial 7) : ℚ) / ((Nat.factorial 3) * (Nat.factorial 4)))))"
   rust:
     in: equal(binomial(n(7), n(3)), (factorial(n(7)) / (factorial(n(3)) * factorial(n(4)))))
     out: "true"
@@ -835,18 +835,18 @@ the-probability-of-exactly-3-heads-in-10-fair:
     in: Divide[Binomial[10, 3], Power[2, 10]]
   wolfram:
     in: Divide[Binomial[10, 3], Power[2, 10]]
+  sympy:
+    in: (S(binomial(10, 3)) / (2**10))
+    out: 15/128
   sage:
     in: (binomial(10, 3) / (2^10))
   oscar:
     in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
-  mathlib4:
-    in: "(((Nat.choose 10 3) : ℚ) / (2 ^ 10))"
-  sympy:
-    in: (S(binomial(10, 3)) / (2**10))
-    out: 15/128
   julia:
     in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
     out: "0.1171875"
+  mathlib4:
+    in: "(((Nat.choose 10 3) : ℚ) / (2 ^ 10))"
   rust:
     in: (binomial(n(10), n(3)) / power(n(2), n(10)))
     out: 15/128
@@ -861,24 +861,24 @@ both-arguments-negative-integers-the-limiting:
     in: Binomial[-3, -5]
   wolfram:
     in: Binomial[-3, -5]
-  sage:
-    in: binomial(-3, -5)
-  oscar:
-    in: binomial(ZZ(-3), ZZ(-5))
-  mathlib4:
-    in: (Nat.choose (-3) (-5))
   sympy:
     in: binomial(-3, -5)
     out: "0"
     verdict: disagree
     kind: convention
     note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Γ; SymPy gives 0.
+  sage:
+    in: binomial(-3, -5)
+  oscar:
+    in: binomial(ZZ(-3), ZZ(-5))
   julia:
     in: binomial(ZZ(-3), ZZ(-5))
     out: "0"
     verdict: disagree
     kind: convention
     note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Γ; Nemo gives 0.
+  mathlib4:
+    in: (Nat.choose (-3) (-5))
   rust:
     in: binomial(n(-3), n(-5))
     out: "1"
@@ -896,18 +896,18 @@ the-central-binomial-coefficient-binom-100-50:
     in: Binomial[100, 50]
   wolfram:
     in: Binomial[100, 50]
+  sympy:
+    in: binomial(100, 50)
+    out: "100891344545564193334812497256"
   sage:
     in: binomial(100, 50)
   oscar:
     in: binomial(ZZ(100), ZZ(50))
-  mathlib4:
-    in: (Nat.choose 100 50)
-  sympy:
-    in: binomial(100, 50)
-    out: "100891344545564193334812497256"
   julia:
     in: binomial(ZZ(100), ZZ(50))
     out: "100891344545564193334812497256"
+  mathlib4:
+    in: (Nat.choose 100 50)
   rust:
     in: binomial(n(100), n(50))
     out: "100891344545564193334812497256"

@@ -1,31 +1,85 @@
 # Special functions, at machine precision and at a digit count. Answers with more digits than
 # a double holds are MathJSON numeric strings, `{ num: "…" }`, so YAML never rounds them.
-# Inputs to a digit-precision case must be exact in binary and decimal alike (3.5, 1/2, not
-# 0.3): mpmath reads a float's binary value, Wolfram its decimal digits, and at 30 digits
-# the two inputs would differ.
+# Inputs to a digit-precision case must be exact in binary and decimal alike (rationals,
+# integers, 3.5; never 0.3): mpmath reads a float's binary value, Wolfram its decimal digits,
+# and at 30 digits the two inputs would differ. Sampled answers are pinned (scripts/pin.ts).
 
 Zeta:
-  # Not ζ(3): mpmath and Wolfram answer that from a stored constant.
-  - id: zeta-3p5-to-30-digits
+  # Not ζ(3) or ζ(2n): kernels answer those from stored constants and closed forms.
+  - id: zeta-3-sevenths-to-30-digits
     role: bench
-    expr: [Zeta, 3.5]
-    expected: { num: "1.12673386731705664642781249186" }
+    expr: [Zeta, [Rational, 3, 7]]
     bench:
-      tags: [special-functions]
+      tier: small
+      tags: [special-functions, zeta]
       precision: 30
+  - id: zeta-random-rationals-to-30-digits
+    role: bench
+    expr: [Zeta, [Rational, $p, $q]]
+    bench:
+      tags: [special-functions, zeta]
+      precision: 30
+      sample: { seed: 20260926, count: 8, draw: { p: [int, 14, 60], q: [int, 3, 13] } }
+  - id: zeta-strip-rationals-to-30-digits
+    role: bench
+    expr: [Zeta, [Rational, $p, $q]]
+    bench:
+      tags: [special-functions, zeta]
+      precision: 30
+      sample: { seed: 20260926, count: 8, draw: { p: [int, 1, 12], q: [int, 13, 29] } }
+  - id: zeta-random-rationals-to-100-digits
+    role: bench
+    expr: [Zeta, [Rational, $p, $q]]
+    bench:
+      tier: large
+      tags: [special-functions, zeta]
+      precision: 100
+      sample: { seed: 20260926, count: 8, draw: { p: [int, 14, 60], q: [int, 3, 13] } }
+  - id: zeta-critical-line-near-1000-machine
+    role: bench
+    expr: [Zeta, [Complex, 0.5, $t]]
+    bench:
+      tier: small
+      tags: [special-functions, zeta, complex]
+      precision: machine
+      sample: { seed: 20260926, count: 8, draw: { t: [real, 1000, 1100] } }
+  - id: zeta-critical-line-near-10-to-the-4-machine
+    role: bench
+    expr: [Zeta, [Complex, 0.5, $t]]
+    bench:
+      tags: [special-functions, zeta, complex]
+      precision: machine
+      sample: { seed: 20260926, count: 4, draw: { t: [real, 10000, 10100] } }
+  - id: zeta-critical-line-near-10-to-the-5-machine
+    role: bench
+    expr: [Zeta, [Complex, 0.5, $t]]
+    bench:
+      tier: large
+      tags: [special-functions, zeta, complex]
+      precision: machine
+      budget: 30
+      sample: { seed: 20260926, count: 4, draw: { t: [real, 100000, 100100] } }
+  - id: zeta-critical-strip-to-30-digits
+    role: bench
+    expr: [Zeta, [Add, [Rational, $p, 10], [Complex, 0, $t]]]
+    bench:
+      tags: [special-functions, zeta, complex]
+      precision: 30
+      sample: { seed: 20260926, count: 4, draw: { p: [int, 1, 9], t: [int, 100, 200] } }
 PolyLog:
-  - id: polylog-3-one-quarter-to-30-digits
+  - id: polylog-random-rationals-to-30-digits
     role: bench
-    expr: [PolyLog, 3, 0.25]
-    expected: { num: "0.2584613957965733052880001298737" }
+    expr: [PolyLog, $s, [Rational, $p, $q]]
     bench:
       tags: [special-functions]
       precision: 30
+      sample: { seed: 20260926, count: 8, draw: { p: [int, 1, 9], q: [int, 10, 20], s: [int, 2, 5] } }
   - id: polylog-3-one-half-to-30-digits
     role: bench
     expr: [PolyLog, 3, [Rational, 1, 2]]
     expected: { num: "0.537213193608040200940623225595" }
     bench:
+      tier: small
       tags: [special-functions]
       source: Arb paper (arXiv:1611.02831)
       precision: 30
@@ -34,7 +88,7 @@ HurwitzZeta:
     role: bench
     expr: [HurwitzZeta, $s, $a]
     bench:
-      tags: [special-functions]
+      tags: [special-functions, zeta]
       precision: machine
       sample: { seed: 20260925, count: 16, draw: { a: [real, 0.1, 5], s: [real, 1.5, 10] } }
   - id: hurwitz-zeta-machine
@@ -42,16 +96,32 @@ HurwitzZeta:
     expr: [HurwitzZeta, 2.5, 0.3]
     expected: 21.0692392022477
     bench:
-      tags: [special-functions]
+      tier: small
+      tags: [special-functions, zeta]
       precision: machine
+  - id: hurwitz-zeta-random-rationals-to-30-digits
+    role: bench
+    expr: [HurwitzZeta, [Rational, $p, 2], [Rational, $a, $b]]
+    bench:
+      tags: [special-functions, zeta]
+      precision: 30
+      sample: { seed: 20260926, count: 8, draw: { a: [int, 1, 40], b: [int, 7, 13], p: [int, 3, 19] } }
 Gamma:
   - id: gamma-random-reals-machine
     role: bench
     expr: [Gamma, $x]
     bench:
+      tier: small
       tags: [special-functions]
       precision: machine
       sample: { seed: 20260925, count: 16, draw: { x: [real, 0.5, 50] } }
+  - id: gamma-random-rationals-to-50-digits
+    role: bench
+    expr: [Gamma, [Rational, $p, $q]]
+    bench:
+      tags: [special-functions]
+      precision: 50
+      sample: { seed: 20260926, count: 8, draw: { p: [int, 1, 400], q: [int, 2, 9] } }
   - id: gamma-20p5-to-100-digits
     role: bench
     expr: [Gamma, 20.5]
@@ -61,14 +131,23 @@ Gamma:
       tags: [special-functions]
       source: Arb
       precision: 100
-PolyGamma:
-  - id: trigamma-3p5-to-30-digits
+  - id: gamma-random-rationals-to-1000-digits
     role: bench
-    expr: [PolyGamma, 1, 3.5]
-    expected: { num: "0.3303577561002348649728010554936" }
+    expr: [Gamma, [Rational, $p, $q]]
+    bench:
+      tier: large
+      tags: [special-functions]
+      precision: 1000
+      budget: 30
+      sample: { seed: 20260926, count: 4, draw: { p: [int, 1, 400], q: [int, 2, 9] } }
+PolyGamma:
+  - id: trigamma-random-rationals-to-30-digits
+    role: bench
+    expr: [PolyGamma, 1, [Rational, $p, $q]]
     bench:
       tags: [special-functions]
       precision: 30
+      sample: { seed: 20260926, count: 8, draw: { p: [int, 1, 60], q: [int, 2, 9] } }
 LerchPhi:
   - id: lerchphi-half-2-three-quarters-to-30-digits
     role: bench
@@ -77,21 +156,32 @@ LerchPhi:
     bench:
       tags: [special-functions]
       precision: 30
+# Argument reduction: a huge exact argument, reduced mod 2π before a double sees it. A kernel
+# that turns the argument into a double first answers for a different number.
 Sin:
   - id: sin-24-to-the-40
     role: bench
     expr: [Sin, [Power, 24, 40]]
     expected: 0.400083152719766
     bench:
+      tier: small
       tags: [special-functions, argument-reduction]
       source: ours (#176)
       precision: machine
+  - id: sin-random-1000-bit-integers-machine
+    role: bench
+    expr: [Sin, $n]
+    bench:
+      tags: [special-functions, argument-reduction]
+      precision: machine
+      sample: { seed: 20260926, count: 8, draw: { n: [bits, 1000] } }
 Cos:
   - id: cos-10-to-the-100
     role: bench
     expr: [Cos, [Power, 10, 100]]
     expected: -0.9280819050746553
     bench:
+      tier: small
       tags: [special-functions, argument-reduction]
       source: ours (#176)
       precision: machine

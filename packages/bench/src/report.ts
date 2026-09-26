@@ -13,9 +13,10 @@ export interface RunInfo {
   readonly date: string;
   readonly trigger: string;
   readonly url?: string;
+  readonly suite?: string;
 }
 
-export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date()): RunInfo {
+export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date(), suite?: string): RunInfo {
   const sha = env["GITHUB_SHA"] ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
   const stamp = date.toISOString().slice(0, 16).replace(":", "-");
   const url =
@@ -28,6 +29,7 @@ export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date())
     date: date.toISOString(),
     trigger: env["BENCH_TRIGGER"] ?? (env["GITHUB_ACTIONS"] === "true" ? "ci" : "local"),
     ...(url === undefined ? {} : { url }),
+    ...(suite === undefined ? {} : { suite }),
   };
 }
 

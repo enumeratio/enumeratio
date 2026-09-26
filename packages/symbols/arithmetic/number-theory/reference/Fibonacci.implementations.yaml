@@ -16,20 +16,20 @@ fibonacci-0:
     tex:
       in: F_0
       out: "0"
+  sympy:
+    in: fibonacci(0)
+    out: "0"
   sage:
     in: fibonacci(0)
     out: "0"
   oscar:
     in: fibonacci(0)
     out: "0"
-  mathlib4:
-    in: (Nat.fib 0)
-    out: "0"
-  sympy:
-    in: fibonacci(0)
-    out: "0"
   julia:
     in: fibonacci(0)
+    out: "0"
+  mathlib4:
+    in: (Nat.fib 0)
     out: "0"
 fibonacci-1:
   epsil:
@@ -49,20 +49,20 @@ fibonacci-1:
     tex:
       in: F_1
       out: "1"
+  sympy:
+    in: fibonacci(1)
+    out: "1"
   sage:
     in: fibonacci(1)
     out: "1"
   oscar:
     in: fibonacci(1)
     out: "1"
-  mathlib4:
-    in: (Nat.fib 1)
-    out: "1"
-  sympy:
-    in: fibonacci(1)
-    out: "1"
   julia:
     in: fibonacci(1)
+    out: "1"
+  mathlib4:
+    in: (Nat.fib 1)
     out: "1"
 fibonacci-10:
   epsil:
@@ -82,20 +82,20 @@ fibonacci-10:
     tex:
       in: F_{10}
       out: "55"
+  sympy:
+    in: fibonacci(10)
+    out: "55"
   sage:
     in: fibonacci(10)
     out: "55"
   oscar:
     in: fibonacci(10)
     out: "55"
-  mathlib4:
-    in: (Nat.fib 10)
-    out: "55"
-  sympy:
-    in: fibonacci(10)
-    out: "55"
   julia:
     in: fibonacci(10)
+    out: "55"
+  mathlib4:
+    in: (Nat.fib 10)
     out: "55"
 fibonacci-20:
   epsil:
@@ -115,20 +115,20 @@ fibonacci-20:
     tex:
       in: F_{20}
       out: "6765"
+  sympy:
+    in: fibonacci(20)
+    out: "6765"
   sage:
     in: fibonacci(20)
     out: "6765"
   oscar:
     in: fibonacci(20)
     out: "6765"
-  mathlib4:
-    in: (Nat.fib 20)
-    out: "6765"
-  sympy:
-    in: fibonacci(20)
-    out: "6765"
   julia:
     in: fibonacci(20)
+    out: "6765"
+  mathlib4:
+    in: (Nat.fib 20)
     out: "6765"
 fibonacci-8:
   epsil:
@@ -144,18 +144,18 @@ fibonacci-8:
     in: Fibonacci[8]
   wolfram:
     in: Fibonacci[8]
+  sympy:
+    in: fibonacci(8)
+    out: "21"
   sage:
     in: fibonacci(8)
   oscar:
     in: fibonacci(8)
-  mathlib4:
-    in: (Nat.fib 8)
-  sympy:
-    in: fibonacci(8)
-    out: "21"
   julia:
     in: fibonacci(8)
     out: "21"
+  mathlib4:
+    in: (Nat.fib 8)
 exact-at-any-size-f-100-has-21-digits:
   epsil:
     in: Fibonacci(100)
@@ -170,21 +170,21 @@ exact-at-any-size-f-100-has-21-digits:
     in: Fibonacci[100]
   wolfram:
     in: Fibonacci[100]
+  sympy:
+    in: fibonacci(100)
+    out: "354224848179261915075"
   sage:
     in: fibonacci(100)
   oscar:
     in: fibonacci(100)
-  mathlib4:
-    in: (Nat.fib 100)
-  sympy:
-    in: fibonacci(100)
-    out: "354224848179261915075"
   julia:
     in: fibonacci(100)
     out: "OverflowError: fibonacci(::Int)"
     verdict: error
     kind: domain
     note: Combinatorics.jl computes Fibonacci in Int64, which overflows here; compute-engine is exact.
+  mathlib4:
+    in: (Nat.fib 100)
 a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
   epsil:
     in: Fibonacci(1.5)
@@ -199,21 +199,21 @@ a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
     in: Fibonacci[1.5]
   wolfram:
     in: Fibonacci[1.5]
+  sympy:
+    in: fibonacci(1.5)
+    out: "0.920442065259926"
   sage:
     in: fibonacci(1.5)
   oscar:
     in: fibonacci(1.5)
-  mathlib4:
-    in: (Nat.fib 1.5)
-  sympy:
-    in: fibonacci(1.5)
-    out: "0.920442065259926"
   julia:
     in: fibonacci(1.5)
     out: "MethodError: no method matching fibonacci(::Float64) The function `fibonacci` exists, but no method "
     verdict: error
     kind: domain
     note: The Julia function takes integers; compute-engine's Fibonacci extends to real, rational and complex arguments.
+  mathlib4:
+    in: (Nat.fib 1.5)
 the-two-argument-fibonacci-polynomial-f-7-x-from:
   epsil:
     in: Fibonacci(7, x)
@@ -307,11 +307,11 @@ the-doubling-identity-f-2n-f-n-l-n-see-lucasl:
     in: Equal[Fibonacci[20], Times[Fibonacci[10], LucasL[10]]]
   wolfram:
     in: (Fibonacci[20] == Times[Fibonacci[10], LucasL[10]])
-  sage:
-    in: bool(fibonacci(20) == (fibonacci(10) * lucas_number2(10, 1, -1)))
   sympy:
     in: enumeratio_equal(fibonacci(20), (fibonacci(10) * lucas(10)))
     out: True
+  sage:
+    in: bool(fibonacci(20) == (fibonacci(10) * lucas_number2(10, 1, -1)))
   julia:
     in: (fibonacci(20) == (fibonacci(10) * Combinatorics.lucasnum(10)))
     out: "true"
@@ -347,20 +347,20 @@ the-defining-recurrence-f-10-f-9-f-8:
     tex:
       in: F_{10}=F_9+F_8
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(fibonacci(10), (fibonacci(9) + fibonacci(8)))
+    out: True
   sage:
     in: bool(fibonacci(10) == (fibonacci(9) + fibonacci(8)))
     out: True
   oscar:
     in: (fibonacci(10) == (fibonacci(9) + fibonacci(8)))
     out: "true"
-  mathlib4:
-    in: (decide ((Nat.fib 10) = ((Nat.fib 9) + (Nat.fib 8))))
-    out: "true"
-  sympy:
-    in: enumeratio_equal(fibonacci(10), (fibonacci(9) + fibonacci(8)))
-    out: True
   julia:
     in: (fibonacci(10) == (fibonacci(9) + fibonacci(8)))
+    out: "true"
+  mathlib4:
+    in: (decide ((Nat.fib 10) = ((Nat.fib 9) + (Nat.fib 8))))
     out: "true"
 cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at:
   epsil:
@@ -380,20 +380,20 @@ cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at:
     tex:
       in: F_5 F_7-\left(F_6\right){}^2
       out: "1"
+  sympy:
+    in: ((fibonacci(5) * fibonacci(7)) - (fibonacci(6)**2))
+    out: "1"
   sage:
     in: ((fibonacci(5) * fibonacci(7)) - (fibonacci(6)^2))
     out: "1"
   oscar:
     in: ((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))
     out: "1"
-  mathlib4:
-    in: (((Nat.fib 5) * (Nat.fib 7)) - ((Nat.fib 6) ^ 2))
-    out: "1"
-  sympy:
-    in: ((fibonacci(5) * fibonacci(7)) - (fibonacci(6)**2))
-    out: "1"
   julia:
     in: ((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))
+    out: "1"
+  mathlib4:
+    in: (((Nat.fib 5) * (Nat.fib 7)) - ((Nat.fib 6) ^ 2))
     out: "1"
 gcd-f-12-f-18-f-gcd-12-18:
   epsil:
@@ -413,20 +413,20 @@ gcd-f-12-f-18-f-gcd-12-18:
     tex:
       in: \gcd \left(F_{12},F_{18}\right)=F_{\gcd (12,18)}
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(gcd(fibonacci(12), fibonacci(18)), fibonacci(gcd(12, 18)))
+    out: True
   sage:
     in: bool(gcd(fibonacci(12), fibonacci(18)) == fibonacci(gcd(12, 18)))
     out: True
   oscar:
     in: (gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))
     out: "true"
-  mathlib4:
-    in: (decide ((Int.gcd (Nat.fib 12) (Nat.fib 18)) = (Nat.fib (Int.gcd 12 18))))
-    out: "true"
-  sympy:
-    in: enumeratio_equal(gcd(fibonacci(12), fibonacci(18)), fibonacci(gcd(12, 18)))
-    out: True
   julia:
     in: (gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))
+    out: "true"
+  mathlib4:
+    in: (decide ((Int.gcd (Nat.fib 12) (Nat.fib 18)) = (Nat.fib (Int.gcd 12 18))))
     out: "true"
 negative-indices-are-supported-via-f-n-1-n-1-f-n:
   epsil:
@@ -446,10 +446,16 @@ negative-indices-are-supported-via-f-n-1-n-1-f-n:
     tex:
       in: F_{-5}
       out: "5"
+  sympy:
+    in: fibonacci(-5)
+    out: "5"
   sage:
     in: fibonacci(-5)
     out: "5"
   oscar:
+    in: fibonacci(-5)
+    out: "5"
+  julia:
     in: fibonacci(-5)
     out: "5"
   mathlib4:
@@ -458,12 +464,6 @@ negative-indices-are-supported-via-f-n-1-n-1-f-n:
     verdict: error
     kind: domain
     note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Fibonacci to this argument.
-  sympy:
-    in: fibonacci(-5)
-    out: "5"
-  julia:
-    in: fibonacci(-5)
-    out: "5"
 consecutive-ratios-f-n-1-f-n-converge-to-the:
   epsil:
     in: Fibonacci(20) / Fibonacci(19)
@@ -482,21 +482,21 @@ consecutive-ratios-f-n-1-f-n-converge-to-the:
     tex:
       in: \frac{F_{20}}{F_{19}}
       out: \frac{6765}{4181}
+  sympy:
+    in: (S(fibonacci(20)) / fibonacci(19))
+    out: 6765/4181
   sage:
     in: (fibonacci(20) / fibonacci(19))
     out: 6765/4181
   oscar:
     in: (fibonacci(20) // fibonacci(19))
     out: "1.6180339631667064"
-  mathlib4:
-    in: "(((Nat.fib 20) : ℚ) / (Nat.fib 19))"
-    out: 6765/4181
-  sympy:
-    in: (S(fibonacci(20)) / fibonacci(19))
-    out: 6765/4181
   julia:
     in: (fibonacci(20) // fibonacci(19))
     out: "1.6180339631667064"
+  mathlib4:
+    in: "(((Nat.fib 20) : ℚ) / (Nat.fib 19))"
+    out: 6765/4181
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: Fibonacci([1, 2, 3, 4])
@@ -512,21 +512,21 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: F_{\{1,2,3,4\}}
       out: \{1,1,2,3\}
+  sympy:
+    in: "[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]"
+    out: "[1, 1, 2, 3]"
   sage:
     in: "[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]"
   oscar:
     in: fibonacci([1, 2, 3, 4])
-  mathlib4:
-    in: (Nat.fib [1, 2, 3, 4])
-  sympy:
-    in: "[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]"
-    out: "[1, 1, 2, 3]"
   julia:
     in: fibonacci([1, 2, 3, 4])
     out: "MethodError: no method matching fibonacci(::Vector{Int64}) The function `fibonacci` exists, but no m"
     verdict: error
     kind: threading
     note: compute-engine's Fibonacci is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+  mathlib4:
+    in: (Nat.fib [1, 2, 3, 4])
 they-grow-fast-f-50-already-exceeds-twelve:
   epsil:
     in: Fibonacci(50)
@@ -545,18 +545,18 @@ they-grow-fast-f-50-already-exceeds-twelve:
     tex:
       in: F_{50}
       out: "12586269025"
+  sympy:
+    in: fibonacci(50)
+    out: "12586269025"
   sage:
     in: fibonacci(50)
     out: "12586269025"
   oscar:
     in: fibonacci(50)
     out: "12586269025"
-  mathlib4:
-    in: (Nat.fib 50)
-    out: "12586269025"
-  sympy:
-    in: fibonacci(50)
-    out: "12586269025"
   julia:
     in: fibonacci(50)
+    out: "12586269025"
+  mathlib4:
+    in: (Nat.fib 50)
     out: "12586269025"
