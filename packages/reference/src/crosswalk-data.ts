@@ -1553,6 +1553,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "EllipticTheta",
+    wolfram: "EllipticTheta",
+  },
+  {
+    name: "EllipticThetaPrime",
+    wolfram: "EllipticThetaPrime",
+  },
+  {
     name: "Equal",
     wolfram: "Equal",
     oracle: [
@@ -2936,6 +2944,58 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "TreeGraphQ",
   },
   {
+    name: "JacobiAmplitude",
+    wolfram: "JacobiAmplitude",
+  },
+  {
+    name: "JacobiCD",
+    wolfram: "JacobiCD",
+  },
+  {
+    name: "JacobiCN",
+    wolfram: "JacobiCN",
+  },
+  {
+    name: "JacobiCS",
+    wolfram: "JacobiCS",
+  },
+  {
+    name: "JacobiDC",
+    wolfram: "JacobiDC",
+  },
+  {
+    name: "JacobiDN",
+    wolfram: "JacobiDN",
+  },
+  {
+    name: "JacobiDS",
+    wolfram: "JacobiDS",
+  },
+  {
+    name: "JacobiNC",
+    wolfram: "JacobiNC",
+  },
+  {
+    name: "JacobiND",
+    wolfram: "JacobiND",
+  },
+  {
+    name: "JacobiNS",
+    wolfram: "JacobiNS",
+  },
+  {
+    name: "JacobiSC",
+    wolfram: "JacobiSC",
+  },
+  {
+    name: "JacobiSD",
+    wolfram: "JacobiSD",
+  },
+  {
+    name: "JacobiSN",
+    wolfram: "JacobiSN",
+  },
+  {
     name: "JacobiSymbol",
     wolfram: "JacobiSymbol",
   },
@@ -3163,6 +3223,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "fc3c44",
       "fe1b96",
     ],
+  },
+  {
+    name: "JacobiZN",
+    wolfram: "JacobiZN",
   },
   {
     name: "Join",

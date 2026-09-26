@@ -1,0 +1,80 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiDN(0.3, 0.5))
+    out: 0.978_240_504_174_361_3
+  tex:
+    in: N(\mathrm{JacobiDN}(0.3, 0.5))
+    out: 0.978\,240\,504\,174\,361\,3
+  fullform:
+    in: N[JacobiDN[0.3, 0.5]]
+  wolfram:
+    in: N[JacobiDN[0.3, 0.5]]
+u-0-is-1-for-any-m:
+  epsil:
+    in: JacobiDN(0, m)
+    out: "1"
+  tex:
+    in: \mathrm{JacobiDN}(0, m)
+    out: "1"
+  fullform:
+    in: JacobiDN[0, m]
+m-0-is-1-for-any-u:
+  epsil:
+    in: JacobiDN(u, 0)
+    out: "1"
+  tex:
+    in: \mathrm{JacobiDN}(u, 0)
+    out: "1"
+  fullform:
+    in: JacobiDN[u, 0]
+the-quarter-period-u-elliptick-m-is-sqrt:
+  epsil:
+    in: JacobiDN(EllipticK(m), m)
+    out: Sqrt(-m + 1)
+  tex:
+    in: \mathrm{JacobiDN}(\mathrm{EllipticK}(m), m)
+    out: \sqrt{1-m}
+  fullform:
+    in: JacobiDN[EllipticK[m], m]
+m-greater-than-1-via-the-reciprocal-modulus:
+  epsil:
+    in: N(JacobiDN(0.3, 1.5))
+    out: 0.935_161_917_755_299_8
+  tex:
+    in: N(\mathrm{JacobiDN}(0.3, 1.5))
+    out: 0.935\,161\,917\,755\,299\,8
+  fullform:
+    in: N[JacobiDN[0.3, 1.5]]
+  wolfram:
+    in: N[JacobiDN[0.3, 1.5]]
+m-less-than-0-via-the-imaginary-modulus:
+  epsil:
+    in: N(JacobiDN(0.3, -2))
+    out: 1.088_512_946_606_272_4
+  tex:
+    in: N(\mathrm{JacobiDN}(0.3, -2))
+    out: 1.088\,512\,946\,606\,272\,4
+  fullform:
+    in: N[JacobiDN[0.3, -2]]
+  wolfram:
+    in: N[JacobiDN[0.3, -2]]
+a-complex-argument-u:
+  epsil:
+    in: N(JacobiDN(0.3 + 0.4i, 0.5))
+    out: 1.012_262_082_212_854 - 0.062_849_685_024_787_7i
+  tex:
+    in: N(\mathrm{JacobiDN}(0.3+0.4i, 0.5))
+    out: 1.012\,262\,082\,212\,854-0.062\,849\,685\,024\,787\,7i
+  fullform:
+    in: N[JacobiDN[Complex[0.3, 0.4], 0.5]]
+  wolfram:
+    in: N[JacobiDN[Complex[0.3, 0.4], 0.5]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiDN(u, m)
+    out: JacobiDN(u, m)
+  tex:
+    in: \mathrm{JacobiDN}(u, m)
+    out: \mathrm{JacobiDN}(u, m)
+  fullform:
+    in: JacobiDN[u, m]

@@ -473,14 +473,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "JacobiCN",
-    uses: 10,
-  },
-  {
-    head: "JacobiSN",
-    uses: 10,
-  },
-  {
     head: "ListPolarPlot",
     uses: 10,
   },
@@ -522,10 +514,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Cuboid",
-    uses: 9,
-  },
-  {
-    head: "EllipticTheta",
     uses: 9,
   },
   {
@@ -713,14 +701,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "JacobiCS",
-    uses: 7,
-  },
-  {
-    head: "JacobiSC",
-    uses: 7,
-  },
-  {
     head: "KernelMixtureDistribution",
     uses: 7,
   },
@@ -810,18 +790,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InfiniteLine",
-    uses: 6,
-  },
-  {
-    head: "JacobiAmplitude",
-    uses: 6,
-  },
-  {
-    head: "JacobiCD",
-    uses: 6,
-  },
-  {
-    head: "JacobiNS",
     uses: 6,
   },
   {
@@ -918,10 +886,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InverseJacobiCN",
-    uses: 5,
-  },
-  {
-    head: "JacobiZN",
     uses: 5,
   },
   {
