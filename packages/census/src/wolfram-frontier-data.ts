@@ -225,10 +225,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 20,
   },
   {
-    head: "RandomFunction",
-    uses: 20,
-  },
-  {
     head: "RootReduce",
     uses: 20,
   },
@@ -294,10 +290,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Speak",
-    uses: 17,
-  },
-  {
-    head: "WienerProcess",
     uses: 17,
   },
   {
@@ -454,10 +446,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "MultinormalDistribution",
-    uses: 11,
-  },
-  {
-    head: "PoissonProcess",
     uses: 11,
   },
   {
