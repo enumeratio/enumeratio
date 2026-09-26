@@ -114,8 +114,8 @@ a-negative-argument-is-left-unevaluated:
     in: \mathrm{Subfactorial}(-1)
     out: \mathrm{Subfactorial}(-1)
   traditional:
-    in: "{!}-1"
-    out: "{!}-1"
+    in: "{!}(-1)"
+    out: "{!}(-1)"
   fullform:
     in: Subfactorial[-1]
   wolfram:
@@ -175,7 +175,7 @@ real-arguments-evaluate-as-frac-gamma-n-1-1-e:
     in: \mathrm{Subfactorial}(4.5)
     out: 19.255\,831\,840\,742\,534+0.157\,179\,122\,964\,615\,25i
   traditional:
-    in: "{!}4.5"
+    in: "{!}(4.5)"
     out: 19.255\,831\,840\,742\,534+0.157\,179\,122\,964\,615\,25i
   fullform:
     in: Subfactorial[4.5]
@@ -189,7 +189,7 @@ complex-arguments-evaluate-as-frac-gamma-n-1-1-e:
     in: \mathrm{Subfactorial}(1.6+i)
     out: 0.296\,830\,458\,177\,711\,8+0.284\,208\,547\,251\,969\,9i
   traditional:
-    in: "{!}1.6+i"
+    in: "{!}(1.6+i)"
     out: 0.296\,830\,458\,177\,711\,8+0.284\,208\,547\,251\,969\,9i
   fullform:
     in: Subfactorial[Complex[1.6, 1]]
