@@ -11,19 +11,6 @@ details:
   - $CDF(x) = (\lfloor x\rfloor - min + 1)/(max-min+1)$, clamped to $0$ below $min$ and $1$ above $max$.
   - $Mean = (min+max)/2$, $Variance = ((max-min+1)^2-1)/12$, both exact.
   - '[[RandomVariate]] draws $min + \lfloor U \cdot (max-min+1)\rfloor$.'
-examples:
-  - id: discreteuniform-pdf-exact
-    expr: [PDF, [DiscreteUniformDistribution, [List, 1, 6]], 3]
-    expected: [Rational, 1, 6]
-  - id: discreteuniform-cdf-exact
-    expr: [CDF, [DiscreteUniformDistribution, [List, 1, 6]], 3]
-    expected: [Rational, 1, 2]
-  - id: discreteuniform-mean-exact
-    expr: [Mean, [DiscreteUniformDistribution, [List, 1, 6]]]
-    expected: [Rational, 7, 2]
-  - id: discreteuniform-variance-exact
-    expr: [Variance, [DiscreteUniformDistribution, [List, 1, 6]]]
-    expected: [Rational, 35, 12]
 seeAlso:
   - UniformDistribution
   - PDF

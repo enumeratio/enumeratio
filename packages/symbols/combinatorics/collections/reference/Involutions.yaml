@@ -9,10 +9,6 @@ signatures:
 details:
   - Count satisfies $a(n) = a(n-1) + (n-1)\,a(n-2)$
   - A sub-family of [[SymmetricGroup]]
-examples:
-  - id: count-involutions-4
-    expr: [Count, [Involutions, 4]]
-    expected: 10
 seeAlso:
   - SymmetricGroup
   - Derangements

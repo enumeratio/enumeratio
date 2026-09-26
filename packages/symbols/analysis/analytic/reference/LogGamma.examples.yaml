@@ -1,0 +1,103 @@
+- id: ln-gamma-3-ln-2-ln-2
+  expr: [LogGamma, 3]
+  expected: [Ln, 2]
+  caption: $\ln\Gamma(3) = \ln 2! = \ln 2$
+- id: ln-gamma-1-0
+  expr: [LogGamma, 1]
+  expected: 0
+  caption: $\ln\Gamma(1) = 0$
+- id: ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac
+  expr: [LogGamma, [Rational, 1, 2]]
+  expected: [Multiply, [Rational, 1, 2], [Ln, Pi]]
+  category: Properties
+  caption: $\ln\Gamma(\tfrac12) = \tfrac12 \ln\pi$, from $\Gamma(\tfrac12) = \sqrt\pi$
+- id: a-pole-of-gamma
+  expr: [LogGamma, 0]
+  expected: PositiveInfinity
+  category: Properties
+  caption: A pole of $\Gamma$
+- id: ln-gamma-2-5-ln-1-3293-to-the-engine-s-working
+  expr: [LogGamma, 2.5]
+  expected: { num: "0.284682870472919159632" }
+  caption: "$\\ln\\Gamma(2.5) = \\ln 1.3293\\ldots$ — to the engine's working precision, not a double: right of the imaginary axis this goes through compute-engine's own [[GammaLn]]"
+- id: off-the-positive-axis-this-is-the-continuation
+  expr: [LogGamma, [Complex, -2.5, 1.5]]
+  expected: [Complex, -3.717513451191792, -7.7130655258341925]
+  category: Possible issues
+  caption: 'Off the positive axis this is the continuation: $\ln(\Gamma(-2.5+1.5i))$ with a principal log has imaginary part $-1.4299$, a full $2\pi$ away'
+- id: ln-gamma-5-ln-4-ln-24-split-into-prime
+  expr: [LogGamma, 5]
+  expected: [Add, [Multiply, 3, [Ln, 2]], [Ln, 3]]
+  caption: $\ln\Gamma(5) = \ln 4! = \ln 24$, split into prime logarithms
+- id: to-the-engine-s-working-precision
+  expr: [LogGamma, 2.2]
+  expected: { num: "0.096947466790638776492" }
+  category: Scope
+  caption: To the engine's working precision
+- id: complex-arguments
+  expr: [LogGamma, [Complex, 2.5, 3]]
+  expected: [Complex, -1.4709546103488407, 2.8226156382607988]
+  category: Scope
+  caption: Complex arguments
+- id: threads-elementwise-over-an-array
+  expr: [LogGamma, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
+  expected:
+    [
+      List,
+      [List, [Multiply, [Rational, 1, 2], [Ln, Pi]], PositiveInfinity],
+      [List, PositiveInfinity, [Multiply, [Rational, 1, 2], [Ln, Pi]]],
+    ]
+  category: Scope
+  caption: Threads elementwise over an array
+- id: on-the-negative-axis-gamma-frac-32-frac-43-sqrt
+  expr: [LogGamma, -1.5]
+  expected: [Complex, 0.8600470153764797, -6.283185307179586]
+  category: Properties
+  caption: 'On the negative axis: $\Gamma(-\tfrac32) = \tfrac43\sqrt\pi > 0$, but the continuation carries $-2\pi i$'
+- id: half-integers-past-frac-12-ln-gamma-frac-32-ln
+  expr: [LogGamma, [Rational, 3, 2]]
+  expected: [Ln, [Multiply, [Rational, 1, 2], [Sqrt, Pi]]]
+  category: Properties
+  caption: 'Half-integers past $\tfrac12$: $\ln\Gamma(\tfrac32) = \ln\tfrac{\sqrt\pi}{2}$'
+- id: exact-negative-half-integers-ln-gamma-frac-32-ln
+  expr: [LogGamma, [Rational, -3, 2]]
+  expected: [Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]
+  category: Scope
+  caption: 'Exact negative half-integers: $\ln\Gamma(-\tfrac32) = \ln\tfrac{4\sqrt\pi}{3} - 2\pi i$'
+- id: ln-gamma-infty-infty
+  expr: [LogGamma, PositiveInfinity]
+  expected: PositiveInfinity
+  category: Scope
+  caption: $\ln\Gamma(\infty) = \infty$
+- id: huge-arguments-ln-gamma-10-300-approx-6-898
+  expr: [N, [LogGamma, [Power, 10, 300]]]
+  expected: 6.897755278982137e+302
+  category: Scope
+  caption: "Huge arguments: $\\ln\\Gamma(10^{300}) \\approx 6.898\\times10^{302}$, from Stirling's series directly rather than through $\\Gamma(10^{300})$ itself, which overflows a double long before its log would -- a magnitude that fits a double, so it comes back as one rather than the engine's bignum (this is the fallback kernel, not compute-engine's own arithmetic)"
+- id: interval-arithmetic-decreasing-here-so-the
+  expr: [LogGamma, [Interval, 0.41, 0.42]]
+  expected: [Interval, 0.7468637271280142, 0.7714224633947468]
+  category: Scope
+  caption: "Interval arithmetic: decreasing here, so the endpoints swap"
+- id: uncertainty-propagation-with-psi-1-2-as-the
+  expr: [LogGamma, [Around, 1.2, 0.01]]
+  expected: [Around, -0.08537409000331585, 0.002890398965921883]
+  category: Scope
+  caption: Uncertainty propagation, with $\psi(1.2)$ as the slope
+- id: to-30-significant-digits-not-yet-the-last-digit
+  expr: [N, [LogGamma, [Rational, 1, 3]], 30]
+  expected: { num: "0.985420646927767069187174036978" }
+  category: Scope
+  caption: To 30 significant digits, the last one correctly rounded
+- role: test
+  id: log-gamma-neg-2-is-a-pole
+  expr: [LogGamma, -2]
+  expected: PositiveInfinity
+- role: test
+  id: log-gamma-neg-3-is-a-pole
+  expr: [LogGamma, -3]
+  expected: PositiveInfinity
+- role: test
+  id: n-log-gamma-5-over-2-to-40-digits
+  expr: [N, [LogGamma, [Rational, 5, 2]], 40]
+  expected: { num: "0.2846828704729191596324946696827019243201" }

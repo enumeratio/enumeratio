@@ -12,12 +12,12 @@ import { loadReferenceData, PACKAGES } from "../src/node.ts";
 const { heads, issues } = loadReferenceData(PACKAGES);
 for (const { file, message } of issues) console.error(`${file}: ${message}`);
 let rewritten = 0;
-for (const { entryPath } of heads) {
-  if (await isWrittenYaml(entryPath)) continue;
-  const data = parseYaml(readFileSync(entryPath, "utf8"));
-  await writeYaml(entryPath, data);
-  if (!isDeepStrictEqual(parseYaml(readFileSync(entryPath, "utf8")), data))
-    throw new Error(`${entryPath}: the rewrite changed the data`);
+for (const path of heads.flatMap((h) => (h.examplesPath ? [h.entryPath, h.examplesPath] : [h.entryPath]))) {
+  if (await isWrittenYaml(path)) continue;
+  const data = parseYaml(readFileSync(path, "utf8"));
+  await writeYaml(path, data);
+  if (!isDeepStrictEqual(parseYaml(readFileSync(path, "utf8")), data))
+    throw new Error(`${path}: the rewrite changed the data`);
   rewritten++;
 }
-console.log(`${rewritten} of ${heads.length} records rewritten`);
+console.log(`${rewritten} files rewritten`);

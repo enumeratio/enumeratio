@@ -1,0 +1,4 @@
+- id: turn-on-orderless
+  expr: [List, [SetAttributes, HarmonicMean, Orderless], [Attributes, HarmonicMean]]
+  expected: [List, [List, Orderless]]
+  caption: turn Orderless on, then read it back with Attributes (the Nothing result of SetAttributes itself vanishes from the enclosing List)

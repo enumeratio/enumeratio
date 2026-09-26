@@ -8,14 +8,5 @@ signatures:
     library: enumeratio-collections
 details:
   - Substitutes n -> n+1 into f and simplifies the difference; stays symbolic when it does not collapse further.
-examples:
-  - id: quadratic
-    expr: [DifferenceDelta, [Power, n, 2], n]
-    expected: [Add, [Multiply, 2, n], 1]
-    caption: $(n+1)^2 - n^2 = 2n + 1$
-  - id: linear
-    expr: [DifferenceDelta, [Add, [Multiply, 3, n], 5], n]
-    expected: 3
-    caption: The forward difference of a linear function is its slope, everywhere
 seeAlso:
   - DiscreteRatio

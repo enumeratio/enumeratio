@@ -11,14 +11,6 @@ signatures:
     library: enumeratio-collections
 details:
   - Counts code points, the same convention ToCharacterCode/StringLength/FromCharacterCode (expression-ops.ts) already use — an astral character is one code point, not two UTF-16 units.
-examples:
-  - id: letters-a-through-e
-    expr: [CharacterRange, [String, a], [String, e]]
-    expected: [List, "'a'", "'b'", "'c'", "'d'", "'e'"]
-  - id: by-code-point
-    expr: [CharacterRange, 97, 101]
-    expected: [List, "'a'", "'b'", "'c'", "'d'", "'e'"]
-    category: Scope
 seeAlso:
   - ToCharacterCode
   - FromCharacterCode

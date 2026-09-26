@@ -10,7 +10,6 @@ details:
   - OEIS A000567.
   - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(65, OctagonalNumbers)$ is true, $Element(64, OctagonalNumbers)$ is false.
   - The $k$-gonal case $k=8$ of [[PolygonalNumbers]].
-examples: []
 enumerate:
   expr: Take(OctagonalNumbers, 20)
 seeAlso:

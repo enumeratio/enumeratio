@@ -1,0 +1,5 @@
+- id: count-phylogenetictrees-5-105-2-cdot-5-3-a001147
+  expr: [Count, [PhylogeneticTrees, 5]]
+  expected: 105
+  category: Basic
+  caption: $Count(PhylogeneticTrees(5)) = 105 = (2 \cdot 5 - 3)!!$, A001147

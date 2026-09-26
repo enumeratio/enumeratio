@@ -10,18 +10,6 @@ details:
   - The linear extension is what makes $\zeta$ upper-triangular with ones on the diagonal, hence invertible over the integers — and therefore what makes $\mu$ integral
   - '`DivisorLattice` elements are integers; `BooleanLattice` elements are subsets; `Chain` elements are $1 \dots n$'
   - '`AlgebraDimension(IncidenceAlgebra(poset))` counts the intervals: $\binom{n+1}{2}$ for a chain, $3^n$ for the Boolean lattice'
-examples:
-  - id: posetelements-divisorlattice-12
-    expr: [PosetElements, [DivisorLattice, 12]]
-    expected: [List, 1, 2, 3, 4, 6, 12]
-  - id: posetelements-chain-4
-    expr: [PosetElements, [Chain, 4]]
-    expected: [List, 1, 2, 3, 4]
-  - id: 3-3-intervals
-    expr: [AlgebraDimension, [IncidenceAlgebra, [BooleanLattice, 3]]]
-    expected: 27
-    caption: $3^3$ intervals
-    category: Properties
 seeAlso:
   - MoebiusFunction
   - MoebiusInvert

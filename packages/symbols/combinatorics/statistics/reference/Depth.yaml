@@ -5,12 +5,3 @@ summary: Half the total displacement, (1/2) * sum |p(i) - i|.
 details:
   - Defined over `Permutations` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
   - Takes a `Permutations` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
-examples:
-  - id: the-one-line-word-312
-    expr: [Depth, [Permutations, [List, 3, 1, 2]]]
-    expected: 2
-    caption: the one-line word $312$
-  - id: the-one-line-word-2413
-    expr: [Depth, [Permutations, [List, 2, 4, 1, 3]]]
-    expected: 3
-    caption: the one-line word $2413$

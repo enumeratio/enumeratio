@@ -1,0 +1,46 @@
+- id: 0-whenever-n-and-m-share-a-factor
+  expr: [JacobiSymbol, 10, 5]
+  expected: 0
+  caption: 0 whenever n and m share a factor
+- id: 3-is-not-a-quadratic-residue-mod-5-the-residues
+  expr: [JacobiSymbol, 3, 5]
+  expected: -1
+  caption: 3 is not a quadratic residue mod 5 (the residues are 1 and 4)
+- id: jacobisymbol-1-001-9-907
+  expr: [JacobiSymbol, 1001, 9907]
+  expected: -1
+- id: by-convention-the-symbol-is-1-whenever-m-1
+  expr: [JacobiSymbol, 0, 1]
+  expected: 1
+  category: Possible issues
+  caption: By convention the symbol is 1 whenever $m=1$
+- id: completely-multiplicative-in-the-top-argument-a
+  expr: [Equal, [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 5, 7]], [JacobiSymbol, [Multiply, 3, 5], 7]]
+  expected: True
+  category: Properties
+  caption: "Completely multiplicative in the top argument: $(a/m)(b/m)=(ab/m)$"
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [JacobiSymbol, [List, 2, 3, 5, 7, 11], 3]
+  expected: [List, -1, 0, -1, 1, -1]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: larger-arguments-10-10-1-against-the-1000th
+  expr: [JacobiSymbol, [Add, [Power, 10, 10], 1], [NthPrime, 1000]]
+  expected: 1
+  category: Scope
+  caption: "Larger arguments: $10^{10}+1$ against the 1000th prime, 7919"
+- id: quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac
+  expr: [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 7, 3]]
+  expected: -1
+  category: Properties
+  caption: 'Quadratic reciprocity: $(p/q)(q/p)=(-1)^{\frac{p-1}2\frac{q-1}2}$, $-1$ as $3\equiv7\equiv3\pmod4$'
+- id: 1-m-1-m-1-2
+  expr: [JacobiSymbol, -1, 7]
+  expected: -1
+  category: Properties
+  caption: $(-1/m)=(-1)^{(m-1)/2}$
+- id: 2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15
+  expr: [JacobiSymbol, 2, 15]
+  expected: 1
+  category: Possible issues
+  caption: $(2/15)=(2/3)(2/5)=1$, yet 2 is not a square mod 15

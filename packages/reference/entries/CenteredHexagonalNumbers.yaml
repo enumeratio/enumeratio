@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(CenteredHexagonalNumbers) = +\infty$, and $At(CenteredHexagonalNumbers, k) = 3k^2-3k+1$ unranks in closed form -- $At(CenteredHexagonalNumbers, 5) = 61$.'
   - OEIS A003215.
   - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(61, CenteredHexagonalNumbers)$ is true, $Element(60, CenteredHexagonalNumbers)$ is false.
-examples: []
 enumerate:
   expr: Take(CenteredHexagonalNumbers, 20)
 seeAlso:

@@ -1,0 +1,32 @@
+- id: the-set-partitions-of-an-explicit-list-in-the
+  expr: [SetPartitions, [List, a, b, c]]
+  expected:
+    [
+      List,
+      [List, [List, a, b, c]],
+      [List, [List, a, b], [List, c]],
+      [List, [List, a, c], [List, b]],
+      [List, [List, a], [List, b, c]],
+      [List, [List, a], [List, b], [List, c]],
+    ]
+  caption: The set partitions of an explicit list, in the family's own RGS order
+- id: exactly-2-blocks
+  expr: [SetPartitions, 3, 2]
+  expected: [List, [List, [List, 1, 2], [List, 3]], [List, [List, 1, 3], [List, 2]], [List, [List, 1], [List, 2, 3]]]
+  category: Scope
+  caption: Exactly 2 blocks
+- id: the-partitions-of-a-4-set-into-2-blocks-number-s
+  expr: [Count, [SetPartitions, 4, 2]]
+  expected: 7
+  category: Scope
+  caption: The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$
+- id: the-family-has-b-4-15-members-see-bellnumber
+  expr: [BellNumber, 4]
+  expected: 15
+  category: Properties
+  caption: The family has $B_4 = 15$ members. See [[BellNumber]]
+- id: those-with-exactly-2-blocks-number-s-4-2-7-see
+  expr: [Stirling, 4, 2]
+  expected: 7
+  category: Properties
+  caption: Those with exactly 2 blocks number $S(4, 2) = 7$. See [[Stirling]]

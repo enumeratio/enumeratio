@@ -1,0 +1,21 @@
+- id: sawtoothwave-zero
+  expr: [SawtoothWave, 0]
+  expected: 0
+- id: sawtoothwave-1-3
+  expr: [SawtoothWave, [Rational, 1, 3]]
+  expected: [Rational, 1, 3]
+- id: sawtoothwave-negative
+  expr: [SawtoothWave, [Rational, -1, 4]]
+  expected: [Rational, 3, 4]
+  category: Scope
+  caption: Always nonnegative, unlike [[FractionalPart]]
+- id: sawtoothwave-periodic
+  expr: [Equal, [SawtoothWave, [Rational, 1, 3]], [SawtoothWave, [Add, [Rational, 1, 3], 5]]]
+  expected: True
+  category: Properties
+  caption: Period 1
+- id: sawtoothwave-ranged
+  expr: [SawtoothWave, [List, 0, 10], [Rational, 1, 2]]
+  expected: 5
+  category: Scope
+  caption: Rescaled to a {min, max} range

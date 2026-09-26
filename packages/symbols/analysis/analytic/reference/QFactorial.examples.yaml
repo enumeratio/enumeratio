@@ -1,0 +1,21 @@
+- id: 1-2-2-2-3-2-1-cdot-3-cdot-7
+  expr: [QFactorial, 3, 2]
+  expected: 21
+  caption: $[1]_2 [2]_2 [3]_2 = 1 \cdot 3 \cdot 7$
+- id: qfactorial-4-2
+  expr: [QFactorial, 4, 2]
+  expected: 315
+- id: qfactorial-3-1-over-2
+  expr: [QFactorial, 3, [Rational, 1, 2]]
+  expected: [Rational, 21, 8]
+  category: Scope
+- id: at-q-1-it-is-the-ordinary-factorial
+  expr: [QFactorial, 5, 1]
+  expected: 120
+  category: Properties
+  caption: At $q = 1$ it is the ordinary factorial
+- id: the-inversion-generating-function-of
+  expr: [Expand, [QFactorial, 3, q]]
+  expected: [Add, [Power, q, 3], [Multiply, 2, [Power, q, 2]], [Multiply, 2, q], 1]
+  category: Applications
+  caption: 'The inversion generating function of SymmetricGroup(3): $\sum_\pi q^{\mathrm{inv}(\pi)}$'

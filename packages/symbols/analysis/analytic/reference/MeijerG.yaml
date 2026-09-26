@@ -10,21 +10,6 @@ details:
   - Numeric only (like this package's `Hypergeometric0F1` and friends — always declines for a symbolic `z` or parameter, never returns a symbolic closed form). Requires $m \ge 1$ and $p \le q$, so every term's ${}_pF_q$ has upper-count $\le$ lower-count $+ 1$, the shape `pfqSeries` already handles (entire, or convergent only inside the unit disc).
   - 'Declined: $p > q$; $m = 0$; two of the $b_h$ ($h \le m$) congruent mod 1 (a non-simple pole — the log-case formula this does not implement); a Γ-argument in the prefactor landing on a non-positive integer (a further degeneracy); non-numeric operands.'
   - Verified against wolframscript's own `MeijerG` at several parameter sets, including the plain-exponential case ($m{=}1,n{=}0,p{=}0,q{=}1$) and cases with both $a$- and $b$-parameters.
-examples:
-  - id: exponential-case
-    expr: [MeijerG, [List, [List], [List]], [List, [List, 0], [List]], 0.6]
-    expected: 0.5488116360940264
-    caption: $G^{1,0}_{0,1}(z \mid {}; 0) = e^{-z}$
-  - id: mixed-a-and-b
-    expr: [MeijerG, [List, [List, 0.7], [List]], [List, [List, 0.3], [List]], 0.4]
-    expected: 0.9244681281245817
-    category: Scope
-    caption: a case with both an $a$- and a $b$-parameter
-  - id: two-b-terms
-    expr: [MeijerG, [List, [List], [List]], [List, [List, 0, [Rational, 1, 2]], [List]], 1.3]
-    expected: 0.18123044018823334
-    category: Scope
-    caption: $m = 2$, two poles summed
 primitive: kernel
 bindings:
   - origin: native

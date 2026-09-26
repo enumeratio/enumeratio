@@ -1,0 +1,22 @@
+- id: the-cube-root-of-a-perfect-cube
+  expr: [CubeRoot, 8]
+  expected: 2
+  caption: The cube root of a perfect cube
+- id: the-real-root-of-a-negative-number-not-a-complex
+  expr: [CubeRoot, -27]
+  expected: -3
+  caption: The real root of a negative number, not a complex one
+- id: at-a-non-perfect-cube-n-forces-the-numeric
+  expr: [N, [CubeRoot, 2]]
+  expected: 1.2599210498948732
+  caption: At a non-perfect cube, N() forces the numeric branch (plain evaluation stays exact and symbolic)
+- id: threads-element-wise-over-a-list
+  expr: [CubeRoot, [List, -8, 27]]
+  expected: [List, -2, 3]
+  category: Scope
+  caption: Threads element-wise over a list
+- id: the-same-as-root-with-index-3
+  expr: [Equal, [CubeRoot, -64], [Root, -64, 3]]
+  expected: True
+  category: Properties
+  caption: The same as [[Root]] with index 3

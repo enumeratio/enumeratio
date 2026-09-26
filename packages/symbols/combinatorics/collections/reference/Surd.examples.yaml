@@ -1,0 +1,9 @@
+- id: negative-cube-root
+  expr: [Surd, -8, 3]
+  expected: -2
+  caption: The real cube root of -8 is -2, not a complex principal root
+- id: nonnegative-base
+  expr: [Surd, 8, 3]
+  expected: 2
+  category: Scope
+  caption: For a nonnegative base, Surd agrees with Power(x, 1/n)

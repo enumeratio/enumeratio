@@ -1,0 +1,10 @@
+- id: listable
+  expr: [IsPerfect, [List, 6, 28, 12]]
+  expected: [List, True, True, False]
+  category: Scope
+  caption: Listable
+- id: negative-numbers-are-not-perfect
+  expr: [IsPerfect, -6]
+  expected: False
+  category: Possible issues
+  caption: Negative numbers are not perfect

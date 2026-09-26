@@ -1,0 +1,25 @@
+- id: fractionalpart-2p5
+  expr: [FractionalPart, 2.5]
+  expected: 0.5
+- id: fractionalpart-7-over-2
+  expr: [FractionalPart, [Rational, 7, 2]]
+  expected: [Rational, 1, 2]
+- id: keeps-the-sign-of-x-unlike-compute-engine-s
+  expr: [FractionalPart, [Rational, -7, 2]]
+  expected: [Rational, -1, 2]
+  caption: Keeps the sign of x, unlike compute-engine's [[Fract]]
+- id: exact-numeric-arguments-stay-exact
+  expr: [FractionalPart, Pi]
+  expected: [Add, -3, Pi]
+  category: Scope
+  caption: Exact numeric arguments stay exact
+- id: threads-element-wise-over-a-list
+  expr: [FractionalPart, [List, [Rational, 7, 2], [Rational, -1, 3]]]
+  expected: [List, [Rational, 1, 2], [Rational, -1, 3]]
+  category: Scope
+  caption: Threads element-wise over a list
+- id: zero-exactly-on-the-integers
+  expr: [FractionalPart, 5]
+  expected: 0
+  category: Properties
+  caption: Zero exactly on the integers

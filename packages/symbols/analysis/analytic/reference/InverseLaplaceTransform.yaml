@@ -9,19 +9,6 @@ signatures:
 details:
   - 'Covered: $s^{-n}$ ($n$ a positive integer) $\to t^{n-1}/(n-1)!$; $1/(s-a) \to e^{at}$; $s/(s^2+a^2) \to \cos(at)$; $a/(s^2+a^2) \to \sin(at)$; $s/(s^2-a^2) \to \cosh(at)$; $a/(s^2-a^2) \to \sinh(at)$; sums and a constant factor.'
   - "Declined: anything outside that table — a general rational function of `s` (partial-fraction decomposition is not attempted), a non-positive or non-integer power of `s`, an image that doesn't depend on `s` at all."
-examples:
-  - id: one-over-s-squared
-    expr: [InverseLaplaceTransform, [Power, s, -2], s, t]
-    expected: t
-    caption: $\mathcal{L}^{-1}\{1/s^2\} = t$
-  - id: one-over-s-minus-a
-    expr: [InverseLaplaceTransform, [Power, [Add, s, [Negate, a]], -1], s, t]
-    expected: [Power, ExponentialE, [Multiply, a, t]]
-    caption: $\mathcal{L}^{-1}\{1/(s-a)\} = e^{at}$
-  - id: s-over-s-squared-plus-a-squared
-    expr: [InverseLaplaceTransform, [Divide, s, [Add, [Power, s, 2], [Power, a, 2]]], s, t]
-    expected: [Cos, [Multiply, a, t]]
-    caption: $\mathcal{L}^{-1}\{s/(s^2+a^2)\} = \cos(at)$
 primitive: kernel
 bindings:
   - origin: native

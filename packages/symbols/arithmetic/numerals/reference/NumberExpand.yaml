@@ -13,20 +13,6 @@ signatures:
 details:
   - "The terms sum back to $n$: `Total(NumberExpand(n))` is $n$"
   - Every term carries the sign of $n$, not just the leading one
-examples:
-  - id: numberexpand-1-234
-    expr: [NumberExpand, 1234]
-    expected: [List, 1000, 200, 30, 4]
-  - id: base-2-zero-terms-kept
-    expr: [NumberExpand, 10, 2]
-    expected: [List, 8, 0, 2, 0]
-    category: Scope
-    caption: base 2, zero terms kept
-  - id: every-term-carries-the-sign
-    expr: [NumberExpand, -123]
-    expected: [List, -100, -20, -3]
-    category: Scope
-    caption: every term carries the sign
 seeAlso:
   - IntegerDigits
   - IntegerLength

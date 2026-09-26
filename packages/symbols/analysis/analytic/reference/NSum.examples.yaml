@@ -1,0 +1,31 @@
+- id: zeta-2-via-euler-maclaurin
+  expr: [NSum, [Power, n, -2], [List, n, 1, PositiveInfinity]]
+  expected: 1.6449340668482282
+  caption: Sum 1/n^2 = pi^2/6, to full double precision
+- id: the-alternating-harmonic-series
+  expr: [NSum, [Divide, [Power, -1, [Add, n, 1]], n], [List, n, 1, PositiveInfinity]]
+  expected: 0.6931471805599454
+  caption: Sum (-1)^(n+1)/n = ln 2, via Wynn's epsilon algorithm
+- id: e-minus-one
+  expr: [NSum, [Divide, 1, [Factorial, n]], [List, n, 1, PositiveInfinity]]
+  expected: 1.7182818284590455
+  caption: Sum 1/n! from n=1 = e - 1, already stable before any acceleration is needed
+- id: a-much-more-slowly-convergent-power-law
+  expr: [NSum, [Power, n, -1.1], [List, n, 1, PositiveInfinity]]
+  expected: 10.584448464950803
+  category: Scope
+  caption: Sum 1/n^1.1 = zeta(1.1) -- far slower than zeta(2), but Euler-Maclaurin still clears the bar
+- id: a-finite-range-is-a-direct-sum
+  expr: [NSum, n, [List, n, 1, 5]]
+  expected: 15
+  caption: A finite range needs no acceleration at all
+- id: declines-the-harmonic-series
+  expr: [NSum, [Divide, 1, n], [List, n, 1, PositiveInfinity]]
+  expected: [NSum, [Divide, 1, n], [List, n, 1, PositiveInfinity]]
+  category: Possible issues
+  caption: Declines -- the harmonic series diverges
+- id: declines-a-series-whose-terms-grow
+  expr: [NSum, n, [List, n, 1, PositiveInfinity]]
+  expected: [NSum, n, [List, n, 1, PositiveInfinity]]
+  category: Possible issues
+  caption: Declines -- Sum n diverges (the terms don't shrink at all)

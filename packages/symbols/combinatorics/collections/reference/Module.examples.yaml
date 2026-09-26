@@ -1,0 +1,9 @@
+- id: a-local-counter
+  expr: [Module, [List, [Equal, i, 0]], [Assign, i, [Add, i, 1]]]
+  expected: 1
+  caption: a local counter, invisible outside
+- id: locals-do-not-leak-or-clobber
+  expr: [List, [Module, [List, [Equal, n, 10]], [Add, n, 1]], [Module, [List, [Equal, n, 20]], [Add, n, 1]]]
+  expected: [List, 11, 21]
+  caption: two calls' locals of the same name don't collide
+  category: Scope

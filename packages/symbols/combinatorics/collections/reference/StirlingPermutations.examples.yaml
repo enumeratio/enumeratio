@@ -1,0 +1,10 @@
+- id: count-stirlingpermutations-4-105-7-a001147
+  expr: [Count, [StirlingPermutations, 4]]
+  expected: 105
+  category: Basic
+  caption: $Count(StirlingPermutations(4)) = 105 = 7!!$, A001147
+- id: count-stirlingpermutations-n-2n-1-see-factorial2
+  expr: [Equal, [Count, [StirlingPermutations, 4]], [Factorial2, 7]]
+  expected: True
+  category: Properties
+  caption: $Count(StirlingPermutations(n)) = (2n-1)!!$. See [[Factorial2]]

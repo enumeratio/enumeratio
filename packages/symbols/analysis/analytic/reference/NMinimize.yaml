@@ -12,17 +12,6 @@ details:
   - "Requires an explicit BOUNDED constraint: `NMinimize(f, x)` alone declines, since an unconstrained numeric search has no principled starting box to invent. A constraint with an unbounded side (x >= a with no upper bound) also declines."
   - Declines on more than one variable.
   - A function that packs more variation into the interval than the 201-point grid resolves (many tightly-spaced local minima, or a spike narrower than the grid) can still be missed -- a real limitation of a sampling-based search, not hidden here.
-examples:
-  - id: a-quartic-with-two-symmetric-minima
-    expr:
-      [NMinimize, [List, [Subtract, [Power, x, 4], [Power, x, 2]], [And, [GreaterEqual, x, -2], [LessEqual, x, 2]]], x]
-    expected: [List, -0.25, [List, [Rule, x, -0.707106778558382]]]
-    caption: x^4 - x^2 has two symmetric global minima on [-2, 2] -- one is found
-  - id: declines-without-a-bounded-constraint
-    expr: [NMinimize, [Power, x, 2], x]
-    expected: [NMinimize, [Power, x, 2], x]
-    category: Possible issues
-    caption: Declines -- no bounded interval to search
 seeAlso:
   - NMaximize
   - Minimize

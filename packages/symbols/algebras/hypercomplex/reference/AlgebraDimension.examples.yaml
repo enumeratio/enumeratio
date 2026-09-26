@@ -1,0 +1,10 @@
+- id: algebradimension-quaternions
+  expr: [AlgebraDimension, Quaternions]
+  expected: 4
+- id: algebradimension-cliffordalgebra-2-1
+  expr: [AlgebraDimension, [CliffordAlgebra, 2, 1]]
+  expected: 8
+- id: c-4
+  expr: [AlgebraDimension, [MulticomplexAlgebra, 4]]
+  expected: 16
+  caption: $\mathbb{C}_4$

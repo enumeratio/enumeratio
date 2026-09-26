@@ -1,0 +1,113 @@
+- id: divisors-1-729
+  expr: [Divisors, 1729]
+  expected: [List, 1, 7, 13, 19, 91, 133, 247, 1729]
+- id: divisors-20
+  expr: [Divisors, 20]
+  expected: [List, 1, 2, 4, 5, 10, 20]
+- id: 1-has-exactly-one-divisor-itself
+  expr: [Divisors, 1]
+  expected: [List, 1]
+  category: Possible issues
+  caption: "1 has exactly one divisor: itself"
+- id: a-prime-s-only-divisors-are-1-and-itself
+  expr: [Divisors, 13]
+  expected: [List, 1, 13]
+  caption: A prime's only divisors are 1 and itself
+- id: 720-is-highly-composite-30-divisors-more-than
+  expr: [Divisors, 720]
+  expected:
+    [
+      List,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      12,
+      15,
+      16,
+      18,
+      20,
+      24,
+      30,
+      36,
+      40,
+      45,
+      48,
+      60,
+      72,
+      80,
+      90,
+      120,
+      144,
+      180,
+      240,
+      360,
+      720,
+    ]
+  category: Neat examples
+  caption: "720 is highly composite: 30 divisors, more than any smaller number"
+- id: the-divisor-count-d-n-equals-sigma-0-n-see
+  expr: [Equal, [Length, [Divisors, 20]], [DivisorSigma, 0, 20]]
+  expected: True
+  category: Properties
+  caption: The divisor count $d(n)$ equals $\sigma_0(n)$. See [[DivisorSigma]]
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [Divisors, [List, 4, 6]]
+  expected: [List, [List, 1, 2, 4], [List, 1, 2, 3, 6]]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: divisors-3-plus-4i
+  expr: [Divisors, [Complex, 3, 4]]
+  expected: [List, 1, [Complex, 2, 1], [Complex, 3, 4]]
+  category: Scope
+- id: 13-2-3i-3-2i-splits-so-it-gains-two-divisors
+  expr: [Divisors, 13, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, 1, [Complex, 2, 3], [Complex, 3, 2], 13]
+  category: Scope
+  caption: $13 = (2 + 3i)(3 - 2i)$ splits, so it gains two divisors
+- id: divisors-6
+  expr: [Divisors, 6]
+  expected: [List, 1, 2, 3, 6]
+- id: 6-4i-i-1-i-2-3-2i
+  expr: [Divisors, [Complex, 6, 4]]
+  expected: [List, 1, [Complex, 1, 1], [Complex, 1, 5], 2, [Complex, 3, 2], [Complex, 6, 4]]
+  category: Scope
+  caption: $6+4i=-i(1+i)^2(3+2i)$
+- id: listable-threads-over-a-list
+  expr: [Divisors, [List, 605, 871, 824]]
+  expected: [List, [List, 1, 5, 11, 55, 121, 605], [List, 1, 13, 67, 871], [List, 1, 2, 4, 8, 103, 206, 412, 824]]
+  category: Scope
+  caption: "Listable: threads over a list"
+- id: only-positive-divisors-even-for-negative-n
+  expr: [Divisors, -6]
+  expected: [List, 1, 2, 3, 6]
+  category: Possible issues
+  caption: Only positive divisors, even for negative $n$
+- role: test
+  id: divisors-neg-12
+  expr: [Divisors, -12]
+  expected: [List, 1, 2, 3, 4, 6, 12]
+  category: Possible issues
+- role: test
+  id: divisors-0-stays-unevaluated
+  expr: [Divisors, 0]
+  expected: [Divisors, 0]
+  category: Possible issues
+  caption: 0 stays unevaluated
+- role: test
+  id: a-non-integer-stays-unevaluated
+  expr: [Divisors, [Rational, 5, 2]]
+  expected: [Divisors, [Rational, 5, 2]]
+  category: Possible issues
+  caption: A non-integer stays unevaluated
+- role: test
+  id: 5-in-the-gaussian-integers
+  expr: [Divisors, 5, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, 1, [Complex, 1, 2], [Complex, 2, 1], 5]
+  category: Scope
+  caption: 5 in the Gaussian integers

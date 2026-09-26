@@ -9,11 +9,6 @@ signatures:
 details:
   - Count is $\binom{n + k - 1}{k}$, the number of combinations with repetition
   - Each element is a non-decreasing length-$k$ list
-examples:
-  - id: binom-4-2
-    expr: [Count, [Multisets, 3, 2]]
-    expected: 6
-    caption: $\binom{4}{2}$
 seeAlso:
   - KSubsets
   - Tuples

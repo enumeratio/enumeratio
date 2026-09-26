@@ -12,17 +12,6 @@ details:
   - $Mean_i = \alpha_i / \sum \alpha$ for $i = 1,\ldots,k-1$.
   - $Variance_i = \alpha_i(\sum\alpha - \alpha_i) / \left((\sum\alpha)^2(\sum\alpha+1)\right)$ for $i = 1,\ldots,k-1$.
   - CDF and RandomVariate are not implemented for this head (out of scope for this batch) — stay unevaluated.
-examples:
-  - id: dirichlet-mean
-    expr: [Mean, [DirichletDistribution, [List, 1, 4, 5]]]
-    expected: [List, [Rational, 1, 10], [Rational, 2, 5]]
-  - id: dirichlet-variance
-    expr: [Variance, [DirichletDistribution, [List, 1, 4, 5]]]
-    expected: [List, [Rational, 9, 1100], [Rational, 6, 275]]
-  - id: dirichlet-pdf
-    expr: [PDF, [DirichletDistribution, [List, 1, 4, 5]], [List, [Rational, 1, 10], [Rational, 2, 5]]]
-    expected: [Divide, [Gamma, 10], [Multiply, 250, [Gamma, 1], [Gamma, 4], [Gamma, 5]]]
-    caption: $= 10.08$ — Gamma(1)/Gamma(4)/Gamma(5)/Gamma(10) do not auto-reduce to factorials.
 seeAlso:
   - Mean
   - Variance

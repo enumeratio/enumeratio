@@ -1,0 +1,32 @@
+- id: exp-about-a-nonzero-point
+  expr: [SeriesCoefficient, [Exp, x], [List, x, 1, 2]]
+  expected: [Multiply, [Rational, 1, 2], ExponentialE]
+  caption: $[x^2]\, e^x$ about $x_0=1$ is $e/2$
+- id: sin-about-zero
+  expr: [SeriesCoefficient, [Sin, x], [List, x, 0, 5]]
+  expected: [Rational, 1, 120]
+  caption: $[x^5]\, \sin x = \frac{1}{120}$
+- id: geometric-series
+  expr: [SeriesCoefficient, [Divide, 1, [Subtract, 1, x]], [List, x, 0, 10]]
+  expected: 1
+  caption: every coefficient of $\frac{1}{1-x}$ about $0$ is $1$
+- id: log-series
+  expr: [SeriesCoefficient, [Ln, [Add, 1, x]], [List, x, 0, 4]]
+  expected: [Rational, -1, 4]
+  caption: $[x^4]\, \ln(1+x) = -\frac{1}{4}$
+- role: test
+  id: a-puiseux-half-integer-order-declines
+  expr: [SeriesCoefficient, [Sqrt, x], [List, x, 0, [Rational, 1, 2]]]
+  expected: [SeriesCoefficient, [Sqrt, x], [List, x, 0, [Rational, 1, 2]]]
+  category: Possible issues
+  caption: a half-integer order is a Puiseux coefficient, past what the derivative formula covers — declined, not guessed
+- id: a-negative-order-laurent-coefficient-declines
+  expr: [SeriesCoefficient, [Divide, 1, x], [List, x, 0, -1]]
+  expected: [SeriesCoefficient, [Divide, 1, x], [List, x, 0, -1]]
+  category: Possible issues
+  caption: the residue of $1/x$ at $0$ is a Laurent coefficient, past what the derivative formula covers — declined, not guessed
+- id: a-removable-singularity-declines
+  expr: [SeriesCoefficient, [Divide, [Sin, x], x], [List, x, 0, 0]]
+  expected: [SeriesCoefficient, [Divide, [Sin, x], x], [List, x, 0, 0]]
+  category: Possible issues
+  caption: $\sin(x)/x$ is singular exactly at the expansion point (removably so) — declined rather than risk the wrong limit

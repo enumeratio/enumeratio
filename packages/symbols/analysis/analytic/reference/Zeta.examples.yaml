@@ -1,0 +1,199 @@
+- id: zeta-2
+  expr: [Zeta, 2]
+  expected: [Multiply, [Rational, 1, 6], [Power, Pi, 2]]
+- id: zeta-4
+  expr: [Zeta, 4]
+  expected: [Multiply, [Rational, 1, 90], [Power, Pi, 4]]
+- id: zeta-6
+  expr: [Zeta, 6]
+  expected: [Multiply, [Rational, 1, 945], [Power, Pi, 6]]
+- id: threads-over-a-list-reducing-every-element-to
+  expr: [Zeta, [List, -1, -2, -3]]
+  expected: [List, [Rational, -1, 12], 0, [Rational, 1, 120]]
+  caption: Threads over a list, reducing every element to its exact closed form
+- id: zeta-0-1-2
+  expr: [Zeta, 0]
+  expected: [Rational, -1, 2]
+  category: Properties
+  caption: $\zeta(0) = -1/2$
+- id: trivial-zero-zeta-2n-0-for-positive-integer-n
+  expr: [Zeta, -2]
+  expected: 0
+  category: Properties
+  caption: 'Trivial zero: $\zeta(-2n) = 0$ for positive integer n'
+- id: zeta-3-b-4-4-1-120-via-the-bernoulli-number
+  expr: [Zeta, -3]
+  expected: [Rational, 1, 120]
+  category: Properties
+  caption: $\zeta(-3) = -B_4/4 = 1/120$, via the Bernoulli-number relation. See [[BernoulliB]]
+- id: pole-at-s-1-the-harmonic-series-sum-1-n-diverges
+  expr: [Zeta, 1]
+  expected: ComplexInfinity
+  category: Properties
+  caption: 'Pole at $s=1$: the harmonic series $\sum 1/n$ diverges'
+- id: the-probability-that-two-random-positive
+  expr: [Equal, [Divide, 1, [Zeta, 2]], [Divide, 6, [Power, Pi, 2]]]
+  expected: True
+  category: Applications
+  caption: The probability that two random positive integers are coprime is $1/\zeta(2) = 6/\pi^2$
+- id: odd-integers-geq-3-have-no-known-closed-form
+  expr: [Zeta, 3]
+  expected: [Zeta, 3]
+  category: Possible issues
+  caption: Odd integers $\geq 3$ have no known closed form (Apéry's constant, $\zeta(3)$), so compute-engine leaves them symbolic under plain evaluation -- use N() for a decimal
+- id: the-notorious-sum-of-all-positive-integers
+  expr: [Zeta, -1]
+  expected: [Rational, -1, 12]
+  category: Neat examples
+  caption: The notorious "sum of all positive integers" result from zeta-function regularization, $\zeta(-1) = -1/12$
+- id: on-the-critical-line-zeta-1-2-14i-0-02224-0
+  expr: [N, [Zeta, [Complex, 0.5, 14]]]
+  expected: [Complex, 0.02224114260999359, -0.10325812326645006]
+  category: Scope
+  caption: On the critical line, $\zeta(1/2 + 14i) = 0.02224\ldots - 0.10326\ldots i$ — complex $s$, from @enumeratio/analytic (compute-engine's Zeta evaluates real $s$ only). Computed in arbitrary precision and rounded once, so each part is the nearest double in every JavaScript engine
+- id: two-argument-zeta-s-a-via-enumeratio-analytic
+  expr: [Zeta, 2, 1]
+  expected: [Multiply, [Rational, 1, 6], [Power, Pi, 2]]
+  category: Scope
+  caption: 'Two-argument $\zeta(s, a)$ (via `@enumeratio/analytic`): $\zeta(s, 1) = \zeta(s)$ recovers the ordinary case, so $\zeta(2, 1) = \pi^2/6$'
+- id: zeta-2-2-zeta-2-1-pi-2-6-1
+  expr: [Zeta, 2, 2]
+  expected: [Add, -1, [Multiply, [Rational, 1, 6], [Power, Pi, 2]]]
+  category: Scope
+  caption: $\zeta(2, 2) = \zeta(2) - 1 = \pi^2/6 - 1$
+- id: zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so
+  expr: [Zeta, 2, 0]
+  expected: [Multiply, [Rational, 1, 6], [Power, Pi, 2]]
+  category: Scope
+  caption: '$\zeta(s, 0) = \zeta(s)$: the $n+a=0$ term is dropped, so unlike [[HurwitzZeta]] there is no pole at $a = 0$'
+- id: apery-s-constant-zeta-3-numerically
+  expr: [N, [Zeta, 3]]
+  expected: { num: "1.2020569031595942854" }
+  caption: Apéry's constant $\zeta(3)$, numerically
+- id: a-machine-precision-argument
+  expr: [Zeta, 1.5]
+  expected: { num: "2.61237534868548834335" }
+  caption: A machine-precision argument
+- id: zeta-8-pi-8-9450
+  expr: [Zeta, 8]
+  expected: [Multiply, [Rational, 1, 9450], [Power, Pi, 8]]
+  caption: $\zeta(8) = \pi^8/9450$
+- id: zeta-5-b-6-6-1-252
+  expr: [Zeta, -5]
+  expected: [Rational, -1, 252]
+  caption: $\zeta(-5) = -B_6/6 = -1/252$
+- id: arbitrary-real-arguments
+  expr: [Zeta, 5.211111111111111]
+  expected: { num: "1.03139179693438499839" }
+  category: Scope
+  caption: Arbitrary real arguments
+- id: left-of-the-critical-strip-via-the-functional
+  expr: [Zeta, -4.5]
+  expected: { num: "-0.00309166924721583384482" }
+  category: Scope
+  caption: Left of the critical strip, via the functional equation
+- id: complex-s-under-n
+  expr: [N, [Zeta, [Complex, 2, -5]]]
+  expected: [Complex, 0.8509629436242628, -0.09899694613483125]
+  category: Scope
+  caption: Complex $s$ under N()
+- id: zeta-infty-1-only-the-n-1-term-survives
+  expr: [Zeta, PositiveInfinity]
+  expected: 1
+  category: Scope
+  caption: '$\zeta(\infty) = 1$: only the $n = 1$ term survives'
+- id: two-arguments-at-a-nonpositive-integer-s-zeta-1
+  expr: [Zeta, -1, 5]
+  expected: [Rational, -121, 12]
+  category: Scope
+  caption: 'Two arguments at a nonpositive integer $s$: $\zeta(-1, 5) = -B_2(5)/2 = -121/12$'
+- id: two-arguments-inexact
+  expr: [Zeta, -1.5, 5]
+  expected: { num: "-17.0500647493426550141295" }
+  category: Scope
+  caption: Two arguments, inexact
+- id: two-complex-arguments-under-n-to-ten-digits
+  expr: [N, [Zeta, [Complex, -1.5, 1], [Complex, 2.5, -1]], 10]
+  expected: [Complex, 0.01848680919, 1.675533784]
+  category: Scope
+  caption: Two complex arguments under N(), to ten digits
+- id: which-with-inexact-complex-arguments-should
+  expr: [Zeta, [Complex, -1.5, 1], [Complex, 2.5, -1]]
+  expected: [Complex, 0.01848680919381065, 1.675533784301766]
+  category: Scope
+  caption: ...and with inexact complex arguments, without N(), as the real case does
+- id: zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of
+  expr: [Zeta, 20, [Rational, 1, 2]]
+  expected: [Multiply, [Rational, 221930581, 1856156927625], [Power, Pi, 20]]
+  category: Scope
+  caption: $\zeta(20, 1/2) = (2^{20} - 1)\zeta(20)$, an exact multiple of $\pi^{20}$
+- id: zeta-2-1-2-3-zeta-2-pi-2-2
+  expr: [Zeta, 2, [Rational, 1, 2]]
+  expected: [Multiply, [Rational, 1, 2], [Power, Pi, 2]]
+  category: Scope
+  caption: $\zeta(2, 1/2) = 3\zeta(2) = \pi^2/2$
+- id: interval-arithmetic-zeta-is-decreasing-on-1
+  expr: [Zeta, [Interval, 1.1, 1.2]]
+  expected: [Interval, 5.59158244117775, 10.584448464950812]
+  category: Scope
+  caption: 'Interval arithmetic: $\zeta$ is decreasing on $(1, \infty)$'
+- id: uncertainty-in-a-propagated-with-partial-a-zeta
+  expr: [Zeta, [Rational, 1, 2], [Around, 0.5, 0.01]]
+  expected: [Around, -0.6048986434216304, 0.023882689737774167]
+  category: Scope
+  caption: Uncertainty in $a$, propagated with $\partial_a\zeta(s, a) = -s\,\zeta(s+1, a)$
+- id: zeta-s-1-zeta-s-for-symbolic-s
+  expr: [Zeta, s, 1]
+  expected: [Zeta, s]
+  category: Properties
+  caption: $\zeta(s, 1) = \zeta(s)$ for symbolic $s$
+- id: to-40-significant-digits-every-one-correctly
+  expr: [N, [Zeta, 3], 40]
+  expected: { num: "1.202056903159594285399738161511449990765" }
+  category: Scope
+  caption: To 40 significant digits, every one correctly rounded
+- id: zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s
+  expr: [N, [Zeta, 3, [Rational, -1, 2]]]
+  expected: { num: "16.4143983221171599978" }
+  category: Possible issues
+  caption: $\zeta(3, -1/2) = 8 + \zeta(3, 1/2)$ under Wolfram's generalized convention for $a \leq 0$ — differs from HurwitzZeta there
+- id: zeta-1-2-35-12-exactly-but-at-a-negative-a-this
+  expr: [N, [Zeta, -1, -2]]
+  expected: { num: "2.91666666666666666667" }
+  category: Possible issues
+  caption: $\zeta(-1, -2) = 35/12$ exactly, but at a negative $a$ this stays symbolic without N()
+- id: certified-digits-zeta-3
+  expr: [N, [Zeta, 3], 40]
+  expected: { num: "1.202056903159594285399738161511449990765" }
+  category: Applications
+  caption: "Apéry's constant $\\zeta(3)$ to 40 digits, proven: both ends of the enclosure round to these digits"
+- role: test
+  id: zeta-symbolic-s-under-n-stays-symbolic
+  expr: [N, [Zeta, s]]
+  expected: [Zeta, s]
+- role: test
+  id: zeta-half-stays-symbolic-until-n
+  expr: [Zeta, [Rational, 1, 2]]
+  expected: [Zeta, [Rational, 1, 2]]
+- role: test
+  id: zeta-complex-argument-stays-symbolic-until-n
+  expr: [Zeta, [Complex, 2, 1]]
+  expected: [Zeta, [Complex, 2, 1]]
+- role: test
+  id: n-zeta-complex-2-plus-i
+  expr: [N, [Zeta, [Complex, 2, 1]]]
+  expected: [Complex, 1.1503557032549028, -0.4375308659196079]
+- role: test
+  id: zeta-threads-over-mixed-exact-and-inexact-list
+  expr: [Zeta, [List, 2, [Complex, 0.5, 14]]]
+  expected: [List, [Multiply, [Rational, 1, 6], [Power, Pi, 2]], [Complex, 0.02224114260999359, -0.10325812326645006]]
+- role: test
+  id: zeta-3-0-drops-pole-term-like-s-2
+  expr: [Zeta, 3, 0]
+  expected: [Zeta, 3]
+  caption: $\zeta(3, 0) = \zeta(3)$ too — the dropped-pole convention holds at any $s$
+- role: test
+  id: zeta-2-neg-2-stays-finite-unlike-hurwitzzeta
+  expr: [N, [Zeta, 2, -2]]
+  expected: { num: "2.89493406684822643647" }
+  caption: "Unaffected at the same $a$ where [[HurwitzZeta]] has a pole: it keeps the generalized-zeta convention"

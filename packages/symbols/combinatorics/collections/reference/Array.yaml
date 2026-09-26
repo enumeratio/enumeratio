@@ -21,27 +21,5 @@ signatures:
 details:
   - The scalar forms of $n$ and $r$ are shorthand for $\{n\}$ and every dimension sharing origin $r$.
   - See [[Tabulate]] for a lazy array read without materialising it.
-examples:
-  - id: array-f-5
-    expr: [Array, f, 5]
-    expected: [List, [f, 1], [f, 2], [f, 3], [f, 4], [f, 5]]
-  - id: array-f-2-2
-    expr: [Array, f, [List, 2, 2]]
-    expected: [List, [List, [f, 1, 1], [f, 1, 2]], [List, [f, 2, 1], [f, 2, 2]]]
-    category: Scope
-    caption: A list of dimensions builds a multi-dimensional array
-  - id: array-f-3-0
-    expr: [Array, f, 3, 0]
-    expected: [List, [f, 0], [f, 1], [f, 2]]
-    category: Scope
-    caption: A third argument pins where the index range starts
-  - id: array-f-3-1-g
-    expr: [Array, f, 3, 1, g]
-    expected: [g, [f, 1], [f, 2], [f, 3]]
-    category: Scope
-    caption: A fourth argument wraps the result in that head instead of List
-  - id: array-squares
-    expr: [Array, [Function, [Power, _1, 2]], 5]
-    expected: [List, 1, 4, 9, 16, 25]
 seeAlso:
   - Tabulate

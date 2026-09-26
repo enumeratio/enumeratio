@@ -1,0 +1,5 @@
+- id: count-vexillarypermutations-5-103-a005802
+  expr: [Count, [VexillaryPermutations, 5]]
+  expected: 103
+  category: Basic
+  caption: $Count(VexillaryPermutations(5)) = 103$, A005802

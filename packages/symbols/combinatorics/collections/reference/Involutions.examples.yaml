@@ -1,0 +1,3 @@
+- id: count-involutions-4
+  expr: [Count, [Involutions, 4]]
+  expected: 10

@@ -1,0 +1,21 @@
+- id: level-expr-1-gives-the-top-level-operands
+  expr: [Level, [List, 1, [List, 2, 3], 4], 1]
+  expected: [List, 1, [List, 2, 3], 4]
+- id: level-expr-0-is-just-expr-itself
+  expr: [Level, [List, 1, [List, 2, 3]], [List, 0]]
+  expected: [List, [List, 1, [List, 2, 3]]]
+  category: Scope
+- id: level-expr-2-gives-levels-1-and-2-together
+  expr: [Level, [List, 1, [List, 2, 3], 4], 2]
+  expected: [List, 1, 2, 3, [List, 2, 3], 4]
+  category: Scope
+  caption: "post-order: {2, 3} prints after its own parts 2 and 3"
+- id: level-expr-1-gives-every-leaf
+  expr: [Level, [List, 1, [List, 2, 3], 4], [List, -1]]
+  expected: [List, 1, 2, 3, 4]
+  category: Scope
+  caption: "{-1} is Wolfram's own leaves shorthand"
+- id: level-expr-infinity-reaches-every-level
+  expr: [Level, [List, 1, [List, 2, [List, 3]]], PositiveInfinity]
+  expected: [List, 1, 2, 3, [List, 3], [List, 2, [List, 3]]]
+  category: Scope

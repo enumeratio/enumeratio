@@ -1,0 +1,16 @@
+- id: sine-s-period-is-2-pi
+  expr: [FunctionPeriod, [Sin, x], x]
+  expected: [Multiply, 2, Pi]
+  caption: Sine's period is 2*pi
+- id: tangent-s-period-is-pi
+  expr: [FunctionPeriod, [Tan, x], x]
+  expected: Pi
+  caption: Tangent's period is pi, half of sine's
+- id: scaling-the-argument-scales-the-period
+  expr: [FunctionPeriod, [Sin, [Multiply, 2, x]], x]
+  expected: Pi
+  caption: Doubling the argument halves the period
+- id: exp-is-not-periodic
+  expr: [FunctionPeriod, [Exp, x], x]
+  expected: 0
+  caption: Exp is monotonic, hence not periodic

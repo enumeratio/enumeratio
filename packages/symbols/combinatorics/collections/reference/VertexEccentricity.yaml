@@ -12,13 +12,6 @@ signatures:
 details:
   - The moment any OTHER vertex is unreachable from v, the eccentricity is PositiveInfinity -- not just the max over whatever happens to be reachable.
   - Distances respect edge direction, same as [[GraphDistance]].
-examples:
-  - id: petersen-is-2-eccentric-everywhere
-    expr: [VertexEccentricity, [PetersenGraph], 1]
-    expected: 2
-  - id: disconnected-vertex-is-infinite
-    expr: [VertexEccentricity, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]], 1]
-    expected: PositiveInfinity
 seeAlso:
   - GraphRadius
   - GraphDiameter

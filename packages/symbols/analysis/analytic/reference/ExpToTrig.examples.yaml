@@ -1,0 +1,26 @@
+- id: euler-s-formula
+  expr: [ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]
+  expected: [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]
+  caption: Euler's formula
+- id: a-real-exponential-splits-into-hyperbolic-parts
+  expr: [ExpToTrig, [Exp, x]]
+  expected: [Add, [Sinh, x], [Cosh, x]]
+  caption: A real exponential splits into hyperbolic parts
+- id: recognizes-cosh
+  expr: [ExpToTrig, [Divide, [Add, [Exp, x], [Exp, [Negate, x]]], 2]]
+  expected: [Cosh, x]
+  category: Scope
+  caption: Recognizes [[Cosh]]
+- id: recognizes-sin
+  expr:
+    [
+      ExpToTrig,
+      [
+        Divide,
+        [Subtract, [Exp, [Multiply, ImaginaryUnit, x]], [Exp, [Negate, [Multiply, ImaginaryUnit, x]]]],
+        [Multiply, 2, ImaginaryUnit],
+      ],
+    ]
+  expected: [Sin, x]
+  category: Scope
+  caption: Recognizes [[Sin]]

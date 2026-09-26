@@ -1,0 +1,6 @@
+- id: a-plain-triangle-is-simple
+  expr: [IsSimpleGraph, [CompleteGraph, 3]]
+  expected: True
+- id: a-repeated-undirected-edge-is-not-simple
+  expr: [IsSimpleGraph, [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 1]]]]
+  expected: False

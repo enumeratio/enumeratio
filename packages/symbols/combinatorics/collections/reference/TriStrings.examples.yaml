@@ -1,0 +1,5 @@
+- id: count-tristrings-6-44-binary-strings-of-length-6
+  expr: [Count, [TriStrings, 6]]
+  expected: 44
+  category: Basic
+  caption: "$Count(TriStrings(6)) = 44$: binary strings of length 6 with no run of 3 consecutive 1s"

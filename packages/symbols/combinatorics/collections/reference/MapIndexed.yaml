@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
 details:
   - "The index arrives as `{i}`, not `i`: Wolfram's own MapIndexed nests over levels, and `{i}` is the level-1 position path — only the top level is implemented here, but the shape is kept for compatibility."
-examples:
-  - id: pairs-each-element-with-its-1-based-index
-    expr: [MapIndexed, f, [List, a, b, c]]
-    expected: [List, [f, a, [List, 1]], [f, b, [List, 2]], [f, c, [List, 3]]]
 seeAlso:
   - MapThread
   - Level

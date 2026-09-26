@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
 details:
   - "Drawn by a Fisher-Yates shuffle of the C(n, 2) possible edges, taking the first m -- from the SAME seeded stream RandomInteger uses (see list-frontier.ts), reseeded together by SeedRandom. NOT Wolfram's own generator or algorithm: only VertexCount / EdgeCount / simplicity are guaranteed to match, the same divergence RandomInteger's own reference entry documents."
-examples:
-  - id: vertex-and-edge-count
-    expr: [Last, [List, [SeedRandom, 9], [VertexCount, [RandomGraph, [List, 6, 8]]]]]
-    expected: 6
 seeAlso:
   - RandomInteger
   - SeedRandom

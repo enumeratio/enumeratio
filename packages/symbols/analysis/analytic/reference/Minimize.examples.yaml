@@ -1,0 +1,51 @@
+- id: a-quadratic-s-vertex
+  expr: [Minimize, [Power, x, 2], x]
+  expected: [List, 0, [List, [Rule, x, 0]]]
+  caption: A quadratic's vertex is its global minimum
+- id: unbounded-below-reports-negative-infinity
+  expr: [Minimize, [Power, x, 3], x]
+  expected: [List, NegativeInfinity, [List, [Rule, x, NegativeInfinity]]]
+  caption: An odd-degree polynomial is unbounded below
+- id: a-rational-function-s-irrational-point
+  expr: [Minimize, [Divide, [Subtract, x, 1], [Add, [Power, x, 2], 1]], x]
+  expected:
+    [
+      List,
+      [Divide, [Negate, [Sqrt, 2]], [Add, 1, [Power, [Add, 1, [Negate, [Sqrt, 2]]], 2]]],
+      [List, [Rule, x, [Add, 1, [Negate, [Sqrt, 2]]]]],
+    ]
+  category: Scope
+  caption: A rational function whose exact critical point is irrational
+- id: a-simple-interval-constraint
+  expr: [Minimize, [List, [Power, x, 2], [GreaterEqual, x, 1]], x]
+  expected: [List, 1, [List, [Rule, x, 1]]]
+  caption: With x >= 1, the unconstrained vertex (0) is out of range -- the boundary wins
+- id: log-s-minimum-is-at-its-domain-edge
+  expr: [Minimize, [Ln, x], x]
+  expected: [List, NegativeInfinity, [List, [Rule, x, 0]]]
+  category: Scope
+  caption: Log is unbounded below, approached at its domain edge (x -> 0), not at x -> -Infinity
+- id: exp-s-infimum-is-not-attained
+  expr: [Minimize, [Exp, x], x]
+  expected: [List, 0, [List, [Rule, x, NegativeInfinity]]]
+  category: Scope
+  caption: Exp's infimum (0) is never actually reached
+- id: the-variable-as-a-one-element-list
+  expr: [Minimize, [Power, x, 2], [List, x]]
+  expected: [List, 0, [List, [Rule, x, 0]]]
+  caption: The variable spelled as {x} instead of bare x
+- id: declines-a-non-exact-critical-point
+  expr: [Minimize, [Subtract, [Power, x, 4], [Multiply, 4, [Power, x, 2]]], x]
+  expected: [Minimize, [Subtract, [Power, x, 4], [Multiply, 4, [Power, x, 2]]], x]
+  category: Possible issues
+  caption: "Declines: Solve can't produce this quartic's critical points exactly"
+- id: declines-more-than-one-variable
+  expr: [Minimize, [Add, [Power, x, 2], [Power, y, 2]], [List, x, y]]
+  expected: [Minimize, [Add, [Power, x, 2], [Power, y, 2]], [List, x, y]]
+  category: Possible issues
+  caption: Declines -- multivariate optimization is out of scope
+- id: declines-sin-s-point-despite-an-exact-value
+  expr: [Minimize, [Sin, x], x]
+  expected: [Minimize, [Sin, x], x]
+  category: Possible issues
+  caption: "Declines: infinitely many x minimize Sin(x), and Wolfram's own choice isn't reproducible -- see MinValue"

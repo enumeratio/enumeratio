@@ -1,0 +1,3 @@
+- id: factorialmoment-order-2
+  expr: [FactorialMoment, [GeometricDistribution, [Rational, 1, 4]], 2]
+  expected: 18

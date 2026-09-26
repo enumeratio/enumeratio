@@ -1,0 +1,21 @@
+- id: selects-the-second-branch
+  expr: [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]]
+  expected: [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [LessEqual, 0, x]]]]
+  caption: with $x$ still symbolic, both branches are undecided and the call stays as-is
+- id: evaluated-at-a-concrete-point-below-zero
+  expr: [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [Rule, x, -5]]
+  expected: 1
+  caption: at $x = -5$ the first condition is `True`
+- id: evaluated-at-a-concrete-point-at-or-above-zero
+  expr: [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [Rule, x, 5]]
+  expected: 2
+  caption: at $x = 5$ the second condition is `True`
+- id: falls-through-to-the-explicit-default
+  expr: [Piecewise, [List, [List, [Power, x, 2], [Less, x, 0]]], 99]
+  expected: [Piecewise, [List, [List, [Power, x, 2], [Less, x, 0]]], 99]
+  caption: symbolic $x$ again stays undecided, default kept as given
+- role: test
+  id: every-clause-eliminated-falls-through-to-default
+  expr: [Piecewise, [List, [List, 1, [Greater, 2, 3]]], 99]
+  expected: 99
+  caption: a concretely-false clause is eliminated, and with none left the result is the default

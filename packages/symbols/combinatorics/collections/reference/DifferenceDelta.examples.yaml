@@ -1,0 +1,8 @@
+- id: quadratic
+  expr: [DifferenceDelta, [Power, n, 2], n]
+  expected: [Add, [Multiply, 2, n], 1]
+  caption: $(n+1)^2 - n^2 = 2n + 1$
+- id: linear
+  expr: [DifferenceDelta, [Add, [Multiply, 3, n], 5], n]
+  expected: 3
+  caption: The forward difference of a linear function is its slope, everywhere

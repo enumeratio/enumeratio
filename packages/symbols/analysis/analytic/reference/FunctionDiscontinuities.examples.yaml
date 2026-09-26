@@ -1,0 +1,12 @@
+- id: a-pole-is-a-discontinuity
+  expr: [FunctionDiscontinuities, [Divide, 1, x], x]
+  expected: [Equal, x, 0]
+  caption: A pole is a discontinuity
+- id: tangent-s-poles
+  expr: [FunctionDiscontinuities, [Tan, x], x]
+  expected: [Equal, [Cos, x], 0]
+  caption: Tangent's poles, where cosine vanishes
+- id: a-polynomial-is-continuous-everywhere
+  expr: [FunctionDiscontinuities, [Power, x, 2], x]
+  expected: False
+  caption: A polynomial is continuous everywhere

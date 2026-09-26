@@ -1,0 +1,49 @@
+- id: primenu-24
+  expr: [PrimeNu, 24]
+  expected: 2
+- id: primenu-360
+  expr: [PrimeNu, 360]
+  expected: 3
+- id: 32-2-5-has-just-one-distinct-prime-factor
+  expr: [PrimeNu, 32]
+  expected: 1
+  category: Possible issues
+  caption: $32=2^5$ has just one distinct prime factor despite the high power
+- id: 1-has-no-prime-factors
+  expr: [PrimeNu, 1]
+  expected: 0
+  category: Possible issues
+  caption: 1 has no prime factors
+- id: primenu-n-is-the-length-of-factorinteger-n
+  expr: [Equal, [PrimeNu, 50], [Length, [FactorInteger, 50]]]
+  expected: True
+  category: Properties
+  caption: PrimeNu(n) is the length of [[FactorInteger]](n)
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [PrimeNu, [List, 4, 28, 180]]
+  expected: [List, 1, 2, 3]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: primenu-105
+  expr: [PrimeNu, 105]
+  expected: 3
+- id: large-integers-the-15-primes-up-to-50-divide-50
+  expr: [PrimeNu, [Factorial, 50]]
+  expected: 15
+  category: Scope
+  caption: "Large integers: the 15 primes up to 50 divide $50!$"
+- id: gaussian-integers-3-i-1-i-2-i
+  expr: [PrimeNu, [Complex, 3, 1]]
+  expected: 2
+  category: Scope
+  caption: "Gaussian integers: $3+i=(1+i)(2-i)$"
+- id: gaussianintegers-true-5-splits-so-105-has-4
+  expr: [PrimeNu, 105, [KeyValuePair, GaussianIntegers, True]]
+  expected: 4
+  category: Scope
+  caption: "GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors"
+- id: listable-over-a-range
+  expr: [PrimeNu, [Range, 20]]
+  expected: [List, 0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]
+  category: Scope
+  caption: Listable over a [[Range]]

@@ -10,16 +10,6 @@ details:
   - compute-engine has no `Hypergeometric3F2` at all, regularized or otherwise. Computed directly by the $1/\Gamma$-per-term series ($p = q + 1$ here), finite at either $b_1$ or $b_2$ a nonpositive integer.
   - The series only converges for $|z| < 1$; outside the unit disc this stays symbolic. Fungrim's own identities for this head (e.g. the Chebyshev derivative formulas, fungrim:6582c4 / fungrim:e1797b) are unconstrained in their own argument, so not every instance evaluates.
   - Wolfram has no dedicated 3,2 head; it maps to the generic `HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]`.
-examples:
-  - id: a-generic-point-inside-the-unit-disc
-    expr: [Hypergeometric3F2Regularized, 1, 1, 1, 2, 3, 0.5]
-    expected: 0.5507754140499144
-    caption: a generic point inside the unit disc
-  - id: z-ge-1-stays-symbolic-no-continuation-past-the
-    expr: [Hypergeometric3F2Regularized, 1, 1, 1, 2, 3, 1.2]
-    expected: [Hypergeometric3F2Regularized, 1, 1, 1, 2, 3, 1.2]
-    category: Possible issues
-    caption: $|z| \ge 1$ stays symbolic — no continuation past the unit disc
 primitive: numeric
 bindings:
   - origin: native

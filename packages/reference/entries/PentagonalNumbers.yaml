@@ -10,7 +10,6 @@ details:
   - OEIS A000326.
   - Membership goes through [[Element]] by inverting the closed form exactly, solving the quadratic in $n$ over the integers -- $Element(35, PentagonalNumbers)$ is true, $Element(36, PentagonalNumbers)$ is false.
   - The $k$-gonal case $k=5$ of [[PolygonalNumbers]]; not to be confused with the (signed-index) generalized pentagonal numbers of Euler's pentagonal number theorem.
-examples: []
 enumerate:
   expr: Take(PentagonalNumbers, 20)
 seeAlso:

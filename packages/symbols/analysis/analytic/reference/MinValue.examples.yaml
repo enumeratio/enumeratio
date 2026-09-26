@@ -1,0 +1,18 @@
+- id: a-quadratic-s-minimum-value
+  expr: [MinValue, [Add, [Power, x, 2], [Multiply, -4, x], 3], x]
+  expected: -1
+  caption: A quadratic's vertex value
+- id: the-amplitude-of-cosine-alone-is-exact
+  expr: [MinValue, [Cos, [Subtract, [Multiply, 3, x], 1]], x]
+  expected: -1
+  category: Scope
+  caption: Cos's exact minimum value, -1 -- Minimize itself would decline this (no reproducible point)
+- id: exp-s-infimum
+  expr: [MinValue, [Exp, x], x]
+  expected: 0
+  category: Scope
+  caption: Exp's infimum, even though it is never attained
+- id: a-simple-interval-constraint
+  expr: [MinValue, [List, [Power, x, 2], [GreaterEqual, x, 1]], x]
+  expected: 1
+  caption: With x >= 1, the boundary value

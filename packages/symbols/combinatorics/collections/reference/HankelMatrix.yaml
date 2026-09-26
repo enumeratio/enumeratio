@@ -12,13 +12,3 @@ signatures:
 details:
   - "A Hankel matrix is constant along each anti-diagonal: M(i, j) depends only on i + j."
   - r's first element coincides with c's last (both are the matrix's shared corner), so it never surfaces on its own.
-examples:
-  - id: single-arg
-    expr: [HankelMatrix, [List, 1, 2, 3]]
-    expected: [List, [List, 1, 2, 3], [List, 2, 3, 0], [List, 3, 0, 0]]
-    caption: Past c's reach, the matrix is zero-padded
-  - id: with-last-row
-    expr: [HankelMatrix, [List, 1, 2, 3], [List, 3, 4, 5]]
-    expected: [List, [List, 1, 2, 3], [List, 2, 3, 4], [List, 3, 4, 5]]
-    category: Scope
-    caption: A second argument becomes the matrix's last row

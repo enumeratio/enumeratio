@@ -1,0 +1,194 @@
+- id: the-square-roots-of-3-modulo-11-5-2-25-and-6-2
+  expr: [PowerModList, 3, [Rational, 1, 2], 11]
+  expected: [List, 5, 6]
+  caption: 'the square roots of 3 modulo 11: $5^2 = 25$ and $6^2 = 36$ are both $\equiv 3$'
+- id: the-cube-roots-of-unity-modulo-7-since-3-mid-6
+  expr: [PowerModList, 1, [Rational, 1, 3], 7]
+  expected: [List, 1, 2, 4]
+  caption: the cube roots of unity modulo 7, since $3 \mid 6$
+- id: the-cubes-mod-7-are-only-0-1-6-so-2-has-no-cube
+  expr: [PowerModList, 2, [Rational, 1, 3], 7]
+  expected: [List]
+  category: Possible issues
+  caption: the cubes mod 7 are only $0, 1, 6$, so 2 has no cube root
+- id: an-integer-exponent-is-an-ordinary-power-2-10
+  expr: [PowerModList, 2, 10, 1000]
+  expected: [List, 24]
+  caption: "an integer exponent is an ordinary power: $2^{10} = 1024$"
+- id: a-general-exponent-s-r-every-x-with-x-2-equiv-2
+  expr: [PowerModList, 2, [Rational, 3, 2], 17]
+  expected: [List, 5, 12]
+  caption: 'a general exponent $s/r$: every $x$ with $x^2 \equiv 2^3$'
+  category: Scope
+- id: the-three-cube-roots-of-2-2-4-since-3-mid-30
+  expr: [PowerModList, 2, [Rational, 2, 3], 31]
+  expected: [List, 16, 18, 28]
+  caption: the three cube roots of $2^2 = 4$, since $3 \mid 30$
+  category: Scope
+- id: exponent-1-is-the-modular-inverse-3-cdot-5-15
+  expr: [PowerModList, 3, -1, 7]
+  expected: [List, 5]
+  caption: 'exponent $-1$ is the modular inverse: $3 \cdot 5 = 15 \equiv 1$'
+  category: Scope
+- id: a-prime-power-the-root-2-of-x-2-equiv-1-pmod-5
+  expr: [PowerModList, -1, [Rational, 1, 2], 625]
+  expected: [List, 182, 443]
+  caption: 'a prime power: the root $2$ of $x^2 \equiv -1 \pmod 5$, Hensel-lifted to $5^4$'
+  category: Scope
+- id: a-rational-base-reads-as-2-cdot-3-1-in-z-23
+  expr: [PowerModList, [Rational, 2, 3], [Rational, 1, 2], 23]
+  expected: [List, 4, 19]
+  caption: a rational base reads as $2 \cdot 3^{-1}$ in $\mathbb{Z}/23$
+  category: Scope
+- id: threads-over-lists-the-squares-mod-5-are-exactly
+  expr: [PowerModList, [List, 1, 2, 3, 4], [Rational, 1, 2], 5]
+  expected: [List, [List, 1, 4], [List], [List], [List, 2, 3]]
+  caption: "threads over lists: the squares mod 5 are exactly 1 and 4"
+  category: Scope
+- id: sqrt-1-modulo-the-31-digit-prime-10-30-57-no
+  expr: [PowerModList, -1, [Rational, 1, 2], [Add, [Power, 10, 30], 57]]
+  expected: [List, { num: "164543371520667882579352850009" }, { num: "835456628479332117420647150048" }]
+  caption: $\sqrt{-1}$ modulo the 31-digit prime $10^{30} + 57$ — no scan, no factoring of $p - 1$
+  category: Scope
+- id: the-cube-roots-of-2-modulo-the-mersenne-prime-2
+  expr: [PowerModList, 2, [Rational, 1, 3], [Subtract, [Power, 2, 89], 1]]
+  expected: [List, 1073741824, { num: "205880356524696485265270985" }, { num: "413089663117993651110549302" }]
+  caption: the cube roots of 2 modulo the Mersenne prime $2^{89} - 1$; the first is $2^{30}$, since $2^{90} = 2 \cdot 2^{89} \equiv 2$
+  category: Scope
+- id: forty-hensel-steps-up-from-sqrt-1-equiv-2-pmod-5
+  expr: [PowerModList, -1, [Rational, 1, 2], [Power, 5, 40]]
+  expected: [List, { num: "2224618918409236552857702057" }, { num: "6870328099320045826292688568" }]
+  caption: forty Hensel steps up from $\sqrt{-1} \equiv 2 \pmod 5$
+  category: Scope
+- id: the-square-roots-of-1-modulo-the-product-of-the
+  expr:
+    [
+      Length,
+      [PowerModList, 1, [Rational, 1, 2], [Multiply, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]],
+    ]
+  expected: 32768
+  caption: 'the square roots of 1 modulo the product of the first 16 primes: one per $\pm$ sign over the 15 odd channels, $2^{15}$'
+  category: Scope
+- id: the-1000th-roots-of-unity-mod-2-61-1-gcd-1000-2
+  expr: [Length, [PowerModList, 1, [Rational, 1, 1000], [Subtract, [Power, 2, 61], 1]]]
+  expected: 50
+  caption: 'the 1000th roots of unity mod $2^{61} - 1$: $\gcd(1000, 2^{61} - 2) = 50$ of them'
+  category: Scope
+- id: mod-a-prime-there-are-exactly-gcd-r-p-1-r-th
+  expr: [Equal, [Length, [PowerModList, 1, [Rational, 1, 12], 1009]], [GCD, 12, 1008]]
+  expected: True
+  caption: mod a prime there are exactly $\gcd(r, p - 1)$ $r$-th roots of unity
+  category: Properties
+- id: for-odd-m-the-square-roots-of-1-are-the-2-omega
+  expr: [Equal, [Length, [PowerModList, 1, [Rational, 1, 2], 1155]], [Power, 2, [PrimeNu, 1155]]]
+  expected: True
+  caption: 'for odd $m$ the square roots of 1 are the $2^{\omega(m)}$ sign vectors over the CRT channels: $1155 = 3 \cdot 5 \cdot 7 \cdot 11$'
+  category: Properties
+- id: powermod-with-a-rational-exponent-is-the-least
+  expr: [Equal, [PowerMod, 4, [Rational, 1, 2], 7], [First, [PowerModList, 4, [Rational, 1, 2], 7]]]
+  expected: True
+  caption: "[[PowerMod]] with a rational exponent is the least element of the list"
+  category: Properties
+- id: the-split-units-of-z-15-j-1-mapsto-4-is-a-ring
+  expr: [PowerModList, 1, [Rational, 1, 2], 15]
+  expected: [List, 1, 4, 11, 14]
+  caption: 'the split units of $\mathbb{Z}/15$: $j_1 \mapsto 4$ is a ring homomorphism $\mathbb{R}[j]/(j^2 - 1) \to \mathbb{Z}/15$'
+  category: Applications
+- id: so-the-identity-1-j-1-j-0-transports-by-j-mapsto
+  expr: [Mod, [Multiply, [Add, 1, 4], [Subtract, 1, 4]], 15]
+  expected: 0
+  caption: so the identity $(1+j)(1-j) = 0$ transports by $j \mapsto 4$
+  category: Applications
+- id: imaginary-units-of-z-65-exist-because-5-and-13
+  expr: [PowerModList, -1, [Rational, 1, 2], 65]
+  expected: [List, 8, 18, 47, 57]
+  caption: imaginary units of $\mathbb{Z}/65$ exist because $5$ and $13$ are both $\equiv 1 \pmod 4$
+  category: Applications
+- id: rabin-decryption-knowing-the-factors-of-n-the
+  expr:
+    [
+      PowerModList,
+      [PowerMod, 123456789, 2, [Multiply, 1000003, 1000033]],
+      [Rational, 1, 2],
+      [Multiply, 1000003, 1000033],
+    ]
+  expected: [List, 123456789, 30305547335, 969730452764, 999912543310]
+  caption: "Rabin decryption: knowing the factors of $n$, the four square roots of the ciphertext include the message"
+  category: Applications
+- id: no-square-root-of-1-3-equiv-3-pmod-4-blocks-its
+  expr: [PowerModList, -1, [Rational, 1, 2], 15]
+  expected: [List]
+  caption: 'no square root of $-1$: $3 \equiv 3 \pmod 4$ blocks its channel'
+  category: Possible issues
+- id: no-inverse-when-gcd-a-m-ne-1-so-the-list-is
+  expr: [PowerModList, 2, -1, 4]
+  expected: [List]
+  caption: no inverse when $\gcd(a, m) \ne 1$, so the list is empty
+  category: Possible issues
+- id: the-2-adic-channel-breaks-the-2-omega-m-law-z-2
+  expr: [PowerModList, 1, [Rational, 1, 2], 8]
+  expected: [List, 1, 3, 5, 7]
+  caption: 'the 2-adic channel breaks the $2^{\omega(m)}$ law: $\mathbb{Z}/2^a$ has four square roots of 1 for $a \ge 3$'
+  category: Possible issues
+- id: a-product-of-two-21-digit-primes-cannot-be
+  expr: [PowerModList, 4, [Rational, 1, 2], [Multiply, [Add, [Power, 10, 20], 39], [Add, [Power, 10, 20], 129]]]
+  expected: [PowerModList, 4, [Rational, 1, 2], { num: "10000000000000000016800000000000000005031" }]
+  caption: a product of two 21-digit primes cannot be factored in budget, so even $\sqrt 4$ stays unevaluated — finding the other two roots is as hard as factoring
+  category: Possible issues
+- id: x-2-equiv-0-pmod-3-40-has-3-20-roots-too-many-to
+  expr: [PowerModList, 0, [Rational, 1, 2], [Power, 3, 40]]
+  expected: [PowerModList, 0, [Rational, 1, 2], { num: "12157665459056928801" }]
+  caption: $x^2 \equiv 0 \pmod{3^{40}}$ has $3^{20}$ roots — too many to list
+  category: Possible issues
+- id: the-moduli-with-four-or-more-square-roots-of-1
+  expr: [PowerModList, 1, [Rational, 1, 2], [List, 8, 15, 21, 24]]
+  expected: [List, [List, 1, 3, 5, 7], [List, 1, 4, 11, 14], [List, 1, 8, 13, 20], [List, 1, 5, 7, 11, 13, 17, 19, 23]]
+  caption: 'the moduli with four or more square roots of 1 come in patterns: mod 24 every unit is one, since $(\mathbb{Z}/24)^\times \cong C_2^3$'
+  category: Neat examples
+- id: a-square-root-of-i-in-z-i-7-the-field-of-49
+  expr: [PowerModList, [Complex, 0, 1], [Rational, 1, 2], 7]
+  expected: [List, [Complex, -2, -2], [Complex, 2, 2]]
+  category: Scope
+  caption: 'a square root of $i$ in $\mathbb{Z}[i]/(7)$, the field of 49 elements: $(2 + 2i)^2 = 8i \equiv i$'
+- id: 10-20-39-is-inert-so-its-residue-field-is-f-p-2
+  expr: [PowerModList, [Complex, 3, 4], [Rational, 1, 2], [Add, [Power, 10, 20], 39]]
+  expected: [List, [Complex, -2, -1], [Complex, 2, 1]]
+  category: Scope
+  caption: $10^{20} + 39$ is inert, so its residue field is $\mathbb{F}_{p^2}$ with $p$ of 21 digits
+- role: test
+  id: a-gaussian-base-and-a-plain-modulus
+  expr: [PowerModList, [Complex, 2, 1], [Rational, 1, 2], 5]
+  expected: [List, [Complex, -1, 2], [Complex, 1, -2]]
+  category: Scope
+  caption: A Gaussian base and a plain modulus
+- id: cube-roots-of-8-modulo-13
+  expr: [PowerModList, 8, [Rational, 1, 3], 13]
+  expected: [List, 2, 5, 6]
+  role: test
+  category: Scope
+- id: an-integer-exponent-mod-100-not-1000
+  expr: [PowerModList, 2, 10, 100]
+  expected: [List, 24]
+  role: test
+  category: Scope
+- id: no-cube-root-of-4-modulo-13
+  expr: [PowerModList, 2, [Rational, 2, 3], 13]
+  expected: [List]
+  role: test
+  category: Possible issues
+  caption: "the cubes mod 13 miss $2^2 = 4$: no cube root"
+- id: a-rational-base-with-integer-exponent-1
+  expr: [PowerModList, [Rational, 2, 3], 1, 7]
+  expected: [List, 3]
+  role: test
+  category: Scope
+- id: threads-over-a-shorter-list-of-bases
+  expr: [PowerModList, [List, 1, 4], [Rational, 1, 2], 5]
+  expected: [List, [List, 1, 4], [List, 2, 3]]
+  role: test
+  category: Scope
+- id: a-symbolic-modulus-stays-unevaluated
+  expr: [PowerModList, 1, [Rational, 1, 2], m]
+  expected: [PowerModList, 1, [Rational, 1, 2], m]
+  role: test
+  category: Possible issues

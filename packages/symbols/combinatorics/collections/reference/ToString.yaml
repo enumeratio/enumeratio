@@ -9,13 +9,5 @@ signatures:
 details:
   - "Prints Epsil, not Wolfram's InputForm: this repo has no Wolfram-syntax printer, and Epsil is InputForm's counterpart here — it round-trips through `parseExpression` the way InputForm round-trips through Wolfram's own parser."
   - expr is evaluated first, then printed — same as Wolfram's own ToString.
-examples:
-  - id: prints-a-list-as-notatio-source
-    expr: [ToString, [List, 1, 2, 3]]
-    expected: "'[1, 2, 3]'"
-  - id: prints-an-arithmetic-expression
-    expr: [ToString, [Add, x, 1]]
-    expected: "'x + 1'"
-    category: Scope
 seeAlso:
   - FromCharacterCode

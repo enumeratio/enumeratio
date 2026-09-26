@@ -10,7 +10,6 @@ details:
   - OEIS A000217.
   - "Membership goes through [[Element]] by inverting the closed form exactly: $x$ is triangular iff $8x+1$ is a perfect square -- $Element(15, TriangularNumbers)$ is true, $Element(14, TriangularNumbers)$ is false."
   - The $k$-gonal case $k=3$ of [[PolygonalNumbers]].
-examples: []
 enumerate:
   expr: Take(TriangularNumbers, 20)
 seeAlso:

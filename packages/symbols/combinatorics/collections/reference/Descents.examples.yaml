@@ -1,0 +1,13 @@
+- id: only-3-1
+  expr: [Descents, [List, 3, 1, 2]]
+  expected: 1
+  caption: only $3 > 1$
+- id: every-step-falls
+  expr: [Descents, [List, 3, 2, 1]]
+  expected: 2
+  caption: every step falls
+- id: descents-and-ascents-partition-the-n-1-steps
+  expr: [Equal, [Add, [Descents, [List, 3, 1, 2]], [Ascents, [List, 3, 1, 2]]], 2]
+  expected: True
+  category: Properties
+  caption: descents and ascents partition the $n - 1$ steps

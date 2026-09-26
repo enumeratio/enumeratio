@@ -1,0 +1,8 @@
+- id: sow-feeds-the-nearest-reap
+  expr: [Reap, [Sow, 5]]
+  expected: [List, 5, [List, [List, 5]]]
+  caption: Sow feeds the nearest Reap
+- id: sow-outside-any-reap-is-a-no-op
+  expr: [Sow, 7]
+  expected: 7
+  caption: Sow outside any Reap is a no-op that still returns its value

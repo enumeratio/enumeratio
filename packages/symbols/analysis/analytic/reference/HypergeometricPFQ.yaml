@@ -9,30 +9,6 @@ signatures:
 details:
   - "Three closed forms stay exact ahead of the numeric series, symbolic $z$ (and parameters) included: ${}_0F_0(;;z) = e^z$; ${}_1F_0(a;;z) = (1-z)^{-a}$; and $\\mathrm{HypergeometricPFQ}(\\ldots; 0) = 1$ for any parameter lists (the series' own leading term)."
   - "Otherwise: $p \\le q$ converges for any $z$; $p = q+1$ only inside the unit disc, matching this package's Regularized forms — declined outside it rather than attempting an analytic continuation."
-examples:
-  - id: 2f-1-1-1-2-z-ln-1-z-z-here-2-ln-2
-    expr: [HypergeometricPFQ, [List, 1, 1], [List, 2], 0.5]
-    expected: 1.3862943611198906
-    caption: ${}_2F_1(1, 1; 2; z) = -\ln(1-z)/z$, here $2\ln 2$
-  - id: 1f-1-1-2-z-e-z-1-z
-    expr: [HypergeometricPFQ, [List, 1], [List, 2], 0.5]
-    expected: 1.2974425414002564
-    caption: ${}_1F_1(1; 2; z) = (e^z - 1)/z$
-  - id: 3f-2
-    expr: [HypergeometricPFQ, [List, 1, 2, 3], [List, 4, 5], 0.5]
-    expected: 1.189874754256423
-    category: Scope
-    caption: ${}_3F_2$
-  - id: 0f-0-z-e-z
-    expr: [HypergeometricPFQ, [List], [List], z]
-    expected: [Power, ExponentialE, z]
-    category: Properties
-    caption: ${}_0F_0(;;z) = e^z$
-  - id: 1f-0-a-z-1-z-a
-    expr: [HypergeometricPFQ, [List, a], [List], z]
-    expected: [Power, [Add, [Negate, z], 1], [Negate, a]]
-    category: Properties
-    caption: ${}_1F_0(a;;z) = (1-z)^{-a}$
 primitive: kernel
 bindings:
   - origin: native

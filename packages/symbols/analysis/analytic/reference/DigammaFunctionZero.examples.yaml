@@ -1,0 +1,37 @@
+- id: the-digamma-function-s-positive-real-zero
+  expr: [N, [DigammaFunctionZero, 0]]
+  expected: 1.4616321449683622
+  caption: the digamma function's positive real zero
+- id: the-zero-in-1-0
+  expr: [N, [DigammaFunctionZero, 1]]
+  expected: -0.5040830082644554
+  caption: the zero in $(-1, 0)$
+- id: psi-vanishes-exactly-there-by-construction
+  expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 2]]]]
+  expected: 0
+  category: Properties
+  caption: $\psi$ vanishes exactly there, by construction
+- id: psi-x-n-0-exactly-at-digamma-s-own-claimed-zero
+  expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 0]]]]
+  expected: 0
+  category: Properties
+  caption: $\psi(x_n) = 0$ exactly at digamma's own claimed zero, $n = 0$
+  group: digamma-vanishes
+- id: psi-x-n-0-at-n-1
+  expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 1]]]]
+  expected: 0
+  category: Properties
+  caption: $\psi(x_n) = 0$ at $n = 1$
+  group: digamma-vanishes
+- id: psi-x-n-0-at-n-3
+  expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 3]]]]
+  expected: 0
+  category: Properties
+  caption: $\psi(x_n) = 0$ at $n = 3$
+  group: digamma-vanishes
+- id: psi-x-n-0-at-n-4
+  expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 4]]]]
+  expected: 0
+  category: Properties
+  caption: $\psi(x_n) = 0$ at $n = 4$
+  group: digamma-vanishes

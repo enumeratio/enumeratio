@@ -1,0 +1,16 @@
+- id: nonetrue-list-1-3-5-iseven
+  expr: [NoneTrue, [List, 1, 3, 5], IsEven]
+  expected: True
+- id: nonetrue-list-1-2-3-iseven
+  expr: [NoneTrue, [List, 1, 2, 3], IsEven]
+  expected: False
+- id: vacuously-true-on-an-empty-list
+  expr: [NoneTrue, [List], IsEven]
+  expected: True
+  category: Scope
+  caption: Vacuously true on an empty list
+- id: the-negation-of-any
+  expr: [Equal, [NoneTrue, [List, 4, 6, 9], IsPrime], [Not, [Any, [List, 4, 6, 9], IsPrime]]]
+  expected: True
+  category: Properties
+  caption: The negation of [[Any]]
