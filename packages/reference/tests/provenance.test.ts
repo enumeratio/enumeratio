@@ -788,6 +788,20 @@ const NOVEL = [
   "ReIm",
   "RandomComplex",
   "KaryTree",
+  // logic-frontier.ts: LogicalExpand/BooleanConvert are genuinely Wolfram's own names (no
+  // DNF/CNF/NNF routine existed in compute-engine to build on); the Is… predicates are our
+  // spelling of Wolfram's TrueQ/IntegerQ/VectorQ/MatrixQ/ArrayQ/MersennePrimeExponentQ/
+  // IntervalMemberQ (see `HEADS` in @enumeratio/wolfram) -- all nine waiting on the same
+  // coverage run to fill in `elsewhere`.
+  "LogicalExpand",
+  "BooleanConvert",
+  "IsTrue",
+  "IsInteger",
+  "IsVector",
+  "IsMatrix",
+  "IsArray",
+  "IsMersennePrimeExponent",
+  "IsIntervalMember",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

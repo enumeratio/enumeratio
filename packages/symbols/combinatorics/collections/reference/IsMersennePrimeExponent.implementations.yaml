@@ -1,0 +1,56 @@
+7-is-a-mersenne-prime-exponent:
+  epsil:
+    in: IsMersennePrimeExponent(7)
+    out: True
+  tex:
+    in: \mathrm{IsMersennePrimeExponent}(7)
+    out: \top
+  traditional:
+    in: \mathrm{IsMersennePrimeExponent}(7)
+    out: \mathrm{True}
+  fullform:
+    in: IsMersennePrimeExponent[7]
+  wolfram:
+    in: MersennePrimeExponentQ[7]
+11-is-prime-but-not-a-mersenne-prime-exponent:
+  epsil:
+    in: IsMersennePrimeExponent(11)
+    out: False
+  tex:
+    in: \mathrm{IsMersennePrimeExponent}(11)
+    out: \bot
+  traditional:
+    in: \mathrm{IsMersennePrimeExponent}(11)
+    out: \mathrm{False}
+  fullform:
+    in: IsMersennePrimeExponent[11]
+  wolfram:
+    in: MersennePrimeExponentQ[11]
+9-is-not-even-prime:
+  epsil:
+    in: IsMersennePrimeExponent(9)
+    out: False
+  tex:
+    in: \mathrm{IsMersennePrimeExponent}(9)
+    out: \bot
+  traditional:
+    in: \mathrm{IsMersennePrimeExponent}(9)
+    out: \mathrm{False}
+  fullform:
+    in: IsMersennePrimeExponent[9]
+  wolfram:
+    in: MersennePrimeExponentQ[9]
+2-31-1-is-the-8th-mersenne-prime:
+  epsil:
+    in: IsMersennePrimeExponent(31)
+    out: True
+  tex:
+    in: \mathrm{IsMersennePrimeExponent}(31)
+    out: \top
+  traditional:
+    in: \mathrm{IsMersennePrimeExponent}(31)
+    out: \mathrm{True}
+  fullform:
+    in: IsMersennePrimeExponent[31]
+  wolfram:
+    in: MersennePrimeExponentQ[31]

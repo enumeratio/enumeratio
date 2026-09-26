@@ -1,0 +1,16 @@
+name: IsMatrix
+domain: Collections
+signature: IsMatrix(m) / IsMatrix(m, test)
+summary: Tests whether m is a non-empty, non-ragged rank-2 List of Lists, optionally with every entry satisfying test.
+signatures:
+  - call: IsMatrix(m)
+    description: True if m is a List of Lists, all the same length, none containing a further List
+    library: enumeratio-collections
+  - call: IsMatrix(m, test)
+    description: as above, and test holds of every entry
+    library: enumeratio-collections
+details:
+  - A ragged List of Lists (rows of different lengths), an empty List, or anything of rank other than exactly 2, is False.
+seeAlso:
+  - IsVector
+  - IsArray

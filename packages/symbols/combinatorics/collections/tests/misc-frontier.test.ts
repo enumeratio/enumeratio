@@ -222,7 +222,8 @@ test("KaryTree(n) defaults to k = 2 (binary)", () => {
 });
 
 // ─── not implemented / out of scope, documented on the module ──────────────────────────
-test("WeightedAdjacencyMatrix and BooleanConvert are intentionally not declared", () => {
+// BooleanConvert was out of scope when this test was written (no DNF/CNF routine to build
+// on yet) — landed since in logic-frontier.ts/logic-frontier.test.ts.
+test("WeightedAdjacencyMatrix is intentionally not declared", () => {
   expect(ce.lookupDefinition("WeightedAdjacencyMatrix")).toBeUndefined();
-  expect(ce.lookupDefinition("BooleanConvert")).toBeUndefined();
 });

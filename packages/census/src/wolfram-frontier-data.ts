@@ -365,10 +365,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 13,
   },
   {
-    head: "LogicalExpand",
-    uses: 13,
-  },
-  {
     head: "MultivariatePoissonDistribution",
     uses: 13,
   },
@@ -470,10 +466,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "BezierCurve",
-    uses: 10,
-  },
-  {
-    head: "BooleanConvert",
     uses: 10,
   },
   {
@@ -582,10 +574,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "SuperDagger",
-    uses: 9,
-  },
-  {
-    head: "VectorQ",
     uses: 9,
   },
   {
@@ -717,14 +705,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "IntegerQ",
-    uses: 7,
-  },
-  {
-    head: "IntervalMemberQ",
-    uses: 7,
-  },
-  {
     head: "JacobiCS",
     uses: 7,
   },
@@ -753,14 +733,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "MatrixQ",
-    uses: 7,
-  },
-  {
-    head: "MersennePrimeExponentQ",
-    uses: 7,
-  },
-  {
     head: "MeshRegion",
     uses: 7,
   },
@@ -777,19 +749,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "TrueQ",
-    uses: 7,
-  },
-  {
     head: "AbortProtect",
     uses: 6,
   },
   {
     head: "AlternatingGroup",
-    uses: 6,
-  },
-  {
-    head: "ArrayQ",
     uses: 6,
   },
   {

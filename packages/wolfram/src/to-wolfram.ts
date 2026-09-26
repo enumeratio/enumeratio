@@ -93,6 +93,18 @@ export const HEADS: Record<string, string> = {
   And: "And",
   Or: "Or",
   Not: "Not",
+  // Boolean normal forms (packages/symbols/combinatorics/collections/src/logic-frontier.ts).
+  LogicalExpand: "LogicalExpand",
+  BooleanConvert: "BooleanConvert",
+  // Predicates — Wolfram's `…Q` names for what we spell `Is…` (same convention as
+  // `IsPrime: "PrimeQ"` above). `IsTrue` is Wolfram's `TrueQ`, not a straight rename.
+  IsTrue: "TrueQ",
+  IsInteger: "IntegerQ",
+  IsVector: "VectorQ",
+  IsMatrix: "MatrixQ",
+  IsArray: "ArrayQ",
+  IsMersennePrimeExponent: "MersennePrimeExponentQ",
+  IsIntervalMember: "IntervalMemberQ",
   List: "List",
   Tuple: "List", // Wolfram has no tuple; `{k, 0, 4}` is also how it spells an iterator
   Function: "Function",

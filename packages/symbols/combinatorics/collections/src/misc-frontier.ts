@@ -14,14 +14,13 @@ import { rngFor } from "./list-frontier.ts";
 // collide on the site's per-symbol page generator once the domain went plural (design/
 // domains.md's naming rule) — restored here after #260 pulled it for exactly that collision.
 //
-// Out of scope for this wave, with reasons: WeightedAdjacencyMatrix (Graph has no edge-weight
-// representation — see graphs.ts, edges are a bare List of UndirectedEdge with no attribute
-// slot — so there is nothing to read a weight OFF of; would need to land graph weights first)
-// and BooleanConvert (compute-engine's logic heads have no DNF/CNF normal-form routine to
-// build on — `And`/`Or`/`Not` `.simplify()` doesn't produce a canonical normal form, and
-// bare boolean symbols default-infer as `number`, so even a probe call needs explicit
-// typing before it does anything useful — writing a full boolean normalizer from scratch is
-// out of scope here).
+// Out of scope for this wave, with a reason: WeightedAdjacencyMatrix (Graph has no
+// edge-weight representation — see graphs.ts, edges are a bare List of UndirectedEdge with
+// no attribute slot — so there is nothing to read a weight OFF of; would need to land graph
+// weights first). BooleanConvert (and LogicalExpand, and the Is… predicate wave) landed
+// later, in logic-frontier.ts — compute-engine's logic heads had no DNF/CNF normal-form
+// routine to build on when this wave was written, so a boolean normalizer was written from
+// scratch there instead.
 
 /** Wolfram 1-based position, negative counting from the end, to a positive 1-based index. */
 const normalizePosition = (position: number, length: number): number =>
