@@ -34,7 +34,8 @@ the-inversion-distribution-over-s-3-mapped:
     in: \mathrm{ListFrom}(\mathrm{Map}(p\mapsto\mathrm{Inversions}(p), \mathrm{SymmetricGroup}(3)))
     out: \bigl\lbrack0, 1, 1, 2, 2, 3\bigr\rbrack
   fullform:
-    in: ListFrom[Map[Function[Inversions[p], p], SymmetricGroup[3]]]
+    in: ListFrom[Map[Function[p, Inversions[p]], SymmetricGroup[3]]]
+    back: [ListFrom, [Map, [Function, p, [Inversions, p]], [SymmetricGroup, 3]]]
 total-inversions-over-all-of-s-4-folded-with-sum:
   epsil:
     in: Sum(Map(Function(Inversions(p), p), SymmetricGroup(4)))
@@ -44,4 +45,5 @@ total-inversions-over-all-of-s-4-folded-with-sum:
     in: \sum\mathrm{Map}(p\mapsto\mathrm{Inversions}(p), \mathrm{SymmetricGroup}(4))
     out: "72"
   fullform:
-    in: Total[Map[Function[Inversions[p], p], SymmetricGroup[4]]]
+    in: Total[Map[Function[p, Inversions[p]], SymmetricGroup[4]]]
+    back: [Sum, [Map, [Function, p, [Inversions, p]], [SymmetricGroup, 4]]]
