@@ -58,6 +58,9 @@ function degreeOf(coeffs: readonly number[]): number {
 
 // ---- reading a real coefficient polynomial in `x` out of a boxed expression --------
 
+/** Is `expr` exactly the bare symbol named `x`? */
+const isSym = (expr: BoxedExpression, x: string): boolean => symbolNameOf(expr) === x;
+
 /** Does `expr` mention the symbol named `x` anywhere in its tree? Exported for
  * `optimize-core.ts`, which needs the same free-variable test when parsing an interval
  * constraint's endpoints. */
@@ -661,6 +664,195 @@ export function periodOf(ce: ComputeEngine, rec: Recognized): BoxedExpression | 
   }
 }
 
+// ---- continuous (2-arg: over all of R; 3-arg: over a stated domain restriction) -----
+
+/** A half-open-or-closed real interval; `lo`/`hi` may be `+/-Infinity` (their own
+ * closedness flag is then irrelevant). Used only to decide whether a stated domain
+ * restriction sits entirely inside where a recognized shape is defined AND continuous —
+ * never surfaced as a MathJSON condition itself. */
+interface RealInterval {
+  readonly lo: number;
+  readonly loClosed: boolean;
+  readonly hi: number;
+  readonly hiClosed: boolean;
+}
+
+const ALL_REALS: RealInterval = { lo: -Infinity, loClosed: false, hi: Infinity, hiClosed: false };
+
+/**
+ * The maximal intervals where `rec`'s shape is BOTH defined and continuous — distinct
+ * from `domainOf`'s condition because a boundary can be closed-and-fine (`Sqrt`'s zero:
+ * defined, one-sided-continuous there) or closed-and-broken (`Log`'s zero: undefined
+ * there even though it borders the domain). `undefined` = decline (an unbounded
+ * discrete exclusion set, e.g. `Tan`, or a degenerate sqrt/log shape this file doesn't
+ * characterise elsewhere either).
+ */
+function continuousIntervalsOf(rec: Recognized): readonly RealInterval[] | undefined {
+  switch (rec.tag) {
+    case "poly":
+    case "exp":
+      return [ALL_REALS];
+    case "trig":
+      return rec.fn === "Tan" ? undefined : [ALL_REALS];
+    case "rational": {
+      const shape = signShape(rec.den);
+      if (shape === undefined) return undefined;
+      if (shape.zeros.length === 0) return [ALL_REALS];
+      // R minus each zero: open at every zero (a pole is never included).
+      const zs = shape.zeros;
+      const out: RealInterval[] = [{ lo: -Infinity, loClosed: false, hi: zs[0]!, hiClosed: false }];
+      for (let i = 0; i + 1 < zs.length; i++) {
+        out.push({ lo: zs[i]!, loClosed: false, hi: zs[i + 1]!, hiClosed: false });
+      }
+      out.push({ lo: zs[zs.length - 1]!, loClosed: false, hi: Infinity, hiClosed: false });
+      return out;
+    }
+    case "sqrt": {
+      const shape = signShape(rec.radicand);
+      if (shape === undefined) return undefined;
+      if (shape.sign === "pos" || shape.sign === "nonneg") return [ALL_REALS];
+      if (shape.sign === "neg" || shape.sign === "nonpos") return undefined; // domain empty or a single point
+      // "mixed": the boundary zero(s) are CLOSED — Sqrt is defined and (one-sided)
+      // continuous exactly there, only strictly beyond it is it undefined.
+      if (shape.zeros.length === 1) {
+        const [z] = shape.zeros;
+        return shape.outsideSign === 1
+          ? [{ lo: z!, loClosed: true, hi: Infinity, hiClosed: false }]
+          : [{ lo: -Infinity, loClosed: false, hi: z!, hiClosed: true }];
+      }
+      const [lo, hi] = shape.zeros as [number, number];
+      return shape.outsideSign === 1
+        ? [
+            { lo: -Infinity, loClosed: false, hi, hiClosed: true },
+            { lo, loClosed: true, hi: Infinity, hiClosed: false },
+          ]
+        : [{ lo, loClosed: true, hi, hiClosed: true }];
+    }
+    case "log": {
+      const shape = signShape([rec.b, rec.a]);
+      if (shape === undefined) return undefined;
+      // Always "mixed", one zero (a log's argument is linear): OPEN at the boundary —
+      // Log(0) itself is undefined, unlike Sqrt's touch point.
+      const [z] = shape.zeros;
+      return shape.outsideSign === 1
+        ? [{ lo: z!, loClosed: false, hi: Infinity, hiClosed: false }]
+        : [{ lo: -Infinity, loClosed: false, hi: z!, hiClosed: false }];
+    }
+  }
+}
+
+/** A concrete finite real value read off a subtree with no occurrence of `x` — the
+ * domain restriction's bound. Mirrors `constantValue` above (not exported from here). */
+function boundValue(expr: BoxedExpression, x: string): number | undefined {
+  if (containsVar(expr, x)) return undefined;
+  return constantValue(expr);
+}
+
+/** One relation `x <op> c` or `c <op> x`, read as a half-open-or-unbounded interval —
+ * `Less`/`LessEqual`/`Greater`/`GreaterEqual`, 2-ary, or 3-ary chained (`a < x < b`). */
+function oneSidedInterval(cond: BoxedExpression, x: string): Partial<RealInterval> | undefined {
+  const ops = operandsOf(cond);
+  const op = cond.operator;
+  if (ops.length === 3 && (op === "Less" || op === "LessEqual")) {
+    const [p0, p1, p2] = ops as [BoxedExpression, BoxedExpression, BoxedExpression];
+    if (!isSym(p1, x)) return undefined;
+    const lo = boundValue(p0, x);
+    const hi = boundValue(p2, x);
+    if (lo === undefined || hi === undefined) return undefined;
+    const closed = op === "LessEqual";
+    return { lo, loClosed: closed, hi, hiClosed: closed };
+  }
+  if (ops.length !== 2 || (op !== "Less" && op !== "LessEqual" && op !== "Greater" && op !== "GreaterEqual")) {
+    return undefined;
+  }
+  const [p0, p1] = ops as [BoxedExpression, BoxedExpression];
+  if (isSym(p0, x)) {
+    // x <op> c
+    const c = boundValue(p1, x);
+    if (c === undefined) return undefined;
+    if (op === "Less") return { hi: c, hiClosed: false };
+    if (op === "LessEqual") return { hi: c, hiClosed: true };
+    if (op === "Greater") return { lo: c, loClosed: false };
+    return { lo: c, loClosed: true }; // GreaterEqual
+  }
+  if (isSym(p1, x)) {
+    // c <op> x
+    const c = boundValue(p0, x);
+    if (c === undefined) return undefined;
+    if (op === "Less") return { lo: c, loClosed: false };
+    if (op === "LessEqual") return { lo: c, loClosed: true };
+    if (op === "Greater") return { hi: c, hiClosed: false };
+    return { hi: c, hiClosed: true }; // GreaterEqual
+  }
+  return undefined;
+}
+
+/** The domain restriction as ONE real interval — a bare relation, a 3-ary chain, or
+ * `And` of two one-sided relations that together bound both sides. `undefined` =
+ * decline (anything else: `Or`, `NotEqual`, a relation not in `x`, ...). */
+function domainRestrictionInterval(domain: BoxedExpression, x: string): RealInterval | undefined {
+  let parts: Partial<RealInterval>[];
+  if (domain.operator === "And") {
+    const ops = operandsOf(domain);
+    if (ops.length !== 2) return undefined;
+    const a = oneSidedInterval(ops[0]!, x);
+    const b = oneSidedInterval(ops[1]!, x);
+    if (a === undefined || b === undefined) return undefined;
+    parts = [a, b];
+  } else {
+    const one = oneSidedInterval(domain, x);
+    if (one === undefined) return undefined;
+    parts = [one];
+  }
+  let lo = -Infinity;
+  let loClosed = false;
+  let hi = Infinity;
+  let hiClosed = false;
+  for (const p of parts) {
+    if (p.lo !== undefined) {
+      lo = p.lo;
+      loClosed = p.loClosed ?? false;
+    }
+    if (p.hi !== undefined) {
+      hi = p.hi;
+      hiClosed = p.hiClosed ?? false;
+    }
+  }
+  return { lo, loClosed, hi, hiClosed };
+}
+
+/** Does `outer` entirely contain `inner`, boundary-aware (an open `outer` boundary only
+ * covers a matching open `inner` boundary at the same point)? */
+function intervalContains(outer: RealInterval, inner: RealInterval): boolean {
+  const loOk = outer.lo < inner.lo || (outer.lo === inner.lo && (outer.loClosed || !inner.loClosed));
+  const hiOk = outer.hi > inner.hi || (outer.hi === inner.hi && (outer.hiClosed || !inner.hiClosed));
+  return loOk && hiOk;
+}
+
+/** `FunctionContinuous(f, x)`: True iff `f` has no singularity anywhere on the reals.
+ * `FunctionContinuous(f, x, domain)`: True iff the stated restriction sits entirely
+ * inside one of `f`'s continuous intervals. Declines whenever the classifier, the
+ * singularity set, or (3-arg) the restriction itself can't be characterised. */
+function continuousOf(
+  ce: ComputeEngine,
+  rec: Recognized,
+  x: string,
+  domain: BoxedExpression | undefined,
+): BoxedExpression | undefined {
+  if (domain === undefined) {
+    const sing = singularitiesOf(ce, rec, x);
+    if (sing === undefined) return undefined;
+    const isFalse = symbolNameOf(sing) === "False";
+    return ce.symbol(isFalse ? "True" : "False");
+  }
+  const intervals = continuousIntervalsOf(rec);
+  if (intervals === undefined) return undefined;
+  const restriction = domainRestrictionInterval(domain, x);
+  if (restriction === undefined) return undefined;
+  const covered = intervals.some((iv) => intervalContains(iv, restriction));
+  return ce.symbol(covered ? "True" : "False");
+}
+
 // ---- declaration ----------------------------------------------------------------------
 
 const trendToExpr = (ce: ComputeEngine, t: Trend | undefined): BoxedExpression | undefined =>
@@ -744,4 +936,17 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   declareUnary(ce, "FunctionAnalytic", (ce_, rec) => ce_.symbol(analyticOf(rec) ? "True" : "False"));
   declareUnary(ce, "FunctionMeromorphic", (ce_, rec) => ce_.symbol(meromorphicOf(rec) ? "True" : "False"));
   declareUnary(ce, "FunctionPeriod", (ce_, rec) => periodOf(ce_, rec));
+
+  ce.declare("FunctionContinuous", {
+    signature: "(any, symbol, any?) -> any",
+    lazy: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const [expr, xExpr, domain] = ops;
+      const x = xExpr === undefined ? undefined : symbolNameOf(xExpr);
+      if (expr === undefined || x === undefined) return undefined;
+      const rec = recognize(expr, x);
+      if (rec === undefined) return undefined;
+      return continuousOf(ce, rec, x, domain);
+    },
+  });
 }

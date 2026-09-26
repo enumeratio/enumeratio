@@ -1,0 +1,39 @@
+implies-becomes-or-not:
+  epsil:
+    in: LogicalExpand(Implies(p, b))
+    out: b || !p
+  tex:
+    in: \mathrm{LogicalExpand}(p\implies b)
+    out: b\lor\lnot p
+  fullform:
+    in: LogicalExpand[Implies[p, b]]
+distributes-and-over-or:
+  epsil:
+    in: LogicalExpand(p && (b || r))
+    out: b && p || p && r
+  tex:
+    in: \mathrm{LogicalExpand}(p\land(b\lor r))
+    out: b\land p\lor p\land r
+  fullform:
+    in: LogicalExpand[And[p, Or[b, r]]]
+xor-eliminated-into-dnf:
+  epsil:
+    in: LogicalExpand(Xor(p, b))
+    out: b && !p || p && !b
+  tex:
+    in: \mathrm{LogicalExpand}(p\veebar b)
+    out: b\land\lnot p\lor p\land\lnot b
+  fullform:
+    in: LogicalExpand[Xor[p, b]]
+a-contradictory-term-drops-out:
+  epsil:
+    in: LogicalExpand(p && !p)
+    out: False
+  tex:
+    in: \mathrm{LogicalExpand}(p\land\lnot p)
+    out: \bot
+  traditional:
+    in: \mathrm{LogicalExpand}(p\land\lnot p)
+    out: \mathrm{False}
+  fullform:
+    in: LogicalExpand[And[p, Not[p]]]

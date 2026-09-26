@@ -93,6 +93,18 @@ export const HEADS: Record<string, string> = {
   And: "And",
   Or: "Or",
   Not: "Not",
+  // Boolean normal forms (packages/symbols/combinatorics/collections/src/logic-frontier.ts).
+  LogicalExpand: "LogicalExpand",
+  BooleanConvert: "BooleanConvert",
+  // Predicates — Wolfram's `…Q` names for what we spell `Is…` (same convention as
+  // `IsPrime: "PrimeQ"` above). `IsTrue` is Wolfram's `TrueQ`, not a straight rename.
+  IsTrue: "TrueQ",
+  IsInteger: "IntegerQ",
+  IsVector: "VectorQ",
+  IsMatrix: "MatrixQ",
+  IsArray: "ArrayQ",
+  IsMersennePrimeExponent: "MersennePrimeExponentQ",
+  IsIntervalMember: "IntervalMemberQ",
   List: "List",
   Tuple: "List", // Wolfram has no tuple; `{k, 0, 4}` is also how it spells an iterator
   Function: "Function",
@@ -582,6 +594,27 @@ export const HEADS: Record<string, string> = {
   // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized
   // 5-argument MeijerG (an extra scale parameter), ours always emits the plain 4-argument form.
   MeijerGReduce: "MeijerGReduce",
+  // MellinTransform[f, x, s] / InverseMellinTransform[F, s, x] — same argument order both
+  // sides.
+  MellinTransform: "MellinTransform",
+  InverseMellinTransform: "InverseMellinTransform",
+  // HankelTransform[f, r, s] (order 0) / HankelTransform[f, r, s, n] — same order, the
+  // trailing order argument optional on both sides.
+  HankelTransform: "HankelTransform",
+  // CaputoD[f, {x, alpha}] — same order; `{x, alpha}` is a plain list both sides.
+  CaputoD: "CaputoD",
+  TrigFactor: "TrigFactor",
+  // DSolveValue[eqn, y[x], x] / DSolveValue[{eqn, ic1, ic2, ...}, y[x], x] — same order;
+  // `y'(x)`/`y''(x)` are `D(y(x), x)`/`D(y(x), x, x)` on this side (boxing to
+  // `Apply(Derivative(y, n), x)`), which the `Apply`/`Derivative` SPECIAL entries below
+  // round-trip to Wolfram's own `Derivative[n][y][x]` (printed `y''[x]`). Arbitrary
+  // constants are `C(1)`, `C(2)`, ... (compute-engine's own `C`, called like Wolfram's
+  // `C[1]`) — a plain rename.
+  DSolveValue: "DSolveValue",
+  C: "C",
+  // Restructured below (SPECIAL) — this entry only marks the name collision decided
+  // (the alignment check), matching BigO/Round/Sum's own SPECIAL+HEADS pairing.
+  FunctionContinuous: "FunctionContinuous",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",
@@ -871,6 +904,21 @@ export const FOREIGN: Record<string, string> = {
 
 /** Heads that need a bespoke emission rather than a plain rename. */
 const SPECIAL: Record<string, (args: MathJson[]) => string> = {
+  // Apply(f, ...args) is compute-engine's own "call f with these arguments" (confirmed
+  // against its own crosswalk description, "Apply a function to a list of arguments" —
+  // NOT Wolfram's Apply, which replaces an expression's head instead), so it maps to a
+  // direct Wolfram call `f[...args]`, not `Apply[f, {...args}]`. This is what
+  // `D(y(x), x, x)` boxes to (`Apply(Derivative(y, 2), x)`), and combined with the
+  // `Derivative` entry below round-trips it to Wolfram's own `Derivative[2][y][x]`
+  // (printed `y''[x]`) — DSolveValue's `y'`/`y''` notation.
+  Apply: (a) =>
+    `${toWolfram(a[0])}[${a
+      .slice(1)
+      .map((x) => toWolfram(x))
+      .join(", ")}]`,
+  // Derivative(f, n): compute-engine's own order (function first, order second) — same
+  // as Wolfram's `Derivative[n][f]`, just swapped.
+  Derivative: (a) => `Derivative[${toWolfram(a[1])}][${toWolfram(a[0])}]`,
   // LambertW(z) / LambertW(z, k) is compute-engine's own order (branch index second, checked
   // directly: `LambertW(-0.14, -1)` is the k = -1 branch); Wolfram's `ProductLog` puts the
   // branch first: `ProductLog[z]` / `ProductLog[k, z]`.
@@ -967,6 +1015,14 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
       .slice(3, 5)
       .map((x) => toWolfram(x))
       .join(", ")}], ${toWolfram(a[5])}]`,
+  // FunctionContinuous(f, x, domain) puts the domain restriction as a third argument;
+  // Wolfram's own FunctionContinuous[{f, domain}, x] embeds it in a list alongside f
+  // instead (confirmed directly: `FunctionContinuous[f, cond]` itself errors
+  // `isvar`) — a restructuring, not a rename. The 2-arg form (no domain) is a plain call.
+  FunctionContinuous: (a) =>
+    a.length === 3
+      ? `FunctionContinuous[List[${toWolfram(a[0])}, ${toWolfram(a[2])}], ${toWolfram(a[1])}]`
+      : call("FunctionContinuous", a),
   // compute-engine's `Function` is `[body, ...params]`, canonicalized with `body` wrapped in
   // its own scoping `Block` (see function-utils.d.ts) — CE-internal, not something Wolfram's
   // own `Function` ever shows, so it's unwrapped here. Wolfram's shape is `Function[{params},
@@ -982,27 +1038,6 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
     if (params.length === 1) return `Function[${toWolfram(params[0])}, ${toWolfram(body)}]`;
     return `Function[List[${params.map((p) => toWolfram(p)).join(", ")}], ${toWolfram(body)}]`;
   },
-  // compute-engine boxes a call whose head is itself a compound expression (rather than a
-  // bare symbol) as `Apply(head, arg)` — see difference-root.ts / differential-root.ts, whose
-  // `DifferenceRoot(fn)(n)` / `DifferentialRoot(fn)(x)` take exactly this shape, and whose ODE
-  // equations write `y'(x)` as `Apply(Derivative(y, 1), x)`. Wolfram spells all of these the
-  // way it spells any curried call: `head[arg]`, not `Apply[head, arg]` (genuine `Apply` —
-  // replacing a list's head — is a different operation there). Only these heads are curried
-  // this way today, so this is narrowly scoped to them; every other `Apply` call still means
-  // Wolfram's own `Apply`.
-  Apply: (a) => {
-    const [head, ...rest] = a;
-    const curried = ["DifferenceRoot", "DifferentialRoot", "Derivative"];
-    if (Array.isArray(head) && curried.includes(head[0] as string)) {
-      return `${toWolfram(head)}[${rest.map((r) => toWolfram(r)).join(", ")}]`;
-    }
-    return call("Apply", a);
-  },
-  // `Derivative(y, k)`: compute-engine's order is (function, order); Wolfram's `Derivative[k]`
-  // is the order-k derivative OPERATOR, applied to the function as its own curried call:
-  // `Derivative[k][y]`. Bare — the `Apply` case above adds the further `[x]` when this is
-  // itself applied to a point, as difference-root.ts / differential-root.ts always do.
-  Derivative: (a) => `Derivative[${toWolfram(a[1])}][${toWolfram(a[0])}]`,
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */

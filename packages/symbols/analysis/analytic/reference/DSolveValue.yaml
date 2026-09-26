@@ -1,0 +1,27 @@
+name: DSolveValue
+domain: Analytic
+signature: DSolveValue(eqn, Y(x), x)
+summary: Solves a linear, constant-coefficient ODE of order 1 or 2 for Y(x), with optional initial conditions.
+signatures:
+  - call: DSolveValue(eqn, Y(x), x)
+    description: the general solution, with arbitrary constants C(1) (and C(2) for order 2).
+    library: "@enumeratio/analytic"
+  - call: DSolveValue({eqn, ic1, ic2, ...}, Y(x), x)
+    description: the particular solution satisfying the stated initial conditions.
+    library: "@enumeratio/analytic"
+details:
+  - "`Y'`/`Y''` are written the way compute-engine itself represents an undifferentiated function's derivative -- `D(Y(x), x)` / `D(Y(x), x, x)` (boxing to `Apply(Derivative(Y, n), x)`) -- no new notation introduced. An initial condition is the same shape applied at a NUMBER instead of `x`: `Equal(D(Y(x), x), b)` at `x=0` is `Equal(Apply(Derivative(Y, 1), 0), b)` for $Y'(0)=b$. Arbitrary constants print as `C(1)`/`C(2)`, matching Wolfram's own `C[1]`/`C[2]` (confirmed directly: compute-engine's native `C`, called `C(1)`, stays a plain, inert expression, exactly like Wolfram's own `C[1]`)."
+  - "Homogeneous part: the characteristic polynomial's roots -- a single real root (order 1); two distinct real roots; a repeated real root ($(C(1)+C(2)x)e^{rx}$); or a complex-conjugate pair ($e^{px}(C(1)\\cos(qx)+C(2)\\sin(qx))$)."
+  - "Nonhomogeneous part, by undetermined coefficients, ONE forcing shape at a time (not sums of different shapes): a polynomial in `x` (any degree), $Ae^{cx}$, or $A\\sin(wx)+B\\cos(wx)$. Each gets $x^s$ times its own trial basis, `s` = how many times the forcing's own characteristic value already appears as a homogeneous root (the standard resonance bump) -- confirmed against `wolframscript`'s own `DSolveValue` for every case below, matching up to relabeling which root gets `C(1)` vs `C(2)`."
+  - "Every solution is verified before being returned: substituted back with `D`, the residual must come back exactly 0 symbolically or measure below `1e-9` at several numeric points -- declining, not guessing, otherwise."
+  - "Declined: order > 2; a non-constant or non-numeric-literal coefficient (including a leading coefficient of 0); a nonlinear term ($Y(x)^2$, $\\sin(Y(x))$, ...); forcing that mixes shapes or isn't one of the three above; and initial conditions at anything but a plain real-number point."
+  - Examples use the unknown function `Y` (capitalized) rather than `y` deliberately -- an unrelated repo-wide provenance check reuses one shared compute-engine instance across every reference example, and boxing `Derivative(y, n)` for a lowercase `y` marks that SYMBOL incompatibly typed there ever after, which then breaks other examples elsewhere that use bare `y` as an ordinary variable (confirmed directly). `Y` avoids the collision; the head itself takes any function name.
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/dsolve.ts
+seeAlso:
+  - SeriesCoefficient
+  - CaputoD

@@ -664,6 +664,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "BinomialDistribution",
   },
   {
+    name: "BooleanConvert",
+    wolfram: "BooleanConvert",
+  },
+  {
     name: "BrauerAlgebra",
     oracle: [
       {
@@ -679,8 +683,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "C",
+    wolfram: "C",
+  },
+  {
     name: "CDF",
     wolfram: "CDF",
+  },
+  {
+    name: "CaputoD",
+    wolfram: "CaputoD",
   },
   {
     name: "CarmichaelLambda",
@@ -1036,6 +1048,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Cycles",
     wolfram: "Cycles",
+  },
+  {
+    name: "DSolveValue",
+    wolfram: "DSolveValue",
   },
   {
     name: "DedekindEta",
@@ -2136,6 +2152,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FunctionAnalytic",
   },
   {
+    name: "FunctionContinuous",
+    wolfram: "FunctionContinuous",
+  },
+  {
     name: "FunctionConvexity",
     wolfram: "FunctionConvexity",
   },
@@ -2505,6 +2525,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "HankelMatrix",
   },
   {
+    name: "HankelTransform",
+    wolfram: "HankelTransform",
+  },
+  {
     name: "HararyGraph",
     wolfram: "HararyGraph",
   },
@@ -2839,12 +2863,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "InverseLaplaceTransform",
   },
   {
+    name: "InverseMellinTransform",
+    wolfram: "InverseMellinTransform",
+  },
+  {
     name: "InversePermutation",
     wolfram: "InversePermutation",
   },
   {
     name: "IsAcyclicGraph",
     wolfram: "AcyclicGraphQ",
+  },
+  {
+    name: "IsArray",
+    wolfram: "ArrayQ",
   },
   {
     name: "IsBipartiteGraph",
@@ -2872,6 +2904,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "EvenQ",
   },
   {
+    name: "IsInteger",
+    wolfram: "IntegerQ",
+  },
+  {
+    name: "IsIntervalMember",
+    wolfram: "IntervalMemberQ",
+  },
+  {
     name: "IsIsomorphicGraph",
     wolfram: "IsomorphicGraphQ",
   },
@@ -2882,6 +2922,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IsMachineNumber",
     wolfram: "MachineNumberQ",
+  },
+  {
+    name: "IsMatrix",
+    wolfram: "MatrixQ",
+  },
+  {
+    name: "IsMersennePrimeExponent",
+    wolfram: "MersennePrimeExponentQ",
   },
   {
     name: "IsNumeric",
@@ -2950,6 +2998,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IsTreeGraph",
     wolfram: "TreeGraphQ",
+  },
+  {
+    name: "IsTrue",
+    wolfram: "TrueQ",
+  },
+  {
+    name: "IsVector",
+    wolfram: "VectorQ",
   },
   {
     name: "JacobiAmplitude",
@@ -3583,6 +3639,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "LogGamma",
   },
   {
+    name: "LogicalExpand",
+    wolfram: "LogicalExpand",
+  },
+  {
     name: "LucasL",
     wolfram: "LucasL",
     oracle: [
@@ -3697,6 +3757,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MeijerGReduce",
     wolfram: "MeijerGReduce",
+  },
+  {
+    name: "MellinTransform",
+    wolfram: "MellinTransform",
   },
   {
     name: "MemoryConstrained",
@@ -5057,6 +5121,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "TriangleWave",
     wolfram: "TriangleWave",
+  },
+  {
+    name: "TrigFactor",
+    wolfram: "TrigFactor",
   },
   {
     name: "True",

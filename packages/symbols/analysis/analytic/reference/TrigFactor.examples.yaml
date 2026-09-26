@@ -1,0 +1,29 @@
+- id: sin-a-plus-sin-b
+  expr: [TrigFactor, [Add, [Sin, a], [Sin, b]]]
+  expected:
+    [
+      Multiply,
+      2,
+      [Sin, [Multiply, [Rational, 1, 2], [Add, a, b]]],
+      [Cos, [Multiply, [Rational, 1, 2], [Add, a, [Negate, b]]]],
+    ]
+  caption: $\sin a+\sin b = 2\sin(\frac{a+b}2)\cos(\frac{a-b}2)$
+- id: cos-a-minus-cos-b
+  expr: [TrigFactor, [Subtract, [Cos, a], [Cos, b]]]
+  expected:
+    [
+      Multiply,
+      -2,
+      [Sin, [Multiply, [Rational, 1, 2], [Add, a, b]]],
+      [Sin, [Multiply, [Rational, 1, 2], [Add, a, [Negate, b]]]],
+    ]
+  caption: $\cos a-\cos b = -2\sin(\frac{a+b}2)\sin(\frac{a-b}2)$
+- id: one-minus-cos-x
+  expr: [TrigFactor, [Subtract, 1, [Cos, x]]]
+  expected: [Multiply, 2, [Power, [Sin, [Multiply, [Rational, 1, 2], x]], 2]]
+  caption: $1-\cos x = 2\sin^2(x/2)$
+- id: poly-in-sin-cos
+  expr: [TrigFactor, [Add, [Power, [Sin, x], 2], [Multiply, 2, [Sin, x], [Cos, x]], [Power, [Cos, x], 2]]]
+  expected: [Power, [Add, [Sin, x], [Cos, x]], 2]
+  category: Scope
+  caption: the polynomial strategy — $\sin^2x+2\sin x\cos x+\cos^2x = (\sin x+\cos x)^2$

@@ -1,0 +1,54 @@
+true-is-true:
+  epsil:
+    in: IsTrue(True)
+    out: True
+  tex:
+    in: \mathrm{IsTrue}(\top)
+    out: \top
+  traditional:
+    in: \mathrm{IsTrue}(\mathrm{True})
+    out: \mathrm{True}
+  fullform:
+    in: TrueQ[True]
+  wolfram:
+    in: TrueQ[True]
+false-is-not-true:
+  epsil:
+    in: IsTrue(False)
+    out: False
+  tex:
+    in: \mathrm{IsTrue}(\bot)
+    out: \bot
+  traditional:
+    in: \mathrm{IsTrue}(\mathrm{False})
+    out: \mathrm{False}
+  fullform:
+    in: TrueQ[False]
+  wolfram:
+    in: TrueQ[False]
+an-evaluating-comparison:
+  epsil:
+    in: IsTrue(1 == 1)
+    out: True
+  tex:
+    in: \mathrm{IsTrue}(1=1)
+    out: \top
+  traditional:
+    in: \mathrm{IsTrue}(1=1)
+    out: \mathrm{True}
+  fullform:
+    in: TrueQ[Equal[1, 1]]
+  wolfram:
+    in: TrueQ[(1 == 1)]
+an-unevaluated-symbol-is-false:
+  epsil:
+    in: IsTrue(x)
+    out: False
+  tex:
+    in: \mathrm{IsTrue}(x)
+    out: \bot
+  traditional:
+    in: \mathrm{IsTrue}(x)
+    out: \mathrm{False}
+  fullform:
+    in: TrueQ[x]
