@@ -1,0 +1,24 @@
+name: NumberQ
+domain: Collections
+signature: NumberQ(expr)
+summary: True only for an explicit numeric literal — a symbolic constant like Pi is NOT NumberQ.
+signatures:
+  - call: NumberQ(expr)
+    description: True for an Integer/Real/Rational/Complex literal, False otherwise
+    library: enumeratio-collections
+details:
+  - Unlike compute-engine's own isNumber (True for Pi, GoldenRatio, …), NumberQ(Pi) is False — Wolfram's own distinction, kernel-checked (`NumberQ[Pi]` is False, `NumberQ[N[Pi]]` is True).
+examples:
+  - id: an-integer-literal
+    expr: [NumberQ, 2]
+    expected: True
+  - id: a-symbolic-constant-is-not-numberq
+    expr: [NumberQ, Pi]
+    expected: False
+    category: Scope
+  - id: a-plain-symbol-is-not-numberq
+    expr: [NumberQ, x]
+    expected: False
+    category: Scope
+seeAlso:
+  - ReIm

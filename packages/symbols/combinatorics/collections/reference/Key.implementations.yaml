@@ -1,0 +1,18 @@
+looks-up-an-existing-key:
+  epsil:
+    in: Association(Rule(a, 1), Rule(b, 2))[Key(b)]
+    out: "2"
+  tex:
+    in: \mathrm{Association}(\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2))[\mathrm{Key}(b)]
+    out: "2"
+  fullform:
+    in: Part[Association[Rule[a, 1], Rule[b, 2]], Key[b]]
+missing-key-answers-missing:
+  epsil:
+    in: Association(Rule(a, 1))[Key(z)]
+    out: Missing
+  tex:
+    in: \mathrm{Association}(\mathrm{Rule}(a, 1))[\mathrm{Key}(z)]
+    out: \mathrm{Missing}
+  fullform:
+    in: Part[Association[Rule[a, 1]], Key[z]]

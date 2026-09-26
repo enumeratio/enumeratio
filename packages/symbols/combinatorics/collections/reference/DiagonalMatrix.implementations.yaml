@@ -1,0 +1,33 @@
+main-diagonal:
+  epsil:
+    in: DiagonalMatrix([1, 2, 3])
+    out: "[[1, 0, 0], [0, 2, 0], [0, 0, 3]]"
+  tex:
+    in: \mathrm{DiagonalMatrix}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack0, 2, 0\bigr\rbrack, \bigl\lbrack0, 0, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: DiagonalMatrix[List[1, 2, 3]]
+  wolfram:
+    in: DiagonalMatrix[List[1, 2, 3]]
+super-diagonal-grows-the-matrix:
+  epsil:
+    in: DiagonalMatrix([1, 2], 1)
+    out: "[[0, 1, 0], [0, 0, 2], [0, 0, 0]]"
+  tex:
+    in: \mathrm{DiagonalMatrix}(\bigl\lbrack1, 2\bigr\rbrack, 1)
+    out: \bigl\lbrack\bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 2\bigr\rbrack, \bigl\lbrack0, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: DiagonalMatrix[List[1, 2], 1]
+  wolfram:
+    in: DiagonalMatrix[List[1, 2], 1]
+sub-diagonal-grows-the-matrix:
+  epsil:
+    in: DiagonalMatrix([1, 2], -1)
+    out: "[[0, 0, 0], [1, 0, 0], [0, 2, 0]]"
+  tex:
+    in: \mathrm{DiagonalMatrix}(\bigl\lbrack1, 2\bigr\rbrack, -1)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack0, 2, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: DiagonalMatrix[List[1, 2], -1]
+  wolfram:
+    in: DiagonalMatrix[List[1, 2], -1]
