@@ -227,6 +227,16 @@ The census makes the ratio concrete: 280 collections over 86 carriers, so a doma
 three collections on average. Domains are the small, stable vocabulary; collections are the
 open tail — the same split §2 of namespaces.md found for names, arrived at independently.
 
+**Naming, 2026-09-26**: the concepts above stay distinct (this section is unchanged), but a
+domain's NAME no longer is. A domain takes the plural — `SetPartitions`, not `SetPartition`
+— and is the same head as its plain collection where one exists, both jobs on one
+declaration (`declareConstructor` in [`declare.ts`](../packages/symbols/combinatorics/domains/src/declare.ts)
+overloads onto whatever the collection already declared, the same mechanism §5.2 describes
+for extending a built-in). The singular pascal-case of a carrier's id is reserved for an
+inhabitant — a helper naming ONE value, never a domain or a collection — so there is no
+singular alias to fall back on. The code examples through the rest of this document
+predate that decision and still say `Permutation`; read it as `Permutations` throughout.
+
 ## 3. Representation is writing, not structure
 
 This section previously argued that one-line and cycle notation are two DOMAINS — different

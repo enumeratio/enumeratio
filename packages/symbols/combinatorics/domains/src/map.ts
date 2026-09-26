@@ -469,7 +469,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     extra: [fromPermutationLeftChild, fromPermutationRightChild],
     summary:
       "The increasing binary tree built by minimum-splitting recursion: the position of the smallest value roots the tree, everything before it recurses to the left, everything after it to the right.",
-    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
+    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTrees among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
   },
   {
     name: "KnuthClassRepresentative",

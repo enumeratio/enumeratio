@@ -5207,7 +5207,7 @@ export const MAPS: readonly CatalogOverload[] = [
     title: "Descent set",
   },
   {
-    name: "Dissection",
+    name: "Dissections",
     on: ["Dissections"],
     title: "Dissection",
   },
@@ -5222,7 +5222,7 @@ export const MAPS: readonly CatalogOverload[] = [
     title: "Evacuation (Schützenberger involution)",
   },
   {
-    name: "Finset",
+    name: "Finsets",
     on: ["Finsets"],
     title: "As a single-graded finset",
   },
@@ -5242,7 +5242,7 @@ export const MAPS: readonly CatalogOverload[] = [
     title: "Minimum-splitting recursion → increasing binary tree",
   },
   {
-    name: "GaussianInteger",
+    name: "GaussianIntegers",
     on: ["GaussianIntegers"],
     title: "As a Gaussian integer",
   },
@@ -5292,7 +5292,7 @@ export const MAPS: readonly CatalogOverload[] = [
     title: "Kreweras complement",
   },
   {
-    name: "LabeledGraph",
+    name: "LabeledGraphs",
     on: ["LabeledGraphs"],
     title: "As a single-graded labeled_graph",
   },
@@ -5337,7 +5337,7 @@ export const MAPS: readonly CatalogOverload[] = [
     title: "Promotion",
   },
   {
-    name: "RationalNumber",
+    name: "RationalNumbers",
     on: ["BinaryWords"],
     title: "To rational number",
   },
@@ -5382,7 +5382,7 @@ export const MAPS: readonly CatalogOverload[] = [
     title: "RSK shape",
   },
   {
-    name: "SetComposition",
+    name: "SetCompositions",
     on: ["SetCompositions"],
     title: "Set composition",
   },
@@ -5392,7 +5392,7 @@ export const MAPS: readonly CatalogOverload[] = [
     title: "Shape",
   },
   {
-    name: "SignedSubset",
+    name: "SignedSubsets",
     on: ["SignedSubsets"],
     title: "Signed subset",
   },
@@ -5548,7 +5548,7 @@ export const MAPS: readonly CatalogOverload[] = [
 export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "carrier",
-    subject: "Finset",
+    subject: "Finsets",
     system: "mathlib4",
     identity: "Finset",
     url: "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html",
@@ -8671,14 +8671,14 @@ export const REFERENCES: readonly CatalogReference[] = [
   },
   {
     kind: "construction",
-    subject: "Finset",
+    subject: "Finsets",
     system: "mathlib4",
     identity: "Finset",
     url: "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html",
   },
   {
     kind: "construction",
-    subject: "Multiset",
+    subject: "Multisets",
     system: "mathlib4",
     identity: "Multiset",
     url: "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Multiset/Defs.html",
