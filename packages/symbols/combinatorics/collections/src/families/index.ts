@@ -15,11 +15,12 @@ import { entries as numericRecurrence } from "./numeric-recurrence.ts";
 import { entries as numericDivisor } from "./numeric-divisor.ts";
 import { entries as numericDigitsPrimes } from "./numeric-digits-primes.ts";
 import { entries as unlabeledTrees } from "./unlabeled-trees.ts";
-import type { FamilyKernel } from "./types.ts";
+import { type FamilyKernel, numberKernel } from "./types.ts";
 
 export * from "./types.ts";
 
-// Every family. declare.ts declares them all; the Plausible and OEIS scripts read them too.
+// Every family, in the bigint contract. declare.ts declares them all; the Plausible and OEIS
+// scripts read them too.
 export const allEntries: readonly FamilyKernel[] = [
   ...core,
   ...subsets,
@@ -38,4 +39,4 @@ export const allEntries: readonly FamilyKernel[] = [
   ...numericDivisor,
   ...numericDigitsPrimes,
   ...unlabeledTrees,
-];
+].map(numberKernel);

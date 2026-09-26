@@ -194,3 +194,58 @@ listable-threads-over-a-list:
     in: ExtendedGCD[3, List[5, 15]]
   wolfram:
     in: ExtendedGCD[3, List[5, 15]]
+gaussian-integer-and-a-plain-integer:
+  epsil:
+    in: ExtendedGCD(3 + i, 5)
+    out: (1 + 2i, 2, -1)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+i, 5)
+    out: (1+2i,2,-1)
+  fullform:
+    in: ExtendedGCD[Complex[3, 1], 5]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 1], 5]
+extendedgcd-6-4:
+  epsil:
+    in: ExtendedGCD(6, 4)
+    out: (2, 1, -1)
+  tex:
+    in: \mathrm{ExtendedGCD}(6, 4)
+    out: (2,1,-1)
+  fullform:
+    in: ExtendedGCD[6, 4]
+  wolfram:
+    in: ExtendedGCD[6, 4]
+a-real-two-argument-case-stays-unevaluated:
+  epsil:
+    in: ExtendedGCD(2.5, 3)
+    out: ExtendedGCD(2.5, 3)
+  tex:
+    in: \mathrm{ExtendedGCD}(2.5, 3)
+    out: \mathrm{ExtendedGCD}(2.5, 3)
+  fullform:
+    in: ExtendedGCD[2.5, 3]
+  wolfram:
+    in: ExtendedGCD[2.5, 3]
+a-gaussian-third-argument-past-two-declines:
+  epsil:
+    in: ExtendedGCD(3 + i, 5, 2)
+    out: ExtendedGCD(3 + i, 5, 2)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+i, 5, 2)
+    out: \mathrm{ExtendedGCD}(3+i, 5, 2)
+  fullform:
+    in: ExtendedGCD[Complex[3, 1], 5, 2]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 1], 5, 2]
+a-real-argument-past-two-also-declines:
+  epsil:
+    in: ExtendedGCD(2.5, 3, 4)
+    out: ExtendedGCD(2.5, 3, 4)
+  tex:
+    in: \mathrm{ExtendedGCD}(2.5, 3, 4)
+    out: \mathrm{ExtendedGCD}(2.5, 3, 4)
+  fullform:
+    in: ExtendedGCD[2.5, 3, 4]
+  wolfram:
+    in: ExtendedGCD[2.5, 3, 4]

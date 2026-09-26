@@ -21,7 +21,7 @@ import {
   FibonacciWordRank,
   IsFibonacciWord,
 } from "./kernels-extra.ts";
-import type { FamilyKernel } from "./types.ts";
+import type { Declared, NumberKernel } from "./types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
@@ -348,7 +348,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -358,7 +358,21 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: FamilyKernel[] = [
+/** Words up to rotation (or reflection): unrank and rank enumerate all base^size words. */
+const wordClass = (carrier: string, base?: number): Declared => ({
+  carrier,
+  params:
+    base === undefined
+      ? [
+          { name: "size", role: "axis", min: 0 },
+          { name: "base", role: "param", min: 1 },
+        ]
+      : [{ name: "n", role: "axis", min: 0 }],
+  cost: { count: "closed", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+  work: ([n, k]) => BigInt(base ?? (k as number)) ** BigInt(n as number),
+});
+
+export const entries: NumberKernel[] = [
   // BinaryWords(n): strings over {0,1}. Reuses the BinaryStrings kernel (same family, catalogued
   // under this name).
   ints(
@@ -427,60 +441,72 @@ export const entries: FamilyKernel[] = [
   ),
   // BinaryNecklaces(n): binary words up to rotation (lex-least reps) — KNecklaces(n, 2), remapped
   // from 1-indexed {1,2} letters to {0,1}.
-  ints(
-    "BinaryNecklaces",
-    1,
-    ([n]) => necklacesCount(n, 2),
-    ([n], r) => necklacesUnrank(n, 2, r).map((x) => x - 1),
-    (a, [n]) =>
-      necklacesValid(
-        a.map((x) => x + 1),
-        n,
-        2,
-      ),
-    (a, [n]) =>
-      necklacesRank(
-        a.map((x) => x + 1),
-        n,
-        2,
-      ),
-  ),
+  {
+    ...ints(
+      "BinaryNecklaces",
+      1,
+      ([n]) => necklacesCount(n, 2),
+      ([n], r) => necklacesUnrank(n, 2, r).map((x) => x - 1),
+      (a, [n]) =>
+        necklacesValid(
+          a.map((x) => x + 1),
+          n,
+          2,
+        ),
+      (a, [n]) =>
+        necklacesRank(
+          a.map((x) => x + 1),
+          n,
+          2,
+        ),
+    ),
+    declared: wordClass("BinaryWord", 2),
+  },
   // LyndonWords(n): binary words strictly less than every rotation — KLyndonWords(n, 2), remapped
   // to {0,1}.
-  ints(
-    "LyndonWords",
-    1,
-    ([n]) => lyndonCount(n, 2),
-    ([n], r) => lyndonWordsUnrank(n, 2, r).map((x) => x - 1),
-    (a, [n]) =>
-      lyndonWordsValid(
-        a.map((x) => x + 1),
-        n,
-        2,
-      ),
-    (a, [n]) =>
-      lyndonWordsRank(
-        a.map((x) => x + 1),
-        n,
-        2,
-      ),
-  ),
+  {
+    ...ints(
+      "LyndonWords",
+      1,
+      ([n]) => lyndonCount(n, 2),
+      ([n], r) => lyndonWordsUnrank(n, 2, r).map((x) => x - 1),
+      (a, [n]) =>
+        lyndonWordsValid(
+          a.map((x) => x + 1),
+          n,
+          2,
+        ),
+      (a, [n]) =>
+        lyndonWordsRank(
+          a.map((x) => x + 1),
+          n,
+          2,
+        ),
+    ),
+    declared: wordClass("BinaryWord", 2),
+  },
   // KNecklaces(size, base): base-letter words up to rotation (lex-least reps).
-  ints(
-    "KNecklaces",
-    2,
-    ([n, k]) => necklacesCount(n, k),
-    ([n, k], r) => necklacesUnrank(n, k, r),
-    (a, [n, k]) => necklacesValid(a, n, k),
-    (a, [n, k]) => necklacesRank(a, n, k),
-  ),
+  {
+    ...ints(
+      "KNecklaces",
+      2,
+      ([n, k]) => necklacesCount(n, k),
+      ([n, k], r) => necklacesUnrank(n, k, r),
+      (a, [n, k]) => necklacesValid(a, n, k),
+      (a, [n, k]) => necklacesRank(a, n, k),
+    ),
+    declared: wordClass("Word"),
+  },
   // KLyndonWords(size, base): aperiodic base-letter necklaces.
-  ints(
-    "KLyndonWords",
-    2,
-    ([n, k]) => lyndonCount(n, k),
-    ([n, k], r) => lyndonWordsUnrank(n, k, r),
-    (a, [n, k]) => lyndonWordsValid(a, n, k),
-    (a, [n, k]) => lyndonWordsRank(a, n, k),
-  ),
+  {
+    ...ints(
+      "KLyndonWords",
+      2,
+      ([n, k]) => lyndonCount(n, k),
+      ([n, k], r) => lyndonWordsUnrank(n, k, r),
+      (a, [n, k]) => lyndonWordsValid(a, n, k),
+      (a, [n, k]) => lyndonWordsRank(a, n, k),
+    ),
+    declared: wordClass("Word"),
+  },
 ];

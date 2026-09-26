@@ -534,6 +534,15 @@ binom-n-n-1-n-for-symbolic-n:
     out: n
   fullform:
     in: Binomial[n, Subtract[n, 1]]
+binom-m-m-1-m-for-symbolic-m:
+  epsil:
+    in: Binomial(m, m - 1)
+    out: m
+  tex:
+    in: \binom{m}{m-1}
+    out: m
+  fullform:
+    in: Binomial[m, Plus[m, -1]]
 real-arguments-evaluate-through-the-gamma:
   epsil:
     in: Binomial(8.5, -4.2)
@@ -635,6 +644,15 @@ binom-n-n-1-for-symbolic-n:
     out: "1"
   fullform:
     in: Binomial[n, n]
+binom-m-m-1-for-symbolic-m:
+  epsil:
+    in: Binomial(m, m)
+    out: "1"
+  tex:
+    in: \binom{m}{m}
+    out: "1"
+  fullform:
+    in: Binomial[m, m]
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
   epsil:
     in: Binomial(1 + i, 5)

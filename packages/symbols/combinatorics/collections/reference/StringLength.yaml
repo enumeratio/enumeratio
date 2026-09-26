@@ -1,0 +1,17 @@
+name: StringLength
+domain: Collections
+signature: StringLength(s)
+summary: The number of characters in s.
+signatures:
+  - call: StringLength(s)
+    description: the number of Unicode code points in s
+    library: enumeratio-collections
+details:
+  - "Counts code points, not UTF-16 units: `a😀b` has 3, not 4 (the emoji is one code point represented as two UTF-16 units) — same convention as [[ToCharacterCode]] and compute-engine's own `Characters`."
+examples:
+  - id: counts-code-points-not-utf-16-units
+    expr: [StringLength, [String, a😀b]]
+    expected: 3
+seeAlso:
+  - StringTake
+  - ToCharacterCode

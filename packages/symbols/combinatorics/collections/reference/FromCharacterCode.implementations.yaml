@@ -1,0 +1,34 @@
+from-character-code-of-a-single-code-point:
+  epsil:
+    in: FromCharacterCode(65)
+    out: '"A"'
+  tex:
+    in: \mathrm{FromCharacterCode}(65)
+    out: \text{A}
+  fullform:
+    in: FromCharacterCode[65]
+  wolfram:
+    in: FromCharacterCode[65]
+inverts-tocharactercode:
+  epsil:
+    in: FromCharacterCode(ToCharacterCode("\(hello)"))
+    out: '"hello"'
+  tex:
+    in: \mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\mathrm{hello}}))
+    out: \text{hello}
+  fullform:
+    in: FromCharacterCode[ToCharacterCode[String[hello]]]
+  wolfram:
+    in: FromCharacterCode[ToCharacterCode["hello"]]
+round-trips-a-non-ascii-string-emoji-astral:
+  epsil:
+    in: FromCharacterCode(ToCharacterCode("a😀b→c"))
+    out: '"a😀b→c"'
+  tex:
+    in: \mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\text{a😀b→c}}))
+    out: \text{a😀b→c}
+  fullform:
+    in: FromCharacterCode[ToCharacterCode[String[a😀b→c]]]
+    back: Unreadable
+  wolfram:
+    in: FromCharacterCode[ToCharacterCode["a😀b→c"]]

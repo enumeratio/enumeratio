@@ -25,6 +25,10 @@ examples:
   - id: ceil-3p2
     expr: [Ceil, 3.2]
     expected: 4
+  - id: ceil-3p7
+    expr: [Ceil, 3.7]
+    expected: 4
+    role: test
   - id: integers-pass-through-unchanged
     expr: [Ceil, 5]
     expected: 5
@@ -104,6 +108,11 @@ examples:
     expected: 10
     category: Applications
     caption: Ten bits are enough to number 1000 items, $\lceil \log_2 1000 \rceil$
+  - role: test
+    id: idempotent-lceil-lceil-x-rceil-rceil
+    expr: [Ceil, [Ceil, x]]
+    expected: [Ceil, x]
+    caption: 'Idempotent: $\lceil\lceil x \rceil\rceil = \lceil x \rceil$'
 seeAlso:
   - Floor
   - Round

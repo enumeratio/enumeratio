@@ -134,6 +134,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "AbsoluteTiming",
+    wolfram: "AbsoluteTiming",
+  },
+  {
     name: "Accumulate",
     wolfram: "Accumulate",
   },
@@ -215,6 +219,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Append",
     wolfram: "Append",
+  },
+  {
+    name: "AppendTo",
+    wolfram: "AppendTo",
   },
   {
     name: "Arccos",
@@ -365,12 +373,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Association",
   },
   {
+    name: "AssociationThread",
+    wolfram: "AssociationThread",
+  },
+  {
     name: "Assuming",
     wolfram: "Assuming",
   },
   {
     name: "At",
     wolfram: "Part",
+  },
+  {
+    name: "Attributes",
+    wolfram: "Attributes",
   },
   {
     name: "BarnesG",
@@ -694,6 +710,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "Catch",
+    wolfram: "Catch",
   },
   {
     name: "Ceil",
@@ -1331,12 +1351,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Do",
+    wolfram: "Do",
+  },
+  {
     name: "Dot",
     wolfram: "Dot",
   },
   {
     name: "Drop",
     wolfram: "Drop",
+  },
+  {
+    name: "Echo",
+    wolfram: "Echo",
   },
   {
     name: "EdgeCount",
@@ -1952,6 +1980,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FixedPoint",
   },
   {
+    name: "FixedPointList",
+    wolfram: "FixedPointList",
+  },
+  {
     name: "Flatten",
     wolfram: "Flatten",
   },
@@ -2004,6 +2036,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FoldList",
   },
   {
+    name: "Fourier",
+    wolfram: "Fourier",
+  },
+  {
+    name: "FourierCoefficient",
+    wolfram: "FourierCoefficient",
+  },
+  {
+    name: "FourierSeries",
+    wolfram: "FourierSeries",
+  },
+  {
     name: "FourierTransform",
     wolfram: "FourierTransform",
   },
@@ -2012,12 +2056,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FractionalPart",
   },
   {
+    name: "FreeQ",
+    wolfram: "FreeQ",
+  },
+  {
     name: "FrobeniusNumber",
     wolfram: "FrobeniusNumber",
   },
   {
     name: "FrobeniusSolve",
     wolfram: "FrobeniusSolve",
+  },
+  {
+    name: "FromCharacterCode",
+    wolfram: "FromCharacterCode",
   },
   {
     name: "FromDigits",
@@ -2719,6 +2771,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "InverseErfc",
   },
   {
+    name: "InverseFourier",
+    wolfram: "InverseFourier",
+  },
+  {
     name: "InverseFourierTransform",
     wolfram: "InverseFourierTransform",
   },
@@ -3226,6 +3282,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "LetterNumber",
   },
   {
+    name: "Level",
+    wolfram: "Level",
+  },
+  {
     name: "LineGraph",
     wolfram: "LineGraph",
   },
@@ -3460,6 +3520,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "MapAt",
   },
   {
+    name: "MapIndexed",
+    wolfram: "MapIndexed",
+  },
+  {
+    name: "MapThread",
+    wolfram: "MapThread",
+  },
+  {
+    name: "MatchQ",
+    wolfram: "MatchQ",
+  },
+  {
     name: "MatrixExp",
     wolfram: "MatrixExp",
   },
@@ -3557,6 +3629,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "Module",
+    wolfram: "Module",
   },
   {
     name: "MoebiusMu",
@@ -3686,6 +3762,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NestList",
   },
   {
+    name: "NestWhile",
+    wolfram: "NestWhile",
+  },
+  {
+    name: "NestWhileList",
+    wolfram: "NestWhileList",
+  },
+  {
     name: "NextPrime",
     wolfram: "NextPrime",
   },
@@ -3803,6 +3887,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Pi",
     wolfram: "Pi",
+  },
+  {
+    name: "Pick",
+    wolfram: "Pick",
   },
   {
     name: "Piecewise",
@@ -4149,6 +4237,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RealSign",
   },
   {
+    name: "Reap",
+    wolfram: "Reap",
+  },
+  {
     name: "RecurrenceTable",
     wolfram: "RecurrenceTable",
   },
@@ -4159,6 +4251,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Repeat",
     wolfram: "ConstantArray",
+  },
+  {
+    name: "Replace",
+    wolfram: "Replace",
+  },
+  {
+    name: "ReplacePart",
+    wolfram: "ReplacePart",
   },
   {
     name: "Rescale",
@@ -4220,6 +4320,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "SeriesCoefficient",
     wolfram: "SeriesCoefficient",
+  },
+  {
+    name: "SetAttributes",
+    wolfram: "SetAttributes",
   },
   {
     name: "SetMinus",
@@ -4469,6 +4573,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "SortBy",
   },
   {
+    name: "Sow",
+    wolfram: "Sow",
+  },
+  {
     name: "Span",
     wolfram: "Span",
   },
@@ -4571,6 +4679,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "StringLength",
+    wolfram: "StringLength",
+  },
+  {
+    name: "StringTake",
+    wolfram: "StringTake",
+  },
+  {
     name: "Subfactorial",
     wolfram: "Subfactorial",
   },
@@ -4644,6 +4760,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Surd",
   },
   {
+    name: "Switch",
+    wolfram: "Switch",
+  },
+  {
     name: "SymmetricGroup",
     wolfram: "SymmetricGroup",
   },
@@ -4703,8 +4823,24 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Thread",
   },
   {
+    name: "Through",
+    wolfram: "Through",
+  },
+  {
+    name: "Throw",
+    wolfram: "Throw",
+  },
+  {
     name: "TimeConstrained",
     wolfram: "TimeConstrained",
+  },
+  {
+    name: "ToCharacterCode",
+    wolfram: "ToCharacterCode",
+  },
+  {
+    name: "ToString",
+    wolfram: "ToString",
   },
   {
     name: "Totient",
@@ -4845,6 +4981,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "WheelGraph",
     wolfram: "WheelGraph",
+  },
+  {
+    name: "While",
+    wolfram: "While",
+  },
+  {
+    name: "With",
+    wolfram: "With",
   },
   {
     name: "Zeta",

@@ -37,6 +37,51 @@ examples:
     expected: [List, 5]
     caption: the $S$/$T$ exponents are a continued fraction
     category: Scope
+  - id: the-identity-matrix
+    expr: [ModularKind, [ModularMatrix, 1, 0, 0, 1]]
+    expected: "'Identity'"
+    caption: the identity matrix
+    category: Scope
+  - id: s-is-elliptic
+    expr: [ModularKind, [ModularMatrix, 0, -1, 1, 0]]
+    expected: "'Elliptic'"
+    caption: $S$ is elliptic
+    category: Scope
+  - id: t-is-parabolic
+    expr: [ModularKind, [ModularMatrix, 1, 1, 0, 1]]
+    expected: "'Parabolic'"
+    caption: $T$ is parabolic
+    category: Scope
+  - id: lr-is-hyperbolic
+    expr: [ModularKind, [ModularMatrix, 1, 1, 1, 2]]
+    expected: "'Hyperbolic'"
+    caption: $LR$ is hyperbolic
+    category: Scope
+  - id: the-trace-of-a-plain-matrix
+    expr: [ModularTrace, [ModularMatrix, 1, 1, 1, 2]]
+    expected: 3
+    caption: the trace of a plain matrix, not just a word
+    category: Scope
+  - id: the-trace-of-a-bare-word
+    expr: [ModularTrace, "'LR'"]
+    expected: 3
+    caption: the trace of a bare word
+    category: Scope
+  - id: a-word-wrapped-as-modularmatrix
+    expr: [ModularTrace, [ModularMatrix, "'LRLR'"]]
+    expected: 7
+    caption: a word wrapped as `ModularMatrix` reads the same
+    category: Scope
+  - id: a-nested-list-matrix-works-too
+    expr: [ModularTrace, [List, [List, 1, 1], [List, 1, 2]]]
+    expected: 3
+    caption: a nested `List` matrix works too
+    category: Scope
+  - id: the-s-t-round-trip-can-negate
+    expr: [ModularTrace, [ModularFromSTWord, [ModularSTWord, [ModularMatrix, 3, 2, 4, 3]]]]
+    expected: -6
+    caption: the $S$/$T$ round trip can return $-M$
+    category: Properties
 seeAlso:
   - ContinuedFraction
   - ModularClasses

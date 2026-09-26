@@ -37,6 +37,16 @@ examples:
     expected: 7
     caption: same word length as $LLLR$, different geodesic length
     category: Scope
+  - id: the-same-geodesic-yet-again
+    expr: [ModularClass, "'RLL'"]
+    expected: "'LLR'"
+    caption: the same geodesic, entered yet another way
+    category: Properties
+  - id: lrr-is-primitive
+    expr: [IsPrimitiveClass, "'LRR'"]
+    expected: True
+    caption: $LRR$ is primitive
+    category: Properties
 seeAlso:
   - RademacherSymbol
   - ModularWord

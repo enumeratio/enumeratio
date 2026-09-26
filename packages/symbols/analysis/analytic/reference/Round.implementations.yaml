@@ -28,6 +28,17 @@ round-3p5:
     tex:
       in: \text{Round}[3.5]
       out: "4"
+round-3p7:
+  epsil:
+    in: Round(3.7)
+    out: "4"
+  tex:
+    in: \mathrm{round}(3.7)
+    out: "4"
+  fullform:
+    in: Round[3.7]
+  wolfram:
+    in: Round[3.7]
 integers-pass-through-unchanged:
   epsil:
     in: Round(5)
@@ -289,3 +300,12 @@ an-exact-half-rounds-away-from-zero-as-well:
   wolfram:
     in: Round[Rational[1, 2]]
     note: 'Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.'
+idempotent-round-round-x-round-x:
+  epsil:
+    in: Round(Round(x))
+    out: Round(x)
+  tex:
+    in: \mathrm{round}(\mathrm{round}(x))
+    out: \mathrm{round}(x)
+  fullform:
+    in: Round[Round[x]]

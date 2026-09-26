@@ -4,7 +4,7 @@
 // first at depth 0) for the two unlabelled families, and an insertion-choice / arity digit sequence
 // for phylogenetic / non-crossing trees — all "ints" kind, matching the catalogued carriers'
 // list<integer> shape (see packages/symbols/combinatorics/domains/src/domain-data.ts).
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 import { Binomial } from "./kernels-combinatorics.ts";
 import { KSubsetUnrank, KSubsetRank } from "./kernels-extra.ts";
 import { KAryTreeCount, KAryTreeUnrank, KAryTreeRank, type KTree } from "./kernels-extra.ts";
@@ -402,7 +402,7 @@ export function IsNonCrossingTreeOf(e: unknown, n: number): boolean {
   return need === 0 && internal === n;
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   {
     head: "RootedUnlabeledTrees",
     paramCount: 1,

@@ -123,6 +123,14 @@ examples:
     expected: [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]
     category: Applications
     caption: Reshaping a list of 9 into a $3 \times 3$ matrix
+  - id: partition-matrix-2x2-nonoverlap
+    expr: [Partition, [List, [List, 1, 2, 3, 4], [List, 5, 6, 7, 8]], [List, 2, 2], 2]
+    expected: [List, [List, [List, [List, 1, 2], [List, 5, 6]], [List, [List, 3, 4], [List, 7, 8]]]]
+    role: test
+  - id: partition-without-upto-drops-remainder
+    expr: [Partition, [List, 1, 2, 3, 4, 5, 6], 4]
+    expected: [List, [List, 1, 2, 3, 4]]
+    role: test
 seeAlso:
   - Flatten
   - UpTo

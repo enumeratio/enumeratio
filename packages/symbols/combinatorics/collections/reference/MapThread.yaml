@@ -1,0 +1,28 @@
+name: MapThread
+domain: Collections
+signature: MapThread(f, {{a1, …}, {b1, …}, …})
+summary: f applied across the CORRESPONDING elements of each list, not each list in turn.
+signatures:
+  - call: MapThread(f, lists)
+    description: "{f(a1, b1, …), f(a2, b2, …), …} for lists = {{a1, a2, …}, {b1, b2, …}, …}"
+    library: enumeratio-collections
+details:
+  - Every row of lists must be the same length; a ragged input is left unevaluated.
+  - The 3-argument Wolfram form (a level spec) isn't implemented — only the top level threads.
+examples:
+  - id: applies-f-across-corresponding-elements
+    expr: [MapThread, f, [List, [List, a, b], [List, c, d]]]
+    expected: [List, [f, a, c], [f, b, d]]
+  - id: add-rows-agrees-with-add-computed-pairwise
+    expr: [MapThread, Add, [List, [List, 1, 2, 3], [List, 10, 20, 30]]]
+    expected: [List, 11, 22, 33]
+    category: Scope
+    caption: sums two rows elementwise
+  - id: rejects-ragged-rows
+    expr: [MapThread, f, [List, [List, 1, 2], [List, 3]]]
+    expected: [MapThread, f, [List, [List, 1, 2], [List, 3]]]
+    category: Possible issues
+    caption: rows of different lengths are left unevaluated
+seeAlso:
+  - MapIndexed
+  - Through

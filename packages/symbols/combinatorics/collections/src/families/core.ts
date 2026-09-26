@@ -1,6 +1,6 @@
-// The originally hand-authored collections, expressed as FamilyKernel[] over the certified kernel library
+// The originally hand-authored collections, expressed as NumberKernel[] over the certified kernel library
 // (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 import { Factorial, PermutationUnrank, PermutationRank, IsPermutationOf } from "./kernels.ts";
 import {
   CompositionCount,
@@ -158,7 +158,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -168,7 +168,7 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   // ── permutations (one-line words) ──
   ints(
     "SymmetricGroup",

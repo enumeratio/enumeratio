@@ -21,7 +21,16 @@
 
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
-import { allEntries } from "@enumeratio/collections/src";
+import { allEntries, countNumber, type FamilyKernel } from "@enumeratio/collections/src";
+
+/** A count as a plain number, or undefined past 2^53 (or where the kernel isn't bigint yet). */
+const countAt = (entry: FamilyKernel, p: number[]): number | undefined => {
+  try {
+    return countNumber(entry.count(p));
+  } catch {
+    return undefined;
+  }
+};
 import type { OeisMatch } from "../src/oeis-data.ts";
 
 const only = process.argv.includes("--only") ? process.argv[process.argv.indexOf("--only") + 1] : undefined;
@@ -136,8 +145,8 @@ for (const entry of allEntries) {
   for (let n = 0; n < MAX_ROWS; n++) {
     const row: number[] = [];
     for (let k = 0; k <= n; k++) {
-      const value = entry.count([n, k]);
-      if (!Number.isFinite(value) || value > SAFE) break;
+      const value = countAt(entry, [n, k]);
+      if (value === undefined || !Number.isFinite(value) || value > SAFE) break;
       row.push(value);
     }
     if (row.length !== n + 1) break;
@@ -179,8 +188,8 @@ for (const entry of allEntries) {
   if (entry.paramCount !== 1) continue;
   const ours: number[] = [];
   for (let n = 0; n < MAX_TERMS; n++) {
-    const value = entry.count([n]);
-    if (!Number.isFinite(value) || value > SAFE) break;
+    const value = countAt(entry, [n]);
+    if (value === undefined || !Number.isFinite(value) || value > SAFE) break;
     ours.push(value);
   }
   if (ours.length < MIN_AGREED) {

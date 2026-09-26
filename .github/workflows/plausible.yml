@@ -40,7 +40,7 @@ jobs:
         run: |
           set -o pipefail
           if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
-            export PLAUSIBLE_POINTS=100 PLAUSIBLE_PARAM_CAP=9
+            export PLAUSIBLE_POINTS=100 PLAUSIBLE_MAX_SIZE=9
           fi
           node packages/symbols/combinatorics/collections/scripts/plausible.ts 2>&1 | tee plausible.log
 

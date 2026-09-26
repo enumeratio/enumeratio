@@ -1,0 +1,33 @@
+name: ProductDistribution
+domain: Statistics
+signature: ProductDistribution(d1, ..., dn)
+summary: The joint distribution of $n$ INDEPENDENT $d_1, \ldots, d_n$ — an $n$-dimensional carrier.
+signatures:
+  - call: ProductDistribution(d1, ..., dn)
+    description: the joint distribution of n independent d1, ..., dn.
+    library: enumeratio-statistics
+  - call: ProductDistribution({d, n})
+    description: n independent copies of the same $d$ — rewritten to the n-ary form at construction.
+    library: enumeratio-statistics
+details:
+  - $PDF$ at a list $\{x_1,\ldots,x_n\}$ is the product $\prod_i PDF(d_i,x_i)$; $CDF$ the product of $CDF(d_i,x_i)$ — both valid only because the factors are assumed independent.
+  - $Mean$ and $Variance$ are componentwise lists, $\{Mean(d_1),\ldots\}$ and $\{Variance(d_1),\ldots\}$.
+  - "[[RandomVariate]] draws a list, one independent draw per factor."
+examples:
+  - id: product-pdf
+    expr: [PDF, [ProductDistribution, [NormalDistribution, 0, 1], [NormalDistribution, 5, 2]], [List, 0, 5]]
+    expected: [Divide, 1, [Multiply, 4, Pi]]
+  - id: product-mean
+    expr: [Mean, [ProductDistribution, [NormalDistribution, 0, 1], [NormalDistribution, 5, 2]]]
+    expected: [List, 0, 5]
+  - id: product-variance
+    expr: [Variance, [ProductDistribution, [NormalDistribution, 0, 1], [NormalDistribution, 5, 2]]]
+    expected: [List, 1, 4]
+  - id: product-repeated-form-mean
+    expr: [Mean, [ProductDistribution, [List, [NormalDistribution, 0, 1], 3]]]
+    expected: [List, 0, 0, 0]
+seeAlso:
+  - MarginalDistribution
+  - MixtureDistribution
+  - Mean
+  - Variance

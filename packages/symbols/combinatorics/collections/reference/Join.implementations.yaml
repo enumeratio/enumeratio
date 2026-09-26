@@ -163,3 +163,30 @@ join-is-associative:
     out: \mathrm{True}
   fullform:
     in: Equal[Join[Join[List[a, b, c], List[x, y]], List[u, v, w]], Join[List[a, b, c], Join[List[x, y], List[u, v, w]]]]
+join-tolerates-shorter-array-second:
+  epsil:
+    in: Join([[1, 2], [3, 4]], [[x]], 2)
+    out: "[[1, 2, x], [3, 4]]"
+  tex:
+    in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack x\bigr\rbrack\bigr\rbrack, 2)
+    out: \bigl\lbrack\bigl\lbrack1, 2, x\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Join[List[List[1, 2], List[3, 4]], List[List[x]], 2]
+join-splices-any-shared-head:
+  epsil:
+    in: Join(f(a), f(b), f(c))
+    out: f(a, b, c)
+  tex:
+    in: \mathrm{Join}(f(a), f(b), f(c))
+    out: f(a, b, c)
+  fullform:
+    in: Join[f[a], f[b], f[c]]
+join-associations-first-seen-order:
+  epsil:
+    in: Join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))
+    out: Association(Rule(a, f), Rule(c, d))
+  tex:
+    in: \mathrm{Join}(\mathrm{Association}(\mathrm{Rule}(a, b)), \mathrm{Association}(\mathrm{Rule}(c, d), \mathrm{Rule}(a, f)))
+    out: \mathrm{Association}(\mathrm{Rule}(a, f), \mathrm{Rule}(c, d))
+  fullform:
+    in: Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]

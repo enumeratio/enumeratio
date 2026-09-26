@@ -129,6 +129,74 @@ examples:
     expected: b
     category: Scope
     caption: "Parts of any expression, not just lists: the second term of a sum"
+  - id: indexes-into-a-named-integer-collection
+    expr: [At, TriangularNumbers, 5]
+    expected: 15
+    category: Scope
+    caption: Reaches into a named collection, not just a literal list — here the 5th triangular number, 1-indexed
+  - id: indexes-into-a-parameterized-collection
+    expr: [At, [PolygonalNumbers, 5], 3]
+    expected: 12
+    category: Scope
+    caption: Also works on a parameterized collection like $PolygonalNumbers(k)$
+  - id: first-term-of-fibonaccinumbers-is-0
+    expr: [At, FibonacciNumbers, 1]
+    expected: 0
+    category: Scope
+  - id: at-bellnumbers-5-is-bell-4-15
+    expr: [At, BellNumbers, 5]
+    expected: 15
+    category: Scope
+    caption: At(BellNumbers, 5) is Bell(4) = 15 (1-indexed At, 0-indexed term)
+  - id: twinprimes-3rd-lesser-twin-prime
+    expr: [At, TwinPrimes, 3]
+    expected: 11
+    role: test
+    caption: At(collection, n) gives the n-th lesser twin prime, 1-indexed
+  - id: kalmostprimes-3-first-term-is-8
+    expr: [At, [KAlmostPrimes, 3], 1]
+    expected: 8
+    role: test
+    caption: KAlmostPrimes and RoughNumbers are one-parameter operators
+  - id: roughnumbers-5-first-term-is-1
+    expr: [At, [RoughNumbers, 5], 1]
+    expected: 1
+    role: test
+  - id: primepairs-gap-2-first-term-is-3
+    expr: [At, [PrimePairs, 2], 1]
+    expected: 3
+    role: test
+    caption: PrimePairs(gap) selects the twin/cousin/sexy family by gap
+  - id: primepairs-gap-4-first-term-is-3
+    expr: [At, [PrimePairs, 4], 1]
+    expected: 3
+    role: test
+  - id: primepairs-gap-6-first-term-is-5
+    expr: [At, [PrimePairs, 6], 1]
+    expected: 5
+    role: test
+  - id: deficientnumbers-6th-term-is-7
+    expr: [At, DeficientNumbers, 6]
+    expected: 7
+    role: test
+    caption: At(collection, n) gives the n-th deficient number, 1-indexed
+  - id: kfreeintegers-2-first-term-is-1
+    expr: [At, [KFreeIntegers, 2], 1]
+    expected: 1
+    role: test
+    caption: KFreeIntegers(k) is a one-parameter operator agreeing with SquareFreeNumbers at k=2
+  - id: at-lazy-family-collection-element
+    expr: [At, [KSubsets, 5, 2], 1]
+    expected: [List, 1, 2]
+    role: test
+  - id: at-span-submatrix-two-levels
+    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]
+    expected: [List, [List, 4, 5], [List, 7, 8]]
+    role: test
+  - id: at-integer-without-span-unaffected
+    expr: [At, [List, a, b, c], 2]
+    expected: b
+    role: test
 seeAlso:
   - First
   - Last

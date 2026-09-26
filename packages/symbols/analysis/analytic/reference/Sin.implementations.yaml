@@ -526,6 +526,111 @@ any-integer-multiple-of-pi-is-a-zero-of-sine:
     in: sin((1000001 * pi))
   rust:
     in: sin((n(1000001) * x(std::f64::consts::PI)))
+sin-negate-pi-is-also-zero:
+  epsil:
+    in: Sin(-Pi)
+    out: "0"
+  tex:
+    in: \sin(-\pi)
+    out: "0"
+  fullform:
+    in: Sin[Minus[Pi]]
+  wolfram:
+    in: Sin[Minus[Pi]]
+  sympy:
+    in: sin((-pi))
+  mpmath:
+    in: sin((-pi))
+  sage:
+    in: sin((-pi))
+  rust:
+    in: sin((-(x(std::f64::consts::PI))))
+sin-4-pi-is-zero:
+  epsil:
+    in: Sin(4Pi)
+    out: "0"
+  tex:
+    in: \sin(4\pi)
+    out: "0"
+  fullform:
+    in: Sin[Times[4, Pi]]
+  wolfram:
+    in: Sin[Times[4, Pi]]
+  sympy:
+    in: sin((4 * pi))
+  mpmath:
+    in: sin((4 * pi))
+  sage:
+    in: sin((4 * pi))
+  rust:
+    in: sin((n(4) * x(std::f64::consts::PI)))
+a-full-turn-shift-of-a-symbolic-argument-doesn-t:
+  epsil:
+    in: Sin(x + 2Pi)
+    out: Sin(x)
+  tex:
+    in: \sin(x+2\pi)
+    out: \sin(x)
+  fullform:
+    in: Sin[Plus[x, Times[2, Pi]]]
+sin-2-a-generic-argument-stays-symbolic:
+  epsil:
+    in: Sin(2)
+    out: Sin(2)
+  tex:
+    in: \sin(2)
+    out: \sin(2)
+  fullform:
+    in: Sin[2]
+  wolfram:
+    in: Sin[2]
+  sympy:
+    in: sin(2)
+  mpmath:
+    in: sin(2)
+  sage:
+    in: sin(2)
+  rust:
+    in: sin(n(2))
+sin-x-plus-y-stays-symbolic:
+  epsil:
+    in: Sin(x + y)
+    out: Sin(x + y)
+  tex:
+    in: \sin(x+y)
+    out: \sin(x+y)
+  fullform:
+    in: Sin[Plus[x, y]]
+sin-i-pi-2-i-sinh-pi-2-exactly:
+  epsil:
+    in: Sin(ImaginaryUnit * (Pi / 2))
+    out: i * Sinh(1 / 2 * Pi)
+  tex:
+    in: \sin(\frac{i\pi}{2})
+    out: i\sinh(\frac{\pi}{2})
+  fullform:
+    in: Sin[Times[I, Divide[Pi, 2]]]
+  wolfram:
+    in: Sin[Times[I, Divide[Pi, 2]]]
+  sympy:
+    in: sin((I * (S(pi) / 2)))
+  sage:
+    in: sin((I * (pi / 2)))
+n-decimalizes-sin-i-pi-2-not-just-the-exact-form:
+  epsil:
+    in: N(Sin(ImaginaryUnit * (Pi / 2)))
+    out: 2.301_298_902_307_294_7i
+  tex:
+    in: N(\sin(\frac{i\pi}{2}))
+    out: 2.301\,298\,902\,307\,294\,7i
+  fullform:
+    in: N[Sin[Times[I, Divide[Pi, 2]]]]
+  wolfram:
+    in: N[Sin[Times[I, Divide[Pi, 2]]]]
+  sympy:
+    in: N(sin((I * (S(pi) / 2))), 30)
+  sage:
+    in: N(sin((I * (pi / 2))))
 interval-arithmetic-the-image-of-pi-6-pi-6-is:
   epsil:
     in: Sin(Interval(-(Pi / 6), Pi / 6))

@@ -166,3 +166,47 @@ wolfram-s-clip-x-min-max-v-min-v-max-returns:
     in: Clip[5, 0, 3, -1, 10]
   wolfram:
     in: Clip[5, 0, 3, -1, 10]
+clamp-neg5-0-3-neg1-10-returns-the-lower:
+  epsil:
+    in: Clamp(-5, 0, 3, -1, 10)
+    out: "-1"
+  tex:
+    in: \mathrm{Clamp}(-5, 0, 3, -1, 10)
+    out: "-1"
+  fullform:
+    in: Clip[-5, 0, 3, -1, 10]
+  wolfram:
+    in: Clip[-5, 0, 3, -1, 10]
+replacement-values-leave-x-inside-the-range:
+  epsil:
+    in: Clamp(2, 0, 3, -1, 10)
+    out: "2"
+  tex:
+    in: \mathrm{Clamp}(2, 0, 3, -1, 10)
+    out: "2"
+  fullform:
+    in: Clip[2, 0, 3, -1, 10]
+  wolfram:
+    in: Clip[2, 0, 3, -1, 10]
+clamp-below-range:
+  epsil:
+    in: Clamp(-5)
+    out: "-1"
+  tex:
+    in: \mathrm{Clamp}(-5)
+    out: "-1"
+  fullform:
+    in: Clip[-5]
+  wolfram:
+    in: Clip[-5]
+clamp-within-range:
+  epsil:
+    in: Clamp(0.5)
+    out: "0.5"
+  tex:
+    in: \mathrm{Clamp}(0.5)
+    out: "0.5"
+  fullform:
+    in: Clip[0.5]
+  wolfram:
+    in: Clip[0.5]

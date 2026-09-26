@@ -1,0 +1,39 @@
+name: StringTake
+domain: Collections
+signature: StringTake(s, n) / StringTake(s, {m, n})
+summary: A substring of s — the first/last n characters, or an explicit 1-based range.
+signatures:
+  - call: StringTake(s, n)
+    description: the first n characters of s; the last |n| if n is negative
+    library: enumeratio-collections
+  - call: StringTake(s, {n})
+    description: the nth character alone, as a length-1 string
+    library: enumeratio-collections
+  - call: StringTake(s, {m, n})
+    description: characters m through n inclusive, 1-based, negative counting from the end
+    library: enumeratio-collections
+details:
+  - Positions and lengths count Unicode code points — see [[StringLength]].
+examples:
+  - id: string-take-s-n-takes-the-first-n-characters
+    expr: [StringTake, [String, hello world], 5]
+    expected: "'hello'"
+  - id: string-take-s-negative-n-takes-last-n-chars
+    expr: [StringTake, [String, hello world], -5]
+    expected: "'world'"
+    category: Scope
+  - id: string-take-s-n-takes-the-nth-character-alone
+    expr: [StringTake, [String, hello], [List, 2]]
+    expected: "'e'"
+    category: Scope
+  - id: string-take-s-m-n-takes-an-inclusive-range
+    expr: [StringTake, [String, hello world], [List, 1, 5]]
+    expected: "'hello'"
+    category: Scope
+  - id: string-take-s-m-negative-n-counts-from-end
+    expr: [StringTake, [String, hello world], [List, 1, -7]]
+    expected: "'hello'"
+    category: Scope
+    caption: -7 counts back from the end, landing on the same range as {1, 5}
+seeAlso:
+  - StringLength

@@ -126,6 +126,10 @@ examples:
     expected: [List, 1, -1]
     category: Possible issues
     caption: rounding ties to even means $1$ and $-1$ both appear as remainders mod 2
+  - role: test
+    id: mod-7-3
+    expr: [Mod, 7, 3]
+    expected: 1
   - id: eulers-number-mod-2-reduces-exactly
     expr: [Mod, ExponentialE, 2]
     expected: [Add, -2, ExponentialE]

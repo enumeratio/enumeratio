@@ -98,6 +98,12 @@ examples:
     expected: [Interval, 0, 5]
     category: Scope
     caption: An [[Interval]] maps to the interval of absolute values, $[0, 5]$
+  - role: test
+    id: an-interval-straddling-0-maps-to-0-the-larger
+    expr: [Abs, [Interval, -3, 2]]
+    expected: [Interval, 0, 3]
+    category: Scope
+    caption: An [[Interval]] straddling $0$ maps to $[0, \max(|{-3}|, |2|)] = [0, 3]$
   - id: decides-the-sign-of-an-exact-numeric-expression
     expr: [Abs, [Subtract, [Sqrt, 2], 2]]
     expected: [Add, 2, [Negate, [Sqrt, 2]]]

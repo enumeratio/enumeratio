@@ -229,3 +229,41 @@ but-not-in-y-alone-y-appears-squared:
     out: \mathrm{False}
   fullform:
     in: SquareFreeQ[Times[x, Power[y, 2]], y]
+a-non-squarefree-rational:
+  epsil:
+    in: IsSquareFree(4 / 3)
+    out: False
+  tex:
+    in: \mathrm{IsSquareFree}(\frac{4}{3})
+    out: \bot
+  traditional:
+    in: \mathrm{IsSquareFree}(\frac{4}{3})
+    out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[Rational[4, 3]]
+  wolfram:
+    in: SquareFreeQ[Rational[4, 3]]
+x-1-2-has-a-repeated-root:
+  epsil:
+    in: IsSquareFree(x ^ 2 - 2x + 1)
+    out: False
+  tex:
+    in: \mathrm{IsSquareFree}(x^2-2x+1)
+    out: \bot
+  traditional:
+    in: \mathrm{IsSquareFree}(x^2-2x+1)
+    out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[Plus[Power[x, 2], Times[-2, x], 1]]
+x-3-y-3-has-no-repeated-factor:
+  epsil:
+    in: IsSquareFree(x ^ 3 - y ^ 3)
+    out: True
+  tex:
+    in: \mathrm{IsSquareFree}(x^3-y^3)
+    out: \top
+  traditional:
+    in: \mathrm{IsSquareFree}(x^3-y^3)
+    out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[Subtract[Power[x, 3], Power[y, 3]]]

@@ -55,7 +55,7 @@ examples:
     caption: 'Exact at the integers: $\ln G(10) = \ln 5056584744960000$, split into logarithms of its factors'
   - id: the-continuation-not-ln-of-the-value-g-2-5-0-yet
     expr: [LogBarnesG, -2.5]
-    expected: [Complex, -2.5747484768528466, 18.84955592153876]
+    expected: [Complex, -2.574748476853131, 18.84955592153876]
     category: Possible issues
     caption: 'The continuation, not $\ln$ of the value: $G(-2.5) > 0$, yet the imaginary part is $6\pi$'
   - id: huge-arguments-straight-from-the-asymptotic

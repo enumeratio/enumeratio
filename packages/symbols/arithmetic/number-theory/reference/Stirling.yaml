@@ -94,6 +94,12 @@ examples:
     expected: 0
     category: Possible issues
     caption: $k > n$ is 0
+  - role: test
+    id: stirling-0-1-is-also-0
+    expr: [Stirling, 0, 1]
+    expected: 0
+    category: Possible issues
+    caption: $S(0, 1) = 0$ too -- there is no way to split the empty set into one nonempty block
 seeAlso:
   - StirlingS1
   - BellNumber

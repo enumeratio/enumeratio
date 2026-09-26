@@ -64,3 +64,25 @@ listable:
     in: MangoldtLambda[List[2, 4, 6, 25]]
   wolfram:
     in: MangoldtLambda[List[2, 4, 6, 25]]
+mangoldtlambda-9:
+  epsil:
+    in: MangoldtLambda(9)
+    out: Ln(3)
+  tex:
+    in: \mathrm{MangoldtLambda}(9)
+    out: \ln(3)
+  fullform:
+    in: MangoldtLambda[9]
+  wolfram:
+    in: MangoldtLambda[9]
+n-of-a-zero-result-is-still-0:
+  epsil:
+    in: N(MangoldtLambda(6))
+    out: "0"
+  tex:
+    in: N(\mathrm{MangoldtLambda}(6))
+    out: "0"
+  fullform:
+    in: N[MangoldtLambda[6]]
+  wolfram:
+    in: N[MangoldtLambda[6]]

@@ -1,0 +1,40 @@
+transformed-affine-mean:
+  epsil:
+    in: Mean(TransformedDistribution(2x + 3, Distributed(x, NormalDistribution(0, 1))))
+    out: "3"
+  tex:
+    in: \mathrm{mean}(\mathrm{TransformedDistribution}(2x+3, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))))
+    out: "3"
+  fullform:
+    in: Mean[TransformedDistribution[Plus[Times[2, x], 3], Distributed[x, NormalDistribution[0, 1]]]]
+transformed-affine-variance:
+  epsil:
+    in: |-
+      Variance(TransformedDistribution(
+                                        2x + 3,
+                                        Distributed(x, NormalDistribution(0, 1)),
+                                      ))
+    out: "4"
+  tex:
+    in: \mathrm{Variance}(\mathrm{TransformedDistribution}(2x+3, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))))
+    out: "4"
+  fullform:
+    in: Variance[TransformedDistribution[Plus[Times[2, x], 3], Distributed[x, NormalDistribution[0, 1]]]]
+transformed-negative-affine-cdf:
+  epsil:
+    in: CDF(TransformedDistribution(-x, Distributed(x, NormalDistribution(0, 1))), 0)
+    out: 1 / 2
+  tex:
+    in: \operatorname{CDF}(\mathrm{TransformedDistribution}(-x, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))), 0)
+    out: \frac{1}{2}
+  fullform:
+    in: CDF[TransformedDistribution[Minus[x], Distributed[x, NormalDistribution[0, 1]]], 0]
+transformed-chisquare-mean:
+  epsil:
+    in: Mean(TransformedDistribution(x ^ 2, Distributed(x, NormalDistribution(0, 1))))
+    out: "1"
+  tex:
+    in: \mathrm{mean}(\mathrm{TransformedDistribution}(x^2, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))))
+    out: "1"
+  fullform:
+    in: Mean[TransformedDistribution[Power[x, 2], Distributed[x, NormalDistribution[0, 1]]]]

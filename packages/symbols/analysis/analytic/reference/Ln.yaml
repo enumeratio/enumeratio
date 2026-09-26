@@ -150,6 +150,11 @@ examples:
     expected: [Add, [Multiply, [Complex, 0, 1], Pi], [Negate, [Ln, 2]]]
     category: Scope
     caption: $\ln(-\tfrac12) = i\pi - \ln 2$ — a negative rational, folded through the unit-fraction rule too.
+  - id: n-decimalizes-ln-i-not-just-the-exact-form
+    expr: [N, [Ln, ImaginaryUnit]]
+    expected: [Complex, 0, 1.5707963267948966]
+    category: Scope
+    caption: N(...) decimalizes $\ln(i)$, not just the exact $i\pi/2$ form
 seeAlso:
   - Exp
   - Log
