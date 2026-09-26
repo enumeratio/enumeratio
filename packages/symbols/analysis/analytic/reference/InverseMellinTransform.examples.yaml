@@ -1,0 +1,17 @@
+- id: gamma-to-exp
+  expr: [InverseMellinTransform, [Gamma, s], s, x]
+  expected: [Power, ExponentialE, [Negate, x]]
+  caption: $\Gamma(s) \to e^{-x}$
+- id: pi-csc-to-one-over-one-plus-x
+  expr: [InverseMellinTransform, [Multiply, Pi, [Csc, [Multiply, Pi, s]]], s, x]
+  expected: [Divide, 1, [Add, x, 1]]
+  caption: $\pi\csc(\pi s) \to 1/(1+x)$
+- id: pi-csc-over-s-to-log-reciprocal
+  expr: [InverseMellinTransform, [Divide, [Multiply, Pi, [Csc, [Multiply, Pi, s]]], s], s, x]
+  expected: [Ln, [Add, [Divide, 1, x], 1]]
+  caption: $\pi\csc(\pi s)/s \to \log(1+1/x)$ — NOT $\log(1+x)$; see the strip note above
+- id: shift-gamma-a-plus-s
+  expr: [InverseMellinTransform, [Gamma, [Add, a, s]], s, x]
+  expected: [Multiply, [Power, ExponentialE, [Negate, x]], [Power, x, a]]
+  category: Scope
+  caption: power shift — $\Gamma(a+s) \to x^a e^{-x}$

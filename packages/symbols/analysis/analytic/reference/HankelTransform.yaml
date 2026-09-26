@@ -13,24 +13,6 @@ details:
   - "Order 0 (each pair, and its strip `Re(a) > 0` where one applies, confirmed against `wolframscript`'s `HankelTransform[..., GenerateConditions -> True]`, matching its normalisation exactly): $e^{-ar}\\to a/(a^2+s^2)^{3/2}$, $e^{-ar^2}\\to \\frac{1}{2a}e^{-s^2/(4a)}$, $1/r\\to 1/s$, $1/\\sqrt{r^2+a^2}\\to e^{-as}/s$."
   - "Two further orders Wolfram's own examples state explicitly, also covered: order 1's $e^{-ar}\\to s/(a^2+s^2)^{3/2}$, and $1/r\\to 1/s$ at ANY order `n` (`n > -1/2`, an identity independent of the order)."
   - "Declined: any other order for $e^{-ar}$/$e^{-ar^2}$/$1/\\sqrt{r^2+a^2}$ (Wolfram's own closed forms there involve `Hypergeometric2F1Regularized`/`Hypergeometric1F1Regularized` — not elementary, not chased), and an unknown-sign `a`."
-examples:
-  - id: exp-neg-ar-order0
-    expr: [Assuming, [Greater, a, 0], [HankelTransform, [Exp, [Negate, [Multiply, a, r]]], r, s]]
-    expected: [Divide, a, [Power, [Add, [Power, a, 2], [Power, s, 2]], [Rational, 3, 2]]]
-    caption: $H_0\{e^{-ar}\}(s) = a/(a^2+s^2)^{3/2}$
-  - id: one-over-r
-    expr: [HankelTransform, [Divide, 1, r], r, s]
-    expected: [Divide, 1, s]
-    caption: $H_0\{1/r\}(s) = 1/s$
-  - id: one-over-sqrt-r2-a2
-    expr: [Assuming, [Greater, a, 0], [HankelTransform, [Divide, 1, [Sqrt, [Add, [Power, r, 2], [Power, a, 2]]]], r, s]]
-    expected: [Divide, [Power, ExponentialE, [Negate, [Multiply, a, s]]], s]
-    caption: $H_0\{1/\sqrt{r^2+a^2}\}(s) = e^{-as}/s$
-  - id: exp-neg-ar-order1
-    expr: [Assuming, [Greater, a, 0], [HankelTransform, [Exp, [Negate, [Multiply, a, r]]], r, s, 1]]
-    expected: [Divide, s, [Power, [Add, [Power, a, 2], [Power, s, 2]], [Rational, 3, 2]]]
-    category: Scope
-    caption: order 1 — $H_1\{e^{-ar}\}(s) = s/(a^2+s^2)^{3/2}$
 primitive: kernel
 bindings:
   - origin: native
