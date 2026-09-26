@@ -125,6 +125,7 @@ export const MAPPINGS: readonly Mapping[] = [
     arity: 2,
     emit: {
       sympy: "Rational($1, $2)",
+      mpmath: "(mpf($1)/$2)",
       sage: "($1/$2)",
       oscar: "($1 // $2)",
       julia: "($1 // $2)",
@@ -160,6 +161,7 @@ export const MAPPINGS: readonly Mapping[] = [
     head: "List",
     emit: {
       sympy: "[$*,]",
+      mpmath: "[$*,]",
       sage: "[$*,]",
       oscar: "[$*,]",
       julia: "[$*,]",

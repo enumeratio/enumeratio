@@ -97,6 +97,9 @@ abs-neg-7-over-2:
   sympy:
     in: Abs(Rational(-7, 2))
     out: 7/2
+  mpmath:
+    in: fabs((mpf(-7)/2))
+    out: "3.5"
   sage:
     in: abs((-7/2))
     out: 7/2
@@ -299,6 +302,9 @@ threads-over-a-matrix-entry-by-entry:
   sympy:
     in: "[[Abs(Rational(1, 2)), Abs(-1)], [Abs(Rational(-5, 3)), Abs(Rational(1, 2))]]"
     out: "[[1/2, 1], [5/3, 1/2]]"
+  mpmath:
+    in: "[[fabs((mpf(1)/2)), fabs(-1)], [fabs((mpf(-5)/3)), fabs((mpf(1)/2))]]"
+    out: "[[mpf('0.5'), mpf('1.0')], [mpf('1.66666666666666666666666666666673'), mpf('0.5')]]"
   sage:
     in: "[[abs((1/2)), abs(-1)], [abs((-5/3)), abs((1/2))]]"
   rust:

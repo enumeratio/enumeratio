@@ -8,6 +8,7 @@ import {
   logTicks,
   normaliseToFirst,
   okIntersection,
+  sameFormula,
 } from "./stats.ts";
 import type { CaseResult } from "./types.ts";
 
@@ -98,5 +99,21 @@ describe("logTicks", () => {
   });
   test("degenerate range falls back to endpoints", () => {
     expect(logTicks(5, 5)).toEqual([5]);
+  });
+});
+
+describe("sameFormula", () => {
+  test("keeps a case only while it computes what the selected run's case does", () => {
+    const results: CaseResult[] = [
+      { name: "P/a", status: "ok", formula: "f1" },
+      { name: "P/b", status: "ok", formula: "old" },
+      { name: "P/c", status: "ok" },
+    ];
+    const formulas = new Map([
+      ["P/a", "f1"],
+      ["P/b", "new"],
+      ["P/c", "f3"],
+    ]);
+    expect(sameFormula({ results }, formulas).results.map((r) => r.name)).toEqual(["P/a"]);
   });
 });

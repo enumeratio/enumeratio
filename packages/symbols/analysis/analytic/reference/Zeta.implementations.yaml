@@ -91,6 +91,12 @@ threads-over-a-list-reducing-every-element-to:
     verdict: error
     kind: threading
     note: compute-engine's Zeta threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: zeta([-1, -2, -3])
+    out: "TypeError: cannot create mpf from [-1, -2, -3]"
+    verdict: error
+    kind: threading
+    note: compute-engine's Zeta threads over the list; mpmath's takes scalars.
   sage:
     in: zeta([-1, -2, -3])
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
@@ -610,6 +616,9 @@ zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of:
   sympy:
     in: zeta(20, Rational(1, 2))
     out: zeta(20, 1/2)
+  mpmath:
+    in: zeta(20, (mpf(1)/2))
+    out: "1048576.0003007396681671843484"
   sage:
     in: hurwitz_zeta(20, (1/2))
 zeta-2-1-2-3-zeta-2-pi-2-2:
@@ -626,6 +635,9 @@ zeta-2-1-2-3-zeta-2-pi-2-2:
   sympy:
     in: zeta(2, Rational(1, 2))
     out: zeta(2, 1/2)
+  mpmath:
+    in: zeta(2, (mpf(1)/2))
+    out: "4.93480220054467930941724549994"
   sage:
     in: hurwitz_zeta(2, (1/2))
 interval-arithmetic-zeta-is-decreasing-on-1:
@@ -695,6 +707,12 @@ zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s:
     verdict: disagree
     kind: convention
     note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  mpmath:
+    in: (zeta(3, (mpf(-1)/2)))
+    out: "0.41439832211715999779816713058"
+    verdict: disagree
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
   sage:
     in: N(hurwitz_zeta(3, (-1/2)))
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
@@ -735,8 +753,10 @@ certified-digits-zeta-3:
     in: N[Zeta[3], 40]
   sympy:
     in: N(zeta(3), 30)
+    out: "1.20205690315959428539973816151"
   mpmath:
     in: (zeta(3))
+    out: "1.20205690315959428539973816151"
   sage:
     in: N(zeta(3))
 zeta-symbolic-s-under-n-stays-symbolic:
@@ -762,6 +782,9 @@ zeta-half-stays-symbolic-until-n:
   sympy:
     in: zeta(Rational(1, 2))
     out: zeta(1/2)
+  mpmath:
+    in: zeta((mpf(1)/2))
+    out: "-1.46035450880958681288949915252"
   sage:
     in: zeta((1/2))
 zeta-complex-argument-stays-symbolic-until-n:
@@ -825,6 +848,12 @@ zeta-threads-over-mixed-exact-and-inexact-list:
     verdict: error
     kind: threading
     note: compute-engine's Zeta is Listable and threads over the list; SymPy takes scalars only.
+  mpmath:
+    in: zeta([2, mpc(0.5, 14)])
+    out: "TypeError: cannot create mpf from [2, mpc(real='0.5', imag='14.0')]"
+    verdict: error
+    kind: threading
+    note: compute-engine's Zeta threads over the list; mpmath's takes scalars.
   sage:
     in: zeta([2, (0.5 + 14*I)])
 zeta-3-0-drops-pole-term-like-s-2:
