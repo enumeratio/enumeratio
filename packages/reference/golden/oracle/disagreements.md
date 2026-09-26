@@ -97,7 +97,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 1174, disagree 32, inconclusive 14, error 29
+## sympy — agree 1182, disagree 32, inconclusive 14, error 29
 
 | example                                                        | kind           | ours                                                | theirs                                                                        |
 | -------------------------------------------------------------- | -------------- | --------------------------------------------------- | ----------------------------------------------------------------------------- |
@@ -170,7 +170,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## mpmath — agree 690, disagree 9, inconclusive 3, error 11
+## mpmath — agree 695, disagree 9, inconclusive 3, error 11
 
 | example                                                | kind           | ours                                                | theirs                                                                         |
 | ------------------------------------------------------ | -------------- | --------------------------------------------------- | ------------------------------------------------------------------------------ |

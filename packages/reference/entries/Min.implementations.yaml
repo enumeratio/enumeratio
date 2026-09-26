@@ -13,10 +13,10 @@ min-3-1-4-1-5:
     tex:
       in: \min (3,1,4,1,5)
       out: "1"
-  sympy:
+  sage:
     in: enumeratio_min(3, 1, 4, 1, 5)
     out: "1"
-  sage:
+  sympy:
     in: enumeratio_min(3, 1, 4, 1, 5)
     out: "1"
 also-accepts-a-single-list-argument:
@@ -34,10 +34,10 @@ also-accepts-a-single-list-argument:
     tex:
       in: \min (\{3,1,4\})
       out: "1"
-  sympy:
+  sage:
     in: enumeratio_min([3, 1, 4])
     out: "1"
-  sage:
+  sympy:
     in: enumeratio_min([3, 1, 4])
     out: "1"
 min-neg-1-neg-5:
@@ -55,10 +55,10 @@ min-neg-1-neg-5:
     tex:
       in: \min (-1,-5)
       out: "-5"
-  sympy:
+  sage:
     in: enumeratio_min((-1), (-5))
     out: "-5"
-  sage:
+  sympy:
     in: enumeratio_min((-1), (-5))
     out: "-5"
 a-single-argument-is-returned-unchanged:
@@ -76,10 +76,10 @@ a-single-argument-is-returned-unchanged:
     tex:
       in: \min (3)
       out: "3"
-  sympy:
+  sage:
     in: enumeratio_min(3)
     out: "3"
-  sage:
+  sympy:
     in: enumeratio_min(3)
     out: "3"
 commutative-order-doesn-t-matter:
@@ -100,11 +100,11 @@ commutative-order-doesn-t-matter:
     tex:
       in: \min (3,7)=\min (7,3)
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))
-    out: True
   sage:
     in: bool(enumeratio_min(3, 7) == enumeratio_min(7, 3))
+    out: True
+  sympy:
+    in: enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))
     out: True
 min-a-b-max-a-b-a-b-see-max:
   epsil:
@@ -124,11 +124,11 @@ min-a-b-max-a-b-a-b-see-max:
     tex:
       in: \min (4,9)+\max (4,9)=4+9
       out: \text{True}
-  sympy:
-    in: enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))
-    out: True
   sage:
     in: bool((enumeratio_min(4, 9) + enumeratio_max(4, 9)) == (4 + 9))
+    out: True
+  sympy:
+    in: enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))
     out: True
 the-day-s-low-from-the-same-hourly-readings-see:
   epsil:
@@ -145,10 +145,10 @@ the-day-s-low-from-the-same-hourly-readings-see:
     tex:
       in: \min (68,72,65,80,74)
       out: "65"
-  sympy:
+  sage:
     in: enumeratio_min(68, 72, 65, 80, 74)
     out: "65"
-  sage:
+  sympy:
     in: enumeratio_min(68, 72, 65, 80, 74)
     out: "65"
 infinities-participate-directly-in-the:
@@ -181,10 +181,10 @@ multiple-arguments-lists-included-are-flattened:
     tex:
       in: \min (\{3,1\},0)
       out: "0"
-  sympy:
+  sage:
     in: enumeratio_min([3, 1], 0)
     out: "0"
-  sage:
+  sympy:
     in: enumeratio_min([3, 1], 0)
     out: "0"
 min-9-2:
@@ -198,11 +198,11 @@ min-9-2:
     in: Min[9, 2]
   wolfram:
     in: Min[9, 2]
+  sage:
+    in: enumeratio_min(9, 2)
   sympy:
     in: enumeratio_min(9, 2)
     out: "2"
-  sage:
-    in: enumeratio_min(9, 2)
 min-list-4-1-7-2:
   epsil:
     in: Min([4, 1, 7, 2])
@@ -214,11 +214,11 @@ min-list-4-1-7-2:
     in: Min[List[4, 1, 7, 2]]
   wolfram:
     in: Min[List[4, 1, 7, 2]]
+  sage:
+    in: enumeratio_min([4, 1, 7, 2])
   sympy:
     in: enumeratio_min([4, 1, 7, 2])
     out: "1"
-  sage:
-    in: enumeratio_min([4, 1, 7, 2])
 min-5p56-neg-4p8-7p3:
   epsil:
     in: Min(5.56, -4.8, 7.3)
@@ -230,11 +230,11 @@ min-5p56-neg-4p8-7p3:
     in: Min[5.56, -4.8, 7.3]
   wolfram:
     in: Min[5.56, -4.8, 7.3]
+  sage:
+    in: enumeratio_min(5.56, (-4.8), 7.3)
   sympy:
     in: enumeratio_min(5.56, (-4.8), 7.3)
     out: "-4.80000000000000"
-  sage:
-    in: enumeratio_min(5.56, (-4.8), 7.3)
 nested-lists-are-flattened-into-the-pool:
   epsil:
     in: Min(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -246,11 +246,11 @@ nested-lists-are-flattened-into-the-pool:
     in: Min[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   wolfram:
     in: Min[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
+  sage:
+    in: enumeratio_min(2, 3, [[(1/2), (-1)], [((-5)/3), (1/2)]])
   sympy:
     in: enumeratio_min(2, 3, [[Rational(1, 2), (-1)], [Rational((-5), 3), Rational(1, 2)]])
     out: -5/3
-  sage:
-    in: enumeratio_min(2, 3, [[(1/2), (-1)], [((-5)/3), (1/2)]])
 exact-numbers-are-compared-numerically:
   epsil:
     in: Min(Sqrt(2), 3 / 2)
@@ -262,11 +262,11 @@ exact-numbers-are-compared-numerically:
     in: Min[Sqrt[2], Rational[3, 2]]
   wolfram:
     in: Min[Sqrt[2], Rational[3, 2]]
+  sage:
+    in: enumeratio_min(sqrt(2), (3/2))
   sympy:
     in: enumeratio_min(sqrt(2), Rational(3, 2))
     out: sqrt(2)
-  sage:
-    in: enumeratio_min(sqrt(2), (3/2))
 the-numeric-arguments-collapse-to-their-minimum:
   epsil:
     in: Min(3, x, 5)
@@ -287,11 +287,11 @@ compares-exact-constants-numerically-min-e-pi-5:
     in: Min[List[E, Pi, 5]]
   wolfram:
     in: Min[List[E, Pi, 5]]
+  sage:
+    in: enumeratio_min([e, pi, 5])
   sympy:
     in: enumeratio_min([E, pi, 5])
     out: E
-  sage:
-    in: enumeratio_min([e, pi, 5])
 the-min-of-two-intervals-is-the-interval-of:
   epsil:
     in: Min(Interval(1, 3), Interval(-3, 5))
@@ -323,11 +323,11 @@ with-no-arguments-it-returns-the-identity:
     in: Min[]
   wolfram:
     in: Min[]
+  sage:
+    in: enumeratio_min()
   sympy:
     in: enumeratio_min()
     out: oo
-  sage:
-    in: enumeratio_min()
 the-min-of-an-empty-list-is-nan:
   epsil:
     in: Min([])
@@ -340,14 +340,14 @@ the-min-of-an-empty-list-is-nan:
   wolfram:
     in: Min[List[]]
     note: Wolfram's $\mathrm{Min}[\{\}]$ is the identity element $+\infty$.
+  sage:
+    in: enumeratio_min([])
   sympy:
     in: enumeratio_min([])
     out: oo
     verdict: disagree
     kind: convention
     note: Same as the Wolfram row above -- SymPy's min() of an empty sequence also takes the identity element (+infinity); we deliberately return NaN for Min of an empty LIST (a no-argument Min[] still returns the identity, see the example above this one).
-  sage:
-    in: enumeratio_min([])
 min-min-folds-into-a-normal-call:
   epsil:
     in: Min(Min(), 5)
@@ -359,7 +359,8 @@ min-min-folds-into-a-normal-call:
     in: Min[Min[], 5]
   wolfram:
     in: Min[Min[], 5]
-  sympy:
-    in: enumeratio_min(enumeratio_min(), 5)
   sage:
     in: enumeratio_min(enumeratio_min(), 5)
+  sympy:
+    in: enumeratio_min(enumeratio_min(), 5)
+    out: "5"
