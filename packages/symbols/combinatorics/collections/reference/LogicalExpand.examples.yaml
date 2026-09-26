@@ -1,0 +1,15 @@
+- id: implies-becomes-or-not
+  expr: [LogicalExpand, [Implies, p, b]]
+  expected: [Or, b, [Not, p]]
+- id: distributes-and-over-or
+  expr: [LogicalExpand, [And, p, [Or, b, r]]]
+  expected: [Or, [And, b, p], [And, p, r]]
+  category: Scope
+- id: xor-eliminated-into-dnf
+  expr: [LogicalExpand, [Xor, p, b]]
+  expected: [Or, [And, b, [Not, p]], [And, p, [Not, b]]]
+  category: Scope
+- id: a-contradictory-term-drops-out
+  expr: [LogicalExpand, [And, p, [Not, p]]]
+  expected: False
+  category: Scope

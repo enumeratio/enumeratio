@@ -445,6 +445,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "BooleanConvert",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "BooleanConvert",
+    elsewhere: [],
+  },
+  {
     name: "BooleanPermutations",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1068,6 +1075,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "IsArray",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "ArrayQ",
+    elsewhere: [],
+  },
+  {
     name: "IsBipartiteGraph",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1089,6 +1103,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "IsInteger",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "IntegerQ",
+    elsewhere: [],
+  },
+  {
+    name: "IsIntervalMember",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "IntervalMemberQ",
+    elsewhere: [],
+  },
+  {
     name: "IsIsomorphicGraph",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1107,6 +1135,20 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "MachineNumberQ",
+    elsewhere: [],
+  },
+  {
+    name: "IsMatrix",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "MatrixQ",
+    elsewhere: [],
+  },
+  {
+    name: "IsMersennePrimeExponent",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "MersennePrimeExponentQ",
     elsewhere: [],
   },
   {
@@ -1135,6 +1177,20 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "TreeGraphQ",
+    elsewhere: [],
+  },
+  {
+    name: "IsTrue",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "TrueQ",
+    elsewhere: [],
+  },
+  {
+    name: "IsVector",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "VectorQ",
     elsewhere: [],
   },
   {
@@ -1240,6 +1296,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "LogicalExpand",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "LogicalExpand",
     elsewhere: [],
   },
   {

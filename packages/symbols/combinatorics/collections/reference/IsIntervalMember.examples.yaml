@@ -1,0 +1,15 @@
+- id: an-interior-point
+  expr: [IsIntervalMember, [Interval, 1, 5], 3]
+  expected: True
+- id: a-closed-endpoint-is-a-member
+  expr: [IsIntervalMember, [Interval, 1, 5], 5]
+  expected: True
+  category: Scope
+- id: an-open-endpoint-is-not-a-member
+  expr: [IsIntervalMember, [Interval, [Open, 1], 5], 1]
+  expected: False
+  category: Scope
+- id: outside-the-interval
+  expr: [IsIntervalMember, [Interval, 1, 5], 6]
+  expected: False
+  category: Scope

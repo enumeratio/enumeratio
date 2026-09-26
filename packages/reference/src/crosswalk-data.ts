@@ -664,6 +664,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "BinomialDistribution",
   },
   {
+    name: "BooleanConvert",
+    wolfram: "BooleanConvert",
+  },
+  {
     name: "BrauerAlgebra",
     oracle: [
       {
@@ -2847,6 +2851,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "AcyclicGraphQ",
   },
   {
+    name: "IsArray",
+    wolfram: "ArrayQ",
+  },
+  {
     name: "IsBipartiteGraph",
     wolfram: "BipartiteGraphQ",
   },
@@ -2872,6 +2880,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "EvenQ",
   },
   {
+    name: "IsInteger",
+    wolfram: "IntegerQ",
+  },
+  {
+    name: "IsIntervalMember",
+    wolfram: "IntervalMemberQ",
+  },
+  {
     name: "IsIsomorphicGraph",
     wolfram: "IsomorphicGraphQ",
   },
@@ -2882,6 +2898,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IsMachineNumber",
     wolfram: "MachineNumberQ",
+  },
+  {
+    name: "IsMatrix",
+    wolfram: "MatrixQ",
+  },
+  {
+    name: "IsMersennePrimeExponent",
+    wolfram: "MersennePrimeExponentQ",
   },
   {
     name: "IsNumeric",
@@ -2950,6 +2974,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IsTreeGraph",
     wolfram: "TreeGraphQ",
+  },
+  {
+    name: "IsTrue",
+    wolfram: "TrueQ",
+  },
+  {
+    name: "IsVector",
+    wolfram: "VectorQ",
   },
   {
     name: "JacobiAmplitude",
@@ -3581,6 +3613,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "LogGamma",
     wolfram: "LogGamma",
+  },
+  {
+    name: "LogicalExpand",
+    wolfram: "LogicalExpand",
   },
   {
     name: "LucasL",

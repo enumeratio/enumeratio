@@ -1,0 +1,15 @@
+- id: true-is-true
+  expr: [IsTrue, True]
+  expected: True
+- id: false-is-not-true
+  expr: [IsTrue, False]
+  expected: False
+  category: Scope
+- id: an-evaluating-comparison
+  expr: [IsTrue, [Equal, 1, 1]]
+  expected: True
+  category: Scope
+- id: an-unevaluated-symbol-is-false
+  expr: [IsTrue, x]
+  expected: False
+  category: Scope
