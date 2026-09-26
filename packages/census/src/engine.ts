@@ -24,6 +24,8 @@ import {
   DOMAINS,
   RESTRICTIONS,
   declareCompose,
+  declareDomainElement,
+  declareDomainPlurals,
   declareDomains,
   declareMaps,
   declareRestricted,
@@ -74,6 +76,11 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
   declareGraphics,
   declareDomains,
   (ce) => {
+    // AFTER declareCollections (above), so a plural a collection family already claims
+    // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
+    // bare symbol first.
+    declareDomainPlurals(ce);
+    declareDomainElement(ce);
     // Statistics, maps and restrictions all key off the carrier types, so they take the
     // same (type → constructor) index and have to follow `declareDomains`.
     const domainTypes = Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));

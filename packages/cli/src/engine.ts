@@ -6,7 +6,7 @@
 
 import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/collections";
-import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
+import { declareDomainElement, declareDomainPlurals, declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
 import {
@@ -203,6 +203,11 @@ export class Session {
     // The ones that are ALSO plain list functions -- they compare entries with each other
     // rather than with their positions -- accept a bare list too; see `Definition.alsoOnList`.
     declareCollections(this.ce, { permutationType: "permutation" });
+    // Every domain's plural type-space name, and Element membership over it -- AFTER
+    // collections, so a plural a collection family already claims (Permutations, DyckPaths,
+    // ...) is still free when this checks, not raced by minting a bare symbol first.
+    declareDomainPlurals(this.ce);
+    declareDomainElement(this.ce);
     // Collections owns the fast permutation heads under the same names, so those are skipped
     // here -- one head, one owner.
     declareStatistics(this.ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: DOMAIN_TYPES });

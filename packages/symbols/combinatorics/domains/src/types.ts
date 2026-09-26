@@ -17,6 +17,16 @@ export interface Domain {
   readonly shape: Shape;
   /** enumeratio's snake_case carrier id — which is also the type's spelling. */
   readonly id: string;
+  /**
+   * The domain's TYPE-SPACE name, plural — every domain has one (design/domains.md §2's
+   * corrected rule), whether or not a same-named collection family already exists.
+   * `declareDomainElement` (`declare.ts`) is what makes `Element(x, DyckPaths)` answer for
+   * it: True when `x` is a `DyckPath(...)` value, False for a value of another carrier,
+   * unevaluated for anything it cannot place. Absent for exactly the two domains whose
+   * SINGULAR name already layers onto an unrelated real head (`ContinuedFraction`,
+   * `PermutationCycles`) — there is no plural type space for either.
+   */
+  readonly plural?: string;
   /** The domain this one RESTRICTS, when it is a restriction. compute-engine cannot express
    *  the subtype relation between minted types (§1.1), so this is recorded as data and
    *  checked by predicate rather than believed by the engine. */

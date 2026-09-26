@@ -149,6 +149,15 @@ test("a head whose Wolfram name means something else emits into our context", ()
   expect(isWolframHead("Area")).toBe(false);
 });
 
+test("GaussianIntegers stays genuinely ambiguous: bare passes through, called is ours", () => {
+  // Wolfram's PrimeQ[n, GaussianIntegers -> True] needs the real, UNPREFIXED option name --
+  // FOREIGN is not consulted for a bare symbol, only for a call (see symbolToWolfram's own
+  // comment). Our carrier's plural type-space symbol is never itself CALLED, so this loses
+  // nothing: `GaussianIntegers([2, 3])` is not a thing we declare.
+  expect(toWolfram("GaussianIntegers")).toBe("GaussianIntegers");
+  expect(toWolfram(["KeyValuePair", "GaussianIntegers", true])).toBe("KeyValuePair[GaussianIntegers, True]");
+});
+
 test("extension heads Wolfram shares are vouched for, not passed through", () => {
   expect(toWolfram(["Subsets", ["List", 1, 2]])).toBe("Subsets[List[1, 2]]");
   expect(toWolfram(["Compose", "Inverse", "Reverse"])).toBe("Composition[Inverse, Reverse]");

@@ -15,6 +15,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { typeFor } from "../src/types.ts";
+import { PLURAL_OVERRIDES } from "./plural-overrides.ts";
 
 const pascal = (id: string): string =>
   id
@@ -22,6 +23,12 @@ const pascal = (id: string): string =>
     .filter(Boolean)
     .map((w) => w[0]!.toUpperCase() + w.slice(1))
     .join("");
+
+/** The domain's TYPE-SPACE name (plural), or `undefined` for the two ids whose singular
+ *  constructor already layers onto an unrelated real head instead (see `types.ts`'s
+ *  `Domain.plural` doc). */
+const pluralFor = (id: string): string | undefined =>
+  id === "continued_fraction" || id === "permutation_cycles" ? undefined : (PLURAL_OVERRIDES[id] ?? `${pascal(id)}s`);
 
 /** A Postgres field type, as the nearest compute-engine type. */
 function typeOf(pg: string): string {
@@ -57,7 +64,8 @@ const domains = readFileSync(path, "utf8")
   .map((line) => {
     const [id = "", fields = ""] = line.split("|");
     const name = pascal(id);
-    return { name, type: typeFor(id), shape: shapeOf(fields), id };
+    const plural = pluralFor(id);
+    return { name, type: typeFor(id), shape: shapeOf(fields), id, ...(plural ? { plural } : {}) };
   })
   .sort((a, b) => a.name.localeCompare(b.name));
 

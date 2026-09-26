@@ -23,6 +23,8 @@ export interface EngineLibraries {
   readonly declareStatistics: typeof import("@enumeratio/statistics").declareStatistics;
   readonly ALL_STATISTICS: typeof import("@enumeratio/statistics").ALL_STATISTICS;
   readonly declareDomains: typeof import("@enumeratio/domains").declareDomains;
+  readonly declareDomainPlurals: typeof import("@enumeratio/domains").declareDomainPlurals;
+  readonly declareDomainElement: typeof import("@enumeratio/domains").declareDomainElement;
   readonly declareMaps: typeof import("@enumeratio/domains").declareMaps;
   readonly DOMAINS: typeof import("@enumeratio/domains").DOMAINS;
   readonly declareAnalytic: typeof import("@enumeratio/analytic").declareAnalytic;
@@ -67,6 +69,11 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   // A combinatorial statistic is a function of a carrier, so that is what these heads
   // take. The ones that are ALSO plain list functions accept a bare list too.
   apply((ce) => libs.declareCollections(ce, { permutationType: "permutation" }));
+  // AFTER declareCollections: a plural a collection family already claims (Permutations,
+  // DyckPaths, ...) has to still be free when this checks, not raced by minting a bare
+  // symbol for it first.
+  apply(libs.declareDomainPlurals);
+  apply(libs.declareDomainElement);
   // Collections already declares the fast permutation heads under the same names, so
   // those are skipped here — one head, one owner.
   apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { skipDeclared: true, domainTypes }));

@@ -6,12 +6,21 @@
 // keeps the type `Permutation`. That is what lets a statistic declared over `Permutation`
 // reject a bare list — and, more usefully, reject a SetPartition.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { DOMAINS } from "./domain-data.ts";
 import type { Domain } from "./types.ts";
 
-/** Declare every carrier domain and its constructor on `ce`. */
+/**
+ * Declare every carrier domain and its constructor on `ce`. Does NOT declare the plural
+ * type-space names — `declareDomainPlurals` does that, and has to run AFTER whatever else in
+ * the engine declares a collection family (`declareCollections`'s `Permutations`,
+ * `DyckPaths`, …): a plural name a family will claim has to still be free when THAT runs, so
+ * minting a bare symbol for it here, before collections gets a turn, would make collections'
+ * own `ce.declare` throw "already declared" instead of the other way around. See
+ * `declareDomainPlurals`'s own doc for why a live `ce.lookupDefinition` check at THAT later
+ * point is what makes the two compose regardless of order.
+ */
 export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = DOMAINS): void {
   // Types first: a constructor's signature names its own domain, so the type has to exist.
   // Shapes referring to another carrier (a tableau pair is two tableaux) are declared in
@@ -72,3 +81,79 @@ function declareConstructor(ce: ComputeEngine, domain: Domain): void {
 
 /** The value inside a constructed carrier — what a statistic reaches for. */
 export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression | undefined => operandsOf(value)[0];
+
+/**
+ * Mint every domain's plural TYPE-SPACE name as a set-valued symbol, the way compute-engine's
+ * own `Integers` is a symbol whose type is `set<integer>` rather than a callable (design/
+ * domains.md §2) — but only when the name isn't ALREADY something at the point this runs: a
+ * same-named collection family that enumerates this carrier (`Permutations`, `DyckPaths`,
+ * …), or a compute-engine native with its own real meaning (`RationalNumbers` is both at
+ * once — a bare `ce.lookupDefinition` audit found no plural that collides with a
+ * compute-engine meaning and has NO family of ours already answering for it). Call this
+ * AFTER `declareCollections` in a combined engine, so that check sees what collections
+ * already claimed rather than losing the race to it — minting a bare symbol first would make
+ * collections' OWN later `ce.declare` of the same name throw. Either way this never
+ * overwrites what a name already means; `declareDomainElement` is what makes
+ * `Element(x, <plural>)` answer regardless of whether this minted a fresh symbol or the name
+ * was already spoken for.
+ */
+export function declareDomainPlurals(ce: ComputeEngine, domains: readonly Domain[] = DOMAINS): void {
+  for (const domain of domains) {
+    if (domain.plural === undefined || ce.lookupDefinition(domain.plural) !== undefined) continue;
+    ce.declare(domain.plural, `set<${domain.type}>`);
+  }
+}
+
+/**
+ * Layer `Element(x, <plural>)` membership onto `ce`'s existing `Element` for every domain
+ * with a plural type-space name: True when `x` is a value of the MATCHING carrier (its own
+ * constructor as `x`'s operator), False when `x` is a value of a DIFFERENT one of ours (the
+ * same reason the carrier types exist at all — a wrong carrier is caught, not silently
+ * miscounted), and `undefined` — deferring to whatever `Element` already meant — for
+ * everything else: a bare, unresolved `x` stays unevaluated, and a name with its own real
+ * meaning (`RationalNumbers`, which is ALSO one of our carriers) still gets its real answer
+ * when `x` is not one of ours.
+ *
+ * Attached IN PLACE onto whatever `Element` already is — compute-engine's own built-in, or
+ * another library's replacement of it (`@enumeratio/algebra`'s `AlgebraProvider.contains`) —
+ * the same reasoning as `declareConstructor`: mutating the existing operator's `evaluate`
+ * never calls `ce.declare` a second time, so it never throws regardless of which library's
+ * `declare*` ran first in a combined engine.
+ */
+export function declareDomainElement(ce: ComputeEngine, domains: readonly Domain[] = DOMAINS): void {
+  const carrierOf = new Map(
+    domains.filter((d): d is Domain & { plural: string } => d.plural !== undefined).map((d) => [d.plural, d.name]),
+  );
+  const constructors = new Set(domains.map((d) => d.name));
+
+  const membership = (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    const element = ops[0];
+    const target = ops[1];
+    if (element === undefined || target === undefined) return undefined;
+    const carrier = isSymbol(target) ? carrierOf.get(target.symbol) : undefined;
+    if (carrier === undefined) return undefined;
+    const op = element.operator;
+    if (op === carrier) return ce.symbol("True");
+    if (constructors.has(op)) return ce.symbol("False");
+    return undefined;
+  };
+
+  const definition = ce.lookupDefinition("Element");
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
+
+  if (operator === undefined) {
+    // Scoped, same reason @enumeratio/algebra's own probe is: boxing binds the free symbols
+    // it names, and `x` read here should not stay bound for the session.
+    ce.pushScope();
+    const nativeEvaluate = ce.box(["Element", "x", "Integers"]).operatorDefinition?.evaluate;
+    ce.popScope();
+    ce.declare("Element", {
+      signature: "(any, any, boolean?) -> boolean",
+      evaluate: (ops: readonly BoxedExpression[], options) => membership(ops) ?? nativeEvaluate?.(ops, options),
+    });
+    return;
+  }
+
+  const existingEvaluate = operator.evaluate;
+  operator.evaluate = (ops: readonly BoxedExpression[], options) => membership(ops) ?? existingEvaluate?.(ops, options);
+}

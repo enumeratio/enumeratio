@@ -799,6 +799,10 @@ export const FOREIGN: Record<string, string> = {
   Composition: "a composition of functions, Composition[f, g]",
   Word: "the token specification used by Read and Find",
   Restricted: "an Interpreter form narrowed by a condition",
+  // Ours is the carrier's plural type-space symbol (design/domains.md §2 — Element(x,
+  // GaussianIntegers) checks x's carrier); Wolfram's is an option flag (IsPrime[n,
+  // GaussianIntegers -> True]), never a value on its own.
+  GaussianIntegers: "the GaussianIntegers -> True/False option several number-theory functions take",
   // Nearly ours, which is the trap: Wolfram's is a raster image built from a pixel array or
   // a graphics object, never from a URI, so `Image["data:image/png;…"]` is not an image over
   // there — it is an Image of a string.
@@ -953,7 +957,12 @@ function symbolToWolfram(s: string): string {
   if (slot) return `Slot[${slot[1] || 1}]`;
   const subscript = /^([A-Za-z][A-Za-z0-9]*)_([A-Za-z0-9]+)$/.exec(s);
   if (subscript) return `Subscript[${subscript[1]}, ${subscript[2]}]`;
-  // A head passed as a value (`Scan(xs, Add)`) takes its Wolfram name too.
+  // A head passed as a value (`Scan(xs, Add)`) takes its Wolfram name too. FOREIGN is
+  // deliberately NOT consulted here: `GaussianIntegers` bare is genuinely ambiguous between
+  // our own carrier's type-space symbol and Wolfram's real option flag (`PrimeQ[n,
+  // GaussianIntegers -> True]` has to keep the UNPREFIXED name, since that IS the real
+  // option) -- `applyHead` below still contextualises a CALL to one of our own heads, which
+  // is the case that actually needs it.
   return SYMBOLS[s] ?? HEADS[s] ?? s;
 }
 
