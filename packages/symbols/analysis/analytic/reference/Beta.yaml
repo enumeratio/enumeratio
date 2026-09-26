@@ -99,6 +99,11 @@ examples:
     expected: { num: "6.35358648555342153052878897202" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
+  - role: test
+    id: four-arguments-at-floats
+    expr: [Beta, 0.2, 0.5, 2, 3]
+    expected: { num: "0.04222499999999999999998311" }
+    caption: "The four-argument generalized form, at floats: $B_{0.5}(2,3) - B_{0.2}(2,3)$"
 seeAlso:
   - Gamma
   - Binomial

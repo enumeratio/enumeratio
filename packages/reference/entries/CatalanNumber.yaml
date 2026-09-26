@@ -28,6 +28,12 @@ examples:
     expected: 42
     category: Properties
     caption: Closed form $C_n = \frac{1}{n+1}\binom{2n}{n}$, here at $n = 5$
+  - role: test
+    id: the-closed-form-through-a-negative-n-in-binomial
+    expr: [Divide, [Binomial, [Multiply, 2, -13], 5], [Add, 4, 1]]
+    expected: [Rational, -142506, 5]
+    category: Properties
+    caption: The same closed form at a negative n, where Binomial's generalized formula (not 0) drives the result
   - id: equivalently-c-n-binom-2n-n-binom-2n-n-1
     expr: [Subtract, [Binomial, 10, 5], [Binomial, 10, 6]]
     expected: 42

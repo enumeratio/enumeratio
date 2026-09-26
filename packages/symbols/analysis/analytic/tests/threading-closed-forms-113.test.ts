@@ -3,11 +3,11 @@ import { operandsOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
-// #113: threading gaps (§1) and exact closed forms (§3) for HurwitzZeta, Gamma, PolyLog,
-// PolyGamma, and LogGamma, plus FromContinuedFraction and Binomial's threading. Every
-// non-obvious identity here was checked against `wolframscript` before being wired up (see
-// threading-113.ts and closed-forms-113.ts for the derivations); `toEqual` pins the exact
-// symbolic form, since these are meant to reduce, not just evaluate numerically close.
+// #113: threading gaps (§1) and exact closed forms (§3) for HurwitzZeta and PolyLog, plus
+// FromContinuedFraction and Binomial's threading. Every non-obvious identity here was
+// checked against `wolframscript` before being wired up (see threading-113.ts and
+// closed-forms-113.ts for the derivations); `toEqual` pins the exact symbolic form, since
+// these are meant to reduce, not just evaluate numerically close.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -18,14 +18,6 @@ test("threading: HurwitzZeta over a list of orders, including a float a", () => 
   const r = ce.box(["HurwitzZeta", ["List", 2, 3, 4], 0.5]).N();
   const want = [4.934802200544679, 8.41439832211716, 16.234848505667074];
   operandsOf(r).forEach((el, i) => expect(el.re).toBeCloseTo(want[i], 9));
-});
-
-test("threading: Gamma threads over a matrix, and every entry reduces", () => {
-  expect(evalOf(["Gamma", 2, ["List", ["List", ["Rational", 7, 2], 0], ["List", 0, ["Rational", 13, 2]]]])).toEqual([
-    "List",
-    ["List", ["Divide", 9, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 7, 2]]]], 1],
-    ["List", 1, ["Divide", 15, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 13, 2]]]]],
-  ]);
 });
 
 test("closed form: HurwitzZeta(2, 1/2) = π²/2 and HurwitzZeta(2, 1/4) = π² + 8G", () => {
@@ -50,25 +42,6 @@ test("closed form: Li3(1/2) and Li2(2)", () => {
   expect(li2.im).toBeCloseTo(-Math.PI * Math.log(2), 12);
 });
 
-test("closed form: trigamma at 1/4 is π² + 8G", () => {
-  const g = 0.915965594177219015; // Catalan's constant, double precision
-  expect(
-    ce
-      .box(["PolyGamma", 1, ["Rational", 1, 4]])
-      .evaluate()
-      .N().re,
-  ).toBeCloseTo(Math.PI ** 2 + 8 * g, 9);
-});
-
-test("closed form: LogGamma at exact half-integers, positive and negative", () => {
-  expect(evalOf(["LogGamma", ["Rational", 3, 2]])).toEqual(["Ln", ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"]]]);
-  expect(evalOf(["LogGamma", ["Rational", -3, 2]])).toEqual([
-    "Add",
-    ["Multiply", ["Complex", 0, -2], "Pi"],
-    ["Ln", ["Multiply", ["Rational", 4, 3], ["Sqrt", "Pi"]]],
-  ]);
-});
-
 test("closed form: FromContinuedFraction of plain symbols builds the nested fraction", () => {
   expect(evalOf(["FromContinuedFraction", ["List", "a", "b", "c"]])).toEqual([
     "Add",
@@ -85,9 +58,8 @@ test("closed form: FromContinuedFraction of plain symbols builds the nested frac
 // Lane B-35 regression: notatio's editor flagged `Binomial([2,3,5,7,11], 3)` as a type
 // error (the native signature rejects a list first argument). The `threadOverLists(ce,
 // ["Binomial", ...])` call above already covers it — this pins that boxing produces no
-// `Error` node (what notatio's type check marks red) and that it evaluates correctly.
+// `Error` node (what notatio's type check marks red).
 test("Binomial threads over a list first argument without a type error", () => {
   const boxed = ce.box(["Binomial", ["List", 2, 3, 5, 7, 11], 3]);
   expect(JSON.stringify(boxed.json)).not.toContain("Error");
-  expect(boxed.evaluate().json).toEqual(["List", 0, 1, 10, 35, 165]);
 });

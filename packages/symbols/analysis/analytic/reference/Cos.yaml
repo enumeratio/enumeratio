@@ -222,6 +222,12 @@ examples:
     expected: { num: "0.540302305868139717400936607443" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
+  - role: test
+    id: to-1-significant-digit
+    expr: [N, [Cos, 1], 1]
+    expected: 0.5
+    category: Scope
+    caption: A single requested digit, next to the 30-digit example above
   - id: a-huge-10-100-argument-reduces-exactly-mod-2-pi
     expr: [N, [Cos, [Power, 10, 100]]]
     expected: { num: "-0.928081905074655343456" }

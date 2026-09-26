@@ -49,6 +49,21 @@ prime-base-q-5-is-a-field-so-the-point-moves:
   rust:
     in: (adic(n(5), n(3)) / n(5))
     out: '["AdicNumeral",5,["Rational",3,5]]'
+dividing-by-zero-stays-complexinfinity:
+  epsil:
+    in: AdicNumeral(5, -1) / 0
+    out: ComplexInfinity
+  tex:
+    in: \frac{\mathrm{AdicNumeral}(5, -1)}{0}
+    out: \tilde\infty
+  fullform:
+    in: Divide[AdicNumeral[5, -1], 0]
+  rust:
+    in: (adic(n(5), n(-1)) / n(0))
+    out: "panic: Error during QAdic<EAdic> division: DivideByZero"
+    verdict: error
+    kind: domain
+    note: The adic crate's own division panics on a zero divisor; compute-engine answers ComplexInfinity, same as dividing anything else by zero.
 composite-base-2-is-not-a-unit-of-z-10-so-this:
   epsil:
     in: AdicNumeral(10, 3) / 2

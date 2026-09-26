@@ -34,6 +34,52 @@ a-pole-of-gamma:
     verdict: disagree
     kind: undefined-form
     note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust gives PositiveInfinity.'
+a-pole-of-gamma-at-negative-1:
+  epsil:
+    in: Gamma(-1)
+    out: ComplexInfinity
+  tex:
+    in: \Gamma(-1)
+    out: \tilde\infty
+  fullform:
+    in: Gamma[-1]
+  wolfram:
+    in: Gamma[-1]
+  sympy:
+    in: gamma(-1)
+  mpmath:
+    in: gamma(-1)
+  sage:
+    in: gamma(-1)
+  rust:
+    in: gamma(n(-1))
+    out: "-2.5653050788007548e16"
+    verdict: inconclusive
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and statrs's gamma blows up to a huge finite float approaching the pole rather than reaching it exactly."
+a-pole-of-gamma-at-negative-2:
+  epsil:
+    in: Gamma(-2)
+    out: ComplexInfinity
+  tex:
+    in: \Gamma(-2)
+    out: \tilde\infty
+  fullform:
+    in: Gamma[-2]
+  wolfram:
+    in: Gamma[-2]
+  sympy:
+    in: gamma(-2)
+  mpmath:
+    in: gamma(-2)
+  sage:
+    in: gamma(-2)
+  rust:
+    in: gamma(n(-2))
+    out: "6413262697001865.0"
+    verdict: inconclusive
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and statrs's gamma blows up to a huge finite float approaching the pole rather than reaching it exactly."
 a-floating-point-argument-evaluates-directly-to:
   epsil:
     in: Gamma(2.5)
@@ -672,3 +718,34 @@ to-40-significant-digits-every-one-correctly:
   rust:
     in: nf(gamma(rational(n(1), n(3))))
     out: "2.6789385347077475"
+two-arguments-with-a-complex-second-argument:
+  epsil:
+    in: Gamma(2.5, 1.5 + i)
+    out: 0.914_816_170_324_099_8 - 0.453_556_013_183_482_1i
+  tex:
+    in: \Gamma(2.5, 1.5+i)
+    out: 0.914\,816\,170\,324\,099\,8-0.453\,556\,013\,183\,482\,1i
+  fullform:
+    in: Gamma[2.5, Complex[1.5, 1]]
+  wolfram:
+    in: Gamma[2.5, Complex[1.5, 1]]
+n-gamma-1-0-2-exponential-cdf-at-a-concrete-z:
+  epsil:
+    in: N(Gamma(1, 0, 2))
+    out: 0.864_664_716_763_387_308_106
+  tex:
+    in: N(\Gamma(1, 0, 2))
+    out: 0.864\,664\,716\,763\,387\,308\,106
+  fullform:
+    in: N[Gamma[1, 0, 2]]
+  wolfram:
+    in: N[Gamma[1, 0, 2]]
+three-arguments-fully-symbolic-in-both-order-and:
+  epsil:
+    in: Gamma(s, 0, z)
+    out: Gamma(s, 0, z)
+  tex:
+    in: \Gamma(s, 0, z)
+    out: \Gamma(s, 0, z)
+  fullform:
+    in: Gamma[s, 0, z]
