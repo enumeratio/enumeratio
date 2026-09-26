@@ -17,3 +17,8 @@ seeAlso:
   - Element
   - PalindromicPrimes
   - EmirpPrimes
+catalog:
+  - system: oeis
+    identity: A068652
+    url: https://oeis.org/A068652
+    note: every cyclic digit permutation is prime — NOT A016114 (smallest-representative-only variant)

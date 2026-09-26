@@ -7,3 +7,8 @@ details:
 references:
   - system: wikipedia
     identity: Permutation#Composition of permutations
+catalog:
+  - system: findstat
+    identity: Mp00066
+    url: https://www.findstat.org/Mp00066
+    on: Permutation

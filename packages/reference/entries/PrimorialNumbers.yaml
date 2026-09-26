@@ -17,3 +17,11 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: mathlib4
+    identity: Nat.primorial
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/Primorial.html
+    note: mathlib's primorial n = product of primes ≤ n (indexed by bound); ours is indexed by rank r = product of the FIRST r primes (A002110) — they agree at n = the r-th prime
+  - system: oeis
+    identity: A002110
+    url: https://oeis.org/A002110

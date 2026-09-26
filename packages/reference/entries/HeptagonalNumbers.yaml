@@ -19,3 +19,15 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A000566
+    url: https://oeis.org/A000566
+  - system: sage
+    identity: sage.combinat.combinat.polygonal_number(7, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: s=7 fixed for the heptagonal case; their n = our r
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=7 fixed for the heptagonal case; PolygonalNumber(7,r) — their n = our r

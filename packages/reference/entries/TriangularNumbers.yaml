@@ -19,3 +19,15 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A000217
+    url: https://oeis.org/A000217
+  - system: sage
+    identity: sage.combinat.combinat.polygonal_number(3, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: s=3 fixed for the triangular case; their n = our r
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=3 fixed for the triangular case; PolygonalNumber(3,r) — their n = our r

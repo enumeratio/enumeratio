@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - CircularPrimes
   - EmirpPrimes
+catalog:
+  - system: oeis
+    identity: A002385
+    url: https://oeis.org/A002385

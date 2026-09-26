@@ -1,0 +1,10 @@
+name: NumRows
+domain: Combinatorics
+signature: NumRows(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St001446
+    url: https://www.findstat.org/St001446
+    on: PlanePartition
+stub: carrier

@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - HappyNumbers
   - SmithNumbers
+catalog:
+  - system: oeis
+    identity: A005349
+    url: https://oeis.org/A005349

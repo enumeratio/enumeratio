@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - SophieGermainPrimes
   - Primes
+catalog:
+  - system: oeis
+    identity: A005385
+    url: https://oeis.org/A005385

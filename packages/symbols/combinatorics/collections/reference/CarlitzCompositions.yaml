@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A003242
+catalog:
+  - system: oeis
+    identity: A003242
+    url: https://oeis.org/A003242

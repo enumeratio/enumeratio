@@ -18,3 +18,7 @@ seeAlso:
   - EvilNumbers
   - OdiousNumbers
   - Primes
+catalog:
+  - system: oeis
+    identity: A052294
+    url: https://oeis.org/A052294

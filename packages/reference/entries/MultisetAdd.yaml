@@ -1,0 +1,10 @@
+name: MultisetAdd
+domain: Combinatorics
+signature: MultisetAdd(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Multiset.instAdd
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Multiset/Defs.html
+    note: "additive union s + t: multiplicities add"
+stub: carrier

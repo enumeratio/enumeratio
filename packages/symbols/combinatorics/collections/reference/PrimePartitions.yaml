@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A000607
+catalog:
+  - system: oeis
+    identity: A000607
+    url: https://oeis.org/A000607

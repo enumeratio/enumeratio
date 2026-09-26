@@ -17,3 +17,12 @@ references:
     identity: Permutation#Ascents, descents, runs, exceedances
   - system: mathworld
     identity: PermutationAscent
+catalog:
+  - system: findstat
+    identity: St000761
+    url: https://www.findstat.org/St000761
+    on: Composition
+  - system: findstat
+    identity: St000245
+    url: https://www.findstat.org/St000245
+    on: Permutation

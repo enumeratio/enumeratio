@@ -36,3 +36,21 @@ references:
     identity: A000041
 names:
   wolframIdentity: true
+catalog:
+  - system: mathlib4
+    identity: Nat.Partition
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Partition/Basic.html
+  - system: sage
+    identity: Partitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
+  - system: sympy
+    identity: partitions
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.partitions
+    note: "partitions(n) yields {part_size: multiplicity} dicts, not a parts list — expand + sort descending to compare"
+  - system: wikipedia
+    identity: Partition (number theory)
+    url: https://en.wikipedia.org/wiki/Partition_(number_theory)
+    relation: conceptual
+  - system: wolfram
+    identity: PartitionsP
+    url: https://reference.wolfram.com/language/ref/PartitionsP.html

@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - KaprekarNumbers
+catalog:
+  - system: oeis
+    identity: A005188
+    url: https://oeis.org/A005188

@@ -1,0 +1,17 @@
+name: Surjections
+domain: Combinatorics
+signature: Surjections(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000670
+    url: https://oeis.org/A000670
+  - system: oeis
+    identity: A019538
+    url: https://oeis.org/A019538
+    note: per-k fiber count
+  - system: sage
+    identity: OrderedSetPartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html
+    note: word (surjection) encoding, not sage's block-list encoding
+stub: carrier

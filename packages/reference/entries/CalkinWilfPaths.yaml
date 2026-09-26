@@ -1,0 +1,11 @@
+name: CalkinWilfPaths
+domain: Combinatorics
+signature: CalkinWilfPaths(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A002487
+    url: https://oeis.org/A002487
+    note: fiber n is a contiguous depth-block of the BFS Calkin-Wilf enumeration (fusc-indexed); rank = word binary value
+    relation: conceptual
+stub: carrier

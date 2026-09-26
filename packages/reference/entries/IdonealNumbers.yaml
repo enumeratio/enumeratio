@@ -16,3 +16,7 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A000926
+    url: https://oeis.org/A000926

@@ -19,3 +19,7 @@ seeAlso:
   - TwinPrimes
   - CousinPrimes
   - PrimePairs
+catalog:
+  - system: oeis
+    identity: A023201
+    url: https://oeis.org/A023201

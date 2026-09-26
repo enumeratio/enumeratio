@@ -8,3 +8,8 @@ details:
 references:
   - system: wikipedia
     identity: Noncrossing partition
+catalog:
+  - system: findstat
+    identity: Mp00088
+    url: https://www.findstat.org/Mp00088
+    on: Permutation

@@ -1,0 +1,10 @@
+name: MaxEntry
+domain: Combinatorics
+signature: MaxEntry(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St001409
+    url: https://www.findstat.org/St001409
+    on: SemistandardTableau
+stub: carrier

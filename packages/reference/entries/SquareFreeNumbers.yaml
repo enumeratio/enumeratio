@@ -17,3 +17,10 @@ seeAlso:
   - Element
   - KFreeIntegers
   - PowerfulNumbers
+catalog:
+  - system: mathlib4
+    identity: Squarefree
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Squarefree/Basic.html
+  - system: oeis
+    identity: A005117
+    url: https://oeis.org/A005117

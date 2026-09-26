@@ -20,3 +20,8 @@ references:
     identity: Inversion (discrete mathematics)
   - system: mathworld
     identity: PermutationInversion
+catalog:
+  - system: findstat
+    identity: St000018
+    url: https://www.findstat.org/St000018
+    on: Permutation

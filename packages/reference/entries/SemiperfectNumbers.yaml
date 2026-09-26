@@ -17,3 +17,11 @@ seeAlso:
   - Element
   - PerfectNumbers
   - WeirdNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Pseudoperfect
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/FactorisationProperties.html
+    note: pseudoperfect is mathlib's name for the semiperfect concept — same predicate (some subset of proper divisors sums to n)
+  - system: oeis
+    identity: A005835
+    url: https://oeis.org/A005835

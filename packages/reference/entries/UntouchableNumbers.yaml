@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - AbundantNumbers
+catalog:
+  - system: oeis
+    identity: A005114
+    url: https://oeis.org/A005114

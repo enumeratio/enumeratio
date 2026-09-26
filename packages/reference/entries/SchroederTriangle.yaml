@@ -1,0 +1,10 @@
+name: SchroederTriangle
+domain: Combinatorics
+signature: SchroederTriangle(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A060693
+    url: https://oeis.org/A060693
+    note: A060693 counts by peaks, our T(n,k) by flat steps — equidistributed statistics, same triangle values
+stub: carrier

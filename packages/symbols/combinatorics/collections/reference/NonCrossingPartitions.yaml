@@ -15,3 +15,17 @@ seeAlso:
 references:
   - system: oeis
     identity: A000108
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+    note: cardinality only
+  - system: sage
+    identity: sage.combinat.set_partition.SetPartition.is_noncrossing
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition.html
+    note: predicate method, not a dedicated class — filter SetPartitions(n) by .is_noncrossing()
+    relation: partial
+  - system: wikipedia
+    identity: Noncrossing partition
+    url: https://en.wikipedia.org/wiki/Noncrossing_partition
+    relation: conceptual

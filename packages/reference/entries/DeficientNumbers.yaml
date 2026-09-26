@@ -17,3 +17,10 @@ seeAlso:
   - Element
   - AbundantNumbers
   - PerfectNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Deficient
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/FactorisationProperties.html
+  - system: oeis
+    identity: A005100
+    url: https://oeis.org/A005100

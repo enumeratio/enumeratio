@@ -17,3 +17,10 @@ seeAlso:
   - Element
   - Primes
   - SquareNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Abundant
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/FactorisationProperties.html
+  - system: oeis
+    identity: A005101
+    url: https://oeis.org/A005101

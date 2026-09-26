@@ -3,3 +3,10 @@ domain: Collections
 signature: SetCompositions(n)
 summary: "Compositions of a set: an ordered sequence of blocks partitioning it."
 stub: carrier
+catalog:
+  - system: oeis
+    identity: A000670
+    url: https://oeis.org/A000670
+  - system: sage
+    identity: OrderedSetPartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html

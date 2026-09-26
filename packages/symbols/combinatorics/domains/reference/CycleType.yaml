@@ -10,3 +10,8 @@ references:
     identity: Cyclic permutation
   - system: mathworld
     identity: PermutationCycle
+catalog:
+  - system: findstat
+    identity: Mp00108
+    url: https://www.findstat.org/Mp00108
+    on: Permutation

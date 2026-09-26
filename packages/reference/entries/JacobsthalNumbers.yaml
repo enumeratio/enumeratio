@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - PellNumbers
+catalog:
+  - system: oeis
+    identity: A001045
+    url: https://oeis.org/A001045

@@ -1,0 +1,17 @@
+name: BooleanAlgebra
+domain: Combinatorics
+signature: BooleanAlgebra(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: BooleanAlgebra
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/BooleanAlgebra/Defs.html
+    note: an order CLASS, not a type — our finset-under-⊆ carrier on [n] is the concrete instance (BooleanAlgebra (Finset (Fin n)))
+  - system: oeis
+    identity: A000079
+    url: https://oeis.org/A000079
+  - system: mathlib4
+    identity: BooleanAlgebra
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/BooleanAlgebra/Defs.html
+    note: an ORDER class (distributive lattice + complement); our BOUNDED finset instantiates it
+stub: carrier

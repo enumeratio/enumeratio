@@ -1,0 +1,17 @@
+name: ParkingFunctions
+domain: Combinatorics
+signature: ParkingFunctions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage, wikipedia; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000272
+    url: https://oeis.org/A000272
+    note: our n = A000272 index − 1
+  - system: sage
+    identity: sage.combinat.parking_functions.ParkingFunctions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/parking_functions.html
+  - system: wikipedia
+    identity: Parking function
+    url: https://en.wikipedia.org/wiki/Parking_function
+    relation: conceptual
+stub: carrier

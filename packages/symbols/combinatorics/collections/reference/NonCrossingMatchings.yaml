@@ -14,3 +14,12 @@ seeAlso:
 references:
   - system: oeis
     identity: A000108
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: sage
+    identity: sage.combinat.perfect_matching.PerfectMatching.is_noncrossing
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/perfect_matching.html
+    note: predicate method, not a dedicated class — filter PerfectMatchings(k) by .is_noncrossing(); k=2n, matching the existing perfect_matchings delta (sage parameterizes by ground-set size, ours by pair-count)
+    relation: partial

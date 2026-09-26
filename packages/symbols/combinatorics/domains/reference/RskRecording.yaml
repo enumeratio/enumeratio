@@ -8,3 +8,8 @@ details:
 references:
   - system: wikipedia
     identity: Robinson–Schensted correspondence
+catalog:
+  - system: findstat
+    identity: Mp00070
+    url: https://www.findstat.org/Mp00070
+    on: Permutation

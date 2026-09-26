@@ -1,0 +1,10 @@
+name: TotalPartitions
+domain: Combinatorics
+signature: TotalPartitions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A001003
+    url: https://oeis.org/A001003
+    note: "shifted: n leaves ⇒ A001003(n-1)"
+stub: carrier

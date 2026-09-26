@@ -16,3 +16,8 @@ seeAlso:
   - At
   - Element
   - SuperabundantNumbers
+catalog:
+  - system: oeis
+    identity: A002182
+    url: https://oeis.org/A002182
+    note: distinct from superabundant (A004394) from the 20th term on

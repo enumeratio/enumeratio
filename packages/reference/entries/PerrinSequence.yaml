@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - PadovanSequence
+catalog:
+  - system: oeis
+    identity: A001608
+    url: https://oeis.org/A001608

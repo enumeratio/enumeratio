@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - ThueMorseNumbers
+catalog:
+  - system: oeis
+    identity: A002487
+    url: https://oeis.org/A002487

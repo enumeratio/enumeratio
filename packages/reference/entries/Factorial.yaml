@@ -56,3 +56,10 @@ bindings:
     form: rust
     template: factorial($1)
     arity: 1
+catalog:
+  - system: mathlib4
+    identity: Nat.factorial
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Factorial/Basic.html
+  - system: wolfram
+    identity: Factorial
+    url: https://reference.wolfram.com/language/ref/Factorial.html

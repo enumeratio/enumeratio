@@ -16,3 +16,8 @@ seeAlso:
 references:
   - system: wikipedia
     identity: Permutation#Ascents, descents, runs, exceedances
+catalog:
+  - system: findstat
+    identity: St000155
+    url: https://www.findstat.org/St000155
+    on: Permutation

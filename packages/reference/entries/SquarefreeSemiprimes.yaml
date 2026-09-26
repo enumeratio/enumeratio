@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - SemiprimeNumbers
   - SphenicNumbers
+catalog:
+  - system: oeis
+    identity: A006881
+    url: https://oeis.org/A006881

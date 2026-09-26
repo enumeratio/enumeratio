@@ -17,3 +17,12 @@ seeAlso:
   - Factorial
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A000142
+    url: https://oeis.org/A000142
+    note: "RSK: pairs of same-shape SYT of size n sum to n!"
+  - system: sage
+    identity: sage.combinat.rsk.RSK
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/rsk.html
+    note: RSK(σ, check_standard=True) maps a permutation to its (P,Q) SYT pair; our collection is that map's codomain at fixed n — every same-shape SYT pair, the image of RSK over Permutations(n)

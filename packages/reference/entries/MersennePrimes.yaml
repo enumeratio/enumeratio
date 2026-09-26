@@ -17,3 +17,12 @@ seeAlso:
   - Element
   - Primes
   - FibonacciPrimes
+catalog:
+  - system: mathlib4
+    identity: mersenne
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/LucasLehmer.html
+    note: mersenne p = 2^p − 1 is the number-family function, not a MersennePrime type; ours is the sub-sequence where Nat.Prime (mersenne p) holds
+  - system: oeis
+    identity: A000668
+    url: https://oeis.org/A000668
+    note: the prime values 2^p-1 themselves, not the exponents p (cf. A000043)

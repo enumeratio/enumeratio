@@ -18,3 +18,10 @@ seeAlso:
 references:
   - system: oeis
     identity: A000108
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: sage
+    identity: Permutations(n, avoiding=[2,3,1])
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html

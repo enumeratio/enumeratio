@@ -16,3 +16,11 @@ enumerate:
 seeAlso:
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A000244
+    url: https://oeis.org/A000244
+  - system: sage
+    identity: sage.combinat.gray_codes.product([3]*n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/gray_codes.html
+    note: a SWITCH generator, not an element class (same pattern as gray_codes → product([2]*n)); product([3]*n) walks the reflected ternary Gray code = our carrier

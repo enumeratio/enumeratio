@@ -1,0 +1,10 @@
+name: TopRowSum
+domain: Combinatorics
+signature: TopRowSum(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000186
+    url: https://www.findstat.org/St000186
+    on: GelfandTsetlinPattern
+stub: carrier

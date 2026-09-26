@@ -1,0 +1,13 @@
+name: SytTwoRow
+domain: Combinatorics
+signature: SytTwoRow(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A001405
+    url: https://oeis.org/A001405
+  - system: sage
+    identity: sage.combinat.tableau.StandardTableaux
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
+    note: sage's StandardTableaux(shape) takes ONE partition; ours unions every ≤2-row shape at fixed n — Σ_{a=⌈n/2⌉}^{n} StandardTableaux([a, n−a])
+stub: carrier

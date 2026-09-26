@@ -17,3 +17,15 @@ seeAlso:
   - IntegerPartitions
   - Count
   - At
+catalog:
+  - system: mathlib4
+    identity: SemistandardYoungTableau
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Young/SemistandardTableau.html
+  - system: sage
+    identity: SemistandardTableaux(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
+  - system: wikipedia
+    identity: Young tableau
+    url: https://en.wikipedia.org/wiki/Young_tableau
+    note: the article covers both standard and semistandard tableaux under one page
+    relation: conceptual

@@ -16,3 +16,10 @@ seeAlso:
   - At
   - Element
   - SternDiatomicSequence
+catalog:
+  - system: oeis
+    identity: A010060
+    url: https://oeis.org/A010060
+  - system: sage
+    identity: sage.combinat.words.word_generators.words.ThueMorseWord()
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/words/word_generators.html

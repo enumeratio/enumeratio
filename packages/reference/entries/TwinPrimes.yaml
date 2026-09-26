@@ -20,3 +20,7 @@ seeAlso:
   - CousinPrimes
   - SexyPrimes
   - PrimePairs
+catalog:
+  - system: oeis
+    identity: A001359
+    url: https://oeis.org/A001359

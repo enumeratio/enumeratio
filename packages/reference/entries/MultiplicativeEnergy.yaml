@@ -1,0 +1,9 @@
+name: MultiplicativeEnergy
+domain: Combinatorics
+signature: MultiplicativeEnergy(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Finset.multiplicativeEnergy
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Additive/Energy.html
+stub: carrier

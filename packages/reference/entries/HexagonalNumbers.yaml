@@ -19,3 +19,15 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A000384
+    url: https://oeis.org/A000384
+  - system: sage
+    identity: sage.combinat.combinat.polygonal_number(6, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: s=6 fixed for the hexagonal case; their n = our r
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=6 fixed for the hexagonal case; PolygonalNumber(6,r) — their n = our r

@@ -11,3 +11,8 @@ details:
 seeAlso:
   - IntegerCompositions
   - OddCompositions
+catalog:
+  - system: oeis
+    identity: A000045
+    url: https://oeis.org/A000045
+    note: F(n−1)

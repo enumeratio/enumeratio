@@ -24,3 +24,21 @@ references:
     identity: DyckPath
   - system: oeis
     identity: A000108
+catalog:
+  - system: mathlib4
+    identity: catalan
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Catalan/Basic.html#catalan
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: sage
+    identity: DyckWords(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/dyck_word.html
+  - system: wikipedia
+    identity: Dyck language
+    url: https://en.wikipedia.org/wiki/Dyck_language
+    note: titled "Dyck language" (the word/bracket formalism); the dedicated "Dyck path" title redirects to Catalan number
+    relation: conceptual
+  - system: mathlib4
+    identity: DyckWord
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/DyckWord.html#DyckWord

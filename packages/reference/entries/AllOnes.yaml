@@ -15,3 +15,7 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A000012
+    url: https://oeis.org/A000012

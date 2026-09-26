@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - HarshadNumbers
   - SemiprimeNumbers
+catalog:
+  - system: oeis
+    identity: A006753
+    url: https://oeis.org/A006753

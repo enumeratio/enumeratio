@@ -1,0 +1,12 @@
+name: BoundedPartPartitions
+domain: Combinatorics
+signature: BoundedPartPartitions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A026820
+    url: https://oeis.org/A026820
+  - system: sage
+    identity: Partitions(n, max_part=k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
+stub: carrier

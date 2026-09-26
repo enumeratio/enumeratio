@@ -1,0 +1,10 @@
+name: NegativesCount
+domain: Combinatorics
+signature: NegativesCount(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St001429
+    url: https://www.findstat.org/St001429
+    on: SignedPermutation
+stub: carrier

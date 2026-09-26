@@ -18,3 +18,8 @@ references:
     identity: Fixed point (mathematics)
   - system: mathworld
     identity: FixedPoint
+catalog:
+  - system: findstat
+    identity: St000022
+    url: https://www.findstat.org/St000022
+    on: Permutation

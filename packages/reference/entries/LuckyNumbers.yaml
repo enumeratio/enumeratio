@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - Primes
+catalog:
+  - system: oeis
+    identity: A000959
+    url: https://oeis.org/A000959

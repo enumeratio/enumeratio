@@ -1,0 +1,17 @@
+name: CompositionsIntoKParts
+domain: Combinatorics
+signature: CompositionsIntoKParts(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis, sage; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Composition n
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Composition.html
+    note: no k-restricted type in mathlib — the parent, filtered to .length = k
+  - system: oeis
+    identity: A097805
+    url: https://oeis.org/A097805
+    note: matches for n,k≥1; OEIS extra k=0 boundary column has no counterpart
+  - system: sage
+    identity: Compositions(n, length=k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/composition.html
+stub: carrier

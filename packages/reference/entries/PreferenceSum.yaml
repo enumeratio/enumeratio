@@ -1,0 +1,10 @@
+name: PreferenceSum
+domain: Combinatorics
+signature: PreferenceSum(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000165
+    url: https://www.findstat.org/St000165
+    on: ParkingFunction
+stub: carrier

@@ -1,0 +1,14 @@
+name: OrderedTrees
+domain: Combinatorics
+signature: OrderedTrees(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+    note: cardinality only
+  - system: sage
+    identity: sage.combinat.ordered_tree.OrderedTrees(size)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/ordered_tree.html
+    note: their parameter is NODE count; ours is EDGE count — our n = their size − 1 (n edges ⇒ n+1 nodes)
+stub: carrier

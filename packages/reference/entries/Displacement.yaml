@@ -1,0 +1,10 @@
+name: Displacement
+domain: Combinatorics
+signature: Displacement(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000188
+    url: https://www.findstat.org/St000188
+    on: ParkingFunction
+stub: carrier

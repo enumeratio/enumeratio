@@ -139,6 +139,7 @@ const REFERENCE: JsonSchema = {
     note: { type: "string" },
     relation: { enum: ["partial", "aggregate", "conceptual"] },
     arity: { type: "integer" },
+    on: { type: "string" },
   },
   required: ["system", "identity"],
   additionalProperties: false,
@@ -165,7 +166,8 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
   title: "ReferenceEntry",
   description:
     "One compute-engine head's reference/<Head>.yaml: summary, signatures, details, " +
-    "references and head-level bindings. Its examples are in <Head>.examples.yaml.",
+    "references, the catalog's own crosswalk rows and head-level bindings. Its examples " +
+    "are in <Head>.examples.yaml.",
   type: "object",
   properties: {
     name: { type: "string" },
@@ -191,6 +193,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     bindings: { type: "array", items: { $ref: "#/$defs/ReferenceBinding" } },
     primitive: { enum: ["kernel", "numeric", "foreign", "axiom"] },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
+    catalog: { type: "array", items: { $ref: "#/$defs/Reference" } },
     names: { $ref: "#/$defs/ReferenceNames" },
     formerly: { type: "array", items: { type: "string" } },
     stub: { enum: ["engine", "carrier"] },

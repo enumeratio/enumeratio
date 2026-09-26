@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - SquareFreeNumbers
   - PerfectPowerNumbers
+catalog:
+  - system: oeis
+    identity: A001694
+    url: https://oeis.org/A001694

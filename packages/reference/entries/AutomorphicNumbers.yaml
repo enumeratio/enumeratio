@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - KaprekarNumbers
+catalog:
+  - system: oeis
+    identity: A003226
+    url: https://oeis.org/A003226

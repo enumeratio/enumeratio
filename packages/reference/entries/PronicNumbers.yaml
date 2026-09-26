@@ -17,3 +17,7 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A002378
+    url: https://oeis.org/A002378

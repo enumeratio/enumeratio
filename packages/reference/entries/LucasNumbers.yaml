@@ -16,3 +16,14 @@ seeAlso:
   - At
   - Element
   - FibonacciNumbers
+catalog:
+  - system: oeis
+    identity: A000032
+    url: https://oeis.org/A000032
+  - system: sage
+    identity: sage.combinat.combinat.lucas_number2(n, 1, -1)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: L(n) via lucas_number2 with (P, Q) = (1, −1); sage has no bare Lucas function, this is the parameterized Lucas-of-the-second-kind
+  - system: wolfram
+    identity: LucasL
+    url: https://reference.wolfram.com/language/ref/LucasL.html

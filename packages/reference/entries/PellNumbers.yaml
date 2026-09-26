@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - JacobsthalNumbers
   - CentralDelannoyNumbers
+catalog:
+  - system: oeis
+    identity: A000129
+    url: https://oeis.org/A000129

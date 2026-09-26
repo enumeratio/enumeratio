@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - HighlyCompositeNumbers
+catalog:
+  - system: oeis
+    identity: A004394
+    url: https://oeis.org/A004394

@@ -16,3 +16,8 @@ seeAlso:
   - At
   - Element
   - PerrinSequence
+catalog:
+  - system: oeis
+    identity: A000931
+    url: https://oeis.org/A000931
+    note: P(n) = A000931(n+5); offset differs

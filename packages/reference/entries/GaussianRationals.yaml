@@ -1,0 +1,10 @@
+name: GaussianRationals
+domain: Combinatorics
+signature: GaussianRationals(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in sage; not yet written up here.
+catalog:
+  - system: sage
+    identity: QuadraticField(-1)
+    url: https://doc.sagemath.org/html/en/reference/number_fields/sage/rings/number_field/number_field.html
+    note: field of Gaussian rationals ℚ(i); our carrier is an explicit (re,im) rational_number pair, not a number-field element type
+stub: carrier

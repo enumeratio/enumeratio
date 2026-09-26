@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A000009
+catalog:
+  - system: oeis
+    identity: A000009
+    url: https://oeis.org/A000009

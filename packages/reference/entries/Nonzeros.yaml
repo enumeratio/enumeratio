@@ -1,0 +1,10 @@
+name: Nonzeros
+domain: Combinatorics
+signature: Nonzeros(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000890
+    url: https://www.findstat.org/St000890
+    on: AlternatingSignMatrix
+stub: carrier

@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - SchroederNumbers
   - CatalanNumbers
+catalog:
+  - system: oeis
+    identity: A001003
+    url: https://oeis.org/A001003

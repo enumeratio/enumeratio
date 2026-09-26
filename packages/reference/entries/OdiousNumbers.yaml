@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - EvilNumbers
   - PerniciousNumbers
+catalog:
+  - system: oeis
+    identity: A000069
+    url: https://oeis.org/A000069

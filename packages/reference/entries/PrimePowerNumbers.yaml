@@ -17,3 +17,10 @@ seeAlso:
   - Element
   - Primes
   - KAlmostPrimes
+catalog:
+  - system: mathlib4
+    identity: IsPrimePow
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/IsPrimePow.html
+  - system: oeis
+    identity: A246655
+    url: https://oeis.org/A246655

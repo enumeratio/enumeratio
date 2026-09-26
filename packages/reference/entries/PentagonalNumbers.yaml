@@ -19,3 +19,15 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A000326
+    url: https://oeis.org/A000326
+  - system: sage
+    identity: sage.combinat.combinat.polygonal_number(5, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: s=5 fixed for the pentagonal case; their n = our r
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=5 fixed for the pentagonal case; PolygonalNumber(5,r) — their n = our r

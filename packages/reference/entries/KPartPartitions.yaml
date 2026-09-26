@@ -1,0 +1,12 @@
+name: KPartPartitions
+domain: Combinatorics
+signature: KPartPartitions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A008284
+    url: https://oeis.org/A008284
+  - system: sage
+    identity: Partitions(n, length=k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
+stub: carrier

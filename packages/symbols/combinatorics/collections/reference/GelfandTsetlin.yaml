@@ -15,3 +15,6 @@ enumerate:
 seeAlso:
   - Count
   - At
+catalog:
+  - system: sage
+    identity: GelfandTsetlinPatterns(n, k)

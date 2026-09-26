@@ -15,3 +15,20 @@ seeAlso:
 references:
   - system: oeis
     identity: A132393
+catalog:
+  - system: mathlib4
+    identity: Nat.stirlingFirst
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Stirling.html
+    note: counting formula only — Nat.stirlingFirst n k = c(n,k), the unsigned Stirling number of the first kind; our fiber is the actual permutations with k cycles, mathlib's is just their count
+  - system: oeis
+    identity: A132393
+    url: https://oeis.org/A132393
+  - system: sage
+    identity: sage.combinat.combinat.stirling_number1(n, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: UNSIGNED first-kind Stirling numbers, matches fiber_count = stirling_first_unsigned(n,k) exactly; verified live n=5,6 (no prior sage row for this collection)
+    relation: aggregate
+  - system: wolfram
+    identity: StirlingS1
+    url: https://reference.wolfram.com/language/ref/StirlingS1.html
+    note: WL StirlingS1 is SIGNED; our fiber count is the unsigned cycle-count c(n,k) = |StirlingS1(n,k)|

@@ -36,3 +36,12 @@ seeAlso:
   - Inversions
   - Descents
   - SymmetricGroup
+catalog:
+  - system: findstat
+    identity: St000004
+    url: https://www.findstat.org/St000004
+    on: Permutation
+  - system: findstat
+    identity: St000330
+    url: https://www.findstat.org/St000330
+    on: StandardTableau
