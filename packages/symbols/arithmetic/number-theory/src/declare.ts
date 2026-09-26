@@ -12,6 +12,7 @@ import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareBacklog } from "./declare-backlog.ts";
 import { declareFastPrimes } from "./declare-fast-primes.ts";
+import { declareFastRecurrence } from "./declare-fast-recurrence.ts";
 import { declareGaussian, declareGaussianRationalGcdLcm, declareIntegerExponentGaussian } from "./declare-gaussian.ts";
 import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
@@ -540,8 +541,10 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     2,
   );
 
-  // Performance override past this point — see declare-fast-primes.ts and issue #205: a
-  // segmented sieve for PrimePi/NthPrime/Prime(n). Attached last so it answers the plain-
-  // integer case directly rather than threading through every widened form declared above.
+  // Performance overrides past this point — see declare-fast-recurrence.ts, declare-fast-
+  // primes.ts and issue #205: fast doubling for Fibonacci/LucasL, a segmented sieve for
+  // PrimePi/NthPrime/Prime(n). Attached last so they answer the plain-integer/plain-real
+  // case directly rather than threading through every widened form declared above first.
+  declareFastRecurrence(ce);
   declareFastPrimes(ce);
 }
