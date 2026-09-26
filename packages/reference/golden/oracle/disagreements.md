@@ -392,28 +392,56 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## rust — agree 228, disagree 18, inconclusive 4, error 74
+## rust — agree 229, disagree 46, inconclusive 10, error 79
 
-| example                                                    | kind           | ours                                                | theirs                                                       |
-| ---------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------------------------------ |
-| `Binomial/a-negative-k-also-gives-0`                       | domain         | `0`                                                 | `1`                                                          |
-| `Binomial/a-negative-n-uses-the-generalized-formula-binom` | domain         | `15`                                                | `0`                                                          |
-| `Binomial/both-arguments-negative-integers-the-limiting`   | convention     | `6`                                                 | `1`                                                          |
-| `Cos/a-huge-10-100-argument-reduces-exactly-mod-2-pi`      | precision      | `-0.928081905074655343456`                          | `0.9247242387519338`                                         |
-| `Gamma/a-pole-of-gamma`                                    | undefined-form | `ComplexInfinity`                                   | `PositiveInfinity`                                           |
-| `Gamma/values-far-past-the-double-range-gamma-200-5`       | precision      | `5.57316894480137913364e+373`                       | `PositiveInfinity`                                           |
-| `Ln/a-negative-float-gives-the-principal-complex`          | domain         | `{"re":0.9162907318741551,"im":3.141592653589793}`  | `NaN`                                                        |
-| `Ln/ln-1-i-pi-the-principal-value-past-the-branch`         | domain         | `{"re":0,"im":3.141592653589793}`                   | `NaN`                                                        |
-| `Ln/ln-frac-12-i-pi-ln-2-a-negative-rational-folded`       | domain         | `{"re":-0.6931471805599453,"im":3.141592653589793}` | `NaN`                                                        |
-| `N/a-list-number-by-number`                                | precision      | `[3.1416, 2.7183, 1.4142]`                          | `[3.141592653589793, 2.718281828459045, 1.4142135623730951]` |
-| `N/an-exact-tie-rounds-to-the-even-digit-0-125`            | precision      | `0.12`                                              | `0.125`                                                      |
-| `N/and-0-375-to-0-38`                                      | precision      | `0.38`                                              | `0.375`                                                      |
-| `Sin/a-huge-24-40-argument-reduces-exactly-mod-2-pi`       | precision      | `0.400083152719766047071`                           | `-0.5897765161315717`                                        |
-| `Sqrt/a-negative-rational-still-evaluates-exactly-when`    | domain         | `{"re":0,"im":0.6666666666666666}`                  | `NaN`                                                        |
-| `Sqrt/a-perfect-square-radicand-evaluates-exactly-even`    | domain         | `{"re":0,"im":2}`                                   | `NaN`                                                        |
-| `Sqrt/negative-but-not-a-perfect-square-stays-symbolic`    | domain         | `{"re":0,"im":1.4142135623730951}`                  | `NaN`                                                        |
-| `Sqrt/sqrt-neg-25`                                         | domain         | `{"re":0,"im":5}`                                   | `NaN`                                                        |
-| `Sqrt/sqrt-neg-2p5`                                        | domain         | `{"re":0,"im":1.5811388300841898}`                  | `NaN`                                                        |
+| example                                                          | kind           | ours                                                | theirs                                                       |
+| ---------------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------------------------------ |
+| `Binomial/a-negative-k-also-gives-0`                             | domain         | `0`                                                 | `1`                                                          |
+| `Binomial/a-negative-k-past-n-binom-100-neg-50`                  | domain         | `0`                                                 | `1`                                                          |
+| `Binomial/a-negative-k-past-n-binom-4-neg-13`                    | domain         | `0`                                                 | `1`                                                          |
+| `Binomial/a-negative-k-with-n-10-binom-10-neg-10`                | domain         | `0`                                                 | `1`                                                          |
+| `Binomial/a-negative-k-with-n-2-binom-2-neg-2`                   | domain         | `3`                                                 | `0`                                                          |
+| `Binomial/a-negative-n-again-binom-neg-4-1`                      | domain         | `-4`                                                | `0`                                                          |
+| `Binomial/a-negative-n-uses-the-generalized-formula-binom`       | domain         | `15`                                                | `0`                                                          |
+| `Binomial/a-negative-n-with-a-positive-k-binom-9-1`              | domain         | `-9`                                                | `0`                                                          |
+| `Binomial/a-negative-n-with-k-0-binom-1-4`                       | domain         | `1`                                                 | `0`                                                          |
+| `Binomial/a-negative-n-zero-k-binom-neg-1-0`                     | domain         | `1`                                                 | `0`                                                          |
+| `Binomial/both-arguments-negative-integers-the-limiting`         | convention     | `6`                                                 | `1`                                                          |
+| `Binomial/not-pascal-s-rule-across-mismatched-n`                 | domain         | `false`                                             | `true`                                                       |
+| `Binomial/symmetry-doesn-t-hold-across-mismatched-n`             | domain         | `false`                                             | `true`                                                       |
+| `CatalanNumber/the-closed-form-through-a-negative-n-in-binomial` | domain         | `-28501.2`                                          | `0`                                                          |
+| `Cos/a-huge-10-100-argument-reduces-exactly-mod-2-pi`            | precision      | `-0.928081905074655343456`                          | `0.9247242387519338`                                         |
+| `Cos/to-1-significant-digit`                                     | precision      | `0.5`                                               | `0.5403023058681398`                                         |
+| `Exp/to-1-significant-digit`                                     | precision      | `3`                                                 | `2.718281828459045`                                          |
+| `Floor/a-negative-radicand-inside-floor`                         | domain         | `{"re":0,"im":1}`                                   | `NaN`                                                        |
+| `Gamma/a-pole-of-gamma`                                          | undefined-form | `ComplexInfinity`                                   | `PositiveInfinity`                                           |
+| `Gamma/values-far-past-the-double-range-gamma-200-5`             | precision      | `5.57316894480137913364e+373`                       | `PositiveInfinity`                                           |
+| `Ln/a-machine-precision-negative-argument`                       | domain         | `{"re":1.548625773037343,"im":3.141592653589793}`   | `NaN`                                                        |
+| `Ln/a-negative-float-gives-the-principal-complex`                | domain         | `{"re":0.9162907318741551,"im":3.141592653589793}`  | `NaN`                                                        |
+| `Ln/an-integer-power-negative-argument`                          | domain         | `{"re":0.6931471805599453,"im":3.141592653589793}`  | `NaN`                                                        |
+| `Ln/ln-1-i-pi-the-principal-value-past-the-branch`               | domain         | `{"re":0,"im":3.141592653589793}`                   | `NaN`                                                        |
+| `Ln/ln-frac-12-i-pi-ln-2-a-negative-rational-folded`             | domain         | `{"re":-0.6931471805599453,"im":3.141592653589793}` | `NaN`                                                        |
+| `Ln/ln-neg-6`                                                    | domain         | `{"re":1.791759469228055,"im":3.141592653589793}`   | `NaN`                                                        |
+| `Ln/n-of-a-negative-integer-argument`                            | domain         | `{"re":0.6931471805599453,"im":3.141592653589793}`  | `NaN`                                                        |
+| `Ln/n-of-a-negative-rational-argument`                           | domain         | `{"re":-0.6931471805599453,"im":3.141592653589793}` | `NaN`                                                        |
+| `N/a-list-number-by-number`                                      | precision      | `[3.1416, 2.7183, 1.4142]`                          | `[3.141592653589793, 2.718281828459045, 1.4142135623730951]` |
+| `N/an-exact-tie-rounds-to-the-even-digit-0-125`                  | precision      | `0.12`                                              | `0.125`                                                      |
+| `N/and-0-375-to-0-38`                                            | precision      | `0.38`                                              | `0.375`                                                      |
+| `N/n-pi-1-digit`                                                 | precision      | `3`                                                 | `3.141592653589793`                                          |
+| `Sin/a-huge-24-40-argument-reduces-exactly-mod-2-pi`             | precision      | `0.400083152719766047071`                           | `-0.5897765161315717`                                        |
+| `Sin/an-even-huger-argument-11-38`                               | precision      | `0.867534193184863032082`                           | `-0.7172457893515806`                                        |
+| `Sqrt/a-negative-rational-still-evaluates-exactly-when`          | domain         | `{"re":0,"im":0.6666666666666666}`                  | `NaN`                                                        |
+| `Sqrt/a-perfect-square-radicand-evaluates-exactly-even`          | domain         | `{"re":0,"im":2}`                                   | `NaN`                                                        |
+| `Sqrt/an-approximate-negative-radicand-stays-complex`            | domain         | `{"re":0,"im":1.695582495781317}`                   | `NaN`                                                        |
+| `Sqrt/negative-but-not-a-perfect-square-stays-symbolic`          | domain         | `{"re":0,"im":1.4142135623730951}`                  | `NaN`                                                        |
+| `Sqrt/sqrt-2-times-sqrt-neg-1`                                   | domain         | `{"re":0,"im":1}`                                   | `NaN`                                                        |
+| `Sqrt/sqrt-36-negative`                                          | domain         | `{"re":0,"im":6}`                                   | `NaN`                                                        |
+| `Sqrt/sqrt-neg-1`                                                | domain         | `{"re":0,"im":1}`                                   | `NaN`                                                        |
+| `Sqrt/sqrt-neg-1-half`                                           | domain         | `{"re":0,"im":0.7071067811865476}`                  | `NaN`                                                        |
+| `Sqrt/sqrt-neg-12-over-5`                                        | domain         | `{"re":0,"im":1.5491933384829668}`                  | `NaN`                                                        |
+| `Sqrt/sqrt-neg-25`                                               | domain         | `{"re":0,"im":5}`                                   | `NaN`                                                        |
+| `Sqrt/sqrt-neg-2p5`                                              | domain         | `{"re":0,"im":1.5811388300841898}`                  | `NaN`                                                        |
+| `Sqrt/sqrt-neg-4-over-9`                                         | domain         | `{"re":0,"im":0.6666666666666666}`                  | `NaN`                                                        |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -425,6 +453,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `AdicNumeral/999-1-0-carrying-forever`                         | `panic: the adic crate takes a prime base, not 10`        |
 | `AdicNumeral/a-negative-power-inverts-exactly-3-1-1-3-in-z-10` | `panic: the adic crate takes a prime base, not 10`        |
 | `AdicNumeral/composite-base-2-is-not-a-unit-of-z-10-so-this`   | `panic: the adic crate takes a prime base, not 10`        |
+| `AdicNumeral/dividing-by-zero-stays-complexinfinity`           | `panic: Error during QAdic<EAdic> division: DivideByZero` |
 | `AdicNumeral/numerals-over-different-bases-never-combine-and`  | `panic: MixedCharacteristic`                              |
 | `AdicNumeral/the-exact-zero-has-infinite-valuation`            | `panic: the adic crate takes a prime base, not 10`        |
 | `Binomial/a-rational-n-with-integer-k-gives-the-exact`         | `panic: an integer, not 1/2`                              |
@@ -433,6 +462,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Binomial/half-integer-arguments-evaluate-exactly-through`     | `panic: an integer, not 9/2`                              |
 | `Binomial/real-arguments-evaluate-through-the-gamma`           | `panic: an integer, not 8.5`                              |
 | `Binomial/threads-element-wise-over-a-list-as-wolfram-s`       | `panic: threading: a list where the crate takes a scalar` |
+| `Ceil/a-zero-divisor-inside-ceil`                              | `panic: denominator == 0`                                 |
 | `Ceil/threads-element-wise-over-a-list`                        | `panic: threading: a list where the crate takes a scalar` |
 | `Cos/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
 | `Cos/threads-element-wise-over-a-matrix`                       | `panic: threading: a list where the crate takes a scalar` |
@@ -444,6 +474,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Factorial/negative-non-integers-are-defined-too-2-5-gamma`    | `panic: an integer, not -2.5`                             |
 | `Factorial/real-arguments-evaluate-as-gamma-n-1`               | `panic: an integer, not 3.5`                              |
 | `Factorial/threads-element-wise-over-a-list`                   | `panic: threading: a list where the crate takes a scalar` |
+| `Floor/a-zero-divisor-inside-floor`                            | `panic: denominator == 0`                                 |
 | `Floor/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
 | `Gamma/threads-over-a-list-and-reduces-each-integer`           | `panic: threading: a list where the crate takes a scalar` |
 | `Gamma/threads-over-a-list-so-poles-evaluate-concretely`       | `panic: threading: a list where the crate takes a scalar` |
@@ -451,6 +482,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `GCD/listable-a-single-list-argument-threads-element`          | `panic: threading: a list where the crate takes a scalar` |
 | `GCD/lists-aren-t-threaded-element-wise-they-re`               | `panic: threading: a list where the crate takes a scalar` |
 | `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`     | `panic: a non-negative integer`                           |
+| `IsPrime/another-non-integer-3-halves`                         | `panic: an integer, not 3/2`                              |
 | `IsPrime/isprime-neg-1-is-false`                               | `panic: a non-negative integer`                           |
 | `IsPrime/isprime-neg-2-is-true`                                | `panic: a non-negative integer`                           |
 | `IsPrime/isprime-neg-4-is-false`                               | `panic: a non-negative integer`                           |
@@ -466,6 +498,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Mod/an-exact-irrational-reduces-exactly-to-2-sqrt-7`          | `panic: an integer, not 5.291502622129181`                |
 | `Mod/division-by-a-0-modulus-yields-nan-rather-than`           | `panic: attempt to divide by zero`                        |
 | `Mod/eulers-number-mod-2-reduces-exactly`                      | `panic: an integer, not 2.718281828459045`                |
+| `Mod/periodicity-with-a-zero-modulus-on-one-side`              | `panic: attempt to divide by zero`                        |
 | `Mod/rationals-are-reduced-exactly`                            | `panic: an integer, not 5/2`                              |
 | `Mod/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
 | `Mod/threads-over-a-list-of-moduli`                            | `panic: threading: a list where the crate takes a scalar` |

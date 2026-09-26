@@ -122,3 +122,26 @@ and-0-375-to-0-38:
     verdict: disagree
     kind: precision
     note: The mapping evaluates at the system's own precision and drops N's digit count, so 3/8 prints 0.375 where N(3/8, 2) is 0.38.
+n-pi-1-digit:
+  epsil:
+    in: N(Pi, 1)
+    out: "3"
+  tex:
+    in: N(\pi, 1)
+    out: "3"
+  fullform:
+    in: N[Pi, 1]
+  wolfram:
+    in: N[Pi, 1]
+  sympy:
+    in: N(pi, 30)
+  mpmath:
+    in: (pi)
+  sage:
+    in: N(pi)
+  rust:
+    in: nf(x(std::f64::consts::PI))
+    out: "3.141592653589793"
+    verdict: disagree
+    kind: precision
+    note: N's digit count is dropped for Rust, per the mapping's own note -- it always returns full f64 precision rather than the one digit asked for.

@@ -687,6 +687,29 @@ to-30-significant-digits-every-one-correctly:
   rust:
     in: nf(cos(n(1)))
     out: "0.5403023058681398"
+to-1-significant-digit:
+  epsil:
+    in: N(Cos(1), 1)
+    out: "0.5"
+  tex:
+    in: N(\cos(1), 1)
+    out: "0.5"
+  fullform:
+    in: N[Cos[1], 1]
+  wolfram:
+    in: N[Cos[1], 1]
+  sympy:
+    in: N(cos(1), 30)
+  mpmath:
+    in: (cos(1))
+  sage:
+    in: N(cos(1))
+  rust:
+    in: nf(cos(n(1)))
+    out: "0.5403023058681398"
+    verdict: disagree
+    kind: precision
+    note: N's digit count is dropped for Rust, per the mapping's own note -- it always returns full f64 precision rather than the one digit asked for.
 a-huge-10-100-argument-reduces-exactly-mod-2-pi:
   epsil:
     in: N(Cos(10 ^ 100))

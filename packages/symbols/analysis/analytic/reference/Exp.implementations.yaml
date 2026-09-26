@@ -314,6 +314,29 @@ exp-ln-2:
   rust:
     in: exp(ln(n(2)))
     out: "2.0"
+exp-ln-neg-1:
+  epsil:
+    in: Exp(Ln(-1))
+    out: "-1"
+  tex:
+    in: \exp(\ln(-1))
+    out: "-1"
+  fullform:
+    in: Exp[Log[-1]]
+  wolfram:
+    in: Exp[Log[-1]]
+  sympy:
+    in: exp(log(-1))
+  mpmath:
+    in: exp(log(-1))
+  sage:
+    in: exp(log(-1))
+  rust:
+    in: exp(ln(n(-1)))
+    out: NaN
+    verdict: inconclusive
+    kind: domain
+    note: Rust's f64 ln is real-only and gives NaN for Ln(-1), which poisons the Exp around it; compute-engine folds Exp(Ln(-1)) = e^{i\pi} = -1 exactly.
 inverse-of-ln-symbolically:
   epsil:
     in: Exp(Ln(x))
@@ -524,3 +547,26 @@ to-50-significant-digits-every-one-correctly:
   rust:
     in: nf(exp(n(1)))
     out: "2.718281828459045"
+to-1-significant-digit:
+  epsil:
+    in: N(Exp(1), 1)
+    out: "3"
+  tex:
+    in: N(e^{1}, 1)
+    out: "3"
+  fullform:
+    in: N[Exp[1], 1]
+  wolfram:
+    in: N[Exp[1], 1]
+  sympy:
+    in: N(exp(1), 30)
+  mpmath:
+    in: (exp(1))
+  sage:
+    in: N(exp(1))
+  rust:
+    in: nf(exp(n(1)))
+    out: "2.718281828459045"
+    verdict: disagree
+    kind: precision
+    note: N's digit count is dropped for Rust, per the mapping's own note -- it always returns full f64 precision rather than the one digit asked for.

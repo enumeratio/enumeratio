@@ -249,7 +249,15 @@ pub fn binomial(a: V, b: V) -> V {
     Int(num_integer::binomial(a.int(), b.int()))
 }
 pub fn powermod(a: V, e: V, m: V) -> V {
-    Int(a.int().modpow(&e.int(), &m.int()))
+    let (a, e, m) = (a.int(), e.int(), m.int());
+    // num-bigint's modpow panics on a negative exponent; invert first, like our own
+    // PowerMod does, then raise the (now non-negative) exponent.
+    if e.is_negative() {
+        let inv = a.modinv(&m).expect("no modular inverse: base and modulus share a factor");
+        Int(inv.modpow(&-e, &m))
+    } else {
+        Int(a.modpow(&e, &m))
+    }
 }
 
 // ── primal, statrs ────────────────────────────────────────────────────────────
@@ -280,7 +288,9 @@ pub fn adic(p: V, v: V) -> V {
 pub fn adic_valuation(v: V) -> V {
     match v.adic().valuation() {
         Valuation::Finite(k) => n(k as i64),
-        other => panic!("valuation {other:?}"),
+        // The zero adic's valuation is +∞, same as ours: print it the way our non-finite
+        // floats already print (Show's Float branch), not a panic.
+        Valuation::PosInf => Float(f64::INFINITY),
     }
 }
 pub fn adic_norm(v: V) -> V {

@@ -79,6 +79,12 @@ examples:
     expr: [Exp, [Ln, 2]]
     expected: 2
     category: Scope
+  - role: test
+    id: exp-ln-neg-1
+    expr: [Exp, [Ln, -1]]
+    expected: -1
+    category: Scope
+    caption: $e^{\ln(-1)} = e^{i\pi} = -1$ folds all the way through, unlike Exp(Ln(-2)) below
   - id: inverse-of-ln-symbolically
     expr: [Exp, [Ln, x]]
     expected: x
@@ -172,6 +178,12 @@ examples:
     expected: { num: "2.7182818284590452353602874713526624977572470937000" }
     category: Scope
     caption: To 50 significant digits, every one correctly rounded
+  - role: test
+    id: to-1-significant-digit
+    expr: [N, [Exp, 1], 1]
+    expected: 3
+    category: Scope
+    caption: A single requested digit, next to the 50-digit example above
 seeAlso:
   - Ln
   - Log

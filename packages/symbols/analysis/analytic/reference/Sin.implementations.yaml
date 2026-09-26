@@ -955,6 +955,29 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
   rust:
     in: nf(sin(power(n(10), n(20))))
     out: "-0.6452512852657808"
+an-even-huger-argument-11-38:
+  epsil:
+    in: N(Sin(11 ^ 38))
+    out: 0.867_534_193_184_863_032_082
+  tex:
+    in: N(\sin(11^{38}))
+    out: 0.867\,534\,193\,184\,863\,032\,082
+  fullform:
+    in: N[Sin[Power[11, 38]]]
+  wolfram:
+    in: N[Sin[Power[11, 38]]]
+  sympy:
+    in: N(sin(((11)**38)), 30)
+  mpmath:
+    in: (sin(((11)**38)))
+  sage:
+    in: N(sin(((11)^38)))
+  rust:
+    in: nf(sin(power(n(11), n(38))))
+    out: "-0.7172457893515806"
+    verdict: disagree
+    kind: precision
+    note: f64's range reduction has no working precision left at 11^38; compute-engine's BigDecimal kernel reduces modulo 2pi with enough digits to keep the answer meaningful.
 functionexpand-gives-the-nested-radical-form:
   epsil:
     in: FunctionExpand(Sin(Pi / 15))

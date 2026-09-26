@@ -34,6 +34,52 @@ a-pole-of-gamma:
     verdict: disagree
     kind: undefined-form
     note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust gives PositiveInfinity.'
+a-pole-of-gamma-at-negative-1:
+  epsil:
+    in: Gamma(-1)
+    out: ComplexInfinity
+  tex:
+    in: \Gamma(-1)
+    out: \tilde\infty
+  fullform:
+    in: Gamma[-1]
+  wolfram:
+    in: Gamma[-1]
+  sympy:
+    in: gamma(-1)
+  mpmath:
+    in: gamma(-1)
+  sage:
+    in: gamma(-1)
+  rust:
+    in: gamma(n(-1))
+    out: "-2.5653050788007548e16"
+    verdict: inconclusive
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and statrs's gamma blows up to a huge finite float approaching the pole rather than reaching it exactly."
+a-pole-of-gamma-at-negative-2:
+  epsil:
+    in: Gamma(-2)
+    out: ComplexInfinity
+  tex:
+    in: \Gamma(-2)
+    out: \tilde\infty
+  fullform:
+    in: Gamma[-2]
+  wolfram:
+    in: Gamma[-2]
+  sympy:
+    in: gamma(-2)
+  mpmath:
+    in: gamma(-2)
+  sage:
+    in: gamma(-2)
+  rust:
+    in: gamma(n(-2))
+    out: "6413262697001865.0"
+    verdict: inconclusive
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and statrs's gamma blows up to a huge finite float approaching the pole rather than reaching it exactly."
 a-floating-point-argument-evaluates-directly-to:
   epsil:
     in: Gamma(2.5)

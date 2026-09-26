@@ -48,6 +48,12 @@ examples:
     expected: 3
     category: Applications
     caption: How many full 5-item packs fit in 17 items
+  - role: test
+    id: a-zero-divisor-inside-floor
+    expr: [Floor, [Divide, 17, 0]]
+    expected: [Floor, ComplexInfinity]
+    category: Possible issues
+    caption: A division by zero inside Floor stays symbolic around ComplexInfinity
   - id: rounds-toward-infty-not-toward-0-floor-3-2-is-4
     expr: [Floor, -3.2]
     expected: -4
@@ -74,6 +80,12 @@ examples:
     expected: 7
     category: Scope
     caption: Exact radicals are decided numerically
+  - role: test
+    id: a-negative-radicand-inside-floor
+    expr: [Floor, [Sqrt, -1]]
+    expected: [Complex, 0, 1]
+    category: Scope
+    caption: "Floor(Sqrt(-1)) stays complex: Floor is a no-op on a non-real value"
   - id: evaluates-at-an-exact-constant-lfloor-pi-rfloor
     expr: [Floor, Pi]
     expected: 3

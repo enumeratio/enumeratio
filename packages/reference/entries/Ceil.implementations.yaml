@@ -212,6 +212,27 @@ how-many-5-seat-vans-are-needed-to-carry-17:
   rust:
     in: ceil((n(17) / n(5)))
     out: "4"
+a-zero-divisor-inside-ceil:
+  epsil:
+    in: Ceil(16 / 0)
+    out: Ceil(ComplexInfinity)
+  tex:
+    in: \lceil\frac{16}{0}\rceil
+    out: \lceil\tilde\infty\rceil
+  fullform:
+    in: Ceiling[Divide[16, 0]]
+  wolfram:
+    in: Ceiling[Divide[16, 0]]
+  sympy:
+    in: ceiling((S(16) / 0))
+  sage:
+    in: ceil((16 / 0))
+  rust:
+    in: ceil((n(16) / n(0)))
+    out: "panic: denominator == 0"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust''s exact division panics on the zero denominator before Ceil is even applied.'
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3:
   epsil:
     in: Ceil(-3.7)

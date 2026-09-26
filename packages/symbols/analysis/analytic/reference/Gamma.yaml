@@ -24,6 +24,15 @@ examples:
     expr: [Gamma, 0]
     expected: ComplexInfinity
     caption: A pole of Gamma
+  - role: test
+    id: a-pole-of-gamma-at-negative-1
+    expr: [Gamma, -1]
+    expected: ComplexInfinity
+    caption: Gamma has a pole at every non-positive integer, not just 0
+  - role: test
+    id: a-pole-of-gamma-at-negative-2
+    expr: [Gamma, -2]
+    expected: ComplexInfinity
   - id: a-floating-point-argument-evaluates-directly-to
     expr: [Gamma, 2.5]
     expected: { num: "1.32934038817913702047" }

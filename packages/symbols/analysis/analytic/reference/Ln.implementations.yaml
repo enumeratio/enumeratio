@@ -551,3 +551,116 @@ n-decimalizes-ln-i-not-just-the-exact-form:
     out: (0.0 + 1.57079632679489661923132169164j)
   sage:
     in: N(log(I))
+a-machine-precision-negative-argument:
+  epsil:
+    in: Ln(-4.705)
+    out: 1.548_625_773_037_342_957_36 + 3.141_592_653_589_793i
+  tex:
+    in: \ln(-4.705)
+    out: 1.548\,625\,773\,037\,342\,957\,36+3.141\,592\,653\,589\,793i
+  fullform:
+    in: Log[-4.705]
+  wolfram:
+    in: Log[-4.705]
+  sympy:
+    in: log(-4.705)
+  mpmath:
+    in: log(-4.705)
+  sage:
+    in: log(-4.705)
+  rust:
+    in: ln(x(-4.705))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
+an-integer-power-negative-argument:
+  epsil:
+    in: Ln(-2)
+    out: i * Pi + Ln(2)
+  tex:
+    in: \ln(-2)
+    out: i\pi+\ln(2)
+  fullform:
+    in: Log[-2]
+  wolfram:
+    in: Log[-2]
+  sympy:
+    in: log(-2)
+  mpmath:
+    in: log(-2)
+  sage:
+    in: log(-2)
+  rust:
+    in: ln(n(-2))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
+n-of-a-negative-integer-argument:
+  epsil:
+    in: N(Ln(-2), 10)
+    out: 0.693_147_180_6 + 3.141_592_654i
+  tex:
+    in: N(\ln(-2), 10)
+    out: 0.693\,147\,180\,6+3.141\,592\,654i
+  fullform:
+    in: N[Log[-2], 10]
+  wolfram:
+    in: N[Log[-2], 10]
+  sympy:
+    in: N(log(-2), 30)
+  mpmath:
+    in: (log(-2))
+  sage:
+    in: N(log(-2))
+  rust:
+    in: nf(ln(n(-2)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
+ln-neg-6:
+  epsil:
+    in: Ln(-6)
+    out: i * Pi + Ln(6)
+  tex:
+    in: \ln(-6)
+    out: i\pi+\ln(6)
+  fullform:
+    in: Log[-6]
+  wolfram:
+    in: Log[-6]
+  sympy:
+    in: log(-6)
+  mpmath:
+    in: log(-6)
+  sage:
+    in: log(-6)
+  rust:
+    in: ln(n(-6))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
+n-of-a-negative-rational-argument:
+  epsil:
+    in: N(Ln(-1 / 2))
+    out: -0.693_147_180_559_945_3 + 3.141_592_653_589_793i
+  tex:
+    in: N(\ln(-\frac{1}{2}))
+    out: -0.693\,147\,180\,559\,945\,3+3.141\,592\,653\,589\,793i
+  fullform:
+    in: N[Log[Rational[-1, 2]]]
+  wolfram:
+    in: N[Log[Rational[-1, 2]]]
+  sympy:
+    in: N(log(Rational(-1, 2)), 30)
+  sage:
+    in: N(log((-1/2)))
+  rust:
+    in: nf(ln(rational(n(-1), n(2))))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).

@@ -187,6 +187,27 @@ how-many-full-5-item-packs-fit-in-17-items:
   rust:
     in: floor((n(17) / n(5)))
     out: "3"
+a-zero-divisor-inside-floor:
+  epsil:
+    in: Floor(17 / 0)
+    out: Floor(ComplexInfinity)
+  tex:
+    in: \lfloor\frac{17}{0}\rfloor
+    out: \lfloor\tilde\infty\rfloor
+  fullform:
+    in: Floor[Divide[17, 0]]
+  wolfram:
+    in: Floor[Divide[17, 0]]
+  sympy:
+    in: floor((S(17) / 0))
+  sage:
+    in: floor((17 / 0))
+  rust:
+    in: floor((n(17) / n(0)))
+    out: "panic: denominator == 0"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust''s exact division panics on the zero denominator before Floor is even applied.'
 rounds-toward-infty-not-toward-0-floor-3-2-is-4:
   epsil:
     in: Floor(-3.2)
@@ -304,6 +325,29 @@ exact-radicals-are-decided-numerically:
   rust:
     in: floor(sqrt(n(50)))
     out: "7.0"
+a-negative-radicand-inside-floor:
+  epsil:
+    in: Floor(Sqrt(-1))
+    out: i
+  tex:
+    in: \lfloor\sqrt{-1}\rfloor
+    out: i
+  fullform:
+    in: Floor[Sqrt[-1]]
+  wolfram:
+    in: Floor[Sqrt[-1]]
+  sympy:
+    in: floor(sqrt(-1))
+  mpmath:
+    in: floor(sqrt(-1))
+  sage:
+    in: floor(sqrt(-1))
+  rust:
+    in: floor(sqrt(n(-1)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine's Floor is a no-op on the resulting complex value.
 evaluates-at-an-exact-constant-lfloor-pi-rfloor:
   epsil:
     in: Floor(Pi)

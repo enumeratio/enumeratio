@@ -195,6 +195,18 @@ examples:
     expected: { num: "1.55740772465490223050697480746" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
+  - role: test
+    id: a-pole-at-negative-pi-over-2-too
+    expr: [Tan, [Divide, Pi, -2]]
+    expected: ComplexInfinity
+    category: Possible issues
+    caption: The pole at $-\pi/2$, same story as $\pi/2$ above
+  - role: test
+    id: a-pole-reached-through-periodicity-unreduced
+    expr: [Tan, [Add, [Divide, Pi, -2], Pi]]
+    expected: ComplexInfinity
+    category: Possible issues
+    caption: 'Period $\pi$ reaches the same pole through an unreduced sum: $-\pi/2 + \pi$'
 seeAlso:
   - Sin
   - Cos
