@@ -187,6 +187,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     primitive: { enum: ["kernel", "numeric", "foreign", "axiom"] },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
     names: { $ref: "#/$defs/ReferenceNames" },
+    formerly: { type: "array", items: { type: "string" } },
     stub: { enum: ["engine", "carrier"] },
   },
   required: ["name", "domain", "signature", "summary"],
