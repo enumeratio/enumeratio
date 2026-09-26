@@ -34,7 +34,7 @@ examples:
     category: Properties
     caption: ${}_1F_0(a;;z) = (1-z)^{-a}$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

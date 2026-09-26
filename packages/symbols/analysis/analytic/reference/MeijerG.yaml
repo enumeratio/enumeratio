@@ -26,7 +26,7 @@ examples:
     category: Scope
     caption: $m = 2$, two poles summed
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

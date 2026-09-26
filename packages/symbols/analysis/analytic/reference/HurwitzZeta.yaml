@@ -800,7 +800,7 @@ examples:
     id: n-hurwitzzeta-neg-0p5-plus-i-neg-1p5
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], -1.5]]
     expected: [Complex, 0.8250495553510385, 38.73186936468636]
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

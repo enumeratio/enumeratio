@@ -342,13 +342,13 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       </details>
     </ClientOnly>
 
-    <section v-if="entry.primitive || entry.implementations?.length" id="implementation">
+    <section v-if="entry.primitive || entry.bindings?.length" id="implementation">
       <h2>Implementation</h2>
       <p v-if="entry.primitive" class="ref-primitive">
         <span class="ref-badge is-primitive">primitive · {{ entry.primitive }}</span>
         <span class="ref-primitive-reason">{{ PRIMITIVE_REASON[entry.primitive] }}</span>
       </p>
-      <div v-for="(impl, i) in entry.implementations ?? []" :key="i" class="ref-impl" :data-origin="impl.origin">
+      <div v-for="(impl, i) in entry.bindings ?? []" :key="i" class="ref-impl" :data-origin="impl.origin">
         <div class="ref-impl-head">
           <span class="ref-badge ref-origin" :title="ORIGIN_TITLE[impl.origin]">
             {{ impl.origin }}

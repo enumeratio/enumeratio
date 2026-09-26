@@ -53,7 +53,7 @@ examples:
     category: Possible issues
     caption: Declines a polynomial-times-trig product like $x\cos(x)$ -- Wolfram has a closed form here, but it falls outside the atoms this covers (see [[FourierCoefficient]])
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

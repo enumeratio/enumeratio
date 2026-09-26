@@ -36,7 +36,7 @@ examples:
     category: Scope
     caption: $H(10)$, well past double range — exact bigint arithmetic, not a rounded double.
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

@@ -33,7 +33,7 @@ examples:
     category: Scope
     caption: $\mathcal{L}\{e^{2t}\sin(3t)\} = 3/((s-2)^2+9)$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine
