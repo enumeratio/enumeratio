@@ -45,7 +45,6 @@ for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== un
         const draw = instance.draw(rng, 1 + (i % MAX_SIZE), BUDGET);
         if (!("address" in draw)) continue;
         const element = family.unrank(draw.address.params, draw.address.rank);
-        if ((element as number[]).length === 0) continue; // see the empty-permutation test below
         const failure = checkLaws(ce, map, (construct as (e: unknown) => unknown)(element));
         checked++;
         if (failure !== undefined)
@@ -58,16 +57,11 @@ for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== un
   );
 }
 
-test("the empty permutation isn't a Permutations value yet", () => {
-  // S₀ has one element and every permutation family draws it at n = 0, but compute-engine
-  // types `["List"]` as list<missing>, which doesn't match our `(list<integer>) -> permutation`
-  // arm -- so overload resolution falls through to compute-engine's OWN native `Permutations`
-  // reading (the carrier and the collection are the same head now) instead of erroring outright.
-  // Still not a usable value -- still pinned, so the day it's fixed this fails and the laws
-  // above can take n = 0 too -- just a different non-value than before the carrier and the
-  // collection merged.
-  const empty = ce.box(["Reverse", ["Permutations", ["List"]]] as never).evaluate();
-  expect(empty.operator).toBe("Permutations");
+test("the empty permutation is a Permutations value, and its own image under each involution", () => {
+  // S₀ has one element and every permutation family draws it at n = 0.
+  const empty = ["Permutations", ["List"]];
+  for (const map of ["Reverse", "Inverse", "Complement"])
+    expect(ce.box([map, empty] as never).evaluate().json).toEqual(empty);
 });
 
 test("every map that declares laws gets them checked", () => {

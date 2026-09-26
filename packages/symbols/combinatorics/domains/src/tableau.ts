@@ -35,7 +35,7 @@ const overRange = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: 
   "Fold",
   ["Function", step, accumulator, variable],
   initial,
-  ["Range", 1, n],
+  ["Range", 1, n, 1],
 ];
 
 /** The entries of `row` greater than `x`. */
@@ -122,7 +122,7 @@ const insertionStep: MathJSON = [
 /** Insert `x` into tableau `tableau`, returning the tableau. */
 export const afterInserting = (tableau: MathJSON, x: MathJSON): MathJSON => [
   "At",
-  ["Fold", ["Function", insertionStep, "st", "r"], ["List", tableau, x], ["Range", 1, ["Add", count(tableau), 1]]],
+  ["Fold", ["Function", insertionStep, "st", "r"], ["List", tableau, x], ["Range", 1, ["Add", count(tableau), 1], 1]],
   1,
 ];
 
@@ -219,7 +219,7 @@ export const rskPair: MathJSON = [
   "Fold",
   ["Function", bind("insertedP", afterInserting(P_SO_FAR, KTH), ["List", insertedP, recordedQ]), "s", "k"],
   ["List", ["List"], ["List"]],
-  ["Range", 1, ["Count", "_raw"]],
+  ["Range", 1, ["Count", "_raw"], 1],
 ];
 
 /** The recording tableau alone, as a row word. */
