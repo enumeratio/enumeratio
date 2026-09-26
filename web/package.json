@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
+    "review": "vitepress dev --open /review",
     "build": "vitepress build",
     "preview": "vitepress preview",
     "test": "vp test",
