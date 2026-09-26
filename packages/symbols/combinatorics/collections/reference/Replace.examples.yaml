@@ -1,0 +1,12 @@
+- id: rewrites-the-whole-expr-matches-top-level
+  expr: [Replace, [Add, x, 1], [Rule, [Add, _a, 1], [Multiply, _a, 100]]]
+  expected: [Multiply, 100, x]
+- id: leaves-expr-untouched-when-only-subexpr-matches
+  expr: [Replace, [List, [Add, x, 1]], [Rule, [Add, _a, 1], [Multiply, _a, 100]]]
+  expected: [List, [Add, x, 1]]
+  category: Possible issues
+  caption: unlike ReplaceAll, a match one level down doesn't count
+- id: tries-a-list-of-rules-in-order
+  expr: [Replace, b, [List, [Rule, a, 1], [Rule, b, 2]]]
+  expected: 2
+  category: Scope

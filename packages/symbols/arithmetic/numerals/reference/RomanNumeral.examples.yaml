@@ -1,0 +1,21 @@
+- id: romannumeral-1-988
+  expr: [RomanNumeral, 1988]
+  expected: "'MCMLXXXVIII'"
+- id: the-largest-with-standard-symbols
+  expr: [RomanNumeral, 3999]
+  expected: "'MMMCMXCIX'"
+  category: Scope
+  caption: the largest with standard symbols
+- id: romannumeral-2-024
+  expr: [RomanNumeral, 2024]
+  expected: "'MMXXIV'"
+- id: listable-4-is-written-subtractively
+  expr: [RomanNumeral, [List, 1, 2, 3, 4]]
+  expected: [List, "'I'", "'II'", "'III'", "'IV'"]
+  category: Scope
+  caption: Listable; 4 is written subtractively
+- id: zero-is-written-n-for-nulla
+  expr: [RomanNumeral, 0]
+  expected: "'N'"
+  category: Possible issues
+  caption: zero is written N, for nulla

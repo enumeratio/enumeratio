@@ -1,0 +1,15 @@
+- id: diracdelta-zero-unevaluated
+  expr: [DiracDelta, 0]
+  expected: [DiracDelta, 0]
+  caption: Unevaluated at 0
+- id: diracdelta-nonzero
+  expr: [DiracDelta, 2]
+  expected: 0
+- id: diracdelta-negative
+  expr: [DiracDelta, -3]
+  expected: 0
+- id: diracdelta-multivariate-one-nonzero
+  expr: [DiracDelta, 0, 1]
+  expected: 0
+  category: Scope
+  caption: Zero as soon as any argument is a nonzero real

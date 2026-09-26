@@ -11,19 +11,6 @@ details:
   - $CDF(x) = e^{(x-\mu)/b}/2$ for $x < \mu$, $1-e^{-(x-\mu)/b}/2$ otherwise.
   - $Mean = \mu$, $Variance = 2b^2$, both exact.
   - "[[RandomVariate]] samples via inverse transform."
-examples:
-  - id: laplace-pdf-exact
-    expr: [PDF, [LaplaceDistribution, 0, [Rational, 1, 2]], 0]
-    expected: 1
-  - id: laplace-cdf-exact
-    expr: [CDF, [LaplaceDistribution, 0, [Rational, 1, 2]], 0]
-    expected: [Rational, 1, 2]
-  - id: laplace-mean-exact
-    expr: [Mean, [LaplaceDistribution, 0, [Rational, 1, 2]]]
-    expected: 0
-  - id: laplace-variance-exact
-    expr: [Variance, [LaplaceDistribution, 0, [Rational, 1, 2]]]
-    expected: [Rational, 1, 2]
 seeAlso:
   - CauchyDistribution
   - LogisticDistribution

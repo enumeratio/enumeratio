@@ -1,0 +1,4 @@
+- id: adds-attributes
+  expr: [Attributes, Add]
+  expected: [List, Flat, HoldAll, Listable, Orderless]
+  caption: Add is Flat, HoldAll, Listable and Orderless on this engine

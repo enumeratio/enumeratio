@@ -1,0 +1,12 @@
+- id: add-of-two-wildcards-matches-an-add
+  expr: [MatchQ, [Add, x, 1], [Add, _a, _b]]
+  expected: True
+- id: a-product-does-not-match-an-add-pattern
+  expr: [MatchQ, [Multiply, x, y], [Add, _a, _b]]
+  expected: False
+  category: Scope
+- id: a-sequence-wildcard-matches-the-rest-of-a-list
+  expr: [MatchQ, [List, 1, 2, 3], [List, _a, __rest]]
+  expected: True
+  category: Scope
+  caption: "`__rest` (a sequence wildcard) absorbs one or more trailing elements"

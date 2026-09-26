@@ -1,0 +1,4 @@
+- id: bad-one
+  expr: [Bad, 1]
+  expected: 1
+  typo: oops

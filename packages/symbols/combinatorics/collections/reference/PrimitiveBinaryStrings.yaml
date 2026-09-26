@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection; the count is $\sum_{d\mid n}\mu(d)\,2^{n/d}$, the un-normalised sum inside the binary Lyndon-word count. See [[MoebiusMu]].
   - Every primitive word's $n$ rotations are pairwise distinct and together form the orbit of exactly one length-$n$ Lyndon word, so the family is the union of every such orbit.
   - Each element is the bit string itself; $At$ unranks over the rotations of the binary Lyndon words, sorted ascending lexicographically.
-examples:
-  - id: count-primitivebinarystrings-6-54-a027375
-    expr: [Count, [PrimitiveBinaryStrings, 6]]
-    expected: 54
-    category: Basic
-    caption: "$Count(PrimitiveBinaryStrings(6)) = 54$, A027375: aperiodic binary strings of length 6"
 enumerate:
   expr: PrimitiveBinaryStrings(6)
   columns: Descents, Ascents

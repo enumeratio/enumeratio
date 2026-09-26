@@ -1,0 +1,13 @@
+- id: chisquare-pdf-exact
+  expr: [PDF, [ChiSquareDistribution, 3], 2]
+  expected: [Divide, 1, [Multiply, 2, ExponentialE, [Gamma, [Rational, 3, 2]]]]
+- id: chisquare-cdf-exact
+  expr: [CDF, [ChiSquareDistribution, 3], 2]
+  expected: [Add, 1, [Negate, [GammaRegularized, [Rational, 3, 2], 1]]]
+  caption: Cross-checked against wolframscript's N[CDF[ChiSquareDistribution[3], 2]] = 0.427593...
+- id: chisquare-mean-exact
+  expr: [Mean, [ChiSquareDistribution, 3]]
+  expected: 3
+- id: chisquare-variance-exact
+  expr: [Variance, [ChiSquareDistribution, 3]]
+  expected: 6

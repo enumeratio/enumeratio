@@ -3,10 +3,5 @@ domain: Combinatorial maps
 signature: DescentComposition(Permutation)
 summary: The composition of n cut at the descent positions.
 details:
-  - Takes a `Permutation` and returns a `Composition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutations` and returns a `Compositions` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - Its parts sum to n and its length is one more than Descents — another statistic readable off a map. Removed once for erroring on words with no descents; `Range(1, 0)` never evaluates, so the short case has to be stated.
-examples:
-  - id: the-one-line-word-231
-    expr: [DescentComposition, [Permutation, [List, 2, 3, 1]]]
-    expected: [Composition, [List, 2, 1]]
-    caption: the one-line word $231$

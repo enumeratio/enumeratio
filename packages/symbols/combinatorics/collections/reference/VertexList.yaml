@@ -6,16 +6,6 @@ signatures:
   - call: VertexList(g)
     description: every vertex of $g$, in the order [[Graph]]'s doc describes.
     library: enumeratio-collections
-examples:
-  - id: vertices-of-a-path
-    expr: [VertexList, [Graph, [List, [UndirectedEdge, 3, 1], [UndirectedEdge, 1, 2]]]]
-    expected: [List, 3, 1, 2]
-    caption: Vertices of a path, in first-appearance order
-  - id: declared-vertices-come-before-edge-endpoints
-    expr: [VertexList, [Graph, [List, 5, 1], [List, [UndirectedEdge, 1, 2]]]]
-    expected: [List, 5, 1, 2]
-    role: test
-    caption: Declared vertices come first, then each edge's endpoints in first-appearance order
 seeAlso:
   - Graph
   - EdgeList

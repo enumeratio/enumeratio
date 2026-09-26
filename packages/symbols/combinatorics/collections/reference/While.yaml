@@ -12,11 +12,6 @@ signatures:
 details:
   - Always returns $Nothing$, like [[Do]].
   - Capped at 4096 iterations, past which the loop simply stops — Wolfram's own default cap, $IterationLimit, is much larger and configurable; this one is fixed.
-examples:
-  - id: count-up-to-a-limit
-    expr: [List, [Assign, n, 0], [While, [Less, n, 5], [Assign, n, [Add, n, 1]]], n]
-    expected: [List, 0, 5]
-    caption: count up to a limit
 seeAlso:
   - Do
   - NestWhile

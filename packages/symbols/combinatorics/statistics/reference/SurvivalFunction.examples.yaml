@@ -1,0 +1,3 @@
+- id: survivalfunction-chisquare
+  expr: [SurvivalFunction, [ChiSquareDistribution, 3], 2]
+  expected: [GammaRegularized, [Rational, 3, 2], 1]

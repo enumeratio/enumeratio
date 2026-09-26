@@ -1,0 +1,27 @@
+- id: the-outer-product-of-two-vectors-a-3-times-2
+  expr: [Outer, Multiply, [List, 1, 2, 3], [List, 1, 2]]
+  expected: [List, [List, 1, 2], [List, 2, 4], [List, 3, 6]]
+  caption: The outer product of two vectors, a $3 \times 2$ matrix
+- id: symbolic-entries
+  expr: [Outer, Multiply, [List, 1, 2, 3], [List, x, y]]
+  expected: [List, [List, x, y], [List, [Multiply, 2, x], [Multiply, 2, y]], [List, [Multiply, 3, x], [Multiply, 3, y]]]
+  caption: Symbolic entries
+- id: any-binary-function-an-addition-table
+  expr: [Outer, Add, [List, 1, 2], [List, 10, 20]]
+  expected: [List, [List, 11, 21], [List, 12, 22]]
+  category: Scope
+  caption: "Any binary function: an addition table"
+- id: a-table-of-powers
+  expr: [Outer, Power, [List, 2, 3], [List, 1, 2, 3]]
+  expected: [List, [List, 2, 4, 8], [List, 3, 9, 27]]
+  category: Scope
+  caption: A table of powers
+- id: list-gives-every-pair-like-a-cartesian-product
+  expr: [Outer, List, [List, a, b], [List, x, y]]
+  expected: [List, [List, [List, a, x], [List, a, y]], [List, [List, b, x], [List, b, y]]]
+  category: Scope
+  caption: $List$ gives every pair, like a Cartesian product
+- id: outer-matrix-of-right-shape
+  expr: [Outer, Add, [List, 1, 2], [List, 10, 20, 30]]
+  expected: [List, [List, 11, 21, 31], [List, 12, 22, 32]]
+  role: test

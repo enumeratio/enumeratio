@@ -1,0 +1,44 @@
+- id: arcsec-1
+  expr: [Arcsec, 1]
+  expected: 0
+- id: arcsec-2
+  expr: [Arcsec, 2]
+  expected: [Multiply, [Rational, 1, 3], Pi]
+- id: undoes-sec-sec-arcsec-x-x
+  expr: [Equal, [Sec, [Arcsec, 2]], 2]
+  expected: True
+  category: Properties
+  caption: 'Undoes [[Sec]]: $\sec(\text{arcsec}(x)) = x$'
+- id: arcsec-sqrt-2-pi-4
+  expr: [Arcsec, [Sqrt, 2]]
+  expected: [Multiply, [Rational, 1, 4], Pi]
+  category: Scope
+  caption: $\operatorname{arcsec}\sqrt2 = \pi/4$
+- id: arcsec-neg-1
+  expr: [Arcsec, -1]
+  expected: Pi
+  category: Scope
+- id: arcsec-2-2-pi-3
+  expr: [Arcsec, -2]
+  expected: [Multiply, [Rational, 2, 3], Pi]
+  category: Scope
+  caption: $\operatorname{arcsec}(-2) = 2\pi/3$
+- id: inside-1-1-the-value-is-purely-imaginary
+  expr: [Arcsec, 0.5]
+  expected: [Complex, 0, 1.3169578969248166]
+  category: Scope
+  caption: Inside $(-1, 1)$ the value is purely imaginary
+- id: arcsec-positiveinfinity
+  expr: [Arcsec, PositiveInfinity]
+  expected: [Multiply, [Rational, 1, 2], Pi]
+  category: Scope
+- id: a-pole-arcsec-0-is-complex-infinity
+  expr: [Arcsec, 0]
+  expected: ComplexInfinity
+  category: Scope
+  caption: 'A pole: $\operatorname{arcsec} 0$ is complex infinity'
+- id: derivative-for-real-x-1
+  expr: [D, [Arcsec, x], x]
+  expected: [Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]
+  category: Scope
+  caption: Derivative, for real $|x| > 1$

@@ -1,0 +1,4 @@
+- id: b-4
+  expr: [Count, [SetPartitions, 4]]
+  expected: 15
+  caption: $B_4$

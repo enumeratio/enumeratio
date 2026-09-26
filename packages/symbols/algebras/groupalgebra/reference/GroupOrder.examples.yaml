@@ -1,0 +1,12 @@
+- id: a-dihedral-group
+  expr: [GroupOrder, [DihedralGroup, 100]]
+  expected: 200
+- id: a-permutation-group
+  expr: [GroupOrder, [PermutationGroup, [List, [Cycles, [List, [List, 1, 9, 6], [List, 3, 7]]]]]]
+  expected: 6
+  category: Scope
+- id: the-symmetric-group
+  expr: [GroupOrder, [SymmetricGroup, 4]]
+  expected: 24
+  caption: $4!$, without unranking every permutation
+  category: Scope

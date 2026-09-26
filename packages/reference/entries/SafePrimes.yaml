@@ -9,7 +9,6 @@ details:
   - A lazy indexed collection, and the mirror image of [[SophieGermainPrimes]] ($q$ is safe iff $(q-1)/2$ is Sophie Germain); infinitude is equally open, so $Count(SafePrimes) = NaN$. OEIS A005385.
   - $At(SafePrimes, k)$ unranks by scanning forward, testing primality of $n$ and $(n-1)/2$ -- $At(SafePrimes, 1) = 5$ ($2$ is prime).
   - "Membership goes through [[Element]]: $Element(23, SafePrimes)$ is true ($11$ is prime), $Element(13, SafePrimes)$ is false ($6$ is not prime)."
-examples: []
 enumerate:
   expr: Take(SafePrimes, 20)
 seeAlso:

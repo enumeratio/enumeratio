@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(SuperabundantNumbers) = +\infty$, and $At$ unranks the $k$-th by scanning forward, comparing abundancy ratios by cross-multiplication (exact, no floating point) against a running record.'
   - OEIS A004394. Every superabundant number is highly composite, but not conversely -- the two sequences share early terms and then diverge (e.g. $180$ is superabundant but not highly composite, and vice versa further out).
   - 'Membership goes through [[Element]]: $Element(4, SuperabundantNumbers)$ is true ($\sigma(4)/4 = 7/4$, a new record over $1..3$), $Element(3, SuperabundantNumbers)$ is false ($\sigma(3)/3 = 4/3 < \sigma(2)/2 = 3/2$).'
-examples: []
 enumerate:
   expr: Take(SuperabundantNumbers, 15)
 seeAlso:

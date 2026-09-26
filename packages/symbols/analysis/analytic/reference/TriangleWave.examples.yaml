@@ -1,0 +1,26 @@
+- id: trianglewave-zero
+  expr: [TriangleWave, 0]
+  expected: 0
+  caption: Zero-crossing at x = 0, unlike [[UnitTriangle]]'s peak there
+- id: trianglewave-quarter-peak
+  expr: [TriangleWave, [Rational, 1, 4]]
+  expected: 1
+  caption: The peak, at the quarter period
+- id: trianglewave-half
+  expr: [TriangleWave, [Rational, 1, 2]]
+  expected: 0
+  caption: Zero-crossing again at the half period
+- id: trianglewave-three-quarters-trough
+  expr: [TriangleWave, [Rational, 3, 4]]
+  expected: -1
+  caption: The trough, at the three-quarter period
+- id: trianglewave-periodic
+  expr: [Equal, [TriangleWave, [Rational, 1, 4]], [TriangleWave, [Add, [Rational, 1, 4], 3]]]
+  expected: True
+  category: Properties
+  caption: Period 1
+- id: trianglewave-ranged
+  expr: [TriangleWave, [List, 0, 10], [Rational, 1, 2]]
+  expected: 5
+  category: Scope
+  caption: Rescaled to a {min, max} range -- the range's midpoint at the half period

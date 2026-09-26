@@ -1,0 +1,20 @@
+- id: probability-equal-is-pdf-for-discrete
+  expr: [Probability, [Equal, x, 2], [Distributed, x, [PoissonDistribution, 3]]]
+  expected: [Divide, 9, [Multiply, 2, [Power, ExponentialE, 3]]]
+- id: probability-equal-is-zero-for-continuous
+  expr: [Probability, [Equal, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]
+  expected: 0
+- id: probability-lessequal-is-cdf
+  expr: [Probability, [LessEqual, x, 5], [Distributed, x, [PoissonDistribution, 3]]]
+  expected: [Divide, 92, [Multiply, 5, [Power, ExponentialE, 3]]]
+  caption: $\approx 0.9160820579686966$, cross-checked against wolframscript's `N[CDF[PoissonDistribution[3],5]]`
+- id: probability-of-a-chained-range
+  expr: [Probability, [And, [LessEqual, 1, x], [LessEqual, x, 5]], [Distributed, x, [PoissonDistribution, 3]]]
+  expected: [Divide, 87, [Multiply, 5, [Power, ExponentialE, 3]]]
+  category: Scope
+  caption: $\approx 0.8662949896008326$, cross-checked against wolframscript's `N[Probability[1<=x<=5, x \[Distributed] PoissonDistribution[3]]]`
+- id: probability-greater-is-canonicalized-first
+  expr: [N, [Probability, [Greater, x, 0], [Distributed, x, [NormalDistribution, 0, 1]]]]
+  expected: 0.5
+  category: Scope
+  caption: compute-engine rewrites `x > 0` to `Less(0, x)` before this evaluator sees it

@@ -1,0 +1,43 @@
+- id: the-trefoil
+  expr: [AlexanderPolynomial, [Braid, 2, [List, 1, 1, 1]]]
+  expected: [Add, [Power, t, 2], [Negate, t], 1]
+  caption: the trefoil
+- id: the-figure-eight-knot
+  expr: [AlexanderPolynomial, [BraidPower, [Braid, 3, [List, 1, -2]], 2]]
+  expected: [Add, [Power, t, 2], [Multiply, -3, t], 1]
+  caption: the figure-eight knot
+- id: and-under-its-own-name-twistknot-1
+  expr: [AlexanderPolynomial, [FigureEightKnot]]
+  expected: [Add, [Power, t, 2], [Multiply, -3, t], 1]
+  caption: …and under its own name, TwistKnot(1)
+  category: Scope
+- id: the-stevedore-knot-61-two-half-twists
+  expr: [AlexanderPolynomial, [TwistKnot, 2]]
+  expected: [Add, [Multiply, 2, [Power, t, 2]], [Multiply, -5, t], 2]
+  caption: the Stevedore knot, 6₁ — two half-twists
+  category: Scope
+- id: p-1-1-1-is-the-unknot
+  expr: [AlexanderPolynomial, [PretzelKnot, 1, 1, -1]]
+  expected: 1
+  caption: P(1,1,-1) is the unknot
+  category: Scope
+- id: 3-1-4-1-2
+  expr: [SeifertGenus, [TorusBraid, 3, 4]]
+  expected: 3
+  caption: $(3-1)(4-1)/2$
+  category: Properties
+- id: a-twist-knot-s-genus-does-not-grow-with-the
+  expr: [SeifertGenus, [TwistKnot, 5]]
+  expected: 1
+  caption: a twist knot's genus does not grow with the twist count
+  category: Properties
+- id: a-mixed-braid-has-no-bennequin-genus-so-the-call
+  expr: [SeifertGenus, [Braid, 3, [List, 1, -2]]]
+  expected: [SeifertGenus, [Braid, 3, [List, 1, -2]]]
+  caption: a mixed braid has no Bennequin genus, so the call is left alone
+  category: Possible issues
+- id: an-even-band-is-not-this-family-so-the-call-is
+  expr: [SeifertGenus, [PretzelKnot, 2, 1, 1]]
+  expected: [SeifertGenus, [PretzelKnot, 2, 1, 1]]
+  caption: an even band is not this family, so the call is left alone
+  category: Possible issues

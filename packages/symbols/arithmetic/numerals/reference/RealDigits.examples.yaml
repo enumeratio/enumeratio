@@ -1,0 +1,36 @@
+- id: the-repeating-block-of-1-7-0-overline-142857
+  expr: [RealDigits, [Rational, 1, 7]]
+  expected: [List, [List, [List, 1, 4, 2, 8, 5, 7]], 0]
+  caption: the repeating block of $1/7 = 0.\overline{142857}$
+- id: 19-7-2-overline-714285-one-digit-before-the
+  expr: [RealDigits, [Rational, 19, 7]]
+  expected: [List, [List, 2, [List, 7, 1, 4, 2, 8, 5]], 1]
+  category: Scope
+  caption: $19/7 = 2.\overline{714285}$, one digit before the point
+- id: a-terminating-rational
+  expr: [RealDigits, [Rational, 5, 4]]
+  expected: [List, [List, 1, 2, 5], 1]
+  category: Scope
+  caption: a terminating rational
+- id: 1-8-0-001-2
+  expr: [RealDigits, [Rational, 1, 8], 2]
+  expected: [List, [List, 1], -2]
+  category: Scope
+  caption: $1/8 = 0.001_2$
+- id: the-first-10-digits-of-pi-truncated-not-rounded
+  expr: [RealDigits, Pi, 10, 10]
+  expected: [List, [List, 3, 1, 4, 1, 5, 9, 2, 6, 5, 3], 1]
+  caption: the first 10 digits of $\pi$ (truncated, not rounded)
+- id: realdigits-sqrt-2-10-5
+  expr: [RealDigits, [Sqrt, 2], 10, 5]
+  expected: [List, [List, 1, 4, 1, 4, 2], 1]
+  category: Scope
+- id: realdigits-exponentiale-10-5
+  expr: [RealDigits, ExponentialE, 10, 5]
+  expected: [List, [List, 2, 7, 1, 8, 2], 1]
+  category: Scope
+- id: an-integer-six-digits-before-the-point
+  expr: [RealDigits, 123456]
+  expected: [List, [List, 1, 2, 3, 4, 5, 6], 6]
+  category: Scope
+  caption: "an integer: six digits before the point"

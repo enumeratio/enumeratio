@@ -1,0 +1,16 @@
+- id: a-pole-at-the-origin
+  expr: [FunctionSingularities, [Divide, 1, x], x]
+  expected: [Equal, x, 0]
+  caption: A simple pole at the origin
+- id: sqrt-is-singular-at-its-own-boundary
+  expr: [FunctionSingularities, [Sqrt, x], x]
+  expected: [LessEqual, x, 0]
+  caption: Sqrt is singular AT x=0 too, not just where the radicand goes negative
+- id: a-polynomial-has-no-singularities
+  expr: [FunctionSingularities, [Power, x, 2], x]
+  expected: False
+  caption: A polynomial is entire
+- id: log-s-branch-cut
+  expr: [FunctionSingularities, [Ln, x], x]
+  expected: [LessEqual, x, 0]
+  caption: Log's branch cut and its excluded domain coincide here

@@ -1,0 +1,11 @@
+- id: riemannsiegelz-1p5
+  expr: [RiemannSiegelZ, 1.5]
+  expected: -0.595568336782887
+- id: riemannsiegelz-20p5
+  expr: [RiemannSiegelZ, 20.5]
+  expected: 0.5993287025147513
+- id: z-0-zeta-1-2
+  expr: [N, [RiemannSiegelZ, 0]]
+  expected: -1.4603545088095868
+  category: Properties
+  caption: $Z(0) = \zeta(1/2)$

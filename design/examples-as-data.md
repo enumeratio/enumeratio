@@ -112,9 +112,9 @@ the record of our choice. Every non-`agree` row still needs a `kind` from
 `DIVERGENCE_KINDS`, and the scan carries classifications forward while a verdict holds and
 resets them when it moves, as now.
 
-The name matches the entry's existing `implementations`, whose `mapped` rows are already
-"the equivalent call in an external system". The head-level record says what a head is
-made of, and this one says how each of those writes and answers one example.
+The entry's head-level `bindings` say what a head is made of (its definition, native code,
+component, and the equivalent call in each external system, the `mapped` rows); this record
+says how each of those writes and answers one example.
 
 **Naming.** This uses `epsil` for the standard, retypeable form and keeps `notatio` for the
 vdom serialisation, per the Names section of `AGENTS.md` and `design/syntax-and-formats.md`.
@@ -329,8 +329,8 @@ track, after step 3.
 ## 10. For sign-off
 
 1. YAML with the strict scalar schema, two files per head per package (§2, §4).
-2. `implementations` as the name for the per-example record, sharing its vocabulary with
-   the head-level `implementations` (§2).
+2. `implementations` as the name for the per-example record; the head-level list is
+   `bindings` (§2).
 3. `epsil` as the standard form and `notatio` as the vdom serialisation — a Names change
    to record in `AGENTS.md` and `design/syntax-and-formats.md` (§2).
 4. `role: test` replacing `hidden` (§5).

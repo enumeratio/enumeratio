@@ -1,0 +1,16 @@
+- id: petersen-is-3-regular
+  expr: [VertexDegree, [PetersenGraph]]
+  expected: [List, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+  caption: Every vertex has degree 3
+- id: petersen-is-not-bipartite
+  expr: [IsBipartiteGraph, [PetersenGraph]]
+  expected: False
+  caption: Its girth is 5 (odd), so it is not bipartite
+- id: petersen-has-10-vertices
+  expr: [VertexCount, [PetersenGraph]]
+  expected: 10
+  role: test
+- id: petersen-has-15-edges
+  expr: [EdgeCount, [PetersenGraph]]
+  expected: 15
+  role: test

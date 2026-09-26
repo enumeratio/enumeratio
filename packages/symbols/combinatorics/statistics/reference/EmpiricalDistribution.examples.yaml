@@ -1,0 +1,13 @@
+- id: empirical-pdf-is-the-observed-proportion
+  expr: [PDF, [EmpiricalDistribution, [List, 1, 2, 2, 3]], 2]
+  expected: [Rational, 1, 2]
+  caption: 2 of the 4 elements are 2
+- id: empirical-cdf-is-the-observed-proportion-at-most
+  expr: [CDF, [EmpiricalDistribution, [List, 1, 2, 2, 3]], 2]
+  expected: [Rational, 3, 4]
+- id: empirical-mean-matches-mean-of-the-data
+  expr: [Mean, [EmpiricalDistribution, [List, 1, 2, 2, 3]]]
+  expected: 2
+- id: empirical-variance-matches-variance-of-the-data
+  expr: [Variance, [EmpiricalDistribution, [List, 1, 2, 2, 3]]]
+  expected: [Rational, 2, 3]

@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection for each $k$: $Count(RoughNumbers(k)) = +\infty$ -- every sufficiently large prime is $k$-rough. $RoughNumbers(5)$ is OEIS A007310 (coprime to 6); $RoughNumbers(7)$ is A007775 (coprime to 30).'
   - $At(RoughNumbers(k), i)$ unranks the $i$-th match by scanning forward, factoring each candidate -- $At(RoughNumbers(5), 1) = 1$ (vacuously rough).
   - 'Membership goes through [[Element]]: $Element(35, RoughNumbers(5))$ is true ($5\times7$, both $\geq5$), $Element(15, RoughNumbers(5))$ is false ($3\times5$, $3<5$).'
-examples: []
 enumerate:
   expr: Take(RoughNumbers(7), 20)
 seeAlso:

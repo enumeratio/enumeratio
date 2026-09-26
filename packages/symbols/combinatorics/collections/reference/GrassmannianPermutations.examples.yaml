@@ -1,0 +1,10 @@
+- id: count-grassmannianpermutations-5-2-5-5-27
+  expr: [Count, [GrassmannianPermutations, 5]]
+  expected: 27
+  category: Basic
+  caption: $Count(GrassmannianPermutations(5)) = 2^5 - 5 = 27$, A000325
+- id: grassmannian-and-cograssmannian-permutations
+  expr: [Equal, [Count, [GrassmannianPermutations, 5]], [Count, [CograssmannianPermutations, 5]]]
+  expected: True
+  category: Properties
+  caption: Grassmannian and Cograssmannian permutations share the same count, $2^n - n$, since value-complementing swaps descents for ascents

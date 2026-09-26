@@ -1,0 +1,5 @@
+- id: zero-modulus
+  expr: [Mod, 5, 0]
+  expected: NaN
+  caption: Division by a 0 modulus yields NaN rather than an error
+  category: Possible issues

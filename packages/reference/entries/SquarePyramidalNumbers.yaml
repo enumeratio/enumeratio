@@ -10,7 +10,6 @@ details:
   - OEIS A000330.
   - Membership goes through [[Element]] by bisecting the monotone cubic for its exact root -- $Element(55, SquarePyramidalNumbers)$ is true, $Element(56, SquarePyramidalNumbers)$ is false.
   - $SquarePyramidalNumbers(n) = \sum_{i=1}^n SquareNumbers(i)$.
-examples: []
 enumerate:
   expr: Take(SquarePyramidalNumbers, 20)
 seeAlso:

@@ -1,0 +1,22 @@
+- id: sqrt-x-2-x-for-positive-x
+  expr: [PowerExpand, [Sqrt, [Power, x, 2]]]
+  expected: x
+  caption: $\sqrt{x^2} = x$ for positive $x$
+- id: splits-a-logarithm-of-a-product
+  expr: [PowerExpand, [Ln, [Multiply, x, y]]]
+  expected: [Add, [Ln, x], [Ln, y]]
+  caption: Splits a logarithm of a product
+- id: pulls-out-an-exponent
+  expr: [PowerExpand, [Ln, [Power, x, n]]]
+  expected: [Multiply, n, [Ln, x]]
+  category: Scope
+  caption: Pulls out an exponent
+- id: distributes-a-power-over-a-product
+  expr: [PowerExpand, [Power, [Multiply, a, b], c]]
+  expected: [Multiply, [Power, a, c], [Power, b, c]]
+  category: Scope
+  caption: Distributes a power over a product
+- id: powerexpand-sqrt-a-times-b
+  expr: [PowerExpand, [Sqrt, [Multiply, a, b]]]
+  expected: [Multiply, [Sqrt, a], [Sqrt, b]]
+  category: Scope

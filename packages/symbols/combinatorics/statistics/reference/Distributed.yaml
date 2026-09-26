@@ -9,15 +9,6 @@ signatures:
 details:
   - Wolfram's own infix `x \[Distributed] dist` parses to exactly this call. Only the second argument of [[Expectation]]/[[Probability]] is read as a `Distributed` binding — elsewhere it is just an inert expression.
   - The first argument is read structurally (it must be a symbol) rather than type-checked — compute-engine PINS a parameter typed literally `symbol` onto that symbol's inferred type globally, breaking later unrelated uses of the same name (confirmed empirically); typing it `any` here avoids that.
-examples:
-  - id: distributed-stays-itself
-    expr: [Distributed, x, [NormalDistribution, 0, 1]]
-    expected: [Distributed, x, [NormalDistribution, 0, 1]]
-  - id: distributed-reached-through-expectation
-    expr: [Expectation, x, [Distributed, x, [NormalDistribution, 2, 3]]]
-    expected: 2
-    category: Scope
-    caption: Read by [[Expectation]] — see there for the general behavior
 seeAlso:
   - Expectation
   - Probability

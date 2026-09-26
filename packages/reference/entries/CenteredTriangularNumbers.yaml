@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(CenteredTriangularNumbers) = +\infty$, and $At(CenteredTriangularNumbers, k) = (3k^2-3k+2)/2$ unranks in closed form -- $At(CenteredTriangularNumbers, 5) = 31$.'
   - OEIS A005448.
   - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(31, CenteredTriangularNumbers)$ is true, $Element(30, CenteredTriangularNumbers)$ is false.
-examples: []
 enumerate:
   expr: Take(CenteredTriangularNumbers, 20)
 seeAlso:

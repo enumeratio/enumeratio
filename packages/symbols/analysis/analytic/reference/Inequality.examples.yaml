@@ -1,0 +1,32 @@
+- id: a-numeric-chain-that-holds
+  expr: [Inequality, 0, LessEqual, 2, Less, 5]
+  expected: True
+  caption: A numeric chain that holds -- 0 <= 2 and 2 < 5
+- id: a-numeric-chain-that-fails
+  expr: [Inequality, 0, LessEqual, 5, Less, 5]
+  expected: False
+  caption: A numeric chain that fails -- 0 <= 5 but not 5 < 5
+- id: a-symbolic-mixed-chain-partially-simplifies
+  expr: [Inequality, 0, LessEqual, x, Less, 5]
+  expected: [And, [LessEqual, 0, x], [Less, x, 5]]
+  caption: A symbolic mixed chain simplifies to the And of its links
+- id: a-three-link-chain
+  expr: [Inequality, 1, Less, 2, LessEqual, 2, Less, 10]
+  expected: True
+  category: Scope
+  caption: A three-link chain -- 1 < 2, 2 <= 2, and 2 < 10
+- id: equal-and-notequal-are-valid-links-too
+  expr: [Inequality, 0, Less, x, NotEqual, 3]
+  expected: [And, [Less, 0, x], [NotEqual, x, 3]]
+  category: Scope
+  caption: Equal and NotEqual are valid links too
+- id: a-homogeneous-chain-still-goes-through-and
+  expr: [Inequality, 0, Less, x, Less, 5]
+  expected: [And, [Less, 0, x], [Less, x, 5]]
+  category: Scope
+  caption: A homogeneous chain (same relation throughout) still goes through And here -- write it as Less(0, x, 5) directly for the native n-ary form
+- id: declines-on-a-non-relation-link
+  expr: [Inequality, 0, Add, 5]
+  expected: [Inequality, 0, Add, 5]
+  category: Possible issues
+  caption: Declines when a link isn't one of the six relations, rather than guess

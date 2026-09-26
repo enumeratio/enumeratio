@@ -10,15 +10,5 @@ details:
   - Each call gets its own scope, so a recursive or repeated $Module$ call never has its locals collide with an outer binding — or another call's — of the same name.
   - An initializer's value (the $y0$ in $y = y0$) is computed in the OUTER context, before any local shadows it, same as [[With]] — a later binding cannot read an earlier one's local value.
   - A binding with no `= value` (a bare $x$) declares an uninitialized local; referencing it before assigning gives an unevaluated symbol, not an error.
-examples:
-  - id: a-local-counter
-    expr: [Module, [List, [Equal, i, 0]], [Assign, i, [Add, i, 1]]]
-    expected: 1
-    caption: a local counter, invisible outside
-  - id: locals-do-not-leak-or-clobber
-    expr: [List, [Module, [List, [Equal, n, 10]], [Add, n, 1]], [Module, [List, [Equal, n, 20]], [Add, n, 1]]]
-    expected: [List, 11, 21]
-    caption: two calls' locals of the same name don't collide
-    category: Scope
 seeAlso:
   - With

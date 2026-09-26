@@ -1,0 +1,10 @@
+- id: dirichlet-mean
+  expr: [Mean, [DirichletDistribution, [List, 1, 4, 5]]]
+  expected: [List, [Rational, 1, 10], [Rational, 2, 5]]
+- id: dirichlet-variance
+  expr: [Variance, [DirichletDistribution, [List, 1, 4, 5]]]
+  expected: [List, [Rational, 9, 1100], [Rational, 6, 275]]
+- id: dirichlet-pdf
+  expr: [PDF, [DirichletDistribution, [List, 1, 4, 5]], [List, [Rational, 1, 10], [Rational, 2, 5]]]
+  expected: [Divide, [Gamma, 10], [Multiply, 250, [Gamma, 1], [Gamma, 4], [Gamma, 5]]]
+  caption: $= 10.08$ — Gamma(1)/Gamma(4)/Gamma(5)/Gamma(10) do not auto-reduce to factorials.

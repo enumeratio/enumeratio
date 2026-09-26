@@ -1,0 +1,30 @@
+- id: fibonacci
+  expr: [GeneratingFunction, [Fibonacci, n], n, x]
+  expected: [Divide, x, [Add, [Negate, [Power, x, 2]], [Negate, x], 1]]
+  caption: $x/(1-x-x^2)$
+- id: catalan-numbers
+  expr: [GeneratingFunction, [CatalanNumber, n], n, x]
+  expected: [Divide, [Add, [Negate, [Sqrt, [Add, [Multiply, -4, x], 1]]], 1], [Multiply, 2, x]]
+  caption: '$(1-\sqrt{1-4x})/(2x)$ -- algebraic, not rational: Catalan numbers are not C-finite'
+- id: dyck-paths-via-count
+  expr: [GeneratingFunction, [Count, [DyckPaths, n]], n, x]
+  expected: [Divide, [Add, [Negate, [Sqrt, [Add, [Multiply, -4, x], 1]]], 1], [Multiply, 2, x]]
+  caption: the same Catalan generating function, reached through a collection's cardinality rather than CatalanNumber directly
+- id: fixed-k-binomial
+  expr: [GeneratingFunction, [Binomial, n, 3], n, x]
+  expected:
+    [
+      Divide,
+      [Power, x, 3],
+      [Add, [Power, x, 4], [Multiply, -4, [Power, x, 3]], [Multiply, 6, [Power, x, 2]], [Multiply, -4, x], 1],
+    ]
+  caption: $x^3/(1-x)^4$
+- id: geometric
+  expr: [GeneratingFunction, [Power, 2, n], n, x]
+  expected: [Divide, 1, [Add, [Multiply, -2, x], 1]]
+  caption: $1/(1-2x)$
+- id: no-closed-form
+  expr: [GeneratingFunction, [Factorial, n], n, x]
+  expected: [GeneratingFunction, [Factorial, n], n, x]
+  category: Scope
+  caption: $n!$ has no elementary ordinary generating function -- stays unevaluated, as Wolfram does too

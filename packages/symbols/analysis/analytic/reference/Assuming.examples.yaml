@@ -1,0 +1,13 @@
+- id: abs-resolves-once-the-sign-is-known
+  expr: [Assuming, [Greater, x, 0], [Abs, x]]
+  expected: x
+  caption: $|x| = x$ once $x > 0$ is assumed
+- id: sign-of-x-plus-sign-of-y-under-opposite-signs
+  expr: [Assuming, [List, [Greater, x, 0], [Less, y, 0]], [Add, [Sign, x], [Sign, y]]]
+  expected: 0
+  caption: 'a `List` of conditions is an implicit conjunction: $\operatorname{sign}(x) + \operatorname{sign}(y) = 0$ under $x>0 \wedge y<0$'
+- id: the-assumption-does-not-leak
+  expr: [List, [Assuming, [Greater, z, 0], [Sign, z]], [Sign, z]]
+  expected: [List, 1, [Sign, z]]
+  category: Properties
+  caption: the assumption on $z$ is gone as soon as `Assuming` returns — the second $\operatorname{sign}(z)$ stays symbolic

@@ -1,0 +1,12 @@
+- id: halfnormal-pdf-exact
+  expr: [PDF, [HalfNormalDistribution, 1], 1]
+  expected: [Divide, [Sqrt, 2], [Sqrt, [Multiply, ExponentialE, Pi]]]
+- id: halfnormal-cdf-exact
+  expr: [CDF, [HalfNormalDistribution, 1], 1]
+  expected: [Erf, [Divide, [Sqrt, 2], 2]]
+- id: halfnormal-mean-exact
+  expr: [Mean, [HalfNormalDistribution, 1]]
+  expected: [Sqrt, [Divide, 2, Pi]]
+- id: halfnormal-variance-exact
+  expr: [Variance, [HalfNormalDistribution, 1]]
+  expected: [Divide, [Add, -2, Pi], Pi]

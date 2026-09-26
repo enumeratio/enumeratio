@@ -1,0 +1,13 @@
+- id: positions-2-and-3-1-2-and-2-3
+  expr: [Antiexcedances, [List, 3, 1, 2]]
+  expected: 2
+  caption: "positions 2 and 3: $1 < 2$ and $2 < 3$"
+- id: the-identity-has-none
+  expr: [Antiexcedances, [List, 1, 2, 3]]
+  expected: 0
+  caption: the identity has none
+- id: positions-3-and-4-2-3-and-1-4
+  expr: [Antiexcedances, [List, 4, 3, 2, 1]]
+  expected: 2
+  category: Properties
+  caption: "positions 3 and 4: $2 < 3$ and $1 < 4$"

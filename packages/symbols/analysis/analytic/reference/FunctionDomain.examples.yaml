@@ -1,0 +1,28 @@
+- id: a-polynomial-is-defined-everywhere
+  expr: [FunctionDomain, [Power, x, 2], x]
+  expected: True
+  caption: A polynomial is defined everywhere
+- id: division-by-zero-excludes-the-origin
+  expr: [FunctionDomain, [Divide, 1, x], x]
+  expected: [Or, [Less, x, 0], [Less, 0, x]]
+  caption: Division by zero excludes the origin
+- id: a-rational-function-with-two-real-poles
+  expr: [FunctionDomain, [Divide, 1, [Add, [Power, x, 2], -1]], x]
+  expected: [Or, [Less, x, -1], [Less, -1, x, 1], [Less, 1, x]]
+  category: Scope
+  caption: A rational function with two real poles
+- id: an-even-root-needs-a-nonnegative-radicand
+  expr: [FunctionDomain, [Sqrt, [Add, [Power, x, 2], -1]], x]
+  expected: [Or, [LessEqual, x, -1], [LessEqual, 1, x]]
+  category: Scope
+  caption: An even root needs a nonnegative radicand
+- id: a-natural-log-needs-a-positive-argument
+  expr: [FunctionDomain, [Ln, [Subtract, 2, x]], x]
+  expected: [Less, x, 2]
+  category: Scope
+  caption: A natural log needs a positive argument
+- id: tangent-s-domain-is-declined
+  expr: [FunctionDomain, [Tan, x], x]
+  expected: [FunctionDomain, [Tan, x], x]
+  category: Possible issues
+  caption: Tan's excluded set isn't a finite union of intervals, so this stays unevaluated rather than guess

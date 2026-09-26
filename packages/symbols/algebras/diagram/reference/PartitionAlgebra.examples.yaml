@@ -1,0 +1,19 @@
+- id: b-6
+  expr: [AlgebraDimension, [PartitionAlgebra, 3]]
+  expected: 203
+  caption: $B(6)$
+- id: b-8-the-closed-form-answers-past-any-useful
+  expr: [AlgebraDimension, [PartitionAlgebra, 4]]
+  expected: 4140
+  caption: $B(8)$ — the closed form answers past any useful basis listing
+  category: Scope
+- id: c-6-planarity-cuts-203-down-to-132
+  expr: [AlgebraDimension, [PlanarPartitionAlgebra, 3]]
+  expected: 132
+  caption: $C(6)$ — planarity cuts 203 down to 132
+  category: Scope
+- id: a-block-of-three-is-a-partition-diagram-and
+  expr: [Element, [Diagram, [List, [List, 1, 2, -1], [List, 3, -3], [List, -2]]], [PartitionAlgebra, 3]]
+  expected: True
+  caption: a block of three is a partition diagram and nothing smaller
+  category: Properties

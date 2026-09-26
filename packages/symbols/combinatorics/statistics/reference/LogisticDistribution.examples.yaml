@@ -1,0 +1,12 @@
+- id: logistic-pdf-exact
+  expr: [PDF, [LogisticDistribution, 0, 1], 0]
+  expected: [Rational, 1, 4]
+- id: logistic-cdf-exact
+  expr: [CDF, [LogisticDistribution, 0, 1], 0]
+  expected: [Rational, 1, 2]
+- id: logistic-mean-exact
+  expr: [Mean, [LogisticDistribution, 0, 1]]
+  expected: 0
+- id: logistic-variance-exact
+  expr: [Variance, [LogisticDistribution, 0, 1]]
+  expected: [Multiply, [Rational, 1, 3], [Power, Pi, 2]]

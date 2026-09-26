@@ -1,0 +1,9 @@
+- id: a-generic-point-checked-against-mpmath-s-hyperu
+  expr: [HypergeometricU, 1, 2.5, 3]
+  expected: 0.3823406624903156
+  caption: a generic point, checked against mpmath's `hyperu`
+- id: integer-b-stays-symbolic-the-connection-formula
+  expr: [HypergeometricU, 1, 2, 3]
+  expected: [HypergeometricU, 1, 2, 3]
+  category: Possible issues
+  caption: integer $b$ stays symbolic — the connection formula's log-case limit is not implemented

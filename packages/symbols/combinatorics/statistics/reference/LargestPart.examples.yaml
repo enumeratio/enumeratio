@@ -1,0 +1,8 @@
+- id: the-partition-4-2-1-of-7
+  expr: [LargestPart, [IntegerPartitions, [List, 4, 2, 1]]]
+  expected: 4
+  caption: the partition $4 + 2 + 1$ of $7$
+- id: the-partition-3-3-1-of-7
+  expr: [LargestPart, [IntegerPartitions, [List, 3, 3, 1]]]
+  expected: 3
+  caption: the partition $3 + 3 + 1$ of $7$

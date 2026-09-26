@@ -1,0 +1,29 @@
+- id: the-documented-subsets-collection-form-listed-in
+  expr: [Subsets, [List, a, b, c]]
+  expected: [List, [List], [List, a], [List, b], [List, a, b], [List, c], [List, a, c], [List, b, c], [List, a, b, c]]
+  caption: The documented $Subsets(collection)$ form, listed in the family's binary-mask order
+- id: a-size-bound-the-subsets-with-at-most-2-elements
+  expr: [Count, [Subsets, 4, 2]]
+  expected: 11
+  category: Scope
+  caption: "A size bound: the subsets with at most 2 elements, $1 + 4 + 6$"
+- id: an-exact-size-2-binom-4-2-subsets
+  expr: [Count, [Subsets, 4, [List, 2]]]
+  expected: 6
+  category: Scope
+  caption: 'An exact size $\{2\}$: $\binom{4}{2}$ subsets'
+- id: a-size-range-0-5-2-the-even-size-subsets-2-4-of
+  expr: [Count, [Subsets, 5, [List, 0, 5, 2]]]
+  expected: 16
+  category: Scope
+  caption: A size range $\{0, 5, 2\}$, the even-size subsets, $2^{4}$ of them
+- id: a-set-of-n-elements-has-2-n-subsets-count
+  expr: [Length, [Subsets, [Range, 1, 10]]]
+  expected: 1024
+  category: Properties
+  caption: "A set of $n$ elements has $2^n$ subsets: $Count(Subsets(list)) = 2^n$"
+- id: counting-by-size-sum-k-binom-n-k-2-n-subsets-of
+  expr: [Sum, [Binomial, 5, k], [Tuple, k, 0, 5]]
+  expected: 32
+  category: Properties
+  caption: 'Counting by size: $\sum_k \binom{n}{k} = 2^n$ subsets of a 5-set. See [[Binomial]]'

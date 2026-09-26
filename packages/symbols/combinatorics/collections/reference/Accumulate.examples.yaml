@@ -1,0 +1,13 @@
+- id: accumulate-1-2-3-4
+  expr: [Accumulate, [List, 1, 2, 3, 4]]
+  expected: [List, 1, 3, 6, 10]
+- id: accumulate-empty
+  expr: [Accumulate, [List]]
+  expected: [List]
+  category: Scope
+  caption: The running sum of the empty list is empty
+- id: accumulate-last-is-total
+  expr: [Equal, [Last, [Accumulate, [List, 1, 2, 3, 4, 5]]], [Add, 1, 2, 3, 4, 5]]
+  expected: True
+  category: Properties
+  caption: The last element is the sum of the whole list

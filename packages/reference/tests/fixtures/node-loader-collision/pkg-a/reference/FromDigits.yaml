@@ -2,8 +2,3 @@ name: FromDigits
 domain: Numbers
 signature: FromDigits(digits)
 summary: Reconstructs a number from a list of digits, base 10.
-examples:
-  - id: base-ten
-    expr: [FromDigits, [List, 1, 2, 3]]
-    expected: 123
-    category: Basic

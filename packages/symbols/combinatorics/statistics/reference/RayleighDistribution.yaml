@@ -11,19 +11,6 @@ details:
   - $CDF(x) = 1-e^{-x^2/(2\sigma^2)}$, clamped to $0$ below $x=0$.
   - $Mean = \sigma\sqrt{\pi/2}$, $Variance = (4-\pi)\sigma^2/2$, both exact.
   - '[[RandomVariate]] samples via inverse transform: $\sigma\sqrt{-2\log U}$.'
-examples:
-  - id: rayleigh-pdf-exact
-    expr: [PDF, [RayleighDistribution, 3], 3]
-    expected: [Divide, 1, [Multiply, 3, [Sqrt, ExponentialE]]]
-  - id: rayleigh-cdf-exact
-    expr: [CDF, [RayleighDistribution, 3], 3]
-    expected: [Add, 1, [Negate, [Sqrt, [Divide, 1, ExponentialE]]]]
-  - id: rayleigh-mean-exact
-    expr: [Mean, [RayleighDistribution, 3]]
-    expected: [Multiply, [Rational, 3, 2], [Sqrt, 2], [Sqrt, Pi]]
-  - id: rayleigh-variance-exact
-    expr: [Variance, [RayleighDistribution, 3]]
-    expected: [Multiply, [Rational, 9, 2], [Add, 4, [Negate, Pi]]]
 seeAlso:
   - ChiDistribution
   - MaxwellDistribution

@@ -1,0 +1,15 @@
+- id: discretedelta-zero
+  expr: [DiscreteDelta, 0]
+  expected: 1
+- id: discretedelta-nonzero
+  expr: [DiscreteDelta, 1]
+  expected: 0
+- id: discretedelta-multi-all-zero
+  expr: [DiscreteDelta, 0, 0]
+  expected: 1
+  category: Scope
+  caption: Multi-argument -- 1 only when every argument is 0
+- id: discretedelta-multi-one-nonzero
+  expr: [DiscreteDelta, 1, 0]
+  expected: 0
+  category: Scope

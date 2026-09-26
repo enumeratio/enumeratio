@@ -105,7 +105,7 @@ export function assemble(loaded: readonly ReferenceEntry[]) {
   const resolveHead = (name: string): HeadInfo | undefined => {
     const entry = getEntry(name);
     if (!entry) return undefined;
-    const definition = entry.implementations?.find((impl) => impl.origin === "reference")?.expr;
+    const definition = entry.bindings?.find((impl) => impl.origin === "reference")?.expr;
     return {
       href: `/reference/symbol/${name}`,
       ...(definition === undefined ? {} : { definition }),

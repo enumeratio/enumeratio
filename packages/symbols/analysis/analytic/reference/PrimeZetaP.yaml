@@ -10,20 +10,8 @@ details:
   - Reuses this package's own `Zeta` (already extended to complex arguments) rather than a fresh prime-summation kernel; $\ln\zeta(ks) \to 0$ geometrically as $k$ grows, so the sum settles in a few dozen terms at double precision.
   - The identity only converges for $\operatorname{Re}(s) > 1$; outside that region (including the pole at $s=1$) this declines rather than attempting an analytic continuation it hasn't proven.
   - Checked against `wolframscript`'s `N[PrimeZetaP[s], 17]` at several points, matching to ~15 significant digits.
-examples:
-  - id: sum-p-1-p-2
-    expr: [N, [PrimeZetaP, 2]]
-    expected: 0.4522474200410655
-    caption: $\sum_p 1/p^2$
-  - id: n-primezetap-3
-    expr: [N, [PrimeZetaP, 3]]
-    expected: 0.17476263929944355
-  - id: primezetap-2p5
-    expr: [PrimeZetaP, 2.5]
-    expected: 0.273680737993234
-    category: Scope
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

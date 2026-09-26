@@ -1,0 +1,17 @@
+- id: a-parabola-is-convex
+  expr: [FunctionConvexity, [Power, x, 2], x]
+  expected: 1
+  caption: A parabola is convex everywhere
+- id: a-cubic-has-an-inflection-point
+  expr: [FunctionConvexity, [Power, x, 3], x]
+  expected: Indeterminate
+  caption: A cubic's second derivative changes sign at the inflection point
+- id: exp-is-always-convex
+  expr: [FunctionConvexity, [Exp, x], x]
+  expected: 1
+  caption: Exp is always convex
+- id: a-restricted-domain-answers-indeterminate
+  expr: [FunctionConvexity, [Divide, 1, x], x]
+  expected: Indeterminate
+  category: Properties
+  caption: 1/x's domain isn't all of R, so this is Indeterminate rather than a guess about its (genuinely mixed) shape

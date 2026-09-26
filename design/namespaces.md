@@ -400,7 +400,7 @@ The reference pages should be able to show, per head:
 - the **reference definition** as an Epsil expression, expandable step by step down
   to the frontier.
 
-`ReferenceEntry` now carries an `implementations` block for exactly this, and it is a LIST
+`ReferenceEntry` now carries a `bindings` block for exactly this, and it is a LIST
 because there are genuinely several — a head is made of more than one thing:
 
 | origin      | what it is                                  | stored as               |
