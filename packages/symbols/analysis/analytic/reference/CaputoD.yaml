@@ -1,0 +1,43 @@
+name: CaputoD
+domain: Analytic
+signature: CaputoD(f, {x, alpha})
+summary: The Caputo fractional derivative of order $\alpha > 0$ of $f$ with respect to $x$, at base point 0.
+signatures:
+  - call: CaputoD(f, {x, alpha})
+    description: $D^\alpha_C f(x) = \frac{1}{\Gamma(n-\alpha)}\int_0^x f^{(n)}(t)\,(x-t)^{n-\alpha-1}\,dt$, $n=\lceil\alpha\rceil$.
+    library: "@enumeratio/analytic"
+details:
+  - "By linearity: any constant (x-free subexpression) is 0; sums and a constant factor pass through termwise."
+  - "The power function $x^\\beta$ ($\\beta$ a concrete real number; bare $x$ is $\\beta=1$): exactly 0 when $\\beta$ is a nonnegative INTEGER less than $n$ — the classical vanishing case ($f$'s own $n$-th ordinary derivative is already 0 there), confirmed numerically (`mpmath.quad` on the definition above evaluates to 0 for these). Otherwise, when $\\beta > n-1$: $\\Gamma(\\beta+1)/\\Gamma(\\beta-\\alpha+1)\\cdot x^{\\beta-\\alpha}$, verified against `wolframscript`'s own `CaputoD` AND independently against `mpmath.quad` on the definition above."
+  - "Declined: a non-numeric-literal $\\alpha$ or $\\alpha\\le0$; a symbolic $\\beta$; a $\\beta$ real but not covered by either case above (a genuine base-point singularity — the same numerical integral diverges there); two or more $x$-dependent factors in one product (no product rule); and any transcendental of $x$ (`Exp(ax)`'s Caputo derivative is a Mittag-Leffler function, and this repo has no `MittagLefflerE` head, so it declines rather than inventing one for this head alone)."
+examples:
+  - id: power-x2-alpha-half
+    expr: [CaputoD, [Power, x, 2], [List, x, 0.5]]
+    expected: [Multiply, { num: "1.504505556127350098532" }, [Power, x, 1.5]]
+    caption: $D^{0.5}_C\{x^2\} = \frac{\Gamma(3)}{\Gamma(2.5)}x^{1.5}$
+  - id: constant-vanishes
+    expr: [CaputoD, 5, [List, x, 0.5]]
+    expected: 0
+    caption: a constant's Caputo derivative is 0
+  - id: integer-edge-case-vanishes
+    expr: [CaputoD, x, [List, x, 1.5]]
+    expected: 0
+    caption: $D^{1.5}_C\{x\} = 0$ — $\beta=1 < n=2$, the classical vanishing case (Wolfram's own `CaputoD` leaves this symbolic rather than reducing it, though it numerically evaluates to 0 — confirmed independently against `mpmath.quad`)
+  - id: polynomial-linearity
+    expr: [CaputoD, [Add, [Power, x, 2], [Multiply, 3, x], 1], [List, x, 0.5]]
+    expected:
+      [
+        Add,
+        [Multiply, { num: "1.504505556127350098532" }, [Power, x, 1.5]],
+        [Multiply, { num: "3.3851375012865377217" }, [Sqrt, x]],
+      ]
+    category: Scope
+    caption: linearity — the constant term (1) drops out entirely
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/caputo-derivative.ts
+seeAlso:
+  - SeriesCoefficient

@@ -1,0 +1,44 @@
+name: MellinTransform
+domain: Transforms
+signature: MellinTransform(f, x, s)
+summary: The Mellin transform $F(s) = \int_0^\infty f(x)\,x^{s-1}\,dx$, as a rule table over nine standard pairs plus the scaling and power-shift theorems.
+signatures:
+  - call: MellinTransform(f, x, s)
+    description: $F(s) = \int_0^\infty f(x)\,x^{s-1}\,dx$, for `f` a function of `x`.
+    library: "@enumeratio/analytic"
+details:
+  - "Covered pairs (each strip of convergence confirmed against `wolframscript`'s `MellinTransform[..., GenerateConditions -> True]`): $e^{-x}\\to\\Gamma(s)$ ($\\mathrm{Re}(s)>0$), $e^{-x^2}\\to\\Gamma(s/2)/2$ ($\\mathrm{Re}(s)>0$), $1/(1+x)\\to\\pi\\csc(\\pi s)$ ($0<\\mathrm{Re}(s)<1$), $1/(1+x)^A\\to\\Gamma(A-s)\\Gamma(s)/\\Gamma(A)$ ($0<\\mathrm{Re}(s)<\\mathrm{Re}(A)$), $\\sin(x)\\to\\Gamma(s)\\sin(\\pi s/2)$ ($-1<\\mathrm{Re}(s)<1$), $\\cos(x)\\to\\Gamma(s)\\cos(\\pi s/2)$ ($0<\\mathrm{Re}(s)<1$), $\\log(1+x)\\to\\pi\\csc(\\pi s)/s$ ($-1<\\mathrm{Re}(s)<0$)."
+  - 'Two theorems generalize every pair above: scaling ($f(ax)\to a^{-s}F(s)$, any provably positive `a`) and the power shift ($x^c f(x)\to F(s+c)$) — together they cover e.g. $e^{-ax}$, $\sin(ax)$, and $x^c e^{-x}\to\Gamma(c+s)$.'
+  - "Declined: an unknown-sign scale or shift parameter, a quadratic or higher argument to `Sin`/`Cos`/`Ln`, an opaque function, and anything outside these nine shapes."
+examples:
+  - id: exp-neg-x-gamma
+    expr: [MellinTransform, [Exp, [Negate, x]], x, s]
+    expected: [Gamma, s]
+    caption: $\mathcal{M}\{e^{-x}\}(s) = \Gamma(s)$, $\mathrm{Re}(s)>0$
+  - id: one-over-one-plus-x
+    expr: [MellinTransform, [Divide, 1, [Add, 1, x]], x, s]
+    expected: [Multiply, Pi, [Csc, [Multiply, Pi, s]]]
+    caption: $\mathcal{M}\{1/(1+x)\}(s) = \pi\csc(\pi s)$, $0<\mathrm{Re}(s)<1$
+  - id: gaussian
+    expr: [MellinTransform, [Exp, [Negate, [Power, x, 2]]], x, s]
+    expected: [Multiply, [Rational, 1, 2], [Gamma, [Multiply, [Rational, 1, 2], s]]]
+    caption: $\mathcal{M}\{e^{-x^2}\}(s) = \Gamma(s/2)/2$
+  - id: log-one-plus-x
+    expr: [MellinTransform, [Ln, [Add, 1, x]], x, s]
+    expected: [Divide, [Multiply, Pi, [Csc, [Multiply, Pi, s]]], s]
+    caption: $\mathcal{M}\{\log(1+x)\}(s) = \pi\csc(\pi s)/s$, $-1<\mathrm{Re}(s)<0$
+  - id: power-shift-x-c-exp
+    expr: [MellinTransform, [Multiply, [Power, x, a], [Exp, [Negate, x]]], x, s]
+    expected: [Gamma, [Add, a, s]]
+    category: Scope
+    caption: power shift — $\mathcal{M}\{x^a e^{-x}\}(s) = \Gamma(a+s)$
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/mellin-transform.ts
+seeAlso:
+  - InverseMellinTransform
+  - LaplaceTransform
+  - FourierTransform

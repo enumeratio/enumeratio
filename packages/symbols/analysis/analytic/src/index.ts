@@ -92,3 +92,8 @@ export { declareFourierSeries } from "./fourier-series.ts";
 export { declareInequality } from "./inequality.ts";
 export { declareFindInstance } from "./find-instance.ts";
 export { declareSignals } from "./signals.ts";
+export { declareMellinTransform, matchInverseMellin, matchMellin } from "./mellin-transform.ts";
+export { declareHankelTransform, matchHankel } from "./hankel-transform.ts";
+export { declareCaputoD, matchCaputoD } from "./caputo-derivative.ts";
+export { declareTrigFactor, matchTrigFactor } from "./trig-factor.ts";
+export { declareDSolveValue } from "./dsolve.ts";

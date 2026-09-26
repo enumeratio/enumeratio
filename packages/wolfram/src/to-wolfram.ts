@@ -526,6 +526,24 @@ export const HEADS: Record<string, string> = {
   // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized
   // 5-argument MeijerG (an extra scale parameter), ours always emits the plain 4-argument form.
   MeijerGReduce: "MeijerGReduce",
+  // MellinTransform[f, x, s] / InverseMellinTransform[F, s, x] — same argument order both
+  // sides.
+  MellinTransform: "MellinTransform",
+  InverseMellinTransform: "InverseMellinTransform",
+  // HankelTransform[f, r, s] (order 0) / HankelTransform[f, r, s, n] — same order, the
+  // trailing order argument optional on both sides.
+  HankelTransform: "HankelTransform",
+  // CaputoD[f, {x, alpha}] — same order; `{x, alpha}` is a plain list both sides.
+  CaputoD: "CaputoD",
+  TrigFactor: "TrigFactor",
+  // DSolveValue[eqn, y[x], x] / DSolveValue[{eqn, ic1, ic2, ...}, y[x], x] — same order;
+  // `y'(x)`/`y''(x)` are `D(y(x), x)`/`D(y(x), x, x)` on this side (boxing to
+  // `Apply(Derivative(y, n), x)`), which the `Apply`/`Derivative` SPECIAL entries below
+  // round-trip to Wolfram's own `Derivative[n][y][x]` (printed `y''[x]`). Arbitrary
+  // constants are `C(1)`, `C(2)`, ... (compute-engine's own `C`, called like Wolfram's
+  // `C[1]`) — a plain rename.
+  DSolveValue: "DSolveValue",
+  C: "C",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",
@@ -804,6 +822,21 @@ export const FOREIGN: Record<string, string> = {
 
 /** Heads that need a bespoke emission rather than a plain rename. */
 const SPECIAL: Record<string, (args: MathJson[]) => string> = {
+  // Apply(f, ...args) is compute-engine's own "call f with these arguments" (confirmed
+  // against its own crosswalk description, "Apply a function to a list of arguments" —
+  // NOT Wolfram's Apply, which replaces an expression's head instead), so it maps to a
+  // direct Wolfram call `f[...args]`, not `Apply[f, {...args}]`. This is what
+  // `D(y(x), x, x)` boxes to (`Apply(Derivative(y, 2), x)`), and combined with the
+  // `Derivative` entry below round-trips it to Wolfram's own `Derivative[2][y][x]`
+  // (printed `y''[x]`) — DSolveValue's `y'`/`y''` notation.
+  Apply: (a) =>
+    `${toWolfram(a[0])}[${a
+      .slice(1)
+      .map((x) => toWolfram(x))
+      .join(", ")}]`,
+  // Derivative(f, n): compute-engine's own order (function first, order second) — same
+  // as Wolfram's `Derivative[n][f]`, just swapped.
+  Derivative: (a) => `Derivative[${toWolfram(a[1])}][${toWolfram(a[0])}]`,
   // LambertW(z) / LambertW(z, k) is compute-engine's own order (branch index second, checked
   // directly: `LambertW(-0.14, -1)` is the k = -1 branch); Wolfram's `ProductLog` puts the
   // branch first: `ProductLog[z]` / `ProductLog[k, z]`.
@@ -900,6 +933,14 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
       .slice(3, 5)
       .map((x) => toWolfram(x))
       .join(", ")}], ${toWolfram(a[5])}]`,
+  // FunctionContinuous(f, x, domain) puts the domain restriction as a third argument;
+  // Wolfram's own FunctionContinuous[{f, domain}, x] embeds it in a list alongside f
+  // instead (confirmed directly: `FunctionContinuous[f, cond]` itself errors
+  // `isvar`) — a restructuring, not a rename. The 2-arg form (no domain) is a plain call.
+  FunctionContinuous: (a) =>
+    a.length === 3
+      ? `FunctionContinuous[List[${toWolfram(a[0])}, ${toWolfram(a[2])}], ${toWolfram(a[1])}]`
+      : call("FunctionContinuous", a),
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */

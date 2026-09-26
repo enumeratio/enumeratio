@@ -1,0 +1,44 @@
+name: FunctionContinuous
+domain: Elementary functions
+signature: FunctionContinuous(f, x, domain)
+summary: Whether f is continuous for every real x (or, given a domain restriction, throughout it).
+signatures:
+  - call: FunctionContinuous(f, x)
+    description: True iff `f` has no singularity anywhere on the reals.
+    library: "@enumeratio/analytic"
+  - call: FunctionContinuous(f, x, domain)
+    description: True iff `f`, restricted to `domain` (a one-sided or bounded inequality in `x`), is continuous throughout it.
+    library: "@enumeratio/analytic"
+details:
+  - "The 2-arg form is built on [[FunctionSingularities]]: True iff that set is identically `False` (no singularity at all), False otherwise -- confirmed against `wolframscript`: `FunctionContinuous(1/x, x)` is False (a pole exists) even though 1/x is continuous everywhere it IS defined, and `FunctionContinuous(Sqrt(x), x)` is likewise False (its domain isn't all of R), matching Wolfram exactly."
+  - "The 3-arg form checks the domain restriction sits entirely inside one of `f`'s continuous intervals, closedness-aware: Sqrt's own zero is a closed, fine boundary (`FunctionContinuous({Sqrt(x), x>=0}, x)` is True) while Log's is closed-and-broken (`FunctionContinuous({Log(x), x>=0}, x)` is False, since `Log(0)` itself is undefined) -- both confirmed against `wolframscript`'s own `FunctionContinuous[{f, cond}, x]`."
+  - "Declined: Tan in the 3-arg form (an unbounded discrete exclusion set, not a finite union of intervals); a domain restriction that isn't a plain one-sided or chained inequality in `x`; and anything [[FunctionSingularities]] itself declines."
+examples:
+  - id: reciprocal-not-continuous
+    expr: [FunctionContinuous, [Power, x, -1], x]
+    expected: False
+    caption: $1/x$ has a pole, so it is not continuous for ALL real $x$
+  - id: polynomial-continuous
+    expr: [FunctionContinuous, [Power, x, 2], x]
+    expected: True
+    caption: a polynomial is entire
+  - id: reciprocal-restricted-domain
+    expr: [FunctionContinuous, [Power, x, -1], x, [Greater, x, 0]]
+    expected: True
+    category: Scope
+    caption: $1/x$ restricted to $x>0$ avoids its only pole
+  - id: sqrt-closed-boundary
+    expr: [FunctionContinuous, [Sqrt, x], x, [GreaterEqual, x, 0]]
+    expected: True
+    category: Scope
+    caption: $\sqrt x$ is continuous on its own closed domain boundary $x=0$
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/function-properties.ts
+seeAlso:
+  - FunctionDomain
+  - FunctionSingularities
+  - FunctionDiscontinuities
