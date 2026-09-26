@@ -5,6 +5,18 @@
   expr: [Gudermannian, 1.5]
   expected: 1.1317283452505091
   caption: At a machine-precision argument
+- id: gudermannian-0-5
+  expr: [Gudermannian, 0.5]
+  expected: 0.48038107913372946
+  role: test
+- id: gudermannian-3
+  expr: [N, [Gudermannian, 3]]
+  expected: 1.4713043411171927
+  role: test
+- id: gudermannian-neg-2-25
+  expr: [Gudermannian, -2.25]
+  expected: -1.3607733020976118
+  role: test
 - id: horizontal-asymptote-pi-2
   expr: [Gudermannian, PositiveInfinity]
   expected: [Multiply, [Rational, 1, 2], Pi]

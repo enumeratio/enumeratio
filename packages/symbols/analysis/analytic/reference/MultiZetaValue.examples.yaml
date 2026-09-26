@@ -6,6 +6,30 @@
   expr: [N, [MultiZetaValue, 3, 3]]
   expected: 0.2137988682245925
   caption: $\zeta(3,3) = \tfrac12(\zeta(3)^2-\zeta(6))$
+- id: zeta-2-3
+  expr: [N, [MultiZetaValue, 2, 3]]
+  expected: 0.711566197550413
+  role: test
+- id: zeta-3-2
+  expr: [N, [MultiZetaValue, 3, 2]]
+  expected: 0.2288103976028497
+  role: test
+- id: zeta-4-2
+  expr: [N, [MultiZetaValue, 4, 2]]
+  expected: 0.08848338245475296
+  role: test
+- id: zeta-2-4
+  expr: [N, [MultiZetaValue, 2, 4]]
+  expected: 0.674523914033936
+  role: test
+- id: zeta-5-2
+  expr: [N, [MultiZetaValue, 5, 2]]
+  expected: 0.038575124342795405
+  role: test
+- id: zeta-3-4
+  expr: [N, [MultiZetaValue, 3, 4]]
+  expected: 0.20750501461558057
+  role: test
 - id: s-1-2-stays-symbolic-outside-the-depth-2-both
   expr: [MultiZetaValue, 1, 2]
   expected: [MultiZetaValue, 1, 2]

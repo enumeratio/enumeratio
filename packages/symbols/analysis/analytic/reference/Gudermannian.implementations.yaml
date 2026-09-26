@@ -20,6 +20,39 @@ at-a-machine-precision-argument:
     in: Gudermannian[1.5]
   wolfram:
     in: Gudermannian[1.5]
+gudermannian-0-5:
+  epsil:
+    in: Gudermannian(0.5)
+    out: 0.480_381_079_133_729_46
+  tex:
+    in: \mathrm{Gudermannian}(0.5)
+    out: 0.480\,381\,079\,133\,729\,46
+  fullform:
+    in: Gudermannian[0.5]
+  wolfram:
+    in: Gudermannian[0.5]
+gudermannian-3:
+  epsil:
+    in: N(Gudermannian(3))
+    out: 1.471_304_341_117_192_7
+  tex:
+    in: N(\mathrm{Gudermannian}(3))
+    out: 1.471\,304\,341\,117\,192\,7
+  fullform:
+    in: N[Gudermannian[3]]
+  wolfram:
+    in: N[Gudermannian[3]]
+gudermannian-neg-2-25:
+  epsil:
+    in: Gudermannian(-2.25)
+    out: -1.360_773_302_097_611_8
+  tex:
+    in: \mathrm{Gudermannian}(-2.25)
+    out: -1.360\,773\,302\,097\,611\,8
+  fullform:
+    in: Gudermannian[-2.25]
+  wolfram:
+    in: Gudermannian[-2.25]
 horizontal-asymptote-pi-2:
   epsil:
     in: Gudermannian(PositiveInfinity)
