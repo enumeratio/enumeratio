@@ -2,11 +2,12 @@ order-2-series-of-x:
   epsil:
     in: FourierSeries(x, x, 2)
     out: |-
-      -1 * i * ExponentialE ^ (i * x) + -1 / 2 * i * ExponentialE ^ (-2 * i * x) + 1 /
-                                                                                   2 *
-                                                                                   i * ExponentialE ^
-                                                                                      (2i * x) +
-      i * ExponentialE ^ (-1 * i * x)
+      -i * ExponentialE ^ (i * x) + -1 / 2 * i * ExponentialE ^ (-2 * i * x) + 1 / 2 *
+                                                                               i * ExponentialE ^
+                                                                                  (2i *
+                                                                                   x) + i *
+                                                                                     ExponentialE ^
+                                                                                     (-i * x)
   tex:
     in: \mathrm{FourierSeries}(x, x, 2)
     out: -i\exp(i x)+(-\frac{1}{2}i)\exp(-2i x)+(\frac{1}{2}i)\exp(2i x)+i\exp(-i x)
@@ -18,7 +19,7 @@ order-2-series-of-x:
 order-3-series-of-sin-is-itself:
   epsil:
     in: FourierSeries(Sin(x), x, 3)
-    out: -1 / 2 * i * ExponentialE ^ (i * x) + 1 / 2 * i * ExponentialE ^ (-1 * i * x)
+    out: -1 / 2 * i * ExponentialE ^ (i * x) + 1 / 2 * i * ExponentialE ^ (-i * x)
   tex:
     in: \mathrm{FourierSeries}(\sin(x), x, 3)
     out: (-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)

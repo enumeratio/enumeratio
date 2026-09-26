@@ -101,6 +101,13 @@ generic `where` clauses.
   `'"s0"'` — single quotes for the literal, inner double quotes because it is non-numeric —
   while `["String", "2"]` becomes `'2'`. A naive reader works on numeric labels and fails
   silently on every other one. That cost a real debugging cycle in the group algebras.
+- **Epsil does not round-trip numbers.** `serializeEpsil` drops a mantissa of exactly 1
+  (`1e-16` prints `e-16`, which reads back as Euler's e minus 16), and `parseEpsil` works a
+  short decimal out in doubles (`0.3` reads as `0.30000000000000004`; a long one is kept as
+  written). `toInputForm` respells the first as `10e-17` and `parseNotatio` re-reads each
+  literal from its source span; both are no-ops once upstream is fixed. It also prints a
+  three-argument `Mod(17, 5, 1)` as `17 % 5 % 1`, which reads back as `Mod(Mod(17, 5), 1)` --
+  still open, and visible as `epsil.back` in the `Mod` sidecar.
 - **Canonical `Add` ordering** is not the order anyone writes, which makes pinned
   expectations in tests and reference entries fragile unless they are dumped rather than
   hand-written.

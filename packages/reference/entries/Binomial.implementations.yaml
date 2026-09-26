@@ -723,7 +723,7 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     note: The Julia mapping converts to ZZ, integers only; compute-engine's Binomial extends to rational, real and complex arguments.
 complex-n-and-k-evaluate-through-the-gamma:
   epsil:
-    in: Binomial(2 + i, 7 + -3 * i)
+    in: Binomial(2 + i, 7 - 3i)
     out: -75.468_347_382_223_04 + 106.815_265_970_790_55i
   tex:
     in: \binom{2+i}{7-3i}

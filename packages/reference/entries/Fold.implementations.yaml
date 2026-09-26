@@ -61,6 +61,7 @@ any-two-argument-function-here-one-that-nests:
   epsil:
     in: Fold(Function([_1, _2]), x, [a, b])
     out: "[[x, a], b]"
+    back: Unreadable
   tex:
     in: \mathrm{Fold}(()\mapsto\bigl\lbrack\operatorname{\_1}, \operatorname{\_2}\bigr\rbrack, x, \bigl\lbrack a, b\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack x, a\bigr\rbrack, b\bigr\rbrack
@@ -99,6 +100,7 @@ assemble-a-number-from-its-decimal-digits:
   epsil:
     in: Fold(Function(10 * _1 + _2), 0, [1, 2, 3, 4])
     out: 1_234
+    back: Unreadable
   tex:
     in: \mathrm{Fold}(()\mapsto10\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: 1\,234
@@ -110,6 +112,7 @@ or-from-its-binary-digits-1011-2-11:
   epsil:
     in: Fold(Function(2 * _1 + _2), 0, [1, 0, 1, 1])
     out: "11"
+    back: Unreadable
   tex:
     in: \mathrm{Fold}(()\mapsto2\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack1, 0, 1, 1\bigr\rbrack)
     out: "11"
@@ -121,6 +124,7 @@ horner-s-rule-for-ax-2-bx-c:
   epsil:
     in: Fold(Function(x * _1 + _2), 0, [a, b, c])
     out: x * (a * x + b) + c
+    back: Unreadable
   tex:
     in: \mathrm{Fold}(()\mapsto x\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack a, b, c\bigr\rbrack)
     out: x\times(ax+b)+c
@@ -130,6 +134,7 @@ evaluate-the-continued-fraction-1-2-2-2-from-the:
   epsil:
     in: Fold(Function(_2 + 1 / _1), 2, [2, 2, 1])
     out: 17 / 12
+    back: Unreadable
   tex:
     in: \mathrm{Fold}(()\mapsto\operatorname{\_2}+\frac{1}{\operatorname{\_1}}, 2, \bigl\lbrack2, 2, 1\bigr\rbrack)
     out: \frac{17}{12}

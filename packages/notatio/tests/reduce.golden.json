@@ -320,7 +320,7 @@
     "markup": "<notatio-dynamic-module><notatio-column><notatio-animator name=\"t\" min=\"0\" max=\"1\" step=\"0.25\"></notatio-animator><notatio-dynamic value=\"Sin(_t)\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "web: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Slider2D(\n          (p, (0.300_000_000_000_000_04, 0.600_000_000_000_000_1)),\n          ((0, 0), (1, 1)),\n          0.01,\n        )",
+    "notatio": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
     "markup": "<notatio-dynamic-module><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-dynamic-module>"
   },
   "print: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
@@ -328,7 +328,7 @@
     "markup": "<notatio-labeled label=\"p = (0.3, 0.6)\" position=\"below\"><notatio-dynamic value=\"(0.3, 0.6)\"></notatio-dynamic></notatio-labeled>"
   },
   "tty: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Slider2D(\n          (p, (0.300_000_000_000_000_04, 0.600_000_000_000_000_1)),\n          ((0, 0), (1, 1)),\n          0.01,\n        )",
+    "notatio": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
     "markup": "<notatio-dynamic-module><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-dynamic-module>"
   },
   "pipe: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
@@ -336,7 +336,7 @@
     "markup": "<notatio-labeled label=\"p = (0.3, 0.6)\" position=\"below\"><notatio-dynamic value=\"(0.3, 0.6)\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Slider2D(\n          (p, (0.300_000_000_000_000_04, 0.600_000_000_000_000_1)),\n          ((0, 0), (1, 1)),\n          0.01,\n        )",
+    "notatio": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
     "markup": "<notatio-dynamic-module><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-dynamic-module>"
   },
   "web: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {

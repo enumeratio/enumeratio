@@ -174,7 +174,7 @@ b-5-2-7-2-frac-3-pi-256-from-the-half-integer:
     in: Beta[Rational[5, 2], Rational[7, 2]]
 complex-arguments-should-evaluate-numerically:
   epsil:
-    in: Beta(2.5 + i, 1 + -1 * i)
+    in: Beta(2.5 + i, 1 - i)
     out: 0.083_107_783_669_911_63 + 0.142_163_944_255_870_34i
   tex:
     in: \mathrm{B}(2.5+i, 1-i)

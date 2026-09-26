@@ -465,8 +465,8 @@ a-gaussian-modulus-and-an-exponent-of-10-30:
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
 11-7i-is-a-unit-mod-7-4i-so-it-has-negative:
   epsil:
-    in: PowerMod(11 + -7 * i, -4, 7 + 4i)
-    out: -2 + -1 * i
+    in: PowerMod(11 - 7i, -4, 7 + 4i)
+    out: -2 - i
   tex:
     in: \mathrm{PowerMod}(11-7i, -4, 7+4i)
     out: -2-i

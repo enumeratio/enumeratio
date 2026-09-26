@@ -2,6 +2,7 @@ string-take-s-n-takes-the-first-n-characters:
   epsil:
     in: StringTake("hello world", 5)
     out: '"hello"'
+    back: [StringTake, "'hello world'", 5]
   tex:
     in: \mathrm{StringTake}(\text{\text{hello world}}, 5)
     out: \text{hello}
@@ -14,6 +15,7 @@ string-take-s-negative-n-takes-last-n-chars:
   epsil:
     in: StringTake("hello world", -5)
     out: '"world"'
+    back: [StringTake, "'hello world'", -5]
   tex:
     in: \mathrm{StringTake}(\text{\text{hello world}}, -5)
     out: \text{world}
@@ -26,6 +28,7 @@ string-take-s-n-takes-the-nth-character-alone:
   epsil:
     in: StringTake("\(hello)", [2])
     out: '"e"'
+    back: [StringTake, [String, "''", hello], [List, 2]]
   tex:
     in: \mathrm{StringTake}(\text{\mathrm{hello}}, \bigl\lbrack2\bigr\rbrack)
     out: \text{e}
@@ -37,6 +40,7 @@ string-take-s-m-n-takes-an-inclusive-range:
   epsil:
     in: StringTake("hello world", [1, 5])
     out: '"hello"'
+    back: [StringTake, "'hello world'", [List, 1, 5]]
   tex:
     in: \mathrm{StringTake}(\text{\text{hello world}}, \bigl\lbrack1, 5\bigr\rbrack)
     out: \text{hello}
@@ -49,6 +53,7 @@ string-take-s-m-negative-n-counts-from-end:
   epsil:
     in: StringTake("hello world", [1, -7])
     out: '"hello"'
+    back: [StringTake, "'hello world'", [List, 1, -7]]
   tex:
     in: \mathrm{StringTake}(\text{\text{hello world}}, \bigl\lbrack1, -7\bigr\rbrack)
     out: \text{hello}

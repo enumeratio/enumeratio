@@ -203,7 +203,7 @@ a-positive-integer-a-peels-off-the-first-terms:
 complex-a:
   epsil:
     in: N(HurwitzZeta(2.3, 8 + i))
-    out: 0.054_470_082_732_130_67 + -0.009_448_515_336_470_249 * i
+    out: 0.054_470_082_732_130_67 - 0.009_448_515_336_470_249i
   tex:
     in: N(\mathrm{HurwitzZeta}(2.3, 8+i))
     out: 0.054\,470\,082\,732\,130\,67-0.009\,448\,515\,336\,470\,249i
@@ -950,7 +950,7 @@ n-hurwitzzeta-2-7-over-3:
 n-hurwitzzeta-2-1-plus-i:
   epsil:
     in: N(HurwitzZeta(2, 1 + i))
-    out: 0.463_000_096_622_763_76 + -0.794_233_542_759_319 * i
+    out: 0.463_000_096_622_763_76 - 0.794_233_542_759_319i
   tex:
     in: N(\mathrm{HurwitzZeta}(2, 1+i))
     out: 0.463\,000\,096\,622\,763\,76-0.794\,233\,542\,759\,319i
@@ -976,7 +976,7 @@ n-hurwitzzeta-2-1-plus-i:
     out: 0.463000096622764 - 0.794233542759319*I
 n-hurwitzzeta-2-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(2, 2 + -0.5 * i))
+    in: N(HurwitzZeta(2, 2 - 0.5i))
     out: 0.588_197_890_950_061_5 + 0.185_041_972_433_790_86i
   tex:
     in: N(\mathrm{HurwitzZeta}(2, 2-0.5i))
@@ -1244,7 +1244,7 @@ n-hurwitzzeta-3-7-over-3:
 n-hurwitzzeta-3-1-plus-i:
   epsil:
     in: N(HurwitzZeta(3, 1 + i))
-    out: -0.184_276_465_793_967_61 + -0.383_326_425_172_533_3 * i
+    out: -0.184_276_465_793_967_61 - 0.383_326_425_172_533_3i
   tex:
     in: N(\mathrm{HurwitzZeta}(3, 1+i))
     out: -0.184\,276\,465\,793\,967\,61-0.383\,326\,425\,172\,533\,3i
@@ -1270,7 +1270,7 @@ n-hurwitzzeta-3-1-plus-i:
     out: -0.184276465793968 - 0.383326425172533*I
 n-hurwitzzeta-3-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(3, 2 + -0.5 * i))
+    in: N(HurwitzZeta(3, 2 - 0.5i))
     out: 0.153_693_633_730_308_25 + 0.104_226_347_413_732_64i
   tex:
     in: N(\mathrm{HurwitzZeta}(3, 2-0.5i))
@@ -1564,7 +1564,7 @@ n-hurwitzzeta-5-1-plus-i:
     out: -0.136646173710169 + 0.107525502140082*I
 n-hurwitzzeta-5-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(5, 2 + -0.5 * i))
+    in: N(HurwitzZeta(5, 2 - 0.5i))
     out: 0.012_993_573_083_069_943 + 0.028_877_271_795_314_092i
   tex:
     in: N(\mathrm{HurwitzZeta}(5, 2-0.5i))
@@ -1832,7 +1832,7 @@ n-hurwitzzeta-neg-1-7-over-3:
 n-hurwitzzeta-neg-1-1-plus-i:
   epsil:
     in: N(HurwitzZeta(-1, 1 + i))
-    out: 0.416_666_666_666_666_666_666_5 + -0.5 * i
+    out: 0.416_666_666_666_666_666_666_5 - 0.5i
   tex:
     in: N(\mathrm{HurwitzZeta}(-1, 1+i))
     out: 0.41\overline{6}-0.5i
@@ -1858,7 +1858,7 @@ n-hurwitzzeta-neg-1-1-plus-i:
     out: 0.416666666666667 - 0.500000000000000*I
 n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(-1, 2 + -0.5 * i))
+    in: N(HurwitzZeta(-1, 2 - 0.5i))
     out: -0.958_333_333_333_333_35 + 0.75i
   tex:
     in: N(\mathrm{HurwitzZeta}(-1, 2-0.5i))
@@ -2152,7 +2152,7 @@ n-hurwitzzeta-neg-2-1-plus-i:
     out: 0.500000000000000 + 0.166666666666667*I
 n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(-2, 2 + -0.5 * i))
+    in: N(HurwitzZeta(-2, 2 - 0.5i))
     out: -0.624_999_999_999_999_999_999_375 + 1.041_666_666_666_666_3i
   tex:
     in: N(\mathrm{HurwitzZeta}(-2, 2-0.5i))
@@ -2446,7 +2446,7 @@ n-hurwitzzeta-neg-3-1-plus-i:
     out: 0.00833333333333333 + 0.500000000000000*I
 n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(-3, 2 + -0.5 * i))
+    in: N(HurwitzZeta(-3, 2 - 0.5i))
     out: -0.194_791_666_666_666_175 + 1.312_499_999_999_999_6i
   tex:
     in: N(\mathrm{HurwitzZeta}(-3, 2-0.5i))
@@ -2714,7 +2714,7 @@ n-hurwitzzeta-0p5-7-over-3:
 n-hurwitzzeta-0p5-1-plus-i:
   epsil:
     in: N(HurwitzZeta(0.5, 1 + i))
-    out: -1.798_813_744_486_485_1 + -1.093_576_875_721_108 * i
+    out: -1.798_813_744_486_485_1 - 1.093_576_875_721_108i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5, 1+i))
     out: -1.798\,813\,744\,486\,485\,1-1.093\,576\,875\,721\,108i
@@ -2740,7 +2740,7 @@ n-hurwitzzeta-0p5-1-plus-i:
     out: -1.79881374448649 - 1.09357687572111*I
 n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(0.5, 2 + -0.5 * i))
+    in: N(HurwitzZeta(0.5, 2 - 0.5i))
     out: -2.491_474_235_288_009_7 + 0.398_328_078_684_049_24i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5, 2-0.5i))
@@ -2768,7 +2768,7 @@ n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i:
 n-hurwitzzeta-0p5-neg-0p5:
   epsil:
     in: N(HurwitzZeta(0.5, -0.5))
-    out: -0.604_898_643_421_629_9 + -1.414_213_562_373_095 * i
+    out: -0.604_898_643_421_629_9 - 1.414_213_562_373_095i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5, -0.5))
     out: -0.604\,898\,643\,421\,629\,9-1.414\,213\,562\,373\,095i
@@ -2795,7 +2795,7 @@ n-hurwitzzeta-0p5-neg-0p5:
 n-hurwitzzeta-0p5-neg-1p5:
   epsil:
     in: N(HurwitzZeta(0.5, -1.5))
-    out: -0.604_898_643_421_629_9 + -2.230_710_143_300_821 * i
+    out: -0.604_898_643_421_629_9 - 2.230_710_143_300_821i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5, -1.5))
     out: -0.604\,898\,643\,421\,629\,9-2.230\,710\,143\,300\,821i
@@ -3008,7 +3008,7 @@ n-hurwitzzeta-1p5-7-over-3:
 n-hurwitzzeta-1p5-1-plus-i:
   epsil:
     in: N(HurwitzZeta(1.5, 1 + i))
-    out: 1.650_934_751_949_365 + -0.967_357_065_698_767_9 * i
+    out: 1.650_934_751_949_365 - 0.967_357_065_698_767_9i
   tex:
     in: N(\mathrm{HurwitzZeta}(1.5, 1+i))
     out: 1.650\,934\,751\,949\,365-0.967\,357\,065\,698\,767\,9i
@@ -3034,7 +3034,7 @@ n-hurwitzzeta-1p5-1-plus-i:
     out: 1.65093475194937 - 0.967357065698768*I
 n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(1.5, 2 + -0.5 * i))
+    in: N(HurwitzZeta(1.5, 2 - 0.5i))
     out: 1.556_595_777_765_751_3 + 0.242_106_322_325_134_4i
   tex:
     in: N(\mathrm{HurwitzZeta}(1.5, 2-0.5i))
@@ -3302,7 +3302,7 @@ n-hurwitzzeta-2p5-7-over-3:
 n-hurwitzzeta-2p5-1-plus-i:
   epsil:
     in: N(HurwitzZeta(2.5, 1 + i))
-    out: 0.018_739_837_095_718_206 + -0.589_547_708_338_161_3 * i
+    out: 0.018_739_837_095_718_206 - 0.589_547_708_338_161_3i
   tex:
     in: N(\mathrm{HurwitzZeta}(2.5, 1+i))
     out: 0.018\,739\,837\,095\,718\,206-0.589\,547\,708\,338\,161\,3i
@@ -3328,7 +3328,7 @@ n-hurwitzzeta-2p5-1-plus-i:
     out: 0.0187398370957182 - 0.589547708338162*I
 n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(2.5, 2 + -0.5 * i))
+    in: N(HurwitzZeta(2.5, 2 - 0.5i))
     out: 0.287_820_164_365_366_45 + 0.139_696_684_393_935_65i
   tex:
     in: N(\mathrm{HurwitzZeta}(2.5, 2-0.5i))
@@ -3356,7 +3356,7 @@ n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i:
 n-hurwitzzeta-2p5-neg-0p5:
   epsil:
     in: N(HurwitzZeta(2.5, -0.5))
-    out: 6.247_110_634_568_814_5 + -5.656_854_249_492_38 * i
+    out: 6.247_110_634_568_814_5 - 5.656_854_249_492_38i
   tex:
     in: N(\mathrm{HurwitzZeta}(2.5, -0.5))
     out: 6.247\,110\,634\,568\,814\,5-5.656\,854\,249\,492\,38i
@@ -3383,7 +3383,7 @@ n-hurwitzzeta-2p5-neg-0p5:
 n-hurwitzzeta-2p5-neg-1p5:
   epsil:
     in: N(HurwitzZeta(2.5, -1.5))
-    out: 6.247_110_634_568_814_5 + -6.019_741_618_793_591 * i
+    out: 6.247_110_634_568_814_5 - 6.019_741_618_793_591i
   tex:
     in: N(\mathrm{HurwitzZeta}(2.5, -1.5))
     out: 6.247\,110\,634\,568\,814\,5-6.019\,741\,618\,793\,591i
@@ -3596,7 +3596,7 @@ n-hurwitzzeta-neg-0p5-7-over-3:
 n-hurwitzzeta-neg-0p5-1-plus-i:
   epsil:
     in: N(HurwitzZeta(-0.5, 1 + i))
-    out: 0.087_845_927_820_186_56 + -0.795_101_413_593_405_8 * i
+    out: 0.087_845_927_820_186_56 - 0.795_101_413_593_405_8i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5, 1+i))
     out: 0.087\,845\,927\,820\,186\,56-0.795\,101\,413\,593\,405\,8i
@@ -3622,7 +3622,7 @@ n-hurwitzzeta-neg-0p5-1-plus-i:
     out: 0.0878459278201809 - 0.795101413593407*I
 n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(-0.5, 2 + -0.5 * i))
+    in: N(HurwitzZeta(-0.5, 2 - 0.5i))
     out: -1.157_801_113_527_324_3 + 0.617_711_202_310_647_9i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5, 2-0.5i))
@@ -3704,7 +3704,7 @@ n-hurwitzzeta-neg-0p5-neg-1p5:
 n-hurwitzzeta-2-plus-i-1:
   epsil:
     in: N(HurwitzZeta(2 + i, 1))
-    out: 1.150_355_703_254_902_6 + -0.437_530_865_919_607_9 * i
+    out: 1.150_355_703_254_902_6 - 0.437_530_865_919_607_9i
   tex:
     in: N(\mathrm{HurwitzZeta}(2+i, 1))
     out: 1.150\,355\,703\,254\,902\,6-0.437\,530\,865\,919\,607\,9i
@@ -3731,7 +3731,7 @@ n-hurwitzzeta-2-plus-i-1:
 n-hurwitzzeta-2-plus-i-2:
   epsil:
     in: N(HurwitzZeta(2 + i, 2))
-    out: 0.150_355_703_254_902_6 + -0.437_530_865_919_607_9 * i
+    out: 0.150_355_703_254_902_6 - 0.437_530_865_919_607_9i
   tex:
     in: N(\mathrm{HurwitzZeta}(2+i, 2))
     out: 0.150\,355\,703\,254\,902\,6-0.437\,530\,865\,919\,607\,9i
@@ -3758,7 +3758,7 @@ n-hurwitzzeta-2-plus-i-2:
 n-hurwitzzeta-2-plus-i-3:
   epsil:
     in: N(HurwitzZeta(2 + i, 3))
-    out: -0.041_954_022_086_090_365 + -0.277_790_546_841_199_2 * i
+    out: -0.041_954_022_086_090_365 - 0.277_790_546_841_199_2i
   tex:
     in: N(\mathrm{HurwitzZeta}(2+i, 3))
     out: -0.041\,954\,022\,086\,090\,365-0.277\,790\,546\,841\,199\,2i
@@ -3839,7 +3839,7 @@ n-hurwitzzeta-2-plus-i-0p25:
 n-hurwitzzeta-2-plus-i-1p3:
   epsil:
     in: N(HurwitzZeta(2 + i, 1.3))
-    out: 0.634_178_650_268_899_9 + -0.536_110_383_539_212_5 * i
+    out: 0.634_178_650_268_899_9 - 0.536_110_383_539_212_5i
   tex:
     in: N(\mathrm{HurwitzZeta}(2+i, 1.3))
     out: 0.634\,178\,650\,268\,899\,9-0.536\,110\,383\,539\,212\,5i
@@ -3866,7 +3866,7 @@ n-hurwitzzeta-2-plus-i-1p3:
 n-hurwitzzeta-2-plus-i-7-over-3:
   epsil:
     in: N(HurwitzZeta(2 + i, 7 / 3))
-    out: 0.055_133_389_636_795_21 + -0.376_862_655_048_367_3 * i
+    out: 0.055_133_389_636_795_21 - 0.376_862_655_048_367_3i
   tex:
     in: N(\mathrm{HurwitzZeta}(2+i, \frac{7}{3}))
     out: 0.055\,133\,389\,636\,795\,21-0.376\,862\,655\,048\,367\,3i
@@ -3890,7 +3890,7 @@ n-hurwitzzeta-2-plus-i-7-over-3:
 n-hurwitzzeta-2-plus-i-1-plus-i:
   epsil:
     in: N(HurwitzZeta(2 + i, 1 + i))
-    out: -0.635_304_343_440_011_7 + -1.658_848_643_605_894_5 * i
+    out: -0.635_304_343_440_011_7 - 1.658_848_643_605_894_5i
   tex:
     in: N(\mathrm{HurwitzZeta}(2+i, 1+i))
     out: -0.635\,304\,343\,440\,011\,7-1.658\,848\,643\,605\,894\,5i
@@ -3916,8 +3916,8 @@ n-hurwitzzeta-2-plus-i-1-plus-i:
     out: -0.635304343440012 - 1.65884864360589*I
 n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(2 + i, 2 + -0.5 * i))
-    out: 0.185_393_489_012_994_57 + -0.270_373_692_422_873_57 * i
+    in: N(HurwitzZeta(2 + i, 2 - 0.5i))
+    out: 0.185_393_489_012_994_57 - 0.270_373_692_422_873_57i
   tex:
     in: N(\mathrm{HurwitzZeta}(2+i, 2-0.5i))
     out: 0.185\,393\,489\,012\,994\,57-0.270\,373\,692\,422\,873\,57i
@@ -3998,7 +3998,7 @@ n-hurwitzzeta-2-plus-i-neg-1p5:
 n-hurwitzzeta-0p5-plus-3i-1:
   epsil:
     in: N(HurwitzZeta(0.5 + 3i, 1))
-    out: 0.532_736_670_974_232_4 + -0.078_896_513_425_832_66 * i
+    out: 0.532_736_670_974_232_4 - 0.078_896_513_425_832_66i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5+3i, 1))
     out: 0.532\,736\,670\,974\,232\,4-0.078\,896\,513\,425\,832\,66i
@@ -4025,7 +4025,7 @@ n-hurwitzzeta-0p5-plus-3i-1:
 n-hurwitzzeta-0p5-plus-3i-2:
   epsil:
     in: N(HurwitzZeta(0.5 + 3i, 2))
-    out: -0.467_263_329_025_767_45 + -0.078_896_513_425_832_66 * i
+    out: -0.467_263_329_025_767_45 - 0.078_896_513_425_832_66i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5+3i, 2))
     out: -0.467\,263\,329\,025\,767\,45-0.078\,896\,513\,425\,832\,66i
@@ -4106,7 +4106,7 @@ n-hurwitzzeta-0p5-plus-3i-0p5:
 n-hurwitzzeta-0p5-plus-3i-0p25:
   epsil:
     in: N(HurwitzZeta(0.5 + 3i, 0.25))
-    out: -0.821_315_995_611_799_2 + -2.117_913_546_901_069 * i
+    out: -0.821_315_995_611_799_2 - 2.117_913_546_901_069i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5+3i, 0.25))
     out: -0.821\,315\,995\,611\,799\,2-2.117\,913\,546\,901\,069i
@@ -4133,7 +4133,7 @@ n-hurwitzzeta-0p5-plus-3i-0p25:
 n-hurwitzzeta-0p5-plus-3i-1p3:
   epsil:
     in: N(HurwitzZeta(0.5 + 3i, 1.3))
-    out: 0.157_370_174_830_998_36 + -0.442_640_214_770_041_1 * i
+    out: 0.157_370_174_830_998_36 - 0.442_640_214_770_041_1i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5+3i, 1.3))
     out: 0.157\,370\,174\,830\,998\,36-0.442\,640\,214\,770\,041\,1i
@@ -4184,7 +4184,7 @@ n-hurwitzzeta-0p5-plus-3i-7-over-3:
 n-hurwitzzeta-0p5-plus-3i-1-plus-i:
   epsil:
     in: N(HurwitzZeta(0.5 + 3i, 1 + i))
-    out: -1.417_301_505_929_129_4 + -8.335_643_562_213_376 * i
+    out: -1.417_301_505_929_129_4 - 8.335_643_562_213_376i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5+3i, 1+i))
     out: -1.417\,301\,505\,929\,129\,4-8.335\,643\,562\,213\,376i
@@ -4210,7 +4210,7 @@ n-hurwitzzeta-0p5-plus-3i-1-plus-i:
     out: -1.41730150592913 - 8.33564356221338*I
 n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(HurwitzZeta(0.5 + 3i, 2 + -0.5 * i))
+    in: N(HurwitzZeta(0.5 + 3i, 2 - 0.5i))
     out: -0.181_016_361_585_113_64 + 0.009_312_340_272_338_617i
   tex:
     in: N(\mathrm{HurwitzZeta}(0.5+3i, 2-0.5i))
@@ -4292,7 +4292,7 @@ n-hurwitzzeta-0p5-plus-3i-neg-1p5:
 n-hurwitzzeta-neg-0p5-plus-i-1:
   epsil:
     in: N(HurwitzZeta(-0.5 + i, 1))
-    out: -0.000_817_893_132_952_607_3 + -0.223_071_688_697_779_1 * i
+    out: -0.000_817_893_132_952_607_3 - 0.223_071_688_697_779_1i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5+i, 1))
     out: -0.000\,817\,893\,132\,952\,607\,3-0.223\,071\,688\,697\,779\,1i
@@ -4319,7 +4319,7 @@ n-hurwitzzeta-neg-0p5-plus-i-1:
 n-hurwitzzeta-neg-0p5-plus-i-2:
   epsil:
     in: N(HurwitzZeta(-0.5 + i, 2))
-    out: -1.000_817_893_132_952_6 + -0.223_071_688_697_779_1 * i
+    out: -1.000_817_893_132_952_6 - 0.223_071_688_697_779_1i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5+i, 2))
     out: -1.000\,817\,893\,132\,952\,6-0.223\,071\,688\,697\,779\,1i
@@ -4427,7 +4427,7 @@ n-hurwitzzeta-neg-0p5-plus-i-0p25:
 n-hurwitzzeta-neg-0p5-plus-i-1p3:
   epsil:
     in: N(HurwitzZeta(-0.5 + i, 1.3))
-    out: -0.243_310_938_687_756_58 + -0.330_441_278_258_429_45 * i
+    out: -0.243_310_938_687_756_58 - 0.330_441_278_258_429_45i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5+i, 1.3))
     out: -0.243\,310\,938\,687\,756\,58-0.330\,441\,278\,258\,429\,45i
@@ -4454,7 +4454,7 @@ n-hurwitzzeta-neg-0p5-plus-i-1p3:
 n-hurwitzzeta-neg-0p5-plus-i-7-over-3:
   epsil:
     in: N(HurwitzZeta(-0.5 + i, 7 / 3))
-    out: -1.382_185_144_087_135_3 + -0.009_056_308_250_057_337 * i
+    out: -1.382_185_144_087_135_3 - 0.009_056_308_250_057_337i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5+i, \frac{7}{3}))
     out: -1.382\,185\,144\,087\,135\,3-0.009\,056\,308\,250\,057\,337i
@@ -4478,7 +4478,7 @@ n-hurwitzzeta-neg-0p5-plus-i-7-over-3:
 n-hurwitzzeta-neg-0p5-plus-i-1-plus-i:
   epsil:
     in: N(HurwitzZeta(-0.5 + i, 1 + i))
-    out: 1.040_957_543_118_520_7 + -1.799_910_432_336_835_6 * i
+    out: 1.040_957_543_118_520_7 - 1.799_910_432_336_835_6i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5+i, 1+i))
     out: 1.040\,957\,543\,118\,520\,7-1.799\,910\,432\,336\,835\,6i
@@ -4504,7 +4504,7 @@ n-hurwitzzeta-neg-0p5-plus-i-1-plus-i:
     out: 1.04095754311853 - 1.79991043233683*I
 n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5:
   epsil:
-    in: N(HurwitzZeta(-0.5 + i, 2 + -0.5 * i))
+    in: N(HurwitzZeta(-0.5 + i, 2 - 0.5i))
     out: -0.746_153_397_257_609_8 + 0.249_257_816_033_066_35i
   tex:
     in: N(\mathrm{HurwitzZeta}(-0.5+i, 2-0.5i))

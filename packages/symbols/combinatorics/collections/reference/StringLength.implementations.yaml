@@ -2,6 +2,7 @@ counts-code-points-not-utf-16-units:
   epsil:
     in: StringLength("a😀b")
     out: "3"
+    back: [StringLength, "'a😀b'"]
   tex:
     in: \mathrm{StringLength}(\text{\text{a😀b}})
     out: "3"

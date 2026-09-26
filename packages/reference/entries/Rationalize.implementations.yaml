@@ -202,6 +202,17 @@ the-rational-with-the-smallest-denominator:
     in: Rationalize[Pi, 0.001]
   wolfram:
     in: Rationalize[Pi, 0.001]
+a-tolerance-finer-than-a-double:
+  epsil:
+    in: Rationalize(Pi, 10e-17)
+    out: 245_850_922 / 78_256_779
+  tex:
+    in: \mathrm{Rationalize}(\pi, 10^{-16})
+    out: \frac{245\,850\,922}{78\,256\,779}
+  fullform:
+    in: Rationalize[Pi, 1*^-16]
+  wolfram:
+    in: Rationalize[Pi, 1*^-16]
 rationalizes-every-approximate-number-inside-an:
   epsil:
     in: Rationalize(1.2 + 6.7x)

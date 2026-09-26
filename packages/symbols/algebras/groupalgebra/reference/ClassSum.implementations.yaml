@@ -32,6 +32,7 @@ a-lone-reflection-is-not:
   epsil:
     in: IsCentral(DihedralGroup(3), GroupBasis("\(s0)"))
     out: False
+    back: [IsCentral, [DihedralGroup, 3], [GroupBasis, [String, "''", s0]]]
   tex:
     in: \mathrm{IsCentral}(\mathrm{DihedralGroup}(3), \mathrm{GroupBasis}(\text{\mathrm{s0}}))
     out: \bot
@@ -47,6 +48,7 @@ in-an-abelian-group-everything-is-central:
   epsil:
     in: IsCentral(CyclicGroup(6), GroupBasis("\(3)"))
     out: True
+    back: [IsCentral, [CyclicGroup, 6], [GroupBasis, [String, "''", 3]]]
   tex:
     in: \mathrm{IsCentral}(\mathrm{CyclicGroup}(6), \mathrm{GroupBasis}(\text{3}))
     out: \top
