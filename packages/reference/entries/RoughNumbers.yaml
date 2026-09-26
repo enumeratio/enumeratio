@@ -5,6 +5,7 @@ summary: The $k$-rough numbers -- positive integers with no prime factor below $
 signatures:
   - call: RoughNumbers(k)
     description: the $n \geq 1$ whose prime factors are all $\geq k$ ($n=1$ counts, vacuously), an infinite indexed collection for every $k$.
+    library: enumeratio-collections
 details:
   - 'A lazy indexed collection for each $k$: $Count(RoughNumbers(k)) = +\infty$ -- every sufficiently large prime is $k$-rough. $RoughNumbers(5)$ is OEIS A007310 (coprime to 6); $RoughNumbers(7)$ is A007775 (coprime to 30).'
   - $At(RoughNumbers(k), i)$ unranks the $i$-th match by scanning forward, factoring each candidate -- $At(RoughNumbers(5), 1) = 1$ (vacuously rough).

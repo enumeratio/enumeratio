@@ -1224,7 +1224,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "KAlmostPrimes",
     provenance: "extension",
-    declared: null,
+    declared: "enumeratio-collections",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -1238,7 +1238,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "KFreeIntegers",
     provenance: "extension",
-    declared: null,
+    declared: "enumeratio-collections",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -1658,7 +1658,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "PolygonalNumbers",
     provenance: "extension",
-    declared: null,
+    declared: "enumeratio-collections",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -1707,7 +1707,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "PrimePairs",
     provenance: "extension",
-    declared: null,
+    declared: "enumeratio-collections",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -1826,7 +1826,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "RoughNumbers",
     provenance: "extension",
-    declared: null,
+    declared: "enumeratio-collections",
     wolframAlias: null,
     elsewhere: [],
   },

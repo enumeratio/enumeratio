@@ -5,6 +5,7 @@ summary: The $k$-gonal figurate numbers $P(k, n) = \big((k-2)n^2 - (k-4)n\big)/2
 signatures:
   - call: PolygonalNumbers(k)
     description: $P(k, n)$ for $n = 1, 2, 3, …$, the $k$-gonal numbers.
+    library: enumeratio-collections
 details:
   - 'A lazy indexed family for each $k \ge 3$: $Count(PolygonalNumbers(k)) = +\infty$, and $At(PolygonalNumbers(k), n)$ unranks $P(k, n)$ in closed form -- $At(PolygonalNumbers(5), 3) = 12$.'
   - $k = 3, 4, 5, 6, 7, 8$ reproduce [[TriangularNumbers]], [[SquareNumbers]], [[PentagonalNumbers]], [[HexagonalNumbers]], [[HeptagonalNumbers]] and [[OctagonalNumbers]] termwise; those fixed-$k$ names exist as their own lazy collections for convenience, not as a separate definition.
