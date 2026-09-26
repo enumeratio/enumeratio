@@ -467,7 +467,7 @@ z-2-z-bar-z:
     in: Equal[Power[Abs[Complex[3, 4]], 2], Times[Complex[3, 4], Conjugate[Complex[3, 4]]]]
 multiplicative-ab-a-b:
   epsil:
-    in: Abs((1 + 2i) * (3 + -1 * i)) == Abs(1 + 2i) * Abs(3 + -1 * i)
+    in: Abs((1 + 2i) * (3 - i)) == Abs(1 + 2i) * Abs(3 - i)
     out: True
   tex:
     in: \vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert

@@ -425,7 +425,7 @@ threads-over-a-list-of-moduli:
 a-gaussian-integer-5-3i-2-2-2i:
   epsil:
     in: (5 + 3i) % 2
-    out: 1 + -1 * i
+    out: 1 - i
   tex:
     in: (5+3i)\bmod2
     out: 1-i
@@ -505,7 +505,7 @@ a-negative-modulus-gives-a-result-in-n-0:
 gaussian-integers-the-quotient-rounds-so-each:
   epsil:
     in: (7 + 5i) % 3
-    out: 1 + -1 * i
+    out: 1 - i
   tex:
     in: (7+5i)\bmod3
     out: 1-i
@@ -544,7 +544,7 @@ gaussian-integers-the-quotient-rounds-so-each:
 a-gaussian-modulus-7-5i-2-i-4-i-i:
   epsil:
     in: (7 + 5i) % (2 + i)
-    out: -1 * i
+    out: -i
   tex:
     in: (7+5i)\bmod(2+i)
     out: -i

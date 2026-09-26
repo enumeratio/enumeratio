@@ -24,7 +24,6 @@ stays-finite-at-a-nonpositive-integer-lower:
   epsil:
     in: N(Hypergeometric2F1Regularized(1, 1, -1, 0.3))
     out: 0.524_781_341_107_871_2
-    back: [N, [Hypergeometric2F1Regularized, 1, 1, -1, 0.30000000000000004]]
   tex:
     in: N(\mathrm{Hypergeometric2F1Regularized}(1, 1, -1, 0.3))
     out: 0.524\,781\,341\,107\,871\,2

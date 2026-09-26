@@ -2,7 +2,6 @@ exponential-case:
   epsil:
     in: MeijerG([[], []], [[0], []], 0.6)
     out: 0.548_811_636_094_026_4
-    back: [MeijerG, [List, [List], [List]], [List, [List, 0], [List]], 0.6000000000000001]
   tex:
     in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack \bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0\bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, 0.6)
     out: 0.548\,811\,636\,094\,026\,4
@@ -14,7 +13,6 @@ mixed-a-and-b:
   epsil:
     in: MeijerG([[0.7], []], [[0.3], []], 0.4)
     out: 0.924_468_128_124_581_7
-    back: [MeijerG, [List, [List, 0.7000000000000001], [List]], [List, [List, 0.30000000000000004], [List]], 0.4]
   tex:
     in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.7\bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.3\bigr\rbrack, \bigl\lbrack \bigr\rbrack\bigr\rbrack, 0.4)
     out: 0.924\,468\,128\,124\,581\,7

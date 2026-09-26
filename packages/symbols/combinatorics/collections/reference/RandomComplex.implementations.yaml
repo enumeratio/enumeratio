@@ -22,7 +22,7 @@ rectangle-from-0-to-zmax:
     in: Last[List[SeedRandom[7], RandomComplex[Complex[2, 3]]]]
 rectangle-from-zmin-to-zmax:
   epsil:
-    in: Last([SeedRandom(9), RandomComplex([-1 + -1 * i, 1 + i])])
+    in: Last([SeedRandom(9), RandomComplex([-1 - i, 1 + i])])
     out: -0.602_542_163_804_173_5 + 0.702_421_592_548_489_6i
   tex:
     in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(9), \mathrm{RandomComplex}(\bigl\lbrack-1-i, 1+i\bigr\rbrack)\bigr\rbrack)

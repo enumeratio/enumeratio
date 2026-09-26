@@ -171,8 +171,8 @@ a-machine-precision-argument:
     in: Erfc[1.5]
 complex-arguments-should-evaluate-as-they-do-for:
   epsil:
-    in: Erfc(1.5 + -1 * i)
-    out: -0.078_399_207_498_933_45 + -0.027_963_711_238_655_847 * i
+    in: Erfc(1.5 - i)
+    out: -0.078_399_207_498_933_45 - 0.027_963_711_238_655_847i
   tex:
     in: \mathrm{Erfc}(1.5-i)
     out: -0.078\,399\,207\,498\,933\,45-0.027\,963\,711\,238\,655\,847i
@@ -198,7 +198,6 @@ interval-arithmetic-erfc-is-decreasing-so-the:
   epsil:
     in: Erfc(Interval(0.2, 0.3))
     out: Interval(0.671_373_240_540_872_6, 0.777_297_410_789_521_5)
-    back: [Erfc, [Interval, 0.2, 0.30000000000000004]]
   tex:
     in: \mathrm{Erfc}(\mathrm{Interval}(0.2, 0.3))
     out: \mathrm{Interval}(0.671\,373\,240\,540\,872\,6, 0.777\,297\,410\,789\,521\,5)

@@ -13,7 +13,6 @@ b-1-is-a-pole-of-gamma-but-the-regularized-form:
   epsil:
     in: Hypergeometric1F1Regularized(1, -1, 0.7)
     out: 0.986_738_826_660_532_9
-    back: [Hypergeometric1F1Regularized, 1, -1, 0.7000000000000001]
   tex:
     in: \mathrm{Hypergeometric1F1Regularized}(1, -1, 0.7)
     out: 0.986\,738\,826\,660\,532\,9

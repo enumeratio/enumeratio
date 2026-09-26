@@ -15,9 +15,8 @@ values-not-near-zero-pass-through-unchanged:
       out: "1.2"
 values-smaller-than-about-10-10-collapse-to:
   epsil:
-    in: Chop(e-11)
+    in: Chop(10e-12)
     out: "0"
-    back: [Chop, [Subtract, e, 11]]
   tex:
     in: \mathrm{chop}(10^{-11})
     out: "0"
@@ -31,9 +30,8 @@ values-smaller-than-about-10-10-collapse-to:
       out: \frac{1}{100000000000}
 negative-values-chop-the-same-way:
   epsil:
-    in: Chop(-e-11)
+    in: Chop(-10e-12)
     out: "0"
-    back: [Chop, [Subtract, [Negate, e], 11]]
   tex:
     in: \mathrm{chop}(-10^{-11})
     out: "0"
@@ -47,9 +45,8 @@ negative-values-chop-the-same-way:
       out: -\frac{1}{100000000000}
 chops-the-real-and-imaginary-parts-independently:
   epsil:
-    in: Chop(e-12 + 3i)
+    in: Chop(10e-13 + 3i)
     out: 3i
-    back: [Chop, [Add, [Subtract, e, 12], [Multiply, 3, i]]]
   tex:
     in: \mathrm{chop}(10^{-12}+3i)
     out: 3i
@@ -78,9 +75,8 @@ cleans-up-the-floating-point-residue-from:
       out: "0"
 only-the-value-s-own-magnitude-matters-this:
   epsil:
-    in: Chop(1 + e-12)
+    in: Chop(1 + 10e-13)
     out: 1.000_000_000_001
-    back: [Chop, [Subtract, [Add, 1, e], 12]]
   tex:
     in: \mathrm{chop}(1+10^{-12})
     out: 1.000\,000\,000\,001
@@ -109,9 +105,8 @@ a-hard-cutoff-at-about-10-10-a-value-just-above:
       out: \text{1.0000000001$\grave{ }$*${}^{\wedge}$-10}
 threads-element-wise-over-a-list:
   epsil:
-    in: Chop([1.2, e-11, 3.5])
+    in: Chop([1.2, 10e-12, 3.5])
     out: "[1.2, 0, 3.5]"
-    back: [Chop, [List, 1.2, [Subtract, e, 11], 3.5]]
   tex:
     in: \mathrm{chop}(\bigl\lbrack1.2, 10^{-11}, 3.5\bigr\rbrack)
     out: \bigl\lbrack1.2, 0, 3.5\bigr\rbrack
@@ -121,9 +116,8 @@ threads-element-wise-over-a-list:
     in: Chop[List[1.2, 1*^-11, 3.5]]
 a-negligible-imaginary-part-is-dropped-leaving-a:
   epsil:
-    in: Chop(1 + e-14 * i)
+    in: Chop(1 + 10e-15 * i)
     out: "1"
-    back: [Chop, [Subtract, [Add, 1, e], [Multiply, 14, i]]]
   tex:
     in: \mathrm{chop}(1+10^{-14}i)
     out: "1"
@@ -164,9 +158,8 @@ a-second-argument-sets-the-tolerance-here:
     in: Chop[0.001, 0.01]
 and-a-tighter-tolerance-keeps-a-value-the:
   epsil:
-    in: Chop(e-15, e-20)
-    out: e-15
-    back: [Chop, [Subtract, e, 15], [Subtract, e, 20]]
+    in: Chop(10e-16, 10e-21)
+    out: "10e-16"
   tex:
     in: \mathrm{chop}(10^{-15}, 10^{-20})
     out: 10^{-15}
@@ -199,9 +192,8 @@ chop-0p001-0p0001-keeps-a-value-inside-the:
     in: Chop[0.001, 0.0001]
 chop-1e-15-with-the-default-tolerance:
   epsil:
-    in: Chop(e-15)
+    in: Chop(10e-16)
     out: "0"
-    back: [Chop, [Subtract, e, 15]]
   tex:
     in: \mathrm{chop}(10^{-15})
     out: "0"

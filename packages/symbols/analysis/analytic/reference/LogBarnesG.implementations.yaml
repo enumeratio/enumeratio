@@ -88,7 +88,6 @@ ln-g-0-7-negative-since-g-1-on-0-1:
   epsil:
     in: LogBarnesG(0.7)
     out: -0.214_589_897_075_086_36
-    back: [LogBarnesG, 0.7000000000000001]
   tex:
     in: \mathrm{LogBarnesG}(0.7)
     out: -0.214\,589\,897\,075\,086\,36
@@ -102,8 +101,7 @@ ln-g-0-7-negative-since-g-1-on-0-1:
 complex-arguments:
   epsil:
     in: LogBarnesG(1.7 + i)
-    out: 0.121_378_662_628_899_29 + -0.313_561_761_336_856_65 * i
-    back: [LogBarnesG, [Add, 1.7000000000000002, i]]
+    out: 0.121_378_662_628_899_29 - 0.313_561_761_336_856_65i
   tex:
     in: \mathrm{LogBarnesG}(1.7+i)
     out: 0.121\,378\,662\,628\,899\,29-0.313\,561\,761\,336\,856\,65i

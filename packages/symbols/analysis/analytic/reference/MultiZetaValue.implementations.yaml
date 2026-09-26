@@ -29,7 +29,6 @@ zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact:
   epsil:
     in: Chop(N(MultiZetaValue(2, 2)) - 0.75 * N(Zeta(4)))
     out: "0"
-    back: [Chop, [Subtract, [N, [MultiZetaValue, 2, 2]], [Multiply, 0.7500000000000001, [N, [Zeta, 4]]]]]
   tex:
     in: \mathrm{chop}(N(\mathrm{MultiZetaValue}(2, 2))-0.75N(\zeta(4)))
     out: "0"

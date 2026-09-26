@@ -378,7 +378,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
 evaluates-at-a-complex-argument:
   epsil:
     in: Sin(2.5 + i)
-    out: 0.923_490_776_043_173_1 + -0.941_504_933_270_867_2 * i
+    out: 0.923_490_776_043_173_1 - 0.941_504_933_270_867_2i
   tex:
     in: \sin(2.5+i)
     out: 0.923\,490\,776\,043\,173\,1-0.941\,504\,933\,270\,867\,2i
@@ -898,7 +898,7 @@ power-reduction-sin-2-x-frac-1-cos-2x-2:
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i:
   epsil:
     in: TrigToExp(Sin(x))
-    out: -1 / 2 * i * ExponentialE ^ (i * x) + 1 / 2 * i * ExponentialE ^ (-1 * i * x)
+    out: -1 / 2 * i * ExponentialE ^ (i * x) + 1 / 2 * i * ExponentialE ^ (-i * x)
   tex:
     in: \mathrm{TrigToExp}(\sin(x))
     out: (-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)

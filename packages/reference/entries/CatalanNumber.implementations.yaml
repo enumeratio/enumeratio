@@ -575,7 +575,6 @@ an-interval-argument-should-give-an-enclosing:
   epsil:
     in: CatalanNumber(Interval(0.5, 0.6))
     out: Interval(0.848_826_363_156_775_1, 0.862_540_968_873_452_3)
-    back: [CatalanNumber, [Interval, 0.5, 0.6000000000000001]]
   tex:
     in: \mathrm{CatalanNumber}(\mathrm{Interval}(0.5, 0.6))
     out: \mathrm{Interval}(0.848\,826\,363\,156\,775\,1, 0.862\,540\,968\,873\,452\,3)

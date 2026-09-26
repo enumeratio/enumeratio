@@ -276,7 +276,7 @@ the-notorious-sum-of-all-positive-integers:
 on-the-critical-line-zeta-1-2-14i-0-02224-0:
   epsil:
     in: N(Zeta(0.5 + 14i))
-    out: 0.022_241_142_609_993_59 + -0.103_258_123_266_450_06 * i
+    out: 0.022_241_142_609_993_59 - 0.103_258_123_266_450_06i
   tex:
     in: N(\zeta(0.5+14i))
     out: 0.022\,241\,142\,609\,993\,59-0.103\,258\,123\,266\,450\,06i
@@ -494,8 +494,8 @@ left-of-the-critical-strip-via-the-functional:
     in: zeta(-4.5)
 complex-s-under-n:
   epsil:
-    in: N(Zeta(2 + -5 * i))
-    out: 0.850_962_943_624_262_8 + -0.098_996_946_134_831_25 * i
+    in: N(Zeta(2 - 5i))
+    out: 0.850_962_943_624_262_8 - 0.098_996_946_134_831_25i
   tex:
     in: N(\zeta(2-5i))
     out: 0.850\,962\,943\,624\,262\,8-0.098\,996\,946\,134\,831\,25i
@@ -562,7 +562,7 @@ two-arguments-inexact:
     in: hurwitz_zeta(-1.5, 5)
 two-complex-arguments-under-n-to-ten-digits:
   epsil:
-    in: N(Zeta(-1.5 + i, 2.5 + -1 * i), 10)
+    in: N(Zeta(-1.5 + i, 2.5 - i), 10)
     out: 0.018_486_809_19 + 1.675_533_784i
   tex:
     in: N(\zeta(-1.5+i, 2.5-i), 10)
@@ -581,7 +581,7 @@ two-complex-arguments-under-n-to-ten-digits:
     in: N(hurwitz_zeta((-1.5 + 1*I), (2.5 + -1*I)))
 which-with-inexact-complex-arguments-should:
   epsil:
-    in: Zeta(-1.5 + i, 2.5 + -1 * i)
+    in: Zeta(-1.5 + i, 2.5 - i)
     out: 0.018_486_809_193_810_65 + 1.675_533_784_301_766i
   tex:
     in: \zeta(-1.5+i, 2.5-i)
@@ -802,7 +802,7 @@ zeta-complex-argument-stays-symbolic-until-n:
 n-zeta-complex-2-plus-i:
   epsil:
     in: N(Zeta(2 + i))
-    out: 1.150_355_703_254_902_8 + -0.437_530_865_919_607_9 * i
+    out: 1.150_355_703_254_902_8 - 0.437_530_865_919_607_9i
   tex:
     in: N(\zeta(2+i))
     out: 1.150\,355\,703\,254\,902\,8-0.437\,530\,865\,919\,607\,9i
@@ -821,7 +821,7 @@ n-zeta-complex-2-plus-i:
 zeta-threads-over-mixed-exact-and-inexact-list:
   epsil:
     in: Zeta([2, 0.5 + 14i])
-    out: "[1 / 6 * Pi ^ 2, 0.022_241_142_609_993_59 + -0.103_258_123_266_450_06 * i]"
+    out: "[1 / 6 * Pi ^ 2, 0.022_241_142_609_993_59 - 0.103_258_123_266_450_06i]"
   tex:
     in: \zeta(\bigl\lbrack2, 0.5+14i\bigr\rbrack)
     out: \bigl\lbrack\frac{\pi^2}{6}, 0.022\,241\,142\,609\,993\,59-0.103\,258\,123\,266\,450\,06i\bigr\rbrack

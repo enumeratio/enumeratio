@@ -341,7 +341,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
 evaluates-at-a-complex-argument:
   epsil:
     in: Cos(2.5 + i)
-    out: -1.236_229_198_856_342 + -0.703_325_178_113_534_7 * i
+    out: -1.236_229_198_856_342 - 0.703_325_178_113_534_7i
   tex:
     in: \cos(2.5+i)
     out: -1.236\,229\,198\,856\,342-0.703\,325\,178\,113\,534\,7i
@@ -648,7 +648,7 @@ power-reduction-cos-2-x-frac-1-cos-2x-2:
 euler-s-formula-cos-x-frac-e-ix-e-ix-2:
   epsil:
     in: TrigToExp(Cos(x))
-    out: 1 / 2 * (ExponentialE ^ (i * x) + ExponentialE ^ (-1 * i * x))
+    out: 1 / 2 * (ExponentialE ^ (i * x) + ExponentialE ^ (-i * x))
   tex:
     in: \mathrm{TrigToExp}(\cos(x))
     out: \frac{1}{2}(\exp(i x)+\exp(-i x))

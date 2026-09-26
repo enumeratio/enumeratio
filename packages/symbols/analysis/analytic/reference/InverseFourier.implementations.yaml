@@ -1,7 +1,7 @@
 inverse-dft-of-1-2-3-4:
   epsil:
     in: InverseFourier([1, 2, 3, 4])
-    out: "[5, -1 + i, -1, -1 + -1 * i]"
+    out: "[5, -1 + i, -1, -1 - i]"
   tex:
     in: \mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack5, -1+i, -1, -1-i\bigr\rbrack
@@ -37,7 +37,7 @@ a-2x2-matrix:
 a-custom-fourierparameters:
   epsil:
     in: InverseFourier([1, 2, 3, 4], FourierParameters -> [1, -1])
-    out: "[2.5, -0.5 + -0.5 * i, -0.5, -0.5 + 0.5i]"
+    out: "[2.5, -0.5 - 0.5i, -0.5, -0.5 + 0.5i]"
   tex:
     in: \mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{FourierParameters}, \bigl\lbrack1, -1\bigr\rbrack))
     out: \bigl\lbrack2.5, -0.5-0.5i, -0.5, -0.5+0.5i\bigr\rbrack
