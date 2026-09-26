@@ -9,6 +9,7 @@ import {
   symbolNameOf,
   withDeadline,
 } from "@enumeratio/boxed";
+import { SUMMARIES } from "./summaries-data.ts";
 import type { Outcome, TestResult } from "./verification-test.ts";
 import { verificationTest } from "./verification-test.ts";
 
@@ -35,7 +36,7 @@ export function declareAestimatio(ce: ComputeEngine): void {
   // lazy-operator trap — see compute-engine's types-definitions.d.ts): canonicalize each
   // held operand before evaluating it.
   ce.declare("TimeConstrained", {
-    description: "Evaluates expr, but aborts after t seconds and returns failexpr (default $Aborted).",
+    description: SUMMARIES.TimeConstrained,
     signature: "(any, number, any?) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -81,8 +82,7 @@ export function declareAestimatio(ce: ComputeEngine): void {
   // computation's heap use, so this stays unevaluated rather than pretending to enforce
   // a bound it cannot: silently ignoring the constraint would be worse than saying so.
   ce.declare("MemoryConstrained", {
-    description:
-      "Evaluates expr under a memory cap of bytes. Only enforced inside the isolated (worker) evaluator — in-process this stays unevaluated.",
+    description: SUMMARIES.MemoryConstrained,
     signature: "(any, number, any?) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -106,8 +106,7 @@ function declareVerificationTest(ce: ComputeEngine): void {
   // MemoryConstraint -> b, TestID -> "…") — held: `input` must not evaluate until the
   // constraints are in place around it.
   ce.declare("VerificationTest", {
-    description:
-      "Evaluates input under the given constraints and compares it with expected (default: structural sameness), returning a TestResultObject.",
+    description: SUMMARIES.VerificationTest,
     signature: "(any*) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {

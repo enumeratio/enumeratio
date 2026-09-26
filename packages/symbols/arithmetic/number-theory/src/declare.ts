@@ -21,6 +21,7 @@ import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
 import { hermiteDecomposition } from "./hermite.ts";
 import { rationalReconstruction } from "./reconstruct.ts";
+import { SUMMARIES } from "./summaries-data.ts";
 
 // Number theory past ℤ/m, on top of @enumeratio/residues (declare that first): PowerMod and
 // PowerModList reach ℤ[i], plus rational reconstruction, integer valuations and Hermite
@@ -116,8 +117,7 @@ export function declareNumberTheory(ce: ComputeEngine): void {
   );
 
   ce.declare("RationalReconstruction", {
-    description:
-      "The fraction n/d with n ≡ a·d (mod m), |n| ≤ N and 0 < d ≤ D; by default the bounds with 2·N·D < m, where the answer is unique.",
+    description: SUMMARIES.RationalReconstruction,
     signature: "(integer, integer, integer?, integer?) -> rational",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -133,7 +133,7 @@ export function declareNumberTheory(ce: ComputeEngine): void {
   // ∞. Rational integers here; ℤ[i] is declareIntegerExponentGaussian's, below, and a p-adic
   // valuation of a rational is AdicValuation's.
   ce.declare("IntegerExponent", {
-    description: "The largest k with bᵏ dividing n (b defaults to 10); ∞ for n = 0.",
+    description: SUMMARIES.IntegerExponent,
     signature: "(number, number?) -> integer | number",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -149,8 +149,7 @@ export function declareNumberTheory(ce: ComputeEngine): void {
 
   // Wolfram's HermiteDecomposition[m] = {u, h}: u unimodular, u·m = h in Hermite normal form.
   ce.declare("HermiteDecomposition", {
-    description:
-      "{u, h} with u unimodular and u·m = h upper triangular: positive pivots, entries above each pivot reduced into [0, pivot).",
+    description: SUMMARIES.HermiteDecomposition,
     signature: "(list<list<integer>>) -> list",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const rows = operandsOf(ops[0]).map((row) => operandsOf(row).map(bigIntegerAt));

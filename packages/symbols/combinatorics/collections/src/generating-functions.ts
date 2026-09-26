@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, symbolNameOf } from "@enumeratio/boxed";
+import { SUMMARIES } from "./summaries-data.ts";
 
 // GeneratingFunction / ExponentialGeneratingFunction / FindSequenceFunction / DiscreteRatio
 // (Wolfram frontier). The three sequence-recognition heads share one pipeline: sample the
@@ -338,8 +339,7 @@ function generatingFunctionCore(
 
 function declareGeneratingFunction(ce: ComputeEngine): void {
   ce.declare("GeneratingFunction", {
-    description:
-      "The ordinary generating function of expr(n) in x: Σ expr(n)·xⁿ in closed form, when the sequence is C-finite (a constant-coefficient linear recurrence — Fibonacci, fixed-k binomials, polynomials in n, geometric terms, …) or a recognised algebraic sequence such as the Catalan numbers.",
+    description: SUMMARIES.GeneratingFunction,
     signature: "(any, symbol, symbol) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => generatingFunctionCore(ce, ops, "ordinary"),
@@ -348,8 +348,7 @@ function declareGeneratingFunction(ce: ComputeEngine): void {
 
 function declareExponentialGeneratingFunction(ce: ComputeEngine): void {
   ce.declare("ExponentialGeneratingFunction", {
-    description:
-      "The exponential generating function of expr(n) in x: Σ expr(n)·xⁿ/n! in closed form. Handles order ≤ 2 C-finite sequences (Fibonacci and the like) and a small registry of named factorial-growth sequences (n!, derangements, Bell numbers).",
+    description: SUMMARIES.ExponentialGeneratingFunction,
     signature: "(any, symbol, symbol) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => generatingFunctionCore(ce, ops, "exponential"),
@@ -370,7 +369,7 @@ function evaluateDiscreteRatio(ce: ComputeEngine, ops: readonly BoxedExpression[
 
 function declareDiscreteRatio(ce: ComputeEngine): void {
   ce.declare("DiscreteRatio", {
-    description: "f(n+1)/f(n), simplified — the ratio between consecutive terms of a sequence.",
+    description: SUMMARIES.DiscreteRatio,
     signature: "(any, symbol) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteRatio(ce, ops),
@@ -393,7 +392,7 @@ function evaluateDifferenceDelta(ce: ComputeEngine, ops: readonly BoxedExpressio
 
 function declareDifferenceDelta(ce: ComputeEngine): void {
   ce.declare("DifferenceDelta", {
-    description: "f(n+1) - f(n), simplified — the forward difference of a sequence.",
+    description: SUMMARIES.DifferenceDelta,
     signature: "(any, symbol) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => evaluateDifferenceDelta(ce, ops),
@@ -506,8 +505,7 @@ function findSequenceFunctionCore(ce: ComputeEngine, ops: readonly BoxedExpressi
 
 function declareFindSequenceFunction(ce: ComputeEngine): void {
   ce.declare("FindSequenceFunction", {
-    description:
-      "A closed form (or, failing that, undefined) for the sequence a(0), a(1), … given as a list — polynomial fits via finite differences, geometric/exponential-polynomial fits via Berlekamp–Massey (order ≤ 2), and a small registry of named sequences (Fibonacci, Catalan, factorial, derangements, Bell numbers).",
+    description: SUMMARIES.FindSequenceFunction,
     signature: "(list, symbol) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => findSequenceFunctionCore(ce, ops),

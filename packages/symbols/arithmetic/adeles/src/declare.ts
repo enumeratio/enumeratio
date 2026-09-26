@@ -18,6 +18,7 @@ import * as P from "./profinite.ts";
 import type { Profinite } from "./profinite.ts";
 import * as Q from "./rational.ts";
 import type { Q as Rational } from "./rational.ts";
+import { SUMMARIES } from "./summaries-data.ts";
 
 // Hertogh's adèles over Q as compute-engine values. Three value heads:
 //
@@ -127,8 +128,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   // ── ProfiniteNumber ───────────────────────────────────────────────────────────
 
   ce.declare(PROFINITE, {
-    description:
-      "x + mẐ: the rational x known modulo the rational m in Q̂ = Ẑ ⊗ Q; ProfiniteNumber({AdicNumeral(p, x, n), …}) glues p-adics by CRT.",
+    description: SUMMARIES.ProfiniteNumber,
     signature: "(any, number?) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [first, second] = ops;
@@ -314,8 +314,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   // ── the constructors ──────────────────────────────────────────────────────────
 
   ce.declare(ADELE, {
-    description:
-      "An adèle of Q: a real component beside a profinite one. Adele(q) puts q at every place; Adele(idèle) is the adèle it determines.",
+    description: SUMMARIES.Adele,
     signature: "(any, any?) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [first, second] = ops;
@@ -335,8 +334,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   });
 
   ce.declare(IDELE, {
-    description:
-      "An idèle of Q. Idele(q) and Idele(r, q) are principal; Idele(r, s, {AdicNumeral(p, c, n), …}) has p^{v_p(s)}·c at each listed prime and p^{v_p(s)} times an unknown unit elsewhere.",
+    description: SUMMARIES.Idele,
     signature: "(any, any?, list?) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [first, second] = ops;
@@ -419,8 +417,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   // ── the matrix factorisation ──────────────────────────────────────────────────
 
   ce.declare("ProfiniteDecomposition", {
-    description:
-      "{b, a} with m = b·a, b ∈ GL_n(Ẑ) and a ∈ GL_n⁺(Q) upper triangular — strong approximation for a matrix over Q̂ (Hertogh's Algorithm 8.4); d is det m, by default that of the value matrix.",
+    description: SUMMARIES.ProfiniteDecomposition,
     signature: "(list, number?) -> list",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const rows = operandsOf(ops[0]).map((row) => operandsOf(row).map(profiniteOf));
@@ -472,8 +469,7 @@ function declareProfinitePlot(ce: ComputeEngine): void {
   // on x = ProfiniteNumber(a, k!) and its image, known modulo some M, meets every row class
   // congruent to it mod gcd(M, k!). The picture it evaluates to is an ArrayPlot.
   ce.declare("ProfinitePlot", {
-    description:
-      "The graph of f: Ẑ → Ẑ in the variable x at precision k (default 5): residue classes mod k! laid out by their factorial digits, drawn as an ArrayPlot.",
+    description: SUMMARIES.ProfinitePlot,
     signature: "(any, symbol, integer?) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
