@@ -1,0 +1,18 @@
+name: EllipticK
+domain: Compute engine
+signature: EllipticK(complex | infinity) -> number
+summary: Complete elliptic integral of the first kind K(m), parameter convention m = k².
+signatures:
+  - call: EllipticK(complex | infinity) -> number
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Elliptic integral
+  - system: mathworld
+    identity: CompleteEllipticIntegraloftheFirstKind
+  - system: dlmf
+    identity: "19.2"
+names:
+  dlmf: Legendre's complete elliptic integral of the first kind
+  wikidata: Q109752514
+stub: engine

@@ -1,0 +1,11 @@
+name: Artanh
+domain: Compute engine
+signature: Artanh(complex | signed_infinity) -> number
+summary: Inverse hyperbolic tangent (area hyperbolic tangent).
+signatures:
+  - call: Artanh(complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  fungrim: Atanh
+  dlmf: inverse hyperbolic tangent function
+stub: engine

@@ -1,0 +1,15 @@
+name: PowerSet
+domain: Compute engine
+signature: PowerSet(set<any>) -> set
+summary: Return the power set of a set (set of all subsets).
+signatures:
+  - call: PowerSet(set<any>) -> set
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Power set
+  - system: mathworld
+    identity: PowerSet
+  - system: rosettacode
+    identity: Power set
+stub: engine

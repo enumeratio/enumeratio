@@ -25,3 +25,10 @@ seeAlso:
   - Stirling
   - Count
   - At
+references:
+  - system: wikipedia
+    identity: Partition of a set
+  - system: mathworld
+    identity: SetPartition
+  - system: oeis
+    identity: A000110

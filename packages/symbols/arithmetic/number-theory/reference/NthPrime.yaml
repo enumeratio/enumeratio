@@ -13,3 +13,8 @@ details:
 seeAlso:
   - FactorInteger
   - PrimePi
+references:
+  - system: wikipedia
+    identity: Prime number
+  - system: oeis
+    identity: A000040

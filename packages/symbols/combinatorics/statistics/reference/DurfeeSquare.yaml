@@ -5,3 +5,8 @@ summary: "The side of the Durfee square: the largest d with at least d parts of 
 details:
   - Defined over `IntegerPartitions` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
   - Takes a `IntegerPartitions` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+references:
+  - system: wikipedia
+    identity: Durfee square
+  - system: mathworld
+    identity: DurfeeSquare

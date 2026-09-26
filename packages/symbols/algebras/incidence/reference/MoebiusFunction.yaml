@@ -16,3 +16,8 @@ seeAlso:
   - MoebiusInvert
   - PosetZeta
   - PosetElements
+references:
+  - system: wikipedia
+    identity: Incidence algebra
+  - system: mathworld
+    identity: MoebiusFunction

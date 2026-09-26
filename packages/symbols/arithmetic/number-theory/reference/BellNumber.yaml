@@ -17,3 +17,10 @@ details:
   - The two-argument form $B_n(x)$ is the Bell (Touchard) polynomial; $B_n(1) = B_n$.
 seeAlso:
   - StirlingS1
+references:
+  - system: wikipedia
+    identity: Bell number
+  - system: mathworld
+    identity: BellNumber
+  - system: oeis
+    identity: A000110

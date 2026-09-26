@@ -1,0 +1,10 @@
+name: Multiply
+domain: Compute engine
+signature: Multiply(number*) -> number
+summary: Product of two or more values.
+signatures:
+  - call: Multiply(number*) -> number
+    description: as compute-engine declares it
+names:
+  wikidataConfirmed: true
+stub: engine

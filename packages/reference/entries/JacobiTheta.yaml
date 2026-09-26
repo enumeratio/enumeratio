@@ -1,0 +1,17 @@
+name: JacobiTheta
+domain: Compute engine
+signature: JacobiTheta(number, complex | infinity, complex | infinity, number?) -> number
+summary: Jacobi theta function θⱼ(z, τ), j ∈ {1,2,3,4}, nome q = e^{iπτ} (Fungrim convention).
+signatures:
+  - call: JacobiTheta(number, complex | infinity, complex | infinity, number?) -> number
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Theta function
+  - system: mathworld
+    identity: JacobiThetaFunctions
+  - system: dlmf
+    identity: "20"
+names:
+  wikidata: Q17098064
+stub: engine

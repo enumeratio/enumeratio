@@ -19,3 +19,8 @@ details:
   - A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.
 seeAlso:
   - PowerMod
+references:
+  - system: wikipedia
+    identity: Modulo
+  - system: mathworld
+    identity: Mod

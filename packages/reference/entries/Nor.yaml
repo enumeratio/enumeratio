@@ -1,0 +1,10 @@
+name: Nor
+domain: Compute engine
+signature: Nor(boolean+) -> boolean
+summary: "Logical NOR: the negation of OR (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `True`."
+signatures:
+  - call: Nor(boolean+) -> boolean
+    description: as compute-engine declares it
+names:
+  wikidata: Q574946
+stub: engine

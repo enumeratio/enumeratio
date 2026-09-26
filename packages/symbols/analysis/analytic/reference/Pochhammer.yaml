@@ -15,3 +15,13 @@ details:
 seeAlso:
   - Factorial
   - Binomial
+references:
+  - system: wikipedia
+    identity: Falling and rising factorials
+  - system: mathworld
+    identity: PochhammerSymbol
+  - system: dlmf
+    identity: "5.2"
+names:
+  fungrim: RisingFactorial
+  wikidata: Q2339261

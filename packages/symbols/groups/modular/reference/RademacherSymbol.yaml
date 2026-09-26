@@ -24,3 +24,8 @@ details:
 seeAlso:
   - ModularClasses
   - ModularWord
+references:
+  - system: wikipedia
+    identity: Dedekind sum
+  - system: mathworld
+    identity: DedekindSum

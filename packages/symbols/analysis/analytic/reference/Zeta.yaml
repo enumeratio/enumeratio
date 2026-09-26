@@ -48,3 +48,27 @@ seeAlso:
   - Digamma
   - RiemannSiegelZ
   - RiemannZetaZero
+references:
+  - system: wikipedia
+    identity: Riemann zeta function
+    arity: 1
+  - system: mathworld
+    identity: RiemannZetaFunction
+    arity: 1
+  - system: dlmf
+    identity: "25.2"
+    arity: 1
+  - system: wikipedia
+    identity: Hurwitz zeta function
+    arity: 2
+  - system: mathworld
+    identity: HurwitzZetaFunction
+    arity: 2
+  - system: dlmf
+    identity: "25.11"
+    arity: 2
+  - system: fungrim
+    identity: HurwitzZeta
+    arity: 2
+names:
+  fungrim: RiemannZeta

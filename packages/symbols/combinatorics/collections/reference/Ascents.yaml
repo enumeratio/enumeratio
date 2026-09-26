@@ -12,3 +12,8 @@ details:
 seeAlso:
   - Descents
   - SymmetricGroup
+references:
+  - system: wikipedia
+    identity: Permutation#Ascents, descents, runs, exceedances
+  - system: mathworld
+    identity: PermutationAscent

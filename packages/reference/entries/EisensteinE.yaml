@@ -1,0 +1,13 @@
+name: EisensteinE
+domain: Compute engine
+signature: EisensteinE(number, complex | infinity) -> number
+summary: Normalized Eisenstein series Eₛ(τ) of even weight s ≥ 2, Im(τ) > 0.
+signatures:
+  - call: EisensteinE(number, complex | infinity) -> number
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Eisenstein series
+  - system: mathworld
+    identity: EisensteinSeries
+stub: engine

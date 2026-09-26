@@ -15,3 +15,12 @@ seeAlso:
   - Tan
   - Sec
   - Arccos
+references:
+  - system: wikipedia
+    identity: Sine and cosine
+  - system: mathworld
+    identity: Cosine
+  - system: dlmf
+    identity: "4.14"
+names:
+  dlmf: cosine function

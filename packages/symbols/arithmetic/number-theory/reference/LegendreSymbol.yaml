@@ -12,3 +12,8 @@ details:
 seeAlso:
   - JacobiSymbol
   - KroneckerSymbol
+references:
+  - system: wikipedia
+    identity: Legendre symbol
+  - system: mathworld
+    identity: LegendreSymbol

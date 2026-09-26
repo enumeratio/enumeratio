@@ -75,6 +75,9 @@
         "$ref": "#/$defs/Reference"
       }
     },
+    "names": {
+      "$ref": "#/$defs/ReferenceNames"
+    },
     "stub": {
       "enum": ["engine", "carrier"]
     }
@@ -184,6 +187,27 @@
         }
       },
       "required": ["system", "identity"],
+      "additionalProperties": false
+    },
+    "ReferenceNames": {
+      "type": "object",
+      "properties": {
+        "fungrim": {
+          "type": "string"
+        },
+        "dlmf": {
+          "type": "string"
+        },
+        "wikidata": {
+          "type": "string"
+        },
+        "wikidataConfirmed": {
+          "type": "boolean"
+        },
+        "catalog": {
+          "type": "string"
+        }
+      },
       "additionalProperties": false
     }
   }

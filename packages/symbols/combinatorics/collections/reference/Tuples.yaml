@@ -12,3 +12,8 @@ details:
 seeAlso:
   - Subsets
   - Multisets
+references:
+  - system: wikipedia
+    identity: Tuple
+  - system: mathworld
+    identity: n-Tuple

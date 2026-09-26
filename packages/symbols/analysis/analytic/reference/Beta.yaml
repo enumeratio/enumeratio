@@ -15,3 +15,13 @@ seeAlso:
   - Gamma
   - Binomial
   - BetaRegularized
+references:
+  - system: wikipedia
+    identity: Beta function
+  - system: mathworld
+    identity: BetaFunction
+  - system: dlmf
+    identity: "5.12"
+names:
+  fungrim: BetaFunction
+  wikidata: Q468881

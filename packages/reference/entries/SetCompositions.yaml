@@ -1,0 +1,8 @@
+name: SetCompositions
+domain: Collections
+signature: SetCompositions(n)
+summary: "Compositions of a set: an ordered sequence of blocks partitioning it."
+references:
+  - system: wikipedia
+    identity: Weak ordering
+stub: carrier

@@ -16,3 +16,12 @@ seeAlso:
   - Factorial2
   - Subfactorial
   - Pochhammer
+references:
+  - system: wikipedia
+    identity: Factorial
+  - system: mathworld
+    identity: Factorial
+  - system: dlmf
+    identity: "5.2"
+  - system: rosettacode
+    identity: Factorial

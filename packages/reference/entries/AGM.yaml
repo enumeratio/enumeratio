@@ -1,0 +1,17 @@
+name: AGM
+domain: Compute engine
+signature: AGM(complex | infinity, (complex | infinity)?) -> number
+summary: Arithmetic-geometric mean. AGM(z) is shorthand for AGM(1, z) (Fungrim convention).
+signatures:
+  - call: AGM(complex | infinity, (complex | infinity)?) -> number
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Arithmetic–geometric mean
+  - system: mathworld
+    identity: Arithmetic-GeometricMean
+  - system: dlmf
+    identity: "19.8"
+names:
+  dlmf: arithmetic-geometric mean
+stub: engine

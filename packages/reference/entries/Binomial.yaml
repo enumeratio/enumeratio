@@ -16,3 +16,10 @@ seeAlso:
   - Factorial
   - Multinomial
   - Pochhammer
+references:
+  - system: wikipedia
+    identity: Binomial coefficient
+  - system: mathworld
+    identity: BinomialCoefficient
+  - system: dlmf
+    identity: "26.3"

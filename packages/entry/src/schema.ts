@@ -141,6 +141,18 @@ const REFERENCE: JsonSchema = {
   additionalProperties: false,
 };
 
+const REFERENCE_NAMES: JsonSchema = {
+  type: "object",
+  properties: {
+    fungrim: { type: "string" },
+    dlmf: { type: "string" },
+    wikidata: { type: "string" },
+    wikidataConfirmed: { type: "boolean" },
+    catalog: { type: "string" },
+  },
+  additionalProperties: false,
+};
+
 /** `reference/<Head>.yaml`: the hand-written entry, all but its examples (design/examples-as-data.md §2). */
 export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
@@ -174,6 +186,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     bindings: { type: "array", items: { $ref: "#/$defs/ReferenceBinding" } },
     primitive: { enum: ["kernel", "numeric", "foreign", "axiom"] },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
+    names: { $ref: "#/$defs/ReferenceNames" },
     stub: { enum: ["engine", "carrier"] },
   },
   required: ["name", "domain", "signature", "summary"],
@@ -183,6 +196,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     ReferenceSignature: REFERENCE_SIGNATURE,
     ReferenceBinding: REFERENCE_IMPLEMENTATION,
     Reference: REFERENCE,
+    ReferenceNames: REFERENCE_NAMES,
   },
 };
 

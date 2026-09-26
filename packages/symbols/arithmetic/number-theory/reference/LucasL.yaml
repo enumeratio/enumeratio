@@ -20,3 +20,10 @@ details:
   - A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Lucas polynomial.
 seeAlso:
   - Fibonacci
+references:
+  - system: wikipedia
+    identity: Lucas number
+  - system: mathworld
+    identity: LucasNumber
+  - system: oeis
+    identity: A000032

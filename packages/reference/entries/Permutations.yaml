@@ -1,0 +1,15 @@
+name: Permutations
+domain: Compute engine
+signature: "Permutations((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>)"
+summary: Return all permutations of length k (default full length) of a collection.
+signatures:
+  - call: "Permutations((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>)"
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Permutation
+  - system: mathworld
+    identity: Permutation
+  - system: rosettacode
+    identity: Permutations
+stub: engine

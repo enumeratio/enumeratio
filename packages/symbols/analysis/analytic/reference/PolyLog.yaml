@@ -22,3 +22,12 @@ seeAlso:
   - Zeta
   - HurwitzZeta
   - Ln
+references:
+  - system: wikipedia
+    identity: Polylogarithm
+  - system: mathworld
+    identity: Polylogarithm
+  - system: dlmf
+    identity: "25.12"
+names:
+  wikidata: Q1238449

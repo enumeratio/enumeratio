@@ -41,3 +41,10 @@ seeAlso:
   - BarnesG
   - LogGamma
   - Gamma
+references:
+  - system: wikipedia
+    identity: Barnes G-function
+  - system: mathworld
+    identity: BarnesG-Function
+  - system: dlmf
+    identity: "5.17"

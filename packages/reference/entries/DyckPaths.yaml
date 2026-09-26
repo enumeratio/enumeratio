@@ -17,3 +17,10 @@ seeAlso:
   - CatalanNumber
   - Count
   - At
+references:
+  - system: wikipedia
+    identity: Dyck language
+  - system: mathworld
+    identity: DyckPath
+  - system: oeis
+    identity: A000108

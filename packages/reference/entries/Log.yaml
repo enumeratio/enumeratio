@@ -16,3 +16,8 @@ seeAlso:
   - Log2
   - Log10
   - Lb
+references:
+  - system: wikipedia
+    identity: Logarithm
+  - system: mathworld
+    identity: Logarithm

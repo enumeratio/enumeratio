@@ -4,3 +4,6 @@ signature: Inverse(Permutation)
 summary: "The inverse permutation: position of each value."
 details:
   - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+references:
+  - system: wikipedia
+    identity: Permutation#Composition of permutations

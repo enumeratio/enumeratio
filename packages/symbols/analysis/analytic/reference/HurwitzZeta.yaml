@@ -39,3 +39,10 @@ seeAlso:
   - BernoulliB
   - Gamma
   - Digamma
+references:
+  - system: wikipedia
+    identity: Hurwitz zeta function
+  - system: mathworld
+    identity: HurwitzZetaFunction
+  - system: dlmf
+    identity: "25.11"

@@ -1,0 +1,15 @@
+name: Pi
+domain: Compute engine
+signature: Pi
+summary: The constant π ≈ 3.14159, the ratio of a circle's circumference to its diameter.
+signatures:
+  - call: "Pi: real<3.141592653589793..3.141592653589794>"
+    description: a constant, as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Pi
+  - system: mathworld
+    identity: Pi
+  - system: oeis
+    identity: A000796
+stub: engine

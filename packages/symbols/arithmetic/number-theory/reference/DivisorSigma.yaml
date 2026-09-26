@@ -12,3 +12,12 @@ details:
   - 'A negative order sums reciprocal powers: $\sigma_{-k}(n) = \sigma_k(n)/n^k$.'
 seeAlso:
   - Divisors
+references:
+  - system: wikipedia
+    identity: Divisor function
+  - system: mathworld
+    identity: DivisorFunction
+  - system: dlmf
+    identity: "27.2"
+names:
+  dlmf: sum of powers of divisors of a number

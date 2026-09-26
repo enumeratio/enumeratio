@@ -17,3 +17,10 @@ details:
 seeAlso:
   - FactorInteger
   - DivisorSigma
+references:
+  - system: wikipedia
+    identity: Divisor
+  - system: mathworld
+    identity: Divisor
+  - system: rosettacode
+    identity: Proper divisors
