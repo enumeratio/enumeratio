@@ -16,13 +16,14 @@ a claim can be computed.
 
 ## Layout
 
-| path                  | what's there                                                                                                                                                                                                                                                |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `packages/symbols/*/` | the symbol libraries, grouped by area: `combinatorics`, `arithmetic`, `analysis`, `algebras`, `groups`, `evaluation`                                                                                                                                        |
-| `packages/`           | shared machinery: reference data (`entry`, `reference`, `catalog`), cross-checking (`oracle`, `census`, `plausible`, `bench`), output (`formats`, `wolfram`, `raster`), components and CLI (`notatio`, `notatio-lit`, `cli`) and helpers (`boxed`, `utils`) |
-| `web/`                | the [enumeratio.dev](https://enumeratio.dev) site: guides, reference pages, worksheet and notebook                                                                                                                                                          |
-| `tools/`              | CI tooling (`perf`)                                                                                                                                                                                                                                         |
-| `design/`             | design notes — start from [roadmap.md](design/roadmap.md)                                                                                                                                                                                                   |
+| path                       | what's there                                                                                                                                                                                                                                                |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/symbols/*/`      | the symbol libraries, grouped by area: `combinatorics`, `arithmetic`, `analysis`, `algebras`, `groups`, `evaluation`                                                                                                                                        |
+| `packages/`                | shared machinery: reference data (`entry`, `reference`, `catalog`), cross-checking (`oracle`, `census`, `plausible`, `bench`), output (`formats`, `wolfram`, `raster`), components and CLI (`notatio`, `notatio-lit`, `cli`) and helpers (`boxed`, `utils`) |
+| `upstream/compute-engine/` | fixes offered to compute-engine, applied as patches until they land ([design](design/upstreaming.md))                                                                                                                                                       |
+| `web/`                     | the [enumeratio.dev](https://enumeratio.dev) site: guides, reference pages, worksheet and notebook                                                                                                                                                          |
+| `tools/`                   | CI tooling (`perf`)                                                                                                                                                                                                                                         |
+| `design/`                  | design notes — start from [roadmap.md](design/roadmap.md)                                                                                                                                                                                                   |
 
 Each package's `package.json` `description` says what it holds.
 

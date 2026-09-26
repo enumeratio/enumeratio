@@ -1,14 +1,22 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { applyPatch, hyperbolicZero } from "@enumeratio/for-compute-engine";
 import type { EvalOptions } from "./box.ts";
 
 // Exact values compute-engine leaves symbolic for the hyperbolic functions, though it has
 // them for the circular ones: the values at 0 (and arcosh 1 = 0), as Wolfram gives them.
 //
+// The at-0 table for Sinh/Cosh/Tanh/Sech/Csch/Coth/Arsinh/Artanh moved to
+// @enumeratio/for-compute-engine's hyperbolic-zero patch, offered upstream as
+// cortex-js/compute-engine#341/#342 (design/upstreaming.md §10) -- applied below, in the
+// same spot it used to run in. Arcosh(1) = 0 is a different point and NOT part of that
+// issue, so it stays here, in SPECIAL.
+//
 // The hyperbolic functions of ln q, q a positive rational, are rational in q:
 // sinh(ln q) = (q − 1/q)/2, cosh(ln q) = (q + 1/q)/2 and the rest by division. Wolfram
 // folds these (Sinh[Log[2]] is 3/4); compute-engine leaves them symbolic. Sinh(−ln q) is
-// already turned into −Sinh(ln q) by the parity rules in elementary-remaining.ts.
+// already turned into −Sinh(ln q) by the parity rules in elementary-remaining.ts. Not
+// upstreamed -- stays here.
 
 const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
@@ -34,20 +42,14 @@ function logArgument(op: BoxedExpression | undefined): readonly [bigint, bigint]
   return q !== undefined && q[0] > 0n && q[0] !== q[1] ? q : undefined;
 }
 
-/** f(x0) for the exact x0 at which each head has a plain value. */
+/** f(x0) for the exact x0 (other than 0 -- hyperbolic-zero's) at which a head has a plain value. */
 const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => BoxedExpression]>> = {
-  Sinh: [0, (ce) => ce.Zero],
-  Cosh: [0, (ce) => ce.One],
-  Tanh: [0, (ce) => ce.Zero],
-  Sech: [0, (ce) => ce.One],
-  Csch: [0, (ce) => ce.ComplexInfinity],
-  Coth: [0, (ce) => ce.ComplexInfinity],
-  Arsinh: [0, (ce) => ce.Zero],
-  Artanh: [0, (ce) => ce.Zero],
   Arcosh: [1, (ce) => ce.Zero],
 };
 
 export function declareHyperbolicExact(ce: ComputeEngine): void {
+  applyPatch(ce, hyperbolicZero);
+
   for (const [head, [at, value]] of Object.entries(SPECIAL)) {
     wrapOperator(
       ce,

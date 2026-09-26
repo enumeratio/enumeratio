@@ -8,7 +8,8 @@ import {
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
-import { factorInteger, gcd as bigGcd, invMod, isPrime } from "@enumeratio/residues";
+import { applyPatch, numberTheoryLargeIntegers } from "@enumeratio/for-compute-engine";
+import { factorInteger, gcd as bigGcd, isPrime } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
   divideExact,
@@ -158,19 +159,24 @@ export function declareGaussian(ce: ComputeEngine): void {
     2,
   );
 
+  // The negative-modulus sign convention (ModularInverse(3, -7) = -2) moved to
+  // @enumeratio/for-compute-engine's number-theory-large-integers patch, offered upstream
+  // as cortex-js/compute-engine#339/#347 — applied here, in the same spot it used to run
+  // in, so a real call falls through to it (via the native handler it wraps) once this
+  // wrapper below declines. Only the genuinely Gaussian case (a or m off the real line)
+  // is still ours: ℤ[i] is beyond Wolfram, not part of that issue.
+  applyPatch(ce, numberTheoryLargeIntegers);
   widenSignature(ce, "ModularInverse", "(value, value) -> value", mayBeInteger);
   wrapOperator(
     ce,
     ["ModularInverse", 1, 1],
-    (ops) => ops.every((op) => gaussianAt(op) !== undefined),
+    (ops) => {
+      const values = ops.map(gaussianAt);
+      return values.every((z) => z !== undefined) && values.some((z) => !isReal(z!));
+    },
     () => (ops) => {
       const [a, m] = ops.map(gaussianAt) as [Gaussian, Gaussian];
-      if (!isReal(a) || !isReal(m)) return g(inverseMod(a, m));
-      if (m[0] === 0n) return undefined;
-      const n = m[0] < 0n ? -m[0] : m[0];
-      const inverse = invMod(a[0], n);
-      // Wolfram's sign convention: the inverse takes the sign of the modulus.
-      return inverse === undefined ? undefined : ce.number(m[0] < 0n && inverse !== 0n ? inverse - n : inverse);
+      return g(inverseMod(a, m));
     },
     2,
   );

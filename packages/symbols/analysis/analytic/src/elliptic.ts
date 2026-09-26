@@ -1,41 +1,19 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, type NativeEval, numberResult, wantsNumber } from "./box.ts";
+import { applyPatch, ellipticEComplex } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
 import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
 import { add, ccos, csin, cx, type Cx, mul, scale, sub } from "./complex.ts";
 
-// The incomplete Legendre elliptic integrals, and two precision fixes for the native
+// The incomplete Legendre elliptic integrals, and one precision fix for the native
 // complete one. compute-engine already declares EllipticE/EllipticF/EllipticK/EllipticPi
-// natively (see design/upstreaming.md §8), so nothing here redeclares those heads — one
-// is patched in place at two call sites, the rest are read-only.
-
-/**
- * Fix `EllipticE`'s precision loss at complex modulus (design/upstreaming.md §8: three
- * Fungrim identities catch it, e.g. m = 0.57 + 0.23i gives four correct digits against
- * mpmath and the engine's own Hypergeometric2F1 identity). The one-argument "complete"
- * form E(m) is the one that loses precision; the two-argument incomplete form E(φ, m) is
- * exact there — confirmed against mpmath across a spread of complex m, including points
- * where the complete form is fine and points where it visibly isn't, so the two forms are
- * not simply redundant paths through the same bug. E(m) = E(π/2, m) (DLMF 19.2.7), so a
- * complex-modulus complete call is routed through the accurate incomplete evaluator
- * instead of trusting the native reduction. Real modulus is untouched — already exact
- * there — and attached in place rather than redeclared, so `EllipticE`'s own canonical
- * form, LaTeX, and the rest of its definition survive (see derivatives.ts).
- */
-function patchEllipticE(ce: ComputeEngine): void {
-  const definition = ce.lookupDefinition("EllipticE");
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return; // EllipticE not declared at all — nothing to patch
-
-  const native: NativeEval = operator.evaluate;
-  const halfPi = ce.box(["Divide", "Pi", 2]);
-  operator.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
-    const [m] = ops;
-    if (ops.length === 1 && m !== undefined && wantsNumber(ops, options) && isFiniteNum(m) && m.im !== 0) {
-      return ce.box(["EllipticE", halfPi, m]).evaluate(options);
-    }
-    return native?.(ops, options);
-  };
-}
+// natively (see design/upstreaming.md §8), so nothing here redeclares those heads.
+//
+// `EllipticE`'s precision loss at complex modulus (design/upstreaming.md §8: three
+// Fungrim identities catch it, e.g. m = 0.57 + 0.23i gives four correct digits against
+// mpmath and the engine's own Hypergeometric2F1 identity) moved to
+// @enumeratio/for-compute-engine's elliptic-e-complex patch, offered upstream as
+// cortex-js/compute-engine#346/#348 — applied below (`applyPatch`), in the same spot it
+// used to run in.
 
 /**
  * Declare `IncompleteEllipticF(φ, m)` — Fungrim's name for the incomplete Legendre
@@ -64,13 +42,13 @@ function declareIncompleteF(ce: ComputeEngine): void {
  * Declare `IncompleteEllipticE(φ, m)` — Fungrim's name for the incomplete Legendre
  * elliptic integral of the second kind. Unlike `IncompleteEllipticF`, this is NOT a thin
  * delegate: native `EllipticE(φ, m)` is exact for φ inside [−π/2, π/2] at any m (checked
- * against mpmath, real and complex m alike — see `patchEllipticE` above), but loses
+ * against mpmath, real and complex m alike — see the elliptic-e-complex patch, applied by `declareElliptic` below), but loses
  * precision whenever m is complex AND φ's real part falls outside that range (e.g.
  * φ = 0.57 + π, m = 0.57 + 0.23i: native gives 3.1882…, mpmath and the quasi-periodicity
  * identity below both give 3.2028… — caught by Fungrim identity c28288). `EllipticF` at
  * the same points has no such bug (checked separately), so this is specific to native
  * `EllipticE`'s internal reduction for the incomplete case, not just the complete-case
- * bug `patchEllipticE` already covers.
+ * bug the elliptic-e-complex patch already covers.
  *
  * DLMF 19.2.10's quasi-periodicity, E(φ + kπ, m) = 2k·E(m) + E(φ, m) for integer k, holds
  * exactly for complex m too (checked against mpmath) — so it is applied explicitly here,
@@ -192,7 +170,7 @@ function declareIncompleteEllipticPi(ce: ComputeEngine): void {
 }
 
 export function declareElliptic(ce: ComputeEngine): void {
-  patchEllipticE(ce);
+  applyPatch(ce, ellipticEComplex);
   declareIncompleteF(ce);
   declareIncompleteE(ce);
   declareIncompleteEllipticPi(ce);

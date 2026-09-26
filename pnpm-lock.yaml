@@ -864,6 +864,9 @@ importers:
       '@enumeratio/boxed':
         specifier: workspace:*
         version: link:../../../boxed
+      '@enumeratio/for-compute-engine':
+        specifier: workspace:*
+        version: link:../../../../upstream/compute-engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.134.0
@@ -914,6 +917,9 @@ importers:
       '@enumeratio/boxed':
         specifier: workspace:*
         version: link:../../../boxed
+      '@enumeratio/for-compute-engine':
+        specifier: workspace:*
+        version: link:../../../../upstream/compute-engine
       '@enumeratio/numerals':
         specifier: workspace:*
         version: link:../numerals
@@ -1206,6 +1212,25 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.4
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
+      vite:
+        specifier: 'catalog:'
+        version: '@voidzero-dev/vite-plus-core@0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)'
+      vite-plus:
+        specifier: 'catalog:'
+        version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
+
+  upstream/compute-engine:
+    dependencies:
+      '@enumeratio/boxed':
+        specifier: workspace:*
+        version: link:../../packages/boxed
+    devDependencies:
+      '@cortex-js/compute-engine':
+        specifier: ^0.134.0
+        version: 0.134.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
