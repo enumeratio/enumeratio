@@ -225,7 +225,7 @@ function pairSet(model: GraphModel, order: readonly string[]): Set<string> {
 /** Heap's algorithm, yielding every permutation of `[0..n-1]` in place. */
 function* permutations(n: number): Generator<number[]> {
   const a = Array.from({ length: n }, (_, i) => i);
-  const c = new Array<number>(n).fill(0);
+  const c = Array.from({ length: n }, () => 0);
   yield a.slice();
   let i = 0;
   while (i < n) {
@@ -514,7 +514,7 @@ function eigenvectorCentrality(ce: ComputeEngine, model: GraphModel): BoxedExpre
   const n = model.order.length;
   if (n === 0) return listOf(ce, []);
   const index = new Map(model.order.map((v, i) => [v, i]));
-  const adj: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+  const adj: number[][] = Array.from({ length: n }, () => Array.from({ length: n }, () => 0));
   for (const e of model.edges) {
     const i = index.get(e.a)!;
     const j = index.get(e.b)!;
@@ -522,9 +522,9 @@ function eigenvectorCentrality(ce: ComputeEngine, model: GraphModel): BoxedExpre
     adj[j]![i] = 1;
   }
   for (let i = 0; i < n; i++) adj[i]![i]! += 1; // shift by +I
-  let x = new Array<number>(n).fill(1 / Math.sqrt(n));
+  let x = Array.from({ length: n }, () => 1 / Math.sqrt(n));
   for (let iter = 0; iter < 200; iter++) {
-    const next = new Array<number>(n).fill(0);
+    const next = Array.from({ length: n }, () => 0);
     for (let i = 0; i < n; i++) {
       let s = 0;
       for (let j = 0; j < n; j++) s += adj[i]![j]! * x[j]!;

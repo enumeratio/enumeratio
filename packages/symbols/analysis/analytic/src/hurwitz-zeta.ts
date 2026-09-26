@@ -423,12 +423,20 @@ function evaluateHurwitz(
     return finish(box(["Divide", ["Negate", poly], nn + 1]));
   }
 
-  // ζ(s, a) for a a nonpositive integer and Re(s) > 0: the (n+a) = 0 term is 0^{−s} with
-  // Re(s) > 0, a genuine pole — not the generalized-zeta convention (`Zeta(s, a)`, evaluated
-  // below) that drops it and stays finite. Matches Wolfram, mpmath and SymPy, all of which
-  // diverge or error here; Re(s) ≤ 0 needs no guard, since 0^{−s} is then just 0.
+  // ζ(s, a) for a a nonpositive integer: the (n+a) = 0 term is 0^{−s}.
+  // Re(s) > 0: a genuine pole (0^{−s} diverges) — not the generalized-zeta convention
+  // (`Zeta(s, a)`, evaluated below) that drops it and stays finite. Matches Wolfram, mpmath
+  // and SymPy, all of which diverge or error here.
   if (a.im === 0 && Number.isInteger(a.re) && a.re <= 0 && isFiniteNum(s) && s.re > 0) {
     return ce.symbol("ComplexInfinity");
+  }
+  // Re(s) = 0, s ≠ 0: 0^{−s} = 0^{−i·Im(s)} doesn't converge to any value (it winds the
+  // unit circle) — neither the pole above nor the clean 0 that Re(s) < 0 gets, where the
+  // term genuinely vanishes and dropping it (below, and in the Euler–Maclaurin kernel) is
+  // exact. Wolfram calls this Indeterminate; N() answers NaN, and plain evaluate already
+  // falls through to stay symbolic (no earlier branch catches a purely imaginary s here).
+  if (numeric && a.im === 0 && Number.isInteger(a.re) && a.re <= 0 && isFiniteNum(s) && s.re === 0 && s.im !== 0) {
+    return ce.symbol("NaN");
   }
 
   // ζ(s, m) for a positive integer m: ζ(s) − Σ_{k=1}^{m-1} k^{-s}. Gives the
