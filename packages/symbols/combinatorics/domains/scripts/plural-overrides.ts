@@ -1,13 +1,14 @@
-// Per-carrier DOMAIN name overrides for scripts/extract.ts.
+// Per-carrier PLURAL overrides for scripts/extract.ts — the domain's TYPE-SPACE name
+// (design/domains.md §2), never the constructor. English pluralization has real irregulars
+// here (matrix -> matrices, tableau -> tableaux), so every carrier gets an explicit entry
+// rather than a blind pascal-case + "s".
 //
-// Plural by default (the domain IS the same-named collection). Two entries keep the
-// pascal-case id verbatim because they overload an existing, genuinely singular head:
-// ContinuedFraction (compute-engine's own expansion function — a continued fraction is one
-// object, and Wolfram itself has no plural of it) and PermutationCycles (Wolfram's real,
-// already-plural-shaped cycle-notation head from @enumeratio/groupalgebra). Everything else
-// is an explicit plural rather than a blind pascal-case + "s" because English pluralization
-// has real irregulars here (matrix -> matrices, tableau -> tableaux).
-export const NAME_OVERRIDES: Readonly<Record<string, string>> = {
+// Two ids are absent on purpose: `continued_fraction` and `permutation_cycles` layer their
+// SINGULAR constructor onto a real, unrelated head (compute-engine's own continued-fraction
+// expansion, Wolfram's cycle-notation conversion via `@enumeratio/groupalgebra`) and have no
+// plural type-space name of their own — there is no "the ContinuedFractions" to be an
+// element of.
+export const PLURAL_OVERRIDES: Readonly<Record<string, string>> = {
   affine_permutation: "AffinePermutations",
   alternating_sign_matrix: "AlternatingSignMatrices",
   arrangement: "Arrangements",
@@ -18,7 +19,6 @@ export const NAME_OVERRIDES: Readonly<Record<string, string>> = {
   colored_motzkin_path: "ColoredMotzkinPaths",
   colored_permutation: "ColoredPermutations",
   composition: "Compositions",
-  continued_fraction: "ContinuedFraction",
   core_partition: "CorePartitions",
   decorated_permutation: "DecoratedPermutations",
   delannoy_path: "DelannoyPaths",
@@ -62,7 +62,6 @@ export const NAME_OVERRIDES: Readonly<Record<string, string>> = {
   parking_function: "ParkingFunctions",
   perfect_matching: "PerfectMatchings",
   permutation: "Permutations",
-  permutation_cycles: "PermutationCycles",
   permutation_inversion: "PermutationInversions",
   phylogenetic_tree: "PhylogeneticTrees",
   plane_partition: "PlanePartitions",

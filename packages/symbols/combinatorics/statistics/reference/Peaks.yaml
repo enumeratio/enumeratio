@@ -1,8 +1,8 @@
 name: Peaks
-domain: Permutations statistics
+domain: Permutation statistics
 signature: Peaks(p)
 summary: Interior positions with p(i-1) < p(i) > p(i+1).
 details:
-  - Defined over `Permutations` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - "Takes a `Permutations`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
-  - "A separate definition exists for `DyckPaths` (Occurrences of an up step immediately followed by a down step.) but is not the one declared: one head, one owner."
+  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
+  - "A separate definition exists for `DyckPath` (Occurrences of an up step immediately followed by a down step.) but is not the one declared: one head, one owner."

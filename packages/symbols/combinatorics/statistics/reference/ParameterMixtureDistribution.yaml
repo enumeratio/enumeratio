@@ -1,0 +1,17 @@
+name: ParameterMixtureDistribution
+domain: Statistics
+signature: ParameterMixtureDistribution(dist(theta), Distributed(theta, prior))
+summary: A distribution whose own parameter $\theta$ is itself random, drawn from $prior$ — the marginal of $dist(\theta)$ averaged over $\theta \sim prior$.
+signatures:
+  - call: ParameterMixtureDistribution(dist(theta), Distributed(theta, prior))
+    description: dist(theta) with theta itself drawn from prior.
+    library: enumeratio-statistics
+details:
+  - 'Two named conjugate closed forms: `PoissonDistribution(theta)` mixed over a `GammaDistribution(shape, scale)` prior on theta is exactly `NegativeBinomialDistribution(shape, 1/(1+scale))` (the standard Gamma-Poisson identity — PDF/Mean/Variance all delegate to that equivalent NegativeBinomial). `BinomialDistribution(n, theta)` mixed over a `BetaDistribution(a, b)` prior is the Beta-Binomial: $PDF(x) = \binom{n}{x} B(x+a,n-x+b)/B(a,b)$, $Mean = na/(a+b)$, $Variance = nab(a+b+n)/\left((a+b)^2(a+b+1)\right)$.'
+  - Anything else falls back to the LAW OF TOTAL EXPECTATION/VARIANCE — $E[X] = E_\theta[Mean(dist(\theta))]$, $Var(X) = E_\theta[Variance(dist(\theta))] + Var_\theta[Mean(dist(\theta))]$ — built entirely out of the (already fully extended) `Mean`/`Variance`/`Expectation` operators, so it composes with any inner distribution/prior pair those already answer. Resolves exactly when `Mean(dist(theta))` (and, for Variance, `Variance(dist(theta))` too) is linear or quadratic in theta — `Expectation`'s own recognized shapes; anything past that stays unevaluated.
+  - PDF has no generic fallback (only the two named closed forms above) — an unrecognized inner/prior pair's PDF stays unevaluated.
+seeAlso:
+  - NegativeBinomialDistribution
+  - BetaDistribution
+  - Expectation
+  - Distributed

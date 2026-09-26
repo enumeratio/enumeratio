@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [KrewerasComplement, [Permutations, [List, 2, 3, 1]]]
-  expected: [Permutations, [List, 1, 2, 3]]
+  expr: [KrewerasComplement, [Permutation, [List, 2, 3, 1]]]
+  expected: [Permutation, [List, 1, 2, 3]]
   caption: the one-line word $231$

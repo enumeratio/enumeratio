@@ -1,8 +1,8 @@
 - id: the-step-word-uuddud
-  expr: [InteriorReturns, [DyckPaths, [List, 1, 1, 0, 0, 1, 0]]]
+  expr: [InteriorReturns, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]
   expected: 1
   caption: the step word $UUDDUD$
 - id: the-step-word-uduudd
-  expr: [InteriorReturns, [DyckPaths, [List, 1, 0, 1, 1, 0, 0]]]
+  expr: [InteriorReturns, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]
   expected: 1
   caption: the step word $UDUUDD$

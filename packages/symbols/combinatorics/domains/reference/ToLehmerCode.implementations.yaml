@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: ToLehmerCode(Permutations([2, 3, 1]))
-    out: SubexcedantSeqs([1, 1, 0])
+    in: ToLehmerCode(Permutation([2, 3, 1]))
+    out: SubexcedantSeq([1, 1, 0])
   tex:
-    in: \mathrm{ToLehmerCode}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{SubexcedantSeqs}(\bigl\lbrack1, 1, 0\bigr\rbrack)
+    in: \mathrm{ToLehmerCode}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{SubexcedantSeq}(\bigl\lbrack1, 1, 0\bigr\rbrack)
   fullform:
-    in: ToLehmerCode[Permutations[List[2, 3, 1]]]
+    in: ToLehmerCode[Permutation[List[2, 3, 1]]]

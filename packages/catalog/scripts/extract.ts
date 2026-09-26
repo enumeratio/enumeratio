@@ -28,103 +28,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { pascal } from "../src/spelling.ts";
 
-/** Same plural-naming rule as @enumeratio/domains' NAME_OVERRIDES (design/domains.md §2) --
- *  kept in sync by hand since this script does not depend on that package. Only the 86
- *  carrier ids appear as keys; a carrier id not here (one of catalog's few generic ones,
- *  e.g. numeric) falls back to a blind pascal-case + "s" below. */
-const CARRIER_NAME_OVERRIDES: Readonly<Record<string, string>> = {
-  affine_permutation: "AffinePermutations",
-  alternating_sign_matrix: "AlternatingSignMatrices",
-  arrangement: "Arrangements",
-  ascent_sequence: "AscentSequences",
-  binary_tree: "BinaryTrees",
-  binary_word: "BinaryWords",
-  collatz_trajectory: "CollatzTrajectories",
-  colored_motzkin_path: "ColoredMotzkinPaths",
-  colored_permutation: "ColoredPermutations",
-  composition: "Compositions",
-  continued_fraction: "ContinuedFraction",
-  core_partition: "CorePartitions",
-  decorated_permutation: "DecoratedPermutations",
-  delannoy_path: "DelannoyPaths",
-  dissection: "Dissections",
-  distribution_match_hit: "DistributionMatchHits",
-  dyck_path: "DyckPaths",
-  egyptian_fraction: "EgyptianFractions",
-  endofunction: "Endofunctions",
-  factoradic_numeral: "FactoradicNumerals",
-  factorization: "Factorizations",
-  find_stat_hit: "FindStatHits",
-  finite_set_element: "FiniteSetElements",
-  finset: "Finsets",
-  fraction: "Fractions",
-  fractional_number: "FractionalNumbers",
-  gaussian_fractional: "GaussianFractionals",
-  gaussian_integer: "GaussianIntegers",
-  gaussian_rational: "GaussianRationals",
-  gelfand_tsetlin_pattern: "GelfandTsetlinPatterns",
-  glyph_kind: "GlyphKinds",
-  goldbach_partition: "GoldbachPartitions",
-  hyperbinary_word: "HyperbinaryWords",
-  hypernumerary_word: "HypernumeraryWords",
-  increasing_binary_tree: "IncreasingBinaryTrees",
-  integer_factorization: "IntegerFactorizations",
-  integer_partition: "IntegerPartitions",
-  k_ary_tree: "KAryTrees",
-  k_dyck_path: "KDyckPaths",
-  k_motzkin_path: "KMotzkinPaths",
-  labeled_graph: "LabeledGraphs",
-  labeled_tree: "LabeledTrees",
-  lukasiewicz_path: "LukasiewiczPaths",
-  modular_residue: "ModularResidues",
-  motzkin_path: "MotzkinPaths",
-  multicomplex: "Multicomplexes",
-  multiplicative_partition: "MultiplicativePartitions",
-  multiset: "Multisets",
-  non_crossing_tree: "NonCrossingTrees",
-  ordered_factorization: "OrderedFactorizations",
-  ordered_tree: "OrderedTrees",
-  parking_function: "ParkingFunctions",
-  perfect_matching: "PerfectMatchings",
-  permutation: "Permutations",
-  permutation_cycles: "PermutationCycles",
-  permutation_inversion: "PermutationInversions",
-  phylogenetic_tree: "PhylogeneticTrees",
-  plane_partition: "PlanePartitions",
-  plane_tree: "PlaneTrees",
-  pythagorean_triple: "PythagoreanTriples",
-  rational_dyck_path: "RationalDyckPaths",
-  rational_number: "RationalNumbers",
-  rook_placement: "RookPlacements",
-  rooted_labeled_tree: "RootedLabeledTrees",
-  rooted_unlabeled_tree: "RootedUnlabeledTrees",
-  schroeder_path: "SchroederPaths",
-  semistandard_tableau: "SemistandardTableaux",
-  set_composition: "SetCompositions",
-  set_partition: "SetPartitions",
-  signed_permutation: "SignedPermutations",
-  signed_set_composition: "SignedSetCompositions",
-  signed_subset: "SignedSubsets",
-  singleton: "Singletons",
-  skew_partition: "SkewPartitions",
-  skew_tableau: "SkewTableaux",
-  square_decomposition: "SquareDecompositions",
-  standard_tableau: "StandardTableaux",
-  standard_tableau_pair: "StandardTableauPairs",
-  subexcedant_seq: "SubexcedantSeqs",
-  surjection: "Surjections",
-  ternary_gray_code: "TernaryGrayCodes",
-  total_partition: "TotalPartitions",
-  tournament: "Tournaments",
-  unlabeled_free_tree: "UnlabeledFreeTrees",
-  weak_composition: "WeakCompositions",
-  word: "Words",
-};
-
-/** A carrier id, spelled the way `@enumeratio/domains` spells that same carrier's domain
- *  name -- plural, so a carrier and its collection are addressed by the same name. */
-const carrierName = (id: string): string => CARRIER_NAME_OVERRIDES[id] ?? `${pascal(id)}s`;
-
 interface DumpCollection {
   id: string;
   carrier: string | null;
@@ -173,7 +76,7 @@ const dump: Dump = JSON.parse(readFileSync(dumpPath, "utf8"));
 // Collections are one row each. Stats and maps are NOT: the dump has one row per
 // (collection, stat), but a stat is a single name defined on several carriers. Fold the
 // rows into names carrying their overload set — 1051 stat rows become 242 stat names.
-const carrierOf = new Map(dump.collections.map((c) => [c.id, c.carrier ? carrierName(c.carrier) : null]));
+const carrierOf = new Map(dump.collections.map((c) => [c.id, c.carrier ? pascal(c.carrier) : null]));
 
 const fold = <T extends { collection: string }>(
   rows: T[],
@@ -207,7 +110,7 @@ const collections = dump.collections.map((c) => ({
   ...(c.unbounded ? { unbounded: true } : {}),
   ...(c.aliasOf ? { aliasOf: pascal(c.aliasOf) } : {}),
 }));
-const carriers = dump.carriers.map((c) => ({ name: carrierName(c), id: c }));
+const carriers = dump.carriers.map((c) => ({ name: pascal(c), id: c }));
 const stats = fold(
   dump.stats,
   (r) => pascal(r.statId),
@@ -222,7 +125,7 @@ const maps = fold(
 // A reference row names its subject the database's way — `set_partitions`, or
 // `permutations.descents` for a stat or map on a collection. Rekey to our spelling: the
 // collection's PascalCase name, or the head plus the carrier it is on (`Descents` on
-// `Permutations`), which is how the statistics and maps libraries address the same thing.
+// `Permutation`), which is how the statistics and maps libraries address the same thing.
 const references = dump.references
   .map((r) => {
     const dot = r.subject.indexOf(".");

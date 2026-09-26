@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [CyclicShift, [Permutations, [List, 2, 3, 1]]]
-  expected: [Permutations, [List, 3, 1, 2]]
+  expr: [CyclicShift, [Permutation, [List, 2, 3, 1]]]
+  expected: [Permutation, [List, 3, 1, 2]]
   caption: the one-line word $231$

@@ -16,7 +16,7 @@ declareDomains(ce);
 declareStatistics(ce, ALL_STATISTICS, { domainTypes });
 declareMaps(ce, constructorFor);
 
-export const perm = (...entries: number[]): unknown => ["Permutations", ["List", ...entries]];
+export const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
 /** The contents of a map's result — the list inside the constructor. */
 export const result = (expr: unknown): unknown => {
   const evaluated = ce.box(expr as never).evaluate();

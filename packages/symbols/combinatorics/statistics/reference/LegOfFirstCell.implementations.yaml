@@ -1,18 +1,18 @@
 the-partition-4-2-1-of-7:
   epsil:
-    in: LegOfFirstCell(IntegerPartitions([4, 2, 1]))
+    in: LegOfFirstCell(IntegerPartition([4, 2, 1]))
     out: "2"
   tex:
-    in: \mathrm{LegOfFirstCell}(\mathrm{IntegerPartitions}(\bigl\lbrack4, 2, 1\bigr\rbrack))
+    in: \mathrm{LegOfFirstCell}(\mathrm{IntegerPartition}(\bigl\lbrack4, 2, 1\bigr\rbrack))
     out: "2"
   fullform:
-    in: LegOfFirstCell[IntegerPartitions[List[4, 2, 1]]]
+    in: LegOfFirstCell[IntegerPartition[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
-    in: LegOfFirstCell(IntegerPartitions([3, 3, 1]))
+    in: LegOfFirstCell(IntegerPartition([3, 3, 1]))
     out: "2"
   tex:
-    in: \mathrm{LegOfFirstCell}(\mathrm{IntegerPartitions}(\bigl\lbrack3, 3, 1\bigr\rbrack))
+    in: \mathrm{LegOfFirstCell}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "2"
   fullform:
-    in: LegOfFirstCell[IntegerPartitions[List[3, 3, 1]]]
+    in: LegOfFirstCell[IntegerPartition[List[3, 3, 1]]]
