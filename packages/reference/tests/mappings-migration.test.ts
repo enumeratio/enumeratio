@@ -1,8 +1,10 @@
-// Before/after equivalence for symbol-metadata step 5 (design/speculative/symbol-metadata.md):
-// `@enumeratio/oracle`'s `MAPPINGS` now also lives as `origin: mapped` rows on each head's
-// `bindings:` (packages/reference/scripts/migrate/mappings-to-yaml.ts). This pins that the two
-// agree while both exist; a follow-up commit deletes `MAPPINGS`'s hand literal and this test
-// switches to asserting `emit`'s output is unchanged instead.
+// Symbol-metadata step 5 (design/speculative/symbol-metadata.md), completed: `mappings.ts`'s
+// hand `MAPPINGS` literal is gone; it reads a generated table instead (mappings-data.ts,
+// packages/reference/scripts/collect-mappings.ts), rebuilt from every head's `origin: mapped`
+// `bindings:` rows -- `emit.ts` runs in the browser too, so it can't parse YAML at runtime.
+// This pins that the generated table is current; packages/oracle/tests/emit.test.ts (unchanged
+// by this migration) is the proof `emit`'s output over every mapped head didn't move, and the
+// nightly oracle scan (untouched) is the proof for the live kernel comparisons.
 //
 // One `Mapping` row is a head, an optional arity, and a dict of per-system templates; the
 // migration writes one `bindings:` row per system instead. This test regroups those rows back
@@ -37,7 +39,7 @@ for (const { head, entry } of heads) {
 const original = new Map<string, Mapping>();
 for (const m of MAPPINGS) original.set(key(m.head, m.arity), m);
 
-test("every MAPPINGS row is recorded as bindings: rows with origin: mapped", () => {
+test("mappings-data.ts is what the current records collect to", () => {
   const rebuiltNames = [...rebuilt.keys()].sort();
   const originalNames = [...original.keys()].sort();
   expect(rebuiltNames).toEqual(originalNames);

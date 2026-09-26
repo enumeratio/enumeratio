@@ -1212,12 +1212,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
       {
-        system: "julia",
+        system: "oscar",
         call: "complex($1, $2)",
         arity: 2,
       },
       {
-        system: "oscar",
+        system: "julia",
         call: "complex($1, $2)",
         arity: 2,
       },
