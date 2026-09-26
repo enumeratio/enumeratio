@@ -44,8 +44,10 @@ the-family-has-b-4-15-members-see-bellnumber:
     out: "15"
   sage:
     in: bell_number(4)
+    out: "15"
   oscar:
     in: bell(4)
+    out: "15"
   julia:
     in: bell(ZZ(4))
     out: "15"
@@ -68,8 +70,10 @@ those-with-exactly-2-blocks-number-s-4-2-7-see:
     out: "7"
   sage:
     in: stirling_number2(4, 2)
+    out: "7"
   julia:
     in: Combinatorics.stirlings2(big(4), 2)
     out: "7"
   mathlib4:
     in: (Nat.stirlingSecond 4 2)
+    out: "7"

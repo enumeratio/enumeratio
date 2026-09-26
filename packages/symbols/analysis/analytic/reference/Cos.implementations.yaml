@@ -222,10 +222,7 @@ threads-element-wise-over-a-list:
     out: "[1, 0, -1]"
   sage:
     in: "[cos(0), cos((pi / 2)), cos(pi)]"
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Cos is Listable and threads over the list; Sage's takes scalars only.
+    out: "[1, 0, -1]"
   rust:
     in: cos(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -314,6 +311,7 @@ a-machine-precision-argument-evaluates:
     out: "0.362357754476673619029223479279"
   sage:
     in: cos(1.2)
+    out: "0.362357754476674"
   rust:
     in: cos(x(1.2))
     out: "0.3623577544766736"
@@ -336,6 +334,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
     out: "0.362357754476673577638373355623"
   sage:
     in: N(cos((6/5)))
+    out: "0.362357754476674"
   rust:
     in: nf(cos(rational(n(6), n(5))))
     out: "0.3623577544766736"
@@ -358,6 +357,7 @@ evaluates-at-a-complex-argument:
     out: (-1.23622919885634208168318950526 - 0.703325178113534826107487014147j)
   sage:
     in: cos((2.5 + 1*I))
+    out: -1.23622919885634 - 0.703325178113535*I
 threads-element-wise-over-a-matrix:
   epsil:
     in: Cos([[5 * (Pi / 6), 0], [3 * (Pi / 2), -(Pi / 2)]])
@@ -374,6 +374,7 @@ threads-element-wise-over-a-matrix:
     out: "[[-sqrt(3)/2, 1], [0, 0]]"
   sage:
     in: "[[cos((5 * (pi / 6))), cos(0)], [cos((3 * (pi / 2))), cos((-(pi / 2)))]]"
+    out: "[[-1/2*sqrt(3), 1], [0, 0]]"
   rust:
     in: cos(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -396,6 +397,7 @@ cos-pi-12-frac-sqrt-6-sqrt-2-4:
     out: sqrt(2)/4 + sqrt(6)/4
   sage:
     in: cos((pi / 12))
+    out: 1/4*sqrt(6) + 1/4*sqrt(2)
   rust:
     in: cos((x(std::f64::consts::PI) / n(12)))
     out: "0.9659258262890683"
@@ -415,6 +417,7 @@ cos-pi-8-frac-sqrt-2-sqrt-2-2:
     out: sqrt(sqrt(2)/4 + 1/2)
   sage:
     in: cos((pi / 8))
+    out: 1/2*sqrt(sqrt(2) + 2)
   rust:
     in: cos((x(std::f64::consts::PI) / n(8)))
     out: "0.9238795325112867"
@@ -434,6 +437,7 @@ cos-pi-10-frac-sqrt-10-2-sqrt-5-4:
     out: sqrt(sqrt(5)/8 + 5/8)
   sage:
     in: cos((pi / 10))
+    out: 1/4*sqrt(2*sqrt(5) + 10)
   rust:
     in: cos((x(std::f64::consts::PI) / n(10)))
     out: "0.9510565162951535"
@@ -456,6 +460,7 @@ cos-2-pi-5-frac-sqrt-5-1-4:
     out: "0.309016994374947424102293417183"
   sage:
     in: cos(((2/5) * pi))
+    out: 1/4*sqrt(5) - 1/4
   rust:
     in: cos((rational(n(2), n(5)) * x(std::f64::consts::PI)))
     out: "0.30901699437494745"
@@ -478,6 +483,7 @@ cos-3-pi-5-frac-1-sqrt-5-4:
     out: "-0.309016994374947424102293417183"
   sage:
     in: cos(((3/5) * pi))
+    out: -1/4*sqrt(5) + 1/4
   rust:
     in: cos((rational(n(3), n(5)) * x(std::f64::consts::PI)))
     out: "-0.30901699437494734"
@@ -500,6 +506,7 @@ reduced-into-the-first-quadrant-by-symmetry:
     out: "0.866025403784438646763723170753"
   sage:
     in: cos(((11/6) * pi))
+    out: 1/2*sqrt(3)
   rust:
     in: cos((rational(n(11), n(6)) * x(std::f64::consts::PI)))
     out: "0.8660254037844384"
@@ -677,6 +684,7 @@ pi-24-is-past-the-automatic-special-angle-table:
     out: "0.991444861373810411144557526929"
   sage:
     in: cos(((1/24) * pi))
+    out: 1/4*sqrt(2*sqrt(6) + 2*sqrt(2) + 8)
   rust:
     in: cos((rational(n(1), n(24)) * x(std::f64::consts::PI)))
     out: "0.9914448613738104"
@@ -699,6 +707,7 @@ to-30-significant-digits-every-one-correctly:
     out: "0.540302305868139717400936607443"
   sage:
     in: N(cos(1))
+    out: "0.540302305868140"
   rust:
     in: nf(cos(n(1)))
     out: "0.5403023058681398"
@@ -727,6 +736,10 @@ to-1-significant-digit:
     note: N's digit count is dropped for mpmath, per the mapping's own note -- it always returns full working precision rather than the one digit asked for (same gap as the Rust row above).
   sage:
     in: N(cos(1))
+    out: "0.540302305868140"
+    verdict: disagree
+    kind: precision
+    note: N's digit count is dropped for Sage, per the mapping's own note; it always returns full double precision rather than the one digit asked for.
   rust:
     in: nf(cos(n(1)))
     out: "0.5403023058681398"
@@ -752,6 +765,10 @@ a-huge-10-100-argument-reduces-exactly-mod-2-pi:
     out: "-0.928081905074655343456194643777"
   sage:
     in: N(cos(((10)^100)))
+    out: "0.924724238751934"
+    verdict: disagree
+    kind: precision
+    note: Sage's N(cos(...)) reduces the huge argument in double precision, which cannot hold 10^100 exactly; compute-engine reduces it exactly before evaluating.
   rust:
     in: nf(cos(power(n(10), n(100))))
     out: "0.9247242387519338"

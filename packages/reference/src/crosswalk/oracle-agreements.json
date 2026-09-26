@@ -3,7 +3,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 7,
+      "agree": 19,
       "disagree": 0
     },
     {
@@ -129,7 +129,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 7,
+      "agree": 10,
       "disagree": 0
     },
     {
@@ -143,7 +143,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 8,
+      "agree": 14,
       "disagree": 0
     },
     {
@@ -173,8 +173,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 12,
-      "disagree": 0
+      "agree": 32,
+      "disagree": 2
     },
     {
       "system": "wolfram",
@@ -195,8 +195,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 10,
-      "disagree": 0
+      "agree": 15,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -209,8 +209,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 7,
-      "disagree": 0
+      "agree": 12,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -255,7 +255,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 1,
+      "agree": 4,
       "disagree": 0
     },
     {
@@ -269,8 +269,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 10,
-      "disagree": 0
+      "agree": 23,
+      "disagree": 2
     },
     {
       "system": "wolfram",
@@ -379,8 +379,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 5,
-      "disagree": 1
+      "agree": 8,
+      "disagree": 3
     },
     {
       "system": "wolfram",
@@ -425,8 +425,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 4,
-      "disagree": 0
+      "agree": 18,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -453,8 +453,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 8,
-      "disagree": 0
+      "agree": 13,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -475,8 +475,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 4,
-      "disagree": 4
+      "agree": 8,
+      "disagree": 9
     },
     {
       "system": "wolfram",
@@ -489,7 +489,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 10,
+      "agree": 14,
       "disagree": 0
     },
     {
@@ -519,8 +519,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 7,
-      "disagree": 0
+      "agree": 15,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -573,8 +573,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 7,
-      "disagree": 2
+      "agree": 16,
+      "disagree": 5
     },
     {
       "system": "wolfram",
@@ -603,7 +603,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 5,
+      "agree": 10,
       "disagree": 0
     },
     {
@@ -633,8 +633,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 146,
-      "disagree": 1
+      "agree": 167,
+      "disagree": 3
     },
     {
       "system": "wolfram",
@@ -711,8 +711,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 8,
-      "disagree": 0
+      "agree": 16,
+      "disagree": 2
     },
     {
       "system": "wolfram",
@@ -773,7 +773,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 4,
+      "agree": 7,
       "disagree": 0
     },
     {
@@ -795,7 +795,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 2,
+      "agree": 6,
       "disagree": 0
     },
     {
@@ -817,7 +817,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 4,
+      "agree": 22,
       "disagree": 2
     },
     {
@@ -871,7 +871,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 10,
+      "agree": 14,
       "disagree": 0
     },
     {
@@ -893,7 +893,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 7,
+      "agree": 13,
       "disagree": 0
     },
     {
@@ -931,7 +931,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 8,
+      "agree": 14,
       "disagree": 0
     },
     {
@@ -945,8 +945,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 4,
-      "disagree": 0
+      "agree": 8,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -967,7 +967,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 1,
+      "agree": 6,
       "disagree": 1
     },
     {
@@ -989,7 +989,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 5,
+      "agree": 8,
       "disagree": 0
     },
     {
@@ -1019,7 +1019,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 5,
+      "agree": 9,
       "disagree": 0
     },
     {
@@ -1029,11 +1029,19 @@
       "disagree": 0
     }
   ],
+  "N": [
+    {
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "agree": 1,
+      "disagree": 3
+    }
+  ],
   "Negate": [
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 5,
+      "agree": 8,
       "disagree": 0
     },
     {
@@ -1111,8 +1119,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 39,
-      "disagree": 0
+      "agree": 56,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -1125,7 +1133,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 55,
+      "agree": 81,
       "disagree": 1
     },
     {
@@ -1139,8 +1147,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 10,
-      "disagree": 0
+      "agree": 13,
+      "disagree": 3
     },
     {
       "system": "wolfram",
@@ -1153,7 +1161,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 19,
+      "agree": 25,
       "disagree": 1
     },
     {
@@ -1183,7 +1191,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 4,
+      "agree": 10,
       "disagree": 0
     },
     {
@@ -1197,8 +1205,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 6,
-      "disagree": 0
+      "agree": 10,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -1287,12 +1295,20 @@
       "disagree": 1
     }
   ],
+  "SetPartitions": [
+    {
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "agree": 2,
+      "disagree": 0
+    }
+  ],
   "Sign": [
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 7,
-      "disagree": 1
+      "agree": 16,
+      "disagree": 4
     },
     {
       "system": "wolfram",
@@ -1305,8 +1321,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 11,
-      "disagree": 0
+      "agree": 31,
+      "disagree": 2
     },
     {
       "system": "wolfram",
@@ -1335,7 +1351,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 10,
+      "agree": 31,
       "disagree": 0
     },
     {
@@ -1371,7 +1387,7 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 5,
+      "agree": 14,
       "disagree": 0
     },
     {
@@ -1385,8 +1401,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 5,
-      "disagree": 2
+      "agree": 10,
+      "disagree": 3
     },
     {
       "system": "wolfram",
@@ -1415,8 +1431,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 8,
-      "disagree": 1
+      "agree": 20,
+      "disagree": 3
     },
     {
       "system": "wolfram",
@@ -1453,8 +1469,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 6,
-      "disagree": 0
+      "agree": 13,
+      "disagree": 1
     },
     {
       "system": "wolfram",
@@ -1491,8 +1507,8 @@
     {
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
-      "agree": 11,
-      "disagree": 1
+      "agree": 29,
+      "disagree": 4
     },
     {
       "system": "wolfram",

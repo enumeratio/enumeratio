@@ -203,6 +203,7 @@ min-9-2:
     out: "2"
   sage:
     in: enumeratio_min(9, 2)
+    out: "2"
 min-list-4-1-7-2:
   epsil:
     in: Min([4, 1, 7, 2])
@@ -219,6 +220,7 @@ min-list-4-1-7-2:
     out: "1"
   sage:
     in: enumeratio_min([4, 1, 7, 2])
+    out: "1"
 min-5p56-neg-4p8-7p3:
   epsil:
     in: Min(5.56, -4.8, 7.3)
@@ -235,6 +237,7 @@ min-5p56-neg-4p8-7p3:
     out: "-4.80000000000000"
   sage:
     in: enumeratio_min(5.56, -4.8, 7.3)
+    out: "-4.80000000000000"
 nested-lists-are-flattened-into-the-pool:
   epsil:
     in: Min(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -251,6 +254,7 @@ nested-lists-are-flattened-into-the-pool:
     out: -5/3
   sage:
     in: enumeratio_min(2, 3, [[(1/2), -1], [(-5/3), (1/2)]])
+    out: -5/3
 exact-numbers-are-compared-numerically:
   epsil:
     in: Min(Sqrt(2), 3 / 2)
@@ -267,6 +271,7 @@ exact-numbers-are-compared-numerically:
     out: sqrt(2)
   sage:
     in: enumeratio_min(sqrt(2), (3/2))
+    out: sqrt(2)
 the-numeric-arguments-collapse-to-their-minimum:
   epsil:
     in: Min(3, x, 5)
@@ -292,6 +297,7 @@ compares-exact-constants-numerically-min-e-pi-5:
     out: E
   sage:
     in: enumeratio_min([e, pi, 5])
+    out: e
 the-min-of-two-intervals-is-the-interval-of:
   epsil:
     in: Min(Interval(1, 3), Interval(-3, 5))
@@ -328,6 +334,10 @@ with-no-arguments-it-returns-the-identity:
     out: oo
   sage:
     in: enumeratio_min()
+    out: "ValueError: min() iterable argument is empty"
+    verdict: error
+    kind: domain
+    note: compute-engine's Min() answers its identity element +Infinity, per Wolfram's convention; Sage's builtin min() has no identity for zero arguments and raises ValueError.
 the-min-of-an-empty-list-is-nan:
   epsil:
     in: Min([])
@@ -348,6 +358,10 @@ the-min-of-an-empty-list-is-nan:
     note: compute-engine gives NaN for the min of an empty list; SymPy's Min() is the identity ∞.
   sage:
     in: enumeratio_min([])
+    out: "ValueError: min() iterable argument is empty"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline on an empty collection: compute-engine answers NaN for Min([]), and Sage's min() raises ValueError: min() iterable argument is empty."
 min-min-folds-into-a-normal-call:
   epsil:
     in: Min(Min(), 5)
@@ -364,3 +378,7 @@ min-min-folds-into-a-normal-call:
     out: "5"
   sage:
     in: enumeratio_min(enumeratio_min(), 5)
+    out: "ValueError: min() iterable argument is empty"
+    verdict: error
+    kind: domain
+    note: compute-engine folds the inner Min() into its identity element +Infinity before combining with 5; Sage's inner min() has no identity for zero arguments and raises before the fold can happen.

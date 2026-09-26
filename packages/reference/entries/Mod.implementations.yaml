@@ -257,8 +257,16 @@ periodicity-with-a-zero-modulus-on-one-side:
     note: "A zero modulus: compute-engine's Mod gives NaN, so the comparison is False; SymPy's % raises ZeroDivisionError."
   sage:
     in: bool((35 % 13) == ((17 + (3 * 5)) % 0))
+    out: "ZeroDivisionError: Integer modulo by zero"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline on the zero-modulus side: compute-engine answers NaN and the comparison is False, while Sage's % raises ZeroDivisionError: Integer modulo by zero."
   oscar:
     in: (mod(35, 13) == mod((17 + (3 * 5)), 0))
+    out: "DivideError: integer division error"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" for a zero modulus (see [[Mod]]); Oscar''s mod raises a DivideError, the same divergence as Mod''s own zero-modulus example.'
   julia:
     in: (mod(35, 13) == mod((17 + (3 * 5)), 0))
   mathlib4:
@@ -315,8 +323,13 @@ rationals-are-reduced-exactly:
     out: 1/2
   sage:
     in: ((5/2) % 2)
+    out: "ZeroDivisionError: inverse of Mod(0, 2) does not exist"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod extends to rational arguments; Sage's % over the residue ring Mod(0, 2) has no multiplicative inverse and raises a ZeroDivisionError.
   oscar:
     in: mod((5 // 2), 2)
+    out: "0.5"
   julia:
     in: mod((5 // 2), 2)
     out: "0.5"
@@ -344,8 +357,13 @@ rationals-are-reduced-exactly:
     out: "1.1400000000000001"
   sage:
     in: (3.14 % 2)
+    out: "-0.860000000000000"
+    verdict: disagree
+    kind: convention
+    note: compute-engine's Mod follows the sign of the divisor (Wolfram's convention), giving 1.14; Sage's % follows the sign of the dividend, giving -0.86.
   oscar:
     in: mod(3.14, 2)
+    out: "1.1400000000000001"
   julia:
     in: mod(3.14, 2)
     out: "1.1400000000000001"
@@ -373,6 +391,10 @@ an-exact-irrational-reduces-exactly-to-2-sqrt-7:
     out: -3 + 2*sqrt(7)
   sage:
     in: (sqrt(28) % 3)
+    out: "TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod reduces an exact irrational symbolically; Sage's % has no operation defined between two Symbolic Ring elements and raises a TypeError.
   rust:
     in: mod_floor(sqrt(n(28)), n(3))
     out: "panic: an integer, not 5.291502622129181"
@@ -395,6 +417,10 @@ a-symbolic-constant-reduces-exactly-to-pi-2:
     out: -2 + pi
   sage:
     in: (pi % 2)
+    out: "TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod reduces the symbolic constant Pi exactly; Sage's % has no operation defined between two Symbolic Ring elements and raises a TypeError.
   rust:
     in: mod_floor(x(std::f64::consts::PI), n(2))
     out: "panic: an integer, not 3.141592653589793"
@@ -417,8 +443,10 @@ a-10-001-digit-dividend:
     out: "6333"
   sage:
     in: (((10)^10000) % 10007)
+    out: "6333"
   oscar:
     in: mod((big(10)^10000), 10007)
+    out: "6333"
   julia:
     in: mod((big(10)^10000), 10007)
     out: "6333"
@@ -443,8 +471,13 @@ threads-over-a-list-of-moduli:
     out: "[1, 2, 3]"
   sage:
     in: "[(10 % 3), (10 % 4), (10 % 7)]"
+    out: "[1, 2, 3]"
   oscar:
     in: mod(10, [3, 4, 7])
+    out: "MethodError: no method matching mod(::Int64, ::Vector{Int64}) The function `mod` exists, but no meth"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; Oscar's mod takes scalars only.
   julia:
     in: "[mod(10, 3), mod(10, 4), mod(10, 7)]"
     out: "[1, 2, 3]"
@@ -475,8 +508,16 @@ a-gaussian-integer-5-3i-2-2-2i:
     note: compute-engine's Mod reduces Gaussian integers; SymPy's % is real-only.
   sage:
     in: ((5 + 3*I) % 2)
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod reduces a Gaussian integer modulo a rational integer; Sage's % has no such operation between its Gaussian integer ring and the integers, and raises a TypeError.
   oscar:
     in: mod(complex(5, 3), 2)
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
+    verdict: error
+    kind: domain
+    note: Oscar's mod has no Gaussian-integer method; compute-engine reduces a Gaussian integer modulo a rational integer.
   julia:
     in: mod(complex(5, 3), 2)
     out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
@@ -502,8 +543,16 @@ a-gaussian-integer-5-3i-2-2-2i:
     note: compute-engine's Mod reduces Gaussian integers; SymPy leaves the complex modulus symbolic.
   sage:
     in: ((5 + 3*I) % (1 + 1*I))
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod reduces a Gaussian integer modulo a Gaussian modulus; Sage's % has no such operation on its Gaussian integer ring and raises a TypeError.
   oscar:
     in: mod(complex(5, 3), complex(1, 1))
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
+    verdict: error
+    kind: domain
+    note: Oscar's mod has no Gaussian-integer method; compute-engine reduces a Gaussian integer modulo a Gaussian modulus too.
   julia:
     in: mod(complex(5, 3), complex(1, 1))
     out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
@@ -526,8 +575,10 @@ a-negative-modulus-gives-a-result-in-n-0:
     out: "-2"
   sage:
     in: (-5 % -3)
+    out: "-2"
   oscar:
     in: mod(-5, -3)
+    out: "-2"
   julia:
     in: mod(-5, -3)
     out: "-2"
@@ -727,8 +778,10 @@ mod-7-3:
     out: "1"
   sage:
     in: (7 % 3)
+    out: "1"
   oscar:
     in: mod(7, 3)
+    out: "1"
   julia:
     in: mod(7, 3)
     out: "1"
@@ -753,6 +806,10 @@ eulers-number-mod-2-reduces-exactly:
     out: -2 + E
   sage:
     in: (e % 2)
+    out: "TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod reduces the symbolic constant E exactly; Sage's % has no operation defined between two Symbolic Ring elements and raises a TypeError.
   rust:
     in: mod_floor(x(std::f64::consts::E), n(2))
     out: "panic: an integer, not 2.718281828459045"

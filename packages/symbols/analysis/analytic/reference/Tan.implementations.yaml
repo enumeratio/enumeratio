@@ -192,10 +192,7 @@ threads-element-wise-over-a-list:
     out: "[0, 1]"
   sage:
     in: "[tan(0), tan((pi / 4))]"
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Tan is Listable and threads over the list; Sage's takes scalars only.
+    out: "[0, 1]"
   rust:
     in: tan(list(vec![n(0), (x(std::f64::consts::PI) / n(4))]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -290,6 +287,7 @@ a-machine-precision-argument-evaluates:
     out: "2.57215162212631859719325219168"
   sage:
     in: tan(1.2)
+    out: "2.57215162212632"
   rust:
     in: tan(x(1.2))
     out: "2.5721516221263188"
@@ -312,6 +310,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
     out: "2.57215162212631893540999423603"
   sage:
     in: N(tan((6/5)))
+    out: "2.57215162212632"
   rust:
     in: nf(tan(rational(n(6), n(5))))
     out: "2.5721516221263188"
@@ -334,6 +333,7 @@ evaluates-at-a-complex-argument:
     out: (-0.237013830916270580522716158056 + 0.896437917127861752050952735755j)
   sage:
     in: tan((2.5 + 1*I))
+    out: -0.237013830916271 + 0.896437917127862*I
 threads-element-wise-over-a-matrix:
   epsil:
     in: Tan([[5 * (Pi / 6), Pi], [Pi / 3, -Pi]])
@@ -350,6 +350,7 @@ threads-element-wise-over-a-matrix:
     out: "[[-sqrt(3)/3, 0], [sqrt(3), 0]]"
   sage:
     in: "[[tan((5 * (pi / 6))), tan(pi)], [tan((pi / 3)), tan((-pi))]]"
+    out: "[[-1/3*sqrt(3), 0], [sqrt(3), 0]]"
   rust:
     in: tan(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), x(std::f64::consts::PI)]), list(vec![(x(std::f64::consts::PI) / n(3)), (-(x(std::f64::consts::PI)))])]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -372,6 +373,7 @@ tan-pi-8-sqrt-2-1:
     out: -1 + sqrt(2)
   sage:
     in: tan((pi / 8))
+    out: sqrt(2) - 1
   rust:
     in: tan((x(std::f64::consts::PI) / n(8)))
     out: "0.41421356237309503"
@@ -391,6 +393,7 @@ tan-pi-12-2-sqrt-3:
     out: 2 - sqrt(3)
   sage:
     in: tan((pi / 12))
+    out: -sqrt(3) + 2
   rust:
     in: tan((x(std::f64::consts::PI) / n(12)))
     out: "0.2679491924311227"
@@ -410,6 +413,7 @@ tan-pi-5-sqrt-5-2-sqrt-5:
     out: sqrt(5 - 2*sqrt(5))
   sage:
     in: tan((pi / 5))
+    out: sqrt(-2*sqrt(5) + 5)
   rust:
     in: tan((x(std::f64::consts::PI) / n(5)))
     out: "0.7265425280053609"
@@ -429,6 +433,7 @@ tan-pi-10-sqrt-1-2-sqrt-5:
     out: sqrt(1 - 2*sqrt(5)/5)
   sage:
     in: tan((pi / 10))
+    out: 1/5*sqrt(-10*sqrt(5) + 25)
   rust:
     in: tan((x(std::f64::consts::PI) / n(10)))
     out: "0.3249196962329063"
@@ -451,6 +456,7 @@ tan-5-pi-12-2-sqrt-3:
     out: "3.73205080756887729352744634151"
   sage:
     in: tan(((5/12) * pi))
+    out: sqrt(3) + 2
   rust:
     in: tan((rational(n(5), n(12)) * x(std::f64::consts::PI)))
     out: "3.7320508075688776"
@@ -473,6 +479,7 @@ tan-3-over-4-times-pi:
     out: "-1.0"
   sage:
     in: tan(((3/4) * pi))
+    out: "-1"
   rust:
     in: tan((rational(n(3), n(4)) * x(std::f64::consts::PI)))
     out: "-1.0000000000000002"
@@ -616,6 +623,7 @@ to-30-significant-digits-every-one-correctly:
     out: "1.55740772465490223050697480746"
   sage:
     in: N(tan(1))
+    out: "1.55740772465490"
   rust:
     in: nf(tan(n(1)))
     out: "1.5574077246549023"
@@ -635,6 +643,10 @@ a-pole-at-negative-pi-over-2-too:
     out: zoo
   sage:
     in: tan((pi / -2))
+    out: Infinity
+    verdict: disagree
+    kind: undefined-form
+    note: "Both decline at the pole, spelled differently: compute-engine answers ComplexInfinity, and Sage's tan answers the real symbolic Infinity."
   rust:
     in: tan((x(std::f64::consts::PI) / n(-2)))
     out: "-1.633123935319537e16"
@@ -657,6 +669,10 @@ a-pole-reached-through-periodicity-unreduced:
     out: zoo
   sage:
     in: tan(((pi / -2) + pi))
+    out: Infinity
+    verdict: disagree
+    kind: undefined-form
+    note: "Both decline at the pole, spelled differently: compute-engine answers ComplexInfinity, and Sage's tan answers the real symbolic Infinity."
   rust:
     in: tan(((x(std::f64::consts::PI) / n(-2)) + x(std::f64::consts::PI)))
     out: "1.633123935319537e16"

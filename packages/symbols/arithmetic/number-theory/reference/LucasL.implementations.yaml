@@ -125,6 +125,7 @@ exact-at-any-size:
     out: "792070839848372253127"
   sage:
     in: lucas_number2(100, 1, -1)
+    out: "792070839848372253127"
   julia:
     in: Combinatorics.lucasnum(100)
     out: "792070839848372253127"
@@ -147,6 +148,7 @@ an-odd-negative-index-flips-the-sign-l-11-l-11:
     out: "-199"
   sage:
     in: lucas_number2(-11, 1, -1)
+    out: "-199"
   julia:
     in: Combinatorics.lucasnum(-11)
     out: "DomainError with -11: n must be nonnegative"
@@ -175,6 +177,10 @@ a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
     note: SymPy's lucas takes integers and stays symbolic; compute-engine continues L_ν to real ν.
   sage:
     in: lucas_number2(2.3333333333333335, 1, -1)
+    out: "TypeError: Attempt to coerce non-integral RealNumber to Integer"
+    verdict: error
+    kind: domain
+    note: compute-engine extends LucasL to a real index through phi^nu and cos(pi*nu), as with Fibonacci; Sage's lucas_number2() requires an integer and raises a TypeError coercing the real.
   julia:
     in: Combinatorics.lucasnum(2.3333333333333335)
     out: "MethodError: no method matching lucasnum(::Float64) The function `lucasnum` exists, but no method is"
@@ -265,6 +271,7 @@ l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci:
     out: "4"
   sage:
     in: (((lucas_number2(10, 1, -1))^2) - (5 * ((fibonacci(10))^2)))
+    out: "4"
   julia:
     in: ((big(Combinatorics.lucasnum(10))^2) - (5 * (big(BigInt(fibonacci(ZZ(10))))^2)))
     out: "4"
@@ -426,6 +433,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1, 3, 4, 7]"
   sage:
     in: "[lucas_number2(1, 1, -1), lucas_number2(2, 1, -1), lucas_number2(3, 1, -1), lucas_number2(4, 1, -1)]"
+    out: "[1, 3, 4, 7]"
   julia:
     in: "[Combinatorics.lucasnum(1), Combinatorics.lucasnum(2), Combinatorics.lucasnum(3), Combinatorics.lucasnum(4)]"
     out: "[1, 3, 4, 7]"

@@ -29,6 +29,7 @@ the-cube-roots-of-unity-modulo-7-since-3-mid-6:
     in: PowerModList[1, Rational[1, 3], 7]
   sage:
     in: enumeratio_power_mod_list(1, (1/3), 7)
+    out: "[1, 2, 4]"
 the-cubes-mod-7-are-only-0-1-6-so-2-has-no-cube:
   epsil:
     in: PowerModList(2, 1 / 3, 7)
@@ -42,6 +43,7 @@ the-cubes-mod-7-are-only-0-1-6-so-2-has-no-cube:
     in: PowerModList[2, Rational[1, 3], 7]
   sage:
     in: enumeratio_power_mod_list(2, (1/3), 7)
+    out: "[]"
 an-integer-exponent-is-an-ordinary-power-2-10:
   epsil:
     in: PowerModList(2, 10, 1_000)
@@ -620,6 +622,10 @@ a-gaussian-base-and-a-plain-modulus:
     in: PowerModList[Complex[2, 1], Rational[1, 2], 5]
   sage:
     in: enumeratio_power_mod_list((2 + 1*I), (1/2), 5)
+    out: "TypeError: Unable to coerce I + 2 to a rational"
+    verdict: error
+    kind: domain
+    note: compute-engine's PowerModList extends to a Gaussian base; Sage's power_mod() requires a rational base and raises a TypeError trying to coerce the Gaussian integer.
 cube-roots-of-8-modulo-13:
   epsil:
     in: PowerModList(8, 1 / 3, 13)
@@ -633,6 +639,7 @@ cube-roots-of-8-modulo-13:
     in: PowerModList[8, Rational[1, 3], 13]
   sage:
     in: enumeratio_power_mod_list(8, (1/3), 13)
+    out: "[2, 5, 6]"
 an-integer-exponent-mod-100-not-1000:
   epsil:
     in: PowerModList(2, 10, 100)
@@ -646,6 +653,7 @@ an-integer-exponent-mod-100-not-1000:
     in: PowerModList[2, 10, 100]
   sage:
     in: enumeratio_power_mod_list(2, 10, 100)
+    out: "[24]"
 no-cube-root-of-4-modulo-13:
   epsil:
     in: PowerModList(2, 2 / 3, 13)
@@ -659,6 +667,7 @@ no-cube-root-of-4-modulo-13:
     in: PowerModList[2, Rational[2, 3], 13]
   sage:
     in: enumeratio_power_mod_list(2, (2/3), 13)
+    out: "[]"
 a-rational-base-with-integer-exponent-1:
   epsil:
     in: PowerModList(2 / 3, 1, 7)
@@ -672,6 +681,7 @@ a-rational-base-with-integer-exponent-1:
     in: PowerModList[Rational[2, 3], 1, 7]
   sage:
     in: enumeratio_power_mod_list((2/3), 1, 7)
+    out: "[3]"
 threads-over-a-shorter-list-of-bases:
   epsil:
     in: PowerModList([1, 4], 1 / 2, 5)
@@ -685,6 +695,10 @@ threads-over-a-shorter-list-of-bases:
     in: PowerModList[List[1, 4], Rational[1, 2], 5]
   sage:
     in: enumeratio_power_mod_list([1, 4], (1/2), 5)
+    out: "TypeError: unable to coerce <class 'list'> to an integer"
+    verdict: error
+    kind: threading
+    note: compute-engine's PowerModList is Listable and threads over the list of bases; Sage's power_mod() takes a scalar base only and raises a TypeError on the list.
 a-symbolic-modulus-stays-unevaluated:
   epsil:
     in: PowerModList(1, 1 / 2, m)

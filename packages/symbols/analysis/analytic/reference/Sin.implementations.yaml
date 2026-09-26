@@ -243,10 +243,7 @@ threads-element-wise-over-a-list:
     out: "[0, 1, 0]"
   sage:
     in: "[sin(0), sin((pi / 2)), sin(pi)]"
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Sin is Listable and threads over the list; Sage's takes scalars only.
+    out: "[0, 1, 0]"
   rust:
     in: sin(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -351,6 +348,7 @@ a-machine-precision-argument-evaluates:
     out: "0.932039085967226333578217548636"
   sage:
     in: sin(1.2)
+    out: "0.932039085967226"
   rust:
     in: sin(x(1.2))
     out: "0.9320390859672263"
@@ -373,6 +371,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
     out: "0.932039085967226349670134435495"
   sage:
     in: N(sin((6/5)))
+    out: "0.932039085967226"
   rust:
     in: nf(sin(rational(n(6), n(5))))
     out: "0.9320390859672263"
@@ -395,6 +394,7 @@ evaluates-at-a-complex-argument:
     out: (0.923490776043173240823036301218 - 0.941504933270867276025389023751j)
   sage:
     in: sin((2.5 + 1*I))
+    out: 0.923490776043173 - 0.941504933270867*I
 threads-element-wise-over-a-matrix:
   epsil:
     in: Sin([[5 * (Pi / 6), 0], [3 * (Pi / 2), -(Pi / 2)]])
@@ -411,6 +411,7 @@ threads-element-wise-over-a-matrix:
     out: "[[1/2, 0], [-1, -1]]"
   sage:
     in: "[[sin((5 * (pi / 6))), sin(0)], [sin((3 * (pi / 2))), sin((-(pi / 2)))]]"
+    out: "[[1/2, 0], [-1, -1]]"
   rust:
     in: sin(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -433,6 +434,7 @@ exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4:
     out: -sqrt(2)/4 + sqrt(6)/4
   sage:
     in: sin((pi / 12))
+    out: 1/4*sqrt(6) - 1/4*sqrt(2)
   rust:
     in: sin((x(std::f64::consts::PI) / n(12)))
     out: "0.25881904510252074"
@@ -452,6 +454,7 @@ sin-pi-8-frac-sqrt-2-sqrt-2-2:
     out: sqrt(1/2 - sqrt(2)/4)
   sage:
     in: sin((pi / 8))
+    out: 1/2*sqrt(-sqrt(2) + 2)
   rust:
     in: sin((x(std::f64::consts::PI) / n(8)))
     out: "0.3826834323650898"
@@ -471,6 +474,7 @@ sin-pi-10-frac-sqrt-5-1-4:
     out: -1/4 + sqrt(5)/4
   sage:
     in: sin((pi / 10))
+    out: 1/4*sqrt(5) - 1/4
   rust:
     in: sin((x(std::f64::consts::PI) / n(10)))
     out: "0.3090169943749474"
@@ -493,6 +497,7 @@ sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
     out: "0.965925826289068286749743199729"
   sage:
     in: sin(((5/12) * pi))
+    out: 1/4*sqrt(6) + 1/4*sqrt(2)
   rust:
     in: sin((rational(n(5), n(12)) * x(std::f64::consts::PI)))
     out: "0.9659258262890683"
@@ -515,6 +520,7 @@ sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
     out: "0.923879532511286756128183189397"
   sage:
     in: sin(((3/8) * pi))
+    out: 1/2*sqrt(sqrt(2) + 2)
   rust:
     in: sin((rational(n(3), n(8)) * x(std::f64::consts::PI)))
     out: "0.9238795325112867"
@@ -537,6 +543,7 @@ large-rational-multiples-of-pi-are-reduced:
     out: "-0.866025403784438646763723170754"
   sage:
     in: sin(((100/3) * pi))
+    out: -1/2*sqrt(3)
   rust:
     in: sin((rational(n(100), n(3)) * x(std::f64::consts::PI)))
     out: "-0.8660254037844414"
@@ -559,6 +566,7 @@ any-integer-multiple-of-pi-is-a-zero-of-sine:
     out: "1.23297297519287531798936557837e-25"
   sage:
     in: sin((1000001 * pi))
+    out: "0"
   rust:
     in: sin((n(1000001) * x(std::f64::consts::PI)))
     out: "3.4473322826621095e-10"
@@ -581,6 +589,7 @@ sin-negate-pi-is-also-zero:
     out: "-1.69568553207377992879174029388e-31"
   sage:
     in: sin((-pi))
+    out: "0"
   rust:
     in: sin((-(x(std::f64::consts::PI))))
     out: "-1.2246467991473532e-16"
@@ -603,6 +612,7 @@ sin-4-pi-is-zero:
     out: "-6.78274212829511971516696117551e-31"
   sage:
     in: sin((4 * pi))
+    out: "0"
   rust:
     in: sin((n(4) * x(std::f64::consts::PI)))
     out: "-4.898587196589413e-16"
@@ -634,6 +644,7 @@ sin-2-a-generic-argument-stays-symbolic:
     out: "0.909297426825681695396019865912"
   sage:
     in: sin(2)
+    out: sin(2)
   rust:
     in: sin(n(2))
     out: "0.9092974268256817"
@@ -662,6 +673,7 @@ sin-i-pi-2-i-sinh-pi-2-exactly:
     out: I*sinh(pi/2)
   sage:
     in: sin((I * (pi / 2)))
+    out: I*sinh(1/2*pi)
 n-decimalizes-sin-i-pi-2-not-just-the-exact-form:
   epsil:
     in: N(Sin(ImaginaryUnit * (Pi / 2)))
@@ -678,6 +690,7 @@ n-decimalizes-sin-i-pi-2-not-just-the-exact-form:
     out: 2.30129890230729487346304002343*I
   sage:
     in: N(sin((I * (pi / 2))))
+    out: 2.30129890230729*I
 interval-arithmetic-the-image-of-pi-6-pi-6-is:
   epsil:
     in: Sin(Interval(-(Pi / 6), Pi / 6))
@@ -943,6 +956,7 @@ pi-15-has-a-radical-form-but-like-wolfram-s:
     out: sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2
   sage:
     in: sin((pi / 15))
+    out: sin(1/15*pi)
   rust:
     in: sin((x(std::f64::consts::PI) / n(15)))
     out: "0.20791169081775931"
@@ -965,6 +979,7 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
     out: "-0.645251285265780844205811711313"
   sage:
     in: N(sin(((10)^20)))
+    out: "-0.645251285265781"
   rust:
     in: nf(sin(power(n(10), n(20))))
     out: "-0.6452512852657808"
@@ -987,6 +1002,10 @@ an-even-huger-argument-11-38:
     out: "0.867534193184863032081750429728"
   sage:
     in: N(sin(((11)^38)))
+    out: "-0.717245789351581"
+    verdict: disagree
+    kind: precision
+    note: Sage's N(sin(...)) reduces the huge argument in double precision, which cannot hold 11^38 exactly; compute-engine's BigDecimal kernel reduces modulo 2*Pi with enough digits to keep the answer meaningful.
   rust:
     in: nf(sin(power(n(11), n(38))))
     out: "-0.7172457893515806"
@@ -1023,6 +1042,7 @@ to-30-significant-digits-every-one-correctly:
     out: "0.84147098480789650665250232163"
   sage:
     in: N(sin(1))
+    out: "0.841470984807897"
   rust:
     in: nf(sin(n(1)))
     out: "0.8414709848078965"
@@ -1045,6 +1065,10 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
     out: "0.400083152719766047070941915848"
   sage:
     in: N(sin(((24)^40)))
+    out: "-0.589776516131572"
+    verdict: disagree
+    kind: precision
+    note: Sage's N(sin(...)) reduces the huge argument in double precision, which cannot hold 24^40 exactly; compute-engine reduces it exactly.
   rust:
     in: nf(sin(power(n(24), n(40))))
     out: "-0.5897765161315717"

@@ -144,10 +144,7 @@ threads-element-wise-over-a-list:
     out: "[mpf('-1.0'), mpf('0.0'), mpf('1.0')]"
   sage:
     in: "[sign(-3), sign(0), sign(7)]"
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only.
+    out: "[-1, 0, 1]"
 sign-z-z-z-see-abs:
   epsil:
     in: Sign(3 + 4i) == (3 + 4i) / Abs(3 + 4i)
@@ -257,6 +254,7 @@ sign-neg-2p5:
     out: "-1.0"
   sage:
     in: sign(-2.5)
+    out: "-1"
 sign-3p14:
   epsil:
     in: Sign(3.14)
@@ -276,6 +274,7 @@ sign-3p14:
     out: "1.0"
   sage:
     in: sign(3.14)
+    out: "1"
 a-complex-number-with-approximate-parts:
   epsil:
     in: Sign(1.4 + 2.3i)
@@ -295,6 +294,10 @@ a-complex-number-with-approximate-parts:
     out: (0.519946946895745222042694276671 + 0.854198555614438567289384025405j)
   sage:
     in: sign((1.4 + 2.3*I))
+    out: sgn(1.40000000000000 + 2.30000000000000*I)
+    verdict: disagree
+    kind: unevaluated
+    note: compute-engine evaluates Sign on a complex float; Sage's sign() leaves the complex argument unevaluated, printing sgn(...) back symbolically.
 an-exact-complex-argument-comes-back-exact-sign:
   epsil:
     in: Sign(1 + i)
@@ -314,6 +317,10 @@ an-exact-complex-argument-comes-back-exact-sign:
     out: (0.707106781186547524400844362105 + 0.707106781186547524400844362105j)
   sage:
     in: sign((1 + 1*I))
+    out: sgn(I + 1)
+    verdict: disagree
+    kind: unevaluated
+    note: compute-engine evaluates Sign on an exact complex argument to its exact normalized form; Sage's sign() leaves it unevaluated, printing sgn(I + 1) back symbolically.
 threads-over-a-matrix-entry-by-entry:
   epsil:
     in: Sign([[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -333,6 +340,7 @@ threads-over-a-matrix-entry-by-entry:
     out: "[[mpf('1.0'), mpf('-1.0')], [mpf('-1.0'), mpf('1.0')]]"
   sage:
     in: "[[sign((1/2)), sign(-1)], [sign((-5/3)), sign((1/2))]]"
+    out: "[[1, -1], [-1, 1]]"
 exact-numeric-constants:
   epsil:
     in: Sign(Pi)
@@ -352,6 +360,7 @@ exact-numeric-constants:
     out: "1.0"
   sage:
     in: sign(pi)
+    out: "1"
 sign-neg-exponentiale:
   epsil:
     in: Sign(-ExponentialE)
@@ -371,6 +380,7 @@ sign-neg-exponentiale:
     out: "-1.0"
   sage:
     in: sign((-e))
+    out: "-1"
 sign-imaginaryunit:
   epsil:
     in: Sign(ImaginaryUnit)
@@ -390,6 +400,10 @@ sign-imaginaryunit:
     out: (0.0 + 1.0j)
   sage:
     in: sign(I)
+    out: sgn(I)
+    verdict: disagree
+    kind: unevaluated
+    note: compute-engine evaluates Sign(i) to the exact value i; Sage's sign() leaves it unevaluated, printing sgn(I) back symbolically.
 sign-positiveinfinity:
   epsil:
     in: Sign(PositiveInfinity)
@@ -431,6 +445,7 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
     out: "-1.0"
   sage:
     in: sign((sqrt(2) - 2))
+    out: "-1"
 2-sqrt-2-is-the-same-certified-decision-the:
   epsil:
     in: Sign(2 - Sqrt(2))
@@ -450,6 +465,7 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
     out: "1.0"
   sage:
     in: sign((2 - sqrt(2)))
+    out: "1"
 the-sign-of-a-nonzero-complex-number-lies-on-the:
   epsil:
     in: Abs(Sign(3 + 4i)) == 1
@@ -472,3 +488,4 @@ the-sign-of-a-nonzero-complex-number-lies-on-the:
     out: True
   sage:
     in: bool(abs(sign((3 + 4*I))) == 1)
+    out: True

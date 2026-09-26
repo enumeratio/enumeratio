@@ -56,6 +56,7 @@ multiplicativeorder-5-7:
     in: MultiplicativeOrder[5, 7]
   sage:
     in: Mod(5, 7).multiplicative_order()
+    out: "6"
 a-negative-base-5-equiv-2-pmod-7:
   epsil:
     in: MultiplicativeOrder(-5, 7)
@@ -72,6 +73,7 @@ a-negative-base-5-equiv-2-pmod-7:
     in: MultiplicativeOrder[-5, 7]
   sage:
     in: Mod(-5, 7).multiplicative_order()
+    out: "3"
 the-first-power-of-5-to-reach-3-or-11-equiv-4-5:
   epsil:
     in: MultiplicativeOrder(5, 7, [3, 11])
@@ -99,6 +101,7 @@ a-10-001-digit-base-modulo-the-prime-7919:
     in: MultiplicativeOrder[Power[10, 10000], 7919]
   sage:
     in: Mod(((10)^10000), 7919).multiplicative_order()
+    out: "3959"
 1-is-the-only-element-of-order-1:
   epsil:
     in: MultiplicativeOrder(1, 7)
@@ -115,6 +118,7 @@ a-10-001-digit-base-modulo-the-prime-7919:
     in: MultiplicativeOrder[1, 7]
   sage:
     in: Mod(1, 7).multiplicative_order()
+    out: "1"
 2-3-8-equiv-1-pmod-7-and-no-smaller-power-works:
   epsil:
     in: MultiplicativeOrder(2, 7)

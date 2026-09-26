@@ -156,6 +156,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[4, 25]"
   sage:
     in: "[prime_pi(10), prime_pi(100)]"
+    out: "[4, 25]"
   mathlib4:
     in: (Nat.primeCounting [10, 100])
   rust:
@@ -183,6 +184,7 @@ rational-arguments-the-primes-up-to-7-2-are-2:
     out: "2"
   sage:
     in: prime_pi((7/2))
+    out: "2"
   mathlib4:
     in: "(Nat.primeCounting ((7 : ℚ) / 2))"
   rust:
@@ -210,6 +212,7 @@ real-arguments:
     out: "6"
   sage:
     in: prime_pi(15.25)
+    out: "6"
   mathlib4:
     in: (Nat.primeCounting 15.25)
   rust:
@@ -237,6 +240,7 @@ the-primes-below-a-million:
     out: "78498"
   sage:
     in: prime_pi(1000000)
+    out: "78498"
   mathlib4:
     in: (Nat.primeCounting 1000000)
   rust:
@@ -258,6 +262,7 @@ listable-threads-over-a-list:
     out: "[2, 3, 7, 9]"
   sage:
     in: "[prime_pi(3), prime_pi(5), prime_pi(17), prime_pi(25)]"
+    out: "[2, 3, 7, 9]"
   mathlib4:
     in: (Nat.primeCounting [3, 5, 17, 25])
   rust:
@@ -285,6 +290,7 @@ no-primes-are-a-negative-number:
     out: "0"
   sage:
     in: prime_pi(-1)
+    out: "0"
   mathlib4:
     in: (Nat.primeCounting (-1))
   rust:

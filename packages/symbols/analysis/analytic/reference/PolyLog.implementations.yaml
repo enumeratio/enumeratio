@@ -293,6 +293,7 @@ a-machine-precision-argument:
     out: "1.2997147230049587819795713031"
   sage:
     in: polylog(2, 0.9)
+    out: "1.29971472300496"
 li-0-z-z-1-z-past-the-unit-disk:
   epsil:
     in: PolyLog(0, 5.5)
@@ -312,6 +313,7 @@ li-0-z-z-1-z-past-the-unit-disk:
     out: "-1.22222222222222222222222222222"
   sage:
     in: polylog(0, 5.5)
+    out: "-1.22222222222222"
 li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
   epsil:
     in: PolyLog(3, 1 / 2)
@@ -331,6 +333,7 @@ li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
     out: "0.537213193608040200940623225595"
   sage:
     in: polylog(3, (1/2))
+    out: polylog(3, 1/2)
 complex-order-and-argument:
   epsil:
     in: PolyLog(0.2 + i, 0.5 - 0.5i)
@@ -350,6 +353,7 @@ complex-order-and-argument:
     out: (0.0703265205505160488207107039144 - 0.563293262539874483087247237706j)
   sage:
     in: polylog((0.2 + 1*I), (0.5 + -0.5*I))
+    out: 0.0703265205505161 - 0.563293262539874*I
 past-z-1-the-continuation-is-complex:
   epsil:
     in: PolyLog(2, 2.5)
@@ -369,6 +373,7 @@ past-z-1-the-continuation-is-complex:
     out: (2.42079080656593384391365659389 - 2.87861223180826055148866875379j)
   sage:
     in: polylog(2, 2.5)
+    out: 2.42079080656593 - 2.87861223180826*I
 li-3-1-eta-3-frac-34-zeta-3:
   epsil:
     in: PolyLog(3, -1)
@@ -388,6 +393,7 @@ li-3-1-eta-3-frac-34-zeta-3:
     out: "-0.901542677369695714049803621134"
   sage:
     in: polylog(3, -1)
+    out: -3/4*zeta(3)
 li-2-2-pi-2-4-i-pi-ln-2-exactly:
   epsil:
     in: PolyLog(2, 2)
@@ -407,6 +413,7 @@ li-2-2-pi-2-4-i-pi-ln-2-exactly:
     out: (2.46740110027233965470862274997 - 2.17758609030360213050068889824j)
   sage:
     in: polylog(2, 2)
+    out: dilog(2)
 li-n-1-1-2-1-n-zeta-n-for-symbolic-n:
   epsil:
     in: PolyLog(n, -1)
@@ -506,6 +513,7 @@ to-30-significant-digits-not-yet-the-requested:
     out: "0.58224052646501250590265632016"
   sage:
     in: N(polylog(2, (1/2)))
+    out: "0.582240526465012"
 certified-digits-li-2-1-3:
   epsil:
     in: N(PolyLog(2, 1 / 3), 40)
@@ -525,6 +533,7 @@ certified-digits-li-2-1-3:
     out: "0.366213229977063487616746297664"
   sage:
     in: N(polylog(2, (1/3)))
+    out: "0.366213229977063"
 certified-digits-li-5-2-minus-1-2:
   epsil:
     in: N(PolyLog(5 / 2, -1 / 2), 40)
@@ -544,6 +553,7 @@ certified-digits-li-5-2-minus-1-2:
     out: "-0.462297782190063438189164323275"
   sage:
     in: N(polylog((5/2), (-1/2)))
+    out: "-0.462297782190063"
 n-polylog-2-0p5:
   epsil:
     in: N(PolyLog(2, 0.5))
@@ -1721,6 +1731,10 @@ li-0-1-a-pole-of-the-rational-form:
     note: Wolfram and ours treat z=1 as the pole of the rational Li_0(z)=z/(1-z) (ComplexInfinity); mpmath takes zeta(s) by analytic continuation in s at fixed z=1 instead (-1/2 here).
   sage:
     in: polylog(0, 1)
+    out: -1/2
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and compute-engine treat z=1 as the pole of the rational Li_0(z)=z/(1-z) (ComplexInfinity); Sage's polylog takes zeta(0) by analytic continuation in s at fixed z=1 instead, giving -1/2.
 li-neg-1-1-a-pole-of-the-rational-form:
   epsil:
     in: PolyLog(-1, 1)
@@ -1746,6 +1760,10 @@ li-neg-1-1-a-pole-of-the-rational-form:
     note: Wolfram and ours treat z=1 as the pole of the rational Li_-1(z)=z/(1-z)^2 (ComplexInfinity); mpmath takes zeta(-1)=-1/12 by analytic continuation in s at fixed z=1 instead.
   sage:
     in: polylog(-1, 1)
+    out: -1/12
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and compute-engine treat z=1 as the pole of the rational Li_-1(z)=z/(1-z)^2 (ComplexInfinity); Sage's polylog takes zeta(-1)=-1/12 by analytic continuation in s at fixed z=1 instead.
 li-neg-2-1-a-pole-of-the-rational-form:
   epsil:
     in: PolyLog(-2, 1)
@@ -1771,6 +1789,10 @@ li-neg-2-1-a-pole-of-the-rational-form:
     note: Wolfram and ours treat z=1 as the pole of the rational Li_-2(z) (ComplexInfinity); mpmath takes zeta(-2)=0 by analytic continuation in s at fixed z=1 instead.
   sage:
     in: polylog(-2, 1)
+    out: "0"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and compute-engine treat z=1 as the pole of the rational Li_-2(z) (ComplexInfinity); Sage's polylog takes zeta(-2)=0 by analytic continuation in s at fixed z=1 instead.
 li-3-over-2-1-zeta-3-2-non-integer-order:
   epsil:
     in: N(PolyLog(3 / 2, 1))
@@ -1790,6 +1812,7 @@ li-3-over-2-1-zeta-3-2-non-integer-order:
     out: "2.61237534868548834334856756792"
   sage:
     in: N(polylog((3/2), 1))
+    out: "2.61237534868549"
 li-1-1-2-ln-2:
   epsil:
     in: N(PolyLog(1, 1 / 2))
@@ -1809,6 +1832,7 @@ li-1-1-2-ln-2:
     out: "0.693147180559945309417232121458"
   sage:
     in: N(polylog(1, (1/2)))
+    out: "0.693147180559945"
 n-polylog-rim-theta-0p5-s-neg-0p5-z:
   epsil:
     in: N(PolyLog(-0.5, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))
@@ -1828,6 +1852,7 @@ n-polylog-rim-theta-0p5-s-neg-0p5-z:
     out: (-1.98141280324163035428655766009 + 1.7596180280954191138331411993j)
   sage:
     in: N(polylog(-0.5, (0.8775825618903728 + 0.479425538604203*I)))
+    out: -1.98141280324163 + 1.75961802809542*I
 polylog-rim-theta-0p5-s-0-z:
   epsil:
     in: N(PolyLog(0, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))
@@ -1847,6 +1872,7 @@ polylog-rim-theta-0p5-s-0-z:
     out: (-0.500000000000000162772180044563 + 1.95815868232297011768855635329j)
   sage:
     in: N(polylog(0, (0.8775825618903728 + 0.479425538604203*I)))
+    out: -0.500000000000000 + 1.95815868232297*I
 polylog-rim-theta-0p5-s-0p5-z:
   epsil:
     in: N(PolyLog(0.5, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))
@@ -1866,6 +1892,7 @@ polylog-rim-theta-0p5-s-0p5-z:
     out: (0.315296615758708340889423388656 + 1.6683324929967655223652807247j)
   sage:
     in: N(polylog(0.5, (0.8775825618903728 + 0.479425538604203*I)))
+    out: 0.315296615758708 + 1.66833249299677*I
 polylog-rim-theta-0p5-s-1-z:
   epsil:
     in: N(PolyLog(1, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))
@@ -1885,6 +1912,7 @@ polylog-rim-theta-0p5-s-1-z:
     out: (0.703585635137844674746273612566 + 1.32079632679489670524619759661j)
   sage:
     in: N(polylog(1, (0.8775825618903728 + 0.479425538604203*I)))
+    out: 0.703585635137845 + 1.32079632679490*I
 polylog-rim-theta-0p5-s-1p5-z:
   epsil:
     in: N(PolyLog(1.5, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))
@@ -1904,6 +1932,7 @@ polylog-rim-theta-0p5-s-1p5-z:
     out: (0.865929522764988280552884461071 + 1.04280869887883137594918850979j)
   sage:
     in: N(polylog(1.5, (0.8775825618903728 + 0.479425538604203*I)))
+    out: 0.865929522764988 + 1.04280869887883*I
 polylog-rim-theta-1p7-s-0-z:
   epsil:
     in: N(PolyLog(0, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))
@@ -1923,6 +1952,7 @@ polylog-rim-theta-1p7-s-0-z:
     out: (-0.499999999999999977487794537038 + 0.439238892276005904440122695821j)
   sage:
     in: N(polylog(0, (-0.12884449429552464 + 0.9916648104524686*I)))
+    out: -0.500000000000000 + 0.439238892276006*I
 polylog-rim-theta-1p7-s-0p5-z:
   epsil:
     in: N(PolyLog(0.5, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))
@@ -1942,6 +1972,7 @@ polylog-rim-theta-1p7-s-0p5-z:
     out: (-0.460639226197527842017307762687 + 0.60047781605507833325428051208j)
   sage:
     in: N(polylog(0.5, (-0.12884449429552464 + 0.9916648104524686*I)))
+    out: -0.460639226197528 + 0.600477816055078*I
 polylog-rim-theta-1p7-s-1-z:
   epsil:
     in: N(PolyLog(1, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))
@@ -1961,6 +1992,7 @@ polylog-rim-theta-1p7-s-1-z:
     out: (-0.407170859340729374328160080788 + 0.720796326794896617651288524145j)
   sage:
     in: N(polylog(1, (-0.12884449429552464 + 0.9916648104524686*I)))
+    out: -0.407170859340729 + 0.720796326794897*I
 polylog-rim-theta-1p7-s-1p5-z:
   epsil:
     in: N(PolyLog(1.5, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))
@@ -1980,6 +2012,7 @@ polylog-rim-theta-1p7-s-1p5-z:
     out: (-0.352399886639668539880641902264 + 0.807057229069461640290489366502j)
   sage:
     in: N(polylog(1.5, (-0.12884449429552464 + 0.9916648104524686*I)))
+    out: -0.352399886639669 + 0.807057229069462*I
 polylog-rim-theta-2p4-s-0-z:
   epsil:
     in: N(PolyLog(0, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))
@@ -1999,6 +2032,7 @@ polylog-rim-theta-2p4-s-0-z:
     out: (-0.499999999999999993326488594745 + 0.194389784684102472862670134434j)
   sage:
     in: N(polylog(0, (-0.7373937155412454 + 0.675463180551151*I)))
+    out: -0.500000000000000 + 0.194389784684102*I
 polylog-rim-theta-2p4-s-0p5-z:
   epsil:
     in: N(PolyLog(0.5, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))
@@ -2018,6 +2052,7 @@ polylog-rim-theta-2p4-s-0p5-z:
     out: (-0.570995313100137620681665622821 + 0.288122350544688681239495794311j)
   sage:
     in: N(polylog(0.5, (-0.7373937155412454 + 0.675463180551151*I)))
+    out: -0.570995313100138 + 0.288122350544689*I
 polylog-rim-theta-2p4-s-1-z:
   epsil:
     in: N(PolyLog(1, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))
@@ -2037,6 +2072,7 @@ polylog-rim-theta-2p4-s-1-z:
     out: (-0.622766653117112758665859429544 + 0.37079632679489664433848426139j)
   sage:
     in: N(polylog(1, (-0.7373937155412454 + 0.675463180551151*I)))
+    out: -0.622766653117113 + 0.370796326794897*I
 polylog-rim-theta-2p4-s-1p5-z:
   epsil:
     in: N(PolyLog(1.5, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))
@@ -2056,6 +2092,7 @@ polylog-rim-theta-2p4-s-1p5-z:
     out: (-0.659486088090073466165234915645 + 0.440335525424699717082212758762j)
   sage:
     in: N(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)))
+    out: -0.659486088090073 + 0.440335525424700*I
 order-one-half-at-1-is-zeta-one-half:
   epsil:
     in: N(PolyLog(1 / 2, 1))
@@ -2075,3 +2112,4 @@ order-one-half-at-1-is-zeta-one-half:
     out: "-1.46035450880958681288949915252"
   sage:
     in: N(polylog((1/2), 1))
+    out: "-1.46035450880959"

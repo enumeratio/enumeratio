@@ -222,8 +222,13 @@ varphi-0-0-as-in-wolfram:
     note: compute-engine's Totient answers at 0; SymPy's totient() requires a positive integer and declines.
   sage:
     in: euler_phi(0)
+    out: "0"
   oscar:
     in: euler_phi(ZZ(0))
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: domain
+    note: compute-engine's Totient answers at 0, following Wolfram's convention EulerPhi(0) = 0; Oscar's euler_phi declines n ≤ 0.
   julia:
     in: euler_phi(ZZ(0))
     out: "DomainError with 0: Argument must be positive"
@@ -252,8 +257,13 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1, 2, 2]"
   sage:
     in: "[euler_phi(2), euler_phi(4), euler_phi(6)]"
+    out: "[1, 2, 2]"
   oscar:
     in: euler_phi(ZZ([2, 4, 6]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: threading
+    note: compute-engine's Totient is Listable and threads over the list; Oscar's euler_phi takes scalars only.
   julia:
     in: "[euler_phi(ZZ(2)), euler_phi(ZZ(4)), euler_phi(ZZ(6))]"
     out: "[1, 2, 2]"
@@ -278,8 +288,10 @@ totient-10:
     out: "4"
   sage:
     in: euler_phi(10)
+    out: "4"
   oscar:
     in: euler_phi(ZZ(10))
+    out: "4"
   julia:
     in: euler_phi(ZZ(10))
     out: "4"
@@ -304,8 +316,10 @@ large-integers-varphi-50:
     out: "4218559200885839042679312107816703841788854953574400000000000000"
   sage:
     in: euler_phi(factorial(50))
+    out: "4218559200885839042679312107816703841788854953574400000000000000"
   oscar:
     in: euler_phi(ZZ(factorial(ZZ(50))))
+    out: "4218559200885839042679312107816703841788854953574400000000000000"
   julia:
     in: euler_phi(ZZ(factorial(ZZ(50))))
     out: "4218559200885839042679312107816703841788854953574400000000000000"
@@ -333,8 +347,16 @@ negative-n-varphi-n-varphi-n:
     note: compute-engine takes φ(-n) = φ(n), as Wolfram does; SymPy's totient requires a positive argument.
   sage:
     in: euler_phi(-10)
+    out: "0"
+    verdict: disagree
+    kind: domain
+    note: compute-engine takes phi(-n) = phi(n), as Wolfram does; Sage's euler_phi() declines a negative n and answers 0.
   oscar:
     in: euler_phi(ZZ(-10))
+    out: "DomainError with -10: Argument must be positive"
+    verdict: error
+    kind: domain
+    note: compute-engine takes φ(-n) = φ(n), as Wolfram does; Oscar's euler_phi declines a negative n.
   julia:
     in: euler_phi(ZZ(-10))
     out: "DomainError with -10: Argument must be positive"
@@ -362,8 +384,10 @@ varphi-p-p-1-for-a-prime-p:
     out: "16"
   sage:
     in: euler_phi(17)
+    out: "16"
   oscar:
     in: euler_phi(ZZ(17))
+    out: "16"
   julia:
     in: euler_phi(ZZ(17))
     out: "16"
@@ -388,8 +412,10 @@ varphi-p-k-p-k-1-p-1-3-3-cdot-2-54:
     out: "54"
   sage:
     in: euler_phi(81)
+    out: "54"
   oscar:
     in: euler_phi(ZZ(81))
+    out: "54"
   julia:
     in: euler_phi(ZZ(81))
     out: "54"
@@ -411,3 +437,4 @@ euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when:
     in: PowerMod[7, EulerPhi[10], 10]
   sage:
     in: power_mod(7, euler_phi(10), 10)
+    out: "1"

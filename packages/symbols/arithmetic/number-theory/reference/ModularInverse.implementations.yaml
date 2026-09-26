@@ -35,6 +35,7 @@ modularinverse-2-11:
     in: ModularInverse[2, 11]
   sage:
     in: inverse_mod(2, 11)
+    out: "6"
 a-negative-argument-3-cdot-2-6-equiv-1:
   epsil:
     in: ModularInverse(-3, 7)
@@ -51,6 +52,7 @@ a-negative-argument-3-cdot-2-6-equiv-1:
     in: ModularInverse[-3, 7]
   sage:
     in: inverse_mod(-3, 7)
+    out: "2"
 a-21-digit-modulus:
   epsil:
     in: ModularInverse(3, 10 ^ 20 + 1)
@@ -67,6 +69,7 @@ a-21-digit-modulus:
     in: ModularInverse[3, Plus[Power[10, 20], 1]]
   sage:
     in: inverse_mod(3, (((10)^20) + 1))
+    out: "33333333333333333334"
 listable-threads-over-a-list:
   epsil:
     in: ModularInverse([2, 3, 4], 11)
@@ -80,6 +83,10 @@ listable-threads-over-a-list:
     in: ModularInverse[List[2, 3, 4], 11]
   sage:
     in: inverse_mod([2, 3, 4], 11)
+    out: "TypeError: unable to coerce <class 'list'> to an integer"
+    verdict: error
+    kind: threading
+    note: compute-engine's ModularInverse is Listable and threads over the list; Sage's inverse_mod() takes a scalar only and raises a TypeError trying to coerce the list.
 the-same-as-powermod-with-exponent-1:
   epsil:
     in: ModularInverse(3, 7) == PowerMod(3, -1, 7)
@@ -96,6 +103,7 @@ the-same-as-powermod-with-exponent-1:
     in: (ModularInverse[3, 7] == PowerMod[3, -1, 7])
   sage:
     in: bool(inverse_mod(3, 7) == power_mod(3, -1, 7))
+    out: True
 a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
   epsil:
     in: 12_345 * ModularInverse(12_345, 2 ^ 61 - 1) % (2 ^ 61 - 1)
@@ -112,6 +120,7 @@ a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
     in: Mod[Times[12345, ModularInverse[12345, Subtract[Power[2, 61], 1]]], Subtract[Power[2, 61], 1]]
   sage:
     in: ((12345 * inverse_mod(12345, (((2)^61) - 1))) % (((2)^61) - 1))
+    out: "1"
 2-i-6-4i-8-14i-equiv-1-pmod-7:
   epsil:
     in: ModularInverse(2 + i, 7)
@@ -200,3 +209,7 @@ a-gaussian-base-and-a-gaussian-modulus:
     in: ModularInverse[Complex[3, -1], Complex[5, 2]]
   sage:
     in: inverse_mod((3 + -1*I), (5 + 2*I))
+    out: "16"
+    verdict: inconclusive
+    kind: domain
+    note: compute-engine computes the Gaussian modular inverse directly; Sage's inverse_mod() doesn't understand Gaussian integers and returns a meaningless integer, 16, instead.

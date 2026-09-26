@@ -171,6 +171,10 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \left( \begin{array}{cc}  \{2,2\} & \{3,1\} \\  \{2,1\} & \{3,2\} \\ \end{array} \right)
   sage:
     in: list(factor([12, 18]))
+    out: "TypeError: unable to factor [12, 18]"
+    verdict: error
+    kind: threading
+    note: compute-engine's FactorInteger is Listable and threads over the list; Sage's factor() takes a scalar only and raises a TypeError trying to factor the list.
 5-i-1-2i-2-i:
   epsil:
     in: FactorInteger(5, GaussianIntegers -> True)
@@ -241,6 +245,7 @@ factorinteger-120:
     in: FactorInteger[120]
   sage:
     in: list(factor(120))
+    out: "[(2, 3), (3, 1), (5, 1)]"
 factorinteger-36:
   epsil:
     in: FactorInteger(36)
@@ -254,6 +259,7 @@ factorinteger-36:
     in: FactorInteger[36]
   sage:
     in: list(factor(36))
+    out: "[(2, 2), (3, 2)]"
 rationals-the-denominator-s-primes-get-negative:
   epsil:
     in: FactorInteger(3 / 8)
@@ -267,6 +273,7 @@ rationals-the-denominator-s-primes-get-negative:
     in: FactorInteger[Rational[3, 8]]
   sage:
     in: list(factor((3/8)))
+    out: "[(2, -3), (3, 1)]"
 9-12i-3-2-i-2:
   epsil:
     in: FactorInteger(9 + 12i)
@@ -280,6 +287,10 @@ rationals-the-denominator-s-primes-get-negative:
     in: FactorInteger[Complex[9, 12]]
   sage:
     in: list(factor((9 + 12*I)))
+    out: "[(2*I - 1, 2), (3, 1)]"
+    verdict: disagree
+    kind: convention
+    note: A Gaussian factorization is defined up to units; compute-engine normalises the Gaussian prime into the first quadrant as 2 + i, while Sage's factor() returns the associate 2*I - 1.
 36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime:
   epsil:
     in: FactorInteger(36, GaussianIntegers -> True)
@@ -305,6 +316,10 @@ listable-threads-over-a-list:
     in: FactorInteger[List[11, 101, 1001]]
   sage:
     in: list(factor([11, 101, 1001]))
+    out: "TypeError: unable to factor [11, 101, 1001]"
+    verdict: error
+    kind: threading
+    note: compute-engine's FactorInteger is Listable and threads over the list; Sage's factor() takes a scalar only and raises a TypeError trying to factor the list.
 1-is-a-unit-and-factors-as-itself:
   epsil:
     in: FactorInteger(-1)
@@ -318,6 +333,10 @@ listable-threads-over-a-list:
     in: FactorInteger[-1]
   sage:
     in: list(factor(-1))
+    out: "[]"
+    verdict: disagree
+    kind: convention
+    note: compute-engine's FactorInteger(-1) includes the unit -1 as its own factor, as Wolfram does; Sage's factor(-1) returns an empty factorization, dropping the unit.
 a-21-digit-prime-cubed-factors-at-once:
   epsil:
     in: FactorInteger(100_000_000_000_000_000_039 ^ 3)
@@ -332,6 +351,7 @@ a-21-digit-prime-cubed-factors-at-once:
     in: FactorInteger[Power[100000000000000000039, 3]]
   sage:
     in: list(factor(((100000000000000000039)^3)))
+    out: "[(100000000000000000039, 3)]"
 factorinteger-neg-12:
   epsil:
     in: FactorInteger(-12)
@@ -345,6 +365,10 @@ factorinteger-neg-12:
     in: FactorInteger[-12]
   sage:
     in: list(factor(-12))
+    out: "[(2, 2), (3, 1)]"
+    verdict: disagree
+    kind: convention
+    note: compute-engine's FactorInteger includes the sign as a unit factor (-1, 1); Sage's factor() drops the unit and returns only the prime-power factors.
 a-non-integer-real-stays-unevaluated:
   epsil:
     in: FactorInteger(2.5)
@@ -358,6 +382,10 @@ a-non-integer-real-stays-unevaluated:
     in: FactorInteger[2.5]
   sage:
     in: list(factor(2.5))
+    out: "[]"
+    verdict: disagree
+    kind: unevaluated
+    note: "Here it's compute-engine that stays symbolic: FactorInteger is restricted to the integers and leaves FactorInteger(2.5) unevaluated, while Sage's factor() silently returns an empty list."
 factorinteger-of-a-negative-rational:
   epsil:
     in: FactorInteger(-3 / 8)
@@ -371,3 +399,7 @@ factorinteger-of-a-negative-rational:
     in: FactorInteger[Rational[-3, 8]]
   sage:
     in: list(factor((-3/8)))
+    out: "[(2, -3), (3, 1)]"
+    verdict: disagree
+    kind: convention
+    note: compute-engine's FactorInteger includes the sign as a unit factor (-1, 1) on a negative rational; Sage's factor() drops the unit and returns only the prime-power factors.

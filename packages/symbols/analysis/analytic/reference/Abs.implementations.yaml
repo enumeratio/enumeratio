@@ -153,10 +153,7 @@ threads-element-wise-over-a-list:
     out: "[mpf('1.0'), mpf('2.0'), mpf('3.0')]"
   sage:
     in: "[abs(-1), abs(2), abs(-3)]"
-    out: "TypeError: bad operand type for abs(): 'list'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Abs is Listable and threads over the list; Sage's takes scalars only.
+    out: "[1, 2, 3]"
   rust:
     in: abs(list(vec![n(-1), n(2), n(-3)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -266,6 +263,7 @@ abs-neg-2p5:
     out: "2.5"
   sage:
     in: abs(-2.5)
+    out: "2.50000000000000"
   rust:
     in: abs(x(-2.5))
     out: "2.5"
@@ -288,6 +286,7 @@ the-modulus-of-a-complex-number-with-approximate:
     out: "2.69258240356725181770864483644"
   sage:
     in: abs((1.4 + 2.3*I))
+    out: "2.69258240356725"
 threads-over-a-matrix-entry-by-entry:
   epsil:
     in: Abs([[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -307,6 +306,7 @@ threads-over-a-matrix-entry-by-entry:
     out: "[[mpf('0.5'), mpf('1.0')], [mpf('1.66666666666666666666666666666673'), mpf('0.5')]]"
   sage:
     in: "[[abs((1/2)), abs(-1)], [abs((-5/3)), abs((1/2))]]"
+    out: "[[1/2, 1], [5/3, 1/2]]"
   rust:
     in: abs(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![rational(n(-5), n(3)), rational(n(1), n(2))])]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -332,6 +332,7 @@ exact-numeric-constants:
     out: "3.14159265358979323846264338328"
   sage:
     in: abs((-pi))
+    out: pi
   rust:
     in: abs((-(x(std::f64::consts::PI))))
     out: "3.141592653589793"
@@ -354,6 +355,7 @@ an-exact-complex-number-gives-an-exact-radical:
     out: "1.41421356237309504880168872421"
   sage:
     in: abs((1 + 1*I))
+    out: sqrt(2)
 abs-imaginaryunit:
   epsil:
     in: Abs(ImaginaryUnit)
@@ -373,6 +375,7 @@ abs-imaginaryunit:
     out: "1.0"
   sage:
     in: abs(I)
+    out: "1"
 e-i-pi-3-lies-on-the-unit-circle:
   epsil:
     in: Abs(Exp(ImaginaryUnit * (Pi / 3)))
@@ -389,6 +392,7 @@ e-i-pi-3-lies-on-the-unit-circle:
     out: "1"
   sage:
     in: abs(exp((I * (pi / 3))))
+    out: abs(1/2*I*sqrt(3) + 1/2)
 abs-negativeinfinity:
   epsil:
     in: Abs(NegativeInfinity)
@@ -452,6 +456,7 @@ decides-the-sign-of-an-exact-numeric-expression:
     out: "0.58578643762690495119831127579"
   sage:
     in: abs((sqrt(2) - 2))
+    out: abs(sqrt(2) - 2)
   rust:
     in: abs((sqrt(n(2)) - n(2)))
     out: "0.5857864376269049"
@@ -474,6 +479,7 @@ a-complex-radicand-inside-the-subtraction:
     out: "3.74165738677394138558374873232"
   sage:
     in: abs((sqrt(-10) - 2))
+    out: abs(sqrt(-10) - 2)
   rust:
     in: abs((sqrt(n(-10)) - n(2)))
     out: NaN
@@ -514,6 +520,7 @@ multiplicative-ab-a-b:
     out: True
   sage:
     in: bool(abs(((1 + 2*I) * (3 + -1*I))) == (abs((1 + 2*I)) * abs((3 + -1*I))))
+    out: True
 the-distance-between-the-points-1-i-and-4-5i-of:
   epsil:
     in: Abs(1 + i - (4 + 5i))
@@ -533,3 +540,4 @@ the-distance-between-the-points-1-i-and-4-5i-of:
     out: "5.0"
   sage:
     in: abs(((1 + 1*I) - (4 + 5*I)))
+    out: "5"

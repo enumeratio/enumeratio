@@ -140,6 +140,7 @@ bernoullib-10:
     out: 5/66
   sage:
     in: bernoulli(10)
+    out: 5/66
 exact-rationals-at-any-index:
   epsil:
     in: BernoulliB(60)
@@ -159,6 +160,7 @@ exact-rationals-at-any-index:
     out: -1215233140483755572040304994079820246041491/56786730
   sage:
     in: bernoulli(60)
+    out: -1215233140483755572040304994079820246041491/56786730
 listable-b-n-threads-over-a-list-of-indices:
   epsil:
     in: BernoulliB([2, 4, 6])
@@ -175,6 +177,7 @@ listable-b-n-threads-over-a-list-of-indices:
     out: "[1/6, -1/30, 1/42]"
   sage:
     in: "[bernoulli(2), bernoulli(4), bernoulli(6)]"
+    out: "[1/6, -1/30, 1/42]"
 the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac:
   epsil:
     in: BernoulliB(4, x)
@@ -246,6 +249,7 @@ zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see:
     out: True
   sage:
     in: bool(zeta(-3) == (-(bernoulli(4) / 4)))
+    out: True
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
   epsil:
     in: |-
@@ -272,6 +276,7 @@ the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2, so the recurrence sums differ.
   sage:
     in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
+    out: "0"
 b-n-0-for-every-odd-n-1:
   epsil:
     in: BernoulliB(5) == 0
@@ -390,6 +395,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2.
   sage:
     in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
+    out: "[-1/2, 1/6, 0]"
 numerators-and-denominators-grow-quickly-b-20:
   epsil:
     in: BernoulliB(20)
