@@ -8,15 +8,6 @@ signatures:
     library: enumeratio-collections
 details:
   - Returned as a plain matrix (a list of lists) rather than Wolfram's default `SparseArray` — a deliberate simplification here, since this library has no sparse-matrix head to return instead.
-examples:
-  - id: adjacency-matrix-of-k4
-    expr: [AdjacencyMatrix, [CompleteGraph, 4]]
-    expected: [List, [List, 0, 1, 1, 1], [List, 1, 0, 1, 1], [List, 1, 1, 0, 1], [List, 1, 1, 1, 0]]
-    caption: $K_4$'s adjacency matrix — every off-diagonal entry is 1
-  - id: a-directed-edge-is-asymmetric
-    expr: [AdjacencyMatrix, [Graph, [List, 1, 2], [List, [DirectedEdge, 1, 2]]]]
-    expected: [List, [List, 0, 1], [List, 0, 0]]
-    caption: A single directed edge gives an asymmetric matrix
 seeAlso:
   - IncidenceMatrix
   - VertexDegree

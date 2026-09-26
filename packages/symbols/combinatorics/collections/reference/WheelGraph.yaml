@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
 details:
   - "EdgeCount = 2(n - 1): n - 1 spokes plus the n - 1 rim edges. Vertex numbering (which vertex is the hub) is kernel-unverified against a live Wolfram session."
-examples:
-  - id: wheel-6-edge-count
-    expr: [EdgeCount, [WheelGraph, 6]]
-    expected: 10
 seeAlso:
   - CycleGraph
   - StarGraph

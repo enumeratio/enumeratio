@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(PerrinSequence) = +\infty$, and $At(PerrinSequence, 1) = P_0 = 3$.'
   - "OEIS A001608, starting exactly at its offset-0 term: $3, 0, 2, 3, 2, 5, 5, 7, 10, 12, …$. The sequence dips through index 4 before climbing forever from $P_4 = 2$ on."
   - "Membership goes through [[Element]]: $Element(10, PerrinSequence)$ is true, $Element(4, PerrinSequence)$ is false."
-examples: []
 enumerate:
   expr: Take(PerrinSequence, 20)
 seeAlso:

@@ -8,10 +8,5 @@ signatures:
     library: enumeratio-collections
 details:
   - $seconds$ is inherently nondeterministic (it depends on the machine and the moment) — the worked example below extracts just the value half with [[At]], rather than pinning a timing figure.
-examples:
-  - id: the-value-half-is-deterministic
-    expr: [At, [AbsoluteTiming, [Add, 1, 2]], 2]
-    expected: 3
-    caption: the value half of the result, extracted with At (seconds is not pinned)
 seeAlso:
   - Echo

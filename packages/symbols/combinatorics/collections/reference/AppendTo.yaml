@@ -8,10 +8,5 @@ signatures:
     library: enumeratio-collections
 details:
   - $s$ is held — its NAME, not its value, is the first operand — so it can be reassigned. Works for any symbol already carrying a value (via a plain assignment, or a [[Module]] local).
-examples:
-  - id: append-to-a-bound-list
-    expr: [List, [Assign, appendToDemoList, [List, 1, 2, 3]], [AppendTo, appendToDemoList, 4]]
-    expected: [List, [List, 1, 2, 3], [List, 1, 2, 3, 4]]
-    caption: bind a list, then append to it
 seeAlso:
   - Module

@@ -109,10 +109,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 45,
   },
   {
-    head: "DifferenceRootReduce",
-    uses: 45,
-  },
-  {
     head: "ParametricPlot3D",
     uses: 41,
   },
@@ -127,10 +123,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "MatrixPlot",
     uses: 37,
-  },
-  {
-    head: "DifferentialRootReduce",
-    uses: 36,
   },
   {
     head: "GraphicsComplex",

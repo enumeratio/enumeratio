@@ -1,0 +1,19 @@
+- id: the-shortest-knotted-geodesic-draws-a-trefoil
+  expr: [AlexanderPolynomial, "'LLRLR'"]
+  expected: [Add, [Power, t, 2], [Negate, t], 1]
+  caption: the shortest knotted geodesic draws a trefoil
+- id: braid-index-2
+  expr: [TripNumber, "'LLRLR'"]
+  expected: 2
+  caption: braid index 2
+  category: Properties
+- id: one-hump-each-way-is-unknotted-however-long
+  expr: [AlexanderPolynomial, "'LLLRRRR'"]
+  expected: 1
+  caption: one hump each way is unknotted, however long
+  category: Properties
+- id: a-rotation-by-2-on-5-points-hence-t-2-3
+  expr: [LorenzPermutation, "'LLRLR'"]
+  expected: [List, 3, 4, 5, 1, 2]
+  caption: a rotation by 2 on 5 points — hence $T(2,3)$
+  category: Scope

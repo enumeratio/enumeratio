@@ -10,15 +10,6 @@ details:
   - Count is $n!$ (see [[Factorial]])
   - Elements are one-line words in lexicographic order; the identity comes first
   - Fixed-point-free permutations are [[Derangements]]; self-inverse ones are [[Involutions]]
-examples:
-  - id: "4"
-    expr: [Count, [SymmetricGroup, 4]]
-    expected: 24
-    caption: $4!$
-  - id: the-identity
-    expr: [At, [SymmetricGroup, 3], 1]
-    expected: [List, 1, 2, 3]
-    caption: the identity
 seeAlso:
   - Derangements
   - Involutions

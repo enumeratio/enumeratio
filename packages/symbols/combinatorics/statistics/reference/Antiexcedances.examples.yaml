@@ -1,0 +1,8 @@
+- id: the-one-line-word-312
+  expr: [Antiexcedances, [Permutations, [List, 3, 1, 2]]]
+  expected: 2
+  caption: the one-line word $312$
+- id: the-one-line-word-2413
+  expr: [Antiexcedances, [Permutations, [List, 2, 4, 1, 3]]]
+  expected: 2
+  caption: the one-line word $2413$

@@ -1,0 +1,21 @@
+a-hand-built-first-order-recurrence:
+  tex:
+    in: \mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)+y(n+1)-1=0\\y(0)=0\end{cases})\lhd5
+    out: "5"
+  fullform:
+    in: DifferenceRoot[Function[List[y, n], List[Equal[Plus[Minus[y[n]], y[Plus[n, 1]], -1], 0], Equal[y[0], 0]]]][5]
+    back: Unreadable
+symbolic-n-stays-inert:
+  tex:
+    in: \mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)+y(n+1)-1=0\\y(0)=0\end{cases})\lhd n
+    out: \mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)+y(n+1)-1=0\\y(0)=0\end{cases})\lhd n
+  fullform:
+    in: DifferenceRoot[Function[List[y, n], List[Equal[Plus[Minus[y[n]], y[Plus[n, 1]], -1], 0], Equal[y[0], 0]]]][n]
+    back: Unreadable
+a-hand-built-fibonacci-recurrence-at-10:
+  tex:
+    in: \mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)-y(n+1)+y(n+2)=0\\y(0)=0\\y(1)=1\end{cases})\lhd10
+    out: "55"
+  fullform:
+    in: DifferenceRoot[Function[List[y, n], List[Equal[Plus[Minus[y[n]], Minus[y[Plus[n, 1]]], y[Plus[n, 2]]], 0], Equal[y[0], 0], Equal[y[1], 1]]]][10]
+    back: Unreadable

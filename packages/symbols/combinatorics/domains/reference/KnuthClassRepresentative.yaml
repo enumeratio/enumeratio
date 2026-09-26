@@ -5,8 +5,3 @@ summary: The row reading word of σ's RSK insertion tableau — the canonical wo
 details:
   - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - "Two permutations are Knuth-equivalent exactly when they share an insertion tableau (Schensted), so reading that tableau back out — bottom row to top, left to right — picks one fixed representative per class. Idempotent: the representative's own insertion tableau is the same P, so applying this again changes nothing."
-examples:
-  - id: the-one-line-word-231
-    expr: [KnuthClassRepresentative, [Permutations, [List, 2, 3, 1]]]
-    expected: [Permutations, [List, 2, 1, 3]]
-    caption: the one-line word $231$

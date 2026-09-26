@@ -1,0 +1,16 @@
+- id: a-rational-function-is-meromorphic
+  expr: [FunctionMeromorphic, [Divide, 1, x], x]
+  expected: True
+  caption: A rational function is meromorphic even though it isn't entire
+- id: tangent-is-a-ratio-of-entire-functions
+  expr: [FunctionMeromorphic, [Tan, x], x]
+  expected: True
+  caption: Tangent is sine over cosine, a ratio of entire functions
+- id: a-branch-point-is-not-a-pole
+  expr: [FunctionMeromorphic, [Ln, x], x]
+  expected: False
+  caption: A branch point disqualifies log even though it has no poles
+- id: polynomials-are-meromorphic
+  expr: [FunctionMeromorphic, [Power, x, 2], x]
+  expected: True
+  caption: Polynomials are entire, hence meromorphic

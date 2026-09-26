@@ -1,0 +1,130 @@
+- id: 17-mod-5
+  expr: [Mod, 17, 5]
+  expected: 2
+- id: 100-mod-7
+  expr: [Mod, 100, 7]
+  expected: 2
+- id: the-result-takes-the-sign-of-the-modulus
+  expr: [Mod, -7, 3]
+  expected: 2
+  caption: The result takes the sign of the modulus
+- id: threads-element-wise-over-a-list
+  expr: [Mod, [List, 1, 2, 3, 4, 5], 3]
+  expected: [List, 1, 2, 0, 1, 2]
+  caption: Threads element-wise over a list
+- id: division-by-a-0-modulus-yields-nan-rather-than
+  expr: [Mod, 5, 0]
+  expected: NaN
+  category: Possible issues
+  caption: Division by a 0 modulus yields NaN rather than an error
+- id: periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer
+  expr: [Equal, [Mod, 17, 5], [Mod, [Add, 17, [Multiply, 3, 5]], 5]]
+  expected: True
+  category: Properties
+  caption: 'Periodicity: $a \bmod n = (a+kn) \bmod n$ for any integer $k$'
+- role: test
+  id: periodicity-with-a-zero-modulus-on-one-side
+  expr: [Equal, [Mod, 35, 13], [Mod, [Add, 17, [Multiply, 3, 5]], 0]]
+  expected: False
+  category: Possible issues
+  caption: A zero modulus on one side of the identity -- NaN never equals 9, so the comparison itself is well-defined
+- id: a-third-argument-offsets-the-range-the-result
+  expr: [Mod, 17, 5, 1]
+  expected: 2
+  category: Scope
+  caption: "A third argument offsets the range: the result lies in $[d, d + n)$, here $[1, 6)$"
+- id: with-offset-1-the-residues-run-1-2-3-rather-than
+  expr: [Mod, 5, 3, 1]
+  expected: 2
+  category: Scope
+  caption: With offset 1 the residues run $1, 2, 3$ rather than $0, 1, 2$
+- id: rationals-are-reduced-exactly
+  expr: [Mod, [Rational, 5, 2], 2]
+  expected: [Rational, 1, 2]
+  category: Scope
+  caption: Rationals are reduced exactly
+- id: 3p14-mod-2
+  expr: [Mod, 3.14, 2]
+  expected: 1.14
+  category: Scope
+- id: an-exact-irrational-reduces-exactly-to-2-sqrt-7
+  expr: [Mod, [Sqrt, 28], 3]
+  expected: [Add, -3, [Multiply, 2, [Sqrt, 7]]]
+  category: Scope
+  caption: An exact irrational reduces exactly to $2\sqrt7 - 3$
+- id: a-symbolic-constant-reduces-exactly-to-pi-2
+  expr: [Mod, Pi, 2]
+  expected: [Add, -2, Pi]
+  category: Scope
+  caption: A symbolic constant reduces exactly to $\pi - 2$
+- id: a-10-001-digit-dividend
+  expr: [Mod, [Power, 10, 10000], 10007]
+  expected: 6333
+  category: Scope
+  caption: a 10 001-digit dividend
+- id: threads-over-a-list-of-moduli
+  expr: [Mod, 10, [List, 3, 4, 7]]
+  expected: [List, 1, 2, 3]
+  category: Scope
+  caption: Threads over a list of moduli
+- id: a-gaussian-integer-5-3i-2-2-2i
+  expr: [Mod, [Complex, 5, 3], 2]
+  expected: [Complex, 1, -1]
+  category: Scope
+  caption: "a Gaussian integer: $(5 + 3i) - 2(2 + 2i)$"
+- id: 1-i-divides-5-3i-1-i-4-i
+  expr: [Mod, [Complex, 5, 3], [Complex, 1, 1]]
+  expected: 0
+  category: Scope
+  caption: $1 + i$ divides $5 + 3i = (1 + i)(4 - i)$
+- id: a-negative-modulus-gives-a-result-in-n-0
+  expr: [Mod, -5, -3]
+  expected: -2
+  category: Properties
+  caption: A negative modulus gives a result in $(n, 0]$
+- id: gaussian-integers-the-quotient-rounds-so-each
+  expr: [Mod, [Complex, 7, 5], 3]
+  expected: [Complex, 1, -1]
+  category: Scope
+  caption: "Gaussian integers: the quotient rounds, so each part lands in $(-m/2, m/2]$"
+- id: a-gaussian-modulus-7-5i-2-i-4-i-i
+  expr: [Mod, [Complex, 7, 5], [Complex, 2, 1]]
+  expected: [Complex, 0, -1]
+  category: Scope
+  caption: "a Gaussian modulus: $7 + 5i = (2 + i)(4 + i) - i$"
+- id: exact-in-both-parts-past-2-53
+  expr: [Mod, [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }], [Complex, 2, 1]]
+  expected: 0
+  category: Scope
+  caption: exact in both parts past $2^{53}$
+- id: the-remainder-of-quotient
+  expr:
+    [
+      Equal,
+      [Mod, [Complex, 7, 5], [Complex, 2, 1]],
+      [Subtract, [Complex, 7, 5], [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]]],
+    ]
+  expected: True
+  category: Properties
+  caption: the remainder of [[Quotient]]
+- id: rounding-ties-to-even-means-1-and-1-both-appear
+  expr: [List, [Mod, [Complex, 1, 2], 2], [Mod, [Complex, 3, 2], 2]]
+  expected: [List, 1, -1]
+  category: Possible issues
+  caption: rounding ties to even means $1$ and $-1$ both appear as remainders mod 2
+- role: test
+  id: mod-7-3
+  expr: [Mod, 7, 3]
+  expected: 1
+- id: eulers-number-mod-2-reduces-exactly
+  expr: [Mod, ExponentialE, 2]
+  expected: [Add, -2, ExponentialE]
+  category: Scope
+  caption: $e \approx 2.718$, one period past 2
+  role: test
+- id: a-free-symbol-is-untouched
+  expr: [Mod, x, 2]
+  expected: [Mod, x, 2]
+  category: Possible issues
+  caption: A free (non-numeric) symbol is untouched — the wrapper declines
+  role: test

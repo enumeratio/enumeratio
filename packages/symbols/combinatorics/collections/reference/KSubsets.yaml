@@ -11,19 +11,6 @@ details:
   - 'Elements are the k-combinations in COLEXICOGRAPHIC order: compare the largest element first, so $\{2,3\}$ precedes $\{1,4\}$'
   - That is the order [[IntegerDigits]] with `CombinatorialNumerals(k)` unranks in — the two are the same map
   - $k = 0$ gives the single empty subset; $k > n$ gives an empty family
-examples:
-  - id: binom-5-2
-    expr: [Count, [KSubsets, 5, 2]]
-    expected: 10
-    caption: $\binom{5}{2}$
-  - id: ksubsets-5-2-list-1
-    expr: [At, [KSubsets, 5, 2], 1]
-    expected: [List, 1, 2]
-  - id: colex-not-lex-lexicographic-order-would-give-1-4
-    expr: [At, [KSubsets, 5, 2], 3]
-    expected: [List, 2, 3]
-    caption: colex, not lex — lexicographic order would give $\{1,4\}$
-    category: Properties
 seeAlso:
   - Subsets
   - Multisets

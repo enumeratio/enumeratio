@@ -1,0 +1,8 @@
+- id: seedrandom-returns-nothing
+  expr: [SeedRandom, 7]
+  expected: Nothing
+- id: seedrandom-pins-the-next-draw
+  expr: [Last, [List, [SeedRandom, 7], [RandomInteger, 100]]]
+  expected: 1
+  category: Scope
+  caption: Seeding pins the next RandomInteger draw

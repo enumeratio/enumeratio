@@ -1,0 +1,14 @@
+- id: matches-hypergeometric2f1-1-1-2-0-5-gamma-2
+  expr: [Hypergeometric2F1Regularized, 1, 1, 2, 0.5]
+  expected: 1.3862943611198895
+  caption: matches Hypergeometric2F1(1, 1, 2, 0.5) / Gamma(2)
+- id: z-ge-1-stays-symbolic-no-continuation-past-the
+  expr: [Hypergeometric2F1Regularized, 1, 1, 2, 1.5]
+  expected: [Hypergeometric2F1Regularized, 1, 1, 2, 1.5]
+  category: Possible issues
+  caption: $|z| \ge 1$ stays symbolic — no continuation past the unit disc
+- id: stays-finite-at-a-nonpositive-integer-lower
+  expr: [N, [Hypergeometric2F1Regularized, 1, 1, -1, 0.3]]
+  expected: 0.5247813411078712
+  category: Properties
+  caption: stays finite at a nonpositive-integer lower parameter, since $1/\Gamma$ vanishes there

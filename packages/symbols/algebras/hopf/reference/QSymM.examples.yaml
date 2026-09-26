@@ -1,0 +1,18 @@
+- id: the-quasi-shuffle-overlap-term-included
+  expr: [NonCommutativeMultiply, [QSymM, [List, 1]], [QSymM, [List, 1]]]
+  expected: [Add, [Multiply, 2, [QSymM, [List, 1, 1]]], [QSymM, [List, 2]]]
+  caption: the quasi-shuffle, overlap term included
+- id: two-interleavings-and-one-overlap
+  expr: [NonCommutativeMultiply, [QSymM, [List, 1]], [QSymM, [List, 2]]]
+  expected: [Add, [QSymM, [List, 3]], [QSymM, [List, 1, 2]], [QSymM, [List, 2, 1]]]
+  caption: two interleavings and one overlap
+- id: nsym-just-concatenates
+  expr: [NonCommutativeMultiply, [NSymH, [List, 2]], [NSymH, [List, 1, 3]]]
+  expected: [NSymH, [List, 2, 1, 3]]
+  caption: NSym just concatenates
+  category: Scope
+- id: 2-4-compositions-of-5
+  expr: [AlgebraDimension, [QSymAlgebra, 5]]
+  expected: 16
+  caption: $2^4$ compositions of 5
+  category: Properties

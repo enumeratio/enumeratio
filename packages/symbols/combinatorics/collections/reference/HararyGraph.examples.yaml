@@ -1,0 +1,21 @@
+- id: harary-4-7-edge-count-and-min-degree
+  expr: [EdgeCount, [HararyGraph, 4, 7]]
+  expected: 14
+- id: harary-3-7-exact-edges
+  expr: [EdgeList, [HararyGraph, 3, 7]]
+  expected:
+    [
+      List,
+      [UndirectedEdge, 1, 2],
+      [UndirectedEdge, 2, 3],
+      [UndirectedEdge, 3, 4],
+      [UndirectedEdge, 4, 5],
+      [UndirectedEdge, 5, 6],
+      [UndirectedEdge, 6, 7],
+      [UndirectedEdge, 7, 1],
+      [UndirectedEdge, 1, 4],
+      [UndirectedEdge, 1, 5],
+      [UndirectedEdge, 2, 6],
+      [UndirectedEdge, 3, 7],
+    ]
+  caption: The 7-cycle plus {1-4, 1-5, 2-6, 3-7} -- kernel-verified

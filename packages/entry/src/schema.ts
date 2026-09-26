@@ -141,21 +141,20 @@ const REFERENCE: JsonSchema = {
   additionalProperties: false,
 };
 
-/** `reference/<Head>.yaml`: the hand-written entry (design/examples-as-data.md §2). */
+/** `reference/<Head>.yaml`: the hand-written entry, all but its examples (design/examples-as-data.md §2). */
 export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://enumeratio.dev/schema/reference-entry.schema.json",
   title: "ReferenceEntry",
   description:
     "One compute-engine head's reference/<Head>.yaml: summary, signatures, details, " +
-    "references, head-level bindings, and examples in page order.",
+    "references and head-level bindings. Its examples are in <Head>.examples.yaml.",
   type: "object",
   properties: {
     name: { type: "string" },
     domain: { type: "string" },
     signature: { type: "string" },
     summary: { type: "string" },
-    examples: { type: "array", items: { $ref: "#/$defs/ReferenceExample" } },
     enumerate: {
       type: "object",
       properties: {
@@ -177,15 +176,25 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
     stub: { enum: ["engine", "carrier"] },
   },
-  required: ["name", "domain", "signature", "summary", "examples"],
+  required: ["name", "domain", "signature", "summary"],
   additionalProperties: false,
   $defs: {
     MathJSON: MATHJSON,
-    ReferenceExample: REFERENCE_EXAMPLE,
     ReferenceSignature: REFERENCE_SIGNATURE,
     ReferenceBinding: REFERENCE_IMPLEMENTATION,
     Reference: REFERENCE,
   },
+};
+
+/** `reference/<Head>.examples.yaml`: the head's examples, in page order. */
+export const REFERENCE_EXAMPLES_SCHEMA: JsonSchema = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: "https://enumeratio.dev/schema/reference-examples.schema.json",
+  title: "ReferenceExamples",
+  description: "One compute-engine head's reference/<Head>.examples.yaml: its examples, in page order.",
+  type: "array",
+  items: { $ref: "#/$defs/ReferenceExample" },
+  $defs: { MathJSON: MATHJSON, ReferenceExample: REFERENCE_EXAMPLE, Reference: REFERENCE },
 };
 
 const RENDERED_FORM: JsonSchema = {

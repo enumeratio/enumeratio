@@ -36,6 +36,8 @@ export { declareElliptic } from "./elliptic.ts";
 export { dirichletBeta, dirichletBetaReal, dirichletEta, dirichletEtaReal } from "./dirichlet.ts";
 export { character, characterExponent, dirichletL, dirichletLReal, eulerPhi } from "./dirichlet-l.ts";
 export { declareFractals, iterateQuadratic, julia, juliaReal, mandelbrot, mandelbrotReal } from "./fractal.ts";
+export { declareDifferenceRoot } from "./difference-root.ts";
+export { declareDifferentialRoot } from "./differential-root.ts";
 export { evaluateHarmonicNumber } from "./harmonic.ts";
 export { digammaFunctionZero } from "./digamma-zero.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";

@@ -1,0 +1,109 @@
+- id: matrixrank-list-list-1-0-list-0-1
+  expr: [MatrixRank, [List, [List, 1, 0], [List, 0, 1]]]
+  expected: 2
+- id: matrixrank-list-list-1-2-list-2-4
+  expr: [MatrixRank, [List, [List, 1, 2], [List, 2, 4]]]
+  expected: 1
+- id: matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9
+  expr: [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]
+  expected: 2
+- id: non-square-matrices-too
+  expr: [MatrixRank, [List, [List, 1, 2, 3], [List, 2, 4, 6]]]
+  expected: 1
+  caption: Non-square matrices too
+- id: matrixrank-list-list-0-0-list-0-0
+  expr: [MatrixRank, [List, [List, 0, 0], [List, 0, 0]]]
+  expected: 0
+- id: row-rank-equals-column-rank
+  expr:
+    [
+      Equal,
+      [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]],
+      [MatrixRank, [Transpose, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]],
+    ]
+  expected: True
+  category: Properties
+  caption: Row rank equals column rank
+- id: a-symbolic-matrix-stays-unevaluated-wolfram
+  expr: [MatrixRank, [List, [List, x, 1], [List, 1, x]]]
+  expected: [MatrixRank, [List, [List, x, 1], [List, 1, x]]]
+  category: Possible issues
+  caption: A symbolic matrix stays unevaluated (Wolfram answers the generic rank, 2)
+- id: a-vector-is-treated-as-a-1-n-matrix-wolfram
+  expr: [MatrixRank, [List, 1, 2, 3]]
+  expected: 1
+  category: Possible issues
+  caption: A vector is treated as a 1×n matrix (Wolfram rejects it)
+- id: a-matrix-of-pairwise-distinct-symbols-has-full
+  expr: [MatrixRank, [List, [List, a, b], [List, c, d]]]
+  expected: 2
+  caption: A matrix of pairwise-distinct symbols has full rank -- its determinant, as a polynomial in independent indeterminates, can never be identically zero
+- id: approximate-entries
+  expr: [MatrixRank, [List, [List, 1, 2.5], [List, 3.5, 4]]]
+  expected: 2
+  category: Scope
+  caption: Approximate entries
+- id: complex-entries-the-second-row-is-i-times-the
+  expr: [MatrixRank, [List, [List, 1, ImaginaryUnit], [List, ImaginaryUnit, -1]]]
+  expected: 1
+  category: Scope
+  caption: "Complex entries: the second row is $i$ times the first"
+- id: exact-numeric-entries
+  expr: [MatrixRank, [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]]]
+  expected: 1
+  category: Scope
+  caption: Exact numeric entries
+- id: the-second-row-is-sqrt-2-times-the-first
+  expr: [MatrixRank, [List, [List, [Sqrt, 2], 1], [List, 2, [Sqrt, 2]]]]
+  expected: 1
+  category: Scope
+  caption: The second row is $\sqrt{2}$ times the first
+- id: a-3-4-matrix-with-one-dependent-row
+  expr: [MatrixRank, [List, [List, 1, 2, 3, 4], [List, 2, 4, 6, 8], [List, 1, 0, 1, 0]]]
+  expected: 2
+  category: Scope
+  caption: A 3×4 matrix with one dependent row
+- id: matrixrank-identitymatrix-5
+  expr: [MatrixRank, [IdentityMatrix, 5]]
+  expected: 5
+  category: Scope
+- id: rank-nullity-the-rank-plus-the-dimension-of-the
+  expr:
+    [
+      Add,
+      [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]],
+      [Length, [Kernel, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]],
+    ]
+  expected: 3
+  category: Properties
+  caption: "Rank–nullity: the rank plus the dimension of the null space is the number of columns"
+- id: an-outer-product-u-v-top-has-rank-1-a-lazy
+  expr: [MatrixRank, [Tabulate, Multiply, 4, 4]]
+  expected: 1
+  category: Properties
+  caption: An outer product $u v^\top$ has rank 1; a lazy [[Tabulate]] matrix is read as the matrix it describes
+- id: the-4-4-hilbert-matrix-is-badly-conditioned-but
+  expr: [MatrixRank, [Tabulate, [Function, [Divide, 1, [Subtract, [Add, _1, _2], 1]]], 4, 4]]
+  expected: 4
+  category: Applications
+  caption: The 4×4 Hilbert matrix is badly conditioned but invertible
+- id: every-matrix-with-entries-i-j-has-rank-2
+  expr: [MatrixRank, [Tabulate, Add, 4, 4]]
+  expected: 2
+  category: Neat examples
+  caption: Every matrix with entries $i + j$ has rank 2, whatever its size
+- id: a-3-times-3-matrix-of-pairwise-distinct-symbols
+  expr: [MatrixRank, [List, [List, p, q, r], [List, s, t, u], [List, v, w, x]]]
+  expected: 3
+  category: Scope
+  caption: A $3\times3$ matrix of pairwise-distinct symbols is full rank — the determinant, as a polynomial in independent indeterminates, can't be identically zero.
+- id: a-non-square-matrix-of-distinct-symbols-stays
+  expr: [MatrixRank, [List, [List, a, b, c], [List, d, g, h]]]
+  expected: [MatrixRank, [List, [List, a, b, c], [List, d, g, h]]]
+  category: Possible issues
+  caption: A non-square matrix of distinct symbols doesn't qualify for the full-rank rule -- it stays unevaluated
+- id: repeating-a-symbol-across-rows-doesn-t-qualify
+  expr: [MatrixRank, [List, [List, a, b], [List, a, b]]]
+  expected: 1
+  category: Possible issues
+  caption: Repeating a symbol across rows doesn't qualify either -- native compute-engine still answers this one directly (rank 1, equal rows)

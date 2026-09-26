@@ -1,0 +1,18 @@
+- id: beta-pdf-exact
+  expr: [PDF, [BetaDistribution, 2, 3], [Rational, 1, 2]]
+  expected: [Rational, 3, 2]
+- id: beta-cdf-exact
+  expr: [CDF, [BetaDistribution, 2, 3], [Rational, 1, 2]]
+  expected: [BetaRegularized, [Rational, 1, 2], 2, 3]
+  caption: $= 0.6875$, cross-checked against wolframscript's `N[CDF[BetaDistribution[2,3],1/2]]`
+- id: beta-mean-exact
+  expr: [Mean, [BetaDistribution, 2, 3]]
+  expected: [Rational, 2, 5]
+- id: beta-variance-exact
+  expr: [Variance, [BetaDistribution, 2, 3]]
+  expected: [Rational, 1, 25]
+  caption: Cross-checked against wolframscript's `N[Variance[BetaDistribution[2,3]]] = 0.04`
+- id: beta-cdf-clamps-below-support
+  expr: [N, [CDF, [BetaDistribution, 2, 3], -1]]
+  expected: 0
+  category: Possible issues

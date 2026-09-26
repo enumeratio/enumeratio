@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(HappyNumbers) = +\infty$. OEIS A007770.'
   - $At(HappyNumbers, k)$ unranks by scanning forward from the last cached match -- $At(HappyNumbers, 5) = 19$.
   - 'Membership goes through [[Element]]: $Element(7, HappyNumbers)$ is true ($7 \to 49 \to 97 \to 130 \to 10 \to 1$), $Element(4, HappyNumbers)$ is false (the other cycle).'
-examples: []
 enumerate:
   expr: Take(HappyNumbers, 20)
 seeAlso:

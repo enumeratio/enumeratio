@@ -1,0 +1,11 @@
+- id: the-first-nontrivial-zero-frac-12-14-1347-i
+  expr: [N, [RiemannZetaZero, 1]]
+  expected: [Complex, 0.5, 14.134725141734693]
+  caption: The first nontrivial zero, $\tfrac12 + 14.1347\ldots i$
+- id: n-riemannzetazero-2
+  expr: [N, [RiemannZetaZero, 2]]
+  expected: [Complex, 0.5, 21.022039638771556]
+- id: n-riemannzetazero-10
+  expr: [N, [RiemannZetaZero, 10]]
+  expected: [Complex, 0.5, 49.7738324776723]
+  category: Scope

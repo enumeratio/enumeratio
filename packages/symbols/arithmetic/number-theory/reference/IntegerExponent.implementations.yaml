@@ -90,7 +90,7 @@ integerexponent-2-pow-10-times-3-pow-4-2:
   wolfram:
     in: IntegerExponent[Times[Power[2, 10], Power[3, 4]], 2]
   sympy:
-    in: multiplicity(2, (((2)**10) * ((3)**4)))
+    in: multiplicity(2, ((S(2)**10) * (S(3)**4)))
     out: "10"
 composite-base-1728-2-6-3-3-so-6-3-divides-it:
   epsil:

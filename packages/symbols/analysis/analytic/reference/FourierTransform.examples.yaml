@@ -1,0 +1,18 @@
+- id: dirac-delta-at-origin
+  expr: [FourierTransform, [DiracDelta, t], t, w]
+  expected: [Sqrt, [Divide, 1, [Multiply, 2, Pi]]]
+  caption: $\mathcal{F}\{\delta(t)\} = 1/\sqrt{2\pi}$
+- id: gaussian
+  expr: [FourierTransform, [Power, ExponentialE, [Negate, [Power, t, 2]]], t, w]
+  expected: [Multiply, [Divide, [Sqrt, 2], 2], [Power, ExponentialE, [Multiply, [Rational, -1, 4], [Power, w, 2]]]]
+  caption: $\mathcal{F}\{e^{-t^2}\} = \frac{1}{\sqrt{2}}e^{-w^2/4}$ ($a = 1 > 0$, checked via `isPositive`)
+- id: cosine
+  expr: [FourierTransform, [Cos, [Multiply, a, t]], t, w]
+  expected:
+    [
+      Multiply,
+      [Divide, [Sqrt, 2], 2],
+      [Add, [DiracDelta, [Add, a, w]], [DiracDelta, [Add, [Negate, a], w]]],
+      [Sqrt, Pi],
+    ]
+  caption: $\mathcal{F}\{\cos(at)\} = \sqrt{\pi/2}\,(\delta(w-a)+\delta(w+a))$

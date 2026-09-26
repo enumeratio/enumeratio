@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(SquareNumbers) = +\infty$, and $At(SquareNumbers, k) = k^2$ unranks in closed form -- $At(SquareNumbers, 5) = 25$.'
   - OEIS A000290.
   - "Membership goes through [[Element]]: $Element(16, SquareNumbers)$ is true, $Element(15, SquareNumbers)$ is false."
-examples: []
 enumerate:
   expr: Take(SquareNumbers, 20)
 seeAlso:

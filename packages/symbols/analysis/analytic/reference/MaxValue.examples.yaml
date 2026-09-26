@@ -1,0 +1,14 @@
+- id: a-downward-parabola-s-maximum-value
+  expr: [MaxValue, [Add, [Negate, [Power, x, 2]], [Multiply, 4, x], -1], x]
+  expected: 3
+  caption: A downward parabola's vertex value
+- id: the-amplitude-of-sine-alone-is-exact
+  expr: [MaxValue, [Sin, x], x]
+  expected: 1
+  category: Scope
+  caption: Sin's exact maximum value, 1 -- Maximize itself would decline this (no reproducible point)
+- id: an-unbounded-cubic
+  expr: [MaxValue, [Power, x, 3], x]
+  expected: PositiveInfinity
+  category: Scope
+  caption: An odd-degree polynomial is unbounded above

@@ -1,0 +1,7 @@
+- id: letters-a-through-e
+  expr: [CharacterRange, [String, a], [String, e]]
+  expected: [List, "'a'", "'b'", "'c'", "'d'", "'e'"]
+- id: by-code-point
+  expr: [CharacterRange, 97, 101]
+  expected: [List, "'a'", "'b'", "'c'", "'d'", "'e'"]
+  category: Scope

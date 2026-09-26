@@ -8,16 +8,6 @@ signatures:
     library: enumeratio-statistics
 details:
   - Generic over every distribution this package's [[Variance]] answers, old or new.
-examples:
-  - id: centralmoment-order-0
-    expr: [CentralMoment, [ChiSquareDistribution, 3], 0]
-    expected: 1
-  - id: centralmoment-order-1
-    expr: [CentralMoment, [ChiSquareDistribution, 3], 1]
-    expected: 0
-  - id: centralmoment-order-2-is-variance
-    expr: [CentralMoment, [ChiSquareDistribution, 3], 2]
-    expected: 6
 seeAlso:
   - Moment
   - FactorialMoment

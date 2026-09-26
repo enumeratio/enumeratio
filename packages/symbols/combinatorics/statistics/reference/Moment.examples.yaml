@@ -1,0 +1,16 @@
+- id: moment-order-0
+  expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 0]
+  expected: 1
+- id: moment-order-1-is-mean
+  expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 1]
+  expected: 3
+- id: moment-order-2
+  expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 2]
+  expected: 21
+- id: moment-order-3-unevaluated
+  expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 3]
+  expected: [Moment, [GeometricDistribution, [Rational, 1, 4]], 3]
+  category: Possible issues
+- id: moment-bernoulli-order-5
+  expr: [Moment, [BernoulliDistribution, [Rational, 2, 5]], 5]
+  expected: [Rational, 2, 5]

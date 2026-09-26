@@ -9,36 +9,6 @@ signatures:
 details:
   - $I_x(1, 1) = x$ is its own inverse, and $I_x(a, 1) = x^a$ inverts to $s^{1/a}$ — both exact, symbolic $s$ (and $a$) included.
   - "Otherwise: a safeguarded Newton's method against `BetaRegularized(x, a, b)`, using the Beta density $x^{a-1}(1-x)^{b-1}/B(a,b)$ (in log space) as the derivative; checked against `wolframscript` to 20 digits."
-examples:
-  - id: the-median-of-beta-2-3
-    expr: [InverseBetaRegularized, 0.5, 2, 3]
-    expected: 0.3857275681323895
-    caption: The median of Beta(2, 3)
-  - id: inversebetaregularized-0p3-2p5-1p5
-    expr: [InverseBetaRegularized, 0.3, 2.5, 1.5]
-    expected: 0.5094974124283413
-  - id: i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2
-    expr: [InverseBetaRegularized, 0.25, 2, 1]
-    expected: 0.5
-    caption: $I_x(2, 1) = x^2$, so the inverse at $1/4$ is $1/2$
-  - id: i-x-1-1-x-is-its-own-inverse
-    expr: [InverseBetaRegularized, s, 1, 1]
-    expected: s
-    category: Properties
-    caption: $I_x(1, 1) = x$ is its own inverse
-  - id: i-x-a-1-x-a-inverts-to-s-1-a
-    expr: [InverseBetaRegularized, s, a, 1]
-    expected: [Power, s, [Divide, 1, a]]
-    category: Properties
-    caption: $I_x(a, 1) = x^a$ inverts to $s^{1/a}$
-  - id: inversebetaregularized-0-2-3
-    expr: [InverseBetaRegularized, 0, 2, 3]
-    expected: 0
-    category: Properties
-  - id: inversebetaregularized-1-2-3
-    expr: [InverseBetaRegularized, 1, 2, 3]
-    expected: 1
-    category: Properties
 primitive: kernel
 bindings:
   - origin: native

@@ -1,0 +1,54 @@
+- id: integerstring-42
+  expr: [IntegerString, 42]
+  expected: "'42'"
+- id: integerstring-17-651-2
+  expr: [IntegerString, 17651, 2]
+  expected: "'100010011110011'"
+- id: bases-above-10-use-letters-a-z
+  expr: [IntegerString, 255, 16]
+  expected: "'ff'"
+  caption: Bases above 10 use letters a-z
+- id: integerstring-0
+  expr: [IntegerString, 0]
+  expected: "'0'"
+  category: Possible issues
+- id: compute-engine-keeps-the-sign
+  expr: [IntegerString, -42]
+  expected: "'-42'"
+  category: Possible issues
+  caption: compute-engine keeps the sign
+- id: base-36-is-the-largest-with-digit-values-up-to-z
+  expr: [IntegerString, 35, 36]
+  expected: "'z'"
+  category: Scope
+  caption: base 36 is the largest, with digit values up to z
+- id: threads-over-a-list
+  expr: [IntegerString, [List, 1, 2, 3]]
+  expected: [List, "'1'", "'2'", "'3'"]
+  category: Scope
+  caption: Threads over a list
+- id: 50-in-hexadecimal-exact-past-double-precision
+  expr: [IntegerString, [Factorial, 50], 16]
+  expected: "'49eebc961ed279b02b1ef4f28d19a84f5973a1d2c7800000000000'"
+  category: Scope
+  caption: "$50!$ in hexadecimal: exact past double precision, via bigint arithmetic"
+- id: roman-numerals-with-the-base-roman
+  expr: [IntegerString, 1988, "'Roman'"]
+  expected: "'MCMLXXXVIII'"
+  category: Scope
+  caption: Roman numerals, with the base `"Roman"`
+- id: a-width-pads-with-leading-zeros
+  expr: [IntegerString, 255, 16, 4]
+  expected: "'00ff'"
+  category: Scope
+  caption: a width pads with leading zeros
+- id: a-width-shorter-than-the-numeral-keeps-the-least
+  expr: [IntegerString, 1234567, 10, 3]
+  expected: "'567'"
+  category: Scope
+  caption: a width shorter than the numeral keeps the least-significant digits
+- id: a-third-argument-pads-with-leading-zeros-to-that
+  expr: [IntegerString, 5, 2, 8]
+  expected: "'00000101'"
+  category: Scope
+  caption: A third argument pads with leading zeros to that length (or keeps only the last that many digits)

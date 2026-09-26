@@ -1,0 +1,18 @@
+- id: sparsearray-vector
+  expr: [SparseArray, [List, [Rule, 1, x], [Rule, 3, y]], 4]
+  expected: [List, x, 0, y, 0]
+- id: sparsearray-infers-dims
+  expr: [SparseArray, [List, [Rule, [List, 1, 1], 5], [Rule, [List, 2, 2], 7]]]
+  expected: [List, [List, 5, 0], [List, 0, 7]]
+  category: Scope
+  caption: With no dims given, they're the largest index seen per axis
+- id: sparsearray-custom-default
+  expr: [SparseArray, [List, [Rule, 2, 9]], 3, -1]
+  expected: [List, -1, 9, -1]
+  category: Scope
+  caption: A third argument fills the gaps instead of 0
+- id: sparsearray-normal-is-identity
+  expr: [Normal, [SparseArray, [List, [Rule, 1, a]], 2]]
+  expected: [List, a, 0]
+  category: Possible issues
+  caption: Normal is a no-op here — SparseArray already returns a plain dense list

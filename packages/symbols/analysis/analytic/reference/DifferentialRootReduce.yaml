@@ -1,0 +1,223 @@
+name: DifferentialRootReduce
+domain: Special functions
+signature: DifferentialRootReduce(f(x), x)
+summary: Reduces a function $f(x)$ to its holonomic (D-finite) representation — $\mathrm{DifferentialRoot}$, a linear ODE with polynomial(x) coefficients plus enough derivatives at one point, applied straight back to $x$. Covers $e^{ax}$, $\sin(ax)$, $\cos(ax)$, polynomials, a single-pole rational function, $\ln(1{+}x)$, $\arctan(x)$, $\mathrm{erf}(x)$, BesselJ, AiryAi and AiryBi; declines sums, products, and anything else. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: DifferentialRootReduce(f(x), x)
+    description: the D-finite reduction of $f(x)$, as $\mathrm{DifferentialRoot}(\ldots)(x)$.
+    library: "@enumeratio/analytic"
+details:
+  - Expands about $x_0 = 0$ wherever that's an ordinary point of the ODE (every case except BesselJ, whose coefficient of $y''$ vanishes at $x=0$); BesselJ expands about $x_0=1$ instead, matching a local wolframscript's own choice there. A single-pole rational function $A/(x{-}a)$ also moves off $a$ itself.
+  - Every reduction's initial conditions come from evaluating $f$ and its derivatives (via compute-engine's own `D`) at the expansion point directly, so they stay exact wherever compute-engine's own arithmetic is (e.g. AiryAi(0), or $2/\sqrt\pi$ for erf); BesselJ's derivative uses the standard identity $J_\nu'(x) = (J_{\nu-1}(x) - J_{\nu+1}(x))/2$.
+  - Verified by evaluating the reduction back (via [[DifferentialRoot]]'s own Taylor-series stepper) against the original function at several points inside the radius of convergence, in both this package's own tests and against a local wolframscript.
+  - Declines a rational function whose denominator isn't a single linear factor, a BesselJ/AiryAi/AiryBi argument that isn't the plain variable, and any sum or product of two of these (no small closure algorithm for D-finite sums is implemented here — see difference-root.ts's own sum rule for the *hypergeometric* case, which doesn't carry over to a general ODE).
+examples:
+  - id: exponential-order-1
+    expr: [DifferentialRootReduce, [Exp, [Multiply, a, x]], x]
+    expected:
+      [
+        Apply,
+        [
+          DifferentialRoot,
+          [
+            Function,
+            [
+              Block,
+              [
+                List,
+                [Equal, [Add, [Negate, [Multiply, a, [y, x2]]], [Apply, [Derivative, y, 1], x2]], 0],
+                [Equal, [y, 0], 1],
+              ],
+            ],
+            y,
+            x2,
+          ],
+        ],
+        x,
+      ]
+    caption: "$e^{ax}$: $y' - a y = 0$, $y(0){=}1$"
+  - id: sine-order-2
+    expr: [DifferentialRootReduce, [Sin, x], x]
+    expected:
+      [
+        Apply,
+        [
+          DifferentialRoot,
+          [
+            Function,
+            [
+              Block,
+              [
+                List,
+                [Equal, [Add, [y, x2], [Apply, [Derivative, y, 2], x2]], 0],
+                [Equal, [y, 0], 0],
+                [Equal, [Apply, [Derivative, y, 1], 0], 1],
+              ],
+            ],
+            y,
+            x2,
+          ],
+        ],
+        x,
+      ]
+    caption: "$\\sin x$: $y'' + y = 0$, $y(0){=}0, y'(0){=}1$"
+  - id: log-one-plus-x-order-2
+    expr: [DifferentialRootReduce, [Ln, [Add, 1, x]], x]
+    expected:
+      [
+        Apply,
+        [
+          DifferentialRoot,
+          [
+            Function,
+            [
+              Block,
+              [
+                List,
+                [
+                  Equal,
+                  [Add, [Multiply, [Add, x2, 1], [Apply, [Derivative, y, 2], x2]], [Apply, [Derivative, y, 1], x2]],
+                  0,
+                ],
+                [Equal, [y, 0], 0],
+                [Equal, [Apply, [Derivative, y, 1], 0], 1],
+              ],
+            ],
+            y,
+            x2,
+          ],
+        ],
+        x,
+      ]
+    category: Scope
+    caption: "$\\ln(1{+}x)$: $(1{+}x) y'' + y' = 0$"
+  - id: single-pole-rational-function
+    expr: [DifferentialRootReduce, [Divide, 1, [Subtract, x, 2]], x]
+    expected:
+      [
+        Apply,
+        [
+          DifferentialRoot,
+          [
+            Function,
+            [
+              Block,
+              [
+                List,
+                [Equal, [Add, [Multiply, [Add, x2, -2], [Apply, [Derivative, y, 1], x2]], [y, x2]], 0],
+                [Equal, [y, 0], [Rational, -1, 2]],
+              ],
+            ],
+            y,
+            x2,
+          ],
+        ],
+        x,
+      ]
+    category: Scope
+    caption: "$1/(x{-}2)$: $(x{-}2) y' + y = 0$, exact at $x_0=0$"
+  - id: besselj-anchored-off-the-singular-point
+    expr: [DifferentialRootReduce, [BesselJ, 2, x], x]
+    expected:
+      [
+        Apply,
+        [
+          DifferentialRoot,
+          [
+            Function,
+            [
+              Block,
+              [
+                List,
+                [
+                  Equal,
+                  [
+                    Add,
+                    [Multiply, [Add, [Power, x2, 2], -4], [y, x2]],
+                    [Multiply, [Apply, [Derivative, y, 2], x2], [Power, x2, 2]],
+                    [Multiply, x2, [Apply, [Derivative, y, 1], x2]],
+                  ],
+                  0,
+                ],
+                [Equal, [y, 1], [BesselJ, 2, 1]],
+                [
+                  Equal,
+                  [Apply, [Derivative, y, 1], 1],
+                  [Add, [Multiply, [Rational, -1, 2], [BesselJ, 3, 1]], [Multiply, [Rational, 1, 2], [BesselJ, 1, 1]]],
+                ],
+              ],
+            ],
+            y,
+            x2,
+          ],
+        ],
+        x,
+      ]
+    category: Scope
+    caption: "BesselJ(2, x): $x=0$ is singular, so this anchors at $x_0=1$ instead — the same choice Wolfram makes"
+  - role: test
+    id: cosine-order-2
+    expr: [DifferentialRootReduce, [Cos, x], x]
+    expected:
+      [
+        Apply,
+        [
+          DifferentialRoot,
+          [
+            Function,
+            [
+              Block,
+              [
+                List,
+                [Equal, [Add, [y, x2], [Apply, [Derivative, y, 2], x2]], 0],
+                [Equal, [y, 0], 1],
+                [Equal, [Apply, [Derivative, y, 1], 0], 0],
+              ],
+            ],
+            y,
+            x2,
+          ],
+        ],
+        x,
+      ]
+  - role: test
+    id: polynomial-terminates-the-ode
+    expr: [DifferentialRootReduce, [Add, [Power, x, 2], [Multiply, 3, x], 1], x]
+    expected:
+      [
+        Apply,
+        [
+          DifferentialRoot,
+          [
+            Function,
+            [
+              Block,
+              [
+                List,
+                [Equal, [Apply, [Derivative, y, 3], x2], 0],
+                [Equal, [y, 0], 1],
+                [Equal, [Apply, [Derivative, y, 1], 0], 3],
+                [Equal, [Apply, [Derivative, y, 2], 0], 2],
+              ],
+            ],
+            y,
+            x2,
+          ],
+        ],
+        x,
+      ]
+  - role: test
+    id: evaluated-at-a-concrete-x-runs-the-taylor-series
+    expr: [N, [[DifferentialRootReduce, [Exp, [Multiply, 2, x]], x], 1]]
+    expected: 7.389056098930649
+  - role: test
+    id: a-two-term-sum-declines
+    expr: [DifferentialRootReduce, [Add, [Exp, x], [Sin, x]], x]
+    expected: [DifferentialRootReduce, [Add, [Exp, x], [Sin, x]], x]
+seeAlso:
+  - DifferentialRoot
+  - DifferenceRootReduce
+  - BesselJ
+  - AiryAi
+  - AiryBi
+  - Erf

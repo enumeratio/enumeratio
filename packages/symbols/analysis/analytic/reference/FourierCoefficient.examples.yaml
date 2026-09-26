@@ -1,0 +1,39 @@
+- id: c-2-of-x
+  expr: [FourierCoefficient, x, x, 2]
+  expected: [Complex, 0, [Rational, 1, 2]]
+  caption: $c_2$ of the sawtooth $x$ is $i(-1)^2/2 = i/2$
+- id: c-2-of-cos-squared
+  expr: [FourierCoefficient, [Power, [Cos, x], 2], x, 2]
+  expected: [Rational, 1, 4]
+  category: Scope
+  caption: $c_2$ of $\cos^2(x) = \tfrac12+\tfrac12\cos(2x)$ is $1/4$ -- a sin/cos polynomial, via the binomial expansion
+- id: c-0-of-x-squared-is-the-average
+  expr: [FourierCoefficient, [Power, x, 2], x, 0]
+  expected: [Multiply, [Rational, 1, 3], [Power, Pi, 2]]
+  category: Scope
+  caption: $c_0$ of $x^2$ is its average value, $\pi^2/3$
+- id: c-0-of-abs-x
+  expr: [FourierCoefficient, [Abs, x], x, 0]
+  expected: [Multiply, [Rational, 1, 2], Pi]
+  category: Scope
+  caption: $c_0$ of the triangle wave $|x|$ is $\pi/2$
+- id: c-1-of-abs-x
+  expr: [FourierCoefficient, [Abs, x], x, 1]
+  expected: [Divide, -2, Pi]
+  category: Scope
+  caption: $c_1$ of $|x|$ is $-2/\pi$ -- checked against an independent numeric quadrature, since Wolfram's own `Integrate` gets this one wrong by a factor of 2
+- id: c-1-of-exp-x
+  expr: [FourierCoefficient, [Exp, x], x, 1]
+  expected: [Divide, [Multiply, [Complex, [Rational, -1, 2], [Rational, -1, 2]], [Sinh, Pi]], Pi]
+  category: Scope
+  caption: $c_1$ of $e^x$, algebraically equal to Wolfram's own $i(-1)^1\sinh(\pi)/((i+1)\pi)$
+- id: declines-a-symbolic-order
+  expr: [FourierCoefficient, x, x, n]
+  expected: [FourierCoefficient, x, x, n]
+  category: Possible issues
+  caption: Declines a symbolic order $n$ -- not cheap the way a concrete integer is
+- id: declines-tan-x-no-closed-form-here
+  expr: [FourierCoefficient, [Tan, x], x, 1]
+  expected: [FourierCoefficient, [Tan, x], x, 1]
+  category: Possible issues
+  caption: Declines $\tan(x)$ -- it has poles inside $[-\pi, \pi]$, so the defining integral doesn't actually converge, even though Wolfram formally returns 0 by symmetry

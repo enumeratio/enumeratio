@@ -1,0 +1,13 @@
+- id: lognormal-pdf-exact
+  expr: [PDF, [LogNormalDistribution, 0, 1], 1]
+  expected: [Sqrt, [Divide, 1, [Multiply, 2, Pi]]]
+- id: lognormal-cdf-exact
+  expr: [CDF, [LogNormalDistribution, 0, 1], 1]
+  expected: [Rational, 1, 2]
+- id: lognormal-mean-exact
+  expr: [Mean, [LogNormalDistribution, 0, 1]]
+  expected: [Sqrt, ExponentialE]
+- id: lognormal-variance-exact
+  expr: [Variance, [LogNormalDistribution, 0, 1]]
+  expected: [Multiply, ExponentialE, [Add, -1, ExponentialE]]
+  caption: Cross-checked against wolframscript's N[Variance[LogNormalDistribution[0, 1]]]

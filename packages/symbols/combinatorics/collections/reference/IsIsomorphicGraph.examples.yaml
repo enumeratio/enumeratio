@@ -1,0 +1,15 @@
+- id: relabelled-cycle-is-isomorphic-to-itself
+  expr:
+    [
+      IsIsomorphicGraph,
+      [CycleGraph, 4],
+      [
+        Graph,
+        [List, 3, 1, 4, 2],
+        [List, [UndirectedEdge, 3, 1], [UndirectedEdge, 1, 4], [UndirectedEdge, 4, 2], [UndirectedEdge, 2, 3]],
+      ],
+    ]
+  expected: True
+- id: same-vertex-count-different-structure
+  expr: [IsIsomorphicGraph, [CycleGraph, 4], [StarGraph, 4]]
+  expected: False

@@ -1,0 +1,75 @@
+- id: eta-1-ln-2-the-alternating-harmonic-series
+  expr: [DirichletEta, 1]
+  expected: [Ln, 2]
+  caption: $\eta(1) = \ln 2$ — the alternating harmonic series
+- id: eta-2-pi-2-12
+  expr: [DirichletEta, 2]
+  expected: [Multiply, [Rational, 1, 12], [Power, Pi, 2]]
+  caption: $\eta(2) = \pi^2/12$
+- id: eta-3-frac-34-zeta-3-no-closed-form-beyond-apery
+  expr: [DirichletEta, 3]
+  expected: [Multiply, [Rational, 3, 4], [Zeta, 3]]
+  caption: $\eta(3) = \tfrac34\zeta(3)$ — no closed form beyond Apéry's constant
+- id: nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1
+  expr: [DirichletEta, [List, 0, -1, -2, -3]]
+  expected: [List, [Rational, 1, 2], [Rational, 1, 4], 0, [Rational, -1, 8]]
+  category: Properties
+  caption: 'Nonpositive integers: $\eta(-n) = (2^{n+1} - 1)\,B_{n+1}/(n+1)$, rational'
+- id: on-the-critical-line-through-1-2-1-s-zeta-s-so
+  expr: [DirichletEta, 0.5]
+  expected: { num: "0.604898643421630370245" }
+  caption: On the critical line — through $(1 - 2^{1-s})\zeta(s)$, so it carries the engine's working precision
+- id: an-exact-non-integer-argument-stays-symbolic
+  expr: [DirichletEta, [Rational, 1, 2]]
+  expected: [DirichletEta, [Rational, 1, 2]]
+  category: Possible issues
+  caption: An exact non-integer argument stays symbolic until N()
+- id: numeric-for-a-floating-point-argument
+  expr: [DirichletEta, 1.5]
+  expected: { num: "0.765147024625407945367" }
+  caption: Numeric for a floating-point argument
+- id: eta-4-frac-78-zeta-4-7-pi-4-720
+  expr: [DirichletEta, 4]
+  expected: [Multiply, [Rational, 7, 720], [Power, Pi, 4]]
+  category: Properties
+  caption: $\eta(4) = \tfrac78\zeta(4) = 7\pi^4/720$
+- id: complex-arguments
+  expr: [DirichletEta, [Complex, 3.5, 2.5]]
+  expected: [Complex, 1.0001097278046978, 0.07812891204148316]
+  category: Scope
+  caption: Complex arguments
+- id: threads-elementwise-over-an-array
+  expr: [DirichletEta, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
+  expected:
+    [
+      List,
+      [List, [DirichletEta, [Rational, 1, 2]], [Rational, 1, 4]],
+      [List, [Rational, 1, 2], [DirichletEta, [Rational, 1, 2]]],
+    ]
+  category: Scope
+  caption: Threads elementwise over an array
+- id: eta-s-to-1-as-s-to-infty
+  expr: [DirichletEta, PositiveInfinity]
+  expected: 1
+  category: Scope
+  caption: $\eta(s) \to 1$ as $s \to \infty$
+- id: interval-arithmetic-over-an-increasing-stretch
+  expr: [DirichletEta, [Interval, 1.5, 1.6]]
+  expected: [Interval, 0.7651470246254078, 0.7777227266611288]
+  category: Scope
+  caption: Interval arithmetic over an increasing stretch
+- id: uncertainty-propagation-eta-2-pm-0-01-0-82247-pm
+  expr: [DirichletEta, [Around, 2, 0.01]]
+  expected: [Around, 0.8224670334241132, 0.001013165781635045]
+  category: Scope
+  caption: 'Uncertainty propagation: $\eta(2 \pm 0.01) = 0.82247 \pm 0.00101$'
+- id: rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s
+  expr: [FunctionExpand, [DirichletEta, s]]
+  expected: [Multiply, [Add, [Negate, [Power, 2, [Add, [Negate, s], 1]]], 1], [Zeta, s]]
+  category: Properties
+  caption: 'Rewriting in terms of [[Zeta]] with [[FunctionExpand]]: $\eta(s) = (1 - 2^{1-s})\zeta(s)$'
+- id: to-30-significant-digits-not-yet-the-last-digit
+  expr: [N, [DirichletEta, [Rational, 1, 2]], 30]
+  expected: { num: "0.604898643421630370247265914236" }
+  category: Scope
+  caption: To 30 significant digits, the last one correctly rounded

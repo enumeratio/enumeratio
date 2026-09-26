@@ -1,0 +1,168 @@
+- id: sqrt-16
+  expr: [Sqrt, 16]
+  expected: 4
+- id: stays-symbolic-when-the-radicand-isn-t-a-perfect
+  expr: [Sqrt, 2]
+  expected: [Sqrt, 2]
+  caption: Stays symbolic when the radicand isn't a perfect square
+- id: sqrt-4-over-9
+  expr: [Sqrt, [Rational, 4, 9]]
+  expected: [Rational, 2, 3]
+- id: sqrt-0
+  expr: [Sqrt, 0]
+  expected: 0
+- id: a-perfect-square-radicand-evaluates-exactly-even
+  expr: [Sqrt, -4]
+  expected: [Complex, 0, 2]
+  caption: A perfect square radicand evaluates exactly, even when negative
+- id: sqrt-x-2-x-for-a-perfect-square-see-square
+  expr: [Equal, [Square, [Sqrt, 16]], 16]
+  expected: True
+  category: Properties
+  caption: $(\sqrt{x})^2 = x$ for a perfect square. See [[Square]]
+- id: sqrt-x-x-1-2
+  expr: [Equal, [Sqrt, 16], [Power, 16, [Rational, 1, 2]]]
+  expected: True
+  category: Properties
+  caption: $\sqrt{x} = x^{1/2}$
+- id: the-pythagorean-hypotenuse-of-a-3-4-5-triangle
+  expr: [Sqrt, [Add, [Square, 3], [Square, 4]]]
+  expected: 5
+  category: Applications
+  caption: The Pythagorean hypotenuse of a 3-4-5 triangle
+- id: negative-but-not-a-perfect-square-stays-symbolic
+  expr: [Sqrt, -2]
+  expected: [Sqrt, -2]
+  category: Possible issues
+  caption: "Negative but not a perfect square: stays symbolic rather than reducing to an exact complex value"
+- id: a-negative-rational-still-evaluates-exactly-when
+  expr: [Sqrt, [Rational, -4, 9]]
+  expected: [Complex, 0, [Rational, 2, 3]]
+  category: Possible issues
+  caption: A negative rational still evaluates exactly when both numerator and denominator are perfect squares
+- id: an-approximate-number-gives-an-approximate-root
+  expr: [Sqrt, 3.5]
+  expected: { num: "1.87082869338697069279" }
+  caption: An approximate number gives an approximate root
+- id: pulls-perfect-square-factors-out-of-the-radical
+  expr: [Sqrt, 200]
+  expected: [Multiply, 10, [Sqrt, 2]]
+  caption: Pulls perfect-square factors out of the radical
+- id: sqrt-neg-25
+  expr: [Sqrt, -25]
+  expected: [Complex, 0, 5]
+- id: sqrt-8
+  expr: [Sqrt, 8]
+  expected: [Multiply, 2, [Sqrt, 2]]
+  category: Scope
+- id: rationalizes-the-denominator
+  expr: [Sqrt, [Rational, 1, 2]]
+  expected: [Divide, [Sqrt, 2], 2]
+  category: Scope
+  caption: Rationalizes the denominator
+- id: sqrt-12-over-5
+  expr: [Sqrt, [Rational, 12, 5]]
+  expected: [Multiply, [Rational, 2, 5], [Sqrt, 15]]
+  category: Scope
+- id: sqrt-neg-2p5
+  expr: [Sqrt, -2.5]
+  expected: [Complex, 0, 1.5811388300841898]
+  category: Scope
+- id: an-exact-complex-square-2-i-2-3-4i
+  expr: [Sqrt, [Complex, 3, 4]]
+  expected: [Complex, 2, 1]
+  category: Scope
+  caption: "An exact complex square: $(2+i)^2 = 3+4i$"
+- id: sqrt-positiveinfinity
+  expr: [Sqrt, PositiveInfinity]
+  expected: PositiveInfinity
+  category: Scope
+- id: threads-element-wise-over-a-list
+  expr: [Sqrt, [List, 1, 4, 9]]
+  expected: [List, 1, 2, 3]
+  category: Scope
+  caption: Threads element-wise over a list
+- id: threads-over-a-matrix-entry-by-entry-this-is-not
+  expr: [Sqrt, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
+  expected: [List, [List, [Divide, [Sqrt, 2], 2], [Complex, 0, 1]], [List, 0, [Divide, [Sqrt, 2], 2]]]
+  category: Scope
+  caption: Threads over a matrix entry by entry -- this is not the matrix square root
+- id: interval-arithmetic-sqrt-is-increasing-so-sqrt-1
+  expr: [Sqrt, [Interval, 1, 8]]
+  expected: [Interval, 1, [Multiply, 2, [Sqrt, 2]]]
+  category: Scope
+  caption: 'Interval arithmetic: $\sqrt{}$ is increasing, so $\sqrt{[1,8]} = [1, 2\sqrt2]$'
+- role: test
+  id: uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1
+  expr: [Sqrt, [Around, 4, 0.4]]
+  expected: [Around, 2, 0.1]
+  category: Scope
+  caption: 'Uncertainty propagation: $\sqrt{4 \pm 0.4} = 2 \pm 0.1$'
+- id: sqrt-x-2-x-for-every-x
+  expr: [Power, [Sqrt, x], 2]
+  expected: x
+  category: Properties
+  caption: $(\sqrt{x})^2 = x$ for every x
+- id: sqrt-x-2-is-not-simplified-to-x-which-would-be
+  expr: [Sqrt, [Power, x, 2]]
+  expected: [Sqrt, [Power, x, 2]]
+  category: Possible issues
+  caption: $\sqrt{x^2}$ is not simplified to x, which would be wrong for negative x
+- id: at-x-1-sqrt-x-2-1-not-1
+  expr: [Sqrt, [Power, -1, 2]]
+  expected: 1
+  category: Possible issues
+  caption: ...at $x = -1$, $\sqrt{x^2} = 1$, not $-1$
+- id: sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b
+  expr: [Multiply, [Sqrt, -1], [Sqrt, -1]]
+  expected: -1
+  category: Possible issues
+  caption: '$\sqrt{a}\sqrt{b} = \sqrt{ab}$ fails for negative a and b: $\sqrt{-1}\sqrt{-1} = -1$...'
+- id: while-sqrt-1-1-1
+  expr: [Sqrt, [Multiply, -1, -1]]
+  expected: 1
+  category: Possible issues
+  caption: ...while $\sqrt{(-1)(-1)} = 1$
+- id: to-45-significant-digits-every-one-correctly
+  expr: [N, [Sqrt, 2], 45]
+  expected: { num: "1.41421356237309504880168872420969807856967188" }
+  category: Scope
+  caption: To 45 significant digits, every one correctly rounded
+- role: test
+  id: an-approximate-negative-radicand-stays-complex
+  expr: [Sqrt, -2.875]
+  expected: [Complex, 0, 1.695582495781317]
+  category: Scope
+  caption: An approximate negative radicand still gives a complex root
+- role: test
+  id: sqrt-36-negative
+  expr: [Sqrt, -36]
+  expected: [Complex, 0, 6]
+  category: Possible issues
+- role: test
+  id: sqrt-2-times-sqrt-neg-1
+  expr: [Multiply, [Sqrt, 1], [Sqrt, -1]]
+  expected: [Complex, 0, 1]
+  category: Possible issues
+  caption: $\sqrt{1}\sqrt{-1} = i$, oracle edge case of the a·b identity above
+- role: test
+  id: sqrt-neg-4-over-9
+  expr: [Sqrt, [Rational, -4, 9]]
+  expected: [Complex, 0, [Rational, 2, 3]]
+  category: Scope
+- role: test
+  id: sqrt-neg-1-half
+  expr: [Sqrt, [Rational, -1, 2]]
+  expected: [Complex, 0, [Divide, [Sqrt, 2], 2]]
+  category: Scope
+  caption: A negative unit fraction also rationalizes the denominator
+- role: test
+  id: sqrt-neg-1
+  expr: [Sqrt, -1]
+  expected: [Complex, 0, 1]
+  category: Scope
+- role: test
+  id: sqrt-neg-12-over-5
+  expr: [Sqrt, [Rational, -12, 5]]
+  expected: [Complex, 0, [Multiply, [Rational, 2, 5], [Sqrt, 15]]]
+  category: Scope

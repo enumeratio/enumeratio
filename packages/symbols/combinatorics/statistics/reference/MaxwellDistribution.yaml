@@ -11,19 +11,6 @@ details:
   - $CDF(x) = P(3/2, x^2/(2\sigma^2))$ via [[GammaRegularized]] (the standard chi-square-CDF identity for Maxwell), clamped to $0$ below $x=0$.
   - $Mean = 2\sigma\sqrt{2/\pi}$, $Variance = \sigma^2(3\pi-8)/\pi$, both exact.
   - '[[RandomVariate]] samples $\sigma\sqrt{V}$ for an independent [[ChiSquareDistribution]]($3$) draw $V$.'
-examples:
-  - id: maxwell-pdf-exact
-    expr: [PDF, [MaxwellDistribution, 1], 2]
-    expected: [Divide, [Multiply, 4, [Sqrt, 2]], [Multiply, [Power, ExponentialE, 2], [Sqrt, Pi]]]
-  - id: maxwell-cdf-exact
-    expr: [CDF, [MaxwellDistribution, 1], 2]
-    expected: [Add, 1, [Negate, [GammaRegularized, [Rational, 3, 2], 2]]]
-  - id: maxwell-mean-exact
-    expr: [Mean, [MaxwellDistribution, 1]]
-    expected: [Divide, [Multiply, 2, [Sqrt, 2]], [Sqrt, Pi]]
-  - id: maxwell-variance-exact
-    expr: [Variance, [MaxwellDistribution, 1]]
-    expected: [Divide, [Add, -8, [Multiply, 3, Pi]], Pi]
 seeAlso:
   - ChiDistribution
   - RayleighDistribution

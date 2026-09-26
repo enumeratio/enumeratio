@@ -1,0 +1,16 @@
+- id: isnumeric-pi
+  expr: [IsNumeric, Pi]
+  expected: True
+- id: isnumeric-plain-symbol
+  expr: [IsNumeric, x]
+  expected: False
+  category: Scope
+  caption: A plain symbol carries no definite numeric value
+- id: isnumeric-sqrt-2
+  expr: [IsNumeric, [Sqrt, 2]]
+  expected: True
+  category: Scope
+  caption: Built from numeric literals and a known numeric function
+- id: isnumeric-literal
+  expr: [IsNumeric, 5]
+  expected: True

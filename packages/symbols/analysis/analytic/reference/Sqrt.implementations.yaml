@@ -183,7 +183,7 @@ sqrt-x-x-1-2:
       in: \sqrt{16}=16^{\frac{1}{2}}
       out: \text{True}
   sympy:
-    in: enumeratio_equal(sqrt(16), ((16)**Rational(1, 2)))
+    in: enumeratio_equal(sqrt(16), (S(16)**Rational(1, 2)))
     out: True
   mpmath:
     in: almosteq(sqrt(16), ((16)**(mpf(1)/2)), 1e-20)
@@ -571,7 +571,7 @@ at-x-1-sqrt-x-2-1-not-1:
   wolfram:
     in: Sqrt[Power[-1, 2]]
   sympy:
-    in: sqrt(((-1)**2))
+    in: sqrt((S(-1)**2))
     out: "1"
   mpmath:
     in: sqrt(((-1)**2))

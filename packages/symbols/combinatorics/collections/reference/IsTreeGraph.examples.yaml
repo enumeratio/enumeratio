@@ -1,0 +1,24 @@
+- id: a-star-is-a-tree
+  expr: [IsTreeGraph, [StarGraph, 5]]
+  expected: True
+- id: a-cycle-is-not-a-tree
+  expr: [IsTreeGraph, [CycleGraph, 4]]
+  expected: False
+  caption: One too many edges to be a tree
+- id: a-disconnected-forest-is-not-a-tree
+  expr: [IsTreeGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]
+  expected: False
+  caption: Right edge count, but two components
+- id: a-path-is-a-tree
+  expr: [IsTreeGraph, [PathGraph, 5]]
+  expected: True
+  role: test
+- id: a-ternary-complete-tree-is-a-tree
+  expr: [IsTreeGraph, [CompleteKaryTree, 3, 3]]
+  expected: True
+  role: test
+- id: a-complete-graph-past-k2-is-not-a-tree
+  expr: [IsTreeGraph, [CompleteGraph, 4]]
+  expected: False
+  role: test
+  caption: Too many edges to be a tree

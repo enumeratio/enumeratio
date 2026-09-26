@@ -1,0 +1,41 @@
+- id: sqrt-2-in-z-7-from-3-2-2-pmod-7
+  expr: [HenselLift, [Subtract, [Power, x, 2], 2], 3, 7, 6]
+  expected: [AdicNumeral, 7, 38181, 6]
+  caption: $\sqrt{2}$ in $\mathbb{Z}_7$, from $3^2 ≡ 2 \pmod 7$
+- id: and-squaring-it-gives-2-back-to-the-same
+  expr: [Power, [AdicSqrt, [AdicNumeral, 7, 2], 6], 2]
+  expected: [AdicNumeral, 7, 2, 6]
+  caption: and squaring it gives 2 back, to the same precision
+- id: a-10-adic-idempotent-e-2-e-and-e-0-1
+  expr: [AdicExpansion, [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8]]
+  expected: "'…12890625 + O(10^8)'"
+  caption: "a 10-adic idempotent: $e^2 = e$, and $e ≠ 0, 1$"
+  category: Applications
+- id: 3-is-not-a-square-mod-7-so-it-has-no-7-adic
+  expr: [AdicSqrt, [AdicNumeral, 7, 3]]
+  expected: [AdicSqrt, [AdicNumeral, 7, 3]]
+  caption: 3 is not a square mod 7, so it has no 7-adic square root
+  category: Possible issues
+- id: declines-at-a-non-simple-root-f-1-2-is-not-a
+  expr: [HenselLift, [Subtract, [Power, x, 3], x], 1, 2, 6]
+  expected: [HenselLift, [Add, [Power, x, 3], [Negate, x]], 1, 2, 6]
+  category: Possible issues
+  caption: "Declines at a non-simple root: $f'(1)=2$ is not a unit mod 2, so Newton's step can't lift"
+- id: the-two-roots-of-x-2-x-lifted-in-z-10-are
+  expr:
+    [
+      Multiply,
+      [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8],
+      [HenselLift, [Subtract, [Power, x, 2], x], 6, 10, 8],
+    ]
+  expected: [AdicNumeral, 10, 0, 8]
+  category: Neat examples
+  caption: 'The two roots of $x^2=x$ lifted in $\mathbf{Z}_{10}$ are orthogonal idempotents: their product is 0'
+  group: z10-idempotents
+- id: and-they-sum-to-1-splitting-z-10-via-z-10-cong-z
+  expr:
+    [Add, [HenselLift, [Subtract, [Power, x, 2], x], 5, 10, 8], [HenselLift, [Subtract, [Power, x, 2], x], 6, 10, 8]]
+  expected: [AdicNumeral, 10, 1, 8]
+  category: Neat examples
+  caption: …and they sum to 1, splitting $\mathbf{Z}_{10}$ via $\mathbf{Z}_{10}\cong\mathbf{Z}_2\times\mathbf{Z}_5$
+  group: z10-idempotents

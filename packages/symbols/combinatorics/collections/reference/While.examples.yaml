@@ -1,0 +1,4 @@
+- id: count-up-to-a-limit
+  expr: [List, [Assign, n, 0], [While, [Less, n, 5], [Assign, n, [Add, n, 1]]], n]
+  expected: [List, 0, 5]
+  caption: count up to a limit

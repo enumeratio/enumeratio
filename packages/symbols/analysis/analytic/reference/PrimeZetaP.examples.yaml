@@ -1,0 +1,11 @@
+- id: sum-p-1-p-2
+  expr: [N, [PrimeZetaP, 2]]
+  expected: 0.4522474200410655
+  caption: $\sum_p 1/p^2$
+- id: n-primezetap-3
+  expr: [N, [PrimeZetaP, 3]]
+  expected: 0.17476263929944355
+- id: primezetap-2p5
+  expr: [PrimeZetaP, 2.5]
+  expected: 0.273680737993234
+  category: Scope

@@ -9,11 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(ThueMorseNumbers) = +\infty$, and $At(ThueMorseNumbers, 1) = t(0) = 0$.'
   - "OEIS A010060, starting exactly at its offset-0 term: $0, 1, 1, 0, 1, 0, 0, 1, 1, 0, …$."
   - Not monotone; every term is $0$ or $1$, so membership is exactly $\{0, 1\}$ -- $Element(0, ThueMorseNumbers)$ and $Element(1, ThueMorseNumbers)$ are true, everything else (including $2$) is false.
-examples:
-  - id: the-first-20-terms-oeis-a010060
-    expr: [Take, ThueMorseNumbers, 20]
-    expected: [List, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1]
-    caption: The first 20 terms, OEIS A010060
 enumerate:
   expr: Take(ThueMorseNumbers, 20)
 seeAlso:

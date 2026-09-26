@@ -1,0 +1,67 @@
+- id: default-base-is-10
+  expr: [Log, 100]
+  expected: 2
+  caption: Default base is 10
+- id: same-result-written-with-an-explicit-base
+  expr: [Log, 100, 10]
+  expected: 2
+  caption: Same result written with an explicit base
+- id: base-2-via-the-explicit-second-argument
+  expr: [Log, 8, 2]
+  expected: 3
+  caption: Base 2 via the explicit second argument
+- id: confirms-the-default-base-is-10
+  expr: [Equal, [Log, 100], [Log, 100, 10]]
+  expected: True
+  category: Properties
+  caption: Confirms the default base is 10
+- id: product-rule-log-b-xy-log-b-x-log-b-y
+  expr: [Equal, [Log, [Multiply, 8, 4], 2], [Add, [Log, 8, 2], [Log, 4, 2]]]
+  expected: True
+  category: Properties
+  caption: 'Product rule: $\log_b(xy) = \log_b(x) + \log_b(y)$'
+- id: power-rule-log-b-x-k-k-log-b-x
+  expr: [Equal, [Log, [Power, 2, 5], 2], [Multiply, 5, [Log, 2, 2]]]
+  expected: True
+  category: Properties
+  caption: 'Power rule: $\log_b(x^k) = k \log_b(x)$'
+- id: log-10-0-infty
+  expr: [Log, 0]
+  expected: NegativeInfinity
+  category: Possible issues
+  caption: $\log_{10}(0) = -\infty$
+- id: a-negative-argument-stays-symbolic-with-the
+  expr: [Log, -5]
+  expected: [Log, -5, 10]
+  category: Possible issues
+  caption: A negative argument stays symbolic, with the default base filled in; wrap in N(...) for the complex value
+- id: log-3-1-5-at-machine-precision
+  expr: [Log, 1.5, 3]
+  expected: { num: "0.3690702464285425629" }
+  category: Scope
+  caption: $\log_3 1.5$ at machine precision
+- id: log-9-3
+  expr: [Log, 9, 3]
+  expected: 2
+  category: Scope
+- id: threads-over-a-list-of-values
+  expr: [Log, [List, 2, 4, 8], 2]
+  expected: [List, 1, 2, 3]
+  category: Scope
+  caption: Threads over a list of values
+- id: threads-over-a-list-of-bases
+  expr: [Log, 2.5, [List, 2, ExponentialE, 10]]
+  expected:
+    [List, { num: "1.32192809488736234787" }, { num: "0.91629073187415514452" }, { num: "0.397940008672037609573" }]
+  category: Scope
+  caption: Threads over a list of bases
+- id: derivative-in-base-3-frac-1-x-ln-3
+  expr: [D, [Log, x, 3], x]
+  expected: [Divide, 1, [Multiply, x, [Ln, 3]]]
+  category: Scope
+  caption: 'Derivative in base 3: $\frac{1}{x\ln 3}$'
+- id: log-2-frac-18-3-an-exact-negative-power-of-the
+  expr: [Log, [Rational, 1, 8], 2]
+  expected: -3
+  category: Scope
+  caption: $\log_2\tfrac18 = -3$; an exact negative power of the base folds too
