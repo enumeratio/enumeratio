@@ -18,3 +18,5 @@ references:
     identity: Prime number
   - system: oeis
     identity: A000040
+names:
+  wolfram: Prime

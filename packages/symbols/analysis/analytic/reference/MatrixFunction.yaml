@@ -12,3 +12,5 @@ details:
 seeAlso:
   - MatrixExp
   - MatrixPower
+names:
+  wolframIdentity: true

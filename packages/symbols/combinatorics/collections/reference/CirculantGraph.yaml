@@ -14,3 +14,5 @@ details:
 seeAlso:
   - CycleGraph
   - HararyGraph
+names:
+  wolframIdentity: true

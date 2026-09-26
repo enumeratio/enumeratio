@@ -1,0 +1,10 @@
+name: BinomialDistribution
+domain: Compute engine
+signature: BinomialDistribution(integer<0..>, real<0..1>) -> expression<BinomialDistribution>
+summary: "Binomial distribution: number of successes in n independent trials, each with success probability p."
+signatures:
+  - call: BinomialDistribution(integer<0..>, real<0..1>) -> expression<BinomialDistribution>
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

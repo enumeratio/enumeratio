@@ -9,3 +9,5 @@ signatures:
 details:
   - Agrees with [[Binomial]] where n >= m >= 0; for a negative n it is the standard generalized binomial coefficient, which still satisfies Pascal's recurrence P(n, m) = P(n-1, m-1) + P(n-1, m).
   - A negative m is left unevaluated -- Wolfram's extension there is a documented gap, not yet cross-checked against a kernel.
+names:
+  wolframIdentity: true

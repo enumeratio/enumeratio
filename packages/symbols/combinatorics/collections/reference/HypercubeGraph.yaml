@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - GridGraph
   - CompleteGraph
+names:
+  wolframIdentity: true

@@ -13,3 +13,5 @@ seeAlso:
   - GraphDistance
   - GraphDistanceMatrix
   - Graph
+names:
+  wolframIdentity: true

@@ -8,4 +8,5 @@ signatures:
 names:
   fungrim: Asinh
   dlmf: inverse hyperbolic sine function
+  wolfram: ArcSinh
 stub: engine

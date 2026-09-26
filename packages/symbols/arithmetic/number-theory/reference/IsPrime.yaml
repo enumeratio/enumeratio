@@ -23,3 +23,5 @@ references:
     identity: PrimalityTest
   - system: rosettacode
     identity: Primality by trial division
+names:
+  wolfram: PrimeQ

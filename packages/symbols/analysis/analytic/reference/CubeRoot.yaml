@@ -11,3 +11,5 @@ details:
   - Threads over a list, element-wise.
   - An exact non-perfect-cube argument (like $\sqrt[3]{2}$) stays symbolic under plain evaluation; a floating-point argument, or N(), gives a decimal.
   - A concretely complex argument is outside CubeRoot's real domain and is left unevaluated.
+names:
+  wolframIdentity: true

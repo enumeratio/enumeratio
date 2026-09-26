@@ -18,3 +18,5 @@ seeAlso:
   - MixtureDistribution
   - Mean
   - Variance
+names:
+  wolframIdentity: true

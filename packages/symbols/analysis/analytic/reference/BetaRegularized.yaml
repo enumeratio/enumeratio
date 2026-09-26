@@ -15,3 +15,5 @@ seeAlso:
   - Beta
   - GammaRegularized
   - Binomial
+names:
+  wolframIdentity: true

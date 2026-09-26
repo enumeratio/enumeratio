@@ -31,3 +31,4 @@ references:
     identity: "25.12"
 names:
   wikidata: Q1238449
+  wolframIdentity: true

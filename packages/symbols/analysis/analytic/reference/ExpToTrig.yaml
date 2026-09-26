@@ -11,3 +11,5 @@ details:
 seeAlso:
   - ComplexExpand
   - TrigToExp
+names:
+  wolframIdentity: true

@@ -20,3 +20,5 @@ references:
     identity: Prime number
   - system: mathworld
     identity: NextPrime
+names:
+  wolframIdentity: true

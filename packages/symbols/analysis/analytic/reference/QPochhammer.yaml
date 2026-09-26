@@ -24,3 +24,5 @@ bindings:
 seeAlso:
   - QFactorial
   - QBinomial
+names:
+  wolframIdentity: true

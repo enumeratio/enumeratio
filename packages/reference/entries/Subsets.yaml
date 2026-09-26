@@ -38,3 +38,5 @@ references:
     identity: Subset
   - system: rosettacode
     identity: Power set
+names:
+  wolframIdentity: true

@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - VertexCount
   - EdgeList
+names:
+  wolframIdentity: true

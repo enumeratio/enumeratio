@@ -16,3 +16,5 @@ details:
 seeAlso:
   - AdicValuation
   - FactorInteger
+names:
+  wolframIdentity: true

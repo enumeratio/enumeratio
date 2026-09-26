@@ -11,3 +11,5 @@ details:
   - expr is evaluated first, then printed — same as Wolfram's own ToString.
 seeAlso:
   - FromCharacterCode
+names:
+  wolframIdentity: true

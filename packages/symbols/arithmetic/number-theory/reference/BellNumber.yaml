@@ -24,3 +24,5 @@ references:
     identity: BellNumber
   - system: oeis
     identity: A000110
+names:
+  wolfram: BellB

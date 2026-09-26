@@ -11,3 +11,5 @@ details:
 seeAlso:
   - GeneratingFunction
   - FindSequenceFunction
+names:
+  wolframIdentity: true

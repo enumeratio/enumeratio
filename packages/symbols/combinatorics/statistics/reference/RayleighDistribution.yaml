@@ -16,3 +16,5 @@ seeAlso:
   - MaxwellDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

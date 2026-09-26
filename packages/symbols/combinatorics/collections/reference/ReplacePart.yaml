@@ -15,3 +15,5 @@ signatures:
 seeAlso:
   - Replace
   - Level
+names:
+  wolframIdentity: true

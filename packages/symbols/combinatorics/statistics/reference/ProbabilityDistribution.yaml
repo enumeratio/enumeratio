@@ -19,3 +19,5 @@ seeAlso:
   - PDF
   - CDF
   - Mean
+names:
+  wolframIdentity: true

@@ -14,3 +14,5 @@ details:
   - A $Sow$ inside a NESTED $Reap$ feeds only the innermost one; it does not also reach further out, matching Wolfram (an inner $Reap$ "consumes" what's sown inside it).
 seeAlso:
   - Reap
+names:
+  wolframIdentity: true

@@ -13,3 +13,5 @@ seeAlso:
   - FactorialMoment
   - Cumulant
   - Variance
+names:
+  wolframIdentity: true

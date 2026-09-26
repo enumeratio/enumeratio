@@ -20,3 +20,5 @@ details:
 seeAlso:
   - Max
   - Clamp
+names:
+  wolframIdentity: true

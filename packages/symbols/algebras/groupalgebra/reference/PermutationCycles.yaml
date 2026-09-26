@@ -17,3 +17,5 @@ seeAlso:
   - Cycles
   - Permute
   - InversePermutation
+names:
+  wolframIdentity: true

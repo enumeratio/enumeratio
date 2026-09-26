@@ -19,3 +19,5 @@ details:
 seeAlso:
   - ContinuedFraction
   - ContinuedFractionK
+names:
+  wolframIdentity: true

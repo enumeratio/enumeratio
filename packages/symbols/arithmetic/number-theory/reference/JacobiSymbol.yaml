@@ -22,3 +22,5 @@ references:
     identity: JacobiSymbol
   - system: rosettacode
     identity: Jacobi symbol
+names:
+  wolframIdentity: true

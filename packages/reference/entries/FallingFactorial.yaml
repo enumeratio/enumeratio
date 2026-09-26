@@ -1,0 +1,7 @@
+name: FallingFactorial
+domain: Wolfram
+signature: FallingFactorial(...)
+summary: Wolfram's own FactorialPower, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolfram: FactorialPower
+stub: carrier

@@ -19,3 +19,5 @@ details:
   - A CNF clause with both a literal and its negation (a tautology) is dropped; an all-dropped result is True.
 seeAlso:
   - LogicalExpand
+names:
+  wolframIdentity: true

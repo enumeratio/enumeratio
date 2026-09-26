@@ -20,3 +20,5 @@ references:
     identity: CatalanNumber
   - system: oeis
     identity: A000108
+names:
+  wolframIdentity: true

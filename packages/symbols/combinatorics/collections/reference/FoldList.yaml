@@ -15,3 +15,5 @@ details:
 seeAlso:
   - Fold
   - Accumulate
+names:
+  wolframIdentity: true

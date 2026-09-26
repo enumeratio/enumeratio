@@ -17,3 +17,5 @@ details:
 seeAlso:
   - RandomInteger
   - SeedRandom
+names:
+  wolframIdentity: true

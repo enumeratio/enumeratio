@@ -25,3 +25,4 @@ references:
     identity: A000010
 names:
   dlmf: Euler's totient
+  wolfram: EulerPhi

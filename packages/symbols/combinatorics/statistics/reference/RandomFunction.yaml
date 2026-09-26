@@ -18,3 +18,5 @@ seeAlso:
   - PoissonProcess
   - SliceDistribution
   - RandomVariate
+names:
+  wolframIdentity: true

@@ -21,3 +21,4 @@ references:
     identity: InverseErf
 names:
   dlmf: inverse error function
+  wolfram: InverseErf

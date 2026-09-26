@@ -24,3 +24,5 @@ details:
   - A worked example that both seeds and draws needs the two calls in one expression; `Last(List(SeedRandom(n), RandomInteger(…)))` runs `SeedRandom` for its effect and keeps the draw.
 seeAlso:
   - SeedRandom
+names:
+  wolframIdentity: true

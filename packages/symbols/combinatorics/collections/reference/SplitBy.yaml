@@ -11,3 +11,5 @@ details:
 seeAlso:
   - Split
   - GatherBy
+names:
+  wolframIdentity: true

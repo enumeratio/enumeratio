@@ -8,4 +8,5 @@ signatures:
 names:
   fungrim: Atanh
   dlmf: inverse hyperbolic tangent function
+  wolfram: ArcTanh
 stub: engine

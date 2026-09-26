@@ -18,3 +18,5 @@ seeAlso:
   - AiryAi
   - AiryBi
   - Erf
+names:
+  wolframIdentity: true

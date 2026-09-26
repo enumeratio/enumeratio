@@ -15,3 +15,5 @@ details:
 seeAlso:
   - VertexOutDegree
   - VertexDegree
+names:
+  wolframIdentity: true

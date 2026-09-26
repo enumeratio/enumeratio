@@ -13,3 +13,5 @@ details:
 seeAlso:
   - GCD
   - IsPrime
+names:
+  wolfram: CoprimeQ

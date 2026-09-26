@@ -23,3 +23,5 @@ references:
     identity: "27.2"
   - system: oeis
     identity: A008683
+names:
+  wolframIdentity: true

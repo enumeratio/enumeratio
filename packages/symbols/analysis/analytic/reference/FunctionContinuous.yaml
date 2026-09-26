@@ -23,3 +23,5 @@ seeAlso:
   - FunctionDomain
   - FunctionSingularities
   - FunctionDiscontinuities
+names:
+  wolframIdentity: true

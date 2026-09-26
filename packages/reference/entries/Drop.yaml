@@ -1,0 +1,10 @@
+name: Drop
+domain: Compute engine
+signature: "Drop((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)"
+summary: Return the collection without the first n elements.
+signatures:
+  - call: "Drop((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)"
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

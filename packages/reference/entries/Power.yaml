@@ -7,4 +7,5 @@ signatures:
     description: as compute-engine declares it
 names:
   fungrim: Pow
+  wolframIdentity: true
 stub: engine

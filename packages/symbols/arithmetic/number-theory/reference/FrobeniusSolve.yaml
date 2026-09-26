@@ -10,3 +10,5 @@ details:
   - The search behind [[FrobeniusNumber]], for the caller who wants the solutions themselves.
 seeAlso:
   - FrobeniusNumber
+names:
+  wolframIdentity: true

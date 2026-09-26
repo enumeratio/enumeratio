@@ -25,3 +25,4 @@ references:
 names:
   fungrim: BetaFunction
   wikidata: Q468881
+  wolframIdentity: true

@@ -46,3 +46,5 @@ references:
     identity: HurwitzZetaFunction
   - system: dlmf
     identity: "25.11"
+names:
+  wolframIdentity: true

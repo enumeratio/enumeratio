@@ -11,3 +11,5 @@ details:
   - Exact at an exact argument -- a rational reduces to an exact integer, and so does a symbolic constant like Pi ($\mathrm{IntegerPart}(\pi) = 3$, not a decimal).
   - At a concretely complex argument, truncates the real and imaginary parts separately.
   - $x = \mathrm{IntegerPart}(x) + \mathrm{FractionalPart}(x)$ always -- see [[FractionalPart]].
+names:
+  wolframIdentity: true

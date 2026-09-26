@@ -20,3 +20,4 @@ references:
     identity: Sign
 names:
   dlmf: sign of
+  wolframIdentity: true

@@ -11,3 +11,5 @@ details:
   - Equivalent to $FoldList(Add, list)$ — see [[FoldList]].
 seeAlso:
   - FoldList
+names:
+  wolframIdentity: true

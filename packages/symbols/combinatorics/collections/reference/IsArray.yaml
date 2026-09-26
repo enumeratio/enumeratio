@@ -15,3 +15,5 @@ details:
 seeAlso:
   - IsVector
   - IsMatrix
+names:
+  wolfram: ArrayQ

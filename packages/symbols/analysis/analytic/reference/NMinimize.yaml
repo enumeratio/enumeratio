@@ -16,3 +16,5 @@ seeAlso:
   - NMaximize
   - Minimize
   - MinValue
+names:
+  wolframIdentity: true

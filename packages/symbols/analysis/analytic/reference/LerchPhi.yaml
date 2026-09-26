@@ -51,3 +51,4 @@ references:
     identity: "25.14"
 names:
   dlmf: Lerch's transcendent
+  wolframIdentity: true

@@ -10,3 +10,5 @@ details:
   - $seconds$ is inherently nondeterministic (it depends on the machine and the moment) — the worked example below extracts just the value half with [[At]], rather than pinning a timing figure.
 seeAlso:
   - Echo
+names:
+  wolframIdentity: true

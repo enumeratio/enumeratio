@@ -12,3 +12,5 @@ details:
 seeAlso:
   - IsPrimePower
   - FactorInteger
+names:
+  wolframIdentity: true

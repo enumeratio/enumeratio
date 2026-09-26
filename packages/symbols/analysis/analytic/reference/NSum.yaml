@@ -17,3 +17,5 @@ details:
 seeAlso:
   - Sum
   - NMinimize
+names:
+  wolframIdentity: true

@@ -28,3 +28,5 @@ references:
     identity: Modular exponentiation
   - system: rosettacode
     identity: Modular exponentiation
+names:
+  wolframIdentity: true

@@ -25,3 +25,5 @@ seeAlso:
   - EdgeList
   - WeightedAdjacencyMatrix
   - GraphDistance
+names:
+  wolframIdentity: true

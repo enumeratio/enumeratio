@@ -13,3 +13,5 @@ details:
 seeAlso:
   - Union
   - SetMinus
+names:
+  wolframIdentity: true

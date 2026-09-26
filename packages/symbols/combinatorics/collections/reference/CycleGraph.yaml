@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - PathGraph
   - IsBipartiteGraph
+names:
+  wolframIdentity: true

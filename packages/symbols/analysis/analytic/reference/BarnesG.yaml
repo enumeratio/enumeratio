@@ -60,3 +60,4 @@ references:
     identity: "5.17"
 names:
   dlmf: Barnes' G-function (or double gamma function)
+  wolframIdentity: true

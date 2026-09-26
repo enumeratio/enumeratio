@@ -15,3 +15,5 @@ seeAlso:
   - JacobiSN
   - JacobiCN
   - JacobiCS
+names:
+  wolframIdentity: true

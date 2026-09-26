@@ -12,3 +12,5 @@ seeAlso:
   - IncidenceMatrix
   - VertexDegree
   - WeightedAdjacencyMatrix
+names:
+  wolframIdentity: true

@@ -11,3 +11,5 @@ details:
   - 'Exact where [[IntegerPart]] is: an exact rational reduces to an exact rational, and a symbolic constant like Pi stays exact and symbolic ($\mathrm{FractionalPart}(\pi) = \pi - 3$).'
   - Zero exactly on the integers.
   - Real domain -- a concretely complex argument is left unevaluated.
+names:
+  wolframIdentity: true

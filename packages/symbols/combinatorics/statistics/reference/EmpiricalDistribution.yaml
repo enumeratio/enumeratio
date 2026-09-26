@@ -14,3 +14,5 @@ seeAlso:
   - Mean
   - Variance
   - RandomVariate
+names:
+  wolframIdentity: true

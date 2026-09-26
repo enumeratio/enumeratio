@@ -163,6 +163,15 @@
         "produces": {
           "type": "string"
         },
+        "arity": {
+          "type": "integer"
+        },
+        "template": {
+          "type": "string"
+        },
+        "threadArg": {
+          "type": "integer"
+        },
         "note": {
           "type": "string"
         }
@@ -212,6 +221,12 @@
         },
         "catalog": {
           "type": "string"
+        },
+        "wolfram": {
+          "type": "string"
+        },
+        "wolframIdentity": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false

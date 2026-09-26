@@ -7,4 +7,5 @@ signatures:
     description: as compute-engine declares it
 names:
   wikidataConfirmed: true
+  wolframIdentity: true
 stub: engine

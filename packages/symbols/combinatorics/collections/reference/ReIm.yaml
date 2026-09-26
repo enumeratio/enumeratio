@@ -10,3 +10,5 @@ details:
   - "Listable: ReIm({z1, z2}) is {ReIm(z1), ReIm(z2)}, not a single flattened pair."
 seeAlso:
   - NumberQ
+names:
+  wolframIdentity: true

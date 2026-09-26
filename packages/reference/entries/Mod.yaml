@@ -24,3 +24,5 @@ references:
     identity: Modulo
   - system: mathworld
     identity: Mod
+names:
+  wolframIdentity: true

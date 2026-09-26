@@ -24,3 +24,5 @@ references:
     identity: DigitSum
   - system: rosettacode
     identity: Sum digits of an integer
+names:
+  wolframIdentity: true

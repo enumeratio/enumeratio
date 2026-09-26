@@ -20,3 +20,5 @@ details:
 seeAlso:
   - IntegerDigits
   - DigitSum
+names:
+  wolframIdentity: true

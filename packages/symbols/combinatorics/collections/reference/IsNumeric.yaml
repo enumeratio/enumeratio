@@ -12,3 +12,5 @@ details:
 seeAlso:
   - IsMachineNumber
   - Precision
+names:
+  wolfram: NumericQ

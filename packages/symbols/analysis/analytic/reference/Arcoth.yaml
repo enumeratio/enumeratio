@@ -9,3 +9,5 @@ details:
   - Stays symbolic at plain evaluation, same as [[Arsinh]]-family functions; wrap in N(...).
 seeAlso:
   - Artanh
+names:
+  wolfram: ArcCoth

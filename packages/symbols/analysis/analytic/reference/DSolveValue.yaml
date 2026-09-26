@@ -25,3 +25,5 @@ bindings:
 seeAlso:
   - SeriesCoefficient
   - CaputoD
+names:
+  wolframIdentity: true

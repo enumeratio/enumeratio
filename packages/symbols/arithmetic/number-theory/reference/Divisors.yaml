@@ -24,3 +24,5 @@ references:
     identity: Divisor
   - system: rosettacode
     identity: Proper divisors
+names:
+  wolframIdentity: true

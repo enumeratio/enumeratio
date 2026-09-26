@@ -13,3 +13,5 @@ seeAlso:
   - ExpToTrig
   - Re
   - Im
+names:
+  wolframIdentity: true

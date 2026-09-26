@@ -17,3 +17,5 @@ references:
     identity: Legendre symbol
   - system: mathworld
     identity: LegendreSymbol
+names:
+  wolfram: JacobiSymbol

@@ -10,3 +10,5 @@ seeAlso:
   - GraphRadius
   - GraphPeriphery
   - VertexEccentricity
+names:
+  wolframIdentity: true

@@ -39,3 +39,5 @@ references:
     identity: ContinuedFraction
   - system: rosettacode
     identity: Continued fraction
+names:
+  wolframIdentity: true

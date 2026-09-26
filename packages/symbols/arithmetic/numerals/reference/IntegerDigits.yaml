@@ -38,3 +38,5 @@ references:
     identity: Numerical digit
   - system: rosettacode
     identity: Sum digits of an integer
+names:
+  wolframIdentity: true

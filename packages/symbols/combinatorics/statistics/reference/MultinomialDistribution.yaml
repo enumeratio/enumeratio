@@ -16,3 +16,5 @@ seeAlso:
   - BinomialDistribution
   - Covariance
   - RandomVariate
+names:
+  wolframIdentity: true

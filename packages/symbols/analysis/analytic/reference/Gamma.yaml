@@ -33,3 +33,5 @@ references:
     identity: GammaFunction
   - system: dlmf
     identity: "5"
+names:
+  wolframIdentity: true

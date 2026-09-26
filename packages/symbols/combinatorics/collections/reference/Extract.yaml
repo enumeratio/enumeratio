@@ -16,3 +16,5 @@ details:
 seeAlso:
   - ReplacePart
   - Level
+names:
+  wolframIdentity: true

@@ -20,3 +20,5 @@ seeAlso:
   - GroupGenerators
   - DihedralGroup
   - CyclicGroup
+names:
+  wolframIdentity: true

@@ -16,3 +16,5 @@ seeAlso:
   - RecurrenceTable
   - Fibonacci
   - LucasL
+names:
+  wolframIdentity: true

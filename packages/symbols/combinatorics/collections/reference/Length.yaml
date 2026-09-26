@@ -16,3 +16,5 @@ details:
   - See [[Count]] to count occurrences of a specific value instead of every element.
 seeAlso:
   - Count
+names:
+  wolframIdentity: true

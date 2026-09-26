@@ -1,0 +1,10 @@
+name: List
+domain: Compute engine
+signature: List(any*) -> list
+summary: An ordered collection of elements (a list).
+signatures:
+  - call: List(any*) -> list
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

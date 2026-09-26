@@ -16,3 +16,5 @@ seeAlso:
   - NormalDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

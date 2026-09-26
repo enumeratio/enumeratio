@@ -1,0 +1,7 @@
+name: CyclicGroup
+domain: Wolfram
+signature: CyclicGroup(...)
+summary: Wolfram's own CyclicGroup, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolframIdentity: true
+stub: carrier

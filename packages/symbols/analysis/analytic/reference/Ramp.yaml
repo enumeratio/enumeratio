@@ -9,3 +9,5 @@ signatures:
 details:
   - Ramp(x) = x * UnitStep(x) -- continuous, so Ramp(0) = 0 needs no special case.
   - D(Ramp(x), x) = Piecewise({{0, x < 0}, {1, x > 0}}, Indeterminate) -- NOT [[UnitStep]](x), which would be defined (as 1) at x = 0; Ramp's own slope there is undefined.
+names:
+  wolframIdentity: true

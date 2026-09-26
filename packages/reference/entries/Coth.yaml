@@ -7,4 +7,5 @@ signatures:
     description: as compute-engine declares it
 names:
   dlmf: hyperbolic cotangent function
+  wolframIdentity: true
 stub: engine

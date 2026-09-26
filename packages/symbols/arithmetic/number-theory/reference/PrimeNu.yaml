@@ -22,3 +22,4 @@ references:
     identity: A001221
 names:
   dlmf: number of distinct primes dividing a number
+  wolframIdentity: true

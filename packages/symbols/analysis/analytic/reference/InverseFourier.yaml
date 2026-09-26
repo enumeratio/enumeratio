@@ -20,3 +20,5 @@ bindings:
 seeAlso:
   - Fourier
   - InverseFourierTransform
+names:
+  wolframIdentity: true

@@ -23,3 +23,4 @@ references:
     identity: "4.2"
 names:
   dlmf: exponential function
+  wolframIdentity: true

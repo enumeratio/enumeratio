@@ -17,3 +17,5 @@ seeAlso:
   - Mode
   - Mean
   - Median
+names:
+  wolframIdentity: true

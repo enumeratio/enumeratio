@@ -13,3 +13,5 @@ details:
 seeAlso:
   - FunctionExpand
   - ExpToTrig
+names:
+  wolframIdentity: true

@@ -11,3 +11,5 @@ details:
 seeAlso:
   - HarmonicMean
   - Mean
+names:
+  wolframIdentity: true

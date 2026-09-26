@@ -12,3 +12,5 @@ details:
 seeAlso:
   - PerfectNumber
   - IsPrime
+names:
+  wolframIdentity: true

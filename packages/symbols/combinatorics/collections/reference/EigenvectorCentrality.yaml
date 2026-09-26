@@ -13,3 +13,5 @@ details:
 seeAlso:
   - ClosenessCentrality
   - VertexDegree
+names:
+  wolframIdentity: true

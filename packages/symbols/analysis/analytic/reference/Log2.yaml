@@ -12,3 +12,5 @@ seeAlso:
   - Log
   - Log10
   - Lb
+names:
+  wolframIdentity: true

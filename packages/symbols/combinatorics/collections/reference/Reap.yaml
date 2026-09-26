@@ -14,3 +14,5 @@ details:
   - "Sequencing several $Sow$s in one $expr$: use $[Last, [List, ...]]$ (Wolfram's $a; b; c$), not compute-engine's own $Block$ — see [[Sow]]'s examples and control.ts's module doc for why."
 seeAlso:
   - Sow
+names:
+  wolframIdentity: true

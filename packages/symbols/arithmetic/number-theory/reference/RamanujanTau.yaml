@@ -11,3 +11,5 @@ details:
   - Computed by truncated power-series multiplication of $\prod(1-q^k)^{24}$, exactly, not from a closed form.
 seeAlso:
   - PartitionsQ
+names:
+  wolframIdentity: true

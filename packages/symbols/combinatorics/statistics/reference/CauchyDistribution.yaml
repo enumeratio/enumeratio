@@ -20,3 +20,5 @@ seeAlso:
   - LaplaceDistribution
   - CharacteristicFunction
   - PDF
+names:
+  wolframIdentity: true

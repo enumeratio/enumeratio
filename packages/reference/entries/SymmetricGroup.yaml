@@ -26,3 +26,4 @@ references:
     identity: SymmetricGroup
 names:
   catalog: Permutations
+  wolframIdentity: true

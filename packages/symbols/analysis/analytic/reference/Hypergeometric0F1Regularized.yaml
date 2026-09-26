@@ -22,3 +22,5 @@ bindings:
 seeAlso:
   - Hypergeometric0F1
   - BesselJ
+names:
+  wolframIdentity: true

@@ -1,0 +1,10 @@
+name: Take
+domain: Compute engine
+signature: "Take((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)"
+summary: Return `n` elements from a collection.
+signatures:
+  - call: "Take((xs: T, count: number) -> T where T: string) & ((xs: indexed_collection<T>, count: number) -> list<T> where T)"
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

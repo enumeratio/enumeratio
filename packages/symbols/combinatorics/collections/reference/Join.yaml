@@ -16,3 +16,5 @@ details:
 seeAlso:
   - Flatten
   - Append
+names:
+  wolframIdentity: true

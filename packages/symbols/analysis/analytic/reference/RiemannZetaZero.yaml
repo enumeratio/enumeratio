@@ -24,3 +24,5 @@ bindings:
 seeAlso:
   - RiemannSiegelZ
   - Zeta
+names:
+  wolfram: ZetaZero

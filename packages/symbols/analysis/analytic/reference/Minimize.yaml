@@ -26,3 +26,5 @@ seeAlso:
   - NMinimize
   - Solve
   - Limit
+names:
+  wolframIdentity: true

@@ -10,3 +10,5 @@ details:
   - Unlike compute-engine's own isNumber (True for Pi, GoldenRatio, …), NumberQ(Pi) is False — Wolfram's own distinction, kernel-checked (`NumberQ[Pi]` is False, `NumberQ[N[Pi]]` is True).
 seeAlso:
   - ReIm
+names:
+  wolframIdentity: true

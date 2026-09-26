@@ -10,3 +10,5 @@ details:
   - Substitutes n -> n+1 into f and simplifies the difference; stays symbolic when it does not collapse further.
 seeAlso:
   - DiscreteRatio
+names:
+  wolframIdentity: true

@@ -12,3 +12,5 @@ seeAlso:
   - Gather
   - SplitBy
   - SortBy
+names:
+  wolframIdentity: true

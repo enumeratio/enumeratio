@@ -23,3 +23,5 @@ details:
   - See [[Tabulate]] for a lazy array read without materialising it.
 seeAlso:
   - Tabulate
+names:
+  wolframIdentity: true

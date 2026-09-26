@@ -14,3 +14,5 @@ details:
   - An error that is not one of our own $Throw$s is never caught here — it propagates as a normal error would.
 seeAlso:
   - Throw
+names:
+  wolframIdentity: true

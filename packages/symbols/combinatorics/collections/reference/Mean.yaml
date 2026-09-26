@@ -16,3 +16,5 @@ details:
 seeAlso:
   - Median
   - Mode
+names:
+  wolframIdentity: true

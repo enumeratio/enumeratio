@@ -21,3 +21,5 @@ references:
     identity: Erf
   - system: dlmf
     identity: "7.2"
+names:
+  wolframIdentity: true

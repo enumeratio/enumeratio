@@ -27,3 +27,5 @@ references:
     identity: LucasNumber
   - system: oeis
     identity: A000032
+names:
+  wolframIdentity: true

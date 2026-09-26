@@ -141,8 +141,11 @@ test("engine stubs cover exactly the symbols nothing documents", () => {
   expect(stubs.length + [...documented].filter((n) => engineData.some((s) => s.name === n)).length).toBe(
     engineData.length,
   );
-  const csch = stubs.find((s) => s.name === "Csch");
-  expect(csch?.summary).toMatch(/cosecant/i);
+  // Csch used to be this test's example -- symbol-metadata step 4 gave it a written record
+  // (names.wolframIdentity: true, HEADS having vouched for it), so it's no longer a stub;
+  // AdjugateMatrix has no Wolfram mapping and stays one.
+  const adjugate = stubs.find((s) => s.name === "AdjugateMatrix");
+  expect(adjugate?.summary).toMatch(/adjugate/i);
 });
 
 test("Python references resolve to their documentation anchors", () => {

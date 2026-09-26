@@ -13,3 +13,5 @@ signatures:
 seeAlso:
   - Subgraph
   - GraphDistance
+names:
+  wolframIdentity: true

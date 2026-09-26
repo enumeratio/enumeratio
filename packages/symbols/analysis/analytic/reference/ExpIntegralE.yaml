@@ -20,3 +20,5 @@ bindings:
 seeAlso:
   - Gamma
   - GammaRegularized
+names:
+  wolframIdentity: true

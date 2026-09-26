@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - HypercubeGraph
   - CompleteGraph
+names:
+  wolframIdentity: true

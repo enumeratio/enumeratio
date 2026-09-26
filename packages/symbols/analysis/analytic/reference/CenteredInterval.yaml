@@ -16,3 +16,5 @@ details:
 seeAlso:
   - Interval
   - Around
+names:
+  wolframIdentity: true

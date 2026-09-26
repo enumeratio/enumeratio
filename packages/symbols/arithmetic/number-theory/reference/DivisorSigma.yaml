@@ -21,3 +21,4 @@ references:
     identity: "27.2"
 names:
   dlmf: sum of powers of divisors of a number
+  wolframIdentity: true

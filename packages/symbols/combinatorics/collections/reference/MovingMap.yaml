@@ -8,3 +8,5 @@ signatures:
     library: enumeratio-collections
 details:
   - Same as Map(f, Partition(list, w + 1, 1)) -- no boundary padding or clipping, unlike a centered-radius window.
+names:
+  wolframIdentity: true

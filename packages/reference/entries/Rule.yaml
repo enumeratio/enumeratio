@@ -1,0 +1,10 @@
+name: Rule
+domain: Compute engine
+signature: "Rule(match: expression, replace: expression, predicate: function?) -> expression"
+summary: Pattern replacement rule.
+signatures:
+  - call: "Rule(match: expression, replace: expression, predicate: function?) -> expression"
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

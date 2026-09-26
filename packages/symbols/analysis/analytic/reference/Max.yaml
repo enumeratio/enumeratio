@@ -16,3 +16,5 @@ details:
 seeAlso:
   - Min
   - Clamp
+names:
+  wolframIdentity: true

@@ -16,3 +16,5 @@ seeAlso:
   - GraphRadius
   - GraphDiameter
   - GraphCenter
+names:
+  wolframIdentity: true

@@ -15,3 +15,5 @@ seeAlso:
   - UniformDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

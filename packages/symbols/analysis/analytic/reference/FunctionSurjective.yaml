@@ -9,3 +9,5 @@ signatures:
 details:
   - Only the codomain `Reals` (or `RealNumbers`) is supported -- any other third argument, or none, declines rather than guess at a codomain this file has no notion of.
   - An odd-degree polynomial and Ln (of an affine argument) are onto R; an even-degree polynomial, Exp, Sqrt, and a nonzero constant over an affine denominator (never zero) are not; Tan is onto R.
+names:
+  wolframIdentity: true

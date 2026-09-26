@@ -12,3 +12,5 @@ details:
   - Unlike [[Module]], $With$ introduces no fresh variable — it is pure substitution, so a name used as an $x$ never shadows an outer binding beyond the substituted occurrences in $body$ itself.
 seeAlso:
   - Module
+names:
+  wolframIdentity: true

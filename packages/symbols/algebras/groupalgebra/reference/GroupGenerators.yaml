@@ -11,3 +11,5 @@ seeAlso:
   - AlternatingGroup
   - GroupOrder
   - GroupElements
+names:
+  wolframIdentity: true

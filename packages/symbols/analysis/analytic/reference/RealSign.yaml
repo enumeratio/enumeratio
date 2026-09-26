@@ -9,3 +9,5 @@ signatures:
 details:
   - Restricted to the reals, the sign is always decidable, so RealSign always resolves to an exact -1, 0 or 1 -- unlike native [[Sign]], which stays symbolic at an exact expression it cannot immediately classify (e.g. $\mathrm{Sign}(\sqrt2 - 2)$ stays unevaluated under plain evaluation).
   - A concretely complex argument is outside RealSign's domain and is left unevaluated.
+names:
+  wolframIdentity: true

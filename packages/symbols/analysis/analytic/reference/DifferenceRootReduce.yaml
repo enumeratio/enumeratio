@@ -20,3 +20,5 @@ seeAlso:
   - LucasL
   - HarmonicNumber
   - Binomial
+names:
+  wolframIdentity: true

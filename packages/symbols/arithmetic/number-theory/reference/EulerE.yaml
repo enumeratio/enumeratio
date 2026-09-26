@@ -15,3 +15,5 @@ details:
   - Not to be confused with [[BernoulliB]] or [[EulerGamma]].
 seeAlso:
   - BernoulliB
+names:
+  wolframIdentity: true

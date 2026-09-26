@@ -8,3 +8,5 @@ signatures:
     library: enumeratio-collections
 details:
   - $Outer(List, a, b)$ is the Cartesian product of $a$ and $b$, each pair wrapped in its own [[List]].
+names:
+  wolframIdentity: true

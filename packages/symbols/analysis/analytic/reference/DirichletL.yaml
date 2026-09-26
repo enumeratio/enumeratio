@@ -44,3 +44,5 @@ references:
     identity: DirichletL-Series
   - system: dlmf
     identity: "25.15"
+names:
+  wolframIdentity: true

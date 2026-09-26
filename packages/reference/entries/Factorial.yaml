@@ -25,3 +25,5 @@ references:
     identity: "5.2"
   - system: rosettacode
     identity: Factorial
+names:
+  wolframIdentity: true

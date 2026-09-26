@@ -25,3 +25,5 @@ details:
 seeAlso:
   - MapIndexed
   - Pick
+names:
+  wolframIdentity: true

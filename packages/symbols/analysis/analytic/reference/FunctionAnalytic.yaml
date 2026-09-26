@@ -9,3 +9,5 @@ signatures:
 details:
   - Confirmed against `wolframscript`, this is stricter than "analytic on its real domain" -- `FunctionAnalytic(1/x, x)` is `False` even though $1/x$ is perfectly analytic away from 0, because it is not analytic EVERYWHERE (it has a pole at $x=0$, real domain or not).
   - True for a polynomial and Exp/Sin/Cos of an affine argument (all entire); False for any genuine rational function (a nonconstant denominator always has a complex pole somewhere), Sqrt and Ln (a branch point), and Tan (poles where cosine vanishes).
+names:
+  wolframIdentity: true

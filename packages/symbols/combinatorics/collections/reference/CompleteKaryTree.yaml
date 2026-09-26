@@ -15,3 +15,5 @@ details:
 seeAlso:
   - StarGraph
   - IsTreeGraph
+names:
+  wolframIdentity: true
