@@ -748,7 +748,6 @@ export const HEADS: Record<string, string> = {
   NumberQ: "NumberQ",
   ReIm: "ReIm",
   RandomComplex: "RandomComplex",
-  KaryTree: "KaryTree",
 };
 
 /** Wolfram heads we answer under one of our own heads, but only in a particular CALL

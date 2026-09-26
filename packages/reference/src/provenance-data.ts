@@ -1089,13 +1089,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "KaryTree",
-    provenance: "extension",
-    declared: "enumeratio-collections",
-    wolframAlias: "KaryTree",
-    elsewhere: [],
-  },
-  {
     name: "KBracelets",
     provenance: "extension",
     declared: "enumeratio-collections",

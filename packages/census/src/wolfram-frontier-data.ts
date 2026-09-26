@@ -425,6 +425,10 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 12,
   },
   {
+    head: "KaryTree",
+    uses: 12,
+  },
+  {
     head: "Maximize",
     uses: 12,
   },

@@ -1,16 +1,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, stringAt, wrapOperator } from "@enumeratio/boxed";
 import { matches } from "./expression-ops.ts";
-import { integerGraph } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";
 
 // A third wave of Wolfram-frontier heads: DiagonalMatrix/HilbertMatrix (matrix
 // constructors), Extract/DeleteCases (expression surgery, built on the same primitives as
 // #241's MatchQ/FreeQ), Key (an Association accessor, riding the same `At` extension
 // point `list-functional.ts` uses for the rest of Association's interface), CharacterRange,
-// NumberQ, ReIm, RandomComplex (seeded off the same PRNG stream as RandomInteger), and
-// KaryTree (a graph constructor — NOT the same thing as our `KAryTree` domain, nor
-// `CompleteKaryTree` in graphs.ts; see that head's own note).
+// NumberQ, ReIm, and RandomComplex (seeded off the same PRNG stream as RandomInteger).
 //
 // Out of scope for this wave, with reasons: WeightedAdjacencyMatrix (Graph has no edge-weight
 // representation — see graphs.ts, edges are a bare List of UndirectedEdge with no attribute
@@ -20,6 +17,14 @@ import { rngFor } from "./list-frontier.ts";
 // bare boolean symbols default-infer as `number`, so even a probe call needs explicit
 // typing before it does anything useful — writing a full boolean normalizer from scratch is
 // out of scope here).
+//
+// KaryTree (a graph constructor, Wolfram's KaryTree(n)/(n,k) sized by vertex count) was
+// implemented in this wave too, but pulled back out: the site's per-symbol page generator
+// keys pages by lowercased head name, and it collided with our existing `KAryTree` DOMAIN
+// (domains/src/domain-data.ts) — differ only in case, same generated filename
+// (`reference_symbol_KaryTree.md.js`), and the site build broke (#260). Left off the
+// FRONTIER gap list restored rather than reworked here; a real implementation needs either
+// the domain renamed first or the site's page-generation collision fixed.
 
 /** Wolfram 1-based position, negative counting from the end, to a positive 1-based index. */
 const normalizePosition = (position: number, length: number): number =>
@@ -290,41 +295,10 @@ function declareRandomComplex(ce: ComputeEngine): void {
   });
 }
 
-// --- KaryTree ------------------------------------------------------------------------------
-
-/** `KaryTree(n)` (binary, `k = 2`) / `KaryTree(n, k)`: the `k`-ary tree on `n` VERTICES, in
- *  breadth-first (heap) layout — vertex `i`'s parent is `⌊(i - 2) / k⌋ + 1`. NOT the same
- *  head as our `KAryTree` DOMAIN (`domains/src/domain-data.ts`, the combinatorial family of
- *  every n-node k-ary tree shape, for enumeration/ranking) or `CompleteKaryTree` in
- *  `graphs.ts` (a LEVEL count, always perfectly filled) — Wolfram's `KaryTree` is a single
- *  specific tree sized by vertex count, not level count, and the last level need not be
- *  full. Reuses `integerGraph` (graphs.ts) for the same `Graph(vertices, edges)` shape every
- *  other named-family constructor there builds. */
-function karyTree(ce: ComputeEngine, n: number, k: number): BoxedExpression | undefined {
-  if (!Number.isSafeInteger(n) || n < 1 || !Number.isSafeInteger(k) || k < 1) return undefined;
-  const edges: [number, number][] = [];
-  for (let i = 2; i <= n; i++) {
-    const parent = Math.floor((i - 2) / k) + 1;
-    edges.push([parent, i]);
-  }
-  return integerGraph(ce, n, edges);
-}
-
-function declareKaryTree(ce: ComputeEngine): void {
-  ce.declare("KaryTree", {
-    signature: "(integer, integer?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const n = ops[0] === undefined ? undefined : integerAt(ops[0]);
-      const k = ops[1] === undefined ? 2 : integerAt(ops[1]);
-      return n === undefined || k === undefined ? undefined : karyTree(ce, n, k);
-    },
-  });
-}
-
 // --- declare everything ----------------------------------------------------------------------
 
 /** Declare this wave's heads: DiagonalMatrix, HilbertMatrix, Extract, DeleteCases, Key,
- *  CharacterRange, NumberQ, ReIm, RandomComplex, KaryTree. See the module doc for what's out
+ *  CharacterRange, NumberQ, ReIm, RandomComplex. See the module doc for what's out
  *  of scope (WeightedAdjacencyMatrix, BooleanConvert) and why. */
 export function declareMiscFrontier(ce: ComputeEngine): void {
   ce.declare("DiagonalMatrix", {
@@ -362,5 +336,4 @@ export function declareMiscFrontier(ce: ComputeEngine): void {
   declareNumberQ(ce);
   declareReIm(ce);
   declareRandomComplex(ce);
-  declareKaryTree(ce);
 }
