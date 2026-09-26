@@ -138,6 +138,9 @@
         },
         "arity": {
           "type": "integer"
+        },
+        "on": {
+          "type": "string"
         }
       },
       "required": ["system", "identity"],
