@@ -122,7 +122,7 @@ export const DEMOS: readonly Demo[] = [
     category: "Permutation statistics",
     // Ascents compares entries with each other, so a bare list is a fair question. Excedances
     // and FixedPoints compare a value with its POSITION, so they need the permutation.
-    lines: ["Ascents([1, 3, 2, 5, 4])", "Excedances(Permutations([3, 1, 2]))", "FixedPoints(Permutations([1, 3, 2]))"],
+    lines: ["Ascents([1, 3, 2, 5, 4])", "Excedances(Permutation([3, 1, 2]))", "FixedPoints(Permutation([1, 3, 2]))"],
     tags: ["combinatorics", "enumeratio"],
   },
 

@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: FromPermutation(Permutations([2, 3, 1]))
-    out: IncreasingBinaryTrees((1, [2, 0, 0], [0, 3, 0]))
+    in: FromPermutation(Permutation([2, 3, 1]))
+    out: IncreasingBinaryTree((1, [2, 0, 0], [0, 3, 0]))
   tex:
-    in: \mathrm{FromPermutation}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{IncreasingBinaryTrees}((1,\bigl\lbrack2, 0, 0\bigr\rbrack,\bigl\lbrack0, 3, 0\bigr\rbrack))
+    in: \mathrm{FromPermutation}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{IncreasingBinaryTree}((1,\bigl\lbrack2, 0, 0\bigr\rbrack,\bigl\lbrack0, 3, 0\bigr\rbrack))
   fullform:
-    in: FromPermutation[Permutations[List[2, 3, 1]]]
+    in: FromPermutation[Permutation[List[2, 3, 1]]]

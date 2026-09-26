@@ -1,0 +1,29 @@
+- id: a-floating-point-argument-evaluates-directly-to
+  expr: [N, [JacobiZN, 0.3, 0.5]]
+  expected: 0.07707646847765576
+  caption: A floating-point argument evaluates directly to a decimal
+- id: u-0-is-0-for-any-m
+  expr: [JacobiZN, 0, m]
+  expected: 0
+  category: Properties
+  caption: u = 0 is 0, for any m
+- id: m-0-is-0-for-any-u
+  expr: [JacobiZN, u, 0]
+  expected: 0
+  category: Properties
+  caption: m = 0 is 0, for any u
+- id: a-parameter-close-to-its-m-1-boundary
+  expr: [N, [JacobiZN, 1.1, 0.9]]
+  expected: 0.35471220019987126
+  category: Scope
+  caption: A parameter close to its m = 1 boundary
+- id: m-outside-0-1-is-declined
+  expr: [N, [JacobiZN, 0.3, -0.5]]
+  expected: [JacobiZN, 0.3, -0.5]
+  category: Possible issues
+  caption: m outside [0, 1] is declined — no verified amplitude transform there
+- id: symbolic-arguments-are-left-unevaluated-rather
+  expr: [JacobiZN, u, m]
+  expected: [JacobiZN, u, m]
+  category: Possible issues
+  caption: Symbolic arguments are left unevaluated rather than guessed at

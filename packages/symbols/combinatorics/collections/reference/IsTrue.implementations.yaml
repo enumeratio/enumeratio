@@ -9,7 +9,7 @@ true-is-true:
     in: \mathrm{IsTrue}(\mathrm{True})
     out: \mathrm{True}
   fullform:
-    in: IsTrue[True]
+    in: TrueQ[True]
   wolfram:
     in: TrueQ[True]
 false-is-not-true:
@@ -23,7 +23,7 @@ false-is-not-true:
     in: \mathrm{IsTrue}(\mathrm{False})
     out: \mathrm{False}
   fullform:
-    in: IsTrue[False]
+    in: TrueQ[False]
   wolfram:
     in: TrueQ[False]
 an-evaluating-comparison:
@@ -37,7 +37,7 @@ an-evaluating-comparison:
     in: \mathrm{IsTrue}(1=1)
     out: \mathrm{True}
   fullform:
-    in: IsTrue[Equal[1, 1]]
+    in: TrueQ[Equal[1, 1]]
   wolfram:
     in: TrueQ[(1 == 1)]
 an-unevaluated-symbol-is-false:
@@ -51,4 +51,4 @@ an-unevaluated-symbol-is-false:
     in: \mathrm{IsTrue}(x)
     out: \mathrm{False}
   fullform:
-    in: IsTrue[x]
+    in: TrueQ[x]

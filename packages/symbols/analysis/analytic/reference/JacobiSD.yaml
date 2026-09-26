@@ -1,0 +1,17 @@
+name: JacobiSD
+domain: Special functions
+signature: JacobiSD(u, m)
+summary: The Jacobi elliptic function $\operatorname{sd}(u,m) = \operatorname{sn}(u,m)/\operatorname{dn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiSD(u, m)
+    description: the Jacobi elliptic function sd, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{sd}(u,m) = \operatorname{sn}(u,m)/\operatorname{dn}(u,m)$ — [[JacobiSN]] and [[JacobiDN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - sd(0,m) = 0, for any m.
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+seeAlso:
+  - JacobiSN
+  - JacobiDN
+  - JacobiDS

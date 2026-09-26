@@ -23,6 +23,12 @@ test("PrimePi/NthPrime through the engine (issue #205)", () => {
   expect(run(["NthPrime", 1])).toBe(2);
 });
 
+test("PrimePi/NthPrime past the segmented sieve's range, via Lucy_Hedgehog (issue #205's remaining punchlist item)", () => {
+  expect(run(["PrimePi", 1000000000])).toBe(50847534);
+  expect(run(["PrimePi", 100000000000])).toBe(4118054813);
+  expect(run(["NthPrime", 100000000])).toBe(2038074743);
+});
+
 test("compute-engine's native Prime (derivative notation) is untouched", () => {
   // Prime(f, n) is the nth derivative notation; a plain integer argument is not a function,
   // so it should behave exactly as bare compute-engine does -- never nth-prime.

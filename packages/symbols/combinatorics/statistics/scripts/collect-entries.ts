@@ -15,25 +15,25 @@ import { captionId, dedupeId } from "@enumeratio/entry";
 import { declareCollections } from "@enumeratio/collections/src";
 import { ALL_STATISTICS } from "../src/all.ts";
 import { declareStatistics } from "../src/declare.ts";
-import { CARRIER_TYPES, declareCarrierConstructors, declareCarrierTypes } from "./carriers.ts";
+import { CARRIER_TYPES, declareCarriers } from "./carriers.ts";
 import { FRONTIER } from "../src/frontier.ts";
 import type { Definition } from "../src/types.ts";
 
 /** Sample subjects per carrier: small enough to read, varied enough to differ. */
 const SAMPLES: Record<string, { list: number[] | number[][]; caption: string }[]> = {
-  Permutations: [
+  Permutation: [
     { list: [3, 1, 2], caption: "the one-line word $312$" },
     { list: [2, 4, 1, 3], caption: "the one-line word $2413$" },
   ],
-  IntegerPartitions: [
+  IntegerPartition: [
     { list: [4, 2, 1], caption: "the partition $4 + 2 + 1$ of $7$" },
     { list: [3, 3, 1], caption: "the partition $3 + 3 + 1$ of $7$" },
   ],
-  DyckPaths: [
+  DyckPath: [
     { list: [1, 1, 0, 0, 1, 0], caption: "the step word $UUDDUD$" },
     { list: [1, 0, 1, 1, 0, 0], caption: "the step word $UDUUDD$" },
   ],
-  SetPartitions: [
+  SetPartition: [
     { list: [[1, 3], [2]], caption: "the partition $\\{1,3\\} \\mid \\{2\\}$" },
     { list: [[1], [2, 4], [3]], caption: "the partition $\\{1\\} \\mid \\{2,4\\} \\mid \\{3\\}$" },
   ],
@@ -41,18 +41,18 @@ const SAMPLES: Record<string, { list: number[] | number[][]; caption: string }[]
 
 /** What to call the subject in a signature, per carrier — `Descents(p)`, not `Descents(_)`. */
 const SUBJECT_NAME: Record<string, string> = {
-  Permutations: "p",
-  IntegerPartitions: "partition",
-  DyckPaths: "path",
-  SetPartitions: "partition",
+  Permutation: "p",
+  IntegerPartition: "partition",
+  DyckPath: "path",
+  SetPartition: "partition",
 };
 
 /** The human name of a carrier, as a reference `domain` reads. */
 const DOMAIN: Record<string, string> = {
-  Permutations: "Permutation statistics",
-  IntegerPartitions: "Partition statistics",
-  DyckPaths: "Dyck path statistics",
-  SetPartitions: "Set partition statistics",
+  Permutation: "Permutation statistics",
+  IntegerPartition: "Partition statistics",
+  DyckPath: "Dyck path statistics",
+  SetPartition: "Set partition statistics",
 };
 
 const listOf = (value: number | number[] | number[][]): unknown =>
@@ -70,9 +70,8 @@ const CORE_OWNED = new Set(
 );
 
 const ce = new ComputeEngine();
-declareCarrierTypes(ce);
-declareCollections(ce, { permutationType: CARRIER_TYPES.Permutations });
-declareCarrierConstructors(ce);
+declareCarriers(ce);
+declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
 declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: CARRIER_TYPES });
 
 // `declareStatistics` declares the FIRST definition of each head and skips the rest, so a
@@ -96,7 +95,7 @@ interface Example {
 
 /**
  * Every subject a head accepts: the carrier, and a bare list when the reading also stands on
- * one. A carrier not in `CARRIER_TYPES` is not typed over at all (SetPartitions), so those
+ * one. A carrier not in `CARRIER_TYPES` is not typed over at all (SetPartition), so those
  * heads still take the bare value and that is the only example to give.
  */
 function subjectsFor(definition: Definition, sample: { list: number[] | number[][] }): unknown[] {

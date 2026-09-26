@@ -10,7 +10,7 @@ import { signatureOf } from "../src/types.ts";
 /** Carriers this package claims to cover. A carrier is only listed once every statistic the
  *  catalog knows for it either has a definition or sits on the frontier — so this list is
  *  the progress marker, and the test below is what earns an entry on it. */
-const COVERED = ["Permutations", "IntegerPartitions", "DyckPaths", "SetPartitions"];
+const COVERED = ["Permutation", "IntegerPartition", "DyckPath", "SetPartition"];
 
 const defined = new Set(ALL_STATISTICS.map(signatureOf));
 const onFrontier = new Set(FRONTIER.map((f) => `${f.head}@${f.on}`));

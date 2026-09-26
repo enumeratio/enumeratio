@@ -9,7 +9,7 @@ a-plain-integer:
     in: \mathrm{IsInteger}(4)
     out: \mathrm{True}
   fullform:
-    in: IsInteger[4]
+    in: IntegerQ[4]
   wolfram:
     in: IntegerQ[4]
 a-rational-is-not-an-integer:
@@ -23,7 +23,7 @@ a-rational-is-not-an-integer:
     in: \mathrm{IsInteger}(\frac{1}{2})
     out: \mathrm{False}
   fullform:
-    in: IsInteger[Rational[1, 2]]
+    in: IntegerQ[Rational[1, 2]]
   wolfram:
     in: IntegerQ[Rational[1, 2]]
 a-free-symbol-is-false:
@@ -37,7 +37,7 @@ a-free-symbol-is-false:
     in: \mathrm{IsInteger}(x)
     out: \mathrm{False}
   fullform:
-    in: IsInteger[x]
+    in: IntegerQ[x]
 a-negative-integer:
   epsil:
     in: IsInteger(-3)
@@ -49,6 +49,6 @@ a-negative-integer:
     in: \mathrm{IsInteger}(-3)
     out: \mathrm{True}
   fullform:
-    in: IsInteger[-3]
+    in: IntegerQ[-3]
   wolfram:
     in: IntegerQ[-3]

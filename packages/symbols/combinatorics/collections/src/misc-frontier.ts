@@ -9,10 +9,11 @@ import { rngFor } from "./list-frontier.ts";
 // #241's MatchQ/FreeQ), Key (an Association accessor, riding the same `At` extension
 // point `list-functional.ts` uses for the rest of Association's interface), CharacterRange,
 // NumberQ, ReIm, RandomComplex (seeded off the same PRNG stream as RandomInteger), and
-// KaryTree (a graph constructor — NOT the same thing as our `KAryTrees` domain, nor
-// `CompleteKaryTree` in graphs.ts; see that head's own note). KaryTree/KAryTrees no longer
-// collide on the site's per-symbol page generator once the domain went plural (design/
-// domains.md's naming rule) — restored here after #260 pulled it for exactly that collision.
+// KaryTree (a graph constructor — NOT the same thing as our `KAryTree` domain, nor
+// `CompleteKaryTree` in graphs.ts; see that head's own note). KaryTree/KAryTree collide on
+// the site's per-symbol page generator only by case (#260) — resolved in
+// web/.vitepress/data/reference-assemble.ts by dropping the carrier's stub page in favour
+// of the documented head, rather than by renaming either symbol.
 //
 // Out of scope for this wave, with a reason: WeightedAdjacencyMatrix (Graph has no
 // edge-weight representation — see graphs.ts, edges are a bare List of UndirectedEdge with
@@ -295,7 +296,7 @@ function declareRandomComplex(ce: ComputeEngine): void {
 
 /** `KaryTree(n)` (binary, `k = 2`) / `KaryTree(n, k)`: the `k`-ary tree on `n` VERTICES, in
  *  breadth-first (heap) layout — vertex `i`'s parent is `⌊(i - 2) / k⌋ + 1`. NOT the same
- *  head as our `KAryTrees` DOMAIN (`domains/src/domain-data.ts`, the combinatorial family of
+ *  head as our `KAryTree` DOMAIN (`domains/src/domain-data.ts`, the combinatorial family of
  *  every n-node k-ary tree shape, for enumeration/ranking) or `CompleteKaryTree` in
  *  `graphs.ts` (a LEVEL count, always perfectly filled) — Wolfram's `KaryTree` is a single
  *  specific tree sized by vertex count, not level count, and the last level need not be

@@ -9,7 +9,7 @@ an-interior-point:
     in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 3)
     out: \mathrm{True}
   fullform:
-    in: IsIntervalMember[Interval[List[1, 5]], 3]
+    in: IntervalMemberQ[Interval[List[1, 5]], 3]
   wolfram:
     in: IntervalMemberQ[Interval[List[1, 5]], 3]
 a-closed-endpoint-is-a-member:
@@ -23,7 +23,7 @@ a-closed-endpoint-is-a-member:
     in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 5)
     out: \mathrm{True}
   fullform:
-    in: IsIntervalMember[Interval[List[1, 5]], 5]
+    in: IntervalMemberQ[Interval[List[1, 5]], 5]
   wolfram:
     in: IntervalMemberQ[Interval[List[1, 5]], 5]
 an-open-endpoint-is-not-a-member:
@@ -37,7 +37,7 @@ an-open-endpoint-is-not-a-member:
     in: \mathrm{IsIntervalMember}((1, 5\rbrack, 1)
     out: \mathrm{False}
   fullform:
-    in: IsIntervalMember[Interval[Open[1], 5], 1]
+    in: IntervalMemberQ[Interval[Open[1], 5], 1]
 outside-the-interval:
   epsil:
     in: IsIntervalMember(Interval(1, 5), 6)
@@ -49,6 +49,6 @@ outside-the-interval:
     in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 6)
     out: \mathrm{False}
   fullform:
-    in: IsIntervalMember[Interval[List[1, 5]], 6]
+    in: IntervalMemberQ[Interval[List[1, 5]], 6]
   wolfram:
     in: IntervalMemberQ[Interval[List[1, 5]], 6]

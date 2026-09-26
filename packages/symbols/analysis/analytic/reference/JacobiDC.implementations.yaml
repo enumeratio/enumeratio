@@ -1,0 +1,40 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiDC(0.6, 0.4))
+    out: 1.124_780_426_911_555
+  tex:
+    in: N(\mathrm{JacobiDC}(0.6, 0.4))
+    out: 1.124\,780\,426\,911\,555
+  fullform:
+    in: N[JacobiDC[0.6, 0.4]]
+  wolfram:
+    in: N[JacobiDC[0.6, 0.4]]
+u-0-is-1-for-any-m:
+  epsil:
+    in: JacobiDC(0, m)
+    out: "1"
+  tex:
+    in: \mathrm{JacobiDC}(0, m)
+    out: "1"
+  fullform:
+    in: JacobiDC[0, m]
+m-less-than-0-via-the-imaginary-modulus:
+  epsil:
+    in: N(JacobiDC(0.3, -0.7))
+    out: 1.079_939_770_083_225_2
+  tex:
+    in: N(\mathrm{JacobiDC}(0.3, -0.7))
+    out: 1.079\,939\,770\,083\,225\,2
+  fullform:
+    in: N[JacobiDC[0.3, -0.7]]
+  wolfram:
+    in: N[JacobiDC[0.3, -0.7]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiDC(u, m)
+    out: JacobiDC(u, m)
+  tex:
+    in: \mathrm{JacobiDC}(u, m)
+    out: \mathrm{JacobiDC}(u, m)
+  fullform:
+    in: JacobiDC[u, m]

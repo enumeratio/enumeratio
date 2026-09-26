@@ -787,6 +787,25 @@ const NOVEL = [
   "NumberQ",
   "ReIm",
   "RandomComplex",
+  // The Jacobi elliptic family and Jacobi theta functions (jacobi-elliptic.ts, theta.ts):
+  // all sixteen are genuinely Wolfram's own names (see HEADS in @enumeratio/wolfram),
+  // waiting on the same coverage run to fill in `elsewhere`.
+  "JacobiSN",
+  "JacobiCN",
+  "JacobiDN",
+  "JacobiCD",
+  "JacobiCS",
+  "JacobiDC",
+  "JacobiDS",
+  "JacobiNC",
+  "JacobiND",
+  "JacobiNS",
+  "JacobiSC",
+  "JacobiSD",
+  "JacobiAmplitude",
+  "JacobiZN",
+  "EllipticTheta",
+  "EllipticThetaPrime",
   "KaryTree",
   // logic-frontier.ts: LogicalExpand/BooleanConvert are genuinely Wolfram's own names (no
   // DNF/CNF/NNF routine existed in compute-engine to build on); the Is… predicates are our

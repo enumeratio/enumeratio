@@ -44,7 +44,7 @@ export const REFERENCE_FIXES: readonly ReferenceFix[] = [
     match: {
       kind: "stat",
       subject: "Crank",
-      on: "IntegerPartitions",
+      on: "IntegerPartition",
       system: "findstat",
       identity: "St000146",
     },
@@ -59,7 +59,7 @@ export const REFERENCE_FIXES: readonly ReferenceFix[] = [
     match: {
       kind: "stat",
       subject: "Area",
-      on: "DyckPaths",
+      on: "DyckPath",
       system: "findstat",
       identity: "St000012",
     },
