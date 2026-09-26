@@ -182,12 +182,12 @@ sqrt-x-x-1-2:
       in: \sqrt{16}=16^{\frac{1}{2}}
       out: \text{True}
   sympy:
-    in: enumeratio_equal(sqrt(16), (16**Rational(1, 2)))
+    in: enumeratio_equal(sqrt(16), ((16)**Rational(1, 2)))
     out: True
   mpmath:
-    in: almosteq(sqrt(16), (16**(mpf(1)/2)), 1e-20)
+    in: almosteq(sqrt(16), ((16)**(mpf(1)/2)), 1e-20)
   sage:
-    in: bool(sqrt(16) == (16^(1/2)))
+    in: bool(sqrt(16) == ((16)^(1/2)))
     out: True
   rust:
     in: equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))
@@ -565,21 +565,21 @@ at-x-1-sqrt-x-2-1-not-1:
   wolfram:
     in: Sqrt[Power[-1, 2]]
   sympy:
-    in: sqrt((-1**2))
+    in: sqrt(((-1)**2))
     out: I
     verdict: inconclusive
     kind: ours
     note: The emitter writes (-1)^2 as -1**2, which Python reads as -(1**2), so this asks for √-1.
     issue: 265
   mpmath:
-    in: sqrt((-1**2))
+    in: sqrt(((-1)**2))
     out: (0.0 + 1.0j)
     verdict: inconclusive
     kind: ours
     note: The emitter writes (-1)^2 as -1**2, which Python reads as -(1**2), so this asks for √-1.
     issue: 265
   sage:
-    in: sqrt((-1^2))
+    in: sqrt(((-1)^2))
   rust:
     in: sqrt(power(n(-1), n(2)))
     out: "1.0"

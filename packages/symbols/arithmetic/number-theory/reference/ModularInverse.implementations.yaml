@@ -66,7 +66,7 @@ a-21-digit-modulus:
   wolfram:
     in: ModularInverse[3, Plus[Power[10, 20], 1]]
   sage:
-    in: inverse_mod(3, ((10^20) + 1))
+    in: inverse_mod(3, (((10)^20) + 1))
 listable-threads-over-a-list:
   epsil:
     in: ModularInverse([2, 3, 4], 11)
@@ -111,7 +111,7 @@ a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
   wolfram:
     in: Mod[Times[12345, ModularInverse[12345, Subtract[Power[2, 61], 1]]], Subtract[Power[2, 61], 1]]
   sage:
-    in: ((12345 * inverse_mod(12345, ((2^61) - 1))) % ((2^61) - 1))
+    in: ((12345 * inverse_mod(12345, (((2)^61) - 1))) % (((2)^61) - 1))
 2-i-6-4i-8-14i-equiv-1-pmod-7:
   epsil:
     in: ModularInverse(2 + i, 7)

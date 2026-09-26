@@ -316,10 +316,10 @@ big-integers-the-exact-118-digit-lcm-past-where:
   wolfram:
     in: LCM[Factorial[20], Plus[Power[10, 100], 3]]
   sympy:
-    in: lcm(factorial(20), ((10**100) + 3))
+    in: lcm(factorial(20), (((10)**100) + 3))
     out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   sage:
-    in: lcm(factorial(20), ((10^100) + 3))
+    in: lcm(factorial(20), (((10)^100) + 3))
   oscar:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
   julia:

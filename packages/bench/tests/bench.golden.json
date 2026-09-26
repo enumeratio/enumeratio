@@ -1141,10 +1141,10 @@
             "reason": "precision"
           },
           "mpmath": {
-            "sources": ["sin((24**40))"]
+            "sources": ["sin(((24)**40))"]
           },
           "sage": {
-            "sources": ["sin((24^40))"]
+            "sources": ["sin(((24)^40))"]
           },
           "oscar": {
             "reason": "precision"
@@ -1286,10 +1286,10 @@
             "reason": "precision"
           },
           "mpmath": {
-            "sources": ["cos((10**100))"]
+            "sources": ["cos(((10)**100))"]
           },
           "sage": {
-            "sources": ["cos((10^100))"]
+            "sources": ["cos(((10)^100))"]
           },
           "oscar": {
             "reason": "precision"
