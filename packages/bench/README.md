@@ -20,6 +20,17 @@ node packages/bench/scripts/bench.ts --plan   # support matrix only
 node packages/bench/scripts/profile.ts Factorial/factorial-10-to-the-5 --out .scratch/profiles
 ```
 
+Each run writes `plan.json` (every case's MathJSON, its seed and draw, and the concrete inputs
+every system ran) and one report per system, with the machine and its load at the start and
+end of the run.
+
+Wolfram without an on-demand license runs here and publishes as its own job:
+
+```sh
+node packages/bench/scripts/bench.ts --systems ts,wolfram --out .scratch/bench
+node packages/bench/scripts/publish-local.ts .scratch/bench/<run> --job wolfram-local
+```
+
 CI: `bench.yml` runs the light systems nightly on one runner, and the Sage, Wolfram and Oscar
 lanes in `nightly.yml` run their system beside ours weekly. Both publish through
 `.github/actions/bench-run` to the `bench-data` branch (`scripts/publish.ts`), which the
