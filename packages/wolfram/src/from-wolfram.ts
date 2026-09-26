@@ -13,13 +13,32 @@ const unqualify = (name: string): string => (name.startsWith(CONTEXT) ? name.sli
 /** Wolfram spelling → compute-engine symbol constant. Reverse of `SYMBOLS`. */
 const REVERSE_SYMBOLS: Record<string, string> = Object.fromEntries(Object.entries(SYMBOLS).map(([ce, wl]) => [wl, ce]));
 
-/** Wolfram head → compute-engine head. Reverse of `HEADS`. Where two compute-engine
- * heads share a Wolfram spelling (`Log2`/`Lb` both → `Log2`, `List`/`Tuple`), the
- * first entry in `HEADS` wins, since object insertion order is preserved. */
+/**
+ * Where two compute-engine heads share a Wolfram spelling, which one `fromWolfram` should
+ * read it back as -- an ambiguity `HEADS`'s own comments called out by hand (e.g. "the reverse
+ * map keeps GammaLn, first entry wins" for `LogGamma`/`GammaLn`). `HEADS` is generated now
+ * (symbol-metadata step 4: `wolfram-names-data.ts`, alphabetical), so "first entry wins" no
+ * longer picks a stable side; this table is the explicit version of the same nine calls.
+ */
+const REVERSE_PREFERRED: Readonly<Record<string, string>> = {
+  List: "List", // not Tuple
+  Log2: "Log2", // not Lb
+  BernoulliB: "BernoulliB", // not BernoulliPolynomial
+  Pochhammer: "Pochhammer", // not RisingFactorial
+  FactorialPower: "FallingFactorial", // not FactorialPower itself
+  JacobiSymbol: "JacobiSymbol", // not LegendreSymbol
+  LogGamma: "GammaLn", // not LogGamma itself -- GammaLn is what LogGamma lowers to
+  PolyGamma: "Digamma", // not PolyGamma itself
+  MixedRadix: "MixedRadixNumerals", // not MixedRadix itself
+};
+
+/** Wolfram head → compute-engine head. Reverse of `HEADS`, with `REVERSE_PREFERRED`'s nine
+ * ties broken explicitly rather than by iteration order. */
 export const REVERSE_HEADS: Record<string, string> = {};
 for (const [ce, wl] of Object.entries(HEADS)) {
   if (!(wl in REVERSE_HEADS)) REVERSE_HEADS[wl] = ce;
 }
+for (const [wl, ce] of Object.entries(REVERSE_PREFERRED)) REVERSE_HEADS[wl] = ce;
 
 // Parser state. `fromWolfram` is not reentrant/concurrent, matching the scope
 // of this small a grammar.

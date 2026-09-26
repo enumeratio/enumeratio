@@ -1,8 +1,11 @@
-// Before/after equivalence for symbol-metadata step 4 (design/speculative/symbol-metadata.md):
-// `to-wolfram.ts`'s `HEADS` now also lives as `names.wolfram` / `names.wolframIdentity` on
-// each head's <Head>.yaml (packages/reference/scripts/migrate/wolfram-heads-to-yaml.ts). This
-// pins that the two agree while both exist; a follow-up commit deletes `HEADS`'s hand literal
-// and this test switches to asserting `toWolfram`'s output is unchanged instead.
+// Symbol-metadata step 4 (design/speculative/symbol-metadata.md), completed: `to-wolfram.ts`'s
+// hand `HEADS` literal is gone; it reads a generated table instead (`wolfram-names-data.ts`,
+// `packages/reference/scripts/collect-wolfram-names.ts`), rebuilt from every head's
+// `names.wolfram` / `names.wolframIdentity` field -- `to-wolfram.ts` runs in the browser too,
+// so it can't parse YAML at runtime. This pins that the generated table is current;
+// `packages/notatio/tests/forms.test.ts` (unchanged by this migration -- 0 records rewritten
+// on regen) is the proof `toWolfram`'s output over every reference example didn't move, and
+// `packages/wolfram/tests/*` (also unchanged) is the proof for that package's own suite.
 
 import { HEADS } from "@enumeratio/wolfram/src";
 import { expect, test } from "vite-plus/test";
@@ -22,8 +25,8 @@ for (const { head, entry } of heads) {
   else if (names.wolframIdentity) wolframFromYaml[head] = head;
 }
 
-test("every HEADS entry is recorded as names.wolfram or names.wolframIdentity", () => {
-  expect(wolframFromYaml).toEqual(HEADS);
+test("wolfram-names-data.ts is what the current records collect to", () => {
+  expect(HEADS).toEqual(wolframFromYaml);
 });
 
 test("wolfram and wolframIdentity are never both set", () => {
