@@ -230,13 +230,13 @@ a-negative-argument-is-left-unevaluated:
       in: B_{-1}
       out: B_{-1}
   sympy:
-    in: bell((-1))
+    in: bell(-1)
     out: "ValueError: a non-negative integer expected"
     verdict: error
     kind: undefined-form
     note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
   sage:
-    in: bell_number((-1))
+    in: bell_number(-1)
     out: "ArithmeticError: Bell numbers not defined for negative indices"
     verdict: error
     kind: undefined-form

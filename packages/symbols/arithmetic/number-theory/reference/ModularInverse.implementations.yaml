@@ -50,7 +50,7 @@ a-negative-argument-3-cdot-2-6-equiv-1:
   wolfram:
     in: ModularInverse[-3, 7]
   sage:
-    in: inverse_mod((-3), 7)
+    in: inverse_mod(-3, 7)
 a-21-digit-modulus:
   epsil:
     in: ModularInverse(3, 10 ^ 20 + 1)
@@ -95,7 +95,7 @@ the-same-as-powermod-with-exponent-1:
   wolfram:
     in: (ModularInverse[3, 7] == PowerMod[3, -1, 7])
   sage:
-    in: bool(inverse_mod(3, 7) == power_mod(3, (-1), 7))
+    in: bool(inverse_mod(3, 7) == power_mod(3, -1, 7))
 a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
   epsil:
     in: 12_345 * ModularInverse(12_345, 2 ^ 61 - 1) % (2 ^ 61 - 1)
@@ -155,7 +155,7 @@ modularinverse-11-plus-neg-7-times-i-7-plus-4i:
       in: \text{ModularInverse}[11-7 i,7+4 i]
       out: -1+2 i
   sage:
-    in: inverse_mod((11 + (-7)*I), (7 + 4*I))
+    in: inverse_mod((11 + -7*I), (7 + 4*I))
     out: "28"
     verdict: inconclusive
     kind: domain
@@ -199,4 +199,4 @@ a-gaussian-base-and-a-gaussian-modulus:
   wolfram:
     in: ModularInverse[Complex[3, -1], Complex[5, 2]]
   sage:
-    in: inverse_mod((3 + (-1)*I), (5 + 2*I))
+    in: inverse_mod((3 + -1*I), (5 + 2*I))

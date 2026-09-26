@@ -29,7 +29,7 @@ the-cup-cap-is-planar-so-it-belongs:
   fullform:
     in: Element[Diagram[List[List[1, 2], List[-1, -2], List[3, -3]]], TemperleyLiebAlgebra[3]]
   sage:
-    in: enumeratio_element(enumeratio_diagram([[1, 2], [(-1), (-2)], [3, (-3)]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))
+    in: enumeratio_element(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))
     out: True
 e-1-2-delta-e-1:
   epsil:
@@ -41,7 +41,7 @@ e-1-2-delta-e-1:
   fullform:
     in: NonCommutativeMultiply[Diagram[List[List[1, 2], List[-1, -2]]], Diagram[List[List[1, 2], List[-1, -2]]]]
   sage:
-    in: (enumeratio_diagram([[1, 2], [(-1), (-2)]]) * enumeratio_diagram([[1, 2], [(-1), (-2)]]))
+    in: (enumeratio_diagram([[1, 2], [-1, -2]]) * enumeratio_diagram([[1, 2], [-1, -2]]))
     out: delta*P{{-2, -1}, {1, 2}}
 the-cup-cap-and-the-identity-all-of-tl-2:
   epsil:

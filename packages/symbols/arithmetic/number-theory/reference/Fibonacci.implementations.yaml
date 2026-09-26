@@ -444,10 +444,10 @@ negative-indices-are-supported-via-f-n-1-n-1-f-n:
       in: F_{-5}
       out: "5"
   sympy:
-    in: fibonacci((-5))
+    in: fibonacci(-5)
     out: "5"
   sage:
-    in: fibonacci((-5))
+    in: fibonacci(-5)
     out: "5"
   oscar:
     in: fibonacci(-5)

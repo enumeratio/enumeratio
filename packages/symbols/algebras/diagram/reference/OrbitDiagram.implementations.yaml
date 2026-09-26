@@ -8,7 +8,7 @@ merging-four-points-into-one-block-1-3-3:
   fullform:
     in: PartitionMobius[Diagram[List[List[1], List[2], List[-1], List[-2]]], Diagram[List[List[1, 2, -1, -2]]]]
   sage:
-    in: enumeratio_partition_mobius(enumeratio_diagram([[1], [2], [(-1)], [(-2)]]), enumeratio_diagram([[1, 2, (-1), (-2)]]))
+    in: enumeratio_partition_mobius(enumeratio_diagram([[1], [2], [-1], [-2]]), enumeratio_diagram([[1, 2, -1, -2]]))
     out: "-6"
 the-coarsest-partition-has-nothing-above-it:
   epsil:
@@ -29,5 +29,5 @@ the-interval-of-length-zero:
   fullform:
     in: PartitionMobius[Diagram[List[List[1, -1]]], Diagram[List[List[1, -1]]]]
   sage:
-    in: enumeratio_partition_mobius(enumeratio_diagram([[1, (-1)]]), enumeratio_diagram([[1, (-1)]]))
+    in: enumeratio_partition_mobius(enumeratio_diagram([[1, -1]]), enumeratio_diagram([[1, -1]]))
     out: "1"

@@ -86,13 +86,13 @@ confirms-the-coefficients-above-satisfy-2x-3y:
       in: 2 (-1)+3\ 1
       out: "1"
   sympy:
-    in: ((2 * (-1)) + (3 * 1))
+    in: ((2 * -1) + (3 * 1))
     out: "1"
   mpmath:
-    in: ((2 * (-1)) + (3 * 1))
+    in: ((2 * -1) + (3 * 1))
     out: "1"
   sage:
-    in: ((2 * (-1)) + (3 * 1))
+    in: ((2 * -1) + (3 * 1))
     out: "1"
   oscar:
     in: ((2 * -1) + (3 * 1))
