@@ -1,0 +1,86 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(EllipticTheta(3, 0.3, 0.2))
+    out: 1.331_293_558_113_586_5
+  tex:
+    in: N(\mathrm{EllipticTheta}(3, 0.3, 0.2))
+    out: 1.331\,293\,558\,113\,586\,5
+  fullform:
+    in: N[EllipticTheta[3, 0.3, 0.2]]
+  wolfram:
+    in: N[EllipticTheta[3, 0.3, 0.2]]
+theta1-0-q-is-0-for-any-q-an-odd:
+  epsil:
+    in: N(EllipticTheta(1, 0, 0.5))
+    out: "0"
+  tex:
+    in: N(\mathrm{EllipticTheta}(1, 0, 0.5))
+    out: "0"
+  fullform:
+    in: N[EllipticTheta[1, 0, 0.5]]
+  wolfram:
+    in: N[EllipticTheta[1, 0, 0.5]]
+each-of-the-four-theta-functions-a-1:
+  epsil:
+    in: N(EllipticTheta(1, 0.3, 0.2))
+    out: 0.353_430_543_747_624_5
+  tex:
+    in: N(\mathrm{EllipticTheta}(1, 0.3, 0.2))
+    out: 0.353\,430\,543\,747\,624\,5
+  fullform:
+    in: N[EllipticTheta[1, 0.3, 0.2]]
+  wolfram:
+    in: N[EllipticTheta[1, 0.3, 0.2]]
+a-complex-argument-u:
+  epsil:
+    in: N(EllipticTheta(3, 0.3 + 0.1i, 0.2))
+    out: 1.338_012_245_244_520_2 - 0.046_698_857_386_200_96i
+  tex:
+    in: N(\mathrm{EllipticTheta}(3, 0.3+0.1i, 0.2))
+    out: 1.338\,012\,245\,244\,520\,2-0.046\,698\,857\,386\,200\,96i
+  fullform:
+    in: N[EllipticTheta[3, Complex[0.3, 0.1], 0.2]]
+  wolfram:
+    in: N[EllipticTheta[3, Complex[0.3, 0.1], 0.2]]
+a-negative-real-nome-q:
+  epsil:
+    in: N(EllipticTheta(3, 1, -0.3))
+    out: 1.239_061_275_954_273
+  tex:
+    in: N(\mathrm{EllipticTheta}(3, 1, -0.3))
+    out: 1.239\,061\,275\,954\,273
+  fullform:
+    in: N[EllipticTheta[3, 1, -0.3]]
+  wolfram:
+    in: N[EllipticTheta[3, 1, -0.3]]
+a-complex-nome-q:
+  epsil:
+    in: N(EllipticTheta(2, 0.5 + 0.5i, 0.1 + 0.2i))
+    out: 1.482_111_803_583_081_8 + 0.163_554_249_597_655_97i
+  tex:
+    in: N(\mathrm{EllipticTheta}(2, 0.5+0.5i, 0.1+0.2i))
+    out: 1.482\,111\,803\,583\,081\,8+0.163\,554\,249\,597\,655\,97i
+  fullform:
+    in: N[EllipticTheta[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+  wolfram:
+    in: N[EllipticTheta[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+q-1-is-declined-the-series-diverges:
+  epsil:
+    in: N(EllipticTheta(3, 0.3, 1))
+    out: EllipticTheta(3, 0.3, 1)
+  tex:
+    in: N(\mathrm{EllipticTheta}(3, 0.3, 1))
+    out: \mathrm{EllipticTheta}(3, 0.3, 1)
+  fullform:
+    in: N[EllipticTheta[3, 0.3, 1]]
+  wolfram:
+    in: N[EllipticTheta[3, 0.3, 1]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: EllipticTheta(3, u, q)
+    out: EllipticTheta(3, u, q)
+  tex:
+    in: \mathrm{EllipticTheta}(3, u, q)
+    out: \mathrm{EllipticTheta}(3, u, q)
+  fullform:
+    in: EllipticTheta[3, u, q]

@@ -34,7 +34,7 @@ examples:
     category: Scope
     caption: A complex argument u
   - id: a-negative-real-nome-q
-    expr: [N, [EllipticTheta, 3, 1.0, -0.3]]
+    expr: [N, [EllipticTheta, 3, 1, -0.3]]
     expected: 1.239061275954273
     category: Scope
     caption: A negative real nome q
@@ -44,7 +44,7 @@ examples:
     category: Scope
     caption: A complex nome q, together with a complex u
   - id: q-1-is-declined-the-series-diverges
-    expr: [N, [EllipticTheta, 3, 0.3, 1.0]]
+    expr: [N, [EllipticTheta, 3, 0.3, 1]]
     expected: [EllipticTheta, 3, 0.3, 1]
     category: Possible issues
     caption: "|q| ≥ 1 is declined — the series diverges there"

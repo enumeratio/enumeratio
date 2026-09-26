@@ -10,7 +10,7 @@ details:
   - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
   - Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel; dn comes from $\operatorname{dn}^2 = 1-m\operatorname{sn}^2$ rather than a second AGM recursion — exact for real u, and checked directly against mpmath for the complex-u cases this head's tests cover, but not proven branch-correct arbitrarily far from the real axis.
   - A genuinely complex m stays unevaluated.
-  - 'Exact at u = 0 (dn = 1, for any m), m = 0 (dn = 1), m = 1 (dn = 1/[[Cosh]](u)), and the quarter period u = [[EllipticK]](m) (dn = $\sqrt{1-m}$).'
+  - Exact at u = 0 (dn = 1, for any m), m = 0 (dn = 1), m = 1 (dn = 1/[[Cosh]](u)), and the quarter period u = [[EllipticK]](m) (dn = $\sqrt{1-m}$).
   - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 examples:
   - id: a-floating-point-argument-evaluates-directly-to
@@ -38,7 +38,7 @@ examples:
     category: Scope
     caption: m greater than 1, via the reciprocal-modulus transformation
   - id: m-less-than-0-via-the-imaginary-modulus
-    expr: [N, [JacobiDN, 0.3, -2.0]]
+    expr: [N, [JacobiDN, 0.3, -2]]
     expected: 1.0885129466062724
     category: Scope
     caption: m less than 0, via the imaginary-modulus transformation

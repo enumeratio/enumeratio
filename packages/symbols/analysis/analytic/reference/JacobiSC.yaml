@@ -22,7 +22,7 @@ examples:
     category: Properties
     caption: u = 0 is 0, for any m
   - id: m-greater-than-1-via-the-reciprocal-modulus
-    expr: [N, [JacobiSC, 1.2, 3.0]]
+    expr: [N, [JacobiSC, 1.2, 3]]
     expected: 0.6660771819422742
     category: Scope
     caption: m greater than 1, via the reciprocal-modulus transformation

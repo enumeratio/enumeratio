@@ -22,7 +22,7 @@ examples:
     category: Properties
     caption: u = 0 is 1, for any m
   - id: m-less-than-0-via-the-imaginary-modulus
-    expr: [N, [JacobiNC, 0.3, -2.0]]
+    expr: [N, [JacobiNC, 0.3, -2]]
     expected: 1.0496874048955946
     category: Scope
     caption: m less than 0, via the imaginary-modulus transformation

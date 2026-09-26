@@ -10,7 +10,7 @@ details:
   - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
   - Numeric evaluation is the descending Landen/arithmetic-geometric-mean method (Abramowitz & Stegun 16.4) for real m between 0 and 1, extended to m outside that range by the reciprocal-modulus (m > 1) and imaginary-modulus (m < 0) transformations, and to complex u by carrying the same recursion in complex arithmetic.
   - A genuinely complex m stays unevaluated — neither the AGM recursion nor either parameter transform has been verified there.
-  - "Exact at u = 0 (sn = 0, for any m), m = 0 (sn = [[Sin]](u)), m = 1 (sn = [[Tanh]](u)), and the quarter period u = [[EllipticK]](m) (sn = 1)."
+  - Exact at u = 0 (sn = 0, for any m), m = 0 (sn = [[Sin]](u)), m = 1 (sn = [[Tanh]](u)), and the quarter period u = [[EllipticK]](m) (sn = 1).
   - $\operatorname{sn}^2(u,m) + \operatorname{cn}^2(u,m) = 1$ and $\operatorname{dn}^2(u,m) + m\operatorname{sn}^2(u,m) = 1$, checked at complex u as part of this head's tests.
   - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 examples:
@@ -39,7 +39,7 @@ examples:
     category: Scope
     caption: m greater than 1, via the reciprocal-modulus transformation
   - id: m-less-than-0-via-the-imaginary-modulus
-    expr: [N, [JacobiSN, 0.3, -2.0]]
+    expr: [N, [JacobiSN, 0.3, -2]]
     expected: 0.30402338308875987
     category: Scope
     caption: m less than 0, via the imaginary-modulus transformation

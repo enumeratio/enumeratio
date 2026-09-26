@@ -13,7 +13,7 @@ details:
   - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 examples:
   - id: a-floating-point-argument-evaluates-directly-to
-    expr: [N, [JacobiND, 0.3, -2.0]]
+    expr: [N, [JacobiND, 0.3, -2]]
     expected: 0.9186845256345044
     caption: A floating-point argument evaluates directly to a decimal
   - id: u-0-is-1-for-any-m
