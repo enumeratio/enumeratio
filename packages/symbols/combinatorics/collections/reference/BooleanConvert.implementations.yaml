@@ -9,44 +9,40 @@ default-form-is-dnf:
     in: BooleanConvert[And[p, Or[b, r]]]
 cnf-distributes-or-over-and:
   epsil:
-    in: BooleanConvert(p || b && r, "\(CNF)")
+    in: BooleanConvert(p || b && r, "CNF")
     out: (b || p) && (p || r)
-    back: [BooleanConvert, [Or, p, [And, b, r]], [String, "''", CNF]]
   tex:
-    in: \mathrm{BooleanConvert}(p\lor b\land r, \text{\mathrm{CNF}})
+    in: \mathrm{BooleanConvert}(p\lor b\land r, \text{CNF})
     out: (b\lor p)\land(p\lor r)
   fullform:
-    in: BooleanConvert[Or[p, And[b, r]], String[CNF]]
+    in: BooleanConvert[Or[p, And[b, r]], "CNF"]
 nnf-pushes-not-to-the-leaves-not-distributed:
   epsil:
-    in: BooleanConvert(Implies(p, b), "\(NNF)")
+    in: BooleanConvert(Implies(p, b), "NNF")
     out: b || !p
-    back: [BooleanConvert, [Implies, p, b], [String, "''", NNF]]
   tex:
-    in: \mathrm{BooleanConvert}(p\implies b, \text{\mathrm{NNF}})
+    in: \mathrm{BooleanConvert}(p\implies b, \text{NNF})
     out: b\lor\lnot p
   fullform:
-    in: BooleanConvert[Implies[p, b], String[NNF]]
+    in: BooleanConvert[Implies[p, b], "NNF"]
 a-tautological-clause-drops-out-of-cnf:
   epsil:
-    in: BooleanConvert(p || !p, "\(CNF)")
+    in: BooleanConvert(p || !p, "CNF")
     out: True
-    back: [BooleanConvert, [Or, p, [Not, p]], [String, "''", CNF]]
   tex:
-    in: \mathrm{BooleanConvert}(p\lor\lnot p, \text{\mathrm{CNF}})
+    in: \mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})
     out: \top
   traditional:
-    in: \mathrm{BooleanConvert}(p\lor\lnot p, \text{\mathrm{CNF}})
+    in: \mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})
     out: \mathrm{True}
   fullform:
-    in: BooleanConvert[Or[p, Not[p]], String[CNF]]
+    in: BooleanConvert[Or[p, Not[p]], "CNF"]
 an-unimplemented-form-stays-unevaluated:
   epsil:
-    in: BooleanConvert(p, "\(ESOP)")
-    out: BooleanConvert(p, "\(ESOP)")
-    back: [BooleanConvert, p, [String, "''", ESOP]]
+    in: BooleanConvert(p, "ESOP")
+    out: BooleanConvert(p, "ESOP")
   tex:
-    in: \mathrm{BooleanConvert}(p, \text{\mathrm{ESOP}})
-    out: \mathrm{BooleanConvert}(p, \text{\mathrm{ESOP}})
+    in: \mathrm{BooleanConvert}(p, \text{ESOP})
+    out: \mathrm{BooleanConvert}(p, \text{ESOP})
   fullform:
-    in: BooleanConvert[p, String[ESOP]]
+    in: BooleanConvert[p, "ESOP"]

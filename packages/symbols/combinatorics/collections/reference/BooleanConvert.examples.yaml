@@ -2,18 +2,18 @@
   expr: [BooleanConvert, [And, p, [Or, b, r]]]
   expected: [Or, [And, b, p], [And, p, r]]
 - id: cnf-distributes-or-over-and
-  expr: [BooleanConvert, [Or, p, [And, b, r]], [String, CNF]]
+  expr: [BooleanConvert, [Or, p, [And, b, r]], "'CNF'"]
   expected: [And, [Or, b, p], [Or, p, r]]
   category: Scope
 - id: nnf-pushes-not-to-the-leaves-not-distributed
-  expr: [BooleanConvert, [Implies, p, b], [String, NNF]]
+  expr: [BooleanConvert, [Implies, p, b], "'NNF'"]
   expected: [Or, b, [Not, p]]
   category: Scope
 - id: a-tautological-clause-drops-out-of-cnf
-  expr: [BooleanConvert, [Or, p, [Not, p]], [String, CNF]]
+  expr: [BooleanConvert, [Or, p, [Not, p]], "'CNF'"]
   expected: True
   category: Scope
 - id: an-unimplemented-form-stays-unevaluated
-  expr: [BooleanConvert, p, [String, ESOP]]
-  expected: [BooleanConvert, p, [String, ESOP]]
+  expr: [BooleanConvert, p, "'ESOP'"]
+  expected: [BooleanConvert, p, "'ESOP'"]
   category: Scope

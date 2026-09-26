@@ -249,6 +249,10 @@ function declareLogicalExpand(ce: ComputeEngine): void {
   });
 }
 
+// "DNF"/"CNF" are Wolfram's own forms; "NNF" is our own extension — Wolfram 15's
+// BooleanConvert has no "NNF" form at all (stays unevaluated there), but it falls
+// straight out of the same elimination pipeline so it's implemented anyway (see
+// BooleanConvert.yaml for the divergence note).
 const BOOLEAN_CONVERT_FORMS = new Set(["DNF", "CNF", "NNF"]);
 
 function declareBooleanConvert(ce: ComputeEngine): void {
