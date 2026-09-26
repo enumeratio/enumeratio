@@ -45,7 +45,7 @@ import {
   x,
 } from "./vocabulary.ts";
 
-const on = "Permutations";
+const on = "Permutation";
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
   head,
   on,

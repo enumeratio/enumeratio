@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: RskRecording(Permutations([2, 3, 1]))
-    out: StandardTableaux([1, 2, 3])
+    in: RskRecording(Permutation([2, 3, 1]))
+    out: StandardTableau([1, 2, 3])
   tex:
-    in: \mathrm{RskRecording}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{StandardTableaux}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    in: \mathrm{RskRecording}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{StandardTableau}(\bigl\lbrack1, 2, 3\bigr\rbrack)
   fullform:
-    in: RskRecording[Permutations[List[2, 3, 1]]]
+    in: RskRecording[Permutation[List[2, 3, 1]]]

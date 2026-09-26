@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [RskRecording, [Permutations, [List, 2, 3, 1]]]
-  expected: [StandardTableaux, [List, 1, 2, 3]]
+  expr: [RskRecording, [Permutation, [List, 2, 3, 1]]]
+  expected: [StandardTableau, [List, 1, 2, 3]]
   caption: the one-line word $231$

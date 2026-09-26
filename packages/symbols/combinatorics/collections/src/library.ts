@@ -17,6 +17,7 @@ import { declareListOps } from "./list-ops.ts";
 import { declareListOpsWolfram } from "./list-ops-wolfram.ts";
 import { declareProducts } from "./products.ts";
 import { declareListStats } from "./list-stats.ts";
+import { declareLogicFrontier } from "./logic-frontier.ts";
 import { declareMiscFrontier } from "./misc-frontier.ts";
 import { declareRoundingHeads } from "./rounding-heads.ts";
 import { declareStats, type StatsOptions } from "./stats.ts";
@@ -53,4 +54,5 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareGraphs(ce);
   declareGraphs2(ce);
   declareMiscFrontier(ce);
+  declareLogicFrontier(ce);
 }

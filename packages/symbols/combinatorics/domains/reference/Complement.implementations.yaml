@@ -1,10 +1,10 @@
 the-one-line-word-231:
   epsil:
-    in: Complement(Permutations([2, 3, 1]))
-    out: Permutations([2, 1, 3])
+    in: Complement(Permutation([2, 3, 1]))
+    out: Permutation([2, 1, 3])
   tex:
-    in: \mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack)^\complement
-    out: \mathrm{Permutations}(\bigl\lbrack2, 1, 3\bigr\rbrack)
+    in: \mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack)^\complement
+    out: \mathrm{Permutation}(\bigl\lbrack2, 1, 3\bigr\rbrack)
   fullform:
-    in: Complement[Permutations[List[2, 3, 1]]]
-    back: [SetMinus, [Permutations, [List, 2, 3, 1]]]
+    in: Complement[Permutation[List[2, 3, 1]]]
+    back: [SetMinus, [Permutation, [List, 2, 3, 1]]]

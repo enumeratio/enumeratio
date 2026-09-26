@@ -1,22 +1,15 @@
-// A carrier domain: what a collection's ELEMENTS are, as opposed to the collection itself —
-// except the domain and its PLAIN collection are the same head now (design/domains.md's
-// naming rule): a domain's name is plural, and IS the same-named collection where one
-// exists (`SetPartitions` is both). The singular pascal-case of a carrier's id is reserved
-// for an inhabitant — a helper naming ONE value, e.g. `SetPartitionUnrank` — never a domain
-// or collection name; there is no singular alias.
+// A carrier domain: what a collection's ELEMENTS are, as opposed to the collection itself.
 //
-// `SetPartitions(4)` is a collection; its elements inhabit the `SetPartitions` domain, and
-// so do the elements of `SetPartitionsIntoKBlocks(4, 2)` and of every other collection over
-// that carrier. 280 collections over 86 carriers — one domain serves three collections on
-// average, which is why the catalog stores the carrier rather than deriving it.
+// `SetPartitions(4)` is a collection; its elements inhabit the `SetPartition` domain, and so
+// do the elements of `SetPartitionsIntoKBlocks(4, 2)` and of every other collection over that
+// carrier. 280 collections over 86 carriers — one domain serves three collections on average,
+// which is why the catalog stores the carrier rather than deriving it.
 
 /** The structural shape a carrier's values have, as a compute-engine type expression. */
 export type Shape = string;
 
 export interface Domain {
-  /** The domain's name, plural — and the CONSTRUCTOR head's spelling (the same head as the
-   *  plain collection, where one exists; declare.ts's `declareConstructor` is what makes
-   *  that a merge rather than a collision). */
+  /** The domain's name, singular — and the CONSTRUCTOR head's spelling. */
   readonly name: string;
   /** The nominal type's name — lowercase singular, which a signature reads. */
   readonly type: string;
@@ -24,6 +17,16 @@ export interface Domain {
   readonly shape: Shape;
   /** enumeratio's snake_case carrier id — which is also the type's spelling. */
   readonly id: string;
+  /**
+   * The domain's TYPE-SPACE name, plural — every domain has one (design/domains.md §2's
+   * corrected rule), whether or not a same-named collection family already exists.
+   * `declareDomainElement` (`declare.ts`) is what makes `Element(x, DyckPaths)` answer for
+   * it: True when `x` is a `DyckPath(...)` value, False for a value of another carrier,
+   * unevaluated for anything it cannot place. Absent for exactly the two domains whose
+   * SINGULAR name already layers onto an unrelated real head (`ContinuedFraction`,
+   * `PermutationCycles`) — there is no plural type space for either.
+   */
+  readonly plural?: string;
   /** The domain this one RESTRICTS, when it is a restriction. compute-engine cannot express
    *  the subtype relation between minted types (§1.1), so this is recorded as data and
    *  checked by predicate rather than believed by the engine. */
@@ -33,20 +36,18 @@ export interface Domain {
 }
 
 /**
- * Two names for two things now, not three, and no suffix on either — because compute-engine's
- * own convention already has room for both:
+ * Three names for three things, and no suffix on any of them — because compute-engine's own
+ * convention already has room for all three:
  *
- *   affine_permutation    the TYPE        snake_case, exactly like `integer`, `indexed_collection`
- *   AffinePermutations    the CONSTRUCTOR *and* the COLLECTION — one head, both jobs
+ *   affine_permutation   the TYPE        snake_case, exactly like `integer`, `indexed_collection`
+ *   AffinePermutation    the CONSTRUCTOR what appears in expressions
+ *   AffinePermutations   the COLLECTION  the indexed family
  *
  * The engine spells its primitive types `integer`, `number`, `boolean`, `indexed_collection`
  * — lowercase, snake_case when multiword — and reserves the TitleCase plural for a
  * set-valued SYMBOL: `Integers` is not a type at all, it is a symbol whose type is
- * `set<integer>`. Our carrier constructors follow that same reading: `AffinePermutations` is
- * a symbol (a held constructor, or an enumerated family — declare.ts's overload-merging is
- * what lets one name answer to both), never a type. The snake_case singular stays the type,
- * and the TitleCase PLURAL is what used to be split between a singular constructor and a
- * plural collection — merged now, per design/domains.md's naming rule.
+ * `set<integer>`. So the plural denotes a set (a value), the snake_case singular is the type,
+ * and the TitleCase singular is free for the constructor.
  *
  * The type name therefore needs no transformation at all: it is enumeratio's carrier id
  * verbatim, which was snake_case already.

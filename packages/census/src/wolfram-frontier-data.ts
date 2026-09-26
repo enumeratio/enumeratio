@@ -177,10 +177,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 26,
   },
   {
-    head: "ProbabilityDistribution",
-    uses: 26,
-  },
-  {
     head: "Blend",
     uses: 25,
   },
@@ -197,16 +193,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 24,
   },
   {
-    head: "ParameterMixtureDistribution",
-    uses: 23,
-  },
-  {
     head: "EstimatedDistribution",
     uses: 22,
-  },
-  {
-    head: "HistogramDistribution",
-    uses: 21,
   },
   {
     head: "Inactive",
@@ -222,10 +210,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ImageScaled",
-    uses: 20,
-  },
-  {
-    head: "RandomFunction",
     uses: 20,
   },
   {
@@ -273,10 +257,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 18,
   },
   {
-    head: "WeightedAdjacencyMatrix",
-    uses: 18,
-  },
-  {
     head: "Control",
     uses: 17,
   },
@@ -290,10 +270,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Speak",
-    uses: 17,
-  },
-  {
-    head: "WienerProcess",
     uses: 17,
   },
   {
@@ -346,14 +322,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "AbsolutePointSize",
-    uses: 13,
-  },
-  {
-    head: "LogicalExpand",
-    uses: 13,
-  },
-  {
-    head: "MultivariatePoissonDistribution",
     uses: 13,
   },
   {
@@ -429,18 +397,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "MultinomialDistribution",
-    uses: 11,
-  },
-  {
-    head: "MultinormalDistribution",
-    uses: 11,
-  },
-  {
-    head: "PoissonProcess",
-    uses: 11,
-  },
-  {
     head: "Region",
     uses: 11,
   },
@@ -450,10 +406,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "BezierCurve",
-    uses: 10,
-  },
-  {
-    head: "BooleanConvert",
     uses: 10,
   },
   {
@@ -546,10 +498,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "SuperDagger",
-    uses: 9,
-  },
-  {
-    head: "VectorQ",
     uses: 9,
   },
   {
@@ -681,14 +629,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "IntegerQ",
-    uses: 7,
-  },
-  {
-    head: "IntervalMemberQ",
-    uses: 7,
-  },
-  {
     head: "KernelMixtureDistribution",
     uses: 7,
   },
@@ -709,23 +649,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "MatrixQ",
-    uses: 7,
-  },
-  {
-    head: "MersennePrimeExponentQ",
-    uses: 7,
-  },
-  {
     head: "MeshRegion",
-    uses: 7,
-  },
-  {
-    head: "PermutationList",
-    uses: 7,
-  },
-  {
-    head: "PermutationReplace",
     uses: 7,
   },
   {
@@ -733,19 +657,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "TrueQ",
-    uses: 7,
-  },
-  {
     head: "AbortProtect",
-    uses: 6,
-  },
-  {
-    head: "AlternatingGroup",
-    uses: 6,
-  },
-  {
-    head: "ArrayQ",
     uses: 6,
   },
   {

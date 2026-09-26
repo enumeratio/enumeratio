@@ -1,0 +1,15 @@
+- id: 7-is-a-mersenne-prime-exponent
+  expr: [IsMersennePrimeExponent, 7]
+  expected: True
+- id: 11-is-prime-but-not-a-mersenne-prime-exponent
+  expr: [IsMersennePrimeExponent, 11]
+  expected: False
+  category: Scope
+- id: 9-is-not-even-prime
+  expr: [IsMersennePrimeExponent, 9]
+  expected: False
+  category: Scope
+- id: 2-31-1-is-the-8th-mersenne-prime
+  expr: [IsMersennePrimeExponent, 31]
+  expected: True
+  category: Scope

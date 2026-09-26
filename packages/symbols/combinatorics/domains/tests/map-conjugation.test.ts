@@ -19,7 +19,7 @@ test("ArcRepresentation links each position to the next in its block", () => {
     });
   for (const n of [1, 2, 3, 4, 5])
     for (const rgs of restrictedGrowthStrings(n))
-      expect(result(["ArcRepresentation", ["SetPartitions", ["List", ...rgs]]]), `${rgs}`).toEqual([
+      expect(result(["ArcRepresentation", ["SetPartition", ["List", ...rgs]]]), `${rgs}`).toEqual([
         "List",
         ...linking(rgs),
       ]);
@@ -46,5 +46,5 @@ test("the empty word has a composition with NO parts", () => {
   // Worth its own test because the obvious plain-loop reading gets it wrong: cutting [] at
   // its (nonexistent) descents gives [0], but a composition of 0 has no parts at all. The
   // expression was right and the reference was the artifact.
-  expect(result(["DescentComposition", ["Permutations", ["List"]]])).toEqual(["List"]);
+  expect(result(["DescentComposition", ["Permutation", ["List"]]])).toEqual(["List"]);
 });

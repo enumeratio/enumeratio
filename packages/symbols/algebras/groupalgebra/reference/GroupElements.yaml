@@ -1,18 +1,19 @@
 name: GroupElements
 domain: Permutations
 signature: GroupElements(group)
-summary: Every element of a group, or — for a [[PermutationGroup]] with a second, list argument — the elements at those positions (`Part`-style, negative counts from the end).
+summary: Every element of a group, or — for a [[PermutationGroup]] or [[AlternatingGroup]] with a second, list argument — the elements at those positions (`Part`-style, negative counts from the end).
 signatures:
   - call: GroupElements(group)
     description: all of `group`'s elements
     library: enumeratio-groupalgebra
   - call: GroupElements(group, positions)
-    description: a `PermutationGroup`'s elements at `positions`, in its own order
+    description: a `PermutationGroup`'s or `AlternatingGroup`'s elements at `positions`, in its own order
     library: enumeratio-groupalgebra
 details:
-  - A `PermutationGroup`'s elements print as [[Cycles]], not as [[GroupBasis]] labels — its elements are permutations, not abstract group-algebra basis vectors
+  - A `PermutationGroup`'s or `AlternatingGroup`'s elements print as [[Cycles]], not as [[GroupBasis]] labels — its elements are permutations, not abstract group-algebra basis vectors
   - The identity always comes first; the rest follow the ascending order of their one-line words
 seeAlso:
   - GroupOrder
   - PermutationGroup
+  - AlternatingGroup
   - GroupGenerators

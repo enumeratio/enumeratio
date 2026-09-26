@@ -39,3 +39,17 @@ unreachable-against-a-longer-directed-chain:
     in: GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]
   wolfram:
     in: GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]
+weighted-distance-is-summed-weight-not-hop-count:
+  epsil:
+    in: |-
+      GraphDistance(Graph(
+                           [1, 2, 3],
+                           [UndirectedEdge(1, 2), UndirectedEdge(2, 3)],
+                           EdgeWeight -> [5, 7],
+                         ), 1, 3)
+    out: "12"
+  tex:
+    in: \mathrm{GraphDistance}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack5, 7\bigr\rbrack)), 1, 3)
+    out: "12"
+  fullform:
+    in: GraphDistance[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], KeyValuePair[EdgeWeight, List[5, 7]]], 1, 3]

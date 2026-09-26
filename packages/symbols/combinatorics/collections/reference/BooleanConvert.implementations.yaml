@@ -1,0 +1,48 @@
+default-form-is-dnf:
+  epsil:
+    in: BooleanConvert(p && (b || r))
+    out: b && p || p && r
+  tex:
+    in: \mathrm{BooleanConvert}(p\land(b\lor r))
+    out: b\land p\lor p\land r
+  fullform:
+    in: BooleanConvert[And[p, Or[b, r]]]
+cnf-distributes-or-over-and:
+  epsil:
+    in: BooleanConvert(p || b && r, "CNF")
+    out: (b || p) && (p || r)
+  tex:
+    in: \mathrm{BooleanConvert}(p\lor b\land r, \text{CNF})
+    out: (b\lor p)\land(p\lor r)
+  fullform:
+    in: BooleanConvert[Or[p, And[b, r]], "CNF"]
+nnf-pushes-not-to-the-leaves-not-distributed:
+  epsil:
+    in: BooleanConvert(Implies(p, b), "NNF")
+    out: b || !p
+  tex:
+    in: \mathrm{BooleanConvert}(p\implies b, \text{NNF})
+    out: b\lor\lnot p
+  fullform:
+    in: BooleanConvert[Implies[p, b], "NNF"]
+a-tautological-clause-drops-out-of-cnf:
+  epsil:
+    in: BooleanConvert(p || !p, "CNF")
+    out: True
+  tex:
+    in: \mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})
+    out: \top
+  traditional:
+    in: \mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})
+    out: \mathrm{True}
+  fullform:
+    in: BooleanConvert[Or[p, Not[p]], "CNF"]
+an-unimplemented-form-stays-unevaluated:
+  epsil:
+    in: BooleanConvert(p, "ESOP")
+    out: BooleanConvert(p, "ESOP")
+  tex:
+    in: \mathrm{BooleanConvert}(p, \text{ESOP})
+    out: \mathrm{BooleanConvert}(p, \text{ESOP})
+  fullform:
+    in: BooleanConvert[p, "ESOP"]

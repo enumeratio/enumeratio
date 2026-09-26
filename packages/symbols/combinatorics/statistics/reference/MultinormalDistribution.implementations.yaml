@@ -1,0 +1,55 @@
+multinormal-mean:
+  epsil:
+    in: Mean(MultinormalDistribution([1, 2], [[4, 0], [0, 9]]))
+    out: "[1, 2]"
+  tex:
+    in: \mathrm{mean}(\mathrm{MultinormalDistribution}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\bigl\lbrack4, 0\bigr\rbrack, \bigl\lbrack0, 9\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack1, 2\bigr\rbrack
+  fullform:
+    in: Mean[MultinormalDistribution[List[1, 2], List[List[4, 0], List[0, 9]]]]
+  wolfram:
+    in: Mean[MultinormalDistribution[List[1, 2], List[List[4, 0], List[0, 9]]]]
+multinormal-mean-one-arg:
+  epsil:
+    in: Mean(MultinormalDistribution([[1, 0], [0, 1]]))
+    out: "[0, 0]"
+  tex:
+    in: \mathrm{mean}(\mathrm{MultinormalDistribution}(\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack0, 0\bigr\rbrack
+  fullform:
+    in: Mean[MultinormalDistribution[List[List[1, 0], List[0, 1]]]]
+  wolfram:
+    in: Mean[MultinormalDistribution[List[List[1, 0], List[0, 1]]]]
+multinormal-variance:
+  epsil:
+    in: Variance(MultinormalDistribution([1, 2], [[4, 0], [0, 9]]))
+    out: "[4, 9]"
+  tex:
+    in: \mathrm{Variance}(\mathrm{MultinormalDistribution}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\bigl\lbrack4, 0\bigr\rbrack, \bigl\lbrack0, 9\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack4, 9\bigr\rbrack
+  fullform:
+    in: Variance[MultinormalDistribution[List[1, 2], List[List[4, 0], List[0, 9]]]]
+  wolfram:
+    in: Variance[MultinormalDistribution[List[1, 2], List[List[4, 0], List[0, 9]]]]
+multinormal-covariance:
+  epsil:
+    in: Covariance(MultinormalDistribution([1, 2], [[4, 1], [1, 9]]))
+    out: "[[4, 1], [1, 9]]"
+  tex:
+    in: \operatorname{Covariance}(\mathrm{MultinormalDistribution}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\bigl\lbrack4, 1\bigr\rbrack, \bigl\lbrack1, 9\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack4, 1\bigr\rbrack, \bigl\lbrack1, 9\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Covariance[MultinormalDistribution[List[1, 2], List[List[4, 1], List[1, 9]]]]
+  wolfram:
+    in: Covariance[MultinormalDistribution[List[1, 2], List[List[4, 1], List[1, 9]]]]
+multinormal-pdf-standard-origin:
+  epsil:
+    in: PDF(MultinormalDistribution([0, 0], [[1, 0], [0, 1]]), [0, 0])
+    out: 1 / (2Pi)
+  tex:
+    in: \operatorname{PDF}(\mathrm{MultinormalDistribution}(\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack), \bigl\lbrack0, 0\bigr\rbrack)
+    out: \frac{1}{2\pi}
+  fullform:
+    in: PDF[MultinormalDistribution[List[0, 0], List[List[1, 0], List[0, 1]]], List[0, 0]]
+  wolfram:
+    in: PDF[MultinormalDistribution[List[0, 0], List[List[1, 0], List[0, 1]]], List[0, 0]]

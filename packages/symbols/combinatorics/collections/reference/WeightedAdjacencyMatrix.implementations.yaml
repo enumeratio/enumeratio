@@ -1,0 +1,24 @@
+two-weighted-edges:
+  epsil:
+    in: |-
+      WeightedAdjacencyMatrix(Graph([1, 2, 3], [
+                                                 UndirectedEdge(1, 2),
+                                                 DirectedEdge(2, 3),
+                                               ], EdgeWeight -> [5, 7]))
+    out: "[[0, 5, 0], [5, 0, 7], [0, 0, 0]]"
+  tex:
+    in: \mathrm{WeightedAdjacencyMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack5, 7\bigr\rbrack)))
+    out: \bigl\lbrack\bigl\lbrack0, 5, 0\bigr\rbrack, \bigl\lbrack5, 0, 7\bigr\rbrack, \bigl\lbrack0, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: WeightedAdjacencyMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], DirectedEdge[2, 3]], KeyValuePair[EdgeWeight, List[5, 7]]]]
+no-edgeweight-falls-back-to-adjacencymatrix:
+  epsil:
+    in: WeightedAdjacencyMatrix(Graph([1, 2], [UndirectedEdge(1, 2)]))
+    out: "[[0, 1], [1, 0]]"
+  tex:
+    in: \mathrm{WeightedAdjacencyMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: WeightedAdjacencyMatrix[Graph[List[1, 2], List[UndirectedEdge[1, 2]]]]
+  wolfram:
+    in: WeightedAdjacencyMatrix[Graph[List[1, 2], List[UndirectedEdge[1, 2]]]]

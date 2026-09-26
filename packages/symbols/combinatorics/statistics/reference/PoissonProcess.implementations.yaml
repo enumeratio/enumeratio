@@ -1,0 +1,33 @@
+poisson-process-slice-mean:
+  epsil:
+    in: Mean(SliceDistribution(PoissonProcess(3), 5))
+    out: "15"
+  tex:
+    in: \mathrm{mean}(\mathrm{SliceDistribution}(\mathrm{PoissonProcess}(3), 5))
+    out: "15"
+  fullform:
+    in: Mean[SliceDistribution[PoissonProcess[3], 5]]
+  wolfram:
+    in: Mean[SliceDistribution[PoissonProcess[3], 5]]
+poisson-process-slice-distribution:
+  epsil:
+    in: SliceDistribution(PoissonProcess(2), 3)
+    out: PoissonDistribution(6)
+  tex:
+    in: \mathrm{SliceDistribution}(\mathrm{PoissonProcess}(2), 3)
+    out: \operatorname{PoissonDistribution}(6)
+  fullform:
+    in: SliceDistribution[PoissonProcess[2], 3]
+  wolfram:
+    in: SliceDistribution[PoissonProcess[2], 3]
+poisson-process-slice-variance:
+  epsil:
+    in: Variance(SliceDistribution(PoissonProcess(2), 3))
+    out: "6"
+  tex:
+    in: \mathrm{Variance}(\mathrm{SliceDistribution}(\mathrm{PoissonProcess}(2), 3))
+    out: "6"
+  fullform:
+    in: Variance[SliceDistribution[PoissonProcess[2], 3]]
+  wolfram:
+    in: Variance[SliceDistribution[PoissonProcess[2], 3]]

@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: Rsk(Permutations([2, 3, 1]))
-    out: StandardTableauPairs((StandardTableaux([1, 3, 2]), StandardTableaux([1, 2, 3])))
+    in: Rsk(Permutation([2, 3, 1]))
+    out: StandardTableauPair((StandardTableau([1, 3, 2]), StandardTableau([1, 2, 3])))
   tex:
-    in: \mathrm{Rsk}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{StandardTableauPairs}((\mathrm{StandardTableaux}(\bigl\lbrack1, 3, 2\bigr\rbrack),\mathrm{StandardTableaux}(\bigl\lbrack1, 2, 3\bigr\rbrack)))
+    in: \mathrm{Rsk}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{StandardTableauPair}((\mathrm{StandardTableau}(\bigl\lbrack1, 3, 2\bigr\rbrack),\mathrm{StandardTableau}(\bigl\lbrack1, 2, 3\bigr\rbrack)))
   fullform:
-    in: Rsk[Permutations[List[2, 3, 1]]]
+    in: Rsk[Permutation[List[2, 3, 1]]]

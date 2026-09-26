@@ -24,7 +24,7 @@ function dyckWords(n: number): number[][] {
 const ALL = [0, 1, 2, 3, 4, 5].flatMap(dyckWords);
 
 const evaluate = (head: string, w: number[]): number =>
-  applyDefinition(ce, index.get(`${head}@DyckPaths`)!, ce.box(["List", ...w])).re;
+  applyDefinition(ce, index.get(`${head}@DyckPath`)!, ce.box(["List", ...w])).re;
 
 /** Heights after each step — the independent reading of the profile. */
 const heights = (w: number[]): number[] => {

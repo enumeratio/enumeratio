@@ -1,0 +1,13 @@
+- id: wiener-slice-mean
+  expr: [Mean, [SliceDistribution, [WienerProcess, 2, 3], 5]]
+  expected: 10
+  caption: $Mean(WienerProcess(\mu,\sigma)[t]) = \mu t$
+- id: wiener-slice-variance
+  expr: [Variance, [SliceDistribution, [WienerProcess, 0, 3], 4]]
+  expected: 36
+  caption: $Variance(WienerProcess(\mu,\sigma)[t]) = \sigma^2 t$
+- id: wiener-default-slice
+  expr: [SliceDistribution, [WienerProcess], 4]
+  expected: [NormalDistribution, 0, 2]
+  caption: Standard Wiener process — $NormalDistribution(0, \sqrt{4}) = NormalDistribution(0, 2)$
+  category: Scope

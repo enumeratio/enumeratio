@@ -395,10 +395,14 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * nminmax.ts, nsum.ts) are the same story yet again: all seven are genuinely Wolfram's own
  * names (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
  * `elsewhere`.
+ *
+ * WeightedAdjacencyMatrix (graph-weights.ts) is the same story once more: genuinely
+ * Wolfram's own name (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run.
  */
 const NOVEL = [
   "DifferenceRootReduce",
   "DifferentialRootReduce",
+  "WeightedAdjacencyMatrix",
   "TimeConstrained",
   "MemoryConstrained",
   "VerificationTest",
@@ -583,6 +587,12 @@ const NOVEL = [
   "GroupGenerators",
   "GroupOrder",
   "GroupElements",
+  // Genuine Wolfram heads (see to-wolfram.ts HEADS) closing the permutation-group frontier,
+  // but not yet run through the oracle sweep, so `elsewhere` is still empty here (same as
+  // the Function* family above).
+  "AlternatingGroup",
+  "PermutationList",
+  "PermutationReplace",
   "ModularMatrix",
   "ModularWord",
   "Convergents",
@@ -818,6 +828,20 @@ const NOVEL = [
   "EllipticTheta",
   "EllipticThetaPrime",
   "KaryTree",
+  // logic-frontier.ts: LogicalExpand/BooleanConvert are genuinely Wolfram's own names (no
+  // DNF/CNF/NNF routine existed in compute-engine to build on); the Is… predicates are our
+  // spelling of Wolfram's TrueQ/IntegerQ/VectorQ/MatrixQ/ArrayQ/MersennePrimeExponentQ/
+  // IntervalMemberQ (see `HEADS` in @enumeratio/wolfram) -- all nine waiting on the same
+  // coverage run to fill in `elsewhere`.
+  "LogicalExpand",
+  "BooleanConvert",
+  "IsTrue",
+  "IsInteger",
+  "IsVector",
+  "IsMatrix",
+  "IsArray",
+  "IsMersennePrimeExponent",
+  "IsIntervalMember",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

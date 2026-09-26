@@ -1,0 +1,19 @@
+- id: a-rectangular-nesting-is-an-array
+  expr: [IsArray, [List, [List, 1, 2], [List, 3, 4]]]
+  expected: True
+- id: a-ragged-nesting-is-not-an-array
+  expr: [IsArray, [List, [List, 1, 2], [List, 3]]]
+  expected: False
+  category: Scope
+- id: a-flat-list-is-a-rank-1-array
+  expr: [IsArray, [List, 1, 2, 3]]
+  expected: True
+  category: Scope
+- id: a-non-list-is-not-an-array
+  expr: [IsArray, 3]
+  expected: False
+  category: Scope
+- id: a-test-function-must-hold-of-every-leaf
+  expr: [IsArray, [List, [List, 2, 4], [List, 6, 8]], IsEven]
+  expected: True
+  category: Scope

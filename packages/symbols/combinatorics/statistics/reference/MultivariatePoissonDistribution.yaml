@@ -1,0 +1,17 @@
+name: MultivariatePoissonDistribution
+domain: Statistics
+signature: MultivariatePoissonDistribution(mu0, {mu1, ..., muk})
+summary: Wolfram's common-shock model — $X_i = Y_0 + Y_i$, a shared $Y_0 \sim Poisson(\mu_0)$ plus an independent $Y_i \sim Poisson(\mu_i)$ per coordinate.
+signatures:
+  - call: MultivariatePoissonDistribution(mu0, {mu1, ..., muk})
+    description: shared shock mu0 plus per-coordinate independent Poisson(mu_i).
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = \sum_{j=0}^{\min_i x_i} PDF(Poisson(\mu_0), j) \prod_i PDF(Poisson(\mu_i), x_i-j)$ — a finite EXACT sum built from compute-engine's own native Poisson PDF, needing every $x_i$ to resolve to a concrete nonnegative integer (symbolic $x_i$ stays unevaluated).
+  - $Mean_i = \mu_0 + \mu_i$; $Variance_i = \mu_0 + \mu_i$ (Poisson's own mean-equals-variance identity carries over, since each $X_i$ is a sum of independent Poissons).
+  - '`Covariance` (compute-engine native over two collections) is widened to also accept a single `MultivariatePoissonDistribution`: $Cov(X_i,X_j) = \mu_0$ ($i \ne j$, from the shared shock), $Var(X_i) = \mu_0+\mu_i$ on the diagonal.'
+  - RandomVariate draws $Y_0 \sim Poisson(\mu_0)$ once, then $X_i = Y_0 + Y_i$ with each $Y_i \sim Poisson(\mu_i)$ independent — seeded through the same `SeedRandom` stream every other distribution in this package uses.
+seeAlso:
+  - PoissonDistribution
+  - MultinomialDistribution
+  - Covariance

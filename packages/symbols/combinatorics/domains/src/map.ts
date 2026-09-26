@@ -280,12 +280,12 @@ const krewerasBody: MathJSON = forEach(positions, ["IndexOf", "_raw", longCycleA
 /**
  * w sits below c in absolute order — equivalently, its cycles form a non-crossing partition —
  * iff the reflection lengths of w and K(w) split c's exactly: `cyc(w) + cyc(K(w)) = n + 1`.
- * Each side is wrapped back into a `Permutations` value because `CycleCount` is declared over
- * the carrier, not the raw word.
+ * Each side is wrapped back into a `Permutation` because `CycleCount` is declared over the
+ * carrier, not the raw word.
  */
 const krewerasGuard: MathJSON = [
   "Equal",
-  ["Add", ["CycleCount", ["Permutations", "_raw"]], ["CycleCount", ["Permutations", "_image"]]],
+  ["Add", ["CycleCount", ["Permutation", "_raw"]], ["CycleCount", ["Permutation", "_image"]]],
   ["Add", size, 1],
 ];
 
@@ -472,7 +472,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     extra: [fromPermutationLeftChild, fromPermutationRightChild],
     summary:
       "The increasing binary tree built by minimum-splitting recursion: the position of the smallest value roots the tree, everything before it recurses to the left, everything after it to the right.",
-    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTrees among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
+    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
   },
   {
     name: "KnuthClassRepresentative",

@@ -1,0 +1,70 @@
+a-flat-list-is-a-vector:
+  epsil:
+    in: IsVector([1, 2, 3])
+    out: True
+  tex:
+    in: \mathrm{IsVector}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{IsVector}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: VectorQ[List[1, 2, 3]]
+  wolfram:
+    in: VectorQ[List[1, 2, 3]]
+a-list-of-lists-is-not-a-vector:
+  epsil:
+    in: IsVector([[1, 2], [3, 4]])
+    out: False
+  tex:
+    in: \mathrm{IsVector}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
+    out: \bot
+  traditional:
+    in: \mathrm{IsVector}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
+    out: \mathrm{False}
+  fullform:
+    in: VectorQ[List[List[1, 2], List[3, 4]]]
+  wolfram:
+    in: VectorQ[List[List[1, 2], List[3, 4]]]
+a-non-list-is-not-a-vector:
+  epsil:
+    in: IsVector(3)
+    out: False
+  tex:
+    in: \mathrm{IsVector}(3)
+    out: \bot
+  traditional:
+    in: \mathrm{IsVector}(3)
+    out: \mathrm{False}
+  fullform:
+    in: VectorQ[3]
+  wolfram:
+    in: VectorQ[3]
+a-test-function-must-hold-of-every-element:
+  epsil:
+    in: IsVector([2, 4, 6], IsEven)
+    out: True
+  tex:
+    in: \mathrm{IsVector}(\bigl\lbrack2, 4, 6\bigr\rbrack, \mathrm{IsEven})
+    out: \top
+  traditional:
+    in: \mathrm{IsVector}(\bigl\lbrack2, 4, 6\bigr\rbrack, \mathrm{IsEven})
+    out: \mathrm{True}
+  fullform:
+    in: VectorQ[List[2, 4, 6], EvenQ]
+  wolfram:
+    in: VectorQ[List[2, 4, 6], EvenQ]
+a-test-function-failing-on-one-element:
+  epsil:
+    in: IsVector([2, 3, 6], IsEven)
+    out: False
+  tex:
+    in: \mathrm{IsVector}(\bigl\lbrack2, 3, 6\bigr\rbrack, \mathrm{IsEven})
+    out: \bot
+  traditional:
+    in: \mathrm{IsVector}(\bigl\lbrack2, 3, 6\bigr\rbrack, \mathrm{IsEven})
+    out: \mathrm{False}
+  fullform:
+    in: VectorQ[List[2, 3, 6], EvenQ]
+  wolfram:
+    in: VectorQ[List[2, 3, 6], EvenQ]

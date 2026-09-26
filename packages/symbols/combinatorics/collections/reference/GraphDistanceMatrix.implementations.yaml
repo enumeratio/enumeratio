@@ -30,3 +30,16 @@ unreachable-pair-is-infinite:
     in: GraphDistanceMatrix[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]
   wolfram:
     in: GraphDistanceMatrix[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]
+weighted-matrix-summed-weight:
+  epsil:
+    in: |-
+      GraphDistanceMatrix(Graph([1, 2, 3], [
+                                             UndirectedEdge(1, 2),
+                                             UndirectedEdge(2, 3),
+                                           ], EdgeWeight -> [5, 7]))
+    out: "[[0, 5, 12], [5, 0, 7], [12, 7, 0]]"
+  tex:
+    in: \mathrm{GraphDistanceMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack5, 7\bigr\rbrack)))
+    out: \bigl\lbrack\bigl\lbrack0, 5, 12\bigr\rbrack, \bigl\lbrack5, 0, 7\bigr\rbrack, \bigl\lbrack12, 7, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: GraphDistanceMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], KeyValuePair[EdgeWeight, List[5, 7]]]]

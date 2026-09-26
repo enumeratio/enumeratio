@@ -1,0 +1,15 @@
+- id: a-plain-integer
+  expr: [IsInteger, 4]
+  expected: True
+- id: a-rational-is-not-an-integer
+  expr: [IsInteger, [Rational, 1, 2]]
+  expected: False
+  category: Scope
+- id: a-free-symbol-is-false
+  expr: [IsInteger, x]
+  expected: False
+  category: Scope
+- id: a-negative-integer
+  expr: [IsInteger, -3]
+  expected: True
+  category: Scope

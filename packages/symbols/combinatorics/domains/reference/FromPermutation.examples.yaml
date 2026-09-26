@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [FromPermutation, [Permutations, [List, 2, 3, 1]]]
-  expected: [IncreasingBinaryTrees, [Tuple, 1, [List, 2, 0, 0], [List, 0, 3, 0]]]
+  expr: [FromPermutation, [Permutation, [List, 2, 3, 1]]]
+  expected: [IncreasingBinaryTree, [Tuple, 1, [List, 2, 0, 0], [List, 0, 3, 0]]]
   caption: the one-line word $231$

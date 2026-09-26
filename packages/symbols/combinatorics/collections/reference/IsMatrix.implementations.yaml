@@ -1,0 +1,70 @@
+a-2x2-is-a-matrix:
+  epsil:
+    in: IsMatrix([[1, 2], [3, 4]])
+    out: True
+  tex:
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: MatrixQ[List[List[1, 2], List[3, 4]]]
+  wolfram:
+    in: MatrixQ[List[List[1, 2], List[3, 4]]]
+a-flat-list-is-not-a-matrix:
+  epsil:
+    in: IsMatrix([1, 2, 3])
+    out: False
+  tex:
+    in: \mathrm{IsMatrix}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bot
+  traditional:
+    in: \mathrm{IsMatrix}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \mathrm{False}
+  fullform:
+    in: MatrixQ[List[1, 2, 3]]
+  wolfram:
+    in: MatrixQ[List[1, 2, 3]]
+a-ragged-list-of-lists-is-not-a-matrix:
+  epsil:
+    in: IsMatrix([[1, 2], [3]])
+    out: False
+  tex:
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)
+    out: \bot
+  traditional:
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)
+    out: \mathrm{False}
+  fullform:
+    in: MatrixQ[List[List[1, 2], List[3]]]
+  wolfram:
+    in: MatrixQ[List[List[1, 2], List[3]]]
+an-empty-list-is-not-a-matrix:
+  epsil:
+    in: IsMatrix([])
+    out: False
+  tex:
+    in: \mathrm{IsMatrix}(\bigl\lbrack \bigr\rbrack)
+    out: \bot
+  traditional:
+    in: \mathrm{IsMatrix}(\bigl\lbrack \bigr\rbrack)
+    out: \mathrm{False}
+  fullform:
+    in: MatrixQ[List[]]
+  wolfram:
+    in: MatrixQ[List[]]
+a-test-function-must-hold-of-every-entry:
+  epsil:
+    in: IsMatrix([[2, 4], [6, 8]], IsEven)
+    out: True
+  tex:
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack6, 8\bigr\rbrack\bigr\rbrack, \mathrm{IsEven})
+    out: \top
+  traditional:
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack6, 8\bigr\rbrack\bigr\rbrack, \mathrm{IsEven})
+    out: \mathrm{True}
+  fullform:
+    in: MatrixQ[List[List[2, 4], List[6, 8]], EvenQ]
+  wolfram:
+    in: MatrixQ[List[List[2, 4], List[6, 8]], EvenQ]

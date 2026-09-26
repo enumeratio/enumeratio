@@ -19,10 +19,10 @@ const catalogCarrier = new Map(COLLECTIONS.map((c) => [c.name, c.carrier]));
 const carrierOf = (f: FamilyKernel): string | undefined => f.declared?.carrier ?? catalogCarrier.get(f.head);
 
 /** How a family's kernel element becomes a value of its carrier. Carriers whose storage differs
- *  from the kernel's (SetPartitions is a growth string, the kernel's blocks) join as they're
+ *  from the kernel's (SetPartition is a growth string, the kernel's blocks) join as they're
  *  written. */
 const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
-  Permutations: (element) => ["Permutations", ["List", ...(element as number[])]],
+  Permutation: (element) => ["Permutation", ["List", ...(element as number[])]],
 };
 
 const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));
@@ -57,9 +57,9 @@ for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== un
   );
 }
 
-test("the empty permutation is a Permutations value, and its own image under each involution", () => {
+test("the empty permutation is a Permutation value, and its own image under each involution", () => {
   // S₀ has one element and every permutation family draws it at n = 0.
-  const empty = ["Permutations", ["List"]];
+  const empty = ["Permutation", ["List"]];
   for (const map of ["Reverse", "Inverse", "Complement"])
     expect(ce.box([map, empty] as never).evaluate().json).toEqual(empty);
 });

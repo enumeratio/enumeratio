@@ -227,15 +227,21 @@ The census makes the ratio concrete: 280 collections over 86 carriers, so a doma
 three collections on average. Domains are the small, stable vocabulary; collections are the
 open tail — the same split §2 of namespaces.md found for names, arrived at independently.
 
-**Naming, 2026-09-26**: the concepts above stay distinct (this section is unchanged), but a
-domain's NAME no longer is. A domain takes the plural — `SetPartitions`, not `SetPartition`
-— and is the same head as its plain collection where one exists, both jobs on one
-declaration (`declareConstructor` in [`declare.ts`](../packages/symbols/combinatorics/domains/src/declare.ts)
-overloads onto whatever the collection already declared, the same mechanism §5.2 describes
-for extending a built-in). The singular pascal-case of a carrier's id is reserved for an
-inhabitant — a helper naming ONE value, never a domain or a collection — so there is no
-singular alias to fall back on. The code examples through the rest of this document
-predate that decision and still say `Permutation`; read it as `Permutations` throughout.
+**Naming, 2026-09-26 (corrected)**: a domain's plural name is the **collection / type
+space** — `Permutations`, `DyckPaths`, `SetPartitions` — unchanged, and it keeps count,
+rank, enumerate, `Element(x, Permutations)`, and the carrier type's own signatures. The
+**singular** pascal-case of a carrier's id is the **inhabitant constructor** — the held value
+`Permutation([2, 1, 3])`, `DyckPath([1, 1, 0, 0])`, `SetPartition([[1, 2], [3]])` builds — and
+that is the ONLY thing the singular names. There is no alias either way: the plural head
+never also builds a value, and the singular head never also stands for the collection.
+`declareConstructor` in [`declare.ts`](../packages/symbols/combinatorics/domains/src/declare.ts)
+declares the singular constructor only, overloading it onto an existing definition of that
+same singular name (`ContinuedFraction`, `PermutationCycles`) rather than onto the plural
+collection — so `Permutations(list)` keeps compute-engine's own "every permutation of list"
+reading wherever CE or Wolfram already define the plural that way, and only `Permutation(list)`
+holds. An earlier version of this paragraph (#271) merged the two into one head under the
+plural name; that broke exactly this — `Permutations([2, 1, 3])` stopped meaning "all six
+permutations" — and is reverted.
 
 ## 3. Representation is writing, not structure
 
