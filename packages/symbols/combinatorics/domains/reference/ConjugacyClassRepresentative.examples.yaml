@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [ConjugacyClassRepresentative, [Permutations, [List, 2, 3, 1]]]
-  expected: [Permutations, [List, 2, 3, 1]]
+  expr: [ConjugacyClassRepresentative, [Permutation, [List, 2, 3, 1]]]
+  expected: [Permutation, [List, 2, 3, 1]]
   caption: the one-line word $231$

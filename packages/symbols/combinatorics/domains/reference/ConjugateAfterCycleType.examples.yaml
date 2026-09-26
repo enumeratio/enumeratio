@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [ConjugateAfterCycleType, [Permutations, [List, 2, 3, 1]]]
-  expected: [IntegerPartitions, [List, 1, 1, 1]]
+  expr: [ConjugateAfterCycleType, [Permutation, [List, 2, 3, 1]]]
+  expected: [IntegerPartition, [List, 1, 1, 1]]
   caption: the one-line word $231$
