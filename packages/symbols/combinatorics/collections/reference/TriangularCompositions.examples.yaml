@@ -1,16 +1,16 @@
 - id: count-triangularcomposition-6
-  expr: [Count, [TriangularComposition, 6]]
+  expr: [Count, [TriangularCompositions, 6]]
   expected: 7
   category: Basic
-  caption: $Count(TriangularComposition(6)) = 7$
+  caption: $Count(TriangularCompositions(6)) = 7$
 - id: first-element-of-triangularcomposition-6
-  expr: [At, [TriangularComposition, 6], 1]
+  expr: [At, [TriangularCompositions, 6], 1]
   expected: [List, 1, 1, 1, 1, 1, 1]
   category: Basic
   caption: The first element in enumeration order
 - id: every-element-of-triangularcomposition-6
   role: test
-  expr: [Take, [TriangularComposition, 6], 7]
+  expr: [Take, [TriangularCompositions, 6], 7]
   expected:
     [
       List,

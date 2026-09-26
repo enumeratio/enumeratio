@@ -11,7 +11,7 @@ details:
   - Each element is a one-line permutation.
 seeAlso:
   - SymmetricGroup
-  - ZigzagComposition
+  - ZigzagCompositions
 references:
   - system: oeis
     identity: A000111

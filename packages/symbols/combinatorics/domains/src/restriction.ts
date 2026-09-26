@@ -111,7 +111,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
     summary: "Compositions into parts 1, 2, 3, 4.",
   },
   {
-    name: "TriangularComposition",
+    name: "TriangularCompositions",
     base: "IntegerCompositions",
     on: "composition",
     predicate: [
@@ -152,7 +152,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
     summary: "Compositions that read the same reversed.",
   },
   {
-    name: "ZigzagComposition",
+    name: "ZigzagCompositions",
     base: "IntegerCompositions",
     on: "composition",
     predicate: [
@@ -188,7 +188,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
     summary: "Partitions into odd parts.",
   },
   {
-    name: "PrimePartition",
+    name: "PrimePartitions",
     base: "IntegerPartitions",
     on: "integer_partition",
     predicate: ["All", "_raw", ["Function", ["IsPrime", "_"], "_"]],

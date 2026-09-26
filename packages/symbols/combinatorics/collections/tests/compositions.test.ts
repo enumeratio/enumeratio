@@ -11,11 +11,11 @@ const PARAMS: Record<string, number[][]> = {
   FibonacciCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   TriCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   TetraCompositions: Array.from({ length: 11 }, (_, n) => [n]),
-  TriangularComposition: Array.from({ length: 11 }, (_, n) => [n]),
+  TriangularCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   PrimeCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   CarlitzCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   PalindromicCompositions: Array.from({ length: 11 }, (_, n) => [n]),
-  ZigzagComposition: Array.from({ length: 11 }, (_, n) => [n]),
+  ZigzagCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   KBoundedCompositions: [1, 2, 3, 4].flatMap((k) => Array.from({ length: 9 }, (_, n) => [n, k])),
 };
 
@@ -69,11 +69,11 @@ const PREDICATES: Record<string, (parts: number[]) => boolean> = {
   FibonacciCompositions: (p) => p.every((x) => x === 1 || x === 2),
   TriCompositions: (p) => p.every((x) => x >= 1 && x <= 3),
   TetraCompositions: (p) => p.every((x) => x >= 1 && x <= 4),
-  TriangularComposition: (p) => p.every(isTriangular),
+  TriangularCompositions: (p) => p.every(isTriangular),
   PrimeCompositions: (p) => p.every(isPrime),
   CarlitzCompositions: (p) => p.every((x, i) => i === 0 || p[i - 1] !== x),
   PalindromicCompositions: (p) => p.every((x, i) => x === p[p.length - 1 - i]),
-  ZigzagComposition: (p) => {
+  ZigzagCompositions: (p) => {
     if (p.length <= 1) return true;
     let expected: "up" | "down" | null = null;
     for (let i = 0; i + 1 < p.length; i++) {
@@ -136,8 +136,8 @@ test("DyadicCompositions count = A023359", () => {
 test("PrimeCompositions count = A023360", () => {
   expect(countsOf("PrimeCompositions", range(13))).toEqual([1, 0, 1, 1, 1, 3, 2, 6, 6, 10, 16, 20, 35]);
 });
-test("TriangularComposition count = A023361", () => {
-  expect(countsOf("TriangularComposition", range(13))).toEqual([1, 1, 1, 2, 3, 4, 7, 11, 16, 25, 40, 61, 94]);
+test("TriangularCompositions count = A023361", () => {
+  expect(countsOf("TriangularCompositions", range(13))).toEqual([1, 1, 1, 2, 3, 4, 7, 11, 16, 25, 40, 61, 94]);
 });
 test("CarlitzCompositions count = A003242", () => {
   expect(countsOf("CarlitzCompositions", range(13))).toEqual([1, 1, 1, 3, 4, 7, 14, 23, 39, 71, 124, 214, 378]);
@@ -145,8 +145,8 @@ test("CarlitzCompositions count = A003242", () => {
 test("PalindromicCompositions count = A016116 (2^floor(n/2))", () => {
   expect(countsOf("PalindromicCompositions", range(13))).toEqual([1, 1, 2, 2, 4, 4, 8, 8, 16, 16, 32, 32, 64]);
 });
-test("ZigzagComposition count = A025047", () => {
-  expect(countsOf("ZigzagComposition", range(13))).toEqual([1, 1, 1, 3, 4, 7, 12, 19, 29, 48, 75, 118, 186]);
+test("ZigzagCompositions count = A025047", () => {
+  expect(countsOf("ZigzagCompositions", range(13))).toEqual([1, 1, 1, 3, 4, 7, 12, 19, 29, 48, 75, 118, 186]);
 });
 test("KBoundedCompositions row k = generalized k-nacci", () => {
   // k=1: only the all-ones composition, one per n.

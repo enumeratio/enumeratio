@@ -1,24 +1,24 @@
 count-primepartition-12:
   epsil:
-    in: Count(PrimePartition(12))
+    in: Count(PrimePartitions(12))
     out: "7"
   tex:
-    in: \mathrm{Count}(\mathrm{PrimePartition}(12))
+    in: \mathrm{Count}(\mathrm{PrimePartitions}(12))
     out: "7"
   fullform:
-    in: Count[PrimePartition[12]]
+    in: Count[PrimePartitions[12]]
 first-element-of-primepartition-12:
   epsil:
-    in: PrimePartition(12)[1]
+    in: PrimePartitions(12)[1]
     out: "[7, 5]"
   tex:
-    in: \mathrm{PrimePartition}(12)[1]
+    in: \mathrm{PrimePartitions}(12)[1]
     out: \bigl\lbrack7, 5\bigr\rbrack
   fullform:
-    in: Part[PrimePartition[12], 1]
+    in: Part[PrimePartitions[12], 1]
 every-element-of-primepartition-12:
   epsil:
-    in: Take(PrimePartition(12), 7)
+    in: Take(PrimePartitions(12), 7)
     out: |-
       [
         [7, 5],
@@ -30,7 +30,7 @@ every-element-of-primepartition-12:
         [2, 2, 2, 2, 2, 2],
       ]
   tex:
-    in: \mathrm{Take}(\mathrm{PrimePartition}(12), 7)
+    in: \mathrm{Take}(\mathrm{PrimePartitions}(12), 7)
     out: \bigl\lbrack\bigl\lbrack7, 5\bigr\rbrack, \bigl\lbrack7, 3, 2\bigr\rbrack, \bigl\lbrack5, 5, 2\bigr\rbrack, \bigl\lbrack5, 3, 2, 2\bigr\rbrack, \bigl\lbrack3, 3, 3, 3\bigr\rbrack, \bigl\lbrack3, 3, 2, 2, 2\bigr\rbrack, \bigl\lbrack2, 2, 2, 2, 2, 2\bigr\rbrack\bigr\rbrack
   fullform:
-    in: Take[PrimePartition[12], 7]
+    in: Take[PrimePartitions[12], 7]

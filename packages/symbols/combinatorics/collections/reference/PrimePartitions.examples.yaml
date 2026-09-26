@@ -1,16 +1,16 @@
 - id: count-primepartition-12
-  expr: [Count, [PrimePartition, 12]]
+  expr: [Count, [PrimePartitions, 12]]
   expected: 7
   category: Basic
-  caption: $Count(PrimePartition(12)) = 7$
+  caption: $Count(PrimePartitions(12)) = 7$
 - id: first-element-of-primepartition-12
-  expr: [At, [PrimePartition, 12], 1]
+  expr: [At, [PrimePartitions, 12], 1]
   expected: [List, 7, 5]
   category: Basic
   caption: The first element in enumeration order
 - id: every-element-of-primepartition-12
   role: test
-  expr: [Take, [PrimePartition, 12], 7]
+  expr: [Take, [PrimePartitions, 12], 7]
   expected:
     [
       List,

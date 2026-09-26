@@ -1,24 +1,24 @@
 count-triangularcomposition-6:
   epsil:
-    in: Count(TriangularComposition(6))
+    in: Count(TriangularCompositions(6))
     out: "7"
   tex:
-    in: \mathrm{Count}(\mathrm{TriangularComposition}(6))
+    in: \mathrm{Count}(\mathrm{TriangularCompositions}(6))
     out: "7"
   fullform:
-    in: Count[TriangularComposition[6]]
+    in: Count[TriangularCompositions[6]]
 first-element-of-triangularcomposition-6:
   epsil:
-    in: TriangularComposition(6)[1]
+    in: TriangularCompositions(6)[1]
     out: "[1, 1, 1, 1, 1, 1]"
   tex:
-    in: \mathrm{TriangularComposition}(6)[1]
+    in: \mathrm{TriangularCompositions}(6)[1]
     out: \bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack
   fullform:
-    in: Part[TriangularComposition[6], 1]
+    in: Part[TriangularCompositions[6], 1]
 every-element-of-triangularcomposition-6:
   epsil:
-    in: Take(TriangularComposition(6), 7)
+    in: Take(TriangularCompositions(6), 7)
     out: |-
       [
         [1, 1, 1, 1, 1, 1],
@@ -30,7 +30,7 @@ every-element-of-triangularcomposition-6:
         [6],
       ]
   tex:
-    in: \mathrm{Take}(\mathrm{TriangularComposition}(6), 7)
+    in: \mathrm{Take}(\mathrm{TriangularCompositions}(6), 7)
     out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 3\bigr\rbrack, \bigl\lbrack1, 1, 3, 1\bigr\rbrack, \bigl\lbrack1, 3, 1, 1\bigr\rbrack, \bigl\lbrack3, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack6\bigr\rbrack\bigr\rbrack
   fullform:
-    in: Take[TriangularComposition[6], 7]
+    in: Take[TriangularCompositions[6], 7]

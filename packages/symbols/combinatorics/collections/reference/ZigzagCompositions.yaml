@@ -1,9 +1,9 @@
-name: ZigzagComposition
+name: ZigzagCompositions
 domain: Collections
-signature: ZigzagComposition(n)
+signature: ZigzagCompositions(n)
 summary: "The alternating compositions of $n$: $a_1 < a_2 > a_3 < …$ or $a_1 > a_2 < a_3 > …$, either starting direction."
 signatures:
-  - call: ZigzagComposition(n)
+  - call: ZigzagCompositions(n)
     description: "the alternating compositions of $n$: $a_1 < a_2 > a_3 < …$ or $a_1 > a_2 < a_3 > …$, either starting direction"
     library: enumeratio-collections
 details:

@@ -204,7 +204,7 @@ function isPalindromic(parts: unknown, n: number): boolean {
   return true;
 }
 
-// ─── ZigzagComposition(n): A025047 — alternating compositions, either starting direction, ──────
+// ─── ZigzagCompositions(n): A025047 — alternating compositions, either starting direction, ──────
 // counting BOTH a1<a2>a3<… and a1>a2<a3>… (offset 0, a(0)=1 the empty composition, a(1)=1 the
 // single part, a(2)=1 since [1,1] is flat — confirmed against the OEIS b-file). DP state is
 // (remaining, previous part, what the NEXT comparison must be): "start" (no part placed),
@@ -264,7 +264,7 @@ function zigzagUnrankSuffix(remaining: number, prev: number, state: ZState, r: n
       rr -= c;
     }
   }
-  throw new Error("ZigzagComposition: rank out of range");
+  throw new Error("ZigzagCompositions: rank out of range");
 }
 function zigzagUnrank(n: number, r: number): number[] {
   return n === 0 ? [] : zigzagUnrankSuffix(n, 0, "start", r);
@@ -362,7 +362,7 @@ export const entries: NumberKernel[] = [
     (a) => tetraComp.rank(a),
   ),
   ints(
-    "TriangularComposition",
+    "TriangularCompositions",
     1,
     ([n]) => triangularComp.count(n),
     ([n], r) => triangularComp.unrank(n, r),
@@ -404,7 +404,7 @@ export const entries: NumberKernel[] = [
     (a, [n]) => palindromicRank(a, n),
   ),
   ints(
-    "ZigzagComposition",
+    "ZigzagCompositions",
     1,
     ([n]) => zigzagCount(n),
     ([n], r) => zigzagUnrank(n, r),
