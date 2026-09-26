@@ -21,7 +21,7 @@ examples:
     category: Possible issues
     caption: $|z| \ge 1$ stays symbolic — no continuation past the unit disc
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

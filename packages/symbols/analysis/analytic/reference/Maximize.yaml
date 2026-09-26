@@ -1,0 +1,56 @@
+name: Maximize
+domain: Calculus
+signature: Maximize(f, x)
+summary: The global maximum of f over the real line (or a simple interval constraint), as {value, {x -> point}} -- an exact, provably global answer, not a local one.
+signatures:
+  - call: Maximize(f, x)
+    description: the global maximum of f, a real expression in the single variable x, over f's own natural domain.
+    library: "@enumeratio/analytic"
+  - call: Maximize(f, {x})
+    description: same as Maximize(f, x) -- Wolfram accepts the variable either bare or wrapped in a one-element list.
+    library: "@enumeratio/analytic"
+  - call: Maximize({f, cons}, x)
+    description: the global maximum of f restricted to cons, a simple interval constraint (x >= a, a <= x <= b, an And of two one-sided bounds, ...).
+    library: "@enumeratio/analytic"
+details:
+  - "[[Minimize]]'s exact mirror image -- same scope, same machinery ([[D]]/[[Solve]]/[[Limit]] on the ORIGINAL expression, never a hand-rolled formula), same declines. See its `details` for the full account; this entry only lists Maximize's own examples."
+examples:
+  - id: a-downward-parabola-s-vertex
+    expr: [Maximize, [Add, [Negate, [Power, x, 2]], [Multiply, 4, x], -1], x]
+    expected: [List, 3, [List, [Rule, x, 2]]]
+    caption: A downward parabola's vertex is its global maximum
+  - id: unbounded-above-reports-positive-infinity
+    expr: [Maximize, [Power, x, 3], x]
+    expected: [List, PositiveInfinity, [List, [Rule, x, PositiveInfinity]]]
+    caption: An odd-degree polynomial is unbounded above
+  - id: a-bounded-interval-constraint
+    expr:
+      [
+        Maximize,
+        [List, [Add, [Negate, [Power, x, 2]], [Multiply, 4, x], -1], [And, [GreaterEqual, x, 0], [LessEqual, x, 1]]],
+        x,
+      ]
+    expected: [List, 2, [List, [Rule, x, 1]]]
+    caption: With 0 <= x <= 1, the unconstrained vertex (x = 2) is out of range -- the boundary wins
+  - id: exp-of-a-negated-argument-is-unbounded-above
+    expr: [Maximize, [Exp, [Negate, x]], x]
+    expected: [List, PositiveInfinity, [List, [Rule, x, NegativeInfinity]]]
+    category: Scope
+    caption: Exp(-x) grows without bound as x -> -Infinity
+  - id: a-downward-quadratic-radicand
+    expr: [Maximize, [Sqrt, [Subtract, 4, [Power, x, 2]]], x]
+    expected: [List, 2, [List, [Rule, x, 0]]]
+    category: Scope
+    caption: Sqrt(4 - x^2)'s domain is exactly [-2, 2] -- its vertex (x = 0) is the max
+  - id: declines-more-than-one-variable
+    expr: [Maximize, [Negate, [Add, [Power, x, 2], [Power, y, 2]]], [List, x, y]]
+    expected: [Maximize, [Negate, [Add, [Power, x, 2], [Power, y, 2]]], [List, x, y]]
+    category: Possible issues
+    caption: Declines -- multivariate optimization is out of scope
+seeAlso:
+  - Minimize
+  - MinValue
+  - MaxValue
+  - NMaximize
+  - Solve
+  - Limit

@@ -29,7 +29,7 @@ examples:
     category: Properties
     caption: $\tan(j_{3/2,1}) = j_{3/2,1}$ — the sinc function's first turning point
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

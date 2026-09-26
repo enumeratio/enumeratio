@@ -30,7 +30,7 @@ examples:
     category: Scope
     caption: The infinite product, Euler's function at $q = \tfrac12$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

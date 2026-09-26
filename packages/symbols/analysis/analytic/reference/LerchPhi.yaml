@@ -1589,7 +1589,7 @@ examples:
     id: lerchphi-rim-theta-2p4-s-1p5-a-1
     expr: [N, [LerchPhi, [Complex, -0.7373937155412454, 0.675463180551151], 1.5, 1]]
     expected: [Complex, 0.7837313313575304, 0.12075792141283123]
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

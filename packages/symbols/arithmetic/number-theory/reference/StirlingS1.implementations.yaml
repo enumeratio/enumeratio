@@ -366,3 +366,51 @@ k-n-is-0:
     out: "0"
   mathlib4:
     in: (Nat.stirlingFirst 5 6)
+a-negative-k-stays-symbolic:
+  epsil:
+    in: StirlingS1(4, -1)
+    out: StirlingS1(4, -1)
+  tex:
+    in: \mathrm{StirlingS1}(4, -1)
+    out: \mathrm{StirlingS1}(4, -1)
+  traditional:
+    in: s(4, -1)
+    out: s(4, -1)
+  fullform:
+    in: StirlingS1[4, -1]
+  wolfram:
+    in: StirlingS1[4, -1]
+  sage:
+    in: stirling_number1(4, -1)
+  julia:
+    in: Combinatorics.stirlings1(big(4), -1)
+    out: "0"
+    verdict: inconclusive
+    kind: domain
+    note: A negative k is outside StirlingS1's textbook domain, so compute-engine leaves it symbolic; Combinatorics.jl's stirlings1 extends past it and answers 0.
+  mathlib4:
+    in: (Nat.stirlingFirst 4 (-1))
+a-mid-sized-n-and-k-past-the-fast-paths:
+  epsil:
+    in: StirlingS1(40, 14)
+    out: 1_640_591_781_294_212_129_275_881_145_293_779_479_141_760
+  tex:
+    in: \mathrm{StirlingS1}(40, 14)
+    out: 1\,640\,591\,781\,294\,212\,129\,275\,881\,145\,293\,779\,479\,141\,760
+  traditional:
+    in: s(40, 14)
+    out: 1\,640\,591\,781\,294\,212\,129\,275\,881\,145\,293\,779\,479\,141\,760
+  fullform:
+    in: StirlingS1[40, 14]
+  wolfram:
+    in: StirlingS1[40, 14]
+  sage:
+    in: stirling_number1(40, 14)
+  julia:
+    in: Combinatorics.stirlings1(big(40), 14)
+    out: "julia: killed (memory, peak 3088 MB)"
+    verdict: error
+    kind: resource
+    note: Combinatorics.jl's stirlings1 is a plain double recursion with no memoization, fast-pathed only at k in {0, 1, 2, n-1, n-2, n-3} or n==k; away from those it blows up combinatorially and the oracle's memory watchdog kills it. Not a mapping bug -- big(n) avoids the Int64 table overflow but can't fix the crate's algorithmic complexity.
+  mathlib4:
+    in: (Nat.stirlingFirst 40 14)

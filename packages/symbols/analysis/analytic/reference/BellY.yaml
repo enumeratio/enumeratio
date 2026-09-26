@@ -25,7 +25,7 @@ examples:
     category: Properties
     caption: $x_j = j!$ gives the Lah number L(4, 2)
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

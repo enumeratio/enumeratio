@@ -1,7 +1,7 @@
 name: MajorIndex
 domain: Permutation statistics
 signature: MajorIndex(p)
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

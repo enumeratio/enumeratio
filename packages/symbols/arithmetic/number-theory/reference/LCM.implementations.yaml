@@ -362,3 +362,30 @@ listable-a-single-list-argument-threads-element:
     verdict: error
     kind: threading
     note: compute-engine's LCM is Listable and threads over the list; the Rust crates take scalars only.
+a-large-integer-against-a-negative-rational:
+  epsil:
+    in: LCM(20!, 10 ^ -1 - 2)
+    out: 2_432_902_008_176_640_000
+  tex:
+    in: \operatorname{lcm}(20!, \frac{1}{10}-2)
+    out: 2\,432\,902\,008\,176\,640\,000
+  fullform:
+    in: LCM[Factorial[20], Plus[Power[10, -1], -2]]
+  wolfram:
+    in: LCM[Factorial[20], Plus[Power[10, -1], -2]]
+  sympy:
+    in: lcm(factorial(20), (((10)**-1) + -2))
+  sage:
+    in: lcm(factorial(20), (((10)^-1) + -2))
+  oscar:
+    in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^-1) + -2)))
+  julia:
+    in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^-1) + -2)))
+    out: "InexactError: BigInt(-1.8999999999999999999999999999999999999999999999999999999999999999999999999999"
+    verdict: error
+    kind: domain
+    note: compute-engine extends LCM to rationals (here 20!/1 and -19/10, giving lcm(20!, 19)/gcd(1, 10) = 20! since 19 | 20!); Nemo's ZZ conversion only accepts integers, so the rational operand is a domain gap in the mapping, not a bug on either side.
+  mathlib4:
+    in: (Int.lcm (Nat.factorial 20) ((10 ^ (-1)) + (-2)))
+  rust:
+    in: lcm(factorial(n(20)), (power(n(10), n(-1)) + n(-2)))

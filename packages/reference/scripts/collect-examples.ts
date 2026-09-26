@@ -15,7 +15,7 @@ import { dirname, join } from "node:path";
 import { dedupeId, type ReferenceExample, type SystemImplementation } from "@enumeratio/entry";
 import { emit } from "@enumeratio/oracle/src";
 import { writeYaml } from "@enumeratio/entry/node";
-import { baseId } from "./migrate/ids.ts";
+import { baseId } from "./example-id.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 
 const ce = new ComputeEngine();

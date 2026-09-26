@@ -19,7 +19,7 @@ examples:
     expected: [Sqrt, [Multiply, 2, Pi]]
     caption: $\mathcal{F}^{-1}\{1\} = \sqrt{2\pi}$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

@@ -142,6 +142,44 @@ examples:
     expected: { num: "1.41421356237309504880168872420969807856967188" }
     category: Scope
     caption: To 45 significant digits, every one correctly rounded
+  - role: test
+    id: an-approximate-negative-radicand-stays-complex
+    expr: [Sqrt, -2.875]
+    expected: [Complex, 0, 1.695582495781317]
+    category: Scope
+    caption: An approximate negative radicand still gives a complex root
+  - role: test
+    id: sqrt-36-negative
+    expr: [Sqrt, -36]
+    expected: [Complex, 0, 6]
+    category: Possible issues
+  - role: test
+    id: sqrt-2-times-sqrt-neg-1
+    expr: [Multiply, [Sqrt, 1], [Sqrt, -1]]
+    expected: [Complex, 0, 1]
+    category: Possible issues
+    caption: $\sqrt{1}\sqrt{-1} = i$, oracle edge case of the a·b identity above
+  - role: test
+    id: sqrt-neg-4-over-9
+    expr: [Sqrt, [Rational, -4, 9]]
+    expected: [Complex, 0, [Rational, 2, 3]]
+    category: Scope
+  - role: test
+    id: sqrt-neg-1-half
+    expr: [Sqrt, [Rational, -1, 2]]
+    expected: [Complex, 0, [Divide, [Sqrt, 2], 2]]
+    category: Scope
+    caption: A negative unit fraction also rationalizes the denominator
+  - role: test
+    id: sqrt-neg-1
+    expr: [Sqrt, -1]
+    expected: [Complex, 0, 1]
+    category: Scope
+  - role: test
+    id: sqrt-neg-12-over-5
+    expr: [Sqrt, [Rational, -12, 5]]
+    expected: [Complex, 0, [Multiply, [Rational, 2, 5], [Sqrt, 15]]]
+    category: Scope
 seeAlso:
   - Root
   - Square

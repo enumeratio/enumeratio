@@ -57,7 +57,7 @@ examples:
     category: Scope
     caption: 'Listable in $n$: the nontrivial character mod 3 over $1, \dots, 5$'
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

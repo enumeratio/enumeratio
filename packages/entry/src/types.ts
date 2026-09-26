@@ -136,11 +136,11 @@ export type Environment = "engine" | "browser" | "gpu" | "node" | "external";
  * - `mapped`    the equivalent call in an external system; the table lives in
  *   `@enumeratio/oracle`'s MAPPINGS, keyed by signature
  */
-export type ImplementationOrigin = "reference" | "native" | "compiled" | "component" | "mapped";
+export type BindingOrigin = "reference" | "native" | "compiled" | "component" | "mapped";
 
 /** One of the several things a head is "made of". */
-export interface ReferenceImplementation {
-  readonly origin: ImplementationOrigin;
+export interface ReferenceBinding {
+  readonly origin: BindingOrigin;
   /** Target or language: "notatio", "typescript", "wgsl", "numpy", "<notatio-plot>", … */
   readonly form: string;
   readonly environment?: Environment;
@@ -215,7 +215,7 @@ export interface ReferenceEntry {
    * runs, the component it bottoms out in, the systems it maps to. Several rows, because
    * there are genuinely several implementations and the point is to see them together.
    */
-  readonly implementations?: readonly ReferenceImplementation[];
+  readonly bindings?: readonly ReferenceBinding[];
   /** Set when the head is on the primitive frontier and has no `reference` row. */
   readonly primitive?: PrimitiveReason;
   /**

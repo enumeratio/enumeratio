@@ -4,7 +4,7 @@
 // FromPermutation left here once, reason "a catalog alias whose source collection is
 // ambiguous": the catalog dump folds map rows to bare names with an overload set (`on`), no
 // source-collection field, so which collection's "FromPermutation" this was looked
-// unrecoverable. It wasn't — `ToPermutation`'s own overload set names `IncreasingBinaryTree`
+// unrecoverable. It wasn't — `ToPermutation`'s own overload set names `IncreasingBinaryTrees`
 // among its sources, and `FromPermutation`'s title ("Minimum-splitting recursion → increasing
 // binary tree") is exactly that map's inverse: the Cartesian tree on a permutation's values,
 // min-heap ordered. Defined in increasing-binary-tree.ts, declared in map.ts.

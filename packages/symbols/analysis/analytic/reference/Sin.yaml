@@ -321,6 +321,12 @@ examples:
     expected: { num: "-0.645251285265780844206" }
     category: Possible issues
     caption: A huge exact argument is reduced modulo $2\pi$ with enough working precision to get the digits right
+  - role: test
+    id: an-even-huger-argument-11-38
+    expr: [N, [Sin, [Power, 11, 38]]]
+    expected: { num: "0.867534193184863032082" }
+    category: Possible issues
+    caption: An even huger argument -- f64's range reduction has long since lost the plot by here
   - id: functionexpand-gives-the-nested-radical-form
     expr: [FunctionExpand, [Sin, [Divide, Pi, 15]]]
     expected:

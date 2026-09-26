@@ -25,7 +25,7 @@ import {
   x,
 } from "./vocabulary.ts";
 
-const on = "IntegerPartition";
+const on = "IntegerPartitions";
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
   head,
   on,

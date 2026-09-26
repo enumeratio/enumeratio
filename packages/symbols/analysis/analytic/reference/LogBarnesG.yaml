@@ -78,7 +78,7 @@ examples:
     expected: PositiveInfinity
     category: Scope
     caption: $\ln G(\infty) = \infty$
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

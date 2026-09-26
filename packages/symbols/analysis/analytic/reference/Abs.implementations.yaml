@@ -455,6 +455,29 @@ decides-the-sign-of-an-exact-numeric-expression:
   rust:
     in: abs((sqrt(n(2)) - n(2)))
     out: "0.5857864376269049"
+a-complex-radicand-inside-the-subtraction:
+  epsil:
+    in: Abs(Sqrt(-10) - 2)
+    out: Sqrt(14)
+  tex:
+    in: \vert\sqrt{-10}-2\vert
+    out: \sqrt{14}
+  fullform:
+    in: Abs[Subtract[Sqrt[-10], 2]]
+  wolfram:
+    in: Abs[Subtract[Sqrt[-10], 2]]
+  sympy:
+    in: Abs((sqrt(-10) - 2))
+  mpmath:
+    in: fabs((sqrt(-10) - 2))
+  sage:
+    in: abs((sqrt(-10) - 2))
+  rust:
+    in: abs((sqrt(n(-10)) - n(2)))
+    out: NaN
+    verdict: inconclusive
+    kind: domain
+    note: Rust's f64 sqrt inside is real-only and gives NaN, which poisons the whole expression; compute-engine decides the sign symbolically and gives an exact Sqrt.
 z-2-z-bar-z:
   epsil:
     in: Abs(3 + 4i) ^ 2 == (3 + 4i) * Conjugate(3 + 4i)

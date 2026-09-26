@@ -1,18 +1,18 @@
 the-one-line-word-312:
   epsil:
-    in: LongestCycleLength(Permutation([3, 1, 2]))
+    in: LongestCycleLength(Permutations([3, 1, 2]))
     out: "3"
   tex:
-    in: \mathrm{LongestCycleLength}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    in: \mathrm{LongestCycleLength}(\mathrm{Permutations}(\bigl\lbrack3, 1, 2\bigr\rbrack))
     out: "3"
   fullform:
-    in: LongestCycleLength[Permutation[List[3, 1, 2]]]
+    in: LongestCycleLength[Permutations[List[3, 1, 2]]]
 the-one-line-word-2413:
   epsil:
-    in: LongestCycleLength(Permutation([2, 4, 1, 3]))
+    in: LongestCycleLength(Permutations([2, 4, 1, 3]))
     out: "4"
   tex:
-    in: \mathrm{LongestCycleLength}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
+    in: \mathrm{LongestCycleLength}(\mathrm{Permutations}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
     out: "4"
   fullform:
-    in: LongestCycleLength[Permutation[List[2, 4, 1, 3]]]
+    in: LongestCycleLength[Permutations[List[2, 4, 1, 3]]]

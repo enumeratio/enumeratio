@@ -279,3 +279,85 @@ to-30-significant-digits-not-yet-the-requested:
     in: N[BarnesG[Rational[1, 2]], 30]
   wolfram:
     in: N[BarnesG[Rational[1, 2]], 30]
+g-1-1:
+  epsil:
+    in: BarnesG(1)
+    out: "1"
+  tex:
+    in: \mathrm{BarnesG}(1)
+    out: "1"
+  traditional:
+    in: G(1)
+    out: "1"
+  fullform:
+    in: BarnesG[1]
+  wolfram:
+    in: BarnesG[1]
+g-2-1:
+  epsil:
+    in: BarnesG(2)
+    out: "1"
+  tex:
+    in: \mathrm{BarnesG}(2)
+    out: "1"
+  traditional:
+    in: G(2)
+    out: "1"
+  fullform:
+    in: BarnesG[2]
+  wolfram:
+    in: BarnesG[2]
+g-4-2:
+  epsil:
+    in: BarnesG(4)
+    out: "2"
+  tex:
+    in: \mathrm{BarnesG}(4)
+    out: "2"
+  traditional:
+    in: G(4)
+    out: "2"
+  fullform:
+    in: BarnesG[4]
+  wolfram:
+    in: BarnesG[4]
+g-6-288:
+  epsil:
+    in: BarnesG(6)
+    out: "288"
+  tex:
+    in: \mathrm{BarnesG}(6)
+    out: "288"
+  traditional:
+    in: G(6)
+    out: "288"
+  fullform:
+    in: BarnesG[6]
+  wolfram:
+    in: BarnesG[6]
+barnesg-of-a-symbol-stays-symbolic:
+  epsil:
+    in: BarnesG(z)
+    out: BarnesG(z)
+  tex:
+    in: \mathrm{BarnesG}(z)
+    out: \mathrm{BarnesG}(z)
+  traditional:
+    in: G(z)
+    out: G(z)
+  fullform:
+    in: BarnesG[z]
+n-barnesg-5-over-2:
+  epsil:
+    in: N(BarnesG(5 / 2))
+    out: 0.947_573_901_083_825_776_884
+  tex:
+    in: N(\mathrm{BarnesG}(\frac{5}{2}))
+    out: 0.947\,573\,901\,083\,825\,776\,884
+  traditional:
+    in: N(G(\frac{5}{2}))
+    out: 0.947\,573\,901\,083\,825\,776\,884
+  fullform:
+    in: N[BarnesG[Rational[5, 2]]]
+  wolfram:
+    in: N[BarnesG[Rational[5, 2]]]

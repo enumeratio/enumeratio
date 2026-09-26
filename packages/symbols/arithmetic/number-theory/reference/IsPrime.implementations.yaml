@@ -536,6 +536,36 @@ non-integers-are-not-prime:
     verdict: error
     kind: domain
     note: The Rust adapter takes integers here; compute-engine's IsPrime extends past them.
+another-non-integer-3-halves:
+  epsil:
+    in: IsPrime(3 / 2)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(\frac{3}{2})
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(\frac{3}{2})
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Rational[3, 2]]
+  wolfram:
+    in: PrimeQ[Rational[3, 2]]
+  sympy:
+    in: isprime(Rational(3, 2))
+  sage:
+    in: is_prime((3/2))
+  oscar:
+    in: is_prime(ZZ((3 // 2)))
+  julia:
+    in: is_prime(ZZ((3 // 2)))
+  mathlib4:
+    in: "(decide (Nat.Prime ((3 : ℚ) / 2)))"
+  rust:
+    in: is_prime(rational(n(3), n(2)))
+    out: "panic: an integer, not 3/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's IsPrime extends past them, same as the 1/2 example above.
 a-symbol-stays-unevaluated:
   epsil:
     in: IsPrime(x)

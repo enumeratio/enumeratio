@@ -29,7 +29,7 @@ examples:
     category: Possible issues
     caption: Exact arguments stay unevaluated; N gives the number
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

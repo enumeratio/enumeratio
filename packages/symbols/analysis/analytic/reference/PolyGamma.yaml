@@ -267,6 +267,45 @@ examples:
     id: n-polygamma-5-2-plus-neg-0p5-times-i
     expr: [N, [PolyGamma, 5, [Complex, 2, -0.5]]]
     expected: [Complex, 0.27132469953315896, 1.7071964092847043]
+  - role: test
+    id: n-polygamma-1-1-over-2
+    expr: [N, [PolyGamma, 1, [Rational, 1, 2]]]
+    expected: { num: "4.93480220054467930942" }
+  - role: test
+    id: n-polygamma-0-1
+    expr: [N, [PolyGamma, 0, 1]]
+    expected: { num: "-0.577215664901532860607" }
+  - role: test
+    id: n-polygamma-0-1-plus-i
+    expr: [N, [PolyGamma, 0, [Complex, 1, 1]]]
+    expected: [Complex, 0.0946503206224758, 1.0766740474685808]
+  - role: test
+    id: n-polygamma-0-0p5-plus-0p3i
+    expr: [N, [PolyGamma, 0, [Complex, 0.5, 0.3]]]
+    expected: [Complex, -1.3979326294058074, 1.1566693833242383]
+  - role: test
+    id: n-polygamma-neg1-2-is-loggamma-2-is-0
+    expr: [N, [PolyGamma, -1, 2]]
+    expected: 0
+    caption: $\psi^{(-1)}(z) = \ln\Gamma(z)$, so $\psi^{(-1)}(2) = \ln 1! = 0$
+  - role: test
+    id: n-polygamma-neg1-1-over-2
+    expr: [N, [PolyGamma, -1, [Rational, 1, 2]]]
+    expected: 0.5723649429246995
+  - role: test
+    id: n-polygamma-neg1-1-plus-i
+    expr: [N, [PolyGamma, -1, [Complex, 1, 1]]]
+    expected: [Complex, -0.6509231993018556, -0.30164032046753264]
+  - role: test
+    id: n-polygamma-neg1-neg0p5
+    expr: [N, [PolyGamma, -1, -0.5]]
+    expected: [Complex, 1.2655121234846451, -3.141592653589793]
+    caption: Off the positive axis, $\ln\Gamma$'s own branch
+  - role: test
+    id: n-polygamma-neg2-stays-unevaluated
+    expr: [N, [PolyGamma, -2, 2]]
+    expected: [PolyGamma, -2, 2]
+    caption: $m \le -2$ is past what the engine covers, so it stays unevaluated
 seeAlso:
   - Digamma
   - Gamma

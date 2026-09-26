@@ -22,7 +22,7 @@ examples:
     expected: 0
     category: Properties
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

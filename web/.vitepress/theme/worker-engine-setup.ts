@@ -27,7 +27,7 @@ import { declareAnalytic, declareFractals } from "@enumeratio/analytic";
 import { declareBraid } from "@enumeratio/braid";
 import { declareCollections } from "@enumeratio/collections";
 import { declareDiagrams } from "@enumeratio/diagram";
-import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
+import { declareDomainConstructors, declareDomainTypes, declareMaps, DOMAINS } from "@enumeratio/domains";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareGeometric } from "@enumeratio/geometric";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
@@ -48,7 +48,8 @@ export function configure(ce: ComputeEngine): void {
     declareCollections,
     declareStatistics,
     ALL_STATISTICS,
-    declareDomains,
+    declareDomainTypes,
+    declareDomainConstructors,
     declareMaps,
     DOMAINS,
     declareAnalytic,

@@ -23,7 +23,7 @@ examples:
     expected: [Complex, 0.5, 49.7738324776723]
     category: Scope
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

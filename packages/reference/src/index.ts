@@ -1,11 +1,11 @@
 export type {
   Environment,
-  ImplementationOrigin,
+  BindingOrigin,
   MathJSON,
   PrimitiveReason,
   ReferenceEntry,
   ReferenceExample,
-  ReferenceImplementation,
+  ReferenceBinding,
 } from "./types.ts";
 export { ENGINE_DOMAIN, engineEntries } from "./engine-entries.ts";
 export { backlog, type BacklogHead } from "./backlog.ts";

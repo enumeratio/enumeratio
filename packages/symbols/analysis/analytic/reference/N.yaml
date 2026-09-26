@@ -37,6 +37,12 @@ examples:
     expected: 0.38
     category: Possible issues
     caption: ...and 0.375 to 0.38
+  - role: test
+    id: n-pi-1-digit
+    expr: [N, Pi, 1]
+    expected: 3
+    category: Possible issues
+    caption: A single requested digit, next to n-pi-30 above
 seeAlso:
   - Round
   - Interval

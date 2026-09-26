@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: PeakSet(Permutation([2, 3, 1]))
-    out: Finset(([2], 3))
+    in: PeakSet(Permutations([2, 3, 1]))
+    out: Finsets(([2], 3))
   tex:
-    in: \mathrm{PeakSet}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{Finset}((\bigl\lbrack2\bigr\rbrack,3))
+    in: \mathrm{PeakSet}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Finsets}((\bigl\lbrack2\bigr\rbrack,3))
   fullform:
-    in: PeakSet[Permutation[List[2, 3, 1]]]
+    in: PeakSet[Permutations[List[2, 3, 1]]]

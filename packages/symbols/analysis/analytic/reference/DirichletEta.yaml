@@ -87,7 +87,7 @@ examples:
     expected: { num: "0.604898643421630370247265914236" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

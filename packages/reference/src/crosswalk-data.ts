@@ -3169,6 +3169,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Join",
   },
   {
+    name: "KaryTree",
+    wolfram: "KaryTree",
+  },
+  {
     name: "KeiperLiLambda",
     fungrimEntries: ["081205", "d8d820", "fcab61"],
   },
@@ -3599,6 +3603,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MaxValue",
+    wolfram: "MaxValue",
+  },
+  {
+    name: "Maximize",
+    wolfram: "Maximize",
+  },
+  {
     name: "Mean",
     wolfram: "Mean",
   },
@@ -3636,6 +3648,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "enumeratio_min($*,)",
       },
     ],
+  },
+  {
+    name: "MinValue",
+    wolfram: "MinValue",
+  },
+  {
+    name: "Minimize",
+    wolfram: "Minimize",
   },
   {
     name: "Mod",
@@ -3778,8 +3798,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "NMaximize",
+    wolfram: "NMaximize",
+  },
+  {
+    name: "NMinimize",
+    wolfram: "NMinimize",
+  },
+  {
     name: "NPartition",
     fungrimEntries: ["6018a4", "7ef291", "8eed2c", "b2583f", "cd3013", "cebe1b", "e84642"],
+  },
+  {
+    name: "NSum",
+    wolfram: "NSum",
   },
   {
     name: "NaN",
