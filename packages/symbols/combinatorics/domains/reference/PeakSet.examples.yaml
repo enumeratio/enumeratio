@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [PeakSet, [Permutations, [List, 2, 3, 1]]]
-  expected: [Finsets, [Tuple, [List, 2], 3]]
+  expr: [PeakSet, [Permutation, [List, 2, 3, 1]]]
+  expected: [Finset, [Tuple, [List, 2], 3]]
   caption: the one-line word $231$

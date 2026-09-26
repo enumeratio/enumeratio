@@ -22,8 +22,9 @@ export interface EngineLibraries {
   readonly declareCollections: typeof import("@enumeratio/collections").declareCollections;
   readonly declareStatistics: typeof import("@enumeratio/statistics").declareStatistics;
   readonly ALL_STATISTICS: typeof import("@enumeratio/statistics").ALL_STATISTICS;
-  readonly declareDomainTypes: typeof import("@enumeratio/domains").declareDomainTypes;
-  readonly declareDomainConstructors: typeof import("@enumeratio/domains").declareDomainConstructors;
+  readonly declareDomains: typeof import("@enumeratio/domains").declareDomains;
+  readonly declareDomainPlurals: typeof import("@enumeratio/domains").declareDomainPlurals;
+  readonly declareDomainElement: typeof import("@enumeratio/domains").declareDomainElement;
   readonly declareMaps: typeof import("@enumeratio/domains").declareMaps;
   readonly DOMAINS: typeof import("@enumeratio/domains").DOMAINS;
   readonly declareAnalytic: typeof import("@enumeratio/analytic").declareAnalytic;
@@ -55,24 +56,24 @@ export interface EngineLibraries {
  * `worker-engine-setup.ts`'s own comment) -- both callers handle those two on their own.
  */
 export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) => void, libs: EngineLibraries): void {
-  // Carrier TYPES first: everything below declares heads OVER these minted types, so they
+  // Carriers first: everything below declares heads OVER these minted types, so they
   // have to exist before a signature can name one.
   const constructorFor = Object.fromEntries(libs.DOMAINS.map((d) => [d.type, d.name]));
-  // SetPartitions is held back: domains treats it as a restricted growth string while
+  // SetPartition is held back: domains treats it as a restricted growth string while
   // every set-partition definition works in blocks -- typing those heads over the
   // carrier would be a wrong answer rather than a type error.
   const domainTypes = Object.fromEntries(
-    libs.DOMAINS.filter((d) => d.name !== "SetPartitions").map((d) => [d.name, d.type]),
+    libs.DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),
   );
-  apply(libs.declareDomainTypes);
+  apply(libs.declareDomains);
   // A combinatorial statistic is a function of a carrier, so that is what these heads
   // take. The ones that are ALSO plain list functions accept a bare list too.
   apply((ce) => libs.declareCollections(ce, { permutationType: "permutation" }));
-  // The carrier NAME comes after collections, not before: a carrier and its plain
-  // collection are the same head now (Permutations, SetPartitions, ...), so collections
-  // has to declare that name first and domains' own constructor layers onto it, rather
-  // than the two colliding over who's first.
-  apply(libs.declareDomainConstructors);
+  // AFTER declareCollections: a plural a collection family already claims (Permutations,
+  // DyckPaths, ...) has to still be free when this checks, not raced by minting a bare
+  // symbol for it first.
+  apply(libs.declareDomainPlurals);
+  apply(libs.declareDomainElement);
   // Collections already declares the fast permutation heads under the same names, so
   // those are skipped here — one head, one owner.
   apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { skipDeclared: true, domainTypes }));

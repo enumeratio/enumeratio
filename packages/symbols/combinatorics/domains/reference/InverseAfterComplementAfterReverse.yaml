@@ -3,9 +3,9 @@ domain: Combinatorial maps
 signature: InverseAfterComplementAfterReverse(Permutation)
 summary: Reverse, then complement, then invert.
 details:
-  - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - "Defined as a COMPOSITION, applied right to left: [[Inverse]] after [[Complement]] after [[Reverse]]. Each step goes through its own declared head, so every intermediate value is a properly constructed carrier."
-  - The name is FindStat's, and it is what a catalog produces when it cannot SAY composition. With Compositions it is Compose(Inverse, Complement, Reverse) and needs no name at all — kept only because the catalog has it.
+  - The name is FindStat's, and it is what a catalog produces when it cannot SAY composition. With Composition it is Compose(Inverse, Complement, Reverse) and needs no name at all — kept only because the catalog has it.
 seeAlso:
   - Inverse
   - Complement

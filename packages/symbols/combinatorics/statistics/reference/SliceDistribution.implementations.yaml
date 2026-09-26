@@ -7,6 +7,8 @@ slice-distribution-wiener:
     out: \operatorname{NormalDistribution}(3, 2\sqrt{3})
   fullform:
     in: SliceDistribution[WienerProcess[1, 2], 3]
+  wolfram:
+    in: SliceDistribution[WienerProcess[1, 2], 3]
 slice-distribution-poisson:
   epsil:
     in: SliceDistribution(PoissonProcess(5), 2)
@@ -16,6 +18,8 @@ slice-distribution-poisson:
     out: \operatorname{PoissonDistribution}(10)
   fullform:
     in: SliceDistribution[PoissonProcess[5], 2]
+  wolfram:
+    in: SliceDistribution[PoissonProcess[5], 2]
 slice-distribution-feeds-pdf-unchanged:
   epsil:
     in: Mean(SliceDistribution(PoissonProcess(5), 2))
@@ -24,4 +28,6 @@ slice-distribution-feeds-pdf-unchanged:
     in: \mathrm{mean}(\mathrm{SliceDistribution}(\mathrm{PoissonProcess}(5), 2))
     out: "10"
   fullform:
+    in: Mean[SliceDistribution[PoissonProcess[5], 2]]
+  wolfram:
     in: Mean[SliceDistribution[PoissonProcess[5], 2]]

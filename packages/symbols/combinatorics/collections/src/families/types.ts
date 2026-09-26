@@ -45,7 +45,7 @@ export interface Param {
 /** What a family tells Plausible about itself (design/plausible.md §3). Optional while the
  *  families migrate; the contract test ratchets the ones still undeclared. */
 export interface Declared {
-  /** The domain its elements inhabit — the catalogue's carrier, e.g. "Permutations". */
+  /** The domain its elements inhabit — the catalogue's carrier, e.g. "Permutation". */
   readonly carrier: string;
   readonly params: readonly Param[];
   readonly cost: { readonly count: Cost; readonly unrank: Cost; readonly rank: Cost; readonly valid: Cost };

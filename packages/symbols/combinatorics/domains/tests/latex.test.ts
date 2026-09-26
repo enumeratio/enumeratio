@@ -19,7 +19,7 @@ const engine = (): ComputeEngine => {
 };
 
 const ce = engine();
-const perm = (...entries: number[]): unknown => ["Permutations", ["List", ...entries]];
+const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
 const text = (expr: unknown): unknown => ce.box(expr as never).evaluate().json;
 
 function permutations(n: number): number[][] {
@@ -43,16 +43,16 @@ test("conventional notation does NOT read back on its own", () => {
 test("the engine's own serialisation keeps a trigger, and round-trips", () => {
   for (const p of ALL) {
     const written = ce.box(perm(...p) as never).evaluate().latex;
-    expect(written, `[${p}]`).toContain(triggerFor(DOMAINS.find((d) => d.name === "Permutations")!));
-    expect(ce.parse(written).json, `[${p}]`).toEqual(["Permutations", ["List", ...p]]);
+    expect(written, `[${p}]`).toContain(triggerFor(DOMAINS.find((d) => d.name === "Permutation")!));
+    expect(ce.parse(written).json, `[${p}]`).toEqual(["Permutation", ["List", ...p]]);
   }
 });
 
 test("display forms are for reading, and are reached through Render", () => {
   expect(text(["Render", perm(2, 3, 1), "'oneline'", "'latex'"])).toBe("'2\\,3\\,1'");
   expect(text(["Render", perm(2, 3, 1), "'cycle'", "'latex'"])).toBe("'(1\\,2\\,3)'");
-  expect(text(["Render", ["IntegerPartitions", ["List", 3, 3, 1]], "'exponential'", "'latex'"])).toBe("'3^{2}\\,1'");
-  expect(text(["Render", ["IntegerPartitions", ["List", 3, 1]], "'young'", "'latex'"])).toBe("'\\lambda = (3, 1)'");
+  expect(text(["Render", ["IntegerPartition", ["List", 3, 3, 1]], "'exponential'", "'latex'"])).toBe("'3^{2}\\,1'");
+  expect(text(["Render", ["IntegerPartition", ["List", 3, 1]], "'young'", "'latex'"])).toBe("'\\lambda = (3, 1)'");
 });
 
 test("ascii stays the default medium", () => {

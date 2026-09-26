@@ -1,18 +1,18 @@
 the-partition-4-2-1-of-7:
   epsil:
-    in: PartsEqualOne(IntegerPartitions([4, 2, 1]))
+    in: PartsEqualOne(IntegerPartition([4, 2, 1]))
     out: "1"
   tex:
-    in: \mathrm{PartsEqualOne}(\mathrm{IntegerPartitions}(\bigl\lbrack4, 2, 1\bigr\rbrack))
+    in: \mathrm{PartsEqualOne}(\mathrm{IntegerPartition}(\bigl\lbrack4, 2, 1\bigr\rbrack))
     out: "1"
   fullform:
-    in: PartsEqualOne[IntegerPartitions[List[4, 2, 1]]]
+    in: PartsEqualOne[IntegerPartition[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
-    in: PartsEqualOne(IntegerPartitions([3, 3, 1]))
+    in: PartsEqualOne(IntegerPartition([3, 3, 1]))
     out: "1"
   tex:
-    in: \mathrm{PartsEqualOne}(\mathrm{IntegerPartitions}(\bigl\lbrack3, 3, 1\bigr\rbrack))
+    in: \mathrm{PartsEqualOne}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "1"
   fullform:
-    in: PartsEqualOne[IntegerPartitions[List[3, 3, 1]]]
+    in: PartsEqualOne[IntegerPartition[List[3, 3, 1]]]

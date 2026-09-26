@@ -15,7 +15,7 @@ export interface LawFailure {
 
 const lawName = (law: Law): string => (typeof law === "string" ? law : `inverse ${law.inverse}`);
 
-/** The map's laws at `subject` (a constructed value, e.g. `["Permutations", ["List", 2, 1]]`).
+/** The map's laws at `subject` (a constructed value, e.g. `["Permutation", ["List", 2, 1]]`).
  *  `undefined` when they hold, or when the map declines the subject (a guarded map such as
  *  KrewerasComplement stays unevaluated outside its domain — a decline, not a failure). */
 export function checkLaws(ce: ComputeEngine, map: CombinatorialMap, subject: unknown): LawFailure | undefined {

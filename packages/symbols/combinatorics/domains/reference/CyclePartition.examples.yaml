@@ -1,4 +1,4 @@
 - id: the-one-line-word-231
-  expr: [CyclePartition, [Permutations, [List, 2, 3, 1]]]
-  expected: [SetPartitions, [List, 1, 1, 1]]
+  expr: [CyclePartition, [Permutation, [List, 2, 3, 1]]]
+  expected: [SetPartition, [List, 1, 1, 1]]
   caption: the one-line word $231$

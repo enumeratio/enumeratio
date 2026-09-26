@@ -1010,6 +1010,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Count",
   },
   {
+    name: "Covariance",
+    wolfram: "Covariance",
+  },
+  {
     name: "Csc",
     wolfram: "Csc",
   },

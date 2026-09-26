@@ -1,0 +1,21 @@
+name: MultinormalDistribution
+domain: Statistics
+signature: MultinormalDistribution(mu, Sigma) | MultinormalDistribution(Sigma)
+summary: The multivariate normal with mean vector $\mu$ and covariance matrix $\Sigma$; the one-argument form defaults $\mu$ to the zero vector.
+signatures:
+  - call: MultinormalDistribution(mu, Sigma)
+    description: mean mu, covariance Sigma.
+    library: enumeratio-statistics
+  - call: MultinormalDistribution(Sigma)
+    description: mean the zero vector, covariance Sigma.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = (2\pi)^{-k/2} |\Sigma|^{-1/2} \exp\left(-\tfrac12 (x-\mu)^T \Sigma^{-1} (x-\mu)\right)$ — exact whenever $\Sigma$ is rational, via compute-engine's own native `Determinant`/`Inverse`/`Dot`, which stay exact over rationals.
+  - $Mean = \mu$. $Variance$ is the DIAGONAL of $\Sigma$ (a length-$k$ list) — Wolfram's own convention; the full matrix is `Covariance` (see below).
+  - '`Covariance` (compute-engine native over two collections) is widened to also accept a single `MultinormalDistribution`, answering $\Sigma$ itself.'
+  - RandomVariate draws $x = \mu + Lz$, $z$ iid standard normal, $L$ the (numeric) Cholesky factor of $\Sigma$ — the standard construction, seeded through the same `SeedRandom` stream every other distribution in this package uses.
+seeAlso:
+  - MultinomialDistribution
+  - NormalDistribution
+  - Covariance
+  - RandomVariate
