@@ -1,9 +1,9 @@
-// Spike: four numeric sets/sequences as FamilyKernel "scalar" entries (element = a single
+// Spike: four numeric sets/sequences as NumberKernel "scalar" entries (element = a single
 // integer, not a list). Proves out kind:"scalar" / paramCount:0 in declare.ts against a mix
 // of a sieve-backed value (Primes), a closed form (SquareNumbers), a predicate scan
 // (AbundantNumbers), and a one-parameter operator (SmoothNumbers(k)) — not the full 88-set
 // catalogue; see design/rendering-environments-planning or the spike report for the rest.
-import type { FamilyKernel } from "./types.ts";
+import type { Declared, NumberKernel } from "./types.ts";
 
 // ---- Primes: incremental sieve, grown on demand and cached across calls. ----
 
@@ -118,7 +118,15 @@ function smoothCacheFor(k: number): ReturnType<typeof nthMatchCache> {
   return cache;
 }
 
-export const entries: FamilyKernel[] = [
+/** An infinite numeric set: `unrank` by `cost`, membership by a predicate. */
+const numeric = (cost: Declared["cost"]["unrank"], rest: Partial<Declared> = {}): Declared => ({
+  carrier: "Numeric",
+  params: [],
+  cost: { count: "closed", unrank: cost, rank: cost, valid: "polynomial" },
+  ...rest,
+});
+
+export const entries: NumberKernel[] = [
   {
     head: "Primes",
     paramCount: 0,
@@ -127,6 +135,7 @@ export const entries: FamilyKernel[] = [
     unrank: (_p, r) => nthPrime(r + 1),
     valid: (element) => isPrime(Number(element)),
     rank: (element) => primeRank(Number(element)),
+    declared: numeric("scan"),
   },
   {
     head: "SquareNumbers",
@@ -144,6 +153,7 @@ export const entries: FamilyKernel[] = [
       const root = Math.sqrt(n);
       return Number.isInteger(root) && root >= 1 ? root - 1 : -1;
     },
+    declared: numeric("closed"),
   },
   {
     head: "AbundantNumbers",
@@ -153,6 +163,7 @@ export const entries: FamilyKernel[] = [
     unrank: (_p, r) => abundantCache.nth(r + 1),
     valid: (element) => isAbundant(Number(element)),
     rank: (element) => abundantCache.rankOf(Number(element)),
+    declared: numeric("scan"),
   },
   {
     head: "SmoothNumbers",
@@ -164,5 +175,11 @@ export const entries: FamilyKernel[] = [
     unrank: ([k], r) => (k < 2 ? (r === 0 ? 1 : Number.NaN) : smoothCacheFor(k).nth(r + 1)),
     valid: (element, [k]) => isKSmooth(Number(element), k),
     rank: (element, [k]) => smoothCacheFor(k).rankOf(Number(element)),
+    declared: numeric("scan", {
+      params: [{ name: "k", role: "param", min: 0 }],
+      // k-smooth numbers thin out fast for small k (the 2-smooth are the powers of 2), and
+      // the scan pays for every integer up to the value: keep the ranks where values stay small.
+      sized: ([k], size) => BigInt(Math.min(size, (k as number) < 3 ? 16 : (k as number) < 5 ? 60 : size)),
+    }),
   },
 ];

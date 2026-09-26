@@ -25,14 +25,14 @@
   oscar:
     in: (-(-5))
     out: "5"
+  julia:
+    in: (-(-5))
+    out: "5"
   mathlib4:
     in: (-((-5)))
     out: "5"
   rust:
     in: (-(n(-5)))
-    out: "5"
-  julia:
-    in: (-(-5))
     out: "5"
 neg-5:
   epsil:
@@ -61,14 +61,14 @@ neg-5:
   oscar:
     in: (-(5))
     out: "-5"
+  julia:
+    in: (-(5))
+    out: "-5"
   mathlib4:
     in: (-(5))
     out: "-5"
   rust:
     in: (-(n(5)))
-    out: "-5"
-  julia:
-    in: (-(5))
     out: "-5"
 its-own-negation:
   epsil:
@@ -97,14 +97,14 @@ its-own-negation:
   oscar:
     in: (-(0))
     out: "0"
+  julia:
+    in: (-(0))
+    out: "0"
   mathlib4:
     in: (-(0))
     out: "0"
   rust:
     in: (-(n(0)))
-    out: "0"
-  julia:
-    in: (-(0))
     out: "0"
 neg-3-over-4:
   epsil:
@@ -130,15 +130,15 @@ neg-3-over-4:
   oscar:
     in: (-((3 // 4)))
     out: "-0.75"
+  julia:
+    in: (-((3 // 4)))
+    out: "-0.75"
   mathlib4:
     in: "(-(((3 : ℚ) / 4)))"
     out: -3/4
   rust:
     in: (-(rational(n(3), n(4))))
     out: -3/4
-  julia:
-    in: (-((3 // 4)))
-    out: "-0.75"
 threads-element-wise-over-a-list:
   epsil:
     in: -[1, -2, 3]
@@ -156,12 +156,10 @@ threads-element-wise-over-a-list:
       out: \{-1,2,-3\}
   sympy:
     in: "[(-1), (--2), (-3)]"
-    out: "TypeError: bad operand type for unary -: 'list'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars.
+    out: "[-1, 2, -3]"
   mpmath:
     in: "[(-1), (--2), (-3)]"
+    out: "[-1, 2, -3]"
   sage:
     in: "[(-1), (--2), (-3)]"
     out: "TypeError: bad operand type for unary -: 'list'"
@@ -170,6 +168,9 @@ threads-element-wise-over-a-list:
     note: compute-engine's Negate is Listable and threads over the list; Sage's takes scalars only.
   oscar:
     in: (-([1, -2, 3]))
+    out: "[-1, 2, -3]"
+  julia:
+    in: "[(-(1)), (-(-2)), (-(3))]"
     out: "[-1, 2, -3]"
   mathlib4:
     in: (-([1, (-2), 3]))
@@ -180,9 +181,6 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars.
-  julia:
-    in: "[(-(1)), (-(-2)), (-(3))]"
-    out: "[-1, 2, -3]"
 double-negation-cancels-x-x:
   epsil:
     in: --x
@@ -231,14 +229,14 @@ recording-a-42-50-charge-as-a-negative-balance:
   oscar:
     in: (-(42.5))
     out: "-42.5"
+  julia:
+    in: (-(42.5))
+    out: "-42.5"
   mathlib4:
     in: (-(42.5))
     out: "-42.500000"
   rust:
     in: (-(x(42.5)))
-    out: "-42.5"
-  julia:
-    in: (-(42.5))
     out: "-42.5"
 flips-signed-infinities-too:
   epsil:
@@ -267,7 +265,7 @@ stays-symbolic:
 neg-1-plus-2i:
   epsil:
     in: -(1 + 2i)
-    out: -1 + -2 * i
+    out: -1 - 2i
   tex:
     in: -(1+2i)
     out: -1-2i
@@ -277,8 +275,10 @@ neg-1-plus-2i:
     in: Minus[Complex[1, 2]]
   sympy:
     in: (-(1 + 2*I))
+    out: -1 - 2*I
   mpmath:
     in: (-mpc(1, 2))
+    out: (-1.0 - 2.0j)
   sage:
     in: (-(1 + 2*I))
   oscar:
@@ -299,19 +299,25 @@ threads-over-a-matrix-entry-by-entry:
     in: Minus[List[List[1, -2], List[3, 4]]]
   sympy:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
   mpmath:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
   sage:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
   oscar:
     in: (-([[1, -2], [3, 4]]))
+  julia:
+    in: "[[(-(1)), (-(-2))], [(-(3)), (-(4))]]"
+    out: "[[-1, 2], [-3, -4]]"
   mathlib4:
     in: (-([[1, (-2)], [3, 4]]))
   rust:
     in: (-(list(vec![list(vec![n(1), n(-2)]), list(vec![n(3), n(4)])])))
-  julia:
-    in: "[[(-(1)), (-(-2))], [(-(3)), (-(4))]]"
-    out: "[[-1, 2], [-3, -4]]"
+    out: "panic: negating [[1, -2], [3, 4]]"
+    verdict: error
+    kind: threading
+    note: compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars only.
 folds-into-a-numeric-coefficient:
   epsil:
     in: -(2x)

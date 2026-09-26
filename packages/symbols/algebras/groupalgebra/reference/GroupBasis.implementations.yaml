@@ -2,6 +2,7 @@
   epsil:
     in: GroupProduct(CyclicGroup(6), GroupBasis("\(2)"), GroupBasis("\(5)"))
     out: GroupBasis("1")
+    back: [GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, "''", 2]], [GroupBasis, [String, "''", 5]]]
   tex:
     in: \mathrm{GroupProduct}(\mathrm{CyclicGroup}(6), \mathrm{GroupBasis}(\text{2}), \mathrm{GroupBasis}(\text{5}))
     out: \mathrm{GroupBasis}(\text{1})
@@ -18,6 +19,7 @@ s-2-1:
   epsil:
     in: GroupProduct(DihedralGroup(4), GroupBasis("\(s0)"), GroupBasis("\(s0)"))
     out: GroupBasis("0")
+    back: [GroupProduct, [DihedralGroup, 4], [GroupBasis, [String, "''", s0]], [GroupBasis, [String, "''", s0]]]
   tex:
     in: \mathrm{GroupProduct}(\mathrm{DihedralGroup}(4), \mathrm{GroupBasis}(\text{\mathrm{s0}}), \mathrm{GroupBasis}(\text{\mathrm{s0}}))
     out: \mathrm{GroupBasis}(\text{0})

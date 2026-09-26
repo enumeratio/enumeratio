@@ -1,0 +1,58 @@
+conditioned-probability-point-given-bound:
+  epsil:
+    in: Probability(Conditioned(x == 2, x <= 5), Distributed(x, PoissonDistribution(3)))
+    out: 45 / 184
+  tex:
+    in: \mathrm{Probability}(\mathrm{Conditioned}(x=2, x\le5), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))
+    out: \frac{45}{184}
+  fullform:
+    in: Probability[Conditioned[Equal[x, 2], LessEqual[x, 5]], Distributed[x, PoissonDistribution[3]]]
+conditioned-probability-interval-given-bound:
+  epsil:
+    in: Probability(Conditioned(x <= 3, 1 <= x), Distributed(x, PoissonDistribution(3)))
+    out: 12 / ((1 - ExponentialE ^ -3) * ExponentialE ^ 3)
+  tex:
+    in: \mathrm{Probability}(\mathrm{Conditioned}(x\le3, 1\le x), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))
+    out: (12)((1-e^{-3})e^{3})^{-1}
+  fullform:
+    in: Probability[Conditioned[LessEqual[x, 3], LessEqual[1, x]], Distributed[x, PoissonDistribution[3]]]
+conditioned-probability-continuous-interval:
+  epsil:
+    in: |-
+      Probability(
+                   Conditioned(x <= 0, -1 <= x),
+                   Distributed(x, NormalDistribution(0, 1)),
+                 )
+    out: -Erf(-(Sqrt(2) / 2)) / (1 - Erf(-(Sqrt(2) / 2)))
+  tex:
+    in: \mathrm{Probability}(\mathrm{Conditioned}(x\le0, -1\le x), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))
+    out: -\frac{\operatorname{erf}(-\frac{2^{1/2}}{2})}{1-\operatorname{erf}(-2^{1/2}/2)}
+  fullform:
+    in: Probability[Conditioned[LessEqual[x, 0], LessEqual[-1, x]], Distributed[x, NormalDistribution[0, 1]]]
+conditioned-expectation-mean-given-bound:
+  epsil:
+    in: Expectation(Conditioned(x, x <= 3), Distributed(x, PoissonDistribution(3)))
+    out: 1.961_538_461_538_462
+  tex:
+    in: \mathrm{Expectation}(\mathrm{Conditioned}(x, x\le3), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))
+    out: 1.961\,538\,461\,538\,462
+  fullform:
+    in: Expectation[Conditioned[x, LessEqual[x, 3]], Distributed[x, PoissonDistribution[3]]]
+conditioned-expectation-point:
+  epsil:
+    in: Expectation(Conditioned(x ^ 2, x == 3), Distributed(x, PoissonDistribution(3)))
+    out: "9"
+  tex:
+    in: \mathrm{Expectation}(\mathrm{Conditioned}(x^2, x=3), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))
+    out: "9"
+  fullform:
+    in: Expectation[Conditioned[Power[x, 2], Equal[x, 3]], Distributed[x, PoissonDistribution[3]]]
+conditioned-expectation-continuous-unevaluated:
+  epsil:
+    in: Expectation(Conditioned(x, x <= 3), Distributed(x, NormalDistribution(0, 1)))
+    out: Expectation(Conditioned(x, x <= 3), Distributed(x, NormalDistribution(0, 1)))
+  tex:
+    in: \mathrm{Expectation}(\mathrm{Conditioned}(x, x\le3), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))
+    out: \mathrm{Expectation}(\mathrm{Conditioned}(x, x\le3), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))
+  fullform:
+    in: Expectation[Conditioned[x, LessEqual[x, 3]], Distributed[x, NormalDistribution[0, 1]]]

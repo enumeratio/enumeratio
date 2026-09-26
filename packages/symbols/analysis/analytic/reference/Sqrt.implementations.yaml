@@ -283,12 +283,15 @@ an-approximate-number-gives-an-approximate-root:
     in: Sqrt[3.5]
   sympy:
     in: sqrt(3.5)
+    out: "1.87082869338697"
   mpmath:
     in: sqrt(3.5)
+    out: "1.87082869338697069279187436616"
   sage:
     in: sqrt(3.5)
   rust:
     in: sqrt(x(3.5))
+    out: "1.8708286933869707"
 pulls-perfect-square-factors-out-of-the-radical:
   epsil:
     in: Sqrt(200)
@@ -302,12 +305,15 @@ pulls-perfect-square-factors-out-of-the-radical:
     in: Sqrt[200]
   sympy:
     in: sqrt(200)
+    out: 10*sqrt(2)
   mpmath:
     in: sqrt(200)
+    out: "14.1421356237309504880168872421"
   sage:
     in: sqrt(200)
   rust:
     in: sqrt(n(200))
+    out: "14.142135623730951"
 sqrt-neg-25:
   epsil:
     in: Sqrt(-25)
@@ -321,12 +327,18 @@ sqrt-neg-25:
     in: Sqrt[-25]
   sympy:
     in: sqrt(-25)
+    out: 5*I
   mpmath:
     in: sqrt(-25)
+    out: (0.0 + 5.0j)
   sage:
     in: sqrt(-25)
   rust:
     in: sqrt(n(-25))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
 sqrt-8:
   epsil:
     in: Sqrt(8)
@@ -340,12 +352,15 @@ sqrt-8:
     in: Sqrt[8]
   sympy:
     in: sqrt(8)
+    out: 2*sqrt(2)
   mpmath:
     in: sqrt(8)
+    out: "2.82842712474619009760337744842"
   sage:
     in: sqrt(8)
   rust:
     in: sqrt(n(8))
+    out: "2.8284271247461903"
 rationalizes-the-denominator:
   epsil:
     in: Sqrt(1 / 2)
@@ -359,10 +374,12 @@ rationalizes-the-denominator:
     in: Sqrt[Rational[1, 2]]
   sympy:
     in: sqrt(Rational(1, 2))
+    out: sqrt(2)/2
   sage:
     in: sqrt((1/2))
   rust:
     in: sqrt(rational(n(1), n(2)))
+    out: "0.7071067811865476"
 sqrt-12-over-5:
   epsil:
     in: Sqrt(12 / 5)
@@ -376,10 +393,12 @@ sqrt-12-over-5:
     in: Sqrt[Rational[12, 5]]
   sympy:
     in: sqrt(Rational(12, 5))
+    out: 2*sqrt(15)/5
   sage:
     in: sqrt((12/5))
   rust:
     in: sqrt(rational(n(12), n(5)))
+    out: "1.5491933384829668"
 sqrt-neg-2p5:
   epsil:
     in: Sqrt(-2.5)
@@ -393,12 +412,18 @@ sqrt-neg-2p5:
     in: Sqrt[-2.5]
   sympy:
     in: sqrt(-2.5)
+    out: 1.58113883008419*I
   mpmath:
     in: sqrt(-2.5)
+    out: (0.0 + 1.58113883008418966599944677222j)
   sage:
     in: sqrt(-2.5)
   rust:
     in: sqrt(x(-2.5))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
 an-exact-complex-square-2-i-2-3-4i:
   epsil:
     in: Sqrt(3 + 4i)
@@ -412,8 +437,10 @@ an-exact-complex-square-2-i-2-3-4i:
     in: Sqrt[Complex[3, 4]]
   sympy:
     in: sqrt((3 + 4*I))
+    out: 2 + I
   mpmath:
     in: sqrt(mpc(3, 4))
+    out: (2.0 + 1.0j)
   sage:
     in: sqrt((3 + 4*I))
 sqrt-positiveinfinity:
@@ -440,12 +467,18 @@ threads-element-wise-over-a-list:
     in: Sqrt[List[1, 4, 9]]
   sympy:
     in: "[sqrt(1), sqrt(4), sqrt(9)]"
+    out: "[1, 2, 3]"
   mpmath:
     in: "[sqrt(1), sqrt(4), sqrt(9)]"
+    out: "[mpf('1.0'), mpf('2.0'), mpf('3.0')]"
   sage:
     in: "[sqrt(1), sqrt(4), sqrt(9)]"
   rust:
     in: sqrt(list(vec![n(1), n(4), n(9)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sqrt is Listable and threads over the list; the Rust crates take scalars only.
 threads-over-a-matrix-entry-by-entry-this-is-not:
   epsil:
     in: Sqrt([[1 / 2, -1], [0, 1 / 2]])
@@ -459,10 +492,15 @@ threads-over-a-matrix-entry-by-entry-this-is-not:
     in: Sqrt[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
   sympy:
     in: "[[sqrt(Rational(1, 2)), sqrt(-1)], [sqrt(0), sqrt(Rational(1, 2))]]"
+    out: "[[sqrt(2)/2, I], [0, sqrt(2)/2]]"
   sage:
     in: "[[sqrt((1/2)), sqrt(-1)], [sqrt(0), sqrt((1/2))]]"
   rust:
     in: sqrt(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(1), n(2))])]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sqrt is Listable and threads over the list; the Rust crates take scalars only.
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1:
   epsil:
     in: Sqrt(Interval(1, 8))
@@ -474,6 +512,17 @@ interval-arithmetic-sqrt-is-increasing-so-sqrt-1:
     in: Sqrt[Interval[List[1, 8]]]
   wolfram:
     in: Sqrt[Interval[List[1, 8]]]
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1:
+  epsil:
+    in: Sqrt(Around(4, 0.4))
+    out: Around(2, 0.1)
+  tex:
+    in: \sqrt{\mathrm{Around}(4, 0.4)}
+    out: \mathrm{Around}(2, 0.1)
+  fullform:
+    in: Sqrt[Around[4, 0.4]]
+  wolfram:
+    in: Sqrt[Around[4, 0.4]]
 sqrt-x-2-x-for-every-x:
   epsil:
     in: Sqrt(x) ^ 2
@@ -505,12 +554,23 @@ at-x-1-sqrt-x-2-1-not-1:
     in: Sqrt[Power[-1, 2]]
   sympy:
     in: sqrt((-1**2))
+    out: I
+    verdict: inconclusive
+    kind: ours
+    note: The emitter writes (-1)^2 as -1**2, which Python reads as -(1**2), so this asks for √-1.
+    issue: 265
   mpmath:
     in: sqrt((-1**2))
+    out: (0.0 + 1.0j)
+    verdict: inconclusive
+    kind: ours
+    note: The emitter writes (-1)^2 as -1**2, which Python reads as -(1**2), so this asks for √-1.
+    issue: 265
   sage:
     in: sqrt((-1^2))
   rust:
     in: sqrt(power(n(-1), n(2)))
+    out: "1.0"
 sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
   epsil:
     in: Sqrt(-1) * Sqrt(-1)
@@ -524,12 +584,18 @@ sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
     in: Times[Sqrt[-1], Sqrt[-1]]
   sympy:
     in: (sqrt(-1) * sqrt(-1))
+    out: "-1"
   mpmath:
     in: (sqrt(-1) * sqrt(-1))
+    out: (-1.0 + 0.0j)
   sage:
     in: (sqrt(-1) * sqrt(-1))
   rust:
     in: (sqrt(n(-1)) * sqrt(n(-1)))
+    out: NaN
+    verdict: inconclusive
+    kind: domain
+    note: Rust's f64 sqrt is real-only (NaN); compute-engine gives i · i = -1.
 while-sqrt-1-1-1:
   epsil:
     in: Sqrt(1)
@@ -543,12 +609,15 @@ while-sqrt-1-1-1:
     in: Sqrt[Times[-1, -1]]
   sympy:
     in: sqrt((-1 * -1))
+    out: "1"
   mpmath:
     in: sqrt((-1 * -1))
+    out: "1.0"
   sage:
     in: sqrt((-1 * -1))
   rust:
     in: sqrt((n(-1) * n(-1)))
+    out: "1.0"
 to-45-significant-digits-every-one-correctly:
   epsil:
     in: N(Sqrt(2), 45)
@@ -562,9 +631,12 @@ to-45-significant-digits-every-one-correctly:
     in: N[Sqrt[2], 45]
   sympy:
     in: N(sqrt(2), 30)
+    out: "1.41421356237309504880168872421"
   mpmath:
     in: (sqrt(2))
+    out: "1.41421356237309504880168872421"
   sage:
     in: N(sqrt(2))
   rust:
     in: nf(sqrt(n(2)))
+    out: "1.4142135623730951"

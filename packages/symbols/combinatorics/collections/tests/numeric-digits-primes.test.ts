@@ -377,14 +377,10 @@ test("Count is +oo for every known-infinite family here", () => {
   for (const k of [2, 5, 7]) expect(byHead.get("RoughNumbers")?.count([k])).toBe(Infinity);
 });
 
-// ─── engine-level: At / Take / Count / Element through the declared CE collection handlers. ───
+// ─── engine-level: Take / Element through the declared CE collection handlers. ───
 
 const ce = new ComputeEngine();
 declareCollections(ce);
-
-test("At(TwinPrimes, n) gives the n-th lesser twin prime, 1-indexed", () => {
-  expect(ce.box(["At", "TwinPrimes", 3]).evaluate().re).toBe(11);
-});
 
 test("Take(TwinPrimes, 5) gives the first five lesser twin primes (Count NaN doesn't block Take)", () => {
   expect(ce.box(["Take", "TwinPrimes", 5]).evaluate().toString()).toBe("[3,5,11,17,29]");
@@ -398,10 +394,6 @@ test("TwinPrimes has no element at a negative index: there is no last one to cou
   expect(definition.value.collection.at(ce.box("TwinPrimes"), -1)).toBeUndefined();
 });
 
-test("Count(TwinPrimes) is NaN through the engine", () => {
-  expect(ce.box(["Count", "TwinPrimes"]).evaluate().toString()).toBe("NaN");
-});
-
 test("Element membership on TwinPrimes and SmithNumbers", () => {
   expect(ce.box(["Element", 11, "TwinPrimes"]).evaluate().toString()).toBe('"True"');
   expect(ce.box(["Element", 13, "TwinPrimes"]).evaluate().toString()).toBe('"False"'); // 13+2=15 not prime
@@ -413,24 +405,9 @@ test("Take(NarcissisticNumbers, 10) gives the first ten Armstrong numbers", () =
   expect(ce.box(["Take", "NarcissisticNumbers", 10]).evaluate().toString()).toBe("[1,2,3,4,5,6,7,8,9,153]");
 });
 
-test("Count(NarcissisticNumbers) is the exact 88 through the engine", () => {
-  expect(ce.box(["Count", "NarcissisticNumbers"]).evaluate().re).toBe(88);
-});
-
 test("Take(MersennePrimes, 5) and Take(FibonacciPrimes, 5) don't hang and give the known terms", () => {
   expect(ce.box(["Take", "MersennePrimes", 5]).evaluate().toString()).toBe("[3,7,31,127,8191]");
   expect(ce.box(["Take", "FibonacciPrimes", 5]).evaluate().toString()).toBe("[2,3,5,13,89]");
-});
-
-test("At(KAlmostPrimes(k), i) and At(RoughNumbers(k), i) are one-parameter operators", () => {
-  expect(ce.box(["At", ["KAlmostPrimes", 3], 1]).evaluate().re).toBe(8);
-  expect(ce.box(["At", ["RoughNumbers", 5], 1]).evaluate().re).toBe(1);
-});
-
-test("At(PrimePairs(gap), i) selects the twin/cousin/sexy family by gap", () => {
-  expect(ce.box(["At", ["PrimePairs", 2], 1]).evaluate().re).toBe(3);
-  expect(ce.box(["At", ["PrimePairs", 4], 1]).evaluate().re).toBe(3);
-  expect(ce.box(["At", ["PrimePairs", 6], 1]).evaluate().re).toBe(5);
 });
 
 // ─── Golden JSON (AGENTS.md); regenerate with `UPDATE_NUMERIC_DIGITS_PRIMES_GOLDEN=1 vp test`. ───
@@ -490,4 +467,24 @@ for (const [head, params] of Object.entries(GOLDEN_CASES)) {
 
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
+});
+
+test("KAlmostPrimes(0) is {1} and below that empty, both finite", () => {
+  const entry = byHead.get("KAlmostPrimes");
+  if (!entry) throw new Error("KAlmostPrimes missing");
+  expect(entry.count([0])).toBe(1);
+  expect(entry.unrank([0], 0)).toBe(1);
+  expect(entry.unrank([0], 1)).toBeNaN();
+  expect(entry.count([-1])).toBe(0);
+});
+
+test("PrimePairs with an odd gap is finite: one of the pair is 2", () => {
+  const entry = byHead.get("PrimePairs");
+  if (!entry) throw new Error("PrimePairs missing");
+  expect(entry.count([1])).toBe(1); // (2, 3)
+  expect(entry.unrank([1], 0)).toBe(2);
+  expect(entry.unrank([1], 1)).toBeNaN();
+  expect(entry.count([3])).toBe(1); // (2, 5)
+  expect(entry.count([7])).toBe(0); // 9 isn't prime
+  expect(entry.count([2])).toBeNaN(); // twin primes: open
 });

@@ -7,11 +7,11 @@
 //
 // A full local run is a heavy job: take `$(git rev-parse --git-common-dir)/lanes/HEAVY` first.
 
-import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { concretise, loadCatalogue } from "../src/catalogue.ts";
+import { conditions } from "../src/machine.ts";
 import { buildPlan, SYSTEMS } from "../src/plan.ts";
 import { report, runInfo, systemInfo } from "../src/report.ts";
 import { HARNESSES } from "../src/registry.ts";
@@ -29,18 +29,6 @@ const { values } = parseArgs({
     force: { type: "boolean", default: false },
   },
 });
-
-/** Megabytes of swap in use (macOS), or undefined where we can't tell. */
-function swapUsedMb(): number | undefined {
-  if (process.platform !== "darwin") return undefined;
-  try {
-    const out = execFileSync("sysctl", ["vm.swapusage"], { encoding: "utf8" });
-    const used = /used = ([\d.]+)([MG])/.exec(out);
-    return used === null ? undefined : Number(used[1]) * (used[2] === "G" ? 1024 : 1);
-  } catch {
-    return undefined;
-  }
-}
 
 const only = values.only?.split(",").filter(Boolean);
 const cases = loadCatalogue()
@@ -61,9 +49,9 @@ if (values.plan) {
   process.exit(0);
 }
 
-const swap = swapUsedMb();
-if (swap !== undefined && swap > 8192 && !values.force) {
-  console.error(`${(swap / 1024).toFixed(1)} GB of swap in use; wait for it to drop, or --force.`);
+const start = conditions();
+if ((start.swapUsedGB ?? 0) > 8 && !values.force) {
+  console.error(`${start.swapUsedGB} GB of swap in use; wait for it to drop, or --force.`);
   process.exit(1);
 }
 
@@ -75,8 +63,9 @@ const results = await runPlan(plan, systems, {
     console.log(`${system.padEnd(8)} ${r.name.padEnd(48)} ${r.status.padEnd(11)} ${ms(r.median)} ${r.reason ?? ""}`),
   onVersion: (system, version) => versions.set(system, version),
 });
+const during = { start, end: conditions() };
 for (const [system, list] of results) {
   const info = systemInfo(system, versions.get(system));
-  writeFileSync(join(dir, `${system}.json`), `${JSON.stringify(report(run, info, list))}\n`);
+  writeFileSync(join(dir, `${system}.json`), `${JSON.stringify(report(run, info, list, during))}\n`);
 }
 console.log(dir);

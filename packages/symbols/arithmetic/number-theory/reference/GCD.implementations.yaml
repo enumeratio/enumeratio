@@ -22,14 +22,14 @@ gcd-12-18:
   oscar:
     in: gcd(ZZ(12), ZZ(18))
     out: "6"
+  julia:
+    in: gcd(ZZ(12), ZZ(18))
+    out: "6"
   mathlib4:
     in: (Int.gcd 12 18)
     out: "6"
   rust:
     in: gcd(n(12), n(18))
-    out: "6"
-  julia:
-    in: gcd(ZZ(12), ZZ(18))
     out: "6"
 gcd-24-36:
   epsil:
@@ -55,14 +55,14 @@ gcd-24-36:
   oscar:
     in: gcd(ZZ(24), ZZ(36))
     out: "12"
+  julia:
+    in: gcd(ZZ(24), ZZ(36))
+    out: "12"
   mathlib4:
     in: (Int.gcd 24 36)
     out: "12"
   rust:
     in: gcd(n(24), n(36))
-    out: "12"
-  julia:
-    in: gcd(ZZ(24), ZZ(36))
     out: "12"
 gcd-is-variadic-it-accepts-any-number-of:
   epsil:
@@ -133,14 +133,14 @@ with-no-arguments-compute-engine-returns-0-the:
   oscar:
     in: gcd(ZZ(0), ZZ(5))
     out: "5"
+  julia:
+    in: gcd(ZZ(0), ZZ(5))
+    out: "5"
   mathlib4:
     in: (Int.gcd 0 5)
     out: "5"
   rust:
     in: gcd(n(0), n(5))
-    out: "5"
-  julia:
-    in: gcd(ZZ(0), ZZ(5))
     out: "5"
 signs-are-discarded-before-computing-the-gcd:
   epsil:
@@ -193,6 +193,12 @@ lists-aren-t-threaded-element-wise-they-re:
     verdict: error
     kind: threading
     note: compute-engine's GCD pools the elements of list arguments; Oscar's gcd takes scalars only.
+  julia:
+    in: "[gcd(ZZ([2, 4]), ZZ(6)), gcd(ZZ([2, 4]), ZZ(8))]"
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD pools the elements of list arguments; Nemo/Combinatorics.jl's gcd takes scalars only.
   mathlib4:
     in: (Int.gcd [2, 4] [6, 8])
     out: "Application type mismatch: The argument"
@@ -205,12 +211,6 @@ lists-aren-t-threaded-element-wise-they-re:
     verdict: error
     kind: threading
     note: compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars.
-  julia:
-    in: "[gcd(ZZ([2, 4]), ZZ(6)), gcd(ZZ([2, 4]), ZZ(8))]"
-    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
-    verdict: error
-    kind: threading
-    note: compute-engine's GCD pools the elements of list arguments; Nemo/Combinatorics.jl's gcd takes scalars only.
 commutative-gcd-a-b-gcd-b-a:
   epsil:
     in: GCD(12, 18) == GCD(18, 12)
@@ -238,14 +238,14 @@ commutative-gcd-a-b-gcd-b-a:
   oscar:
     in: (gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))
     out: "true"
+  julia:
+    in: (gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))
+    out: "true"
   mathlib4:
     in: (decide ((Int.gcd 12 18) = (Int.gcd 18 12)))
     out: "true"
   rust:
     in: equal(gcd(n(12), n(18)), gcd(n(18), n(12)))
-    out: "true"
-  julia:
-    in: (gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))
     out: "true"
 gcd-a-b-cdot-lcm-a-b-ab-see-lcm:
   epsil:
@@ -274,14 +274,14 @@ gcd-a-b-cdot-lcm-a-b-ab-see-lcm:
   oscar:
     in: ((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))
     out: "true"
+  julia:
+    in: ((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))
+    out: "true"
   mathlib4:
     in: (decide (((Int.gcd 12 18) * (Int.lcm 12 18)) = (12 * 18)))
     out: "true"
   rust:
     in: equal((gcd(n(12), n(18)) * lcm(n(12), n(18))), (n(12) * n(18)))
-    out: "true"
-  julia:
-    in: ((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))
     out: "true"
 over-the-rationals-the-gcd-of-the-numerators:
   epsil:
@@ -358,17 +358,19 @@ reduce-12-18-to-lowest-terms-by-dividing-out-the:
     in: Divide[12, GCD[12, 18]]
   sympy:
     in: (S(12) / gcd(12, 18))
+    out: "2"
   sage:
     in: (12 / gcd(12, 18))
   oscar:
     in: (12 // gcd(ZZ(12), ZZ(18)))
+  julia:
+    in: (12 // gcd(ZZ(12), ZZ(18)))
+    out: "2.0"
   mathlib4:
     in: "((12 : ℚ) / (Int.gcd 12 18))"
   rust:
     in: (n(12) / gcd(n(12), n(18)))
-  julia:
-    in: (12 // gcd(ZZ(12), ZZ(18)))
-    out: "2.0"
+    out: "2"
 gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
   epsil:
     in: GCD(-3 + 2i, 10 + 15i)
@@ -382,6 +384,7 @@ gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
     in: GCD[Complex[-3, 2], Complex[10, 15]]
   sympy:
     in: gcd((-3 + 2*I), (10 + 15*I))
+    out: 2 + 3*I
   sage:
     in: gcd((-3 + 2*I), (10 + 15*I))
   oscar:
@@ -405,6 +408,7 @@ gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
     in: GCD[Complex[5, Rational[10, 3]], Complex[Rational[3, 2], 1]]
   sympy:
     in: gcd((5 + Rational(10, 3)*I), (Rational(3, 2) + 1*I))
+    out: 1/2 + I/3
   sage:
     in: gcd((5 + (10/3)*I), ((3/2) + 1*I))
   oscar:
@@ -428,17 +432,22 @@ big-integers-gcd-20-10-100-3-7-exact-past-where:
     in: GCD[Factorial[20], Plus[Power[10, 100], 3]]
   sympy:
     in: gcd(factorial(20), ((10**100) + 3))
+    out: "7"
   sage:
     in: gcd(factorial(20), ((10^100) + 3))
   oscar:
     in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+  julia:
+    in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+    out: "7"
   mathlib4:
     in: (Int.gcd (Nat.factorial 20) ((10 ^ 100) + 3))
   rust:
     in: gcd(factorial(n(20)), (power(n(10), n(100)) + n(3)))
-  julia:
-    in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
-    out: "7"
+    out: "panic: an integer, not 2.43290200817664e18"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's GCD extends past them.
 listable-a-single-list-argument-threads-element:
   epsil:
     in: GCD(12, [3, 7, 40])
@@ -452,17 +461,22 @@ listable-a-single-list-argument-threads-element:
     in: GCD[12, List[3, 7, 40]]
   sympy:
     in: "[gcd(12, 3), gcd(12, 7), gcd(12, 40)]"
+    out: "[3, 1, 4]"
   sage:
     in: "[gcd(12, 3), gcd(12, 7), gcd(12, 40)]"
   oscar:
     in: gcd(ZZ(12), ZZ([3, 7, 40]))
+  julia:
+    in: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]"
+    out: "[3, 1, 4]"
   mathlib4:
     in: (Int.gcd 12 [3, 7, 40])
   rust:
     in: gcd(n(12), list(vec![n(3), n(7), n(40)]))
-  julia:
-    in: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]"
-    out: "[3, 1, 4]"
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars only.
 gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci:
   epsil:
     in: GCD(Fibonacci(12), Fibonacci(18))
@@ -479,15 +493,16 @@ gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci:
     in: GCD[Fibonacci[12], Fibonacci[18]]
   sympy:
     in: gcd(fibonacci(12), fibonacci(18))
+    out: "8"
   sage:
     in: gcd(fibonacci(12), fibonacci(18))
   oscar:
     in: gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18)))
-  mathlib4:
-    in: (Int.gcd (Nat.fib 12) (Nat.fib 18))
   julia:
     in: gcd(ZZ(BigInt(fibonacci(ZZ(12)))), ZZ(BigInt(fibonacci(ZZ(18)))))
     out: "8"
+  mathlib4:
+    in: (Int.gcd (Nat.fib 12) (Nat.fib 18))
 gcd-0-0-0-by-convention:
   epsil:
     in: GCD(0, 0)
@@ -501,16 +516,18 @@ gcd-0-0-0-by-convention:
     in: GCD[0, 0]
   sympy:
     in: gcd(0, 0)
+    out: "0"
   sage:
     in: gcd(0, 0)
   oscar:
     in: gcd(ZZ(0), ZZ(0))
+  julia:
+    in: gcd(ZZ(0), ZZ(0))
+    out: "0"
   mathlib4:
     in: (Int.gcd 0 0)
   rust:
     in: gcd(n(0), n(0))
-  julia:
-    in: gcd(ZZ(0), ZZ(0))
     out: "0"
 symbolic-arguments-stay-unevaluated:
   epsil:

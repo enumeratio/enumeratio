@@ -20,11 +20,20 @@ export interface CaseResult {
   readonly value?: string;
 }
 
+export interface Conditions {
+  readonly at: string;
+  readonly loadavg: readonly number[];
+  readonly freeMemoryGB: number;
+  readonly swapUsedGB?: number;
+}
+
 export interface Machine {
   readonly fingerprint: string;
   readonly os: string;
+  readonly osVersion?: string;
   readonly arch: string;
   readonly cpu: string;
+  readonly cpuMHz?: number;
   readonly cores: number;
   readonly memoryGB: number;
   readonly runner: string;
@@ -47,6 +56,7 @@ export interface Report {
     readonly caches: "cleared" | "uncleared";
   };
   readonly machine: Machine;
+  readonly conditions?: { readonly start: Conditions; readonly end: Conditions };
   readonly results: readonly CaseResult[];
 }
 
@@ -65,6 +75,13 @@ export interface Plan {
     readonly precision: "exact" | "machine" | number;
     readonly budget: number;
     readonly tags?: readonly string[];
+    readonly expr?: unknown;
+    readonly sample?: {
+      readonly seed: number;
+      readonly count: number;
+      readonly draw: Readonly<Record<string, unknown>>;
+    };
+    readonly inputs?: readonly unknown[];
     readonly expected?: string;
     readonly systems: Readonly<Partial<Record<BenchSystem, PlanCell>>>;
   }[];

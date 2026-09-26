@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { afterAll, expect, test } from "vite-plus/test";
 import { check, checkFamily, random } from "../scripts/properties.ts";
 import { entries } from "../src/families/paths-partitions.ts";
+import { numberKernel } from "../src/families/types.ts";
 
 // Self-cert every family in this module (mirrors tests/subsets.test.ts): for every rank r in
 // [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r. Params are kept
@@ -63,9 +64,10 @@ for (const [head, p] of Object.entries(PLAUSIBLE_PARAMS)) {
   test(`${head}(${p.join(", ")}) passes the Plausible properties`, () => {
     expect(entry).toBeDefined();
     if (!entry) return;
-    expect(checkFamily(entry, p, draw)).toBeUndefined();
+    const family = numberKernel(entry);
+    expect(checkFamily(family, p, draw)).toBeUndefined();
     const total = entry.count(p);
-    for (let r = 0; r < Math.min(total, 20); r++) expect(check(entry, p, r)).toBeUndefined();
+    for (let r = 0n; r < BigInt(Math.min(total, 20)); r++) expect(check(family, p, r)).toBeUndefined();
   });
 }
 

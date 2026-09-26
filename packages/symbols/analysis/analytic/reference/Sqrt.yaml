@@ -106,6 +106,12 @@ examples:
     expected: [Interval, 1, [Multiply, 2, [Sqrt, 2]]]
     category: Scope
     caption: 'Interval arithmetic: $\sqrt{}$ is increasing, so $\sqrt{[1,8]} = [1, 2\sqrt2]$'
+  - role: test
+    id: uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1
+    expr: [Sqrt, [Around, 4, 0.4]]
+    expected: [Around, 2, 0.1]
+    category: Scope
+    caption: 'Uncertainty propagation: $\sqrt{4 \pm 0.4} = 2 \pm 0.1$'
   - id: sqrt-x-2-x-for-every-x
     expr: [Power, [Sqrt, x], 2]
     expected: x

@@ -34,3 +34,14 @@ falls-through-to-the-explicit-default:
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x^2, x\lt0\bigr\rbrack\bigr\rbrack, 99)
   fullform:
     in: Piecewise[List[List[Power[x, 2], Less[x, 0]]], 99]
+every-clause-eliminated-falls-through-to-default:
+  epsil:
+    in: Piecewise([[1, 2 > 3]], 99)
+    out: "99"
+  tex:
+    in: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, 2\gt3\bigr\rbrack\bigr\rbrack, 99)
+    out: "99"
+  fullform:
+    in: Piecewise[List[List[1, Greater[2, 3]]], 99]
+  wolfram:
+    in: Piecewise[List[List[1, Greater[2, 3]]], 99]

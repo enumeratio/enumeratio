@@ -23,3 +23,19 @@ no-path-back-against-directed-edges:
     in: FindShortestPath[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]
   wolfram:
     in: FindShortestPath[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]
+a-path-crossing-both-directed-and-undirected:
+  epsil:
+    in: |-
+      FindShortestPath(Graph([1, 2, 3, 4], [
+                                             DirectedEdge(1, 2),
+                                             DirectedEdge(2, 3),
+                                             UndirectedEdge(3, 4),
+                                           ]), 1, 4)
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{FindShortestPath}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack), 1, 4)
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: FindShortestPath[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 1, 4]
+  wolfram:
+    in: FindShortestPath[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 1, 4]

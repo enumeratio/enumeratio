@@ -49,6 +49,28 @@ ceil-3p2:
   rust:
     in: ceil(x(3.2))
     out: "4.0"
+ceil-3p7:
+  epsil:
+    in: Ceil(3.7)
+    out: "4"
+  tex:
+    in: \lceil3.7\rceil
+    out: "4"
+  fullform:
+    in: Ceiling[3.7]
+  wolfram:
+    in: Ceiling[3.7]
+  sympy:
+    in: ceiling(3.7)
+    out: "4"
+  mpmath:
+    in: ceil(3.7)
+    out: "4.0"
+  sage:
+    in: ceil(3.7)
+  rust:
+    in: ceil(x(3.7))
+    out: "4.0"
 integers-pass-through-unchanged:
   epsil:
     in: Ceil(5)
@@ -245,12 +267,15 @@ ceil-2p4:
     in: Ceiling[2.4]
   sympy:
     in: ceiling(2.4)
+    out: "3"
   mpmath:
     in: ceil(2.4)
+    out: "3.0"
   sage:
     in: ceil(2.4)
   rust:
     in: ceil(x(2.4))
+    out: "3.0"
 ceil-2p6:
   epsil:
     in: Ceil(2.6)
@@ -264,12 +289,15 @@ ceil-2p6:
     in: Ceiling[2.6]
   sympy:
     in: ceiling(2.6)
+    out: "3"
   mpmath:
     in: ceil(2.6)
+    out: "3.0"
   sage:
     in: ceil(2.6)
   rust:
     in: ceil(x(2.6))
+    out: "3.0"
 stays-symbolic:
   epsil:
     in: Ceil(x)
@@ -292,12 +320,15 @@ exact-radicals-are-decided-numerically:
     in: Ceiling[Sqrt[50]]
   sympy:
     in: ceiling(sqrt(50))
+    out: "8"
   mpmath:
     in: ceil(sqrt(50))
+    out: "8.0"
   sage:
     in: ceil(sqrt(50))
   rust:
     in: ceil(sqrt(n(50)))
+    out: "8.0"
 evaluates-at-an-exact-constant-lceil-pi-rceil-4:
   epsil:
     in: Ceil(Pi)
@@ -311,12 +342,15 @@ evaluates-at-an-exact-constant-lceil-pi-rceil-4:
     in: Ceiling[Pi]
   sympy:
     in: ceiling(pi)
+    out: "4"
   mpmath:
     in: ceil(pi)
+    out: "4.0"
   sage:
     in: ceil(pi)
   rust:
     in: ceil(x(std::f64::consts::PI))
+    out: "4.0"
 a-second-argument-rounds-up-to-a-multiple-of-it:
   epsil:
     in: Ceil(226, 10)
@@ -352,8 +386,8 @@ nor-rational-2-pi-e-approx-3-57-rounds-up-to-the:
     in: Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]
 rounds-the-real-and-imaginary-parts-up:
   epsil:
-    in: Ceil(5.37 + -1.3 * i)
-    out: 6 + -1 * i
+    in: Ceil(5.37 - 1.3i)
+    out: 6 - i
   tex:
     in: \lceil5.37-1.3i\rceil
     out: 6-i
@@ -363,8 +397,10 @@ rounds-the-real-and-imaginary-parts-up:
     in: Ceiling[Complex[5.37, -1.3]]
   sympy:
     in: ceiling((5.37 + -1.3*I))
+    out: 6 - I
   mpmath:
     in: ceil(mpc(5.37, -1.3))
+    out: (6.0 - 1.0j)
   sage:
     in: ceil((5.37 + -1.3*I))
 ten-bits-are-enough-to-number-1000-items-lceil:

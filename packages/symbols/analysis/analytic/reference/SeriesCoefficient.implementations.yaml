@@ -34,6 +34,15 @@ log-series:
     out: -\frac{1}{4}
   fullform:
     in: SeriesCoefficient[Log[Plus[1, x]], List[x, 0, 4]]
+a-puiseux-half-integer-order-declines:
+  epsil:
+    in: SeriesCoefficient(Sqrt(x), [x, 0, 1 / 2])
+    out: SeriesCoefficient(Sqrt(x), [x, 0, 1 / 2])
+  tex:
+    in: \mathrm{SeriesCoefficient}(\sqrt{x}, \bigl\lbrack x, 0, \frac{1}{2}\bigr\rbrack)
+    out: \mathrm{SeriesCoefficient}(\sqrt{x}, \bigl\lbrack x, 0, \frac{1}{2}\bigr\rbrack)
+  fullform:
+    in: SeriesCoefficient[Sqrt[x], List[x, 0, Rational[1, 2]]]
 a-negative-order-laurent-coefficient-declines:
   epsil:
     in: SeriesCoefficient(1 / x, [x, 0, -1])

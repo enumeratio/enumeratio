@@ -78,9 +78,9 @@ examples:
     caption: $G(\infty) = \infty$
   - id: interval-arithmetic-g-is-increasing-on-1-17-1-18
     expr: [BarnesG, [Interval, 1.17, 1.18]]
-    expected: [Interval, 1.0522163286861943, 1.054193606435691]
+    expected: [Interval, 1.05221632868619, 1.0541936064357]
     category: Scope
-    caption: "Interval arithmetic: $G$ is increasing on $[1.17, 1.18]$, so the image is the interval of the endpoint values"
+    caption: "Interval arithmetic, proven: $G$'s certified derivative keeps one sign on $[1.17, 1.18]$, so the image is its values at the ends, rounded outward"
   - id: uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm
     expr: [BarnesG, [Around, 2.1, 0.01]]
     expected: [Around, 0.9847727243540465, 0.001449505695943639]

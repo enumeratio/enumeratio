@@ -6,7 +6,7 @@
 // each with its own small DP or bijection.
 //
 // n = 0 always has exactly one (empty) composition, matching IntegerCompositions(0) in ./core.ts.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
@@ -16,7 +16,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -311,7 +311,7 @@ function isZigzag(parts: unknown, n: number): boolean {
   return true;
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   // ── parts drawn from an allowed set S ──
   ints(
     "OddCompositions",

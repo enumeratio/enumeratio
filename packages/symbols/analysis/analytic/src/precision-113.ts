@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/boxed";
 import { isFiniteNum } from "./box.ts";
 import { cx } from "./complex.ts";
@@ -111,6 +111,22 @@ function declarePreciseHarmonicNumber(ce: ComputeEngine): void {
   );
 }
 
+/** An exact rational `n/d` (d > 0), for the interval search below. */
+type Fraction = readonly [n: bigint, d: bigint];
+
+/** `x` exactly: a decimal is `significand · 10^exponent`, so it is already a rational. */
+function decimalFraction(x: BigDecimal): Fraction {
+  return x.exponent >= 0
+    ? [x.significand * 10n ** BigInt(x.exponent), 1n]
+    : [x.significand, 10n ** BigInt(-x.exponent)];
+}
+
+/** ⌊n/d⌋ for d > 0 (BigInt division truncates toward zero). */
+function floorDiv([n, d]: Fraction): bigint {
+  const q = n / d;
+  return n < 0n && q * d !== n ? q - 1n : q;
+}
+
 /**
  * The simplest [[p, q]] (smallest q) with p/q in [lo, hi], 0 < lo ≤ hi — the Stern–Brocot
  * / continued-fraction search for the simplest rational in an interval, which is what
@@ -120,26 +136,47 @@ function declarePreciseHarmonicNumber(ce: ComputeEngine): void {
  * is the difference: convergent gives 333/106 (closer to π, but with the larger
  * denominator); this gives Wolfram's 201/64 (the smallest denominator that still lands
  * in [π − 0.001, π + 0.001]).
+ *
+ * Exact arithmetic, not doubles: each step takes the reciprocal of a fractional part, and
+ * a rational's continued fraction ends, so the recursion always bottoms out. In doubles a
+ * tolerance below x's ulp collapsed the interval to a point, the fractional part rounded
+ * to 0, and `1/0` sent it round forever (`Rationalize(Pi, 1e-16)` overflowed the stack).
  */
-function simplestInInterval(lo: number, hi: number): [number, number] {
-  const fl = Math.floor(lo);
-  if (fl === lo) return [fl, 1]; // lo itself is an integer, and the interval's left edge
-  const fh = Math.floor(hi);
-  if (fl < fh) return [fl + 1, 1]; // an integer strictly inside (lo, hi]
-  const [p, q] = simplestInInterval(1 / (hi - fl), 1 / (lo - fl));
+function simplestInInterval(lo: Fraction, hi: Fraction): Fraction {
+  const fl = floorDiv(lo);
+  if (fl * lo[1] === lo[0]) return [fl, 1n]; // lo itself is an integer, and the interval's left edge
+  if (fl < floorDiv(hi)) return [fl + 1n, 1n]; // an integer strictly inside (lo, hi]
+  // Recurse on the reciprocals of the fractional parts: 1/(hi − fl) ≤ 1/(lo − fl).
+  const [p, q] = simplestInInterval([hi[1], hi[0] - fl * hi[1]], [lo[1], lo[0] - fl * lo[1]]);
   return [fl * p + q, p];
 }
 
 /** The simplest p/q within `tolerance` of `x`, as a reduced [numerator, denominator]. */
-function rationalizeToTolerance(x: number, tolerance: number): [number, number] {
-  const lo = x - tolerance;
-  const hi = x + tolerance;
-  if (lo <= 0 && hi >= 0) return [0, 1]; // 0 is in range and is its own simplest fraction
-  if (hi < 0) {
-    const [p, q] = simplestInInterval(-hi, -lo);
+function rationalizeToTolerance([xn, xd]: Fraction, [tn, td]: Fraction): Fraction {
+  const lo: Fraction = [xn * td - tn * xd, xd * td];
+  const hi: Fraction = [xn * td + tn * xd, xd * td];
+  if (lo[0] <= 0n && hi[0] >= 0n) return [0n, 1n]; // 0 is in range and is its own simplest fraction
+  if (hi[0] < 0n) {
+    const [p, q] = simplestInInterval([-hi[0], hi[1]], [-lo[0], lo[1]]);
     return [-p, q];
   }
   return simplestInInterval(lo, hi);
+}
+
+/**
+ * `x` as a decimal good to well past `tolerance`, so the interval is x's, not its double's:
+ * N(π) is 1.2·10^-16 off π, more than a 10^-16 tolerance. A float literal comes back as
+ * written (0.1 stays 1/10), the decimal its author meant.
+ */
+function decimalBeyond(ce: ComputeEngine, x: BoxedExpression, tolerance: BigDecimal): BigDecimal {
+  const precision = ce.precision;
+  const whole = Math.max(0, Math.ceil(Math.log10(Math.abs(x.N().re))));
+  ce.precision = precision + whole + Math.max(0, -tolerance.exponent);
+  try {
+    return x.N().bignumRe ?? ce.bignum(x.N().re);
+  } finally {
+    ce.precision = precision;
+  }
 }
 
 function declarePreciseRationalize(ce: ComputeEngine): void {
@@ -156,8 +193,10 @@ function declarePreciseRationalize(ce: ComputeEngine): void {
       return bigRationalAt(x) === undefined; // an already-exact x is returned unchanged
     },
     () => (ops, options) => {
-      const [p, q] = rationalizeToTolerance(ops[0].N().re, ops[1].N().re);
-      const expr = q === 1 ? ce.number(p) : ce.function("Rational", [p, q]);
+      const tolerance = ops[1].N().bignumRe ?? ce.bignum(ops[1].N().re);
+      const x = decimalBeyond(ce, ops[0], tolerance);
+      const [p, q] = rationalizeToTolerance(decimalFraction(x), decimalFraction(tolerance));
+      const expr = q === 1n ? ce.number(p) : ce.function("Rational", [ce.number(p), ce.number(q)]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
     2,

@@ -79,3 +79,12 @@ binom-n2-frac-n-n-1-2:
     out: \frac{n\times(n-1)}{2}
   fullform:
     in: FunctionExpand[Binomial[n, 2]]
+a-generic-cos-argument-passes-through-unchanged:
+  epsil:
+    in: FunctionExpand(Cos(theta))
+    out: Cos(theta)
+  tex:
+    in: \mathrm{FunctionExpand}(\cos(\theta))
+    out: \cos(\theta)
+  fullform:
+    in: FunctionExpand[Cos[theta]]
