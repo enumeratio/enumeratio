@@ -1,0 +1,31 @@
+- id: mode-list-1-2-2-3
+  expr: [Mode, [List, 1, 2, 2, 3]]
+  expected: 2
+- id: the-mode-occurs-exactly-as-many-times-as-the
+  expr: [Equal, [Count, [List, 1, 2, 2, 3], [Mode, [List, 1, 2, 2, 3]]], 2]
+  expected: True
+  category: Properties
+  caption: The mode occurs exactly as many times as the highest frequency in the collection. See [[Count]]
+- id: with-a-tie-for-most-frequent-mode-returns-just
+  expr: [Mode, [List, 1, 1, 2, 2, 3]]
+  expected: 1
+  category: Possible issues
+  caption: With a tie for most frequent, Mode returns just one; see [[Commonest]] for every tied value
+- id: mode-list-1-2-3-3-2-3
+  expr: [Mode, [List, 1, 2, 3, 3, 2, 3]]
+  expected: 3
+- id: exact-rationals
+  expr: [Mode, [List, [Rational, 1, 2], 1, [Rational, 1, 2]]]
+  expected: [Rational, 1, 2]
+  category: Scope
+  caption: Exact rationals
+- id: symbols-and-numbers-mixed-three-way-tie-wolfram
+  expr: [Mode, [List, b, a, c, 2, a, b, 1, 2]]
+  expected: b
+  category: Scope
+  caption: "Symbols and numbers mixed, three-way tie: the first to appear wins; [[Commonest]] lists all three, $b$, $a$, $2$, as Wolfram's does"
+- id: empty-data-has-no-mode-compute-engine-returns
+  expr: [Mode, [List]]
+  expected: NaN
+  category: Possible issues
+  caption: Empty data has no mode; compute-engine returns $NaN$

@@ -1,0 +1,9 @@
+- id: completegraph-n-is-complete
+  expr: [IsCompleteGraph, [CompleteGraph, 5]]
+  expected: True
+- id: a-path-is-not-complete
+  expr: [IsCompleteGraph, [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]]]]
+  expected: False
+- id: a-directed-2-cycle-is-complete
+  expr: [IsCompleteGraph, [Graph, [List, 1, 2], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1]]]]
+  expected: True

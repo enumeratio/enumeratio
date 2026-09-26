@@ -1,0 +1,4 @@
+- id: halve-and-floor-down-to-the-fixed-point
+  expr: [FixedPointList, [Function, [Floor, [Divide, _1, 2]]], 10]
+  expected: [List, 10, 5, 2, 1, 0, 0]
+  caption: halve and floor down to 0, ending with the repeated fixed point

@@ -12,19 +12,6 @@ details:
   - $CDF(x) = 1 - (1-p)^{\lfloor x\rfloor + 1}$, clamped to $0$ below $x=0$.
   - $Mean = (1-p)/p$, $Variance = (1-p)/p^2$, both exact.
   - '[[RandomVariate]] samples via inverse transform: $\lfloor \log U / \log(1-p) \rfloor$.'
-examples:
-  - id: geometric-pdf-exact
-    expr: [PDF, [GeometricDistribution, [Rational, 1, 4]], 2]
-    expected: [Rational, 9, 64]
-  - id: geometric-cdf-exact
-    expr: [CDF, [GeometricDistribution, [Rational, 1, 4]], 2]
-    expected: [Rational, 37, 64]
-  - id: geometric-mean-exact
-    expr: [Mean, [GeometricDistribution, [Rational, 1, 4]]]
-    expected: 3
-  - id: geometric-variance-exact
-    expr: [Variance, [GeometricDistribution, [Rational, 1, 4]]]
-    expected: 12
 seeAlso:
   - BernoulliDistribution
   - NegativeBinomialDistribution

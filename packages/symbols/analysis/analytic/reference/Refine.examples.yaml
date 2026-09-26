@@ -1,0 +1,25 @@
+- id: sqrt-of-x-squared-under-x-greater-than-0
+  expr: [Refine, [Sqrt, [Power, x, 2]], [Greater, x, 0]]
+  expected: x
+  caption: $\sqrt{x^2} \to x$ under $x > 0$
+- id: sqrt-of-x-squared-under-x-less-than-0
+  expr: [Refine, [Sqrt, [Power, x, 2]], [Less, x, 0]]
+  expected: [Negate, x]
+  caption: $\sqrt{x^2} \to -x$ under $x < 0$
+- id: abs-under-x-greater-than-0
+  expr: [Refine, [Abs, x], [Greater, x, 0]]
+  expected: x
+  caption: $|x| \to x$ under $x > 0$
+- id: sign-under-x-greater-than-0
+  expr: [Refine, [Sign, x], [Greater, x, 0]]
+  expected: 1
+  caption: $\operatorname{sign}(x) \to 1$ under $x > 0$
+- id: log-of-exp-under-x-real
+  expr: [Refine, [Ln, [Exp, x]], [Element, x, RealNumbers]]
+  expected: x
+  caption: $\ln(e^x) \to x$ once $x$ is known real
+- id: an-undecidable-inequality-is-left-alone
+  expr: [Refine, [Greater, [Power, x, 2], 0]]
+  expected: [Less, 0, [Power, x, 2]]
+  category: Possible issues
+  caption: $x^2 > 0$ is left alone with no assumption — it fails exactly at $x=0$

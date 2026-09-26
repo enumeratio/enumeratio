@@ -1,0 +1,5 @@
+- id: count-planepartitions-4-13-a000219
+  expr: [Count, [PlanePartitions, 4]]
+  expected: 13
+  category: Basic
+  caption: $Count(PlanePartitions(4)) = 13$, A000219

@@ -1,0 +1,10 @@
+- id: an-actual-path-is-a-path
+  expr:
+    [
+      IsPathGraph,
+      [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]],
+    ]
+  expected: True
+- id: a-cycle-is-not-a-path
+  expr: [IsPathGraph, [CycleGraph, 4]]
+  expected: False

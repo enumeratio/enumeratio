@@ -1,0 +1,4 @@
+- id: the-value-half-is-deterministic
+  expr: [At, [AbsoluteTiming, [Add, 1, 2]], 2]
+  expected: 3
+  caption: the value half of the result, extracted with At (seconds is not pinned)

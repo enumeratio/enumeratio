@@ -9,15 +9,6 @@ signatures:
 details:
   - "Covered: `DiracDelta(w)` $\\to 1/\\sqrt{2\\pi}$, and a `w`-free constant $c \\to c\\sqrt{2\\pi}$ (the inverse of `FourierTransform`'s own constant rule)."
   - "Declined: everything else — no rational-function or trig table the way `InverseLaplaceTransform` has one, since the corresponding `FourierTransform` images are themselves distributional (a sum of `DiracDelta`s) rather than an algebraic shape to invert termwise here."
-examples:
-  - id: dirac-delta
-    expr: [InverseFourierTransform, [DiracDelta, w], w, t]
-    expected: [Sqrt, [Divide, 1, [Multiply, 2, Pi]]]
-    caption: $\mathcal{F}^{-1}\{\delta(w)\} = 1/\sqrt{2\pi}$
-  - id: constant
-    expr: [InverseFourierTransform, 1, w, t]
-    expected: [Sqrt, [Multiply, 2, Pi]]
-    caption: $\mathcal{F}^{-1}\{1\} = \sqrt{2\pi}$
 primitive: kernel
 bindings:
   - origin: native

@@ -1,0 +1,27 @@
+- id: integerlength-12-345
+  expr: [IntegerLength, 12345]
+  expected: 5
+- id: integerlength-2-pow-100
+  expr: [IntegerLength, [Power, 2, 100]]
+  expected: 31
+  category: Scope
+- id: 255-ff-16
+  expr: [IntegerLength, 255, 16]
+  expected: 2
+  category: Scope
+  caption: $255 = \mathrm{ff}_{16}$
+- id: the-sign-is-not-counted
+  expr: [IntegerLength, -123]
+  expected: 3
+  category: Possible issues
+  caption: the sign is not counted
+- id: 0-has-length-0-unlike-its-one-element
+  expr: [IntegerLength, 0]
+  expected: 0
+  category: Possible issues
+  caption: 0 has length 0, unlike its one-element [[IntegerDigits]]
+- id: listable
+  expr: [IntegerLength, [List, 1, 10, 100]]
+  expected: [List, 1, 2, 3]
+  category: Scope
+  caption: Listable

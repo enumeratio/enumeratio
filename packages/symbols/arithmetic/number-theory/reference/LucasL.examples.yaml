@@ -1,0 +1,92 @@
+- id: lucasl-0
+  expr: [LucasL, 0]
+  expected: 2
+- id: lucasl-1
+  expr: [LucasL, 1]
+  expected: 1
+- id: lucasl-5
+  expr: [LucasL, 5]
+  expected: 11
+- id: lucasl-10
+  expr: [LucasL, 10]
+  expected: 123
+- id: exact-at-any-size
+  expr: [LucasL, 100]
+  expected: { num: "792070839848372253127" }
+  category: Scope
+  caption: Exact at any size
+- id: an-odd-negative-index-flips-the-sign-l-11-l-11
+  expr: [LucasL, -11]
+  expected: -199
+  category: Scope
+  caption: "An odd negative index flips the sign: $L_{-11} = -L_{11}$"
+- id: a-real-index-uses-l-nu-varphi-nu-cos-pi-nu
+  expr: [LucasL, 2.3333333333333335]
+  expected: 3.2362118794916213
+  category: Scope
+  caption: A real index uses $L_\nu = \varphi^\nu + \cos(\pi\nu)\,\varphi^{-\nu}$
+- id: the-two-argument-lucas-polynomial-l-7-x-from-l-n
+  expr: [LucasL, 7, x]
+  expected: [Add, [Power, x, 7], [Multiply, 7, [Power, x, 5]], [Multiply, 14, [Power, x, 3]], [Multiply, 7, x]]
+  category: Scope
+  caption: The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$
+- id: the-lucas-polynomial-at-x-1-is-the-lucas-number
+  expr: [LucasL, 143, 1]
+  expected: { num: "767772505664398093937756525279" }
+  category: Scope
+  caption: "The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$"
+- id: special-value-of-the-lucas-polynomial-l-1-0-0
+  expr: [LucasL, 1, 0]
+  expected: 0
+  category: Scope
+  caption: "Special value of the Lucas polynomial: $L_1(0) = 0$"
+- id: special-value-of-the-lucas-polynomial-l-0-0-2
+  expr: [LucasL, 0, 0]
+  expected: 2
+  category: Scope
+  caption: "Special value of the Lucas polynomial: $L_0(0) = 2$"
+- id: l-2-x-x-2-2-threads-element-wise-over-a-matrix
+  expr: [LucasL, 2, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
+  expected: [List, [List, [Rational, 9, 4], 3], [List, 2, [Rational, 9, 4]]]
+  category: Scope
+  caption: $L_2(x) = x^2 + 2$ threads element-wise over a matrix argument
+- id: l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci
+  expr: [Subtract, [Power, [LucasL, 10], 2], [Multiply, 5, [Power, [Fibonacci, 10], 2]]]
+  expected: 4
+  category: Properties
+  caption: $L_n^2 - 5F_n^2 = 4(-1)^n$, here at $n = 10$. See [[Fibonacci]]
+- id: l-n-f-n-1-f-n-1-here-at-n-6
+  expr: [Equal, [LucasL, 6], [Add, [Fibonacci, 5], [Fibonacci, 7]]]
+  expected: True
+  category: Properties
+  caption: $L_n = F_{n-1} + F_{n+1}$, here at $n = 6$
+- id: conversely-f-n-frac-l-n-1-l-n-1-5
+  expr: [Equal, [Fibonacci, 6], [Divide, [Add, [LucasL, 5], [LucasL, 7]], 5]]
+  expected: True
+  category: Properties
+  caption: Conversely $F_n = \dfrac{L_{n-1} + L_{n+1}}{5}$
+- id: a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n
+  expr: [Subtract, [Multiply, [LucasL, 4], [LucasL, 6]], [Power, [LucasL, 5], 2]]
+  expected: 5
+  category: Properties
+  caption: A Cassini-style identity $L_{n-1}L_{n+1} - L_n^2 = 5(-1)^{n+1}$, here at $n = 5$
+- id: negative-indices-are-supported-via-l-n-1-n-l-n
+  expr: [LucasL, -1]
+  expected: -1
+  category: Properties
+  caption: Negative indices are supported via $L_{-n} = (-1)^n L_n$
+- id: consecutive-ratios-l-n-1-l-n-converge-to-the
+  expr: [Divide, [LucasL, 15], [LucasL, 14]]
+  expected: [Rational, 1364, 843]
+  category: Applications
+  caption: Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio too. See [[Fibonacci]]
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [LucasL, [List, 1, 2, 3, 4]]
+  expected: [List, 1, 3, 4, 7]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: l-30-already-tops-1-8-million-growing-at-the
+  expr: [LucasL, 30]
+  expected: 1860498
+  category: Neat examples
+  caption: $L_{30}$ already tops 1.8 million, growing at the same rate as [[Fibonacci]]

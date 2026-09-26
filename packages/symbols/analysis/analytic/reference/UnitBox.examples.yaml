@@ -1,0 +1,28 @@
+- id: unitbox-inside-the-box
+  expr: [UnitBox, 0]
+  expected: 1
+  caption: Inside the box
+- id: unitbox-boundary-1-2
+  expr: [UnitBox, [Rational, 1, 2]]
+  expected: 1
+  caption: The boundary is closed
+- id: unitbox-boundary-neg-1-2
+  expr: [UnitBox, [Rational, -1, 2]]
+  expected: 1
+  caption: The boundary is closed
+- id: unitbox-outside-the-box
+  expr: [UnitBox, 1]
+  expected: 0
+  category: Scope
+  caption: Outside the box
+- id: unitbox-product-of-two-boxes
+  expr: [UnitBox, 0, 0]
+  expected: 1
+  category: Scope
+  caption: Two arguments -- the product of their unit boxes
+- id: unitbox-derivative-away-from-the-jump
+  expr: [D, [UnitBox, x], x]
+  expected:
+    [Piecewise, [List, [List, Indeterminate, [Or, [Equal, x, [Rational, 1, 2]], [Equal, x, [Rational, -1, 2]]]]], 0]
+  category: Properties
+  caption: 0 away from the jump, undefined exactly at the boundary

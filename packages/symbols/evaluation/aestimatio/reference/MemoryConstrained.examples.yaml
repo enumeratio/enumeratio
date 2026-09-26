@@ -1,0 +1,9 @@
+- id: in-process-the-call-simply-does-not-reduce-see
+  expr: [MemoryConstrained, [Add, 1, 2], 1000000]
+  expected: [MemoryConstrained, [Add, 1, 2], 1000000]
+  caption: In-process, the call simply does not reduce — see evaluateIsolated for the real cap
+- id: a-failexpr-does-not-change-that-in-process-there
+  expr: [MemoryConstrained, [Add, 1, 2], 1000000, -1]
+  expected: [MemoryConstrained, [Add, 1, 2], 1000000, -1]
+  caption: "A failexpr does not change that: in-process there is no cap to exceed"
+  category: Scope

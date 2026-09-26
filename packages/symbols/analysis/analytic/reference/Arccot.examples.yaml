@@ -1,0 +1,51 @@
+- id: pi-4-numerically-n-forces-the-fold-plain
+  expr: [N, [Arccot, 1]]
+  expected: { num: "0.785398163397448309616" }
+  caption: $\pi/4$, numerically -- N(...) forces the fold plain evaluation withholds
+- id: undoes-cot-cot-arccot-x-x
+  expr: [Equal, [Cot, [Arccot, 1]], 1]
+  expected: True
+  category: Properties
+  caption: 'Undoes [[Cot]]: $\cot(\text{arccot}(x)) = x$'
+- id: folds-to-pi-4-exactly-as-arctan-does-at-1
+  expr: [Arccot, 1]
+  expected: [Multiply, [Rational, 1, 4], Pi]
+  caption: Folds to $\pi/4$ exactly, as [[Arctan]] does at 1
+- id: a-machine-precision-argument-evaluates
+  expr: [Arccot, 0.5]
+  expected: { num: "1.10714871779409050302" }
+  caption: A machine-precision argument evaluates numerically
+- id: arccot-0-pi-2
+  expr: [Arccot, 0]
+  expected: [Multiply, [Rational, 1, 2], Pi]
+  category: Scope
+  caption: $\operatorname{arccot} 0 = \pi/2$
+- id: arccot-sqrt-3-pi-6
+  expr: [Arccot, [Sqrt, 3]]
+  expected: [Multiply, [Rational, 1, 6], Pi]
+  category: Scope
+  caption: $\operatorname{arccot}\sqrt3 = \pi/6$
+- id: arccot-1-3-pi-4-on-compute-engine-s-range-0-pi
+  expr: [Arccot, -1]
+  expected: [Multiply, [Rational, 3, 4], Pi]
+  category: Scope
+  caption: $\operatorname{arccot}(-1) = 3\pi/4$ on compute-engine's range $(0, \pi)$ -- continuous through 0, unlike Wolfram's
+- id: arccot-positiveinfinity
+  expr: [Arccot, PositiveInfinity]
+  expected: 0
+  category: Scope
+- id: derivative-frac-1-1-x-2
+  expr: [D, [Arccot, x], x]
+  expected: [Divide, -1, [Add, [Power, x, 2], 1]]
+  category: Scope
+  caption: 'Derivative: $-\frac{1}{1 + x^2}$'
+- id: arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored
+  expr: [Arccot, [Negate, [Sqrt, 3]]]
+  expected: [Multiply, [Rational, 5, 6], Pi]
+  category: Scope
+  caption: $\operatorname{arccot}(-\sqrt{3}) = \tfrac{5\pi}{6}$ — past $\pi/2$, not mirrored through 0, in compute-engine's own $(0,\pi)$ range.
+- id: a-generic-rational-with-no-exact-fold-stays
+  expr: [Arccot, 2]
+  expected: [Arccot, 2]
+  category: Possible issues
+  caption: A generic rational with no exact [[Arctan]] fold stays symbolic

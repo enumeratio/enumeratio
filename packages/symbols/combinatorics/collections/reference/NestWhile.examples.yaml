@@ -1,0 +1,4 @@
+- id: halve-while-even
+  expr: [NestWhile, [Function, [Divide, _1, 2]], 96, [Function, [Equal, [Mod, _1, 2], 0]]]
+  expected: 3
+  caption: halve while even, stopping at the first odd value

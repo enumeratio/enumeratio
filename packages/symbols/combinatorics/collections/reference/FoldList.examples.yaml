@@ -1,0 +1,23 @@
+- id: foldlist-add-0-1-2-3
+  expr: [FoldList, Add, 0, [List, 1, 2, 3]]
+  expected: [List, 0, 1, 3, 6]
+- id: foldlist-add-1-2-3
+  expr: [FoldList, Add, [List, 1, 2, 3]]
+  expected: [List, 1, 3, 6]
+  category: Scope
+  caption: With no seed, the first element of the list is the seed
+- id: foldlist-multiply-1-1-2-3-4
+  expr: [FoldList, Multiply, 1, [List, 1, 2, 3, 4]]
+  expected: [List, 1, 1, 2, 6, 24]
+  category: Scope
+  caption: Running products, via Multiply instead of Add
+- id: foldlist-length-is-one-more
+  expr: [Equal, [Length, [FoldList, Add, 0, [List, 1, 2, 3, 4, 5]]], [Add, [Length, [List, 1, 2, 3, 4, 5]], 1]]
+  expected: True
+  category: Properties
+  caption: One longer than the input list
+- id: foldlist-last-is-fold
+  expr: [Equal, [Last, [FoldList, Add, 0, [List, 1, 2, 3]]], [Fold, Add, 0, [List, 1, 2, 3]]]
+  expected: True
+  category: Properties
+  caption: The last element is what Fold alone would give

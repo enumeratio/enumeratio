@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(SternDiatomicSequence) = +\infty$, and $At(SternDiatomicSequence, 1) = s(0) = 0$; unranking is $O(\log k)$ via the bit-doubling pair $(s(n), s(n+1))$, not a growing cache.'
   - "OEIS A002487, starting exactly at its offset-0 term: $0, 1, 1, 2, 1, 3, 2, 3, 1, 4, …$."
   - "Not monotone, so membership is not 'is this term $\\le$ some bound': every non-negative integer is a term ($0$ appears exactly once, at $n = 0$; every positive integer appears infinitely often). $Element(0, SternDiatomicSequence)$ and $Element(42, SternDiatomicSequence)$ are both true; only a negative or non-integer value is false."
-examples: []
 enumerate:
   expr: Take(SternDiatomicSequence, 20)
 seeAlso:

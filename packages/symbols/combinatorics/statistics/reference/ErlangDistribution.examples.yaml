@@ -1,0 +1,12 @@
+- id: erlang-pdf-exact
+  expr: [PDF, [ErlangDistribution, 3, 2], 1]
+  expected: [Divide, 8, [Multiply, [Gamma, 3], [Power, ExponentialE, 2]]]
+- id: erlang-cdf-exact
+  expr: [CDF, [ErlangDistribution, 3, 2], 1]
+  expected: [Add, 1, [Divide, -5, [Power, ExponentialE, 2]]]
+- id: erlang-mean-exact
+  expr: [Mean, [ErlangDistribution, 3, 2]]
+  expected: [Rational, 3, 2]
+- id: erlang-variance-exact
+  expr: [Variance, [ErlangDistribution, 3, 2]]
+  expected: [Rational, 3, 4]

@@ -1,0 +1,84 @@
+- id: endpoints-add
+  expr: [Add, [Interval, 1, 2], [Interval, 3, 4]]
+  expected: [Interval, 4, 6]
+  caption: Endpoints add
+- id: decimal-arithmetic-is-exact-so-nothing-needs
+  expr: [Add, [Interval, 1.4, 1.5], 1]
+  expected: [Interval, 2.4, 2.5]
+  caption: Decimal arithmetic is exact, so nothing needs rounding
+- id: at-an-inexact-endpoint-the-value-is-rounded
+  expr: [Sin, [Interval, 1.4, 1.5]]
+  expected: [Interval, 0.98544972998846, 0.9974949866040546]
+  category: Scope
+  caption: 'At an inexact endpoint the value is rounded outward: $\sin 1.4 = 0.98544972998846018\ldots$ lies inside'
+- id: gamma-s-minimum-at-1-4616-lies-inside-so-it-is
+  expr: [Gamma, [Interval, 1, 2]]
+  expected: [Interval, 0.8856031944108886, 1]
+  category: Scope
+  caption: $\Gamma$'s minimum at $1.4616\ldots$ lies inside, so it is the lower bound, rounded down; the upper bound, $\Gamma(1) = \Gamma(2) = 1$, stays exact
+- id: across-the-pole-at-pi-2-the-two-pieces-cover
+  expr: [Tan, [Interval, 0, Pi]]
+  expected: [Interval, NegativeInfinity, PositiveInfinity]
+  category: Scope
+  caption: Across the pole at $\pi/2$ the two pieces cover every real, so they merge
+- id: a-product-takes-the-extreme-endpoint-products
+  expr: [Multiply, [Interval, 1, 2], [Interval, -1, 3]]
+  expected: [Interval, -2, 6]
+  caption: A product takes the extreme endpoint products
+- id: reciprocal-of-an-interval-not-containing-0
+  expr: [Divide, 1, [Interval, 2, 4]]
+  expected: [Interval, [Rational, 1, 4], [Rational, 1, 2]]
+  category: Scope
+  caption: Reciprocal of an interval not containing 0
+- id: an-even-power-of-an-interval-straddling-0-starts
+  expr: [Power, [Interval, -1, 2], 2]
+  expected: [Interval, 0, 4]
+  category: Scope
+  caption: An even power of an interval straddling 0 starts at 0, not at 1
+- id: the-dependency-problem-interval-arithmetic-doesn
+  expr: [Subtract, [Interval, 1, 2], [Interval, 1, 2]]
+  expected: [Interval, -1, 1]
+  category: Scope
+  caption: "The dependency problem: interval arithmetic doesn't know both operands are the same quantity"
+- id: through-an-elementary-function
+  expr: [Sin, [Interval, [Negate, [Divide, Pi, 6]], [Divide, Pi, 6]]]
+  expected: [Interval, [Rational, -1, 2], [Rational, 1, 2]]
+  category: Scope
+  caption: Through an elementary function
+- id: the-absolute-value-of-an-interval-straddling-0
+  expr: [Abs, [Interval, -3, 2]]
+  expected: [Interval, 0, 3]
+  category: Scope
+  caption: The absolute value of an interval straddling 0
+- id: a-periodic-head-over-an-interval-that-contains-a
+  expr: [Cos, [Interval, -1, 4]]
+  expected: [Interval, -1, 1]
+  category: Scope
+  caption: A periodic head over an interval that contains a full swing covers its whole range
+- id: an-interior-maximum-at-pi-2-becomes-the-upper
+  expr: [Sin, [Interval, 1, 2]]
+  expected: [Interval, [Sin, 1], 1]
+  category: Scope
+  caption: An interior maximum at $\pi/2$ becomes the upper end
+- id: gamma-dips-to-its-minimum-0-8856-inside-0-5-3
+  expr: [N, [Gamma, [Interval, 0.5, 3]]]
+  expected: [Interval, { num: "0.885603194410888805432" }, 2]
+  category: Scope
+  caption: $\Gamma$ dips to its minimum $0.8856\ldots$ inside $[0.5, 3]$
+- id: zeta-is-decreasing-on-2-3-so-the-ends-swap
+  expr: [Zeta, [Interval, 2, 3]]
+  expected: [Interval, [Zeta, 3], [Multiply, [Rational, 1, 6], [Power, Pi, 2]]]
+  category: Scope
+  caption: $\zeta$ is decreasing on $[2, 3]$, so the ends swap
+- id: arctan-interval-neg-1-3
+  expr: [Arctan, [Interval, -1, 3]]
+  expected: [Interval, [Multiply, [Rational, -1, 4], Pi], [Arctan, 3]]
+  category: Scope
+- id: exp-interval-neg-1-ln-2
+  expr: [Exp, [Interval, -1, [Ln, 2]]]
+  expected: [Interval, [Divide, 1, ExponentialE], 2]
+  category: Scope
+- id: max-interval-1-3-interval-neg-3-5
+  expr: [Max, [Interval, 1, 3], [Interval, -3, 5]]
+  expected: [Interval, 1, 5]
+  category: Scope

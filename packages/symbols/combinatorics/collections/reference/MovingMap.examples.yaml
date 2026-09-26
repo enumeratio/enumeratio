@@ -1,0 +1,4 @@
+- id: length-of-window
+  expr: [MovingMap, Length, [List, 1, 2, 3, 4], 1]
+  expected: [List, 2, 2, 2]
+  caption: Each width-2 window has length 2 -- three windows from a 4-element list

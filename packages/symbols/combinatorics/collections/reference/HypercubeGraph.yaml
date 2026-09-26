@@ -6,11 +6,6 @@ signatures:
   - call: HypercubeGraph(n)
     description: vertex $i$ (1-based) labels the bit pattern $i - 1$; edges join patterns at Hamming distance 1.
     library: enumeratio-collections
-examples:
-  - id: q3-has-8-vertices-12-edges
-    expr: [List, [VertexCount, [HypercubeGraph, 3]], [EdgeCount, [HypercubeGraph, 3]]]
-    expected: [List, 8, 12]
-    caption: '$Q_3$: 8 vertices, $3 \cdot 2^2 = 12$ edges'
 seeAlso:
   - GridGraph
   - CompleteGraph

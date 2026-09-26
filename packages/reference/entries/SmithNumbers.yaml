@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(SmithNumbers) = +\infty$ (McDaniel, 1987). OEIS A006753.'
   - $At(SmithNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SmithNumbers, 2) = 22$ ($2+2=4$; factors $2, 11$, digit sums $2+1+1=4$).
   - 'Membership goes through [[Element]]: $Element(4, SmithNumbers)$ is true ($4=2 \times 2$: digit sums $4 = 2+2$), $Element(6, SmithNumbers)$ is false ($6=2\times3$: digit sums $2+3=5 \ne 6$).'
-examples: []
 enumerate:
   expr: Take(SmithNumbers, 20)
 seeAlso:

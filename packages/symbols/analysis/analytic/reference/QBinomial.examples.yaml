@@ -1,0 +1,19 @@
+- id: frac-2-4-1-2-3-1-2-2-1-2-1-35
+  expr: [QBinomial, 4, 2, 2]
+  expected: 35
+  caption: $\frac{(2^4-1)(2^3-1)}{(2^2-1)(2-1)} = 35$
+- id: a-polynomial-in-q-whose-coefficients-count
+  expr: [Expand, [QBinomial, 4, 2, q]]
+  expected: [Add, [Power, q, 4], [Power, q, 3], [Multiply, 2, [Power, q, 2]], q, 1]
+  category: Scope
+  caption: A polynomial in q whose coefficients count partitions in a 2 × 2 box
+- id: at-q-1-it-is-binomial-6-3
+  expr: [QBinomial, 6, 3, 1]
+  expected: 20
+  category: Properties
+  caption: At q = 1 it is Binomial(6, 3)
+- id: the-number-of-2-dimensional-subspaces-of-f-3-5
+  expr: [QBinomial, 5, 2, 3]
+  expected: 1210
+  category: Applications
+  caption: The number of 2-dimensional subspaces of $\mathbb{F}_3^5$

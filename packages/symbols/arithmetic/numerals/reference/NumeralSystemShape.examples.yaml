@@ -1,0 +1,44 @@
+- id: 4-and-6-share-a-factor-so-this-is-not-a
+  expr: [NumeralSystemShape, [ResidueNumerals, [List, 4, 6]]]
+  expected:
+    [
+      Dictionary,
+      [KeyValuePair, { str: Bijective }, False],
+      [KeyValuePair, { str: Integers }, [Range, 0, 23]],
+      [KeyValuePair, { str: Digits }, [List, [Range, 0, 3], [Range, 0, 5]]],
+      [KeyValuePair, { str: Width }, 2],
+    ]
+  caption: 4 and 6 share a factor, so this is not a bijection
+- id: numeralsystemshape-zeckendorfnumerals
+  expr: [NumeralSystemShape, ZeckendorfNumerals]
+  expected:
+    [
+      Dictionary,
+      [KeyValuePair, { str: Bijective }, True],
+      [KeyValuePair, { str: Integers }, NonNegativeIntegers],
+      [KeyValuePair, { str: Digits }, [Range, 0, 1]],
+      [KeyValuePair, { str: Rule }, "'no two adjacent ones'"],
+    ]
+  category: Scope
+- id: ordinary-base-2-in-the-same-shape-every-other
+  expr: [NumeralSystemShape, [PositionalNumerals, 2]]
+  expected:
+    [
+      Dictionary,
+      [KeyValuePair, { str: Bijective }, True],
+      [KeyValuePair, { str: Integers }, NonNegativeIntegers],
+      [KeyValuePair, { str: Digits }, [Range, 0, 1]],
+    ]
+  caption: ordinary base 2, in the same shape every other system reports
+  category: Scope
+- id: every-integer-negatives-included-with-no-sign
+  expr: [NumeralSystemShape, [BalancedNumerals, 3]]
+  expected:
+    [
+      Dictionary,
+      [KeyValuePair, { str: Bijective }, True],
+      [KeyValuePair, { str: Integers }, Integers],
+      [KeyValuePair, { str: Digits }, [Range, -1, 1]],
+    ]
+  caption: every integer, negatives included, with no sign
+  category: Scope

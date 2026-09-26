@@ -1,0 +1,9 @@
+- id: two-trig-terms-on-a-bounded-interval
+  expr: [NMaximize, [List, [Add, [Sin, x], [Cos, [Multiply, 2, x]]], [And, [GreaterEqual, x, 0], [LessEqual, x, 6]]], x]
+  expected: [List, 1.125, [List, [Rule, x, 2.8889124061210176]]]
+  caption: Sin(x) + Cos(2x) reaches its maximum, 9/8, at more than one point on [0, 6]
+- id: declines-without-a-bounded-constraint
+  expr: [NMaximize, [Negate, [Power, x, 2]], x]
+  expected: [NMaximize, [Negate, [Power, x, 2]], x]
+  category: Possible issues
+  caption: Declines -- no bounded interval to search

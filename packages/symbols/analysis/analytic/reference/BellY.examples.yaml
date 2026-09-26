@@ -1,0 +1,13 @@
+- id: belly-4-2-list-x1-x2-x3
+  expr: [BellY, 4, 2, [List, x1, x2, x3]]
+  expected: [Add, [Multiply, 3, [Power, x2, 2]], [Multiply, 4, x1, x3]]
+- id: all-ones-arguments-give-stirling-6-2
+  expr: [BellY, 6, 2, [List, 1, 1, 1, 1, 1]]
+  expected: 31
+  category: Properties
+  caption: All-ones arguments give Stirling(6, 2)
+- id: x-j-j-gives-the-lah-number-l-4-2
+  expr: [BellY, 4, 2, [List, 1, 2, 6]]
+  expected: 36
+  category: Properties
+  caption: $x_j = j!$ gives the Lah number L(4, 2)

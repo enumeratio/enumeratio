@@ -1,0 +1,4 @@
+- id: the-partition-1-3-mid-2-as-a-plain-list
+  expr: [LastBlockSize, [List, [List, 1, 3], [List, 2]]]
+  expected: 1
+  caption: the partition $\{1,3\} \mid \{2\}$, as a plain list

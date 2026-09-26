@@ -1,0 +1,44 @@
+- id: moebiusmu-1
+  expr: [MoebiusMu, 1]
+  expected: 1
+- id: moebiusmu-11
+  expr: [MoebiusMu, 11]
+  expected: -1
+- id: 12-22-3-is-not-squarefree
+  expr: [MoebiusMu, 12]
+  expected: 0
+  caption: 12 = 2² · 3 is not squarefree
+- id: 10-2-5-a-product-of-an-even-number-of-distinct
+  expr: [MoebiusMu, 10]
+  expected: 1
+  caption: 10 = 2·5, a product of an even number of distinct primes
+- id: sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind
+  expr: [Add, [MoebiusMu, 1], [MoebiusMu, 2], [MoebiusMu, 3], [MoebiusMu, 4], [MoebiusMu, 6], [MoebiusMu, 12]]
+  expected: 0
+  category: Properties
+  caption: $\sum_{d\mid n}\mu(d)=0$ for $n>1$, the identity behind Möbius inversion
+- id: mu-is-only-defined-for-positive-integers-compute
+  expr: [MoebiusMu, 0]
+  expected: [MoebiusMu, 0]
+  category: Possible issues
+  caption: $\mu$ is only defined for positive integers; compute-engine leaves $n=0$ unevaluated
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [MoebiusMu, [List, 1, 2, 3, 4]]
+  expected: [List, 1, -1, -1, 0]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: gaussian-integers-5-6i-is-a-gaussian-prime-norm
+  expr: [MoebiusMu, [Complex, 5, 6]]
+  expected: -1
+  category: Scope
+  caption: "Gaussian integers: $5+6i$ is a Gaussian prime (norm 61)"
+- id: listable-threads-over-a-list
+  expr: [MoebiusMu, [List, 4, 10, 17, 20]]
+  expected: [List, 0, 1, -1, 0]
+  category: Scope
+  caption: "Listable: threads over a list"
+- id: listable-over-a-range
+  expr: [MoebiusMu, [Range, 20]]
+  expected: [List, 1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0]
+  category: Scope
+  caption: Listable over a [[Range]]

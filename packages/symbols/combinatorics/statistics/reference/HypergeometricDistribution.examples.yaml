@@ -1,0 +1,13 @@
+- id: hypergeometric-pdf-exact
+  expr: [PDF, [HypergeometricDistribution, 20, 50, 100], 10]
+  expected: [Rational, 10272278170, 52177653441]
+  caption: Cross-checked against wolframscript's N[PDF[HypergeometricDistribution[20, 50, 100], 10]]
+- id: hypergeometric-cdf-exact-sum
+  expr: [CDF, [HypergeometricDistribution, 3, 5, 10], 2]
+  expected: [Rational, 11, 12]
+- id: hypergeometric-mean-exact
+  expr: [Mean, [HypergeometricDistribution, 20, 50, 100]]
+  expected: 10
+- id: hypergeometric-variance-exact
+  expr: [Variance, [HypergeometricDistribution, 20, 50, 100]]
+  expected: [Rational, 400, 99]

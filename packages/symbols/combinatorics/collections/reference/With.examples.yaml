@@ -1,0 +1,9 @@
+- id: substitute-a-fixed-value
+  expr: [With, [List, [Equal, x, 3]], [Multiply, x, x]]
+  expected: 9
+  caption: substitute a fixed value
+- id: several-bindings-at-once
+  expr: [With, [List, [Equal, x, 2], [Equal, y, 5]], [Add, x, y]]
+  expected: 7
+  caption: several bindings at once
+  category: Scope

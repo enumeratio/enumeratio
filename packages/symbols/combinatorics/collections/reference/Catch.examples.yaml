@@ -1,0 +1,8 @@
+- id: no-throw-evaluates-normally
+  expr: [Catch, [Add, 1, 2]]
+  expected: 3
+  caption: with no Throw inside, Catch just returns the value
+- id: tag-matched-catch-recovers-the-value
+  expr: [Catch, [Throw, ok, done], done]
+  expected: ok
+  caption: Catch(expr, tag) recovers a Throw with a matching tag

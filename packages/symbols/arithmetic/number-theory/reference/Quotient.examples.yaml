@@ -1,0 +1,46 @@
+- id: quotient-17-5
+  expr: [Quotient, 17, 5]
+  expected: 3
+- id: the-floor-not-truncation
+  expr: [Quotient, -7, 2]
+  expected: -4
+  caption: the floor, not truncation
+- id: 7-5i-2-i-3-8-0-6i-rounded
+  expr: [Quotient, [Complex, 7, 5], [Complex, 2, 1]]
+  expected: [Complex, 4, 1]
+  category: Scope
+  caption: $(7 + 5i)/(2 + i) = 3.8 + 0.6i$, rounded
+- id: 2-5-2-5i-rounds-to-even-in-each-part
+  expr: [Quotient, [Complex, 5, 5], 2]
+  expected: [Complex, 2, 2]
+  category: Possible issues
+  caption: $2.5 + 2.5i$ rounds to even in each part
+- id: the-remainder-takes-the-sign-of-n
+  expr: [Quotient, 17, -5]
+  expected: -4
+  caption: the remainder takes the sign of $n$
+- id: m-n-quotient-m-n-mod-m-n-see-mod
+  expr: [Add, [Multiply, 5, [Quotient, 17, 5]], [Mod, 17, 5]]
+  expected: 17
+  category: Properties
+  caption: $m=n\,\mathrm{Quotient}(m,n)+\mathrm{Mod}(m,n)$. See [[Mod]]
+- id: real-arguments-lfloor-7-5-2-rfloor
+  expr: [Quotient, 7.5, 2]
+  expected: 3
+  category: Scope
+  caption: 'Real arguments: $\lfloor 7.5/2\rfloor$'
+- id: rational-arguments-lfloor-21-2-rfloor
+  expr: [Quotient, [Rational, 7, 2], [Rational, 1, 3]]
+  expected: 10
+  category: Scope
+  caption: 'Rational arguments: $\lfloor 21/2\rfloor$'
+- id: quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q
+  expr: [Quotient, 17, 5, 3]
+  expected: 2
+  category: Scope
+  caption: Quotient(m, n, d) is $\lfloor (m-d)/n\rfloor$, so $m-n\,q$ lands in $[d, d+n)$
+- id: listable-threads-over-a-list
+  expr: [Quotient, [List, 10, 20, 30], 7]
+  expected: [List, 1, 2, 4]
+  category: Scope
+  caption: "Listable: threads over a list"

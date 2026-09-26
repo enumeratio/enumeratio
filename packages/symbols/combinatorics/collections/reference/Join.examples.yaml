@@ -1,0 +1,81 @@
+- id: join-list-1-2-list-3-4
+  expr: [Join, [List, 1, 2], [List, 3, 4]]
+  expected: [List, 1, 2, 3, 4]
+- id: join-list-1-2-list-3-4-list-5
+  expr: [Join, [List, 1, 2], [List, 3, 4], [List, 5]]
+  expected: [List, 1, 2, 3, 4, 5]
+- id: join-a-b-flatten-a-b-1-see-flatten
+  expr: [Equal, [Join, [List, 1, 2], [List, 3, 4]], [Flatten, [List, [List, 1, 2], [List, 3, 4]], 1]]
+  expected: True
+  category: Properties
+  caption: $Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]]
+- id: a-trailing-integer-argument-joins-at-that-level
+  expr: [Join, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]], 2]
+  expected: [List, [List, 1, 2, 5, 6], [List, 3, 4, 7, 8]]
+  category: Scope
+  caption: A trailing integer argument joins at that level rather than the top level
+- id: join-list-a-b-c-list-x-y-list-u-v-w
+  expr: [Join, [List, a, b, c], [List, x, y], [List, u, v, w]]
+  expected: [List, a, b, c, x, y, u, v, w]
+- id: joining-matrices-stacks-their-rows
+  expr: [Join, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]]]
+  expected: [List, [List, a, b], [List, c, d], [List, 1, 2], [List, 3, 4]]
+  category: Scope
+  caption: Joining matrices stacks their rows
+- id: sets-as-well-as-lists-as-long-as-all-arguments
+  expr: [Join, [Set, 1, 2], [Set, 3]]
+  expected: [Set, 1, 2, 3]
+  category: Scope
+  caption: Sets as well as lists, as long as all arguments share the head
+- id: a-lazy-range-is-spliced-in
+  expr: [Join, [List, 1, 2], [Range, 3, 5]]
+  expected: [List, 1, 2, 3, 4, 5]
+  category: Scope
+  caption: A lazy [[Range]] is spliced in
+- id: with-no-arguments-the-empty-list
+  expr: [Join]
+  expected: [List]
+  category: Scope
+  caption: With no arguments, the empty list
+- id: at-level-2-matrices-are-joined-side-by-side
+  expr: [Join, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]], 2]
+  expected: [List, [List, a, b, 1, 2], [List, c, d, 3, 4]]
+  category: Scope
+  caption: At level 2, matrices are joined side by side
+- id: ragged-rows-join-at-level-2-too
+  expr: [Join, [List, [List, 1], [List, 5, 6]], [List, [List, 2, 3], [List, 7]], [List, [List, 4], [List, 8]], 2]
+  expected: [List, [List, 1, 2, 3, 4], [List, 5, 6, 7, 8]]
+  category: Scope
+  caption: Ragged rows join at level 2 too
+- id: a-row-missing-from-the-shorter-array-simply-isn
+  expr: [Join, [List, [List, x]], [List, [List, 1, 2], [List, 3, 4]], 2]
+  expected: [List, [List, x, 1, 2], [List, 3, 4]]
+  category: Scope
+  caption: A row missing from the shorter array simply isn't merged in
+- id: any-head-as-long-as-all-the-arguments-share-it
+  expr: [Join, [f, a], [f, b]]
+  expected: [f, a, b]
+  category: Scope
+  caption: Any head, as long as all the arguments share it
+- id: join-is-associative
+  expr:
+    [
+      Equal,
+      [Join, [Join, [List, a, b, c], [List, x, y]], [List, u, v, w]],
+      [Join, [List, a, b, c], [Join, [List, x, y], [List, u, v, w]]],
+    ]
+  expected: True
+  category: Properties
+  caption: $Join$ is associative
+- id: join-tolerates-shorter-array-second
+  expr: [Join, [List, [List, 1, 2], [List, 3, 4]], [List, [List, x]], 2]
+  expected: [List, [List, 1, 2, x], [List, 3, 4]]
+  role: test
+- id: join-splices-any-shared-head
+  expr: [Join, [f, a], [f, b], [f, c]]
+  expected: [f, a, b, c]
+  role: test
+- id: join-associations-first-seen-order
+  expr: [Join, [Association, [Rule, a, b]], [Association, [Rule, c, d], [Rule, a, f]]]
+  expected: [Association, [Rule, a, f], [Rule, c, d]]
+  role: test

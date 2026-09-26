@@ -1,0 +1,12 @@
+- id: from-character-code-of-a-single-code-point
+  expr: [FromCharacterCode, 65]
+  expected: "'A'"
+- id: inverts-tocharactercode
+  expr: [FromCharacterCode, [ToCharacterCode, [String, hello]]]
+  expected: "'hello'"
+  category: Scope
+- id: round-trips-a-non-ascii-string-emoji-astral
+  expr: [FromCharacterCode, [ToCharacterCode, [String, a😀b→c]]]
+  expected: "'a😀b→c'"
+  category: Scope
+  caption: round-trips an emoji (astral) and an arrow (BMP) through code points

@@ -10,12 +10,6 @@ details:
   - 'A lazy indexed collection: $Count(StandardTableauPairs(n)) = n!$, exact and closed-form, since Robinson–Schensted–Knuth is a bijection $S_n \leftrightarrow \{(P, Q)\}$. See [[Factorial]].'
   - Each element is `[P, Q]`, two standard Young tableaux of the same shape; unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.
   - Ranking inverts RSK back to a permutation and reads off [[SymmetricGroup]]'s rank — so the two families share one underlying order.
-examples:
-  - id: count-standardtableaupairs-4-4-24-rsk-is-a
-    expr: [Count, [StandardTableauPairs, 4]]
-    expected: 24
-    category: Basic
-    caption: "$Count(StandardTableauPairs(4)) = 4! = 24$: RSK is a bijection with permutations"
 enumerate:
   expr: StandardTableauPairs(4)
 seeAlso:

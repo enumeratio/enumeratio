@@ -1,0 +1,10 @@
+- id: momentgeneratingfunction-gamma
+  expr: [MomentGeneratingFunction, [GammaDistribution, 2, 1], t]
+  expected: [Power, [Add, [Negate, t], 1], -2]
+- id: momentgeneratingfunction-poisson-at-zero
+  expr: [MomentGeneratingFunction, [PoissonDistribution, 2], 0]
+  expected: 1
+- id: momentgeneratingfunction-cauchy-undeclared
+  expr: [MomentGeneratingFunction, [CauchyDistribution, 0, 1], 1]
+  expected: [MomentGeneratingFunction, [CauchyDistribution, 0, 1], 1]
+  category: Possible issues

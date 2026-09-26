@@ -1,0 +1,8 @@
+- id: dirac-delta
+  expr: [InverseFourierTransform, [DiracDelta, w], w, t]
+  expected: [Sqrt, [Divide, 1, [Multiply, 2, Pi]]]
+  caption: $\mathcal{F}^{-1}\{\delta(w)\} = 1/\sqrt{2\pi}$
+- id: constant
+  expr: [InverseFourierTransform, 1, w, t]
+  expected: [Sqrt, [Multiply, 2, Pi]]
+  caption: $\mathcal{F}^{-1}\{1\} = \sqrt{2\pi}$

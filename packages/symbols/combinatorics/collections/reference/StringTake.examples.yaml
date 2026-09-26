@@ -1,0 +1,20 @@
+- id: string-take-s-n-takes-the-first-n-characters
+  expr: [StringTake, [String, hello world], 5]
+  expected: "'hello'"
+- id: string-take-s-negative-n-takes-last-n-chars
+  expr: [StringTake, [String, hello world], -5]
+  expected: "'world'"
+  category: Scope
+- id: string-take-s-n-takes-the-nth-character-alone
+  expr: [StringTake, [String, hello], [List, 2]]
+  expected: "'e'"
+  category: Scope
+- id: string-take-s-m-n-takes-an-inclusive-range
+  expr: [StringTake, [String, hello world], [List, 1, 5]]
+  expected: "'hello'"
+  category: Scope
+- id: string-take-s-m-negative-n-counts-from-end
+  expr: [StringTake, [String, hello world], [List, 1, -7]]
+  expected: "'hello'"
+  category: Scope
+  caption: -7 counts back from the end, landing on the same range as {1, 5}

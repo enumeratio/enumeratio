@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(SphenicNumbers) = +\infty$. OEIS A007304.'
   - $At(SphenicNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SphenicNumbers, 1) = 30$ ($2\times3\times5$).
   - 'Membership goes through [[Element]]: $Element(30, SphenicNumbers)$ is true, $Element(60, SphenicNumbers)$ is false ($2^2\times3\times5$, a repeated factor).'
-examples: []
 enumerate:
   expr: Take(SphenicNumbers, 20)
 seeAlso:

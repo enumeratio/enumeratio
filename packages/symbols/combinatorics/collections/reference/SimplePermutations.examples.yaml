@@ -1,0 +1,5 @@
+- id: count-simplepermutations-5-6-a111111
+  expr: [Count, [SimplePermutations, 5]]
+  expected: 6
+  category: Basic
+  caption: $Count(SimplePermutations(5)) = 6$, A111111
