@@ -41,6 +41,7 @@ const meta: RunMeta = {
   trigger: first.run.trigger,
   ...(first.run.url === undefined ? {} : { url: first.run.url }),
   job: values.job,
+  ...(first.run.suite === undefined ? {} : { suite: first.run.suite }),
   systems: reports.map((r) => r.system.name as BenchSystem).sort(),
   machine: first.machine.fingerprint,
 };

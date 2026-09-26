@@ -77,6 +77,30 @@ examples:
     expected: True
     category: Properties
     caption: The counts of the distinct values add up to the [[Length]]
+  - id: count-of-an-infinite-collection
+    expr: [Count, FactorialNumbers]
+    expected: PositiveInfinity
+    category: Scope
+    caption: Without a value to match, Count gives the cardinality of the collection itself
+  - id: count-of-twinprimes-is-nan
+    expr: [Count, TwinPrimes]
+    expected: NaN
+    role: test
+    caption: Count is NaN for an open-infinitude family whose size is unproven either way
+  - id: count-of-narcissisticnumbers-is-the-exact-88
+    expr: [Count, NarcissisticNumbers]
+    expected: 88
+    role: test
+    caption: NarcissisticNumbers is proven finite, so Count gives the exact 88, not +oo
+  - id: count-of-squarefreenumbers-is-infinite
+    expr: [Count, SquareFreeNumbers]
+    expected: PositiveInfinity
+    role: test
+  - id: count-of-perfectnumbers-is-nan
+    expr: [Count, PerfectNumbers]
+    expected: NaN
+    role: test
+    caption: Count is NaN since it's unknown whether infinitely many perfect numbers exist
 seeAlso:
   - Length
   - IndexOf

@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { afterAll, expect, test } from "vite-plus/test";
 import { controlNames, DRAWING_SYMBOLS, markupOf, renderingOf, visualSymbol } from "../src/symbols.ts";
 
@@ -98,7 +98,7 @@ const fresh: Record<string, unknown> = {};
 
 for (const src of CORPUS) {
   test(`rendering: ${src}`, () => {
-    const { json, errors } = parseNotatio(src);
+    const { json, errors } = parseExpression(src);
     expect(errors).toEqual([]);
     const rendering = renderingOf(json);
     const result = { rendering, markup: rendering === undefined ? undefined : markupOf(rendering) };
@@ -136,7 +136,7 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
 });
 
 test("the controls' variables are collected, and only where they are declared", () => {
-  const { json } = parseNotatio("Row([Slider(k, (0, 5)), Dynamic(k^2), Checkbox(on)])");
+  const { json } = parseExpression("Row([Slider(k, (0, 5)), Dynamic(k^2), Checkbox(on)])");
   expect([...controlNames(json)].sort()).toEqual(["k", "on"]);
-  expect(controlNames(parseNotatio("Sin(k)").json).size).toBe(0);
+  expect(controlNames(parseExpression("Sin(k)").json).size).toBe(0);
 });

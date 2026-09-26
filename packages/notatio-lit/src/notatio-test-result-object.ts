@@ -21,11 +21,11 @@ const BADGE: Readonly<Record<Exclude<Outcome, "">, { symbol: string; label: stri
  */
 export class NotatioTestResultObject extends LitElement {
   static properties = {
-    /** The held input, as notatio source. */
+    /** The held input, as Epsil source. */
     input: { type: String },
-    /** The evaluated result, as notatio source; absent on Error/Aborted. */
+    /** The evaluated result, as Epsil source; absent on Error/Aborted. */
     actual: { type: String },
-    /** What it was compared against, as notatio source; absent when there was none. */
+    /** What it was compared against, as Epsil source; absent when there was none. */
     expected: { type: String },
     /** `Success`, `Failure`, `Error` or `Aborted`. */
     outcome: { type: String, reflect: true },
@@ -83,11 +83,11 @@ export class NotatioTestResultObject extends LitElement {
   protected override render(): unknown {
     return html`<div class="ntr">
       <div class="ntr-head">${this.#badge()}${this.#foot()}</div>
-      <notatio-out format="notatio" .value=${this.input} label="In" label-menu></notatio-out>
+      <notatio-out format="epsil" .value=${this.input} label="In" label-menu></notatio-out>
       ${
         this.outcome === "Error" || this.outcome === "Aborted"
           ? nothing
-          : html`<notatio-out format="notatio" .value=${this.actual} label="Out" label-menu> </notatio-out>`
+          : html`<notatio-out format="epsil" .value=${this.actual} label="Out" label-menu> </notatio-out>`
       }
     </div>`;
   }

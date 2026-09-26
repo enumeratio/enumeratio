@@ -13,7 +13,7 @@ export { declareClosedForms113 } from "./closed-forms-113.ts";
 export { declareInverseCompositions } from "./inverse-compositions.ts";
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./barnes-g.ts";
 export { besselJZero } from "./bessel-zeros.ts";
-export { declareCorrectlyRoundedN, refinementOf } from "./correctly-rounded.ts";
+export { declareCorrectlyRoundedN, enclosureOf, refinementOf } from "./correctly-rounded.ts";
 export { bernoulliNumber, bernoulliPolyAt, bernoulliPolyExpr, bernoulliRational } from "./bernoulli.ts";
 export {
   carlsonRC,

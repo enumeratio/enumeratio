@@ -60,6 +60,9 @@ export const SHAPES: Readonly<Record<string, Shape>> = {
   LogGamma: { kind: "valley", at: GAMMA_MINIMUM, domain: positive },
   // ψ' = Σ 1/(x+k)² > 0: increasing on the whole positive axis.
   Digamma: { kind: "increasing", domain: positive },
+  // ζ'(s) = −Σ ln(n)/nˢ < 0: decreasing right of its pole. Left of it ζ turns between the
+  // trivial zeros, at points no constant pins down, so an interval there is sampled.
+  Zeta: { kind: "decreasing", domain: { from: 1, to: Infinity, open: true } },
 };
 
 /** `Log(x, b)`'s shape in `x`: increasing for a base above 1, decreasing for a base in (0, 1),

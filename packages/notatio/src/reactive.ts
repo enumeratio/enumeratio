@@ -236,12 +236,12 @@ export function bindingSource(control: WorksheetControl, next: number, integer =
 }
 
 /**
- * `bindingSource`'s notatio equivalent, for a `<notatio-cell format="notatio">`-backed
- * cell (the worksheet, once it sits on the unified cell) -- notatio has no LaTeX-style
+ * `bindingSource`'s Epsil equivalent, for a `<notatio-cell format="epsil">`-backed
+ * cell (the worksheet, once it sits on the unified cell) -- Epsil has no LaTeX-style
  * adjacency ambiguity, so a multi-letter name needs no escaping the way `symbolLatex`
  * gives a LaTeX field.
  */
-export function bindingNotatio(control: WorksheetControl, next: number, integer = false): string {
+export function bindingEpsil(control: WorksheetControl, next: number, integer = false): string {
   const round = (v: number) => (integer ? Math.round(v) : Number(v.toPrecision(12)));
   if (control.part === "real") return `${control.name} := ${round(next)}`;
   const re = round(control.part === "re" ? next : control.other);

@@ -51,6 +51,14 @@ export const leaf = (expr: MathJSON): Leaf => {
 export const show = (expr: MathJSON): string => {
   // A list prints as the systems print one, element by element.
   if (Array.isArray(expr) && expr[0] === "List") return `[${expr.slice(1).map(show).join(", ")}]`;
+  // A bignum keeps its digits: as a double, 5.57e+373 would print as Infinity.
+  if (
+    typeof expr === "object" &&
+    expr !== null &&
+    !Array.isArray(expr) &&
+    typeof (expr as { num?: unknown }).num === "string"
+  )
+    return (expr as { num: string }).num;
   const value = leaf(expr);
   return typeof value === "number" ? String(value) : typeof value === "string" ? value : JSON.stringify(value);
 };

@@ -75,19 +75,19 @@ leaves `type` unset and lets the data decide.
 
 ## Input syntax
 
-Every expression attribute is **notatio** — the restricted-Epsil subset, so
+Every expression attribute takes **an expression**, written in **Epsil**:
 `Sin(x) * Cos(y)` rather than `\sin(x)\cos(y)`, and products need an explicit
-`*`. LaTeX is read only inside a `$…$` island (`value="$x\sin(x)$"`), where
-implicit multiplication works as usual. That holds for the editable components too — a
-notebook's or worksheet's `seed` is notatio, converted to LaTeX only for the MathLive
-field that edits it; `in-form="latex"` hands the field LaTeX as written, for the rare
-thing notatio cannot yet say. A cell's `value` is written in the syntax its own
-`format` names (`notatio` by default, or `latex`, `mathjson`, `wolfram`); its `in-form`
-is a different thing again — which editor shows it (see [Cell](/playground/cell)).
-Two components keep LaTeX as their own form: `<notatio-in>` _is_ the math field, so its
-`value` is the field's LaTeX, and `<notatio-out>` renders a given encoding rather than
-taking authored input, so it keeps its `format` attribute (`latex` by default;
-`mathjson` and `notatio` too).
+`*`. LaTeX is read only inside a `$…$` island (`value="$x\sin(x)$"`) — Epsil's own
+LaTeX hook — where implicit multiplication works as usual. That holds for the editable
+components too — a notebook's or worksheet's `seed` is Epsil, converted to LaTeX only
+for the MathLive field that edits it; `in-form="latex"` hands the field LaTeX as
+written, for the rare thing Epsil cannot yet say. A cell's `value` is written in the
+syntax its own `format` names (`epsil` by default, or `latex`, `mathjson`, `wolfram`);
+its `in-form` is a different thing again — which editor shows it (see
+[Cell](/playground/cell)). Two components keep LaTeX as their own form: `<notatio-in>`
+_is_ the math field, so its `value` is the field's LaTeX, and `<notatio-out>` renders a
+given encoding rather than taking authored input, so it keeps its `format` attribute
+(`latex` by default; `mathjson` and `epsil` too).
 
 ## Debugging
 

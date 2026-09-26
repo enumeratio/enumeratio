@@ -9,6 +9,7 @@ import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";
 import { declareDistributions3 } from "../src/distributions-3.ts";
 import { declareDistributions4 } from "../src/distributions-4.ts";
+import { declareDistributions5 } from "../src/distributions-5.ts";
 import { readEntries } from "@enumeratio/entry/node";
 
 const entries = readEntries(new URL("../reference/", import.meta.url));
@@ -25,6 +26,7 @@ declareDistributions(ce);
 declareDistributions2(ce);
 declareDistributions3(ce);
 declareDistributions4(ce);
+declareDistributions5(ce);
 
 for (const entry of entries) {
   for (const example of entry.examples) {

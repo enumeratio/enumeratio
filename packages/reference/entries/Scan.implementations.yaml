@@ -108,6 +108,7 @@ the-values-of-every-prefix-of-the-binary-digits:
   epsil:
     in: Scan([1, 0, 1, 1], Function(2 * _1 + _2))
     out: "[1, 2, 5, 11]"
+    back: Unreadable
   tex:
     in: \mathrm{Scan}(\bigl\lbrack1, 0, 1, 1\bigr\rbrack, ()\mapsto2\operatorname{\_1}+\operatorname{\_2})
     out: \bigl\lbrack1, 2, 5, 11\bigr\rbrack

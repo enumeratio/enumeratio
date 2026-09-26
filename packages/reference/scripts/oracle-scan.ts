@@ -39,7 +39,7 @@ import {
   type Verdict,
   wiredSystems,
 } from "@enumeratio/oracle/src";
-import type { HeadImplementations, SystemImplementation } from "@enumeratio/entry";
+import { orderImplementations, type SystemImplementation } from "@enumeratio/entry";
 import { writeYaml } from "@enumeratio/entry/node";
 import { referenceData, referenceEntries } from "../src/node.ts";
 import { asksForDigits, show, verdictOf } from "./oracle-verdict.ts";
@@ -109,8 +109,13 @@ const missingBySystem: Record<string, Record<string, number>> = {};
 type Record_ = Record<string, Record<string, SystemImplementation>>;
 const recordPathOf = new Map<string, string>();
 const records = new Map<string, Record_>();
+const exampleIdsOf = new Map<string, string[]>();
 for (const h of data.heads) {
   if (data.packageOf.get(h.head) !== h.package) continue;
+  exampleIdsOf.set(
+    h.head,
+    h.entry.examples.map((e) => e.id),
+  );
   recordPathOf.set(h.head, h.implementationsPath ?? join(dirname(h.entryPath), `${h.head}.implementations.yaml`));
   records.set(h.head, structuredClone((h.implementations ?? {}) as Record_));
 }
@@ -258,7 +263,15 @@ if (accept)
     const path = recordPathOf.get(head)!;
     if (Object.keys(record).length === 0) {
       if (existsSync(path)) rmSync(path);
-    } else await writeYaml(path, record as HeadImplementations);
+    } else
+      await writeYaml(
+        path,
+        orderImplementations(
+          record,
+          exampleIdsOf.get(head) ?? [],
+          SYSTEMS.map((s) => s.name),
+        ),
+      );
   }
 if (accept && !isDeepStrictEqual(kernels, data.kernels))
   writeFileSync(KERNELS, `${JSON.stringify(Object.fromEntries(Object.entries(kernels).sort()), null, 2)}\n`);

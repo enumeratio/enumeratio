@@ -1,6 +1,6 @@
 # InputForm
 
-**InputForm** is an expression printed as notatio you could have typed. It is what the
+**InputForm** is an expression printed as Epsil you could have typed. It is what the
 components put on the clipboard, what the REPL prints, and what the `InputForm`
 entry in any Out menu shows.
 
@@ -11,15 +11,15 @@ Evaluation is a separate question — `HoldForm[1 - 2x]` prints `1 - 2*x` while
 ever saw it. Ours works the same way: hand it what you typed and it prints what you
 typed; hand it a result and it prints the result.
 
-## It is notatio, not LaTeX
+## It is Epsil, not LaTeX
 
 The rule is the one the [components](/reference/components/) already follow:
-the syntax is notatio, and LaTeX appears only inside a `$…$` island. InputForm never
-emits an island — a test asserts it — so what comes out is always something the notatio
+the syntax is Epsil, and LaTeX appears only inside a `$…$` island. InputForm never
+emits an island — a test asserts it — so what comes out is always something the Epsil
 parser reads on its own.
 
 <Story title="Out as InputForm">
-<template #description><code>box</code> holds the expression instead of evaluating it, so the Out is the integral itself, spelled as notatio. Switch the Out menu to compare it with MathJSON or TeXForm.</template>
+<template #description><code>box</code> holds the expression instead of evaluating it, so the Out is the integral itself, spelled as Epsil. Switch the Out menu to compare it with MathJSON or TeXForm.</template>
 <notatio-cell value="Integrate(x ^ 2, (x, 0, 1))" out-form="input" box />
 <notatio-cell value="Sum(n ^ 2, (n, 1, 10))" out-form="input" box />
 <notatio-cell value="(x + 1) / (y - 2)" out-form="input" box />

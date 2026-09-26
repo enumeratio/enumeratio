@@ -20,7 +20,7 @@ import {
   KSubsetUnrank,
   SchroederCount,
 } from "./kernels-extra.ts";
-import type { FamilyKernel } from "./types.ts";
+import type { Declared, NumberKernel } from "./types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors permutations.ts's private `ints`.
 const ints = (
@@ -30,7 +30,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -65,6 +65,19 @@ function makeBruteForceClass(
     return l;
   }
   return {
+    /** What Plausible reads: it filters all n! permutations to unrank or rank, and to count
+     *  too unless a closed count was given. */
+    declared: {
+      carrier: "Permutation",
+      params: [{ name: "size", role: "axis", min: 0 }],
+      cost: {
+        count: exactCount ? "closed" : "enumerative",
+        unrank: "enumerative",
+        rank: "enumerative",
+        valid: "polynomial",
+      },
+      work: ([n]: number[]) => BigInt(Factorial(n as number)),
+    } satisfies Declared,
     count: (n: number) => (exactCount ? exactCount(n) : list(n).length),
     unrank: (n: number, r: number): number[] => {
       const l = list(n);
@@ -348,15 +361,18 @@ const smoothClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["3412", 
 // ─── VexillaryPermutations(n): Av(2143) — A005802.
 const vexillaryClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["2143"]));
 
-export const entries: FamilyKernel[] = [
-  ints(
-    "BaxterPermutations",
-    1,
-    ([n]) => baxterClass.count(n),
-    ([n], r) => baxterClass.unrank(n, r),
-    (a, [n]) => baxterClass.valid(a, n),
-    (a) => baxterClass.rank(a),
-  ),
+export const entries: NumberKernel[] = [
+  {
+    ...ints(
+      "BaxterPermutations",
+      1,
+      ([n]) => baxterClass.count(n),
+      ([n], r) => baxterClass.unrank(n, r),
+      (a, [n]) => baxterClass.valid(a, n),
+      (a) => baxterClass.rank(a),
+    ),
+    declared: baxterClass.declared,
+  },
   ints(
     "BooleanPermutations",
     1,
@@ -381,44 +397,59 @@ export const entries: FamilyKernel[] = [
     (a, [n]) => isCograssmannian(a, n),
     (a) => cograssmannianRank(a),
   ),
-  ints(
-    "NonCrossingPermutations",
-    1,
-    ([n]) => nonCrossingClass.count(n),
-    ([n], r) => nonCrossingClass.unrank(n, r),
-    (a, [n]) => nonCrossingClass.valid(a, n),
-    (a) => nonCrossingClass.rank(a),
-  ),
-  ints(
-    "SeparablePermutations",
-    1,
-    ([n]) => separableClass.count(n),
-    ([n], r) => separableClass.unrank(n, r),
-    (a, [n]) => separableClass.valid(a, n),
-    (a) => separableClass.rank(a),
-  ),
-  ints(
-    "SimplePermutations",
-    1,
-    ([n]) => simpleClass.count(n),
-    ([n], r) => simpleClass.unrank(n, r),
-    (a, [n]) => simpleClass.valid(a, n),
-    (a) => simpleClass.rank(a),
-  ),
-  ints(
-    "SmoothPermutations",
-    1,
-    ([n]) => smoothClass.count(n),
-    ([n], r) => smoothClass.unrank(n, r),
-    (a, [n]) => smoothClass.valid(a, n),
-    (a) => smoothClass.rank(a),
-  ),
-  ints(
-    "VexillaryPermutations",
-    1,
-    ([n]) => vexillaryClass.count(n),
-    ([n], r) => vexillaryClass.unrank(n, r),
-    (a, [n]) => vexillaryClass.valid(a, n),
-    (a) => vexillaryClass.rank(a),
-  ),
+  {
+    ...ints(
+      "NonCrossingPermutations",
+      1,
+      ([n]) => nonCrossingClass.count(n),
+      ([n], r) => nonCrossingClass.unrank(n, r),
+      (a, [n]) => nonCrossingClass.valid(a, n),
+      (a) => nonCrossingClass.rank(a),
+    ),
+    declared: nonCrossingClass.declared,
+  },
+  {
+    ...ints(
+      "SeparablePermutations",
+      1,
+      ([n]) => separableClass.count(n),
+      ([n], r) => separableClass.unrank(n, r),
+      (a, [n]) => separableClass.valid(a, n),
+      (a) => separableClass.rank(a),
+    ),
+    declared: separableClass.declared,
+  },
+  {
+    ...ints(
+      "SimplePermutations",
+      1,
+      ([n]) => simpleClass.count(n),
+      ([n], r) => simpleClass.unrank(n, r),
+      (a, [n]) => simpleClass.valid(a, n),
+      (a) => simpleClass.rank(a),
+    ),
+    declared: simpleClass.declared,
+  },
+  {
+    ...ints(
+      "SmoothPermutations",
+      1,
+      ([n]) => smoothClass.count(n),
+      ([n], r) => smoothClass.unrank(n, r),
+      (a, [n]) => smoothClass.valid(a, n),
+      (a) => smoothClass.rank(a),
+    ),
+    declared: smoothClass.declared,
+  },
+  {
+    ...ints(
+      "VexillaryPermutations",
+      1,
+      ([n]) => vexillaryClass.count(n),
+      ([n], r) => vexillaryClass.unrank(n, r),
+      (a, [n]) => vexillaryClass.valid(a, n),
+      (a) => vexillaryClass.rank(a),
+    ),
+    declared: vexillaryClass.declared,
+  },
 ];

@@ -3,7 +3,7 @@
 A 2-D function plot representation (`Plot`), rendered by `<notatio-plot>`. The
 element samples a univariate expression across a domain — substituting the free
 variable and taking the numeric value — and draws the curve as pure SVG. `value`
-is **notatio** (the restricted-Epsil subset); LaTeX goes in a `$…$` island.
+is an expression written in **Epsil**; LaTeX goes in a `$…$` island.
 Poles (non-finite samples) break the line rather
 than drawing a spurious jump. Axes default on (`axes="false"` to hide, à la
 Wolfram's `Axes`); either axis takes a scaling function via `x-scale` / `y-scale`

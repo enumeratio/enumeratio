@@ -40,3 +40,29 @@ a-self-loop-is-never-bipartite:
     in: BipartiteGraphQ[Graph[List[UndirectedEdge[1, 1]]]]
   wolfram:
     in: BipartiteGraphQ[Graph[List[UndirectedEdge[1, 1]]]]
+a-4-cycle-is-bipartite:
+  epsil:
+    in: IsBipartiteGraph(CycleGraph(4))
+    out: True
+  tex:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(4))
+    out: \top
+  traditional:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(4))
+    out: \mathrm{True}
+  fullform:
+    in: BipartiteGraphQ[CycleGraph[4]]
+  wolfram:
+    in: BipartiteGraphQ[CycleGraph[4]]
+a-path-is-always-bipartite:
+  epsil:
+    in: IsBipartiteGraph(PathGraph(7))
+    out: True
+  tex:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{PathGraph}(7))
+    out: \top
+  traditional:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{PathGraph}(7))
+    out: \mathrm{True}
+  fullform:
+    in: BipartiteGraphQ[enumeratio`PathGraph[7]]

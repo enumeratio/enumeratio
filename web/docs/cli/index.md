@@ -18,13 +18,13 @@ stay exact — `1/2 + 1/3` is `5 / 6`, not `0.833…`.
 ## Input syntaxes
 
 The default is **Epsil** — compute-engine's own surface syntax, rendered back as
-**notatio** (the restricted subset): `(` for function calls, `^` / `/` for powers and fractions,
+**InputForm** (re-typeable Epsil): `(` for function calls, `^` / `/` for powers and fractions,
 capitalized heads (`Binomial`, `Sqrt`, `Sin`). LaTeX lives in `$…$` islands. A
 syntax pragma forces a syntax for one line, and `:in <syntax>` changes the default.
 
 | Syntax            | Example                         | Notes                      |
 | ----------------- | ------------------------------- | -------------------------- |
-| Epsil (default)   | `Binomial(10, 3)`               | rendered back as notatio   |
+| Epsil (default)   | `Binomial(10, 3)`               | rendered back as InputForm |
 | LaTeX island      | `$\binom{10}{3}$`               | LaTeX inside an Epsil line |
 | LaTeX (pragma)    | `:latex \binom{10}{3}`          | a whole LaTeX line         |
 | Wolfram full form | `:wolfram Binomial[10, 3]`      | `Head[args]`               |
@@ -37,7 +37,7 @@ starting with `\`) is **not** accepted in Epsil — use a `$…$` island or `:la
 ## Output forms
 
 `:form <name>` switches how results print; `:forms` lists them with the current
-one marked. The default `notatio` form is the restricted-Epsil subset — the same
+one marked. The default `inputform` form is InputForm — re-typeable Epsil, the same
 syntax you type. The same expression renders as TeX, Wolfram, or compilable source:
 
 ```text
@@ -54,7 +54,7 @@ In[4]:= x^2 + 1
 Out[4]= (_.x * _.x) + 1
 ```
 
-Forms: `notatio` (Epsil), `tex`, `mathjson`, `wolfram`, `epsil`, `numpy`, `glsl`,
+Forms: `inputform` (Epsil), `tex`, `mathjson`, `wolfram`, `epsil`, `numpy`, `glsl`,
 `wgsl`, `js`. The code forms (`numpy`/`glsl`/`wgsl`/`js`) are real compute-engine
 compilation targets — they only apply to numeric/function expressions.
 
@@ -65,13 +65,13 @@ Wolfram notebook does:
 
 - `Out(n)` is the **result** of line `n`, already evaluated. A negative index counts back:
   `Out(-1)` is the last result, `Out(-2)` the one before. (Wolfram's `%` / `%%` / `%n`
-  work in Wolfram syntax only — in notatio `%` is `Mod`.)
+  work in Wolfram syntax only — in Epsil `%` is `Mod`.)
 - `In(n)` is the **input** of line `n`, **re-evaluated** where you ask for it. Wolfram gives
   `In[n]` a delayed value, so `In[1]` of a random draw draws again; ours re-evaluates the
   parsed input the same way.
 - `InString(n)` is that line as you typed it, as a string.
 
-Bracket spelling is Wolfram's; in notatio (Epsil) `[…]` builds a list, so the calls are
+Bracket spelling is Wolfram's; in Epsil `[…]` builds a list, so the calls are
 written `Out(2)`, or `:wolfram Out[2]` for one line in Wolfram syntax.
 
 ```text
@@ -181,7 +181,7 @@ drift from the binary. Form and syntax names resolve on any **unambiguous prefix
 
 ### Running it
 
-The CLI is part of the notatio monorepo. In a checkout:
+The CLI is part of the enumeratio monorepo. In a checkout:
 
 ```bash
 # interactive REPL
@@ -225,11 +225,11 @@ notatio serve --port 8080
 ```bash
 curl -s localhost:7373/eval -H 'content-type: application/json' \
   -d '{"input":"x^2 + 1","form":"wolfram"}'
-# {"ok":true,"result":"Plus[Power[x, 2], 1]","forms":{"notatio":"x ^ 2 + 1", …}}
+# {"ok":true,"result":"Plus[Power[x, 2], 1]","forms":{"inputform":"x ^ 2 + 1", …}}
 ```
 
 Endpoints: `POST /eval` `{ input, syntax?, form? }` (each request evaluates in a
-fresh session and returns `notatio` / `tex` / `mathjson` / `wolfram` forms),
+fresh session and returns `inputform` / `tex` / `mathjson` / `wolfram` forms),
 `GET /formats`, and `GET /mime?type=…`. It binds **localhost** with no auth — a
 single-user dev tool; exposing it on a network would need auth and sandboxing
 first.

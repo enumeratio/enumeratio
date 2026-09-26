@@ -130,7 +130,7 @@ The dot is at <notatio-dynamic value="_p" digits="3" />.
 <Story
   title="InputField and ColorSlider">
 <template #description>
-An <code>InputField</code> binds whatever notatio you type, on Enter; a
+An <code>InputField</code> binds whatever Epsil you type, on Enter; a
 <code>ColorSlider</code> binds <code>RGBColor(r, g, b)</code>.
 </template>
 <notatio-dynamic-module>
@@ -169,17 +169,17 @@ choice list may be `Labeled(value, "label")`.
 The same thing a cell could evaluate to, or the REPL could hold: no markup, just the
 symbols the engine knows.
 </template>
-<notatio-out format="notatio" value='Row([Slider((k, 2), (0, 5, 0.5)), "so", Dynamic(k^2)])' />
+<notatio-out format="epsil" value='Row([Slider((k, 2), (0, 5, 0.5)), "so", Dynamic(k^2)])' />
 </Story>
 
 <Story
   title="A panel of controls and a plot">
-<notatio-out format="notatio" value='Column([Panel(Grid([[Labeled(Slider((a, 1), (0.2, 2, 0.1)), "amplitude"), Labeled(SetterBar((k, 2), [1, 2, 3, 5]), "frequency")]])), Plot(a * Sin(k * x), (x, -6.283, 6.283))])' />
+<notatio-out format="epsil" value='Column([Panel(Grid([[Labeled(Slider((a, 1), (0.2, 2, 0.1)), "amplitude"), Labeled(SetterBar((k, 2), [1, 2, 3, 5]), "frequency")]])), Plot(a * Sin(k * x), (x, -6.283, 6.283))])' />
 </Story>
 
 <Story
   title="Every kind, in one grid">
-<notatio-out format="notatio" value='Grid([[Checkbox((on, True)), Toggler(size, ["a few", "several", "many"]), PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon"), Labeled(8, "octagon")])], [on, size, 180 - 360/n]])' />
+<notatio-out format="epsil" value='Grid([[Checkbox((on, True)), Toggler(size, ["a few", "several", "many"]), PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon"), Labeled(8, "octagon")])], [on, size, 180 - 360/n]])' />
 </Story>
 
 ## Options
@@ -188,7 +188,7 @@ Options are Wolfram's: rules after the positional arguments, `PlotRange -> (-1, 
 singly or in lists, the leftmost setting of a name winning. On an element they are
 attributes — `plot-range`, or the name a component already has (`PlotLabel` is the
 plot's `label`) — and one whose value is something to draw, like `Epilog`, is
-carried the same way, as the notatio it was.
+carried the same way, as the Epsil it was.
 
 <Story
   title="Options as rules, and as attributes">
@@ -196,7 +196,7 @@ carried the same way, as the notatio it was.
 The expression and the element say the same thing; <code>Epilog</code> marks the
 plot with a graphics primitive.
 </template>
-<notatio-out format="notatio" value='Plot(Sin(x), (x, 0, 10), PlotRange -> (-1.5, 1.5), PlotLabel -> "sine", Epilog -> [Point((1.5, 1)), Line([(0, 0), (10, 0)])])' />
+<notatio-out format="epsil" value='Plot(Sin(x), (x, 0, 10), PlotRange -> (-1.5, 1.5), PlotLabel -> "sine", Epilog -> [Point((1.5, 1)), Line([(0, 0), (10, 0)])])' />
 <notatio-plot value="Sin(x)" var="x" domain="0,10" plot-range="-1.5,1.5" label="sine" epilog="[Point((1.5, 1)), Line([(0, 0), (10, 0)])]" />
 </Story>
 

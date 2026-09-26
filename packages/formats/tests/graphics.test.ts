@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { dataUri, declareGraphics, GRAPHICS_HEADS, imageUri, setRasterizer, svgDataUri } from "../src/graphics.ts";
-import { parseNotatio } from "../src/notatio.ts";
+import { parseExpression } from "../src/expression.ts";
 
 const SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="10" height="10"/></svg>';
 
@@ -77,7 +77,7 @@ test("data URIs encode without a DOM", () => {
 // component can render, with the arguments as they were written.
 test("a graphics head holds, arguments and all", () => {
   const ce = engine();
-  const held = (src: string): unknown => ce.box(parseNotatio(src).json).evaluate().json;
+  const held = (src: string): unknown => ce.box(parseExpression(src).json).evaluate().json;
   expect(held("Plot(Sin(x), (x, 0, 10))")).toEqual(["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10]]);
   expect(held("Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))")).toEqual([
     "Manipulate",
@@ -90,7 +90,7 @@ test("a graphics head holds, arguments and all", () => {
 
 test("Histogram draws at one argument and still computes at two", () => {
   const ce = engine();
-  const run = (src: string): unknown => ce.box(parseNotatio(src).json).evaluate().json;
+  const run = (src: string): unknown => ce.box(parseExpression(src).json).evaluate().json;
   expect(run("Histogram([1, 2, 2, 3])")).toEqual(["Histogram", ["List", 1, 2, 2, 3]]);
   expect(run("Histogram([1, 2, 2, 3], 2)")).toEqual(["List", ["Tuple", 1, 1], ["Tuple", 2, 3]]);
 });

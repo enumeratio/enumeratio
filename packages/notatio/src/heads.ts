@@ -4,8 +4,8 @@
 // compute-engine evaluates `N` itself; the *Form heads are ours, and whoever consumes
 // the value reads the head off and honours it (see `formOfHead`).
 
-/** How the wrapper is spelled: LaTeX (a math field) or notatio (Epsil source). */
-export type NumericForm = "latex" | "notatio";
+/** How the wrapper is spelled: LaTeX (a math field) or Epsil source. */
+export type NumericForm = "latex" | "epsil";
 
 /**
  * A head that may be written around an input. `form` names the `<notatio-out>`
@@ -28,7 +28,7 @@ export const WRAPPER_HEADS: readonly WrapperHead[] = [
     title: "render in traditional notation",
     form: "traditional",
   },
-  { head: "InputForm", label: "Input", title: "show as notatio you could retype", form: "input" },
+  { head: "InputForm", label: "Input", title: "show as Epsil you could retype", form: "input" },
   { head: "FullForm", label: "Full", title: "show the MathJSON AST", form: "full" },
   { head: "TreeForm", label: "Tree", title: "show the expression tree", form: "tree" },
   { head: "TeXForm", label: "TeX", title: "show the LaTeX source", form: "tex" },
@@ -48,10 +48,10 @@ export const formOfHead = (head: string): string | undefined => BY_HEAD.get(head
 /** The spellings a head may be written in, most specific first. */
 const spellings = (head: string): string[] => [`\\operatorname{${head}}`, `\\mathrm{${head}}`, head];
 
-/** A `$…$` island can only occur in notatio, so it settles which form a source is. */
+/** A `$…$` island can only occur in Epsil, so it settles which form a source is. */
 const ISLAND = /\$[^$]*\$/;
 
-const formOf = (src: string): NumericForm => (ISLAND.test(src) ? "notatio" : "latex");
+const formOf = (src: string): NumericForm => (ISLAND.test(src) ? "epsil" : "latex");
 
 /** Past `\left(` / `\right)` as well as bare parens, so LaTeX sizing is not a barrier. */
 function closingIndex(src: string, open: number): number {
@@ -111,7 +111,7 @@ export const stripHead = (src: string): string => splitHead(src).body;
 /**
  * Write `head` around `src`. Replaces any head already there rather than nesting, so
  * the result is idempotent and never `N(N(x))`. Empty in, empty out. The spelling is
- * inferred from the source (a `$…$` island means notatio) unless one is given.
+ * inferred from the source (a `$…$` island means Epsil) unless one is given.
  */
 export function wrapHead(src: string, head: string, form: NumericForm = formOf(src)): string {
   const body = stripHead(src);

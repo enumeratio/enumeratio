@@ -253,8 +253,8 @@
       "out": "\u001b[2mOut[5]= \u001b[0m(_.x * _.x) + 1"
     },
     {
-      "in": ":form notatio",
-      "out": "\u001b[2m  form -> notatio\u001b[0m"
+      "in": ":form inputform",
+      "out": "\u001b[2m  form -> inputform\u001b[0m"
     }
   ],
   "compile-targets": [
@@ -283,8 +283,8 @@
       "out": "\u001b[2mOut[3]= \u001b[0msin(x) * cos(x)"
     },
     {
-      "in": ":form notatio",
-      "out": "\u001b[2m  form -> notatio\u001b[0m"
+      "in": ":form inputform",
+      "out": "\u001b[2m  form -> inputform\u001b[0m"
     }
   ],
   "history": [
@@ -456,7 +456,7 @@
   "formats-registry": [
     {
       "in": ":formats",
-      "out": "  InputForm     .txt       text/plain  [export/import]\n  TeX           .tex       application/x-tex  [export/import]\n  MathML        .mml       application/mathml-presentation+xml  [export]\n  MathJSON      .json      application/json  [export/import]\n  WL            .wl .m     application/vnd.wolfram.wl  [export/import]\n  Epsil         .epsil .ep text/x-epsil  [export/import]\n  Python        .py        text/x-python  [export]\n  GLSL          .glsl .frag x-shader/x-fragment  [export]\n  WGSL          .wgsl      text/wgsl  [export]\n  JavaScript    .js .mjs   text/javascript  [export]\n  SVG           .svg       image/svg+xml  [export/import]\n\n  export: InputForm, TeX, MathML, MathJSON, WL, Epsil, Python, GLSL, WGSL, JavaScript, SVG\n  import: InputForm, TeX, MathJSON, WL, Epsil, SVG\n  (display form: notatio)"
+      "out": "  InputForm     .txt       text/plain  [export/import]\n  TeX           .tex       application/x-tex  [export/import]\n  MathML        .mml       application/mathml-presentation+xml  [export]\n  MathJSON      .json      application/json  [export/import]\n  WL            .wl .m     application/vnd.wolfram.wl  [export/import]\n  Epsil         .epsil .ep text/x-epsil  [export/import]\n  Python        .py        text/x-python  [export]\n  GLSL          .glsl .frag x-shader/x-fragment  [export]\n  WGSL          .wgsl      text/wgsl  [export]\n  JavaScript    .js .mjs   text/javascript  [export]\n  SVG           .svg       image/svg+xml  [export/import]\n\n  export: InputForm, TeX, MathML, MathJSON, WL, Epsil, Python, GLSL, WGSL, JavaScript, SVG\n  import: InputForm, TeX, MathJSON, WL, Epsil, SVG\n  (display form: inputform)"
     },
     {
       "in": ":mime image/png",

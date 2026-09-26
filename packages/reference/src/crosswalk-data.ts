@@ -438,7 +438,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "bell($1)",
+        call: "bell(ZZ($1))",
         arity: 1,
       },
     ],
@@ -749,6 +749,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "CenteredInterval",
     wolfram: "CenteredInterval",
+  },
+  {
+    name: "CharacterRange",
+    wolfram: "CharacterRange",
   },
   {
     name: "ChineseRemainder",
@@ -1065,6 +1069,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "DeleteCases",
+    wolfram: "DeleteCases",
+  },
+  {
     name: "Derivative",
     fungrimEntries: [
       "01bbb6",
@@ -1192,6 +1200,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Determinant",
     wolfram: "Det",
+  },
+  {
+    name: "DiagonalMatrix",
+    wolfram: "DiagonalMatrix",
   },
   {
     name: "Diagram",
@@ -1769,6 +1781,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ExtendedGCD",
   },
   {
+    name: "Extract",
+    wolfram: "Extract",
+  },
+  {
     name: "FactorInteger",
     wolfram: "FactorInteger",
     oracle: [
@@ -1930,7 +1946,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "fibonacci($1)",
+        call: "BigInt(fibonacci(ZZ($1)))",
         arity: 1,
       },
     ],
@@ -2484,6 +2500,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "HermiteDecomposition",
     wolfram: "HermiteDecomposition",
+  },
+  {
+    name: "HilbertMatrix",
+    wolfram: "HilbertMatrix",
   },
   {
     name: "HurwitzZeta",
@@ -3135,6 +3155,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "KeiperLiLambda",
     fungrimEntries: ["081205", "d8d820", "fcab61"],
+  },
+  {
+    name: "Key",
+    wolfram: "Key",
   },
   {
     name: "Khinchin",
@@ -3814,6 +3838,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NumberExpand",
   },
   {
+    name: "NumberQ",
+    wolfram: "NumberQ",
+  },
+  {
     name: "Or",
     wolfram: "Or",
   },
@@ -4150,6 +4178,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RandomReal",
   },
   {
+    name: "RandomComplex",
+    wolfram: "RandomComplex",
+  },
+  {
     name: "RandomGraph",
     wolfram: "RandomGraph",
   },
@@ -4194,6 +4226,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Rationalize",
     wolfram: "Rationalize",
+  },
+  {
+    name: "ReIm",
+    wolfram: "ReIm",
   },
   {
     name: "Real",
@@ -4656,7 +4692,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "Combinatorics.stirlings2($1, $2)",
+        call: "Combinatorics.stirlings2(big($1), $2)",
         arity: 2,
       },
     ],
@@ -4673,7 +4709,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "Combinatorics.stirlings1($1, $2)",
+        call: "Combinatorics.stirlings1(big($1), $2)",
         arity: 2,
       },
     ],

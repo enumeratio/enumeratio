@@ -233,16 +233,14 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{1,-1,-1,0\}
   sympy:
     in: "[mobius(1), mobius(2), mobius(3), mobius(4)]"
-    out: "AttributeError: 'list' object has no attribute 'is_integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's MoebiusMu is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[1, -1, -1, 0]"
   sage:
     in: "[moebius(1), moebius(2), moebius(3), moebius(4)]"
   oscar:
     in: moebius_mu([1, 2, 3, 4])
   julia:
-    in: moebius_mu([1, 2, 3, 4])
+    in: "[moebius_mu(1), moebius_mu(2), moebius_mu(3), moebius_mu(4)]"
+    out: "[1, -1, -1, 0]"
   mathlib4:
     in: (ArithmeticFunction.moebius [1, 2, 3, 4])
 gaussian-integers-5-6i-is-a-gaussian-prime-norm:
@@ -261,12 +259,20 @@ gaussian-integers-5-6i-is-a-gaussian-prime-norm:
     in: MoebiusMu[Complex[5, 6]]
   sympy:
     in: mobius((5 + 6*I))
+    out: "TypeError: n should be an integer"
+    verdict: error
+    kind: domain
+    note: compute-engine's MoebiusMu takes Gaussian integers; SymPy's mobius takes integers.
   sage:
     in: moebius((5 + 6*I))
   oscar:
     in: moebius_mu(complex(5, 6))
   julia:
     in: moebius_mu(complex(5, 6))
+    out: "MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n"
+    verdict: error
+    kind: domain
+    note: Nemo's moebius_mu is rational-integer only, no Gaussian integers; ours extends μ through the Gaussian-prime factorization.
 listable-threads-over-a-list:
   epsil:
     in: MoebiusMu([4, 10, 17, 20])
@@ -280,12 +286,14 @@ listable-threads-over-a-list:
     in: MoebiusMu[List[4, 10, 17, 20]]
   sympy:
     in: "[mobius(4), mobius(10), mobius(17), mobius(20)]"
+    out: "[0, 1, -1, 0]"
   sage:
     in: "[moebius(4), moebius(10), moebius(17), moebius(20)]"
   oscar:
     in: moebius_mu([4, 10, 17, 20])
   julia:
-    in: moebius_mu([4, 10, 17, 20])
+    in: "[moebius_mu(4), moebius_mu(10), moebius_mu(17), moebius_mu(20)]"
+    out: "[0, 1, -1, 0]"
   mathlib4:
     in: (ArithmeticFunction.moebius [4, 10, 17, 20])
 listable-over-a-range:

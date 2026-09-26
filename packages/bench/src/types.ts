@@ -14,13 +14,29 @@ export type Draw =
   | readonly ["real", number, number] // uniform double in [lo, hi)
   | readonly ["log", number, number]; // 10^u, u uniform in [lo, hi)
 
+/**
+ * Seeded inputs. The draws become one input, a `List` of the expression at each draw, so a
+ * timed call computes every value: enough work to time, and no value a system could have
+ * stored or cached from the call before.
+ */
 export interface Sample {
   readonly seed: number;
+  /** Values per list: what one timed call computes. */
   readonly count: number;
+  /**
+   * Distinct lists, one per call in turn (default 1). For a kernel that memoises values or
+   * keeps tables around recent ones: a pool at least as long as the protocol's calls
+   * (calibration, warmup, samples) means no call repeats one before it.
+   */
+  readonly batches?: number;
   readonly draw: Readonly<Record<string, Draw>>;
 }
 
+/** How hard a case is. A suite runs some tiers: see `SUITES` in suites.ts. */
+export type Tier = "small" | "medium" | "large";
+
 export interface BenchSpec {
+  readonly tier?: Tier;
   readonly tags?: readonly string[];
   /** Where the problem is already timed publicly: a suite, paper or library. */
   readonly source?: string;
@@ -30,8 +46,6 @@ export interface BenchSpec {
   readonly sample?: Sample;
   /** Systems to leave out, each with its reason. */
   readonly deny?: Readonly<Record<string, string>>;
-  /** Bumped when the case changes in a way that breaks comparison with earlier runs. */
-  readonly version?: number;
 }
 
 /** A catalogue case: an example (`role: bench`) plus its bench fields. */
@@ -68,12 +82,26 @@ export type PlanCell = { readonly sources: readonly string[] } | Exclusion;
 export interface Plan {
   readonly schema: 1;
   readonly protocol: number;
+  /** The suite the cases were chosen by. */
+  readonly suite?: string;
   readonly cases: readonly {
     readonly name: string;
+    /**
+     * Hash of what the case computes (expression, inputs, precision): runs compare a case
+     * only while this matches, whatever the catalogue does to it in between.
+     */
+    readonly formula: string;
+    readonly tier: Tier;
     readonly precision: Precision;
     /** Soft cap for the whole measurement, in seconds. */
     readonly budget: number;
     readonly tags?: readonly string[];
+    /** The case as the catalogue writes it, `$name` symbols standing for sampled inputs. */
+    readonly expr: MathJSON;
+    /** Where sampled inputs came from: rerunning the draw with this seed gives `inputs` again. */
+    readonly sample?: Sample;
+    /** The concrete MathJSON every system ran, one per input. */
+    readonly inputs: readonly MathJSON[];
     /** The pinned answer as text, for the correctness gate; absent for sampled cases. */
     readonly expected?: string;
     readonly systems: Readonly<Partial<Record<BenchSystem, PlanCell>>>;
@@ -94,6 +122,8 @@ export interface Summary {
 
 export interface CaseResult extends Partial<Summary> {
   readonly name: string;
+  /** The plan's `formula` for the case this timed. */
+  readonly formula?: string;
   readonly status: Status;
   readonly reason?: string;
   /** Calls per sample. */
@@ -107,12 +137,27 @@ export interface CaseResult extends Partial<Summary> {
 export interface Machine {
   readonly fingerprint: string;
   readonly os: string;
+  /** The kernel's own version string (`os.version()`). */
+  readonly osVersion: string;
   readonly arch: string;
   readonly cpu: string;
+  /** Nominal clock of the first core, MHz, as the OS reports it (0 where it doesn't). */
+  readonly cpuMHz: number;
   readonly cores: number;
   readonly memoryGB: number;
+  /** `local`, or the hosted runner's image and version. */
   readonly runner: string;
   readonly node: string;
+}
+
+/** How loaded the machine was: taken when the run starts and when it ends. */
+export interface Conditions {
+  readonly at: string;
+  /** 1, 5 and 15 minute load averages. */
+  readonly loadavg: readonly number[];
+  readonly freeMemoryGB: number;
+  /** Swap in use, where the OS reports it. */
+  readonly swapUsedGB?: number;
 }
 
 export interface Report {
@@ -123,6 +168,7 @@ export interface Report {
     readonly date: string;
     readonly trigger: string;
     readonly url?: string;
+    readonly suite?: string;
   };
   readonly system: {
     readonly name: BenchSystem;
@@ -131,6 +177,7 @@ export interface Report {
     readonly caches: "cleared" | "uncleared";
   };
   readonly machine: Machine;
+  readonly conditions?: { readonly start: Conditions; readonly end: Conditions };
   readonly protocol: Protocol;
   readonly results: readonly CaseResult[];
 }
@@ -162,6 +209,7 @@ export interface BenchIndex {
     readonly url?: string;
     /** The GitHub job that produced it: systems in one job share a machine and a time window. */
     readonly job: string;
+    readonly suite?: string;
     readonly systems: readonly BenchSystem[];
     readonly machine: string;
   }[];
