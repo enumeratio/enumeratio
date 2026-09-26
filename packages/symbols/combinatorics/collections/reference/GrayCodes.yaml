@@ -1,0 +1,16 @@
+name: GrayCodes
+domain: Collections
+signature: GrayCodes(n)
+summary: The binary words of length $n$ in binary-reflected Gray-code order.
+signatures:
+  - call: GrayCodes(n)
+    description: the binary words of length $n$ in binary-reflected Gray-code order
+    library: enumeratio-collections
+details:
+  - Count is $2^n$; consecutive words differ in exactly one bit.
+  - $g(r) = r \oplus \lfloor r/2 \rfloor$ (A003188).
+seeAlso:
+  - BinaryWords
+references:
+  - system: oeis
+    identity: A003188

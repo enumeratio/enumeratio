@@ -1,0 +1,43 @@
+count-permutationsavoiding231-4:
+  epsil:
+    in: Count(PermutationsAvoiding231(4))
+    out: "14"
+  tex:
+    in: \mathrm{Count}(\mathrm{PermutationsAvoiding231}(4))
+    out: "14"
+  fullform:
+    in: Count[PermutationsAvoiding231[4]]
+first-element-of-permutationsavoiding231-4:
+  epsil:
+    in: PermutationsAvoiding231(4)[1]
+    out: "[4, 3, 2, 1]"
+  tex:
+    in: \mathrm{PermutationsAvoiding231}(4)[1]
+    out: \bigl\lbrack4, 3, 2, 1\bigr\rbrack
+  fullform:
+    in: Part[PermutationsAvoiding231[4], 1]
+every-element-of-permutationsavoiding231-4:
+  epsil:
+    in: Take(PermutationsAvoiding231(4), 14)
+    out: |-
+      [
+        [4, 3, 2, 1],
+        [4, 3, 1, 2],
+        [4, 1, 3, 2],
+        [4, 2, 1, 3],
+        [4, 1, 2, 3],
+        [1, 4, 3, 2],
+        [1, 4, 2, 3],
+        [2, 1, 4, 3],
+        [1, 2, 4, 3],
+        [3, 2, 1, 4],
+        [3, 1, 2, 4],
+        [1, 3, 2, 4],
+        [2, 1, 3, 4],
+        [1, 2, 3, 4],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{PermutationsAvoiding231}(4), 14)
+    out: \bigl\lbrack\bigl\lbrack4, 3, 2, 1\bigr\rbrack, \bigl\lbrack4, 3, 1, 2\bigr\rbrack, \bigl\lbrack4, 1, 3, 2\bigr\rbrack, \bigl\lbrack4, 2, 1, 3\bigr\rbrack, \bigl\lbrack4, 1, 2, 3\bigr\rbrack, \bigl\lbrack1, 4, 3, 2\bigr\rbrack, \bigl\lbrack1, 4, 2, 3\bigr\rbrack, \bigl\lbrack2, 1, 4, 3\bigr\rbrack, \bigl\lbrack1, 2, 4, 3\bigr\rbrack, \bigl\lbrack3, 2, 1, 4\bigr\rbrack, \bigl\lbrack3, 1, 2, 4\bigr\rbrack, \bigl\lbrack1, 3, 2, 4\bigr\rbrack, \bigl\lbrack2, 1, 3, 4\bigr\rbrack, \bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[PermutationsAvoiding231[4], 14]

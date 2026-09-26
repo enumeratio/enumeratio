@@ -1,0 +1,34 @@
+count-motzkinpathsbypeaks-5-1:
+  epsil:
+    in: Count(MotzkinPathsByPeaks(5, 1))
+    out: "10"
+  tex:
+    in: \mathrm{Count}(\mathrm{MotzkinPathsByPeaks}(5, 1))
+    out: "10"
+  fullform:
+    in: Count[MotzkinPathsByPeaks[5, 1]]
+first-element-of-motzkinpathsbypeaks-5-1:
+  epsil:
+    in: MotzkinPathsByPeaks(5, 1)[1]
+    out: "[1, 1, -1, 0, -1]"
+  tex:
+    in: \mathrm{MotzkinPathsByPeaks}(5, 1)[1]
+    out: \bigl\lbrack1, 1, -1, 0, -1\bigr\rbrack
+  fullform:
+    in: Part[MotzkinPathsByPeaks[5, 1], 1]
+every-element-of-motzkinpathsbypeaks-5-1:
+  epsil:
+    in: Take(MotzkinPathsByPeaks(5, 1), 5)
+    out: |-
+      [
+        [1, 1, -1, 0, -1],
+        [1, 1, -1, -1, 0],
+        [1, 0, 1, -1, -1],
+        [1, 0, -1, 1, -1],
+        [1, -1, 1, 0, -1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{MotzkinPathsByPeaks}(5, 1), 5)
+    out: \bigl\lbrack\bigl\lbrack1, 1, -1, 0, -1\bigr\rbrack, \bigl\lbrack1, 1, -1, -1, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, -1, -1\bigr\rbrack, \bigl\lbrack1, 0, -1, 1, -1\bigr\rbrack, \bigl\lbrack1, -1, 1, 0, -1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[MotzkinPathsByPeaks[5, 1], 5]

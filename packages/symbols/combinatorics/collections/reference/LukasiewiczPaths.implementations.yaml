@@ -1,0 +1,34 @@
+count-lukasiewiczpaths-4:
+  epsil:
+    in: Count(LukasiewiczPaths(4))
+    out: "14"
+  tex:
+    in: \mathrm{Count}(\mathrm{LukasiewiczPaths}(4))
+    out: "14"
+  fullform:
+    in: Count[LukasiewiczPaths[4]]
+first-element-of-lukasiewiczpaths-4:
+  epsil:
+    in: LukasiewiczPaths(4)[1]
+    out: "[0, 0, 0, 0, -1]"
+  tex:
+    in: \mathrm{LukasiewiczPaths}(4)[1]
+    out: \bigl\lbrack0, 0, 0, 0, -1\bigr\rbrack
+  fullform:
+    in: Part[LukasiewiczPaths[4], 1]
+every-element-of-lukasiewiczpaths-4:
+  epsil:
+    in: Take(LukasiewiczPaths(4), 5)
+    out: |-
+      [
+        [0, 0, 0, 0, -1],
+        [0, 0, 1, -1, -1],
+        [0, 1, 0, -1, -1],
+        [1, 0, 0, -1, -1],
+        [0, 1, -1, 0, -1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{LukasiewiczPaths}(4), 5)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0, 0, -1\bigr\rbrack, \bigl\lbrack0, 0, 1, -1, -1\bigr\rbrack, \bigl\lbrack0, 1, 0, -1, -1\bigr\rbrack, \bigl\lbrack1, 0, 0, -1, -1\bigr\rbrack, \bigl\lbrack0, 1, -1, 0, -1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[LukasiewiczPaths[4], 5]

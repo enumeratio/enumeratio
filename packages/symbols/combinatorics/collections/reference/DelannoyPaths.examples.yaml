@@ -1,0 +1,22 @@
+- id: count-delannoypaths-3
+  expr: [Count, [DelannoyPaths, 3]]
+  expected: 63
+  category: Basic
+  caption: $Count(DelannoyPaths(3)) = 63$
+- id: first-element-of-delannoypaths-3
+  expr: [At, [DelannoyPaths, 3], 1]
+  expected: [List, 0, 0, 0, 1, 1, 1]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-delannoypaths-3
+  role: test
+  expr: [Take, [DelannoyPaths, 3], 5]
+  expected:
+    [
+      List,
+      [List, 0, 0, 0, 1, 1, 1],
+      [List, 0, 0, 1, 0, 1, 1],
+      [List, 0, 0, 1, 1, 0, 1],
+      [List, 0, 0, 1, 1, 1, 0],
+      [List, 0, 0, 1, 1, 2],
+    ]

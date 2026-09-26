@@ -1,0 +1,17 @@
+name: EvenPermutations
+domain: Collections
+signature: EvenPermutations(n)
+summary: The even permutations of $\{1, …, n\}$ — the alternating group $A_n$.
+signatures:
+  - call: EvenPermutations(n)
+    description: the even permutations of $\{1, …, n\}$ — the alternating group $A_n$
+    library: enumeratio-collections
+details:
+  - Count is $n!/2$ for $n \ge 2$, and $1$ for $n \le 1$ (A001710).
+  - Each element is a one-line permutation with an even number of inversions.
+seeAlso:
+  - SymmetricGroup
+  - Inversions
+references:
+  - system: oeis
+    identity: A001710

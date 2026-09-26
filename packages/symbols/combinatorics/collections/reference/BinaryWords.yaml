@@ -1,0 +1,16 @@
+name: BinaryWords
+domain: Collections
+signature: BinaryWords(n)
+summary: The binary strings of length $n$.
+signatures:
+  - call: BinaryWords(n)
+    description: the binary strings of length $n$
+    library: enumeratio-collections
+details:
+  - Count is $2^n$ (A000079).
+seeAlso:
+  - Words
+  - BinaryWordsByWeight
+references:
+  - system: oeis
+    identity: A000079

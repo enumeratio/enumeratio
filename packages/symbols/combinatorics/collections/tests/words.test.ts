@@ -1,6 +1,5 @@
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/words.ts";
-import golden from "./words.golden.json" with { type: "json" };
 
 // Self-cert every words.ts family, mirroring core.test.ts: for every rank r in [0, count),
 // valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r, over a few small parameter
@@ -114,16 +113,3 @@ test("KLyndonWords(n, 2) agrees with LyndonWords(n)", () => {
     expect(kLyndon.count([n, 2])).toBe(lyndon.count([n]));
   }
 });
-
-// Golden JSON: the first few elements of a representative parameter point per family, pinned
-// against a committed file (regenerate by hand if a kernel's chosen order ever changes deliberately
-// — never toMatchSnapshot, see AGENTS.md).
-for (const [head, { params, elements }] of Object.entries(
-  golden as Record<string, { params: number[]; elements: number[][] }>,
-)) {
-  test(`${head}(${params.join(", ")}) first ${elements.length} elements match golden`, () => {
-    const entry = byHead.get(head)!;
-    const actual = elements.map((_, r) => entry.unrank(params, r));
-    expect(actual).toEqual(elements);
-  });
-}

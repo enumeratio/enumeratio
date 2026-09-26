@@ -1,0 +1,16 @@
+name: NonCrossingMatchings
+domain: Collections
+signature: NonCrossingMatchings(n)
+summary: The perfect matchings of $\{1, …, 2n\}$ with no two crossing chords — the balanced-parenthesis reading of a Dyck path.
+signatures:
+  - call: NonCrossingMatchings(n)
+    description: the perfect matchings of $\{1, …, 2n\}$ with no two crossing chords — the balanced-parenthesis reading of a Dyck path
+    library: enumeratio-collections
+details:
+  - Count is the Catalan number $C_n$ (A000108).
+seeAlso:
+  - NonNestingMatchings
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A000108

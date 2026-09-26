@@ -1,0 +1,41 @@
+count-evenpermutations-4:
+  epsil:
+    in: Count(EvenPermutations(4))
+    out: "12"
+  tex:
+    in: \mathrm{Count}(\mathrm{EvenPermutations}(4))
+    out: "12"
+  fullform:
+    in: Count[EvenPermutations[4]]
+first-element-of-evenpermutations-4:
+  epsil:
+    in: EvenPermutations(4)[1]
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{EvenPermutations}(4)[1]
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Part[EvenPermutations[4], 1]
+every-element-of-evenpermutations-4:
+  epsil:
+    in: Take(EvenPermutations(4), 12)
+    out: |-
+      [
+        [1, 2, 3, 4],
+        [1, 3, 4, 2],
+        [1, 4, 2, 3],
+        [2, 1, 4, 3],
+        [2, 3, 1, 4],
+        [2, 4, 3, 1],
+        [3, 1, 2, 4],
+        [3, 2, 4, 1],
+        [3, 4, 1, 2],
+        [4, 1, 3, 2],
+        [4, 2, 1, 3],
+        [4, 3, 2, 1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{EvenPermutations}(4), 12)
+    out: \bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack1, 3, 4, 2\bigr\rbrack, \bigl\lbrack1, 4, 2, 3\bigr\rbrack, \bigl\lbrack2, 1, 4, 3\bigr\rbrack, \bigl\lbrack2, 3, 1, 4\bigr\rbrack, \bigl\lbrack2, 4, 3, 1\bigr\rbrack, \bigl\lbrack3, 1, 2, 4\bigr\rbrack, \bigl\lbrack3, 2, 4, 1\bigr\rbrack, \bigl\lbrack3, 4, 1, 2\bigr\rbrack, \bigl\lbrack4, 1, 3, 2\bigr\rbrack, \bigl\lbrack4, 2, 1, 3\bigr\rbrack, \bigl\lbrack4, 3, 2, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[EvenPermutations[4], 12]

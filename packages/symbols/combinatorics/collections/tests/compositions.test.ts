@@ -1,6 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { expect, test, afterAll } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/compositions.ts";
 
 // Certify every composition family: rank(unrank(p, r), p) === r across the whole family,
@@ -179,48 +177,4 @@ test("KBoundedCompositions row k = generalized k-nacci", () => {
       Array.from({ length: 8 }, (_, n) => [n, 4]),
     ),
   ).toEqual(countsOf("TetraCompositions", range(8)));
-});
-
-// Golden JSON (AGENTS.md); regenerate with `UPDATE_COMPOSITIONS_GOLDEN=1 vp test`.
-const GOLDEN = fileURLToPath(new URL("./compositions.golden.json", import.meta.url));
-const updating = process.env.UPDATE_COMPOSITIONS_GOLDEN === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-const GOLDEN_CASES: Record<string, number[][]> = {
-  OddCompositions: [[6]],
-  ProperCompositions: [[6]],
-  DyadicCompositions: [[6]],
-  FibonacciCompositions: [[6]],
-  TriCompositions: [[6]],
-  TetraCompositions: [[6]],
-  TriangularComposition: [[6]],
-  PrimeCompositions: [[7]],
-  KBoundedCompositions: [
-    [6, 2],
-    [6, 3],
-  ],
-  CarlitzCompositions: [[5]],
-  PalindromicCompositions: [[6]],
-  ZigzagComposition: [[6]],
-};
-
-for (const [head, paramsList] of Object.entries(GOLDEN_CASES)) {
-  for (const p of paramsList) {
-    const key = `${head}(${p.join(",")})`;
-    test(`golden: ${key}`, () => {
-      const entry = byHead[head];
-      const total = entry.count(p);
-      const elements = Array.from({ length: total }, (_, r) => entry.unrank(p, r));
-      if (updating) {
-        fresh[key] = elements;
-        return;
-      }
-      expect(elements).toEqual(golden[key]);
-    });
-  }
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

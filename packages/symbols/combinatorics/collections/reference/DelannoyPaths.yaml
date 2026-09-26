@@ -1,0 +1,15 @@
+name: DelannoyPaths
+domain: Collections
+signature: DelannoyPaths(n)
+summary: Lattice paths from $(0,0)$ to $(n,n)$ using East, North, and Diagonal steps.
+signatures:
+  - call: DelannoyPaths(n)
+    description: Lattice paths from $(0,0)$ to $(n,n)$ using East, North, and Diagonal steps
+    library: enumeratio-collections
+details:
+  - Count is the central Delannoy number (A001850).
+seeAlso:
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A001850

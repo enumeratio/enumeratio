@@ -1,0 +1,34 @@
+count-nonnestingmatchings-4:
+  epsil:
+    in: Count(NonNestingMatchings(4))
+    out: "14"
+  tex:
+    in: \mathrm{Count}(\mathrm{NonNestingMatchings}(4))
+    out: "14"
+  fullform:
+    in: Count[NonNestingMatchings[4]]
+first-element-of-nonnestingmatchings-4:
+  epsil:
+    in: NonNestingMatchings(4)[1]
+    out: "[[1, 5], [2, 6], [3, 7], [4, 8]]"
+  tex:
+    in: \mathrm{NonNestingMatchings}(4)[1]
+    out: \bigl\lbrack\bigl\lbrack1, 5\bigr\rbrack, \bigl\lbrack2, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack, \bigl\lbrack4, 8\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Part[NonNestingMatchings[4], 1]
+every-element-of-nonnestingmatchings-4:
+  epsil:
+    in: Take(NonNestingMatchings(4), 5)
+    out: |-
+      [
+        [[1, 5], [2, 6], [3, 7], [4, 8]],
+        [[1, 4], [2, 6], [3, 7], [5, 8]],
+        [[1, 4], [2, 5], [3, 7], [6, 8]],
+        [[1, 4], [2, 5], [3, 6], [7, 8]],
+        [[1, 3], [2, 6], [4, 7], [5, 8]],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{NonNestingMatchings}(4), 5)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 5\bigr\rbrack, \bigl\lbrack2, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack, \bigl\lbrack4, 8\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack, \bigl\lbrack5, 8\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack, \bigl\lbrack6, 8\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack3, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 6\bigr\rbrack, \bigl\lbrack4, 7\bigr\rbrack, \bigl\lbrack5, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[NonNestingMatchings[4], 5]

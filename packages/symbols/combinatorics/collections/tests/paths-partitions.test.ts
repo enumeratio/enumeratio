@@ -1,6 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { afterAll, expect, test } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { check, checkFamily, random } from "../scripts/properties.ts";
 import { entries } from "../src/families/paths-partitions.ts";
 import { numberKernel } from "../src/families/types.ts";
@@ -114,45 +112,4 @@ test("MotzkinPathsByPeaks rows sum to the Motzkin numbers", () => {
     for (let k = 0; k <= n; k++) sum += entry.count([n, k]);
     expect(sum).toBe(motzkin[n]);
   }
-});
-
-// Golden JSON: the first few elements of each family at a fixed small parameter, exactly as this
-// codebase's own unrank produces them — a change here is a real behavior change, not drift.
-// Regenerate with `UPDATE_PATHS_PARTITIONS=1 vp test` after an intended change.
-const GOLDEN_PARAMS: Record<string, number[]> = {
-  RestrictedGrowthStrings: [4],
-  NonCrossingPartitions: [4],
-  NonNestingPartitions: [4],
-  NonCrossingMatchings: [4],
-  NonNestingMatchings: [4],
-  DelannoyPaths: [3],
-  GrandDyckPaths: [3],
-  RiordanPaths: [6],
-  FinePaths: [5],
-  BallotSequences: [4],
-  LukasiewiczPaths: [4],
-  DyckPathsByHeight: [4, 2],
-  MotzkinPathsByPeaks: [5, 1],
-};
-
-const GOLDEN = fileURLToPath(new URL("./paths-partitions.golden.json", import.meta.url));
-const updating = process.env.UPDATE_PATHS_PARTITIONS === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-for (const [head, p] of Object.entries(GOLDEN_PARAMS)) {
-  test(`${head}(${p.join(", ")}) first elements match golden`, () => {
-    const entry = byHead.get(head)!;
-    const total = entry.count(p);
-    const firstFew = Array.from({ length: Math.min(total, 5) }, (_, r) => entry.unrank(p, r));
-    if (updating) {
-      fresh[head] = firstFew;
-      return;
-    }
-    expect(firstFew).toEqual(golden[head]);
-  });
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

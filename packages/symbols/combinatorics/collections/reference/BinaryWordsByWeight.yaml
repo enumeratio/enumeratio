@@ -1,0 +1,13 @@
+name: BinaryWordsByWeight
+domain: Collections
+signature: BinaryWordsByWeight(n, k)
+summary: The binary strings of length $n$ with exactly $k$ ones.
+signatures:
+  - call: BinaryWordsByWeight(n, k)
+    description: the binary strings of length $n$ with exactly $k$ ones
+    library: enumeratio-collections
+details:
+  - Count is $\binom{n}{k}$ (see [[Binomial]]).
+seeAlso:
+  - BinaryWords
+  - Binomial

@@ -1,0 +1,25 @@
+- id: count-binarynecklaces-5
+  expr: [Count, [BinaryNecklaces, 5]]
+  expected: 8
+  category: Basic
+  caption: $Count(BinaryNecklaces(5)) = 8$
+- id: first-element-of-binarynecklaces-5
+  expr: [At, [BinaryNecklaces, 5], 1]
+  expected: [List, 0, 0, 0, 0, 0]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-binarynecklaces-5
+  role: test
+  expr: [Take, [BinaryNecklaces, 5], 8]
+  expected:
+    [
+      List,
+      [List, 0, 0, 0, 0, 0],
+      [List, 1, 1, 1, 1, 1],
+      [List, 0, 0, 0, 0, 1],
+      [List, 0, 0, 0, 1, 1],
+      [List, 0, 0, 1, 0, 1],
+      [List, 0, 0, 1, 1, 1],
+      [List, 0, 1, 0, 1, 1],
+      [List, 0, 1, 1, 1, 1],
+    ]

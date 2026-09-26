@@ -1,0 +1,23 @@
+- id: count-binarywordsbyweight-4-2
+  expr: [Count, [BinaryWordsByWeight, 4, 2]]
+  expected: 6
+  category: Basic
+  caption: $Count(BinaryWordsByWeight(4, 2)) = 6$
+- id: first-element-of-binarywordsbyweight-4-2
+  expr: [At, [BinaryWordsByWeight, 4, 2], 1]
+  expected: [List, 0, 0, 1, 1]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-binarywordsbyweight-4-2
+  role: test
+  expr: [Take, [BinaryWordsByWeight, 4, 2], 6]
+  expected:
+    [
+      List,
+      [List, 0, 0, 1, 1],
+      [List, 0, 1, 0, 1],
+      [List, 0, 1, 1, 0],
+      [List, 1, 0, 0, 1],
+      [List, 1, 0, 1, 0],
+      [List, 1, 1, 0, 0],
+    ]
