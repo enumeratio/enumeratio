@@ -19,5 +19,12 @@ folder, remove it from the registry in `src/index.ts`, and drop the `applyPatche
 single-patch) call from whatever package made it — the package's own tests are the net
 that catches anything that quietly depended on the patch rather than on the native head.
 
-**Zeta / HurwitzZeta** (cortex-js/compute-engine#340) stays in `@enumeratio/analytic` until
-its PR is open.
+**cortex-js/compute-engine#340** (the analytic special-function family) lives here as ten
+patches: `zeta-hurwitz` (complex `Zeta`, `Zeta(s, a)`, `HurwitzZeta`; offered as PR #350),
+`lerch-phi` (`LerchPhi`), `polylog-order` and `polygamma-complex` (`PolyLog`/`PolyGamma`
+widened to non-integer/complex arguments), `dirichlet` (`DirichletEta`, `DirichletBeta`,
+`DirichletCharacter`, `DirichletL`), `barnes-g` (`BarnesG`, `LogBarnesG`), `log-gamma`
+(`LogGamma`), `clausen` (`ClausenCl`), and `stieltjes` (`StieltjesGamma`). Their shared
+kernels (complex arithmetic, Bernoulli numbers and polynomials, arbitrary-precision helpers,
+the WGSL complex kernels) live in `src/shared/`. `@enumeratio/analytic`'s `declareAnalytic`
+applies each at the point its declaration used to run.

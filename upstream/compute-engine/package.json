@@ -28,6 +28,7 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.134.0",
     "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/oracle": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

@@ -1,0 +1,66 @@
+name: HurwitzZeta
+domain: Special functions
+signature: HurwitzZeta(s, a)
+summary: The Hurwitz zeta function $\zeta(s, a) = \sum_{n=0}^{\infty} (n+a)^{-s}$ for $\operatorname{Re}(s) > 1$, continued analytically elsewhere. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: HurwitzZeta(s, a)
+    description: the Hurwitz zeta function $\zeta(s, a)$.
+    library: "@enumeratio/analytic"
+details:
+  - 'Generalizes the Riemann zeta: $\zeta(s, 1) = \zeta(s)$, and $\zeta(s, m) = \zeta(s) - \sum_{k=1}^{m-1} k^{-s}$ for a positive integer $m$ (so $\zeta(2, 2) = \pi^2/6 - 1$).'
+  - 'Nonpositive integer $s$: $\zeta(-n, a) = -B_{n+1}(a)/(n+1)$, a Bernoulli polynomial in $a$ -- so $\zeta(0, a) = \tfrac12 - a$ and $\zeta(-1, a) = -\tfrac{1}{12}(6a^2 - 6a + 1)$. See [[BernoulliB]].'
+  - 'Pole at $s = 1$: $\zeta(1, a) = \text{ComplexInfinity}$ for every $a$.'
+  - 'Poles at $a = 0, -1, -2, \dots$: the $(n+a)=0$ term is singular. (The two-argument [[Zeta]] drops that term instead, staying finite there.)'
+  - Numeric evaluation (under N()) is Euler–Maclaurin summation and supports complex $s$ and $a$; it is aligned with Wolfram's $\mathrm{HurwitzZeta}[s, a]$. Left of $\operatorname{Re}(s) = 0$, where those direct terms cancel, $a$ near the real axis goes through $\zeta(s, 1+h) = \sum_k \binom{-s}{k} h^k \zeta(s+k)$ instead, each $\zeta(s+k)$ from the functional equation.
+  - That Euler–Maclaurin sum runs in arbitrary precision (as many digits as `ce.precision` asks for, checked against mpmath at 30 and 50 digits) whenever $s$ and $a$ are both real; a genuinely complex $s$ or $a$ is correct to the same number of digits internally, but the returned value is still one of compute-engine's own complex numbers, which is a pair of doubles -- so asking N() for 30 or 50 digits of a complex result gives back the same ~15-17 correct digits either way, a ceiling of compute-engine's complex-number representation rather than of this computation.
+  - 'Certified digits: for exact real $s \ne 1$ and $a > 0$ (integers, rationals or decimals), $\mathrm{N}(\zeta(s, a), d)$ is proven. The Euler–Maclaurin sum runs in ball arithmetic, and its remainder after $M$ Bernoulli pairs is bounded by $4|(s)_{2M}|\,z^{1-s-2M} / ((2\pi)^{2M}(s + 2M - 1))$, $z = N + a$ (Johansson 2015); the d digits are those both ends of the enclosure round to. See [[N]].'
+bindings:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [Sum, [Exp, [Multiply, [Negate, _s], [Ln, [Add, n, _a]]]], [Triple, n, 0, Infinity]]
+    note: The Dirichlet series, on the principal branch — written exp(−s·ln(n+a)) so the wildcards arrive in the head's own order. It converges only for Re(s) > 1; everywhere else ζ(s, a) is its analytic continuation, which is what the kernel computes.
+  - origin: native
+    form: typescript
+    environment: engine
+    source: upstream/compute-engine/src/zeta-hurwitz/kernel.ts
+    note: "Euler–Maclaurin in double precision — the fast path, and all a double holds. Asked for more digits than that, N() leaves it: at an integer s ≥ 2 with real a > 0 it takes ζ(n, a) = (−1)ⁿψ⁽ⁿ⁻¹⁾(a)/(n−1)! through compute-engine's PolyGamma, and otherwise (real s ≠ 1, real a > 0) it evaluates the SAME Euler–Maclaurin written as an expression — a finite Sum over Power, Pochhammer and BernoulliB, which compute-engine carries to whatever precision was asked for (packages/symbols/analysis/analytic/src/precise.ts)."
+  - origin: compiled
+    form: wgsl
+    environment: gpu
+    source: packages/symbols/analysis/analytic/src/shader.ts:zetaWGSL
+    produces: a colour per pixel — complex ζ(s, a), domain-coloured
+  - origin: mapped
+    form: wolfram
+    template: HurwitzZeta[$1, $2]
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+  - origin: mapped
+    form: sympy
+    template: zeta($1, $2)
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+  - origin: mapped
+    form: mpmath
+    template: zeta($1, $2)
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+  - origin: mapped
+    form: sage
+    template: hurwitz_zeta($1, $2)
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+seeAlso:
+  - Zeta
+  - BernoulliB
+  - Gamma
+  - Digamma
+references:
+  - system: wikipedia
+    identity: Hurwitz zeta function
+  - system: mathworld
+    identity: HurwitzZetaFunction
+  - system: dlmf
+    identity: "25.11"
+names:
+  wolframIdentity: true

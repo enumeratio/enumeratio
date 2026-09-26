@@ -1,0 +1,426 @@
+import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { bernoulliNumber, bernoulliPolyExpr, type Json } from "../shared/bernoulli.ts";
+import { type BoxInput, isFiniteNum, isRealInt, numberResult } from "../shared/box.ts";
+import { add, cexp, clog, cosPi, cpow, cx, type Cx, mul, scale, sinPi } from "../shared/complex.ts";
+import { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "../shared/bigzeta.ts";
+import { atEnginePrecision, DOUBLE_DIGITS } from "../shared/precise.ts";
+import { logGamma } from "../log-gamma/loggamma.ts";
+
+// Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
+// compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
+// terms directly (which also shifts a into the right half-plane), then add the
+// tail's integral, endpoint, and Bernoulli-number correction terms — or, left of
+// Re(s) = 0, a Taylor series in a over Riemann zetas (see `hurwitzZeta`). Exact
+// closed forms are returned symbolically where Wolfram has them: the s=1 pole,
+// the ζ(−n, a) Bernoulli-polynomial values, and the ζ(s, m) reduction to the
+// Riemann ζ that makes ζ(s, 1) = ζ(s).
+
+/** Bernoulli correction pairs B₂..B₂ₖ used in the tail (optimal-truncation regime). */
+const EM_PAIRS = 12;
+
+/** cₖ = B₂ₖ / (2k)!, the Euler–Maclaurin tail coefficients. */
+const EM_COEFF: number[] = (() => {
+  const c: number[] = [0];
+  let factorial = 1; // (2k)!
+  for (let k = 1; k <= EM_PAIRS; k++) {
+    factorial *= (2 * k - 1) * (2 * k);
+    c[k] = bernoulliNumber(2 * k) / factorial;
+  }
+  return c;
+})();
+
+// Scratch registers for the allocation-free complex power below. The kernel is
+// synchronous and single-threaded, so a shared pair is safe and keeps the hot loop
+// from allocating a {re,im} per term (each eval does ~N+15 powers).
+let _pr = 0;
+let _pi = 0;
+
+/** z^w for z = zr+zi·i, w = wr+wi·i, principal branch; result in _pr/_pi. */
+function cpowInto(zr: number, zi: number, wr: number, wi: number): void {
+  if (zi === 0 && zr > 0 && wi === 0) {
+    _pr = Math.pow(zr, wr);
+    _pi = 0;
+    return;
+  }
+  // A negative real base to a real power: |z|^w · e^{iπw}, with the phase exact at
+  // half-integers. cos(−1.5π) in floating point is −1.8e−16, not 0, and next to a huge
+  // |z|^w (a tiny |z| to a negative power) that leaked hundreds into the real part.
+  if (zi === 0 && zr < 0 && wi === 0) {
+    const m = Math.pow(-zr, wr);
+    _pr = m * cosPi(wr);
+    _pi = m * sinPi(wr);
+    return;
+  }
+  const logr = 0.5 * Math.log(zr * zr + zi * zi);
+  const th = Math.atan2(zi, zr);
+  const er = wr * logr - wi * th;
+  const ei = wr * th + wi * logr;
+  const m = Math.exp(er);
+  _pr = m * Math.cos(ei);
+  _pi = m * Math.sin(ei);
+}
+
+/**
+ * Euler–Maclaurin for ζ(s, a); see `hurwitzZeta`, which calls it.
+ *
+ * Hot path: all complex arithmetic is inlined on primitive locals (no per-term
+ * object allocation). The math is identical to the `Cx`-helper form; see
+ * `zetaGeneralized` for the readable version of the same operations.
+ */
+function hurwitzEM(s: Cx, a: Cx): Cx {
+  const sRe = s.re;
+  const sIm = s.im;
+  const aRe = a.re;
+  const aIm = a.im;
+  // Direct terms push a into Re(a)+N large relative to |s|, where the asymptotic
+  // tail is accurate; a few more than |s| keeps the truncated series converging.
+  const n = Math.max(8, Math.ceil(emEdge(s) - aRe));
+  const negSr = -sRe;
+  const negSi = -sIm;
+
+  let sumR = 0;
+  let sumI = 0;
+  for (let k = 0; k < n; k++) {
+    const br = aRe + k;
+    if (br === 0 && aIm === 0) continue; // Wolfram HurwitzZeta drops (n+a)=0
+    cpowInto(br, aIm, negSr, negSi);
+    sumR += _pr;
+    sumI += _pi;
+  }
+
+  const zr = aRe + n; // Re(z) large
+  const zi = aIm;
+  cpowInto(zr, zi, negSr, negSi); // z^{-s}
+  const zNegSr = _pr;
+  const zNegSi = _pi;
+
+  cpowInto(zr, zi, 1 - sRe, -sIm); // z^{1-s}
+  const dr = sRe - 1;
+  const dd = dr * dr + sIm * sIm; // divide by (s-1)
+  sumR += (_pr * dr + _pi * sIm) / dd;
+  sumI += (_pi * dr - _pr * sIm) / dd;
+
+  sumR += 0.5 * zNegSr; // ½ z^{-s}
+  sumI += 0.5 * zNegSi;
+
+  // Σ_{k≥1} cₖ · (s)_{2k-1} · z^{-(s+2k-1)}, rolling the Pochhammer and z-power forward.
+  cpowInto(zr, zi, -2, 0); // z^{-2}
+  const zi2r = _pr;
+  const zi2i = _pi;
+  const zd = zr * zr + zi * zi; // zPow = z^{-s}/z = z^{-(s+1)}
+  let zpr = (zNegSr * zr + zNegSi * zi) / zd;
+  let zpi = (zNegSi * zr - zNegSr * zi) / zd;
+  let pochR = sRe; // (s)_1
+  let pochI = sIm;
+  for (let k = 1; k <= EM_PAIRS; k++) {
+    sumR += EM_COEFF[k] * (pochR * zpr - pochI * zpi);
+    sumI += EM_COEFF[k] * (pochR * zpi + pochI * zpr);
+    // poch *= (s+2k-1)(s+2k)
+    const gr = (sRe + 2 * k - 1) * (sRe + 2 * k) - sIm * sIm;
+    const gi = (sRe + 2 * k - 1) * sIm + sIm * (sRe + 2 * k);
+    const npR = pochR * gr - pochI * gi;
+    pochI = pochR * gi + pochI * gr;
+    pochR = npR;
+    // zPow *= z^{-2}
+    const nzr = zpr * zi2r - zpi * zi2i;
+    zpi = zpr * zi2i + zpi * zi2r;
+    zpr = nzr;
+  }
+  return { re: sumR, im: sumI };
+}
+
+/** How far from 1 (once shifted by an integer) a may sit for the Taylor series in a. */
+const TAYLOR_RADIUS = 0.75;
+
+/**
+ * Past this many times `emEdge`, Euler–Maclaurin takes over from the Taylor series left of
+ * the strip. Its direct terms stop cancelling at 1×, but its big tail still costs it a digit
+ * or two out to ~4×, where walking a down to 1 + h stops being cheap.
+ */
+const EM_BEYOND = 4;
+
+/**
+ * Numeric ζ(s, a) for complex s, a. Terms where (n+a)=0 (a a nonpositive integer) are
+ * dropped, matching Wolfram's `HurwitzZeta`, which omits the singular term rather than
+ * diverging there. Returns a non-finite part at the s=1 pole.
+ *
+ * Euler–Maclaurin (`hurwitzEM`), except left of Re(s) = 0 with a near the real axis and not
+ * far past where its direct terms end: there those terms grow like N^(−Re s) and cancel down
+ * to an O(1) result. Instead a is shifted by an integer to b = 1 + h, |Re h| ≤ ½, and
+ * ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k) sums Riemann zetas, each from the functional
+ * equation, with no cancellation to speak of: the terms fall off like (2πh)ᵏ/k! against
+ * ζ(s)'s own scale, so at most e^π of it is lost. An integer a is h = 0, ζ(s) alone.
+ */
+export function hurwitzZeta(s: Cx, a: Cx): Cx {
+  if (s.re >= 0 || a.re >= EM_BEYOND * emEdge(s)) return hurwitzEM(s, a);
+  const m = Math.floor(a.re - 0.5); // a − m has real part in [½, 3/2)
+  const h = cx(a.re - m - 1, a.im);
+  if (!(Math.hypot(h.re, h.im) <= TAYLOR_RADIUS)) return hurwitzEM(s, a); // NaN included
+  // ζ(s, a) = ζ(s, a+1) + a^(−s): walk a to 1 + h, carrying the terms passed over.
+  let z = zetaNearOne(s, h);
+  for (let j = 0; j < Math.abs(m); j++) {
+    const br = m > 0 ? h.re + 1 + j : a.re + j;
+    if (br === 0 && a.im === 0) continue; // the dropped (n+a)=0 term
+    cpowInto(br, a.im, -s.re, -s.im);
+    z = m > 0 ? cx(z.re - _pr, z.im - _pi) : cx(z.re + _pr, z.im + _pi);
+  }
+  return z;
+}
+
+/** Where `hurwitzEM` starts its asymptotic tail; a at or past it sums no cancelling terms. */
+function emEdge(s: Cx): number {
+  return Math.max(12, Math.ceil(Math.abs(s.re) + Math.abs(s.im)) + 6);
+}
+
+/** ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k) for |h| < 1 — see `hurwitzZeta`. */
+function zetaNearOne(s: Cx, h: Cx): Cx {
+  let sum = riemannZeta(s);
+  let c = cx(1, 0); // C(−s, k)
+  let hk = cx(1, 0); // hᵏ
+  let largest = Math.hypot(sum.re, sum.im);
+  let small = 0;
+  const cap = Math.ceil(Math.abs(s.re)) + 200;
+  for (let k = 1; k < cap; k++) {
+    hk = mul(hk, h);
+    if (hk.re === 0 && hk.im === 0) break;
+    const f = cx(-s.re - k + 1, -s.im);
+    if (f.re === 0 && f.im === 0) {
+      // s = 1 − k, an integer: C(−s, k) → 0 as ζ(s + k) → ∞, and their product → −C(−s, k−1)/k.
+      // Every later C(−s, k) is 0, so the series ends here (a Bernoulli polynomial).
+      const t = scale(mul(c, hk), -1 / k);
+      return add(sum, t);
+    }
+    c = scale(mul(c, f), 1 / k);
+    const t = mul(mul(c, hk), riemannZeta(cx(s.re + k, s.im)));
+    sum = add(sum, t);
+    const size = Math.hypot(t.re, t.im);
+    largest = Math.max(largest, size);
+    // Two in a row, since ζ at a negative even integer makes every other term vanish.
+    if (size <= 1e-17 * largest) {
+      if (++small === 2) break;
+    } else small = 0;
+  }
+  return sum;
+}
+
+/**
+ * ζ(s): the functional equation left of Re(s) = 0, Euler–Maclaurin across the strip, and far
+ * right the bare series, whose nᵗʰ term is already below a double's reach by n = 10^(17/Re s).
+ */
+function riemannZeta(s: Cx): Cx {
+  if (s.re < 0) return reflectedZeta(s);
+  if (s.re < 16) return hurwitzEM(s, cx(1, 0));
+  const n = Math.ceil(10 ** (17 / s.re));
+  let z = cx(1, 0);
+  for (let k = 2; k <= n; k++) {
+    cpowInto(k, 0, -s.re, -s.im);
+    z = cx(z.re + _pr, z.im + _pi);
+  }
+  return z;
+}
+
+/**
+ * ζ(s) = 2ˢ πˢ⁻¹ sin(πs/2) Γ(1−s) ζ(1−s), for Re(s) < 0. Every factor but ζ(1−s) is taken
+ * as a log and summed, so the huge Γ and sin at large |s| never meet outside exp.
+ */
+function reflectedZeta(s: Cx): Cx {
+  const r = cx(1 - s.re, -s.im);
+  const log = add(
+    add(scale(s, Math.LN2), scale(cx(s.re - 1, s.im), Math.log(Math.PI))),
+    add(logGamma(r), logSin(scale(s, Math.PI / 2))),
+  );
+  return mul(cexp(log), hurwitzEM(r, cx(1, 0)));
+}
+
+/**
+ * ln sin w, up to 2πi. For Im w ≥ 0, sin w = (i/2)·e^(−iw)·(1 − e^(2iw)) with |e^(2iw)| ≤ 1,
+ * so nothing overflows however large Im w is; below the axis, sin w̄ = conj(sin w).
+ */
+function logSin(w: Cx): Cx {
+  if (w.im < 0) {
+    const c = logSin(cx(w.re, -w.im));
+    return cx(c.re, -c.im);
+  }
+  const u = cexp(cx(-2 * w.im, 2 * w.re)); // e^(2iw)
+  const l = clog(cx(1 - u.re, -u.im));
+  return cx(w.im + l.re - Math.LN2, -w.re + l.im + Math.PI / 2);
+}
+
+/**
+ * Numeric Zeta(s, a) in Wolfram's generalized-zeta convention. Identical to
+ * HurwitzZeta for Re(a) > 0; for a with Re(a) ≤ 0 it differs in the finitely many
+ * terms off the positive axis: those use ((k+a)²)^(−s/2) (which is the real
+ * |k+a|^(−s) when k+a is real and negative), and the (k+a)=0 slot is dropped. So,
+ * unlike HurwitzZeta, Zeta(s, a) is finite at a = 0, −1, −2, … (Zeta(s, 0) = ζ(s)).
+ */
+export function zetaGeneralized(s: Cx, a: Cx): Cx {
+  const negHalfS = scale(s, -0.5);
+  let acc = cx(0, 0);
+  let cur = cx(a.re, a.im);
+  while (cur.re < 0) {
+    acc = add(acc, cpow(mul(cur, cur), negHalfS)); // ((k+a)²)^(−s/2)
+    cur = cx(cur.re + 1, cur.im);
+  }
+  if (cur.re === 0 && cur.im === 0) cur = cx(1, 0); // drop the (k+a)=0 term — no pole
+  return add(acc, hurwitzZeta(s, cur));
+}
+
+/** Real-valued ζ(s, a) for real s, a — the shape compute-engine's compiled
+ * (JS/GPU) plotting pipeline consumes, which is real-scalar. */
+export const hurwitzZetaReal = (s: number, a: number): number => hurwitzZeta({ re: s, im: 0 }, { re: a, im: 0 }).re;
+export const zetaGeneralizedReal = (s: number, a: number): number =>
+  zetaGeneralized({ re: s, im: 0 }, { re: a, im: 0 }).re;
+
+/**
+ * Which kernel numeric `HurwitzZeta` and `Zeta` evaluate on. `"bignum"` (the default) is
+ * bigzeta.ts: correctly rounded, the same in every JS engine, and as many digits as the
+ * engine asks for — at a cost of milliseconds rather than microseconds. `"double"` is
+ * `hurwitzZeta` above. Compiled code always uses the double kernel.
+ */
+export type ZetaKernel = "bignum" | "double";
+let zetaKernel: ZetaKernel = "bignum";
+export const setZetaKernel = (kernel: ZetaKernel): void => {
+  zetaKernel = kernel;
+};
+
+/**
+ * A numeric operand as BigDecimals. Above machine precision the real part is the engine's
+ * bignum (1/3 to every digit asked for); at machine precision it is the double, which is
+ * closer than the 15-digit bignum compute-engine would give.
+ */
+const bigOperand = (ce: ComputeEngine, x: BoxedExpression): BigCx =>
+  bigCx(ce.precision > DOUBLE_DIGITS ? (x.bignumRe ?? x.re) : x.re, x.im);
+
+/**
+ * ζ on the bignum kernel, boxed; undefined to fall back to the double one. A real result
+ * keeps the engine's precision. A complex one can't: compute-engine holds a complex number
+ * as a pair of doubles, so each part is the double nearest the bignum value.
+ */
+function bigZetaResult(
+  ce: ComputeEngine,
+  kernel: (s: BigCx, a: BigCx, digits: number) => BigCx | undefined,
+  s: BoxedExpression,
+  a: BoxedExpression,
+): BoxedExpression | undefined {
+  if (zetaKernel !== "bignum") return undefined;
+  const r = kernel(bigOperand(ce, s), bigOperand(ce, a), Math.max(ce.precision, 17));
+  if (r === undefined) return undefined;
+  if (!r.im.isZero()) return ce.number(ce.complex(r.re.toNumber(), r.im.toNumber()));
+  return ce.number(ce.precision > DOUBLE_DIGITS ? r.re.toPrecision(ce.precision) : r.re.toNumber());
+}
+
+export function evaluateHurwitz(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  numeric: boolean,
+): BoxedExpression | undefined {
+  const s = ops[0];
+  const a = ops[1];
+  if (s === undefined || a === undefined) return undefined;
+
+  const box = (expr: Json) => ce.box(expr as unknown as BoxInput);
+  const finish = (expr: BoxedExpression) => (numeric ? expr.N() : expr.evaluate());
+
+  // ζ(1, a): a simple pole for every a.
+  if (isRealInt(s) && s.re === 1) return ce.symbol("ComplexInfinity");
+
+  // ζ(−n, a) = −B_{n+1}(a)/(n+1). Exact and polynomial in a — works for symbolic a.
+  if (isRealInt(s) && s.re <= 0) {
+    const nn = -s.re;
+    const poly = bernoulliPolyExpr(nn + 1, a.json as unknown as Json);
+    return finish(box(["Divide", ["Negate", poly], nn + 1]));
+  }
+
+  // ζ(s, a) for a a nonpositive integer: the (n+a) = 0 term is 0^{−s}.
+  // Re(s) > 0: a genuine pole (0^{−s} diverges) — not the generalized-zeta convention
+  // (`Zeta(s, a)`, evaluated below) that drops it and stays finite. Matches Wolfram, mpmath
+  // and SymPy, all of which diverge or error here.
+  if (a.im === 0 && Number.isInteger(a.re) && a.re <= 0 && isFiniteNum(s) && s.re > 0) {
+    return ce.symbol("ComplexInfinity");
+  }
+  // Re(s) = 0, s ≠ 0: 0^{−s} = 0^{−i·Im(s)} doesn't converge to any value (it winds the
+  // unit circle) — neither the pole above nor the clean 0 that Re(s) < 0 gets, where the
+  // term genuinely vanishes and dropping it (below, and in the Euler–Maclaurin kernel) is
+  // exact. Wolfram calls this Indeterminate; N() answers NaN, and plain evaluate already
+  // falls through to stay symbolic (no earlier branch catches a purely imaginary s here).
+  if (numeric && a.im === 0 && Number.isInteger(a.re) && a.re <= 0 && isFiniteNum(s) && s.re === 0 && s.im !== 0) {
+    return ce.symbol("NaN");
+  }
+
+  // ζ(s, m) for a positive integer m: ζ(s) − Σ_{k=1}^{m-1} k^{-s}. Gives the
+  // ζ(s, 1) = ζ(s) reduction and closed forms like ζ(2, 2) = π²/6 − 1. Skipped for
+  // a concretely complex s, whose ζ(s) compute-engine can't evaluate numerically —
+  // those fall through to Euler–Maclaurin, which handles complex s directly.
+  const complexS = Number.isFinite(s.re) && Number.isFinite(s.im) && s.im !== 0;
+  if (!complexS && a.im === 0 && Number.isInteger(a.re) && a.re >= 1) {
+    const m = a.re;
+    const sJson = s.json as unknown as Json;
+    if (m === 1) return finish(box(["Zeta", sJson]));
+    const subtracted: Json[] = [];
+    for (let k = 1; k < m; k++) subtracted.push(["Power", k, ["Negate", sJson]]);
+    const tail: Json = subtracted.length === 1 ? subtracted[0] : ["Add", ...subtracted];
+    return finish(box(["Subtract", ["Zeta", sJson], tail]));
+  }
+
+  // ζ(n, a) = (−1)ⁿ ψ⁽ⁿ⁻¹⁾(a)/(n−1)! for an integer n ≥ 2 and real a > 0. Exact, and
+  // compute-engine's PolyGamma carries it to whatever precision was asked for, which the
+  // double-precision kernel below cannot. Numeric path only: under plain evaluate the head
+  // keeps its own form rather than trading it for a polygamma.
+  if (numeric && isRealInt(s) && s.re >= 2 && a.im === 0 && a.re > 0) {
+    const n = s.re;
+    const sign: Json = n % 2 === 0 ? 1 : -1;
+    const viaPolygamma = atEnginePrecision(
+      ce,
+      box(["Divide", ["Multiply", sign, ["PolyGamma", n - 1, a.json as unknown as Json]], ["Factorial", n - 1]]).N(),
+    );
+    if (viaPolygamma !== undefined) return viaPolygamma;
+  }
+
+  // Numeric Euler–Maclaurin for everything else — only when a number is asked for.
+  if (numeric && isFiniteNum(s) && isFiniteNum(a)) {
+    return (
+      bigZetaResult(ce, hurwitzZetaBig, s, a) ??
+      numberResult(ce, hurwitzZeta({ re: s.re, im: s.im }, { re: a.re, im: a.im }))
+    );
+  }
+
+  return undefined; // stay symbolic
+}
+
+/**
+ * Evaluate the two-argument Zeta(s, a) — Wolfram's generalized zeta. For Re(a) > 0
+ * (and symbolic a) it is identical to HurwitzZeta, so it reuses those exact
+ * reductions; for a concrete a with Re(a) ≤ 0 it uses the generalized-zeta
+ * convention numerically (see zetaGeneralized). The one-argument case is handled by
+ * the caller, which defers to compute-engine's native Riemann zeta.
+ */
+export function evaluateZeta(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  numeric: boolean,
+): BoxedExpression | undefined {
+  const s = ops[0];
+  const a = ops[1];
+  if (s === undefined || a === undefined) return undefined;
+
+  if (isRealInt(s) && s.re === 1) return ce.symbol("ComplexInfinity"); // ζ(1, a) pole
+
+  // Re(a) > 0, or a symbolic: identical to HurwitzZeta (exact reductions + EM).
+  if (!isFiniteNum(a) || a.re > 0) return evaluateHurwitz(ce, ops, numeric);
+
+  // Zeta(s, 0) = ζ(s): the (k+a)=0 term is dropped, leaving the Riemann sum. Exact.
+  if (a.re === 0 && a.im === 0) {
+    const expr = ce.box(["Zeta", s.json as unknown as BoxInput] as unknown as BoxInput);
+    return numeric ? expr.N() : expr.evaluate();
+  }
+
+  // a concrete with Re(a) ≤ 0: generalized-zeta convention, numeric only.
+  if (numeric && isFiniteNum(s)) {
+    return (
+      bigZetaResult(ce, zetaGeneralizedBig, s, a) ??
+      numberResult(ce, zetaGeneralized({ re: s.re, im: s.im }, { re: a.re, im: a.im }))
+    );
+  }
+
+  return undefined; // stay symbolic
+}

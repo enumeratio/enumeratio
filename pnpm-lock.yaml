@@ -1231,6 +1231,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.134.0
         version: 0.134.0
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../../packages/oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
