@@ -1,0 +1,7 @@
+a-hand-built-first-order-ode:
+  tex:
+    in: \mathrm{DifferentialRoot}((y, x)\mapsto\begin{cases}y^{\prime}(x)-y(x)=0\\y(0)=1\end{cases})\lhd2
+    out: 7.389\,056\,098\,930\,649
+  fullform:
+    in: DifferentialRoot[Function[List[y, x], List[Equal[Plus[Minus[y[x]], Derivative[1][y][x]], 0], Equal[y[0], 1]]]][2]
+    back: Unreadable

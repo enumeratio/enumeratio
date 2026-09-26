@@ -500,7 +500,8 @@ e-as-the-limit-lim-x-to-infty-1-1-x-x:
     in: \lim_{x\to\infty}(1+\frac{1}{x})^{x}
     out: e
   fullform:
-    in: Limit[Function[Power[Plus[1, Divide[1, x]], x], x], Infinity]
+    in: Limit[Function[x, Power[Plus[1, Divide[1, x]], x]], Infinity]
+    back: [Limit, [Function, x, [Power, [Add, 1, [Divide, 1, x]], x]], PositiveInfinity]
 lim-x-to-0-frac-e-x-1-x-1:
   epsil:
     in: Limit((Exp(x) - 1) / x, 0)
@@ -509,7 +510,8 @@ lim-x-to-0-frac-e-x-1-x-1:
     in: \lim_{x\to0}\frac{e^{x}-1}{x}
     out: "1"
   fullform:
-    in: Limit[Function[Divide[Subtract[Exp[x], 1], x], x], 0]
+    in: Limit[Function[x, Divide[Subtract[Exp[x], 1], x]], 0]
+    back: [Limit, [Function, x, [Divide, [Subtract, [Exp, x], 1], x]], 0]
 a-product-of-exponentials-should-combine-e-x-e-y:
   epsil:
     in: Exp(x) * Exp(y)

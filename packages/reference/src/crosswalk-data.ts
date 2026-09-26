@@ -1220,6 +1220,22 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DifferenceDelta",
   },
   {
+    name: "DifferenceRoot",
+    wolfram: "DifferenceRoot",
+  },
+  {
+    name: "DifferenceRootReduce",
+    wolfram: "DifferenceRootReduce",
+  },
+  {
+    name: "DifferentialRoot",
+    wolfram: "DifferentialRoot",
+  },
+  {
+    name: "DifferentialRootReduce",
+    wolfram: "DifferentialRootReduce",
+  },
+  {
     name: "Digamma",
     fungrimEntries: [
       "00c02a",

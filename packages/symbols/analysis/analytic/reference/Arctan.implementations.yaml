@@ -284,7 +284,8 @@ the-limit-at-infty:
     in: \lim_{x\to\infty}\arctan(x)
     out: \frac{\pi}{2}
   fullform:
-    in: Limit[Function[ArcTan[x], x], Infinity]
+    in: Limit[Function[x, ArcTan[x]], Infinity]
+    back: [Limit, [Function, x, [Arctan, x]], PositiveInfinity]
 as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2:
   epsil:
     in: TrigToExp(Arctan(x))

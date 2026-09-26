@@ -7,7 +7,8 @@ sigma-2-20-see-divisorsigma:
     in: \mathrm{DivisorSum}(20, d\mapsto d^2)
     out: "546"
   fullform:
-    in: DivisorSum[20, Function[Power[d, 2], d]]
+    in: DivisorSum[20, Function[d, Power[d, 2]]]
+    back: [DivisorSum, 20, [Function, d, [Power, d, 2]]]
 only-the-odd-divisors-1-3-5-15:
   epsil:
     in: DivisorSum(30, Function(d, d), Function(IsOdd(d), d))
@@ -17,7 +18,8 @@ only-the-odd-divisors-1-3-5-15:
     in: \mathrm{DivisorSum}(30, d\mapsto d, d\mapsto\mathrm{IsOdd}(d))
     out: "24"
   fullform:
-    in: DivisorSum[30, Function[d, d], Function[OddQ[d], d]]
+    in: DivisorSum[30, Function[d, d], Function[d, OddQ[d]]]
+    back: [DivisorSum, 30, [Function, d, d], [Function, d, [IsOdd, d]]]
 sum-d-mid-n-mu-d-0-for-n-1:
   epsil:
     in: DivisorSum(12, Function(MoebiusMu(d), d))
@@ -30,7 +32,8 @@ sum-d-mid-n-mu-d-0-for-n-1:
     in: \mathrm{DivisorSum}(12, d\mapsto\mu(d))
     out: "0"
   fullform:
-    in: DivisorSum[12, Function[MoebiusMu[d], d]]
+    in: DivisorSum[12, Function[d, MoebiusMu[d]]]
+    back: [DivisorSum, 12, [Function, d, [MoebiusMu, d]]]
 sum-d-mid-n-varphi-d-n:
   epsil:
     in: DivisorSum(36, Function(Totient(d), d))
@@ -43,7 +46,8 @@ sum-d-mid-n-varphi-d-n:
     in: \mathrm{DivisorSum}(36, d\mapsto\varphi(d))
     out: "36"
   fullform:
-    in: DivisorSum[36, Function[EulerPhi[d], d]]
+    in: DivisorSum[36, Function[d, EulerPhi[d]]]
+    back: [DivisorSum, 36, [Function, d, [Totient, d]]]
 1-has-one-divisor:
   epsil:
     in: DivisorSum(1, Function(d, d))
