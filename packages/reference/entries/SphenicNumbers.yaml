@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - SquarefreeSemiprimes
   - KAlmostPrimes
+catalog:
+  - system: oeis
+    identity: A007304
+    url: https://oeis.org/A007304

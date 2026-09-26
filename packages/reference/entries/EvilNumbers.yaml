@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - OdiousNumbers
   - PerniciousNumbers
+catalog:
+  - system: oeis
+    identity: A001969
+    url: https://oeis.org/A001969

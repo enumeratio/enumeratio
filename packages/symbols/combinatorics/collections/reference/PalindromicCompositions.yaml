@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A016116
+catalog:
+  - system: oeis
+    identity: A016116
+    url: https://oeis.org/A016116

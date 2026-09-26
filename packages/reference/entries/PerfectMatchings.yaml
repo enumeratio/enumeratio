@@ -1,0 +1,17 @@
+name: PerfectMatchings
+domain: Combinatorics
+signature: PerfectMatchings(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage, wikipedia; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A001147
+    url: https://oeis.org/A001147
+  - system: sage
+    identity: sage.combinat.perfect_matching.PerfectMatchings(k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/perfect_matching.html
+    note: sage parameterizes by ground-set size k (k=2n); ours parameterizes by pair-count n
+  - system: wikipedia
+    identity: Perfect matching
+    url: https://en.wikipedia.org/wiki/Perfect_matching
+    relation: conceptual
+stub: carrier

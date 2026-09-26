@@ -1,0 +1,10 @@
+name: NegativeOnes
+domain: Combinatorics
+signature: NegativeOnes(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000065
+    url: https://www.findstat.org/St000065
+    on: AlternatingSignMatrix
+stub: carrier

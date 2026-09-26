@@ -1,0 +1,9 @@
+name: MultisetCard
+domain: Combinatorics
+signature: MultisetCard(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Multiset.card
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Multiset/Defs.html
+stub: carrier

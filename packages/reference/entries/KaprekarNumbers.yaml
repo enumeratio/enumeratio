@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - NarcissisticNumbers
+catalog:
+  - system: oeis
+    identity: A006886
+    url: https://oeis.org/A006886

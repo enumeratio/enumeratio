@@ -16,3 +16,15 @@ seeAlso:
 references:
   - system: oeis
     identity: A000142
+catalog:
+  - system: oeis
+    identity: A000142
+    url: https://oeis.org/A000142
+  - system: sage
+    identity: sage.combinat.permutation.from_lehmer_code
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html
+    note: the encode/decode pair to_lehmer_code / from_lehmer_code, not an enumerated class; our collection is every length-n Lehmer code (subexcedant vector)
+  - system: wikipedia
+    identity: Lehmer code
+    url: https://en.wikipedia.org/wiki/Lehmer_code
+    relation: conceptual

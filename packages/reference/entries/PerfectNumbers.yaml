@@ -17,3 +17,10 @@ seeAlso:
   - Element
   - AbundantNumbers
   - SemiperfectNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Perfect
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/Divisors.html
+  - system: oeis
+    identity: A000396
+    url: https://oeis.org/A000396

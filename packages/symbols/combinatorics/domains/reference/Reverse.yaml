@@ -6,3 +6,12 @@ details:
   - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 names:
   wolframIdentity: true
+catalog:
+  - system: findstat
+    identity: Mp00038
+    url: https://www.findstat.org/Mp00038
+    on: Composition
+  - system: findstat
+    identity: Mp00064
+    url: https://www.findstat.org/Mp00064
+    on: Permutation

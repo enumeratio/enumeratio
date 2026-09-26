@@ -48,3 +48,10 @@ bindings:
     template: (catalan $1)
     arity: 1
     threadArg: 1
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: wolfram
+    identity: CatalanNumber
+    url: https://reference.wolfram.com/language/ref/CatalanNumber.html

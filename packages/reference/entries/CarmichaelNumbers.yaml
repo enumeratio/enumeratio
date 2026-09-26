@@ -16,3 +16,11 @@ seeAlso:
   - At
   - Element
   - Primes
+catalog:
+  - system: mathlib4
+    identity: Nat.IsCarmichael
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/CarmichaelNumber.html
+    note: "exact: composite, squarefree, satisfies Korselt's criterion — same predicate we implement"
+  - system: oeis
+    identity: A002997
+    url: https://oeis.org/A002997

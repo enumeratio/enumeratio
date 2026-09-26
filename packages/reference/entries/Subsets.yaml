@@ -40,3 +40,21 @@ references:
     identity: Power set
 names:
   wolframIdentity: true
+catalog:
+  - system: mathlib4
+    identity: Finset (Fin n)
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
+  - system: oeis
+    identity: A000079
+    url: https://oeis.org/A000079
+  - system: sage
+    identity: Subsets(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/subset.html
+  - system: sympy
+    identity: subsets
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.subsets
+    note: subsets(seq) with k=None (the default) — all 2^n subsets, shortest to longest
+  - system: wikipedia
+    identity: Power set
+    url: https://en.wikipedia.org/wiki/Power_set
+    relation: conceptual

@@ -1,0 +1,10 @@
+name: NumColumns
+domain: Combinatorics
+signature: NumColumns(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St001460
+    url: https://www.findstat.org/St001460
+    on: PlanePartition
+stub: carrier

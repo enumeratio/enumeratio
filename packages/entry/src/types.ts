@@ -263,6 +263,14 @@ export interface ReferenceEntry {
    * catalog's FindStat and Sage rows) -- see `crosswalk/`.
    */
   readonly references?: readonly Reference[];
+  /**
+   * The enumeratio catalog's own crosswalk rows for this head (or, for a statistic or map,
+   * for its name and every carrier it overloads) -- separate from `references` so the
+   * crosswalk can keep telling the two apart (`origin: "catalog"` vs `"curated"`) now that
+   * both are hand-kept records. `names.catalog` says which catalog name these are filed
+   * under when it differs from this head's own.
+   */
+  readonly catalog?: readonly Reference[];
   /** This head's own vocabulary in other systems -- Fungrim, the DLMF, Wikidata, the catalog. */
   readonly names?: ReferenceNames;
   /**

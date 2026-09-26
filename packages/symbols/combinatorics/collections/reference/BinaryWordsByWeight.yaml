@@ -11,3 +11,7 @@ details:
 seeAlso:
   - BinaryWords
   - Binomial
+catalog:
+  - system: oeis
+    identity: A007318
+    url: https://oeis.org/A007318

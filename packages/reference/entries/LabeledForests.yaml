@@ -1,0 +1,10 @@
+name: LabeledForests
+domain: Combinatorics
+signature: LabeledForests(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000272
+    url: https://oeis.org/A000272
+    note: "shifted: count = (n+1)^(n-1) = A000272(n+1)"
+stub: carrier

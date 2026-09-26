@@ -1,0 +1,10 @@
+name: SignedSubsets
+domain: Combinatorics
+signature: SignedSubsets(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000244
+    url: https://oeis.org/A000244
+    note: cardinality only (3^n); the face structure itself has no OEIS analog
+stub: carrier

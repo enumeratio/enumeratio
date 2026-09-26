@@ -10,7 +10,7 @@
 //   vp node packages/reference/scripts/fetch-wikidata.ts
 
 import { writeFileSync } from "node:fs";
-import { REFERENCES } from "@enumeratio/catalog/src";
+import { CATALOG_REFERENCES } from "../src/crosswalk/catalog-references-data.ts";
 import { CURATED, WIKIDATA_FIXES } from "../src/crosswalk/curated-data.ts";
 import { wikipediaTitle } from "../src/crosswalk/wikidata.ts";
 import type { WikidataItem } from "../src/wikidata-data.ts";
@@ -80,7 +80,7 @@ const titles = [
     [
       ...Object.values(CURATED).flat(),
       ...entries.flatMap((e) => [...(e.references ?? []), ...(e.signatures ?? []).flatMap((s) => s.references ?? [])]),
-      ...REFERENCES.map((r) => ({ system: r.system, identity: r.identity })),
+      ...CATALOG_REFERENCES.map((r) => ({ system: r.system, identity: r.identity })),
     ]
       .filter((r) => r.system === "wikipedia")
       .map((r) => wikipediaTitle(r.identity)),

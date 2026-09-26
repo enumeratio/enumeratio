@@ -1,0 +1,15 @@
+name: NaturalNumbers
+domain: Combinatorics
+signature: NaturalNumbers(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Nat
+    url: https://leanprover-community.github.io/mathlib4_docs/Init/Prelude.html
+  - system: oeis
+    identity: A000027
+    url: https://oeis.org/A000027
+  - system: oeis
+    identity: A001477
+    url: https://oeis.org/A001477
+stub: carrier

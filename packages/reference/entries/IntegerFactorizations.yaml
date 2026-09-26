@@ -1,0 +1,17 @@
+name: IntegerFactorizations
+domain: Combinatorics
+signature: IntegerFactorizations(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, matlab, sage; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Nat.factorization
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Factorization/Basic.html
+    note: Nat.factorization (ℕ →₀ ℕ, support=primes, values=exponents) covers only the magnitude; our carrier adds a sign bit for ℤ
+  - system: matlab
+    identity: factor
+    url: https://www.mathworks.com/help/matlab/ref/factor.html
+    note: factor(n) returns the flat vector of prime factors with multiplicity in ascending order (e.g. factor(200) = [2 2 2 5 5]) — our integer_factorizations carries the same multiset in exponent notation (2^3·5^2); factors(factored(n)) recovers MATLAB's flat multiset directly
+  - system: sage
+    identity: IntegerFactorization (sage.structure.factorization_integer)
+    url: https://doc.sagemath.org/html/en/reference/structure/sage/structure/factorization_integer.html
+stub: carrier

@@ -1,0 +1,10 @@
+name: SparseSubsets
+domain: Combinatorics
+signature: SparseSubsets(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000045
+    url: https://oeis.org/A000045
+    note: count = F(n+2), shifted
+stub: carrier

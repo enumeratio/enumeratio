@@ -11,3 +11,8 @@ details:
 seeAlso:
   - BinaryWords
   - PalindromicCompositions
+catalog:
+  - system: oeis
+    identity: A016116
+    url: https://oeis.org/A016116
+    note: A016116(n+1) = 2^⌈n/2⌉

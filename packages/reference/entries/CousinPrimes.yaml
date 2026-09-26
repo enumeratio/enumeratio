@@ -19,3 +19,7 @@ seeAlso:
   - TwinPrimes
   - SexyPrimes
   - PrimePairs
+catalog:
+  - system: oeis
+    identity: A023200
+    url: https://oeis.org/A023200

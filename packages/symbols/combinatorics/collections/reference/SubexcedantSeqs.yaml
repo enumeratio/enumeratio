@@ -14,3 +14,8 @@ seeAlso:
 references:
   - system: oeis
     identity: A000142
+catalog:
+  - system: oeis
+    identity: A000142
+    url: https://oeis.org/A000142
+    note: cardinality only; distinct word-representation

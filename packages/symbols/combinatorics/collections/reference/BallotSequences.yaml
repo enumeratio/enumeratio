@@ -13,3 +13,8 @@ seeAlso:
 references:
   - system: oeis
     identity: A000108
+catalog:
+  - system: sage
+    identity: DyckWords(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/dyck_word.html
+    note: same object under an alternate ±1-step reading (sage represents it as open/close symbols)

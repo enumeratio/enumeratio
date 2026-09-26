@@ -27,3 +27,30 @@ references:
 names:
   catalog: Permutations
   wolframIdentity: true
+catalog:
+  - system: mathlib4
+    identity: Equiv.Perm (Fin n)
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Logic/Equiv/Defs.html#Equiv.Perm
+  - system: matlab
+    identity: perms
+    url: https://www.mathworks.com/help/matlab/ref/perms.html
+    note: perms(v) returns all n! permutations of v, but in reverse-lexicographic order of the element indices — our permutations() fiber_unrank/elements() order is plain lexicographic ascending, so the SET matches but the ORDER does not
+  - system: oeis
+    identity: A000142
+    url: https://oeis.org/A000142
+    note: cardinality only
+  - system: sage
+    identity: Permutations(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html
+  - system: sympy
+    identity: generate_bell
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.generate_bell
+    note: generate_bell yields the same SET in Steinhaus-Johnson-Trotter (adjacent-transposition) order, not lex order; 0-indexed tuples, shift +1
+  - system: wikipedia
+    identity: Permutation
+    url: https://en.wikipedia.org/wiki/Permutation
+    relation: conceptual
+  - system: wolfram
+    identity: QFactorial
+    url: https://reference.wolfram.com/language/ref/QFactorial.html
+    note: "grouping permutations(n) by inversions (or major_index) gives QFactorial[n,q] coefficients — the Mahonian distribution [n]_q! (generating_functions.sql: gf_qfactorial); cardinality = QFactorial[n,1] = n!"

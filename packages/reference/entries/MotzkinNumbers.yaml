@@ -16,3 +16,17 @@ seeAlso:
   - At
   - Element
   - CatalanNumbers
+catalog:
+  - system: oeis
+    identity: A001006
+    url: https://oeis.org/A001006
+  - system: sympy
+    identity: motzkin.find_first_n_motzkins
+    note: |-
+      the motzkin(n) FUNCTION itself is off by one term from the standard/OEIS A001006 indexing (confirmed live,
+      sympy 1.11.1: motzkin(0..10) = 1,1,1,2,4,9,21,51,127,323,835 — an extra leading 1); find_first_n_motzkins(k) gives
+      the correct first k terms matching ours exactly. No WL builtin either (see wolfram-refs.sql) — this is new information.
+  - system: wikipedia
+    identity: Motzkin number
+    url: https://en.wikipedia.org/wiki/Motzkin_number
+    relation: conceptual

@@ -17,3 +17,20 @@ seeAlso:
   - Element
   - FubiniNumbers
   - PartitionNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.bell
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Bell.html
+  - system: oeis
+    identity: A000110
+    url: https://oeis.org/A000110
+  - system: sage
+    identity: sage.combinat.combinat.bell_number(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html#sage.combinat.combinat.bell_number
+  - system: wikipedia
+    identity: Bell number
+    url: https://en.wikipedia.org/wiki/Bell_number
+    relation: conceptual
+  - system: wolfram
+    identity: BellB
+    url: https://reference.wolfram.com/language/ref/BellB.html

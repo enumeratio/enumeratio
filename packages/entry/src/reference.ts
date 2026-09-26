@@ -19,6 +19,12 @@ export interface Reference {
    * different pages everywhere. Omitted: the row is about the head as a whole.
    */
   readonly arity?: number;
+  /**
+   * The carrier this row is about, for a statistic or map that means something different on
+   * each one -- `MajorIndex` on `DyckPath` and on `Permutation` point at different FindStat
+   * numbers. Omitted: the row is about the subject itself, not one of its overloads.
+   */
+  readonly on?: string;
 }
 
 /** Where a resolved reference was found, so the page can say and a reader can judge. */

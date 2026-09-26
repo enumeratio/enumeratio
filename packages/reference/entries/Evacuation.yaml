@@ -1,0 +1,10 @@
+name: Evacuation
+domain: Combinatorics
+signature: Evacuation(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: Mp00085
+    url: https://www.findstat.org/Mp00085
+    on: StandardTableau
+stub: carrier

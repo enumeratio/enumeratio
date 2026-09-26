@@ -13,3 +13,7 @@ seeAlso:
   - FibonacciCompositions
   - TriCompositions
   - TetraCompositions
+catalog:
+  - system: sage
+    identity: Compositions(n, max_length=k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/composition.html

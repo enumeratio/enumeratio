@@ -17,3 +17,16 @@ references:
     identity: Multiset
   - system: mathworld
     identity: Multiset
+catalog:
+  - system: mathlib4
+    identity: Sym (Fin n) k
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Sym/Basic.html
+  - system: sage
+    identity: sage.combinat.combinat.number_of_unordered_tuples(S, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: the multichoose ((|S| multichoose k)); matches fiber_count exactly; verified live (3,2)=6, (5,3)=35 (no prior sage row for this collection)
+    relation: aggregate
+  - system: wikipedia
+    identity: Multiset
+    url: https://en.wikipedia.org/wiki/Multiset
+    relation: conceptual

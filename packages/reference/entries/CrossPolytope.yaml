@@ -1,0 +1,14 @@
+name: CrossPolytope
+domain: Combinatorics
+signature: CrossPolytope(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000244
+    url: https://oeis.org/A000244
+    note: cardinality only (3^n faces), not the element carrier
+  - system: sage
+    identity: sage.geometry.polyhedron.library.polytopes.cross_polytope(dim)
+    url: https://doc.sagemath.org/html/en/reference/discrete_geometry/sage/geometry/polyhedron/library.html
+    note: their object is the geometric polyhedron (vertex/facet coordinate data) for one fixed dim; our collection is the full face lattice at ground n, enumerated via the order-isomorphic signed_subset carrier
+stub: carrier

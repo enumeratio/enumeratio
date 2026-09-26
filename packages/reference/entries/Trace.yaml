@@ -1,0 +1,13 @@
+name: Trace
+domain: Compute engine
+signature: "Trace(list<number> | number, axis1: integer?, axis2: integer?) -> list<number> | number"
+summary: Trace of a matrix or pair of tensor axes.
+signatures:
+  - call: "Trace(list<number> | number, axis1: integer?, axis2: integer?) -> list<number> | number"
+    description: as compute-engine declares it
+catalog:
+  - system: findstat
+    identity: St001919
+    url: https://www.findstat.org/St001919
+    on: PlanePartition
+stub: engine

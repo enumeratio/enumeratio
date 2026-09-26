@@ -1,0 +1,10 @@
+name: AffinePermutations
+domain: Combinatorics
+signature: AffinePermutations(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in sage; not yet written up here.
+catalog:
+  - system: sage
+    identity: AffinePermutationGroup(cartan_type) [sage.combinat.affine_permutation.AffinePermutation]
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/affine_permutation.html
+    note: window-notation elements of the affine symmetric group; our r-bounded-translation-box grading (n, radius) is our own restriction, not part of the sage class
+stub: carrier

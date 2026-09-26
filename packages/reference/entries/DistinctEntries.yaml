@@ -1,0 +1,14 @@
+name: DistinctEntries
+domain: Combinatorics
+signature: DistinctEntries(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St001404
+    url: https://www.findstat.org/St001404
+    on: GelfandTsetlinPattern
+  - system: findstat
+    identity: St001401
+    url: https://www.findstat.org/St001401
+    on: SemistandardTableau
+stub: carrier

@@ -13,3 +13,12 @@ seeAlso:
   - Peaks
   - Ascents
   - SymmetricGroup
+catalog:
+  - system: findstat
+    identity: St000053
+    url: https://www.findstat.org/St000053
+    on: DyckPath
+  - system: findstat
+    identity: St000353
+    url: https://www.findstat.org/St000353
+    on: Permutation

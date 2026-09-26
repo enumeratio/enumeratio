@@ -17,3 +17,11 @@ seeAlso:
   - Element
   - AbundantNumbers
   - SemiperfectNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Weird
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/FactorisationProperties.html
+    note: "exact: abundant and not pseudoperfect"
+  - system: oeis
+    identity: A006037
+    url: https://oeis.org/A006037

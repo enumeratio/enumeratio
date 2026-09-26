@@ -18,3 +18,11 @@ seeAlso:
   - Totient
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A000029
+    url: https://oeis.org/A000029
+  - system: sympy
+    identity: bracelets
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.bracelets
+    note: bracelets(n, 2) (necklaces with free=True) — same lex-least-under-rotation+reflection representative convention as ours

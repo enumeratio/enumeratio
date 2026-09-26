@@ -13,3 +13,8 @@ seeAlso:
   - Valleys
   - Descents
   - SymmetricGroup
+catalog:
+  - system: findstat
+    identity: St000023
+    url: https://www.findstat.org/St000023
+    on: Permutation

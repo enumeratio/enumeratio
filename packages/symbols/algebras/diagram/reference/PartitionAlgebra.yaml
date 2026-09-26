@@ -32,3 +32,12 @@ bindings:
     template: EnumeratioDiagramAlgebra(:partition, $1)
     arity: 1
     note: Oscar has no diagram algebras; its row checks the dimension against the closed form (oscar/preamble.jl), not against a second implementation.
+catalog:
+  - system: oeis
+    identity: A000110
+    url: https://oeis.org/A000110
+    note: cardinality = Bell(n), borrowed from set_partitions
+  - system: sage
+    identity: sage.combinat.diagram_algebras.PartitionAlgebra(k, q, base_ring, prefix)
+    url: https://doc.sagemath.org/html/en/reference/algebras/sage/combinat/diagram_algebras.html
+    note: sage's full diagram partition algebra basis = set partitions of a 2k-point set (Bell(2k)); our collection borrows only the one-row Bell(n) basis (identical to set_partitions), a simpler sub-object of the real partition algebra

@@ -22,3 +22,29 @@ references:
     identity: k-Subset
   - system: rosettacode
     identity: Combinations
+catalog:
+  - system: mathlib4
+    identity: Finset.powersetCard k
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Powerset.html
+  - system: matlab
+    identity: nchoosek
+    url: https://www.mathworks.com/help/matlab/ref/nchoosek.html
+    note: "nchoosek has two modes: nchoosek(n,k) is the scalar binomial coefficient C(n,k) (matches fiber_count(k_subsets(n),k)); nchoosek(v,k) with a length-m vector v enumerates all k-element combinations of v in the order elements appear in v (not necessarily our canonical order)"
+  - system: oeis
+    identity: A007318
+    url: https://oeis.org/A007318
+  - system: sage
+    identity: Subsets(n, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/subset.html
+  - system: sympy
+    identity: subsets
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.subsets
+    note: subsets(seq, k) — the k-subsets
+  - system: wikipedia
+    identity: Combination
+    url: https://en.wikipedia.org/wiki/Combination
+    relation: conceptual
+  - system: wolfram
+    identity: Binomial
+    url: https://reference.wolfram.com/language/ref/Binomial.html
+    note: fiber_count(n,k) = Binomial(n,k)

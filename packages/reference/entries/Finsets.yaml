@@ -1,0 +1,9 @@
+name: Finsets
+domain: Combinatorics
+signature: Finsets(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Finset ℕ
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
+stub: carrier

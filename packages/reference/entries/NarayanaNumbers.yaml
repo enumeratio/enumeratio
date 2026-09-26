@@ -1,0 +1,17 @@
+name: NarayanaNumbers
+domain: Combinatorics
+signature: NarayanaNumbers(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage, wikipedia; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A001263
+    url: https://oeis.org/A001263
+  - system: sage
+    identity: sage.combinat.combinat.narayana_number(n, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: their k is 0-indexed (0..n-1); our k is the 1-indexed peak count (1..n) — our N(n,k) = their narayana_number(n, k-1)
+  - system: wikipedia
+    identity: Narayana number
+    url: https://en.wikipedia.org/wiki/Narayana_number
+    relation: conceptual
+stub: carrier

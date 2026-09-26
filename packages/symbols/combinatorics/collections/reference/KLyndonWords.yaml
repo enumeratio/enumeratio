@@ -11,3 +11,8 @@ details:
 seeAlso:
   - LyndonWords
   - KNecklaces
+catalog:
+  - system: sage
+    identity: LyndonWords(n, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/words/lyndon_word.html
+    note: sage signature is (alphabet size, word length); matches our (base, size)

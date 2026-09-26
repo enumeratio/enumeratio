@@ -17,3 +17,14 @@ seeAlso:
   - Element
   - Primes
   - AbundantNumbers
+catalog:
+  - system: mathlib4
+    identity: IsSquare
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Group/Even.html
+  - system: oeis
+    identity: A000290
+    url: https://oeis.org/A000290
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=4 fixed for the square case; PolygonalNumber(4,r) — their n = our r

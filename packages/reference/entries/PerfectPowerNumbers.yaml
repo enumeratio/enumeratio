@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - PowerfulNumbers
   - SquareNumbers
+catalog:
+  - system: oeis
+    identity: A001597
+    url: https://oeis.org/A001597

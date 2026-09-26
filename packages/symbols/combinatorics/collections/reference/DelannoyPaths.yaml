@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A001850
+catalog:
+  - system: oeis
+    identity: A001850
+    url: https://oeis.org/A001850

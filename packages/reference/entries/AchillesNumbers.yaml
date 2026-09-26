@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - PowerfulNumbers
   - PerfectPowerNumbers
+catalog:
+  - system: oeis
+    identity: A052486
+    url: https://oeis.org/A052486

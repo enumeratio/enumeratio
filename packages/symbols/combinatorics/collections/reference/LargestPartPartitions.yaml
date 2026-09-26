@@ -14,3 +14,10 @@ seeAlso:
 references:
   - system: oeis
     identity: A008284
+catalog:
+  - system: oeis
+    identity: A008284
+    url: https://oeis.org/A008284
+  - system: sage
+    identity: PartitionsGreatestEQ(n, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html

@@ -1,0 +1,9 @@
+name: OrderedFactorizations
+domain: Combinatorics
+signature: OrderedFactorizations(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A074206
+    url: https://oeis.org/A074206
+stub: carrier

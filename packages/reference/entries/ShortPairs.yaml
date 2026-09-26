@@ -1,0 +1,10 @@
+name: ShortPairs
+domain: Combinatorics
+signature: ShortPairs(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000164
+    url: https://www.findstat.org/St000164
+    on: PerfectMatching
+stub: carrier

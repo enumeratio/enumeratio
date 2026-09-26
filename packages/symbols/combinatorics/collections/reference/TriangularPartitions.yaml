@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A007294
+catalog:
+  - system: oeis
+    identity: A007294
+    url: https://oeis.org/A007294

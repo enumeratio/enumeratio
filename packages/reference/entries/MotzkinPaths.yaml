@@ -1,0 +1,10 @@
+name: MotzkinPaths
+domain: Combinatorics
+signature: MotzkinPaths(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A001006
+    url: https://oeis.org/A001006
+    note: count only
+stub: carrier

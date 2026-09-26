@@ -1,0 +1,9 @@
+name: RookPlacements
+domain: Combinatorics
+signature: RookPlacements(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A002720
+    url: https://oeis.org/A002720
+stub: carrier

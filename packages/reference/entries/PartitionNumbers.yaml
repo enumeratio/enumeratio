@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - IntegerPartitions
   - BellNumbers
+catalog:
+  - system: oeis
+    identity: A000041
+    url: https://oeis.org/A000041

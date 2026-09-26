@@ -1,0 +1,10 @@
+name: HyperbinaryRepresentations
+domain: Combinatorics
+signature: HyperbinaryRepresentations(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A002487
+    url: https://oeis.org/A002487
+    note: fiber n has fusc(n+1) numerals — Stern's diatomic sequence
+stub: carrier

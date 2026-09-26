@@ -15,3 +15,12 @@ seeAlso:
 references:
   - system: oeis
     identity: A001710
+catalog:
+  - system: oeis
+    identity: A001710
+    url: https://oeis.org/A001710
+  - system: sage
+    identity: sage.groups.perm_gps.permgroup_named.AlternatingGroup(n)
+    url: https://doc.sagemath.org/html/en/reference/groups/sage/groups/perm_gps/permgroup_named.html
+    note: a GROUP object (order n!/2), not a plain combinatorial class — the underlying permutation set is our collection
+    relation: partial

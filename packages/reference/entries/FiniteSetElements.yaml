@@ -1,0 +1,10 @@
+name: FiniteSetElements
+domain: Combinatorics
+signature: FiniteSetElements(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Fin n
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Fin/Basic.html
+    note: the n atoms of ground set [n]; Fin n is mathlib's canonical n-element type (our atoms are 1-indexed, Fin n is 0-indexed)
+stub: carrier

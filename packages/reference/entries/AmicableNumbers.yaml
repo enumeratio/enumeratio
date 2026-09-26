@@ -1,0 +1,9 @@
+name: AmicableNumbers
+domain: Combinatorics
+signature: AmicableNumbers(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A063990
+    url: https://oeis.org/A063990
+stub: carrier

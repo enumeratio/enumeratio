@@ -18,3 +18,10 @@ names:
   fungrim: PartitionsP
   catalog: PartitionNumber
 stub: engine
+catalog:
+  - system: oeis
+    identity: A000041
+    url: https://oeis.org/A000041
+  - system: wolfram
+    identity: PartitionsP
+    url: https://reference.wolfram.com/language/ref/PartitionsP.html

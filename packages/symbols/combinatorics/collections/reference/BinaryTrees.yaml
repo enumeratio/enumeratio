@@ -19,3 +19,14 @@ references:
     identity: BinaryTree
   - system: oeis
     identity: A000108
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: sage
+    identity: BinaryTrees(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/binary_tree.html
+  - system: wikipedia
+    identity: Binary tree
+    url: https://en.wikipedia.org/wiki/Binary_tree
+    relation: conceptual

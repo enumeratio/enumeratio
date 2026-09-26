@@ -21,8 +21,9 @@
 // Each resolved reference says which of these it came from, so a page can show a Wikidata
 // id next to a FindStat number without pretending they were found the same way.
 
-import { COLLECTIONS, REFERENCES } from "@enumeratio/catalog/src";
+import { COLLECTIONS } from "@enumeratio/catalog/src";
 import { crosswalk as derived } from "../crosswalk-data.ts";
+import { CATALOG_REFERENCES } from "./catalog-references-data.ts";
 import { engineSymbols } from "../engine-symbols-data.ts";
 import { findstat } from "../findstat-data.ts";
 import { oeis } from "../oeis-data.ts";
@@ -65,7 +66,7 @@ const resolve = (reference: Reference, origin: ReferenceOrigin, via?: string): R
 
 /** The catalog's rows about `subject`, as references -- any kind, any carrier. */
 function catalogRows(subject: string, on?: string): ResolvedReference[] {
-  return REFERENCES.filter(
+  return CATALOG_REFERENCES.filter(
     (row) => row.subject === subject && (on === undefined || row.on === on) && isCrosswalkSystem(row.system),
   ).map((row) =>
     resolve(
@@ -334,7 +335,9 @@ function foundByValue(head: string, carrier: string): ResolvedReference[] {
 function foundByCount(head: string): ResolvedReference[] {
   const found = oeis.filter((m) => m.head === head);
   if (!found.length) return [];
-  const recorded = new Set(REFERENCES.filter((r) => r.subject === head && r.system === "oeis").map((r) => r.identity));
+  const recorded = new Set(
+    CATALOG_REFERENCES.filter((r) => r.subject === head && r.system === "oeis").map((r) => r.identity),
+  );
   const rank = (m: (typeof found)[number]): number =>
     (recorded.has(m.oeis) ? 0 : 100) + Math.abs(m.shift) * 2 + (m.atZero ? 1 : 0);
   const sorted = [...found].sort((a, b) => rank(a) - rank(b));

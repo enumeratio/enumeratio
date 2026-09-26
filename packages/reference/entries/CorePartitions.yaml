@@ -1,0 +1,9 @@
+name: CorePartitions
+domain: Combinatorics
+signature: CorePartitions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in sage; not yet written up here.
+catalog:
+  - system: sage
+    identity: Cores(k, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/core.html
+stub: carrier

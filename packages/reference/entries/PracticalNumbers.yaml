@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - ArithmeticNumbers
+catalog:
+  - system: oeis
+    identity: A005153
+    url: https://oeis.org/A005153

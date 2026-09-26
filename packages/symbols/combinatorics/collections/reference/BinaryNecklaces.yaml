@@ -14,3 +14,12 @@ seeAlso:
 references:
   - system: oeis
     identity: A000031
+catalog:
+  - system: sage
+    identity: Necklaces(content)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/necklace.html
+    note: binary necklaces of length n = ⋃_{k=0}^{n} Necklaces([k, n−k]) — sage's class fixes content (weight), not just length
+  - system: sympy
+    identity: necklaces
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.necklaces
+    note: necklaces(n, 2), free=False (the default) — same lex-least-under-rotation representative convention as ours

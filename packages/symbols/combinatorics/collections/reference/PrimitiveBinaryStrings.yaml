@@ -18,3 +18,7 @@ seeAlso:
   - MoebiusMu
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A027375
+    url: https://oeis.org/A027375

@@ -17,3 +17,10 @@ seeAlso:
   - IntegerPartitions
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A000219
+    url: https://oeis.org/A000219
+  - system: sage
+    identity: PlanePartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/plane_partition.html

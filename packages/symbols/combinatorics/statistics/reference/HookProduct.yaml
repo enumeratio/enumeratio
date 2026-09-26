@@ -10,3 +10,8 @@ references:
     identity: Hook length formula
   - system: mathworld
     identity: HookLengthFormula
+catalog:
+  - system: findstat
+    identity: St000179
+    url: https://www.findstat.org/St000179
+    on: IntegerPartition

@@ -15,3 +15,14 @@ enumerate:
 seeAlso:
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A005130
+    url: https://oeis.org/A005130
+  - system: sage
+    identity: AlternatingSignMatrices(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/alternating_sign_matrix.html
+  - system: wikipedia
+    identity: Alternating sign matrix
+    url: https://en.wikipedia.org/wiki/Alternating_sign_matrix
+    relation: conceptual

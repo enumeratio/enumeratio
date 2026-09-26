@@ -13,3 +13,11 @@ seeAlso:
 references:
   - system: oeis
     identity: A000110
+catalog:
+  - system: oeis
+    identity: A000110
+    url: https://oeis.org/A000110
+  - system: sage
+    identity: SetPartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition.html
+    note: word (RGS) encoding, not sage's block-list representation

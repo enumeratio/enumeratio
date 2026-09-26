@@ -8,3 +8,8 @@ details:
 references:
   - system: wikipedia
     identity: Rank of a partition
+catalog:
+  - system: findstat
+    identity: St000145
+    url: https://www.findstat.org/St000145
+    on: IntegerPartition

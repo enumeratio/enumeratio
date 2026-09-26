@@ -1,0 +1,10 @@
+name: MultisetLe
+domain: Combinatorics
+signature: MultisetLe(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Multiset.instLE
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Multiset/Defs.html
+    note: sub-multiset order a ≤ b
+stub: carrier

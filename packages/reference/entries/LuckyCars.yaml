@@ -1,0 +1,10 @@
+name: LuckyCars
+domain: Combinatorics
+signature: LuckyCars(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000135
+    url: https://www.findstat.org/St000135
+    on: ParkingFunction
+stub: carrier

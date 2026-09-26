@@ -11,3 +11,12 @@ details:
 seeAlso:
   - BinaryNecklaces
   - KLyndonWords
+catalog:
+  - system: sage
+    identity: Necklaces(content)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/necklace.html
+    note: sage parameterizes by letter-multiplicity content (a composition); ours by fixed (size, base) — a different but related parameterization of the same rotation-class idea
+  - system: sympy
+    identity: necklaces
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.necklaces
+    note: necklaces(n, base) — 0-indexed colors, shift +1 for our 1-based letters

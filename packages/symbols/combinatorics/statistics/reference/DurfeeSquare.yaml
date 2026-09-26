@@ -10,3 +10,8 @@ references:
     identity: Durfee square
   - system: mathworld
     identity: DurfeeSquare
+catalog:
+  - system: findstat
+    identity: St000183
+    url: https://www.findstat.org/St000183
+    on: IntegerPartition

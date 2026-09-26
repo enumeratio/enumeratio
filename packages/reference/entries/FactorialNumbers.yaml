@@ -18,3 +18,18 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: mathlib4
+    identity: Nat.factorial
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Factorial/Basic.html
+  - system: matlab
+    identity: factorial
+    url: https://www.mathworks.com/help/matlab/ref/factorial.html
+    note: factorial(0) = 1, matches our n=0 term exactly; both agree for all n
+  - system: oeis
+    identity: A000142
+    url: https://oeis.org/A000142
+  - system: wikipedia
+    identity: Factorial
+    url: https://en.wikipedia.org/wiki/Factorial
+    relation: conceptual

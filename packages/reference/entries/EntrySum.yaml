@@ -1,0 +1,10 @@
+name: EntrySum
+domain: Combinatorics
+signature: EntrySum(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000103
+    url: https://www.findstat.org/St000103
+    on: SemistandardTableau
+stub: carrier

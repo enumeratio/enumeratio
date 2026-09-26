@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - HarshadNumbers
+catalog:
+  - system: oeis
+    identity: A007770
+    url: https://oeis.org/A007770

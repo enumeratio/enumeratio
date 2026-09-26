@@ -17,3 +17,7 @@ seeAlso:
   - Count
   - At
   - Element
+catalog:
+  - system: oeis
+    identity: A005448
+    url: https://oeis.org/A005448

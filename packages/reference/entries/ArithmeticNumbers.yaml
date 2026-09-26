@@ -16,3 +16,7 @@ seeAlso:
   - At
   - Element
   - PracticalNumbers
+catalog:
+  - system: oeis
+    identity: A003601
+    url: https://oeis.org/A003601

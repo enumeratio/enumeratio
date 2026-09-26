@@ -1,0 +1,12 @@
+name: RationalNumbers
+domain: Compute engine
+signature: RationalNumbers
+summary: The set of all finite rational numbers.
+signatures:
+  - call: "RationalNumbers: set<rational>"
+    description: a constant, as compute-engine declares it
+catalog:
+  - system: mathlib4
+    identity: Rat
+    url: https://leanprover-community.github.io/mathlib4_docs/Init/Data/Rat/Basic.html
+stub: engine

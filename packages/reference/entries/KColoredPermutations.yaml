@@ -1,0 +1,13 @@
+name: KColoredPermutations
+domain: Combinatorics
+signature: KColoredPermutations(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A319027
+    url: https://oeis.org/A319027
+  - system: sage
+    identity: ColoredPermutations(k, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/colored_permutations.html
+    note: sage parameter order is (colors, size); ours is (size, colors)
+stub: carrier

@@ -1,0 +1,10 @@
+name: NumParts
+domain: Combinatorics
+signature: NumParts(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St001922
+    url: https://www.findstat.org/St001922
+    on: PlanePartition
+stub: carrier

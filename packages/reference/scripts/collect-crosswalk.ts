@@ -9,8 +9,9 @@
 //
 // Everything here is offline and mechanical; the hand-kept half of the crosswalk lives on
 // each head's own record (`references:`/`names:` in `<Head>.yaml`, rebuilt into
-// `src/crosswalk/curated-data.ts` by `collect-curated.ts`) and the catalog's half in
-// `@enumeratio/catalog`. Regenerate:
+// `src/crosswalk/curated-data.ts` by `collect-curated.ts`) and the catalog's half on the
+// same records' `catalog:` field, rebuilt into `src/crosswalk/catalog-references-data.ts`
+// by `collect-catalog-references.ts`. Regenerate:
 //
 //   vp node packages/reference/scripts/collect-crosswalk.ts
 

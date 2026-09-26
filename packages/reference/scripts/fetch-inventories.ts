@@ -12,9 +12,9 @@
 
 import { writeFileSync } from "node:fs";
 import { inflateSync } from "node:zlib";
-import { REFERENCES } from "@enumeratio/catalog/src";
 import { MAPPINGS } from "@enumeratio/oracle/src";
 import { bareName, documents, INVENTORIES, type InventorySystem } from "../src/crosswalk/inventory.ts";
+import { CATALOG_REFERENCES } from "../src/crosswalk/catalog-references-data.ts";
 import { CURATED } from "../src/crosswalk/curated-data.ts";
 import { referenceEntries } from "../src/node.ts";
 
@@ -58,7 +58,7 @@ const want = (system: string, identity: string): void => {
 for (const mapping of MAPPINGS) {
   for (const [system, call] of Object.entries(mapping.emit)) if (call) want(system, call);
 }
-for (const row of REFERENCES) want(row.system, row.identity);
+for (const row of CATALOG_REFERENCES) want(row.system, row.identity);
 const written = [
   ...Object.values(CURATED).flat(),
   ...entries.flatMap((e) => [...(e.references ?? []), ...(e.signatures ?? []).flatMap((s) => s.references ?? [])]),

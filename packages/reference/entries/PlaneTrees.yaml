@@ -1,0 +1,13 @@
+name: PlaneTrees
+domain: Combinatorics
+signature: PlaneTrees(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+    note: n (node count) = Catalan index + 1
+  - system: sage
+    identity: sage.combinat.ordered_tree.OrderedTrees(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/ordered_tree.html
+stub: carrier

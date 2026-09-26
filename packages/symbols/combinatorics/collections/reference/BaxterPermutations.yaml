@@ -19,3 +19,10 @@ seeAlso:
   - Binomial
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A001181
+    url: https://oeis.org/A001181
+  - system: sage
+    identity: BaxterPermutations(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/baxter_permutations.html

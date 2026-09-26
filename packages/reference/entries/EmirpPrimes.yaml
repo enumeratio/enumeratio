@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - PalindromicPrimes
   - CircularPrimes
+catalog:
+  - system: oeis
+    identity: A006567
+    url: https://oeis.org/A006567

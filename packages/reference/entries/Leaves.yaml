@@ -1,0 +1,14 @@
+name: Leaves
+domain: Combinatorics
+signature: Leaves(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000201
+    url: https://www.findstat.org/St000201
+    on: BinaryTree
+  - system: findstat
+    identity: St000167
+    url: https://www.findstat.org/St000167
+    on: OrderedTree
+stub: carrier

@@ -32,3 +32,29 @@ references:
     identity: SetPartition
   - system: oeis
     identity: A000110
+catalog:
+  - system: mathlib4
+    identity: "Finpartition (Finset.univ : Finset (Fin n))"
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/Partition/Finpartition.html
+  - system: oeis
+    identity: A000110
+    url: https://oeis.org/A000110
+  - system: sage
+    identity: SetPartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition.html
+  - system: sympy
+    identity: multiset_partitions
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.multiset_partitions
+    note: multiset_partitions(n) partitions the 0-indexed multiset range(n) — shift block elements +1 for our 1-indexed RGS
+  - system: wikipedia
+    identity: Partition of a set
+    url: https://en.wikipedia.org/wiki/Partition_of_a_set
+    relation: conceptual
+  - system: wolfram
+    identity: BellB
+    url: https://reference.wolfram.com/language/ref/BellB.html
+    note: cardinality(set_partitions(n)) = BellB(n); the set-partition collection whose count BellB gives, alongside the plain sequence at bell_numbers
+  - system: mathlib4
+    identity: Nat.bell
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Bell.html#Nat.bell
+    relation: aggregate

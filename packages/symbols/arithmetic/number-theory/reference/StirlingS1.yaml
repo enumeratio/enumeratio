@@ -53,3 +53,8 @@ bindings:
     arity: 2
     threadArg: 1
     note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+catalog:
+  - system: wolfram
+    identity: StirlingS1
+    url: https://reference.wolfram.com/language/ref/StirlingS1.html
+    note: WL StirlingS1 is SIGNED; stirling1 here is the UNSIGNED cycle-count c(n,k) = |StirlingS1(n,k)|

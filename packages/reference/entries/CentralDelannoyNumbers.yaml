@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - SchroederNumbers
   - PellNumbers
+catalog:
+  - system: oeis
+    identity: A001850
+    url: https://oeis.org/A001850

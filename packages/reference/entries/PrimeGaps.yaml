@@ -1,0 +1,14 @@
+name: PrimeGaps
+domain: Combinatorics
+signature: PrimeGaps(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000040
+    url: https://oeis.org/A000040
+    note: the elements themselves are the primes (each addressed by the smaller prime of its pair)
+  - system: oeis
+    identity: A001223
+    url: https://oeis.org/A001223
+    note: the gap reading g(n) = p_{n+1} − p_n carried on each element
+stub: carrier

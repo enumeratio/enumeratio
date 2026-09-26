@@ -18,3 +18,7 @@ seeAlso:
   - Binomial
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A000055
+    url: https://oeis.org/A000055

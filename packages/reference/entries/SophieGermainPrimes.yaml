@@ -17,3 +17,7 @@ seeAlso:
   - Element
   - SafePrimes
   - Primes
+catalog:
+  - system: oeis
+    identity: A005384
+    url: https://oeis.org/A005384

@@ -13,3 +13,25 @@ seeAlso:
   - SymmetricGroup
   - Subsets
   - Binomial
+catalog:
+  - system: mathlib4
+    identity: Nat.descFactorial
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Factorial/BigOperators.html
+    note: counting formula only — |arrangements(n,k)| = n.descFactorial k; the structural analog (injective length-k word) would be Function.Embedding (Fin k) (Fin n), which mathlib does not itself name as 'arrangements'
+  - system: oeis
+    identity: A000522
+    url: https://oeis.org/A000522
+    note: row sums Σ_k n!/(n-k)! = |arrangements(n)| over all k
+  - system: oeis
+    identity: A008279
+    url: https://oeis.org/A008279
+  - system: sage
+    identity: Permutations(n,k) [= Arrangements([1..n], k)]
+  - system: sympy
+    identity: variations
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.variations
+    note: variations(seq, k) — the length-k injective words (arrangements' [n,k] fiber); repetition=False (the default)
+  - system: wolfram
+    identity: FactorialPower
+    url: https://reference.wolfram.com/language/ref/FactorialPower.html
+    note: fiber_count(n,k) = P(n,k) = n!/(n-k)! = FactorialPower[n,k], the 2-argument falling-factorial form

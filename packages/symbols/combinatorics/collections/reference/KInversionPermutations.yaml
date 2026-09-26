@@ -15,3 +15,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A008302
+catalog:
+  - system: oeis
+    identity: A008302
+    url: https://oeis.org/A008302

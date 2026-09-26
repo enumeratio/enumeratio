@@ -1,0 +1,14 @@
+name: Permutahedron
+domain: Combinatorics
+signature: Permutahedron(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000670
+    url: https://oeis.org/A000670
+    note: cardinality only, borrowed from set_compositions
+  - system: sage
+    identity: sage.combinat.set_partition_ordered.OrderedSetPartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html
+    note: order-isomorphic borrow of set_compositions (ordered set partitions of [n]); the geometric permutahedron itself is sage's polytopes.permutahedron(n), a different (coordinate) reading of the same combinatorics
+stub: carrier

@@ -16,3 +16,20 @@ seeAlso:
 references:
   - system: wikipedia
     identity: Permutation#Ascents, descents, runs, exceedances
+catalog:
+  - system: findstat
+    identity: St001946
+    url: https://www.findstat.org/St001946
+    on: ParkingFunction
+  - system: findstat
+    identity: St000021
+    url: https://www.findstat.org/St000021
+    on: Permutation
+  - system: findstat
+    identity: St001427
+    url: https://www.findstat.org/St001427
+    on: SignedPermutation
+  - system: findstat
+    identity: St000157
+    url: https://www.findstat.org/St000157
+    on: StandardTableau

@@ -3,3 +3,19 @@ domain: Collections
 signature: StandardTableaux(n)
 summary: "Standard Young tableaux: fillings of a partition shape, weakly increasing along rows and columns."
 stub: carrier
+catalog:
+  - system: mathlib4
+    identity: SemistandardYoungTableau
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Young/SemistandardTableau.html
+    note: no standalone SYT type — an SSYT with content (1ⁿ) (all-distinct ⇒ strict rows)
+  - system: oeis
+    identity: A000085
+    url: https://oeis.org/A000085
+  - system: sage
+    identity: StandardTableaux(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
+  - system: wikipedia
+    identity: Young tableau
+    url: https://en.wikipedia.org/wiki/Young_tableau
+    note: the article covers both standard and semistandard tableaux under one page
+    relation: conceptual

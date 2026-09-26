@@ -18,3 +18,7 @@ seeAlso:
   - SeparablePermutations
   - Count
   - At
+catalog:
+  - system: oeis
+    identity: A111111
+    url: https://oeis.org/A111111

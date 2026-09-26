@@ -1,0 +1,10 @@
+name: NumberOfStandardTableaux
+domain: Combinatorics
+signature: NumberOfStandardTableaux(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000003
+    url: https://www.findstat.org/St000003
+    on: IntegerPartition
+stub: carrier

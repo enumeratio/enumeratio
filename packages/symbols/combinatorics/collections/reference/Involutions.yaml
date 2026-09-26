@@ -19,3 +19,15 @@ references:
     identity: PermutationInvolution
   - system: oeis
     identity: A000085
+catalog:
+  - system: oeis
+    identity: A000085
+    url: https://oeis.org/A000085
+  - system: sympy
+    identity: generate_involutions
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.generate_involutions
+    note: 0-indexed tuples, shift +1
+  - system: wikipedia
+    identity: Involution (mathematics)
+    url: https://en.wikipedia.org/wiki/Involution_(mathematics)
+    relation: conceptual

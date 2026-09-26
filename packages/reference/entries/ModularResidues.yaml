@@ -1,0 +1,12 @@
+name: ModularResidues
+domain: Combinatorics
+signature: ModularResidues(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, sage; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: ZMod n
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/ZMod/Defs.html
+  - system: sage
+    identity: IntegerModRing(n) / Zmod(n)
+    url: https://doc.sagemath.org/html/en/reference/finite_rings/sage/rings/finite_rings/integer_mod_ring.html
+stub: carrier

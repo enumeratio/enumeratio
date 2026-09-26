@@ -18,3 +18,17 @@ references:
     identity: Composition
   - system: oeis
     identity: A011782
+catalog:
+  - system: mathlib4
+    identity: Composition n
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Composition.html
+  - system: oeis
+    identity: A011782
+    url: https://oeis.org/A011782
+  - system: sage
+    identity: Compositions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/composition.html
+  - system: wikipedia
+    identity: Composition (combinatorics)
+    url: https://en.wikipedia.org/wiki/Composition_(combinatorics)
+    relation: conceptual

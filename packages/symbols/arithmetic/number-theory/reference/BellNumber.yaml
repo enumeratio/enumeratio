@@ -57,3 +57,10 @@ bindings:
     arity: 1
     threadArg: 1
     note: Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.
+catalog:
+  - system: oeis
+    identity: A000110
+    url: https://oeis.org/A000110
+  - system: wolfram
+    identity: BellB
+    url: https://reference.wolfram.com/language/ref/BellB.html
