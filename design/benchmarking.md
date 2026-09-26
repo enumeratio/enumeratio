@@ -306,6 +306,10 @@ holds:
   side runs in that same job too**, interleaved. Every report then carries a same-machine TS
   anchor, and Wolfram-vs-us is honest. Wolfram-vs-Julia is only available through their ratios
   to us, which chains two jobs, and the viewer marks it that way.
+- **Wolfram without a license in CI** runs on a maintainer's machine instead:
+  `scripts/publish-local.ts` publishes a local `ts,wolfram` run as the job `wolfram-local`,
+  so its trend compares only with earlier local runs, and each report records the machine and
+  its load, so a busy machine shows.
 - **Trends over time** compare TS runs from the nightly job only, with `tools/perf`'s drift
   rule (≥1.5× and a floor, against the trailing median of at least 5 runs), and file a rolling
   `bench drift` issue labelled `nightly-fixup`. That rule already tolerates hosted-runner
