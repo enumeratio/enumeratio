@@ -491,6 +491,17 @@ interval-arithmetic-sqrt-is-increasing-so-sqrt-1:
     in: Sqrt[Interval[List[1, 8]]]
   wolfram:
     in: Sqrt[Interval[List[1, 8]]]
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1:
+  epsil:
+    in: Sqrt(Around(4, 0.4))
+    out: Around(2, 0.1)
+  tex:
+    in: \sqrt{\mathrm{Around}(4, 0.4)}
+    out: \mathrm{Around}(2, 0.1)
+  fullform:
+    in: Sqrt[Around[4, 0.4]]
+  wolfram:
+    in: Sqrt[Around[4, 0.4]]
 sqrt-x-2-x-for-every-x:
   epsil:
     in: Sqrt(x) ^ 2

@@ -23,3 +23,25 @@ petersen-is-not-bipartite:
     in: BipartiteGraphQ[PetersenGraph[]]
   wolfram:
     in: BipartiteGraphQ[PetersenGraph[]]
+petersen-has-10-vertices:
+  epsil:
+    in: VertexCount(PetersenGraph())
+    out: "10"
+  tex:
+    in: \mathrm{VertexCount}(\mathrm{PetersenGraph}())
+    out: "10"
+  fullform:
+    in: VertexCount[PetersenGraph[]]
+  wolfram:
+    in: VertexCount[PetersenGraph[]]
+petersen-has-15-edges:
+  epsil:
+    in: EdgeCount(PetersenGraph())
+    out: "15"
+  tex:
+    in: \mathrm{EdgeCount}(\mathrm{PetersenGraph}())
+    out: "15"
+  fullform:
+    in: EdgeCount[PetersenGraph[]]
+  wolfram:
+    in: EdgeCount[PetersenGraph[]]

@@ -1,0 +1,22 @@
+name: While
+domain: Collections
+signature: While(test, body)
+summary: Evaluates an expression repeatedly while a test stays true.
+signatures:
+  - call: While(test)
+    description: Re-evaluates $test$ until it reads other than $True$.
+    library: enumeratio-collections
+  - call: While(test, body)
+    description: Evaluates $body$ each time $test$ (re-evaluated first) reads $True$; stops as soon as it doesn't.
+    library: enumeratio-collections
+details:
+  - Always returns $Nothing$, like [[Do]].
+  - Capped at 4096 iterations, past which the loop simply stops — Wolfram's own default cap, $IterationLimit, is much larger and configurable; this one is fixed.
+examples:
+  - id: count-up-to-a-limit
+    expr: [List, [Assign, n, 0], [While, [Less, n, 5], [Assign, n, [Add, n, 1]]], n]
+    expected: [List, 0, 5]
+    caption: count up to a limit
+seeAlso:
+  - Do
+  - NestWhile

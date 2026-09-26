@@ -1,0 +1,25 @@
+name: Sow
+domain: Collections
+signature: Sow(e)
+summary: Sends a value to the nearest enclosing Reap, and returns it.
+signatures:
+  - call: Sow(e)
+    description: Records $e$ (evaluated) into the nearest enclosing [[Reap]]'s untagged group, and returns $e$.
+    library: enumeratio-collections
+  - call: Sow(e, tag)
+    description: Like $Sow(e)$, but records under $tag$ instead of the untagged group.
+    library: enumeratio-collections
+details:
+  - A $Sow$ with no enclosing $Reap$ is a no-op — it still returns $e$, nothing is recorded anywhere.
+  - A $Sow$ inside a NESTED $Reap$ feeds only the innermost one; it does not also reach further out, matching Wolfram (an inner $Reap$ "consumes" what's sown inside it).
+examples:
+  - id: sow-feeds-the-nearest-reap
+    expr: [Reap, [Sow, 5]]
+    expected: [List, 5, [List, [List, 5]]]
+    caption: Sow feeds the nearest Reap
+  - id: sow-outside-any-reap-is-a-no-op
+    expr: [Sow, 7]
+    expected: 7
+    caption: Sow outside any Reap is a no-op that still returns its value
+seeAlso:
+  - Reap

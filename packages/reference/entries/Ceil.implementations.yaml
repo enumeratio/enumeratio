@@ -49,6 +49,25 @@ ceil-3p2:
   rust:
     in: ceil(x(3.2))
     out: "4.0"
+ceil-3p7:
+  epsil:
+    in: Ceil(3.7)
+    out: "4"
+  tex:
+    in: \lceil3.7\rceil
+    out: "4"
+  fullform:
+    in: Ceiling[3.7]
+  wolfram:
+    in: Ceiling[3.7]
+  sympy:
+    in: ceiling(3.7)
+  mpmath:
+    in: ceil(3.7)
+  sage:
+    in: ceil(3.7)
+  rust:
+    in: ceil(x(3.7))
 integers-pass-through-unchanged:
   epsil:
     in: Ceil(5)

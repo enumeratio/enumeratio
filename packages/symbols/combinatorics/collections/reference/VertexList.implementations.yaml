@@ -9,3 +9,14 @@ vertices-of-a-path:
     in: VertexList[Graph[List[UndirectedEdge[3, 1], UndirectedEdge[1, 2]]]]
   wolfram:
     in: VertexList[Graph[List[UndirectedEdge[3, 1], UndirectedEdge[1, 2]]]]
+declared-vertices-come-before-edge-endpoints:
+  epsil:
+    in: VertexList(Graph([5, 1], [UndirectedEdge(1, 2)]))
+    out: "[5, 1, 2]"
+  tex:
+    in: \mathrm{VertexList}(\mathrm{Graph}(\bigl\lbrack5, 1\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))
+    out: \bigl\lbrack5, 1, 2\bigr\rbrack
+  fullform:
+    in: VertexList[Graph[List[5, 1], List[UndirectedEdge[1, 2]]]]
+  wolfram:
+    in: VertexList[Graph[List[5, 1], List[UndirectedEdge[1, 2]]]]

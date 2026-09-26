@@ -1,0 +1,30 @@
+name: Reap
+domain: Collections
+signature: Reap(expr)
+summary: Evaluates an expression together with everything Sow recorded during it.
+signatures:
+  - call: Reap(expr)
+    description: "$\\{value, \\{\\{sown, ...\\}, ...\\}\\}$: $expr$'s value, and one list per distinct tag [[Sow]] used while evaluating it (untagged sows share one group), in first-appearance order. $\\{value, \\{\\}\\}$ if nothing was sown."
+    library: enumeratio-collections
+  - call: Reap(expr, tag)
+    description: Like $Reap(expr)$, but the second element holds only the group whose tag matches $tag$ exactly (or several groups, one per entry, for $Reap(expr, \{tag1, tag2, ...\})$) — a requested tag nothing was sown under comes back as $\{\}$.
+    library: enumeratio-collections
+details:
+  - Only exact tag equality is matched here, not Wolfram's fuller pattern-matching form of the second argument.
+  - "Sequencing several $Sow$s in one $expr$: use $[Last, [List, ...]]$ (Wolfram's $a; b; c$), not compute-engine's own $Block$ — see [[Sow]]'s examples and control.ts's module doc for why."
+examples:
+  - id: collect-everything-sown
+    expr: [Reap, [Last, [List, [Sow, 1], [Sow, 2], 3]]]
+    expected: [List, 3, [List, [List, 1, 2]]]
+    caption: collect everything sown, untagged sows sharing one group
+  - id: nothing-sown-gives-an-empty-group-list
+    expr: [Reap, 5]
+    expected: [List, 5, [List]]
+    caption: nothing sown gives an empty group list
+  - id: reap-only-a-matching-tag
+    expr: [Reap, [Last, [List, [Sow, 1, a], [Sow, 2, b], [Sow, 3, a], 0]], a]
+    expected: [List, 0, [List, [List, 1, 3]]]
+    caption: Reap(expr, tag) collects only the matching tag's group
+    category: Scope
+seeAlso:
+  - Sow

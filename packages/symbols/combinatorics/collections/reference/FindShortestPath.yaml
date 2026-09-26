@@ -22,6 +22,17 @@ examples:
       ]
     expected: [List]
     caption: Directed edges block the way back
+  - id: a-path-crossing-both-directed-and-undirected
+    expr:
+      [
+        FindShortestPath,
+        [Graph, [List, 1, 2, 3, 4], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]],
+        1,
+        4,
+      ]
+    expected: [List, 1, 2, 3, 4]
+    role: test
+    caption: A shortest path that crosses both directed and undirected edges
 seeAlso:
   - GraphDistance
   - Graph

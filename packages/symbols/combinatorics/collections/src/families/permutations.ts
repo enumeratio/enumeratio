@@ -13,7 +13,7 @@ import {
   KSubsetRank,
   KSubsetUnrank,
 } from "./kernels-extra.ts";
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
@@ -23,7 +23,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -651,7 +651,7 @@ function kInversionRank(perm: number[], n: number): number {
   return rank;
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   ints(
     "EvenPermutations",
     1,

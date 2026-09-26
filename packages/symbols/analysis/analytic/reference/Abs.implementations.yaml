@@ -410,6 +410,17 @@ an-interval-maps-to-the-interval-of-absolute:
     in: Abs[Interval[List[-3, 5]]]
   wolfram:
     in: Abs[Interval[List[-3, 5]]]
+an-interval-straddling-0-maps-to-0-the-larger:
+  epsil:
+    in: Abs(Interval(-3, 2))
+    out: Interval(0, 3)
+  tex:
+    in: \vert\mathrm{Interval}(-3, 2)\vert
+    out: \mathrm{Interval}(0, 3)
+  fullform:
+    in: Abs[Interval[List[-3, 2]]]
+  wolfram:
+    in: Abs[Interval[List[-3, 2]]]
 decides-the-sign-of-an-exact-numeric-expression:
   epsil:
     in: Abs(Sqrt(2) - 2)

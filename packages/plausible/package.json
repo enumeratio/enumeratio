@@ -1,0 +1,21 @@
+{
+  "name": "@enumeratio/plausible",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Seeded, size-aware generators for Plausible, the property sampler over our value spaces (design/plausible.md). A leaf with no workspace dependencies, so collections, reference and bench can all import it.",
+  "license": "WTFPL",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

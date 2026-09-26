@@ -54,6 +54,11 @@ examples:
     expected: [Multiply, [Rational, 5, 6], Pi]
     category: Scope
     caption: $\operatorname{arccot}(-\sqrt{3}) = \tfrac{5\pi}{6}$ — past $\pi/2$, not mirrored through 0, in compute-engine's own $(0,\pi)$ range.
+  - id: a-generic-rational-with-no-exact-fold-stays
+    expr: [Arccot, 2]
+    expected: [Arccot, 2]
+    category: Possible issues
+    caption: A generic rational with no exact [[Arctan]] fold stays symbolic
 seeAlso:
   - Cot
   - Arctan

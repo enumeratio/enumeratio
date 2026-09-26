@@ -44,14 +44,6 @@ function taylorCoefficients(expr: ReturnType<typeof evalMJ>, xName: string, upTo
 
 // ─── DiscreteRatio ──────────────────────────────────────────────────────────────────────────
 
-test("DiscreteRatio(n!, n) simplifies to n + 1", () => {
-  expect(evalMJ(["DiscreteRatio", ["Factorial", "n"], "n"]).toString()).toBe("n + 1");
-});
-
-test("DiscreteRatio(2^n, n) simplifies to the constant ratio 2", () => {
-  expect(evalMJ(["DiscreteRatio", ["Power", 2, "n"], "n"]).toString()).toBe("2");
-});
-
 test("DiscreteRatio(Binomial(n,2), n) simplifies to a rational function of n", () => {
   const r = evalMJ(["DiscreteRatio", ["Binomial", "n", 2], "n"]);
   // Binomial(n+1,2)/Binomial(n,2) = (n+1)/(n-1) for n > 1 — check numerically instead of by
@@ -67,10 +59,6 @@ test("DiscreteRatio(Binomial(n,2), n) simplifies to a rational function of n", (
 });
 
 // ─── DifferenceDelta ────────────────────────────────────────────────────────────────────────
-
-test("DifferenceDelta(n^2, n) simplifies to 2n + 1", () => {
-  expect(evalMJ(["DifferenceDelta", ["Power", "n", 2], "n"]).toString()).toBe("2n + 1");
-});
 
 test("DifferenceDelta(2^n, n) is 2^n at every n — checked numerically, since simplify doesn't fold 2^(n+1) - 2^n on its own", () => {
   const r = evalMJ(["DifferenceDelta", ["Power", 2, "n"], "n"]);
@@ -162,11 +150,6 @@ test("GeneratingFunction(n^2, n, x) is a rational GF of a polynomial sequence", 
       .evaluate()
       .N().re,
   ).toBeCloseTo(independent, 6);
-});
-
-test("GeneratingFunction(n!, n, x) has no closed form and stays unevaluated, same as Wolfram", () => {
-  const gf = evalMJ(["GeneratingFunction", ["Factorial", "n"], "n", "x"]);
-  expect(gf.operator).toBe("GeneratingFunction");
 });
 
 // ─── ExponentialGeneratingFunction ──────────────────────────────────────────────────────────

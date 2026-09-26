@@ -50,6 +50,12 @@ examples:
     expected: [Divide, [Multiply, n, [Subtract, n, 1]], 2]
     category: Scope
     caption: $\binom n2 = \frac{n(n-1)}{2}$
+  - role: test
+    id: a-generic-cos-argument-passes-through-unchanged
+    expr: [FunctionExpand, [Cos, theta]]
+    expected: [Cos, theta]
+    category: Possible issues
+    caption: A generic [[Cos]] argument outside the special-angle table passes through unchanged
 seeAlso:
   - FullSimplify
   - DirichletEta
