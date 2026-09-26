@@ -611,3 +611,31 @@ upstream -- and, once there, to delete here.
   against mpmath. `EULER_GAMMA` is computed, with no stated error, so Barnes G's kernel takes
   γ = γ₀(1) from our certified Stieltjes kernel instead. The ask: a stated bound on each
   constant BigDecimal offers.
+
+## 10. The upstream folder
+
+What we have offered compute-engine lives apart from what is ours, so that landing upstream
+is a deletion, not an excavation. The model is Mathlib's `ForMathlib/`: code written in our
+repo, shaped for theirs.
+
+- **`upstream/compute-engine/`** is a workspace package, `@enumeratio/for-compute-engine`.
+  It is a leaf: it depends on compute-engine and `@enumeratio/boxed`, nothing else of ours.
+- **One folder per candidate**, `src/<slug>/`, holding everything the candidate needs:
+  the kernel, the declaration, its tests. Its `patch.ts` names the issue and PR and says
+  where the code goes in compute-engine.
+- **A patch knows when it has landed.** `fixed(ce)` asks the engine whether it already
+  answers correctly (the issue's own repro, as a probe). `applyPatches(ce)` applies only
+  the patches that are not fixed, and applying twice is a no-op, so any package may call
+  it from its own `declare`.
+- **A test turns a landing into a to-do.** It asserts every patch is still unfixed on the
+  compute-engine we pin. When an upgrade fixes one, the test fails naming the folder to
+  delete.
+- **Packages import from it, never the other way.** `residues` and `analytic` call
+  `applyPatches` and import the kernels they share with a patch. When a patch lands, a
+  kernel still used elsewhere moves back into its package, or the package calls the
+  compute-engine head instead.
+- **Upstream erratum, no code of ours**, as with a corpus entry: no folder. The workaround
+  that points at it links the issue.
+
+The pull requests themselves are built in a compute-engine checkout beside this repo,
+`~/Playground/@enumeratio/compute-engine`, with the `enumeratio` fork as its push remote.

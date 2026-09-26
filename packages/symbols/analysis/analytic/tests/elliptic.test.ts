@@ -4,13 +4,17 @@ import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // IncompleteEllipticF, IncompleteEllipticE — Fungrim's names for compute-engine's native
-// two-argument EllipticF(φ, m) / EllipticE(φ, m) — plus the in-place precision fix for
-// EllipticE(m) at complex modulus (design/upstreaming.md §8). IncompleteEllipticPi(n, φ, m)
-// is a from-scratch Carlson R_F/R_J evaluator (native EllipticPi's own 3-argument
-// incomplete form NaNs at some complex φ — see the direct test below). Numeric evaluation
-// is held to the oracle values in elliptic.golden.json, gathered from mpmath
-// (ellipf/ellipe/ellippi) and a Wolfram kernel by scripts/collect-elliptic-goldens.ts
-// (neither is needed to run this file).
+// two-argument EllipticF(φ, m) / EllipticE(φ, m). IncompleteEllipticPi(n, φ, m) is a
+// from-scratch Carlson R_F/R_J evaluator (native EllipticPi's own 3-argument incomplete
+// form NaNs at some complex φ — see the direct test below). Numeric evaluation is held to
+// the oracle values in elliptic.golden.json, gathered from mpmath (ellipf/ellipe/ellippi)
+// and a Wolfram kernel by scripts/collect-elliptic-goldens.ts (neither is needed to run
+// this file).
+//
+// EllipticE(m)'s own complex-modulus precision fix (design/upstreaming.md §8) moved to
+// @enumeratio/for-compute-engine's elliptic-e-complex patch, offered upstream as
+// cortex-js/compute-engine#346/#348 — declareElliptic below applies it in the same spot
+// it used to run in.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -53,10 +57,10 @@ for (const [head, cases] of byHead) {
 }
 
 test("the golden file covers every head", () => {
+  // EllipticE's own complex-modulus cases moved to @enumeratio/for-compute-engine's
+  // elliptic-e-complex patch tests, with the patch (design/upstreaming.md §10).
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(
-    ["EllipticE", "IncompleteEllipticE", "IncompleteEllipticF", "IncompleteEllipticPi"].sort(),
-  );
+  expect([...heads].sort()).toEqual(["IncompleteEllipticE", "IncompleteEllipticF", "IncompleteEllipticPi"].sort());
 });
 
 // --- Direct checks not tied to the golden grid --------------------------------------
@@ -103,20 +107,6 @@ test("quasi-periodicity: E(φ+2π, m) = 4·E(m) + E(φ, m), complex m included",
   const complete = ce.box(["EllipticE", m]).N();
   expect(shifted.re).toBeCloseTo(4 * complete.re + base.re, 10);
   expect(shifted.im).toBeCloseTo(4 * complete.im + base.im, 10);
-});
-
-test("EllipticE(m) at real m is untouched by the patch — matches native EllipticK's own agreement", () => {
-  // Real modulus was already exact; the patch only reroutes the complex-modulus branch,
-  // so this should be identical to calling the native evaluator directly (no detour).
-  for (const m of [0.3, 0.7, -0.5]) {
-    const viaPatched = ce.box(["EllipticE", m]).N().re;
-    const viaIncomplete = ce.box(["EllipticE", ["Divide", "Pi", 2], m]).N().re;
-    expect(viaPatched).toBeCloseTo(viaIncomplete, 13);
-  }
-});
-
-test("EllipticE(m) stays symbolic under plain evaluate at a symbolic or exact argument", () => {
-  expect(ce.box(["EllipticE", "x"]).evaluate().json).toEqual(["EllipticE", "x"]);
 });
 
 test("IncompleteEllipticPi stays symbolic under plain evaluate; a float argument evaluates numerically", () => {
