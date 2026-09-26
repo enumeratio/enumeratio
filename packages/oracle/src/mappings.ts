@@ -111,7 +111,8 @@ export const MAPPINGS: readonly Mapping[] = [
     emit: {
       // $1 in parens: a negative base (or any expression looser than **/^) would otherwise
       // bind under unary minus -- `-1**2` is `-(1**2)` in Python, not `(-1)**2` (#265).
-      sympy: "(($1)**$2)",
+      // SymPy's S() also keeps it exact: a bare int `2**-1` is the float 0.5.
+      sympy: "(S($1)**$2)",
       mpmath: "(($1)**$2)",
       sage: "(($1)^$2)",
       oscar: "(big($1)^$2)",

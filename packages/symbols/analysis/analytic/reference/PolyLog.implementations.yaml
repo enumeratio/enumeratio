@@ -107,7 +107,7 @@ li-2-1-2-pi-2-12-ln-2-2-2:
       in: \text{Li}_2(0.5)+0.5 \log ^2(2)=\frac{\pi ^2}{12}
       out: \text{True}
   sympy:
-    in: enumeratio_equal((polylog(2, 0.5) + (0.5 * ((log(2))**2))), (S(((pi)**2)) / 12))
+    in: enumeratio_equal((polylog(2, 0.5) + (0.5 * (S(log(2))**2))), (S((S(pi)**2)) / 12))
     out: True
   sage:
     in: bool((polylog(2, 0.5) + (0.5 * ((log(2))^2))) == (((pi)^2) / 12))
