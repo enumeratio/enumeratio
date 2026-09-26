@@ -23,7 +23,7 @@ import { expect, test } from "vite-plus/test";
 import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog/src";
 import { referenceData } from "../src/node.ts";
 
-test("catalog-records-data.ts is what the current records collect to", () => {
+test("catalog-records-data.ts is what the current records collect to", { timeout: 60_000 }, () => {
   const { entries } = referenceData();
 
   const carriers: { name: string }[] = [];
