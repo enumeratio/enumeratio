@@ -49,6 +49,12 @@ release. Add a tool name to select part of the graph. For example, run
 - Package names have not all caught up; do not rename them in passing — see
   `design/component-naming.md` for how renames wait.
 
+## Upstream candidates
+
+- A head or fix compute-engine would plausibly take (Wolfram or mpmath has it, or it fixes or
+  widens a native head) is written in `upstream/compute-engine/` as a patch, not in a symbol
+  package, even before anything is proposed upstream. See `design/upstreaming.md` §10.
+
 ## Reference entries
 
 - Each head's entry is `reference/<Head>.yaml` in the package that declares it

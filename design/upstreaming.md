@@ -614,15 +614,20 @@ upstream -- and, once there, to delete here.
 
 ## 10. The upstream folder
 
-What we have offered compute-engine lives apart from what is ours, so that landing upstream
-is a deletion, not an excavation. The model is Mathlib's `ForMathlib/`: code written in our
+What we have offered compute-engine, or expect to, lives apart from what is ours, so that
+landing upstream is a deletion, not an excavation, and a pull request is a copy of one folder. The model is Mathlib's `ForMathlib/`: code written in our
 repo, shaped for theirs.
 
 - **`upstream/compute-engine/`** is a workspace package, `@enumeratio/for-compute-engine`.
   It is a leaf: it depends on compute-engine and `@enumeratio/boxed`, nothing else of ours.
-- **One folder per candidate**, `src/<slug>/`, holding everything the candidate needs:
-  the kernel, the declaration, its tests. Its `patch.ts` names the issue and PR and says
-  where the code goes in compute-engine.
+- **Candidates, not just offers.** Anything compute-engine would plausibly take (a head
+  Wolfram or mpmath already has, a fix or widening of a native head: Tiers 1 and 2 of §4)
+  is written here from the start, whether or not an issue exists yet. What is only ours
+  (Tier 4) stays in its package. The folder is the list of what should eventually go.
+- **One folder per candidate**, `src/<slug>/`, sized like the pull request it would become:
+  the kernel, the declaration, its tests, and the reference entries of the heads it
+  declares. Its `patch.ts` says where the code goes in compute-engine, and names the issue
+  and PR once there are any. Kernels several candidates share live in `src/shared/`.
 - **A patch knows when it has landed.** `fixed(ce)` asks the engine whether it already
   answers correctly (the issue's own repro, as a probe). `applyPatches(ce)` applies only
   the patches that are not fixed, and applying twice is a no-op, so any package may call
