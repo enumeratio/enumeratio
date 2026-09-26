@@ -1,0 +1,48 @@
+- id: five-six-seven
+  expr: [RisingFactorial, 5, 3]
+  expected: 210
+  caption: 5 × 6 × 7
+- id: from-1-is-the-factorial
+  expr: [RisingFactorial, 1, 5]
+  expected: 120
+  caption: $(1)_5 = 5!$
+- id: a-symbolic-base
+  expr: [RisingFactorial, a, 3]
+  expected: [Multiply, a, [Add, a, 1], [Add, a, 2]]
+  category: Scope
+  caption: A symbolic base with an integer order expands to the product
+- id: a-rational-base
+  expr: [RisingFactorial, [Rational, 1, 2], 3]
+  expected: [Rational, 15, 8]
+  category: Scope
+  caption: 'A rational base: $\tfrac12 \cdot \tfrac32 \cdot \tfrac52$'
+- id: a-symbolic-order-is-pochhammer
+  expr: [RisingFactorial, a, n]
+  expected: [Pochhammer, a, n]
+  category: Scope
+  caption: A symbolic order comes back as [[Pochhammer]]
+- id: complex-base-and-order
+  expr: [N, [RisingFactorial, [Complex, 2, 5], [Complex, 3, 2]]]
+  expected: [Complex, 20.647407894772527, 24.04735671023272]
+  category: Scope
+  caption: A complex base and order, through $\Gamma(a+n)/\Gamma(a)$, where native [[Pochhammer]] gives NaN
+- id: agrees-with-pochhammer
+  expr: [Equal, [RisingFactorial, 4, 3], [Pochhammer, 4, 3]]
+  expected: True
+  category: Properties
+  caption: The same function as [[Pochhammer]]
+- id: negative-order
+  expr: [RisingFactorial, 5, -2]
+  expected: [Rational, 1, 12]
+  category: Properties
+  caption: 'A negative order gives the reciprocal: $(5)_{-2} = \frac{1}{4 \cdot 3}$'
+- id: a-zero-factor
+  expr: [RisingFactorial, -3, 4]
+  expected: 0
+  category: Possible issues
+  caption: "A non-positive integer base with $|a| < n$ picks up a zero factor: $(-3)(-2)(-1)(0)$"
+- id: a-pole-of-gamma-a
+  expr: [N, [RisingFactorial, -2, [Complex, 1, 1]]]
+  expected: 0
+  category: Possible issues
+  caption: At a pole of $\Gamma(a)$ with a non-integer order, $1/\Gamma(a) = 0$ makes the value 0

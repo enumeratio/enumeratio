@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1440, disagree 69, inconclusive 0, error 3
+## wolfram — agree 1470, disagree 69, inconclusive 0, error 3
 
 | example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
 | ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -185,8 +185,8 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 | example                                                  | kind           | ours                                                | theirs                                                                                |
 | -------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `Cos/to-1-significant-digit`                             | unclassified   | `0.5`                                               | `0.540302305868139717400936607443`                                                    |
-| `Exp/to-1-significant-digit`                             | unclassified   | `3`                                                 | `2.71828182845904523536028747135`                                                     |
+| `Cos/to-1-significant-digit`                             | precision      | `0.5`                                               | `0.540302305868139717400936607443`                                                    |
+| `Exp/to-1-significant-digit`                             | precision      | `3`                                                 | `2.71828182845904523536028747135`                                                     |
 | `HurwitzZeta/pole-at-s-1-for-every-a`                    | undefined-form | `ComplexInfinity`                                   | `+inf`                                                                                |
 | `HurwitzZeta/re-s-0-a-0-is-indeterminate`                | convention     | `NaN`                                               | `(1.00330022368532410287421711421 + 0.418155449141321676689274239843j)`               |
 | `HurwitzZeta/re-s-negative-a-drops-the-term-cleanly`     | domain         | `{"re":-4.632252692594817,"im":-17.64247080748051}` | `(nan + nanj)`                                                                        |
@@ -197,7 +197,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `N/a-list-number-by-number`                              | precision      | `[3.1416, 2.7183, 1.4142]`                          | `[<pi: 3.14159~>, <e = exp(1): 2.71828~>, mpf('1.41421356237309504880168872420977')]` |
 | `N/an-exact-tie-rounds-to-the-even-digit-0-125`          | precision      | `0.12`                                              | `0.125`                                                                               |
 | `N/and-0-375-to-0-38`                                    | precision      | `0.38`                                              | `0.375`                                                                               |
-| `N/n-pi-1-digit`                                         | unclassified   | `3`                                                 | `3.14159265358979323846264338328`                                                     |
+| `N/n-pi-1-digit`                                         | precision      | `3`                                                 | `3.14159265358979323846264338328`                                                     |
 | `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`   | convention     | `2.91666666666666666667`                            | `-3.08333333333333333333333333333`                                                    |
 | `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`           | convention     | `16.4143983221171599978`                            | `0.41439832211715999779816713058`                                                     |
 | `Zeta/zeta-complex-argument-stays-symbolic-until-n`      | unevaluated    | `["Zeta",["Complex",2,1]]`                          | `(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)`               |

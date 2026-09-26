@@ -1,7 +1,0 @@
-name: ChebyshevU
-domain: Wolfram
-signature: ChebyshevU(...)
-summary: Wolfram's own ChebyshevU, mapped through for the transpiler and the oracle but not yet written up here.
-names:
-  wolframIdentity: true
-stub: carrier

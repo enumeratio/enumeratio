@@ -1,0 +1,57 @@
+- id: the-quadratic
+  expr: [ChebyshevU, 2, x]
+  expected: [Add, [Multiply, 4, [Power, x, 2]], -1]
+  caption: $U_2(x) = 4x^2 - 1$
+- id: the-cubic
+  expr: [ChebyshevU, 3, x]
+  expected: [Add, [Multiply, 8, [Power, x, 3]], [Multiply, -4, x]]
+  caption: $U_3(x) = 8x^3 - 4x$
+- id: at-a-real
+  expr: [ChebyshevU, 5, 0.7]
+  expected: -1.39776
+  caption: At a floating-point $x$
+- id: at-a-rational
+  expr: [ChebyshevU, 3, [Rational, 1, 2]]
+  expected: -1
+  category: Scope
+  caption: At a rational $x$ the value is exact
+- id: at-a-complex-argument
+  expr: [ChebyshevU, 4, [Complex, 2, 3]]
+  expected: [Complex, -1843, -2064]
+  category: Scope
+  caption: At a Gaussian integer
+- id: a-symbolic-order-stays-unevaluated
+  expr: [ChebyshevU, n, x]
+  expected: [ChebyshevU, n, x]
+  category: Scope
+  caption: A symbolic order stays unevaluated
+- id: at-1
+  expr: [ChebyshevU, 5, 1]
+  expected: 6
+  category: Properties
+  caption: $U_n(1) = n + 1$
+- id: at-minus-1
+  expr: [ChebyshevU, 5, -1]
+  expected: -6
+  category: Properties
+  caption: $U_n(-1) = (-1)^n (n + 1)$
+- id: recurrence
+  expr:
+    [
+      Subtract,
+      [ChebyshevU, 4, [Rational, 1, 3]],
+      [Subtract, [Multiply, [Rational, 2, 3], [ChebyshevU, 3, [Rational, 1, 3]]], [ChebyshevU, 2, [Rational, 1, 3]]],
+    ]
+  expected: 0
+  category: Properties
+  caption: $U_{n+1} = 2x\,U_n - U_{n-1}$, here at $x = \tfrac13$
+- id: order-minus-1
+  expr: [ChebyshevU, -1, x]
+  expected: 0
+  category: Properties
+  caption: $U_{-1} = 0$
+- id: negative-order
+  expr: [ChebyshevU, -5, x]
+  expected: [Add, [Multiply, -8, [Power, x, 3]], [Multiply, 4, x]]
+  category: Properties
+  caption: "Below that a negative order folds: $U_{-n} = -U_{n-2}$"

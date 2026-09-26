@@ -219,6 +219,22 @@
       "disagree": 0
     }
   ],
+  "ChebyshevT": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 9,
+      "disagree": 0
+    }
+  ],
+  "ChebyshevU": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 6,
+      "disagree": 0
+    }
+  ],
   "ChineseRemainder": [
     {
       "system": "wolfram",
@@ -783,6 +799,14 @@
       "disagree": 0
     }
   ],
+  "LegendrePolynomial": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 7,
+      "disagree": 0
+    }
+  ],
   "LegendreSymbol": [
     {
       "system": "wolfram",
@@ -1252,6 +1276,14 @@
       "system": "sage",
       "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
       "agree": 3,
+      "disagree": 0
+    }
+  ],
+  "RisingFactorial": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 8,
       "disagree": 0
     }
   ],

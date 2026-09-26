@@ -1,0 +1,62 @@
+- id: the-quadratic
+  expr: [LegendrePolynomial, 2, x]
+  expected: [Add, [Multiply, [Rational, 3, 2], [Power, x, 2]], [Rational, -1, 2]]
+  caption: $P_2(x) = \tfrac12(3x^2 - 1)$
+- id: the-cubic
+  expr: [LegendrePolynomial, 3, x]
+  expected: [Add, [Multiply, [Rational, 5, 2], [Power, x, 3]], [Multiply, [Rational, -3, 2], x]]
+  caption: $P_3(x) = \tfrac12(5x^3 - 3x)$
+- id: the-quartic
+  expr: [LegendrePolynomial, 4, x]
+  expected:
+    [Add, [Multiply, [Rational, 35, 8], [Power, x, 4]], [Multiply, [Rational, -15, 4], [Power, x, 2]], [Rational, 3, 8]]
+  caption: $P_4(x) = \tfrac18(35x^4 - 30x^2 + 3)$
+- id: at-a-real
+  expr: [LegendrePolynomial, 5, 0.7]
+  expected: -0.3651987499999999
+  caption: At a floating-point $x$
+- id: at-a-rational
+  expr: [LegendrePolynomial, 3, [Rational, 1, 2]]
+  expected: [Rational, -7, 16]
+  category: Scope
+  caption: At a rational $x$ the value is an exact rational
+- id: at-a-complex-argument
+  expr: [LegendrePolynomial, 3, [Complex, 2, 3]]
+  expected: [Complex, -118, 18]
+  category: Scope
+  caption: At a Gaussian integer
+- id: a-symbolic-order-stays-unevaluated
+  expr: [LegendrePolynomial, n, x]
+  expected: [LegendrePolynomial, n, x]
+  category: Scope
+  caption: A symbolic order stays unevaluated
+- id: at-1
+  expr: [LegendrePolynomial, 6, 1]
+  expected: 1
+  category: Properties
+  caption: $P_n(1) = 1$
+- id: at-minus-1
+  expr: [LegendrePolynomial, 5, -1]
+  expected: -1
+  category: Properties
+  caption: $P_n(-1) = (-1)^n$
+- id: at-0
+  expr: [LegendrePolynomial, 4, 0]
+  expected: [Rational, 3, 8]
+  category: Properties
+  caption: $P_{2m}(0) = (-1)^m \binom{2m}{m}/4^m$, here $\binom42/16$
+- id: bonnet-recurrence
+  expr:
+    [
+      Equal,
+      [Multiply, 4, [LegendrePolynomial, 4, 3]],
+      [Subtract, [Multiply, 7, 3, [LegendrePolynomial, 3, 3]], [Multiply, 3, [LegendrePolynomial, 2, 3]]],
+    ]
+  expected: True
+  category: Properties
+  caption: Bonnet's recurrence $(n+1)P_{n+1} = (2n+1)xP_n - nP_{n-1}$, at $n = 3$, $x = 3$
+- id: negative-order
+  expr: [LegendrePolynomial, -3, x]
+  expected: [Add, [Multiply, [Rational, 3, 2], [Power, x, 2]], [Rational, -1, 2]]
+  category: Properties
+  caption: "A negative order folds: $P_{-n} = P_{n-1}$"

@@ -1,0 +1,178 @@
+five-six-seven:
+  epsil:
+    in: RisingFactorial(5, 3)
+    out: "210"
+  tex:
+    in: \mathrm{RisingFactorial}(5, 3)
+    out: "210"
+  traditional:
+    in: 5^{\overline{3}}
+    out: "210"
+  fullform:
+    in: Pochhammer[5, 3]
+    back: [Pochhammer, 5, 3]
+  wolfram:
+    in: Pochhammer[5, 3]
+    out: "210"
+    tex:
+      in: (5)_3
+      out: "210"
+from-1-is-the-factorial:
+  epsil:
+    in: RisingFactorial(1, 5)
+    out: "120"
+  tex:
+    in: \mathrm{RisingFactorial}(1, 5)
+    out: "120"
+  traditional:
+    in: 1^{\overline{5}}
+    out: "120"
+  fullform:
+    in: Pochhammer[1, 5]
+    back: [Pochhammer, 1, 5]
+  wolfram:
+    in: Pochhammer[1, 5]
+    out: "120"
+    tex:
+      in: (1)_5
+      out: "120"
+a-symbolic-base:
+  epsil:
+    in: RisingFactorial(a, 3)
+    out: a * (a + 1) * (a + 2)
+  tex:
+    in: \mathrm{RisingFactorial}(a, 3)
+    out: a\times(a+1)(a+2)
+  traditional:
+    in: a^{\overline{3}}
+    out: a\times(a+1)(a+2)
+  fullform:
+    in: Pochhammer[a, 3]
+    back: [Pochhammer, a, 3]
+a-rational-base:
+  epsil:
+    in: RisingFactorial(1 / 2, 3)
+    out: 15 / 8
+  tex:
+    in: \mathrm{RisingFactorial}(\frac{1}{2}, 3)
+    out: \frac{15}{8}
+  traditional:
+    in: \frac{1}{2}^{\overline{3}}
+    out: \frac{15}{8}
+  fullform:
+    in: Pochhammer[Rational[1, 2], 3]
+    back: [Pochhammer, [Rational, 1, 2], 3]
+  wolfram:
+    in: Pochhammer[Rational[1, 2], 3]
+    out: 15/8
+    tex:
+      in: \left(\frac{1}{2}\right)_3
+      out: \frac{15}{8}
+a-symbolic-order-is-pochhammer:
+  epsil:
+    in: RisingFactorial(a, n)
+    out: Pochhammer(a, n)
+  tex:
+    in: \mathrm{RisingFactorial}(a, n)
+    out: \mathrm{Pochhammer}(a, n)
+  traditional:
+    in: a^{\overline{n}}
+    out: \left(a\right)_{n}
+  fullform:
+    in: Pochhammer[a, n]
+    back: [Pochhammer, a, n]
+complex-base-and-order:
+  epsil:
+    in: N(RisingFactorial(2 + 5i, 3 + 2i))
+    out: 20.647_407_894_772_527 + 24.047_356_710_232_72i
+  tex:
+    in: N(\mathrm{RisingFactorial}(2+5i, 3+2i))
+    out: 20.647\,407\,894\,772\,527+24.047\,356\,710\,232\,72i
+  traditional:
+    in: N(2+5i^{\overline{3+2i}})
+    out: 20.647\,407\,894\,772\,527+24.047\,356\,710\,232\,72i
+  fullform:
+    in: N[Pochhammer[Complex[2, 5], Complex[3, 2]]]
+    back: [N, [Pochhammer, [Complex, 2, 5], [Complex, 3, 2]]]
+  wolfram:
+    in: N[Pochhammer[Complex[2, 5], Complex[3, 2]]]
+    out: 20.6474078947724 + 24.047356710232826*I
+    tex:
+      in: N\left[(2+5 i)_{3+2 i}\right]
+      out: 20.6474\, +24.0474 i
+agrees-with-pochhammer:
+  epsil:
+    in: RisingFactorial(4, 3) == Pochhammer(4, 3)
+    out: True
+  tex:
+    in: \mathrm{RisingFactorial}(4, 3)=\mathrm{Pochhammer}(4, 3)
+    out: \top
+  traditional:
+    in: 4^{\overline{3}}=\left(4\right)_{3}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Pochhammer[4, 3], Pochhammer[4, 3]]
+    back: [Equal, [Pochhammer, 4, 3], [Pochhammer, 4, 3]]
+  wolfram:
+    in: (Pochhammer[4, 3] == Pochhammer[4, 3])
+    out: True
+    tex:
+      in: (4)_3=(4)_3
+      out: \text{True}
+negative-order:
+  epsil:
+    in: RisingFactorial(5, -2)
+    out: 1 / 12
+  tex:
+    in: \mathrm{RisingFactorial}(5, -2)
+    out: \frac{1}{12}
+  traditional:
+    in: 5^{\overline{-2}}
+    out: \frac{1}{12}
+  fullform:
+    in: Pochhammer[5, -2]
+    back: [Pochhammer, 5, -2]
+  wolfram:
+    in: Pochhammer[5, -2]
+    out: 1/12
+    tex:
+      in: (5)_{-2}
+      out: \frac{1}{12}
+a-zero-factor:
+  epsil:
+    in: RisingFactorial(-3, 4)
+    out: "0"
+  tex:
+    in: \mathrm{RisingFactorial}(-3, 4)
+    out: "0"
+  traditional:
+    in: -3^{\overline{4}}
+    out: "0"
+  fullform:
+    in: Pochhammer[-3, 4]
+    back: [Pochhammer, -3, 4]
+  wolfram:
+    in: Pochhammer[-3, 4]
+    out: "0"
+    tex:
+      in: (-3)_4
+      out: "0"
+a-pole-of-gamma-a:
+  epsil:
+    in: N(RisingFactorial(-2, 1 + i))
+    out: "0"
+  tex:
+    in: N(\mathrm{RisingFactorial}(-2, 1+i))
+    out: "0"
+  traditional:
+    in: N(-2^{\overline{1+i}})
+    out: "0"
+  fullform:
+    in: N[Pochhammer[-2, Complex[1, 1]]]
+    back: [N, [Pochhammer, -2, [Complex, 1, 1]]]
+  wolfram:
+    in: N[Pochhammer[-2, Complex[1, 1]]]
+    out: 0.
+    tex:
+      in: N\left[(-2)_{1+i}\right]
+      out: 0.
