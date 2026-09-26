@@ -1,0 +1,10 @@
+name: Variance
+domain: Compute engine
+signature: Variance((collection<any> | distribution | number)+) -> nan | real<0..>
+summary: Sample variance of a collection of numbers.
+signatures:
+  - call: Variance((collection<any> | distribution | number)+) -> nan | real<0..>
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

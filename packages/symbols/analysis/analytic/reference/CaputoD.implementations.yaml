@@ -1,0 +1,36 @@
+power-x2-alpha-half:
+  epsil:
+    in: CaputoD(x ^ 2, [x, 0.5])
+    out: 1.504_505_556_127_350_098_532 * x ^ 1.5
+  tex:
+    in: \mathrm{CaputoD}(x^2, \bigl\lbrack x, 0.5\bigr\rbrack)
+    out: 1.504\,505\,556\,127\,350\,098\,53x^{1.5}
+  fullform:
+    in: CaputoD[Power[x, 2], List[x, 0.5]]
+constant-vanishes:
+  epsil:
+    in: CaputoD(5, [x, 0.5])
+    out: "0"
+  tex:
+    in: \mathrm{CaputoD}(5, \bigl\lbrack x, 0.5\bigr\rbrack)
+    out: "0"
+  fullform:
+    in: CaputoD[5, List[x, 0.5]]
+integer-edge-case-vanishes:
+  epsil:
+    in: CaputoD(x, [x, 1.5])
+    out: "0"
+  tex:
+    in: \mathrm{CaputoD}(x, \bigl\lbrack x, 1.5\bigr\rbrack)
+    out: "0"
+  fullform:
+    in: CaputoD[x, List[x, 1.5]]
+polynomial-linearity:
+  epsil:
+    in: CaputoD(x ^ 2 + 3x + 1, [x, 0.5])
+    out: 1.504_505_556_127_350_098_532 * x ^ 1.5 + 3.385_137_501_286_537_721_7 * Sqrt(x)
+  tex:
+    in: \mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, 0.5\bigr\rbrack)
+    out: 1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7\sqrt{x}
+  fullform:
+    in: CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]

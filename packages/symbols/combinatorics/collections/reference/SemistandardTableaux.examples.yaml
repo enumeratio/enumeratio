@@ -8,3 +8,16 @@
   expected: [List, [List, 1, 1], [List, 2]]
   category: Scope
   caption: The first SSYT of 3 cells with entries in $\{1, 2\}$, as a list of rows
+- role: test
+  id: every-element-of-semistandardtableaux-3-2
+  expr: [Take, [SemistandardTableaux, 3, 2], 6]
+  expected:
+    [
+      List,
+      [List, [List, 1, 1], [List, 2]],
+      [List, [List, 1, 2], [List, 2]],
+      [List, [List, 1, 1, 1]],
+      [List, [List, 1, 1, 2]],
+      [List, [List, 1, 2, 2]],
+      [List, [List, 2, 2, 2]],
+    ]

@@ -10,3 +10,5 @@ seeAlso:
   - GraphCenter
   - GraphDiameter
   - VertexEccentricity
+names:
+  wolframIdentity: true

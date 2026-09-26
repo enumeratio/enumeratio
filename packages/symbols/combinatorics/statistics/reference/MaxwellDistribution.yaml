@@ -16,3 +16,5 @@ seeAlso:
   - RayleighDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

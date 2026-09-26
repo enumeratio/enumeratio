@@ -11,3 +11,7 @@
   expected: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]]]
   role: test
   caption: The 1-argument form holds exactly as written, never normalized into the 2-argument form
+- id: edgeweight-option-is-held-exactly
+  expr: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]], [KeyValuePair, EdgeWeight, [List, 5, 7]]]
+  expected: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]], [Tuple, EdgeWeight, [List, 5, 7]]]
+  caption: EdgeWeight (Wolfram's own weighting option) is held with the rest of Graph, not consumed on the way in

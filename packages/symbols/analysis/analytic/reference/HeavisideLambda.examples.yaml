@@ -17,3 +17,8 @@
   expected: [Rational, 3, 4]
   category: Scope
   caption: Exact rational input, exact rational output
+- id: heavisidelambda-1-2
+  expr: [HeavisideLambda, [Rational, 1, 2]]
+  expected: [Rational, 1, 2]
+  category: Scope
+  role: test

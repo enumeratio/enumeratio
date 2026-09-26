@@ -13,3 +13,41 @@ details:
 seeAlso:
   - NthPrime
   - NextPrime
+references:
+  - system: wikipedia
+    identity: Prime-counting function
+  - system: mathworld
+    identity: PrimeCountingFunction
+  - system: dlmf
+    identity: "27.12"
+  - system: oeis
+    identity: A000720
+names:
+  dlmf: number of primes not exceeding a number
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PrimePi[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: primepi($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: prime_pi($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.primeCounting $1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: prime_pi($1)
+    arity: 1
+    threadArg: 1

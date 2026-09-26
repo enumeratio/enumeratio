@@ -13,3 +13,5 @@ details:
   - Builds the SAME `Association` head as [[Association]] — Rule pairs, not compute-engine's string-keyed Dictionary. See that entry's own notes for why.
 seeAlso:
   - Association
+names:
+  wolframIdentity: true

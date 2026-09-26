@@ -1,0 +1,31 @@
+name: Complex
+domain: Compute engine
+signature: "Complex(real: number, imaginary: number) -> complex"
+summary: Construct a complex number from real and imaginary parts. Converted directly to a BoxedNumber during boxing; this entry exists so `operatorInfo("Complex")` returns a signature.
+signatures:
+  - call: "Complex(real: number, imaginary: number) -> complex"
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: ($1 + $2*I)
+    arity: 2
+  - origin: mapped
+    form: mpmath
+    template: mpc($1, $2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: ($1 + $2*I)
+    arity: 2
+  - origin: mapped
+    form: oscar
+    template: complex($1, $2)
+    arity: 2
+  - origin: mapped
+    form: julia
+    template: complex($1, $2)
+    arity: 2

@@ -13,3 +13,35 @@ seeAlso:
   - Exp
   - Log
   - Log2
+references:
+  - system: wikipedia
+    identity: Natural logarithm
+  - system: mathworld
+    identity: NaturalLogarithm
+  - system: dlmf
+    identity: "4.2"
+names:
+  fungrim: Log
+  dlmf: principal branch of logarithm function
+  wolfram: Log
+bindings:
+  - origin: mapped
+    form: sympy
+    template: log($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: log($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: log($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: ln($1)
+    arity: 1
+    threadArg: 1

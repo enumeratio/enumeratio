@@ -15,3 +15,12 @@ seeAlso:
   - PowerMod
   - LegendreSymbol
   - KroneckerSymbol
+references:
+  - system: wikipedia
+    identity: Jacobi symbol
+  - system: mathworld
+    identity: JacobiSymbol
+  - system: rosettacode
+    identity: Jacobi symbol
+names:
+  wolframIdentity: true

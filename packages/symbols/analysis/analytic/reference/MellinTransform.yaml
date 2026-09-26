@@ -1,0 +1,24 @@
+name: MellinTransform
+domain: Transforms
+signature: MellinTransform(f, x, s)
+summary: The Mellin transform $F(s) = \int_0^\infty f(x)\,x^{s-1}\,dx$, as a rule table over nine standard pairs plus the scaling and power-shift theorems.
+signatures:
+  - call: MellinTransform(f, x, s)
+    description: $F(s) = \int_0^\infty f(x)\,x^{s-1}\,dx$, for `f` a function of `x`.
+    library: "@enumeratio/analytic"
+details:
+  - "Covered pairs (each strip of convergence confirmed against `wolframscript`'s `MellinTransform[..., GenerateConditions -> True]`): $e^{-x}\\to\\Gamma(s)$ ($\\mathrm{Re}(s)>0$), $e^{-x^2}\\to\\Gamma(s/2)/2$ ($\\mathrm{Re}(s)>0$), $1/(1+x)\\to\\pi\\csc(\\pi s)$ ($0<\\mathrm{Re}(s)<1$), $1/(1+x)^A\\to\\Gamma(A-s)\\Gamma(s)/\\Gamma(A)$ ($0<\\mathrm{Re}(s)<\\mathrm{Re}(A)$), $\\sin(x)\\to\\Gamma(s)\\sin(\\pi s/2)$ ($-1<\\mathrm{Re}(s)<1$), $\\cos(x)\\to\\Gamma(s)\\cos(\\pi s/2)$ ($0<\\mathrm{Re}(s)<1$), $\\log(1+x)\\to\\pi\\csc(\\pi s)/s$ ($-1<\\mathrm{Re}(s)<0$)."
+  - 'Two theorems generalize every pair above: scaling ($f(ax)\to a^{-s}F(s)$, any provably positive `a`) and the power shift ($x^c f(x)\to F(s+c)$) — together they cover e.g. $e^{-ax}$, $\sin(ax)$, and $x^c e^{-x}\to\Gamma(c+s)$.'
+  - "Declined: an unknown-sign scale or shift parameter, a quadratic or higher argument to `Sin`/`Cos`/`Ln`, an opaque function, and anything outside these nine shapes."
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/mellin-transform.ts
+seeAlso:
+  - InverseMellinTransform
+  - LaplaceTransform
+  - FourierTransform
+names:
+  wolframIdentity: true

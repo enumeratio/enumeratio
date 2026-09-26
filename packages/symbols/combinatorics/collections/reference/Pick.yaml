@@ -15,3 +15,5 @@ details:
 seeAlso:
   - Level
   - MatchQ
+names:
+  wolframIdentity: true

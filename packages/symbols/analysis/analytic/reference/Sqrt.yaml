@@ -14,3 +14,31 @@ details:
 seeAlso:
   - Root
   - Square
+references:
+  - system: wikipedia
+    identity: Square root
+  - system: mathworld
+    identity: SquareRoot
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1

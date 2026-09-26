@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-20-terms-at-4
+  expr: [Take, [PrimePairs, 4], 20]
+  expected: [List, 3, 7, 13, 19, 37, 43, 67, 79, 97, 103, 109, 127, 163, 193, 223, 229, 277, 307, 313, 349]

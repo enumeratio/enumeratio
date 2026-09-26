@@ -20,3 +20,5 @@ details:
   - compute-engine's second argument is always a numeric base.
 seeAlso:
   - IntegerDigits
+names:
+  wolframIdentity: true

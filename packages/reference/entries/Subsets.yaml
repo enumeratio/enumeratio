@@ -31,3 +31,12 @@ seeAlso:
   - Length
   - Count
   - At
+references:
+  - system: wikipedia
+    identity: Power set
+  - system: mathworld
+    identity: Subset
+  - system: rosettacode
+    identity: Power set
+names:
+  wolframIdentity: true

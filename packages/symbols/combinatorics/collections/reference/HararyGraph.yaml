@@ -12,3 +12,5 @@ details:
 seeAlso:
   - CirculantGraph
   - IsConnectedGraph
+names:
+  wolframIdentity: true

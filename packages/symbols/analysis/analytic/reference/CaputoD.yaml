@@ -1,0 +1,22 @@
+name: CaputoD
+domain: Analytic
+signature: CaputoD(f, {x, alpha})
+summary: The Caputo fractional derivative of order $\alpha > 0$ of $f$ with respect to $x$, at base point 0.
+signatures:
+  - call: CaputoD(f, {x, alpha})
+    description: $D^\alpha_C f(x) = \frac{1}{\Gamma(n-\alpha)}\int_0^x f^{(n)}(t)\,(x-t)^{n-\alpha-1}\,dt$, $n=\lceil\alpha\rceil$.
+    library: "@enumeratio/analytic"
+details:
+  - "By linearity: any constant (x-free subexpression) is 0; sums and a constant factor pass through termwise."
+  - "The power function $x^\\beta$ ($\\beta$ a concrete real number; bare $x$ is $\\beta=1$): exactly 0 when $\\beta$ is a nonnegative INTEGER less than $n$ — the classical vanishing case ($f$'s own $n$-th ordinary derivative is already 0 there), confirmed numerically (`mpmath.quad` on the definition above evaluates to 0 for these). Otherwise, when $\\beta > n-1$: $\\Gamma(\\beta+1)/\\Gamma(\\beta-\\alpha+1)\\cdot x^{\\beta-\\alpha}$, verified against `wolframscript`'s own `CaputoD` AND independently against `mpmath.quad` on the definition above."
+  - "Declined: a non-numeric-literal $\\alpha$ or $\\alpha\\le0$; a symbolic $\\beta$; a $\\beta$ real but not covered by either case above (a genuine base-point singularity — the same numerical integral diverges there); two or more $x$-dependent factors in one product (no product rule); and any transcendental of $x$ (`Exp(ax)`'s Caputo derivative is a Mittag-Leffler function, and this repo has no `MittagLefflerE` head, so it declines rather than inventing one for this head alone)."
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/caputo-derivative.ts
+seeAlso:
+  - SeriesCoefficient
+names:
+  wolframIdentity: true

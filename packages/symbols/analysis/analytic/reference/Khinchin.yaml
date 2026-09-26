@@ -15,3 +15,5 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/khinchin.ts
+names:
+  wolframIdentity: true

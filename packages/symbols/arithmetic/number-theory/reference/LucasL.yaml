@@ -20,3 +20,33 @@ details:
   - A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Lucas polynomial.
 seeAlso:
   - Fibonacci
+references:
+  - system: wikipedia
+    identity: Lucas number
+  - system: mathworld
+    identity: LucasNumber
+  - system: oeis
+    identity: A000032
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: LucasL[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: lucas($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: lucas_number2($1, 1, -1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: julia
+    template: Combinatorics.lucasnum($1)
+    arity: 1
+    threadArg: 1

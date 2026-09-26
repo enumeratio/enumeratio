@@ -14,3 +14,10 @@ details:
 seeAlso:
   - Binomial
   - Factorial
+references:
+  - system: wikipedia
+    identity: Multinomial theorem
+  - system: mathworld
+    identity: MultinomialCoefficient
+names:
+  wolframIdentity: true

@@ -14,3 +14,5 @@ details:
   - Builds the approximation via continued fractions, the same technique behind classic approximations like $\pi \approx 355/113$.
 seeAlso:
   - Round
+names:
+  wolframIdentity: true

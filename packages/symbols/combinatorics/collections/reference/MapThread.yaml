@@ -12,3 +12,5 @@ details:
 seeAlso:
   - MapIndexed
   - Through
+names:
+  wolframIdentity: true

@@ -1,0 +1,13 @@
+name: Words
+domain: Collections
+signature: Words(size, base)
+summary: The strings of length $size$ over a $base$-letter alphabet $\{1, …, base\}$.
+signatures:
+  - call: Words(size, base)
+    description: the strings of length $size$ over a $base$-letter alphabet $\{1, …, base\}$
+    library: enumeratio-collections
+details:
+  - Count is $base^{size}$; the same family as [[Tuples]], with grades reordered.
+seeAlso:
+  - Tuples
+  - BinaryWords

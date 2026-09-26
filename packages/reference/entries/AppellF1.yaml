@@ -1,0 +1,10 @@
+name: AppellF1
+domain: Compute engine
+signature: AppellF1(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
+summary: Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double series for |x|, |y| < 1.
+signatures:
+  - call: AppellF1(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
+    description: as compute-engine declares it
+names:
+  wikidata: Q4780998
+stub: engine

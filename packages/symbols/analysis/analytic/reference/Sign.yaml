@@ -13,3 +13,32 @@ details:
 seeAlso:
   - Abs
   - Negate
+references:
+  - system: wikipedia
+    identity: Sign function
+  - system: mathworld
+    identity: Sign
+names:
+  dlmf: sign of
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Sign[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: sign($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sign($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sign($1)
+    arity: 1
+    threadArg: 1

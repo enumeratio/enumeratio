@@ -1,0 +1,31 @@
+the-first-20-terms:
+  epsil:
+    in: Take(SphenicNumbers, 20)
+    out: |-
+      [
+        30,
+        42,
+        66,
+        70,
+        78,
+        102,
+        105,
+        110,
+        114,
+        130,
+        138,
+        154,
+        165,
+        170,
+        174,
+        182,
+        186,
+        190,
+        195,
+        222,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SphenicNumbers}, 20)
+    out: \bigl\lbrack30, 42, 66, 70, 78, 102, 105, 110, 114, 130, 138, 154, 165, 170, 174, 182, 186, 190, 195, 222\bigr\rbrack
+  fullform:
+    in: Take[SphenicNumbers, 20]

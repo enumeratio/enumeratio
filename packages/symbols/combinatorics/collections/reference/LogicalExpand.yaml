@@ -1,0 +1,18 @@
+name: LogicalExpand
+domain: Collections
+signature: LogicalExpand(expr)
+summary: expr rewritten as a disjunction of conjunctions (DNF), with Implies/Equivalent/Xor/Nand/Nor eliminated.
+signatures:
+  - call: LogicalExpand(expr)
+    description: expr, boolean-connective-eliminated and distributed into an Or of Ands
+    library: enumeratio-collections
+details:
+  - "Structural, not type-inferring: And/Or/Not/Implies/Equivalent/Xor/Nand/Nor are walked by operator, so a bare symbol is a boolean variable here regardless of what compute-engine would otherwise infer its type to be."
+  - Implies(a, b) becomes Or(Not(a), b); Xor and Equivalent are eliminated via their pairwise expansions before distribution; Nand/Nor become Not(And(...))/Not(Or(...)).
+  - A term with both a literal and its negation (a contradiction) is dropped; an empty result (no satisfiable term) is False.
+  - Every And/Or's operands are sorted and deduplicated by their serialized form for a deterministic result — the same input always prints the same way.
+  - Anything not one of the eight connectives above (a plain symbol, a comparison, a predicate call) is an opaque literal.
+seeAlso:
+  - BooleanConvert
+names:
+  wolframIdentity: true

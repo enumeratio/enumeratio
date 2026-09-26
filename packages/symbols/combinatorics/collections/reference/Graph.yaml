@@ -9,13 +9,21 @@ signatures:
   - call: Graph(vertices, edges)
     description: an explicit vertex list, so an isolated vertex (mentioned by no edge) can be included.
     library: enumeratio-collections
+  - call: Graph(edges, EdgeWeight -> {w1, w2, …})
+    description: a weighted graph — one weight per edge, in EdgeList order. Switches GraphDistance/FindShortestPath/GraphDistanceMatrix onto Dijkstra automatically, same as Wolfram, and enables WeightedAdjacencyMatrix.
+    library: enumeratio-collections
 details:
   - Inert — `Graph(...)` holds exactly as written; it never reduces to anything else. Every query head ([[VertexList]], [[EdgeList]], [[VertexCount]], …) reads it directly.
   - "Vertex order follows Wolfram's own convention — first appearance: the declared vertex list (if given), then each edge's endpoints, in order."
   - A vertex may be any expression (an integer, a symbol, a string, …); two vertices are the same exactly when their canonical (MathJSON) forms are identical.
+  - "`EdgeWeight` must give exactly one weight per edge; a mismatched count leaves the whole Graph call — and every query over it — unevaluated, same as any other malformed call. Every query that is not distance-shaped (VertexDegree, ConnectedComponents, the Is… predicates, IsIsomorphicGraph, …) ignores weight entirely, matching Wolfram's own default. The Property/PropertyValue per-edge weight form is not supported — EdgeWeight is a plain option only."
   - No drawing. Rendering a `Graph` (vertex placement, an SVG/canvas element) is not implemented — see the graphs.ts module comment for what that would need.
 seeAlso:
   - UndirectedEdge
   - DirectedEdge
   - VertexList
   - EdgeList
+  - WeightedAdjacencyMatrix
+  - GraphDistance
+names:
+  wolframIdentity: true

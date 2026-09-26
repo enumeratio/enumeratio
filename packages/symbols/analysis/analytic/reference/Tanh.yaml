@@ -12,3 +12,13 @@ details:
 seeAlso:
   - Sinh
   - Cosh
+references:
+  - system: wikipedia
+    identity: Hyperbolic functions
+  - system: mathworld
+    identity: HyperbolicTangent
+  - system: dlmf
+    identity: "4.28"
+names:
+  dlmf: hyperbolic tangent function
+  wolframIdentity: true

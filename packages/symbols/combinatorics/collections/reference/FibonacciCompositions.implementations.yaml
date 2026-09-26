@@ -1,0 +1,42 @@
+count-fibonaccicompositions-6:
+  epsil:
+    in: Count(FibonacciCompositions(6))
+    out: "13"
+  tex:
+    in: \mathrm{Count}(\mathrm{FibonacciCompositions}(6))
+    out: "13"
+  fullform:
+    in: Count[FibonacciCompositions[6]]
+first-element-of-fibonaccicompositions-6:
+  epsil:
+    in: FibonacciCompositions(6)[1]
+    out: "[1, 1, 1, 1, 1, 1]"
+  tex:
+    in: \mathrm{FibonacciCompositions}(6)[1]
+    out: \bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: Part[FibonacciCompositions[6], 1]
+every-element-of-fibonaccicompositions-6:
+  epsil:
+    in: Take(FibonacciCompositions(6), 13)
+    out: |-
+      [
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 2],
+        [1, 1, 1, 2, 1],
+        [1, 1, 2, 1, 1],
+        [1, 1, 2, 2],
+        [1, 2, 1, 1, 1],
+        [1, 2, 1, 2],
+        [1, 2, 2, 1],
+        [2, 1, 1, 1, 1],
+        [2, 1, 1, 2],
+        [2, 1, 2, 1],
+        [2, 2, 1, 1],
+        [2, 2, 2],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{FibonacciCompositions}(6), 13)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 2\bigr\rbrack, \bigl\lbrack1, 1, 1, 2, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 2\bigr\rbrack, \bigl\lbrack1, 2, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 2, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 2, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 2\bigr\rbrack, \bigl\lbrack2, 1, 2, 1\bigr\rbrack, \bigl\lbrack2, 2, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[FibonacciCompositions[6], 13]

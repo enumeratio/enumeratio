@@ -16,6 +16,42 @@ a-generic-point-checked-against-mpmath-s-hyperu:
     out: 1.113\,705\,290\,586\,790\,6
   fullform:
     in: HypergeometricUStar[1.3, 2.7, 4]
+a-complex-point-checked-against-mpmath-s-hyperu:
+  epsil:
+    in: HypergeometricUStar(1, 2.5, 3 + i)
+    out: 1.134_734_176_864_381_3 - 0.040_360_801_253_122_44i
+  tex:
+    in: \mathrm{HypergeometricUStar}(1, 2.5, 3+i)
+    out: 1.134\,734\,176\,864\,381\,3-0.040\,360\,801\,253\,122\,44i
+  fullform:
+    in: HypergeometricUStar[1, 2.5, Complex[3, 1]]
+another-point-checked-against-mpmath-s-hyperu:
+  epsil:
+    in: HypergeometricUStar(0.2, 0.6, 1.5)
+    out: 0.945_737_339_042_95
+  tex:
+    in: \mathrm{HypergeometricUStar}(0.2, 0.6, 1.5)
+    out: 0.945\,737\,339\,042\,95
+  fullform:
+    in: HypergeometricUStar[0.2, 0.6, 1.5]
+a-third-point-checked-against-mpmath-s-hyperu:
+  epsil:
+    in: HypergeometricUStar(2, 4.5, 5)
+    out: 1.680_941_114_165_958
+  tex:
+    in: \mathrm{HypergeometricUStar}(2, 4.5, 5)
+    out: 1.680\,941\,114\,165\,958
+  fullform:
+    in: HypergeometricUStar[2, 4.5, 5]
+a-negative-a-checked-against-mpmath-s-hyperu:
+  epsil:
+    in: HypergeometricUStar(-0.5, 1.5, 2)
+    out: "0.75"
+  tex:
+    in: \mathrm{HypergeometricUStar}(-0.5, 1.5, 2)
+    out: "0.75"
+  fullform:
+    in: HypergeometricUStar[-0.5, 1.5, 2]
 integer-b-stays-symbolic-the-connection-formula:
   epsil:
     in: HypergeometricUStar(1, 2, 3)

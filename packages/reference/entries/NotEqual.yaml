@@ -1,0 +1,10 @@
+name: NotEqual
+domain: Compute engine
+signature: NotEqual(any, any) -> boolean
+summary: Inequality comparison (not equal to).
+signatures:
+  - call: NotEqual(any, any) -> boolean
+    description: as compute-engine declares it
+names:
+  wolfram: Unequal
+stub: engine

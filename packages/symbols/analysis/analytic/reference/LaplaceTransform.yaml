@@ -18,3 +18,5 @@ bindings:
 seeAlso:
   - InverseLaplaceTransform
   - FourierTransform
+names:
+  wolframIdentity: true

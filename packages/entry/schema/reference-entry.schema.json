@@ -75,6 +75,15 @@
         "$ref": "#/$defs/Reference"
       }
     },
+    "names": {
+      "$ref": "#/$defs/ReferenceNames"
+    },
+    "formerly": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "stub": {
       "enum": ["engine", "carrier"]
     }
@@ -154,6 +163,15 @@
         "produces": {
           "type": "string"
         },
+        "arity": {
+          "type": "integer"
+        },
+        "template": {
+          "type": "string"
+        },
+        "threadArg": {
+          "type": "integer"
+        },
         "note": {
           "type": "string"
         }
@@ -184,6 +202,33 @@
         }
       },
       "required": ["system", "identity"],
+      "additionalProperties": false
+    },
+    "ReferenceNames": {
+      "type": "object",
+      "properties": {
+        "fungrim": {
+          "type": "string"
+        },
+        "dlmf": {
+          "type": "string"
+        },
+        "wikidata": {
+          "type": "string"
+        },
+        "wikidataConfirmed": {
+          "type": "boolean"
+        },
+        "catalog": {
+          "type": "string"
+        },
+        "wolfram": {
+          "type": "string"
+        },
+        "wolframIdentity": {
+          "type": "boolean"
+        }
+      },
       "additionalProperties": false
     }
   }

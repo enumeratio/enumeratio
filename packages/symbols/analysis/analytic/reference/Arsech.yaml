@@ -7,3 +7,5 @@ signatures:
     description: the value $y$ with $\operatorname{sech}(y) = x$.
 seeAlso:
   - Arcosh
+names:
+  wolfram: ArcSech

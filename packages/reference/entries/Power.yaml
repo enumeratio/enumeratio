@@ -1,0 +1,40 @@
+name: Power
+domain: Compute engine
+signature: Power(complex | infinity, complex | signed_infinity) -> number
+summary: "Exponentiation: raise a base to a power."
+signatures:
+  - call: Power(complex | infinity, complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  fungrim: Pow
+  wolframIdentity: true
+stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: (S($1)**$2)
+    arity: 2
+  - origin: mapped
+    form: mpmath
+    template: (($1)**$2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: (($1)^$2)
+    arity: 2
+  - origin: mapped
+    form: oscar
+    template: (big($1)^$2)
+    arity: 2
+  - origin: mapped
+    form: julia
+    template: (big($1)^$2)
+    arity: 2
+  - origin: mapped
+    form: mathlib4
+    template: ($1 ^ $2)
+    arity: 2
+  - origin: mapped
+    form: rust
+    template: power($1, $2)
+    arity: 2

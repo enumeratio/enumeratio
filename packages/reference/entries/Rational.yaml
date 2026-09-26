@@ -1,0 +1,39 @@
+name: Rational
+domain: Compute engine
+signature: Rational((integer, integer) -> rational) | ((real) -> rational)
+summary: Construct a rational number from a numerator and denominator.
+signatures:
+  - call: Rational((integer, integer) -> rational) | ((real) -> rational)
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: Rational($1, $2)
+    arity: 2
+  - origin: mapped
+    form: mpmath
+    template: (mpf($1)/$2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: ($1/$2)
+    arity: 2
+  - origin: mapped
+    form: oscar
+    template: ($1 // $2)
+    arity: 2
+  - origin: mapped
+    form: julia
+    template: ($1 // $2)
+    arity: 2
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : ℚ) / $2)"
+    arity: 2
+  - origin: mapped
+    form: rust
+    template: rational($1, $2)
+    arity: 2

@@ -15,3 +15,5 @@ details:
   - "The rectangular dimensions are a {m, n} LIST, not two bare arguments — kernel-checked: Wolfram's HilbertMatrix has no 2-argument form, only HilbertMatrix[n] and HilbertMatrix[{m, n}]."
 seeAlso:
   - DiagonalMatrix
+names:
+  wolframIdentity: true

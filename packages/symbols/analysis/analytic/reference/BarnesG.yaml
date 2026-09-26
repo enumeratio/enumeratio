@@ -51,3 +51,13 @@ seeAlso:
   - Gamma
   - LogGamma
   - Factorial
+references:
+  - system: wikipedia
+    identity: Barnes G-function
+  - system: mathworld
+    identity: BarnesG-Function
+  - system: dlmf
+    identity: "5.17"
+names:
+  dlmf: Barnes' G-function (or double gamma function)
+  wolframIdentity: true

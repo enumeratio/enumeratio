@@ -12,3 +12,5 @@ details:
 seeAlso:
   - IsMachineNumber
   - IsNumeric
+names:
+  wolframIdentity: true

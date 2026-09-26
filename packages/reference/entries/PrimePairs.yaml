@@ -5,6 +5,7 @@ summary: The lesser prime $p$ of a pair $(p, p+gap)$, both prime -- $gap$ select
 signatures:
   - call: PrimePairs(gap)
     description: the prime $p$ with $p+gap$ also prime, an indexed collection of open infinitude for every $gap$.
+    library: enumeratio-collections
 details:
   - A lazy indexed collection for each $gap$; whether there are infinitely many prime pairs at ANY fixed gap is open (the twin-prime conjecture generalises to every gap), so $Count(PrimePairs(gap)) = NaN$ for every $gap$, not just $gap=2$.
   - $PrimePairs(2)$, $PrimePairs(4)$, $PrimePairs(6)$ are [[TwinPrimes]], [[CousinPrimes]], [[SexyPrimes]] verbatim.

@@ -14,3 +14,48 @@ details:
 seeAlso:
   - LCM
   - ExtendedGCD
+references:
+  - system: wikipedia
+    identity: Greatest common divisor
+  - system: mathworld
+    identity: GreatestCommonDivisor
+  - system: rosettacode
+    identity: Greatest common divisor
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: GCD[$1, $2]
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: sympy
+    template: gcd($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: sage
+    template: gcd($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: oscar
+    template: gcd(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: julia
+    template: gcd(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: mathlib4
+    template: (Int.gcd $1 $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: rust
+    template: gcd($1, $2)
+    arity: 2
+    threadArg: 2

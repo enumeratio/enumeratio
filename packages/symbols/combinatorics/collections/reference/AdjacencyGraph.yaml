@@ -12,3 +12,5 @@ signatures:
 seeAlso:
   - AdjacencyMatrix
   - Graph
+names:
+  wolframIdentity: true

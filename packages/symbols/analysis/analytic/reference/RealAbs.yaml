@@ -9,3 +9,5 @@ signatures:
 details:
   - Agrees with native [[Abs]] on every real x -- RealAbs exists so a plot or a domain check can say "real only" and mean it, the way Wolfram's does.
   - A concretely complex argument is outside RealAbs's domain and is left unevaluated -- unlike [[Abs]], which is complex-valued (the modulus).
+names:
+  wolframIdentity: true

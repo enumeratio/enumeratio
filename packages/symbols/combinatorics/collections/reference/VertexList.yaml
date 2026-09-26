@@ -10,3 +10,5 @@ seeAlso:
   - Graph
   - EdgeList
   - VertexCount
+names:
+  wolframIdentity: true

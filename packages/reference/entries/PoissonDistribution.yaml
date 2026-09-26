@@ -1,0 +1,10 @@
+name: PoissonDistribution
+domain: Compute engine
+signature: PoissonDistribution(real<0<..>) -> expression<PoissonDistribution>
+summary: Poisson distribution with rate parameter λ.
+signatures:
+  - call: PoissonDistribution(real<0<..>) -> expression<PoissonDistribution>
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

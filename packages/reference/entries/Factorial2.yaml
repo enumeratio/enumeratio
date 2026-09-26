@@ -13,3 +13,11 @@ details:
   - The recurrence run downwards extends it to negative odd integers, $(-2k-1)!! = \dfrac{(-1)^k}{(2k-1)!!}$; at negative even integers it hits a pole (a division by the $0!!$ term) and returns NaN.
 seeAlso:
   - Factorial
+references:
+  - system: wikipedia
+    identity: Double factorial
+  - system: mathworld
+    identity: DoubleFactorial
+names:
+  fungrim: DoubleFactorial
+  wolframIdentity: true

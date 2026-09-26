@@ -16,3 +16,10 @@ seeAlso:
   - QSymM
   - Antipode
   - Counit
+references:
+  - system: wikipedia
+    identity: Hopf algebra
+  - system: mathworld
+    identity: HopfAlgebra
+names:
+  wolframIdentity: true

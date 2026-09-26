@@ -1,0 +1,9 @@
+the-first-4-terms:
+  epsil:
+    in: Take(GiugaNumbers, 4)
+    out: "[30, 858, 1_722, 66_198]"
+  tex:
+    in: \mathrm{Take}(\mathrm{GiugaNumbers}, 4)
+    out: \bigl\lbrack30, 858, 1\,722, 66\,198\bigr\rbrack
+  fullform:
+    in: Take[GiugaNumbers, 4]

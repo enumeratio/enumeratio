@@ -1,0 +1,9 @@
+the-first-20-terms:
+  epsil:
+    in: Take(HappyNumbers, 20)
+    out: "[1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49, 68, 70, 79, 82, 86, 91, 94, 97, 100]"
+  tex:
+    in: \mathrm{Take}(\mathrm{HappyNumbers}, 20)
+    out: \bigl\lbrack1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49, 68, 70, 79, 82, 86, 91, 94, 97, 100\bigr\rbrack
+  fullform:
+    in: Take[HappyNumbers, 20]

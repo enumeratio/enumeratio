@@ -15,3 +15,39 @@ seeAlso:
   - Cos
   - Cot
   - Arctan
+references:
+  - system: wikipedia
+    identity: Trigonometric functions
+  - system: mathworld
+    identity: Tangent
+  - system: dlmf
+    identity: "4.14"
+names:
+  dlmf: tangent function
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Tan[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: tan($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: tan($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: tan($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: tan($1)
+    arity: 1
+    threadArg: 1

@@ -156,6 +156,15 @@ export interface ReferenceBinding {
   readonly code?: string;
   /** What evaluating it produces here, when that is not simply a number or expression. */
   readonly produces?: string;
+  /** `mapped` only: the operand count this row applies to. Omitted matches any arity --
+   * @enumeratio/oracle's `mappingFor` prefers an arity-specific row over one with none. */
+  readonly arity?: number;
+  /** `mapped` only: the source template, `$n` for the n-th operand (`@enumeratio/oracle`'s
+   * `Mapping.emit` entry for this row's `form`). */
+  readonly template?: string;
+  /** `mapped` only: 1-based operand this head threads over, for a system whose plain function
+   * call doesn't auto-thread a list the way compute-engine and Wolfram do (`THREADS_MANUALLY`). */
+  readonly threadArg?: number;
   readonly note?: string;
 }
 
@@ -173,6 +182,36 @@ export type PrimitiveReason =
   | "foreign"
   /** Definitional. It is what other things are defined IN TERMS OF. */
   | "axiom";
+
+/**
+ * A head's name in another system's own vocabulary, where that differs from ours -- the
+ * hand-kept half of the crosswalk (design/speculative/symbol-metadata.md). The mechanically
+ * derived half (Fungrim identities, the oracle's per-arity mapping) lives in `bindings:` and
+ * the generated crosswalk data; this is what a human had to type in.
+ */
+export interface ReferenceNames {
+  /** Fungrim's own spelling, when a head whose page it publishes doesn't use ours verbatim. */
+  readonly fungrim?: string;
+  /** The DLMF index's own wording, when it doesn't use this head's Wikipedia title verbatim. */
+  readonly dlmf?: string;
+  /** The Wikidata id to use INSTEAD of the one compute-engine's own definition carries, when
+   * that one is wrong (`scripts/audit-wikidata.ts`). */
+  readonly wikidata?: string;
+  /** The engine's own Wikidata id was checked by hand and found right -- no `wikidata`
+   * override needed, but worth marking so the audit doesn't ask again. */
+  readonly wikidataConfirmed?: boolean;
+  /** The catalog's subject name for this head, when its rows are recorded under a different
+   * spelling (`SymmetricGroup`'s rows are the catalog's `Permutations`). */
+  readonly catalog?: string;
+  /** Wolfram's own spelling, when it differs from ours (`Add` -> `Plus`). Omitted for a head
+   * whose Wolfram name IS ours -- see `wolframIdentity` for how that case is marked instead. */
+  readonly wolfram?: string;
+  /** This head is a genuine Wolfram head under its own name -- no `wolfram` override needed,
+   * but the fact still has to be recorded somewhere: `to-wolfram.ts`'s `isWolframHead` (a
+   * kernel oracle may be asked about this head) reads exactly one of `wolfram` or
+   * `wolframIdentity`, never neither, for a head it vouches for. */
+  readonly wolframIdentity?: boolean;
+}
 
 /** A single compute-engine function's reference entry. */
 export interface ReferenceEntry {
@@ -224,6 +263,14 @@ export interface ReferenceEntry {
    * catalog's FindStat and Sage rows) -- see `crosswalk/`.
    */
   readonly references?: readonly Reference[];
+  /** This head's own vocabulary in other systems -- Fungrim, the DLMF, Wikidata, the catalog. */
+  readonly names?: ReferenceNames;
+  /**
+   * Old names this head was declared under, oldest first -- a data alias, same idea as the
+   * numerals systems' aliases. `@enumeratio/statistics`'s `blessedName` reads the generated
+   * table built from these, not this field directly (design/speculative/symbol-metadata.md).
+   */
+  readonly formerly?: readonly string[];
   /**
    * Generated rather than written, so the head has a page and a crosswalk: `engine` for a
    * compute-engine symbol we neither extend nor document by hand, `carrier` for a domain.

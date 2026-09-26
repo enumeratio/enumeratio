@@ -1,0 +1,36 @@
+name: Divide
+domain: Compute engine
+signature: Divide(complex | infinity, (complex | infinity)+) -> number
+summary: Quotient of a numerator and one or more denominators.
+signatures:
+  - call: Divide(complex | infinity, (complex | infinity)+) -> number
+    description: as compute-engine declares it
+names:
+  wikidataConfirmed: true
+  wolframIdentity: true
+stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: (S($1) / $2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: ($1 / $2)
+    arity: 2
+  - origin: mapped
+    form: oscar
+    template: ($1 // $2)
+    arity: 2
+  - origin: mapped
+    form: julia
+    template: ($1 // $2)
+    arity: 2
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : ℚ) / $2)"
+    arity: 2
+  - origin: mapped
+    form: rust
+    template: ($1 / $2)
+    arity: 2

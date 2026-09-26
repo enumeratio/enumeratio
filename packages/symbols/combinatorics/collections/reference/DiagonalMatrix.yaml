@@ -13,3 +13,5 @@ details:
   - The result grows with k rather than staying n×n — Wolfram's own convention, kernel-checked (`DiagonalMatrix[{1, 2}, 1]` is 3×3, not 2×2).
 seeAlso:
   - HilbertMatrix
+names:
+  wolframIdentity: true

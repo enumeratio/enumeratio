@@ -20,6 +20,11 @@
   expected: 1
   category: Scope
   caption: Two arguments -- the product of their unit boxes
+- id: unitbox-product-second-at-its-boundary
+  expr: [UnitBox, 0, [Rational, 1, 2]]
+  expected: 1
+  category: Scope
+  role: test
 - id: unitbox-derivative-away-from-the-jump
   expr: [D, [UnitBox, x], x]
   expected:

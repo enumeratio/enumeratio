@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(PracticalNumbers, 25)
+    out: |-
+      [
+        1,
+        2,
+        4,
+        6,
+        8,
+        12,
+        16,
+        18,
+        20,
+        24,
+        28,
+        30,
+        32,
+        36,
+        40,
+        42,
+        48,
+        54,
+        56,
+        60,
+        64,
+        66,
+        72,
+        78,
+        80,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{PracticalNumbers}, 25)
+    out: \bigl\lbrack1, 2, 4, 6, 8, 12, 16, 18, 20, 24, 28, 30, 32, 36, 40, 42, 48, 54, 56, 60, 64, 66, 72, 78, 80\bigr\rbrack
+  fullform:
+    in: Take[PracticalNumbers, 25]

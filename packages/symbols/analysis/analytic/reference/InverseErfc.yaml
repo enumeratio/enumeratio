@@ -18,3 +18,5 @@ bindings:
     source: packages/symbols/analysis/analytic/src/inverse-erfc.ts
 seeAlso:
   - Erfc
+names:
+  wolframIdentity: true

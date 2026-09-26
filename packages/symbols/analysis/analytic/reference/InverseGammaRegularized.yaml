@@ -21,3 +21,5 @@ seeAlso:
   - GammaRegularized
   - Gamma
   - InverseBetaRegularized
+names:
+  wolframIdentity: true

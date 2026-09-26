@@ -15,3 +15,5 @@ details:
 seeAlso:
   - EigenvectorCentrality
   - GraphDistance
+names:
+  wolframIdentity: true

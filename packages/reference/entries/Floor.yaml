@@ -21,3 +21,31 @@ details:
 seeAlso:
   - Ceil
   - Round
+references:
+  - system: wikipedia
+    identity: Floor and ceiling functions
+  - system: mathworld
+    identity: FloorFunction
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Floor[$1]
+    arity: 1
+  - origin: mapped
+    form: sympy
+    template: floor($1)
+    arity: 1
+  - origin: mapped
+    form: mpmath
+    template: floor($1)
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: floor($1)
+    arity: 1
+  - origin: mapped
+    form: rust
+    template: floor($1)
+    arity: 1

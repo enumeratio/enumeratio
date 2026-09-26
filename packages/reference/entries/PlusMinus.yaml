@@ -1,0 +1,10 @@
+name: PlusMinus
+domain: Compute engine
+signature: "PlusMinus(T, U) -> tuple<T, U> where T: value, U: value"
+summary: Plus or Minus
+signatures:
+  - call: "PlusMinus(T, U) -> tuple<T, U> where T: value, U: value"
+    description: as compute-engine declares it
+names:
+  wikidata: Q260387
+stub: engine

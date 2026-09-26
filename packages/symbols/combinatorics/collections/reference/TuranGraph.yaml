@@ -11,3 +11,5 @@ details:
   - Vertex-to-part assignment order (which vertices land in the larger parts) is a labelling choice, kernel-unverified against Wolfram's own.
 seeAlso:
   - CompleteGraph
+names:
+  wolframIdentity: true

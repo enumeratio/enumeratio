@@ -17,3 +17,5 @@ details:
   - An infinite product $\prod_{k=k_0}^{\infty} P(k)/Q(k)$, for $P$ and $Q$ polynomials of equal degree and equal leading coefficient, factors both over $\mathbb{C}$ and rewrites the ratio as a Gamma-function product via the Pochhammer identity $\prod_{k=k_0}^{N}(k-a) = \Gamma(N+1-a)/\Gamma(k_0-a)$; the series converges exactly when the roots' sums agree, which cancels the $N \to \infty$ tail. Each factor then closes either straight to a factorial (a real integer root) or, paired with its negation, via Gamma recursion and the reflection formula $\Gamma(z)\Gamma(1-z) = \pi/\sin(\pi z)$. Roots come from `Factor`'s own linear and irreducible-quadratic pieces (rational, Gaussian, or quadratic-surd only); anything past that -- an unresolved root, a pole, or an unpaired leftover -- leaves the product unevaluated rather than guess.
 seeAlso:
   - Length
+names:
+  wolframIdentity: true

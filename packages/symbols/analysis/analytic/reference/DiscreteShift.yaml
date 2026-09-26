@@ -13,3 +13,5 @@ signatures:
 details:
   - A substitution, not an arithmetic evaluation -- f need not itself be a declared function; DiscreteShift(a(n), n) is a(n + 1) even though a has no definition.
   - The h-step form takes n and h together as the second argument, {n, h} -- not a third argument.
+names:
+  wolframIdentity: true

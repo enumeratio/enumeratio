@@ -29,3 +29,8 @@ seeAlso:
   - AlexanderPolynomial
   - Braid
   - LorenzBraid
+references:
+  - system: wikipedia
+    identity: Jones polynomial
+  - system: mathworld
+    identity: JonesPolynomial

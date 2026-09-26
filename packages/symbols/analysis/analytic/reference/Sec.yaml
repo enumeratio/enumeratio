@@ -13,3 +13,6 @@ seeAlso:
   - Cos
   - Csc
   - Cot
+names:
+  dlmf: secant function
+  wolframIdentity: true

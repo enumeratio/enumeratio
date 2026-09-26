@@ -21,3 +21,16 @@ seeAlso:
   - TemperleyLiebAlgebra
   - PartitionAlgebra
   - Diagram
+references:
+  - system: wikipedia
+    identity: Motzkin number
+  - system: mathworld
+    identity: MotzkinNumber
+  - system: oeis
+    identity: A001006
+bindings:
+  - origin: mapped
+    form: oscar
+    template: EnumeratioDiagramAlgebra(:motzkin, $1)
+    arity: 1
+    note: Sage has no Motzkin algebra.

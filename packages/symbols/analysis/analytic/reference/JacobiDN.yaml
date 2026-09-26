@@ -17,3 +17,5 @@ seeAlso:
   - JacobiCN
   - JacobiAmplitude
   - EllipticK
+names:
+  wolframIdentity: true

@@ -1,0 +1,25 @@
+- id: count-palindromiccompositions-6
+  expr: [Count, [PalindromicCompositions, 6]]
+  expected: 8
+  category: Basic
+  caption: $Count(PalindromicCompositions(6)) = 8$
+- id: first-element-of-palindromiccompositions-6
+  expr: [At, [PalindromicCompositions, 6], 1]
+  expected: [List, 1, 1, 2, 1, 1]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-palindromiccompositions-6
+  role: test
+  expr: [Take, [PalindromicCompositions, 6], 8]
+  expected:
+    [
+      List,
+      [List, 1, 1, 2, 1, 1],
+      [List, 2, 2, 2],
+      [List, 1, 4, 1],
+      [List, 6],
+      [List, 1, 1, 1, 1, 1, 1],
+      [List, 1, 2, 2, 1],
+      [List, 2, 1, 1, 2],
+      [List, 3, 3],
+    ]

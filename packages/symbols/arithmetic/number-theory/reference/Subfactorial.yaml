@@ -13,3 +13,12 @@ details:
   - compute-engine leaves negative arguments unevaluated rather than extending Subfactorial analytically.
 seeAlso:
   - Factorial
+references:
+  - system: wikipedia
+    identity: Derangement
+  - system: mathworld
+    identity: Subfactorial
+  - system: oeis
+    identity: A000166
+names:
+  wolframIdentity: true

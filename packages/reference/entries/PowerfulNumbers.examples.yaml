@@ -1,0 +1,5 @@
+- role: test
+  id: the-first-25-terms
+  expr: [Take, PowerfulNumbers, 25]
+  expected:
+    [List, 1, 4, 8, 9, 16, 25, 27, 32, 36, 49, 64, 72, 81, 100, 108, 121, 125, 128, 144, 169, 196, 200, 216, 225, 243]

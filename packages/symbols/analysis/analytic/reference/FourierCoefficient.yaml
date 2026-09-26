@@ -23,3 +23,5 @@ bindings:
 seeAlso:
   - FourierSeries
   - Fourier
+names:
+  wolframIdentity: true

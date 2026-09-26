@@ -15,3 +15,15 @@ seeAlso:
   - TemperleyLiebAlgebra
   - PartitionAlgebra
   - Diagram
+references:
+  - system: wikipedia
+    identity: Brauer algebra
+bindings:
+  - origin: mapped
+    form: sage
+    template: BrauerAlgebra($1, enumeratio_delta, enumeratio_ring)
+    arity: 1
+  - origin: mapped
+    form: oscar
+    template: EnumeratioDiagramAlgebra(:brauer, $1)
+    arity: 1

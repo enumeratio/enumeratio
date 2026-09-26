@@ -16,3 +16,5 @@ details:
 seeAlso:
   - Convergents
   - ContinuedFraction
+names:
+  wolframIdentity: true

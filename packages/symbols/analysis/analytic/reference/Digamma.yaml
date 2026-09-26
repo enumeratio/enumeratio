@@ -16,3 +16,15 @@ seeAlso:
   - Gamma
   - Zeta
   - GammaLn
+references:
+  - system: wikipedia
+    identity: Digamma function
+  - system: mathworld
+    identity: DigammaFunction
+  - system: dlmf
+    identity: "5.2"
+names:
+  fungrim: DigammaFunction
+  dlmf: psi (or digamma) function
+  wikidata: Q905326
+  wolfram: PolyGamma

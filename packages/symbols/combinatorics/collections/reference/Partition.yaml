@@ -22,3 +22,5 @@ details:
 seeAlso:
   - Flatten
   - UpTo
+names:
+  wolframIdentity: true

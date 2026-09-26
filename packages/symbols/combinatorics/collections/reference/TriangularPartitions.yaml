@@ -1,0 +1,15 @@
+name: TriangularPartitions
+domain: Collections
+signature: TriangularPartitions(n)
+summary: The partitions of $n$ into triangular-number parts.
+signatures:
+  - call: TriangularPartitions(n)
+    description: the partitions of $n$ into triangular-number parts
+    library: enumeratio-collections
+details:
+  - Count is A007294.
+seeAlso:
+  - IntegerPartitions
+references:
+  - system: oeis
+    identity: A007294

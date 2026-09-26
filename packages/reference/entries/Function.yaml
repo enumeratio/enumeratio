@@ -1,0 +1,10 @@
+name: Function
+domain: Compute engine
+signature: Function(expression, (function | symbol)*) -> function
+summary: A function literal
+signatures:
+  - call: Function(expression, (function | symbol)*) -> function
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

@@ -15,3 +15,14 @@ seeAlso:
   - Sin
   - Arccos
   - Arctan
+references:
+  - system: wikipedia
+    identity: Inverse trigonometric functions
+  - system: mathworld
+    identity: InverseSine
+  - system: dlmf
+    identity: "4.23"
+names:
+  fungrim: Asin
+  dlmf: arcsine function
+  wolfram: ArcSin

@@ -21,10 +21,45 @@ bindings:
     produces: a rendered phase portrait
     note: "For a plotted ζ the head's meaning bottoms out here: the element IS the answer, and there is no expression it reduces to."
   - origin: mapped
-    form: wolfram / sympy / mpmath / sage
-    environment: external
-    source: packages/oracle/src/mappings.ts
-    note: "Keyed by signature, not name: one argument is Riemann's, two is Hurwitz's, and the systems disagree about how to spell that."
+    form: wolfram
+    template: Zeta[$1]
+    arity: 1
+    note: Riemann ζ at one argument, in every system.
+  - origin: mapped
+    form: sympy
+    template: zeta($1)
+    arity: 1
+    note: Riemann ζ at one argument, in every system.
+  - origin: mapped
+    form: mpmath
+    template: zeta($1)
+    arity: 1
+    note: Riemann ζ at one argument, in every system.
+  - origin: mapped
+    form: sage
+    template: zeta($1)
+    arity: 1
+    note: Riemann ζ at one argument, in every system.
+  - origin: mapped
+    form: wolfram
+    template: Zeta[$1, $2]
+    arity: 2
+    note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges); Sage spells it hurwitz_zeta; SymPy and mpmath overload zeta.
+  - origin: mapped
+    form: sympy
+    template: zeta($1, $2)
+    arity: 2
+    note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges); Sage spells it hurwitz_zeta; SymPy and mpmath overload zeta.
+  - origin: mapped
+    form: mpmath
+    template: zeta($1, $2)
+    arity: 2
+    note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges); Sage spells it hurwitz_zeta; SymPy and mpmath overload zeta.
+  - origin: mapped
+    form: sage
+    template: hurwitz_zeta($1, $2)
+    arity: 2
+    note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges); Sage spells it hurwitz_zeta; SymPy and mpmath overload zeta.
 summary: The Riemann zeta function $\zeta(s) = \sum_{n=1}^{\infty} n^{-s}$ for $\operatorname{Re}(s) > 1$, continued analytically elsewhere.
 signatures:
   - call: Zeta(s)
@@ -48,3 +83,28 @@ seeAlso:
   - Digamma
   - RiemannSiegelZ
   - RiemannZetaZero
+references:
+  - system: wikipedia
+    identity: Riemann zeta function
+    arity: 1
+  - system: mathworld
+    identity: RiemannZetaFunction
+    arity: 1
+  - system: dlmf
+    identity: "25.2"
+    arity: 1
+  - system: wikipedia
+    identity: Hurwitz zeta function
+    arity: 2
+  - system: mathworld
+    identity: HurwitzZetaFunction
+    arity: 2
+  - system: dlmf
+    identity: "25.11"
+    arity: 2
+  - system: fungrim
+    identity: HurwitzZeta
+    arity: 2
+names:
+  fungrim: RiemannZeta
+  wolframIdentity: true

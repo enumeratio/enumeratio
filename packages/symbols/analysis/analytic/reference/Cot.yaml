@@ -13,3 +13,6 @@ seeAlso:
   - Tan
   - Sin
   - Cos
+names:
+  dlmf: cotangent function
+  wolframIdentity: true

@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-20-terms
+  expr: [Take, EmirpPrimes, 20]
+  expected: [List, 13, 17, 31, 37, 71, 73, 79, 97, 107, 113, 149, 157, 167, 179, 199, 311, 337, 347, 359, 389]

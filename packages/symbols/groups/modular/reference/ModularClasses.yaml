@@ -20,3 +20,8 @@ details:
 seeAlso:
   - RademacherSymbol
   - ModularWord
+references:
+  - system: wikipedia
+    identity: Modular group
+  - system: mathworld
+    identity: ModularGroupGamma

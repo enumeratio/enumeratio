@@ -18,3 +18,5 @@ seeAlso:
   - NestWhileList
   - While
   - FixedPointList
+names:
+  wolframIdentity: true

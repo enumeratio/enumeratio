@@ -16,3 +16,8 @@ seeAlso:
   - TemperleyLiebAlgebra
   - PartitionAlgebra
   - NonCommutativeMultiply
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_diagram($1)
+    arity: 1

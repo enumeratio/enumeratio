@@ -10,3 +10,5 @@ details:
   - Uses the same classifier as [[FunctionDomain]]. An odd-degree polynomial is onto $\mathbb R$ by the intermediate value theorem regardless of its other coefficients; a degree-2 polynomial's range comes from its vertex.
   - 'Covers: odd-degree polynomials (True); degree-2 polynomials (from the vertex); a nonzero constant over an affine denominator ($y \ne 0$); Sqrt of an affine or quadratic argument; Ln of an affine argument (True); Exp of an affine argument ($y>0$); Sin/Cos of an affine argument ($-1\le y\le1$); Tan of an affine argument (True).'
   - Declines for even-degree polynomials above degree 2 (no general closed-form extremum here), and for a rational function whose denominator is a quadratic (needs the same vertex analysis compounded with the reciprocal, left for later).
+names:
+  wolframIdentity: true

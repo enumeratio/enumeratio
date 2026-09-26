@@ -16,3 +16,15 @@ details:
   - 'The three-argument form is a discrete logarithm, by Pohlig–Hellman over the order of $a$ and baby-step giant-step within each prime: the cost is $\sqrt q$ for the largest prime $q$ dividing that order — instant for a smooth order, hopeless for a safe prime.'
 seeAlso:
   - PowerMod
+references:
+  - system: wikipedia
+    identity: Multiplicative order
+  - system: mathworld
+    identity: MultiplicativeOrder
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: Mod($1, $2).multiplicative_order()
+    arity: 2

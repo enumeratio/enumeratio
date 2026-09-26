@@ -8,6 +8,10 @@ signatures:
     library: enumeratio-collections
 details:
   - A directed edge is only traversable forward; an undirected edge, either way.
+  - "Weighted (g carries EdgeWeight): the path minimizing summed edge weight (Dijkstra), not the fewest hops — same as Wolfram, which reads EdgeWeight automatically when present. Requires every weight to be non-negative; a negative weight leaves the call unevaluated rather than guess (Dijkstra doesn't support them — Wolfram itself switches algorithm in that case, out of scope here)."
 seeAlso:
   - GraphDistance
+  - GraphDistanceMatrix
   - Graph
+names:
+  wolframIdentity: true

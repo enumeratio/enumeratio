@@ -13,3 +13,13 @@ details:
 seeAlso:
   - PrimeOmega
   - FactorInteger
+references:
+  - system: wikipedia
+    identity: Prime omega function
+  - system: mathworld
+    identity: DistinctPrimeFactors
+  - system: oeis
+    identity: A001221
+names:
+  dlmf: number of distinct primes dividing a number
+  wolframIdentity: true

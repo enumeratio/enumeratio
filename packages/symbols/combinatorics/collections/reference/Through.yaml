@@ -12,3 +12,5 @@ details:
 seeAlso:
   - MapThread
   - Apply
+names:
+  wolframIdentity: true

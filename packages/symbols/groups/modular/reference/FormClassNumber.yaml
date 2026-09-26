@@ -29,3 +29,8 @@ seeAlso:
   - ModularClasses
   - ContinuedFraction
   - RademacherSymbol
+references:
+  - system: wikipedia
+    identity: Class number (number theory)
+  - system: mathworld
+    identity: ClassNumber

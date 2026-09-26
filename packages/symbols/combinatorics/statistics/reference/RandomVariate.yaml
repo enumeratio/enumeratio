@@ -16,3 +16,5 @@ details:
 seeAlso:
   - SeedRandom
   - Distributed
+names:
+  wolframIdentity: true

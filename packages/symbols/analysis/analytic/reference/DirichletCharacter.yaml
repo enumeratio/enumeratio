@@ -28,3 +28,12 @@ seeAlso:
   - DirichletBeta
   - DirichletEta
   - Zeta
+references:
+  - system: wikipedia
+    identity: Dirichlet character
+  - system: mathworld
+    identity: DirichletCharacter
+  - system: dlmf
+    identity: "27.8"
+names:
+  wolframIdentity: true

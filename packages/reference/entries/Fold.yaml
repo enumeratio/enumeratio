@@ -10,3 +10,5 @@ signatures:
     library: enumeratio-collections
 seeAlso:
   - Scan
+names:
+  wolframIdentity: true

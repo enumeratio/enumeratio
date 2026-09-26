@@ -11,3 +11,5 @@ details:
 seeAlso:
   - MapThread
   - Level
+names:
+  wolframIdentity: true

@@ -1,0 +1,16 @@
+name: ZigzagComposition
+domain: Collections
+signature: ZigzagComposition(n)
+summary: "The alternating compositions of $n$: $a_1 < a_2 > a_3 < …$ or $a_1 > a_2 < a_3 > …$, either starting direction."
+signatures:
+  - call: ZigzagComposition(n)
+    description: "the alternating compositions of $n$: $a_1 < a_2 > a_3 < …$ or $a_1 > a_2 < a_3 > …$, either starting direction"
+    library: enumeratio-collections
+details:
+  - Count is A025047.
+seeAlso:
+  - IntegerCompositions
+  - AlternatingPermutations
+references:
+  - system: oeis
+    identity: A025047

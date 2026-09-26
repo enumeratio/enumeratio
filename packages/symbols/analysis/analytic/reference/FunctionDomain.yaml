@@ -10,3 +10,5 @@ details:
   - Built on one shared classifier for an elementary real expression in a single variable — see [[FunctionMonotonicity]], [[FunctionRange]], and the rest of the `Function*` family, which all reduce the expression the same way before answering their own question.
   - 'Covers: polynomials and rational functions (division by zero, denominator degree <= 2 or a bare power like $x^n$); Sqrt of an affine or quadratic argument (an even root, requiring the radicand >= 0); Ln/Log of an affine argument; and Exp, Sin, Cos, Tan of an affine argument (domain all of $\mathbb R$, except Tan -- see below).'
   - "Declines (leaves the call unevaluated) rather than answer: a second free variable; a denominator or radicand of degree above 2 with more than one term; Log of anything but an affine argument; and Tan, whose true domain excludes a countably infinite set of points ($x \\ne \\pi/2 + k\\pi$) that this file's interval vocabulary cannot express as a finite union of intervals."
+names:
+  wolframIdentity: true

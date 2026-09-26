@@ -11,3 +11,6 @@ details:
   - Everything interesting about $H_n(q)$ — Kazhdan–Lusztig theory, the Jones polynomial, representations at roots of unity — lives at $q \ne 1$
 seeAlso:
   - HeckeT
+references:
+  - system: wikipedia
+    identity: Iwahori–Hecke algebra

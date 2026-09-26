@@ -1,0 +1,31 @@
+the-first-20-terms:
+  epsil:
+    in: Take(SafePrimes, 20)
+    out: |-
+      [
+        5,
+        7,
+        11,
+        23,
+        47,
+        59,
+        83,
+        107,
+        167,
+        179,
+        227,
+        263,
+        347,
+        359,
+        383,
+        467,
+        479,
+        503,
+        563,
+        587,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SafePrimes}, 20)
+    out: \bigl\lbrack5, 7, 11, 23, 47, 59, 83, 107, 167, 179, 227, 263, 347, 359, 383, 467, 479, 503, 563, 587\bigr\rbrack
+  fullform:
+    in: Take[SafePrimes, 20]

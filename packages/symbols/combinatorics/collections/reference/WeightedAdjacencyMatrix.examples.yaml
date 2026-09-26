@@ -1,0 +1,18 @@
+- id: two-weighted-edges
+  expr:
+    [
+      WeightedAdjacencyMatrix,
+      [
+        Graph,
+        [List, 1, 2, 3],
+        [List, [UndirectedEdge, 1, 2], [DirectedEdge, 2, 3]],
+        [KeyValuePair, EdgeWeight, [List, 5, 7]],
+      ],
+    ]
+  expected: [List, [List, 0, 5, 0], [List, 5, 0, 7], [List, 0, 0, 0]]
+  caption: The undirected edge's weight is symmetric; the directed edge's is not
+- id: no-edgeweight-falls-back-to-adjacencymatrix
+  expr: [WeightedAdjacencyMatrix, [Graph, [List, 1, 2], [List, [UndirectedEdge, 1, 2]]]]
+  expected: [List, [List, 0, 1], [List, 1, 0]]
+  caption: With no EdgeWeight at all, every edge reads weight 1 — the same matrix AdjacencyMatrix gives
+  role: test

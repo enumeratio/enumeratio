@@ -22,3 +22,9 @@ seeAlso:
   - AdicSqrt
   - HenselLift
   - IntegerDigits
+bindings:
+  - origin: mapped
+    form: rust
+    template: adic($1, $2)
+    arity: 2
+    note: "The adic crate is p-adic only: our composite bases (10-adic) have no counterpart there."

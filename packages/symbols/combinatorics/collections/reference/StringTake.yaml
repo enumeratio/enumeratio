@@ -16,3 +16,5 @@ details:
   - Positions and lengths count Unicode code points — see [[StringLength]].
 seeAlso:
   - StringLength
+names:
+  wolframIdentity: true

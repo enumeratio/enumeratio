@@ -13,3 +13,5 @@ signatures:
 details:
   - DiracDelta has no ordinary value at 0 -- it is not a function in the usual sense, so DiracDelta(0) stays unevaluated rather than becoming Infinity or an error.
   - D(HeavisideTheta(x), x) = DiracDelta(x) -- see [[HeavisideTheta]].
+names:
+  wolframIdentity: true

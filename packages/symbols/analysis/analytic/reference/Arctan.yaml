@@ -14,3 +14,14 @@ seeAlso:
   - Tan
   - Arcsin
   - Arccos
+references:
+  - system: wikipedia
+    identity: Inverse trigonometric functions
+  - system: mathworld
+    identity: InverseTangent
+  - system: dlmf
+    identity: "4.23"
+names:
+  fungrim: Atan
+  dlmf: arctangent function
+  wolfram: ArcTan

@@ -15,3 +15,5 @@ details:
 seeAlso:
   - MatchQ
   - ReplacePart
+names:
+  wolframIdentity: true

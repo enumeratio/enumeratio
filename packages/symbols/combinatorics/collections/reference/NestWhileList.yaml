@@ -10,3 +10,5 @@ details:
   - Capped at 4096 applications of $f$, same as [[NestWhile]].
 seeAlso:
   - NestWhile
+names:
+  wolframIdentity: true

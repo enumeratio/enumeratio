@@ -1,0 +1,10 @@
+name: Tuple
+domain: Compute engine
+signature: Tuple(any*) -> tuple
+summary: A fixed number of heterogeneous elements
+signatures:
+  - call: Tuple(any*) -> tuple
+    description: as compute-engine declares it
+names:
+  wolfram: List
+stub: engine

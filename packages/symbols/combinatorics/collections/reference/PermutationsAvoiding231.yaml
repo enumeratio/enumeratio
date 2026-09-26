@@ -1,0 +1,20 @@
+name: PermutationsAvoiding231
+domain: Collections
+signature: PermutationsAvoiding231(n)
+summary: Permutations of $\{1, …, n\}$ avoiding the pattern $2-3-1$.
+signatures:
+  - call: PermutationsAvoiding231(n)
+    description: Permutations of $\{1, …, n\}$ avoiding the pattern $2-3-1$
+    library: enumeratio-collections
+details:
+  - Count is the Catalan number $C_n$ (A000108) — Knuth's classical pattern-avoidance result.
+seeAlso:
+  - SymmetricGroup
+  - PermutationsAvoiding123
+  - PermutationsAvoiding132
+  - PermutationsAvoiding213
+  - PermutationsAvoiding312
+  - PermutationsAvoiding321
+references:
+  - system: oeis
+    identity: A000108

@@ -16,3 +16,5 @@ seeAlso:
   - TruncatedDistribution
   - ProductDistribution
   - RandomVariate
+names:
+  wolframIdentity: true

@@ -16,3 +16,14 @@ details:
 seeAlso:
   - AdicValuation
   - FactorInteger
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: IntegerExponent[$1, $2]
+    arity: 2
+  - origin: mapped
+    form: sympy
+    template: multiplicity($2, $1)
+    arity: 2

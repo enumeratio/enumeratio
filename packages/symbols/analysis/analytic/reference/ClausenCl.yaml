@@ -38,3 +38,8 @@ seeAlso:
   - DirichletBeta
   - DirichletEta
   - Zeta
+references:
+  - system: wikipedia
+    identity: Clausen function
+  - system: mathworld
+    identity: ClausenFunction

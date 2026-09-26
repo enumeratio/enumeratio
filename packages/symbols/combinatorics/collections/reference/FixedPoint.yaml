@@ -13,3 +13,5 @@ details:
 seeAlso:
   - Nest
   - NestList
+names:
+  wolframIdentity: true

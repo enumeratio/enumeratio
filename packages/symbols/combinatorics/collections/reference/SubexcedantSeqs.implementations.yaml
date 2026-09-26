@@ -1,0 +1,53 @@
+count-subexcedantseqs-4:
+  epsil:
+    in: Count(SubexcedantSeqs(4))
+    out: "24"
+  tex:
+    in: \mathrm{Count}(\mathrm{SubexcedantSeqs}(4))
+    out: "24"
+  fullform:
+    in: Count[SubexcedantSeqs[4]]
+first-element-of-subexcedantseqs-4:
+  epsil:
+    in: SubexcedantSeqs(4)[1]
+    out: "[0, 0, 0, 0]"
+  tex:
+    in: \mathrm{SubexcedantSeqs}(4)[1]
+    out: \bigl\lbrack0, 0, 0, 0\bigr\rbrack
+  fullform:
+    in: Part[SubexcedantSeqs[4], 1]
+every-element-of-subexcedantseqs-4:
+  epsil:
+    in: Take(SubexcedantSeqs(4), 24)
+    out: |-
+      [
+        [0, 0, 0, 0],
+        [0, 0, 0, 1],
+        [0, 0, 0, 2],
+        [0, 0, 0, 3],
+        [0, 0, 1, 0],
+        [0, 0, 1, 1],
+        [0, 0, 1, 2],
+        [0, 0, 1, 3],
+        [0, 0, 2, 0],
+        [0, 0, 2, 1],
+        [0, 0, 2, 2],
+        [0, 0, 2, 3],
+        [0, 1, 0, 0],
+        [0, 1, 0, 1],
+        [0, 1, 0, 2],
+        [0, 1, 0, 3],
+        [0, 1, 1, 0],
+        [0, 1, 1, 1],
+        [0, 1, 1, 2],
+        [0, 1, 1, 3],
+        [0, 1, 2, 0],
+        [0, 1, 2, 1],
+        [0, 1, 2, 2],
+        [0, 1, 2, 3],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SubexcedantSeqs}(4), 24)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 2\bigr\rbrack, \bigl\lbrack0, 0, 0, 3\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 2\bigr\rbrack, \bigl\lbrack0, 0, 1, 3\bigr\rbrack, \bigl\lbrack0, 0, 2, 0\bigr\rbrack, \bigl\lbrack0, 0, 2, 1\bigr\rbrack, \bigl\lbrack0, 0, 2, 2\bigr\rbrack, \bigl\lbrack0, 0, 2, 3\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 2\bigr\rbrack, \bigl\lbrack0, 1, 0, 3\bigr\rbrack, \bigl\lbrack0, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 2\bigr\rbrack, \bigl\lbrack0, 1, 1, 3\bigr\rbrack, \bigl\lbrack0, 1, 2, 0\bigr\rbrack, \bigl\lbrack0, 1, 2, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[SubexcedantSeqs[4], 24]

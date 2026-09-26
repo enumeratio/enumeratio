@@ -24,3 +24,6 @@ details:
 seeAlso:
   - Diagram
   - PartitionAlgebra
+references:
+  - system: wikipedia
+    identity: Group action#Orbits and stabilizers

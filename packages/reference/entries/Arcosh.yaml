@@ -1,0 +1,12 @@
+name: Arcosh
+domain: Compute engine
+signature: Arcosh(complex | signed_infinity) -> number
+summary: Inverse hyperbolic cosine (area hyperbolic cosine).
+signatures:
+  - call: Arcosh(complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  fungrim: Acosh
+  dlmf: inverse hyperbolic cosine function
+  wolfram: ArcCosh
+stub: engine

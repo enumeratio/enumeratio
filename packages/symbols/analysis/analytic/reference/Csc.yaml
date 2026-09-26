@@ -13,3 +13,6 @@ seeAlso:
   - Sin
   - Sec
   - Cot
+names:
+  dlmf: cosecant function
+  wolframIdentity: true

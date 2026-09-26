@@ -14,3 +14,5 @@ details:
   - SquareWave(0) = 1 -- the half-open convention puts the period's left edge in the high half.
   - Default range is {-1, 1}, not {0, 1} -- SquareWave(1/2) = -1.
   - The range form takes the range FIRST, x second -- SquareWave({min, max}, x) -- matching [[SawtoothWave]] and [[TriangleWave]].
+names:
+  wolframIdentity: true

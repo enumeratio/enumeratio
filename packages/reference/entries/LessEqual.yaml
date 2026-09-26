@@ -1,0 +1,10 @@
+name: LessEqual
+domain: Compute engine
+signature: LessEqual(any, any*) -> boolean
+summary: Less-than-or-equal comparison (less than or equal to).
+signatures:
+  - call: LessEqual(any, any*) -> boolean
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

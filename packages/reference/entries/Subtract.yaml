@@ -1,0 +1,39 @@
+name: Subtract
+domain: Compute engine
+signature: Subtract(number+) -> number
+summary: Difference between two or more values.
+signatures:
+  - call: Subtract(number+) -> number
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: ($1 - $2)
+    arity: 2
+  - origin: mapped
+    form: mpmath
+    template: ($1 - $2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: ($1 - $2)
+    arity: 2
+  - origin: mapped
+    form: oscar
+    template: ($1 - $2)
+    arity: 2
+  - origin: mapped
+    form: julia
+    template: ($1 - $2)
+    arity: 2
+  - origin: mapped
+    form: mathlib4
+    template: ($1 - $2)
+    arity: 2
+  - origin: mapped
+    form: rust
+    template: ($1 - $2)
+    arity: 2

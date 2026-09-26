@@ -1,0 +1,47 @@
+count-dyadiccompositions-6:
+  epsil:
+    in: Count(DyadicCompositions(6))
+    out: "18"
+  tex:
+    in: \mathrm{Count}(\mathrm{DyadicCompositions}(6))
+    out: "18"
+  fullform:
+    in: Count[DyadicCompositions[6]]
+first-element-of-dyadiccompositions-6:
+  epsil:
+    in: DyadicCompositions(6)[1]
+    out: "[1, 1, 1, 1, 1, 1]"
+  tex:
+    in: \mathrm{DyadicCompositions}(6)[1]
+    out: \bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: Part[DyadicCompositions[6], 1]
+every-element-of-dyadiccompositions-6:
+  epsil:
+    in: Take(DyadicCompositions(6), 18)
+    out: |-
+      [
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 2],
+        [1, 1, 1, 2, 1],
+        [1, 1, 2, 1, 1],
+        [1, 1, 2, 2],
+        [1, 1, 4],
+        [1, 2, 1, 1, 1],
+        [1, 2, 1, 2],
+        [1, 2, 2, 1],
+        [1, 4, 1],
+        [2, 1, 1, 1, 1],
+        [2, 1, 1, 2],
+        [2, 1, 2, 1],
+        [2, 2, 1, 1],
+        [2, 2, 2],
+        [2, 4],
+        [4, 1, 1],
+        [4, 2],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{DyadicCompositions}(6), 18)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 2\bigr\rbrack, \bigl\lbrack1, 1, 1, 2, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 2\bigr\rbrack, \bigl\lbrack1, 1, 4\bigr\rbrack, \bigl\lbrack1, 2, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 2, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 2, 1\bigr\rbrack, \bigl\lbrack1, 4, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 2\bigr\rbrack, \bigl\lbrack2, 1, 2, 1\bigr\rbrack, \bigl\lbrack2, 2, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack4, 1, 1\bigr\rbrack, \bigl\lbrack4, 2\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[DyadicCompositions[6], 18]

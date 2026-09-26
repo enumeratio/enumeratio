@@ -1,0 +1,22 @@
+- id: count-lukasiewiczpaths-4
+  expr: [Count, [LukasiewiczPaths, 4]]
+  expected: 14
+  category: Basic
+  caption: $Count(LukasiewiczPaths(4)) = 14$
+- id: first-element-of-lukasiewiczpaths-4
+  expr: [At, [LukasiewiczPaths, 4], 1]
+  expected: [List, 0, 0, 0, 0, -1]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-lukasiewiczpaths-4
+  role: test
+  expr: [Take, [LukasiewiczPaths, 4], 5]
+  expected:
+    [
+      List,
+      [List, 0, 0, 0, 0, -1],
+      [List, 0, 0, 1, -1, -1],
+      [List, 0, 1, 0, -1, -1],
+      [List, 1, 0, 0, -1, -1],
+      [List, 0, 1, -1, 0, -1],
+    ]

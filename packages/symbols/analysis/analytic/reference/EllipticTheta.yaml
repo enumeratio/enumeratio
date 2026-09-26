@@ -16,3 +16,5 @@ details:
 seeAlso:
   - EllipticThetaPrime
   - JacobiSN
+names:
+  wolframIdentity: true

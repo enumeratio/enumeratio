@@ -12,3 +12,15 @@ details:
 seeAlso:
   - Basis
   - AlgebraSignature
+references:
+  - system: wikipedia
+    identity: Dimension (vector space)
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).dimension()
+    arity: 1
+  - origin: mapped
+    form: oscar
+    template: dim($1)
+    arity: 1

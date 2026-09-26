@@ -19,3 +19,11 @@ seeAlso:
   - Subfactorial
   - Count
   - At
+references:
+  - system: wikipedia
+    identity: Symmetric group
+  - system: mathworld
+    identity: SymmetricGroup
+names:
+  catalog: Permutations
+  wolframIdentity: true

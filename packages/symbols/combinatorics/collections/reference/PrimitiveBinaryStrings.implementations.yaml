@@ -7,3 +7,68 @@ count-primitivebinarystrings-6-54-a027375:
     out: "54"
   fullform:
     in: Count[PrimitiveBinaryStrings[6]]
+every-element-of-primitivebinarystrings-6:
+  epsil:
+    in: Take(PrimitiveBinaryStrings(6), 54)
+    out: |-
+      [
+        [0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 1, 0],
+        [0, 0, 0, 1, 1, 1],
+        [0, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 1, 1],
+        [0, 0, 1, 1, 0, 0],
+        [0, 0, 1, 1, 0, 1],
+        [0, 0, 1, 1, 1, 0],
+        [0, 0, 1, 1, 1, 1],
+        [0, 1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 0, 1, 1],
+        [0, 1, 0, 1, 0, 0],
+        [0, 1, 0, 1, 1, 0],
+        [0, 1, 0, 1, 1, 1],
+        [0, 1, 1, 0, 0, 0],
+        [0, 1, 1, 0, 0, 1],
+        [0, 1, 1, 0, 1, 0],
+        [0, 1, 1, 1, 0, 0],
+        [0, 1, 1, 1, 0, 1],
+        [0, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 0],
+        [1, 0, 0, 0, 1, 1],
+        [1, 0, 0, 1, 0, 1],
+        [1, 0, 0, 1, 1, 0],
+        [1, 0, 0, 1, 1, 1],
+        [1, 0, 1, 0, 0, 0],
+        [1, 0, 1, 0, 0, 1],
+        [1, 0, 1, 0, 1, 1],
+        [1, 0, 1, 1, 0, 0],
+        [1, 0, 1, 1, 1, 0],
+        [1, 0, 1, 1, 1, 1],
+        [1, 1, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 1],
+        [1, 1, 0, 0, 1, 0],
+        [1, 1, 0, 0, 1, 1],
+        [1, 1, 0, 1, 0, 0],
+        [1, 1, 0, 1, 0, 1],
+        [1, 1, 0, 1, 1, 1],
+        [1, 1, 1, 0, 0, 0],
+        [1, 1, 1, 0, 0, 1],
+        [1, 1, 1, 0, 1, 0],
+        [1, 1, 1, 0, 1, 1],
+        [1, 1, 1, 1, 0, 0],
+        [1, 1, 1, 1, 0, 1],
+        [1, 1, 1, 1, 1, 0],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{PrimitiveBinaryStrings}(6), 54)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 1, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 1, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 1, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[PrimitiveBinaryStrings[6], 54]

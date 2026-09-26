@@ -1,0 +1,10 @@
+name: IntegerPartition
+domain: Collections
+signature: IntegerPartition(list)
+summary: The singular-inhabitant constructor for an integer partition, as its parts.
+references:
+  - system: wikipedia
+    identity: Integer partition
+  - system: mathworld
+    identity: Partition
+stub: carrier

@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - PathGraph
   - CompleteKaryTree
+names:
+  wolframIdentity: true

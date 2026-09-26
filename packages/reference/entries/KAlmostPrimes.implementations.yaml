@@ -1,0 +1,9 @@
+the-first-20-terms-at-3:
+  epsil:
+    in: Take(KAlmostPrimes(3), 20)
+    out: "[8, 12, 18, 20, 27, 28, 30, 42, 44, 45, 50, 52, 63, 66, 68, 70, 75, 76, 78, 92]"
+  tex:
+    in: \mathrm{Take}(\mathrm{KAlmostPrimes}(3), 20)
+    out: \bigl\lbrack8, 12, 18, 20, 27, 28, 30, 42, 44, 45, 50, 52, 63, 66, 68, 70, 75, 76, 78, 92\bigr\rbrack
+  fullform:
+    in: Take[KAlmostPrimes[3], 20]

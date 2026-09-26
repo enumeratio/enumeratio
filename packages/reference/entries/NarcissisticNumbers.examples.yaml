@@ -8,3 +8,7 @@
   expected: { num: "115132219018763992565095597973971522401" }
   category: Scope
   caption: The 88th and largest term, a 39-digit exact integer well past $2^{53}-1$
+- role: test
+  id: the-first-20-terms
+  expr: [Take, NarcissisticNumbers, 20]
+  expected: [List, 1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1634, 8208, 9474, 54748, 92727, 93084, 548834]

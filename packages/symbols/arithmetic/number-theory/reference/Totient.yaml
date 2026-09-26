@@ -14,3 +14,46 @@ details:
 seeAlso:
   - MultiplicativeOrder
   - DivisorSigma
+references:
+  - system: wikipedia
+    identity: Euler's totient function
+  - system: mathworld
+    identity: TotientFunction
+  - system: dlmf
+    identity: "27.2"
+  - system: oeis
+    identity: A000010
+names:
+  dlmf: Euler's totient
+  wolfram: EulerPhi
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: EulerPhi[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: totient($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: euler_phi($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: oscar
+    template: euler_phi(ZZ($1))
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: julia
+    template: euler_phi(ZZ($1))
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.totient $1)
+    arity: 1
+    threadArg: 1

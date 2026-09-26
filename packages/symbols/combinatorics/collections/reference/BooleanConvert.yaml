@@ -1,0 +1,23 @@
+name: BooleanConvert
+domain: Collections
+signature: BooleanConvert(expr) / BooleanConvert(expr, form)
+summary: expr rewritten in the given boolean normal form — "DNF" (default), "CNF", or "NNF".
+signatures:
+  - call: BooleanConvert(expr)
+    description: expr in disjunctive normal form (an Or of Ands) — same as LogicalExpand
+    library: enumeratio-collections
+  - call: BooleanConvert(expr, "CNF")
+    description: expr in conjunctive normal form (an And of Ors)
+    library: enumeratio-collections
+  - call: BooleanConvert(expr, "NNF")
+    description: expr with Not pushed to the leaves, but And/Or left in their original nesting shape (not distributed)
+    library: enumeratio-collections
+details:
+  - '"DNF" and "CNF" are Wolfram''s own forms. "NNF" is an extension of ours — Wolfram 15''s BooleanConvert has no "NNF" form (BooleanConvert(expr, "NNF") stays unevaluated there); we implement it anyway since it falls straight out of the same elimination pipeline, and it is documented here as a divergence rather than a Wolfram form.'
+  - Other Wolfram forms ("ESOP", "AC", "BF", …) are left unevaluated rather than approximated.
+  - Shares LogicalExpand's elimination of Implies/Equivalent/Xor/Nand/Nor and its deterministic sort/dedup of every And/Or's operands.
+  - A CNF clause with both a literal and its negation (a tautology) is dropped; an all-dropped result is True.
+seeAlso:
+  - LogicalExpand
+names:
+  wolframIdentity: true

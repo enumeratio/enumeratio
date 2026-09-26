@@ -18,3 +18,5 @@ seeAlso:
   - PermutationCycles
   - PermutationGroup
   - GroupElements
+names:
+  wolframIdentity: true

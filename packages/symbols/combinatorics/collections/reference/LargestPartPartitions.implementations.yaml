@@ -1,0 +1,47 @@
+count-largestpartpartitions-10-4:
+  epsil:
+    in: Count(LargestPartPartitions(10, 4))
+    out: "9"
+  tex:
+    in: \mathrm{Count}(\mathrm{LargestPartPartitions}(10, 4))
+    out: "9"
+  fullform:
+    in: Count[LargestPartPartitions[10, 4]]
+first-element-of-largestpartpartitions-10-4:
+  epsil:
+    in: LargestPartPartitions(10, 4)[1]
+    out: "[4, 4, 2]"
+  tex:
+    in: \mathrm{LargestPartPartitions}(10, 4)[1]
+    out: \bigl\lbrack4, 4, 2\bigr\rbrack
+  fullform:
+    in: Part[LargestPartPartitions[10, 4], 1]
+every-element-of-largestpartpartitions-10-4:
+  epsil:
+    in: Take(LargestPartPartitions(10, 4), 9)
+    out: |-
+      [
+        [4, 4, 2],
+        [4, 4, 1, 1],
+        [4, 3, 3],
+        [4, 3, 2, 1],
+        [4, 3, 1, 1, 1],
+        [4, 2, 2, 2],
+        [4, 2, 2, 1, 1],
+        [4, 2, 1, 1, 1, 1],
+        [4, 1, 1, 1, 1, 1, 1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{LargestPartPartitions}(10, 4), 9)
+    out: \bigl\lbrack\bigl\lbrack4, 4, 2\bigr\rbrack, \bigl\lbrack4, 4, 1, 1\bigr\rbrack, \bigl\lbrack4, 3, 3\bigr\rbrack, \bigl\lbrack4, 3, 2, 1\bigr\rbrack, \bigl\lbrack4, 3, 1, 1, 1\bigr\rbrack, \bigl\lbrack4, 2, 2, 2\bigr\rbrack, \bigl\lbrack4, 2, 2, 1, 1\bigr\rbrack, \bigl\lbrack4, 2, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack4, 1, 1, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[LargestPartPartitions[10, 4], 9]
+every-element-of-largestpartpartitions-10-1:
+  epsil:
+    in: Take(LargestPartPartitions(10, 1), 1)
+    out: "[[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]"
+  tex:
+    in: \mathrm{Take}(\mathrm{LargestPartPartitions}(10, 1), 1)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[LargestPartPartitions[10, 1], 1]

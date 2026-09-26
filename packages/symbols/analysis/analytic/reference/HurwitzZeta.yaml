@@ -31,11 +31,36 @@ bindings:
     source: packages/symbols/analysis/analytic/src/shader.ts:zetaWGSL
     produces: a colour per pixel — complex ζ(s, a), domain-coloured
   - origin: mapped
-    form: wolfram / mpmath
-    environment: external
-    note: HurwitzZeta[s, a]; mpmath.zeta(s, a).
+    form: wolfram
+    template: HurwitzZeta[$1, $2]
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+  - origin: mapped
+    form: sympy
+    template: zeta($1, $2)
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+  - origin: mapped
+    form: mpmath
+    template: zeta($1, $2)
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
+  - origin: mapped
+    form: sage
+    template: hurwitz_zeta($1, $2)
+    arity: 2
+    note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
 seeAlso:
   - Zeta
   - BernoulliB
   - Gamma
   - Digamma
+references:
+  - system: wikipedia
+    identity: Hurwitz zeta function
+  - system: mathworld
+    identity: HurwitzZetaFunction
+  - system: dlmf
+    identity: "25.11"
+names:
+  wolframIdentity: true

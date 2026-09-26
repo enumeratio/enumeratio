@@ -1,0 +1,11 @@
+name: BesselI
+domain: Compute engine
+signature: "BesselI(order: complex, complex | infinity) -> number"
+summary: Modified Bessel function of the first kind
+signatures:
+  - call: "BesselI(order: complex, complex | infinity) -> number"
+    description: as compute-engine declares it
+names:
+  dlmf: modified Bessel function of the first kind
+  wikidata: Q2607225
+stub: engine

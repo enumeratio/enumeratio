@@ -19,3 +19,5 @@ details:
 seeAlso:
   - Gamma
   - BetaRegularized
+names:
+  wolframIdentity: true

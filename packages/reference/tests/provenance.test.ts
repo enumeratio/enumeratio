@@ -395,10 +395,20 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * nminmax.ts, nsum.ts) are the same story yet again: all seven are genuinely Wolfram's own
  * names (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
  * `elsewhere`.
+ *
+ * WeightedAdjacencyMatrix (graph-weights.ts) is the same story once more: genuinely
+ * Wolfram's own name (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run.
  */
 const NOVEL = [
+  // Parametric numeric families whose golden data became examples calling the head itself.
+  "KAlmostPrimes",
+  "KFreeIntegers",
+  "PolygonalNumbers",
+  "PrimePairs",
+  "RoughNumbers",
   "DifferenceRootReduce",
   "DifferentialRootReduce",
+  "WeightedAdjacencyMatrix",
   "TimeConstrained",
   "MemoryConstrained",
   "VerificationTest",
@@ -583,6 +593,12 @@ const NOVEL = [
   "GroupGenerators",
   "GroupOrder",
   "GroupElements",
+  // Genuine Wolfram heads (see to-wolfram.ts HEADS) closing the permutation-group frontier,
+  // but not yet run through the oracle sweep, so `elsewhere` is still empty here (same as
+  // the Function* family above).
+  "AlternatingGroup",
+  "PermutationList",
+  "PermutationReplace",
   "ModularMatrix",
   "ModularWord",
   "Convergents",
@@ -787,6 +803,17 @@ const NOVEL = [
   "NumberQ",
   "ReIm",
   "RandomComplex",
+  // The Wolfram-frontier transforms/ODE batch (mellin-transform.ts, hankel-transform.ts,
+  // caputo-derivative.ts, trig-factor.ts, function-properties.ts's FunctionContinuous,
+  // dsolve.ts): every one of these is genuinely Wolfram's own name too (see HEADS in
+  // @enumeratio/wolfram), waiting on the same coverage run to fill in `elsewhere`.
+  "MellinTransform",
+  "InverseMellinTransform",
+  "HankelTransform",
+  "CaputoD",
+  "TrigFactor",
+  "FunctionContinuous",
+  "DSolveValue",
   // The Jacobi elliptic family and Jacobi theta functions (jacobi-elliptic.ts, theta.ts):
   // all sixteen are genuinely Wolfram's own names (see HEADS in @enumeratio/wolfram),
   // waiting on the same coverage run to fill in `elsewhere`.
@@ -807,6 +834,80 @@ const NOVEL = [
   "EllipticTheta",
   "EllipticThetaPrime",
   "KaryTree",
+  // logic-frontier.ts: LogicalExpand/BooleanConvert are genuinely Wolfram's own names (no
+  // DNF/CNF/NNF routine existed in compute-engine to build on); the Is… predicates are our
+  // spelling of Wolfram's TrueQ/IntegerQ/VectorQ/MatrixQ/ArrayQ/MersennePrimeExponentQ/
+  // IntervalMemberQ (see `HEADS` in @enumeratio/wolfram) -- all nine waiting on the same
+  // coverage run to fill in `elsewhere`.
+  "LogicalExpand",
+  "BooleanConvert",
+  "IsTrue",
+  "IsInteger",
+  "IsVector",
+  "IsMatrix",
+  "IsArray",
+  "IsMersennePrimeExponent",
+  "IsIntervalMember",
+  // Collection families in permutations.ts, partitions.ts, compositions.ts, words.ts and
+  // paths-partitions.ts (packages/symbols/combinatorics/collections) that had no reference
+  // record until now (lane A-65): our own names for classical combinatorial families, not
+  // Wolfram's -- nothing elsewhere to cross-reference.
+  "EvenPermutations",
+  "Arrangements",
+  "LehmerCodes",
+  "SubexcedantSeqs",
+  "AlternatingPermutations",
+  "ConnectedPermutations",
+  "KCyclePermutations",
+  "KDescentPermutations",
+  "KInversionPermutations",
+  "PermutationsAvoiding123",
+  "PermutationsAvoiding132",
+  "PermutationsAvoiding213",
+  "PermutationsAvoiding231",
+  "PermutationsAvoiding312",
+  "PermutationsAvoiding321",
+  "OddPartitions",
+  "PrimePartition",
+  "SquarePartitions",
+  "TriangularPartitions",
+  "LargestPartPartitions",
+  "OddCompositions",
+  "ProperCompositions",
+  "DyadicCompositions",
+  "FibonacciCompositions",
+  "TriCompositions",
+  "TetraCompositions",
+  "TriangularComposition",
+  "PrimeCompositions",
+  "KBoundedCompositions",
+  "CarlitzCompositions",
+  "PalindromicCompositions",
+  "ZigzagComposition",
+  "BinaryWords",
+  "BinaryWordsByWeight",
+  "Words",
+  "FibStrings",
+  "LucasStrings",
+  "GrayCodes",
+  "BinaryPalindromes",
+  "BinaryNecklaces",
+  "LyndonWords",
+  "KNecklaces",
+  "KLyndonWords",
+  "RestrictedGrowthStrings",
+  "NonCrossingPartitions",
+  "NonNestingPartitions",
+  "NonCrossingMatchings",
+  "NonNestingMatchings",
+  "GrandDyckPaths",
+  "DelannoyPaths",
+  "RiordanPaths",
+  "FinePaths",
+  "BallotSequences",
+  "LukasiewiczPaths",
+  "DyckPathsByHeight",
+  "MotzkinPathsByPeaks",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

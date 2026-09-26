@@ -3,3 +3,23 @@
   expected: 13
   category: Basic
   caption: $Count(BinaryBracelets(6)) = 13$, A000029
+- role: test
+  id: every-element-of-binarybracelets-6
+  expr: [Take, [BinaryBracelets, 6], 13]
+  expected:
+    [
+      List,
+      [List, 0, 0, 0, 0, 0, 0],
+      [List, 0, 0, 0, 0, 0, 1],
+      [List, 0, 0, 0, 0, 1, 1],
+      [List, 0, 0, 0, 1, 0, 1],
+      [List, 0, 0, 0, 1, 1, 1],
+      [List, 0, 0, 1, 0, 0, 1],
+      [List, 0, 0, 1, 0, 1, 1],
+      [List, 0, 0, 1, 1, 1, 1],
+      [List, 0, 1, 0, 1, 0, 1],
+      [List, 0, 1, 0, 1, 1, 1],
+      [List, 0, 1, 1, 0, 1, 1],
+      [List, 0, 1, 1, 1, 1, 1],
+      [List, 1, 1, 1, 1, 1, 1],
+    ]

@@ -16,3 +16,5 @@ seeAlso:
   - Expectation
   - NProbability
   - Distributed
+names:
+  wolframIdentity: true

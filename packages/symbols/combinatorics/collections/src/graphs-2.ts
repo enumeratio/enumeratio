@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf } from "@enumeratio/boxed";
+import { allPairsWeightedDistances, weightedAdjacencyMatrixExpr } from "./graph-weights.ts";
 import { degrees, directedAdjacency, type GraphModel, graphOf, integerGraph, listOf, vertexKey } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";
 
@@ -551,9 +552,13 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("GraphDistanceMatrix", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
-      const distances = allPairsDistances(g);
+      // Weighted (EdgeWeight given): each entry is Dijkstra's summed-weight distance, not
+      // an edge count -- same switch GraphDistance/FindShortestPath make, and the same
+      // decline (undefined) on a negative weight.
+      const distances = g.weighted ? allPairsWeightedDistances(g) : allPairsDistances(g);
+      if (distances === undefined) return undefined;
       return listOf(
         ce,
         g.order.map((v) =>
@@ -566,10 +571,18 @@ export function declareGraphs2(ce: ComputeEngine): void {
     },
   });
 
+  ce.declare("WeightedAdjacencyMatrix", {
+    signature: "(value) -> list",
+    evaluate: (ops) => {
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
+      return g === undefined ? undefined : weightedAdjacencyMatrixExpr(ce, g);
+    },
+  });
+
   ce.declare("VertexEccentricity", {
     signature: "(value, any?) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const ecc = eccentricities(g);
       if (ops[1] === undefined)
@@ -585,7 +598,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("GraphRadius", {
     signature: "(value) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || g.order.length === 0) return undefined;
       const ecc = [...eccentricities(g).values()];
       return ecc.some((e) => e === undefined) ? POSITIVE_INFINITY(ce) : ce.number(Math.min(...(ecc as number[])));
@@ -595,7 +608,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("GraphDiameter", {
     signature: "(value) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || g.order.length === 0) return undefined;
       const ecc = [...eccentricities(g).values()];
       return ecc.some((e) => e === undefined) ? POSITIVE_INFINITY(ce) : ce.number(Math.max(...(ecc as number[])));
@@ -605,7 +618,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("GraphCenter", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const ecc = eccentricities(g);
       const finite = g.order.filter((v) => ecc.get(v) !== undefined);
@@ -621,7 +634,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("GraphPeriphery", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const ecc = eccentricities(g);
       const finite = g.order.filter((v) => ecc.get(v) !== undefined);
@@ -637,7 +650,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("VertexIndex", {
     signature: "(value, any) -> integer",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined) return undefined;
       const idx = g.order.indexOf(vertexKey(ops[1]));
       return idx === -1 ? undefined : ce.number(idx + 1);
@@ -647,7 +660,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("VertexInDegree", {
     signature: "(value, any?) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const inDeg = directionalDegrees(g, "in");
       if (ops[1] === undefined)
@@ -663,7 +676,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("VertexOutDegree", {
     signature: "(value, any?) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const outDeg = directionalDegrees(g, "out");
       if (ops[1] === undefined)
@@ -679,7 +692,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("ClosenessCentrality", {
     signature: "(value, any?) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const distances = allPairsDistances(g);
       if (ops[1] === undefined)
@@ -695,7 +708,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("EigenvectorCentrality", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : eigenvectorCentrality(ce, g);
     },
   });
@@ -705,7 +718,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("IsPathGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       if (!isSimple(g)) return ce.False;
       const n = g.order.length;
@@ -721,7 +734,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("IsAcyclicGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : hasCycle(g) ? ce.False : ce.True;
     },
   });
@@ -729,7 +742,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("IsCompleteGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : isCompleteGraph(g) ? ce.True : ce.False;
     },
   });
@@ -737,7 +750,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("IsLoopFreeGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : hasSelfLoop(g) ? ce.False : ce.True;
     },
   });
@@ -745,7 +758,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("IsSimpleGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : isSimple(g) ? ce.True : ce.False;
     },
   });
@@ -753,8 +766,8 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("IsIsomorphicGraph", {
     signature: "(value, value) -> boolean",
     evaluate: (ops) => {
-      const g1 = ops[0] === undefined ? undefined : graphOf(ops[0]);
-      const g2 = ops[1] === undefined ? undefined : graphOf(ops[1]);
+      const g1 = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
+      const g2 = ops[1] === undefined ? undefined : graphOf(ce, ops[1]);
       if (g1 === undefined || g2 === undefined) return undefined;
       const result = areIsomorphic(g1, g2);
       return result === undefined ? undefined : result ? ce.True : ce.False;
@@ -806,7 +819,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("LineGraph", {
     signature: "(value) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : lineGraph(ce, g);
     },
   });

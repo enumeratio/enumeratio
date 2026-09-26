@@ -10,3 +10,5 @@ details:
   - Lexicographic order. See [[SquaresR]] for just the count, at $p=2$.
 seeAlso:
   - SquaresR
+names:
+  wolframIdentity: true

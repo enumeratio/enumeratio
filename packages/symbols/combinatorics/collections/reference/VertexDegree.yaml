@@ -15,3 +15,5 @@ details:
 seeAlso:
   - AdjacencyMatrix
   - Graph
+names:
+  wolframIdentity: true

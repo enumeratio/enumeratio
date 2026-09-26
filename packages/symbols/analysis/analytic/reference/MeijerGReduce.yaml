@@ -18,3 +18,5 @@ bindings:
     source: packages/symbols/analysis/analytic/src/meijer-g-reduce.ts
 seeAlso:
   - MeijerG
+names:
+  wolframIdentity: true

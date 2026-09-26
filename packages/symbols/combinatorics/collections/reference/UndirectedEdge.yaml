@@ -12,3 +12,5 @@ details:
 seeAlso:
   - DirectedEdge
   - Graph
+names:
+  wolframIdentity: true

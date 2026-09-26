@@ -13,3 +13,5 @@ details:
 seeAlso:
   - Interval
   - CenteredInterval
+names:
+  wolframIdentity: true

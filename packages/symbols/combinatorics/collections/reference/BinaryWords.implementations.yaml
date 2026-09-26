@@ -1,0 +1,37 @@
+count-binarywords-3:
+  epsil:
+    in: Count(BinaryWords(3))
+    out: "8"
+  tex:
+    in: \mathrm{Count}(\mathrm{BinaryWords}(3))
+    out: "8"
+  fullform:
+    in: Count[BinaryWords[3]]
+first-element-of-binarywords-3:
+  epsil:
+    in: BinaryWords(3)[1]
+    out: "[0, 0, 0]"
+  tex:
+    in: \mathrm{BinaryWords}(3)[1]
+    out: \bigl\lbrack0, 0, 0\bigr\rbrack
+  fullform:
+    in: Part[BinaryWords[3], 1]
+every-element-of-binarywords-3:
+  epsil:
+    in: Take(BinaryWords(3), 8)
+    out: |-
+      [
+        [0, 0, 0],
+        [0, 0, 1],
+        [0, 1, 0],
+        [0, 1, 1],
+        [1, 0, 0],
+        [1, 0, 1],
+        [1, 1, 0],
+        [1, 1, 1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{BinaryWords}(3), 8)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[BinaryWords[3], 8]

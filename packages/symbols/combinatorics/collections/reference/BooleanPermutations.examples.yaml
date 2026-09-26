@@ -3,3 +3,18 @@
   expected: 8
   category: Basic
   caption: $Count(BooleanPermutations(5)) = F(6) = 8$. See [[Fibonacci]]
+- role: test
+  id: every-element-of-booleanpermutations-5
+  expr: [Take, [BooleanPermutations, 5], 8]
+  expected:
+    [
+      List,
+      [List, 1, 2, 3, 4, 5],
+      [List, 1, 2, 3, 5, 4],
+      [List, 1, 2, 4, 3, 5],
+      [List, 1, 3, 2, 4, 5],
+      [List, 1, 3, 2, 5, 4],
+      [List, 2, 1, 3, 4, 5],
+      [List, 2, 1, 3, 5, 4],
+      [List, 2, 1, 4, 3, 5],
+    ]

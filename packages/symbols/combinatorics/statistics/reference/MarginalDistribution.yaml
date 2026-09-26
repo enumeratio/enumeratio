@@ -15,3 +15,5 @@ details:
 seeAlso:
   - ProductDistribution
   - Mean
+names:
+  wolframIdentity: true

@@ -13,3 +13,6 @@ seeAlso:
   - Ascents
   - MajorIndex
   - SymmetricGroup
+references:
+  - system: wikipedia
+    identity: Permutation#Ascents, descents, runs, exceedances

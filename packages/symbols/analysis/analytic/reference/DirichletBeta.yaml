@@ -35,3 +35,10 @@ seeAlso:
   - HurwitzZeta
   - ClausenCl
   - Zeta
+references:
+  - system: wikipedia
+    identity: Dirichlet beta function
+  - system: mathworld
+    identity: DirichletBetaFunction
+names:
+  wolframIdentity: true

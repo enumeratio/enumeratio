@@ -17,3 +17,14 @@ details:
 seeAlso:
   - ConjugacyClasses
   - GroupBasis
+references:
+  - system: wikipedia
+    identity: Conjugacy class#Conjugacy class sum
+  - system: mathworld
+    identity: ConjugacyClass
+bindings:
+  - origin: mapped
+    form: oscar
+    template: enumeratio_class_sum($1, $2)
+    arity: 2
+    note: Classes are numbered in our order, by each class's smallest element; Oscar's conjugacy_classes order differs, so the helper re-sorts.

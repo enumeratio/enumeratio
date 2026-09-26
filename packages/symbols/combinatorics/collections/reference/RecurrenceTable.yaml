@@ -13,3 +13,5 @@ details:
 seeAlso:
   - LinearRecurrence
   - Fibonacci
+names:
+  wolframIdentity: true

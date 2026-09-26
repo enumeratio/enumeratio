@@ -1,0 +1,10 @@
+name: Rest
+domain: Compute engine
+signature: "Rest((T) -> T where T: string) & ((indexed_collection<T>) -> list<T> where T)"
+summary: Return the collection without the first element. If the collection has only one element, return an empty collection.
+signatures:
+  - call: "Rest((T) -> T where T: string) & ((indexed_collection<T>) -> list<T> where T)"
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

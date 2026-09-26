@@ -1,0 +1,54 @@
+an-interior-point:
+  epsil:
+    in: IsIntervalMember(Interval(1, 5), 3)
+    out: True
+  tex:
+    in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 3)
+    out: \top
+  traditional:
+    in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 3)
+    out: \mathrm{True}
+  fullform:
+    in: IntervalMemberQ[Interval[List[1, 5]], 3]
+  wolfram:
+    in: IntervalMemberQ[Interval[List[1, 5]], 3]
+a-closed-endpoint-is-a-member:
+  epsil:
+    in: IsIntervalMember(Interval(1, 5), 5)
+    out: True
+  tex:
+    in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 5)
+    out: \top
+  traditional:
+    in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 5)
+    out: \mathrm{True}
+  fullform:
+    in: IntervalMemberQ[Interval[List[1, 5]], 5]
+  wolfram:
+    in: IntervalMemberQ[Interval[List[1, 5]], 5]
+an-open-endpoint-is-not-a-member:
+  epsil:
+    in: IsIntervalMember(Interval(Open(1), 5), 1)
+    out: False
+  tex:
+    in: \mathrm{IsIntervalMember}((1, 5\rbrack, 1)
+    out: \bot
+  traditional:
+    in: \mathrm{IsIntervalMember}((1, 5\rbrack, 1)
+    out: \mathrm{False}
+  fullform:
+    in: IntervalMemberQ[Interval[Open[1], 5], 1]
+outside-the-interval:
+  epsil:
+    in: IsIntervalMember(Interval(1, 5), 6)
+    out: False
+  tex:
+    in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 6)
+    out: \bot
+  traditional:
+    in: \mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 6)
+    out: \mathrm{False}
+  fullform:
+    in: IntervalMemberQ[Interval[List[1, 5]], 6]
+  wolfram:
+    in: IntervalMemberQ[Interval[List[1, 5]], 6]

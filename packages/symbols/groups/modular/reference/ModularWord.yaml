@@ -22,3 +22,8 @@ seeAlso:
   - ContinuedFraction
   - ModularClasses
   - RademacherSymbol
+references:
+  - system: wikipedia
+    identity: Modular group
+  - system: mathworld
+    identity: ModularGroupGamma

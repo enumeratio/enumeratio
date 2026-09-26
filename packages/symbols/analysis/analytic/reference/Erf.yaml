@@ -14,3 +14,12 @@ details:
 seeAlso:
   - Erfc
   - ErfInv
+references:
+  - system: wikipedia
+    identity: Error function
+  - system: mathworld
+    identity: Erf
+  - system: dlmf
+    identity: "7.2"
+names:
+  wolframIdentity: true

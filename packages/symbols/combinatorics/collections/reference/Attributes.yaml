@@ -13,3 +13,5 @@ details:
   - An undeclared or non-operator symbol reads as no attributes.
 seeAlso:
   - SetAttributes
+names:
+  wolframIdentity: true

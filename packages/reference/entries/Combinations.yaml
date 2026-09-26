@@ -1,0 +1,17 @@
+name: Combinations
+domain: Compute engine
+signature: "Combinations((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)"
+summary: Return all k-element combinations of a collection.
+signatures:
+  - call: "Combinations((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)"
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Combination
+  - system: mathworld
+    identity: Combination
+  - system: rosettacode
+    identity: Combinations
+names:
+  wikidata: Q202805
+stub: engine

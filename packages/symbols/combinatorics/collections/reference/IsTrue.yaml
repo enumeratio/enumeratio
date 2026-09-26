@@ -1,0 +1,15 @@
+name: IsTrue
+domain: Collections
+signature: IsTrue(expr)
+summary: Tests whether expr evaluates to the literal True.
+signatures:
+  - call: IsTrue(expr)
+    description: True only if expr evaluates to True, False otherwise
+    library: enumeratio-collections
+details:
+  - No third "unknown" outcome — an unevaluated symbolic expression, False, or anything else that isn't literally True all answer False.
+  - Wolfram's TrueQ; ours spells predicates Is… (see IsPrime, IsConnectedGraph).
+seeAlso:
+  - IsInteger
+names:
+  wolfram: TrueQ

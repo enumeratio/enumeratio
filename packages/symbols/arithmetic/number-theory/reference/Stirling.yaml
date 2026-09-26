@@ -14,3 +14,47 @@ seeAlso:
   - StirlingS1
   - BellNumber
   - SetPartitions
+references:
+  - system: wikipedia
+    identity: Stirling numbers of the second kind
+  - system: mathworld
+    identity: StirlingNumberoftheSecondKind
+  - system: dlmf
+    identity: "26.8"
+  - system: oeis
+    identity: A008277
+names:
+  dlmf: Stirling number of the second kind
+  catalog: StirlingSecond
+  wolfram: StirlingS2
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: StirlingS2[$1, $2]
+    arity: 2
+    threadArg: 1
+    note: compute-engine's Stirling is the SECOND kind; see design/upstreaming.md §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: sympy
+    template: stirling($1, $2)
+    arity: 2
+    threadArg: 1
+    note: compute-engine's Stirling is the SECOND kind; see design/upstreaming.md §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: sage
+    template: stirling_number2($1, $2)
+    arity: 2
+    threadArg: 1
+    note: compute-engine's Stirling is the SECOND kind; see design/upstreaming.md §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: julia
+    template: Combinatorics.stirlings2(big($1), $2)
+    arity: 2
+    threadArg: 1
+    note: compute-engine's Stirling is the SECOND kind; see design/upstreaming.md §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.stirlingSecond $1 $2)
+    arity: 2
+    threadArg: 1
+    note: compute-engine's Stirling is the SECOND kind; see design/upstreaming.md §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).

@@ -13,3 +13,5 @@ details:
 seeAlso:
   - IsConnectedGraph
   - Graph
+names:
+  wolframIdentity: true

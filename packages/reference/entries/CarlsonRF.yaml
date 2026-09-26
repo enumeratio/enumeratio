@@ -1,0 +1,7 @@
+name: CarlsonRF
+domain: Wolfram
+signature: CarlsonRF(...)
+summary: Wolfram's own CarlsonRF, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolframIdentity: true
+stub: carrier

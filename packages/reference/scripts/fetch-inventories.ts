@@ -15,7 +15,7 @@ import { inflateSync } from "node:zlib";
 import { REFERENCES } from "@enumeratio/catalog/src";
 import { MAPPINGS } from "@enumeratio/oracle/src";
 import { bareName, documents, INVENTORIES, type InventorySystem } from "../src/crosswalk/inventory.ts";
-import { CURATED } from "../src/crosswalk/curated.ts";
+import { CURATED } from "../src/crosswalk/curated-data.ts";
 import { referenceEntries } from "../src/node.ts";
 
 const entries = referenceEntries();

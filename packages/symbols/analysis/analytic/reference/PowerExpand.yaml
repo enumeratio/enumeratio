@@ -12,3 +12,5 @@ details:
 seeAlso:
   - FunctionExpand
   - Ln
+names:
+  wolframIdentity: true

@@ -1,0 +1,10 @@
+name: StandardDeviation
+domain: Compute engine
+signature: StandardDeviation((collection<any> | distribution | number)+) -> nan | real<0..>
+summary: Sample Standard Deviation of a collection of numbers.
+signatures:
+  - call: StandardDeviation((collection<any> | distribution | number)+) -> nan | real<0..>
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

@@ -15,3 +15,10 @@ details:
 seeAlso:
   - NthPrime
   - PrimePi
+references:
+  - system: wikipedia
+    identity: Prime number
+  - system: mathworld
+    identity: NextPrime
+names:
+  wolframIdentity: true

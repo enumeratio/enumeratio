@@ -1,0 +1,15 @@
+name: RiordanPaths
+domain: Collections
+signature: RiordanPaths(n)
+summary: Motzkin paths of length $n$ with no level step taken at height $0$.
+signatures:
+  - call: RiordanPaths(n)
+    description: Motzkin paths of length $n$ with no level step taken at height $0$
+    library: enumeratio-collections
+details:
+  - Count is the Riordan number (A005043).
+seeAlso:
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A005043

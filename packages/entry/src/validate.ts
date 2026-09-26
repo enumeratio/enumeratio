@@ -28,9 +28,15 @@ export function checkImplementations(entries: readonly ReferenceEntry[], exists?
     const bindings = rows(entry);
     if (bindings.length === 0) continue;
 
-    // Nothing is silently irreducible — design/namespaces.md §6.1.
+    // Nothing is silently irreducible — design/namespaces.md §6.1. A `mapped` row alone
+    // doesn't trigger this: it's a crosswalk fact about another system's spelling (symbol-
+    // metadata step 5), not a claim about how OUR head reduces, so a head documented ONLY by
+    // its oracle mappings (many bare compute-engine/foreign heads never get a `reference`,
+    // `native`, `compiled` or `component` row at all) isn't required to also justify a
+    // `primitive` reason it has no other information to give.
+    const claimsImplementation = bindings.some((r) => r.origin !== "mapped");
     const reduces = bindings.some((r) => r.origin === "reference");
-    if (!reduces && entry.primitive === undefined)
+    if (claimsImplementation && !reduces && entry.primitive === undefined)
       fail(entry.name, "has bindings but neither a reference row nor a `primitive` reason");
 
     for (const row of bindings) {

@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-20-terms
+  expr: [Take, SophieGermainPrimes, 20]
+  expected: [List, 2, 3, 5, 11, 23, 29, 41, 53, 83, 89, 113, 131, 173, 179, 191, 233, 239, 251, 281, 293]

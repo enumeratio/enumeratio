@@ -5,6 +5,7 @@ summary: The $k$-almost primes -- integers with exactly $k$ prime factors, count
 signatures:
   - call: KAlmostPrimes(k)
     description: the $n$ with $\Omega(n) = k$, an infinite indexed collection for every $k \geq 1$.
+    library: enumeratio-collections
 details:
   - 'A lazy indexed collection for each $k$: $Count(KAlmostPrimes(k)) = +\infty$ -- $2^{k-1}p$ has $\Omega = k$ for every prime $p$. $KAlmostPrimes(1)$ is [[Primes]] verbatim; $KAlmostPrimes(2)$ is [[SemiprimeNumbers]] verbatim.'
   - $At(KAlmostPrimes(k), i)$ unranks the $i$-th match by scanning forward, factoring each candidate -- $At(KAlmostPrimes(3), 1) = 8$ ($2^3$).

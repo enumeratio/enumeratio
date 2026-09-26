@@ -23,3 +23,5 @@ bindings:
 seeAlso:
   - HypergeometricUStar
   - Hypergeometric1F1Regularized
+names:
+  wolframIdentity: true

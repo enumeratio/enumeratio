@@ -14,3 +14,45 @@ details:
 seeAlso:
   - FactorInteger
   - IsSquareFree
+references:
+  - system: wikipedia
+    identity: Möbius function
+  - system: mathworld
+    identity: MoebiusFunction
+  - system: dlmf
+    identity: "27.2"
+  - system: oeis
+    identity: A008683
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: MoebiusMu[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: mobius($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: moebius($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: oscar
+    template: moebius_mu($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: julia
+    template: moebius_mu($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mathlib4
+    template: (ArithmeticFunction.moebius $1)
+    arity: 1
+    threadArg: 1

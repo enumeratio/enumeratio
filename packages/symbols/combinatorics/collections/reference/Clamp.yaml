@@ -19,3 +19,6 @@ details:
 seeAlso:
   - Min
   - Max
+references:
+  - system: wikipedia
+    identity: Clamp (function)

@@ -11,3 +11,5 @@ details:
 seeAlso:
   - Nest
   - FixedPoint
+names:
+  wolframIdentity: true

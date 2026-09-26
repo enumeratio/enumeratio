@@ -12,3 +12,5 @@ seeAlso:
   - PathGraph
   - IsTreeGraph
   - IsAcyclicGraph
+names:
+  wolfram: PathGraphQ

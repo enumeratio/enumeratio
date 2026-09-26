@@ -17,3 +17,5 @@ seeAlso:
   - JacobiCN
   - JacobiZN
   - EllipticF
+names:
+  wolframIdentity: true

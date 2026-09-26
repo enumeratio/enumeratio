@@ -19,3 +19,13 @@ seeAlso:
   - ClassSum
   - ConjugacyClasses
   - Basis
+references:
+  - system: wikipedia
+    identity: Group ring
+  - system: mathworld
+    identity: GroupRing
+bindings:
+  - origin: mapped
+    form: oscar
+    template: EnumeratioBasis($1)
+    arity: 1

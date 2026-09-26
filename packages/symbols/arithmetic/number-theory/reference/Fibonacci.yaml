@@ -20,3 +20,52 @@ details:
   - A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Fibonacci polynomial.
 seeAlso:
   - LucasL
+references:
+  - system: wikipedia
+    identity: Fibonacci sequence
+  - system: mathworld
+    identity: FibonacciNumber
+  - system: oeis
+    identity: A000045
+  - system: rosettacode
+    identity: Fibonacci sequence
+names:
+  dlmf: Fibonacci number
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Fibonacci[$1]
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: sympy
+    template: fibonacci($1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: sage
+    template: fibonacci($1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: oscar
+    template: fibonacci($1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: julia
+    template: BigInt(fibonacci(ZZ($1)))
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.fib $1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.

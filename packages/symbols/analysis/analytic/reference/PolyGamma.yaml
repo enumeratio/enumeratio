@@ -21,3 +21,35 @@ seeAlso:
   - Gamma
   - HurwitzZeta
   - Zeta
+references:
+  - system: wikipedia
+    identity: Polygamma function
+  - system: mathworld
+    identity: PolygammaFunction
+  - system: dlmf
+    identity: "5.15"
+names:
+  dlmf: polygamma functions
+  wikidata: Q857956
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PolyGamma[$1, $2]
+    arity: 2
+    note: mpmath and Sage call it psi; the argument order matches.
+  - origin: mapped
+    form: sympy
+    template: polygamma($1, $2)
+    arity: 2
+    note: mpmath and Sage call it psi; the argument order matches.
+  - origin: mapped
+    form: mpmath
+    template: psi($1, $2)
+    arity: 2
+    note: mpmath and Sage call it psi; the argument order matches.
+  - origin: mapped
+    form: sage
+    template: psi($1, $2)
+    arity: 2
+    note: mpmath and Sage call it psi; the argument order matches.

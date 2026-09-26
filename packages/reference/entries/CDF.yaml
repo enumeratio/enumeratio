@@ -1,0 +1,10 @@
+name: CDF
+domain: Compute engine
+signature: CDF(distribution, real | signed_infinity) -> nan | real<0..1>
+summary: Cumulative distribution function P(X ≤ x) of a distribution.
+signatures:
+  - call: CDF(distribution, real | signed_infinity) -> nan | real<0..1>
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

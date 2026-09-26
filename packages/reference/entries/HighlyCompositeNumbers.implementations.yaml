@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(HighlyCompositeNumbers, 25)
+    out: |-
+      [
+        1,
+        2,
+        4,
+        6,
+        12,
+        24,
+        36,
+        48,
+        60,
+        120,
+        180,
+        240,
+        360,
+        720,
+        840,
+        1_260,
+        1_680,
+        2_520,
+        5_040,
+        7_560,
+        10_080,
+        15_120,
+        20_160,
+        25_200,
+        27_720,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{HighlyCompositeNumbers}, 25)
+    out: \bigl\lbrack1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, 720, 840, 1\,260, 1\,680, 2\,520, 5\,040, 7\,560, 10\,080, 15\,120, 20\,160, 25\,200, 27\,720\bigr\rbrack
+  fullform:
+    in: Take[HighlyCompositeNumbers, 25]

@@ -16,3 +16,39 @@ seeAlso:
   - Tan
   - Csc
   - Arcsin
+references:
+  - system: wikipedia
+    identity: Sine and cosine
+  - system: mathworld
+    identity: Sine
+  - system: dlmf
+    identity: "4.14"
+names:
+  dlmf: sine function
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Sin[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: sin($1)
+    arity: 1
+    threadArg: 1

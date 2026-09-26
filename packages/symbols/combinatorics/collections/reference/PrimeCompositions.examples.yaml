@@ -1,0 +1,14 @@
+- id: count-primecompositions-7
+  expr: [Count, [PrimeCompositions, 7]]
+  expected: 6
+  category: Basic
+  caption: $Count(PrimeCompositions(7)) = 6$
+- id: first-element-of-primecompositions-7
+  expr: [At, [PrimeCompositions, 7], 1]
+  expected: [List, 2, 2, 3]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-primecompositions-7
+  role: test
+  expr: [Take, [PrimeCompositions, 7], 6]
+  expected: [List, [List, 2, 2, 3], [List, 2, 3, 2], [List, 2, 5], [List, 3, 2, 2], [List, 5, 2], [List, 7]]

@@ -1,0 +1,25 @@
+name: Prime
+domain: Compute engine
+signature: Prime(T, integer?) -> T where T
+summary: Derivative or prime notation (`f'`, `f^{(n)}`) — opaque typed head until a derivative library handler runs.
+signatures:
+  - call: Prime(T, integer?) -> T where T
+    description: as compute-engine declares it
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Prime[$1]
+    arity: 1
+  - origin: mapped
+    form: sympy
+    template: prime($1)
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: nth_prime($1)
+    arity: 1
+  - origin: mapped
+    form: rust
+    template: nth_prime($1)
+    arity: 1
+stub: engine

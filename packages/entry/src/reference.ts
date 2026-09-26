@@ -25,7 +25,8 @@ export interface Reference {
 export type ReferenceOrigin =
   /** Written on the entry itself. */
   | "entry"
-  /** The hand-kept table in `crosswalk/curated.ts`. */
+  /** The hand-kept encyclopaedia rows on the head's own record (`references:`/`names:`
+   * in `<Head>.yaml`; design/speculative/symbol-metadata.md). */
   | "curated"
   /** The enumeratio catalog's own crosswalk (`base_reference`). */
   | "catalog"

@@ -1,0 +1,10 @@
+name: EllipticF
+domain: Compute engine
+signature: EllipticF(complex | infinity, complex | infinity) -> number
+summary: Incomplete elliptic integral of the first kind F(φ|m) (amplitude first, parameter convention m = k², as in Mathematica). F(π/2|m) = K(m).
+signatures:
+  - call: EllipticF(complex | infinity, complex | infinity) -> number
+    description: as compute-engine declares it
+names:
+  wikidata: Q109752309
+stub: engine

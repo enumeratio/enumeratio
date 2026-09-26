@@ -18,3 +18,5 @@ bindings:
     source: packages/symbols/analysis/analytic/src/prime-zeta.ts
 seeAlso:
   - Zeta
+names:
+  wolframIdentity: true

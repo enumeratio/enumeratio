@@ -18,3 +18,5 @@ seeAlso:
   - PDF
   - CDF
   - RandomVariate
+names:
+  wolframIdentity: true

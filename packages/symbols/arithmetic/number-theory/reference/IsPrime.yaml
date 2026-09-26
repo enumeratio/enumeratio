@@ -16,3 +16,41 @@ details:
 seeAlso:
   - FactorInteger
   - NextPrime
+references:
+  - system: wikipedia
+    identity: Primality test
+  - system: mathworld
+    identity: PrimalityTest
+  - system: rosettacode
+    identity: Primality by trial division
+names:
+  wolfram: PrimeQ
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PrimeQ[$1]
+    arity: 1
+  - origin: mapped
+    form: sympy
+    template: isprime($1)
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: is_prime($1)
+    arity: 1
+  - origin: mapped
+    form: oscar
+    template: is_prime(ZZ($1))
+    arity: 1
+  - origin: mapped
+    form: julia
+    template: is_prime(ZZ($1))
+    arity: 1
+  - origin: mapped
+    form: mathlib4
+    template: (decide (Nat.Prime $1))
+    arity: 1
+  - origin: mapped
+    form: rust
+    template: is_prime($1)
+    arity: 1

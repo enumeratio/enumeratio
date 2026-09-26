@@ -15,3 +15,10 @@ seeAlso:
   - Subsets
   - Multisets
   - Binomial
+references:
+  - system: wikipedia
+    identity: Combination
+  - system: mathworld
+    identity: k-Subset
+  - system: rosettacode
+    identity: Combinations

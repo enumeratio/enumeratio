@@ -13,3 +13,13 @@ details:
   - compute-engine requires an inexact (floating-point) argument to produce a numeric value under plain evaluation, the same convention as [[Erf]].
 seeAlso:
   - Erf
+references:
+  - system: wikipedia
+    identity: Error function
+  - system: mathworld
+    identity: Erfc
+  - system: dlmf
+    identity: "7.2"
+names:
+  dlmf: complementary error function
+  wolframIdentity: true

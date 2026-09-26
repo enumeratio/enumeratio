@@ -14,3 +14,11 @@ details:
 seeAlso:
   - Erf
   - Erfc
+references:
+  - system: wikipedia
+    identity: Error function
+  - system: mathworld
+    identity: InverseErf
+names:
+  dlmf: inverse error function
+  wolfram: InverseErf

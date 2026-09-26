@@ -12,3 +12,8 @@ details:
 seeAlso:
   - KSubsets
   - Tuples
+references:
+  - system: wikipedia
+    identity: Multiset
+  - system: mathworld
+    identity: Multiset

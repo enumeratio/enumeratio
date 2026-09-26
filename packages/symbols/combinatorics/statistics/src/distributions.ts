@@ -661,7 +661,9 @@ export const normal01 = (ce: ComputeEngine): number => {
 
 const uniformSample = (ce: ComputeEngine, min: number, max: number): number => min + (max - min) * uniform01(ce);
 
-const poissonSample = (ce: ComputeEngine, lambda: number): number => {
+/** Exported for `processes.ts`'s `PoissonProcess` path simulation, which reuses this same
+ *  draw rather than re-deriving Knuth's algorithm. */
+export const poissonSample = (ce: ComputeEngine, lambda: number): number => {
   // Knuth's algorithm — a standard inverse-transform-flavored method, fine at the (small to
   // moderate) rates a reference example or a statistical check draws.
   const L = Math.exp(-lambda);

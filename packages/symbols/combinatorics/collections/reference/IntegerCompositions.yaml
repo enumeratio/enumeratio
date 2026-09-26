@@ -11,3 +11,10 @@ details:
   - Unlike [[IntegerPartitions]], order matters
 seeAlso:
   - IntegerPartitions
+references:
+  - system: wikipedia
+    identity: Composition (combinatorics)
+  - system: mathworld
+    identity: Composition
+  - system: oeis
+    identity: A011782

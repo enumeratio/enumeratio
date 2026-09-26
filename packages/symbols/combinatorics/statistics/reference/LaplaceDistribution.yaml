@@ -16,3 +16,5 @@ seeAlso:
   - LogisticDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

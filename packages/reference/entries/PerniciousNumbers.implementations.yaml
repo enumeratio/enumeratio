@@ -1,0 +1,9 @@
+the-first-20-terms:
+  epsil:
+    in: Take(PerniciousNumbers, 20)
+    out: "[3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 22, 24, 25, 26, 28]"
+  tex:
+    in: \mathrm{Take}(\mathrm{PerniciousNumbers}, 20)
+    out: \bigl\lbrack3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 22, 24, 25, 26, 28\bigr\rbrack
+  fullform:
+    in: Take[PerniciousNumbers, 20]

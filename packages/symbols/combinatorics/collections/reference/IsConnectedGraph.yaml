@@ -12,3 +12,5 @@ details:
 seeAlso:
   - ConnectedComponents
   - IsTreeGraph
+names:
+  wolfram: ConnectedGraphQ

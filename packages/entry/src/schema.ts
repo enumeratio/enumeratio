@@ -121,6 +121,9 @@ const REFERENCE_IMPLEMENTATION: JsonSchema = {
     source: { type: "string" },
     code: { type: "string" },
     produces: { type: "string" },
+    arity: { type: "integer" },
+    template: { type: "string" },
+    threadArg: { type: "integer" },
     note: { type: "string" },
   },
   required: ["origin", "form"],
@@ -138,6 +141,20 @@ const REFERENCE: JsonSchema = {
     arity: { type: "integer" },
   },
   required: ["system", "identity"],
+  additionalProperties: false,
+};
+
+const REFERENCE_NAMES: JsonSchema = {
+  type: "object",
+  properties: {
+    fungrim: { type: "string" },
+    dlmf: { type: "string" },
+    wikidata: { type: "string" },
+    wikidataConfirmed: { type: "boolean" },
+    catalog: { type: "string" },
+    wolfram: { type: "string" },
+    wolframIdentity: { type: "boolean" },
+  },
   additionalProperties: false,
 };
 
@@ -174,6 +191,8 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     bindings: { type: "array", items: { $ref: "#/$defs/ReferenceBinding" } },
     primitive: { enum: ["kernel", "numeric", "foreign", "axiom"] },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
+    names: { $ref: "#/$defs/ReferenceNames" },
+    formerly: { type: "array", items: { type: "string" } },
     stub: { enum: ["engine", "carrier"] },
   },
   required: ["name", "domain", "signature", "summary"],
@@ -183,6 +202,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     ReferenceSignature: REFERENCE_SIGNATURE,
     ReferenceBinding: REFERENCE_IMPLEMENTATION,
     Reference: REFERENCE,
+    ReferenceNames: REFERENCE_NAMES,
   },
 };
 

@@ -1,0 +1,18 @@
+name: LehmerCodes
+domain: Collections
+signature: LehmerCodes(n)
+summary: The Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-2})$ with $0 \le a_i \le n-1-i$.
+signatures:
+  - call: LehmerCodes(n)
+    description: the Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-2})$ with $0 \le a_i \le n-1-i$
+    library: enumeratio-collections
+details:
+  - Count is $n!$ (A000142); order-isomorphic to [[SymmetricGroup]] via the Lehmer code bijection.
+  - Each element is the code itself, not the permutation it decodes to.
+seeAlso:
+  - SymmetricGroup
+  - SubexcedantSeqs
+  - Inversions
+references:
+  - system: oeis
+    identity: A000142

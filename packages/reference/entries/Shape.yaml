@@ -1,0 +1,10 @@
+name: Shape
+domain: Compute engine
+signature: Shape(value) -> tuple
+summary: Return the shape tuple of an expression.
+signatures:
+  - call: Shape(value) -> tuple
+    description: as compute-engine declares it
+names:
+  wolfram: Dimensions
+stub: engine

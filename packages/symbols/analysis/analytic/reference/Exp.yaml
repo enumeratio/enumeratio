@@ -14,3 +14,34 @@ seeAlso:
   - Log
   - Sinh
   - MatrixExp
+references:
+  - system: wikipedia
+    identity: Exponential function
+  - system: mathworld
+    identity: ExponentialFunction
+  - system: dlmf
+    identity: "4.2"
+names:
+  dlmf: exponential function
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: exp($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: exp($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: exp($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: exp($1)
+    arity: 1
+    threadArg: 1

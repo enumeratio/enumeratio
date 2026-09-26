@@ -19,3 +19,8 @@ details:
 seeAlso:
   - AdicNumeral
   - AdicExpansion
+bindings:
+  - origin: mapped
+    form: rust
+    template: adic_valuation($1)
+    arity: 1

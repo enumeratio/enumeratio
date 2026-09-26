@@ -1,0 +1,35 @@
+count-lyndonwords-5:
+  epsil:
+    in: Count(LyndonWords(5))
+    out: "6"
+  tex:
+    in: \mathrm{Count}(\mathrm{LyndonWords}(5))
+    out: "6"
+  fullform:
+    in: Count[LyndonWords[5]]
+first-element-of-lyndonwords-5:
+  epsil:
+    in: LyndonWords(5)[1]
+    out: "[0, 0, 0, 0, 1]"
+  tex:
+    in: \mathrm{LyndonWords}(5)[1]
+    out: \bigl\lbrack0, 0, 0, 0, 1\bigr\rbrack
+  fullform:
+    in: Part[LyndonWords[5], 1]
+every-element-of-lyndonwords-5:
+  epsil:
+    in: Take(LyndonWords(5), 6)
+    out: |-
+      [
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 1, 1],
+        [0, 0, 1, 0, 1],
+        [0, 0, 1, 1, 1],
+        [0, 1, 0, 1, 1],
+        [0, 1, 1, 1, 1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{LyndonWords}(5), 6)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[LyndonWords[5], 6]

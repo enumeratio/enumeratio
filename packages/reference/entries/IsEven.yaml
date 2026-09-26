@@ -7,3 +7,5 @@ signatures:
     description: $True$ if $n$ is an even integer, else $False$.
 seeAlso:
   - IsOdd
+names:
+  wolfram: EvenQ

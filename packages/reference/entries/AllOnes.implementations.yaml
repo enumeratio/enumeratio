@@ -1,0 +1,9 @@
+the-first-25-terms:
+  epsil:
+    in: Take(AllOnes, 25)
+    out: "[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]"
+  tex:
+    in: \mathrm{Take}(\mathrm{AllOnes}, 25)
+    out: \bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: Take[AllOnes, 25]

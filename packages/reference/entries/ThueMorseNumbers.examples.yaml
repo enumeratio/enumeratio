@@ -2,3 +2,50 @@
   expr: [Take, ThueMorseNumbers, 20]
   expected: [List, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1]
   caption: The first 20 terms, OEIS A010060
+- role: test
+  id: the-first-40-terms
+  expr: [Take, ThueMorseNumbers, 40]
+  expected:
+    [
+      List,
+      0,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      1,
+      0,
+      0,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      1,
+      0,
+    ]

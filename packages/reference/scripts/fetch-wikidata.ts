@@ -11,7 +11,7 @@
 
 import { writeFileSync } from "node:fs";
 import { REFERENCES } from "@enumeratio/catalog/src";
-import { CURATED, WIKIDATA_FIXES } from "../src/crosswalk/curated.ts";
+import { CURATED, WIKIDATA_FIXES } from "../src/crosswalk/curated-data.ts";
 import { wikipediaTitle } from "../src/crosswalk/wikidata.ts";
 import type { WikidataItem } from "../src/wikidata-data.ts";
 import { engineSymbols } from "../src/engine-symbols-data.ts";

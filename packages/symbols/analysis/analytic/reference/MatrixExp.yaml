@@ -20,3 +20,5 @@ seeAlso:
   - MatrixPower
   - Inverse
   - Determinant
+names:
+  wolframIdentity: true

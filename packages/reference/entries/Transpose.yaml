@@ -1,0 +1,10 @@
+name: Transpose
+domain: Compute engine
+signature: "Transpose(value, axis1: integer?, axis2: integer?) -> value"
+summary: Transpose a matrix or swap two tensor axes.
+signatures:
+  - call: "Transpose(value, axis1: integer?, axis2: integer?) -> value"
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

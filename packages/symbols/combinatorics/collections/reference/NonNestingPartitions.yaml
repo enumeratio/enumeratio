@@ -1,0 +1,17 @@
+name: NonNestingPartitions
+domain: Collections
+signature: NonNestingPartitions(n)
+summary: The partitions of $\{1, …, n\}$ with no two blocks whose consecutive-element arcs nest.
+signatures:
+  - call: NonNestingPartitions(n)
+    description: the partitions of $\{1, …, n\}$ with no two blocks whose consecutive-element arcs nest
+    library: enumeratio-collections
+details:
+  - Count is the Catalan number $C_n$ (A000108).
+seeAlso:
+  - SetPartitions
+  - NonCrossingPartitions
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A000108
