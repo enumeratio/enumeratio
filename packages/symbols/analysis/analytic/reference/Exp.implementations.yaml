@@ -332,6 +332,7 @@ exp-ln-neg-1:
     in: exp(log(-1))
   mpmath:
     in: exp(log(-1))
+    out: (-1.0 + 1.69568553207377992879174029388e-31j)
   sage:
     in: exp(log(-1))
   rust:
@@ -567,6 +568,10 @@ to-1-significant-digit:
     in: N(exp(1), 30)
   mpmath:
     in: (exp(1))
+    out: "2.71828182845904523536028747135"
+    verdict: disagree
+    kind: precision
+    note: N's digit count is dropped for mpmath, per the mapping's own note -- it always returns full working precision rather than the one digit asked for (same gap as the Rust row above).
   sage:
     in: N(exp(1))
   rust:

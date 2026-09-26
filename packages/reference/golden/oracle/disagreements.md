@@ -167,10 +167,12 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## mpmath — agree 886, disagree 13, inconclusive 6, error 19
+## mpmath — agree 928, disagree 16, inconclusive 6, error 26
 
 | example                                                  | kind           | ours                                                | theirs                                                                                |
 | -------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `Cos/to-1-significant-digit`                             | unclassified   | `0.5`                                               | `0.540302305868139717400936607443`                                                    |
+| `Exp/to-1-significant-digit`                             | unclassified   | `3`                                                 | `2.71828182845904523536028747135`                                                     |
 | `HurwitzZeta/pole-at-s-1-for-every-a`                    | undefined-form | `ComplexInfinity`                                   | `+inf`                                                                                |
 | `HurwitzZeta/re-s-0-a-0-is-indeterminate`                | convention     | `NaN`                                               | `(1.00330022368532410287421711421 + 0.418155449141321676689274239843j)`               |
 | `HurwitzZeta/re-s-negative-a-drops-the-term-cleanly`     | domain         | `{"re":-4.632252692594817,"im":-17.64247080748051}` | `(nan + nanj)`                                                                        |
@@ -181,6 +183,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `N/a-list-number-by-number`                              | precision      | `[3.1416, 2.7183, 1.4142]`                          | `[<pi: 3.14159~>, <e = exp(1): 2.71828~>, mpf('1.41421356237309504880168872420977')]` |
 | `N/an-exact-tie-rounds-to-the-even-digit-0-125`          | precision      | `0.12`                                              | `0.125`                                                                               |
 | `N/and-0-375-to-0-38`                                    | precision      | `0.38`                                              | `0.375`                                                                               |
+| `N/n-pi-1-digit`                                         | unclassified   | `3`                                                 | `3.14159265358979323846264338328`                                                     |
 | `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`   | convention     | `2.91666666666666666667`                            | `-3.08333333333333333333333333333`                                                    |
 | `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`           | convention     | `16.4143983221171599978`                            | `0.41439832211715999779816713058`                                                     |
 | `Zeta/zeta-complex-argument-stays-symbolic-until-n`      | unevaluated    | `["Zeta",["Complex",2,1]]`                          | `(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)`               |
@@ -192,6 +195,8 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Ceil/threads-element-wise-over-a-list`                    | `TypeError: cannot create mpf from [1.2, -1.2, 3.7]`                       |
 | `Floor/threads-element-wise-over-a-list`                   | `TypeError: cannot create mpf from [1.2, -1.2, 3.7]`                       |
 | `Gamma/a-pole-of-gamma`                                    | `ValueError: gamma function pole`                                          |
+| `Gamma/a-pole-of-gamma-at-negative-1`                      | `ValueError: gamma function pole`                                          |
+| `Gamma/a-pole-of-gamma-at-negative-2`                      | `ValueError: gamma function pole`                                          |
 | `Gamma/threads-over-a-list-so-poles-evaluate-concretely`   | `ValueError: gamma function pole`                                          |
 | `HurwitzZeta/listable-threads-over-a-list-of-orders`       | `TypeError: cannot create mpf from [2, 3, 4]`                              |
 | `HurwitzZeta/pole-at-a-0-re-s-positive`                    | `ZeroDivisionError: `                                                      |
@@ -199,6 +204,11 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `HurwitzZeta/pole-at-a-neg-2-re-s-positive`                | `ZeroDivisionError: `                                                      |
 | `HurwitzZeta/re-s-0-a-neg-1-is-indeterminate`              | `ComplexResult: logarithm of a negative number`                            |
 | `PolyGamma/a-pole-of-gamma-still-a-pole-after`             | `ZeroDivisionError: `                                                      |
+| `PolyGamma/n-polygamma-neg1-1-over-2`                      | `ValueError: gamma function pole`                                          |
+| `PolyGamma/n-polygamma-neg1-1-plus-i`                      | `ValueError: gamma function pole`                                          |
+| `PolyGamma/n-polygamma-neg1-2-is-loggamma-2-is-0`          | `ValueError: gamma function pole`                                          |
+| `PolyGamma/n-polygamma-neg1-neg0p5`                        | `ValueError: gamma function pole`                                          |
+| `PolyGamma/n-polygamma-neg2-stays-unevaluated`             | `ValueError: gamma function pole`                                          |
 | `PolyGamma/threads-over-a-list-each-element-exact-so-each` | `TypeError: cannot create mpf from [1, 2]`                                 |
 | `PolyLog/threads-over-a-list-of-arguments`                 | `TypeError: cannot create mpf from [0.5, 0.25]`                            |
 | `Square/threads-element-wise-over-a-list`                  | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'` |

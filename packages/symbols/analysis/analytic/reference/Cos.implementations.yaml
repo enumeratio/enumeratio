@@ -717,6 +717,10 @@ to-1-significant-digit:
     in: N(cos(1), 30)
   mpmath:
     in: (cos(1))
+    out: "0.540302305868139717400936607443"
+    verdict: disagree
+    kind: precision
+    note: N's digit count is dropped for mpmath, per the mapping's own note -- it always returns full working precision rather than the one digit asked for (same gap as the Rust row above).
   sage:
     in: N(cos(1))
   rust:

@@ -665,6 +665,7 @@ an-approximate-negative-radicand-stays-complex:
     in: sqrt(-2.875)
   mpmath:
     in: sqrt(-2.875)
+    out: (0.0 + 1.69558249578131703476613908166j)
   sage:
     in: sqrt(-2.875)
   rust:
@@ -688,6 +689,7 @@ sqrt-36-negative:
     in: sqrt(-36)
   mpmath:
     in: sqrt(-36)
+    out: (0.0 + 6.0j)
   sage:
     in: sqrt(-36)
   rust:
@@ -711,6 +713,7 @@ sqrt-2-times-sqrt-neg-1:
     in: (sqrt(1) * sqrt(-1))
   mpmath:
     in: (sqrt(1) * sqrt(-1))
+    out: (0.0 + 1.0j)
   sage:
     in: (sqrt(1) * sqrt(-1))
   rust:
@@ -734,6 +737,7 @@ sqrt-neg-4-over-9:
     in: sqrt(Rational(-4, 9))
   mpmath:
     in: sqrt((mpf(-4)/9))
+    out: (0.0 + 0.666666666666666666666666666667j)
   sage:
     in: sqrt((-4/9))
   rust:
@@ -757,6 +761,7 @@ sqrt-neg-1-half:
     in: sqrt(Rational(-1, 2))
   mpmath:
     in: sqrt((mpf(-1)/2))
+    out: (0.0 + 0.707106781186547524400844362105j)
   sage:
     in: sqrt((-1/2))
   rust:
@@ -780,6 +785,7 @@ sqrt-neg-1:
     in: sqrt(-1)
   mpmath:
     in: sqrt(-1)
+    out: (0.0 + 1.0j)
   sage:
     in: sqrt(-1)
   rust:
@@ -803,6 +809,7 @@ sqrt-neg-12-over-5:
     in: sqrt(Rational(-12, 5))
   mpmath:
     in: sqrt((mpf(-12)/5))
+    out: (0.0 + 1.54919333848296675407170615991j)
   sage:
     in: sqrt((-12/5))
   rust:
