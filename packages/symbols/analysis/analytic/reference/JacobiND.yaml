@@ -1,0 +1,17 @@
+name: JacobiND
+domain: Special functions
+signature: JacobiND(u, m)
+summary: The Jacobi elliptic function $\operatorname{nd}(u,m) = 1/\operatorname{dn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiND(u, m)
+    description: the Jacobi elliptic function nd, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{nd}(u,m) = 1/\operatorname{dn}(u,m)$ — [[JacobiDN]] shares this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - nd(0,m) = 1, for any m; nd(u,0) = 1, for any u (dn ≡ 1 at m = 0).
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+seeAlso:
+  - JacobiDN
+  - JacobiDC
+  - JacobiDS

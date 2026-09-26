@@ -504,6 +504,24 @@ export const HEADS: Record<string, string> = {
   CarlsonRD: "CarlsonRD",
   CarlsonRJ: "CarlsonRJ",
   CarlsonRG: "CarlsonRG",
+  // The Jacobi elliptic family (jacobi-elliptic.ts) and Jacobi theta functions (theta.ts) —
+  // same names and (u,m)/(a,u,q) argument order as Wolfram, m = k² throughout.
+  JacobiSN: "JacobiSN",
+  JacobiCN: "JacobiCN",
+  JacobiDN: "JacobiDN",
+  JacobiCD: "JacobiCD",
+  JacobiCS: "JacobiCS",
+  JacobiDC: "JacobiDC",
+  JacobiDS: "JacobiDS",
+  JacobiNC: "JacobiNC",
+  JacobiND: "JacobiND",
+  JacobiNS: "JacobiNS",
+  JacobiSC: "JacobiSC",
+  JacobiSD: "JacobiSD",
+  JacobiAmplitude: "JacobiAmplitude",
+  JacobiZN: "JacobiZN",
+  EllipticTheta: "EllipticTheta",
+  EllipticThetaPrime: "EllipticThetaPrime",
   // The hypergeometric heads: 1F1 and 2F1 themselves are compute-engine natives (never
   // reach here via `declaredNames()`), so only what hypergeometric.ts / hypergeometric-ustar.ts
   // add. Hypergeometric3F2Regularized has no dedicated Wolfram head — it maps into the generic

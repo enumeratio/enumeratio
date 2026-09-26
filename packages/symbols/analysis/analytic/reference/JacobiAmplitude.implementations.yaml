@@ -1,0 +1,60 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiAmplitude(0.3, 0.5))
+    out: 0.297_794_749_129_830_3
+  tex:
+    in: N(\mathrm{JacobiAmplitude}(0.3, 0.5))
+    out: 0.297\,794\,749\,129\,830\,3
+  fullform:
+    in: N[JacobiAmplitude[0.3, 0.5]]
+  wolfram:
+    in: N[JacobiAmplitude[0.3, 0.5]]
+u-0-is-0-for-any-m:
+  epsil:
+    in: JacobiAmplitude(0, m)
+    out: "0"
+  tex:
+    in: \mathrm{JacobiAmplitude}(0, m)
+    out: "0"
+  fullform:
+    in: JacobiAmplitude[0, m]
+m-0-reduces-to-u:
+  epsil:
+    in: JacobiAmplitude(u, 0)
+    out: u
+  tex:
+    in: \mathrm{JacobiAmplitude}(u, 0)
+    out: u
+  fullform:
+    in: JacobiAmplitude[u, 0]
+a-wider-argument-u-past-the-first-quarter:
+  epsil:
+    in: N(JacobiAmplitude(2.5, 0.3))
+    out: 2.247_250_550_954_094_5
+  tex:
+    in: N(\mathrm{JacobiAmplitude}(2.5, 0.3))
+    out: 2.247\,250\,550\,954\,094\,5
+  fullform:
+    in: N[JacobiAmplitude[2.5, 0.3]]
+  wolfram:
+    in: N[JacobiAmplitude[2.5, 0.3]]
+m-outside-0-1-is-declined:
+  epsil:
+    in: N(JacobiAmplitude(0.3, 1.5))
+    out: JacobiAmplitude(0.3, 1.5)
+  tex:
+    in: N(\mathrm{JacobiAmplitude}(0.3, 1.5))
+    out: \mathrm{JacobiAmplitude}(0.3, 1.5)
+  fullform:
+    in: N[JacobiAmplitude[0.3, 1.5]]
+  wolfram:
+    in: N[JacobiAmplitude[0.3, 1.5]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiAmplitude(u, m)
+    out: JacobiAmplitude(u, m)
+  tex:
+    in: \mathrm{JacobiAmplitude}(u, m)
+    out: \mathrm{JacobiAmplitude}(u, m)
+  fullform:
+    in: JacobiAmplitude[u, m]

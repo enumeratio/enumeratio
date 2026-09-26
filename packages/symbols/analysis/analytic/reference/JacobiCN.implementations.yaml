@@ -1,0 +1,80 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiCN(0.3, 0.5))
+    out: 0.955_985_861_827_787_1
+  tex:
+    in: N(\mathrm{JacobiCN}(0.3, 0.5))
+    out: 0.955\,985\,861\,827\,787\,1
+  fullform:
+    in: N[JacobiCN[0.3, 0.5]]
+  wolfram:
+    in: N[JacobiCN[0.3, 0.5]]
+u-0-is-1-for-any-m:
+  epsil:
+    in: JacobiCN(0, m)
+    out: "1"
+  tex:
+    in: \mathrm{JacobiCN}(0, m)
+    out: "1"
+  fullform:
+    in: JacobiCN[0, m]
+m-0-reduces-to-cos-u:
+  epsil:
+    in: JacobiCN(u, 0)
+    out: Cos(u)
+  tex:
+    in: \mathrm{JacobiCN}(u, 0)
+    out: \cos(u)
+  fullform:
+    in: JacobiCN[u, 0]
+the-quarter-period-u-elliptick-m-is-0:
+  epsil:
+    in: JacobiCN(EllipticK(m), m)
+    out: "0"
+  tex:
+    in: \mathrm{JacobiCN}(\mathrm{EllipticK}(m), m)
+    out: "0"
+  fullform:
+    in: JacobiCN[EllipticK[m], m]
+m-greater-than-1-via-the-reciprocal-modulus:
+  epsil:
+    in: N(JacobiCN(0.3, 1.5))
+    out: 0.957_262_699_025_984_9
+  tex:
+    in: N(\mathrm{JacobiCN}(0.3, 1.5))
+    out: 0.957\,262\,699\,025\,984\,9
+  fullform:
+    in: N[JacobiCN[0.3, 1.5]]
+  wolfram:
+    in: N[JacobiCN[0.3, 1.5]]
+m-less-than-0-via-the-imaginary-modulus:
+  epsil:
+    in: N(JacobiCN(0.3, -2))
+    out: 0.952_664_569_791_101_9
+  tex:
+    in: N(\mathrm{JacobiCN}(0.3, -2))
+    out: 0.952\,664\,569\,791\,101\,9
+  fullform:
+    in: N[JacobiCN[0.3, -2]]
+  wolfram:
+    in: N[JacobiCN[0.3, -2]]
+a-complex-argument-u:
+  epsil:
+    in: N(JacobiCN(0.3 + 0.4i, 0.5))
+    out: 1.027_992_872_007_962_7 - 0.123_775_864_136_771_64i
+  tex:
+    in: N(\mathrm{JacobiCN}(0.3+0.4i, 0.5))
+    out: 1.027\,992\,872\,007\,962\,7-0.123\,775\,864\,136\,771\,64i
+  fullform:
+    in: N[JacobiCN[Complex[0.3, 0.4], 0.5]]
+  wolfram:
+    in: N[JacobiCN[Complex[0.3, 0.4], 0.5]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiCN(u, m)
+    out: JacobiCN(u, m)
+  tex:
+    in: \mathrm{JacobiCN}(u, m)
+    out: \mathrm{JacobiCN}(u, m)
+  fullform:
+    in: JacobiCN[u, m]
