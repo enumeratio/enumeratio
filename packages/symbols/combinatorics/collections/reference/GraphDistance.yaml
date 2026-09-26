@@ -14,6 +14,16 @@ examples:
     expr: [GraphDistance, [Graph, [List, 1, 2, 3, 4], [List, [DirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]], 4, 1]
     expected: PositiveInfinity
     caption: No directed path back, so the distance is infinite
+  - id: unreachable-against-a-longer-directed-chain
+    expr:
+      [
+        GraphDistance,
+        [Graph, [List, 1, 2, 3, 4], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]],
+        4,
+        1,
+      ]
+    expected: PositiveInfinity
+    role: test
 seeAlso:
   - FindShortestPath
   - ConnectedComponents

@@ -13,6 +13,7 @@ inverts-tocharactercode:
   epsil:
     in: FromCharacterCode(ToCharacterCode("\(hello)"))
     out: '"hello"'
+    back: [FromCharacterCode, [ToCharacterCode, [String, "''", hello]]]
   tex:
     in: \mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\mathrm{hello}}))
     out: \text{hello}
@@ -24,6 +25,7 @@ round-trips-a-non-ascii-string-emoji-astral:
   epsil:
     in: FromCharacterCode(ToCharacterCode("a😀b→c"))
     out: '"a😀b→c"'
+    back: [FromCharacterCode, [ToCharacterCode, "'a😀b→c'"]]
   tex:
     in: \mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\text{a😀b→c}}))
     out: \text{a😀b→c}

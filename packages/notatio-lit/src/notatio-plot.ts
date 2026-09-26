@@ -2,7 +2,7 @@ import type { BoxedExpression } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 
 // Real-valued kernels for the compiled fast path: compute-engine's `compile`
@@ -46,8 +46,8 @@ const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
 
 /**
  * `<notatio-plot value="Sin(x)" domain="-6.28,6.28">` -- a 2-D line plot of a
- * univariate expression. `value` is **notatio** (the restricted-Epsil subset) by
- * default, and accepts LaTeX inside a `$…$` island. Samples the
+ * univariate expression. `value` is **Epsil** by default, and accepts LaTeX
+ * inside a `$…$` island. Samples the
  * expression across `domain` by substituting `var` (defaults to the sole free
  * variable) and taking the numeric value. compute-engine is loaded on demand.
  *
@@ -66,7 +66,7 @@ const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
  */
 export class NotatioPlot extends LitElement {
   static properties = {
-    /** The curve, in notatio. A list (`{f, g}`) overlays a series each; a list of pairs is data. */
+    /** The curve, in Epsil. A list (`{f, g}`) overlays a series each; a list of pairs is data. */
     value: { type: String },
     /** The plot variable; defaults to the sole free symbol left after the slots are filled. */
     var: { type: String },
@@ -88,7 +88,7 @@ export class NotatioPlot extends LitElement {
     adaptive: { type: String },
     /** Clamp the y range, as `lo,hi`; empty fits the samples. */
     plotRange: { type: String, attribute: "plot-range" },
-    /** Marks drawn over the curve, as notatio graphics primitives: `Point((1, 0.5))`, `Line([...])`, `Circle(c, r)`, `Text("t", p)`. Wolfram's `Epilog`. */
+    /** Marks drawn over the curve, as Epsil graphics primitives: `Point((1, 0.5))`, `Line([...])`, `Circle(c, r)`, `Text("t", p)`. Wolfram's `Epilog`. */
     epilog: { type: String },
     /** Marks drawn under the curve; Wolfram's `Prolog`. */
     prolog: { type: String },
@@ -246,11 +246,11 @@ export class NotatioPlot extends LitElement {
     }
     try {
       const engine = await loadEngine();
-      const { json, errors } = parseNotatio(raw, {
+      const { json, errors } = parseExpression(raw, {
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length) {
-        log("value is not notatio", raw, errors);
+        log("value is not Epsil", raw, errors);
         this.#series = [];
         this._svg = "";
         return;
@@ -379,10 +379,10 @@ export class NotatioPlot extends LitElement {
     this.dispatchEvent(new CustomEvent("notatio-plot-render"));
   }
 
-  /** Graphics primitives from an `epilog`/`prolog` attribute's notatio; nothing on a parse error. */
+  /** Graphics primitives from an `epilog`/`prolog` attribute's Epsil; nothing on a parse error. */
   #marks(source: string): Primitive[] | undefined {
     if (!source.trim()) return undefined;
-    const { json, errors } = parseNotatio(source);
+    const { json, errors } = parseExpression(source);
     return errors.length ? undefined : primitivesOf(json as MathJsonExpression);
   }
 

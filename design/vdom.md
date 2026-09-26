@@ -44,7 +44,7 @@ h("notatio-out", { format: "mathjson", value: '["Binomial","n",2]' });
 ```
 
 The rule for a **generic** element (one generated per symbol, no hand-written class):
-its `expression` is its head over its children's `expression`s; a text child is notatio
+its `expression` is its head over its children's `expression`s; a text child is Epsil
 (so `<notatio-binomial>n, 2</notatio-binomial>` is the short spelling of the same); only
 the outermost generic element typesets. Pseudo-Vue:
 
@@ -119,7 +119,7 @@ reads them off; `withOptions` writes them back.
 In the vdom an option is a prop, kebab-cased: `PlotRange -> (-1, 1)` is
 `h("notatio-plot", { "plot-range": "-1,1" })`. An option whose value has a rendering of
 its own is a slotted child instead, `slot` naming the option; one whose value is a
-graphics primitive (`Epilog -> Point((1, 0.5))`) travels as its notatio text, since it
+graphics primitive (`Epilog -> Point((1, 0.5))`) travels as its Epsil text, since it
 is marks on the plot's own axes rather than a picture of its own. A component that
 spells an option differently (`PlotLabel` is the plot's `label`) maps it in
 `VisualSymbol.options`; an element's own attributes are its options too, read back by
@@ -204,12 +204,12 @@ lowered into one JSON prop, since the chart's API takes it that way and a thousa
 
 ## Three things the examples raised
 
-**`_k` is notatio, not LaTeX and not a regex.** `<Dynamic value="_k ^ 2" />` is right as
-written: the attribute is notatio (Epsil), and `_k` is Epsil's wildcard -- compute-engine's
+**`_k` is Epsil, not LaTeX and not a regex.** `<Dynamic value="_k ^ 2" />` is right as
+written: the attribute is an expression written in Epsil, and `_k` is Epsil's wildcard -- compute-engine's
 slot notation, the same `_` the pattern matcher uses. LaTeX is what goes in `$…$` islands
 (`value="$\sin(kx)$"`), and a wildcard can sit inside one too. The renderer writes `_k`
 where a control declares `k`; an author writes it by hand. What the rule _does_ insist on
-is that anything LaTeX be fenced, which is the subset of Epsil the site already uses.
+is that anything LaTeX be fenced.
 
 **Atoms take `value`, and so does everything else.** `<Integer value="2" />` rather than
 `<Integer>2</Integer>` -- `value` is the text the symbol's constructor takes: an atom's

@@ -109,3 +109,13 @@ examples:
     expected: 3
     category: Scope
     caption: A $3\times3$ matrix of pairwise-distinct symbols is full rank — the determinant, as a polynomial in independent indeterminates, can't be identically zero.
+  - id: a-non-square-matrix-of-distinct-symbols-stays
+    expr: [MatrixRank, [List, [List, a, b, c], [List, d, g, h]]]
+    expected: [MatrixRank, [List, [List, a, b, c], [List, d, g, h]]]
+    category: Possible issues
+    caption: A non-square matrix of distinct symbols doesn't qualify for the full-rank rule -- it stays unevaluated
+  - id: repeating-a-symbol-across-rows-doesn-t-qualify
+    expr: [MatrixRank, [List, [List, a, b], [List, a, b]]]
+    expected: 1
+    category: Possible issues
+    caption: Repeating a symbol across rows doesn't qualify either -- native compute-engine still answers this one directly (rank 1, equal rows)

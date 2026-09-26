@@ -25,6 +25,10 @@ examples:
   - id: ceil-3p2
     expr: [Ceil, 3.2]
     expected: 4
+  - id: ceil-3p7
+    expr: [Ceil, 3.7]
+    expected: 4
+    role: test
   - id: integers-pass-through-unchanged
     expr: [Ceil, 5]
     expected: 5

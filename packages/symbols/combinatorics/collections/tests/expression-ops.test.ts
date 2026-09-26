@@ -6,8 +6,8 @@ const ce = new ComputeEngine();
 declareCollections(ce);
 const run = (expr: unknown) => ce.box(expr as never).evaluate().json;
 
-// ToString: prints notatio (this repo's own syntax), not Wolfram InputForm.
-test("ToString prints a list as notatio source", () => {
+// ToString: prints Epsil (this repo's own syntax), not Wolfram InputForm.
+test("ToString prints a list as Epsil source", () => {
   expect(run(["ToString", ["List", 1, 2, 3]])).toEqual("'[1, 2, 3]'");
 });
 test("ToString prints an arithmetic expression", () => {

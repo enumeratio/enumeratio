@@ -2,6 +2,7 @@ halve-and-floor-down-to-the-fixed-point:
   epsil:
     in: FixedPointList(Function(Floor(_1 / 2)), 10)
     out: "[10, 5, 2, 1, 0, 0]"
+    back: Unreadable
   tex:
     in: \mathrm{FixedPointList}(()\mapsto\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 10)
     out: \bigl\lbrack10, 5, 2, 1, 0, 0\bigr\rbrack

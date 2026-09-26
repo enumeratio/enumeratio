@@ -1,20 +1,27 @@
 import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
+import { defineMessages, emit } from "@enumeratio/boxed";
 import { allEntries } from "./index.ts";
 import {
   asBlockList,
   asIntList,
   blocksMJ,
   type Boxed,
+  countNumber,
   denest,
   type FamilyKernel,
   intOf,
   listMJ,
+  needsBigint,
   nestMJ,
 } from "./types.ts";
 
 type BoxInput = Parameters<ComputeEngine["box"]>[0];
 
 const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
+
+/** Elements a kernel may generate to answer one call on the engine. Past it, a family whose
+ *  unrank or rank enumerates declines with `Head::toobig` rather than exhausting the heap. */
+export const ENUMERATION_LIMIT = 2_000_000n;
 
 // Collection type an operator call returns. paramCount-0 values are typed directly in declareFamilies.
 const collectionTypeOf = (kind: FamilyKernel["kind"]): string => {
@@ -42,7 +49,8 @@ const decoderFor = (kind: FamilyKernel["kind"]) =>
   kind === "ints" ? asIntList : kind === "blocks" ? asBlockList : kind === "scalar" ? intOf : denest;
 
 /** A family's kernel as compute-engine collection handlers: Count, At and iteration by
- *  unranking, membership by `valid`. */
+ *  unranking, membership by `valid`. CE speaks plain numbers; a count past 2^53 answers
+ *  `undefined` (unknown to CE) rather than a rounded one. */
 function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers {
   const encode = encoderFor(family.kind);
   const decode = decoderFor(family.kind);
@@ -50,36 +58,78 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
     const ops = asBoxed(c).ops ?? [];
     return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
   };
-  const element = (p: number[], rank0: number): BoxedExpression =>
-    ce.box(encode(family.unrank(p, rank0) as never) as BoxInput);
+  const element = (p: number[], rank: bigint): BoxedExpression =>
+    ce.box(encode(family.unrank(p, rank) as never) as BoxInput);
+  // Whether reaching an element (or, for `count`, the count) would enumerate past the limit.
+  const cost = family.declared?.cost;
+  const tooBig = (p: number[], ops: readonly ("count" | "unrank")[]): boolean => {
+    const work = family.declared?.work;
+    if (cost === undefined || work === undefined || !ops.some((op) => cost[op] === "enumerative")) return false;
+    const w = work(p);
+    if (w <= ENUMERATION_LIMIT) return false;
+    emit(ce, family.head, "toobig", [
+      `${family.head}(${p.join(", ")})`,
+      w.toLocaleString("en-US"),
+      ENUMERATION_LIMIT.toLocaleString("en-US"),
+    ]);
+    return true;
+  };
+  // The count, or undefined where a kernel still in plain numbers can't carry it exactly.
+  const countAt = (p: number[]): bigint | number | undefined => {
+    try {
+      return family.count(p);
+    } catch (error) {
+      if (needsBigint(error)) return undefined;
+      throw error;
+    }
+  };
   return {
-    count: (c) => family.count(params(c)),
+    count: (c) => {
+      const p = params(c);
+      if (tooBig(p, ["count"])) return undefined;
+      const total = countAt(p);
+      return total === undefined ? undefined : countNumber(total);
+    },
     // ∞ is known-infinite; NaN (an open problem, e.g. TwinPrimes) is unknown either way.
     isFinite: (c) => {
-      const total = family.count(params(c));
-      return Number.isNaN(total) ? undefined : Number.isFinite(total);
+      const total = countAt(params(c));
+      // Past 2^53 in a plain-number kernel: still finite, just not a count a double can carry.
+      if (total === undefined) return true;
+      return typeof total === "bigint" ? true : Number.isNaN(total) ? undefined : false;
     },
     isLazy: () => true,
-    isEnumerable: () => true,
-    isEmpty: (c) => family.count(params(c)) === 0,
+    isEnumerable: (c) => !tooBig(params(c), ["count", "unrank"]),
+    isEmpty: (c) => {
+      const p = params(c);
+      return tooBig(p, ["count"]) ? undefined : countAt(p) === 0n ? true : countAt(p) === undefined ? undefined : false;
+    },
     iterator: (c) => {
       const p = params(c);
-      const total = family.count(p);
-      let i = 0;
-      // An unknown count (NaN, e.g. TwinPrimes) never ends the iteration.
+      if (tooBig(p, ["count", "unrank"])) return undefined;
+      const total = countAt(p);
+      if (total === undefined) return undefined;
+      let i = 0n;
+      // Only a finite count ends the iteration; ∞ and unknown (NaN) run on.
       return {
         next: () =>
-          Number.isNaN(total) || i < total ? { value: element(p, i++), done: false } : { value: undefined, done: true },
+          typeof total !== "bigint" || i < total
+            ? { value: element(p, i++), done: false }
+            : { value: undefined, done: true },
       };
     },
+    // `index` is an ordinality (1-based, negative from the end); the rank is index − 1.
     at: (c, index) => {
-      if (typeof index !== "number") return undefined;
+      if (typeof index !== "number" || !Number.isSafeInteger(index)) return undefined;
       const p = params(c);
-      const total = family.count(p);
-      // No last element to count back from when the count is unknown.
-      if (index < 0 && Number.isNaN(total)) return undefined;
-      const i = index < 0 ? total + index + 1 : index;
-      return i < 1 || i > total ? undefined : element(p, i - 1);
+      if (tooBig(p, ["count", "unrank"])) return undefined;
+      const total = countAt(p);
+      if (total === undefined) return undefined;
+      if (typeof total !== "bigint") {
+        // No last element to count back from when the count is ∞ or unknown.
+        return index < 1 ? undefined : element(p, BigInt(index - 1));
+      }
+      const i = index < 0 ? total + BigInt(index) + 1n : BigInt(index);
+      return i < 1n || i > total ? undefined : element(p, i - 1n);
     },
     contains: (c, target) => family.valid(decode(asBoxed(target)), params(c)),
   };
@@ -90,6 +140,9 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
 export function declareFamilies(ce: ComputeEngine): void {
   for (const family of allEntries) {
     const collection = handlersOf(ce, family);
+    if (family.declared?.work !== undefined) {
+      defineMessages(ce, family.head, { toobig: "`1` would enumerate about `2` elements; the limit is `3`." });
+    }
     if (family.paramCount === 0) {
       ce.declare(family.head, { type: "indexed_collection<integer>", collection });
     } else {

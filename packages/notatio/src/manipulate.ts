@@ -76,7 +76,7 @@ function splitTop(s: string, sep: string): string[] {
 const num = (s: string): number => Number(s.trim());
 
 /**
- * Read a number from an attribute that may have been written by Manipulate. Notatio
+ * Read a number from an attribute that may have been written by Manipulate. Epsil
  * serializes with digit separators (`-2.119_744`), which `Number()` rejects outright —
  * so any element reading a substituted numeric attribute has to strip them first, or
  * silently take its fallback instead of the value the slider is showing.

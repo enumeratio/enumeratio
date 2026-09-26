@@ -8,7 +8,7 @@ signatures:
     library: enumeratio-collections
 details:
   - Inert, like [[Graph]] itself — it holds exactly as written.
-  - Wolfram prints this infix as $u \to v$ (`u -> v`); notatio's own `->` already means [[KeyValuePair]] (not this), so this round-trips through call-form syntax, `DirectedEdge(u, v)`, which Wolfram accepts as equivalent input.
+  - Wolfram prints this infix as $u \to v$ (`u -> v`); Epsil's own `->` already means [[KeyValuePair]] (not this), so this round-trips through call-form syntax, `DirectedEdge(u, v)`, which Wolfram accepts as equivalent input.
 examples:
   - id: an-edge-from-1-to-2
     expr: [DirectedEdge, 1, 2]

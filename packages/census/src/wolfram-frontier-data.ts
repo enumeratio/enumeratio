@@ -145,10 +145,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 34,
   },
   {
-    head: "Conditioned",
-    uses: 33,
-  },
-  {
     head: "QuantityArray",
     uses: 33,
   },
@@ -178,10 +174,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "GridBox",
-    uses: 27,
-  },
-  {
-    head: "NProbability",
     uses: 27,
   },
   {
@@ -254,10 +246,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "AbsoluteOptions",
-    uses: 19,
-  },
-  {
-    head: "DiagonalMatrix",
     uses: 19,
   },
   {
@@ -345,10 +333,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 15,
   },
   {
-    head: "Key",
-    uses: 15,
-  },
-  {
     head: "Offset",
     uses: 15,
   },
@@ -369,19 +353,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 14,
   },
   {
-    head: "HilbertMatrix",
-    uses: 14,
-  },
-  {
     head: "ListStepPlot",
     uses: 14,
   },
   {
     head: "MellinTransform",
-    uses: 14,
-  },
-  {
-    head: "NumberQ",
     uses: 14,
   },
   {
@@ -414,10 +390,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "PopupWindow",
-    uses: 13,
-  },
-  {
-    head: "ReIm",
     uses: 13,
   },
   {
@@ -477,10 +449,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "CharacterRange",
-    uses: 11,
-  },
-  {
     head: "ContourPlot3D",
     uses: 11,
   },
@@ -533,10 +501,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "Extract",
-    uses: 10,
-  },
-  {
     head: "HoldPattern",
     uses: 10,
   },
@@ -553,19 +517,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "NExpectation",
-    uses: 10,
-  },
-  {
     head: "NSum",
     uses: 10,
   },
   {
     head: "QuantityDistribution",
-    uses: 10,
-  },
-  {
-    head: "RandomComplex",
     uses: 10,
   },
   {
@@ -602,10 +558,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Cuboid",
-    uses: 9,
-  },
-  {
-    head: "DeleteCases",
     uses: 9,
   },
   {

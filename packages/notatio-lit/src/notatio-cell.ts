@@ -1,15 +1,16 @@
 import { toInputForm } from "@enumeratio/formats/inputform";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import "./notatio-in.ts";
 import { type HeadInfo, transcriptHostOf } from "./notatio-out.ts";
 import "./notatio-out.ts";
+import { latexForText, pastedFrom } from "./clipboard.ts";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 
 /** The syntax `notatio-cell`'s `value` is written in -- what `format` names. */
-type Syntax = "notatio" | "latex" | "mathjson" | "wolfram";
+type Syntax = "epsil" | "latex" | "mathjson" | "wolfram";
 
 /** The editor shown for the In row; each names the syntax its text is written in. */
 type EditForm = "standard" | "input" | "full" | "wolfram" | "tex";
@@ -17,20 +18,33 @@ type EditForm = "standard" | "input" | "full" | "wolfram" | "tex";
 const SYNTAX_OF: Record<EditForm, Syntax> = {
   standard: "latex",
   tex: "latex",
-  input: "notatio",
+  input: "epsil",
   full: "mathjson",
   wolfram: "wolfram",
 };
 
 const EDIT_FORMS: readonly { form: EditForm; label: string; title: string }[] = [
   { form: "standard", label: "StandardForm", title: "typeset math" },
-  { form: "input", label: "InputForm", title: "notatio you could retype" },
+  { form: "input", label: "InputForm", title: "Epsil you could retype" },
   { form: "full", label: "MathJSON", title: "the MathJSON AST, as text" },
   { form: "wolfram", label: "WolframFullForm", title: "Wolfram source" },
   { form: "tex", label: "TeXForm", title: "LaTeX source" },
 ];
 
 type Engine = Awaited<ReturnType<typeof loadEngine>>;
+
+/** Text that doesn't parse, and where, when the parser said. */
+class SyntaxProblem extends Error {
+  constructor(
+    message: string,
+    readonly range?: readonly [number, number],
+  ) {
+    super(message);
+  }
+}
+
+/** How long typing has to pause before the text is parsed for a hint. */
+const HINT_DELAY_MS = 300;
 
 /** `text`, in `syntax`, to MathJSON. `""` reads as no expression at all. */
 async function parseSyntax(syntax: Syntax, text: string): Promise<unknown> {
@@ -44,17 +58,17 @@ async function parseSyntax(syntax: Syntax, text: string): Promise<unknown> {
       const engine = await loadEngine();
       return engine.parse(text, { form: "raw" }).json;
     }
-    case "notatio":
+    case "epsil":
     default: {
       const engine = await loadEngine();
-      // `Assign` is otherwise a statement notatio rejects outside a notebook -- a cell IS
+      // `Assign` is otherwise a statement Epsil rejects outside a notebook -- a cell IS
       // a notebook line (`a := 5`, then `a^2` reads it back), whether or not it sits in a
       // transcript.
-      const { json, errors } = parseNotatio(text, {
+      const { json, diagnostics } = parseExpression(text, {
         allow: ["Assign"],
         parseLatex: (tex) => engine.parse(tex).json,
       });
-      if (errors.length) throw new Error(errors[0]);
+      if (diagnostics.length) throw new SyntaxProblem(diagnostics[0].message, diagnostics[0].range);
       return json;
     }
   }
@@ -72,7 +86,7 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
       const e = engine ?? (await loadEngine());
       return e.box(json as Parameters<Engine["box"]>[0], { form: "raw" }).latex;
     }
-    case "notatio":
+    case "epsil":
     default:
       return toInputForm(json as Parameters<typeof toInputForm>[0]);
   }
@@ -83,11 +97,14 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
  * `<notatio-out>` of the result. Renders in light DOM so the nested output inherits
  * the page's MathLive styles.
  *
- * `value` is written in the syntax `format` names (`notatio` by default, or `latex`,
+ * `value` is written in the syntax `format` names (`epsil` by default, or `latex`,
  * `mathjson`, `wolfram`); `in-form` picks which editor shows it -- `standard` (the
  * MathLive field, live on every keystroke), or a plain text field in `input`
- * (InputForm/notatio), `full` (the MathJSON AST as text), `wolfram` (Wolfram source)
- * or `tex` (LaTeX), each parsed back on commit (Enter or blur). The In label opens a
+ * (InputForm/Epsil), `full` (the MathJSON AST as text), `wolfram` (Wolfram source)
+ * or `tex` (LaTeX), each parsed back on commit (Enter or blur). While one is being typed
+ * in, a pause in the typing parses it for a hint -- what is wrong with it, and where --
+ * beside the editor, without evaluating; and LaTeX pasted into one (a math field's copy,
+ * or `$…$`) goes in as that editor's syntax (see `clipboard.ts`). The In label opens a
  * menu to switch editors -- converting the current value -- and to copy it out.
  *
  * The cell starts *clean*: `expect`/`planned` reach the Out, and any `slot="aside"`
@@ -95,7 +112,7 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
  * turns it *dirty* -- `expect`/`planned` drop, the aside hides, and a reset button
  * appears that restores the original value and clears it. `notatio-dirty` fires on
  * both transitions; `notatio-change` fires on every edit, with the result as both
- * notatio text and MathJSON.
+ * Epsil text and MathJSON.
  *
  * Inside a transcript (a `<notatio-dynamic-module>` ancestor, `transcriptHostOf`), a
  * cell evaluates only on COMMIT -- Enter or blur -- never on every keystroke: Wolfram
@@ -165,6 +182,7 @@ export class NotatioCell extends LitElement {
     _json: { state: true },
     _liveJson: { state: true },
     _error: { state: true },
+    _hint: { state: true },
     _n: { state: true },
   };
 
@@ -195,6 +213,8 @@ export class NotatioCell extends LitElement {
   declare _liveJson: unknown;
   /** Why `_raw` did not parse, when it did not. */
   declare _error: string;
+  /** Why the text being typed doesn't parse, yet -- ephemeral, never an Out. */
+  declare _hint: string;
   /** This cell's `In[n]`/`Out[n]` line number, read off the Out's own transcript result. */
   declare _n: number | undefined;
 
@@ -212,7 +232,7 @@ export class NotatioCell extends LitElement {
   constructor() {
     super();
     this.value = "";
-    this.format = "notatio";
+    this.format = "epsil";
     this.inForm = "standard";
     this.outForm = "standard";
     this.evaluate = true;
@@ -232,6 +252,7 @@ export class NotatioCell extends LitElement {
     this._raw = "";
     this._json = undefined;
     this._error = "";
+    this._hint = "";
     this._n = undefined;
     ensureStyles();
   }
@@ -251,6 +272,7 @@ export class NotatioCell extends LitElement {
   }
 
   override disconnectedCallback(): void {
+    clearTimeout(this.#hintTimer);
     globalThis.document?.removeEventListener("pointerdown", this.#onDocPointerDown);
     super.disconnectedCallback();
   }
@@ -291,7 +313,7 @@ export class NotatioCell extends LitElement {
       return;
     }
     try {
-      const json = await parseSyntax(this.format || "notatio", this.liveValue);
+      const json = await parseSyntax(this.format || "epsil", this.liveValue);
       if (token !== this.#liveToken) return;
       this._liveJson = json;
     } catch {
@@ -306,7 +328,8 @@ export class NotatioCell extends LitElement {
     this.pending = false;
     this.#uncommitted = false;
     this._error = "";
-    const format = this.format || "notatio";
+    this._hint = "";
+    const format = this.format || "epsil";
     const editForm = this.inForm || "standard";
     this._editForm = editForm;
     // Fast path: LaTeX in, a LaTeX-native editor, nothing that needs an evaluated
@@ -336,7 +359,7 @@ export class NotatioCell extends LitElement {
     // The fast path above may have left `_json` unset; a form change needs it.
     if (this._json === undefined && !this._error && this.value.trim()) {
       try {
-        this._json = await parseSyntax(this.format || "notatio", this.value);
+        this._json = await parseSyntax(this.format || "epsil", this.value);
       } catch (err) {
         this._error = err instanceof Error ? err.message : String(err);
         this._editForm = form;
@@ -344,11 +367,12 @@ export class NotatioCell extends LitElement {
       }
     }
     this._editForm = form;
-    const format = this.format || "notatio";
+    const format = this.format || "epsil";
     this._raw = SYNTAX_OF[form] === format ? this.value : await textInSyntax(SYNTAX_OF[form], this._json);
     // Switching editors re-renders the current value, not a new one -- nothing pending.
     this.pending = false;
     this.#uncommitted = false;
+    this._hint = "";
   }
 
   /**
@@ -360,6 +384,8 @@ export class NotatioCell extends LitElement {
     this._raw = text;
     this.pending = false;
     this.#uncommitted = false;
+    clearTimeout(this.#hintTimer);
+    this._hint = "";
     try {
       const json = await parseSyntax(SYNTAX_OF[form], text);
       if (token !== this.#token) return;
@@ -384,10 +410,10 @@ export class NotatioCell extends LitElement {
   }
 
   async #emitChange(): Promise<void> {
-    const notatio = this._json === undefined ? "" : await textInSyntax("notatio", this._json);
+    const epsil = this._json === undefined ? "" : await textInSyntax("epsil", this._json);
     this.dispatchEvent(
       new CustomEvent("notatio-change", {
-        detail: { notatio, json: this._json },
+        detail: { epsil, json: this._json },
         bubbles: true,
         composed: true,
       }),
@@ -425,7 +451,7 @@ export class NotatioCell extends LitElement {
     this.#closeMenu();
     let text: string;
     if (kind === "mathjson") text = this._json === undefined ? "" : JSON.stringify(this._json);
-    else if (kind === "input") text = await textInSyntax("notatio", this._json);
+    else if (kind === "input") text = await textInSyntax("epsil", this._json);
     else text = this._json === undefined ? this._raw : await textInSyntax("latex", this._json);
     if (text) await globalThis.navigator?.clipboard?.writeText(text);
   }
@@ -488,7 +514,71 @@ export class NotatioCell extends LitElement {
   #onTextInput = (event: Event): void => {
     this._raw = (event.target as HTMLInputElement | HTMLTextAreaElement).value;
     this.#uncommitted = true;
+    this.#scheduleHint();
   };
+
+  #hintTimer: ReturnType<typeof setTimeout> | undefined;
+
+  // Parse what's being typed once typing pauses, and say what's wrong with it beside the
+  // editor -- without evaluating (that waits for commit, as before) and without touching
+  // the Out. A keystroke inside the pause starts it over, so a fast typist pays nothing.
+  #scheduleHint(): void {
+    clearTimeout(this.#hintTimer);
+    const [form, text] = [this._editForm, this._raw];
+    this.#hintTimer = setTimeout(() => void this.#hint(form, text), HINT_DELAY_MS);
+  }
+
+  async #hint(form: EditForm, text: string): Promise<void> {
+    let hint = "";
+    try {
+      await parseSyntax(SYNTAX_OF[form], text);
+    } catch (err) {
+      const at = err instanceof SyntaxProblem && err.range ? `\u00a0(at\u00a0${err.range[0] + 1})` : "";
+      hint = `${err instanceof Error ? err.message : String(err)}${at}`;
+    }
+    // Stale by the time it parsed: the text moved on, or was committed.
+    if (!this.#uncommitted || this._raw !== text || this._editForm !== form) return;
+    this._hint = hint;
+  }
+
+  // A paste of LaTeX -- another cell's math field, or `$…$` from Copy LaTeX or a web page
+  // -- goes in as this editor's own syntax; anything else is inserted as it is.
+  #onTextPaste = (event: ClipboardEvent): void => {
+    const syntax = SYNTAX_OF[this._editForm];
+    const pasted = pastedFrom(event.clipboardData);
+    const found = latexForText(pasted);
+    if (found === undefined) return;
+    event.preventDefault();
+    const field = event.target as HTMLInputElement | HTMLTextAreaElement;
+    const [start, end] = [field.selectionStart ?? field.value.length, field.selectionEnd ?? field.value.length];
+    void (async () => {
+      const text = await this.#pastedText(syntax, found, pasted.text ?? found.latex);
+      field.setRangeText(text, start, end, "end");
+      field.dispatchEvent(new Event("input", { bubbles: true }));
+    })();
+  };
+
+  /** A LaTeX paste as `syntax` text; `plain` -- what the clipboard said as text -- if it won't convert. */
+  async #pastedText(
+    syntax: Syntax,
+    { latex, maybe }: { latex: string; maybe: boolean },
+    plain: string,
+  ): Promise<string> {
+    if (syntax === "latex") return latex;
+    try {
+      if (maybe) {
+        await parseSyntax(syntax, plain);
+        return plain; // already this editor's syntax
+      }
+    } catch {
+      // not this editor's syntax, so LaTeX after all
+    }
+    try {
+      return await textInSyntax(syntax, await parseSyntax("latex", latex));
+    } catch {
+      return plain;
+    }
+  }
 
   #onTextKeydown = (event: KeyboardEvent): void => {
     if (event.key !== "Enter") return;
@@ -522,6 +612,7 @@ export class NotatioCell extends LitElement {
         rows=${Math.min(8, this._raw.split("\n").length + 1)}
         .value=${this._raw}
         @input=${this.#onTextInput}
+        @paste=${this.#onTextPaste}
         @blur=${this.#onTextCommit}
       ></textarea>`;
     }
@@ -532,6 +623,7 @@ export class NotatioCell extends LitElement {
       size=${Math.max(12, this._raw.length + 2)}
       .value=${this._raw}
       @input=${this.#onTextInput}
+      @paste=${this.#onTextPaste}
       @keydown=${this.#onTextKeydown}
       @blur=${this.#onTextCommit}
     />`;
@@ -548,7 +640,7 @@ export class NotatioCell extends LitElement {
         format: "mathjson",
       };
     }
-    if (this._json === undefined && !this._error && (this.format || "notatio") === "latex") {
+    if (this._json === undefined && !this._error && (this.format || "epsil") === "latex") {
       return { value: this._raw, format: "latex" };
     }
     return {
@@ -594,6 +686,7 @@ export class NotatioCell extends LitElement {
         <div class="notatio-row">
           ${this.#inMenu()}
           <span class="notatio-render">${this.#editor()}</span>
+          ${this._hint ? html`<span class="notatio-cell-hint" role="status">${this._hint}</span>` : ""}
           ${
             this.dirty
               ? html`<button type="button" class="notatio-reset" @click=${this.#reset}>edited · reset</button>`

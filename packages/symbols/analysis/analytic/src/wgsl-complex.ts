@@ -96,7 +96,7 @@ const KERNELS: Record<string, { fn: string; arity: number }> = {
   Julia: { fn: "julia", arity: 3 },
 };
 
-/** `ln` -> `Ln`: a round trip through notatio can hand back a lowercase head. */
+/** `ln` -> `Ln`: a round trip through Epsil can hand back a lowercase head. */
 const capitalize = (name: string): string => name.charAt(0).toUpperCase() + name.slice(1);
 
 /** Unary functions with a complex WGSL counterpart in `zetaWGSL`. */

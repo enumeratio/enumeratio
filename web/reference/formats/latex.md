@@ -1,7 +1,7 @@
 # LaTeX
 
 LaTeX is compute-engine's default text input: `ce.parse("\\frac{1}{2}")`. `<notatio-out>`
-takes it via `format="latex"` (its default); the plotting elements take notatio
+takes it via `format="latex"` (its default); the plotting elements take Epsil
 instead, and read LaTeX only inside a `$…$` island.
 
 <notatio-out value="\sin(x)^2 + \cos(x)^2" format="latex" label="In" />

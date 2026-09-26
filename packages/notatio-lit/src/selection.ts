@@ -1,8 +1,12 @@
 // A document-level copy handler: when a selection spans notatio elements, put
 // Markdown on the clipboard instead of the browser's mangled default. Inline
 // math (`<notatio-out inline>`) becomes `$latex$`, a code box (`<notatio-code>`) becomes
-// an inline code span or a fenced block, and the surrounding prose is kept. A
-// no-op (default copy) for any selection that doesn't touch our elements.
+// an inline code span or a fenced block, a notebook In or Out its InputForm, and the
+// surrounding prose is kept. A selection inside one typeset Out copies that expression
+// (see `clipboard.ts`). A no-op (default copy) for any selection that doesn't touch our
+// elements.
+
+import { writeExpression } from "./clipboard.ts";
 
 let installed = false;
 
@@ -15,15 +19,40 @@ export function ensureCopyHandler(): void {
 function onCopy(event: ClipboardEvent): void {
   const selection = globalThis.getSelection?.();
   if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
-  const fragment = selection.getRangeAt(0).cloneContents();
+  const range = selection.getRangeAt(0);
+  const out = typesetOutAround(range.commonAncestorContainer);
+  if (out && event.clipboardData && (out.expression.inputForm || out.expression.latex)) {
+    // Typeset glyphs copy as nonsense, and a part of them has no expression of its own:
+    // the copy is the Out's whole expression.
+    writeExpression(event.clipboardData, out.expression);
+    event.preventDefault();
+    return;
+  }
+  const fragment = range.cloneContents();
   // Only intervene when the selection actually contains one of our elements.
-  if (!fragment.querySelector?.("notatio-out[inline], notatio-out[display], notatio-code")) return;
+  if (!fragment.querySelector?.(`notatio-out[inline], notatio-out[display], notatio-code, ${WITH_INPUT_FORM}`)) return;
   const text = serialize(fragment)
     .replace(/[ \t]+\n/g, "\n")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
   event.clipboardData?.setData("text/plain", text);
   event.preventDefault();
+}
+
+/** A notebook In or Out, which keeps its InputForm on an attribute for a copied clone. */
+const WITH_INPUT_FORM = "notatio-out[input-form], notatio-in[input-form]";
+
+interface TypesetOut extends Element {
+  readonly expression: { inputForm: string; latex: string };
+}
+
+/** The Out whose typeset math `node` sits in -- not prose math, not a plain-text form. */
+function typesetOutAround(node: Node): TypesetOut | undefined {
+  const el = node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
+  const out = el?.closest(".notatio-render")?.closest("notatio-out");
+  if (!out || out.hasAttribute("inline") || out.hasAttribute("display") || el?.closest("notatio-code"))
+    return undefined;
+  return "expression" in out ? (out as TypesetOut) : undefined;
 }
 
 // Chrome (menus, In/Out labels, diagnostics) that shouldn't end up in the copy.
@@ -49,6 +78,7 @@ function serialize(node: Node): string {
     const lang = el.getAttribute("language") ?? "";
     return value.includes("\n") ? `\n\`\`\`${lang}\n${value}\n\`\`\`\n` : `\`${value}\``;
   }
+  if (el.matches(WITH_INPUT_FORM)) return `\n${el.getAttribute("input-form")}\n`;
   if (tag === "br") return "\n";
   if (SKIP.split(" ").some((c) => el.classList.contains(c))) return "";
 

@@ -1,0 +1,22 @@
+real-and-imaginary-parts:
+  epsil:
+    in: ReIm(3 + 4i)
+    out: "[3, 4]"
+  tex:
+    in: \mathrm{ReIm}(3+4i)
+    out: \bigl\lbrack3, 4\bigr\rbrack
+  fullform:
+    in: ReIm[Complex[3, 4]]
+  wolfram:
+    in: ReIm[Complex[3, 4]]
+threads-over-a-list:
+  epsil:
+    in: ReIm([1 + 2i, 3 + 4i])
+    out: "[[1, 2], [3, 4]]"
+  tex:
+    in: \mathrm{ReIm}(\bigl\lbrack1+2i, 3+4i\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: ReIm[List[Complex[1, 2], Complex[3, 4]]]
+  wolfram:
+    in: ReIm[List[Complex[1, 2], Complex[3, 4]]]

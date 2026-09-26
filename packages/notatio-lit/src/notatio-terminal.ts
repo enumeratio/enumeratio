@@ -113,7 +113,7 @@ export class NotatioTerminal extends LitElement {
   static properties = {
     /** `repl` for the interactive session, `cli` for the command-line transcript, `show` for one expression. */
     mode: { type: String, reflect: true },
-    /** In `show` mode, the expression, in notatio. */
+    /** In `show` mode, the expression, in Epsil. */
     value: { type: String },
     /** In `show` mode, the environment it is shown for: `tty` or `pipe`. */
     env: { type: String },

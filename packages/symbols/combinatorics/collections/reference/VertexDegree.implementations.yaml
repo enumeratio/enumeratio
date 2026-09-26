@@ -18,3 +18,52 @@ the-degree-of-one-vertex:
     in: VertexDegree[StarGraph[6], 1]
   wolfram:
     in: VertexDegree[StarGraph[6], 1]
+a-self-loop-counts-twice-at-its-own-vertex:
+  epsil:
+    in: |-
+      VertexDegree(Graph([
+                           UndirectedEdge(1, 2),
+                           UndirectedEdge(2, 3),
+                           UndirectedEdge(3, 1),
+                           UndirectedEdge(1, 1),
+                         ]))
+    out: "[4, 2, 2]"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 1), \mathrm{UndirectedEdge}(1, 1)\bigr\rbrack))
+    out: \bigl\lbrack4, 2, 2\bigr\rbrack
+  fullform:
+    in: VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 1], UndirectedEdge[1, 1]]]]
+  wolfram:
+    in: VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 1], UndirectedEdge[1, 1]]]]
+the-degree-of-vertex-2-in-a-mixed-graph:
+  epsil:
+    in: |-
+      VertexDegree(Graph([
+                           UndirectedEdge(1, 2),
+                           UndirectedEdge(2, 3),
+                           DirectedEdge(3, 1),
+                         ]), 2)
+    out: "2"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{DirectedEdge}(3, 1)\bigr\rbrack), 2)
+    out: "2"
+  fullform:
+    in: VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], DirectedEdge[3, 1]]], 2]
+  wolfram:
+    in: VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], DirectedEdge[3, 1]]], 2]
+the-degree-of-vertex-3-in-a-mixed-graph:
+  epsil:
+    in: |-
+      VertexDegree(Graph([
+                           UndirectedEdge(1, 2),
+                           UndirectedEdge(2, 3),
+                           DirectedEdge(3, 1),
+                         ]), 3)
+    out: "2"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{DirectedEdge}(3, 1)\bigr\rbrack), 3)
+    out: "2"
+  fullform:
+    in: VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], DirectedEdge[3, 1]]], 3]
+  wolfram:
+    in: VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], DirectedEdge[3, 1]]], 3]

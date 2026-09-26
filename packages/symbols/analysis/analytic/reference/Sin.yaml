@@ -132,6 +132,41 @@ examples:
     expected: 0
     category: Scope
     caption: Any integer multiple of $\pi$ is a zero of sine, however large
+  - id: sin-negate-pi-is-also-zero
+    expr: [Sin, [Negate, Pi]]
+    expected: 0
+    category: Scope
+    caption: $\sin(-\pi) = 0$
+  - id: sin-4-pi-is-zero
+    expr: [Sin, [Multiply, 4, Pi]]
+    expected: 0
+    category: Scope
+    caption: $\sin(4\pi) = 0$
+  - id: a-full-turn-shift-of-a-symbolic-argument-doesn-t
+    expr: [Sin, [Add, x, [Multiply, 2, Pi]]]
+    expected: [Sin, x]
+    category: Scope
+    caption: "A full-turn shift of a symbolic argument doesn't change the value: $\\sin(x + 2\\pi) = \\sin x$"
+  - id: sin-2-a-generic-argument-stays-symbolic
+    expr: [Sin, 2]
+    expected: [Sin, 2]
+    category: Possible issues
+    caption: $\sin(2)$, a generic argument, stays symbolic -- not a recognized special angle
+  - id: sin-x-plus-y-stays-symbolic
+    expr: [Sin, [Add, x, y]]
+    expected: [Sin, [Add, x, y]]
+    category: Possible issues
+    caption: A generic symbolic sum stays symbolic
+  - id: sin-i-pi-2-i-sinh-pi-2-exactly
+    expr: [Sin, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]
+    expected: [Multiply, [Complex, 0, 1], [Sinh, [Multiply, [Rational, 1, 2], Pi]]]
+    category: Scope
+    caption: $\sin(i\pi/2) = i\sinh(\pi/2)$ exactly -- [[Sinh]] has no special value at $\pi/2$, so this stays symbolic there
+  - id: n-decimalizes-sin-i-pi-2-not-just-the-exact-form
+    expr: [N, [Sin, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]]
+    expected: [Complex, 0, 2.3012989023072947]
+    category: Scope
+    caption: N(...) decimalizes $\sin(i\pi/2)$, not just the exact $i\sinh(\pi/2)$ form
   - id: interval-arithmetic-the-image-of-pi-6-pi-6-is
     expr: [Sin, [Interval, [Negate, [Divide, Pi, 6]], [Divide, Pi, 6]]]
     expected: [Interval, [Rational, -1, 2], [Rational, 1, 2]]

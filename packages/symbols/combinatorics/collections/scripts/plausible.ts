@@ -1,120 +1,134 @@
-// The runner: sample the catalogue, report, and print the seed that replays it.
+// Plausible over the collection catalogue (design/plausible.md): every family sampled from what
+// it declares — its params, the cost of each operation, a work bound where it enumerates — with
+// no lists of families here. Each family runs in a heap-capped worker under a time cap, so a
+// declaration that understates its cost is a finding rather than a dead run.
 //
-// Every property lives in `properties.ts`, which has no side effects and is unit-tested
-// against deliberately broken kernels — because a harness that reports "0 failing" is only
-// worth anything if it has been shown to fail on something.
+// Every property lives in `properties.ts`, the derived instance in `sampleable.ts`, one family's
+// run in `run-family.ts`; each is unit-tested against deliberately broken kernels.
 //
-//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts             # everything, fresh seed
-//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm        # families matching "perm"
-//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
-//   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
+//   node packages/symbols/combinatorics/collections/scripts/plausible.ts             # everything, fresh seed
+//   node packages/symbols/combinatorics/collections/scripts/plausible.ts Partitions  # one head (or every head containing it)
+//   node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
+//   PLAUSIBLE_POINTS=20 PLAUSIBLE_MAX_SIZE=9 node …/plausible.ts                     # deeper
 
+import { Worker } from "node:worker_threads";
 import { allEntries } from "../src/families/index.ts";
-import { check, checkFamily, type Failure, shrink, streamFor } from "./properties.ts";
+import type { Failure } from "./properties.ts";
+import type { FamilyReport, RunOptions } from "./run-family.ts";
 
-const POINTS = Number(process.env.PLAUSIBLE_POINTS ?? 8);
-const PARAM_CAP = Number(process.env.PLAUSIBLE_PARAM_CAP ?? 7);
-
-// Families backed by tableaux-plane.ts's `indexedFamily` engine: unrank/rank (and, for three of
-// them, count itself) fully materialize every element of the family before answering. That
-// file's own comment assumes sizes "stay small enough that full enumeration is cheap and
-// safe" — an assumption PARAM_CAP (let alone the nightly deep sample's 9) blows past:
-// GelfandTsetlin(5, 5) alone is 151,008 elements, GelfandTsetlin(9, 3) is 8.6M. Sampled at a
-// much smaller cap so they're still exercised without materializing the whole family.
-//
-// BoxedPlanePartitions was missed here (issue #90): its count() is closed-form (MacMahon's box
-// formula), so the `total <= 0` guard below never catches it, but unrank/rank still enumerate
-// the whole box through the same indexedFamily cache. Three independent params compound faster
-// than the rest of this set's one or two: BoxedPlanePartitions(7,7,7) is 3.9e16 elements, which
-// is what actually OOM'd — a 4GB heap dies partway through materializing that one box.
-const FULL_ENUMERATION_FAMILIES = new Set([
-  "SemistandardTableaux",
-  "GelfandTsetlin",
-  "AlternatingSignMatrices",
-  "SkewPartitions",
-  "SkewStandardTableaux",
-  "PlanePartitions",
-  "BoxedPlanePartitions",
-]);
-const SMALL_PARAM_CAP = 4;
-
-// Belt-and-suspenders for the families above: even at SMALL_PARAM_CAP, (4,4,4) puts
-// BoxedPlanePartitions at 232,848 elements — an order of magnitude past its siblings' worst case.
-// If a future param cap or a new full-enumeration family turns out too generous, fail that one
-// param draw as a finding instead of materializing an OOM.
-const MAX_MATERIALIZED = 2_000_000;
-
-// ── the run ─────────────────────────────────────────────────────────────────────
+const env = (name: string, fallback: number): number => Number(process.env[name] ?? fallback);
+const POINTS = env("PLAUSIBLE_POINTS", 8);
+const MAX_SIZE = env("PLAUSIBLE_MAX_SIZE", 7);
+const BUDGET = BigInt(env("PLAUSIBLE_BUDGET", 200_000));
+const RETRIES = env("PLAUSIBLE_RETRIES", 10);
+const FAMILY_SECONDS = env("PLAUSIBLE_FAMILY_SECONDS", 60);
+const WORKER_MB = env("PLAUSIBLE_WORKER_MB", 768);
 
 const args = process.argv.slice(2);
 const filter = args.find((argument) => !/^\d+$/.test(argument)) ?? "";
 const seed = Number(args.find((argument) => /^\d+$/.test(argument)) ?? Date.now() % 1_000_000);
 
-const families = allEntries.filter((entry) =>
-  filter === "" ? true : entry.head.toLowerCase().includes(filter.toLowerCase()),
-);
+const exact = allEntries.filter((entry) => entry.head === filter);
+const families =
+  exact.length > 0 ? exact : allEntries.filter((entry) => entry.head.toLowerCase().includes(filter.toLowerCase()));
 
-process.stdout.write(`plausible seed ${seed} — ${families.length} families, ${POINTS} points each\n`);
+process.stdout.write(
+  `plausible seed ${seed} — ${families.length} families, ${POINTS} points each, size to ${MAX_SIZE}\n`,
+);
 if (families.length === 0) {
   process.stdout.write(`no family matches ${JSON.stringify(filter)}\n`);
   process.exit(1);
 }
 
-const failures: Failure[] = [];
-let checked = 0;
+const options: RunOptions = { seed, points: POINTS, maxSize: MAX_SIZE, budget: BUDGET, retries: RETRIES };
+const spawn = (): Worker =>
+  new Worker(new URL("./plausible-worker.ts", import.meta.url), {
+    resourceLimits: { maxOldGenerationSizeMb: WORKER_MB },
+  });
 
-for (const entry of families) {
-  const draw = streamFor(seed, entry.head);
-  const fullEnumeration = FULL_ENUMERATION_FAMILIES.has(entry.head);
-  const paramCap = fullEnumeration ? SMALL_PARAM_CAP : PARAM_CAP;
-  for (let attempt = 0; attempt < POINTS; attempt++) {
-    const params = Array.from({ length: entry.paramCount }, () => Math.floor(draw() * (paramCap + 1)));
-    let total: number;
-    try {
-      total = entry.count(params);
-    } catch (error) {
-      failures.push({
-        family: entry.head,
-        property: "count",
-        params,
-        rank: -1,
-        detail: `count threw: ${String(error).slice(0, 120)}`,
-      });
-      continue;
-    }
-    if (!Number.isFinite(total) || total <= 0) continue; // an empty family proves nothing
-    if (fullEnumeration && total > MAX_MATERIALIZED) {
-      failures.push({
-        family: entry.head,
-        property: "count",
-        params,
-        rank: -1,
-        detail: `count ${total.toLocaleString()} exceeds the ${MAX_MATERIALIZED.toLocaleString()}-element materialization guard`,
-      });
-      continue;
-    }
-
-    const familyFailure = checkFamily(entry, params, draw);
-    if (familyFailure !== undefined) {
-      failures.push(shrink(entry, familyFailure));
-      break;
-    }
-    const rank = Math.floor(draw() * Math.min(total, 10_000));
-    const failure = check(entry, params, rank);
-    checked++;
-    if (failure !== undefined) {
-      failures.push(shrink(entry, failure));
-      break;
-    }
-  }
+/** One family in the worker; a timeout or a dead worker is reported as a cost finding. */
+function run(worker: Worker, head: string): Promise<{ report: FamilyReport; dead: boolean }> {
+  return new Promise((resolve) => {
+    let last = "";
+    const onMessage = (message: { progress?: string; report?: FamilyReport }) => {
+      if (message.progress !== undefined) last = message.progress;
+      if (message.report !== undefined) finish(message.report, false);
+    };
+    const onError = (error: unknown) =>
+      died(
+        (error as { code?: string }).code === "ERR_WORKER_OUT_OF_MEMORY"
+          ? `ran out of ${WORKER_MB} MB`
+          : `threw: ${String(error).slice(0, 120)}`,
+      );
+    const onExit = (code: number) => died(`worker exited ${code}`);
+    // Only our own listeners: removeAllListeners would take the Worker's internal ones too,
+    // and the next family's messages would never arrive.
+    const finish = (report: FamilyReport, dead: boolean) => {
+      clearTimeout(timer);
+      worker.off("message", onMessage).off("error", onError).off("exit", onExit);
+      resolve({ report, dead });
+    };
+    const died = (detail: string) =>
+      finish(
+        {
+          head,
+          declared: true,
+          checked: 0,
+          discards: {},
+          failures: [
+            { family: head, property: "cost", params: [], rank: -1n, detail: `${detail}${last ? ` at ${last}` : ""}` },
+          ],
+        },
+        true,
+      );
+    const timer = setTimeout(() => died(`exceeded ${FAMILY_SECONDS} s`), FAMILY_SECONDS * 1000);
+    worker.on("message", onMessage).on("error", onError).on("exit", onExit);
+    worker.postMessage({ head, options });
+  });
 }
 
+const failures: Failure[] = [];
+const undeclared: string[] = [];
+const starved: string[] = [];
+let checked = 0;
+let worker = spawn();
+const slow: string[] = [];
+for (const family of families) {
+  const started = performance.now();
+  const { report, dead } = await run(worker, family.head);
+  const seconds = (performance.now() - started) / 1000;
+  if (seconds > 2) slow.push(`${family.head} ${seconds.toFixed(1)} s`);
+  if (process.env["PLAUSIBLE_TRACE"]) process.stderr.write(`${family.head} ${seconds.toFixed(2)} s\n`);
+  if (dead) {
+    await worker.terminate();
+    worker = spawn();
+  }
+  checked += report.checked;
+  failures.push(...report.failures);
+  if (!report.declared) undeclared.push(report.head);
+  if (report.checked === 0 && report.failures.length === 0) {
+    const why = Object.entries(report.discards)
+      .map(([reason, n]) => `${reason} ×${n}`)
+      .join(", ");
+    starved.push(`${report.head} (${why})`);
+  }
+}
+await worker.terminate();
+
 process.stdout.write(`${checked} points checked, ${failures.length} families failing\n`);
+if (undeclared.length > 0) process.stdout.write(`sampled conservatively, not yet declared: ${undeclared.length}\n`);
+// Every draw discarded: the declared params reach nothing checkable within the budget.
+if (slow.length > 0) process.stdout.write(`slow:\n  ${slow.join("\n  ")}\n`);
+if (starved.length > 0) process.stdout.write(`nothing checked:\n  ${starved.join("\n  ")}\n`);
 for (const failure of failures) {
+  const at =
+    failure.params.length > 0 || failure.rank >= 0n
+      ? `(${failure.params.join(", ")})${failure.rank >= 0n ? `#${failure.rank}` : ""}`
+      : "";
   process.stdout.write(
-    `\n  ${failure.family}(${failure.params.join(", ")})${failure.rank >= 0 ? ` at rank ${failure.rank}` : ""}\n` +
+    `\n  ${failure.family}${at}\n` +
       `    ${failure.property}: ${failure.detail}\n` +
-      `    replay: vp node packages/symbols/combinatorics/collections/scripts/plausible.ts ${failure.family} ${seed}\n`,
+      `    replay: node packages/symbols/combinatorics/collections/scripts/plausible.ts ${failure.family} ${seed}\n`,
   );
 }
 

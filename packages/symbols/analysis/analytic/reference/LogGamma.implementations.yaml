@@ -96,7 +96,7 @@ ln-gamma-2-5-ln-1-3293-to-the-engine-s-working:
 off-the-positive-axis-this-is-the-continuation:
   epsil:
     in: LogGamma(-2.5 + 1.5i)
-    out: -3.717_513_451_191_792 + -7.713_065_525_834_192_5 * i
+    out: -3.717_513_451_191_792 - 7.713_065_525_834_192_5i
   tex:
     in: \mathrm{LogGamma}(-2.5+1.5i)
     out: -3.717\,513\,451\,191\,792-7.713\,065\,525\,834\,192\,5i
@@ -173,7 +173,7 @@ threads-elementwise-over-an-array:
 on-the-negative-axis-gamma-frac-32-frac-43-sqrt:
   epsil:
     in: LogGamma(-1.5)
-    out: 0.860_047_015_376_479_7 + -6.283_185_307_179_586 * i
+    out: 0.860_047_015_376_479_7 - 6.283_185_307_179_586i
   tex:
     in: \mathrm{LogGamma}(-1.5)
     out: 0.860\,047\,015\,376\,479\,7-6.283\,185\,307\,179\,586i

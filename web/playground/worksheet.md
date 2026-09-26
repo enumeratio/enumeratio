@@ -89,7 +89,7 @@ it, while the curve drawn over it stays visible.
 
 ## Framing is a cell too
 
-A setting is written in a namespace of its own — `\mathsf{extent}`, which in notatio is
+A setting is written in a namespace of its own — `\mathsf{extent}`, which in Epsil is
 the island `$\mathsf{extent}$` — so it can never collide with an ordinary name the
 mathematics is using. Wolfram reserves a context for the same reason.
 

@@ -9,4 +9,5 @@ export type * from "./reference.ts";
 export { type CrosswalkSource, type CrosswalkSystem, isCrosswalkSystem, SOURCES, SYSTEM_ORDER } from "./sources.ts";
 export { checkImplementations, type Exists, type Problem } from "./validate.ts";
 export { isCanonicalYaml, parseYaml, type StringifyOptions, stringifyYaml } from "./yaml.ts";
+export { orderImplementations } from "./order.ts";
 export { captionId, dedupeId, EXAMPLE_ID, EXAMPLE_ID_MAX, slugId } from "./id.ts";

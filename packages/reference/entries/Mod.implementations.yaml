@@ -239,6 +239,7 @@ a-third-argument-offsets-the-range-the-result:
   epsil:
     in: 17 % 5 % 1
     out: "2"
+    back: [Mod, [Mod, 17, 5], 1]
   tex:
     in:
     out: "2"
@@ -255,6 +256,7 @@ with-offset-1-the-residues-run-1-2-3-rather-than:
   epsil:
     in: 5 % 3 % 1
     out: "2"
+    back: [Mod, [Mod, 5, 3], 1]
   tex:
     in:
     out: "2"
@@ -276,16 +278,22 @@ rationals-are-reduced-exactly:
     in: Mod[Rational[5, 2], 2]
   sympy:
     in: (Rational(5, 2) % 2)
+    out: 1/2
   sage:
     in: ((5/2) % 2)
   oscar:
     in: mod((5 // 2), 2)
   julia:
     in: mod((5 // 2), 2)
+    out: "0.5"
   mathlib4:
     in: "((((5 : ℚ) / 2) : ℤ) % 2)"
   rust:
     in: mod_floor(rational(n(5), n(2)), n(2))
+    out: "panic: an integer, not 5/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 3p14-mod-2:
   epsil:
     in: 3.14 % 2
@@ -299,16 +307,22 @@ rationals-are-reduced-exactly:
     in: Mod[3.14, 2]
   sympy:
     in: (3.14 % 2)
+    out: "1.1400000000000001"
   sage:
     in: (3.14 % 2)
   oscar:
     in: mod(3.14, 2)
   julia:
     in: mod(3.14, 2)
+    out: "1.1400000000000001"
   mathlib4:
     in: "((3.14 : ℤ) % 2)"
   rust:
     in: mod_floor(x(3.14), n(2))
+    out: "panic: an integer, not 3.14"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 an-exact-irrational-reduces-exactly-to-2-sqrt-7:
   epsil:
     in: Sqrt(28) % 3
@@ -322,10 +336,15 @@ an-exact-irrational-reduces-exactly-to-2-sqrt-7:
     in: Mod[Sqrt[28], 3]
   sympy:
     in: (sqrt(28) % 3)
+    out: -3 + 2*sqrt(7)
   sage:
     in: (sqrt(28) % 3)
   rust:
     in: mod_floor(sqrt(n(28)), n(3))
+    out: "panic: an integer, not 5.291502622129181"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 a-symbolic-constant-reduces-exactly-to-pi-2:
   epsil:
     in: Pi % 2
@@ -339,10 +358,15 @@ a-symbolic-constant-reduces-exactly-to-pi-2:
     in: Mod[Pi, 2]
   sympy:
     in: (pi % 2)
+    out: -2 + pi
   sage:
     in: (pi % 2)
   rust:
     in: mod_floor(x(std::f64::consts::PI), n(2))
+    out: "panic: an integer, not 3.141592653589793"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 a-10-001-digit-dividend:
   epsil:
     in: 10 ^ 10_000 % 10_007
@@ -355,17 +379,20 @@ a-10-001-digit-dividend:
   wolfram:
     in: Mod[Power[10, 10000], 10007]
   sympy:
-    in: ((10**10000) % 10007)
+    in: (((10)**10000) % 10007)
+    out: "6333"
   sage:
-    in: ((10^10000) % 10007)
+    in: (((10)^10000) % 10007)
   oscar:
     in: mod((big(10)^10000), 10007)
   julia:
     in: mod((big(10)^10000), 10007)
+    out: "6333"
   mathlib4:
     in: "(((10 ^ 10000) : ℤ) % 10007)"
   rust:
     in: mod_floor(power(n(10), n(10000)), n(10007))
+    out: "6333"
 threads-over-a-list-of-moduli:
   epsil:
     in: 10 % [3, 4, 7]
@@ -379,20 +406,26 @@ threads-over-a-list-of-moduli:
     in: Mod[10, List[3, 4, 7]]
   sympy:
     in: "[(10 % 3), (10 % 4), (10 % 7)]"
+    out: "[1, 2, 3]"
   sage:
     in: "[(10 % 3), (10 % 4), (10 % 7)]"
   oscar:
     in: mod(10, [3, 4, 7])
   julia:
-    in: mod(10, [3, 4, 7])
+    in: "[mod(10, 3), mod(10, 4), mod(10, 7)]"
+    out: "[1, 2, 3]"
   mathlib4:
     in: "((10 : ℤ) % [3, 4, 7])"
   rust:
     in: mod_floor(n(10), list(vec![n(3), n(4), n(7)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars only.
 a-gaussian-integer-5-3i-2-2-2i:
   epsil:
     in: (5 + 3i) % 2
-    out: 1 + -1 * i
+    out: 1 - i
   tex:
     in: (5+3i)\bmod2
     out: 1-i
@@ -402,12 +435,20 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: Mod[Complex[5, 3], 2]
   sympy:
     in: ((5 + 3*I) % 2)
+    out: "TypeError: Invalid comparison of non-real (1 - I)**2*(-2*I - (1 - I)**2)/2"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod reduces Gaussian integers; SymPy's % is real-only.
   sage:
     in: ((5 + 3*I) % 2)
   oscar:
     in: mod(complex(5, 3), 2)
   julia:
     in: mod(complex(5, 3), 2)
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
+    verdict: error
+    kind: domain
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a rational integer.
 1-i-divides-5-3i-1-i-4-i:
   epsil:
     in: (5 + 3i) % (1 + i)
@@ -421,12 +462,20 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: Mod[Complex[5, 3], Complex[1, 1]]
   sympy:
     in: ((5 + 3*I) % (1 + 1*I))
+    out: (1 + I)*(Mod((1 - I)*(5 + 3*I)/2, (1 - I)*(1 + I)/2))
+    verdict: inconclusive
+    kind: domain
+    note: compute-engine's Mod reduces Gaussian integers; SymPy leaves the complex modulus symbolic.
   sage:
     in: ((5 + 3*I) % (1 + 1*I))
   oscar:
     in: mod(complex(5, 3), complex(1, 1))
   julia:
     in: mod(complex(5, 3), complex(1, 1))
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
+    verdict: error
+    kind: domain
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a Gaussian modulus too.
 a-negative-modulus-gives-a-result-in-n-0:
   epsil:
     in: -5 % -3
@@ -440,20 +489,23 @@ a-negative-modulus-gives-a-result-in-n-0:
     in: Mod[-5, -3]
   sympy:
     in: (-5 % -3)
+    out: "-2"
   sage:
     in: (-5 % -3)
   oscar:
     in: mod(-5, -3)
   julia:
     in: mod(-5, -3)
+    out: "-2"
   mathlib4:
     in: "(((-5) : ℤ) % (-3))"
   rust:
     in: mod_floor(n(-5), n(-3))
+    out: "-2"
 gaussian-integers-the-quotient-rounds-so-each:
   epsil:
     in: (7 + 5i) % 3
-    out: 1 + -1 * i
+    out: 1 - i
   tex:
     in: (7+5i)\bmod3
     out: 1-i
@@ -492,7 +544,7 @@ gaussian-integers-the-quotient-rounds-so-each:
 a-gaussian-modulus-7-5i-2-i-4-i-i:
   epsil:
     in: (7 + 5i) % (2 + i)
-    out: -1 * i
+    out: -i
   tex:
     in: (7+5i)\bmod(2+i)
     out: -i
@@ -638,16 +690,19 @@ mod-7-3:
     in: Mod[7, 3]
   sympy:
     in: (7 % 3)
+    out: "1"
   sage:
     in: (7 % 3)
   oscar:
     in: mod(7, 3)
   julia:
     in: mod(7, 3)
+    out: "1"
   mathlib4:
     in: "((7 : ℤ) % 3)"
   rust:
     in: mod_floor(n(7), n(3))
+    out: "1"
 eulers-number-mod-2-reduces-exactly:
   epsil:
     in: ExponentialE % 2
@@ -661,10 +716,15 @@ eulers-number-mod-2-reduces-exactly:
     in: Mod[E, 2]
   sympy:
     in: (E % 2)
+    out: -2 + E
   sage:
     in: (e % 2)
   rust:
     in: mod_floor(x(std::f64::consts::E), n(2))
+    out: "panic: an integer, not 2.718281828459045"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 a-free-symbol-is-untouched:
   epsil:
     in: x % 2

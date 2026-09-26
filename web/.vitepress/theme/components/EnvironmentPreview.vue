@@ -16,7 +16,7 @@ import {
   mediaSignals,
   reduce,
 } from "@enumeratio/notatio";
-import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 import { fragment, setFragment } from "../fragment.ts";
 
@@ -32,7 +32,7 @@ const environment = computed<Environment>(() => {
 });
 
 const engine = shallowRef<Awaited<ReturnType<typeof loadEngine>>>();
-const parsed = computed(() => parseNotatio(source.value));
+const parsed = computed(() => parseExpression(source.value));
 // With no engine at view time a readout is the value it had when the page was made.
 const reduced = computed(() => {
   if (parsed.value.errors.length > 0) return undefined;
@@ -42,7 +42,7 @@ const reduced = computed(() => {
     ? out
     : evaluateReadouts(out, (e) => ce.box(e).evaluate().json);
 });
-const notatio = computed(() => (reduced.value === undefined ? "" : serializeNotatio(reduced.value)));
+const epsil = computed(() => (reduced.value === undefined ? "" : serializeExpression(reduced.value)));
 const json = computed(() => (reduced.value === undefined ? "" : JSON.stringify(reduced.value)));
 const textOnly = computed(() => environment.value.surface.every((s) => s === "text"));
 
@@ -91,7 +91,7 @@ onUnmounted(() => {
         <span v-if="printing" class="env-note">printing</span>
       </div>
       <textarea v-model="source" class="env-source" rows="2" spellcheck="false" />
-      <notatio-code language="notatio" :value="notatio" hide-lang />
+      <notatio-code language="epsil" :value="epsil" hide-lang />
       <div class="env-out" :env="environment.name">
         <notatio-terminal v-if="textOnly" mode="show" :env="environment.name" :value="source" />
         <Notatio v-else-if="json" :key="json" :json="json" />

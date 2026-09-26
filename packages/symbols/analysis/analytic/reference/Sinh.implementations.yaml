@@ -182,6 +182,15 @@ sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic:
     in: Sinh[Log[2]]
   wolfram:
     in: Sinh[Log[2]]
+a-real-symbolic-argument-is-untouched:
+  epsil:
+    in: Sinh(x)
+    out: Sinh(x)
+  tex:
+    in: \sinh(x)
+    out: \sinh(x)
+  fullform:
+    in: Sinh[x]
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Sinh(-x)
@@ -261,3 +270,14 @@ to-30-significant-digits-not-yet-the-last-digit:
     in: N[Sinh[1], 30]
   wolfram:
     in: N[Sinh[1], 30]
+n-decimalizes-sinh-i-pi-2-not-just-the-exact:
+  epsil:
+    in: N(Sinh(ImaginaryUnit * (Pi / 2)))
+    out: i
+  tex:
+    in: N(\sinh(\frac{i\pi}{2}))
+    out: i
+  fullform:
+    in: N[Sinh[Times[I, Divide[Pi, 2]]]]
+  wolfram:
+    in: N[Sinh[Times[I, Divide[Pi, 2]]]]

@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { expect, test } from "vite-plus/test";
 import {
   affected,
@@ -17,7 +17,7 @@ const ce = new ComputeEngine();
 /** `sources[i]` becomes cell `i + 1` -- document order is the id order throughout. */
 function bindingsOf(...sources: string[]): CellBindings[] {
   return sources.map((src, i) => {
-    const { json, errors } = parseNotatio(src, { allow: ["Assign"] });
+    const { json, errors } = parseExpression(src, { allow: ["Assign"] });
     if (errors.length) throw new Error(errors.join("; "));
     return cellBindings(ce, i + 1, src, json);
   });

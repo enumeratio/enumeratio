@@ -97,7 +97,7 @@ co-function-identity-arcsin-x-arccos-x-pi-2:
 outside-1-1-reduces-to-the-exact-closed-form:
   epsil:
     in: Arcsin(2)
-    out: 1 / 2 * Pi + -1 * i * Ln(2 + Sqrt(3))
+    out: 1 / 2 * Pi + -i * Ln(2 + Sqrt(3))
   tex:
     in: \arcsin(2)
     out: \frac{\pi}{2}-i\ln(2+\sqrt{3})
@@ -124,7 +124,7 @@ a-machine-precision-argument-evaluates:
 outside-1-1-a-float-argument-gives-the-complex:
   epsil:
     in: Arcsin(1.5)
-    out: 1.570_796_326_794_896_6 + -0.962_423_650_119_206_9 * i
+    out: 1.570_796_326_794_896_6 - 0.962_423_650_119_206_9i
   tex:
     in: \arcsin(1.5)
     out: 1.570\,796\,326\,794\,896\,6-0.962\,423\,650\,119\,206\,9i
@@ -274,7 +274,7 @@ taylor-series-about-0:
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2:
   epsil:
     in: TrigToExp(Arcsin(x))
-    out: -1 * i * Ln(i * x + Sqrt(-x ^ 2 + 1))
+    out: -i * Ln(i * x + Sqrt(-x ^ 2 + 1))
   tex:
     in: \mathrm{TrigToExp}(\arcsin(x))
     out: -i\ln(i x+\sqrt{1-x^2})
@@ -291,6 +291,28 @@ not-simply-2-2-is-outside-the-principal-range-pi:
     in: ArcSin[Sin[2]]
   wolfram:
     in: ArcSin[Sin[2]]
+arcsin-sin-neg-2-mirrors-through-0:
+  epsil:
+    in: Arcsin(Sin(-2))
+    out: 2 - Pi
+  tex:
+    in: \arcsin(\sin(-2))
+    out: 2-\pi
+  fullform:
+    in: ArcSin[Sin[-2]]
+  wolfram:
+    in: ArcSin[Sin[-2]]
+arcsin-sin-1-2-is-already-principal:
+  epsil:
+    in: Arcsin(Sin(1 / 2))
+    out: 1 / 2
+  tex:
+    in: \arcsin(\sin(\frac{1}{2}))
+    out: \frac{1}{2}
+  fullform:
+    in: ArcSin[Sin[Rational[1, 2]]]
+  wolfram:
+    in: ArcSin[Sin[Rational[1, 2]]]
 to-30-significant-digits-not-yet-the-last-digit:
   epsil:
     in: N(Arcsin(1 / 3), 30)
