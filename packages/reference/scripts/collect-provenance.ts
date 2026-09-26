@@ -11,8 +11,8 @@
 //
 //   vp node packages/reference/scripts/collect-provenance.ts
 
-import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { writeFormatted } from "@enumeratio/entry/node";
 import { HEADS } from "@enumeratio/wolfram/src";
 import { referenceEntries } from "../src/node.ts";
 import { declaredEngine } from "./engines.ts";
@@ -58,7 +58,7 @@ export interface HeadRecord {
 export const provenance: readonly HeadRecord[] = ${JSON.stringify(records, null, 2)};
 `;
 
-writeFileSync(new URL("../src/provenance-data.ts", import.meta.url), source);
+await writeFormatted(new URL("../src/provenance-data.ts", import.meta.url), source);
 
 const counts = new Map<string, number>();
 for (const record of records) {

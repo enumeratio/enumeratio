@@ -36,6 +36,14 @@ export async function writeYaml(path: string, value: unknown, options?: Stringif
   writeFileSync(path, await formatYaml(value, options));
 }
 
+/** Write generated source to `path` as `vp fmt` lays it out, so a regeneration diffs clean. */
+export async function writeFormatted(path: string | URL, source: string): Promise<void> {
+  const name = typeof path === "string" ? path : path.pathname;
+  const { code, errors } = await format(name, source, FORMAT);
+  if (errors.length > 0) throw new Error(`oxfmt: ${JSON.stringify(errors)}`);
+  writeFileSync(path, code);
+}
+
 /** True if the text at `path` is what the writer makes of its own data. */
 export async function isWrittenYaml(path: string, options?: StringifyOptions): Promise<boolean> {
   const text = readFileSync(path, "utf8");
