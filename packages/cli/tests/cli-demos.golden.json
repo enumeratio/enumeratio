@@ -75,7 +75,7 @@
   "cli-json": [
     {
       "cmd": "notatio --json \"Binomial(10, 3)\"",
-      "out": "{\"ok\":true,\"input\":\"Binomial(10, 3)\",\"syntax\":\"epsil\",\"form\":\"notatio\",\"result\":\"120\",\"forms\":{\"notatio\":\"120\",\"tex\":\"120\",\"mathjson\":120,\"wolfram\":\"120\"}}",
+      "out": "{\"ok\":true,\"input\":\"Binomial(10, 3)\",\"syntax\":\"epsil\",\"form\":\"inputform\",\"result\":\"120\",\"forms\":{\"inputform\":\"120\",\"tex\":\"120\",\"mathjson\":120,\"wolfram\":\"120\"}}",
       "code": 0
     },
     {
@@ -126,17 +126,17 @@
   "cli-lists": [
     {
       "cmd": "notatio forms",
-      "out": "  * notatio   notatio (restricted Epsil)\n    tex       TeXForm\n    mathjson  MathJSON\n    wolfram   WolframFullForm\n    epsil     Epsil\n    numpy     NumPy / Python\n    glsl      GLSL\n    wgsl      WGSL\n    js        JavaScript",
+      "out": "  * inputform InputForm\n    tex       TeXForm\n    mathjson  MathJSON\n    wolfram   WolframFullForm\n    epsil     Epsil\n    numpy     NumPy / Python\n    glsl      GLSL\n    wgsl      WGSL\n    js        JavaScript",
       "code": 0
     },
     {
       "cmd": "notatio forms --json",
-      "out": "[{\"name\":\"notatio\",\"label\":\"notatio (restricted Epsil)\",\"default\":true},{\"name\":\"tex\",\"label\":\"TeXForm\",\"default\":false},{\"name\":\"mathjson\",\"label\":\"MathJSON\",\"default\":false},{\"name\":\"wolfram\",\"label\":\"WolframFullForm\",\"default\":false},{\"name\":\"epsil\",\"label\":\"Epsil\",\"default\":false},{\"name\":\"numpy\",\"label\":\"NumPy / Python\",\"default\":false},{\"name\":\"glsl\",\"label\":\"GLSL\",\"default\":false},{\"name\":\"wgsl\",\"label\":\"WGSL\",\"default\":false},{\"name\":\"js\",\"label\":\"JavaScript\",\"default\":false}]",
+      "out": "[{\"name\":\"inputform\",\"label\":\"InputForm\",\"default\":true},{\"name\":\"tex\",\"label\":\"TeXForm\",\"default\":false},{\"name\":\"mathjson\",\"label\":\"MathJSON\",\"default\":false},{\"name\":\"wolfram\",\"label\":\"WolframFullForm\",\"default\":false},{\"name\":\"epsil\",\"label\":\"Epsil\",\"default\":false},{\"name\":\"numpy\",\"label\":\"NumPy / Python\",\"default\":false},{\"name\":\"glsl\",\"label\":\"GLSL\",\"default\":false},{\"name\":\"wgsl\",\"label\":\"WGSL\",\"default\":false},{\"name\":\"js\",\"label\":\"JavaScript\",\"default\":false}]",
       "code": 0
     },
     {
       "cmd": "notatio completion zsh",
-      "out": "#compdef notatio\n# zsh completion for notatio -- eval \"$(notatio completion zsh)\"\n_notatio() {\n  local -a subcommands forms syntaxes\n  subcommands=(eval convert forms formats serve completion)\n  forms=(notatio tex mathjson wolfram epsil numpy glsl wgsl js)\n  syntaxes=(latex mathjson wolfram epsil)\n  _arguments -s \\\n    '(-f --form)'{-f,--form}'[output form]:form:(${forms})' \\\n    '(-i --in)'{-i,--in}'[input syntax]:syntax:(${syntaxes})' \\\n    '-c[expression]:expr:' \\\n    '(-N --numeric)'{-N,--numeric}'[numeric approximation]' \\\n    '(-p --precision)'{-p,--precision}'[significant digits]:digits:' \\\n    '--json[structured JSON output]' \\\n    '(-h --help)'{-h,--help}'[show help]' \\\n    '(-V --version)'{-V,--version}'[show version]' \\\n    '1:subcommand or expression:(${subcommands})' \\\n    '*::expr:'\n}\ncompdef _notatio notatio",
+      "out": "#compdef notatio\n# zsh completion for notatio -- eval \"$(notatio completion zsh)\"\n_notatio() {\n  local -a subcommands forms syntaxes\n  subcommands=(eval convert forms formats serve completion)\n  forms=(inputform tex mathjson wolfram epsil numpy glsl wgsl js)\n  syntaxes=(latex mathjson wolfram epsil)\n  _arguments -s \\\n    '(-f --form)'{-f,--form}'[output form]:form:(${forms})' \\\n    '(-i --in)'{-i,--in}'[input syntax]:syntax:(${syntaxes})' \\\n    '-c[expression]:expr:' \\\n    '(-N --numeric)'{-N,--numeric}'[numeric approximation]' \\\n    '(-p --precision)'{-p,--precision}'[significant digits]:digits:' \\\n    '--json[structured JSON output]' \\\n    '(-h --help)'{-h,--help}'[show help]' \\\n    '(-V --version)'{-V,--version}'[show version]' \\\n    '1:subcommand or expression:(${subcommands})' \\\n    '*::expr:'\n}\ncompdef _notatio notatio",
       "code": 0
     }
   ],
@@ -162,7 +162,7 @@
   "cli-help": [
     {
       "cmd": "notatio --help",
-      "out": "notatio — evaluate compute-engine expressions\n\nUsage:\n  notatio [options] <expr>       evaluate <expr> and print the result\n  notatio eval [options] <expr>  same, explicit\n  notatio convert [options] <expr>\n                                 re-render <expr> in another form without evaluating\n  echo <expr> | notatio          read the expression from stdin (or pass \"-\")\n  notatio                        (a TTY, no expr) start the interactive REPL\n  notatio forms | formats        list the output forms | the format registry\n  notatio completion <shell>     print a completion script: bash, zsh, fish\n  notatio serve [--port N]       run the local HTTP compute host\n\nOptions:\n  -f, --form <name>   output form: notatio, tex, mathjson, wolfram, epsil, numpy, glsl, wgsl, js\n                      (repeatable; Wolfram names like TeXForm, InputForm, FullForm work too)\n  -i, --in <syntax>   input syntax: latex, mathjson, wolfram, epsil (default epsil)\n  -c <expr>           the expression to evaluate\n  -N, --numeric       numeric approximation of the result\n  -p, --precision <n> working precision in significant digits\n      --env <name>    reduce the result for an environment: web, print, tty, pipe, compact\n                      (text output defaults to pipe: controls pin, with a caption)\n      --json          print a structured result: { ok, input, syntax, form, result, forms }\n  -h, --help          show this help\n  -V, --version       show the version\n\nDefaults for --form, --in, and --precision can live in a config file\n($NOTATIO_CONFIG, ~/.config/notatio/config.json, or ~/.notatiorc).",
+      "out": "notatio — evaluate compute-engine expressions\n\nUsage:\n  notatio [options] <expr>       evaluate <expr> and print the result\n  notatio eval [options] <expr>  same, explicit\n  notatio convert [options] <expr>\n                                 re-render <expr> in another form without evaluating\n  echo <expr> | notatio          read the expression from stdin (or pass \"-\")\n  notatio                        (a TTY, no expr) start the interactive REPL\n  notatio forms | formats        list the output forms | the format registry\n  notatio completion <shell>     print a completion script: bash, zsh, fish\n  notatio serve [--port N]       run the local HTTP compute host\n\nOptions:\n  -f, --form <name>   output form: inputform, tex, mathjson, wolfram, epsil, numpy, glsl, wgsl, js\n                      (repeatable; Wolfram names like TeXForm, InputForm, FullForm work too)\n  -i, --in <syntax>   input syntax: latex, mathjson, wolfram, epsil (default epsil)\n  -c <expr>           the expression to evaluate\n  -N, --numeric       numeric approximation of the result\n  -p, --precision <n> working precision in significant digits\n      --env <name>    reduce the result for an environment: web, print, tty, pipe, compact\n                      (text output defaults to pipe: controls pin, with a caption)\n      --json          print a structured result: { ok, input, syntax, form, result, forms }\n  -h, --help          show this help\n  -V, --version       show the version\n\nDefaults for --form, --in, and --precision can live in a config file\n($NOTATIO_CONFIG, ~/.config/notatio/config.json, or ~/.notatiorc).",
       "code": 0
     },
     {

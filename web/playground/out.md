@@ -2,9 +2,9 @@
 
 `<notatio-out>` — read-only typeset rendering of a compute-engine expression.
 Accepts LaTeX (the default — it renders an encoding it is handed, and a cell hands it
-the editor's LaTeX), MathJSON or notatio, optionally evaluates first, and offers the
+the editor's LaTeX), MathJSON or Epsil, optionally evaluates first, and offers the
 textual **display forms** through its In/Out menu (hover the label). compute-engine
-loads only when MathJSON or notatio, evaluation, or an assertion is requested.
+loads only when MathJSON or Epsil, evaluation, or an assertion is requested.
 
 <Story
   title="Evaluated LaTeX">
@@ -17,9 +17,9 @@ loads only when MathJSON or notatio, evaluation, or an assertion is requested.
 </Story>
 
 <Story
-  title="notatio input">
-<notatio-out value="Sqrt(16) + 2^3" format="notatio" evaluate />
-<notatio-out value="Binomial(n, k) + $\frac{1}{2}$" format="notatio" />
+  title="Epsil input">
+<notatio-out value="Sqrt(16) + 2^3" format="epsil" evaluate />
+<notatio-out value="Binomial(n, k) + $\frac{1}{2}$" format="epsil" />
 </Story>
 
 <Story

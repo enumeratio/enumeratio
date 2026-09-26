@@ -4,7 +4,7 @@ import { collectMessages, type Message } from "@enumeratio/boxed";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
 import { toMathML } from "@enumeratio/formats/mathml";
 import { portableTeX } from "@enumeratio/formats/tex";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -60,7 +60,7 @@ function cachedMarkup(convert: (latex: string) => string, latex: string): string
  * live scope rather than a worksheet pass's own tracked bindings.
  */
 interface PlotInfo {
-  /** InputForm -- notatio a plot element can re-parse (`toInputForm`, round-trips). */
+  /** InputForm -- Epsil a plot element can re-parse (`toInputForm`, round-trips). */
   readonly source: string;
   /** The names still free after substitution, sorted. */
   readonly free: readonly string[];
@@ -100,7 +100,7 @@ function plotOf(engine: ComputeEngine, raw: BoxedExpression): PlotInfo | undefin
 // the worker branch, below).
 const log = debug("out");
 
-type Format = "latex" | "mathjson" | "notatio";
+type Format = "latex" | "mathjson" | "epsil";
 type Status = "" | "ok" | "mismatch" | "error";
 type Form =
   | "standard"
@@ -257,7 +257,7 @@ const FORM_LABEL: Record<Form, string> = {
 };
 // The language tag for the forms that render as source in a <notatio-code> box.
 const FORM_LANG: Partial<Record<Form, string>> = {
-  input: "notatio",
+  input: "epsil",
   full: "json",
   tex: "latex",
   asciimath: "asciimath",
@@ -273,9 +273,9 @@ const FORM_LANG: Partial<Record<Form, string>> = {
 /**
  * `<notatio-out>` -- read-only typeset rendering of a compute-engine
  * expression. Accepts LaTeX (the default: it renders an encoding it is handed, and the
- * cell hands it the editor's LaTeX), MathJSON or notatio; optionally evaluates first.
+ * cell hands it the editor's LaTeX), MathJSON or Epsil; optionally evaluates first.
  * Renders in light DOM so the host page's MathLive static stylesheet applies.
- * compute-engine is loaded only when the input is MathJSON or notatio, or evaluation
+ * compute-engine is loaded only when the input is MathJSON or Epsil, or evaluation
  * or an assertion is requested.
  *
  * Set `expect` to a JSON MathJSON value to turn the element into a live snapshot
@@ -286,7 +286,7 @@ export class NotatioOut extends LitElement {
   static properties = {
     /** The expression to render, in the encoding `format` names. */
     value: { type: String },
-    /** How to read `value`: `latex`, `mathjson` or `notatio`. */
+    /** How to read `value`: `latex`, `mathjson` or `epsil`. */
     format: { type: String },
     /** Sit inline in a sentence: the rendering alone, no label, no menu, no status. */
     inline: { type: Boolean, reflect: true },
@@ -468,7 +468,7 @@ export class NotatioOut extends LitElement {
       if (this.getAttribute("value") !== this.value) this.setAttribute("value", this.value);
     }
     // Any other Out keeps its InputForm there, for the same reason: a selection that
-    // spans it copies it as notatio you can paste back in.
+    // spans it copies it as Epsil you can paste back in.
     if (changed.has("_input")) {
       if (this._input) this.setAttribute("input-form", this._input);
       else this.removeAttribute("input-form");
@@ -616,11 +616,11 @@ export class NotatioOut extends LitElement {
     return { latex, json: result.json, messages, name, plot: plotInfo };
   }
 
-  /** `value` as MathJSON, for the two encodings that are not LaTeX. A notatio diagnostic throws. */
+  /** `value` as MathJSON, for the two encodings that are not LaTeX. An Epsil diagnostic throws. */
   #json(engine: ComputeEngine): MathJsonExpression {
     const source = this.value ?? "";
     if (this.format === "mathjson") return JSON.parse(source) as MathJsonExpression;
-    const { json, errors } = parseNotatio(source, {
+    const { json, errors } = parseExpression(source, {
       parseLatex: (tex) => engine.parse(tex).json,
     });
     if (errors.length) throw new Error(errors.join("; "));
@@ -775,7 +775,7 @@ export class NotatioOut extends LitElement {
       // MathMLForm: presentation MathML, straight off the MathJSON tree -- no engine,
       // and output only, so nothing parses it back.
       this._mathml = json === undefined ? "" : toMathML(json as MathJsonExpression);
-      // InputForm: the same expression as notatio you could type back in.
+      // InputForm: the same expression as Epsil you could type back in.
       this._input = json === undefined ? "" : toInputForm(json as MathJsonExpression);
       if (json === undefined) {
         this._traditional = this._markup;
@@ -1173,7 +1173,7 @@ export class NotatioOut extends LitElement {
             ? html`<div class="notatio-tree-children">
                 ${args.map((arg, i) => this.#node(arg, path ? `${path}.${i}` : `${i}`))}
               </div>`
-            : html`<span class="notatio-tree-summary">${unsafeHTML(highlightCode(summary, "notatio"))}</span>`
+            : html`<span class="notatio-tree-summary">${unsafeHTML(highlightCode(summary, "epsil"))}</span>`
         }
       </div>`;
     }

@@ -30,14 +30,14 @@
       "types": "./dist/node.d.mts",
       "import": "./dist/node.mjs"
     },
-    "./notatio": {
-      "types": "./dist/notatio.d.mts",
-      "import": "./dist/notatio.mjs"
+    "./expression": {
+      "types": "./dist/expression.d.mts",
+      "import": "./dist/expression.mjs"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/node.ts src/notatio.ts src/inputform.ts src/mathml.ts src/tex.ts",
+    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/mathml.ts src/tex.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

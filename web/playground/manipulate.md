@@ -3,14 +3,14 @@
 A generic, Wolfram-style [`Manipulate`](https://reference.wolfram.com/language/ref/Manipulate.html),
 rendered by `<notatio-manipulate>`. It shows a slider (or setter) per parameter
 and re-binds those parameters into **any** slotted content: every descendant
-attribute that is a **notatio** expression carrying a **named wildcard** (`_a`)
+attribute that is an **expression** carrying a **named wildcard** (`_a`)
 is a template, re-evaluated live as the controls move. The same wrapper drives a
 plot, a glyph, several elements at once, or plain markup.
 
 `params` uses Wolfram's control tuples — `{a, min, max}`, `{a, min, max, step}`,
 `{ {a, init}, min, max }`, and a discrete `{k, {1, 2, 3}}`; separate several with
 `;` or `,`. A slot is a named wildcard filled from the matching control: `_a` takes the
-value of `a`, and the slot body can be any notatio expression over them
+value of `a`, and the slot body can be any expression over them
 (`_n`, `_n * 20`, `_A / 2`). Every slider carries a **play button (▶)** that
 animates it on a loop.
 

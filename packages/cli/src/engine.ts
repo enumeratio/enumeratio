@@ -42,8 +42,8 @@ const SYNTAX_PREFIX: Record<string, Syntax> = {
 /**
  * Decide how to read an input line. An explicit syntax pragma
  * (`:latex|:mathjson|:wolfram|:epsil`, plus short aliases) selects the syntax for
- * that line; otherwise the line uses the session default (Epsil — notatio is the
- * restricted subset rendered back).
+ * that line; otherwise the line uses the session default (Epsil), rendered back
+ * as InputForm.
  * LaTeX inside Epsil goes in `$…$` islands, or `:latex` for a whole LaTeX line.
  */
 export function classifyInput(src: string, fallback: Syntax = "epsil"): Classified {
@@ -53,11 +53,11 @@ export function classifyInput(src: string, fallback: Syntax = "epsil"): Classifi
   return { syntax: fallback, body: t };
 }
 
-export const FORMS = ["notatio", "tex", "mathjson", "wolfram", "epsil", "numpy", "glsl", "wgsl", "js"] as const;
+export const FORMS = ["inputform", "tex", "mathjson", "wolfram", "epsil", "numpy", "glsl", "wgsl", "js"] as const;
 export type Form = (typeof FORMS)[number];
 
 export const FORM_LABEL: Record<Form, string> = {
-  notatio: "notatio (restricted Epsil)",
+  inputform: "InputForm",
   tex: "TeXForm",
   mathjson: "MathJSON",
   wolfram: "WolframFullForm",
@@ -70,7 +70,7 @@ export const FORM_LABEL: Record<Form, string> = {
 
 // A display form is just a @enumeratio/formats export format under a short name.
 const FORMAT_OF: Record<Form, string> = {
-  notatio: "Notatio",
+  inputform: "InputForm",
   tex: "TeX",
   mathjson: "MathJSON",
   wolfram: "WL",
@@ -101,10 +101,9 @@ const FORM_ALIASES: Record<string, Form> = {
   fullform: "wolfram",
   wolframfullform: "wolfram",
   wolframlanguage: "wolfram",
-  standardform: "notatio",
-  inputform: "notatio",
-  outputform: "notatio",
-  text: "notatio",
+  standardform: "inputform",
+  outputform: "inputform",
+  text: "inputform",
 };
 const SYNTAX_ALIASES: Record<string, Syntax> = {
   tex: "latex",
@@ -189,7 +188,7 @@ export class Session {
   readonly ce: ComputeEngine;
   readonly history: EvalResult[] = [];
   readonly vars = new Map<string, BoxedExpression>();
-  form: Form = "notatio";
+  form: Form = "inputform";
   defaultSyntax: Syntax = "epsil";
   private counter = 0;
 
@@ -345,7 +344,7 @@ export class Session {
 
   /**
    * Replace `%`, `%%`, `%n` with a prior result -- in Wolfram syntax only, where they are
-   * Wolfram's own. In notatio (Epsil) `%` is `Mod` and in LaTeX a comment; there, `Out(n)`.
+   * Wolfram's own. In Epsil `%` is `Mod` and in LaTeX a comment; there, `Out(n)`.
    */
   private substitute(body: string, syntax: Syntax): string {
     if (syntax !== "wolfram") return body;

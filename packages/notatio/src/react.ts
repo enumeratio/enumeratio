@@ -7,7 +7,7 @@
 // `@enumeratio/notatio-lit`, which the page imports once for their registration; this
 // module only names them.
 
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { createElement, type ReactElement, useEffect, useState } from "react";
 import { loadEngine } from "./engine.ts";
 import { type Environment, environmentNamed, pageEnvironment, watchPageEnvironment } from "./environment.ts";
@@ -20,7 +20,7 @@ export { components };
 export * from "./react-generated.ts";
 
 export interface NotatioProps {
-  /** The expression, as notatio. */
+  /** The expression, as Epsil. */
   expr?: string;
   /** The expression, as a MathJSON string -- an alternative to `expr`. */
   json?: string;
@@ -60,11 +60,11 @@ export function Notatio({ expr, json, env }: NotatioProps): ReactElement {
   return env ? createElement("span", { env, style: { display: "contents" } }, node) : node;
 }
 
-/** Parse the source: MathJSON as given, notatio with the engine for its `$…$` islands. */
+/** Parse the source: MathJSON as given, Epsil with the engine for its `$…$` islands. */
 async function parse(expr?: string, json?: string): Promise<unknown> {
   if (json) return JSON.parse(json);
   if (!expr?.trim()) return undefined;
   const engine = await loadEngine();
-  const parsed = parseNotatio(expr, { parseLatex: (tex) => engine.parse(tex).json });
+  const parsed = parseExpression(expr, { parseLatex: (tex) => engine.parse(tex).json });
   return parsed.errors.length ? undefined : parsed.json;
 }

@@ -1,15 +1,15 @@
-// `notatio` — a restricted subset of Epsil, and the language of the web-component
-// attributes (`<notatio-plot value>`, `<notatio-manipulate>` slots, …). It is a
-// single expression: the full Epsil surface syntax minus statements and effects
-// (no assignment, declarations, control flow, pragmas, or sequences). Parsing and
-// serialization lean entirely on compute-engine's own Epsil (`parseEpsil` /
-// `serializeEpsil`); this module only adds the subset gate and the slot helpers.
+// An expression written in Epsil, compute-engine's own surface syntax, read into MathJSON.
+// Web-component attributes (`<notatio-plot value>`, `<notatio-manipulate>` slots, …) and
+// cells each take one: no statements or effects (assignment, declarations, control flow,
+// pragmas, sequences), which `parseExpression` reports rather than evaluates. Parsing and
+// serialization are compute-engine's own (`parseEpsil` / `serializeEpsil`); this module adds
+// that check and the slot helpers.
 //
 // Slots use compute-engine's native pattern notation: a named **wildcard**
 // `_name` is a hole filled from the parameter `name` (see `collectWildcards`; the
-// element fills them with CE's own `.subs`). `$…$` LaTeX islands are allowed (need a `parseLatex`
-// hook via `ce`); inside an island implicit multiplication works, so a product of
-// symbols needs an explicit `*` only in the Epsil (non-island) text.
+// element fills them with CE's own `.subs`). Epsil's `$…$` LaTeX islands need a `parseLatex`
+// hook via `ce`; inside an island implicit multiplication works, so a product of
+// symbols needs an explicit `*` only outside one.
 
 import { type MathJsonExpression, parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 
@@ -29,28 +29,28 @@ const STATEMENT_HEADS = new Set([
   "Function", // a lambda is a definition, not a value we plot/substitute
 ]);
 
-export interface NotatioOptions {
+export interface ParseExpressionOptions {
   /** Parses `$…$` LaTeX islands; typically `(tex) => ce.parse(tex).json`. */
   parseLatex?: (latex: string) => MathJsonExpression;
   /**
    * Statement heads to let through anyway -- a notebook cell binds with `Assign`, and
-   * is otherwise notatio.
+   * is otherwise an expression.
    */
   allow?: Iterable<string>;
 }
 
-export interface NotatioResult {
+export interface ParseExpressionResult {
   /** The parsed expression as MathJSON (with Epsil source decorations). */
   json: MathJsonExpression;
   /** Named wildcards present, e.g. `["_a", "_w"]` — the slots to fill. */
   wildcards: string[];
-  /** Diagnostic messages; empty iff the input is valid notatio. */
+  /** Diagnostic messages; empty iff the input is a valid expression. */
   errors: string[];
   /** `errors` again, each with the span of `src` it is about when there is one. */
-  diagnostics: NotatioDiagnostic[];
+  diagnostics: ExpressionDiagnostic[];
 }
 
-export interface NotatioDiagnostic {
+export interface ExpressionDiagnostic {
   message: string;
   /** Offsets into the source, `[start, end)`; absent for a whole-input complaint. */
   range?: [number, number];
@@ -118,14 +118,13 @@ function exactDecimals(json: MathJsonExpression, src: string): void {
 }
 
 /**
- * Parse a notatio (restricted-Epsil) source string. Returns the MathJSON, its
- * slot wildcards, and any diagnostics — an Epsil parse error, or a statement/
- * effect head that the subset forbids. Never throws.
+ * Parse one Epsil expression. Returns the MathJSON, its slot wildcards, and any
+ * diagnostics — an Epsil parse error, or a statement/effect head. Never throws.
  */
-export function parseNotatio(src: string, options?: NotatioOptions): NotatioResult {
+export function parseExpression(src: string, options?: ParseExpressionOptions): ParseExpressionResult {
   const [json, diagnostics] = parseEpsil(src, undefined, options);
   exactDecimals(json, src);
-  const found: NotatioDiagnostic[] = diagnostics
+  const found: ExpressionDiagnostic[] = diagnostics
     .filter((d) => d.severity === "error")
     .map((d) => ({ message: diagText(d.message), ...(d.range ? { range: [d.range[0], d.range[1]] } : {}) }));
   const allowed = new Set(options?.allow);
@@ -140,13 +139,13 @@ export function parseNotatio(src: string, options?: NotatioOptions): NotatioResu
     const head = headOf(n);
     if (head && STATEMENT_HEADS.has(head) && !allowed.has(head) && !cellBindings.has(n)) {
       const at = (n as { sourceOffsets?: [number, number] }).sourceOffsets;
-      found.push({ message: `notatio: ${head} is not allowed`, ...(at ? { range: [at[0], at[1]] } : {}) });
+      found.push({ message: `${head} is not allowed in an expression`, ...(at ? { range: [at[0], at[1]] } : {}) });
     }
   });
   return { json, wildcards: collectWildcards(json), errors: found.map((d) => d.message), diagnostics: found };
 }
 
-/** Serialize MathJSON back to notatio text (Epsil surface syntax). */
-export function serializeNotatio(json: MathJsonExpression): string {
+/** Serialize MathJSON back to Epsil text. */
+export function serializeExpression(json: MathJsonExpression): string {
   return serializeEpsil(json);
 }
