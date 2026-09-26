@@ -10,3 +10,9 @@ details:
   - 'Rows sum to the Catalan numbers (A000108): $\sum_h Count(DyckPathsByHeight(n, h)) = C_n$.'
 seeAlso:
   - DyckPaths
+grades:
+  - name: n
+    role: axis
+  - name: h
+    role: axis
+carrier: DyckPath

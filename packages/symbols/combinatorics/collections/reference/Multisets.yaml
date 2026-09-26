@@ -30,3 +30,9 @@ catalog:
     identity: Multiset
     url: https://en.wikipedia.org/wiki/Multiset
     relation: conceptual
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: Multiset

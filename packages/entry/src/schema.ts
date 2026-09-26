@@ -145,6 +145,16 @@ const REFERENCE: JsonSchema = {
   additionalProperties: false,
 };
 
+const CATALOG_GRADE: JsonSchema = {
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    role: { enum: ["axis", "param"] },
+  },
+  required: ["name", "role"],
+  additionalProperties: false,
+};
+
 const REFERENCE_NAMES: JsonSchema = {
   type: "object",
   properties: {
@@ -194,6 +204,12 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     primitive: { enum: ["kernel", "numeric", "foreign", "axiom"] },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
     catalog: { type: "array", items: { $ref: "#/$defs/Reference" } },
+    carrier: { type: "string" },
+    grades: { type: "array", items: { $ref: "#/$defs/CatalogGrade" } },
+    unbounded: { type: "boolean" },
+    catalogCarrier: { const: true },
+    statOn: { type: "array", items: { type: "string" } },
+    mapOn: { type: "array", items: { type: "string" } },
     names: { $ref: "#/$defs/ReferenceNames" },
     formerly: { type: "array", items: { type: "string" } },
     stub: { enum: ["engine", "carrier"] },
@@ -205,6 +221,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     ReferenceSignature: REFERENCE_SIGNATURE,
     ReferenceBinding: REFERENCE_IMPLEMENTATION,
     Reference: REFERENCE,
+    CatalogGrade: CATALOG_GRADE,
     ReferenceNames: REFERENCE_NAMES,
   },
 };

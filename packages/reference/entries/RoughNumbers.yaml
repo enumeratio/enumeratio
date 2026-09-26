@@ -18,3 +18,8 @@ seeAlso:
   - Element
   - SmoothNumbers
   - KAlmostPrimes
+grades:
+  - name: k
+    role: param
+carrier: Numeric
+unbounded: true

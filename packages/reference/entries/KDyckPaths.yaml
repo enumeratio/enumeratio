@@ -1,0 +1,11 @@
+name: KDyckPaths
+domain: Combinatorics
+signature: KDyckPaths(...)
+summary: "Fuss-Catalan lattice paths: n up-steps of rise k−1, prefixes ≥ 0 — C(kn,n)/((k−1)n+1); k-ary trees."
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: KDyckPath
+stub: carrier

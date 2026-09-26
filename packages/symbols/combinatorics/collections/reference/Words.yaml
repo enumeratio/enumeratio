@@ -23,3 +23,9 @@ catalog:
   - system: mathlib4
     identity: List.Vector
     note: a length-n word over Fin b = List.Vector (Fin b) n
+grades:
+  - name: size
+    role: axis
+  - name: base
+    role: param
+carrier: Word

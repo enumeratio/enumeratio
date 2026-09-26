@@ -23,3 +23,7 @@ catalog:
     identity: necklaces
     url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.necklaces
     note: necklaces(n, 2), free=False (the default) — same lex-least-under-rotation representative convention as ours
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

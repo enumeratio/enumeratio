@@ -21,3 +21,6 @@ catalog:
   - system: oeis
     identity: A052486
     url: https://oeis.org/A052486
+grades: []
+carrier: Numeric
+unbounded: true

@@ -1,0 +1,7 @@
+name: SquarePartRoot
+domain: Combinatorics
+signature: SquarePartRoot(...)
+summary: s in n = ±s²·q — the root of the square part
+mapOn:
+  - IntegerFactorization
+stub: carrier

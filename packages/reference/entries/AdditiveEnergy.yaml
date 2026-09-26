@@ -7,3 +7,5 @@ catalog:
     identity: Finset.additiveEnergy
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Additive/Energy.html
 stub: carrier
+statOn:
+  - Finset

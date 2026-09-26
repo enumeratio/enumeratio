@@ -11,3 +11,6 @@ catalog:
     url: https://oeis.org/A001477
     note: finite-cardinal enumeration matches exactly; ℵ₀ is an extra non-enumerated limit member not in A001477
 stub: carrier
+grades: []
+carrier: Cardinal
+unbounded: true

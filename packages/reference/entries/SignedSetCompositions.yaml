@@ -1,0 +1,9 @@
+name: SignedSetCompositions
+domain: Combinatorics
+signature: SignedSetCompositions(...)
+summary: Ordered set partitions of [n] with a ± sign per block — faces of the type-B permutahedron.
+grades:
+  - name: n
+    role: axis
+carrier: SignedSetComposition
+stub: carrier

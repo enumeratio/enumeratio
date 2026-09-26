@@ -12,3 +12,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/root_system/associahedron.html
     note: sage builds the geometric polytope from a Cartan type (e.g. type A_{n-2} for our n); ours is the combinatorial face poset reached via the dissection order-isomorphism
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: Dissection

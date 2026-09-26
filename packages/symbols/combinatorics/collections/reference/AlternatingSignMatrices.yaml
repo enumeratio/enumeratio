@@ -26,3 +26,7 @@ catalog:
     identity: Alternating sign matrix
     url: https://en.wikipedia.org/wiki/Alternating_sign_matrix
     relation: conceptual
+grades:
+  - name: size
+    role: axis
+carrier: AlternatingSignMatrix

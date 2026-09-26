@@ -8,3 +8,5 @@ catalog:
     url: https://www.findstat.org/St000890
     on: AlternatingSignMatrix
 stub: carrier
+statOn:
+  - AlternatingSignMatrix

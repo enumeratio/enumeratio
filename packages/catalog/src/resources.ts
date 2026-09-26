@@ -1,7 +1,7 @@
 // The enumeratio catalog, as resources in a context. Nothing here declares a
 // compute-engine head — registering 280 collections costs one Map insert each.
 
-import { CARRIERS, COLLECTIONS, MAPS, STATS } from "./catalog-data.ts";
+import { CARRIERS, COLLECTIONS, MAPS, STATS } from "./catalog-records-data.ts";
 import { ResourceRegistry } from "./registry.ts";
 import type { Resource } from "./types.ts";
 
@@ -18,7 +18,6 @@ export function catalogResources(context: string = ENUMERATIO): Resource[] {
       context,
       ...(c.carrier ? { carrier: c.carrier } : {}),
       grades: c.grades,
-      ...(c.title ? { title: c.title } : {}),
       ...(c.description ? { description: c.description } : {}),
       ...(c.unbounded ? { unbounded: true } : {}),
     })),
@@ -27,14 +26,14 @@ export function catalogResources(context: string = ENUMERATIO): Resource[] {
       kind: "stat",
       context,
       on: s.on,
-      ...(s.title ? { title: s.title } : {}),
+      ...(s.description ? { description: s.description } : {}),
     })),
     ...MAPS.map((m): Resource => ({
       name: m.name,
       kind: "map",
       context,
       on: m.on,
-      ...(m.title ? { title: m.title } : {}),
+      ...(m.description ? { description: m.description } : {}),
     })),
   ];
 }

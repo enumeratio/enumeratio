@@ -25,3 +25,6 @@ catalog:
   - system: oeis
     identity: A005835
     url: https://oeis.org/A005835
+grades: []
+carrier: Numeric
+unbounded: true

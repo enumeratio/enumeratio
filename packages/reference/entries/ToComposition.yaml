@@ -1,0 +1,8 @@
+name: ToComposition
+domain: Combinatorics
+signature: ToComposition(...)
+summary: To composition
+mapOn:
+  - Finset
+  - Surjection
+stub: carrier

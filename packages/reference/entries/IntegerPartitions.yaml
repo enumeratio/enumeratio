@@ -54,3 +54,7 @@ catalog:
   - system: wolfram
     identity: PartitionsP
     url: https://reference.wolfram.com/language/ref/PartitionsP.html
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition

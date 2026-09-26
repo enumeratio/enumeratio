@@ -15,3 +15,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html
     note: word (surjection) encoding, not sage's block-list encoding
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: Surjection

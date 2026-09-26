@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A000108
+grades:
+  - name: n
+    role: axis
+carrier: LukasiewiczPath

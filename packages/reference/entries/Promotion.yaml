@@ -8,3 +8,5 @@ catalog:
     url: https://www.findstat.org/Mp00155
     on: StandardTableau
 stub: carrier
+mapOn:
+  - StandardTableau

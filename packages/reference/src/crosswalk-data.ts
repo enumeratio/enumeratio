@@ -6101,6 +6101,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "With",
   },
   {
+    name: "Zeros",
+    fungrimEntries: ["415911"],
+  },
+  {
     name: "Zeta",
     fungrimEntries: [
       "03aca0",

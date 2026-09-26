@@ -12,3 +12,8 @@ catalog:
     url: https://www.findstat.org/St000167
     on: OrderedTree
 stub: carrier
+statOn:
+  - BinaryTree
+  - LabeledTree
+  - OrderedTree
+  - PlaneTree

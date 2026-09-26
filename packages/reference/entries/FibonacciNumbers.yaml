@@ -36,3 +36,6 @@ catalog:
   - system: wolfram
     identity: Fibonacci
     url: https://reference.wolfram.com/language/ref/Fibonacci.html
+grades: []
+carrier: Numeric
+unbounded: true

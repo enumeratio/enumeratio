@@ -21,3 +21,7 @@ catalog:
   - system: oeis
     identity: A000081
     url: https://oeis.org/A000081
+grades:
+  - name: n
+    role: axis
+carrier: RootedUnlabeledTree

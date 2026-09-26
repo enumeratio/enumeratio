@@ -18,3 +18,9 @@ seeAlso:
 catalog:
   - system: sage
     identity: GelfandTsetlinPatterns(n, k)
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: GelfandTsetlinPattern

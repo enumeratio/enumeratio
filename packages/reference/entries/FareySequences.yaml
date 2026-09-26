@@ -7,3 +7,7 @@ catalog:
     identity: A005728
     url: https://oeis.org/A005728
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: RationalNumber

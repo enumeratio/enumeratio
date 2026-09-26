@@ -21,3 +21,6 @@ catalog:
   - system: oeis
     identity: A002378
     url: https://oeis.org/A002378
+grades: []
+carrier: Numeric
+unbounded: true

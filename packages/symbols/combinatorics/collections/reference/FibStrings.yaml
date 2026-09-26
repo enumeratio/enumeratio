@@ -19,3 +19,7 @@ catalog:
     identity: A000045
     url: https://oeis.org/A000045
     note: "F(n+2): length-n binary strings with no two adjacent 1s"
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

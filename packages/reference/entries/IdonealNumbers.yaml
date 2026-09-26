@@ -20,3 +20,5 @@ catalog:
   - system: oeis
     identity: A000926
     url: https://oeis.org/A000926
+grades: []
+carrier: Numeric

@@ -1,0 +1,7 @@
+name: StoppingTime
+domain: Combinatorics
+signature: StoppingTime(...)
+summary: Stopping time (steps to reach 1)
+statOn:
+  - CollatzTrajectory
+stub: carrier

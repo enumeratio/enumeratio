@@ -29,3 +29,7 @@ catalog:
     identity: Noncrossing partition
     url: https://en.wikipedia.org/wiki/Noncrossing_partition
     relation: conceptual
+grades:
+  - name: n
+    role: axis
+carrier: SetPartition

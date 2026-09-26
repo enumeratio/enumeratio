@@ -26,3 +26,7 @@ catalog:
   - system: sage
     identity: BaxterPermutations(n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/baxter_permutations.html
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

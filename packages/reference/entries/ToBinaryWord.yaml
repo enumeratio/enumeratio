@@ -1,0 +1,7 @@
+name: ToBinaryWord
+domain: Combinatorics
+signature: ToBinaryWord(...)
+summary: the k-subset as a weight-k binary word
+mapOn:
+  - Finset
+stub: carrier

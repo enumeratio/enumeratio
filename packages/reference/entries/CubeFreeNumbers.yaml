@@ -1,0 +1,8 @@
+name: CubeFreeNumbers
+domain: Combinatorics
+signature: CubeFreeNumbers(...)
+summary: Naturals not divisible by any cube > 1 (A004709) — k_free_integers at k = 3. Catalogued as an alias of KFreeIntegers.
+grades: []
+carrier: Numeric
+unbounded: true
+stub: carrier

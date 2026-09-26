@@ -1,19 +1,5 @@
-export { COLLECTIONS, CARRIERS, STATS, MAPS } from "./catalog-data.ts";
-export { REFERENCES } from "./references.ts";
-export {
-  ADDED_REFERENCES,
-  applyReferenceFixes,
-  REFERENCE_FIXES,
-  type ReferenceFix,
-  type ReferenceKey,
-} from "./reference-fixes.ts";
-export type {
-  CatalogCollection,
-  CatalogCarrier,
-  CatalogOverload,
-  CatalogReference,
-  CatalogRelation,
-} from "./catalog-data.ts";
+export { COLLECTIONS, CARRIERS, STATS, MAPS } from "./catalog-records-data.ts";
+export type { CatalogCollection, CatalogCarrier, CatalogOverload } from "./types.ts";
 export { declareCatalog, type CatalogOptions } from "./declare.ts";
 export { CATALOG_LATEX, RESOURCE_TRIGGER, type LatexEntry } from "./latex.ts";
 export { applicationCandidates, type Install, prepare, rawParse } from "./lazy.ts";

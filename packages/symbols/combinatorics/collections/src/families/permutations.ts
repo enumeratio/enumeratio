@@ -1,4 +1,4 @@
-// Permutation-carrier families that were catalogued (packages/catalog/src/catalog-data.ts) but never
+// Permutation-carrier families that were catalogued (packages/reference/entries/) but never
 // wired to a kernel. Kept in its own file (rather than folded into core.ts) so parallel batches of this
 // same roadmap item don't collide on one file. Reuses ./kernels.ts (Factorial/PermutationUnrank/
 // PermutationRank/IsPermutationOf/LehmerCode/Inversions) and ./kernels-extra.ts (KPermutation*) wherever

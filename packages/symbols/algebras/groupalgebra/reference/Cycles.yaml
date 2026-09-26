@@ -27,3 +27,5 @@ catalog:
     identity: St000031
     url: https://www.findstat.org/St000031
     on: Permutation
+statOn:
+  - Permutation

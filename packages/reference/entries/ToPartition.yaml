@@ -8,3 +8,8 @@ catalog:
     url: https://www.findstat.org/Mp00040
     on: Composition
 stub: carrier
+mapOn:
+  - Composition
+  - CorePartition
+  - DyckPath
+  - Finset

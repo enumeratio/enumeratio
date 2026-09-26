@@ -25,3 +25,6 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html
     note: no dedicated fubini/ordered-Bell function in sage — a(n) = OrderedSetPartitions(n).cardinality()
     relation: aggregate
+grades: []
+carrier: Numeric
+unbounded: true

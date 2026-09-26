@@ -22,3 +22,7 @@ catalog:
     identity: LyndonWords(2, n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/words/lyndon_word.html
     note: fixed binary alphabet — k_lyndon_words(base,size) already anchors the general (alphabet,length) LyndonWords(e,k) signature; here e=2 is pinned
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

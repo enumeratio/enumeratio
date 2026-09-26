@@ -35,8 +35,15 @@ This table comes from a survey of main at the time of writing. The counts are on
 
 These stay where they are:
 
-- `catalog/src/reference-fixes.ts`, because it is keyed by catalog row, not by head.
 - The generated `*-data.ts` files (wikidata, fungrim, oeis, dlmf, inventory, …), because they are fetched; the loader joins them by name.
+
+The catalog dump (`packages/catalog/src/catalog-data.ts`, not in the table above because it
+predates this survey) went the same way in a later pass: `REFERENCES` onto `catalog:` and
+`names.catalog`, `CARRIERS`/`COLLECTIONS`/`STATS`/`MAPS` onto `grades`/`carrier`/`unbounded`/
+`catalogCarrier`/`statOn`/`mapOn`. `catalog/src/reference-fixes.ts` did NOT stay, against this
+doc's original expectation: once the dump it corrected was gone, its fixes were already
+permanently baked into the records it wrote (the codemod read the FIXED rows), so nothing was
+left for it to apply at load.
 
 MAPPINGS is the move that pays off most. The page already shows the head-level `bindings:` list as "the systems it maps to", and MAPPINGS is a second hand-kept copy of the same fact.
 

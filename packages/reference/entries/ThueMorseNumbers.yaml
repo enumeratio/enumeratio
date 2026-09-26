@@ -23,3 +23,6 @@ catalog:
   - system: sage
     identity: sage.combinat.words.word_generators.words.ThueMorseWord()
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/words/word_generators.html
+grades: []
+carrier: Numeric
+unbounded: true

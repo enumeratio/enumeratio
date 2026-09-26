@@ -1,0 +1,8 @@
+name: BigOmega
+domain: Combinatorics
+signature: BigOmega(...)
+summary: Ω — prime factors with multiplicity
+statOn:
+  - IntegerFactorization
+  - Numeric
+stub: carrier

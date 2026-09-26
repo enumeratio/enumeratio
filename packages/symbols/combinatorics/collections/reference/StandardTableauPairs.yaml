@@ -26,3 +26,7 @@ catalog:
     identity: sage.combinat.rsk.RSK
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/rsk.html
     note: RSK(σ, check_standard=True) maps a permutation to its (P,Q) SYT pair; our collection is that map's codomain at fixed n — every same-shape SYT pair, the image of RSK over Permutations(n)
+grades:
+  - name: size
+    role: axis
+carrier: StandardTableauPair

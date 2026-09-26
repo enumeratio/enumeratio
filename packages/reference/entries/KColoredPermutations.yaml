@@ -11,3 +11,9 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/colored_permutations.html
     note: sage parameter order is (colors, size); ours is (size, colors)
 stub: carrier
+grades:
+  - name: size
+    role: axis
+  - name: colors
+    role: axis
+carrier: ColoredPermutation

@@ -15,3 +15,6 @@ catalog:
     identity: IntegerFactorization (sage.structure.factorization_integer)
     url: https://doc.sagemath.org/html/en/reference/structure/sage/structure/factorization_integer.html
 stub: carrier
+grades: []
+carrier: IntegerFactorization
+unbounded: true

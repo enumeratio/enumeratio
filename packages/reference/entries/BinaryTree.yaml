@@ -1,0 +1,6 @@
+name: BinaryTree
+domain: Combinatorics
+signature: BinaryTree(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier

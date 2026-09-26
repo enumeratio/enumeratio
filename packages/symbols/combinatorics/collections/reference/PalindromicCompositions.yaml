@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A016116
     url: https://oeis.org/A016116
+grades:
+  - name: n
+    role: axis
+carrier: Composition

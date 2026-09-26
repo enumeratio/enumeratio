@@ -1,0 +1,6 @@
+name: WeakComposition
+domain: Combinatorics
+signature: WeakComposition(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier

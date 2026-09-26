@@ -5,3 +5,5 @@ summary: "The increasing binary tree built by minimum-splitting recursion: the p
 details:
   - Takes a `Permutation` and returns a `IncreasingBinaryTree` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts)."
+mapOn:
+  - Permutation

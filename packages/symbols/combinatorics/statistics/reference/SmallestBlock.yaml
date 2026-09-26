@@ -10,3 +10,6 @@ catalog:
     identity: St001075
     url: https://www.findstat.org/St001075
     on: SetPartition
+statOn:
+  - SetComposition
+  - SetPartition

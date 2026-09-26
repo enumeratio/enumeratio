@@ -8,3 +8,7 @@ catalog:
     url: https://oeis.org/A000244
     note: cardinality only (3^n); the face structure itself has no OEIS analog
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: SignedSubset

@@ -17,3 +17,7 @@ seeAlso:
   - Factorial2
   - Count
   - At
+grades:
+  - name: n
+    role: axis
+carrier: PhylogeneticTree

@@ -22,3 +22,7 @@ catalog:
   - system: oeis
     identity: A027375
     url: https://oeis.org/A027375
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

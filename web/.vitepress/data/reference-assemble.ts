@@ -48,14 +48,19 @@ function sampleForShape(shape: string, byType: ReadonlyMap<string, Domain>): Mat
 }
 
 export function assemble(loaded: readonly ReferenceEntry[]) {
-  const byName = new Map<string, ReferenceEntry>(loaded.map((entry) => [entry.name, entry]));
+  // Page generation keys files by name CASE-INSENSITIVELY (macOS's default filesystem), so two
+  // loaded records that differ only in case can't both get pages (Wolfram's `KaryTree` graph
+  // constructor vs. a domain's singular inhabitant constructor `KAryTree`) -- that collision
+  // broke the site build once already (#260), and again when a catalog-only `KAryTree.yaml`
+  // stub record (carrying `catalogCarrier` for the registry, not meant to be its own page)
+  // hit the same pair. The documented head wins over a stub, whether the stub is generated
+  // below or is itself a record on disk; only its page is suppressed, not the record.
+  const shadows = (stub: ReferenceEntry) => (entry: ReferenceEntry) =>
+    !entry.stub && entry.name !== stub.name && entry.name.toLowerCase() === stub.name.toLowerCase();
+  const pageable = loaded.filter((entry) => !entry.stub || !loaded.some(shadows(entry)));
+  const byName = new Map<string, ReferenceEntry>(pageable.map((entry) => [entry.name, entry]));
   /** The documented heads -- the ones with examples, and the ones prose auto-links. */
   const documented: readonly ReferenceEntry[] = [...byName.values()];
-  // Page generation keys files by name CASE-INSENSITIVELY (macOS's default filesystem), so a
-  // domain's singular inhabitant constructor (e.g. `KAryTree`) can't get its own stub page
-  // when a documented head differs only in case (Wolfram's `KaryTree` graph constructor) --
-  // that collision broke the site build once already (#260). The documented head wins; the
-  // carrier still gets its crosswalk via the documented page instead of a stub.
   const byNameLower = new Set([...byName.keys()].map((name) => name.toLowerCase()));
   const carrierStubs: ReferenceEntry[] = DOMAINS.filter(
     (d) => !byName.has(d.name) && !byNameLower.has(d.name.toLowerCase()),

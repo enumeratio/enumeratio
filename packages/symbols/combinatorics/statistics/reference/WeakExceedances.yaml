@@ -10,3 +10,6 @@ catalog:
     identity: St000213
     url: https://www.findstat.org/St000213
     on: Permutation
+statOn:
+  - DecoratedPermutation
+  - Permutation

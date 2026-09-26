@@ -7,3 +7,9 @@ catalog:
     identity: A114709
     url: https://oeis.org/A114709
 stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: SchroederPath

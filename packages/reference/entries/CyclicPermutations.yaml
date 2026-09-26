@@ -11,3 +11,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html
     note: sage returns linear arrangements of mset up to rotation ("the same as necklaces"), one representative per class; ours is the single-n-cycle PERMUTATION itself (a bijection [n]→[n] whose functional graph is one n-cycle) — same count (n−1)!, different representation
 stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

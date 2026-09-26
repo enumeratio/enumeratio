@@ -1,0 +1,9 @@
+name: Simplex
+domain: Combinatorics
+signature: Simplex(...)
+summary: Faces of the (n−1)-simplex — the non-empty subsets of [n]; 2ⁿ−1.
+grades:
+  - name: n
+    role: axis
+carrier: Finset
+stub: carrier

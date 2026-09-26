@@ -1,0 +1,7 @@
+name: NoRightChild
+domain: Combinatorics
+signature: NoRightChild(...)
+summary: Nodes with no right child
+statOn:
+  - BinaryTree
+stub: carrier

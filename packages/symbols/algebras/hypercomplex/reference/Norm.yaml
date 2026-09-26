@@ -21,3 +21,6 @@ references:
     identity: Norm (mathematics)
   - system: mathworld
     identity: Norm
+statOn:
+  - GaussianInteger
+  - Multicomplex

@@ -1,0 +1,11 @@
+name: Numerator
+domain: Compute engine
+signature: Numerator(number) -> nothing | number
+summary: Numerator of an expression
+signatures:
+  - call: Numerator(number) -> nothing | number
+    description: as compute-engine declares it
+statOn:
+  - BinaryWord
+  - RationalNumber
+stub: engine

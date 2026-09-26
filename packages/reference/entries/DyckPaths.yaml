@@ -42,3 +42,7 @@ catalog:
   - system: mathlib4
     identity: DyckWord
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/DyckWord.html#DyckWord
+grades:
+  - name: n
+    role: axis
+carrier: DyckPath

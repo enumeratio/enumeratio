@@ -8,3 +8,5 @@ details:
 references:
   - system: wikipedia
     identity: Binary search tree
+mapOn:
+  - Permutation

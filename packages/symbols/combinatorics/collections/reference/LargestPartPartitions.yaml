@@ -21,3 +21,9 @@ catalog:
   - system: sage
     identity: PartitionsGreatestEQ(n, k)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
+grades:
+  - name: n
+    role: axis
+  - name: m
+    role: axis
+carrier: IntegerPartition

@@ -73,3 +73,10 @@ export interface ResolvedReference extends Reference {
   /** The name the reference was actually recorded against, when not this head's own. */
   readonly via?: string;
 }
+
+/** A grade axis of a catalogued collection -- `role` separates a size axis from a shape
+ * parameter (`@enumeratio/catalog`'s `Grade`, packages/catalog/src/types.ts). */
+export interface CatalogGrade {
+  readonly name: string;
+  readonly role: "axis" | "param";
+}

@@ -20,3 +20,7 @@ catalog:
   - system: sage
     identity: SkewPartitions(n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/skew_partition.html
+grades:
+  - name: size
+    role: axis
+carrier: SkewPartition

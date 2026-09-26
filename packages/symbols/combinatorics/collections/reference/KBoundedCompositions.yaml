@@ -17,3 +17,9 @@ catalog:
   - system: sage
     identity: Compositions(n, max_length=k)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/composition.html
+grades:
+  - name: n
+    role: axis
+  - name: max_parts
+    role: axis
+carrier: Composition

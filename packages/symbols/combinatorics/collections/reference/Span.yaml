@@ -15,3 +15,5 @@ seeAlso:
   - UpTo
 names:
   wolframIdentity: true
+statOn:
+  - Finset

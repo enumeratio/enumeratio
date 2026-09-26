@@ -26,3 +26,5 @@ references:
     identity: Sum digits of an integer
 names:
   wolframIdentity: true
+statOn:
+  - Numeric

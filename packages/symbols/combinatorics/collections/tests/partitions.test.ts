@@ -100,7 +100,8 @@ for (let n = 0; n <= 20; n++) {
 
 // ─── BoundedPartPartitions (= PartitionsMaxPart) and BoxConfinedPartitions (= PartitionsInBox): ─
 // catalogued as their own names but declared under these existing kernels (see partitions.ts's
-// header and catalog-data.ts's `aliasOf`) — no kernel of their own, so certified against the
+// header and each one's own "Catalogued as an alias of ..." summary) — no kernel of their own,
+// so certified against the
 // kernel they alias rather than duplicated here.
 for (let n = 0; n <= 20; n++) {
   const all = allPartitions(n);

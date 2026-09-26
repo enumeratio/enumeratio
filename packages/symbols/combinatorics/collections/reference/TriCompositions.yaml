@@ -20,3 +20,7 @@ catalog:
     identity: A000073
     url: https://oeis.org/A000073
     note: "tribonacci (A000073 shifted): compositions into {1,2,3}"
+grades:
+  - name: n
+    role: axis
+carrier: Composition

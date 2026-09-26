@@ -29,3 +29,9 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
     note: .list() gives the whole ⟨n,·⟩ row at once, the same object generating_functions.sql calls gf_eulerian_row(n); verified live n=3,4,5
     relation: aggregate
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: Permutation

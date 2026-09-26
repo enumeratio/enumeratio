@@ -8,3 +8,9 @@ catalog:
     url: https://oeis.org/A000108
     note: header names it only as the r=2 special case, not a general pointer
 stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: r
+    role: axis
+carrier: ColoredMotzkinPath

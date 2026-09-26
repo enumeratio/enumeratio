@@ -31,3 +31,7 @@ catalog:
     identity: Involution (mathematics)
     url: https://en.wikipedia.org/wiki/Involution_(mathematics)
     relation: conceptual
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

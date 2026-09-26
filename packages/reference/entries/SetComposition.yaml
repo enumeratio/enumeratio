@@ -6,3 +6,6 @@ references:
   - system: wikipedia
     identity: Weak ordering
 stub: carrier
+catalogCarrier: true
+mapOn:
+  - SetComposition

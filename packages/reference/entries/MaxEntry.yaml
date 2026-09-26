@@ -8,3 +8,6 @@ catalog:
     url: https://www.findstat.org/St001409
     on: SemistandardTableau
 stub: carrier
+statOn:
+  - AscentSequence
+  - SemistandardTableau

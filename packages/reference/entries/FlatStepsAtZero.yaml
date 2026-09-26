@@ -1,0 +1,8 @@
+name: FlatStepsAtZero
+domain: Combinatorics
+signature: FlatStepsAtZero(...)
+summary: Flat steps at height 0
+statOn:
+  - ColoredMotzkinPath
+  - MotzkinPath
+stub: carrier

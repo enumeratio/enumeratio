@@ -1,0 +1,7 @@
+name: ZeroEntries
+domain: Combinatorics
+signature: ZeroEntries(...)
+summary: Zero entries
+statOn:
+  - SubexcedantSeq
+stub: carrier

@@ -8,3 +8,7 @@ catalog:
     url: https://oeis.org/A001003
     note: "shifted: n leaves ⇒ A001003(n-1)"
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: TotalPartition

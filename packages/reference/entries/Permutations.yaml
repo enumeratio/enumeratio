@@ -13,3 +13,7 @@ references:
   - system: rosettacode
     identity: Permutations
 stub: engine
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

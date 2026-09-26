@@ -11,3 +11,5 @@ references:
     identity: Hook length formula
   - system: mathworld
     identity: HookLengthFormula
+statOn:
+  - IntegerPartition

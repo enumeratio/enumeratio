@@ -13,3 +13,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A000957
+grades:
+  - name: n
+    role: axis
+carrier: DyckPath

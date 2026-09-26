@@ -30,3 +30,6 @@ catalog:
     identity: Motzkin number
     url: https://en.wikipedia.org/wiki/Motzkin_number
     relation: conceptual
+grades: []
+carrier: Numeric
+unbounded: true

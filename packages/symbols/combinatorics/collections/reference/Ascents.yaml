@@ -26,3 +26,9 @@ catalog:
     identity: St000245
     url: https://www.findstat.org/St000245
     on: Permutation
+statOn:
+  - Arrangement
+  - AscentSequence
+  - Composition
+  - Permutation
+  - Word

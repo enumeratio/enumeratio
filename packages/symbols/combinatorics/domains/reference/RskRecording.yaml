@@ -13,3 +13,5 @@ catalog:
     identity: Mp00070
     url: https://www.findstat.org/Mp00070
     on: Permutation
+mapOn:
+  - Permutation

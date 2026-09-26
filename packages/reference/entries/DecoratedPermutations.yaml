@@ -9,3 +9,7 @@ catalog:
   - system: sage
     identity: DecoratedPermutations(n)
 stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: DecoratedPermutation

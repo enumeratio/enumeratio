@@ -42,3 +42,5 @@ bindings:
     template: sign($1)
     arity: 1
     threadArg: 1
+statOn:
+  - Permutation

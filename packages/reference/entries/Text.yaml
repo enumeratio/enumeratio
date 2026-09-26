@@ -1,0 +1,9 @@
+name: Text
+domain: Compute engine
+signature: Text(any*) -> string
+summary: A sequence of strings, annotated expressions and other Text expressions
+signatures:
+  - call: Text(any*) -> string
+    description: as compute-engine declares it
+catalogCarrier: true
+stub: engine

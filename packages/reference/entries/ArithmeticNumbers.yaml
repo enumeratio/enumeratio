@@ -20,3 +20,6 @@ catalog:
   - system: oeis
     identity: A003601
     url: https://oeis.org/A003601
+grades: []
+carrier: Numeric
+unbounded: true

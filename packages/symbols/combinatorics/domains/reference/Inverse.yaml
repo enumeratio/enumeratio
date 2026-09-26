@@ -12,3 +12,6 @@ catalog:
     identity: Mp00066
     url: https://www.findstat.org/Mp00066
     on: Permutation
+mapOn:
+  - Permutation
+  - SignedPermutation

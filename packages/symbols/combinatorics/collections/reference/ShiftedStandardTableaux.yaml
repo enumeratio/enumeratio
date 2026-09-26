@@ -16,3 +16,7 @@ enumerate:
 seeAlso:
   - Count
   - At
+grades:
+  - name: size
+    role: axis
+carrier: StandardTableau

@@ -1,0 +1,8 @@
+name: FractionalNumbers
+domain: Combinatorics
+signature: FractionalNumbers(...)
+summary: Unreduced fractions n/d over ℤ×ℕ⁺ — the formal pair, not the reduced value it names.
+grades: []
+carrier: FractionalNumber
+unbounded: true
+stub: carrier

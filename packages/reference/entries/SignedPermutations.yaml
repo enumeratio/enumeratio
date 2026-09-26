@@ -14,3 +14,7 @@ catalog:
     url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.signed_permutations
     note: must be called with a tuple, not a range — signed_permutations(t) does type(t)(i) internally and range(tuple) raises
 stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: SignedPermutation

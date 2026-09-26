@@ -22,3 +22,5 @@ catalog:
     identity: A005478
     url: https://oeis.org/A005478
     note: Fibonacci VALUES that are prime, not their indices (cf. A001605)
+grades: []
+carrier: Numeric

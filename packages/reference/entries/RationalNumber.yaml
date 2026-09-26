@@ -1,0 +1,8 @@
+name: RationalNumber
+domain: Combinatorics
+signature: RationalNumber(...)
+summary: To rational number
+catalogCarrier: true
+mapOn:
+  - BinaryWord
+stub: carrier

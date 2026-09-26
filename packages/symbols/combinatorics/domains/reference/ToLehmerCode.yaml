@@ -10,3 +10,5 @@ references:
     identity: Lehmer code
   - system: rosettacode
     identity: Permutations/Rank of a permutation
+mapOn:
+  - Permutation

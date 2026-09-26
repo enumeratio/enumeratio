@@ -1,0 +1,6 @@
+name: GaussianFractional
+domain: Combinatorics
+signature: GaussianFractional(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier

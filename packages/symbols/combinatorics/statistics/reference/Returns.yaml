@@ -10,3 +10,9 @@ catalog:
     identity: St000011
     url: https://www.findstat.org/St000011
     on: DyckPath
+statOn:
+  - ColoredMotzkinPath
+  - DelannoyPath
+  - DyckPath
+  - KDyckPath
+  - MotzkinPath

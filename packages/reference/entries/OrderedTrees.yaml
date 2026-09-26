@@ -12,3 +12,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/ordered_tree.html
     note: their parameter is NODE count; ours is EDGE count — our n = their size − 1 (n edges ⇒ n+1 nodes)
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: OrderedTree

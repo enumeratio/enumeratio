@@ -25,3 +25,7 @@ catalog:
     identity: Words(2, n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/words/words.html
     note: sage's alphabet is {1,2}, ours is {0,1} — a relabeling
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

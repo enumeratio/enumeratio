@@ -1,0 +1,9 @@
+name: LabeledGraphs
+domain: Combinatorics
+signature: LabeledGraphs(...)
+summary: Simple undirected graphs on the labeled vertex set [n].
+grades:
+  - name: n
+    role: axis
+carrier: LabeledGraph
+stub: carrier

@@ -34,3 +34,6 @@ catalog:
   - system: wolfram
     identity: CatalanNumber
     url: https://reference.wolfram.com/language/ref/CatalanNumber.html
+grades: []
+carrier: Numeric
+unbounded: true

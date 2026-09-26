@@ -1,7 +1,7 @@
 name: WeakCompositionsIntoKParts
 domain: Combinatorics
 signature: WeakCompositionsIntoKParts(...)
-summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, sage; not yet written up here.
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, sage; not yet written up here. Catalogued as an alias of WeakCompositions.
 catalog:
   - system: mathlib4
     identity: Finset.Nat.antidiagonalTuple
@@ -11,3 +11,9 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/integer_vector.html
     note: same set (nonnegative length-k vectors summing to n) but sage's default iteration order is reverse-lex (e.g. IntegerVectors(2,3) starts [2,0,0]) vs our ascending-lex ([0,0,2] first)
 stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: WeakComposition

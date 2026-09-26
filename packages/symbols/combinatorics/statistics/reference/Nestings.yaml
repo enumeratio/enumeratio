@@ -15,3 +15,6 @@ catalog:
     identity: St000233
     url: https://www.findstat.org/St000233
     on: SetPartition
+statOn:
+  - PerfectMatching
+  - SetPartition

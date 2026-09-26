@@ -1,0 +1,11 @@
+name: Denominator
+domain: Compute engine
+signature: Denominator(number) -> nothing | number
+summary: Denominator of an expression
+signatures:
+  - call: Denominator(number) -> nothing | number
+    description: as compute-engine declares it
+statOn:
+  - BinaryWord
+  - RationalNumber
+stub: engine

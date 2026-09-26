@@ -20,3 +20,8 @@ seeAlso:
   - TwinPrimes
   - CousinPrimes
   - SexyPrimes
+grades:
+  - name: gap
+    role: param
+carrier: Numeric
+unbounded: true

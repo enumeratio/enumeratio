@@ -12,3 +12,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
     note: sage's StandardTableaux(shape) takes ONE partition; ours unions every hook shape (a,1ᵇ) at fixed n — Σ_{b=0}^{n−1} StandardTableaux([n−b] ++ [1]*b)
 stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: StandardTableau

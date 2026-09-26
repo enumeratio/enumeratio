@@ -10,3 +10,5 @@ details:
   - Not the rank of a matrix (its number of independent rows); that is [[MatrixRank]].
 names:
   wolfram: ArrayDepth
+statOn:
+  - Finset

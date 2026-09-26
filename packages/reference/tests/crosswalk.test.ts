@@ -1,11 +1,12 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
-import { CARRIERS, COLLECTIONS, MAPS, REFERENCES, STATS } from "@enumeratio/catalog/src";
+import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog/src";
 import { DOMAINS } from "@enumeratio/domains/src";
 import { MAPPINGS } from "@enumeratio/oracle/src";
 import { HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
 import { expect, test } from "vite-plus/test";
 import { crosswalk as derivedData } from "../src/crosswalk-data.ts";
+import { CATALOG_REFERENCES } from "../src/crosswalk/catalog-references-data.ts";
 import {
   CATALOG_ALIASES,
   CURATED,
@@ -62,7 +63,7 @@ test("every curated head is a name something resolves", () => {
 });
 
 test("every catalog alias names a catalog subject", () => {
-  const subjects = new Set(REFERENCES.map((r) => r.subject));
+  const subjects = new Set(CATALOG_REFERENCES.map((r) => r.subject));
   expect(Object.values(CATALOG_ALIASES).filter((s) => !subjects.has(s))).toEqual([]);
   const sage = crosswalkFor("SymmetricGroup").find((r) => r.system === "sage");
   expect(sage?.identity).toBe("Permutations(n)");
@@ -203,17 +204,13 @@ test("the DLMF is reached by name, down to the defining equation", () => {
 test("what the finder established by value agrees with what the catalog recorded", () => {
   // Two independent routes to a FindStat id -- the catalog's recorded rows and our value
   // sweep -- and where they contradict each other the values win, the case is pinned here
-  // so a new one cannot slip in, and the fix goes in the catalog's reference-fixes.ts
-  // (which is how Crank's St000146 became St000474).
+  // so a new one cannot slip in, and the fix goes directly on the head's own record (which
+  // is how Crank's St000146 became St000474). `on` alone picks out a stat/map row here: a
+  // collection's catalog row never carries one.
   const KNOWN: string[] = [];
   const disagreements = findstat.flatMap((m) =>
-    REFERENCES.filter(
-      (r) =>
-        r.kind === "stat" &&
-        r.system === "findstat" &&
-        r.subject === m.head &&
-        r.on === m.on &&
-        !m.findstat.includes(r.identity),
+    CATALOG_REFERENCES.filter(
+      (r) => r.system === "findstat" && r.subject === m.head && r.on === m.on && !m.findstat.includes(r.identity),
     ).map((r) => `${m.head}@${m.on}: catalog ${r.identity}, finder ${m.findstat.join("/")}`),
   );
   expect(disagreements).toEqual(KNOWN);
@@ -254,9 +251,9 @@ test("what the OEIS established by count agrees with what the catalog recorded",
     const rows = oeis.filter((m) => m.head === head);
     if (rows.some((m) => m.triangle)) return [];
     const found = rows.map((m) => m.oeis);
-    return REFERENCES.filter((r) => r.system === "oeis" && r.subject === head && !found.includes(r.identity)).map(
-      (r) => `${head}: catalog ${r.identity}, counts ${found.join("/")}`,
-    );
+    return CATALOG_REFERENCES.filter(
+      (r) => r.system === "oeis" && r.subject === head && !found.includes(r.identity),
+    ).map((r) => `${head}: catalog ${r.identity}, counts ${found.join("/")}`);
   });
   expect(disagreements).toEqual(KNOWN);
   // The recorded A-number leads and carries its verification; the rest coincide.

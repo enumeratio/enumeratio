@@ -1,0 +1,7 @@
+name: SquareRoot
+domain: Combinatorics
+signature: SquareRoot(...)
+summary: s — the root of the square part in n = s²·q
+statOn:
+  - SquareDecomposition
+stub: carrier

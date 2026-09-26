@@ -10,3 +10,6 @@ references:
     identity: Permutation#Ascents, descents, runs, exceedances
   - system: mathworld
     identity: PermutationRun
+statOn:
+  - BinaryWord
+  - Permutation

@@ -24,3 +24,7 @@ catalog:
   - system: sage
     identity: PlanePartitions(n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/plane_partition.html
+grades:
+  - name: size
+    role: axis
+carrier: PlanePartition

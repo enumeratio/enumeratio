@@ -23,3 +23,6 @@ catalog:
     identity: A000332
     url: https://oeis.org/A000332
     note: our r = A000332 index − 3
+grades: []
+carrier: Numeric
+unbounded: true

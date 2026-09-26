@@ -1,0 +1,7 @@
+name: Carriers
+domain: Combinatorics
+signature: Carriers(...)
+summary: The distinct carrier types collections are built on.
+grades: []
+carrier: Text
+stub: carrier

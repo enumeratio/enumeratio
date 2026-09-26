@@ -274,7 +274,14 @@ if (accept)
       );
   }
 if (accept && !isDeepStrictEqual(kernels, data.kernels))
-  writeFileSync(KERNELS, `${JSON.stringify(Object.fromEntries(Object.entries(kernels).sort()), null, 2)}\n`);
+  writeFileSync(
+    KERNELS,
+    `${JSON.stringify(
+      Object.fromEntries(Object.entries(kernels).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))),
+      null,
+      2,
+    )}\n`,
+  );
 
 const fresh = [...records].flatMap(([head, record]) =>
   Object.values(record).flatMap((bySystem) =>

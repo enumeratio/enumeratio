@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A005043
     url: https://oeis.org/A005043
+grades:
+  - name: n
+    role: axis
+carrier: MotzkinPath

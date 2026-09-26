@@ -1,0 +1,7 @@
+name: SquareFreeKernel
+domain: Combinatorics
+signature: SquareFreeKernel(...)
+summary: q — the square-free kernel in n = s²·q
+statOn:
+  - SquareDecomposition
+stub: carrier

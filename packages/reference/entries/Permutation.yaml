@@ -8,3 +8,4 @@ references:
   - system: mathworld
     identity: Permutation
 stub: carrier
+catalogCarrier: true

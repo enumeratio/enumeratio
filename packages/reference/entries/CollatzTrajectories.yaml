@@ -1,0 +1,9 @@
+name: CollatzTrajectories
+domain: Combinatorics
+signature: CollatzTrajectories(...)
+summary: The 3n+1 trajectory of n, as a word ending at 1.
+grades:
+  - name: n
+    role: axis
+carrier: CollatzTrajectory
+stub: carrier

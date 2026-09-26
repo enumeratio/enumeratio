@@ -8,3 +8,6 @@ catalog:
     url: https://www.findstat.org/Mp00092
     on: PerfectMatching
 stub: carrier
+mapOn:
+  - PerfectMatching
+  - SetComposition

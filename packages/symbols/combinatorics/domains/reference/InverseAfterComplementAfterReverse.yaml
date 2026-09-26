@@ -10,3 +10,5 @@ seeAlso:
   - Inverse
   - Complement
   - Reverse
+mapOn:
+  - Permutation

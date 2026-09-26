@@ -7,3 +7,9 @@ catalog:
     identity: A055151
     url: https://oeis.org/A055151
 stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: KMotzkinPath

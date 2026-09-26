@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A001850
     url: https://oeis.org/A001850
+grades:
+  - name: n
+    role: axis
+carrier: DelannoyPath

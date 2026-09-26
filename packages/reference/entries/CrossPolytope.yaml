@@ -12,3 +12,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/discrete_geometry/sage/geometry/polyhedron/library.html
     note: their object is the geometric polyhedron (vertex/facet coordinate data) for one fixed dim; our collection is the full face lattice at ground n, enumerated via the order-isomorphic signed_subset carrier
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: SignedSubset

@@ -1,0 +1,11 @@
+name: RationalDyckPaths
+domain: Combinatorics
+signature: RationalDyckPaths(...)
+summary: (a,b)-Dyck paths — lattice paths from (0,0) to (b,a) staying above the diagonal.
+grades:
+  - name: a
+    role: axis
+  - name: b
+    role: axis
+carrier: RationalDyckPath
+stub: carrier

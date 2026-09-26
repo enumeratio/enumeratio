@@ -8,3 +8,4 @@ references:
   - system: mathworld
     identity: DyckPath
 stub: carrier
+catalogCarrier: true

@@ -20,3 +20,7 @@ catalog:
     identity: A000078
     url: https://oeis.org/A000078
     note: "tetranacci: compositions into {1,2,3,4}"
+grades:
+  - name: n
+    role: axis
+carrier: Composition

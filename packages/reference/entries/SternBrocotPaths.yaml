@@ -1,10 +1,14 @@
 name: SternBrocotPaths
 domain: Combinatorics
 signature: SternBrocotPaths(...)
-summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here. Catalogued as an alias of BinaryWords.
 catalog:
   - system: oeis
     identity: A000079
     url: https://oeis.org/A000079
     note: cardinality only; borrows binary_words carrier
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

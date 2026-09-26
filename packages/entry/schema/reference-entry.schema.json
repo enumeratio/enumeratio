@@ -81,6 +81,33 @@
         "$ref": "#/$defs/Reference"
       }
     },
+    "carrier": {
+      "type": "string"
+    },
+    "grades": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CatalogGrade"
+      }
+    },
+    "unbounded": {
+      "type": "boolean"
+    },
+    "catalogCarrier": {
+      "const": true
+    },
+    "statOn": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mapOn": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "names": {
       "$ref": "#/$defs/ReferenceNames"
     },
@@ -211,6 +238,19 @@
         }
       },
       "required": ["system", "identity"],
+      "additionalProperties": false
+    },
+    "CatalogGrade": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "enum": ["axis", "param"]
+        }
+      },
+      "required": ["name", "role"],
       "additionalProperties": false
     },
     "ReferenceNames": {

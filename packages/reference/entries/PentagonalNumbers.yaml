@@ -31,3 +31,6 @@ catalog:
     identity: PolygonalNumber
     url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
     note: r=5 fixed for the pentagonal case; PolygonalNumber(5,r) — their n = our r
+grades: []
+carrier: Numeric
+unbounded: true

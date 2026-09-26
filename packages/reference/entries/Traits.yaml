@@ -1,0 +1,9 @@
+name: Traits
+domain: Combinatorics
+signature: Traits(...)
+summary: The capability + organization trait vocabulary.
+grades: []
+carrier: Text
+statOn:
+  - Text
+stub: carrier
