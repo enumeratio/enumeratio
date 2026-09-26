@@ -378,7 +378,7 @@ cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at:
       in: F_5 F_7-\left(F_6\right){}^2
       out: "1"
   sympy:
-    in: ((fibonacci(5) * fibonacci(7)) - ((fibonacci(6))**2))
+    in: ((fibonacci(5) * fibonacci(7)) - (S(fibonacci(6))**2))
     out: "1"
   sage:
     in: ((fibonacci(5) * fibonacci(7)) - ((fibonacci(6))^2))

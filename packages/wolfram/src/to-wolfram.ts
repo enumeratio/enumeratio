@@ -96,6 +96,13 @@ export const HEADS: Record<string, string> = {
   List: "List",
   Tuple: "List", // Wolfram has no tuple; `{k, 0, 4}` is also how it spells an iterator
   Function: "Function",
+  // Holonomic reductions (@enumeratio/analytic's difference-root.ts / differential-root.ts):
+  // plain renames — the `Function[{y, n}, …][n]` operator-application shape is a SPECIAL case
+  // below (see `Apply`), and `Function` itself needs one too (see `Function` in SPECIAL).
+  DifferenceRoot: "DifferenceRoot",
+  DifferenceRootReduce: "DifferenceRootReduce",
+  DifferentialRoot: "DifferentialRoot",
+  DifferentialRootReduce: "DifferentialRootReduce",
   Sum: "Sum",
   Product: "Product",
   // elementary
@@ -914,6 +921,42 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
       .slice(3, 5)
       .map((x) => toWolfram(x))
       .join(", ")}], ${toWolfram(a[5])}]`,
+  // compute-engine's `Function` is `[body, ...params]`, canonicalized with `body` wrapped in
+  // its own scoping `Block` (see function-utils.d.ts) — CE-internal, not something Wolfram's
+  // own `Function` ever shows, so it's unwrapped here. Wolfram's shape is `Function[{params},
+  // body]` (or bare `Function[body]` for the anonymous-parameter case, 0 params). Needed for
+  // any multi-parameter Function literal, holonomic reductions included.
+  // A single parameter is Wolfram's own bare form (its FullForm agrees: `Function[x, x^2]`,
+  // not `Function[{x}, x^2]` — both parse, but the bare form is canonical there); 2+ needs the
+  // list.
+  Function: (a) => {
+    const [rawBody, ...params] = a;
+    const body = Array.isArray(rawBody) && rawBody[0] === "Block" ? rawBody[1] : rawBody;
+    if (params.length === 0) return `Function[${toWolfram(body)}]`;
+    if (params.length === 1) return `Function[${toWolfram(params[0])}, ${toWolfram(body)}]`;
+    return `Function[List[${params.map((p) => toWolfram(p)).join(", ")}], ${toWolfram(body)}]`;
+  },
+  // compute-engine boxes a call whose head is itself a compound expression (rather than a
+  // bare symbol) as `Apply(head, arg)` — see difference-root.ts / differential-root.ts, whose
+  // `DifferenceRoot(fn)(n)` / `DifferentialRoot(fn)(x)` take exactly this shape, and whose ODE
+  // equations write `y'(x)` as `Apply(Derivative(y, 1), x)`. Wolfram spells all of these the
+  // way it spells any curried call: `head[arg]`, not `Apply[head, arg]` (genuine `Apply` —
+  // replacing a list's head — is a different operation there). Only these heads are curried
+  // this way today, so this is narrowly scoped to them; every other `Apply` call still means
+  // Wolfram's own `Apply`.
+  Apply: (a) => {
+    const [head, ...rest] = a;
+    const curried = ["DifferenceRoot", "DifferentialRoot", "Derivative"];
+    if (Array.isArray(head) && curried.includes(head[0] as string)) {
+      return `${toWolfram(head)}[${rest.map((r) => toWolfram(r)).join(", ")}]`;
+    }
+    return call("Apply", a);
+  },
+  // `Derivative(y, k)`: compute-engine's order is (function, order); Wolfram's `Derivative[k]`
+  // is the order-k derivative OPERATOR, applied to the function as its own curried call:
+  // `Derivative[k][y]`. Bare — the `Apply` case above adds the further `[x]` when this is
+  // itself applied to a point, as difference-root.ts / differential-root.ts always do.
+  Derivative: (a) => `Derivative[${toWolfram(a[1])}][${toWolfram(a[0])}]`,
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */

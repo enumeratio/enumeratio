@@ -169,4 +169,11 @@ a-sametest-with-a-tolerance-22-7-3-14-0-01:
     in: \mathrm{VerificationTest}(\frac{22}{7}, 3.14, \mathrm{KeyValuePair}(\mathrm{SameTest}, (a, b)\mapsto\vert a-b\vert\lt0.01))
     out: \mathrm{TestResultObject}((\text{Outcome},\text{Success}), (\text{Input},\frac{22}{7}), (\text{ExpectedOutput},3.14), (\text{ActualOutput},\frac{22}{7}), (\text{AbsoluteTimeUsed},0))
   fullform:
-    in: VerificationTest[Divide[22, 7], 3.14, KeyValuePair[SameTest, Function[Less[Abs[Subtract[a, b]], 0.01], a, b]]]
+    in: VerificationTest[Divide[22, 7], 3.14, KeyValuePair[SameTest, Function[List[a, b], Less[Abs[Subtract[a, b]], 0.01]]]]
+    back:
+      [
+        VerificationTest,
+        [Divide, 22, 7],
+        3.14,
+        [KeyValuePair, SameTest, [Function, [List, a, b], [Less, [Abs, [Subtract, a, b]], 0.01]]],
+      ]
