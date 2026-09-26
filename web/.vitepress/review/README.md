@@ -29,7 +29,7 @@ hand edits both patch items in place, so either is fine.
 
 ## Reviewing
 
-1. `cd web && pnpm run dev` (from any worktree), then open `/review`. The panel opens on the
+1. `vp run review` (from any worktree) starts the docs dev server and opens `/review`. The panel opens on the
    last item you had selected, or the first open one. On any other page, the **☰ Review** button
    bottom-right opens it; it starts collapsed on every page load.
 2. Pick an item (click, or `j` / `k`): the site navigates to its `link`, anchor included, and
