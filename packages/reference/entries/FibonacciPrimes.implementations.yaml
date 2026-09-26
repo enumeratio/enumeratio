@@ -1,0 +1,9 @@
+the-first-11-terms:
+  epsil:
+    in: Take(FibonacciPrimes, 11)
+    out: "[2, 3, 5, 13, 89, 233, 1_597, 28_657, 514_229, 433_494_437, 2_971_215_073]"
+  tex:
+    in: \mathrm{Take}(\mathrm{FibonacciPrimes}, 11)
+    out: \bigl\lbrack2, 3, 5, 13, 89, 233, 1\,597, 28\,657, 514\,229, 433\,494\,437, 2\,971\,215\,073\bigr\rbrack
+  fullform:
+    in: Take[FibonacciPrimes, 11]

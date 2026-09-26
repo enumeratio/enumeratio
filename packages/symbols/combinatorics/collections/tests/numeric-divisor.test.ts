@@ -1,7 +1,5 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { afterAll, expect, test } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries as numericDivisor } from "../src/families/numeric-divisor.ts";
 import { declareCollections } from "../src/library.ts";
 
@@ -337,40 +335,6 @@ test("KFreeIntegers(k) is a one-parameter operator agreeing with SquareFreeNumbe
 test("Element membership on CarmichaelNumbers", () => {
   expect(ce.box(["Element", 561, "CarmichaelNumbers"]).evaluate().toString()).toBe('"True"');
   expect(ce.box(["Element", 560, "CarmichaelNumbers"]).evaluate().toString()).toBe('"False"');
-});
-
-// ─── golden JSON (AGENTS.md); regenerate with `UPDATE_NUMERIC_DIVISOR_GOLDEN=1 vp test`. ──
-
-const GOLDEN = fileURLToPath(new URL("./numeric-divisor.golden.json", import.meta.url));
-const updating = process.env.UPDATE_NUMERIC_DIVISOR_GOLDEN === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-// Known-term-table heads: cap at the table length -- NaN (past the table) isn't valid JSON,
-// so it can't round-trip through the golden file, and there's nothing more to certify there
-// anyway (the "past the table returns NaN" tests above already cover that behaviour).
-const GOLDEN_TERM_COUNT = 25;
-const GOLDEN_CAP: Record<string, number> = {
-  PerfectNumbers: 7,
-  GiugaNumbers: 4,
-  IdonealNumbers: 25,
-};
-for (const entry of numericDivisor) {
-  const key = entry.head === "KFreeIntegers" ? "KFreeIntegers(4)" : entry.head;
-  const params = entry.head === "KFreeIntegers" ? [4] : [];
-  const count = GOLDEN_CAP[entry.head] ?? GOLDEN_TERM_COUNT;
-  test(`golden: ${key}`, () => {
-    const elements = Array.from({ length: count }, (_, r) => entry.unrank(params, r));
-    if (updating) {
-      fresh[key] = elements;
-      return;
-    }
-    expect(elements).toEqual(golden[key]);
-  });
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });
 
 test("KFreeIntegers(k) below 2 is just {1}, finite", () => {

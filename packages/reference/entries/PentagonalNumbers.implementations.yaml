@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(PentagonalNumbers, 25)
+    out: |-
+      [
+        1,
+        5,
+        12,
+        22,
+        35,
+        51,
+        70,
+        92,
+        117,
+        145,
+        176,
+        210,
+        247,
+        287,
+        330,
+        376,
+        425,
+        477,
+        532,
+        590,
+        651,
+        715,
+        782,
+        852,
+        925,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{PentagonalNumbers}, 25)
+    out: \bigl\lbrack1, 5, 12, 22, 35, 51, 70, 92, 117, 145, 176, 210, 247, 287, 330, 376, 425, 477, 532, 590, 651, 715, 782, 852, 925\bigr\rbrack
+  fullform:
+    in: Take[PentagonalNumbers, 25]

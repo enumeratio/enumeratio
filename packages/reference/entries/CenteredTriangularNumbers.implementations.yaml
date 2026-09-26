@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(CenteredTriangularNumbers, 25)
+    out: |-
+      [
+        1,
+        4,
+        10,
+        19,
+        31,
+        46,
+        64,
+        85,
+        109,
+        136,
+        166,
+        199,
+        235,
+        274,
+        316,
+        361,
+        409,
+        460,
+        514,
+        571,
+        631,
+        694,
+        760,
+        829,
+        901,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{CenteredTriangularNumbers}, 25)
+    out: \bigl\lbrack1, 4, 10, 19, 31, 46, 64, 85, 109, 136, 166, 199, 235, 274, 316, 361, 409, 460, 514, 571, 631, 694, 760, 829, 901\bigr\rbrack
+  fullform:
+    in: Take[CenteredTriangularNumbers, 25]

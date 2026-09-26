@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(TetrahedralNumbers, 25)
+    out: |-
+      [
+        1,
+        4,
+        10,
+        20,
+        35,
+        56,
+        84,
+        120,
+        165,
+        220,
+        286,
+        364,
+        455,
+        560,
+        680,
+        816,
+        969,
+        1_140,
+        1_330,
+        1_540,
+        1_771,
+        2_024,
+        2_300,
+        2_600,
+        2_925,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{TetrahedralNumbers}, 25)
+    out: \bigl\lbrack1, 4, 10, 20, 35, 56, 84, 120, 165, 220, 286, 364, 455, 560, 680, 816, 969, 1\,140, 1\,330, 1\,540, 1\,771, 2\,024, 2\,300, 2\,600, 2\,925\bigr\rbrack
+  fullform:
+    in: Take[TetrahedralNumbers, 25]

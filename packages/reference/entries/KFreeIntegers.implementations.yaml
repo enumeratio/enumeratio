@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(KFreeIntegers(4), 25)
+    out: |-
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{KFreeIntegers}(4), 25)
+    out: \bigl\lbrack1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26\bigr\rbrack
+  fullform:
+    in: Take[KFreeIntegers[4], 25]

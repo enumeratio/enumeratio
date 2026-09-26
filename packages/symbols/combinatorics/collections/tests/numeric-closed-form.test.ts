@@ -1,7 +1,5 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { afterAll, expect, test } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/numeric-closed-form.ts";
 import { entries as numericSets } from "../src/families/numeric-sets.ts";
 import { declareCollections } from "../src/library.ts";
@@ -317,46 +315,4 @@ test("AllOnes is the constant sequence", () => {
   expect(ce.box(["Take", "AllOnes", 5]).evaluate().toString()).toBe("[1,1,1,1,1]");
   expect(ce.box(["Element", 1, "AllOnes"]).evaluate().toString()).toBe('"True"');
   expect(ce.box(["Element", 2, "AllOnes"]).evaluate().toString()).toBe('"False"');
-});
-
-// ─── Golden JSON (AGENTS.md); regenerate with `UPDATE_NUMERIC_CLOSED_FORM_GOLDEN=1 vp test`.
-// Stored as decimal strings (not numbers) so the fast-growing families stay exact through
-// JSON, which has no bigint of its own. ────────────────────────────────────────────────────
-const GOLDEN = fileURLToPath(new URL("./numeric-closed-form.golden.json", import.meta.url));
-const updating = process.env.UPDATE_NUMERIC_CLOSED_FORM_GOLDEN === "1";
-const golden: Record<string, string[]> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, string[]> = {};
-
-const GOLDEN_TERM_COUNT = 25;
-
-for (const entry of entries) {
-  const key = entry.head === "PolygonalNumbers" ? undefined : entry.head;
-  if (!key) continue; // PolygonalNumbers is covered by its own golden cases below (needs k)
-  test(`golden: ${key}`, () => {
-    const terms = Array.from({ length: GOLDEN_TERM_COUNT }, (_, r) => String(entry.unrank([], r)));
-    if (updating) {
-      fresh[key] = terms;
-      return;
-    }
-    expect(terms).toEqual(golden[key]);
-  });
-}
-
-for (const k of [3, 4, 5, 6, 7, 8, 12]) {
-  const key = `PolygonalNumbers(${k})`;
-  test(`golden: ${key}`, () => {
-    const poly = byHead.get("PolygonalNumbers");
-    expect(poly).toBeDefined();
-    if (!poly) return;
-    const terms = Array.from({ length: GOLDEN_TERM_COUNT }, (_, r) => String(poly.unrank([k], r)));
-    if (updating) {
-      fresh[key] = terms;
-      return;
-    }
-    expect(terms).toEqual(golden[key]);
-  });
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

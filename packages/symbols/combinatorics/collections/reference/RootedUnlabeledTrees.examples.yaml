@@ -3,3 +3,30 @@
   expected: 20
   category: Basic
   caption: $Count(RootedUnlabeledTrees(6)) = 20$, A000081
+- role: test
+  id: every-element-of-rootedunlabeledtrees-6
+  expr: [Take, [RootedUnlabeledTrees, 6], 20]
+  expected:
+    [
+      List,
+      [List, 0, 1, 1, 1, 1, 1],
+      [List, 0, 1, 2, 1, 1, 1],
+      [List, 0, 1, 2, 1, 2, 1],
+      [List, 0, 1, 2, 2, 1, 1],
+      [List, 0, 1, 2, 2, 1, 2],
+      [List, 0, 1, 2, 3, 1, 1],
+      [List, 0, 1, 2, 3, 1, 2],
+      [List, 0, 1, 2, 2, 2, 1],
+      [List, 0, 1, 2, 3, 2, 1],
+      [List, 0, 1, 2, 3, 3, 1],
+      [List, 0, 1, 2, 3, 4, 1],
+      [List, 0, 1, 2, 2, 2, 2],
+      [List, 0, 1, 2, 3, 2, 2],
+      [List, 0, 1, 2, 3, 2, 3],
+      [List, 0, 1, 2, 3, 3, 2],
+      [List, 0, 1, 2, 3, 4, 2],
+      [List, 0, 1, 2, 3, 3, 3],
+      [List, 0, 1, 2, 3, 4, 3],
+      [List, 0, 1, 2, 3, 4, 4],
+      [List, 0, 1, 2, 3, 4, 5],
+    ]

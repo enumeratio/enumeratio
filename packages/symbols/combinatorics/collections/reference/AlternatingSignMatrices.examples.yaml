@@ -3,3 +3,52 @@
   expected: 42
   category: Basic
   caption: $Count(AlternatingSignMatrices(4)) = 42$, the ASM numbers A005130
+- role: test
+  id: every-element-of-alternatingsignmatrices-4
+  expr: [Take, [AlternatingSignMatrices, 4], 42]
+  expected:
+    [
+      List,
+      [List, [List, 0, 0, 0, 1], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 1, 0, 0, 0]],
+      [List, [List, 0, 0, 0, 1], [List, 0, 0, 1, 0], [List, 1, 0, 0, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 0, 1], [List, 0, 1, 0, 0], [List, 0, 0, 1, 0], [List, 1, 0, 0, 0]],
+      [List, [List, 0, 0, 0, 1], [List, 0, 1, 0, 0], [List, 1, -1, 1, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 0, 1], [List, 0, 1, 0, 0], [List, 1, 0, 0, 0], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 0, 0, 1], [List, 1, 0, 0, 0], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 0, 1], [List, 1, 0, 0, 0], [List, 0, 1, 0, 0], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 0, 0, 1], [List, 0, 1, 0, 0], [List, 1, 0, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 0, 0, 1], [List, 1, 0, 0, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 1, -1, 1], [List, 0, 0, 1, 0], [List, 1, 0, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 1, -1, 1], [List, 1, -1, 1, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 1, -1, 1], [List, 1, 0, 0, 0], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 0, 0, 0, 1], [List, 1, 0, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 1, -1, 0, 1], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 1, 0, -1, 1], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 1, 0, 0, 0], [List, 0, 0, 0, 1]],
+      [List, [List, 0, 0, 1, 0], [List, 1, 0, -1, 1], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 1, 0, -1, 1], [List, 0, 1, 0, 0], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 1, 0, 0, 0], [List, 0, 0, 0, 1], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 1, 0, 0, 0], [List, 0, 1, -1, 1], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 0, 1, 0], [List, 1, 0, 0, 0], [List, 0, 1, 0, 0], [List, 0, 0, 0, 1]],
+      [List, [List, 0, 1, 0, 0], [List, 0, 0, 0, 1], [List, 0, 0, 1, 0], [List, 1, 0, 0, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 0, 0, 0, 1], [List, 1, -1, 1, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 0, 0, 0, 1], [List, 1, 0, 0, 0], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 0, 0, 1, 0], [List, 0, 0, 0, 1], [List, 1, 0, 0, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 0, 0, 1, 0], [List, 1, -1, 0, 1], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 0, 0, 1, 0], [List, 1, 0, -1, 1], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 0, 0, 1, 0], [List, 1, 0, 0, 0], [List, 0, 0, 0, 1]],
+      [List, [List, 0, 1, 0, 0], [List, 1, -1, 0, 1], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 1, -1, 0, 1], [List, 0, 1, 0, 0], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 1, -1, 1, 0], [List, 0, 0, 0, 1], [List, 0, 1, 0, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 1, -1, 1, 0], [List, 0, 1, -1, 1], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 1, -1, 1, 0], [List, 0, 1, 0, 0], [List, 0, 0, 0, 1]],
+      [List, [List, 0, 1, 0, 0], [List, 1, 0, 0, 0], [List, 0, 0, 0, 1], [List, 0, 0, 1, 0]],
+      [List, [List, 0, 1, 0, 0], [List, 1, 0, 0, 0], [List, 0, 0, 1, 0], [List, 0, 0, 0, 1]],
+      [List, [List, 1, 0, 0, 0], [List, 0, 0, 0, 1], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0]],
+      [List, [List, 1, 0, 0, 0], [List, 0, 0, 0, 1], [List, 0, 1, 0, 0], [List, 0, 0, 1, 0]],
+      [List, [List, 1, 0, 0, 0], [List, 0, 0, 1, 0], [List, 0, 0, 0, 1], [List, 0, 1, 0, 0]],
+      [List, [List, 1, 0, 0, 0], [List, 0, 0, 1, 0], [List, 0, 1, -1, 1], [List, 0, 0, 1, 0]],
+      [List, [List, 1, 0, 0, 0], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 0, 0, 0, 1]],
+      [List, [List, 1, 0, 0, 0], [List, 0, 1, 0, 0], [List, 0, 0, 0, 1], [List, 0, 0, 1, 0]],
+      [List, [List, 1, 0, 0, 0], [List, 0, 1, 0, 0], [List, 0, 0, 1, 0], [List, 0, 0, 0, 1]],
+    ]

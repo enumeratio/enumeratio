@@ -3,3 +3,45 @@
   expected: 35
   category: Basic
   caption: "$Count(GelfandTsetlin(3, 2)) = 35$: Gelfand–Tsetlin patterns with 3 rows, entries up to 2"
+- role: test
+  id: every-element-of-gelfandtsetlin-3-2
+  expr: [Take, [GelfandTsetlin, 3, 2], 35]
+  expected:
+    [
+      List,
+      [List, [List, 0, 0, 0], [List, 0, 0], [List, 0]],
+      [List, [List, 1, 0, 0], [List, 0, 0], [List, 0]],
+      [List, [List, 1, 0, 0], [List, 1, 0], [List, 0]],
+      [List, [List, 1, 0, 0], [List, 1, 0], [List, 1]],
+      [List, [List, 1, 1, 0], [List, 1, 0], [List, 0]],
+      [List, [List, 1, 1, 0], [List, 1, 0], [List, 1]],
+      [List, [List, 1, 1, 0], [List, 1, 1], [List, 1]],
+      [List, [List, 1, 1, 1], [List, 1, 1], [List, 1]],
+      [List, [List, 2, 0, 0], [List, 0, 0], [List, 0]],
+      [List, [List, 2, 0, 0], [List, 1, 0], [List, 0]],
+      [List, [List, 2, 0, 0], [List, 1, 0], [List, 1]],
+      [List, [List, 2, 0, 0], [List, 2, 0], [List, 0]],
+      [List, [List, 2, 0, 0], [List, 2, 0], [List, 1]],
+      [List, [List, 2, 0, 0], [List, 2, 0], [List, 2]],
+      [List, [List, 2, 1, 0], [List, 1, 0], [List, 0]],
+      [List, [List, 2, 1, 0], [List, 1, 0], [List, 1]],
+      [List, [List, 2, 1, 0], [List, 1, 1], [List, 1]],
+      [List, [List, 2, 1, 0], [List, 2, 0], [List, 0]],
+      [List, [List, 2, 1, 0], [List, 2, 0], [List, 1]],
+      [List, [List, 2, 1, 0], [List, 2, 0], [List, 2]],
+      [List, [List, 2, 1, 0], [List, 2, 1], [List, 1]],
+      [List, [List, 2, 1, 0], [List, 2, 1], [List, 2]],
+      [List, [List, 2, 1, 1], [List, 1, 1], [List, 1]],
+      [List, [List, 2, 1, 1], [List, 2, 1], [List, 1]],
+      [List, [List, 2, 1, 1], [List, 2, 1], [List, 2]],
+      [List, [List, 2, 2, 0], [List, 2, 0], [List, 0]],
+      [List, [List, 2, 2, 0], [List, 2, 0], [List, 1]],
+      [List, [List, 2, 2, 0], [List, 2, 0], [List, 2]],
+      [List, [List, 2, 2, 0], [List, 2, 1], [List, 1]],
+      [List, [List, 2, 2, 0], [List, 2, 1], [List, 2]],
+      [List, [List, 2, 2, 0], [List, 2, 2], [List, 2]],
+      [List, [List, 2, 2, 1], [List, 2, 1], [List, 1]],
+      [List, [List, 2, 2, 1], [List, 2, 1], [List, 2]],
+      [List, [List, 2, 2, 1], [List, 2, 2], [List, 2]],
+      [List, [List, 2, 2, 2], [List, 2, 2], [List, 2]],
+    ]

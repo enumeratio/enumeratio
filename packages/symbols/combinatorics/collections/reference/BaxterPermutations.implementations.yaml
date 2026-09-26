@@ -7,3 +7,36 @@ count-baxterpermutations-4-22-a001181:
     out: "22"
   fullform:
     in: Count[BaxterPermutations[4]]
+every-element-of-baxterpermutations-4:
+  epsil:
+    in: Take(BaxterPermutations(4), 22)
+    out: |-
+      [
+        [1, 2, 3, 4],
+        [1, 2, 4, 3],
+        [1, 3, 2, 4],
+        [1, 3, 4, 2],
+        [1, 4, 2, 3],
+        [1, 4, 3, 2],
+        [2, 1, 3, 4],
+        [2, 1, 4, 3],
+        [2, 3, 1, 4],
+        [2, 3, 4, 1],
+        [2, 4, 3, 1],
+        [3, 1, 2, 4],
+        [3, 2, 1, 4],
+        [3, 2, 4, 1],
+        [3, 4, 1, 2],
+        [3, 4, 2, 1],
+        [4, 1, 2, 3],
+        [4, 1, 3, 2],
+        [4, 2, 1, 3],
+        [4, 2, 3, 1],
+        [4, 3, 1, 2],
+        [4, 3, 2, 1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{BaxterPermutations}(4), 22)
+    out: \bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack1, 2, 4, 3\bigr\rbrack, \bigl\lbrack1, 3, 2, 4\bigr\rbrack, \bigl\lbrack1, 3, 4, 2\bigr\rbrack, \bigl\lbrack1, 4, 2, 3\bigr\rbrack, \bigl\lbrack1, 4, 3, 2\bigr\rbrack, \bigl\lbrack2, 1, 3, 4\bigr\rbrack, \bigl\lbrack2, 1, 4, 3\bigr\rbrack, \bigl\lbrack2, 3, 1, 4\bigr\rbrack, \bigl\lbrack2, 3, 4, 1\bigr\rbrack, \bigl\lbrack2, 4, 3, 1\bigr\rbrack, \bigl\lbrack3, 1, 2, 4\bigr\rbrack, \bigl\lbrack3, 2, 1, 4\bigr\rbrack, \bigl\lbrack3, 2, 4, 1\bigr\rbrack, \bigl\lbrack3, 4, 1, 2\bigr\rbrack, \bigl\lbrack3, 4, 2, 1\bigr\rbrack, \bigl\lbrack4, 1, 2, 3\bigr\rbrack, \bigl\lbrack4, 1, 3, 2\bigr\rbrack, \bigl\lbrack4, 2, 1, 3\bigr\rbrack, \bigl\lbrack4, 2, 3, 1\bigr\rbrack, \bigl\lbrack4, 3, 1, 2\bigr\rbrack, \bigl\lbrack4, 3, 2, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[BaxterPermutations[4], 22]

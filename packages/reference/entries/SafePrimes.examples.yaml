@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-20-terms
+  expr: [Take, SafePrimes, 20]
+  expected: [List, 5, 7, 11, 23, 47, 59, 83, 107, 167, 179, 227, 263, 347, 359, 383, 467, 479, 503, 563, 587]

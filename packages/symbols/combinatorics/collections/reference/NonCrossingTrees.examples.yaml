@@ -3,3 +3,22 @@
   expected: 273
   category: Basic
   caption: $Count(NonCrossingTrees(5)) = 273 = \binom{15}{5}/11$, A001764
+- role: test
+  id: every-element-of-noncrossingtrees-3
+  expr: [Take, [NonCrossingTrees, 3], 12]
+  expected:
+    [
+      List,
+      [List, 3, 0, 0, 3, 0, 0, 3, 0, 0, 0],
+      [List, 3, 0, 0, 3, 0, 3, 0, 0, 0, 0],
+      [List, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0],
+      [List, 3, 0, 3, 0, 0, 0, 3, 0, 0, 0],
+      [List, 3, 0, 3, 0, 0, 3, 0, 0, 0, 0],
+      [List, 3, 0, 3, 0, 3, 0, 0, 0, 0, 0],
+      [List, 3, 0, 3, 3, 0, 0, 0, 0, 0, 0],
+      [List, 3, 3, 0, 0, 0, 0, 3, 0, 0, 0],
+      [List, 3, 3, 0, 0, 0, 3, 0, 0, 0, 0],
+      [List, 3, 3, 0, 0, 3, 0, 0, 0, 0, 0],
+      [List, 3, 3, 0, 3, 0, 0, 0, 0, 0, 0],
+      [List, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
+    ]

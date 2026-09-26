@@ -7,3 +7,38 @@ count-standardtableaupairs-4-4-24-rsk-is-a:
     out: "24"
   fullform:
     in: Count[StandardTableauPairs[4]]
+every-element-of-standardtableaupairs-4:
+  epsil:
+    in: Take(StandardTableauPairs(4), 24)
+    out: |-
+      [
+        [[[1, 2, 3, 4]], [[1, 2, 3, 4]]],
+        [[[1, 2, 3], [4]], [[1, 2, 3], [4]]],
+        [[[1, 2, 4], [3]], [[1, 2, 4], [3]]],
+        [[[1, 2, 4], [3]], [[1, 2, 3], [4]]],
+        [[[1, 2, 3], [4]], [[1, 2, 4], [3]]],
+        [[[1, 2], [3], [4]], [[1, 2], [3], [4]]],
+        [[[1, 3, 4], [2]], [[1, 3, 4], [2]]],
+        [[[1, 3], [2, 4]], [[1, 3], [2, 4]]],
+        [[[1, 3, 4], [2]], [[1, 2, 4], [3]]],
+        [[[1, 3, 4], [2]], [[1, 2, 3], [4]]],
+        [[[1, 3], [2, 4]], [[1, 2], [3, 4]]],
+        [[[1, 3], [2], [4]], [[1, 2], [3], [4]]],
+        [[[1, 2, 4], [3]], [[1, 3, 4], [2]]],
+        [[[1, 2], [3, 4]], [[1, 3], [2, 4]]],
+        [[[1, 4], [2], [3]], [[1, 4], [2], [3]]],
+        [[[1, 4], [2], [3]], [[1, 3], [2], [4]]],
+        [[[1, 2], [3, 4]], [[1, 2], [3, 4]]],
+        [[[1, 4], [2], [3]], [[1, 2], [3], [4]]],
+        [[[1, 2, 3], [4]], [[1, 3, 4], [2]]],
+        [[[1, 2], [3], [4]], [[1, 3], [2], [4]]],
+        [[[1, 3], [2], [4]], [[1, 4], [2], [3]]],
+        [[[1, 3], [2], [4]], [[1, 3], [2], [4]]],
+        [[[1, 2], [3], [4]], [[1, 4], [2], [3]]],
+        [[[1], [2], [3], [4]], [[1], [2], [3], [4]]],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{StandardTableauPairs}(4), 24)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[StandardTableauPairs[4], 24]

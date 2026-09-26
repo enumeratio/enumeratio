@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-25-terms
+  expr: [Take, AllOnes, 25]
+  expected: [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
