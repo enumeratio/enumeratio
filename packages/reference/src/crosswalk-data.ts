@@ -751,6 +751,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "CenteredInterval",
   },
   {
+    name: "CharacterRange",
+    wolfram: "CharacterRange",
+  },
+  {
     name: "ChineseRemainder",
     wolfram: "ChineseRemainder",
   },
@@ -1065,6 +1069,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "DeleteCases",
+    wolfram: "DeleteCases",
+  },
+  {
     name: "Derivative",
     fungrimEntries: [
       "01bbb6",
@@ -1192,6 +1200,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Determinant",
     wolfram: "Det",
+  },
+  {
+    name: "DiagonalMatrix",
+    wolfram: "DiagonalMatrix",
   },
   {
     name: "Diagram",
@@ -1767,6 +1779,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "ExtendedGCD",
     wolfram: "ExtendedGCD",
+  },
+  {
+    name: "Extract",
+    wolfram: "Extract",
   },
   {
     name: "FactorInteger",
@@ -2486,6 +2502,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "HermiteDecomposition",
   },
   {
+    name: "HilbertMatrix",
+    wolfram: "HilbertMatrix",
+  },
+  {
     name: "HurwitzZeta",
     fungrimEntries: [
       "150b3e",
@@ -3135,6 +3155,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "KeiperLiLambda",
     fungrimEntries: ["081205", "d8d820", "fcab61"],
+  },
+  {
+    name: "Key",
+    wolfram: "Key",
   },
   {
     name: "Khinchin",
@@ -3814,6 +3838,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NumberExpand",
   },
   {
+    name: "NumberQ",
+    wolfram: "NumberQ",
+  },
+  {
     name: "Or",
     wolfram: "Or",
   },
@@ -4150,6 +4178,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RandomReal",
   },
   {
+    name: "RandomComplex",
+    wolfram: "RandomComplex",
+  },
+  {
     name: "RandomGraph",
     wolfram: "RandomGraph",
   },
@@ -4194,6 +4226,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Rationalize",
     wolfram: "Rationalize",
+  },
+  {
+    name: "ReIm",
+    wolfram: "ReIm",
   },
   {
     name: "Real",

@@ -1,0 +1,30 @@
+name: Extract
+domain: Collections
+signature: Extract(expr, pos) / Extract(expr, {{pos1}, {pos2}, …})
+summary: The part of expr at position pos, or a list of parts at several positions.
+signatures:
+  - call: Extract(expr, pos)
+    description: the part at pos — a bare integer, or a {i, j, …} path drilling into nested operands
+    library: enumeratio-collections
+  - call: Extract(expr, {{pos1}, {pos2}, …})
+    description: the LIST of parts at each of several positions, one per element
+    library: enumeratio-collections
+details:
+  - Same 1-based, negative-counts-from-the-end indexing as At/Part.
+  - "Disambiguated Wolfram's own way: pos is a single path unless every one of its own elements is itself a List, in which case it's a list of paths."
+  - Extract(expr, {}) is expr itself — the trivial, zero-step path.
+examples:
+  - id: nested-path-drills-in
+    expr: [Extract, [List, [List, a, b], [List, c, d]], [List, 2, 1]]
+    expected: c
+  - id: negative-position-counts-from-the-end
+    expr: [Extract, [List, a, b, c], -1]
+    expected: c
+    category: Scope
+  - id: list-of-paths-extracts-several-parts
+    expr: [Extract, [List, [List, a, b], [List, c, d]], [List, [List, 1, 1], [List, 2, 2]]]
+    expected: [List, a, d]
+    category: Scope
+seeAlso:
+  - ReplacePart
+  - Level

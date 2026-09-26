@@ -228,13 +228,12 @@ export function referenceData(
     };
   };
 
+  // By code unit, not localeCompare: generated files must sort the same in every locale.
+  const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
   const rank = (h: LoadedHead): string => `${h.package === "reference" ? "0" : "1"}${h.entryPath}`;
   const chosen = new Map<string, LoadedHead>();
-  for (const h of [...heads].sort((a, b) => rank(a).localeCompare(rank(b))))
-    if (!chosen.has(h.head)) chosen.set(h.head, h);
-  const entries = [...chosen.values()]
-    .map(withRecord)
-    .sort((a, b) => a.domain.localeCompare(b.domain) || a.name.localeCompare(b.name));
+  for (const h of [...heads].sort((a, b) => cmp(rank(a), rank(b)))) if (!chosen.has(h.head)) chosen.set(h.head, h);
+  const entries = [...chosen.values()].map(withRecord).sort((a, b) => cmp(a.domain, b.domain) || cmp(a.name, b.name));
 
   const packageOf = new Map([...chosen].map(([head, h]) => [head, h.package]));
   const data = { entries, packageOf, heads, kernels };
