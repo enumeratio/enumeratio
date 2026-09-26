@@ -137,8 +137,8 @@ test("sn^2 + cn^2 = 1 at a complex point", () => {
     re: sn.re * sn.re - sn.im * sn.im + cn.re * cn.re - cn.im * cn.im,
     im: 2 * sn.re * sn.im + 2 * cn.re * cn.im,
   };
-  expect(lhs.re).toBeCloseTo(1, 8);
-  expect(lhs.im).toBeCloseTo(0, 8);
+  expect(lhs.re).toBeCloseTo(1, 12);
+  expect(lhs.im).toBeCloseTo(0, 12);
 });
 
 test("dn^2 + m*sn^2 = 1 at a complex point", () => {
@@ -149,8 +149,43 @@ test("dn^2 + m*sn^2 = 1 at a complex point", () => {
   const sn2 = { re: sn.re * sn.re - sn.im * sn.im, im: 2 * sn.re * sn.im };
   const dn2 = { re: dn.re * dn.re - dn.im * dn.im, im: 2 * dn.re * dn.im };
   const lhs = { re: dn2.re + m * sn2.re, im: dn2.im + m * sn2.im };
-  expect(lhs.re).toBeCloseTo(1, 8);
-  expect(lhs.im).toBeCloseTo(0, 8);
+  expect(lhs.re).toBeCloseTo(1, 12);
+  expect(lhs.im).toBeCloseTo(0, 12);
+});
+
+// Regression: coordinator review of B-55 caught JacobiCN(1+i, 0.3) off by ~1.3e-12
+// relative under the earlier complex-u kernel (the AGM/amplitude recursion carried
+// directly in complex arithmetic). Pinned against mpmath/Wolfram (agreeing to 18
+// digits) now that jacobi-elliptic.ts uses DLMF 22.8's real addition formulas instead.
+test("JacobiCN(1+i, 0.3) matches mpmath/Wolfram to double precision (regression)", () => {
+  const r = ce.box(["JacobiCN", ["Complex", 1, 1], 0.3]).N();
+  expect(r.re).toBeCloseTo(0.701054852177762148, 13);
+  expect(r.im).toBeCloseTo(-0.857450911387921485, 13);
+});
+
+test("sn/cn/dn stay accurate very close to sn's pole at u = i*K'(m)", () => {
+  const m = 0.3;
+  const kPrime = ce.box(["EllipticK", 1 - m]).N().re;
+  // 1e-3 short of the pole — reference values from mpmath's ellipfun (30 digits).
+  const u = ["Complex", 0.05, kPrime - 0.001] as const;
+  const sn = ce.box(["JacobiSN", u, m]).N();
+  const cn = ce.box(["JacobiCN", u, m]).N();
+  const dn = ce.box(["JacobiDN", u, m]).N();
+  expect(sn.re).toBeCloseTo(36.52001659546388, 8);
+  expect(sn.im).toBeCloseTo(0.7296091247708486, 8);
+  expect(cn.re).toBeCloseTo(0.7298826951670783, 8);
+  expect(cn.im).toBeCloseTo(-36.5063283747724, 8);
+  expect(dn.re).toBeCloseTo(0.40012350088472864, 8);
+  expect(dn.im).toBeCloseTo(-19.977834807940592, 8);
+});
+
+test("quasi-periodicity holds at a complex point too: sn(u+2K,m) = -sn(u,m)", () => {
+  const m = 0.4;
+  const twoK = ce.box(["Multiply", 2, ["EllipticK", m]]).N().re;
+  const sn0 = ce.box(["JacobiSN", ["Complex", 0.35, 0.6], m]).N();
+  const snShifted = ce.box(["JacobiSN", ["Complex", 0.35 + twoK, 0.6], m]).N();
+  expect(snShifted.re).toBeCloseTo(-sn0.re, 10);
+  expect(snShifted.im).toBeCloseTo(-sn0.im, 10);
 });
 
 test("quasi-periodicity: sn(u+2K,m) = -sn(u,m), cn(u+2K,m) = -cn(u,m), dn(u+2K,m) = dn(u,m)", () => {

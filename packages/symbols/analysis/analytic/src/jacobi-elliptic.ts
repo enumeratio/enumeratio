@@ -1,7 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { add, casin, ccos, csech, csin, csqrt, ctanh, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
+import { add, casin, ccos, clog, csech, csin, csqrt, ctanh, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
 
 // The twelve Jacobi elliptic functions (Glaisher's `pq(u,m)` notation: `sn`, `cn`, `dn`
 // and their nine quotients/reciprocals), `JacobiAmplitude` and `JacobiZN` (Wolfram's
@@ -9,26 +9,35 @@ import { add, casin, ccos, csech, csin, csqrt, ctanh, cx, type Cx, div, mul, sca
 // modulus `k` (checked against mpmath.ellipfun(kind, u, m=m) at every point below).
 //
 // Numeric core: the descending Landen/AGM method (Abramowitz & Stegun 16.4; DLMF
-// 22.20(ii)) for real `m ∈ [0, 1]`, extended to complex `u` by carrying the amplitude
-// recursion in complex arithmetic (the AGM constants a_n, b_n, c_n stay real — only
-// `sin`/`cos`/`asin` need complex versions) — verified against mpmath at real and complex
-// u, m ∈ [0, 1] including near-boundary m. `m` outside `[0, 1]` reduces to that case via
-// the reciprocal-modulus (m > 1, DLMF 22.17.1) and imaginary-modulus (m < 0, DLMF 22.17.2)
-// transformations — both verified against mpmath at real AND complex u. A complex `m` is
-// declined: neither transformation nor the AGM descent itself has been verified there.
+// 22.20(ii)) for real `u`, real `m ∈ [0, 1]` — verified against mpmath there to double
+// precision. `m` outside `[0, 1]` reduces to that case via the reciprocal-modulus
+// (m > 1, DLMF 22.17.1) and imaginary-modulus (m < 0, DLMF 22.17.2) transformations. A
+// complex `m` is declined: neither transformation nor the AGM descent has been verified
+// there.
 //
-// `dn` comes from the Pythagorean identity `dn² = 1 − m·sn²`, not a second AGM recursion:
-// exact for real u (dn ≥ 0 there, no branch ambiguity) and checked directly against
-// mpmath for every complex-u case exercised below, including through both parameter
-// transforms — but NOT proven branch-correct far from the real axis (dn has no branch cut
-// as a function of u, but this formula's principal square root does, and nothing here
-// tracks continuity across it), so complex-u claims are limited to the region checked in
-// tests/jacobi-elliptic.test.ts (roughly |Im u| well inside a quarter-period).
+// Complex `u = x + iy`: NOT the AGM recursion carried in complex arithmetic (an earlier
+// version of this file did that, and lost 3-4 digits — `cosh`/`sinh` of the accumulating
+// angle grow with each of the recursion's ~5-10 steps, and the final combination cancels
+// most of the growth back out, taking working precision with it). Instead, DLMF 22.8's
+// real addition formulas (`sncndnComplexU`, "Jacobi's imaginary transformation"): evaluate
+// the real-u kernel at (x, m) and at (y, 1−m), and combine algebraically — no growing
+// trig factors, so no cancellation. Verified against mpmath to ~1e-14 relative or better
+// (tighter very close to sn's poles, where the reference value itself is enormous) across
+// all four quadrants of u and large |Im u| (tests/jacobi-elliptic.test.ts).
 //
-// `JacobiAmplitude`/`JacobiZN` need the amplitude φ = am(u,m) directly (not just sn, cn),
-// which the AGM recursion produces as a byproduct for m ∈ [0, 1] — no equally-verified
-// amplitude transform exists here for m outside that range, so both heads decline there
-// (the pq family itself does not; see above).
+// `dn` comes from the Pythagorean identity `dn² = 1 − m·sn²` in the real-u kernel only
+// (exact there — dn ≥ 0, no branch ambiguity); the complex-u combination above computes
+// dn directly from the real kernel's own dn values, so it never needs that identity (or
+// its principal-branch square root) at complex u at all.
+//
+// `JacobiAmplitude`/`JacobiZN` need the amplitude φ = am(u,m) directly (not just sn, cn).
+// Real u: the AGM recursion produces φ as a byproduct, for m ∈ [0, 1] — no equally-
+// verified amplitude transform exists here for m outside that range, so both heads
+// decline there (the pq family itself does not; see above). Complex u: φ is recovered
+// from the now-accurate complex sn/cn via e^{iφ} = cos φ + i sin φ = cn + i·sn, i.e.
+// φ = −i·Log(cn + i·sn) — verified against a Wolfram kernel (mpmath has no direct
+// amplitude function) at several complex points, including large |Im u| and u past the
+// first quarter period.
 
 const AGM_TOL = 1e-15;
 const MAX_AGM_ITERS = 60;
@@ -44,10 +53,11 @@ interface SCDN<T> {
   N: T;
 }
 
-/** Descending Landen/AGM amplitude am(u,m), real m ∈ [0, 1], u possibly complex
- * (Abramowitz & Stegun 16.4). `m = 0`/`m = 1` are exact (no AGM needed — the recursion
- * degenerates at m = 0 and never converges at m = 1). */
-function agmAmplitude(u: Cx, m: number): Cx {
+/** Descending Landen/AGM amplitude am(u,m), REAL u, real m ∈ [0, 1] (Abramowitz &
+ * Stegun 16.4). `m = 0`/`m = 1` are exact (no AGM needed — the recursion degenerates at
+ * m = 0 and never converges at m = 1). Precise for real u (verified against mpmath); do
+ * not call with complex u — see `agmAmplitude` below for that case. */
+function agmAmplitudeReal(u: Cx, m: number): Cx {
   if (m === 0) return u; // am(u,0) = u
   if (m === 1) return casin(ctanh(u)); // am(u,1) = gd(u) = asin(tanh(u)), bounded so principal asin is exact
 
@@ -78,21 +88,69 @@ function agmAmplitude(u: Cx, m: number): Cx {
   return phi;
 }
 
-/** {sn, cn, dn} for real m ∈ [0, 1], u possibly complex — sn/cn from the amplitude,
- * dn from dn² = 1 − m·sn² (see the file header for why this is only claimed where
- * verified). `m = 0`/`m = 1` fold through `agmAmplitude`'s own exact cases. */
+/**
+ * am(u,m), any complex u, real m ∈ [0, 1]. Real u: `agmAmplitudeReal` directly. Complex
+ * u: recovered from `sncndnCore`'s now-accurate complex sn/cn (see the file header) via
+ * e^{iφ} = cos φ + i sin φ = cn + i·sn, so φ = −i·Log(cn + i·sn) — the principal branch
+ * of Log matches Wolfram's own `JacobiAmplitude` at every complex point checked,
+ * including large |Im u| and u past the first quarter period.
+ */
+function agmAmplitude(u: Cx, m: number): Cx {
+  if (u.im === 0) return agmAmplitudeReal(u, m);
+  const { S, C } = sncndnCore(u, m);
+  const iS = cx(-S.im, S.re); // i·sn
+  return mul(cx(0, -1), clog(add(C, iS)));
+}
+
+/** {sn, cn, dn} for real m ∈ [0, 1], u possibly complex. Real u: sn/cn from the AGM
+ * amplitude, dn from the exact identity dn² = 1 − m·sn² (real & nonnegative there, no
+ * branch ambiguity). Complex u: `sncndnComplexU`'s real addition formulas — see the file
+ * header for why this replaced carrying the AGM recursion itself in complex arithmetic.
+ */
 function sncndnCore(u: Cx, m: number): SCDN<Cx> {
+  if (u.im !== 0) return sncndnComplexU(u, m);
   if (m === 1) {
     const t = ctanh(u);
     const s = csech(u);
     return { S: t, C: s, D: s, N: cx(1) };
   }
-  const phi = agmAmplitude(u, m);
+  const phi = agmAmplitudeReal(u, m);
   const S = csin(phi);
   const C = ccos(phi);
-  // dn² = 1 − m·sn² (exact identity); real & nonnegative for real u (no branch
-  // ambiguity there — see the file header for the complex-u caveat).
   const D = m === 0 ? cx(1) : csqrt(sub(cx(1), scale(mul(S, S), m)));
+  return { S, C, D, N: cx(1) };
+}
+
+/**
+ * {sn, cn, dn} at complex u = x + iy, real m ∈ [0, 1], via DLMF 22.8's real addition
+ * formulas (equivalently, Jacobi's imaginary transformation): with s = sn(x,m),
+ * c = cn(x,m), d = dn(x,m), s₁ = sn(y,m₁), c₁ = cn(y,m₁), d₁ = dn(y,m₁) — m₁ = 1 − m —
+ * and δ = c₁² + m·s²·s₁²:
+ *   sn(u) = (s·d₁ + i·c·d·s₁·c₁)/δ,  cn(u) = (c·c₁ − i·s·d·s₁·d₁)/δ,
+ *   dn(u) = (d·c₁·d₁ − i·m·s·c·s₁)/δ.
+ * Both real-u evaluations go back through `sncndnCore` (recursing into its real branch,
+ * where m and m₁ are both still in [0, 1]), so this needs no numeric method of its own —
+ * just the algebra above. Verified against mpmath to ~1e-14 relative (or a comparable
+ * absolute error very near a pole of sn, where the reference value is itself enormous)
+ * across all four quadrants of u and large |Im u| (tests/jacobi-elliptic.test.ts). δ → 0
+ * at u → i·K'(m) (sn's pole) falls out of the algebra on its own — no separate case.
+ */
+function sncndnComplexU(u: Cx, m: number): SCDN<Cx> {
+  const x = u.re;
+  const y = u.im;
+  const m1 = 1 - m;
+  const r1 = sncndnCore(cx(x, 0), m);
+  const r2 = sncndnCore(cx(y, 0), m1);
+  const s = r1.S.re;
+  const c = r1.C.re;
+  const d = r1.D.re;
+  const s1 = r2.S.re;
+  const c1 = r2.C.re;
+  const d1 = r2.D.re;
+  const delta = c1 * c1 + m * s * s * s1 * s1;
+  const S = cx((s * d1) / delta, (c * d * s1 * c1) / delta);
+  const C = cx((c * c1) / delta, -(s * d * s1 * d1) / delta);
+  const D = cx((d * c1 * d1) / delta, -(m * s * c * s1) / delta);
   return { S, C, D, N: cx(1) };
 }
 

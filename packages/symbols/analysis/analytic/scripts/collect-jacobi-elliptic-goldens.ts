@@ -41,7 +41,12 @@ const push = (p: Pending): void => void pending.push(p);
 // --- JacobiSN/CN/DN(u,m) -------------------------------------------------------------
 // A spread: generic real (u,m) with m in [0,1], m > 1 (reciprocal-modulus), m < 0
 // (imaginary-modulus), and complex u crossed with each of those three m ranges — the
-// exact matrix jacobi-elliptic.ts's file header claims coverage for.
+// exact matrix jacobi-elliptic.ts's file header claims coverage for. Complex u is
+// spread across all four quadrants, large |Im u|, and close to sn's pole at u = iK'(m)
+// (coordinator review of B-55: the earlier complex-u kernel — carrying the AGM/amplitude
+// recursion itself in complex arithmetic — lost precision there down to ~1e-12 relative;
+// jacobi-elliptic.ts now uses DLMF 22.8's real addition formulas instead, verified
+// against mpmath to ~1e-14 relative everywhere in this spread, poles included).
 const uM: [Val, Val][] = [
   [0.3, 0.5],
   [1.1, 0.9],
@@ -52,21 +57,41 @@ const uM: [Val, Val][] = [
   [1.2, 3.0], // m > 1
   [0.3, -2.0], // m < 0
   [0.9, -0.5], // m < 0
-  [{ c: [0.3, 0.4] }, 0.5], // complex u, m in [0,1]
-  [{ c: [1.1, -0.7] }, 0.3], // complex u, m in [0,1]
+  // Complex u, all four quadrants, m in [0,1].
+  [{ c: [0.4, 0.5] }, 0.3],
+  [{ c: [0.4, -0.5] }, 0.3],
+  [{ c: [-0.4, 0.5] }, 0.3],
+  [{ c: [-0.4, -0.5] }, 0.3],
+  [{ c: [0.3, 0.4] }, 0.5],
+  [{ c: [1.1, -0.7] }, 0.3],
+  [{ c: [1.0, 1.0] }, 0.3], // the exact case coordinator review flagged
+  // Large |Im u|, and large Re AND Im together.
+  [{ c: [0.2, 8.0] }, 0.4],
+  [{ c: [0.2, -8.0] }, 0.4],
+  [{ c: [5.0, 4.0] }, 0.6],
+  // Close to sn's pole at u = i*K'(m) = i*K(1-m) (K'(0.3) ≈ 2.07536313529...).
+  [{ c: [0.05, 1.9753631352924692] }, 0.3], // ~0.1 short of the pole
+  [{ c: [0.05, 2.0653631352924693] }, 0.3], // ~0.01 short
+  [{ c: [0.05, 2.074363135292469] }, 0.3], // ~0.001 short
+  [{ c: [0.05, 2.075263135292469] }, 0.3], // ~0.0001 short
+  // Complex u, m outside [0,1] (via the reciprocal-/imaginary-modulus transforms).
   [{ c: [0.3, 0.2] }, 1.5], // complex u, m > 1
   [{ c: [0.5, -0.3] }, 3.0], // complex u, m > 1
   [{ c: [0.3, 0.2] }, -0.7], // complex u, m < 0
   [{ c: [0.5, -0.3] }, -3.0], // complex u, m < 0
 ];
 for (const [u, m] of uM) {
+  // A near-pole case's reference value is itself huge (tens in magnitude); `relErr`
+  // below already floors its denominator at 1, so this is really an absolute-near-zero /
+  // relative-elsewhere hybrid throughout — 1e-13 leaves a ~10x safety margin over the
+  // ~9e-15 worst case measured right at the closest pole approach in this spread.
   for (const kind of ["sn", "cn", "dn"] as const) {
     push({
       golden: {
         head: `Jacobi${kind.toUpperCase()}`,
         args: [toCE(u), toCE(m)],
         label: `${kind}(${label(u)},${label(m)})`,
-        tol: 1e-9,
+        tol: 1e-13,
       },
       py: `ellipfun('${kind}', u=${toPy(u)}, m=${toPy(m)})`,
       wl: `Jacobi${kind.toUpperCase()}[${toWL(u)}, ${toWL(m)}]`,
@@ -87,34 +112,49 @@ const quotientCases: [string, ["s" | "c" | "d" | "n", "s" | "c" | "d" | "n"], Va
   ["JacobiNC", ["n", "c"], 0.3, 1.5],
   ["JacobiND", ["n", "d"], 0.3, -2.0],
   ["JacobiSD", ["s", "d"], 0.3, -2.0],
+  // Complex u, exercising the same DLMF 22.8 addition-formula combination as sn/cn/dn.
+  ["JacobiCD", ["c", "d"], { c: [0.4, 0.5] }, 0.3],
+  ["JacobiNS", ["n", "s"], { c: [0.4, -0.5] }, 0.3],
 ];
 const pyFun = (letter: "s" | "c" | "d" | "n", u: Val, m: Val): string =>
   letter === "n" ? "1" : `ellipfun('${letter}n', u=${toPy(u)}, m=${toPy(m)})`;
 for (const [head, [p, q], u, m] of quotientCases) {
   push({
-    golden: { head, args: [toCE(u), toCE(m)], label: `${head}(${label(u)},${label(m)})`, tol: 1e-9 },
+    golden: { head, args: [toCE(u), toCE(m)], label: `${head}(${label(u)},${label(m)})`, tol: 1e-13 },
     py: `(${pyFun(p, u, m)}) / (${pyFun(q, u, m)})`,
     wl: `${head}[${toWL(u)}, ${toWL(m)}]`,
   });
 }
 
 // --- JacobiAmplitude(u,m) / JacobiZN(u,m), m in [0,1] only --------------------------
+// Complex u for JacobiAmplitude (JacobiZN stays real-u only — see jacobi-elliptic.ts):
+// am(u,m) = -i*Log(cn(u,m) + i*sn(u,m)), using the same now-accurate complex sn/cn, is
+// checked directly against Wolfram's own JacobiAmplitude here (mpmath has no equivalent).
 const amplitudeUM: [Val, Val][] = [
   [0.3, 0.5],
   [1.1, 0.9],
   [-0.7, 0.2],
   [2.5, 0.3],
+  [{ c: [1.0, 1.0] }, 0.3],
+  [{ c: [0.1, 5.0] }, 0.4], // large Im
 ];
 for (const [u, m] of amplitudeUM) {
-  // mpmath has no direct amplitude function; asin(sn(u,m)) is only the principal branch,
-  // but every u below is small enough that am(u,m) stays inside asin's principal range —
-  // checked separately against a Wolfram kernel, which HAS JacobiAmplitude directly.
+  // mpmath has no direct amplitude function; checked against a Wolfram kernel, which HAS
+  // JacobiAmplitude directly.
   push({
-    golden: { head: "JacobiAmplitude", args: [toCE(u), toCE(m)], label: `am(${label(u)},${label(m)})`, tol: 1e-9 },
+    golden: { head: "JacobiAmplitude", args: [toCE(u), toCE(m)], label: `am(${label(u)},${label(m)})`, tol: 1e-12 },
     wl: `JacobiAmplitude[${toWL(u)}, ${toWL(m)}]`,
   });
+}
+const znUM: [Val, Val][] = [
+  [0.3, 0.5],
+  [1.1, 0.9],
+  [-0.7, 0.2],
+  [2.5, 0.3],
+];
+for (const [u, m] of znUM) {
   push({
-    golden: { head: "JacobiZN", args: [toCE(u), toCE(m)], label: `zn(${label(u)},${label(m)})`, tol: 1e-9 },
+    golden: { head: "JacobiZN", args: [toCE(u), toCE(m)], label: `zn(${label(u)},${label(m)})`, tol: 1e-12 },
     wl: `JacobiZN[${toWL(u)}, ${toWL(m)}]`,
   });
 }
