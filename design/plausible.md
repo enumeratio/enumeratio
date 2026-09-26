@@ -231,8 +231,8 @@ As built (`domains/src/laws.ts`, `domains/tests/laws.test.ts`):
   carrier without an entry fails the test.
 - A guarded map that declines a subject (KrewerasComplement off the non-crossing permutations)
   counts as a decline, not a failure.
-- The empty permutation isn't constructible yet: compute-engine types `[]` as `list<missing>`.
-  A test pins that, and the laws skip n = 0 until it's fixed.
+- The laws take n = 0 too. They first turned up compute-engine's `Range(1, 0)`, which counts
+  down to `[1, 0]` (Wolfram's is empty), so the map bodies state their step.
 
 ## 5. The runner
 

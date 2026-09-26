@@ -25,7 +25,7 @@ const overRange = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: 
   "Fold",
   ["Function", step, accumulator, variable],
   initial,
-  ["Range", 1, n],
+  ["Range", 1, n, 1],
 ];
 
 const WORD: MathJSON = "_raw";
