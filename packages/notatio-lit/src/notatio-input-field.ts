@@ -1,5 +1,5 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
@@ -7,7 +7,7 @@ import { defineControl, emitControl } from "./define.ts";
 
 /**
  * `<notatio-input-field name="x" value="3">` -- a field you type a value into, Wolfram's
- * `InputField`. The text is notatio, parsed when you press Enter or leave the field, and
+ * `InputField`. The text is Epsil, parsed when you press Enter or leave the field, and
  * the binding `_x` is the expression it parses to: a number, a symbol, `Sin(t)`,
  * whatever was typed. Text that does not parse leaves the binding where it was and
  * marks the field. `type="number"` accepts only a number, and `size` is the width in
@@ -20,7 +20,7 @@ export class NotatioInputField extends LitElement {
   static properties = {
     /** The binding this field drives: `name="x"` fills the wildcard `_x`. */
     name: { type: String, reflect: true },
-    /** The starting text, as notatio. */
+    /** The starting text, as Epsil. */
     value: { type: String },
     /** `expression` (default) or `number`. */
     type: { type: String },
@@ -77,7 +77,7 @@ export class NotatioInputField extends LitElement {
       return;
     }
     const engine = await loadEngine();
-    const { json, errors } = parseNotatio(trimmed, {
+    const { json, errors } = parseExpression(trimmed, {
       parseLatex: (tex) => engine.parse(tex).json,
     });
     this._invalid = errors.length > 0;

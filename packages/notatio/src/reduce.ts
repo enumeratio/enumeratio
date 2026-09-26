@@ -10,7 +10,7 @@
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf, withOptions } from "@enumeratio/formats";
-import { serializeNotatio } from "@enumeratio/formats/notatio";
+import { serializeExpression } from "@enumeratio/formats/expression";
 import { can, type Environment, type Reading } from "./environment.ts";
 import {
   CONTROL_HEADS,
@@ -108,7 +108,7 @@ export function declarations(expr: Json, into: Declaration[] = []): Declaration[
 
 const number = (v: number): Json => Number(v.toPrecision(12)) as Json;
 const string = (s: string): Json => `'${s}'` as Json;
-const text = (node: Json): string => strOf(node) ?? serializeNotatio(node);
+const text = (node: Json): string => strOf(node) ?? serializeExpression(node);
 
 /** A value with the parser's binary noise taken off its numbers (`0.3` arrives as 0.30000000000000004). */
 function cleaned(node: Json): Json {

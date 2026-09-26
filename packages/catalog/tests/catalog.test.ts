@@ -24,7 +24,7 @@ test("the catalog is the measured shape, folded to names", () => {
 });
 
 test("a stat is one name defined on several carriers", () => {
-  expect(STATS.find((s) => s.name === "MajorIndex")?.on).toEqual(["DyckPath", "Permutation", "StandardTableau"]);
+  expect(STATS.find((s) => s.name === "MajorIndex")?.on).toEqual(["DyckPaths", "Permutations", "StandardTableaux"]);
 });
 
 test("every collection's carrier is itself a carrier we know", () => {
@@ -83,7 +83,7 @@ test("most stat names are single-carrier inheritance, not overloading", () => {
   const multi = STATS.filter((s) => s.on.length > 1);
   expect(STATS.length - multi.length).toBe(189);
   expect(multi.length).toBe(53);
-  expect(STATS.find((s) => s.name === "BigOmega")?.on).toEqual(["IntegerFactorization", "Numeric"]);
+  expect(STATS.find((s) => s.name === "BigOmega")?.on).toEqual(["IntegerFactorizations", "Numeric"]);
 });
 
 test("every reference fix lands on a row, and the fixed rows are what consumers see", () => {

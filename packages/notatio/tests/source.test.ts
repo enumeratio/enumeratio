@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { afterAll, expect, test } from "vite-plus/test";
 import { splitHead, stripHead } from "../src/heads.ts";
 import { editorLatexOf, toEditorLatex } from "../src/source.ts";
@@ -37,9 +37,9 @@ for (const head of ["MixedRadix", "SymmetricGroup", "LorenzBraid", "HurwitzZeta"
   ce.declare(head, "(any*) -> any");
 }
 
-/** What the notatio means, for comparing against what its LaTeX means. */
+/** What the Epsil means, for comparing against what its LaTeX means. */
 const meaning = (src: string): unknown =>
-  ce.box(parseNotatio(src, { parseLatex: (tex) => ce.parse(tex).json }).json).json;
+  ce.box(parseExpression(src, { parseLatex: (tex) => ce.parse(tex).json }).json).json;
 
 // Golden JSON compared with `toEqual`, never a snapshot (see AGENTS.md). Regenerate with
 // `UPDATE_SOURCE=1 vp test` after an intended change.
@@ -58,7 +58,7 @@ for (const src of CORPUS) {
     expect(result).toEqual(golden[src]);
   });
 
-  // The LaTeX is what the Out evaluates, so it has to mean what the notatio meant. A
+  // The LaTeX is what the Out evaluates, so it has to mean what the Epsil meant. A
   // wrapper head is read off before either side reaches the engine, so it is read off here.
   test(`editor LaTeX round-trips: ${src}`, () => {
     const { latex, errors } = toEditorLatex(ce, src);
@@ -78,7 +78,7 @@ test("a wrapper head survives the conversion, in a spelling splitHead reads", ()
 });
 
 test("a binding is a statement, let through only when asked", () => {
-  expect(toEditorLatex(ce, "s := 2").errors).toEqual(["notatio: Assign is not allowed"]);
+  expect(toEditorLatex(ce, "s := 2").errors).toEqual(["Assign is not allowed in an expression"]);
   const bound = toEditorLatex(ce, "s := 2", { assign: true });
   expect(bound.errors).toEqual([]);
   expect(ce.parse(bound.latex).json).toEqual(["Assign", "s", 2]);
@@ -96,5 +96,5 @@ test("in-form=latex is the escape hatch: the source is the LaTeX", () => {
     latex: "\\operatorname{Foo}(x)",
     errors: [],
   });
-  expect(editorLatexOf(ce, "notatio", "Sin(x)").latex).toEqual(toEditorLatex(ce, "Sin(x)").latex);
+  expect(editorLatexOf(ce, "epsil", "Sin(x)").latex).toEqual(toEditorLatex(ce, "Sin(x)").latex);
 });

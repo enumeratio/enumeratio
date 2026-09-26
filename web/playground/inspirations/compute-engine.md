@@ -30,9 +30,9 @@ static markup, which is what every piece of typeset maths on this site goes
 through — the prose, the reference pages, the readouts.
 
 **Epsil** is compute-engine's own surface syntax: `Binomial(10, 3)`, capitalised
-heads, `(` for calls, `[…]` for lists. Our `notatio` is Epsil
-[restricted to a single expression](/reference/formats/) with no statements and
-no effects — a gate over it, not a fork.
+heads, `(` for calls, `[…]` for lists, `$…$` for a stretch of LaTeX. It is what
+you type into every attribute and cell on this site, unchanged. It reads into
+MathJSON, and MathJSON is what everything else here speaks.
 
 ## The engine, in the page
 
@@ -93,7 +93,7 @@ possible, and it is worth naming the four seams we actually use:
 - **A pluggable compiler.** The engine compiles an expression to a target, and
   the target list is open — which is why `<notatio-out>` can show you the same
   expression as Python, as JavaScript, as WGSL, and why the GPU phase portraits
-  compile a notatio expression straight to a shader.
+  compile an expression straight to a shader.
 
 <Story
   title="The same expression, compiled">
@@ -107,19 +107,19 @@ Not a pretty-printer — this is the compile target the GPU pages actually run.
 
 Three places, each deliberate.
 
-**notatio is a subset of Epsil, not a superset.** Epsil has statements, assignment,
+**An attribute holds an expression.** Epsil has statements, assignment,
 declarations, control flow and pragmas. An attribute on a web component has room
-for one expression and no room for an effect, so `parseNotatio` gates all of that
-out and reports a diagnostic rather than throwing. The gate is the whole
-difference; the grammar underneath is the engine's, unchanged.
+for one expression and no room for an effect, so `parseExpression` reports those
+as a diagnostic rather than running them; a cell may bind one name with `:=`.
+The grammar is the engine's, unchanged.
 
 **LaTeX is the escape hatch, not the default.** Bare LaTeX is an error here — it
-goes in `$…$` islands inside a notatio line. The engine is perfectly happy to
+goes in Epsil's own `$…$` islands. The engine is perfectly happy to
 parse LaTeX and for a long time we let it; the trouble is that LaTeX has no
 notion of a head, so `\mathrm{Foo}(x)` and a product of five letters look the same
 until you evaluate them. Epsil says which is which.
 
-**We print notatio, not LaTeX, as the canonical text.** A result should read back
+**We print Epsil, not LaTeX, as the canonical text.** A result should read back
 as itself. `InputForm` is the rule: whatever the engine hands back, the printed
 form re-parses to the same value.
 

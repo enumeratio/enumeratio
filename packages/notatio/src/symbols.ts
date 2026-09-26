@@ -1,6 +1,6 @@
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf } from "@enumeratio/formats";
-import { serializeNotatio } from "@enumeratio/formats/notatio";
+import { serializeExpression } from "@enumeratio/formats/expression";
 
 // A symbol and its component are the same thing seen from two ends
 // (design/components-and-symbols.md). This is the map between them: for every head that
@@ -124,8 +124,8 @@ function complexOf(node: Json | undefined): [number, number] | undefined {
   return undefined;
 }
 
-/** notatio for an operand, as an attribute value. */
-const notatio = (node: Json): string => serializeNotatio(node);
+/** Epsil for an operand, as an attribute value. */
+const epsil = (node: Json): string => serializeExpression(node);
 
 /** MathJSON data -- lists, numbers, strings -- as the plain JSON a `data` attribute takes. */
 export function toJsonData(node: Json): unknown {
@@ -137,7 +137,7 @@ export function toJsonData(node: Json): unknown {
   const sym = symOf(node);
   if (sym === "True") return true;
   if (sym === "False") return false;
-  return sym ?? notatio(node);
+  return sym ?? epsil(node);
 }
 
 const json = (node: Json): string => JSON.stringify(toJsonData(node));
@@ -163,7 +163,7 @@ function iterator(node: Json | undefined): { variable?: string; range?: string }
   if (parts === undefined) return {};
   const [first, lo, hi] = parts;
   const variable = symOf(first);
-  const range = lo !== undefined && hi !== undefined ? `${notatio(lo)},${notatio(hi)}` : undefined;
+  const range = lo !== undefined && hi !== undefined ? `${epsil(lo)},${epsil(hi)}` : undefined;
   return { variable, range };
 }
 
@@ -173,7 +173,7 @@ function oneVariable(
   names: { value: string; variable: string; range: string },
 ): Record<string, string> {
   const out: Record<string, string> = {};
-  if (ops[0] !== undefined) out[names.value] = notatio(ops[0]);
+  if (ops[0] !== undefined) out[names.value] = epsil(ops[0]);
   const { variable, range } = iterator(ops[1]);
   if (variable) out[names.variable] = variable;
   if (range) out[names.range] = range;
@@ -186,7 +186,7 @@ function twoVariables(
   names: { value: string; x: string; y: string; xrange: string; yrange: string },
 ): Record<string, string> {
   const out: Record<string, string> = {};
-  if (ops[0] !== undefined) out[names.value] = notatio(ops[0]);
+  if (ops[0] !== undefined) out[names.value] = epsil(ops[0]);
   const x = iterator(ops[1]);
   const y = iterator(ops[2]);
   if (x.variable) out[names.x] = x.variable;
@@ -231,7 +231,7 @@ function slotted(node: Json, names: ReadonlySet<string>): Json {
 function controlOf(node: Json): string | undefined {
   const parts = tupleOf(node)?.map((p) => {
     const inner = tupleOf(p);
-    return inner === undefined ? notatio(p) : `{${inner.map(notatio).join(", ")}}`;
+    return inner === undefined ? epsil(p) : `{${inner.map(epsil).join(", ")}}`;
   });
   return parts !== undefined && parts.length >= 2 ? `{${parts.join(", ")}}` : undefined;
 }
@@ -256,8 +256,8 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       AxesLabel: (value) => {
         const parts = tupleOf(value) ?? [value];
         const out: Record<string, string> = {};
-        if (parts[0] !== undefined) out["x-label"] = strOf(parts[0]) ?? notatio(parts[0]);
-        if (parts[1] !== undefined) out["y-label"] = strOf(parts[1]) ?? notatio(parts[1]);
+        if (parts[0] !== undefined) out["x-label"] = strOf(parts[0]) ?? epsil(parts[0]);
+        if (parts[1] !== undefined) out["y-label"] = strOf(parts[1]) ?? epsil(parts[1]);
         return out;
       },
       // A range is `(a, b)` for y, or `((x0, x1), (y0, y1))`; the component takes the y pair.
@@ -326,7 +326,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-complex-plot",
     attributes: (ops) => {
       const out: Record<string, string> = {};
-      if (ops[0] !== undefined) out.value = notatio(ops[0]);
+      if (ops[0] !== undefined) out.value = epsil(ops[0]);
       const variable = symOf(ops[1]) ?? iterator(ops[1]).variable;
       if (variable) out.var = variable;
       return out;
@@ -339,7 +339,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-complex-plot-3d",
     attributes: (ops) => {
       const out: Record<string, string> = {};
-      if (ops[0] !== undefined) out.value = notatio(ops[0]);
+      if (ops[0] !== undefined) out.value = epsil(ops[0]);
       const parts = tupleOf(ops[1]);
       const variable = symOf(ops[1]) ?? symOf(parts?.[0]);
       if (variable) out.var = variable;
@@ -378,7 +378,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   {
     head: "CollectionTable",
     tag: "notatio-collection-table",
-    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { expr: notatio(ops[0]) }),
+    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { expr: epsil(ops[0]) }),
   },
   {
     // `Manipulate(body, (a, 0, 5), …)`: the controls become `params`, and the body is a
@@ -410,7 +410,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     // OPTIONS, not positional operands -- this symbol has no `attributes(ops)` of its
     // own, only the option map. `Outcome`/`Input`/`TestID` need no override: their
     // default kebab-cased attribute (`outcome`, `input`, `test-id`) is already right,
-    // and the default option text (a string bare, else notatio) is already what the
+    // and the default option text (a string bare, else Epsil) is already what the
     // component wants. `ExpectedOutput`/`ActualOutput` rename to `expected`/`actual`
     // and drop the `Missing` sentinel `declare.ts` fills the gap with; `time` is
     // Wolfram's `AbsoluteTiming`-style name for `AbsoluteTimeUsed`.
@@ -418,10 +418,9 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-test-result-object",
     attributes: () => ({}),
     options: {
-      ExpectedOutput: (value): Record<string, string> =>
-        symOf(value) === "Missing" ? {} : { expected: notatio(value) },
-      ActualOutput: (value): Record<string, string> => (symOf(value) === "Missing" ? {} : { actual: notatio(value) }),
-      AbsoluteTimeUsed: (value): Record<string, string> => ({ time: notatio(value) }),
+      ExpectedOutput: (value): Record<string, string> => (symOf(value) === "Missing" ? {} : { expected: epsil(value) }),
+      ActualOutput: (value): Record<string, string> => (symOf(value) === "Missing" ? {} : { actual: epsil(value) }),
+      AbsoluteTimeUsed: (value): Record<string, string> => ({ time: epsil(value) }),
     },
   },
 ];
@@ -432,9 +431,9 @@ function vectorField(ops: readonly Json[]): Record<string, string> {
   if (field !== undefined) {
     const parts = tupleOf(field) ?? [];
     if (parts.length === 2) {
-      out.u = notatio(parts[0]);
-      out.v = notatio(parts[1]);
-    } else out.field = notatio(field);
+      out.u = epsil(parts[0]);
+      out.v = epsil(parts[1]);
+    } else out.field = epsil(field);
   }
   const x = iterator(ops[1]);
   const y = iterator(ops[2]);
@@ -452,13 +451,13 @@ function vectorField(ops: readonly Json[]): Record<string, string> {
 // parameter does. The rest are the control's own: a range tuple, a list of entries.
 
 /**
- * A number as an attribute: cleaned of the binary noise the notatio parser leaves on a
+ * A number as an attribute: cleaned of the binary noise the Epsil parser leaves on a
  * decimal (`0.3` arrives as 0.30000000000000004), which a control would otherwise
- * carry into its readout. Anything else is notatio.
+ * carry into its readout. Anything else is Epsil.
  */
 const clean = (node: Json): string => {
   const v = numOf(node);
-  return v === undefined ? notatio(node) : String(Number(v.toPrecision(12)));
+  return v === undefined ? epsil(node) : String(Number(v.toPrecision(12)));
 };
 
 /** `k` or `(k, init)`: the variable and, if given, where it starts. */
@@ -483,12 +482,12 @@ function rangeAttributes(node: Json | undefined): Record<string, string> {
 function entryOf(node: Json): string {
   if (headOf(node) === "Labeled") {
     const [value, label] = opsOf(node);
-    const text = label === undefined ? undefined : (strOf(label) ?? notatio(label));
-    return value === undefined ? "" : text === undefined ? notatio(value) : `${notatio(value)} -> ${text}`;
+    const text = label === undefined ? undefined : (strOf(label) ?? epsil(label));
+    return value === undefined ? "" : text === undefined ? epsil(value) : `${epsil(value)} -> ${text}`;
   }
   // A string binds as the string it is, and shows as its words.
   const text = strOf(node);
-  return text === undefined ? notatio(node) : `${notatio(node)} -> ${text}`;
+  return text === undefined ? epsil(node) : `${epsil(node)} -> ${text}`;
 }
 
 /** A list of entries as the `|`-separated `values` attribute. */
@@ -563,7 +562,7 @@ const simple = (head: string, tag: string): VisualSymbol => ({
     const out: Record<string, string> = {};
     const { name, init } = variable(ops[0]);
     if (name) out.name = name;
-    if (init !== undefined) out.value = strOf(init) ?? notatio(init);
+    if (init !== undefined) out.value = strOf(init) ?? epsil(init);
     return out;
   },
 });
@@ -611,7 +610,7 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
   {
     head: "Dynamic",
     tag: "notatio-dynamic",
-    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { value: notatio(ops[0]) }),
+    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { value: epsil(ops[0]) }),
   },
 ];
 
@@ -667,7 +666,7 @@ const dynamicModuleChildren = (ops: readonly Json[]): Json[] =>
  * companion, `tracked-symbols.ts`): every cell that reads a changed tracked symbol
  * re-evaluates, transitively, instead of the module staying a plain top-to-bottom
  * transcript. Normalised to one attribute, `tracked-symbols`, so the element parses it
- * without walking notatio again: `"all"` for `All`/`Automatic`/`True`, else a
+ * without walking Epsil again: `"all"` for `All`/`Automatic`/`True`, else a
  * comma-joined symbol list. `False` (or the option simply absent) leaves the attribute
  * unset -- the default, non-reactive configuration.
  */
@@ -723,7 +722,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     // output. The forms pick the editor and the rendering; `Expected` is the assertion.
     head: "Cell",
     tag: "notatio-cell",
-    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { value: notatio(ops[0]) }),
+    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { value: epsil(ops[0]) }),
     options: {
       InForm: (value): Record<string, string> => {
         const id = formId(value);
@@ -760,7 +759,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     attributes: (ops): Record<string, string> => {
       const out: Record<string, string> = {};
       const label = ops[1];
-      if (label !== undefined) out.label = strOf(label) ?? notatio(label);
+      if (label !== undefined) out.label = strOf(label) ?? epsil(label);
       const position = LABEL_POSITIONS[symOf(ops[2]) ?? ""];
       if (position !== undefined) out.position = position;
       return out;
@@ -772,12 +771,12 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
 /** `PlotRange` -> `plot-range`: an option's attribute when the symbol says nothing. */
 export const optionAttribute = (name: string): string => name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 
-/** An option's value as attribute text: a string bare, `True` as `true`, the rest notatio. */
+/** An option's value as attribute text: a string bare, `True` as `true`, the rest Epsil. */
 function optionText(value: Json): string | undefined {
   const sym = symOf(value);
   if (sym === "True") return "true";
   if (sym === "False") return undefined;
-  return strOf(value) ?? notatio(value);
+  return strOf(value) ?? epsil(value);
 }
 
 /**
@@ -901,7 +900,7 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   if (text !== undefined && inScope) return { tag: "span", attributes: {}, text };
   const symbol = head === undefined ? undefined : BY_HEAD.get(head);
   if (symbol === undefined) {
-    return inScope ? { tag: "notatio-dynamic", attributes: { value: notatio(expr) } } : undefined;
+    return inScope ? { tag: "notatio-dynamic", attributes: { value: epsil(expr) } } : undefined;
   }
   // The trailing rules are options, Wolfram's way; the rest are the positional operands.
   const { ops, options } = optionsOf(expr);
@@ -912,7 +911,7 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
       (c) =>
         render(c, true) ?? {
           tag: "notatio-dynamic",
-          attributes: { value: notatio(c) },
+          attributes: { value: epsil(c) },
         },
     ) ?? []),
     ...lowered.children,

@@ -104,7 +104,7 @@ generic `where` clauses.
 - **Epsil does not round-trip numbers.** `serializeEpsil` drops a mantissa of exactly 1
   (`1e-16` prints `e-16`, which reads back as Euler's e minus 16), and `parseEpsil` works a
   short decimal out in doubles (`0.3` reads as `0.30000000000000004`; a long one is kept as
-  written). `toInputForm` respells the first as `10e-17` and `parseNotatio` re-reads each
+  written). `toInputForm` respells the first as `10e-17` and `parseExpression` re-reads each
   literal from its source span; both are no-ops once upstream is fixed. It also prints a
   three-argument `Mod(17, 5, 1)` as `17 % 5 % 1`, which reads back as `Mod(Mod(17, 5), 1)` --
   still open, and visible as `epsil.back` in the `Mod` sidecar.
@@ -578,7 +578,7 @@ checked against mpmath:
 
 **`Zeta` serializes as `\Zeta`.** `ce.box(["Zeta", 3]).latex` is `\Zeta(3)` — an uppercase
 command that is not LaTeX's (the Riemann zeta is `\zeta`; there is no `\Zeta`, since
-capital zeta is a Z). MathLive renders it as a roman **Z**, so a cell whose notatio is
+capital zeta is a Z). MathLive renders it as a roman **Z**, so a cell whose Epsil is
 `Zeta(s)` shows `Z(s)` in its field. The parser accepts both `\zeta(3)` and `\Zeta(3)` as
 `["Zeta", 3]`, so the fix is one character in the serializer's LaTeX dictionary entry, and
 round-trips. Seen once the editable components started handing the engine's own LaTeX to

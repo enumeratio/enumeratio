@@ -16,6 +16,9 @@ floor-7-over-2:
   sympy:
     in: floor(Rational(7, 2))
     out: "3"
+  mpmath:
+    in: floor((mpf(7)/2))
+    out: "3.0"
   sage:
     in: floor((7/2))
     out: "3"
@@ -97,6 +100,12 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Floor threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: floor([1.2, -1.2, 3.7])
+    out: "TypeError: cannot create mpf from [1.2, -1.2, 3.7]"
+    verdict: error
+    kind: threading
+    note: compute-engine's Floor threads over the list; mpmath's takes scalars.
   sage:
     in: floor([1.2, -1.2, 3.7])
     out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
@@ -130,6 +139,9 @@ for-a-non-integer-x-lceil-x-rceil-lfloor-x:
   sympy:
     in: enumeratio_equal((floor(Rational(7, 2)) + 1), ceiling(Rational(7, 2)))
     out: True
+  mpmath:
+    in: almosteq((floor((mpf(7)/2)) + 1), ceil((mpf(7)/2)), 1e-20)
+    out: True
   sage:
     in: bool((floor((7/2)) + 1) == ceil((7/2)))
     out: True
@@ -156,6 +168,9 @@ lfloor-x-rfloor-lceil-x-rceil:
       out: \text{True}
   sympy:
     in: enumeratio_equal(floor(Rational(-7, 2)), (-ceiling(Rational(7, 2))))
+    out: True
+  mpmath:
+    in: almosteq(floor((mpf(-7)/2)), (-ceil((mpf(7)/2))), 1e-20)
     out: True
   sage:
     in: bool(floor((-7/2)) == (-ceil((7/2))))

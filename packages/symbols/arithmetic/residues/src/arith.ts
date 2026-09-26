@@ -18,10 +18,37 @@ export function powMod(a: bigint, e: bigint, m: bigint): bigint {
   return result;
 }
 
+/** How many factors of 2 divide `x` (x ≠ 0). */
+const twos = (x: bigint): bigint => {
+  let n = 0n;
+  while ((x & 1n) === 0n) {
+    x >>= 1n;
+    n++;
+  }
+  return n;
+};
+
+/**
+ * Stein's binary GCD: shifts and subtractions only, no division. ~2x faster than plain
+ * Euclid (`x, y = y, x % y`) on balanced, large bigints in measurements at 10000 bits
+ * (issue #205) — division of two same-size bigints is expensive relative to a shift.
+ */
 export function gcd(a: bigint, b: bigint): bigint {
-  let [x, y] = [a < 0n ? -a : a, b < 0n ? -b : b];
-  while (y !== 0n) [x, y] = [y, x % y];
-  return x;
+  let x = a < 0n ? -a : a;
+  let y = b < 0n ? -b : b;
+  if (x === 0n) return y;
+  if (y === 0n) return x;
+  const xTwos = twos(x);
+  const yTwos = twos(y);
+  x >>= xTwos;
+  y >>= yTwos;
+  const shift = xTwos < yTwos ? xTwos : yTwos;
+  while (x !== y) {
+    if (x < y) [x, y] = [y, x];
+    x -= y;
+    x >>= twos(x);
+  }
+  return x << shift;
 }
 
 /** [g, u, v] with u·a + v·b = g = gcd(a, b). */

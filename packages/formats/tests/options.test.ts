@@ -1,17 +1,17 @@
 import { expect, test } from "vite-plus/test";
-import { parseNotatio, serializeNotatio } from "../src/notatio.ts";
+import { parseExpression, serializeExpression } from "../src/expression.ts";
 import { isOptionList, optionsOf, ruleOf, withOptions } from "@enumeratio/boxed";
 
-const parse = (src: string) => parseNotatio(src).json;
+const parse = (src: string) => parseExpression(src).json;
 
 test("trailing rules are options, bare or in lists, and the leftmost setting wins", () => {
   const { ops, options } = optionsOf(
     parse("Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), [Frame -> True, PlotRange -> All])"),
   );
-  expect(ops.map((o) => serializeNotatio(o))).toEqual(["Sin(x)", "(x, 0, 10)"]);
+  expect(ops.map((o) => serializeExpression(o))).toEqual(["Sin(x)", "(x, 0, 10)"]);
   expect(Object.keys(options)).toEqual(["PlotRange", "Frame"]);
-  expect(serializeNotatio(options.PlotRange)).toBe("(-1, 1)");
-  expect(serializeNotatio(options.Frame)).toBe("True");
+  expect(serializeExpression(options.PlotRange)).toBe("(-1, 1)");
+  expect(serializeExpression(options.Frame)).toBe("True");
 });
 
 test("a rule before a positional argument is data, not an option", () => {
@@ -31,6 +31,6 @@ test("the canonical Tuple a rule becomes still reads as one, an iterator does no
 
 test("options are written back as trailing rules, and round-trip", () => {
   const expr = withOptions("Plot", [parse("Sin(x)")], { PlotRange: parse("All") });
-  expect(serializeNotatio(expr)).toBe("Plot(Sin(x), PlotRange -> All)");
+  expect(serializeExpression(expr)).toBe("Plot(Sin(x), PlotRange -> All)");
   expect(Object.keys(optionsOf(expr).options)).toEqual(["PlotRange"]);
 });

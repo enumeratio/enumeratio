@@ -4,6 +4,7 @@
 //   node packages/bench/scripts/bench.ts --only Factorial,Gamma # cases whose name contains any of these
 //   node packages/bench/scripts/bench.ts --systems ts --out .scratch/bench
 //   node packages/bench/scripts/bench.ts --plan                 # write the support matrix and stop
+//   node packages/bench/scripts/bench.ts --suite deep           # every tier (default: standard)
 //
 // A full local run is a heavy job: take `$(git rev-parse --git-common-dir)/lanes/HEAVY` first.
 
@@ -16,6 +17,7 @@ import { buildPlan, SYSTEMS } from "../src/plan.ts";
 import { report, runInfo, systemInfo } from "../src/report.ts";
 import { HARNESSES } from "../src/registry.ts";
 import { runPlan } from "../src/run.ts";
+import { inSuite, isSuite, SUITES } from "../src/suites.ts";
 import type { BenchSystem } from "../src/types.ts";
 
 const { values } = parseArgs({
@@ -27,19 +29,27 @@ const { values } = parseArgs({
     // Interleave only on a machine of its own: every kernel stays resident for the whole run.
     interleave: { type: "boolean", default: process.env["GITHUB_ACTIONS"] === "true" },
     force: { type: "boolean", default: false },
+    suite: { type: "string", default: "standard" },
   },
 });
 
+const suite = values.suite;
+if (!isSuite(suite)) {
+  console.error(`--suite must be one of ${Object.keys(SUITES).join(", ")}`);
+  process.exit(2);
+}
+
 const only = values.only?.split(",").filter(Boolean);
 const cases = loadCatalogue()
+  .filter((c) => inSuite(c, suite))
   .map(concretise)
   .filter((c) => only === undefined || only.some((o) => c.name.includes(o)));
-const plan = buildPlan(cases);
+const plan = buildPlan(cases, { suite });
 const systems = (values.systems?.split(",") ?? SYSTEMS).filter(
   (s): s is BenchSystem => HARNESSES[s as BenchSystem] !== undefined,
 );
 
-const run = runInfo();
+const run = runInfo(process.env, new Date(), suite);
 const dir = resolve(values.out, run.id);
 mkdirSync(dir, { recursive: true });
 const planPath = join(dir, "plan.json");

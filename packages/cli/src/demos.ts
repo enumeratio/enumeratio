@@ -2,7 +2,7 @@
 // fresh REPL evaluates in order. The corpus drives the golden snapshot tests
 // (every line's styled output is captured) and the docs terminal (grouped by
 // `category` into a dropdown). The default syntax is Epsil, rendered back as
-// notatio (the restricted subset) — parens, `^`, `/`, capitalized heads, and `$…$`
+// InputForm (re-typeable Epsil) — parens, `^`, `/`, capitalized heads, and `$…$`
 // islands for LaTeX. Keep every
 // line browser-safe — no :export / :import (those need the Node host).
 
@@ -122,7 +122,7 @@ export const DEMOS: readonly Demo[] = [
     category: "Permutation statistics",
     // Ascents compares entries with each other, so a bare list is a fair question. Excedances
     // and FixedPoints compare a value with its POSITION, so they need the permutation.
-    lines: ["Ascents([1, 3, 2, 5, 4])", "Excedances(Permutation([3, 1, 2]))", "FixedPoints(Permutation([1, 3, 2]))"],
+    lines: ["Ascents([1, 3, 2, 5, 4])", "Excedances(Permutations([3, 1, 2]))", "FixedPoints(Permutations([1, 3, 2]))"],
     tags: ["combinatorics", "enumeratio"],
   },
 
@@ -163,7 +163,7 @@ export const DEMOS: readonly Demo[] = [
   {
     id: "forms",
     title: "Output forms",
-    description: "The same expression as notatio (Epsil), TeX, Wolfram, NumPy, JS.",
+    description: "The same expression as InputForm (Epsil), TeX, Wolfram, NumPy, JS.",
     category: "Output forms",
     lines: [
       "x^2 + 1",
@@ -175,7 +175,7 @@ export const DEMOS: readonly Demo[] = [
       "x^2 + 1",
       ":form js",
       "x^2 + 1",
-      ":form notatio",
+      ":form inputform",
     ],
     tags: ["forms"],
     highlight: true,
@@ -192,7 +192,7 @@ export const DEMOS: readonly Demo[] = [
       "Sin(x) * Cos(x)",
       ":form wgsl",
       "Sin(x) * Cos(x)",
-      ":form notatio",
+      ":form inputform",
     ],
     tags: ["forms", "compile"],
   },

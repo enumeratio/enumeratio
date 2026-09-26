@@ -227,10 +227,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: StirlingS2[List[2, 4, 6], 2]
   sympy:
     in: "[stirling(2, 2), stirling(4, 2), stirling(6, 2)]"
-    out: "ValueError: [2, 4, 6] is not an integer"
-    verdict: error
-    kind: threading
-    note: compute-engine's Stirling is Listable and threads over the list; SymPy takes scalars only.
+    out: "[1, 7, 31]"
   sage:
     in: "[stirling_number2(2, 2), stirling_number2(4, 2), stirling_number2(6, 2)]"
   julia:

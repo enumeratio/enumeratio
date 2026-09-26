@@ -7,6 +7,7 @@ export type Status = "ok" | "unsupported" | "precision" | "denied" | "too-fast" 
 
 export interface CaseResult {
   readonly name: string;
+  readonly formula?: string;
   readonly status: Status;
   readonly reason?: string;
   readonly k?: number;
@@ -48,6 +49,7 @@ export interface Report {
     readonly date: string;
     readonly trigger: string;
     readonly url?: string;
+    readonly suite?: string;
   };
   readonly system: {
     readonly name: BenchSystem;
@@ -70,8 +72,11 @@ export type PlanCell = { readonly sources: readonly string[] } | Exclusion;
 export interface Plan {
   readonly schema: 1;
   readonly protocol: number;
+  readonly suite?: string;
   readonly cases: readonly {
     readonly name: string;
+    readonly formula?: string;
+    readonly tier?: "small" | "medium" | "large";
     readonly precision: "exact" | "machine" | number;
     readonly budget: number;
     readonly tags?: readonly string[];
@@ -96,6 +101,7 @@ export interface BenchIndex {
     readonly trigger: string;
     readonly url?: string;
     readonly job: string;
+    readonly suite?: string;
     readonly systems: readonly BenchSystem[];
     readonly machine: string;
   }[];

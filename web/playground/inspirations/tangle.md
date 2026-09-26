@@ -24,7 +24,7 @@ Five components come out of that, and they are all inline:
 | `<notatio-when>`           | a phrase that appears only under a condition | Tangle's `TKIf`      |
 
 The binding machinery is the one `<notatio-manipulate>` already uses: a knob
-named `a` publishes the wildcard `_a`, and **any** notatio expression in the
+named `a` publishes the wildcard `_a`, and **any** expression in the
 subtree that mentions `_a` is a template, re-evaluated on every move. So a knob
 can drive a sentence, a glyph and a plot at once without knowing that any of
 them exist.

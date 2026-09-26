@@ -24,7 +24,7 @@ Three ways in, and all of them read the same `reduce`:
   WebGPU portrait rasterizes.
 - **Narrow the window** past 640px (or open the site on a phone). `Row` becomes
   `Column`; the controls stay live, because a phone can still drive them.
-- **Edit a card below.** The text box takes notatio; the code block under it is the
+- **Edit a card below.** The text box takes Epsil; the code block under it is the
   reduced expression, and the frame under that is what the components make of it.
 
 At a terminal it is the same rewrite with a different answer, because a TTY _can_ drive
