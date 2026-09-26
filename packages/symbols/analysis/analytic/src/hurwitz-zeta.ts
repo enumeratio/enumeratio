@@ -35,6 +35,8 @@ import { lerchPhiBig } from "./lerch-big.ts";
 import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
 import { declareElliptic } from "./elliptic.ts";
+import { declareJacobiElliptic } from "./jacobi-elliptic.ts";
+import { declareEllipticTheta } from "./theta.ts";
 import { declareModular } from "./modular.ts";
 import { declareMatrixExp } from "./matrix-exp.ts";
 import { declareSpecialFunctions } from "./special-functions.ts";
@@ -802,6 +804,8 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareCaputoD(ce);
   declareTrigFactor(ce);
   declareDSolveValue(ce);
+  declareJacobiElliptic(ce);
+  declareEllipticTheta(ce);
   declareOptimize(ce);
   declareNMinMax(ce);
   declareNSum(ce);

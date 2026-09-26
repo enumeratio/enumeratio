@@ -1,0 +1,40 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiND(0.3, -2))
+    out: 0.918_684_525_634_504_4
+  tex:
+    in: N(\mathrm{JacobiND}(0.3, -2))
+    out: 0.918\,684\,525\,634\,504\,4
+  fullform:
+    in: N[JacobiND[0.3, -2]]
+  wolfram:
+    in: N[JacobiND[0.3, -2]]
+u-0-is-1-for-any-m:
+  epsil:
+    in: JacobiND(0, m)
+    out: "1"
+  tex:
+    in: \mathrm{JacobiND}(0, m)
+    out: "1"
+  fullform:
+    in: JacobiND[0, m]
+m-greater-than-1-via-the-reciprocal-modulus:
+  epsil:
+    in: N(JacobiND(0.3, 1.5))
+    out: 1.069_333_535_737_140_7
+  tex:
+    in: N(\mathrm{JacobiND}(0.3, 1.5))
+    out: 1.069\,333\,535\,737\,140\,7
+  fullform:
+    in: N[JacobiND[0.3, 1.5]]
+  wolfram:
+    in: N[JacobiND[0.3, 1.5]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiND(u, m)
+    out: JacobiND(u, m)
+  tex:
+    in: \mathrm{JacobiND}(u, m)
+    out: \mathrm{JacobiND}(u, m)
+  fullform:
+    in: JacobiND[u, m]
