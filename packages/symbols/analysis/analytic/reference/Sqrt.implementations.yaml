@@ -663,6 +663,7 @@ an-approximate-negative-radicand-stays-complex:
     in: Sqrt[-2.875]
   sympy:
     in: sqrt(-2.875)
+    out: 1.69558249578132*I
   mpmath:
     in: sqrt(-2.875)
   sage:
@@ -686,6 +687,7 @@ sqrt-36-negative:
     in: Sqrt[-36]
   sympy:
     in: sqrt(-36)
+    out: 6*I
   mpmath:
     in: sqrt(-36)
   sage:
@@ -709,6 +711,7 @@ sqrt-2-times-sqrt-neg-1:
     in: Times[Sqrt[1], Sqrt[-1]]
   sympy:
     in: (sqrt(1) * sqrt(-1))
+    out: I
   mpmath:
     in: (sqrt(1) * sqrt(-1))
   sage:
@@ -732,6 +735,7 @@ sqrt-neg-4-over-9:
     in: Sqrt[Rational[-4, 9]]
   sympy:
     in: sqrt(Rational(-4, 9))
+    out: 2*I/3
   mpmath:
     in: sqrt((mpf(-4)/9))
   sage:
@@ -755,6 +759,7 @@ sqrt-neg-1-half:
     in: Sqrt[Rational[-1, 2]]
   sympy:
     in: sqrt(Rational(-1, 2))
+    out: sqrt(2)*I/2
   mpmath:
     in: sqrt((mpf(-1)/2))
   sage:
@@ -778,6 +783,7 @@ sqrt-neg-1:
     in: Sqrt[-1]
   sympy:
     in: sqrt(-1)
+    out: I
   mpmath:
     in: sqrt(-1)
   sage:
@@ -801,6 +807,7 @@ sqrt-neg-12-over-5:
     in: Sqrt[Rational[-12, 5]]
   sympy:
     in: sqrt(Rational(-12, 5))
+    out: 2*sqrt(15)*I/5
   mpmath:
     in: sqrt((mpf(-12)/5))
   sage:

@@ -423,6 +423,10 @@ a-negative-k-stays-symbolic:
     in: StirlingS2[10, -5]
   sympy:
     in: stirling(10, -5)
+    out: "IndexError: list index out of range"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline: compute-engine leaves Stirling(10, -5) symbolic, as Wolfram does, and SymPy's stirling fails on a negative k."
   sage:
     in: stirling_number2(10, -5)
   julia:

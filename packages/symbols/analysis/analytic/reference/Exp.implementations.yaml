@@ -330,6 +330,7 @@ exp-ln-neg-1:
     in: Exp[Log[-1]]
   sympy:
     in: exp(log(-1))
+    out: "-1"
   mpmath:
     in: exp(log(-1))
   sage:
@@ -565,6 +566,10 @@ to-1-significant-digit:
     in: N[Exp[1], 1]
   sympy:
     in: N(exp(1), 30)
+    out: "2.71828182845904523536028747135"
+    verdict: disagree
+    kind: precision
+    note: "The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit."
   mpmath:
     in: (exp(1))
   sage:

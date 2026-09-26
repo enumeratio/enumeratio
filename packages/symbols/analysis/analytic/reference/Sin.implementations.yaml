@@ -981,6 +981,7 @@ an-even-huger-argument-11-38:
     in: N[Sin[Power[11, 38]]]
   sympy:
     in: N(sin((S(11)**38)), 30)
+    out: "0.867534193184863032081750429728"
   mpmath:
     in: (sin(((11)**38)))
   sage:

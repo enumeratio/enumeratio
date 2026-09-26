@@ -47,6 +47,7 @@ a-pole-of-gamma-at-negative-1:
     in: Gamma[-1]
   sympy:
     in: gamma(-1)
+    out: zoo
   mpmath:
     in: gamma(-1)
   sage:
@@ -70,6 +71,7 @@ a-pole-of-gamma-at-negative-2:
     in: Gamma[-2]
   sympy:
     in: gamma(-2)
+    out: zoo
   mpmath:
     in: gamma(-2)
   sage:

@@ -97,47 +97,58 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 1190, disagree 31, inconclusive 14, error 27
+## sympy — agree 1226, disagree 41, inconclusive 15, error 31
 
-| example                                                        | kind           | ours                                                | theirs                                                                        |
-| -------------------------------------------------------------- | -------------- | --------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `BernoulliB/bernoullib-1`                                      | convention     | `-0.5`                                              | `1/2`                                                                         |
-| `BernoulliB/faulhaber-s-formula-recovers-sum-k-0-4-k-2-30`     | convention     | `30`                                                | `55`                                                                          |
-| `BernoulliB/the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here`   | convention     | `0`                                                 | `5`                                                                           |
-| `BernoulliB/threads-element-wise-over-a-list-as-wolfram-s`     | convention     | `[-0.5, 0.16666666666666666, 0]`                    | `[1/2, 1/6, 0]`                                                               |
-| `Binomial/both-arguments-negative-integers-the-limiting`       | convention     | `6`                                                 | `0`                                                                           |
-| `CatalanNumber/catalannumber-neg-1-is-neg-1`                   | convention     | `-1`                                                | `-1/2`                                                                        |
-| `ContinuedFraction/varphi-1-overline-1-purely-periodic-so-the` | shape          | `[1, [1]]`                                          | `[[1]]`                                                                       |
-| `HurwitzZeta/pole-at-a-0-re-s-positive`                        | undefined-form | `ComplexInfinity`                                   | `nan`                                                                         |
-| `HurwitzZeta/pole-at-a-neg-1-inexact-s`                        | undefined-form | `ComplexInfinity`                                   | `nan`                                                                         |
-| `HurwitzZeta/pole-at-a-neg-2-re-s-positive`                    | undefined-form | `ComplexInfinity`                                   | `nan`                                                                         |
-| `HurwitzZeta/re-s-negative-a-drops-the-term-cleanly`           | domain         | `{"re":-4.632252692594817,"im":-17.64247080748051}` | `nan`                                                                         |
-| `HurwitzZeta/re-s-positive-complex-s-is-a-pole`                | undefined-form | `ComplexInfinity`                                   | `nan`                                                                         |
-| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`     | convention     | `true`                                              | `False`                                                                       |
-| `IsPrime/isprime-neg-2-is-true`                                | convention     | `true`                                              | `False`                                                                       |
-| `LCM/1-3i-i-3-i-associates-share-their-multiples`              | convention     | `{"re":3,"im":1}`                                   | `-1 + 3*I`                                                                    |
-| `LCM/gaussian-primes-of-norm-41-and-13-the-lcm-is-the`         | convention     | `{"re":23,"im":2}`                                  | `-23 - 2*I`                                                                   |
-| `LCM/gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3`                | convention     | `{"re":21,"im":13}`                                 | `-13 + 21*I`                                                                  |
-| `LerchPhi/n-lerchphi-10-10-10-cancels-below-precision`         | unevaluated    | `["LerchPhi",10,10,10]`                             | `-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I` |
-| `LerchPhi/where-the-continuation-s-terms-cancel-below`         | unevaluated    | `["LerchPhi",10,10,10]`                             | `-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I` |
-| `Ln/ln-0`                                                      | undefined-form | `NegativeInfinity`                                  | `zoo`                                                                         |
-| `Max/the-max-of-an-empty-list-is-nan-too`                      | convention     | `NaN`                                               | `-oo`                                                                         |
-| `Max/with-no-arguments-compute-engine-returns-nan`             | convention     | `NaN`                                               | `-oo`                                                                         |
-| `Min/the-min-of-an-empty-list-is-nan`                          | convention     | `NaN`                                               | `oo`                                                                          |
-| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                        | domain         | `{"re":0,"im":-1}`                                  | `Mod(7 + 5*I, 2 + I)`                                                         |
-| `Mod/gaussian-integers-the-quotient-rounds-so-each`            | domain         | `{"re":1,"im":-1}`                                  | `Mod(1 + 5*I, 3)`                                                             |
-| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`          | domain         | `[1, -1]`                                           | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]`                                          |
-| `N/an-exact-tie-rounds-to-the-even-digit-0-125`                | precision      | `0.12`                                              | `0.125000000000000000000000000000`                                            |
-| `N/and-0-375-to-0-38`                                          | precision      | `0.38`                                              | `0.375000000000000000000000000000`                                            |
-| `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`         | convention     | `2.91666666666666666667`                            | `-3.08333333333333333333333333333`                                            |
-| `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`                 | convention     | `16.4143983221171599978`                            | `0.414398322117159997798167130580`                                            |
-| `Zeta/zeta-complex-argument-stays-symbolic-until-n`            | shape          | `["Zeta",["Complex",2,1]]`                          | `zeta(2 + I)`                                                                 |
+| example                                                        | kind           | ours                                                   | theirs                                                                        |
+| -------------------------------------------------------------- | -------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| `BernoulliB/bernoullib-1`                                      | convention     | `-0.5`                                                 | `1/2`                                                                         |
+| `BernoulliB/faulhaber-s-formula-recovers-sum-k-0-4-k-2-30`     | convention     | `30`                                                   | `55`                                                                          |
+| `BernoulliB/the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here`   | convention     | `0`                                                    | `5`                                                                           |
+| `BernoulliB/threads-element-wise-over-a-list-as-wolfram-s`     | convention     | `[-0.5, 0.16666666666666666, 0]`                       | `[1/2, 1/6, 0]`                                                               |
+| `Binomial/both-arguments-negative-integers-the-limiting`       | convention     | `6`                                                    | `0`                                                                           |
+| `Binomial/equal-negative-arguments-binom-2-2-1`                | convention     | `1`                                                    | `0`                                                                           |
+| `CatalanNumber/catalannumber-neg-1-is-neg-1`                   | convention     | `-1`                                                   | `-1/2`                                                                        |
+| `Ceil/a-zero-divisor-inside-ceil`                              | ours           | `["Ceil","ComplexInfinity"]`                           | `zoo`                                                                         |
+| `ContinuedFraction/varphi-1-overline-1-purely-periodic-so-the` | shape          | `[1, [1]]`                                             | `[[1]]`                                                                       |
+| `Cos/to-1-significant-digit`                                   | precision      | `0.5`                                                  | `0.540302305868139717400936607443`                                            |
+| `Exp/to-1-significant-digit`                                   | precision      | `3`                                                    | `2.71828182845904523536028747135`                                             |
+| `Floor/a-zero-divisor-inside-floor`                            | ours           | `["Floor","ComplexInfinity"]`                          | `zoo`                                                                         |
+| `HurwitzZeta/pole-at-a-0-re-s-positive`                        | undefined-form | `ComplexInfinity`                                      | `nan`                                                                         |
+| `HurwitzZeta/pole-at-a-neg-1-inexact-s`                        | undefined-form | `ComplexInfinity`                                      | `nan`                                                                         |
+| `HurwitzZeta/pole-at-a-neg-2-re-s-positive`                    | undefined-form | `ComplexInfinity`                                      | `nan`                                                                         |
+| `HurwitzZeta/re-s-negative-a-drops-the-term-cleanly`           | domain         | `{"re":-4.632252692594817,"im":-17.64247080748051}`    | `nan`                                                                         |
+| `HurwitzZeta/re-s-positive-complex-s-is-a-pole`                | undefined-form | `ComplexInfinity`                                      | `nan`                                                                         |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`     | convention     | `true`                                                 | `False`                                                                       |
+| `IsPrime/isprime-neg-2-is-true`                                | convention     | `true`                                                 | `False`                                                                       |
+| `LCM/1-3i-i-3-i-associates-share-their-multiples`              | convention     | `{"re":3,"im":1}`                                      | `-1 + 3*I`                                                                    |
+| `LCM/gaussian-primes-of-norm-41-and-13-the-lcm-is-the`         | convention     | `{"re":23,"im":2}`                                     | `-23 - 2*I`                                                                   |
+| `LCM/gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3`                | convention     | `{"re":21,"im":13}`                                    | `-13 + 21*I`                                                                  |
+| `LerchPhi/n-lerchphi-10-10-10-cancels-below-precision`         | unevaluated    | `["LerchPhi",10,10,10]`                                | `-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I` |
+| `LerchPhi/where-the-continuation-s-terms-cancel-below`         | unevaluated    | `["LerchPhi",10,10,10]`                                | `-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I` |
+| `Ln/ln-0`                                                      | undefined-form | `NegativeInfinity`                                     | `zoo`                                                                         |
+| `Max/the-max-of-an-empty-list-is-nan-too`                      | convention     | `NaN`                                                  | `-oo`                                                                         |
+| `Max/with-no-arguments-compute-engine-returns-nan`             | convention     | `NaN`                                                  | `-oo`                                                                         |
+| `Min/the-min-of-an-empty-list-is-nan`                          | convention     | `NaN`                                                  | `oo`                                                                          |
+| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                        | domain         | `{"re":0,"im":-1}`                                     | `Mod(7 + 5*I, 2 + I)`                                                         |
+| `Mod/gaussian-integers-the-quotient-rounds-so-each`            | domain         | `{"re":1,"im":-1}`                                     | `Mod(1 + 5*I, 3)`                                                             |
+| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`          | domain         | `[1, -1]`                                              | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]`                                          |
+| `N/an-exact-tie-rounds-to-the-even-digit-0-125`                | precision      | `0.12`                                                 | `0.125000000000000000000000000000`                                            |
+| `N/and-0-375-to-0-38`                                          | precision      | `0.38`                                                 | `0.375000000000000000000000000000`                                            |
+| `N/n-pi-1-digit`                                               | precision      | `3`                                                    | `3.14159265358979323846264338328`                                             |
+| `PolyGamma/n-polygamma-neg1-1-over-2`                          | convention     | `0.5723649429246995`                                   | `-0.346573590279972654708616060729`                                           |
+| `PolyGamma/n-polygamma-neg1-1-plus-i`                          | convention     | `{"re":-0.6509231993018556,"im":-0.30164032046753264}` | `-1.56986173250652908066554656791 - 0.301640320467533197887531657797*I`       |
+| `PolyGamma/n-polygamma-neg1-2-is-loggamma-2-is-0`              | convention     | `0`                                                    | `-0.918938533204672741780329736406`                                           |
+| `PolyGamma/n-polygamma-neg1-neg0p5`                            | convention     | `{"re":1.2655121234846451,"im":-3.141592653589793}`    | `0.346573590279972626385172340912 - 3.14159265358979311599796346854*I`        |
+| `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`         | convention     | `2.91666666666666666667`                               | `-3.08333333333333333333333333333`                                            |
+| `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`                 | convention     | `16.4143983221171599978`                               | `0.414398322117159997798167130580`                                            |
+| `Zeta/zeta-complex-argument-stays-symbolic-until-n`            | shape          | `["Zeta",["Complex",2,1]]`                             | `zeta(2 + I)`                                                                 |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
 | example                                                             | message                                                                          |
 | ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `BellNumber/a-negative-argument-is-left-unevaluated`                | `ValueError: a non-negative integer expected`                                    |
+| `BellNumber/a-zero-modulus-inside-a-congruence-check-is-nan`        | `ZeroDivisionError: integer modulo by zero`                                      |
 | `Ceil/threads-element-wise-over-a-list`                             | `AttributeError: 'list' object has no attribute 'is_Number'`                     |
 | `ContinuedFraction/a-floating-point-number-read-as-the-rational-it` | `ValueError: expecting a rational or quadratic irrational, not 3.24500000000000` |
 | `Factorial/threads-element-wise-over-a-list`                        | `AttributeError: 'list' object has no attribute 'is_Number'`                     |
@@ -148,11 +159,13 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `IntegerExponent/gaussian-integers-8i-i-cdot-i-3-1-i-6`             | `ValueError: expecting ints or fractions, got 1 + I and 8*I`                     |
 | `IntegerExponent/integerexponent-0-5`                               | `ValueError: no such integer exists: multiplicity of 0 is not-defined`           |
 | `IsPrime/a-gaussian-prime-its-norm-5-is-prime`                      | `ValueError: 2 + I is not an integer`                                            |
+| `IsPrime/another-non-integer-3-halves`                              | `ValueError: 3/2 is not an integer`                                              |
 | `IsPrime/non-integers-are-not-prime`                                | `ValueError: 1/2 is not an integer`                                              |
 | `IsPrime/threads-element-wise-over-a-list`                          | `ValueError: [1, 2, 3, 4, 5, 6] is not an integer`                               |
 | `IsPrime/threads-element-wise-over-a-short-list`                    | `ValueError: [2, 3, 4] is not an integer`                                        |
 | `Mod/a-gaussian-integer-5-3i-2-2-2i`                                | `TypeError: Invalid comparison of non-real (1 - I)**2*(-2*I - (1 - I)**2)/2`     |
 | `Mod/division-by-a-0-modulus-yields-nan-rather-than`                | `ZeroDivisionError: integer modulo by zero`                                      |
+| `Mod/periodicity-with-a-zero-modulus-on-one-side`                   | `ZeroDivisionError: integer modulo by zero`                                      |
 | `Mod/threads-element-wise-over-a-list`                              | `TypeError: unsupported operand type(s) for %: 'list' and 'int'`                 |
 | `MoebiusMu/gaussian-integers-5-6i-is-a-gaussian-prime-norm`         | `TypeError: n should be an integer`                                              |
 | `MoebiusMu/mu-is-only-defined-for-positive-integers-compute`        | `ValueError: n should be a positive integer`                                     |
@@ -160,6 +173,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `PolyGamma/threads-over-a-list-each-element-exact-so-each`          | `AttributeError: 'list' object has no attribute 'is_Integer'`                    |
 | `PolyLog/threads-over-a-list-of-arguments`                          | `AttributeError: 'list' object has no attribute 'is_number'`                     |
 | `Square/threads-element-wise-over-a-list`                           | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'`       |
+| `Stirling/a-negative-k-stays-symbolic`                              | `IndexError: list index out of range`                                            |
 | `Totient/negative-n-varphi-n-varphi-n`                              | `ValueError: n should be a positive integer`                                     |
 | `Totient/varphi-0-0-as-in-wolfram`                                  | `ValueError: n should be a positive integer`                                     |
 | `Zeta/threads-over-a-list-reducing-every-element-to`                | `AttributeError: 'list' object has no attribute 'is_Integer'`                    |

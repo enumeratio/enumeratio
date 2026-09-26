@@ -1457,6 +1457,7 @@ n-polygamma-1-1-over-2:
     in: N[PolyGamma[1, Rational[1, 2]]]
   sympy:
     in: N(polygamma(1, Rational(1, 2)), 30)
+    out: "4.93480220054467930941724549994"
   mpmath:
     in: (psi(1, (mpf(1)/2)))
   sage:
@@ -1477,6 +1478,7 @@ n-polygamma-0-1:
     in: N[PolyGamma[0, 1]]
   sympy:
     in: N(polygamma(0, 1), 30)
+    out: "-0.577215664901532860606512090082"
   mpmath:
     in: (psi(0, 1))
   sage:
@@ -1497,6 +1499,7 @@ n-polygamma-0-1-plus-i:
     in: N[PolyGamma[0, Complex[1, 1]]]
   sympy:
     in: N(polygamma(0, (1 + 1*I)), 30)
+    out: 0.0946503206224769772718784827219 + 1.07667404746858117413405079475*I
   mpmath:
     in: (psi(0, mpc(1, 1)))
   sage:
@@ -1517,6 +1520,7 @@ n-polygamma-0-0p5-plus-0p3i:
     in: N[PolyGamma[0, Complex[0.5, 0.3]]]
   sympy:
     in: N(polygamma(0, (0.5 + 0.3*I)), 30)
+    out: -1.39793262940580732844854732105 + 1.15666938332423779803245397677*I
   mpmath:
     in: (psi(0, mpc(0.5, 0.3)))
   sage:
@@ -1537,6 +1541,10 @@ n-polygamma-neg1-2-is-loggamma-2-is-0:
     in: N[PolyGamma[-1, 2]]
   sympy:
     in: N(polygamma(-1, 2), 30)
+    out: "-0.918938533204672741780329736406"
+    verdict: disagree
+    kind: convention
+    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
   mpmath:
     in: (psi(-1, 2))
   sage:
@@ -1557,6 +1565,10 @@ n-polygamma-neg1-1-over-2:
     in: N[PolyGamma[-1, Rational[1, 2]]]
   sympy:
     in: N(polygamma(-1, Rational(1, 2)), 30)
+    out: "-0.346573590279972654708616060729"
+    verdict: disagree
+    kind: convention
+    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
   mpmath:
     in: (psi(-1, (mpf(1)/2)))
   sage:
@@ -1577,6 +1589,10 @@ n-polygamma-neg1-1-plus-i:
     in: N[PolyGamma[-1, Complex[1, 1]]]
   sympy:
     in: N(polygamma(-1, (1 + 1*I)), 30)
+    out: -1.56986173250652908066554656791 - 0.301640320467533197887531657797*I
+    verdict: disagree
+    kind: convention
+    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
   mpmath:
     in: (psi(-1, mpc(1, 1)))
   sage:
@@ -1597,6 +1613,10 @@ n-polygamma-neg1-neg0p5:
     in: N[PolyGamma[-1, -0.5]]
   sympy:
     in: N(polygamma(-1, -0.5), 30)
+    out: 0.346573590279972626385172340912 - 3.14159265358979311599796346854*I
+    verdict: disagree
+    kind: convention
+    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
   mpmath:
     in: (psi(-1, -0.5))
   sage:
@@ -1617,6 +1637,10 @@ n-polygamma-neg2-stays-unevaluated:
     in: N[PolyGamma[-2, 2]]
   sympy:
     in: N(polygamma(-2, 2), 30)
+    out: "-1.24875447703378426254725299358"
+    verdict: inconclusive
+    kind: unevaluated
+    note: "m ≤ -2 is past what compute-engine covers, so it stays symbolic; SymPy's polygamma extends to negative orders and gives a number."
   mpmath:
     in: (psi(-2, 2))
   sage:

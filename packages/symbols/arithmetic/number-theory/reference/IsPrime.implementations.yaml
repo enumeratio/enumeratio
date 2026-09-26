@@ -552,6 +552,10 @@ another-non-integer-3-halves:
     in: PrimeQ[Rational[3, 2]]
   sympy:
     in: isprime(Rational(3, 2))
+    out: "ValueError: 3/2 is not an integer"
+    verdict: error
+    kind: domain
+    note: "compute-engine answers False for a non-integer; SymPy's isprime raises."
   sage:
     in: is_prime((3/2))
   oscar:

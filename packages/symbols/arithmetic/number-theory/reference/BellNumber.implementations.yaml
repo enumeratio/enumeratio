@@ -393,6 +393,10 @@ a-zero-modulus-inside-a-congruence-check-is-nan:
     in: (Mod[BellB[9], 23] == Mod[Plus[BellB[4], BellB[5]], 0])
   sympy:
     in: enumeratio_equal((bell(9) % 23), ((bell(4) + bell(5)) % 0))
+    out: "ZeroDivisionError: integer modulo by zero"
+    verdict: error
+    kind: undefined-form
+    note: "A zero modulus: compute-engine's Mod gives NaN, so the comparison is False; SymPy's % raises ZeroDivisionError."
   sage:
     in: bool((bell_number(9) % 23) == ((bell_number(4) + bell_number(5)) % 0))
   oscar:
