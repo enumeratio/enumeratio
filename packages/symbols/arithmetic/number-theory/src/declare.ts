@@ -12,6 +12,7 @@ import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareBacklog } from "./declare-backlog.ts";
 import { declareFastFactorial } from "./declare-fast-factorial.ts";
+import { declareFastGcd } from "./declare-fast-gcd.ts";
 import { declareFastPrimes } from "./declare-fast-primes.ts";
 import { declareFastRecurrence } from "./declare-fast-recurrence.ts";
 import { declareGaussian, declareGaussianRationalGcdLcm, declareIntegerExponentGaussian } from "./declare-gaussian.ts";
@@ -549,4 +550,5 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   declareFastRecurrence(ce);
   declareFastPrimes(ce);
   declareFastFactorial(ce);
+  declareFastGcd(ce);
 }
