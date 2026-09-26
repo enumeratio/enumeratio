@@ -8,7 +8,7 @@ framework: import `@enumeratio/notatio` for the side effect and use the tags in 
 HTML. The [playground](/playground/) shows each one working; this reference is for
 reading the dials.
 
-## Expression attributes take an expression
+## Expressions are written in Epsil
 
 An attribute that holds an expression — `value`, `expr`, `u`/`v` — is written in
 **Epsil**: `Sin(x) * Cos(y)`, with products spelled out
