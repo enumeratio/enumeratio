@@ -14,3 +14,18 @@ runs:
     - name: ${{ inputs.system }} rows match the committed records
       shell: bash
       run: node .github/scripts/oracle-drift.ts | tee -a "$GITHUB_STEP_SUMMARY"; exit "${PIPESTATUS[0]}"
+    # What the scan accepted, for applying a weekly lane's rows without its kernel locally:
+    # download, `tar xzf` at the repo root, classify, commit.
+    - name: pack the accepted records
+      if: ${{ !cancelled() }}
+      shell: bash
+      run: |
+        git ls-files -m -o --exclude-standard -- '*.implementations.yaml' 'packages/reference/golden/oracle/*' > accepted.txt
+        [ -s accepted.txt ] && tar czf "oracle-${{ inputs.system }}.tgz" -T accepted.txt || true
+    - if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: oracle-records-${{ inputs.system }}
+        path: oracle-${{ inputs.system }}.tgz
+        if-no-files-found: ignore
+        retention-days: 14
