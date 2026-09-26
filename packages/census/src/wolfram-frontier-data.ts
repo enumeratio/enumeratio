@@ -221,10 +221,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 21,
   },
   {
-    head: "Minimize",
-    uses: 21,
-  },
-  {
     head: "CellPrint",
     uses: 20,
   },
@@ -417,10 +413,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 12,
   },
   {
-    head: "Maximize",
-    uses: 12,
-  },
-  {
     head: "PolygonalNumber",
     uses: 12,
   },
@@ -510,10 +502,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ListPolarPlot",
-    uses: 10,
-  },
-  {
-    head: "NSum",
     uses: 10,
   },
   {
@@ -782,10 +770,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "MeshRegion",
-    uses: 7,
-  },
-  {
-    head: "NMinimize",
     uses: 7,
   },
   {
@@ -1434,10 +1418,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LocationEquivalenceTest",
-    uses: 3,
-  },
-  {
-    head: "MaxValue",
     uses: 3,
   },
   {

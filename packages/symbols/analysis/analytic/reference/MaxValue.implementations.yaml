@@ -1,0 +1,27 @@
+a-downward-parabola-s-maximum-value:
+  epsil:
+    in: MaxValue(-x ^ 2 + 4x - 1, x)
+    out: "3"
+  tex:
+    in: \mathrm{MaxValue}(-x^2+4x-1, x)
+    out: "3"
+  fullform:
+    in: MaxValue[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
+the-amplitude-of-sine-alone-is-exact:
+  epsil:
+    in: MaxValue(Sin(x), x)
+    out: "1"
+  tex:
+    in: \mathrm{MaxValue}(\sin(x), x)
+    out: "1"
+  fullform:
+    in: MaxValue[Sin[x], x]
+an-unbounded-cubic:
+  epsil:
+    in: MaxValue(x ^ 3, x)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{MaxValue}(x^3, x)
+    out: \infty
+  fullform:
+    in: MaxValue[Power[x, 3], x]

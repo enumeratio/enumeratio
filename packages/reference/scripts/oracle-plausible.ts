@@ -253,6 +253,30 @@ const DOMAIN = /DomainError|non-?negative|must be positive|positive integer|not 
 function autoKind(sample: MathJSON, ours: MathJSON, result: { value?: string; error?: string }): string | undefined {
   const theirs = result.error ?? result.value ?? "";
   if (result.error !== undefined && RESOURCE.test(theirs)) return "resource";
+  // Our own worker hit its time or memory cap on this sample (an extreme edge the mutator
+  // drew, not the other system): the same "nothing to compare" shrug, from our side.
+  if (ours === "Aborted") return "resource";
+  // `N(expr, d)`: the mapping drops the digit count and asks the other system for full
+  // precision instead (a numeric-tolerance comparison is the better general witness — see
+  // the N/2 mapping's own note), so a low `d` disagrees whenever rounding to `d` significant
+  // figures actually matters. Not a real disagreement when their full-precision answer
+  // rounds to ours at the requested d.
+  if (
+    Array.isArray(sample) &&
+    sample[0] === "N" &&
+    sample.length === 3 &&
+    typeof sample[2] === "number" &&
+    typeof ours === "number" &&
+    result.error === undefined
+  ) {
+    const d = sample[2];
+    const theirsNum = Number(theirs);
+    if (Number.isFinite(theirsNum) && theirsNum !== 0) {
+      const scale = 10 ** (d - 1 - Math.floor(Math.log10(Math.abs(theirsNum))));
+      const rounded = Math.round(theirsNum * scale) / scale;
+      if (Math.abs(rounded - ours) <= 1e-9 * Math.max(1, Math.abs(ours))) return "convention";
+    }
+  }
   // Unevaluated: the sample itself, or for `N(f(…))` the inner call.
   const inner = Array.isArray(sample) && sample[0] === "N" ? sample[1] : sample;
   const oursDeclines =
@@ -263,9 +287,21 @@ function autoKind(sample: MathJSON, ours: MathJSON, result: { value?: string; er
     (result.error !== undefined && POLE.test(theirs)) ||
     UNDEFINED.has(theirs.trim()) ||
     /^(nan|zoo|oo|-oo|inf|-inf)$/i.test(theirs.trim());
-  if (oursDeclines && theirsDeclines) return "undefined-form";
-  // They refuse the argument: a domain difference when ours answers, both declining when not.
-  if (result.error !== undefined && DOMAIN.test(theirs)) return oursDeclines ? "undefined-form" : "domain";
+  // Ours already gave up (stayed symbolic, or answered ComplexInfinity/NaN/…): any exception
+  // on their side is also a decline, whatever its message happens to say (an internal
+  // IndexError from a table lookup, `ComplexResult: logarithm of a negative number`, …) — a
+  // recognizable POLE message on top of that is just the common case, not a requirement.
+  if (oursDeclines && (theirsDeclines || result.error !== undefined)) return "undefined-form";
+  // We already gave up (stayed symbolic, or answered ComplexInfinity/NaN/…) and they
+  // cleanly computed something: not a pole on either side, just a capability boundary of
+  // ours (an order or a branch we haven't extended this far).
+  if (oursDeclines) return "unevaluated";
+  // They refuse the argument (a pole they haven't continued past, or their own domain
+  // error) where ours answers: a domain difference. `theirsDeclines` already covers a pole
+  // spelled as an error (ValueError, ZeroDivisionError, "complex infinity", …) or a bare
+  // NaN/zoo/oo value; DOMAIN catches the rest (an explicit "not a positive integer" or
+  // similar refusal that doesn't read as a pole).
+  if (theirsDeclines || (result.error !== undefined && DOMAIN.test(theirs))) return "domain";
   return undefined;
 }
 

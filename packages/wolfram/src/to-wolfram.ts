@@ -81,6 +81,15 @@ export const HEADS: Record<string, string> = {
   Rule: "Rule",
   // Same argument order both sides: expr, vars, [domain], [n].
   FindInstance: "FindInstance",
+  // Same argument order and `{f, cons}`/`{n, a, b}` shapes both sides -- see
+  // @enumeratio/analytic's optimize.ts, nminmax.ts, nsum.ts.
+  Minimize: "Minimize",
+  Maximize: "Maximize",
+  MinValue: "MinValue",
+  MaxValue: "MaxValue",
+  NMinimize: "NMinimize",
+  NMaximize: "NMaximize",
+  NSum: "NSum",
   And: "And",
   Or: "Or",
   Not: "Not",
