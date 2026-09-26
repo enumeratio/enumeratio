@@ -23,7 +23,7 @@ examples:
     category: Properties
     caption: $Z(0) = \zeta(1/2)$
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

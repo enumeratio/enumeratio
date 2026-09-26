@@ -23,7 +23,7 @@ examples:
     expected: [Cos, [Multiply, a, t]]
     caption: $\mathcal{L}^{-1}\{s/(s^2+a^2)\} = \cos(at)$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

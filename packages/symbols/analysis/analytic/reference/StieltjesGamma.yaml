@@ -112,7 +112,7 @@ examples:
     category: Applications
     caption: $\gamma_2(1/3)$ to 40 digits, proven the same way
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

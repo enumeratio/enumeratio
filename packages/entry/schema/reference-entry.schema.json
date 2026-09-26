@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://enumeratio.dev/schema/reference-entry.schema.json",
   "title": "ReferenceEntry",
-  "description": "One compute-engine head's reference/<Head>.yaml: summary, signatures, details, references, head-level implementations, and examples in page order.",
+  "description": "One compute-engine head's reference/<Head>.yaml: summary, signatures, details, references, head-level bindings, and examples in page order.",
   "type": "object",
   "properties": {
     "name": {
@@ -66,10 +66,10 @@
     "outEvaluate": {
       "type": "boolean"
     },
-    "implementations": {
+    "bindings": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/ReferenceImplementation"
+        "$ref": "#/$defs/ReferenceBinding"
       }
     },
     "primitive": {
@@ -223,7 +223,7 @@
       "required": ["call", "description"],
       "additionalProperties": false
     },
-    "ReferenceImplementation": {
+    "ReferenceBinding": {
       "type": "object",
       "properties": {
         "origin": {

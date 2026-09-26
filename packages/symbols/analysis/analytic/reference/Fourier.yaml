@@ -39,7 +39,7 @@ examples:
     category: Possible issues
     caption: Declines a symbolic list, as Wolfram's `Fourier::fftl` does
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

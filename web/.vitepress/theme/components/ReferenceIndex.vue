@@ -17,8 +17,8 @@ const stubGroups = every
 // definition, it sits on the primitive frontier for a stated reason, or neither -- which is
 // the population the frontier lint will eventually refuse.
 type Standing = "defined" | "primitive" | "undeclared";
-const standing = (entry: { implementations?: readonly { origin: string }[]; primitive?: string }): Standing =>
-  entry.implementations?.some((impl) => impl.origin === "reference")
+const standing = (entry: { bindings?: readonly { origin: string }[]; primitive?: string }): Standing =>
+  entry.bindings?.some((impl) => impl.origin === "reference")
     ? "defined"
     : entry.primitive
       ? "primitive"

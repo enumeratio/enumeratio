@@ -55,7 +55,7 @@ examples:
     category: Possible issues
     caption: Declines $\tan(x)$ -- it has poles inside $[-\pi, \pi]$, so the defining integral doesn't actually converge, even though Wolfram formally returns 0 by symmetry
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

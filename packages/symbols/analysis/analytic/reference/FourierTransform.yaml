@@ -29,7 +29,7 @@ examples:
       ]
     caption: $\mathcal{F}\{\cos(at)\} = \sqrt{\pi/2}\,(\delta(w-a)+\delta(w+a))$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

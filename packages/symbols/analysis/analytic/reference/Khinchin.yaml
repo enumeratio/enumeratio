@@ -15,7 +15,7 @@ examples:
     expected: 2.6854520010653062
     caption: Khinchin's constant
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine
