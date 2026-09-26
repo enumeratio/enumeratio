@@ -1,0 +1,90 @@
+a-quadratic-s-vertex:
+  epsil:
+    in: Minimize(x ^ 2, x)
+    out: "[0, [Rule(x, 0)]]"
+  tex:
+    in: \mathrm{Minimize}(x^2, x)
+    out: \bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minimize[Power[x, 2], x]
+unbounded-below-reports-negative-infinity:
+  epsil:
+    in: Minimize(x ^ 3, x)
+    out: "[NegativeInfinity, [Rule(x, NegativeInfinity)]]"
+  tex:
+    in: \mathrm{Minimize}(x^3, x)
+    out: \bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minimize[Power[x, 3], x]
+a-rational-function-s-irrational-point:
+  epsil:
+    in: Minimize((x - 1) / (x ^ 2 + 1), x)
+    out: "[-Sqrt(2) / (1 + (1 - Sqrt(2)) ^ 2), [Rule(x, 1 - Sqrt(2))]]"
+  tex:
+    in: \mathrm{Minimize}(\frac{x-1}{x^2+1}, x)
+    out: \bigl\lbrack-(\sqrt{2})(1+{(1-2^{1/2})}^2)^{-1}, \bigl\lbrack\mathrm{Rule}(x, 1-2^{1/2})\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minimize[Divide[Subtract[x, 1], Plus[Power[x, 2], 1]], x]
+a-simple-interval-constraint:
+  epsil:
+    in: Minimize([x ^ 2, x >= 1], x)
+    out: "[1, [Rule(x, 1)]]"
+  tex:
+    in: \mathrm{Minimize}(\bigl\lbrack x^2, x\ge1\bigr\rbrack, x)
+    out: \bigl\lbrack1, \bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minimize[List[Power[x, 2], GreaterEqual[x, 1]], x]
+log-s-minimum-is-at-its-domain-edge:
+  epsil:
+    in: Minimize(Ln(x), x)
+    out: "[NegativeInfinity, [Rule(x, 0)]]"
+  tex:
+    in: \mathrm{Minimize}(\ln(x), x)
+    out: \bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minimize[Log[x], x]
+exp-s-infimum-is-not-attained:
+  epsil:
+    in: Minimize(Exp(x), x)
+    out: "[0, [Rule(x, NegativeInfinity)]]"
+  tex:
+    in: \mathrm{Minimize}(e^{x}, x)
+    out: \bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minimize[Exp[x], x]
+the-variable-as-a-one-element-list:
+  epsil:
+    in: Minimize(x ^ 2, [x])
+    out: "[0, [Rule(x, 0)]]"
+  tex:
+    in: \mathrm{Minimize}(x^2, \bigl\lbrack x\bigr\rbrack)
+    out: \bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minimize[Power[x, 2], List[x]]
+declines-a-non-exact-critical-point:
+  epsil:
+    in: Minimize(x ^ 4 - 4 * x ^ 2, x)
+    out: Minimize(x ^ 4 - 4 * x ^ 2, x)
+  tex:
+    in: \mathrm{Minimize}(x^4-4x^2, x)
+    out: \mathrm{Minimize}(x^4-4x^2, x)
+  fullform:
+    in: Minimize[Subtract[Power[x, 4], Times[4, Power[x, 2]]], x]
+declines-more-than-one-variable:
+  epsil:
+    in: Minimize(x ^ 2 + y ^ 2, [x, y])
+    out: Minimize(x ^ 2 + y ^ 2, [x, y])
+  tex:
+    in: \mathrm{Minimize}(x^2+y^2, \bigl\lbrack x, y\bigr\rbrack)
+    out: \mathrm{Minimize}(x^2+y^2, \bigl\lbrack x, y\bigr\rbrack)
+  fullform:
+    in: Minimize[Plus[Power[x, 2], Power[y, 2]], List[x, y]]
+declines-sin-s-point-despite-an-exact-value:
+  epsil:
+    in: Minimize(Sin(x), x)
+    out: Minimize(Sin(x), x)
+  tex:
+    in: \mathrm{Minimize}(\sin(x), x)
+    out: \mathrm{Minimize}(\sin(x), x)
+  fullform:
+    in: Minimize[Sin[x], x]

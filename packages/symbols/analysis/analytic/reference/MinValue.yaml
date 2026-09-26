@@ -1,0 +1,37 @@
+name: MinValue
+domain: Calculus
+signature: MinValue(f, x)
+summary: The global minimum VALUE of f -- Minimize's value alone, without the witnessing point.
+signatures:
+  - call: MinValue(f, x)
+    description: the global minimum of f over its own natural domain.
+    library: "@enumeratio/analytic"
+  - call: MinValue({f, cons}, x)
+    description: the global minimum of f restricted to a simple interval constraint cons.
+    library: "@enumeratio/analytic"
+details:
+  - A projection of [[Minimize]] onto just the value -- same scope, same machinery; see [[Minimize]]'s `details` for the full account.
+  - The one case this covers that Minimize itself declines -- Sin/Cos of an affine argument, unconstrained -- because a value alone doesn't need a witnessing point Wolfram's own choice of (among infinitely many) isn't reproducible here. Its exact amplitude, +-1, is well defined regardless.
+examples:
+  - id: a-quadratic-s-minimum-value
+    expr: [MinValue, [Add, [Power, x, 2], [Multiply, -4, x], 3], x]
+    expected: -1
+    caption: A quadratic's vertex value
+  - id: the-amplitude-of-cosine-alone-is-exact
+    expr: [MinValue, [Cos, [Subtract, [Multiply, 3, x], 1]], x]
+    expected: -1
+    category: Scope
+    caption: Cos's exact minimum value, -1 -- Minimize itself would decline this (no reproducible point)
+  - id: exp-s-infimum
+    expr: [MinValue, [Exp, x], x]
+    expected: 0
+    category: Scope
+    caption: Exp's infimum, even though it is never attained
+  - id: a-simple-interval-constraint
+    expr: [MinValue, [List, [Power, x, 2], [GreaterEqual, x, 1]], x]
+    expected: 1
+    caption: With x >= 1, the boundary value
+seeAlso:
+  - Minimize
+  - MaxValue
+  - Maximize

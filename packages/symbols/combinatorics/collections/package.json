@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@enumeratio/boxed": "workspace:*",
-    "@enumeratio/formats": "workspace:*"
+    "@enumeratio/formats": "workspace:*",
+    "@enumeratio/residues": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.134.0",
@@ -33,6 +34,7 @@
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/plausible": "workspace:*",
+    "@enumeratio/residues": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

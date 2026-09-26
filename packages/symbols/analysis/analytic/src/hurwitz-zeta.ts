@@ -94,6 +94,9 @@ import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
 import { declareInequality } from "./inequality.ts";
 import { declareFindInstance } from "./find-instance.ts";
 import { declareSignals } from "./signals.ts";
+import { declareOptimize } from "./optimize.ts";
+import { declareNMinMax } from "./nminmax.ts";
+import { declareNSum } from "./nsum.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -777,6 +780,9 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareFourierSeries(ce);
   declareInequality(ce);
   declareFindInstance(ce);
+  declareOptimize(ce);
+  declareNMinMax(ce);
+  declareNSum(ce);
   declareCorrectlyRoundedN(ce);
   declareSignals(ce);
 }
