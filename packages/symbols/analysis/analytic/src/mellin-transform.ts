@@ -59,11 +59,16 @@ function linearCoeff(ce: ComputeEngine, expr: BoxedExpression, name: string): Bo
   return undefined;
 }
 
-/** `expr` as `b*x^2` — the Gaussian's exponent shape (no scaling helper reuse: the
- * argument is quadratic, not linear). */
-function quadraticCoeff(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
+/** `expr` as `b*x^2` (any sign of `b`, `Negate` handled the same way `linearCoeff` does)
+ * — the Gaussian's exponent shape (no scaling helper reuse: the argument is quadratic,
+ * not linear). */
+function quadraticCoeffSigned(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
   const isXSq = (o: BoxedExpression) => o.operator === "Power" && isSym(opAt(o, 0), name) && opAt(o, 1).re === 2;
   if (isXSq(expr)) return ce.One;
+  if (expr.operator === "Negate") {
+    const inner = quadraticCoeffSigned(ce, opAt(expr, 0), name);
+    return inner === undefined ? undefined : ce.function("Negate", [inner]).evaluate();
+  }
   if (expr.operator === "Multiply") {
     const ops = operandsOf(expr);
     const sqFactors = ops.filter(isXSq);
@@ -105,17 +110,23 @@ function atomicMellin(
   s: BoxedExpression,
 ): BoxedExpression | undefined {
   if (expr.operator === "Power" && isE(opAt(expr, 0))) {
+    // The exponent must read as `-a*x` (linear) or `-b*x^2` (Gaussian) for some
+    // provably positive `a`/`b`. A literal coefficient folds `Negate` away during
+    // canonicalization (`Exp(-2x)` boxes as `Power[E, Multiply[-2, x]]`, no `Negate`
+    // node at all) while a symbolic one keeps it (`Exp(-a x)` stays `Negate[Multiply[a,
+    // x]]`) — so this reads the SIGNED coefficient directly rather than requiring a
+    // `Negate` wrapper first, and checks `isNegative` on it either way.
     const exponent = opAt(expr, 1);
-    if (exponent.operator !== "Negate") return undefined;
-    const inner = opAt(exponent, 0);
-    const a = linearCoeff(ce, inner, x);
-    if (a !== undefined && a.isPositive === true) {
+    const k = linearCoeff(ce, exponent, x);
+    if (k !== undefined && k.isNegative === true) {
+      const a = ce.function("Negate", [k]).evaluate();
       return ce
         .function("Multiply", [ce.function("Gamma", [s]), ce.function("Power", [a, ce.function("Negate", [s])])])
         .evaluate();
     }
-    const b = quadraticCoeff(ce, inner, x);
-    if (b !== undefined && b.isPositive === true) {
+    const m = quadraticCoeffSigned(ce, exponent, x);
+    if (m !== undefined && m.isNegative === true) {
+      const b = ce.function("Negate", [m]).evaluate();
       const halfS = ce.function("Divide", [s, 2]);
       return ce
         .function("Multiply", [
@@ -231,22 +242,42 @@ export function matchMellin(
 
 // --- Inverse: InverseMellinTransform ---------------------------------------------------
 
-/** `expr = Power[b, sExpr]` with `sExpr` exactly the bare `s` (Wolfram's own scaled
- * pairs always come back with the scale in the denominator this way — confirmed by
- * probing `MellinTransform`/`InverseMellinTransform` directly). Strips it off `Divide`'s
- * denominator; `b = 1` (no scale) otherwise. */
+/** A `Power[b, Negate[s]]` factor — the scale term every base pair above produces on
+ * its own forward side (`b^(-s)`, `b` not containing `s`). */
+function isScalePower(expr: BoxedExpression, sName: string): boolean {
+  if (expr.operator !== "Power") return false;
+  const exponent = opAt(expr, 1);
+  return exponent.operator === "Negate" && isSym(opAt(exponent, 0), sName) && !hasVar(opAt(expr, 0), sName);
+}
+
+/** Pulls a `Power[b, Negate[s]]` factor out of `expr`'s top-level `Multiply` — or, for a
+ * `Divide`, out of its numerator's `Multiply` (where the base pairs above put it,
+ * alongside the rest of the numerator; the denominator, e.g. `Gamma(A)`, never carries
+ * one). `b = 1` (no scale) when there is no such factor. */
 function stripScale(
   ce: ComputeEngine,
   expr: BoxedExpression,
   sName: string,
 ): { readonly b: BoxedExpression; readonly rest: BoxedExpression } {
+  const pullFrom = (
+    mul: BoxedExpression,
+  ): { readonly b: BoxedExpression; readonly rest: BoxedExpression } | undefined => {
+    if (mul.operator !== "Multiply") return undefined;
+    const ops = operandsOf(mul);
+    const idx = ops.findIndex((o) => isScalePower(o, sName));
+    if (idx === -1) return undefined;
+    const b = opAt(ops[idx]!, 0);
+    const others = ops.filter((_, i) => i !== idx);
+    const rest = others.length === 1 ? others[0]! : ce.function("Multiply", others);
+    return { b, rest };
+  };
   if (expr.operator === "Divide") {
-    const den = opAt(expr, 1);
-    if (den.operator === "Power" && isSym(opAt(den, 1), sName) && !hasVar(opAt(den, 0), sName)) {
-      return { b: opAt(den, 0), rest: opAt(expr, 0) };
-    }
+    const pulled = pullFrom(opAt(expr, 0));
+    if (pulled !== undefined) return { b: pulled.b, rest: ce.function("Divide", [pulled.rest, opAt(expr, 1)]) };
+    return { b: ce.One, rest: expr };
   }
-  return { b: ce.One, rest: expr };
+  const pulled = pullFrom(expr);
+  return pulled ?? { b: ce.One, rest: expr };
 }
 
 /** `s`, or `s + c` (`c` not containing `s`) — the one shift shape this table supports
