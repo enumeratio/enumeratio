@@ -5,8 +5,7 @@
 //
 //   vp node packages/symbols/combinatorics/statistics/scripts/collect-naming.ts
 //
-// Read-only over reference/: unlike collect-entries.ts, this never calls writeEntries, so it
-// cannot delete a hand-written record.
+// Read-only over reference/.
 
 import { readEntries, writeFormatted } from "@enumeratio/entry/node";
 

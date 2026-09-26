@@ -70,28 +70,64 @@ export async function isWrittenYaml(path: string, options?: StringifyOptions): P
   return (await formatYaml(parseYaml(text), options)) === text;
 }
 
-/** Write `entry` as `dir/<Head>.yaml` and `dir/<Head>.examples.yaml` (removed when it has none). */
-export async function writeEntry(dir: string, entry: ReferenceEntry): Promise<void> {
+/** `entry` as the files it's written to, by name: `<Head>.yaml`, and `<Head>.examples.yaml`
+ * when it has examples. */
+export async function entryFiles(entry: ReferenceEntry): Promise<Map<string, string>> {
   const { examples, ...rest } = JSON.parse(JSON.stringify(entry)) as ReferenceEntry;
-  await writeYaml(join(dir, `${entry.name}.yaml`), rest);
-  const examplesPath = join(dir, `${entry.name}${EXAMPLES_SUFFIX}`);
-  if (examples.length > 0) await writeYaml(examplesPath, examples);
-  else rmSync(examplesPath, { force: true });
+  const files = new Map([[`${entry.name}.yaml`, await formatYaml(rest)]]);
+  if (examples.length > 0) files.set(`${entry.name}${EXAMPLES_SUFFIX}`, await formatYaml(examples));
+  return files;
 }
 
-/** Write `entries` into `dir`, one head each, and remove any other entry and examples there:
- * how a generator (statistics, domains) owns its package's reference directory. */
-export async function writeEntries(dir: string | URL, entries: readonly ReferenceEntry[]): Promise<void> {
+/** Write `entry` as `dir/<Head>.yaml` and `dir/<Head>.examples.yaml` (removed when it has none). */
+export async function writeEntry(dir: string, entry: ReferenceEntry): Promise<void> {
+  const files = await entryFiles(entry);
+  for (const [file, text] of files) writeFileSync(join(dir, file), text);
+  if (!files.has(`${entry.name}${EXAMPLES_SUFFIX}`))
+    rmSync(join(dir, `${entry.name}${EXAMPLES_SUFFIX}`), { force: true });
+}
+
+/** A generator's output: its entries, every head it owns (written or not) and the fields it
+ * writes. A head it owns but leaves out (one compute-engine now declares, say) has its record
+ * removed; any other field on its records (`formerly`, `references`, …) is curated by hand and
+ * kept. */
+export interface GeneratedEntries {
+  readonly entries: readonly ReferenceEntry[];
+  readonly owned: ReadonlySet<string>;
+  readonly fields: ReadonlySet<string>;
+}
+
+/** `entry` with the hand-curated fields of the record already in `dir`, after its own. */
+function withCurated(dir: string, entry: ReferenceEntry, fields: ReadonlySet<string>): ReferenceEntry {
+  if (!existsSync(join(dir, `${entry.name}.yaml`))) return entry;
+  const curated = Object.entries(readEntry(dir, entry.name)).filter(([key]) => !fields.has(key));
+  return { ...entry, ...Object.fromEntries(curated) };
+}
+
+/** What `writeEntries` would change in `dir`: each file it would write, rewrite or remove. */
+export async function staleEntries(dir: string | URL, { entries, owned, fields }: GeneratedEntries): Promise<string[]> {
   const path = typeof dir === "string" ? dir : dir.pathname;
+  const onDisk = (file: string): string | undefined =>
+    existsSync(join(path, file)) ? readFileSync(join(path, file), "utf8") : undefined;
+  const expected = new Map<string, string | undefined>();
+  for (const head of owned)
+    for (const suffix of [".yaml", EXAMPLES_SUFFIX]) expected.set(`${head}${suffix}`, undefined);
+  for (const entry of entries)
+    for (const [file, text] of await entryFiles(withCurated(path, entry, fields))) expected.set(file, text);
+  return [...expected].filter(([file, text]) => onDisk(file) !== text).map(([file]) => file);
+}
+
+/** Write a generator's entries into `dir`, one head each, and remove the records of heads it
+ * owns but left out, keeping their curated fields. Any other record there (a hand-written one)
+ * is never touched. */
+export async function writeEntries(dir: string | URL, { entries, owned, fields }: GeneratedEntries): Promise<void> {
+  const path = typeof dir === "string" ? dir : dir.pathname;
+  const stray = entries.filter((e) => !owned.has(e.name)).map((e) => e.name);
+  if (stray.length > 0) throw new Error(`writeEntries: not owned: ${stray.join(", ")}`);
   mkdirSync(path, { recursive: true });
   const heads = new Set(entries.map((e) => e.name));
-  for (const entry of entries) await writeEntry(path, entry);
-  for (const file of readdirSync(path)) {
-    const head = file.endsWith(EXAMPLES_SUFFIX)
-      ? file.slice(0, -EXAMPLES_SUFFIX.length)
-      : isEntryFile(file)
-        ? file.slice(0, -".yaml".length)
-        : undefined;
-    if (head !== undefined && !heads.has(head)) rmSync(join(path, file));
-  }
+  for (const entry of entries) await writeEntry(path, withCurated(path, entry, fields));
+  for (const head of owned)
+    if (!heads.has(head))
+      for (const suffix of [".yaml", EXAMPLES_SUFFIX]) rmSync(join(path, `${head}${suffix}`), { force: true });
 }
