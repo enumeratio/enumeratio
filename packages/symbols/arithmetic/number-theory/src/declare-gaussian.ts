@@ -30,6 +30,7 @@ import {
   primeOmegaGaussian,
   quotient,
 } from "./gaussian.ts";
+import { SUMMARIES } from "./summaries-data.ts";
 
 // compute-engine's integer heads, carried into ℤ[i] the way Wolfram carries them: a Gaussian
 // argument switches Mod, Quotient, GCD, LCM, ExtendedGCD and ModularInverse over on its own,
@@ -90,8 +91,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   // optional offset d shifting the remainder into [d, d+n); z/m rounded half-even for
   // Gaussian integers.
   ce.declare("Quotient", {
-    description:
-      "The integer quotient of m by n: ⌊(m−d)/n⌋, d defaulting to 0, for integers, rationals and reals; for Gaussian integers, m/n rounded to the nearest lattice point, ties to even.",
+    description: SUMMARIES.Quotient,
     signature: "(number, number, number?) -> number",
     broadcastable: true,
     evaluate: (ops: Ops) => {

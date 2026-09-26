@@ -12,6 +12,7 @@ import {
 import { gcd, mod } from "./arith.ts";
 import * as Z from "./integer-mod.ts";
 import type { IntegerMod } from "./integer-mod.ts";
+import { SUMMARIES } from "./summaries-data.ts";
 
 // The value head for ℤ/m and the ring it lives in, after Sage's Mod(a, m) / Zmod(m):
 //
@@ -82,7 +83,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
 
   // Evaluating the constructor normalises into [0, m), and declines a non-unit denominator.
   ce.declare(INTEGER_MOD, {
-    description: "a mod m as an element of ℤ/m; a rational a = u/v reads as u·v⁻¹.",
+    description: SUMMARIES.IntegerMod,
     signature: "(any, integer) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       // IntegerMod(IntegerMod(a, m), n) for n | m: the same class, read in the smaller ring
@@ -101,7 +102,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   });
 
   ce.declare(INTEGER_MOD_RING, {
-    description: "The ring ℤ/m, as the finite collection of its m residue classes.",
+    description: SUMMARIES.IntegerModRing,
     signature: "(integer) -> set",
     collection: {
       count: (ring) => {

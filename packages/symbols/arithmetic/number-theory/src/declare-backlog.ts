@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
 import { factorInteger, gcd as gcdBig, isqrt } from "@enumeratio/residues";
+import { SUMMARIES } from "./summaries-data.ts";
 
 // Heads new to compute-engine, from the Wolfram-sweep backlog (design/symbols.md §4, issue
 // #113). Every one stays unevaluated — never approximate — when it cannot answer: a
@@ -266,7 +267,7 @@ const MERSENNE_EXPONENTS: readonly bigint[] = [
 
 export function declareBacklog(ce: ComputeEngine): void {
   ce.declare("DivisorSum", {
-    description: "The sum of f(d) over the positive divisors d of n, optionally only those with cond(d) true.",
+    description: SUMMARIES.DivisorSum,
     signature: "(integer, function, function?) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const n = bigIntegerAt(ops[0]);
@@ -286,7 +287,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("IsCoprime", {
-    description: "Tests whether the arguments are pairwise relatively prime.",
+    description: SUMMARIES.IsCoprime,
     signature: "(number+) -> boolean",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -302,7 +303,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("IsPrimePower", {
-    description: "Tests whether n is a positive integer power of a single prime.",
+    description: SUMMARIES.IsPrimePower,
     signature: "(integer) -> boolean",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -316,7 +317,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("LiouvilleLambda", {
-    description: "λ(n) = (−1)^Ω(n), Ω the count of prime factors of n counted with multiplicity.",
+    description: SUMMARIES.LiouvilleLambda,
     signature: "(integer) -> integer",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -330,7 +331,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("MangoldtLambda", {
-    description: "Λ(n) = ln p when n is a power of the prime p, else 0.",
+    description: SUMMARIES.MangoldtLambda,
     signature: "(integer) -> number",
     broadcastable: true,
     // `N(MangoldtLambda(9))` doesn't re-derive a double from this handler's own evaluated
@@ -353,7 +354,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("MersennePrimeExponent", {
-    description: "The exponent p of the nth Mersenne prime 2ᵖ−1, from the known table.",
+    description: SUMMARIES.MersennePrimeExponent,
     signature: "(integer) -> integer",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -364,7 +365,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("PerfectNumber", {
-    description: "The nth perfect number, 2^(p−1)(2^p−1) for the nth known Mersenne prime exponent p.",
+    description: SUMMARIES.PerfectNumber,
     signature: "(integer) -> integer",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -376,7 +377,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("PartitionsQ", {
-    description: "q(n): the number of partitions of n into distinct parts.",
+    description: SUMMARIES.PartitionsQ,
     signature: "(integer) -> integer",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -387,7 +388,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("PowersRepresentations", {
-    description: "The ways to write n as a sum of k non-negative pth powers, as non-decreasing lists.",
+    description: SUMMARIES.PowersRepresentations,
     signature: "(integer, integer, integer) -> list",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const n = bigIntegerAt(ops[0]);
@@ -409,7 +410,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("RamanujanTau", {
-    description: "Ramanujan's τ: the coefficients of the discriminant form Δ(q)=q∏(1−qⁿ)²⁴.",
+    description: SUMMARIES.RamanujanTau,
     signature: "(integer) -> integer",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -421,7 +422,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("SquaresR", {
-    description: "r_d(n): the number of ways to write n as an ordered sum of d squares, signs counted.",
+    description: SUMMARIES.SquaresR,
     signature: "(integer, integer) -> integer",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const d = bigIntegerAt(ops[0]);
@@ -432,7 +433,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("EulerE", {
-    description: "The Euler numbers Eₙ, or — with x — the Euler polynomials Eₙ(x).",
+    description: SUMMARIES.EulerE,
     signature: "(value, expression?) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       if (ops[1] === undefined && ops[0]?.operator === "List") {
@@ -455,7 +456,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("FrobeniusSolve", {
-    description: "Every non-negative integer solution x of a·x = b, lexicographically.",
+    description: SUMMARIES.FrobeniusSolve,
     signature: "(list<integer>, integer) -> list",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const coeffs = operandsOf(ops[0]).map(bigIntegerAt);
@@ -476,7 +477,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   });
 
   ce.declare("FrobeniusNumber", {
-    description: "The largest integer that is not a non-negative integer combination of the given ones.",
+    description: SUMMARIES.FrobeniusNumber,
     signature: "(list<integer>) -> integer",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const values = operandsOf(ops[0]).map(bigIntegerAt);

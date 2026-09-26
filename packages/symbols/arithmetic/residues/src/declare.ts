@@ -4,6 +4,7 @@ import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
 import { powerModList } from "./roots.ts";
+import { SUMMARIES } from "./summaries-data.ts";
 
 // Wiring ℤ/m to compute-engine. Every head answers over bigints and stays unevaluated —
 // never approximate — when it cannot answer: no such residue, an unfactorable modulus, or
@@ -39,7 +40,7 @@ export function declareResidues(ce: ComputeEngine): void {
 
   // Wolfram's PowerModList[a, s/r, m]. Threads over lists, as Wolfram's does.
   ce.declare("PowerModList", {
-    description: "Every x in [0, m) with x^r ≡ a^s (mod m), for an exponent s/r; a rational a = u/v reads as u·v⁻¹.",
+    description: SUMMARIES.PowerModList,
     signature: "(number, number, number) -> list<number>",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -52,8 +53,7 @@ export function declareResidues(ce: ComputeEngine): void {
   // root — and a rational base. Integer forms go to the native handler unchanged.
   const nativePowerMod = nativeEvaluate(ce, "PowerMod");
   ce.declare("PowerMod", {
-    description:
-      "a^b mod m. A negative b inverts a; a rational b = s/r gives the least x with x^r ≡ a^s; a rational a = u/v reads as u·v⁻¹.",
+    description: SUMMARIES.PowerMod,
     signature: "(number, number, number) -> number",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
@@ -73,8 +73,7 @@ export function declareResidues(ce: ComputeEngine): void {
 
   // MultiplicativeOrder[k, n, {r₁, …}]: the least m > 0 with kᵐ ≡ some rᵢ — a discrete log.
   ce.declare("MultiplicativeOrder", {
-    description:
-      "The least m > 0 with k^m ≡ 1 (mod n); with a list of targets, the least m with k^m ≡ any of them — a discrete logarithm.",
+    description: SUMMARIES.MultiplicativeOrder,
     signature: "(any, integer?, list<integer>?) -> integer",
     evaluate: (ops: readonly BoxedExpression[]) => {
       // MultiplicativeOrder(IntegerMod(k, n)) is MultiplicativeOrder(k, n).
@@ -94,7 +93,7 @@ export function declareResidues(ce: ComputeEngine): void {
   });
 
   ce.declare("PrimitiveRootList", {
-    description: "Every primitive root of n, ascending — empty unless (ℤ/n)* is cyclic.",
+    description: SUMMARIES.PrimitiveRootList,
     signature: "(integer) -> list<integer>",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
