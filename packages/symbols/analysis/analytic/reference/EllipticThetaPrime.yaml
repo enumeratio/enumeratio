@@ -1,0 +1,14 @@
+name: EllipticThetaPrime
+domain: Special functions
+signature: EllipticThetaPrime(a, u, q)
+summary: The u-derivative of the Jacobi theta function, $\vartheta_a'(u,q) = \dfrac{\partial}{\partial u}\vartheta_a(u,q)$, $a=1,2,3,4$, Wolfram's nome convention $|q|<1$.
+signatures:
+  - call: EllipticThetaPrime(a, u, q)
+    description: the u-derivative of the a-th Jacobi theta function (a = 1, 2, 3, or 4), argument u, nome q.
+    library: "@enumeratio/analytic"
+details:
+  - Shares [[EllipticTheta]]'s nome convention, series-convergence rule, and decline conditions — see there.
+  - The termwise u-derivative of DLMF 20.2.1-20.2.4, verified against mpmath's `jtheta(a, u, q, derivative=1)` and a Wolfram kernel at complex u, complex q, and real negative q.
+  - Numeric only — a symbolic u or q stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+seeAlso:
+  - EllipticTheta

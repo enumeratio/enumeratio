@@ -28,6 +28,19 @@ test("GCD of two large (10000-bit-scale) integers is exact", () => {
   expect(run(["GCD", a, b])).toEqual({ num: shared.toString() });
 });
 
+test("GCD is exact either side of the Lehmer/Stein hybrid threshold", () => {
+  // Below LEHMER_THRESHOLD_BITS (Stein's binary GCD).
+  const smallShared = 2n ** 300n + 7n;
+  expect(run(["GCD", { num: String(smallShared * 13n) }, { num: String(smallShared * 17n) }])).toEqual({
+    num: smallShared.toString(),
+  });
+  // Well above it (Lehmer's algorithm) -- the bench's 10000-bit pair, at 10000 bits.
+  const bigShared = 2n ** 9990n + 91n;
+  expect(run(["GCD", { num: String(bigShared * 19n) }, { num: String(bigShared * 23n) }])).toEqual({
+    num: bigShared.toString(),
+  });
+});
+
 test("a genuinely Gaussian GCD call is unaffected", () => {
   const c = (re: number, im: number): unknown => ["Complex", re, im];
   // gcd(3+i, 1+3i) in Z[i]: the point isn't the specific associate, just that the call

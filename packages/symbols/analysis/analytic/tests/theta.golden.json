@@ -1,0 +1,450 @@
+[
+  {
+    "head": "EllipticTheta",
+    "args": [1, 0.3, 0.2],
+    "label": "theta1(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [0.35343054374762456, 0],
+    "wolfram": [0.35343054374762445, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [1, 0.3, 0.2],
+    "label": "theta1'(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [1.1780073710873242, 0],
+    "wolfram": [1.178007371087324, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [2, 0.3, 0.2],
+    "label": "theta2(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [1.3110057336174998, 0],
+    "wolfram": [1.3110057336174996, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [2, 0.3, 0.2],
+    "label": "theta2'(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [-0.5214016473721361, 0],
+    "wolfram": [-0.5214016473721361, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [3, 0.3, 0.2],
+    "label": "theta3(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [1.3312935581135865, 0],
+    "wolfram": [1.3312935581135867, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [3, 0.3, 0.2],
+    "label": "theta3'(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [-0.46365006240708034, 0],
+    "wolfram": [-0.4636500624070804, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [4, 0.3, 0.2],
+    "label": "theta4(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [0.6710255314957339, 0],
+    "wolfram": [0.6710255314957337, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [4, 0.3, 0.2],
+    "label": "theta4'(0.3,0.2)",
+    "tol": 1e-9,
+    "mpmath": [0.43978986166466444, 0],
+    "wolfram": [0.4397898616646645, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [1, 0, 0.5],
+    "label": "theta1(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [2.3248790545015315e-35, 0],
+    "wolfram": [0, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [1, 0, 0.5],
+    "label": "theta1'(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [0.5489785325603406, 0],
+    "wolfram": [0.5489785325603406, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [2, 0, 0.5],
+    "label": "theta2(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [2.1289312505130273, 0],
+    "wolfram": [2.128931250513028, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [2, 0, 0.5],
+    "label": "theta2'(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [0, 0],
+    "wolfram": [0, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [3, 0, 0.5],
+    "label": "theta3(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [2.128936827211877, 0],
+    "wolfram": [2.128936827211877, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [3, 0, 0.5],
+    "label": "theta3'(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [0, 0],
+    "wolfram": [0, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [4, 0, 0.5],
+    "label": "theta4(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [0.1211242080025805, 0],
+    "wolfram": [0.1211242080025805, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [4, 0, 0.5],
+    "label": "theta4'(0,0.5)",
+    "tol": 1e-9,
+    "mpmath": [0, 0],
+    "wolfram": [0, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [1, 1, -0.3],
+    "label": "theta1(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [0.8666879753632718, 0.8666879753632718],
+    "wolfram": [0.866687975363272, 0.866687975363272]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [1, 1, -0.3],
+    "label": "theta1'(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [0.8463420629117178, 0.8463420629117178],
+    "wolfram": [0.8463420629117178, 0.8463420629117178]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [2, 1, -0.3],
+    "label": "theta2(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [0.47246174780242167, 0.47246174780242167],
+    "wolfram": [0.4724617478024218, 0.4724617478024218]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [2, 1, -0.3],
+    "label": "theta2'(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [-0.9169366908491493, -0.9169366908491493],
+    "wolfram": [-0.9169366908491494, -0.9169366908491494]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [3, 1, -0.3],
+    "label": "theta3(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [1.239061275954273, 0],
+    "wolfram": [1.239061275954273, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [3, 1, -0.3],
+    "label": "theta3'(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [1.1401316489210318, 0],
+    "wolfram": [1.1401316489210318, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [4, 1, -0.3],
+    "label": "theta4(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [0.7397606682244263, 0],
+    "wolfram": [0.7397606682244261, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [4, 1, -0.3],
+    "label": "theta4'(1,-0.3)",
+    "tol": 1e-9,
+    "mpmath": [-1.0420501818127352, 0],
+    "wolfram": [-1.0420501818127352, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [1, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta1(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [0.3535193315286892, 0.1178636035434598],
+    "wolfram": [0.35351933152868914, 0.1178636035434598]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [1, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta1'(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [1.1798820003406776, -0.0015286598622396281],
+    "wolfram": [1.1798820003406774, -0.001528659862239628]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [2, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta2(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [1.3189083133593864, -0.052397308257536516],
+    "wolfram": [1.3189083133593862, -0.05239730825753652]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [2, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta2'(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [-0.5291341075828397, -0.1583842903474391],
+    "wolfram": [-0.5291341075828397, -0.1583842903474391]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [3, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta3(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [1.3380122452445202, -0.04669885738620095],
+    "wolfram": [1.3380122452445202, -0.046698857386200956]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [3, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta3'(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [-0.4736828076769382, -0.1348400728937009],
+    "wolfram": [-0.4736828076769382, -0.13484007289370092]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [4, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta4(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [0.6644948584549781, 0.0442486991477543],
+    "wolfram": [0.6644948584549781, 0.0442486991477543]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [4, ["Complex", 0.3, 0.1], 0.2],
+    "label": "theta4'(0.3+0.1i,0.2)",
+    "tol": 1e-9,
+    "mpmath": [0.447888203831478, 0.1310297871961861],
+    "wolfram": [0.4478882038314779, 0.13102978719618613]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [1, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta1(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [0.679025732824592, 0.7184037505217498],
+    "wolfram": [0.679025732824592, 0.7184037505217498]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [1, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta1'(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [1.1635040697104988, -0.33307950379447177],
+    "wolfram": [1.1635040697104988, -0.33307950379447193]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [2, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta2(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [1.482111803583082, 0.16355424959765608],
+    "wolfram": [1.4821118035830818, 0.1635542495976559]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [2, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta2'(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [-0.1443239740461413, -1.0751239180764987],
+    "wolfram": [-0.14432397404614122, -1.0751239180764989]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [3, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta3(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [1.5486889397050436, 0.14786223021467193],
+    "wolfram": [1.5486889397050436, 0.14786223021467199]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [3, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta3'(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [0.03683003851249454, -1.2356518745987153],
+    "wolfram": [0.036830038512494605, -1.2356518745987155]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [4, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta4(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [0.42403502395402, -0.12359811276367863],
+    "wolfram": [0.42403502395402, -0.12359811276367867]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [4, ["Complex", 0.5, 0.5], ["Complex", 0.1, 0.2]],
+    "label": "theta4'(0.5+0.5i,0.1+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [0.05944205608451258, 1.3501122946178208],
+    "wolfram": [0.05944205608451255, 1.350112294617821]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [1, 2, 0.6],
+    "label": "theta1(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [1.7291051264658694, 0],
+    "wolfram": [1.72910512646587, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [1, 2, 0.6],
+    "label": "theta1'(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [-2.9056592687798637, 0],
+    "wolfram": [-2.9056592687798646, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [2, 2, 0.6],
+    "label": "theta2(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [-0.19241299560138184, 0],
+    "wolfram": [-0.19241299560138178, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [2, 2, 0.6],
+    "label": "theta2'(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [-0.8721320591590851, 0],
+    "wolfram": [-0.872132059159085, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [3, 2, 0.6],
+    "label": "theta3(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [0.19438425010240812, 0],
+    "wolfram": [0.1943842501024081, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [3, 2, 0.6],
+    "label": "theta3'(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [0.8566962281489682, 0],
+    "wolfram": [0.8566962281489681, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [4, 2, 0.6],
+    "label": "theta4(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [1.729107884812714, 0],
+    "wolfram": [1.7291078848127142, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [4, 2, 0.6],
+    "label": "theta4'(2,0.6)",
+    "tol": 1e-9,
+    "mpmath": [-2.9056299779255736, 0],
+    "wolfram": [-2.905629977925575, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [1, 0.4, 0.85],
+    "label": "theta1(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [0.0009551488811003731, 0],
+    "wolfram": [0.0009551488811005307, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [1, 0.4, 0.85],
+    "label": "theta1'(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [0.013761909235491957, 0],
+    "wolfram": [0.013761909235492132, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [2, 0.4, 0.85],
+    "label": "theta2(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [1.6427056013700834, 0],
+    "wolfram": [1.6427056013700838, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [2, 0.4, 0.85],
+    "label": "theta2'(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [-8.08622407960212, 0],
+    "wolfram": [-8.086224079602115, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [3, 0.4, 0.85],
+    "label": "theta3(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [1.6427056013700834, 0],
+    "wolfram": [1.6427056013700838, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [3, 0.4, 0.85],
+    "label": "theta3'(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [-8.08622407960212, 0],
+    "wolfram": [-8.086224079602118, 0]
+  },
+  {
+    "head": "EllipticTheta",
+    "args": [4, 0.4, 0.85],
+    "label": "theta4(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [0.0009551492483435766, 0],
+    "wolfram": [0.0009551492483435876, 0]
+  },
+  {
+    "head": "EllipticThetaPrime",
+    "args": [4, 0.4, 0.85],
+    "label": "theta4'(0.4,0.85)",
+    "tol": 1e-9,
+    "mpmath": [0.01376190032869496, 0],
+    "wolfram": [0.013761900328695018, 0]
+  }
+]

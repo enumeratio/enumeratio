@@ -105,3 +105,41 @@ export const csin = (z: Cx): Cx => ({
   re: Math.sin(z.re) * Math.cosh(z.im),
   im: Math.cos(z.re) * Math.sinh(z.im),
 });
+
+/** cosh(x+iy) = cosh x·cos y + i·sinh x·sin y. */
+export const ccosh = (z: Cx): Cx => ({
+  re: Math.cosh(z.re) * Math.cos(z.im),
+  im: Math.sinh(z.re) * Math.sin(z.im),
+});
+
+/** sinh(x+iy) = sinh x·cos y + i·cosh x·sin y. */
+export const csinh = (z: Cx): Cx => ({
+  re: Math.sinh(z.re) * Math.cos(z.im),
+  im: Math.cosh(z.re) * Math.sin(z.im),
+});
+
+export const ctanh = (z: Cx): Cx => div(csinh(z), ccosh(z));
+
+/** 1/cosh(z), shared by JacobiCN/JacobiDN's m = 1 exact case (jacobi-elliptic.ts). */
+export const csech = (z: Cx): Cx => div(cx(1), ccosh(z));
+
+/**
+ * Principal-branch square root, `cpow(z, ½)` — cut on the negative reals. `z = 0` is
+ * special-cased: `cpow`'s `0 · (−∞)` inside `w·log(z)` would otherwise come back with a
+ * NaN imaginary part (`0 * -Infinity` in IEEE 754), even though `sqrt(0) = 0` plainly.
+ * Shared by carlson.ts and jacobi-elliptic.ts rather than each keeping its own copy.
+ */
+export const csqrt = (z: Cx): Cx => (z.re === 0 && z.im === 0 ? z : cpow(z, cx(0.5)));
+
+/**
+ * Principal-branch complex arcsine: asin(z) = −i·ln(iz + √(1−z²)) (Abramowitz & Stegun
+ * 4.4.37, principal branches throughout). Used by jacobi-elliptic.ts's descending
+ * Landen/AGM recursion (Abramowitz & Stegun 16.4), where `z` is a complex sine that stays
+ * well inside the unit disc for every case that recursion is verified on, so the branch
+ * cuts of `csqrt`/`clog` are never actually approached there.
+ */
+export const casin = (z: Cx): Cx => {
+  const iz = cx(-z.im, z.re); // i·z
+  const root = csqrt(sub(cx(1), mul(z, z)));
+  return mul(cx(0, -1), clog(add(iz, root)));
+};

@@ -1,0 +1,60 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiZN(0.3, 0.5))
+    out: 0.077_076_468_477_655_76
+  tex:
+    in: N(\mathrm{JacobiZN}(0.3, 0.5))
+    out: 0.077\,076\,468\,477\,655\,76
+  fullform:
+    in: N[JacobiZN[0.3, 0.5]]
+  wolfram:
+    in: N[JacobiZN[0.3, 0.5]]
+u-0-is-0-for-any-m:
+  epsil:
+    in: JacobiZN(0, m)
+    out: "0"
+  tex:
+    in: \mathrm{JacobiZN}(0, m)
+    out: "0"
+  fullform:
+    in: JacobiZN[0, m]
+m-0-is-0-for-any-u:
+  epsil:
+    in: JacobiZN(u, 0)
+    out: "0"
+  tex:
+    in: \mathrm{JacobiZN}(u, 0)
+    out: "0"
+  fullform:
+    in: JacobiZN[u, 0]
+a-parameter-close-to-its-m-1-boundary:
+  epsil:
+    in: N(JacobiZN(1.1, 0.9))
+    out: 0.354_712_200_199_871_26
+  tex:
+    in: N(\mathrm{JacobiZN}(1.1, 0.9))
+    out: 0.354\,712\,200\,199\,871\,26
+  fullform:
+    in: N[JacobiZN[1.1, 0.9]]
+  wolfram:
+    in: N[JacobiZN[1.1, 0.9]]
+m-outside-0-1-is-declined:
+  epsil:
+    in: N(JacobiZN(0.3, -0.5))
+    out: JacobiZN(0.3, -0.5)
+  tex:
+    in: N(\mathrm{JacobiZN}(0.3, -0.5))
+    out: \mathrm{JacobiZN}(0.3, -0.5)
+  fullform:
+    in: N[JacobiZN[0.3, -0.5]]
+  wolfram:
+    in: N[JacobiZN[0.3, -0.5]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiZN(u, m)
+    out: JacobiZN(u, m)
+  tex:
+    in: \mathrm{JacobiZN}(u, m)
+    out: \mathrm{JacobiZN}(u, m)
+  fullform:
+    in: JacobiZN[u, m]
