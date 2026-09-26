@@ -1,0 +1,72 @@
+probability-distribution-pdf-in-range:
+  epsil:
+    in: PDF(ProbabilityDistribution(2x, [x, 0, 1]), 1 / 2)
+    out: "1"
+  tex:
+    in: \operatorname{PDF}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack), \frac{1}{2})
+    out: "1"
+  fullform:
+    in: PDF[ProbabilityDistribution[Times[2, x], List[x, 0, 1]], Rational[1, 2]]
+probability-distribution-pdf-outside:
+  epsil:
+    in: PDF(ProbabilityDistribution(2x, [x, 0, 1]), 2)
+    out: "0"
+  tex:
+    in: \operatorname{PDF}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack), 2)
+    out: "0"
+  fullform:
+    in: PDF[ProbabilityDistribution[Times[2, x], List[x, 0, 1]], 2]
+probability-distribution-mean:
+  epsil:
+    in: Mean(ProbabilityDistribution(2x, [x, 0, 1]))
+    out: 2 / 3
+  tex:
+    in: \mathrm{mean}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack))
+    out: \frac{2}{3}
+  fullform:
+    in: Mean[ProbabilityDistribution[Times[2, x], List[x, 0, 1]]]
+probability-distribution-variance:
+  epsil:
+    in: Variance(ProbabilityDistribution(2x, [x, 0, 1]))
+    out: 1 / 18
+  tex:
+    in: \mathrm{Variance}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack))
+    out: \frac{1}{18}
+  fullform:
+    in: Variance[ProbabilityDistribution[Times[2, x], List[x, 0, 1]]]
+probability-distribution-cdf:
+  epsil:
+    in: CDF(ProbabilityDistribution(2x, [x, 0, 1]), 1 / 2)
+    out: 1 / 4
+  tex:
+    in: \operatorname{CDF}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack), \frac{1}{2})
+    out: \frac{1}{4}
+  fullform:
+    in: CDF[ProbabilityDistribution[Times[2, x], List[x, 0, 1]], Rational[1, 2]]
+probability-distribution-discrete-pdf:
+  epsil:
+    in: PDF(ProbabilityDistribution(1 / 4, [x, 1, 4, 1]), 2)
+    out: 1 / 4
+  tex:
+    in: \operatorname{PDF}(\mathrm{ProbabilityDistribution}(\frac{1}{4}, \bigl\lbrack x, 1, 4, 1\bigr\rbrack), 2)
+    out: \frac{1}{4}
+  fullform:
+    in: PDF[ProbabilityDistribution[Rational[1, 4], List[x, 1, 4, 1]], 2]
+probability-distribution-discrete-mean:
+  epsil:
+    in: Mean(ProbabilityDistribution(1 / 4, [x, 1, 4, 1]))
+    out: 5 / 2
+  tex:
+    in: \mathrm{mean}(\mathrm{ProbabilityDistribution}(\frac{1}{4}, \bigl\lbrack x, 1, 4, 1\bigr\rbrack))
+    out: \frac{5}{2}
+  fullform:
+    in: Mean[ProbabilityDistribution[Rational[1, 4], List[x, 1, 4, 1]]]
+probability-distribution-stays-unevaluated:
+  epsil:
+    in: Mean(ProbabilityDistribution(Sin(x ^ x), [x, 0, 1]))
+    out: Mean(ProbabilityDistribution(Sin(x ^ x), [x, 0, 1]))
+  tex:
+    in: \mathrm{mean}(\mathrm{ProbabilityDistribution}(\sin(x^{x}), \bigl\lbrack x, 0, 1\bigr\rbrack))
+    out: \mathrm{mean}(\mathrm{ProbabilityDistribution}(\sin(x^{x}), \bigl\lbrack x, 0, 1\bigr\rbrack))
+  fullform:
+    in: Mean[ProbabilityDistribution[Sin[Power[x, x]], List[x, 0, 1]]]

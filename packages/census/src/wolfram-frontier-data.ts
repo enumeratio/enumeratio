@@ -185,10 +185,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 26,
   },
   {
-    head: "ProbabilityDistribution",
-    uses: 26,
-  },
-  {
     head: "Blend",
     uses: 25,
   },
@@ -205,16 +201,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 24,
   },
   {
-    head: "ParameterMixtureDistribution",
-    uses: 23,
-  },
-  {
     head: "EstimatedDistribution",
     uses: 22,
-  },
-  {
-    head: "HistogramDistribution",
-    uses: 21,
   },
   {
     head: "Inactive",
@@ -377,10 +365,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 13,
   },
   {
-    head: "MultivariatePoissonDistribution",
-    uses: 13,
-  },
-  {
     head: "Options",
     uses: 13,
   },
@@ -454,14 +438,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InterpretationBox",
-    uses: 11,
-  },
-  {
-    head: "MultinomialDistribution",
-    uses: 11,
-  },
-  {
-    head: "MultinormalDistribution",
     uses: 11,
   },
   {

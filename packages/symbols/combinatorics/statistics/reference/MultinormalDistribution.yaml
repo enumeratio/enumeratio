@@ -1,0 +1,41 @@
+name: MultinormalDistribution
+domain: Statistics
+signature: MultinormalDistribution(mu, Sigma) | MultinormalDistribution(Sigma)
+summary: The multivariate normal with mean vector $\mu$ and covariance matrix $\Sigma$; the one-argument form defaults $\mu$ to the zero vector.
+signatures:
+  - call: MultinormalDistribution(mu, Sigma)
+    description: mean mu, covariance Sigma.
+    library: enumeratio-statistics
+  - call: MultinormalDistribution(Sigma)
+    description: mean the zero vector, covariance Sigma.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = (2\pi)^{-k/2} |\Sigma|^{-1/2} \exp\left(-\tfrac12 (x-\mu)^T \Sigma^{-1} (x-\mu)\right)$ — exact whenever $\Sigma$ is rational, via compute-engine's own native `Determinant`/`Inverse`/`Dot`, which stay exact over rationals.
+  - $Mean = \mu$. $Variance$ is the DIAGONAL of $\Sigma$ (a length-$k$ list) — Wolfram's own convention; the full matrix is `Covariance` (see below).
+  - '`Covariance` (compute-engine native over two collections) is widened to also accept a single `MultinormalDistribution`, answering $\Sigma$ itself.'
+  - RandomVariate draws $x = \mu + Lz$, $z$ iid standard normal, $L$ the (numeric) Cholesky factor of $\Sigma$ — the standard construction, seeded through the same `SeedRandom` stream every other distribution in this package uses.
+examples:
+  - id: multinormal-mean
+    expr: [Mean, [MultinormalDistribution, [List, 1, 2], [List, [List, 4, 0], [List, 0, 9]]]]
+    expected: [List, 1, 2]
+  - id: multinormal-mean-one-arg
+    expr: [Mean, [MultinormalDistribution, [List, [List, 1, 0], [List, 0, 1]]]]
+    expected: [List, 0, 0]
+    caption: the one-argument (Sigma-only) form defaults mu to the zero vector.
+  - id: multinormal-variance
+    expr: [Variance, [MultinormalDistribution, [List, 1, 2], [List, [List, 4, 0], [List, 0, 9]]]]
+    expected: [List, 4, 9]
+    caption: the diagonal of Sigma, not the full matrix.
+  - id: multinormal-covariance
+    expr: [Covariance, [MultinormalDistribution, [List, 1, 2], [List, [List, 4, 1], [List, 1, 9]]]]
+    expected: [List, [List, 4, 1], [List, 1, 9]]
+    caption: Covariance answers Sigma itself.
+  - id: multinormal-pdf-standard-origin
+    expr: [PDF, [MultinormalDistribution, [List, 0, 0], [List, [List, 1, 0], [List, 0, 1]]], [List, 0, 0]]
+    expected: [Divide, 1, [Multiply, 2, Pi]]
+    caption: the standard bivariate normal's peak density, 1/(2 pi).
+seeAlso:
+  - MultinomialDistribution
+  - NormalDistribution
+  - Covariance
+  - RandomVariate

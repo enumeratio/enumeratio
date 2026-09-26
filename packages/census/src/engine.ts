@@ -49,6 +49,7 @@ import {
   declareDistributions3,
   declareDistributions4,
   declareDistributions5,
+  declareDistributions6,
   declareStatistics,
 } from "@enumeratio/statistics/src";
 
@@ -83,6 +84,7 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
     declareDistributions3(ce);
     declareDistributions4(ce);
     declareDistributions5(ce);
+    declareDistributions6(ce);
     declareMaps(ce, domainTypes);
     declareRestricted(ce);
     declareRestrictions(ce, RESTRICTIONS, { skipDeclared: true });
