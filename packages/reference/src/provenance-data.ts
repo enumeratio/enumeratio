@@ -1089,13 +1089,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "Key",
-    provenance: "extension",
-    declared: "enumeratio-collections",
-    wolframAlias: "Key",
-    elsewhere: [],
-  },
-  {
     name: "KFreeIntegers",
     provenance: "unknown",
     declared: null,
@@ -1107,6 +1100,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "Key",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Key",
     elsewhere: [],
   },
   {
@@ -1607,6 +1607,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "ReIm",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "ReIm",
+    elsewhere: [],
+  },
+  {
     name: "Reap",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1618,13 +1625,6 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "RecurrenceTable",
-    elsewhere: [],
-  },
-  {
-    name: "ReIm",
-    provenance: "extension",
-    declared: "enumeratio-collections",
-    wolframAlias: "ReIm",
     elsewhere: [],
   },
   {
