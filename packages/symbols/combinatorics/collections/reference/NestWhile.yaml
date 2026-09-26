@@ -14,11 +14,6 @@ signatures:
     library: enumeratio-collections
 details:
   - Capped at 4096 applications of $f$ regardless of $max$ — see [[While]].
-examples:
-  - id: halve-while-even
-    expr: [NestWhile, [Function, [Divide, _1, 2]], 96, [Function, [Equal, [Mod, _1, 2], 0]]]
-    expected: 3
-    caption: halve while even, stopping at the first odd value
 seeAlso:
   - NestWhileList
   - While

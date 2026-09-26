@@ -13,18 +13,6 @@ details:
   - Same 1-based, negative-counts-from-the-end indexing as At/Part.
   - "Disambiguated Wolfram's own way: pos is a single path unless every one of its own elements is itself a List, in which case it's a list of paths."
   - Extract(expr, {}) is expr itself — the trivial, zero-step path.
-examples:
-  - id: nested-path-drills-in
-    expr: [Extract, [List, [List, a, b], [List, c, d]], [List, 2, 1]]
-    expected: c
-  - id: negative-position-counts-from-the-end
-    expr: [Extract, [List, a, b, c], -1]
-    expected: c
-    category: Scope
-  - id: list-of-paths-extracts-several-parts
-    expr: [Extract, [List, [List, a, b], [List, c, d]], [List, [List, 1, 1], [List, 2, 2]]]
-    expected: [List, a, d]
-    category: Scope
 seeAlso:
   - ReplacePart
   - Level

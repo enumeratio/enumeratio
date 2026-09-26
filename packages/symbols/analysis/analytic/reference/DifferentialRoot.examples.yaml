@@ -1,0 +1,16 @@
+- id: a-hand-built-first-order-ode
+  expr:
+    [
+      [
+        DifferentialRoot,
+        [
+          Function,
+          [List, [Equal, [Add, [Negate, [y, x]], [Apply, [Derivative, y, 1], x]], 0], [Equal, [y, 0], 1]],
+          y,
+          x,
+        ],
+      ],
+      2,
+    ]
+  expected: 7.389056098930649
+  caption: "$y' = y$, $y(0){=}1$: $y(2) = e^2$"

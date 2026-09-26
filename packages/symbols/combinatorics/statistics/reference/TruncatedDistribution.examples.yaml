@@ -1,0 +1,25 @@
+- id: truncated-uniform-pdf
+  expr:
+    [
+      PDF,
+      [TruncatedDistribution, [List, [Rational, 1, 4], [Rational, 3, 4]], [UniformDistribution, 0, 1]],
+      [Rational, 1, 2],
+    ]
+  expected: 2
+- id: truncated-uniform-pdf-outside
+  expr:
+    [
+      PDF,
+      [TruncatedDistribution, [List, [Rational, 1, 4], [Rational, 3, 4]], [UniformDistribution, 0, 1]],
+      [Rational, 1, 10],
+    ]
+  expected: 0
+- id: truncated-uniform-mean
+  expr: [Mean, [TruncatedDistribution, [List, [Rational, 1, 4], [Rational, 3, 4]], [UniformDistribution, 0, 1]]]
+  expected: [Rational, 1, 2]
+- id: truncated-normal-mean-symmetric
+  expr: [Mean, [TruncatedDistribution, [List, -1, 1], [NormalDistribution, 0, 1]]]
+  expected: 0
+- id: truncated-discrete-half-open-excludes-lower
+  expr: [PDF, [TruncatedDistribution, [List, 1, 4], [PoissonDistribution, 2]], 1]
+  expected: 0

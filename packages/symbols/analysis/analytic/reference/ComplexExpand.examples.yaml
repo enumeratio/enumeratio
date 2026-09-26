@@ -1,0 +1,32 @@
+- id: sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y
+  expr: [ComplexExpand, [Sin, [Add, x, [Multiply, ImaginaryUnit, y]]]]
+  expected: [Add, [Multiply, [Complex, 0, 1], [Cos, x], [Sinh, y]], [Multiply, [Sin, x], [Cosh, y]]]
+  caption: $\sin(x + iy) = \sin x\cosh y + i\cos x\sinh y$
+- id: polar-form-of-a-complex-exponential
+  expr: [ComplexExpand, [Exp, [Add, x, [Multiply, ImaginaryUnit, y]]]]
+  expected:
+    [
+      Add,
+      [Multiply, [Complex, 0, 1], [Sin, y], [Power, ExponentialE, x]],
+      [Multiply, [Cos, y], [Power, ExponentialE, x]],
+    ]
+  caption: Polar form of a complex exponential
+- id: complexexpand-x-plus-imaginaryunit-times-y-pow-2
+  expr: [ComplexExpand, [Power, [Add, x, [Multiply, ImaginaryUnit, y]], 2]]
+  expected: [Add, [Power, x, 2], [Negate, [Power, y, 2]], [Multiply, [Complex, 0, 2], x, y]]
+  category: Scope
+- id: complexexpand-abs-x-plus-imaginaryunit-times-y
+  expr: [ComplexExpand, [Abs, [Add, x, [Multiply, ImaginaryUnit, y]]]]
+  expected: [Sqrt, [Add, [Power, x, 2], [Power, y, 2]]]
+  category: Scope
+- id: wolfram-leaves-e-i-pi-5-alone-until-asked-this
+  expr: [ComplexExpand, [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 5]]]]
+  expected:
+    [
+      Add,
+      [Rational, 1, 4],
+      [Divide, [Sqrt, 5], 4],
+      [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]],
+    ]
+  category: Scope
+  caption: Wolfram leaves $e^{i\pi/5}$ alone until asked; this is the radical form compute-engine's Exp already produces

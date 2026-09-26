@@ -1,0 +1,21 @@
+- id: abs-of-a-real-variable
+  expr: [PiecewiseExpand, [Abs, x], [Element, x, RealNumbers]]
+  expected: [Piecewise, [List, [List, [Negate, x], [Less, x, 0]]], x]
+  caption: $|x| \to$ a two-branch [[Piecewise]], once $x$ is known real
+- id: sign-of-a-real-variable
+  expr: [PiecewiseExpand, [Sign, x], [Element, x, RealNumbers]]
+  expected: [Piecewise, [List, [List, -1, [Less, x, 0]], [List, 1, [Less, 0, x]]], 0]
+  caption: $\operatorname{sign}(x)$ expanded into its three branches
+- id: clip-of-a-real-variable
+  expr: [PiecewiseExpand, [Clip, x, [List, -1, 1]], [Element, x, RealNumbers]]
+  expected: [Piecewise, [List, [List, -1, [Less, x, -1]], [List, 1, [Less, 1, x]]], x]
+  caption: $\operatorname{Clip}(x,\{-1,1\})$ expanded into its three branches
+- id: without-a-realness-assumption-it-declines
+  expr: [PiecewiseExpand, [Abs, x]]
+  expected: [Abs, x]
+  category: Possible issues
+  caption: with no assumption that $x$ is real, `Abs` is left alone — same as Wolfram
+- id: max-of-two-real-variables
+  expr: [PiecewiseExpand, [Max, x, y], [And, [Element, x, RealNumbers], [Element, y, RealNumbers]]]
+  expected: [Piecewise, [List, [List, x, [LessEqual, y, x]]], y]
+  caption: $\max(x,y)$ expanded, once both are known real

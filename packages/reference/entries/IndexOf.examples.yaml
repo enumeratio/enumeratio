@@ -1,0 +1,31 @@
+- id: indexof-list-1-2-3-2
+  expr: [IndexOf, [List, 1, 2, 3], 2]
+  expected: 2
+- id: 0-signals-that-the-value-isn-t-present-since-0
+  expr: [IndexOf, [List, 1, 2, 3], 9]
+  expected: 0
+  caption: 0 signals that the value isn't present, since 0 is never a valid position
+- id: at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at
+  expr: [Equal, [At, [List, 10, 20, 30], [IndexOf, [List, 10, 20, 30], 20]], 20]
+  expected: True
+  category: Properties
+  caption: $At(c, IndexOf(c, v)) = v$ whenever v occurs in c. See [[At]]
+- id: indexof-reports-only-the-first-occurrence-see
+  expr: [IndexOf, [List, 1, 2, 3, 2], 2]
+  expected: 2
+  category: Possible issues
+  caption: IndexOf reports only the first occurrence; see [[Position]] for every one
+- id: only-the-first-of-several-occurrences-is
+  expr: [IndexOf, [List, a, b, a, a, b, c, b], b]
+  expected: 2
+  caption: Only the first of several occurrences is reported
+- id: the-value-can-itself-be-a-list
+  expr: [IndexOf, [List, [List, 1, 2], [List, 3, 4]], [List, 3, 4]]
+  expected: 2
+  category: Scope
+  caption: The value can itself be a list
+- id: indexof-stays-at-the-top-level-where-this-value
+  expr: [IndexOf, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b]
+  expected: 0
+  category: Possible issues
+  caption: IndexOf stays at the top level, where this value doesn't occur at all

@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(PellNumbers) = +\infty$, and $At(PellNumbers, 1) = P_0 = 0$.'
   - "OEIS A000129, starting exactly at its offset-0 term: $0, 1, 2, 5, 12, 29, 70, …$; strictly increasing from the start."
   - "Membership goes through [[Element]]: $Element(12, PellNumbers)$ is true, $Element(7, PellNumbers)$ is false."
-examples: []
 enumerate:
   expr: Take(PellNumbers, 20)
 seeAlso:

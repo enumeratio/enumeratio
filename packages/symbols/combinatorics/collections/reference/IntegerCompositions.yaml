@@ -9,10 +9,5 @@ signatures:
 details:
   - Count is $2^{n-1}$ for $n \ge 1$
   - Unlike [[IntegerPartitions]], order matters
-examples:
-  - id: 2-4
-    expr: [Count, [IntegerCompositions, 5]]
-    expected: 16
-    caption: $2^{4}$
 seeAlso:
   - IntegerPartitions

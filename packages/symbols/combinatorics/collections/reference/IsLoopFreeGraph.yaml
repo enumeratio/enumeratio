@@ -8,12 +8,5 @@ signatures:
     library: enumeratio-collections
 details:
   - Wolfram calls this `LoopFreeGraphQ`; this library uses the `Is…` spelling everywhere.
-examples:
-  - id: no-self-loop
-    expr: [IsLoopFreeGraph, [Graph, [List, [UndirectedEdge, 1, 2]]]]
-    expected: True
-  - id: a-self-loop
-    expr: [IsLoopFreeGraph, [Graph, [List, [UndirectedEdge, 1, 1]]]]
-    expected: False
 seeAlso:
   - IsSimpleGraph

@@ -1,0 +1,18 @@
+- id: matches-hypergeometric0f1-2-0-5-gamma-2
+  expr: [Hypergeometric0F1Regularized, 2, 0.5]
+  expected: 1.2717234563121365
+  caption: matches Hypergeometric0F1(2, 0.5) / Gamma(2) = Hypergeometric0F1(2, 0.5)
+- id: b-1-is-a-pole-of-gamma-but-the-regularized-form
+  expr: [Hypergeometric0F1Regularized, -1, 0.5]
+  expected: 0.1471797367221067
+  caption: $b = -1$ is a pole of $\Gamma$, but the regularized form is finite there
+- id: at-the-pole-b-1-under-n
+  expr: [N, [Hypergeometric0F1Regularized, -1, 2]]
+  expected: 3.7150355604584364
+  category: Basic
+  caption: At the pole $b = -1$ under N
+- id: exact-arguments-stay-unevaluated-n-gives-the
+  expr: [Hypergeometric0F1Regularized, -1, 2]
+  expected: [Hypergeometric0F1Regularized, -1, 2]
+  category: Possible issues
+  caption: Exact arguments stay unevaluated; N gives the number

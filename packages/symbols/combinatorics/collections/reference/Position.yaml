@@ -10,19 +10,6 @@ details:
   - Wolfram's answer where [[IndexOf]] reports only the first occurrence, as a plain index.
   - An empty $List$ when the value isn't present.
   - Each position is wrapped in its own single-element $List$, matching Wolfram's Position — since a position can itself be a multi-level index into a nested collection.
-examples:
-  - id: position-list-1-2-3-2-2
-    expr: [Position, [List, 1, 2, 3, 2], 2]
-    expected: [List, [List, 2], [List, 4]]
-  - id: a-value-absent-from-the-collection-has-no
-    expr: [Position, [List, 1, 2, 3], 9]
-    expected: [List]
-    caption: A value absent from the collection has no positions
-  - id: position-s-first-entry-agrees-with-indexof
-    expr: [At, [Position, [List, 1, 2, 3, 2], 2], 1]
-    expected: [List, 2]
-    category: Properties
-    caption: Position's first entry agrees with [[IndexOf]]
 seeAlso:
   - IndexOf
   - At

@@ -1,0 +1,9 @@
+- id: cfrac-1-1-cfrac-1-2-cfrac-1-3-cfrac-1-4-cfrac-15
+  expr: [ContinuedFractionK, 1, k, [Tuple, k, 1, 5]]
+  expected: [Rational, 157, 225]
+  caption: $\cfrac{1}{1 + \cfrac{1}{2 + \cfrac{1}{3 + \cfrac{1}{4 + \cfrac15}}}}$
+- id: the-infinite-all-ones-fraction-is-1-varphi-sqrt
+  expr: [ContinuedFractionK, 1, 1, [Tuple, k, 1, PositiveInfinity]]
+  expected: [Multiply, [Rational, 1, 2], [Add, -1, [Sqrt, 5]]]
+  category: Scope
+  caption: the infinite all-ones fraction is $1/\varphi$ — $(\sqrt5 - 1)/2$

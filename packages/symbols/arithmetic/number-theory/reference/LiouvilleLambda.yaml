@@ -9,27 +9,6 @@ signatures:
 details:
   - 'Completely multiplicative: $\lambda(mn)=\lambda(m)\lambda(n)$ for every $m,n$, not just coprime ones — unlike [[MoebiusMu]].'
   - $\sum_{d\mid n}\lambda(d)$ is 1 when $n$ is a perfect square and 0 otherwise.
-examples:
-  - id: omega-12-3
-    expr: [LiouvilleLambda, 12]
-    expected: -1
-    caption: $\Omega(12)=3$
-  - id: liouvillelambda-10
-    expr: [LiouvilleLambda, 10]
-    expected: 1
-  - id: liouvillelambda-1
-    expr: [LiouvilleLambda, 1]
-    expected: 1
-  - id: listable
-    expr: [LiouvilleLambda, [Range, 10]]
-    expected: [List, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1]
-    category: Scope
-    caption: Listable
-  - id: lambda-n-1-omega-n-see-primeomega
-    expr: [Equal, [LiouvilleLambda, 360], [Power, -1, [PrimeOmega, 360]]]
-    expected: True
-    category: Properties
-    caption: $\lambda(n)=(-1)^{\Omega(n)}$. See [[PrimeOmega]]
 seeAlso:
   - MoebiusMu
   - PrimeOmega

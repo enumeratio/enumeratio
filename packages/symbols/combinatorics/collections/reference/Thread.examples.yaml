@@ -1,0 +1,13 @@
+- id: equal-over-lists
+  expr: [Thread, [Equal, [List, 1, 2, 3], [List, 1, 5, 3]]]
+  expected: [List, [Equal, 1, 1], [Equal, 2, 5], [Equal, 3, 3]]
+- id: scalar-broadcast
+  expr: [Thread, [Equal, [List, 1, 2, 3], 1]]
+  expected: [List, [Equal, 1, 1], [Equal, 2, 1], [Equal, 3, 1]]
+  category: Scope
+  caption: A non-list operand is broadcast to every threaded call
+- id: custom-head
+  expr: [Thread, [f, [g, 1, 2], [g, 3, 4]], g]
+  expected: [g, [f, 1, 3], [f, 2, 4]]
+  category: Scope
+  caption: A second argument threads over a head other than List

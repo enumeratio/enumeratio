@@ -1,0 +1,22 @@
+- id: gamma-distribution-one-argument-defaults-scale
+  expr: [GammaDistribution, 2]
+  expected: [GammaDistribution, 2, 1]
+  category: Scope
+- id: gamma-pdf-exact
+  expr: [PDF, [GammaDistribution, 2, 2], 3]
+  expected: [Divide, 3, [Multiply, 4, [Gamma, 2], [Power, ExponentialE, [Rational, 3, 2]]]]
+  caption: $\approx 0.16734762011132237$, cross-checked against wolframscript's `N[PDF[GammaDistribution[2,2],3]]`
+- id: gamma-cdf-exact
+  expr: [CDF, [GammaDistribution, 2, 2], 3]
+  expected: [Add, 1, [Divide, -5, [Multiply, 2, [Power, ExponentialE, [Rational, 3, 2]]]]]
+  caption: $\approx 0.44217459962892543$, cross-checked against wolframscript's `N[CDF[GammaDistribution[2,2],3]] = 0.4421745996289253`
+- id: gamma-mean-exact
+  expr: [Mean, [GammaDistribution, 2, 2]]
+  expected: 4
+- id: gamma-variance-exact
+  expr: [Variance, [GammaDistribution, 2, 2]]
+  expected: 8
+- id: gamma-cdf-clamps-below-support
+  expr: [N, [CDF, [GammaDistribution, 2, 2], -1]]
+  expected: 0
+  category: Possible issues

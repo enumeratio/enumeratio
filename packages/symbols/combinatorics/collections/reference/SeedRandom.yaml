@@ -9,14 +9,5 @@ signatures:
 details:
   - "One generator per engine instance: [[RandomInteger]] draws from it, and the same seed always starts the same sequence."
   - Our generator is our own (a small deterministic PRNG), not Wolfram's Mersenne-twister-based one — a shared seed value does not draw the same numbers as Wolfram would.
-examples:
-  - id: seedrandom-returns-nothing
-    expr: [SeedRandom, 7]
-    expected: Nothing
-  - id: seedrandom-pins-the-next-draw
-    expr: [Last, [List, [SeedRandom, 7], [RandomInteger, 100]]]
-    expected: 1
-    category: Scope
-    caption: Seeding pins the next RandomInteger draw
 seeAlso:
   - RandomInteger

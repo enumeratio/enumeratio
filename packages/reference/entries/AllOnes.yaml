@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(AllOnes) = +\infty$, and $At(AllOnes, k) = 1$ for every $k$.'
   - OEIS A000012.
   - "A repeated-term collection: every position holds the same value, so $At$ still indexes by position while [[Element]] answers membership in the *set* of values -- $Element(1, AllOnes)$ is true, $Element(2, AllOnes)$ is false."
-examples: []
 enumerate:
   expr: Take(AllOnes, 20)
 seeAlso:

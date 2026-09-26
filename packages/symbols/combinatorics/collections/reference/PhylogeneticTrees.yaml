@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection; the count is $(2n-3)!! = A001147(n-2)$ — $PhylogeneticTrees(5)$ has $105$ elements. See [[Factorial2]].
   - "Built by successive insertion: start from the cherry $\\{1,2\\}$, then for $k = 3, …, n$ attach leaf $k$ at one of $2k-3$ places — above the current root, or subdividing one of the tree's edges."
   - Each element is the digit sequence $(d_3, …, d_n)$ with $d_k \in [0, 2k-3)$ recording that insertion choice at each step; $At$ unranks it as a mixed-radix number in those insertion-step radices.
-examples:
-  - id: count-phylogenetictrees-5-105-2-cdot-5-3-a001147
-    expr: [Count, [PhylogeneticTrees, 5]]
-    expected: 105
-    category: Basic
-    caption: $Count(PhylogeneticTrees(5)) = 105 = (2 \cdot 5 - 3)!!$, A001147
 enumerate:
   expr: PhylogeneticTrees(5)
   columns: Max

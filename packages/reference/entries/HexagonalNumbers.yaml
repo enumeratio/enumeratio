@@ -10,7 +10,6 @@ details:
   - OEIS A000384.
   - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(45, HexagonalNumbers)$ is true, $Element(44, HexagonalNumbers)$ is false.
   - Every hexagonal number is triangular ($H(n) = T(2n-1)$); the $k$-gonal case $k=6$ of [[PolygonalNumbers]].
-examples: []
 enumerate:
   expr: Take(HexagonalNumbers, 20)
 seeAlso:

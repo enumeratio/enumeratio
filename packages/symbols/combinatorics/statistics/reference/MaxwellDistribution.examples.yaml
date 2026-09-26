@@ -1,0 +1,12 @@
+- id: maxwell-pdf-exact
+  expr: [PDF, [MaxwellDistribution, 1], 2]
+  expected: [Divide, [Multiply, 4, [Sqrt, 2]], [Multiply, [Power, ExponentialE, 2], [Sqrt, Pi]]]
+- id: maxwell-cdf-exact
+  expr: [CDF, [MaxwellDistribution, 1], 2]
+  expected: [Add, 1, [Negate, [GammaRegularized, [Rational, 3, 2], 2]]]
+- id: maxwell-mean-exact
+  expr: [Mean, [MaxwellDistribution, 1]]
+  expected: [Divide, [Multiply, 2, [Sqrt, 2]], [Sqrt, Pi]]
+- id: maxwell-variance-exact
+  expr: [Variance, [MaxwellDistribution, 1]]
+  expected: [Divide, [Add, -8, [Multiply, 3, Pi]], Pi]

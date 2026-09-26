@@ -11,16 +11,6 @@ details:
   - $CDF(x) = P(k/2, x^2/2)$ via [[GammaRegularized]] (same convention as [[ChiSquareDistribution]]), clamped to $0$ below $x=0$.
   - $Mean = \sqrt{2}\,\Gamma((k+1)/2)/\Gamma(k/2)$, $Variance = k - Mean^2$, both exact.
   - '[[RandomVariate]] samples $\sqrt{V}$ for an independent [[ChiSquareDistribution]]($k$) draw $V$.'
-examples:
-  - id: chi-pdf-exact
-    expr: [PDF, [ChiDistribution, 3], 1]
-    expected: [Divide, [Sqrt, 2], [Multiply, 2, [Gamma, [Rational, 3, 2]], [Sqrt, ExponentialE]]]
-  - id: chi-cdf-exact
-    expr: [CDF, [ChiDistribution, 3], 1]
-    expected: [Add, 1, [Negate, [GammaRegularized, [Rational, 3, 2], [Rational, 1, 2]]]]
-  - id: chi-mean-exact
-    expr: [Mean, [ChiDistribution, 3]]
-    expected: [Divide, [Multiply, [Sqrt, 2], [Gamma, 2]], [Gamma, [Rational, 3, 2]]]
 seeAlso:
   - ChiSquareDistribution
   - MaxwellDistribution

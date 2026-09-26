@@ -1,0 +1,12 @@
+- id: binom-5-2
+  expr: [Count, [KSubsets, 5, 2]]
+  expected: 10
+  caption: $\binom{5}{2}$
+- id: ksubsets-5-2-list-1
+  expr: [At, [KSubsets, 5, 2], 1]
+  expected: [List, 1, 2]
+- id: colex-not-lex-lexicographic-order-would-give-1-4
+  expr: [At, [KSubsets, 5, 2], 3]
+  expected: [List, 2, 3]
+  caption: colex, not lex — lexicographic order would give $\{1,4\}$
+  category: Properties

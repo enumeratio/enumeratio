@@ -1,0 +1,12 @@
+- id: one-over-s-squared
+  expr: [InverseLaplaceTransform, [Power, s, -2], s, t]
+  expected: t
+  caption: $\mathcal{L}^{-1}\{1/s^2\} = t$
+- id: one-over-s-minus-a
+  expr: [InverseLaplaceTransform, [Power, [Add, s, [Negate, a]], -1], s, t]
+  expected: [Power, ExponentialE, [Multiply, a, t]]
+  caption: $\mathcal{L}^{-1}\{1/(s-a)\} = e^{at}$
+- id: s-over-s-squared-plus-a-squared
+  expr: [InverseLaplaceTransform, [Divide, s, [Add, [Power, s, 2], [Power, a, 2]]], s, t]
+  expected: [Cos, [Multiply, a, t]]
+  caption: $\mathcal{L}^{-1}\{s/(s^2+a^2)\} = \cos(at)$

@@ -25,8 +25,9 @@ test("every example has an implementations entry", () => {
 
 test("every record is what the writer would write", async () => {
   const drift: string[] = [];
-  for (const { entryPath } of loaded.heads)
-    if (!(await isWrittenYaml(entryPath))) drift.push(entryPath.slice(PACKAGES.length));
+  for (const { entryPath, examplesPath } of loaded.heads)
+    for (const path of examplesPath ? [entryPath, examplesPath] : [entryPath])
+      if (!(await isWrittenYaml(path))) drift.push(path.slice(PACKAGES.length));
   expect(drift, "run `node packages/reference/scripts/format-records.ts`").toEqual([]);
 });
 

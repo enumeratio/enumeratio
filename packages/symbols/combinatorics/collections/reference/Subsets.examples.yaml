@@ -1,0 +1,8 @@
+- id: 2-4-subsets
+  expr: [Count, [Subsets, 4]]
+  expected: 16
+  caption: $2^4$ subsets
+- id: the-empty-subset
+  expr: [At, [Subsets, 3], 1]
+  expected: [List]
+  caption: the empty subset

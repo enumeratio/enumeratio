@@ -1,0 +1,14 @@
+- id: ijk-1
+  expr: [NonCommutativeMultiply, f_1, f_2, [Multiply, f_1, f_2]]
+  expected: -1
+  caption: $ijk = -1$
+- id: k-in-h
+  expr: [Element, [Multiply, f_1, f_2], Quaternions]
+  expected: True
+  caption: $k \in \mathbb{H}$
+  category: Properties
+- id: a-multicomplex-unit-is-not-a-quaternion
+  expr: [Element, i_1, Quaternions]
+  expected: False
+  caption: a multicomplex unit is not a quaternion
+  category: Properties

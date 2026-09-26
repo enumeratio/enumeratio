@@ -9,21 +9,6 @@ signatures:
 details:
   - Wolfram calls this `ConnectedGraphQ`; this library uses the `Is…` spelling everywhere.
   - "Tests WEAK connectivity, unlike [[ConnectedComponents]] (which respects direction): a directed 2-cycle plus a downstream vertex is one weakly-connected piece even though it has two strongly-connected components — see [[ConnectedComponents]]'s own example."
-examples:
-  - id: petersen-is-connected
-    expr: [IsConnectedGraph, [PetersenGraph]]
-    expected: True
-  - id: two-disjoint-edges-are-not-connected
-    expr: [IsConnectedGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]
-    expected: False
-  - id: weakly-connected-despite-two-scc
-    expr:
-      [
-        IsConnectedGraph,
-        [Graph, [List, 1, 2, 3], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1], [DirectedEdge, 2, 3]]],
-      ]
-    expected: True
-    caption: One weakly-connected piece, even though ConnectedComponents finds two
 seeAlso:
   - ConnectedComponents
   - IsTreeGraph

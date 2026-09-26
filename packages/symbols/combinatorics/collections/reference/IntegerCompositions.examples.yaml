@@ -1,0 +1,4 @@
+- id: 2-4
+  expr: [Count, [IntegerCompositions, 5]]
+  expected: 16
+  caption: $2^{4}$

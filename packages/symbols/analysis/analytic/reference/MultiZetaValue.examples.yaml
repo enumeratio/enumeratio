@@ -1,0 +1,18 @@
+- id: zeta-2-2-frac-34-zeta-4
+  expr: [N, [MultiZetaValue, 2, 2]]
+  expected: 0.8117424252833536
+  caption: $\zeta(2,2) = \tfrac34\zeta(4)$
+- id: zeta-3-3-frac-12-zeta-3-2-zeta-6
+  expr: [N, [MultiZetaValue, 3, 3]]
+  expected: 0.2137988682245925
+  caption: $\zeta(3,3) = \tfrac12(\zeta(3)^2-\zeta(6))$
+- id: s-1-2-stays-symbolic-outside-the-depth-2-both
+  expr: [MultiZetaValue, 1, 2]
+  expected: [MultiZetaValue, 1, 2]
+  category: Possible issues
+  caption: $s_1 < 2$ stays symbolic — outside the depth-2, both-weights-$\ge2$ scope
+- id: zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact
+  expr: [Chop, [Subtract, [N, [MultiZetaValue, 2, 2]], [Multiply, 0.75, [N, [Zeta, 4]]]]]
+  expected: 0
+  category: Properties
+  caption: $\zeta(2, 2) = \tfrac34\zeta(4)$, one of Fungrim's exact closed forms

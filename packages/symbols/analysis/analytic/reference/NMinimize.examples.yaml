@@ -1,0 +1,10 @@
+- id: a-quartic-with-two-symmetric-minima
+  expr:
+    [NMinimize, [List, [Subtract, [Power, x, 4], [Power, x, 2]], [And, [GreaterEqual, x, -2], [LessEqual, x, 2]]], x]
+  expected: [List, -0.25, [List, [Rule, x, -0.707106778558382]]]
+  caption: x^4 - x^2 has two symmetric global minima on [-2, 2] -- one is found
+- id: declines-without-a-bounded-constraint
+  expr: [NMinimize, [Power, x, 2], x]
+  expected: [NMinimize, [Power, x, 2], x]
+  category: Possible issues
+  caption: Declines -- no bounded interval to search

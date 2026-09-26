@@ -1,0 +1,12 @@
+- id: pareto-pdf-exact
+  expr: [PDF, [ParetoDistribution, 1, 3], 2]
+  expected: [Rational, 3, 16]
+- id: pareto-cdf-exact
+  expr: [CDF, [ParetoDistribution, 1, 3], 2]
+  expected: [Rational, 7, 8]
+- id: pareto-mean-exact
+  expr: [Mean, [ParetoDistribution, 1, 3]]
+  expected: [Rational, 3, 2]
+- id: pareto-variance-exact
+  expr: [Variance, [ParetoDistribution, 1, 3]]
+  expected: [Rational, 3, 4]

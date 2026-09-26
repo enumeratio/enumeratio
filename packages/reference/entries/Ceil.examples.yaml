@@ -1,0 +1,100 @@
+- id: ceil-7-over-2
+  expr: [Ceil, [Rational, 7, 2]]
+  expected: 4
+- id: ceil-3p2
+  expr: [Ceil, 3.2]
+  expected: 4
+- id: ceil-3p7
+  expr: [Ceil, 3.7]
+  expected: 4
+  role: test
+- id: integers-pass-through-unchanged
+  expr: [Ceil, 5]
+  expected: 5
+  caption: Integers pass through unchanged
+- id: threads-element-wise-over-a-list
+  expr: [Ceil, [List, 1.2, -1.2, 3.7]]
+  expected: [List, 2, -1, 4]
+  caption: Threads element-wise over a list
+- id: lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer
+  expr: [Equal, [Ceil, [Rational, 7, 2]], [Add, [Floor, [Rational, 7, 2]], 1]]
+  expected: True
+  category: Properties
+  caption: $\lceil x \rceil = \lfloor x \rfloor + 1$ for non-integer x. See [[Floor]]
+- id: floor-and-ceil-agree-exactly-on-integers
+  expr: [Equal, [Ceil, 5], [Floor, 5]]
+  expected: True
+  category: Properties
+  caption: Floor and Ceil agree exactly on integers
+- id: how-many-5-seat-vans-are-needed-to-carry-17
+  expr: [Ceil, [Divide, 17, 5]]
+  expected: 4
+  category: Applications
+  caption: How many 5-seat vans are needed to carry 17 people
+- role: test
+  id: a-zero-divisor-inside-ceil
+  expr: [Ceil, [Divide, 16, 0]]
+  expected: [Ceil, ComplexInfinity]
+  category: Possible issues
+  caption: A division by zero inside Ceil stays symbolic around ComplexInfinity
+- id: rounds-toward-infty-not-toward-0-ceil-3-7-is-3
+  expr: [Ceil, -3.7]
+  expected: -3
+  category: Possible issues
+  caption: 'Rounds toward $+\infty$, not toward 0: ceil(-3.7) is -3, not -4'
+- id: nan-propagates-rather-than-erroring
+  expr: [Ceil, NaN]
+  expected: NaN
+  category: Possible issues
+  caption: NaN propagates rather than erroring
+- id: ceil-2p4
+  expr: [Ceil, 2.4]
+  expected: 3
+- id: ceil-2p6
+  expr: [Ceil, 2.6]
+  expected: 3
+- id: stays-symbolic
+  expr: [Ceil, x]
+  expected: [Ceil, x]
+  category: Scope
+  caption: Stays symbolic
+- id: exact-radicals-are-decided-numerically
+  expr: [Ceil, [Sqrt, 50]]
+  expected: 8
+  category: Scope
+  caption: Exact radicals are decided numerically
+- id: evaluates-at-an-exact-constant-lceil-pi-rceil-4
+  expr: [Ceil, Pi]
+  expected: 4
+  category: Scope
+  caption: 'Evaluates at an exact constant: $\lceil\pi\rceil = 4$'
+- id: a-second-argument-rounds-up-to-a-multiple-of-it
+  expr: [Ceil, 226, 10]
+  expected: 230
+  category: Scope
+  caption: A second argument rounds up to a multiple of it -- the next multiple of 10 above 226
+- id: the-step-needn-t-be-an-integer-3-5-cdot-lceil-10
+  expr: [Ceil, -10.3, 3.5]
+  expected: -7
+  category: Scope
+  caption: "...the step needn't be an integer: $3.5 \\cdot \\lceil -10.3/3.5 \\rceil = -7$"
+- id: nor-rational-2-pi-e-approx-3-57-rounds-up-to-the
+  expr: [Ceil, [Subtract, [Multiply, 2, Pi], ExponentialE], [Rational, 5, 4]]
+  expected: [Rational, 15, 4]
+  category: Scope
+  caption: '...nor rational: $2\pi - e \approx 3.57$ rounds up to the multiple $15/4$ of $5/4$'
+- id: rounds-the-real-and-imaginary-parts-up
+  expr: [Ceil, [Complex, 5.37, -1.3]]
+  expected: [Complex, 6, -1]
+  category: Scope
+  caption: Rounds the real and imaginary parts up separately
+- id: ten-bits-are-enough-to-number-1000-items-lceil
+  expr: [Ceil, [Log, 1000, 2]]
+  expected: 10
+  category: Applications
+  caption: Ten bits are enough to number 1000 items, $\lceil \log_2 1000 \rceil$
+- role: test
+  id: idempotent-lceil-lceil-x-rceil-rceil
+  expr: [Ceil, [Ceil, x]]
+  expected: [Ceil, x]
+  caption: 'Idempotent: $\lceil\lceil x \rceil\rceil = \lceil x \rceil$'

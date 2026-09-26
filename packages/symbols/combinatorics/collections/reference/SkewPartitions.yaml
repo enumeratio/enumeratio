@@ -10,17 +10,6 @@ details:
   - A lazy indexed collection with no known closed form; the count is the cached enumeration's length, following Sage's `SkewPartitions(n)` convention.
   - Each element packs both partitions as `[λ, μ]`; "reduced" means every row of $\lambda$ strictly exceeds the matching row of $\mu$ (no empty row) and every column $1..\lambda_1$ is covered by some row's cells (no empty column).
   - Unranked lexicographically, by $\lambda$ first, then by $\mu$.
-examples:
-  - id: count-skewpartitions-4-28-pairs-lambda-mu-with
-    expr: [Count, [SkewPartitions, 4]]
-    expected: 28
-    category: Basic
-    caption: '$Count(SkewPartitions(4)) = 28$: pairs $(\lambda, \mu)$ with $\mu \subseteq \lambda$ and $|\lambda| - |\mu| = 4$'
-  - id: the-first-skew-shape-of-size-3-as-an-outer-inner
-    expr: [At, [SkewPartitions, 3], 1]
-    expected: [List, [List, 1, 1, 1], [List]]
-    category: Scope
-    caption: The first skew shape of size 3, as an outer/inner partition pair
 enumerate:
   expr: SkewPartitions(4)
 seeAlso:

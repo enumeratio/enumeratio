@@ -1,0 +1,5 @@
+- id: count-noncrossingpermutations-5-105
+  expr: [Count, [NonCrossingPermutations, 5]]
+  expected: 105
+  category: Basic
+  caption: $Count(NonCrossingPermutations(5)) = 105$

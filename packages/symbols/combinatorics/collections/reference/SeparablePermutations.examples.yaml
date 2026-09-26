@@ -1,0 +1,5 @@
+- id: count-separablepermutations-5-90-the-large
+  expr: [Count, [SeparablePermutations, 5]]
+  expected: 90
+  category: Basic
+  caption: $Count(SeparablePermutations(5)) = 90$, the large Schröder numbers A006318

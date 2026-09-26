@@ -1,0 +1,12 @@
+- id: transformed-affine-mean
+  expr: [Mean, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]
+  expected: 3
+- id: transformed-affine-variance
+  expr: [Variance, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]
+  expected: 4
+- id: transformed-negative-affine-cdf
+  expr: [CDF, [TransformedDistribution, [Negate, x], [Distributed, x, [NormalDistribution, 0, 1]]], 0]
+  expected: [Rational, 1, 2]
+- id: transformed-chisquare-mean
+  expr: [Mean, [TransformedDistribution, [Power, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]]
+  expected: 1

@@ -6,15 +6,6 @@ signatures:
   - call: VertexCount(g)
     description: $|V(g)|$.
     library: enumeratio-collections
-examples:
-  - id: vertex-count-of-k4
-    expr: [VertexCount, [CompleteGraph, 4]]
-    expected: 4
-    caption: $K_4$ has 4 vertices
-  - id: vertex-count-of-a-triangle
-    expr: [VertexCount, [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]]
-    expected: 3
-    role: test
 seeAlso:
   - VertexList
   - EdgeCount

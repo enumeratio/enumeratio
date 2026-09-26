@@ -1,0 +1,120 @@
+- id: product-list-1-2-3-4
+  expr: [Product, [List, 1, 2, 3, 4]]
+  expected: 24
+- id: the-empty-product-is-1-by-convention-matching
+  expr: [Product, [List]]
+  expected: 1
+  caption: The empty product is 1 by convention, matching [[Factorial]] of 0
+- id: the-product-of-1-through-n-is-n-see-factorial
+  expr: [Equal, [Product, [List, 1, 2, 3, 4]], [Factorial, 4]]
+  expected: True
+  category: Properties
+  caption: The product of $1$ through $n$ is $n!$. See [[Factorial]]
+- id: range-stays-lazy-on-its-own-but-product-forces
+  expr: [Product, [Range, 1, 6]]
+  expected: 720
+  category: Applications
+  caption: "[[Range]] stays lazy on its own, but Product forces it to compute $6!$"
+- id: prod-i-1-6-i-2-6-2
+  expr: [Product, [Power, i, 2], [Tuple, i, 1, 6]]
+  expected: 518400
+  caption: $\prod_{i=1}^{6} i^2 = (6!)^2$
+- id: a-symbolic-upper-limit-prod-i-1-n-i-2-n-2
+  expr: [Product, [Power, i, 2], [Tuple, i, 1, n]]
+  expected: [Power, [Factorial, n], 2]
+  caption: 'A symbolic upper limit: $\prod_{i=1}^{n} i^2 = (n!)^2$'
+- id: a-symbolic-upper-limit-prod-k-1-n-k-n-see
+  expr: [Product, k, [Tuple, k, 1, n]]
+  expected: [Factorial, n]
+  category: Scope
+  caption: 'A symbolic upper limit: $\prod_{k=1}^{n} k = n!$. See [[Factorial]]'
+- id: exponents-add-prod-k-1-n-x-k-x-n-n-1-2
+  expr: [Product, [Power, x, k], [Tuple, k, 1, n]]
+  expected: [Power, x, [Multiply, [Rational, 1, 2], n, [Add, n, 1]]]
+  category: Scope
+  caption: 'Exponents add: $\prod_{k=1}^{n} x^k = x^{n(n+1)/2}$'
+- id: a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1
+  expr: [Product, [Divide, [Add, k, 1], k], [Tuple, k, 1, n]]
+  expected: [Add, n, 1]
+  category: Scope
+  caption: 'A telescoping product: $\prod_{k=1}^{n} \frac{k+1}{k} = n+1$'
+- id: an-undefined-function-expanded-term-by-term
+  expr: [Product, [f, i], [Tuple, i, 1, 4]]
+  expected: [Multiply, [f, 1], [f, 2], [f, 3], [f, 4]]
+  category: Scope
+  caption: An undefined function, expanded term by term
+- id: a-step-of-2-takes-every-other-index
+  expr: [Product, [f, i], [Tuple, i, 1, 4, 2]]
+  expected: [Multiply, [f, 1], [f, 3]]
+  category: Scope
+  caption: A step of 2 takes every other index
+- id: over-an-explicit-list-of-values
+  expr: [Product, [f, i], [Element, i, [List, a, b, c]]]
+  expected: [Multiply, [f, a], [f, b], [f, c]]
+  category: Scope
+  caption: Over an explicit list of values
+- id: a-polynomial-with-roots-1-2-and-3
+  expr: [Product, [Subtract, x, k], [Tuple, k, 1, 3]]
+  expected: [Multiply, [Add, x, -3], [Add, x, -2], [Add, x, -1]]
+  category: Scope
+  caption: A polynomial with roots 1, 2 and 3
+- id: a-double-product-over-a-3-times-3-grid
+  expr: [Product, [Add, i, j], [Tuple, i, 1, 3], [Tuple, j, 1, 3]]
+  expected: 172800
+  category: Scope
+  caption: A double product over a $3 \times 3$ grid
+- id: an-inner-limit-that-depends-on-the-outer-index-a
+  expr: [Product, [Add, i, j], [Tuple, i, 1, 3], [Tuple, j, 1, i]]
+  expected: 2880
+  category: Scope
+  caption: An inner limit that depends on the outer index, a triangular product
+- id: a-symbolic-triangular-product-prod-i-1-p-prod-j
+  expr: [Product, [Power, 2, [Add, i, j]], [Tuple, i, 1, p], [Tuple, j, 1, i]]
+  expected: [Power, 2, [Multiply, [Rational, 1, 2], p, [Power, [Add, p, 1], 2]]]
+  category: Scope
+  caption: 'A symbolic triangular product: $\prod_{i=1}^{p}\prod_{j=1}^{i} 2^{i+j} = 2^{p(p+1)^2/2}$'
+- id: an-infinite-product-with-a-closed-form-prod-k-1
+  expr: [Product, [Add, 1, [Divide, 1, [Power, k, 2]]], [Tuple, k, 1, PositiveInfinity]]
+  expected: [Divide, [Sinh, Pi], Pi]
+  category: Scope
+  caption: 'An infinite product with a closed form: $\prod_{k=1}^{\infty} (1 + 1/k^2) = \frac{\sinh \pi}{\pi}$'
+- id: an-infinite-telescoping-product-prod-k-2-infty-1
+  expr: [Product, [Subtract, 1, [Divide, 1, [Power, k, 2]]], [Tuple, k, 2, PositiveInfinity]]
+  expected: [Rational, 1, 2]
+  category: Scope
+  caption: 'An infinite telescoping product: $\prod_{k=2}^{\infty} (1 - 1/k^2) = \frac{1}{2}$'
+- id: prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet
+  expr: [Product, [Subtract, 1, [Divide, 1, [Power, i, 4]]], [Tuple, i, 2, PositiveInfinity]]
+  expected: [Divide, [Sinh, Pi], [Multiply, 4, Pi]]
+  category: Scope
+  caption: 'A quartic infinite product, via a Gamma product over a conjugate pair of Gaussian-integer roots $\pm i$ alongside the real roots $\pm 1$: $\prod_{i=2}^{\infty} (1 - 1/i^4) = \frac{\sinh \pi}{4\pi}$'
+- id: exact-rationals-in-a-collection
+  expr: [Product, [List, [Rational, 1, 2], [Rational, 2, 3], [Rational, 3, 4]]]
+  expected: [Rational, 1, 4]
+  category: Scope
+  caption: Exact rationals in a collection
+- id: symbolic-elements
+  expr: [Product, [List, a, b, c]]
+  expected: [Multiply, a, b, c]
+  category: Scope
+  caption: Symbolic elements
+- id: the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2
+  expr:
+    [
+      Product,
+      [Divide, [Multiply, 4, [Power, k, 2]], [Subtract, [Multiply, 4, [Power, k, 2]], 1]],
+      [Tuple, k, 1, PositiveInfinity],
+    ]
+  expected: [Multiply, [Rational, 1, 2], Pi]
+  category: Neat examples
+  caption: 'The Wallis product, via the same Gamma-product method: $\prod_{k=1}^{\infty} \frac{4k^2}{4k^2-1} = \frac{\pi}{2}$'
+- id: an-asymmetric-infinite-product-n-n-3-n-1-n-2
+  expr:
+    [
+      Product,
+      [Divide, [Multiply, n, [Add, n, 3]], [Multiply, [Add, n, 1], [Add, n, 2]]],
+      [Tuple, n, 1, PositiveInfinity],
+    ]
+  expected: [Rational, 1, 3]
+  category: Neat examples
+  caption: 'Roots need not pair off as $\pm r$ -- $0$ and $-3$ each close on their own, straight to a factorial: $\prod_{n=1}^{\infty} \frac{n(n+3)}{(n+1)(n+2)} = \frac{1}{3}$'

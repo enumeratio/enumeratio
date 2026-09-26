@@ -1,0 +1,22 @@
+- id: t-cubed
+  expr: [LaplaceTransform, [Power, t, 3], t, s]
+  expected: [Divide, 6, [Power, s, 4]]
+  caption: $\mathcal{L}\{t^3\} = 6/s^4$
+- id: exp-at
+  expr: [LaplaceTransform, [Power, ExponentialE, [Multiply, 2, t]], t, s]
+  expected: [Divide, 1, [Add, s, -2]]
+  caption: $\mathcal{L}\{e^{2t}\} = 1/(s-2)$
+- id: sin-at
+  expr: [LaplaceTransform, [Sin, [Multiply, 3, t]], t, s]
+  expected: [Divide, 3, [Add, [Power, s, 2], 9]]
+  caption: $\mathcal{L}\{\sin(3t)\} = 3/(s^2+9)$
+- id: t-cubed-exp-shift
+  expr: [LaplaceTransform, [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Power, t, 3]], t, s]
+  expected: [Divide, 6, [Power, [Add, s, -2], 4]]
+  category: Scope
+  caption: first shifting theorem — $\mathcal{L}\{t^3 e^{2t}\} = 6/(s-2)^4$
+- id: exp-sin-shift
+  expr: [LaplaceTransform, [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Sin, [Multiply, 3, t]]], t, s]
+  expected: [Divide, 3, [Add, [Power, [Add, s, -2], 2], 9]]
+  category: Scope
+  caption: $\mathcal{L}\{e^{2t}\sin(3t)\} = 3/((s-2)^2+9)$

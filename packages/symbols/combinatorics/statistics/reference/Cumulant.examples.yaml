@@ -1,0 +1,9 @@
+- id: cumulant-order-1-is-mean
+  expr: [Cumulant, [ChiSquareDistribution, 3], 1]
+  expected: 3
+- id: cumulant-order-2-is-variance
+  expr: [Cumulant, [ChiSquareDistribution, 3], 2]
+  expected: 6
+- id: cumulant-poisson-order-5
+  expr: [Cumulant, [PoissonDistribution, 3], 5]
+  expected: 3

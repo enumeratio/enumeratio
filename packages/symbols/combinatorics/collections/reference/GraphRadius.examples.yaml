@@ -1,0 +1,11 @@
+- id: path-5-has-radius-2
+  expr:
+    [
+      GraphRadius,
+      [
+        Graph,
+        [List, 1, 2, 3, 4, 5],
+        [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4], [UndirectedEdge, 4, 5]],
+      ],
+    ]
+  expected: 2

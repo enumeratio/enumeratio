@@ -12,15 +12,5 @@ signatures:
 details:
   - Only exact tag equality is matched, not Wolfram's fuller pattern-matching form.
   - A $Throw$ that reaches no matching $Catch$ propagates out of the whole evaluation.
-examples:
-  - id: throw-aborts-to-the-nearest-catch
-    expr: [Catch, [Throw, abandoned]]
-    expected: abandoned
-    caption: Throw aborts evaluation, Catch recovers the value
-  - id: a-tag-mismatch-propagates-past-a-catch
-    expr: [Catch, [Catch, [Throw, deep, x], y], x]
-    expected: deep
-    caption: a tag mismatch propagates past a non-matching Catch to one that matches
-    category: Scope
 seeAlso:
   - Catch

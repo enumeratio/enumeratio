@@ -1,0 +1,18 @@
+- id: from-a-list-of-terms
+  expr: [Convergents, [List, 3, 7, 15, 1]]
+  expected: [List, 3, [Rational, 22, 7], [Rational, 333, 106], [Rational, 355, 113]]
+  caption: from a list of terms
+- id: the-first-five-convergents-of-pi
+  expr: [Convergents, Pi, 5]
+  expected: [List, 3, [Rational, 22, 7], [Rational, 333, 106], [Rational, 355, 113], [Rational, 103993, 33102]]
+  caption: the first five convergents of $\pi$
+- id: a-rational-the-last-convergent-is-the-number
+  expr: [Convergents, [Rational, 47, 17]]
+  expected: [List, 2, 3, [Rational, 11, 4], [Rational, 47, 17]]
+  category: Scope
+  caption: "a rational: the last convergent is the number itself"
+- id: convergents-of-sqrt-2-solve-pell-s-equations-p-2
+  expr: [Convergents, [Sqrt, 2], 5]
+  expected: [List, 1, [Rational, 3, 2], [Rational, 7, 5], [Rational, 17, 12], [Rational, 41, 29]]
+  category: Applications
+  caption: convergents of $\sqrt2$ solve Pell's equations $p^2 - 2q^2 = \pm1$
