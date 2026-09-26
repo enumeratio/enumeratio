@@ -426,7 +426,7 @@ export const entries: NumberKernel[] = [
       (a, [n]) => braceletValid(a, n, 2),
       (a, [n]) => braceletRank(a, n, 2),
     ),
-    declared: wordClass("BinaryWord", 2),
+    declared: wordClass("BinaryWords", 2),
   },
   // KBracelets(size, base): base-letter words up to rotation and reflection.
   {
