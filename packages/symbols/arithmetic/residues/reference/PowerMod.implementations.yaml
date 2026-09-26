@@ -198,7 +198,7 @@ by-definition-a-b-bmod-m-computed-without-ever:
       in: (2^{10} \bmod 3)=(2^{10} \bmod 3)
       out: \text{True}
   sage:
-    in: bool(power_mod(2, 10, 3) == ((2^10) % 3))
+    in: bool(power_mod(2, 10, 3) == (((2)^10) % 3))
     out: True
   rust:
     in: equal(powermod(n(2), n(10), n(3)), mod_floor(power(n(2), n(10)), n(3)))
@@ -350,7 +350,7 @@ a-301-digit-base:
       in: (\left(10^{300}+1\right)^7 \bmod 5)
       out: "1"
   sage:
-    in: power_mod(((10^300) + 1), 7, 5)
+    in: power_mod((((10)^300) + 1), 7, 5)
     out: "1"
   rust:
     in: powermod((power(n(10), n(300)) + n(1)), n(7), n(5))
@@ -374,7 +374,7 @@ a-square-root-of-3-modulo-the-prime-10-30-57:
       in: (3^{\frac{1}{2}} \bmod \left(10^{30}+57\right))
       out: "492767688934650018614948489645"
   sage:
-    in: power_mod(3, (1/2), ((10^30) + 57))
+    in: power_mod(3, (1/2), (((10)^30) + 57))
     out: "TypeError: no conversion of this rational to integer"
     verdict: error
     kind: domain
@@ -458,7 +458,7 @@ a-gaussian-modulus-and-an-exponent-of-10-30:
       in: ((1+2 i)^{10^{30}} \bmod (7+2 i))
       out: 1+2 i
   sage:
-    in: power_mod((1 + 2*I), (10^30), (7 + 2*I))
+    in: power_mod((1 + 2*I), ((10)^30), (7 + 2*I))
     out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
     verdict: error
     kind: domain

@@ -164,10 +164,10 @@ pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
       in: \sin ^2\left(\frac{\pi }{6}\right)+\cos ^2\left(\frac{\pi }{6}\right)
       out: "1"
   sympy:
-    in: ((sin((S(pi) / 6))**2) + (cos((S(pi) / 6))**2))
+    in: (((sin((S(pi) / 6)))**2) + ((cos((S(pi) / 6)))**2))
     out: "1"
   sage:
-    in: ((sin((pi / 6))^2) + (cos((pi / 6))^2))
+    in: (((sin((pi / 6)))^2) + ((cos((pi / 6)))^2))
     out: "1"
   rust:
     in: (power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))
@@ -945,13 +945,13 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
   wolfram:
     in: N[Sin[Power[10, 20]]]
   sympy:
-    in: N(sin((10**20)), 30)
+    in: N(sin(((10)**20)), 30)
     out: "-0.645251285265780844205811711313"
   mpmath:
-    in: (sin((10**20)))
+    in: (sin(((10)**20)))
     out: "-0.645251285265780844205811711313"
   sage:
-    in: N(sin((10^20)))
+    in: N(sin(((10)^20)))
   rust:
     in: nf(sin(power(n(10), n(20))))
     out: "-0.6452512852657808"
@@ -1000,13 +1000,13 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
   wolfram:
     in: N[Sin[Power[24, 40]]]
   sympy:
-    in: N(sin((24**40)), 30)
+    in: N(sin(((24)**40)), 30)
     out: "0.400083152719766047070941915848"
   mpmath:
-    in: (sin((24**40)))
+    in: (sin(((24)**40)))
     out: "0.400083152719766047070941915848"
   sage:
-    in: N(sin((24^40)))
+    in: N(sin(((24)^40)))
   rust:
     in: nf(sin(power(n(24), n(40))))
     out: "-0.5897765161315717"

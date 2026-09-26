@@ -84,6 +84,20 @@ test("threadArg rebuilds a List's nesting as Julia list literals too", () => {
   });
 });
 
+// Found scanning Sqrt((-1)^2) (#265): a negative base is emitted bare, and Python's `**`
+// binds tighter than unary minus, so `-1**2` reads as `-(1**2)` — not the `(-1)**2` we meant.
+test("a Power base is parenthesised, so a negative literal doesn't leak past unary minus", () => {
+  expect(emit(["Power", -1, 2], "sympy")).toEqual({ ok: true, source: "((-1)**2)" });
+  expect(emit(["Power", -1, 2], "mpmath")).toEqual({ ok: true, source: "((-1)**2)" });
+  expect(emit(["Power", -1, 2], "sage")).toEqual({ ok: true, source: "((-1)^2)" });
+  // A positive base picks up the same (harmless) parens, for one template regardless of sign.
+  expect(emit(["Power", 2, 10], "sympy")).toEqual({ ok: true, source: "((2)**10)" });
+  // Julia/Oscar and Lean were never affected: `big($1)` and the negative-literal special
+  // case already parenthesise the base.
+  expect(emit(["Power", -1, 2], "julia")).toEqual({ ok: true, source: "(big(-1)^2)" });
+  expect(emit(["Power", -1, 2], "mathlib4")).toEqual({ ok: true, source: "((-1) ^ 2)" });
+});
+
 test("Max/Min flatten a (possibly nested) list argument, matching Wolfram — bare SymPy Max() raises on one", () => {
   expect(emit(["Min", ["List", 2, 1, 7, 2]], "sympy")).toEqual({
     ok: true,

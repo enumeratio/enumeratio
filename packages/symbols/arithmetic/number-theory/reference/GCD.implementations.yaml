@@ -431,10 +431,10 @@ big-integers-gcd-20-10-100-3-7-exact-past-where:
   wolfram:
     in: GCD[Factorial[20], Plus[Power[10, 100], 3]]
   sympy:
-    in: gcd(factorial(20), ((10**100) + 3))
+    in: gcd(factorial(20), (((10)**100) + 3))
     out: "7"
   sage:
-    in: gcd(factorial(20), ((10^100) + 3))
+    in: gcd(factorial(20), (((10)^100) + 3))
   oscar:
     in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
   julia:

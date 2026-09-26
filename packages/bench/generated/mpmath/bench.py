@@ -144,9 +144,9 @@ def _b6_0():
 def _b7_0():
     return lerchphi(0.5, 2, 0.75)
 def _b8_0():
-    return sin((24**40))
+    return sin(((24)**40))
 def _b9_0():
-    return cos((10**100))
+    return cos(((10)**100))
 
 CASES = {
     "Zeta/zeta-3p5-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b0_0]},
