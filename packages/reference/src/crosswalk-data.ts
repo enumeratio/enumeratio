@@ -438,7 +438,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "bell($1)",
+        call: "bell(ZZ($1))",
         arity: 1,
       },
     ],
@@ -1946,7 +1946,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "fibonacci($1)",
+        call: "BigInt(fibonacci(ZZ($1)))",
         arity: 1,
       },
     ],
@@ -4696,7 +4696,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "Combinatorics.stirlings2($1, $2)",
+        call: "Combinatorics.stirlings2(big($1), $2)",
         arity: 2,
       },
     ],
@@ -4713,7 +4713,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "Combinatorics.stirlings1($1, $2)",
+        call: "Combinatorics.stirlings1(big($1), $2)",
         arity: 2,
       },
     ],

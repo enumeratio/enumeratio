@@ -22,6 +22,30 @@ export function asNumber(text: string): number | undefined {
   return Number.isFinite(value) ? value : undefined;
 }
 
+/** A real decimal as `mantissa × 10^exponent`, exactly, in any of the systems' spellings. */
+function decimal(text: string): { readonly m: bigint; readonly e: number } | undefined {
+  const match = /^([-+]?)(\d*)(?:\.(\d*))?(?:[eE]([-+]?\d+)|\*\^([-+]?\d+))?$/.exec(
+    text.trim().replace(/`+[0-9.]*/g, ""),
+  );
+  if (match === null || (match[2] === "" && (match[3] ?? "") === "")) return undefined;
+  const frac = match[3] ?? "";
+  return { m: BigInt(`${match[1]}${match[2] || "0"}${frac}`), e: Number(match[4] ?? match[5] ?? 0) - frac.length };
+}
+
+/** Relative agreement of two decimals in exact arithmetic, or `undefined` if either isn't one. */
+function decimalsAgree(a: string, b: string, tolerance: number): boolean | undefined {
+  const x = decimal(a);
+  const y = decimal(b);
+  if (x === undefined || y === undefined) return undefined;
+  const e = Math.min(x.e, y.e);
+  const xm = x.m * 10n ** BigInt(x.e - e);
+  const ym = y.m * 10n ** BigInt(y.e - e);
+  const abs = (n: bigint): bigint => (n < 0n ? -n : n);
+  const scale = abs(xm) > abs(ym) ? abs(xm) : abs(ym);
+  const digits = Math.max(0, Math.round(-Math.log10(tolerance)));
+  return abs(xm - ym) * 10n ** BigInt(digits) <= scale;
+}
+
 /** Strip the differences that are only notation: brackets, spaces, trailing zeros. */
 export const normalise = (text: string): string =>
   text
@@ -44,6 +68,9 @@ export function compare(ours: string, theirs: string, tolerance = 1e-9): Verdict
     const scale = Math.max(1, Math.abs(a), Math.abs(b));
     return Math.abs(a - b) <= tolerance * scale ? "agree" : "disagree";
   }
+  // Past the double range (Gamma(200.5)) both still read as decimals: compare their digits.
+  const exact = decimalsAgree(ours, theirs, tolerance);
+  if (exact !== undefined) return exact ? "agree" : "disagree";
   // A symbolic answer from SymPy or Sage against our numeric one proves nothing either way.
   if ((a === undefined) !== (b === undefined)) return "inconclusive";
   return normalise(ours) === normalise(theirs) ? "agree" : "disagree";
@@ -112,6 +139,12 @@ export function parsePython(text: string): Tree | undefined {
     if (s.startsWith("False", i)) {
       i += 5;
       return false;
+    }
+    // An exact rational, as SymPy prints one inside a list: `[1/6, -1/30]`.
+    const ratio = /^([-+]?\d+)\/(\d+)/.exec(s.slice(i));
+    if (ratio !== null && Number(ratio[2]) !== 0) {
+      i += ratio[0].length;
+      return Number(ratio[1]) / Number(ratio[2]);
     }
     const match = /^[-+]?\d+(\.\d+)?([eE][-+]?\d+)?/.exec(s.slice(i));
     if (match !== null) {

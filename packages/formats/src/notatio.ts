@@ -46,6 +46,14 @@ export interface NotatioResult {
   wildcards: string[];
   /** Diagnostic messages; empty iff the input is valid notatio. */
   errors: string[];
+  /** `errors` again, each with the span of `src` it is about when there is one. */
+  diagnostics: NotatioDiagnostic[];
+}
+
+export interface NotatioDiagnostic {
+  message: string;
+  /** Offsets into the source, `[start, end)`; absent for a whole-input complaint. */
+  range?: [number, number];
 }
 
 /** Flatten an Epsil diagnostic message (a string or a `[code, ...args]` tuple). */
@@ -92,13 +100,34 @@ export function collectWildcards(json: MathJsonExpression): string[] {
 }
 
 /**
+ * Put back the digits each decimal literal was typed with. compute-engine's `parseEpsil`
+ * works a short decimal out in doubles, so `0.3` reads as `0.30000000000000004` and prints
+ * back that way; a long one it keeps as written. Every literal carries the span it came
+ * from, and that text (less its `_` separators) is the value the author meant. A span that
+ * doesn't read as the same number -- a node from a `$…$` island, say -- is left alone.
+ */
+function exactDecimals(json: MathJsonExpression, src: string): void {
+  walk(json, (n) => {
+    const node = n as { num?: unknown; sourceOffsets?: [number, number] };
+    if (typeof node?.num !== "string" || !Array.isArray(node.sourceOffsets)) return;
+    const written = src.slice(...node.sourceOffsets).replaceAll("_", "");
+    if (!/^-?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/i.test(written)) return;
+    const [typed, parsed] = [Number(written), Number(node.num)];
+    if (typed === parsed || Math.abs(typed - parsed) <= Math.abs(parsed) * 1e-15) node.num = written;
+  });
+}
+
+/**
  * Parse a notatio (restricted-Epsil) source string. Returns the MathJSON, its
  * slot wildcards, and any diagnostics — an Epsil parse error, or a statement/
  * effect head that the subset forbids. Never throws.
  */
 export function parseNotatio(src: string, options?: NotatioOptions): NotatioResult {
   const [json, diagnostics] = parseEpsil(src, undefined, options);
-  const errors = diagnostics.filter((d) => d.severity === "error").map((d) => diagText(d.message));
+  exactDecimals(json, src);
+  const found: NotatioDiagnostic[] = diagnostics
+    .filter((d) => d.severity === "error")
+    .map((d) => ({ message: diagText(d.message), ...(d.range ? { range: [d.range[0], d.range[1]] } : {}) }));
   const allowed = new Set(options?.allow);
   // A `Cell`'s input is a cell, and a cell may be one `:=` binding (`Cell(a := 5)`).
   const cellBindings = new Set<unknown>();
@@ -110,10 +139,11 @@ export function parseNotatio(src: string, options?: NotatioOptions): NotatioResu
   walk(json, (n) => {
     const head = headOf(n);
     if (head && STATEMENT_HEADS.has(head) && !allowed.has(head) && !cellBindings.has(n)) {
-      errors.push(`notatio: ${head} is not allowed`);
+      const at = (n as { sourceOffsets?: [number, number] }).sourceOffsets;
+      found.push({ message: `notatio: ${head} is not allowed`, ...(at ? { range: [at[0], at[1]] } : {}) });
     }
   });
-  return { json, wildcards: collectWildcards(json), errors };
+  return { json, wildcards: collectWildcards(json), errors: found.map((d) => d.message), diagnostics: found };
 }
 
 /** Serialize MathJSON back to notatio text (Epsil surface syntax). */

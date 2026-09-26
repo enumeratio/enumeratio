@@ -3,7 +3,7 @@
 // words (binary and k-ary). Pure rank/unrank kernels over plain JS numbers/arrays, same contract as
 // every other family (types.ts). A few reuse kernels already certified elsewhere (BinaryStrings,
 // FibonacciWords, Tuples, k-subsets); the rest (Lucas strings, Gray code, palindromes, necklaces,
-// Lyndon words) are new, several adapted from the archived enumeratio.dev's compute-engine
+// Lyndon words) are new, several adapted from the archived enumeratio repo's compute-engine
 // packs/words.ts (Necklaces/LyndonWords there are exactly KNecklaces/KLyndonWords here).
 import { binomial } from "./shared.ts";
 import { Binomial } from "./kernels-combinatorics.ts";

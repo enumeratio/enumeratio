@@ -263,12 +263,20 @@ gaussian-primes-of-norm-41-and-13-the-lcm-is-the:
     in: LCM[Complex[-4, 5], Complex[2, 3]]
   sympy:
     in: lcm((-4 + 5*I), (2 + 3*I))
+    out: -23 - 2*I
+    verdict: disagree
+    kind: convention
+    note: A Gaussian LCM is defined up to a unit; compute-engine normalises it into the first quadrant, as Wolfram does, and SymPy doesn't.
   sage:
     in: lcm((-4 + 5*I), (2 + 3*I))
   oscar:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
   julia:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian lcm directly.
 gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
   epsil:
     in: LCM(1 / 2 + 3 / 5 * i, 1 / 3 + i)
@@ -282,12 +290,20 @@ gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
     in: LCM[Complex[Rational[1, 2], Rational[3, 5]], Complex[Rational[1, 3], 1]]
   sympy:
     in: lcm((Rational(1, 2) + Rational(3, 5)*I), (Rational(1, 3) + 1*I))
+    out: -13 + 21*I
+    verdict: disagree
+    kind: convention
+    note: A Gaussian LCM is defined up to a unit; compute-engine normalises it into the first quadrant, as Wolfram does, and SymPy doesn't.
   sage:
     in: lcm(((1/2) + (3/5)*I), ((1/3) + 1*I))
   oscar:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
   julia:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian lcm for a Gaussian-rational argument too.
 big-integers-the-exact-118-digit-lcm-past-where:
   epsil:
     in: LCM(20!, 10 ^ 100 + 3)
@@ -301,16 +317,22 @@ big-integers-the-exact-118-digit-lcm-past-where:
     in: LCM[Factorial[20], Plus[Power[10, 100], 3]]
   sympy:
     in: lcm(factorial(20), ((10**100) + 3))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   sage:
     in: lcm(factorial(20), ((10^100) + 3))
   oscar:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
   julia:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   mathlib4:
     in: (Int.lcm (Nat.factorial 20) ((10 ^ 100) + 3))
   rust:
     in: lcm(factorial(n(20)), (power(n(10), n(100)) + n(3)))
+    out: "panic: an integer, not 2.43290200817664e18"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's LCM extends past them.
 listable-a-single-list-argument-threads-element:
   epsil:
     in: LCM(12, [3, 7, 40])
@@ -324,13 +346,19 @@ listable-a-single-list-argument-threads-element:
     in: LCM[12, List[3, 7, 40]]
   sympy:
     in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
+    out: "[12, 84, 120]"
   sage:
     in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
   oscar:
     in: lcm(ZZ(12), ZZ([3, 7, 40]))
   julia:
-    in: lcm(ZZ(12), ZZ([3, 7, 40]))
+    in: "[lcm(ZZ(12), ZZ(3)), lcm(ZZ(12), ZZ(7)), lcm(ZZ(12), ZZ(40))]"
+    out: "[12, 84, 120]"
   mathlib4:
     in: (Int.lcm 12 [3, 7, 40])
   rust:
     in: lcm(n(12), list(vec![n(3), n(7), n(40)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's LCM is Listable and threads over the list; the Rust crates take scalars only.

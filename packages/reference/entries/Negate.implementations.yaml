@@ -156,12 +156,10 @@ threads-element-wise-over-a-list:
       out: \{-1,2,-3\}
   sympy:
     in: "[(-1), (--2), (-3)]"
-    out: "TypeError: bad operand type for unary -: 'list'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars.
+    out: "[-1, 2, -3]"
   mpmath:
     in: "[(-1), (--2), (-3)]"
+    out: "[-1, 2, -3]"
   sage:
     in: "[(-1), (--2), (-3)]"
     out: "TypeError: bad operand type for unary -: 'list'"
@@ -172,7 +170,7 @@ threads-element-wise-over-a-list:
     in: (-([1, -2, 3]))
     out: "[-1, 2, -3]"
   julia:
-    in: (-([1, -2, 3]))
+    in: "[(-(1)), (-(-2)), (-(3))]"
     out: "[-1, 2, -3]"
   mathlib4:
     in: (-([1, (-2), 3]))
@@ -267,7 +265,7 @@ stays-symbolic:
 neg-1-plus-2i:
   epsil:
     in: -(1 + 2i)
-    out: -1 + -2 * i
+    out: -1 - 2i
   tex:
     in: -(1+2i)
     out: -1-2i
@@ -277,14 +275,17 @@ neg-1-plus-2i:
     in: Minus[Complex[1, 2]]
   sympy:
     in: (-(1 + 2*I))
+    out: -1 - 2*I
   mpmath:
     in: (-mpc(1, 2))
+    out: (-1.0 - 2.0j)
   sage:
     in: (-(1 + 2*I))
   oscar:
     in: (-(complex(1, 2)))
   julia:
     in: (-(complex(1, 2)))
+    out: (-1-2j)
 threads-over-a-matrix-entry-by-entry:
   epsil:
     in: -[[1, -2], [3, 4]]
@@ -298,18 +299,25 @@ threads-over-a-matrix-entry-by-entry:
     in: Minus[List[List[1, -2], List[3, 4]]]
   sympy:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
   mpmath:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
   sage:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
   oscar:
     in: (-([[1, -2], [3, 4]]))
   julia:
-    in: (-([[1, -2], [3, 4]]))
+    in: "[[(-(1)), (-(-2))], [(-(3)), (-(4))]]"
+    out: "[[-1, 2], [-3, -4]]"
   mathlib4:
     in: (-([[1, (-2)], [3, 4]]))
   rust:
     in: (-(list(vec![list(vec![n(1), n(-2)]), list(vec![n(3), n(4)])])))
+    out: "panic: negating [[1, -2], [3, 4]]"
+    verdict: error
+    kind: threading
+    note: compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars only.
 folds-into-a-numeric-coefficient:
   epsil:
     in: -(2x)

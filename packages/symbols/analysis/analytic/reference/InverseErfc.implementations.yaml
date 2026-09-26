@@ -77,7 +77,7 @@ sqrt-2-times-this-2-5758-is-the-two-sided-99:
     in: InverseErfc[0.01]
 deep-in-the-tail-it-keeps-full-precision-where:
   epsil:
-    in: InverseErfc(e-10)
+    in: InverseErfc(10e-11)
     out: 4.572_824_967_389_485
   tex:
     in: \mathrm{InverseErfc}(10^{-10})

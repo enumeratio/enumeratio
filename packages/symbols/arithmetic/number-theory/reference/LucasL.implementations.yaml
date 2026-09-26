@@ -122,10 +122,12 @@ exact-at-any-size:
     in: LucasL[100]
   sympy:
     in: lucas(100)
+    out: "792070839848372253127"
   sage:
     in: lucas_number2(100, 1, -1)
   julia:
     in: Combinatorics.lucasnum(100)
+    out: "792070839848372253127"
 an-odd-negative-index-flips-the-sign-l-11-l-11:
   epsil:
     in: LucasL(-11)
@@ -142,10 +144,15 @@ an-odd-negative-index-flips-the-sign-l-11-l-11:
     in: LucasL[-11]
   sympy:
     in: lucas(-11)
+    out: "-199"
   sage:
     in: lucas_number2(-11, 1, -1)
   julia:
     in: Combinatorics.lucasnum(-11)
+    out: "DomainError with -11: n must be nonnegative"
+    verdict: error
+    kind: domain
+    note: Combinatorics.jl's lucasnum declines a negative index; ours extends via LucasL(-n) = (-1)^n LucasL(n).
 a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
   epsil:
     in: LucasL(2.333_333_333_333_333_5)
@@ -162,10 +169,18 @@ a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
     in: LucasL[2.3333333333333335]
   sympy:
     in: lucas(2.3333333333333335)
+    out: lucas(2.33333333333333)
+    verdict: inconclusive
+    kind: domain
+    note: SymPy's lucas takes integers and stays symbolic; compute-engine continues L_ν to real ν.
   sage:
     in: lucas_number2(2.3333333333333335, 1, -1)
   julia:
     in: Combinatorics.lucasnum(2.3333333333333335)
+    out: "MethodError: no method matching lucasnum(::Float64) The function `lucasnum` exists, but no method is"
+    verdict: error
+    kind: domain
+    note: Combinatorics.jl's lucasnum is Int-only; ours extends LucasL to a real index ν through φ^ν and cos(πν), as with Fibonacci.
 the-two-argument-lucas-polynomial-l-7-x-from-l-n:
   epsil:
     in: LucasL(7, x)
@@ -247,10 +262,12 @@ l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci:
     in: Subtract[Power[LucasL[10], 2], Times[5, Power[Fibonacci[10], 2]]]
   sympy:
     in: ((lucas(10)**2) - (5 * (fibonacci(10)**2)))
+    out: "4"
   sage:
     in: ((lucas_number2(10, 1, -1)^2) - (5 * (fibonacci(10)^2)))
   julia:
-    in: ((big(Combinatorics.lucasnum(10))^2) - (5 * (big(fibonacci(10))^2)))
+    in: ((big(Combinatorics.lucasnum(10))^2) - (5 * (big(BigInt(fibonacci(ZZ(10))))^2)))
+    out: "4"
 l-n-f-n-1-f-n-1-here-at-n-6:
   epsil:
     in: LucasL(6) == Fibonacci(5) + Fibonacci(7)
@@ -276,7 +293,7 @@ l-n-f-n-1-f-n-1-here-at-n-6:
     in: bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))
     out: True
   julia:
-    in: (Combinatorics.lucasnum(6) == (fibonacci(5) + fibonacci(7)))
+    in: (Combinatorics.lucasnum(6) == (BigInt(fibonacci(ZZ(5))) + BigInt(fibonacci(ZZ(7)))))
     out: "true"
 conversely-f-n-frac-l-n-1-l-n-1-5:
   epsil:
@@ -303,7 +320,7 @@ conversely-f-n-frac-l-n-1-l-n-1-5:
     in: bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))
     out: True
   julia:
-    in: (fibonacci(6) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))
+    in: (BigInt(fibonacci(ZZ(6))) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))
     out: "true"
 a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n:
   epsil:
@@ -406,14 +423,12 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{1,3,4,7\}
   sympy:
     in: "[lucas(1), lucas(2), lucas(3), lucas(4)]"
-    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's LucasL is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[1, 3, 4, 7]"
   sage:
     in: "[lucas_number2(1, 1, -1), lucas_number2(2, 1, -1), lucas_number2(3, 1, -1), lucas_number2(4, 1, -1)]"
   julia:
-    in: Combinatorics.lucasnum([1, 2, 3, 4])
+    in: "[Combinatorics.lucasnum(1), Combinatorics.lucasnum(2), Combinatorics.lucasnum(3), Combinatorics.lucasnum(4)]"
+    out: "[1, 3, 4, 7]"
 l-30-already-tops-1-8-million-growing-at-the:
   epsil:
     in: LucasL(30)

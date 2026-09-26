@@ -135,12 +135,10 @@ threads-element-wise-over-a-list:
       out: \{-1,0,1\}
   sympy:
     in: "[sign(-3), sign(0), sign(7)]"
-    out: "AttributeError: 'list' object has no attribute 'is_Mul'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Sign threads over (or pools) the list; SymPy's takes scalars.
+    out: "[-1, 0, 1]"
   mpmath:
     in: "[sign(-3), sign(0), sign(7)]"
+    out: "[mpf('-1.0'), mpf('0.0'), mpf('1.0')]"
   sage:
     in: "[sign(-3), sign(0), sign(7)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
@@ -250,8 +248,10 @@ sign-neg-2p5:
     in: Sign[-2.5]
   sympy:
     in: sign(-2.5)
+    out: "-1"
   mpmath:
     in: sign(-2.5)
+    out: "-1.0"
   sage:
     in: sign(-2.5)
 sign-3p14:
@@ -267,8 +267,10 @@ sign-3p14:
     in: Sign[3.14]
   sympy:
     in: sign(3.14)
+    out: "1"
   mpmath:
     in: sign(3.14)
+    out: "1.0"
   sage:
     in: sign(3.14)
 a-complex-number-with-approximate-parts:
@@ -284,8 +286,10 @@ a-complex-number-with-approximate-parts:
     in: Sign[Complex[1.4, 2.3]]
   sympy:
     in: sign((1.4 + 2.3*I))
+    out: 0.519946946895745 + 0.854198555614439*I
   mpmath:
     in: sign(mpc(1.4, 2.3))
+    out: (0.519946946895745222042694276671 + 0.854198555614438567289384025405j)
   sage:
     in: sign((1.4 + 2.3*I))
 an-exact-complex-argument-comes-back-exact-sign:
@@ -301,8 +305,10 @@ an-exact-complex-argument-comes-back-exact-sign:
     in: Sign[Complex[1, 1]]
   sympy:
     in: sign((1 + 1*I))
+    out: sign(1 + I)
   mpmath:
     in: sign(mpc(1, 1))
+    out: (0.707106781186547524400844362105 + 0.707106781186547524400844362105j)
   sage:
     in: sign((1 + 1*I))
 threads-over-a-matrix-entry-by-entry:
@@ -318,6 +324,7 @@ threads-over-a-matrix-entry-by-entry:
     in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   sympy:
     in: "[[sign(Rational(1, 2)), sign(-1)], [sign(Rational(-5, 3)), sign(Rational(1, 2))]]"
+    out: "[[1, -1], [-1, 1]]"
   sage:
     in: "[[sign((1/2)), sign(-1)], [sign((-5/3)), sign((1/2))]]"
 exact-numeric-constants:
@@ -333,8 +340,10 @@ exact-numeric-constants:
     in: Sign[Pi]
   sympy:
     in: sign(pi)
+    out: "1"
   mpmath:
     in: sign(pi)
+    out: "1.0"
   sage:
     in: sign(pi)
 sign-neg-exponentiale:
@@ -350,8 +359,10 @@ sign-neg-exponentiale:
     in: Sign[Minus[E]]
   sympy:
     in: sign((-E))
+    out: "-1"
   mpmath:
     in: sign((-e))
+    out: "-1.0"
   sage:
     in: sign((-e))
 sign-imaginaryunit:
@@ -367,8 +378,10 @@ sign-imaginaryunit:
     in: Sign[I]
   sympy:
     in: sign(I)
+    out: I
   mpmath:
     in: sign(mpc(0,1))
+    out: (0.0 + 1.0j)
   sage:
     in: sign(I)
 sign-positiveinfinity:
@@ -406,8 +419,10 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
     in: Sign[Subtract[Sqrt[2], 2]]
   sympy:
     in: sign((sqrt(2) - 2))
+    out: "-1"
   mpmath:
     in: sign((sqrt(2) - 2))
+    out: "-1.0"
   sage:
     in: sign((sqrt(2) - 2))
 2-sqrt-2-is-the-same-certified-decision-the:
@@ -423,8 +438,10 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
     in: Sign[Subtract[2, Sqrt[2]]]
   sympy:
     in: sign((2 - sqrt(2)))
+    out: "1"
   mpmath:
     in: sign((2 - sqrt(2)))
+    out: "1.0"
   sage:
     in: sign((2 - sqrt(2)))
 the-sign-of-a-nonzero-complex-number-lies-on-the:
@@ -443,7 +460,9 @@ the-sign-of-a-nonzero-complex-number-lies-on-the:
     in: (Abs[Sign[Complex[3, 4]]] == 1)
   sympy:
     in: enumeratio_equal(Abs(sign((3 + 4*I))), 1)
+    out: True
   mpmath:
     in: almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)
+    out: True
   sage:
     in: bool(abs(sign((3 + 4*I))) == 1)

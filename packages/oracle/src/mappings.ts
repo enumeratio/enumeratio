@@ -34,9 +34,11 @@ export interface Mapping {
   readonly note?: string;
 }
 
-/** Python-family systems whose function calls need `threadArg`'s help — everyone else
- * (Wolfram, Julia's broadcast, …) already threads a Listable head natively. */
-export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage"];
+/** Systems whose function calls need `threadArg`'s help: the Python family, and Julia/Nemo —
+ * our emit templates are plain calls (`binomial(ZZ($1), ZZ($2))`), not `f.($1)` broadcasts, so
+ * a raw Julia `Vector` hits the same "no method" wall a bare Python list does. Only Wolfram's
+ * own heads are Listable without this. */
+export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage", "julia"];
 
 export const MAPPINGS: readonly Mapping[] = [
   // ── arithmetic and structure ────────────────────────────────────────────────
@@ -313,9 +315,10 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "fibonacci($1)",
       sage: "fibonacci($1)",
       oscar: "fibonacci($1)",
-      julia: "fibonacci($1)",
+      julia: "BigInt(fibonacci(ZZ($1)))",
       mathlib4: "(Nat.fib $1)",
     },
+    note: "Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.",
   },
   {
     head: "LucasL",
@@ -331,6 +334,7 @@ export const MAPPINGS: readonly Mapping[] = [
   {
     head: "CatalanNumber",
     arity: 1,
+    threadArg: 1,
     emit: {
       wolfram: "CatalanNumber[$1]",
       sympy: "catalan($1)",
@@ -348,32 +352,34 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "bell($1)",
       sage: "bell_number($1)",
       oscar: "bell($1)",
-      julia: "bell($1)",
+      julia: "bell(ZZ($1))",
     },
-    note: "Wolfram spells it BellB.",
+    note: "Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.",
   },
   {
     head: "Stirling",
     arity: 2,
+    threadArg: 1,
     emit: {
       wolfram: "StirlingS2[$1, $2]",
       sympy: "stirling($1, $2)",
       sage: "stirling_number2($1, $2)",
-      julia: "Combinatorics.stirlings2($1, $2)",
+      julia: "Combinatorics.stirlings2(big($1), $2)",
       mathlib4: "(Nat.stirlingSecond $1 $2)",
     },
-    note: "compute-engine's Stirling is the SECOND kind; see design/upstreaming.md §3.5.",
+    note: "compute-engine's Stirling is the SECOND kind; see design/upstreaming.md §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).",
   },
   {
     head: "StirlingS1",
     arity: 2,
+    threadArg: 1,
     emit: {
       wolfram: "StirlingS1[$1, $2]",
       sage: "stirling_number1($1, $2)",
-      julia: "Combinatorics.stirlings1($1, $2)",
+      julia: "Combinatorics.stirlings1(big($1), $2)",
       mathlib4: "(Nat.stirlingFirst $1 $2)",
     },
-    note: "Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug.",
+    note: "Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).",
   },
   {
     head: "Totient",

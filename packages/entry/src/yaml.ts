@@ -95,7 +95,7 @@ export interface StringifyOptions {
   /**
    * Field names whose value is MathJSON: it and every array/map nested inside it are
    * rendered in flow style (`[Mod, 5, 0]`), the only thing this writer ever flow-styles.
-   * Defaults to `expr`, `expected` and `fullform`'s `back` (the lossy round trip).
+   * Defaults to `expr`, `expected` and a form's `back` (the lossy round trip).
    */
   readonly mathJsonKeys?: readonly string[];
 }

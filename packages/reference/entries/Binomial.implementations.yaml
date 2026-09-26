@@ -434,16 +434,14 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{0,1,10,35,165\}
   sympy:
     in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
-    out: "TypeError: unsupported operand type(s) for -: 'list' and 'Integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Binomial is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[0, 1, 10, 35, 165]"
   sage:
     in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
   oscar:
     in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
   julia:
-    in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
+    in: "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]"
+    out: "[0, 1, 10, 35, 165]"
   mathlib4:
     in: (Nat.choose [2, 3, 5, 7, 11] 3)
   rust:
@@ -476,6 +474,10 @@ half-integer-arguments-evaluate-exactly-through:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
   julia:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is integers only; it can't hold a half-integer argument. Ours evaluates a half-integer Binomial exactly through the Gamma function.
   mathlib4:
     in: "(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))"
   rust:
@@ -497,16 +499,19 @@ binomial-8-4:
     in: Binomial[8, 4]
   sympy:
     in: binomial(8, 4)
+    out: "70"
   sage:
     in: binomial(8, 4)
   oscar:
     in: binomial(ZZ(8), ZZ(4))
   julia:
     in: binomial(ZZ(8), ZZ(4))
+    out: "70"
   mathlib4:
     in: (Nat.choose 8 4)
   rust:
     in: binomial(n(8), n(4))
+    out: "70"
 symbolic-n-binom-n-0-1-for-any-n:
   epsil:
     in: Binomial(n, 0)
@@ -556,16 +561,25 @@ real-arguments-evaluate-through-the-gamma:
     in: Binomial[8.5, -4.2]
   sympy:
     in: binomial(8.5, -4.2)
+    out: "6.04992484022837e-5"
   sage:
     in: binomial(8.5, -4.2)
   oscar:
     in: binomial(ZZ(8.5), ZZ(-4.2))
   julia:
     in: binomial(ZZ(8.5), ZZ(-4.2))
+    out: "InexactError: convert(ZZRingElem, 8.5)"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ can't hold a non-integer real; ours extends Binomial to real n and k through the Gamma function.
   mathlib4:
     in: (Nat.choose 8.5 (-4.2))
   rust:
     in: binomial(x(8.5), x(-4.2))
+    out: "panic: an integer, not 8.5"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Binomial extends past them.
 a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
   epsil:
     in: Binomial(0.5, 3)
@@ -579,16 +593,25 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     in: Binomial[0.5, 3]
   sympy:
     in: binomial(0.5, 3)
+    out: "0.0625000000000000"
   sage:
     in: binomial(0.5, 3)
   oscar:
     in: binomial(ZZ(0.5), ZZ(3))
   julia:
     in: binomial(ZZ(0.5), ZZ(3))
+    out: "InexactError: convert(ZZRingElem, 0.5)"
+    verdict: error
+    kind: domain
+    note: ZZ(0.5) has no exact integer value; ours extends Binomial to a real n through the Gamma function.
   mathlib4:
     in: (Nat.choose 0.5 3)
   rust:
     in: binomial(x(0.5), n(3))
+    out: "panic: an integer, not 0.5"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Binomial extends past them.
 a-rational-n-with-integer-k-gives-the-exact:
   epsil:
     in: Binomial(1 / 2, 2)
@@ -602,16 +625,25 @@ a-rational-n-with-integer-k-gives-the-exact:
     in: Binomial[Rational[1, 2], 2]
   sympy:
     in: binomial(Rational(1, 2), 2)
+    out: -1/8
   sage:
     in: binomial((1/2), 2)
   oscar:
     in: binomial(ZZ((1 // 2)), ZZ(2))
   julia:
     in: binomial(ZZ((1 // 2)), ZZ(2))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: ZZ needs an integer; ours extends Binomial to a rational n through the Gamma function.
   mathlib4:
     in: "(Nat.choose ((1 : ℚ) / 2) 2)"
   rust:
     in: binomial(rational(n(1), n(2)), n(2))
+    out: "panic: an integer, not 1/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Binomial extends past them.
 binom-1-2-3-frac-5-16-the-central-binomial:
   epsil:
     in: Binomial(-1 / 2, 3)
@@ -625,16 +657,25 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     in: Binomial[Rational[-1, 2], 3]
   sympy:
     in: binomial(Rational(-1, 2), 3)
+    out: -5/16
   sage:
     in: binomial((-1/2), 3)
   oscar:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
   julia:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: ZZ needs an integer; ours extends Binomial to a negative rational n through the Gamma function.
   mathlib4:
     in: "(Nat.choose (((-1) : ℚ) / 2) 3)"
   rust:
     in: binomial(rational(n(-1), n(2)), n(3))
+    out: "panic: an integer, not -1/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Binomial extends past them.
 binom-n-n-1-for-symbolic-n:
   epsil:
     in: Binomial(n, n)
@@ -666,15 +707,20 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     in: Binomial[Complex[1, 1], 5]
   sympy:
     in: binomial((1 + 1*I), 5)
+    out: -1/12 - I/12
   sage:
     in: binomial((1 + 1*I), 5)
   oscar:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
   julia:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours extends Binomial to a complex n through the Gamma function.
 complex-n-and-k-evaluate-through-the-gamma:
   epsil:
-    in: Binomial(2 + i, 7 + -3 * i)
+    in: Binomial(2 + i, 7 - 3i)
     out: -75.468_347_382_223_04 + 106.815_265_970_790_55i
   tex:
     in: \binom{2+i}{7-3i}
@@ -685,12 +731,17 @@ complex-n-and-k-evaluate-through-the-gamma:
     in: Binomial[Complex[2, 1], Complex[7, -3]]
   sympy:
     in: binomial((2 + 1*I), (7 + -3*I))
+    out: gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))
   sage:
     in: binomial((2 + 1*I), (7 + -3*I))
   oscar:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
   julia:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours extends Binomial to complex n and k through the Gamma function.
 interval-arithmetic-in-k-binom-1-2-k-is:
   epsil:
     in: Binomial(1 / 2, Interval(0.5, 0.6))
@@ -757,16 +808,19 @@ the-factorial-form-binom-n-k-frac-n-k-n-k-see:
     in: (Binomial[7, 3] == Divide[Factorial[7], Times[Factorial[3], Factorial[4]]])
   sympy:
     in: enumeratio_equal(binomial(7, 3), (S(factorial(7)) / (factorial(3) * factorial(4))))
+    out: True
   sage:
     in: bool(binomial(7, 3) == (factorial(7) / (factorial(3) * factorial(4))))
   oscar:
     in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
   julia:
     in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
+    out: "true"
   mathlib4:
     in: "(decide ((Nat.choose 7 3) = (((Nat.factorial 7) : ℚ) / ((Nat.factorial 3) * (Nat.factorial 4)))))"
   rust:
     in: equal(binomial(n(7), n(3)), (factorial(n(7)) / (factorial(n(3)) * factorial(n(4)))))
+    out: "true"
 the-probability-of-exactly-3-heads-in-10-fair:
   epsil:
     in: Binomial(10, 3) / 2 ^ 10
@@ -780,16 +834,19 @@ the-probability-of-exactly-3-heads-in-10-fair:
     in: Divide[Binomial[10, 3], Power[2, 10]]
   sympy:
     in: (S(binomial(10, 3)) / (2**10))
+    out: 15/128
   sage:
     in: (binomial(10, 3) / (2^10))
   oscar:
     in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
   julia:
     in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
+    out: "0.1171875"
   mathlib4:
     in: "(((Nat.choose 10 3) : ℚ) / (2 ^ 10))"
   rust:
     in: (binomial(n(10), n(3)) / power(n(2), n(10)))
+    out: 15/128
 both-arguments-negative-integers-the-limiting:
   epsil:
     in: Binomial(-3, -5)
@@ -803,16 +860,28 @@ both-arguments-negative-integers-the-limiting:
     in: Binomial[-3, -5]
   sympy:
     in: binomial(-3, -5)
+    out: "0"
+    verdict: disagree
+    kind: convention
+    note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Γ; SymPy gives 0.
   sage:
     in: binomial(-3, -5)
   oscar:
     in: binomial(ZZ(-3), ZZ(-5))
   julia:
     in: binomial(ZZ(-3), ZZ(-5))
+    out: "0"
+    verdict: disagree
+    kind: convention
+    note: Nemo's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n; ours extends through the reflection identities (Wolfram's convention), giving 6 — see the mapping's note.
   mathlib4:
     in: (Nat.choose (-3) (-5))
   rust:
     in: binomial(n(-3), n(-5))
+    out: "1"
+    verdict: disagree
+    kind: convention
+    note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Γ; num-integer's binomial isn't defined for negative arguments.
 the-central-binomial-coefficient-binom-100-50:
   epsil:
     in: Binomial(100, 50)
@@ -826,13 +895,16 @@ the-central-binomial-coefficient-binom-100-50:
     in: Binomial[100, 50]
   sympy:
     in: binomial(100, 50)
+    out: "100891344545564193334812497256"
   sage:
     in: binomial(100, 50)
   oscar:
     in: binomial(ZZ(100), ZZ(50))
   julia:
     in: binomial(ZZ(100), ZZ(50))
+    out: "100891344545564193334812497256"
   mathlib4:
     in: (Nat.choose 100 50)
   rust:
     in: binomial(n(100), n(50))
+    out: "100891344545564193334812497256"

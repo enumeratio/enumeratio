@@ -77,6 +77,11 @@ examples:
     expected: [Rational, 201, 64]
     category: Scope
     caption: The rational with the smallest denominator within 0.001 of $\pi$ -- $201/64$, not compute-engine's own closer-but-larger-denominator continued-fraction convergent $333/106$
+  - id: a-tolerance-finer-than-a-double
+    expr: [Rationalize, Pi, 1e-16]
+    expected: [Rational, 245850922, 78256779]
+    category: Scope
+    caption: A tolerance finer than a double can resolve is still honoured -- the simplest fraction within $10^{-16}$ of $\pi$ itself, not of $N(\pi)$, which is already $1.2 \times 10^{-16}$ away
   - id: rationalizes-every-approximate-number-inside-an
     expr: [Rationalize, [Add, 1.2, [Multiply, 6.7, x]]]
     expected: [Add, [Multiply, [Rational, 67, 10], x], [Rational, 6, 5]]

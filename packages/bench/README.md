@@ -1,4 +1,4 @@
-# bench
+# @enumeratio/bench
 
 Cross-system benchmarks; the design is `design/benchmarking.md`.
 
