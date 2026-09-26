@@ -709,14 +709,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "PermutationList",
-    uses: 7,
-  },
-  {
-    head: "PermutationReplace",
-    uses: 7,
-  },
-  {
     head: "SetOptions",
     uses: 7,
   },
@@ -726,10 +718,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "AbortProtect",
-    uses: 6,
-  },
-  {
-    head: "AlternatingGroup",
     uses: 6,
   },
   {

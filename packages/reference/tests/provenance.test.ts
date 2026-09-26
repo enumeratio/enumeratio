@@ -583,6 +583,12 @@ const NOVEL = [
   "GroupGenerators",
   "GroupOrder",
   "GroupElements",
+  // Genuine Wolfram heads (see to-wolfram.ts HEADS) closing the permutation-group frontier,
+  // but not yet run through the oracle sweep, so `elsewhere` is still empty here (same as
+  // the Function* family above).
+  "AlternatingGroup",
+  "PermutationList",
+  "PermutationReplace",
   "ModularMatrix",
   "ModularWord",
   "Convergents",
