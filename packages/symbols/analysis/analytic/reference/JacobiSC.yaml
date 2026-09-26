@@ -1,0 +1,37 @@
+name: JacobiSC
+domain: Special functions
+signature: JacobiSC(u, m)
+summary: The Jacobi elliptic function $\operatorname{sc}(u,m) = \operatorname{sn}(u,m)/\operatorname{cn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiSC(u, m)
+    description: the Jacobi elliptic function sc, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{sc}(u,m) = \operatorname{sn}(u,m)/\operatorname{cn}(u,m)$ — [[JacobiSN]] and [[JacobiCN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - sc(0,m) = 0, for any m.
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiSC, 0.6, 0.4]]
+    expected: 0.6647443227328587
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-0-for-any-m
+    expr: [JacobiSC, 0, m]
+    expected: 0
+    category: Properties
+    caption: u = 0 is 0, for any m
+  - id: m-greater-than-1-via-the-reciprocal-modulus
+    expr: [N, [JacobiSC, 1.2, 3.0]]
+    expected: 0.6660771819422742
+    category: Scope
+    caption: m greater than 1, via the reciprocal-modulus transformation
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiSC, u, m]
+    expected: [JacobiSC, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiSN
+  - JacobiCN
+  - JacobiCS

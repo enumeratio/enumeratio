@@ -1,0 +1,39 @@
+name: EllipticThetaPrime
+domain: Special functions
+signature: EllipticThetaPrime(a, u, q)
+summary: The u-derivative of the Jacobi theta function, $\vartheta_a'(u,q) = \dfrac{\partial}{\partial u}\vartheta_a(u,q)$, $a=1,2,3,4$, Wolfram's nome convention $|q|<1$.
+signatures:
+  - call: EllipticThetaPrime(a, u, q)
+    description: the u-derivative of the a-th Jacobi theta function (a = 1, 2, 3, or 4), argument u, nome q.
+    library: "@enumeratio/analytic"
+details:
+  - Shares [[EllipticTheta]]'s nome convention, series-convergence rule, and decline conditions — see there.
+  - The termwise u-derivative of DLMF 20.2.1-20.2.4, verified against mpmath's `jtheta(a, u, q, derivative=1)` and a Wolfram kernel at complex u, complex q, and real negative q.
+  - Numeric only — a symbolic u or q stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [EllipticThetaPrime, 3, 0.3, 0.2]]
+    expected: -0.4636500624070804
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: theta1-prime-0-q-matches-the-classical
+    expr: [N, [EllipticThetaPrime, 1, 0.3, 0.2]]
+    expected: 1.178007371087324
+    category: Scope
+    caption: The a = 1 theta function's derivative
+  - id: a-complex-argument-u
+    expr: [N, [EllipticThetaPrime, 3, [Complex, 0.3, 0.1], 0.2]]
+    expected: [Complex, -0.4736828076769382, -0.13484007289370092]
+    category: Scope
+    caption: A complex argument u
+  - id: q-1-is-declined-the-series-diverges
+    expr: [N, [EllipticThetaPrime, 3, 0.3, 1.0]]
+    expected: [EllipticThetaPrime, 3, 0.3, 1]
+    category: Possible issues
+    caption: "|q| ≥ 1 is declined — the series diverges there"
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [EllipticThetaPrime, 3, u, q]
+    expected: [EllipticThetaPrime, 3, u, q]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - EllipticTheta

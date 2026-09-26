@@ -1,0 +1,37 @@
+name: JacobiNC
+domain: Special functions
+signature: JacobiNC(u, m)
+summary: The Jacobi elliptic function $\operatorname{nc}(u,m) = 1/\operatorname{cn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiNC(u, m)
+    description: the Jacobi elliptic function nc, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{nc}(u,m) = 1/\operatorname{cn}(u,m)$ — [[JacobiCN]] shares this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - nc(0,m) = 1, for any m; nc has a pole at the quarter period u = EllipticK(m) (cn = 0 there).
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiNC, 0.3, 1.5]]
+    expected: 1.0446453215167584
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-1-for-any-m
+    expr: [JacobiNC, 0, m]
+    expected: 1
+    category: Properties
+    caption: u = 0 is 1, for any m
+  - id: m-less-than-0-via-the-imaginary-modulus
+    expr: [N, [JacobiNC, 0.3, -2.0]]
+    expected: 1.0496874048955946
+    category: Scope
+    caption: m less than 0, via the imaginary-modulus transformation
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiNC, u, m]
+    expected: [JacobiNC, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiCN
+  - JacobiCD
+  - JacobiDC

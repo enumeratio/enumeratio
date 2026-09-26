@@ -1,0 +1,59 @@
+name: JacobiDN
+domain: Special functions
+signature: JacobiDN(u, m)
+summary: The Jacobi elliptic function $\operatorname{dn}(u,m)$, one of the three primary Jacobi elliptic functions, in Wolfram/mpmath's $m=k^2$ parameter convention.
+signatures:
+  - call: JacobiDN(u, m)
+    description: the Jacobi elliptic delta amplitude, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
+  - Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel; dn comes from $\operatorname{dn}^2 = 1-m\operatorname{sn}^2$ rather than a second AGM recursion — exact for real u, and checked directly against mpmath for the complex-u cases this head's tests cover, but not proven branch-correct arbitrarily far from the real axis.
+  - A genuinely complex m stays unevaluated.
+  - 'Exact at u = 0 (dn = 1, for any m), m = 0 (dn = 1), m = 1 (dn = 1/[[Cosh]](u)), and the quarter period u = [[EllipticK]](m) (dn = $\sqrt{1-m}$).'
+  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiDN, 0.3, 0.5]]
+    expected: 0.9782405041743613
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-1-for-any-m
+    expr: [JacobiDN, 0, m]
+    expected: 1
+    category: Properties
+    caption: u = 0 is 1, for any m
+  - id: m-0-is-1-for-any-u
+    expr: [JacobiDN, u, 0]
+    expected: 1
+    category: Properties
+    caption: m = 0 is 1, for any u
+  - id: the-quarter-period-u-elliptick-m-is-sqrt
+    expr: [JacobiDN, [EllipticK, m], m]
+    expected: [Sqrt, [Add, [Negate, m], 1]]
+    category: Properties
+    caption: The quarter period u = EllipticK(m) is √(1−m)
+  - id: m-greater-than-1-via-the-reciprocal-modulus
+    expr: [N, [JacobiDN, 0.3, 1.5]]
+    expected: 0.9351619177552998
+    category: Scope
+    caption: m greater than 1, via the reciprocal-modulus transformation
+  - id: m-less-than-0-via-the-imaginary-modulus
+    expr: [N, [JacobiDN, 0.3, -2.0]]
+    expected: 1.0885129466062724
+    category: Scope
+    caption: m less than 0, via the imaginary-modulus transformation
+  - id: a-complex-argument-u
+    expr: [N, [JacobiDN, [Complex, 0.3, 0.4], 0.5]]
+    expected: [Complex, 1.012262082212854, -0.0628496850247877]
+    category: Scope
+    caption: A complex argument u
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiDN, u, m]
+    expected: [JacobiDN, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiSN
+  - JacobiCN
+  - JacobiAmplitude
+  - EllipticK

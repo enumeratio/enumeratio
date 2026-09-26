@@ -1,0 +1,37 @@
+name: JacobiSD
+domain: Special functions
+signature: JacobiSD(u, m)
+summary: The Jacobi elliptic function $\operatorname{sd}(u,m) = \operatorname{sn}(u,m)/\operatorname{dn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiSD(u, m)
+    description: the Jacobi elliptic function sd, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{sd}(u,m) = \operatorname{sn}(u,m)/\operatorname{dn}(u,m)$ — [[JacobiSN]] and [[JacobiDN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - sd(0,m) = 0, for any m.
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiSD, 0.3, -2.0]]
+    expected: 0.2793015774746946
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-0-for-any-m
+    expr: [JacobiSD, 0, m]
+    expected: 0
+    category: Properties
+    caption: u = 0 is 0, for any m
+  - id: m-greater-than-1-via-the-reciprocal-modulus
+    expr: [N, [JacobiSD, 1.1, 0.9]]
+    expected: 1.2678217669206615
+    category: Scope
+    caption: m close to its m = 1 boundary
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiSD, u, m]
+    expected: [JacobiSD, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiSN
+  - JacobiDN
+  - JacobiDS

@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { abs, add, cpow, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
+import { abs, add, cpow, csqrt, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
 
 // Carlson symmetric elliptic integrals RF, RD, RJ, RC, RG (Carlson 1995, "Numerical
 // computation of real or complex elliptic integrals"; DLMF §19.16, §19.36). These are
@@ -34,12 +34,9 @@ const TOL = 1e-15;
 /** Fixed step count for `carlsonRJ`'s sum (see there for why this can't be convergence-gated). */
 const RJ_ITERS = 40;
 
-/**
- * Principal-branch square root: `cpow(z, ½)`, cut on the negative reals. `z = 0` is
- * special-cased — `cpow`'s `0 · (−∞)` in `w·log(z)` would otherwise come back NaN — which
- * matters here since RF, RD, RJ, RG all accept a zero argument (the "complete" cases).
- */
-const csqrt = (z: Cx): Cx => (z.re === 0 && z.im === 0 ? z : cpow(z, cx(0.5)));
+// csqrt (principal-branch square root, z = 0 special-cased) is shared from complex.ts —
+// RF, RD, RJ, RG all accept a zero argument (the "complete" cases), which is what that
+// special case is for.
 
 /**
  * Are all the given values within `tol` of their mean (the duplication has converged)?

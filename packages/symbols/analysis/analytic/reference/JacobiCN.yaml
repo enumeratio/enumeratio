@@ -1,0 +1,59 @@
+name: JacobiCN
+domain: Special functions
+signature: JacobiCN(u, m)
+summary: The Jacobi elliptic function $\operatorname{cn}(u,m)$, one of the three primary Jacobi elliptic functions, in Wolfram/mpmath's $m=k^2$ parameter convention.
+signatures:
+  - call: JacobiCN(u, m)
+    description: the Jacobi elliptic cosine, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
+  - Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel (Abramowitz & Stegun 16.4); see there for the m-outside-[0,1] and complex-u coverage this rests on.
+  - A genuinely complex m stays unevaluated.
+  - "Exact at u = 0 (cn = 1, for any m), m = 0 (cn = [[Cos]](u)), m = 1 (cn = 1/[[Cosh]](u)), and the quarter period u = [[EllipticK]](m) (cn = 0)."
+  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiCN, 0.3, 0.5]]
+    expected: 0.9559858618277871
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-1-for-any-m
+    expr: [JacobiCN, 0, m]
+    expected: 1
+    category: Properties
+    caption: u = 0 is 1, for any m
+  - id: m-0-reduces-to-cos-u
+    expr: [JacobiCN, u, 0]
+    expected: [Cos, u]
+    category: Properties
+    caption: m = 0 reduces to Cos(u)
+  - id: the-quarter-period-u-elliptick-m-is-0
+    expr: [JacobiCN, [EllipticK, m], m]
+    expected: 0
+    category: Properties
+    caption: The quarter period u = EllipticK(m) is 0
+  - id: m-greater-than-1-via-the-reciprocal-modulus
+    expr: [N, [JacobiCN, 0.3, 1.5]]
+    expected: 0.9572626990259849
+    category: Scope
+    caption: m greater than 1, via the reciprocal-modulus transformation
+  - id: m-less-than-0-via-the-imaginary-modulus
+    expr: [N, [JacobiCN, 0.3, -2.0]]
+    expected: 0.9526645697911019
+    category: Scope
+    caption: m less than 0, via the imaginary-modulus transformation
+  - id: a-complex-argument-u
+    expr: [N, [JacobiCN, [Complex, 0.3, 0.4], 0.5]]
+    expected: [Complex, 1.0279928720079627, -0.12377586413677164]
+    category: Scope
+    caption: A complex argument u
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiCN, u, m]
+    expected: [JacobiCN, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiSN
+  - JacobiDN
+  - JacobiAmplitude
+  - EllipticK

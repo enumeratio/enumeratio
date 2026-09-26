@@ -1,0 +1,65 @@
+name: JacobiSN
+domain: Special functions
+signature: JacobiSN(u, m)
+summary: The Jacobi elliptic function $\operatorname{sn}(u,m)$, one of the three primary Jacobi elliptic functions, in Wolfram/mpmath's $m=k^2$ parameter convention.
+signatures:
+  - call: JacobiSN(u, m)
+    description: the Jacobi elliptic sine, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
+  - Numeric evaluation is the descending Landen/arithmetic-geometric-mean method (Abramowitz & Stegun 16.4) for real m between 0 and 1, extended to m outside that range by the reciprocal-modulus (m > 1) and imaginary-modulus (m < 0) transformations, and to complex u by carrying the same recursion in complex arithmetic.
+  - A genuinely complex m stays unevaluated — neither the AGM recursion nor either parameter transform has been verified there.
+  - "Exact at u = 0 (sn = 0, for any m), m = 0 (sn = [[Sin]](u)), m = 1 (sn = [[Tanh]](u)), and the quarter period u = [[EllipticK]](m) (sn = 1)."
+  - $\operatorname{sn}^2(u,m) + \operatorname{cn}^2(u,m) = 1$ and $\operatorname{dn}^2(u,m) + m\operatorname{sn}^2(u,m) = 1$, checked at complex u as part of this head's tests.
+  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiSN, 0.3, 0.5]]
+    expected: 0.2934127331684554
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-0-for-any-m
+    expr: [JacobiSN, 0, m]
+    expected: 0
+    category: Properties
+    caption: u = 0 is 0, for any m
+  - id: m-0-reduces-to-sin-u
+    expr: [JacobiSN, u, 0]
+    expected: [Sin, u]
+    category: Properties
+    caption: m = 0 reduces to Sin(u)
+  - id: m-1-reduces-to-tanh-u
+    expr: [JacobiSN, u, 1]
+    expected: [Tanh, u]
+    category: Properties
+    caption: m = 1 reduces to Tanh(u)
+  - id: m-greater-than-1-via-the-reciprocal-modulus
+    expr: [N, [JacobiSN, 0.3, 1.5]]
+    expected: 0.2892198559115308
+    category: Scope
+    caption: m greater than 1, via the reciprocal-modulus transformation
+  - id: m-less-than-0-via-the-imaginary-modulus
+    expr: [N, [JacobiSN, 0.3, -2.0]]
+    expected: 0.30402338308875987
+    category: Scope
+    caption: m less than 0, via the imaginary-modulus transformation
+  - id: a-complex-argument-u
+    expr: [N, [JacobiSN, [Complex, 0.3, 0.4], 0.5]]
+    expected: [Complex, 0.3289270041825616, 0.3868356943676352]
+    category: Scope
+    caption: A complex argument u
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiSN, u, m]
+    expected: [JacobiSN, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+  - id: a-genuinely-complex-m-is-declined
+    expr: [N, [JacobiSN, 0.3, [Complex, 0.5, 0.2]]]
+    expected: [JacobiSN, 0.3, [Complex, 0.5, 0.2]]
+    category: Possible issues
+    caption: A genuinely complex m is declined — neither the AGM recursion nor its parameter transforms are verified there
+seeAlso:
+  - JacobiCN
+  - JacobiDN
+  - JacobiAmplitude
+  - EllipticK

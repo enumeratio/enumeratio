@@ -1,0 +1,48 @@
+name: JacobiZN
+domain: Special functions
+signature: JacobiZN(u, m)
+summary: Wolfram's Jacobi zeta function $Z(u,m) = E(\operatorname{am}(u,m),m) - \dfrac{E(m)}{K(m)}u$, in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiZN(u, m)
+    description: the Jacobi zeta function, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - Composed from [[JacobiAmplitude]]'s amplitude and the already-declared [[IncompleteEllipticE]], [[EllipticE]], [[EllipticK]] (DLMF 22.16.31) — not a separate numeric method.
+  - Real m between 0 and 1 only, inheriting [[JacobiAmplitude]]'s restriction (no verified amplitude transform for m outside that range).
+  - Z(0,m) = 0, for any m in range; Z(u,0) = 0, for any u — am(u,0) = u makes E(am,0) = u exactly, canceling the E(0)/K(0)·u = u term.
+  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiZN, 0.3, 0.5]]
+    expected: 0.07707646847765576
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-0-for-any-m
+    expr: [JacobiZN, 0, m]
+    expected: 0
+    category: Properties
+    caption: u = 0 is 0, for any m
+  - id: m-0-is-0-for-any-u
+    expr: [JacobiZN, u, 0]
+    expected: 0
+    category: Properties
+    caption: m = 0 is 0, for any u
+  - id: a-parameter-close-to-its-m-1-boundary
+    expr: [N, [JacobiZN, 1.1, 0.9]]
+    expected: 0.35471220019987126
+    category: Scope
+    caption: A parameter close to its m = 1 boundary
+  - id: m-outside-0-1-is-declined
+    expr: [N, [JacobiZN, 0.3, -0.5]]
+    expected: [JacobiZN, 0.3, -0.5]
+    category: Possible issues
+    caption: m outside [0, 1] is declined — no verified amplitude transform there
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiZN, u, m]
+    expected: [JacobiZN, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiAmplitude
+  - EllipticE
+  - EllipticK

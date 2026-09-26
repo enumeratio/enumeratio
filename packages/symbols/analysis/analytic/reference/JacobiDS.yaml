@@ -1,0 +1,37 @@
+name: JacobiDS
+domain: Special functions
+signature: JacobiDS(u, m)
+summary: The Jacobi elliptic function $\operatorname{ds}(u,m) = \operatorname{dn}(u,m)/\operatorname{sn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiDS(u, m)
+    description: the Jacobi elliptic function ds, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{ds}(u,m) = \operatorname{dn}(u,m)/\operatorname{sn}(u,m)$ — [[JacobiDN]] and [[JacobiSN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - ds has a pole at u = 0 (sn(0,m) = 0, for any m).
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiDS, 1.1, 0.9]]
+    expected: 0.7887544023075437
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-a-pole-for-any-m
+    expr: [JacobiDS, 0, m]
+    expected: ComplexInfinity
+    category: Properties
+    caption: u = 0 is a pole, for any m
+  - id: m-less-than-0-via-the-imaginary-modulus
+    expr: [N, [JacobiDS, 0.3, -0.7]]
+    expected: 3.453163713618813
+    category: Scope
+    caption: m less than 0, via the imaginary-modulus transformation
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiDS, u, m]
+    expected: [JacobiDS, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiDN
+  - JacobiSN
+  - JacobiSD

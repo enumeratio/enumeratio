@@ -1,0 +1,37 @@
+name: JacobiCS
+domain: Special functions
+signature: JacobiCS(u, m)
+summary: The Jacobi elliptic function $\operatorname{cs}(u,m) = \operatorname{cn}(u,m)/\operatorname{sn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiCS(u, m)
+    description: the Jacobi elliptic function cs, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{cs}(u,m) = \operatorname{cn}(u,m)/\operatorname{sn}(u,m)$ — [[JacobiCN]] and [[JacobiSN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - cs has a pole at u = 0 (sn(0,m) = 0, for any m).
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiCS, 1.1, 0.9]]
+    expected: 0.7225880618717211
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-a-pole-for-any-m
+    expr: [JacobiCS, 0, m]
+    expected: ComplexInfinity
+    category: Properties
+    caption: u = 0 is a pole, for any m
+  - id: m-greater-than-1-via-the-reciprocal-modulus
+    expr: [N, [JacobiCS, 0.3, 1.5]]
+    expected: 3.3098097501258734
+    category: Scope
+    caption: m greater than 1, via the reciprocal-modulus transformation
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiCS, u, m]
+    expected: [JacobiCS, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiCN
+  - JacobiSN
+  - JacobiSC

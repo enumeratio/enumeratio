@@ -1,0 +1,49 @@
+name: JacobiAmplitude
+domain: Special functions
+signature: JacobiAmplitude(u, m)
+summary: The Jacobi amplitude $\operatorname{am}(u,m)$ — the angle $\varphi$ inverting $u = F(\varphi,m)$ ([[EllipticF]]) — in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiAmplitude(u, m)
+    description: the Jacobi amplitude, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{sn}(u,m) = \sin(\operatorname{am}(u,m))$, $\operatorname{cn}(u,m) = \cos(\operatorname{am}(u,m))$ — the amplitude is what the descending Landen/AGM recursion behind [[JacobiSN]]/[[JacobiCN]]/[[JacobiDN]] computes directly (Abramowitz & Stegun 16.4), continuously (not just modulo $\pi$, unlike reconstructing it from $\arcsin$ of sn alone).
+  - Real m between 0 and 1 only — unlike the pq family, no parameter transform for m outside [0,1] has been verified for the amplitude itself, so this head declines there.
+  - am(0,m) = 0, for any m in range; am(u,0) = u, for any u.
+  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [JacobiAmplitude, 0.3, 0.5]]
+    expected: 0.2977947491298303
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: u-0-is-0-for-any-m
+    expr: [JacobiAmplitude, 0, m]
+    expected: 0
+    category: Properties
+    caption: u = 0 is 0, for any m
+  - id: m-0-reduces-to-u
+    expr: [JacobiAmplitude, u, 0]
+    expected: u
+    category: Properties
+    caption: m = 0 reduces to u
+  - id: a-wider-argument-u-past-the-first-quarter
+    expr: [N, [JacobiAmplitude, 2.5, 0.3]]
+    expected: 2.2472505509540945
+    category: Scope
+    caption: A wider argument u, past the first quarter period — not just arcsin(sn(u,m))
+  - id: m-outside-0-1-is-declined
+    expr: [N, [JacobiAmplitude, 0.3, 1.5]]
+    expected: [JacobiAmplitude, 0.3, 1.5]
+    category: Possible issues
+    caption: m outside [0, 1] is declined — no verified amplitude transform there
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [JacobiAmplitude, u, m]
+    expected: [JacobiAmplitude, u, m]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - JacobiSN
+  - JacobiCN
+  - JacobiZN
+  - EllipticF

@@ -1,0 +1,58 @@
+name: EllipticTheta
+domain: Special functions
+signature: EllipticTheta(a, u, q)
+summary: The Jacobi theta function $\vartheta_a(u,q)$, $a=1,2,3,4$ (DLMF 20.2), Wolfram's nome convention $|q|<1$.
+signatures:
+  - call: EllipticTheta(a, u, q)
+    description: the a-th Jacobi theta function (a = 1, 2, 3, or 4), argument u, nome q.
+    library: "@enumeratio/analytic"
+details:
+  - $q$ is the nome, $|q| < 1$ — the same convention mpmath's `jtheta(a, u, q)` uses, not the "half-period ratio" $\tau$ some other references parameterize by.
+  - Direct q-series (DLMF 20.2.1-20.2.4), term-summed until three consecutive terms fall under $10^{-15}$ or 20000 terms are reached.
+  - Declines when $|q| \ge 1$ (the series does not converge there at all), or when $|q|$ is close enough to 1 that convergence isn't reached within that term cap — no modular (Jacobi imaginary) transform is implemented to extend the series further.
+  - $a$ must be a concrete integer 1, 2, 3, or 4; any other value (including a symbolic a) stays unevaluated.
+  - Verified against mpmath's `jtheta` and a Wolfram kernel at complex u, complex q, AND real negative q.
+  - Numeric only — a symbolic u or q stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+examples:
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [N, [EllipticTheta, 3, 0.3, 0.2]]
+    expected: 1.3312935581135865
+    caption: A floating-point argument evaluates directly to a decimal
+  - id: theta1-0-q-is-0-for-any-q-an-odd
+    expr: [N, [EllipticTheta, 1, 0, 0.5]]
+    expected: 0
+    category: Properties
+    caption: theta1(0,q) is 0 for any q — an odd function of u
+  - id: each-of-the-four-theta-functions-a-1
+    expr: [N, [EllipticTheta, 1, 0.3, 0.2]]
+    expected: 0.3534305437476245
+    category: Scope
+    caption: Each of the four theta functions (a = 1)
+  - id: a-complex-argument-u
+    expr: [N, [EllipticTheta, 3, [Complex, 0.3, 0.1], 0.2]]
+    expected: [Complex, 1.3380122452445202, -0.04669885738620096]
+    category: Scope
+    caption: A complex argument u
+  - id: a-negative-real-nome-q
+    expr: [N, [EllipticTheta, 3, 1.0, -0.3]]
+    expected: 1.239061275954273
+    category: Scope
+    caption: A negative real nome q
+  - id: a-complex-nome-q
+    expr: [N, [EllipticTheta, 2, [Complex, 0.5, 0.5], [Complex, 0.1, 0.2]]]
+    expected: [Complex, 1.4821118035830818, 0.16355424959765597]
+    category: Scope
+    caption: A complex nome q, together with a complex u
+  - id: q-1-is-declined-the-series-diverges
+    expr: [N, [EllipticTheta, 3, 0.3, 1.0]]
+    expected: [EllipticTheta, 3, 0.3, 1]
+    category: Possible issues
+    caption: "|q| ≥ 1 is declined — the series diverges there"
+  - id: symbolic-arguments-are-left-unevaluated-rather
+    expr: [EllipticTheta, 3, u, q]
+    expected: [EllipticTheta, 3, u, q]
+    category: Possible issues
+    caption: Symbolic arguments are left unevaluated rather than guessed at
+seeAlso:
+  - EllipticThetaPrime
+  - JacobiSN
