@@ -33,7 +33,7 @@ examples:
     category: Scope
     caption: power shift — $\mathcal{M}\{x^a e^{-x}\}(s) = \Gamma(a+s)$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

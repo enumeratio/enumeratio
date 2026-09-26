@@ -29,7 +29,7 @@ examples:
     category: Scope
     caption: power shift — $\Gamma(a+s) \to x^a e^{-x}$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

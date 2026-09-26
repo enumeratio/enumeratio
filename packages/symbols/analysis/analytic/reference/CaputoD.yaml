@@ -34,7 +34,7 @@ examples:
     category: Scope
     caption: linearity — the constant term (1) drops out entirely
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

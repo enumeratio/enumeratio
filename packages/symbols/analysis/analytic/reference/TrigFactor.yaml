@@ -41,7 +41,7 @@ examples:
     category: Scope
     caption: the polynomial strategy — $\sin^2x+2\sin x\cos x+\cos^2x = (\sin x+\cos x)^2$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

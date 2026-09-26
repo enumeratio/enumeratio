@@ -84,7 +84,7 @@ examples:
     expected: [Cos, x]
     caption: $Y''+Y=0,\ Y(0)=1,\ Y'(0)=0 \Rightarrow \cos x$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

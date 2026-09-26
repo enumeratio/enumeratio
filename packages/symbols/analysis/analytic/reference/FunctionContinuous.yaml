@@ -33,7 +33,7 @@ examples:
     category: Scope
     caption: $\sqrt x$ is continuous on its own closed domain boundary $x=0$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine
