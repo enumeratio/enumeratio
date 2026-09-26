@@ -562,7 +562,7 @@ the-moduli-with-four-or-more-square-roots-of-1:
 a-square-root-of-i-in-z-i-7-the-field-of-49:
   epsil:
     in: PowerModList(i, 1 / 2, 7)
-    out: "[-2 + -2 * i, 2 + 2i]"
+    out: "[-2 - 2i, 2 + 2i]"
   tex:
     in: \mathrm{PowerModList}(i, \frac{1}{2}, 7)
     out: \bigl\lbrack-2-2i, 2+2i\bigr\rbrack
@@ -586,7 +586,7 @@ a-square-root-of-i-in-z-i-7-the-field-of-49:
 10-20-39-is-inert-so-its-residue-field-is-f-p-2:
   epsil:
     in: PowerModList(3 + 4i, 1 / 2, 10 ^ 20 + 39)
-    out: "[-2 + -1 * i, 2 + i]"
+    out: "[-2 - i, 2 + i]"
   tex:
     in: \mathrm{PowerModList}(3+4i, \frac{1}{2}, 10^{20}+39)
     out: \bigl\lbrack-2-i, 2+i\bigr\rbrack
@@ -610,7 +610,7 @@ a-square-root-of-i-in-z-i-7-the-field-of-49:
 a-gaussian-base-and-a-plain-modulus:
   epsil:
     in: PowerModList(2 + i, 1 / 2, 5)
-    out: "[-1 + 2i, 1 + -2 * i]"
+    out: "[-1 + 2i, 1 - 2i]"
   tex:
     in: \mathrm{PowerModList}(2+i, \frac{1}{2}, 5)
     out: \bigl\lbrack-1+2i, 1-2i\bigr\rbrack

@@ -92,12 +92,31 @@ export function collectWildcards(json: MathJsonExpression): string[] {
 }
 
 /**
+ * Put back the digits each decimal literal was typed with. compute-engine's `parseEpsil`
+ * works a short decimal out in doubles, so `0.3` reads as `0.30000000000000004` and prints
+ * back that way; a long one it keeps as written. Every literal carries the span it came
+ * from, and that text (less its `_` separators) is the value the author meant. A span that
+ * doesn't read as the same number -- a node from a `$…$` island, say -- is left alone.
+ */
+function exactDecimals(json: MathJsonExpression, src: string): void {
+  walk(json, (n) => {
+    const node = n as { num?: unknown; sourceOffsets?: [number, number] };
+    if (typeof node?.num !== "string" || !Array.isArray(node.sourceOffsets)) return;
+    const written = src.slice(...node.sourceOffsets).replaceAll("_", "");
+    if (!/^-?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/i.test(written)) return;
+    const [typed, parsed] = [Number(written), Number(node.num)];
+    if (typed === parsed || Math.abs(typed - parsed) <= Math.abs(parsed) * 1e-15) node.num = written;
+  });
+}
+
+/**
  * Parse a notatio (restricted-Epsil) source string. Returns the MathJSON, its
  * slot wildcards, and any diagnostics — an Epsil parse error, or a statement/
  * effect head that the subset forbids. Never throws.
  */
 export function parseNotatio(src: string, options?: NotatioOptions): NotatioResult {
   const [json, diagnostics] = parseEpsil(src, undefined, options);
+  exactDecimals(json, src);
   const errors = diagnostics.filter((d) => d.severity === "error").map((d) => diagText(d.message));
   const allowed = new Set(options?.allow);
   // A `Cell`'s input is a cell, and a cell may be one `:=` binding (`Cell(a := 5)`).

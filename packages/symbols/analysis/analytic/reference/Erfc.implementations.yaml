@@ -171,8 +171,8 @@ a-machine-precision-argument:
     in: Erfc[1.5]
 complex-arguments-should-evaluate-as-they-do-for:
   epsil:
-    in: Erfc(1.5 + -1 * i)
-    out: -0.078_399_207_498_933_45 + -0.027_963_711_238_655_847 * i
+    in: Erfc(1.5 - i)
+    out: -0.078_399_207_498_933_45 - 0.027_963_711_238_655_847i
   tex:
     in: \mathrm{Erfc}(1.5-i)
     out: -0.078\,399\,207\,498\,933\,45-0.027\,963\,711\,238\,655\,847i

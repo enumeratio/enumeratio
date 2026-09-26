@@ -324,6 +324,12 @@ the-generating-property-sum-k-s-n-k-x-k-x-x-1-x:
       Sum(StirlingS1(4, k) * x ^ k, (k, 0, 4)) == Expand(x * (x - 1) * (x - 2) * (x -
                                                                                   3))
     out: True
+    back:
+      [
+        Equal,
+        [Sum, [Multiply, [StirlingS1, 4, k], [Power, x, k]], [Tuple, k, 0, 4]],
+        [Expand, [Multiply, [Multiply, [Multiply, x, [Subtract, x, 1]], [Subtract, x, 2]], [Subtract, x, 3]]],
+      ]
   tex:
     in: \sum_{k=0}^4\mathrm{StirlingS1}(4, k)x^{k}=\mathrm{Expand}(x\times(x-1)(x-2)(x-3))
     out: \top

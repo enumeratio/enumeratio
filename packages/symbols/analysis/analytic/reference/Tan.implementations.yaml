@@ -558,10 +558,10 @@ rewritten-in-exponentials:
   epsil:
     in: TrigToExp(Tan(x))
     out: |-
-      -1 * i * ((-ExponentialE ^ (-1 * i * x) + ExponentialE ^ (i * x)) / (ExponentialE ^
-                                                                           (i * x) + ExponentialE ^
-                                                                              (-1 * i *
-                                                                               x)))
+      -i * ((-ExponentialE ^ (-i * x) + ExponentialE ^ (i * x)) / (ExponentialE ^ (i *
+                                                                                   x) +
+                                                                   ExponentialE ^ (-i *
+                                                                                   x)))
   tex:
     in: \mathrm{TrigToExp}(\tan(x))
     out: -\frac{i(\exp(i x)-\exp(-i x))}{\exp(i x)+\exp(-i x)}

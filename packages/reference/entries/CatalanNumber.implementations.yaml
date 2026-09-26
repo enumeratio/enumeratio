@@ -451,6 +451,12 @@ segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i:
   epsil:
     in: CatalanNumber(4) == Sum(CatalanNumber(i) * CatalanNumber(3 - i), (i, 0, 3))
     out: True
+    back:
+      [
+        Equal,
+        [CatalanNumber, 4],
+        [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]],
+      ]
   tex:
     in: \mathrm{CatalanNumber}(4)=\sum_{i=0}^3\mathrm{CatalanNumber}(i)\mathrm{CatalanNumber}(3-i)
     out: \top

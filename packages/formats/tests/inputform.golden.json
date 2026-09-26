@@ -47,6 +47,18 @@
     "canonical": "2 + 3i",
     "raw": "2 + 3i"
   },
+  "1 - i": {
+    "canonical": "1 - i",
+    "raw": "1 - i"
+  },
+  "2 - \\frac{1}{2}i": {
+    "canonical": "2 + -1 / 2 * i",
+    "raw": "2 - 1 / 2 * i"
+  },
+  "-3i": {
+    "canonical": "-3 * i",
+    "raw": "-3 * i"
+  },
   "\\sin(x)\\cos(y)": {
     "canonical": "Sin(x) * Cos(y)",
     "raw": "Sin(x) * Cos(y)"
@@ -70,6 +82,18 @@
   "10^{-3}": {
     "canonical": "10 ^ -3",
     "raw": "10 ^ (-3)"
+  },
+  "0.0000000000000001": {
+    "canonical": "10e-17",
+    "raw": "10e-17"
+  },
+  "-0.0000000000000001": {
+    "canonical": "-10e-17",
+    "raw": "-10e-17"
+  },
+  "2.5\\times10^{-16}": {
+    "canonical": "25e-17",
+    "raw": "25e-17"
   },
   "\\binom{5}{3}": {
     "canonical": "Binomial(5, 3)",

@@ -267,7 +267,7 @@ stays-symbolic:
 neg-1-plus-2i:
   epsil:
     in: -(1 + 2i)
-    out: -1 + -2 * i
+    out: -1 - 2i
   tex:
     in: -(1+2i)
     out: -1-2i

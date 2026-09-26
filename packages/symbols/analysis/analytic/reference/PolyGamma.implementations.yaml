@@ -166,7 +166,7 @@ a-pole-of-gamma-still-a-pole-after:
 psi-1-i-0-46300-0-79423-i-complex-argument-from:
   epsil:
     in: N(PolyGamma(1, 1 + i))
-    out: 0.463_000_096_622_763_76 + -0.794_233_542_759_319 * i
+    out: 0.463_000_096_622_763_76 - 0.794_233_542_759_319i
   tex:
     in: N(\mathrm{PolyGamma}(1, 1+i))
     out: 0.463\,000\,096\,622\,763\,76-0.794\,233\,542\,759\,319i
@@ -346,7 +346,7 @@ one-argument-digamma-at-a-complex-point:
 complex-argument-integer-order:
   epsil:
     in: PolyGamma(1, 2.5 + 3i)
-    out: 0.155_597_888_471_945_53 + -0.230_379_553_082_323_5 * i
+    out: 0.155_597_888_471_945_53 - 0.230_379_553_082_323_5i
   tex:
     in: \mathrm{PolyGamma}(1, 2.5+3i)
     out: 0.155\,597\,888\,471\,945\,53-0.230\,379\,553\,082\,323\,5i
@@ -670,7 +670,7 @@ n-polygamma-1-7-over-3:
 n-polygamma-1-1-plus-i:
   epsil:
     in: N(PolyGamma(1, 1 + i))
-    out: 0.463_000_096_622_763_76 + -0.794_233_542_759_319 * i
+    out: 0.463_000_096_622_763_76 - 0.794_233_542_759_319i
   tex:
     in: N(\mathrm{PolyGamma}(1, 1+i))
     out: 0.463\,000\,096\,622\,763\,76-0.794\,233\,542\,759\,319i
@@ -697,7 +697,7 @@ n-polygamma-1-1-plus-i:
 n-polygamma-1-0p5-plus-0p3i:
   epsil:
     in: N(PolyGamma(1, 0.5 + 0.3i))
-    out: 2.259_034_075_905_333_3 + -2.828_996_786_115_696_6 * i
+    out: 2.259_034_075_905_333_3 - 2.828_996_786_115_696_6i
   tex:
     in: N(\mathrm{PolyGamma}(1, 0.5+0.3i))
     out: 2.259\,034\,075\,905\,333\,3-2.828\,996\,786\,115\,696\,6i
@@ -723,7 +723,7 @@ n-polygamma-1-0p5-plus-0p3i:
     out: 2.25903407590533 - 2.82899678611570*I
 n-polygamma-1-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(PolyGamma(1, 2 + -0.5 * i))
+    in: N(PolyGamma(1, 2 - 0.5i))
     out: 0.588_197_890_950_061_5 + 0.185_041_972_433_790_86i
   tex:
     in: N(\mathrm{PolyGamma}(1, 2-0.5i))
@@ -936,8 +936,8 @@ n-polygamma-2-0p5-plus-0p3i:
     out: -0.177259899890067 + 10.4518222059434*I
 n-polygamma-2-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(PolyGamma(2, 2 + -0.5 * i))
-    out: -0.307_387_267_460_616_5 + -0.208_452_694_827_465_28 * i
+    in: N(PolyGamma(2, 2 - 0.5i))
+    out: -0.307_387_267_460_616_5 - 0.208_452_694_827_465_28i
   tex:
     in: N(\mathrm{PolyGamma}(2, 2-0.5i))
     out: -0.307\,387\,267\,460\,616\,5-0.208\,452\,694\,827\,465\,28i
@@ -1096,7 +1096,7 @@ n-polygamma-3-7-over-3:
 n-polygamma-3-1-plus-i:
   epsil:
     in: N(PolyGamma(3, 1 + i))
-    out: -1.522_874_448_953_496_4 + -0.317_286_578_661_960_86 * i
+    out: -1.522_874_448_953_496_4 - 0.317_286_578_661_960_86i
   tex:
     in: N(\mathrm{PolyGamma}(3, 1+i))
     out: -1.522\,874\,448\,953\,496\,4-0.317\,286\,578\,661\,960\,86i
@@ -1123,7 +1123,7 @@ n-polygamma-3-1-plus-i:
 n-polygamma-3-0p5-plus-0p3i:
   epsil:
     in: N(PolyGamma(3, 0.5 + 0.3i))
-    out: -27.944_271_157_846_87 + -43.969_408_839_814_47 * i
+    out: -27.944_271_157_846_87 - 43.969_408_839_814_47i
   tex:
     in: N(\mathrm{PolyGamma}(3, 0.5+0.3i))
     out: -27.944\,271\,157\,846\,87-43.969\,408\,839\,814\,47i
@@ -1149,7 +1149,7 @@ n-polygamma-3-0p5-plus-0p3i:
     out: -27.9442711578469 - 43.9694088398145*I
 n-polygamma-3-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(PolyGamma(3, 2 + -0.5 * i))
+    in: N(PolyGamma(3, 2 - 0.5i))
     out: 0.280_334_830_853_447_74 + 0.336_488_835_908_065_05i
   tex:
     in: N(\mathrm{PolyGamma}(3, 2-0.5i))
@@ -1362,7 +1362,7 @@ n-polygamma-5-0p5-plus-0p3i:
     out: -3033.62795029873 + 298.588513636671*I
 n-polygamma-5-2-plus-neg-0p5-times-i:
   epsil:
-    in: N(PolyGamma(5, 2 + -0.5 * i))
+    in: N(PolyGamma(5, 2 - 0.5i))
     out: 0.271_324_699_533_158_96 + 1.707_196_409_284_704_3i
   tex:
     in: N(\mathrm{PolyGamma}(5, 2-0.5i))
