@@ -1,0 +1,31 @@
+the-first-20-terms:
+  epsil:
+    in: Take(CircularPrimes, 20)
+    out: |-
+      [
+        2,
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        31,
+        37,
+        71,
+        73,
+        79,
+        97,
+        113,
+        131,
+        197,
+        199,
+        311,
+        337,
+        373,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{CircularPrimes}, 20)
+    out: \bigl\lbrack2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, 97, 113, 131, 197, 199, 311, 337, 373\bigr\rbrack
+  fullform:
+    in: Take[CircularPrimes, 20]

@@ -3,3 +3,34 @@
   expected: 24
   category: Basic
   caption: "$Count(SkewStandardTableaux(3)) = 24$: standard fillings of every skew shape of 3 cells"
+- role: test
+  id: every-element-of-skewstandardtableaux-3
+  expr: [Take, [SkewStandardTableaux, 3], 24]
+  expected:
+    [
+      List,
+      [List, [List, 1, 1, 1], [List], [List, 0, 1, 2]],
+      [List, [List, 2, 1], [List], [List, 0, 0, 1]],
+      [List, [List, 2, 1], [List], [List, 0, 1, 0]],
+      [List, [List, 2, 1, 1], [List, 1], [List, 0, 1, 2]],
+      [List, [List, 2, 1, 1], [List, 1], [List, 1, 0, 2]],
+      [List, [List, 2, 1, 1], [List, 1], [List, 1, 2, 0]],
+      [List, [List, 2, 2], [List, 1], [List, 0, 1, 1]],
+      [List, [List, 2, 2], [List, 1], [List, 1, 0, 1]],
+      [List, [List, 2, 2, 1], [List, 1, 1], [List, 0, 1, 2]],
+      [List, [List, 2, 2, 1], [List, 1, 1], [List, 0, 2, 1]],
+      [List, [List, 2, 2, 1], [List, 1, 1], [List, 2, 0, 1]],
+      [List, [List, 3], [List], [List, 0, 0, 0]],
+      [List, [List, 3, 1], [List, 1], [List, 0, 0, 1]],
+      [List, [List, 3, 1], [List, 1], [List, 0, 1, 0]],
+      [List, [List, 3, 1], [List, 1], [List, 1, 0, 0]],
+      [List, [List, 3, 2], [List, 2], [List, 0, 1, 1]],
+      [List, [List, 3, 2], [List, 2], [List, 1, 0, 1]],
+      [List, [List, 3, 2], [List, 2], [List, 1, 1, 0]],
+      [List, [List, 3, 2, 1], [List, 2, 1], [List, 0, 1, 2]],
+      [List, [List, 3, 2, 1], [List, 2, 1], [List, 0, 2, 1]],
+      [List, [List, 3, 2, 1], [List, 2, 1], [List, 1, 0, 2]],
+      [List, [List, 3, 2, 1], [List, 2, 1], [List, 1, 2, 0]],
+      [List, [List, 3, 2, 1], [List, 2, 1], [List, 2, 0, 1]],
+      [List, [List, 3, 2, 1], [List, 2, 1], [List, 2, 1, 0]],
+    ]

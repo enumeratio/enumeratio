@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(HexagonalNumbers, 25)
+    out: |-
+      [
+        1,
+        6,
+        15,
+        28,
+        45,
+        66,
+        91,
+        120,
+        153,
+        190,
+        231,
+        276,
+        325,
+        378,
+        435,
+        496,
+        561,
+        630,
+        703,
+        780,
+        861,
+        946,
+        1_035,
+        1_128,
+        1_225,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{HexagonalNumbers}, 25)
+    out: \bigl\lbrack1, 6, 15, 28, 45, 66, 91, 120, 153, 190, 231, 276, 325, 378, 435, 496, 561, 630, 703, 780, 861, 946, 1\,035, 1\,128, 1\,225\bigr\rbrack
+  fullform:
+    in: Take[HexagonalNumbers, 25]

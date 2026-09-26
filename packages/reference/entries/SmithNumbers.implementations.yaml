@@ -1,0 +1,31 @@
+the-first-20-terms:
+  epsil:
+    in: Take(SmithNumbers, 20)
+    out: |-
+      [
+        4,
+        22,
+        27,
+        58,
+        85,
+        94,
+        121,
+        166,
+        202,
+        265,
+        274,
+        319,
+        346,
+        355,
+        378,
+        382,
+        391,
+        438,
+        454,
+        483,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SmithNumbers}, 20)
+    out: \bigl\lbrack4, 22, 27, 58, 85, 94, 121, 166, 202, 265, 274, 319, 346, 355, 378, 382, 391, 438, 454, 483\bigr\rbrack
+  fullform:
+    in: Take[SmithNumbers, 20]

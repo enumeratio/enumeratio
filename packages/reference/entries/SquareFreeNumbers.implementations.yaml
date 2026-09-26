@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(SquareFreeNumbers, 25)
+    out: |-
+      [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        10,
+        11,
+        13,
+        14,
+        15,
+        17,
+        19,
+        21,
+        22,
+        23,
+        26,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        37,
+        38,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SquareFreeNumbers}, 25)
+    out: \bigl\lbrack1, 2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 29, 30, 31, 33, 34, 35, 37, 38\bigr\rbrack
+  fullform:
+    in: Take[SquareFreeNumbers, 25]

@@ -16,3 +16,34 @@ the-88th-and-largest-term-is-exact:
     out: 115\,132\,219\,018\,763\,992\,565\,095\,597\,973\,971\,522\,401
   fullform:
     in: Part[NarcissisticNumbers, 88]
+the-first-20-terms:
+  epsil:
+    in: Take(NarcissisticNumbers, 20)
+    out: |-
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        153,
+        370,
+        371,
+        407,
+        1_634,
+        8_208,
+        9_474,
+        54_748,
+        92_727,
+        93_084,
+        548_834,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{NarcissisticNumbers}, 20)
+    out: \bigl\lbrack1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1\,634, 8\,208, 9\,474, 54\,748, 92\,727, 93\,084, 548\,834\bigr\rbrack
+  fullform:
+    in: Take[NarcissisticNumbers, 20]

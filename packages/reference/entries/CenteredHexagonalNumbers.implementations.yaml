@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(CenteredHexagonalNumbers, 25)
+    out: |-
+      [
+        1,
+        7,
+        19,
+        37,
+        61,
+        91,
+        127,
+        169,
+        217,
+        271,
+        331,
+        397,
+        469,
+        547,
+        631,
+        721,
+        817,
+        919,
+        1_027,
+        1_141,
+        1_261,
+        1_387,
+        1_519,
+        1_657,
+        1_801,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{CenteredHexagonalNumbers}, 25)
+    out: \bigl\lbrack1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397, 469, 547, 631, 721, 817, 919, 1\,027, 1\,141, 1\,261, 1\,387, 1\,519, 1\,657, 1\,801\bigr\rbrack
+  fullform:
+    in: Take[CenteredHexagonalNumbers, 25]

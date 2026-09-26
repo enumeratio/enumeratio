@@ -7,3 +7,54 @@ the-first-20-terms-oeis-a010060:
     out: \bigl\lbrack0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1\bigr\rbrack
   fullform:
     in: Take[ThueMorseNumbers, 20]
+the-first-40-terms:
+  epsil:
+    in: Take(ThueMorseNumbers, 40)
+    out: |-
+      [
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{ThueMorseNumbers}, 40)
+    out: \bigl\lbrack0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0\bigr\rbrack
+  fullform:
+    in: Take[ThueMorseNumbers, 40]

@@ -7,3 +7,58 @@ count-tristrings-6-44-binary-strings-of-length-6:
     out: "44"
   fullform:
     in: Count[TriStrings[6]]
+every-element-of-tristrings-6:
+  epsil:
+    in: Take(TriStrings(6), 44)
+    out: |-
+      [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 1, 0],
+        [0, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 1],
+        [0, 0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 1, 1],
+        [0, 0, 1, 1, 0, 0],
+        [0, 0, 1, 1, 0, 1],
+        [0, 1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 0, 1, 0],
+        [0, 1, 0, 0, 1, 1],
+        [0, 1, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1],
+        [0, 1, 0, 1, 1, 0],
+        [0, 1, 1, 0, 0, 0],
+        [0, 1, 1, 0, 0, 1],
+        [0, 1, 1, 0, 1, 0],
+        [0, 1, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 0],
+        [1, 0, 0, 0, 1, 1],
+        [1, 0, 0, 1, 0, 0],
+        [1, 0, 0, 1, 0, 1],
+        [1, 0, 0, 1, 1, 0],
+        [1, 0, 1, 0, 0, 0],
+        [1, 0, 1, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0],
+        [1, 0, 1, 0, 1, 1],
+        [1, 0, 1, 1, 0, 0],
+        [1, 0, 1, 1, 0, 1],
+        [1, 1, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 1],
+        [1, 1, 0, 0, 1, 0],
+        [1, 1, 0, 0, 1, 1],
+        [1, 1, 0, 1, 0, 0],
+        [1, 1, 0, 1, 0, 1],
+        [1, 1, 0, 1, 1, 0],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{TriStrings}(6), 44)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 1, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 1, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[TriStrings[6], 44]

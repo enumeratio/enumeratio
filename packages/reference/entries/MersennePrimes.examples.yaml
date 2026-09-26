@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-8-terms
+  expr: [Take, MersennePrimes, 8]
+  expected: [List, 3, 7, 31, 127, 8191, 131071, 524287, 2147483647]

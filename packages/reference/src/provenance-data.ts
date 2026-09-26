@@ -1223,7 +1223,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "KAlmostPrimes",
-    provenance: "unknown",
+    provenance: "extension",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -1237,7 +1237,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "KFreeIntegers",
-    provenance: "unknown",
+    provenance: "extension",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -1657,7 +1657,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "PolygonalNumbers",
-    provenance: "unknown",
+    provenance: "extension",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -1706,7 +1706,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "PrimePairs",
-    provenance: "unknown",
+    provenance: "extension",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -1825,7 +1825,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "RoughNumbers",
-    provenance: "unknown",
+    provenance: "extension",
     declared: null,
     wolframAlias: null,
     elsewhere: [],

@@ -1,0 +1,9 @@
+the-first-20-terms:
+  epsil:
+    in: Take(PrimePowerNumbers, 20)
+    out: "[2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 29, 31, 32, 37, 41]"
+  tex:
+    in: \mathrm{Take}(\mathrm{PrimePowerNumbers}, 20)
+    out: \bigl\lbrack2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 29, 31, 32, 37, 41\bigr\rbrack
+  fullform:
+    in: Take[PrimePowerNumbers, 20]

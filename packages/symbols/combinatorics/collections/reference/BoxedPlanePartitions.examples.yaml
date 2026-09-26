@@ -8,3 +8,30 @@
   expected: 5
   category: Scope
   caption: 'A degenerate $1 \times 1 \times n$ box: $Count = n + 1$'
+- role: test
+  id: every-element-of-boxedplanepartitions-2-2-2
+  expr: [Take, [BoxedPlanePartitions, 2, 2, 2], 20]
+  expected:
+    [
+      List,
+      [List],
+      [List, [List, 1]],
+      [List, [List, 2]],
+      [List, [List, 1], [List, 1]],
+      [List, [List, 2], [List, 1]],
+      [List, [List, 2], [List, 2]],
+      [List, [List, 1, 1]],
+      [List, [List, 2, 1]],
+      [List, [List, 2, 2]],
+      [List, [List, 1, 1], [List, 1]],
+      [List, [List, 2, 1], [List, 1]],
+      [List, [List, 2, 1], [List, 2]],
+      [List, [List, 2, 2], [List, 1]],
+      [List, [List, 2, 2], [List, 2]],
+      [List, [List, 1, 1], [List, 1, 1]],
+      [List, [List, 2, 1], [List, 1, 1]],
+      [List, [List, 2, 1], [List, 2, 1]],
+      [List, [List, 2, 2], [List, 1, 1]],
+      [List, [List, 2, 2], [List, 2, 1]],
+      [List, [List, 2, 2], [List, 2, 2]],
+    ]

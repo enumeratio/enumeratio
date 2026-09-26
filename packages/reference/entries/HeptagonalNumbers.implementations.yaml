@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(HeptagonalNumbers, 25)
+    out: |-
+      [
+        1,
+        7,
+        18,
+        34,
+        55,
+        81,
+        112,
+        148,
+        189,
+        235,
+        286,
+        342,
+        403,
+        469,
+        540,
+        616,
+        697,
+        783,
+        874,
+        970,
+        1_071,
+        1_177,
+        1_288,
+        1_404,
+        1_525,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{HeptagonalNumbers}, 25)
+    out: \bigl\lbrack1, 7, 18, 34, 55, 81, 112, 148, 189, 235, 286, 342, 403, 469, 540, 616, 697, 783, 874, 970, 1\,071, 1\,177, 1\,288, 1\,404, 1\,525\bigr\rbrack
+  fullform:
+    in: Take[HeptagonalNumbers, 25]
