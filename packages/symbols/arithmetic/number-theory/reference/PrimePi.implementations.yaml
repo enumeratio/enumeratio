@@ -187,6 +187,10 @@ rational-arguments-the-primes-up-to-7-2-are-2:
     in: "(Nat.primeCounting ((7 : ℚ) / 2))"
   rust:
     in: prime_pi(rational(n(7), n(2)))
+    out: "panic: an integer, not 7/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's PrimePi extends past them.
 real-arguments:
   epsil:
     in: PrimePi(15.25)
@@ -210,6 +214,10 @@ real-arguments:
     in: (Nat.primeCounting 15.25)
   rust:
     in: prime_pi(x(15.25))
+    out: "panic: an integer, not 15.25"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's PrimePi extends past them.
 the-primes-below-a-million:
   epsil:
     in: PrimePi(1_000_000)
@@ -233,6 +241,7 @@ the-primes-below-a-million:
     in: (Nat.primeCounting 1000000)
   rust:
     in: prime_pi(n(1000000))
+    out: "78498"
 listable-threads-over-a-list:
   epsil:
     in: PrimePi([3, 5, 17, 25])
@@ -253,6 +262,10 @@ listable-threads-over-a-list:
     in: (Nat.primeCounting [3, 5, 17, 25])
   rust:
     in: prime_pi(list(vec![n(3), n(5), n(17), n(25)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's PrimePi is Listable and threads over the list; the Rust crates take scalars only.
 no-primes-are-a-negative-number:
   epsil:
     in: PrimePi(-1)
@@ -268,11 +281,15 @@ no-primes-are-a-negative-number:
   wolfram:
     in: PrimePi[-1]
   sympy:
-    in: primepi((-1))
+    in: primepi(-1)
     out: "0"
   sage:
-    in: prime_pi((-1))
+    in: prime_pi(-1)
   mathlib4:
     in: (Nat.primeCounting (-1))
   rust:
     in: prime_pi(n(-1))
+    out: "panic: a non-negative integer"
+    verdict: error
+    kind: domain
+    note: primal takes non-negative machine-size integers; compute-engine's PrimePi answers the rest.

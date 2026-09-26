@@ -56,10 +56,10 @@ max-neg-1-neg-5:
       in: \max (-1,-5)
       out: "-1"
   sympy:
-    in: enumeratio_max((-1), (-5))
+    in: enumeratio_max(-1, -5)
     out: "-1"
   sage:
-    in: enumeratio_max((-1), (-5))
+    in: enumeratio_max(-1, -5)
     out: "-1"
 a-single-argument-is-returned-unchanged:
   epsil:
@@ -240,10 +240,10 @@ max-5p56-neg-4p8-7p3:
   wolfram:
     in: Max[5.56, -4.8, 7.3]
   sympy:
-    in: enumeratio_max(5.56, (-4.8), 7.3)
+    in: enumeratio_max(5.56, -4.8, 7.3)
     out: "7.30000000000000"
   sage:
-    in: enumeratio_max(5.56, (-4.8), 7.3)
+    in: enumeratio_max(5.56, -4.8, 7.3)
 nested-lists-are-flattened-into-the-pool:
   epsil:
     in: Max(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -256,10 +256,10 @@ nested-lists-are-flattened-into-the-pool:
   wolfram:
     in: Max[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   sympy:
-    in: enumeratio_max(2, 3, [[Rational(1, 2), (-1)], [Rational((-5), 3), Rational(1, 2)]])
+    in: enumeratio_max(2, 3, [[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]])
     out: "3"
   sage:
-    in: enumeratio_max(2, 3, [[(1/2), (-1)], [((-5)/3), (1/2)]])
+    in: enumeratio_max(2, 3, [[(1/2), -1], [(-5/3), (1/2)]])
 exact-numbers-are-compared-numerically:
   epsil:
     in: Max(Sqrt(2), 3 / 2)
@@ -349,6 +349,6 @@ the-max-of-an-empty-list-is-nan-too:
     out: -oo
     verdict: disagree
     kind: convention
-    note: Same as the Wolfram row above -- SymPy's max() of an empty sequence also takes the identity element (-infinity); we deliberately return NaN for Max of an empty LIST.
+    note: compute-engine gives NaN for the max of an empty list; SymPy's Max() is the identity -∞.
   sage:
     in: enumeratio_max([])

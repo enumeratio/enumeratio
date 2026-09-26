@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { parseEpsil } from "@cortex-js/compute-engine/epsil";
 import { afterAll, expect, test } from "vite-plus/test";
 import { toInputForm } from "../src/inputform.ts";
+import { parseExpression } from "../src/expression.ts";
 
 // The corpus is every shape the normalization rules touch, plus enough ordinary
 // expressions to catch a rule firing where it shouldn't. Each is printed from both
@@ -22,12 +22,18 @@ const CORPUS = [
   "\\lim_{x\\to 0}\\frac{\\sin x}{x}",
   "e^{i\\pi}+1",
   "2 + 3i",
+  "1 - i",
+  "2 - \\frac{1}{2}i",
+  "-3i",
   "\\sin(x)\\cos(y)",
   "\\sqrt{x}",
   "\\sqrt[3]{x}",
   "\\frac{1}{2}",
   "x^2+1",
   "10^{-3}",
+  "0.0000000000000001",
+  "-0.0000000000000001",
+  "2.5\\times10^{-16}",
   "\\binom{5}{3}",
   "|x|",
   "\\log_2(8)",
@@ -42,8 +48,7 @@ const ce = new ComputeEngine();
 
 /** The canonical MathJSON of an InputForm string, or a diagnostic. */
 function reparse(source: string): unknown {
-  const [json, diagnostics] = parseEpsil(source);
-  const errors = diagnostics.filter((d) => d.severity === "error");
+  const { json, errors } = parseExpression(source);
   if (errors.length) return { parseError: source };
   return ce.box(json as Parameters<ComputeEngine["box"]>[0]).json;
 }

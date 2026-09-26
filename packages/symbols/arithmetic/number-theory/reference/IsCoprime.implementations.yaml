@@ -56,7 +56,7 @@ pairwise-not-collectively-gcd-6-10-15-1-yet-no:
     in: CoprimeQ[6, 10, 15]
 gaussian-integers-2-i-and-2-i-are-non-associate:
   epsil:
-    in: IsCoprime(2 + i, 2 + -1 * i)
+    in: IsCoprime(2 + i, 2 - i)
     out: True
   tex:
     in: \mathrm{IsCoprime}(2+i, 2-i)

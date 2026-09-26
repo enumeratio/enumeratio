@@ -66,7 +66,7 @@ a-21-digit-modulus:
   wolfram:
     in: ModularInverse[3, Plus[Power[10, 20], 1]]
   sage:
-    in: inverse_mod(3, ((10^20) + 1))
+    in: inverse_mod(3, (((10)^20) + 1))
 listable-threads-over-a-list:
   epsil:
     in: ModularInverse([2, 3, 4], 11)
@@ -111,7 +111,7 @@ a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
   wolfram:
     in: Mod[Times[12345, ModularInverse[12345, Subtract[Power[2, 61], 1]]], Subtract[Power[2, 61], 1]]
   sage:
-    in: ((12345 * inverse_mod(12345, ((2^61) - 1))) % ((2^61) - 1))
+    in: ((12345 * inverse_mod(12345, (((2)^61) - 1))) % (((2)^61) - 1))
 2-i-6-4i-8-14i-equiv-1-pmod-7:
   epsil:
     in: ModularInverse(2 + i, 7)
@@ -138,7 +138,7 @@ a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
 modularinverse-11-plus-neg-7-times-i-7-plus-4i:
   epsil:
-    in: ModularInverse(11 + -7 * i, 7 + 4i)
+    in: ModularInverse(11 - 7i, 7 + 4i)
     out: -1 + 2i
   tex:
     in: \mathrm{ModularInverse}(11-7i, 7+4i)
@@ -186,8 +186,8 @@ gcd-2-4-2-no-inverse:
     note: 'Both decline: compute-engine answers ["ModularInverse", 2, 4] and Sage raises an error.'
 a-gaussian-base-and-a-gaussian-modulus:
   epsil:
-    in: ModularInverse(3 + -1 * i, 5 + 2i)
-    out: -1 + -1 * i
+    in: ModularInverse(3 - i, 5 + 2i)
+    out: -1 - i
   tex:
     in: \mathrm{ModularInverse}(3-i, 5+2i)
     out: -1-i

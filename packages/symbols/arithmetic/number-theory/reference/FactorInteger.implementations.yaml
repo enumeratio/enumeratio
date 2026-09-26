@@ -71,13 +71,13 @@ multiplying-the-p-e-factors-back-together:
       in: 2^3 3^2 5=360
       out: \text{True}
   sympy:
-    in: enumeratio_equal(((2**3) * (3**2) * 5), 360)
+    in: enumeratio_equal((((2)**3) * ((3)**2) * 5), 360)
     out: True
   mpmath:
-    in: almosteq(((2**3) * (3**2) * 5), 360, 1e-20)
+    in: almosteq((((2)**3) * ((3)**2) * 5), 360, 1e-20)
     out: True
   sage:
-    in: bool(((2^3) * (3^2) * 5) == 360)
+    in: bool((((2)^3) * ((3)^2) * 5) == 360)
     out: True
   oscar:
     in: (((big(2)^3) * (big(3)^2) * 5) == 360)
@@ -174,7 +174,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
 5-i-1-2i-2-i:
   epsil:
     in: FactorInteger(5, GaussianIntegers -> True)
-    out: "[(-1 * i, 1), (1 + 2i, 1), (2 + i, 1)]"
+    out: "[(-i, 1), (1 + 2i, 1), (2 + i, 1)]"
   tex:
     in: \mathrm{FactorInteger}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
     out: \bigl\lbrack(-i,1), (1+2i,1), (2+i,1)\bigr\rbrack
@@ -208,13 +208,8 @@ a-21-digit-gaussian-integer-through-its-norm:
   epsil:
     in: FactorInteger(100_000_000_000_000_000_039 + 100_000_000_000_000_000_129i)
     out: |-
-      [
-        (-1 * i, 1),
-        (1 + i, 1),
-        (99 + 34i, 1),
-        (1_538 + 213i, 1),
-        (277_789_996_706_096 + 549_000_467_740_335i, 1),
-      ]
+      [(-i, 1), (1 + i, 1), (99 + 34i, 1), (1_538 + 213i, 1), (277_789_996_706_096 +
+                                                               549_000_467_740_335i, 1)]
   tex:
     in: \mathrm{FactorInteger}(100\,000\,000\,000\,000\,000\,039+100\,000\,000\,000\,000\,000\,129i)
     out: \bigl\lbrack(-i,1), (1+i,1), (99+34i,1), (1\,538+213i,1), (277\,789\,996\,706\,096+549\,000\,467\,740\,335i,1)\bigr\rbrack
@@ -336,7 +331,7 @@ a-21-digit-prime-cubed-factors-at-once:
   wolfram:
     in: FactorInteger[Power[100000000000000000039, 3]]
   sage:
-    in: list(factor((100000000000000000039^3)))
+    in: list(factor(((100000000000000000039)^3)))
 factorinteger-neg-12:
   epsil:
     in: FactorInteger(-12)

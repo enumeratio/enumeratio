@@ -114,7 +114,7 @@ a-floating-point-number-read-as-the-rational-it:
     out: "ValueError: expecting a rational or quadratic irrational, not 3.24500000000000"
     verdict: error
     kind: domain
-    note: SymPy's continued_fraction refuses a plain float; ours reads it as the exact rational it prints as (see the caption).
+    note: SymPy's continued_fraction takes rationals and quadratic irrationals, not floats; compute-engine reads 3.245 exactly.
   sage:
     in: list(continued_fraction(3.245))
 negative-a-floor-for-a-0-then-positive-terms-3-1:
@@ -130,10 +130,10 @@ negative-a-floor-for-a-0-then-positive-terms-3-1:
     in: ContinuedFraction[Rational[-47, 17]]
     note: Wolfram negates every term instead, giving {-2, -1, -3, -4}.
   sympy:
-    in: list(continued_fraction(Rational((-47), 17)))
+    in: list(continued_fraction(Rational(-47, 17)))
     out: "[-3, 4, 4]"
   sage:
-    in: list(continued_fraction(((-47)/17)))
+    in: list(continued_fraction((-47/17)))
 fromcontinuedfraction-inverts-it:
   epsil:
     in: FromContinuedFraction(ContinuedFraction(47 / 17))
@@ -186,7 +186,7 @@ varphi-1-overline-1-purely-periodic-so-the:
     out: "[[1]]"
     verdict: disagree
     kind: shape
-    note: Same period, split differently -- we write the leading term and the period separately ([1, [1]], matching [1; overline 1] as printed), SymPy folds the leading term into the period for a purely periodic value ([[1]]).
+    note: "The same expansion: SymPy prints the purely periodic one as [[1]], compute-engine as [1, [1]]."
   sage:
     in: list(continued_fraction(((1 + sqrt(5)) / 2)))
 the-named-constant-unfolded-to-1-sqrt-5-2-first:

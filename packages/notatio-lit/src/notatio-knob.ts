@@ -87,7 +87,7 @@ const DOUBLE_TAP_MS = 400;
  * ```
  *
  * Inside a `<notatio-dynamic-module>` the knob's `name` becomes the wildcard `_name`, and every
- * notatio template in the surrounding prose re-derives as it moves.
+ * Epsil template in the surrounding prose re-derives as it moves.
  *
  * ```html
  * <notatio-dynamic-module>

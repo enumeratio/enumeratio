@@ -12,7 +12,7 @@ const RUNTIME = {
   __pl: polyLogReal,
 } as const;
 
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import { debug, type Field2d, vectorPlotSvg } from "@enumeratio/notatio";
@@ -57,7 +57,7 @@ const log = debug("vectorplot");
 /**
  * `<notatio-vector-plot u="-y" v="x" xrange="-2,2" yrange="-2,2">` -- a planar
  * vector field (Wolfram's `VectorPlot`): `u`/`v` are the two components in
- * notatio, or `field="-y, x"` gives both at once. Arrows sit on an `n`×`n` grid
+ * Epsil, or `field="-y, x"` gives both at once. Arrows sit on an `n`×`n` grid
  * of cell centres, their length and colour scaling with |F|.
  *
  * `type="stream"` switches to `StreamPlot`: streamlines traced from the same
@@ -66,9 +66,9 @@ const log = debug("vectorplot");
  */
 export class NotatioVectorPlot extends LitElement {
   static properties = {
-    /** The x component of the field, in notatio. */
+    /** The x component of the field, in Epsil. */
     u: { type: String },
-    /** The y component of the field, in notatio. */
+    /** The y component of the field, in Epsil. */
     v: { type: String },
     /** Both components at once, comma-separated — `"-y, x"`. */
     field: { type: String },
@@ -176,11 +176,11 @@ export class NotatioVectorPlot extends LitElement {
       const vx = this.xvar || "x";
       const vy = this.yvar || "y";
       const box = (src: string): BoxedExpression | undefined => {
-        const { json, errors } = parseNotatio(src, {
+        const { json, errors } = parseExpression(src, {
           parseLatex: (tex) => engine.parse(tex).json,
         });
         if (errors.length) {
-          log("component is not notatio", src, errors);
+          log("component is not Epsil", src, errors);
           return undefined;
         }
         return engine.box(json);

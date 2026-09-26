@@ -4,7 +4,7 @@ Wolfram's `ComplexPlot3D`, rendered by `<notatio-complex-plot-3d>`: |f(z)| as a 
 over the complex plane, each face coloured by arg f(z) on the same hue wheel the
 [complex plot](/playground/complex-plot) paints. A pole is a spike that rises to
 `max-height` (default 4) with every hue winding round it; a zero is a dimple the hues wind
-round the other way. `value` is **notatio**; LaTeX goes in a `$…$` island.
+round the other way. `value` is an expression written in **Epsil**; LaTeX goes in a `$…$` island.
 
 The surface is sampled `samples` per side (default 40) in a WebGPU compute shader where it
 can be (see [GPU evaluation](#gpu-evaluation)), and otherwise on the CPU through the base
@@ -96,7 +96,7 @@ itself, the iterator's complex corners becoming the `domain`.
 
 <Story
   title="Through notatio-out">
-<notatio-out format="notatio" value="ComplexPlot3D(1/(z^2 + 1), (z, -2 - 2 * i, 2 + 2 * i))" />
+<notatio-out format="epsil" value="ComplexPlot3D(1/(z^2 + 1), (z, -2 - 2 * i, 2 + 2 * i))" />
 </Story>
 
 ## Notes

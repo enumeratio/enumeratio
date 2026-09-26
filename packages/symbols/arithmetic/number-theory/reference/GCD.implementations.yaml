@@ -194,7 +194,7 @@ lists-aren-t-threaded-element-wise-they-re:
     kind: threading
     note: compute-engine's GCD pools the elements of list arguments; Oscar's gcd takes scalars only.
   julia:
-    in: gcd(ZZ([2, 4]), ZZ([6, 8]))
+    in: "[gcd(ZZ([2, 4]), ZZ(6)), gcd(ZZ([2, 4]), ZZ(8))]"
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
     kind: threading
@@ -365,10 +365,12 @@ reduce-12-18-to-lowest-terms-by-dividing-out-the:
     in: (12 // gcd(ZZ(12), ZZ(18)))
   julia:
     in: (12 // gcd(ZZ(12), ZZ(18)))
+    out: "2.0"
   mathlib4:
     in: "((12 : ℚ) / (Int.gcd 12 18))"
   rust:
     in: (n(12) / gcd(n(12), n(18)))
+    out: "2"
 gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
   epsil:
     in: GCD(-3 + 2i, 10 + 15i)
@@ -381,14 +383,18 @@ gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
   wolfram:
     in: GCD[Complex[-3, 2], Complex[10, 15]]
   sympy:
-    in: gcd(((-3) + 2*I), (10 + 15*I))
+    in: gcd((-3 + 2*I), (10 + 15*I))
     out: 2 + 3*I
   sage:
-    in: gcd(((-3) + 2*I), (10 + 15*I))
+    in: gcd((-3 + 2*I), (10 + 15*I))
   oscar:
     in: gcd(ZZ(complex(-3, 2)), ZZ(complex(10, 15)))
   julia:
     in: gcd(ZZ(complex(-3, 2)), ZZ(complex(10, 15)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd directly.
 gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
   epsil:
     in: GCD(5 + 10 / 3 * i, 3 / 2 + i)
@@ -409,6 +415,10 @@ gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
     in: gcd(ZZ(complex(5, (10 // 3))), ZZ(complex((3 // 2), 1)))
   julia:
     in: gcd(ZZ(complex(5, (10 // 3))), ZZ(complex((3 // 2), 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd for a Gaussian-rational argument too.
 big-integers-gcd-20-10-100-3-7-exact-past-where:
   epsil:
     in: GCD(20!, 10 ^ 100 + 3)
@@ -421,18 +431,23 @@ big-integers-gcd-20-10-100-3-7-exact-past-where:
   wolfram:
     in: GCD[Factorial[20], Plus[Power[10, 100], 3]]
   sympy:
-    in: gcd(factorial(20), ((10**100) + 3))
+    in: gcd(factorial(20), (((10)**100) + 3))
     out: "7"
   sage:
-    in: gcd(factorial(20), ((10^100) + 3))
+    in: gcd(factorial(20), (((10)^100) + 3))
   oscar:
     in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
   julia:
     in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+    out: "7"
   mathlib4:
     in: (Int.gcd (Nat.factorial 20) ((10 ^ 100) + 3))
   rust:
     in: gcd(factorial(n(20)), (power(n(10), n(100)) + n(3)))
+    out: "panic: an integer, not 2.43290200817664e18"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's GCD extends past them.
 listable-a-single-list-argument-threads-element:
   epsil:
     in: GCD(12, [3, 7, 40])
@@ -452,11 +467,16 @@ listable-a-single-list-argument-threads-element:
   oscar:
     in: gcd(ZZ(12), ZZ([3, 7, 40]))
   julia:
-    in: gcd(ZZ(12), ZZ([3, 7, 40]))
+    in: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]"
+    out: "[3, 1, 4]"
   mathlib4:
     in: (Int.gcd 12 [3, 7, 40])
   rust:
     in: gcd(n(12), list(vec![n(3), n(7), n(40)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars only.
 gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci:
   epsil:
     in: GCD(Fibonacci(12), Fibonacci(18))
@@ -479,7 +499,8 @@ gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci:
   oscar:
     in: gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18)))
   julia:
-    in: gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18)))
+    in: gcd(ZZ(BigInt(fibonacci(ZZ(12)))), ZZ(BigInt(fibonacci(ZZ(18)))))
+    out: "8"
   mathlib4:
     in: (Int.gcd (Nat.fib 12) (Nat.fib 18))
 gcd-0-0-0-by-convention:
@@ -502,10 +523,12 @@ gcd-0-0-0-by-convention:
     in: gcd(ZZ(0), ZZ(0))
   julia:
     in: gcd(ZZ(0), ZZ(0))
+    out: "0"
   mathlib4:
     in: (Int.gcd 0 0)
   rust:
     in: gcd(n(0), n(0))
+    out: "0"
 symbolic-arguments-stay-unevaluated:
   epsil:
     in: GCD(x, y)

@@ -311,10 +311,10 @@ negative-integers-are-poles-of-the-gamma:
       in: (-1)!
       out: \text{ComplexInfinity}
   sympy:
-    in: factorial((-1))
+    in: factorial(-1)
     out: zoo
   sage:
-    in: factorial((-1))
+    in: factorial(-1)
     out: "ValueError: factorial only defined for nonnegative integers"
     verdict: error
     kind: undefined-form
@@ -405,10 +405,18 @@ real-arguments-evaluate-as-gamma-n-1:
     in: factorial(ZZ(3.5))
   julia:
     in: factorial(ZZ(3.5))
+    out: "InexactError: convert(ZZRingElem, 3.5)"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is integers only; ours evaluates a real argument through Gamma(n+1).
   mathlib4:
     in: (Nat.factorial 3.5)
   rust:
     in: factorial(x(3.5))
+    out: "panic: an integer, not 3.5"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Factorial extends past them.
 negative-non-integers-are-defined-too-2-5-gamma:
   epsil:
     in: (-2.5)!
@@ -421,18 +429,26 @@ negative-non-integers-are-defined-too-2-5-gamma:
   wolfram:
     in: Factorial[-2.5]
   sympy:
-    in: factorial((-2.5))
+    in: factorial(-2.5)
     out: "2.36327180120735"
   sage:
-    in: factorial((-2.5))
+    in: factorial(-2.5)
   oscar:
     in: factorial(ZZ(-2.5))
   julia:
     in: factorial(ZZ(-2.5))
+    out: "InexactError: convert(ZZRingElem, -2.5)"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ is integers only; ours evaluates a negative non-integer argument through Gamma(n+1) too.
   mathlib4:
     in: (Nat.factorial (-2.5))
   rust:
     in: factorial(x(-2.5))
+    out: "panic: an integer, not -2.5"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Factorial extends past them.
 complex-arguments-1-i-gamma-2-i:
   epsil:
     in: (1 + i)!
@@ -453,6 +469,10 @@ complex-arguments-1-i-gamma-2-i:
     in: factorial(ZZ(complex(1, 1)))
   julia:
     in: factorial(ZZ(complex(1, 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: Nemo's ZZ has no Gaussian integers; ours evaluates a complex argument through Gamma(n+1).
 frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
   epsil:
     in: (-1 / 2)!
@@ -466,18 +486,26 @@ frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
     in: Factorial[Rational[-1, 2]]
     note: Wolfram returns the exact Sqrt[Pi].
   sympy:
-    in: factorial(Rational((-1), 2))
+    in: factorial(Rational(-1, 2))
     out: factorial(-1/2)
   sage:
-    in: factorial(((-1)/2))
+    in: factorial((-1/2))
   oscar:
     in: factorial(ZZ((-1 // 2)))
   julia:
     in: factorial(ZZ((-1 // 2)))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: ZZ needs an integer; ours reaches (-1/2)! = sqrt(pi) through Gamma(n+1).
   mathlib4:
     in: "(Nat.factorial (((-1) : ℚ) / 2))"
   rust:
     in: factorial(rational(n(-1), n(2)))
+    out: "panic: an integer, not -1/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Factorial extends past them.
 infty-infty:
   epsil:
     in: PositiveInfinity!
@@ -510,6 +538,7 @@ n-gamma-n-1-see-gamma:
     in: bool(factorial(5) == gamma(6))
   rust:
     in: equal(factorial(n(5)), gamma(n(6)))
+    out: "true"
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e:
   epsil:
     in: Sum(1 / k!, (k, 0, PositiveInfinity))
@@ -541,7 +570,9 @@ the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e:
     in: factorial(ZZ(30))
   julia:
     in: factorial(ZZ(30))
+    out: "265252859812191058636308480000000"
   mathlib4:
     in: (Nat.factorial 30)
   rust:
     in: factorial(n(30))
+    out: "2.6525285981219103e32"

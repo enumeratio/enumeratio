@@ -1,0 +1,56 @@
+name: Conditioned
+domain: Statistics
+signature: Conditioned(a, b)
+summary: $a$ conditioned on $b$ — meaningful only as `Probability`'s or `Expectation`'s first argument.
+signatures:
+  - call: Probability(Conditioned(pred, cond), Distributed(x, dist))
+    description: P(pred | cond) = P(pred, cond) / P(cond), for the discrete and closed-form-CDF cases Probability itself handles; otherwise stays unevaluated.
+    library: enumeratio-statistics
+  - call: Expectation(Conditioned(f, cond), Distributed(x, dist))
+    description: "E[f | cond]: exact for cond pinning x to a point (any distribution), or cond bounding x to a finite interval on a discrete distribution; otherwise stays unevaluated."
+    library: enumeratio-statistics
+details:
+  - "`Conditioned` is a bare inert constructor (like [[Distributed]]) — it does nothing on its own; both evaluations above happen inside `Probability`/`Expectation`, triggered by seeing `Conditioned` as their first argument."
+  - "`Probability`'s case is built entirely by calling back into `Probability` itself: the numerator is `Probability(And(pred, cond), binding)`, the denominator `Probability(cond, binding)` — so it inherits every discrete-PDF and closed-form-CDF case any wave of this package has added, with no new distribution-shape knowledge needed here. One extra case past the plain `And` machinery: `pred = Equal(x, k)` is evaluated directly as `PDF(k)/P(cond)` (or `0`, if `cond` fails at `k`), since `Probability`'s own `And` case only recognizes a conjunction of two `Less`/`LessEqual` relations, not `Equal` combined with anything."
+  - "`Expectation`'s case: `cond = Equal(x, k)` collapses `f` to its value at `k`, for any distribution. A finite interval condition on a DISCRETE distribution sums exactly over the (necessarily finite) support the interval implies. A continuous distribution with an interval condition — which the exact machinery for a truncated *continuous* mean already exists for, in [[TruncatedDistribution]] — is NOT composed through here; out of scope for this batch, so it stays unevaluated."
+  - Neither case falls back to numeric approximation — see [[NProbability]]/[[NExpectation]] for that.
+examples:
+  - id: conditioned-probability-point-given-bound
+    expr: [Probability, [Conditioned, [Equal, x, 2], [LessEqual, x, 5]], [Distributed, x, [PoissonDistribution, 3]]]
+    expected: [Rational, 45, 184]
+    caption: $P(X{=}2 \mid X \le 5) = PDF(2)/CDF(5) = 45/184 \approx 0.2445652174$ for $X \sim \mathrm{Poisson}(3)$ — exact, the $e^{-3}$ factor cancels. Cross-checked against wolframscript's `N[Probability[x == 2 \[Conditioned] x <= 5, x \[Distributed] PoissonDistribution[3]], 10]`.
+  - id: conditioned-probability-interval-given-bound
+    expr: [Probability, [Conditioned, [LessEqual, x, 3], [LessEqual, 1, x]], [Distributed, x, [PoissonDistribution, 3]]]
+    expected: [Divide, 12, [Multiply, [Add, 1, [Negate, [Power, ExponentialE, -3]]], [Power, ExponentialE, 3]]]
+    category: Scope
+    caption: $P(X \le 3 \mid X \ge 1) \approx 0.6287483579$ for $X \sim \mathrm{Poisson}(3)$ — both `pred` and `cond` are single `LessEqual` relations, the shape `Probability`'s own `And` case composes. Cross-checked against wolframscript's `N[Probability[x <= 3 \[Conditioned] x >= 1, x \[Distributed] PoissonDistribution[3]], 10]`.
+  - id: conditioned-probability-continuous-interval
+    expr:
+      [Probability, [Conditioned, [LessEqual, x, 0], [LessEqual, -1, x]], [Distributed, x, [NormalDistribution, 0, 1]]]
+    expected:
+      [
+        Divide,
+        [Negate, [Erf, [Negate, [Divide, [Sqrt, 2], 2]]]],
+        [Add, 1, [Negate, [Erf, [Negate, [Divide, [Sqrt, 2], 2]]]]],
+      ]
+    category: Scope
+    caption: $P(X \le 0 \mid X \ge -1) = (\Phi(0)-\Phi(-1))/(1-\Phi(-1)) \approx 0.4057132913$ for standard normal $X$ — the closed-form-CDF case, not just discrete PDFs. Cross-checked against wolframscript's `N[Probability[x <= 0 \[Conditioned] x >= -1, x \[Distributed] NormalDistribution[0,1]], 10]`.
+  - id: conditioned-expectation-mean-given-bound
+    expr: [Expectation, [Conditioned, x, [LessEqual, x, 3]], [Distributed, x, [PoissonDistribution, 3]]]
+    expected: 1.961538461538462
+    caption: $E[X \mid X \le 3] = 51/26 \approx 1.961538462$ for $X \sim \mathrm{Poisson}(3)$ — an exact finite sum over $\{0,1,2,3\}$. Cross-checked against wolframscript's `N[Expectation[x \[Conditioned] x <= 3, x \[Distributed] PoissonDistribution[3]], 10]`.
+  - id: conditioned-expectation-point
+    expr: [Expectation, [Conditioned, [Power, x, 2], [Equal, x, 3]], [Distributed, x, [PoissonDistribution, 3]]]
+    expected: 9
+    caption: Conditioning on an exact point collapses $f$ to its value there, for any distribution.
+  - id: conditioned-expectation-continuous-unevaluated
+    expr: [Expectation, [Conditioned, x, [LessEqual, x, 3]], [Distributed, x, [NormalDistribution, 0, 1]]]
+    expected: [Expectation, [Conditioned, x, [LessEqual, x, 3]], [Distributed, x, [NormalDistribution, 0, 1]]]
+    category: Possible issues
+    caption: A continuous distribution with an interval condition is out of scope here (see the truncated-mean note above) and stays unevaluated, even though `Probability`'s analogous case (previous example) works.
+seeAlso:
+  - Probability
+  - Expectation
+  - NProbability
+  - NExpectation
+  - TruncatedDistribution

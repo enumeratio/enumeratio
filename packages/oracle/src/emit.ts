@@ -72,12 +72,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
       // Lean reads `f -1` as `f - 1`.
       // Rust values are the prelude's dynamic `V` (rust/src/prelude.rs).
       if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
-      // A bare negative literal substituted next to an operator misparses under Python's
-      // (and Sage's, and Lean's) precedence: `-1**2` is `-(1**2)`, not `(-1)**2`. Every
-      // system but Wolfram, Julia and Oscar (both wrapped in `big(...)` at the call site)
-      // and Rust (wrapped in `n(...)`/`x(...)`) substitutes the literal bare, so it needs
-      // its own parens whenever it's negative.
-      return node < 0 && system !== "julia" && system !== "oscar" ? `(${node})` : String(node);
+      return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
     }
     if (typeof node === "boolean") return node ? "True" : "False";
     if (typeof node === "string") {
@@ -119,9 +114,10 @@ export function emit(expr: MathJSON, system: System): Emitted {
   };
 
   /**
-   * Rebuild `node`'s `List` nesting as Python list literals, applying `template` (with
-   * `others` filled into every position but `threadArg`) at each leaf — the manual
-   * Listable thread `threadArg` asks for on a Python-family system.
+   * Rebuild `node`'s `List` nesting as list literals (Python's or Julia's — both spell one
+   * `[a, b, c]`), applying `template` (with `others` filled into every position but
+   * `threadArg`) at each leaf — the manual Listable thread `threadArg` asks for on a system
+   * whose call is not itself broadcasting.
    */
   const threadOver = (node: MathJSON, template: string, others: readonly string[], threadArg: number): string => {
     if (isCall(node) && node[0] === "List") {

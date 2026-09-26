@@ -33,19 +33,19 @@ release. Add a tool name to select part of the graph. For example, run
   `@cortex-js/compute-engine` and written in its language, Epsil. When prose says "the
   library", "the catalogue", "a head we declare", it is talking about enumeratio.
 - **notatio** is the interface: the notebook, the `<notatio-*>` elements, the plots and
-  glyphs, the CLI and REPL, the format registry, the docs site — and the name of the
-  restricted-Epsil subset those read and write. Never describe notatio as "the extension
-  libraries" or "combinatorial math for compute-engine"; that is enumeratio.
+  glyphs, the CLI and REPL, the format registry, the docs site — and the vdom, the
+  component form of an expression. Never describe notatio as "the extension libraries" or
+  "combinatorial math for compute-engine"; that is enumeratio. Nor as a syntax: the text
+  is Epsil.
 - The line runs by what the word governs: enumeratio owns _meaning_ ("a head", "defined
   as", "evaluates to"), notatio owns _writing and showing_ ("written as", "typed", "prints
-  as", InputForm, the `*Form` heads, `$…$` islands). The syntax is notatio's — say
-  "notatio", never "the notatio notation". A cell is notatio plus one `:=` binding
-  (`parseNotatio` with `allow: ["Assign"]`); nothing else in notatio is a statement. See
+  as", InputForm, the `*Form` heads). What an attribute or cell holds is an expression:
+  MathJSON, written in Epsil (`$…$` LaTeX islands are Epsil's). `parseExpression` reports
+  statements and effects; a cell may be one `:=` binding (`allow: ["Assign"]`). See
   `design/syntax-and-formats.md`.
 - In the reference data, an example's retypeable text form (its InputForm) is keyed `epsil`,
   and `notatio` keys its component serialisation, the vdom as Vue/React markup
-  (`design/examples-as-data.md` §2, signed off). That moves the name `notatio` toward the
-  component form and away from the restricted-Epsil subset; prose elsewhere hasn't caught up.
+  (`design/examples-as-data.md` §2, signed off).
 - Package names have not all caught up; do not rename them in passing — see
   `design/component-naming.md` for how renames wait.
 

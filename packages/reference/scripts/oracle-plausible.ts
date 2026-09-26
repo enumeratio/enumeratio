@@ -20,7 +20,9 @@
 
 import { appendFileSync, writeFileSync } from "node:fs";
 import { runCases } from "@enumeratio/aestimatio/src/node";
+import { allEntries, type FamilyKernel } from "@enumeratio/collections/src";
 import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
+import { between as edgeBiased } from "@enumeratio/plausible";
 import { referenceEntries } from "../src/node.ts";
 import { verdictOf } from "./oracle-verdict.ts";
 
@@ -77,6 +79,7 @@ const numberNear = (random: Random, t: number): number =>
 
 // Heads whose integer arguments are sizes, labels or bases rather than values: resampling
 // them builds malformed objects (a diagram missing a point) or huge ones, not edge cases.
+// Collection families aren't listed: their declared params say how to draw them (below).
 const STRUCTURAL = new Set([
   "Diagram",
   "OrbitDiagram",
@@ -93,6 +96,34 @@ const STRUCTURAL = new Set([
   "RookAlgebra",
   "AdicNumerals",
 ]);
+
+// A collection family's integer arguments are sizes, not values: resampling them near the
+// template's (up to ±1e6) builds enormous families. They're drawn from the family's own
+// declared params instead (design/plausible.md §7), within a small work budget.
+const FAMILIES = new Map<string, FamilyKernel>(allEntries.map((f) => [f.head, f]));
+const FAMILY_SIZE = 6;
+const FAMILY_BUDGET = 20_000n;
+
+/** A family call's params drawn from what it declares; the template's when none fit the budget. */
+function familyParams(family: FamilyKernel, ops: readonly MathJSON[], random: Random): MathJSON[] {
+  const declared = family.declared;
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const params =
+      declared === undefined
+        ? ops.map(() => edgeBiased(random, 0, 4)) // not declared yet: stay tiny
+        : declared.params.map(({ role, min, max }) =>
+            edgeBiased(
+              random,
+              min,
+              Math.min(role === "axis" ? min + FAMILY_SIZE : min + 3, max ?? Number.MAX_SAFE_INTEGER),
+            ),
+          );
+    const enumerates = declared !== undefined && Object.values(declared.cost).includes("enumerative");
+    if (enumerates && declared.work !== undefined && declared.work(params) > FAMILY_BUDGET) continue;
+    return params;
+  }
+  return [...ops];
+}
 
 /** `expr` with some of its numeric literals resampled; at least one when it has any. */
 function mutate(expr: MathJSON, random: Random): MathJSON {
@@ -138,6 +169,14 @@ function mutate(expr: MathJSON, random: Random): MathJSON {
         ];
         const [a, b] = pick(random, options);
         return ["Complex", a, b];
+      }
+      return node;
+    }
+    const family = FAMILIES.get(head as string);
+    if (family !== undefined && ops.length === family.paramCount && ops.every((op) => Number.isInteger(op))) {
+      if (random() < 0.5) {
+        changed = true;
+        return [head, ...familyParams(family, ops, random)] as MathJSON;
       }
       return node;
     }

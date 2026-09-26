@@ -198,8 +198,9 @@ function evaluateBeta(ce: ComputeEngine, s: BoxedExpression, numeric: boolean) {
   return undefined;
 }
 
-/** Past this order the double-precision Euler–Maclaurin kernel drifts beyond ~1e-7. */
-const STIELTJES_MAX_ORDER = 30;
+/** Past this order the double-precision Euler–Maclaurin kernel drifts beyond ~1e-7, and the
+ * head declines. */
+export const STIELTJES_MAX_ORDER = 30;
 
 function evaluateStieltjes(ce: ComputeEngine, n: BoxedExpression, a: BoxedExpression | undefined, numeric: boolean) {
   if (!isRealInt(n) || n.re < 0) return undefined;

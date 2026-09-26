@@ -242,10 +242,10 @@ zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see:
   wolfram:
     in: (Zeta[-3] == Minus[Divide[BernoulliB[4], 4]])
   sympy:
-    in: enumeratio_equal(zeta((-3)), (-(S(bernoulli(4)) / 4)))
+    in: enumeratio_equal(zeta(-3), (-(S(bernoulli(4)) / 4)))
     out: True
   sage:
-    in: bool(zeta((-3)) == (-(bernoulli(4) / 4)))
+    in: bool(zeta(-3) == (-(bernoulli(4) / 4)))
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
   epsil:
     in: |-
@@ -269,7 +269,7 @@ the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here:
     out: "5"
     verdict: disagree
     kind: convention
-    note: The k=1 term flips sign under SymPy's B+ convention (bernoulli(1)=+1/2) versus ours (B-, -1/2), which shifts the recurrence's total. Same root cause as the row below.
+    note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2, so the recurrence sums differ.
   sage:
     in: ((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))
 b-n-0-for-every-odd-n-1:
@@ -317,13 +317,13 @@ faulhaber-s-formula-recovers-sum-k-0-4-k-2-30:
       in: \frac{\binom{3}{0} B_0 5^3+\binom{3}{1} B_1 5^2+\binom{3}{2} B_2 5^1}{3}
       out: "30"
   sympy:
-    in: (S(((binomial(3, 0) * bernoulli(0) * (5**3)) + (binomial(3, 1) * bernoulli(1) * (5**2)) + (binomial(3, 2) * bernoulli(2) * (5**1)))) / 3)
+    in: (S(((binomial(3, 0) * bernoulli(0) * ((5)**3)) + (binomial(3, 1) * bernoulli(1) * ((5)**2)) + (binomial(3, 2) * bernoulli(2) * ((5)**1)))) / 3)
     out: "55"
     verdict: disagree
     kind: convention
     note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does.
   sage:
-    in: (((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)
+    in: (((binomial(3, 0) * bernoulli(0) * ((5)^3)) + (binomial(3, 1) * bernoulli(1) * ((5)^2)) + (binomial(3, 2) * bernoulli(2) * ((5)^1))) / 3)
     out: "30"
 bernoulli-numbers-are-only-defined-for-n-ge-0-a:
   epsil:
@@ -344,13 +344,13 @@ bernoulli-numbers-are-only-defined-for-n-ge-0-a:
       in: B_{-1}
       out: B_{-1}
   sympy:
-    in: bernoulli((-1))
+    in: bernoulli(-1)
     out: bernoulli(-1)
     verdict: inconclusive
     kind: undefined-form
     note: "Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated."
   sage:
-    in: bernoulli((-1))
+    in: bernoulli(-1)
     out: "OverflowError: can't convert negative value to unsigned long"
     verdict: error
     kind: undefined-form
@@ -387,7 +387,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1/2, 1/6, 0]"
     verdict: disagree
     kind: convention
-    note: SymPy's bernoulli(1) is +1/2 (the "B+" convention); ours is -1/2 (the "B-" convention), documented at the top of this head's page.
+    note: SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2.
   sage:
     in: "[bernoulli(1), bernoulli(2), bernoulli(3)]"
 numerators-and-denominators-grow-quickly-b-20:

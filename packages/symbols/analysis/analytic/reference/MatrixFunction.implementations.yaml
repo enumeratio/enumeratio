@@ -33,6 +33,7 @@ a-polynomial-f-agrees-with-the-matrix-power:
   epsil:
     in: MatrixFunction(Function(_1 ^ 2), [[1, 1], [0, 1]])
     out: "[[1, 2], [0, 1]]"
+    back: Unreadable
   tex:
     in: \mathrm{MatrixFunction}(()\mapsto\operatorname{\_1}^2, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack

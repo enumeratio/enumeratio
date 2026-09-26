@@ -70,9 +70,9 @@ test("--json prints a structured reply on stdout, errors included", () => {
     ok: true,
     input: "Binomial(10, 3)",
     syntax: "epsil",
-    form: "notatio",
+    form: "inputform",
     result: "120",
-    forms: { notatio: "120", tex: "120", mathjson: 120, wolfram: "120" },
+    forms: { inputform: "120", tex: "120", mathjson: 120, wolfram: "120" },
   });
   // named forms narrow the reply; mathjson is carried as JSON
   expect(JSON.parse(run(["--json", "-f", "mathjson", "1/3"]).stdout).forms).toEqual({
@@ -108,7 +108,7 @@ test("host defaults apply under the flags", () => {
 });
 
 test("forms / formats / completion subcommands", () => {
-  expect(run(["forms"]).stdout).toMatch(/\* notatio/);
+  expect(run(["forms"]).stdout).toMatch(/\* inputform/);
   expect(JSON.parse(run(["forms", "--json"]).stdout).map((f: { name: string }) => f.name)).toContain("wolfram");
   expect(JSON.parse(run(["formats", "--json"]).stdout).some((f: { name: string }) => f.name === "WL")).toBe(true);
   expect(run(["formats"]).stdout).toMatch(/WL/);
@@ -125,7 +125,7 @@ test("evaluateCommand is the structured seam shared with serve", () => {
   expect(r.ok && r.result).toBe("Plus[Power[x, 2], 1]");
   expect(r.ok && r.forms.js).toMatch(/x/);
   // a secondary form that cannot render is left out, not fatal
-  const s = evaluateCommand({ input: "Rule(x, 1)", forms: ["notatio", "glsl"] });
-  expect(s.ok && Object.keys(s.forms)).toEqual(["notatio"]);
+  const s = evaluateCommand({ input: "Rule(x, 1)", forms: ["inputform", "glsl"] });
+  expect(s.ok && Object.keys(s.forms)).toEqual(["inputform"]);
   expect(evaluateCommand({ input: "1 +" })).toMatchObject({ ok: false });
 });

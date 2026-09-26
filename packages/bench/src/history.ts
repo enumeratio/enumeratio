@@ -44,20 +44,22 @@ export const DRIFT: DriftOptions = { ratio: 1.5, floorNs: 1e6, minRuns: 5, windo
 
 /**
  * Cases in `current` that got slower than the trailing median of the same system's earlier
- * reports, `prior` oldest first. Only `ok` results count on either side.
+ * reports, `prior` oldest first. Only `ok` results count on either side, and only a result
+ * of the same formula: an earlier run of a case that has since changed is another benchmark.
  */
 export function detectDrift(current: Report, prior: readonly Report[], options: DriftOptions = DRIFT): Drift[] {
+  const key = (r: CaseResult): string => `${r.name}#${r.formula ?? ""}`;
   const history = new Map<string, number[]>();
   for (const report of prior.slice(-options.window)) {
     for (const r of report.results) {
       if (r.status === "ok" && r.median !== undefined) {
-        history.set(r.name, [...(history.get(r.name) ?? []), r.median]);
+        history.set(key(r), [...(history.get(key(r)) ?? []), r.median]);
       }
     }
   }
   const drifted: Drift[] = [];
   for (const r of current.results as CaseResult[]) {
-    const past = history.get(r.name);
+    const past = history.get(key(r));
     if (r.status !== "ok" || r.median === undefined || past === undefined) continue;
     if (past.length < options.minRuns) continue;
     const trailingNs = quantile(

@@ -7,6 +7,7 @@ export type Status = "ok" | "unsupported" | "precision" | "denied" | "too-fast" 
 
 export interface CaseResult {
   readonly name: string;
+  readonly formula?: string;
   readonly status: Status;
   readonly reason?: string;
   readonly k?: number;
@@ -20,11 +21,20 @@ export interface CaseResult {
   readonly value?: string;
 }
 
+export interface Conditions {
+  readonly at: string;
+  readonly loadavg: readonly number[];
+  readonly freeMemoryGB: number;
+  readonly swapUsedGB?: number;
+}
+
 export interface Machine {
   readonly fingerprint: string;
   readonly os: string;
+  readonly osVersion?: string;
   readonly arch: string;
   readonly cpu: string;
+  readonly cpuMHz?: number;
   readonly cores: number;
   readonly memoryGB: number;
   readonly runner: string;
@@ -39,6 +49,7 @@ export interface Report {
     readonly date: string;
     readonly trigger: string;
     readonly url?: string;
+    readonly suite?: string;
   };
   readonly system: {
     readonly name: BenchSystem;
@@ -47,6 +58,7 @@ export interface Report {
     readonly caches: "cleared" | "uncleared";
   };
   readonly machine: Machine;
+  readonly conditions?: { readonly start: Conditions; readonly end: Conditions };
   readonly results: readonly CaseResult[];
 }
 
@@ -60,11 +72,21 @@ export type PlanCell = { readonly sources: readonly string[] } | Exclusion;
 export interface Plan {
   readonly schema: 1;
   readonly protocol: number;
+  readonly suite?: string;
   readonly cases: readonly {
     readonly name: string;
+    readonly formula?: string;
+    readonly tier?: "small" | "medium" | "large";
     readonly precision: "exact" | "machine" | number;
     readonly budget: number;
     readonly tags?: readonly string[];
+    readonly expr?: unknown;
+    readonly sample?: {
+      readonly seed: number;
+      readonly count: number;
+      readonly draw: Readonly<Record<string, unknown>>;
+    };
+    readonly inputs?: readonly unknown[];
     readonly expected?: string;
     readonly systems: Readonly<Partial<Record<BenchSystem, PlanCell>>>;
   }[];
@@ -79,6 +101,7 @@ export interface BenchIndex {
     readonly trigger: string;
     readonly url?: string;
     readonly job: string;
+    readonly suite?: string;
     readonly systems: readonly BenchSystem[];
     readonly machine: string;
   }[];

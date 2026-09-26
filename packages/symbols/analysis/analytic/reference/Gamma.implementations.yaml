@@ -77,16 +77,16 @@ threads-over-a-list-so-poles-evaluate-concretely:
       in: \Gamma (\{0,-1\})
       out: \{\text{ComplexInfinity},\text{ComplexInfinity}\}
   sympy:
-    in: "[gamma(0), gamma((-1))]"
+    in: "[gamma(0), gamma(-1)]"
     out: "[zoo, zoo]"
   mpmath:
-    in: "[gamma(0), gamma((-1))]"
+    in: "[gamma(0), gamma(-1)]"
     out: "ValueError: gamma function pole"
     verdict: error
     kind: undefined-form
-    note: The list wrapper is incidental -- mpmath's gamma(0) raises before the list is even built. Both decline at the pole (ours answers ComplexInfinity, mpmath raises), same as the single-argument pole example above.
+    note: compute-engine answers ComplexInfinity at the poles; mpmath raises.
   sage:
-    in: "[gamma(0), gamma((-1))]"
+    in: "[gamma(0), gamma(-1)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
     kind: threading
@@ -205,6 +205,9 @@ gamma-1-2-sqrt-pi:
   sympy:
     in: enumeratio_equal(gamma(Rational(1, 2)), sqrt(pi))
     out: True
+  mpmath:
+    in: almosteq(gamma((mpf(1)/2)), sqrt(pi), 1e-20)
+    out: True
   sage:
     in: bool(gamma((1/2)) == sqrt(pi))
     out: True
@@ -230,10 +233,10 @@ the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2:
       in: \frac{\pi ^2}{\Gamma (3)}=\frac{\pi ^2}{2}
       out: \text{True}
   sympy:
-    in: enumeratio_equal((S((pi**2)) / gamma(3)), (S((pi**2)) / 2))
+    in: enumeratio_equal((S(((pi)**2)) / gamma(3)), (S(((pi)**2)) / 2))
     out: True
   sage:
-    in: bool(((pi^2) / gamma(3)) == ((pi^2) / 2))
+    in: bool((((pi)^2) / gamma(3)) == (((pi)^2) / 2))
     out: True
   rust:
     in: equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))
@@ -257,10 +260,13 @@ squaring-the-reflection-formula-at-z-1-2:
       in: \Gamma \left(\frac{1}{2}\right)^2=\pi
       out: \text{True}
   sympy:
-    in: enumeratio_equal((gamma(Rational(1, 2))**2), pi)
+    in: enumeratio_equal(((gamma(Rational(1, 2)))**2), pi)
+    out: True
+  mpmath:
+    in: almosteq(((gamma((mpf(1)/2)))**2), pi, 1e-20)
     out: True
   sage:
-    in: bool((gamma((1/2))^2) == pi)
+    in: bool(((gamma((1/2)))^2) == pi)
     out: True
   rust:
     in: equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))
@@ -308,6 +314,9 @@ gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer:
   sympy:
     in: gamma(Rational(5, 2))
     out: 3*sqrt(pi)/4
+  mpmath:
+    in: gamma((mpf(5)/2))
+    out: "1.32934038817913702047362561251"
   sage:
     in: gamma((5/2))
     out: 3/4*sqrt(pi)
@@ -392,6 +401,7 @@ a-machine-precision-argument-gamma-4-5-11-6317:
     in: gamma(4.5)
   rust:
     in: gamma(x(4.5))
+    out: "11.631728396567521"
 gamma-5-4-24:
   epsil:
     in: Gamma(5)
@@ -413,6 +423,7 @@ gamma-5-4-24:
     in: gamma(5)
   rust:
     in: gamma(n(5))
+    out: "24.000000000000114"
 complex-arguments-evaluate-directly:
   epsil:
     in: Gamma(2.3 + i)
@@ -446,10 +457,14 @@ half-integers-have-closed-forms-gamma-7-2-frac:
   sympy:
     in: gamma(Rational(7, 2))
     out: 15*sqrt(pi)/8
+  mpmath:
+    in: gamma((mpf(7)/2))
+    out: "3.32335097044784255118406403126"
   sage:
     in: gamma((7/2))
   rust:
     in: gamma(rational(n(7), n(2)))
+    out: "3.3233509704478403"
 including-negative-half-integers-gamma-3-2-frac:
   epsil:
     in: Gamma(-3 / 2)
@@ -462,12 +477,16 @@ including-negative-half-integers-gamma-3-2-frac:
   wolfram:
     in: Gamma[Rational[-3, 2]]
   sympy:
-    in: gamma(Rational((-3), 2))
+    in: gamma(Rational(-3, 2))
     out: 4*sqrt(pi)/3
+  mpmath:
+    in: gamma((mpf(-3)/2))
+    out: "2.36327180120735470306422331112"
   sage:
-    in: gamma(((-3)/2))
+    in: gamma((-3/2))
   rust:
     in: gamma(rational(n(-3), n(2)))
+    out: "2.3632718012073477"
 gamma-infty-infty:
   epsil:
     in: Gamma(PositiveInfinity)
@@ -493,19 +512,17 @@ values-far-past-the-double-range-gamma-200-5:
   sympy:
     in: gamma(200.5)
     out: "5.57316894480138e+373"
-    verdict: disagree
-    kind: convention
-    note: Agrees with ours (5.57316894480137913364e+373) rounded to SymPy's 15 significant digits. Same scan limitation as the mpmath row above -- text compare can't line up numbers past double's exponent range.
   mpmath:
     in: gamma(200.5)
     out: "5.57316894480137913364320296291e+373"
-    verdict: disagree
-    kind: convention
-    note: Agrees with ours (5.57316894480137913364e+373) to every shared digit -- mpmath just carries more of them. The scan's tolerance compare can't line the two up past a double's exponent range (~1e308) and falls back to an exact text match, which a different digit count always fails; verified equal by hand.
   sage:
     in: gamma(200.5)
   rust:
     in: gamma(x(200.5))
+    out: PositiveInfinity
+    verdict: disagree
+    kind: precision
+    note: statrs computes in f64, which overflows past 1.8e308; compute-engine's value is exact to its digits.
 two-arguments-the-upper-incomplete-gamma-gamma-5:
   epsil:
     in: Gamma(2.5, 1.5)
@@ -626,13 +643,13 @@ gamma-i-2-pi-sinh-pi-0-27203:
   wolfram:
     in: N[Power[Abs[Gamma[I]], 2]]
   sympy:
-    in: N((Abs(gamma(I))**2), 30)
+    in: N(((Abs(gamma(I)))**2), 30)
     out: "0.272029054982133162950236583672"
   mpmath:
-    in: ((fabs(gamma(mpc(0,1)))**2))
+    in: (((fabs(gamma(mpc(0,1))))**2))
     out: "0.272029054982133162950236583672"
   sage:
-    in: N((abs(gamma(I))^2))
+    in: N(((abs(gamma(I)))^2))
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Gamma(1 / 3), 40)
@@ -647,7 +664,11 @@ to-40-significant-digits-every-one-correctly:
   sympy:
     in: N(gamma(Rational(1, 3)), 30)
     out: "2.67893853470774763365569294097"
+  mpmath:
+    in: (gamma((mpf(1)/3)))
+    out: "2.67893853470774763365569294097"
   sage:
     in: N(gamma((1/3)))
   rust:
     in: nf(gamma(rational(n(1), n(3))))
+    out: "2.6789385347077475"

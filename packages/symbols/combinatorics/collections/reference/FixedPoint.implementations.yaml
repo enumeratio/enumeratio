@@ -2,6 +2,7 @@ halving-and-flooring-until-nothing-changes:
   epsil:
     in: FixedPoint(Function(Floor(_1 / 2)), 100)
     out: "0"
+    back: Unreadable
   tex:
     in: \mathrm{FixedPoint}(()\mapsto\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 100)
     out: "0"
@@ -25,6 +26,7 @@ newton-s-method-for-sqrt-2-run-to-this-engine-s:
   epsil:
     in: FixedPoint(Function((_1 + 2 / _1) / 2), 1.5)
     out: 1.414_213_562_373_095_048_801_687_5
+    back: Unreadable
   tex:
     in: \mathrm{FixedPoint}(()\mapsto\frac{\operatorname{\_1}+\frac{2}{\operatorname{\_1}}}{2}, 1.5)
     out: 1.414\,213\,562\,373\,095\,048\,8

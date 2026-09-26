@@ -98,7 +98,7 @@ a-10-001-digit-base-modulo-the-prime-7919:
   wolfram:
     in: MultiplicativeOrder[Power[10, 10000], 7919]
   sage:
-    in: Mod((10^10000), 7919).multiplicative_order()
+    in: Mod(((10)^10000), 7919).multiplicative_order()
 1-is-the-only-element-of-order-1:
   epsil:
     in: MultiplicativeOrder(1, 7)
@@ -245,7 +245,7 @@ a-discrete-log-mod-the-mersenne-prime-2-61-1:
       in: \text{ord}_{2^{127}-1}(3)
       out: "56713727820156410577229101238628035242"
   sage:
-    in: Mod(3, ((2^127) - 1)).multiplicative_order()
+    in: Mod(3, (((2)^127) - 1)).multiplicative_order()
     out: "56713727820156410577229101238628035242"
 the-discrete-log-inverts-powermod:
   epsil:

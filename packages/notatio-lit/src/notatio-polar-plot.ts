@@ -12,7 +12,7 @@ const RUNTIME = {
   __pl: polyLogReal,
 } as const;
 
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import { debug, polarPlotSvg, type PolarPoint, samplePolar } from "@enumeratio/notatio";
@@ -56,7 +56,7 @@ function toPolarPoints(data: unknown, t0: number, t1: number): PolarPoint[] | un
  */
 export class NotatioPolarPlot extends LitElement {
   static properties = {
-    /** The radius r(θ), in notatio. */
+    /** The radius r(θ), in Epsil. */
     expr: { type: String },
     /** The angle variable; defaults to the expression's first unknown, else `theta`. */
     tvar: { type: String },
@@ -165,11 +165,11 @@ export class NotatioPolarPlot extends LitElement {
     }
     try {
       const engine = await loadEngine();
-      const { json, errors } = parseNotatio(raw, {
+      const { json, errors } = parseExpression(raw, {
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length) {
-        log("expr is not notatio", raw, errors);
+        log("expr is not Epsil", raw, errors);
         this._svg = "";
         return;
       }

@@ -7,11 +7,11 @@ export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } 
 export { type MathMLOptions, toMathML } from "./mathml.ts";
 export {
   collectWildcards,
-  type NotatioOptions,
-  type NotatioResult,
-  parseNotatio,
-  serializeNotatio,
-} from "./notatio.ts";
+  type ParseExpressionOptions,
+  type ParseExpressionResult,
+  parseExpression,
+  serializeExpression,
+} from "./expression.ts";
 export type { Format, FormatOptions, ImageValue } from "./registry.ts";
 export { portableTeX } from "./tex.ts";
 export {

@@ -1,7 +1,7 @@
 dft-of-1-2-3-4:
   epsil:
     in: Fourier([1, 2, 3, 4])
-    out: "[5, -1 + -1 * i, -1, -1 + i]"
+    out: "[5, -1 - i, -1, -1 + i]"
   tex:
     in: \mathrm{Fourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack5, -1-i, -1, -1+i\bigr\rbrack
@@ -37,7 +37,7 @@ a-2x2-matrix-the-separable-2d-transform:
 a-custom-fourierparameters:
   epsil:
     in: Fourier([1, 2, 3, 4], FourierParameters -> [1, -1])
-    out: "[10, -2 + 2i, -2, -2 + -2 * i]"
+    out: "[10, -2 + 2i, -2, -2 - 2i]"
   tex:
     in: \mathrm{Fourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{FourierParameters}, \bigl\lbrack1, -1\bigr\rbrack))
     out: \bigl\lbrack10, -2+2i, -2, -2-2i\bigr\rbrack

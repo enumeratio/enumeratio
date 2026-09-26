@@ -226,6 +226,10 @@ varphi-0-0-as-in-wolfram:
     in: euler_phi(ZZ(0))
   julia:
     in: euler_phi(ZZ(0))
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: domain
+    note: Nemo's euler_phi declines n ≤ 0; ours follows Wolfram's convention EulerPhi(0) = 0.
   mathlib4:
     in: (Nat.totient 0)
 threads-element-wise-over-a-list-as-wolfram-s:
@@ -251,7 +255,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   oscar:
     in: euler_phi(ZZ([2, 4, 6]))
   julia:
-    in: euler_phi(ZZ([2, 4, 6]))
+    in: "[euler_phi(ZZ(2)), euler_phi(ZZ(4)), euler_phi(ZZ(6))]"
+    out: "[1, 2, 2]"
   mathlib4:
     in: (Nat.totient [2, 4, 6])
 totient-10:
@@ -277,6 +282,7 @@ totient-10:
     in: euler_phi(ZZ(10))
   julia:
     in: euler_phi(ZZ(10))
+    out: "4"
   mathlib4:
     in: (Nat.totient 10)
 large-integers-varphi-50:
@@ -302,6 +308,7 @@ large-integers-varphi-50:
     in: euler_phi(ZZ(factorial(ZZ(50))))
   julia:
     in: euler_phi(ZZ(factorial(ZZ(50))))
+    out: "4218559200885839042679312107816703841788854953574400000000000000"
   mathlib4:
     in: (Nat.totient (Nat.factorial 50))
 negative-n-varphi-n-varphi-n:
@@ -319,17 +326,21 @@ negative-n-varphi-n-varphi-n:
   wolfram:
     in: EulerPhi[-10]
   sympy:
-    in: totient((-10))
+    in: totient(-10)
     out: "ValueError: n should be a positive integer"
     verdict: error
     kind: domain
-    note: SymPy's totient refuses a negative n; ours extends via phi(-n) = phi(n) deliberately (see the caption).
+    note: compute-engine takes φ(-n) = φ(n), as Wolfram does; SymPy's totient requires a positive argument.
   sage:
-    in: euler_phi((-10))
+    in: euler_phi(-10)
   oscar:
     in: euler_phi(ZZ(-10))
   julia:
     in: euler_phi(ZZ(-10))
+    out: "DomainError with -10: Argument must be positive"
+    verdict: error
+    kind: domain
+    note: Nemo's euler_phi declines a negative n; ours follows Wolfram's convention Totient(-n) = Totient(n).
   mathlib4:
     in: (Nat.totient (-10))
 varphi-p-p-1-for-a-prime-p:
@@ -355,6 +366,7 @@ varphi-p-p-1-for-a-prime-p:
     in: euler_phi(ZZ(17))
   julia:
     in: euler_phi(ZZ(17))
+    out: "16"
   mathlib4:
     in: (Nat.totient 17)
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54:
@@ -380,6 +392,7 @@ varphi-p-k-p-k-1-p-1-3-3-cdot-2-54:
     in: euler_phi(ZZ(81))
   julia:
     in: euler_phi(ZZ(81))
+    out: "54"
   mathlib4:
     in: (Nat.totient 81)
 euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when:

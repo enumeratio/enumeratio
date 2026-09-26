@@ -146,7 +146,7 @@ numeric-for-a-floating-point-argument:
 complex-s-l-s-chi-1-bmod-2-1-2-s-zeta-s-at-s-1-i:
   epsil:
     in: N(DirichletL(2, 1, 1 + i))
-    out: 0.654_358_917_407_233_1 + -0.384_376_350_214_799_6 * i
+    out: 0.654_358_917_407_233_1 - 0.384_376_350_214_799_6i
   tex:
     in: N(\mathrm{DirichletL}(2, 1, 1+i))
     out: 0.654\,358\,917\,407\,233\,1-0.384\,376\,350\,214\,799\,6i

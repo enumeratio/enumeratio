@@ -400,6 +400,11 @@ export const HEADS: Record<string, string> = {
   TransformedDistribution: "TransformedDistribution",
   MarginalDistribution: "MarginalDistribution",
   DirichletDistribution: "DirichletDistribution",
+  // Fifth-wave (narrowed) probability heads (@enumeratio/statistics/src/distributions-5.ts) —
+  // identity here already.
+  NExpectation: "NExpectation",
+  NProbability: "NProbability",
+  Conditioned: "Conditioned",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
@@ -735,6 +740,19 @@ export const HEADS: Record<string, string> = {
   Pick: "Pick",
   ReplacePart: "ReplacePart",
   AssociationThread: "AssociationThread",
+
+  // Wolfram-frontier misc heads (@enumeratio/collections's misc-frontier.ts): genuinely
+  // Wolfram's own names, same call shape and semantics, waiting on a coverage run to fill in
+  // `elsewhere` — see NOVEL in packages/reference/tests/provenance.test.ts.
+  DiagonalMatrix: "DiagonalMatrix",
+  HilbertMatrix: "HilbertMatrix",
+  Extract: "Extract",
+  DeleteCases: "DeleteCases",
+  Key: "Key",
+  CharacterRange: "CharacterRange",
+  NumberQ: "NumberQ",
+  ReIm: "ReIm",
+  RandomComplex: "RandomComplex",
 };
 
 /** Wolfram heads we answer under one of our own heads, but only in a particular CALL

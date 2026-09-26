@@ -13,6 +13,9 @@
     tex:
       in: (17 \bmod 5)
       out: "2"
+  sympy:
+    in: (17 % 5)
+    out: "2"
   sage:
     in: (17 % 5)
     out: "2"
@@ -27,9 +30,6 @@
     out: "2"
   rust:
     in: mod_floor(n(17), n(5))
-    out: "2"
-  sympy:
-    in: (17 % 5)
     out: "2"
 100-mod-7:
   epsil:
@@ -46,6 +46,9 @@
     tex:
       in: (100 \bmod 7)
       out: "2"
+  sympy:
+    in: (100 % 7)
+    out: "2"
   sage:
     in: (100 % 7)
     out: "2"
@@ -60,9 +63,6 @@
     out: "2"
   rust:
     in: mod_floor(n(100), n(7))
-    out: "2"
-  sympy:
-    in: (100 % 7)
     out: "2"
 the-result-takes-the-sign-of-the-modulus:
   epsil:
@@ -79,8 +79,11 @@ the-result-takes-the-sign-of-the-modulus:
     tex:
       in: ((-7) \bmod 3)
       out: "2"
+  sympy:
+    in: (-7 % 3)
+    out: "2"
   sage:
-    in: ((-7) % 3)
+    in: (-7 % 3)
     out: "2"
   oscar:
     in: mod(-7, 3)
@@ -93,9 +96,6 @@ the-result-takes-the-sign-of-the-modulus:
     out: "2"
   rust:
     in: mod_floor(n(-7), n(3))
-    out: "2"
-  sympy:
-    in: ((-7) % 3)
     out: "2"
 threads-element-wise-over-a-list:
   epsil:
@@ -112,6 +112,12 @@ threads-element-wise-over-a-list:
     tex:
       in: (\{1,2,3,4,5\} \bmod 3)
       out: \{1,2,0,1,2\}
+  sympy:
+    in: ([1, 2, 3, 4, 5] % 3)
+    out: "TypeError: unsupported operand type(s) for %: 'list' and 'int'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: ([1, 2, 3, 4, 5] % 3)
     out: "TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'"
@@ -142,12 +148,6 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars.
-  sympy:
-    in: ([1, 2, 3, 4, 5] % 3)
-    out: "TypeError: unsupported operand type(s) for %: 'list' and 'int'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Mod threads over (or pools) the list; SymPy's takes scalars.
 division-by-a-0-modulus-yields-nan-rather-than:
   epsil:
     in: 5 % 0
@@ -163,6 +163,12 @@ division-by-a-0-modulus-yields-nan-rather-than:
     tex:
       in: (5 \bmod 0)
       out: \text{Indeterminate}
+  sympy:
+    in: (5 % 0)
+    out: "ZeroDivisionError: integer modulo by zero"
+    verdict: error
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers NaN, SymPy gives ZeroDivisionError: integer modulo by zer."
   sage:
     in: (5 % 0)
     out: "ZeroDivisionError: Integer modulo by zero"
@@ -193,12 +199,6 @@ division-by-a-0-modulus-yields-nan-rather-than:
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers "NaN", and Rust gives panic: attempt to divide by zero.'
-  sympy:
-    in: (5 % 0)
-    out: "ZeroDivisionError: integer modulo by zero"
-    verdict: error
-    kind: undefined-form
-    note: "A pole or undefined value: compute-engine answers NaN, SymPy gives ZeroDivisionError: integer modulo by zer."
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer:
   epsil:
     in: 17 % 5 == (17 + 3 * 5) % 5
@@ -217,6 +217,9 @@ periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer:
     tex:
       in: (17 \bmod 5)=((17+3\ 5) \bmod 5)
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((17 % 5), ((17 + (3 * 5)) % 5))
+    out: True
   sage:
     in: bool((17 % 5) == ((17 + (3 * 5)) % 5))
     out: True
@@ -232,13 +235,11 @@ periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer:
   rust:
     in: equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))
     out: "true"
-  sympy:
-    in: enumeratio_equal((17 % 5), ((17 + (3 * 5)) % 5))
-    out: True
 a-third-argument-offsets-the-range-the-result:
   epsil:
     in: 17 % 5 % 1
     out: "2"
+    back: [Mod, [Mod, 17, 5], 1]
   tex:
     in:
     out: "2"
@@ -255,6 +256,7 @@ with-offset-1-the-residues-run-1-2-3-rather-than:
   epsil:
     in: 5 % 3 % 1
     out: "2"
+    back: [Mod, [Mod, 5, 3], 1]
   tex:
     in:
     out: "2"
@@ -274,19 +276,24 @@ rationals-are-reduced-exactly:
     in: Mod[Rational[5, 2], 2]
   wolfram:
     in: Mod[Rational[5, 2], 2]
+  sympy:
+    in: (Rational(5, 2) % 2)
+    out: 1/2
   sage:
     in: ((5/2) % 2)
   oscar:
     in: mod((5 // 2), 2)
   julia:
     in: mod((5 // 2), 2)
+    out: "0.5"
   mathlib4:
     in: "((((5 : ℚ) / 2) : ℤ) % 2)"
   rust:
     in: mod_floor(rational(n(5), n(2)), n(2))
-  sympy:
-    in: (Rational(5, 2) % 2)
-    out: 1/2
+    out: "panic: an integer, not 5/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 3p14-mod-2:
   epsil:
     in: 3.14 % 2
@@ -298,19 +305,24 @@ rationals-are-reduced-exactly:
     in: Mod[3.14, 2]
   wolfram:
     in: Mod[3.14, 2]
+  sympy:
+    in: (3.14 % 2)
+    out: "1.1400000000000001"
   sage:
     in: (3.14 % 2)
   oscar:
     in: mod(3.14, 2)
   julia:
     in: mod(3.14, 2)
+    out: "1.1400000000000001"
   mathlib4:
     in: "((3.14 : ℤ) % 2)"
   rust:
     in: mod_floor(x(3.14), n(2))
-  sympy:
-    in: (3.14 % 2)
-    out: "1.1400000000000001"
+    out: "panic: an integer, not 3.14"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 an-exact-irrational-reduces-exactly-to-2-sqrt-7:
   epsil:
     in: Sqrt(28) % 3
@@ -322,13 +334,17 @@ an-exact-irrational-reduces-exactly-to-2-sqrt-7:
     in: Mod[Sqrt[28], 3]
   wolfram:
     in: Mod[Sqrt[28], 3]
+  sympy:
+    in: (sqrt(28) % 3)
+    out: -3 + 2*sqrt(7)
   sage:
     in: (sqrt(28) % 3)
   rust:
     in: mod_floor(sqrt(n(28)), n(3))
-  sympy:
-    in: (sqrt(28) % 3)
-    out: -3 + 2*sqrt(7)
+    out: "panic: an integer, not 5.291502622129181"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 a-symbolic-constant-reduces-exactly-to-pi-2:
   epsil:
     in: Pi % 2
@@ -340,13 +356,17 @@ a-symbolic-constant-reduces-exactly-to-pi-2:
     in: Mod[Pi, 2]
   wolfram:
     in: Mod[Pi, 2]
+  sympy:
+    in: (pi % 2)
+    out: -2 + pi
   sage:
     in: (pi % 2)
   rust:
     in: mod_floor(x(std::f64::consts::PI), n(2))
-  sympy:
-    in: (pi % 2)
-    out: -2 + pi
+    out: "panic: an integer, not 3.141592653589793"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 a-10-001-digit-dividend:
   epsil:
     in: 10 ^ 10_000 % 10_007
@@ -358,18 +378,20 @@ a-10-001-digit-dividend:
     in: Mod[Power[10, 10000], 10007]
   wolfram:
     in: Mod[Power[10, 10000], 10007]
+  sympy:
+    in: (((10)**10000) % 10007)
+    out: "6333"
   sage:
-    in: ((10^10000) % 10007)
+    in: (((10)^10000) % 10007)
   oscar:
     in: mod((big(10)^10000), 10007)
   julia:
     in: mod((big(10)^10000), 10007)
+    out: "6333"
   mathlib4:
     in: "(((10 ^ 10000) : ℤ) % 10007)"
   rust:
     in: mod_floor(power(n(10), n(10000)), n(10007))
-  sympy:
-    in: ((10**10000) % 10007)
     out: "6333"
 threads-over-a-list-of-moduli:
   epsil:
@@ -382,23 +404,28 @@ threads-over-a-list-of-moduli:
     in: Mod[10, List[3, 4, 7]]
   wolfram:
     in: Mod[10, List[3, 4, 7]]
+  sympy:
+    in: "[(10 % 3), (10 % 4), (10 % 7)]"
+    out: "[1, 2, 3]"
   sage:
     in: "[(10 % 3), (10 % 4), (10 % 7)]"
   oscar:
     in: mod(10, [3, 4, 7])
   julia:
-    in: mod(10, [3, 4, 7])
+    in: "[mod(10, 3), mod(10, 4), mod(10, 7)]"
+    out: "[1, 2, 3]"
   mathlib4:
     in: "((10 : ℤ) % [3, 4, 7])"
   rust:
     in: mod_floor(n(10), list(vec![n(3), n(4), n(7)]))
-  sympy:
-    in: "[(10 % 3), (10 % 4), (10 % 7)]"
-    out: "[1, 2, 3]"
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars only.
 a-gaussian-integer-5-3i-2-2-2i:
   epsil:
     in: (5 + 3i) % 2
-    out: 1 + -1 * i
+    out: 1 - i
   tex:
     in: (5+3i)\bmod2
     out: 1-i
@@ -406,18 +433,22 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: Mod[Complex[5, 3], 2]
   wolfram:
     in: Mod[Complex[5, 3], 2]
+  sympy:
+    in: ((5 + 3*I) % 2)
+    out: "TypeError: Invalid comparison of non-real (1 - I)**2*(-2*I - (1 - I)**2)/2"
+    verdict: error
+    kind: domain
+    note: compute-engine's Mod reduces Gaussian integers; SymPy's % is real-only.
   sage:
     in: ((5 + 3*I) % 2)
   oscar:
     in: mod(complex(5, 3), 2)
   julia:
     in: mod(complex(5, 3), 2)
-  sympy:
-    in: ((5 + 3*I) % 2)
-    out: "TypeError: Invalid comparison of non-real (1 - I)**2*(-2*I - (1 - I)**2)/2"
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
     verdict: error
     kind: domain
-    note: Python's % doesn't support a Gaussian-integer modulus; SymPy's Mod tries to compare a non-real quantity and raises. Ours implements Gaussian-integer division deliberately (see this head's Scope examples).
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a rational integer.
 1-i-divides-5-3i-1-i-4-i:
   epsil:
     in: (5 + 3i) % (1 + i)
@@ -429,18 +460,22 @@ a-gaussian-integer-5-3i-2-2-2i:
     in: Mod[Complex[5, 3], Complex[1, 1]]
   wolfram:
     in: Mod[Complex[5, 3], Complex[1, 1]]
+  sympy:
+    in: ((5 + 3*I) % (1 + 1*I))
+    out: (1 + I)*(Mod((1 - I)*(5 + 3*I)/2, (1 - I)*(1 + I)/2))
+    verdict: inconclusive
+    kind: domain
+    note: compute-engine's Mod reduces Gaussian integers; SymPy leaves the complex modulus symbolic.
   sage:
     in: ((5 + 3*I) % (1 + 1*I))
   oscar:
     in: mod(complex(5, 3), complex(1, 1))
   julia:
     in: mod(complex(5, 3), complex(1, 1))
-  sympy:
-    in: ((5 + 3*I) % (1 + 1*I))
-    out: (1 + I)*(Mod((1 - I)*(5 + 3*I)/2, (1 - I)*(1 + I)/2))
-    verdict: inconclusive
+    out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
+    verdict: error
     kind: domain
-    note: Same underlying gap as the row above -- SymPy's Mod can't reduce a Gaussian-integer modulus, so it stays symbolic instead of reducing to 0.
+    note: Base's mod has no Gaussian-integer method; ours reduces a Gaussian integer modulo a Gaussian modulus too.
 a-negative-modulus-gives-a-result-in-n-0:
   epsil:
     in: -5 % -3
@@ -452,23 +487,25 @@ a-negative-modulus-gives-a-result-in-n-0:
     in: Mod[-5, -3]
   wolfram:
     in: Mod[-5, -3]
+  sympy:
+    in: (-5 % -3)
+    out: "-2"
   sage:
-    in: ((-5) % (-3))
+    in: (-5 % -3)
   oscar:
     in: mod(-5, -3)
   julia:
     in: mod(-5, -3)
+    out: "-2"
   mathlib4:
     in: "(((-5) : ℤ) % (-3))"
   rust:
     in: mod_floor(n(-5), n(-3))
-  sympy:
-    in: ((-5) % (-3))
     out: "-2"
 gaussian-integers-the-quotient-rounds-so-each:
   epsil:
     in: (7 + 5i) % 3
-    out: 1 + -1 * i
+    out: 1 - i
   tex:
     in: (7+5i)\bmod3
     out: 1-i
@@ -480,6 +517,12 @@ gaussian-integers-the-quotient-rounds-so-each:
     tex:
       in: ((7+5 i) \bmod 3)
       out: 1-i
+  sympy:
+    in: ((7 + 5*I) % 3)
+    out: Mod(1 + 5*I, 3)
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   sage:
     in: ((7 + 5*I) % 3)
     out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
@@ -498,16 +541,10 @@ gaussian-integers-the-quotient-rounds-so-each:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
-  sympy:
-    in: ((7 + 5*I) % 3)
-    out: Mod(1 + 5*I, 3)
-    verdict: disagree
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
 a-gaussian-modulus-7-5i-2-i-4-i-i:
   epsil:
     in: (7 + 5i) % (2 + i)
-    out: -1 * i
+    out: -i
   tex:
     in: (7+5i)\bmod(2+i)
     out: -i
@@ -519,6 +556,12 @@ a-gaussian-modulus-7-5i-2-i-4-i-i:
     tex:
       in: ((7+5 i) \bmod (2+i))
       out: -i
+  sympy:
+    in: ((7 + 5*I) % (2 + 1*I))
+    out: Mod(7 + 5*I, 2 + I)
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   sage:
     in: ((7 + 5*I) % (2 + 1*I))
     out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
@@ -537,12 +580,6 @@ a-gaussian-modulus-7-5i-2-i-4-i-i:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
-  sympy:
-    in: ((7 + 5*I) % (2 + 1*I))
-    out: Mod(7 + 5*I, 2 + I)
-    verdict: disagree
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
 exact-in-both-parts-past-2-53:
   epsil:
     in: (100_000_000_000_000_000_001 + 9_007_199_254_740_993i) % (2 + i)
@@ -559,6 +596,12 @@ exact-in-both-parts-past-2-53:
     tex:
       in: ((100000000000000000001+9007199254740993 i) \bmod (2+i))
       out: "0"
+  sympy:
+    in: ((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))
+    out: (2 + I)*(Mod((2 - I)*(100000000000000000001 + 9007199254740993*I)/5, (2 - I)*(2 + I)/5))
+    verdict: inconclusive
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   sage:
     in: ((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))
     out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
@@ -577,12 +620,6 @@ exact-in-both-parts-past-2-53:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
-  sympy:
-    in: ((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))
-    out: (2 + I)*(Mod((2 - I)*(100000000000000000001 + 9007199254740993*I)/5, (2 - I)*(2 + I)/5))
-    verdict: inconclusive
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
 the-remainder-of-quotient:
   epsil:
     in: (7 + 5i) % (2 + i) == 7 + 5i - (2 + i) * Quotient(7 + 5i, 2 + i)
@@ -616,6 +653,12 @@ rounding-ties-to-even-means-1-and-1-both-appear:
     tex:
       in: \{((1+2 i) \bmod 2),((3+2 i) \bmod 2)\}
       out: \{1,-1\}
+  sympy:
+    in: "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]"
+    out: "[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]"
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   sage:
     in: "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]"
     out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
@@ -634,12 +677,6 @@ rounding-ties-to-even-means-1-and-1-both-appear:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
-  sympy:
-    in: "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]"
-    out: "[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]"
-    verdict: disagree
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
 mod-7-3:
   epsil:
     in: 7 % 3
@@ -651,18 +688,20 @@ mod-7-3:
     in: Mod[7, 3]
   wolfram:
     in: Mod[7, 3]
+  sympy:
+    in: (7 % 3)
+    out: "1"
   sage:
     in: (7 % 3)
   oscar:
     in: mod(7, 3)
   julia:
     in: mod(7, 3)
+    out: "1"
   mathlib4:
     in: "((7 : ℤ) % 3)"
   rust:
     in: mod_floor(n(7), n(3))
-  sympy:
-    in: (7 % 3)
     out: "1"
 eulers-number-mod-2-reduces-exactly:
   epsil:
@@ -675,13 +714,17 @@ eulers-number-mod-2-reduces-exactly:
     in: Mod[E, 2]
   wolfram:
     in: Mod[E, 2]
+  sympy:
+    in: (E % 2)
+    out: -2 + E
   sage:
     in: (e % 2)
   rust:
     in: mod_floor(x(std::f64::consts::E), n(2))
-  sympy:
-    in: (E % 2)
-    out: -2 + E
+    out: "panic: an integer, not 2.718281828459045"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Mod extends past them.
 a-free-symbol-is-untouched:
   epsil:
     in: x % 2

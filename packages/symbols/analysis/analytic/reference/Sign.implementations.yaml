@@ -14,13 +14,13 @@ sign-neg-3:
       in: \text{sgn}(-3)
       out: "-1"
   sympy:
-    in: sign((-3))
+    in: sign(-3)
     out: "-1"
   mpmath:
-    in: sign((-3))
+    in: sign(-3)
     out: "-1.0"
   sage:
-    in: sign((-3))
+    in: sign(-3)
     out: "-1"
 sign-3:
   epsil:
@@ -86,10 +86,13 @@ sign-neg-1-over-2:
       in: \text{sgn}\left(-\frac{1}{2}\right)
       out: "-1"
   sympy:
-    in: sign(Rational((-1), 2))
+    in: sign(Rational(-1, 2))
     out: "-1"
+  mpmath:
+    in: sign((mpf(-1)/2))
+    out: "-1.0"
   sage:
-    in: sign(((-1)/2))
+    in: sign((-1/2))
     out: "-1"
 the-unit-complex-number-pointing-the-same:
   epsil:
@@ -134,13 +137,13 @@ threads-element-wise-over-a-list:
       in: \text{sgn}(\{-3,0,7\})
       out: \{-1,0,1\}
   sympy:
-    in: "[sign((-3)), sign(0), sign(7)]"
+    in: "[sign(-3), sign(0), sign(7)]"
     out: "[-1, 0, 1]"
   mpmath:
-    in: "[sign((-3)), sign(0), sign(7)]"
+    in: "[sign(-3), sign(0), sign(7)]"
     out: "[mpf('-1.0'), mpf('0.0'), mpf('1.0')]"
   sage:
-    in: "[sign((-3)), sign(0), sign(7)]"
+    in: "[sign(-3), sign(0), sign(7)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
     kind: threading
@@ -188,13 +191,13 @@ x-cdot-sign-x-x-here-at-x-5:
       in: -5 \text{sgn}(-5)=| -5|
       out: \text{True}
   sympy:
-    in: enumeratio_equal(((-5) * sign((-5))), Abs((-5)))
+    in: enumeratio_equal((-5 * sign(-5)), Abs(-5))
     out: True
   mpmath:
-    in: almosteq(((-5) * sign((-5))), fabs((-5)), 1e-20)
+    in: almosteq((-5 * sign(-5)), fabs(-5), 1e-20)
     out: True
   sage:
-    in: bool(((-5) * sign((-5))) == abs((-5)))
+    in: bool((-5 * sign(-5)) == abs(-5))
     out: True
 tells-you-the-temperature-dropped-but-not-by-how:
   epsil:
@@ -247,13 +250,13 @@ sign-neg-2p5:
   wolfram:
     in: Sign[-2.5]
   sympy:
-    in: sign((-2.5))
+    in: sign(-2.5)
     out: "-1"
   mpmath:
-    in: sign((-2.5))
+    in: sign(-2.5)
     out: "-1.0"
   sage:
-    in: sign((-2.5))
+    in: sign(-2.5)
 sign-3p14:
   epsil:
     in: Sign(3.14)
@@ -323,10 +326,13 @@ threads-over-a-matrix-entry-by-entry:
   wolfram:
     in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   sympy:
-    in: "[[sign(Rational(1, 2)), sign((-1))], [sign(Rational((-5), 3)), sign(Rational(1, 2))]]"
+    in: "[[sign(Rational(1, 2)), sign(-1)], [sign(Rational(-5, 3)), sign(Rational(1, 2))]]"
     out: "[[1, -1], [-1, 1]]"
+  mpmath:
+    in: "[[sign((mpf(1)/2)), sign(-1)], [sign((mpf(-5)/3)), sign((mpf(1)/2))]]"
+    out: "[[mpf('1.0'), mpf('-1.0')], [mpf('-1.0'), mpf('1.0')]]"
   sage:
-    in: "[[sign((1/2)), sign((-1))], [sign(((-5)/3)), sign((1/2))]]"
+    in: "[[sign((1/2)), sign(-1)], [sign((-5/3)), sign((1/2))]]"
 exact-numeric-constants:
   epsil:
     in: Sign(Pi)

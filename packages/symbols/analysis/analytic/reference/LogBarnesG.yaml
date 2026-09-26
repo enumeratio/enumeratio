@@ -65,9 +65,9 @@ examples:
     caption: 'Huge arguments, straight from the asymptotic series: $\ln G(10^{1000}) \approx 1.1505\times10^{2003}$'
   - id: interval-arithmetic-over-an-increasing-stretch
     expr: [LogBarnesG, [Interval, 0.111, 0.112]]
-    expected: [Interval, -2.106284277112393, -2.096646198881469]
+    expected: [Interval, -2.1062842771124, -2.09664619888146]
     category: Scope
-    caption: Interval arithmetic over an increasing stretch
+    caption: Interval arithmetic over an increasing stretch, proven by the certified derivative
   - id: uncertainty-propagation-through-ln-g
     expr: [LogBarnesG, [Around, 1.2, 0.01]]
     expected: [Around, 0.05620885559910568, 0.0016113055388623507]

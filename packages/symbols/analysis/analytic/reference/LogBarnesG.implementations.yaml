@@ -101,7 +101,7 @@ ln-g-0-7-negative-since-g-1-on-0-1:
 complex-arguments:
   epsil:
     in: LogBarnesG(1.7 + i)
-    out: 0.121_378_662_628_899_29 + -0.313_561_761_336_856_65 * i
+    out: 0.121_378_662_628_899_29 - 0.313_561_761_336_856_65i
   tex:
     in: \mathrm{LogBarnesG}(1.7+i)
     out: 0.121\,378\,662\,628\,899\,29-0.313\,561\,761\,336\,856\,65i
@@ -169,13 +169,13 @@ huge-arguments-straight-from-the-asymptotic:
 interval-arithmetic-over-an-increasing-stretch:
   epsil:
     in: LogBarnesG(Interval(0.111, 0.112))
-    out: Interval(-2.106_284_277_112_393, -2.096_646_198_881_469)
+    out: Interval(-2.106_284_277_112_4, -2.096_646_198_881_46)
   tex:
     in: \mathrm{LogBarnesG}(\mathrm{Interval}(0.111, 0.112))
-    out: \mathrm{Interval}(-2.106\,284\,277\,112\,393, -2.096\,646\,198\,881\,469)
+    out: \mathrm{Interval}(-2.106\,284\,277\,112\,4, -2.096\,646\,198\,881\,46)
   traditional:
     in: \log G(\mathrm{Interval}(0.111, 0.112))
-    out: \mathrm{Interval}(-2.106\,284\,277\,112\,393, -2.096\,646\,198\,881\,469)
+    out: \mathrm{Interval}(-2.106\,284\,277\,112\,4, -2.096\,646\,198\,881\,46)
   fullform:
     in: LogBarnesG[Interval[List[0.111, 0.112]]]
   wolfram:

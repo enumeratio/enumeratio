@@ -201,6 +201,7 @@ a-machine-precision-argument-evaluates:
     in: exp(3.4)
   rust:
     in: exp(x(3.4))
+    out: "29.96410004739701"
 arbitrary-precision-via-n:
   epsil:
     in: N(Exp(8 / 5))
@@ -215,10 +216,14 @@ arbitrary-precision-via-n:
   sympy:
     in: N(exp(Rational(8, 5)), 30)
     out: "4.95303242439511480365428635642"
+  mpmath:
+    in: (exp((mpf(8)/5)))
+    out: "4.95303242439511480365428635642"
   sage:
     in: N(exp((8/5)))
   rust:
     in: nf(exp(rational(n(8), n(5))))
+    out: "4.953032424395115"
 evaluates-at-a-complex-argument:
   epsil:
     in: Exp(2.5 + i)
@@ -311,6 +316,7 @@ exp-ln-2:
     in: exp(log(2))
   rust:
     in: exp(ln(n(2)))
+    out: "2.0"
 inverse-of-ln-symbolically:
   epsil:
     in: Exp(Ln(x))
@@ -352,15 +358,19 @@ exp-ln-of-a-negative-real-is-left-unevaluated:
     in: Exp[Log[-2]]
     note: Wolfram folds Exp[Log[-2]] to -2 (and native compute-engine does too, checked against a bare engine with nothing declared) -- this package's own Ln(-q) = Ln(q) + i*pi rule (widened.ts, a deliberate, documented choice, see Ln.yaml) evaluates the negative-real Ln away before Exp's native e^(ln z) = z fold ever sees a literal Ln node to recognize, since Exp(z) canonicalizes straight to Power(ExponentialE, z) inside compute-engine's own box() step without ever consulting a customizable canonical hook (confirmed by patching Power's canonical and evaluate directly and observing neither intercepts in time). N(Exp(Ln(-2))) is unaffected, still -2.
   sympy:
-    in: exp(log((-2)))
+    in: exp(log(-2))
     out: "-2"
   mpmath:
-    in: exp(log((-2)))
+    in: exp(log(-2))
     out: (-2.0 + 3.39137106414755985758348058775e-31j)
   sage:
-    in: exp(log((-2)))
+    in: exp(log(-2))
   rust:
     in: exp(ln(n(-2)))
+    out: NaN
+    verdict: inconclusive
+    kind: domain
+    note: Rust's f64 ln is real-only (NaN); compute-engine keeps exp(ln(-2)) exact.
 exp-negativeinfinity:
   epsil:
     in: Exp(NegativeInfinity)
@@ -516,3 +526,4 @@ to-50-significant-digits-every-one-correctly:
     in: N(exp(1))
   rust:
     in: nf(exp(n(1)))
+    out: "2.718281828459045"

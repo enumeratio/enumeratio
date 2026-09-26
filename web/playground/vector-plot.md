@@ -1,7 +1,7 @@
 # Vector & Stream Plot
 
 Planar vector fields, rendered by `<notatio-vector-plot>`. The two components
-`u(x, y)` and `v(x, y)` are given in notatio (or both at once via `field`), each
+`u(x, y)` and `v(x, y)` are given in Epsil (or both at once via `field`), each
 compiled to a native function and sampled on an `n`×`n` grid of cell centres.
 
 Two modes share the element:

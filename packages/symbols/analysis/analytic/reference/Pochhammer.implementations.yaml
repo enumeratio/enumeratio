@@ -260,7 +260,7 @@ a-rational-order-evaluates-through-gamma-exactly:
 complex-base-and-order-evaluate-through-gamma:
   epsil:
     in: Pochhammer(2 + 5i, 8i)
-    out: 0.000_002_138_682_291_868_096_3 + -0.000_014_218_737_711_709_974 * i
+    out: 0.000_002_138_682_291_868_096_3 - 0.000_014_218_737_711_709_974i
   tex:
     in: \mathrm{Pochhammer}(2+5i, 8i)
     out: 0.000\,002\,138\,682\,291\,868\,096\,3-0.000\,014\,218\,737\,711\,709\,974i

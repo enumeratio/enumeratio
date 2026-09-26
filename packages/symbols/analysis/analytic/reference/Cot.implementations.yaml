@@ -146,7 +146,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
 evaluates-at-a-complex-argument:
   epsil:
     in: Cot(2.5 + i)
-    out: -0.275_669_121_229_899_45 + -1.042_640_642_094_421_6 * i
+    out: -0.275_669_121_229_899_45 - 1.042_640_642_094_421_6i
   tex:
     in: \cot(2.5+i)
     out: -0.275\,669\,121\,229\,899\,45-1.042\,640\,642\,094\,421\,6i

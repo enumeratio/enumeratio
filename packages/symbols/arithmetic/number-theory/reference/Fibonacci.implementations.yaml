@@ -26,7 +26,7 @@ fibonacci-0:
     in: fibonacci(0)
     out: "0"
   julia:
-    in: fibonacci(0)
+    in: BigInt(fibonacci(ZZ(0)))
     out: "0"
   mathlib4:
     in: (Nat.fib 0)
@@ -59,7 +59,7 @@ fibonacci-1:
     in: fibonacci(1)
     out: "1"
   julia:
-    in: fibonacci(1)
+    in: BigInt(fibonacci(ZZ(1)))
     out: "1"
   mathlib4:
     in: (Nat.fib 1)
@@ -92,7 +92,7 @@ fibonacci-10:
     in: fibonacci(10)
     out: "55"
   julia:
-    in: fibonacci(10)
+    in: BigInt(fibonacci(ZZ(10)))
     out: "55"
   mathlib4:
     in: (Nat.fib 10)
@@ -125,7 +125,7 @@ fibonacci-20:
     in: fibonacci(20)
     out: "6765"
   julia:
-    in: fibonacci(20)
+    in: BigInt(fibonacci(ZZ(20)))
     out: "6765"
   mathlib4:
     in: (Nat.fib 20)
@@ -152,7 +152,8 @@ fibonacci-8:
   oscar:
     in: fibonacci(8)
   julia:
-    in: fibonacci(8)
+    in: BigInt(fibonacci(ZZ(8)))
+    out: "21"
   mathlib4:
     in: (Nat.fib 8)
 exact-at-any-size-f-100-has-21-digits:
@@ -177,7 +178,8 @@ exact-at-any-size-f-100-has-21-digits:
   oscar:
     in: fibonacci(100)
   julia:
-    in: fibonacci(100)
+    in: BigInt(fibonacci(ZZ(100)))
+    out: "354224848179261915075"
   mathlib4:
     in: (Nat.fib 100)
 a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
@@ -202,7 +204,11 @@ a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
   oscar:
     in: fibonacci(1.5)
   julia:
-    in: fibonacci(1.5)
+    in: BigInt(fibonacci(ZZ(1.5)))
+    out: "InexactError: convert(ZZRingElem, 1.5)"
+    verdict: error
+    kind: domain
+    note: Nemo's fibonacci is Int/ZZRingElem-only; ours extends Fibonacci to a real index ν through φ^ν and cos(πν).
   mathlib4:
     in: (Nat.fib 1.5)
 the-two-argument-fibonacci-polynomial-f-7-x-from:
@@ -304,7 +310,8 @@ the-doubling-identity-f-2n-f-n-l-n-see-lucasl:
   sage:
     in: bool(fibonacci(20) == (fibonacci(10) * lucas_number2(10, 1, -1)))
   julia:
-    in: (fibonacci(20) == (fibonacci(10) * Combinatorics.lucasnum(10)))
+    in: (BigInt(fibonacci(ZZ(20))) == (BigInt(fibonacci(ZZ(10))) * Combinatorics.lucasnum(10)))
+    out: "true"
 f-1000-has-209-digits-see-integerdigits:
   epsil:
     in: Length(IntegerDigits(Fibonacci(1_000)))
@@ -347,7 +354,7 @@ the-defining-recurrence-f-10-f-9-f-8:
     in: (fibonacci(10) == (fibonacci(9) + fibonacci(8)))
     out: "true"
   julia:
-    in: (fibonacci(10) == (fibonacci(9) + fibonacci(8)))
+    in: (BigInt(fibonacci(ZZ(10))) == (BigInt(fibonacci(ZZ(9))) + BigInt(fibonacci(ZZ(8)))))
     out: "true"
   mathlib4:
     in: (decide ((Nat.fib 10) = ((Nat.fib 9) + (Nat.fib 8))))
@@ -371,16 +378,16 @@ cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at:
       in: F_5 F_7-\left(F_6\right){}^2
       out: "1"
   sympy:
-    in: ((fibonacci(5) * fibonacci(7)) - (fibonacci(6)**2))
+    in: ((fibonacci(5) * fibonacci(7)) - ((fibonacci(6))**2))
     out: "1"
   sage:
-    in: ((fibonacci(5) * fibonacci(7)) - (fibonacci(6)^2))
+    in: ((fibonacci(5) * fibonacci(7)) - ((fibonacci(6))^2))
     out: "1"
   oscar:
     in: ((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))
     out: "1"
   julia:
-    in: ((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))
+    in: ((BigInt(fibonacci(ZZ(5))) * BigInt(fibonacci(ZZ(7)))) - (big(BigInt(fibonacci(ZZ(6))))^2))
     out: "1"
   mathlib4:
     in: (((Nat.fib 5) * (Nat.fib 7)) - ((Nat.fib 6) ^ 2))
@@ -413,7 +420,7 @@ gcd-f-12-f-18-f-gcd-12-18:
     in: (gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))
     out: "true"
   julia:
-    in: (gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))
+    in: (gcd(ZZ(BigInt(fibonacci(ZZ(12)))), ZZ(BigInt(fibonacci(ZZ(18))))) == BigInt(fibonacci(ZZ(gcd(ZZ(12), ZZ(18))))))
     out: "true"
   mathlib4:
     in: (decide ((Int.gcd (Nat.fib 12) (Nat.fib 18)) = (Nat.fib (Int.gcd 12 18))))
@@ -446,7 +453,7 @@ negative-indices-are-supported-via-f-n-1-n-1-f-n:
     in: fibonacci(-5)
     out: "5"
   julia:
-    in: fibonacci(-5)
+    in: BigInt(fibonacci(ZZ(-5)))
     out: "5"
   mathlib4:
     in: (Nat.fib (-5))
@@ -482,7 +489,7 @@ consecutive-ratios-f-n-1-f-n-converge-to-the:
     in: (fibonacci(20) // fibonacci(19))
     out: "1.6180339631667064"
   julia:
-    in: (fibonacci(20) // fibonacci(19))
+    in: (BigInt(fibonacci(ZZ(20))) // BigInt(fibonacci(ZZ(19))))
     out: "1.6180339631667064"
   mathlib4:
     in: "(((Nat.fib 20) : ℚ) / (Nat.fib 19))"
@@ -510,7 +517,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   oscar:
     in: fibonacci([1, 2, 3, 4])
   julia:
-    in: fibonacci([1, 2, 3, 4])
+    in: "[BigInt(fibonacci(ZZ(1))), BigInt(fibonacci(ZZ(2))), BigInt(fibonacci(ZZ(3))), BigInt(fibonacci(ZZ(4)))]"
+    out: "[1, 1, 2, 3]"
   mathlib4:
     in: (Nat.fib [1, 2, 3, 4])
 they-grow-fast-f-50-already-exceeds-twelve:
@@ -541,7 +549,7 @@ they-grow-fast-f-50-already-exceeds-twelve:
     in: fibonacci(50)
     out: "12586269025"
   julia:
-    in: fibonacci(50)
+    in: BigInt(fibonacci(ZZ(50)))
     out: "12586269025"
   mathlib4:
     in: (Nat.fib 50)
