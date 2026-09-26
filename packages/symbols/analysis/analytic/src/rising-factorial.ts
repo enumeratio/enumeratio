@@ -1,7 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { isFiniteNum, numberResult } from "./box.ts";
-import { cexp, cx, sub } from "./complex.ts";
-import { logGamma } from "./loggamma.ts";
+import { isFiniteNum, numberResult, cexp, cx, sub, logGamma } from "@enumeratio/for-compute-engine";
 
 // RisingFactorial(a, n) — Fungrim's name for CE's native `Pochhammer`, delegated to. Native
 // returns NaN for complex a with non-integer n; there use Γ(a+n)/Γ(a).

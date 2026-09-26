@@ -1,7 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { symbolNameOf } from "@enumeratio/boxed";
 import { isDiagonal, listOf, rowsOf, squareMatrixError } from "./matrix-exp.ts";
-import { type EvalOptions, wantsNumber } from "./box.ts";
+import { type EvalOptions, wantsNumber } from "@enumeratio/for-compute-engine";
 
 // MatrixFunction(f, m) — a scalar function f extended to a square matrix m, via its
 // eigendecomposition. Reuses matrix-exp.ts's matrix reader and builder (`rowsOf`, `listOf`,

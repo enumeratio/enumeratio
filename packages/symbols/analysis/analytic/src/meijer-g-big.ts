@@ -1,16 +1,16 @@
 import { BigDecimal } from "@cortex-js/compute-engine";
-import type { Cx } from "./complex.ts";
+import type { Cx } from "@enumeratio/for-compute-engine";
 import {
-  add as badd,
+  bigAdd as badd,
   atDigits,
   bigCx,
   type BigCx,
-  div as bdiv,
-  exp as bexp,
-  mul as bmul,
-  pow as bpow,
-} from "./bigzeta.ts";
-import { logGammaBig } from "./loggamma.ts";
+  bigDiv as bdiv,
+  bigExp as bexp,
+  bigMul as bmul,
+  bigPow as bpow,
+  logGammaBig,
+} from "@enumeratio/for-compute-engine";
 
 // The BigDecimal twin of meijer-g.ts's `meijerGSeries` — same DLMF 16.17.2 sum, same term
 // structure, run at extended precision so a second cancellation this package's double kernels

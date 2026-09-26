@@ -1,7 +1,18 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { symbolNameOf, wrapOperator } from "@enumeratio/boxed";
-import { add, cexp, clog, cx, type Cx, div, mul, sub } from "./complex.ts";
-import { isFiniteNum, isRealInt, wantsNumber } from "./box.ts";
+import {
+  add,
+  cexp,
+  clog,
+  cx,
+  type Cx,
+  div,
+  mul,
+  sub,
+  isFiniteNum,
+  isRealInt,
+  wantsNumber,
+} from "@enumeratio/for-compute-engine";
 
 // LambertW(z) — compute-engine's native ProductLog — already evaluates the principal (k = 0)
 // and lower-real (k = -1) branches numerically. Missing: exact values at algebraically nice

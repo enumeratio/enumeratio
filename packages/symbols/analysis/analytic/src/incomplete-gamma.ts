@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt } from "@enumeratio/boxed";
-import { type BoxInput, declined, type EvalOptions, isRealInt, type NativeEval } from "./box.ts";
+import { type BoxInput, declined, type EvalOptions, isRealInt, type NativeEval } from "@enumeratio/for-compute-engine";
 import { gammaExactValue } from "./widened.ts";
 
 // The three-argument generalized incomplete gamma, Wolfram's Gamma[s, z₀, z₁] =

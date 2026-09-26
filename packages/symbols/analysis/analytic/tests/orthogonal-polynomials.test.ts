@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // ChebyshevT, ChebyshevU, LegendrePolynomial, RisingFactorial — the Fungrim frontier's top
 // four undeclared heads. Numeric values are role: test examples on each head's reference record; the exact-integer

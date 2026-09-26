@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 import { NOT_RIGOROUS } from "../src/interval.ts";
 
 // A containment property test for every head interval.ts extends: `f(Interval(l, h))`, where

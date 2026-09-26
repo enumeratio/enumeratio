@@ -1,7 +1,18 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { add, cexp, cx, type Cx, div, mul, scale } from "./complex.ts";
-import { logGamma } from "./loggamma.ts";
+import {
+  type EvalOptions,
+  isFiniteNum,
+  numberResult,
+  wantsNumber,
+  add,
+  cexp,
+  cx,
+  type Cx,
+  div,
+  mul,
+  scale,
+  logGamma,
+} from "@enumeratio/for-compute-engine";
 
 // The generalized hypergeometric series pFq(a1,…,ap; b1,…,bq; z) = Σ_{k≥0} ∏(ai)_k / ∏(bj)_k
 // · zᵏ/k!, and its regularized cousin pFq(…)/∏Γ(bj) — Fungrim's frontier heads

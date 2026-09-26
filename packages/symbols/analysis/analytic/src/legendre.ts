@@ -1,7 +1,16 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import type { Json } from "./bernoulli.ts";
-import { type BoxInput, isFiniteNum, isRealInt, numberResult } from "./box.ts";
-import { cx, mul, scale, sub, type Cx } from "./complex.ts";
+import type { Json } from "@enumeratio/for-compute-engine";
+import {
+  type BoxInput,
+  isFiniteNum,
+  isRealInt,
+  numberResult,
+  cx,
+  mul,
+  scale,
+  sub,
+  type Cx,
+} from "@enumeratio/for-compute-engine";
 
 // LegendrePolynomial(n, x): P_0 = 1, P_1 = x, (k+1) P_{k+1} = (2k+1) x P_k − k P_{k−1}.
 // Fungrim's name; Wolfram's is `LegendreP` (bridged in the wolfram package's HEADS map,

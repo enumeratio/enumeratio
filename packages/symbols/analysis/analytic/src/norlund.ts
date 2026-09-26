@@ -1,7 +1,12 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt } from "@enumeratio/boxed";
-import { bernoulliRational, type Rat } from "./bernoulli.ts";
-import { type EvalOptions, isFiniteNum, wantsNumber } from "./box.ts";
+import {
+  bernoulliRational,
+  type Rat,
+  type EvalOptions,
+  isFiniteNum,
+  wantsNumber,
+} from "@enumeratio/for-compute-engine";
 
 // NorlundB(n, a): the Nörlund polynomial B_n^(a), from (t/(e^t − 1))^a = Σ B_n^(a) tⁿ/n!.
 // At a = 1 this is the ordinary Bernoulli number, already exact here as `bernoulliRational`;

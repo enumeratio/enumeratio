@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // DifferenceRootReduce / DifferenceRoot (difference-root.ts): the holonomic (P-recursive)
 // reduction of a hypergeometric-type sequence, and its evaluator. Every case below is

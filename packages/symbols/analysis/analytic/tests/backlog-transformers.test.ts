@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // Add/Multiply/Power/Subtract over Interval, CenteredInterval and Around. These core
 // arithmetic heads have no reference entry to pin an example on, so their cases are direct

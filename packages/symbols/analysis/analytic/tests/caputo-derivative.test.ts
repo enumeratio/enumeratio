@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // CaputoD — see caputo-derivative.ts for the table and its scope. Expected values are
 // each verified against `wolframscript`'s own `CaputoD` AND independently against direct

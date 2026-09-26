@@ -1,6 +1,20 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { abs, add, cpow, csqrt, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
+import {
+  type EvalOptions,
+  isFiniteNum,
+  numberResult,
+  wantsNumber,
+  abs,
+  add,
+  cpow,
+  csqrt,
+  cx,
+  type Cx,
+  div,
+  mul,
+  scale,
+  sub,
+} from "@enumeratio/for-compute-engine";
 
 // Carlson symmetric elliptic integrals RF, RD, RJ, RC, RG (Carlson 1995, "Numerical
 // computation of real or complex elliptic integrals"; DLMF §19.16, §19.36). These are

@@ -1,13 +1,21 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { BigDecimal } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
-import { type Ball, certify, exact, ln, lower, mul, rational } from "./ball.ts";
-import { barnesGBall } from "./barnes-g-big.ts";
-import { atDigits } from "./bigzeta.ts";
-import { hurwitzZetaBall } from "./hurwitz-ball.ts";
-import { lerchPhiBall } from "./lerch-big.ts";
-import { STIELTJES_MAX_ORDER } from "./special-functions.ts";
-import { stieltjesGammaBall } from "./stieltjes-big.ts";
+import {
+  type Ball,
+  certify,
+  exact,
+  ballLn as ln,
+  lower,
+  ballMul as mul,
+  rational,
+  barnesGBall,
+  atDigits,
+  hurwitzZetaBall,
+  lerchPhiBall,
+  stieltjesGammaBall,
+  STIELTJES_MAX_ORDER,
+} from "@enumeratio/for-compute-engine";
 
 // Certified values: the heads whose arbitrary-precision kernels bound their own error, and so
 // return an enclosure -- a ball proven to hold the true value -- rather than a point value.

@@ -15,7 +15,7 @@
 // is why the Dirichlet series below is written `exp(-s·ln(n+a))` rather than `(n+a)^{-s}`:
 // same principal branch, but `_s` comes first.
 
-import type { Json } from "./bernoulli.ts";
+import type { Json } from "@enumeratio/for-compute-engine";
 
 /** Σ over n ≥ 0 of `summand`. */
 const seriesOverN = (summand: Json): Json => ["Sum", summand, ["Triple", "n", 0, "Infinity"]];

@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
-import type { EvalOptions } from "./box.ts";
+import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // PowerExpand(expr) — expand powers and logarithms of products as though every variable were
 // positive: `Ln(xy)` becomes `Ln(x) + Ln(y)`, `(ab)^c` becomes `a^c·b^c`, `Sqrt(x²)` becomes

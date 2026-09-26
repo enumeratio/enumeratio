@@ -1,7 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
 import { applyPatch, hyperbolicZero } from "@enumeratio/for-compute-engine";
-import type { EvalOptions } from "./box.ts";
+import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // Exact values compute-engine leaves symbolic for the hyperbolic functions, though it has
 // them for the circular ones: the values at 0 (and arcosh 1 = 0), as Wolfram gives them.

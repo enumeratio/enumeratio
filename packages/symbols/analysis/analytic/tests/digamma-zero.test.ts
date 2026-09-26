@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // DigammaFunctionZero(n) — see digamma-zero.ts for the bisection over ψ's monotone
 // intervals. mpmath's `findroot(digamma, …)` values from the same intervals are pinned

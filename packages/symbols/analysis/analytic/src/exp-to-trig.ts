@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
-import type { EvalOptions } from "./box.ts";
+import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // ExpToTrig(expr) — rewrite every exponential in `expr` as circular or hyperbolic functions,
 // the inverse of compute-engine's native TrigToExp: `Exp(ix)` becomes `cos(x) + i·sin(x)`

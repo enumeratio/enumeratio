@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // EllipticTheta(a,u,q) and EllipticThetaPrime(a,u,q), a = 1..4 — Wolfram's nome
 // convention |q| < 1 (matches mpmath.jtheta(n,z,q)). Direct q-series, held to the oracle

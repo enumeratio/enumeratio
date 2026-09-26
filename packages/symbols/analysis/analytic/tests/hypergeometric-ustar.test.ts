@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // HypergeometricUStar(a,b,z) = z^a·U(a,b,z) — see hypergeometric-ustar.ts for Kummer's
 // connection formula. mpmath's `z**a * hyperu(a,b,z)` values are pinned as examples on

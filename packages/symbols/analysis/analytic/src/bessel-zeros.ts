@@ -1,6 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, wantsNumber } from "./box.ts";
-import { logGammaReal } from "./loggamma.ts";
+import { type EvalOptions, isFiniteNum, wantsNumber, logGammaReal } from "@enumeratio/for-compute-engine";
 
 // BesselJZero(ν, k) — the k-th positive zero of the Bessel function J_ν, real ν > −1,
 // positive integer k. compute-engine 0.128's native `BesselJ` only evaluates

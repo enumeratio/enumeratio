@@ -1,8 +1,19 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isRealInt, wantsNumber } from "./box.ts";
-import { add, cexp, clog, cx, type Cx, mul, scale, sub } from "./complex.ts";
-import { hurwitzZeta } from "./hurwitz-zeta.ts";
-import { logGamma } from "./loggamma.ts";
+import {
+  type EvalOptions,
+  isRealInt,
+  wantsNumber,
+  add,
+  cexp,
+  clog,
+  cx,
+  type Cx,
+  mul,
+  scale,
+  sub,
+  hurwitzZeta,
+  logGamma,
+} from "@enumeratio/for-compute-engine";
 
 // The Keiper–Li coefficients λₙ (Fungrim, "riemann_zeta" topic; Keiper 1992). Fungrim
 // states two closed forms — λ₀ = 0 and λ₁ = 1 + γ/2 − ½ln(4π) — plus the general

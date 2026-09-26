@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // NSum -- numeric series via convergence acceleration (Wynn epsilon for alternating
 // series, Euler-Maclaurin for a smooth power-law tail), with a strict internal error

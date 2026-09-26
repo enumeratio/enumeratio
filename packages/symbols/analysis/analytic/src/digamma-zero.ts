@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isRealInt, wantsNumber } from "./box.ts";
+import { type EvalOptions, isRealInt, wantsNumber } from "@enumeratio/for-compute-engine";
 
 // DigammaFunctionZero(n) — Fungrim's n-th real zero of the digamma function ψ.
 //

@@ -1,8 +1,8 @@
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf } from "@enumeratio/boxed";
-import type { Json } from "./bernoulli.ts";
-import type { BoxInput, EvalOptions, NativeEval } from "./box.ts";
-import { isFiniteNum } from "./box.ts";
+import type { Json } from "@enumeratio/for-compute-engine";
+import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/for-compute-engine";
+import { isFiniteNum } from "@enumeratio/for-compute-engine";
 
 // The Wolfram signal / piecewise-waveform family: UnitBox, UnitTriangle, HeavisideTheta,
 // HeavisideLambda, HeavisidePi, Ramp, SawtoothWave, TriangleWave, SquareWave, Rescale,

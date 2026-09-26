@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
-import type { EvalOptions } from "./box.ts";
+import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // ComplexExpand(expr) — split `expr` into real and imaginary parts, treating every free
 // symbol as real: `ComplexExpand(f(x + iy))` becomes `Re + i·Im` with `x, y` kept symbolic.

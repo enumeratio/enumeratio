@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { isFiniteNum } from "./box.ts";
+import { isFiniteNum } from "@enumeratio/for-compute-engine";
 
 // Csgn(z) — the sign of Re z, falling back to the sign of Im z on the imaginary axis.
 

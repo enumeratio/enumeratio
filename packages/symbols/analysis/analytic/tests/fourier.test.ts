@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // Fourier / InverseFourier (the discrete transform) and FourierSeries / FourierCoefficient
 // (the order-n complex exponential series) -- see fourier-transform.ts and fourier-series.ts

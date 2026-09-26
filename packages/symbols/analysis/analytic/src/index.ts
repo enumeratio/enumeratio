@@ -1,20 +1,53 @@
+export { declareAnalytic } from "./declare.ts";
 export {
-  declareAnalytic,
   hurwitzZeta,
   hurwitzZetaReal,
   setZetaKernel,
   zetaGeneralized,
   zetaGeneralizedReal,
   type ZetaKernel,
-} from "./hurwitz-zeta.ts";
-export { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "./bigzeta.ts";
+  type BigCx,
+  bigCx,
+  hurwitzZetaBig,
+  zetaGeneralizedBig,
+  barnesG,
+  barnesGReal,
+  logBarnesG,
+  logBarnesGReal,
+  bernoulliNumber,
+  bernoulliPolyAt,
+  bernoulliPolyExpr,
+  bernoulliRational,
+  clausen,
+  dirichletBeta,
+  dirichletBetaReal,
+  dirichletEta,
+  dirichletEtaReal,
+  character,
+  characterExponent,
+  dirichletL,
+  dirichletLReal,
+  eulerPhi,
+  lerchPhi,
+  lerchPhiReal,
+  logGamma,
+  logGammaReal,
+  digamma,
+  polygamma,
+  polygammaReal,
+  polyLog,
+  polyLogReal,
+  stieltjesGamma,
+  stieltjesGammaReal,
+  type ComplexWGSL,
+  emitComplexWGSL,
+  MAX_SLOTS,
+} from "@enumeratio/for-compute-engine";
 export { declareThreading113 } from "./threading-113.ts";
 export { declareClosedForms113 } from "./closed-forms-113.ts";
 export { declareInverseCompositions } from "./inverse-compositions.ts";
-export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./barnes-g.ts";
 export { besselJZero } from "./bessel-zeros.ts";
 export { declareCorrectlyRoundedN, enclosureOf, refinementOf } from "./correctly-rounded.ts";
-export { bernoulliNumber, bernoulliPolyAt, bernoulliPolyExpr, bernoulliRational } from "./bernoulli.ts";
 export {
   carlsonRC,
   carlsonRCReal,
@@ -29,12 +62,9 @@ export {
   declareCarlson,
 } from "./carlson.ts";
 export { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
-export { clausen } from "./clausen.ts";
 export { DEFINITIONS, PRIMITIVE } from "./definitions.ts";
 export { declareDerivatives } from "./derivatives.ts";
 export { declareElliptic } from "./elliptic.ts";
-export { dirichletBeta, dirichletBetaReal, dirichletEta, dirichletEtaReal } from "./dirichlet.ts";
-export { character, characterExponent, dirichletL, dirichletLReal, eulerPhi } from "./dirichlet-l.ts";
 export { declareFractals, iterateQuadratic, julia, juliaReal, mandelbrot, mandelbrotReal } from "./fractal.ts";
 export { declareDifferenceRoot } from "./difference-root.ts";
 export { declareDifferentialRoot } from "./differential-root.ts";
@@ -45,7 +75,6 @@ export { hypergeometricUStar } from "./hypergeometric-ustar.ts";
 export { declareHypergeometric } from "./hypergeometric.ts";
 export { declareKeiperLi } from "./keiper-li.ts";
 export { evaluateLegendreP } from "./legendre.ts";
-export { lerchPhi, lerchPhiReal } from "./lerch.ts";
 export { declareModular } from "./modular.ts";
 export { declareLambertW } from "./lambert-w.ts";
 export { declareInverseErfc } from "./inverse-erfc.ts";
@@ -66,19 +95,14 @@ export { declareExpToTrig, evaluateExpToTrig } from "./exp-to-trig.ts";
 export { declarePowerExpand, powerExpand } from "./power-expand.ts";
 export { declareFunctionExpand, functionExpand } from "./function-expand.ts";
 export { declareFullSimplify, fullSimplify } from "./full-simplify.ts";
-export { logGamma, logGammaReal } from "./loggamma.ts";
 export { multiZetaValue } from "./multizeta.ts";
-export { digamma, polygamma, polygammaReal } from "./polygamma.ts";
-export { polyLog, polyLogReal } from "./polylog.ts";
 export { evaluateRisingFactorial } from "./rising-factorial.ts";
 export { declareQSeries } from "./q-series.ts";
 export { declareRiemannSiegel } from "./riemann-siegel.ts";
 export { landauFunction } from "./sloane-a.ts";
 export { zetaWGSL } from "./shader.ts";
-export { stieltjesGamma, stieltjesGammaReal } from "./stieltjes.ts";
 export { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
 export { declareGeneralizedSpecial } from "./generalized-special.ts";
-export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./wgsl-complex.ts";
 export { declareConstantRounding } from "./constant-rounding.ts";
 export { declareFunctionProperties, domainOf, recognize, type Recognized, type Trend } from "./function-properties.ts";
 export { declareTrigNormalisation } from "./trig-normalisation.ts";

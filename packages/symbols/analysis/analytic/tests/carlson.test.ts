@@ -2,8 +2,8 @@ import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { carlsonRC, carlsonRD, carlsonRF, carlsonRG, carlsonRJ } from "../src/carlson.ts";
-import { cx } from "../src/complex.ts";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { cx } from "@enumeratio/for-compute-engine";
+import { declareAnalytic } from "../src/declare.ts";
 
 // CarlsonRF, CarlsonRC, CarlsonRD, CarlsonRJ, CarlsonRG — the Carlson symmetric elliptic
 // integrals (Carlson 1995; DLMF §19.16, §19.36). Numeric evaluation is held to the oracle

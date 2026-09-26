@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // N(Sin(24^40)) et al. on a huge exact/bignum argument — trig-reduction.ts. Golden values
 // are `wolframscript -code 'N[Sin[24^40], 30]'` (and the same for Cos/Tan/Sec/Csc/Cot, at

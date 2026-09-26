@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, threadOverLists, widenSignature, wrapOperator } from "@enumeratio/boxed";
-import type { EvalOptions, NativeEval } from "./box.ts";
+import type { EvalOptions, NativeEval } from "@enumeratio/for-compute-engine";
 
 /** No free variable anywhere in `expr` — a plain number, `Pi`/`ExponentialE`, or a closed
  * call over them (`Exp(Sqrt(2))`) all qualify, even though `evaluate()` alone leaves the

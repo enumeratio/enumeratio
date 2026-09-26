@@ -3,7 +3,7 @@ import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // MatrixExp — the matrix exponential. Numeric evaluation (the scaling-and-squaring path,
 // exercised here by the non-diagonal, non-2×2, non-nilpotent cases) is held to the oracle

@@ -1,6 +1,19 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { abs, add, ccos, cpow, csin, cx, type Cx, mul, scale } from "./complex.ts";
+import {
+  type EvalOptions,
+  isFiniteNum,
+  numberResult,
+  wantsNumber,
+  abs,
+  add,
+  ccos,
+  cpow,
+  csin,
+  cx,
+  type Cx,
+  mul,
+  scale,
+} from "@enumeratio/for-compute-engine";
 
 // EllipticTheta(a, u, q) and EllipticThetaPrime(a, u, q) — the four Jacobi theta
 // functions (a = 1..4) and their u-derivatives, Wolfram's nome convention |q| < 1

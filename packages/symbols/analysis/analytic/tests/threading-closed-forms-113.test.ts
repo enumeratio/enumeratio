@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // #113: threading gaps (§1) and exact closed forms (§3) for HurwitzZeta and PolyLog, plus
 // FromContinuedFraction and Binomial's threading. Every non-obvious identity here was

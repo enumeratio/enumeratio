@@ -1,8 +1,7 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/boxed";
-import type { Json } from "./bernoulli.ts";
-import { type BoxInput, wantsNumber } from "./box.ts";
-import { withGuardDigits } from "./precise.ts";
+import type { Json } from "@enumeratio/for-compute-engine";
+import { type BoxInput, wantsNumber, withGuardDigits } from "@enumeratio/for-compute-engine";
 
 // ln Γ(x) and ln G(x) for a real x past a double's range, where the double kernels have
 // nothing to work with. Both asymptotic series converge absurdly fast out here, so a few

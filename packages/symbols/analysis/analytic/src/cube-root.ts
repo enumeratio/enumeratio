@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import type { EvalOptions } from "./box.ts";
+import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // CubeRoot(x) — Wolfram's real cube root. compute-engine's own `Root(x, 3)` already takes
 // the real branch at a negative base (`Root(-64, 3)` is `-3`, not a complex value), so this

@@ -1,9 +1,6 @@
 import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/boxed";
-import { isFiniteNum } from "./box.ts";
-import { cx } from "./complex.ts";
-import { logGamma } from "./loggamma.ts";
-import { DOUBLE_DIGITS } from "./precise.ts";
+import { isFiniteNum, cx, logGamma, DOUBLE_DIGITS } from "@enumeratio/for-compute-engine";
 
 /**
  * Box a JS double as a float, not an exact bignum integer. `ce.number(x)` for a huge,

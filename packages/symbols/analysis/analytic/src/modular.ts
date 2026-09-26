@@ -1,6 +1,18 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, isRealInt, numberResult, wantsNumber } from "./box.ts";
-import { abs, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
+import {
+  type EvalOptions,
+  isFiniteNum,
+  isRealInt,
+  numberResult,
+  wantsNumber,
+  abs,
+  cx,
+  type Cx,
+  div,
+  mul,
+  scale,
+  sub,
+} from "@enumeratio/for-compute-engine";
 
 // ModularJ, ModularLambda, EisensteinG — Fungrim-frontier heads over τ in the upper
 // half-plane, delegating to compute-engine's own native EisensteinE/JacobiTheta rather

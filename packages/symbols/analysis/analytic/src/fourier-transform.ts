@@ -1,7 +1,17 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, ruleOf } from "@enumeratio/boxed";
-import { add, cosPi, cx, mul, scale, sinPi, type Cx } from "./complex.ts";
-import { type BoxInput, isFiniteNum, numberResult } from "./box.ts";
+import {
+  add,
+  cosPi,
+  cx,
+  mul,
+  scale,
+  sinPi,
+  type Cx,
+  type BoxInput,
+  isFiniteNum,
+  numberResult,
+} from "@enumeratio/for-compute-engine";
 
 // Fourier(list) / InverseFourier(list): the numeric discrete Fourier transform of a
 // list, or of a rectangular matrix (a 2D DFT is separable -- apply the 1D transform

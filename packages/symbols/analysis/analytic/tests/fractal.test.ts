@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareFractals, iterateQuadratic, julia, mandelbrot } from "../src/fractal.ts";
-import { emitComplexWGSL, type Json } from "../src/wgsl-complex.ts";
+import { emitComplexWGSL, type Json } from "@enumeratio/for-compute-engine";
 
 const ce = new ComputeEngine();
 declareFractals(ce);

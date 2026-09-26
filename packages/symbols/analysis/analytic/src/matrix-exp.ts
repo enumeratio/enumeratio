@@ -1,7 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
-import { add, cx, type Cx, mul, scale } from "./complex.ts";
-import { type EvalOptions, wantsNumber } from "./box.ts";
+import { add, cx, type Cx, mul, scale, type EvalOptions, wantsNumber } from "@enumeratio/for-compute-engine";
 
 // MatrixExp(m) — the matrix exponential e^M = Σ_{k≥0} M^k / k!, for a square matrix m.
 // Wolfram names this MatrixExp too (its Exp maps element-wise, same as ours — see the
