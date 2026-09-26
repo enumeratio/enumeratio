@@ -16,11 +16,11 @@ lucasl-0:
     tex:
       in: L_0
       out: "2"
-  sage:
-    in: lucas_number2(0, 1, -1)
-    out: "2"
   sympy:
     in: lucas(0)
+    out: "2"
+  sage:
+    in: lucas_number2(0, 1, -1)
     out: "2"
   julia:
     in: Combinatorics.lucasnum(0)
@@ -43,11 +43,11 @@ lucasl-1:
     tex:
       in: L_1
       out: "1"
-  sage:
-    in: lucas_number2(1, 1, -1)
-    out: "1"
   sympy:
     in: lucas(1)
+    out: "1"
+  sage:
+    in: lucas_number2(1, 1, -1)
     out: "1"
   julia:
     in: Combinatorics.lucasnum(1)
@@ -70,11 +70,11 @@ lucasl-5:
     tex:
       in: L_5
       out: "11"
-  sage:
-    in: lucas_number2(5, 1, -1)
-    out: "11"
   sympy:
     in: lucas(5)
+    out: "11"
+  sage:
+    in: lucas_number2(5, 1, -1)
     out: "11"
   julia:
     in: Combinatorics.lucasnum(5)
@@ -97,11 +97,11 @@ lucasl-10:
     tex:
       in: L_{10}
       out: "123"
-  sage:
-    in: lucas_number2(10, 1, -1)
-    out: "123"
   sympy:
     in: lucas(10)
+    out: "123"
+  sage:
+    in: lucas_number2(10, 1, -1)
     out: "123"
   julia:
     in: Combinatorics.lucasnum(10)
@@ -120,11 +120,11 @@ exact-at-any-size:
     in: LucasL[100]
   wolfram:
     in: LucasL[100]
-  sage:
-    in: lucas_number2(100, 1, -1)
   sympy:
     in: lucas(100)
     out: "792070839848372253127"
+  sage:
+    in: lucas_number2(100, 1, -1)
   julia:
     in: Combinatorics.lucasnum(100)
     out: "792070839848372253127"
@@ -142,17 +142,17 @@ an-odd-negative-index-flips-the-sign-l-11-l-11:
     in: LucasL[-11]
   wolfram:
     in: LucasL[-11]
-  sage:
-    in: lucas_number2(-11, 1, -1)
   sympy:
     in: lucas(-11)
     out: "-199"
+  sage:
+    in: lucas_number2(-11, 1, -1)
   julia:
     in: Combinatorics.lucasnum(-11)
     out: "DomainError with -11: n must be nonnegative"
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's lucasnum declines a negative index; ours extends via LucasL(-n) = (-1)^n LucasL(n).
 a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
   epsil:
     in: LucasL(2.333_333_333_333_333_5)
@@ -167,20 +167,20 @@ a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
     in: LucasL[2.3333333333333335]
   wolfram:
     in: LucasL[2.3333333333333335]
-  sage:
-    in: lucas_number2(2.3333333333333335, 1, -1)
   sympy:
     in: lucas(2.3333333333333335)
     out: lucas(2.33333333333333)
     verdict: inconclusive
     kind: domain
     note: SymPy's lucas takes integers and stays symbolic; compute-engine continues L_ν to real ν.
+  sage:
+    in: lucas_number2(2.3333333333333335, 1, -1)
   julia:
     in: Combinatorics.lucasnum(2.3333333333333335)
     out: "MethodError: no method matching lucasnum(::Float64) The function `lucasnum` exists, but no method is"
     verdict: error
     kind: domain
-    note: The Julia function takes integers; compute-engine's LucasL extends to real, rational and complex arguments.
+    note: Combinatorics.jl's lucasnum is Int-only; ours extends LucasL to a real index ν through φ^ν and cos(πν), as with Fibonacci.
 the-two-argument-lucas-polynomial-l-7-x-from-l-n:
   epsil:
     in: LucasL(7, x)
@@ -260,13 +260,13 @@ l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci:
     in: Subtract[Power[LucasL[10], 2], Times[5, Power[Fibonacci[10], 2]]]
   wolfram:
     in: Subtract[Power[LucasL[10], 2], Times[5, Power[Fibonacci[10], 2]]]
-  sage:
-    in: ((lucas_number2(10, 1, -1)^2) - (5 * (fibonacci(10)^2)))
   sympy:
-    in: ((lucas(10)**2) - (5 * (fibonacci(10)**2)))
+    in: (((lucas(10))**2) - (5 * ((fibonacci(10))**2)))
     out: "4"
+  sage:
+    in: (((lucas_number2(10, 1, -1))^2) - (5 * ((fibonacci(10))^2)))
   julia:
-    in: ((big(Combinatorics.lucasnum(10))^2) - (5 * (big(fibonacci(10))^2)))
+    in: ((big(Combinatorics.lucasnum(10))^2) - (5 * (big(BigInt(fibonacci(ZZ(10))))^2)))
     out: "4"
 l-n-f-n-1-f-n-1-here-at-n-6:
   epsil:
@@ -286,14 +286,14 @@ l-n-f-n-1-f-n-1-here-at-n-6:
     tex:
       in: L_6=F_5+F_7
       out: \text{True}
-  sage:
-    in: bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))
-    out: True
   sympy:
     in: enumeratio_equal(lucas(6), (fibonacci(5) + fibonacci(7)))
     out: True
+  sage:
+    in: bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))
+    out: True
   julia:
-    in: (Combinatorics.lucasnum(6) == (fibonacci(5) + fibonacci(7)))
+    in: (Combinatorics.lucasnum(6) == (BigInt(fibonacci(ZZ(5))) + BigInt(fibonacci(ZZ(7)))))
     out: "true"
 conversely-f-n-frac-l-n-1-l-n-1-5:
   epsil:
@@ -313,14 +313,14 @@ conversely-f-n-frac-l-n-1-l-n-1-5:
     tex:
       in: F_6=\frac{L_5+L_7}{5}
       out: \text{True}
-  sage:
-    in: bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))
-    out: True
   sympy:
     in: enumeratio_equal(fibonacci(6), (S((lucas(5) + lucas(7))) / 5))
     out: True
+  sage:
+    in: bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))
+    out: True
   julia:
-    in: (fibonacci(6) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))
+    in: (BigInt(fibonacci(ZZ(6))) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))
     out: "true"
 a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n:
   epsil:
@@ -340,11 +340,11 @@ a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n:
     tex:
       in: L_4 L_6-\left(L_5\right){}^2
       out: "5"
-  sage:
-    in: ((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - (lucas_number2(5, 1, -1)^2))
-    out: "5"
   sympy:
-    in: ((lucas(4) * lucas(6)) - (lucas(5)**2))
+    in: ((lucas(4) * lucas(6)) - ((lucas(5))**2))
+    out: "5"
+  sage:
+    in: ((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - ((lucas_number2(5, 1, -1))^2))
     out: "5"
   julia:
     in: ((Combinatorics.lucasnum(4) * Combinatorics.lucasnum(6)) - (big(Combinatorics.lucasnum(5))^2))
@@ -367,11 +367,11 @@ negative-indices-are-supported-via-l-n-1-n-l-n:
     tex:
       in: L_{-1}
       out: "-1"
-  sage:
-    in: lucas_number2(-1, 1, -1)
-    out: "-1"
   sympy:
     in: lucas(-1)
+    out: "-1"
+  sage:
+    in: lucas_number2(-1, 1, -1)
     out: "-1"
   julia:
     in: Combinatorics.lucasnum(-1)
@@ -397,11 +397,11 @@ consecutive-ratios-l-n-1-l-n-converge-to-the:
     tex:
       in: \frac{L_{15}}{L_{14}}
       out: \frac{1364}{843}
-  sage:
-    in: (lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))
-    out: 1364/843
   sympy:
     in: (S(lucas(15)) / lucas(14))
+    out: 1364/843
+  sage:
+    in: (lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))
     out: 1364/843
   julia:
     in: (Combinatorics.lucasnum(15) // Combinatorics.lucasnum(14))
@@ -421,17 +421,14 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: L_{\{1,2,3,4\}}
       out: \{1,3,4,7\}
-  sage:
-    in: "[lucas_number2(1, 1, -1), lucas_number2(2, 1, -1), lucas_number2(3, 1, -1), lucas_number2(4, 1, -1)]"
   sympy:
     in: "[lucas(1), lucas(2), lucas(3), lucas(4)]"
     out: "[1, 3, 4, 7]"
+  sage:
+    in: "[lucas_number2(1, 1, -1), lucas_number2(2, 1, -1), lucas_number2(3, 1, -1), lucas_number2(4, 1, -1)]"
   julia:
-    in: Combinatorics.lucasnum([1, 2, 3, 4])
-    out: "MethodError: no method matching lucasnum(::Vector{Int64}) The function `lucasnum` exists, but no met"
-    verdict: error
-    kind: threading
-    note: compute-engine's LucasL is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[Combinatorics.lucasnum(1), Combinatorics.lucasnum(2), Combinatorics.lucasnum(3), Combinatorics.lucasnum(4)]"
+    out: "[1, 3, 4, 7]"
 l-30-already-tops-1-8-million-growing-at-the:
   epsil:
     in: LucasL(30)
@@ -450,11 +447,11 @@ l-30-already-tops-1-8-million-growing-at-the:
     tex:
       in: L_{30}
       out: "1860498"
-  sage:
-    in: lucas_number2(30, 1, -1)
-    out: "1860498"
   sympy:
     in: lucas(30)
+    out: "1860498"
+  sage:
+    in: lucas_number2(30, 1, -1)
     out: "1860498"
   julia:
     in: Combinatorics.lucasnum(30)

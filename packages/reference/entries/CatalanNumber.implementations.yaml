@@ -16,17 +16,17 @@ catalannumber-0:
     tex:
       in: C_0
       out: "1"
-  sage:
-    in: catalan_number(0)
-    out: "1"
-  mathlib4:
-    in: (catalan 0)
-    out: "1"
   sympy:
     in: catalan(0)
     out: "1"
+  sage:
+    in: catalan_number(0)
+    out: "1"
   julia:
     in: Combinatorics.catalannum(0)
+    out: "1"
+  mathlib4:
+    in: (catalan 0)
     out: "1"
 catalannumber-1:
   epsil:
@@ -46,17 +46,17 @@ catalannumber-1:
     tex:
       in: C_1
       out: "1"
-  sage:
-    in: catalan_number(1)
-    out: "1"
-  mathlib4:
-    in: (catalan 1)
-    out: "1"
   sympy:
     in: catalan(1)
     out: "1"
+  sage:
+    in: catalan_number(1)
+    out: "1"
   julia:
     in: Combinatorics.catalannum(1)
+    out: "1"
+  mathlib4:
+    in: (catalan 1)
     out: "1"
 catalannumber-5:
   epsil:
@@ -76,17 +76,17 @@ catalannumber-5:
     tex:
       in: C_5
       out: "42"
-  sage:
-    in: catalan_number(5)
-    out: "42"
-  mathlib4:
-    in: (catalan 5)
-    out: "42"
   sympy:
     in: catalan(5)
     out: "42"
+  sage:
+    in: catalan_number(5)
+    out: "42"
   julia:
     in: Combinatorics.catalannum(5)
+    out: "42"
+  mathlib4:
+    in: (catalan 5)
     out: "42"
 catalannumber-10:
   epsil:
@@ -106,17 +106,17 @@ catalannumber-10:
     tex:
       in: C_{10}
       out: "16796"
-  sage:
-    in: catalan_number(10)
-    out: "16796"
-  mathlib4:
-    in: (catalan 10)
-    out: "16796"
   sympy:
     in: catalan(10)
     out: "16796"
+  sage:
+    in: catalan_number(10)
+    out: "16796"
   julia:
     in: Combinatorics.catalannum(10)
+    out: "16796"
+  mathlib4:
+    in: (catalan 10)
     out: "16796"
 closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n:
   epsil:
@@ -133,10 +133,16 @@ closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n:
     tex:
       in: \frac{\binom{2\ 5}{5}}{5+1}
       out: "42"
+  sympy:
+    in: (S(binomial((2 * 5), 5)) / (5 + 1))
+    out: "42"
   sage:
     in: (binomial((2 * 5), 5) / (5 + 1))
     out: "42"
   oscar:
+    in: (binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))
+    out: "42.0"
+  julia:
     in: (binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))
     out: "42.0"
   mathlib4:
@@ -145,12 +151,6 @@ closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n:
   rust:
     in: (binomial((n(2) * n(5)), n(5)) / (n(5) + n(1)))
     out: "42"
-  sympy:
-    in: (S(binomial((2 * 5), 5)) / (5 + 1))
-    out: "42"
-  julia:
-    in: (binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))
-    out: "42.0"
 equivalently-c-n-binom-2n-n-binom-2n-n-1:
   epsil:
     in: Binomial(10, 5) - Binomial(10, 6)
@@ -166,10 +166,16 @@ equivalently-c-n-binom-2n-n-binom-2n-n-1:
     tex:
       in: \binom{10}{5}-\binom{10}{6}
       out: "42"
+  sympy:
+    in: (binomial(10, 5) - binomial(10, 6))
+    out: "42"
   sage:
     in: (binomial(10, 5) - binomial(10, 6))
     out: "42"
   oscar:
+    in: (binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))
+    out: "42"
+  julia:
     in: (binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))
     out: "42"
   mathlib4:
@@ -177,12 +183,6 @@ equivalently-c-n-binom-2n-n-binom-2n-n-1:
     out: "42"
   rust:
     in: (binomial(n(10), n(5)) - binomial(n(10), n(6)))
-    out: "42"
-  sympy:
-    in: (binomial(10, 5) - binomial(10, 6))
-    out: "42"
-  julia:
-    in: (binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))
     out: "42"
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2:
   epsil:
@@ -202,18 +202,18 @@ the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2:
     tex:
       in: \frac{C_6}{C_5}
       out: \frac{22}{7}
-  sage:
-    in: (catalan_number(6) / catalan_number(5))
-    out: 22/7
-  mathlib4:
-    in: "(((catalan 6) : ℚ) / (catalan 5))"
-    out: 22/7
   sympy:
     in: (S(catalan(6)) / catalan(5))
+    out: 22/7
+  sage:
+    in: (catalan_number(6) / catalan_number(5))
     out: 22/7
   julia:
     in: (Combinatorics.catalannum(6) // Combinatorics.catalannum(5))
     out: "3.142857142857143"
+  mathlib4:
+    in: "(((catalan 6) : ℚ) / (catalan 5))"
+    out: 22/7
 the-5-ways-to-balance-3-pairs-of-parentheses:
   epsil:
     in: CatalanNumber(3)
@@ -232,17 +232,17 @@ the-5-ways-to-balance-3-pairs-of-parentheses:
     tex:
       in: C_3
       out: "5"
-  sage:
-    in: catalan_number(3)
-    out: "5"
-  mathlib4:
-    in: (catalan 3)
-    out: "5"
   sympy:
     in: catalan(3)
     out: "5"
+  sage:
+    in: catalan_number(3)
+    out: "5"
   julia:
     in: Combinatorics.catalannum(3)
+    out: "5"
+  mathlib4:
+    in: (catalan 3)
     out: "5"
 the-14-triangulations-of-a-hexagon-and-the-14:
   epsil:
@@ -262,17 +262,17 @@ the-14-triangulations-of-a-hexagon-and-the-14:
     tex:
       in: C_4
       out: "14"
-  sage:
-    in: catalan_number(4)
-    out: "14"
-  mathlib4:
-    in: (catalan 4)
-    out: "14"
   sympy:
     in: catalan(4)
     out: "14"
+  sage:
+    in: catalan_number(4)
+    out: "14"
   julia:
     in: Combinatorics.catalannum(4)
+    out: "14"
+  mathlib4:
+    in: (catalan 4)
     out: "14"
 catalannumber-neg-1-is-neg-1:
   epsil:
@@ -289,22 +289,22 @@ catalannumber-neg-1-is-neg-1:
   wolfram:
     in: CatalanNumber[-1]
     note: Checked against an actual Wolfram kernel (see combinatorics.oracle.json) -- CatalanNumber[-1] = -1. The alternative Gamma-ratio limit Gamma(2n+1)/(Gamma(n+1) Gamma(n+2)) -- what SymPy's and Sage's own catalan/catalan_number give -- disagrees, at -1/2; this entry follows the verified Wolfram kernel output.
-  sage:
-    in: catalan_number(-1)
-  mathlib4:
-    in: (catalan (-1))
   sympy:
     in: catalan(-1)
     out: -1/2
     verdict: disagree
     kind: convention
     note: compute-engine and Wolfram take C(-1) = -1; SymPy's Γ formula gives the limit -1/2.
+  sage:
+    in: catalan_number(-1)
   julia:
     in: Combinatorics.catalannum(-1)
     out: "DomainError with -1: n must be nonnegative"
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's catalannum declines any negative n; ours defines CatalanNumber(-1) = -1 by convention.
+  mathlib4:
+    in: (catalan (-1))
 catalannumber-0-past-neg-1:
   epsil:
     in: CatalanNumber(-2)
@@ -319,19 +319,19 @@ catalannumber-0-past-neg-1:
     in: CatalanNumber[-2]
   wolfram:
     in: CatalanNumber[-2]
-  sage:
-    in: catalan_number(-2)
-  mathlib4:
-    in: (catalan (-2))
   sympy:
     in: catalan(-2)
     out: "0"
+  sage:
+    in: catalan_number(-2)
   julia:
     in: Combinatorics.catalannum(-2)
     out: "DomainError with -2: n must be nonnegative"
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's catalannum declines any negative n; ours gives 0 for n ≤ -2.
+  mathlib4:
+    in: (catalan (-2))
 catalannumber-neg-5-is-also-0:
   epsil:
     in: CatalanNumber(-5)
@@ -346,19 +346,19 @@ catalannumber-neg-5-is-also-0:
     in: CatalanNumber[-5]
   wolfram:
     in: CatalanNumber[-5]
-  sage:
-    in: catalan_number(-5)
-  mathlib4:
-    in: (catalan (-5))
   sympy:
     in: catalan(-5)
     out: "0"
+  sage:
+    in: catalan_number(-5)
   julia:
     in: Combinatorics.catalannum(-5)
     out: "DomainError with -5: n must be nonnegative"
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's catalannum declines any negative n; ours gives 0 for n ≤ -2.
+  mathlib4:
+    in: (catalan (-5))
 they-grow-fast-c-15-already-passes-nine-million:
   epsil:
     in: CatalanNumber(15)
@@ -377,17 +377,17 @@ they-grow-fast-c-15-already-passes-nine-million:
     tex:
       in: C_{15}
       out: "9694845"
-  sage:
-    in: catalan_number(15)
-    out: "9694845"
-  mathlib4:
-    in: (catalan 15)
-    out: "9694845"
   sympy:
     in: catalan(15)
     out: "9694845"
+  sage:
+    in: catalan_number(15)
+    out: "9694845"
   julia:
     in: Combinatorics.catalannum(15)
+    out: "9694845"
+  mathlib4:
+    in: (catalan 15)
     out: "9694845"
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
@@ -404,22 +404,19 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: C_{\{1,2,3,4\}}
       out: \{1,2,5,14\}
-  sage:
-    in: catalan_number([1, 2, 3, 4])
-  mathlib4:
-    in: (catalan [1, 2, 3, 4])
   sympy:
-    in: catalan([1, 2, 3, 4])
+    in: "[catalan(1), catalan(2), catalan(3), catalan(4)]"
     out: "AttributeError: 'list' object has no attribute 'is_Integer'"
     verdict: error
     kind: threading
     note: compute-engine's CatalanNumber is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: "[catalan_number(1), catalan_number(2), catalan_number(3), catalan_number(4)]"
   julia:
-    in: Combinatorics.catalannum([1, 2, 3, 4])
-    out: "MethodError: no method matching catalannum(::Vector{Int64}) The function `catalannum` exists, but no"
-    verdict: error
-    kind: threading
-    note: compute-engine's CatalanNumber is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[Combinatorics.catalannum(1), Combinatorics.catalannum(2), Combinatorics.catalannum(3), Combinatorics.catalannum(4)]"
+    out: "[1, 2, 5, 14]"
+  mathlib4:
+    in: (catalan [1, 2, 3, 4])
 half-integer-arguments-evaluate-exactly-through:
   epsil:
     in: CatalanNumber(5 / 2)
@@ -438,19 +435,19 @@ half-integer-arguments-evaluate-exactly-through:
     tex:
       in: C_{\frac{5}{2}}
       out: \frac{1024}{105 \pi }
-  sage:
-    in: catalan_number((5/2))
-  mathlib4:
-    in: "(catalan ((5 : ℚ) / 2))"
   sympy:
     in: catalan(Rational(5, 2))
     out: catalan(5/2)
+  sage:
+    in: catalan_number((5/2))
   julia:
     in: Combinatorics.catalannum((5 // 2))
     out: "MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but "
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's catalannum is Int-only; ours extends CatalanNumber to a rational n through the Gamma function.
+  mathlib4:
+    in: "(catalan ((5 : ℚ) / 2))"
 catalannumber-30:
   epsil:
     in: CatalanNumber(30)
@@ -465,16 +462,16 @@ catalannumber-30:
     in: CatalanNumber[30]
   wolfram:
     in: CatalanNumber[30]
-  sage:
-    in: catalan_number(30)
-  mathlib4:
-    in: (catalan 30)
   sympy:
     in: catalan(30)
     out: "3814986502092304"
+  sage:
+    in: catalan_number(30)
   julia:
     in: Combinatorics.catalannum(30)
     out: "3814986502092304"
+  mathlib4:
+    in: (catalan 30)
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i:
   epsil:
     in: CatalanNumber(4) == Sum(CatalanNumber(i) * CatalanNumber(3 - i), (i, 0, 3))
@@ -509,19 +506,19 @@ real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
     in: CatalanNumber[2.3]
   wolfram:
     in: CatalanNumber[2.3]
-  sage:
-    in: catalan_number(2.3)
-  mathlib4:
-    in: (catalan 2.3)
   sympy:
     in: catalan(2.3)
     out: "2.59035215401932"
+  sage:
+    in: catalan_number(2.3)
   julia:
     in: Combinatorics.catalannum(2.3)
     out: "MethodError: no method matching catalannum(::Float64) The function `catalannum` exists, but no metho"
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's catalannum is Int-only; ours extends CatalanNumber to a real n through the Gamma function.
+  mathlib4:
+    in: (catalan 2.3)
 complex-arguments-evaluate-through-the-same:
   epsil:
     in: CatalanNumber(1.2 + i)
@@ -536,17 +533,17 @@ complex-arguments-evaluate-through-the-same:
     in: CatalanNumber[Complex[1.2, 1]]
   wolfram:
     in: CatalanNumber[Complex[1.2, 1]]
-  sage:
-    in: catalan_number((1.2 + 1*I))
   sympy:
     in: catalan((1.2 + 1*I))
     out: 0.730728624207284 + 0.569846406969343*I
+  sage:
+    in: catalan_number((1.2 + 1*I))
   julia:
     in: Combinatorics.catalannum(complex(1.2, 1))
     out: "MethodError: no method matching catalannum(::ComplexF64) The function `catalannum` exists, but no me"
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's catalannum is Int-only; ours extends CatalanNumber to a complex n through the same Gamma-function formula.
 c-1-2-frac-8-3-pi-by-analytic-continuation:
   epsil:
     in: CatalanNumber(1 / 2)
@@ -561,19 +558,19 @@ c-1-2-frac-8-3-pi-by-analytic-continuation:
     in: CatalanNumber[Rational[1, 2]]
   wolfram:
     in: CatalanNumber[Rational[1, 2]]
-  sage:
-    in: catalan_number((1/2))
-  mathlib4:
-    in: "(catalan ((1 : ℚ) / 2))"
   sympy:
     in: catalan(Rational(1, 2))
     out: catalan(1/2)
+  sage:
+    in: catalan_number((1/2))
   julia:
     in: Combinatorics.catalannum((1 // 2))
     out: "MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but "
     verdict: error
     kind: domain
-    note: Combinatorics.jl's catalannum takes nonnegative integers; compute-engine's CatalanNumber continues through Γ (and to negative integers, as Wolfram's does).
+    note: Combinatorics.jl's catalannum is Int-only; ours reaches CatalanNumber(1/2) = 8/(3π) by analytic continuation.
+  mathlib4:
+    in: "(catalan ((1 : ℚ) / 2))"
 an-interval-argument-should-give-an-enclosing:
   epsil:
     in: CatalanNumber(Interval(0.5, 0.6))

@@ -16,17 +16,17 @@ bellnumber-0:
     tex:
       in: B_0
       out: "1"
+  sympy:
+    in: bell(0)
+    out: "1"
   sage:
     in: bell_number(0)
     out: "1"
   oscar:
     in: bell(0)
     out: "1"
-  sympy:
-    in: bell(0)
-    out: "1"
   julia:
-    in: bell(0)
+    in: bell(ZZ(0))
     out: "1"
 bellnumber-1:
   epsil:
@@ -46,17 +46,17 @@ bellnumber-1:
     tex:
       in: B_1
       out: "1"
+  sympy:
+    in: bell(1)
+    out: "1"
   sage:
     in: bell_number(1)
     out: "1"
   oscar:
     in: bell(1)
     out: "1"
-  sympy:
-    in: bell(1)
-    out: "1"
   julia:
-    in: bell(1)
+    in: bell(ZZ(1))
     out: "1"
 bellnumber-3:
   epsil:
@@ -76,17 +76,17 @@ bellnumber-3:
     tex:
       in: B_3
       out: "5"
+  sympy:
+    in: bell(3)
+    out: "5"
   sage:
     in: bell_number(3)
     out: "5"
   oscar:
     in: bell(3)
     out: "5"
-  sympy:
-    in: bell(3)
-    out: "5"
   julia:
-    in: bell(3)
+    in: bell(ZZ(3))
     out: "5"
 bellnumber-5:
   epsil:
@@ -106,17 +106,17 @@ bellnumber-5:
     tex:
       in: B_5
       out: "52"
+  sympy:
+    in: bell(5)
+    out: "52"
   sage:
     in: bell_number(5)
     out: "52"
   oscar:
     in: bell(5)
     out: "52"
-  sympy:
-    in: bell(5)
-    out: "52"
   julia:
-    in: bell(5)
+    in: bell(ZZ(5))
     out: "52"
 bellnumber-10:
   epsil:
@@ -136,17 +136,17 @@ bellnumber-10:
     tex:
       in: B_{10}
       out: "115975"
+  sympy:
+    in: bell(10)
+    out: "115975"
   sage:
     in: bell_number(10)
     out: "115975"
   oscar:
     in: bell(10)
     out: "115975"
-  sympy:
-    in: bell(10)
-    out: "115975"
   julia:
-    in: bell(10)
+    in: bell(ZZ(10))
     out: "115975"
 recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
   epsil:
@@ -169,17 +169,17 @@ recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
     tex:
       in: B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(bell(5), ((binomial(4, 0) * bell(0)) + (binomial(4, 1) * bell(1)) + (binomial(4, 2) * bell(2)) + (binomial(4, 3) * bell(3)) + (binomial(4, 4) * bell(4))))
+    out: True
   sage:
     in: bool(bell_number(5) == ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))
     out: True
   oscar:
     in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
     out: "true"
-  sympy:
-    in: enumeratio_equal(bell(5), ((binomial(4, 0) * bell(0)) + (binomial(4, 1) * bell(1)) + (binomial(4, 2) * bell(2)) + (binomial(4, 3) * bell(3)) + (binomial(4, 4) * bell(4))))
-    out: True
   julia:
-    in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
+    in: (bell(ZZ(5)) == ((binomial(ZZ(4), ZZ(0)) * bell(ZZ(0))) + (binomial(ZZ(4), ZZ(1)) * bell(ZZ(1))) + (binomial(ZZ(4), ZZ(2)) * bell(ZZ(2))) + (binomial(ZZ(4), ZZ(3)) * bell(ZZ(3))) + (binomial(ZZ(4), ZZ(4)) * bell(ZZ(4)))))
     out: "true"
 the-number-of-ways-to-partition-a-4-element-set:
   epsil:
@@ -199,17 +199,17 @@ the-number-of-ways-to-partition-a-4-element-set:
     tex:
       in: B_4
       out: "15"
+  sympy:
+    in: bell(4)
+    out: "15"
   sage:
     in: bell_number(4)
     out: "15"
   oscar:
     in: bell(4)
     out: "15"
-  sympy:
-    in: bell(4)
-    out: "15"
   julia:
-    in: bell(4)
+    in: bell(ZZ(4))
     out: "15"
 a-negative-argument-is-left-unevaluated:
   epsil:
@@ -229,6 +229,12 @@ a-negative-argument-is-left-unevaluated:
     tex:
       in: B_{-1}
       out: B_{-1}
+  sympy:
+    in: bell(-1)
+    out: "ValueError: a non-negative integer expected"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
   sage:
     in: bell_number(-1)
     out: "ArithmeticError: Bell numbers not defined for negative indices"
@@ -241,14 +247,8 @@ a-negative-argument-is-left-unevaluated:
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers ["BellNumber", -1] and Oscar raises an error.'
-  sympy:
-    in: bell(-1)
-    out: "ValueError: a non-negative integer expected"
-    verdict: error
-    kind: undefined-form
-    note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
   julia:
-    in: bell(-1)
+    in: bell(ZZ(-1))
     out: "DomainError with -1: Argument must be non-negative"
     verdict: error
     kind: undefined-form
@@ -268,19 +268,16 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: B_{\{1,2,3,4\}}
       out: \{1,2,5,15\}
+  sympy:
+    in: "[bell(1), bell(2), bell(3), bell(4)]"
+    out: "[1, 2, 5, 15]"
   sage:
     in: "[bell_number(1), bell_number(2), bell_number(3), bell_number(4)]"
   oscar:
     in: bell([1, 2, 3, 4])
-  sympy:
-    in: "[bell(1), bell(2), bell(3), bell(4)]"
-    out: "[1, 2, 5, 15]"
   julia:
-    in: bell([1, 2, 3, 4])
-    out: "MethodError: no method matching bell(::Vector{Int64}) The function `bell` exists, but no method is d"
-    verdict: error
-    kind: threading
-    note: compute-engine's BellNumber is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
+    in: "[bell(ZZ(1)), bell(ZZ(2)), bell(ZZ(3)), bell(ZZ(4))]"
+    out: "[1, 2, 5, 15]"
 exact-for-large-n:
   epsil:
     in: BellNumber(30)
@@ -295,19 +292,16 @@ exact-for-large-n:
     in: BellB[30]
   wolfram:
     in: BellB[30]
+  sympy:
+    in: bell(30)
+    out: "846749014511809332450147"
   sage:
     in: bell_number(30)
   oscar:
     in: bell(30)
-  sympy:
-    in: bell(30)
-    out: "846749014511809332450147"
   julia:
-    in: bell(30)
-    out: "InexactError: convert(Int64, 846749014511809332450147)"
-    verdict: error
-    kind: domain
-    note: Combinatorics.jl computes BellNumber in Int64, which overflows here; compute-engine is exact.
+    in: bell(ZZ(30))
+    out: "846749014511809332450147"
 the-two-argument-form-gives-the-bell-touchard:
   epsil:
     in: BellNumber(5, x)
@@ -373,13 +367,13 @@ touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
     in: Equal[Mod[BellB[9], 7], Mod[Plus[BellB[2], BellB[3]], 7]]
   wolfram:
     in: (Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])
+  sympy:
+    in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
+    out: True
   sage:
     in: bool((bell_number(9) % 7) == ((bell_number(2) + bell_number(3)) % 7))
   oscar:
     in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
-  sympy:
-    in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
-    out: True
   julia:
-    in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
+    in: (mod(bell(ZZ(9)), 7) == mod((bell(ZZ(2)) + bell(ZZ(3))), 7))
     out: "true"

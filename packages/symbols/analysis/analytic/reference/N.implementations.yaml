@@ -9,14 +9,14 @@ n-pi-30:
     in: N[Pi, 30]
   wolfram:
     in: N[Pi, 30]
-  sage:
-    in: N(pi)
-  mpmath:
-    in: (pi)
-    out: "3.14159265358979323846264338328"
   sympy:
     in: N(pi, 30)
     out: "3.14159265358979323846264338328"
+  mpmath:
+    in: (pi)
+    out: "3.14159265358979323846264338328"
+  sage:
+    in: N(pi)
   rust:
     in: nf(x(std::f64::consts::PI))
     out: "3.141592653589793"
@@ -42,14 +42,14 @@ a-list-number-by-number:
     in: N[List[Pi, E, Sqrt[2]], 5]
   wolfram:
     in: N[List[Pi, E, Sqrt[2]], 5]
-  sage:
-    in: N([pi, e, sqrt(2)])
   sympy:
     in: N([pi, E, sqrt(2)], 30)
     out: "AttributeError: 'list' object has no attribute 'evalf'"
     verdict: error
     kind: threading
     note: compute-engine's N is Listable and threads over the list; SymPy takes scalars only.
+  sage:
+    in: N([pi, e, sqrt(2)])
   rust:
     in: nf(list(vec![x(std::f64::consts::PI), x(std::f64::consts::E), sqrt(n(2))]))
     out: "[3.141592653589793, 2.718281828459045, 1.4142135623730951]"
@@ -67,22 +67,22 @@ an-exact-tie-rounds-to-the-even-digit-0-125:
     in: N[Rational[1, 8], 2]
   wolfram:
     in: N[Rational[1, 8], 2]
-  sage:
-    in: N((1/8))
-  oscar:
-    in: ((1 // 8))
   sympy:
     in: N(Rational(1, 8), 30)
     out: "0.125000000000000000000000000000"
     verdict: disagree
     kind: precision
     note: The mapping evaluates at the system's own precision and drops N's digit count, so 1/8 prints 0.125 where N(1/8, 2) rounds to even, 0.12.
+  sage:
+    in: N((1/8))
+  oscar:
+    in: ((1 // 8))
   julia:
     in: ((1 // 8))
     out: "0.125"
     verdict: disagree
-    kind: precision
-    note: The mapping evaluates at the system's own precision and drops N's digit count, so 1/8 prints 0.125 where N(1/8, 2) rounds to even, 0.12.
+    kind: rounding-mode
+    note: N's digit count is dropped for Julia — it's numeric already, per the mapping's own note. At this exact tie the untruncated 0.125 differs from our round-half-to-even N(1/8, 2) = 0.12.
   rust:
     in: nf(rational(n(1), n(8)))
     out: "0.125"
@@ -100,22 +100,22 @@ and-0-375-to-0-38:
     in: N[Rational[3, 8], 2]
   wolfram:
     in: N[Rational[3, 8], 2]
-  sage:
-    in: N((3/8))
-  oscar:
-    in: ((3 // 8))
   sympy:
     in: N(Rational(3, 8), 30)
     out: "0.375000000000000000000000000000"
     verdict: disagree
     kind: precision
     note: The mapping evaluates at the system's own precision and drops N's digit count, so 3/8 prints 0.375 where N(3/8, 2) is 0.38.
+  sage:
+    in: N((3/8))
+  oscar:
+    in: ((3 // 8))
   julia:
     in: ((3 // 8))
     out: "0.375"
     verdict: disagree
-    kind: precision
-    note: The mapping evaluates at the system's own precision and drops N's digit count, so 3/8 prints 0.375 where N(3/8, 2) is 0.38.
+    kind: rounding-mode
+    note: N's digit count is dropped for Julia — it's numeric already, per the mapping's own note. At this exact tie the untruncated 0.375 differs from our round-half-to-even N(3/8, 2) = 0.38.
   rust:
     in: nf(rational(n(3), n(8)))
     out: "0.375"

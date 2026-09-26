@@ -13,23 +13,23 @@
     tex:
       in: -(-5)
       out: "5"
+  sympy:
+    in: (--5)
+    out: "5"
+  mpmath:
+    in: (--5)
+    out: "5"
   sage:
     in: (--5)
     out: "5"
   oscar:
     in: (-(-5))
     out: "5"
-  mathlib4:
-    in: (-((-5)))
-    out: "5"
-  mpmath:
-    in: (--5)
-    out: "5"
-  sympy:
-    in: (--5)
-    out: "5"
   julia:
     in: (-(-5))
+    out: "5"
+  mathlib4:
+    in: (-((-5)))
     out: "5"
   rust:
     in: (-(n(-5)))
@@ -49,22 +49,22 @@ neg-5:
     tex:
       in: "-5"
       out: "-5"
+  sympy:
+    in: (-5)
+    out: "-5"
+  mpmath:
+    in: (-5)
+    out: "-5"
   sage:
     in: (-5)
     out: "-5"
   oscar:
     in: (-(5))
     out: "-5"
-  mathlib4:
+  julia:
     in: (-(5))
     out: "-5"
-  mpmath:
-    in: (-5)
-    out: "-5"
-  sympy:
-    in: (-5)
-    out: "-5"
-  julia:
+  mathlib4:
     in: (-(5))
     out: "-5"
   rust:
@@ -85,22 +85,22 @@ its-own-negation:
     tex:
       in: "-0"
       out: "0"
+  sympy:
+    in: (-0)
+    out: "0"
+  mpmath:
+    in: (-0)
+    out: "0"
   sage:
     in: (-0)
     out: "0"
   oscar:
     in: (-(0))
     out: "0"
-  mathlib4:
+  julia:
     in: (-(0))
     out: "0"
-  mpmath:
-    in: (-0)
-    out: "0"
-  sympy:
-    in: (-0)
-    out: "0"
-  julia:
+  mathlib4:
     in: (-(0))
     out: "0"
   rust:
@@ -121,21 +121,21 @@ neg-3-over-4:
     tex:
       in: -\frac{3}{4}
       out: -\frac{3}{4}
+  sympy:
+    in: (-Rational(3, 4))
+    out: -3/4
   sage:
     in: (-(3/4))
     out: -3/4
   oscar:
     in: (-((3 // 4)))
     out: "-0.75"
-  mathlib4:
-    in: "(-(((3 : ℚ) / 4)))"
-    out: -3/4
-  sympy:
-    in: (-Rational(3, 4))
-    out: -3/4
   julia:
     in: (-((3 // 4)))
     out: "-0.75"
+  mathlib4:
+    in: "(-(((3 : ℚ) / 4)))"
+    out: -3/4
   rust:
     in: (-(rational(n(3), n(4))))
     out: -3/4
@@ -154,6 +154,12 @@ threads-element-wise-over-a-list:
     tex:
       in: -\{1,-2,3\}
       out: \{-1,2,-3\}
+  sympy:
+    in: "[(-1), (--2), (-3)]"
+    out: "[-1, 2, -3]"
+  mpmath:
+    in: "[(-1), (--2), (-3)]"
+    out: "[-1, 2, -3]"
   sage:
     in: "[(-1), (--2), (-3)]"
     out: "TypeError: bad operand type for unary -: 'list'"
@@ -163,17 +169,11 @@ threads-element-wise-over-a-list:
   oscar:
     in: (-([1, -2, 3]))
     out: "[-1, 2, -3]"
+  julia:
+    in: "[(-(1)), (-(-2)), (-(3))]"
+    out: "[-1, 2, -3]"
   mathlib4:
     in: (-([1, (-2), 3]))
-    out: "[-1, 2, -3]"
-  mpmath:
-    in: "[(-1), (--2), (-3)]"
-    out: "[-1, 2, -3]"
-  sympy:
-    in: "[(-1), (--2), (-3)]"
-    out: "[-1, 2, -3]"
-  julia:
-    in: (-([1, -2, 3]))
     out: "[-1, 2, -3]"
   rust:
     in: (-(list(vec![n(1), n(-2), n(3)])))
@@ -217,24 +217,24 @@ recording-a-42-50-charge-as-a-negative-balance:
     tex:
       in: "-42.5"
       out: "-42.5"
+  sympy:
+    in: (-42.5)
+    out: "-42.5"
+  mpmath:
+    in: (-42.5)
+    out: "-42.5"
   sage:
     in: (-42.5)
     out: "-42.5000000000000"
   oscar:
     in: (-(42.5))
     out: "-42.5"
-  mathlib4:
-    in: (-(42.5))
-    out: "-42.500000"
-  mpmath:
-    in: (-42.5)
-    out: "-42.5"
-  sympy:
-    in: (-42.5)
-    out: "-42.5"
   julia:
     in: (-(42.5))
     out: "-42.5"
+  mathlib4:
+    in: (-(42.5))
+    out: "-42.500000"
   rust:
     in: (-(x(42.5)))
     out: "-42.5"
@@ -273,22 +273,19 @@ neg-1-plus-2i:
     in: Minus[Complex[1, 2]]
   wolfram:
     in: Minus[Complex[1, 2]]
+  sympy:
+    in: (-(1 + 2*I))
+    out: -1 - 2*I
+  mpmath:
+    in: (-mpc(1, 2))
+    out: (-1.0 - 2.0j)
   sage:
     in: (-(1 + 2*I))
   oscar:
     in: (-(complex(1, 2)))
-  mpmath:
-    in: (-mpc(1, 2))
-    out: (-1.0 - 2.0j)
-  sympy:
-    in: (-(1 + 2*I))
-    out: -1 - 2*I
   julia:
     in: (-(complex(1, 2)))
-    out: -1 - 2im
-    verdict: disagree
-    kind: shape
-    note: "The same value: the scan doesn't read Julia's `-1 - 2im` as a complex number."
+    out: (-1-2j)
 threads-over-a-matrix-entry-by-entry:
   epsil:
     in: -[[1, -2], [3, 4]]
@@ -300,21 +297,21 @@ threads-over-a-matrix-entry-by-entry:
     in: Minus[List[List[1, -2], List[3, 4]]]
   wolfram:
     in: Minus[List[List[1, -2], List[3, 4]]]
+  sympy:
+    in: "[[(-1), (--2)], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
+  mpmath:
+    in: "[[(-1), (--2)], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
   sage:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
   oscar:
     in: (-([[1, -2], [3, 4]]))
+  julia:
+    in: "[[(-(1)), (-(-2))], [(-(3)), (-(4))]]"
+    out: "[[-1, 2], [-3, -4]]"
   mathlib4:
     in: (-([[1, (-2)], [3, 4]]))
-  mpmath:
-    in: "[[(-1), (--2)], [(-3), (-4)]]"
-    out: "[[-1, 2], [-3, -4]]"
-  sympy:
-    in: "[[(-1), (--2)], [(-3), (-4)]]"
-    out: "[[-1, 2], [-3, -4]]"
-  julia:
-    in: (-([[1, -2], [3, 4]]))
-    out: "[[-1, 2], [-3, -4]]"
   rust:
     in: (-(list(vec![list(vec![n(1), n(-2)]), list(vec![n(3), n(4)])])))
     out: "panic: negating [[1, -2], [3, 4]]"

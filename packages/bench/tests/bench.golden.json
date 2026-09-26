@@ -574,10 +574,10 @@
             "reason": "precision"
           },
           "mpmath": {
-            "sources": ["sin((24**40))"]
+            "sources": ["sin(((24)**40))"]
           },
           "sage": {
-            "sources": ["sin((24^40))"]
+            "sources": ["sin(((24)^40))"]
           },
           "oscar": {
             "reason": "precision"
@@ -610,10 +610,10 @@
             "reason": "precision"
           },
           "mpmath": {
-            "sources": ["cos((10**100))"]
+            "sources": ["cos(((10)**100))"]
           },
           "sage": {
-            "sources": ["cos((10^100))"]
+            "sources": ["cos(((10)^100))"]
           },
           "oscar": {
             "reason": "precision"
@@ -795,7 +795,7 @@
             "sources": ["mod(fibonacci(100000), 1000000007)"]
           },
           "julia": {
-            "sources": ["mod(fibonacci(100000), 1000000007)"]
+            "sources": ["mod(BigInt(fibonacci(ZZ(100000))), 1000000007)"]
           },
           "rust": {
             "reason": "unmapped",
@@ -831,7 +831,7 @@
             "sources": ["mod(fibonacci(1000000), 1000000007)"]
           },
           "julia": {
-            "sources": ["mod(fibonacci(1000000), 1000000007)"]
+            "sources": ["mod(BigInt(fibonacci(ZZ(1000000))), 1000000007)"]
           },
           "rust": {
             "reason": "unmapped",
@@ -943,7 +943,7 @@
             "missing": ["StirlingS1/2"]
           },
           "julia": {
-            "sources": ["mod(Combinatorics.stirlings1(1000, 500), 1000000007)"]
+            "sources": ["mod(Combinatorics.stirlings1(big(1000), 500), 1000000007)"]
           },
           "rust": {
             "reason": "unmapped",

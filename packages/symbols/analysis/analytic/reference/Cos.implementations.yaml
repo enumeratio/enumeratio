@@ -13,13 +13,13 @@ cos-0:
     tex:
       in: \cos (0)
       out: "1"
-  sage:
+  sympy:
     in: cos(0)
     out: "1"
   mpmath:
     in: cos(0)
     out: "1.0"
-  sympy:
+  sage:
     in: cos(0)
     out: "1"
   rust:
@@ -40,12 +40,12 @@ cos-pi-over-6:
     tex:
       in: \cos \left(\frac{\pi }{6}\right)
       out: \frac{\sqrt{3}}{2}
-  sage:
-    in: cos((pi / 6))
-    out: 1/2*sqrt(3)
   sympy:
     in: cos((S(pi) / 6))
     out: sqrt(3)/2
+  sage:
+    in: cos((pi / 6))
+    out: 1/2*sqrt(3)
   rust:
     in: cos((x(std::f64::consts::PI) / n(6)))
     out: "0.8660254037844387"
@@ -64,12 +64,12 @@ cos-pi-over-4:
     tex:
       in: \cos \left(\frac{\pi }{4}\right)
       out: \frac{1}{\sqrt{2}}
-  sage:
-    in: cos((pi / 4))
-    out: 1/2*sqrt(2)
   sympy:
     in: cos((S(pi) / 4))
     out: sqrt(2)/2
+  sage:
+    in: cos((pi / 4))
+    out: 1/2*sqrt(2)
   rust:
     in: cos((x(std::f64::consts::PI) / n(4)))
     out: "0.7071067811865476"
@@ -88,11 +88,11 @@ cos-pi-over-3:
     tex:
       in: \cos \left(\frac{\pi }{3}\right)
       out: \frac{1}{2}
-  sage:
-    in: cos((pi / 3))
-    out: 1/2
   sympy:
     in: cos((S(pi) / 3))
+    out: 1/2
+  sage:
+    in: cos((pi / 3))
     out: 1/2
   rust:
     in: cos((x(std::f64::consts::PI) / n(3)))
@@ -112,11 +112,11 @@ cos-pi-over-2:
     tex:
       in: \cos \left(\frac{\pi }{2}\right)
       out: "0"
-  sage:
-    in: cos((pi / 2))
-    out: "0"
   sympy:
     in: cos((S(pi) / 2))
+    out: "0"
+  sage:
+    in: cos((pi / 2))
     out: "0"
   rust:
     in: cos((x(std::f64::consts::PI) / n(2)))
@@ -136,13 +136,13 @@ cos-pi:
     tex:
       in: \cos (\pi )
       out: "-1"
-  sage:
+  sympy:
     in: cos(pi)
     out: "-1"
   mpmath:
     in: cos(pi)
     out: "-1.0"
-  sympy:
+  sage:
     in: cos(pi)
     out: "-1"
   rust:
@@ -166,11 +166,11 @@ even-function-cos-x-cos-x:
     tex:
       in: \cos \left(-\frac{\pi }{3}\right)=\cos \left(\frac{\pi }{3}\right)
       out: \text{True}
-  sage:
-    in: bool(cos((-(pi / 3))) == cos((pi / 3)))
-    out: True
   sympy:
     in: enumeratio_equal(cos((-(S(pi) / 3))), cos((S(pi) / 3)))
+    out: True
+  sage:
+    in: bool(cos((-(pi / 3))) == cos((pi / 3)))
     out: True
   rust:
     in: equal(cos((-((x(std::f64::consts::PI) / n(3))))), cos((x(std::f64::consts::PI) / n(3))))
@@ -193,11 +193,11 @@ co-function-identity-cos-x-sin-pi-2-x:
     tex:
       in: \cos \left(\frac{\pi }{6}\right)=\sin \left(\frac{\pi }{2}-\frac{\pi }{6}\right)
       out: \text{True}
-  sage:
-    in: bool(cos((pi / 6)) == sin(((pi / 2) - (pi / 6))))
-    out: True
   sympy:
     in: enumeratio_equal(cos((S(pi) / 6)), sin(((S(pi) / 2) - (S(pi) / 6))))
+    out: True
+  sage:
+    in: bool(cos((pi / 6)) == sin(((pi / 2) - (pi / 6))))
     out: True
   rust:
     in: equal(cos((x(std::f64::consts::PI) / n(6))), sin(((x(std::f64::consts::PI) / n(2)) - (x(std::f64::consts::PI) / n(6)))))
@@ -217,15 +217,15 @@ threads-element-wise-over-a-list:
     tex:
       in: \cos \left(\left\{0,\frac{\pi }{2},\pi \right\}\right)
       out: \{1,0,-1\}
+  sympy:
+    in: "[cos(0), cos((S(pi) / 2)), cos(pi)]"
+    out: "[1, 0, -1]"
   sage:
     in: "[cos(0), cos((pi / 2)), cos(pi)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
     kind: threading
     note: compute-engine's Cos is Listable and threads over the list; Sage's takes scalars only.
-  sympy:
-    in: "[cos(0), cos((S(pi) / 2)), cos(pi)]"
-    out: "[1, 0, -1]"
   rust:
     in: cos(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -247,13 +247,13 @@ as-with-sin-a-non-special-numeric-argument-stays:
     tex:
       in: \cos (2)
       out: \cos (2)
-  sage:
+  sympy:
     in: cos(2)
     out: cos(2)
   mpmath:
     in: cos(2)
     out: "-0.416146836547142386997568229501"
-  sympy:
+  sage:
     in: cos(2)
     out: cos(2)
   rust:
@@ -274,12 +274,12 @@ cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden:
     tex:
       in: \cos \left(\frac{\pi }{5}\right)
       out: \frac{1}{4} \left(1+\sqrt{5}\right)
-  sage:
-    in: cos((pi / 5))
-    out: 1/4*sqrt(5) + 1/4
   sympy:
     in: cos((S(pi) / 5))
     out: 1/4 + sqrt(5)/4
+  sage:
+    in: cos((pi / 5))
+    out: 1/4*sqrt(5) + 1/4
   rust:
     in: cos((x(std::f64::consts::PI) / n(5)))
     out: "0.8090169943749475"
@@ -306,14 +306,14 @@ a-machine-precision-argument-evaluates:
     in: Cos[1.2]
   wolfram:
     in: Cos[1.2]
-  sage:
-    in: cos(1.2)
-  mpmath:
-    in: cos(1.2)
-    out: "0.362357754476673619029223479279"
   sympy:
     in: cos(1.2)
     out: "0.362357754476674"
+  mpmath:
+    in: cos(1.2)
+    out: "0.362357754476673619029223479279"
+  sage:
+    in: cos(1.2)
   rust:
     in: cos(x(1.2))
     out: "0.3623577544766736"
@@ -328,11 +328,11 @@ n-of-an-exact-argument-gives-an-arbitrary:
     in: N[Cos[Rational[6, 5]]]
   wolfram:
     in: N[Cos[Rational[6, 5]]]
-  sage:
-    in: N(cos((6/5)))
   sympy:
     in: N(cos(Rational(6, 5)), 30)
     out: "0.362357754476673577638373355623"
+  sage:
+    in: N(cos((6/5)))
   rust:
     in: nf(cos(rational(n(6), n(5))))
     out: "0.3623577544766736"
@@ -347,14 +347,14 @@ evaluates-at-a-complex-argument:
     in: Cos[Complex[2.5, 1]]
   wolfram:
     in: Cos[Complex[2.5, 1]]
-  sage:
-    in: cos((2.5 + 1*I))
-  mpmath:
-    in: cos(mpc(2.5, 1))
-    out: (-1.23622919885634208168318950526 - 0.703325178113534826107487014147j)
   sympy:
     in: cos((2.5 + 1*I))
     out: -1.23622919885634 - 0.703325178113535*I
+  mpmath:
+    in: cos(mpc(2.5, 1))
+    out: (-1.23622919885634208168318950526 - 0.703325178113534826107487014147j)
+  sage:
+    in: cos((2.5 + 1*I))
 threads-element-wise-over-a-matrix:
   epsil:
     in: Cos([[5 * (Pi / 6), 0], [3 * (Pi / 2), -(Pi / 2)]])
@@ -366,11 +366,11 @@ threads-element-wise-over-a-matrix:
     in: Cos[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
   wolfram:
     in: Cos[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
-  sage:
-    in: "[[cos((5 * (pi / 6))), cos(0)], [cos((3 * (pi / 2))), cos((-(pi / 2)))]]"
   sympy:
     in: "[[cos((5 * (S(pi) / 6))), cos(0)], [cos((3 * (S(pi) / 2))), cos((-(S(pi) / 2)))]]"
     out: "[[-sqrt(3)/2, 1], [0, 0]]"
+  sage:
+    in: "[[cos((5 * (pi / 6))), cos(0)], [cos((3 * (pi / 2))), cos((-(pi / 2)))]]"
   rust:
     in: cos(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -388,11 +388,11 @@ cos-pi-12-frac-sqrt-6-sqrt-2-4:
     in: Cos[Divide[Pi, 12]]
   wolfram:
     in: Cos[Divide[Pi, 12]]
-  sage:
-    in: cos((pi / 12))
   sympy:
     in: cos((S(pi) / 12))
     out: sqrt(2)/4 + sqrt(6)/4
+  sage:
+    in: cos((pi / 12))
   rust:
     in: cos((x(std::f64::consts::PI) / n(12)))
     out: "0.9659258262890683"
@@ -407,11 +407,11 @@ cos-pi-8-frac-sqrt-2-sqrt-2-2:
     in: Cos[Divide[Pi, 8]]
   wolfram:
     in: Cos[Divide[Pi, 8]]
-  sage:
-    in: cos((pi / 8))
   sympy:
     in: cos((S(pi) / 8))
     out: sqrt(sqrt(2)/4 + 1/2)
+  sage:
+    in: cos((pi / 8))
   rust:
     in: cos((x(std::f64::consts::PI) / n(8)))
     out: "0.9238795325112867"
@@ -426,11 +426,11 @@ cos-pi-10-frac-sqrt-10-2-sqrt-5-4:
     in: Cos[Divide[Pi, 10]]
   wolfram:
     in: Cos[Divide[Pi, 10]]
-  sage:
-    in: cos((pi / 10))
   sympy:
     in: cos((S(pi) / 10))
     out: sqrt(sqrt(5)/8 + 5/8)
+  sage:
+    in: cos((pi / 10))
   rust:
     in: cos((x(std::f64::consts::PI) / n(10)))
     out: "0.9510565162951535"
@@ -445,11 +445,11 @@ cos-2-pi-5-frac-sqrt-5-1-4:
     in: Cos[Times[Rational[2, 5], Pi]]
   wolfram:
     in: Cos[Times[Rational[2, 5], Pi]]
-  sage:
-    in: cos(((2/5) * pi))
   sympy:
     in: cos((Rational(2, 5) * pi))
     out: -1/4 + sqrt(5)/4
+  sage:
+    in: cos(((2/5) * pi))
   rust:
     in: cos((rational(n(2), n(5)) * x(std::f64::consts::PI)))
     out: "0.30901699437494745"
@@ -464,11 +464,11 @@ cos-3-pi-5-frac-1-sqrt-5-4:
     in: Cos[Times[Rational[3, 5], Pi]]
   wolfram:
     in: Cos[Times[Rational[3, 5], Pi]]
-  sage:
-    in: cos(((3/5) * pi))
   sympy:
     in: cos((Rational(3, 5) * pi))
     out: 1/4 - sqrt(5)/4
+  sage:
+    in: cos(((3/5) * pi))
   rust:
     in: cos((rational(n(3), n(5)) * x(std::f64::consts::PI)))
     out: "-0.30901699437494734"
@@ -483,11 +483,11 @@ reduced-into-the-first-quadrant-by-symmetry:
     in: Cos[Times[Rational[11, 6], Pi]]
   wolfram:
     in: Cos[Times[Rational[11, 6], Pi]]
-  sage:
-    in: cos(((11/6) * pi))
   sympy:
     in: cos((Rational(11, 6) * pi))
     out: sqrt(3)/2
+  sage:
+    in: cos(((11/6) * pi))
   rust:
     in: cos((rational(n(11), n(6)) * x(std::f64::consts::PI)))
     out: "0.8660254037844384"
@@ -657,11 +657,11 @@ pi-24-is-past-the-automatic-special-angle-table:
     in: Cos[Times[Rational[1, 24], Pi]]
   wolfram:
     in: Cos[Times[Rational[1, 24], Pi]]
-  sage:
-    in: cos(((1/24) * pi))
   sympy:
     in: cos((Rational(1, 24) * pi))
     out: sqrt(1/2 - sqrt(2)/4)/2 + sqrt(3)*sqrt(sqrt(2)/4 + 1/2)/2
+  sage:
+    in: cos(((1/24) * pi))
   rust:
     in: cos((rational(n(1), n(24)) * x(std::f64::consts::PI)))
     out: "0.9914448613738104"
@@ -676,14 +676,14 @@ to-30-significant-digits-every-one-correctly:
     in: N[Cos[1], 30]
   wolfram:
     in: N[Cos[1], 30]
-  sage:
-    in: N(cos(1))
-  mpmath:
-    in: (cos(1))
-    out: "0.540302305868139717400936607443"
   sympy:
     in: N(cos(1), 30)
     out: "0.540302305868139717400936607443"
+  mpmath:
+    in: (cos(1))
+    out: "0.540302305868139717400936607443"
+  sage:
+    in: N(cos(1))
   rust:
     in: nf(cos(n(1)))
     out: "0.5403023058681398"
@@ -698,14 +698,14 @@ a-huge-10-100-argument-reduces-exactly-mod-2-pi:
     in: N[Cos[Power[10, 100]]]
   wolfram:
     in: N[Cos[Power[10, 100]]]
-  sage:
-    in: N(cos((10^100)))
-  mpmath:
-    in: (cos((10**100)))
-    out: "-0.928081905074655343456194643777"
   sympy:
-    in: N(cos((10**100)), 30)
+    in: N(cos(((10)**100)), 30)
     out: "-0.928081905074655343456194643777"
+  mpmath:
+    in: (cos(((10)**100)))
+    out: "-0.928081905074655343456194643777"
+  sage:
+    in: N(cos(((10)^100)))
   rust:
     in: nf(cos(power(n(10), n(100))))
     out: "0.9247242387519338"
