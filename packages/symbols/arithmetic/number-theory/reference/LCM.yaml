@@ -85,5 +85,11 @@ examples:
     expected: [List, 12, 84, 120]
     category: Scope
     caption: "Listable: a single list argument threads element-wise against the rest"
+  - role: test
+    id: a-large-integer-against-a-negative-rational
+    expr: [LCM, [Factorial, 20], [Add, [Power, 10, -1], -2]]
+    expected: { num: "2432902008176640000" }
+    category: Scope
+    caption: 'A large integer against a negative rational: $\operatorname{lcm}(20!, -19/10) = \operatorname{lcm}(20!, 19)/\gcd(1, 10) = 20!$, since $19 \mid 20!$'
 seeAlso:
   - GCD

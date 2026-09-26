@@ -100,6 +100,12 @@ examples:
     expected: 0
     category: Possible issues
     caption: $S(0, 1) = 0$ too -- there is no way to split the empty set into one nonempty block
+  - role: test
+    id: a-negative-k-stays-symbolic
+    expr: [Stirling, 10, -5]
+    expected: [Stirling, 10, -5]
+    category: Possible issues
+    caption: A negative $k$ is outside the textbook domain and stays unevaluated
 seeAlso:
   - StirlingS1
   - BellNumber
