@@ -1,6 +1,8 @@
 # Symbol metadata as data
 
-This is a proposal; nothing is started yet. It follows the examples-as-data migration (design/examples-as-data.md) and would begin once step 7 lands.
+This follows the examples-as-data migration (design/examples-as-data.md). Steps 1-7 below are
+done (#288, #301, #302, #306, #307, and the catalog-dump retirement it inspired, #317/#320),
+and `packages/reference/scripts/migrate/` is gone. The open questions below are still open.
 
 ## The split
 
