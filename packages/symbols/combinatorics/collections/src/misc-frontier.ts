@@ -47,9 +47,11 @@ function diagonalMatrix(ce: ComputeEngine, list: readonly BoxedExpression[], k: 
   );
 }
 
-/** `HilbertMatrix(n)` / `HilbertMatrix(m, n)`: the (possibly rectangular) Hilbert matrix,
+/** `HilbertMatrix(n)` / `HilbertMatrix({m, n})`: the (possibly rectangular) Hilbert matrix,
  *  entry `(i, j) = 1/(i + j - 1)` (1-based), kept EXACT (a rational per entry, never a
- *  float) — Wolfram's own default. */
+ *  float) — Wolfram's own default. The rectangular form takes its dimensions as a `{m, n}`
+ *  LIST, not two bare arguments — kernel-checked: Wolfram's `HilbertMatrix` has no 2-argument
+ *  form at all, only `HilbertMatrix[n]` and `HilbertMatrix[{m, n}]`. */
 function hilbertMatrix(ce: ComputeEngine, m: number, n: number): BoxedExpression | undefined {
   if (!Number.isSafeInteger(m) || !Number.isSafeInteger(n) || m < 1 || n < 1) return undefined;
   const rows: BoxedExpression[][] = [];
@@ -337,12 +339,19 @@ export function declareMiscFrontier(ce: ComputeEngine): void {
   });
 
   ce.declare("HilbertMatrix", {
-    signature: "(integer, integer?) -> list<any>",
+    signature: "(any) -> list<any>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const m = ops[0] === undefined ? undefined : integerAt(ops[0]);
-      if (m === undefined) return undefined;
-      const n = ops[1] === undefined ? m : integerAt(ops[1]);
-      return n === undefined ? undefined : hilbertMatrix(ce, m, n);
+      // Exactly one argument — the declared signature already rejects a 2-argument call at
+      // BOX time, before this ever runs (Wolfram's rectangular form takes its dimensions as
+      // a single {m, n} LIST, see hilbertMatrix's doc comment, not a bare 2-argument call).
+      const spec = ops[0];
+      if (spec === undefined) return undefined;
+      if (spec.operator === "List") {
+        const [m, n] = operandsOf(spec).map(integerAt);
+        return m === undefined || n === undefined ? undefined : hilbertMatrix(ce, m, n);
+      }
+      const n = integerAt(spec);
+      return n === undefined ? undefined : hilbertMatrix(ce, n, n);
     },
   });
 

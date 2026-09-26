@@ -52,10 +52,22 @@ test("HilbertMatrix(n) is symmetric", () => {
 test("Determinant(HilbertMatrix(3)) is the textbook 1/2160", () => {
   expect(run(["Determinant", ["HilbertMatrix", 3]])).toEqual(["Rational", 1, 2160]);
 });
-test("HilbertMatrix(m, n) is rectangular when m ≠ n", () => {
-  const rows = (run(["HilbertMatrix", 2, 3]) as unknown as unknown[]).slice(1) as unknown[][];
+// Wolfram's rectangular form takes its dimensions as a {m, n} LIST, not two bare arguments
+// (kernel-checked: HilbertMatrix has no 2-argument form at all) — so this is
+// HilbertMatrix({m, n}), not HilbertMatrix(m, n).
+test("HilbertMatrix({m, n}) is rectangular when m ≠ n", () => {
+  const rows = (run(["HilbertMatrix", L(2, 3)]) as unknown as unknown[]).slice(1) as unknown[][];
   expect(rows.length).toBe(2);
   expect((rows[0] as unknown[]).length).toBe(4); // "List" head + 3 entries
+});
+test("HilbertMatrix(n) and HilbertMatrix({n, n}) agree", () => {
+  expect(run(["HilbertMatrix", 3])).toEqual(run(["HilbertMatrix", L(3, 3)]));
+});
+test("a bare 2-argument HilbertMatrix(m, n) is NOT Wolfram's form and doesn't evaluate", () => {
+  // Boxing itself rejects the extra argument (the declared signature takes exactly one) —
+  // it never reaches HilbertMatrix's own evaluate at all.
+  const result = run(["HilbertMatrix", 2, 3]) as unknown as unknown[];
+  expect(result[0]).toEqual("Error");
 });
 
 // ─── Extract ─────────────────────────────────────────────────────────────────────────────
