@@ -1,0 +1,27 @@
+slice-distribution-wiener:
+  epsil:
+    in: SliceDistribution(WienerProcess(1, 2), 3)
+    out: NormalDistribution(3, 2 * Sqrt(3))
+  tex:
+    in: \mathrm{SliceDistribution}(\mathrm{WienerProcess}(1, 2), 3)
+    out: \operatorname{NormalDistribution}(3, 2\sqrt{3})
+  fullform:
+    in: SliceDistribution[WienerProcess[1, 2], 3]
+slice-distribution-poisson:
+  epsil:
+    in: SliceDistribution(PoissonProcess(5), 2)
+    out: PoissonDistribution(10)
+  tex:
+    in: \mathrm{SliceDistribution}(\mathrm{PoissonProcess}(5), 2)
+    out: \operatorname{PoissonDistribution}(10)
+  fullform:
+    in: SliceDistribution[PoissonProcess[5], 2]
+slice-distribution-feeds-pdf-unchanged:
+  epsil:
+    in: Mean(SliceDistribution(PoissonProcess(5), 2))
+    out: "10"
+  tex:
+    in: \mathrm{mean}(\mathrm{SliceDistribution}(\mathrm{PoissonProcess}(5), 2))
+    out: "10"
+  fullform:
+    in: Mean[SliceDistribution[PoissonProcess[5], 2]]
