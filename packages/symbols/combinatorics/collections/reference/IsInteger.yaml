@@ -12,3 +12,5 @@ details:
 seeAlso:
   - IsPrime
   - IsTrue
+names:
+  wolfram: IntegerQ

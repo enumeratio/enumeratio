@@ -18,3 +18,5 @@ bindings:
     source: packages/symbols/analysis/analytic/src/caputo-derivative.ts
 seeAlso:
   - SeriesCoefficient
+names:
+  wolframIdentity: true

@@ -11,3 +11,5 @@ details:
   - Wolfram's TrueQ; ours spells predicates Is… (see IsPrime, IsConnectedGraph).
 seeAlso:
   - IsInteger
+names:
+  wolfram: TrueQ

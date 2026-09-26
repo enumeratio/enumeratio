@@ -14,3 +14,5 @@ details:
   - Anything not one of the eight connectives above (a plain symbol, a comparison, a predicate call) is an opaque literal.
 seeAlso:
   - BooleanConvert
+names:
+  wolframIdentity: true

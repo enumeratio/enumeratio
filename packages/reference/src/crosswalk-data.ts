@@ -217,6 +217,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "And",
   },
   {
+    name: "Animator",
+    wolfram: "Animator",
+  },
+  {
     name: "Any",
     wolfram: "AnyTrue",
   },
@@ -359,6 +363,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Array",
   },
   {
+    name: "ArrayPlot",
+    wolfram: "ArrayPlot",
+  },
+  {
+    name: "Arrow",
+    wolfram: "Arrow",
+  },
+  {
     name: "Arsech",
     wolfram: "ArcSech",
   },
@@ -391,6 +403,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Attributes",
     wolfram: "Attributes",
+  },
+  {
+    name: "BarChart",
+    wolfram: "BarChart",
+  },
+  {
+    name: "BarChart3D",
+    wolfram: "BarChart3D",
   },
   {
     name: "BarnesG",
@@ -485,6 +505,23 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "BernoulliPolynomial",
+    fungrimEntries: [
+      "03ee0b",
+      "4228cd",
+      "5bdba2",
+      "6395ee",
+      "792f7b",
+      "829185",
+      "8b4f7f",
+      "a1d2d7",
+      "c2dcfa",
+      "e89eb5",
+      "f80439",
+    ],
+    wolfram: "BernoulliB",
   },
   {
     name: "BesselI",
@@ -668,6 +705,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "BooleanConvert",
   },
   {
+    name: "BoxWhiskerChart",
+    wolfram: "BoxWhiskerChart",
+  },
+  {
     name: "BrauerAlgebra",
     oracle: [
       {
@@ -693,6 +734,244 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "CaputoD",
     wolfram: "CaputoD",
+  },
+  {
+    name: "CarlsonRC",
+    fungrimEntries: [
+      "00cdb7",
+      "09a494",
+      "0aa9ac",
+      "120284",
+      "157ebb",
+      "1acb07",
+      "1faf7a",
+      "25435b",
+      "2cdd2f",
+      "33e034",
+      "35cb93",
+      "398bb7",
+      "423b36",
+      "42c7f1",
+      "4becdd",
+      "4eac3f",
+      "56d1bc",
+      "584a61",
+      "5ada5f",
+      "5c2b08",
+      "5d0c95",
+      "61f98d",
+      "718f3a",
+      "72b5bd",
+      "7348e3",
+      "771801",
+      "7a9dad",
+      "7cbe17",
+      "7ded8f",
+      "7ea1ad",
+      "8c9ba1",
+      "8f5d76",
+      "a15c03",
+      "a839d5",
+      "ad96f4",
+      "b136bd",
+      "bc2f88",
+      "c85c2f",
+      "d38c27",
+      "d4b12e",
+      "d9765b",
+      "de0638",
+      "e464ec",
+      "eac389",
+      "eb1d4f",
+      "ebaa1a",
+      "ff58cf",
+    ],
+    wolfram: "CarlsonRC",
+  },
+  {
+    name: "CarlsonRD",
+    fungrimEntries: [
+      "00c331",
+      "060366",
+      "12b1d0",
+      "14a365",
+      "197a91",
+      "1c0fee",
+      "1e8061",
+      "2dcf0c",
+      "3047b1",
+      "31a3ba",
+      "37ffb7",
+      "3dd30a",
+      "3e05c6",
+      "41cf8e",
+      "4a2403",
+      "4d2c10",
+      "4e4380",
+      "545e8b",
+      "55d23d",
+      "5c6f10",
+      "61c002",
+      "63644d",
+      "6dda7a",
+      "748131",
+      "771801",
+      "84ea08",
+      "8d0629",
+      "94f646",
+      "980014",
+      "9bfd88",
+      "a203e9",
+      "bbf003",
+      "c85c2f",
+      "ccb4d1",
+      "d52bda",
+      "dbe634",
+      "eda57d",
+      "f07e9d",
+      "f47947",
+      "f48f54",
+      "f68409",
+    ],
+    wolfram: "CarlsonRD",
+  },
+  {
+    name: "CarlsonRF",
+    fungrimEntries: [
+      "0bf328",
+      "0cc11f",
+      "0ed5e2",
+      "124339",
+      "13a092",
+      "23e0a7",
+      "2499cd",
+      "271b73",
+      "28237a",
+      "38fa65",
+      "3a84d6",
+      "3b6175",
+      "415ff0",
+      "4c1988",
+      "4cd504",
+      "538c8c",
+      "53d869",
+      "5ab6bf",
+      "5c178f",
+      "61f98d",
+      "6674bb",
+      "67e015",
+      "6c4567",
+      "7a168a",
+      "8519dd",
+      "8bb972",
+      "8e6189",
+      "8f4e31",
+      "90af98",
+      "9a95a5",
+      "9b0388",
+      "9ccaef",
+      "ab5af3",
+      "b2fdfe",
+      "c166ca",
+      "cf5caa",
+      "d0c9ff",
+      "e2445d",
+      "e30d7e",
+      "e39456",
+      "e54e61",
+      "ebaa1a",
+      "f1dd8a",
+      "f29729",
+      "f48f54",
+    ],
+    wolfram: "CarlsonRF",
+  },
+  {
+    name: "CarlsonRG",
+    fungrimEntries: [
+      "092716",
+      "120284",
+      "250ff1",
+      "3f1547",
+      "3f6d40",
+      "4091ad",
+      "48333c",
+      "4d7098",
+      "5d0c95",
+      "6520e7",
+      "7c50d1",
+      "7cddc6",
+      "84f403",
+      "990145",
+      "9e30e7",
+      "a2e9dd",
+      "b478a1",
+      "b4a735",
+      "bcc121",
+      "c5a9cf",
+      "cd55cf",
+      "cdb587",
+      "d51efc",
+      "d5ff09",
+      "d829be",
+      "e98dd0",
+      "f9ca94",
+      "fda084",
+    ],
+    wolfram: "CarlsonRG",
+  },
+  {
+    name: "CarlsonRJ",
+    fungrimEntries: [
+      "0aa9ac",
+      "1b6362",
+      "1eaaed",
+      "1faf7a",
+      "303827",
+      "3567c5",
+      "397051",
+      "3b6175",
+      "3dd30a",
+      "44d300",
+      "4c1db8",
+      "4c882a",
+      "4e21c7",
+      "4eac3f",
+      "522f54",
+      "534335",
+      "55cd70",
+      "5a8f57",
+      "5c6f10",
+      "62b0c4",
+      "64a808",
+      "64d87a",
+      "655a2b",
+      "6e9544",
+      "7314c4",
+      "78131f",
+      "7f8a58",
+      "849751",
+      "8f4e31",
+      "9ccaef",
+      "9f2b18",
+      "a091d1",
+      "a1414f",
+      "a9f190",
+      "b07652",
+      "b1c84e",
+      "b468f3",
+      "b891d1",
+      "c05ed8",
+      "cdee01",
+      "d4b12e",
+      "e04867",
+      "e1a3cb",
+      "e60205",
+      "e9d5a9",
+      "f1fd51",
+      "fd3017",
+    ],
+    wolfram: "CarlsonRJ",
   },
   {
     name: "CarmichaelLambda",
@@ -759,6 +1038,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Cell",
+    wolfram: "Cell",
+  },
+  {
     name: "CellularAutomaton",
     wolfram: "CellularAutomaton",
   },
@@ -771,12 +1054,101 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "CharacterRange",
   },
   {
+    name: "ChebyshevT",
+    fungrimEntries: [
+      "05fe07",
+      "0649c9",
+      "0cbe75",
+      "1a0d11",
+      "223ce1",
+      "2760e7",
+      "2fc479",
+      "35e13b",
+      "382679",
+      "42102c",
+      "42eb01",
+      "4b83c6",
+      "5bd0ec",
+      "5f09f4",
+      "6582c4",
+      "6a24ab",
+      "7b2c26",
+      "7e882c",
+      "82288c",
+      "844561",
+      "8a785a",
+      "9093a3",
+      "9789ee",
+      "a46d91",
+      "a68f0e",
+      "be5652",
+      "c76e72",
+      "ce5e03",
+      "de0968",
+      "ed5222",
+      "f4b3fa",
+      "faeed9",
+      "fc5d42",
+      "fda800",
+      "fdf80d",
+    ],
+    wolfram: "ChebyshevT",
+  },
+  {
+    name: "ChebyshevU",
+    fungrimEntries: [
+      "05fe07",
+      "0649c9",
+      "1a0d11",
+      "2a5337",
+      "303204",
+      "35e13b",
+      "42eb01",
+      "48765b",
+      "4c7aeb",
+      "5f09f4",
+      "61375f",
+      "75eacb",
+      "78f5bb",
+      "7b2c26",
+      "7d111e",
+      "844561",
+      "88aeb6",
+      "9001e6",
+      "90631b",
+      "aadf90",
+      "ae76a3",
+      "b6b014",
+      "b8fdcd",
+      "be9a45",
+      "ce5e03",
+      "ce9a39",
+      "d1ef91",
+      "e03fa4",
+      "e1797b",
+      "fdf80d",
+    ],
+    wolfram: "ChebyshevU",
+  },
+  {
+    name: "Checkbox",
+    wolfram: "Checkbox",
+  },
+  {
     name: "ChineseRemainder",
     wolfram: "ChineseRemainder",
   },
   {
     name: "Chop",
     wolfram: "Chop",
+  },
+  {
+    name: "Circle",
+    wolfram: "Circle",
+  },
+  {
+    name: "CircleTimes",
+    wolfram: "CircleTimes",
   },
   {
     name: "CirculantGraph",
@@ -793,8 +1165,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "CliffordAlgebra",
+    wolfram: "CliffordAlgebra",
+  },
+  {
     name: "ClosenessCentrality",
     wolfram: "ClosenessCentrality",
+  },
+  {
+    name: "ColorSlider",
+    wolfram: "ColorSlider",
+  },
+  {
+    name: "Column",
+    wolfram: "Column",
   },
   {
     name: "Commonest",
@@ -838,6 +1222,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ComplexInfinity",
   },
   {
+    name: "ComplexPlot",
+    wolfram: "ComplexPlot",
+  },
+  {
+    name: "ComplexPlot3D",
+    wolfram: "ComplexPlot3D",
+  },
+  {
+    name: "Compose",
+    wolfram: "Composition",
+  },
+  {
     name: "Conjugate",
     fungrimEntries: [
       "12b1d0",
@@ -877,6 +1273,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ConnectedComponents",
   },
   {
+    name: "ConstGlaisher",
+    fungrimEntries: ["6395ee", "6f8e14", "8b7991", "b64782", "ce66a9", "dc507f"],
+    wolfram: "Glaisher",
+  },
+  {
     name: "Contains",
     wolfram: "MemberQ",
   },
@@ -899,6 +1300,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "ContinuedFractionK",
     wolfram: "ContinuedFractionK",
+  },
+  {
+    name: "ContourPlot",
+    wolfram: "ContourPlot",
   },
   {
     name: "Convergents",
@@ -1050,6 +1455,17 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Cycles",
   },
   {
+    name: "CyclicGroup",
+    wolfram: "CyclicGroup",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_cyclic(cyclic_group(PermGroup, $1), $1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "DSolveValue",
     wolfram: "DSolveValue",
   },
@@ -1095,6 +1511,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "DeleteCases",
     wolfram: "DeleteCases",
+  },
+  {
+    name: "Dendrogram",
+    wolfram: "Dendrogram",
+  },
+  {
+    name: "DensityPlot",
+    wolfram: "DensityPlot",
   },
   {
     name: "Derivative",
@@ -1323,6 +1747,17 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DigitSum",
   },
   {
+    name: "DihedralGroup",
+    wolfram: "DihedralGroup",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_dihedral(dihedral_group(PermGroup, 2 * $1), $1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "DiracDelta",
     wolfram: "DiracDelta",
   },
@@ -1365,12 +1800,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DiscreteDelta",
   },
   {
+    name: "DiscretePlot",
+    wolfram: "DiscretePlot",
+  },
+  {
     name: "DiscreteRatio",
     wolfram: "DiscreteRatio",
   },
   {
     name: "DiscreteShift",
     wolfram: "DiscreteShift",
+  },
+  {
+    name: "Disk",
+    wolfram: "Disk",
   },
   {
     name: "Divide",
@@ -1413,6 +1856,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Drop",
     wolfram: "Drop",
+  },
+  {
+    name: "Dynamic",
+    wolfram: "Dynamic",
+  },
+  {
+    name: "DynamicModule",
+    wolfram: "DynamicModule",
   },
   {
     name: "Echo",
@@ -1928,8 +2379,17 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FactorialPower",
   },
   {
+    name: "FallingFactorial",
+    fungrimEntries: ["1d5e92", "355c22", "5b414d", "a7b330", "e78989"],
+    wolfram: "FactorialPower",
+  },
+  {
     name: "False",
     wolfram: "False",
+  },
+  {
+    name: "FareySequence",
+    wolfram: "FareySequence",
   },
   {
     name: "Fibonacci",
@@ -2472,8 +2932,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "GraphPeriphery",
   },
   {
+    name: "GraphPlot",
+    wolfram: "GraphPlot",
+  },
+  {
     name: "GraphRadius",
     wolfram: "GraphRadius",
+  },
+  {
+    name: "GrassmannAlgebra",
+    wolfram: "GrassmannAlgebra",
   },
   {
     name: "Greater",
@@ -2482,6 +2950,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "GreaterEqual",
     wolfram: "GreaterEqual",
+  },
+  {
+    name: "Grid",
+    wolfram: "Grid",
   },
   {
     name: "GridGraph",
@@ -2771,6 +3243,57 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "IncidenceMatrix",
   },
   {
+    name: "IncompleteEllipticE",
+    fungrimEntries: [
+      "1b881e",
+      "2245df",
+      "2573ba",
+      "2ef763",
+      "3aed02",
+      "4dabda",
+      "51a946",
+      "a14442",
+      "a6c07e",
+      "aa1b8e",
+      "b62aae",
+      "be3e09",
+      "c28288",
+      "d88dd1",
+      "dec0d2",
+      "eba27c",
+      "efc7a4",
+      "f0bcb5",
+      "f35a37",
+      "f48f54",
+    ],
+    wolfram: "EllipticE",
+  },
+  {
+    name: "IncompleteEllipticF",
+    fungrimEntries: [
+      "04c829",
+      "087a7c",
+      "0b8fd6",
+      "16612f",
+      "4268fc",
+      "685126",
+      "81f7db",
+      "8b4be6",
+      "a91f8d",
+      "aac129",
+      "ace837",
+      "b0eb37",
+      "b7cfb3",
+      "ba1965",
+      "c0ad12",
+      "c584c3",
+      "d2adb6",
+      "e2445d",
+      "f5d489",
+    ],
+    wolfram: "EllipticF",
+  },
+  {
     name: "IncompleteEllipticPi",
     fungrimEntries: ["255d81", "5f84d9", "8f4e31"],
     wolfram: "EllipticPi",
@@ -2778,6 +3301,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Inequality",
     wolfram: "Inequality",
+  },
+  {
+    name: "InputField",
+    wolfram: "InputField",
   },
   {
     name: "IntegerDigits",
@@ -2837,6 +3364,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Intersection",
     wolfram: "Intersection",
+  },
+  {
+    name: "IntervalSlider",
+    wolfram: "IntervalSlider",
   },
   {
     name: "InverseBetaRegularized",
@@ -3380,6 +3911,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Labeled",
+    wolfram: "Labeled",
+  },
+  {
     name: "LambertW",
     fungrimEntries: [
       "0be17d",
@@ -3413,8 +3948,41 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Last",
   },
   {
+    name: "LayeredGraphPlot",
+    wolfram: "LayeredGraphPlot",
+  },
+  {
     name: "Lb",
     wolfram: "Log2",
+  },
+  {
+    name: "LegendrePolynomial",
+    fungrimEntries: [
+      "0010f3",
+      "13f971",
+      "217521",
+      "27688e",
+      "367ac2",
+      "3c87b9",
+      "3df748",
+      "415911",
+      "4cfeac",
+      "674afa",
+      "6cd4a1",
+      "859445",
+      "85eebc",
+      "925fdf",
+      "9395fc",
+      "9b7f05",
+      "9bdf22",
+      "a17386",
+      "a7ac51",
+      "b2d723",
+      "d77f0a",
+      "ea4754",
+      "f55f0a",
+    ],
+    wolfram: "LegendreP",
   },
   {
     name: "LegendreSymbol",
@@ -3458,6 +4026,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Level",
   },
   {
+    name: "Line",
+    wolfram: "Line",
+  },
+  {
     name: "LineGraph",
     wolfram: "LineGraph",
   },
@@ -3479,6 +4051,22 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "list(vec![$*,])",
       },
     ],
+  },
+  {
+    name: "ListLinePlot",
+    wolfram: "ListLinePlot",
+  },
+  {
+    name: "ListPicker",
+    wolfram: "ListPicker",
+  },
+  {
+    name: "ListPlot",
+    wolfram: "ListPlot",
+  },
+  {
+    name: "ListPlot3D",
+    wolfram: "ListPlot3D",
   },
   {
     name: "Ln",
@@ -3603,6 +4191,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Locator",
+    wolfram: "Locator",
+  },
+  {
     name: "Log10",
     wolfram: "Log10",
   },
@@ -3666,6 +4258,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MangoldtLambda",
     wolfram: "MangoldtLambda",
+  },
+  {
+    name: "Manipulate",
+    wolfram: "Manipulate",
   },
   {
     name: "Map",
@@ -3794,6 +4390,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Minimize",
   },
   {
+    name: "MixedRadix",
+    wolfram: "MixedRadix",
+  },
+  {
+    name: "MixedRadixNumerals",
+    wolfram: "MixedRadix",
+  },
+  {
     name: "Mod",
     fungrimEntries: ["540931", "75231e", "959a25"],
     wolfram: "Mod",
@@ -3825,6 +4429,38 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "ModularLambda",
+    fungrimEntries: [
+      "033d39",
+      "04d3a6",
+      "078869",
+      "07bf27",
+      "166402",
+      "27b2c7",
+      "2ba627",
+      "35c85f",
+      "3a7a0b",
+      "44a529",
+      "4877f2",
+      "4b20ab",
+      "5b9c02",
+      "5dd24a",
+      "6678af",
+      "830dd4",
+      "903962",
+      "90b419",
+      "a35b3c",
+      "b0e1cb",
+      "bbfb6c",
+      "c18c95",
+      "e4315f",
+      "e9f0c8",
+      "ec5a44",
+      "fe2627",
+    ],
+    wolfram: "ModularLambda",
   },
   {
     name: "Module",
@@ -4010,6 +4646,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Unequal",
   },
   {
+    name: "Notebook",
+    wolfram: "Notebook",
+  },
+  {
     name: "Nothing",
     wolfram: "Null",
   },
@@ -4038,6 +4678,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Outer",
   },
   {
+    name: "OverBar",
+    wolfram: "OverBar",
+  },
+  {
     name: "PDF",
     wolfram: "PDF",
   },
@@ -4048,6 +4692,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "PadRight",
     wolfram: "PadRight",
+  },
+  {
+    name: "Panel",
+    wolfram: "Panel",
   },
   {
     name: "Partition",
@@ -4113,6 +4761,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Pick",
   },
   {
+    name: "PieChart",
+    wolfram: "PieChart",
+  },
+  {
     name: "Piecewise",
     wolfram: "Piecewise",
   },
@@ -4121,12 +4773,28 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "PiecewiseExpand",
   },
   {
+    name: "Plot",
+    wolfram: "Plot",
+  },
+  {
+    name: "Plot3D",
+    wolfram: "Plot3D",
+  },
+  {
     name: "Pochhammer",
     wolfram: "Pochhammer",
   },
   {
+    name: "Point",
+    wolfram: "Point",
+  },
+  {
     name: "PoissonDistribution",
     wolfram: "PoissonDistribution",
+  },
+  {
+    name: "PolarPlot",
+    wolfram: "PolarPlot",
   },
   {
     name: "PolyGamma",
@@ -4200,6 +4868,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "PopupMenu",
+    wolfram: "PopupMenu",
   },
   {
     name: "Position",
@@ -4358,6 +5030,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Quotient",
   },
   {
+    name: "RadioButtonBar",
+    wolfram: "RadioButtonBar",
+  },
+  {
     name: "RamanujanTau",
     wolfram: "RamanujanTau",
   },
@@ -4388,6 +5064,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Rank",
     wolfram: "ArrayDepth",
+  },
+  {
+    name: "Rasterize",
+    wolfram: "Rasterize",
   },
   {
     name: "Rational",
@@ -4469,6 +5149,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Reap",
   },
   {
+    name: "Rectangle",
+    wolfram: "Rectangle",
+  },
+  {
     name: "RecurrenceTable",
     wolfram: "RecurrenceTable",
   },
@@ -4518,12 +5202,44 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Riffle",
   },
   {
+    name: "RisingFactorial",
+    fungrimEntries: [
+      "02ee06",
+      "0feb19",
+      "22ee07",
+      "24c9e9",
+      "30652c",
+      "40c3e2",
+      "41f950",
+      "56d710",
+      "65693e",
+      "792f7b",
+      "83abff",
+      "973b2c",
+      "a68f0e",
+      "b6b014",
+      "c640bf",
+      "c733f7",
+      "d1b3b5",
+      "d651d1",
+      "ddc7e1",
+      "e78084",
+      "e78989",
+      "fe9fb7",
+    ],
+    wolfram: "Pochhammer",
+  },
+  {
     name: "RomanNumeral",
     wolfram: "RomanNumeral",
   },
   {
     name: "Round",
     wolfram: "Round",
+  },
+  {
+    name: "Row",
+    wolfram: "Row",
   },
   {
     name: "Rule",
@@ -4556,6 +5272,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "SetMinus",
     wolfram: "Complement",
+  },
+  {
+    name: "SetterBar",
+    wolfram: "SetterBar",
   },
   {
     name: "Shape",
@@ -4789,6 +5509,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Sinh",
   },
   {
+    name: "Slider",
+    wolfram: "Slider",
+  },
+  {
+    name: "Slider2D",
+    wolfram: "Slider2D",
+  },
+  {
     name: "SloaneA",
     fungrimEntries: ["373aa1", "447541", "4fa169", "60dc3e", "6af603", "8eed2c", "9d0839", "b6111c", "d12aa0"],
   },
@@ -4905,6 +5633,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "StreamPlot",
+    wolfram: "StreamPlot",
   },
   {
     name: "StringLength",
@@ -5047,6 +5779,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "TestResultObject",
+    wolfram: "TestResultObject",
+  },
+  {
     name: "Thread",
     wolfram: "Thread",
   },
@@ -5069,6 +5805,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "ToString",
     wolfram: "ToString",
+  },
+  {
+    name: "Toggler",
+    wolfram: "Toggler",
+  },
+  {
+    name: "TogglerBar",
+    wolfram: "TogglerBar",
   },
   {
     name: "Totient",
@@ -5117,6 +5861,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Transpose",
     wolfram: "Transpose",
+  },
+  {
+    name: "TreeGraph",
+    wolfram: "TreeGraph",
   },
   {
     name: "TriangleWave",
@@ -5179,6 +5927,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Variance",
   },
   {
+    name: "VectorPlot",
+    wolfram: "VectorPlot",
+  },
+  {
+    name: "Vee",
+    wolfram: "Vee",
+  },
+  {
     name: "VerificationTest",
     wolfram: "VerificationTest",
   },
@@ -5209,6 +5965,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "VertexOutDegree",
     wolfram: "VertexOutDegree",
+  },
+  {
+    name: "VerticalSlider",
+    wolfram: "VerticalSlider",
+  },
+  {
+    name: "Wedge",
+    wolfram: "Wedge",
   },
   {
     name: "WeightedAdjacencyMatrix",

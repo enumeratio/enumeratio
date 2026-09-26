@@ -20,3 +20,5 @@ seeAlso:
   - InverseMellinTransform
   - LaplaceTransform
   - FourierTransform
+names:
+  wolframIdentity: true

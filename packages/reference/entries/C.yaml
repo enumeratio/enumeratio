@@ -1,0 +1,10 @@
+name: C
+domain: Compute engine
+signature: C
+summary: An arbitrary constant, as Wolfram's DSolveValue introduces one per integration (C[1], C[2], …).
+signatures:
+  - call: "C: unknown"
+    description: a constant, as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

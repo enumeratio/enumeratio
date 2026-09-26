@@ -38,6 +38,12 @@ const graphicsHeads = new Set(GRAPHICS_HEADS);
 
 const entriesDir = fileURLToPath(new URL("../../entries/", import.meta.url));
 
+/** A handful of engine symbols carry no `description` of their own (compute-engine's bare
+ * declaration), so the generic engine-symbol fallback below would say nothing useful. */
+const SYMBOL_SUMMARY: Readonly<Record<string, string>> = {
+  C: "An arbitrary constant, as Wolfram's DSolveValue introduces one per integration (C[1], C[2], …).",
+};
+
 function namesFor(name: string, wolframName: string): ReferenceNames {
   return wolframName === name ? { wolframIdentity: true } : { wolfram: wolframName };
 }
@@ -73,9 +79,11 @@ for (const name of Object.keys(HEADS).sort()) {
   const isGraphics = graphicsHeads.has(name);
   const summary = symbol?.description
     ? symbol.description
-    : isGraphics
-      ? `Wolfram's own ${wolframName}, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).`
-      : `Wolfram's own ${wolframName}, mapped through for the transpiler and the oracle but not yet written up here.`;
+    : SYMBOL_SUMMARY[name]
+      ? SYMBOL_SUMMARY[name]
+      : isGraphics
+        ? `Wolfram's own ${wolframName}, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).`
+        : `Wolfram's own ${wolframName}, mapped through for the transpiler and the oracle but not yet written up here.`;
 
   const entry: ReferenceEntry = {
     name,

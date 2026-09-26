@@ -19,3 +19,5 @@ bindings:
 seeAlso:
   - ExpToTrig
   - FunctionExpand
+names:
+  wolframIdentity: true

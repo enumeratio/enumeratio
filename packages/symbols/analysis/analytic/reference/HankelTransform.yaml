@@ -22,3 +22,5 @@ bindings:
 seeAlso:
   - MellinTransform
   - LaplaceTransform
+names:
+  wolframIdentity: true
