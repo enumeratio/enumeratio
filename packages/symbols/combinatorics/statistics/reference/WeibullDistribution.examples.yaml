@@ -1,0 +1,11 @@
+- id: weibull-pdf-exact
+  expr: [PDF, [WeibullDistribution, 2, 5], 4]
+  expected: [Divide, 8, [Multiply, 25, [Power, ExponentialE, [Rational, 16, 25]]]]
+  caption: Cross-checked against wolframscript's N[PDF[WeibullDistribution[2, 5], 4]]
+- id: weibull-cdf-exact
+  expr: [CDF, [WeibullDistribution, 2, 5], 4]
+  expected: [Add, 1, [Negate, [Power, ExponentialE, [Rational, -16, 25]]]]
+  caption: Cross-checked against wolframscript's N[CDF[WeibullDistribution[2, 5], 4]]
+- id: weibull-mean-exact
+  expr: [Mean, [WeibullDistribution, 2, 5]]
+  expected: [Multiply, 5, [Gamma, [Rational, 3, 2]]]

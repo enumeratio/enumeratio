@@ -1,0 +1,19 @@
+- id: the-identity-s-class-is-a-singleton
+  expr: [ClassSum, [DihedralGroup, 3], 1]
+  expected: [GroupBasis, "'0'"]
+  caption: the identity's class is a singleton
+- id: class-sums-are-central
+  expr: [IsCentral, [DihedralGroup, 3], [ClassSum, [DihedralGroup, 3], 2]]
+  expected: True
+  caption: class sums are central
+  category: Properties
+- id: a-lone-reflection-is-not
+  expr: [IsCentral, [DihedralGroup, 3], [GroupBasis, [String, s0]]]
+  expected: False
+  caption: a lone reflection is not
+  category: Properties
+- id: in-an-abelian-group-everything-is-central
+  expr: [IsCentral, [CyclicGroup, 6], [GroupBasis, [String, "3"]]]
+  expected: True
+  caption: in an abelian group everything is central
+  category: Scope

@@ -1,0 +1,5 @@
+- id: count-standardtableaupairs-4-4-24-rsk-is-a
+  expr: [Count, [StandardTableauPairs, 4]]
+  expected: 24
+  category: Basic
+  caption: "$Count(StandardTableauPairs(4)) = 4! = 24$: RSK is a bijection with permutations"

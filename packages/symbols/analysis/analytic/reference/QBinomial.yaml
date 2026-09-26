@@ -9,28 +9,8 @@ signatures:
 details:
   - Built by the Pascal-like recurrence $\binom{n}{k}_q = \binom{n-1}{k-1}_q + q^k \binom{n-1}{k}_q$, with $\binom{n}{0}_q = \binom{n}{n}_q = 1$ — pure addition and multiplication, never division, so it stays a genuine polynomial for symbolic $q$ that `Expand` can open up. The equivalent quotient $[n]_q!/([k]_q![n-k]_q!)$ is exact numerically but `Expand` alone can't cancel it down to a polynomial when $q$ is symbolic, which is why the recurrence is used instead.
   - At $q = 1$ it reduces to the ordinary $\binom{n}{k}$ by the same recurrence Pascal's triangle uses.
-examples:
-  - id: frac-2-4-1-2-3-1-2-2-1-2-1-35
-    expr: [QBinomial, 4, 2, 2]
-    expected: 35
-    caption: $\frac{(2^4-1)(2^3-1)}{(2^2-1)(2-1)} = 35$
-  - id: a-polynomial-in-q-whose-coefficients-count
-    expr: [Expand, [QBinomial, 4, 2, q]]
-    expected: [Add, [Power, q, 4], [Power, q, 3], [Multiply, 2, [Power, q, 2]], q, 1]
-    category: Scope
-    caption: A polynomial in q whose coefficients count partitions in a 2 × 2 box
-  - id: at-q-1-it-is-binomial-6-3
-    expr: [QBinomial, 6, 3, 1]
-    expected: 20
-    category: Properties
-    caption: At q = 1 it is Binomial(6, 3)
-  - id: the-number-of-2-dimensional-subspaces-of-f-3-5
-    expr: [QBinomial, 5, 2, 3]
-    expected: 1210
-    category: Applications
-    caption: The number of 2-dimensional subspaces of $\mathbb{F}_3^5$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

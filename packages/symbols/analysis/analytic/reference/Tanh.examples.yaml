@@ -1,0 +1,95 @@
+- id: n-forces-the-numeric-result-that-plain
+  expr: [N, [Tanh, 0]]
+  expected: 0
+  caption: N(...) forces the numeric result that plain evaluation withholds
+- id: n-tanh-1
+  expr: [N, [Tanh, 1]]
+  expected: { num: "0.761594155955764888119" }
+- id: tanh-x-frac-sinh-x-cosh-x
+  expr: [Equal, [Tanh, 1], [Divide, [Sinh, 1], [Cosh, 1]]]
+  expected: True
+  category: Properties
+  caption: $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$
+- id: stays-symbolic-even-at-0-same-as-sinh-and-cosh
+  expr: [Tanh, 0]
+  expected: 0
+  caption: Exact at 0, as [[Sinh]] and [[Cosh]] are
+- id: a-float-argument-evaluates-directly-no-n-needed
+  expr: [Tanh, 2.2]
+  expected: { num: "0.975743130031451520414" }
+  caption: A float argument evaluates directly, no N(...) needed
+- id: arbitrary-precision-via-n
+  expr: [N, [Tanh, [Rational, 11, 5]]]
+  expected: { num: "0.975743130031451520414" }
+  category: Scope
+  caption: Arbitrary precision via N(...)
+- id: evaluates-at-a-complex-argument
+  expr: [Tanh, [Complex, 2.5, 1]]
+  expected: [Complex, 1.00554801189506, 0.012322138255828353]
+  category: Scope
+  caption: Evaluates at a complex argument
+- id: interval-arithmetic-tanh-is-increasing-so-tanh-0
+  expr: [Tanh, [Interval, 0, [Ln, 2]]]
+  expected: [Interval, 0, [Rational, 3, 5]]
+  category: Scope
+  caption: 'Interval arithmetic: $\tanh$ is increasing, so $\tanh[0, \ln 2] = [0, \tfrac35]$'
+- id: uncertainty-propagation-tanh-2-sqrt-3-pm-0-1
+  expr: [Tanh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]
+  expected: [Around, 0.8193052900783008, 0.03287388416497115]
+  category: Scope
+  caption: 'Uncertainty propagation: $\tanh(2/\sqrt3 \pm 0.1) \approx 0.819 \pm 0.033$'
+- id: the-horizontal-asymptote-at-infty
+  expr: [Tanh, PositiveInfinity]
+  expected: 1
+  category: Scope
+  caption: The horizontal asymptote at $+\infty$
+- id: tanh-i-pi-4-i-tan-pi-4-i
+  expr: [Tanh, [Multiply, ImaginaryUnit, [Divide, Pi, 4]]]
+  expected: [Complex, 0, 1]
+  category: Scope
+  caption: $\tanh(i\pi/4) = i\tan(\pi/4) = i$
+- id: oddness-pulls-the-sign-out-of-a-symbolic
+  expr: [Tanh, [Negate, x]]
+  expected: [Negate, [Tanh, x]]
+  category: Scope
+  caption: 'Oddness pulls the sign out of a symbolic argument: $\tanh(-x) = -\tanh x$'
+- id: tanh-artanh-x-x-for-every-x
+  expr: [Tanh, [Artanh, x]]
+  expected: x
+  category: Scope
+  caption: $\tanh(\operatorname{artanh} x) = x$ for every $x$
+- id: tanh-artanh-2-2-past-the-real-domain
+  expr: [Tanh, [Artanh, 2]]
+  expected: 2
+  category: Scope
+  caption: $\tanh(\operatorname{artanh}(2)) = 2$, even past $(-1, 1)$
+- id: derivative-sech-2-x
+  expr: [D, [Tanh, x], x]
+  expected: [Power, [Sech, x], 2]
+  category: Scope
+  caption: 'Derivative: $\operatorname{sech}^2 x$'
+- id: antiderivative-ln-cosh-x
+  expr: [Integrate, [Tanh, x], x]
+  expected: [Ln, [Cosh, x]]
+  category: Scope
+  caption: 'Antiderivative: $\ln\cosh x$'
+- id: in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x
+  expr: [TrigToExp, [Tanh, x]]
+  expected:
+    [
+      Divide,
+      [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]],
+      [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]],
+    ]
+  category: Properties
+  caption: 'In exponentials: $\tanh x = \frac{e^x - e^{-x}}{e^x + e^{-x}}$'
+- id: tanh-has-no-limit-at-complex-infinity-undefined
+  expr: [Tanh, ComplexInfinity]
+  expected: NaN
+  category: Scope
+  caption: '$\tanh$ has no limit at complex infinity, undefined from any direction: NaN'
+- id: to-30-significant-digits-every-one-correctly
+  expr: [N, [Tanh, 1], 30]
+  expected: { num: "0.761594155955764888119458282605" }
+  category: Scope
+  caption: To 30 significant digits, every one correctly rounded

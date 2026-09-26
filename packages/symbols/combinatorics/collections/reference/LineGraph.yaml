@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
 details:
   - EdgeCount(LineGraph(g)) = sum over v of C(VertexDegree(v), 2) for a simple g -- every pair of edges sharing vertex v contributes one line-graph edge.
-examples:
-  - id: line-graph-of-a-triangle-is-a-triangle
-    expr: [EdgeCount, [LineGraph, [CompleteGraph, 3]]]
-    expected: 3
 seeAlso:
   - VertexDegree
   - AdjacencyGraph

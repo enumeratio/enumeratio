@@ -1,0 +1,5 @@
+- id: count-unlabeledfreetrees-7-11-a000055
+  expr: [Count, [UnlabeledFreeTrees, 7]]
+  expected: 11
+  category: Basic
+  caption: $Count(UnlabeledFreeTrees(7)) = 11$, A000055

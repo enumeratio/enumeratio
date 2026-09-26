@@ -9,26 +9,6 @@ signatures:
 details:
   - From a fixed table of the first 20 known Mersenne prime exponents, proven complete this far since the 1950s — well short of GIMPS's ongoing search. Past the table the call stays unevaluated rather than searching.
   - "Feeds [[PerfectNumber]]: the $n$th even perfect number is $2^{p-1}(2^p-1)$."
-examples:
-  - id: mersenneprimeexponent-1
-    expr: [MersennePrimeExponent, 1]
-    expected: 2
-  - id: mersenneprimeexponent-5
-    expr: [MersennePrimeExponent, 5]
-    expected: 13
-  - id: mersenneprimeexponent-10
-    expr: [MersennePrimeExponent, 10]
-    expected: 89
-  - id: listable
-    expr: [MersennePrimeExponent, [List, 1, 2, 3, 4, 5, 6]]
-    expected: [List, 2, 3, 5, 7, 13, 17]
-    category: Scope
-    caption: Listable
-  - id: past-the-known-table-of-mersenne-prime-exponents
-    expr: [MersennePrimeExponent, 1000]
-    expected: [MersennePrimeExponent, 1000]
-    category: Possible issues
-    caption: Past the known table of Mersenne-prime exponents, the call stays unevaluated rather than guessing
 seeAlso:
   - PerfectNumber
   - IsPrime

@@ -12,14 +12,5 @@ signatures:
 details:
   - Only exact tag equality is matched, not Wolfram's fuller pattern-matching form.
   - An error that is not one of our own $Throw$s is never caught here — it propagates as a normal error would.
-examples:
-  - id: no-throw-evaluates-normally
-    expr: [Catch, [Add, 1, 2]]
-    expected: 3
-    caption: with no Throw inside, Catch just returns the value
-  - id: tag-matched-catch-recovers-the-value
-    expr: [Catch, [Throw, ok, done], done]
-    expected: ok
-    caption: Catch(expr, tag) recovers a Throw with a matching tag
 seeAlso:
   - Throw

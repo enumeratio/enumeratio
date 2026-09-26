@@ -10,15 +10,6 @@ details:
   - "Respects edge direction (kernel-verified): a directed edge only counts toward mutual reachability one way, so `Graph({1,2,3}, {1->2, 2->1, 2->3})` gives two components, `{1, 2}` (a 2-cycle) and `{3}` (reachable but never reached from), even though the graph is a single WEAKLY connected piece. An undirected edge counts both ways, so a purely undirected graph's components are its ordinary (weakly) connected pieces."
   - "[[IsConnectedGraph]] and [[IsTreeGraph]] test weak connectivity instead — direction ignored — since a directed tree (edges pointing away from a root) is weakly connected but never strongly connected. The two heads deliberately disagree on a directed graph."
   - Vertex order WITHIN a component is this implementation's own traversal order, not a claim about matching Wolfram's.
-examples:
-  - id: a-2-cycle-and-a-downstream-only-vertex
-    expr:
-      [
-        ConnectedComponents,
-        [Graph, [List, 1, 2, 3], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1], [DirectedEdge, 2, 3]]],
-      ]
-    expected: [List, [List, 1, 2], [List, 3]]
-    caption: 1 and 2 reach each other; 3 is downstream only
 seeAlso:
   - IsConnectedGraph
   - Graph

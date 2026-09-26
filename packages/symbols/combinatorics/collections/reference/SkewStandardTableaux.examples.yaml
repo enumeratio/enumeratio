@@ -1,0 +1,5 @@
+- id: count-skewstandardtableaux-3-24-standard
+  expr: [Count, [SkewStandardTableaux, 3]]
+  expected: 24
+  category: Basic
+  caption: "$Count(SkewStandardTableaux(3)) = 24$: standard fillings of every skew shape of 3 cells"

@@ -12,14 +12,6 @@ signatures:
 details:
   - list and sel must be the same length.
   - Matching uses the same wildcard grammar as [[MatchQ]].
-examples:
-  - id: keeps-elements-where-sel-is-true
-    expr: [Pick, [List, a, b, c], [List, True, False, True]]
-    expected: [List, a, c]
-  - id: an-explicit-pattern-keeps-elements-matching
-    expr: [Pick, [List, a, b, c, d], [List, 1, 0, 1, 0], 1]
-    expected: [List, a, c]
-    category: Scope
 seeAlso:
   - Level
   - MatchQ

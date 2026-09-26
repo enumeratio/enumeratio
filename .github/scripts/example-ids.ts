@@ -15,14 +15,17 @@ const git = (...args: string[]): string => execFileSync("git", args, { encoding:
 const base = process.env.BASE ?? git("merge-base", "HEAD", "origin/main").trim();
 
 type Ids = Map<string, Map<string, string>>; // head -> id -> JSON of expr
+type Example = { id: string; expr: unknown };
 const collect = (files: string[], read: (file: string) => string): Ids => {
   const out: Ids = new Map();
   for (const file of files) {
     if (!RECORD.test(file) || file.endsWith(".implementations.yaml") || file.includes("/tests/")) continue;
-    const entry = parseYaml(read(file)) as { name?: string; examples?: { id: string; expr: unknown }[] };
-    const head = entry.name ?? basename(file, ".yaml");
+    // Examples sit in `<Head>.examples.yaml`; before that split they were `<Head>.yaml`'s `examples:`.
+    const data = parseYaml(read(file)) as Example[] | { examples?: Example[] };
+    const head = basename(file, ".yaml").replace(/\.examples$/, "");
     const ids = out.get(head) ?? new Map<string, string>();
-    for (const example of entry.examples ?? []) ids.set(example.id, JSON.stringify(example.expr));
+    for (const example of (Array.isArray(data) ? data : data.examples) ?? [])
+      ids.set(example.id, JSON.stringify(example.expr));
     out.set(head, ids);
   }
   return out;

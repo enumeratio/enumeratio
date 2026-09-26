@@ -1,0 +1,102 @@
+- id: erf-0
+  expr: [Erf, 0]
+  expected: 0
+- id: erf-infinity
+  expr: [Erf, Infinity]
+  expected: 1
+- id: erf-negativeinfinity
+  expr: [Erf, NegativeInfinity]
+  expected: -1
+- id: a-floating-point-argument-evaluates-directly-to
+  expr: [Erf, 0.5]
+  expected: { num: "0.520499877813046537683" }
+  caption: A floating-point argument evaluates directly to a high-precision decimal
+- id: odd-function-erf-z-erf-z-here-at-z-2
+  expr: [Equal, [Add, [Erf, 2], [Erf, -2]], 0]
+  expected: True
+  category: Properties
+  caption: 'Odd function: $\operatorname{erf}(-z) = -\operatorname{erf}(z)$, here at $z = 2$'
+- id: complementary-with-erfc-erf-z-erfc-z-1-see-erfc
+  expr: [Equal, [Add, [Erf, 2], [Erfc, 2]], 1]
+  expected: True
+  category: Properties
+  caption: 'Complementary with Erfc: $\operatorname{erf}(z) + \operatorname{erfc}(z) = 1$. See [[Erfc]]'
+- id: erf-1-sqrt-2-approx-0-6827-the-68-in-the
+  expr: [Erf, 0.7071067811865476]
+  expected: { num: "0.68268949213708594891" }
+  category: Applications
+  caption: "$\\operatorname{erf}(1/\\sqrt2) \\approx 0.6827$: the '68' in the empirical 68-95-99.7 rule for one standard deviation"
+- id: an-exact-integer-argument-is-left-unevaluated
+  expr: [Erf, 1]
+  expected: [Erf, 1]
+  category: Possible issues
+  caption: An exact integer argument is left unevaluated under plain evaluation -- pair with N() or use an inexact argument like 0.5 for a decimal
+- id: by-z-3-5-erf-is-already-within-10-6-of-its-limit
+  expr: [Erf, 3.5]
+  expected: { num: "0.999999256901627658587" }
+  category: Neat examples
+  caption: By $z=3.5$, erf is already within $10^{-6}$ of its limit of 1
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [Erf, [List, 0, 1]]
+  expected: [List, 0, [Erf, 1]]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: a-machine-precision-argument
+  expr: [Erf, 0.95]
+  expected: { num: "0.820890807273277941908" }
+  caption: A machine-precision argument
+- id: complex-arguments-evaluate-directly
+  expr: [Erf, [Complex, 1.5, -1]]
+  expected: [Complex, 1.0783992074989335, 0.027963711238655833]
+  category: Scope
+  caption: Complex arguments evaluate directly
+- id: two-arguments-the-generalized-erf-z-0-z-1-erf-z
+  expr: [Erf, 0.5, 1.5]
+  expected: 0.4456052686622642
+  category: Scope
+  caption: 'Two arguments: the generalized $\operatorname{erf}(z_0, z_1) = \operatorname{erf}(z_1) - \operatorname{erf}(z_0)$'
+- id: which-with-exact-arguments-is-the-difference-erf
+  expr: [Erf, 1, 2]
+  expected: [Add, [Negate, [Erf, 1]], [Erf, 2]]
+  category: Scope
+  caption: ...which with exact arguments is the difference $\operatorname{erf}(2) - \operatorname{erf}(1)$
+- id: interval-arithmetic-erf-is-increasing-so-the
+  expr: [Erf, [Interval, -2.1, -1.9]]
+  expected: [Interval, -0.997020533343667, -0.9927904292352575]
+  category: Scope
+  caption: "Interval arithmetic: Erf is increasing, so the image of an interval is the interval of the endpoint images"
+- id: uncertainty-propagation-with-slope-frac-2-sqrt
+  expr: [Erf, [Around, 2, 0.01]]
+  expected: [Around, 0.9953222650189527, 0.00020666985354092054]
+  category: Scope
+  caption: Uncertainty propagation, with slope $\frac{2}{\sqrt\pi}e^{-4}$
+- id: the-standard-normal-cdf-phi-x-frac-12-1-erf-x
+  expr: [Multiply, 0.5, [Add, 1, [Erf, [Divide, 1.96, [Sqrt, 2]]]]]
+  expected: { num: "0.9750021048517795658635" }
+  category: Applications
+  caption: 'The standard normal CDF $\Phi(x) = \frac12(1 + \operatorname{erf}(x/\sqrt2))$ at $x = 1.96$: the familiar 97.5%'
+- id: oddness-applied-symbolically-erf-x-erf-x
+  expr: [Erf, [Negate, x]]
+  expected: [Negate, [Erf, x]]
+  category: Properties
+  caption: 'Oddness applied symbolically: $\operatorname{erf}(-x) = -\operatorname{erf}(x)$'
+- id: erf-erfinv-x-x-symbolically-see-erfinv
+  expr: [Erf, [ErfInv, x]]
+  expected: x
+  category: Properties
+  caption: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$ symbolically. See [[ErfInv]]
+- id: on-the-imaginary-axis-erf-i-i-erfi-1
+  expr: [Erf, ImaginaryUnit]
+  expected: [Multiply, [Complex, 0, 1], [Erfi, 1]]
+  category: Properties
+  caption: 'On the imaginary axis: $\operatorname{erf}(i) = i\,\operatorname{erfi}(1)$'
+- id: frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the
+  expr: [D, [Erf, x], x]
+  expected: [Divide, [Multiply, 2, [Power, ExponentialE, [Negate, [Power, x, 2]]]], [Sqrt, Pi]]
+  category: Properties
+  caption: $\frac{d}{dx}\operatorname{erf}(x) = \frac{2}{\sqrt\pi}e^{-x^2}$, the Gaussian itself
+- id: to-40-significant-digits-every-one-correctly
+  expr: [N, [Erf, 1], 40]
+  expected: { num: "0.8427007929497148693412206350826092592961" }
+  category: Scope
+  caption: To 40 significant digits, every one correctly rounded

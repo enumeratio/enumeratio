@@ -11,10 +11,5 @@ details:
   - "Compute-engine's `idempotent` and `involution` flags are deliberately excluded: real algebraic properties it tracks for pattern matching, but not Wolfram `Attributes` names — Wolfram has no such entries, so reporting them would claim a fact that doesn't exist."
   - '`HoldAll` for `lazy` is an approximation: compute-engine''s `lazy` means "operands arrive unevaluated", the effect of Wolfram''s `HoldAll` without distinguishing it from `HoldFirst`/`HoldRest`/`HoldAllComplete`.'
   - An undeclared or non-operator symbol reads as no attributes.
-examples:
-  - id: adds-attributes
-    expr: [Attributes, Add]
-    expected: [List, Flat, HoldAll, Listable, Orderless]
-    caption: Add is Flat, HoldAll, Listable and Orderless on this engine
 seeAlso:
   - SetAttributes

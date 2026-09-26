@@ -1,0 +1,4 @@
+- id: the-one-line-word-231
+  expr: [InverseAfterComplementAfterReverse, [Permutations, [List, 2, 3, 1]]]
+  expected: [Permutations, [List, 2, 3, 1]]
+  caption: the one-line word $231$

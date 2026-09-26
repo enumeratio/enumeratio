@@ -1,0 +1,18 @@
+- id: r-1-1-h-1-1-h-2
+  expr: [InCompleteBasis, [NSymR, [List, 1, 1]]]
+  expected: [Add, [Negate, [NSymH, [List, 2]]], [NSymH, [List, 1, 1]]]
+  caption: $R_{(1,1)} = H_{(1,1)} - H_{(2)}$
+- id: the-fundamental-basis-sums-over-refinements
+  expr: [InMonomialBasis, [QSymF, [List, 2]]]
+  expected: [Add, [QSymM, [List, 2]], [QSymM, [List, 1, 1]]]
+  caption: the fundamental basis sums over refinements
+- id: one-signed-term
+  expr: [Antipode, [NSymR, [List, 3]]]
+  expected: [Negate, [NSymR, [List, 1, 1, 1]]]
+  caption: one signed term
+  category: Properties
+- id: self-conjugate-the-convention-is-settled-by-the
+  expr: [ConjugateComposition, [List, 2, 1]]
+  expected: [List, 2, 1]
+  caption: self-conjugate — the convention is settled by the antipode, not by taste
+  category: Possible issues

@@ -1,0 +1,13 @@
+- id: grouped-by-residue-mod-3
+  expr: [GatherBy, [List, 1, 2, 3, 4, 5, 6, 7], [Function, [Mod, _1, 3]]]
+  expected: [List, [List, 1, 4, 7], [List, 2, 5], [List, 3, 6]]
+  caption: Grouped by residue mod 3
+- id: grouped-by-absolute-value
+  expr: [GatherBy, [List, -2, 1, 2, -1, 3], Abs]
+  expected: [List, [List, -2, 2], [List, 1, -1], [List, 3]]
+  caption: Grouped by absolute value
+- id: pairs-grouped-by-their-last-element
+  expr: [GatherBy, [List, [List, a, 1], [List, b, 2], [List, c, 1]], Last]
+  expected: [List, [List, [List, a, 1], [List, c, 1]], [List, [List, b, 2]]]
+  category: Scope
+  caption: Pairs grouped by their last element

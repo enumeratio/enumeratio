@@ -1,0 +1,4 @@
+- id: the-first-20-terms-oeis-a010060
+  expr: [Take, ThueMorseNumbers, 20]
+  expected: [List, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1]
+  caption: The first 20 terms, OEIS A010060

@@ -1,0 +1,10 @@
+- id: riemannsiegeltheta-1p5
+  expr: [RiemannSiegelTheta, 1.5]
+  expected: -2.19819085737941
+- id: n-riemannsiegeltheta-10
+  expr: [N, [RiemannSiegelTheta, 10]]
+  expected: -3.0670743962898954
+- id: riemannsiegeltheta-0
+  expr: [RiemannSiegelTheta, 0]
+  expected: 0
+  category: Properties

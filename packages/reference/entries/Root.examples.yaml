@@ -1,0 +1,59 @@
+- id: the-cube-root-of-27
+  expr: [Root, 27, 3]
+  expected: 3
+  caption: The cube root of 27
+- id: root-16-4
+  expr: [Root, 16, 4]
+  expected: 2
+- id: odd-roots-of-a-negative-number-stay-real
+  expr: [Root, -8, 3]
+  expected: -2
+  caption: Odd roots of a negative number stay real
+- id: stays-symbolic-when-x-isn-t-a-perfect-power
+  expr: [Root, 2, 3]
+  expected: [Root, 2, 3]
+  caption: Stays symbolic when x isn't a perfect power
+- id: a-negative-index-gives-the-reciprocal-root-x-1-n
+  expr: [Root, 16, -2]
+  expected: [Rational, 1, 4]
+  caption: "A negative index gives the reciprocal root: $x^{-1/n}$"
+- id: sqrt-n-x-n-x-for-a-perfect-nth-power
+  expr: [Equal, [Power, [Root, 8, 3], 3], 8]
+  expected: True
+  category: Properties
+  caption: $(\sqrt[n]{x})^n = x$ for a perfect nth power
+- id: root-x-2-agrees-with-sqrt
+  expr: [Equal, [Root, 16, 2], [Sqrt, 16]]
+  expected: True
+  category: Properties
+  caption: Root(x, 2) agrees with [[Sqrt]]
+- id: the-edge-length-of-a-cube-with-volume-1000
+  expr: [Root, 1000, 3]
+  expected: 10
+  category: Applications
+  caption: The edge length of a cube with volume 1000
+- id: an-even-root-of-a-negative-non-perfect-power
+  expr: [Root, -8, 2]
+  expected: [Sqrt, -8]
+  category: Possible issues
+  caption: An even root of a negative, non-perfect-power number canonicalizes to [[Sqrt]] and stays symbolic; numerically it's $2\sqrt{2}\,i$
+- id: the-real-cube-root-wolfram-s-surd-27-3
+  expr: [Root, -27, 3]
+  expected: -3
+  category: Scope
+  caption: The real cube root, Wolfram's $\mathrm{Surd}[-27, 3]$
+- id: any-odd-root-of-a-negative-number-is-real
+  expr: [Root, -32, 5]
+  expected: -2
+  category: Scope
+  caption: Any odd root of a negative number is real
+- id: approximate-negative-radicands-stay-real-too
+  expr: [Root, -3.5, 5]
+  expected: { num: "-1.28473515712343933868" }
+  category: Scope
+  caption: Approximate negative radicands stay real too
+- id: threads-element-wise-over-a-list
+  expr: [Root, [List, -8, 27], 3]
+  expected: [List, -2, 3]
+  category: Scope
+  caption: Threads element-wise over a list

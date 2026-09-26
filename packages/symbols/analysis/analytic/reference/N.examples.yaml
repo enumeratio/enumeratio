@@ -1,0 +1,27 @@
+- id: n-pi-30
+  expr: [N, Pi, 30]
+  expected: { num: "3.14159265358979323846264338328" }
+- id: the-last-digit-correctly-rounded-computing-at-30
+  expr: [N, [Sinh, 1], 30]
+  expected: { num: "1.17520119364380145688238185060" }
+  caption: "The last digit correctly rounded: computing at 30 digits alone gives …059"
+- id: a-list-number-by-number
+  expr: [N, [List, Pi, ExponentialE, [Sqrt, 2]], 5]
+  expected: [List, 3.1416, 2.7183, 1.4142]
+  caption: A list, number by number
+- id: an-exact-tie-rounds-to-the-even-digit-0-125
+  expr: [N, [Rational, 1, 8], 2]
+  expected: 0.12
+  category: Possible issues
+  caption: "An exact tie rounds to the even digit: 0.125 to 0.12"
+- id: and-0-375-to-0-38
+  expr: [N, [Rational, 3, 8], 2]
+  expected: 0.38
+  category: Possible issues
+  caption: ...and 0.375 to 0.38
+- role: test
+  id: n-pi-1-digit
+  expr: [N, Pi, 1]
+  expected: 3
+  category: Possible issues
+  caption: A single requested digit, next to n-pi-30 above

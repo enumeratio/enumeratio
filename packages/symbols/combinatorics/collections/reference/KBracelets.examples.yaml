@@ -1,0 +1,10 @@
+- id: count-kbracelets-4-3-21-bracelets-of-length-4
+  expr: [Count, [KBracelets, 4, 3]]
+  expected: 21
+  category: Basic
+  caption: "$Count(KBracelets(4, 3)) = 21$: bracelets of length 4 over a 3-letter alphabet"
+- id: kbracelets-n-2-agrees-with-binarybracelets-n
+  expr: [Equal, [Count, [KBracelets, 5, 2]], [Count, [BinaryBracelets, 5]]]
+  expected: True
+  category: Properties
+  caption: $KBracelets(n, 2)$ agrees with [[BinaryBracelets]]$(n)$ — same Burnside sum over $D_n$

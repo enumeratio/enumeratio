@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(UntouchableNumbers) = +\infty$ (Erdős), and $At$ unranks the $k$-th by scanning forward, testing each candidate $n$ against a sieve of aliquot sums $\sigma(m) - m$ for $m$ up to $n^2$ -- large enough to catch $m = p^2$ for a prime $p$ as big as $n - 1$, which gives aliquot sum $1 + p = n$.'
   - OEIS A005114. $1$ is excluded by convention even though it's also never an aliquot sum for $m > 1$; the sequence starts at $2$.
   - 'Membership goes through [[Element]]: $Element(5, UntouchableNumbers)$ is true, $Element(4, UntouchableNumbers)$ is false ($\sigma(9) - 9 = 4$).'
-examples: []
 enumerate:
   expr: Take(UntouchableNumbers, 15)
 seeAlso:

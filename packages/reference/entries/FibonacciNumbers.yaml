@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(FibonacciNumbers) = +\infty$, and $At(FibonacciNumbers, k)$ unranks the term via a memoised linear recurrence -- $At(FibonacciNumbers, 1) = F_0 = 0$ (`At` is 1-indexed; rank 0 is $F_0$).'
   - "OEIS A000045, starting exactly at its offset-0 term: $0, 1, 1, 2, 3, 5, 8, …$."
   - "Membership goes through [[Element]]: $Element(21, FibonacciNumbers)$ is true, $Element(10, FibonacciNumbers)$ is false. $F_1 = F_2 = 1$ repeats, so the sequence is non-decreasing rather than strictly increasing."
-examples: []
 enumerate:
   expr: Take(FibonacciNumbers, 20)
 seeAlso:

@@ -256,7 +256,7 @@ row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4:
       in: \binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4
       out: \text{True}
   sympy:
-    in: enumeratio_equal((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), ((2)**4))
+    in: enumeratio_equal((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)), (S(2)**4))
     out: True
   sage:
     in: bool((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)) == ((2)^4))
@@ -833,7 +833,7 @@ the-probability-of-exactly-3-heads-in-10-fair:
   wolfram:
     in: Divide[Binomial[10, 3], Power[2, 10]]
   sympy:
-    in: (S(binomial(10, 3)) / ((2)**10))
+    in: (S(binomial(10, 3)) / (S(2)**10))
     out: 15/128
   sage:
     in: (binomial(10, 3) / ((2)^10))

@@ -1,0 +1,33 @@
+- id: all-list-2-4-6-function-1-mod-2-eq-0
+  expr: [All, [List, 2, 4, 6], [Function, [Equal, [Mod, _1, 2], 0]]]
+  expected: True
+- id: all-list-2-4-5-function-1-mod-2-eq-0
+  expr: [All, [List, 2, 4, 5], [Function, [Equal, [Mod, _1, 2], 0]]]
+  expected: False
+- id: a-named-predicate
+  expr: [All, [List, 2, 3, 5, 7], IsPrime]
+  expected: True
+  caption: A named predicate
+- id: all-list-1-2-3-function-1-gt-0
+  expr: [All, [List, 1, 2, 3], [Function, [Greater, _1, 0]]]
+  expected: True
+- id: one-definite-failure-decides-the-answer-even
+  expr: [All, [List, 1, x], IsEven]
+  expected: False
+  category: Scope
+  caption: One definite failure decides the answer, even beside a symbolic element
+- id: without-a-predicate-tests-the-elements
+  expr: [All, [List, True, True]]
+  expected: True
+  category: Scope
+  caption: Without a predicate, tests the elements themselves
+- id: a-level-argument-tests-the-elements-at-depth-2
+  expr: [All, [List, [List, 1, 2], [List, 3, 4]], [Function, [Greater, _1, 0]], 2]
+  expected: True
+  category: Scope
+  caption: A level argument tests the elements at depth 2 of a nested list
+- id: vacuously-true-on-an-empty-list
+  expr: [All, [List], IsEven]
+  expected: True
+  category: Properties
+  caption: Vacuously true on an empty list

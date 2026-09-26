@@ -1,0 +1,14 @@
+- id: perfectnumber-1
+  expr: [PerfectNumber, 1]
+  expected: 6
+- id: perfectnumber-3
+  expr: [PerfectNumber, 3]
+  expected: 496
+- id: perfectnumber-5
+  expr: [PerfectNumber, 5]
+  expected: 33550336
+- id: listable
+  expr: [PerfectNumber, [List, 1, 2, 3, 4]]
+  expected: [List, 6, 28, 496, 8128]
+  category: Scope
+  caption: Listable

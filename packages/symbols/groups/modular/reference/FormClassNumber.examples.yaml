@@ -1,0 +1,74 @@
+- id: four-classes-of-discriminant-60
+  expr: [FormClassNumber, 60]
+  expected: 4
+  caption: four classes of discriminant 60
+- id: the-action-preserves-the-discriminant
+  expr: [FormDiscriminant, [FormAction, [QuadraticForm, 1, 1, -1], [ModularMatrix, 1, 1, 0, 1]]]
+  expected: 5
+  caption: the action preserves the discriminant
+  category: Properties
+- id: 3-2-5-cdot-1-2-4
+  expr: [PellSolution, 5]
+  expected: [List, 3, 1]
+  caption: $3^2 - 5\cdot 1^2 = 4$
+  category: Properties
+- id: the-class-read-back-as-a-geodesic
+  expr: [ModularWord, [FormAutomorph, [QuadraticForm, 1, 1, -1]]]
+  expected: "'LR'"
+  caption: the class, read back as a geodesic
+  category: Applications
+- id: the-discriminant-of-a-form
+  expr: [FormDiscriminant, [QuadraticForm, 1, 1, -1]]
+  expected: 5
+  caption: the discriminant of a form
+  category: Scope
+- id: indefinite-when-d-5
+  expr: [IsIndefinite, [QuadraticForm, 1, 1, -1]]
+  expected: True
+  caption: indefinite when $D=5$
+  category: Scope
+- id: definite-when-d-4
+  expr: [IsIndefinite, [QuadraticForm, 1, 0, 1]]
+  expected: False
+  caption: definite when $D=-4$
+  category: Scope
+- id: already-reduced
+  expr: [IsReducedForm, [QuadraticForm, 1, 1, -1]]
+  expected: True
+  caption: already reduced
+  category: Scope
+- id: evaluate-a-form-at-a-point
+  expr: [EvaluateForm, [QuadraticForm, 1, 1, -1], 2, 3]
+  expected: 1
+  caption: $x^2+xy-y^2$ at $(2,3)$
+  category: Scope
+- id: one-class-of-discriminant-5
+  expr: [FormClassNumber, 5]
+  expected: 1
+  caption: one class of discriminant 5
+  category: Scope
+- id: two-classes-of-discriminant-12
+  expr: [FormClassNumber, 12]
+  expected: 2
+  caption: two classes of discriminant 12
+  category: Scope
+- id: 4-2-12-cdot-1-2-4
+  expr: [PellSolution, 12]
+  expected: [List, 4, 1]
+  caption: $4^2 - 12\cdot 1^2 = 4$
+  category: Properties
+- id: the-automorph-fixes-the-form
+  expr: [FormAction, [QuadraticForm, 1, 1, -1], [FormAutomorph, [QuadraticForm, 1, 1, -1]]]
+  expected: [QuadraticForm, 1, 1, -1]
+  caption: the automorph fixes the form
+  category: Properties
+- id: the-automorph-is-hyperbolic
+  expr: [ModularTrace, [FormAutomorph, [QuadraticForm, 1, 1, -1]]]
+  expected: 3
+  caption: the automorph is hyperbolic
+  category: Properties
+- id: confirmed-by-modularkind
+  expr: [ModularKind, [FormAutomorph, [QuadraticForm, 1, 1, -1]]]
+  expected: "'Hyperbolic'"
+  caption: confirmed by `ModularKind`
+  category: Properties

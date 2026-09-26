@@ -9,17 +9,3 @@ signatures:
 details:
   - Agrees with [[Binomial]] where n >= m >= 0; for a negative n it is the standard generalized binomial coefficient, which still satisfies Pascal's recurrence P(n, m) = P(n-1, m-1) + P(n-1, m).
   - A negative m is left unevaluated -- Wolfram's extension there is a documented gap, not yet cross-checked against a kernel.
-examples:
-  - id: standard-range
-    expr: [PascalBinomial, 5, 2]
-    expected: 10
-    caption: Agrees with Binomial(5, 2) in the standard range
-  - id: negative-n
-    expr: [PascalBinomial, -1, 3]
-    expected: -1
-    category: Scope
-    caption: C(-1, k) = (-1)^k, the standard identity for a negative upper index
-  - id: pascalbinomial-negative-n-case-2
-    expr: [PascalBinomial, -1, 4]
-    expected: 1
-    role: test

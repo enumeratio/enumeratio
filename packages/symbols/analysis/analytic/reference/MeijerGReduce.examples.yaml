@@ -1,0 +1,33 @@
+- id: exp
+  expr: [MeijerGReduce, [Power, ExponentialE, x], x]
+  expected: [MeijerG, [List, [List], [List]], [List, [List, 0], [List]], [Negate, x]]
+  caption: $e^{x} = G^{1,0}_{0,1}(-x \mid {}; 0)$
+- id: sin
+  expr: [MeijerGReduce, [Sin, x], x]
+  expected:
+    [
+      Multiply,
+      [
+        MeijerG,
+        [List, [List], [List]],
+        [List, [List, [Rational, 1, 2]], [List, 0]],
+        [Multiply, [Rational, 1, 4], [Power, x, 2]],
+      ],
+      [Sqrt, Pi],
+    ]
+  caption: $\sin(x) = \sqrt{\pi}\,G^{1,0}_{0,2}(x^2/4 \mid {}; 1/2, 0)$
+- id: log1p
+  expr: [MeijerGReduce, [Ln, [Add, 1, x]], x]
+  expected: [MeijerG, [List, [List, 1, 1], [List]], [List, [List, 1], [List, 0]], x]
+  caption: $\ln(1+x) = G^{1,2}_{2,2}(x \mid 1,1; 1,0)$
+- id: bessel-j
+  expr: [MeijerGReduce, [BesselJ, n, x], x]
+  expected:
+    [
+      MeijerG,
+      [List, [List], [List]],
+      [List, [List, [Multiply, [Rational, 1, 2], n]], [List, [Multiply, [Rational, -1, 2], n]]],
+      [Multiply, [Rational, 1, 4], [Power, x, 2]],
+    ]
+  category: Scope
+  caption: $J_n(x) = G^{1,0}_{0,2}(x^2/4 \mid {}; n/2, -n/2)$, symbolic order $n$

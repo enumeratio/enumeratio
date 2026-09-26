@@ -737,7 +737,7 @@ a-huge-10-100-argument-reduces-exactly-mod-2-pi:
   wolfram:
     in: N[Cos[Power[10, 100]]]
   sympy:
-    in: N(cos(((10)**100)), 30)
+    in: N(cos((S(10)**100)), 30)
     out: "-0.928081905074655343456194643777"
   mpmath:
     in: (cos(((10)**100)))

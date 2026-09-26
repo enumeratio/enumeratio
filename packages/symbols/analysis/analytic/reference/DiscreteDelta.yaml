@@ -6,19 +6,3 @@ signatures:
   - call: DiscreteDelta(x1, x2, …)
     description: 1 if every argument is exactly 0; 0 if any argument is a nonzero real; unevaluated if any argument is undecided and none is a nonzero real.
     library: "@enumeratio/analytic"
-examples:
-  - id: discretedelta-zero
-    expr: [DiscreteDelta, 0]
-    expected: 1
-  - id: discretedelta-nonzero
-    expr: [DiscreteDelta, 1]
-    expected: 0
-  - id: discretedelta-multi-all-zero
-    expr: [DiscreteDelta, 0, 0]
-    expected: 1
-    category: Scope
-    caption: Multi-argument -- 1 only when every argument is 0
-  - id: discretedelta-multi-one-nonzero
-    expr: [DiscreteDelta, 1, 0]
-    expected: 0
-    category: Scope

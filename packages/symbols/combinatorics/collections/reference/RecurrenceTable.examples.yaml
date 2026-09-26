@@ -1,0 +1,21 @@
+- id: a-geometric-sequence
+  expr:
+    [RecurrenceTable, [List, [Equal, [a, [Add, n, 1]], [Multiply, 3, [a, n]]], [Equal, [a, 1], 7]], a, [List, n, 1, 5]]
+  expected: [List, 7, 21, 63, 189, 567]
+  caption: a geometric sequence
+- id: the-fibonacci-recurrence
+  expr:
+    [
+      RecurrenceTable,
+      [
+        List,
+        [Equal, [a, n], [Add, [a, [Subtract, n, 1]], [a, [Subtract, n, 2]]]],
+        [Equal, [a, 1], 1],
+        [Equal, [a, 2], 1],
+      ],
+      a,
+      [List, n, 1, 10],
+    ]
+  expected: [List, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+  category: Scope
+  caption: the Fibonacci recurrence

@@ -354,7 +354,7 @@ ln-exponentiale-pow-3:
   wolfram:
     in: Log[Power[E, 3]]
   sympy:
-    in: log(((E)**3))
+    in: log((S(E)**3))
     out: "3"
   mpmath:
     in: log(((e)**3))

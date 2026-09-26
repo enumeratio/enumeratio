@@ -1,0 +1,22 @@
+name: DifferenceRootReduce
+domain: Special functions
+signature: DifferenceRootReduce(f(n), n)
+summary: Reduces a hypergeometric-type sequence $f(n)$ to its holonomic (P-recursive) representation — $\mathrm{DifferenceRoot}$, a linear recurrence with polynomial(n) coefficients plus enough initial values to pin the sequence down, applied straight back to $n$. Covers Factorial, $a^n$, CatalanNumber, Binomial(n, k) for concrete k, polynomials in n, Fibonacci, LucasL, HarmonicNumber, and a sum of two hypergeometric terms; declines everything else, leaving the call symbolic. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: DifferenceRootReduce(f(n), n)
+    description: the P-recursive reduction of $f(n)$, as $\mathrm{DifferenceRoot}(\ldots)(n)$.
+    library: "@enumeratio/analytic"
+details:
+  - "Order 1 (a single recurrence step, one or two initial conditions): Factorial(n), $a^n$, CatalanNumber(n), polynomials in n, and Binomial(n, k) for k a concrete non-negative integer — plus products and quotients of these. Binomial's recurrence has a genuine pole at $n = k - 1$ (its own ratio $C(n{+}1,k)/C(n,k)$ divides by $n{+}1{-}k$), so it carries two anchors, at $n=-1$ and $n=k$, straddling it — confirmed against a local wolframscript, which makes the identical choice."
+  - "Order 2, constant coefficients: Fibonacci(n) and LucasL(n), $y(n{+}2) = y(n{+}1) + y(n)$ with $(y(0),y(1)) = (0,1)$ or $(2,1)$."
+  - HarmonicNumber(n) reduces to order 1 with a constant *inhomogeneous* term, $(n{+}1)(y(n{+}1) - y(n)) = 1$ — Wolfram's own reduction, not the order-2 homogeneous form the standard difference identity for $H_n$ would otherwise suggest; probed rather than guessed.
+  - "Sum of two hypergeometric terms (order 1 each) reduces to order ≤ 2 via the classical cross-product elimination (Petkovšek's sum rule): $2^n + 3^n$ below."
+  - Every reduction is checked by running its own recurrence forward (exact rational arithmetic, [[DifferenceRoot]]) against the original expression at ~20 integer points before being trusted; see difference-root.ts.
+  - Declines (returns the call unevaluated) a polynomial or product/quotient the internal ratio decomposition doesn't recognize, a symbolic or negative Binomial order, three or more summands, and anything outside the heads listed above.
+seeAlso:
+  - DifferenceRoot
+  - DifferentialRootReduce
+  - Fibonacci
+  - LucasL
+  - HarmonicNumber
+  - Binomial

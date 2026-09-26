@@ -1,0 +1,17 @@
+- id: a-cubic-is-increasing-everywhere
+  expr: [FunctionMonotonicity, [Power, x, 3], x]
+  expected: 1
+  caption: A cubic is increasing everywhere -- its derivative $3x^2$ never goes negative
+- id: a-parabola-is-not-globally-monotonic
+  expr: [FunctionMonotonicity, [Power, x, 2], x]
+  expected: Indeterminate
+  caption: A parabola turns around at its vertex
+- id: exp-of-an-affine-argument-is-always-monotonic
+  expr: [FunctionMonotonicity, [Exp, x], x]
+  expected: 1
+  caption: Exp of an affine argument is always monotonic
+- id: a-restricted-domain-answers-indeterminate
+  expr: [FunctionMonotonicity, [Sqrt, x], x]
+  expected: Indeterminate
+  category: Properties
+  caption: Sqrt's domain isn't all of R, so Wolfram's own convention is Indeterminate here -- confirmed against wolframscript

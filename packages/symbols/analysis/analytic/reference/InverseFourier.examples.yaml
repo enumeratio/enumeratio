@@ -1,0 +1,23 @@
+- id: inverse-dft-of-1-2-3-4
+  expr: [InverseFourier, [List, 1, 2, 3, 4]]
+  expected: [List, 5, [Complex, -1, 1], -1, [Complex, -1, -1]]
+  caption: The inverse DFT of $\{1, 2, 3, 4\}$ — the conjugate kernel of [[Fourier]]
+- id: round-trips-through-fourier
+  expr: [Fourier, [InverseFourier, [List, 1, 2, 3, 4]]]
+  expected: [List, 1, 2, 3, 4]
+  caption: Round-trips exactly through [[Fourier]]
+- id: a-2x2-matrix
+  expr: [InverseFourier, [List, [List, 5, -1], [List, -2, 0]]]
+  expected: [List, [List, 1, 2], [List, 3, 4]]
+  category: Scope
+  caption: The inverse of [[Fourier]]'s $2\times2$ matrix example
+- id: a-custom-fourierparameters
+  expr: [InverseFourier, [List, 1, 2, 3, 4], [KeyValuePair, FourierParameters, [List, 1, -1]]]
+  expected: [List, 2.5, [Complex, -0.5, -0.5], -0.5, [Complex, -0.5, 0.5]]
+  category: Scope
+  caption: A custom `FourierParameters -> {1, -1}`, equivalent to `Fourier(list, FourierParameters -> {-1, 1})`
+- id: declines-a-symbolic-list
+  expr: [InverseFourier, [List, a, b]]
+  expected: [InverseFourier, [List, a, b]]
+  category: Possible issues
+  caption: Declines a symbolic list, exactly like [[Fourier]]

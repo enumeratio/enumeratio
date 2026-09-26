@@ -1,0 +1,13 @@
+- id: negativebinomial-pdf-exact
+  expr: [PDF, [NegativeBinomialDistribution, 5, [Rational, 1, 3]], 2]
+  expected: [Rational, 20, 729]
+- id: negativebinomial-cdf-exact
+  expr: [CDF, [NegativeBinomialDistribution, 5, [Rational, 1, 3]], 2]
+  expected: [BetaRegularized, [Rational, 1, 3], 5, 3]
+  caption: Cross-checked against wolframscript's N[CDF[NegativeBinomialDistribution[5, 1/3], 2]]
+- id: negativebinomial-mean-exact
+  expr: [Mean, [NegativeBinomialDistribution, 5, [Rational, 1, 3]]]
+  expected: 10
+- id: negativebinomial-variance-exact
+  expr: [Variance, [NegativeBinomialDistribution, 5, [Rational, 1, 3]]]
+  expected: 30

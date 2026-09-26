@@ -24,7 +24,7 @@ test("the rules actually reject", () => {
           signature: "",
           summary: "",
           examples: [],
-          implementations: [{ origin: "native", form: "typescript", source: "packages/nope/does-not-exist.ts" }],
+          bindings: [{ origin: "native", form: "typescript", source: "packages/nope/does-not-exist.ts" }],
         },
         {
           name: "B",
@@ -32,7 +32,7 @@ test("the rules actually reject", () => {
           signature: "",
           summary: "",
           examples: [],
-          implementations: [{ origin: "component", form: "<x-y>", environment: "engine" }],
+          bindings: [{ origin: "component", form: "<x-y>", environment: "engine" }],
         },
         {
           name: "C",
@@ -40,7 +40,7 @@ test("the rules actually reject", () => {
           signature: "",
           summary: "",
           examples: [],
-          implementations: [{ origin: "reference", form: "notatio" }],
+          bindings: [{ origin: "reference", form: "notatio" }],
         },
       ],
       exists,

@@ -5,38 +5,5 @@ summary: Inverse hyperbolic cosecant, the inverse of Csch.
 signatures:
   - call: Arcsch(x)
     description: the value $y$ with $\operatorname{csch}(y) = x$.
-examples:
-  - id: n-arcsch-2
-    expr: [N, [Arcsch, 2]]
-    expected: { num: "0.481211825059603447495" }
-  - id: a-pole-at-0
-    expr: [Arcsch, 0]
-    expected: ComplexInfinity
-    category: Scope
-    caption: A pole at 0
-  - id: arcsch-positiveinfinity
-    expr: [Arcsch, PositiveInfinity]
-    expected: 0
-    category: Scope
-  - id: a-float-argument-evaluates-directly
-    expr: [Arcsch, 1.5]
-    expected: { num: "0.625145117250416687636" }
-    category: Scope
-    caption: A float argument evaluates directly
-  - id: as-a-logarithm-arcsch-1-ln-1-sqrt-2
-    expr: [TrigToExp, [Arcsch, 1]]
-    expected: [Ln, [Add, 1, [Sqrt, 2]]]
-    category: Scope
-    caption: As a logarithm, $\operatorname{arcsch} 1 = \ln(1 + \sqrt2)$
-  - id: oddness-pulls-the-sign-out-of-a-symbolic
-    expr: [Arcsch, [Negate, x]]
-    expected: [Negate, [Arcsch, x]]
-    category: Scope
-    caption: 'Oddness pulls the sign out of a symbolic argument: $\operatorname{arcsch}(-x) = -\operatorname{arcsch} x$'
-  - id: derivative-for-real-x-ne-0
-    expr: [D, [Arcsch, x], x]
-    expected: [Divide, -1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], 1]]]]
-    category: Scope
-    caption: Derivative, for real $x \ne 0$
 seeAlso:
   - Arsinh

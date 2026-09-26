@@ -1,0 +1,27 @@
+- id: 8-2-3
+  expr: [IsPrimePower, 8]
+  expected: True
+  caption: $8=2^3$
+- id: 12-2-2-cdot-3-has-two-distinct-primes
+  expr: [IsPrimePower, 12]
+  expected: False
+  caption: $12=2^2\cdot3$ has two distinct primes
+- id: a-prime-is-its-own-first-power
+  expr: [IsPrimePower, 7]
+  expected: True
+  caption: A prime is its own first power
+- id: 1-is-p-0-which-does-not-count
+  expr: [IsPrimePower, 1]
+  expected: False
+  category: Possible issues
+  caption: 1 is $p^0$, which does not count
+- id: listable
+  expr: [IsPrimePower, [List, 2, 4, 6, 9, 10, 16]]
+  expected: [List, True, True, False, True, False, True]
+  category: Scope
+  caption: Listable
+- id: large-integers
+  expr: [IsPrimePower, [Power, 3, 40]]
+  expected: True
+  category: Scope
+  caption: Large integers

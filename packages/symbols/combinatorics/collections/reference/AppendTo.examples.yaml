@@ -1,0 +1,4 @@
+- id: append-to-a-bound-list
+  expr: [List, [Assign, appendToDemoList, [List, 1, 2, 3]], [AppendTo, appendToDemoList, 4]]
+  expected: [List, [List, 1, 2, 3], [List, 1, 2, 3, 4]]
+  caption: bind a list, then append to it

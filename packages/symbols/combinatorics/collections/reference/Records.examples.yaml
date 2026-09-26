@@ -1,0 +1,17 @@
+- id: 3-alone-nothing-after-tops-it
+  expr: [Records, [List, 3, 1, 2]]
+  expected: 1
+  caption: $3$ alone; nothing after tops it
+- id: the-identity-sets-a-new-record-everywhere
+  expr: [Records, [List, 1, 2, 3]]
+  expected: 3
+  caption: the identity sets a new record everywhere
+- id: 2-then-3
+  expr: [Records, [List, 2, 3, 1]]
+  expected: 2
+  caption: $2$, then $3$
+- id: the-reversal-attains-the-minimum-1
+  expr: [Records, [List, 4, 3, 2, 1]]
+  expected: 1
+  category: Properties
+  caption: the reversal attains the minimum, $1$

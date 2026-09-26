@@ -8,18 +8,6 @@ signatures:
     library: enumeratio-collections
 details:
   - radius <= diameter <= 2 * radius always holds for a connected graph.
-examples:
-  - id: path-5-has-radius-2
-    expr:
-      [
-        GraphRadius,
-        [
-          Graph,
-          [List, 1, 2, 3, 4, 5],
-          [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4], [UndirectedEdge, 4, 5]],
-        ],
-      ]
-    expected: 2
 seeAlso:
   - GraphDiameter
   - GraphCenter

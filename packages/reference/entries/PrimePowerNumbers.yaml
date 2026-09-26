@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(PrimePowerNumbers) = +\infty$ ([[Primes]] alone already is). OEIS A246655.'
   - $At(PrimePowerNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(PrimePowerNumbers, 3) = 4$ ($2^2$).
   - 'Membership goes through [[Element]]: $Element(9, PrimePowerNumbers)$ is true ($3^2$), $Element(12, PrimePowerNumbers)$ is false ($2^2 \times 3$, two distinct primes).'
-examples: []
 enumerate:
   expr: Take(PrimePowerNumbers, 20)
 seeAlso:

@@ -1,0 +1,33 @@
+- id: conditioned-probability-point-given-bound
+  expr: [Probability, [Conditioned, [Equal, x, 2], [LessEqual, x, 5]], [Distributed, x, [PoissonDistribution, 3]]]
+  expected: [Rational, 45, 184]
+  caption: $P(X{=}2 \mid X \le 5) = PDF(2)/CDF(5) = 45/184 \approx 0.2445652174$ for $X \sim \mathrm{Poisson}(3)$ — exact, the $e^{-3}$ factor cancels. Cross-checked against wolframscript's `N[Probability[x == 2 \[Conditioned] x <= 5, x \[Distributed] PoissonDistribution[3]], 10]`.
+- id: conditioned-probability-interval-given-bound
+  expr: [Probability, [Conditioned, [LessEqual, x, 3], [LessEqual, 1, x]], [Distributed, x, [PoissonDistribution, 3]]]
+  expected: [Divide, 12, [Multiply, [Add, 1, [Negate, [Power, ExponentialE, -3]]], [Power, ExponentialE, 3]]]
+  category: Scope
+  caption: $P(X \le 3 \mid X \ge 1) \approx 0.6287483579$ for $X \sim \mathrm{Poisson}(3)$ — both `pred` and `cond` are single `LessEqual` relations, the shape `Probability`'s own `And` case composes. Cross-checked against wolframscript's `N[Probability[x <= 3 \[Conditioned] x >= 1, x \[Distributed] PoissonDistribution[3]], 10]`.
+- id: conditioned-probability-continuous-interval
+  expr:
+    [Probability, [Conditioned, [LessEqual, x, 0], [LessEqual, -1, x]], [Distributed, x, [NormalDistribution, 0, 1]]]
+  expected:
+    [
+      Divide,
+      [Negate, [Erf, [Negate, [Divide, [Sqrt, 2], 2]]]],
+      [Add, 1, [Negate, [Erf, [Negate, [Divide, [Sqrt, 2], 2]]]]],
+    ]
+  category: Scope
+  caption: $P(X \le 0 \mid X \ge -1) = (\Phi(0)-\Phi(-1))/(1-\Phi(-1)) \approx 0.4057132913$ for standard normal $X$ — the closed-form-CDF case, not just discrete PDFs. Cross-checked against wolframscript's `N[Probability[x <= 0 \[Conditioned] x >= -1, x \[Distributed] NormalDistribution[0,1]], 10]`.
+- id: conditioned-expectation-mean-given-bound
+  expr: [Expectation, [Conditioned, x, [LessEqual, x, 3]], [Distributed, x, [PoissonDistribution, 3]]]
+  expected: 1.961538461538462
+  caption: $E[X \mid X \le 3] = 51/26 \approx 1.961538462$ for $X \sim \mathrm{Poisson}(3)$ — an exact finite sum over $\{0,1,2,3\}$. Cross-checked against wolframscript's `N[Expectation[x \[Conditioned] x <= 3, x \[Distributed] PoissonDistribution[3]], 10]`.
+- id: conditioned-expectation-point
+  expr: [Expectation, [Conditioned, [Power, x, 2], [Equal, x, 3]], [Distributed, x, [PoissonDistribution, 3]]]
+  expected: 9
+  caption: Conditioning on an exact point collapses $f$ to its value there, for any distribution.
+- id: conditioned-expectation-continuous-unevaluated
+  expr: [Expectation, [Conditioned, x, [LessEqual, x, 3]], [Distributed, x, [NormalDistribution, 0, 1]]]
+  expected: [Expectation, [Conditioned, x, [LessEqual, x, 3]], [Distributed, x, [NormalDistribution, 0, 1]]]
+  category: Possible issues
+  caption: A continuous distribution with an interval condition is out of scope here (see the truncated-mean note above) and stays unevaluated, even though `Probability`'s analogous case (previous example) works.

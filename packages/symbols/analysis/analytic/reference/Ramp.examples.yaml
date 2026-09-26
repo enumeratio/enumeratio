@@ -1,0 +1,19 @@
+- id: ramp-negative
+  expr: [Ramp, -2]
+  expected: 0
+- id: ramp-positive
+  expr: [Ramp, 3]
+  expected: 3
+- id: ramp-zero
+  expr: [Ramp, 0]
+  expected: 0
+- id: ramp-equals-x-times-unitstep
+  expr: [Equal, [Ramp, 5], [Multiply, 5, [UnitStep, 5]]]
+  expected: True
+  category: Properties
+  caption: Ramp(x) = x * [[UnitStep]](x)
+- id: ramp-derivative
+  expr: [D, [Ramp, x], x]
+  expected: [Piecewise, [List, [List, 0, [Less, x, 0]], [List, 1, [Less, 0, x]]], Indeterminate]
+  category: Properties
+  caption: 0 or 1 away from the kink, undefined at x = 0

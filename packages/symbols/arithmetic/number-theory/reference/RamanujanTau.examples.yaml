@@ -1,0 +1,20 @@
+- id: ramanujantau-2
+  expr: [RamanujanTau, 2]
+  expected: -24
+- id: ramanujantau-5
+  expr: [RamanujanTau, 5]
+  expected: 4830
+- id: listable
+  expr: [RamanujanTau, [List, 1, 2, 3, 4, 5, 6]]
+  expected: [List, 1, -24, 252, -1472, 4830, -6048]
+  category: Scope
+  caption: Listable
+- id: ramanujantau-12
+  expr: [RamanujanTau, 12]
+  expected: -370944
+  category: Scope
+- id: multiplicative-tau-6-tau-2-tau-3
+  expr: [Multiply, [RamanujanTau, 2], [RamanujanTau, 3]]
+  expected: -6048
+  category: Properties
+  caption: 'Multiplicative: $\tau(6) = \tau(2)\tau(3)$'

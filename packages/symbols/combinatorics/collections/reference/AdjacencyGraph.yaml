@@ -9,13 +9,6 @@ signatures:
   - call: AdjacencyGraph(vertices, matrix)
     description: the same, with vertices labelled by the given list instead of 1..n.
     library: enumeratio-collections
-examples:
-  - id: symmetric-matrix-is-undirected
-    expr: [EdgeList, [AdjacencyGraph, [List, [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 0]]]]
-    expected: [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3]]
-  - id: asymmetric-matrix-is-directed
-    expr: [EdgeList, [AdjacencyGraph, [List, [List, 0, 1], [List, 0, 0]]]]
-    expected: [List, [DirectedEdge, 1, 2]]
 seeAlso:
   - AdjacencyMatrix
   - Graph

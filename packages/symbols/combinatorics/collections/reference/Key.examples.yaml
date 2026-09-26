@@ -1,0 +1,7 @@
+- id: looks-up-an-existing-key
+  expr: [At, [Association, [Rule, a, 1], [Rule, b, 2]], [Key, b]]
+  expected: 2
+- id: missing-key-answers-missing
+  expr: [At, [Association, [Rule, a, 1]], [Key, z]]
+  expected: Missing
+  category: Scope

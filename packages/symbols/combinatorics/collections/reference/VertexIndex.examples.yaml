@@ -1,0 +1,3 @@
+- id: matches-vertexlist-position
+  expr: [VertexIndex, [Graph, [List, 5, 1, 2], [List, [UndirectedEdge, 1, 2]]], 1]
+  expected: 2

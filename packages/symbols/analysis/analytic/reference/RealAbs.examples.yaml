@@ -1,0 +1,22 @@
+- id: the-absolute-value-of-a-real-number
+  expr: [RealAbs, -2.5]
+  expected: 2.5
+  caption: The absolute value of a real number
+- id: realabs-neg-7-over-2
+  expr: [RealAbs, [Rational, -7, 2]]
+  expected: [Rational, 7, 2]
+- id: threads-element-wise-over-a-list
+  expr: [RealAbs, [List, -1, 2, -3]]
+  expected: [List, 1, 2, 3]
+  category: Scope
+  caption: Threads element-wise over a list
+- id: exact-numeric-arguments
+  expr: [RealAbs, [Negate, Pi]]
+  expected: Pi
+  category: Scope
+  caption: Exact numeric arguments
+- id: agrees-with-abs-on-the-reals
+  expr: [Equal, [RealAbs, -5], [Abs, -5]]
+  expected: True
+  category: Properties
+  caption: Agrees with [[Abs]] on the reals

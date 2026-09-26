@@ -1,0 +1,174 @@
+- id: exp-0
+  expr: [Exp, 0]
+  expected: 1
+- id: stays-the-exact-constant-rather-than
+  expr: [Exp, 1]
+  expected: ExponentialE
+  caption: Stays the exact constant rather than decimalizing
+- id: compute-engine-represents-exp-x-as-e-x-once-the
+  expr: [Exp, x]
+  expected: [Power, ExponentialE, x]
+  caption: compute-engine represents Exp(x) as $e^x$ once the argument is symbolic
+- id: inverse-of-ln-e-ln-x-x
+  expr: [Equal, [Exp, [Ln, 5]], 5]
+  expected: True
+  category: Properties
+  caption: 'Inverse of [[Ln]]: $e^{\ln x} = x$'
+- id: e-a-e-b-e-a-b
+  expr: [Equal, [Multiply, [Exp, 2], [Exp, 3]], [Exp, 5]]
+  expected: True
+  category: Properties
+  caption: $e^a \, e^b = e^{a+b}$
+- id: threads-element-wise-over-a-list
+  expr: [Exp, [List, 0, 1]]
+  expected: [List, 1, ExponentialE]
+  category: Applications
+  caption: Threads element-wise over a list
+- id: broadcasts-element-wise-giving-begin-pmatrix-1-e
+  expr: [Exp, [List, [List, 0, 1], [List, 1, 0]]]
+  expected: [List, [List, 1, ExponentialE], [List, ExponentialE, 1]]
+  category: Scope
+  caption: Broadcasts element-wise, giving $\begin{pmatrix}1 & e\\ e & 1\end{pmatrix}$ -- NOT the matrix exponential $\begin{pmatrix}\cosh 1 & \sinh 1\\ \sinh 1 & \cosh 1\end{pmatrix}$, which is [[MatrixExp]]
+- id: a-machine-precision-argument-evaluates
+  expr: [Exp, 3.4]
+  expected: { num: "29.9641000473970133482" }
+  caption: A machine-precision argument evaluates numerically
+- id: arbitrary-precision-via-n
+  expr: [N, [Exp, [Rational, 8, 5]]]
+  expected: { num: "4.95303242439511480365" }
+  category: Scope
+  caption: Arbitrary precision via N(...)
+- id: evaluates-at-a-complex-argument
+  expr: [Exp, [Complex, 2.5, 1]]
+  expected: [Complex, { num: "6.5822295781927729844" }, 10.251215190529404]
+  category: Scope
+  caption: Evaluates at a complex argument
+- id: euler-s-identity-e-i-pi-1
+  expr: [Exp, [Multiply, ImaginaryUnit, Pi]]
+  expected: -1
+  category: Scope
+  caption: Euler's identity $e^{i\pi} = -1$
+- id: exp-imaginaryunit-times-pi-over-2
+  expr: [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]
+  expected: [Complex, 0, 1]
+  category: Scope
+- id: a-special-imaginary-argument-folds-through-e-i
+  expr: [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 5]]]
+  expected:
+    [
+      Add,
+      [Rational, 1, 4],
+      [Divide, [Sqrt, 5], 4],
+      [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]],
+    ]
+  category: Scope
+  caption: A special imaginary argument folds through $e^{i\theta} = \cos\theta + i\sin\theta$
+- id: exp-ln-2
+  expr: [Exp, [Ln, 2]]
+  expected: 2
+  category: Scope
+- role: test
+  id: exp-ln-neg-1
+  expr: [Exp, [Ln, -1]]
+  expected: -1
+  category: Scope
+  caption: $e^{\ln(-1)} = e^{i\pi} = -1$ folds all the way through, unlike Exp(Ln(-2)) below
+- id: inverse-of-ln-symbolically
+  expr: [Exp, [Ln, x]]
+  expected: x
+  category: Scope
+  caption: Inverse of [[Ln]] symbolically
+- id: exp-ln-of-a-complex-argument-is-that-argument
+  expr: [Exp, [Ln, [Complex, 1, 2]]]
+  expected: [Complex, 1, 2]
+  category: Scope
+  caption: $e^{\ln(1+2i)} = 1+2i$ -- compute-engine's native $e^{\ln z} = z$ fold holds for complex z too
+- id: exp-ln-of-a-negative-real-is-left-unevaluated
+  expr: [Exp, [Ln, -2]]
+  expected: [Power, ExponentialE, [Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 2]]]
+  category: Possible issues
+  caption: $e^{\ln(-2)}$ is left as $e^{i\pi + \ln 2}$ rather than folding to $-2$
+- id: exp-negativeinfinity
+  expr: [Exp, NegativeInfinity]
+  expected: 0
+  category: Scope
+- id: exp-positiveinfinity
+  expr: [Exp, PositiveInfinity]
+  expected: PositiveInfinity
+  category: Scope
+- id: element-wise-over-a-matrix-not-the-matrix
+  expr: [Exp, [List, [List, 1, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]], [List, 0, 1]]]
+  expected: [List, [List, ExponentialE, [Complex, 0, 1]], [List, 1, ExponentialE]]
+  category: Scope
+  caption: Element-wise over a matrix (not the matrix exponential -- see above)
+- id: interval-arithmetic-exp-1-ln-2-e-1-2
+  expr: [Exp, [Interval, -1, [Ln, 2]]]
+  expected: [Interval, [Divide, 1, ExponentialE], 2]
+  category: Scope
+  caption: 'Interval arithmetic: $\exp[-1, \ln 2] = [e^{-1}, 2]$'
+- id: uncertainty-propagation-e-2-pm-0-01-approx-7-389
+  expr: [Exp, [Around, 2, 0.01]]
+  expected: [Around, 7.38905609893065, 0.0738905609893065]
+  category: Scope
+  caption: 'Uncertainty propagation: $e^{2 \pm 0.01} \approx 7.389 \pm 0.074$'
+- role: test
+  id: around-0-still-fires-the-e-base-power-rule
+  expr: [N, [Exp, [Around, 0, 0.1]]]
+  expected: [Around, 1, 0.1]
+  category: Scope
+  caption: N() decimalizes [[ExponentialE]] before the Power resolver's $e$-base check runs, but the rule still fires
+- id: its-own-derivative
+  expr: [D, [Exp, x], x]
+  expected: [Power, ExponentialE, x]
+  category: Scope
+  caption: Its own derivative
+- id: its-own-antiderivative
+  expr: [Integrate, [Exp, x], x]
+  expected: [Power, ExponentialE, x]
+  category: Scope
+  caption: Its own antiderivative
+- id: taylor-series-about-0
+  expr: [Series, [Exp, x], x, 0, 4]
+  expected:
+    [
+      Add,
+      [Multiply, [Rational, 1, 24], [Power, x, 4]],
+      [Multiply, [Rational, 1, 6], [Power, x, 3]],
+      [Multiply, [Rational, 1, 2], [Power, x, 2]],
+      x,
+      [BigO, [Power, x, 5]],
+      1,
+    ]
+  category: Scope
+  caption: Taylor series about 0
+- id: e-as-the-limit-lim-x-to-infty-1-1-x-x
+  expr: [Limit, [Function, [Power, [Add, 1, [Divide, 1, x]], x], x], PositiveInfinity]
+  expected: ExponentialE
+  category: Properties
+  caption: $e$ as the limit $\lim_{x\to\infty}(1 + 1/x)^x$
+- id: lim-x-to-0-frac-e-x-1-x-1
+  expr: [Limit, [Function, [Divide, [Subtract, [Exp, x], 1], x], x], 0]
+  expected: 1
+  category: Properties
+  caption: $\lim_{x\to0}\frac{e^x - 1}{x} = 1$
+- id: a-product-of-exponentials-should-combine-e-x-e-y
+  expr: [Multiply, [Exp, x], [Exp, y]]
+  expected: [Power, ExponentialE, [Add, x, y]]
+  category: Properties
+  caption: "A product of exponentials combines: $e^x e^y = e^{x+y}$"
+- id: euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig
+  expr: [ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]
+  expected: [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]
+  category: Properties
+  caption: Euler's formula $e^{ix} = \cos x + i\sin x$ via [[ExpToTrig]]
+- id: to-50-significant-digits-every-one-correctly
+  expr: [N, [Exp, 1], 50]
+  expected: { num: "2.7182818284590452353602874713526624977572470937000" }
+  category: Scope
+  caption: To 50 significant digits, every one correctly rounded
+- role: test
+  id: to-1-significant-digit
+  expr: [N, [Exp, 1], 1]
+  expected: 3
+  category: Scope
+  caption: A single requested digit, next to the 50-digit example above

@@ -2,27 +2,33 @@
 // anything (see packages/reference/tests/implementations.test.ts for the same principle).
 
 import { expect, test } from "vite-plus/test";
-import { HEAD_IMPLEMENTATIONS_SCHEMA, REFERENCE_ENTRY_SCHEMA, validateSchema } from "../src/schema.ts";
+import {
+  HEAD_IMPLEMENTATIONS_SCHEMA,
+  REFERENCE_ENTRY_SCHEMA,
+  REFERENCE_EXAMPLES_SCHEMA,
+  validateSchema,
+} from "../src/schema.ts";
 
 const MINIMAL_ENTRY = {
   name: "Mod",
   domain: "Numbers",
   signature: "Mod(a, b)",
   summary: "Remainder of a divided by b.",
-  examples: [{ id: "zero-modulus", expr: ["Mod", 5, 0], expected: "NaN" }],
 };
+const EXAMPLE = { id: "zero-modulus", expr: ["Mod", 5, 0], expected: "NaN" };
 
 test("a well-formed entry passes", () => {
   expect(validateSchema(REFERENCE_ENTRY_SCHEMA, MINIMAL_ENTRY)).toEqual([]);
 });
 
-test("a well-formed entry with id and role passes", () => {
-  expect(
-    validateSchema(REFERENCE_ENTRY_SCHEMA, {
-      ...MINIMAL_ENTRY,
-      examples: [{ ...MINIMAL_ENTRY.examples[0], id: "zero-modulus", role: "test" }],
-    }),
-  ).toEqual([]);
+test("examples don't belong in the entry file", () => {
+  expect(validateSchema(REFERENCE_ENTRY_SCHEMA, { ...MINIMAL_ENTRY, examples: [EXAMPLE] })).toEqual([
+    '$: unexpected property "examples"',
+  ]);
+});
+
+test("well-formed examples pass, with and without a role", () => {
+  expect(validateSchema(REFERENCE_EXAMPLES_SCHEMA, [EXAMPLE, { ...EXAMPLE, id: "again", role: "test" }])).toEqual([]);
 });
 
 test("rejects a missing required field", () => {
@@ -37,21 +43,15 @@ test("rejects an unknown property (typo guard)", () => {
 });
 
 test("rejects a malformed id", () => {
-  expect(
-    validateSchema(REFERENCE_ENTRY_SCHEMA, {
-      ...MINIMAL_ENTRY,
-      examples: [{ ...MINIMAL_ENTRY.examples[0], id: "Not_Valid" }],
-    }),
-  ).toEqual(["$.examples[0].id: does not match /^[a-z0-9]+(-[a-z0-9]+)*$/"]);
+  expect(validateSchema(REFERENCE_EXAMPLES_SCHEMA, [{ ...EXAMPLE, id: "Not_Valid" }])).toEqual([
+    "$[0].id: does not match /^[a-z0-9]+(-[a-z0-9]+)*$/",
+  ]);
 });
 
 test("rejects an invalid role", () => {
-  expect(
-    validateSchema(REFERENCE_ENTRY_SCHEMA, {
-      ...MINIMAL_ENTRY,
-      examples: [{ ...MINIMAL_ENTRY.examples[0], role: "hidden" }],
-    }),
-  ).toEqual(['$.examples[0].role: expected one of ["demo","test"], got "hidden"']);
+  expect(validateSchema(REFERENCE_EXAMPLES_SCHEMA, [{ ...EXAMPLE, role: "hidden" }])).toEqual([
+    '$[0].role: expected one of ["demo","test"], got "hidden"',
+  ]);
 });
 
 const MINIMAL_IMPLEMENTATIONS = {

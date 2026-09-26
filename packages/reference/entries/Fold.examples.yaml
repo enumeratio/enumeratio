@@ -1,0 +1,58 @@
+- id: fold-add-0-list-1-2-3-4
+  expr: [Fold, Add, 0, [List, 1, 2, 3, 4]]
+  expected: 10
+- id: fold-multiply-1-list-1-2-3-4
+  expr: [Fold, Multiply, 1, [List, 1, 2, 3, 4]]
+  expected: 24
+- id: the-shape-of-a-left-fold
+  expr: [Fold, f, x, [List, a, b, c]]
+  expected: [f, [f, [f, x, a], b], c]
+  caption: The shape of a left fold
+- id: fold-max-0-list-3-1-4-1-5
+  expr: [Fold, Max, 0, [List, 3, 1, 4, 1, 5]]
+  expected: 5
+- id: symbolic-elements
+  expr: [Fold, Add, 0, [List, a, b, c]]
+  expected: [Add, a, b, c]
+  category: Scope
+  caption: Symbolic elements
+- id: any-two-argument-function-here-one-that-nests
+  expr: [Fold, [Function, [List, _1, _2]], x, [List, a, b]]
+  expected: [List, [List, x, a], b]
+  category: Scope
+  caption: Any two-argument function, here one that nests pairs
+- id: without-a-seed-folding-starts-from-the-first
+  expr: [Fold, f, [List, a, b, c]]
+  expected: [f, [f, a, b], c]
+  category: Scope
+  caption: Without a seed, folding starts from the first element
+- id: folding-an-empty-list-returns-the-seed
+  expr: [Fold, f, x, [List]]
+  expected: x
+  category: Properties
+  caption: Folding an empty list returns the seed
+- id: folding-with-add-is-a-sum-1-2-100
+  expr: [Fold, Add, 0, [Range, 100]]
+  expected: 5050
+  category: Properties
+  caption: 'Folding with Add is a sum: $1 + 2 + \cdots + 100$'
+- id: assemble-a-number-from-its-decimal-digits
+  expr: [Fold, [Function, [Add, [Multiply, 10, _1], _2]], 0, [List, 1, 2, 3, 4]]
+  expected: 1234
+  category: Applications
+  caption: Assemble a number from its decimal digits
+- id: or-from-its-binary-digits-1011-2-11
+  expr: [Fold, [Function, [Add, [Multiply, 2, _1], _2]], 0, [List, 1, 0, 1, 1]]
+  expected: 11
+  category: Applications
+  caption: "...or from its binary digits: $1011_2 = 11$"
+- id: horner-s-rule-for-ax-2-bx-c
+  expr: [Fold, [Function, [Add, [Multiply, x, _1], _2]], 0, [List, a, b, c]]
+  expected: [Add, [Multiply, x, [Add, [Multiply, a, x], b]], c]
+  category: Applications
+  caption: Horner's rule for $ax^2 + bx + c$
+- id: evaluate-the-continued-fraction-1-2-2-2-from-the
+  expr: [Fold, [Function, [Add, _2, [Divide, 1, _1]]], 2, [List, 2, 2, 1]]
+  expected: [Rational, 17, 12]
+  category: Applications
+  caption: Evaluate the continued fraction $[1; 2, 2, 2]$ from the inside out -- a convergent of $\sqrt{2}$

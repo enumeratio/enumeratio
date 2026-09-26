@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection; the count is the Fuss–Catalan number $\binom{3n}{n} / (2n+1) = A001764(n)$ — $NonCrossingTrees(3)$ has $12$ elements. See [[Binomial]].
   - In bijection (Flajolet & Noy 1999) with the ternary trees on $n$ internal nodes; each element reuses that encoding as its flat preorder arity word — $3n+1$ entries, each $0$ (leaf) or $3$ (internal node, followed in preorder by its three children).
   - The $tree$ glyph draws an element directly from this word, since it is already a preorder child-count sequence.
-examples:
-  - id: count-noncrossingtrees-5-273-binom-15-5-11
-    expr: [Count, [NonCrossingTrees, 5]]
-    expected: 273
-    category: Basic
-    caption: $Count(NonCrossingTrees(5)) = 273 = \binom{15}{5}/11$, A001764
 enumerate:
   expr: NonCrossingTrees(3)
   glyph: tree

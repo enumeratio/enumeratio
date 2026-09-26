@@ -10,26 +10,8 @@ details:
   - compute-engine's native `BesselJ` only evaluates numerically at integer order, so the zero-finder here carries its own real $J_\nu$ series (term-ratio, stable for the double-precision range zero-finding needs) rather than depending on it — which matters for exactly the half-integer orders Fungrim's identities use.
   - McMahon's asymptotic expansion seeds a bracket around the $k$-th zero, then bisection (with a few closing Newton steps) converges it.
   - Matches mpmath's `besseljzero(nu, k)` and Wolfram's `BesselJZero[nu, k]`.
-examples:
-  - id: j-3-2-1-4-4934-also-the-first-positive-root-of
-    expr: [N, [BesselJZero, [Rational, 3, 2], 1]]
-    expected: 4.493409457909064
-    caption: $j_{3/2,1} = 4.4934\ldots$ — also the first positive root of $\tan x = x$
-  - id: j-0-1-2-4048
-    expr: [N, [BesselJZero, 0, 1]]
-    expected: 2.404825557695773
-    caption: $j_{0,1} = 2.4048\ldots$
-  - id: the-third-zero-of-j-0
-    expr: [N, [BesselJZero, 0, 3]]
-    expected: 8.653727912911013
-    caption: the third zero of $J_0$
-  - id: tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first
-    expr: [Chop, [Subtract, [Tan, [N, [BesselJZero, [Rational, 3, 2], 1]]], [N, [BesselJZero, [Rational, 3, 2], 1]]]]
-    expected: 0
-    category: Properties
-    caption: $\tan(j_{3/2,1}) = j_{3/2,1}$ — the sinc function's first turning point
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

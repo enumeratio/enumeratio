@@ -9,28 +9,6 @@ signatures:
 details:
   - By the round-robin shortest-path algorithm over $\mathbb{Z}/a_0$ for the smallest generator $a_0$, not by searching [[FrobeniusSolve]] upward.
   - Requires the generators' $\gcd$ to be 1 — otherwise every multiple of that gcd past it is still unreachable, so the answer is $+\infty$.
-examples:
-  - id: the-mcnugget-number
-    expr: [FrobeniusNumber, [List, 6, 9, 20]]
-    expected: 43
-    caption: The McNugget number
-  - id: frobeniusnumber-list-3-5
-    expr: [FrobeniusNumber, [List, 3, 5]]
-    expected: 7
-  - id: two-generators-ab-a-b
-    expr: [FrobeniusNumber, [List, 4, 7]]
-    expected: 17
-    category: Properties
-    caption: "Two generators: $ab-a-b$"
-  - id: frobeniusnumber-list-12-16-20-27
-    expr: [FrobeniusNumber, [List, 12, 16, 20, 27]]
-    expected: 89
-    category: Scope
-  - id: not-coprime-infinitely-many-numbers-are
-    expr: [FrobeniusNumber, [List, 2, 4]]
-    expected: PositiveInfinity
-    category: Possible issues
-    caption: "Not coprime: infinitely many numbers are unreachable"
 seeAlso:
   - FrobeniusSolve
   - GCD

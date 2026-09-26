@@ -1,0 +1,138 @@
+- id: n-forces-the-numeric-result-that-plain
+  expr: [N, [Sinh, 0]]
+  expected: 0
+  caption: N(...) forces the numeric result that plain evaluation withholds
+- id: n-sinh-1
+  expr: [N, [Sinh, 1]]
+  expected: { num: "1.17520119364380145688" }
+- id: odd-function-sinh-x-sinh-x
+  expr: [Equal, [Sinh, [Negate, 1]], [Negate, [Sinh, 1]]]
+  expected: True
+  category: Properties
+  caption: 'Odd function: $\sinh(-x) = -\sinh(x)$'
+- id: definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2
+  expr: [Equal, [Sinh, 1], [Divide, [Subtract, [Exp, 1], [Exp, [Negate, 1]]], 2]]
+  expected: True
+  category: Properties
+  caption: 'Definition in terms of [[Exp]]: $\sinh(x) = \frac{e^x - e^{-x}}{2}$'
+- id: stays-symbolic-even-at-0-compute-engine-doesn-t
+  expr: [Sinh, 0]
+  expected: 0
+  caption: Exact at 0, as [[Sin]] is -- compute-engine alone leaves the hyperbolic functions symbolic there
+- id: a-float-argument-evaluates-directly-no-n-needed
+  expr: [Sinh, 1.4]
+  expected: { num: "1.90430150145153405514" }
+  caption: A float argument evaluates directly, no N(...) needed
+- id: arbitrary-precision-via-n
+  expr: [N, [Sinh, [Rational, 7, 5]]]
+  expected: { num: "1.90430150145153405514" }
+  category: Scope
+  caption: Arbitrary precision via N(...)
+- id: evaluates-at-a-complex-argument
+  expr: [Sinh, [Complex, 2.5, 1]]
+  expected: [Complex, 3.268939432079549, 5.160143667579705]
+  category: Scope
+  caption: Evaluates at a complex argument
+- id: sinh-i-pi-2-i-sin-pi-2-i
+  expr: [Sinh, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]
+  expected: [Complex, 0, 1]
+  category: Scope
+  caption: $\sinh(i\pi/2) = i\sin(\pi/2) = i$
+- id: element-wise-over-a-matrix-of-imaginary
+  expr:
+    [
+      Sinh,
+      [
+        List,
+        [
+          List,
+          [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]],
+          [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]]],
+        ],
+        [List, 0, [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 6]]]],
+      ],
+    ]
+  expected:
+    [
+      List,
+      [List, [Complex, 0, [Divide, [Sqrt, 3], 2]], [Complex, 0, [Negate, [Divide, [Sqrt, 3], 2]]]],
+      [List, 0, [Complex, 0, [Rational, -1, 2]]],
+    ]
+  category: Scope
+  caption: Element-wise over a matrix of imaginary multiples of $\pi$, folding through $\sinh(ix) = i\sin x$
+- id: interval-arithmetic-sinh-is-increasing-so-sinh-0
+  expr: [Sinh, [Interval, 0, [Ln, 3]]]
+  expected: [Interval, 0, [Rational, 4, 3]]
+  category: Scope
+  caption: 'Interval arithmetic: $\sinh$ is increasing, so $\sinh[0, \ln 3] = [0, \tfrac43]$, the interval of the endpoint values'
+- id: uncertainty-propagation-sinh-2-sqrt-3-pm-0-1
+  expr: [Sinh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]
+  expected: [Around, 1.4289605814815758, 0.1744112480153778]
+  category: Scope
+  caption: 'Uncertainty propagation: $\sinh(2/\sqrt3 \pm 0.1) \approx 1.429 \pm 0.174$'
+- id: sinh-positiveinfinity
+  expr: [Sinh, PositiveInfinity]
+  expected: PositiveInfinity
+  category: Scope
+- id: sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic
+  expr: [Sinh, [Ln, 2]]
+  expected: [Rational, 3, 4]
+  category: Scope
+  caption: $\sinh(\ln 2) = \frac{2 - 1/2}{2} = \tfrac34$
+- id: a-real-symbolic-argument-is-untouched
+  expr: [Sinh, x]
+  expected: [Sinh, x]
+  category: Scope
+  caption: A real symbolic argument is untouched
+- id: oddness-pulls-the-sign-out-of-a-symbolic
+  expr: [Sinh, [Negate, x]]
+  expected: [Negate, [Sinh, x]]
+  category: Scope
+  caption: 'Oddness pulls the sign out of a symbolic argument: $\sinh(-x) = -\sinh x$'
+- id: sinh-arsinh-x-x-for-every-x
+  expr: [Sinh, [Arsinh, x]]
+  expected: x
+  category: Scope
+  caption: $\sinh(\operatorname{arsinh} x) = x$ for every $x$
+- id: sinh-arsinh-2-2-for-every-x
+  expr: [Sinh, [Arsinh, 2]]
+  expected: 2
+  category: Scope
+  caption: $\sinh(\operatorname{arsinh}(2)) = 2$
+- id: derivative-cosh-x
+  expr: [D, [Sinh, x], x]
+  expected: [Cosh, x]
+  category: Scope
+  caption: 'Derivative: $\cosh x$'
+- id: antiderivative
+  expr: [Integrate, [Sinh, x], x]
+  expected: [Cosh, x]
+  category: Scope
+  caption: Antiderivative
+- id: taylor-series-about-0
+  expr: [Series, [Sinh, x], x, 0, 5]
+  expected:
+    [
+      Add,
+      [Multiply, [Rational, 1, 120], [Power, x, 5]],
+      [Multiply, [Rational, 1, 6], [Power, x, 3]],
+      x,
+      [BigO, [Power, x, 7]],
+    ]
+  category: Scope
+  caption: Taylor series about 0
+- id: the-definition-sinh-x-frac-e-x-e-x-2
+  expr: [TrigToExp, [Sinh, x]]
+  expected: [Multiply, [Rational, 1, 2], [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]]]
+  category: Properties
+  caption: The definition $\sinh x = \frac{e^x - e^{-x}}{2}$
+- id: to-30-significant-digits-not-yet-the-last-digit
+  expr: [N, [Sinh, 1], 30]
+  expected: { num: "1.17520119364380145688238185060" }
+  category: Scope
+  caption: To 30 significant digits, the last one correctly rounded
+- id: n-decimalizes-sinh-i-pi-2-not-just-the-exact
+  expr: [N, [Sinh, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]]
+  expected: [Complex, 0, 1]
+  category: Scope
+  caption: N(...) decimalizes $\sinh(i\pi/2)$, not just the exact $i$ form

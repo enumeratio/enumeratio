@@ -8,22 +8,6 @@ signatures:
 details:
   - compute-engine has this natively; the gap closed here is Wolfram's $\lambda(-n)=\lambda(n)$ and threading over a list, which the native handler left unevaluated.
   - $\lambda(n) \mid \varphi(n)$ always, and the two agree exactly when $(\mathbb{Z}/n)^\times$ is cyclic. See [[Totient]].
-examples:
-  - id: listable
-    expr: [CarmichaelLambda, [List, 8, 15]]
-    expected: [List, 2, 4]
-    category: Scope
-    caption: Listable
-  - id: negative-n-lambda-n-lambda-n
-    expr: [CarmichaelLambda, -100]
-    expected: 20
-    category: Scope
-    caption: 'Negative n: $\lambda(-n)=\lambda(n)$'
-  - id: listable-over-a-range
-    expr: [CarmichaelLambda, [Range, 10]]
-    expected: [List, 1, 1, 2, 2, 4, 2, 6, 2, 6, 4]
-    category: Scope
-    caption: Listable over a Range
 seeAlso:
   - Totient
   - MultiplicativeOrder

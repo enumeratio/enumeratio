@@ -9,18 +9,8 @@ signatures:
 details:
   - compute-engine 0.128 does not declare this head at all — no `Hypergeometric1F1`-style native to extend — so it is supplied here directly, by the term-ratio recurrence (Fungrim's own `Hypergeometric0F1` identities relate it to `AiryAi`, `Sin` and `Sinc`).
   - Poles at $b$ a nonpositive integer $0, -1, -2, \dots$ stay symbolic; see [[Hypergeometric0F1Regularized]] for the entire version.
-examples:
-  - id: a-generic-point-checked-against-mpmath-s-hyp0f1
-    expr: [Hypergeometric0F1, 2, 0.5]
-    expected: 1.271723456312137
-    caption: a generic point, checked against mpmath's `hyp0f1`
-  - id: b-0-is-a-pole-stays-symbolic
-    expr: [Hypergeometric0F1, 0, 0.5]
-    expected: [Hypergeometric0F1, 0, 0.5]
-    category: Possible issues
-    caption: $b = 0$ is a pole — stays symbolic
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

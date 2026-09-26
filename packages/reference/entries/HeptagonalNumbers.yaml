@@ -10,7 +10,6 @@ details:
   - OEIS A000566.
   - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(55, HeptagonalNumbers)$ is true, $Element(54, HeptagonalNumbers)$ is false.
   - The $k$-gonal case $k=7$ of [[PolygonalNumbers]].
-examples: []
 enumerate:
   expr: Take(HeptagonalNumbers, 20)
 seeAlso:
