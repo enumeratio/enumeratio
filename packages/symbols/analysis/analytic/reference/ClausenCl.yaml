@@ -54,7 +54,7 @@ examples:
     expected: PositiveInfinity
     category: Possible issues
     caption: $\mathrm{Cl}_1(\theta) = -\ln|2\sin(\theta/2)|$ diverges at $\theta = 0$
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

@@ -148,7 +148,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
   title: "ReferenceEntry",
   description:
     "One compute-engine head's reference/<Head>.yaml: summary, signatures, details, " +
-    "references, head-level implementations, and examples in page order.",
+    "references, head-level bindings, and examples in page order.",
   type: "object",
   properties: {
     name: { type: "string" },
@@ -172,7 +172,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     details: { type: "array", items: { type: "string" } },
     outForm: { type: "string" },
     outEvaluate: { type: "boolean" },
-    implementations: { type: "array", items: { $ref: "#/$defs/ReferenceImplementation" } },
+    bindings: { type: "array", items: { $ref: "#/$defs/ReferenceBinding" } },
     primitive: { enum: ["kernel", "numeric", "foreign", "axiom"] },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
     stub: { enum: ["engine", "carrier"] },
@@ -183,7 +183,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     MathJSON: MATHJSON,
     ReferenceExample: REFERENCE_EXAMPLE,
     ReferenceSignature: REFERENCE_SIGNATURE,
-    ReferenceImplementation: REFERENCE_IMPLEMENTATION,
+    ReferenceBinding: REFERENCE_IMPLEMENTATION,
     Reference: REFERENCE,
   },
 };

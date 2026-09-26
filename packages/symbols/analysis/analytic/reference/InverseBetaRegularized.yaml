@@ -40,7 +40,7 @@ examples:
     expected: 1
     category: Properties
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

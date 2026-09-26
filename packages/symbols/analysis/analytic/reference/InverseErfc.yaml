@@ -55,7 +55,7 @@ examples:
     category: Properties
     caption: $\operatorname{erfc}(\operatorname{erfc}^{-1}(x)) = x$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

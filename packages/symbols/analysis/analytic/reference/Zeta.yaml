@@ -2,7 +2,7 @@ name: Zeta
 domain: Special functions
 signature: Zeta(s)
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

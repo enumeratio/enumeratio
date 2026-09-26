@@ -72,7 +72,7 @@ examples:
     caption: A000793(15) = 105, Landau's function $g(15)$.
     group: oeis-lookup
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

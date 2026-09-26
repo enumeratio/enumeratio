@@ -140,11 +140,12 @@ export function parsePython(text: string): Tree | undefined {
       i += 5;
       return false;
     }
-    // An exact rational, as SymPy prints one inside a list: `[1/6, -1/30]`.
-    const ratio = /^([-+]?\d+)\/(\d+)/.exec(s.slice(i));
-    if (ratio !== null && Number(ratio[2]) !== 0) {
-      i += ratio[0].length;
-      return Number(ratio[1]) / Number(ratio[2]);
+    // An exact rational as SymPy/Sage print it inside a structure, `1/2` or `-5/3` (no
+    // spaces around the slash — this is Python division syntax, not our Rational).
+    const rational = /^([-+]?\d+)\/(\d+)(?![\d.eE])/.exec(s.slice(i));
+    if (rational !== null && Number(rational[2]) !== 0) {
+      i += rational[0].length;
+      return Number(rational[1]) / Number(rational[2]);
     }
     const match = /^[-+]?\d+(\.\d+)?([eE][-+]?\d+)?/.exec(s.slice(i));
     if (match !== null) {

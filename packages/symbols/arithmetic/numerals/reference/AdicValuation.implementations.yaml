@@ -13,6 +13,21 @@ adicvaluation-adicnumeral-5-75:
   rust:
     in: adic_valuation(adic(n(5), n(75)))
     out: "2"
+the-valuation-of-zero-is-positive-infinity:
+  epsil:
+    in: AdicValuation(AdicNumeral(5, 0))
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(5, 0))
+    out: \infty
+  traditional:
+    in: v_{5}(0)
+    out: \infty
+  fullform:
+    in: AdicValuation[AdicNumeral[5, 0]]
+  rust:
+    in: adic_valuation(adic(n(5), n(0)))
+    out: PositiveInfinity
 adicnorm-adicnumeral-5-75:
   epsil:
     in: AdicNorm(AdicNumeral(5, 75))

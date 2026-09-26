@@ -155,6 +155,32 @@ examples:
     expected: [Complex, 0, 1.5707963267948966]
     category: Scope
     caption: N(...) decimalizes $\ln(i)$, not just the exact $i\pi/2$ form
+  - role: test
+    id: a-machine-precision-negative-argument
+    expr: [Ln, -4.705]
+    expected: [Complex, { num: "1.54862577303734295736" }, 3.141592653589793]
+    caption: A machine-precision negative argument stays complex
+  - role: test
+    id: an-integer-power-negative-argument
+    expr: [Ln, -2]
+    expected: [Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 2]]
+    category: Scope
+  - role: test
+    id: n-of-a-negative-integer-argument
+    expr: [N, [Ln, -2], 10]
+    expected: [Complex, 0.6931471806, 3.141592654]
+    category: Scope
+    caption: N(...) at a negative argument, digit count and all
+  - role: test
+    id: ln-neg-6
+    expr: [Ln, -6]
+    expected: [Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 6]]
+    category: Scope
+  - role: test
+    id: n-of-a-negative-rational-argument
+    expr: [N, [Ln, [Rational, -1, 2]]]
+    expected: [Complex, -0.6931471805599453, 3.141592653589793]
+    category: Scope
 seeAlso:
   - Exp
   - Log

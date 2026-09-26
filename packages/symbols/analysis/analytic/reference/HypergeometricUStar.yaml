@@ -26,7 +26,7 @@ examples:
     category: Possible issues
     caption: integer $b$ stays symbolic — the connection formula's log-case limit is not implemented
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

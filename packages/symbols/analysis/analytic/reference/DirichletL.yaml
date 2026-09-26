@@ -127,7 +127,7 @@ examples:
     expr: [N, [DirichletL, 4, 2, 1.0001]]
     expected: { num: "0.785417452758435172836" }
     caption: Just off the removable point at $s = 1$ — a non-principal $L$ has no pole there
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

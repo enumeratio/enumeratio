@@ -1,0 +1,18 @@
+two-trig-terms-on-a-bounded-interval:
+  epsil:
+    in: NMaximize([Sin(x) + Cos(2x), x >= 0 && x <= 6], x)
+    out: "[1.125, [Rule(x, 2.888_912_406_121_017_6)]]"
+  tex:
+    in: \mathrm{NMaximize}(\bigl\lbrack\sin(x)+\cos(2x), x\ge0\land x\le6\bigr\rbrack, x)
+    out: \bigl\lbrack1.125, \bigl\lbrack\mathrm{Rule}(x, 2.888\,912\,406\,121\,017\,6)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: NMaximize[List[Plus[Sin[x], Cos[Times[2, x]]], And[GreaterEqual[x, 0], LessEqual[x, 6]]], x]
+declines-without-a-bounded-constraint:
+  epsil:
+    in: NMaximize(-x ^ 2, x)
+    out: NMaximize(-x ^ 2, x)
+  tex:
+    in: \mathrm{NMaximize}(-x^2, x)
+    out: \mathrm{NMaximize}(-x^2, x)
+  fullform:
+    in: NMaximize[Minus[Power[x, 2]], x]

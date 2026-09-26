@@ -1,0 +1,26 @@
+name: NMaximize
+domain: Calculus
+signature: NMaximize({f, cons}, x)
+summary: A numeric global maximum of f over a BOUNDED interval, as {value, {x -> point}} -- dense sampling plus a golden-section refinement, not an exact answer.
+signatures:
+  - call: NMaximize({f, cons}, x)
+    description: the numeric global maximum of f over the bounded interval cons implies, for any real-valued f (not just the exact core [[Maximize]] covers).
+    library: "@enumeratio/analytic"
+details:
+  - "[[NMinimize]]'s exact mirror image -- same method (201-point sampling plus a golden-section refinement, converged to a bracket width under 1e-11 relative to the interval), same requirement for an explicit bounded constraint, same declines. See its `details` for the full account."
+  - When f has more than one point attaining the same global maximum, this reports whichever the sampling grid's basin of attraction happens to land on first -- a different, equally valid witness than another correct implementation (or Wolfram's own NMaximize) might report for the same value.
+examples:
+  - id: two-trig-terms-on-a-bounded-interval
+    expr:
+      [NMaximize, [List, [Add, [Sin, x], [Cos, [Multiply, 2, x]]], [And, [GreaterEqual, x, 0], [LessEqual, x, 6]]], x]
+    expected: [List, 1.125, [List, [Rule, x, 2.8889124061210176]]]
+    caption: Sin(x) + Cos(2x) reaches its maximum, 9/8, at more than one point on [0, 6]
+  - id: declines-without-a-bounded-constraint
+    expr: [NMaximize, [Negate, [Power, x, 2]], x]
+    expected: [NMaximize, [Negate, [Power, x, 2]], x]
+    category: Possible issues
+    caption: Declines -- no bounded interval to search
+seeAlso:
+  - NMinimize
+  - Maximize
+  - MaxValue

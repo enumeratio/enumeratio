@@ -30,7 +30,7 @@ examples:
     category: Applications
     caption: The number of 2-dimensional subspaces of $\mathbb{F}_3^5$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

@@ -30,7 +30,7 @@ examples:
     category: Properties
     caption: $\zeta(2, 2) = \tfrac34\zeta(4)$, one of Fungrim's exact closed forms
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

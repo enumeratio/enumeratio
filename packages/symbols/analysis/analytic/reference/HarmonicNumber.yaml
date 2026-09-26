@@ -194,7 +194,7 @@ examples:
     id: h-2-is-three-halves
     expr: [HarmonicNumber, 2]
     expected: [Rational, 3, 2]
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

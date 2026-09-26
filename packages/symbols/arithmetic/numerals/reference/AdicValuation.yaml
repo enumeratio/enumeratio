@@ -20,6 +20,10 @@ examples:
   - id: adicvaluation-adicnumeral-5-75
     expr: [AdicValuation, [AdicNumeral, 5, 75]]
     expected: 2
+  - id: the-valuation-of-zero-is-positive-infinity
+    expr: [AdicValuation, [AdicNumeral, 5, 0]]
+    expected: PositiveInfinity
+    caption: The valuation of zero is PositiveInfinity, as the signature above says
   - id: adicnorm-adicnumeral-5-75
     expr: [AdicNorm, [AdicNumeral, 5, 75]]
     expected: [Rational, 1, 25]

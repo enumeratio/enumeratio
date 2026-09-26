@@ -20,7 +20,7 @@ examples:
     category: Possible issues
     caption: $b = 0$ is a pole — stays symbolic
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

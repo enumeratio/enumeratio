@@ -52,6 +52,12 @@ examples:
     expected: 4
     category: Applications
     caption: How many 5-seat vans are needed to carry 17 people
+  - role: test
+    id: a-zero-divisor-inside-ceil
+    expr: [Ceil, [Divide, 16, 0]]
+    expected: [Ceil, ComplexInfinity]
+    category: Possible issues
+    caption: A division by zero inside Ceil stays symbolic around ComplexInfinity
   - id: rounds-toward-infty-not-toward-0-ceil-3-7-is-3
     expr: [Ceil, -3.7]
     expected: -3

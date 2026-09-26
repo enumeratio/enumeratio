@@ -36,7 +36,7 @@ examples:
     category: Possible issues
     caption: Declines a symbolic list, exactly like [[Fourier]]
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

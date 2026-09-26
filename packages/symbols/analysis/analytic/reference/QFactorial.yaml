@@ -32,7 +32,7 @@ examples:
     category: Applications
     caption: 'The inversion generating function of SymmetricGroup(3): $\sum_\pi q^{\mathrm{inv}(\pi)}$'
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine
