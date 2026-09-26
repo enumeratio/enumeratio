@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: BinarySearchTree(Permutations([2, 3, 1]))
-    out: BinaryTrees([2, 0, 2])
+    in: BinarySearchTree(Permutation([2, 3, 1]))
+    out: BinaryTree([2, 0, 2])
   tex:
-    in: \mathrm{BinarySearchTree}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{BinaryTrees}(\bigl\lbrack2, 0, 2\bigr\rbrack)
+    in: \mathrm{BinarySearchTree}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{BinaryTree}(\bigl\lbrack2, 0, 2\bigr\rbrack)
   fullform:
-    in: BinarySearchTree[Permutations[List[2, 3, 1]]]
+    in: BinarySearchTree[Permutation[List[2, 3, 1]]]

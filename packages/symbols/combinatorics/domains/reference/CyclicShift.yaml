@@ -3,4 +3,4 @@ domain: Combinatorial maps
 signature: CyclicShift(Permutation)
 summary: Rotate the word one place to the left.
 details:
-  - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

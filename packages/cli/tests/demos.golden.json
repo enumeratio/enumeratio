@@ -153,11 +153,11 @@
       "out": "\u001b[2mOut[1]= \u001b[0m2"
     },
     {
-      "in": "Excedances(Permutations([3, 1, 2]))",
+      "in": "Excedances(Permutation([3, 1, 2]))",
       "out": "\u001b[2mOut[2]= \u001b[0m1"
     },
     {
-      "in": "FixedPoints(Permutations([1, 3, 2]))",
+      "in": "FixedPoints(Permutation([1, 3, 2]))",
       "out": "\u001b[2mOut[3]= \u001b[0m1"
     }
   ],

@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: Inverse(Permutations([2, 3, 1]))
-    out: Permutations([3, 1, 2])
+    in: Inverse(Permutation([2, 3, 1]))
+    out: Permutation([3, 1, 2])
   tex:
-    in: \mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack)^{-1}
-    out: \mathrm{Permutations}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    in: \mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack)^{-1}
+    out: \mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack)
   fullform:
-    in: Inverse[Permutations[List[2, 3, 1]]]
+    in: Inverse[Permutation[List[2, 3, 1]]]

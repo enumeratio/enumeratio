@@ -3,5 +3,5 @@ domain: Set partition statistics
 signature: BlockSizeSpan(partition)
 summary: Largest block size minus smallest.
 details:
-  - Defined over `SetPartitions` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - "Not yet typed over its carrier: `SetPartitions` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."
+  - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."

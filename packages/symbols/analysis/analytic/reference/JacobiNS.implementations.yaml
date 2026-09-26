@@ -1,0 +1,40 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiNS(0.3, 0.5))
+    out: 3.408_168_381_792_332_3
+  tex:
+    in: N(\mathrm{JacobiNS}(0.3, 0.5))
+    out: 3.408\,168\,381\,792\,332\,3
+  fullform:
+    in: N[JacobiNS[0.3, 0.5]]
+  wolfram:
+    in: N[JacobiNS[0.3, 0.5]]
+u-0-is-a-pole-for-any-m:
+  epsil:
+    in: JacobiNS(0, m)
+    out: ComplexInfinity
+  tex:
+    in: \mathrm{JacobiNS}(0, m)
+    out: \tilde\infty
+  fullform:
+    in: JacobiNS[0, m]
+m-less-than-0-via-the-imaginary-modulus:
+  epsil:
+    in: N(JacobiNS(0.3, -2))
+    out: 3.289_220_683_752_634_8
+  tex:
+    in: N(\mathrm{JacobiNS}(0.3, -2))
+    out: 3.289\,220\,683\,752\,634\,8
+  fullform:
+    in: N[JacobiNS[0.3, -2]]
+  wolfram:
+    in: N[JacobiNS[0.3, -2]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiNS(u, m)
+    out: JacobiNS(u, m)
+  tex:
+    in: \mathrm{JacobiNS}(u, m)
+    out: \mathrm{JacobiNS}(u, m)
+  fullform:
+    in: JacobiNS[u, m]

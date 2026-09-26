@@ -1,8 +1,8 @@
 name: Denert
-domain: Permutations statistics
+domain: Permutation statistics
 signature: Denert(p)
 summary: Sum of the excedance positions, plus the inversions within each of the excedance and non-excedance subwords.
 details:
-  - Defined over `Permutations` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `Permutations` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - Takes a `Permutation` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
   - "Foata–Zeilberger's den (FindStat St000156). Mahonian, and (Excedances, Denert) is equidistributed with (Descents, MajorIndex) — checked in tests/permutation.test.ts. Moved off the frontier: it needs no fold, just same-block inversion counting."

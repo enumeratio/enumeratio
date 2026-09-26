@@ -93,4 +93,6 @@ export { declareFourierTransform } from "./fourier-transform.ts";
 export { declareFourierSeries } from "./fourier-series.ts";
 export { declareInequality } from "./inequality.ts";
 export { declareFindInstance } from "./find-instance.ts";
+export { amplitude, declareJacobiElliptic, type PQLetter, sncndn } from "./jacobi-elliptic.ts";
+export { declareEllipticTheta } from "./theta.ts";
 export { declareSignals } from "./signals.ts";

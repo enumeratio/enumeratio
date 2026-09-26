@@ -6,7 +6,7 @@
 
 import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/collections";
-import { declareDomainConstructors, declareDomainTypes, declareMaps, DOMAINS } from "@enumeratio/domains";
+import { declareDomainElement, declareDomainPlurals, declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
 import {
@@ -16,6 +16,7 @@ import {
   declareDistributions3,
   declareDistributions4,
   declareDistributions5,
+  declareDistributions6,
   declareStatistics,
 } from "@enumeratio/statistics";
 
@@ -196,17 +197,18 @@ export class Session {
     this.ce = new ComputeEngine({
       latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
     });
-    // Carrier TYPES first: everything below declares heads over these minted types, so they
-    // have to exist before a signature can name one. The carrier NAMES (declareDomainConstructors)
-    // come after declareCollections instead -- a carrier and its collection are the same head
-    // now (Permutations, SetPartitions, ...), so collections has to declare that name first and
-    // domains' own constructor layers onto it, rather than the two colliding over who's first.
-    declareDomainTypes(this.ce);
+    // Carriers first: everything below declares heads OVER these minted types, so they have
+    // to exist before a signature can name one.
+    declareDomains(this.ce);
     // A combinatorial statistic is a function of a carrier, so that is what these heads take.
     // The ones that are ALSO plain list functions -- they compare entries with each other
     // rather than with their positions -- accept a bare list too; see `Definition.alsoOnList`.
     declareCollections(this.ce, { permutationType: "permutation" });
-    declareDomainConstructors(this.ce);
+    // Every domain's plural type-space name, and Element membership over it -- AFTER
+    // collections, so a plural a collection family already claims (Permutations, DyckPaths,
+    // ...) is still free when this checks, not raced by minting a bare symbol first.
+    declareDomainPlurals(this.ce);
+    declareDomainElement(this.ce);
     // Collections owns the fast permutation heads under the same names, so those are skipped
     // here -- one head, one owner.
     declareStatistics(this.ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: DOMAIN_TYPES });
@@ -215,6 +217,7 @@ export class Session {
     declareDistributions3(this.ce);
     declareDistributions4(this.ce);
     declareDistributions5(this.ce);
+    declareDistributions6(this.ce);
     declareMaps(this.ce, CONSTRUCTOR_FOR);
     // The heads that draw stay inert, so a `Plot` or a `Slider` survives evaluation as
     // the picture (or the control) it names, for a host that can show one.
