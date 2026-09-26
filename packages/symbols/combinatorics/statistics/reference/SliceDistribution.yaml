@@ -1,0 +1,19 @@
+name: SliceDistribution
+domain: Statistics
+signature: SliceDistribution(proc, t)
+summary: The ordinary distribution answering a random process's value at a fixed time $t$.
+signatures:
+  - call: SliceDistribution(proc, t)
+    description: evaluates directly to the distribution [[WienerProcess]] or [[PoissonProcess]] answers at time $t$ — [[PDF]]/[[CDF]]/[[Mean]]/[[Variance]] need no changes of their own to reach it, since the slice IS already a plain [[NormalDistribution]] or [[PoissonDistribution]].
+    library: enumeratio-statistics
+details:
+  - Stands in for Wolfram's own `proc[t]` — direct function application on a process. This engine has no general mechanism for calling an arbitrary declared symbol-headed expression as a function, so `SliceDistribution` (a real Wolfram head, used here for the same purpose) is the bridge instead.
+  - $SliceDistribution(WienerProcess(\mu,\sigma), t) = NormalDistribution(\mu t, \sigma\sqrt{t})$; $SliceDistribution(PoissonProcess(\lambda), t) = PoissonDistribution(\lambda t)$.
+  - Unevaluated for any process kind other than WienerProcess/PoissonProcess — no other process is declared yet.
+seeAlso:
+  - WienerProcess
+  - PoissonProcess
+  - RandomFunction
+  - PDF
+  - Mean
+  - Variance

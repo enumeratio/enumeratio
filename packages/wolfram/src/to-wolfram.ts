@@ -430,6 +430,16 @@ export const HEADS: Record<string, string> = {
   ProbabilityDistribution: "ProbabilityDistribution",
   ParameterMixtureDistribution: "ParameterMixtureDistribution",
   HistogramDistribution: "HistogramDistribution",
+  // Random-process heads (@enumeratio/statistics/src/processes.ts) — identity here already.
+  // `RandomFunction` diverges in RESULT SHAPE (a plain list of {t, x} pairs, not a
+  // `TemporalData` object) and `SliceDistribution` is our bridge for Wolfram's `proc[t]`
+  // application, but both are the same Wolfram head used the same way, so `HEADS` (not
+  // `FOREIGN`) is still the right list — see each head's own reference entry for the
+  // divergence.
+  WienerProcess: "WienerProcess",
+  PoissonProcess: "PoissonProcess",
+  SliceDistribution: "SliceDistribution",
+  RandomFunction: "RandomFunction",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",

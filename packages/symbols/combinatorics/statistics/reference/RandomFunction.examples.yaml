@@ -1,0 +1,27 @@
+- id: randomfunction-poisson-counts-nondecreasing
+  expr: [Last, [List, [SeedRandom, 7], [RandomFunction, [PoissonProcess, 4], [List, 0, 2, 0.5]], [SeedRandom, 42]]]
+  expected: [List, [List, 0, 0], [List, 0.5, 0], [List, 1, 0], [List, 1.5, 4], [List, 2, 5]]
+  caption: A seeded Poisson-process path — counts are nondecreasing nonnegative integers. Resets the shared PRNG stream back to the default seed afterward, same as this file's other examples.
+- id: randomfunction-default-grid-length
+  expr: [Last, [List, [Length, [RandomFunction, [WienerProcess, 0, 1], [List, 0, 1]]], [SeedRandom, 42]]]
+  expected: 101
+  caption: No dt given — 100 default equal steps from tmin to tmax, both endpoints included.
+- id: randomfunction-wiener-path-starts-at-zero
+  expr:
+    [
+      First,
+      [Last, [List, [SeedRandom, 3], [RandomFunction, [WienerProcess, 0, 1], [List, 0, 1, 0.5]], [SeedRandom, 42]]],
+    ]
+  expected: [List, 0, 0]
+  caption: A Wiener-process path always starts at $X(tmin) = 0$.
+  category: Scope
+- id: randomfunction-reproducible-for-a-fixed-seed
+  expr:
+    [
+      Equal,
+      [Last, [List, [SeedRandom, 7], [RandomFunction, [PoissonProcess, 4], [List, 0, 2, 0.5]], [SeedRandom, 42]]],
+      [Last, [List, [SeedRandom, 7], [RandomFunction, [PoissonProcess, 4], [List, 0, 2, 0.5]], [SeedRandom, 42]]],
+    ]
+  expected: True
+  caption: Same seed, same grid — the same path every time (not Wolfram's own generator, only the same shape guaranteed — see `RandomVariate`).
+  category: Scope

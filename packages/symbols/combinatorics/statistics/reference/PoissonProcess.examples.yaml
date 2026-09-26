@@ -1,0 +1,12 @@
+- id: poisson-process-slice-mean
+  expr: [Mean, [SliceDistribution, [PoissonProcess, 3], 5]]
+  expected: 15
+  caption: $Mean(PoissonProcess(\lambda)[t]) = \lambda t$
+- id: poisson-process-slice-distribution
+  expr: [SliceDistribution, [PoissonProcess, 2], 3]
+  expected: [PoissonDistribution, 6]
+- id: poisson-process-slice-variance
+  expr: [Variance, [SliceDistribution, [PoissonProcess, 2], 3]]
+  expected: 6
+  caption: $Variance(PoissonProcess(\lambda)[t]) = \lambda t$, same as its Mean — a property of the Poisson distribution.
+  category: Scope

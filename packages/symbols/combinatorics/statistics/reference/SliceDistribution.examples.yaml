@@ -1,0 +1,11 @@
+- id: slice-distribution-wiener
+  expr: [SliceDistribution, [WienerProcess, 1, 2], 3]
+  expected: [NormalDistribution, 3, [Multiply, 2, [Sqrt, 3]]]
+- id: slice-distribution-poisson
+  expr: [SliceDistribution, [PoissonProcess, 5], 2]
+  expected: [PoissonDistribution, 10]
+- id: slice-distribution-feeds-pdf-unchanged
+  expr: [Mean, [SliceDistribution, [PoissonProcess, 5], 2]]
+  expected: 10
+  caption: PDF/CDF/Mean/Variance need no changes of their own — the slice is already a plain PoissonDistribution.
+  category: Scope

@@ -17,6 +17,7 @@ import {
   declareDistributions4,
   declareDistributions5,
   declareDistributions6,
+  declareProcesses,
   declareStatistics,
 } from "@enumeratio/statistics";
 
@@ -218,6 +219,7 @@ export class Session {
     declareDistributions4(this.ce);
     declareDistributions5(this.ce);
     declareDistributions6(this.ce);
+    declareProcesses(this.ce);
     declareMaps(this.ce, CONSTRUCTOR_FOR);
     // The heads that draw stay inert, so a `Plot` or a `Slider` survives evaluation as
     // the picture (or the control) it names, for a host that can show one.
