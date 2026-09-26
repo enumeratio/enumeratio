@@ -1,7 +1,7 @@
 name: KPartPartitions
 domain: Combinatorics
 signature: KPartPartitions(...)
-summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here. Catalogued as an alias of PartitionsIntoKParts.
 catalog:
   - system: oeis
     identity: A008284
@@ -10,3 +10,9 @@ catalog:
     identity: Partitions(n, length=k)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
 stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: IntegerPartition

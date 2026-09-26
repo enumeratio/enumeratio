@@ -1,0 +1,8 @@
+name: Columns
+domain: Combinatorics
+signature: Columns(...)
+summary: Number of columns
+statOn:
+  - SemistandardTableau
+  - StandardTableau
+stub: carrier

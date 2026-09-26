@@ -8,3 +8,5 @@ catalog:
     url: https://www.findstat.org/St001429
     on: SignedPermutation
 stub: carrier
+statOn:
+  - SignedPermutation

@@ -26,3 +26,6 @@ catalog:
     note: |-
       sympy's T0=0,T1=1,T2=1,T3=2,... (one term ahead of ours); ours repeats the leading 0 (T0=0,T1=0,T2=1,T3=1,...)
       so tribonacci_numbers(n) [ours] = sympy tribonacci(n-1) for n>=1
+grades: []
+carrier: Numeric
+unbounded: true

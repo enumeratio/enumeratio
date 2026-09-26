@@ -14,3 +14,7 @@ seeAlso:
 references:
   - system: oeis
     identity: A025047
+grades:
+  - name: n
+    role: axis
+carrier: Composition

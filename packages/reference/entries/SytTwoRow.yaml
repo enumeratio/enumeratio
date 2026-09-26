@@ -11,3 +11,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
     note: sage's StandardTableaux(shape) takes ONE partition; ours unions every ≤2-row shape at fixed n — Σ_{a=⌈n/2⌉}^{n} StandardTableaux([a, n−a])
 stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: StandardTableau

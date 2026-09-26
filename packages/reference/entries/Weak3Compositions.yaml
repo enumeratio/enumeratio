@@ -8,3 +8,7 @@ catalog:
     url: https://oeis.org/A000217
     note: fiber n has C(n+2,2) elements — the triangular numbers (A000217 shifted)
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: WeakComposition

@@ -13,3 +13,6 @@ catalog:
     identity: Mp00084
     url: https://www.findstat.org/Mp00084
     on: StandardTableau
+mapOn:
+  - PlanePartition
+  - StandardTableau

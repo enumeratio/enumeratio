@@ -17,3 +17,6 @@ catalog:
     identity: sage.sets.primes.Primes()
     url: https://doc.sagemath.org/html/en/reference/sets/sage/sets/primes.html
 stub: carrier
+grades: []
+carrier: Numeric
+unbounded: true

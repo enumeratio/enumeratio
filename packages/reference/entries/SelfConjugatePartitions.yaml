@@ -12,3 +12,7 @@ catalog:
     note: no dedicated self-conjugate filter in Partitions() — our collection is the fixed points of the conjugate() involution on Partitions(n)
     relation: partial
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition

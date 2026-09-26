@@ -21,3 +21,6 @@ catalog:
   - system: oeis
     identity: A006318
     url: https://oeis.org/A006318
+grades: []
+carrier: Numeric
+unbounded: true

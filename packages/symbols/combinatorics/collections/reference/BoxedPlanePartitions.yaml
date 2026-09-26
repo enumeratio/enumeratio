@@ -21,3 +21,11 @@ catalog:
     identity: PlanePartitions([a, b, c])
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/plane_partition.html
     note: plane partitions fitting an a×b×c box; sage's PlanePartitions([a,b,c]) is the same box-confined set (our carrier stores the (a,b,c) bound)
+grades:
+  - name: a
+    role: axis
+  - name: b
+    role: axis
+  - name: c
+    role: axis
+carrier: PlanePartition

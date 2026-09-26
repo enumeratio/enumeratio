@@ -20,3 +20,6 @@ catalog:
   - system: oeis
     identity: A005114
     url: https://oeis.org/A005114
+grades: []
+carrier: Numeric
+unbounded: true

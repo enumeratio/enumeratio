@@ -21,3 +21,5 @@ catalog:
   - system: oeis
     identity: A007850
     url: https://oeis.org/A007850
+grades: []
+carrier: Numeric

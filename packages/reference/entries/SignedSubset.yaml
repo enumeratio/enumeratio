@@ -1,0 +1,8 @@
+name: SignedSubset
+domain: Combinatorics
+signature: SignedSubset(...)
+summary: Signed subset
+catalogCarrier: true
+mapOn:
+  - SignedSubset
+stub: carrier

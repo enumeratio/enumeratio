@@ -14,3 +14,7 @@ catalog:
     identity: Mp00028
     url: https://www.findstat.org/Mp00028
     on: DyckPath
+mapOn:
+  - DyckPath
+  - MotzkinPath
+  - Permutation

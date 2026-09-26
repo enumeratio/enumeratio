@@ -22,3 +22,6 @@ catalog:
     identity: St000353
     url: https://www.findstat.org/St000353
     on: Permutation
+statOn:
+  - DyckPath
+  - Permutation

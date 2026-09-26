@@ -18,3 +18,5 @@ seeAlso:
   - Minimize
 names:
   wolframIdentity: true
+statOn:
+  - Arrangement

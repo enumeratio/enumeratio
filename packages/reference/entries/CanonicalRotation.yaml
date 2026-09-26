@@ -1,0 +1,8 @@
+name: CanonicalRotation
+domain: Combinatorics
+signature: CanonicalRotation(...)
+summary: Canonical rotation (as a binary necklace)
+mapOn:
+  - Finset
+  - Word
+stub: carrier

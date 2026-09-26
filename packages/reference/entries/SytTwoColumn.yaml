@@ -11,3 +11,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
     note: the conjugate family of syt_two_row — unions StandardTableaux(λ) over every ≤2-column shape λ at fixed n, one shape at a time in sage
 stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: StandardTableau

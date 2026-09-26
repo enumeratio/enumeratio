@@ -7,3 +7,6 @@ catalog:
     identity: Int
     url: https://leanprover-community.github.io/mathlib4_docs/Init/Data/Int/Basic.html
 stub: carrier
+grades: []
+carrier: IntegerNumber
+unbounded: true

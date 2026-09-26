@@ -26,3 +26,6 @@ catalog:
     identity: A000668
     url: https://oeis.org/A000668
     note: the prime values 2^p-1 themselves, not the exponents p (cf. A000043)
+grades: []
+carrier: Numeric
+unbounded: true

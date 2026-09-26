@@ -8,3 +8,9 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/affine_permutation.html
     note: window-notation elements of the affine symmetric group; our r-bounded-translation-box grading (n, radius) is our own restriction, not part of the sage class
 stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: radius
+    role: axis
+carrier: AffinePermutation

@@ -1,0 +1,9 @@
+name: ContinuedFractions
+domain: Combinatorics
+signature: ContinuedFractions(...)
+summary: The canonical CF expansion [a₀;a₁,a₂,…] of a reduced fraction p/q.
+grades:
+  - name: q
+    role: axis
+carrier: ContinuedFraction
+stub: carrier

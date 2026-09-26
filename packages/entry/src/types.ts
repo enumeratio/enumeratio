@@ -1,4 +1,4 @@
-import type { Reference } from "./reference.ts";
+import type { CatalogGrade, Reference } from "./reference.ts";
 
 /** Systems compute-engine results may be cross-checked against (see `divergence`). */
 export type DivergenceSystem = "wolfram" | "numpy" | "sympy";
@@ -271,6 +271,22 @@ export interface ReferenceEntry {
    * under when it differs from this head's own.
    */
   readonly catalog?: readonly Reference[];
+  /**
+   * What `@enumeratio/catalog`'s `declareCatalog` needs to register this head as a resource
+   * (design/speculative/symbol-metadata.md), moved here off the retired
+   * packages/catalog/src/catalog-data.ts. Presence is the kind: `grades` marks a catalogued
+   * collection, `statOn`/
+   * `mapOn` a statistic or map (its overload set), `catalogCarrier` a bare carrier -- a name
+   * can be more than one (`Finset` is both a carrier and a map). Description and title fold
+   * into `summary`; a name's own catalog id and `aliasOf` have no runtime reader and are not
+   * kept.
+   */
+  readonly carrier?: string;
+  readonly grades?: readonly CatalogGrade[];
+  readonly unbounded?: boolean;
+  readonly catalogCarrier?: true;
+  readonly statOn?: readonly string[];
+  readonly mapOn?: readonly string[];
   /** This head's own vocabulary in other systems -- Fungrim, the DLMF, Wikidata, the catalog. */
   readonly names?: ReferenceNames;
   /**

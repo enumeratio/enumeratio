@@ -10,3 +10,5 @@ catalog:
     identity: St000159
     url: https://www.findstat.org/St000159
     on: IntegerPartition
+statOn:
+  - IntegerPartition

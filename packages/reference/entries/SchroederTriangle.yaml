@@ -8,3 +8,9 @@ catalog:
     url: https://oeis.org/A060693
     note: A060693 counts by peaks, our T(n,k) by flat steps — equidistributed statistics, same triangle values
 stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: SchroederPath

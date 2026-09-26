@@ -1,0 +1,13 @@
+name: Hypernumerary
+domain: Combinatorics
+signature: Hypernumerary(...)
+summary: Base-b numerals of n over a widened digit alphabet {0..b−1+k} — the general non-unique numeral family.
+grades:
+  - name: b
+    role: param
+  - name: k
+    role: param
+  - name: n
+    role: axis
+carrier: HypernumeraryWord
+stub: carrier

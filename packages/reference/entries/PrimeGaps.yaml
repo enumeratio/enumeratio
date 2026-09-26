@@ -12,3 +12,6 @@ catalog:
     url: https://oeis.org/A001223
     note: the gap reading g(n) = p_{n+1} − p_n carried on each element
 stub: carrier
+grades: []
+carrier: Numeric
+unbounded: true

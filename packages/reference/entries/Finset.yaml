@@ -11,3 +11,6 @@ catalog:
     identity: Finset
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
 stub: carrier
+catalogCarrier: true
+mapOn:
+  - Finset

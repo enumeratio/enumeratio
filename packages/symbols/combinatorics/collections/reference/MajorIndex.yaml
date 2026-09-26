@@ -45,3 +45,7 @@ catalog:
     identity: St000330
     url: https://www.findstat.org/St000330
     on: StandardTableau
+statOn:
+  - DyckPath
+  - Permutation
+  - StandardTableau

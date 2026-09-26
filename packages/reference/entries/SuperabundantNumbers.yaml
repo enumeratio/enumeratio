@@ -20,3 +20,6 @@ catalog:
   - system: oeis
     identity: A004394
     url: https://oeis.org/A004394
+grades: []
+carrier: Numeric
+unbounded: true

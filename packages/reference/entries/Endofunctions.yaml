@@ -10,3 +10,7 @@ catalog:
     identity: A000312
     url: https://oeis.org/A000312
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: Endofunction

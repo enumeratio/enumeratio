@@ -1,0 +1,8 @@
+name: Dissection
+domain: Combinatorics
+signature: Dissection(...)
+summary: Dissection
+catalogCarrier: true
+mapOn:
+  - Dissection
+stub: carrier

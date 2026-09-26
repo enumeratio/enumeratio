@@ -23,3 +23,8 @@ catalog:
     identity: St000022
     url: https://www.findstat.org/St000022
     on: Permutation
+statOn:
+  - DecoratedPermutation
+  - Endofunction
+  - Permutation
+  - SignedPermutation

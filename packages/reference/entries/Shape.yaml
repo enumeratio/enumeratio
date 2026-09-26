@@ -21,3 +21,8 @@ catalog:
     identity: Mp00083
     url: https://www.findstat.org/Mp00083
     on: StandardTableau
+mapOn:
+  - PlanePartition
+  - SemistandardTableau
+  - SetPartition
+  - StandardTableau

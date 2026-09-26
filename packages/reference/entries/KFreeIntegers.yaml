@@ -17,3 +17,8 @@ seeAlso:
   - At
   - Element
   - SquareFreeNumbers
+grades:
+  - name: k
+    role: param
+carrier: Numeric
+unbounded: true

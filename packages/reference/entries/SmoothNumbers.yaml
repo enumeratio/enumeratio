@@ -16,3 +16,8 @@ seeAlso:
   - At
   - Element
   - Primes
+grades:
+  - name: k
+    role: param
+carrier: Numeric
+unbounded: true

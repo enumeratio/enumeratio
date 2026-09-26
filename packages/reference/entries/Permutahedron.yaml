@@ -12,3 +12,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html
     note: order-isomorphic borrow of set_compositions (ordered set partitions of [n]); the geometric permutahedron itself is sage's polytopes.permutahedron(n), a different (coordinate) reading of the same combinatorics
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: SetComposition

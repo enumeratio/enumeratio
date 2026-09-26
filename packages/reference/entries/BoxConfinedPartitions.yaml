@@ -1,7 +1,7 @@
 name: BoxConfinedPartitions
 domain: Combinatorics
 signature: BoxConfinedPartitions(...)
-summary: Catalogued in the enumeratio database, with crosswalk rows in sage, wolfram; not yet written up here.
+summary: Catalogued in the enumeratio database, with crosswalk rows in sage, wolfram; not yet written up here. Catalogued as an alias of PartitionsInBox.
 catalog:
   - system: sage
     identity: PartitionsInBox(h, w)
@@ -12,3 +12,9 @@ catalog:
     url: https://reference.wolfram.com/language/ref/QBinomial.html
     note: grouping box_confined_partitions(parts,max_part) by |λ| gives QBinomial[parts+max_part,parts,q] coefficients (box_confined_partitions.sql's own "THE GEM" self-test); cardinality = QBinomial[parts+max_part,parts,1] = Binomial(parts+max_part,parts)
 stub: carrier
+grades:
+  - name: parts
+    role: axis
+  - name: max_part
+    role: axis
+carrier: IntegerPartition

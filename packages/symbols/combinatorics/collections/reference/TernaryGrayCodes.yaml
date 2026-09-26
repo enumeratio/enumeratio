@@ -24,3 +24,7 @@ catalog:
     identity: sage.combinat.gray_codes.product([3]*n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/gray_codes.html
     note: a SWITCH generator, not an element class (same pattern as gray_codes → product([2]*n)); product([3]*n) walks the reflected ternary Gray code = our carrier
+grades:
+  - name: n
+    role: axis
+carrier: TernaryGrayCode

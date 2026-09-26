@@ -14,3 +14,14 @@ catalog:
     identity: St000166
     url: https://www.findstat.org/St000166
     on: OrderedTree
+statOn:
+  - BinaryTree
+  - ColoredMotzkinPath
+  - DelannoyPath
+  - DyckPath
+  - KDyckPath
+  - KMotzkinPath
+  - MotzkinPath
+  - OrderedTree
+  - PlaneTree
+  - SchroederPath

@@ -8,3 +8,5 @@ catalog:
     url: https://www.findstat.org/St000186
     on: GelfandTsetlinPattern
 stub: carrier
+statOn:
+  - GelfandTsetlinPattern

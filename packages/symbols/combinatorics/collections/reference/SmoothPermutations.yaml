@@ -18,3 +18,7 @@ seeAlso:
   - VexillaryPermutations
   - Count
   - At
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

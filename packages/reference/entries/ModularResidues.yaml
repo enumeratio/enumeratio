@@ -10,3 +10,7 @@ catalog:
     identity: IntegerModRing(n) / Zmod(n)
     url: https://doc.sagemath.org/html/en/reference/finite_rings/sage/rings/finite_rings/integer_mod_ring.html
 stub: carrier
+grades:
+  - name: modulus
+    role: axis
+carrier: ModularResidue

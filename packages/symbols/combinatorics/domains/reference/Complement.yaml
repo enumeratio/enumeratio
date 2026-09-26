@@ -13,3 +13,7 @@ catalog:
     identity: Mp00069
     url: https://www.findstat.org/Mp00069
     on: Permutation
+mapOn:
+  - BinaryWord
+  - Composition
+  - Permutation

@@ -18,3 +18,7 @@ catalog:
   - system: oeis
     identity: A000108
     url: https://oeis.org/A000108
+grades:
+  - name: n
+    role: axis
+carrier: PerfectMatching

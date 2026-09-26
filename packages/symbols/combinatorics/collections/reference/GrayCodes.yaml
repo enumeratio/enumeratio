@@ -27,3 +27,7 @@ catalog:
     identity: Gray code
     url: https://en.wikipedia.org/wiki/Gray_code
     relation: conceptual
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

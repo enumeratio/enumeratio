@@ -8,3 +8,5 @@ catalog:
     url: https://www.findstat.org/St000003
     on: IntegerPartition
 stub: carrier
+statOn:
+  - IntegerPartition

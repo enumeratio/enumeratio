@@ -10,3 +10,6 @@ catalog:
     identity: Rat
     url: https://leanprover-community.github.io/mathlib4_docs/Init/Data/Rat/Basic.html
 stub: engine
+grades: []
+carrier: RationalNumber
+unbounded: true

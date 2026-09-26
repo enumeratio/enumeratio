@@ -15,3 +15,8 @@ catalog:
     identity: Mp00064
     url: https://www.findstat.org/Mp00064
     on: Permutation
+mapOn:
+  - BinaryWord
+  - Composition
+  - Permutation
+  - SetPartition

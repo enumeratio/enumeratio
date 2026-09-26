@@ -25,3 +25,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition.html
     note: predicate method, not a dedicated class — filter SetPartitions(n) by .is_nonnesting()
     relation: partial
+grades:
+  - name: n
+    role: axis
+carrier: SetPartition

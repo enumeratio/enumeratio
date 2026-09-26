@@ -12,3 +12,6 @@ catalog:
     url: https://www.findstat.org/St001401
     on: SemistandardTableau
 stub: carrier
+statOn:
+  - GelfandTsetlinPattern
+  - SemistandardTableau

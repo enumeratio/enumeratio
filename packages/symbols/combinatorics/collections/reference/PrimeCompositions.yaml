@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A023360
     url: https://oeis.org/A023360
+grades:
+  - name: n
+    role: axis
+carrier: Composition

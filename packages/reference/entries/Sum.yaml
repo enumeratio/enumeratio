@@ -8,3 +8,7 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+statOn:
+  - Finset
+  - PermutationInversion
+  - SubexcedantSeq

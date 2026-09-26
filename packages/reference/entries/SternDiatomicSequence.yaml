@@ -20,3 +20,6 @@ catalog:
   - system: oeis
     identity: A002487
     url: https://oeis.org/A002487
+grades: []
+carrier: Numeric
+unbounded: true

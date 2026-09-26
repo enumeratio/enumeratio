@@ -11,3 +11,5 @@ catalog:
     url: https://www.findstat.org/St001919
     on: PlanePartition
 stub: engine
+statOn:
+  - PlanePartition

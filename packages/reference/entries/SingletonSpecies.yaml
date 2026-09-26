@@ -7,3 +7,7 @@ catalog:
     identity: SingletonSpecies (= CharacteristicSpecies(1))
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/species/characteristic_species.html
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: Singleton

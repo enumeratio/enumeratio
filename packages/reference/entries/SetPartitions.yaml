@@ -58,3 +58,7 @@ catalog:
     identity: Nat.bell
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Bell.html#Nat.bell
     relation: aggregate
+grades:
+  - name: n
+    role: axis
+carrier: SetPartition

@@ -5,3 +5,5 @@ summary: The conjugate partition of the cycle type.
 details:
   - Takes a `Permutation` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - Entry j is the count of cycles of length at least j — non-increasing in j by construction, so it comes out sorted without needing one.
+mapOn:
+  - Permutation

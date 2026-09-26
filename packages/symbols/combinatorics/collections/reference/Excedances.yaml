@@ -21,3 +21,6 @@ catalog:
     identity: St000155
     url: https://www.findstat.org/St000155
     on: Permutation
+statOn:
+  - DecoratedPermutation
+  - Permutation

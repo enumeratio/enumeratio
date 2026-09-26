@@ -34,3 +34,6 @@ catalog:
   - system: wolfram
     identity: BellB
     url: https://reference.wolfram.com/language/ref/BellB.html
+grades: []
+carrier: Numeric
+unbounded: true

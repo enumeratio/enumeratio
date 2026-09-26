@@ -11,3 +11,5 @@ references:
     identity: Longest increasing subsequence
   - system: rosettacode
     identity: Longest increasing subsequence
+statOn:
+  - Permutation

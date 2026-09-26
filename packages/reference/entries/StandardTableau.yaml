@@ -8,3 +8,4 @@ references:
   - system: mathworld
     identity: YoungTableau
 stub: carrier
+catalogCarrier: true

@@ -8,3 +8,5 @@ catalog:
     url: https://www.findstat.org/St000190
     on: CorePartition
 stub: carrier
+statOn:
+  - CorePartition

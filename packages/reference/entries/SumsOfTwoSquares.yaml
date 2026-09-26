@@ -1,0 +1,9 @@
+name: SumsOfTwoSquares
+domain: Combinatorics
+signature: SumsOfTwoSquares(...)
+summary: Representations n = a²+b² with 0 ≤ a ≤ b.
+grades:
+  - name: n
+    role: axis
+carrier: GaussianInteger
+stub: carrier

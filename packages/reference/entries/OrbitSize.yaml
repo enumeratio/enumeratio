@@ -1,0 +1,7 @@
+name: OrbitSize
+domain: Combinatorics
+signature: OrbitSize(...)
+summary: Period-block repetition count (n / period)
+statOn:
+  - Word
+stub: carrier

@@ -7,3 +7,4 @@ catalog:
     identity: Multiset
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Multiset/Defs.html
 stub: carrier
+catalogCarrier: true

@@ -9,3 +9,5 @@ details:
 references:
   - system: wikipedia
     identity: Longest increasing subsequence
+statOn:
+  - Permutation

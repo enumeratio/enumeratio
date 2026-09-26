@@ -25,3 +25,7 @@ catalog:
   - system: sage
     identity: Permutations(n, avoiding=[1,2,3])
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

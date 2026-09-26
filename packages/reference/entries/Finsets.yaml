@@ -7,3 +7,6 @@ catalog:
     identity: Finset ℕ
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
 stub: carrier
+grades: []
+carrier: Finset
+unbounded: true

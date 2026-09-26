@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A007294
     url: https://oeis.org/A007294
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition

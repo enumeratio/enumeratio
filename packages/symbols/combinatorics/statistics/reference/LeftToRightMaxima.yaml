@@ -11,3 +11,6 @@ catalog:
     identity: St000314
     url: https://www.findstat.org/St000314
     on: Permutation
+statOn:
+  - Arrangement
+  - Permutation

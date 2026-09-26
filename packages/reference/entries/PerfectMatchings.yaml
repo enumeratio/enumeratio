@@ -15,3 +15,7 @@ catalog:
     url: https://en.wikipedia.org/wiki/Perfect_matching
     relation: conceptual
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: PerfectMatching

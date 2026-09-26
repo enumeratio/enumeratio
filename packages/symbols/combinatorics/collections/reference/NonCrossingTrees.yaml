@@ -18,3 +18,7 @@ seeAlso:
   - CatalanNumber
   - Count
   - At
+grades:
+  - name: n
+    role: axis
+carrier: NonCrossingTree

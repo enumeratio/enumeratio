@@ -30,3 +30,7 @@ catalog:
     identity: Binary tree
     url: https://en.wikipedia.org/wiki/Binary_tree
     relation: conceptual
+grades:
+  - name: n
+    role: axis
+carrier: BinaryTree

@@ -13,3 +13,9 @@ seeAlso:
 references:
   - system: oeis
     identity: A055151
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: MotzkinPath

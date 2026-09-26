@@ -21,3 +21,6 @@ catalog:
   - system: oeis
     identity: A003215
     url: https://oeis.org/A003215
+grades: []
+carrier: Numeric
+unbounded: true

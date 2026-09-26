@@ -1,7 +1,7 @@
 name: CalkinWilfPaths
 domain: Combinatorics
 signature: CalkinWilfPaths(...)
-summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here. Catalogued as an alias of BinaryWords.
 catalog:
   - system: oeis
     identity: A002487
@@ -9,3 +9,7 @@ catalog:
     note: fiber n is a contiguous depth-block of the BFS Calkin-Wilf enumeration (fusc-indexed); rank = word binary value
     relation: conceptual
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

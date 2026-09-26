@@ -22,3 +22,7 @@ catalog:
   - system: oeis
     identity: A000325
     url: https://oeis.org/A000325
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

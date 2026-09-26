@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A000045
     url: https://oeis.org/A000045
+grades:
+  - name: n
+    role: axis
+carrier: Composition

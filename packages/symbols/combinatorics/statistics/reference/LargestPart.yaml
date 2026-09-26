@@ -10,3 +10,9 @@ catalog:
     identity: St001447
     url: https://www.findstat.org/St001447
     on: PlanePartition
+statOn:
+  - Composition
+  - CorePartition
+  - IntegerPartition
+  - PlanePartition
+  - WeakComposition

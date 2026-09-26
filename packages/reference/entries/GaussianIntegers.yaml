@@ -10,3 +10,6 @@ catalog:
     identity: GaussianIntegers()
     url: https://doc.sagemath.org/html/en/reference/number_fields/
 stub: carrier
+grades: []
+carrier: GaussianInteger
+unbounded: true

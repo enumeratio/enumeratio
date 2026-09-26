@@ -22,3 +22,5 @@ seeAlso:
   - DigitSum
 names:
   wolframIdentity: true
+statOn:
+  - Numeric

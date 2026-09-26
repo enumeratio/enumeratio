@@ -8,3 +8,6 @@ catalog:
     url: https://www.findstat.org/St001446
     on: PlanePartition
 stub: carrier
+statOn:
+  - PlanePartition
+  - SkewPartition

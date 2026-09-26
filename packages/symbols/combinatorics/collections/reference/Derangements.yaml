@@ -41,3 +41,7 @@ catalog:
   - system: wolfram
     identity: Subfactorial
     url: https://reference.wolfram.com/language/ref/Subfactorial.html
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

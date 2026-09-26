@@ -10,3 +10,5 @@ catalog:
     identity: St000024
     url: https://www.findstat.org/St000024
     on: DyckPath
+statOn:
+  - DyckPath

@@ -1,0 +1,8 @@
+name: GaussianInteger
+domain: Combinatorics
+signature: GaussianInteger(...)
+summary: As a Gaussian integer
+catalogCarrier: true
+mapOn:
+  - GaussianInteger
+stub: carrier

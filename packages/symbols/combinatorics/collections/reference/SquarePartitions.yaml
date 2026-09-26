@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A001156
     url: https://oeis.org/A001156
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition

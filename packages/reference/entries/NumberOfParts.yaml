@@ -1,0 +1,7 @@
+name: NumberOfParts
+domain: Combinatorics
+signature: NumberOfParts(...)
+summary: Number of parts
+statOn:
+  - CorePartition
+stub: carrier

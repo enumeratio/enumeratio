@@ -13,3 +13,5 @@ catalog:
     identity: St000145
     url: https://www.findstat.org/St000145
     on: IntegerPartition
+statOn:
+  - IntegerPartition

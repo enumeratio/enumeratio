@@ -10,3 +10,5 @@ catalog:
     identity: St000247
     url: https://www.findstat.org/St000247
     on: SetPartition
+statOn:
+  - SetPartition

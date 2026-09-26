@@ -7,3 +7,7 @@ catalog:
     identity: A000108
     url: https://oeis.org/A000108
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: ParkingFunction

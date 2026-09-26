@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A003319
     url: https://oeis.org/A003319
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

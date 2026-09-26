@@ -18,3 +18,12 @@ catalog:
     identity: St000023
     url: https://www.findstat.org/St000023
     on: Permutation
+statOn:
+  - ColoredMotzkinPath
+  - DelannoyPath
+  - DyckPath
+  - KDyckPath
+  - KMotzkinPath
+  - MotzkinPath
+  - Permutation
+  - SchroederPath

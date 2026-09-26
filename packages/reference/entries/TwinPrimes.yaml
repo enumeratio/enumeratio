@@ -24,3 +24,6 @@ catalog:
   - system: oeis
     identity: A001359
     url: https://oeis.org/A001359
+grades: []
+carrier: Numeric
+unbounded: true

@@ -1,0 +1,11 @@
+name: MulticomplexNumbers
+domain: Combinatorics
+signature: MulticomplexNumbers(...)
+summary: The commutative ring tower ℂn(ℤ/M) = (ℤ/M)[i₁,…,iₙ]/(iₖ²+1); 2ⁿ-coefficient vectors, XOR-convolution product.
+grades:
+  - name: modulus
+    role: axis
+  - name: level
+    role: axis
+carrier: Multicomplex
+stub: carrier

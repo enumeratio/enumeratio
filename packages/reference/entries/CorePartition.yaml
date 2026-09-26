@@ -1,0 +1,6 @@
+name: CorePartition
+domain: Combinatorics
+signature: CorePartition(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier

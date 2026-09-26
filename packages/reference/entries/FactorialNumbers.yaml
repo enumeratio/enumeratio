@@ -33,3 +33,6 @@ catalog:
     identity: Factorial
     url: https://en.wikipedia.org/wiki/Factorial
     relation: conceptual
+grades: []
+carrier: Numeric
+unbounded: true

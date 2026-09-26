@@ -20,3 +20,7 @@ catalog:
     note: real running construction, not just the bare Partition.conjugate property; verified live n=4 term-for-term against integer_partitions' own conjugate map
     on: IntegerPartition
 stub: engine
+mapOn:
+  - Composition
+  - CorePartition
+  - IntegerPartition

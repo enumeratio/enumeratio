@@ -13,3 +13,6 @@ catalog:
     identity: A001477
     url: https://oeis.org/A001477
 stub: carrier
+grades: []
+carrier: Numeric
+unbounded: true

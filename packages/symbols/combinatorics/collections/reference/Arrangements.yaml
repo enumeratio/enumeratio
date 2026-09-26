@@ -35,3 +35,9 @@ catalog:
     identity: FactorialPower
     url: https://reference.wolfram.com/language/ref/FactorialPower.html
     note: fiber_count(n,k) = P(n,k) = n!/(n-k)! = FactorialPower[n,k], the 2-argument falling-factorial form
+grades:
+  - name: size
+    role: axis
+  - name: length
+    role: axis
+carrier: Arrangement

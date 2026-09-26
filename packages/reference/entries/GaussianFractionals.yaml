@@ -1,0 +1,8 @@
+name: GaussianFractionals
+domain: Combinatorics
+signature: GaussianFractionals(...)
+summary: ℚ(i) carried as a pair of unreduced fractions — the unreduced companion to the Gaussian rationals.
+grades: []
+carrier: GaussianFractional
+unbounded: true
+stub: carrier

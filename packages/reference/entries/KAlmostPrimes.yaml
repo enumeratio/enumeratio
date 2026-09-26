@@ -24,3 +24,8 @@ catalog:
     identity: A078840
     url: https://oeis.org/A078840
     note: their k is 1-indexed within Ω=n row; our unrank is 0-indexed
+grades:
+  - name: k
+    role: axis
+carrier: Numeric
+unbounded: true

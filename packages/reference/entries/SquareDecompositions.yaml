@@ -1,0 +1,8 @@
+name: SquareDecompositions
+domain: Combinatorics
+signature: SquareDecompositions(...)
+summary: The unique factorization n = s²·q with q squarefree, as the pair (s, q).
+grades: []
+carrier: SquareDecomposition
+unbounded: true
+stub: carrier

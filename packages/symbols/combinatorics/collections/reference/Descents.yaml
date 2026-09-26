@@ -33,3 +33,15 @@ catalog:
     identity: St000157
     url: https://www.findstat.org/St000157
     on: StandardTableau
+statOn:
+  - Arrangement
+  - BinaryWord
+  - Composition
+  - DecoratedPermutation
+  - ParkingFunction
+  - Permutation
+  - SetComposition
+  - SignedPermutation
+  - StandardTableau
+  - Surjection
+  - Word

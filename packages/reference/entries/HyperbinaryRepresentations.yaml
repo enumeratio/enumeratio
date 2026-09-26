@@ -8,3 +8,7 @@ catalog:
     url: https://oeis.org/A002487
     note: fiber n has fusc(n+1) numerals — Stern's diatomic sequence
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: HyperbinaryWord

@@ -48,3 +48,9 @@ catalog:
     identity: Binomial
     url: https://reference.wolfram.com/language/ref/Binomial.html
     note: fiber_count(n,k) = Binomial(n,k)
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: Finset

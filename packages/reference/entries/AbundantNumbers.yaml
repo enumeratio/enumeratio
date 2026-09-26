@@ -24,3 +24,6 @@ catalog:
   - system: oeis
     identity: A005101
     url: https://oeis.org/A005101
+grades: []
+carrier: Numeric
+unbounded: true

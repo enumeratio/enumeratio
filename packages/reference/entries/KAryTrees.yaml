@@ -1,0 +1,11 @@
+name: KAryTrees
+domain: Combinatorics
+signature: KAryTrees(...)
+summary: Trees where every internal node has exactly k children — the Fuss-Catalan count.
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: KAryTree
+stub: carrier

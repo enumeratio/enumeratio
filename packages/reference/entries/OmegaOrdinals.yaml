@@ -7,3 +7,6 @@ catalog:
     identity: Ordinal
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/SetTheory/Ordinal/Basic.html
 stub: carrier
+grades: []
+carrier: OmegaOrdinal
+unbounded: true

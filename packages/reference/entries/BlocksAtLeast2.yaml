@@ -1,0 +1,7 @@
+name: BlocksAtLeast2
+domain: Combinatorics
+signature: BlocksAtLeast2(...)
+summary: Number of blocks of size ≥ 2
+statOn:
+  - SetComposition
+stub: carrier

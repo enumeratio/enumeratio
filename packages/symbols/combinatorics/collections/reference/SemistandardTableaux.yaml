@@ -29,3 +29,9 @@ catalog:
     url: https://en.wikipedia.org/wiki/Young_tableau
     note: the article covers both standard and semistandard tableaux under one page
     relation: conceptual
+grades:
+  - name: size
+    role: axis
+  - name: max_entry
+    role: axis
+carrier: SemistandardTableau

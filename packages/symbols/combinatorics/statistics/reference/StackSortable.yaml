@@ -10,3 +10,5 @@ references:
     identity: Stack-sortable permutation
   - system: oeis
     identity: A000108
+statOn:
+  - Permutation

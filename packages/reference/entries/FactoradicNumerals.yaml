@@ -1,0 +1,8 @@
+name: FactoradicNumerals
+domain: Combinatorics
+signature: FactoradicNumerals(...)
+summary: The factorial-base (mixed-radix) numerals; bijective with ℕ, rank = value.
+grades: []
+carrier: FactoradicNumeral
+unbounded: true
+stub: carrier

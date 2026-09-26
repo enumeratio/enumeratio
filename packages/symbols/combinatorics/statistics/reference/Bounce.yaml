@@ -11,3 +11,5 @@ catalog:
     identity: St000005
     url: https://www.findstat.org/St000005
     on: DyckPath
+statOn:
+  - DyckPath

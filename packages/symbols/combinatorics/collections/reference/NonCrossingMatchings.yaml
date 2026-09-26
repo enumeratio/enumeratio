@@ -23,3 +23,7 @@ catalog:
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/perfect_matching.html
     note: predicate method, not a dedicated class — filter PerfectMatchings(k) by .is_noncrossing(); k=2n, matching the existing perfect_matchings delta (sage parameterizes by ground-set size, ours by pair-count)
     relation: partial
+grades:
+  - name: n
+    role: axis
+carrier: PerfectMatching

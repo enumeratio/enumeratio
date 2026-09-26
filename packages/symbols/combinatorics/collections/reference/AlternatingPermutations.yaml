@@ -19,3 +19,7 @@ catalog:
   - system: oeis
     identity: A000111
     url: https://oeis.org/A000111
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

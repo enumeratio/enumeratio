@@ -10,3 +10,7 @@ catalog:
   - system: sage
     identity: OrderedSetPartitions(n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html
+grades:
+  - name: n
+    role: axis
+carrier: SetComposition

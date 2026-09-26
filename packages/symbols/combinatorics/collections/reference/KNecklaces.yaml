@@ -20,3 +20,9 @@ catalog:
     identity: necklaces
     url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.necklaces
     note: necklaces(n, base) — 0-indexed colors, shift +1 for our 1-based letters
+grades:
+  - name: size
+    role: axis
+  - name: base
+    role: param
+carrier: Word

@@ -23,3 +23,7 @@ catalog:
     identity: A000045
     url: https://oeis.org/A000045
     note: "F(n+1): no non-adjacent inversion (independent sets of a path)"
+grades:
+  - name: size
+    role: axis
+carrier: Permutation

@@ -20,3 +20,8 @@ seeAlso:
   - Count
   - At
   - Element
+grades:
+  - name: k
+    role: param
+carrier: Numeric
+unbounded: true

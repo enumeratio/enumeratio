@@ -25,3 +25,9 @@ catalog:
     identity: St000018
     url: https://www.findstat.org/St000018
     on: Permutation
+statOn:
+  - Arrangement
+  - Permutation
+  - PermutationCycles
+  - PermutationInversion
+  - SignedPermutation

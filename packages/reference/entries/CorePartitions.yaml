@@ -7,3 +7,9 @@ catalog:
     identity: Cores(k, n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/core.html
 stub: carrier
+grades:
+  - name: k
+    role: axis
+  - name: length
+    role: axis
+carrier: CorePartition

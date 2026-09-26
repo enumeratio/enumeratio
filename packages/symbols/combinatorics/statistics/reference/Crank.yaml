@@ -14,3 +14,5 @@ catalog:
     url: https://www.findstat.org/St000474
     note: FindStat's St000146 takes the length when there are no 1s; ours takes the largest part, which is St000474 — confirmed on every partition of n ≤ 10 by FindStat's finder
     on: IntegerPartition
+statOn:
+  - IntegerPartition

@@ -15,3 +15,5 @@ catalog:
     identity: Mp00108
     url: https://www.findstat.org/Mp00108
     on: Permutation
+mapOn:
+  - Permutation

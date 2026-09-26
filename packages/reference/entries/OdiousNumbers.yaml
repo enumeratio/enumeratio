@@ -21,3 +21,6 @@ catalog:
   - system: oeis
     identity: A000069
     url: https://oeis.org/A000069
+grades: []
+carrier: Numeric
+unbounded: true

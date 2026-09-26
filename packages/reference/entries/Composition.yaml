@@ -8,3 +8,4 @@ references:
   - system: mathworld
     identity: Composition
 stub: carrier
+catalogCarrier: true

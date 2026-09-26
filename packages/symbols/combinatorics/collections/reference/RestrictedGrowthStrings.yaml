@@ -21,3 +21,7 @@ catalog:
     identity: SetPartitions(n)
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition.html
     note: word (RGS) encoding, not sage's block-list representation
+grades:
+  - name: n
+    role: axis
+carrier: SetPartition

@@ -17,3 +17,7 @@ catalog:
   - system: oeis
     identity: A000204
     url: https://oeis.org/A000204
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

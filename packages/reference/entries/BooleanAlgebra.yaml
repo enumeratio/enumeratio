@@ -15,3 +15,7 @@ catalog:
     url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/BooleanAlgebra/Defs.html
     note: an ORDER class (distributive lattice + complement); our BOUNDED finset instantiates it
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: Finset

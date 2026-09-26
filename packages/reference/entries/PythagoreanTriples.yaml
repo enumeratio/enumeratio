@@ -1,0 +1,9 @@
+name: PythagoreanTriples
+domain: Combinatorics
+signature: PythagoreanTriples(...)
+summary: Triples (a,b,c) with a²+b²=c², graded by hypotenuse c.
+grades:
+  - name: hypotenuse
+    role: axis
+carrier: PythagoreanTriple
+stub: carrier

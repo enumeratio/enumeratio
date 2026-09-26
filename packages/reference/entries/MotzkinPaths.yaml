@@ -8,3 +8,7 @@ catalog:
     url: https://oeis.org/A001006
     note: count only
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: MotzkinPath

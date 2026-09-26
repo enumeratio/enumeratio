@@ -1,7 +1,7 @@
 name: PowerSet
 domain: Compute engine
 signature: PowerSet(set<any>) -> set
-summary: Return the power set of a set (set of all subsets).
+summary: Return the power set of a set (set of all subsets). Catalogued as an alias of Subsets.
 signatures:
   - call: PowerSet(set<any>) -> set
     description: as compute-engine declares it
@@ -13,3 +13,7 @@ references:
   - system: rosettacode
     identity: Power set
 stub: engine
+grades:
+  - name: n
+    role: axis
+carrier: Finset

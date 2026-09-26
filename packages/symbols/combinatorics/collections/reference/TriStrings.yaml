@@ -22,3 +22,7 @@ catalog:
     identity: A000073
     url: https://oeis.org/A000073
     note: "A000073(n+3): length-n binary strings avoiding 111 (tribonacci)"
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord

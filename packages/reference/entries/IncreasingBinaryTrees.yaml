@@ -1,0 +1,9 @@
+name: IncreasingBinaryTrees
+domain: Combinatorics
+signature: IncreasingBinaryTrees(...)
+summary: Binary trees on n labeled nodes, heap-ordered by label — n! of them.
+grades:
+  - name: n
+    role: axis
+carrier: IncreasingBinaryTree
+stub: carrier

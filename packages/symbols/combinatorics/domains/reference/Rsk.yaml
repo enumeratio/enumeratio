@@ -8,3 +8,5 @@ details:
 references:
   - system: wikipedia
     identity: Robinson–Schensted correspondence
+mapOn:
+  - Permutation

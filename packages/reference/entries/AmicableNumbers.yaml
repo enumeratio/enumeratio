@@ -7,3 +7,6 @@ catalog:
     identity: A063990
     url: https://oeis.org/A063990
 stub: carrier
+grades: []
+carrier: Numeric
+unbounded: true

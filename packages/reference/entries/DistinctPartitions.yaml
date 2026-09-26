@@ -16,3 +16,7 @@ catalog:
     identity: PartitionsQ
     url: https://reference.wolfram.com/language/ref/PartitionsQ.html
 stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition

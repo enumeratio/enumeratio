@@ -27,3 +27,6 @@ catalog:
   - system: wolfram
     identity: LucasL
     url: https://reference.wolfram.com/language/ref/LucasL.html
+grades: []
+carrier: Numeric
+unbounded: true

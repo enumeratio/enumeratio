@@ -19,3 +19,9 @@ catalog:
   - system: oeis
     identity: A008302
     url: https://oeis.org/A008302
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: Permutation
