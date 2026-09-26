@@ -97,7 +97,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 1180, disagree 29, inconclusive 12, error 29
+## sympy — agree 1188, disagree 29, inconclusive 11, error 27
 
 | example                                                        | kind           | ours                             | theirs                                                                        |
 | -------------------------------------------------------------- | -------------- | -------------------------------- | ----------------------------------------------------------------------------- |
@@ -136,7 +136,6 @@ Counts cover mapped examples only; unmapped ones have no row.
 | example                                                             | message                                                                          |
 | ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `BellNumber/a-negative-argument-is-left-unevaluated`                | `ValueError: a non-negative integer expected`                                    |
-| `CatalanNumber/threads-element-wise-over-a-list-as-wolfram-s`       | `AttributeError: 'list' object has no attribute 'is_Integer'`                    |
 | `Ceil/threads-element-wise-over-a-list`                             | `AttributeError: 'list' object has no attribute 'is_Number'`                     |
 | `ContinuedFraction/a-floating-point-number-read-as-the-rational-it` | `ValueError: expecting a rational or quadratic irrational, not 3.24500000000000` |
 | `Factorial/threads-element-wise-over-a-list`                        | `AttributeError: 'list' object has no attribute 'is_Number'`                     |
@@ -159,7 +158,6 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `PolyGamma/threads-over-a-list-each-element-exact-so-each`          | `AttributeError: 'list' object has no attribute 'is_Integer'`                    |
 | `PolyLog/threads-over-a-list-of-arguments`                          | `AttributeError: 'list' object has no attribute 'is_number'`                     |
 | `Square/threads-element-wise-over-a-list`                           | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'`       |
-| `Stirling/threads-element-wise-over-a-list-as-wolfram-s`            | `ValueError: [2, 4, 6] is not an integer`                                        |
 | `Totient/negative-n-varphi-n-varphi-n`                              | `ValueError: n should be a positive integer`                                     |
 | `Totient/varphi-0-0-as-in-wolfram`                                  | `ValueError: n should be a positive integer`                                     |
 | `Zeta/threads-over-a-list-reducing-every-element-to`                | `AttributeError: 'list' object has no attribute 'is_Integer'`                    |
@@ -167,30 +165,43 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## mpmath — agree 695, disagree 5, inconclusive 1, error 10
+## mpmath — agree 886, disagree 10, inconclusive 3, error 18
 
-| example                                                | kind           | ours                       | theirs                                                                         |
-| ------------------------------------------------------ | -------------- | -------------------------- | ------------------------------------------------------------------------------ |
-| `HurwitzZeta/pole-at-s-1-for-every-a`                  | undefined-form | `ComplexInfinity`          | `+inf`                                                                         |
-| `LerchPhi/n-lerchphi-10-10-10-cancels-below-precision` | unevaluated    | `["LerchPhi",10,10,10]`    | `(-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)` |
-| `LerchPhi/where-the-continuation-s-terms-cancel-below` | unevaluated    | `["LerchPhi",10,10,10]`    | `(-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)` |
-| `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this` | convention     | `2.91666666666666666667`   | `-3.08333333333333333333333333333`                                             |
-| `Zeta/zeta-complex-argument-stays-symbolic-until-n`    | unevaluated    | `["Zeta",["Complex",2,1]]` | `(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)`        |
+| example                                                  | kind           | ours                       | theirs                                                                                |
+| -------------------------------------------------------- | -------------- | -------------------------- | ------------------------------------------------------------------------------------- |
+| `HurwitzZeta/pole-at-s-1-for-every-a`                    | undefined-form | `ComplexInfinity`          | `+inf`                                                                                |
+| `LerchPhi/n-lerchphi-10-10-10-cancels-below-precision`   | unevaluated    | `["LerchPhi",10,10,10]`    | `(-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)`        |
+| `LerchPhi/phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and` | precision      | `["Multiply",4,"Catalan"]` | `(3.66386237670887606021841405973 + 7.97925565338168760409178361466e-35j)`            |
+| `LerchPhi/where-the-continuation-s-terms-cancel-below`   | unevaluated    | `["LerchPhi",10,10,10]`    | `(-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)`        |
+| `N/a-list-number-by-number`                              | precision      | `[3.1416, 2.7183, 1.4142]` | `[<pi: 3.14159~>, <e = exp(1): 2.71828~>, mpf('1.41421356237309504880168872420977')]` |
+| `N/an-exact-tie-rounds-to-the-even-digit-0-125`          | precision      | `0.12`                     | `0.125`                                                                               |
+| `N/and-0-375-to-0-38`                                    | precision      | `0.38`                     | `0.375`                                                                               |
+| `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`   | convention     | `2.91666666666666666667`   | `-3.08333333333333333333333333333`                                                    |
+| `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`           | convention     | `16.4143983221171599978`   | `0.41439832211715999779816713058`                                                     |
+| `Zeta/zeta-complex-argument-stays-symbolic-until-n`      | unevaluated    | `["Zeta",["Complex",2,1]]` | `(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)`               |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                                                  | message                                      |
-| -------------------------------------------------------- | -------------------------------------------- |
-| `Gamma/a-pole-of-gamma`                                  | `ValueError: gamma function pole`            |
-| `Gamma/threads-over-a-list-so-poles-evaluate-concretely` | `ValueError: gamma function pole`            |
-| `HurwitzZeta/pole-at-a-0-re-s-positive`                  | `ZeroDivisionError: `                        |
-| `HurwitzZeta/pole-at-a-neg-1-inexact-s`                  | `NoConvergence: zeta: too much cancellation` |
-| `HurwitzZeta/pole-at-a-neg-2-re-s-positive`              | `ZeroDivisionError: `                        |
-| `PolyGamma/a-pole-of-gamma-still-a-pole-after`           | `ZeroDivisionError: `                        |
-| `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges`  | `ValueError: zeta(1) pole`                   |
-| `Zeta/zeta-2-neg-2-stays-finite-unlike-hurwitzzeta`      | `ZeroDivisionError: `                        |
-| `Zeta/zeta-3-0-drops-pole-term-like-s-2`                 | `ZeroDivisionError: `                        |
-| `Zeta/zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so`      | `ZeroDivisionError: `                        |
+| example                                                    | message                                                                    |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `Ceil/threads-element-wise-over-a-list`                    | `TypeError: cannot create mpf from [1.2, -1.2, 3.7]`                       |
+| `Floor/threads-element-wise-over-a-list`                   | `TypeError: cannot create mpf from [1.2, -1.2, 3.7]`                       |
+| `Gamma/a-pole-of-gamma`                                    | `ValueError: gamma function pole`                                          |
+| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`   | `ValueError: gamma function pole`                                          |
+| `HurwitzZeta/listable-threads-over-a-list-of-orders`       | `TypeError: cannot create mpf from [2, 3, 4]`                              |
+| `HurwitzZeta/pole-at-a-0-re-s-positive`                    | `ZeroDivisionError: `                                                      |
+| `HurwitzZeta/pole-at-a-neg-1-inexact-s`                    | `NoConvergence: zeta: too much cancellation`                               |
+| `HurwitzZeta/pole-at-a-neg-2-re-s-positive`                | `ZeroDivisionError: `                                                      |
+| `PolyGamma/a-pole-of-gamma-still-a-pole-after`             | `ZeroDivisionError: `                                                      |
+| `PolyGamma/threads-over-a-list-each-element-exact-so-each` | `TypeError: cannot create mpf from [1, 2]`                                 |
+| `PolyLog/threads-over-a-list-of-arguments`                 | `TypeError: cannot create mpf from [0.5, 0.25]`                            |
+| `Square/threads-element-wise-over-a-list`                  | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'` |
+| `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges`    | `ValueError: zeta(1) pole`                                                 |
+| `Zeta/threads-over-a-list-reducing-every-element-to`       | `TypeError: cannot create mpf from [-1, -2, -3]`                           |
+| `Zeta/zeta-2-neg-2-stays-finite-unlike-hurwitzzeta`        | `ZeroDivisionError: `                                                      |
+| `Zeta/zeta-3-0-drops-pole-term-like-s-2`                   | `ZeroDivisionError: `                                                      |
+| `Zeta/zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so`        | `ZeroDivisionError: `                                                      |
+| `Zeta/zeta-threads-over-mixed-exact-and-inexact-list`      | `TypeError: cannot create mpf from [2, mpc(real='0.5', imag='14.0')]`      |
 
 </details>
 

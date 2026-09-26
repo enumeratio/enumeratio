@@ -11,7 +11,7 @@
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { withOptions } from "@enumeratio/formats";
-import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import {
   CONTROL_HEADS,
   DRAWING_SYMBOLS,
@@ -50,7 +50,7 @@ function optionsOn(el: Element, symbol: VisualSymbol): Record<string, MathJsonEx
   for (const name of Object.keys(symbol.options ?? {})) {
     const raw = el.getAttribute(optionAttribute(name));
     if (raw === null) continue;
-    const { json, errors } = parseNotatio(raw === "true" ? "True" : raw);
+    const { json, errors } = parseExpression(raw === "true" ? "True" : raw);
     if (!errors.length) options[name] = json as MathJsonExpression;
   }
   return options;
@@ -100,7 +100,7 @@ function unwrapLayout(el: Element, head: string, names: ReadonlySet<string>): vo
     const slotted = slottedExceptDeclarations(expr as never, names);
     if (JSON.stringify(slotted) === JSON.stringify(expr)) return;
     const readout = document.createElement("notatio-dynamic");
-    readout.setAttribute("value", serializeNotatio(slotted as never));
+    readout.setAttribute("value", serializeExpression(slotted as never));
     entry.replaceWith(readout);
   };
   if (head === "Labeled") {

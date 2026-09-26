@@ -6,7 +6,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import AcrossSystemsTable from "./AcrossSystemsTable.vue";
 import { baseUrlFrom, HttpError, loadIndex, loadPlan, loadReport } from "./data.ts";
 import OverTimeChart, { type TimePoint } from "./OverTimeChart.vue";
-import { geomean, normaliseToFirst } from "./stats.ts";
+import { geomean, normaliseToFirst, sameFormula } from "./stats.ts";
 import SupportMatrix from "./SupportMatrix.vue";
 import type { BenchIndex, BenchSystem, IndexRun, Plan, Report } from "./types.ts";
 
@@ -70,6 +70,9 @@ const compareReport = ref<Report | null>(null);
 const compareTsReport = ref<Report | null>(null);
 const reportsLoading = ref(false);
 
+/** Each case's formula in the selected run: what another run must have timed to compare. */
+const formulas = computed(() => new Map(plan.value?.cases.map((c) => [c.name, c.formula]) ?? []));
+
 async function loadRun(run: IndexRun): Promise<void> {
   reportsLoading.value = true;
   try {
@@ -85,8 +88,13 @@ async function loadRun(run: IndexRun): Promise<void> {
     if (compareRunId.value && compareSystem.value) {
       const cmpRun = runs.value.find((r) => r.id === compareRunId.value);
       if (cmpRun) {
-        compareReport.value = await loadReport(baseUrl.value, cmpRun.id, compareSystem.value);
-        compareTsReport.value = cmpRun.systems.includes("ts") ? await loadReport(baseUrl.value, cmpRun.id, "ts") : null;
+        compareReport.value = sameFormula(
+          await loadReport(baseUrl.value, cmpRun.id, compareSystem.value),
+          formulas.value,
+        );
+        compareTsReport.value = cmpRun.systems.includes("ts")
+          ? sameFormula(await loadReport(baseUrl.value, cmpRun.id, "ts"), formulas.value)
+          : null;
       }
     } else {
       compareReport.value = null;
@@ -152,7 +160,7 @@ async function loadTimeSeries(): Promise<void> {
     const perRun = await Promise.all(
       eligibleRuns.map(async (r) => {
         const report = await loadReport(baseUrl.value, r.id, timeSystem.value);
-        const byN = new Map(report.results.map((res) => [res.name, res] as const));
+        const byN = new Map(sameFormula(report, formulas.value).results.map((res) => [res.name, res] as const));
         const caseNames = timeTag.value ? [...byN.keys()].filter((n) => tagCases.value.has(n)) : [timeBench.value];
         const oks = caseNames.map((n) => byN.get(n)).filter((r): r is Report["results"][number] => r?.status === "ok");
         return { run: r, oks };

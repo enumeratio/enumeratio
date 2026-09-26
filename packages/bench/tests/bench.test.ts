@@ -2,12 +2,13 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, test } from "vite-plus/test";
 import { agrees } from "../src/agree.ts";
-import { concretise, loadCatalogue } from "../src/catalogue.ts";
-import { buildPlan } from "../src/plan.ts";
+import { concretise, loadCatalogue, loadPins } from "../src/catalogue.ts";
+import { buildPlan, expectedOf } from "../src/plan.ts";
 import { measure, PROTOCOL } from "../src/protocol.ts";
 import { drawSample } from "../src/random.ts";
 import { judge } from "../src/run.ts";
 import { geomean, summarise } from "../src/stats.ts";
+import { SUITES } from "../src/suites.ts";
 
 // Golden data, not snapshots (AGENTS.md). Regenerate with `UPDATE_BENCH=1 vp test`.
 const GOLDEN = fileURLToPath(new URL("./bench.golden.json", import.meta.url));
@@ -70,7 +71,10 @@ describe("protocol", () => {
 describe("judge", () => {
   const samplesNs = [2e6, 2.1e6, 1.9e6, 2e6, 2e6];
   test("the correctness gate runs before the timing counts", () => {
-    expect(judge("F/x", { value: "7", samplesNs, k: 1 }, "8", "exact").status).toBe("wrong");
+    const wrong = judge("F/x", { value: "7", samplesNs, k: 1 }, "8", "exact");
+    expect(wrong.status).toBe("wrong");
+    // Kept for the record: the viewer shows it struck through, outside every comparison.
+    expect(wrong.median).toBe(2e6);
     expect(judge("F/x", { value: "8", samplesNs, k: 1 }, "8", "exact").status).toBe("ok");
   });
   test("exact answers compare as text, never through a double", () => {
@@ -83,6 +87,18 @@ describe("judge", () => {
     expect(agrees("0.53721319360804020094062322559", li3, 30)).toBe(true);
     expect(agrees("5.37213193608040200940623225595*^-1", li3, 30)).toBe(true);
   });
+  test("a list answer agrees element by element, whatever brackets the system prints", () => {
+    expect(agrees('["List",1,{"num":"123456789012345678901"}]', "{1, 123456789012345678901}", "exact")).toBe(true);
+    expect(agrees("[1, 3]", "{1, 2}", "exact")).toBe(false);
+    expect(agrees("[1]", "{1, 2}", "exact")).toBe(false);
+  });
+  test("complex answers compare across every system's spelling", () => {
+    const wl = "{-0.0490583746895581 + 0.0638414785169873*I}";
+    expect(agrees("[(-0.0490583746895581+0.0638414785169873j)]", wl, "machine")).toBe(true);
+    expect(agrees("[-0.0490583746895581 + 0.0638414785169873im]", wl, "machine")).toBe(true);
+    expect(agrees('["List",["Complex",-0.0490583746895581,0.0638414785169873]]', wl, "machine")).toBe(true);
+    expect(agrees("[(-0.0490583746895581-0.0638414785169873j)]", wl, "machine")).toBe(false);
+  });
   test("a call under the floor is kept but marked too-fast", () => {
     expect(judge("F/x", { value: "8", samplesNs: [100, 100, 100, 100, 100], k: 1 }, "8", "exact").status).toBe(
       "too-fast",
@@ -94,6 +110,15 @@ describe("catalogue", () => {
   const cases = loadCatalogue().map(concretise);
   test("loads, with unique ids", () => {
     expect(cases.length).toBeGreaterThan(0);
+  });
+  test("every case has an answer to gate on: written, or pinned for its current formula", () => {
+    const pins = loadPins();
+    const unpinned = cases.filter((c) => expectedOf(c, pins) === undefined).map((c) => c.name);
+    expect(unpinned, "run `node packages/bench/scripts/pin.ts` (needs wolframscript)").toEqual([]);
+  });
+  test("each suite takes the one before it and more", () => {
+    expect(SUITES.standard).toEqual(expect.arrayContaining([...SUITES.quick]));
+    expect(SUITES.deep).toEqual(expect.arrayContaining([...SUITES.standard]));
   });
   test("the support matrix is pinned", () => {
     pin("plan", buildPlan(cases));

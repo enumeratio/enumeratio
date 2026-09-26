@@ -1,5 +1,5 @@
 import { toInputForm } from "@enumeratio/formats/inputform";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
@@ -424,8 +424,8 @@ export class NotatioIn extends LitElement {
   #onExport = (_field: MathField, latex: string): string =>
     (latex === this.value ? this.inputForm : this.#inputFormOf(latex)) || latex;
 
-  // MathLive reads a paste as LaTeX, and notatio read as LaTeX is nonsense (`Sin(x)` is
-  // S·i·n·(x)). Plain text that parses as notatio goes in as its LaTeX instead.
+  // MathLive reads a paste as LaTeX, and Epsil read as LaTeX is nonsense (`Sin(x)` is
+  // S·i·n·(x)). Plain text that parses as Epsil goes in as its LaTeX instead.
   #onPaste = (event: ClipboardEvent): void => {
     const field = this.#field;
     if (!field || field.readOnly) return;
@@ -437,12 +437,12 @@ export class NotatioIn extends LitElement {
     this.#onInput();
   };
 
-  // The LaTeX of notatio `text`, or undefined when it isn't notatio (or the engine isn't
+  // The LaTeX of Epsil `text`, or undefined when it isn't Epsil (or the engine isn't
   // loaded yet, and MathLive's own reading will have to do).
   #latexOf(text: string): string | undefined {
     const engine = NotatioIn.#engine;
     if (!engine) return undefined;
-    const { json, errors } = parseNotatio(text, { allow: ["Assign"], parseLatex: (tex) => engine.parse(tex).json });
+    const { json, errors } = parseExpression(text, { allow: ["Assign"], parseLatex: (tex) => engine.parse(tex).json });
     if (errors.length > 0) return undefined;
     try {
       return engine.box(json, { form: "raw" }).latex;

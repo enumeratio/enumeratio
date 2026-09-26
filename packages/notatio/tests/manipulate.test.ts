@@ -140,7 +140,7 @@ test("mixed separators, and a choice setter alongside a slider", () => {
 // --- numeric attributes written by Manipulate --------------------------------------
 
 test("digit separators survive the round trip through a substituted attribute", () => {
-  // Notatio serializes this way; Number() alone returns NaN and the reader would
+  // Epsil serializes this way; Number() alone returns NaN and the reader would
   // silently fall back instead of following the slider.
   expect(parseNumeric("-2.119_744")).toBeCloseTo(-2.119744, 12);
   expect(parseNumeric("1_000")).toBe(1000);

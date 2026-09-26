@@ -4,9 +4,9 @@ import { renderForm, Session } from "../src/index.ts";
 const session = new Session();
 const box = (mathjson: unknown) => session.ce.box(mathjson as Parameters<Session["ce"]["box"]>[0]);
 
-test("notatio/tex/mathjson/wolfram forms", () => {
+test("inputform/tex/mathjson/wolfram forms", () => {
   const e = box(["Add", "x", 1]);
-  expect(renderForm(e, "notatio")).toContain("x");
+  expect(renderForm(e, "inputform")).toContain("x");
   expect(renderForm(e, "tex")).toContain("x");
   expect(JSON.parse(renderForm(e, "mathjson"))).toEqual(["Add", "x", 1]);
   expect(renderForm(box(["Binomial", 10, 3]), "wolfram")).toBe("Binomial[10, 3]");
@@ -27,7 +27,7 @@ test("evaluate records history and honours % references", () => {
   expect(b.expr.toString()).toBe("20");
 });
 
-test("% is Wolfram's history shorthand only in Wolfram syntax; in notatio it is Mod", () => {
+test("% is Wolfram's history shorthand only in Wolfram syntax; in Epsil it is Mod", () => {
   const s = new Session();
   s.evaluate("10");
   expect(s.evaluate("7 % 3").expr.toString()).toBe("1");
@@ -56,7 +56,7 @@ test("Epsil is the default input; $…$ islands parse LaTeX", () => {
   expect(() => s.evaluate("\\binom{10}{3}")).toThrow();
 });
 
-test("notatio renders Epsil", () => {
-  expect(renderForm(box(["Add", ["Power", "x", 2], 1]), "notatio")).toBe("x ^ 2 + 1");
-  expect(renderForm(box(["Binomial", 10, 3]), "notatio")).toBe("Binomial(10, 3)");
+test("inputform renders Epsil", () => {
+  expect(renderForm(box(["Add", ["Power", "x", 2], 1]), "inputform")).toBe("x ^ 2 + 1");
+  expect(renderForm(box(["Binomial", 10, 3]), "inputform")).toBe("Binomial(10, 3)");
 });

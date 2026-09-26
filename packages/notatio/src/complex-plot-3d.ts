@@ -113,7 +113,7 @@ const numberOf = (j: Json): number | undefined => {
   return undefined;
 };
 
-/** `ln` -> `Ln`: a round trip through notatio can hand back a lowercase head. */
+/** `ln` -> `Ln`: a round trip through Epsil can hand back a lowercase head. */
 const capitalize = (name: string): string => name.charAt(0).toUpperCase() + name.slice(1);
 
 class Unsupported extends Error {}

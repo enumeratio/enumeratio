@@ -1,5 +1,5 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { loadEngine } from "./mathlive.ts";
@@ -22,7 +22,7 @@ import { type Clock, curve3dSvg, Orbit, ORBIT_HINT, type OrbitView, pageClock, t
  */
 export class NotatioCurve3D extends LitElement {
   static properties = {
-    /** A notatio expression evaluating to a list of 3-D points. */
+    /** An Epsil expression evaluating to a list of 3-D points. */
     value: { type: String },
     /**
      * Points to draw directly, skipping the expression. For a host that has already
@@ -147,7 +147,7 @@ export class NotatioCurve3D extends LitElement {
     let json: unknown;
     let errors: readonly unknown[];
     try {
-      ({ json, errors } = parseNotatio(this.value, {
+      ({ json, errors } = parseExpression(this.value, {
         parseLatex: (tex: string) => engine.parse(tex).json,
       }));
     } catch (err) {

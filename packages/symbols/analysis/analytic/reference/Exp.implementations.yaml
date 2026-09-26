@@ -216,6 +216,9 @@ arbitrary-precision-via-n:
   sympy:
     in: N(exp(Rational(8, 5)), 30)
     out: "4.95303242439511480365428635642"
+  mpmath:
+    in: (exp((mpf(8)/5)))
+    out: "4.95303242439511480365428635642"
   sage:
     in: N(exp((8/5)))
   rust:

@@ -7,7 +7,7 @@
 // session -- the same rewrite `reduce` uses for print, run once per keypress instead
 // of once. This is the base's `Rendering` mounted on a cell grid; nothing of lit here.
 
-import { serializeNotatio } from "@enumeratio/formats/notatio";
+import { serializeExpression } from "@enumeratio/formats/expression";
 import { iterate } from "../../notatio/src/playback.ts";
 import { type Declaration, declarations, pinValue, pin, sampleValues } from "../../notatio/src/reduce.ts";
 import { numOf, strOf, tupleOf } from "../../notatio/src/symbols.ts";
@@ -40,8 +40,8 @@ function pairOf(node: Json | undefined): [number, number] | undefined {
   return x === undefined || y === undefined || rest.length > 0 ? undefined : [x, y];
 }
 
-// A string shows bare (it is a choice's label); anything else as notatio, `(1, 0.5)`.
-const text = (node: Json): string => strOf(node) ?? serializeNotatio(node as never);
+// A string shows bare (it is a choice's label); anything else as Epsil, `(1, 0.5)`.
+const text = (node: Json): string => strOf(node) ?? serializeExpression(node as never);
 
 function driven(decl: Declaration): Driven | undefined {
   const value = pinValue(decl);

@@ -1,74 +1,106 @@
 # Big-integer combinatorics. Huge answers are reduced mod a word-sized prime, which every
 # system maps, so the answer compares as a small value and the reduction costs next to nothing.
+# Arguments are drawn a little below a round size (10^5 - n, n seeded), so no system answers
+# from a value it stored for the round number, and a call computes the whole list.
 
 Factorial:
-  - id: factorial-10-to-the-4
+  - id: factorial-near-10-to-the-4
     role: bench
-    expr: [Mod, [Factorial, 10000], 1000000007]
-    expected: 531950728
+    expr: [Mod, [Factorial, $n], 1000000007]
     bench:
+      tier: small
       tags: [combinatorics, big-integer]
       precision: exact
-  - id: factorial-10-to-the-5
+      sample: { seed: 20260926, count: 4, draw: { n: [int, 9900, 10000] } }
+  - id: factorial-near-10-to-the-5
     role: bench
-    expr: [Mod, [Factorial, 100000], 1000000007]
-    expected: 457992974
+    expr: [Mod, [Factorial, $n], 1000000007]
     bench:
       tags: [combinatorics, big-integer]
       source: GMP
       precision: exact
+      sample: { seed: 20260926, count: 4, draw: { n: [int, 99000, 100000] } }
+  - id: factorial-near-10-to-the-6
+    role: bench
+    expr: [Mod, [Factorial, $n], 1000000007]
+    bench:
+      tier: large
+      tags: [combinatorics, big-integer]
+      precision: exact
+      budget: 30
+      sample: { seed: 20260926, count: 2, draw: { n: [int, 999000, 1000000] } }
 Binomial:
-  - id: central-binomial-2-10-to-the-4
+  - id: central-binomial-near-2-10-to-the-4
     role: bench
-    expr: [Mod, [Binomial, 20000, 10000], 1000000007]
-    expected: 703593270
+    expr: [Mod, [Binomial, [Multiply, 2, $n], $n], 1000000007]
+    bench:
+      tier: small
+      tags: [combinatorics, big-integer]
+      precision: exact
+      sample: { seed: 20260926, count: 4, draw: { n: [int, 9900, 10000] } }
+  - id: binomial-near-10-to-the-5-choose-3-10-to-the-4
+    role: bench
+    expr: [Mod, [Binomial, $n, $k], 1000000007]
     bench:
       tags: [combinatorics, big-integer]
       precision: exact
-  - id: binomial-10-to-the-5-choose-3-10-to-the-4
-    role: bench
-    expr: [Mod, [Binomial, 100000, 30000], 1000000007]
-    expected: 169452473
-    bench:
-      tags: [combinatorics, big-integer]
-      precision: exact
+      sample: { seed: 20260926, count: 4, draw: { k: [int, 29000, 30000], n: [int, 99000, 100000] } }
 Fibonacci:
-  - id: fibonacci-10-to-the-5
+  - id: fibonacci-near-10-to-the-5
     role: bench
-    expr: [Mod, [Fibonacci, 100000], 1000000007]
-    expected: 911435502
+    expr: [Mod, [Fibonacci, $n], 1000000007]
+    bench:
+      tier: small
+      tags: [combinatorics, big-integer]
+      precision: exact
+      sample: { seed: 20260926, count: 8, draw: { n: [int, 99000, 100000] } }
+  - id: fibonacci-near-10-to-the-6
+    role: bench
+    expr: [Mod, [Fibonacci, $n], 1000000007]
     bench:
       tags: [combinatorics, big-integer]
       precision: exact
-  - id: fibonacci-10-to-the-6
+      sample: { seed: 20260926, count: 4, draw: { n: [int, 999000, 1000000] } }
+  - id: fibonacci-near-10-to-the-7
     role: bench
-    expr: [Mod, [Fibonacci, 1000000], 1000000007]
-    expected: 918091266
+    expr: [Mod, [Fibonacci, $n], 1000000007]
     bench:
+      tier: large
       tags: [combinatorics, big-integer]
       precision: exact
+      budget: 30
+      sample: { seed: 20260926, count: 2, draw: { n: [int, 9999000, 10000000] } }
 LucasL:
-  - id: lucas-10-to-the-5
+  - id: lucas-near-10-to-the-5
     role: bench
-    expr: [Mod, [LucasL, 100000], 1000000007]
-    expected: 23800955
+    expr: [Mod, [LucasL, $n], 1000000007]
     bench:
       tags: [combinatorics, big-integer]
       precision: exact
+      sample: { seed: 20260926, count: 8, draw: { n: [int, 99000, 100000] } }
 CatalanNumber:
-  - id: catalan-10-to-the-5
+  - id: catalan-near-10-to-the-5
     role: bench
-    expr: [Mod, [CatalanNumber, 100000], 1000000007]
-    expected: 945729344
+    expr: [Mod, [CatalanNumber, $n], 1000000007]
     bench:
       tags: [combinatorics, big-integer]
       precision: exact
+      sample: { seed: 20260926, count: 4, draw: { n: [int, 99000, 100000] } }
 StirlingS1:
-  - id: stirling-s1-1000-500
+  - id: stirling-s1-near-250
     role: bench
-    expr: [Mod, [StirlingS1, 1000, 500], 1000000007]
-    expected: 761367694
+    expr: [Mod, [StirlingS1, $n, $k], 1000000007]
+    bench:
+      tier: small
+      tags: [combinatorics, big-integer]
+      source: combinatorics staples (signed, as Wolfram)
+      precision: exact
+      sample: { seed: 20260926, count: 8, draw: { k: [int, 80, 160], n: [int, 200, 300] } }
+  - id: stirling-s1-near-1000
+    role: bench
+    expr: [Mod, [StirlingS1, $n, $k], 1000000007]
     bench:
       tags: [combinatorics, big-integer]
       source: combinatorics staples (signed, as Wolfram)
       precision: exact
+      sample: { seed: 20260926, count: 4, draw: { k: [int, 400, 600], n: [int, 1000, 1100] } }

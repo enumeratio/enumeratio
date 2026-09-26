@@ -73,7 +73,7 @@ the near-linear ramp where the first term dominates.
 <Story
   title="Two axes at once">
 <template #description>
-Framing is manipulable too — <code>center</code> takes the notatio list form
+Framing is manipulable too — <code>center</code> takes the Epsil list form
 <code>[_c, 0]</code>, and <code>extent</code> a bare wildcard. The polygamma's poles sit
 at <code>0, −1, −2, …</code>, of order <code>m+1</code> — raise the order and the hue
 winds more times around each.

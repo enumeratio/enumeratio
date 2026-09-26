@@ -3,7 +3,7 @@
 How enumeratio computes an expression, and what bounds it. A computation goes through up to
 three stages:
 
-- **Interpretation**: reading what the input means. Text (notatio, or LaTeX) is parsed into
+- **Interpretation**: reading what the input means. Text (Epsil, or LaTeX) is parsed into
   MathJSON, then boxed and canonicalised by compute-engine. The result is an expression, not
   yet an answer.
 - **Evaluation**: pushing that expression down to compute-engine and our handlers and kernels
@@ -40,14 +40,14 @@ compute-engine parses, evaluates and compiles. We extend it, head by head:
 
 ## 2. Interpretation
 
-Parsing and canonicalisation. notatio is read by `parseNotatio` (a cell also allows one `:=`
+Parsing and canonicalisation. Epsil is read by `parseExpression` (a cell also allows one `:=`
 binding), LaTeX by compute-engine's parser, and either way the result is MathJSON. `ce.box`
 then canonicalises it: flattening, ordering operands, folding what is structurally trivial,
 and leaving held heads alone. Nothing is computed yet.
 
 - Canonical form is compute-engine's, and not extensible for `Multiply`; `InvisibleOperator`
   is where we can step in.
-- InputForm is interpretation run backwards: a printer from the boxed form to notatio you can
+- InputForm is interpretation run backwards: a printer from the boxed form to Epsil you can
   retype, with the round trip enforced.
 - Interpretation happens once per input, evaluation perhaps many times, so the benchmarks box
   each case once and keep interpretation out of the timing.

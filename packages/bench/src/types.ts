@@ -14,13 +14,29 @@ export type Draw =
   | readonly ["real", number, number] // uniform double in [lo, hi)
   | readonly ["log", number, number]; // 10^u, u uniform in [lo, hi)
 
+/**
+ * Seeded inputs. The draws become one input, a `List` of the expression at each draw, so a
+ * timed call computes every value: enough work to time, and no value a system could have
+ * stored or cached from the call before.
+ */
 export interface Sample {
   readonly seed: number;
+  /** Values per list: what one timed call computes. */
   readonly count: number;
+  /**
+   * Distinct lists, one per call in turn (default 1). For a kernel that memoises values or
+   * keeps tables around recent ones: a pool at least as long as the protocol's calls
+   * (calibration, warmup, samples) means no call repeats one before it.
+   */
+  readonly batches?: number;
   readonly draw: Readonly<Record<string, Draw>>;
 }
 
+/** How hard a case is. A suite runs some tiers: see `SUITES` in suites.ts. */
+export type Tier = "small" | "medium" | "large";
+
 export interface BenchSpec {
+  readonly tier?: Tier;
   readonly tags?: readonly string[];
   /** Where the problem is already timed publicly: a suite, paper or library. */
   readonly source?: string;
@@ -30,8 +46,6 @@ export interface BenchSpec {
   readonly sample?: Sample;
   /** Systems to leave out, each with its reason. */
   readonly deny?: Readonly<Record<string, string>>;
-  /** Bumped when the case changes in a way that breaks comparison with earlier runs. */
-  readonly version?: number;
 }
 
 /** A catalogue case: an example (`role: bench`) plus its bench fields. */
@@ -68,8 +82,16 @@ export type PlanCell = { readonly sources: readonly string[] } | Exclusion;
 export interface Plan {
   readonly schema: 1;
   readonly protocol: number;
+  /** The suite the cases were chosen by. */
+  readonly suite?: string;
   readonly cases: readonly {
     readonly name: string;
+    /**
+     * Hash of what the case computes (expression, inputs, precision): runs compare a case
+     * only while this matches, whatever the catalogue does to it in between.
+     */
+    readonly formula: string;
+    readonly tier: Tier;
     readonly precision: Precision;
     /** Soft cap for the whole measurement, in seconds. */
     readonly budget: number;
@@ -100,6 +122,8 @@ export interface Summary {
 
 export interface CaseResult extends Partial<Summary> {
   readonly name: string;
+  /** The plan's `formula` for the case this timed. */
+  readonly formula?: string;
   readonly status: Status;
   readonly reason?: string;
   /** Calls per sample. */
@@ -144,6 +168,7 @@ export interface Report {
     readonly date: string;
     readonly trigger: string;
     readonly url?: string;
+    readonly suite?: string;
   };
   readonly system: {
     readonly name: BenchSystem;
@@ -184,6 +209,7 @@ export interface BenchIndex {
     readonly url?: string;
     /** The GitHub job that produced it: systems in one job share a machine and a time window. */
     readonly job: string;
+    readonly suite?: string;
     readonly systems: readonly BenchSystem[];
     readonly machine: string;
   }[];

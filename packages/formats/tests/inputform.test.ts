@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { afterAll, expect, test } from "vite-plus/test";
 import { toInputForm } from "../src/inputform.ts";
-import { parseNotatio } from "../src/notatio.ts";
+import { parseExpression } from "../src/expression.ts";
 
 // The corpus is every shape the normalization rules touch, plus enough ordinary
 // expressions to catch a rule firing where it shouldn't. Each is printed from both
@@ -48,7 +48,7 @@ const ce = new ComputeEngine();
 
 /** The canonical MathJSON of an InputForm string, or a diagnostic. */
 function reparse(source: string): unknown {
-  const { json, errors } = parseNotatio(source);
+  const { json, errors } = parseExpression(source);
   if (errors.length) return { parseError: source };
   return ce.box(json as Parameters<ComputeEngine["box"]>[0]).json;
 }

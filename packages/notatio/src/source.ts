@@ -1,13 +1,13 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 
 // The seam between what an author writes and what MathLive edits. Every editable
-// element reads notatio by default and hands the editor LaTeX; this is the one place
+// element reads Epsil by default and hands the editor LaTeX; this is the one place
 // that conversion happens, so a cell, a notebook seed and a worksheet seed all agree on
 // what a source means.
 
 /** The syntaxes an editable element's `in-form` may name. */
-export type InForm = "notatio" | "latex" | "wolfram";
+export type InForm = "epsil" | "latex" | "wolfram";
 
 export interface EditorLatex {
   /** LaTeX for the math field, or `""` when the source did not parse. */
@@ -22,13 +22,13 @@ export interface EditorLatexOptions {
 }
 
 /**
- * notatio -> the LaTeX a math field shows for it. The tree is boxed without
+ * Epsil -> the LaTeX a math field shows for it. The tree is boxed without
  * canonicalising, so the LaTeX spells what was written (`a - b`, not `a + -b`) and
- * re-parses to the same expression the notatio meant. Never throws.
+ * re-parses to the same expression the Epsil meant. Never throws.
  */
 export function toEditorLatex(engine: ComputeEngine, source: string, options: EditorLatexOptions = {}): EditorLatex {
   if (!source.trim()) return { latex: "", errors: [] };
-  const { json, errors } = parseNotatio(source, {
+  const { json, errors } = parseExpression(source, {
     parseLatex: (tex) => engine.parse(tex).json,
     allow: options.assign ? ["Assign"] : [],
   });
@@ -42,7 +42,7 @@ export function toEditorLatex(engine: ComputeEngine, source: string, options: Ed
 
 /**
  * A source in the syntax `form` names, as the LaTeX the editor shows. LaTeX passes
- * through untouched -- `in-form="latex"` is the escape hatch for something notatio
+ * through untouched -- `in-form="latex"` is the escape hatch for something Epsil
  * cannot yet say.
  */
 export function editorLatexOf(

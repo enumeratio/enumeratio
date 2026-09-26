@@ -29,7 +29,7 @@ node packages/cli/bin/notatio.mjs "Binomial(10, 3)"
 `-f/--form` picks the output form, `-i/--in` the input syntax, `-c <expr>` passes
 the expression explicitly. With no expression on a TTY it drops into the REPL.
 
-The full form/syntax names are `notatio`, `tex`, `mathjson`, `wolfram`, `epsil`,
+The full form/syntax names are `inputform`, `tex`, `mathjson`, `wolfram`, `epsil`,
 `numpy`, `glsl`, `wgsl`, `js` (forms) and `latex`, `mathjson`, `wolfram`, `epsil`
 (syntaxes) — but any **unambiguous prefix** works, so `-f wolf`, `-f math`, and
 `-i w` all resolve.

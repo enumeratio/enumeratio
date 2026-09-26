@@ -88,7 +88,7 @@ const STOP_GRACE_MS = 300;
  *
  * It is the scope, not a control panel. The controls live inline where they are read —
  * a `<notatio-knob>` you drag, a `<notatio-toggler>` you click — and each contributes
- * its `name` as a wildcard. Everything else in the subtree that is a notatio expression
+ * its `name` as a wildcard. Everything else in the subtree that is an Epsil expression
  * over those wildcards is a template, re-evaluated on every move: a `<notatio-dynamic>`
  * readout, a `<notatio-when>` condition, or an attribute of any other component, so the
  * same knob can drive a sentence and the plot beside it.
@@ -346,11 +346,11 @@ export class NotatioDynamicModule extends LitElement {
    * reacts to (design/rendering-environments.md). Only meaningful once `TrackedSymbols`
    * is set; a plain transcript ignores its own cells' commits here.
    */
-  #onCellChange = (event: CustomEvent<{ notatio: string; json: unknown }>): void => {
+  #onCellChange = (event: CustomEvent<{ epsil: string; json: unknown }>): void => {
     if (!this.#reactive) return;
     const el = event.target;
     if (el instanceof Element && el.tagName === "NOTATIO-CELL") {
-      this.#reactive.commit(el, event.detail.notatio, event.detail.json as never);
+      this.#reactive.commit(el, event.detail.epsil, event.detail.json as never);
     }
   };
 

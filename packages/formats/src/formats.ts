@@ -9,7 +9,7 @@ import { parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { toInputForm } from "./inputform.ts";
 import { type MathMLOptions, toMathML } from "./mathml.ts";
-import { parseNotatio } from "./notatio.ts";
+import { parseExpression } from "./expression.ts";
 import { portableTeX } from "./tex.ts";
 import { type FormatOptions, type ImageValue, registerFormat } from "./registry.ts";
 
@@ -42,26 +42,24 @@ const epsilDecode = (d: string | Uint8Array, o?: FormatOptions): unknown => {
   return expr;
 };
 
-// notatio is the restricted subset of Epsil (a single expression, no statements)
-// and the default display form. It encodes as InputForm -- the same serializer,
-// with the normalization pass that makes the output re-typeable -- and the decoder
-// enforces the subset.
-const notatioDecode = (d: string | Uint8Array, o?: FormatOptions): unknown => {
+// InputForm is the default display form: Epsil through the same serializer, with the
+// normalization pass that makes the output re-typeable. It decodes one expression.
+const inputFormDecode = (d: string | Uint8Array, o?: FormatOptions): unknown => {
   const ce = o?.ce;
   const options = ce ? { parseLatex: (tex: string) => ce.parse(tex)?.json } : undefined;
-  const { json, errors } = parseNotatio(text(d), options);
-  if (errors.length) throw new Error(`notatio: ${errors.join("; ")}`);
+  const { json, errors } = parseExpression(text(d), options);
+  if (errors.length) throw new Error(`InputForm: ${errors.join("; ")}`);
   return json;
 };
 
 registerFormat({
   name: "InputForm",
-  aliases: ["inputform", "notatio", "Notatio", "Text", "text"],
+  aliases: ["inputform", "Text", "text"],
   mimeTypes: ["text/plain"],
   extensions: ["txt"],
   binary: false,
   encode: (v) => toInputForm(asExpr(v).json),
-  decode: notatioDecode,
+  decode: inputFormDecode,
 });
 
 registerFormat({

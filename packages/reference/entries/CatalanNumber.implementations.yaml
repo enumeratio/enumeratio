@@ -433,10 +433,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{1,2,5,14\}
   sympy:
     in: "[catalan(1), catalan(2), catalan(3), catalan(4)]"
-    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's CatalanNumber is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[1, 2, 5, 14]"
   sage:
     in: "[catalan_number(1), catalan_number(2), catalan_number(3), catalan_number(4)]"
   julia:

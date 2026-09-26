@@ -307,6 +307,9 @@ n-of-an-exact-argument-gives-an-arbitrary:
   sympy:
     in: N(tan(Rational(6, 5)), 30)
     out: "2.57215162212631893540999423603"
+  mpmath:
+    in: (tan((mpf(6)/5)))
+    out: "2.57215162212631893540999423603"
   sage:
     in: N(tan((6/5)))
   rust:
@@ -443,6 +446,9 @@ tan-5-pi-12-2-sqrt-3:
   sympy:
     in: tan((Rational(5, 12) * pi))
     out: sqrt(3) + 2
+  mpmath:
+    in: tan(((mpf(5)/12) * pi))
+    out: "3.73205080756887729352744634151"
   sage:
     in: tan(((5/12) * pi))
   rust:
@@ -462,6 +468,9 @@ tan-3-over-4-times-pi:
   sympy:
     in: tan((Rational(3, 4) * pi))
     out: "-1"
+  mpmath:
+    in: tan(((mpf(3)/4) * pi))
+    out: "-1.0"
   sage:
     in: tan(((3/4) * pi))
   rust:

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { driver, keysOf } from "../src/drive.ts";
 
-const json = (src: string) => parseNotatio(src).json as never;
+const json = (src: string) => parseExpression(src).json as never;
 
 describe("driver", () => {
   it("moves the focused control from raw terminal input and pins the expression there", () => {
