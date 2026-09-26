@@ -46,3 +46,7 @@
   expected: 0
   category: Possible issues
   caption: At a pole of $\Gamma(a)$ with a non-integer order, $1/\Gamma(a) = 0$ makes the value 0
+- id: at-risingfactorial-2-5i
+  expr: [N, [RisingFactorial, [Complex, 2, 5], [Complex, 3, 2]]]
+  expected: [Complex, 20.647407894772527, 24.04735671023272]
+  role: test

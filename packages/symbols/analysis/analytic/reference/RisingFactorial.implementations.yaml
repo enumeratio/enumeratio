@@ -57,7 +57,7 @@ a-rational-base:
     in: \mathrm{RisingFactorial}(\frac{1}{2}, 3)
     out: \frac{15}{8}
   traditional:
-    in: \frac{1}{2}^{\overline{3}}
+    in: (\frac{1}{2})^{\overline{3}}
     out: \frac{15}{8}
   fullform:
     in: Pochhammer[Rational[1, 2], 3]
@@ -89,7 +89,7 @@ complex-base-and-order:
     in: N(\mathrm{RisingFactorial}(2+5i, 3+2i))
     out: 20.647\,407\,894\,772\,527+24.047\,356\,710\,232\,72i
   traditional:
-    in: N(2+5i^{\overline{3+2i}})
+    in: N((2+5i)^{\overline{3+2i}})
     out: 20.647\,407\,894\,772\,527+24.047\,356\,710\,232\,72i
   fullform:
     in: N[Pochhammer[Complex[2, 5], Complex[3, 2]]]
@@ -146,7 +146,7 @@ a-zero-factor:
     in: \mathrm{RisingFactorial}(-3, 4)
     out: "0"
   traditional:
-    in: -3^{\overline{4}}
+    in: (-3)^{\overline{4}}
     out: "0"
   fullform:
     in: Pochhammer[-3, 4]
@@ -165,7 +165,7 @@ a-pole-of-gamma-a:
     in: N(\mathrm{RisingFactorial}(-2, 1+i))
     out: "0"
   traditional:
-    in: N(-2^{\overline{1+i}})
+    in: N((-2)^{\overline{1+i}})
     out: "0"
   fullform:
     in: N[Pochhammer[-2, Complex[1, 1]]]
@@ -176,3 +176,22 @@ a-pole-of-gamma-a:
     tex:
       in: N\left[(-2)_{1+i}\right]
       out: 0.
+at-risingfactorial-2-5i:
+  epsil:
+    in: N(RisingFactorial(2 + 5i, 3 + 2i))
+    out: 20.647_407_894_772_527 + 24.047_356_710_232_72i
+  tex:
+    in: N(\mathrm{RisingFactorial}(2+5i, 3+2i))
+    out: 20.647\,407\,894\,772\,527+24.047\,356\,710\,232\,72i
+  traditional:
+    in: N((2+5i)^{\overline{3+2i}})
+    out: 20.647\,407\,894\,772\,527+24.047\,356\,710\,232\,72i
+  fullform:
+    in: N[Pochhammer[Complex[2, 5], Complex[3, 2]]]
+    back: [N, [Pochhammer, [Complex, 2, 5], [Complex, 3, 2]]]
+  wolfram:
+    in: N[Pochhammer[Complex[2, 5], Complex[3, 2]]]
+    out: 20.6474078947724 + 24.047356710232826*I
+    tex:
+      in: N\left[(2+5 i)_{3+2 i}\right]
+      out: 20.6474\, +24.0474 i

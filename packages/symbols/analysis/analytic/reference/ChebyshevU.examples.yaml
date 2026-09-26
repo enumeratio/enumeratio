@@ -55,3 +55,31 @@
   expected: [Add, [Multiply, -8, [Power, x, 3]], [Multiply, 4, x]]
   category: Properties
   caption: "Below that a negative order folds: $U_{-n} = -U_{n-2}$"
+- id: at-u0-0-7
+  expr: [N, [ChebyshevU, 0, 0.7]]
+  expected: 1
+  role: test
+- id: at-u1-0-7
+  expr: [N, [ChebyshevU, 1, 0.7]]
+  expected: 1.4
+  role: test
+- id: at-u5-0-7
+  expr: [N, [ChebyshevU, 5, 0.7]]
+  expected: -1.39776
+  role: test
+- id: at-u-1-0-7
+  expr: [N, [ChebyshevU, -1, 0.7]]
+  expected: 0
+  role: test
+- id: at-u-2-0-7
+  expr: [N, [ChebyshevU, -2, 0.7]]
+  expected: -1
+  role: test
+- id: at-u-5-0-7
+  expr: [N, [ChebyshevU, -5, 0.7]]
+  expected: 0.05600000000000027
+  role: test
+- id: at-u4-2-3i
+  expr: [N, [ChebyshevU, 4, [Complex, 2, 3]]]
+  expected: [Complex, -1843, -2064]
+  role: test

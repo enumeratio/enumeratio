@@ -175,3 +175,108 @@ pell-identity:
     tex:
       in: T_4(3){}^2-8 U_3(3){}^2
       out: "1"
+at-t0-0-7:
+  epsil:
+    in: N(ChebyshevT(0, 0.7))
+    out: "1"
+  tex:
+    in: N(\mathrm{ChebyshevT}(0, 0.7))
+    out: "1"
+  fullform:
+    in: N[ChebyshevT[0, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[0, 0.7]]
+    out: 1.
+    tex:
+      in: N[T_0(0.7)]
+      out: 1.
+at-t1-0-7:
+  epsil:
+    in: N(ChebyshevT(1, 0.7))
+    out: "0.7"
+  tex:
+    in: N(\mathrm{ChebyshevT}(1, 0.7))
+    out: "0.7"
+  fullform:
+    in: N[ChebyshevT[1, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[1, 0.7]]
+    out: "0.7"
+    tex:
+      in: N[T_1(0.7)]
+      out: "0.7"
+at-t2-0-7:
+  epsil:
+    in: N(ChebyshevT(2, 0.7))
+    out: -0.020_000_000_000_000_13
+  tex:
+    in: N(\mathrm{ChebyshevT}(2, 0.7))
+    out: -0.020\,000\,000\,000\,000\,13
+  fullform:
+    in: N[ChebyshevT[2, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[2, 0.7]]
+    out: "-0.02000000000000013"
+    tex:
+      in: N[T_2(0.7)]
+      out: "-0.02"
+at-t5-0-7:
+  epsil:
+    in: N(ChebyshevT(5, 0.7))
+    out: -0.670_879_999_999_999_8
+  tex:
+    in: N(\mathrm{ChebyshevT}(5, 0.7))
+    out: -0.670\,879\,999\,999\,999\,8
+  fullform:
+    in: N[ChebyshevT[5, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[5, 0.7]]
+    out: "-0.6708799999999998"
+    tex:
+      in: N[T_5(0.7)]
+      out: "-0.67088"
+at-t5-2:
+  epsil:
+    in: N(ChebyshevT(5, 2))
+    out: "362"
+  tex:
+    in: N(\mathrm{ChebyshevT}(5, 2))
+    out: "362"
+  fullform:
+    in: N[ChebyshevT[5, 2]]
+  wolfram:
+    in: N[ChebyshevT[5, 2]]
+    out: 362.
+    tex:
+      in: N[T_5(2)]
+      out: 362.
+at-t-5-0-7:
+  epsil:
+    in: N(ChebyshevT(-5, 0.7))
+    out: -0.670_879_999_999_999_8
+  tex:
+    in: N(\mathrm{ChebyshevT}(-5, 0.7))
+    out: -0.670\,879\,999\,999\,999\,8
+  fullform:
+    in: N[ChebyshevT[-5, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[-5, 0.7]]
+    out: "-0.6708799999999998"
+    tex:
+      in: N[T_{-5}(0.7)]
+      out: "-0.67088"
+at-t4-2-3i:
+  epsil:
+    in: N(ChebyshevT(4, 2 + 3i))
+    out: -911 - 1_056i
+  tex:
+    in: N(\mathrm{ChebyshevT}(4, 2+3i))
+    out: -911-1\,056i
+  fullform:
+    in: N[ChebyshevT[4, Complex[2, 3]]]
+  wolfram:
+    in: N[ChebyshevT[4, Complex[2, 3]]]
+    out: -911. - 1056.*I
+    tex:
+      in: N[T_4(2+3 i)]
+      out: -911.-1056. i

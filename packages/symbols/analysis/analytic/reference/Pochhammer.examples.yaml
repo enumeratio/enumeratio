@@ -97,3 +97,7 @@
   expected: True
   category: Properties
   caption: 'Rising and falling factorials: $x^{\underline{n}} = (-1)^n\,(-x)_n$'
+- id: at-pochhammer-3-2
+  expr: [N, [Pochhammer, 3, 2]]
+  expected: 12
+  role: test

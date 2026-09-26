@@ -60,3 +60,31 @@
   expected: [Add, [Multiply, [Rational, 3, 2], [Power, x, 2]], [Rational, -1, 2]]
   category: Properties
   caption: "A negative order folds: $P_{-n} = P_{n-1}$"
+- id: at-p0-0-7
+  expr: [N, [LegendrePolynomial, 0, 0.7]]
+  expected: 1
+  role: test
+- id: at-p1-0-7
+  expr: [N, [LegendrePolynomial, 1, 0.7]]
+  expected: 0.7
+  role: test
+- id: at-p2-0-7
+  expr: [N, [LegendrePolynomial, 2, 0.7]]
+  expected: 0.23499999999999988
+  role: test
+- id: at-p5-0-7
+  expr: [N, [LegendrePolynomial, 5, 0.7]]
+  expected: -0.3651987499999999
+  role: test
+- id: at-p-1-0-7
+  expr: [N, [LegendrePolynomial, -1, 0.7]]
+  expected: 1
+  role: test
+- id: at-p-4-0-7
+  expr: [N, [LegendrePolynomial, -4, 0.7]]
+  expected: -0.19250000000000014
+  role: test
+- id: at-p4-2-3i
+  expr: [N, [LegendrePolynomial, 4, [Complex, 2, 3]]]
+  expected: [Complex, -501.5, -570]
+  role: test

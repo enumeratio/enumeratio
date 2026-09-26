@@ -1,11 +1,9 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // ChebyshevT, ChebyshevU, LegendrePolynomial, RisingFactorial — the Fungrim frontier's top
-// four undeclared heads. Numeric values are pinned against a Wolfram kernel (a fixed golden
-// file, not re-collected here — see orthogonal-polynomials.golden.json); the exact-integer
+// four undeclared heads. Numeric values are role: test examples on each head's reference record; the exact-integer
 // path is pinned directly against T_n(cos t) = cos(nt) and the standard low-degree
 // polynomials, which need no oracle.
 
@@ -17,32 +15,6 @@ type Expr = number | string | readonly [string, ...Expr[]];
 const exactJson = (input: Expr, expected: unknown) => expect(ce.box(input).evaluate().json).toEqual(expected);
 const sameExact = (input: Expr, expected: Expr) =>
   expect(ce.box(input).evaluate().json).toEqual(ce.box(expected).evaluate().json);
-
-// --- Golden numeric values (Wolfram kernel) -----------------------------------------
-
-interface GoldenCase {
-  head: string;
-  args: unknown[];
-  label: string;
-  wolfram: [number, number];
-}
-
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./orthogonal-polynomials.golden.json", import.meta.url), "utf8"),
-);
-
-const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
-
-test("matches a Wolfram kernel on every golden case", () => {
-  const off: string[] = [];
-  for (const g of goldens) {
-    const r = ce.box([g.head, ...g.args] as never).N();
-    const err = relErr([r.re, r.im], g.wolfram);
-    if (!(err <= 1e-9)) off.push(`${g.label}: relerr ${err.toExponential(2)}`);
-  }
-  expect(off).toEqual([]);
-});
 
 // --- ChebyshevT / ChebyshevU exact integer path -------------------------------------
 

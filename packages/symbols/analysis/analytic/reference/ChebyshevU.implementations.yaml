@@ -133,3 +133,108 @@ negative-order:
     out: 4x-8x^3
   fullform:
     in: ChebyshevU[-5, x]
+at-u0-0-7:
+  epsil:
+    in: N(ChebyshevU(0, 0.7))
+    out: "1"
+  tex:
+    in: N(\mathrm{ChebyshevU}(0, 0.7))
+    out: "1"
+  fullform:
+    in: N[ChebyshevU[0, 0.7]]
+  wolfram:
+    in: N[ChebyshevU[0, 0.7]]
+    out: 1.
+    tex:
+      in: N[U_0(0.7)]
+      out: 1.
+at-u1-0-7:
+  epsil:
+    in: N(ChebyshevU(1, 0.7))
+    out: "1.4"
+  tex:
+    in: N(\mathrm{ChebyshevU}(1, 0.7))
+    out: "1.4"
+  fullform:
+    in: N[ChebyshevU[1, 0.7]]
+  wolfram:
+    in: N[ChebyshevU[1, 0.7]]
+    out: "1.4"
+    tex:
+      in: N[U_1(0.7)]
+      out: "1.4"
+at-u5-0-7:
+  epsil:
+    in: N(ChebyshevU(5, 0.7))
+    out: -1.397_76
+  tex:
+    in: N(\mathrm{ChebyshevU}(5, 0.7))
+    out: -1.397\,76
+  fullform:
+    in: N[ChebyshevU[5, 0.7]]
+  wolfram:
+    in: N[ChebyshevU[5, 0.7]]
+    out: "-1.39776"
+    tex:
+      in: N[U_5(0.7)]
+      out: "-1.39776"
+at-u-1-0-7:
+  epsil:
+    in: N(ChebyshevU(-1, 0.7))
+    out: "0"
+  tex:
+    in: N(\mathrm{ChebyshevU}(-1, 0.7))
+    out: "0"
+  fullform:
+    in: N[ChebyshevU[-1, 0.7]]
+  wolfram:
+    in: N[ChebyshevU[-1, 0.7]]
+    out: 0.
+    tex:
+      in: N[U_{-1}(0.7)]
+      out: 0.
+at-u-2-0-7:
+  epsil:
+    in: N(ChebyshevU(-2, 0.7))
+    out: "-1"
+  tex:
+    in: N(\mathrm{ChebyshevU}(-2, 0.7))
+    out: "-1"
+  fullform:
+    in: N[ChebyshevU[-2, 0.7]]
+  wolfram:
+    in: N[ChebyshevU[-2, 0.7]]
+    out: -1.
+    tex:
+      in: N[U_{-2}(0.7)]
+      out: -1.
+at-u-5-0-7:
+  epsil:
+    in: N(ChebyshevU(-5, 0.7))
+    out: 0.056_000_000_000_000_27
+  tex:
+    in: N(\mathrm{ChebyshevU}(-5, 0.7))
+    out: 0.056\,000\,000\,000\,000\,27
+  fullform:
+    in: N[ChebyshevU[-5, 0.7]]
+  wolfram:
+    in: N[ChebyshevU[-5, 0.7]]
+    out: "0.056000000000000355"
+    tex:
+      in: N[U_{-5}(0.7)]
+      out: "0.056"
+at-u4-2-3i:
+  epsil:
+    in: N(ChebyshevU(4, 2 + 3i))
+    out: -1_843 - 2_064i
+  tex:
+    in: N(\mathrm{ChebyshevU}(4, 2+3i))
+    out: -1\,843-2\,064i
+  fullform:
+    in: N[ChebyshevU[4, Complex[2, 3]]]
+  wolfram:
+    in: N[ChebyshevU[4, Complex[2, 3]]]
+    out: -1843. - 2064.*I
+    tex:
+      in: N[U_4(2+3 i)]
+      out: -1843.-2064. i

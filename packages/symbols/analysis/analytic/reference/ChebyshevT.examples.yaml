@@ -59,3 +59,31 @@
   expected: 1
   category: Properties
   caption: $T_n(x)^2 - (x^2 - 1)\,U_{n-1}(x)^2 = 1$, here at $x = 3$. See [[ChebyshevU]]
+- id: at-t0-0-7
+  expr: [N, [ChebyshevT, 0, 0.7]]
+  expected: 1
+  role: test
+- id: at-t1-0-7
+  expr: [N, [ChebyshevT, 1, 0.7]]
+  expected: 0.7
+  role: test
+- id: at-t2-0-7
+  expr: [N, [ChebyshevT, 2, 0.7]]
+  expected: -0.02000000000000013
+  role: test
+- id: at-t5-0-7
+  expr: [N, [ChebyshevT, 5, 0.7]]
+  expected: -0.6708799999999998
+  role: test
+- id: at-t5-2
+  expr: [N, [ChebyshevT, 5, 2]]
+  expected: 362
+  role: test
+- id: at-t-5-0-7
+  expr: [N, [ChebyshevT, -5, 0.7]]
+  expected: -0.6708799999999998
+  role: test
+- id: at-t4-2-3i
+  expr: [N, [ChebyshevT, 4, [Complex, 2, 3]]]
+  expected: [Complex, -911, -1056]
+  role: test
