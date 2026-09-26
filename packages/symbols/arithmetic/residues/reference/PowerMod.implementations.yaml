@@ -668,3 +668,93 @@ exponent-0-with-a-positive-modulus:
   rust:
     in: powermod(n(2), n(0), n(14))
     out: "1"
+a-positive-exponent-at-a-negative-modulus-1-2:
+  epsil:
+    in: PowerMod(1, 2, -2)
+    out: PowerMod(1, 2, -2)
+  tex:
+    in: \mathrm{PowerMod}(1, 2, -2)
+    out: \mathrm{PowerMod}(1, 2, -2)
+  traditional:
+    in: \left(1^2\bmod -2\right)
+    out: \left(1^2\bmod -2\right)
+  fullform:
+    in: PowerMod[1, 2, -2]
+  wolfram:
+    in: PowerMod[1, 2, -2]
+  sage:
+    in: power_mod(1, 2, -2)
+  rust:
+    in: powermod(n(1), n(2), n(-2))
+a-positive-exponent-at-a-negative-modulus-3-2-7:
+  epsil:
+    in: PowerMod(3, 2, -7)
+    out: PowerMod(3, 2, -7)
+  tex:
+    in: \mathrm{PowerMod}(3, 2, -7)
+    out: \mathrm{PowerMod}(3, 2, -7)
+  traditional:
+    in: \left(3^2\bmod -7\right)
+    out: \left(3^2\bmod -7\right)
+  fullform:
+    in: PowerMod[3, 2, -7]
+  wolfram:
+    in: PowerMod[3, 2, -7]
+  sage:
+    in: power_mod(3, 2, -7)
+  rust:
+    in: powermod(n(3), n(2), n(-7))
+a-positive-exponent-at-a-negative-modulus-341:
+  epsil:
+    in: PowerMod(-1, 340, -2)
+    out: PowerMod(-1, 340, -2)
+  tex:
+    in: \mathrm{PowerMod}(-1, 340, -2)
+    out: \mathrm{PowerMod}(-1, 340, -2)
+  traditional:
+    in: \left((-1)^{340}\bmod -2\right)
+    out: \left((-1)^{340}\bmod -2\right)
+  fullform:
+    in: PowerMod[-1, 340, -2]
+  wolfram:
+    in: PowerMod[-1, 340, -2]
+  sage:
+    in: power_mod(-1, 340, -2)
+  rust:
+    in: powermod(n(-1), n(340), n(-2))
+a-positive-exponent-at-a-negative-modulus-5-1-7:
+  epsil:
+    in: PowerMod(5, 1, -7)
+    out: PowerMod(5, 1, -7)
+  tex:
+    in: \mathrm{PowerMod}(5, 1, -7)
+    out: \mathrm{PowerMod}(5, 1, -7)
+  traditional:
+    in: \left(5^1\bmod -7\right)
+    out: \left(5^1\bmod -7\right)
+  fullform:
+    in: PowerMod[5, 1, -7]
+  wolfram:
+    in: PowerMod[5, 1, -7]
+  sage:
+    in: power_mod(5, 1, -7)
+  rust:
+    in: powermod(n(5), n(1), n(-7))
+a-negative-exponent-at-a-negative-modulus-2-1-5:
+  epsil:
+    in: PowerMod(2, -1, -5)
+    out: PowerMod(2, -1, -5)
+  tex:
+    in: \mathrm{PowerMod}(2, -1, -5)
+    out: \mathrm{PowerMod}(2, -1, -5)
+  traditional:
+    in: \left(\frac{1}{2}\bmod -5\right)
+    out: \left(\frac{1}{2}\bmod -5\right)
+  fullform:
+    in: PowerMod[2, -1, -5]
+  wolfram:
+    in: PowerMod[2, -1, -5]
+  sage:
+    in: power_mod(2, -1, -5)
+  rust:
+    in: powermod(n(2), n(-1), n(-5))
