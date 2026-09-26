@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
 import {
   optimizeRecognized,
   parseInterval,
@@ -9,20 +9,30 @@ import {
   type Ivl,
 } from "./optimize-core.ts";
 
-// Minimize, Maximize, MinValue, MaxValue, ArgMin, ArgMax -- Wolfram's exact global
-// optimizers, over the scope `optimize-core.ts` documents (its header has the full list;
-// the short version: univariate polynomials, rational functions, sqrt/log of an
-// affine-or-quadratic argument, exp of an affine argument, with a simple interval
-// constraint or none). `Minimize`/`Maximize` match Wolfram's own output shape, `{value, {x
-// -> point}}`; `MinValue`/`MaxValue`/`ArgMin`/`ArgMax` are projections of the same
-// computation onto just the value or just the point.
+// Minimize, Maximize, MinValue, MaxValue -- Wolfram's exact global optimizers, over the
+// scope `optimize-core.ts` documents (its header has the full list; the short version:
+// univariate polynomials, rational functions, sqrt/log of an affine-or-quadratic argument,
+// exp of an affine argument, with a simple interval constraint or none). `Minimize`/
+// `Maximize` match Wolfram's own output shape, `{value, {x -> point}}`; `MinValue`/
+// `MaxValue` are projections of the same computation onto just the value.
 //
-// `ArgMin`/`ArgMax` are ALREADY compute-engine heads -- the index of a collection's
-// extremal element (`ArgMax([3, 1, 4], key)` is `3`, not `4`) -- an entirely different
-// question from Wolfram's `ArgMin(f, x)`. Extended in place with `widenSignature` +
-// `wrapOperator` (never redeclared: that would drop the collection form), dispatching on
-// shape: this file's form always has a bare symbol as its second argument (a collection's
-// key, when given at all, is a function/lambda), so that alone safely tells the two apart.
+// `ArgMin`/`ArgMax` are declined entirely, and deliberately NOT declared here. They are
+// ALREADY compute-engine heads -- the index of a collection's extremal element
+// (`ArgMax([3, 1, 4], key)` is `3`, not `4`) -- an entirely different question from
+// Wolfram's `ArgMin(f, x)`. The obvious route (`wrapOperator`/`widenSignature`, extending
+// the head in place -- see `@enumeratio/boxed`) does not work here: verified empirically
+// (a throwaway script mutating `ce.lookupDefinition("ArgMin").operator` every way that
+// utility exposes -- `evaluate`, `signature`, `canEnumerate`, and the fully-spread
+// `ce.declare` override CE's own tests use for this exact idiom) that a call whose first
+// argument is not a collection is rejected before `evaluate` is ever reached, regardless of
+// what the operator's `signature` or handlers say. `ArgMin`/`ArgMax`'s box-time acceptance
+// of `indexed_collection<T>` is evidently resolved through machinery this package's public
+// surface doesn't reach, at least in compute-engine 0.134 -- redeclaring the head outright
+// would satisfy Wolfram's form but silently drop the collection one, which every other rule
+// in this package treats as a worse outcome than declining. `solve` below already
+// implements exactly the computation `ArgMin`/`ArgMax` would need (see its own comment);
+// wiring it up is a one-function change if a future compute-engine version (or a documented
+// hook this session didn't find) makes the extension possible.
 
 // ---- multivariate is out of scope for now (see Minimize.yaml's `details`) -------------
 
@@ -61,13 +71,14 @@ interface Solved {
 }
 
 /**
- * The shared computation behind every head this file declares. `needPoint` distinguishes
- * `MinValue`/`MaxValue` (a value alone is enough) from `Minimize`/`Maximize`/`ArgMin`/
- * `ArgMax` (need a specific, reproducible point) -- the one place this matters is sin/cos
- * of an affine argument, UNCONSTRAINED: the exact amplitude (+-1) is well defined, but
- * Wolfram's own choice of a witnessing `x` (one of infinitely many, picked by an internal
- * search this file cannot reproduce or verify -- see optimize-core.ts's header) is not, so
- * that shortcut only fires when a point isn't required.
+ * The shared computation behind every head this file declares (and behind `ArgMin`/
+ * `ArgMax`, the day extending them becomes possible -- see the file header). `needPoint`
+ * distinguishes `MinValue`/`MaxValue` (a value alone is enough) from `Minimize`/`Maximize`
+ * (need a specific, reproducible point) -- the one place this matters is sin/cos of an
+ * affine argument, UNCONSTRAINED: the exact amplitude (+-1) is well defined, but Wolfram's
+ * own choice of a witnessing `x` (one of infinitely many, picked by an internal search this
+ * file cannot reproduce or verify -- see optimize-core.ts's header) is not, so that
+ * shortcut only fires when a point isn't required.
  */
 function solve(
   ce: ComputeEngine,
@@ -123,35 +134,11 @@ function declareMinMax(ce: ComputeEngine, name: string, direction: "min" | "max"
   });
 }
 
-/** `ArgMin`/`ArgMax`'s new, Wolfram-shaped form: `(f, x)`, never a collection (an
- * `indexed_collection`'s own key argument, when given, is a function, not a bare symbol,
- * so this predicate never intercepts a genuine collection call). */
-const isFunctionForm = (ops: readonly BoxedExpression[]): boolean =>
-  ops.length === 2 && symbolNameOf(ops[1]!) !== undefined;
-
-function declareArg(ce: ComputeEngine, name: string, direction: "min" | "max"): void {
-  // Last call to touch this signature wins (see `widenSignature`'s own doc comment) --
-  // nothing else in this repo widens ArgMin/ArgMax today, so declaring first (this
-  // package always does -- see hurwitz-zeta.ts's `LIBRARY_DECLARATIONS` order in
-  // packages/reference/scripts/engines.ts) is safe. A future library that also widens
-  // either head needs to keep both the collection-index and the `(f, x)` shapes wide.
-  widenSignature(ce, name, "(any, any?) -> any");
-  wrapOperator(
-    ce,
-    [name],
-    isFunctionForm,
-    () => (ops: readonly BoxedExpression[]) => solve(ce, ops[0]!, ops[1]!, direction, true)?.point,
-    2,
-  );
-}
-
 export function declareOptimize(ce: ComputeEngine): void {
   declareMinMax(ce, "Minimize", "min");
   declareMinMax(ce, "Maximize", "max");
   declareValueHead(ce, "MinValue", "min");
   declareValueHead(ce, "MaxValue", "max");
-  declareArg(ce, "ArgMin", "min");
-  declareArg(ce, "ArgMax", "max");
 }
 
 export type { Recognized };

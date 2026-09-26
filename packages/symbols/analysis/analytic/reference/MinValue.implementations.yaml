@@ -1,0 +1,36 @@
+a-quadratic-s-minimum-value:
+  epsil:
+    in: MinValue(x ^ 2 - 4x + 3, x)
+    out: "-1"
+  tex:
+    in: \mathrm{MinValue}(x^2-4x+3, x)
+    out: "-1"
+  fullform:
+    in: MinValue[Plus[Power[x, 2], Times[-4, x], 3], x]
+the-amplitude-of-cosine-alone-is-exact:
+  epsil:
+    in: MinValue(Cos(3x - 1), x)
+    out: "-1"
+  tex:
+    in: \mathrm{MinValue}(\cos(3x-1), x)
+    out: "-1"
+  fullform:
+    in: MinValue[Cos[Subtract[Times[3, x], 1]], x]
+exp-s-infimum:
+  epsil:
+    in: MinValue(Exp(x), x)
+    out: "0"
+  tex:
+    in: \mathrm{MinValue}(e^{x}, x)
+    out: "0"
+  fullform:
+    in: MinValue[Exp[x], x]
+a-simple-interval-constraint:
+  epsil:
+    in: MinValue([x ^ 2, x >= 1], x)
+    out: "1"
+  tex:
+    in: \mathrm{MinValue}(\bigl\lbrack x^2, x\ge1\bigr\rbrack, x)
+    out: "1"
+  fullform:
+    in: MinValue[List[Power[x, 2], GreaterEqual[x, 1]], x]

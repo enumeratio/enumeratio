@@ -143,10 +143,19 @@ export function exactRealRootsOf(ce: ComputeEngine, lhs: BoxedExpression, x: str
   if (solved.operator !== "List") return undefined;
   const out: BoxedExpression[] = [];
   for (const r of operandsOf(solved)) {
-    if ((r as { isExact?: unknown }).isExact === false) return undefined;
     const n = r.N();
     if (n.im !== 0) continue;
-    if (!Number.isFinite(n.re)) return undefined;
+    // `Solve` answers an equation like `1/x = 0` with `[PositiveInfinity,
+    // ComplexInfinity]` -- an asymptotic "root at infinity", not a finite one. Not a
+    // genuine critical point (nothing to `subs` a finite `x` with), so it's skipped, not
+    // treated as a reason to decline the whole computation. Checked BEFORE `isExact`:
+    // `ComplexInfinity` itself reports `isExact === false` (an "undirected infinity" isn't
+    // exact in compute-engine's own numeric-literal sense), which is a different question
+    // from the one `isExact` is asked below -- did `Solve` fall back to a float for a
+    // otherwise-finite root -- and would wrongly decline the whole computation over a
+    // candidate this file was always going to throw away.
+    if (!Number.isFinite(n.re)) continue;
+    if ((r as { isExact?: unknown }).isExact === false) return undefined;
     out.push(r);
   }
   return out;
@@ -244,7 +253,10 @@ export function extremize(
   let best: Extreme | undefined;
   const consider = (value: BoxedExpression, point: BoxedExpression, attained: boolean): void => {
     const n = value.N();
-    if (n.im !== 0 || !Number.isFinite(n.re)) return;
+    // +-Infinity is a legitimate candidate (an unbounded tail) -- only NaN/complex are
+    // rejected here. `Number.isFinite` would also reject +-Infinity, which is exactly the
+    // value an unbounded direction needs to report.
+    if (n.im !== 0 || Number.isNaN(n.re)) return;
     if (best === undefined) {
       best = { value, point, attained };
       return;

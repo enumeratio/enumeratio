@@ -161,8 +161,12 @@ function accelerateSmoothTail(f: (i: number) => number | undefined): { value: nu
 
 const PROBE_TERMS = 60;
 
-function nsumInfinite(ce: ComputeEngine, expr: BoxedExpression, n: string): BoxedExpression | undefined {
-  const f = termFn(ce, expr, n);
+function nsumInfinite(ce: ComputeEngine, expr: BoxedExpression, n: string, a: number): BoxedExpression | undefined {
+  const raw = termFn(ce, expr, n);
+  // Every helper below (and `f` itself, passed on to `accelerateSmoothTail`) is indexed
+  // from 0 -- `f(i)` means the term for `n = a + i` -- so a range starting anywhere other
+  // than 0 (`{n, 5, Infinity}`) is still summed from its actual first term.
+  const f = (i: number): number | undefined => raw(a + i);
   const probe: number[] = [];
   for (let i = 0; i < PROBE_TERMS; i++) {
     const t = f(i);
@@ -227,8 +231,11 @@ function parseRange(rangeArg: BoxedExpression): { n: string; a: number; b: numbe
   const n = symbolNameOf(ops[0]!);
   const a = integerAt(ops[1]!.evaluate());
   if (n === undefined || a === undefined) return undefined;
-  const bName = symbolNameOf(ops[2]!.evaluate());
-  if (bName === "PositiveInfinity" || bName === "Infinity") return { n, a, b: "infinite" };
+  // `PositiveInfinity`'s `.symbol` reads back `undefined` (it's an infinite NUMBER
+  // literal, not a plain symbol -- confirmed against `Limit`'s own +-Infinity results in
+  // optimize-core.ts) -- `.operator` is what actually names it.
+  const bOperator = ops[2]!.evaluate().operator;
+  if (bOperator === "PositiveInfinity" || bOperator === "Infinity") return { n, a, b: "infinite" };
   const b = integerAt(ops[2]!.evaluate());
   return b === undefined ? undefined : { n, a, b };
 }
@@ -242,7 +249,9 @@ export function declareNSum(ce: ComputeEngine): void {
       if (f === undefined || rangeArg === undefined) return undefined;
       const range = parseRange(rangeArg);
       if (range === undefined) return undefined;
-      return range.b === "infinite" ? nsumInfinite(ce, f, range.n) : nsumFinite(ce, f, range.n, range.a, range.b);
+      return range.b === "infinite"
+        ? nsumInfinite(ce, f, range.n, range.a)
+        : nsumFinite(ce, f, range.n, range.a, range.b);
     },
   });
 }

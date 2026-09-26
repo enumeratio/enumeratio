@@ -1,0 +1,80 @@
+name: Minimize
+domain: Calculus
+signature: Minimize(f, x)
+summary: The global minimum of f over the real line (or a simple interval constraint), as {value, {x -> point}} -- an exact, provably global answer, not a local one.
+signatures:
+  - call: Minimize(f, x)
+    description: the global minimum of f, a real expression in the single variable x, over f's own natural domain.
+    library: "@enumeratio/analytic"
+  - call: Minimize(f, {x})
+    description: same as Minimize(f, x) -- Wolfram accepts the variable either bare or wrapped in a one-element list.
+    library: "@enumeratio/analytic"
+  - call: Minimize({f, cons}, x)
+    description: the global minimum of f restricted to cons, a simple interval constraint (x >= a, a <= x <= b, an And of two one-sided bounds, ...).
+    library: "@enumeratio/analytic"
+details:
+  - "An EXACT core, never a numerical search (see [[NMinimize]] for that): a polynomial (any degree), a rational function with no real pole splitting its domain in two, Sqrt/Ln of an affine-or-quadratic argument, and Exp of an affine argument, each on the whole real line or a simple interval. Every critical point comes from compute-engine's own [[D]] (the derivative) and [[Solve]] (its real roots) on the ORIGINAL expression -- never from a hand-rolled formula -- and every boundary/limit behaviour from compute-engine's own [[Limit]]. `Solve` is trusted only when every root it returns is exact (no numeric fallback); a genuine higher-degree polynomial whose derivative `Solve` can't fully factor declines rather than risk missing the real global minimum."
+  - Sin/Cos of an affine argument are supported only through [[MinValue]]/[[MaxValue]] (the exact amplitude, +-1) -- Minimize itself declines them even when a point exists, because Wolfram's own choice of WHICH of the infinitely many minimizers to report (verified against wolframscript) comes from an internal search this package has no way to reproduce or verify, and a wrong "the" point is worse than no point.
+  - A rational function's real pole sitting strictly inside the interval being optimized over (given or implied) declines, as does a Sqrt whose domain splits into two disjoint rays under the interval in force -- either would need comparing across more than one connected piece, which this file does not attempt.
+  - More than one variable declines outright; multivariate optimization isn't attempted.
+  - "A constant f declines: every real x is an equally valid minimizer, and Wolfram's own choice of WHICH one to print (verified against wolframscript -- `Minimize[5, x]` names an arbitrary-looking rational) isn't reproducible or verifiable here."
+  - Matches Wolfram's output shape, `{value, {x -> point}}`, via [[Rule]] -- including for an unbounded minimum, `{-Infinity, {x -> point}}`, where point is whichever end (or domain edge) the limit is taken at.
+examples:
+  - id: a-quadratic-s-vertex
+    expr: [Minimize, [Power, x, 2], x]
+    expected: [List, 0, [List, [Rule, x, 0]]]
+    caption: A quadratic's vertex is its global minimum
+  - id: unbounded-below-reports-negative-infinity
+    expr: [Minimize, [Power, x, 3], x]
+    expected: [List, NegativeInfinity, [List, [Rule, x, NegativeInfinity]]]
+    caption: An odd-degree polynomial is unbounded below
+  - id: a-rational-function-s-irrational-point
+    expr: [Minimize, [Divide, [Subtract, x, 1], [Add, [Power, x, 2], 1]], x]
+    expected:
+      [
+        List,
+        [Divide, [Negate, [Sqrt, 2]], [Add, 1, [Power, [Add, 1, [Negate, [Sqrt, 2]]], 2]]],
+        [List, [Rule, x, [Add, 1, [Negate, [Sqrt, 2]]]]],
+      ]
+    category: Scope
+    caption: A rational function whose exact critical point is irrational
+  - id: a-simple-interval-constraint
+    expr: [Minimize, [List, [Power, x, 2], [GreaterEqual, x, 1]], x]
+    expected: [List, 1, [List, [Rule, x, 1]]]
+    caption: With x >= 1, the unconstrained vertex (0) is out of range -- the boundary wins
+  - id: log-s-minimum-is-at-its-domain-edge
+    expr: [Minimize, [Ln, x], x]
+    expected: [List, NegativeInfinity, [List, [Rule, x, 0]]]
+    category: Scope
+    caption: Log is unbounded below, approached at its domain edge (x -> 0), not at x -> -Infinity
+  - id: exp-s-infimum-is-not-attained
+    expr: [Minimize, [Exp, x], x]
+    expected: [List, 0, [List, [Rule, x, NegativeInfinity]]]
+    category: Scope
+    caption: Exp's infimum (0) is never actually reached
+  - id: the-variable-as-a-one-element-list
+    expr: [Minimize, [Power, x, 2], [List, x]]
+    expected: [List, 0, [List, [Rule, x, 0]]]
+    caption: The variable spelled as {x} instead of bare x
+  - id: declines-a-non-exact-critical-point
+    expr: [Minimize, [Subtract, [Power, x, 4], [Multiply, 4, [Power, x, 2]]], x]
+    expected: [Minimize, [Subtract, [Power, x, 4], [Multiply, 4, [Power, x, 2]]], x]
+    category: Possible issues
+    caption: "Declines: Solve can't produce this quartic's critical points exactly"
+  - id: declines-more-than-one-variable
+    expr: [Minimize, [Add, [Power, x, 2], [Power, y, 2]], [List, x, y]]
+    expected: [Minimize, [Add, [Power, x, 2], [Power, y, 2]], [List, x, y]]
+    category: Possible issues
+    caption: Declines -- multivariate optimization is out of scope
+  - id: declines-sin-s-point-despite-an-exact-value
+    expr: [Minimize, [Sin, x], x]
+    expected: [Minimize, [Sin, x], x]
+    category: Possible issues
+    caption: "Declines: infinitely many x minimize Sin(x), and Wolfram's own choice isn't reproducible -- see MinValue"
+seeAlso:
+  - Maximize
+  - MinValue
+  - MaxValue
+  - NMinimize
+  - Solve
+  - Limit
