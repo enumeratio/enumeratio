@@ -1,14 +1,21 @@
-// Before/after equivalence for symbol-metadata step 3 (design/speculative/symbol-metadata.md):
-// `naming.ts`'s `RENAMED` now also lives as a `formerly:` field on the head it renamed to
-// (packages/reference/scripts/migrate/renamed-to-yaml.ts), rebuilt into `naming-data.ts`
-// (scripts/collect-naming.ts). This pins that the generated table and the hand table agree
-// while both exist; a follow-up commit deletes `RENAMED` and this test switches to asserting
-// `naming-data.ts` is current instead.
+// Symbol-metadata step 3 (design/speculative/symbol-metadata.md), completed: naming.ts's
+// RENAMED is gone; `blessedName` reads a generated table instead (naming-data.ts), rebuilt
+// from every head's `formerly:` field by scripts/collect-naming.ts -- naming.ts runs in the
+// browser too, so it can't parse YAML at runtime. This pins that the generated table is
+// current; coverage.test.ts (unchanged by this migration) exercises `blessedName` itself.
 
+import { readEntries } from "@enumeratio/entry/node";
 import { expect, test } from "vite-plus/test";
-import { RENAMED } from "../src/naming.ts";
 import { RENAMED_DATA } from "../src/naming-data.ts";
 
-test("the generated rename table agrees with the hand-kept one", () => {
-  expect(RENAMED_DATA).toEqual(RENAMED);
+// Mirrors collect-naming.ts's one hand-carried exception: StandardTableauCount is a
+// cardinality answered by Count over a collection, not a head with a record of its own
+// (cardinalities.ts), so its rename cannot come from a `formerly:` field.
+const NO_HEAD: Readonly<Record<string, string>> = { NumberOfStandardTableaux: "StandardTableauCount" };
+
+test("naming-data.ts is what the current records collect to", () => {
+  const entries = readEntries(new URL("../reference/", import.meta.url));
+  const rebuilt: Record<string, string> = { ...NO_HEAD };
+  for (const entry of entries) for (const oldName of entry.formerly ?? []) rebuilt[oldName] = entry.name;
+  expect(RENAMED_DATA).toEqual(rebuilt);
 });
