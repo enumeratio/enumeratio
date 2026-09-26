@@ -19,7 +19,7 @@ examples:
     expected: 0.9867388266605329
     caption: $b = -1$ is a pole of $\Gamma$, but the regularized form is finite there
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

@@ -39,7 +39,7 @@ examples:
     category: Properties
     caption: $E_0(x) = e^{-x}/x$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

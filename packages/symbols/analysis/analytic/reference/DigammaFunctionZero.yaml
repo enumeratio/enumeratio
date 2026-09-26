@@ -48,7 +48,7 @@ examples:
     caption: $\psi(x_n) = 0$ at $n = 4$
     group: digamma-vanishes
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

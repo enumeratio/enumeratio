@@ -1,8 +1,8 @@
-// The rules an `implementations` block has to satisfy, as a function rather than a test, so
+// The rules an `bindings` block has to satisfy, as a function rather than a test, so
 // that every package holding reference entries can enforce them over its OWN entries — the
 // entries live in the package that owns the heads, and the rule has to travel to them.
 
-import type { ReferenceEntry, ReferenceImplementation } from "./types.ts";
+import type { ReferenceEntry, ReferenceBinding } from "./types.ts";
 
 /** Does this path exist? Supplied by the caller so this module stays free of node:fs. */
 export type Exists = (path: string) => boolean;
@@ -12,7 +12,7 @@ export interface Problem {
   readonly message: string;
 }
 
-const rows = (entry: ReferenceEntry): readonly ReferenceImplementation[] => entry.implementations ?? [];
+const rows = (entry: ReferenceEntry): readonly ReferenceBinding[] => entry.bindings ?? [];
 
 /**
  * Check every entry's implementation rows. Returns the problems; an empty array is a pass.
@@ -25,15 +25,15 @@ export function checkImplementations(entries: readonly ReferenceEntry[], exists?
   const fail = (entry: string, message: string): void => void problems.push({ entry, message });
 
   for (const entry of entries) {
-    const implementations = rows(entry);
-    if (implementations.length === 0) continue;
+    const bindings = rows(entry);
+    if (bindings.length === 0) continue;
 
     // Nothing is silently irreducible — design/namespaces.md §6.1.
-    const reduces = implementations.some((r) => r.origin === "reference");
+    const reduces = bindings.some((r) => r.origin === "reference");
     if (!reduces && entry.primitive === undefined)
-      fail(entry.name, "has implementations but neither a reference row nor a `primitive` reason");
+      fail(entry.name, "has bindings but neither a reference row nor a `primitive` reason");
 
-    for (const row of implementations) {
+    for (const row of bindings) {
       if (row.origin === "reference" && row.expr === undefined)
         fail(entry.name, "a reference row must carry the defining expression");
       if (row.origin !== "reference" && row.expr !== undefined)

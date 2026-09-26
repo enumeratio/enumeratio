@@ -23,7 +23,7 @@ examples:
     expected: 0.273680737993234
     category: Scope
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

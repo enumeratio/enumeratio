@@ -120,7 +120,7 @@ examples:
     id: n-barnesg-5-over-2
     expr: [N, [BarnesG, [Rational, 5, 2]]]
     expected: { num: "0.947573901083825776884" }
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine

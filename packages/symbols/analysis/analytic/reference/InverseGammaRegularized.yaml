@@ -38,7 +38,7 @@ examples:
     category: Properties
     caption: Order 1 inverts $e^{-z}$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

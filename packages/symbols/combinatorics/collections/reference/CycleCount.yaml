@@ -2,7 +2,7 @@ name: CycleCount
 domain: Permutation statistics
 signature: CycleCount(p)
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

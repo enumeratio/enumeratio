@@ -1,5 +1,5 @@
 // The shape of a reference entry, and nothing else: what a package's `entries.ts` is typed
-// against, the crosswalk pointer an entry may carry, and the rule its `implementations`
+// against, the crosswalk pointer an entry may carry, and the rule its `bindings`
 // block has to satisfy. No runtime dependencies, so `collections`, `statistics`, `domains`
 // can depend on this while `reference` depends on them — the cycle this package exists
 // to break.

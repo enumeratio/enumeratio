@@ -52,7 +52,7 @@ examples:
     category: Scope
     caption: The real branch $k = -1$ on $-1/e < z < 0$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

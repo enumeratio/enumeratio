@@ -45,7 +45,7 @@ examples:
     category: Scope
     caption: $J_n(x) = G^{1,0}_{0,2}(x^2/4 \mid {}; n/2, -n/2)$, symbolic order $n$
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

@@ -30,7 +30,7 @@ examples:
     category: Scope
     caption: A polynomial in a
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

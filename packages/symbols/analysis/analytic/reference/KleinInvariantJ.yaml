@@ -29,7 +29,7 @@ examples:
     category: Neat examples
     caption: 'Heegner number 163: $J\bigl(\tfrac{1+i\sqrt{163}}2\bigr) = -640320^3/1728$, to double precision'
 primitive: kernel
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

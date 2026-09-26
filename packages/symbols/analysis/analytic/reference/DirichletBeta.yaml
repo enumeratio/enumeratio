@@ -87,7 +87,7 @@ examples:
     id: n-dirichletbeta-4
     expr: [N, [DirichletBeta, 4]]
     expected: { num: "0.988944551741105336109" }
-implementations:
+bindings:
   - origin: reference
     form: notatio
     environment: engine
