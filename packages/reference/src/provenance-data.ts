@@ -1082,13 +1082,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "KaprekarNumbers",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
     name: "KBracelets",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1104,6 +1097,13 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "KFreeIntegers",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "KaprekarNumbers",
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
@@ -1138,17 +1138,17 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "LinearRecurrence",
-    provenance: "extension",
-    declared: "enumeratio-collections",
-    wolframAlias: "LinearRecurrence",
-    elsewhere: [],
-  },
-  {
     name: "LineGraph",
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "LineGraph",
+    elsewhere: [],
+  },
+  {
+    name: "LinearRecurrence",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "LinearRecurrence",
     elsewhere: [],
   },
   {
@@ -1362,17 +1362,17 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "PadovanSequence",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
     name: "PadRight",
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "PadRight",
+    elsewhere: [],
+  },
+  {
+    name: "PadovanSequence",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
     elsewhere: [],
   },
   {
@@ -1866,13 +1866,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "SquarefreeSemiprimes",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
     name: "SquareNumbers",
     provenance: "unknown",
     declared: null,
@@ -1881,6 +1874,13 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "SquarePyramidalNumbers",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "SquarefreeSemiprimes",
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
@@ -2041,6 +2041,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "TriStrings",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "TriangularNumbers",
     provenance: "unknown",
     declared: null,
@@ -2051,13 +2058,6 @@ export const provenance: readonly HeadRecord[] = [
     name: "TribonacciNumbers",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
-    name: "TriStrings",
-    provenance: "extension",
-    declared: "enumeratio-collections",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -2202,6 +2202,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "NSymR",
+    provenance: "extension",
+    declared: "enumeratio-hopf",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "BinaryTrees",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -2248,13 +2255,6 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "Tuples",
-    elsewhere: [],
-  },
-  {
-    name: "NSymR",
-    provenance: "extension",
-    declared: "enumeratio-hopf",
-    wolframAlias: null,
     elsewhere: [],
   },
   {
@@ -3049,13 +3049,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "Divisors",
-    provenance: "override",
-    declared: null,
-    wolframAlias: "Divisors",
-    elsewhere: ["wolfram", "sympy"],
-  },
-  {
     name: "DivisorSigma",
     provenance: "override",
     declared: null,
@@ -3068,6 +3061,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-number-theory",
     wolframAlias: "DivisorSum",
     elsewhere: [],
+  },
+  {
+    name: "Divisors",
+    provenance: "override",
+    declared: null,
+    wolframAlias: "Divisors",
+    elsewhere: ["wolfram", "sympy"],
   },
   {
     name: "EulerE",
@@ -3700,18 +3700,18 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
-    name: "Erfc",
-    provenance: "override",
-    declared: null,
-    wolframAlias: "Erfc",
-    elsewhere: ["wolfram", "sympy", "mpmath"],
-  },
-  {
     name: "ErfInv",
     provenance: "override",
     declared: null,
     wolframAlias: "InverseErf",
     elsewhere: ["sympy", "mpmath"],
+  },
+  {
+    name: "Erfc",
+    provenance: "override",
+    declared: null,
+    wolframAlias: "Erfc",
+    elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
     name: "ExpIntegralE",
