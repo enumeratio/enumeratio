@@ -164,7 +164,7 @@ pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
       in: \sin ^2\left(\frac{\pi }{6}\right)+\cos ^2\left(\frac{\pi }{6}\right)
       out: "1"
   sympy:
-    in: (((sin((S(pi) / 6)))**2) + ((cos((S(pi) / 6)))**2))
+    in: ((S(sin((S(pi) / 6)))**2) + (S(cos((S(pi) / 6)))**2))
     out: "1"
   sage:
     in: (((sin((pi / 6)))^2) + ((cos((pi / 6)))^2))
@@ -957,7 +957,7 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
   wolfram:
     in: N[Sin[Power[10, 20]]]
   sympy:
-    in: N(sin(((10)**20)), 30)
+    in: N(sin((S(10)**20)), 30)
     out: "-0.645251285265780844205811711313"
   mpmath:
     in: (sin(((10)**20)))
@@ -979,7 +979,7 @@ an-even-huger-argument-11-38:
   wolfram:
     in: N[Sin[Power[11, 38]]]
   sympy:
-    in: N(sin(((11)**38)), 30)
+    in: N(sin((S(11)**38)), 30)
   mpmath:
     in: (sin(((11)**38)))
   sage:
@@ -1035,7 +1035,7 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
   wolfram:
     in: N[Sin[Power[24, 40]]]
   sympy:
-    in: N(sin(((24)**40)), 30)
+    in: N(sin((S(24)**40)), 30)
     out: "0.400083152719766047070941915848"
   mpmath:
     in: (sin(((24)**40)))

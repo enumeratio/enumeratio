@@ -224,7 +224,7 @@ the-probability-that-two-random-positive:
       in: \frac{1}{\zeta (2)}=\frac{6}{\pi ^2}
       out: \text{True}
   sympy:
-    in: enumeratio_equal((S(1) / zeta(2)), (S(6) / ((pi)**2)))
+    in: enumeratio_equal((S(1) / zeta(2)), (S(6) / (S(pi)**2)))
     out: True
   sage:
     in: bool((1 / zeta(2)) == (6 / ((pi)^2)))

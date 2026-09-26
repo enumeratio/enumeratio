@@ -71,7 +71,7 @@ multiplying-the-p-e-factors-back-together:
       in: 2^3 3^2 5=360
       out: \text{True}
   sympy:
-    in: enumeratio_equal((((2)**3) * ((3)**2) * 5), 360)
+    in: enumeratio_equal(((S(2)**3) * (S(3)**2) * 5), 360)
     out: True
   mpmath:
     in: almosteq((((2)**3) * ((3)**2) * 5), 360, 1e-20)

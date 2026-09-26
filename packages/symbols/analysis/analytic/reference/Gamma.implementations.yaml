@@ -279,7 +279,7 @@ the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2:
       in: \frac{\pi ^2}{\Gamma (3)}=\frac{\pi ^2}{2}
       out: \text{True}
   sympy:
-    in: enumeratio_equal((S(((pi)**2)) / gamma(3)), (S(((pi)**2)) / 2))
+    in: enumeratio_equal((S((S(pi)**2)) / gamma(3)), (S((S(pi)**2)) / 2))
     out: True
   sage:
     in: bool((((pi)^2) / gamma(3)) == (((pi)^2) / 2))
@@ -306,7 +306,7 @@ squaring-the-reflection-formula-at-z-1-2:
       in: \Gamma \left(\frac{1}{2}\right)^2=\pi
       out: \text{True}
   sympy:
-    in: enumeratio_equal(((gamma(Rational(1, 2)))**2), pi)
+    in: enumeratio_equal((S(gamma(Rational(1, 2)))**2), pi)
     out: True
   mpmath:
     in: almosteq(((gamma((mpf(1)/2)))**2), pi, 1e-20)
@@ -689,7 +689,7 @@ gamma-i-2-pi-sinh-pi-0-27203:
   wolfram:
     in: N[Power[Abs[Gamma[I]], 2]]
   sympy:
-    in: N(((Abs(gamma(I)))**2), 30)
+    in: N((S(Abs(gamma(I)))**2), 30)
     out: "0.272029054982133162950236583672"
   mpmath:
     in: (((fabs(gamma(mpc(0,1))))**2))
