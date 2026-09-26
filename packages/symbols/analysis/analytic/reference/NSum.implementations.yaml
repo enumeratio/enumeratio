@@ -1,0 +1,63 @@
+zeta-2-via-euler-maclaurin:
+  epsil:
+    in: NSum(n ^ -2, [n, 1, PositiveInfinity])
+    out: 1.644_934_066_848_228_2
+  tex:
+    in: \mathrm{NSum}(\frac{1}{n^2}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+    out: 1.644\,934\,066\,848\,228\,2
+  fullform:
+    in: NSum[Power[n, -2], List[n, 1, Infinity]]
+the-alternating-harmonic-series:
+  epsil:
+    in: NSum((-1) ^ (n + 1) / n, [n, 1, PositiveInfinity])
+    out: 0.693_147_180_559_945_4
+  tex:
+    in: \mathrm{NSum}(\frac{(-1)^{n+1}}{n}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+    out: 0.693\,147\,180\,559\,945\,4
+  fullform:
+    in: NSum[Divide[Power[-1, Plus[n, 1]], n], List[n, 1, Infinity]]
+e-minus-one:
+  epsil:
+    in: NSum(1 / n!, [n, 1, PositiveInfinity])
+    out: 1.718_281_828_459_045_5
+  tex:
+    in: \mathrm{NSum}(\frac{1}{n!}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+    out: 1.718\,281\,828\,459\,045\,5
+  fullform:
+    in: NSum[Divide[1, Factorial[n]], List[n, 1, Infinity]]
+a-much-more-slowly-convergent-power-law:
+  epsil:
+    in: NSum(n ^ -1.1, [n, 1, PositiveInfinity])
+    out: 10.584_448_464_950_803
+  tex:
+    in: \mathrm{NSum}(\frac{1}{n^{1.1}}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+    out: 10.584\,448\,464\,950\,803
+  fullform:
+    in: NSum[Power[n, -1.1], List[n, 1, Infinity]]
+a-finite-range-is-a-direct-sum:
+  epsil:
+    in: NSum(n, [n, 1, 5])
+    out: "15"
+  tex:
+    in: \mathrm{NSum}(n, \bigl\lbrack n, 1, 5\bigr\rbrack)
+    out: "15"
+  fullform:
+    in: NSum[n, List[n, 1, 5]]
+declines-the-harmonic-series:
+  epsil:
+    in: NSum(1 / n, [n, 1, PositiveInfinity])
+    out: NSum(1 / n, [n, 1, PositiveInfinity])
+  tex:
+    in: \mathrm{NSum}(\frac{1}{n}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+    out: \mathrm{NSum}(\frac{1}{n}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+  fullform:
+    in: NSum[Divide[1, n], List[n, 1, Infinity]]
+declines-a-series-whose-terms-grow:
+  epsil:
+    in: NSum(n, [n, 1, PositiveInfinity])
+    out: NSum(n, [n, 1, PositiveInfinity])
+  tex:
+    in: \mathrm{NSum}(n, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+    out: \mathrm{NSum}(n, \bigl\lbrack n, 1, \infty\bigr\rbrack)
+  fullform:
+    in: NSum[n, List[n, 1, Infinity]]

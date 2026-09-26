@@ -1,0 +1,54 @@
+a-downward-parabola-s-vertex:
+  epsil:
+    in: Maximize(-x ^ 2 + 4x - 1, x)
+    out: "[3, [Rule(x, 2)]]"
+  tex:
+    in: \mathrm{Maximize}(-x^2+4x-1, x)
+    out: \bigl\lbrack3, \bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Maximize[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
+unbounded-above-reports-positive-infinity:
+  epsil:
+    in: Maximize(x ^ 3, x)
+    out: "[PositiveInfinity, [Rule(x, PositiveInfinity)]]"
+  tex:
+    in: \mathrm{Maximize}(x^3, x)
+    out: \bigl\lbrack\infty, \bigl\lbrack\mathrm{Rule}(x, \infty)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Maximize[Power[x, 3], x]
+a-bounded-interval-constraint:
+  epsil:
+    in: Maximize([-x ^ 2 + 4x - 1, x >= 0 && x <= 1], x)
+    out: "[2, [Rule(x, 1)]]"
+  tex:
+    in: \mathrm{Maximize}(\bigl\lbrack-x^2+4x-1, x\ge0\land x\le1\bigr\rbrack, x)
+    out: \bigl\lbrack2, \bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Maximize[List[Plus[Minus[Power[x, 2]], Times[4, x], -1], And[GreaterEqual[x, 0], LessEqual[x, 1]]], x]
+exp-of-a-negated-argument-is-unbounded-above:
+  epsil:
+    in: Maximize(Exp(-x), x)
+    out: "[PositiveInfinity, [Rule(x, NegativeInfinity)]]"
+  tex:
+    in: \mathrm{Maximize}(\exp(-x), x)
+    out: \bigl\lbrack\infty, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Maximize[Exp[Minus[x]], x]
+a-downward-quadratic-radicand:
+  epsil:
+    in: Maximize(Sqrt(4 - x ^ 2), x)
+    out: "[2, [Rule(x, 0)]]"
+  tex:
+    in: \mathrm{Maximize}(\sqrt{4-x^2}, x)
+    out: \bigl\lbrack2, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Maximize[Sqrt[Subtract[4, Power[x, 2]]], x]
+declines-more-than-one-variable:
+  epsil:
+    in: Maximize(-(x ^ 2 + y ^ 2), [x, y])
+    out: Maximize(-(x ^ 2 + y ^ 2), [x, y])
+  tex:
+    in: \mathrm{Maximize}(-(x^2+y^2), \bigl\lbrack x, y\bigr\rbrack)
+    out: \mathrm{Maximize}(-(x^2+y^2), \bigl\lbrack x, y\bigr\rbrack)
+  fullform:
+    in: Maximize[Minus[Plus[Power[x, 2], Power[y, 2]]], List[x, y]]
