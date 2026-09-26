@@ -983,6 +983,7 @@ an-even-huger-argument-11-38:
     in: N(sin((S(11)**38)), 30)
   mpmath:
     in: (sin(((11)**38)))
+    out: "0.867534193184863032081750429728"
   sage:
     in: N(sin(((11)^38)))
   rust:

@@ -1459,6 +1459,7 @@ n-polygamma-1-1-over-2:
     in: N(polygamma(1, Rational(1, 2)), 30)
   mpmath:
     in: (psi(1, (mpf(1)/2)))
+    out: "4.93480220054467930941724549994"
   sage:
     in: N(psi(1, (1/2)))
 n-polygamma-0-1:
@@ -1479,6 +1480,7 @@ n-polygamma-0-1:
     in: N(polygamma(0, 1), 30)
   mpmath:
     in: (psi(0, 1))
+    out: "-0.577215664901532860606512090082"
   sage:
     in: N(psi(0, 1))
 n-polygamma-0-1-plus-i:
@@ -1499,6 +1501,7 @@ n-polygamma-0-1-plus-i:
     in: N(polygamma(0, (1 + 1*I)), 30)
   mpmath:
     in: (psi(0, mpc(1, 1)))
+    out: (0.0946503206224769772718784827219 + 1.07667404746858117413405079475j)
   sage:
     in: N(psi(0, (1 + 1*I)))
 n-polygamma-0-0p5-plus-0p3i:
@@ -1519,6 +1522,7 @@ n-polygamma-0-0p5-plus-0p3i:
     in: N(polygamma(0, (0.5 + 0.3*I)), 30)
   mpmath:
     in: (psi(0, mpc(0.5, 0.3)))
+    out: (-1.39793262940580732844854732105 + 1.15666938332423779803245397677j)
   sage:
     in: N(psi(0, (0.5 + 0.3*I)))
 n-polygamma-neg1-2-is-loggamma-2-is-0:
@@ -1539,6 +1543,10 @@ n-polygamma-neg1-2-is-loggamma-2-is-0:
     in: N(polygamma(-1, 2), 30)
   mpmath:
     in: (psi(-1, 2))
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: domain
+    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (confirmed: psi(-1, 2) and psi(-2, 2) both fail this way while psi(0, 2) succeeds) -- a domain gap in the mapping, not a bug on either side."
   sage:
     in: N(psi(-1, 2))
 n-polygamma-neg1-1-over-2:
@@ -1559,6 +1567,10 @@ n-polygamma-neg1-1-over-2:
     in: N(polygamma(-1, Rational(1, 2)), 30)
   mpmath:
     in: (psi(-1, (mpf(1)/2)))
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: domain
+    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
   sage:
     in: N(psi(-1, (1/2)))
 n-polygamma-neg1-1-plus-i:
@@ -1579,6 +1591,10 @@ n-polygamma-neg1-1-plus-i:
     in: N(polygamma(-1, (1 + 1*I)), 30)
   mpmath:
     in: (psi(-1, mpc(1, 1)))
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: domain
+    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
   sage:
     in: N(psi(-1, (1 + 1*I)))
 n-polygamma-neg1-neg0p5:
@@ -1599,6 +1615,10 @@ n-polygamma-neg1-neg0p5:
     in: N(polygamma(-1, -0.5), 30)
   mpmath:
     in: (psi(-1, -0.5))
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: domain
+    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
   sage:
     in: N(psi(-1, -0.5))
 n-polygamma-neg2-stays-unevaluated:
@@ -1619,5 +1639,9 @@ n-polygamma-neg2-stays-unevaluated:
     in: N(polygamma(-2, 2), 30)
   mpmath:
     in: (psi(-2, 2))
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: domain
+    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
   sage:
     in: N(psi(-2, 2))

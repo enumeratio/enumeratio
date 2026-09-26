@@ -446,6 +446,7 @@ precise-zeta-s-neg-41-2-a-3-10-d80:
     in: N(zeta(Rational(-41, 2), Rational(3, 10)), 30)
   mpmath:
     in: (zeta((mpf(-41)/2), (mpf(3)/10)))
+    out: "136.361935791831144171775099936"
   sage:
     in: N(hurwitz_zeta((-41/2), (3/10)))
 precise-zeta-s-neg-81-2-a-2-5-d40:
@@ -466,6 +467,7 @@ precise-zeta-s-neg-81-2-a-2-5-d40:
     in: N(zeta(Rational(-81, 2), Rational(2, 5)), 30)
   mpmath:
     in: (zeta((mpf(-81)/2), (mpf(2)/5)))
+    out: "7724997484091588.75677781408441"
   sage:
     in: N(hurwitz_zeta((-81/2), (2/5)))
 precise-zeta-s-neg-81-2-a-2-5-d80:
@@ -486,6 +488,7 @@ precise-zeta-s-neg-81-2-a-2-5-d80:
     in: N(zeta(Rational(-81, 2), Rational(2, 5)), 30)
   mpmath:
     in: (zeta((mpf(-81)/2), (mpf(2)/5)))
+    out: "7724997484091588.75677781408441"
   sage:
     in: N(hurwitz_zeta((-81/2), (2/5)))
 precise-zeta-s-neg-21-2-a-3-10-d40:
@@ -506,6 +509,7 @@ precise-zeta-s-neg-21-2-a-3-10-d40:
     in: N(zeta(Rational(-21, 2), Rational(3, 10)), 30)
   mpmath:
     in: (zeta((mpf(-21)/2), (mpf(3)/10)))
+    out: "-0.0140408398381087152333772105725"
   sage:
     in: N(hurwitz_zeta((-21/2), (3/10)))
 precise-zeta-s-neg-21-2-a-3-10-d80:
@@ -526,6 +530,7 @@ precise-zeta-s-neg-21-2-a-3-10-d80:
     in: N(zeta(Rational(-21, 2), Rational(3, 10)), 30)
   mpmath:
     in: (zeta((mpf(-21)/2), (mpf(3)/10)))
+    out: "-0.0140408398381087152333772105725"
   sage:
     in: N(hurwitz_zeta((-21/2), (3/10)))
 precise-zeta-s-neg-11-2-a-27-10-d40:
@@ -546,6 +551,7 @@ precise-zeta-s-neg-11-2-a-27-10-d40:
     in: N(zeta(Rational(-11, 2), Rational(27, 10)), 30)
   mpmath:
     in: (zeta((mpf(-11)/2), (mpf(27)/10)))
+    out: "-18.6499577040875707562097720682"
   sage:
     in: N(hurwitz_zeta((-11/2), (27/10)))
 precise-zeta-s-neg-11-2-a-27-10-d80:
@@ -566,6 +572,7 @@ precise-zeta-s-neg-11-2-a-27-10-d80:
     in: N(zeta(Rational(-11, 2), Rational(27, 10)), 30)
   mpmath:
     in: (zeta((mpf(-11)/2), (mpf(27)/10)))
+    out: "-18.6499577040875707562097720682"
   sage:
     in: N(hurwitz_zeta((-11/2), (27/10)))
 precise-zeta-s-neg-5-2-a-3-10-d40:
@@ -586,6 +593,7 @@ precise-zeta-s-neg-5-2-a-3-10-d40:
     in: N(zeta(Rational(-5, 2), Rational(3, 10)), 30)
   mpmath:
     in: (zeta((mpf(-5)/2), (mpf(3)/10)))
+    out: "-0.00949638093151452001727383524968"
   sage:
     in: N(hurwitz_zeta((-5/2), (3/10)))
 precise-zeta-s-neg-5-2-a-3-10-d80:
@@ -606,6 +614,7 @@ precise-zeta-s-neg-5-2-a-3-10-d80:
     in: N(zeta(Rational(-5, 2), Rational(3, 10)), 30)
   mpmath:
     in: (zeta((mpf(-5)/2), (mpf(3)/10)))
+    out: "-0.00949638093151452001727383524968"
   sage:
     in: N(hurwitz_zeta((-5/2), (3/10)))
 precise-zeta-s-neg-1-2-a-1-20-d40:
@@ -626,6 +635,7 @@ precise-zeta-s-neg-1-2-a-1-20-d40:
     in: N(zeta(Rational(-1, 2), Rational(1, 20)), 30)
   mpmath:
     in: (zeta((mpf(-1)/2), (mpf(1)/20)))
+    out: "-0.0215944432602647433393546867694"
   sage:
     in: N(hurwitz_zeta((-1/2), (1/20)))
 precise-zeta-s-neg-1-2-a-1-20-d80:
@@ -646,6 +656,7 @@ precise-zeta-s-neg-1-2-a-1-20-d80:
     in: N(zeta(Rational(-1, 2), Rational(1, 20)), 30)
   mpmath:
     in: (zeta((mpf(-1)/2), (mpf(1)/20)))
+    out: "-0.0215944432602647433393546867694"
   sage:
     in: N(hurwitz_zeta((-1/2), (1/20)))
 precise-zeta-s-1-2-a-5-4-d40:
@@ -666,6 +677,7 @@ precise-zeta-s-1-2-a-5-4-d40:
     in: N(zeta(Rational(1, 2), Rational(5, 4)), 30)
   mpmath:
     in: (zeta((mpf(1)/2), (mpf(5)/4)))
+    out: "-1.76003647550436904466242568984"
   sage:
     in: N(hurwitz_zeta((1/2), (5/4)))
 precise-zeta-s-1-2-a-5-4-d80:
@@ -686,6 +698,7 @@ precise-zeta-s-1-2-a-5-4-d80:
     in: N(zeta(Rational(1, 2), Rational(5, 4)), 30)
   mpmath:
     in: (zeta((mpf(1)/2), (mpf(5)/4)))
+    out: "-1.76003647550436904466242568984"
   sage:
     in: N(hurwitz_zeta((1/2), (5/4)))
 left-of-the-strip-at-a-non-integer-a:

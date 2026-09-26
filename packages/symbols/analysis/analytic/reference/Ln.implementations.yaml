@@ -575,6 +575,7 @@ a-machine-precision-negative-argument:
     in: log(-4.705)
   mpmath:
     in: log(-4.705)
+    out: (1.54862577303734297246018360519 + 3.14159265358979323846264338328j)
   sage:
     in: log(-4.705)
   rust:
@@ -598,6 +599,7 @@ an-integer-power-negative-argument:
     in: log(-2)
   mpmath:
     in: log(-2)
+    out: (0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
   sage:
     in: log(-2)
   rust:
@@ -621,6 +623,7 @@ n-of-a-negative-integer-argument:
     in: N(log(-2), 30)
   mpmath:
     in: (log(-2))
+    out: (0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
   sage:
     in: N(log(-2))
   rust:
@@ -644,6 +647,7 @@ ln-neg-6:
     in: log(-6)
   mpmath:
     in: log(-6)
+    out: (1.79175946922805500081247735838 + 3.14159265358979323846264338328j)
   sage:
     in: log(-6)
   rust:
@@ -667,6 +671,7 @@ n-of-a-negative-rational-argument:
     in: N(log(Rational(-1, 2)), 30)
   mpmath:
     in: (log((mpf(-1)/2)))
+    out: (-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
   sage:
     in: N(log((-1/2)))
   rust:

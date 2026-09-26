@@ -155,6 +155,10 @@ n-pi-1-digit:
     in: N(pi, 30)
   mpmath:
     in: (pi)
+    out: "3.14159265358979323846264338328"
+    verdict: disagree
+    kind: precision
+    note: N's digit count is dropped for mpmath, per the mapping's own note -- it always returns full working precision rather than the one digit asked for (same gap as the Rust row above).
   sage:
     in: N(pi)
   rust:

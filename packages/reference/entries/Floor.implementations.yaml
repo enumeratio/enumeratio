@@ -355,6 +355,7 @@ a-negative-radicand-inside-floor:
     in: floor(sqrt(-1))
   mpmath:
     in: floor(sqrt(-1))
+    out: (0.0 + 1.0j)
   sage:
     in: floor(sqrt(-1))
   rust:

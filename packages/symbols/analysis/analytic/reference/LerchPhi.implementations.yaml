@@ -9189,6 +9189,7 @@ lerch-continuation-z3-s2p5-a1p5:
     in: N(lerchphi(3, 2.5, 1.5), 30)
   mpmath:
     in: (lerchphi(3, 2.5, 1.5))
+    out: (0.259043193993909540298934126628 - 0.523719168554283393277272866038j)
 lerch-continuation-zneg5-s2-a1:
   epsil:
     in: N(LerchPhi(-5, 2, 1))
@@ -9207,6 +9208,7 @@ lerch-continuation-zneg5-s2-a1:
     in: N(lerchphi(-5, 2, 1), 30)
   mpmath:
     in: (lerchphi(-5, 2, 1))
+    out: "0.549855825212161658005117503075"
 lerch-continuation-z2p3i-s1neg2i-a3:
   epsil:
     in: N(LerchPhi(2 + 3i, 1 - 2i, 3))
@@ -9225,6 +9227,7 @@ lerch-continuation-z2p3i-s1neg2i-a3:
     in: N(lerchphi((2 + 3*I), (1 + -2*I), 3), 30)
   mpmath:
     in: (lerchphi(mpc(2, 3), mpc(1, -2), 3))
+    out: (-0.108147767607783295336729636068 - 0.0131434106268973124079563408879j)
 lerch-continuation-zneg3p0p5i-s1p5-a2:
   epsil:
     in: N(LerchPhi(-3 + 0.5i, 1.5, 2))
@@ -9243,6 +9246,7 @@ lerch-continuation-zneg3p0p5i-s1p5-a2:
     in: N(lerchphi((-3 + 0.5*I), 1.5, 2), 30)
   mpmath:
     in: (lerchphi(mpc(-3, 0.5), 1.5, 2))
+    out: (0.145493815105337939244094426002 + 0.0130712479883854981705173123528j)
 lerch-continuation-z10-s0p5-a3:
   epsil:
     in: N(LerchPhi(10, 0.5, 3))
@@ -9261,6 +9265,7 @@ lerch-continuation-z10-s0p5-a3:
     in: N(lerchphi(10, 0.5, 3), 30)
   mpmath:
     in: (lerchphi(10, 0.5, 3))
+    out: (-0.0826967336410126929805988879001 - 0.00116806521814573408154703961184j)
 lerch-continuation-z4-s3-a0p3:
   epsil:
     in: N(LerchPhi(4, 3, 0.3))
@@ -9279,6 +9284,7 @@ lerch-continuation-z4-s3-a0p3:
     in: N(lerchphi(4, 3, 0.3), 30)
   mpmath:
     in: (lerchphi(4, 3, 0.3))
+    out: (38.6892354242459661497280626852 - 1.99164895636857398697515968295j)
 lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7:
   epsil:
     in: N(LerchPhi(-1.5 + 2.5i, 2 - i, 0.7))
@@ -9297,6 +9303,7 @@ lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7:
     in: N(lerchphi((-1.5 + 2.5*I), (2 + -1*I), 0.7), 30)
   mpmath:
     in: (lerchphi(mpc(-1.5, 2.5), mpc(2, -1), 0.7))
+    out: (1.4129936470544950821581822101 - 0.558305334451271056515333785948j)
 lerch-continuation-z100-sneg2-a1:
   epsil:
     in: N(LerchPhi(100, -2, 1))
@@ -9315,6 +9322,7 @@ lerch-continuation-z100-sneg2-a1:
     in: N(lerchphi(100, -2, 1), 30)
   mpmath:
     in: (lerchphi(100, -2, 1))
+    out: "-0.000104091625364964820122457098276"
 lerch-continuation-z1p0001-s2-a1:
   epsil:
     in: N(LerchPhi(1.000_1, 2, 1))
@@ -9333,3 +9341,4 @@ lerch-continuation-z1p0001-s2-a1:
     in: N(lerchphi(1.0001, 2, 1), 30)
   mpmath:
     in: (lerchphi(1.0001, 2, 1))
+    out: (1.64579047328957414222826720656 - 0.000314112147228072992507307010068j)

@@ -49,6 +49,10 @@ a-pole-of-gamma-at-negative-1:
     in: gamma(-1)
   mpmath:
     in: gamma(-1)
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and mpmath raises at the exact pole rather than returning a value (same undefined form as the Rust/statrs row above, which instead blows up to a huge finite float)."
   sage:
     in: gamma(-1)
   rust:
@@ -72,6 +76,10 @@ a-pole-of-gamma-at-negative-2:
     in: gamma(-2)
   mpmath:
     in: gamma(-2)
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and mpmath raises at the exact pole rather than returning a value (same undefined form as the Rust/statrs row above, which instead blows up to a huge finite float)."
   sage:
     in: gamma(-2)
   rust:
