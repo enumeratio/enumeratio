@@ -1,0 +1,15 @@
+name: MotzkinPathsByPeaks
+domain: Collections
+signature: MotzkinPathsByPeaks(n, k)
+summary: Motzkin paths of length $n$ with exactly $k$ peaks — an up-step immediately followed by a down-step.
+signatures:
+  - call: MotzkinPathsByPeaks(n, k)
+    description: Motzkin paths of length $n$ with exactly $k$ peaks — an up-step immediately followed by a down-step
+    library: enumeratio-collections
+details:
+  - Row $n$ is the Motzkin triangle (A055151); rows sum to the Motzkin numbers (A001006).
+seeAlso:
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A055151

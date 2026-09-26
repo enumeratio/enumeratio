@@ -1,0 +1,17 @@
+name: TetraCompositions
+domain: Collections
+signature: TetraCompositions(n)
+summary: The compositions of $n$ into parts from $\{1, 2, 3, 4\}$.
+signatures:
+  - call: TetraCompositions(n)
+    description: the compositions of $n$ into parts from $\{1, 2, 3, 4\}$
+    library: enumeratio-collections
+details:
+  - Count is the tetranacci number (A000078).
+seeAlso:
+  - IntegerCompositions
+  - TriCompositions
+  - KBoundedCompositions
+references:
+  - system: oeis
+    identity: A000078

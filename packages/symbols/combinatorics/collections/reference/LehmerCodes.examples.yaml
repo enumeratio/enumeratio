@@ -1,0 +1,41 @@
+- id: count-lehmercodes-4
+  expr: [Count, [LehmerCodes, 4]]
+  expected: 24
+  category: Basic
+  caption: $Count(LehmerCodes(4)) = 24$
+- id: first-element-of-lehmercodes-4
+  expr: [At, [LehmerCodes, 4], 1]
+  expected: [List, 0, 0, 0]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-lehmercodes-4
+  role: test
+  expr: [Take, [LehmerCodes, 4], 24]
+  expected:
+    [
+      List,
+      [List, 0, 0, 0],
+      [List, 0, 0, 1],
+      [List, 0, 1, 0],
+      [List, 0, 1, 1],
+      [List, 0, 2, 0],
+      [List, 0, 2, 1],
+      [List, 1, 0, 0],
+      [List, 1, 0, 1],
+      [List, 1, 1, 0],
+      [List, 1, 1, 1],
+      [List, 1, 2, 0],
+      [List, 1, 2, 1],
+      [List, 2, 0, 0],
+      [List, 2, 0, 1],
+      [List, 2, 1, 0],
+      [List, 2, 1, 1],
+      [List, 2, 2, 0],
+      [List, 2, 2, 1],
+      [List, 3, 0, 0],
+      [List, 3, 0, 1],
+      [List, 3, 1, 0],
+      [List, 3, 1, 1],
+      [List, 3, 2, 0],
+      [List, 3, 2, 1],
+    ]

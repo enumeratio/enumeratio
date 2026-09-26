@@ -1,0 +1,16 @@
+name: LyndonWords
+domain: Collections
+signature: LyndonWords(n)
+summary: "The binary Lyndon words of length $n$: words strictly less than every one of their nontrivial rotations."
+signatures:
+  - call: LyndonWords(n)
+    description: "the binary Lyndon words of length $n$: words strictly less than every one of their nontrivial rotations"
+    library: enumeratio-collections
+details:
+  - Count is A001037, via Möbius inversion over the divisors of $n$.
+seeAlso:
+  - BinaryNecklaces
+  - KLyndonWords
+references:
+  - system: oeis
+    identity: A001037

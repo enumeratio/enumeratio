@@ -1,0 +1,25 @@
+- id: count-graycodes-3
+  expr: [Count, [GrayCodes, 3]]
+  expected: 8
+  category: Basic
+  caption: $Count(GrayCodes(3)) = 8$
+- id: first-element-of-graycodes-3
+  expr: [At, [GrayCodes, 3], 1]
+  expected: [List, 0, 0, 0]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-graycodes-3
+  role: test
+  expr: [Take, [GrayCodes, 3], 8]
+  expected:
+    [
+      List,
+      [List, 0, 0, 0],
+      [List, 0, 0, 1],
+      [List, 0, 1, 1],
+      [List, 0, 1, 0],
+      [List, 1, 1, 0],
+      [List, 1, 1, 1],
+      [List, 1, 0, 1],
+      [List, 1, 0, 0],
+    ]

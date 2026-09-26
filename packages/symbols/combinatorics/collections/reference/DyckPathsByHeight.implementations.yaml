@@ -1,0 +1,34 @@
+count-dyckpathsbyheight-4-2:
+  epsil:
+    in: Count(DyckPathsByHeight(4, 2))
+    out: "7"
+  tex:
+    in: \mathrm{Count}(\mathrm{DyckPathsByHeight}(4, 2))
+    out: "7"
+  fullform:
+    in: Count[DyckPathsByHeight[4, 2]]
+first-element-of-dyckpathsbyheight-4-2:
+  epsil:
+    in: DyckPathsByHeight(4, 2)[1]
+    out: "[1, 1, 0, 1, 0, 1, 0, 0]"
+  tex:
+    in: \mathrm{DyckPathsByHeight}(4, 2)[1]
+    out: \bigl\lbrack1, 1, 0, 1, 0, 1, 0, 0\bigr\rbrack
+  fullform:
+    in: Part[DyckPathsByHeight[4, 2], 1]
+every-element-of-dyckpathsbyheight-4-2:
+  epsil:
+    in: Take(DyckPathsByHeight(4, 2), 5)
+    out: |-
+      [
+        [1, 1, 0, 1, 0, 1, 0, 0],
+        [1, 1, 0, 1, 0, 0, 1, 0],
+        [1, 1, 0, 0, 1, 1, 0, 0],
+        [1, 1, 0, 0, 1, 0, 1, 0],
+        [1, 0, 1, 1, 0, 1, 0, 0],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{DyckPathsByHeight}(4, 2), 5)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 0, 1, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 1, 0, 1, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[DyckPathsByHeight[4, 2], 5]

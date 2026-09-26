@@ -1,0 +1,15 @@
+name: TriangularComposition
+domain: Collections
+signature: TriangularComposition(n)
+summary: The compositions of $n$ into triangular-number parts.
+signatures:
+  - call: TriangularComposition(n)
+    description: the compositions of $n$ into triangular-number parts
+    library: enumeratio-collections
+details:
+  - Count is A023361.
+seeAlso:
+  - IntegerCompositions
+references:
+  - system: oeis
+    identity: A023361

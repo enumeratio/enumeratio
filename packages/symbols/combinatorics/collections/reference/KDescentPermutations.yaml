@@ -1,0 +1,17 @@
+name: KDescentPermutations
+domain: Collections
+signature: KDescentPermutations(n, k)
+summary: Permutations of $\{1, …, n\}$ with exactly $k$ descents — row $n$ of the Eulerian triangle.
+signatures:
+  - call: KDescentPermutations(n, k)
+    description: Permutations of $\{1, …, n\}$ with exactly $k$ descents — row $n$ of the Eulerian triangle
+    library: enumeratio-collections
+details:
+  - Count is the Eulerian number $\left\langle{n \atop k}\right\rangle$ (A008292).
+seeAlso:
+  - SymmetricGroup
+  - KCyclePermutations
+  - KInversionPermutations
+references:
+  - system: oeis
+    identity: A008292

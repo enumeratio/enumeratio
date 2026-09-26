@@ -1,0 +1,39 @@
+count-triangularpartitions-12:
+  epsil:
+    in: Count(TriangularPartitions(12))
+    out: "10"
+  tex:
+    in: \mathrm{Count}(\mathrm{TriangularPartitions}(12))
+    out: "10"
+  fullform:
+    in: Count[TriangularPartitions[12]]
+first-element-of-triangularpartitions-12:
+  epsil:
+    in: TriangularPartitions(12)[1]
+    out: "[10, 1, 1]"
+  tex:
+    in: \mathrm{TriangularPartitions}(12)[1]
+    out: \bigl\lbrack10, 1, 1\bigr\rbrack
+  fullform:
+    in: Part[TriangularPartitions[12], 1]
+every-element-of-triangularpartitions-12:
+  epsil:
+    in: Take(TriangularPartitions(12), 10)
+    out: |-
+      [
+        [10, 1, 1],
+        [6, 6],
+        [6, 3, 3],
+        [6, 3, 1, 1, 1],
+        [6, 1, 1, 1, 1, 1, 1],
+        [3, 3, 3, 3],
+        [3, 3, 3, 1, 1, 1],
+        [3, 3, 1, 1, 1, 1, 1, 1],
+        [3, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{TriangularPartitions}(12), 10)
+    out: \bigl\lbrack\bigl\lbrack10, 1, 1\bigr\rbrack, \bigl\lbrack6, 6\bigr\rbrack, \bigl\lbrack6, 3, 3\bigr\rbrack, \bigl\lbrack6, 3, 1, 1, 1\bigr\rbrack, \bigl\lbrack6, 1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 3, 3, 3\bigr\rbrack, \bigl\lbrack3, 3, 3, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 3, 1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[TriangularPartitions[12], 10]

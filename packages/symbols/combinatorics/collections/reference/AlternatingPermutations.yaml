@@ -1,0 +1,17 @@
+name: AlternatingPermutations
+domain: Collections
+signature: AlternatingPermutations(n)
+summary: 'Alternating (zigzag) permutations of $\{1, …, n\}$: $a_1 < a_2 > a_3 < …$.'
+signatures:
+  - call: AlternatingPermutations(n)
+    description: 'Alternating (zigzag) permutations of $\{1, …, n\}$: $a_1 < a_2 > a_3 < …$'
+    library: enumeratio-collections
+details:
+  - Count is the Euler zigzag (up/down) number (A000111).
+  - Each element is a one-line permutation.
+seeAlso:
+  - SymmetricGroup
+  - ZigzagComposition
+references:
+  - system: oeis
+    identity: A000111

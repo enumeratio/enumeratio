@@ -1,0 +1,37 @@
+count-words-3-2:
+  epsil:
+    in: Count(Words(3, 2))
+    out: "8"
+  tex:
+    in: \mathrm{Count}(\mathrm{Words}(3, 2))
+    out: "8"
+  fullform:
+    in: Count[Words[3, 2]]
+first-element-of-words-3-2:
+  epsil:
+    in: Words(3, 2)[1]
+    out: "[1, 1, 1]"
+  tex:
+    in: \mathrm{Words}(3, 2)[1]
+    out: \bigl\lbrack1, 1, 1\bigr\rbrack
+  fullform:
+    in: Part[Words[3, 2], 1]
+every-element-of-words-3-2:
+  epsil:
+    in: Take(Words(3, 2), 8)
+    out: |-
+      [
+        [1, 1, 1],
+        [1, 1, 2],
+        [1, 2, 1],
+        [1, 2, 2],
+        [2, 1, 1],
+        [2, 1, 2],
+        [2, 2, 1],
+        [2, 2, 2],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{Words}(3, 2), 8)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 1\bigr\rbrack, \bigl\lbrack1, 2, 2\bigr\rbrack, \bigl\lbrack2, 1, 1\bigr\rbrack, \bigl\lbrack2, 1, 2\bigr\rbrack, \bigl\lbrack2, 2, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[Words[3, 2], 8]

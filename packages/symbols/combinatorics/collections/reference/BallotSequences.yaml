@@ -1,0 +1,15 @@
+name: BallotSequences
+domain: Collections
+signature: BallotSequences(n)
+summary: "Ballot sequences of length $2n$: 0/1 words where every prefix has at least as many 1s as 0s."
+signatures:
+  - call: BallotSequences(n)
+    description: "Ballot sequences of length $2n$: 0/1 words where every prefix has at least as many 1s as 0s"
+    library: enumeratio-collections
+details:
+  - Count is the Catalan number $C_n$ (A000108); the same family as [[DyckPaths]].
+seeAlso:
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A000108

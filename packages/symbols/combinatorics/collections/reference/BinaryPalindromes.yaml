@@ -1,0 +1,13 @@
+name: BinaryPalindromes
+domain: Collections
+signature: BinaryPalindromes(n)
+summary: The binary words of length $n$ that read the same reversed.
+signatures:
+  - call: BinaryPalindromes(n)
+    description: the binary words of length $n$ that read the same reversed
+    library: enumeratio-collections
+details:
+  - Count is $2^{\lceil n/2 \rceil}$.
+seeAlso:
+  - BinaryWords
+  - PalindromicCompositions

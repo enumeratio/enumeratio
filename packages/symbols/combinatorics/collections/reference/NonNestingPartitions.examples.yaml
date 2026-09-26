@@ -1,0 +1,22 @@
+- id: count-nonnestingpartitions-4
+  expr: [Count, [NonNestingPartitions, 4]]
+  expected: 14
+  category: Basic
+  caption: $Count(NonNestingPartitions(4)) = 14$
+- id: first-element-of-nonnestingpartitions-4
+  expr: [At, [NonNestingPartitions, 4], 1]
+  expected: [List, [List, 1], [List, 2], [List, 3], [List, 4]]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-nonnestingpartitions-4
+  role: test
+  expr: [Take, [NonNestingPartitions, 4], 5]
+  expected:
+    [
+      List,
+      [List, [List, 1], [List, 2], [List, 3], [List, 4]],
+      [List, [List, 1, 4], [List, 2], [List, 3]],
+      [List, [List, 1], [List, 2, 4], [List, 3]],
+      [List, [List, 1], [List, 2], [List, 3, 4]],
+      [List, [List, 1, 3], [List, 2], [List, 4]],
+    ]

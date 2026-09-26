@@ -1,0 +1,16 @@
+name: FibStrings
+domain: Collections
+signature: FibStrings(n)
+summary: Binary words of length $n$ with no two consecutive ones.
+signatures:
+  - call: FibStrings(n)
+    description: Binary words of length $n$ with no two consecutive ones
+    library: enumeratio-collections
+details:
+  - Count is $F_{n+2}$ (A000045, shifted).
+seeAlso:
+  - LucasStrings
+  - BinaryWords
+references:
+  - system: oeis
+    identity: A000045

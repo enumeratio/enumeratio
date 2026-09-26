@@ -1,0 +1,15 @@
+name: OddPartitions
+domain: Collections
+signature: OddPartitions(n)
+summary: The partitions of $n$ into odd parts.
+signatures:
+  - call: OddPartitions(n)
+    description: the partitions of $n$ into odd parts
+    library: enumeratio-collections
+details:
+  - Count is A000009; by Euler's theorem, equal to the count of partitions into distinct parts.
+seeAlso:
+  - IntegerPartitions
+references:
+  - system: oeis
+    identity: A000009

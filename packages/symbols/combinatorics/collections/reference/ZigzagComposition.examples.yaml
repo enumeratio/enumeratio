@@ -1,0 +1,29 @@
+- id: count-zigzagcomposition-6
+  expr: [Count, [ZigzagComposition, 6]]
+  expected: 12
+  category: Basic
+  caption: $Count(ZigzagComposition(6)) = 12$
+- id: first-element-of-zigzagcomposition-6
+  expr: [At, [ZigzagComposition, 6], 1]
+  expected: [List, 1, 2, 1, 2]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-zigzagcomposition-6
+  role: test
+  expr: [Take, [ZigzagComposition, 6], 12]
+  expected:
+    [
+      List,
+      [List, 1, 2, 1, 2],
+      [List, 1, 3, 2],
+      [List, 1, 4, 1],
+      [List, 1, 5],
+      [List, 2, 1, 2, 1],
+      [List, 2, 1, 3],
+      [List, 2, 3, 1],
+      [List, 2, 4],
+      [List, 3, 1, 2],
+      [List, 4, 2],
+      [List, 5, 1],
+      [List, 6],
+    ]

@@ -1,0 +1,31 @@
+- id: count-permutationsavoiding213-4
+  expr: [Count, [PermutationsAvoiding213, 4]]
+  expected: 14
+  category: Basic
+  caption: $Count(PermutationsAvoiding213(4)) = 14$
+- id: first-element-of-permutationsavoiding213-4
+  expr: [At, [PermutationsAvoiding213, 4], 1]
+  expected: [List, 1, 2, 3, 4]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-permutationsavoiding213-4
+  role: test
+  expr: [Take, [PermutationsAvoiding213, 4], 14]
+  expected:
+    [
+      List,
+      [List, 1, 2, 3, 4],
+      [List, 1, 2, 4, 3],
+      [List, 1, 4, 2, 3],
+      [List, 1, 3, 4, 2],
+      [List, 1, 4, 3, 2],
+      [List, 4, 1, 2, 3],
+      [List, 4, 1, 3, 2],
+      [List, 3, 4, 1, 2],
+      [List, 4, 3, 1, 2],
+      [List, 2, 3, 4, 1],
+      [List, 2, 4, 3, 1],
+      [List, 4, 2, 3, 1],
+      [List, 3, 4, 2, 1],
+      [List, 4, 3, 2, 1],
+    ]

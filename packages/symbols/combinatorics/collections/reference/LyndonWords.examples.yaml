@@ -1,0 +1,23 @@
+- id: count-lyndonwords-5
+  expr: [Count, [LyndonWords, 5]]
+  expected: 6
+  category: Basic
+  caption: $Count(LyndonWords(5)) = 6$
+- id: first-element-of-lyndonwords-5
+  expr: [At, [LyndonWords, 5], 1]
+  expected: [List, 0, 0, 0, 0, 1]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-lyndonwords-5
+  role: test
+  expr: [Take, [LyndonWords, 5], 6]
+  expected:
+    [
+      List,
+      [List, 0, 0, 0, 0, 1],
+      [List, 0, 0, 0, 1, 1],
+      [List, 0, 0, 1, 0, 1],
+      [List, 0, 0, 1, 1, 1],
+      [List, 0, 1, 0, 1, 1],
+      [List, 0, 1, 1, 1, 1],
+    ]
