@@ -322,8 +322,8 @@ s-n-n-1-binom-n-2:
     in: bool(stirling_number1(6, 5) == (-binomial(6, 2)))
     out: False
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: Sage's stirling_number1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
   julia:
     in: (Combinatorics.stirlings1(big(6), 5) == (-(binomial(ZZ(6), ZZ(2)))))
     out: "false"
@@ -392,8 +392,8 @@ a-negative-k-stays-symbolic:
     in: stirling_number1(4, -1)
     out: "0"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: domain
+    note: A negative k is outside StirlingS1's textbook domain, so compute-engine leaves it symbolic; Sage's stirling_number1 extends past it and answers 0.
   julia:
     in: Combinatorics.stirlings1(big(4), -1)
     out: "0"

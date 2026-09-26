@@ -730,8 +730,8 @@ to-1-significant-digit:
     in: N(cos(1))
     out: "0.540302305868140"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: precision
+    note: N's digit count is dropped for Sage, per the mapping's own note; it always returns full double precision rather than the one digit asked for.
   rust:
     in: nf(cos(n(1)))
     out: "0.5403023058681398"
@@ -759,8 +759,8 @@ a-huge-10-100-argument-reduces-exactly-mod-2-pi:
     in: N(cos(((10)^100)))
     out: "0.924724238751934"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: precision
+    note: Sage's N(cos(...)) reduces the huge argument in double precision, which cannot hold 10^100 exactly; compute-engine reduces it exactly before evaluating.
   rust:
     in: nf(cos(power(n(10), n(100))))
     out: "0.9247242387519338"

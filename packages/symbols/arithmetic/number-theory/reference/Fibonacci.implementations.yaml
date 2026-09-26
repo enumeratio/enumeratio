@@ -182,8 +182,8 @@ exact-at-any-size-f-100-has-21-digits:
     in: fibonacci(100)
     out: "OverflowError: fibonacci(::Int)"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The oracle mapping calls Oscar's bare fibonacci(::Int), which overflows past F(92); compute-engine computes Fibonacci(100) exactly, matching Julia's own ZZ-wrapped fibonacci.
   julia:
     in: BigInt(fibonacci(ZZ(100)))
     out: "354224848179261915075"
@@ -210,14 +210,14 @@ a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
     in: fibonacci(1.5)
     out: "TypeError: Attempt to coerce non-integral RealNumber to Integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Fibonacci to a real index through phi^nu and cos(pi*nu); Sage's fibonacci() requires an integer and raises a TypeError coercing the real.
   oscar:
     in: fibonacci(1.5)
     out: "MethodError: no method matching fibonacci(::Float64) The function `fibonacci` exists, but no method "
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: Oscar's fibonacci is Int-only, like Julia's bare fibonacci; compute-engine extends Fibonacci to a real index ν through φ^ν and cos(πν).
   julia:
     in: BigInt(fibonacci(ZZ(1.5)))
     out: "InexactError: convert(ZZRingElem, 1.5)"
@@ -535,8 +535,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: fibonacci([1, 2, 3, 4])
     out: "MethodError: no method matching fibonacci(::Vector{Int64}) The function `fibonacci` exists, but no m"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Fibonacci is Listable and threads over the list; Oscar's fibonacci takes scalars only.
   julia:
     in: "[BigInt(fibonacci(ZZ(1))), BigInt(fibonacci(ZZ(2))), BigInt(fibonacci(ZZ(3))), BigInt(fibonacci(ZZ(4)))]"
     out: "[1, 1, 2, 3]"
@@ -544,8 +544,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: (Nat.fib [1, 2, 3, 4])
     out: "Application type mismatch: The argument"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Fibonacci is Listable and threads over the list; Mathlib's Nat.fib takes scalars only.
 they-grow-fast-f-50-already-exceeds-twelve:
   epsil:
     in: Fibonacci(50)

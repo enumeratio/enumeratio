@@ -104,8 +104,8 @@ a-square-root-of-3-equiv-1-pmod-2:
     in: power_mod(3, (1/2), 2)
     out: "TypeError: no conversion of this rational to integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's PowerMod extends past integer exponents; Sage's power_mod() requires an integer exponent and raises a TypeError on the rational 1/2.
   rust:
     in: powermod(n(3), rational(n(1), n(2)), n(2))
     out: "panic: an integer, not 1/2"
@@ -127,8 +127,8 @@ threads-over-a-list-of-bases:
     in: power_mod([2, 3, 4], 2, 5)
     out: "TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's PowerMod is Listable and threads over the list; Sage's power_mod() takes a scalar only and raises a TypeError on the list.
   rust:
     in: powermod(list(vec![n(2), n(3), n(4)]), n(2), n(5))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -255,8 +255,8 @@ exponent-0-evaluates-even-at-a-negative-modulus:
     in: power_mod(-2, 0, -14)
     out: "1"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine reduces PowerMod(-2, 0, -14) into the negative-modulus residue system, giving -13; Sage's power_mod() answers the base case 1 regardless of the modulus's sign at exponent 0.
   rust:
     in: powermod(n(-2), n(0), n(-14))
     out: "-13"
@@ -278,8 +278,8 @@ a-nonzero-exponent-at-the-same-negative-modulus:
     in: power_mod(-2, 3, -14)
     out: "-8"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine leaves PowerMod with a negative modulus unevaluated outside the exponent-0 case; Sage's power_mod() computes a value, -8, regardless.
   rust:
     in: powermod(n(-2), n(3), n(-14))
     out: "-8"
@@ -619,8 +619,8 @@ a-square-root-of-3-mod-2-is-1-trivially:
     in: power_mod(3, (1/2), 2)
     out: "TypeError: no conversion of this rational to integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's PowerMod extends past integer exponents; Sage's power_mod() requires an integer exponent and raises a TypeError on the rational 1/2.
   rust:
     in: powermod(n(3), rational(n(1), n(2)), n(2))
     out: "panic: an integer, not 1/2"
@@ -645,8 +645,8 @@ exponent-0-base-minus-4-modulus-minus-2:
     in: power_mod(-4, 0, -2)
     out: "1"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine reduces PowerMod(-4, 0, -2) into the negative-modulus residue system, giving -1; Sage's power_mod() answers the base case 1 regardless of the modulus's sign at exponent 0.
   rust:
     in: powermod(n(-4), n(0), n(-2))
     out: "-1"
@@ -668,8 +668,8 @@ exponent-0-base-5-modulus-minus-7:
     in: power_mod(5, 0, -7)
     out: "1"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine reduces PowerMod(5, 0, -7) into the negative-modulus residue system, giving -6; Sage's power_mod() answers the base case 1 regardless of the modulus's sign at exponent 0.
   rust:
     in: powermod(n(5), n(0), n(-7))
     out: "-6"
@@ -711,8 +711,8 @@ a-positive-exponent-at-a-negative-modulus-1-2:
     in: power_mod(1, 2, -2)
     out: "-1"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine and Wolfram leave PowerMod unevaluated for a modulus <= 0 outside the exponent-0 case; Sage's power_mod() reduces it into a negative residue, -1, instead.
   rust:
     in: powermod(n(1), n(2), n(-2))
     out: "-1"
@@ -737,8 +737,8 @@ a-positive-exponent-at-a-negative-modulus-3-2-7:
     in: power_mod(3, 2, -7)
     out: "-5"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine and Wolfram leave PowerMod unevaluated for a modulus <= 0 outside the exponent-0 case; Sage's power_mod() reduces it into a negative residue, -5, instead.
   rust:
     in: powermod(n(3), n(2), n(-7))
     out: "-5"
@@ -763,8 +763,8 @@ a-positive-exponent-at-a-negative-modulus-341:
     in: power_mod(-1, 340, -2)
     out: "-1"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine and Wolfram leave PowerMod unevaluated for a modulus <= 0 outside the exponent-0 case; Sage's power_mod() reduces it into a negative residue, -1, instead.
   rust:
     in: powermod(n(-1), n(340), n(-2))
     out: "-1"
@@ -789,8 +789,8 @@ a-positive-exponent-at-a-negative-modulus-5-1-7:
     in: power_mod(5, 1, -7)
     out: "-2"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine and Wolfram leave PowerMod unevaluated for a modulus <= 0 outside the exponent-0 case; Sage's power_mod() reduces it into a negative residue, -2, instead.
   rust:
     in: powermod(n(5), n(1), n(-7))
     out: "-2"
@@ -815,8 +815,8 @@ a-negative-exponent-at-a-negative-modulus-2-1-5:
     in: power_mod(2, -1, -5)
     out: "3"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine and Wolfram leave PowerMod unevaluated for a modulus <= 0 outside the exponent-0 case; Sage's power_mod() reduces it into a residue, 3, instead.
   rust:
     in: powermod(n(2), n(-1), n(-5))
     out: "-2"

@@ -406,8 +406,8 @@ real-arguments-evaluate-as-gamma-n-1:
     in: factorial(ZZ(3.5))
     out: "InexactError: convert(ZZRingElem, 3.5)"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine evaluates a real argument through Gamma(n+1); Oscar's ZZ wrapper is integers only and rejects 3.5.
   julia:
     in: factorial(ZZ(3.5))
     out: "InexactError: convert(ZZRingElem, 3.5)"
@@ -443,8 +443,8 @@ negative-non-integers-are-defined-too-2-5-gamma:
     in: factorial(ZZ(-2.5))
     out: "InexactError: convert(ZZRingElem, -2.5)"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine evaluates a negative non-integer argument through Gamma(n+1) too; Oscar's ZZ wrapper is integers only and rejects -2.5.
   julia:
     in: factorial(ZZ(-2.5))
     out: "InexactError: convert(ZZRingElem, -2.5)"
@@ -477,14 +477,14 @@ complex-arguments-1-i-gamma-2-i:
     in: factorial((1 + 1*I))
     out: factorial(I + 1)
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine evaluates a complex argument through Gamma(n+1); Sage's factorial() leaves a complex argument unevaluated, printing factorial(I + 1) back symbolically.
   oscar:
     in: factorial(ZZ(complex(1, 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine evaluates a complex argument through Gamma(n+1); Oscar's ZZ wrapper is rational integers only, no Gaussian integers.
   julia:
     in: factorial(ZZ(complex(1, 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -513,8 +513,8 @@ frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
     in: factorial(ZZ((-1 // 2)))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine reaches (-1/2)! = sqrt(pi) through Gamma(n+1); Oscar's ZZ wrapper needs an integer and rejects -1/2.
   julia:
     in: factorial(ZZ((-1 // 2)))
     out: "AssertionError: denominator(x) == 1"

@@ -328,8 +328,8 @@ catalannumber-neg-1-is-neg-1:
     in: catalan_number(-1)
     out: -1/2
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine and Wolfram take CatalanNumber(-1) = -1 (verified against a Wolfram kernel); Sage's catalan_number uses the plain Gamma-ratio formula, giving the limit -1/2.
   julia:
     in: Combinatorics.catalannum(-1)
     out: "DomainError with -1: n must be nonnegative"
@@ -475,8 +475,8 @@ half-integer-arguments-evaluate-exactly-through:
     in: catalan_number((5/2))
     out: "TypeError: no conversion of this rational to integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends CatalanNumber to rational n through the Gamma function; Sage's catalan_number requires an integer and raises a TypeError on a rational.
   julia:
     in: Combinatorics.catalannum((5 // 2))
     out: "MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but "
@@ -551,8 +551,8 @@ real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
     in: catalan_number(2.3)
     out: "TypeError: Attempt to coerce non-integral RealNumber to Integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends CatalanNumber to a real n through the Gamma function; Sage's catalan_number requires an integer and raises a TypeError coercing the real.
   julia:
     in: Combinatorics.catalannum(2.3)
     out: "MethodError: no method matching catalannum(::Float64) The function `catalannum` exists, but no metho"
@@ -582,8 +582,8 @@ complex-arguments-evaluate-through-the-same:
     in: catalan_number((1.2 + 1*I))
     out: "TypeError: unable to coerce <class 'sage.rings.complex_mpfr.ComplexNumber'> to an integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends CatalanNumber to a complex n through the Gamma function; Sage's catalan_number requires an integer and raises a TypeError coercing the complex value.
   julia:
     in: Combinatorics.catalannum(complex(1.2, 1))
     out: "MethodError: no method matching catalannum(::ComplexF64) The function `catalannum` exists, but no me"
@@ -611,8 +611,8 @@ c-1-2-frac-8-3-pi-by-analytic-continuation:
     in: catalan_number((1/2))
     out: "TypeError: no conversion of this rational to integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine reaches CatalanNumber(1/2) = 8/(3*Pi) by analytic continuation through Gamma; Sage's catalan_number requires an integer and raises a TypeError on the rational.
   julia:
     in: Combinatorics.catalannum((1 // 2))
     out: "MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but "

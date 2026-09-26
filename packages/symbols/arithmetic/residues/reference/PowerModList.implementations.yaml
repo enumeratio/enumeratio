@@ -624,8 +624,8 @@ a-gaussian-base-and-a-plain-modulus:
     in: enumeratio_power_mod_list((2 + 1*I), (1/2), 5)
     out: "TypeError: Unable to coerce I + 2 to a rational"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's PowerModList extends to a Gaussian base; Sage's power_mod() requires a rational base and raises a TypeError trying to coerce the Gaussian integer.
 cube-roots-of-8-modulo-13:
   epsil:
     in: PowerModList(8, 1 / 3, 13)
@@ -697,8 +697,8 @@ threads-over-a-shorter-list-of-bases:
     in: enumeratio_power_mod_list([1, 4], (1/2), 5)
     out: "TypeError: unable to coerce <class 'list'> to an integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's PowerModList is Listable and threads over the list of bases; Sage's power_mod() takes a scalar base only and raises a TypeError on the list.
 a-symbolic-modulus-stays-unevaluated:
   epsil:
     in: PowerModList(1, 1 / 2, m)

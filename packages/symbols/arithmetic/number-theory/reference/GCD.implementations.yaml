@@ -392,14 +392,14 @@ gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
     in: gcd((-3 + 2*I), (10 + 15*I))
     out: "1"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine computes the Gaussian gcd directly; Sage's gcd() doesn't understand Gaussian integers and falls back to the trivial answer 1 in the Symbolic Ring.
   oscar:
     in: gcd(ZZ(complex(-3, 2)), ZZ(complex(10, 15)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: Oscar's ZZ wrapper is rational integers only, no Gaussian integers; compute-engine computes the Gaussian gcd directly.
   julia:
     in: gcd(ZZ(complex(-3, 2)), ZZ(complex(10, 15)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -424,14 +424,14 @@ gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
     in: gcd((5 + (10/3)*I), ((3/2) + 1*I))
     out: "1"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine computes the Gaussian gcd for Gaussian-rational arguments too; Sage's gcd() doesn't understand Gaussian integers and falls back to the trivial answer 1 in the Symbolic Ring.
   oscar:
     in: gcd(ZZ(complex(5, (10 // 3))), ZZ(complex((3 // 2), 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: Oscar's ZZ wrapper is rational integers only, no Gaussian integers; compute-engine computes the Gaussian gcd for a Gaussian-rational argument too.
   julia:
     in: gcd(ZZ(complex(5, (10 // 3))), ZZ(complex((3 // 2), 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
@@ -491,8 +491,8 @@ listable-a-single-list-argument-threads-element:
     in: gcd(ZZ(12), ZZ([3, 7, 40]))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's GCD is Listable and threads over the list; Oscar's gcd takes scalars only.
   julia:
     in: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]"
     out: "[3, 1, 4]"
@@ -500,8 +500,8 @@ listable-a-single-list-argument-threads-element:
     in: (Int.gcd 12 [3, 7, 40])
     out: "Application type mismatch: The argument"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's GCD pools the elements of list arguments; Mathlib's Int.gcd takes scalars only.
   rust:
     in: gcd(n(12), list(vec![n(3), n(7), n(40)]))
     out: "panic: threading: a list where the crate takes a scalar"

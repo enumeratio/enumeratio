@@ -157,8 +157,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: divisors([4, 6])
     out: "TypeError: unable to factor [4, 6]"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Divisors is Listable and threads over the list; Sage's divisors() takes a scalar only and raises a TypeError trying to factor the list.
 divisors-3-plus-4i:
   epsil:
     in: Divisors(3 + 4i)
@@ -221,8 +221,8 @@ divisors-6:
     in: divisors((6 + 4*I))
     out: "[6*I - 4, -2*I - 3, I - 1, -2*I, 1, -I + 5]"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: A Gaussian divisor list is defined up to a unit; compute-engine normalises each divisor into the first quadrant, as Wolfram does, and Sage's divisors() returns a different, unnormalised set of associates.
 listable-threads-over-a-list:
   epsil:
     in: Divisors([605, 871, 824])
@@ -238,8 +238,8 @@ listable-threads-over-a-list:
     in: divisors([605, 871, 824])
     out: "TypeError: unable to factor [605, 871, 824]"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Divisors is Listable and threads over the list; Sage's divisors() takes a scalar only and raises a TypeError trying to factor the list.
 only-positive-divisors-even-for-negative-n:
   epsil:
     in: Divisors(-6)
@@ -283,8 +283,8 @@ divisors-0-stays-unevaluated:
     in: divisors(0)
     out: "ValueError: n must be nonzero"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline: compute-engine leaves Divisors(0) unevaluated, and Sage's divisors() raises ValueError: n must be nonzero."
 a-non-integer-stays-unevaluated:
   epsil:
     in: Divisors(5 / 2)
@@ -300,8 +300,8 @@ a-non-integer-stays-unevaluated:
     in: divisors((5/2))
     out: "[1, 5]"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: "Here it's compute-engine that stays symbolic: Divisors is restricted to the integers and leaves Divisors(5/2) unevaluated, while Sage's divisors() computes the divisors of the numerator, [1, 5]."
 5-in-the-gaussian-integers:
   epsil:
     in: Divisors(5, GaussianIntegers -> True)

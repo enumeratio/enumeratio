@@ -360,5 +360,5 @@ the-max-of-an-empty-list-is-nan-too:
     in: enumeratio_max([])
     out: "ValueError: max() iterable argument is empty"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline on an empty collection: compute-engine answers NaN for Max([]), and Sage's max() raises ValueError: max() iterable argument is empty."

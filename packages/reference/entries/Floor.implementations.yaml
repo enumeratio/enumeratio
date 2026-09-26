@@ -219,8 +219,8 @@ a-zero-divisor-inside-floor:
     in: floor((17 / 0))
     out: "ZeroDivisionError: rational division by zero"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline: compute-engine answers Floor(ComplexInfinity), and Sage's exact rational division raises a ZeroDivisionError before Floor is even applied."
   rust:
     in: floor((n(17) / n(0)))
     out: "panic: denominator == 0"
@@ -366,8 +366,8 @@ a-negative-radicand-inside-floor:
     in: floor(sqrt(-1))
     out: "ValueError: floor is not defined for complex quadratic number field"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's Floor is a no-op on the already-integral complex value i; Sage's floor() declines outright on an element of a complex quadratic number field.
   rust:
     in: floor(sqrt(n(-1)))
     out: NaN
@@ -474,8 +474,8 @@ floors-the-real-and-imaginary-parts-separately:
     in: floor((5.37 + -1.3*I))
     out: floor(5.37000000000000 - 1.30000000000000*I)
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine evaluates Floor on a complex float, flooring the real and imaginary parts separately; Sage's floor() leaves the complex argument unevaluated, printing it back symbolically.
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor:
   epsil:
     in: Floor(Floor(x))

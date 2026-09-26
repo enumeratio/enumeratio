@@ -227,8 +227,8 @@ varphi-0-0-as-in-wolfram:
     in: euler_phi(ZZ(0))
     out: "DomainError with 0: Argument must be positive"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's Totient answers at 0, following Wolfram's convention EulerPhi(0) = 0; Oscar's euler_phi declines n ≤ 0.
   julia:
     in: euler_phi(ZZ(0))
     out: "DomainError with 0: Argument must be positive"
@@ -262,8 +262,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: euler_phi(ZZ([2, 4, 6]))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Totient is Listable and threads over the list; Oscar's euler_phi takes scalars only.
   julia:
     in: "[euler_phi(ZZ(2)), euler_phi(ZZ(4)), euler_phi(ZZ(6))]"
     out: "[1, 2, 2]"
@@ -349,14 +349,14 @@ negative-n-varphi-n-varphi-n:
     in: euler_phi(-10)
     out: "0"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine takes phi(-n) = phi(n), as Wolfram does; Sage's euler_phi() declines a negative n and answers 0.
   oscar:
     in: euler_phi(ZZ(-10))
     out: "DomainError with -10: Argument must be positive"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine takes φ(-n) = φ(n), as Wolfram does; Oscar's euler_phi declines a negative n.
   julia:
     in: euler_phi(ZZ(-10))
     out: "DomainError with -10: Argument must be positive"

@@ -296,8 +296,8 @@ a-complex-number-with-approximate-parts:
     in: sign((1.4 + 2.3*I))
     out: sgn(1.40000000000000 + 2.30000000000000*I)
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine evaluates Sign on a complex float; Sage's sign() leaves the complex argument unevaluated, printing sgn(...) back symbolically.
 an-exact-complex-argument-comes-back-exact-sign:
   epsil:
     in: Sign(1 + i)
@@ -319,8 +319,8 @@ an-exact-complex-argument-comes-back-exact-sign:
     in: sign((1 + 1*I))
     out: sgn(I + 1)
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine evaluates Sign on an exact complex argument to its exact normalized form; Sage's sign() leaves it unevaluated, printing sgn(I + 1) back symbolically.
 threads-over-a-matrix-entry-by-entry:
   epsil:
     in: Sign([[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -402,8 +402,8 @@ sign-imaginaryunit:
     in: sign(I)
     out: sgn(I)
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine evaluates Sign(i) to the exact value i; Sage's sign() leaves it unevaluated, printing sgn(I) back symbolically.
 sign-positiveinfinity:
   epsil:
     in: Sign(PositiveInfinity)

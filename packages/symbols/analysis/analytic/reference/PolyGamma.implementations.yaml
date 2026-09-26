@@ -531,8 +531,8 @@ psi-1-4-pi-2-8g:
     in: psi(1, (1/4))
     out: psi(1, 1/4)
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: "Here it's Sage that stays symbolic: it keeps psi(1, 1/4), where compute-engine gives the closed form 8*Catalan + Pi^2."
 frac-d-dx-psi-n-x-psi-n-1-x:
   epsil:
     in: D(PolyGamma(n, x), x)
@@ -1624,8 +1624,8 @@ n-polygamma-neg1-neg0p5:
     in: N(psi(-1, -0.5))
     out: 1.26551212348465 + 3.14159265358979*I
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine and Sage compute the same magnitude with opposite-signed imaginary parts at this branch point; a branch-cut sign convention difference, not a numeric error.
 n-polygamma-neg2-stays-unevaluated:
   epsil:
     in: N(PolyGamma(-2, 2))
@@ -1648,5 +1648,5 @@ n-polygamma-neg2-stays-unevaluated:
     in: N(psi(-2, 2))
     out: "ValueError: gamma function pole"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline: compute-engine leaves PolyGamma(-2, 2) unevaluated, and Sage's psi raises ValueError: gamma function pole."

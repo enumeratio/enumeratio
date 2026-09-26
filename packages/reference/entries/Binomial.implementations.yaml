@@ -442,8 +442,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Binomial is Listable and threads over the list; Oscar's binomial, wrapped in ZZ, takes scalars only.
   julia:
     in: "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]"
     out: "[0, 1, 10, 35, 165]"
@@ -451,8 +451,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: (Nat.choose [2, 3, 5, 7, 11] 3)
     out: "Application type mismatch: The argument"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Binomial is Listable and threads over the list; Mathlib's Nat.choose takes scalars only.
   rust:
     in: binomial(list(vec![n(2), n(3), n(5), n(7), n(11)]), n(3))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -484,8 +484,8 @@ half-integer-arguments-evaluate-exactly-through:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's Binomial extends to half-integer arguments through the Gamma function; Oscar's ZZ wrapper only holds integers, so it rejects 9/2 and 7/2.
   julia:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
     out: "AssertionError: denominator(x) == 1"
@@ -496,8 +496,8 @@ half-integer-arguments-evaluate-exactly-through:
     in: "(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))"
     out: Type mismatch
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to rational arguments through the Gamma function; Mathlib's Nat.choose is defined over ℕ only.
   rust:
     in: binomial(rational(n(9), n(2)), rational(n(7), n(2)))
     out: "panic: an integer, not 9/2"
@@ -587,14 +587,14 @@ real-arguments-evaluate-through-the-gamma:
     in: binomial(8.5, -4.2)
     out: "TypeError: either m or x-m must be an integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's Binomial extends to real arguments through the Gamma function; Sage's binomial requires one of m or x-m to be an integer and raises otherwise.
   oscar:
     in: binomial(ZZ(8.5), ZZ(-4.2))
     out: "InexactError: convert(ZZRingElem, 8.5)"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to real n and k through the Gamma function; Oscar's ZZ wrapper can't hold a non-integer real like 8.5.
   julia:
     in: binomial(ZZ(8.5), ZZ(-4.2))
     out: "InexactError: convert(ZZRingElem, 8.5)"
@@ -605,8 +605,8 @@ real-arguments-evaluate-through-the-gamma:
     in: (Nat.choose 8.5 (-4.2))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to real, negative arguments through the Gamma function; Mathlib's Nat.choose is defined over ℕ only.
   rust:
     in: binomial(x(8.5), x(-4.2))
     out: "panic: an integer, not 8.5"
@@ -634,8 +634,8 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     in: binomial(ZZ(0.5), ZZ(3))
     out: "InexactError: convert(ZZRingElem, 0.5)"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to a real n through the Gamma function; Oscar's ZZ wrapper rejects the non-integer 0.5.
   julia:
     in: binomial(ZZ(0.5), ZZ(3))
     out: "InexactError: convert(ZZRingElem, 0.5)"
@@ -646,8 +646,8 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     in: (Nat.choose 0.5 3)
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to non-integer n through the Gamma function; Mathlib's Nat.choose is defined over ℕ only.
   rust:
     in: binomial(x(0.5), n(3))
     out: "panic: an integer, not 0.5"
@@ -675,8 +675,8 @@ a-rational-n-with-integer-k-gives-the-exact:
     in: binomial(ZZ((1 // 2)), ZZ(2))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to a rational n through the Gamma function; Oscar's ZZ wrapper needs an integer and rejects 1/2.
   julia:
     in: binomial(ZZ((1 // 2)), ZZ(2))
     out: "AssertionError: denominator(x) == 1"
@@ -687,8 +687,8 @@ a-rational-n-with-integer-k-gives-the-exact:
     in: "(Nat.choose ((1 : ℚ) / 2) 2)"
     out: Type mismatch
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to rational n through the Gamma function; Mathlib's Nat.choose is defined over ℕ only.
   rust:
     in: binomial(rational(n(1), n(2)), n(2))
     out: "panic: an integer, not 1/2"
@@ -716,8 +716,8 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to a negative rational n through the Gamma function; Oscar's ZZ wrapper rejects -1/2.
   julia:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
     out: "AssertionError: denominator(x) == 1"
@@ -728,8 +728,8 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     in: "(Nat.choose (((-1) : ℚ) / 2) 3)"
     out: Type mismatch
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to negative rational n through the Gamma function; Mathlib's Nat.choose is defined over ℕ only.
   rust:
     in: binomial(rational(n(-1), n(2)), n(3))
     out: "panic: an integer, not -1/2"
@@ -775,8 +775,8 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to a complex n through the Gamma function; Oscar's ZZ wrapper is rational integers only, no Gaussian integers.
   julia:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -801,14 +801,14 @@ complex-n-and-k-evaluate-through-the-gamma:
     in: binomial((2 + 1*I), (7 + -3*I))
     out: "TypeError: either m or x-m must be an integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's Binomial extends to complex arguments through the Gamma function; Sage's binomial requires an integer argument and raises a TypeError on Gaussian input.
   oscar:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends Binomial to complex n and k through the Gamma function; Oscar's ZZ wrapper is rational integers only, no Gaussian integers.
   julia:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -947,14 +947,14 @@ both-arguments-negative-integers-the-limiting:
     in: binomial(-3, -5)
     out: "0"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Gamma; Sage's binomial follows the combinatorial C(n,k)=0 convention outside 0<=k<=n.
   oscar:
     in: binomial(ZZ(-3), ZZ(-5))
     out: "0"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Gamma; Oscar's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n.
   julia:
     in: binomial(ZZ(-3), ZZ(-5))
     out: "0"
@@ -965,8 +965,8 @@ both-arguments-negative-integers-the-limiting:
     in: (Nat.choose (-3) (-5))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to both arguments negative, giving 6 through the limit along the reflection identities.
   rust:
     in: binomial(n(-3), n(-5))
     out: "1"
@@ -990,14 +990,14 @@ equal-negative-arguments-binom-2-2-1:
     in: binomial(-2, -2)
     out: "0"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine and Wolfram take binom(-2, -2) = 1 by the limit through Gamma; Sage's binomial follows the combinatorial C(n,k)=0 convention outside 0<=k<=n.
   oscar:
     in: binomial(ZZ(-2), ZZ(-2))
     out: "0"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine extends through the reflection identities (Wolfram's convention), giving binom(-2, -2) = 1; Oscar's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n.
   julia:
     in: binomial(ZZ(-2), ZZ(-2))
     out: "0"
@@ -1008,8 +1008,8 @@ equal-negative-arguments-binom-2-2-1:
     in: (Nat.choose (-2) (-2))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(-2), n(-2))
 the-central-binomial-coefficient-binom-100-50:
@@ -1066,8 +1066,8 @@ a-negative-n-with-a-positive-k-binom-9-1:
     in: (Nat.choose (-9) 1)
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(-9), n(1))
     out: "0"
@@ -1099,8 +1099,8 @@ a-negative-n-with-k-0-binom-1-4:
     in: (Nat.choose (-1) 4)
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(-1), n(4))
     out: "0"
@@ -1132,8 +1132,8 @@ a-negative-k-with-n-10-binom-10-neg-10:
     in: (Nat.choose 10 (-10))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(10), n(-10))
     out: "1"
@@ -1165,8 +1165,8 @@ a-negative-k-past-n-binom-4-neg-13:
     in: (Nat.choose 4 (-13))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(4), n(-13))
     out: "1"
@@ -1198,8 +1198,8 @@ a-negative-n-again-binom-neg-4-1:
     in: (Nat.choose (-4) 1)
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(-4), n(1))
     out: "0"
@@ -1231,8 +1231,8 @@ a-negative-k-with-n-2-binom-2-neg-2:
     in: (Nat.choose (-2) 2)
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(-2), n(2))
     out: "0"
@@ -1264,8 +1264,8 @@ a-negative-n-zero-k-binom-neg-1-0:
     in: (Nat.choose (-1) 0)
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(-1), n(0))
     out: "0"
@@ -1297,8 +1297,8 @@ a-negative-k-past-n-binom-100-neg-50:
     in: (Nat.choose 100 (-50))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument.
   rust:
     in: binomial(n(100), n(-50))
     out: "1"

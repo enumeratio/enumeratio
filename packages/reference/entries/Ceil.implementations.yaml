@@ -242,8 +242,8 @@ a-zero-divisor-inside-ceil:
     in: ceil((16 / 0))
     out: "ZeroDivisionError: rational division by zero"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline: compute-engine answers Ceil(ComplexInfinity), and Sage's exact rational division raises a ZeroDivisionError before Ceil is even applied."
   rust:
     in: ceil((n(16) / n(0)))
     out: "panic: denominator == 0"
@@ -447,8 +447,8 @@ rounds-the-real-and-imaginary-parts-up:
     in: ceil((5.37 + -1.3*I))
     out: ceil(5.37000000000000 - 1.30000000000000*I)
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: compute-engine evaluates Ceil on a complex float, rounding the real and imaginary parts up; Sage's ceil() leaves the complex argument unevaluated, printing it back symbolically.
 ten-bits-are-enough-to-number-1000-items-lceil:
   epsil:
     in: Ceil(Log(1_000, 2))

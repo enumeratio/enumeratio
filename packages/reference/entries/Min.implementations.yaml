@@ -336,8 +336,8 @@ with-no-arguments-it-returns-the-identity:
     in: enumeratio_min()
     out: "ValueError: min() iterable argument is empty"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's Min() answers its identity element +Infinity, per Wolfram's convention; Sage's builtin min() has no identity for zero arguments and raises ValueError.
 the-min-of-an-empty-list-is-nan:
   epsil:
     in: Min([])
@@ -360,8 +360,8 @@ the-min-of-an-empty-list-is-nan:
     in: enumeratio_min([])
     out: "ValueError: min() iterable argument is empty"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline on an empty collection: compute-engine answers NaN for Min([]), and Sage's min() raises ValueError: min() iterable argument is empty."
 min-min-folds-into-a-normal-call:
   epsil:
     in: Min(Min(), 5)
@@ -380,5 +380,5 @@ min-min-folds-into-a-normal-call:
     in: enumeratio_min(enumeratio_min(), 5)
     out: "ValueError: min() iterable argument is empty"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine folds the inner Min() into its identity element +Infinity before combining with 5; Sage's inner min() has no identity for zero arguments and raises before the fold can happen.

@@ -1002,8 +1002,8 @@ an-even-huger-argument-11-38:
     in: N(sin(((11)^38)))
     out: "-0.717245789351581"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: precision
+    note: Sage's N(sin(...)) reduces the huge argument in double precision, which cannot hold 11^38 exactly; compute-engine's BigDecimal kernel reduces modulo 2*Pi with enough digits to keep the answer meaningful.
   rust:
     in: nf(sin(power(n(11), n(38))))
     out: "-0.7172457893515806"
@@ -1065,8 +1065,8 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
     in: N(sin(((24)^40)))
     out: "-0.589776516131572"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: precision
+    note: Sage's N(sin(...)) reduces the huge argument in double precision, which cannot hold 24^40 exactly; compute-engine reduces it exactly.
   rust:
     in: nf(sin(power(n(24), n(40))))
     out: "-0.5897765161315717"

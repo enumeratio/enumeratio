@@ -278,8 +278,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: bell([1, 2, 3, 4])
     out: "MethodError: no method matching bell(::Vector{Int64}) The function `bell` exists, but no method is d"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's BellNumber is Listable and threads over the list; Oscar's bare bell function takes scalars only.
   julia:
     in: "[bell(ZZ(1)), bell(ZZ(2)), bell(ZZ(3)), bell(ZZ(4))]"
     out: "[1, 2, 5, 15]"
@@ -307,8 +307,8 @@ exact-for-large-n:
     in: bell(30)
     out: "InexactError: convert(Int64, 846749014511809332450147)"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: The oracle mapping calls Oscar's bare bell(::Int), which tries to fit an arbitrary-precision result into a machine Int64 and overflows past n≈25; compute-engine computes BellNumber(30) exactly.
   julia:
     in: bell(ZZ(30))
     out: "846749014511809332450147"
@@ -409,14 +409,14 @@ a-zero-modulus-inside-a-congruence-check-is-nan:
     in: bool((bell_number(9) % 23) == ((bell_number(4) + bell_number(5)) % 0))
     out: "ZeroDivisionError: Integer modulo by zero"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline: compute-engine answers NaN for a zero modulus (see Mod), and Sage's % raises ZeroDivisionError: Integer modulo by zero; the same divergence as Mod's own zero-modulus example, reached here through a BellNumber congruence."
   oscar:
     in: (mod(bell(9), 23) == mod((bell(4) + bell(5)), 0))
     out: "DivideError: integer division error"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" for a zero modulus; Oscar''s mod raises the same DivideError as Julia''s, reached here through a BellNumber congruence.'
   julia:
     in: (mod(bell(ZZ(9)), 23) == mod((bell(ZZ(4)) + bell(ZZ(5))), 0))
     out: "DivideError: integer division error"

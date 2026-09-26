@@ -256,8 +256,8 @@ listable-threads-over-a-list-of-orders:
     in: hurwitz_zeta([2, 3, 4], 0.5)
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's HurwitzZeta is Listable and threads over the list; Sage's hurwitz_zeta takes scalars only and raises a TypeError coercing the list.
 uncertainty-in-a:
   epsil:
     in: HurwitzZeta(2, Around(0.5, 0.01))
@@ -325,8 +325,8 @@ zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
     in: hurwitz_zeta(2, (1/4))
     out: psi(1, 1/4)
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: unevaluated
+    note: "Here it's Sage that stays symbolic: it keeps psi(1, 1/4), where compute-engine gives the closed form 8*Catalan + Pi^2."
 zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s:
   epsil:
     in: HurwitzZeta(s, 1 / 2)
@@ -785,8 +785,8 @@ pole-at-a-neg-2-re-s-positive:
     in: N(hurwitz_zeta(2, -2))
     out: "ValueError: psi2_eval(): pole"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the pole: compute-engine answers ComplexInfinity, and Sage's hurwitz_zeta raises ValueError: psi2_eval(): pole."
 pole-at-a-neg-1-inexact-s:
   epsil:
     in: N(HurwitzZeta(0.158, -1))
@@ -817,8 +817,8 @@ pole-at-a-neg-1-inexact-s:
     in: N(hurwitz_zeta(0.158, -1))
     out: "ValueError: Hurwitz zeta complex infinity"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the pole: compute-engine answers ComplexInfinity, and Sage's hurwitz_zeta raises ValueError: Hurwitz zeta complex infinity."
 pole-at-a-0-re-s-positive:
   epsil:
     in: N(HurwitzZeta(3, 0))
@@ -849,8 +849,8 @@ pole-at-a-0-re-s-positive:
     in: N(hurwitz_zeta(3, 0))
     out: "ValueError: psi2_eval(): pole"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the pole: compute-engine answers ComplexInfinity, and Sage's hurwitz_zeta raises ValueError: psi2_eval(): pole."
 re-s-0-a-0-is-indeterminate:
   epsil:
     in: N(HurwitzZeta(-i, 0))
@@ -878,8 +878,8 @@ re-s-0-a-0-is-indeterminate:
     in: N(hurwitz_zeta((0 + -1*I), 0))
     out: 1.00330022368532 + 0.418155449141322*I
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: Sage's hurwitz_zeta counts the dropped term's 0^(-s) as 1 when Re(s)=0, matching mpmath's value exactly; Wolfram calls this Indeterminate instead, which is the convention compute-engine follows.
 re-s-0-a-neg-1-is-indeterminate:
   epsil:
     in: N(HurwitzZeta(-i, -1))
@@ -907,8 +907,8 @@ re-s-0-a-neg-1-is-indeterminate:
     in: N(hurwitz_zeta((0 + -1*I), -1))
     out: "ValueError: Hurwitz zeta complex infinity"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline: compute-engine answers NaN, Wolfram's Indeterminate, and Sage's hurwitz_zeta raises ValueError: Hurwitz zeta complex infinity."
 re-s-negative-a-drops-the-term-cleanly:
   epsil:
     in: N(HurwitzZeta(-1.5 + 0.5i, -2))
@@ -939,8 +939,8 @@ re-s-negative-a-drops-the-term-cleanly:
     in: N(hurwitz_zeta((-1.5 + 0.5*I), -2))
     out: "ValueError: Hurwitz zeta complex infinity"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine drops the n + a = 0 term and stays finite, as Wolfram does; Sage's hurwitz_zeta raises at this nonpositive-integer a.
 re-s-positive-complex-s-is-a-pole:
   epsil:
     in: N(HurwitzZeta(2 + i, 0))
@@ -971,8 +971,8 @@ re-s-positive-complex-s-is-a-pole:
     in: N(hurwitz_zeta((2 + 1*I), 0))
     out: 2.15035570325490 - 0.437530865919608*I
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: domain
+    note: Sage's hurwitz_zeta doesn't treat a=0 (the dropped-term pole) as singular when Re(s)>0 the way Wolfram (and compute-engine) do; it computes a value from its own series, matching mpmath's answer exactly.
 n-hurwitzzeta-2-1:
   epsil:
     in: N(HurwitzZeta(2, 1))

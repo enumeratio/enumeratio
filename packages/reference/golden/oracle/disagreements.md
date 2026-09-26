@@ -215,69 +215,69 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 | example                                                          | kind           | ours                                                                                         | theirs                                                                                       |
 | ---------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `Binomial/both-arguments-negative-integers-the-limiting`         | unclassified   | `6`                                                                                          | `0`                                                                                          |
-| `Binomial/equal-negative-arguments-binom-2-2-1`                  | unclassified   | `1`                                                                                          | `0`                                                                                          |
-| `CatalanNumber/catalannumber-neg-1-is-neg-1`                     | unclassified   | `-1`                                                                                         | `-1/2`                                                                                       |
-| `Ceil/rounds-the-real-and-imaginary-parts-up`                    | unclassified   | `{"re":6,"im":-1}`                                                                           | `ceil(5.37000000000000 - 1.30000000000000*I)`                                                |
-| `Cos/a-huge-10-100-argument-reduces-exactly-mod-2-pi`            | unclassified   | `-0.928081905074655343456`                                                                   | `0.924724238751934`                                                                          |
-| `Cos/to-1-significant-digit`                                     | unclassified   | `0.5`                                                                                        | `0.540302305868140`                                                                          |
+| `Binomial/both-arguments-negative-integers-the-limiting`         | convention     | `6`                                                                                          | `0`                                                                                          |
+| `Binomial/equal-negative-arguments-binom-2-2-1`                  | convention     | `1`                                                                                          | `0`                                                                                          |
+| `CatalanNumber/catalannumber-neg-1-is-neg-1`                     | convention     | `-1`                                                                                         | `-1/2`                                                                                       |
+| `Ceil/rounds-the-real-and-imaginary-parts-up`                    | unevaluated    | `{"re":6,"im":-1}`                                                                           | `ceil(5.37000000000000 - 1.30000000000000*I)`                                                |
+| `Cos/a-huge-10-100-argument-reduces-exactly-mod-2-pi`            | precision      | `-0.928081905074655343456`                                                                   | `0.924724238751934`                                                                          |
+| `Cos/to-1-significant-digit`                                     | precision      | `0.5`                                                                                        | `0.540302305868140`                                                                          |
 | `Diagram/malformed-the-point-2-is-missing-so-it-is-left`         | domain         | `["Diagram",["List",["List",1,-1],["List",2]]]`                                              | `P{{-2}, {-1, 1}, {2}}`                                                                      |
-| `Divisors/6-4i-i-1-i-2-3-2i`                                     | unclassified   | `[1, {"re":1,"im":1}, {"re":1,"im":5}, 2, {"re":3,"im":2}, {"re":6,"im":4}]`                 | `[6*I - 4, -2*I - 3, I - 1, -2*I, 1, -I + 5]`                                                |
-| `Divisors/a-non-integer-stays-unevaluated`                       | unclassified   | `["Divisors",["Rational",5,2]]`                                                              | `[1, 5]`                                                                                     |
+| `Divisors/6-4i-i-1-i-2-3-2i`                                     | convention     | `[1, {"re":1,"im":1}, {"re":1,"im":5}, 2, {"re":3,"im":2}, {"re":6,"im":4}]`                 | `[6*I - 4, -2*I - 3, I - 1, -2*I, 1, -I + 5]`                                                |
+| `Divisors/a-non-integer-stays-unevaluated`                       | unevaluated    | `["Divisors",["Rational",5,2]]`                                                              | `[1, 5]`                                                                                     |
 | `Divisors/divisors-3-plus-4i`                                    | domain         | `[1, {"re":2,"im":1}, {"re":3,"im":4}]`                                                      | `[-4*I - 3, 2*I - 1, 1]`                                                                     |
-| `Exp/to-1-significant-digit`                                     | unclassified   | `3`                                                                                          | `2.71828182845905`                                                                           |
-| `Factorial/complex-arguments-1-i-gamma-2-i`                      | unclassified   | `{"re":0.6529654964201674,"im":0.3430658398165463}`                                          | `factorial(I + 1)`                                                                           |
-| `FactorInteger/1-is-a-unit-and-factors-as-itself`                | unclassified   | `[["Tuple",-1,1]]`                                                                           | `[]`                                                                                         |
+| `Exp/to-1-significant-digit`                                     | precision      | `3`                                                                                          | `2.71828182845905`                                                                           |
+| `Factorial/complex-arguments-1-i-gamma-2-i`                      | unevaluated    | `{"re":0.6529654964201674,"im":0.3430658398165463}`                                          | `factorial(I + 1)`                                                                           |
+| `FactorInteger/1-is-a-unit-and-factors-as-itself`                | convention     | `[["Tuple",-1,1]]`                                                                           | `[]`                                                                                         |
 | `FactorInteger/3-4i-2-i-2`                                       | domain         | `[["Tuple",["Complex",2,1],2]]`                                                              | `[(2*I - 1, 2)]`                                                                             |
-| `FactorInteger/9-12i-3-2-i-2`                                    | unclassified   | `[["Tuple",["Complex",2,1],2], ["Tuple",3,1]]`                                               | `[(2*I - 1, 2), (3, 1)]`                                                                     |
+| `FactorInteger/9-12i-3-2-i-2`                                    | convention     | `[["Tuple",["Complex",2,1],2], ["Tuple",3,1]]`                                               | `[(2*I - 1, 2), (3, 1)]`                                                                     |
 | `FactorInteger/a-21-digit-gaussian-integer-through-its-norm`     | domain         | `[["Tuple",["Complex",0,-1],1], ["Tuple",["Complex",1,1],1], ["Tuple",["Complex",99,34],1],` | `[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)` |
-| `FactorInteger/a-non-integer-real-stays-unevaluated`             | unclassified   | `["FactorInteger",2.5]`                                                                      | `[]`                                                                                         |
+| `FactorInteger/a-non-integer-real-stays-unevaluated`             | unevaluated    | `["FactorInteger",2.5]`                                                                      | `[]`                                                                                         |
 | `FactorInteger/compute-engine-returns-the-trivial-factor-1-1`    | shape          | `[["Tuple",1,1]]`                                                                            | `[]`                                                                                         |
-| `FactorInteger/factorinteger-neg-12`                             | unclassified   | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1]]`                                             | `[(2, 2), (3, 1)]`                                                                           |
-| `FactorInteger/factorinteger-of-a-negative-rational`             | unclassified   | `[["Tuple",-1,1], ["Tuple",2,-3], ["Tuple",3,1]]`                                            | `[(2, -3), (3, 1)]`                                                                          |
+| `FactorInteger/factorinteger-neg-12`                             | convention     | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1]]`                                             | `[(2, 2), (3, 1)]`                                                                           |
+| `FactorInteger/factorinteger-of-a-negative-rational`             | convention     | `[["Tuple",-1,1], ["Tuple",2,-3], ["Tuple",3,1]]`                                            | `[(2, -3), (3, 1)]`                                                                          |
 | `FactorInteger/negative-numbers-carry-an-explicit-1-unit-factor` | shape          | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1], ["Tuple",5,1]]`                              | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
-| `Floor/floors-the-real-and-imaginary-parts-separately`           | unclassified   | `{"re":5,"im":-2}`                                                                           | `floor(5.37000000000000 - 1.30000000000000*I)`                                               |
+| `Floor/floors-the-real-and-imaginary-parts-separately`           | unevaluated    | `{"re":5,"im":-2}`                                                                           | `floor(5.37000000000000 - 1.30000000000000*I)`                                               |
 | `Gamma/a-pole-of-gamma`                                          | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `Gamma/a-pole-of-gamma-at-negative-1`                            | unclassified   | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `Gamma/a-pole-of-gamma-at-negative-2`                            | unclassified   | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `Gamma/a-pole-of-gamma-at-negative-1`                            | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `Gamma/a-pole-of-gamma-at-negative-2`                            | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
 | `Gamma/reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z`         | convention     | `true`                                                                                       | `False`                                                                                      |
-| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`         | unclassified   | `[ComplexInfinity, ComplexInfinity]`                                                         | `[Infinity, Infinity]`                                                                       |
+| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`         | undefined-form | `[ComplexInfinity, ComplexInfinity]`                                                         | `[Infinity, Infinity]`                                                                       |
 | `HurwitzZeta/pole-at-s-1-for-every-a`                            | undefined-form | `ComplexInfinity`                                                                            | `hurwitz_zeta(1, 3)`                                                                         |
-| `HurwitzZeta/re-s-0-a-0-is-indeterminate`                        | unclassified   | `NaN`                                                                                        | `1.00330022368532 + 0.418155449141322*I`                                                     |
-| `HurwitzZeta/re-s-positive-complex-s-is-a-pole`                  | unclassified   | `ComplexInfinity`                                                                            | `2.15035570325490 - 0.437530865919608*I`                                                     |
-| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`       | unclassified   | `true`                                                                                       | `False`                                                                                      |
-| `IsPrime/isprime-neg-2-is-true`                                  | unclassified   | `true`                                                                                       | `False`                                                                                      |
+| `HurwitzZeta/re-s-0-a-0-is-indeterminate`                        | convention     | `NaN`                                                                                        | `1.00330022368532 + 0.418155449141322*I`                                                     |
+| `HurwitzZeta/re-s-positive-complex-s-is-a-pole`                  | domain         | `ComplexInfinity`                                                                            | `2.15035570325490 - 0.437530865919608*I`                                                     |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`       | convention     | `true`                                                                                       | `False`                                                                                      |
+| `IsPrime/isprime-neg-2-is-true`                                  | convention     | `true`                                                                                       | `False`                                                                                      |
 | `Ln/ln-0`                                                        | shape          | `NegativeInfinity`                                                                           | `-Infinity`                                                                                  |
 | `Ln/product-rule-ln-ab-ln-a-ln-b`                                | convention     | `true`                                                                                       | `False`                                                                                      |
-| `Mod/3p14-mod-2`                                                 | unclassified   | `1.14`                                                                                       | `-0.860000000000000`                                                                         |
+| `Mod/3p14-mod-2`                                                 | convention     | `1.14`                                                                                       | `-0.860000000000000`                                                                         |
 | `ModularInverse/2-i-6-4i-8-14i-equiv-1-pmod-7`                   | domain         | `{"re":6,"im":4}`                                                                            | `-3*I - 1`                                                                                   |
-| `N/an-exact-tie-rounds-to-the-even-digit-0-125`                  | unclassified   | `0.12`                                                                                       | `0.125000000000000`                                                                          |
-| `N/and-0-375-to-0-38`                                            | unclassified   | `0.38`                                                                                       | `0.375000000000000`                                                                          |
-| `N/n-pi-1-digit`                                                 | unclassified   | `3`                                                                                          | `3.14159265358979`                                                                           |
-| `PolyGamma/n-polygamma-neg1-neg0p5`                              | unclassified   | `{"re":1.2655121234846451,"im":-3.141592653589793}`                                          | `1.26551212348465 + 3.14159265358979*I`                                                      |
+| `N/an-exact-tie-rounds-to-the-even-digit-0-125`                  | precision      | `0.12`                                                                                       | `0.125000000000000`                                                                          |
+| `N/and-0-375-to-0-38`                                            | precision      | `0.38`                                                                                       | `0.375000000000000`                                                                          |
+| `N/n-pi-1-digit`                                                 | precision      | `3`                                                                                          | `3.14159265358979`                                                                           |
+| `PolyGamma/n-polygamma-neg1-neg0p5`                              | convention     | `{"re":1.2655121234846451,"im":-3.141592653589793}`                                          | `1.26551212348465 + 3.14159265358979*I`                                                      |
 | `PolyLog/li-2-1-2-pi-2-12-ln-2-2-2`                              | convention     | `true`                                                                                       | `False`                                                                                      |
-| `PowerMod/exponent-0-base-5-modulus-minus-7`                     | unclassified   | `-6`                                                                                         | `1`                                                                                          |
-| `PowerMod/exponent-0-base-minus-4-modulus-minus-2`               | unclassified   | `-1`                                                                                         | `1`                                                                                          |
-| `PowerMod/exponent-0-evaluates-even-at-a-negative-modulus`       | unclassified   | `-13`                                                                                        | `1`                                                                                          |
+| `PowerMod/exponent-0-base-5-modulus-minus-7`                     | convention     | `-6`                                                                                         | `1`                                                                                          |
+| `PowerMod/exponent-0-base-minus-4-modulus-minus-2`               | convention     | `-1`                                                                                         | `1`                                                                                          |
+| `PowerMod/exponent-0-evaluates-even-at-a-negative-modulus`       | convention     | `-13`                                                                                        | `1`                                                                                          |
 | `PowerModList/a-product-of-two-21-digit-primes-cannot-be`        | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]`    | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
-| `PrimitiveRootList/past-the-cap-primitiverootlist-itself-stays`  | unclassified   | `["PrimitiveRootList",1000003]`                                                              | `[2, 5, 7, 11, 12, 18, 20, 23, 26, 28, 31, 32, 39, 41, 44, 45, 48, 50, 57, 58, 61, 63, 68, ` |
-| `Sign/a-complex-number-with-approximate-parts`                   | unclassified   | `{"re":0.5199469468957452,"im":0.8541985556144385}`                                          | `sgn(1.40000000000000 + 2.30000000000000*I)`                                                 |
-| `Sign/an-exact-complex-argument-comes-back-exact-sign`           | unclassified   | `{"re":0.7071067811865476,"im":0.7071067811865476}`                                          | `sgn(I + 1)`                                                                                 |
-| `Sign/sign-imaginaryunit`                                        | unclassified   | `{"re":0,"im":1}`                                                                            | `sgn(I)`                                                                                     |
+| `PrimitiveRootList/past-the-cap-primitiverootlist-itself-stays`  | unevaluated    | `["PrimitiveRootList",1000003]`                                                              | `[2, 5, 7, 11, 12, 18, 20, 23, 26, 28, 31, 32, 39, 41, 44, 45, 48, 50, 57, 58, 61, 63, 68, ` |
+| `Sign/a-complex-number-with-approximate-parts`                   | unevaluated    | `{"re":0.5199469468957452,"im":0.8541985556144385}`                                          | `sgn(1.40000000000000 + 2.30000000000000*I)`                                                 |
+| `Sign/an-exact-complex-argument-comes-back-exact-sign`           | unevaluated    | `{"re":0.7071067811865476,"im":0.7071067811865476}`                                          | `sgn(I + 1)`                                                                                 |
+| `Sign/sign-imaginaryunit`                                        | unevaluated    | `{"re":0,"im":1}`                                                                            | `sgn(I)`                                                                                     |
 | `Sign/the-unit-complex-number-pointing-the-same`                 | domain         | `{"re":0.6,"im":0.8}`                                                                        | `sgn(4*I + 3)`                                                                               |
-| `Sin/a-huge-24-40-argument-reduces-exactly-mod-2-pi`             | unclassified   | `0.400083152719766047071`                                                                    | `-0.589776516131572`                                                                         |
-| `Sin/an-even-huger-argument-11-38`                               | unclassified   | `0.867534193184863032082`                                                                    | `-0.717245789351581`                                                                         |
+| `Sin/a-huge-24-40-argument-reduces-exactly-mod-2-pi`             | precision      | `0.400083152719766047071`                                                                    | `-0.589776516131572`                                                                         |
+| `Sin/an-even-huger-argument-11-38`                               | precision      | `0.867534193184863032082`                                                                    | `-0.717245789351581`                                                                         |
 | `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9`                         | convention     | `-362880`                                                                                    | `362880`                                                                                     |
-| `StirlingS1/s-n-n-1-binom-n-2`                                   | unclassified   | `true`                                                                                       | `False`                                                                                      |
+| `StirlingS1/s-n-n-1-binom-n-2`                                   | convention     | `true`                                                                                       | `False`                                                                                      |
 | `StirlingS1/stirlings1-5-2`                                      | convention     | `-50`                                                                                        | `50`                                                                                         |
-| `Tan/a-pole-at-negative-pi-over-2-too`                           | unclassified   | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `Tan/a-pole-at-negative-pi-over-2-too`                           | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
 | `Tan/a-pole-cos-pi-2-0-so-the-ratio-blows-up`                    | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `Tan/a-pole-reached-through-periodicity-unreduced`               | unclassified   | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `Totient/negative-n-varphi-n-varphi-n`                           | unclassified   | `4`                                                                                          | `0`                                                                                          |
+| `Tan/a-pole-reached-through-periodicity-unreduced`               | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `Totient/negative-n-varphi-n-varphi-n`                           | domain         | `4`                                                                                          | `0`                                                                                          |
 | `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges`          | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`           | unclassified   | `2.91666666666666666667`                                                                     | `-3.08333333333333`                                                                          |
-| `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`                   | unclassified   | `16.4143983221171599978`                                                                     | `0.414398322117160`                                                                          |
-| `Zeta/zeta-complex-argument-stays-symbolic-until-n`              | unclassified   | `["Zeta",["Complex",2,1]]`                                                                   | `zeta(I + 2)`                                                                                |
+| `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`           | convention     | `2.91666666666666666667`                                                                     | `-3.08333333333333`                                                                          |
+| `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`                   | convention     | `16.4143983221171599978`                                                                     | `0.414398322117160`                                                                          |
+| `Zeta/zeta-complex-argument-stays-symbolic-until-n`              | shape          | `["Zeta",["Complex",2,1]]`                                                                   | `zeta(I + 2)`                                                                                |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -380,14 +380,14 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 ## oscar — agree 141, disagree 6, inconclusive 0, error 54
 
-| example                                                    | kind         | ours   | theirs  |
-| ---------------------------------------------------------- | ------------ | ------ | ------- |
-| `Binomial/both-arguments-negative-integers-the-limiting`   | unclassified | `6`    | `0`     |
-| `Binomial/equal-negative-arguments-binom-2-2-1`            | unclassified | `1`    | `0`     |
-| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s` | unclassified | `true` | `false` |
-| `IsPrime/isprime-neg-2-is-true`                            | unclassified | `true` | `false` |
-| `N/an-exact-tie-rounds-to-the-even-digit-0-125`            | unclassified | `0.12` | `0.125` |
-| `N/and-0-375-to-0-38`                                      | unclassified | `0.38` | `0.375` |
+| example                                                    | kind          | ours   | theirs  |
+| ---------------------------------------------------------- | ------------- | ------ | ------- |
+| `Binomial/both-arguments-negative-integers-the-limiting`   | convention    | `6`    | `0`     |
+| `Binomial/equal-negative-arguments-binom-2-2-1`            | convention    | `1`    | `0`     |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s` | convention    | `true` | `false` |
+| `IsPrime/isprime-neg-2-is-true`                            | convention    | `true` | `false` |
+| `N/an-exact-tie-rounds-to-the-even-digit-0-125`            | rounding-mode | `0.12` | `0.125` |
+| `N/and-0-375-to-0-38`                                      | rounding-mode | `0.38` | `0.375` |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -523,165 +523,55 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## mathlib4 — agree 49, disagree 0, inconclusive 0, error 153
+## mathlib4 — agree 103, disagree 2, inconclusive 2, error 38
+
+| example                                  | kind       | ours      | theirs   |
+| ---------------------------------------- | ---------- | --------- | -------- |
+| `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9` | convention | `-362880` | `362880` |
+| `StirlingS1/stirlings1-5-2`              | convention | `-50`     | `50`     |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                                                          | message                                       |
-| ---------------------------------------------------------------- | --------------------------------------------- |
-| `Binomial/a-negative-k-also-gives-0`                             | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-k-past-n-binom-100-neg-50`                  | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-k-past-n-binom-4-neg-13`                    | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-k-with-n-10-binom-10-neg-10`                | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-k-with-n-2-binom-2-neg-2`                   | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-n-again-binom-neg-4-1`                      | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-n-uses-the-generalized-formula-binom`       | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-n-with-a-positive-k-binom-9-1`              | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-n-with-k-0-binom-1-4`                       | `failed to synthesize instance of type class` |
-| `Binomial/a-negative-n-zero-k-binom-neg-1-0`                     | `failed to synthesize instance of type class` |
-| `Binomial/a-rational-n-with-integer-k-gives-the-exact`           | `Type mismatch`                               |
-| `Binomial/a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0`          | `failed to synthesize instance of type class` |
-| `Binomial/binom-1-2-3-frac-5-16-the-central-binomial`            | `Type mismatch`                               |
-| `Binomial/both-arguments-negative-integers-the-limiting`         | `failed to synthesize instance of type class` |
-| `Binomial/equal-negative-arguments-binom-2-2-1`                  | `failed to synthesize instance of type class` |
-| `Binomial/half-integer-arguments-evaluate-exactly-through`       | `Type mismatch`                               |
-| `Binomial/not-pascal-s-rule-across-mismatched-n`                 | `lake: killed (timeout, peak 2336 MB)`        |
-| `Binomial/real-arguments-evaluate-through-the-gamma`             | `failed to synthesize instance of type class` |
-| `Binomial/symmetry-doesn-t-hold-across-mismatched-n`             | `lake: killed (timeout, peak 2336 MB)`        |
-| `Binomial/threads-element-wise-over-a-list-as-wolfram-s`         | `Application type mismatch: The argument`     |
-| `CatalanNumber/c-1-2-frac-8-3-pi-by-analytic-continuation`       | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-0`                                  | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-0-past-neg-1`                       | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-1`                                  | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-10`                                 | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-30`                                 | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-5`                                  | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-neg-1-is-neg-1`                     | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/catalannumber-neg-5-is-also-0`                    | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n`  | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/equivalently-c-n-binom-2n-n-binom-2n-n-1`         | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/half-integer-arguments-evaluate-exactly-through`  | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/real-arguments-evaluate-as-frac-gamma-2n-1-gamma` | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/the-14-triangulations-of-a-hexagon-and-the-14`    | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/the-5-ways-to-balance-3-pairs-of-parentheses`     | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/the-closed-form-through-a-negative-n-in-binomial` | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2`   | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/they-grow-fast-c-15-already-passes-nine-million`  | `lake: killed (timeout, peak 2336 MB)`        |
-| `CatalanNumber/threads-element-wise-over-a-list-as-wolfram-s`    | `lake: killed (timeout, peak 2336 MB)`        |
-| `ExtendedGCD/confirms-the-coefficients-above-satisfy-2x-3y`      | `lake: killed (timeout, peak 2334 MB)`        |
-| `Factorial/10-factorial`                                         | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/30-has-33-digits-and-ends-in-seven-zeros`             | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/5-factorial`                                          | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/6-factorial`                                          | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/extends-to-non-integers-via-the-gamma-function`       | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/factorials-grow-fast-20-already-exceeds-2-times`      | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/frac-12-gamma-frac-12-sqrt-pi-returned-as-a`          | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/negative-integers-are-poles-of-the-gamma`             | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/negative-non-integers-are-defined-too-2-5-gamma`      | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/real-arguments-evaluate-as-gamma-n-1`                 | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/recurrence-n-n-n-1`                                   | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/the-empty-product-is-1-by-convention`                 | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/the-number-of-ways-to-arrange-8-distinct-books`       | `lake: killed (timeout, peak 2336 MB)`        |
-| `Factorial/threads-element-wise-over-a-list`                     | `lake: killed (timeout, peak 2336 MB)`        |
-| `FactorInteger/multiplying-the-p-e-factors-back-together`        | `lake: killed (timeout, peak 2334 MB)`        |
-| `Fibonacci/a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu`      | `lake: exit 137: `                            |
-| `Fibonacci/cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at`     | `lake: exit 137: `                            |
-| `Fibonacci/consecutive-ratios-f-n-1-f-n-converge-to-the`         | `lake: exit 137: `                            |
-| `Fibonacci/exact-at-any-size-f-100-has-21-digits`                | `lake: exit 137: `                            |
-| `Fibonacci/fibonacci-0`                                          | `lake: exit 137: `                            |
-| `Fibonacci/fibonacci-1`                                          | `lake: exit 137: `                            |
-| `Fibonacci/fibonacci-10`                                         | `lake: exit 137: `                            |
-| `Fibonacci/fibonacci-20`                                         | `lake: exit 137: `                            |
-| `Fibonacci/fibonacci-8`                                          | `lake: exit 137: `                            |
-| `Fibonacci/gcd-f-12-f-18-f-gcd-12-18`                            | `lake: exit 137: `                            |
-| `Fibonacci/negative-indices-are-supported-via-f-n-1-n-1-f-n`     | `lake: exit 137: `                            |
-| `Fibonacci/the-defining-recurrence-f-10-f-9-f-8`                 | `lake: exit 137: `                            |
-| `Fibonacci/threads-element-wise-over-a-list-as-wolfram-s`        | `Application type mismatch: The argument`     |
-| `GCD/listable-a-single-list-argument-threads-element`            | `Application type mismatch: The argument`     |
-| `GCD/lists-aren-t-threaded-element-wise-they-re`                 | `Application type mismatch: The argument`     |
-| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`       | `failed to synthesize instance of type class` |
-| `IsPrime/another-non-integer-3-halves`                           | `Type mismatch`                               |
-| `IsPrime/isprime-neg-1-is-false`                                 | `failed to synthesize instance of type class` |
-| `IsPrime/isprime-neg-2-is-true`                                  | `failed to synthesize instance of type class` |
-| `IsPrime/isprime-neg-4-is-false`                                 | `failed to synthesize instance of type class` |
-| `IsPrime/non-integers-are-not-prime`                             | `Type mismatch`                               |
-| `IsPrime/the-mersenne-prime-2-31-1`                              | `failed to synthesize instance of type class` |
-| `IsPrime/threads-element-wise-over-a-list`                       | `Application type mismatch: The argument`     |
-| `IsPrime/threads-element-wise-over-a-short-list`                 | `Application type mismatch: The argument`     |
-| `LCM/a-large-integer-against-a-negative-rational`                | `failed to synthesize instance of type class` |
-| `LCM/listable-a-single-list-argument-threads-element`            | `Application type mismatch: The argument`     |
-| `Mod/100-mod-7`                                                  | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/17-mod-5`                                                   | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/3p14-mod-2`                                                 | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/a-10-001-digit-dividend`                                    | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/a-negative-modulus-gives-a-result-in-n-0`                   | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/division-by-a-0-modulus-yields-nan-rather-than`             | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/mod-7-3`                                                    | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer`           | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/periodicity-with-a-zero-modulus-on-one-side`                | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/rationals-are-reduced-exactly`                              | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/the-result-takes-the-sign-of-the-modulus`                   | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/threads-element-wise-over-a-list`                           | `lake: killed (timeout, peak 2334 MB)`        |
-| `Mod/threads-over-a-list-of-moduli`                              | `lake: killed (timeout, peak 2334 MB)`        |
-| `MoebiusMu/10-2-5-a-product-of-an-even-number-of-distinct`       | `lake: exit 137: `                            |
-| `MoebiusMu/listable-threads-over-a-list`                         | `lake: exit 137: `                            |
-| `MoebiusMu/mu-is-only-defined-for-positive-integers-compute`     | `lake: exit 137: `                            |
-| `MoebiusMu/sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind`       | `lake: exit 137: `                            |
-| `MoebiusMu/threads-element-wise-over-a-list-as-wolfram-s`        | `lake: exit 137: `                            |
-| `Negate/threads-over-a-matrix-entry-by-entry`                    | `failed to synthesize instance of type class` |
-| `PowerModList/so-the-identity-1-j-1-j-0-transports-by-j-mapsto`  | `lake: killed (timeout, peak 2334 MB)`        |
-| `PrimePi/listable-threads-over-a-list`                           | `lake: exit 137: `                            |
-| `PrimePi/no-primes-are-1`                                        | `lake: exit 137: `                            |
-| `PrimePi/no-primes-are-a-negative-number`                        | `lake: exit 137: `                            |
-| `PrimePi/primepi-100`                                            | `lake: exit 137: `                            |
-| `PrimePi/primepi-15`                                             | `lake: exit 137: `                            |
-| `PrimePi/primepi-2`                                              | `lake: exit 137: `                            |
-| `PrimePi/rational-arguments-the-primes-up-to-7-2-are-2`          | `lake: exit 137: `                            |
-| `PrimePi/real-arguments`                                         | `lake: exit 137: `                            |
-| `PrimePi/the-primes-below-a-million`                             | `lake: exit 137: `                            |
-| `PrimePi/threads-element-wise-over-a-list-as-wolfram-s`          | `lake: exit 137: `                            |
-| `Stirling/a-negative-k-stays-symbolic`                           | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/exact-for-large-n`                                     | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/k-n-is-0`                                              | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0`         | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/one-block-means-one-partition-s-n-1-1`                 | `lake: killed (timeout, peak 2336 MB)`        |
-| `Stirling/s-n-n-1-binom-n-2-one-block-is-a-pair`                 | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/singletons-only-s-n-n-1`                               | `lake: killed (timeout, peak 2336 MB)`        |
-| `Stirling/stirling-0-1-is-also-0`                                | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/stirling-20-10`                                        | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/stirling-5-2`                                          | `lake: killed (timeout, peak 2336 MB)`        |
-| `Stirling/stirling-6-3`                                          | `lake: killed (timeout, peak 2336 MB)`        |
-| `Stirling/the-empty-set-has-one-partition-into-no-blocks`        | `lake: killed (timeout, peak 2336 MB)`        |
-| `Stirling/the-ways-to-split-10-distinct-items-among-3`           | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/threads-element-wise-over-a-list-as-wolfram-s`         | `lake: killed (timeout, peak 2334 MB)`        |
-| `Stirling/two-blocks-s-n-2-2-n-1-1`                              | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/a-mid-sized-n-and-k-past-the-fast-paths`             | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/a-negative-k-stays-symbolic`                         | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/exact-for-large-n`                                   | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/k-n-is-0`                                            | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/s-n-0-is-0-for-n-0`                                  | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9`                         | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/s-n-n-1-binom-n-2`                                   | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/s-n-n-is-always-1`                                   | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/stirlings1-20-10`                                    | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/stirlings1-4-2`                                      | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/stirlings1-5-2`                                      | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/the-empty-case-s-0-0-1-by-convention-distinct`       | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/the-number-of-permutations-of-5-elements-with`       | `lake: killed (timeout, peak 2334 MB)`        |
-| `StirlingS1/threads-element-wise-over-a-list-as-wolfram-s`       | `lake: killed (timeout, peak 2334 MB)`        |
-| `Totient/large-integers-varphi-50`                               | `lake: exit 137: `                            |
-| `Totient/multiplicative-varphi-mn-varphi-m-varphi-n-when`        | `lake: exit 137: `                            |
-| `Totient/negative-n-varphi-n-varphi-n`                           | `lake: exit 137: `                            |
-| `Totient/rsa-key-setup-varphi-17-times-23-16-times-22-352`       | `lake: exit 137: `                            |
-| `Totient/sum-d-mid-n-varphi-d-n-checked-over-the-divisors`       | `lake: exit 137: `                            |
-| `Totient/threads-element-wise-over-a-list-as-wolfram-s`          | `lake: exit 137: `                            |
-| `Totient/totient-1`                                              | `lake: exit 137: `                            |
-| `Totient/totient-10`                                             | `lake: exit 137: `                            |
-| `Totient/totient-12`                                             | `lake: exit 137: `                            |
-| `Totient/totient-36`                                             | `lake: exit 137: `                            |
-| `Totient/varphi-0-0-as-in-wolfram`                               | `lake: exit 137: `                            |
-| `Totient/varphi-p-k-p-k-1-p-1-3-3-cdot-2-54`                     | `lake: exit 137: `                            |
-| `Totient/varphi-p-p-1-for-a-prime-p`                             | `lake: exit 137: `                            |
+| example                                                      | message                                       |
+| ------------------------------------------------------------ | --------------------------------------------- |
+| `Binomial/a-negative-k-also-gives-0`                         | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-k-past-n-binom-100-neg-50`              | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-k-past-n-binom-4-neg-13`                | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-k-with-n-10-binom-10-neg-10`            | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-k-with-n-2-binom-2-neg-2`               | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-n-again-binom-neg-4-1`                  | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-n-uses-the-generalized-formula-binom`   | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-n-with-a-positive-k-binom-9-1`          | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-n-with-k-0-binom-1-4`                   | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-n-zero-k-binom-neg-1-0`                 | `failed to synthesize instance of type class` |
+| `Binomial/a-rational-n-with-integer-k-gives-the-exact`       | `Type mismatch`                               |
+| `Binomial/a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0`      | `failed to synthesize instance of type class` |
+| `Binomial/binom-1-2-3-frac-5-16-the-central-binomial`        | `Type mismatch`                               |
+| `Binomial/both-arguments-negative-integers-the-limiting`     | `failed to synthesize instance of type class` |
+| `Binomial/equal-negative-arguments-binom-2-2-1`              | `failed to synthesize instance of type class` |
+| `Binomial/half-integer-arguments-evaluate-exactly-through`   | `Type mismatch`                               |
+| `Binomial/real-arguments-evaluate-through-the-gamma`         | `failed to synthesize instance of type class` |
+| `Binomial/threads-element-wise-over-a-list-as-wolfram-s`     | `Application type mismatch: The argument`     |
+| `Factorial/extends-to-non-integers-via-the-gamma-function`   | `Type mismatch`                               |
+| `Factorial/negative-integers-are-poles-of-the-gamma`         | `failed to synthesize instance of type class` |
+| `Factorial/threads-element-wise-over-a-list`                 | `Application type mismatch: The argument`     |
+| `Fibonacci/negative-indices-are-supported-via-f-n-1-n-1-f-n` | `failed to synthesize instance of type class` |
+| `Fibonacci/threads-element-wise-over-a-list-as-wolfram-s`    | `Application type mismatch: The argument`     |
+| `GCD/listable-a-single-list-argument-threads-element`        | `Application type mismatch: The argument`     |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`             | `Application type mismatch: The argument`     |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`   | `failed to synthesize instance of type class` |
+| `IsPrime/another-non-integer-3-halves`                       | `Type mismatch`                               |
+| `IsPrime/isprime-neg-1-is-false`                             | `failed to synthesize instance of type class` |
+| `IsPrime/isprime-neg-2-is-true`                              | `failed to synthesize instance of type class` |
+| `IsPrime/isprime-neg-4-is-false`                             | `failed to synthesize instance of type class` |
+| `IsPrime/non-integers-are-not-prime`                         | `Type mismatch`                               |
+| `IsPrime/the-mersenne-prime-2-31-1`                          | `failed to synthesize instance of type class` |
+| `IsPrime/threads-element-wise-over-a-list`                   | `Application type mismatch: The argument`     |
+| `IsPrime/threads-element-wise-over-a-short-list`             | `Application type mismatch: The argument`     |
+| `LCM/a-large-integer-against-a-negative-rational`            | `failed to synthesize instance of type class` |
+| `LCM/listable-a-single-list-argument-threads-element`        | `Application type mismatch: The argument`     |
+| `Mod/threads-element-wise-over-a-list`                       | `Type mismatch`                               |
+| `Negate/threads-over-a-matrix-entry-by-entry`                | `failed to synthesize instance of type class` |
 
 </details>
 

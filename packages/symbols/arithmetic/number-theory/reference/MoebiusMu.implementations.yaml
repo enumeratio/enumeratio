@@ -241,8 +241,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: moebius_mu([1, 2, 3, 4])
     out: "MethodError: no method matching moebius_mu(::Vector{Int64}) The function `moebius_mu` exists, but no"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's MoebiusMu is Listable and threads over the list; Oscar's moebius_mu takes scalars only.
   julia:
     in: "[moebius_mu(1), moebius_mu(2), moebius_mu(3), moebius_mu(4)]"
     out: "[1, -1, -1, 0]"
@@ -275,8 +275,8 @@ gaussian-integers-5-6i-is-a-gaussian-prime-norm:
     in: moebius_mu(complex(5, 6))
     out: "MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: Oscar's moebius_mu is rational-integer only, no Gaussian integers; compute-engine extends μ through the Gaussian-prime factorization.
   julia:
     in: moebius_mu(complex(5, 6))
     out: "MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n"
@@ -304,8 +304,8 @@ listable-threads-over-a-list:
     in: moebius_mu([4, 10, 17, 20])
     out: "MethodError: no method matching moebius_mu(::Vector{Int64}) The function `moebius_mu` exists, but no"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's MoebiusMu is Listable and threads over the list; Oscar's moebius_mu takes scalars only.
   julia:
     in: "[moebius_mu(4), moebius_mu(10), moebius_mu(17), moebius_mu(20)]"
     out: "[0, 1, -1, 0]"

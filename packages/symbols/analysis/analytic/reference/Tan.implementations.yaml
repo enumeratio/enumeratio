@@ -644,8 +644,8 @@ a-pole-at-negative-pi-over-2-too:
     in: tan((pi / -2))
     out: Infinity
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the pole, spelled differently: compute-engine answers ComplexInfinity, and Sage's tan answers the real symbolic Infinity."
   rust:
     in: tan((x(std::f64::consts::PI) / n(-2)))
     out: "-1.633123935319537e16"
@@ -669,8 +669,8 @@ a-pole-reached-through-periodicity-unreduced:
     in: tan(((pi / -2) + pi))
     out: Infinity
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the pole, spelled differently: compute-engine answers ComplexInfinity, and Sage's tan answers the real symbolic Infinity."
   rust:
     in: tan(((x(std::f64::consts::PI) / n(-2)) + x(std::f64::consts::PI)))
     out: "1.633123935319537e16"

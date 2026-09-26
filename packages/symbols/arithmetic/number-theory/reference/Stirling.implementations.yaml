@@ -436,8 +436,8 @@ a-negative-k-stays-symbolic:
     in: stirling_number2(10, -5)
     out: "OverflowError: can't convert negative value to unsigned long"
     verdict: error
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline: compute-engine leaves Stirling(10, -5) unevaluated since a negative k is outside its textbook domain, and Sage's stirling_number2 raises OverflowError trying to convert -5 to an unsigned long."
   julia:
     in: Combinatorics.stirlings2(big(10), -5)
     out: "0"

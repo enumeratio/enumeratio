@@ -1733,8 +1733,8 @@ li-0-1-a-pole-of-the-rational-form:
     in: polylog(0, 1)
     out: -1/2
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: convention
+    note: Wolfram and compute-engine treat z=1 as the pole of the rational Li_0(z)=z/(1-z) (ComplexInfinity); Sage's polylog takes zeta(0) by analytic continuation in s at fixed z=1 instead, giving -1/2.
 li-neg-1-1-a-pole-of-the-rational-form:
   epsil:
     in: PolyLog(-1, 1)
@@ -1762,8 +1762,8 @@ li-neg-1-1-a-pole-of-the-rational-form:
     in: polylog(-1, 1)
     out: -1/12
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: convention
+    note: Wolfram and compute-engine treat z=1 as the pole of the rational Li_-1(z)=z/(1-z)^2 (ComplexInfinity); Sage's polylog takes zeta(-1)=-1/12 by analytic continuation in s at fixed z=1 instead.
 li-neg-2-1-a-pole-of-the-rational-form:
   epsil:
     in: PolyLog(-2, 1)
@@ -1791,8 +1791,8 @@ li-neg-2-1-a-pole-of-the-rational-form:
     in: polylog(-2, 1)
     out: "0"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: convention
+    note: Wolfram and compute-engine treat z=1 as the pole of the rational Li_-2(z) (ComplexInfinity); Sage's polylog takes zeta(-2)=0 by analytic continuation in s at fixed z=1 instead.
 li-3-over-2-1-zeta-3-2-non-integer-order:
   epsil:
     in: N(PolyLog(3 / 2, 1))

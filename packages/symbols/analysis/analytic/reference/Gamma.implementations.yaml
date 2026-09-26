@@ -53,8 +53,8 @@ a-pole-of-gamma-at-negative-1:
     in: gamma(-1)
     out: Infinity
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the pole, spelled differently: compute-engine answers ComplexInfinity, and Sage's gamma answers the real symbolic Infinity."
   rust:
     in: gamma(n(-1))
     out: "-2.5653050788007548e16"
@@ -80,8 +80,8 @@ a-pole-of-gamma-at-negative-2:
     in: gamma(-2)
     out: Infinity
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the pole, spelled differently: compute-engine answers ComplexInfinity, and Sage's gamma answers the real symbolic Infinity."
   rust:
     in: gamma(n(-2))
     out: "6413262697001865.0"
@@ -143,8 +143,8 @@ threads-over-a-list-so-poles-evaluate-concretely:
     in: "[gamma(0), gamma(-1)]"
     out: "[Infinity, Infinity]"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: undefined-form
+    note: "Both decline at the poles, spelled differently: compute-engine threads Gamma over the list answering ComplexInfinity at each pole, and Sage answers the real symbolic Infinity at each."
   rust:
     in: gamma(list(vec![n(0), n(-1)]))
     out: "panic: threading: a list where the crate takes a scalar"

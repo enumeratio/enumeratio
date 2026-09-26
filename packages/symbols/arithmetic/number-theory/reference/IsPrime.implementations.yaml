@@ -331,14 +331,14 @@ threads-element-wise-over-a-list:
     in: is_prime(-7)
     out: False
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; Sage's is_prime() only accepts positive primes and answers False.
   oscar:
     in: is_prime(ZZ(-7))
     out: "false"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; Oscar's is_prime only accepts non-negative integers.
   julia:
     in: is_prime(ZZ(-7))
     out: "false"
@@ -349,8 +349,8 @@ threads-element-wise-over-a-list:
     in: (decide (Nat.Prime (-7)))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; Mathlib's Nat.Prime is defined over ℕ only, so it can't take a negative argument.
   rust:
     in: is_prime(n(-7))
     out: "panic: a non-negative integer"
@@ -546,8 +546,8 @@ non-integers-are-not-prime:
     in: is_prime(ZZ((1 // 2)))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine answers False for a non-integer; Oscar's ZZ wrapper needs an integer and raises instead of answering.
   julia:
     in: is_prime(ZZ((1 // 2)))
     out: "AssertionError: denominator(x) == 1"
@@ -558,8 +558,8 @@ non-integers-are-not-prime:
     in: "(decide (Nat.Prime ((1 : ℚ) / 2)))"
     out: Type mismatch
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine answers False for a non-integer; Mathlib's Nat.Prime is defined over ℕ only and can't take a rational argument.
   rust:
     in: is_prime(rational(n(1), n(2)))
     out: "panic: an integer, not 1/2"
@@ -589,16 +589,16 @@ another-non-integer-3-halves:
     in: is_prime(ZZ((3 // 2)))
     out: "AssertionError: denominator(x) == 1"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine answers False for a non-integer, same as the 1/2 example above; Oscar's ZZ wrapper needs an integer and raises instead.
   julia:
     in: is_prime(ZZ((3 // 2)))
   mathlib4:
     in: "(decide (Nat.Prime ((3 : ℚ) / 2)))"
     out: Type mismatch
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine answers False for a non-integer; Mathlib's Nat.Prime is defined over ℕ only and can't take a rational argument, same as the 1/2 example above.
   rust:
     in: is_prime(rational(n(3), n(2)))
     out: "panic: an integer, not 3/2"
@@ -673,14 +673,14 @@ threads-element-wise-over-a-short-list:
     in: is_prime([2, 3, 4])
     out: "TypeError: unable to coerce <class 'list'> to an integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's IsPrime is Listable and threads over the list; Sage's is_prime() takes a scalar only and raises a TypeError trying to coerce the list.
   oscar:
     in: is_prime(ZZ([2, 3, 4]))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's IsPrime is Listable and threads over the list; Oscar's is_prime takes scalars only.
   julia:
     in: is_prime(ZZ([2, 3, 4]))
     out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
@@ -691,8 +691,8 @@ threads-element-wise-over-a-short-list:
     in: (decide (Nat.Prime [2, 3, 4]))
     out: "Application type mismatch: The argument"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's IsPrime is Listable and threads over the list; Mathlib's Nat.Prime takes scalars only.
   rust:
     in: is_prime(list(vec![n(2), n(3), n(4)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -729,8 +729,8 @@ isprime-neg-1-is-false:
     in: (decide (Nat.Prime (-1)))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: Mathlib's Nat.Prime is defined over ℕ only, so it can't take a negative argument; compute-engine's IsPrime answers the rest.
   rust:
     in: is_prime(n(-1))
     out: "panic: a non-negative integer"
@@ -767,8 +767,8 @@ isprime-neg-4-is-false:
     in: (decide (Nat.Prime (-4)))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: Mathlib's Nat.Prime is defined over ℕ only, so it can't take a negative argument; compute-engine's IsPrime answers the rest.
   rust:
     in: is_prime(n(-4))
     out: "panic: a non-negative integer"
@@ -799,14 +799,14 @@ isprime-neg-2-is-true:
     in: is_prime(-2)
     out: False
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Sage's is_prime() only accepts positive primes and answers False.
   oscar:
     in: is_prime(ZZ(-2))
     out: "false"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Oscar's is_prime only accepts non-negative integers.
   julia:
     in: is_prime(ZZ(-2))
     out: "false"
@@ -817,8 +817,8 @@ isprime-neg-2-is-true:
     in: (decide (Nat.Prime (-2)))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Mathlib's Nat.Prime is defined over ℕ only, so it can't take a negative argument.
   rust:
     in: is_prime(n(-2))
     out: "panic: a non-negative integer"

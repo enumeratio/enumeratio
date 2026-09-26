@@ -175,8 +175,8 @@ a-quadratic-irrational-s-exact-expansion-is:
     in: list(continued_fraction(sqrt(13)))
     out: "ValueError: the length is infinite!"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: "compute-engine returns the finite periodic form of the continued fraction directly; Sage's continued_fraction() represents it as an unbounded generator, and converting it with list() raises ValueError: the length is infinite!"
 varphi-1-overline-1-purely-periodic-so-the:
   epsil:
     in: ContinuedFraction((1 + Sqrt(5)) / 2)
@@ -198,8 +198,8 @@ varphi-1-overline-1-purely-periodic-so-the:
     in: list(continued_fraction(((1 + sqrt(5)) / 2)))
     out: "ValueError: the length is infinite!"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: "compute-engine returns the finite periodic form of the continued fraction directly; Sage's continued_fraction() represents it as an unbounded generator, and converting it with list() raises ValueError: the length is infinite!"
 the-named-constant-unfolded-to-1-sqrt-5-2-first:
   epsil:
     in: ContinuedFraction(GoldenRatio, 10)
@@ -322,8 +322,8 @@ sqrt-2-is-1-overline-2:
     in: list(continued_fraction(sqrt(2)))
     out: "ValueError: the length is infinite!"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: "compute-engine returns the finite periodic form of the continued fraction directly; Sage's continued_fraction() represents it as an unbounded generator, and converting it with list() raises ValueError: the length is infinite!"
 25-terms-past-the-double-precision-wall:
   epsil:
     in: ContinuedFraction(GoldenRatio, 25)

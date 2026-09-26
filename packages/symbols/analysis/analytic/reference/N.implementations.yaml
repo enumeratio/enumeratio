@@ -59,8 +59,8 @@ a-list-number-by-number:
     in: N([pi, e, sqrt(2)])
     out: "ValueError: too many values to unpack (expected 2)"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's N is Listable and threads over the list; Sage's N() takes a single value and raises ValueError trying to unpack the list.
   rust:
     in: nf(list(vec![x(std::f64::consts::PI), x(std::f64::consts::E), sqrt(n(2))]))
     out: "[3.141592653589793, 2.718281828459045, 1.4142135623730951]"
@@ -94,14 +94,14 @@ an-exact-tie-rounds-to-the-even-digit-0-125:
     in: N((1/8))
     out: "0.125000000000000"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: precision
+    note: The mapping evaluates at Sage's own precision and drops N's digit count, so 1/8 prints 0.125000000000000 where N(1/8, 2) rounds to even, 0.12.
   oscar:
     in: ((1 // 8))
     out: "0.125"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: rounding-mode
+    note: Oscar's input is already numeric and N's digit count is dropped, so it prints the untruncated 0.125; at this exact tie that differs from compute-engine's round-half-to-even N(1/8, 2) = 0.12.
   julia:
     in: ((1 // 8))
     out: "0.125"
@@ -141,14 +141,14 @@ and-0-375-to-0-38:
     in: N((3/8))
     out: "0.375000000000000"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: precision
+    note: The mapping evaluates at Sage's own precision and drops N's digit count, so 3/8 prints 0.375000000000000 where N(3/8, 2) is 0.38.
   oscar:
     in: ((3 // 8))
     out: "0.375"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: rounding-mode
+    note: Oscar's input is already numeric and N's digit count is dropped, so it prints the untruncated 0.375; at this exact tie that differs from compute-engine's round-half-to-even N(3/8, 2) = 0.38.
   julia:
     in: ((3 // 8))
     out: "0.375"
@@ -180,8 +180,8 @@ n-pi-1-digit:
     in: N(pi)
     out: "3.14159265358979"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: precision
+    note: N's digit count is dropped for Sage, per the mapping's own note; it always returns full precision rather than the one digit asked for.
   rust:
     in: nf(x(std::f64::consts::PI))
     out: "3.141592653589793"

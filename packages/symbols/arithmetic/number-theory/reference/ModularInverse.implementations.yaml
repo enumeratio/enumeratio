@@ -85,8 +85,8 @@ listable-threads-over-a-list:
     in: inverse_mod([2, 3, 4], 11)
     out: "TypeError: unable to coerce <class 'list'> to an integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's ModularInverse is Listable and threads over the list; Sage's inverse_mod() takes a scalar only and raises a TypeError trying to coerce the list.
 the-same-as-powermod-with-exponent-1:
   epsil:
     in: ModularInverse(3, 7) == PowerMod(3, -1, 7)
@@ -211,5 +211,5 @@ a-gaussian-base-and-a-gaussian-modulus:
     in: inverse_mod((3 + -1*I), (5 + 2*I))
     out: "16"
     verdict: inconclusive
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine computes the Gaussian modular inverse directly; Sage's inverse_mod() doesn't understand Gaussian integers and returns a meaningless integer, 16, instead.

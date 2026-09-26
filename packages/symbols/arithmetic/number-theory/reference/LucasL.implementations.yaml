@@ -179,8 +179,8 @@ a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
     in: lucas_number2(2.3333333333333335, 1, -1)
     out: "TypeError: Attempt to coerce non-integral RealNumber to Integer"
     verdict: error
-    kind: unclassified
-    note:
+    kind: domain
+    note: compute-engine extends LucasL to a real index through phi^nu and cos(pi*nu), as with Fibonacci; Sage's lucas_number2() requires an integer and raises a TypeError coercing the real.
   julia:
     in: Combinatorics.lucasnum(2.3333333333333335)
     out: "MethodError: no method matching lucasnum(::Float64) The function `lucasnum` exists, but no method is"

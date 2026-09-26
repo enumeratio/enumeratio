@@ -318,8 +318,8 @@ threads-over-a-matrix-entry-by-entry:
     in: (-([[1, (-2)], [3, 4]]))
     out: failed to synthesize instance of type class
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Negate is Listable and threads over the (nested) list; Mathlib's negation takes scalars only.
   rust:
     in: (-(list(vec![list(vec![n(1), n(-2)]), list(vec![n(3), n(4)])])))
     out: "panic: negating [[1, -2], [3, 4]]"

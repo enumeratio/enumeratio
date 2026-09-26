@@ -732,8 +732,8 @@ zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s:
     in: N(hurwitz_zeta(3, (-1/2)))
     out: "0.414398322117160"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n+a)^2)^(-s/2), skipping n+a=0. Sage's hurwitz_zeta computes the plain Hurwitz sum (n+a)^(-s) instead."
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
   epsil:
     in: N(Zeta(-1, -2))
@@ -761,8 +761,8 @@ zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
     in: N(hurwitz_zeta(-1, -2))
     out: "-3.08333333333333"
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n+a)^2)^(-s/2), skipping n+a=0. Sage's hurwitz_zeta computes the plain Hurwitz sum (n+a)^(-s) instead."
 certified-digits-zeta-3:
   epsil:
     in: N(Zeta(3), 40)
@@ -839,8 +839,8 @@ zeta-complex-argument-stays-symbolic-until-n:
     in: zeta((2 + 1*I))
     out: zeta(I + 2)
     verdict: disagree
-    kind: unclassified
-    note:
+    kind: shape
+    note: Both stay symbolic; only the spelling differs; compute-engine keeps Zeta(2 + i), Sage keeps zeta(I + 2).
 n-zeta-complex-2-plus-i:
   epsil:
     in: N(Zeta(2 + i))
@@ -888,8 +888,8 @@ zeta-threads-over-mixed-exact-and-inexact-list:
     in: zeta([2, (0.5 + 14*I)])
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
-    kind: unclassified
-    note:
+    kind: threading
+    note: compute-engine's Zeta is Listable and threads over the list; Sage's zeta takes scalars only and raises a TypeError coercing the list.
 zeta-3-0-drops-pole-term-like-s-2:
   epsil:
     in: Zeta(3, 0)
@@ -917,8 +917,8 @@ zeta-3-0-drops-pole-term-like-s-2:
     in: hurwitz_zeta(3, 0)
     out: "ValueError: psi2_eval(): pole"
     verdict: error
-    kind: unclassified
-    note:
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a] and skips the n+a=0 term, giving Zeta(3); Sage's hurwitz_zeta computes the plain Hurwitz sum and hits the a=0 pole, raising ValueError: psi2_eval(): pole."
 zeta-2-neg-2-stays-finite-unlike-hurwitzzeta:
   epsil:
     in: N(Zeta(2, -2))
@@ -946,5 +946,5 @@ zeta-2-neg-2-stays-finite-unlike-hurwitzzeta:
     in: N(hurwitz_zeta(2, -2))
     out: "ValueError: psi2_eval(): pole"
     verdict: error
-    kind: unclassified
-    note:
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a] and skips the n+a=0 term, staying finite; Sage's hurwitz_zeta computes the plain Hurwitz sum and hits the pole, raising ValueError: psi2_eval(): pole."
