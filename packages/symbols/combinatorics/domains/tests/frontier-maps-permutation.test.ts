@@ -24,7 +24,7 @@ declareDomains(ce);
 declareStatistics(ce, ALL_STATISTICS, { domainTypes });
 declareMaps(ce, constructorFor);
 
-const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
+const perm = (...entries: number[]): unknown => ["Permutations", ["List", ...entries]];
 const contents = (expr: unknown): unknown => {
   const evaluated = ce.box(expr as never).evaluate();
   return (evaluated as unknown as { ops?: { json: unknown }[] }).ops?.[0]?.json;
@@ -260,7 +260,7 @@ function fromPermutationRef(p: readonly number[]): {
   return { root, left: left.slice(1), right: right.slice(1) };
 }
 
-/** The constructed value's Tuple — the single argument `IncreasingBinaryTree` wraps. */
+/** The constructed value's Tuple — the single argument `IncreasingBinaryTrees` wraps. */
 const tupleOf = (expr: unknown): { json: unknown }[] | undefined =>
   (ce.box(expr as never).evaluate() as unknown as { ops?: { ops?: { json: unknown }[] }[] }).ops?.[0]?.ops as
     | { json: unknown }[]

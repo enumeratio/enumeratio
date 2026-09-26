@@ -1,18 +1,18 @@
 the-partition-4-2-1-of-7:
   epsil:
-    in: SumOfHookLengths(IntegerPartition([4, 2, 1]))
+    in: SumOfHookLengths(IntegerPartitions([4, 2, 1]))
     out: "18"
   tex:
-    in: \mathrm{SumOfHookLengths}(\mathrm{IntegerPartition}(\bigl\lbrack4, 2, 1\bigr\rbrack))
+    in: \mathrm{SumOfHookLengths}(\mathrm{IntegerPartitions}(\bigl\lbrack4, 2, 1\bigr\rbrack))
     out: "18"
   fullform:
-    in: SumOfHookLengths[IntegerPartition[List[4, 2, 1]]]
+    in: SumOfHookLengths[IntegerPartitions[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
-    in: SumOfHookLengths(IntegerPartition([3, 3, 1]))
+    in: SumOfHookLengths(IntegerPartitions([3, 3, 1]))
     out: "18"
   tex:
-    in: \mathrm{SumOfHookLengths}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
+    in: \mathrm{SumOfHookLengths}(\mathrm{IntegerPartitions}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "18"
   fullform:
-    in: SumOfHookLengths[IntegerPartition[List[3, 3, 1]]]
+    in: SumOfHookLengths[IntegerPartitions[List[3, 3, 1]]]

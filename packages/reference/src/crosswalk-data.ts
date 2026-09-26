@@ -3217,6 +3217,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Join",
   },
   {
+    name: "KaryTree",
+    wolfram: "KaryTree",
+  },
+  {
     name: "KeiperLiLambda",
     fungrimEntries: ["081205", "d8d820", "fcab61"],
   },

@@ -137,7 +137,7 @@ const PERM_STATS: Record<string, (p: number[]) => number> = {
 export interface StatsOptions {
   /**
    * The minted carrier type for a permutation (`@enumeratio/domains`' `permutation`). Given
-   * it, each head takes the CARRIER: `Cycles(Permutation([2,3,1]))` is the question and
+   * it, each head takes the CARRIER: `Cycles(Permutations([2,3,1]))` is the question and
    * `Cycles([2,3,1])` is a type error. A word statistic additionally accepts a bare list,
    * because that reading stands on its own.
    *
@@ -145,13 +145,13 @@ export interface StatsOptions {
    * name. Without it every head takes a bare list, as before.
    */
   readonly permutationType?: string;
-  /** The constructor head wrapping that type — `Permutation`. */
+  /** The constructor head wrapping that type — `Permutations`. */
   readonly permutationCarrier?: string;
 }
 
 /** Declare the permutation-statistic heads on `ce` (each maps a permutation to an integer). */
 export function declareStats(ce: ComputeEngine, options: StatsOptions = {}): void {
-  const { permutationType: type, permutationCarrier: carrier = "Permutation" } = options;
+  const { permutationType: type, permutationCarrier: carrier = "Permutations" } = options;
   const declare = (head: string, fn: (p: number[]) => number, alsoOnList: boolean): void => {
     const signature =
       type === undefined ? "(list) -> integer" : alsoOnList ? `(${type} | list) -> integer` : `(${type}) -> integer`;

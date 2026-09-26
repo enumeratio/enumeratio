@@ -19,7 +19,7 @@ function partitions(n: number, cap = n): number[][] {
 const ALL = [0, 1, 2, 3, 4, 5, 6, 7, 8].flatMap((n) => partitions(n));
 
 const evaluate = (head: string, l: number[]): number =>
-  applyDefinition(ce, index.get(`${head}@IntegerPartition`)!, ce.box(["List", ...l])).re;
+  applyDefinition(ce, index.get(`${head}@IntegerPartitions`)!, ce.box(["List", ...l])).re;
 
 // Independent readings, written against the Young diagram rather than against the
 // expressions — same values, different route.

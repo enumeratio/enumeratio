@@ -1,18 +1,18 @@
 the-partition-4-2-1-of-7:
   epsil:
-    in: HookProduct(IntegerPartition([4, 2, 1]))
+    in: HookProduct(IntegerPartitions([4, 2, 1]))
     out: "144"
   tex:
-    in: \mathrm{HookProduct}(\mathrm{IntegerPartition}(\bigl\lbrack4, 2, 1\bigr\rbrack))
+    in: \mathrm{HookProduct}(\mathrm{IntegerPartitions}(\bigl\lbrack4, 2, 1\bigr\rbrack))
     out: "144"
   fullform:
-    in: HookProduct[IntegerPartition[List[4, 2, 1]]]
+    in: HookProduct[IntegerPartitions[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
-    in: HookProduct(IntegerPartition([3, 3, 1]))
+    in: HookProduct(IntegerPartitions([3, 3, 1]))
     out: "240"
   tex:
-    in: \mathrm{HookProduct}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
+    in: \mathrm{HookProduct}(\mathrm{IntegerPartitions}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "240"
   fullform:
-    in: HookProduct[IntegerPartition[List[3, 3, 1]]]
+    in: HookProduct[IntegerPartitions[List[3, 3, 1]]]

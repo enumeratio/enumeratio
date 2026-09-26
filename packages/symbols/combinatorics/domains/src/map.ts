@@ -53,7 +53,10 @@ export interface CombinatorialMap {
 /** A map's law: f∘f = id, f∘f = f, or g∘f = id for the named map g. */
 export type Law = "involution" | "idempotent" | { readonly inverse: string };
 
-const positions: MathJSON = ["Range", 1, ["Length", "_raw"]];
+// Every Range here states its step: compute-engine counts DOWN when the end is below the start,
+// so `Range(1, 0)` is [1, 0] where Wolfram's is empty, and an empty permutation would get two
+// positions.
+const positions: MathJSON = ["Range", 1, ["Length", "_raw"], 1];
 const at = (index: MathJSON, of: MathJSON = "_raw"): MathJSON => ["At", of, index];
 const forEach = (over: MathJSON, body: MathJSON, variable = "i"): MathJSON => [
   "Map",
@@ -70,7 +73,7 @@ const size: MathJSON = ["Count", "_raw"];
 /** The smallest later position sharing i's label in the restricted growth string, or i
  *  itself when none does — i.e. i's successor within its own block. */
 const nextInBlock = (i: MathJSON): MathJSON => {
-  const later: MathJSON = ["Filter", ["Range", ["Add", i, 1], size], ["Function", ["Equal", at("k"), at(i)], "k"]];
+  const later: MathJSON = ["Filter", ["Range", ["Add", i, 1], size, 1], ["Function", ["Equal", at("k"), at(i)], "k"]];
   return ["If", ["Greater", ["Length", later], 0], ["Min", later], i];
 };
 
@@ -85,7 +88,7 @@ const byIndex = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: st
   "Fold",
   ["Function", step, accumulator, variable],
   initial,
-  ["Range", 1, n],
+  ["Range", 1, n, 1],
 ];
 
 /** The least element of i's orbit — its cycle's representative. */
@@ -277,12 +280,12 @@ const krewerasBody: MathJSON = forEach(positions, ["IndexOf", "_raw", longCycleA
 /**
  * w sits below c in absolute order — equivalently, its cycles form a non-crossing partition —
  * iff the reflection lengths of w and K(w) split c's exactly: `cyc(w) + cyc(K(w)) = n + 1`.
- * Each side is wrapped back into a `Permutation` because `CycleCount` is declared over the
- * carrier, not the raw word.
+ * Each side is wrapped back into a `Permutations` value because `CycleCount` is declared over
+ * the carrier, not the raw word.
  */
 const krewerasGuard: MathJSON = [
   "Equal",
-  ["Add", ["CycleCount", ["Permutation", "_raw"]], ["CycleCount", ["Permutation", "_image"]]],
+  ["Add", ["CycleCount", ["Permutations", "_raw"]], ["CycleCount", ["Permutations", "_image"]]],
   ["Add", size, 1],
 ];
 
@@ -319,7 +322,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     extra: [["Length", "_raw"]],
     body: [
       "Filter",
-      ["Range", 1, ["Subtract", ["Length", "_raw"], 1]],
+      ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
       ["Function", ["Greater", at("i"), at(["Add", "i", 1])], "i"],
     ],
     summary: "The positions where the word falls.",
@@ -331,7 +334,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "subexcedant_seq",
     body: forEach(positions, [
       "Count",
-      ["Filter", ["Range", ["Add", "i", 1], ["Length", "_raw"]], ["Function", ["Greater", at("i"), at("j")], "j"]],
+      ["Filter", ["Range", ["Add", "i", 1], ["Length", "_raw"], 1], ["Function", ["Greater", at("i"), at("j")], "j"]],
     ]),
     summary: "Entry i counts the later entries smaller than p(i).",
     note: "Its total is the inversion count, which is the Lehmer code's whole point.",
@@ -393,7 +396,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     extra: [["Length", "_raw"]],
     body: [
       "Filter",
-      ["Range", 2, ["Subtract", ["Length", "_raw"], 1]],
+      ["Range", 2, ["Subtract", ["Length", "_raw"], 1], 1],
       [
         "Function",
         ["And", ["Less", at(["Subtract", "i", 1]), at("i")], ["Greater", at("i"), at(["Add", "i", 1])]],
@@ -469,7 +472,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     extra: [fromPermutationLeftChild, fromPermutationRightChild],
     summary:
       "The increasing binary tree built by minimum-splitting recursion: the position of the smallest value roots the tree, everything before it recurses to the left, everything after it to the right.",
-    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
+    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTrees among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
   },
   {
     name: "KnuthClassRepresentative",
@@ -534,12 +537,12 @@ export const MAPS: readonly CombinatorialMap[] = [
 function descending(list: MathJSON): MathJSON {
   const sorted = ["Sort", list];
   const size = ["Count", sorted];
-  return ["Map", ["Function", ["At", sorted, ["Subtract", ["Add", size, 1], "i"]], "i"], ["Range", 1, size]];
+  return ["Map", ["Function", ["At", sorted, ["Subtract", ["Add", size, 1], "i"]], "i"], ["Range", 1, size, 1]];
 }
 
 /** p^k(i): apply the permutation k times, as a fold. */
 function iterate(start: MathJSON, times: MathJSON): MathJSON {
-  return ["Fold", ["Function", at("a"), "a", "b"], start, ["Range", 1, times]];
+  return ["Fold", ["Function", at("a"), "a", "b"], start, ["Range", 1, times, 1]];
 }
 
 /** Declare each map, typed by carrier: it takes a constructed value of `from` and returns a

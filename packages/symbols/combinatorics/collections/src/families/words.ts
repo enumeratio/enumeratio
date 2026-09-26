@@ -460,7 +460,7 @@ export const entries: NumberKernel[] = [
           2,
         ),
     ),
-    declared: wordClass("BinaryWord", 2),
+    declared: wordClass("BinaryWords", 2),
   },
   // LyndonWords(n): binary words strictly less than every rotation — KLyndonWords(n, 2), remapped
   // to {0,1}.
@@ -483,7 +483,7 @@ export const entries: NumberKernel[] = [
           2,
         ),
     ),
-    declared: wordClass("BinaryWord", 2),
+    declared: wordClass("BinaryWords", 2),
   },
   // KNecklaces(size, base): base-letter words up to rotation (lex-least reps).
   {
@@ -495,7 +495,7 @@ export const entries: NumberKernel[] = [
       (a, [n, k]) => necklacesValid(a, n, k),
       (a, [n, k]) => necklacesRank(a, n, k),
     ),
-    declared: wordClass("Word"),
+    declared: wordClass("Words"),
   },
   // KLyndonWords(size, base): aperiodic base-letter necklaces.
   {
@@ -507,6 +507,6 @@ export const entries: NumberKernel[] = [
       (a, [n, k]) => lyndonWordsValid(a, n, k),
       (a, [n, k]) => lyndonWordsRank(a, n, k),
     ),
-    declared: wordClass("Word"),
+    declared: wordClass("Words"),
   },
 ];

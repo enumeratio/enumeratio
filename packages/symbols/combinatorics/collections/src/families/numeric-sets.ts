@@ -3,50 +3,28 @@
 // of a sieve-backed value (Primes), a closed form (SquareNumbers), a predicate scan
 // (AbundantNumbers), and a one-parameter operator (SmoothNumbers(k)) — not the full 88-set
 // catalogue; see design/rendering-environments-planning or the spike report for the rest.
+import { isPrime as isPrimeBig, nthPrime as sieveNthPrime, primeCountUpTo } from "@enumeratio/residues";
 import type { Declared, NumberKernel } from "./types.ts";
 
-// ---- Primes: incremental sieve, grown on demand and cached across calls. ----
+// ---- Primes: the segmented sieve/BPSW primality of @enumeratio/residues (issue #205's
+// nth-prime work) — no separate sieve of our own to keep in sync with it. ----
 
-let sievePrimes: number[] = [2, 3];
-let sieveLimit = 3;
-
-function growSieveTo(limit: number): void {
-  if (limit <= sieveLimit) return;
-  const isComposite = new Uint8Array(limit + 1);
-  const primes: number[] = [];
-  for (let i = 2; i <= limit; i++) {
-    if (isComposite[i]) continue;
-    primes.push(i);
-    for (let j = i * i; j <= limit; j += i) isComposite[j] = 1;
-  }
-  sievePrimes = primes;
-  sieveLimit = limit;
-}
-
-/** The k-th prime (1-indexed): grow the sieve past a prime-counting estimate, doubling
- *  until it's actually reached (the estimate can undershoot for small k). */
+/** The k-th prime (1-indexed). */
 function nthPrime(k: number): number {
-  let bound = Math.max(16, Math.ceil(k * (Math.log(k + 1) + Math.log(Math.log(k + 2) + 1)) * 1.2));
-  growSieveTo(bound);
-  while (sievePrimes.length < k) {
-    bound *= 2;
-    growSieveTo(bound);
-  }
-  return sievePrimes[k - 1];
+  const p = sieveNthPrime(k);
+  if (p === undefined) throw new RangeError(`nthPrime: ${k} past PRIME_SIEVE_LIMIT`);
+  return p;
 }
 
+/** Baillie–PSW: exact for any size, not bounded by a sieve limit. */
 function isPrime(n: number): boolean {
-  if (!Number.isInteger(n) || n < 2) return false;
-  if (n <= sieveLimit) return sievePrimes.includes(n);
-  for (let i = 2; i * i <= n; i++) if (n % i === 0) return false;
-  return true;
+  return Number.isInteger(n) && n >= 0 && isPrimeBig(BigInt(n));
 }
 
-/** 0-indexed rank of a prime (its position in the sequence), or -1 if not prime. */
+/** 0-indexed rank of a prime (its position in the sequence), or -1 if not prime. π(n) − 1
+ *  for a prime n is its rank; the segmented sieve answers π exactly and fast. */
 function primeRank(n: number): number {
-  if (!isPrime(n)) return -1;
-  growSieveTo(n);
-  return sievePrimes.indexOf(n);
+  return isPrime(n) ? primeCountUpTo(n) - 1 : -1;
 }
 
 // ---- shared: memoised "nth n with predicate(n)" scan, for families with no closed form. ----

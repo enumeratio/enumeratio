@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // One control for every cross reference on the site. `<Symbol>Inversions</Symbol>` links a
 // head to its own reference page and hovers its signature and summary; `type` retargets the
-// same wrapper at an outside source -- `<Symbol type="sage">SetComposition</Symbol>` is
+// same wrapper at an outside source -- `<Symbol type="sage">SetCompositions</Symbol>` is
 // still OUR name, and the link is whatever the crosswalk records for it in Sage
 // (`OrderedSetPartitions`), so prose never has to know the other system's spelling.
 //

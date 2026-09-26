@@ -25,7 +25,7 @@ import {
   upTo,
 } from "./vocabulary.ts";
 
-const on = "SetPartition";
+const on = "SetPartitions";
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
   head,
   on,

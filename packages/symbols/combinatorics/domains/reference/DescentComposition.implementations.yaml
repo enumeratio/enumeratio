@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: DescentComposition(Permutation([2, 3, 1]))
-    out: Composition([2, 1])
+    in: DescentComposition(Permutations([2, 3, 1]))
+    out: Compositions([2, 1])
   tex:
-    in: \mathrm{DescentComposition}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{Composition}(\bigl\lbrack2, 1\bigr\rbrack)
+    in: \mathrm{DescentComposition}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Compositions}(\bigl\lbrack2, 1\bigr\rbrack)
   fullform:
-    in: DescentComposition[Permutation[List[2, 3, 1]]]
+    in: DescentComposition[Permutations[List[2, 3, 1]]]
