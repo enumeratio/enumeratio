@@ -135,13 +135,18 @@ test("PermutationReplace: points, lists, and conjugation on Cycles", () => {
   same(["PermutationReplace", 2, C([1, 2, 3])], 3);
   same(["PermutationReplace", 4, C([1, 2, 3])], 4); // past the cycle's support: fixed
   same(["PermutationReplace", L(1, 2, 3, 4), C([1, 2, 3])], L(2, 3, 1, 4));
-  same(["PermutationReplace", C([1, 2, 3]), C([1, 2])], C([2, 1, 3]));
+  same(["PermutationReplace", C([1, 2, 3]), C([1, 2])], C([1, 3, 2]));
+});
+
+test("PermutationReplace canonicalises a conjugated Cycles: smallest point first, singletons dropped, ascending order", () => {
+  // cross-checked against a Wolfram kernel: PermutationReplace[Cycles[{{1, 2}}], Cycles[{{1, 3, 2}}]] -> Cycles[{{1, 3}}]
+  same(["PermutationReplace", C([1, 2]), C([1, 3, 2])], C([1, 3]));
 });
 
 test("PermutationReplace composition law: conjugating twice is conjugating by the composite", () => {
-  // p = (1 2), q = (2 3); their composite (apply p, then q) is the one-line word {3, 1, 2}.
-  same(["PermutationReplace", ["PermutationReplace", C([1, 2, 3]), C([1, 2])], C([2, 3])], C([3, 1, 2]));
-  same(["PermutationReplace", C([1, 2, 3]), L(3, 1, 2)], C([3, 1, 2]));
+  // p = (1 2), q = (1 2 3); their composite (apply p, then q) is the one-line word {3, 2, 1} = (1 3).
+  same(["PermutationReplace", ["PermutationReplace", C([1, 2, 3]), C([1, 2])], C([1, 2, 3])], C([1, 3, 2]));
+  same(["PermutationReplace", C([1, 2, 3]), L(3, 2, 1)], C([1, 3, 2]));
 });
 
 test("GroupOrder(AlternatingGroup(n)) is n!/2, by enumeration, for n <= 6", () => {

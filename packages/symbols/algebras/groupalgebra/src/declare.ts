@@ -519,8 +519,15 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
         if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
         const degree = Math.max(maxSupport(cycles), perm.length);
         const widePerm = permutationOf(permExpr, degree)!;
-        const conjugated = cycles.map((cycle) => cycle.map((x) => widePerm[x - 1]!));
-        return cyclesExpression(ce, conjugated);
+        // Conjugate at the PERMUTATION level (sigma . tau . sigma⁻¹), then re-derive cycles
+        // the same way PermutationCycles/GroupElements do: `permutationToCycles` is Cycles'
+        // own canonical presentation (smallest point first, ascending order, singletons
+        // dropped) — a bare per-entry relabelling keeps the input's rotation and order,
+        // which is right for a literal Cycles(...) but not for a COMPUTED result.
+        const tau = cyclesToPermutation(cycles, degree);
+        const inverseSigma = invertPermutation(widePerm);
+        const conjugatedTau = tau.map((_, i) => widePerm[tau[inverseSigma[i]! - 1]! - 1]!);
+        return cyclesExpression(ce, permutationToCycles(conjugatedTau));
       }
       if (expr.operator === "List") {
         const replaced = operandsOf(expr).map((item) => {

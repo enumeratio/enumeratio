@@ -8,15 +8,20 @@
   caption: each VALUE is replaced, not the position it sits in — 4 is past the cycle's support, so it is fixed
 - id: conjugates-cycles
   expr: [PermutationReplace, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2]]]]
-  expected: [Cycles, [List, [List, 2, 1, 3]]]
+  expected: [Cycles, [List, [List, 1, 3, 2]]]
   caption: "on Cycles, PermutationReplace conjugates: every point the cycle names is relabelled by the second permutation"
+- id: conjugation-is-canonicalised
+  expr: [PermutationReplace, [Cycles, [List, [List, 1, 2]]], [Cycles, [List, [List, 1, 3, 2]]]]
+  expected: [Cycles, [List, [List, 1, 3]]]
+  caption: "the result prints the way [[Cycles]] always does when it's computed rather than typed: smallest point first, singletons dropped — not whatever rotation the per-point relabelling happened to produce"
+  category: Properties
 - id: composition-law
   expr:
     [
       PermutationReplace,
       [PermutationReplace, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2]]]],
-      [Cycles, [List, [List, 2, 3]]],
+      [Cycles, [List, [List, 1, 2, 3]]],
     ]
-  expected: [Cycles, [List, [List, 3, 1, 2]]]
+  expected: [Cycles, [List, [List, 1, 3, 2]]]
   caption: "conjugating by $p$ then by $q$ is conjugating by their composite: two steps land where one big permutation would"
   category: Properties
