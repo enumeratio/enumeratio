@@ -203,6 +203,18 @@ examples:
     expected: { num: "2.678938534707747633655692940974677644129" }
     category: Scope
     caption: To 40 significant digits, every one correctly rounded
+  - role: test
+    id: two-arguments-with-a-complex-second-argument
+    expr: [Gamma, 2.5, [Complex, 1.5, 1]]
+    expected: [Complex, 0.9148161703240998, -0.4535560131834821]
+  - role: test
+    id: n-gamma-1-0-2-exponential-cdf-at-a-concrete-z
+    expr: [N, [Gamma, 1, 0, 2]]
+    expected: { num: "0.864664716763387308106" }
+  - role: test
+    id: three-arguments-fully-symbolic-in-both-order-and
+    expr: [Gamma, s, 0, z]
+    expected: [Gamma, s, 0, z]
 seeAlso:
   - Factorial
   - GammaLn
