@@ -23,6 +23,7 @@ on:
 permissions:
   contents: read
   issues: write # the oracle Plausible's tracking issues
+  actions: write # julia-actions/cache deletes its older saves; without it every run adds one
 
 concurrency:
   group: nightly
@@ -116,6 +117,7 @@ jobs:
     permissions:
       contents: write # the bench tail step pushes to bench-data
       issues: write
+      actions: write # julia-actions/cache prunes its older saves
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
