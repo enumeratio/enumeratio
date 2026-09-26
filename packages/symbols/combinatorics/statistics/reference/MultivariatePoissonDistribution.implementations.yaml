@@ -1,0 +1,44 @@
+multivariate-poisson-mean:
+  epsil:
+    in: Mean(MultivariatePoissonDistribution(1, [2, 3]))
+    out: "[3, 4]"
+  tex:
+    in: \mathrm{mean}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack))
+    out: \bigl\lbrack3, 4\bigr\rbrack
+  fullform:
+    in: Mean[MultivariatePoissonDistribution[1, List[2, 3]]]
+  wolfram:
+    in: Mean[MultivariatePoissonDistribution[1, List[2, 3]]]
+multivariate-poisson-variance:
+  epsil:
+    in: Variance(MultivariatePoissonDistribution(1, [2, 3]))
+    out: "[3, 4]"
+  tex:
+    in: \mathrm{Variance}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack))
+    out: \bigl\lbrack3, 4\bigr\rbrack
+  fullform:
+    in: Variance[MultivariatePoissonDistribution[1, List[2, 3]]]
+  wolfram:
+    in: Variance[MultivariatePoissonDistribution[1, List[2, 3]]]
+multivariate-poisson-covariance:
+  epsil:
+    in: Covariance(MultivariatePoissonDistribution(1, [2, 3]))
+    out: "[[3, 1], [1, 4]]"
+  tex:
+    in: \operatorname{Covariance}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack3, 1\bigr\rbrack, \bigl\lbrack1, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Covariance[MultivariatePoissonDistribution[1, List[2, 3]]]
+  wolfram:
+    in: Covariance[MultivariatePoissonDistribution[1, List[2, 3]]]
+multivariate-poisson-pdf:
+  epsil:
+    in: PDF(MultivariatePoissonDistribution(1, [2, 3]), [1, 1])
+    out: 7 / ExponentialE ^ 6
+  tex:
+    in: \operatorname{PDF}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack), \bigl\lbrack1, 1\bigr\rbrack)
+    out: \frac{7}{e^{6}}
+  fullform:
+    in: PDF[MultivariatePoissonDistribution[1, List[2, 3]], List[1, 1]]
+  wolfram:
+    in: PDF[MultivariatePoissonDistribution[1, List[2, 3]], List[1, 1]]

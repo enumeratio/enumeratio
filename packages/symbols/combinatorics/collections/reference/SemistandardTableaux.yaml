@@ -17,8 +17,3 @@ seeAlso:
   - IntegerPartitions
   - Count
   - At
-references:
-  - system: wikipedia
-    identity: Young tableau
-  - system: mathworld
-    identity: YoungTableau

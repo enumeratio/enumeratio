@@ -116,6 +116,30 @@ export function applyPermutation<T>(items: readonly T[], sigma: readonly number[
   return result;
 }
 
+/** n! — shared by SymmetricGroup and AlternatingGroup's GroupOrder. */
+export function factorial(n: number): number {
+  let f = 1;
+  for (let i = 2; i <= n; i++) f *= i;
+  return f;
+}
+
+/**
+ * `GroupGenerators(AlternatingGroup(n))`, Wolfram's own choice: the 3-cycle `(1 2 3)` and
+ * the longest even cycle available — `(1 2 … n)` when `n` is odd (an n-cycle is even iff
+ * n is odd), else `(2 3 … n)` (one point shorter, so still even). `n <= 2` is the trivial
+ * group and needs no generators; `n == 3` collapses to one, since the n-cycle IS `(1 2 3)`.
+ */
+export function alternatingGenerators(n: number): number[][] {
+  if (n <= 2) return [];
+  const threeCycle = cyclesToPermutation([[1, 2, 3]], n);
+  if (n === 3) return [threeCycle];
+  const longCycle =
+    n % 2 === 1
+      ? cyclesToPermutation([Array.from({ length: n }, (_, i) => i + 1)], n)
+      : cyclesToPermutation([Array.from({ length: n - 1 }, (_, i) => i + 2)], n);
+  return [threeCycle, longCycle];
+}
+
 /** BFS closure of a permutation group from its generators — every group element, once. */
 export function permutationGroupClosure(
   generators: readonly (readonly number[])[],

@@ -177,10 +177,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 26,
   },
   {
-    head: "ProbabilityDistribution",
-    uses: 26,
-  },
-  {
     head: "Blend",
     uses: 25,
   },
@@ -197,16 +193,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 24,
   },
   {
-    head: "ParameterMixtureDistribution",
-    uses: 23,
-  },
-  {
     head: "EstimatedDistribution",
     uses: 22,
-  },
-  {
-    head: "HistogramDistribution",
-    uses: 21,
   },
   {
     head: "Inactive",
@@ -222,10 +210,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ImageScaled",
-    uses: 20,
-  },
-  {
-    head: "RandomFunction",
     uses: 20,
   },
   {
@@ -277,10 +261,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 18,
   },
   {
-    head: "WeightedAdjacencyMatrix",
-    uses: 18,
-  },
-  {
     head: "Control",
     uses: 17,
   },
@@ -294,10 +274,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Speak",
-    uses: 17,
-  },
-  {
-    head: "WienerProcess",
     uses: 17,
   },
   {
@@ -366,10 +342,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LogicalExpand",
-    uses: 13,
-  },
-  {
-    head: "MultivariatePoissonDistribution",
     uses: 13,
   },
   {
@@ -446,18 +418,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InterpretationBox",
-    uses: 11,
-  },
-  {
-    head: "MultinomialDistribution",
-    uses: 11,
-  },
-  {
-    head: "MultinormalDistribution",
-    uses: 11,
-  },
-  {
-    head: "PoissonProcess",
     uses: 11,
   },
   {
@@ -745,14 +705,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "PermutationList",
-    uses: 7,
-  },
-  {
-    head: "PermutationReplace",
-    uses: 7,
-  },
-  {
     head: "SetOptions",
     uses: 7,
   },
@@ -762,10 +714,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "AbortProtect",
-    uses: 6,
-  },
-  {
-    head: "AlternatingGroup",
     uses: 6,
   },
   {

@@ -578,6 +578,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Composition",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "Compositions",
     provenance: "unknown",
     declared: null,
@@ -670,6 +677,13 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "DoubleFactorialNumbers",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "DyckPath",
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
@@ -1021,6 +1035,13 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "IndexOf",
     provenance: "compute-engine",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "IntegerPartition",
+    provenance: "unknown",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -1509,6 +1530,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Permutation",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "PerniciousNumbers",
     provenance: "unknown",
     declared: null,
@@ -1768,6 +1796,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "SemistandardTableau",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "SemistandardTableaux",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -1789,6 +1824,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "SetComposition",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "SetCompositions",
     provenance: "unknown",
     declared: null,
@@ -1800,6 +1842,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "override",
     declared: null,
     wolframAlias: "Complement",
+    elsewhere: [],
+  },
+  {
+    name: "SetPartition",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
     elsewhere: [],
   },
   {
@@ -1951,6 +2000,13 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "SquarefreeSemiprimes",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "StandardTableau",
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
@@ -2248,6 +2304,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "WeightedAdjacencyMatrix",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "WeightedAdjacencyMatrix",
     elsewhere: [],
   },
   {
@@ -3973,6 +4036,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "AlternatingGroup",
+    provenance: "extension",
+    declared: "enumeratio-groupalgebra",
+    wolframAlias: "AlternatingGroup",
+    elsewhere: [],
+  },
+  {
     name: "Cycles",
     provenance: "extension",
     declared: "enumeratio-groupalgebra",
@@ -4019,6 +4089,20 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-groupalgebra",
     wolframAlias: "PermutationGroup",
+    elsewhere: [],
+  },
+  {
+    name: "PermutationList",
+    provenance: "extension",
+    declared: "enumeratio-groupalgebra",
+    wolframAlias: "PermutationList",
+    elsewhere: [],
+  },
+  {
+    name: "PermutationReplace",
+    provenance: "extension",
+    declared: "enumeratio-groupalgebra",
+    wolframAlias: "PermutationReplace",
     elsewhere: [],
   },
   {

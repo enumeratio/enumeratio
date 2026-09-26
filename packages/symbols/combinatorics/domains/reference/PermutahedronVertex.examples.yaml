@@ -1,5 +1,5 @@
 - id: the-one-line-word-231-once-there-is-a-definition
-  expr: [PermutahedronVertex, [Permutations, [List, 2, 3, 1]]]
+  expr: [PermutahedronVertex, [Permutation, [List, 2, 3, 1]]]
   expected: [List]
   caption: the one-line word $231$ — once there is a definition to evaluate
   aspirational: true

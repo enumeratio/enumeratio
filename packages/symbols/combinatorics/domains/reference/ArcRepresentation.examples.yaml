@@ -1,4 +1,4 @@
 - id: the-restricted-growth-string-of-1-3-mid-2-mid-4
-  expr: [ArcRepresentation, [SetPartitions, [List, 1, 2, 1, 3]]]
-  expected: [Endofunctions, [List, 3, 2, 3, 4]]
+  expr: [ArcRepresentation, [SetPartition, [List, 1, 2, 1, 3]]]
+  expected: [Endofunction, [List, 3, 2, 3, 4]]
   caption: the restricted growth string of $\{1,3\} \mid \{2\} \mid \{4\}$

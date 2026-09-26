@@ -1,0 +1,66 @@
+randomfunction-poisson-counts-nondecreasing:
+  epsil:
+    in: |-
+      Last([
+             SeedRandom(7),
+             RandomFunction(PoissonProcess(4), [0, 2, 0.5]),
+             SeedRandom(42),
+           ])
+    out: "[[0, 0], [0.5, 0], [1, 0], [1.5, 4], [2, 5]]"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0.5, 0\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack1.5, 4\bigr\rbrack, \bigl\lbrack2, 5\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]]
+  wolfram:
+    in: Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]]
+randomfunction-default-grid-length:
+  epsil:
+    in: Last([Length(RandomFunction(WienerProcess(0, 1), [0, 1])), SeedRandom(42)])
+    out: "101"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{Length}(\mathrm{RandomFunction}(\mathrm{WienerProcess}(0, 1), \bigl\lbrack0, 1\bigr\rbrack)), \mathrm{SeedRandom}(42)\bigr\rbrack)
+    out: "101"
+  fullform:
+    in: Last[List[Length[RandomFunction[WienerProcess[0, 1], List[0, 1]]], SeedRandom[42]]]
+  wolfram:
+    in: Last[List[Length[RandomFunction[WienerProcess[0, 1], List[0, 1]]], SeedRandom[42]]]
+randomfunction-wiener-path-starts-at-zero:
+  epsil:
+    in: |-
+      First(Last([
+                   SeedRandom(3),
+                   RandomFunction(WienerProcess(0, 1), [0, 1, 0.5]),
+                   SeedRandom(42),
+                 ]))
+    out: "[0, 0]"
+  tex:
+    in: \mathrm{First}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(3), \mathrm{RandomFunction}(\mathrm{WienerProcess}(0, 1), \bigl\lbrack0, 1, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack))
+    out: \bigl\lbrack0, 0\bigr\rbrack
+  fullform:
+    in: First[Last[List[SeedRandom[3], RandomFunction[WienerProcess[0, 1], List[0, 1, 0.5]], SeedRandom[42]]]]
+  wolfram:
+    in: First[Last[List[SeedRandom[3], RandomFunction[WienerProcess[0, 1], List[0, 1, 0.5]], SeedRandom[42]]]]
+randomfunction-reproducible-for-a-fixed-seed:
+  epsil:
+    in: |-
+      Last([
+             SeedRandom(7),
+             RandomFunction(PoissonProcess(4), [0, 2, 0.5]),
+             SeedRandom(42),
+           ]) == Last([
+                       SeedRandom(7),
+                       RandomFunction(PoissonProcess(4), [0, 2, 0.5]),
+                       SeedRandom(42),
+                     ])
+    out: True
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]], Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]]]
+  wolfram:
+    in: (Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]] == Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]])

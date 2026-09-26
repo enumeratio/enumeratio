@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: RskShape(Permutations([2, 3, 1]))
-    out: IntegerPartitions([2, 1])
+    in: RskShape(Permutation([2, 3, 1]))
+    out: IntegerPartition([2, 1])
   tex:
-    in: \mathrm{RskShape}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{IntegerPartitions}(\bigl\lbrack2, 1\bigr\rbrack)
+    in: \mathrm{RskShape}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{IntegerPartition}(\bigl\lbrack2, 1\bigr\rbrack)
   fullform:
-    in: RskShape[Permutations[List[2, 3, 1]]]
+    in: RskShape[Permutation[List[2, 3, 1]]]

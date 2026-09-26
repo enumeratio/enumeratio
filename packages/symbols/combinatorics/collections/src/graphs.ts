@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, optionsOf } from "@enumeratio/boxed";
+import { dijkstraDistances, dijkstraPath } from "./graph-weights.ts";
 
 // Graphs (Wolfram frontier: UndirectedEdge/DirectedEdge top the gap list at 756/69 doc
 // uses, with Graph and its query/family heads clustered right behind them).
@@ -19,6 +20,17 @@ import { integerAt, operandsOf } from "@enumeratio/boxed";
 // declared vertex list (if given) then the edges in order, each edge's endpoints in
 // (a, b) order.
 //
+// Edge weights: `Graph(edges, EdgeWeight -> {w1, w2, …})` — Wolfram's OPTION form, read
+// by `graphOf` itself, one weight per edge in `EdgeList` order (the `Property`/
+// `PropertyValue` per-edge annotation form is out of scope — see the report). A weighted
+// graph switches GraphDistance/FindShortestPath (below) and GraphDistanceMatrix/
+// WeightedAdjacencyMatrix (graphs-2.ts, graph-weights.ts) onto Dijkstra automatically, same
+// as Wolfram; every OTHER query here — VertexDegree, ConnectedComponents,
+// IsIsomorphicGraph, the `Is…` structural predicates, … — reads only the graph's shape and
+// ignores weight entirely, same as Wolfram's own default. Dijkstra needs non-negative
+// weights; a negative one makes the relevant head decline (stay unevaluated) rather than
+// guess — see graph-weights.ts.
+//
 // No rendering: a `<notatio-graph>` element (vertex/edge positions, an actual drawing) is
 // out of scope here — see the module-level TODO at the bottom of this file for what it
 // would need.
@@ -30,12 +42,20 @@ export interface Edge {
   readonly a: string; // canonical key
   readonly b: string;
   readonly expr: BoxedExpression; // original UndirectedEdge/DirectedEdge expression
+  /** From `EdgeWeight -> {…}` (Wolfram's option form, see `graphOf`), one entry per edge in
+   *  `EdgeList` order — `undefined` on every edge when the graph carries no weights at all.
+   *  Kept as the original expression (not coerced to a JS number) so an exact weight prints
+   *  back exactly; `numericWeight` in `graph-weights.ts` reads it for arithmetic. */
+  readonly weight?: BoxedExpression;
 }
 
 export interface GraphModel {
   readonly order: readonly string[]; // vertex keys, first-appearance order
   readonly label: ReadonlyMap<string, BoxedExpression>; // key -> original vertex expression
   readonly edges: readonly Edge[];
+  /** Whether this graph was built with `EdgeWeight -> {…}` — every edge then has `.weight`
+   *  set (never a partial mix). See `graphOf`. */
+  readonly weighted: boolean;
 }
 
 /** A stable key for a vertex expression — canonical MathJSON, so `1` and `2` never
@@ -52,18 +72,40 @@ function edgeOf(expr: BoxedExpression): { directed: boolean; a: BoxedExpression;
   return { directed: expr.operator === "DirectedEdge", a: ops[0]!, b: ops[1]! };
 }
 
-/** Build a `GraphModel` from `Graph(edges)` or `Graph(vertices, edges)`. Vertices not
- *  named in an explicit vertex list but seen as an edge endpoint are appended, in
- *  first-appearance order — Wolfram accepts edges that mention a vertex the list omits. */
-export function graphOf(expr: BoxedExpression): GraphModel | undefined {
+/** Build a `GraphModel` from `Graph(edges)` or `Graph(vertices, edges)`, either optionally
+ *  followed by `EdgeWeight -> {w1, w2, …}` (Wolfram's option form for a weighted graph —
+ *  the `Property`/`PropertyValue` per-edge form is out of scope, see the report). Vertices
+ *  not named in an explicit vertex list but seen as an edge endpoint are appended, in
+ *  first-appearance order — Wolfram accepts edges that mention a vertex the list omits.
+ *
+ *  `EdgeWeight` must give exactly one weight per edge, in `EdgeList` order (Wolfram's own
+ *  requirement); a mismatched count makes the whole `Graph` fail to parse — same as any
+ *  other malformed call — rather than silently ignoring the option or padding it out.
+ *
+ *  Takes `ce` (every caller already has one, being a `declare(…)` callback) so the option's
+ *  value — read off as MathJSON by `optionsOf`, the same `OptionsPattern`-style splitter
+ *  `VerificationTest` uses (`@enumeratio/boxed`) — can be reboxed into `BoxedExpression`s. */
+export function graphOf(ce: ComputeEngine, expr: BoxedExpression): GraphModel | undefined {
   if (expr.operator !== "Graph") return undefined;
-  const ops = operandsOf(expr);
-  if (ops.length !== 1 && ops.length !== 2) return undefined;
+  const rawOps = operandsOf(expr);
+  const { ops: positional, options } = optionsOf(["Graph", ...rawOps.map((op) => op.json)] as never);
+  if (positional.length !== 1 && positional.length !== 2) return undefined;
+  const ops = rawOps.slice(0, positional.length);
   const explicitVertices = ops.length === 2 ? ops[0] : undefined;
   const edgeList = ops.length === 2 ? ops[1] : ops[0];
   if (edgeList === undefined || edgeList.operator !== "List") return undefined;
-  const rawEdges = operandsOf(edgeList).map(edgeOf);
+  const edgeExprs = operandsOf(edgeList);
+  const rawEdges = edgeExprs.map(edgeOf);
   if (rawEdges.some((e) => e === undefined)) return undefined;
+
+  let weights: readonly BoxedExpression[] | undefined;
+  if (options.EdgeWeight !== undefined) {
+    const weightList = ce.box(options.EdgeWeight as never);
+    if (weightList.operator !== "List") return undefined;
+    const w = operandsOf(weightList);
+    if (w.length !== rawEdges.length) return undefined;
+    weights = w;
+  }
 
   const order: string[] = [];
   const label = new Map<string, BoxedExpression>();
@@ -87,10 +129,11 @@ export function graphOf(expr: BoxedExpression): GraphModel | undefined {
       directed: raw.directed,
       a: vertexKey(raw.a),
       b: vertexKey(raw.b),
-      expr: operandsOf(edgeList)[i]!,
+      expr: edgeExprs[i]!,
+      weight: weights?.[i],
     });
   }
-  return { order, label, edges };
+  return { order, label, edges, weighted: weights !== undefined };
 }
 
 // ─── pure algorithms over the model (string keys only — no compute-engine here) ───────────
@@ -444,12 +487,17 @@ function petersenGraph(ce: ComputeEngine): BoxedExpression {
 export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("UndirectedEdge", { signature: "(any, any) -> value" });
   ce.declare("DirectedEdge", { signature: "(any, any) -> value" });
-  ce.declare("Graph", { signature: "(any, any?) -> value" });
+  // `any*` (compute-engine won't mix `?` with a variadic tail) covers both the second
+  // positional argument (`Graph(vertices, edges)`) and `EdgeWeight -> {…}` (or any other
+  // option, held the same way) trailing it -- graphOf itself enforces the 1-or-2 positional
+  // count this signature only loosely bounds. Without a variadic tail here, a 3-argument
+  // call (edges/vertices + one rule) fails arity checking before graphOf ever sees it.
+  ce.declare("Graph", { signature: "(any, any*) -> value" });
 
   ce.declare("VertexList", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : vertexListExpr(ce, g);
     },
   });
@@ -457,7 +505,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("EdgeList", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined
         ? undefined
         : listOf(
@@ -470,7 +518,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("VertexCount", {
     signature: "(value) -> integer",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : ce.number(g.order.length);
     },
   });
@@ -478,7 +526,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("EdgeCount", {
     signature: "(value) -> integer",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : ce.number(g.edges.length);
     },
   });
@@ -486,7 +534,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("VertexDegree", {
     signature: "(value, any?) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const deg = degrees(g);
       if (ops[1] === undefined)
@@ -502,7 +550,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("AdjacencyMatrix", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const index = new Map(g.order.map((v, i) => [v, i]));
       const rows = g.order.map(() => Array.from({ length: g.order.length }, () => 0));
@@ -527,7 +575,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("IncidenceMatrix", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       const index = new Map(g.order.map((v, i) => [v, i]));
       const rows = g.order.map(() => Array.from({ length: g.edges.length }, () => 0));
@@ -557,7 +605,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("ConnectedComponents", {
     signature: "(value) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       return listOf(
         ce,
@@ -574,7 +622,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("IsConnectedGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : isWeaklyConnected(g) ? ce.True : ce.False;
     },
   });
@@ -582,12 +630,16 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("FindShortestPath", {
     signature: "(value, any, any) -> list",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined || ops[2] === undefined) return undefined;
       const source = vertexKey(ops[1]);
       const target = vertexKey(ops[2]);
       if (!g.label.has(source) || !g.label.has(target)) return undefined;
-      const path = bfsPath(directedAdjacency(g), source, target);
+      // A weighted graph (EdgeWeight given) uses Dijkstra automatically -- same as
+      // Wolfram's own FindShortestPath -- and declines (undefined) on a negative weight;
+      // an unweighted graph keeps the plain BFS above unchanged.
+      const path = g.weighted ? dijkstraPath(g, source, target) : bfsPath(directedAdjacency(g), source, target);
+      if (path === undefined) return undefined;
       return listOf(
         ce,
         path.map((k) => g.label.get(k)!),
@@ -598,11 +650,20 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("GraphDistance", {
     signature: "(value, any, any) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined || ops[2] === undefined) return undefined;
       const source = vertexKey(ops[1]);
       const target = vertexKey(ops[2]);
       if (!g.label.has(source) || !g.label.has(target)) return undefined;
+      // Weighted (see FindShortestPath's own note just above): the distance is the SUM of
+      // edge weights along the cheapest path, read numerically (not kept exact -- see
+      // numericWeight), not an edge count.
+      if (g.weighted) {
+        const distances = dijkstraDistances(g, source);
+        if (distances === undefined) return undefined;
+        const d = distances.get(target);
+        return d === undefined ? ce.symbol("PositiveInfinity") : ce.number(d);
+      }
       const path = bfsPath(directedAdjacency(g), source, target);
       return path.length === 0 ? ce.symbol("PositiveInfinity") : ce.number(path.length - 1);
     },
@@ -611,7 +672,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("IsTreeGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       return isWeaklyConnected(g) && g.edges.length === g.order.length - 1 ? ce.True : ce.False;
     },
@@ -620,7 +681,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("IsBipartiteGraph", {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
       return bipartiteColoring(g) === undefined ? ce.False : ce.True;
     },
@@ -629,7 +690,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("NeighborhoodGraph", {
     signature: "(value, any, integer?) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined) return undefined;
       const start = vertexKey(ops[1]);
       if (!g.label.has(start)) return undefined;
@@ -656,7 +717,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("Subgraph", {
     signature: "(value, list) -> value",
     evaluate: (ops) => {
-      const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
+      const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined || ops[1].operator !== "List") return undefined;
       const keep = new Set(operandsOf(ops[1]).map(vertexKey));
       return induced(ce, g, keep);
@@ -731,15 +792,29 @@ export function declareGraphs(ce: ComputeEngine): void {
 /** The induced subgraph of `g` on the vertex keys in `keep`: those vertices, in `g`'s
  *  original order, and every edge with both endpoints kept. */
 export function induced(ce: ComputeEngine, g: GraphModel, keep: ReadonlySet<string>): BoxedExpression {
+  const kept = g.edges.filter((e) => keep.has(e.a) && keep.has(e.b));
   const vertices = listOf(
     ce,
     g.order.filter((k) => keep.has(k)).map((k) => g.label.get(k)!),
   );
   const edges = listOf(
     ce,
-    g.edges.filter((e) => keep.has(e.a) && keep.has(e.b)).map((e) => e.expr),
+    kept.map((e) => e.expr),
   );
-  return ce.function("Graph", [vertices, edges]);
+  const args = [vertices, edges];
+  // Carry EdgeWeight through: a weighted graph's induced subgraph keeps each surviving
+  // edge's own weight, same as Wolfram's Subgraph/NeighborhoodGraph.
+  if (g.weighted)
+    args.push(
+      ce.function("KeyValuePair", [
+        ce.symbol("EdgeWeight"),
+        listOf(
+          ce,
+          kept.map((e) => e.weight!),
+        ),
+      ]),
+    );
+  return ce.function("Graph", args);
 }
 
 // TODO(notatio rendering): drawing `Graph` (a `<notatio-graph>` element) needs a layout

@@ -1,0 +1,33 @@
+cycle-to-image-list:
+  epsil:
+    in: PermutationList(Cycles([[1, 3, 2]]))
+    out: "[3, 1, 2]"
+  tex:
+    in: \mathrm{PermutationList}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 2\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack3, 1, 2\bigr\rbrack
+  fullform:
+    in: PermutationList[Cycles[List[List[1, 3, 2]]]]
+  wolfram:
+    in: PermutationList[Cycles[List[List[1, 3, 2]]]]
+padded-to-length:
+  epsil:
+    in: PermutationList(Cycles([[2, 3]]), 5)
+    out: "[1, 3, 2, 4, 5]"
+  tex:
+    in: \mathrm{PermutationList}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack), 5)
+    out: \bigl\lbrack1, 3, 2, 4, 5\bigr\rbrack
+  fullform:
+    in: PermutationList[Cycles[List[List[2, 3]]], 5]
+  wolfram:
+    in: PermutationList[Cycles[List[List[2, 3]]], 5]
+round-trips-with-permutation-cycles:
+  epsil:
+    in: PermutationCycles(PermutationList(Cycles([[1, 2, 5], [4, 6, 8, 9]])))
+    out: Cycles([[1, 2, 5], [4, 6, 8, 9]])
+  tex:
+    in: \mathrm{PermutationCycles}(\mathrm{PermutationList}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack\bigr\rbrack)))
+    out: \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack\bigr\rbrack)
+  fullform:
+    in: PermutationCycles[PermutationList[Cycles[List[List[1, 2, 5], List[4, 6, 8, 9]]]]]
+  wolfram:
+    in: PermutationCycles[PermutationList[Cycles[List[List[1, 2, 5], List[4, 6, 8, 9]]]]]

@@ -125,7 +125,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "LorenzAttractor",
     },
   ],
-  Compositions: [
+  Composition: [
     {
       system: "wikipedia",
       identity: "Composition (combinatorics)",
@@ -133,6 +133,16 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "Composition",
+    },
+  ],
+  DyckPath: [
+    {
+      system: "wikipedia",
+      identity: "Dyck language",
+    },
+    {
+      system: "mathworld",
+      identity: "DyckPath",
     },
   ],
   DyckPaths: [
@@ -147,6 +157,16 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "oeis",
       identity: "A000108",
+    },
+  ],
+  IntegerPartition: [
+    {
+      system: "wikipedia",
+      identity: "Integer partition",
+    },
+    {
+      system: "mathworld",
+      identity: "Partition",
     },
   ],
   IntegerPartitions: [
@@ -173,7 +193,17 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "Mode",
     },
   ],
-  SemistandardTableaux: [
+  Permutation: [
+    {
+      system: "wikipedia",
+      identity: "Permutation",
+    },
+    {
+      system: "mathworld",
+      identity: "Permutation",
+    },
+  ],
+  SemistandardTableau: [
     {
       system: "wikipedia",
       identity: "Young tableau",
@@ -183,10 +213,20 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "YoungTableau",
     },
   ],
-  SetCompositions: [
+  SetComposition: [
     {
       system: "wikipedia",
       identity: "Weak ordering",
+    },
+  ],
+  SetPartition: [
+    {
+      system: "wikipedia",
+      identity: "Partition of a set",
+    },
+    {
+      system: "mathworld",
+      identity: "SetPartition",
     },
   ],
   SetPartitions: [
@@ -203,7 +243,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A000110",
     },
   ],
-  StandardTableaux: [
+  StandardTableau: [
     {
       system: "wikipedia",
       identity: "Young tableau",
@@ -1603,16 +1643,6 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "PermutationInversion",
     },
   ],
-  Cycles: [
-    {
-      system: "wikipedia",
-      identity: "Cyclic permutation",
-    },
-    {
-      system: "mathworld",
-      identity: "PermutationCycle",
-    },
-  ],
   LongestDecreasingSubsequence: [
     {
       system: "wikipedia",
@@ -1647,6 +1677,16 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "oeis",
       identity: "A000108",
+    },
+  ],
+  Cycles: [
+    {
+      system: "wikipedia",
+      identity: "Cyclic permutation",
+    },
+    {
+      system: "mathworld",
+      identity: "PermutationCycle",
     },
   ],
   BernoulliB: [

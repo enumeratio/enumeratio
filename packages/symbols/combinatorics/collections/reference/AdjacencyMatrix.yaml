@@ -11,3 +11,4 @@ details:
 seeAlso:
   - IncidenceMatrix
   - VertexDegree
+  - WeightedAdjacencyMatrix

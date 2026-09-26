@@ -1,18 +1,18 @@
 the-step-word-uuddud:
   epsil:
-    in: Returns(DyckPaths([1, 1, 0, 0, 1, 0]))
+    in: Returns(DyckPath([1, 1, 0, 0, 1, 0]))
     out: "2"
   tex:
-    in: \mathrm{Returns}(\mathrm{DyckPaths}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
+    in: \mathrm{Returns}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
     out: "2"
   fullform:
-    in: Returns[DyckPaths[List[1, 1, 0, 0, 1, 0]]]
+    in: Returns[DyckPath[List[1, 1, 0, 0, 1, 0]]]
 the-step-word-uduudd:
   epsil:
-    in: Returns(DyckPaths([1, 0, 1, 1, 0, 0]))
+    in: Returns(DyckPath([1, 0, 1, 1, 0, 0]))
     out: "2"
   tex:
-    in: \mathrm{Returns}(\mathrm{DyckPaths}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
+    in: \mathrm{Returns}(\mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
     out: "2"
   fullform:
-    in: Returns[DyckPaths[List[1, 0, 1, 1, 0, 0]]]
+    in: Returns[DyckPath[List[1, 0, 1, 1, 0, 0]]]

@@ -1,0 +1,14 @@
+- id: multivariate-poisson-mean
+  expr: [Mean, [MultivariatePoissonDistribution, 1, [List, 2, 3]]]
+  expected: [List, 3, 4]
+- id: multivariate-poisson-variance
+  expr: [Variance, [MultivariatePoissonDistribution, 1, [List, 2, 3]]]
+  expected: [List, 3, 4]
+  caption: matches Mean, exactly Poisson's own identity.
+- id: multivariate-poisson-covariance
+  expr: [Covariance, [MultivariatePoissonDistribution, 1, [List, 2, 3]]]
+  expected: [List, [List, 3, 1], [List, 1, 4]]
+  caption: off-diagonal is mu0 = 1, the shared shock.
+- id: multivariate-poisson-pdf
+  expr: [PDF, [MultivariatePoissonDistribution, 1, [List, 2, 3]], [List, 1, 1]]
+  expected: [Divide, 7, [Power, ExponentialE, 6]]

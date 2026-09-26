@@ -1,0 +1,18 @@
+name: MultinomialDistribution
+domain: Statistics
+signature: MultinomialDistribution(n, {p1, ..., pk})
+summary: $n$ draws over $k$ categories with probabilities $p_1,\ldots,p_k$ (summing to 1); a count vector on the $n$-simplex.
+signatures:
+  - call: MultinomialDistribution(n, {p1, ..., pk})
+    description: n independent draws, each landing in category i with probability pi.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = \binom{n}{x_1,\ldots,x_k} \prod_i p_i^{x_i}$ when $\sum_i x_i = n$, $0$ otherwise — the multinomial coefficient is compute-engine's own native `Multinomial(x1,...,xk)`, which already computes $n!/(x_1!\cdots x_k!)$ for $n = \sum x_i$; the guard is what checks that sum against the DISTRIBUTION's own $n$.
+  - "$Mean_i = n\\,p_i$; $Variance_i = n\\,p_i(1-p_i)$ — both length-$k$ lists (Wolfram's own `Variance` convention: componentwise, not the full covariance matrix)."
+  - '`Covariance` (compute-engine native over two collections) is widened to also accept a single `MultinomialDistribution`, answering the full $k \times k$ covariance matrix: $Cov(X_i,X_j) = -n\,p_i p_j$ ($i \ne j$), $Var(X_i) = n\,p_i(1-p_i)$ on the diagonal.'
+  - RandomVariate draws via sequential conditional binomials (category $i$ gets $Binomial(\text{remaining } n, p_i / \text{remaining } p)$ successes, the last category takes the exact remainder), seeded through the same `SeedRandom` stream every other distribution in this package uses.
+seeAlso:
+  - MultinormalDistribution
+  - BinomialDistribution
+  - Covariance
+  - RandomVariate

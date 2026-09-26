@@ -24,6 +24,8 @@ import {
   DOMAINS,
   RESTRICTIONS,
   declareCompose,
+  declareDomainElement,
+  declareDomainPlurals,
   declareDomains,
   declareMaps,
   declareRestricted,
@@ -49,6 +51,8 @@ import {
   declareDistributions3,
   declareDistributions4,
   declareDistributions5,
+  declareDistributions6,
+  declareProcesses,
   declareStatistics,
 } from "@enumeratio/statistics/src";
 
@@ -74,6 +78,11 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
   declareGraphics,
   declareDomains,
   (ce) => {
+    // AFTER declareCollections (above), so a plural a collection family already claims
+    // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
+    // bare symbol first.
+    declareDomainPlurals(ce);
+    declareDomainElement(ce);
     // Statistics, maps and restrictions all key off the carrier types, so they take the
     // same (type → constructor) index and have to follow `declareDomains`.
     const domainTypes = Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
@@ -83,6 +92,8 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
     declareDistributions3(ce);
     declareDistributions4(ce);
     declareDistributions5(ce);
+    declareDistributions6(ce);
+    declareProcesses(ce);
     declareMaps(ce, domainTypes);
     declareRestricted(ce);
     declareRestrictions(ce, RESTRICTIONS, { skipDeclared: true });

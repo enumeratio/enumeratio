@@ -1,18 +1,18 @@
 the-partition-4-2-1-of-7:
   epsil:
-    in: Perimeter(IntegerPartitions([4, 2, 1]))
+    in: Perimeter(IntegerPartition([4, 2, 1]))
     out: "7"
   tex:
-    in: \mathrm{Perimeter}(\mathrm{IntegerPartitions}(\bigl\lbrack4, 2, 1\bigr\rbrack))
+    in: \mathrm{Perimeter}(\mathrm{IntegerPartition}(\bigl\lbrack4, 2, 1\bigr\rbrack))
     out: "7"
   fullform:
-    in: enumeratio`Perimeter[IntegerPartitions[List[4, 2, 1]]]
+    in: enumeratio`Perimeter[IntegerPartition[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
-    in: Perimeter(IntegerPartitions([3, 3, 1]))
+    in: Perimeter(IntegerPartition([3, 3, 1]))
     out: "6"
   tex:
-    in: \mathrm{Perimeter}(\mathrm{IntegerPartitions}(\bigl\lbrack3, 3, 1\bigr\rbrack))
+    in: \mathrm{Perimeter}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "6"
   fullform:
-    in: enumeratio`Perimeter[IntegerPartitions[List[3, 3, 1]]]
+    in: enumeratio`Perimeter[IntegerPartition[List[3, 3, 1]]]

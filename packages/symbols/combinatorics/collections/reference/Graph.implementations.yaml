@@ -31,3 +31,12 @@ the-1-arg-form-is-not-normalized-to-2-arg:
     in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]]]
   wolfram:
     in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]]]
+edgeweight-option-is-held-exactly:
+  epsil:
+    in: Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)], EdgeWeight -> [5, 7])
+    out: Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)], (EdgeWeight, [5, 7]))
+  tex:
+    in: \mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack5, 7\bigr\rbrack))
+    out: \mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack, (\mathrm{EdgeWeight},\bigl\lbrack5, 7\bigr\rbrack))
+  fullform:
+    in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], KeyValuePair[EdgeWeight, List[5, 7]]]
