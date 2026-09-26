@@ -5,3 +5,8 @@ summary: Wolfram's own CyclicGroup, mapped through for the transpiler and the or
 names:
   wolframIdentity: true
 stub: carrier
+bindings:
+  - origin: mapped
+    form: oscar
+    template: enumeratio_cyclic(cyclic_group(PermGroup, $1), $1)
+    arity: 1

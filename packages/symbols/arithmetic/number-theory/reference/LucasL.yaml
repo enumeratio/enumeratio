@@ -29,3 +29,24 @@ references:
     identity: A000032
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: LucasL[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: lucas($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: lucas_number2($1, 1, -1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: julia
+    template: Combinatorics.lucasnum($1)
+    arity: 1
+    threadArg: 1

@@ -29,3 +29,14 @@ seeAlso:
   - RationalReconstruction
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PowerModList[$1, $2, $3]
+    arity: 3
+    note: Sage reaches this through Zmod(m)(a).nth_root(b, all=True) (run.ts's SAGE_PREAMBLE); no one-liner in SymPy.
+  - origin: mapped
+    form: sage
+    template: enumeratio_power_mod_list($1, $2, $3)
+    arity: 3
+    note: Sage reaches this through Zmod(m)(a).nth_root(b, all=True) (run.ts's SAGE_PREAMBLE); no one-liner in SymPy.

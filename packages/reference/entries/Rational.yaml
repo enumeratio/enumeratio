@@ -8,3 +8,32 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: Rational($1, $2)
+    arity: 2
+  - origin: mapped
+    form: mpmath
+    template: (mpf($1)/$2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: ($1/$2)
+    arity: 2
+  - origin: mapped
+    form: oscar
+    template: ($1 // $2)
+    arity: 2
+  - origin: mapped
+    form: julia
+    template: ($1 // $2)
+    arity: 2
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : ℚ) / $2)"
+    arity: 2
+  - origin: mapped
+    form: rust
+    template: rational($1, $2)
+    arity: 2

@@ -26,3 +26,29 @@ references:
 names:
   dlmf: sine function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Sin[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: sin($1)
+    arity: 1
+    threadArg: 1

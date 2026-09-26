@@ -18,3 +18,19 @@ seeAlso:
   - Count
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Length[$1]
+    arity: 1
+    note: Wolfram's Length of an atom (not a list) is 0, not an error, matching ours; a bare len() raises on a non-list, so it is guarded.
+  - origin: mapped
+    form: sympy
+    template: (len($1) if hasattr($1, '__len__') else 0)
+    arity: 1
+    note: Wolfram's Length of an atom (not a list) is 0, not an error, matching ours; a bare len() raises on a non-list, so it is guarded.
+  - origin: mapped
+    form: sage
+    template: (len($1) if hasattr($1, '__len__') else 0)
+    arity: 1
+    note: Wolfram's Length of an atom (not a list) is 0, not an error, matching ours; a bare len() raises on a non-list, so it is guarded.

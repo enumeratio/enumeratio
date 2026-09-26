@@ -18,3 +18,8 @@ seeAlso:
   - AlternatingGroup
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: oscar
+    template: order(($1).G)
+    arity: 1

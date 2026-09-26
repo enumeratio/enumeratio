@@ -21,3 +21,24 @@ references:
     identity: AbsoluteValue
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: Abs($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: fabs($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: abs($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: abs($1)
+    arity: 1
+    threadArg: 1

@@ -1,0 +1,23 @@
+name: Element
+domain: Compute engine
+signature: Element(any, any, boolean?) -> boolean
+summary: |-
+  Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+  Element supports two modes of operation:
+  1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+  2. Type-style membership: Element(x, integer) checks if x has type integer
+
+  Type-style membership works with:
+  - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+  - Type names: integer, rational, real, number, positive_integer, etc.
+  - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+signatures:
+  - call: Element(any, any, boolean?) -> boolean
+    description: as compute-engine declares it
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_element($1, $2)
+    arity: 2
+stub: engine

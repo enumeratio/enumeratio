@@ -146,6 +146,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Plus",
   },
   {
+    name: "AdicNorm",
+    oracle: [
+      {
+        system: "rust",
+        call: "adic_norm($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "AdicNumeral",
     oracle: [
       {
@@ -2970,12 +2980,42 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "GroupCentreDimension",
+    oracle: [
+      {
+        system: "oscar",
+        call: "number_of_conjugacy_classes(($1).G)",
+        arity: 1,
+      },
+    ],
+  },
+  {
+    name: "GroupDirectProduct",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_direct_product($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
     name: "GroupElements",
     wolfram: "GroupElements",
   },
   {
     name: "GroupGenerators",
     wolfram: "GroupGenerators",
+  },
+  {
+    name: "GroupIsAbelian",
+    oracle: [
+      {
+        system: "oscar",
+        call: "is_abelian(($1).G)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "GroupOrder",
@@ -2985,6 +3025,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         system: "oscar",
         call: "order(($1).G)",
         arity: 1,
+      },
+    ],
+  },
+  {
+    name: "GroupProduct",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_product($1, $2, $3)",
+        arity: 3,
       },
     ],
   },
@@ -3412,6 +3462,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IsBipartiteGraph",
     wolfram: "BipartiteGraphQ",
+  },
+  {
+    name: "IsCentral",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_is_central($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "IsCompleteGraph",
@@ -4717,6 +4777,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "PartitionMobius",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_partition_mobius($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
     name: "PartitionsQ",
     wolfram: "PartitionsQ",
   },
@@ -4771,6 +4841,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "PiecewiseExpand",
     wolfram: "PiecewiseExpand",
+  },
+  {
+    name: "PlanarPartitionAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "PlanarAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:planar, $1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Plot",
@@ -5232,6 +5317,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "RomanNumeral",
     wolfram: "RomanNumeral",
+  },
+  {
+    name: "RookAlgebra",
+    oracle: [
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:rook, $1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Round",
@@ -5726,6 +5821,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "SymmetricGroup",
     wolfram: "SymmetricGroup",
+  },
+  {
+    name: "SymmetricGroupAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "SymmetricGroupAlgebra(QQ, $1)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "group_algebra(QQ, symmetric_group($1))",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Take",

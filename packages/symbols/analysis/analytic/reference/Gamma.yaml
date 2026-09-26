@@ -35,3 +35,29 @@ references:
     identity: "5"
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Gamma[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: gamma($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: gamma($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: gamma($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: gamma($1)
+    arity: 1
+    threadArg: 1

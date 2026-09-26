@@ -25,3 +25,29 @@ references:
 names:
   dlmf: cosine function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Cos[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: cos($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: cos($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: cos($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: cos($1)
+    arity: 1
+    threadArg: 1

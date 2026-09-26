@@ -25,3 +25,19 @@ references:
     identity: A027641
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: BernoulliB[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: bernoulli($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: bernoulli($1)
+    arity: 1
+    threadArg: 1

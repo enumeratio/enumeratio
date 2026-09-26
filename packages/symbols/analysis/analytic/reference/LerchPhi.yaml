@@ -34,9 +34,20 @@ bindings:
     source: packages/symbols/analysis/analytic/src/shader.ts:zetaWGSL
     produces: a colour per pixel — complex Φ, domain-coloured
   - origin: mapped
-    form: wolfram / mpmath
-    environment: external
-    note: LerchPhi[z, s, a]; mpmath.lerchphi(z, s, a).
+    form: wolfram
+    template: LerchPhi[$1, $2, $3]
+    arity: 3
+    note: For a + k < 0, Wolfram sums ((a+k)²)^(−s/2), the generalized-zeta convention; mpmath, SymPy and ours take (a+k)^(−s), principal.
+  - origin: mapped
+    form: sympy
+    template: lerchphi($1, $2, $3)
+    arity: 3
+    note: For a + k < 0, Wolfram sums ((a+k)²)^(−s/2), the generalized-zeta convention; mpmath, SymPy and ours take (a+k)^(−s), principal.
+  - origin: mapped
+    form: mpmath
+    template: lerchphi($1, $2, $3)
+    arity: 3
+    note: For a + k < 0, Wolfram sums ((a+k)²)^(−s/2), the generalized-zeta convention; mpmath, SymPy and ours take (a+k)^(−s), principal.
 seeAlso:
   - HurwitzZeta
   - Zeta

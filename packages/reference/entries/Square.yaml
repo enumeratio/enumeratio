@@ -14,3 +14,20 @@ details:
 seeAlso:
   - Sqrt
   - Root
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: ($1)^2
+    arity: 1
+  - origin: mapped
+    form: sympy
+    template: ($1)**2
+    arity: 1
+  - origin: mapped
+    form: mpmath
+    template: ($1)**2
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: ($1)^2
+    arity: 1

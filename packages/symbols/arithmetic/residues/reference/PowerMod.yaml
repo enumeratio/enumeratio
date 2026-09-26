@@ -30,3 +30,14 @@ references:
     identity: Modular exponentiation
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: power_mod($1, $2, $3)
+    arity: 3
+    note: Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.
+  - origin: mapped
+    form: rust
+    template: powermod($1, $2, $3)
+    arity: 3
+    note: Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.

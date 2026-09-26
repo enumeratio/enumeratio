@@ -21,3 +21,14 @@ seeAlso:
 references:
   - system: wikipedia
     identity: Partition algebra
+bindings:
+  - origin: mapped
+    form: sage
+    template: PartitionAlgebra($1, enumeratio_delta, enumeratio_ring)
+    arity: 1
+    note: Oscar has no diagram algebras; its row checks the dimension against the closed form (oscar/preamble.jl), not against a second implementation.
+  - origin: mapped
+    form: oscar
+    template: EnumeratioDiagramAlgebra(:partition, $1)
+    arity: 1
+    note: Oscar has no diagram algebras; its row checks the dimension against the closed form (oscar/preamble.jl), not against a second implementation.

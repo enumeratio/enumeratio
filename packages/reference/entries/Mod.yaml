@@ -26,3 +26,39 @@ references:
     identity: Mod
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Mod[$1, $2]
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: sympy
+    template: ($1 % $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: sage
+    template: ($1 % $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: oscar
+    template: mod($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: julia
+    template: mod($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : ℤ) % $2)"
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: rust
+    template: mod_floor($1, $2)
+    arity: 2
+    threadArg: 2

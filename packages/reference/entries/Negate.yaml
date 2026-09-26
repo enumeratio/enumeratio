@@ -17,3 +17,39 @@ seeAlso:
 names:
   wikidataConfirmed: true
   wolfram: Minus
+bindings:
+  - origin: mapped
+    form: sympy
+    template: (-$1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: (-$1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: (-$1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: oscar
+    template: (-($1))
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: julia
+    template: (-($1))
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mathlib4
+    template: (-($1))
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: (-($1))
+    arity: 1
+    threadArg: 1

@@ -1,0 +1,11 @@
+name: PartitionMobius
+domain: Oracle
+signature: PartitionMobius(...)
+summary: Mapped through to sage for the oracle; not yet written up here.
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_partition_mobius($1, $2)
+    arity: 2
+    note: "Sage's posets.SetPartitions, on the 2k points relabelled 1…2k: finer below coarser."
+stub: carrier

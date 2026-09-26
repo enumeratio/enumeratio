@@ -18,3 +18,8 @@ seeAlso:
   - PowerModList
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: inverse_mod($1, $2)
+    arity: 2
