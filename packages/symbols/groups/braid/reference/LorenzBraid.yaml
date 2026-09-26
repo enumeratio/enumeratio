@@ -23,3 +23,8 @@ seeAlso:
   - Braid
   - AlexanderPolynomial
   - ModularClasses
+references:
+  - system: wikipedia
+    identity: Lorenz system
+  - system: mathworld
+    identity: LorenzAttractor

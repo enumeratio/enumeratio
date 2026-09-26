@@ -33,3 +33,8 @@ seeAlso:
   - NumeralSystemShape
   - DigitCount
   - IntegerString
+references:
+  - system: wikipedia
+    identity: Numerical digit
+  - system: rosettacode
+    identity: Sum digits of an integer

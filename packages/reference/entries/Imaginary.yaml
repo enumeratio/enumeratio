@@ -1,0 +1,10 @@
+name: Imaginary
+domain: Compute engine
+signature: Imaginary(complex | infinity) -> number
+summary: Imaginary part of a complex number.
+signatures:
+  - call: Imaginary(complex | infinity) -> number
+    description: as compute-engine declares it
+names:
+  fungrim: Im
+stub: engine

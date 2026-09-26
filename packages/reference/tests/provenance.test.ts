@@ -797,6 +797,17 @@ const NOVEL = [
   "NumberQ",
   "ReIm",
   "RandomComplex",
+  // The Wolfram-frontier transforms/ODE batch (mellin-transform.ts, hankel-transform.ts,
+  // caputo-derivative.ts, trig-factor.ts, function-properties.ts's FunctionContinuous,
+  // dsolve.ts): every one of these is genuinely Wolfram's own name too (see HEADS in
+  // @enumeratio/wolfram), waiting on the same coverage run to fill in `elsewhere`.
+  "MellinTransform",
+  "InverseMellinTransform",
+  "HankelTransform",
+  "CaputoD",
+  "TrigFactor",
+  "FunctionContinuous",
+  "DSolveValue",
   // The Jacobi elliptic family and Jacobi theta functions (jacobi-elliptic.ts, theta.ts):
   // all sixteen are genuinely Wolfram's own names (see HEADS in @enumeratio/wolfram),
   // waiting on the same coverage run to fill in `elsewhere`.
@@ -817,6 +828,20 @@ const NOVEL = [
   "EllipticTheta",
   "EllipticThetaPrime",
   "KaryTree",
+  // logic-frontier.ts: LogicalExpand/BooleanConvert are genuinely Wolfram's own names (no
+  // DNF/CNF/NNF routine existed in compute-engine to build on); the Is… predicates are our
+  // spelling of Wolfram's TrueQ/IntegerQ/VectorQ/MatrixQ/ArrayQ/MersennePrimeExponentQ/
+  // IntervalMemberQ (see `HEADS` in @enumeratio/wolfram) -- all nine waiting on the same
+  // coverage run to fill in `elsewhere`.
+  "LogicalExpand",
+  "BooleanConvert",
+  "IsTrue",
+  "IsInteger",
+  "IsVector",
+  "IsMatrix",
+  "IsArray",
+  "IsMersennePrimeExponent",
+  "IsIntervalMember",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

@@ -1,0 +1,21 @@
+name: TrigFactor
+domain: Transformations
+signature: TrigFactor(expr)
+summary: The factoring counterpart of TrigExpand/TrigReduce — rewrites sums and differences of Sin/Cos into products.
+signatures:
+  - call: TrigFactor(expr)
+    description: an identity for `expr`, factored via the sum-to-product/half-angle identities or, for a genuine polynomial in `Sin(x0)`/`Cos(x0)`, via `Factor` after substitution.
+    library: "@enumeratio/analytic"
+details:
+  - "Two independent strategies, tried in order: (1) the four sum-to-product identities ($\\sin a\\pm\\sin b$, $\\cos a\\pm\\cos b$) and the two half-angle identities ($1\\pm\\cos x$), matched structurally (each confirmed against `wolframscript`'s own `TrigFactor`, up to reordering); (2) failing that, if `expr` is a genuine polynomial in `Sin(x0)`/`Cos(x0)` for one common argument `x0` (`Add`/`Subtract`/`Negate`/`Multiply`/an integer `Power` over those two atoms and `x0`-free numeric coefficients), substitute `u = Sin(x0)`, `v = Cos(x0)`, factor the polynomial in `u`, `v` with compute-engine's own `Factor`, and substitute back."
+  - The polynomial strategy is provably correct (whatever `Factor` returns for the polynomial IS one, so re-substituting reconstructs the identity) but does not chase the extra trig identities Wolfram's own `TrigFactor` sometimes prefers — e.g. it rewrites $\sin^2x-\cos^2x$ as $-2\sin(\pi/4-x)\sin(\pi/4+x)$ rather than the plain difference-of-squares $(\sin x-\cos x)(\sin x+\cos x)$ this file gives; both are correct identities, just not the same factorization.
+  - 'Declined: two DIFFERENT trig arguments mixed together outside the four named pairs (e.g. $\sin a\cos b$), any transcendental other than Sin/Cos, and an argument-dependent (non-integer) exponent.'
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/trig-factor.ts
+seeAlso:
+  - ExpToTrig
+  - FunctionExpand

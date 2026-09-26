@@ -1,0 +1,19 @@
+- id: a-flat-list-is-a-vector
+  expr: [IsVector, [List, 1, 2, 3]]
+  expected: True
+- id: a-list-of-lists-is-not-a-vector
+  expr: [IsVector, [List, [List, 1, 2], [List, 3, 4]]]
+  expected: False
+  category: Scope
+- id: a-non-list-is-not-a-vector
+  expr: [IsVector, 3]
+  expected: False
+  category: Scope
+- id: a-test-function-must-hold-of-every-element
+  expr: [IsVector, [List, 2, 4, 6], IsEven]
+  expected: True
+  category: Scope
+- id: a-test-function-failing-on-one-element
+  expr: [IsVector, [List, 2, 3, 6], IsEven]
+  expected: False
+  category: Scope

@@ -175,6 +175,21 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
 /** The repo's `packages/`, which every caller but the loader's own tests reads. */
 export const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
 
+/**
+ * One `LoadedHead` per name, for a head two packages document (design/examples-as-data.md
+ * §9 "Shared heads"): reference's own copy when it has one, else the first package's by
+ * path. The same precedence `referenceData()` uses to pick which entry a name resolves to --
+ * a migration script edits THIS copy, not an arbitrary duplicate, or its write is invisible
+ * to every consumer that reads through `referenceData()`.
+ */
+export function canonicalHeads(heads: readonly LoadedHead[]): ReadonlyMap<string, LoadedHead> {
+  const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
+  const rank = (h: LoadedHead): string => `${h.package === "reference" ? "0" : "1"}${h.entryPath}`;
+  const chosen = new Map<string, LoadedHead>();
+  for (const h of [...heads].sort((a, b) => cmp(rank(a), rank(b)))) if (!chosen.has(h.head)) chosen.set(h.head, h);
+  return chosen;
+}
+
 /** Every system's kernel version, as the last scan of it recorded (scripts/oracle-scan.ts). */
 const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
 
@@ -254,9 +269,7 @@ export function referenceData(
 
   // By code unit, not localeCompare: generated files must sort the same in every locale.
   const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
-  const rank = (h: LoadedHead): string => `${h.package === "reference" ? "0" : "1"}${h.entryPath}`;
-  const chosen = new Map<string, LoadedHead>();
-  for (const h of [...heads].sort((a, b) => cmp(rank(a), rank(b)))) if (!chosen.has(h.head)) chosen.set(h.head, h);
+  const chosen = canonicalHeads(heads);
   const entries = [...chosen.values()].map(withRecord).sort((a, b) => cmp(a.domain, b.domain) || cmp(a.name, b.name));
 
   const packageOf = new Map([...chosen].map(([head, h]) => [head, h.package]));

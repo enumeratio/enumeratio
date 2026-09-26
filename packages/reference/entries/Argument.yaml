@@ -1,0 +1,10 @@
+name: Argument
+domain: Compute engine
+signature: Argument(complex | infinity) -> number
+summary: Complex argument (phase angle) of a number.
+signatures:
+  - call: Argument(complex | infinity) -> number
+    description: as compute-engine declares it
+names:
+  fungrim: Arg
+stub: engine

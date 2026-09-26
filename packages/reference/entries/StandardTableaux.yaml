@@ -1,0 +1,5 @@
+name: StandardTableaux
+domain: Collections
+signature: StandardTableaux(n)
+summary: "Standard Young tableaux: fillings of a partition shape, weakly increasing along rows and columns."
+stub: carrier

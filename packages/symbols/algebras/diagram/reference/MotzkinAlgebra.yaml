@@ -21,3 +21,10 @@ seeAlso:
   - TemperleyLiebAlgebra
   - PartitionAlgebra
   - Diagram
+references:
+  - system: wikipedia
+    identity: Motzkin number
+  - system: mathworld
+    identity: MotzkinNumber
+  - system: oeis
+    identity: A001006

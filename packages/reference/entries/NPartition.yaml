@@ -1,0 +1,20 @@
+name: NPartition
+domain: Compute engine
+signature: NPartition(integer) -> integer
+summary: Number of integer partitions of n.
+signatures:
+  - call: NPartition(integer) -> integer
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Integer partition
+  - system: mathworld
+    identity: PartitionFunctionP
+  - system: dlmf
+    identity: "26.9"
+  - system: oeis
+    identity: A000041
+names:
+  fungrim: PartitionsP
+  catalog: PartitionNumber
+stub: engine

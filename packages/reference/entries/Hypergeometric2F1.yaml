@@ -1,0 +1,17 @@
+name: Hypergeometric2F1
+domain: Compute engine
+signature: Hypergeometric2F1(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
+summary: Gauss hypergeometric function ₂F₁(a, b; c; z).
+signatures:
+  - call: Hypergeometric2F1(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Hypergeometric function
+  - system: mathworld
+    identity: HypergeometricFunction
+  - system: dlmf
+    identity: "15.2"
+names:
+  wikidata: Q21028472
+stub: engine

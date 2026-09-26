@@ -19,3 +19,8 @@ seeAlso:
   - ClassSum
   - ConjugacyClasses
   - Basis
+references:
+  - system: wikipedia
+    identity: Group ring
+  - system: mathworld
+    identity: GroupRing

@@ -1,0 +1,17 @@
+name: CatalanConstant
+domain: Compute engine
+signature: CatalanConstant
+summary: Catalan's constant G ≈ 0.9160.
+signatures:
+  - call: "CatalanConstant: real<0.915965594177219..0.9159655941772191>"
+    description: a constant, as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Catalan's constant
+  - system: mathworld
+    identity: CatalansConstant
+  - system: oeis
+    identity: A006752
+names:
+  fungrim: ConstCatalan
+stub: engine

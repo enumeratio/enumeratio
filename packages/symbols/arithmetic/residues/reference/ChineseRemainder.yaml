@@ -20,3 +20,10 @@ seeAlso:
   - Mod
   - IntegerMod
   - FromDigits
+references:
+  - system: wikipedia
+    identity: Chinese remainder theorem
+  - system: mathworld
+    identity: ChineseRemainderTheorem
+  - system: rosettacode
+    identity: Chinese remainder theorem

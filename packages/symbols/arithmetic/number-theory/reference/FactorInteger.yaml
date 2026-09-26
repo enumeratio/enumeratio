@@ -19,3 +19,10 @@ seeAlso:
   - Divisors
   - PrimeNu
   - PrimeOmega
+references:
+  - system: wikipedia
+    identity: Integer factorization
+  - system: mathworld
+    identity: PrimeFactorization
+  - system: rosettacode
+    identity: Prime decomposition

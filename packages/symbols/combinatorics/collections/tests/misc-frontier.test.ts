@@ -221,8 +221,8 @@ test("KaryTree(n) defaults to k = 2 (binary)", () => {
   expect(run(["KaryTree", 7])).toEqual(run(["KaryTree", 7, 2]));
 });
 
-// ─── not implemented / out of scope, documented on the module ──────────────────────────
-// WeightedAdjacencyMatrix has since landed (graph-weights.ts) -- see graph-weights.test.ts.
-test("BooleanConvert is intentionally not declared", () => {
-  expect(ce.lookupDefinition("BooleanConvert")).toBeUndefined();
-});
+// Both WeightedAdjacencyMatrix and BooleanConvert were out of scope when this module was
+// written -- WeightedAdjacencyMatrix has since landed in graph-weights.ts (see
+// graph-weights.test.ts), and BooleanConvert in logic-frontier.ts (see
+// logic-frontier.test.ts) -- so the "intentionally not declared" test that used to guard
+// both of them is gone.

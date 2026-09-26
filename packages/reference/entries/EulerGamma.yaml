@@ -1,0 +1,18 @@
+name: EulerGamma
+domain: Compute engine
+signature: EulerGamma
+summary: The Euler–Mascheroni constant γ ≈ 0.5772.
+signatures:
+  - call: "EulerGamma: real<0.5772156649015328..0.5772156649015329>"
+    description: a constant, as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Euler's constant
+  - system: mathworld
+    identity: Euler-MascheroniConstant
+  - system: oeis
+    identity: A001620
+names:
+  fungrim: ConstGamma
+  dlmf: Euler's constant
+stub: engine

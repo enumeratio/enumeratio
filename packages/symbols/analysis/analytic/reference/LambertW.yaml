@@ -23,3 +23,12 @@ bindings:
 seeAlso:
   - Exp
   - Ln
+references:
+  - system: wikipedia
+    identity: Lambert W function
+  - system: mathworld
+    identity: LambertW-Function
+  - system: dlmf
+    identity: "4.13"
+names:
+  wikidata: Q429331

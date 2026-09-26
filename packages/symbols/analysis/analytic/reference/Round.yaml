@@ -20,3 +20,8 @@ seeAlso:
   - Floor
   - Ceil
   - Clamp
+references:
+  - system: wikipedia
+    identity: Rounding
+  - system: mathworld
+    identity: NearestIntegerFunction

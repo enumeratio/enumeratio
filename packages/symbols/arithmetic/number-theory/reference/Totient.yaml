@@ -14,3 +14,14 @@ details:
 seeAlso:
   - MultiplicativeOrder
   - DivisorSigma
+references:
+  - system: wikipedia
+    identity: Euler's totient function
+  - system: mathworld
+    identity: TotientFunction
+  - system: dlmf
+    identity: "27.2"
+  - system: oeis
+    identity: A000010
+names:
+  dlmf: Euler's totient

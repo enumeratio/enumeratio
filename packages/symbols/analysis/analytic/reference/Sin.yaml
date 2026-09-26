@@ -16,3 +16,12 @@ seeAlso:
   - Tan
   - Csc
   - Arcsin
+references:
+  - system: wikipedia
+    identity: Sine and cosine
+  - system: mathworld
+    identity: Sine
+  - system: dlmf
+    identity: "4.14"
+names:
+  dlmf: sine function

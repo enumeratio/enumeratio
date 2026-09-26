@@ -13,3 +13,12 @@ seeAlso:
   - Cosh
   - Tanh
   - Exp
+references:
+  - system: wikipedia
+    identity: Hyperbolic functions
+  - system: mathworld
+    identity: HyperbolicSine
+  - system: dlmf
+    identity: "4.28"
+names:
+  dlmf: hyperbolic sine function

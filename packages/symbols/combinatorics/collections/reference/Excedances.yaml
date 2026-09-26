@@ -13,3 +13,6 @@ seeAlso:
   - Antiexcedances
   - Descents
   - SymmetricGroup
+references:
+  - system: wikipedia
+    identity: Permutation#Ascents, descents, runs, exceedances

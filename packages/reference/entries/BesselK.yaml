@@ -1,0 +1,11 @@
+name: BesselK
+domain: Compute engine
+signature: "BesselK(order: complex, complex | infinity) -> number"
+summary: Modified Bessel function of the second kind (Macdonald function)
+signatures:
+  - call: "BesselK(order: complex, complex | infinity) -> number"
+    description: as compute-engine declares it
+names:
+  dlmf: modified Bessel function of the second kind
+  wikidata: Q109559130
+stub: engine

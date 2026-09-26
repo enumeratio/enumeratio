@@ -25,3 +25,8 @@ seeAlso:
   - AlexanderPolynomial
   - LorenzBraid
   - SeifertGenus
+references:
+  - system: wikipedia
+    identity: Braid group
+  - system: mathworld
+    identity: BraidGroup

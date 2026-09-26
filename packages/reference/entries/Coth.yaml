@@ -1,0 +1,10 @@
+name: Coth
+domain: Compute engine
+signature: Coth(complex | signed_infinity) -> number
+summary: Hyperbolic cotangent, the reciprocal of hyperbolic tangent.
+signatures:
+  - call: Coth(complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  dlmf: hyperbolic cotangent function
+stub: engine

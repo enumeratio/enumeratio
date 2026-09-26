@@ -1,0 +1,15 @@
+name: ImaginaryUnit
+domain: Compute engine
+signature: ImaginaryUnit
+summary: The imaginary unit, whose square is −1.
+signatures:
+  - call: "ImaginaryUnit: imaginary"
+    description: a constant, as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Imaginary unit
+  - system: mathworld
+    identity: i
+names:
+  fungrim: ConstI
+stub: engine

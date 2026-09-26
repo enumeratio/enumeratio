@@ -42,3 +42,12 @@ seeAlso:
   - Zeta
   - Gamma
   - PolyLog
+references:
+  - system: wikipedia
+    identity: Lerch transcendent
+  - system: mathworld
+    identity: LerchTranscendent
+  - system: dlmf
+    identity: "25.14"
+names:
+  dlmf: Lerch's transcendent

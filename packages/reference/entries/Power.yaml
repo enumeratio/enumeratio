@@ -1,0 +1,10 @@
+name: Power
+domain: Compute engine
+signature: Power(complex | infinity, complex | signed_infinity) -> number
+summary: "Exponentiation: raise a base to a power."
+signatures:
+  - call: Power(complex | infinity, complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  fungrim: Pow
+stub: engine

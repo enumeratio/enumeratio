@@ -13,3 +13,13 @@ seeAlso:
   - Cos
   - Arcsin
   - Arctan
+references:
+  - system: wikipedia
+    identity: Inverse trigonometric functions
+  - system: mathworld
+    identity: InverseCosine
+  - system: dlmf
+    identity: "4.23"
+names:
+  fungrim: Acos
+  dlmf: arccosine function

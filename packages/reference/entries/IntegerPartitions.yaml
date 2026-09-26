@@ -27,3 +27,10 @@ seeAlso:
   - Count
   - At
   - Length
+references:
+  - system: wikipedia
+    identity: Integer partition
+  - system: mathworld
+    identity: Partition
+  - system: oeis
+    identity: A000041

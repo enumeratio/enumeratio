@@ -1,0 +1,11 @@
+name: Arsinh
+domain: Compute engine
+signature: Arsinh(complex | signed_infinity) -> number
+summary: Inverse hyperbolic sine (area hyperbolic sine).
+signatures:
+  - call: Arsinh(complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  fungrim: Asinh
+  dlmf: inverse hyperbolic sine function
+stub: engine

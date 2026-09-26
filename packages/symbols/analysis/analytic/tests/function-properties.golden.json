@@ -262,5 +262,89 @@
     "head": "FunctionPeriod",
     "args": [["Power", "x", 2], "x"],
     "expected": 0
+  },
+  {
+    "id": "continuous-reciprocal-has-a-pole",
+    "head": "FunctionContinuous",
+    "args": [["Power", "x", -1], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "continuous-sqrt-not-defined-everywhere",
+    "head": "FunctionContinuous",
+    "args": [["Sqrt", "x"], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "continuous-polynomial",
+    "head": "FunctionContinuous",
+    "args": [["Power", "x", 2], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "continuous-log-not-defined-everywhere",
+    "head": "FunctionContinuous",
+    "args": [["Ln", "x"], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "continuous-tan-has-poles",
+    "head": "FunctionContinuous",
+    "args": [["Tan", "x"], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "continuous-rational-no-real-poles",
+    "head": "FunctionContinuous",
+    "args": [["Power", ["Add", ["Power", "x", 2], 1], -1], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "continuous-sqrt-of-always-positive",
+    "head": "FunctionContinuous",
+    "args": [["Sqrt", ["Add", ["Power", "x", 2], 1]], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "continuous-reciprocal-restricted-past-its-pole",
+    "head": "FunctionContinuous",
+    "args": [["Power", "x", -1], "x", ["Greater", "x", -1]],
+    "expected": "False"
+  },
+  {
+    "id": "continuous-reciprocal-restricted-before-its-pole",
+    "head": "FunctionContinuous",
+    "args": [["Power", "x", -1], "x", ["Greater", "x", 0]],
+    "expected": "True"
+  },
+  {
+    "id": "continuous-sqrt-restricted-to-its-own-domain",
+    "head": "FunctionContinuous",
+    "args": [["Sqrt", "x"], "x", ["GreaterEqual", "x", 0]],
+    "expected": "True"
+  },
+  {
+    "id": "continuous-sqrt-restricted-past-its-domain",
+    "head": "FunctionContinuous",
+    "args": [["Sqrt", "x"], "x", ["Greater", "x", -5]],
+    "expected": "False"
+  },
+  {
+    "id": "continuous-log-restricted-to-its-own-domain",
+    "head": "FunctionContinuous",
+    "args": [["Ln", "x"], "x", ["Greater", "x", 0]],
+    "expected": "True"
+  },
+  {
+    "id": "continuous-log-restricted-includes-its-own-singular-boundary",
+    "head": "FunctionContinuous",
+    "args": [["Ln", "x"], "x", ["GreaterEqual", "x", 0]],
+    "expected": "False"
+  },
+  {
+    "id": "continuous-reciprocal-restricted-below-its-pole",
+    "head": "FunctionContinuous",
+    "args": [["Power", "x", -1], "x", ["Less", "x", 0]],
+    "expected": "True"
   }
 ]

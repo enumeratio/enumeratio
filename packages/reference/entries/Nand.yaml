@@ -1,0 +1,11 @@
+name: Nand
+domain: Compute engine
+signature: Nand(boolean+) -> boolean
+summary: "Logical NAND: the negation of AND (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `False`."
+signatures:
+  - call: Nand(boolean+) -> boolean
+    description: as compute-engine declares it
+names:
+  wikidata: Q3874243
+  wikidataConfirmed: true
+stub: engine

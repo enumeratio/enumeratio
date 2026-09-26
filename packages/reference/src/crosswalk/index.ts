@@ -2,7 +2,8 @@
 // different things, and the point of putting them together is to see them side by side:
 //
 //   entry      what the entry's author wrote down, on the entry or on one signature
-//   curated    the hand-kept encyclopaedia table (`curated.ts`)
+//   curated    the hand-kept encyclopaedia rows on the head's own record (`references:`/
+//              `names:` in `<Head>.yaml`; rebuilt into `curated-data.ts`)
 //   catalog    the enumeratio database's own crosswalk, rekeyed to our names
 //   engine     the Wikidata id compute-engine's definition carries
 //   wikidata   what that item (or the item behind a Wikipedia title we name) points at:
@@ -27,7 +28,7 @@ import { findstat } from "../findstat-data.ts";
 import { oeis } from "../oeis-data.ts";
 import { fungrimSymbols } from "../fungrim-symbols-data.ts";
 import type { ReferenceEntry } from "../types.ts";
-import { CATALOG_ALIASES, CURATED, DLMF_NAMES, FUNGRIM_NAMES, WIKIDATA_FIXES } from "./curated.ts";
+import { CATALOG_ALIASES, CURATED, DLMF_NAMES, FUNGRIM_NAMES, WIKIDATA_FIXES } from "./curated-data.ts";
 import { dlmfNotations } from "./dlmf.ts";
 import { fungrimEntryVerdict, fungrimScore, KNOWN_CAUSES } from "./fungrim.ts";
 import { inventoryEntry } from "./inventory.ts";

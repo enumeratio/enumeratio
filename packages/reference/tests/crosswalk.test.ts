@@ -13,7 +13,7 @@ import {
   FUNGRIM_NAMES,
   WIKIDATA_CONFIRMED,
   WIKIDATA_FIXES,
-} from "../src/crosswalk/curated.ts";
+} from "../src/crosswalk/curated-data.ts";
 import { dlmfNotations, normaliseName } from "../src/crosswalk/dlmf.ts";
 import { crosswalkFor, crosswalkForCollection, crosswalkForStatistic, hrefOf } from "../src/crosswalk/index.ts";
 import { inventoryEntry } from "../src/crosswalk/inventory.ts";

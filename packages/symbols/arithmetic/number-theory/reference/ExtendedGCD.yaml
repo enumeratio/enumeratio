@@ -14,3 +14,8 @@ details:
   - When $a=0$, the coefficients reduce to $x=0,\,y=1$.
 seeAlso:
   - GCD
+references:
+  - system: wikipedia
+    identity: Extended Euclidean algorithm
+  - system: rosettacode
+    identity: Modular inverse

@@ -14,3 +14,12 @@ seeAlso:
   - Log
   - Sinh
   - MatrixExp
+references:
+  - system: wikipedia
+    identity: Exponential function
+  - system: mathworld
+    identity: ExponentialFunction
+  - system: dlmf
+    identity: "4.2"
+names:
+  dlmf: exponential function

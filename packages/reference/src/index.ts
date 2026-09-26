@@ -18,7 +18,7 @@ export {
   groupBySystem,
   hrefOf,
 } from "./crosswalk/index.ts";
-export { CATALOG_ALIASES, CURATED, DLMF_NAMES, FUNGRIM_NAMES } from "./crosswalk/curated.ts";
+export { CATALOG_ALIASES, CURATED, DLMF_NAMES, FUNGRIM_NAMES } from "./crosswalk/curated-data.ts";
 export { dlmfNotations, normaliseName } from "./crosswalk/dlmf.ts";
 export { type OracleAgreement, oracleAgreements } from "./crosswalk/oracle.ts";
 export { fungrimEntryVerdict, type FungrimScore, fungrimScore, KNOWN_CAUSES } from "./crosswalk/fungrim.ts";
