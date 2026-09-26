@@ -9,8 +9,9 @@
 
 import { existsSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { isDeepStrictEqual } from "node:util";
+import { orderImplementations } from "@enumeratio/entry";
 import { writeYaml } from "@enumeratio/entry/node";
+import { SYSTEMS } from "@enumeratio/oracle/src";
 import { loadReferenceData, PACKAGES } from "@enumeratio/reference/node";
 import { recordWithForms } from "./forms.ts";
 
@@ -24,8 +25,13 @@ if (issues.length > 0) throw new Error(JSON.stringify(issues, null, 2));
 
 let written = 0;
 for (const h of heads) {
-  const next = recordWithForms(h.entry.examples, h.implementations);
-  if (isDeepStrictEqual(next, h.implementations ?? {})) continue;
+  const next = orderImplementations(
+    recordWithForms(h.entry.examples, h.implementations),
+    h.entry.examples.map((e) => e.id),
+    SYSTEMS.map((s) => s.name),
+  );
+  // Order counts: a record another tool wrote in its own order is rewritten in this one.
+  if (JSON.stringify(next) === JSON.stringify(h.implementations ?? {})) continue;
   const path = h.implementationsPath ?? join(dirname(h.entryPath), `${h.head}.implementations.yaml`);
   if (Object.keys(next).length === 0) {
     if (existsSync(path)) rmSync(path);
