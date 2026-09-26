@@ -1,0 +1,15 @@
+- id: replaces-a-single-1-based-position
+  expr: [ReplacePart, [List, a, b, c], [Rule, 2, z]]
+  expected: [List, a, z, c]
+- id: with-a-negative-position-counts-from-the-end
+  expr: [ReplacePart, [List, a, b, c], [Rule, -1, z]]
+  expected: [List, a, b, z]
+  category: Scope
+- id: applies-a-list-of-rules
+  expr: [ReplacePart, [List, a, b, c], [List, [Rule, 1, x], [Rule, 3, y]]]
+  expected: [List, x, b, y]
+  category: Scope
+- id: with-a-nested-i-j-position-drills-into-a-sublist
+  expr: [ReplacePart, [List, [List, a, b], c], [Rule, [List, 1, 2], z]]
+  expected: [List, [List, a, z], c]
+  category: Scope

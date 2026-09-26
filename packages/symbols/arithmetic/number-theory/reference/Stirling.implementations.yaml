@@ -250,7 +250,7 @@ two-blocks-s-n-2-2-n-1-1:
   wolfram:
     in: (StirlingS2[10, 2] == Subtract[Power[2, 9], 1])
   sympy:
-    in: enumeratio_equal(stirling(10, 2), (((2)**9) - 1))
+    in: enumeratio_equal(stirling(10, 2), ((S(2)**9) - 1))
     out: True
   sage:
     in: bool(stirling_number2(10, 2) == (((2)^9) - 1))
@@ -407,3 +407,29 @@ stirling-0-1-is-also-0:
     out: "0"
   mathlib4:
     in: (Nat.stirlingSecond 0 1)
+a-negative-k-stays-symbolic:
+  epsil:
+    in: Stirling(10, -5)
+    out: Stirling(10, -5)
+  tex:
+    in: \mathrm{Stirling}(10, -5)
+    out: \mathrm{Stirling}(10, -5)
+  traditional:
+    in: \left\lbrace\begin{matrix}10\\-5\end{matrix}\right\rbrace
+    out: \left\lbrace\begin{matrix}10\\-5\end{matrix}\right\rbrace
+  fullform:
+    in: StirlingS2[10, -5]
+  wolfram:
+    in: StirlingS2[10, -5]
+  sympy:
+    in: stirling(10, -5)
+  sage:
+    in: stirling_number2(10, -5)
+  julia:
+    in: Combinatorics.stirlings2(big(10), -5)
+    out: "0"
+    verdict: inconclusive
+    kind: domain
+    note: A negative k is outside Stirling's textbook domain, so compute-engine leaves it symbolic; Combinatorics.jl's stirlings2 extends past it and answers 0.
+  mathlib4:
+    in: (Nat.stirlingSecond 10 (-5))

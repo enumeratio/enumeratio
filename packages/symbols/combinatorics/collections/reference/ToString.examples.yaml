@@ -1,0 +1,7 @@
+- id: prints-a-list-as-notatio-source
+  expr: [ToString, [List, 1, 2, 3]]
+  expected: "'[1, 2, 3]'"
+- id: prints-an-arithmetic-expression
+  expr: [ToString, [Add, x, 1]]
+  expected: "'x + 1'"
+  category: Scope

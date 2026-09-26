@@ -1,0 +1,12 @@
+- id: geometric-pdf-exact
+  expr: [PDF, [GeometricDistribution, [Rational, 1, 4]], 2]
+  expected: [Rational, 9, 64]
+- id: geometric-cdf-exact
+  expr: [CDF, [GeometricDistribution, [Rational, 1, 4]], 2]
+  expected: [Rational, 37, 64]
+- id: geometric-mean-exact
+  expr: [Mean, [GeometricDistribution, [Rational, 1, 4]]]
+  expected: 3
+- id: geometric-variance-exact
+  expr: [Variance, [GeometricDistribution, [Rational, 1, 4]]]
+  expected: 12

@@ -11,17 +11,3 @@ signatures:
     library: enumeratio-collections
 details:
   - Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.
-examples:
-  - id: single-position
-    expr: [MapAt, f, [List, a, b, c], 2]
-    expected: [List, a, [f, b], c]
-  - id: negative-position
-    expr: [MapAt, f, [List, a, b, c], -1]
-    expected: [List, a, b, [f, c]]
-    category: Scope
-    caption: A negative position counts from the end
-  - id: several-positions
-    expr: [MapAt, f, [List, a, b, c], [List, [List, 1], [List, 3]]]
-    expected: [List, [f, a], b, [f, c]]
-    category: Scope
-    caption: A list of positions applies f at each independently

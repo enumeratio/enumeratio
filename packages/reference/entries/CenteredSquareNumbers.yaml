@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(CenteredSquareNumbers) = +\infty$, and $At(CenteredSquareNumbers, k) = 2k^2-2k+1$ unranks in closed form -- $At(CenteredSquareNumbers, 5) = 41$.'
   - OEIS A001844.
   - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(41, CenteredSquareNumbers)$ is true, $Element(40, CenteredSquareNumbers)$ is false.
-examples: []
 enumerate:
   expr: Take(CenteredSquareNumbers, 20)
 seeAlso:

@@ -10,21 +10,6 @@ details:
   - 'A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \times 10^{18}$ rows — pages as cheaply as a small one.'
   - Each element is the image word $[\pi(1), …, \pi(n)]$; the classical statistics ([[Descents]], MajorIndex, Inversions, CycleCount, FixedPoints) are heads over that word.
   - The derangements — permutations with no fixed point — number $Subfactorial(n)$. See [[Subfactorial]].
-examples:
-  - id: the-order-of-s-5-is-5
-    expr: [GroupOrder, [SymmetricGroup, 5]]
-    expected: 120
-    caption: The order of $S_5$ is $5!$
-  - id: s-10-10
-    expr: [GroupOrder, [SymmetricGroup, 10]]
-    expected: 3628800
-    category: Scope
-    caption: $|S_{10}| = 10!$
-  - id: the-one-line-words-are-compute-engine-s
-    expr: [Length, [Permutations, [List, 1, 2, 3]]]
-    expected: 6
-    category: Properties
-    caption: The one-line words are compute-engine's Permutations of $1, …, n$, $n!$ of them. See [[Factorial]]
 enumerate:
   expr: SymmetricGroup(5)
   columns: Descents, MajorIndex, Inversions, CycleCount, FixedPoints

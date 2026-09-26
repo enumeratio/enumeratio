@@ -1,0 +1,8 @@
+- id: the-step-word-uuddud
+  expr: [LongestDescent, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]
+  expected: 2
+  caption: the step word $UUDDUD$
+- id: the-step-word-uduudd
+  expr: [LongestDescent, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]
+  expected: 2
+  caption: the step word $UDUUDD$

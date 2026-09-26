@@ -1010,6 +1010,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Count",
   },
   {
+    name: "Covariance",
+    wolfram: "Covariance",
+  },
+  {
     name: "Csc",
     wolfram: "Csc",
   },
@@ -1218,6 +1222,22 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "DifferenceDelta",
     wolfram: "DifferenceDelta",
+  },
+  {
+    name: "DifferenceRoot",
+    wolfram: "DifferenceRoot",
+  },
+  {
+    name: "DifferenceRootReduce",
+    wolfram: "DifferenceRootReduce",
+  },
+  {
+    name: "DifferentialRoot",
+    wolfram: "DifferentialRoot",
+  },
+  {
+    name: "DifferentialRootReduce",
+    wolfram: "DifferentialRootReduce",
   },
   {
     name: "Digamma",
@@ -1535,6 +1555,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "dd67fb",
       "e9c797",
     ],
+  },
+  {
+    name: "EllipticTheta",
+    wolfram: "EllipticTheta",
+  },
+  {
+    name: "EllipticThetaPrime",
+    wolfram: "EllipticThetaPrime",
   },
   {
     name: "Equal",
@@ -2920,6 +2948,58 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "TreeGraphQ",
   },
   {
+    name: "JacobiAmplitude",
+    wolfram: "JacobiAmplitude",
+  },
+  {
+    name: "JacobiCD",
+    wolfram: "JacobiCD",
+  },
+  {
+    name: "JacobiCN",
+    wolfram: "JacobiCN",
+  },
+  {
+    name: "JacobiCS",
+    wolfram: "JacobiCS",
+  },
+  {
+    name: "JacobiDC",
+    wolfram: "JacobiDC",
+  },
+  {
+    name: "JacobiDN",
+    wolfram: "JacobiDN",
+  },
+  {
+    name: "JacobiDS",
+    wolfram: "JacobiDS",
+  },
+  {
+    name: "JacobiNC",
+    wolfram: "JacobiNC",
+  },
+  {
+    name: "JacobiND",
+    wolfram: "JacobiND",
+  },
+  {
+    name: "JacobiNS",
+    wolfram: "JacobiNS",
+  },
+  {
+    name: "JacobiSC",
+    wolfram: "JacobiSC",
+  },
+  {
+    name: "JacobiSD",
+    wolfram: "JacobiSD",
+  },
+  {
+    name: "JacobiSN",
+    wolfram: "JacobiSN",
+  },
+  {
     name: "JacobiSymbol",
     wolfram: "JacobiSymbol",
   },
@@ -3147,6 +3227,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "fc3c44",
       "fe1b96",
     ],
+  },
+  {
+    name: "JacobiZN",
+    wolfram: "JacobiZN",
   },
   {
     name: "Join",
@@ -3587,6 +3671,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MaxValue",
+    wolfram: "MaxValue",
+  },
+  {
+    name: "Maximize",
+    wolfram: "Maximize",
+  },
+  {
     name: "Mean",
     wolfram: "Mean",
   },
@@ -3624,6 +3716,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "enumeratio_min($*,)",
       },
     ],
+  },
+  {
+    name: "MinValue",
+    wolfram: "MinValue",
+  },
+  {
+    name: "Minimize",
+    wolfram: "Minimize",
   },
   {
     name: "Mod",
@@ -3766,8 +3866,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "NMaximize",
+    wolfram: "NMaximize",
+  },
+  {
+    name: "NMinimize",
+    wolfram: "NMinimize",
+  },
+  {
     name: "NPartition",
     fungrimEntries: ["6018a4", "7ef291", "8eed2c", "b2583f", "cd3013", "cebe1b", "e84642"],
+  },
+  {
+    name: "NSum",
+    wolfram: "NSum",
   },
   {
     name: "NaN",

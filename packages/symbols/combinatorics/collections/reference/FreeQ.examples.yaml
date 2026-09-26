@@ -1,0 +1,12 @@
+- id: x-occurs-in-x-2-plus-1
+  expr: [FreeQ, [Add, [Power, x, 2], 1], x]
+  expected: False
+- id: y-never-occurs
+  expr: [FreeQ, [Add, [Power, x, 2], 1], y]
+  expected: True
+  category: Scope
+- id: looks-inside-subexpressions-not-just-top-level
+  expr: [FreeQ, [List, [List, a, b]], b]
+  expected: False
+  category: Scope
+  caption: b is found two levels deep

@@ -1,0 +1,29 @@
+- id: a-floating-point-argument-evaluates-directly-to
+  expr: [N, [JacobiAmplitude, 0.3, 0.5]]
+  expected: 0.2977947491298303
+  caption: A floating-point argument evaluates directly to a decimal
+- id: u-0-is-0-for-any-m
+  expr: [JacobiAmplitude, 0, m]
+  expected: 0
+  category: Properties
+  caption: u = 0 is 0, for any m
+- id: m-0-reduces-to-u
+  expr: [JacobiAmplitude, u, 0]
+  expected: u
+  category: Properties
+  caption: m = 0 reduces to u
+- id: a-wider-argument-u-past-the-first-quarter
+  expr: [N, [JacobiAmplitude, 2.5, 0.3]]
+  expected: 2.2472505509540945
+  category: Scope
+  caption: A wider argument u, past the first quarter period — not just arcsin(sn(u,m))
+- id: m-outside-0-1-is-declined
+  expr: [N, [JacobiAmplitude, 0.3, 1.5]]
+  expected: [JacobiAmplitude, 0.3, 1.5]
+  category: Possible issues
+  caption: m outside [0, 1] is declined — no verified amplitude transform there
+- id: symbolic-arguments-are-left-unevaluated-rather
+  expr: [JacobiAmplitude, u, m]
+  expected: [JacobiAmplitude, u, m]
+  category: Possible issues
+  caption: Symbolic arguments are left unevaluated rather than guessed at

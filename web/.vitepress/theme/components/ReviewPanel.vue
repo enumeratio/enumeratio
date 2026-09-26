@@ -143,6 +143,7 @@ onBeforeUnmount(() => {
     class="review-toggle"
     :class="{ 'is-open': store.isOpen.value }"
     :title="store.isOpen.value ? 'Close review panel' : 'Open review panel'"
+    :style="store.isOpen.value ? { right: `calc(${panelWidth}px + 1rem)` } : undefined"
     @click="store.isOpen.value = !store.isOpen.value"
   >
     ☰ Review

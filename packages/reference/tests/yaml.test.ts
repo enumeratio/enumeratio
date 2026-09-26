@@ -25,16 +25,17 @@ test("every example has an implementations entry", () => {
 
 test("every record is what the writer would write", async () => {
   const drift: string[] = [];
-  for (const { entryPath } of loaded.heads)
-    if (!(await isWrittenYaml(entryPath))) drift.push(entryPath.slice(PACKAGES.length));
+  for (const { entryPath, examplesPath } of loaded.heads)
+    for (const path of examplesPath ? [entryPath, examplesPath] : [entryPath])
+      if (!(await isWrittenYaml(path))) drift.push(path.slice(PACKAGES.length));
   expect(drift, "run `node packages/reference/scripts/format-records.ts`").toEqual([]);
 });
 
-// A reference implementation's defining expression is copied into the YAML; analytic declares
+// A reference binding's defining expression is copied into the YAML; analytic declares
 // the head from its own copy, and the two must stay the same.
-test("reference implementations match analytic's DEFINITIONS", () => {
+test("reference bindings match analytic's DEFINITIONS", () => {
   for (const { entry } of loaded.heads)
-    for (const impl of entry.implementations ?? [])
+    for (const impl of entry.bindings ?? [])
       if (impl.origin === "reference" && entry.name in DEFINITIONS)
         expect(impl.expr, entry.name).toEqual(DEFINITIONS[entry.name as keyof typeof DEFINITIONS]);
 });

@@ -1,0 +1,48 @@
+- id: parameter-mixture-poisson-gamma-pdf
+  expr:
+    [
+      PDF,
+      [ParameterMixtureDistribution, [PoissonDistribution, theta], [Distributed, theta, [GammaDistribution, 3, 2]]],
+      4,
+    ]
+  expected: [Rational, 80, 729]
+  caption: matches PDF(NegativeBinomialDistribution(3, 1/3), 4) — p = 1/(1+scale) = 1/3.
+- id: parameter-mixture-poisson-gamma-mean
+  expr:
+    [
+      Mean,
+      [ParameterMixtureDistribution, [PoissonDistribution, theta], [Distributed, theta, [GammaDistribution, 3, 2]]],
+    ]
+  expected: 6
+  caption: shape * scale = 3 * 2.
+- id: parameter-mixture-poisson-gamma-variance
+  expr:
+    [
+      Variance,
+      [ParameterMixtureDistribution, [PoissonDistribution, theta], [Distributed, theta, [GammaDistribution, 3, 2]]],
+    ]
+  expected: 18
+  caption: shape*scale + shape*scale^2 = 6 + 12.
+- id: parameter-mixture-binomial-beta-mean
+  expr:
+    [
+      Mean,
+      [ParameterMixtureDistribution, [BinomialDistribution, 10, theta], [Distributed, theta, [BetaDistribution, 2, 3]]],
+    ]
+  expected: 4
+  caption: n a/(a+b) = 10*2/5.
+- id: parameter-mixture-binomial-beta-variance
+  expr:
+    [
+      Variance,
+      [ParameterMixtureDistribution, [BinomialDistribution, 10, theta], [Distributed, theta, [BetaDistribution, 2, 3]]],
+    ]
+  expected: 6
+- id: parameter-mixture-binomial-beta-pdf
+  expr:
+    [
+      PDF,
+      [ParameterMixtureDistribution, [BinomialDistribution, 4, theta], [Distributed, theta, [BetaDistribution, 2, 2]]],
+      2,
+    ]
+  expected: [Rational, 9, 35]

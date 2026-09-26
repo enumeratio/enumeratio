@@ -12,11 +12,6 @@ signatures:
 details:
   - "Hertogh's Algorithm 8.4: $GL_n(\\hat{\\mathbb{Q}}) = GL_n(\\hat{\\mathbb{Z}}) \\cdot GL_n^+(\\mathbb{Q})$, strong approximation for $GL_n$ over $\\mathbb{Q}$."
   - $b$'s entries are profinite numbers; $a$'s are rationals. Built on [[HermiteDecomposition]] of the denominators.
-examples:
-  - id: already-in-gl-n-q-upper-triangular-form-b-is-the
-    expr: [ProfiniteDecomposition, [List, [List, 2, 1], [List, 0, 3]]]
-    expected: [List, [List, [List, 1, 0], [List, 0, 1]], [List, [List, 2, 1], [List, 0, 3]]]
-    caption: 'already in $GL_n^+(\mathbb{Q})$ upper-triangular form: $b$ is the identity'
 seeAlso:
   - HermiteDecomposition
   - ProfiniteNumber

@@ -1,0 +1,36 @@
+- id: 8-2-3
+  expr: [MangoldtLambda, 8]
+  expected: [Ln, 2]
+  caption: $8=2^3$
+- id: 6-is-not-a-prime-power
+  expr: [MangoldtLambda, 6]
+  expected: 0
+  caption: 6 is not a prime power
+- id: mangoldtlambda-7
+  expr: [MangoldtLambda, 7]
+  expected: [Ln, 7]
+- id: lambda-1-0
+  expr: [MangoldtLambda, 1]
+  expected: 0
+  category: Possible issues
+  caption: $\Lambda(1)=0$
+- id: numerically-ln-3
+  expr: [N, [MangoldtLambda, 9]]
+  expected: 1.0986122886681098
+  category: Scope
+  caption: Numerically, $\ln3$
+- id: listable
+  expr: [MangoldtLambda, [List, 2, 4, 6, 25]]
+  expected: [List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]
+  category: Scope
+  caption: Listable
+- role: test
+  id: mangoldtlambda-9
+  expr: [MangoldtLambda, 9]
+  expected: [Ln, 3]
+- role: test
+  id: n-of-a-zero-result-is-still-0
+  expr: [N, [MangoldtLambda, 6]]
+  expected: 0
+  category: Scope
+  caption: N of a zero result is still 0

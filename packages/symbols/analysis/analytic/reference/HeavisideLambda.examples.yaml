@@ -1,0 +1,19 @@
+- id: heavisidelambda-peak
+  expr: [HeavisideLambda, 0]
+  expected: 1
+- id: heavisidelambda-endpoint
+  expr: [HeavisideLambda, 1]
+  expected: 0
+  caption: Zero at the endpoint
+- id: heavisidelambda-neg-endpoint
+  expr: [HeavisideLambda, -1]
+  expected: 0
+- id: heavisidelambda-outside
+  expr: [HeavisideLambda, 2]
+  expected: 0
+  category: Scope
+- id: heavisidelambda-1-4
+  expr: [HeavisideLambda, [Rational, 1, 4]]
+  expected: [Rational, 3, 4]
+  category: Scope
+  caption: Exact rational input, exact rational output

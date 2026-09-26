@@ -1,0 +1,37 @@
+- id: lambda0-0-exact-under-plain-evaluation
+  expr: [KeiperLiLambda, 0]
+  expected: 0
+  caption: λ₀ = 0, exact under plain evaluation
+- id: lambda1-s-closed-form-exact-under-plain
+  expr: [KeiperLiLambda, 1]
+  expected: [Add, 1, [Multiply, [Rational, -1, 2], [Ln, [Multiply, 4, Pi]]], [Multiply, [Rational, 1, 2], EulerGamma]]
+  caption: λ₁'s closed form, exact under plain evaluation
+- id: n-forces-the-closed-form-to-a-decimal
+  expr: [N, [KeiperLiLambda, 1]]
+  expected: { num: "0.0230957089661210338135" }
+  caption: N() forces the closed form to a decimal
+- id: n-2-is-numeric-only-the-contour-integral
+  expr: [N, [KeiperLiLambda, 2]]
+  expected: 0.09234573522804794
+  caption: "n ≥ 2 is numeric-only: the contour-integral evaluator"
+- id: n-keiperlilambda-3
+  expr: [N, [KeiperLiLambda, 3]]
+  expected: 0.20763892055433203
+- id: declines-past-n-20-rather-than-returning-a-value
+  expr: [KeiperLiLambda, 21]
+  expected: [KeiperLiLambda, 21]
+  category: Possible issues
+  caption: Declines past n = 20 rather than returning a value that has quietly lost precision
+- id: lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly
+  expr:
+    [
+      Chop,
+      [
+        Subtract,
+        [N, [KeiperLiLambda, 1]],
+        [N, [Subtract, [Add, 1, [Divide, EulerGamma, 2]], [Multiply, [Rational, 1, 2], [Ln, [Multiply, 4, Pi]]]]],
+      ],
+    ]
+  expected: 0
+  category: Properties
+  caption: $\lambda_1 = 1 + \gamma/2 - \tfrac12\ln(4\pi)$, exactly

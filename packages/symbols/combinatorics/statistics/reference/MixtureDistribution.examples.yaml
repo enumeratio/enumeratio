@@ -1,0 +1,13 @@
+- id: mixture-mean
+  expr: [Mean, [MixtureDistribution, [List, 1, 1], [List, [NormalDistribution, 0, 1], [NormalDistribution, 10, 1]]]]
+  expected: 5
+- id: mixture-variance-total-law
+  expr: [Variance, [MixtureDistribution, [List, 1, 1], [List, [NormalDistribution, 0, 1], [NormalDistribution, 10, 1]]]]
+  expected: 26
+- id: mixture-cdf-far-right
+  expr:
+    [
+      N,
+      [CDF, [MixtureDistribution, [List, 1, 1], [List, [NormalDistribution, 0, 1], [NormalDistribution, 10, 1]]], 100],
+    ]
+  expected: 1

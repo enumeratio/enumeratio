@@ -1,0 +1,4 @@
+- id: binom-4-2
+  expr: [Count, [Multisets, 3, 2]]
+  expected: 6
+  caption: $\binom{4}{2}$

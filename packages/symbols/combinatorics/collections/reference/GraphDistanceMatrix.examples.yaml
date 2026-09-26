@@ -1,0 +1,13 @@
+- id: a-3-cycle
+  expr: [GraphDistanceMatrix, [CycleGraph, 3]]
+  expected: [List, [List, 0, 1, 1], [List, 1, 0, 1], [List, 1, 1, 0]]
+- id: unreachable-pair-is-infinite
+  expr: [GraphDistanceMatrix, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]
+  expected:
+    [
+      List,
+      [List, 0, 1, PositiveInfinity, PositiveInfinity],
+      [List, 1, 0, PositiveInfinity, PositiveInfinity],
+      [List, PositiveInfinity, PositiveInfinity, 0, 1],
+      [List, PositiveInfinity, PositiveInfinity, 1, 0],
+    ]

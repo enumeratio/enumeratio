@@ -1,0 +1,138 @@
+exponential-order-1:
+  epsil:
+    in: DifferentialRootReduce(Exp(a * x), x)
+    out: |-
+      Apply(DifferentialRoot(Function([
+                                        -(a * y(x2)) + Apply(Derivative(y, 1), x2) ==
+                                        0,
+                                        y(0) == 1,
+                                      ], y, x2)), x)
+  tex:
+    in: \mathrm{DifferentialRootReduce}(\exp(ax), x)
+    out: \mathrm{DifferentialRoot}((y, \mathrm{x2})\mapsto\begin{cases}y^{\prime}(\mathrm{x2})-ay(\mathrm{x2})=0\\y(0)=1\end{cases})\lhd x
+  fullform:
+    in: DifferentialRootReduce[Exp[Times[a, x]], x]
+sine-order-2:
+  epsil:
+    in: DifferentialRootReduce(Sin(x), x)
+    out: |-
+      Apply(DifferentialRoot(Function([
+                                        y(x2) + Apply(Derivative(y, 2), x2) == 0,
+                                        y(0) == 0,
+                                        Apply(Derivative(y, 1), 0) == 1,
+                                      ], y, x2)), x)
+  tex:
+    in: \mathrm{DifferentialRootReduce}(\sin(x), x)
+    out: \mathrm{DifferentialRoot}((y, \mathrm{x2})\mapsto\begin{cases}y(\mathrm{x2})+y^{\doubleprime}(\mathrm{x2})=0\\y(0)=0\\y^{\prime}(0)=1\end{cases})\lhd x
+  fullform:
+    in: DifferentialRootReduce[Sin[x], x]
+log-one-plus-x-order-2:
+  epsil:
+    in: DifferentialRootReduce(Ln(1 + x), x)
+    out: |-
+      Apply(
+             DifferentialRoot(Function([
+                                         (x2 + 1) * Apply(Derivative(y, 2), x2) +
+                                         Apply(Derivative(y, 1), x2) == 0,
+                                         y(0) == 0,
+                                         Apply(Derivative(y, 1), 0) == 1,
+                                       ], y, x2)),
+             x,
+           )
+  tex:
+    in: \mathrm{DifferentialRootReduce}(\ln(1+x), x)
+    out: \mathrm{DifferentialRoot}((y, \mathrm{x2})\mapsto\begin{cases}(\mathrm{x2}+1)y^{\doubleprime}(\mathrm{x2})+y^{\prime}(\mathrm{x2})=0\\y(0)=0\\y^{\prime}(0)=1\end{cases})\lhd x
+  fullform:
+    in: DifferentialRootReduce[Log[Plus[1, x]], x]
+single-pole-rational-function:
+  epsil:
+    in: DifferentialRootReduce(1 / (x - 2), x)
+    out: |-
+      Apply(
+             DifferentialRoot(Function([
+                                         (x2 - 2) * Apply(Derivative(y, 1), x2) +
+                                         y(x2) == 0,
+                                         y(0) == -1 / 2,
+                                       ], y, x2)),
+             x,
+           )
+  tex:
+    in: \mathrm{DifferentialRootReduce}(\frac{1}{x-2}, x)
+    out: \mathrm{DifferentialRoot}((y, \mathrm{x2})\mapsto\begin{cases}(\mathrm{x2}-2)y^{\prime}(\mathrm{x2})+y(\mathrm{x2})=0\\y(0)=-1/2\end{cases})\lhd x
+  fullform:
+    in: DifferentialRootReduce[Divide[1, Subtract[x, 2]], x]
+besselj-anchored-off-the-singular-point:
+  epsil:
+    in: DifferentialRootReduce(BesselJ(2, x), x)
+    out: |-
+      Apply(
+             DifferentialRoot(Function(
+                                        [
+                                          (x2 ^ 2 - 4) * y(x2) + Apply(Derivative(
+                                                                                   y,
+                                                                                   2,
+                                                                                 ), x2) *
+                                                                 x2 ^ 2 + x2 * Apply(
+                                                                                Derivative(y, 1),
+                                                                                x2,
+                                                                              ) == 0,
+                                          y(1) == BesselJ(2, 1),
+                                          Apply(Derivative(y, 1), 1) == -1 / 2 *
+                                                                        BesselJ(3, 1) + 1 / 2 *
+                                                                           BesselJ(1, 1),
+                                        ],
+                                        y,
+                                        x2,
+                                      )),
+             x,
+           )
+  tex:
+    in: \mathrm{DifferentialRootReduce}(\operatorname{J}_{2}(x), x)
+    out: \mathrm{DifferentialRoot}((y, \mathrm{x2})\mapsto\begin{cases}(\mathrm{x2}^2-4)y(\mathrm{x2})+y^{\doubleprime}(\mathrm{x2})\mathrm{x2}^2+\mathrm{x2}y^{\prime}(\mathrm{x2})=0\\y(1)=\operatorname{J}_{2}(1)\\y^{\prime}(1)=\operatorname{J}_{1}(1)/2-(\operatorname{J}_{3}(1))/2\end{cases})\lhd x
+  fullform:
+    in: DifferentialRootReduce[BesselJ[2, x], x]
+cosine-order-2:
+  epsil:
+    in: DifferentialRootReduce(Cos(x), x)
+    out: |-
+      Apply(DifferentialRoot(Function([
+                                        y(x2) + Apply(Derivative(y, 2), x2) == 0,
+                                        y(0) == 1,
+                                        Apply(Derivative(y, 1), 0) == 0,
+                                      ], y, x2)), x)
+  tex:
+    in: \mathrm{DifferentialRootReduce}(\cos(x), x)
+    out: \mathrm{DifferentialRoot}((y, \mathrm{x2})\mapsto\begin{cases}y(\mathrm{x2})+y^{\doubleprime}(\mathrm{x2})=0\\y(0)=1\\y^{\prime}(0)=0\end{cases})\lhd x
+  fullform:
+    in: DifferentialRootReduce[Cos[x], x]
+polynomial-terminates-the-ode:
+  epsil:
+    in: DifferentialRootReduce(x ^ 2 + 3x + 1, x)
+    out: |-
+      Apply(DifferentialRoot(Function([
+                                        Apply(Derivative(y, 3), x2) == 0,
+                                        y(0) == 1,
+                                        Apply(Derivative(y, 1), 0) == 3,
+                                        Apply(Derivative(y, 2), 0) == 2,
+                                      ], y, x2)), x)
+  tex:
+    in: \mathrm{DifferentialRootReduce}(x^2+3x+1, x)
+    out: \mathrm{DifferentialRoot}((y, \mathrm{x2})\mapsto\begin{cases}y^{\tripleprime}(\mathrm{x2})=0\\y(0)=1\\y^{\prime}(0)=3\\y^{\doubleprime}(0)=2\end{cases})\lhd x
+  fullform:
+    in: DifferentialRootReduce[Plus[Power[x, 2], Times[3, x], 1], x]
+evaluated-at-a-concrete-x-runs-the-taylor-series:
+  tex:
+    in: N(\mathrm{DifferentialRootReduce}(\exp(2x), x)\lhd1)
+    out: 7.389\,056\,098\,930\,649
+  fullform:
+    in: N[DifferentialRootReduce[Exp[Times[2, x]], x][1]]
+    back: Unreadable
+a-two-term-sum-declines:
+  epsil:
+    in: DifferentialRootReduce(Exp(x) + Sin(x), x)
+    out: DifferentialRootReduce(Exp(x) + Sin(x), x)
+  tex:
+    in: \mathrm{DifferentialRootReduce}(e^{x}+\sin(x), x)
+    out: \mathrm{DifferentialRootReduce}(e^{x}+\sin(x), x)
+  fullform:
+    in: DifferentialRootReduce[Plus[Exp[x], Sin[x]], x]

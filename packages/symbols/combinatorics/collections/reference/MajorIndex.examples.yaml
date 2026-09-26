@@ -1,0 +1,12 @@
+- id: one-descent-at-position-1
+  expr: [MajorIndex, [List, 3, 1, 2]]
+  expected: 1
+  caption: one descent, at position 1
+- id: descents-at-positions-1-and-2
+  expr: [MajorIndex, [List, 3, 2, 1]]
+  expected: 3
+  caption: descents at positions 1 and 2
+- id: no-descents
+  expr: [MajorIndex, [List, 1, 2, 3]]
+  expected: 0
+  caption: no descents

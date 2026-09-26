@@ -10,14 +10,6 @@ details:
   - Reads the SAME Rule-pair Association [[AssociationThread]] and list-functional.ts's Association build — not compute-engine's own string-keyed Dictionary.
   - Missing(k) answers Missing rather than leaving the call unevaluated, matching Wolfram's own default.
   - Wolfram's OTHER reading of Key — as a standalone operator, Key(k)(assoc) — isn't implemented; only the At(assoc, Key(k)) form is.
-examples:
-  - id: looks-up-an-existing-key
-    expr: [At, [Association, [Rule, a, 1], [Rule, b, 2]], [Key, b]]
-    expected: 2
-  - id: missing-key-answers-missing
-    expr: [At, [Association, [Rule, a, 1]], [Key, z]]
-    expected: Missing
-    category: Scope
 seeAlso:
   - AssociationThread
   - At

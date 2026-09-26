@@ -30,7 +30,7 @@ Measured against the live catalog (`bootCore('all')`, every pack loaded), not es
 The gap between rows and names is the whole story, so it is worth making concrete:
 
 ```
-big_omega       90 collections, but only 2 carriers  (IntegerFactorizations, Numeric)
+big_omega       90 collections, but only 2 carriers  (IntegerFactorization, Numeric)
 divisor_count   90 collections
 binary_weight   89 collections
 major_index      3 collections, 3 carriers  — dyck_paths, permutations, standard_tableaux
@@ -102,8 +102,8 @@ stale within weeks, so this section says where each one lives rather than restat
 a test pins each, and `design/roadmap.md` §1 is the index of the lists.
 
 - **Carriers**: all 86 declared as domains (`packages/symbols/combinatorics/domains/src/domain-data.ts`).
-- **Statistics**: every catalog statistic on the four covered carriers (Permutations,
-  IntegerPartitions, DyckPaths, SetPartitions) is defined, native, or a cardinality —
+- **Statistics**: every catalog statistic on the four covered carriers (Permutation,
+  IntegerPartition, DyckPath, SetPartition) is defined, native, or a cardinality —
   `packages/symbols/combinatorics/statistics/tests/coverage.test.ts` refuses anything else, and the frontier
   (`src/frontier.ts`) is **empty** as of September 2026. The other carriers are not claimed.
 - **Maps**: `packages/symbols/combinatorics/domains/src/map.ts` defines them; `src/frontier-maps.ts` lists the two
@@ -400,7 +400,7 @@ The reference pages should be able to show, per head:
 - the **reference definition** as an Epsil expression, expandable step by step down
   to the frontier.
 
-`ReferenceEntry` now carries an `implementations` block for exactly this, and it is a LIST
+`ReferenceEntry` now carries a `bindings` block for exactly this, and it is a LIST
 because there are genuinely several — a head is made of more than one thing:
 
 | origin      | what it is                                  | stored as               |

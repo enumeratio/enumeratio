@@ -1,0 +1,14 @@
+- id: expectation-of-the-bound-variable-is-the-mean
+  expr: [Expectation, x, [Distributed, x, [NormalDistribution, 2, 3]]]
+  expected: 2
+- id: expectation-of-x-squared
+  expr: [Expectation, [Power, x, 2], [Distributed, x, [NormalDistribution, 2, 3]]]
+  expected: 13
+  caption: $Var + Mean^2 = 9 + 4$
+- id: expectation-is-linear
+  expr: [Expectation, [Add, [Multiply, 2, x], 1], [Distributed, x, [NormalDistribution, 2, 3]]]
+  expected: 5
+- id: a-shape-with-no-closed-form-stays-unevaluated
+  expr: [Expectation, [Sin, x], [Distributed, x, [NormalDistribution, 2, 3]]]
+  expected: [Expectation, [Sin, x], [Distributed, x, [NormalDistribution, 2, 3]]]
+  category: Possible issues

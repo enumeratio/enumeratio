@@ -10,27 +10,8 @@ details:
   - Scoped to depth 2 with both weights $\ge 2$ — every `MultiZetaValue` identity Fungrim declares is this shape, which is also exactly what makes the double sum converge unconditionally. A general depth-$n$ MZV over compositions is a different, open-ended project and is not attempted here.
   - 'Numerically: $\zeta(s_1,s_2) = \sum_{n\ge1} n^{-s_1} H_{n-1}^{(s_2)}$, summed directly for $10^5$ terms with the tail approximated by $\zeta(s_2)\cdot\sum_{n>N} n^{-s_1}$ (both from the native [[Zeta]]).'
   - "Small cases have closed forms Fungrim states directly: $\\zeta(2,2) = \\tfrac34\\zeta(4)$, $\\zeta(3,3) = \\tfrac12(\\zeta(3)^2-\\zeta(6))$, and Euler's reflection $\\zeta(a)\\zeta(b) - \\zeta(a+b) = \\zeta(a,b) + \\zeta(b,a)$ for $a,b\\ge2$."
-examples:
-  - id: zeta-2-2-frac-34-zeta-4
-    expr: [N, [MultiZetaValue, 2, 2]]
-    expected: 0.8117424252833536
-    caption: $\zeta(2,2) = \tfrac34\zeta(4)$
-  - id: zeta-3-3-frac-12-zeta-3-2-zeta-6
-    expr: [N, [MultiZetaValue, 3, 3]]
-    expected: 0.2137988682245925
-    caption: $\zeta(3,3) = \tfrac12(\zeta(3)^2-\zeta(6))$
-  - id: s-1-2-stays-symbolic-outside-the-depth-2-both
-    expr: [MultiZetaValue, 1, 2]
-    expected: [MultiZetaValue, 1, 2]
-    category: Possible issues
-    caption: $s_1 < 2$ stays symbolic — outside the depth-2, both-weights-$\ge2$ scope
-  - id: zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact
-    expr: [Chop, [Subtract, [N, [MultiZetaValue, 2, 2]], [Multiply, 0.75, [N, [Zeta, 4]]]]]
-    expected: 0
-    category: Properties
-    caption: $\zeta(2, 2) = \tfrac34\zeta(4)$, one of Fungrim's exact closed forms
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

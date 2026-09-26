@@ -1,0 +1,9 @@
+- id: a-generic-point-checked-against-mpmath-s-hyp0f1
+  expr: [Hypergeometric0F1, 2, 0.5]
+  expected: 1.271723456312137
+  caption: a generic point, checked against mpmath's `hyp0f1`
+- id: b-0-is-a-pole-stays-symbolic
+  expr: [Hypergeometric0F1, 0, 0.5]
+  expected: [Hypergeometric0F1, 0, 0.5]
+  category: Possible issues
+  caption: $b = 0$ is a pole — stays symbolic

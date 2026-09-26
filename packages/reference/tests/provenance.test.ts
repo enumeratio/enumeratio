@@ -381,8 +381,24 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * the same story once more: all seventeen are genuinely Wolfram's own control/scoping heads
  * (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
  * `elsewhere`.
+ *
+ * DifferenceRootReduce and DifferentialRootReduce (difference-root.ts, differential-root.ts)
+ * are genuinely Wolfram's own names too, same story, waiting on the same coverage run.
+ * DifferenceRoot and DifferentialRoot are `unknown` rather than `extension` — every example
+ * calls them curried, `DifferenceRoot(fn)(n)`, so the reference entry's own examples never
+ * have `DifferenceRoot` as an expression's literal head (it's one level down, inside the
+ * `Apply` the currying produces), which is exactly what "the entry's examples never call its
+ * own head" means — so they don't need a NOVEL entry here at all (nothing checks `unknown`
+ * heads against a list), but they are genuine Wolfram names too — see `HEADS` in
+ * @enumeratio/wolfram.
+ * Minimize, Maximize, MinValue, MaxValue, NMinimize, NMaximize and NSum (optimize.ts,
+ * nminmax.ts, nsum.ts) are the same story yet again: all seven are genuinely Wolfram's own
+ * names (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
+ * `elsewhere`.
  */
 const NOVEL = [
+  "DifferenceRootReduce",
+  "DifferentialRootReduce",
   "TimeConstrained",
   "MemoryConstrained",
   "VerificationTest",
@@ -408,6 +424,15 @@ const NOVEL = [
   "IntegerMod",
   "IntegerModRing",
   "RationalReconstruction",
+  // optimize.ts/nminmax.ts/nsum.ts: genuinely Wolfram's own names, waiting on a coverage
+  // run with a Wolfram kernel to fill in `elsewhere` -- see the module doc above.
+  "Minimize",
+  "Maximize",
+  "MinValue",
+  "MaxValue",
+  "NMinimize",
+  "NMaximize",
+  "NSum",
   // The Wolfram-sweep backlog (packages/reference/src/backlog.json), landed in number-theory:
   // Wolfram has every one of these (see HEADS in @enumeratio/wolfram), but this offline suite
   // has no kernel to confirm it, so they land here rather than in the "known" list below.
@@ -762,6 +787,25 @@ const NOVEL = [
   "NumberQ",
   "ReIm",
   "RandomComplex",
+  // The Jacobi elliptic family and Jacobi theta functions (jacobi-elliptic.ts, theta.ts):
+  // all sixteen are genuinely Wolfram's own names (see HEADS in @enumeratio/wolfram),
+  // waiting on the same coverage run to fill in `elsewhere`.
+  "JacobiSN",
+  "JacobiCN",
+  "JacobiDN",
+  "JacobiCD",
+  "JacobiCS",
+  "JacobiDC",
+  "JacobiDS",
+  "JacobiNC",
+  "JacobiND",
+  "JacobiNS",
+  "JacobiSC",
+  "JacobiSD",
+  "JacobiAmplitude",
+  "JacobiZN",
+  "EllipticTheta",
+  "EllipticThetaPrime",
   "KaryTree",
 ];
 

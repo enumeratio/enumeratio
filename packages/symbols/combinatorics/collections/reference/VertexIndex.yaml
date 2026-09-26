@@ -6,10 +6,6 @@ signatures:
   - call: VertexIndex(g, v)
     description: the position of v in VertexList(g); unevaluated if v is not a vertex of g.
     library: enumeratio-collections
-examples:
-  - id: matches-vertexlist-position
-    expr: [VertexIndex, [Graph, [List, 5, 1, 2], [List, [UndirectedEdge, 1, 2]]], 1]
-    expected: 2
 seeAlso:
   - VertexList
   - VertexDegree

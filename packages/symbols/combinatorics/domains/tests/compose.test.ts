@@ -11,7 +11,7 @@ declareDomains(ce);
 declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
 declareCompose(ce);
 
-const perm = (...entries: number[]): unknown => ["Permutations", ["List", ...entries]];
+const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
 const value = (expr: unknown): unknown => ce.box(expr as never).evaluate().json;
 
 test("composition is an operation, so the names are optional", () => {

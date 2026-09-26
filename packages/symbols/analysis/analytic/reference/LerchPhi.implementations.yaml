@@ -215,7 +215,7 @@ phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via:
       in: \Phi (-1,2,1)=\frac{\pi ^2}{12}
       out: \text{True}
   sympy:
-    in: enumeratio_equal(lerchphi(-1, 2, 1), (S(((pi)**2)) / 12))
+    in: enumeratio_equal(lerchphi(-1, 2, 1), (S((S(pi)**2)) / 12))
     out: True
 inexact-arguments-should-evaluate-numerically:
   epsil:

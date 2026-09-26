@@ -1,0 +1,91 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(JacobiSN(0.3, 0.5))
+    out: 0.293_412_733_168_455_4
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3, 0.5))
+    out: 0.293\,412\,733\,168\,455\,4
+  fullform:
+    in: N[JacobiSN[0.3, 0.5]]
+  wolfram:
+    in: N[JacobiSN[0.3, 0.5]]
+u-0-is-0-for-any-m:
+  epsil:
+    in: JacobiSN(0, m)
+    out: "0"
+  tex:
+    in: \mathrm{JacobiSN}(0, m)
+    out: "0"
+  fullform:
+    in: JacobiSN[0, m]
+m-0-reduces-to-sin-u:
+  epsil:
+    in: JacobiSN(u, 0)
+    out: Sin(u)
+  tex:
+    in: \mathrm{JacobiSN}(u, 0)
+    out: \sin(u)
+  fullform:
+    in: JacobiSN[u, 0]
+m-1-reduces-to-tanh-u:
+  epsil:
+    in: JacobiSN(u, 1)
+    out: Tanh(u)
+  tex:
+    in: \mathrm{JacobiSN}(u, 1)
+    out: \tanh(u)
+  fullform:
+    in: JacobiSN[u, 1]
+m-greater-than-1-via-the-reciprocal-modulus:
+  epsil:
+    in: N(JacobiSN(0.3, 1.5))
+    out: 0.289_219_855_911_530_8
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3, 1.5))
+    out: 0.289\,219\,855\,911\,530\,8
+  fullform:
+    in: N[JacobiSN[0.3, 1.5]]
+  wolfram:
+    in: N[JacobiSN[0.3, 1.5]]
+m-less-than-0-via-the-imaginary-modulus:
+  epsil:
+    in: N(JacobiSN(0.3, -2))
+    out: 0.304_023_383_088_759_87
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3, -2))
+    out: 0.304\,023\,383\,088\,759\,87
+  fullform:
+    in: N[JacobiSN[0.3, -2]]
+  wolfram:
+    in: N[JacobiSN[0.3, -2]]
+a-complex-argument-u:
+  epsil:
+    in: N(JacobiSN(0.3 + 0.4i, 0.5))
+    out: 0.328_927_004_182_561_6 + 0.386_835_694_367_635_2i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3+0.4i, 0.5))
+    out: 0.328\,927\,004\,182\,561\,6+0.386\,835\,694\,367\,635\,2i
+  fullform:
+    in: N[JacobiSN[Complex[0.3, 0.4], 0.5]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.3, 0.4], 0.5]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: JacobiSN(u, m)
+    out: JacobiSN(u, m)
+  tex:
+    in: \mathrm{JacobiSN}(u, m)
+    out: \mathrm{JacobiSN}(u, m)
+  fullform:
+    in: JacobiSN[u, m]
+a-genuinely-complex-m-is-declined:
+  epsil:
+    in: N(JacobiSN(0.3, 0.5 + 0.2i))
+    out: JacobiSN(0.3, 0.5 + 0.2i)
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3, 0.5+0.2i))
+    out: \mathrm{JacobiSN}(0.3, 0.5+0.2i)
+  fullform:
+    in: N[JacobiSN[0.3, Complex[0.5, 0.2]]]
+  wolfram:
+    in: N[JacobiSN[0.3, Complex[0.5, 0.2]]]

@@ -1,0 +1,72 @@
+- id: 7-5-3-1
+  expr: [Factorial2, 7]
+  expected: 105
+  caption: 7 × 5 × 3 × 1
+- id: 8-6-4-2
+  expr: [Factorial2, 8]
+  expected: 384
+  caption: 8 × 6 × 4 × 2
+- id: factorial2-10
+  expr: [Factorial2, 10]
+  expected: 3840
+- id: factorial2-0
+  expr: [Factorial2, 0]
+  expected: 1
+- id: splits-an-ordinary-factorial-into-even-and-odd
+  expr: [Equal, [Factorial, 8], [Multiply, [Factorial2, 8], [Factorial2, 7]]]
+  expected: True
+  category: Properties
+  caption: 'Splits an ordinary factorial into even and odd parts: $n! = n!!\,(n-1)!!$'
+- id: the-number-of-ways-to-pair-up-10-people-into-5
+  expr: [Factorial2, 9]
+  expected: 945
+  category: Applications
+  caption: "The number of ways to pair up 10 people into 5 couples: $(2n-1)!!$ counts perfect matchings of $2n$ objects"
+- id: negative-even-arguments-hit-a-pole-in-the
+  expr: [Factorial2, -2]
+  expected: NaN
+  category: Possible issues
+  caption: Negative even arguments hit a pole in the recurrence (the $(0)!!/0$ term is undefined), so compute-engine returns NaN
+- id: 15-2-027-025-already-past-two-million-despite
+  expr: [Factorial2, 15]
+  expected: 2027025
+  category: Neat examples
+  caption: $15!! = 2{,}027{,}025$, already past two million despite skipping every other factor
+- id: the-recurrence-n-n-cdot-n-2-run-downwards
+  expr: [Factorial2, -1]
+  expected: 1
+  category: Scope
+  caption: 'The recurrence $n!! = n \cdot (n-2)!!$ run downwards extends it to negative odd integers: $(-1)!! = 1$, $(-3)!! = -1$, $(-5)!! = \frac{1}{3}$'
+- id: factorial2-20
+  expr: [Factorial2, 20]
+  expected: 3715891200
+- id: threads-element-wise-over-a-list
+  expr: [Factorial2, [List, 1, 2, 3, 4, 5]]
+  expected: [List, 1, 2, 3, 8, 15]
+  category: Scope
+  caption: Threads element-wise over a list
+- id: even-double-factorials-2n-2-n-n
+  expr: [Equal, [Factorial2, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]
+  expected: True
+  category: Properties
+  caption: 'Even double factorials: $(2n)!! = 2^n\,n!$'
+- id: odd-double-factorials-2n-1-frac-2n-2-n-n
+  expr: [Equal, [Factorial2, 9], [Divide, [Factorial, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]]
+  expected: True
+  category: Properties
+  caption: 'Odd double factorials: $(2n-1)!! = \frac{(2n)!}{2^n\,n!}$'
+- id: negative-odd-integers-follow-the-recurrence
+  expr: [Factorial2, -3]
+  expected: -1
+  category: Scope
+  caption: "Negative odd integers follow the recurrence backwards: $(-3)!! = -1$"
+- id: 5-frac-1-3-by-the-backward-recurrence
+  expr: [Factorial2, -5]
+  expected: [Rational, 1, 3]
+  category: Scope
+  caption: $(-5)!! = \frac{1}{3}$ by the backward recurrence
+- id: real-arguments-use-the-analytic-continuation-2-1
+  expr: [Factorial2, 2.5]
+  expected: 2.407069456116044
+  category: Scope
+  caption: Real arguments use the analytic continuation $2^{(1+2x-\cos\pi x)/4}\,\pi^{(\cos\pi x-1)/4}\,\Gamma(1+\frac{x}{2})$

@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection; the count follows Burnside's lemma over the dihedral group $D_n$ — a rotation sum shared with binary necklaces, plus a reflection sum that splits on the parity of $n$ (OEIS A000029). See [[Totient]], used in the rotation sum.
   - Each element is the lexicographically-least word in its rotation-and-reflection orbit; that canonical word's 1-count is an invariant of the whole orbit.
   - $At$ unranks over these canonical words in ascending lexicographic order.
-examples:
-  - id: count-binarybracelets-6-13-a000029
-    expr: [Count, [BinaryBracelets, 6]]
-    expected: 13
-    category: Basic
-    caption: $Count(BinaryBracelets(6)) = 13$, A000029
 enumerate:
   expr: BinaryBracelets(6)
   columns: Descents, Ascents

@@ -1,0 +1,120 @@
+- id: q-a-0-1-for-any-a
+  expr: [GammaRegularized, 1, 0]
+  expected: 1
+  caption: $Q(a, 0) = 1$ for any $a$
+- id: q-1-z-e-z-here-at-z-1
+  expr: [GammaRegularized, 1, 1]
+  expected: [Divide, 1, ExponentialE]
+  caption: $Q(1, z) = e^{-z}$, here at $z = 1$
+- id: floating-point-arguments-evaluate-directly-to-a
+  expr: [GammaRegularized, 2.5, 1.5]
+  expected: { num: "0.6999858358786275091" }
+  caption: Floating-point arguments evaluate directly to a high-precision decimal
+- id: the-polynomial-closed-form-for-an-integer-order
+  expr: [GammaRegularized, 5, -1]
+  expected: [Multiply, [Rational, 3, 8], ExponentialE]
+  category: Properties
+  caption: The polynomial closed form for an integer order extends validly to negative $z$ too, following the analytic continuation
+- id: the-cdf-of-a-poisson-lambda-2-random-variable-at
+  expr: [GammaRegularized, 3, 2]
+  expected: [Divide, 5, [Power, ExponentialE, 2]]
+  category: Applications
+  caption: The CDF of a Poisson($\lambda=2$) random variable at $k=2$ is $Q(3, 2) = 5/e^2$
+- id: a-non-integer-order-combined-with-negative-z
+  expr: [GammaRegularized, 2.5, -1]
+  expected: [GammaRegularized, 2.5, -1]
+  category: Possible issues
+  caption: A non-integer order combined with negative z falls outside the real domain; compute-engine leaves it symbolic rather than erroring or returning NaN
+- id: three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma
+  expr: [GammaRegularized, 2.5, 0, 1.5]
+  expected: 0.30001416412137194
+  category: Applications
+  caption: "Three arguments: $P(5/2, 3/2) = Q(5/2, 0, 3/2)$, the Gamma(5/2, 1) distribution's CDF at $3/2$"
+- id: q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma
+  expr: [GammaRegularized, -1.5, 0, 1.5]
+  expected: 0.9852600743603472
+  category: Properties
+  caption: $Q(a, 0, z) = 1 - Q(a, z)$ even for negative $a$, where $\Gamma(a, 0)$ and $\Gamma(a)$ are each infinite but their ratio is 1
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [GammaRegularized, [List, 1, 2], 1]
+  expected: [List, [Divide, 1, ExponentialE], [Divide, 2, ExponentialE]]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: q-1-z-e-z-at-z-1-5
+  expr: [GammaRegularized, 1, 1.5]
+  expected: { num: "0.223130160148429828933" }
+  caption: $Q(1, z) = e^{-z}$ at $z = 1.5$
+- id: q-2-3-3-4-3-e-3-3
+  expr: [GammaRegularized, 2, 3.3]
+  expected: { num: "0.15859761982533202341608" }
+  caption: $Q(2, 3.3) = 4.3\,e^{-3.3}$
+- id: complex-order-under-n
+  expr: [N, [GammaRegularized, [Complex, 1, 1], 2.5]]
+  expected: [Complex, { num: "0.00794706062011918622237387002562211784" }, 0.15253677854101844]
+  category: Scope
+  caption: Complex order, under N()
+- id: three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2
+  expr: [GammaRegularized, 2.5, 0.5, 1.5]
+  expected: 0.26257993736866897
+  category: Scope
+  caption: "Three arguments: $Q(a, z_0) - Q(a, z_1)$, the Gamma(5/2) mass between $1/2$ and $3/2$"
+- id: which-at-an-integer-order-equally-evaluates-to
+  expr: [GammaRegularized, 2, 0.5, 1.5]
+  expected: 0.35197058919787555
+  category: Scope
+  caption: ...which at an integer order equally evaluates, to $\frac32e^{-1/2} - \frac52e^{-3/2}$
+- id: listable-over-its-limits-q-1-infty-infty-q-1
+  expr: [GammaRegularized, 1, [List, NegativeInfinity, PositiveInfinity]]
+  expected: [List, PositiveInfinity, 0]
+  category: Scope
+  caption: 'Listable over its limits: $Q(1, -\infty) = \infty$, $Q(1, \infty) = 0$'
+- id: listable-threads-elementwise-over-a-matrix
+  expr: [GammaRegularized, 2, [List, [List, 3.5, 0], [List, 0, 6.5]]]
+  expected: [List, [List, 0.13588822540043324, 1], [List, 1, 0.011275793947331794]]
+  category: Scope
+  caption: "Listable: threads elementwise over a matrix"
+- id: interval-arithmetic-q-is-decreasing-in-z
+  expr: [GammaRegularized, [Rational, 2, 5], [Interval, 0.21, 0.22]]
+  expected: [Interval, 0.42124489579195323, 0.4303906669405995]
+  category: Scope
+  caption: "Interval arithmetic: $Q$ is decreasing in $z$"
+- id: the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar
+  expr: [Subtract, 1, [GammaRegularized, 0.5, 1.9207294103470425]]
+  expected: { num: "0.9499999999999987786437" }
+  category: Applications
+  caption: 'The $\chi^2_1$ CDF, $P(1/2, x/2)$, at the familiar critical value $x = 3.8415$: 95%'
+- id: q-a-0-1-for-symbolic-a
+  expr: [GammaRegularized, a, 0]
+  expected: 1
+  category: Properties
+  caption: $Q(a, 0) = 1$ for symbolic $a$
+- id: q-a-infty-0
+  expr: [GammaRegularized, a, PositiveInfinity]
+  expected: 0
+  category: Properties
+  caption: $Q(a, \infty) = 0$
+- id: q-1-x-e-x-symbolically
+  expr: [GammaRegularized, 1, x]
+  expected: [Power, ExponentialE, [Negate, x]]
+  category: Properties
+  caption: $Q(1, x) = e^{-x}$ symbolically
+- id: q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s
+  expr: [GammaRegularized, 2, x]
+  expected: [Multiply, [Add, x, 1], [Power, ExponentialE, [Negate, x]]]
+  category: Properties
+  caption: $Q(2, x) = (1 + x)e^{-x}$, through $Q(s,x) = \Gamma(s,x)/\Gamma(s)$ now that $\Gamma(2,x)$ has a closed form
+- id: q-1-2-x-erfc-sqrt-x-see-erfc
+  expr: [GammaRegularized, [Rational, 1, 2], x]
+  expected: [Erfc, [Sqrt, x]]
+  category: Properties
+  caption: $Q(1/2, x) = \operatorname{erfc}(\sqrt x)$. See [[Erfc]]
+- id: to-30-significant-digits-not-yet-the-last-digit
+  expr: [N, [GammaRegularized, 2, 1], 30]
+  expected: { num: "0.735758882342884643191047540323" }
+  category: Scope
+  caption: To 30 significant digits, the last one correctly rounded
+- id: q-s-z-at-a-complex-order-s-beyond-what-the
+  expr: [N, [GammaRegularized, [Complex, 2, 1], 1.5]]
+  expected: [Complex, { num: "0.6176522310450641336650331038297415246" }, 0.3334815406585523]
+  category: Scope
+  caption: $Q(s, z)$ at a complex order $s$ — beyond what the native two-argument handler covers

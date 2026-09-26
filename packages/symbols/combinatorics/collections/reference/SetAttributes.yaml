@@ -12,10 +12,5 @@ signatures:
 details:
   - Only $\{Flat, HoldAll, Listable, Orderless\}$ can actually be turned on — see [[Attributes]] for why those four and no others. Declines (stays unevaluated) for an undeclared $f$, or any attribute name outside that set, rather than silently accepting a change that didn't happen.
   - Always returns $Nothing$, like Wolfram's own $Null$.
-examples:
-  - id: turn-on-orderless
-    expr: [List, [SetAttributes, HarmonicMean, Orderless], [Attributes, HarmonicMean]]
-    expected: [List, [List, Orderless]]
-    caption: turn Orderless on, then read it back with Attributes (the Nothing result of SetAttributes itself vanishes from the enclosing List)
 seeAlso:
   - Attributes

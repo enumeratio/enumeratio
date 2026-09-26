@@ -830,7 +830,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n, k]) => IsSemistandardTableauOf(e, n, k),
     rank: (e, [n, k]) => SemistandardTableauxRank(e as number[][], n, k),
     declared: {
-      carrier: "SemistandardTableaux",
+      carrier: "SemistandardTableau",
       params: [axis("size"), axis("max_entry")],
       cost: enumerated("polynomial"),
       work: ([n, k]) => BigInt(SemistandardTableauxCount(n, k)),
@@ -845,7 +845,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n, k]) => IsGelfandTsetlinOf(e, n, k),
     rank: (e, [n, k]) => GelfandTsetlinRank(e as number[][], n, k),
     declared: {
-      carrier: "GelfandTsetlinPatterns",
+      carrier: "GelfandTsetlinPattern",
       params: [axis("n"), axis("k")],
       cost: enumerated("closed"),
       work: ([n, k]) => BigInt(GelfandTsetlinCount(n, k)),
@@ -860,7 +860,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsAlternatingSignMatrixOf(e, n),
     rank: (e, [n]) => AlternatingSignMatrixRank(e as number[][], n),
     declared: {
-      carrier: "AlternatingSignMatrices",
+      carrier: "AlternatingSignMatrix",
       params: [axis("size")],
       cost: enumerated("closed"),
       work: ([n]) => BigInt(AlternatingSignMatrixCount(n)),
@@ -875,7 +875,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsSkewPartitionOf(e, n),
     rank: (e, [n]) => SkewPartitionsRank(e as [number[], number[]], n),
     declared: {
-      carrier: "SkewPartitions",
+      carrier: "SkewPartition",
       params: [axis("size")],
       cost: enumerated("enumerative"),
       work: ([n]) => 4n ** BigInt(n),
@@ -890,7 +890,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsSkewStandardTableauOf(e, n),
     rank: (e, [n]) => SkewStandardTableauxRank(e as [number[], number[], number[]], n),
     declared: {
-      carrier: "SkewTableaux",
+      carrier: "SkewTableau",
       params: [axis("size")],
       cost: enumerated("enumerative"),
       work: ([n]) => factorialBig(n) * 4n ** BigInt(n),
@@ -923,7 +923,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsPlanePartitionOf(e, n),
     rank: (e, [n]) => PlanePartitionsRank(e as number[][], n),
     declared: {
-      carrier: "PlanePartitions",
+      carrier: "PlanePartition",
       params: [axis("size")],
       cost: enumerated("polynomial"),
       work: ([n]) => BigInt(PlanePartitionsCount(n)),
@@ -938,7 +938,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [a, b, c]) => IsBoxedPlanePartitionOf(e, a, b, c),
     rank: (e, [a, b, c]) => BoxedPlanePartitionsRank(e as number[][], a, b, c),
     declared: {
-      carrier: "PlanePartitions",
+      carrier: "PlanePartition",
       params: [axis("a"), axis("b"), axis("c")],
       cost: enumerated("closed"),
       work: ([a, b, c]) => BigInt(BoxedPlanePartitionsCount(a, b, c)),

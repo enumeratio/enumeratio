@@ -1,0 +1,18 @@
+- id: symbolic-falling
+  expr: [FactorialPower, x, 3]
+  expected: [FactorialPower, x, 3]
+  caption: A symbolic x stays unevaluated, matching Wolfram's own default behavior
+- id: numeric
+  expr: [FactorialPower, 5, 3]
+  expected: 60
+  caption: 5 × 4 × 3 = 60
+- id: step
+  expr: [FactorialPower, x, 2, h]
+  expected: [FactorialPower, x, 2, h]
+  category: Scope
+  caption: A symbolic x with a third (step) argument also stays unevaluated
+- id: zero
+  expr: [FactorialPower, x, 0]
+  expected: 1
+  category: Scope
+  caption: The empty product is 1, even for a symbolic x

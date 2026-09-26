@@ -1,0 +1,22 @@
+name: HistogramDistribution
+domain: Statistics
+signature: HistogramDistribution(data, {dx}) | HistogramDistribution(data, {x0, x1, dx})
+summary: The empirical density of $data$, binned into equal-width bins of width $dx$ — piecewise-constant.
+signatures:
+  - call: HistogramDistribution(data, {dx})
+    description: bins of width dx, starting at floor(min(data)/dx)*dx.
+    library: enumeratio-statistics
+  - call: HistogramDistribution(data, {x0, x1, dx})
+    description: bins of width dx over the explicit range [x0, x1].
+    library: enumeratio-statistics
+details:
+  - EXPLICIT bins only — Wolfram's own automatic-binning rule (`{}` with no spec) is not pinned down here and is out of scope. The `{dx}` form picks $x_0 = \lfloor \min(data)/dx \rfloor \cdot dx$ as the first bin's left edge (a documented choice of this package, not Wolfram's own automatic rule) and covers every data point up to $\max(data)$; `{x0, x1, dx}` gives the range explicitly.
+  - $PDF(x) = count_i / (n \cdot dx)$ for the bin $i$ containing $x$, $0$ outside every bin — piecewise CONSTANT.
+  - $CDF$ is piecewise LINEAR (the PDF's antiderivative) — full bins below $x$ contribute their whole count, $x$'s own bin a fractional share.
+  - $Mean = \sum_i count_i \cdot mid_i / n$; $Variance = E[X^2] - Mean^2$, with each bin's $E[X^2\mid bin]$ the standard uniform-on-$[a,b]$ second moment $(a^2+ab+b^2)/3$.
+  - Bin counts are exact integers and every PDF/CDF/Mean/Variance built from them stays exact (rational arithmetic throughout), even though the BINNING itself (which bin a data point falls in) is computed in plain numbers — inherently a floor/division on a numeric position.
+seeAlso:
+  - ProbabilityDistribution
+  - EmpiricalDistribution
+  - PDF
+  - CDF

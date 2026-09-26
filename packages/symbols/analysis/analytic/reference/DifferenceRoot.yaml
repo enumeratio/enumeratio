@@ -1,0 +1,15 @@
+name: DifferenceRoot
+domain: Special functions
+signature: DifferenceRoot(Function([recurrence == 0, ic, ...], y, n))(n0)
+summary: A holonomic (P-recursive) sequence object — a linear recurrence with polynomial(n) coefficients plus enough initial values, exactly as [[DifferenceRootReduce]] emits it. Applied to a concrete non-negative integer $n_0$, it runs the recurrence forward in exact rational arithmetic; applied to a symbolic $n$ (or anything else it can't run), it stays inert. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: DifferenceRoot(fn)(n0)
+    description: the sequence's value at $n_0$, running the recurrence stored in `fn` forward from whichever initial condition is closest below $n_0$.
+    library: "@enumeratio/analytic"
+details:
+  - Ordinarily built by [[DifferenceRootReduce]] rather than by hand — the examples below construct one directly to show the evaluation contract on its own.
+  - Evaluation is attached to the native `Apply` operator (never redeclares it — see derivatives.ts's own `Derivative`/`D` hook for the same pattern), so it only intercepts a call whose head is `DifferenceRoot(...)`; every other `Apply` call is untouched.
+  - Declines (stays symbolic) at a step whose leading coefficient evaluates to exactly 0 with no initial condition to jump to instead, and at a negative or non-integer target.
+seeAlso:
+  - DifferenceRootReduce
+  - DifferentialRoot

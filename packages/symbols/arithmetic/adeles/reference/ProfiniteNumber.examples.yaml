@@ -1,0 +1,108 @@
+- id: 12-hat-z-8-hat-z-4-hat-z
+  expr: [Add, [ProfiniteNumber, 3, 12], [ProfiniteNumber, 5, 8]]
+  expected: [ProfiniteNumber, 0, 4]
+  caption: $12\hat{\mathbb{Z}} + 8\hat{\mathbb{Z}} = 4\hat{\mathbb{Z}}$
+- id: profinitenumber-3-12-times-profinitenumber-5-8
+  expr: [Multiply, [ProfiniteNumber, 3, 12], [ProfiniteNumber, 5, 8]]
+  expected: [ProfiniteNumber, 3, 12]
+- id: equal-cosets-need-not-share-a-modulus
+  expr: [Equal, [ProfiniteNumber, 6, 20], [ProfiniteNumber, 6, 40]]
+  expected: True
+  caption: equal cosets need not share a modulus
+- id: crt-glued-from-its-2-adic-and-3-adic-images
+  expr: [ProfiniteNumber, [List, [AdicNumeral, 2, 20, 5], [AdicNumeral, 3, 7, 2]]]
+  expected: [ProfiniteNumber, 52, 288]
+  caption: "CRT: glued from its 2-adic and 3-adic images"
+  category: Scope
+- id: a-rational-value-and-a-rational-modulus
+  expr: [Add, [ProfiniteNumber, [Rational, 1, 2], [Rational, 97, 5]], [ProfiniteNumber, [Rational, 1, 3], 10]]
+  expected: [ProfiniteNumber, [Rational, 1, 30], [Rational, 1, 5]]
+  caption: a rational value and a rational modulus
+  category: Scope
+- id: numerator-profinitenumber-2-over-3-5
+  expr: [Numerator, [ProfiniteNumber, [Rational, 2, 3], 5]]
+  expected: [ProfiniteNumber, 2, 15]
+- id: denominator-profinitenumber-2-over-3-5
+  expr: [Denominator, [ProfiniteNumber, [Rational, 2, 3], 5]]
+  expected: 3
+- id: lenstra-s-profinite-fibonacci-numbers
+  expr: [Fibonacci, [ProfiniteNumber, 3, 10]]
+  expected: [ProfiniteNumber, 2, 11]
+  caption: Lenstra's profinite Fibonacci numbers
+  category: Applications
+- id: projecting-to-q-2
+  expr: [AdicNumeral, 2, [ProfiniteNumber, 100, 24]]
+  expected: [AdicNumeral, 2, 4, 3]
+  caption: projecting to $\mathbb{Q}_2$
+- id: projecting-to-q-3
+  expr: [AdicNumeral, 3, [ProfiniteNumber, 100, 24]]
+  expected: [AdicNumeral, 3, 1, 1]
+  caption: projecting to $\mathbb{Q}_3$
+- id: 5-doesn-t-divide-the-modulus-so-nothing-is-known
+  expr: [AdicNumeral, 5, [ProfiniteNumber, 100, 24]]
+  expected: [AdicNumeral, 5, [ProfiniteNumber, 4, 24]]
+  caption: 5 does not divide the modulus, so nothing is known at 5
+  category: Possible issues
+- id: gluing-projections-back-by-crt-is-the-identity
+  expr:
+    [
+      ProfiniteNumber,
+      [List, [AdicNumeral, 2, [ProfiniteNumber, 100, 24]], [AdicNumeral, 3, [ProfiniteNumber, 100, 24]]],
+    ]
+  expected: [ProfiniteNumber, 4, 24]
+  caption: gluing the projections at every prime of the modulus is the identity
+  category: Properties
+- id: profinitenumber-26-20-normalises-to-6-20
+  expr: [ProfiniteNumber, 26, 20]
+  expected: [ProfiniteNumber, 6, 20]
+- id: a-negative-value-normalises-into-the-coset
+  expr: [ProfiniteNumber, -1, 12]
+  expected: [ProfiniteNumber, 11, 12]
+- id: a-negative-modulus-normalises-to-positive
+  expr: [ProfiniteNumber, 5, -12]
+  expected: [ProfiniteNumber, 5, 12]
+- id: a-rational-value-reduces-mod-a-rational-modulus
+  expr: [ProfiniteNumber, [Rational, 7, 2], [Rational, 3, 2]]
+  expected: [ProfiniteNumber, [Rational, 1, 2], [Rational, 3, 2]]
+- id: modulus-zero-collapses-to-the-rational-itself
+  expr: [ProfiniteNumber, [Rational, 1, 3], 0]
+  expected: [Rational, 1, 3]
+- id: subtracting-an-integer-from-a-profinite-number
+  expr: [Subtract, [ProfiniteNumber, 7, 30], 2]
+  expected: [ProfiniteNumber, 5, 30]
+- id: squaring-a-profinite-number
+  expr: [Power, [ProfiniteNumber, 3, 12], 2]
+  expected: [ProfiniteNumber, 9, 36]
+- id: dividing-by-an-exact-integer-divisor
+  expr: [Divide, [ProfiniteNumber, 4, 12], 2]
+  expected: [ProfiniteNumber, 2, 6]
+- id: dividing-by-a-profinite-number-stays-unevaluated
+  expr: [Divide, 1, [ProfiniteNumber, 5, 12]]
+  expected: [Divide, 1, [ProfiniteNumber, 5, 12]]
+  caption: only an exact divisor works; a profinite divisor leaves the call standing
+  category: Possible issues
+- id: lenstra-s-profinite-lucas-numbers
+  expr: [LucasL, [ProfiniteNumber, 3, 10]]
+  expected: [ProfiniteNumber, 4, 11]
+  caption: Lenstra's profinite Lucas numbers
+  category: Applications
+- id: a-non-integer-numerator-refuses-fibonacci
+  expr: [Fibonacci, [ProfiniteNumber, [Rational, 1, 2], 3]]
+  expected: [Fibonacci, [ProfiniteNumber, [Rational, 1, 2], 3]]
+  caption: a non-integer profinite numerator leaves Fibonacci standing
+  category: Possible issues
+- id: numerator-of-a-plain-rational-is-untouched
+  expr: [Numerator, [Rational, 3, 4]]
+  expected: 3
+  caption: native behavior on a plain rational is untouched
+  category: Possible issues
+- id: denominator-of-a-plain-rational-is-untouched
+  expr: [Denominator, [Rational, 3, 4]]
+  expected: 4
+  caption: native behavior on a plain rational is untouched
+  category: Possible issues
+- id: only-profinitenumber-gets-numerator-not-adele
+  expr: [Numerator, [Adele, 5]]
+  expected: [Numerator, [Adele, 5]]
+  caption: only ProfiniteNumber gets Numerator; Adele does not
+  category: Possible issues

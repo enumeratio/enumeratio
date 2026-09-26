@@ -1,0 +1,19 @@
+- id: a-floating-point-argument-evaluates-directly-to
+  expr: [N, [JacobiCD, 0.3, 0.5]]
+  expected: 0.9772503364442499
+  caption: A floating-point argument evaluates directly to a decimal
+- id: u-0-is-1-for-any-m
+  expr: [JacobiCD, 0, m]
+  expected: 1
+  category: Properties
+  caption: u = 0 is 1, for any m
+- id: m-greater-than-1-via-the-reciprocal-modulus
+  expr: [N, [JacobiCD, 0.3, 1.5]]
+  expected: 1.023633106578735
+  category: Scope
+  caption: m greater than 1, via the reciprocal-modulus transformation
+- id: symbolic-arguments-are-left-unevaluated-rather
+  expr: [JacobiCD, u, m]
+  expected: [JacobiCD, u, m]
+  category: Possible issues
+  caption: Symbolic arguments are left unevaluated rather than guessed at

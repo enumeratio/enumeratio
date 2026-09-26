@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(OdiousNumbers) = +\infty$, the complement of [[EvilNumbers]] among the positive integers. OEIS A000069.'
   - $At(OdiousNumbers, k)$ unranks by scanning forward -- $At(OdiousNumbers, 4) = 7$.
   - "Membership goes through [[Element]]: $Element(7, OdiousNumbers)$ is true ($111_2$, three 1-bits), $Element(6, OdiousNumbers)$ is false ([[EvilNumbers]])."
-examples: []
 enumerate:
   expr: Take(OdiousNumbers, 20)
 seeAlso:

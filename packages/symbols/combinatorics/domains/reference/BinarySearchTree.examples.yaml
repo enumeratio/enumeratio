@@ -1,0 +1,4 @@
+- id: the-one-line-word-231
+  expr: [BinarySearchTree, [Permutation, [List, 2, 3, 1]]]
+  expected: [BinaryTree, [List, 2, 0, 2]]
+  caption: the one-line word $231$

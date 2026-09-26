@@ -1,9 +1,9 @@
 the-one-line-word-231-once-there-is-a-definition:
   epsil:
-    in: PermutahedronVertex(Permutations([2, 3, 1]))
+    in: PermutahedronVertex(Permutation([2, 3, 1]))
     out: "[]"
   tex:
-    in: \mathrm{PermutahedronVertex}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    in: \mathrm{PermutahedronVertex}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
     out: \bigl\lbrack \bigr\rbrack
   fullform:
-    in: PermutahedronVertex[Permutations[List[2, 3, 1]]]
+    in: PermutahedronVertex[Permutation[List[2, 3, 1]]]

@@ -164,7 +164,7 @@ pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
       in: \sin ^2\left(\frac{\pi }{6}\right)+\cos ^2\left(\frac{\pi }{6}\right)
       out: "1"
   sympy:
-    in: (((sin((S(pi) / 6)))**2) + ((cos((S(pi) / 6)))**2))
+    in: ((S(sin((S(pi) / 6)))**2) + (S(cos((S(pi) / 6)))**2))
     out: "1"
   sage:
     in: (((sin((pi / 6)))^2) + ((cos((pi / 6)))^2))
@@ -862,7 +862,8 @@ the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1:
     in: \lim_{x\to0}\frac{\sin(x)}{x}
     out: "1"
   fullform:
-    in: Limit[Function[Divide[Sin[x], x], x], 0]
+    in: Limit[Function[x, Divide[Sin[x], x]], 0]
+    back: [Limit, [Function, x, [Divide, [Sin, x], x]], 0]
 double-angle-formula-via-trigexpand:
   epsil:
     in: TrigExpand(Sin(2x))
@@ -957,7 +958,7 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
   wolfram:
     in: N[Sin[Power[10, 20]]]
   sympy:
-    in: N(sin(((10)**20)), 30)
+    in: N(sin((S(10)**20)), 30)
     out: "-0.645251285265780844205811711313"
   mpmath:
     in: (sin(((10)**20)))
@@ -967,6 +968,29 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
   rust:
     in: nf(sin(power(n(10), n(20))))
     out: "-0.6452512852657808"
+an-even-huger-argument-11-38:
+  epsil:
+    in: N(Sin(11 ^ 38))
+    out: 0.867_534_193_184_863_032_082
+  tex:
+    in: N(\sin(11^{38}))
+    out: 0.867\,534\,193\,184\,863\,032\,082
+  fullform:
+    in: N[Sin[Power[11, 38]]]
+  wolfram:
+    in: N[Sin[Power[11, 38]]]
+  sympy:
+    in: N(sin((S(11)**38)), 30)
+  mpmath:
+    in: (sin(((11)**38)))
+  sage:
+    in: N(sin(((11)^38)))
+  rust:
+    in: nf(sin(power(n(11), n(38))))
+    out: "-0.7172457893515806"
+    verdict: disagree
+    kind: precision
+    note: f64's range reduction has no working precision left at 11^38; compute-engine's BigDecimal kernel reduces modulo 2pi with enough digits to keep the answer meaningful.
 functionexpand-gives-the-nested-radical-form:
   epsil:
     in: FunctionExpand(Sin(Pi / 15))
@@ -1012,7 +1036,7 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
   wolfram:
     in: N[Sin[Power[24, 40]]]
   sympy:
-    in: N(sin(((24)**40)), 30)
+    in: N(sin((S(24)**40)), 30)
     out: "0.400083152719766047070941915848"
   mpmath:
     in: (sin(((24)**40)))

@@ -1,0 +1,40 @@
+- id: lb-8
+  expr: [Lb, 8]
+  expected: 3
+- id: lb-1
+  expr: [Lb, 1]
+  expected: 0
+- id: lb-1-024
+  expr: [Lb, 1024]
+  expected: 10
+- id: identical-to-log2
+  expr: [Equal, [Lb, 64], [Log2, 64]]
+  expected: True
+  category: Properties
+  caption: Identical to [[Log2]]
+- id: same-exact-negative-power-fold-as-log2-lb-frac
+  expr: [Lb, [Rational, 1, 8]]
+  expected: -3
+  category: Scope
+  caption: 'Same exact negative power fold as [[Log2]]: $\operatorname{lb}\tfrac18 = -3$'
+- id: a-machine-precision-argument-evaluates
+  expr: [Lb, 1.4142]
+  expected: { num: "0.499986164421874256467" }
+  caption: A machine-precision argument evaluates numerically
+- id: lb-2-pow-10
+  expr: [Lb, [Power, 2, 10]]
+  expected: 10
+- id: lb-0
+  expr: [Lb, 0]
+  expected: NegativeInfinity
+  category: Scope
+- id: threads-element-wise-over-a-list
+  expr: [Lb, [List, 1, 2, 4, 8]]
+  expected: [List, 0, 1, 2, 3]
+  category: Scope
+  caption: Threads element-wise over a list
+- id: same-as-log2-the-logarithm-of-complex-infinity
+  expr: [Lb, ComplexInfinity]
+  expected: PositiveInfinity
+  category: Scope
+  caption: 'Same as [[Log2]]: the logarithm of complex infinity is $+\infty$'

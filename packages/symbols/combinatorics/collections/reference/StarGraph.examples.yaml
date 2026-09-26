@@ -1,0 +1,4 @@
+- id: centre-degree-of-a-6-vertex-star
+  expr: [VertexDegree, [StarGraph, 6], 1]
+  expected: 5
+  caption: The centre of a 6-vertex star has degree 5

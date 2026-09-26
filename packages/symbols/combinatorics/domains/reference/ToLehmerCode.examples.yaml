@@ -1,0 +1,4 @@
+- id: the-one-line-word-231
+  expr: [ToLehmerCode, [Permutation, [List, 2, 3, 1]]]
+  expected: [SubexcedantSeq, [List, 1, 1, 0]]
+  caption: the one-line word $231$

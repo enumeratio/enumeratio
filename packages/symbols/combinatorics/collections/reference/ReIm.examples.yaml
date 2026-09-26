@@ -1,0 +1,7 @@
+- id: real-and-imaginary-parts
+  expr: [ReIm, [Complex, 3, 4]]
+  expected: [List, 3, 4]
+- id: threads-over-a-list
+  expr: [ReIm, [List, [Complex, 1, 2], [Complex, 3, 4]]]
+  expected: [List, [List, 1, 2], [List, 3, 4]]
+  category: Scope

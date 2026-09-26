@@ -9,17 +9,6 @@ details:
   - compute-engine has this natively; the gap closed here is negative $n$ (never perfect) and threading over a list.
   - The even perfect numbers are exactly $2^{p-1}(2^p-1)$ for a Mersenne prime exponent $p$ — see [[PerfectNumber]] and [[MersennePrimeExponent]]. Whether an odd perfect number exists is open.
   - Wolfram's `PerfectNumberQ`.
-examples:
-  - id: listable
-    expr: [IsPerfect, [List, 6, 28, 12]]
-    expected: [List, True, True, False]
-    category: Scope
-    caption: Listable
-  - id: negative-numbers-are-not-perfect
-    expr: [IsPerfect, -6]
-    expected: False
-    category: Possible issues
-    caption: Negative numbers are not perfect
 seeAlso:
   - PerfectNumber
   - MersennePrimeExponent

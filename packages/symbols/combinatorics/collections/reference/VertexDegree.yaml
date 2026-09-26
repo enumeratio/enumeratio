@@ -12,32 +12,6 @@ signatures:
     arity: 2
 details:
   - Total degree, in and out combined — a directed edge counts once at each endpoint, same as an undirected one. Sums to $2|E|$ (the handshake lemma), which the tests check against an independently-computed sum on random graphs.
-examples:
-  - id: degrees-around-a-path
-    expr: [VertexDegree, [PathGraph, 5]]
-    expected: [List, 1, 2, 2, 2, 1]
-    caption: A 5-vertex path — the two ends have degree 1, the rest degree 2
-  - id: the-degree-of-one-vertex
-    expr: [VertexDegree, [StarGraph, 6], 1]
-    expected: 5
-    caption: The centre of a 6-vertex star has degree 5
-  - id: a-self-loop-counts-twice-at-its-own-vertex
-    expr:
-      [
-        VertexDegree,
-        [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1], [UndirectedEdge, 1, 1]]],
-      ]
-    expected: [List, 4, 2, 2]
-    role: test
-    caption: "Vertex 1's self-loop counts at both endpoints, on top of its two triangle edges: degree 4"
-  - id: the-degree-of-vertex-2-in-a-mixed-graph
-    expr: [VertexDegree, [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [DirectedEdge, 3, 1]]], 2]
-    expected: 2
-    role: test
-  - id: the-degree-of-vertex-3-in-a-mixed-graph
-    expr: [VertexDegree, [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [DirectedEdge, 3, 1]]], 3]
-    expected: 2
-    role: test
 seeAlso:
   - AdjacencyMatrix
   - Graph

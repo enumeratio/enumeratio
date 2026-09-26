@@ -3,14 +3,5 @@ domain: Partition statistics
 signature: LargestPart(partition)
 summary: The largest part.
 details:
-  - Defined over `IntegerPartitions` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `IntegerPartitions` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
-examples:
-  - id: the-partition-4-2-1-of-7
-    expr: [LargestPart, [IntegerPartitions, [List, 4, 2, 1]]]
-    expected: 4
-    caption: the partition $4 + 2 + 1$ of $7$
-  - id: the-partition-3-3-1-of-7
-    expr: [LargestPart, [IntegerPartitions, [List, 3, 3, 1]]]
-    expected: 3
-    caption: the partition $3 + 3 + 1$ of $7$
+  - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - Takes a `IntegerPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.

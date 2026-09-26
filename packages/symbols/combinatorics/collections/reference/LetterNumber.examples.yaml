@@ -1,0 +1,8 @@
+- id: single-letter
+  expr: [LetterNumber, "'d'"]
+  expected: 4
+- id: string
+  expr: [LetterNumber, "'cab'"]
+  expected: [List, 3, 1, 2]
+  category: Scope
+  caption: A string gives one position per character

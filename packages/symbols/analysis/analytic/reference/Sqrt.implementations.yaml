@@ -183,7 +183,7 @@ sqrt-x-x-1-2:
       in: \sqrt{16}=16^{\frac{1}{2}}
       out: \text{True}
   sympy:
-    in: enumeratio_equal(sqrt(16), ((16)**Rational(1, 2)))
+    in: enumeratio_equal(sqrt(16), (S(16)**Rational(1, 2)))
     out: True
   mpmath:
     in: almosteq(sqrt(16), ((16)**(mpf(1)/2)), 1e-20)
@@ -571,7 +571,7 @@ at-x-1-sqrt-x-2-1-not-1:
   wolfram:
     in: Sqrt[Power[-1, 2]]
   sympy:
-    in: sqrt(((-1)**2))
+    in: sqrt((S(-1)**2))
     out: "1"
   mpmath:
     in: sqrt(((-1)**2))
@@ -650,3 +650,164 @@ to-45-significant-digits-every-one-correctly:
   rust:
     in: nf(sqrt(n(2)))
     out: "1.4142135623730951"
+an-approximate-negative-radicand-stays-complex:
+  epsil:
+    in: Sqrt(-2.875)
+    out: 1.695_582_495_781_317i
+  tex:
+    in: \sqrt{-2.875}
+    out: 1.695\,582\,495\,781\,317i
+  fullform:
+    in: Sqrt[-2.875]
+  wolfram:
+    in: Sqrt[-2.875]
+  sympy:
+    in: sqrt(-2.875)
+  mpmath:
+    in: sqrt(-2.875)
+  sage:
+    in: sqrt(-2.875)
+  rust:
+    in: sqrt(x(-2.875))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-36-negative:
+  epsil:
+    in: Sqrt(-36)
+    out: 6i
+  tex:
+    in: \sqrt{-36}
+    out: 6i
+  fullform:
+    in: Sqrt[-36]
+  wolfram:
+    in: Sqrt[-36]
+  sympy:
+    in: sqrt(-36)
+  mpmath:
+    in: sqrt(-36)
+  sage:
+    in: sqrt(-36)
+  rust:
+    in: sqrt(n(-36))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-2-times-sqrt-neg-1:
+  epsil:
+    in: Sqrt(1) * Sqrt(-1)
+    out: i
+  tex:
+    in: \sqrt{1}\sqrt{-1}
+    out: i
+  fullform:
+    in: Times[Sqrt[1], Sqrt[-1]]
+  wolfram:
+    in: Times[Sqrt[1], Sqrt[-1]]
+  sympy:
+    in: (sqrt(1) * sqrt(-1))
+  mpmath:
+    in: (sqrt(1) * sqrt(-1))
+  sage:
+    in: (sqrt(1) * sqrt(-1))
+  rust:
+    in: (sqrt(n(1)) * sqrt(n(-1)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-4-over-9:
+  epsil:
+    in: Sqrt(-4 / 9)
+    out: 2 / 3 * i
+  tex:
+    in: \sqrt{-\frac{4}{9}}
+    out: \frac{2}{3}i
+  fullform:
+    in: Sqrt[Rational[-4, 9]]
+  wolfram:
+    in: Sqrt[Rational[-4, 9]]
+  sympy:
+    in: sqrt(Rational(-4, 9))
+  mpmath:
+    in: sqrt((mpf(-4)/9))
+  sage:
+    in: sqrt((-4/9))
+  rust:
+    in: sqrt(rational(n(-4), n(9)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-1-half:
+  epsil:
+    in: Sqrt(-1 / 2)
+    out: Sqrt(2) / 2 * i
+  tex:
+    in: \sqrt{-\frac{1}{2}}
+    out: \frac{\sqrt{2}}{2}i
+  fullform:
+    in: Sqrt[Rational[-1, 2]]
+  wolfram:
+    in: Sqrt[Rational[-1, 2]]
+  sympy:
+    in: sqrt(Rational(-1, 2))
+  mpmath:
+    in: sqrt((mpf(-1)/2))
+  sage:
+    in: sqrt((-1/2))
+  rust:
+    in: sqrt(rational(n(-1), n(2)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-1:
+  epsil:
+    in: Sqrt(-1)
+    out: i
+  tex:
+    in: \sqrt{-1}
+    out: i
+  fullform:
+    in: Sqrt[-1]
+  wolfram:
+    in: Sqrt[-1]
+  sympy:
+    in: sqrt(-1)
+  mpmath:
+    in: sqrt(-1)
+  sage:
+    in: sqrt(-1)
+  rust:
+    in: sqrt(n(-1))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-12-over-5:
+  epsil:
+    in: Sqrt(-12 / 5)
+    out: 2 / 5 * Sqrt(15) * i
+  tex:
+    in: \sqrt{-\frac{12}{5}}
+    out: \frac{2\sqrt{15}}{5}i
+  fullform:
+    in: Sqrt[Rational[-12, 5]]
+  wolfram:
+    in: Sqrt[Rational[-12, 5]]
+  sympy:
+    in: sqrt(Rational(-12, 5))
+  mpmath:
+    in: sqrt((mpf(-12)/5))
+  sage:
+    in: sqrt((-12/5))
+  rust:
+    in: sqrt(rational(n(-12), n(5)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.

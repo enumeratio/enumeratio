@@ -1,0 +1,7 @@
+- id: distributes-a-list-of-functions-over-argument
+  expr: [Through, [[List, f, g], x]]
+  expected: [List, [f, x], [g, x]]
+- id: distributes-an-add-of-functions-evaluates-sum
+  expr: [Through, [[Add, f, g], x]]
+  expected: [Add, [g, x], [f, x]]
+  category: Scope

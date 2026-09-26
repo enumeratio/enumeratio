@@ -52,8 +52,10 @@ release. Add a tool name to select part of the graph. For example, run
 ## Reference entries
 
 - Each head's entry is `reference/<Head>.yaml` in the package that declares it
-  (`packages/reference/entries/` for compute-engine's own heads). Every example has an `id`:
-  lowercase words joined by `-`, unique within the head, kept when the example is edited.
+  (`packages/reference/entries/` for compute-engine's own heads): what the head is, everything
+  but its examples. Those are a list in `<Head>.examples.yaml` beside it (no file when there are
+  none). Every example has an `id`: lowercase words joined by `-`, unique within the head, kept
+  when the example is edited.
 - The YAML is read through `@enumeratio/entry`'s `parseYaml` and written through
   `@enumeratio/entry/node`'s `writeYaml`: the strict-schema structure, laid out by oxfmt, so a
   record is what `vp fmt` makes of it. Hand edits are fine; `vp fmt` or
@@ -118,11 +120,12 @@ release. Add a tool name to select part of the graph. For example, run
   classified example explains goes to a rolling `oracle Plausible findings: <ecosystem>` issue
   for triage. Weekly it rescans the Oscar, Mathlib, Sage (in Docker, with the adeles and
   adic goldens) and Wolfram lanes the same way and follows every crosswalk link. Examples
-  too many to render (grid points, edge cases) are still data: `hidden` examples in the
-  head's YAML, tested and scanned like the rest. A lane fails when a row it had answered changes verdict,
-  classification or input, not on a float's printed digits. A row answered for the first time
-  (a new example the weekly kernels hadn't seen) is a warning, and every lane uploads what it
-  accepted as an `oracle-records-<system>` artifact to apply and classify without the kernel. Wolfram runs on an on-demand license, the
+  too many to render (grid points, edge cases) are still data: `role: test` examples in the
+  head's `<Head>.examples.yaml`, tested and scanned like the rest. A lane fails when a row it
+  had answered changes verdict, classification or input, not on a float's printed digits. A
+  row answered for the first time (a new example the weekly kernels hadn't seen) is a
+  warning, and every lane uploads what it accepted as an `oracle-records-<system>` artifact
+  to apply and classify without the kernel. Wolfram runs on an on-demand license, the
   `WOLFRAMSCRIPT_ENTITLEMENTID` secret, and skips without it. The nightly-fixup routine
   (06:15 UTC) reads these runs, files `CI failure: <workflow> › <job>` issues, and opens fix
   PRs — it never merges.

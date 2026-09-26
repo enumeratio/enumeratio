@@ -10,19 +10,8 @@ details:
   - Reuses the existing log-gamma continuation ([[LogGamma]], `packages/symbols/analysis/analytic/src/loggamma.ts`) rather than deriving one — $\vartheta$ is just its imaginary part on the $\operatorname{Re} = \tfrac14$ line, minus the linear term.
   - Real $t$ only; a complex argument stays symbolic. $\vartheta(0) = 0$ exactly (no `N()` needed) since $\ln\Gamma(\tfrac14)$ is real.
   - "Numeric otherwise: `N()`, or an inexact $t$, is required to reduce."
-examples:
-  - id: riemannsiegeltheta-1p5
-    expr: [RiemannSiegelTheta, 1.5]
-    expected: -2.19819085737941
-  - id: n-riemannsiegeltheta-10
-    expr: [N, [RiemannSiegelTheta, 10]]
-    expected: -3.0670743962898954
-  - id: riemannsiegeltheta-0
-    expr: [RiemannSiegelTheta, 0]
-    expected: 0
-    category: Properties
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

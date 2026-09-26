@@ -81,12 +81,28 @@ export const HEADS: Record<string, string> = {
   Rule: "Rule",
   // Same argument order both sides: expr, vars, [domain], [n].
   FindInstance: "FindInstance",
+  // Same argument order and `{f, cons}`/`{n, a, b}` shapes both sides -- see
+  // @enumeratio/analytic's optimize.ts, nminmax.ts, nsum.ts.
+  Minimize: "Minimize",
+  Maximize: "Maximize",
+  MinValue: "MinValue",
+  MaxValue: "MaxValue",
+  NMinimize: "NMinimize",
+  NMaximize: "NMaximize",
+  NSum: "NSum",
   And: "And",
   Or: "Or",
   Not: "Not",
   List: "List",
   Tuple: "List", // Wolfram has no tuple; `{k, 0, 4}` is also how it spells an iterator
   Function: "Function",
+  // Holonomic reductions (@enumeratio/analytic's difference-root.ts / differential-root.ts):
+  // plain renames — the `Function[{y, n}, …][n]` operator-application shape is a SPECIAL case
+  // below (see `Apply`), and `Function` itself needs one too (see `Function` in SPECIAL).
+  DifferenceRoot: "DifferenceRoot",
+  DifferenceRootReduce: "DifferenceRootReduce",
+  DifferentialRoot: "DifferentialRoot",
+  DifferentialRootReduce: "DifferentialRootReduce",
   Sum: "Sum",
   Product: "Product",
   // elementary
@@ -281,6 +297,7 @@ export const HEADS: Record<string, string> = {
   Intersection: "Intersection",
   SetMinus: "Complement",
   Dot: "Dot",
+  Covariance: "Covariance",
   Mean: "Mean",
   Median: "Median",
   Commonest: "Commonest",
@@ -405,6 +422,14 @@ export const HEADS: Record<string, string> = {
   NExpectation: "NExpectation",
   NProbability: "NProbability",
   Conditioned: "Conditioned",
+  // Sixth-wave (deferred) distribution heads (@enumeratio/statistics/src/distributions-6.ts) —
+  // identity here already.
+  MultinomialDistribution: "MultinomialDistribution",
+  MultinormalDistribution: "MultinormalDistribution",
+  MultivariatePoissonDistribution: "MultivariatePoissonDistribution",
+  ProbabilityDistribution: "ProbabilityDistribution",
+  ParameterMixtureDistribution: "ParameterMixtureDistribution",
+  HistogramDistribution: "HistogramDistribution",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
@@ -485,6 +510,24 @@ export const HEADS: Record<string, string> = {
   CarlsonRD: "CarlsonRD",
   CarlsonRJ: "CarlsonRJ",
   CarlsonRG: "CarlsonRG",
+  // The Jacobi elliptic family (jacobi-elliptic.ts) and Jacobi theta functions (theta.ts) —
+  // same names and (u,m)/(a,u,q) argument order as Wolfram, m = k² throughout.
+  JacobiSN: "JacobiSN",
+  JacobiCN: "JacobiCN",
+  JacobiDN: "JacobiDN",
+  JacobiCD: "JacobiCD",
+  JacobiCS: "JacobiCS",
+  JacobiDC: "JacobiDC",
+  JacobiDS: "JacobiDS",
+  JacobiNC: "JacobiNC",
+  JacobiND: "JacobiND",
+  JacobiNS: "JacobiNS",
+  JacobiSC: "JacobiSC",
+  JacobiSD: "JacobiSD",
+  JacobiAmplitude: "JacobiAmplitude",
+  JacobiZN: "JacobiZN",
+  EllipticTheta: "EllipticTheta",
+  EllipticThetaPrime: "EllipticThetaPrime",
   // The hypergeometric heads: 1F1 and 2F1 themselves are compute-engine natives (never
   // reach here via `declaredNames()`), so only what hypergeometric.ts / hypergeometric-ustar.ts
   // add. Hypergeometric3F2Regularized has no dedicated Wolfram head — it maps into the generic
@@ -787,9 +830,12 @@ export const FOREIGN: Record<string, string> = {
   Perimeter: "the perimeter of a geometric region",
   Depth: "the number of indices needed to reach any part of an expression",
   Order: "the canonical-order comparison Order[a, b]",
+  Composition: "a composition of functions, Composition[f, g]",
+  Word: "the token specification used by Read and Find",
   Restricted: "an Interpreter form narrowed by a condition",
-  // Ours is the carrier/collection constructor (GaussianIntegers([2, 3])); Wolfram's is an
-  // option flag (IsPrime[n, GaussianIntegers -> True]), never a callable on its own.
+  // Ours is the carrier's plural type-space symbol (design/domains.md §2 — Element(x,
+  // GaussianIntegers) checks x's carrier); Wolfram's is an option flag (IsPrime[n,
+  // GaussianIntegers -> True]), never a value on its own.
   GaussianIntegers: "the GaussianIntegers -> True/False option several number-theory functions take",
   // Nearly ours, which is the trap: Wolfram's is a raster image built from a pixel array or
   // a graphics object, never from a URI, so `Image["data:image/png;…"]` is not an image over
@@ -902,6 +948,42 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
       .slice(3, 5)
       .map((x) => toWolfram(x))
       .join(", ")}], ${toWolfram(a[5])}]`,
+  // compute-engine's `Function` is `[body, ...params]`, canonicalized with `body` wrapped in
+  // its own scoping `Block` (see function-utils.d.ts) — CE-internal, not something Wolfram's
+  // own `Function` ever shows, so it's unwrapped here. Wolfram's shape is `Function[{params},
+  // body]` (or bare `Function[body]` for the anonymous-parameter case, 0 params). Needed for
+  // any multi-parameter Function literal, holonomic reductions included.
+  // A single parameter is Wolfram's own bare form (its FullForm agrees: `Function[x, x^2]`,
+  // not `Function[{x}, x^2]` — both parse, but the bare form is canonical there); 2+ needs the
+  // list.
+  Function: (a) => {
+    const [rawBody, ...params] = a;
+    const body = Array.isArray(rawBody) && rawBody[0] === "Block" ? rawBody[1] : rawBody;
+    if (params.length === 0) return `Function[${toWolfram(body)}]`;
+    if (params.length === 1) return `Function[${toWolfram(params[0])}, ${toWolfram(body)}]`;
+    return `Function[List[${params.map((p) => toWolfram(p)).join(", ")}], ${toWolfram(body)}]`;
+  },
+  // compute-engine boxes a call whose head is itself a compound expression (rather than a
+  // bare symbol) as `Apply(head, arg)` — see difference-root.ts / differential-root.ts, whose
+  // `DifferenceRoot(fn)(n)` / `DifferentialRoot(fn)(x)` take exactly this shape, and whose ODE
+  // equations write `y'(x)` as `Apply(Derivative(y, 1), x)`. Wolfram spells all of these the
+  // way it spells any curried call: `head[arg]`, not `Apply[head, arg]` (genuine `Apply` —
+  // replacing a list's head — is a different operation there). Only these heads are curried
+  // this way today, so this is narrowly scoped to them; every other `Apply` call still means
+  // Wolfram's own `Apply`.
+  Apply: (a) => {
+    const [head, ...rest] = a;
+    const curried = ["DifferenceRoot", "DifferentialRoot", "Derivative"];
+    if (Array.isArray(head) && curried.includes(head[0] as string)) {
+      return `${toWolfram(head)}[${rest.map((r) => toWolfram(r)).join(", ")}]`;
+    }
+    return call("Apply", a);
+  },
+  // `Derivative(y, k)`: compute-engine's order is (function, order); Wolfram's `Derivative[k]`
+  // is the order-k derivative OPERATOR, applied to the function as its own curried call:
+  // `Derivative[k][y]`. Bare — the `Apply` case above adds the further `[x]` when this is
+  // itself applied to a point, as difference-root.ts / differential-root.ts always do.
+  Derivative: (a) => `Derivative[${toWolfram(a[1])}][${toWolfram(a[0])}]`,
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */
@@ -945,7 +1027,12 @@ function symbolToWolfram(s: string): string {
   if (slot) return `Slot[${slot[1] || 1}]`;
   const subscript = /^([A-Za-z][A-Za-z0-9]*)_([A-Za-z0-9]+)$/.exec(s);
   if (subscript) return `Subscript[${subscript[1]}, ${subscript[2]}]`;
-  // A head passed as a value (`Scan(xs, Add)`) takes its Wolfram name too.
+  // A head passed as a value (`Scan(xs, Add)`) takes its Wolfram name too. FOREIGN is
+  // deliberately NOT consulted here: `GaussianIntegers` bare is genuinely ambiguous between
+  // our own carrier's type-space symbol and Wolfram's real option flag (`PrimeQ[n,
+  // GaussianIntegers -> True]` has to keep the UNPREFIXED name, since that IS the real
+  // option) -- `applyHead` below still contextualises a CALL to one of our own heads, which
+  // is the case that actually needs it.
   return SYMBOLS[s] ?? HEADS[s] ?? s;
 }
 

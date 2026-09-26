@@ -1,0 +1,13 @@
+- id: a-tree-is-acyclic
+  expr:
+    [
+      IsAcyclicGraph,
+      [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]],
+    ]
+  expected: True
+- id: a-cycle-is-not-acyclic
+  expr: [IsAcyclicGraph, [CycleGraph, 4]]
+  expected: False
+- id: a-directed-2-cycle-is-a-cycle
+  expr: [IsAcyclicGraph, [Graph, [List, 1, 2], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1]]]]
+  expected: False

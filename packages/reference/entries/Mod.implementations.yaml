@@ -235,6 +235,36 @@ periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer:
   rust:
     in: equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))
     out: "true"
+periodicity-with-a-zero-modulus-on-one-side:
+  epsil:
+    in: 35 % 13 == (17 + 3 * 5) % 0
+    out: False
+  tex:
+    in: 35\bmod13=(17+3\times5)\bmod0
+    out: \bot
+  traditional:
+    in: 35\bmod13=(17+3\times5)\bmod0
+    out: \mathrm{False}
+  fullform:
+    in: Equal[Mod[35, 13], Mod[Plus[17, Times[3, 5]], 0]]
+  wolfram:
+    in: (Mod[35, 13] == Mod[Plus[17, Times[3, 5]], 0])
+  sympy:
+    in: enumeratio_equal((35 % 13), ((17 + (3 * 5)) % 0))
+  sage:
+    in: bool((35 % 13) == ((17 + (3 * 5)) % 0))
+  oscar:
+    in: (mod(35, 13) == mod((17 + (3 * 5)), 0))
+  julia:
+    in: (mod(35, 13) == mod((17 + (3 * 5)), 0))
+  mathlib4:
+    in: "(decide (((35 : ℤ) % 13) = (((17 + (3 * 5)) : ℤ) % 0)))"
+  rust:
+    in: equal(mod_floor(n(35), n(13)), mod_floor((n(17) + (n(3) * n(5))), n(0)))
+    out: "panic: attempt to divide by zero"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline on the zero-modulus side: compute-engine answers "NaN", and Rust gives panic: attempt to divide by zero, same as the plain zero-modulus example above.'
 a-third-argument-offsets-the-range-the-result:
   epsil:
     in: 17 % 5 % 1
@@ -379,7 +409,7 @@ a-10-001-digit-dividend:
   wolfram:
     in: Mod[Power[10, 10000], 10007]
   sympy:
-    in: (((10)**10000) % 10007)
+    in: ((S(10)**10000) % 10007)
     out: "6333"
   sage:
     in: (((10)^10000) % 10007)

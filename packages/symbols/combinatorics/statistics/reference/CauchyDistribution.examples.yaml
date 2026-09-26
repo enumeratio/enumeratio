@@ -1,0 +1,13 @@
+- id: cauchy-pdf-exact
+  expr: [PDF, [CauchyDistribution, 0, 1], 0]
+  expected: [Divide, 1, Pi]
+- id: cauchy-cdf-exact
+  expr: [CDF, [CauchyDistribution, 0, 1], 1]
+  expected: [Rational, 3, 4]
+- id: cauchy-mean-indeterminate
+  expr: [Mean, [CauchyDistribution, 0, 1]]
+  expected: Indeterminate
+  category: Possible issues
+- id: cauchy-default-is-standard
+  expr: [CauchyDistribution]
+  expected: [CauchyDistribution, 0, 1]

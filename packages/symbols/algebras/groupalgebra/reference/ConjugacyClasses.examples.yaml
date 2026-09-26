@@ -1,0 +1,18 @@
+- id: abelian-one-class-per-element
+  expr: [GroupCentreDimension, [CyclicGroup, 6]]
+  expected: 6
+  caption: "abelian: one class per element"
+- id: d-3-cong-s-3
+  expr: [GroupCentreDimension, [DihedralGroup, 3]]
+  expected: 3
+  caption: $D_3 \cong S_3$
+- id: 4-6-2
+  expr: [GroupCentreDimension, [DihedralGroup, 4]]
+  expected: 5
+  caption: $(4+6)/2$
+  category: Properties
+- id: direct-products-work-too
+  expr: [GroupOrder, [GroupDirectProduct, [CyclicGroup, 2], [CyclicGroup, 3]]]
+  expected: 6
+  caption: direct products work too
+  category: Scope

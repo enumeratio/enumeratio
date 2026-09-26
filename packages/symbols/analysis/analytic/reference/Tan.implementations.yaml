@@ -619,3 +619,45 @@ to-30-significant-digits-every-one-correctly:
   rust:
     in: nf(tan(n(1)))
     out: "1.557407724654902"
+a-pole-at-negative-pi-over-2-too:
+  epsil:
+    in: Tan(Pi / -2)
+    out: ComplexInfinity
+  tex:
+    in: \tan(-\frac{\pi}{2})
+    out: \tilde\infty
+  fullform:
+    in: Tan[Divide[Pi, -2]]
+  wolfram:
+    in: Tan[Divide[Pi, -2]]
+  sympy:
+    in: tan((S(pi) / -2))
+  sage:
+    in: tan((pi / -2))
+  rust:
+    in: tan((x(std::f64::consts::PI) / n(-2)))
+    out: "-1.633123935319537e16"
+    verdict: inconclusive
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and Rust's f64 tan at this pole gives a huge finite float (1/cos(pi/2) never quite reaches an exact 0) rather than the pole itself."
+a-pole-reached-through-periodicity-unreduced:
+  epsil:
+    in: Tan(Pi / -2 + Pi)
+    out: ComplexInfinity
+  tex:
+    in: \tan(-\frac{\pi}{2}+\pi)
+    out: \tilde\infty
+  fullform:
+    in: Tan[Plus[Divide[Pi, -2], Pi]]
+  wolfram:
+    in: Tan[Plus[Divide[Pi, -2], Pi]]
+  sympy:
+    in: tan(((S(pi) / -2) + pi))
+  sage:
+    in: tan(((pi / -2) + pi))
+  rust:
+    in: tan(((x(std::f64::consts::PI) / n(-2)) + x(std::f64::consts::PI)))
+    out: "1.633123935319537e16"
+    verdict: inconclusive
+    kind: undefined-form
+    note: "Both decline: compute-engine answers ComplexInfinity, and Rust's f64 tan at this pole gives a huge finite float (1/cos(pi/2) never quite reaches an exact 0) rather than the pole itself."

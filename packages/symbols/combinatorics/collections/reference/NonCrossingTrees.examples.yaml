@@ -1,0 +1,5 @@
+- id: count-noncrossingtrees-5-273-binom-15-5-11
+  expr: [Count, [NonCrossingTrees, 5]]
+  expected: 273
+  category: Basic
+  caption: $Count(NonCrossingTrees(5)) = 273 = \binom{15}{5}/11$, A001764

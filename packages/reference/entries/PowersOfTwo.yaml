@@ -10,7 +10,6 @@ details:
   - OEIS A000079.
   - Membership goes through [[Element]] by the bit trick $x \mathbin{\&} (x-1) = 0$ -- $Element(64, PowersOfTwo)$ is true, $Element(48, PowersOfTwo)$ is false.
   - $Count(Subsets(n)) = At(PowersOfTwo, n+1)$; see [[Subsets]].
-examples: []
 enumerate:
   expr: Take(PowersOfTwo, 20)
 seeAlso:

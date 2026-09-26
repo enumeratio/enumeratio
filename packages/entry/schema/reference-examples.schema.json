@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enumeratio.dev/schema/reference-examples.schema.json",
+  "title": "ReferenceExamples",
+  "description": "One compute-engine head's reference/<Head>.examples.yaml: its examples, in page order.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/ReferenceExample"
+  },
+  "$defs": {
+    "MathJSON": {
+      "description": "A MathJSON expression: form-agnostic compute-engine input/output.",
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MathJSON"
+          }
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "ReferenceExample": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "maxLength": 48
+        },
+        "expr": {
+          "$ref": "#/$defs/MathJSON"
+        },
+        "expected": {
+          "$ref": "#/$defs/MathJSON"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "role": {
+          "enum": ["demo", "test"]
+        },
+        "aspirational": {
+          "type": "boolean"
+        },
+        "volatile": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "group": {
+          "type": "string",
+          "description": "Cases of one example: those sharing a group show as one cycling card."
+        },
+        "others": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "string"
+              },
+              "output": {
+                "type": "string"
+              },
+              "verdict": {
+                "enum": ["agree", "disagree", "inconclusive", "error"]
+              },
+              "kind": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              },
+              "tolerance": {
+                "type": "number"
+              },
+              "issue": {
+                "type": "integer"
+              },
+              "shown": {
+                "type": "string"
+              },
+              "tex": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string"
+                  },
+                  "output": {
+                    "type": "string"
+                  }
+                },
+                "required": ["input", "output"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["input", "output", "verdict"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["id", "expr", "expected"],
+      "additionalProperties": false
+    },
+    "Reference": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "relation": {
+          "enum": ["partial", "aggregate", "conceptual"]
+        },
+        "arity": {
+          "type": "integer"
+        }
+      },
+      "required": ["system", "identity"],
+      "additionalProperties": false
+    }
+  }
+}

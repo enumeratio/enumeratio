@@ -1,0 +1,8 @@
+- id: a-5-vertex-path
+  expr: [VertexDegree, [PathGraph, 5]]
+  expected: [List, 1, 2, 2, 2, 1]
+  caption: A 5-vertex path — the ends have degree 1
+- id: a-path-along-named-vertices
+  expr: [PathGraph, [List, a, b, c]]
+  expected: [Graph, [List, a, b, c], [List, [UndirectedEdge, a, b], [UndirectedEdge, b, c]]]
+  caption: A path along named vertices

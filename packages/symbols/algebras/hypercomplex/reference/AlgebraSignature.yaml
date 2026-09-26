@@ -10,19 +10,6 @@ details:
   - Together with the commutation rule this is all that defines the algebra
   - $\mathrm{Cl}(p,q)$ reads as $p$ entries of $+1$ then $q$ of $-1$
   - A $0$ entry marks a nilpotent generator — the dual and Grassmann families
-examples:
-  - id: algebrasignature-quaternions
-    expr: [AlgebraSignature, Quaternions]
-    expected: [List, -1, -1]
-  - id: cl-2-1
-    expr: [AlgebraSignature, [CliffordAlgebra, 2, 1]]
-    expected: [List, 1, 1, -1]
-    caption: $\mathrm{Cl}(2,1)$
-  - id: nilpotent
-    expr: [AlgebraSignature, DualNumbers]
-    expected: [List, 0]
-    caption: nilpotent
-    category: Scope
 seeAlso:
   - Basis
   - AlgebraDimension

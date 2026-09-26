@@ -1,0 +1,12 @@
+- id: the-one-line-word-312
+  expr: [FirstDescent, [Permutation, [List, 3, 1, 2]]]
+  expected: 1
+  caption: the one-line word $312$
+- id: the-one-line-word-312-as-a-plain-list
+  expr: [FirstDescent, [List, 3, 1, 2]]
+  expected: 1
+  caption: the one-line word $312$, as a plain list
+- id: the-one-line-word-2413
+  expr: [FirstDescent, [Permutation, [List, 2, 4, 1, 3]]]
+  expected: 2
+  caption: the one-line word $2413$

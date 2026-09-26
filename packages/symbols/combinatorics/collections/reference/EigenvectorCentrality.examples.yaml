@@ -1,0 +1,10 @@
+- id: path-4-matches-wolfram
+  expr:
+    [
+      EigenvectorCentrality,
+      [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]],
+    ]
+  expected: [List, 0.190983005625053, 0.309016994374947, 0.309016994374947, 0.190983005625053]
+- id: star-4-hub-is-most-central
+  expr: [EigenvectorCentrality, [StarGraph, 4]]
+  expected: [List, 0.366025403784439, 0.211324865405187, 0.211324865405187, 0.211324865405187]

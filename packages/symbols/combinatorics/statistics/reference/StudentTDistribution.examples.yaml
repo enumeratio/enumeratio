@@ -1,0 +1,13 @@
+- id: studentt-pdf-exact
+  expr: [PDF, [StudentTDistribution, 5], 0]
+  expected: [Divide, [Multiply, [Sqrt, 5], [Gamma, 3]], [Multiply, 5, [Gamma, [Rational, 5, 2]], [Sqrt, Pi]]]
+- id: studentt-cdf-symmetric
+  expr: [CDF, [StudentTDistribution, 5], 0]
+  expected: [Rational, 1, 2]
+- id: studentt-mean-exact
+  expr: [Mean, [StudentTDistribution, 5]]
+  expected: 0
+- id: studentt-variance-exact
+  expr: [Variance, [StudentTDistribution, 5]]
+  expected: [Rational, 5, 3]
+  caption: Cross-checked against wolframscript's N[Variance[StudentTDistribution[5]]] = 1.66666...

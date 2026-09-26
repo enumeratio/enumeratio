@@ -109,10 +109,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 45,
   },
   {
-    head: "DifferenceRootReduce",
-    uses: 45,
-  },
-  {
     head: "ParametricPlot3D",
     uses: 41,
   },
@@ -127,10 +123,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "MatrixPlot",
     uses: 37,
-  },
-  {
-    head: "DifferentialRootReduce",
-    uses: 36,
   },
   {
     head: "GraphicsComplex",
@@ -185,10 +177,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 26,
   },
   {
-    head: "ProbabilityDistribution",
-    uses: 26,
-  },
-  {
     head: "Blend",
     uses: 25,
   },
@@ -205,23 +193,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 24,
   },
   {
-    head: "ParameterMixtureDistribution",
-    uses: 23,
-  },
-  {
     head: "EstimatedDistribution",
     uses: 22,
   },
   {
-    head: "HistogramDistribution",
-    uses: 21,
-  },
-  {
     head: "Inactive",
-    uses: 21,
-  },
-  {
-    head: "Minimize",
     uses: 21,
   },
   {
@@ -381,10 +357,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 13,
   },
   {
-    head: "MultivariatePoissonDistribution",
-    uses: 13,
-  },
-  {
     head: "Options",
     uses: 13,
   },
@@ -414,10 +386,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Hyperlink",
-    uses: 12,
-  },
-  {
-    head: "Maximize",
     uses: 12,
   },
   {
@@ -465,14 +433,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "MultinomialDistribution",
-    uses: 11,
-  },
-  {
-    head: "MultinormalDistribution",
-    uses: 11,
-  },
-  {
     head: "PoissonProcess",
     uses: 11,
   },
@@ -501,19 +461,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "JacobiCN",
-    uses: 10,
-  },
-  {
-    head: "JacobiSN",
-    uses: 10,
-  },
-  {
     head: "ListPolarPlot",
-    uses: 10,
-  },
-  {
-    head: "NSum",
     uses: 10,
   },
   {
@@ -554,10 +502,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Cuboid",
-    uses: 9,
-  },
-  {
-    head: "EllipticTheta",
     uses: 9,
   },
   {
@@ -745,14 +689,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "JacobiCS",
-    uses: 7,
-  },
-  {
-    head: "JacobiSC",
-    uses: 7,
-  },
-  {
     head: "KernelMixtureDistribution",
     uses: 7,
   },
@@ -782,10 +718,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "MeshRegion",
-    uses: 7,
-  },
-  {
-    head: "NMinimize",
     uses: 7,
   },
   {
@@ -846,18 +778,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InfiniteLine",
-    uses: 6,
-  },
-  {
-    head: "JacobiAmplitude",
-    uses: 6,
-  },
-  {
-    head: "JacobiCD",
-    uses: 6,
-  },
-  {
-    head: "JacobiNS",
     uses: 6,
   },
   {
@@ -954,10 +874,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InverseJacobiCN",
-    uses: 5,
-  },
-  {
-    head: "JacobiZN",
     uses: 5,
   },
   {
@@ -1434,10 +1350,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LocationEquivalenceTest",
-    uses: 3,
-  },
-  {
-    head: "MaxValue",
     uses: 3,
   },
   {

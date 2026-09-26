@@ -6,15 +6,6 @@ signatures:
   - call: CycleGraph(n)
     description: $C_n$ ($n \geq 3$), vertices $1, \dots, n$, each joined to its neighbours around the ring.
     library: enumeratio-collections
-examples:
-  - id: c5-is-not-bipartite
-    expr: [IsBipartiteGraph, [CycleGraph, 5]]
-    expected: False
-    caption: An odd cycle is never bipartite
-  - id: c6-is-bipartite
-    expr: [IsBipartiteGraph, [CycleGraph, 6]]
-    expected: True
-    caption: An even cycle is bipartite
 seeAlso:
   - PathGraph
   - IsBipartiteGraph

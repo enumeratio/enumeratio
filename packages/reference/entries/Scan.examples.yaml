@@ -1,0 +1,42 @@
+- id: scan-list-1-2-3-4-add
+  expr: [Scan, [List, 1, 2, 3, 4], Add]
+  expected: [List, 1, 3, 6, 10]
+- id: the-running-maximum
+  expr: [Scan, [List, 1, 2, 3, 4], Max]
+  expected: [List, 1, 2, 3, 4]
+  category: Scope
+  caption: The running maximum
+- id: the-seeded-form-is-still-the-same-length-as-xs
+  expr: [Scan, [List, 1, 2, 3], Add, 10]
+  expected: [List, 11, 13, 16]
+  category: Possible issues
+  caption: The seeded form is still the same length as $xs$ — the seed isn't an output element
+- id: the-shape-of-a-running-fold
+  expr: [Scan, [List, a, b, c], f]
+  expected: [List, a, [f, a, b], [f, [f, a, b], c]]
+  caption: The shape of a running fold
+- id: running-products-the-factorials
+  expr: [Scan, [List, 1, 2, 3, 4, 5], Multiply]
+  expected: [List, 1, 2, 6, 24, 120]
+  category: Scope
+  caption: "Running products: the factorials"
+- id: running-sums-of-symbolic-elements-wolfram-s
+  expr: [Scan, [List, a, b, c], Add]
+  expected: [List, a, [Add, a, b], [Add, a, b, c]]
+  category: Scope
+  caption: Running sums of symbolic elements -- Wolfram's Accumulate
+- id: the-running-minimum
+  expr: [Scan, [List, 3, 1, 4, 1, 5], Min]
+  expected: [List, 3, 1, 1, 1, 1]
+  category: Scope
+  caption: The running minimum
+- id: an-empty-list-scans-to-an-empty-list
+  expr: [Scan, [List], Add]
+  expected: [List]
+  category: Scope
+  caption: An empty list scans to an empty list
+- id: the-values-of-every-prefix-of-the-binary-digits
+  expr: [Scan, [List, 1, 0, 1, 1], [Function, [Add, [Multiply, 2, _1], _2]]]
+  expected: [List, 1, 2, 5, 11]
+  category: Applications
+  caption: The values of every prefix of the binary digits 1011

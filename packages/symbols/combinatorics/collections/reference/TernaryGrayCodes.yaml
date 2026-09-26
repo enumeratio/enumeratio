@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection; the count is the closed form $3^n$, but the ORDER is the point — it is the standard reflected-Gray-code recursion (each digit's block traversed forward or reversed in turn), not lexicographic.
   - Each element is the digit string itself, as a list over $\{0,1,2\}$.
   - $At$ unranks directly into that Gray-code order, so consecutive indices always differ in exactly one digit, by exactly 1.
-examples:
-  - id: count-ternarygraycodes-4-3-4-81
-    expr: [Count, [TernaryGrayCodes, 4]]
-    expected: 81
-    category: Basic
-    caption: $Count(TernaryGrayCodes(4)) = 3^4 = 81$
 enumerate:
   expr: TernaryGrayCodes(4)
   columns: Descents, Ascents

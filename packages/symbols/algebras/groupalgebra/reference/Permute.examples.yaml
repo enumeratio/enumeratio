@@ -1,0 +1,16 @@
+- id: by-a-cycle
+  expr: [Permute, [List, a, b, c, d], [Cycles, [List, [List, 1, 3, 2]]]]
+  expected: [List, b, c, a, d]
+- id: by-disjoint-cycles
+  expr: [Permute, [List, a, b, c, d], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]
+  expected: [List, c, d, a, b]
+  category: Scope
+- id: by-a-one-line-word
+  expr: [Permute, [List, a, b, c, d], [List, 2, 3, 4, 1]]
+  expected: [List, d, a, b, c]
+  category: Scope
+- id: by-a-permutation-group
+  expr: [Permute, [List, a, b, c], [PermutationGroup, [List, [Cycles, [List, [List, 1, 2, 3]]]]]]
+  expected: [List, [List, a, b, c], [List, c, a, b], [List, b, c, a]]
+  caption: one permuted copy per element of the cyclic group of order 3
+  category: Applications

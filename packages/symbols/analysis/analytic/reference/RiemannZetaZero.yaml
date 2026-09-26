@@ -10,20 +10,8 @@ details:
   - $t_k$ is found by scanning [[RiemannSiegelZ]] for sign changes along the real line from $t \approx 0$, counting crossings as it goes, then bisecting the bracket once the $k$-th crossing turns up. This counts crossings directly rather than bracketing between Gram points, so it isn't exposed to a Gram's-law failure (the first is at Gram index 126) the way a Gram-point method would be.
   - 'Supported range: $k$ such that $t_k \le 2000$ — comfortably past the first 1000 zeros, and well beyond every example here. Above that the call is left symbolic rather than guess further out with an unvalidated scan; $k < 1$ is likewise left symbolic, and a non-integer $k$ is a type error.'
   - Numeric only (`N()` or an inexact operand) — the real part is always exactly $\tfrac12$; the search cost is in the imaginary part.
-examples:
-  - id: the-first-nontrivial-zero-frac-12-14-1347-i
-    expr: [N, [RiemannZetaZero, 1]]
-    expected: [Complex, 0.5, 14.134725141734693]
-    caption: The first nontrivial zero, $\tfrac12 + 14.1347\ldots i$
-  - id: n-riemannzetazero-2
-    expr: [N, [RiemannZetaZero, 2]]
-    expected: [Complex, 0.5, 21.022039638771556]
-  - id: n-riemannzetazero-10
-    expr: [N, [RiemannZetaZero, 10]]
-    expected: [Complex, 0.5, 49.7738324776723]
-    category: Scope
 primitive: numeric
-implementations:
+bindings:
   - origin: native
     form: typescript
     environment: engine

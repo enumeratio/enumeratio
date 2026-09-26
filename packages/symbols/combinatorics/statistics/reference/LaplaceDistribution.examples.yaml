@@ -1,0 +1,12 @@
+- id: laplace-pdf-exact
+  expr: [PDF, [LaplaceDistribution, 0, [Rational, 1, 2]], 0]
+  expected: 1
+- id: laplace-cdf-exact
+  expr: [CDF, [LaplaceDistribution, 0, [Rational, 1, 2]], 0]
+  expected: [Rational, 1, 2]
+- id: laplace-mean-exact
+  expr: [Mean, [LaplaceDistribution, 0, [Rational, 1, 2]]]
+  expected: 0
+- id: laplace-variance-exact
+  expr: [Variance, [LaplaceDistribution, 0, [Rational, 1, 2]]]
+  expected: [Rational, 1, 2]

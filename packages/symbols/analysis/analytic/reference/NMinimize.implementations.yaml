@@ -1,0 +1,18 @@
+a-quartic-with-two-symmetric-minima:
+  epsil:
+    in: NMinimize([x ^ 4 - x ^ 2, x >= -2 && x <= 2], x)
+    out: "[-0.25, [Rule(x, -0.707_106_778_558_382)]]"
+  tex:
+    in: \mathrm{NMinimize}(\bigl\lbrack x^4-x^2, x\ge-2\land x\le2\bigr\rbrack, x)
+    out: \bigl\lbrack-0.25, \bigl\lbrack\mathrm{Rule}(x, -0.707\,106\,778\,558\,382)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: NMinimize[List[Subtract[Power[x, 4], Power[x, 2]], And[GreaterEqual[x, -2], LessEqual[x, 2]]], x]
+declines-without-a-bounded-constraint:
+  epsil:
+    in: NMinimize(x ^ 2, x)
+    out: NMinimize(x ^ 2, x)
+  tex:
+    in: \mathrm{NMinimize}(x^2, x)
+    out: \mathrm{NMinimize}(x^2, x)
+  fullform:
+    in: NMinimize[Power[x, 2], x]

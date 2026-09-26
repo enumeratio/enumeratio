@@ -1,0 +1,3 @@
+- id: vertex-and-edge-count
+  expr: [Last, [List, [SeedRandom, 9], [VertexCount, [RandomGraph, [List, 6, 8]]]]]
+  expected: 6

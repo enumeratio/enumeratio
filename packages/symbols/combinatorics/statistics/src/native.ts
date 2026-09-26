@@ -16,7 +16,7 @@ export interface NativeStatistic {
 export const NATIVE_TO_ENGINE: readonly NativeStatistic[] = [
   {
     head: "Length",
-    on: "IntegerPartitions",
+    on: "IntegerPartition",
     why: "The number of parts is compute-engine's Length of the parts list — the same function, not a redefinition.",
   },
 ];

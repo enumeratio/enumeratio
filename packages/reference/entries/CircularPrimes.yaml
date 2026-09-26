@@ -9,7 +9,6 @@ details:
   - A lazy indexed collection; conjectured but unproven that only finitely many beyond the repunit primes $R_n$ (all-1s) exist at all, and separately whether infinitely many repunit primes exist is itself open, so $Count(CircularPrimes) = NaN$. OEIS A068652. A digit-0 prime is excluded (a rotation would start with a leading zero).
   - $At(CircularPrimes, k)$ unranks by scanning forward, testing every rotation's primality -- $At(CircularPrimes, 8) = 31$ ($31$ and $13$ both prime).
   - "Membership goes through [[Element]]: $Element(13, CircularPrimes)$ is true ($13, 31$ both prime), $Element(19, CircularPrimes)$ is false ($91 = 7 \\times 13$, its only other rotation, isn't prime)."
-examples: []
 enumerate:
   expr: Take(CircularPrimes, 20)
 seeAlso:
