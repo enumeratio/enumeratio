@@ -32,3 +32,10 @@ seeAlso:
   - ModularWord
   - IntegerDigits
   - Convergents
+references:
+  - system: wikipedia
+    identity: Continued fraction
+  - system: mathworld
+    identity: ContinuedFraction
+  - system: rosettacode
+    identity: Continued fraction

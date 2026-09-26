@@ -21,3 +21,8 @@ details:
 seeAlso:
   - Ceil
   - Round
+references:
+  - system: wikipedia
+    identity: Floor and ceiling functions
+  - system: mathworld
+    identity: FloorFunction

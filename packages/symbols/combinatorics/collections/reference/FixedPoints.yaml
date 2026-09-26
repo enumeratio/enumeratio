@@ -13,3 +13,8 @@ seeAlso:
   - Derangements
   - CycleCount
   - SymmetricGroup
+references:
+  - system: wikipedia
+    identity: Fixed point (mathematics)
+  - system: mathworld
+    identity: FixedPoint

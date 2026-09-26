@@ -5,3 +5,6 @@ summary: The recording tableau of the RSK correspondence, as a row word.
 details:
   - Takes a `Permutation` and returns a `StandardTableau` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - Records WHERE each insertion landed. The insertion logic is untouched — comparing row lengths before and after says which row grew, which is less work than instrumenting the bumping to report it.
+references:
+  - system: wikipedia
+    identity: Robinson–Schensted correspondence

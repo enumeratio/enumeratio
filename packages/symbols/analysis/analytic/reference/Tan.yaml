@@ -15,3 +15,12 @@ seeAlso:
   - Cos
   - Cot
   - Arctan
+references:
+  - system: wikipedia
+    identity: Trigonometric functions
+  - system: mathworld
+    identity: Tangent
+  - system: dlmf
+    identity: "4.14"
+names:
+  dlmf: tangent function

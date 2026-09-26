@@ -1,0 +1,11 @@
+name: Arctan2
+domain: Compute engine
+signature: "Arctan2(y: real | signed_infinity, x: real | signed_infinity) -> real"
+summary: Two-argument arctangent giving the angle of a vector.
+signatures:
+  - call: "Arctan2(y: real | signed_infinity, x: real | signed_infinity) -> real"
+    description: as compute-engine declares it
+names:
+  fungrim: Atan2
+  wikidataConfirmed: true
+stub: engine

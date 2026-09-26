@@ -16,3 +16,12 @@ seeAlso:
   - Gamma
   - LogGamma
   - Digamma
+references:
+  - system: wikipedia
+    identity: Gamma function
+  - system: mathworld
+    identity: LogGammaFunction
+  - system: dlmf
+    identity: "5.2"
+names:
+  fungrim: LogGamma

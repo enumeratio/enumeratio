@@ -37,3 +37,8 @@ details:
 seeAlso:
   - Braid
   - LorenzBraid
+references:
+  - system: wikipedia
+    identity: Alexander polynomial
+  - system: mathworld
+    identity: AlexanderPolynomial

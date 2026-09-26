@@ -17,3 +17,8 @@ details:
 seeAlso:
   - ConjugacyClasses
   - GroupBasis
+references:
+  - system: wikipedia
+    identity: Conjugacy class#Conjugacy class sum
+  - system: mathworld
+    identity: ConjugacyClass

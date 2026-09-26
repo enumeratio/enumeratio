@@ -13,3 +13,14 @@ details:
 seeAlso:
   - NthPrime
   - NextPrime
+references:
+  - system: wikipedia
+    identity: Prime-counting function
+  - system: mathworld
+    identity: PrimeCountingFunction
+  - system: dlmf
+    identity: "27.12"
+  - system: oeis
+    identity: A000720
+names:
+  dlmf: number of primes not exceeding a number

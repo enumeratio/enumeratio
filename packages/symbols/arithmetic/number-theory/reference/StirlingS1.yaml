@@ -15,3 +15,15 @@ details:
 seeAlso:
   - Binomial
   - Stirling
+references:
+  - system: wikipedia
+    identity: Stirling numbers of the first kind
+  - system: mathworld
+    identity: StirlingNumberoftheFirstKind
+  - system: dlmf
+    identity: "26.8"
+  - system: oeis
+    identity: A008275
+names:
+  dlmf: Stirling number of the first kind
+  catalog: Stirling1

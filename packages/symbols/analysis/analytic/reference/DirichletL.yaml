@@ -37,3 +37,10 @@ seeAlso:
   - DirichletEta
   - HurwitzZeta
   - Zeta
+references:
+  - system: wikipedia
+    identity: Dirichlet L-function
+  - system: mathworld
+    identity: DirichletL-Series
+  - system: dlmf
+    identity: "25.15"

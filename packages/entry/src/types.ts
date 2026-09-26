@@ -174,6 +174,28 @@ export type PrimitiveReason =
   /** Definitional. It is what other things are defined IN TERMS OF. */
   | "axiom";
 
+/**
+ * A head's name in another system's own vocabulary, where that differs from ours -- the
+ * hand-kept half of the crosswalk (design/speculative/symbol-metadata.md). The mechanically
+ * derived half (Fungrim identities, the oracle's per-arity mapping) lives in `bindings:` and
+ * the generated crosswalk data; this is what a human had to type in.
+ */
+export interface ReferenceNames {
+  /** Fungrim's own spelling, when a head whose page it publishes doesn't use ours verbatim. */
+  readonly fungrim?: string;
+  /** The DLMF index's own wording, when it doesn't use this head's Wikipedia title verbatim. */
+  readonly dlmf?: string;
+  /** The Wikidata id to use INSTEAD of the one compute-engine's own definition carries, when
+   * that one is wrong (`scripts/audit-wikidata.ts`). */
+  readonly wikidata?: string;
+  /** The engine's own Wikidata id was checked by hand and found right -- no `wikidata`
+   * override needed, but worth marking so the audit doesn't ask again. */
+  readonly wikidataConfirmed?: boolean;
+  /** The catalog's subject name for this head, when its rows are recorded under a different
+   * spelling (`SymmetricGroup`'s rows are the catalog's `Permutations`). */
+  readonly catalog?: string;
+}
+
 /** A single compute-engine function's reference entry. */
 export interface ReferenceEntry {
   readonly name: string;
@@ -224,6 +246,8 @@ export interface ReferenceEntry {
    * catalog's FindStat and Sage rows) -- see `crosswalk/`.
    */
   readonly references?: readonly Reference[];
+  /** This head's own vocabulary in other systems -- Fungrim, the DLMF, Wikidata, the catalog. */
+  readonly names?: ReferenceNames;
   /**
    * Generated rather than written, so the head has a page and a crosswalk: `engine` for a
    * compute-engine symbol we neither extend nor document by hand, `carrier` for a domain.

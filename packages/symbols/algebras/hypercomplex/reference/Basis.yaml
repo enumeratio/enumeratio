@@ -15,3 +15,8 @@ seeAlso:
   - Quaternions
   - AlgebraDimension
   - AlgebraSignature
+references:
+  - system: wikipedia
+    identity: Basis (linear algebra)
+  - system: mathworld
+    identity: VectorBasis

@@ -30,3 +30,10 @@ seeAlso:
   - DirichletBeta
   - LerchPhi
   - PolyLog
+references:
+  - system: wikipedia
+    identity: Dirichlet eta function
+  - system: mathworld
+    identity: DirichletEtaFunction
+  - system: dlmf
+    identity: "25.2"

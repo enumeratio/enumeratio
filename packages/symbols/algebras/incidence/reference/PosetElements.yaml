@@ -13,3 +13,8 @@ details:
 seeAlso:
   - MoebiusFunction
   - MoebiusInvert
+references:
+  - system: wikipedia
+    identity: Partially ordered set
+  - system: mathworld
+    identity: PartiallyOrderedSet

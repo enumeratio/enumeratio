@@ -15,3 +15,6 @@ seeAlso:
   - BrauerAlgebra
   - MotzkinAlgebra
   - Diagram
+references:
+  - system: wikipedia
+    identity: Temperley–Lieb algebra

@@ -13,3 +13,10 @@ seeAlso:
   - SymmetricGroup
   - Involutions
   - Subfactorial
+references:
+  - system: wikipedia
+    identity: Derangement
+  - system: mathworld
+    identity: Derangement
+  - system: oeis
+    identity: A000166

@@ -23,3 +23,8 @@ seeAlso:
   - Mod
   - PowerModList
   - ModularInverse
+references:
+  - system: wikipedia
+    identity: Modular exponentiation
+  - system: rosettacode
+    identity: Modular exponentiation

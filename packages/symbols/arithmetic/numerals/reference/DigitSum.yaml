@@ -17,3 +17,10 @@ details:
   - The sign of n is discarded before summing.
 seeAlso:
   - DigitCount
+references:
+  - system: wikipedia
+    identity: Digit sum
+  - system: mathworld
+    identity: DigitSum
+  - system: rosettacode
+    identity: Sum digits of an integer

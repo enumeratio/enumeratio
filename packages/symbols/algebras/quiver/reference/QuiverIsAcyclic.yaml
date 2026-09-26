@@ -14,3 +14,8 @@ seeAlso:
   - QuiverPath
   - QuiverCompose
   - MoebiusFunction
+references:
+  - system: wikipedia
+    identity: Directed acyclic graph
+  - system: mathworld
+    identity: AcyclicDigraph

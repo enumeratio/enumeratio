@@ -16,3 +16,8 @@ details:
 seeAlso:
   - MoebiusFunction
   - PosetElements
+references:
+  - system: wikipedia
+    identity: Möbius inversion formula
+  - system: mathworld
+    identity: MoebiusInversionFormula

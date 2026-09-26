@@ -1,0 +1,17 @@
+name: AiryAi
+domain: Compute engine
+signature: AiryAi(complex | infinity) -> number
+summary: Airy function of the first kind
+signatures:
+  - call: AiryAi(complex | infinity) -> number
+    description: as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Airy function
+  - system: mathworld
+    identity: AiryFunctions
+  - system: dlmf
+    identity: "9.2"
+names:
+  wikidata: Q109729241
+stub: engine

@@ -21,3 +21,13 @@ seeAlso:
   - Gamma
   - HurwitzZeta
   - Zeta
+references:
+  - system: wikipedia
+    identity: Polygamma function
+  - system: mathworld
+    identity: PolygammaFunction
+  - system: dlmf
+    identity: "5.15"
+names:
+  dlmf: polygamma functions
+  wikidata: Q857956

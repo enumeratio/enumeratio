@@ -12,3 +12,10 @@ details:
 seeAlso:
   - DyckPaths
   - CatalanNumber
+references:
+  - system: wikipedia
+    identity: Binary tree
+  - system: mathworld
+    identity: BinaryTree
+  - system: oeis
+    identity: A000108

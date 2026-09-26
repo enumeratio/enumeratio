@@ -16,3 +16,10 @@ details:
 seeAlso:
   - FactorInteger
   - NextPrime
+references:
+  - system: wikipedia
+    identity: Primality test
+  - system: mathworld
+    identity: PrimalityTest
+  - system: rosettacode
+    identity: Primality by trial division

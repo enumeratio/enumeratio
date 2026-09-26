@@ -1,0 +1,11 @@
+name: EllipticPi
+domain: Compute engine
+signature: EllipticPi(complex | infinity, complex | infinity, (complex | infinity)?) -> number
+summary: "Elliptic integral of the third kind: complete Π(n|m) with two arguments, incomplete Π(n; φ|m) with three (characteristic first, amplitude second, parameter convention m = k², as in Mathematica)."
+signatures:
+  - call: EllipticPi(complex | infinity, complex | infinity, (complex | infinity)?) -> number
+    description: as compute-engine declares it
+names:
+  dlmf: Legendre's complete elliptic integral of the third kind
+  wikidata: Q109753363
+stub: engine

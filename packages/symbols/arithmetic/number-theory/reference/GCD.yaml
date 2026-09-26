@@ -14,3 +14,10 @@ details:
 seeAlso:
   - LCM
   - ExtendedGCD
+references:
+  - system: wikipedia
+    identity: Greatest common divisor
+  - system: mathworld
+    identity: GreatestCommonDivisor
+  - system: rosettacode
+    identity: Greatest common divisor

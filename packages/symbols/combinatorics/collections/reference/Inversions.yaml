@@ -15,3 +15,8 @@ seeAlso:
   - MajorIndex
   - Descents
   - SymmetricGroup
+references:
+  - system: wikipedia
+    identity: Inversion (discrete mathematics)
+  - system: mathworld
+    identity: PermutationInversion

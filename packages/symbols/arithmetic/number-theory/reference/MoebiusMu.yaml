@@ -14,3 +14,12 @@ details:
 seeAlso:
   - FactorInteger
   - IsSquareFree
+references:
+  - system: wikipedia
+    identity: Möbius function
+  - system: mathworld
+    identity: MoebiusFunction
+  - system: dlmf
+    identity: "27.2"
+  - system: oeis
+    identity: A008683

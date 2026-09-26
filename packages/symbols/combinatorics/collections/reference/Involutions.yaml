@@ -12,3 +12,10 @@ details:
 seeAlso:
   - SymmetricGroup
   - Derangements
+references:
+  - system: wikipedia
+    identity: Involution (mathematics)
+  - system: mathworld
+    identity: PermutationInvolution
+  - system: oeis
+    identity: A000085

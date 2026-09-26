@@ -18,3 +18,8 @@ seeAlso:
   - Basis
   - NonCommutativeMultiply
   - AlgebraSignature
+references:
+  - system: wikipedia
+    identity: Quaternion
+  - system: mathworld
+    identity: Quaternion

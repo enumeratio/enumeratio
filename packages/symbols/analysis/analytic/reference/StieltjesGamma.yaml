@@ -31,3 +31,10 @@ seeAlso:
   - HurwitzZeta
   - EulerGamma
   - Digamma
+references:
+  - system: wikipedia
+    identity: Stieltjes constants
+  - system: mathworld
+    identity: StieltjesConstants
+  - system: dlmf
+    identity: "25.2"

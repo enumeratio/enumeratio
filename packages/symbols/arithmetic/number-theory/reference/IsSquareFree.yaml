@@ -19,3 +19,10 @@ details:
 seeAlso:
   - MoebiusMu
   - FactorInteger
+references:
+  - system: wikipedia
+    identity: Square-free integer
+  - system: mathworld
+    identity: Squarefree
+  - system: oeis
+    identity: A005117

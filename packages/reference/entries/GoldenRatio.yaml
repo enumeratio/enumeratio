@@ -1,0 +1,15 @@
+name: GoldenRatio
+domain: Compute engine
+signature: GoldenRatio
+summary: The golden ratio φ = (1+√5)/2 ≈ 1.618.
+signatures:
+  - call: "GoldenRatio: real<1.618033988749894..1.618033988749895>"
+    description: a constant, as compute-engine declares it
+references:
+  - system: wikipedia
+    identity: Golden ratio
+  - system: mathworld
+    identity: GoldenRatio
+  - system: oeis
+    identity: A001622
+stub: engine

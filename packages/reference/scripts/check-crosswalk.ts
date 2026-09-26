@@ -13,7 +13,7 @@
 // script cannot pass; OEIS A-numbers are checked for shape, Britannica ids come from Wikidata).
 
 import { COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog/src";
-import { CURATED } from "../src/crosswalk/curated.ts";
+import { CURATED } from "../src/crosswalk/curated-data.ts";
 import { crosswalkFor } from "../src/crosswalk/index.ts";
 import { isInventorySystem } from "../src/crosswalk/inventory.ts";
 import type { CrosswalkSystem } from "../src/crosswalk/sources.ts";
