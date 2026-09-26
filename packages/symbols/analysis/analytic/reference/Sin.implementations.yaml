@@ -13,18 +13,18 @@ sin-0:
     tex:
       in: \sin (0)
       out: "0"
-  sage:
+  sympy:
     in: sin(0)
     out: "0"
   mpmath:
     in: sin(0)
     out: "0.0"
+  sage:
+    in: sin(0)
+    out: "0"
   rust:
     in: sin(n(0))
     out: "0.0"
-  sympy:
-    in: sin(0)
-    out: "0"
 exact-value-at-a-special-angle:
   epsil:
     in: Sin(Pi / 6)
@@ -40,15 +40,15 @@ exact-value-at-a-special-angle:
     tex:
       in: \sin \left(\frac{\pi }{6}\right)
       out: \frac{1}{2}
+  sympy:
+    in: sin((S(pi) / 6))
+    out: 1/2
   sage:
     in: sin((pi / 6))
     out: 1/2
   rust:
     in: sin((x(std::f64::consts::PI) / n(6)))
     out: "0.49999999999999994"
-  sympy:
-    in: sin((S(pi) / 6))
-    out: 1/2
 sin-pi-over-4:
   epsil:
     in: Sin(Pi / 4)
@@ -64,15 +64,15 @@ sin-pi-over-4:
     tex:
       in: \sin \left(\frac{\pi }{4}\right)
       out: \frac{1}{\sqrt{2}}
+  sympy:
+    in: sin((S(pi) / 4))
+    out: sqrt(2)/2
   sage:
     in: sin((pi / 4))
     out: 1/2*sqrt(2)
   rust:
     in: sin((x(std::f64::consts::PI) / n(4)))
     out: "0.7071067811865475"
-  sympy:
-    in: sin((S(pi) / 4))
-    out: sqrt(2)/2
 sin-pi-over-3:
   epsil:
     in: Sin(Pi / 3)
@@ -88,15 +88,15 @@ sin-pi-over-3:
     tex:
       in: \sin \left(\frac{\pi }{3}\right)
       out: \frac{\sqrt{3}}{2}
+  sympy:
+    in: sin((S(pi) / 3))
+    out: sqrt(3)/2
   sage:
     in: sin((pi / 3))
     out: 1/2*sqrt(3)
   rust:
     in: sin((x(std::f64::consts::PI) / n(3)))
     out: "0.8660254037844386"
-  sympy:
-    in: sin((S(pi) / 3))
-    out: sqrt(3)/2
 sin-pi-over-2:
   epsil:
     in: Sin(Pi / 2)
@@ -112,15 +112,15 @@ sin-pi-over-2:
     tex:
       in: \sin \left(\frac{\pi }{2}\right)
       out: "1"
+  sympy:
+    in: sin((S(pi) / 2))
+    out: "1"
   sage:
     in: sin((pi / 2))
     out: "1"
   rust:
     in: sin((x(std::f64::consts::PI) / n(2)))
     out: "1.0"
-  sympy:
-    in: sin((S(pi) / 2))
-    out: "1"
 sin-pi:
   epsil:
     in: Sin(Pi)
@@ -136,18 +136,18 @@ sin-pi:
     tex:
       in: \sin (\pi )
       out: "0"
-  sage:
+  sympy:
     in: sin(pi)
     out: "0"
   mpmath:
     in: sin(pi)
     out: "1.69568553207377992879174029388e-31"
+  sage:
+    in: sin(pi)
+    out: "0"
   rust:
     in: sin(x(std::f64::consts::PI))
     out: "1.2246467991473532e-16"
-  sympy:
-    in: sin(pi)
-    out: "0"
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
   epsil:
     in: Sin(Pi / 6) ^ 2 + Cos(Pi / 6) ^ 2
@@ -163,15 +163,15 @@ pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
     tex:
       in: \sin ^2\left(\frac{\pi }{6}\right)+\cos ^2\left(\frac{\pi }{6}\right)
       out: "1"
+  sympy:
+    in: ((sin((S(pi) / 6))**2) + (cos((S(pi) / 6))**2))
+    out: "1"
   sage:
     in: ((sin((pi / 6))^2) + (cos((pi / 6))^2))
     out: "1"
   rust:
     in: (power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))
     out: "1.0"
-  sympy:
-    in: ((sin((S(pi) / 6))**2) + (cos((S(pi) / 6))**2))
-    out: "1"
 odd-function-sin-x-sin-x:
   epsil:
     in: Sin(-(Pi / 6)) == -Sin(Pi / 6)
@@ -190,15 +190,15 @@ odd-function-sin-x-sin-x:
     tex:
       in: \sin \left(-\frac{\pi }{6}\right)=-\sin \left(\frac{\pi }{6}\right)
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(sin((-(S(pi) / 6))), (-sin((S(pi) / 6))))
+    out: True
   sage:
     in: bool(sin((-(pi / 6))) == (-sin((pi / 6))))
     out: True
   rust:
     in: equal(sin((-((x(std::f64::consts::PI) / n(6))))), (-(sin((x(std::f64::consts::PI) / n(6))))))
     out: "true"
-  sympy:
-    in: enumeratio_equal(sin((-(S(pi) / 6))), (-sin((S(pi) / 6))))
-    out: True
 period-2-pi-adding-a-full-turn-doesn-t-change:
   epsil:
     in: Sin(Pi / 6 + 2Pi)
@@ -214,15 +214,15 @@ period-2-pi-adding-a-full-turn-doesn-t-change:
     tex:
       in: \sin \left(\frac{\pi }{6}+2 \pi \right)
       out: \frac{1}{2}
+  sympy:
+    in: sin(((S(pi) / 6) + (2 * pi)))
+    out: 1/2
   sage:
     in: sin(((pi / 6) + (2 * pi)))
     out: 1/2
   rust:
     in: sin(((x(std::f64::consts::PI) / n(6)) + (n(2) * x(std::f64::consts::PI))))
     out: "0.5"
-  sympy:
-    in: sin(((S(pi) / 6) + (2 * pi)))
-    out: 1/2
 threads-element-wise-over-a-list:
   epsil:
     in: Sin([0, Pi / 2, Pi])
@@ -238,6 +238,9 @@ threads-element-wise-over-a-list:
     tex:
       in: \sin \left(\left\{0,\frac{\pi }{2},\pi \right\}\right)
       out: \{0,1,0\}
+  sympy:
+    in: "[sin(0), sin((S(pi) / 2)), sin(pi)]"
+    out: "[0, 1, 0]"
   sage:
     in: "[sin(0), sin((pi / 2)), sin(pi)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
@@ -250,9 +253,6 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars.
-  sympy:
-    in: "[sin(0), sin((S(pi) / 2)), sin(pi)]"
-    out: "[0, 1, 0]"
 degrees-d-converts-a-degree-measure-to-radians:
   epsil:
     in: Sin(Degrees(30))
@@ -284,18 +284,18 @@ degrees-d-converts-a-degree-measure-to-radians:
     tex:
       in: \sin (1)
       out: \sin (1)
-  sage:
+  sympy:
     in: sin(1)
     out: sin(1)
   mpmath:
     in: sin(1)
     out: "0.84147098480789650665250232163"
+  sage:
+    in: sin(1)
+    out: sin(1)
   rust:
     in: sin(n(1))
     out: "0.8414709848078965"
-  sympy:
-    in: sin(1)
-    out: sin(1)
 the-special-angle-table-reaches-past-30-45-60:
   epsil:
     in: Sin(Pi / 5)
@@ -311,15 +311,15 @@ the-special-angle-table-reaches-past-30-45-60:
     tex:
       in: \sin \left(\frac{\pi }{5}\right)
       out: \sqrt{\frac{5}{8}-\frac{\sqrt{5}}{8}}
+  sympy:
+    in: sin((S(pi) / 5))
+    out: sqrt(5/8 - sqrt(5)/8)
   sage:
     in: sin((pi / 5))
     out: 1/4*sqrt(-2*sqrt(5) + 10)
   rust:
     in: sin((x(std::f64::consts::PI) / n(5)))
     out: "0.5877852522924731"
-  sympy:
-    in: sin((S(pi) / 5))
-    out: sqrt(5/8 - sqrt(5)/8)
 degrees-d-converts-to-radians-so-sin-60-circ-is:
   epsil:
     in: Sin(Degrees(60))
@@ -343,17 +343,17 @@ a-machine-precision-argument-evaluates:
     in: Sin[1.2]
   wolfram:
     in: Sin[1.2]
-  sage:
-    in: sin(1.2)
-  mpmath:
-    in: sin(1.2)
-    out: "0.932039085967226333578217548636"
-  rust:
-    in: sin(x(1.2))
-    out: "0.9320390859672263"
   sympy:
     in: sin(1.2)
     out: "0.932039085967226"
+  mpmath:
+    in: sin(1.2)
+    out: "0.932039085967226333578217548636"
+  sage:
+    in: sin(1.2)
+  rust:
+    in: sin(x(1.2))
+    out: "0.9320390859672263"
 n-of-an-exact-argument-gives-an-arbitrary:
   epsil:
     in: N(Sin(6 / 5))
@@ -365,14 +365,14 @@ n-of-an-exact-argument-gives-an-arbitrary:
     in: N[Sin[Rational[6, 5]]]
   wolfram:
     in: N[Sin[Rational[6, 5]]]
+  sympy:
+    in: N(sin(Rational(6, 5)), 30)
+    out: "0.932039085967226349670134435495"
   sage:
     in: N(sin((6/5)))
   rust:
     in: nf(sin(rational(n(6), n(5))))
     out: "0.9320390859672263"
-  sympy:
-    in: N(sin(Rational(6, 5)), 30)
-    out: "0.932039085967226349670134435495"
 evaluates-at-a-complex-argument:
   epsil:
     in: Sin(2.5 + i)
@@ -384,14 +384,14 @@ evaluates-at-a-complex-argument:
     in: Sin[Complex[2.5, 1]]
   wolfram:
     in: Sin[Complex[2.5, 1]]
-  sage:
-    in: sin((2.5 + 1*I))
-  mpmath:
-    in: sin(mpc(2.5, 1))
-    out: (0.923490776043173240823036301218 - 0.941504933270867276025389023751j)
   sympy:
     in: sin((2.5 + 1*I))
     out: 0.923490776043173 - 0.941504933270867*I
+  mpmath:
+    in: sin(mpc(2.5, 1))
+    out: (0.923490776043173240823036301218 - 0.941504933270867276025389023751j)
+  sage:
+    in: sin((2.5 + 1*I))
 threads-element-wise-over-a-matrix:
   epsil:
     in: Sin([[5 * (Pi / 6), 0], [3 * (Pi / 2), -(Pi / 2)]])
@@ -403,6 +403,9 @@ threads-element-wise-over-a-matrix:
     in: Sin[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
   wolfram:
     in: Sin[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]
+  sympy:
+    in: "[[sin((5 * (S(pi) / 6))), sin(0)], [sin((3 * (S(pi) / 2))), sin((-(S(pi) / 2)))]]"
+    out: "[[1/2, 0], [-1, -1]]"
   sage:
     in: "[[sin((5 * (pi / 6))), sin(0)], [sin((3 * (pi / 2))), sin((-(pi / 2)))]]"
   rust:
@@ -411,9 +414,6 @@ threads-element-wise-over-a-matrix:
     verdict: error
     kind: threading
     note: compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars only.
-  sympy:
-    in: "[[sin((5 * (S(pi) / 6))), sin(0)], [sin((3 * (S(pi) / 2))), sin((-(S(pi) / 2)))]]"
-    out: "[[1/2, 0], [-1, -1]]"
 exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4:
   epsil:
     in: Sin(Pi / 12)
@@ -425,14 +425,14 @@ exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4:
     in: Sin[Divide[Pi, 12]]
   wolfram:
     in: Sin[Divide[Pi, 12]]
+  sympy:
+    in: sin((S(pi) / 12))
+    out: -sqrt(2)/4 + sqrt(6)/4
   sage:
     in: sin((pi / 12))
   rust:
     in: sin((x(std::f64::consts::PI) / n(12)))
     out: "0.25881904510252074"
-  sympy:
-    in: sin((S(pi) / 12))
-    out: -sqrt(2)/4 + sqrt(6)/4
 sin-pi-8-frac-sqrt-2-sqrt-2-2:
   epsil:
     in: Sin(Pi / 8)
@@ -444,14 +444,14 @@ sin-pi-8-frac-sqrt-2-sqrt-2-2:
     in: Sin[Divide[Pi, 8]]
   wolfram:
     in: Sin[Divide[Pi, 8]]
+  sympy:
+    in: sin((S(pi) / 8))
+    out: sqrt(1/2 - sqrt(2)/4)
   sage:
     in: sin((pi / 8))
   rust:
     in: sin((x(std::f64::consts::PI) / n(8)))
     out: "0.3826834323650898"
-  sympy:
-    in: sin((S(pi) / 8))
-    out: sqrt(1/2 - sqrt(2)/4)
 sin-pi-10-frac-sqrt-5-1-4:
   epsil:
     in: Sin(Pi / 10)
@@ -463,14 +463,14 @@ sin-pi-10-frac-sqrt-5-1-4:
     in: Sin[Divide[Pi, 10]]
   wolfram:
     in: Sin[Divide[Pi, 10]]
+  sympy:
+    in: sin((S(pi) / 10))
+    out: -1/4 + sqrt(5)/4
   sage:
     in: sin((pi / 10))
   rust:
     in: sin((x(std::f64::consts::PI) / n(10)))
     out: "0.3090169943749474"
-  sympy:
-    in: sin((S(pi) / 10))
-    out: -1/4 + sqrt(5)/4
 sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
   epsil:
     in: Sin(5 / 12 * Pi)
@@ -482,14 +482,14 @@ sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
     in: Sin[Times[Rational[5, 12], Pi]]
   wolfram:
     in: Sin[Times[Rational[5, 12], Pi]]
+  sympy:
+    in: sin((Rational(5, 12) * pi))
+    out: sqrt(2)/4 + sqrt(6)/4
   sage:
     in: sin(((5/12) * pi))
   rust:
     in: sin((rational(n(5), n(12)) * x(std::f64::consts::PI)))
     out: "0.9659258262890683"
-  sympy:
-    in: sin((Rational(5, 12) * pi))
-    out: sqrt(2)/4 + sqrt(6)/4
 sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
   epsil:
     in: Sin(3 / 8 * Pi)
@@ -501,14 +501,14 @@ sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
     in: Sin[Times[Rational[3, 8], Pi]]
   wolfram:
     in: Sin[Times[Rational[3, 8], Pi]]
+  sympy:
+    in: sin((Rational(3, 8) * pi))
+    out: sqrt(sqrt(2)/4 + 1/2)
   sage:
     in: sin(((3/8) * pi))
   rust:
     in: sin((rational(n(3), n(8)) * x(std::f64::consts::PI)))
     out: "0.9238795325112867"
-  sympy:
-    in: sin((Rational(3, 8) * pi))
-    out: sqrt(sqrt(2)/4 + 1/2)
 large-rational-multiples-of-pi-are-reduced:
   epsil:
     in: Sin(100 / 3 * Pi)
@@ -520,14 +520,14 @@ large-rational-multiples-of-pi-are-reduced:
     in: Sin[Times[Rational[100, 3], Pi]]
   wolfram:
     in: Sin[Times[Rational[100, 3], Pi]]
+  sympy:
+    in: sin((Rational(100, 3) * pi))
+    out: -sqrt(3)/2
   sage:
     in: sin(((100/3) * pi))
   rust:
     in: sin((rational(n(100), n(3)) * x(std::f64::consts::PI)))
     out: "-0.8660254037844414"
-  sympy:
-    in: sin((Rational(100, 3) * pi))
-    out: -sqrt(3)/2
 any-integer-multiple-of-pi-is-a-zero-of-sine:
   epsil:
     in: Sin(1_000_001Pi)
@@ -539,17 +539,17 @@ any-integer-multiple-of-pi-is-a-zero-of-sine:
     in: Sin[Times[1000001, Pi]]
   wolfram:
     in: Sin[Times[1000001, Pi]]
-  sage:
-    in: sin((1000001 * pi))
-  mpmath:
-    in: sin((1000001 * pi))
-    out: "1.23297297519287531798936557837e-25"
-  rust:
-    in: sin((n(1000001) * x(std::f64::consts::PI)))
-    out: "3.4473322826621095e-10"
   sympy:
     in: sin((1000001 * pi))
     out: "0"
+  mpmath:
+    in: sin((1000001 * pi))
+    out: "1.23297297519287531798936557837e-25"
+  sage:
+    in: sin((1000001 * pi))
+  rust:
+    in: sin((n(1000001) * x(std::f64::consts::PI)))
+    out: "3.4473322826621095e-10"
 sin-negate-pi-is-also-zero:
   epsil:
     in: Sin(-Pi)
@@ -561,17 +561,17 @@ sin-negate-pi-is-also-zero:
     in: Sin[Minus[Pi]]
   wolfram:
     in: Sin[Minus[Pi]]
-  sage:
-    in: sin((-pi))
-  mpmath:
-    in: sin((-pi))
-    out: "-1.69568553207377992879174029388e-31"
-  rust:
-    in: sin((-(x(std::f64::consts::PI))))
-    out: "-1.2246467991473532e-16"
   sympy:
     in: sin((-pi))
     out: "0"
+  mpmath:
+    in: sin((-pi))
+    out: "-1.69568553207377992879174029388e-31"
+  sage:
+    in: sin((-pi))
+  rust:
+    in: sin((-(x(std::f64::consts::PI))))
+    out: "-1.2246467991473532e-16"
 sin-4-pi-is-zero:
   epsil:
     in: Sin(4Pi)
@@ -583,17 +583,17 @@ sin-4-pi-is-zero:
     in: Sin[Times[4, Pi]]
   wolfram:
     in: Sin[Times[4, Pi]]
-  sage:
-    in: sin((4 * pi))
-  mpmath:
-    in: sin((4 * pi))
-    out: "-6.78274212829511971516696117551e-31"
-  rust:
-    in: sin((n(4) * x(std::f64::consts::PI)))
-    out: "-4.898587196589413e-16"
   sympy:
     in: sin((4 * pi))
     out: "0"
+  mpmath:
+    in: sin((4 * pi))
+    out: "-6.78274212829511971516696117551e-31"
+  sage:
+    in: sin((4 * pi))
+  rust:
+    in: sin((n(4) * x(std::f64::consts::PI)))
+    out: "-4.898587196589413e-16"
 a-full-turn-shift-of-a-symbolic-argument-doesn-t:
   epsil:
     in: Sin(x + 2Pi)
@@ -614,17 +614,17 @@ sin-2-a-generic-argument-stays-symbolic:
     in: Sin[2]
   wolfram:
     in: Sin[2]
-  sage:
-    in: sin(2)
-  mpmath:
-    in: sin(2)
-    out: "0.909297426825681695396019865912"
-  rust:
-    in: sin(n(2))
-    out: "0.9092974268256817"
   sympy:
     in: sin(2)
     out: sin(2)
+  mpmath:
+    in: sin(2)
+    out: "0.909297426825681695396019865912"
+  sage:
+    in: sin(2)
+  rust:
+    in: sin(n(2))
+    out: "0.9092974268256817"
 sin-x-plus-y-stays-symbolic:
   epsil:
     in: Sin(x + y)
@@ -645,11 +645,11 @@ sin-i-pi-2-i-sinh-pi-2-exactly:
     in: Sin[Times[I, Divide[Pi, 2]]]
   wolfram:
     in: Sin[Times[I, Divide[Pi, 2]]]
-  sage:
-    in: sin((I * (pi / 2)))
   sympy:
     in: sin((I * (S(pi) / 2)))
     out: I*sinh(pi/2)
+  sage:
+    in: sin((I * (pi / 2)))
 n-decimalizes-sin-i-pi-2-not-just-the-exact-form:
   epsil:
     in: N(Sin(ImaginaryUnit * (Pi / 2)))
@@ -661,11 +661,11 @@ n-decimalizes-sin-i-pi-2-not-just-the-exact-form:
     in: N[Sin[Times[I, Divide[Pi, 2]]]]
   wolfram:
     in: N[Sin[Times[I, Divide[Pi, 2]]]]
-  sage:
-    in: N(sin((I * (pi / 2))))
   sympy:
     in: N(sin((I * (S(pi) / 2))), 30)
     out: 2.30129890230729487346304002343*I
+  sage:
+    in: N(sin((I * (pi / 2))))
 interval-arithmetic-the-image-of-pi-6-pi-6-is:
   epsil:
     in: Sin(Interval(-(Pi / 6), Pi / 6))
@@ -925,14 +925,14 @@ pi-15-has-a-radical-form-but-like-wolfram-s:
     in: Sin[Divide[Pi, 15]]
   wolfram:
     in: Sin[Divide[Pi, 15]]
+  sympy:
+    in: sin((S(pi) / 15))
+    out: sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2
   sage:
     in: sin((pi / 15))
   rust:
     in: sin((x(std::f64::consts::PI) / n(15)))
     out: "0.20791169081775931"
-  sympy:
-    in: sin((S(pi) / 15))
-    out: sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2
 a-huge-exact-argument-is-reduced-modulo-2-pi:
   epsil:
     in: N(Sin(10 ^ 20))
@@ -944,17 +944,17 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
     in: N[Sin[Power[10, 20]]]
   wolfram:
     in: N[Sin[Power[10, 20]]]
-  sage:
-    in: N(sin((10^20)))
-  mpmath:
-    in: (sin((10**20)))
-    out: "-0.645251285265780844205811711313"
-  rust:
-    in: nf(sin(power(n(10), n(20))))
-    out: "-0.6452512852657808"
   sympy:
     in: N(sin((10**20)), 30)
     out: "-0.645251285265780844205811711313"
+  mpmath:
+    in: (sin((10**20)))
+    out: "-0.645251285265780844205811711313"
+  sage:
+    in: N(sin((10^20)))
+  rust:
+    in: nf(sin(power(n(10), n(20))))
+    out: "-0.6452512852657808"
 functionexpand-gives-the-nested-radical-form:
   epsil:
     in: FunctionExpand(Sin(Pi / 15))
@@ -977,17 +977,17 @@ to-30-significant-digits-every-one-correctly:
     in: N[Sin[1], 30]
   wolfram:
     in: N[Sin[1], 30]
-  sage:
-    in: N(sin(1))
-  mpmath:
-    in: (sin(1))
-    out: "0.84147098480789650665250232163"
-  rust:
-    in: nf(sin(n(1)))
-    out: "0.8414709848078965"
   sympy:
     in: N(sin(1), 30)
     out: "0.841470984807896506652502321630"
+  mpmath:
+    in: (sin(1))
+    out: "0.84147098480789650665250232163"
+  sage:
+    in: N(sin(1))
+  rust:
+    in: nf(sin(n(1)))
+    out: "0.8414709848078965"
 a-huge-24-40-argument-reduces-exactly-mod-2-pi:
   epsil:
     in: N(Sin(24 ^ 40))
@@ -999,17 +999,17 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
     in: N[Sin[Power[24, 40]]]
   wolfram:
     in: N[Sin[Power[24, 40]]]
-  sage:
-    in: N(sin((24^40)))
+  sympy:
+    in: N(sin((24**40)), 30)
+    out: "0.400083152719766047070941915848"
   mpmath:
     in: (sin((24**40)))
     out: "0.400083152719766047070941915848"
+  sage:
+    in: N(sin((24^40)))
   rust:
     in: nf(sin(power(n(24), n(40))))
     out: "-0.5897765161315717"
     verdict: disagree
     kind: precision
     note: Rust reduces the argument in f64, which can't hold 24^40 exactly; compute-engine reduces it exactly.
-  sympy:
-    in: N(sin((24**40)), 30)
-    out: "0.400083152719766047070941915848"

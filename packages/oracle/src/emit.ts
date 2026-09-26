@@ -114,9 +114,10 @@ export function emit(expr: MathJSON, system: System): Emitted {
   };
 
   /**
-   * Rebuild `node`'s `List` nesting as Python list literals, applying `template` (with
-   * `others` filled into every position but `threadArg`) at each leaf — the manual
-   * Listable thread `threadArg` asks for on a Python-family system.
+   * Rebuild `node`'s `List` nesting as list literals (Python's or Julia's — both spell one
+   * `[a, b, c]`), applying `template` (with `others` filled into every position but
+   * `threadArg`) at each leaf — the manual Listable thread `threadArg` asks for on a system
+   * whose call is not itself broadcasting.
    */
   const threadOver = (node: MathJSON, template: string, others: readonly string[], threadArg: number): string => {
     if (isCall(node) && node[0] === "List") {

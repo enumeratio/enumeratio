@@ -62,10 +62,25 @@ test("threadArg rebuilds a List's nesting as Python list literals, applying the 
     ok: true,
     source: "[(-10 % 3), (-10 % 4), (-10 % 7)]",
   });
-  // threadArg is a Python-family concern only: Wolfram's own heads are already Listable.
+  // threadArg is a Python-family (and Julia) concern: Wolfram's own heads are already Listable.
   expect(emit(["Sin", ["List", 1, 2]], "wolfram")).toEqual({
     ok: true,
     source: "Sin[List[1, 2]]",
+  });
+});
+
+// Found by the julia rescan (#124): our emit templates for Julia/Nemo are plain calls
+// (`binomial(ZZ($1), ZZ($2))`), not `f.($1)` broadcasts, so a raw Julia Vector hit the same
+// "no method matching" wall a bare Python list does.
+test("threadArg rebuilds a List's nesting as Julia list literals too", () => {
+  expect(emit(["Binomial", ["List", 2, 3, 5, 7, 11], 3], "julia")).toEqual({
+    ok: true,
+    source:
+      "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]",
+  });
+  expect(emit(["GCD", 12, ["List", 3, 7, 40]], "julia")).toEqual({
+    ok: true,
+    source: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]",
   });
 });
 

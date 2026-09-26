@@ -13,10 +13,10 @@ length-list-1-2-3-4:
     tex:
       in: \text{Length}[\{1,2,3,4\}]
       out: "4"
-  sage:
+  sympy:
     in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else 0)
     out: "4"
-  sympy:
+  sage:
     in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else 0)
     out: "4"
 length-list-1-2-3-4-5:
@@ -34,10 +34,10 @@ length-list-1-2-3-4-5:
     tex:
       in: \text{Length}[\{1,2,3,4,5\}]
       out: "5"
-  sage:
+  sympy:
     in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else 0)
     out: "5"
-  sympy:
+  sage:
     in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else 0)
     out: "5"
 works-on-any-collection-not-just-list:
@@ -85,11 +85,11 @@ an-atom-has-no-parts-so-its-length-is-0:
     in: Length[5]
   wolfram:
     in: Length[5]
-  sage:
-    in: (len(5) if hasattr(5, '__len__') else 0)
   sympy:
     in: (len(5) if hasattr(5, '__len__') else 0)
     out: "0"
+  sage:
+    in: (len(5) if hasattr(5, '__len__') else 0)
 length-list-a-b-c-d:
   epsil:
     in: Length([a, b, c, d])
@@ -110,11 +110,11 @@ the-empty-list-has-length-0:
     in: Length[List[]]
   wolfram:
     in: Length[List[]]
-  sage:
-    in: (len([]) if hasattr([], '__len__') else 0)
   sympy:
     in: (len([]) if hasattr([], '__len__') else 0)
     out: "0"
+  sage:
+    in: (len([]) if hasattr([], '__len__') else 0)
 of-a-matrix-the-number-of-rows:
   epsil:
     in: Length([[1, 2], [3, 4], [5, 6]])
@@ -126,11 +126,11 @@ of-a-matrix-the-number-of-rows:
     in: Length[List[List[1, 2], List[3, 4], List[5, 6]]]
   wolfram:
     in: Length[List[List[1, 2], List[3, 4], List[5, 6]]]
-  sage:
-    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
   sympy:
     in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
     out: "3"
+  sage:
+    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
 a-set-holds-each-element-once-so-a-repeated:
   epsil:
     in: Length({1, 1, 2})
@@ -172,11 +172,11 @@ a-symbol-such-as-pi-is-an-atom-of-length-0:
     in: Length[Pi]
   wolfram:
     in: Length[Pi]
-  sage:
-    in: (len(pi) if hasattr(pi, '__len__') else 0)
   sympy:
     in: (len(pi) if hasattr(pi, '__len__') else 0)
     out: "0"
+  sage:
+    in: (len(pi) if hasattr(pi, '__len__') else 0)
 a-lazy-range-is-counted-without-being:
   epsil:
     in: Length(Range(1, 20))

@@ -7,6 +7,7 @@ show_oracle(x) = string(x)
 show_oracle(x::Rational) = string(Float64(x))
 show_oracle(x::QQFieldElem) = string(Float64(x))
 show_oracle(x::AbstractVector) = "[" * join(map(show_oracle, x), ", ") * "]"
+show_oracle(x::Complex) = "(" * string(real(x)) * (imag(x) < 0 ? "-" : "+") * string(abs(imag(x))) * "j)"
 include(joinpath(@__DIR__, "../../../oracle/oscar/preamble.jl"))
 
 const _PROTO_WARMUP = 3
