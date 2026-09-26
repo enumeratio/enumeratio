@@ -1,0 +1,17 @@
+name: JacobiCS
+domain: Special functions
+signature: JacobiCS(u, m)
+summary: The Jacobi elliptic function $\operatorname{cs}(u,m) = \operatorname{cn}(u,m)/\operatorname{sn}(u,m)$ (Glaisher's notation), in Wolfram/mpmath's $m=k^2$ convention.
+signatures:
+  - call: JacobiCS(u, m)
+    description: the Jacobi elliptic function cs, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+  - $\operatorname{cs}(u,m) = \operatorname{cn}(u,m)/\operatorname{sn}(u,m)$ — [[JacobiCN]] and [[JacobiSN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+  - cs has a pole at u = 0 (sn(0,m) = 0, for any m).
+  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+seeAlso:
+  - JacobiCN
+  - JacobiSN
+  - JacobiSC

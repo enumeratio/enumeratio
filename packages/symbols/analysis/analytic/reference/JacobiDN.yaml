@@ -1,0 +1,19 @@
+name: JacobiDN
+domain: Special functions
+signature: JacobiDN(u, m)
+summary: The Jacobi elliptic function $\operatorname{dn}(u,m)$, one of the three primary Jacobi elliptic functions, in Wolfram/mpmath's $m=k^2$ parameter convention.
+signatures:
+  - call: JacobiDN(u, m)
+    description: the Jacobi elliptic delta amplitude, argument u, parameter m.
+    library: "@enumeratio/analytic"
+details:
+  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
+  - Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel; for real u, dn comes from $\operatorname{dn}^2 = 1-m\operatorname{sn}^2$ (exact, no branch ambiguity there). For complex u, dn comes from DLMF 22.8's real addition formulas instead (real-u sn/cn/dn combined algebraically) — verified against mpmath to ~1e-13 relative across all four quadrants, large $\operatorname{Im}(u)$, and close to dn's own pole structure.
+  - A genuinely complex m stays unevaluated.
+  - Exact at u = 0 (dn = 1, for any m), m = 0 (dn = 1), m = 1 (dn = 1/[[Cosh]](u)), and the quarter period u = [[EllipticK]](m) (dn = $\sqrt{1-m}$).
+  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+seeAlso:
+  - JacobiSN
+  - JacobiCN
+  - JacobiAmplitude
+  - EllipticK

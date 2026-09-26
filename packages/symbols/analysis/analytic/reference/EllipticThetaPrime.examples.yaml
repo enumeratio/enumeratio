@@ -1,0 +1,24 @@
+- id: a-floating-point-argument-evaluates-directly-to
+  expr: [N, [EllipticThetaPrime, 3, 0.3, 0.2]]
+  expected: -0.4636500624070804
+  caption: A floating-point argument evaluates directly to a decimal
+- id: theta1-prime-0-q-matches-the-classical
+  expr: [N, [EllipticThetaPrime, 1, 0.3, 0.2]]
+  expected: 1.178007371087324
+  category: Scope
+  caption: The a = 1 theta function's derivative
+- id: a-complex-argument-u
+  expr: [N, [EllipticThetaPrime, 3, [Complex, 0.3, 0.1], 0.2]]
+  expected: [Complex, -0.4736828076769382, -0.13484007289370092]
+  category: Scope
+  caption: A complex argument u
+- id: q-1-is-declined-the-series-diverges
+  expr: [N, [EllipticThetaPrime, 3, 0.3, 1]]
+  expected: [EllipticThetaPrime, 3, 0.3, 1]
+  category: Possible issues
+  caption: "|q| ≥ 1 is declined — the series diverges there"
+- id: symbolic-arguments-are-left-unevaluated-rather
+  expr: [EllipticThetaPrime, 3, u, q]
+  expected: [EllipticThetaPrime, 3, u, q]
+  category: Possible issues
+  caption: Symbolic arguments are left unevaluated rather than guessed at

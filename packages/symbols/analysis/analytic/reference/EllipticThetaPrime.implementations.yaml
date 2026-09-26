@@ -1,0 +1,53 @@
+a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: N(EllipticThetaPrime(3, 0.3, 0.2))
+    out: -0.463_650_062_407_080_4
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 0.3, 0.2))
+    out: -0.463\,650\,062\,407\,080\,4
+  fullform:
+    in: N[EllipticThetaPrime[3, 0.3, 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, 0.3, 0.2]]
+theta1-prime-0-q-matches-the-classical:
+  epsil:
+    in: N(EllipticThetaPrime(1, 0.3, 0.2))
+    out: 1.178_007_371_087_324
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(1, 0.3, 0.2))
+    out: 1.178\,007\,371\,087\,324
+  fullform:
+    in: N[EllipticThetaPrime[1, 0.3, 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[1, 0.3, 0.2]]
+a-complex-argument-u:
+  epsil:
+    in: N(EllipticThetaPrime(3, 0.3 + 0.1i, 0.2))
+    out: -0.473_682_807_676_938_2 - 0.134_840_072_893_700_92i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 0.3+0.1i, 0.2))
+    out: -0.473\,682\,807\,676\,938\,2-0.134\,840\,072\,893\,700\,92i
+  fullform:
+    in: N[EllipticThetaPrime[3, Complex[0.3, 0.1], 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, Complex[0.3, 0.1], 0.2]]
+q-1-is-declined-the-series-diverges:
+  epsil:
+    in: N(EllipticThetaPrime(3, 0.3, 1))
+    out: EllipticThetaPrime(3, 0.3, 1)
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 0.3, 1))
+    out: \mathrm{EllipticThetaPrime}(3, 0.3, 1)
+  fullform:
+    in: N[EllipticThetaPrime[3, 0.3, 1]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, 0.3, 1]]
+symbolic-arguments-are-left-unevaluated-rather:
+  epsil:
+    in: EllipticThetaPrime(3, u, q)
+    out: EllipticThetaPrime(3, u, q)
+  tex:
+    in: \mathrm{EllipticThetaPrime}(3, u, q)
+    out: \mathrm{EllipticThetaPrime}(3, u, q)
+  fullform:
+    in: EllipticThetaPrime[3, u, q]
