@@ -672,3 +672,34 @@ to-40-significant-digits-every-one-correctly:
   rust:
     in: nf(gamma(rational(n(1), n(3))))
     out: "2.6789385347077475"
+two-arguments-with-a-complex-second-argument:
+  epsil:
+    in: Gamma(2.5, 1.5 + i)
+    out: 0.914_816_170_324_099_8 - 0.453_556_013_183_482_1i
+  tex:
+    in: \Gamma(2.5, 1.5+i)
+    out: 0.914\,816\,170\,324\,099\,8-0.453\,556\,013\,183\,482\,1i
+  fullform:
+    in: Gamma[2.5, Complex[1.5, 1]]
+  wolfram:
+    in: Gamma[2.5, Complex[1.5, 1]]
+n-gamma-1-0-2-exponential-cdf-at-a-concrete-z:
+  epsil:
+    in: N(Gamma(1, 0, 2))
+    out: 0.864_664_716_763_387_308_106
+  tex:
+    in: N(\Gamma(1, 0, 2))
+    out: 0.864\,664\,716\,763\,387\,308\,106
+  fullform:
+    in: N[Gamma[1, 0, 2]]
+  wolfram:
+    in: N[Gamma[1, 0, 2]]
+three-arguments-fully-symbolic-in-both-order-and:
+  epsil:
+    in: Gamma(s, 0, z)
+    out: Gamma(s, 0, z)
+  tex:
+    in: \Gamma(s, 0, z)
+    out: \Gamma(s, 0, z)
+  fullform:
+    in: Gamma[s, 0, z]

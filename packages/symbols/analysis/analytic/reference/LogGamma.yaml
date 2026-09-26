@@ -103,6 +103,18 @@ examples:
     expected: { num: "0.985420646927767069187174036978" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
+  - role: test
+    id: log-gamma-neg-2-is-a-pole
+    expr: [LogGamma, -2]
+    expected: PositiveInfinity
+  - role: test
+    id: log-gamma-neg-3-is-a-pole
+    expr: [LogGamma, -3]
+    expected: PositiveInfinity
+  - role: test
+    id: n-log-gamma-5-over-2-to-40-digits
+    expr: [N, [LogGamma, [Rational, 5, 2]], 40]
+    expected: { num: "0.2846828704729191596324946696827019243201" }
 implementations:
   - origin: reference
     form: notatio
