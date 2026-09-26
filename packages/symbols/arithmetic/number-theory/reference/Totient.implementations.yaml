@@ -16,20 +16,20 @@ totient-12:
     tex:
       in: \phi (12)
       out: "4"
-  sympy:
-    in: totient(12)
-    out: "4"
   sage:
     in: euler_phi(12)
     out: "4"
   oscar:
     in: euler_phi(ZZ(12))
     out: "4"
-  julia:
-    in: euler_phi(ZZ(12))
-    out: "4"
   mathlib4:
     in: (Nat.totient 12)
+    out: "4"
+  sympy:
+    in: totient(12)
+    out: "4"
+  julia:
+    in: euler_phi(ZZ(12))
     out: "4"
 totient-36:
   epsil:
@@ -49,20 +49,20 @@ totient-36:
     tex:
       in: \phi (36)
       out: "12"
-  sympy:
-    in: totient(36)
-    out: "12"
   sage:
     in: euler_phi(36)
     out: "12"
   oscar:
     in: euler_phi(ZZ(36))
     out: "12"
-  julia:
-    in: euler_phi(ZZ(36))
-    out: "12"
   mathlib4:
     in: (Nat.totient 36)
+    out: "12"
+  sympy:
+    in: totient(36)
+    out: "12"
+  julia:
+    in: euler_phi(ZZ(36))
     out: "12"
 totient-1:
   epsil:
@@ -82,20 +82,20 @@ totient-1:
     tex:
       in: \phi (1)
       out: "1"
-  sympy:
-    in: totient(1)
-    out: "1"
   sage:
     in: euler_phi(1)
     out: "1"
   oscar:
     in: euler_phi(ZZ(1))
     out: "1"
-  julia:
-    in: euler_phi(ZZ(1))
-    out: "1"
   mathlib4:
     in: (Nat.totient 1)
+    out: "1"
+  sympy:
+    in: totient(1)
+    out: "1"
+  julia:
+    in: euler_phi(ZZ(1))
     out: "1"
 rsa-key-setup-varphi-17-times-23-16-times-22-352:
   epsil:
@@ -115,20 +115,20 @@ rsa-key-setup-varphi-17-times-23-16-times-22-352:
     tex:
       in: \phi (391)
       out: "352"
-  sympy:
-    in: totient(391)
-    out: "352"
   sage:
     in: euler_phi(391)
     out: "352"
   oscar:
     in: euler_phi(ZZ(391))
     out: "352"
-  julia:
-    in: euler_phi(ZZ(391))
-    out: "352"
   mathlib4:
     in: (Nat.totient 391)
+    out: "352"
+  sympy:
+    in: totient(391)
+    out: "352"
+  julia:
+    in: euler_phi(ZZ(391))
     out: "352"
 sum-d-mid-n-varphi-d-n-checked-over-the-divisors:
   epsil:
@@ -148,20 +148,20 @@ sum-d-mid-n-varphi-d-n-checked-over-the-divisors:
     tex:
       in: \phi (1)+\phi (2)+\phi (3)+\phi (4)+\phi (6)+\phi (12)
       out: "12"
-  sympy:
-    in: (totient(1) + totient(2) + totient(3) + totient(4) + totient(6) + totient(12))
-    out: "12"
   sage:
     in: (euler_phi(1) + euler_phi(2) + euler_phi(3) + euler_phi(4) + euler_phi(6) + euler_phi(12))
     out: "12"
   oscar:
     in: (euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))
     out: "12"
-  julia:
-    in: (euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))
-    out: "12"
   mathlib4:
     in: ((Nat.totient 1) + (Nat.totient 2) + (Nat.totient 3) + (Nat.totient 4) + (Nat.totient 6) + (Nat.totient 12))
+    out: "12"
+  sympy:
+    in: (totient(1) + totient(2) + totient(3) + totient(4) + totient(6) + totient(12))
+    out: "12"
+  julia:
+    in: (euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))
     out: "12"
 multiplicative-varphi-mn-varphi-m-varphi-n-when:
   epsil:
@@ -181,20 +181,20 @@ multiplicative-varphi-mn-varphi-m-varphi-n-when:
     tex:
       in: \phi (12)=\phi (4) \phi (3)
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(totient(12), (totient(4) * totient(3)))
-    out: True
   sage:
     in: bool(euler_phi(12) == (euler_phi(4) * euler_phi(3)))
     out: True
   oscar:
     in: (euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))
     out: "true"
-  julia:
-    in: (euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))
-    out: "true"
   mathlib4:
     in: (decide ((Nat.totient 12) = ((Nat.totient 4) * (Nat.totient 3))))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(totient(12), (totient(4) * totient(3)))
+    out: True
+  julia:
+    in: (euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))
     out: "true"
 varphi-0-0-as-in-wolfram:
   epsil:
@@ -214,20 +214,24 @@ varphi-0-0-as-in-wolfram:
     tex:
       in: \phi (0)
       out: "0"
+  sage:
+    in: euler_phi(0)
+  oscar:
+    in: euler_phi(ZZ(0))
+  mathlib4:
+    in: (Nat.totient 0)
   sympy:
     in: totient(0)
     out: "ValueError: n should be a positive integer"
     verdict: error
     kind: domain
     note: compute-engine's Totient answers at 0; SymPy's totient() requires a positive integer and declines.
-  sage:
-    in: euler_phi(0)
-  oscar:
-    in: euler_phi(ZZ(0))
   julia:
     in: euler_phi(ZZ(0))
-  mathlib4:
-    in: (Nat.totient 0)
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: domain
+    note: compute-engine takes φ(0) = 0, as Wolfram does; Nemo's euler_phi requires a positive argument.
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: Totient([2, 4, 6])
@@ -243,20 +247,21 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: \phi (\{2,4,6\})
       out: \{1,2,2\}
-  sympy:
-    in: "[totient(2), totient(4), totient(6)]"
-    out: "AttributeError: 'list' object has no attribute 'is_integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Totient is Listable and threads over the list; SymPy's takes scalars only.
   sage:
     in: "[euler_phi(2), euler_phi(4), euler_phi(6)]"
   oscar:
     in: euler_phi(ZZ([2, 4, 6]))
-  julia:
-    in: euler_phi(ZZ([2, 4, 6]))
   mathlib4:
     in: (Nat.totient [2, 4, 6])
+  sympy:
+    in: "[totient(2), totient(4), totient(6)]"
+    out: "[1, 2, 2]"
+  julia:
+    in: euler_phi(ZZ([2, 4, 6]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: threading
+    note: compute-engine's Totient is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
 totient-10:
   epsil:
     in: Totient(10)
@@ -271,16 +276,18 @@ totient-10:
     in: EulerPhi[10]
   wolfram:
     in: EulerPhi[10]
-  sympy:
-    in: totient(10)
   sage:
     in: euler_phi(10)
   oscar:
     in: euler_phi(ZZ(10))
-  julia:
-    in: euler_phi(ZZ(10))
   mathlib4:
     in: (Nat.totient 10)
+  sympy:
+    in: totient(10)
+    out: "4"
+  julia:
+    in: euler_phi(ZZ(10))
+    out: "4"
 large-integers-varphi-50:
   epsil:
     in: Totient(50!)
@@ -295,16 +302,18 @@ large-integers-varphi-50:
     in: EulerPhi[Factorial[50]]
   wolfram:
     in: EulerPhi[Factorial[50]]
-  sympy:
-    in: totient(factorial(50))
   sage:
     in: euler_phi(factorial(50))
   oscar:
     in: euler_phi(ZZ(factorial(ZZ(50))))
-  julia:
-    in: euler_phi(ZZ(factorial(ZZ(50))))
   mathlib4:
     in: (Nat.totient (Nat.factorial 50))
+  sympy:
+    in: totient(factorial(50))
+    out: "4218559200885839042679312107816703841788854953574400000000000000"
+  julia:
+    in: euler_phi(ZZ(factorial(ZZ(50))))
+    out: "4218559200885839042679312107816703841788854953574400000000000000"
 negative-n-varphi-n-varphi-n:
   epsil:
     in: Totient(-10)
@@ -319,16 +328,24 @@ negative-n-varphi-n-varphi-n:
     in: EulerPhi[-10]
   wolfram:
     in: EulerPhi[-10]
-  sympy:
-    in: totient(-10)
   sage:
     in: euler_phi(-10)
   oscar:
     in: euler_phi(ZZ(-10))
-  julia:
-    in: euler_phi(ZZ(-10))
   mathlib4:
     in: (Nat.totient (-10))
+  sympy:
+    in: totient(-10)
+    out: "ValueError: n should be a positive integer"
+    verdict: error
+    kind: domain
+    note: compute-engine takes φ(-n) = φ(n), as Wolfram does; SymPy's totient requires a positive argument.
+  julia:
+    in: euler_phi(ZZ(-10))
+    out: "DomainError with -10: Argument must be positive"
+    verdict: error
+    kind: domain
+    note: compute-engine takes φ(-n) = φ(n), as Wolfram does; Nemo's euler_phi requires a positive argument.
 varphi-p-p-1-for-a-prime-p:
   epsil:
     in: Totient(17)
@@ -343,16 +360,18 @@ varphi-p-p-1-for-a-prime-p:
     in: EulerPhi[17]
   wolfram:
     in: EulerPhi[17]
-  sympy:
-    in: totient(17)
   sage:
     in: euler_phi(17)
   oscar:
     in: euler_phi(ZZ(17))
-  julia:
-    in: euler_phi(ZZ(17))
   mathlib4:
     in: (Nat.totient 17)
+  sympy:
+    in: totient(17)
+    out: "16"
+  julia:
+    in: euler_phi(ZZ(17))
+    out: "16"
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54:
   epsil:
     in: Totient(81)
@@ -367,16 +386,18 @@ varphi-p-k-p-k-1-p-1-3-3-cdot-2-54:
     in: EulerPhi[81]
   wolfram:
     in: EulerPhi[81]
-  sympy:
-    in: totient(81)
   sage:
     in: euler_phi(81)
   oscar:
     in: euler_phi(ZZ(81))
-  julia:
-    in: euler_phi(ZZ(81))
   mathlib4:
     in: (Nat.totient 81)
+  sympy:
+    in: totient(81)
+    out: "54"
+  julia:
+    in: euler_phi(ZZ(81))
+    out: "54"
 euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when:
   epsil:
     in: PowerMod(7, Totient(10), 10)

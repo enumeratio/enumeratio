@@ -13,10 +13,10 @@ max-3-1-4-1-5:
     tex:
       in: \max (3,1,4,1,5)
       out: "5"
-  sympy:
+  sage:
     in: enumeratio_max(3, 1, 4, 1, 5)
     out: "5"
-  sage:
+  sympy:
     in: enumeratio_max(3, 1, 4, 1, 5)
     out: "5"
 also-accepts-a-single-list-argument:
@@ -34,13 +34,10 @@ also-accepts-a-single-list-argument:
     tex:
       in: \max (\{3,1,4\})
       out: "4"
-  sympy:
-    in: enumeratio_max([3, 1, 4])
-    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
-    verdict: error
-    kind: threading
-    note: compute-engine's Max threads over (or pools) the list; SymPy's takes scalars.
   sage:
+    in: enumeratio_max([3, 1, 4])
+    out: "4"
+  sympy:
     in: enumeratio_max([3, 1, 4])
     out: "4"
 max-neg-1-neg-5:
@@ -58,10 +55,10 @@ max-neg-1-neg-5:
     tex:
       in: \max (-1,-5)
       out: "-1"
-  sympy:
+  sage:
     in: enumeratio_max(-1, -5)
     out: "-1"
-  sage:
+  sympy:
     in: enumeratio_max(-1, -5)
     out: "-1"
 a-single-argument-is-returned-unchanged:
@@ -79,10 +76,10 @@ a-single-argument-is-returned-unchanged:
     tex:
       in: \max (3)
       out: "3"
-  sympy:
+  sage:
     in: enumeratio_max(3)
     out: "3"
-  sage:
+  sympy:
     in: enumeratio_max(3)
     out: "3"
 commutative-order-doesn-t-matter:
@@ -103,11 +100,11 @@ commutative-order-doesn-t-matter:
     tex:
       in: \max (3,7)=\max (7,3)
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(enumeratio_max(3, 7), enumeratio_max(7, 3))
-    out: True
   sage:
     in: bool(enumeratio_max(3, 7) == enumeratio_max(7, 3))
+    out: True
+  sympy:
+    in: enumeratio_equal(enumeratio_max(3, 7), enumeratio_max(7, 3))
     out: True
 multiple-list-arguments-are-flattened-into-one:
   epsil:
@@ -127,14 +124,11 @@ multiple-list-arguments-are-flattened-into-one:
     tex:
       in: \max (\{3,1,4\},\{9,2\})=9
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(enumeratio_max([3, 1, 4], [9, 2]), 9)
-    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
-    verdict: error
-    kind: threading
-    note: compute-engine's Max threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: bool(enumeratio_max([3, 1, 4], [9, 2]) == 9)
+    out: True
+  sympy:
+    in: enumeratio_equal(enumeratio_max([3, 1, 4], [9, 2]), 9)
     out: True
 the-day-s-high-from-a-handful-of-hourly-readings:
   epsil:
@@ -151,10 +145,10 @@ the-day-s-high-from-a-handful-of-hourly-readings:
     tex:
       in: \max (68,72,65,80,74)
       out: "80"
-  sympy:
+  sage:
     in: enumeratio_max(68, 72, 65, 80, 74)
     out: "80"
-  sage:
+  sympy:
     in: enumeratio_max(68, 72, 65, 80, 74)
     out: "80"
 with-no-arguments-compute-engine-returns-nan:
@@ -175,18 +169,18 @@ with-no-arguments-compute-engine-returns-nan:
     verdict: disagree
     kind: convention
     note: Max of nothing is NaN here; Wolfram returns the identity element -Infinity.
-  sympy:
-    in: enumeratio_max()
-    out: -oo
-    verdict: disagree
-    kind: convention
-    note: "The maximum of nothing: SymPy answers −∞, compute-engine NaN."
   sage:
     in: enumeratio_max()
     out: "ValueError: max() iterable argument is empty"
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers "NaN" and Sage raises an error.'
+  sympy:
+    in: enumeratio_max()
+    out: -oo
+    verdict: disagree
+    kind: convention
+    note: "The maximum of nothing: SymPy answers −∞, compute-engine NaN."
 nan-poisons-the-result-overriding-every-other:
   epsil:
     in: Max(`NaN`, 3)
@@ -213,10 +207,11 @@ max-9-2:
     in: Max[9, 2]
   wolfram:
     in: Max[9, 2]
-  sympy:
-    in: enumeratio_max(9, 2)
   sage:
     in: enumeratio_max(9, 2)
+  sympy:
+    in: enumeratio_max(9, 2)
+    out: "9"
 max-list-4-1-7-2:
   epsil:
     in: Max([4, 1, 7, 2])
@@ -228,10 +223,11 @@ max-list-4-1-7-2:
     in: Max[List[4, 1, 7, 2]]
   wolfram:
     in: Max[List[4, 1, 7, 2]]
-  sympy:
-    in: enumeratio_max([4, 1, 7, 2])
   sage:
     in: enumeratio_max([4, 1, 7, 2])
+  sympy:
+    in: enumeratio_max([4, 1, 7, 2])
+    out: "7"
 max-5p56-neg-4p8-7p3:
   epsil:
     in: Max(5.56, -4.8, 7.3)
@@ -243,10 +239,11 @@ max-5p56-neg-4p8-7p3:
     in: Max[5.56, -4.8, 7.3]
   wolfram:
     in: Max[5.56, -4.8, 7.3]
-  sympy:
-    in: enumeratio_max(5.56, -4.8, 7.3)
   sage:
     in: enumeratio_max(5.56, -4.8, 7.3)
+  sympy:
+    in: enumeratio_max(5.56, -4.8, 7.3)
+    out: "7.30000000000000"
 nested-lists-are-flattened-into-the-pool:
   epsil:
     in: Max(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -258,10 +255,11 @@ nested-lists-are-flattened-into-the-pool:
     in: Max[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   wolfram:
     in: Max[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
-  sympy:
-    in: enumeratio_max(2, 3, [[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]])
   sage:
     in: enumeratio_max(2, 3, [[(1/2), -1], [(-5/3), (1/2)]])
+  sympy:
+    in: enumeratio_max(2, 3, [[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]])
+    out: "3"
 exact-numbers-are-compared-numerically:
   epsil:
     in: Max(Sqrt(2), 3 / 2)
@@ -273,10 +271,11 @@ exact-numbers-are-compared-numerically:
     in: Max[Sqrt[2], Rational[3, 2]]
   wolfram:
     in: Max[Sqrt[2], Rational[3, 2]]
-  sympy:
-    in: enumeratio_max(sqrt(2), Rational(3, 2))
   sage:
     in: enumeratio_max(sqrt(2), (3/2))
+  sympy:
+    in: enumeratio_max(sqrt(2), Rational(3, 2))
+    out: 3/2
 max-1-positiveinfinity:
   epsil:
     in: Max(1, PositiveInfinity)
@@ -308,10 +307,11 @@ compares-exact-constants-numerically-max-e-pi-2:
     in: Max[List[E, Pi, 2]]
   wolfram:
     in: Max[List[E, Pi, 2]]
-  sympy:
-    in: enumeratio_max([E, pi, 2])
   sage:
     in: enumeratio_max([e, pi, 2])
+  sympy:
+    in: enumeratio_max([E, pi, 2])
+    out: pi
 the-max-of-two-intervals-is-the-interval-of:
   epsil:
     in: Max(Interval(1, 3), Interval(-3, 5))
@@ -344,7 +344,11 @@ the-max-of-an-empty-list-is-nan-too:
   wolfram:
     in: Max[List[]]
     note: Wolfram's $\mathrm{Max}[\{\}]$ is the identity element $-\infty$.
-  sympy:
-    in: enumeratio_max([])
   sage:
     in: enumeratio_max([])
+  sympy:
+    in: enumeratio_max([])
+    out: -oo
+    verdict: disagree
+    kind: convention
+    note: compute-engine gives NaN for the max of an empty list; SymPy's Max() is the identity -∞.

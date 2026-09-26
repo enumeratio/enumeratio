@@ -13,13 +13,13 @@ sign-neg-3:
     tex:
       in: \text{sgn}(-3)
       out: "-1"
-  sympy:
+  sage:
     in: sign(-3)
     out: "-1"
   mpmath:
     in: sign(-3)
     out: "-1.0"
-  sage:
+  sympy:
     in: sign(-3)
     out: "-1"
 sign-3:
@@ -37,13 +37,13 @@ sign-3:
     tex:
       in: \text{sgn}(3)
       out: "1"
-  sympy:
+  sage:
     in: sign(3)
     out: "1"
   mpmath:
     in: sign(3)
     out: "1.0"
-  sage:
+  sympy:
     in: sign(3)
     out: "1"
 zero-is-its-own-sign:
@@ -61,13 +61,13 @@ zero-is-its-own-sign:
     tex:
       in: \text{sgn}(0)
       out: "0"
-  sympy:
+  sage:
     in: sign(0)
     out: "0"
   mpmath:
     in: sign(0)
     out: "0.0"
-  sage:
+  sympy:
     in: sign(0)
     out: "0"
 sign-neg-1-over-2:
@@ -85,11 +85,11 @@ sign-neg-1-over-2:
     tex:
       in: \text{sgn}\left(-\frac{1}{2}\right)
       out: "-1"
-  sympy:
-    in: sign(Rational(-1, 2))
-    out: "-1"
   sage:
     in: sign((-1/2))
+    out: "-1"
+  sympy:
+    in: sign(Rational(-1, 2))
     out: "-1"
 the-unit-complex-number-pointing-the-same:
   epsil:
@@ -106,18 +106,18 @@ the-unit-complex-number-pointing-the-same:
     tex:
       in: \text{sgn}(3+4 i)
       out: \frac{3}{5}+\frac{4 i}{5}
-  sympy:
-    in: sign((3 + 4*I))
-    out: sign(3 + 4*I)
-  mpmath:
-    in: sign(mpc(3, 4))
-    out: (0.6 + 0.8j)
   sage:
     in: sign((3 + 4*I))
     out: sgn(4*I + 3)
     verdict: disagree
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Sign over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  mpmath:
+    in: sign(mpc(3, 4))
+    out: (0.6 + 0.8j)
+  sympy:
+    in: sign((3 + 4*I))
+    out: sign(3 + 4*I)
 threads-element-wise-over-a-list:
   epsil:
     in: Sign([-3, 0, 7])
@@ -133,20 +133,18 @@ threads-element-wise-over-a-list:
     tex:
       in: \text{sgn}(\{-3,0,7\})
       out: \{-1,0,1\}
-  sympy:
-    in: "[sign(-3), sign(0), sign(7)]"
-    out: "AttributeError: 'list' object has no attribute 'is_Mul'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Sign threads over (or pools) the list; SymPy's takes scalars.
-  mpmath:
-    in: "[sign(-3), sign(0), sign(7)]"
   sage:
     in: "[sign(-3), sign(0), sign(7)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
     kind: threading
     note: compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only.
+  mpmath:
+    in: "[sign(-3), sign(0), sign(7)]"
+    out: "[mpf('-1.0'), mpf('0.0'), mpf('1.0')]"
+  sympy:
+    in: "[sign(-3), sign(0), sign(7)]"
+    out: "[-1, 0, 1]"
 sign-z-z-z-see-abs:
   epsil:
     in: Sign(3 + 4i) == (3 + 4i) / Abs(3 + 4i)
@@ -165,11 +163,11 @@ sign-z-z-z-see-abs:
     tex:
       in: \text{sgn}(3+4 i)=\frac{3+4 i}{| 3+4 i| }
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))
-    out: True
   sage:
     in: bool(sign((3 + 4*I)) == ((3 + 4*I) / abs((3 + 4*I))))
+    out: True
+  sympy:
+    in: enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))
     out: True
 x-cdot-sign-x-x-here-at-x-5:
   epsil:
@@ -189,14 +187,14 @@ x-cdot-sign-x-x-here-at-x-5:
     tex:
       in: -5 \text{sgn}(-5)=| -5|
       out: \text{True}
-  sympy:
-    in: enumeratio_equal((-5 * sign(-5)), Abs(-5))
+  sage:
+    in: bool((-5 * sign(-5)) == abs(-5))
     out: True
   mpmath:
     in: almosteq((-5 * sign(-5)), fabs(-5), 1e-20)
     out: True
-  sage:
-    in: bool((-5 * sign(-5)) == abs(-5))
+  sympy:
+    in: enumeratio_equal((-5 * sign(-5)), Abs(-5))
     out: True
 tells-you-the-temperature-dropped-but-not-by-how:
   epsil:
@@ -213,13 +211,13 @@ tells-you-the-temperature-dropped-but-not-by-how:
     tex:
       in: \text{sgn}(70-95)
       out: "-1"
-  sympy:
+  sage:
     in: sign((70 - 95))
     out: "-1"
   mpmath:
     in: sign((70 - 95))
     out: "-1.0"
-  sage:
+  sympy:
     in: sign((70 - 95))
     out: "-1"
 nan-propagates-rather-than-being-treated-as-0:
@@ -248,12 +246,14 @@ sign-neg-2p5:
     in: Sign[-2.5]
   wolfram:
     in: Sign[-2.5]
-  sympy:
+  sage:
     in: sign(-2.5)
   mpmath:
     in: sign(-2.5)
-  sage:
+    out: "-1.0"
+  sympy:
     in: sign(-2.5)
+    out: "-1"
 sign-3p14:
   epsil:
     in: Sign(3.14)
@@ -265,12 +265,14 @@ sign-3p14:
     in: Sign[3.14]
   wolfram:
     in: Sign[3.14]
-  sympy:
+  sage:
     in: sign(3.14)
   mpmath:
     in: sign(3.14)
-  sage:
+    out: "1.0"
+  sympy:
     in: sign(3.14)
+    out: "1"
 a-complex-number-with-approximate-parts:
   epsil:
     in: Sign(1.4 + 2.3i)
@@ -282,12 +284,14 @@ a-complex-number-with-approximate-parts:
     in: Sign[Complex[1.4, 2.3]]
   wolfram:
     in: Sign[Complex[1.4, 2.3]]
-  sympy:
+  sage:
     in: sign((1.4 + 2.3*I))
   mpmath:
     in: sign(mpc(1.4, 2.3))
-  sage:
+    out: (0.519946946895745222042694276671 + 0.854198555614438567289384025405j)
+  sympy:
     in: sign((1.4 + 2.3*I))
+    out: 0.519946946895745 + 0.854198555614439*I
 an-exact-complex-argument-comes-back-exact-sign:
   epsil:
     in: Sign(1 + i)
@@ -299,12 +303,14 @@ an-exact-complex-argument-comes-back-exact-sign:
     in: Sign[Complex[1, 1]]
   wolfram:
     in: Sign[Complex[1, 1]]
-  sympy:
+  sage:
     in: sign((1 + 1*I))
   mpmath:
     in: sign(mpc(1, 1))
-  sage:
+    out: (0.707106781186547524400844362105 + 0.707106781186547524400844362105j)
+  sympy:
     in: sign((1 + 1*I))
+    out: sign(1 + I)
 threads-over-a-matrix-entry-by-entry:
   epsil:
     in: Sign([[1 / 2, -1], [-5 / 3, 1 / 2]])
@@ -316,10 +322,11 @@ threads-over-a-matrix-entry-by-entry:
     in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   wolfram:
     in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
-  sympy:
-    in: "[[sign(Rational(1, 2)), sign(-1)], [sign(Rational(-5, 3)), sign(Rational(1, 2))]]"
   sage:
     in: "[[sign((1/2)), sign(-1)], [sign((-5/3)), sign((1/2))]]"
+  sympy:
+    in: "[[sign(Rational(1, 2)), sign(-1)], [sign(Rational(-5, 3)), sign(Rational(1, 2))]]"
+    out: "[[1, -1], [-1, 1]]"
 exact-numeric-constants:
   epsil:
     in: Sign(Pi)
@@ -331,12 +338,14 @@ exact-numeric-constants:
     in: Sign[Pi]
   wolfram:
     in: Sign[Pi]
-  sympy:
+  sage:
     in: sign(pi)
   mpmath:
     in: sign(pi)
-  sage:
+    out: "1.0"
+  sympy:
     in: sign(pi)
+    out: "1"
 sign-neg-exponentiale:
   epsil:
     in: Sign(-ExponentialE)
@@ -348,12 +357,14 @@ sign-neg-exponentiale:
     in: Sign[Minus[E]]
   wolfram:
     in: Sign[Minus[E]]
-  sympy:
-    in: sign((-E))
-  mpmath:
-    in: sign((-e))
   sage:
     in: sign((-e))
+  mpmath:
+    in: sign((-e))
+    out: "-1.0"
+  sympy:
+    in: sign((-E))
+    out: "-1"
 sign-imaginaryunit:
   epsil:
     in: Sign(ImaginaryUnit)
@@ -365,12 +376,14 @@ sign-imaginaryunit:
     in: Sign[I]
   wolfram:
     in: Sign[I]
-  sympy:
+  sage:
     in: sign(I)
   mpmath:
     in: sign(mpc(0,1))
-  sage:
+    out: (0.0 + 1.0j)
+  sympy:
     in: sign(I)
+    out: I
 sign-positiveinfinity:
   epsil:
     in: Sign(PositiveInfinity)
@@ -404,12 +417,14 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
     in: Sign[Subtract[Sqrt[2], 2]]
   wolfram:
     in: Sign[Subtract[Sqrt[2], 2]]
-  sympy:
+  sage:
     in: sign((sqrt(2) - 2))
   mpmath:
     in: sign((sqrt(2) - 2))
-  sage:
+    out: "-1.0"
+  sympy:
     in: sign((sqrt(2) - 2))
+    out: "-1"
 2-sqrt-2-is-the-same-certified-decision-the:
   epsil:
     in: Sign(2 - Sqrt(2))
@@ -421,12 +436,14 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
     in: Sign[Subtract[2, Sqrt[2]]]
   wolfram:
     in: Sign[Subtract[2, Sqrt[2]]]
-  sympy:
+  sage:
     in: sign((2 - sqrt(2)))
   mpmath:
     in: sign((2 - sqrt(2)))
-  sage:
+    out: "1.0"
+  sympy:
     in: sign((2 - sqrt(2)))
+    out: "1"
 the-sign-of-a-nonzero-complex-number-lies-on-the:
   epsil:
     in: Abs(Sign(3 + 4i)) == 1
@@ -441,9 +458,11 @@ the-sign-of-a-nonzero-complex-number-lies-on-the:
     in: Equal[Abs[Sign[Complex[3, 4]]], 1]
   wolfram:
     in: (Abs[Sign[Complex[3, 4]]] == 1)
-  sympy:
-    in: enumeratio_equal(Abs(sign((3 + 4*I))), 1)
-  mpmath:
-    in: almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)
   sage:
     in: bool(abs(sign((3 + 4*I))) == 1)
+  mpmath:
+    in: almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(Abs(sign((3 + 4*I))), 1)
+    out: True
