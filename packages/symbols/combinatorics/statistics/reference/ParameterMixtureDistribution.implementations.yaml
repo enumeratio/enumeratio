@@ -1,0 +1,84 @@
+parameter-mixture-poisson-gamma-pdf:
+  epsil:
+    in: |-
+      PDF(ParameterMixtureDistribution(
+                                        PoissonDistribution(theta),
+                                        Distributed(theta, GammaDistribution(3, 2)),
+                                      ), 4)
+    out: 80 / 729
+  tex:
+    in: \operatorname{PDF}(\mathrm{ParameterMixtureDistribution}(\operatorname{PoissonDistribution}(\theta), \mathrm{Distributed}(\theta, \mathrm{GammaDistribution}(3, 2))), 4)
+    out: \frac{80}{729}
+  fullform:
+    in: PDF[ParameterMixtureDistribution[PoissonDistribution[theta], Distributed[theta, GammaDistribution[3, 2]]], 4]
+parameter-mixture-poisson-gamma-mean:
+  epsil:
+    in: |-
+      Mean(ParameterMixtureDistribution(
+                                         PoissonDistribution(theta),
+                                         Distributed(theta, GammaDistribution(3, 2)),
+                                       ))
+    out: "6"
+  tex:
+    in: \mathrm{mean}(\mathrm{ParameterMixtureDistribution}(\operatorname{PoissonDistribution}(\theta), \mathrm{Distributed}(\theta, \mathrm{GammaDistribution}(3, 2))))
+    out: "6"
+  fullform:
+    in: Mean[ParameterMixtureDistribution[PoissonDistribution[theta], Distributed[theta, GammaDistribution[3, 2]]]]
+parameter-mixture-poisson-gamma-variance:
+  epsil:
+    in: |-
+      Variance(ParameterMixtureDistribution(
+                                             PoissonDistribution(theta),
+                                             Distributed(
+                                                          theta,
+                                                          GammaDistribution(3, 2),
+                                                        ),
+                                           ))
+    out: "18"
+  tex:
+    in: \mathrm{Variance}(\mathrm{ParameterMixtureDistribution}(\operatorname{PoissonDistribution}(\theta), \mathrm{Distributed}(\theta, \mathrm{GammaDistribution}(3, 2))))
+    out: "18"
+  fullform:
+    in: Variance[ParameterMixtureDistribution[PoissonDistribution[theta], Distributed[theta, GammaDistribution[3, 2]]]]
+parameter-mixture-binomial-beta-mean:
+  epsil:
+    in: |-
+      Mean(ParameterMixtureDistribution(
+                                         BinomialDistribution(10, theta),
+                                         Distributed(theta, BetaDistribution(2, 3)),
+                                       ))
+    out: "4"
+  tex:
+    in: \mathrm{mean}(\mathrm{ParameterMixtureDistribution}(\operatorname{BinomialDistribution}(10, \theta), \mathrm{Distributed}(\theta, \mathrm{BetaDistribution}(2, 3))))
+    out: "4"
+  fullform:
+    in: Mean[ParameterMixtureDistribution[BinomialDistribution[10, theta], Distributed[theta, BetaDistribution[2, 3]]]]
+parameter-mixture-binomial-beta-variance:
+  epsil:
+    in: |-
+      Variance(ParameterMixtureDistribution(
+                                             BinomialDistribution(10, theta),
+                                             Distributed(
+                                                          theta,
+                                                          BetaDistribution(2, 3),
+                                                        ),
+                                           ))
+    out: "6"
+  tex:
+    in: \mathrm{Variance}(\mathrm{ParameterMixtureDistribution}(\operatorname{BinomialDistribution}(10, \theta), \mathrm{Distributed}(\theta, \mathrm{BetaDistribution}(2, 3))))
+    out: "6"
+  fullform:
+    in: Variance[ParameterMixtureDistribution[BinomialDistribution[10, theta], Distributed[theta, BetaDistribution[2, 3]]]]
+parameter-mixture-binomial-beta-pdf:
+  epsil:
+    in: |-
+      PDF(ParameterMixtureDistribution(
+                                        BinomialDistribution(4, theta),
+                                        Distributed(theta, BetaDistribution(2, 2)),
+                                      ), 2)
+    out: 9 / 35
+  tex:
+    in: \operatorname{PDF}(\mathrm{ParameterMixtureDistribution}(\operatorname{BinomialDistribution}(4, \theta), \mathrm{Distributed}(\theta, \mathrm{BetaDistribution}(2, 2))), 2)
+    out: \frac{9}{35}
+  fullform:
+    in: PDF[ParameterMixtureDistribution[BinomialDistribution[4, theta], Distributed[theta, BetaDistribution[2, 2]]], 2]

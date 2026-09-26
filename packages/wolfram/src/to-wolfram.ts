@@ -297,6 +297,7 @@ export const HEADS: Record<string, string> = {
   Intersection: "Intersection",
   SetMinus: "Complement",
   Dot: "Dot",
+  Covariance: "Covariance",
   Mean: "Mean",
   Median: "Median",
   Commonest: "Commonest",
@@ -421,6 +422,14 @@ export const HEADS: Record<string, string> = {
   NExpectation: "NExpectation",
   NProbability: "NProbability",
   Conditioned: "Conditioned",
+  // Sixth-wave (deferred) distribution heads (@enumeratio/statistics/src/distributions-6.ts) —
+  // identity here already.
+  MultinomialDistribution: "MultinomialDistribution",
+  MultinormalDistribution: "MultinormalDistribution",
+  MultivariatePoissonDistribution: "MultivariatePoissonDistribution",
+  ProbabilityDistribution: "ProbabilityDistribution",
+  ParameterMixtureDistribution: "ParameterMixtureDistribution",
+  HistogramDistribution: "HistogramDistribution",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
