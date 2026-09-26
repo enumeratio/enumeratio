@@ -1,0 +1,126 @@
+fibonacci-order-2:
+  epsil:
+    in: DifferenceRootReduce(Fibonacci(n), n)
+    out: |-
+      Apply(DifferenceRoot(Function([
+                                      -y(n2) - y(n2 + 1) + y(n2 + 2) == 0,
+                                      y(0) == 0,
+                                      y(1) == 1,
+                                    ], y, n2)), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(\mathrm{Fibonacci}(n), n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=0\\y(1)=1\end{cases})\lhd n
+  traditional:
+    in: \mathrm{DifferenceRootReduce}(F_{n}, n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=0\\y(1)=1\end{cases})\lhd n
+  fullform:
+    in: DifferenceRootReduce[Fibonacci[n], n]
+factorial-order-1:
+  epsil:
+    in: DifferenceRootReduce(n!, n)
+    out: |-
+      Apply(DifferenceRoot(Function(
+                                     [(-n2 - 1) * y(n2) + y(n2 + 1) == 0, y(0) == 1],
+                                     y,
+                                     n2,
+                                   )), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(n!, n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}((-1)-\mathrm{n2})y(\mathrm{n2})+y(\mathrm{n2}+1)=0\\y(0)=1\end{cases})\lhd n
+  fullform:
+    in: DifferenceRootReduce[Factorial[n], n]
+binomial-anchors-either-side-of-the-pole:
+  epsil:
+    in: DifferenceRootReduce(Binomial(n, 3), n)
+    out: |-
+      Apply(DifferenceRoot(Function([
+                                      (n2 - 2) * y(n2 + 1) + (-n2 - 1) * y(n2) == 0,
+                                      y(-1) == -1,
+                                      y(3) == 1,
+                                    ], y, n2)), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(\binom{n}{3}, n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}-2)y(\mathrm{n2}+1)+((-1)-\mathrm{n2})y(\mathrm{n2})=0\\y(-1)=-1\\y(3)=1\end{cases})\lhd n
+  fullform:
+    in: DifferenceRootReduce[Binomial[n, 3], n]
+harmonicnumber-order-1-inhomogeneous:
+  epsil:
+    in: DifferenceRootReduce(HarmonicNumber(n), n)
+    out: |-
+      Apply(DifferenceRoot(Function([
+                                      (n2 + 1) * y(n2 + 1) + (-n2 - 1) * y(n2) - 1 ==
+                                      0,
+                                      y(0) == 0,
+                                    ], y, n2)), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(\mathrm{HarmonicNumber}(n), n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+1)y(\mathrm{n2}+1)+((-1)-\mathrm{n2})y(\mathrm{n2})-1=0\\y(0)=0\end{cases})\lhd n
+  traditional:
+    in: \mathrm{DifferenceRootReduce}(H_{n}, n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+1)y(\mathrm{n2}+1)+((-1)-\mathrm{n2})y(\mathrm{n2})-1=0\\y(0)=0\end{cases})\lhd n
+  fullform:
+    in: DifferenceRootReduce[HarmonicNumber[n], n]
+sum-of-two-hypergeometric-terms:
+  epsil:
+    in: DifferenceRootReduce(2 ^ n + 3 ^ n, n)
+    out: |-
+      Apply(DifferenceRoot(Function([
+                                      -5 * y(n2 + 1) + 6 * y(n2) + y(n2 + 2) == 0,
+                                      y(0) == 2,
+                                      y(1) == 5,
+                                    ], y, n2)), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(2^{n}+3^{n}, n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-5y(\mathrm{n2}+1)+6y(\mathrm{n2})+y(\mathrm{n2}+2)=0\\y(0)=2\\y(1)=5\end{cases})\lhd n
+  fullform:
+    in: DifferenceRootReduce[Plus[Power[2, n], Power[3, n]], n]
+catalannumber-order-1:
+  epsil:
+    in: DifferenceRootReduce(CatalanNumber(n), n)
+    out: |-
+      Apply(DifferenceRoot(Function([-2 * (2n2 + 1) * y(n2) + (n2 + 2) * y(n2 + 1) ==
+                                     0, y(0) == 1], y, n2)), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(\mathrm{CatalanNumber}(n), n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+2)y(\mathrm{n2}+1)-2(2\mathrm{n2}+1)y(\mathrm{n2})=0\\y(0)=1\end{cases})\lhd n
+  traditional:
+    in: \mathrm{DifferenceRootReduce}(C_{n}, n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+2)y(\mathrm{n2}+1)-2(2\mathrm{n2}+1)y(\mathrm{n2})=0\\y(0)=1\end{cases})\lhd n
+  fullform:
+    in: DifferenceRootReduce[CatalanNumber[n], n]
+lucasl-order-2:
+  epsil:
+    in: DifferenceRootReduce(LucasL(n), n)
+    out: |-
+      Apply(DifferenceRoot(Function([
+                                      -y(n2) - y(n2 + 1) + y(n2 + 2) == 0,
+                                      y(0) == 2,
+                                      y(1) == 1,
+                                    ], y, n2)), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(\mathrm{LucasL}(n), n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=2\\y(1)=1\end{cases})\lhd n
+  traditional:
+    in: \mathrm{DifferenceRootReduce}(L_{n}, n)
+    out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=2\\y(1)=1\end{cases})\lhd n
+  fullform:
+    in: DifferenceRootReduce[LucasL[n], n]
+evaluated-at-a-concrete-n-runs-the-recurrence:
+  tex:
+    in: N(\mathrm{DifferenceRootReduce}(\mathrm{Fibonacci}(n), n)\lhd20)
+    out: 6\,765
+  traditional:
+    in: N(\mathrm{DifferenceRootReduce}(F_{n}, n)\lhd20)
+    out: 6\,765
+  fullform:
+    in: N[DifferenceRootReduce[Fibonacci[n], n][20]]
+    back: Unreadable
+a-symbolic-order-declines:
+  epsil:
+    in: DifferenceRootReduce(Binomial(n, k), n)
+    out: DifferenceRootReduce(Binomial(n, k), n)
+  tex:
+    in: \mathrm{DifferenceRootReduce}(\binom{n}{k}, n)
+    out: \mathrm{DifferenceRootReduce}(\binom{n}{k}, n)
+  fullform:
+    in: DifferenceRootReduce[Binomial[n, k], n]

@@ -912,12 +912,15 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // own `Function` ever shows, so it's unwrapped here. Wolfram's shape is `Function[{params},
   // body]` (or bare `Function[body]` for the anonymous-parameter case, 0 params). Needed for
   // any multi-parameter Function literal, holonomic reductions included.
+  // A single parameter is Wolfram's own bare form (its FullForm agrees: `Function[x, x^2]`,
+  // not `Function[{x}, x^2]` — both parse, but the bare form is canonical there); 2+ needs the
+  // list.
   Function: (a) => {
     const [rawBody, ...params] = a;
     const body = Array.isArray(rawBody) && rawBody[0] === "Block" ? rawBody[1] : rawBody;
-    return params.length === 0
-      ? `Function[${toWolfram(body)}]`
-      : `Function[List[${params.map((p) => toWolfram(p)).join(", ")}], ${toWolfram(body)}]`;
+    if (params.length === 0) return `Function[${toWolfram(body)}]`;
+    if (params.length === 1) return `Function[${toWolfram(params[0])}, ${toWolfram(body)}]`;
+    return `Function[List[${params.map((p) => toWolfram(p)).join(", ")}], ${toWolfram(body)}]`;
   },
   // compute-engine boxes a call whose head is itself a compound expression (rather than a
   // bare symbol) as `Apply(head, arg)` — see difference-root.ts / differential-root.ts, whose

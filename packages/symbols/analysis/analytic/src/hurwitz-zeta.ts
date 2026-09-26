@@ -90,6 +90,8 @@ import { declareMeijerG } from "./meijer-g.ts";
 import { declareMeijerGReduce } from "./meijer-g-reduce.ts";
 import { declareFourierTransform } from "./fourier-transform.ts";
 import { declareFourierSeries } from "./fourier-series.ts";
+import { declareDifferenceRoot } from "./difference-root.ts";
+import { declareDifferentialRoot } from "./differential-root.ts";
 import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
 import { declareInequality } from "./inequality.ts";
 import { declareFindInstance } from "./find-instance.ts";
@@ -777,6 +779,8 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareFourierSeries(ce);
   declareInequality(ce);
   declareFindInstance(ce);
+  declareDifferenceRoot(ce);
+  declareDifferentialRoot(ce);
   declareCorrectlyRoundedN(ce);
   declareSignals(ce);
 }

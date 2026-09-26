@@ -381,8 +381,20 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * the same story once more: all seventeen are genuinely Wolfram's own control/scoping heads
  * (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
  * `elsewhere`.
+ *
+ * DifferenceRootReduce and DifferentialRootReduce (difference-root.ts, differential-root.ts)
+ * are genuinely Wolfram's own names too, same story, waiting on the same coverage run.
+ * DifferenceRoot and DifferentialRoot are `unknown` rather than `extension` — every example
+ * calls them curried, `DifferenceRoot(fn)(n)`, so the reference entry's own examples never
+ * have `DifferenceRoot` as an expression's literal head (it's one level down, inside the
+ * `Apply` the currying produces), which is exactly what "the entry's examples never call its
+ * own head" means — so they don't need a NOVEL entry here at all (nothing checks `unknown`
+ * heads against a list), but they are genuine Wolfram names too — see `HEADS` in
+ * @enumeratio/wolfram.
  */
 const NOVEL = [
+  "DifferenceRootReduce",
+  "DifferentialRootReduce",
   "TimeConstrained",
   "MemoryConstrained",
   "VerificationTest",

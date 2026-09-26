@@ -862,7 +862,8 @@ the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1:
     in: \lim_{x\to0}\frac{\sin(x)}{x}
     out: "1"
   fullform:
-    in: Limit[Function[Divide[Sin[x], x], x], 0]
+    in: Limit[Function[x, Divide[Sin[x], x]], 0]
+    back: [Limit, [Function, x, [Divide, [Sin, x], x]], 0]
 double-angle-formula-via-trigexpand:
   epsil:
     in: TrigExpand(Sin(2x))
