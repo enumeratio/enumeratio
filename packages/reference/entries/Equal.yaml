@@ -1,0 +1,10 @@
+name: Equal
+domain: Compute engine
+signature: Equal(any, any) -> boolean
+summary: Equality comparison (equal to).
+signatures:
+  - call: Equal(any, any) -> boolean
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

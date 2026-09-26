@@ -23,3 +23,5 @@ seeAlso:
   - Norm
   - Basis
   - Quaternions
+names:
+  wolframIdentity: true

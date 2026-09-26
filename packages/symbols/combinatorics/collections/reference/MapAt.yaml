@@ -11,3 +11,5 @@ signatures:
     library: enumeratio-collections
 details:
   - Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.
+names:
+  wolframIdentity: true

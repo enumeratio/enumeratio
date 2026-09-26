@@ -13,3 +13,5 @@ details:
   - Conditions are tried in list order via `ce.verify` (a three-valued check against the current assumptions). The first one known `True` wins, PROVIDED every condition before it is known `False` — a `Piecewise` with an undecided earlier condition stays symbolic rather than guessing which branch is really first.
   - A condition known `False` is dropped; if every condition is eliminated this way, the result is $default$.
   - "[[PiecewiseExpand]] produces this head from [[Abs]], [[Sign]], [[UnitStep]], [[Clip]], and 2-argument [[Max]]/[[Min]]."
+names:
+  wolframIdentity: true

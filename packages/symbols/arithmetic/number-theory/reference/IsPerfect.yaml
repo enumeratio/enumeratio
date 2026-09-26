@@ -13,3 +13,5 @@ seeAlso:
   - PerfectNumber
   - MersennePrimeExponent
   - DivisorSigma
+names:
+  wolfram: PerfectNumberQ

@@ -19,3 +19,5 @@ bindings:
     source: packages/symbols/analysis/analytic/src/hyperfactorial.ts
 seeAlso:
   - BarnesG
+names:
+  wolframIdentity: true

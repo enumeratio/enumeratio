@@ -7,3 +7,5 @@ signatures:
     description: $True$ if $n$ is an odd integer, else $False$.
 seeAlso:
   - IsEven
+names:
+  wolfram: OddQ

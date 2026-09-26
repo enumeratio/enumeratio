@@ -11,3 +11,5 @@ details:
 seeAlso:
   - VertexDegree
   - AdjacencyGraph
+names:
+  wolframIdentity: true

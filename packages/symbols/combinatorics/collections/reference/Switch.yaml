@@ -10,3 +10,5 @@ details:
   - Matching is structural equality only, not Wolfram's fuller pattern language — a form is either a literal value or the bare wildcard $\_$.
 seeAlso:
   - Do
+names:
+  wolframIdentity: true

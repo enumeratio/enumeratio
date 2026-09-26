@@ -22,3 +22,5 @@ seeAlso:
   - Solve
   - Rule
   - Inequality
+names:
+  wolframIdentity: true

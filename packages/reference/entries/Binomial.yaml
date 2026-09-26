@@ -23,3 +23,5 @@ references:
     identity: BinomialCoefficient
   - system: dlmf
     identity: "26.3"
+names:
+  wolframIdentity: true

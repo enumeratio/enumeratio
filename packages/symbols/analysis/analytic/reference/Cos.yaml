@@ -24,3 +24,4 @@ references:
     identity: "4.14"
 names:
   dlmf: cosine function
+  wolframIdentity: true

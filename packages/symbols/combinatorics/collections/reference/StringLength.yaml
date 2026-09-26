@@ -11,3 +11,5 @@ details:
 seeAlso:
   - StringTake
   - ToCharacterCode
+names:
+  wolframIdentity: true

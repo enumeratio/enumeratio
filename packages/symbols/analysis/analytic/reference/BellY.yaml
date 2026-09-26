@@ -19,3 +19,5 @@ bindings:
 seeAlso:
   - BellNumber
   - StirlingS2
+names:
+  wolframIdentity: true

@@ -26,3 +26,5 @@ references:
     identity: Squarefree
   - system: oeis
     identity: A005117
+names:
+  wolfram: SquareFreeQ

@@ -48,3 +48,5 @@ references:
     identity: BarnesG-Function
   - system: dlmf
     identity: "5.17"
+names:
+  wolframIdentity: true

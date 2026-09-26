@@ -1,0 +1,10 @@
+name: Range
+domain: Compute engine
+signature: "Range(number, number?, step: number?) -> indexed_collection<number>"
+summary: A sequence of numbers from a start to an end value with an optional step.
+signatures:
+  - call: "Range(number, number?, step: number?) -> indexed_collection<number>"
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

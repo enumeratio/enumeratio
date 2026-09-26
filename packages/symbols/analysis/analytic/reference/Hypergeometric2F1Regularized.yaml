@@ -22,3 +22,5 @@ bindings:
 seeAlso:
   - Hypergeometric3F2Regularized
   - Hypergeometric1F1Regularized
+names:
+  wolframIdentity: true

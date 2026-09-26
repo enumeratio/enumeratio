@@ -21,3 +21,5 @@ references:
     identity: Multiplicative order
   - system: mathworld
     identity: MultiplicativeOrder
+names:
+  wolframIdentity: true

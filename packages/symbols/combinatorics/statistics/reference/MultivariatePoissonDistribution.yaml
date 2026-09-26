@@ -15,3 +15,5 @@ seeAlso:
   - PoissonDistribution
   - MultinomialDistribution
   - Covariance
+names:
+  wolframIdentity: true

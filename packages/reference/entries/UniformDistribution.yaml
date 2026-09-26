@@ -1,0 +1,10 @@
+name: UniformDistribution
+domain: Compute engine
+signature: UniformDistribution(real, real) -> expression<UniformDistribution>
+summary: Continuous uniform distribution on the interval [a, b].
+signatures:
+  - call: UniformDistribution(real, real) -> expression<UniformDistribution>
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

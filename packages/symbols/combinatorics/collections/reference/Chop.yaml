@@ -15,3 +15,5 @@ details:
   - A second argument overrides the default $10^{-10}$ threshold.
 seeAlso:
   - Round
+names:
+  wolframIdentity: true

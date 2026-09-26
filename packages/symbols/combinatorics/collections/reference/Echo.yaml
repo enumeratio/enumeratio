@@ -16,3 +16,5 @@ details:
   - "This engine has no console: printing is routed through @enumeratio/boxed's message channel instead (`Echo::printed` for the plain form, `Echo::labeled` with a label), collectible with `collectMessages` — not skipped outright, so a caller that wants the printed text still can get it."
 seeAlso:
   - AbsoluteTiming
+names:
+  wolframIdentity: true

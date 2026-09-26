@@ -16,3 +16,5 @@ seeAlso:
   - ChiSquareDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

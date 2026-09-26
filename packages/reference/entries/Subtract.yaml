@@ -1,0 +1,10 @@
+name: Subtract
+domain: Compute engine
+signature: Subtract(number+) -> number
+summary: Difference between two or more values.
+signatures:
+  - call: Subtract(number+) -> number
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

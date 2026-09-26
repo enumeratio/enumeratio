@@ -14,3 +14,5 @@ details:
   - A $Throw$ that reaches no matching $Catch$ propagates out of the whole evaluation.
 seeAlso:
   - Catch
+names:
+  wolframIdentity: true

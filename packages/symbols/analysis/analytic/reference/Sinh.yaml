@@ -22,3 +22,4 @@ references:
     identity: "4.28"
 names:
   dlmf: hyperbolic sine function
+  wolframIdentity: true

@@ -16,3 +16,5 @@ details:
 seeAlso:
   - IntegerDigits
   - IntegerLength
+names:
+  wolframIdentity: true

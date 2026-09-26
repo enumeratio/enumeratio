@@ -11,3 +11,5 @@ details:
 seeAlso:
   - IsConnectedGraph
   - CycleGraph
+names:
+  wolfram: BipartiteGraphQ

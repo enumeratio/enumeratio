@@ -12,3 +12,5 @@ details:
   - Numeric only — a symbolic u or q stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - EllipticTheta
+names:
+  wolframIdentity: true

@@ -25,3 +25,4 @@ references:
     identity: "4.14"
 names:
   dlmf: sine function
+  wolframIdentity: true

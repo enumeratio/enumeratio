@@ -1,0 +1,10 @@
+name: Add
+domain: Compute engine
+signature: Add(value+) -> value
+summary: Sum of two or more values.
+signatures:
+  - call: Add(value+) -> value
+    description: as compute-engine declares it
+names:
+  wolfram: Plus
+stub: engine

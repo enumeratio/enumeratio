@@ -11,3 +11,5 @@ details:
 seeAlso:
   - FromCharacterCode
   - StringLength
+names:
+  wolframIdentity: true

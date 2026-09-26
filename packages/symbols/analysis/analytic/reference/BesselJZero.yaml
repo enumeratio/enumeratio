@@ -22,3 +22,5 @@ bindings:
     note: BesselJZero[nu, k]; mpmath.besseljzero(nu, k).
 seeAlso:
   - Sinc
+names:
+  wolframIdentity: true

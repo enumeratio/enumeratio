@@ -8,3 +8,5 @@ signatures:
   - call: Unique(xs, test)
     description: as above, but two elements count as duplicates when $test$ holds for them, not just when they're structurally equal.
     library: enumeratio-collections
+names:
+  wolfram: DeleteDuplicates

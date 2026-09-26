@@ -27,3 +27,5 @@ seeAlso:
   - MultiplicativeOrder
   - PrimitiveRootList
   - RationalReconstruction
+names:
+  wolframIdentity: true

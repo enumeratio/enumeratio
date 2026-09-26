@@ -11,3 +11,5 @@ details:
   - 'An odd function: $\operatorname{gd}(-x) = -\operatorname{gd}(x)$.'
   - $\operatorname{gd}'(x) = \operatorname{sech}(x)$; differentiable via [[D]].
   - Numeric only past the special values above, and real domain -- no reference example calls for a complex argument.
+names:
+  wolframIdentity: true

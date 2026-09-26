@@ -9,3 +9,5 @@ signatures:
 details:
   - "Differs from x^(1/n): that gives a complex principal root for a negative x, where Surd stays on the real line whenever a real root exists."
   - An even n with a negative x has no real root and is left unevaluated.
+names:
+  wolframIdentity: true

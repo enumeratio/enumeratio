@@ -19,3 +19,5 @@ seeAlso:
   - Hypergeometric0F1
   - Hypergeometric2F1Regularized
   - Hypergeometric3F2Regularized
+names:
+  wolframIdentity: true

@@ -11,3 +11,5 @@ details:
   - Brute force over all n! vertex permutations, cheap-filtered first by vertex count, edge count and sorted degree sequence -- fine through 9 vertices (9! = 362,880), unevaluated beyond that rather than guessing.
 seeAlso:
   - IsConnectedGraph
+names:
+  wolfram: IsomorphicGraphQ

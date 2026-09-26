@@ -11,3 +11,5 @@ details:
 seeAlso:
   - IsConnectedGraph
   - CompleteKaryTree
+names:
+  wolfram: TreeGraphQ

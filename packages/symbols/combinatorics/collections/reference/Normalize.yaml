@@ -11,3 +11,5 @@ signatures:
     library: enumeratio-collections
 details:
   - The zero vector is returned unchanged -- there is no direction to normalize it to.
+names:
+  wolframIdentity: true

@@ -121,6 +121,9 @@ const REFERENCE_IMPLEMENTATION: JsonSchema = {
     source: { type: "string" },
     code: { type: "string" },
     produces: { type: "string" },
+    arity: { type: "integer" },
+    template: { type: "string" },
+    threadArg: { type: "integer" },
     note: { type: "string" },
   },
   required: ["origin", "form"],
@@ -149,6 +152,8 @@ const REFERENCE_NAMES: JsonSchema = {
     wikidata: { type: "string" },
     wikidataConfirmed: { type: "boolean" },
     catalog: { type: "string" },
+    wolfram: { type: "string" },
+    wolframIdentity: { type: "boolean" },
   },
   additionalProperties: false,
 };

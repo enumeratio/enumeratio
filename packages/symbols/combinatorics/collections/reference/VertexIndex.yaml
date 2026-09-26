@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - VertexList
   - VertexDegree
+names:
+  wolframIdentity: true

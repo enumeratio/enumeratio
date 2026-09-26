@@ -13,3 +13,5 @@ seeAlso:
   - GraphDistanceMatrix
   - WeightedAdjacencyMatrix
   - ConnectedComponents
+names:
+  wolframIdentity: true

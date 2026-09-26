@@ -19,3 +19,5 @@ details:
 seeAlso:
   - IntegerDigits
   - FromDigits
+names:
+  wolframIdentity: true

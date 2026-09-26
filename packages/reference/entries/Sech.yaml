@@ -1,0 +1,10 @@
+name: Sech
+domain: Compute engine
+signature: Sech(complex | signed_infinity) -> number
+summary: Hyperbolic secant, the reciprocal of hyperbolic cosine.
+signatures:
+  - call: Sech(complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

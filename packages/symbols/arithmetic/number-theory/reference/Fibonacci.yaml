@@ -31,3 +31,4 @@ references:
     identity: Fibonacci sequence
 names:
   dlmf: Fibonacci number
+  wolframIdentity: true

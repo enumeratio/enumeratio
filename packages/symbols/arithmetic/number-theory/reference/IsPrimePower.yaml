@@ -12,3 +12,5 @@ details:
 seeAlso:
   - IsPrime
   - FactorInteger
+names:
+  wolfram: PrimePowerQ

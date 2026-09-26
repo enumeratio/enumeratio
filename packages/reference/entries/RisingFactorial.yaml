@@ -1,0 +1,7 @@
+name: RisingFactorial
+domain: Wolfram
+signature: RisingFactorial(...)
+summary: Wolfram's own Pochhammer, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolfram: Pochhammer
+stub: carrier

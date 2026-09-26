@@ -1,0 +1,10 @@
+name: Dot
+domain: Compute engine
+signature: Dot(list<tuple> | matrix | tuple | vector, list<tuple> | matrix | tuple | vector) -> value
+summary: Dot product (vector inner product) or matrix product.
+signatures:
+  - call: Dot(list<tuple> | matrix | tuple | vector, list<tuple> | matrix | tuple | vector) -> value
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

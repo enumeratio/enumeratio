@@ -12,3 +12,5 @@ details:
   - A binding with no `= value` (a bare $x$) declares an uninitialized local; referencing it before assigning gives an unevaluated symbol, not an error.
 seeAlso:
   - With
+names:
+  wolframIdentity: true

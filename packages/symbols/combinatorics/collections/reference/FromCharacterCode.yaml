@@ -13,3 +13,5 @@ details:
   - Code points, not UTF-16 units — see [[ToCharacterCode]].
 seeAlso:
   - ToCharacterCode
+names:
+  wolframIdentity: true

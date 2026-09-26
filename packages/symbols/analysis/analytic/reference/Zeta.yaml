@@ -72,3 +72,4 @@ references:
     arity: 2
 names:
   fungrim: RiemannZeta
+  wolframIdentity: true

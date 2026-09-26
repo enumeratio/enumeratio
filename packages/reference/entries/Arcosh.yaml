@@ -8,4 +8,5 @@ signatures:
 names:
   fungrim: Acosh
   dlmf: inverse hyperbolic cosine function
+  wolfram: ArcCosh
 stub: engine

@@ -27,3 +27,5 @@ references:
     identity: ChineseRemainderTheorem
   - system: rosettacode
     identity: Chinese remainder theorem
+names:
+  wolframIdentity: true

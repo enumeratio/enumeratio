@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - NeighborhoodGraph
   - Graph
+names:
+  wolframIdentity: true

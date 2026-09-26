@@ -20,3 +20,5 @@ seeAlso:
   - NProbability
   - NExpectation
   - TruncatedDistribution
+names:
+  wolframIdentity: true

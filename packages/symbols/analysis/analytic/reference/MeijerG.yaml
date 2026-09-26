@@ -19,3 +19,5 @@ bindings:
 seeAlso:
   - MeijerGReduce
   - HypergeometricPFQ
+names:
+  wolframIdentity: true

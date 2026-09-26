@@ -19,3 +19,5 @@ references:
     identity: Multinomial theorem
   - system: mathworld
     identity: MultinomialCoefficient
+names:
+  wolframIdentity: true

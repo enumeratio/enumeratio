@@ -11,3 +11,5 @@ details:
   - 0 is `N`, for the Latin *nulla* — Roman numerals otherwise have no zero
 seeAlso:
   - IntegerString
+names:
+  wolframIdentity: true

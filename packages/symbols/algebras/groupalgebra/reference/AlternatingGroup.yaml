@@ -17,3 +17,5 @@ seeAlso:
   - GroupGenerators
   - PermutationGroup
   - Permute
+names:
+  wolframIdentity: true

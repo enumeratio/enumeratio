@@ -37,3 +37,5 @@ references:
     identity: DirichletEtaFunction
   - system: dlmf
     identity: "25.2"
+names:
+  wolframIdentity: true

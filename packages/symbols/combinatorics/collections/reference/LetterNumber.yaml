@@ -12,3 +12,5 @@ signatures:
 details:
   - Case-insensitive -- LetterNumber("D") and LetterNumber("d") agree.
   - The LetterNumber(c, alphabet) form is only answered for alphabet = "English"; any other named alphabet is left unevaluated.
+names:
+  wolframIdentity: true

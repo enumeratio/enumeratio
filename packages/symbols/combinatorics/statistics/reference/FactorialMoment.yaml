@@ -12,3 +12,5 @@ seeAlso:
   - Moment
   - CentralMoment
   - Cumulant
+names:
+  wolframIdentity: true

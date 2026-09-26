@@ -22,3 +22,5 @@ seeAlso:
   - Cycles
   - PermutationList
   - InversePermutation
+names:
+  wolframIdentity: true

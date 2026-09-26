@@ -19,3 +19,5 @@ references:
     identity: Square root
   - system: mathworld
     identity: SquareRoot
+names:
+  wolframIdentity: true

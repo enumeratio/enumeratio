@@ -10,3 +10,5 @@ details:
   - Wolfram calls this `LoopFreeGraphQ`; this library uses the `Is…` spelling everywhere.
 seeAlso:
   - IsSimpleGraph
+names:
+  wolfram: LoopFreeGraphQ

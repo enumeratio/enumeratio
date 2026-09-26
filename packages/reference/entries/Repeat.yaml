@@ -1,0 +1,10 @@
+name: Repeat
+domain: Compute engine
+signature: "Repeat(value: any, count: integer?) -> list"
+summary: Produce a sequence by repeating a single value. With 1 argument, returns an infinite sequence; with 2 arguments (value, count), returns a finite list of `count` copies.
+signatures:
+  - call: "Repeat(value: any, count: integer?) -> list"
+    description: as compute-engine declares it
+names:
+  wolfram: ConstantArray
+stub: engine

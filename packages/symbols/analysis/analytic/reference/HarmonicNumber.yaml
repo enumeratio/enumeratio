@@ -35,3 +35,5 @@ seeAlso:
   - EulerGamma
   - Zeta
   - HurwitzZeta
+names:
+  wolframIdentity: true

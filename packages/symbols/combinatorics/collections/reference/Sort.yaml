@@ -18,3 +18,5 @@ details:
   - Works on the operands of any expression, not just a collection's elements.
 seeAlso:
   - Ordering
+names:
+  wolframIdentity: true

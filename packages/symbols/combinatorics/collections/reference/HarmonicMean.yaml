@@ -11,3 +11,5 @@ details:
 seeAlso:
   - GeometricMean
   - Mean
+names:
+  wolframIdentity: true

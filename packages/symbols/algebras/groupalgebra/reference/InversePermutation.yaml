@@ -13,3 +13,5 @@ seeAlso:
   - Cycles
   - PermutationCycles
   - Permute
+names:
+  wolframIdentity: true

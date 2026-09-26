@@ -19,3 +19,5 @@ references:
     identity: Absolute value
   - system: mathworld
     identity: AbsoluteValue
+names:
+  wolframIdentity: true

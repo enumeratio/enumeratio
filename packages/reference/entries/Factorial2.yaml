@@ -20,3 +20,4 @@ references:
     identity: DoubleFactorial
 names:
   fungrim: DoubleFactorial
+  wolframIdentity: true

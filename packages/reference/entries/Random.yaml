@@ -1,0 +1,10 @@
+name: Random
+domain: Compute engine
+signature: Random((collection<any> | set<real>)?) random -> any
+summary: "Random(): non-deterministic real in [0, 1) Random(Interval(a, b)): a real in [a, b) (endpoint markers ignored) Random(Range(...)): an element of the range Random(xs): an element of the finite collection `xs`"
+signatures:
+  - call: Random((collection<any> | set<real>)?) random -> any
+    description: as compute-engine declares it
+names:
+  wolfram: RandomReal
+stub: engine

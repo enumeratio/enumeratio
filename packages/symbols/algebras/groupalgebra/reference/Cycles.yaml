@@ -20,3 +20,5 @@ references:
     identity: Cyclic permutation
   - system: mathworld
     identity: PermutationCycle
+names:
+  wolframIdentity: true

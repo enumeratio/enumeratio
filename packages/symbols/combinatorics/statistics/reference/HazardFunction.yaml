@@ -13,3 +13,5 @@ seeAlso:
   - PDF
   - CDF
   - SurvivalFunction
+names:
+  wolframIdentity: true

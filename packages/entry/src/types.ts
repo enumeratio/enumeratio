@@ -156,6 +156,15 @@ export interface ReferenceBinding {
   readonly code?: string;
   /** What evaluating it produces here, when that is not simply a number or expression. */
   readonly produces?: string;
+  /** `mapped` only: the operand count this row applies to. Omitted matches any arity --
+   * @enumeratio/oracle's `mappingFor` prefers an arity-specific row over one with none. */
+  readonly arity?: number;
+  /** `mapped` only: the source template, `$n` for the n-th operand (`@enumeratio/oracle`'s
+   * `Mapping.emit` entry for this row's `form`). */
+  readonly template?: string;
+  /** `mapped` only: 1-based operand this head threads over, for a system whose plain function
+   * call doesn't auto-thread a list the way compute-engine and Wolfram do (`THREADS_MANUALLY`). */
+  readonly threadArg?: number;
   readonly note?: string;
 }
 
@@ -194,6 +203,14 @@ export interface ReferenceNames {
   /** The catalog's subject name for this head, when its rows are recorded under a different
    * spelling (`SymmetricGroup`'s rows are the catalog's `Permutations`). */
   readonly catalog?: string;
+  /** Wolfram's own spelling, when it differs from ours (`Add` -> `Plus`). Omitted for a head
+   * whose Wolfram name IS ours -- see `wolframIdentity` for how that case is marked instead. */
+  readonly wolfram?: string;
+  /** This head is a genuine Wolfram head under its own name -- no `wolfram` override needed,
+   * but the fact still has to be recorded somewhere: `to-wolfram.ts`'s `isWolframHead` (a
+   * kernel oracle may be asked about this head) reads exactly one of `wolfram` or
+   * `wolframIdentity`, never neither, for a head it vouches for. */
+  readonly wolframIdentity?: boolean;
 }
 
 /** A single compute-engine function's reference entry. */

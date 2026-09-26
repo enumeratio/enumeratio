@@ -27,3 +27,4 @@ references:
 names:
   dlmf: Stirling number of the first kind
   catalog: Stirling1
+  wolframIdentity: true

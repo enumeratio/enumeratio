@@ -9,3 +9,5 @@ signatures:
 seeAlso:
   - Sort
   - GatherBy
+names:
+  wolframIdentity: true

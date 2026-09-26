@@ -26,3 +26,5 @@ references:
     identity: PrimeFactorization
   - system: rosettacode
     identity: Prime decomposition
+names:
+  wolframIdentity: true

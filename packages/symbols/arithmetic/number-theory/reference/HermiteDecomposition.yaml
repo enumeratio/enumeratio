@@ -13,3 +13,5 @@ details:
 seeAlso:
   - ProfiniteDecomposition
   - ExtendedGCD
+names:
+  wolframIdentity: true

@@ -20,3 +20,5 @@ seeAlso:
   - EmpiricalDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

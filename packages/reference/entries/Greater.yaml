@@ -1,0 +1,10 @@
+name: Greater
+domain: Compute engine
+signature: Greater(any, any*) -> boolean
+summary: Greater-than comparison (strictly greater than).
+signatures:
+  - call: Greater(any, any*) -> boolean
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

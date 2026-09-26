@@ -38,3 +38,5 @@ seeAlso:
   - IntegerDigits
   - NumeralSystemShape
   - ChineseRemainder
+names:
+  wolframIdentity: true

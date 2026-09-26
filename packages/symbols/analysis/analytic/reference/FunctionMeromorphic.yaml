@@ -9,3 +9,5 @@ signatures:
 details:
   - A polynomial, Exp/Sin/Cos of an affine argument (entire, hence trivially meromorphic), a genuine rational function, and Tan ($=\sin/\cos$, a ratio of entire functions) are all meromorphic; Sqrt and Ln are not, since a branch point is not a pole.
   - This is a strictly larger class than [[FunctionAnalytic]] — the one distinction the two heads draw is exactly the poles a rational function or Tan has, which disqualify it from `FunctionAnalytic` but not from this one.
+names:
+  wolframIdentity: true

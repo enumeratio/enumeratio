@@ -11,3 +11,5 @@ details:
 seeAlso:
   - AdjacencyMatrix
   - EdgeList
+names:
+  wolframIdentity: true

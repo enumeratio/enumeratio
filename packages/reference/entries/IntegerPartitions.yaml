@@ -34,3 +34,5 @@ references:
     identity: Partition
   - system: oeis
     identity: A000041
+names:
+  wolframIdentity: true

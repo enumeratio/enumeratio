@@ -23,3 +23,5 @@ details:
   - Any single head's nested calls flatten, not just $List$'s.
 seeAlso:
   - Join
+names:
+  wolframIdentity: true

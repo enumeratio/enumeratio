@@ -15,3 +15,5 @@ seeAlso:
   - Gather
   - SplitBy
   - Partition
+names:
+  wolframIdentity: true

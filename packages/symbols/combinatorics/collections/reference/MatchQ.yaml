@@ -12,3 +12,5 @@ details:
 seeAlso:
   - FreeQ
   - Replace
+names:
+  wolframIdentity: true

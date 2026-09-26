@@ -20,3 +20,5 @@ references:
     identity: Subfactorial
   - system: oeis
     identity: A000166
+names:
+  wolframIdentity: true

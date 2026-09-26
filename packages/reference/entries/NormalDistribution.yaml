@@ -1,0 +1,10 @@
+name: NormalDistribution
+domain: Compute engine
+signature: NormalDistribution(real, real<0<..>) -> expression<NormalDistribution>
+summary: Normal (Gaussian) distribution with mean μ and standard deviation σ.
+signatures:
+  - call: NormalDistribution(real, real<0<..>) -> expression<NormalDistribution>
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

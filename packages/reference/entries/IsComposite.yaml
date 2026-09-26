@@ -1,0 +1,10 @@
+name: IsComposite
+domain: Compute engine
+signature: IsComposite(number) -> boolean
+summary: "`IsComposite(n)` returns `True` if `n` is a composite number"
+signatures:
+  - call: IsComposite(number) -> boolean
+    description: as compute-engine declares it
+names:
+  wolfram: CompositeQ
+stub: engine

@@ -21,3 +21,5 @@ seeAlso:
   - NMaximize
   - Solve
   - Limit
+names:
+  wolframIdentity: true

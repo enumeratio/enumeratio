@@ -11,3 +11,5 @@ details:
 seeAlso:
   - CDF
   - HazardFunction
+names:
+  wolframIdentity: true

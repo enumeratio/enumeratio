@@ -12,3 +12,5 @@ details:
 seeAlso:
   - FrobeniusSolve
   - GCD
+names:
+  wolframIdentity: true

@@ -10,3 +10,5 @@ seeAlso:
   - PathGraph
   - CycleGraph
   - StarGraph
+names:
+  wolframIdentity: true

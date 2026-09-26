@@ -15,3 +15,5 @@ details:
 seeAlso:
   - Do
   - NestWhile
+names:
+  wolframIdentity: true

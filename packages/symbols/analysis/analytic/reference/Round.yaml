@@ -25,3 +25,5 @@ references:
     identity: Rounding
   - system: mathworld
     identity: NearestIntegerFunction
+names:
+  wolframIdentity: true

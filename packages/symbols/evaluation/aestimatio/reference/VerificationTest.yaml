@@ -17,3 +17,5 @@ details:
   - Outcome is one of "Success", "Failure", "Error" (input raised, or a constraint was requested this process cannot honor) or "Aborted" (TimeConstraint fired).
   - MemoryConstraint in-process reports Error rather than silently skipping the check — real enforcement needs the isolated evaluator, where it comes from the worker's own resourceLimits.
   - TestResultObject's operands are rules — Outcome, Input, ExpectedOutput, ActualOutput, AbsoluteTimeUsed (seconds, rounded to the millisecond), and TestID when given — the same rule spelling @enumeratio/boxed's optionsOf/ruleOf read elsewhere in this codebase.
+names:
+  wolframIdentity: true

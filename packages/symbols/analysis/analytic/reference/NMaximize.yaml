@@ -13,3 +13,5 @@ seeAlso:
   - NMinimize
   - Maximize
   - MaxValue
+names:
+  wolframIdentity: true

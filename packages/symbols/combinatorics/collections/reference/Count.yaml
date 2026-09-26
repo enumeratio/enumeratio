@@ -16,3 +16,5 @@ details:
 seeAlso:
   - Length
   - IndexOf
+names:
+  wolframIdentity: true

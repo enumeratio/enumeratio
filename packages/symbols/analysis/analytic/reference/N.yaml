@@ -18,3 +18,5 @@ details:
 seeAlso:
   - Round
   - Interval
+names:
+  wolframIdentity: true

@@ -17,3 +17,5 @@ seeAlso:
   - PermutationGroup
   - AlternatingGroup
   - GroupGenerators
+names:
+  wolframIdentity: true

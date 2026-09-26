@@ -1,0 +1,10 @@
+name: Less
+domain: Compute engine
+signature: Less(any, any*) -> boolean
+summary: Less-than comparison (strictly less than).
+signatures:
+  - call: Less(any, any*) -> boolean
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

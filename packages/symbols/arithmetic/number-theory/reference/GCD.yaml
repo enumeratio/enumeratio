@@ -21,3 +21,5 @@ references:
     identity: GreatestCommonDivisor
   - system: rosettacode
     identity: Greatest common divisor
+names:
+  wolframIdentity: true

@@ -8,3 +8,5 @@ signatures:
     library: "@enumeratio/analytic"
 details:
   - The same rectangular pulse as [[UnitBox]], but the boundary is left open rather than closed -- [[UnitBox]](±1/2) = 1, HeavisidePi(±1/2) unevaluated. The two heads exist for the two conventions.
+names:
+  wolframIdentity: true

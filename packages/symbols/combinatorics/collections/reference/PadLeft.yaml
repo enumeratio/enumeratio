@@ -12,3 +12,5 @@ signatures:
 seeAlso:
   - PadRight
   - Take
+names:
+  wolframIdentity: true

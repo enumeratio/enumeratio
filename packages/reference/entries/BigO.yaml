@@ -1,0 +1,10 @@
+name: BigO
+domain: Compute engine
+signature: BigO(value) -> number
+summary: Landau big-O remainder term. Inert; any numeric approximation (.N()) of an expression containing it is NaN.
+signatures:
+  - call: BigO(value) -> number
+    description: as compute-engine declares it
+names:
+  wolfram: O
+stub: engine

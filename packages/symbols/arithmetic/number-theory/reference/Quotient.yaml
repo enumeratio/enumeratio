@@ -13,3 +13,5 @@ details:
 seeAlso:
   - Mod
   - GCD
+names:
+  wolframIdentity: true

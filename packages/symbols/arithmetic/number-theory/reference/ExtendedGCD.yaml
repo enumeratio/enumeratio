@@ -19,3 +19,5 @@ references:
     identity: Extended Euclidean algorithm
   - system: rosettacode
     identity: Modular inverse
+names:
+  wolframIdentity: true

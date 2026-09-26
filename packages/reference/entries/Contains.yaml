@@ -7,3 +7,5 @@ signatures:
     description: $True$ if some element of $xs$ is structurally equal to $v$, else $False$.
 seeAlso:
   - Any
+names:
+  wolfram: MemberQ

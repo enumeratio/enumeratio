@@ -22,3 +22,5 @@ seeAlso:
   - PDF
   - Mean
   - Variance
+names:
+  wolframIdentity: true

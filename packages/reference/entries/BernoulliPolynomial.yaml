@@ -1,0 +1,7 @@
+name: BernoulliPolynomial
+domain: Wolfram
+signature: BernoulliPolynomial(...)
+summary: Wolfram's own BernoulliB, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolfram: BernoulliB
+stub: carrier

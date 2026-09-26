@@ -26,3 +26,5 @@ references:
     identity: Floor and ceiling functions
   - system: mathworld
     identity: CeilingFunction
+names:
+  wolfram: Ceiling

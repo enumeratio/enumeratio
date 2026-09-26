@@ -1,0 +1,7 @@
+name: ConstGlaisher
+domain: Wolfram
+signature: ConstGlaisher(...)
+summary: Wolfram's own Glaisher, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolfram: Glaisher
+stub: carrier

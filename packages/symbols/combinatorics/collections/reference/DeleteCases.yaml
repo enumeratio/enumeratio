@@ -14,3 +14,5 @@ seeAlso:
   - MatchQ
   - FreeQ
   - Pick
+names:
+  wolframIdentity: true

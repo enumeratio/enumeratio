@@ -1,0 +1,10 @@
+name: Csch
+domain: Compute engine
+signature: Csch(complex | signed_infinity) -> number
+summary: Hyperbolic cosecant, the reciprocal of hyperbolic sine.
+signatures:
+  - call: Csch(complex | signed_infinity) -> number
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine

@@ -13,3 +13,5 @@ details:
 seeAlso:
   - DifferenceRootReduce
   - DifferentialRoot
+names:
+  wolframIdentity: true

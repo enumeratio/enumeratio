@@ -18,3 +18,5 @@ seeAlso:
   - DiscreteUniformDistribution
   - PDF
   - CDF
+names:
+  wolframIdentity: true

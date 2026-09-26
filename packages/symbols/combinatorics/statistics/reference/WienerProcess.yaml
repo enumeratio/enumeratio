@@ -18,3 +18,5 @@ seeAlso:
   - SliceDistribution
   - RandomFunction
   - NormalDistribution
+names:
+  wolframIdentity: true

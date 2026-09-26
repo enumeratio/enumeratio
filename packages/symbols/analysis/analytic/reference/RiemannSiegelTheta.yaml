@@ -25,3 +25,5 @@ seeAlso:
   - RiemannSiegelZ
   - Zeta
   - LogGamma
+names:
+  wolframIdentity: true

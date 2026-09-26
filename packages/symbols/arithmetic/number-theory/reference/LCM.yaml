@@ -20,3 +20,5 @@ references:
     identity: LeastCommonMultiple
   - system: rosettacode
     identity: Least common multiple
+names:
+  wolframIdentity: true

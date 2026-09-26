@@ -20,3 +20,5 @@ references:
     identity: PrimeFactor
   - system: oeis
     identity: A001222
+names:
+  wolframIdentity: true

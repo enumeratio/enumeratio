@@ -17,3 +17,5 @@ seeAlso:
   - DivisorSigma
   - MoebiusMu
   - Totient
+names:
+  wolframIdentity: true

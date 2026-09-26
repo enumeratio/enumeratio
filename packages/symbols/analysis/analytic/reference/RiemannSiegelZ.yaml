@@ -24,3 +24,5 @@ seeAlso:
   - RiemannSiegelTheta
   - Zeta
   - RiemannZetaZero
+names:
+  wolframIdentity: true
