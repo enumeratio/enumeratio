@@ -8,3 +8,24 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: ($1 + $2*I)
+    arity: 2
+  - origin: mapped
+    form: mpmath
+    template: mpc($1, $2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: ($1 + $2*I)
+    arity: 2
+  - origin: mapped
+    form: oscar
+    template: complex($1, $2)
+    arity: 2
+  - origin: mapped
+    form: julia
+    template: complex($1, $2)
+    arity: 2

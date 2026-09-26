@@ -41,3 +41,19 @@ references:
     identity: Continued fraction
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: ContinuedFraction[$1]
+    arity: 1
+    note: Sage's continued_fraction returns a ContinuedFraction object (str() is '[3; 7, 16]'); list(...) gives the plain quotients, like the SymPy row.
+  - origin: mapped
+    form: sympy
+    template: list(continued_fraction($1))
+    arity: 1
+    note: Sage's continued_fraction returns a ContinuedFraction object (str() is '[3; 7, 16]'); list(...) gives the plain quotients, like the SymPy row.
+  - origin: mapped
+    form: sage
+    template: list(continued_fraction($1))
+    arity: 1
+    note: Sage's continued_fraction returns a ContinuedFraction object (str() is '[3; 7, 16]'); list(...) gives the plain quotients, like the SymPy row.

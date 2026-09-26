@@ -28,3 +28,24 @@ references:
     identity: CeilingFunction
 names:
   wolfram: Ceiling
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Ceiling[$1]
+    arity: 1
+  - origin: mapped
+    form: sympy
+    template: ceiling($1)
+    arity: 1
+  - origin: mapped
+    form: mpmath
+    template: ceil($1)
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: ceil($1)
+    arity: 1
+  - origin: mapped
+    form: rust
+    template: ceil($1)
+    arity: 1

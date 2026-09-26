@@ -17,3 +17,14 @@ seeAlso:
   - PowerModList
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PrimitiveRootList[$1]
+    arity: 1
+    note: Sage's primitive_root gives one root only; run.ts's SAGE_PREAMBLE walks the powers coprime to phi(n).
+  - origin: mapped
+    form: sage
+    template: enumeratio_primitive_root_list($1)
+    arity: 1
+    note: Sage's primitive_root gives one root only; run.ts's SAGE_PREAMBLE walks the powers coprime to phi(n).

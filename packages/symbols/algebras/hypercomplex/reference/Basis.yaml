@@ -20,3 +20,8 @@ references:
     identity: Basis (linear algebra)
   - system: mathworld
     identity: VectorBasis
+bindings:
+  - origin: mapped
+    form: sage
+    template: list(($1).basis())
+    arity: 1

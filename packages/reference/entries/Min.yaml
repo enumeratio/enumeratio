@@ -22,3 +22,16 @@ seeAlso:
   - Clamp
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Min[$*,]
+    note: Same flattening as Max.
+  - origin: mapped
+    form: sympy
+    template: enumeratio_min($*,)
+    note: Same flattening as Max.
+  - origin: mapped
+    form: sage
+    template: enumeratio_min($*,)
+    note: Same flattening as Max.

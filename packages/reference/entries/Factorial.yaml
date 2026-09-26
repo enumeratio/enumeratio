@@ -27,3 +27,32 @@ references:
     identity: Factorial
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Factorial[$1]
+    arity: 1
+  - origin: mapped
+    form: sympy
+    template: factorial($1)
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: factorial($1)
+    arity: 1
+  - origin: mapped
+    form: oscar
+    template: factorial(ZZ($1))
+    arity: 1
+  - origin: mapped
+    form: julia
+    template: factorial(ZZ($1))
+    arity: 1
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.factorial $1)
+    arity: 1
+  - origin: mapped
+    form: rust
+    template: factorial($1)
+    arity: 1

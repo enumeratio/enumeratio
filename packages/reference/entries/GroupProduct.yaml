@@ -1,0 +1,10 @@
+name: GroupProduct
+domain: Oracle
+signature: GroupProduct(...)
+summary: Mapped through to oscar for the oracle; not yet written up here.
+bindings:
+  - origin: mapped
+    form: oscar
+    template: enumeratio_product($1, $2, $3)
+    arity: 3
+stub: carrier

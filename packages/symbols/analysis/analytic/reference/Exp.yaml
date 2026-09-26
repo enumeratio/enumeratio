@@ -24,3 +24,24 @@ references:
 names:
   dlmf: exponential function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: exp($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: exp($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: exp($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: exp($1)
+    arity: 1
+    threadArg: 1

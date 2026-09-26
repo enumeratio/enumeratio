@@ -22,3 +22,29 @@ references:
     identity: A000108
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: CatalanNumber[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: catalan($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: catalan_number($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: julia
+    template: Combinatorics.catalannum($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mathlib4
+    template: (catalan $1)
+    arity: 1
+    threadArg: 1

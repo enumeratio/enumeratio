@@ -25,3 +25,7 @@ seeAlso:
   - Quaternions
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($**)

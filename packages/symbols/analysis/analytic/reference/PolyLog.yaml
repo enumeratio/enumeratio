@@ -32,3 +32,20 @@ references:
 names:
   wikidata: Q1238449
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PolyLog[$1, $2]
+    arity: 2
+  - origin: mapped
+    form: sympy
+    template: polylog($1, $2)
+    arity: 2
+  - origin: mapped
+    form: mpmath
+    template: polylog($1, $2)
+    arity: 2
+  - origin: mapped
+    form: sage
+    template: polylog($1, $2)
+    arity: 2

@@ -25,3 +25,29 @@ references:
 names:
   dlmf: tangent function
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Tan[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: tan($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: tan($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: tan($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: tan($1)
+    arity: 1
+    threadArg: 1

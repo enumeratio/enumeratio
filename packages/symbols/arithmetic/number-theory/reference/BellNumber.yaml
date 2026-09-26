@@ -26,3 +26,34 @@ references:
     identity: A000110
 names:
   wolfram: BellB
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: BellB[$1]
+    arity: 1
+    threadArg: 1
+    note: Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.
+  - origin: mapped
+    form: sympy
+    template: bell($1)
+    arity: 1
+    threadArg: 1
+    note: Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.
+  - origin: mapped
+    form: sage
+    template: bell_number($1)
+    arity: 1
+    threadArg: 1
+    note: Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.
+  - origin: mapped
+    form: oscar
+    template: bell($1)
+    arity: 1
+    threadArg: 1
+    note: Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.
+  - origin: mapped
+    form: julia
+    template: bell(ZZ($1))
+    arity: 1
+    threadArg: 1
+    note: Wolfram spells it BellB. Julia's bare bell(::Int) tries to fit an arbitrary-precision result into an Int64 past n≈25; ZZ keeps it exact.

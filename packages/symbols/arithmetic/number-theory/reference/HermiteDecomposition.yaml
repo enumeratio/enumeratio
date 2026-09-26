@@ -15,3 +15,8 @@ seeAlso:
   - ExtendedGCD
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: HermiteDecomposition[$1]
+    arity: 1

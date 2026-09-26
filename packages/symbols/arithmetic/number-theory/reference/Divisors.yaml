@@ -26,3 +26,8 @@ references:
     identity: Proper divisors
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: divisors($1)
+    arity: 1

@@ -8,3 +8,25 @@ signatures:
 names:
   wolfram: Plus
 stub: engine
+bindings:
+  - origin: mapped
+    form: sympy
+    template: ($*+)
+  - origin: mapped
+    form: mpmath
+    template: ($*+)
+  - origin: mapped
+    form: sage
+    template: ($*+)
+  - origin: mapped
+    form: oscar
+    template: ($*+)
+  - origin: mapped
+    form: julia
+    template: ($*+)
+  - origin: mapped
+    form: mathlib4
+    template: ($*+)
+  - origin: mapped
+    form: rust
+    template: ($*+)

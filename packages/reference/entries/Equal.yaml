@@ -8,3 +8,44 @@ signatures:
 names:
   wolframIdentity: true
 stub: engine
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: ($1 == $2)
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+  - origin: mapped
+    form: sympy
+    template: enumeratio_equal($1, $2)
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+  - origin: mapped
+    form: mpmath
+    template: almosteq($1, $2, 1e-20)
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+  - origin: mapped
+    form: sage
+    template: bool($1 == $2)
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+  - origin: mapped
+    form: oscar
+    template: ($1 == $2)
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+  - origin: mapped
+    form: julia
+    template: ($1 == $2)
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+  - origin: mapped
+    form: mathlib4
+    template: (decide ($1 = $2))
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+  - origin: mapped
+    form: rust
+    template: equal($1, $2)
+    arity: 2
+    note: "The single most valuable row: a large share of documented examples are identities written as Equal."

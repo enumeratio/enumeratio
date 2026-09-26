@@ -19,3 +19,8 @@ seeAlso:
   - ChineseRemainder
   - Rationalize
   - ContinuedFraction
+bindings:
+  - origin: mapped
+    form: sage
+    template: rational_reconstruction($1, $2)
+    arity: 2

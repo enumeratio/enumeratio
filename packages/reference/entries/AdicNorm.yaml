@@ -1,0 +1,10 @@
+name: AdicNorm
+domain: Oracle
+signature: AdicNorm(...)
+summary: Mapped through to rust for the oracle; not yet written up here.
+bindings:
+  - origin: mapped
+    form: rust
+    template: adic_norm($1)
+    arity: 1
+stub: carrier
