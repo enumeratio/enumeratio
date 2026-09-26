@@ -173,7 +173,9 @@ def _measure(call, budget_ms):
 
 def _value(x, precision):
     # The scan's printer goes through a double; at a digit precision print every digit.
-    if isinstance(precision, int) and type(x).__name__ == "mpf":
+    if isinstance(x, list):
+        return "[" + ", ".join(_value(e, precision) for e in x) + "]"
+    if isinstance(precision, int) and type(x).__name__ in ("mpf", "mpc"):
         return nstr(x, precision)
     return enumeratio_value(x)
 

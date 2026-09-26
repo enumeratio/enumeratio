@@ -237,8 +237,12 @@ report records `caches: cleared | uncleared` per system. The benchmarks that mat
 than 1 ms per call, so they run one call per sample and never hit a warm cache.
 
 Some answers are stored rather than computed: mpmath and Wolfram answer ζ(3) from a stored
-constant in microseconds. The catalogue avoids such points (ζ(3.5), not ζ(3)), and the
-`too-fast` floor catches the ones that slip through.
+constant in microseconds. The catalogue avoids such points by drawing its arguments (§3.2),
+and the `too-fast` floor catches the ones that slip through. It still catches some: Wolfram
+answers four `PrimePi` values near 10^11, or eight `Prime` values near 10^5, in a few µs per
+list even after `ClearSystemCache[]`. Its prime tables survive that clear, and the batch of
+`k` calls in one sample repeats the list. mpmath memoises `gamma` at a fixed point the same way.
+Those rows stay `too-fast` and out of the comparison.
 
 ### 4.4 Precision
 
