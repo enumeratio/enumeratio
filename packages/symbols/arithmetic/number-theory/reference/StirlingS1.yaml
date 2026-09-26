@@ -91,6 +91,12 @@ examples:
     expected: [StirlingS1, 4, -1]
     category: Possible issues
     caption: A negative $k$ is outside the textbook domain and stays unevaluated
+  - role: test
+    id: a-mid-sized-n-and-k-past-the-fast-paths
+    expr: [StirlingS1, 40, 14]
+    expected: { num: "1640591781294212129275881145293779479141760" }
+    category: Scope
+    caption: A mid-sized $n$ and $k$ away from the closed-form special cases -- exact for us, but not cheap for every implementation (see Possible issues)
 seeAlso:
   - Binomial
   - Stirling

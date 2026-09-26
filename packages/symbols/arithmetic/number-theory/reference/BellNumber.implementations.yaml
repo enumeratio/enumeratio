@@ -399,3 +399,7 @@ a-zero-modulus-inside-a-congruence-check-is-nan:
     in: (mod(bell(9), 23) == mod((bell(4) + bell(5)), 0))
   julia:
     in: (mod(bell(ZZ(9)), 23) == mod((bell(ZZ(4)) + bell(ZZ(5))), 0))
+    out: "DivideError: integer division error"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" for a zero modulus (see [[Mod]]), Julia''s mod raises DivideError -- same divergence as Mod''s own zero-modulus example, reached here through a BellNumber congruence.'

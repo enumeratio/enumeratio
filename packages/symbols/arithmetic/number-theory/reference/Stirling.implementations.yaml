@@ -427,5 +427,9 @@ a-negative-k-stays-symbolic:
     in: stirling_number2(10, -5)
   julia:
     in: Combinatorics.stirlings2(big(10), -5)
+    out: "0"
+    verdict: inconclusive
+    kind: domain
+    note: A negative k is outside Stirling's textbook domain, so compute-engine leaves it symbolic; Combinatorics.jl's stirlings2 extends past it and answers 0.
   mathlib4:
     in: (Nat.stirlingSecond 10 (-5))

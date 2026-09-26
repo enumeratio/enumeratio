@@ -901,6 +901,10 @@ equal-negative-arguments-binom-2-2-1:
     in: binomial(ZZ(-2), ZZ(-2))
   julia:
     in: binomial(ZZ(-2), ZZ(-2))
+    out: "0"
+    verdict: disagree
+    kind: convention
+    note: Nemo's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n; ours extends through the reflection identities (Wolfram's convention), giving 1 -- verified against a Wolfram kernel, same gap as the mapping's note.
   mathlib4:
     in: (Nat.choose (-2) (-2))
   rust:

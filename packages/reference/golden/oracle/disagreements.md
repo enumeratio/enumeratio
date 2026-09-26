@@ -310,11 +310,12 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## julia — agree 166, disagree 8, inconclusive 0, error 49
+## julia — agree 166, disagree 9, inconclusive 2, error 52
 
 | example                                                    | kind          | ours      | theirs   |
 | ---------------------------------------------------------- | ------------- | --------- | -------- |
 | `Binomial/both-arguments-negative-integers-the-limiting`   | convention    | `6`       | `0`      |
+| `Binomial/equal-negative-arguments-binom-2-2-1`            | convention    | `1`       | `0`      |
 | `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s` | convention    | `true`    | `false`  |
 | `IsPrime/isprime-neg-2-is-true`                            | convention    | `true`    | `false`  |
 | `N/an-exact-tie-rounds-to-the-even-digit-0-125`            | rounding-mode | `0.12`    | `0.125`  |
@@ -328,6 +329,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | example                                                          | message                                                                                      |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `BellNumber/a-negative-argument-is-left-unevaluated`             | `DomainError with -1: Argument must be non-negative`                                         |
+| `BellNumber/a-zero-modulus-inside-a-congruence-check-is-nan`     | `DivideError: integer division error`                                                        |
 | `Binomial/a-gaussian-integer-n-binom-1-i-5-frac-1-i-12`          | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `Binomial/a-rational-n-with-integer-k-gives-the-exact`           | `AssertionError: denominator(x) == 1`                                                        |
 | `Binomial/a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0`          | `InexactError: convert(ZZRingElem, 0.5)`                                                     |
@@ -359,6 +361,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `IsPrime/threads-element-wise-over-a-list`                       | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `IsPrime/threads-element-wise-over-a-short-list`                 | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `LCM/1-3i-i-3-i-associates-share-their-multiples`                | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `LCM/a-large-integer-against-a-negative-rational`                | `InexactError: BigInt(-1.899999999999999999999999999999999999999999999999999999999999999999` |
 | `LCM/gaussian-primes-of-norm-41-and-13-the-lcm-is-the`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `LCM/gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3`                  | `MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type ` |
 | `LucasL/a-real-index-uses-l-nu-varphi-nu-cos-pi-nu`              | `MethodError: no method matching lucasnum(::Float64) The function 'lucasnum' exists, but no` |
@@ -374,6 +377,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Mod/threads-element-wise-over-a-list`                           | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
 | `MoebiusMu/gaussian-integers-5-6i-is-a-gaussian-prime-norm`      | `MethodError: no method matching moebius_mu(::Complex{Int64}) The function 'moebius_mu' exi` |
 | `MoebiusMu/mu-is-only-defined-for-positive-integers-compute`     | `DomainError with 0: Argument must be positive`                                              |
+| `StirlingS1/a-mid-sized-n-and-k-past-the-fast-paths`             | `julia: killed (memory, peak 3088 MB)`                                                       |
 | `Totient/negative-n-varphi-n-varphi-n`                           | `DomainError with -10: Argument must be positive`                                            |
 | `Totient/varphi-0-0-as-in-wolfram`                               | `DomainError with 0: Argument must be positive`                                              |
 
