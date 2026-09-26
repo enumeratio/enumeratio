@@ -15,6 +15,7 @@ on:
 permissions:
   contents: write # pushes runs to bench-data
   issues: write
+  actions: write # julia-actions/cache deletes its older saves
 
 concurrency:
   group: bench
