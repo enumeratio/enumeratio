@@ -1,0 +1,15 @@
+name: ConnectedPermutations
+domain: Collections
+signature: ConnectedPermutations(n)
+summary: "Indecomposable (connected) permutations of $\\{1, …, n\\}$: no proper prefix's values are exactly $\\{1, …, j\\}$."
+signatures:
+  - call: ConnectedPermutations(n)
+    description: "Indecomposable (connected) permutations of $\\{1, …, n\\}$: no proper prefix's values are exactly $\\{1, …, j\\}$"
+    library: enumeratio-collections
+details:
+  - Count is A003319.
+seeAlso:
+  - SymmetricGroup
+references:
+  - system: oeis
+    identity: A003319

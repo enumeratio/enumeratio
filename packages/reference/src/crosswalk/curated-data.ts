@@ -125,6 +125,36 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "LorenzAttractor",
     },
   ],
+  AlternatingPermutations: [
+    {
+      system: "oeis",
+      identity: "A000111",
+    },
+  ],
+  BallotSequences: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  BinaryNecklaces: [
+    {
+      system: "oeis",
+      identity: "A000031",
+    },
+  ],
+  BinaryWords: [
+    {
+      system: "oeis",
+      identity: "A000079",
+    },
+  ],
+  CarlitzCompositions: [
+    {
+      system: "oeis",
+      identity: "A003242",
+    },
+  ],
   Composition: [
     {
       system: "wikipedia",
@@ -133,6 +163,24 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "Composition",
+    },
+  ],
+  ConnectedPermutations: [
+    {
+      system: "oeis",
+      identity: "A003319",
+    },
+  ],
+  DelannoyPaths: [
+    {
+      system: "oeis",
+      identity: "A001850",
+    },
+  ],
+  DyadicCompositions: [
+    {
+      system: "oeis",
+      identity: "A023359",
     },
   ],
   DyckPath: [
@@ -159,6 +207,42 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A000108",
     },
   ],
+  EvenPermutations: [
+    {
+      system: "oeis",
+      identity: "A001710",
+    },
+  ],
+  FibStrings: [
+    {
+      system: "oeis",
+      identity: "A000045",
+    },
+  ],
+  FibonacciCompositions: [
+    {
+      system: "oeis",
+      identity: "A000045",
+    },
+  ],
+  FinePaths: [
+    {
+      system: "oeis",
+      identity: "A000957",
+    },
+  ],
+  GrandDyckPaths: [
+    {
+      system: "oeis",
+      identity: "A000984",
+    },
+  ],
+  GrayCodes: [
+    {
+      system: "oeis",
+      identity: "A003188",
+    },
+  ],
   IntegerPartition: [
     {
       system: "wikipedia",
@@ -183,6 +267,54 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A000041",
     },
   ],
+  KCyclePermutations: [
+    {
+      system: "oeis",
+      identity: "A132393",
+    },
+  ],
+  KDescentPermutations: [
+    {
+      system: "oeis",
+      identity: "A008292",
+    },
+  ],
+  KInversionPermutations: [
+    {
+      system: "oeis",
+      identity: "A008302",
+    },
+  ],
+  LargestPartPartitions: [
+    {
+      system: "oeis",
+      identity: "A008284",
+    },
+  ],
+  LehmerCodes: [
+    {
+      system: "oeis",
+      identity: "A000142",
+    },
+  ],
+  LucasStrings: [
+    {
+      system: "oeis",
+      identity: "A000032",
+    },
+  ],
+  LukasiewiczPaths: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  LyndonWords: [
+    {
+      system: "oeis",
+      identity: "A001037",
+    },
+  ],
   Mode: [
     {
       system: "wikipedia",
@@ -193,6 +325,54 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "Mode",
     },
   ],
+  MotzkinPathsByPeaks: [
+    {
+      system: "oeis",
+      identity: "A055151",
+    },
+  ],
+  NonCrossingMatchings: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  NonCrossingPartitions: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  NonNestingMatchings: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  NonNestingPartitions: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  OddCompositions: [
+    {
+      system: "oeis",
+      identity: "A000045",
+    },
+  ],
+  OddPartitions: [
+    {
+      system: "oeis",
+      identity: "A000009",
+    },
+  ],
+  PalindromicCompositions: [
+    {
+      system: "oeis",
+      identity: "A016116",
+    },
+  ],
   Permutation: [
     {
       system: "wikipedia",
@@ -201,6 +381,66 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "Permutation",
+    },
+  ],
+  PermutationsAvoiding123: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  PermutationsAvoiding132: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  PermutationsAvoiding213: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  PermutationsAvoiding231: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  PermutationsAvoiding312: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  PermutationsAvoiding321: [
+    {
+      system: "oeis",
+      identity: "A000108",
+    },
+  ],
+  PrimeCompositions: [
+    {
+      system: "oeis",
+      identity: "A023360",
+    },
+  ],
+  PrimePartition: [
+    {
+      system: "oeis",
+      identity: "A000607",
+    },
+  ],
+  RestrictedGrowthStrings: [
+    {
+      system: "oeis",
+      identity: "A000110",
+    },
+  ],
+  RiordanPaths: [
+    {
+      system: "oeis",
+      identity: "A005043",
     },
   ],
   SemistandardTableau: [
@@ -243,6 +483,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A000110",
     },
   ],
+  SquarePartitions: [
+    {
+      system: "oeis",
+      identity: "A001156",
+    },
+  ],
   StandardTableau: [
     {
       system: "wikipedia",
@@ -251,6 +497,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "YoungTableau",
+    },
+  ],
+  SubexcedantSeqs: [
+    {
+      system: "oeis",
+      identity: "A000142",
     },
   ],
   Subsets: [
@@ -275,6 +527,36 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "SymmetricGroup",
+    },
+  ],
+  TetraCompositions: [
+    {
+      system: "oeis",
+      identity: "A000078",
+    },
+  ],
+  TriCompositions: [
+    {
+      system: "oeis",
+      identity: "A000073",
+    },
+  ],
+  TriangularComposition: [
+    {
+      system: "oeis",
+      identity: "A023361",
+    },
+  ],
+  TriangularPartitions: [
+    {
+      system: "oeis",
+      identity: "A007294",
+    },
+  ],
+  ZigzagComposition: [
+    {
+      system: "oeis",
+      identity: "A025047",
     },
   ],
   NSymR: [

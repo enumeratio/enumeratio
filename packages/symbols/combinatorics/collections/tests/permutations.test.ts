@@ -1,6 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { expect, test, afterAll } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/permutations.ts";
 
 // Certify every permutation family: rank(unrank(p, r), p) === r across the whole
@@ -132,48 +130,4 @@ test("KInversionPermutations row n=4 = Mahonian triangle (A008302)", () => {
       [4, 6],
     ]),
   ).toEqual([1, 3, 5, 6, 5, 3, 1]);
-});
-
-// Golden JSON (AGENTS.md); regenerate with `UPDATE_PERMUTATIONS_GOLDEN=1 vp test`.
-const GOLDEN = fileURLToPath(new URL("./permutations.golden.json", import.meta.url));
-const updating = process.env.UPDATE_PERMUTATIONS_GOLDEN === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-const GOLDEN_CASES: Record<string, number[][]> = {
-  EvenPermutations: [[4]],
-  Arrangements: [[4, 2]],
-  LehmerCodes: [[4]],
-  SubexcedantSeqs: [[4]],
-  AlternatingPermutations: [[4], [5]],
-  ConnectedPermutations: [[4]],
-  KCyclePermutations: [[4, 2]],
-  KDescentPermutations: [[4, 1]],
-  KInversionPermutations: [[4, 3]],
-  PermutationsAvoiding123: [[4]],
-  PermutationsAvoiding132: [[4]],
-  PermutationsAvoiding213: [[4]],
-  PermutationsAvoiding231: [[4]],
-  PermutationsAvoiding312: [[4]],
-  PermutationsAvoiding321: [[4]],
-};
-
-for (const [head, paramsList] of Object.entries(GOLDEN_CASES)) {
-  for (const p of paramsList) {
-    const key = `${head}(${p.join(",")})`;
-    test(`golden: ${key}`, () => {
-      const entry = byHead[head];
-      const total = entry.count(p);
-      const elements = Array.from({ length: total }, (_, r) => entry.unrank(p, r));
-      if (updating) {
-        fresh[key] = elements;
-        return;
-      }
-      expect(elements).toEqual(golden[key]);
-    });
-  }
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

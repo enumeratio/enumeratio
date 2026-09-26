@@ -1,0 +1,17 @@
+name: KCyclePermutations
+domain: Collections
+signature: KCyclePermutations(n, k)
+summary: Permutations of $\{1, …, n\}$ with exactly $k$ cycles — row $n$ of the unsigned Stirling first-kind triangle.
+signatures:
+  - call: KCyclePermutations(n, k)
+    description: Permutations of $\{1, …, n\}$ with exactly $k$ cycles — row $n$ of the unsigned Stirling first-kind triangle
+    library: enumeratio-collections
+details:
+  - Count is the unsigned Stirling number of the first kind $\left[{n \atop k}\right]$.
+seeAlso:
+  - SymmetricGroup
+  - KDescentPermutations
+  - KInversionPermutations
+references:
+  - system: oeis
+    identity: A132393

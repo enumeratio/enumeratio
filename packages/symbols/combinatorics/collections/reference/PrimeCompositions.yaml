@@ -1,0 +1,15 @@
+name: PrimeCompositions
+domain: Collections
+signature: PrimeCompositions(n)
+summary: The compositions of $n$ into prime parts.
+signatures:
+  - call: PrimeCompositions(n)
+    description: the compositions of $n$ into prime parts
+    library: enumeratio-collections
+details:
+  - Count is A023360.
+seeAlso:
+  - IntegerCompositions
+references:
+  - system: oeis
+    identity: A023360

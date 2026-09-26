@@ -1,0 +1,41 @@
+count-zigzagcomposition-6:
+  epsil:
+    in: Count(ZigzagComposition(6))
+    out: "12"
+  tex:
+    in: \mathrm{Count}(\mathrm{ZigzagComposition}(6))
+    out: "12"
+  fullform:
+    in: Count[ZigzagComposition[6]]
+first-element-of-zigzagcomposition-6:
+  epsil:
+    in: ZigzagComposition(6)[1]
+    out: "[1, 2, 1, 2]"
+  tex:
+    in: \mathrm{ZigzagComposition}(6)[1]
+    out: \bigl\lbrack1, 2, 1, 2\bigr\rbrack
+  fullform:
+    in: Part[ZigzagComposition[6], 1]
+every-element-of-zigzagcomposition-6:
+  epsil:
+    in: Take(ZigzagComposition(6), 12)
+    out: |-
+      [
+        [1, 2, 1, 2],
+        [1, 3, 2],
+        [1, 4, 1],
+        [1, 5],
+        [2, 1, 2, 1],
+        [2, 1, 3],
+        [2, 3, 1],
+        [2, 4],
+        [3, 1, 2],
+        [4, 2],
+        [5, 1],
+        [6],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{ZigzagComposition}(6), 12)
+    out: \bigl\lbrack\bigl\lbrack1, 2, 1, 2\bigr\rbrack, \bigl\lbrack1, 3, 2\bigr\rbrack, \bigl\lbrack1, 4, 1\bigr\rbrack, \bigl\lbrack1, 5\bigr\rbrack, \bigl\lbrack2, 1, 2, 1\bigr\rbrack, \bigl\lbrack2, 1, 3\bigr\rbrack, \bigl\lbrack2, 3, 1\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack3, 1, 2\bigr\rbrack, \bigl\lbrack4, 2\bigr\rbrack, \bigl\lbrack5, 1\bigr\rbrack, \bigl\lbrack6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[ZigzagComposition[6], 12]

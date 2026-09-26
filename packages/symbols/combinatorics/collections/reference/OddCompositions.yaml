@@ -1,0 +1,15 @@
+name: OddCompositions
+domain: Collections
+signature: OddCompositions(n)
+summary: The compositions of $n$ into odd parts.
+signatures:
+  - call: OddCompositions(n)
+    description: the compositions of $n$ into odd parts
+    library: enumeratio-collections
+details:
+  - Count is the Fibonacci number $F_n$ (A000045).
+seeAlso:
+  - IntegerCompositions
+references:
+  - system: oeis
+    identity: A000045

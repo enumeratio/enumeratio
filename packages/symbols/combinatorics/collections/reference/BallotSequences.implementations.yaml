@@ -1,0 +1,34 @@
+count-ballotsequences-4:
+  epsil:
+    in: Count(BallotSequences(4))
+    out: "14"
+  tex:
+    in: \mathrm{Count}(\mathrm{BallotSequences}(4))
+    out: "14"
+  fullform:
+    in: Count[BallotSequences[4]]
+first-element-of-ballotsequences-4:
+  epsil:
+    in: BallotSequences(4)[1]
+    out: "[1, 1, 1, 1, 0, 0, 0, 0]"
+  tex:
+    in: \mathrm{BallotSequences}(4)[1]
+    out: \bigl\lbrack1, 1, 1, 1, 0, 0, 0, 0\bigr\rbrack
+  fullform:
+    in: Part[BallotSequences[4], 1]
+every-element-of-ballotsequences-4:
+  epsil:
+    in: Take(BallotSequences(4), 5)
+    out: |-
+      [
+        [1, 1, 1, 1, 0, 0, 0, 0],
+        [1, 1, 1, 0, 1, 0, 0, 0],
+        [1, 1, 1, 0, 0, 1, 0, 0],
+        [1, 1, 1, 0, 0, 0, 1, 0],
+        [1, 1, 0, 1, 1, 0, 0, 0],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{BallotSequences}(4), 5)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 1, 0, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[BallotSequences[4], 5]

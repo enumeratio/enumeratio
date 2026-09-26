@@ -1,0 +1,27 @@
+count-propercompositions-6:
+  epsil:
+    in: Count(ProperCompositions(6))
+    out: "5"
+  tex:
+    in: \mathrm{Count}(\mathrm{ProperCompositions}(6))
+    out: "5"
+  fullform:
+    in: Count[ProperCompositions[6]]
+first-element-of-propercompositions-6:
+  epsil:
+    in: ProperCompositions(6)[1]
+    out: "[2, 2, 2]"
+  tex:
+    in: \mathrm{ProperCompositions}(6)[1]
+    out: \bigl\lbrack2, 2, 2\bigr\rbrack
+  fullform:
+    in: Part[ProperCompositions[6], 1]
+every-element-of-propercompositions-6:
+  epsil:
+    in: Take(ProperCompositions(6), 5)
+    out: "[[2, 2, 2], [2, 4], [3, 3], [4, 2], [6]]"
+  tex:
+    in: \mathrm{Take}(\mathrm{ProperCompositions}(6), 5)
+    out: \bigl\lbrack\bigl\lbrack2, 2, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack4, 2\bigr\rbrack, \bigl\lbrack6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[ProperCompositions[6], 5]

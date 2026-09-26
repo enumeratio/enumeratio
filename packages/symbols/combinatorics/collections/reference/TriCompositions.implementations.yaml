@@ -1,0 +1,53 @@
+count-tricompositions-6:
+  epsil:
+    in: Count(TriCompositions(6))
+    out: "24"
+  tex:
+    in: \mathrm{Count}(\mathrm{TriCompositions}(6))
+    out: "24"
+  fullform:
+    in: Count[TriCompositions[6]]
+first-element-of-tricompositions-6:
+  epsil:
+    in: TriCompositions(6)[1]
+    out: "[1, 1, 1, 1, 1, 1]"
+  tex:
+    in: \mathrm{TriCompositions}(6)[1]
+    out: \bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: Part[TriCompositions[6], 1]
+every-element-of-tricompositions-6:
+  epsil:
+    in: Take(TriCompositions(6), 24)
+    out: |-
+      [
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 2],
+        [1, 1, 1, 2, 1],
+        [1, 1, 1, 3],
+        [1, 1, 2, 1, 1],
+        [1, 1, 2, 2],
+        [1, 1, 3, 1],
+        [1, 2, 1, 1, 1],
+        [1, 2, 1, 2],
+        [1, 2, 2, 1],
+        [1, 2, 3],
+        [1, 3, 1, 1],
+        [1, 3, 2],
+        [2, 1, 1, 1, 1],
+        [2, 1, 1, 2],
+        [2, 1, 2, 1],
+        [2, 1, 3],
+        [2, 2, 1, 1],
+        [2, 2, 2],
+        [2, 3, 1],
+        [3, 1, 1, 1],
+        [3, 1, 2],
+        [3, 2, 1],
+        [3, 3],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{TriCompositions}(6), 24)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 2\bigr\rbrack, \bigl\lbrack1, 1, 1, 2, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 3\bigr\rbrack, \bigl\lbrack1, 1, 2, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 2\bigr\rbrack, \bigl\lbrack1, 1, 3, 1\bigr\rbrack, \bigl\lbrack1, 2, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 2, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 2, 1\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack1, 3, 1, 1\bigr\rbrack, \bigl\lbrack1, 3, 2\bigr\rbrack, \bigl\lbrack2, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 2\bigr\rbrack, \bigl\lbrack2, 1, 2, 1\bigr\rbrack, \bigl\lbrack2, 1, 3\bigr\rbrack, \bigl\lbrack2, 2, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack, \bigl\lbrack2, 3, 1\bigr\rbrack, \bigl\lbrack3, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 1, 2\bigr\rbrack, \bigl\lbrack3, 2, 1\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[TriCompositions[6], 24]

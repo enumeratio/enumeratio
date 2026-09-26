@@ -1,0 +1,17 @@
+name: NonCrossingPartitions
+domain: Collections
+signature: NonCrossingPartitions(n)
+summary: The partitions of $\{1, …, n\}$ with no two blocks whose consecutive-element arcs cross.
+signatures:
+  - call: NonCrossingPartitions(n)
+    description: the partitions of $\{1, …, n\}$ with no two blocks whose consecutive-element arcs cross
+    library: enumeratio-collections
+details:
+  - Count is the Catalan number $C_n$ (A000108).
+seeAlso:
+  - SetPartitions
+  - NonNestingPartitions
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A000108

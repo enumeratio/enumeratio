@@ -1,0 +1,35 @@
+count-binarywordsbyweight-4-2:
+  epsil:
+    in: Count(BinaryWordsByWeight(4, 2))
+    out: "6"
+  tex:
+    in: \mathrm{Count}(\mathrm{BinaryWordsByWeight}(4, 2))
+    out: "6"
+  fullform:
+    in: Count[BinaryWordsByWeight[4, 2]]
+first-element-of-binarywordsbyweight-4-2:
+  epsil:
+    in: BinaryWordsByWeight(4, 2)[1]
+    out: "[0, 0, 1, 1]"
+  tex:
+    in: \mathrm{BinaryWordsByWeight}(4, 2)[1]
+    out: \bigl\lbrack0, 0, 1, 1\bigr\rbrack
+  fullform:
+    in: Part[BinaryWordsByWeight[4, 2], 1]
+every-element-of-binarywordsbyweight-4-2:
+  epsil:
+    in: Take(BinaryWordsByWeight(4, 2), 6)
+    out: |-
+      [
+        [0, 0, 1, 1],
+        [0, 1, 0, 1],
+        [0, 1, 1, 0],
+        [1, 0, 0, 1],
+        [1, 0, 1, 0],
+        [1, 1, 0, 0],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{BinaryWordsByWeight}(4, 2), 6)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[BinaryWordsByWeight[4, 2], 6]

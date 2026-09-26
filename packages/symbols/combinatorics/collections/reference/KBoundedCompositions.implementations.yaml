@@ -1,0 +1,77 @@
+count-kboundedcompositions-6-2:
+  epsil:
+    in: Count(KBoundedCompositions(6, 2))
+    out: "13"
+  tex:
+    in: \mathrm{Count}(\mathrm{KBoundedCompositions}(6, 2))
+    out: "13"
+  fullform:
+    in: Count[KBoundedCompositions[6, 2]]
+first-element-of-kboundedcompositions-6-2:
+  epsil:
+    in: KBoundedCompositions(6, 2)[1]
+    out: "[1, 1, 1, 1, 1, 1]"
+  tex:
+    in: \mathrm{KBoundedCompositions}(6, 2)[1]
+    out: \bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack
+  fullform:
+    in: Part[KBoundedCompositions[6, 2], 1]
+every-element-of-kboundedcompositions-6-2:
+  epsil:
+    in: Take(KBoundedCompositions(6, 2), 13)
+    out: |-
+      [
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 2],
+        [1, 1, 1, 2, 1],
+        [1, 1, 2, 1, 1],
+        [1, 1, 2, 2],
+        [1, 2, 1, 1, 1],
+        [1, 2, 1, 2],
+        [1, 2, 2, 1],
+        [2, 1, 1, 1, 1],
+        [2, 1, 1, 2],
+        [2, 1, 2, 1],
+        [2, 2, 1, 1],
+        [2, 2, 2],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{KBoundedCompositions}(6, 2), 13)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 2\bigr\rbrack, \bigl\lbrack1, 1, 1, 2, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 2\bigr\rbrack, \bigl\lbrack1, 2, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 2, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 2, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 2\bigr\rbrack, \bigl\lbrack2, 1, 2, 1\bigr\rbrack, \bigl\lbrack2, 2, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[KBoundedCompositions[6, 2], 13]
+every-element-of-kboundedcompositions-6-3:
+  epsil:
+    in: Take(KBoundedCompositions(6, 3), 24)
+    out: |-
+      [
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 2],
+        [1, 1, 1, 2, 1],
+        [1, 1, 1, 3],
+        [1, 1, 2, 1, 1],
+        [1, 1, 2, 2],
+        [1, 1, 3, 1],
+        [1, 2, 1, 1, 1],
+        [1, 2, 1, 2],
+        [1, 2, 2, 1],
+        [1, 2, 3],
+        [1, 3, 1, 1],
+        [1, 3, 2],
+        [2, 1, 1, 1, 1],
+        [2, 1, 1, 2],
+        [2, 1, 2, 1],
+        [2, 1, 3],
+        [2, 2, 1, 1],
+        [2, 2, 2],
+        [2, 3, 1],
+        [3, 1, 1, 1],
+        [3, 1, 2],
+        [3, 2, 1],
+        [3, 3],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{KBoundedCompositions}(6, 3), 24)
+    out: \bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 2\bigr\rbrack, \bigl\lbrack1, 1, 1, 2, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 3\bigr\rbrack, \bigl\lbrack1, 1, 2, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 2, 2\bigr\rbrack, \bigl\lbrack1, 1, 3, 1\bigr\rbrack, \bigl\lbrack1, 2, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 2, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 2, 1\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack1, 3, 1, 1\bigr\rbrack, \bigl\lbrack1, 3, 2\bigr\rbrack, \bigl\lbrack2, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack2, 1, 1, 2\bigr\rbrack, \bigl\lbrack2, 1, 2, 1\bigr\rbrack, \bigl\lbrack2, 1, 3\bigr\rbrack, \bigl\lbrack2, 2, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack, \bigl\lbrack2, 3, 1\bigr\rbrack, \bigl\lbrack3, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 1, 2\bigr\rbrack, \bigl\lbrack3, 2, 1\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[KBoundedCompositions[6, 3], 24]

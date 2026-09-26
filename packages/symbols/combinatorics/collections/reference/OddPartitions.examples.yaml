@@ -1,0 +1,27 @@
+- id: count-oddpartitions-10
+  expr: [Count, [OddPartitions, 10]]
+  expected: 10
+  category: Basic
+  caption: $Count(OddPartitions(10)) = 10$
+- id: first-element-of-oddpartitions-10
+  expr: [At, [OddPartitions, 10], 1]
+  expected: [List, 9, 1]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-oddpartitions-10
+  role: test
+  expr: [Take, [OddPartitions, 10], 10]
+  expected:
+    [
+      List,
+      [List, 9, 1],
+      [List, 7, 3],
+      [List, 7, 1, 1, 1],
+      [List, 5, 5],
+      [List, 5, 3, 1, 1],
+      [List, 5, 1, 1, 1, 1, 1],
+      [List, 3, 3, 3, 1],
+      [List, 3, 3, 1, 1, 1, 1],
+      [List, 3, 1, 1, 1, 1, 1, 1, 1],
+      [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ]

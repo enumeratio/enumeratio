@@ -1,0 +1,16 @@
+name: BinaryNecklaces
+domain: Collections
+signature: BinaryNecklaces(n)
+summary: The binary words of length $n$ up to rotation, represented by the lexicographically-least word in each orbit.
+signatures:
+  - call: BinaryNecklaces(n)
+    description: the binary words of length $n$ up to rotation, represented by the lexicographically-least word in each orbit
+    library: enumeratio-collections
+details:
+  - Count is A000031, a Burnside sum over the cyclic group $C_n$.
+seeAlso:
+  - LyndonWords
+  - KNecklaces
+references:
+  - system: oeis
+    identity: A000031

@@ -1,0 +1,16 @@
+name: FibonacciCompositions
+domain: Collections
+signature: FibonacciCompositions(n)
+summary: The compositions of $n$ into parts from $\{1, 2\}$.
+signatures:
+  - call: FibonacciCompositions(n)
+    description: the compositions of $n$ into parts from $\{1, 2\}$
+    library: enumeratio-collections
+details:
+  - Count is the Fibonacci number $F_{n+1}$ (A000045, shifted).
+seeAlso:
+  - IntegerCompositions
+  - KBoundedCompositions
+references:
+  - system: oeis
+    identity: A000045

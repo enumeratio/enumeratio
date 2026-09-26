@@ -1,0 +1,40 @@
+count-kcyclepermutations-4-2:
+  epsil:
+    in: Count(KCyclePermutations(4, 2))
+    out: "11"
+  tex:
+    in: \mathrm{Count}(\mathrm{KCyclePermutations}(4, 2))
+    out: "11"
+  fullform:
+    in: Count[KCyclePermutations[4, 2]]
+first-element-of-kcyclepermutations-4-2:
+  epsil:
+    in: KCyclePermutations(4, 2)[1]
+    out: "[3, 1, 2, 4]"
+  tex:
+    in: \mathrm{KCyclePermutations}(4, 2)[1]
+    out: \bigl\lbrack3, 1, 2, 4\bigr\rbrack
+  fullform:
+    in: Part[KCyclePermutations[4, 2], 1]
+every-element-of-kcyclepermutations-4-2:
+  epsil:
+    in: Take(KCyclePermutations(4, 2), 11)
+    out: |-
+      [
+        [3, 1, 2, 4],
+        [2, 3, 1, 4],
+        [4, 1, 3, 2],
+        [2, 4, 3, 1],
+        [2, 1, 4, 3],
+        [4, 2, 1, 3],
+        [3, 4, 1, 2],
+        [3, 2, 4, 1],
+        [4, 3, 2, 1],
+        [1, 4, 2, 3],
+        [1, 3, 4, 2],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{KCyclePermutations}(4, 2), 11)
+    out: \bigl\lbrack\bigl\lbrack3, 1, 2, 4\bigr\rbrack, \bigl\lbrack2, 3, 1, 4\bigr\rbrack, \bigl\lbrack4, 1, 3, 2\bigr\rbrack, \bigl\lbrack2, 4, 3, 1\bigr\rbrack, \bigl\lbrack2, 1, 4, 3\bigr\rbrack, \bigl\lbrack4, 2, 1, 3\bigr\rbrack, \bigl\lbrack3, 4, 1, 2\bigr\rbrack, \bigl\lbrack3, 2, 4, 1\bigr\rbrack, \bigl\lbrack4, 3, 2, 1\bigr\rbrack, \bigl\lbrack1, 4, 2, 3\bigr\rbrack, \bigl\lbrack1, 3, 4, 2\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[KCyclePermutations[4, 2], 11]

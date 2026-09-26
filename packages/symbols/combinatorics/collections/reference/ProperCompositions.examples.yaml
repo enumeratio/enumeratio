@@ -1,0 +1,14 @@
+- id: count-propercompositions-6
+  expr: [Count, [ProperCompositions, 6]]
+  expected: 5
+  category: Basic
+  caption: $Count(ProperCompositions(6)) = 5$
+- id: first-element-of-propercompositions-6
+  expr: [At, [ProperCompositions, 6], 1]
+  expected: [List, 2, 2, 2]
+  category: Basic
+  caption: The first element in enumeration order
+- id: every-element-of-propercompositions-6
+  role: test
+  expr: [Take, [ProperCompositions, 6], 5]
+  expected: [List, [List, 2, 2, 2], [List, 2, 4], [List, 3, 3], [List, 4, 2], [List, 6]]

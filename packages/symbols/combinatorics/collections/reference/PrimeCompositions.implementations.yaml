@@ -1,0 +1,27 @@
+count-primecompositions-7:
+  epsil:
+    in: Count(PrimeCompositions(7))
+    out: "6"
+  tex:
+    in: \mathrm{Count}(\mathrm{PrimeCompositions}(7))
+    out: "6"
+  fullform:
+    in: Count[PrimeCompositions[7]]
+first-element-of-primecompositions-7:
+  epsil:
+    in: PrimeCompositions(7)[1]
+    out: "[2, 2, 3]"
+  tex:
+    in: \mathrm{PrimeCompositions}(7)[1]
+    out: \bigl\lbrack2, 2, 3\bigr\rbrack
+  fullform:
+    in: Part[PrimeCompositions[7], 1]
+every-element-of-primecompositions-7:
+  epsil:
+    in: Take(PrimeCompositions(7), 6)
+    out: "[[2, 2, 3], [2, 3, 2], [2, 5], [3, 2, 2], [5, 2], [7]]"
+  tex:
+    in: \mathrm{Take}(\mathrm{PrimeCompositions}(7), 6)
+    out: \bigl\lbrack\bigl\lbrack2, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 2\bigr\rbrack, \bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack3, 2, 2\bigr\rbrack, \bigl\lbrack5, 2\bigr\rbrack, \bigl\lbrack7\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[PrimeCompositions[7], 6]
