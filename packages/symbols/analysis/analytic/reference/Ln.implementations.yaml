@@ -238,6 +238,7 @@ arbitrary-precision-via-n:
     out: "0.916290731874155065183527211768"
   mpmath:
     in: (log((mpf(5)/2)))
+    out: "0.916290731874155065183527211768"
   sage:
     in: N(log((5/2)))
   rust:
@@ -420,6 +421,7 @@ a-unit-fraction-becomes-a-negated-logarithm-ln:
     out: -log(2)
   mpmath:
     in: log((mpf(1)/2))
+    out: "-0.693147180559945309417232121458"
   sage:
     in: log((1/2))
   rust:
@@ -530,6 +532,7 @@ ln-frac-12-i-pi-ln-2-a-negative-rational-folded:
     out: -log(2) + I*pi
   mpmath:
     in: log((mpf(-1)/2))
+    out: (-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
   sage:
     in: log((-1/2))
   rust:

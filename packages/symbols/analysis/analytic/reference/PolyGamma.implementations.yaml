@@ -216,6 +216,10 @@ threads-over-a-list-each-element-exact-so-each:
     note: compute-engine's PolyGamma threads over (or pools) the list; SymPy's takes scalars.
   mpmath:
     in: psi(1, [1, 2])
+    out: "TypeError: cannot create mpf from [1, 2]"
+    verdict: error
+    kind: threading
+    note: compute-engine's PolyGamma threads over the list; mpmath's takes scalars.
   sage:
     in: psi(1, [1, 2])
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
@@ -464,6 +468,7 @@ psi-1-2-gamma-2-ln-2:
     out: -2*log(2) - EulerGamma
   mpmath:
     in: psi(0, (mpf(1)/2))
+    out: "-1.963510026021423479440976333"
   sage:
     in: psi(0, (1/2))
 psi-1-2-pi-2-2-in-closed-form:
@@ -485,6 +490,7 @@ psi-1-2-pi-2-2-in-closed-form:
     out: pi**2/2
   mpmath:
     in: psi(1, (mpf(1)/2))
+    out: "4.93480220054467930941724549994"
   sage:
     in: psi(1, (1/2))
 psi-1-4-pi-2-8g:
@@ -509,6 +515,10 @@ psi-1-4-pi-2-8g:
     note: "Here it's SymPy that stays symbolic: it keeps ψ′(1/4), where compute-engine gives π² + 8G."
   mpmath:
     in: psi(1, (mpf(1)/4))
+    out: "17.1973291545071107392713191193"
+    verdict: inconclusive
+    kind: unevaluated
+    note: compute-engine gives the closed form π² + 8G; mpmath gives the number it equals.
   sage:
     in: psi(1, (1/4))
 frac-d-dx-psi-n-x-psi-n-1-x:
@@ -542,6 +552,7 @@ to-30-significant-digits-every-one-correctly:
     out: "10.0955971254270940817920040999"
   mpmath:
     in: (psi(1, (mpf(1)/3)))
+    out: "10.0955971254270940817920040999"
   sage:
     in: N(psi(1, (1/3)))
 to-25-significant-digits-not-yet-only-the-first:
@@ -697,6 +708,7 @@ n-polygamma-1-7-over-3:
     out: "0.533097125427094081792004099893"
   mpmath:
     in: (psi(1, (mpf(7)/3)))
+    out: "0.533097125427094081792004099893"
   sage:
     in: N(psi(1, (7/3)))
     out: "0.533097125427094"
@@ -912,6 +924,7 @@ n-polygamma-2-7-over-3:
     out: "-0.278372399401607552455755954815"
   mpmath:
     in: (psi(2, (mpf(7)/3)))
+    out: "-0.278372399401607552455755954815"
   sage:
     in: N(psi(2, (7/3)))
     out: "-0.278372399401608"
@@ -1127,6 +1140,7 @@ n-polygamma-3-7-over-3:
     out: "0.285379043814241755770762322106"
   mpmath:
     in: (psi(3, (mpf(7)/3)))
+    out: "0.285379043814241755770762322106"
   sage:
     in: N(psi(3, (7/3)))
     out: "0.285379043814242"
@@ -1342,6 +1356,7 @@ n-polygamma-5-7-over-3:
     out: "0.857814321602379528563847169274"
   mpmath:
     in: (psi(5, (mpf(7)/3)))
+    out: "0.857814321602379528563847169274"
   sage:
     in: N(psi(5, (7/3)))
     out: "0.857814321602379"

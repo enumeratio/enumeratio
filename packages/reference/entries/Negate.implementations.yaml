@@ -126,6 +126,7 @@ neg-3-over-4:
     out: -3/4
   mpmath:
     in: (-(mpf(3)/4))
+    out: "-0.75"
   sage:
     in: (-(3/4))
     out: -3/4

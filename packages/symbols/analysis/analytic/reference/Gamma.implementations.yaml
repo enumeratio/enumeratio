@@ -207,6 +207,7 @@ gamma-1-2-sqrt-pi:
     out: True
   mpmath:
     in: almosteq(gamma((mpf(1)/2)), sqrt(pi), 1e-20)
+    out: True
   sage:
     in: bool(gamma((1/2)) == sqrt(pi))
     out: True
@@ -263,6 +264,7 @@ squaring-the-reflection-formula-at-z-1-2:
     out: True
   mpmath:
     in: almosteq(((gamma((mpf(1)/2)))**2), pi, 1e-20)
+    out: True
   sage:
     in: bool(((gamma((1/2)))^2) == pi)
     out: True
@@ -314,6 +316,7 @@ gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer:
     out: 3*sqrt(pi)/4
   mpmath:
     in: gamma((mpf(5)/2))
+    out: "1.32934038817913702047362561251"
   sage:
     in: gamma((5/2))
     out: 3/4*sqrt(pi)
@@ -456,6 +459,7 @@ half-integers-have-closed-forms-gamma-7-2-frac:
     out: 15*sqrt(pi)/8
   mpmath:
     in: gamma((mpf(7)/2))
+    out: "3.32335097044784255118406403126"
   sage:
     in: gamma((7/2))
   rust:
@@ -477,6 +481,7 @@ including-negative-half-integers-gamma-3-2-frac:
     out: 4*sqrt(pi)/3
   mpmath:
     in: gamma((mpf(-3)/2))
+    out: "2.36327180120735470306422331112"
   sage:
     in: gamma((-3/2))
   rust:
@@ -661,6 +666,7 @@ to-40-significant-digits-every-one-correctly:
     out: "2.67893853470774763365569294097"
   mpmath:
     in: (gamma((mpf(1)/3)))
+    out: "2.67893853470774763365569294097"
   sage:
     in: N(gamma((1/3)))
   rust:

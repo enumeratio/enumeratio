@@ -18,6 +18,7 @@ ceil-7-over-2:
     out: "4"
   mpmath:
     in: ceil((mpf(7)/2))
+    out: "4.0"
   sage:
     in: ceil((7/2))
     out: "4"
@@ -123,6 +124,10 @@ threads-element-wise-over-a-list:
     note: compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.
   mpmath:
     in: ceil([1.2, -1.2, 3.7])
+    out: "TypeError: cannot create mpf from [1.2, -1.2, 3.7]"
+    verdict: error
+    kind: threading
+    note: compute-engine's Ceil threads over the list; mpmath's takes scalars.
   sage:
     in: ceil([1.2, -1.2, 3.7])
     out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
@@ -158,6 +163,7 @@ lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer:
     out: True
   mpmath:
     in: almosteq(ceil((mpf(7)/2)), (floor((mpf(7)/2)) + 1), 1e-20)
+    out: True
   sage:
     in: bool(ceil((7/2)) == (floor((7/2)) + 1))
     out: True

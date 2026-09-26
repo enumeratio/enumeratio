@@ -50,6 +50,10 @@ a-list-number-by-number:
     note: compute-engine's N is Listable and threads over the list; SymPy takes scalars only.
   mpmath:
     in: ([pi, e, sqrt(2)])
+    out: "[<pi: 3.14159~>, <e = exp(1): 2.71828~>, mpf('1.41421356237309504880168872420977')]"
+    verdict: disagree
+    kind: precision
+    note: "The mapping drops N, and mpmath prints its constants as lazy objects (<pi: 3.14159~>) rather than digits."
   sage:
     in: N([pi, e, sqrt(2)])
   rust:
@@ -77,6 +81,10 @@ an-exact-tie-rounds-to-the-even-digit-0-125:
     note: The mapping evaluates at the system's own precision and drops N's digit count, so 1/8 prints 0.125 where N(1/8, 2) rounds to even, 0.12.
   mpmath:
     in: ((mpf(1)/8))
+    out: "0.125"
+    verdict: disagree
+    kind: precision
+    note: The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.
   sage:
     in: N((1/8))
   oscar:
@@ -112,6 +120,10 @@ and-0-375-to-0-38:
     note: The mapping evaluates at the system's own precision and drops N's digit count, so 3/8 prints 0.375 where N(3/8, 2) is 0.38.
   mpmath:
     in: ((mpf(3)/8))
+    out: "0.375"
+    verdict: disagree
+    kind: precision
+    note: The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.
   sage:
     in: N((3/8))
   oscar:

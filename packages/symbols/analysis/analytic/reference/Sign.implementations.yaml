@@ -90,6 +90,7 @@ sign-neg-1-over-2:
     out: "-1"
   mpmath:
     in: sign((mpf(-1)/2))
+    out: "-1.0"
   sage:
     in: sign((-1/2))
     out: "-1"
@@ -329,6 +330,7 @@ threads-over-a-matrix-entry-by-entry:
     out: "[[1, -1], [-1, 1]]"
   mpmath:
     in: "[[sign((mpf(1)/2)), sign(-1)], [sign((mpf(-5)/3)), sign((mpf(1)/2))]]"
+    out: "[[mpf('1.0'), mpf('-1.0')], [mpf('-1.0'), mpf('1.0')]]"
   sage:
     in: "[[sign((1/2)), sign(-1)], [sign((-5/3)), sign((1/2))]]"
 exact-numeric-constants:

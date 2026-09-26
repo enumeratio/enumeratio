@@ -370,6 +370,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
     out: "0.932039085967226349670134435495"
   mpmath:
     in: (sin((mpf(6)/5)))
+    out: "0.932039085967226349670134435495"
   sage:
     in: N(sin((6/5)))
   rust:
@@ -489,6 +490,7 @@ sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
     out: sqrt(2)/4 + sqrt(6)/4
   mpmath:
     in: sin(((mpf(5)/12) * pi))
+    out: "0.965925826289068286749743199729"
   sage:
     in: sin(((5/12) * pi))
   rust:
@@ -510,6 +512,7 @@ sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
     out: sqrt(sqrt(2)/4 + 1/2)
   mpmath:
     in: sin(((mpf(3)/8) * pi))
+    out: "0.923879532511286756128183189397"
   sage:
     in: sin(((3/8) * pi))
   rust:
@@ -531,6 +534,7 @@ large-rational-multiples-of-pi-are-reduced:
     out: -sqrt(3)/2
   mpmath:
     in: sin(((mpf(100)/3) * pi))
+    out: "-0.866025403784438646763723170754"
   sage:
     in: sin(((100/3) * pi))
   rust:

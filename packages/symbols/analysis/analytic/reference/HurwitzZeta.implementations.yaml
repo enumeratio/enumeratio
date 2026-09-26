@@ -133,6 +133,7 @@ zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the:
     out: -7813/3240
   mpmath:
     in: zeta(-3, (mpf(7)/3))
+    out: "-2.41141975308641975308641975309"
   sage:
     in: hurwitz_zeta(-3, (7/3))
     out: -7813/3240
@@ -243,6 +244,10 @@ listable-threads-over-a-list-of-orders:
     note: compute-engine's HurwitzZeta is Listable and threads over the list; SymPy takes scalars only.
   mpmath:
     in: zeta([2, 3, 4], 0.5)
+    out: "TypeError: cannot create mpf from [2, 3, 4]"
+    verdict: error
+    kind: threading
+    note: compute-engine's HurwitzZeta threads over the list; mpmath's takes scalars.
   sage:
     in: hurwitz_zeta([2, 3, 4], 0.5)
 uncertainty-in-a:
@@ -278,6 +283,7 @@ zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2:
     out: zeta(2, 1/2)
   mpmath:
     in: zeta(2, (mpf(1)/2))
+    out: "4.93480220054467930941724549994"
   sage:
     in: hurwitz_zeta(2, (1/2))
 zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
@@ -302,6 +308,10 @@ zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
     note: "Here it's SymPy that stays symbolic: it keeps ζ(2, 1/4), where compute-engine gives the closed form 8G + π²."
   mpmath:
     in: zeta(2, (mpf(1)/4))
+    out: "17.1973291545071107392713191193"
+    verdict: inconclusive
+    kind: unevaluated
+    note: compute-engine gives the closed form π² + 8G; mpmath gives the number it equals.
   sage:
     in: hurwitz_zeta(2, (1/4))
 zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s:
@@ -393,6 +403,7 @@ to-30-significant-digits-not-yet-the-last-digit:
     out: "27.5610611997008037762278779774"
   mpmath:
     in: (zeta(3, (mpf(1)/3)))
+    out: "27.5610611997008037762278779774"
   sage:
     in: N(hurwitz_zeta(3, (1/3)))
 far-left-of-the-strip-all-40-digits-agree-with:
@@ -414,6 +425,7 @@ far-left-of-the-strip-all-40-digits-agree-with:
     out: "136.361935791831144171775099936"
   mpmath:
     in: (zeta((mpf(-41)/2), (mpf(3)/10)))
+    out: "136.361935791831144171775099936"
   sage:
     in: N(hurwitz_zeta((-41/2), (3/10)))
 left-of-the-strip-at-a-non-integer-a:
@@ -479,6 +491,7 @@ a-negative-a-frac-12-5-is-real-and-so-is-the:
     out: "0.144760409444467716272330080168"
   mpmath:
     in: (zeta(5, (mpf(-1)/2)))
+    out: "0.144760409444467716272330080168"
   sage:
     in: N(hurwitz_zeta(5, (-1/2)))
 zeta-4-2-pi-4-90-1:
@@ -519,8 +532,10 @@ certified-digits-zeta-1-2-1-3:
     in: N[HurwitzZeta[Rational[1, 2], Rational[1, 3]], 40]
   sympy:
     in: N(zeta(Rational(1, 2), Rational(1, 3)), 30)
+    out: "-0.118083327934221719094454170794"
   mpmath:
     in: (zeta((mpf(1)/2), (mpf(1)/3)))
+    out: "-0.118083327934221719094454170794"
   sage:
     in: N(hurwitz_zeta((1/2), (1/3)))
 zeta-0-a-exact-at-a-3:
@@ -564,6 +579,7 @@ zeta-0-a-exact-at-a-5-over-2:
     out: "-2"
   mpmath:
     in: zeta(0, (mpf(5)/2))
+    out: "-2.0"
   sage:
     in: hurwitz_zeta(0, (5/2))
 zeta-neg-1-a-exact-at-a-3:
@@ -607,6 +623,7 @@ zeta-neg-1-a-exact-at-a-5-over-2:
     out: -47/24
   mpmath:
     in: zeta(-1, (mpf(5)/2))
+    out: "-1.95833333333333333333333333333"
   sage:
     in: hurwitz_zeta(-1, (5/2))
 zeta-neg-1-a-exact-at-a-7-over-3:
@@ -628,6 +645,7 @@ zeta-neg-1-a-exact-at-a-7-over-3:
     out: -59/36
   mpmath:
     in: zeta(-1, (mpf(7)/3))
+    out: "-1.63888888888888888888888888889"
   sage:
     in: hurwitz_zeta(-1, (7/3))
 zeta-neg-2-a-exact-at-a-5-over-2:
@@ -649,6 +667,7 @@ zeta-neg-2-a-exact-at-a-5-over-2:
     out: -5/2
   mpmath:
     in: zeta(-2, (mpf(5)/2))
+    out: "-2.5"
   sage:
     in: hurwitz_zeta(-2, (5/2))
 zeta-neg-3-a-exact-at-a-5-over-2:
@@ -670,6 +689,7 @@ zeta-neg-3-a-exact-at-a-5-over-2:
     out: -3367/960
   mpmath:
     in: zeta(-3, (mpf(5)/2))
+    out: "-3.50729166666666666666666666667"
   sage:
     in: hurwitz_zeta(-3, (5/2))
 zeta-neg-4-a-exact-at-a-5-over-2:
@@ -691,6 +711,7 @@ zeta-neg-4-a-exact-at-a-5-over-2:
     out: -41/8
   mpmath:
     in: zeta(-4, (mpf(5)/2))
+    out: "-5.125"
   sage:
     in: hurwitz_zeta(-4, (5/2))
 pole-at-s-1-for-symbolic-a:
@@ -974,6 +995,7 @@ n-hurwitzzeta-2-7-over-3:
     out: "0.533097125427094081792004099893"
   mpmath:
     in: (zeta(2, (mpf(7)/3)))
+    out: "0.533097125427094081792004099893"
   sage:
     in: N(hurwitz_zeta(2, (7/3)))
     out: "0.533097125427094"
@@ -1270,6 +1292,7 @@ n-hurwitzzeta-3-7-over-3:
     out: "0.139186199700803776227877977408"
   mpmath:
     in: (zeta(3, (mpf(7)/3)))
+    out: "0.139186199700803776227877977407"
   sage:
     in: N(hurwitz_zeta(3, (7/3)))
     out: "0.139186199700804"
@@ -1566,6 +1589,7 @@ n-hurwitzzeta-5-7-over-3:
     out: "0.0179852769188750622367864472925"
   mpmath:
     in: (zeta(5, (mpf(7)/3)))
+    out: "0.0179852769188750622367864472925"
   sage:
     in: N(hurwitz_zeta(5, (7/3)))
     out: "0.0179852769188751"
@@ -1862,6 +1886,7 @@ n-hurwitzzeta-neg-1-7-over-3:
     out: "-1.63888888888888888888888888889"
   mpmath:
     in: (zeta(-1, (mpf(7)/3)))
+    out: "-1.63888888888888888888888888889"
   sage:
     in: N(hurwitz_zeta(-1, (7/3)))
     out: "-1.63888888888889"
@@ -2158,6 +2183,7 @@ n-hurwitzzeta-neg-2-7-over-3:
     out: "-1.90123456790123456790123456790"
   mpmath:
     in: (zeta(-2, (mpf(7)/3)))
+    out: "-1.9012345679012345679012345679"
   sage:
     in: N(hurwitz_zeta(-2, (7/3)))
     out: "-1.90123456790123"
@@ -2454,6 +2480,7 @@ n-hurwitzzeta-neg-3-7-over-3:
     out: "-2.41141975308641975308641975309"
   mpmath:
     in: (zeta(-3, (mpf(7)/3)))
+    out: "-2.41141975308641975308641975309"
   sage:
     in: N(hurwitz_zeta(-3, (7/3)))
     out: "-2.41141975308642"
@@ -2750,6 +2777,7 @@ n-hurwitzzeta-0p5-7-over-3:
     out: "-2.71615953928753765938562368305"
   mpmath:
     in: (zeta(0.5, (mpf(7)/3)))
+    out: "-2.71615953928753765938562368305"
   sage:
     in: N(hurwitz_zeta(0.5, (7/3)))
     out: "-2.71615953928754"
@@ -3046,6 +3074,7 @@ n-hurwitzzeta-1p5-7-over-3:
     out: "1.46425424919948810837063411564"
   mpmath:
     in: (zeta(1.5, (mpf(7)/3)))
+    out: "1.46425424919948810837063411564"
   sage:
     in: N(hurwitz_zeta(1.5, (7/3)))
     out: "1.46425424919949"
@@ -3342,6 +3371,7 @@ n-hurwitzzeta-2p5-7-over-3:
     out: "0.257447605150205592648448682764"
   mpmath:
     in: (zeta(2.5, (mpf(7)/3)))
+    out: "0.257447605150205592648448682764"
   sage:
     in: N(hurwitz_zeta(2.5, (7/3)))
     out: "0.257447605150206"
@@ -3638,6 +3668,7 @@ n-hurwitzzeta-neg-0p5-7-over-3:
     out: "-1.63960452469900834923927408468"
   mpmath:
     in: (zeta(-0.5, (mpf(7)/3)))
+    out: "-1.63960452469900834923927408468"
   sage:
     in: N(hurwitz_zeta(-0.5, (7/3)))
     out: "-1.63960452469901"
@@ -3934,6 +3965,7 @@ n-hurwitzzeta-2-plus-i-7-over-3:
     out: 0.0551333896367952252482168603076 - 0.37686265504836735060377137832*I
   mpmath:
     in: (zeta(mpc(2, 1), (mpf(7)/3)))
+    out: (0.0551333896367952252482168603076 - 0.376862655048367350603771378319j)
   sage:
     in: N(hurwitz_zeta((2 + 1*I), (7/3)))
     out: 0.0551333896367952 - 0.376862655048367*I
@@ -4230,6 +4262,7 @@ n-hurwitzzeta-0p5-plus-3i-7-over-3:
     out: -0.453727021657171526533270182058 + 0.204440194003099030670447355214*I
   mpmath:
     in: (zeta(mpc(0.5, 3), (mpf(7)/3)))
+    out: (-0.453727021657171526533270182058 + 0.204440194003099030670447355214j)
   sage:
     in: N(hurwitz_zeta((0.5 + 3*I), (7/3)))
     out: -0.453727021657172 + 0.204440194003099*I
@@ -4526,6 +4559,7 @@ n-hurwitzzeta-neg-0p5-plus-i-7-over-3:
     out: -1.38218514408713650371244848583 - 0.00905630825006344816221532599897*I
   mpmath:
     in: (zeta(mpc(-0.5, 1), (mpf(7)/3)))
+    out: (-1.38218514408713650371244848583 - 0.00905630825006344816221532599887j)
   sage:
     in: N(hurwitz_zeta((-0.5 + 1*I), (7/3)))
     out: -1.38218514408714 - 0.00905630825006346*I

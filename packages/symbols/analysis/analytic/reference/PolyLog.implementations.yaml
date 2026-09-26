@@ -216,6 +216,10 @@ threads-over-a-list-of-arguments:
     note: compute-engine's PolyLog threads over (or pools) the list; SymPy's takes scalars.
   mpmath:
     in: polylog(2, [0.5, 0.25])
+    out: "TypeError: cannot create mpf from [0.5, 0.25]"
+    verdict: error
+    kind: threading
+    note: compute-engine's PolyLog threads over the list; mpmath's takes scalars.
   sage:
     in: polylog(2, [0.5, 0.25])
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
@@ -266,6 +270,7 @@ an-exact-argument-stays-symbolic-under-plain:
     out: -log(2)**2/2 + pi**2/12
   mpmath:
     in: polylog(2, (mpf(1)/2))
+    out: "0.58224052646501250590265632016"
   sage:
     in: polylog(2, (1/2))
     out: 1/12*pi^2 - 1/2*log(2)^2
@@ -323,6 +328,7 @@ li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
     out: polylog(3, 1/2)
   mpmath:
     in: polylog(3, (mpf(1)/2))
+    out: "0.537213193608040200940623225595"
   sage:
     in: polylog(3, (1/2))
 complex-order-and-argument:
@@ -497,6 +503,7 @@ to-30-significant-digits-not-yet-the-requested:
     out: "0.582240526465012505902656320160"
   mpmath:
     in: (polylog(2, (mpf(1)/2)))
+    out: "0.58224052646501250590265632016"
   sage:
     in: N(polylog(2, (1/2)))
 certified-digits-li-2-1-3:
@@ -512,8 +519,10 @@ certified-digits-li-2-1-3:
     in: N[PolyLog[2, Rational[1, 3]], 40]
   sympy:
     in: N(polylog(2, Rational(1, 3)), 30)
+    out: "0.366213229977063487616746297664"
   mpmath:
     in: (polylog(2, (mpf(1)/3)))
+    out: "0.366213229977063487616746297664"
   sage:
     in: N(polylog(2, (1/3)))
 certified-digits-li-5-2-minus-1-2:
@@ -529,8 +538,10 @@ certified-digits-li-5-2-minus-1-2:
     in: N[PolyLog[Rational[5, 2], Rational[-1, 2]], 40]
   sympy:
     in: N(polylog(Rational(5, 2), Rational(-1, 2)), 30)
+    out: "-0.462297782190063438189164323275"
   mpmath:
     in: (polylog((mpf(5)/2), (mpf(-1)/2)))
+    out: "-0.462297782190063438189164323275"
   sage:
     in: N(polylog((5/2), (-1/2)))
 n-polylog-2-0p5:
@@ -649,6 +660,7 @@ n-polylog-2-1-over-3:
     out: "0.366213229977063487616746297664"
   mpmath:
     in: (polylog(2, (mpf(1)/3)))
+    out: "0.366213229977063487616746297664"
   sage:
     in: N(polylog(2, (1/3)))
     out: "0.366213229977063"
@@ -792,6 +804,7 @@ n-polylog-3-1-over-3:
     out: "0.348827861154840084214251935387"
   mpmath:
     in: (polylog(3, (mpf(1)/3)))
+    out: "0.348827861154840084214251935387"
   sage:
     in: N(polylog(3, (1/3)))
     out: "0.348827861154840"
@@ -935,6 +948,7 @@ n-polylog-0p5-1-over-3:
     out: "0.442108835280675441655027702275"
   mpmath:
     in: (polylog(0.5, (mpf(1)/3)))
+    out: "0.442108835280675441655027702275"
   sage:
     in: N(polylog(0.5, (1/3)))
     out: "0.442108835280675"
@@ -1078,6 +1092,7 @@ n-polylog-1p5-1-over-3:
     out: "0.381783507869016176661783238149"
   mpmath:
     in: (polylog(1.5, (mpf(1)/3)))
+    out: "0.381783507869016176661783238148"
   sage:
     in: N(polylog(1.5, (1/3)))
     out: "0.381783507869016"
@@ -1221,6 +1236,7 @@ n-polylog-2p5-1-over-3:
     out: "0.355830740032320830366943172521"
   mpmath:
     in: (polylog(2.5, (mpf(1)/3)))
+    out: "0.355830740032320830366943172521"
   sage:
     in: N(polylog(2.5, (1/3)))
     out: "0.355830740032321"
@@ -1364,6 +1380,7 @@ n-polylog-neg-1-1-over-3:
     out: "0.750000000000000000000000000000"
   mpmath:
     in: (polylog(-1, (mpf(1)/3)))
+    out: "0.75"
   sage:
     in: N(polylog(-1, (1/3)))
     out: "0.750000000000000"
@@ -1507,6 +1524,7 @@ n-polylog-2-plus-i-1-over-3:
     out: 0.356694556200713529780183576164 - 0.0223854623179620616862878521231*I
   mpmath:
     in: (polylog(mpc(2, 1), (mpf(1)/3)))
+    out: (0.356694556200713529780183576164 - 0.0223854623179620616862878521231j)
   sage:
     in: N(polylog((2 + 1*I), (1/3)))
     out: 0.356694556200714 - 0.0223854623179621*I
@@ -1650,6 +1668,7 @@ n-polylog-0p5-plus-neg-1-times-i-1-over-3:
     out: 0.404329932237944807577845015681 + 0.0779257245606425737341079708118*I
   mpmath:
     in: (polylog(mpc(0.5, -1), (mpf(1)/3)))
+    out: (0.404329932237944807577845015681 + 0.0779257245606425737341079708118j)
   sage:
     in: N(polylog((0.5 + -1*I), (1/3)))
     out: 0.404329932237945 + 0.0779257245606426*I
@@ -1693,6 +1712,7 @@ li-3-over-2-1-zeta-3-2-non-integer-order:
     out: "2.61237534868548834334856756792"
   mpmath:
     in: (polylog((mpf(3)/2), 1))
+    out: "2.61237534868548834334856756792"
   sage:
     in: N(polylog((3/2), 1))
 li-1-1-2-ln-2:
@@ -1711,6 +1731,7 @@ li-1-1-2-ln-2:
     out: "0.693147180559945309417232121458"
   mpmath:
     in: (polylog(1, (mpf(1)/2)))
+    out: "0.693147180559945309417232121458"
   sage:
     in: N(polylog(1, (1/2)))
 n-polylog-rim-theta-0p5-s-neg-0p5-z:
@@ -1976,5 +1997,6 @@ order-one-half-at-1-is-zeta-one-half:
     out: "-1.46035450880958681288949915252"
   mpmath:
     in: (polylog((mpf(1)/2), 1))
+    out: "-1.46035450880958681288949915252"
   sage:
     in: N(polylog((1/2), 1))

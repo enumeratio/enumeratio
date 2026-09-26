@@ -333,6 +333,7 @@ n-of-an-exact-argument-gives-an-arbitrary:
     out: "0.362357754476673577638373355623"
   mpmath:
     in: (cos((mpf(6)/5)))
+    out: "0.362357754476673577638373355623"
   sage:
     in: N(cos((6/5)))
   rust:
@@ -452,6 +453,7 @@ cos-2-pi-5-frac-sqrt-5-1-4:
     out: -1/4 + sqrt(5)/4
   mpmath:
     in: cos(((mpf(2)/5) * pi))
+    out: "0.309016994374947424102293417183"
   sage:
     in: cos(((2/5) * pi))
   rust:
@@ -473,6 +475,7 @@ cos-3-pi-5-frac-1-sqrt-5-4:
     out: 1/4 - sqrt(5)/4
   mpmath:
     in: cos(((mpf(3)/5) * pi))
+    out: "-0.309016994374947424102293417183"
   sage:
     in: cos(((3/5) * pi))
   rust:
@@ -494,6 +497,7 @@ reduced-into-the-first-quadrant-by-symmetry:
     out: sqrt(3)/2
   mpmath:
     in: cos(((mpf(11)/6) * pi))
+    out: "0.866025403784438646763723170753"
   sage:
     in: cos(((11/6) * pi))
   rust:
@@ -670,6 +674,7 @@ pi-24-is-past-the-automatic-special-angle-table:
     out: sqrt(1/2 - sqrt(2)/4)/2 + sqrt(3)*sqrt(sqrt(2)/4 + 1/2)/2
   mpmath:
     in: cos(((mpf(1)/24) * pi))
+    out: "0.991444861373810411144557526929"
   sage:
     in: cos(((1/24) * pi))
   rust:
