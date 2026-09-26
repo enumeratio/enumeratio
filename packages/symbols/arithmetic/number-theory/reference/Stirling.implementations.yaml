@@ -227,10 +227,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: StirlingS2[List[2, 4, 6], 2]
   sympy:
     in: "[stirling(2, 2), stirling(4, 2), stirling(6, 2)]"
-    out: "ValueError: [2, 4, 6] is not an integer"
-    verdict: error
-    kind: threading
-    note: compute-engine's Stirling is Listable and threads over the list; SymPy takes scalars only.
+    out: "[1, 7, 31]"
   sage:
     in: "[stirling_number2(2, 2), stirling_number2(4, 2), stirling_number2(6, 2)]"
   julia:
@@ -253,10 +250,10 @@ two-blocks-s-n-2-2-n-1-1:
   wolfram:
     in: (StirlingS2[10, 2] == Subtract[Power[2, 9], 1])
   sympy:
-    in: enumeratio_equal(stirling(10, 2), ((2**9) - 1))
+    in: enumeratio_equal(stirling(10, 2), (((2)**9) - 1))
     out: True
   sage:
-    in: bool(stirling_number2(10, 2) == ((2^9) - 1))
+    in: bool(stirling_number2(10, 2) == (((2)^9) - 1))
   julia:
     in: (Combinatorics.stirlings2(big(10), 2) == ((big(2)^9) - 1))
     out: "true"

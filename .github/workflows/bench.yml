@@ -11,6 +11,12 @@ on:
   schedule:
     - cron: "10 5 * * *" # 05:10 UTC, after perf.yml
   workflow_dispatch:
+    inputs:
+      suite:
+        description: Which tiers to run (quick, standard, deep)
+        type: choice
+        options: [standard, quick, deep]
+        default: standard
 
 permissions:
   contents: write # pushes runs to bench-data
@@ -52,6 +58,7 @@ jobs:
           systems: ts,mpmath,sympy,julia,rust
           job: nightly
           token: ${{ github.token }}
+          suite: ${{ inputs.suite || 'standard' }}
 
       - name: cpu-profile where we trail the field, and anything that drifted
         if: ${{ !cancelled() && steps.bench.outputs.dir != '' }}

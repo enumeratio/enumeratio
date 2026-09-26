@@ -3,10 +3,10 @@
 // for the expression `Head(args)`:
 //
 //   - `value` is the text the head's constructor takes -- the whole expression as
-//     notatio, or for an atom (`Integer`, `Real`, `String`, `Symbol`) its literal --
+//     Epsil, or for an atom (`Integer`, `Real`, `String`, `Symbol`) its literal --
 //     which is what a framework or a scope writes into it;
 //   - otherwise its ARGUMENTS ARE ITS CHILDREN: each child element contributes its own
-//     `expression`, and a run of text is a notatio argument list, so
+//     `expression`, and a run of text is an Epsil argument list, so
 //     `<notatio-binomial>n, 2</notatio-binomial>` and
 //     `<notatio-binomial><notatio-symbol value="n" /><notatio-integer value="2" /></notatio-binomial>`
 //     are the same thing -- or, for a head of fixed arity whose parameters the reference
@@ -21,7 +21,7 @@
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf, withOptions } from "@enumeratio/formats";
-import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { HEADS, PARAMS, tagOf } from "@enumeratio/notatio";
 import { html, LitElement, nothing } from "lit";
 import "./notatio-out.ts";
@@ -72,7 +72,7 @@ export class NotatioGeneric extends LitElement {
 
   static properties = {
     /**
-     * The expression as text -- the whole `Head(args)` as notatio, or an atom's literal.
+     * The expression as text -- the whole `Head(args)` as Epsil, or an atom's literal.
      * Set, it wins over the children; inside a scope it is a template.
      */
     value: { type: String },
@@ -160,7 +160,7 @@ export class NotatioGeneric extends LitElement {
     if (this.value.trim() && !this.#derived) return;
     const fromChildren = this.#fromChildren();
     if (fromChildren === undefined) return;
-    const text = ATOMS[this.head] ? this.#ownText() : serializeNotatio(fromChildren);
+    const text = ATOMS[this.head] ? this.#ownText() : serializeExpression(fromChildren);
     if (text !== this.value) {
       this.#derived = true;
       this.value = text;
@@ -187,7 +187,7 @@ export class NotatioGeneric extends LitElement {
     for (const p of params) {
       const raw = this.getAttribute(p.toLowerCase());
       if (raw === null) break;
-      const { json, errors } = parseNotatio(raw);
+      const { json, errors } = parseExpression(raw);
       if (errors.length) break;
       args.push(json as MathJsonExpression);
     }
@@ -200,7 +200,7 @@ export class NotatioGeneric extends LitElement {
     const options: Record<string, MathJsonExpression> = {};
     for (const { name, value } of this.attributes) {
       if (OWN.has(name) || params.has(name) || name.startsWith("data-") || name.startsWith("aria-")) continue;
-      const { json, errors } = parseNotatio(value === "" || value === "true" ? "True" : value);
+      const { json, errors } = parseExpression(value === "" || value === "true" ? "True" : value);
       if (!errors.length) options[optionNameOf(name)] = json as MathJsonExpression;
     }
     return options;
@@ -215,7 +215,7 @@ export class NotatioGeneric extends LitElement {
     if (text && !this.#derived) {
       const atom = ATOMS[head];
       if (atom) return atom(text);
-      const { json, errors } = parseNotatio(text);
+      const { json, errors } = parseExpression(text);
       return errors.length ? undefined : (json as MathJsonExpression);
     }
     return this.#fromChildren();
@@ -244,14 +244,14 @@ export class NotatioGeneric extends LitElement {
       .trim();
   }
 
-  /** The arguments: element children's expressions, and text runs as notatio lists. */
+  /** The arguments: element children's expressions, and text runs as Epsil lists. */
   #arguments(): MathJsonExpression[] {
     const args: MathJsonExpression[] = [];
     for (const node of this.#nodes) {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = (node.textContent ?? "").trim();
         if (!text) continue;
-        const { json, errors } = parseNotatio(`(${text})`);
+        const { json, errors } = parseExpression(`(${text})`);
         if (errors.length) continue;
         const fn = (json as { fn?: unknown[] }).fn;
         if (Array.isArray(fn) && fn[0] === "Tuple") args.push(...(fn.slice(1) as MathJsonExpression[]));

@@ -164,10 +164,10 @@ pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x:
       in: \sin ^2\left(\frac{\pi }{6}\right)+\cos ^2\left(\frac{\pi }{6}\right)
       out: "1"
   sympy:
-    in: ((sin((S(pi) / 6))**2) + (cos((S(pi) / 6))**2))
+    in: (((sin((S(pi) / 6)))**2) + ((cos((S(pi) / 6)))**2))
     out: "1"
   sage:
-    in: ((sin((pi / 6))^2) + (cos((pi / 6))^2))
+    in: (((sin((pi / 6)))^2) + ((cos((pi / 6)))^2))
     out: "1"
   rust:
     in: (power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))
@@ -368,6 +368,9 @@ n-of-an-exact-argument-gives-an-arbitrary:
   sympy:
     in: N(sin(Rational(6, 5)), 30)
     out: "0.932039085967226349670134435495"
+  mpmath:
+    in: (sin((mpf(6)/5)))
+    out: "0.932039085967226349670134435495"
   sage:
     in: N(sin((6/5)))
   rust:
@@ -485,6 +488,9 @@ sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
   sympy:
     in: sin((Rational(5, 12) * pi))
     out: sqrt(2)/4 + sqrt(6)/4
+  mpmath:
+    in: sin(((mpf(5)/12) * pi))
+    out: "0.965925826289068286749743199729"
   sage:
     in: sin(((5/12) * pi))
   rust:
@@ -504,6 +510,9 @@ sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
   sympy:
     in: sin((Rational(3, 8) * pi))
     out: sqrt(sqrt(2)/4 + 1/2)
+  mpmath:
+    in: sin(((mpf(3)/8) * pi))
+    out: "0.923879532511286756128183189397"
   sage:
     in: sin(((3/8) * pi))
   rust:
@@ -523,6 +532,9 @@ large-rational-multiples-of-pi-are-reduced:
   sympy:
     in: sin((Rational(100, 3) * pi))
     out: -sqrt(3)/2
+  mpmath:
+    in: sin(((mpf(100)/3) * pi))
+    out: "-0.866025403784438646763723170754"
   sage:
     in: sin(((100/3) * pi))
   rust:
@@ -945,13 +957,13 @@ a-huge-exact-argument-is-reduced-modulo-2-pi:
   wolfram:
     in: N[Sin[Power[10, 20]]]
   sympy:
-    in: N(sin((10**20)), 30)
+    in: N(sin(((10)**20)), 30)
     out: "-0.645251285265780844205811711313"
   mpmath:
-    in: (sin((10**20)))
+    in: (sin(((10)**20)))
     out: "-0.645251285265780844205811711313"
   sage:
-    in: N(sin((10^20)))
+    in: N(sin(((10)^20)))
   rust:
     in: nf(sin(power(n(10), n(20))))
     out: "-0.6452512852657808"
@@ -1000,13 +1012,13 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
   wolfram:
     in: N[Sin[Power[24, 40]]]
   sympy:
-    in: N(sin((24**40)), 30)
+    in: N(sin(((24)**40)), 30)
     out: "0.400083152719766047070941915848"
   mpmath:
-    in: (sin((24**40)))
+    in: (sin(((24)**40)))
     out: "0.400083152719766047070941915848"
   sage:
-    in: N(sin((24^40)))
+    in: N(sin(((24)^40)))
   rust:
     in: nf(sin(power(n(24), n(40))))
     out: "-0.5897765161315717"

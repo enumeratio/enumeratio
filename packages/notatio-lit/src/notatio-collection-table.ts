@@ -1,6 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -82,7 +82,7 @@ const GLYPH_KINDS = new Set<GlyphKind>([
  */
 export class NotatioCollectionTable extends LitElement {
   static properties = {
-    /** The collection to enumerate, in notatio: `Subsets(4)`, `SymmetricGroup(5)`. */
+    /** The collection to enumerate, in Epsil: `Subsets(4)`, `SymmetricGroup(5)`. */
     expr: { type: String },
     /**
      * Statistic columns, comma-separated. A bare head applies to the row (`Descents`
@@ -242,7 +242,7 @@ export class NotatioCollectionTable extends LitElement {
       const engine = await loadEngine();
       if (generation !== this.#generation) return;
       this.#engine = engine;
-      const { json, errors } = parseNotatio(src, {
+      const { json, errors } = parseExpression(src, {
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length > 0) throw new Error(errors.join("; "));
@@ -281,7 +281,7 @@ export class NotatioCollectionTable extends LitElement {
   #parse(source: string): { json?: MathJsonExpression; error: string } {
     const engine = this.#engine;
     if (!engine) return { error: "engine not ready" };
-    const { json, errors } = parseNotatio(source, {
+    const { json, errors } = parseExpression(source, {
       parseLatex: (tex) => engine.parse(tex).json,
     });
     return errors.length > 0 ? { error: errors.join("; ") } : { json, error: "" };

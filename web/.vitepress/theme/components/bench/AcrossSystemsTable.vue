@@ -51,6 +51,26 @@ function ratioFor(col: Column, result: CaseResult): number | undefined {
   return directRatio(result.median, baseResult.median);
 }
 
+const resultOf = (col: Column, name: string): CaseResult | undefined => byName(col.report?.results ?? []).get(name);
+
+/** Timed and shown: an ok result, or a wrong one kept for the record (struck through, †). */
+const timed = (r: CaseResult | undefined): r is CaseResult =>
+  r !== undefined && r.median !== undefined && (r.status === "ok" || r.status === "wrong");
+
+/** A wrong answer's tooltip: what came back against what the gate expected, cut short. */
+function wrongTitle(r: CaseResult): string {
+  const cut = (s: string | undefined): string => (s === undefined ? "" : s.length > 200 ? `${s.slice(0, 200)}…` : s);
+  return `answer didn't match: ${cut(r.value)} (${cut(r.reason)})`;
+}
+
+const anyWrong = computed(() =>
+  props.caseNames.some(
+    (name) =>
+      baselineByName.value.get(name)?.status === "wrong" ||
+      props.columns.some((col) => resultOf(col, name)?.status === "wrong"),
+  ),
+);
+
 const geomeans = computed(() => {
   const out = new Map<BenchSystem, number>();
   for (const col of props.columns) {
@@ -97,8 +117,14 @@ const geomeans = computed(() => {
               </a>
             </td>
             <td>
-              <template v-if="baselineByName.get(name)?.status === 'ok'">
-                {{ formatNs(baselineByName.get(name)!.median!) }}
+              <template v-if="timed(baselineByName.get(name))">
+                <span
+                  :class="{ 'bench-wrong': baselineByName.get(name)!.status === 'wrong' }"
+                  :title="
+                    baselineByName.get(name)!.status === 'wrong' ? wrongTitle(baselineByName.get(name)!) : undefined
+                  "
+                  >{{ formatNs(baselineByName.get(name)!.median!) }}</span
+                ><sup v-if="baselineByName.get(name)!.status === 'wrong'" class="bench-dagger">†</sup>
               </template>
               <template v-else>
                 <span
@@ -111,29 +137,32 @@ const geomeans = computed(() => {
               </template>
             </td>
             <td v-for="col in columns" :key="col.system">
-              <template v-if="byName(col.report?.results ?? []).get(name)?.status === 'ok'">
-                {{ formatNs(byName(col.report?.results ?? []).get(name)!.median!) }}
+              <template v-if="timed(resultOf(col, name))">
                 <span
-                  v-if="ratioFor(col, byName(col.report?.results ?? []).get(name)!) !== undefined"
+                  :class="{ 'bench-wrong': resultOf(col, name)!.status === 'wrong' }"
+                  :title="resultOf(col, name)!.status === 'wrong' ? wrongTitle(resultOf(col, name)!) : undefined"
+                  >{{ formatNs(resultOf(col, name)!.median!) }}</span
+                ><sup v-if="resultOf(col, name)!.status === 'wrong'" class="bench-dagger">†</sup>
+                <span
+                  v-if="ratioFor(col, resultOf(col, name)!) !== undefined"
                   class="bench-ratio"
-                  :class="{
-                    faster: ratioFor(col, byName(col.report?.results ?? []).get(name)!)! < 1,
-                    slower: ratioFor(col, byName(col.report?.results ?? []).get(name)!)! > 1,
-                  }"
+                  :class="
+                    resultOf(col, name)!.status === 'wrong' || baselineByName.get(name)?.status === 'wrong'
+                      ? 'muted'
+                      : {
+                          faster: ratioFor(col, resultOf(col, name)!)! < 1,
+                          slower: ratioFor(col, resultOf(col, name)!)! > 1,
+                        }
+                  "
                 >
-                  {{ formatRatio(ratioFor(col, byName(col.report?.results ?? []).get(name)!)!) }}
+                  {{ formatRatio(ratioFor(col, resultOf(col, name)!)!) }}
                 </span>
               </template>
               <template v-else>
                 <span
                   class="bench-status"
-                  :title="
-                    statusReason(
-                      byName(col.report?.results ?? []).get(name)?.status ?? 'unsupported',
-                      byName(col.report?.results ?? []).get(name)?.reason,
-                    )
-                  "
-                  >{{ byName(col.report?.results ?? []).get(name)?.status ?? "unsupported" }}</span
+                  :title="statusReason(resultOf(col, name)?.status ?? 'unsupported', resultOf(col, name)?.reason)"
+                  >{{ resultOf(col, name)?.status ?? "unsupported" }}</span
                 >
               </template>
             </td>
@@ -153,6 +182,10 @@ const geomeans = computed(() => {
         </tfoot>
       </table>
     </div>
+    <p v-if="anyWrong" class="bench-footnote">
+      <sup>†</sup> The answer didn't match the pinned one (hover for both). Its time is shown for the record, but it
+      stays out of every ratio's colouring and the geometric mean.
+    </p>
   </div>
 </template>
 
@@ -203,6 +236,23 @@ const geomeans = computed(() => {
 .bench-ratio {
   margin-left: 0.35rem;
   font-variant-numeric: tabular-nums;
+}
+.bench-wrong {
+  color: var(--vp-c-text-3);
+  text-decoration: line-through;
+  cursor: help;
+}
+.bench-dagger {
+  color: var(--vp-c-text-3);
+  margin-left: 0.1rem;
+}
+.bench-ratio.muted {
+  color: var(--vp-c-text-3);
+}
+.bench-footnote {
+  color: var(--vp-c-text-2);
+  font-size: 0.78rem;
+  margin: 0.5rem 0 0;
 }
 .bench-ratio.faster {
   color: var(--vp-c-green-1);

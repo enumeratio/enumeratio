@@ -117,9 +117,7 @@ The name matches the entry's existing `implementations`, whose `mapped` rows are
 made of, and this one says how each of those writes and answers one example.
 
 **Naming.** This uses `epsil` for the standard, retypeable form and keeps `notatio` for the
-vdom serialisation. That moves `notatio` away from "the restricted Epsil subset", which
-the Names section of `AGENTS.md` and `design/syntax-and-formats.md` still say. The rename
-should be settled and recorded in those two places before step 6 writes any keys.
+vdom serialisation, per the Names section of `AGENTS.md` and `design/syntax-and-formats.md`.
 
 ## 3. Identity
 

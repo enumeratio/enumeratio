@@ -205,6 +205,9 @@ gamma-1-2-sqrt-pi:
   sympy:
     in: enumeratio_equal(gamma(Rational(1, 2)), sqrt(pi))
     out: True
+  mpmath:
+    in: almosteq(gamma((mpf(1)/2)), sqrt(pi), 1e-20)
+    out: True
   sage:
     in: bool(gamma((1/2)) == sqrt(pi))
     out: True
@@ -230,10 +233,10 @@ the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2:
       in: \frac{\pi ^2}{\Gamma (3)}=\frac{\pi ^2}{2}
       out: \text{True}
   sympy:
-    in: enumeratio_equal((S((pi**2)) / gamma(3)), (S((pi**2)) / 2))
+    in: enumeratio_equal((S(((pi)**2)) / gamma(3)), (S(((pi)**2)) / 2))
     out: True
   sage:
-    in: bool(((pi^2) / gamma(3)) == ((pi^2) / 2))
+    in: bool((((pi)^2) / gamma(3)) == (((pi)^2) / 2))
     out: True
   rust:
     in: equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))
@@ -257,10 +260,13 @@ squaring-the-reflection-formula-at-z-1-2:
       in: \Gamma \left(\frac{1}{2}\right)^2=\pi
       out: \text{True}
   sympy:
-    in: enumeratio_equal((gamma(Rational(1, 2))**2), pi)
+    in: enumeratio_equal(((gamma(Rational(1, 2)))**2), pi)
+    out: True
+  mpmath:
+    in: almosteq(((gamma((mpf(1)/2)))**2), pi, 1e-20)
     out: True
   sage:
-    in: bool((gamma((1/2))^2) == pi)
+    in: bool(((gamma((1/2)))^2) == pi)
     out: True
   rust:
     in: equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))
@@ -308,6 +314,9 @@ gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer:
   sympy:
     in: gamma(Rational(5, 2))
     out: 3*sqrt(pi)/4
+  mpmath:
+    in: gamma((mpf(5)/2))
+    out: "1.32934038817913702047362561251"
   sage:
     in: gamma((5/2))
     out: 3/4*sqrt(pi)
@@ -448,6 +457,9 @@ half-integers-have-closed-forms-gamma-7-2-frac:
   sympy:
     in: gamma(Rational(7, 2))
     out: 15*sqrt(pi)/8
+  mpmath:
+    in: gamma((mpf(7)/2))
+    out: "3.32335097044784255118406403126"
   sage:
     in: gamma((7/2))
   rust:
@@ -467,6 +479,9 @@ including-negative-half-integers-gamma-3-2-frac:
   sympy:
     in: gamma(Rational(-3, 2))
     out: 4*sqrt(pi)/3
+  mpmath:
+    in: gamma((mpf(-3)/2))
+    out: "2.36327180120735470306422331112"
   sage:
     in: gamma((-3/2))
   rust:
@@ -628,13 +643,13 @@ gamma-i-2-pi-sinh-pi-0-27203:
   wolfram:
     in: N[Power[Abs[Gamma[I]], 2]]
   sympy:
-    in: N((Abs(gamma(I))**2), 30)
+    in: N(((Abs(gamma(I)))**2), 30)
     out: "0.272029054982133162950236583672"
   mpmath:
-    in: ((fabs(gamma(mpc(0,1)))**2))
+    in: (((fabs(gamma(mpc(0,1))))**2))
     out: "0.272029054982133162950236583672"
   sage:
-    in: N((abs(gamma(I))^2))
+    in: N(((abs(gamma(I)))^2))
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Gamma(1 / 3), 40)
@@ -648,6 +663,9 @@ to-40-significant-digits-every-one-correctly:
     in: N[Gamma[Rational[1, 3]], 40]
   sympy:
     in: N(gamma(Rational(1, 3)), 30)
+    out: "2.67893853470774763365569294097"
+  mpmath:
+    in: (gamma((mpf(1)/3)))
     out: "2.67893853470774763365569294097"
   sage:
     in: N(gamma((1/3)))

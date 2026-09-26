@@ -70,6 +70,9 @@ sqrt-4-over-9:
   sympy:
     in: sqrt(Rational(4, 9))
     out: 2/3
+  mpmath:
+    in: sqrt((mpf(4)/9))
+    out: "0.666666666666666666666666666667"
   sage:
     in: sqrt((4/9))
     out: 2/3
@@ -180,10 +183,13 @@ sqrt-x-x-1-2:
       in: \sqrt{16}=16^{\frac{1}{2}}
       out: \text{True}
   sympy:
-    in: enumeratio_equal(sqrt(16), (16**Rational(1, 2)))
+    in: enumeratio_equal(sqrt(16), ((16)**Rational(1, 2)))
+    out: True
+  mpmath:
+    in: almosteq(sqrt(16), ((16)**(mpf(1)/2)), 1e-20)
     out: True
   sage:
-    in: bool(sqrt(16) == (16^(1/2)))
+    in: bool(sqrt(16) == ((16)^(1/2)))
     out: True
   rust:
     in: equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))
@@ -261,6 +267,9 @@ a-negative-rational-still-evaluates-exactly-when:
   sympy:
     in: sqrt(Rational(-4, 9))
     out: 2*I/3
+  mpmath:
+    in: sqrt((mpf(-4)/9))
+    out: (0.0 + 0.666666666666666666666666666667j)
   sage:
     in: sqrt((-4/9))
     out: 2/3*I
@@ -375,6 +384,9 @@ rationalizes-the-denominator:
   sympy:
     in: sqrt(Rational(1, 2))
     out: sqrt(2)/2
+  mpmath:
+    in: sqrt((mpf(1)/2))
+    out: "0.707106781186547524400844362105"
   sage:
     in: sqrt((1/2))
   rust:
@@ -394,6 +406,9 @@ sqrt-12-over-5:
   sympy:
     in: sqrt(Rational(12, 5))
     out: 2*sqrt(15)/5
+  mpmath:
+    in: sqrt((mpf(12)/5))
+    out: "1.54919333848296675407170615991"
   sage:
     in: sqrt((12/5))
   rust:
@@ -493,6 +508,9 @@ threads-over-a-matrix-entry-by-entry-this-is-not:
   sympy:
     in: "[[sqrt(Rational(1, 2)), sqrt(-1)], [sqrt(0), sqrt(Rational(1, 2))]]"
     out: "[[sqrt(2)/2, I], [0, sqrt(2)/2]]"
+  mpmath:
+    in: "[[sqrt((mpf(1)/2)), sqrt(-1)], [sqrt(0), sqrt((mpf(1)/2))]]"
+    out: "[[mpf('0.707106781186547524400844362104884'), mpc(real='0.0', imag='1.0')], [mpf('0.0'), mpf('0.707106781186547524400844362104884')]]"
   sage:
     in: "[[sqrt((1/2)), sqrt(-1)], [sqrt(0), sqrt((1/2))]]"
   rust:
@@ -553,21 +571,13 @@ at-x-1-sqrt-x-2-1-not-1:
   wolfram:
     in: Sqrt[Power[-1, 2]]
   sympy:
-    in: sqrt((-1**2))
-    out: I
-    verdict: inconclusive
-    kind: ours
-    note: The emitter writes (-1)^2 as -1**2, which Python reads as -(1**2), so this asks for √-1.
-    issue: 265
+    in: sqrt(((-1)**2))
+    out: "1"
   mpmath:
-    in: sqrt((-1**2))
-    out: (0.0 + 1.0j)
-    verdict: inconclusive
-    kind: ours
-    note: The emitter writes (-1)^2 as -1**2, which Python reads as -(1**2), so this asks for √-1.
-    issue: 265
+    in: sqrt(((-1)**2))
+    out: "1.0"
   sage:
-    in: sqrt((-1^2))
+    in: sqrt(((-1)^2))
   rust:
     in: sqrt(power(n(-1), n(2)))
     out: "1.0"

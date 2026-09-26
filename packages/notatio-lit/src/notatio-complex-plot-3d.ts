@@ -1,6 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { emitComplexWGSL } from "@enumeratio/analytic/src";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { loadEngine } from "./mathlive.ts";
@@ -36,7 +36,7 @@ const log = debug("complex-plot-3d");
  * wheel `<notatio-complex-plot>` paints. A pole is a spike that rises to `max-height`
  * with every hue winding round it; a zero is a dimple the hues wind round the other way.
  *
- * `value` is **notatio**; LaTeX is accepted inside a `$…$` island. Sampled in a WebGPU
+ * `value` is **Epsil**; LaTeX is accepted inside a `$…$` island. Sampled in a WebGPU
  * compute shader through the same complex lowering the portrait uses, falling back to
  * the CPU -- the base package's complex evaluator, or the engine's own numeric evaluation
  * for a head it has no lowering for -- where WebGPU is missing or the expression doesn't
@@ -49,7 +49,7 @@ const log = debug("complex-plot-3d");
  */
 export class NotatioComplexPlot3D extends LitElement {
   static properties = {
-    /** The complex-valued expression to draw, in notatio. */
+    /** The complex-valued expression to draw, in Epsil. */
     value: { type: String },
     /** The complex variable; defaults to `z`. */
     var: { type: String },
@@ -158,11 +158,11 @@ export class NotatioComplexPlot3D extends LitElement {
     }
     try {
       const engine = await loadEngine();
-      const { json, errors } = parseNotatio(raw, {
+      const { json, errors } = parseExpression(raw, {
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length) {
-        log("value is not notatio", raw, errors);
+        log("value is not Epsil", raw, errors);
         this._status = `Could not parse: ${raw}`;
         this._svg = "";
         return;

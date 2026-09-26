@@ -1,7 +1,7 @@
 # MathJSON
 
 MathJSON is compute-engine's expression AST — the most explicit input form, and
-what every other input (LaTeX, …) parses into. A notatio component takes it via
+what every other input (LaTeX, …) parses into. A component takes it via
 `format="mathjson"`.
 
 ## The shape

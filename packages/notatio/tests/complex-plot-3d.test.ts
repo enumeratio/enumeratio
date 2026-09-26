@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { expect, test } from "vite-plus/test";
 import { emitComplexWGSL } from "@enumeratio/analytic/src";
 import { complexComputeShader } from "../src/gpu-eval.ts";
@@ -16,9 +16,9 @@ import {
 
 const ce = new ComputeEngine();
 
-/** The compiled function of a notatio expression in `z`. */
+/** The compiled function of an Epsil expression in `z`. */
 const fn = (src: string) => {
-  const { json, errors } = parseNotatio(src);
+  const { json, errors } = parseExpression(src);
   expect(errors).toEqual([]);
   const f = complexFunction(ce.box(json).json, "z");
   expect(f, src).toBeDefined();
@@ -48,9 +48,9 @@ test("the special functions reach the analytic kernels", () => {
 });
 
 test("what has no complex lowering is refused rather than guessed", () => {
-  const { json } = parseNotatio("Sin(z) + w");
+  const { json } = parseExpression("Sin(z) + w");
   expect(complexFunction(ce.box(json).json, "z")).toBeUndefined();
-  expect(complexFunction(ce.box(parseNotatio("Floor(z)").json).json, "z")).toBeUndefined();
+  expect(complexFunction(ce.box(parseExpression("Floor(z)").json).json, "z")).toBeUndefined();
 });
 
 test("hue is the argument on a wheel, 0 at the positive real axis", () => {
@@ -132,7 +132,7 @@ test("a GPU value buffer colours the same way as the CPU sampler", () => {
 });
 
 test("the complex compute shader binds the grid and the literal slots", () => {
-  const { json } = parseNotatio("1/(z^2 + 1)");
+  const { json } = parseExpression("1/(z^2 + 1)");
   const emitted = emitComplexWGSL(ce.box(json).json as never, "z");
   expect(emitted).toBeDefined();
   const code = complexComputeShader("z", emitted!.code);

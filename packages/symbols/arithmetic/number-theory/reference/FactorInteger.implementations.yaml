@@ -71,13 +71,13 @@ multiplying-the-p-e-factors-back-together:
       in: 2^3 3^2 5=360
       out: \text{True}
   sympy:
-    in: enumeratio_equal(((2**3) * (3**2) * 5), 360)
+    in: enumeratio_equal((((2)**3) * ((3)**2) * 5), 360)
     out: True
   mpmath:
-    in: almosteq(((2**3) * (3**2) * 5), 360, 1e-20)
+    in: almosteq((((2)**3) * ((3)**2) * 5), 360, 1e-20)
     out: True
   sage:
-    in: bool(((2^3) * (3^2) * 5) == 360)
+    in: bool((((2)^3) * ((3)^2) * 5) == 360)
     out: True
   oscar:
     in: (((big(2)^3) * (big(3)^2) * 5) == 360)
@@ -331,7 +331,7 @@ a-21-digit-prime-cubed-factors-at-once:
   wolfram:
     in: FactorInteger[Power[100000000000000000039, 3]]
   sage:
-    in: list(factor((100000000000000000039^3)))
+    in: list(factor(((100000000000000000039)^3)))
 factorinteger-neg-12:
   epsil:
     in: FactorInteger(-12)

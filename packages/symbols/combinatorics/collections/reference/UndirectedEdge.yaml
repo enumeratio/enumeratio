@@ -8,7 +8,7 @@ signatures:
     library: enumeratio-collections
 details:
   - Inert, like [[Graph]] itself — it holds exactly as written; nothing here evaluates it away.
-  - Wolfram prints this infix as $u \leftrightarrow v$ (`u <-> v`); notatio has no infix form for it yet, so it round-trips through call-form syntax, `UndirectedEdge(u, v)`, which Wolfram accepts as equivalent input.
+  - Wolfram prints this infix as $u \leftrightarrow v$ (`u <-> v`); Epsil has no infix form for it yet, so it round-trips through call-form syntax, `UndirectedEdge(u, v)`, which Wolfram accepts as equivalent input.
 examples:
   - id: an-edge-between-1-and-2
     expr: [UndirectedEdge, 1, 2]

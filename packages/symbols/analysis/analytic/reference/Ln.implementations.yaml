@@ -236,6 +236,9 @@ arbitrary-precision-via-n:
   sympy:
     in: N(log(Rational(5, 2)), 30)
     out: "0.916290731874155065183527211768"
+  mpmath:
+    in: (log((mpf(5)/2)))
+    out: "0.916290731874155065183527211768"
   sage:
     in: N(log((5/2)))
   rust:
@@ -351,13 +354,13 @@ ln-exponentiale-pow-3:
   wolfram:
     in: Log[Power[E, 3]]
   sympy:
-    in: log((E**3))
+    in: log(((E)**3))
     out: "3"
   mpmath:
-    in: log((e**3))
+    in: log(((e)**3))
     out: "3.0"
   sage:
-    in: log((e^3))
+    in: log(((e)^3))
   rust:
     in: ln(power(x(std::f64::consts::E), n(3)))
     out: "3.0"
@@ -416,6 +419,9 @@ a-unit-fraction-becomes-a-negated-logarithm-ln:
   sympy:
     in: log(Rational(1, 2))
     out: -log(2)
+  mpmath:
+    in: log((mpf(1)/2))
+    out: "-0.693147180559945309417232121458"
   sage:
     in: log((1/2))
   rust:
@@ -524,6 +530,9 @@ ln-frac-12-i-pi-ln-2-a-negative-rational-folded:
   sympy:
     in: log(Rational(-1, 2))
     out: -log(2) + I*pi
+  mpmath:
+    in: log((mpf(-1)/2))
+    out: (-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
   sage:
     in: log((-1/2))
   rust:

@@ -1,4 +1,8 @@
-# Integer arithmetic and number theory.
+# Integer arithmetic and number theory. Prime and PrimePi arguments are drawn from the decade
+# below a power of ten, not at it, and each call takes a list it hasn't seen (`batches`):
+# Wolfram memoises every Prime it computes and keeps the sieve segment around recent PrimePi
+# arguments, and `ClearSystemCache[]` clears neither, so a repeated list or a tight cluster
+# would time a lookup.
 
 GCD:
   - id: gcd-random-10000-bit
@@ -19,18 +23,52 @@ PowerMod:
       precision: exact
       sample: { seed: 20260925, count: 8, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
 PrimePi:
-  - id: primepi-10-to-the-7
+  - id: primepi-below-10-to-the-7
     role: bench
-    expr: [PrimePi, 10000000]
-    expected: 664579
+    expr: [PrimePi, $n]
+    bench:
+      tier: small
+      tags: [number-theory, primes]
+      precision: exact
+      sample: { seed: 20260926, batches: 24, count: 4, draw: { n: [int, 9000000, 10000000] } }
+  - id: primepi-below-10-to-the-9
+    role: bench
+    expr: [PrimePi, $n]
     bench:
       tags: [number-theory, primes]
       precision: exact
+      sample: { seed: 20260926, batches: 24, count: 4, draw: { n: [int, 900000000, 1000000000] } }
+  - id: primepi-below-10-to-the-11
+    role: bench
+    expr: [PrimePi, $n]
+    bench:
+      tier: large
+      tags: [number-theory, primes]
+      precision: exact
+      budget: 30
+      sample: { seed: 20260926, batches: 24, count: 4, draw: { n: [int, 90000000000, 100000000000] } }
 Prime:
-  - id: prime-10-to-the-5
+  - id: prime-below-10-to-the-5
     role: bench
-    expr: [Prime, 100000]
-    expected: 1299709
+    expr: [Prime, $n]
+    bench:
+      tier: small
+      tags: [number-theory, primes]
+      precision: exact
+      sample: { seed: 20260926, batches: 24, count: 8, draw: { n: [int, 90000, 100000] } }
+  - id: prime-below-10-to-the-7
+    role: bench
+    expr: [Prime, $n]
     bench:
       tags: [number-theory, primes]
       precision: exact
+      sample: { seed: 20260926, batches: 24, count: 4, draw: { n: [int, 9000000, 10000000] } }
+  - id: prime-below-10-to-the-9
+    role: bench
+    expr: [Prime, $n]
+    bench:
+      tier: large
+      tags: [number-theory, primes]
+      precision: exact
+      budget: 30
+      sample: { seed: 20260926, batches: 24, count: 4, draw: { n: [int, 900000000, 1000000000] } }

@@ -1,4 +1,4 @@
-// InputForm -- an expression printed as notatio you could have typed. Wolfram's
+// InputForm -- an expression printed as Epsil you could have typed. Wolfram's
 // `InputForm` is a printer, not a hold: it renders whatever tree it is handed, so a
 // held expression prints as written and an evaluated one prints as evaluated. This is
 // the same deal, over `serializeEpsil`.
@@ -132,7 +132,7 @@ export function normalizeInputForm(json: MathJsonExpression): MathJsonExpression
   return rewrite(json);
 }
 
-/** Print `json` as InputForm: notatio you could type back in. */
+/** Print `json` as InputForm: Epsil you could type back in. */
 export function toInputForm(json: MathJsonExpression): string {
   return serializeEpsil(normalizeInputForm(json));
 }

@@ -23,13 +23,13 @@ import { toInputForm } from "@enumeratio/formats";
 // AssociationThread builds the SAME `Association` head as `list-functional.ts` (Rule pairs,
 // not compute-engine's string-keyed `Dictionary`) — see that file's own module doc for why.
 //
-// ToString prints NOTATIO (this repo's own syntax, via `@enumeratio/formats`'s
+// ToString prints Epsil (this repo's own syntax, via `@enumeratio/formats`'s
 // `toInputForm`), not Wolfram InputForm — there is no Wolfram-syntax printer in this repo,
-// and notatio is InputForm's counterpart here (round-trips through `parseNotatio` the same
+// and Epsil is InputForm's counterpart here (round-trips through `parseExpression` the same
 // way InputForm round-trips through Wolfram's own parser). Documented as a divergence on
 // the reference entry.
 //
-// Slot (`#`, `#1`) is NOT declared here: notatio's own pure-function literals already lower
+// Slot (`#`, `#1`) is NOT declared here: Epsil's own pure-function literals already lower
 // `#`/`#1` to compute-engine's `Function`/parameter-symbol representation at parse time (see
 // `design/syntax-and-formats.md`), so there is no bare `Slot` head left to give meaning to
 // on this engine — declaring one would just shadow that lowering.
@@ -152,7 +152,7 @@ function replaceAtPath(
 /** Declare the Wolfram-frontier expression, pattern and string heads new to this backlog
  *  wave. See the module doc for what each diverges on. */
 export function declareExpressionOps(ce: ComputeEngine): void {
-  // ToString(expr): notatio, not Wolfram InputForm — see module doc.
+  // ToString(expr): Epsil, not Wolfram InputForm — see module doc.
   ce.declare("ToString", {
     signature: "(any) -> string",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {

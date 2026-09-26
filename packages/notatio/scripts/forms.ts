@@ -11,7 +11,7 @@
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import type { ExampleImplementations, HeadImplementations, MathJSON, SystemImplementation } from "@enumeratio/entry";
 import { toInputForm } from "@enumeratio/formats/inputform";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
@@ -61,12 +61,12 @@ function complexLiterals(json: unknown): unknown {
 }
 
 /**
- * What InputForm `printed` reads back as through notatio, as a notebook cell reads it, where
+ * What InputForm `printed` reads back as through Epsil, as a notebook cell reads it, where
  * that is not `expr` -- the same canonical expression, not merely the same value (a complex
  * literal aside). Absent when the trip is exact; `Unreadable` when the cell would refuse it.
  */
 function inputFormBack(expr: MathJSON, printed: string): MathJSON | undefined {
-  const { json, errors } = parseNotatio(printed, { allow: ["Assign"] });
+  const { json, errors } = parseExpression(printed, { allow: ["Assign"] });
   if (errors.length > 0) return "Unreadable";
   const reread = attempt(() => JSON.stringify(ce.box(complexLiterals(box(json as MathJSON).json) as never).json));
   if (reread === attempt(() => JSON.stringify(ce.box(expr as never).json))) return undefined;
