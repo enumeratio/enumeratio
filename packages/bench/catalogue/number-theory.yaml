@@ -47,10 +47,15 @@ PrimePi:
       precision: exact
       budget: 30
       sample: { seed: 20260926, batches: 24, count: 4, draw: { n: [int, 90000000000, 100000000000] } }
-Prime:
+NthPrime:
+  # compute-engine's own "Prime" is derivative notation (f', f''), not nth-prime -- these
+  # cases used to call [Prime, $n], relying on an override that widened Prime to also mean
+  # nth-prime for a plain integer argument. That overload was removed (issue #276); NthPrime
+  # is the only head name for it on our side (the crosswalk still maps NthPrime to Wolfram's
+  # Prime, so the oracle side of these cases is unchanged).
   - id: prime-below-10-to-the-5
     role: bench
-    expr: [Prime, $n]
+    expr: [NthPrime, $n]
     bench:
       tier: small
       tags: [number-theory, primes]
@@ -58,14 +63,14 @@ Prime:
       sample: { seed: 20260926, batches: 24, count: 8, draw: { n: [int, 90000, 100000] } }
   - id: prime-below-10-to-the-7
     role: bench
-    expr: [Prime, $n]
+    expr: [NthPrime, $n]
     bench:
       tags: [number-theory, primes]
       precision: exact
       sample: { seed: 20260926, batches: 24, count: 4, draw: { n: [int, 9000000, 10000000] } }
   - id: prime-below-10-to-the-9
     role: bench
-    expr: [Prime, $n]
+    expr: [NthPrime, $n]
     bench:
       tier: large
       tags: [number-theory, primes]
