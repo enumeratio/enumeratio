@@ -391,7 +391,7 @@ export function crosswalkForStatistic(head: string, carrier: string): ResolvedRe
   const byValue = foundByValue(head, carrier);
   // Where the finder has spoken, a FindStat id the catalog recorded but the values do not
   // bear out is wrong for our definition and is not shown; the test pins each such case
-  // until the catalog's row is fixed (`@enumeratio/catalog` reference-fixes.ts).
+  // until the head's own `catalog:` row is fixed by hand.
   const recorded = catalogRows(head, carrier).filter(
     (row) => row.system !== "findstat" || !byValue.length || byValue.some((found) => found.identity === row.identity),
   );

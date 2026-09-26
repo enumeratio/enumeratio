@@ -1,4 +1,4 @@
-// Tableaux and plane-partition heads catalogued (packages/catalog/src/catalog-data.ts) but never wired
+// Tableaux and plane-partition heads catalogued (packages/reference/entries/) but never wired
 // to a kernel: SemistandardTableaux, GelfandTsetlin, AlternatingSignMatrices, SkewPartitions,
 // SkewStandardTableaux, ShiftedStandardTableaux, StandardTableauPairs, PlanePartitions, BoxedPlanePartitions.
 //

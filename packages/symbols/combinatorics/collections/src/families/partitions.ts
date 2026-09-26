@@ -1,4 +1,4 @@
-// Integer-partition families that were catalogued (packages/catalog/src/catalog-data.ts) but never
+// Integer-partition families that were catalogued (packages/reference/entries/) but never
 // wired to a kernel. One shape: "partitions of n with every part drawn from an allowed set S" — a
 // generic DP builder (count by largest-allowed-part recurrence, unrank/rank in the same
 // largest-part-first, weakly-decreasing order IntegerPartitions uses in ./core.ts), instantiated
@@ -9,7 +9,8 @@
 //
 // KPartPartitions, BoundedPartPartitions and BoxConfinedPartitions are catalogued names for
 // families ALREADY declared under other kernel heads (PartitionsIntoKParts / PartitionsMaxPart /
-// PartitionsInBox, all in ./core.ts) — see catalog-data.ts's `aliasOf` on each. No kernel here.
+// PartitionsInBox, all in ./core.ts) — each one's own record says so ("Catalogued as an alias
+// of ..." in its summary). No kernel here.
 import type { NumberKernel } from "./types.ts";
 import {
   PartitionsMaxPartCount,

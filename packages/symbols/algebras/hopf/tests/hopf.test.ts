@@ -78,7 +78,9 @@ test("both coproducts are coassociative", () => {
           right.set(triple, (right.get(triple) ?? 0) + c * ic);
         }
       }
-      expect([...left].sort(), `${algebra.name} coassociativity`).toEqual([...right].sort());
+      const byKey = (a: readonly [string, number], b: readonly [string, number]): number =>
+        a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
+      expect([...left].sort(byKey), `${algebra.name} coassociativity`).toEqual([...right].sort(byKey));
     }
   }
 });

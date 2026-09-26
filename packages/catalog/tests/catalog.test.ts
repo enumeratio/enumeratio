@@ -1,8 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/collections/src";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, COLLECTIONS, MAPS, STATS } from "../src/catalog-data.ts";
-import { REFERENCES } from "../src/references.ts";
+import { CARRIERS, COLLECTIONS, MAPS, STATS } from "../src/catalog-records-data.ts";
 import { declareCatalog } from "../src/declare.ts";
 import { catalogRegistry, ENUMERATIO } from "../src/resources.ts";
 import { pascal } from "../src/spelling.ts";
@@ -84,14 +83,4 @@ test("most stat names are single-carrier inheritance, not overloading", () => {
   expect(STATS.length - multi.length).toBe(189);
   expect(multi.length).toBe(53);
   expect(STATS.find((s) => s.name === "BigOmega")?.on).toEqual(["IntegerFactorization", "Numeric"]);
-});
-
-test("every reference fix lands on a row, and the fixed rows are what consumers see", () => {
-  // A fix that matches nothing throws at load; this just shows the fixed shape.
-  const crank = REFERENCES.filter((r) => r.subject === "Crank" && r.system === "findstat");
-  expect(crank.map((r) => r.identity)).toEqual(["St000474"]);
-  expect(REFERENCES.some((r) => r.subject === "Area" && r.system === "findstat")).toBe(false);
-  expect(REFERENCES.find((r) => r.subject === "DyckPaths" && r.system === "mathlib4")?.url).toContain(
-    "Catalan/Basic.html#catalan",
-  );
 });

@@ -1,4 +1,4 @@
-// Permutation-class families (catalogued in packages/catalog/src/catalog-data.ts, carrier
+// Permutation-class families (catalogued in packages/reference/entries/, carrier
 // "Permutation") that were never wired to a kernel: Baxter/Boolean/Grassmannian/Cograssmannian/
 // NonCrossing/Separable/Simple/Smooth/Vexillary permutations. Reuses ./kernels.ts and
 // ./kernels-extra.ts wherever the element representation already matches (Boolean permutations are

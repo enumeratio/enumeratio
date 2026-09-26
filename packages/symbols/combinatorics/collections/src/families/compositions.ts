@@ -1,4 +1,4 @@
-// Composition-carrier families that were catalogued (packages/catalog/src/catalog-data.ts) but
+// Composition-carrier families that were catalogued (packages/reference/entries/) but
 // never wired to a kernel. Two shapes here: (1) "parts drawn from an allowed set S" — one generic
 // DP builder (count by subset-sum recurrence, unrank/rank by lexicographic block-counting),
 // instantiated per family; (2) three families whose constraint isn't a per-part membership test
