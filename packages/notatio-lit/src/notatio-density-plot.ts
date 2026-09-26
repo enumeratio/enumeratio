@@ -12,7 +12,7 @@ const RUNTIME = {
   __pl: polyLogReal,
 } as const;
 
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import { debug, densitySvg } from "@enumeratio/notatio";
@@ -49,7 +49,7 @@ function toMatrix(data: unknown): number[][] | undefined {
  */
 export class NotatioDensityPlot extends LitElement {
   static properties = {
-    /** The bivariate expression, in notatio. */
+    /** The bivariate expression, in Epsil. */
     expr: { type: String },
     /** The variable on the x axis; defaults to the expression's first unknown. */
     xvar: { type: String },
@@ -168,11 +168,11 @@ export class NotatioDensityPlot extends LitElement {
     }
     try {
       const engine = await loadEngine();
-      const { json, errors } = parseNotatio(raw, {
+      const { json, errors } = parseExpression(raw, {
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length) {
-        log("expr is not notatio", raw, errors);
+        log("expr is not Epsil", raw, errors);
         this._svg = "";
         return;
       }

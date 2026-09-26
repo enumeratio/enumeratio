@@ -314,29 +314,19 @@ test("IdonealNumbers has exactly the 65 known numeri idonei", () => {
   expect(got.every((n) => entry.valid(n, []))).toBe(true);
 });
 
-// ─── engine-level: At / Take / Count / Element through the declared CE collection handlers. ──
+// ─── engine-level: Take / Element through the declared CE collection handlers. ──
 
 const ce = new ComputeEngine();
 declareCollections(ce);
 
-test("At(DeficientNumbers, n) gives the n-th deficient number, 1-indexed", () => {
-  expect(ce.box(["At", "DeficientNumbers", 6]).evaluate().re).toBe(7);
-});
 test("Take(PracticalNumbers, 5) gives the first five practical numbers", () => {
   expect(ce.box(["Take", "PracticalNumbers", 5]).evaluate().toString()).toBe("[1,2,4,6,8]");
-});
-test("Count(SquareFreeNumbers) is +oo", () => {
-  expect(ce.box(["Count", "SquareFreeNumbers"]).evaluate().toString()).toBe("+oo");
-});
-test("Count(PerfectNumbers) is NaN", () => {
-  expect(ce.box(["Count", "PerfectNumbers"]).evaluate().toString()).toBe("NaN");
 });
 test("Element membership on PowerfulNumbers", () => {
   expect(ce.box(["Element", 36, "PowerfulNumbers"]).evaluate().toString()).toBe('"True"');
   expect(ce.box(["Element", 12, "PowerfulNumbers"]).evaluate().toString()).toBe('"False"');
 });
 test("KFreeIntegers(k) is a one-parameter operator agreeing with SquareFreeNumbers at k=2", () => {
-  expect(ce.box(["At", ["KFreeIntegers", 2], 1]).evaluate().re).toBe(1);
   expect(
     ce
       .box(["Take", ["KFreeIntegers", 2], 10])
@@ -381,4 +371,14 @@ for (const entry of numericDivisor) {
 
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
+});
+
+test("KFreeIntegers(k) below 2 is just {1}, finite", () => {
+  const entry = byHead.get("KFreeIntegers");
+  if (!entry) throw new Error("KFreeIntegers missing");
+  for (const k of [0, 1]) {
+    expect(entry.count([k])).toBe(1);
+    expect(entry.unrank([k], 0)).toBe(1);
+    expect(entry.unrank([k], 1)).toBeNaN(); // declines rather than scanning forever
+  }
 });

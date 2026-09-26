@@ -62,11 +62,40 @@ test("threadArg rebuilds a List's nesting as Python list literals, applying the 
     ok: true,
     source: "[(-10 % 3), (-10 % 4), (-10 % 7)]",
   });
-  // threadArg is a Python-family concern only: Wolfram's own heads are already Listable.
+  // threadArg is a Python-family (and Julia) concern: Wolfram's own heads are already Listable.
   expect(emit(["Sin", ["List", 1, 2]], "wolfram")).toEqual({
     ok: true,
     source: "Sin[List[1, 2]]",
   });
+});
+
+// Found by the julia rescan (#124): our emit templates for Julia/Nemo are plain calls
+// (`binomial(ZZ($1), ZZ($2))`), not `f.($1)` broadcasts, so a raw Julia Vector hit the same
+// "no method matching" wall a bare Python list does.
+test("threadArg rebuilds a List's nesting as Julia list literals too", () => {
+  expect(emit(["Binomial", ["List", 2, 3, 5, 7, 11], 3], "julia")).toEqual({
+    ok: true,
+    source:
+      "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]",
+  });
+  expect(emit(["GCD", 12, ["List", 3, 7, 40]], "julia")).toEqual({
+    ok: true,
+    source: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]",
+  });
+});
+
+// Found scanning Sqrt((-1)^2) (#265): a negative base is emitted bare, and Python's `**`
+// binds tighter than unary minus, so `-1**2` reads as `-(1**2)` — not the `(-1)**2` we meant.
+test("a Power base is parenthesised, so a negative literal doesn't leak past unary minus", () => {
+  expect(emit(["Power", -1, 2], "sympy")).toEqual({ ok: true, source: "((-1)**2)" });
+  expect(emit(["Power", -1, 2], "mpmath")).toEqual({ ok: true, source: "((-1)**2)" });
+  expect(emit(["Power", -1, 2], "sage")).toEqual({ ok: true, source: "((-1)^2)" });
+  // A positive base picks up the same (harmless) parens, for one template regardless of sign.
+  expect(emit(["Power", 2, 10], "sympy")).toEqual({ ok: true, source: "((2)**10)" });
+  // Julia/Oscar and Lean were never affected: `big($1)` and the negative-literal special
+  // case already parenthesise the base.
+  expect(emit(["Power", -1, 2], "julia")).toEqual({ ok: true, source: "(big(-1)^2)" });
+  expect(emit(["Power", -1, 2], "mathlib4")).toEqual({ ok: true, source: "((-1) ^ 2)" });
 });
 
 test("Max/Min flatten a (possibly nested) list argument, matching Wolfram — bare SymPy Max() raises on one", () => {

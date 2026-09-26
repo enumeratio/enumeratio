@@ -4,7 +4,7 @@
 // are read off with `OptionsPattern` semantics -- the trailing rules are flattened and
 // the LEFTMOST setting of a name wins -- and written back the same way.
 //
-// In notatio a rule is `a -> b`, which Epsil parses to `KeyValuePair`; compute-engine's
+// In Epsil a rule is `a -> b`, which parses to `KeyValuePair`; compute-engine's
 // canonical form turns a symbol-keyed pair into a `Tuple`, so both spellings read as a
 // rule here, as does a string key.
 

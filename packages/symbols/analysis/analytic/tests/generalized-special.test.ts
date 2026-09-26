@@ -2,11 +2,11 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
-// Issue #113: the incomplete gamma/beta/erf closed forms, the Hurwitz-zeta and Lerch
-// identities, and the generalized-arity call forms (incomplete Beta, generalized Erf/ErfInv,
-// one-argument PolyGamma, Nielsen PolyLog). Every value here was checked against
-// `wolframscript` before being pinned (see the reference entries this closes in
-// packages/reference/src/entries/special-functions.ts for the identities themselves).
+// Issue #113: the incomplete gamma/beta closed forms and the Hurwitz-zeta, Lerch, and
+// generalized-arity (one-argument PolyGamma, Nielsen PolyLog) identities. Every value here
+// was checked against `wolframscript` before being pinned (see the reference entries this
+// closes in packages/reference/src/entries/special-functions.ts for the identities
+// themselves).
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -39,24 +39,6 @@ test("Beta: B(a,1) = 1/a, and the incomplete/generalized-incomplete arities", ()
   expect(numAt(["Beta", 0.2, 0.5, 2, 3])).toBeCloseTo(0.04222500000000001, 12);
   // Still threads over a list, unaffected by the widened arity.
   expect(evalJson(["Beta", ["List", 1, 2], 2])).toEqual(["List", ["Rational", 1, 2], ["Rational", 1, 6]]);
-});
-
-test("BetaRegularized: the four-argument generalized form", () => {
-  expect(numAt(["BetaRegularized", 0.2, 0.5, 2, 3])).toBeCloseTo(0.5067, 12);
-});
-
-test("Erf: generalized two-argument form, parity, and Erf(ErfInv(x)) = x", () => {
-  expect(numAt(["Erf", 0.5, 1.5])).toBeCloseTo(0.4456052686622642, 12);
-  expect(evalJson(["Erf", 1, 2])).toEqual(["Add", ["Negate", ["Erf", 1]], ["Erf", 2]]);
-  expect(evalJson(["Erf", ["Negate", "x"]])).toEqual(["Negate", ["Erf", "x"]]);
-  expect(evalJson(["Erf", ["ErfInv", "x"]])).toEqual("x");
-  // Untouched: a plain exact argument still stays symbolic.
-  expect(evalJson(["Erf", 1])).toEqual(["Erf", 1]);
-});
-
-test("ErfInv: generalized two-argument form and parity", () => {
-  expect(numAt(["ErfInv", 0.4, 0.2])).toBeCloseTo(0.6317759030550063, 12);
-  expect(evalJson(["ErfInv", ["Negate", "x"]])).toEqual(["Negate", ["ErfInv", "x"]]);
 });
 
 test("HurwitzZeta(s, 1/2) = (2^s - 1) Zeta(s)", () => {

@@ -134,6 +134,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "AbsoluteTiming",
+    wolfram: "AbsoluteTiming",
+  },
+  {
     name: "Accumulate",
     wolfram: "Accumulate",
   },
@@ -215,6 +219,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Append",
     wolfram: "Append",
+  },
+  {
+    name: "AppendTo",
+    wolfram: "AppendTo",
   },
   {
     name: "Arccos",
@@ -377,6 +385,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Part",
   },
   {
+    name: "Attributes",
+    wolfram: "Attributes",
+  },
+  {
     name: "BarnesG",
     fungrimEntries: [
       "147db6",
@@ -426,7 +438,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "bell($1)",
+        call: "bell(ZZ($1))",
         arity: 1,
       },
     ],
@@ -700,6 +712,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Catch",
+    wolfram: "Catch",
+  },
+  {
     name: "Ceil",
     fungrimEntries: ["a3a253"],
     wolfram: "Ceiling",
@@ -733,6 +749,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "CenteredInterval",
     wolfram: "CenteredInterval",
+  },
+  {
+    name: "CharacterRange",
+    wolfram: "CharacterRange",
   },
   {
     name: "ChineseRemainder",
@@ -1049,6 +1069,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "DeleteCases",
+    wolfram: "DeleteCases",
+  },
+  {
     name: "Derivative",
     fungrimEntries: [
       "01bbb6",
@@ -1176,6 +1200,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Determinant",
     wolfram: "Det",
+  },
+  {
+    name: "DiagonalMatrix",
+    wolfram: "DiagonalMatrix",
   },
   {
     name: "Diagram",
@@ -1335,12 +1363,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Do",
+    wolfram: "Do",
+  },
+  {
     name: "Dot",
     wolfram: "Dot",
   },
   {
     name: "Drop",
     wolfram: "Drop",
+  },
+  {
+    name: "Echo",
+    wolfram: "Echo",
   },
   {
     name: "EdgeCount",
@@ -1745,6 +1781,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ExtendedGCD",
   },
   {
+    name: "Extract",
+    wolfram: "Extract",
+  },
+  {
     name: "FactorInteger",
     wolfram: "FactorInteger",
     oracle: [
@@ -1906,7 +1946,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "fibonacci($1)",
+        call: "BigInt(fibonacci(ZZ($1)))",
         arity: 1,
       },
     ],
@@ -1954,6 +1994,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "FixedPoint",
     wolfram: "FixedPoint",
+  },
+  {
+    name: "FixedPointList",
+    wolfram: "FixedPointList",
   },
   {
     name: "Flatten",
@@ -2456,6 +2500,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "HermiteDecomposition",
     wolfram: "HermiteDecomposition",
+  },
+  {
+    name: "HilbertMatrix",
+    wolfram: "HilbertMatrix",
   },
   {
     name: "HurwitzZeta",
@@ -3109,6 +3157,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     fungrimEntries: ["081205", "d8d820", "fcab61"],
   },
   {
+    name: "Key",
+    wolfram: "Key",
+  },
+  {
     name: "Khinchin",
     wolfram: "Khinchin",
   },
@@ -3603,6 +3655,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Module",
+    wolfram: "Module",
+  },
+  {
     name: "MoebiusMu",
     wolfram: "MoebiusMu",
     oracle: [
@@ -3730,6 +3786,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NestList",
   },
   {
+    name: "NestWhile",
+    wolfram: "NestWhile",
+  },
+  {
+    name: "NestWhileList",
+    wolfram: "NestWhileList",
+  },
+  {
     name: "NextPrime",
     wolfram: "NextPrime",
   },
@@ -3772,6 +3836,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "NumberExpand",
     wolfram: "NumberExpand",
+  },
+  {
+    name: "NumberQ",
+    wolfram: "NumberQ",
   },
   {
     name: "Or",
@@ -4110,6 +4178,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RandomReal",
   },
   {
+    name: "RandomComplex",
+    wolfram: "RandomComplex",
+  },
+  {
     name: "RandomGraph",
     wolfram: "RandomGraph",
   },
@@ -4156,6 +4228,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Rationalize",
   },
   {
+    name: "ReIm",
+    wolfram: "ReIm",
+  },
+  {
     name: "Real",
     fungrimEntries: [
       "099b19",
@@ -4195,6 +4271,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "RealSign",
     wolfram: "RealSign",
+  },
+  {
+    name: "Reap",
+    wolfram: "Reap",
   },
   {
     name: "RecurrenceTable",
@@ -4276,6 +4356,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "SeriesCoefficient",
     wolfram: "SeriesCoefficient",
+  },
+  {
+    name: "SetAttributes",
+    wolfram: "SetAttributes",
   },
   {
     name: "SetMinus",
@@ -4525,6 +4609,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "SortBy",
   },
   {
+    name: "Sow",
+    wolfram: "Sow",
+  },
+  {
     name: "Span",
     wolfram: "Span",
   },
@@ -4604,7 +4692,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "Combinatorics.stirlings2($1, $2)",
+        call: "Combinatorics.stirlings2(big($1), $2)",
         arity: 2,
       },
     ],
@@ -4621,7 +4709,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "julia",
-        call: "Combinatorics.stirlings1($1, $2)",
+        call: "Combinatorics.stirlings1(big($1), $2)",
         arity: 2,
       },
     ],
@@ -4708,6 +4796,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Surd",
   },
   {
+    name: "Switch",
+    wolfram: "Switch",
+  },
+  {
     name: "SymmetricGroup",
     wolfram: "SymmetricGroup",
   },
@@ -4769,6 +4861,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Through",
     wolfram: "Through",
+  },
+  {
+    name: "Throw",
+    wolfram: "Throw",
   },
   {
     name: "TimeConstrained",
@@ -4921,6 +5017,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "WheelGraph",
     wolfram: "WheelGraph",
+  },
+  {
+    name: "While",
+    wolfram: "While",
+  },
+  {
+    name: "With",
+    wolfram: "With",
   },
   {
     name: "Zeta",

@@ -2,6 +2,7 @@ grouped-by-residue-mod-3:
   epsil:
     in: GatherBy([1, 2, 3, 4, 5, 6, 7], Function(_1 % 3))
     out: "[[1, 4, 7], [2, 5], [3, 6]]"
+    back: Unreadable
   tex:
     in: \mathrm{GatherBy}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod3)
     out: \bigl\lbrack\bigl\lbrack1, 4, 7\bigr\rbrack, \bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack3, 6\bigr\rbrack\bigr\rbrack

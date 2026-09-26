@@ -11,6 +11,10 @@ inputs:
   token:
     description: A token that can push to bench-data.
     required: true
+  suite:
+    description: Which tiers to run (quick, standard, deep; packages/bench/src/suites.ts).
+    required: false
+    default: standard
 
 outputs:
   dir:
@@ -29,7 +33,7 @@ runs:
         BENCH_TRIGGER: ${{ github.event_name == 'schedule' && inputs.job || 'dispatch' }}
       run: |
         set -o pipefail
-        node packages/bench/scripts/bench.ts --systems "${{ inputs.systems }}" --out .bench | tee bench.log
+        node packages/bench/scripts/bench.ts --systems "${{ inputs.systems }}" --suite "${{ inputs.suite }}" --out .bench | tee bench.log
         echo "dir=$(tail -n 1 bench.log)" >> "$GITHUB_OUTPUT"
 
     - id: publish

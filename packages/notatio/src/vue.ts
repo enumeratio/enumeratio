@@ -7,7 +7,7 @@
 // `@enumeratio/notatio-lit`, which the page imports once for their registration; this
 // module only names them.
 
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { type App, defineComponent, h, onMounted, onUnmounted, ref, type VNode, watchEffect } from "vue";
 import { loadEngine } from "./engine.ts";
 import { type Environment, environmentNamed, pageEnvironment, watchPageEnvironment } from "./environment.ts";
@@ -23,12 +23,12 @@ export * from "./vue-generated.ts";
  * `<Notatio expr="Row([Slider(k, (0, 5)), Dynamic(k^2)])" />` -- an expression drawn as
  * the vdom it is: every head a tag, every argument a child, every option an attribute;
  * the controls, the layout, the readouts each find their component by name, and the
- * controls' variables bind through the page. `json` takes MathJSON in place of notatio.
+ * controls' variables bind through the page. `json` takes MathJSON in place of Epsil.
  */
 export const Notatio = defineComponent({
   name: "Notatio",
   props: {
-    /** The expression, as notatio. */
+    /** The expression, as Epsil. */
     expr: { type: String, required: false },
     /** The expression, as a MathJSON string -- an alternative to `expr`. */
     json: { type: String, required: false },
@@ -66,12 +66,12 @@ export const Notatio = defineComponent({
   },
 });
 
-/** Parse the source: MathJSON as given, notatio with the engine for its `$…$` islands. */
+/** Parse the source: MathJSON as given, Epsil with the engine for its `$…$` islands. */
 async function parse(expr?: string, json?: string): Promise<unknown> {
   if (json) return JSON.parse(json);
   if (!expr?.trim()) return undefined;
   const engine = await loadEngine();
-  const parsed = parseNotatio(expr, { parseLatex: (tex) => engine.parse(tex).json });
+  const parsed = parseExpression(expr, { parseLatex: (tex) => engine.parse(tex).json });
   return parsed.errors.length ? undefined : parsed.json;
 }
 

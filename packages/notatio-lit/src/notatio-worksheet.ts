@@ -8,14 +8,14 @@ import "./notatio-plot.ts";
 import "./notatio-plot-3d.ts";
 import { imageUri } from "@enumeratio/formats";
 import { toInputForm } from "@enumeratio/formats/inputform";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { pointsOf } from "./notatio-curve-3d.ts";
 import { loadEngine } from "./mathlive.ts";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
 import { ensureStyles } from "./styles.ts";
 import {
-  bindingNotatio,
+  bindingEpsil,
   type Cell,
   type ControlRange,
   controlsFor,
@@ -76,7 +76,7 @@ export class NotatioWorksheet extends LitElement {
      * names; a binding is `s := 2`.
      */
     seed: { type: String },
-    /** The seed's syntax: `notatio` (default) or `latex`. Cells are notatio internally. */
+    /** The seed's syntax: `epsil` (default) or `latex`. Cells are Epsil internally. */
     inForm: { type: String, attribute: "in-form" },
     /** Where the shared view sits: `auto`, `side` or `below`. */
     screen: { type: String },
@@ -129,7 +129,7 @@ export class NotatioWorksheet extends LitElement {
 
   #nextId = 1;
   /**
-   * Cell sources a slider is driving right now, in notatio -- handed to the cell's own
+   * Cell sources a slider is driving right now, in Epsil -- handed to the cell's own
    * `liveValue`, not `value`. `<notatio-cell>`'s own doc comment has the reason: `value`
    * feeds the editor field, and rewriting it on every drag frame is what measured
    * 11-31ms of synchronous MathLive relayout each, freezing the renderer outright. The
@@ -172,7 +172,7 @@ export class NotatioWorksheet extends LitElement {
   constructor() {
     super();
     this.seed = "";
-    this.inForm = "notatio";
+    this.inForm = "epsil";
     this.screen = "auto";
     this.readonly = false;
     this.structure = "open";
@@ -209,9 +209,9 @@ export class NotatioWorksheet extends LitElement {
     });
   }
 
-  /** `format` every cell reads its source in -- notatio unless the seed asked for LaTeX. */
-  get #format(): "notatio" | "latex" {
-    return this.inForm === "latex" ? "latex" : "notatio";
+  /** `format` every cell reads its source in -- Epsil unless the seed asked for LaTeX. */
+  get #format(): "epsil" | "latex" {
+    return this.inForm === "latex" ? "latex" : "epsil";
   }
 
   /**
@@ -247,7 +247,7 @@ export class NotatioWorksheet extends LitElement {
   }
 
   /**
-   * Read the seed into cells, kept in notatio (`#format`'s syntax) -- the syntax every
+   * Read the seed into cells, kept in Epsil (`#format`'s syntax) -- the syntax every
    * `<notatio-cell>` below reads directly, so this is synchronous unless the seed itself
    * asked for `in-form="latex"`, which needs the engine to convert it once.
    */
@@ -282,9 +282,9 @@ export class NotatioWorksheet extends LitElement {
   // --- editing ---------------------------------------------------------------------
 
   #onChange(id: number, event: Event): void {
-    const notatio = (event as CustomEvent<{ notatio: string }>).detail.notatio;
+    const epsil = (event as CustomEvent<{ epsil: string }>).detail.epsil;
     this.#live.delete(id);
-    this._cells = this._cells.map((c) => (c.id === id ? { ...c, value: notatio } : c));
+    this._cells = this._cells.map((c) => (c.id === id ? { ...c, value: epsil } : c));
   }
 
   /** May the reader add or remove cells at all? */
@@ -335,7 +335,7 @@ export class NotatioWorksheet extends LitElement {
     if (!Number.isFinite(v)) return;
     const targetId = this.#cellIdFor(control.name);
     if (targetId === undefined) return;
-    const source = bindingNotatio(control, v, this.#integerNames.has(control.name));
+    const source = bindingEpsil(control, v, this.#integerNames.has(control.name));
     if (commit) {
       this.#live.delete(targetId);
       this.#patch(targetId, { value: source });
@@ -364,7 +364,7 @@ export class NotatioWorksheet extends LitElement {
   #notifyReactive(id: number, source: string): void {
     let json: unknown;
     try {
-      json = parseNotatio(source, { allow: ["Assign"] }).json;
+      json = parseExpression(source, { allow: ["Assign"] }).json;
     } catch {
       return;
     }
@@ -372,7 +372,7 @@ export class NotatioWorksheet extends LitElement {
       const el = this.querySelector<Element>(`[data-cell="${id}"] notatio-cell`);
       el?.dispatchEvent(
         new CustomEvent("notatio-change", {
-          detail: { notatio: source, json },
+          detail: { epsil: source, json },
           bubbles: true,
           composed: true,
         }),
@@ -882,7 +882,7 @@ export class NotatioWorksheet extends LitElement {
 interface Drawable {
   id: number;
   kind: ProjectionKind;
-  /** The cell's expression, as notatio the plot elements can re-parse. */
+  /** The cell's expression, as Epsil the plot elements can re-parse. */
   source: string;
   /** For a curve, the points already evaluated, so the element need not resample. */
   points?: Triple[];

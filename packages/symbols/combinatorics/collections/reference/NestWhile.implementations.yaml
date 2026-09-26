@@ -1,0 +1,12 @@
+halve-while-even:
+  epsil:
+    in: NestWhile(Function(_1 / 2), 96, Function(_1 % 2 == 0))
+    out: "3"
+    back: Unreadable
+  tex:
+    in: \mathrm{NestWhile}(()\mapsto\frac{\operatorname{\_1}}{2}, 96, ()\mapsto\operatorname{\_1}\bmod2=0)
+    out: "3"
+  fullform:
+    in: NestWhile[Function[Divide[Slot[1], 2]], 96, Function[Equal[Mod[Slot[1], 2], 0]]]
+  wolfram:
+    in: NestWhile[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]

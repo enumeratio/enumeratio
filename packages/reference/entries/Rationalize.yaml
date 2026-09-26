@@ -77,6 +77,11 @@ examples:
     expected: [Rational, 201, 64]
     category: Scope
     caption: The rational with the smallest denominator within 0.001 of $\pi$ -- $201/64$, not compute-engine's own closer-but-larger-denominator continued-fraction convergent $333/106$
+  - id: a-tolerance-finer-than-a-double
+    expr: [Rationalize, Pi, 1e-16]
+    expected: [Rational, 245850922, 78256779]
+    category: Scope
+    caption: A tolerance finer than a double can resolve is still honoured -- the simplest fraction within $10^{-16}$ of $\pi$ itself, not of $N(\pi)$, which is already $1.2 \times 10^{-16}$ away
   - id: rationalizes-every-approximate-number-inside-an
     expr: [Rationalize, [Add, 1.2, [Multiply, 6.7, x]]]
     expected: [Add, [Multiply, [Rational, 67, 10], x], [Rational, 6, 5]]
@@ -102,6 +107,16 @@ examples:
     expected: [Rational, 80143857, 25510582]
     category: Possible issues
     caption: Without a tolerance, a float with no simple fraction nearby still becomes a fraction with a large denominator
+  - id: a-zero-tolerance-still-returns-an-exact-integer
+    expr: [Rationalize, 2, 0]
+    expected: 2
+    role: test
+    caption: A zero tolerance still returns an exact integer unchanged
+  - id: a-tolerance-still-routes-to-search-not-the-exact
+    expr: [Rationalize, 0.1, 0.01]
+    expected: [Rational, 1, 10]
+    role: test
+    caption: With a nonzero tolerance, still routes to a tolerance search rather than the exact dyadic form
   - role: test
     id: an-already-exact-value-unchanged-with-tolerance
     expr: [Rationalize, [Rational, 1, 3], 0.1]

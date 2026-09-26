@@ -1,4 +1,4 @@
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { expect, test } from "vite-plus/test";
 import { structuralOf, tagOf, toVNode, vdomOf } from "../src/vdom.ts";
 
@@ -17,7 +17,7 @@ test("the tag is the naming rule: notatio- plus the head, kebab-cased", () => {
 });
 
 test("the structural tree is the expression verbatim: heads are tags, arguments children, atoms leaves", () => {
-  const { json } = parseNotatio("Binomial(n, 2)");
+  const { json } = parseExpression("Binomial(n, 2)");
   expect(toVNode(structuralOf(json), h)).toEqual({
     tag: "notatio-binomial",
     props: {},
@@ -26,24 +26,24 @@ test("the structural tree is the expression verbatim: heads are tags, arguments 
       { tag: "notatio-integer", props: { value: "2" }, children: [] },
     ],
   });
-  const nested = parseNotatio("Sin(x)^2 + 1").json;
+  const nested = parseExpression("Sin(x)^2 + 1").json;
   const tree = structuralOf(nested);
   expect(tree.tag).toBe("notatio-add");
   expect(tree.children?.map((c) => c.tag)).toEqual(["notatio-power", "notatio-integer"]);
-  expect(structuralOf(parseNotatio('"so"').json)).toEqual({
+  expect(structuralOf(parseExpression('"so"').json)).toEqual({
     tag: "notatio-string",
     attributes: { value: "so" },
   });
-  expect(structuralOf(parseNotatio("2.5").json).tag).toBe("notatio-real");
+  expect(structuralOf(parseExpression("2.5").json).tag).toBe("notatio-real");
 });
 
 test("the realized tree lowers a component's arguments into props, and typesets the rest", () => {
-  const plot = vdomOf(parseNotatio("Plot(Sin(k * x), (x, 0, 10))").json);
+  const plot = vdomOf(parseExpression("Plot(Sin(k * x), (x, 0, 10))").json);
   expect(plot.tag).toBe("notatio-plot");
   expect(plot.attributes).toEqual({ value: "Sin(k * x)", var: "x", domain: "0,10" });
   expect(plot.children).toBeUndefined();
 
-  const scoped = vdomOf(parseNotatio("Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])").json);
+  const scoped = vdomOf(parseExpression("Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])").json);
   expect(scoped.tag).toBe("notatio-dynamic-module");
   const row = scoped.children?.[0];
   expect(row?.tag).toBe("notatio-row");
@@ -52,7 +52,7 @@ test("the realized tree lowers a component's arguments into props, and typesets 
     ["notatio-dynamic", { value: "_k ^ 2" }],
   ]);
 
-  const plain = vdomOf(parseNotatio("Binomial(n, 2)").json);
+  const plain = vdomOf(parseExpression("Binomial(n, 2)").json);
   expect(plain.tag).toBe("notatio-out");
   expect(plain.attributes.format).toBe("mathjson");
 });
@@ -68,7 +68,7 @@ test("toVNode hands the tree to any h, text as a lone child", () => {
 
 test("options ride as props in the structural tree, a node-valued one as a slotted child", () => {
   const tree = structuralOf(
-    parseNotatio(
+    parseExpression(
       'Plot(Sin(x), (x, 0, 10), PlotRange -> All, Frame -> True, Epilog -> Point((1, 0.5)), PlotLabel -> "wave", Inset -> Plot(Cos(x)))',
     ).json,
   );

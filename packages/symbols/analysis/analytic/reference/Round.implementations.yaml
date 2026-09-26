@@ -28,6 +28,17 @@ round-3p5:
     tex:
       in: \text{Round}[3.5]
       out: "4"
+round-3p7:
+  epsil:
+    in: Round(3.7)
+    out: "4"
+  tex:
+    in: \mathrm{round}(3.7)
+    out: "4"
+  fullform:
+    in: Round[3.7]
+  wolfram:
+    in: Round[3.7]
 integers-pass-through-unchanged:
   epsil:
     in: Round(5)
@@ -268,8 +279,8 @@ evaluates-at-an-exact-constant-round-pi-3:
     in: Round[Times[100, E]]
 rounds-the-real-and-imaginary-parts-separately:
   epsil:
-    in: Round(5.37 + -1.3 * i)
-    out: 5 + -1 * i
+    in: Round(5.37 - 1.3i)
+    out: 5 - i
   tex:
     in: \mathrm{round}(5.37-1.3i)
     out: 5-i

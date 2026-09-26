@@ -66,7 +66,7 @@ the-harmonic-number-h-20-back-from-its-image-mod:
   fullform:
     in: RationalReconstruction[PowerMod[Rational[55835135, 15519504], 1, Subtract[Power[2, 61], 1]], Subtract[Power[2, 61], 1]]
   sage:
-    in: rational_reconstruction(power_mod((55835135/15519504), 1, ((2^61) - 1)), ((2^61) - 1))
+    in: rational_reconstruction(power_mod((55835135/15519504), 1, (((2)^61) - 1)), (((2)^61) - 1))
     out: 55835135/15519504
 one-word-size-prime-is-not-enough-for-h-20-2nd-m:
   epsil:

@@ -1,0 +1,40 @@
+an-integer-literal:
+  epsil:
+    in: NumberQ(2)
+    out: True
+  tex:
+    in: \mathrm{NumberQ}(2)
+    out: \top
+  traditional:
+    in: \mathrm{NumberQ}(2)
+    out: \mathrm{True}
+  fullform:
+    in: NumberQ[2]
+  wolfram:
+    in: NumberQ[2]
+a-symbolic-constant-is-not-numberq:
+  epsil:
+    in: NumberQ(Pi)
+    out: False
+  tex:
+    in: \mathrm{NumberQ}(\pi)
+    out: \bot
+  traditional:
+    in: \mathrm{NumberQ}(\pi)
+    out: \mathrm{False}
+  fullform:
+    in: NumberQ[Pi]
+  wolfram:
+    in: NumberQ[Pi]
+a-plain-symbol-is-not-numberq:
+  epsil:
+    in: NumberQ(x)
+    out: False
+  tex:
+    in: \mathrm{NumberQ}(x)
+    out: \bot
+  traditional:
+    in: \mathrm{NumberQ}(x)
+    out: \mathrm{False}
+  fullform:
+    in: NumberQ[x]

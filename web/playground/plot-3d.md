@@ -2,8 +2,8 @@
 
 A bivariate surface (`Plot3D`), rendered by `<notatio-plot-3d>`. It samples an
 `n`×`n` grid, projects it obliquely, and paints the quads back-to-front with
-height shading — pure SVG, no WebGL. `value` is **notatio**; LaTeX goes in a
-`$…$` island. A boxed axes frame with range labels
+height shading — pure SVG, no WebGL. `value` is an expression written in **Epsil**;
+LaTeX goes in a `$…$` island. A boxed axes frame with range labels
 draws by default (`axes="false"` to hide); each axis takes `x-scale` / `y-scale` /
 `z-scale`.
 

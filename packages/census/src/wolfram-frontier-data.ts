@@ -49,10 +49,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 159,
   },
   {
-    head: "With",
-    uses: 157,
-  },
-  {
     head: "RGBColor",
     uses: 151,
   },
@@ -79,10 +75,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Scaled",
     uses: 93,
-  },
-  {
-    head: "Module",
-    uses: 90,
   },
   {
     head: "Callout",
@@ -121,10 +113,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 45,
   },
   {
-    head: "AbsoluteTiming",
-    uses: 43,
-  },
-  {
     head: "ParametricPlot3D",
     uses: 41,
   },
@@ -157,10 +145,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 34,
   },
   {
-    head: "Conditioned",
-    uses: 33,
-  },
-  {
     head: "QuantityArray",
     uses: 33,
   },
@@ -181,20 +165,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 31,
   },
   {
-    head: "Reap",
-    uses: 30,
-  },
-  {
-    head: "Sow",
-    uses: 30,
-  },
-  {
     head: "RegionPlot",
     uses: 28,
-  },
-  {
-    head: "Echo",
-    uses: 27,
   },
   {
     head: "FractionBox",
@@ -202,10 +174,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "GridBox",
-    uses: 27,
-  },
-  {
-    head: "NProbability",
     uses: 27,
   },
   {
@@ -241,16 +209,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 23,
   },
   {
-    head: "Do",
-    uses: 22,
-  },
-  {
     head: "EstimatedDistribution",
     uses: 22,
-  },
-  {
-    head: "Attributes",
-    uses: 21,
   },
   {
     head: "HistogramDistribution",
@@ -262,10 +222,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Minimize",
-    uses: 21,
-  },
-  {
-    head: "Switch",
     uses: 21,
   },
   {
@@ -293,10 +249,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 19,
   },
   {
-    head: "DiagonalMatrix",
-    uses: 19,
-  },
-  {
     head: "DiscretePlot3D",
     uses: 19,
   },
@@ -306,10 +258,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LightDarkSwitched",
-    uses: 19,
-  },
-  {
-    head: "NestWhile",
     uses: 19,
   },
   {
@@ -385,10 +333,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 15,
   },
   {
-    head: "Key",
-    uses: 15,
-  },
-  {
     head: "Offset",
     uses: 15,
   },
@@ -409,19 +353,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 14,
   },
   {
-    head: "HilbertMatrix",
-    uses: 14,
-  },
-  {
     head: "ListStepPlot",
     uses: 14,
   },
   {
     head: "MellinTransform",
-    uses: 14,
-  },
-  {
-    head: "NumberQ",
     uses: 14,
   },
   {
@@ -454,10 +390,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "PopupWindow",
-    uses: 13,
-  },
-  {
-    head: "ReIm",
     uses: 13,
   },
   {
@@ -497,10 +429,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 12,
   },
   {
-    head: "SetAttributes",
-    uses: 12,
-  },
-  {
     head: "SignedRegionDistance",
     uses: 12,
   },
@@ -518,10 +446,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Band",
-    uses: 11,
-  },
-  {
-    head: "CharacterRange",
     uses: 11,
   },
   {
@@ -577,10 +501,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "Extract",
-    uses: 10,
-  },
-  {
     head: "HoldPattern",
     uses: 10,
   },
@@ -597,19 +517,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "NExpectation",
-    uses: 10,
-  },
-  {
     head: "NSum",
     uses: 10,
   },
   {
     head: "QuantityDistribution",
-    uses: 10,
-  },
-  {
-    head: "RandomComplex",
     uses: 10,
   },
   {
@@ -646,10 +558,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Cuboid",
-    uses: 9,
-  },
-  {
-    head: "DeleteCases",
     uses: 9,
   },
   {
@@ -702,10 +610,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "VectorQ",
-    uses: 9,
-  },
-  {
-    head: "While",
     uses: 9,
   },
   {
@@ -941,10 +845,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 6,
   },
   {
-    head: "FixedPointList",
-    uses: 6,
-  },
-  {
     head: "HermiteH",
     uses: 6,
   },
@@ -978,10 +878,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Names",
-    uses: 6,
-  },
-  {
-    head: "NestWhileList",
     uses: 6,
   },
   {
@@ -1023,10 +919,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "VandermondeMatrix",
     uses: 6,
-  },
-  {
-    head: "AppendTo",
-    uses: 5,
   },
   {
     head: "AudioMeasurements",
@@ -1674,10 +1566,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "TensorTranspose",
-    uses: 3,
-  },
-  {
-    head: "Throw",
     uses: 3,
   },
   {

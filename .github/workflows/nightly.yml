@@ -23,6 +23,7 @@ on:
 permissions:
   contents: read
   issues: write # the oracle Plausible's tracking issues
+  actions: write # julia-actions/cache deletes its older saves; without it every run adds one
 
 concurrency:
   group: nightly
@@ -116,6 +117,7 @@ jobs:
     permissions:
       contents: write # the bench tail step pushes to bench-data
       issues: write
+      actions: write # julia-actions/cache prunes its older saves
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
@@ -140,6 +142,7 @@ jobs:
           systems: ts,oscar
           job: oscar-weekly
           token: ${{ github.token }}
+          suite: deep
 
   # The discrete heads against Lean 4 + Mathlib, weekly: the pinned toolchain from elan, and mathlib's prebuilt
   # oleans (~5 GB) from its cache, kept between runs.
@@ -205,6 +208,7 @@ jobs:
           systems: ts,sage
           job: sage-weekly
           token: ${{ github.token }}
+          suite: deep
 
   # Wolfram, weekly, from the official Wolfram Engine image on an on-demand license: billed per kernel-hour against
   # the repo secret WOLFRAMSCRIPT_ENTITLEMENTID (a LicenseEntitlementObject, renewed yearly). Skips without it.

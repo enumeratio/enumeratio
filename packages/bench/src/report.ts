@@ -13,9 +13,10 @@ export interface RunInfo {
   readonly date: string;
   readonly trigger: string;
   readonly url?: string;
+  readonly suite?: string;
 }
 
-export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date()): RunInfo {
+export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date(), suite?: string): RunInfo {
   const sha = env["GITHUB_SHA"] ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
   const stamp = date.toISOString().slice(0, 16).replace(":", "-");
   const url =
@@ -28,11 +29,18 @@ export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date())
     date: date.toISOString(),
     trigger: env["BENCH_TRIGGER"] ?? (env["GITHUB_ACTIONS"] === "true" ? "ci" : "local"),
     ...(url === undefined ? {} : { url }),
+    ...(suite === undefined ? {} : { suite }),
   };
 }
 
-export function report(run: RunInfo, system: Report["system"], results: readonly CaseResult[]): Report {
-  return { schema: 1, run, system, machine: machine(), protocol: PROTOCOL, results };
+export function report(
+  run: RunInfo,
+  system: Report["system"],
+  results: readonly CaseResult[],
+  during?: Report["conditions"],
+): Report {
+  const conditions = during === undefined ? {} : { conditions: during };
+  return { schema: 1, run, system, machine: machine(), ...conditions, protocol: PROTOCOL, results };
 }
 
 /** A system's version (as its harness reported it, or probed) and cache policy. */

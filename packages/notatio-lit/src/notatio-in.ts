@@ -1,9 +1,11 @@
 import { toInputForm } from "@enumeratio/formats/inputform";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { loadEditor, loadEngine, loadMarkup } from "./mathlive.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
+import { latexForField, pastedFrom } from "./clipboard.ts";
 import { ensureStyles } from "./styles.ts";
 import {
   inferRange,
@@ -27,6 +29,9 @@ interface MathField extends HTMLElement {
   getValue?: (range?: unknown, format?: string) => string;
   /** MathLive's fill-in-the-blank API: the content of a `\placeholder[id]{}`. */
   getPromptValue?: (id: string, format?: string) => string;
+  /** The plain text MathLive puts beside the LaTeX it copies. */
+  onExport: (field: MathField, latex: string, range: unknown) => string;
+  insert: (latex: string, options: { format: "latex"; insertionMode: string; selectionMode: string }) => boolean;
 }
 
 /**
@@ -177,7 +182,7 @@ export class NotatioIn extends LitElement {
   }
 
   // Light DOM so the shared stylesheet and MathLive static CSS apply.
-  // The engine, once loaded, so `#onCopy` can reach it without awaiting.
+  // The engine, once loaded, so copy and paste can reach it without awaiting.
   static #engine: Awaited<ReturnType<typeof loadEngine>> | undefined;
 
   protected override createRenderRoot(): HTMLElement {
@@ -186,11 +191,11 @@ export class NotatioIn extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener("copy", this.#onCopy, true);
+    this.addEventListener("paste", this.#onPaste, true);
   }
 
   override disconnectedCallback(): void {
-    this.removeEventListener("copy", this.#onCopy, true);
+    this.removeEventListener("paste", this.#onPaste, true);
     this.#stop();
     super.disconnectedCallback();
   }
@@ -412,18 +417,39 @@ export class NotatioIn extends LitElement {
     }
   }
 
-  // MathLive owns copy inside the field and would put LaTeX on the clipboard. Replace
-  // it with InputForm: the selected range when there is one, else the whole value.
-  #onCopy = (event: ClipboardEvent): void => {
+  // MathLive owns copy inside the field: it writes the LaTeX (which another field reads
+  // back exactly) and asks `onExport` for the plain text, which we make InputForm --
+  // what a text cell, or anyone the copy is sent to, can read. The selected range when
+  // there is one, else the whole value; LaTeX until the engine has loaded.
+  #onExport = (_field: MathField, latex: string): string =>
+    (latex === this.value ? this.inputForm : this.#inputFormOf(latex)) || latex;
+
+  // MathLive reads a paste as LaTeX, and Epsil read as LaTeX is nonsense (`Sin(x)` is
+  // S·i·n·(x)). Plain text that parses as Epsil goes in as its LaTeX instead.
+  #onPaste = (event: ClipboardEvent): void => {
     const field = this.#field;
-    const selected = field?.getValue?.(field.selection, "latex") ?? "";
-    const latex = selected.trim() ? selected : this.value;
-    const text = latex === this.value ? this.inputForm : this.#inputFormOf(latex);
-    if (!text) return; // nothing cached yet -- let MathLive copy its LaTeX
-    event.clipboardData?.setData("text/plain", text);
+    if (!field || field.readOnly) return;
+    const latex = latexForField(pastedFrom(event.clipboardData), (text) => this.#latexOf(text));
+    if (latex === undefined) return;
     event.preventDefault();
     event.stopPropagation();
+    field.insert(latex, { format: "latex", insertionMode: "replaceSelection", selectionMode: "after" });
+    this.#onInput();
   };
+
+  // The LaTeX of Epsil `text`, or undefined when it isn't Epsil (or the engine isn't
+  // loaded yet, and MathLive's own reading will have to do).
+  #latexOf(text: string): string | undefined {
+    const engine = NotatioIn.#engine;
+    if (!engine) return undefined;
+    const { json, errors } = parseExpression(text, { allow: ["Assign"], parseLatex: (tex) => engine.parse(tex).json });
+    if (errors.length > 0) return undefined;
+    try {
+      return engine.box(json, { form: "raw" }).latex;
+    } catch {
+      return undefined;
+    }
+  }
 
   // A synchronous InputForm for a partial selection, possible only once the engine has
   // been loaded (which `#syncInputForm` has already done by the time anyone selects).
@@ -442,6 +468,7 @@ export class NotatioIn extends LitElement {
     await loadEditor();
     const field = this.#field;
     if (!field) return;
+    field.onExport = this.#onExport;
     if (this.#pinned) {
       // Read-only *plus* prompts is what makes the declaration unreachable: MathLive
       // confines the caret to the holes, so there is no caret position from which the

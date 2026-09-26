@@ -48,7 +48,7 @@ const linkify = (text?: string): string =>
 
 // What each implementation row is, for the badge tooltip and the pointer it shows.
 const ORIGIN_TITLE: Record<string, string> = {
-  reference: "the defining expression, in notatio — the specification the others are checked against",
+  reference: "the defining expression, in Epsil — the specification the others are checked against",
   native: "the TypeScript that actually runs",
   compiled: "produced by a compute-engine compile target",
   component: "bottoms out in a web component — the rendered element is the value",

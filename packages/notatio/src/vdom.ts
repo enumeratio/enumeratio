@@ -7,7 +7,7 @@
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf } from "@enumeratio/formats";
-import { serializeNotatio } from "@enumeratio/formats/notatio";
+import { serializeExpression } from "@enumeratio/formats/expression";
 import { optionAttribute, type Rendering, renderingOf } from "./symbols.ts";
 
 type Json = MathJsonExpression;
@@ -84,7 +84,7 @@ export function structuralOf(expr: Json): Rendering {
     }
     const sym = typeof value === "string" ? value : (value as { sym?: unknown }).sym;
     if (sym === "False") continue;
-    attributes[attr] = sym === "True" ? "true" : (stringOf(value) ?? serializeNotatio(value));
+    attributes[attr] = sym === "True" ? "true" : (stringOf(value) ?? serializeExpression(value));
   }
   return { tag: tagOf(head), attributes, children };
 }

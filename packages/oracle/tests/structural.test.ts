@@ -1,4 +1,5 @@
-import { expect, test } from "vite-plus/test";
+import { describe, expect, test } from "vite-plus/test";
+import { compare, parsePython } from "../src/compare.ts";
 import type { MathJSON } from "../src/emit.ts";
 import { compareTrees, isNumericValue, type Leaf, reduce, symbolic, valuesOnly } from "../src/structural.ts";
 
@@ -41,4 +42,14 @@ test("truth values reduce to booleans whichever evaluator reads the rest", () =>
   expect(reduce("True", symbolic)).toBe(true);
   expect(reduce(["List", "True", "False"], valuesOnly(symbolic))).toEqual([true, false]);
   expect(compareTrees(reduce("True", symbolic), reduce("True", symbolic))).toBe("agree");
+});
+
+describe("comparison past the double range and of exact rationals", () => {
+  test("decimals too large for a double still compare by their digits", () => {
+    expect(compare("5.57316894480137913364e+373", "5.57316894480137913364320296291e+373")).toBe("agree");
+    expect(compare("5.57316894480137913364e+373", "5.57316894480137913364e+372")).toBe("disagree");
+  });
+  test("a SymPy list of rationals parses", () => {
+    expect(parsePython("[1/6, -1/30, 1/42]")).toEqual([1 / 6, -1 / 30, 1 / 42]);
+  });
 });

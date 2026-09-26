@@ -5,7 +5,7 @@ import { collectErrors } from "../src/assert.ts";
 import {
   boundName,
   type Cell,
-  bindingNotatio,
+  bindingEpsil,
   bindingSource,
   controlsFor,
   elideResult,
@@ -319,7 +319,7 @@ test("a declared name keeps its type while the cell is mid-edit", () => {
 });
 
 // --- notatio-out's general capabilities: elision, the substituted-unevaluated form,
-// and the notatio-syntax binding rewrite a `<notatio-cell>`-backed control needs -----
+// and the Epsil-syntax binding rewrite a `<notatio-cell>`-backed control needs -------
 
 test("a short list is not elided", () => {
   const short = ce.box(["List", 1, 2, 3]);
@@ -388,23 +388,23 @@ test("substitutedForm is a no-op with nothing bound", () => {
   }
 });
 
-test("bindingNotatio writes notatio, not LaTeX -- a plain multi-letter name needs no escaping", () => {
+test("bindingEpsil writes Epsil, not LaTeX -- a plain multi-letter name needs no escaping", () => {
   // `\mathrm{camera}` is a genuine multi-letter symbol (a bare `camera` would parse as
-  // six letters multiplied); notatio has no such ambiguity, so the rewrite is plain.
+  // six letters multiplied); Epsil has no such ambiguity, so the rewrite is plain.
   const [only] = pass("\\mathrm{camera} \\coloneq 2");
   const [c] = controlsFor(only.result.name, only.value!);
-  expect(bindingNotatio(c, 5)).toBe("camera := 5");
+  expect(bindingEpsil(c, 5)).toBe("camera := 5");
 });
 
-test("bindingNotatio round-trips a complex rewrite the same way bindingSource does", () => {
+test("bindingEpsil round-trips a complex rewrite the same way bindingSource does", () => {
   const [only] = pass("w \\coloneq 2 + 3i");
   const [re, im] = controlsFor(only.result.name, only.value!);
-  expect(bindingNotatio(re, 5)).toBe("w := 5 + 3i");
-  expect(bindingNotatio(im, -4)).toBe("w := 2 - 4i");
+  expect(bindingEpsil(re, 5)).toBe("w := 5 + 3i");
+  expect(bindingEpsil(im, -4)).toBe("w := 2 - 4i");
 });
 
-test("bindingNotatio rounds to a whole number for an integer control", () => {
+test("bindingEpsil rounds to a whole number for an integer control", () => {
   const [only] = pass("n \\coloneq 2");
   const [c] = controlsFor(only.result.name, only.value!, undefined, true);
-  expect(bindingNotatio(c, 5.7, true)).toBe("n := 6");
+  expect(bindingEpsil(c, 5.7, true)).toBe("n := 6");
 });

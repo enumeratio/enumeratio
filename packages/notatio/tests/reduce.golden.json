@@ -1,476 +1,476 @@
 {
   "web: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
-    "notatio": "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
+    "epsil": "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
     "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"Sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
   },
   "print: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
-    "notatio": "Grid([[\n        Labeled(Plot(Sin(1x), (x, 0, 10)), \"a = 1\", Bottom),\n        Labeled(Plot(Sin(1.8x), (x, 0, 10)), \"a = 1.8\", Bottom),\n        Labeled(Plot(Sin(2.6x), (x, 0, 10)), \"a = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(Sin(3.4x), (x, 0, 10)), \"a = 3.4\", Bottom),\n          Labeled(Plot(Sin(4.2x), (x, 0, 10)), \"a = 4.2\", Bottom),\n          Labeled(Plot(Sin(5x), (x, 0, 10)), \"a = 5\", Bottom),\n        ]])",
+    "epsil": "Grid([[\n        Labeled(Plot(Sin(1x), (x, 0, 10)), \"a = 1\", Bottom),\n        Labeled(Plot(Sin(1.8x), (x, 0, 10)), \"a = 1.8\", Bottom),\n        Labeled(Plot(Sin(2.6x), (x, 0, 10)), \"a = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(Sin(3.4x), (x, 0, 10)), \"a = 3.4\", Bottom),\n          Labeled(Plot(Sin(4.2x), (x, 0, 10)), \"a = 4.2\", Bottom),\n          Labeled(Plot(Sin(5x), (x, 0, 10)), \"a = 5\", Bottom),\n        ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"a = 1\" position=\"below\"><notatio-plot value=\"Sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"a = 1.8\" position=\"below\"><notatio-plot value=\"Sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"a = 2.6\" position=\"below\"><notatio-plot value=\"Sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"a = 3.4\" position=\"below\"><notatio-plot value=\"Sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"a = 4.2\" position=\"below\"><notatio-plot value=\"Sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"a = 5\" position=\"below\"><notatio-plot value=\"Sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled></notatio-grid>"
   },
   "tty: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
-    "notatio": "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
+    "epsil": "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
     "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"Sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
   },
   "pipe: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
-    "notatio": "Labeled(Plot(Sin(1x), (x, 0, 10)), \"a = 1 (1 ≤ a ≤ 5)\", Bottom)",
+    "epsil": "Labeled(Plot(Sin(1x), (x, 0, 10)), \"a = 1 (1 ≤ a ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"a = 1 (1 ≤ a ≤ 5)\" position=\"below\"><notatio-plot value=\"Sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled>"
   },
   "compact: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
-    "notatio": "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
+    "epsil": "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
     "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"Sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
   },
   "web: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
-    "notatio": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
+    "epsil": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
     "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
   },
   "print: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
-    "notatio": "Labeled(Grid([[\n                Labeled(Sin(0) + 2, \"a = 0\", Bottom),\n                Labeled(Sin(1) + 2, \"a = 1\", Bottom),\n                Labeled(Sin(2) + 2, \"a = 2\", Bottom),\n              ], [\n                  Labeled(Sin(3) + 2, \"a = 3\", Bottom),\n                  Labeled(Sin(4) + 2, \"a = 4\", Bottom),\n                  Labeled(Sin(5) + 2, \"a = 5\", Bottom),\n                ]]), \"b = 2 (0 ≤ b ≤ 3)\", Bottom)",
+    "epsil": "Labeled(Grid([[\n                Labeled(Sin(0) + 2, \"a = 0\", Bottom),\n                Labeled(Sin(1) + 2, \"a = 1\", Bottom),\n                Labeled(Sin(2) + 2, \"a = 2\", Bottom),\n              ], [\n                  Labeled(Sin(3) + 2, \"a = 3\", Bottom),\n                  Labeled(Sin(4) + 2, \"a = 4\", Bottom),\n                  Labeled(Sin(5) + 2, \"a = 5\", Bottom),\n                ]]), \"b = 2 (0 ≤ b ≤ 3)\", Bottom)",
     "markup": "<notatio-labeled label=\"b = 2 (0 ≤ b ≤ 3)\" position=\"below\"><notatio-grid columns=\"3\"><notatio-labeled label=\"a = 0\" position=\"below\"><notatio-dynamic value=\"Sin(0) + 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 1\" position=\"below\"><notatio-dynamic value=\"Sin(1) + 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 2\" position=\"below\"><notatio-dynamic value=\"Sin(2) + 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 3\" position=\"below\"><notatio-dynamic value=\"Sin(3) + 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 4\" position=\"below\"><notatio-dynamic value=\"Sin(4) + 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 5\" position=\"below\"><notatio-dynamic value=\"Sin(5) + 2\"></notatio-dynamic></notatio-labeled></notatio-grid></notatio-labeled>"
   },
   "tty: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
-    "notatio": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
+    "epsil": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
     "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
   },
   "pipe: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
-    "notatio": "Labeled(Sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
+    "epsil": "Labeled(Sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
     "markup": "<notatio-labeled label=\"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\" position=\"below\"><notatio-dynamic value=\"Sin(0) + 2\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
-    "notatio": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
+    "epsil": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
     "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
   },
   "web: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
-    "notatio": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
+    "epsil": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
     "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\" static=\"Pin\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
   },
   "print: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
-    "notatio": "Labeled(Sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
+    "epsil": "Labeled(Sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
     "markup": "<notatio-labeled label=\"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\" position=\"below\"><notatio-dynamic value=\"Sin(0) + 2\"></notatio-dynamic></notatio-labeled>"
   },
   "tty: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
-    "notatio": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
+    "epsil": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
     "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\" static=\"Pin\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
   },
   "pipe: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
-    "notatio": "Labeled(Sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
+    "epsil": "Labeled(Sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
     "markup": "<notatio-labeled label=\"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\" position=\"below\"><notatio-dynamic value=\"Sin(0) + 2\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
-    "notatio": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
+    "epsil": "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
     "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\" static=\"Pin\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
   },
   "web: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
-    "notatio": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
+    "epsil": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
     "markup": "<notatio-manipulate params=\"{a, 0, 1}\" static=\"3\"><notatio-dynamic value=\"_a ^ 2\"></notatio-dynamic></notatio-manipulate>"
   },
   "print: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
-    "notatio": "Grid([[\n        Labeled(0 ^ 2, \"a = 0\", Bottom),\n        Labeled(0.5 ^ 2, \"a = 0.5\", Bottom),\n        Labeled(1 ^ 2, \"a = 1\", Bottom),\n      ]])",
+    "epsil": "Grid([[\n        Labeled(0 ^ 2, \"a = 0\", Bottom),\n        Labeled(0.5 ^ 2, \"a = 0.5\", Bottom),\n        Labeled(1 ^ 2, \"a = 1\", Bottom),\n      ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"a = 0\" position=\"below\"><notatio-dynamic value=\"0 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 0.5\" position=\"below\"><notatio-dynamic value=\"0.5 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 1\" position=\"below\"><notatio-dynamic value=\"1 ^ 2\"></notatio-dynamic></notatio-labeled></notatio-grid>"
   },
   "tty: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
-    "notatio": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
+    "epsil": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
     "markup": "<notatio-manipulate params=\"{a, 0, 1}\" static=\"3\"><notatio-dynamic value=\"_a ^ 2\"></notatio-dynamic></notatio-manipulate>"
   },
   "pipe: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
-    "notatio": "Grid([[\n        Labeled(0 ^ 2, \"a = 0\", Bottom),\n        Labeled(0.5 ^ 2, \"a = 0.5\", Bottom),\n        Labeled(1 ^ 2, \"a = 1\", Bottom),\n      ]])",
+    "epsil": "Grid([[\n        Labeled(0 ^ 2, \"a = 0\", Bottom),\n        Labeled(0.5 ^ 2, \"a = 0.5\", Bottom),\n        Labeled(1 ^ 2, \"a = 1\", Bottom),\n      ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"a = 0\" position=\"below\"><notatio-dynamic value=\"0 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 0.5\" position=\"below\"><notatio-dynamic value=\"0.5 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"a = 1\" position=\"below\"><notatio-dynamic value=\"1 ^ 2\"></notatio-dynamic></notatio-labeled></notatio-grid>"
   },
   "compact: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
-    "notatio": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
+    "epsil": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
     "markup": "<notatio-manipulate params=\"{a, 0, 1}\" static=\"3\"><notatio-dynamic value=\"_a ^ 2\"></notatio-dynamic></notatio-manipulate>"
   },
   "web: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
-    "notatio": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
+    "epsil": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
     "markup": "<notatio-manipulate params=\"{k, {1, 2, 3}, PopupMenu}\"><notatio-dynamic value=\"_k * x\"></notatio-dynamic></notatio-manipulate>"
   },
   "print: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
-    "notatio": "Grid([[\n        Labeled(1x, \"k = 1\", Bottom),\n        Labeled(2x, \"k = 2\", Bottom),\n        Labeled(3x, \"k = 3\", Bottom),\n      ]])",
+    "epsil": "Grid([[\n        Labeled(1x, \"k = 1\", Bottom),\n        Labeled(2x, \"k = 2\", Bottom),\n        Labeled(3x, \"k = 3\", Bottom),\n      ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"k = 1\" position=\"below\"><notatio-dynamic value=\"1x\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"k = 2\" position=\"below\"><notatio-dynamic value=\"2x\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"k = 3\" position=\"below\"><notatio-dynamic value=\"3x\"></notatio-dynamic></notatio-labeled></notatio-grid>"
   },
   "tty: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
-    "notatio": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
+    "epsil": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
     "markup": "<notatio-manipulate params=\"{k, {1, 2, 3}, PopupMenu}\"><notatio-dynamic value=\"_k * x\"></notatio-dynamic></notatio-manipulate>"
   },
   "pipe: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
-    "notatio": "Labeled(1x, \"k = 1 (1 | 2 | 3)\", Bottom)",
+    "epsil": "Labeled(1x, \"k = 1 (1 | 2 | 3)\", Bottom)",
     "markup": "<notatio-labeled label=\"k = 1 (1 | 2 | 3)\" position=\"below\"><notatio-dynamic value=\"1x\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
-    "notatio": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
+    "epsil": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
     "markup": "<notatio-manipulate params=\"{k, {1, 2, 3}, PopupMenu}\"><notatio-dynamic value=\"_k * x\"></notatio-dynamic></notatio-manipulate>"
   },
   "web: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
-    "notatio": "Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
+    "epsil": "Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "print: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
-    "notatio": "Grid([[\n        Labeled(Dynamic(0 ^ 2), \"k = 0\", Bottom),\n        Labeled(Dynamic(1 ^ 2), \"k = 1\", Bottom),\n        Labeled(Dynamic(2 ^ 2), \"k = 2\", Bottom),\n      ], [\n          Labeled(Dynamic(3 ^ 2), \"k = 3\", Bottom),\n          Labeled(Dynamic(4 ^ 2), \"k = 4\", Bottom),\n          Labeled(Dynamic(5 ^ 2), \"k = 5\", Bottom),\n        ]])",
+    "epsil": "Grid([[\n        Labeled(Dynamic(0 ^ 2), \"k = 0\", Bottom),\n        Labeled(Dynamic(1 ^ 2), \"k = 1\", Bottom),\n        Labeled(Dynamic(2 ^ 2), \"k = 2\", Bottom),\n      ], [\n          Labeled(Dynamic(3 ^ 2), \"k = 3\", Bottom),\n          Labeled(Dynamic(4 ^ 2), \"k = 4\", Bottom),\n          Labeled(Dynamic(5 ^ 2), \"k = 5\", Bottom),\n        ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"k = 0\" position=\"below\"><notatio-dynamic value=\"0 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"k = 1\" position=\"below\"><notatio-dynamic value=\"1 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"k = 2\" position=\"below\"><notatio-dynamic value=\"2 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"k = 3\" position=\"below\"><notatio-dynamic value=\"3 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"k = 4\" position=\"below\"><notatio-dynamic value=\"4 ^ 2\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"k = 5\" position=\"below\"><notatio-dynamic value=\"5 ^ 2\"></notatio-dynamic></notatio-labeled></notatio-grid>"
   },
   "tty: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
-    "notatio": "Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
+    "epsil": "Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "pipe: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
-    "notatio": "Labeled(Dynamic(2 ^ 2), \"k = 2 (0 ≤ k ≤ 5)\", Bottom)",
+    "epsil": "Labeled(Dynamic(2 ^ 2), \"k = 2 (0 ≤ k ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"k = 2 (0 ≤ k ≤ 5)\" position=\"below\"><notatio-dynamic value=\"2 ^ 2\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
-    "notatio": "Column([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
+    "epsil": "Column([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "web: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
-    "notatio": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
+    "epsil": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider></notatio-column></notatio-dynamic-module>"
   },
   "print: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
-    "notatio": "Grid([[\n        Labeled(Cell(Binomial(10, 3)), \"k = 0\", Bottom),\n        Labeled(Cell(Binomial(10, 3)), \"k = 1\", Bottom),\n        Labeled(Cell(Binomial(10, 3)), \"k = 2\", Bottom),\n      ], [\n          Labeled(Cell(Binomial(10, 3)), \"k = 3\", Bottom),\n          Labeled(Cell(Binomial(10, 3)), \"k = 4\", Bottom),\n          Labeled(Cell(Binomial(10, 3)), \"k = 5\", Bottom),\n        ]])",
+    "epsil": "Grid([[\n        Labeled(Cell(Binomial(10, 3)), \"k = 0\", Bottom),\n        Labeled(Cell(Binomial(10, 3)), \"k = 1\", Bottom),\n        Labeled(Cell(Binomial(10, 3)), \"k = 2\", Bottom),\n      ], [\n          Labeled(Cell(Binomial(10, 3)), \"k = 3\", Bottom),\n          Labeled(Cell(Binomial(10, 3)), \"k = 4\", Bottom),\n          Labeled(Cell(Binomial(10, 3)), \"k = 5\", Bottom),\n        ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"k = 0\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 1\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 2\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 3\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 4\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 5\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled></notatio-grid>"
   },
   "tty: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
-    "notatio": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
+    "epsil": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider></notatio-column></notatio-dynamic-module>"
   },
   "pipe: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
-    "notatio": "Labeled(Cell(Binomial(10, 3)), \"k = 2 (0 ≤ k ≤ 5)\", Bottom)",
+    "epsil": "Labeled(Cell(Binomial(10, 3)), \"k = 2 (0 ≤ k ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"k = 2 (0 ≤ k ≤ 5)\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled>"
   },
   "compact: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
-    "notatio": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
+    "epsil": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider></notatio-column></notatio-dynamic-module>"
   },
   "web: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
-    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "epsil": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
     "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
   },
   "print: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
-    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "epsil": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
     "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
   },
   "tty: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
-    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "epsil": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
     "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
   },
   "pipe: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
-    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "epsil": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
     "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
   },
   "compact: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
-    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "epsil": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
     "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
   },
   "web: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
-    "notatio": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
+    "epsil": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-slider name=\"k\" min=\"0\" max=\"5\" static=\"Pin\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "print: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
-    "notatio": "Labeled(Column([\"so\", 0 ^ 2]), \"k = 0 (0 ≤ k ≤ 5)\", Bottom)",
+    "epsil": "Labeled(Column([\"so\", 0 ^ 2]), \"k = 0 (0 ≤ k ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"k = 0 (0 ≤ k ≤ 5)\" position=\"below\"><notatio-column><span>so</span><notatio-dynamic value=\"0 ^ 2\"></notatio-dynamic></notatio-column></notatio-labeled>"
   },
   "tty: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
-    "notatio": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
+    "epsil": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-slider name=\"k\" min=\"0\" max=\"5\" static=\"Pin\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "pipe: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
-    "notatio": "Labeled(Column([\"so\", 0 ^ 2]), \"k = 0 (0 ≤ k ≤ 5)\", Bottom)",
+    "epsil": "Labeled(Column([\"so\", 0 ^ 2]), \"k = 0 (0 ≤ k ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"k = 0 (0 ≤ k ≤ 5)\" position=\"below\"><notatio-column><span>so</span><notatio-dynamic value=\"0 ^ 2\"></notatio-dynamic></notatio-column></notatio-labeled>"
   },
   "compact: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
-    "notatio": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
+    "epsil": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-slider name=\"k\" min=\"0\" max=\"5\" static=\"Pin\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "web: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
-    "notatio": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
+    "epsil": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
     "markup": "<notatio-dynamic-module><notatio-grid columns=\"2\"><notatio-slider name=\"a\" min=\"0\" max=\"1\"></notatio-slider><notatio-slider name=\"b\" min=\"0\" max=\"1\"></notatio-slider><notatio-dynamic value=\"_a + _b\"></notatio-dynamic><notatio-dynamic value=\"_a * _b\"></notatio-dynamic></notatio-grid></notatio-dynamic-module>"
   },
   "print: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
-    "notatio": "Labeled(Grid([[\n                Labeled(Grid([[0 + 0, 0 * 0]]), \"a = 0\", Bottom),\n                Labeled(Grid([[0.2 + 0, 0.2 * 0]]), \"a = 0.2\", Bottom),\n                Labeled(Grid([[0.4 + 0, 0.4 * 0]]), \"a = 0.4\", Bottom),\n              ], [\n                  Labeled(Grid([[0.6 + 0, 0.6 * 0]]), \"a = 0.6\", Bottom),\n                  Labeled(Grid([[0.8 + 0, 0.8 * 0]]), \"a = 0.8\", Bottom),\n                  Labeled(Grid([[1 + 0, 1 * 0]]), \"a = 1\", Bottom),\n                ]]), \"b = 0 (0 ≤ b ≤ 1)\", Bottom)",
+    "epsil": "Labeled(Grid([[\n                Labeled(Grid([[0 + 0, 0 * 0]]), \"a = 0\", Bottom),\n                Labeled(Grid([[0.2 + 0, 0.2 * 0]]), \"a = 0.2\", Bottom),\n                Labeled(Grid([[0.4 + 0, 0.4 * 0]]), \"a = 0.4\", Bottom),\n              ], [\n                  Labeled(Grid([[0.6 + 0, 0.6 * 0]]), \"a = 0.6\", Bottom),\n                  Labeled(Grid([[0.8 + 0, 0.8 * 0]]), \"a = 0.8\", Bottom),\n                  Labeled(Grid([[1 + 0, 1 * 0]]), \"a = 1\", Bottom),\n                ]]), \"b = 0 (0 ≤ b ≤ 1)\", Bottom)",
     "markup": "<notatio-labeled label=\"b = 0 (0 ≤ b ≤ 1)\" position=\"below\"><notatio-grid columns=\"3\"><notatio-labeled label=\"a = 0\" position=\"below\"><notatio-grid columns=\"2\"><notatio-dynamic value=\"0 + 0\"></notatio-dynamic><notatio-dynamic value=\"0 * 0\"></notatio-dynamic></notatio-grid></notatio-labeled><notatio-labeled label=\"a = 0.2\" position=\"below\"><notatio-grid columns=\"2\"><notatio-dynamic value=\"0.2 + 0\"></notatio-dynamic><notatio-dynamic value=\"0.2 * 0\"></notatio-dynamic></notatio-grid></notatio-labeled><notatio-labeled label=\"a = 0.4\" position=\"below\"><notatio-grid columns=\"2\"><notatio-dynamic value=\"0.4 + 0\"></notatio-dynamic><notatio-dynamic value=\"0.4 * 0\"></notatio-dynamic></notatio-grid></notatio-labeled><notatio-labeled label=\"a = 0.6\" position=\"below\"><notatio-grid columns=\"2\"><notatio-dynamic value=\"0.6 + 0\"></notatio-dynamic><notatio-dynamic value=\"0.6 * 0\"></notatio-dynamic></notatio-grid></notatio-labeled><notatio-labeled label=\"a = 0.8\" position=\"below\"><notatio-grid columns=\"2\"><notatio-dynamic value=\"0.8 + 0\"></notatio-dynamic><notatio-dynamic value=\"0.8 * 0\"></notatio-dynamic></notatio-grid></notatio-labeled><notatio-labeled label=\"a = 1\" position=\"below\"><notatio-grid columns=\"2\"><notatio-dynamic value=\"1 + 0\"></notatio-dynamic><notatio-dynamic value=\"1 * 0\"></notatio-dynamic></notatio-grid></notatio-labeled></notatio-grid></notatio-labeled>"
   },
   "tty: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
-    "notatio": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
+    "epsil": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
     "markup": "<notatio-dynamic-module><notatio-grid columns=\"2\"><notatio-slider name=\"a\" min=\"0\" max=\"1\"></notatio-slider><notatio-slider name=\"b\" min=\"0\" max=\"1\"></notatio-slider><notatio-dynamic value=\"_a + _b\"></notatio-dynamic><notatio-dynamic value=\"_a * _b\"></notatio-dynamic></notatio-grid></notatio-dynamic-module>"
   },
   "pipe: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
-    "notatio": "Labeled(Grid([[0 + 0, 0 * 0]]), \"a = 0 (0 ≤ a ≤ 1); b = 0 (0 ≤ b ≤ 1)\", Bottom)",
+    "epsil": "Labeled(Grid([[0 + 0, 0 * 0]]), \"a = 0 (0 ≤ a ≤ 1); b = 0 (0 ≤ b ≤ 1)\", Bottom)",
     "markup": "<notatio-labeled label=\"a = 0 (0 ≤ a ≤ 1); b = 0 (0 ≤ b ≤ 1)\" position=\"below\"><notatio-grid columns=\"2\"><notatio-dynamic value=\"0 + 0\"></notatio-dynamic><notatio-dynamic value=\"0 * 0\"></notatio-dynamic></notatio-grid></notatio-labeled>"
   },
   "compact: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
-    "notatio": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
+    "epsil": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
     "markup": "<notatio-dynamic-module><notatio-grid columns=\"2\"><notatio-slider name=\"a\" min=\"0\" max=\"1\"></notatio-slider><notatio-slider name=\"b\" min=\"0\" max=\"1\"></notatio-slider><notatio-dynamic value=\"_a + _b\"></notatio-dynamic><notatio-dynamic value=\"_a * _b\"></notatio-dynamic></notatio-grid></notatio-dynamic-module>"
   },
   "web: Panel(Labeled(Checkbox(on), \"on?\"))": {
-    "notatio": "Panel(Labeled(Checkbox(on), \"on?\"))",
+    "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
     "markup": "<notatio-dynamic-module><notatio-panel><notatio-labeled label=\"on?\"><notatio-checkbox name=\"on\"></notatio-checkbox></notatio-labeled></notatio-panel></notatio-dynamic-module>"
   },
   "print: Panel(Labeled(Checkbox(on), \"on?\"))": {
-    "notatio": "Grid([[Labeled(False, \"on = False\", Bottom), Labeled(True, \"on = True\", Bottom)]])",
+    "epsil": "Grid([[Labeled(False, \"on = False\", Bottom), Labeled(True, \"on = True\", Bottom)]])",
     "markup": "<notatio-grid columns=\"2\"><notatio-labeled label=\"on = False\" position=\"below\"><notatio-dynamic value=\"False\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"on = True\" position=\"below\"><notatio-dynamic value=\"True\"></notatio-dynamic></notatio-labeled></notatio-grid>"
   },
   "tty: Panel(Labeled(Checkbox(on), \"on?\"))": {
-    "notatio": "Panel(Labeled(Checkbox(on), \"on?\"))",
+    "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
     "markup": "<notatio-dynamic-module><notatio-panel><notatio-labeled label=\"on?\"><notatio-checkbox name=\"on\"></notatio-checkbox></notatio-labeled></notatio-panel></notatio-dynamic-module>"
   },
   "pipe: Panel(Labeled(Checkbox(on), \"on?\"))": {
-    "notatio": "Panel(Labeled(Checkbox(on), \"on?\"))",
+    "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
     "markup": "<notatio-dynamic-module><notatio-panel><notatio-labeled label=\"on?\"><notatio-checkbox name=\"on\"></notatio-checkbox></notatio-labeled></notatio-panel></notatio-dynamic-module>"
   },
   "compact: Panel(Labeled(Checkbox(on), \"on?\"))": {
-    "notatio": "Panel(Labeled(Checkbox(on), \"on?\"))",
+    "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
     "markup": "<notatio-dynamic-module><notatio-panel><notatio-labeled label=\"on?\"><notatio-checkbox name=\"on\"></notatio-checkbox></notatio-labeled></notatio-panel></notatio-dynamic-module>"
   },
   "web: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
-    "notatio": "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
+    "epsil": "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-plot value=\"Sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-row></notatio-dynamic-module>"
   },
   "print: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
-    "notatio": "Grid([[\n        Labeled(Plot(Sin(1x), (x, 0, 10)), \"k = 1\", Bottom),\n        Labeled(Plot(Sin(1.8x), (x, 0, 10)), \"k = 1.8\", Bottom),\n        Labeled(Plot(Sin(2.6x), (x, 0, 10)), \"k = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(Sin(3.4x), (x, 0, 10)), \"k = 3.4\", Bottom),\n          Labeled(Plot(Sin(4.2x), (x, 0, 10)), \"k = 4.2\", Bottom),\n          Labeled(Plot(Sin(5x), (x, 0, 10)), \"k = 5\", Bottom),\n        ]])",
+    "epsil": "Grid([[\n        Labeled(Plot(Sin(1x), (x, 0, 10)), \"k = 1\", Bottom),\n        Labeled(Plot(Sin(1.8x), (x, 0, 10)), \"k = 1.8\", Bottom),\n        Labeled(Plot(Sin(2.6x), (x, 0, 10)), \"k = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(Sin(3.4x), (x, 0, 10)), \"k = 3.4\", Bottom),\n          Labeled(Plot(Sin(4.2x), (x, 0, 10)), \"k = 4.2\", Bottom),\n          Labeled(Plot(Sin(5x), (x, 0, 10)), \"k = 5\", Bottom),\n        ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"k = 1\" position=\"below\"><notatio-plot value=\"Sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"k = 1.8\" position=\"below\"><notatio-plot value=\"Sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"k = 2.6\" position=\"below\"><notatio-plot value=\"Sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"k = 3.4\" position=\"below\"><notatio-plot value=\"Sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"k = 4.2\" position=\"below\"><notatio-plot value=\"Sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled><notatio-labeled label=\"k = 5\" position=\"below\"><notatio-plot value=\"Sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled></notatio-grid>"
   },
   "tty: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
-    "notatio": "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
+    "epsil": "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-plot value=\"Sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-row></notatio-dynamic-module>"
   },
   "pipe: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
-    "notatio": "Labeled(Plot(Sin(1x), (x, 0, 10)), \"k = 1 (1 ≤ k ≤ 5)\", Bottom)",
+    "epsil": "Labeled(Plot(Sin(1x), (x, 0, 10)), \"k = 1 (1 ≤ k ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"k = 1 (1 ≤ k ≤ 5)\" position=\"below\"><notatio-plot value=\"Sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-labeled>"
   },
   "compact: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
-    "notatio": "Column([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
+    "epsil": "Column([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-plot value=\"Sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-column></notatio-dynamic-module>"
   },
   "web: Toggler(size, [\"a few\", \"several\", \"many\"])": {
-    "notatio": "Toggler(size, [\"a few\", \"several\", \"many\"])",
+    "epsil": "Toggler(size, [\"a few\", \"several\", \"many\"])",
     "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> several|&quot;many&quot; -> many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "print: Toggler(size, [\"a few\", \"several\", \"many\"])": {
-    "notatio": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
+    "epsil": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"size = a few\" position=\"below\"><span>a few</span></notatio-labeled><notatio-labeled label=\"size = several\" position=\"below\"><span>several</span></notatio-labeled><notatio-labeled label=\"size = many\" position=\"below\"><span>many</span></notatio-labeled></notatio-grid>"
   },
   "tty: Toggler(size, [\"a few\", \"several\", \"many\"])": {
-    "notatio": "Toggler(size, [\"a few\", \"several\", \"many\"])",
+    "epsil": "Toggler(size, [\"a few\", \"several\", \"many\"])",
     "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> several|&quot;many&quot; -> many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "pipe: Toggler(size, [\"a few\", \"several\", \"many\"])": {
-    "notatio": "Labeled(\"a few\", \"size = a few (a few | several | many)\", Bottom)",
+    "epsil": "Labeled(\"a few\", \"size = a few (a few | several | many)\", Bottom)",
     "markup": "<notatio-labeled label=\"size = a few (a few | several | many)\" position=\"below\"><span>a few</span></notatio-labeled>"
   },
   "compact: Toggler(size, [\"a few\", \"several\", \"many\"])": {
-    "notatio": "Toggler(size, [\"a few\", \"several\", \"many\"])",
+    "epsil": "Toggler(size, [\"a few\", \"several\", \"many\"])",
     "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> several|&quot;many&quot; -> many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "web: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
-    "notatio": "Row([\n      Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]),\n      size,\n    ])",
+    "epsil": "Row([\n      Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]),\n      size,\n    ])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-toggler name=\"size\" value=\"&quot;several&quot;\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> some|&quot;many&quot; -> many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "print: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
-    "notatio": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
+    "epsil": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
     "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"size = a few\" position=\"below\"><span>a few</span></notatio-labeled><notatio-labeled label=\"size = several\" position=\"below\"><span>several</span></notatio-labeled><notatio-labeled label=\"size = many\" position=\"below\"><span>many</span></notatio-labeled></notatio-grid>"
   },
   "tty: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
-    "notatio": "Row([\n      Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]),\n      size,\n    ])",
+    "epsil": "Row([\n      Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]),\n      size,\n    ])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-toggler name=\"size\" value=\"&quot;several&quot;\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> some|&quot;many&quot; -> many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "pipe: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
-    "notatio": "Labeled(\"several\", \"size = several (a few | some | many)\", Bottom)",
+    "epsil": "Labeled(\"several\", \"size = several (a few | some | many)\", Bottom)",
     "markup": "<notatio-labeled label=\"size = several (a few | some | many)\" position=\"below\"><span>several</span></notatio-labeled>"
   },
   "compact: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
-    "notatio": "Column([Toggler(\n                 (size, \"several\"),\n                 [\"a few\", Labeled(\"several\", \"some\"), \"many\"],\n               ), size])",
+    "epsil": "Column([Toggler(\n                 (size, \"several\"),\n                 [\"a few\", Labeled(\"several\", \"some\"), \"many\"],\n               ), size])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-toggler name=\"size\" value=\"&quot;several&quot;\" values=\"&quot;a few&quot; -> a few|&quot;several&quot; -> some|&quot;many&quot; -> many\"></notatio-toggler><notatio-dynamic value=\"_size\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "web: Animator(t, (0, 1, 0.25))": {
-    "notatio": "Animator(t, (0, 1, 0.25))",
+    "epsil": "Animator(t, (0, 1, 0.25))",
     "markup": "<notatio-dynamic-module><notatio-animator name=\"t\" min=\"0\" max=\"1\" step=\"0.25\"></notatio-animator></notatio-dynamic-module>"
   },
   "print: Animator(t, (0, 1, 0.25))": {
-    "notatio": "Row([\n      Labeled(0, \"t = 0\", Bottom),\n      Labeled(0.25, \"t = 0.25\", Bottom),\n      Labeled(0.5, \"t = 0.5\", Bottom),\n      Labeled(0.75, \"t = 0.75\", Bottom),\n      Labeled(1, \"t = 1\", Bottom),\n    ])",
+    "epsil": "Row([\n      Labeled(0, \"t = 0\", Bottom),\n      Labeled(0.25, \"t = 0.25\", Bottom),\n      Labeled(0.5, \"t = 0.5\", Bottom),\n      Labeled(0.75, \"t = 0.75\", Bottom),\n      Labeled(1, \"t = 1\", Bottom),\n    ])",
     "markup": "<notatio-row><notatio-labeled label=\"t = 0\" position=\"below\"><notatio-dynamic value=\"0\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 0.25\" position=\"below\"><notatio-dynamic value=\"0.25\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 0.5\" position=\"below\"><notatio-dynamic value=\"0.5\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 0.75\" position=\"below\"><notatio-dynamic value=\"0.75\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 1\" position=\"below\"><notatio-dynamic value=\"1\"></notatio-dynamic></notatio-labeled></notatio-row>"
   },
   "tty: Animator(t, (0, 1, 0.25))": {
-    "notatio": "Animator(t, (0, 1, 0.25))",
+    "epsil": "Animator(t, (0, 1, 0.25))",
     "markup": "<notatio-dynamic-module><notatio-animator name=\"t\" min=\"0\" max=\"1\" step=\"0.25\"></notatio-animator></notatio-dynamic-module>"
   },
   "pipe: Animator(t, (0, 1, 0.25))": {
-    "notatio": "Labeled(0, \"t = 0 (0 ≤ t ≤ 1)\", Bottom)",
+    "epsil": "Labeled(0, \"t = 0 (0 ≤ t ≤ 1)\", Bottom)",
     "markup": "<notatio-labeled label=\"t = 0 (0 ≤ t ≤ 1)\" position=\"below\"><notatio-dynamic value=\"0\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Animator(t, (0, 1, 0.25))": {
-    "notatio": "Animator(t, (0, 1, 0.25))",
+    "epsil": "Animator(t, (0, 1, 0.25))",
     "markup": "<notatio-dynamic-module><notatio-animator name=\"t\" min=\"0\" max=\"1\" step=\"0.25\"></notatio-animator></notatio-dynamic-module>"
   },
   "web: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
-    "notatio": "Row([Animator(t, (0, 1, 0.25)), Sin(t)])",
+    "epsil": "Row([Animator(t, (0, 1, 0.25)), Sin(t)])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-animator name=\"t\" min=\"0\" max=\"1\" step=\"0.25\"></notatio-animator><notatio-dynamic value=\"Sin(_t)\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "print: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
-    "notatio": "Row([\n      Labeled(Sin(0), \"t = 0\", Bottom),\n      Labeled(Sin(0.25), \"t = 0.25\", Bottom),\n      Labeled(Sin(0.5), \"t = 0.5\", Bottom),\n      Labeled(Sin(0.75), \"t = 0.75\", Bottom),\n      Labeled(Sin(1), \"t = 1\", Bottom),\n    ])",
+    "epsil": "Row([\n      Labeled(Sin(0), \"t = 0\", Bottom),\n      Labeled(Sin(0.25), \"t = 0.25\", Bottom),\n      Labeled(Sin(0.5), \"t = 0.5\", Bottom),\n      Labeled(Sin(0.75), \"t = 0.75\", Bottom),\n      Labeled(Sin(1), \"t = 1\", Bottom),\n    ])",
     "markup": "<notatio-row><notatio-labeled label=\"t = 0\" position=\"below\"><notatio-dynamic value=\"Sin(0)\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 0.25\" position=\"below\"><notatio-dynamic value=\"Sin(0.25)\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 0.5\" position=\"below\"><notatio-dynamic value=\"Sin(0.5)\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 0.75\" position=\"below\"><notatio-dynamic value=\"Sin(0.75)\"></notatio-dynamic></notatio-labeled><notatio-labeled label=\"t = 1\" position=\"below\"><notatio-dynamic value=\"Sin(1)\"></notatio-dynamic></notatio-labeled></notatio-row>"
   },
   "tty: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
-    "notatio": "Row([Animator(t, (0, 1, 0.25)), Sin(t)])",
+    "epsil": "Row([Animator(t, (0, 1, 0.25)), Sin(t)])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-animator name=\"t\" min=\"0\" max=\"1\" step=\"0.25\"></notatio-animator><notatio-dynamic value=\"Sin(_t)\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "pipe: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
-    "notatio": "Labeled(Sin(0), \"t = 0 (0 ≤ t ≤ 1)\", Bottom)",
+    "epsil": "Labeled(Sin(0), \"t = 0 (0 ≤ t ≤ 1)\", Bottom)",
     "markup": "<notatio-labeled label=\"t = 0 (0 ≤ t ≤ 1)\" position=\"below\"><notatio-dynamic value=\"Sin(0)\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
-    "notatio": "Column([Animator(t, (0, 1, 0.25)), Sin(t)])",
+    "epsil": "Column([Animator(t, (0, 1, 0.25)), Sin(t)])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-animator name=\"t\" min=\"0\" max=\"1\" step=\"0.25\"></notatio-animator><notatio-dynamic value=\"Sin(_t)\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "web: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Slider2D(\n          (p, (0.300_000_000_000_000_04, 0.600_000_000_000_000_1)),\n          ((0, 0), (1, 1)),\n          0.01,\n        )",
+    "epsil": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
     "markup": "<notatio-dynamic-module><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-dynamic-module>"
   },
   "print: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Labeled((0.3, 0.6), \"p = (0.3, 0.6)\", Bottom)",
+    "epsil": "Labeled((0.3, 0.6), \"p = (0.3, 0.6)\", Bottom)",
     "markup": "<notatio-labeled label=\"p = (0.3, 0.6)\" position=\"below\"><notatio-dynamic value=\"(0.3, 0.6)\"></notatio-dynamic></notatio-labeled>"
   },
   "tty: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Slider2D(\n          (p, (0.300_000_000_000_000_04, 0.600_000_000_000_000_1)),\n          ((0, 0), (1, 1)),\n          0.01,\n        )",
+    "epsil": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
     "markup": "<notatio-dynamic-module><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-dynamic-module>"
   },
   "pipe: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Labeled((0.3, 0.6), \"p = (0.3, 0.6)\", Bottom)",
+    "epsil": "Labeled((0.3, 0.6), \"p = (0.3, 0.6)\", Bottom)",
     "markup": "<notatio-labeled label=\"p = (0.3, 0.6)\" position=\"below\"><notatio-dynamic value=\"(0.3, 0.6)\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
-    "notatio": "Slider2D(\n          (p, (0.300_000_000_000_000_04, 0.600_000_000_000_000_1)),\n          ((0, 0), (1, 1)),\n          0.01,\n        )",
+    "epsil": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
     "markup": "<notatio-dynamic-module><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-dynamic-module>"
   },
   "web: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
-    "notatio": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
+    "epsil": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
     "markup": "<notatio-dynamic-module><notatio-interval-slider name=\"r\" value=\"1,3\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-interval-slider></notatio-dynamic-module>"
   },
   "print: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
-    "notatio": "Labeled((1, 3), \"r = (1, 3) (0 ≤ r ≤ 5)\", Bottom)",
+    "epsil": "Labeled((1, 3), \"r = (1, 3) (0 ≤ r ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"r = (1, 3) (0 ≤ r ≤ 5)\" position=\"below\"><notatio-dynamic value=\"(1, 3)\"></notatio-dynamic></notatio-labeled>"
   },
   "tty: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
-    "notatio": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
+    "epsil": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
     "markup": "<notatio-dynamic-module><notatio-interval-slider name=\"r\" value=\"1,3\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-interval-slider></notatio-dynamic-module>"
   },
   "pipe: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
-    "notatio": "Labeled((1, 3), \"r = (1, 3) (0 ≤ r ≤ 5)\", Bottom)",
+    "epsil": "Labeled((1, 3), \"r = (1, 3) (0 ≤ r ≤ 5)\", Bottom)",
     "markup": "<notatio-labeled label=\"r = (1, 3) (0 ≤ r ≤ 5)\" position=\"below\"><notatio-dynamic value=\"(1, 3)\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
-    "notatio": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
+    "epsil": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
     "markup": "<notatio-dynamic-module><notatio-interval-slider name=\"r\" value=\"1,3\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-interval-slider></notatio-dynamic-module>"
   },
   "web: Locator((p, (1, 0.5)))": {
-    "notatio": "Locator((p, (1, 0.5)))",
+    "epsil": "Locator((p, (1, 0.5)))",
     "markup": "<notatio-dynamic-module><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-dynamic-module>"
   },
   "print: Locator((p, (1, 0.5)))": {
-    "notatio": "Labeled((1, 0.5), \"p = (1, 0.5)\", Bottom)",
+    "epsil": "Labeled((1, 0.5), \"p = (1, 0.5)\", Bottom)",
     "markup": "<notatio-labeled label=\"p = (1, 0.5)\" position=\"below\"><notatio-dynamic value=\"(1, 0.5)\"></notatio-dynamic></notatio-labeled>"
   },
   "tty: Locator((p, (1, 0.5)))": {
-    "notatio": "Locator((p, (1, 0.5)))",
+    "epsil": "Locator((p, (1, 0.5)))",
     "markup": "<notatio-dynamic-module><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-dynamic-module>"
   },
   "pipe: Locator((p, (1, 0.5)))": {
-    "notatio": "Labeled((1, 0.5), \"p = (1, 0.5)\", Bottom)",
+    "epsil": "Labeled((1, 0.5), \"p = (1, 0.5)\", Bottom)",
     "markup": "<notatio-labeled label=\"p = (1, 0.5)\" position=\"below\"><notatio-dynamic value=\"(1, 0.5)\"></notatio-dynamic></notatio-labeled>"
   },
   "compact: Locator((p, (1, 0.5)))": {
-    "notatio": "Locator((p, (1, 0.5)))",
+    "epsil": "Locator((p, (1, 0.5)))",
     "markup": "<notatio-dynamic-module><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-dynamic-module>"
   },
   "web: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
-    "notatio": "Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
+    "epsil": "Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-row></notatio-dynamic-module>"
   },
   "print: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
-    "notatio": "Labeled(\n         Plot(Sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
+    "epsil": "Labeled(\n         Plot(Sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
     "markup": "<notatio-labeled label=\"p = (1, 0.5)\" position=\"below\"><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot></notatio-labeled>"
   },
   "tty: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
-    "notatio": "Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
+    "epsil": "Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
     "markup": "<notatio-dynamic-module><notatio-row><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-row></notatio-dynamic-module>"
   },
   "pipe: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
-    "notatio": "Labeled(\n         Plot(Sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
+    "epsil": "Labeled(\n         Plot(Sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
     "markup": "<notatio-labeled label=\"p = (1, 0.5)\" position=\"below\"><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot></notatio-labeled>"
   },
   "compact: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
-    "notatio": "Column([\n         Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))),\n         Locator((p, (1, 0.5))),\n       ])",
+    "epsil": "Column([\n         Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))),\n         Locator((p, (1, 0.5))),\n       ])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-column></notatio-dynamic-module>"
   },
   "web: ComplexPlot(Zeta(z), z)": {
-    "notatio": "ComplexPlot(Zeta(z), z)",
+    "epsil": "ComplexPlot(Zeta(z), z)",
     "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"
   },
   "print: ComplexPlot(Zeta(z), z)": {
-    "notatio": "Rasterize(ComplexPlot(Zeta(z), z))"
+    "epsil": "Rasterize(ComplexPlot(Zeta(z), z))"
   },
   "tty: ComplexPlot(Zeta(z), z)": {
-    "notatio": "ComplexPlot(Zeta(z), z)",
+    "epsil": "ComplexPlot(Zeta(z), z)",
     "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"
   },
   "pipe: ComplexPlot(Zeta(z), z)": {
-    "notatio": "ComplexPlot(Zeta(z), z)",
+    "epsil": "ComplexPlot(Zeta(z), z)",
     "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"
   },
   "compact: ComplexPlot(Zeta(z), z)": {
-    "notatio": "ComplexPlot(Zeta(z), z)",
+    "epsil": "ComplexPlot(Zeta(z), z)",
     "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"
   },
   "web: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
-    "notatio": "Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
+    "epsil": "Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
     "markup": "<notatio-row><notatio-complex-plot-3d value=\"Gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-row>"
   },
   "print: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
-    "notatio": "Row([Rasterize(ComplexPlot3D(Gamma(z), z)), Plot(Sin(x), (x, 0, 10))])",
+    "epsil": "Row([Rasterize(ComplexPlot3D(Gamma(z), z)), Plot(Sin(x), (x, 0, 10))])",
     "markup": "<notatio-row><notatio-dynamic value=\"Rasterize(ComplexPlot3D(Gamma(z), z))\"></notatio-dynamic><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-row>"
   },
   "tty: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
-    "notatio": "Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
+    "epsil": "Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
     "markup": "<notatio-row><notatio-complex-plot-3d value=\"Gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-row>"
   },
   "pipe: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
-    "notatio": "Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
+    "epsil": "Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
     "markup": "<notatio-row><notatio-complex-plot-3d value=\"Gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-row>"
   },
   "compact: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
-    "notatio": "Column([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
+    "epsil": "Column([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
     "markup": "<notatio-column><notatio-complex-plot-3d value=\"Gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-column>"
   },
   "web: Sin(x) + 1": {
-    "notatio": "Sin(x) + 1"
+    "epsil": "Sin(x) + 1"
   },
   "print: Sin(x) + 1": {
-    "notatio": "Sin(x) + 1"
+    "epsil": "Sin(x) + 1"
   },
   "tty: Sin(x) + 1": {
-    "notatio": "Sin(x) + 1"
+    "epsil": "Sin(x) + 1"
   },
   "pipe: Sin(x) + 1": {
-    "notatio": "Sin(x) + 1"
+    "epsil": "Sin(x) + 1"
   },
   "compact: Sin(x) + 1": {
-    "notatio": "Sin(x) + 1"
+    "epsil": "Sin(x) + 1"
   },
   "web: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
-    "notatio": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
+    "epsil": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
     "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
   },
   "print: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
-    "notatio": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
+    "epsil": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
     "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
   },
   "tty: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
-    "notatio": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
+    "epsil": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
     "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
   },
   "pipe: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
-    "notatio": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
+    "epsil": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
     "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
   },
   "compact: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
-    "notatio": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
+    "epsil": "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
     "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
   }
 }

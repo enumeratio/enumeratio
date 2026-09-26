@@ -238,6 +238,7 @@ the-4-4-hilbert-matrix-is-badly-conditioned-but:
   epsil:
     in: MatrixRank(Tabulate(Function(1 / (_1 + _2 - 1)), 4, 4))
     out: "4"
+    back: Unreadable
   tex:
     in: \operatorname{rank}(\mathrm{Tabulate}(()\mapsto\frac{1}{(\operatorname{\_1}+\operatorname{\_2})-1}, 4, 4))
     out: "4"
@@ -267,3 +268,21 @@ a-3-times-3-matrix-of-pairwise-distinct-symbols:
     out: "3"
   fullform:
     in: MatrixRank[List[List[p, q, r], List[s, t, u], List[v, w, x]]]
+a-non-square-matrix-of-distinct-symbols-stays:
+  epsil:
+    in: MatrixRank([[a, b, c], [d, g, h]])
+    out: MatrixRank([[a, b, c], [d, g, h]])
+  tex:
+    in: \operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, g, h\bigr\rbrack\bigr\rbrack)
+    out: \operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, g, h\bigr\rbrack\bigr\rbrack)
+  fullform:
+    in: MatrixRank[List[List[a, b, c], List[d, g, h]]]
+repeating-a-symbol-across-rows-doesn-t-qualify:
+  epsil:
+    in: MatrixRank([[a, b], [a, b]])
+    out: "1"
+  tex:
+    in: \operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: MatrixRank[List[List[a, b], List[a, b]]]

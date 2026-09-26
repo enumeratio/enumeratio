@@ -1,5 +1,6 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareArithHeads } from "./arith-heads.ts";
+import { declareControl } from "./control.ts";
 import { declareExpressionOps } from "./expression-ops.ts";
 import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
@@ -16,6 +17,7 @@ import { declareListOps } from "./list-ops.ts";
 import { declareListOpsWolfram } from "./list-ops-wolfram.ts";
 import { declareProducts } from "./products.ts";
 import { declareListStats } from "./list-stats.ts";
+import { declareMiscFrontier } from "./misc-frontier.ts";
 import { declareRoundingHeads } from "./rounding-heads.ts";
 import { declareStats, type StatsOptions } from "./stats.ts";
 
@@ -38,6 +40,7 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareListFrontier(ce);
   declareListFrontier2(ce);
   declareListFunctional(ce);
+  declareControl(ce);
   declareListOpsWolfram(ce);
   declareProducts(ce);
   declareInfiniteProducts(ce);
@@ -49,4 +52,5 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareGeneratingFunctions(ce);
   declareGraphs(ce);
   declareGraphs2(ce);
+  declareMiscFrontier(ce);
 }

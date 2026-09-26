@@ -120,8 +120,8 @@ any-number-of-arguments-folding-pairwise-6-times:
     note: "Same values: ours is the flat Tuple (g, x₁, x₂, x₃), Wolfram's is {g, {x₁, x₂, x₃}}."
 gaussian-integers-by-euclid-with-the-rounded:
   epsil:
-    in: ExtendedGCD(7 + 2i, 3 + -5 * i)
-    out: (1, -1 + -2 * i, -2 + 2i)
+    in: ExtendedGCD(7 + 2i, 3 - 5i)
+    out: (1, -1 - 2i, -2 + 2i)
   tex:
     in: \mathrm{ExtendedGCD}(7+2i, 3-5i)
     out: (1,-1-2i,-2+2i )

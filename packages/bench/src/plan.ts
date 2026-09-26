@@ -2,9 +2,12 @@
 // source the generator will write, or why the system sits this one out. Built before any
 // timing, so "Julia is missing NextPrime" is data, not a silent gap.
 
+import { createHash } from "node:crypto";
 import { emit } from "@enumeratio/oracle/src";
 import { answerText } from "./agree.ts";
+import { loadPins, type Pins } from "./catalogue.ts";
 import { PROTOCOL } from "./protocol.ts";
+import { tierOf } from "./suites.ts";
 import type { BenchSystem, ConcreteCase, Exclusion, Plan, PlanCell, Precision } from "./types.ts";
 
 /** Seconds, when a case names no budget. */
@@ -47,17 +50,41 @@ export function planCell(c: ConcreteCase, system: BenchSystem): PlanCell {
   return { sources };
 }
 
-export function buildPlan(cases: readonly ConcreteCase[]): Plan {
+/** What a case computes, as a short hash: the same formula times the same work. */
+export const formulaOf = (c: ConcreteCase): string =>
+  createHash("sha256")
+    .update(JSON.stringify({ inputs: c.inputs, precision: c.case.bench.precision }))
+    .digest("hex")
+    .slice(0, 12);
+
+/** The answer to gate on: the YAML's, else a pin made for this very formula. */
+export function expectedOf(c: ConcreteCase, pins: Pins): string | undefined {
+  if (c.case.expected !== undefined) return answerText(c.case.expected);
+  const pin = pins[c.name];
+  return pin?.formula === formulaOf(c) ? pin.answer : undefined;
+}
+
+export function buildPlan(cases: readonly ConcreteCase[], options: { suite?: string; pins?: Pins } = {}): Plan {
+  const pins = options.pins ?? loadPins();
   return {
     schema: 1,
     protocol: PROTOCOL.version,
-    cases: cases.map((c) => ({
-      name: c.name,
-      precision: c.case.bench.precision,
-      budget: c.case.bench.budget ?? DEFAULT_BUDGET,
-      ...(c.case.bench.tags === undefined ? {} : { tags: c.case.bench.tags }),
-      ...(c.case.expected === undefined ? {} : { expected: answerText(c.case.expected) }),
-      systems: Object.fromEntries(SYSTEMS.map((s) => [s, planCell(c, s)])),
-    })),
+    ...(options.suite === undefined ? {} : { suite: options.suite }),
+    cases: cases.map((c) => {
+      const expected = expectedOf(c, pins);
+      return {
+        name: c.name,
+        formula: formulaOf(c),
+        tier: tierOf(c.case),
+        precision: c.case.bench.precision,
+        budget: c.case.bench.budget ?? DEFAULT_BUDGET,
+        ...(c.case.bench.tags === undefined ? {} : { tags: c.case.bench.tags }),
+        expr: c.case.expr,
+        ...(c.case.bench.sample === undefined ? {} : { sample: c.case.bench.sample }),
+        inputs: c.inputs,
+        ...(expected === undefined ? {} : { expected }),
+        systems: Object.fromEntries(SYSTEMS.map((s) => [s, planCell(c, s)])),
+      };
+    }),
   };
 }

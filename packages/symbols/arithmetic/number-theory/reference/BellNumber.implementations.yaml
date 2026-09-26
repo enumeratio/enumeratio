@@ -26,7 +26,7 @@ bellnumber-0:
     in: bell(0)
     out: "1"
   julia:
-    in: bell(0)
+    in: bell(ZZ(0))
     out: "1"
 bellnumber-1:
   epsil:
@@ -56,7 +56,7 @@ bellnumber-1:
     in: bell(1)
     out: "1"
   julia:
-    in: bell(1)
+    in: bell(ZZ(1))
     out: "1"
 bellnumber-3:
   epsil:
@@ -86,7 +86,7 @@ bellnumber-3:
     in: bell(3)
     out: "5"
   julia:
-    in: bell(3)
+    in: bell(ZZ(3))
     out: "5"
 bellnumber-5:
   epsil:
@@ -116,7 +116,7 @@ bellnumber-5:
     in: bell(5)
     out: "52"
   julia:
-    in: bell(5)
+    in: bell(ZZ(5))
     out: "52"
 bellnumber-10:
   epsil:
@@ -146,7 +146,7 @@ bellnumber-10:
     in: bell(10)
     out: "115975"
   julia:
-    in: bell(10)
+    in: bell(ZZ(10))
     out: "115975"
 recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
   epsil:
@@ -179,7 +179,7 @@ recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
     in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
     out: "true"
   julia:
-    in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
+    in: (bell(ZZ(5)) == ((binomial(ZZ(4), ZZ(0)) * bell(ZZ(0))) + (binomial(ZZ(4), ZZ(1)) * bell(ZZ(1))) + (binomial(ZZ(4), ZZ(2)) * bell(ZZ(2))) + (binomial(ZZ(4), ZZ(3)) * bell(ZZ(3))) + (binomial(ZZ(4), ZZ(4)) * bell(ZZ(4)))))
     out: "true"
 the-number-of-ways-to-partition-a-4-element-set:
   epsil:
@@ -209,7 +209,7 @@ the-number-of-ways-to-partition-a-4-element-set:
     in: bell(4)
     out: "15"
   julia:
-    in: bell(4)
+    in: bell(ZZ(4))
     out: "15"
 a-negative-argument-is-left-unevaluated:
   epsil:
@@ -248,7 +248,7 @@ a-negative-argument-is-left-unevaluated:
     kind: undefined-form
     note: 'Both decline: compute-engine answers ["BellNumber", -1] and Oscar raises an error.'
   julia:
-    in: bell(-1)
+    in: bell(ZZ(-1))
     out: "DomainError with -1: Argument must be non-negative"
     verdict: error
     kind: undefined-form
@@ -270,16 +270,14 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{1,2,5,15\}
   sympy:
     in: "[bell(1), bell(2), bell(3), bell(4)]"
-    out: "AttributeError: 'list' object has no attribute 'is_negative'"
-    verdict: error
-    kind: threading
-    note: compute-engine's BellNumber is Listable and threads over the list; SymPy's takes scalars only.
+    out: "[1, 2, 5, 15]"
   sage:
     in: "[bell_number(1), bell_number(2), bell_number(3), bell_number(4)]"
   oscar:
     in: bell([1, 2, 3, 4])
   julia:
-    in: bell([1, 2, 3, 4])
+    in: "[bell(ZZ(1)), bell(ZZ(2)), bell(ZZ(3)), bell(ZZ(4))]"
+    out: "[1, 2, 5, 15]"
 exact-for-large-n:
   epsil:
     in: BellNumber(30)
@@ -296,12 +294,14 @@ exact-for-large-n:
     in: BellB[30]
   sympy:
     in: bell(30)
+    out: "846749014511809332450147"
   sage:
     in: bell_number(30)
   oscar:
     in: bell(30)
   julia:
-    in: bell(30)
+    in: bell(ZZ(30))
+    out: "846749014511809332450147"
 the-two-argument-form-gives-the-bell-touchard:
   epsil:
     in: BellNumber(5, x)
@@ -369,9 +369,11 @@ touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
     in: (Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])
   sympy:
     in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
+    out: True
   sage:
     in: bool((bell_number(9) % 7) == ((bell_number(2) + bell_number(3)) % 7))
   oscar:
     in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
   julia:
-    in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
+    in: (mod(bell(ZZ(9)), 7) == mod((bell(ZZ(2)) + bell(ZZ(3))), 7))
+    out: "true"

@@ -1,0 +1,33 @@
+unit-square-default-seed:
+  epsil:
+    in: Last([SeedRandom(42), RandomComplex()])
+    out: 0.601_103_751_920_163_6 + 0.448_290_558_997_541_67i
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(42), \mathrm{RandomComplex}()\bigr\rbrack)
+    out: 0.601\,103\,751\,920\,163\,6+0.448\,290\,558\,997\,541\,67i
+  fullform:
+    in: Last[List[SeedRandom[42], RandomComplex[]]]
+  wolfram:
+    in: Last[List[SeedRandom[42], RandomComplex[]]]
+rectangle-from-0-to-zmax:
+  epsil:
+    in: Last([SeedRandom(7), RandomComplex(2 + 3i)])
+    out: 0.023_409_506_306_052_208 + 0.185_874_772_723_764_18i
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomComplex}(2+3i)\bigr\rbrack)
+    out: 0.023\,409\,506\,306\,052\,208+0.185\,874\,772\,723\,764\,18i
+  fullform:
+    in: Last[List[SeedRandom[7], RandomComplex[Complex[2, 3]]]]
+  wolfram:
+    in: Last[List[SeedRandom[7], RandomComplex[Complex[2, 3]]]]
+rectangle-from-zmin-to-zmax:
+  epsil:
+    in: Last([SeedRandom(9), RandomComplex([-1 - i, 1 + i])])
+    out: -0.602_542_163_804_173_5 + 0.702_421_592_548_489_6i
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(9), \mathrm{RandomComplex}(\bigl\lbrack-1-i, 1+i\bigr\rbrack)\bigr\rbrack)
+    out: -0.602\,542\,163\,804\,173\,5+0.702\,421\,592\,548\,489\,6i
+  fullform:
+    in: Last[List[SeedRandom[9], RandomComplex[List[Complex[-1, -1], Complex[1, 1]]]]]
+  wolfram:
+    in: Last[List[SeedRandom[9], RandomComplex[List[Complex[-1, -1], Complex[1, 1]]]]]

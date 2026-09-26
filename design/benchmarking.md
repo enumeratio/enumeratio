@@ -123,6 +123,7 @@ first sign-off question (§11).**
 | `bench.precision` | `exact`, `machine`, or a digit count (`50`). A system joins only at that precision (§4.4)                                                                  |
 | `bench.budget`    | a soft cap for the whole measurement. Past it we record `timeout` and move on                                                                              |
 | `bench.sample`    | seeded inputs (§3.2), instead of a fixed `expr`                                                                                                            |
+| `bench.tier`      | `small`, `medium` (the default) or `large`: which suites run it (§3.3)                                                                                     |
 | `bench.systems`   | optional allow/deny list, for a known-unfair pairing (for example Lean's `#eval`)                                                                          |
 
 The reducer is part of the timed region in every system alike, and it should be negligible
@@ -134,24 +135,49 @@ agreement.
 ### Sampled inputs
 
 ```yaml
-- id: powermod-random-2048-bit
+- id: prime-near-10-to-the-5
   role: bench
-  expr: [PowerMod, $a, $e, $m]
+  expr: [Prime, $n]
   bench:
-    sample: { seed: 20260925, count: 16, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
+    tier: small
+    precision: exact
+    sample: { seed: 20260926, count: 8, draw: { n: [int, 99000, 100000] } }
 ```
 
-- The seed is part of the record. Every run draws the same 16 inputs, in every system, so runs
-  are comparable across time and across systems. Changing the seed or `draw` means a new id
-  (or bumping `bench.version`), because the benchmark has changed.
-- One benchmark is timed as a batch: each sample is one inner iteration, cycled round-robin.
-  The report stores per-sample timings of the whole batch, not per input.
+- The seed is part of the record. Every run draws the same inputs, in every system, so runs
+  are comparable across time and across systems.
+- The draws become a `List` of the expression at each draw, so one timed call computes every
+  value (`count` of them); with `batches`, several such lists, taken by successive calls. A cheap function (Gamma at machine precision, a few µs) then sums past
+  the too-fast floor (§5.1). And no system can answer from a value it stored or cached for a
+  round number (`Prime[10^5]`, `PrimePi[10^7]`, ζ(3)), which is what the too-fast rows were.
+- Arguments sit a seeded distance below a round size, `10^5 − n` with `n` drawn, rather than at
+  it. A fixed case stays fixed only when it is a published problem (the Arb paper's Li₃(½)) or
+  a known trap (`Sin[24^40]`).
 - The drawing uses mulberry32, the same generator both Plausible scripts use. It moves into
   `@enumeratio/plausible` (design/plausible.md §3.1) rather than being copied a third time. Draws happen at **generation
   time**, and the literal inputs are written into every native script, so no PRNG runs in the
   timed region and no two languages' PRNGs have to agree.
-- `expected` for a sampled benchmark is computed by us at generation time and pinned in the
-  generated plan. The oracle scans can check it like any hidden example.
+- A sampled case's answer is pinned in `catalogue/pinned.json` by `scripts/pin.ts`, which asks
+  a local Wolfram kernel well past the case's precision (ten more digits; twenty for machine),
+  with every machine input as the exact binary rational it is (a decimal literal is read by
+  its digits in Wolfram and by its bits everywhere else). The gate compares a list element by
+  element, whatever brackets and complex spelling the system prints. A test fails when a case
+  has no pin for its current formula.
+
+### Tiers, suites and formulas
+
+- A case's `tier` (`small`, `medium` by default, `large`) says how hard it is. The same
+  function usually appears at several: PrimePi near 10^7, 10^9 and 10^11; ζ at machine, 30 and
+  100 digits; the critical line near t = 10^3, 10^4 and 10^5. A system too slow for the large
+  tier times out there and still counts in the small one, and the tiers together show where
+  the crossovers are.
+- A **suite** picks tiers: `quick` (small), `standard` (small, medium), `deep` (all).
+  `bench.ts --suite` chooses; the nightly runs `standard`, the weekly Sage and Oscar jobs
+  `deep`. The suite is recorded on the run, but comparisons never depend on it.
+- Each planned case carries a **formula**: a hash of its concrete inputs and precision. Every
+  result records it; drift and the viewer compare a case across runs only while it matches. A
+  case whose draw, size or precision changes simply starts a new series, so like is compared
+  with like without anyone bumping a version.
 
 **The Plausible link.** A nightly `bench-plausible` mode can draw a _fresh_ date-seeded
 sample, the way `oracle-plausible` does. Its timings are reported but never trended: they
@@ -211,8 +237,13 @@ report records `caches: cleared | uncleared` per system. The benchmarks that mat
 than 1 ms per call, so they run one call per sample and never hit a warm cache.
 
 Some answers are stored rather than computed: mpmath and Wolfram answer ζ(3) from a stored
-constant in microseconds. The catalogue avoids such points (ζ(3.5), not ζ(3)), and the
-`too-fast` floor catches the ones that slip through.
+constant in microseconds. The catalogue avoids such points by drawing its arguments (§3.2),
+and the `too-fast` floor catches the ones that slip through. A `too-fast` row means the case
+isn't a benchmark yet: make it harder (more values per list, a higher precision, a larger
+argument) rather than live with it. Some caches `ClearSystemCache[]` doesn't reach: Wolfram
+memoises every `Prime` it computes and keeps the sieve segment around recent `PrimePi`
+arguments. For those, `sample.batches` gives each call a list it hasn't seen, a pool longer
+than the protocol's calls, and the draws spread over a decade rather than clustering.
 
 ### 4.4 Precision
 
@@ -306,6 +337,10 @@ holds:
   side runs in that same job too**, interleaved. Every report then carries a same-machine TS
   anchor, and Wolfram-vs-us is honest. Wolfram-vs-Julia is only available through their ratios
   to us, which chains two jobs, and the viewer marks it that way.
+- **Wolfram without a license in CI** runs on a maintainer's machine instead:
+  `scripts/publish-local.ts` publishes a local `ts,wolfram` run as the job `wolfram-local`,
+  so its trend compares only with earlier local runs, and each report records the machine and
+  its load, so a busy machine shows.
 - **Trends over time** compare TS runs from the nightly job only, with `tools/perf`'s drift
   rule (≥1.5× and a floor, against the trailing median of at least 5 runs), and file a rolling
   `bench drift` issue labelled `nightly-fixup`. That rule already tolerates hosted-runner
