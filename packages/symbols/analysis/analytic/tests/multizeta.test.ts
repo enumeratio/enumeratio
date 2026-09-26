@@ -1,36 +1,15 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // MultiZetaValue(s1, s2) — see multizeta.ts for the partial-sum + Zeta-tail summation.
-// Golden values are a fast mpmath partial-sum + tail (same method, at 50-digit
-// precision) rather than mpmath's generic `nsum`, which does not converge in
-// reasonable time on a nested nsum over this series. The exact closed forms Fungrim
-// declares (fungrim:62de01 etc.) are checked directly below, independent of mpmath.
+// A fast mpmath partial-sum + tail (same method, at 50-digit precision) is pinned as
+// examples on the head's record, rather than mpmath's generic `nsum`, which does not
+// converge in reasonable time on a nested nsum over this series. The exact closed forms
+// Fungrim declares (fungrim:62de01 etc.) are checked directly below, independent of mpmath.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
-
-interface GoldenCase {
-  head: string;
-  args: unknown[];
-  label: string;
-  tol: number;
-  mpmath: [number, number];
-}
-
-const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./multizeta.golden.json", import.meta.url), "utf8"));
-
-test("MultiZetaValue matches the oracle partial-sum", () => {
-  const off: string[] = [];
-  for (const g of goldens) {
-    const r = ce.box([g.head, ...g.args] as never).N();
-    const err = Math.abs(r.re - g.mpmath[0]);
-    if (!(err <= g.tol)) off.push(`${g.label}: got ${r.re}, expected ${g.mpmath[0]} (err ${err})`);
-  }
-  expect(off).toEqual([]);
-});
 
 const zeta = (s: number): number => ce.box(["Zeta", s]).N().re;
 const mzv = (s1: number, s2: number): number => ce.box(["MultiZetaValue", s1, s2]).N().re;
