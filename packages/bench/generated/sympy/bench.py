@@ -73,6 +73,10 @@ def enumeratio_value(x):
     if math.isnan(z.real) or math.isnan(z.imag):
         return "NaN"
     if math.isinf(z.real) and z.imag == 0:
+        # A finite value past the double range (gamma(200.5)) keeps its own digits.
+        text = str(x)
+        if "inf" not in text.lower() and text.strip("-") != "oo":
+            return text
         return "PositiveInfinity" if z.real > 0 else "NegativeInfinity"
     if z.imag == 0:
         return repr(z.real)
