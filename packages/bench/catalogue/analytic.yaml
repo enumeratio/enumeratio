@@ -114,7 +114,7 @@ Gamma:
       tier: small
       tags: [special-functions]
       precision: machine
-      sample: { seed: 20260925, count: 16, draw: { x: [real, 0.5, 50] } }
+      sample: { seed: 20260925, count: 256, draw: { x: [real, 0.5, 50] } }
   - id: gamma-random-rationals-to-50-digits
     role: bench
     expr: [Gamma, [Rational, $p, $q]]
@@ -122,15 +122,14 @@ Gamma:
       tags: [special-functions]
       precision: 50
       sample: { seed: 20260926, count: 8, draw: { p: [int, 1, 400], q: [int, 2, 9] } }
-  - id: gamma-20p5-to-100-digits
+  - id: gamma-random-rationals-to-100-digits
     role: bench
-    expr: [Gamma, 20.5]
-    expected:
-      { num: "540624298233507504.4736873647808221412273166395781714789601948262439262966163731666261810160445254373" }
+    expr: [Gamma, [Rational, $p, $q]]
     bench:
       tags: [special-functions]
       source: Arb
       precision: 100
+      sample: { seed: 20260926, count: 8, draw: { p: [int, 1, 400], q: [int, 3, 9] } }
   - id: gamma-random-rationals-to-1000-digits
     role: bench
     expr: [Gamma, [Rational, $p, $q]]
@@ -159,15 +158,15 @@ LerchPhi:
 # Argument reduction: a huge exact argument, reduced mod 2π before a double sees it. A kernel
 # that turns the argument into a double first answers for a different number.
 Sin:
-  - id: sin-24-to-the-40
+  - id: sin-random-huge-powers-machine
     role: bench
-    expr: [Sin, [Power, 24, 40]]
-    expected: 0.400083152719766
+    expr: [Sin, [Power, $b, $e]]
     bench:
       tier: small
       tags: [special-functions, argument-reduction]
-      source: ours (#176)
+      source: ours (#176, after Sin[24^40])
       precision: machine
+      sample: { seed: 20260926, count: 16, draw: { b: [int, 11, 30], e: [int, 30, 60] } }
   - id: sin-random-1000-bit-integers-machine
     role: bench
     expr: [Sin, $n]
@@ -176,12 +175,12 @@ Sin:
       precision: machine
       sample: { seed: 20260926, count: 8, draw: { n: [bits, 1000] } }
 Cos:
-  - id: cos-10-to-the-100
+  - id: cos-10-to-random-powers-machine
     role: bench
-    expr: [Cos, [Power, 10, 100]]
-    expected: -0.9280819050746553
+    expr: [Cos, [Power, 10, $e]]
     bench:
       tier: small
       tags: [special-functions, argument-reduction]
-      source: ours (#176)
+      source: ours (#176, after Cos[10^100])
       precision: machine
+      sample: { seed: 20260926, count: 16, draw: { e: [int, 60, 140] } }

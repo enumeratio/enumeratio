@@ -65,11 +65,18 @@ function validate(c: BenchCase): string | undefined {
   return undefined;
 }
 
-/** Substitute each case's seeded draws: the one input every system runs, a `List` for a sample. */
+/**
+ * Substitute each case's seeded draws: the inputs every system runs, each a `List` for a
+ * sample. Calls take them in turn; the gate checks the first.
+ */
 export function concretise(c: BenchCase): ConcreteCase {
-  const inputs: MathJSON[] =
-    c.bench.sample === undefined
-      ? [c.expr]
-      : [["List", ...drawSample(c.bench.sample).map((binding) => substitute(c.expr, binding))]];
+  const sample = c.bench.sample;
+  if (sample === undefined) return { name: `${c.head}/${c.id}`, case: c, inputs: [c.expr] };
+  // One draw sequence, cut into lists: the first list is the same whatever `batches` says.
+  const values = drawSample({ ...sample, count: sample.count * (sample.batches ?? 1) }).map((binding) =>
+    substitute(c.expr, binding),
+  );
+  const inputs: MathJSON[] = [];
+  for (let i = 0; i < values.length; i += sample.count) inputs.push(["List", ...values.slice(i, i + sample.count)]);
   return { name: `${c.head}/${c.id}`, case: c, inputs };
 }

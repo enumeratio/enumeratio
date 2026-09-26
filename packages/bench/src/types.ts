@@ -21,7 +21,14 @@ export type Draw =
  */
 export interface Sample {
   readonly seed: number;
+  /** Values per list: what one timed call computes. */
   readonly count: number;
+  /**
+   * Distinct lists, one per call in turn (default 1). For a kernel that memoises values or
+   * keeps tables around recent ones: a pool at least as long as the protocol's calls
+   * (calibration, warmup, samples) means no call repeats one before it.
+   */
+  readonly batches?: number;
   readonly draw: Readonly<Record<string, Draw>>;
 }
 

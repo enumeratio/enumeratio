@@ -146,8 +146,8 @@ agreement.
 
 - The seed is part of the record. Every run draws the same inputs, in every system, so runs
   are comparable across time and across systems.
-- The draws become **one input**, a `List` of the expression at each draw, so one timed call
-  computes every value. A cheap function (Gamma at machine precision, a few µs) then sums past
+- The draws become a `List` of the expression at each draw, so one timed call computes every
+  value (`count` of them); with `batches`, several such lists, taken by successive calls. A cheap function (Gamma at machine precision, a few µs) then sums past
   the too-fast floor (§5.1). And no system can answer from a value it stored or cached for a
   round number (`Prime[10^5]`, `PrimePi[10^7]`, ζ(3)), which is what the too-fast rows were.
 - Arguments sit a seeded distance below a round size, `10^5 − n` with `n` drawn, rather than at
@@ -238,11 +238,12 @@ than 1 ms per call, so they run one call per sample and never hit a warm cache.
 
 Some answers are stored rather than computed: mpmath and Wolfram answer ζ(3) from a stored
 constant in microseconds. The catalogue avoids such points by drawing its arguments (§3.2),
-and the `too-fast` floor catches the ones that slip through. It still catches some: Wolfram
-answers four `PrimePi` values near 10^11, or eight `Prime` values near 10^5, in a few µs per
-list even after `ClearSystemCache[]`. Its prime tables survive that clear, and the batch of
-`k` calls in one sample repeats the list. mpmath memoises `gamma` at a fixed point the same way.
-Those rows stay `too-fast` and out of the comparison.
+and the `too-fast` floor catches the ones that slip through. A `too-fast` row means the case
+isn't a benchmark yet: make it harder (more values per list, a higher precision, a larger
+argument) rather than live with it. Some caches `ClearSystemCache[]` doesn't reach: Wolfram
+memoises every `Prime` it computes and keeps the sieve segment around recent `PrimePi`
+arguments. For those, `sample.batches` gives each call a list it hasn't seen, a pool longer
+than the protocol's calls, and the draws spread over a decade rather than clustering.
 
 ### 4.4 Precision
 

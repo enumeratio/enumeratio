@@ -72,11 +72,11 @@ struct CaseEntry {
 }
 
 fn b_0_0() -> V {
-    list(vec![gamma(x(std::hint::black_box(24.026529921218753))), gamma(x(std::hint::black_box(17.407367952284403))), gamma(x(std::hint::black_box(38.77917202899698))), gamma(x(std::hint::black_box(46.78631058672909))), gamma(x(std::hint::black_box(44.87958628672641))), gamma(x(std::hint::black_box(6.665662877028808))), gamma(x(std::hint::black_box(49.318621157319285))), gamma(x(std::hint::black_box(23.027127810637467))), gamma(x(std::hint::black_box(48.55525078927167))), gamma(x(std::hint::black_box(35.59063852287363))), gamma(x(std::hint::black_box(29.168683981057256))), gamma(x(std::hint::black_box(3.201277957763523))), gamma(x(std::hint::black_box(24.212262262008153))), gamma(x(std::hint::black_box(33.7944600781193))), gamma(x(std::hint::black_box(12.926321253180504))), gamma(x(std::hint::black_box(35.72455013496801)))])
+    list(vec![gamma(x(std::hint::black_box(24.026529921218753))), gamma(x(std::hint::black_box(17.407367952284403))), gamma(x(std::hint::black_box(38.77917202899698))), gamma(x(std::hint::black_box(46.78631058672909))), gamma(x(std::hint::black_box(44.87958628672641))), gamma(x(std::hint::black_box(6.665662877028808))), gamma(x(std::hint::black_box(49.318621157319285))), gamma(x(std::hint::black_box(23.027127810637467))), gamma(x(std::hint::black_box(48.55525078927167))), gamma(x(std::hint::black_box(35.59063852287363))), gamma(x(std::hint::black_box(29.168683981057256))), gamma(x(std::hint::black_box(3.201277957763523))), gamma(x(std::hint::black_box(24.212262262008153))), gamma(x(std::hint::black_box(33.7944600781193))), gamma(x(std::hint::black_box(12.926321253180504))), gamma(x(std::hint::black_box(35.72455013496801))), gamma(x(std::hint::black_box(48.46032371476758))), gamma(x(std::hint::black_box(7.269543906557374))), gamma(x(std::hint::black_box(10.971783484565094))), gamma(x(std::hint::black_box(24.062604677979834))), gamma(x(std::hint::black_box(25.58570188668091))), gamma(x(std::hint::black_box(49.32065146800596))), gamma(x(std::hint::black_box(40.06920915434603))), gamma(x(std::hint::black_box(11.433716841391288))), gamma(x(std::hint::black_box(21.761978034162894))), gamma(x(std::hint::black_box(47.901578949880786))), gamma(x(std::hint::black_box(46.521142034907825))), gamma(x(std::hint::black_box(6.863556936034001))), gamma(x(std::hint::black_box(31.82071290165186))), gamma(x(std::hint::black_box(33.108671587426215))), gamma(x(std::hint::black_box(11.05188189423643))), gamma(x(std::hint::black_box(24.18126080406364))), gamma(x(std::hint::black_box(41.71029583027121))), gamma(x(std::hint::black_box(39.285694968071766))), gamma(x(std::hint::black_box(28.824135668226518))), gamma(x(std::hint::black_box(0.9335450577782467))), gamma(x(std::hint::black_box(42.39051607600413))), gamma(x(std::hint::black_box(32.05744081886951))), gamma(x(std::hint::black_box(30.5660336362198))), gamma(x(std::hint::black_box(48.022719303378835))), gamma(x(std::hint::black_box(18.12658193265088))), gamma(x(std::hint::black_box(3.9010075179394335))), gamma(x(std::hint::black_box(1.6854309234768152))), gamma(x(std::hint::black_box(34.87309465871658))), gamma(x(std::hint::black_box(20.43339115625713))), gamma(x(std::hint::black_box(42.923445466556586))), gamma(x(std::hint::black_box(37.528012119350024))), gamma(x(std::hint::black_box(37.45791317766998))), gamma(x(std::hint::black_box(38.58139597566333))), gamma(x(std::hint::black_box(1.787173502612859))), gamma(x(std::hint::black_box(15.4498692197958))), gamma(x(std::hint::black_box(12.690765993553214))), gamma(x(std::hint::black_box(30.374919330934063))), gamma(x(std::hint::black_box(48.20903380087111))), gamma(x(std::hint::black_box(30.66665255103726))), gamma(x(std::hint::black_box(26.317197031574324))), gamma(x(std::hint::black_box(31.715203580097295))), gamma(x(std::hint::black_box(11.082693810109049))), gamma(x(std::hint::black_box(47.27302412036806))), gamma(x(std::hint::black_box(39.94478799193166))), gamma(x(std::hint::black_box(33.533154653268866))), gamma(x(std::hint::black_box(44.098766753450036))), gamma(x(std::hint::black_box(22.542760963668115))), gamma(x(std::hint::black_box(20.192029243102297))), gamma(x(std::hint::black_box(49.57375024899375))), gamma(x(std::hint::black_box(28.1783716379432))), gamma(x(std::hint::black_box(22.152154907002114))), gamma(x(std::hint::black_box(35.89101804699749))), gamma(x(std::hint::black_box(38.54149466112722))), gamma(x(std::hint::black_box(6.430054163909517))), gamma(x(std::hint::black_box(39.504296584869735))), gamma(x(std::hint::black_box(45.9282571770018))), gamma(x(std::hint::black_box(5.610229405458085))), gamma(x(std::hint::black_box(16.20828817866277))), gamma(x(std::hint::black_box(31.225256006466225))), gamma(x(std::hint::black_box(23.204148499993607))), gamma(x(std::hint::black_box(24.31417492881883))), gamma(x(std::hint::black_box(49.956288424204104))), gamma(x(std::hint::black_box(23.036176053108647))), gamma(x(std::hint::black_box(32.05726569471881))), gamma(x(std::hint::black_box(18.866649943520315))), gamma(x(std::hint::black_box(31.18547605141066))), gamma(x(std::hint::black_box(28.40904385538306))), gamma(x(std::hint::black_box(38.45388241694309))), gamma(x(std::hint::black_box(27.473768301773816))), gamma(x(std::hint::black_box(1.106480369810015))), gamma(x(std::hint::black_box(25.900202617864124))), gamma(x(std::hint::black_box(42.790350720169954))), gamma(x(std::hint::black_box(37.180101768579334))), gamma(x(std::hint::black_box(14.59976343845483))), gamma(x(std::hint::black_box(23.048550029401667))), gamma(x(std::hint::black_box(32.58731672191061))), gamma(x(std::hint::black_box(5.7823907943675295))), gamma(x(std::hint::black_box(37.52639687422197))), gamma(x(std::hint::black_box(36.59578472864814))), gamma(x(std::hint::black_box(48.51417450059671))), gamma(x(std::hint::black_box(38.404925852664746))), gamma(x(std::hint::black_box(7.54375716263894))), gamma(x(std::hint::black_box(41.00752971298061))), gamma(x(std::hint::black_box(40.03652898245491))), gamma(x(std::hint::black_box(5.381004074239172))), gamma(x(std::hint::black_box(14.574476559879258))), gamma(x(std::hint::black_box(4.4791588969528675))), gamma(x(std::hint::black_box(3.104716955916956))), gamma(x(std::hint::black_box(40.43090703699272))), gamma(x(std::hint::black_box(45.22099333675578))), gamma(x(std::hint::black_box(23.678022707696073))), gamma(x(std::hint::black_box(44.354057761491276))), gamma(x(std::hint::black_box(8.192675352329388))), gamma(x(std::hint::black_box(41.53811355785001))), gamma(x(std::hint::black_box(49.78013857267797))), gamma(x(std::hint::black_box(42.159022878389806))), gamma(x(std::hint::black_box(0.6861942444229499))), gamma(x(std::hint::black_box(36.09482942370232))), gamma(x(std::hint::black_box(18.19250121002551))), gamma(x(std::hint::black_box(40.10974604450166))), gamma(x(std::hint::black_box(12.635133943287656))), gamma(x(std::hint::black_box(12.453041787608527))), gamma(x(std::hint::black_box(46.259974565706216))), gamma(x(std::hint::black_box(14.141690673073754))), gamma(x(std::hint::black_box(28.781025426927954))), gamma(x(std::hint::black_box(38.12934070429765))), gamma(x(std::hint::black_box(23.38422450935468))), gamma(x(std::hint::black_box(29.529103417065926))), gamma(x(std::hint::black_box(33.90873693639878))), gamma(x(std::hint::black_box(8.746900173835456))), gamma(x(std::hint::black_box(13.968147422652692))), gamma(x(std::hint::black_box(41.485173394554295))), gamma(x(std::hint::black_box(31.309348030481488))), gamma(x(std::hint::black_box(5.575177664170042))), gamma(x(std::hint::black_box(29.146477478090674))), gamma(x(std::hint::black_box(38.48300458933227))), gamma(x(std::hint::black_box(2.7473672347841784))), gamma(x(std::hint::black_box(10.913355452474207))), gamma(x(std::hint::black_box(16.780739661306143))), gamma(x(std::hint::black_box(11.214195312815718))), gamma(x(std::hint::black_box(4.905959825147875))), gamma(x(std::hint::black_box(0.7218331327894703))), gamma(x(std::hint::black_box(33.07569547358435))), gamma(x(std::hint::black_box(25.899212956079282))), gamma(x(std::hint::black_box(18.043544606654905))), gamma(x(std::hint::black_box(19.915137768839486))), gamma(x(std::hint::black_box(2.9412164157256484))), gamma(x(std::hint::black_box(4.810174348414876))), gamma(x(std::hint::black_box(31.185638739960268))), gamma(x(std::hint::black_box(23.169452850241214))), gamma(x(std::hint::black_box(34.779172827955335))), gamma(x(std::hint::black_box(25.131612259312533))), gamma(x(std::hint::black_box(11.180831436417066))), gamma(x(std::hint::black_box(39.618254139786586))), gamma(x(std::hint::black_box(46.079616363858804))), gamma(x(std::hint::black_box(13.89889804343693))), gamma(x(std::hint::black_box(48.19176403561141))), gamma(x(std::hint::black_box(1.3834280405426398))), gamma(x(std::hint::black_box(17.791624130564742))), gamma(x(std::hint::black_box(31.553503551287577))), gamma(x(std::hint::black_box(48.76763202389702))), gamma(x(std::hint::black_box(22.095940965111367))), gamma(x(std::hint::black_box(9.779017020133324))), gamma(x(std::hint::black_box(14.602236521081068))), gamma(x(std::hint::black_box(7.099096682853997))), gamma(x(std::hint::black_box(12.167101817321964))), gamma(x(std::hint::black_box(3.4699940097052604))), gamma(x(std::hint::black_box(3.8532991929678246))), gamma(x(std::hint::black_box(35.55920393951237))), gamma(x(std::hint::black_box(48.35455466317944))), gamma(x(std::hint::black_box(13.952469448908232))), gamma(x(std::hint::black_box(43.7749958060449))), gamma(x(std::hint::black_box(47.43829575984273))), gamma(x(std::hint::black_box(38.50743835570756))), gamma(x(std::hint::black_box(20.212291677831672))), gamma(x(std::hint::black_box(38.25577450939454))), gamma(x(std::hint::black_box(14.58229560253676))), gamma(x(std::hint::black_box(23.7219526268309))), gamma(x(std::hint::black_box(45.295641449512914))), gamma(x(std::hint::black_box(17.817081212066114))), gamma(x(std::hint::black_box(33.06199979688972))), gamma(x(std::hint::black_box(3.35298666683957))), gamma(x(std::hint::black_box(21.381242698407732))), gamma(x(std::hint::black_box(15.947890495066531))), gamma(x(std::hint::black_box(27.362978275399655))), gamma(x(std::hint::black_box(16.685942636220716))), gamma(x(std::hint::black_box(1.3476225450867787))), gamma(x(std::hint::black_box(6.006204311037436))), gamma(x(std::hint::black_box(47.867628076230176))), gamma(x(std::hint::black_box(42.07210309780203))), gamma(x(std::hint::black_box(5.5427710639778525))), gamma(x(std::hint::black_box(33.2481157281436))), gamma(x(std::hint::black_box(48.1407884437358))), gamma(x(std::hint::black_box(13.019411385408603))), gamma(x(std::hint::black_box(18.237832675571553))), gamma(x(std::hint::black_box(12.444097732193768))), gamma(x(std::hint::black_box(40.760115649783984))), gamma(x(std::hint::black_box(37.362097251578234))), gamma(x(std::hint::black_box(45.04884274688084))), gamma(x(std::hint::black_box(19.826301292167045))), gamma(x(std::hint::black_box(5.512920826906338))), gamma(x(std::hint::black_box(9.834825669764541))), gamma(x(std::hint::black_box(49.2713940636022))), gamma(x(std::hint::black_box(18.328505045734346))), gamma(x(std::hint::black_box(26.370623266673647))), gamma(x(std::hint::black_box(3.209531059372239))), gamma(x(std::hint::black_box(36.880693650455214))), gamma(x(std::hint::black_box(43.81440374185331))), gamma(x(std::hint::black_box(11.480208298424259))), gamma(x(std::hint::black_box(11.544651634758338))), gamma(x(std::hint::black_box(43.33325571019668))), gamma(x(std::hint::black_box(5.890034947893582))), gamma(x(std::hint::black_box(10.931855800561607))), gamma(x(std::hint::black_box(40.587461389251985))), gamma(x(std::hint::black_box(34.73905601678416))), gamma(x(std::hint::black_box(27.62754227721598))), gamma(x(std::hint::black_box(23.111537167220376))), gamma(x(std::hint::black_box(37.385176678420976))), gamma(x(std::hint::black_box(47.16163882170804))), gamma(x(std::hint::black_box(33.6342605042737))), gamma(x(std::hint::black_box(17.88151765638031))), gamma(x(std::hint::black_box(13.455942796892487))), gamma(x(std::hint::black_box(28.462803535163403))), gamma(x(std::hint::black_box(29.90109523443971))), gamma(x(std::hint::black_box(37.56548684358131))), gamma(x(std::hint::black_box(7.641347415046766))), gamma(x(std::hint::black_box(24.169941399013624))), gamma(x(std::hint::black_box(16.978650719858706))), gamma(x(std::hint::black_box(34.139243376557715))), gamma(x(std::hint::black_box(14.261934095877223))), gamma(x(std::hint::black_box(23.56710183667019))), gamma(x(std::hint::black_box(24.79640717431903))), gamma(x(std::hint::black_box(28.952064142678864))), gamma(x(std::hint::black_box(32.3026378529612))), gamma(x(std::hint::black_box(25.657346150605008))), gamma(x(std::hint::black_box(5.343008599127643))), gamma(x(std::hint::black_box(31.618006668402813))), gamma(x(std::hint::black_box(25.883697405806743))), gamma(x(std::hint::black_box(41.816046234220266))), gamma(x(std::hint::black_box(37.47865354747046))), gamma(x(std::hint::black_box(19.647552019683644))), gamma(x(std::hint::black_box(14.54260686878115))), gamma(x(std::hint::black_box(20.798466866253875))), gamma(x(std::hint::black_box(23.058990863268264))), gamma(x(std::hint::black_box(25.69372739479877))), gamma(x(std::hint::black_box(25.202314782887697))), gamma(x(std::hint::black_box(8.439922889112495))), gamma(x(std::hint::black_box(41.04649009392597))), gamma(x(std::hint::black_box(39.43106908106711))), gamma(x(std::hint::black_box(46.86713113717269))), gamma(x(std::hint::black_box(31.28103760664817))), gamma(x(std::hint::black_box(38.85493913840037))), gamma(x(std::hint::black_box(25.219770171679556))), gamma(x(std::hint::black_box(4.951421397738159))), gamma(x(std::hint::black_box(21.58706916111987))), gamma(x(std::hint::black_box(41.76165167032741))), gamma(x(std::hint::black_box(46.10352853802033))), gamma(x(std::hint::black_box(47.18110824772157))), gamma(x(std::hint::black_box(9.320275521371514))), gamma(x(std::hint::black_box(23.233045759727247)))])
 }
 
 fn b_1_0() -> V {
-    sin(power(n(std::hint::black_box(24)), n(std::hint::black_box(40))))
+    list(vec![sin(power(n(std::hint::black_box(22)), n(std::hint::black_box(41)))), sin(power(n(std::hint::black_box(30)), n(std::hint::black_box(57)))), sin(power(n(std::hint::black_box(24)), n(std::hint::black_box(37)))), sin(power(n(std::hint::black_box(15)), n(std::hint::black_box(58)))), sin(power(n(std::hint::black_box(21)), n(std::hint::black_box(37)))), sin(power(n(std::hint::black_box(15)), n(std::hint::black_box(60)))), sin(power(n(std::hint::black_box(11)), n(std::hint::black_box(59)))), sin(power(n(std::hint::black_box(14)), n(std::hint::black_box(37)))), sin(power(n(std::hint::black_box(27)), n(std::hint::black_box(53)))), sin(power(n(std::hint::black_box(28)), n(std::hint::black_box(58)))), sin(power(n(std::hint::black_box(18)), n(std::hint::black_box(58)))), sin(power(n(std::hint::black_box(25)), n(std::hint::black_box(38)))), sin(power(n(std::hint::black_box(26)), n(std::hint::black_box(52)))), sin(power(n(std::hint::black_box(23)), n(std::hint::black_box(58)))), sin(power(n(std::hint::black_box(13)), n(std::hint::black_box(51)))), sin(power(n(std::hint::black_box(18)), n(std::hint::black_box(60))))])
 }
 
 fn b_2_0() -> V {
@@ -84,7 +84,7 @@ fn b_2_0() -> V {
 }
 
 fn b_3_0() -> V {
-    cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(100))))
+    list(vec![cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(104)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(88)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(140)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(133)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(116)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(79)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(76)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(135)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(102)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(80)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(79)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(140)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(63)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(136)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(73)))), cos(power(n(std::hint::black_box(10)), n(std::hint::black_box(79))))])
 }
 
 fn b_4_0() -> V {
@@ -116,34 +116,586 @@ fn b_10_0() -> V {
 }
 
 fn b_11_0() -> V {
-    list(vec![prime_pi(n(std::hint::black_box(9999551))), prime_pi(n(std::hint::black_box(9999355))), prime_pi(n(std::hint::black_box(9999996))), prime_pi(n(std::hint::black_box(9999903)))])
+    list(vec![prime_pi(n(std::hint::black_box(9550730))), prime_pi(n(std::hint::black_box(9354950))), prime_pi(n(std::hint::black_box(9995006))), prime_pi(n(std::hint::black_box(9902324)))])
+}
+
+fn b_11_1() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9693213))), prime_pi(n(std::hint::black_box(9240999))), prime_pi(n(std::hint::black_box(9206491))), prime_pi(n(std::hint::black_box(9928875)))])
+}
+
+fn b_11_2() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9525076))), prime_pi(n(std::hint::black_box(9251767))), prime_pi(n(std::hint::black_box(9239410))), prime_pi(n(std::hint::black_box(9993534)))])
+}
+
+fn b_11_3() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9038162))), prime_pi(n(std::hint::black_box(9945015))), prime_pi(n(std::hint::black_box(9164551))), prime_pi(n(std::hint::black_box(9243801)))])
+}
+
+fn b_11_4() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9805969))), prime_pi(n(std::hint::black_box(9757601))), prime_pi(n(std::hint::black_box(9894240))), prime_pi(n(std::hint::black_box(9905611)))])
+}
+
+fn b_11_5() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9395863))), prime_pi(n(std::hint::black_box(9917998))), prime_pi(n(std::hint::black_box(9720242))), prime_pi(n(std::hint::black_box(9271888)))])
+}
+
+fn b_11_6() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9779458))), prime_pi(n(std::hint::black_box(9710417))), prime_pi(n(std::hint::black_box(9643879))), prime_pi(n(std::hint::black_box(9923749)))])
+}
+
+fn b_11_7() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9110872))), prime_pi(n(std::hint::black_box(9696064))), prime_pi(n(std::hint::black_box(9394001))), prime_pi(n(std::hint::black_box(9976569)))])
+}
+
+fn b_11_8() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9840674))), prime_pi(n(std::hint::black_box(9095228))), prime_pi(n(std::hint::black_box(9360169))), prime_pi(n(std::hint::black_box(9028567)))])
+}
+
+fn b_11_9() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9957288))), prime_pi(n(std::hint::black_box(9641416))), prime_pi(n(std::hint::black_box(9648421))), prime_pi(n(std::hint::black_box(9062193)))])
+}
+
+fn b_11_10() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9667184))), prime_pi(n(std::hint::black_box(9121069))), prime_pi(n(std::hint::black_box(9352511))), prime_pi(n(std::hint::black_box(9897384)))])
+}
+
+fn b_11_11() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9593978))), prime_pi(n(std::hint::black_box(9881116))), prime_pi(n(std::hint::black_box(9041930))), prime_pi(n(std::hint::black_box(9637652)))])
+}
+
+fn b_11_12() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9831803))), prime_pi(n(std::hint::black_box(9997841))), prime_pi(n(std::hint::black_box(9992696))), prime_pi(n(std::hint::black_box(9377767)))])
+}
+
+fn b_11_13() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9684579))), prime_pi(n(std::hint::black_box(9410691))), prime_pi(n(std::hint::black_box(9608920))), prime_pi(n(std::hint::black_box(9184024)))])
+}
+
+fn b_11_14() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9395791))), prime_pi(n(std::hint::black_box(9470515))), prime_pi(n(std::hint::black_box(9475743))), prime_pi(n(std::hint::black_box(9652720)))])
+}
+
+fn b_11_15() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9540214))), prime_pi(n(std::hint::black_box(9302523))), prime_pi(n(std::hint::black_box(9796040))), prime_pi(n(std::hint::black_box(9853141)))])
+}
+
+fn b_11_16() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9563758))), prime_pi(n(std::hint::black_box(9224006))), prime_pi(n(std::hint::black_box(9590898))), prime_pi(n(std::hint::black_box(9449901)))])
+}
+
+fn b_11_17() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9057638))), prime_pi(n(std::hint::black_box(9136025))), prime_pi(n(std::hint::black_box(9414764))), prime_pi(n(std::hint::black_box(9517153)))])
+}
+
+fn b_11_18() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9701167))), prime_pi(n(std::hint::black_box(9889668))), prime_pi(n(std::hint::black_box(9232305))), prime_pi(n(std::hint::black_box(9655595)))])
+}
+
+fn b_11_19() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9857696))), prime_pi(n(std::hint::black_box(9528308))), prime_pi(n(std::hint::black_box(9542604))), prime_pi(n(std::hint::black_box(9432656)))])
+}
+
+fn b_11_20() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9379231))), prime_pi(n(std::hint::black_box(9518460))), prime_pi(n(std::hint::black_box(9991532))), prime_pi(n(std::hint::black_box(9339568)))])
+}
+
+fn b_11_21() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9822166))), prime_pi(n(std::hint::black_box(9351882))), prime_pi(n(std::hint::black_box(9550137))), prime_pi(n(std::hint::black_box(9390329)))])
+}
+
+fn b_11_22() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9623137))), prime_pi(n(std::hint::black_box(9818218))), prime_pi(n(std::hint::black_box(9458955))), prime_pi(n(std::hint::black_box(9139684)))])
+}
+
+fn b_11_23() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(9294563))), prime_pi(n(std::hint::black_box(9351859))), prime_pi(n(std::hint::black_box(9276210))), prime_pi(n(std::hint::black_box(9061806)))])
 }
 
 fn b_12_0() -> V {
-    list(vec![prime_pi(n(std::hint::black_box(999999551))), prime_pi(n(std::hint::black_box(999999355))), prime_pi(n(std::hint::black_box(999999996))), prime_pi(n(std::hint::black_box(999999903)))])
+    list(vec![prime_pi(n(std::hint::black_box(955072951))), prime_pi(n(std::hint::black_box(935494965))), prime_pi(n(std::hint::black_box(999500563))), prime_pi(n(std::hint::black_box(990232362)))])
+}
+
+fn b_12_1() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(969321293))), prime_pi(n(std::hint::black_box(924099920))), prime_pi(n(std::hint::black_box(920649106))), prime_pi(n(std::hint::black_box(992887433)))])
+}
+
+fn b_12_2() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(952507573))), prime_pi(n(std::hint::black_box(925176739))), prime_pi(n(std::hint::black_box(923941076))), prime_pi(n(std::hint::black_box(999353364)))])
+}
+
+fn b_12_3() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(903816211))), prime_pi(n(std::hint::black_box(994501468))), prime_pi(n(std::hint::black_box(916455109))), prime_pi(n(std::hint::black_box(924380079)))])
+}
+
+fn b_12_4() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(980596848))), prime_pi(n(std::hint::black_box(975760108))), prime_pi(n(std::hint::black_box(989424003))), prime_pi(n(std::hint::black_box(990561104)))])
+}
+
+fn b_12_5() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(939586352))), prime_pi(n(std::hint::black_box(991799801))), prime_pi(n(std::hint::black_box(972024137))), prime_pi(n(std::hint::black_box(927188846)))])
+}
+
+fn b_12_6() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(977945810))), prime_pi(n(std::hint::black_box(971041682))), prime_pi(n(std::hint::black_box(964387887))), prime_pi(n(std::hint::black_box(992374835)))])
+}
+
+fn b_12_7() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(911087264))), prime_pi(n(std::hint::black_box(969606345))), prime_pi(n(std::hint::black_box(939400104))), prime_pi(n(std::hint::black_box(997656883)))])
+}
+
+fn b_12_8() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(984067327))), prime_pi(n(std::hint::black_box(909522818))), prime_pi(n(std::hint::black_box(936016886))), prime_pi(n(std::hint::black_box(902856707)))])
+}
+
+fn b_12_9() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(995728789))), prime_pi(n(std::hint::black_box(964141636))), prime_pi(n(std::hint::black_box(964842056))), prime_pi(n(std::hint::black_box(906219321)))])
+}
+
+fn b_12_10() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(966718369))), prime_pi(n(std::hint::black_box(912106977))), prime_pi(n(std::hint::black_box(935251120))), prime_pi(n(std::hint::black_box(989738393)))])
+}
+
+fn b_12_11() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(959397752))), prime_pi(n(std::hint::black_box(988111588))), prime_pi(n(std::hint::black_box(904193050))), prime_pi(n(std::hint::black_box(963765214)))])
+}
+
+fn b_12_12() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(983180266))), prime_pi(n(std::hint::black_box(999784006))), prime_pi(n(std::hint::black_box(999269507))), prime_pi(n(std::hint::black_box(937776757)))])
+}
+
+fn b_12_13() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(968457891))), prime_pi(n(std::hint::black_box(941069060))), prime_pi(n(std::hint::black_box(960891979))), prime_pi(n(std::hint::black_box(918402446)))])
+}
+
+fn b_12_14() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(939579130))), prime_pi(n(std::hint::black_box(947051477))), prime_pi(n(std::hint::black_box(947574266))), prime_pi(n(std::hint::black_box(965271946)))])
+}
+
+fn b_12_15() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(954021370))), prime_pi(n(std::hint::black_box(930252360))), prime_pi(n(std::hint::black_box(979603963))), prime_pi(n(std::hint::black_box(985314034)))])
+}
+
+fn b_12_16() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(956375763))), prime_pi(n(std::hint::black_box(922400666))), prime_pi(n(std::hint::black_box(959089789))), prime_pi(n(std::hint::black_box(944990117)))])
+}
+
+fn b_12_17() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(905763799))), prime_pi(n(std::hint::black_box(913602583))), prime_pi(n(std::hint::black_box(941476425))), prime_pi(n(std::hint::black_box(951715282)))])
+}
+
+fn b_12_18() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(970116710))), prime_pi(n(std::hint::black_box(988966751))), prime_pi(n(std::hint::black_box(923230573))), prime_pi(n(std::hint::black_box(965559459)))])
+}
+
+fn b_12_19() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(985769538))), prime_pi(n(std::hint::black_box(952830810))), prime_pi(n(std::hint::black_box(954260413))), prime_pi(n(std::hint::black_box(943265626)))])
+}
+
+fn b_12_20() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(937923128))), prime_pi(n(std::hint::black_box(951845951))), prime_pi(n(std::hint::black_box(999153117))), prime_pi(n(std::hint::black_box(933956842)))])
+}
+
+fn b_12_21() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(982216530))), prime_pi(n(std::hint::black_box(935188248))), prime_pi(n(std::hint::black_box(955013714))), prime_pi(n(std::hint::black_box(939032904)))])
+}
+
+fn b_12_22() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(962313669))), prime_pi(n(std::hint::black_box(981821734))), prime_pi(n(std::hint::black_box(945895477))), prime_pi(n(std::hint::black_box(913968437)))])
+}
+
+fn b_12_23() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(929456327))), prime_pi(n(std::hint::black_box(935185885))), prime_pi(n(std::hint::black_box(927621058))), prime_pi(n(std::hint::black_box(906180686)))])
 }
 
 fn b_13_0() -> V {
-    list(vec![prime_pi(n(std::hint::black_box(99999999551))), prime_pi(n(std::hint::black_box(99999999355))), prime_pi(n(std::hint::black_box(99999999996))), prime_pi(n(std::hint::black_box(99999999903)))])
+    list(vec![prime_pi(n(std::hint::black_box(95507295132))), prime_pi(n(std::hint::black_box(93549496538))), prime_pi(n(std::hint::black_box(99950056212))), prime_pi(n(std::hint::black_box(99023236141)))])
+}
+
+fn b_13_1() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(96932129290))), prime_pi(n(std::hint::black_box(92409992071))), prime_pi(n(std::hint::black_box(92064910608))), prime_pi(n(std::hint::black_box(99288743213)))])
+}
+
+fn b_13_2() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(95250757248))), prime_pi(n(std::hint::black_box(92517673904))), prime_pi(n(std::hint::black_box(92394107582))), prime_pi(n(std::hint::black_box(99935336360)))])
+}
+
+fn b_13_3() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(90381621150))), prime_pi(n(std::hint::black_box(99450146722))), prime_pi(n(std::hint::black_box(91645510958))), prime_pi(n(std::hint::black_box(92438007944)))])
+}
+
+fn b_13_4() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(98059684739))), prime_pi(n(std::hint::black_box(97576010772))), prime_pi(n(std::hint::black_box(98942400250))), prime_pi(n(std::hint::black_box(99056110350)))])
+}
+
+fn b_13_5() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(93958635204))), prime_pi(n(std::hint::black_box(99179980040))), prime_pi(n(std::hint::black_box(97202413660))), prime_pi(n(std::hint::black_box(92718884598)))])
+}
+
+fn b_13_6() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(97794580986))), prime_pi(n(std::hint::black_box(97104168222))), prime_pi(n(std::hint::black_box(96438788646))), prime_pi(n(std::hint::black_box(99237483484)))])
+}
+
+fn b_13_7() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(91108726391))), prime_pi(n(std::hint::black_box(96960634494))), prime_pi(n(std::hint::black_box(93940010406))), prime_pi(n(std::hint::black_box(99765688277)))])
+}
+
+fn b_13_8() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(98406732704))), prime_pi(n(std::hint::black_box(90952281842))), prime_pi(n(std::hint::black_box(93601688628))), prime_pi(n(std::hint::black_box(90285670785)))])
+}
+
+fn b_13_9() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(99572878872))), prime_pi(n(std::hint::black_box(96414163553))), prime_pi(n(std::hint::black_box(96484205546))), prime_pi(n(std::hint::black_box(90621932153)))])
+}
+
+fn b_13_10() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(96671836903))), prime_pi(n(std::hint::black_box(91210697784))), prime_pi(n(std::hint::black_box(93525111992))), prime_pi(n(std::hint::black_box(98973839267)))])
+}
+
+fn b_13_11() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(95939775237))), prime_pi(n(std::hint::black_box(98811158764))), prime_pi(n(std::hint::black_box(90419305050))), prime_pi(n(std::hint::black_box(96376521348)))])
+}
+
+fn b_13_12() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(98318026604))), prime_pi(n(std::hint::black_box(99978400504))), prime_pi(n(std::hint::black_box(99926950625))), prime_pi(n(std::hint::black_box(93777675684)))])
+}
+
+fn b_13_13() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(96845789033))), prime_pi(n(std::hint::black_box(94106905972))), prime_pi(n(std::hint::black_box(96089197870))), prime_pi(n(std::hint::black_box(91840244599)))])
+}
+
+fn b_13_14() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(93957912980))), prime_pi(n(std::hint::black_box(94705147690))), prime_pi(n(std::hint::black_box(94757426607))), prime_pi(n(std::hint::black_box(96527194581)))])
+}
+
+fn b_13_15() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(95402136953))), prime_pi(n(std::hint::black_box(93025236046))), prime_pi(n(std::hint::black_box(97960396319))), prime_pi(n(std::hint::black_box(98531403316)))])
+}
+
+fn b_13_16() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(95637576338))), prime_pi(n(std::hint::black_box(92240066647))), prime_pi(n(std::hint::black_box(95908978931))), prime_pi(n(std::hint::black_box(94499011671)))])
+}
+
+fn b_13_17() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(90576379902))), prime_pi(n(std::hint::black_box(91360258304))), prime_pi(n(std::hint::black_box(94147642502))), prime_pi(n(std::hint::black_box(95171528182)))])
+}
+
+fn b_13_18() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(97011671011))), prime_pi(n(std::hint::black_box(98896675050))), prime_pi(n(std::hint::black_box(92323057307))), prime_pi(n(std::hint::black_box(96555945925)))])
+}
+
+fn b_13_19() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(98576953730))), prime_pi(n(std::hint::black_box(95283080994))), prime_pi(n(std::hint::black_box(95426041305))), prime_pi(n(std::hint::black_box(94326562602)))])
+}
+
+fn b_13_20() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(93792312827))), prime_pi(n(std::hint::black_box(95184595052))), prime_pi(n(std::hint::black_box(99915311668))), prime_pi(n(std::hint::black_box(93395684210)))])
+}
+
+fn b_13_21() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(98221652990))), prime_pi(n(std::hint::black_box(93518824829))), prime_pi(n(std::hint::black_box(95501371373))), prime_pi(n(std::hint::black_box(93903290406)))])
+}
+
+fn b_13_22() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(96231366843))), prime_pi(n(std::hint::black_box(98182173327))), prime_pi(n(std::hint::black_box(94589547724))), prime_pi(n(std::hint::black_box(91396843774)))])
+}
+
+fn b_13_23() -> V {
+    list(vec![prime_pi(n(std::hint::black_box(92945632681))), prime_pi(n(std::hint::black_box(93518588550))), prime_pi(n(std::hint::black_box(92762105814))), prime_pi(n(std::hint::black_box(90618068596)))])
 }
 
 fn b_14_0() -> V {
-    list(vec![nth_prime(n(std::hint::black_box(99551))), nth_prime(n(std::hint::black_box(99355))), nth_prime(n(std::hint::black_box(99996))), nth_prime(n(std::hint::black_box(99903))), nth_prime(n(std::hint::black_box(99693))), nth_prime(n(std::hint::black_box(99241))), nth_prime(n(std::hint::black_box(99206))), nth_prime(n(std::hint::black_box(99929)))])
+    list(vec![nth_prime(n(std::hint::black_box(95507))), nth_prime(n(std::hint::black_box(93549))), nth_prime(n(std::hint::black_box(99951))), nth_prime(n(std::hint::black_box(99024))), nth_prime(n(std::hint::black_box(96932))), nth_prime(n(std::hint::black_box(92410))), nth_prime(n(std::hint::black_box(92065))), nth_prime(n(std::hint::black_box(99289)))])
+}
+
+fn b_14_1() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(95251))), nth_prime(n(std::hint::black_box(92517))), nth_prime(n(std::hint::black_box(92394))), nth_prime(n(std::hint::black_box(99936))), nth_prime(n(std::hint::black_box(90381))), nth_prime(n(std::hint::black_box(99451))), nth_prime(n(std::hint::black_box(91645))), nth_prime(n(std::hint::black_box(92438)))])
+}
+
+fn b_14_2() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(98060))), nth_prime(n(std::hint::black_box(97576))), nth_prime(n(std::hint::black_box(98943))), nth_prime(n(std::hint::black_box(99057))), nth_prime(n(std::hint::black_box(93959))), nth_prime(n(std::hint::black_box(99180))), nth_prime(n(std::hint::black_box(97203))), nth_prime(n(std::hint::black_box(92719)))])
+}
+
+fn b_14_3() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(97795))), nth_prime(n(std::hint::black_box(97104))), nth_prime(n(std::hint::black_box(96439))), nth_prime(n(std::hint::black_box(99238))), nth_prime(n(std::hint::black_box(91108))), nth_prime(n(std::hint::black_box(96961))), nth_prime(n(std::hint::black_box(93940))), nth_prime(n(std::hint::black_box(99766)))])
+}
+
+fn b_14_4() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(98407))), nth_prime(n(std::hint::black_box(90952))), nth_prime(n(std::hint::black_box(93602))), nth_prime(n(std::hint::black_box(90285))), nth_prime(n(std::hint::black_box(99573))), nth_prime(n(std::hint::black_box(96414))), nth_prime(n(std::hint::black_box(96484))), nth_prime(n(std::hint::black_box(90621)))])
+}
+
+fn b_14_5() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(96672))), nth_prime(n(std::hint::black_box(91210))), nth_prime(n(std::hint::black_box(93525))), nth_prime(n(std::hint::black_box(98974))), nth_prime(n(std::hint::black_box(95940))), nth_prime(n(std::hint::black_box(98812))), nth_prime(n(std::hint::black_box(90419))), nth_prime(n(std::hint::black_box(96377)))])
+}
+
+fn b_14_6() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(98318))), nth_prime(n(std::hint::black_box(99979))), nth_prime(n(std::hint::black_box(99927))), nth_prime(n(std::hint::black_box(93778))), nth_prime(n(std::hint::black_box(96846))), nth_prime(n(std::hint::black_box(94107))), nth_prime(n(std::hint::black_box(96089))), nth_prime(n(std::hint::black_box(91840)))])
+}
+
+fn b_14_7() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(93958))), nth_prime(n(std::hint::black_box(94705))), nth_prime(n(std::hint::black_box(94757))), nth_prime(n(std::hint::black_box(96527))), nth_prime(n(std::hint::black_box(95402))), nth_prime(n(std::hint::black_box(93025))), nth_prime(n(std::hint::black_box(97961))), nth_prime(n(std::hint::black_box(98532)))])
+}
+
+fn b_14_8() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(95638))), nth_prime(n(std::hint::black_box(92240))), nth_prime(n(std::hint::black_box(95909))), nth_prime(n(std::hint::black_box(94499))), nth_prime(n(std::hint::black_box(90576))), nth_prime(n(std::hint::black_box(91360))), nth_prime(n(std::hint::black_box(94148))), nth_prime(n(std::hint::black_box(95172)))])
+}
+
+fn b_14_9() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(97012))), nth_prime(n(std::hint::black_box(98897))), nth_prime(n(std::hint::black_box(92323))), nth_prime(n(std::hint::black_box(96556))), nth_prime(n(std::hint::black_box(98577))), nth_prime(n(std::hint::black_box(95283))), nth_prime(n(std::hint::black_box(95426))), nth_prime(n(std::hint::black_box(94326)))])
+}
+
+fn b_14_10() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(93792))), nth_prime(n(std::hint::black_box(95185))), nth_prime(n(std::hint::black_box(99916))), nth_prime(n(std::hint::black_box(93396))), nth_prime(n(std::hint::black_box(98222))), nth_prime(n(std::hint::black_box(93519))), nth_prime(n(std::hint::black_box(95501))), nth_prime(n(std::hint::black_box(93903)))])
+}
+
+fn b_14_11() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(96231))), nth_prime(n(std::hint::black_box(98182))), nth_prime(n(std::hint::black_box(94590))), nth_prime(n(std::hint::black_box(91396))), nth_prime(n(std::hint::black_box(92945))), nth_prime(n(std::hint::black_box(93518))), nth_prime(n(std::hint::black_box(92762))), nth_prime(n(std::hint::black_box(90618)))])
+}
+
+fn b_14_12() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(99133))), nth_prime(n(std::hint::black_box(99525))), nth_prime(n(std::hint::black_box(98611))), nth_prime(n(std::hint::black_box(91555))), nth_prime(n(std::hint::black_box(92514))), nth_prime(n(std::hint::black_box(96827))), nth_prime(n(std::hint::black_box(94067))), nth_prime(n(std::hint::black_box(95612)))])
+}
+
+fn b_14_13() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(95880))), nth_prime(n(std::hint::black_box(96843))), nth_prime(n(std::hint::black_box(97658))), nth_prime(n(std::hint::black_box(99963))), nth_prime(n(std::hint::black_box(99169))), nth_prime(n(std::hint::black_box(90897))), nth_prime(n(std::hint::black_box(97997))), nth_prime(n(std::hint::black_box(98028)))])
+}
+
+fn b_14_14() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(92996))), nth_prime(n(std::hint::black_box(92102))), nth_prime(n(std::hint::black_box(93118))), nth_prime(n(std::hint::black_box(96343))), nth_prime(n(std::hint::black_box(94637))), nth_prime(n(std::hint::black_box(99222))), nth_prime(n(std::hint::black_box(90839))), nth_prime(n(std::hint::black_box(97583)))])
+}
+
+fn b_14_15() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(98301))), nth_prime(n(std::hint::black_box(99932))), nth_prime(n(std::hint::black_box(92828))), nth_prime(n(std::hint::black_box(94105))), nth_prime(n(std::hint::black_box(92823))), nth_prime(n(std::hint::black_box(96354))), nth_prime(n(std::hint::black_box(99815))), nth_prime(n(std::hint::black_box(90164)))])
+}
+
+fn b_14_16() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(90430))), nth_prime(n(std::hint::black_box(94835))), nth_prime(n(std::hint::black_box(93343))), nth_prime(n(std::hint::black_box(97640))), nth_prime(n(std::hint::black_box(96537))), nth_prime(n(std::hint::black_box(90231))), nth_prime(n(std::hint::black_box(98908))), nth_prime(n(std::hint::black_box(95966)))])
+}
+
+fn b_14_17() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(92676))), nth_prime(n(std::hint::black_box(93546))), nth_prime(n(std::hint::black_box(97753))), nth_prime(n(std::hint::black_box(91764))), nth_prime(n(std::hint::black_box(94639))), nth_prime(n(std::hint::black_box(96636))), nth_prime(n(std::hint::black_box(97580))), nth_prime(n(std::hint::black_box(99195)))])
+}
+
+fn b_14_18() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(97121))), nth_prime(n(std::hint::black_box(96653))), nth_prime(n(std::hint::black_box(98977))), nth_prime(n(std::hint::black_box(93755))), nth_prime(n(std::hint::black_box(91785))), nth_prime(n(std::hint::black_box(99476))), nth_prime(n(std::hint::black_box(93267))), nth_prime(n(std::hint::black_box(95374)))])
+}
+
+fn b_14_19() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(96233))), nth_prime(n(std::hint::black_box(94899))), nth_prime(n(std::hint::black_box(94001))), nth_prime(n(std::hint::black_box(99870))), nth_prime(n(std::hint::black_box(92626))), nth_prime(n(std::hint::black_box(92174))), nth_prime(n(std::hint::black_box(98831))), nth_prime(n(std::hint::black_box(92150)))])
+}
+
+fn b_14_20() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(93291))), nth_prime(n(std::hint::black_box(95156))), nth_prime(n(std::hint::black_box(99311))), nth_prime(n(std::hint::black_box(94972))), nth_prime(n(std::hint::black_box(99428))), nth_prime(n(std::hint::black_box(93359))), nth_prime(n(std::hint::black_box(92852))), nth_prime(n(std::hint::black_box(90951)))])
+}
+
+fn b_14_21() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(95649))), nth_prime(n(std::hint::black_box(98009))), nth_prime(n(std::hint::black_box(91178))), nth_prime(n(std::hint::black_box(91580))), nth_prime(n(std::hint::black_box(99342))), nth_prime(n(std::hint::black_box(91569))), nth_prime(n(std::hint::black_box(96774))), nth_prime(n(std::hint::black_box(92799)))])
+}
+
+fn b_14_22() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(98815))), nth_prime(n(std::hint::black_box(97962))), nth_prime(n(std::hint::black_box(97774))), nth_prime(n(std::hint::black_box(92822))), nth_prime(n(std::hint::black_box(96332))), nth_prime(n(std::hint::black_box(94042))), nth_prime(n(std::hint::black_box(99765))), nth_prime(n(std::hint::black_box(97832)))])
+}
+
+fn b_14_23() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(93914))), nth_prime(n(std::hint::black_box(91341))), nth_prime(n(std::hint::black_box(92110))), nth_prime(n(std::hint::black_box(97346))), nth_prime(n(std::hint::black_box(98739))), nth_prime(n(std::hint::black_box(97556))), nth_prime(n(std::hint::black_box(92988))), nth_prime(n(std::hint::black_box(97345)))])
 }
 
 fn b_15_0() -> V {
-    list(vec![nth_prime(n(std::hint::black_box(9999551))), nth_prime(n(std::hint::black_box(9999355))), nth_prime(n(std::hint::black_box(9999996))), nth_prime(n(std::hint::black_box(9999903)))])
+    list(vec![nth_prime(n(std::hint::black_box(9550730))), nth_prime(n(std::hint::black_box(9354950))), nth_prime(n(std::hint::black_box(9995006))), nth_prime(n(std::hint::black_box(9902324)))])
+}
+
+fn b_15_1() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9693213))), nth_prime(n(std::hint::black_box(9240999))), nth_prime(n(std::hint::black_box(9206491))), nth_prime(n(std::hint::black_box(9928875)))])
+}
+
+fn b_15_2() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9525076))), nth_prime(n(std::hint::black_box(9251767))), nth_prime(n(std::hint::black_box(9239410))), nth_prime(n(std::hint::black_box(9993534)))])
+}
+
+fn b_15_3() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9038162))), nth_prime(n(std::hint::black_box(9945015))), nth_prime(n(std::hint::black_box(9164551))), nth_prime(n(std::hint::black_box(9243801)))])
+}
+
+fn b_15_4() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9805969))), nth_prime(n(std::hint::black_box(9757601))), nth_prime(n(std::hint::black_box(9894240))), nth_prime(n(std::hint::black_box(9905611)))])
+}
+
+fn b_15_5() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9395863))), nth_prime(n(std::hint::black_box(9917998))), nth_prime(n(std::hint::black_box(9720242))), nth_prime(n(std::hint::black_box(9271888)))])
+}
+
+fn b_15_6() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9779458))), nth_prime(n(std::hint::black_box(9710417))), nth_prime(n(std::hint::black_box(9643879))), nth_prime(n(std::hint::black_box(9923749)))])
+}
+
+fn b_15_7() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9110872))), nth_prime(n(std::hint::black_box(9696064))), nth_prime(n(std::hint::black_box(9394001))), nth_prime(n(std::hint::black_box(9976569)))])
+}
+
+fn b_15_8() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9840674))), nth_prime(n(std::hint::black_box(9095228))), nth_prime(n(std::hint::black_box(9360169))), nth_prime(n(std::hint::black_box(9028567)))])
+}
+
+fn b_15_9() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9957288))), nth_prime(n(std::hint::black_box(9641416))), nth_prime(n(std::hint::black_box(9648421))), nth_prime(n(std::hint::black_box(9062193)))])
+}
+
+fn b_15_10() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9667184))), nth_prime(n(std::hint::black_box(9121069))), nth_prime(n(std::hint::black_box(9352511))), nth_prime(n(std::hint::black_box(9897384)))])
+}
+
+fn b_15_11() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9593978))), nth_prime(n(std::hint::black_box(9881116))), nth_prime(n(std::hint::black_box(9041930))), nth_prime(n(std::hint::black_box(9637652)))])
+}
+
+fn b_15_12() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9831803))), nth_prime(n(std::hint::black_box(9997841))), nth_prime(n(std::hint::black_box(9992696))), nth_prime(n(std::hint::black_box(9377767)))])
+}
+
+fn b_15_13() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9684579))), nth_prime(n(std::hint::black_box(9410691))), nth_prime(n(std::hint::black_box(9608920))), nth_prime(n(std::hint::black_box(9184024)))])
+}
+
+fn b_15_14() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9395791))), nth_prime(n(std::hint::black_box(9470515))), nth_prime(n(std::hint::black_box(9475743))), nth_prime(n(std::hint::black_box(9652720)))])
+}
+
+fn b_15_15() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9540214))), nth_prime(n(std::hint::black_box(9302523))), nth_prime(n(std::hint::black_box(9796040))), nth_prime(n(std::hint::black_box(9853141)))])
+}
+
+fn b_15_16() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9563758))), nth_prime(n(std::hint::black_box(9224006))), nth_prime(n(std::hint::black_box(9590898))), nth_prime(n(std::hint::black_box(9449901)))])
+}
+
+fn b_15_17() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9057638))), nth_prime(n(std::hint::black_box(9136025))), nth_prime(n(std::hint::black_box(9414764))), nth_prime(n(std::hint::black_box(9517153)))])
+}
+
+fn b_15_18() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9701167))), nth_prime(n(std::hint::black_box(9889668))), nth_prime(n(std::hint::black_box(9232305))), nth_prime(n(std::hint::black_box(9655595)))])
+}
+
+fn b_15_19() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9857696))), nth_prime(n(std::hint::black_box(9528308))), nth_prime(n(std::hint::black_box(9542604))), nth_prime(n(std::hint::black_box(9432656)))])
+}
+
+fn b_15_20() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9379231))), nth_prime(n(std::hint::black_box(9518460))), nth_prime(n(std::hint::black_box(9991532))), nth_prime(n(std::hint::black_box(9339568)))])
+}
+
+fn b_15_21() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9822166))), nth_prime(n(std::hint::black_box(9351882))), nth_prime(n(std::hint::black_box(9550137))), nth_prime(n(std::hint::black_box(9390329)))])
+}
+
+fn b_15_22() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9623137))), nth_prime(n(std::hint::black_box(9818218))), nth_prime(n(std::hint::black_box(9458955))), nth_prime(n(std::hint::black_box(9139684)))])
+}
+
+fn b_15_23() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(9294563))), nth_prime(n(std::hint::black_box(9351859))), nth_prime(n(std::hint::black_box(9276210))), nth_prime(n(std::hint::black_box(9061806)))])
 }
 
 fn b_16_0() -> V {
-    list(vec![nth_prime(n(std::hint::black_box(999999551))), nth_prime(n(std::hint::black_box(999999355))), nth_prime(n(std::hint::black_box(999999996))), nth_prime(n(std::hint::black_box(999999903)))])
+    list(vec![nth_prime(n(std::hint::black_box(955072951))), nth_prime(n(std::hint::black_box(935494965))), nth_prime(n(std::hint::black_box(999500563))), nth_prime(n(std::hint::black_box(990232362)))])
+}
+
+fn b_16_1() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(969321293))), nth_prime(n(std::hint::black_box(924099920))), nth_prime(n(std::hint::black_box(920649106))), nth_prime(n(std::hint::black_box(992887433)))])
+}
+
+fn b_16_2() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(952507573))), nth_prime(n(std::hint::black_box(925176739))), nth_prime(n(std::hint::black_box(923941076))), nth_prime(n(std::hint::black_box(999353364)))])
+}
+
+fn b_16_3() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(903816211))), nth_prime(n(std::hint::black_box(994501468))), nth_prime(n(std::hint::black_box(916455109))), nth_prime(n(std::hint::black_box(924380079)))])
+}
+
+fn b_16_4() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(980596848))), nth_prime(n(std::hint::black_box(975760108))), nth_prime(n(std::hint::black_box(989424003))), nth_prime(n(std::hint::black_box(990561104)))])
+}
+
+fn b_16_5() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(939586352))), nth_prime(n(std::hint::black_box(991799801))), nth_prime(n(std::hint::black_box(972024137))), nth_prime(n(std::hint::black_box(927188846)))])
+}
+
+fn b_16_6() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(977945810))), nth_prime(n(std::hint::black_box(971041682))), nth_prime(n(std::hint::black_box(964387887))), nth_prime(n(std::hint::black_box(992374835)))])
+}
+
+fn b_16_7() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(911087264))), nth_prime(n(std::hint::black_box(969606345))), nth_prime(n(std::hint::black_box(939400104))), nth_prime(n(std::hint::black_box(997656883)))])
+}
+
+fn b_16_8() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(984067327))), nth_prime(n(std::hint::black_box(909522818))), nth_prime(n(std::hint::black_box(936016886))), nth_prime(n(std::hint::black_box(902856707)))])
+}
+
+fn b_16_9() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(995728789))), nth_prime(n(std::hint::black_box(964141636))), nth_prime(n(std::hint::black_box(964842056))), nth_prime(n(std::hint::black_box(906219321)))])
+}
+
+fn b_16_10() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(966718369))), nth_prime(n(std::hint::black_box(912106977))), nth_prime(n(std::hint::black_box(935251120))), nth_prime(n(std::hint::black_box(989738393)))])
+}
+
+fn b_16_11() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(959397752))), nth_prime(n(std::hint::black_box(988111588))), nth_prime(n(std::hint::black_box(904193050))), nth_prime(n(std::hint::black_box(963765214)))])
+}
+
+fn b_16_12() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(983180266))), nth_prime(n(std::hint::black_box(999784006))), nth_prime(n(std::hint::black_box(999269507))), nth_prime(n(std::hint::black_box(937776757)))])
+}
+
+fn b_16_13() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(968457891))), nth_prime(n(std::hint::black_box(941069060))), nth_prime(n(std::hint::black_box(960891979))), nth_prime(n(std::hint::black_box(918402446)))])
+}
+
+fn b_16_14() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(939579130))), nth_prime(n(std::hint::black_box(947051477))), nth_prime(n(std::hint::black_box(947574266))), nth_prime(n(std::hint::black_box(965271946)))])
+}
+
+fn b_16_15() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(954021370))), nth_prime(n(std::hint::black_box(930252360))), nth_prime(n(std::hint::black_box(979603963))), nth_prime(n(std::hint::black_box(985314034)))])
+}
+
+fn b_16_16() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(956375763))), nth_prime(n(std::hint::black_box(922400666))), nth_prime(n(std::hint::black_box(959089789))), nth_prime(n(std::hint::black_box(944990117)))])
+}
+
+fn b_16_17() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(905763799))), nth_prime(n(std::hint::black_box(913602583))), nth_prime(n(std::hint::black_box(941476425))), nth_prime(n(std::hint::black_box(951715282)))])
+}
+
+fn b_16_18() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(970116710))), nth_prime(n(std::hint::black_box(988966751))), nth_prime(n(std::hint::black_box(923230573))), nth_prime(n(std::hint::black_box(965559459)))])
+}
+
+fn b_16_19() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(985769538))), nth_prime(n(std::hint::black_box(952830810))), nth_prime(n(std::hint::black_box(954260413))), nth_prime(n(std::hint::black_box(943265626)))])
+}
+
+fn b_16_20() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(937923128))), nth_prime(n(std::hint::black_box(951845951))), nth_prime(n(std::hint::black_box(999153117))), nth_prime(n(std::hint::black_box(933956842)))])
+}
+
+fn b_16_21() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(982216530))), nth_prime(n(std::hint::black_box(935188248))), nth_prime(n(std::hint::black_box(955013714))), nth_prime(n(std::hint::black_box(939032904)))])
+}
+
+fn b_16_22() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(962313669))), nth_prime(n(std::hint::black_box(981821734))), nth_prime(n(std::hint::black_box(945895477))), nth_prime(n(std::hint::black_box(913968437)))])
+}
+
+fn b_16_23() -> V {
+    list(vec![nth_prime(n(std::hint::black_box(929456327))), nth_prime(n(std::hint::black_box(935185885))), nth_prime(n(std::hint::black_box(927621058))), nth_prime(n(std::hint::black_box(906180686)))])
 }
 
 const CASES: &[CaseEntry] = &[
     CaseEntry { name: "Gamma/gamma-random-reals-machine", budget_ms: 10000.0, calls: &[b_0_0] },
-    CaseEntry { name: "Sin/sin-24-to-the-40", budget_ms: 10000.0, calls: &[b_1_0] },
+    CaseEntry { name: "Sin/sin-random-huge-powers-machine", budget_ms: 10000.0, calls: &[b_1_0] },
     CaseEntry { name: "Sin/sin-random-1000-bit-integers-machine", budget_ms: 10000.0, calls: &[b_2_0] },
-    CaseEntry { name: "Cos/cos-10-to-the-100", budget_ms: 10000.0, calls: &[b_3_0] },
+    CaseEntry { name: "Cos/cos-10-to-random-powers-machine", budget_ms: 10000.0, calls: &[b_3_0] },
     CaseEntry { name: "Factorial/factorial-near-10-to-the-4", budget_ms: 10000.0, calls: &[b_4_0] },
     CaseEntry { name: "Factorial/factorial-near-10-to-the-5", budget_ms: 10000.0, calls: &[b_5_0] },
     CaseEntry { name: "Factorial/factorial-near-10-to-the-6", budget_ms: 30000.0, calls: &[b_6_0] },
@@ -151,12 +703,12 @@ const CASES: &[CaseEntry] = &[
     CaseEntry { name: "Binomial/binomial-near-10-to-the-5-choose-3-10-to-the-4", budget_ms: 10000.0, calls: &[b_8_0] },
     CaseEntry { name: "GCD/gcd-random-10000-bit", budget_ms: 10000.0, calls: &[b_9_0] },
     CaseEntry { name: "PowerMod/powermod-random-2048-bit", budget_ms: 10000.0, calls: &[b_10_0] },
-    CaseEntry { name: "PrimePi/primepi-near-10-to-the-7", budget_ms: 10000.0, calls: &[b_11_0] },
-    CaseEntry { name: "PrimePi/primepi-near-10-to-the-9", budget_ms: 10000.0, calls: &[b_12_0] },
-    CaseEntry { name: "PrimePi/primepi-near-10-to-the-11", budget_ms: 30000.0, calls: &[b_13_0] },
-    CaseEntry { name: "Prime/prime-near-10-to-the-5", budget_ms: 10000.0, calls: &[b_14_0] },
-    CaseEntry { name: "Prime/prime-near-10-to-the-7", budget_ms: 10000.0, calls: &[b_15_0] },
-    CaseEntry { name: "Prime/prime-near-10-to-the-9", budget_ms: 30000.0, calls: &[b_16_0] },
+    CaseEntry { name: "PrimePi/primepi-below-10-to-the-7", budget_ms: 10000.0, calls: &[b_11_0, b_11_1, b_11_2, b_11_3, b_11_4, b_11_5, b_11_6, b_11_7, b_11_8, b_11_9, b_11_10, b_11_11, b_11_12, b_11_13, b_11_14, b_11_15, b_11_16, b_11_17, b_11_18, b_11_19, b_11_20, b_11_21, b_11_22, b_11_23] },
+    CaseEntry { name: "PrimePi/primepi-below-10-to-the-9", budget_ms: 10000.0, calls: &[b_12_0, b_12_1, b_12_2, b_12_3, b_12_4, b_12_5, b_12_6, b_12_7, b_12_8, b_12_9, b_12_10, b_12_11, b_12_12, b_12_13, b_12_14, b_12_15, b_12_16, b_12_17, b_12_18, b_12_19, b_12_20, b_12_21, b_12_22, b_12_23] },
+    CaseEntry { name: "PrimePi/primepi-below-10-to-the-11", budget_ms: 30000.0, calls: &[b_13_0, b_13_1, b_13_2, b_13_3, b_13_4, b_13_5, b_13_6, b_13_7, b_13_8, b_13_9, b_13_10, b_13_11, b_13_12, b_13_13, b_13_14, b_13_15, b_13_16, b_13_17, b_13_18, b_13_19, b_13_20, b_13_21, b_13_22, b_13_23] },
+    CaseEntry { name: "Prime/prime-below-10-to-the-5", budget_ms: 10000.0, calls: &[b_14_0, b_14_1, b_14_2, b_14_3, b_14_4, b_14_5, b_14_6, b_14_7, b_14_8, b_14_9, b_14_10, b_14_11, b_14_12, b_14_13, b_14_14, b_14_15, b_14_16, b_14_17, b_14_18, b_14_19, b_14_20, b_14_21, b_14_22, b_14_23] },
+    CaseEntry { name: "Prime/prime-below-10-to-the-7", budget_ms: 10000.0, calls: &[b_15_0, b_15_1, b_15_2, b_15_3, b_15_4, b_15_5, b_15_6, b_15_7, b_15_8, b_15_9, b_15_10, b_15_11, b_15_12, b_15_13, b_15_14, b_15_15, b_15_16, b_15_17, b_15_18, b_15_19, b_15_20, b_15_21, b_15_22, b_15_23] },
+    CaseEntry { name: "Prime/prime-below-10-to-the-9", budget_ms: 30000.0, calls: &[b_16_0, b_16_1, b_16_2, b_16_3, b_16_4, b_16_5, b_16_6, b_16_7, b_16_8, b_16_9, b_16_10, b_16_11, b_16_12, b_16_13, b_16_14, b_16_15, b_16_16, b_16_17, b_16_18, b_16_19, b_16_20, b_16_21, b_16_22, b_16_23] },
 ];
 
 fn json_string(s: &str) -> String {
