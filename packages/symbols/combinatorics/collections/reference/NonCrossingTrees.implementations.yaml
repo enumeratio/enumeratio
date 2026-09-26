@@ -7,3 +7,26 @@ count-noncrossingtrees-5-273-binom-15-5-11:
     out: "273"
   fullform:
     in: Count[NonCrossingTrees[5]]
+every-element-of-noncrossingtrees-3:
+  epsil:
+    in: Take(NonCrossingTrees(3), 12)
+    out: |-
+      [
+        [3, 0, 0, 3, 0, 0, 3, 0, 0, 0],
+        [3, 0, 0, 3, 0, 3, 0, 0, 0, 0],
+        [3, 0, 0, 3, 3, 0, 0, 0, 0, 0],
+        [3, 0, 3, 0, 0, 0, 3, 0, 0, 0],
+        [3, 0, 3, 0, 0, 3, 0, 0, 0, 0],
+        [3, 0, 3, 0, 3, 0, 0, 0, 0, 0],
+        [3, 0, 3, 3, 0, 0, 0, 0, 0, 0],
+        [3, 3, 0, 0, 0, 0, 3, 0, 0, 0],
+        [3, 3, 0, 0, 0, 3, 0, 0, 0, 0],
+        [3, 3, 0, 0, 3, 0, 0, 0, 0, 0],
+        [3, 3, 0, 3, 0, 0, 0, 0, 0, 0],
+        [3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{NonCrossingTrees}(3), 12)
+    out: \bigl\lbrack\bigl\lbrack3, 0, 0, 3, 0, 0, 3, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 0, 0, 3, 0, 3, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 0, 0, 3, 3, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 0, 3, 0, 0, 0, 3, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 0, 3, 0, 0, 3, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 0, 3, 0, 3, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 0, 3, 3, 0, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 3, 0, 0, 0, 0, 3, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 3, 0, 0, 0, 3, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 3, 0, 0, 3, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 3, 0, 3, 0, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack3, 3, 3, 0, 0, 0, 0, 0, 0, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[NonCrossingTrees[3], 12]

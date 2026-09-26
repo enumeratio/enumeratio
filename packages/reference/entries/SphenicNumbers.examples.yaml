@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-20-terms
+  expr: [Take, SphenicNumbers, 20]
+  expected: [List, 30, 42, 66, 70, 78, 102, 105, 110, 114, 130, 138, 154, 165, 170, 174, 182, 186, 190, 195, 222]

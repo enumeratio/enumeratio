@@ -1,7 +1,5 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { afterAll, expect, test } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/numeric-digits-primes.ts";
 import { entries as numericSets } from "../src/families/numeric-sets.ts";
 import { declareCollections } from "../src/library.ts";
@@ -408,65 +406,6 @@ test("Take(NarcissisticNumbers, 10) gives the first ten Armstrong numbers", () =
 test("Take(MersennePrimes, 5) and Take(FibonacciPrimes, 5) don't hang and give the known terms", () => {
   expect(ce.box(["Take", "MersennePrimes", 5]).evaluate().toString()).toBe("[3,7,31,127,8191]");
   expect(ce.box(["Take", "FibonacciPrimes", 5]).evaluate().toString()).toBe("[2,3,5,13,89]");
-});
-
-// ─── Golden JSON (AGENTS.md); regenerate with `UPDATE_NUMERIC_DIGITS_PRIMES_GOLDEN=1 vp test`. ───
-
-const GOLDEN = fileURLToPath(new URL("./numeric-digits-primes.golden.json", import.meta.url));
-const updating = process.env.UPDATE_NUMERIC_DIGITS_PRIMES_GOLDEN === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-const GOLDEN_CASES: Record<string, number[]> = {
-  HarshadNumbers: [],
-  HappyNumbers: [],
-  NarcissisticNumbers: [],
-  AutomorphicNumbers: [],
-  KaprekarNumbers: [],
-  EvilNumbers: [],
-  OdiousNumbers: [],
-  PerniciousNumbers: [],
-  SmithNumbers: [],
-  SemiprimeNumbers: [],
-  SquarefreeSemiprimes: [],
-  SphenicNumbers: [],
-  PrimePowerNumbers: [],
-  TwinPrimes: [],
-  CousinPrimes: [],
-  SexyPrimes: [],
-  SophieGermainPrimes: [],
-  SafePrimes: [],
-  PalindromicPrimes: [],
-  CircularPrimes: [],
-  EmirpPrimes: [],
-  MersennePrimes: [],
-  FibonacciPrimes: [],
-  KAlmostPrimes: [3],
-  RoughNumbers: [7],
-  PrimePairs: [4],
-};
-
-// MersennePrimes/FibonacciPrimes only have 8/11 known-representable terms -- past that,
-// `unrank` answers NaN, which JSON can't round-trip (it serializes to `null`), so their golden
-// slice stops right at the known table instead of the usual 20.
-const GOLDEN_TAKE: Record<string, number> = { MersennePrimes: 8, FibonacciPrimes: 11 };
-
-for (const [head, params] of Object.entries(GOLDEN_CASES)) {
-  const key = `${head}${params.length ? `(${params.join(",")})` : ""}`;
-  test(`golden: ${key}`, () => {
-    const entry = byHead.get(head)!;
-    const take = GOLDEN_TAKE[head] ?? 20;
-    const elements = Array.from({ length: take }, (_, r) => entry.unrank(params, r));
-    if (updating) {
-      fresh[key] = elements;
-      return;
-    }
-    expect(elements).toEqual(golden[key]);
-  });
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });
 
 test("KAlmostPrimes(0) is {1} and below that empty, both finite", () => {

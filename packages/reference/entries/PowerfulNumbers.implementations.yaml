@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(PowerfulNumbers, 25)
+    out: |-
+      [
+        1,
+        4,
+        8,
+        9,
+        16,
+        25,
+        27,
+        32,
+        36,
+        49,
+        64,
+        72,
+        81,
+        100,
+        108,
+        121,
+        125,
+        128,
+        144,
+        169,
+        196,
+        200,
+        216,
+        225,
+        243,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{PowerfulNumbers}, 25)
+    out: \bigl\lbrack1, 4, 8, 9, 16, 25, 27, 32, 36, 49, 64, 72, 81, 100, 108, 121, 125, 128, 144, 169, 196, 200, 216, 225, 243\bigr\rbrack
+  fullform:
+    in: Take[PowerfulNumbers, 25]

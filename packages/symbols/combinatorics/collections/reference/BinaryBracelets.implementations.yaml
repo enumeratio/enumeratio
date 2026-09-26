@@ -7,3 +7,27 @@ count-binarybracelets-6-13-a000029:
     out: "13"
   fullform:
     in: Count[BinaryBracelets[6]]
+every-element-of-binarybracelets-6:
+  epsil:
+    in: Take(BinaryBracelets(6), 13)
+    out: |-
+      [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 1, 1],
+        [0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 1, 1],
+        [0, 0, 1, 0, 0, 1],
+        [0, 0, 1, 0, 1, 1],
+        [0, 0, 1, 1, 1, 1],
+        [0, 1, 0, 1, 0, 1],
+        [0, 1, 0, 1, 1, 1],
+        [0, 1, 1, 0, 1, 1],
+        [0, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{BinaryBracelets}(6), 13)
+    out: \bigl\lbrack\bigl\lbrack0, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[BinaryBracelets[6], 13]

@@ -16,3 +16,34 @@ a-degenerate-1-times-1-times-n-box-count-n-1:
     out: "5"
   fullform:
     in: Count[BoxedPlanePartitions[1, 1, 4]]
+every-element-of-boxedplanepartitions-2-2-2:
+  epsil:
+    in: Take(BoxedPlanePartitions(2, 2, 2), 20)
+    out: |-
+      [
+        [],
+        [[1]],
+        [[2]],
+        [[1], [1]],
+        [[2], [1]],
+        [[2], [2]],
+        [[1, 1]],
+        [[2, 1]],
+        [[2, 2]],
+        [[1, 1], [1]],
+        [[2, 1], [1]],
+        [[2, 1], [2]],
+        [[2, 2], [1]],
+        [[2, 2], [2]],
+        [[1, 1], [1, 1]],
+        [[2, 1], [1, 1]],
+        [[2, 1], [2, 1]],
+        [[2, 2], [1, 1]],
+        [[2, 2], [2, 1]],
+        [[2, 2], [2, 2]],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{BoxedPlanePartitions}(2, 2, 2), 20)
+    out: \bigl\lbrack\bigl\lbrack \bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack2, 2\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[BoxedPlanePartitions[2, 2, 2], 20]

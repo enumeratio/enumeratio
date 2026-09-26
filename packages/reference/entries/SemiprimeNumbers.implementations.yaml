@@ -1,0 +1,9 @@
+the-first-20-terms:
+  epsil:
+    in: Take(SemiprimeNumbers, 20)
+    out: "[4, 6, 9, 10, 14, 15, 21, 22, 25, 26, 33, 34, 35, 38, 39, 46, 49, 51, 55, 57]"
+  tex:
+    in: \mathrm{Take}(\mathrm{SemiprimeNumbers}, 20)
+    out: \bigl\lbrack4, 6, 9, 10, 14, 15, 21, 22, 25, 26, 33, 34, 35, 38, 39, 46, 49, 51, 55, 57\bigr\rbrack
+  fullform:
+    in: Take[SemiprimeNumbers, 20]

@@ -1,6 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { expect, test, afterAll } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/permutation-classes.ts";
 
 // Certify every permutation-class family: rank(unrank(p, r), p) === r across the whole
@@ -77,42 +75,4 @@ test("VexillaryPermutations count matches A005802", () => {
   expect(countsOf("VexillaryPermutations", [[0], [1], [2], [3], [4], [5], [6], [7]])).toEqual([
     1, 1, 2, 6, 23, 103, 513, 2761,
   ]);
-});
-
-// Golden JSON (AGENTS.md); regenerate with `UPDATE_PERMUTATION_CLASSES_GOLDEN=1 vp test`.
-const GOLDEN = fileURLToPath(new URL("./permutation-classes.golden.json", import.meta.url));
-const updating = process.env.UPDATE_PERMUTATION_CLASSES_GOLDEN === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-const GOLDEN_CASES: Record<string, number[][]> = {
-  BaxterPermutations: [[4]],
-  BooleanPermutations: [[5]],
-  GrassmannianPermutations: [[4]],
-  CograssmannianPermutations: [[4]],
-  NonCrossingPermutations: [[4]],
-  SeparablePermutations: [[4]],
-  SimplePermutations: [[5]],
-  SmoothPermutations: [[4]],
-  VexillaryPermutations: [[4]],
-};
-
-for (const [head, paramsList] of Object.entries(GOLDEN_CASES)) {
-  for (const p of paramsList) {
-    const key = `${head}(${p.join(",")})`;
-    test(`golden: ${key}`, () => {
-      const entry = byHead[head];
-      const total = entry.count(p);
-      const elements = Array.from({ length: total }, (_, r) => entry.unrank(p, r));
-      if (updating) {
-        fresh[key] = elements;
-        return;
-      }
-      expect(elements).toEqual(golden[key]);
-    });
-  }
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

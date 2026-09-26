@@ -19,6 +19,11 @@
   expected: [Rational, 2, 3]
   category: Scope
   caption: Exact rational input, exact rational output
+- id: unittriangle-1-2
+  expr: [UnitTriangle, [Rational, 1, 2]]
+  expected: [Rational, 1, 2]
+  category: Scope
+  role: test
 - id: unittriangle-same-as-heavisidelambda
   expr: [Equal, [UnitTriangle, [Rational, 1, 4]], [HeavisideLambda, [Rational, 1, 4]]]
   expected: True

@@ -1,0 +1,31 @@
+the-first-20-terms:
+  epsil:
+    in: Take(KaprekarNumbers, 20)
+    out: |-
+      [
+        1,
+        9,
+        45,
+        55,
+        99,
+        297,
+        703,
+        999,
+        2_223,
+        2_728,
+        4_879,
+        4_950,
+        5_050,
+        5_292,
+        7_272,
+        7_777,
+        9_999,
+        17_344,
+        22_222,
+        38_962,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{KaprekarNumbers}, 20)
+    out: \bigl\lbrack1, 9, 45, 55, 99, 297, 703, 999, 2\,223, 2\,728, 4\,879, 4\,950, 5\,050, 5\,292, 7\,272, 7\,777, 9\,999, 17\,344, 22\,222, 38\,962\bigr\rbrack
+  fullform:
+    in: Take[KaprekarNumbers, 20]

@@ -6,9 +6,10 @@ import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 import { lerchContinued } from "../src/lerch-continuation.ts";
 
 // LerchPhi past |z| = 1, via the Hermite-type integral in lerch-continuation.ts. Golden
-// values are mpmath.lerchphi at 30 digits (tests/lerch-continuation.golden.json); mpmath and
-// Wolfram's LerchPhi agree on the principal branch (see the branch-cut test below), so these
-// also stand in for Wolfram.
+// values are mpmath.lerchphi at 30 digits (tests/lerch-continuation.golden.json), checked here
+// against the internal `lerchContinued` kernel directly; the same cases are pinned as
+// role:test examples on LerchPhi's own record (mpmath and Wolfram's LerchPhi agree on the
+// principal branch -- see the branch-cut test below -- so these also stand in for Wolfram).
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -37,12 +38,6 @@ for (const { label, z, s, a, mpmath } of GOLDEN) {
     expect(out).not.toBeUndefined();
     expect(out!.re).toBeCloseTo(mpmath[0], 9);
     expect(out!.im).toBeCloseTo(mpmath[1], 9);
-  });
-
-  test(`LerchPhi(N): ${label}`, () => {
-    const r = ce.box(["N", ["LerchPhi", ["Complex", ...z], ["Complex", ...s], ["Complex", ...a]]]).evaluate();
-    expect(r.re).toBeCloseTo(mpmath[0], 9);
-    expect((r.im ?? 0) as number).toBeCloseTo(mpmath[1], 9);
   });
 }
 

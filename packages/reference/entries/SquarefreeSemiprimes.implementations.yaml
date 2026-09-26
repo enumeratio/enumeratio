@@ -1,0 +1,9 @@
+the-first-20-terms:
+  epsil:
+    in: Take(SquarefreeSemiprimes, 20)
+    out: "[6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69]"
+  tex:
+    in: \mathrm{Take}(\mathrm{SquarefreeSemiprimes}, 20)
+    out: \bigl\lbrack6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69\bigr\rbrack
+  fullform:
+    in: Take[SquarefreeSemiprimes, 20]

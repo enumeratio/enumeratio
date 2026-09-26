@@ -1,0 +1,9 @@
+the-first-8-terms:
+  epsil:
+    in: Take(MersennePrimes, 8)
+    out: "[3, 7, 31, 127, 8_191, 131_071, 524_287, 2_147_483_647]"
+  tex:
+    in: \mathrm{Take}(\mathrm{MersennePrimes}, 8)
+    out: \bigl\lbrack3, 7, 31, 127, 8\,191, 131\,071, 524\,287, 2\,147\,483\,647\bigr\rbrack
+  fullform:
+    in: Take[MersennePrimes, 8]

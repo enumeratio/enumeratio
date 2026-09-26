@@ -16,6 +16,18 @@
   expected: 0.8804492351734234
   category: Scope
   caption: Continued off the integers
+- id: hyperfactorial-1-5
+  expr: [Hyperfactorial, 1.5]
+  expected: 1.6174885279489126
+  role: test
+- id: hyperfactorial-2-5
+  expr: [Hyperfactorial, 2.5]
+  expected: 15.984211992223353
+  role: test
+- id: hyperfactorial-6-25
+  expr: [Hyperfactorial, 6.25]
+  expected: 92229745540487.84
+  role: test
 - id: h-10-well-past-double-range-exact-bigint
   expr: [Hyperfactorial, 10]
   expected: { num: "215779412229418562091680268288e+15" }

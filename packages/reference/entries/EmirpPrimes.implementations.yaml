@@ -1,0 +1,31 @@
+the-first-20-terms:
+  epsil:
+    in: Take(EmirpPrimes, 20)
+    out: |-
+      [
+        13,
+        17,
+        31,
+        37,
+        71,
+        73,
+        79,
+        97,
+        107,
+        113,
+        149,
+        157,
+        167,
+        179,
+        199,
+        311,
+        337,
+        347,
+        359,
+        389,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{EmirpPrimes}, 20)
+    out: \bigl\lbrack13, 17, 31, 37, 71, 73, 79, 97, 107, 113, 149, 157, 167, 179, 199, 311, 337, 347, 359, 389\bigr\rbrack
+  fullform:
+    in: Take[EmirpPrimes, 20]

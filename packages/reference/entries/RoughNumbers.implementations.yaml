@@ -1,0 +1,9 @@
+the-first-20-terms-at-7:
+  epsil:
+    in: Take(RoughNumbers(7), 20)
+    out: "[1, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 49, 53, 59, 61, 67, 71, 73]"
+  tex:
+    in: \mathrm{Take}(\mathrm{RoughNumbers}(7), 20)
+    out: \bigl\lbrack1, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 49, 53, 59, 61, 67, 71, 73\bigr\rbrack
+  fullform:
+    in: Take[RoughNumbers[7], 20]

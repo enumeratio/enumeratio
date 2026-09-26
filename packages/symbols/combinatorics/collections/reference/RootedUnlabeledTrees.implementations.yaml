@@ -7,3 +7,34 @@ count-rootedunlabeledtrees-6-20-a000081:
     out: "20"
   fullform:
     in: Count[RootedUnlabeledTrees[6]]
+every-element-of-rootedunlabeledtrees-6:
+  epsil:
+    in: Take(RootedUnlabeledTrees(6), 20)
+    out: |-
+      [
+        [0, 1, 1, 1, 1, 1],
+        [0, 1, 2, 1, 1, 1],
+        [0, 1, 2, 1, 2, 1],
+        [0, 1, 2, 2, 1, 1],
+        [0, 1, 2, 2, 1, 2],
+        [0, 1, 2, 3, 1, 1],
+        [0, 1, 2, 3, 1, 2],
+        [0, 1, 2, 2, 2, 1],
+        [0, 1, 2, 3, 2, 1],
+        [0, 1, 2, 3, 3, 1],
+        [0, 1, 2, 3, 4, 1],
+        [0, 1, 2, 2, 2, 2],
+        [0, 1, 2, 3, 2, 2],
+        [0, 1, 2, 3, 2, 3],
+        [0, 1, 2, 3, 3, 2],
+        [0, 1, 2, 3, 4, 2],
+        [0, 1, 2, 3, 3, 3],
+        [0, 1, 2, 3, 4, 3],
+        [0, 1, 2, 3, 4, 4],
+        [0, 1, 2, 3, 4, 5],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{RootedUnlabeledTrees}(6), 20)
+    out: \bigl\lbrack\bigl\lbrack0, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 1, 2, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 2, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 2, 1, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 1, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 2, 2, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 2, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 3, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 4, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 2, 2, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 2, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 2, 3\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 3, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 4, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 3, 3\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 4, 3\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 4, 4\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 4, 5\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[RootedUnlabeledTrees[6], 20]

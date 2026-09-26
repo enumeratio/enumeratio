@@ -400,6 +400,12 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * Wolfram's own name (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run.
  */
 const NOVEL = [
+  // Parametric numeric families whose golden data became examples calling the head itself.
+  "KAlmostPrimes",
+  "KFreeIntegers",
+  "PolygonalNumbers",
+  "PrimePairs",
+  "RoughNumbers",
   "DifferenceRootReduce",
   "DifferentialRootReduce",
   "WeightedAdjacencyMatrix",

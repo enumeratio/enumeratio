@@ -1,48 +1,19 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // Gudermannian and Hyperfactorial — the two backlog-elementary heads that carry a real
-// numeric kernel of our own. Held to the oracle values in elementary.golden.json, which
-// scripts/collect-elementary-goldens.ts gathers from mpmath and a Wolfram kernel (neither
-// is needed to run this file). Exact special values (0, ±∞, integers) are checked directly.
+// numeric kernel of our own. mpmath and Wolfram oracle values (originally gathered by
+// scripts/collect-elementary-goldens.ts) are pinned as examples on their records. Exact
+// special values (0, ±∞, integers) are checked directly.
 //
 // The other backlog-elementary heads (CubeRoot, IntegerPart, FractionalPart, RealAbs,
 // RealSign, UnitStep) reduce to a native compute-engine head or exact arithmetic and have
 // no independent kernel of their own to golden-test; they are covered by the reference
 // examples in packages/reference/src/entries/analytic-elementary.ts instead.
 
-interface GoldenCase {
-  head: "Gudermannian" | "Hyperfactorial";
-  arg: number;
-  label: string;
-  tol: number;
-  mpmath?: number;
-  wolfram?: number;
-}
-
 const ce = new ComputeEngine();
 declareAnalytic(ce);
-
-const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./elementary.golden.json", import.meta.url), "utf8"));
-
-test("Gudermannian and Hyperfactorial: every golden case matches the oracles under N()", () => {
-  const off: string[] = [];
-  for (const g of goldens) {
-    const ours = ce.box([g.head, g.arg] as never).N().re;
-    expect(g.mpmath ?? g.wolfram, g.label).toBeDefined();
-    for (const [name, ref] of [
-      ["mpmath", g.mpmath],
-      ["wolfram", g.wolfram],
-    ] as const) {
-      if (ref === undefined) continue;
-      const err = Math.abs(ours - ref) / Math.max(1, Math.abs(ref));
-      if (!(err <= g.tol)) off.push(`${g.label} vs ${name}: relerr ${err.toExponential(2)}`);
-    }
-  }
-  expect(off).toEqual([]);
-});
 
 test("Gudermannian: exact at 0 and at the horizontal asymptotes", () => {
   expect(ce.box(["Gudermannian", 0]).evaluate().isSame(0)).toBe(true);

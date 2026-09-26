@@ -16,3 +16,20 @@ the-first-ssyt-of-3-cells-with-entries-in-1-2-as:
     out: \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack
   fullform:
     in: Part[SemistandardTableaux[3, 2], 1]
+every-element-of-semistandardtableaux-3-2:
+  epsil:
+    in: Take(SemistandardTableaux(3, 2), 6)
+    out: |-
+      [
+        [[1, 1], [2]],
+        [[1, 2], [2]],
+        [[1, 1, 1]],
+        [[1, 1, 2]],
+        [[1, 2, 2]],
+        [[2, 2, 2]],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SemistandardTableaux}(3, 2), 6)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1, 2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 2, 2\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[SemistandardTableaux[3, 2], 6]

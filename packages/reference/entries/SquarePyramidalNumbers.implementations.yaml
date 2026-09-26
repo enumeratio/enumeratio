@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(SquarePyramidalNumbers, 25)
+    out: |-
+      [
+        1,
+        5,
+        14,
+        30,
+        55,
+        91,
+        140,
+        204,
+        285,
+        385,
+        506,
+        650,
+        819,
+        1_015,
+        1_240,
+        1_496,
+        1_785,
+        2_109,
+        2_470,
+        2_870,
+        3_311,
+        3_795,
+        4_324,
+        4_900,
+        5_525,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SquarePyramidalNumbers}, 25)
+    out: \bigl\lbrack1, 5, 14, 30, 55, 91, 140, 204, 285, 385, 506, 650, 819, 1\,015, 1\,240, 1\,496, 1\,785, 2\,109, 2\,470, 2\,870, 3\,311, 3\,795, 4\,324, 4\,900, 5\,525\bigr\rbrack
+  fullform:
+    in: Take[SquarePyramidalNumbers, 25]
