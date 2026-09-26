@@ -413,7 +413,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## rust — agree 231, disagree 46, inconclusive 15, error 77
+## rust — agree 232, disagree 46, inconclusive 15, error 78
 
 | example                                                          | kind           | ours                                                | theirs                                                       |
 | ---------------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------------------------------ |
@@ -511,6 +511,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `IsPrime/non-integers-are-not-prime`                           | `panic: an integer, not 1/2`                                 |
 | `IsPrime/threads-element-wise-over-a-list`                     | `panic: threading: a list where the crate takes a scalar`    |
 | `IsPrime/threads-element-wise-over-a-short-list`               | `panic: threading: a list where the crate takes a scalar`    |
+| `LCM/a-large-integer-against-a-negative-rational`              | `panic: an integer, not 2.43290200817664e18`                 |
 | `LCM/big-integers-the-exact-118-digit-lcm-past-where`          | `panic: an integer, not 2.43290200817664e18`                 |
 | `LCM/listable-a-single-list-argument-threads-element`          | `panic: threading: a list where the crate takes a scalar`    |
 | `Ln/threads-element-wise-over-a-list`                          | `panic: threading: a list where the crate takes a scalar`    |

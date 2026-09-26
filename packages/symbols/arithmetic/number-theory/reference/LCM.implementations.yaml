@@ -389,3 +389,7 @@ a-large-integer-against-a-negative-rational:
     in: (Int.lcm (Nat.factorial 20) ((10 ^ (-1)) + (-2)))
   rust:
     in: lcm(factorial(n(20)), (power(n(10), n(-1)) + n(-2)))
+    out: "panic: an integer, not 2.43290200817664e18"
+    verdict: error
+    kind: domain
+    note: compute-engine extends LCM to rationals (here 20!/1 and -19/10, giving lcm(20!, 19)/gcd(1, 10) = 20! since 19 | 20!); the harness's `n()` wrapper only accepts integers, so the rational operand is a domain gap in the mapping, not a bug on either side (same gap as the Julia/Nemo row above).

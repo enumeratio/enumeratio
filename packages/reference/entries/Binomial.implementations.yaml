@@ -909,6 +909,7 @@ equal-negative-arguments-binom-2-2-1:
     in: (Nat.choose (-2) (-2))
   rust:
     in: binomial(n(-2), n(-2))
+    out: "1"
 the-central-binomial-coefficient-binom-100-50:
   epsil:
     in: Binomial(100, 50)
