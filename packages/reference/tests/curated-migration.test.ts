@@ -1,10 +1,13 @@
-// Before/after equivalence for symbol-metadata step 2 (design/speculative/symbol-metadata.md):
-// `curated.ts`'s tables now also live as `references:`/`names:` on each head's <Head>.yaml
-// (packages/reference/scripts/migrate/curated-to-yaml.ts). This pins that the two agree while
-// both exist; a follow-up commit deletes curated.ts's tables and this test switches to
-// asserting the crosswalk's resolved output is unchanged instead.
+// Symbol-metadata step 2 (design/speculative/symbol-metadata.md), completed: curated.ts's
+// tables are gone, and the crosswalk consumer reads each head's `references:`/`names:`
+// instead, through a generated cache (`scripts/collect-curated.ts` -> `curated-data.ts`) --
+// the crosswalk runs in the browser and the site build, and cannot parse YAML at runtime.
+//
+// This pins that the generated cache is current; `crosswalk.test.ts`'s existing assertions
+// (unchanged by this migration) are the proof that the crosswalk's resolved output itself is
+// unchanged -- they exercise `crosswalkFor` et al. reading through this same cache and still
+// expect the same origins, ids and hrefs "curated" always meant.
 
-import type { Reference, ReferenceNames } from "@enumeratio/entry";
 import { expect, test } from "vite-plus/test";
 import {
   CATALOG_ALIASES,
@@ -13,69 +16,34 @@ import {
   FUNGRIM_NAMES,
   WIKIDATA_CONFIRMED,
   WIKIDATA_FIXES,
-} from "../src/crosswalk/curated.ts";
-import { loadReferenceData, PACKAGES } from "../src/node.ts";
+} from "../src/crosswalk/curated-data.ts";
+import { referenceData } from "../src/node.ts";
 
-const { heads } = loadReferenceData(PACKAGES);
+test("curated-data.ts is what the current records collect to", () => {
+  const { entries } = referenceData();
 
-const referencesFromYaml: Record<string, readonly Reference[]> = {};
-const namesFromYaml: Record<string, ReferenceNames> = {};
-for (const { head, entry } of heads) {
-  if (entry.references?.length) referencesFromYaml[head] = entry.references;
-  if (entry.names) namesFromYaml[head] = entry.names;
-}
+  const rebuiltCurated: Record<string, unknown> = {};
+  const rebuiltFungrim: Record<string, string> = {};
+  const rebuiltDlmf: Record<string, string> = {};
+  const rebuiltWikidataFixes: Record<string, string> = {};
+  const rebuiltWikidataConfirmed: string[] = [];
+  const rebuiltCatalog: Record<string, string> = {};
 
-test("every curated reference is on its head's record", () => {
-  expect(referencesFromYaml).toEqual(CURATED);
-});
-
-test("every curated name is in its head's names map", () => {
-  const fungrim = Object.fromEntries(
-    Object.entries(namesFromYaml)
-      .filter(([, n]) => n.fungrim !== undefined)
-      .map(([name, n]) => [name, n.fungrim]),
-  );
-  expect(fungrim).toEqual(FUNGRIM_NAMES);
-
-  const dlmf = Object.fromEntries(
-    Object.entries(namesFromYaml)
-      .filter(([, n]) => n.dlmf !== undefined)
-      .map(([name, n]) => [name, n.dlmf]),
-  );
-  expect(dlmf).toEqual(DLMF_NAMES);
-
-  const wikidataFixes = Object.fromEntries(
-    Object.entries(namesFromYaml)
-      .filter(([, n]) => n.wikidata !== undefined)
-      .map(([name, n]) => [name, n.wikidata]),
-  );
-  expect(wikidataFixes).toEqual(WIKIDATA_FIXES);
-
-  const wikidataConfirmed = new Set(
-    Object.entries(namesFromYaml)
-      .filter(([, n]) => n.wikidataConfirmed)
-      .map(([name]) => name),
-  );
-  expect(wikidataConfirmed).toEqual(WIKIDATA_CONFIRMED);
-
-  const catalogAliases = Object.fromEntries(
-    Object.entries(namesFromYaml)
-      .filter(([, n]) => n.catalog !== undefined)
-      .map(([name, n]) => [name, n.catalog]),
-  );
-  expect(catalogAliases).toEqual(CATALOG_ALIASES);
-});
-
-test("the migration script is idempotent (a re-run touches nothing)", () => {
-  // Every reference the codemod would add is already on the record (`mergedReferences`'
-  // de-duplication check), so this is really just documentation of that property -- a
-  // regression here means a head picked up a duplicate row.
-  for (const [name, references] of Object.entries(referencesFromYaml)) {
-    const seen = new Set<string>();
-    for (const r of references) {
-      const key = `${r.system} ${r.identity} ${r.arity ?? ""}`;
-      expect(seen.has(key), `${name}: duplicate ${key}`).toBe(false);
-      seen.add(key);
-    }
+  for (const entry of entries) {
+    if (entry.references?.length) rebuiltCurated[entry.name] = entry.references;
+    const names = entry.names;
+    if (!names) continue;
+    if (names.fungrim !== undefined) rebuiltFungrim[entry.name] = names.fungrim;
+    if (names.dlmf !== undefined) rebuiltDlmf[entry.name] = names.dlmf;
+    if (names.wikidata !== undefined) rebuiltWikidataFixes[entry.name] = names.wikidata;
+    if (names.wikidataConfirmed) rebuiltWikidataConfirmed.push(entry.name);
+    if (names.catalog !== undefined) rebuiltCatalog[entry.name] = names.catalog;
   }
+
+  expect(CURATED).toEqual(rebuiltCurated);
+  expect(FUNGRIM_NAMES).toEqual(rebuiltFungrim);
+  expect(DLMF_NAMES).toEqual(rebuiltDlmf);
+  expect(WIKIDATA_FIXES).toEqual(rebuiltWikidataFixes);
+  expect(WIKIDATA_CONFIRMED).toEqual(new Set(rebuiltWikidataConfirmed));
+  expect(CATALOG_ALIASES).toEqual(rebuiltCatalog);
 });

@@ -2,7 +2,7 @@
 // the way a reader would -- "gamma function", "Stirling number of the first kind" -- and
 // so do the Wikipedia titles the crosswalk already carries, so a head reaches its defining
 // equation through the names it has, plus a short table for the ones the DLMF words its own
-// way (`DLMF_NAMES` in curated.ts).
+// way (`names.dlmf` on the head's own record, rebuilt into `curated-data.ts`'s DLMF_NAMES).
 
 import { type DlmfNotation, dlmf } from "../dlmf-data.ts";
 

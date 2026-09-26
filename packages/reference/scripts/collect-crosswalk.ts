@@ -7,8 +7,10 @@
 //                                Wolfram symbol the transpiler vouches for, and the equivalent
 //                                call in each oracle kernel
 //
-// Everything here is offline and mechanical; the hand-kept half of the crosswalk lives in
-// `src/crosswalk/curated.ts` and the catalog's half in `@enumeratio/catalog`. Regenerate:
+// Everything here is offline and mechanical; the hand-kept half of the crosswalk lives on
+// each head's own record (`references:`/`names:` in `<Head>.yaml`, rebuilt into
+// `src/crosswalk/curated-data.ts` by `collect-curated.ts`) and the catalog's half in
+// `@enumeratio/catalog`. Regenerate:
 //
 //   vp node packages/reference/scripts/collect-crosswalk.ts
 
