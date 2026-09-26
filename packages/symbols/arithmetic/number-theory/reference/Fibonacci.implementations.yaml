@@ -149,8 +149,10 @@ fibonacci-8:
     out: "21"
   sage:
     in: fibonacci(8)
+    out: "21"
   oscar:
     in: fibonacci(8)
+    out: "21"
   julia:
     in: BigInt(fibonacci(ZZ(8)))
     out: "21"
@@ -175,8 +177,13 @@ exact-at-any-size-f-100-has-21-digits:
     out: "354224848179261915075"
   sage:
     in: fibonacci(100)
+    out: "354224848179261915075"
   oscar:
     in: fibonacci(100)
+    out: "OverflowError: fibonacci(::Int)"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: BigInt(fibonacci(ZZ(100)))
     out: "354224848179261915075"
@@ -201,8 +208,16 @@ a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu:
     out: "0.920442065259926"
   sage:
     in: fibonacci(1.5)
+    out: "TypeError: Attempt to coerce non-integral RealNumber to Integer"
+    verdict: error
+    kind: unclassified
+    note:
   oscar:
     in: fibonacci(1.5)
+    out: "MethodError: no method matching fibonacci(::Float64) The function `fibonacci` exists, but no method "
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: BigInt(fibonacci(ZZ(1.5)))
     out: "InexactError: convert(ZZRingElem, 1.5)"
@@ -309,6 +324,7 @@ the-doubling-identity-f-2n-f-n-l-n-see-lucasl:
     out: True
   sage:
     in: bool(fibonacci(20) == (fibonacci(10) * lucas_number2(10, 1, -1)))
+    out: True
   julia:
     in: (BigInt(fibonacci(ZZ(20))) == (BigInt(fibonacci(ZZ(10))) * Combinatorics.lucasnum(10)))
     out: "true"
@@ -514,13 +530,22 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1, 1, 2, 3]"
   sage:
     in: "[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]"
+    out: "[1, 1, 2, 3]"
   oscar:
     in: fibonacci([1, 2, 3, 4])
+    out: "MethodError: no method matching fibonacci(::Vector{Int64}) The function `fibonacci` exists, but no m"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: "[BigInt(fibonacci(ZZ(1))), BigInt(fibonacci(ZZ(2))), BigInt(fibonacci(ZZ(3))), BigInt(fibonacci(ZZ(4)))]"
     out: "[1, 1, 2, 3]"
   mathlib4:
     in: (Nat.fib [1, 2, 3, 4])
+    out: "Application type mismatch: The argument"
+    verdict: error
+    kind: unclassified
+    note:
 they-grow-fast-f-50-already-exceeds-twelve:
   epsil:
     in: Fibonacci(50)

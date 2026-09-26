@@ -166,8 +166,10 @@ the-closed-form-through-a-negative-n-in-binomial:
     in: (S(binomial((2 * -13), 5)) / (4 + 1))
   sage:
     in: (binomial((2 * -13), 5) / (4 + 1))
+    out: -142506/5
   oscar:
     in: (binomial(ZZ((2 * -13)), ZZ(5)) // (4 + 1))
+    out: "-28501.2"
   julia:
     in: (binomial(ZZ((2 * -13)), ZZ(5)) // (4 + 1))
   mathlib4:
@@ -324,6 +326,10 @@ catalannumber-neg-1-is-neg-1:
     note: compute-engine and Wolfram take C(-1) = -1; SymPy's Γ formula gives the limit -1/2.
   sage:
     in: catalan_number(-1)
+    out: -1/2
+    verdict: disagree
+    kind: unclassified
+    note:
   julia:
     in: Combinatorics.catalannum(-1)
     out: "DomainError with -1: n must be nonnegative"
@@ -351,6 +357,7 @@ catalannumber-0-past-neg-1:
     out: "0"
   sage:
     in: catalan_number(-2)
+    out: "0"
   julia:
     in: Combinatorics.catalannum(-2)
     out: "DomainError with -2: n must be nonnegative"
@@ -378,6 +385,7 @@ catalannumber-neg-5-is-also-0:
     out: "0"
   sage:
     in: catalan_number(-5)
+    out: "0"
   julia:
     in: Combinatorics.catalannum(-5)
     out: "DomainError with -5: n must be nonnegative"
@@ -436,6 +444,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1, 2, 5, 14]"
   sage:
     in: "[catalan_number(1), catalan_number(2), catalan_number(3), catalan_number(4)]"
+    out: "[1, 2, 5, 14]"
   julia:
     in: "[Combinatorics.catalannum(1), Combinatorics.catalannum(2), Combinatorics.catalannum(3), Combinatorics.catalannum(4)]"
     out: "[1, 2, 5, 14]"
@@ -464,6 +473,10 @@ half-integer-arguments-evaluate-exactly-through:
     out: catalan(5/2)
   sage:
     in: catalan_number((5/2))
+    out: "TypeError: no conversion of this rational to integer"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: Combinatorics.catalannum((5 // 2))
     out: "MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but "
@@ -491,6 +504,7 @@ catalannumber-30:
     out: "3814986502092304"
   sage:
     in: catalan_number(30)
+    out: "3814986502092304"
   julia:
     in: Combinatorics.catalannum(30)
     out: "3814986502092304"
@@ -535,6 +549,10 @@ real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
     out: "2.59035215401932"
   sage:
     in: catalan_number(2.3)
+    out: "TypeError: Attempt to coerce non-integral RealNumber to Integer"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: Combinatorics.catalannum(2.3)
     out: "MethodError: no method matching catalannum(::Float64) The function `catalannum` exists, but no metho"
@@ -562,6 +580,10 @@ complex-arguments-evaluate-through-the-same:
     out: 0.730728624207284 + 0.569846406969343*I
   sage:
     in: catalan_number((1.2 + 1*I))
+    out: "TypeError: unable to coerce <class 'sage.rings.complex_mpfr.ComplexNumber'> to an integer"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: Combinatorics.catalannum(complex(1.2, 1))
     out: "MethodError: no method matching catalannum(::ComplexF64) The function `catalannum` exists, but no me"
@@ -587,6 +609,10 @@ c-1-2-frac-8-3-pi-by-analytic-continuation:
     out: catalan(1/2)
   sage:
     in: catalan_number((1/2))
+    out: "TypeError: no conversion of this rational to integer"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: Combinatorics.catalannum((1 // 2))
     out: "MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but "

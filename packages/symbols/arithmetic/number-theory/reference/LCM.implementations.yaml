@@ -269,8 +269,16 @@ gaussian-primes-of-norm-41-and-13-the-lcm-is-the:
     note: A Gaussian LCM is defined up to a unit; compute-engine normalises it into the first quadrant, as Wolfram does, and SymPy doesn't.
   sage:
     in: lcm((-4 + 5*I), (2 + 3*I))
+    out: "1"
+    verdict: inconclusive
+    kind: unclassified
+    note:
   oscar:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -296,8 +304,16 @@ gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
     note: A Gaussian LCM is defined up to a unit; compute-engine normalises it into the first quadrant, as Wolfram does, and SymPy doesn't.
   sage:
     in: lcm(((1/2) + (3/5)*I), ((1/3) + 1*I))
+    out: "1"
+    verdict: inconclusive
+    kind: unclassified
+    note:
   oscar:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
@@ -320,13 +336,16 @@ big-integers-the-exact-118-digit-lcm-past-where:
     out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   sage:
     in: lcm(factorial(20), (((10)^100) + 3))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   oscar:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   julia:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
     out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   mathlib4:
     in: (Int.lcm (Nat.factorial 20) ((10 ^ 100) + 3))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   rust:
     in: lcm(factorial(n(20)), (power(n(10), n(100)) + n(3)))
     out: "panic: an integer, not 2.43290200817664e18"
@@ -349,13 +368,22 @@ listable-a-single-list-argument-threads-element:
     out: "[12, 84, 120]"
   sage:
     in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
+    out: "[12, 84, 120]"
   oscar:
     in: lcm(ZZ(12), ZZ([3, 7, 40]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: "[lcm(ZZ(12), ZZ(3)), lcm(ZZ(12), ZZ(7)), lcm(ZZ(12), ZZ(40))]"
     out: "[12, 84, 120]"
   mathlib4:
     in: (Int.lcm 12 [3, 7, 40])
+    out: "Application type mismatch: The argument"
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: lcm(n(12), list(vec![n(3), n(7), n(40)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -377,8 +405,13 @@ a-large-integer-against-a-negative-rational:
     in: lcm(factorial(20), ((S(10)**-1) + -2))
   sage:
     in: lcm(factorial(20), (((10)^-1) + -2))
+    out: "2432902008176640000"
   oscar:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^-1) + -2)))
+    out: "InexactError: BigInt(-1.8999999999999999999999999999999999999999999999999999999999999999999999999999"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^-1) + -2)))
     out: "InexactError: BigInt(-1.8999999999999999999999999999999999999999999999999999999999999999999999999999"
@@ -387,5 +420,9 @@ a-large-integer-against-a-negative-rational:
     note: compute-engine extends LCM to rationals (here 20!/1 and -19/10, giving lcm(20!, 19)/gcd(1, 10) = 20! since 19 | 20!); Nemo's ZZ conversion only accepts integers, so the rational operand is a domain gap in the mapping, not a bug on either side.
   mathlib4:
     in: (Int.lcm (Nat.factorial 20) ((10 ^ (-1)) + (-2)))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: lcm(factorial(n(20)), (power(n(10), n(-1)) + n(-2)))

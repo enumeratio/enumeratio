@@ -65,6 +65,7 @@ and-back-again:
     out: "[2, 1, 3, 4]"
   sage:
     in: list(continued_fraction((47/17)))
+    out: "[2, 1, 3, 4]"
 the-first-20-terms-of-a-quadratic-irrational:
   epsil:
     in: ContinuedFraction(Sqrt(13), 20)
@@ -117,6 +118,7 @@ a-floating-point-number-read-as-the-rational-it:
     note: SymPy's continued_fraction takes rationals and quadratic irrationals, not floats; compute-engine reads 3.245 exactly.
   sage:
     in: list(continued_fraction(3.245))
+    out: "[3, 4, 12, 4]"
 negative-a-floor-for-a-0-then-positive-terms-3-1:
   epsil:
     in: ContinuedFraction(-47 / 17)
@@ -134,6 +136,7 @@ negative-a-floor-for-a-0-then-positive-terms-3-1:
     out: "[-3, 4, 4]"
   sage:
     in: list(continued_fraction((-47/17)))
+    out: "[-3, 4, 4]"
 fromcontinuedfraction-inverts-it:
   epsil:
     in: FromContinuedFraction(ContinuedFraction(47 / 17))
@@ -170,6 +173,10 @@ a-quadratic-irrational-s-exact-expansion-is:
     out: "[3, [1, 1, 1, 1, 6]]"
   sage:
     in: list(continued_fraction(sqrt(13)))
+    out: "ValueError: the length is infinite!"
+    verdict: error
+    kind: unclassified
+    note:
 varphi-1-overline-1-purely-periodic-so-the:
   epsil:
     in: ContinuedFraction((1 + Sqrt(5)) / 2)
@@ -189,6 +196,10 @@ varphi-1-overline-1-purely-periodic-so-the:
     note: "The same expansion: SymPy prints the purely periodic one as [[1]], compute-engine as [1, [1]]."
   sage:
     in: list(continued_fraction(((1 + sqrt(5)) / 2)))
+    out: "ValueError: the length is infinite!"
+    verdict: error
+    kind: unclassified
+    note:
 the-named-constant-unfolded-to-1-sqrt-5-2-first:
   epsil:
     in: ContinuedFraction(GoldenRatio, 10)
@@ -309,6 +320,10 @@ sqrt-2-is-1-overline-2:
     out: "[1, [2]]"
   sage:
     in: list(continued_fraction(sqrt(2)))
+    out: "ValueError: the length is infinite!"
+    verdict: error
+    kind: unclassified
+    note:
 25-terms-past-the-double-precision-wall:
   epsil:
     in: ContinuedFraction(GoldenRatio, 25)

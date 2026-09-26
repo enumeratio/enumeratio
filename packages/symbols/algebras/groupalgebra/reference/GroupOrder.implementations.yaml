@@ -14,6 +14,7 @@ a-dihedral-group:
     in: GroupOrder[DihedralGroup[100]]
   oscar:
     in: order((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 100), 100)).G)
+    out: "200"
 a-permutation-group:
   epsil:
     in: GroupOrder(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]))

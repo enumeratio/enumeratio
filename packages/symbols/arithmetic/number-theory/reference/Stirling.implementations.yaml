@@ -185,6 +185,7 @@ stirling-20-10:
     out: "5917584964655"
   sage:
     in: stirling_number2(20, 10)
+    out: "5917584964655"
   julia:
     in: Combinatorics.stirlings2(big(20), 10)
     out: "5917584964655"
@@ -209,6 +210,7 @@ exact-for-large-n:
     out: "562949953421311"
   sage:
     in: stirling_number2(50, 2)
+    out: "562949953421311"
   julia:
     in: Combinatorics.stirlings2(big(50), 2)
     out: "562949953421311"
@@ -230,6 +232,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1, 7, 31]"
   sage:
     in: "[stirling_number2(2, 2), stirling_number2(4, 2), stirling_number2(6, 2)]"
+    out: "[1, 7, 31]"
   julia:
     in: "[Combinatorics.stirlings2(big(2), 2), Combinatorics.stirlings2(big(4), 2), Combinatorics.stirlings2(big(6), 2)]"
     out: "[1, 7, 31]"
@@ -254,6 +257,7 @@ two-blocks-s-n-2-2-n-1-1:
     out: True
   sage:
     in: bool(stirling_number2(10, 2) == (((2)^9) - 1))
+    out: True
   julia:
     in: (Combinatorics.stirlings2(big(10), 2) == ((big(2)^9) - 1))
     out: "true"
@@ -278,6 +282,7 @@ s-n-n-1-binom-n-2-one-block-is-a-pair:
     out: True
   sage:
     in: bool(stirling_number2(6, 5) == binomial(6, 2))
+    out: True
   julia:
     in: (Combinatorics.stirlings2(big(6), 5) == binomial(ZZ(6), ZZ(2)))
     out: "true"
@@ -330,6 +335,7 @@ the-ways-to-split-10-distinct-items-among-3:
     out: "9330"
   sage:
     in: stirling_number2(10, 3)
+    out: "9330"
   julia:
     in: Combinatorics.stirlings2(big(10), 3)
     out: "9330"
@@ -354,6 +360,7 @@ no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0:
     out: "0"
   sage:
     in: stirling_number2(5, 0)
+    out: "0"
   julia:
     in: Combinatorics.stirlings2(big(5), 0)
     out: "0"
@@ -378,6 +385,7 @@ k-n-is-0:
     out: "0"
   sage:
     in: stirling_number2(3, 5)
+    out: "0"
   julia:
     in: Combinatorics.stirlings2(big(3), 5)
     out: "0"
@@ -402,6 +410,7 @@ stirling-0-1-is-also-0:
     out: "0"
   sage:
     in: stirling_number2(0, 1)
+    out: "0"
   julia:
     in: Combinatorics.stirlings2(big(0), 1)
     out: "0"
@@ -425,6 +434,10 @@ a-negative-k-stays-symbolic:
     in: stirling(10, -5)
   sage:
     in: stirling_number2(10, -5)
+    out: "OverflowError: can't convert negative value to unsigned long"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: Combinatorics.stirlings2(big(10), -5)
     out: "0"

@@ -236,8 +236,13 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1, -1, -1, 0]"
   sage:
     in: "[moebius(1), moebius(2), moebius(3), moebius(4)]"
+    out: "[1, -1, -1, 0]"
   oscar:
     in: moebius_mu([1, 2, 3, 4])
+    out: "MethodError: no method matching moebius_mu(::Vector{Int64}) The function `moebius_mu` exists, but no"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: "[moebius_mu(1), moebius_mu(2), moebius_mu(3), moebius_mu(4)]"
     out: "[1, -1, -1, 0]"
@@ -265,8 +270,13 @@ gaussian-integers-5-6i-is-a-gaussian-prime-norm:
     note: compute-engine's MoebiusMu takes Gaussian integers; SymPy's mobius takes integers.
   sage:
     in: moebius((5 + 6*I))
+    out: "-1"
   oscar:
     in: moebius_mu(complex(5, 6))
+    out: "MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: moebius_mu(complex(5, 6))
     out: "MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n"
@@ -289,8 +299,13 @@ listable-threads-over-a-list:
     out: "[0, 1, -1, 0]"
   sage:
     in: "[moebius(4), moebius(10), moebius(17), moebius(20)]"
+    out: "[0, 1, -1, 0]"
   oscar:
     in: moebius_mu([4, 10, 17, 20])
+    out: "MethodError: no method matching moebius_mu(::Vector{Int64}) The function `moebius_mu` exists, but no"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: "[moebius_mu(4), moebius_mu(10), moebius_mu(17), moebius_mu(20)]"
     out: "[0, 1, -1, 0]"

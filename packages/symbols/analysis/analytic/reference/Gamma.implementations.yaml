@@ -51,6 +51,10 @@ a-pole-of-gamma-at-negative-1:
     in: gamma(-1)
   sage:
     in: gamma(-1)
+    out: Infinity
+    verdict: disagree
+    kind: unclassified
+    note:
   rust:
     in: gamma(n(-1))
     out: "-2.5653050788007548e16"
@@ -74,6 +78,10 @@ a-pole-of-gamma-at-negative-2:
     in: gamma(-2)
   sage:
     in: gamma(-2)
+    out: Infinity
+    verdict: disagree
+    kind: unclassified
+    note:
   rust:
     in: gamma(n(-2))
     out: "6413262697001865.0"
@@ -133,10 +141,10 @@ threads-over-a-list-so-poles-evaluate-concretely:
     note: compute-engine answers ComplexInfinity at the poles; mpmath raises.
   sage:
     in: "[gamma(0), gamma(-1)]"
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Gamma is Listable and threads over the list; Sage's takes scalars only.
+    out: "[Infinity, Infinity]"
+    verdict: disagree
+    kind: unclassified
+    note:
   rust:
     in: gamma(list(vec![n(0), n(-1)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -336,6 +344,7 @@ threads-over-a-list-and-reduces-each-integer:
     out: "[mpf('1.0'), mpf('1.0'), mpf('2.0'), mpf('6.0'), mpf('24.0')]"
   sage:
     in: "[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]"
+    out: "[1, 1, 2, 6, 24]"
   rust:
     in: gamma(list(vec![n(1), n(2), n(3), n(4), n(5)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -445,6 +454,7 @@ a-machine-precision-argument-gamma-4-5-11-6317:
     out: "11.6317283965674489291442241094"
   sage:
     in: gamma(4.5)
+    out: "11.6317283965674"
   rust:
     in: gamma(x(4.5))
     out: "11.631728396567521"
@@ -467,6 +477,7 @@ gamma-5-4-24:
     out: "24.0"
   sage:
     in: gamma(5)
+    out: "24"
   rust:
     in: gamma(n(5))
     out: "24.000000000000114"
@@ -489,6 +500,7 @@ complex-arguments-evaluate-directly:
     out: (0.719140936537281734129165979401 + 0.540614467909849141745661620038j)
   sage:
     in: gamma((2.3 + 1*I))
+    out: 0.719140936537282 + 0.540614467909849*I
 half-integers-have-closed-forms-gamma-7-2-frac:
   epsil:
     in: Gamma(7 / 2)
@@ -508,6 +520,7 @@ half-integers-have-closed-forms-gamma-7-2-frac:
     out: "3.32335097044784255118406403126"
   sage:
     in: gamma((7/2))
+    out: 15/8*sqrt(pi)
   rust:
     in: gamma(rational(n(7), n(2)))
     out: "3.3233509704478403"
@@ -530,6 +543,7 @@ including-negative-half-integers-gamma-3-2-frac:
     out: "2.36327180120735470306422331112"
   sage:
     in: gamma((-3/2))
+    out: 4/3*sqrt(pi)
   rust:
     in: gamma(rational(n(-3), n(2)))
     out: "2.3632718012073477"
@@ -563,6 +577,7 @@ values-far-past-the-double-range-gamma-200-5:
     out: "5.57316894480137913364320296291e+373"
   sage:
     in: gamma(200.5)
+    out: "5.57316894480138e373"
   rust:
     in: gamma(x(200.5))
     out: PositiveInfinity
@@ -696,6 +711,7 @@ gamma-i-2-pi-sinh-pi-0-27203:
     out: "0.272029054982133162950236583672"
   sage:
     in: N(((abs(gamma(I)))^2))
+    out: "0.272029054982133"
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Gamma(1 / 3), 40)
@@ -715,6 +731,7 @@ to-40-significant-digits-every-one-correctly:
     out: "2.67893853470774763365569294097"
   sage:
     in: N(gamma((1/3)))
+    out: "2.67893853470775"
   rust:
     in: nf(gamma(rational(n(1), n(3))))
     out: "2.6789385347077475"

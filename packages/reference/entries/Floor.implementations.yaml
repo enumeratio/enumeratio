@@ -217,6 +217,10 @@ a-zero-divisor-inside-floor:
     in: floor((S(17) / 0))
   sage:
     in: floor((17 / 0))
+    out: "ZeroDivisionError: rational division by zero"
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: floor((n(17) / n(0)))
     out: "panic: denominator == 0"
@@ -284,6 +288,7 @@ floor-2p4:
     out: "2.0"
   sage:
     in: floor(2.4)
+    out: "2"
   rust:
     in: floor(x(2.4))
     out: "2.0"
@@ -306,6 +311,7 @@ floor-2p6:
     out: "2.0"
   sage:
     in: floor(2.6)
+    out: "2"
   rust:
     in: floor(x(2.6))
     out: "2.0"
@@ -337,6 +343,7 @@ exact-radicals-are-decided-numerically:
     out: "7.0"
   sage:
     in: floor(sqrt(50))
+    out: "7"
   rust:
     in: floor(sqrt(n(50)))
     out: "7.0"
@@ -357,6 +364,10 @@ a-negative-radicand-inside-floor:
     in: floor(sqrt(-1))
   sage:
     in: floor(sqrt(-1))
+    out: "ValueError: floor is not defined for complex quadratic number field"
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: floor(sqrt(n(-1)))
     out: NaN
@@ -382,6 +393,7 @@ evaluates-at-an-exact-constant-lfloor-pi-rfloor:
     out: "3.0"
   sage:
     in: floor(pi)
+    out: "3"
   rust:
     in: floor(x(std::f64::consts::PI))
     out: "3.0"
@@ -404,6 +416,7 @@ and-at-its-negative-lfloor-pi-rfloor-4:
     out: "-4.0"
   sage:
     in: floor((-pi))
+    out: "-4"
   rust:
     in: floor((-(x(std::f64::consts::PI))))
     out: "-4.0"
@@ -459,6 +472,10 @@ floors-the-real-and-imaginary-parts-separately:
     out: (5.0 - 2.0j)
   sage:
     in: floor((5.37 + -1.3*I))
+    out: floor(5.37000000000000 - 1.30000000000000*I)
+    verdict: disagree
+    kind: unclassified
+    note:
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor:
   epsil:
     in: Floor(Floor(x))
@@ -484,6 +501,7 @@ legendre-s-formula-100-ends-in-lfloor-100-5:
     out: "24"
   sage:
     in: (floor((100 / 5)) + floor((100 / 25)))
+    out: "24"
   rust:
     in: (floor((n(100) / n(5))) + floor((n(100) / n(25))))
     out: "24"
@@ -518,6 +536,7 @@ the-first-four-digits-of-e:
     out: "2718.0"
   sage:
     in: floor((1000 * e))
+    out: "2718"
   rust:
     in: floor((n(1000) * x(std::f64::consts::E)))
     out: "2718.0"
@@ -540,6 +559,7 @@ floor-2p7:
     out: "2.0"
   sage:
     in: floor(2.7)
+    out: "2"
   rust:
     in: floor(x(2.7))
     out: "2.0"

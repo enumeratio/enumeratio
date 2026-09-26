@@ -144,10 +144,7 @@ threads-element-wise-over-a-list:
     out: "[mpf('1.0'), mpf('2.71828182845904523536028747135281')]"
   sage:
     in: "[exp(0), exp(1)]"
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Exp is Listable and threads over the list; Sage's takes scalars only.
+    out: "[1, e]"
   rust:
     in: exp(list(vec![n(0), n(1)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -174,6 +171,7 @@ broadcasts-element-wise-giving-begin-pmatrix-1-e:
     out: "[[mpf('1.0'), mpf('2.71828182845904523536028747135281')], [mpf('2.71828182845904523536028747135281'), mpf('1.0')]]"
   sage:
     in: "[[exp(0), exp(1)], [exp(1), exp(0)]]"
+    out: "[[1, e], [e, 1]]"
   rust:
     in: exp(list(vec![list(vec![n(0), n(1)]), list(vec![n(1), n(0)])]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -199,6 +197,7 @@ a-machine-precision-argument-evaluates:
     out: "29.9641000473970106868160502504"
   sage:
     in: exp(3.4)
+    out: "29.9641000473970"
   rust:
     in: exp(x(3.4))
     out: "29.96410004739701"
@@ -221,6 +220,7 @@ arbitrary-precision-via-n:
     out: "4.95303242439511480365428635642"
   sage:
     in: N(exp((8/5)))
+    out: "4.95303242439511"
   rust:
     in: nf(exp(rational(n(8), n(5))))
     out: "4.953032424395115"
@@ -243,6 +243,7 @@ evaluates-at-a-complex-argument:
     out: (6.58222957819277298437932116841 + 10.251215190529403439318317104j)
   sage:
     in: exp((2.5 + 1*I))
+    out: 6.58222957819277 + 10.2512151905294*I
 euler-s-identity-e-i-pi-1:
   epsil:
     in: Exp(ImaginaryUnit * Pi)
@@ -262,6 +263,7 @@ euler-s-identity-e-i-pi-1:
     out: (-1.0 + 1.69568553207377992879174029388e-31j)
   sage:
     in: exp((I * pi))
+    out: "-1"
 exp-imaginaryunit-times-pi-over-2:
   epsil:
     in: Exp(ImaginaryUnit * (Pi / 2))
@@ -278,6 +280,7 @@ exp-imaginaryunit-times-pi-over-2:
     out: I
   sage:
     in: exp((I * (pi / 2)))
+    out: I
 a-special-imaginary-argument-folds-through-e-i:
   epsil:
     in: Exp(ImaginaryUnit * (Pi / 5))
@@ -295,6 +298,7 @@ a-special-imaginary-argument-folds-through-e-i:
     out: exp(I*pi/5)
   sage:
     in: exp((I * (pi / 5)))
+    out: 1/4*sqrt(5) + 1/4*I*sqrt(-2*sqrt(5) + 10) + 1/4
 exp-ln-2:
   epsil:
     in: Exp(Ln(2))
@@ -314,6 +318,7 @@ exp-ln-2:
     out: "2.0"
   sage:
     in: exp(log(2))
+    out: "2"
   rust:
     in: exp(ln(n(2)))
     out: "2.0"
@@ -334,6 +339,7 @@ exp-ln-neg-1:
     in: exp(log(-1))
   sage:
     in: exp(log(-1))
+    out: "-1"
   rust:
     in: exp(ln(n(-1)))
     out: NaN
@@ -368,6 +374,7 @@ exp-ln-of-a-complex-argument-is-that-argument:
     out: (1.0 + 2.0j)
   sage:
     in: exp(log((1 + 2*I)))
+    out: 2*I + 1
 exp-ln-of-a-negative-real-is-left-unevaluated:
   epsil:
     in: Exp(Ln(-2))
@@ -388,6 +395,7 @@ exp-ln-of-a-negative-real-is-left-unevaluated:
     out: (-2.0 + 3.39137106414755985758348058775e-31j)
   sage:
     in: exp(log(-2))
+    out: e^(I*pi + log(2))
   rust:
     in: exp(ln(n(-2)))
     out: NaN
@@ -432,6 +440,7 @@ element-wise-over-a-matrix-not-the-matrix:
     out: "[[E, I], [1, E]]"
   sage:
     in: "[[exp(1), exp((I * (pi / 2)))], [exp(0), exp(1)]]"
+    out: "[[e, I], [1, e]]"
 interval-arithmetic-exp-1-ln-2-e-1-2:
   epsil:
     in: Exp(Interval(-1, Ln(2)))
@@ -549,6 +558,7 @@ to-50-significant-digits-every-one-correctly:
     out: "2.71828182845904523536028747135"
   sage:
     in: N(exp(1))
+    out: "2.71828182845905"
   rust:
     in: nf(exp(n(1)))
     out: "2.718281828459045"
@@ -569,6 +579,10 @@ to-1-significant-digit:
     in: (exp(1))
   sage:
     in: N(exp(1))
+    out: "2.71828182845905"
+    verdict: disagree
+    kind: unclassified
+    note:
   rust:
     in: nf(exp(n(1)))
     out: "2.718281828459045"

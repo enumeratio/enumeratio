@@ -273,8 +273,13 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[1, 2, 5, 15]"
   sage:
     in: "[bell_number(1), bell_number(2), bell_number(3), bell_number(4)]"
+    out: "[1, 2, 5, 15]"
   oscar:
     in: bell([1, 2, 3, 4])
+    out: "MethodError: no method matching bell(::Vector{Int64}) The function `bell` exists, but no method is d"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: "[bell(ZZ(1)), bell(ZZ(2)), bell(ZZ(3)), bell(ZZ(4))]"
     out: "[1, 2, 5, 15]"
@@ -297,8 +302,13 @@ exact-for-large-n:
     out: "846749014511809332450147"
   sage:
     in: bell_number(30)
+    out: "846749014511809332450147"
   oscar:
     in: bell(30)
+    out: "InexactError: convert(Int64, 846749014511809332450147)"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: bell(ZZ(30))
     out: "846749014511809332450147"
@@ -372,8 +382,10 @@ touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
     out: True
   sage:
     in: bool((bell_number(9) % 7) == ((bell_number(2) + bell_number(3)) % 7))
+    out: True
   oscar:
     in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
+    out: "true"
   julia:
     in: (mod(bell(ZZ(9)), 7) == mod((bell(ZZ(2)) + bell(ZZ(3))), 7))
     out: "true"
@@ -395,8 +407,16 @@ a-zero-modulus-inside-a-congruence-check-is-nan:
     in: enumeratio_equal((bell(9) % 23), ((bell(4) + bell(5)) % 0))
   sage:
     in: bool((bell_number(9) % 23) == ((bell_number(4) + bell_number(5)) % 0))
+    out: "ZeroDivisionError: Integer modulo by zero"
+    verdict: error
+    kind: unclassified
+    note:
   oscar:
     in: (mod(bell(9), 23) == mod((bell(4) + bell(5)), 0))
+    out: "DivideError: integer division error"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: (mod(bell(ZZ(9)), 23) == mod((bell(ZZ(4)) + bell(ZZ(5))), 0))
     out: "DivideError: integer division error"

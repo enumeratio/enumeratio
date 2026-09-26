@@ -197,6 +197,7 @@ a-machine-precision-argument-evaluates:
     out: "0.405465108108164381978013115464"
   sage:
     in: log(1.5)
+    out: "0.405465108108164"
   rust:
     in: ln(x(1.5))
     out: "0.4054651081081644"
@@ -219,6 +220,7 @@ n-for-a-decimal-value:
     out: "6.90775527898213705205397436405"
   sage:
     in: N(log(1000))
+    out: "6.90775527898214"
   rust:
     in: nf(ln(n(1000)))
     out: "6.907755278982137"
@@ -241,6 +243,7 @@ arbitrary-precision-via-n:
     out: "0.916290731874155065183527211768"
   sage:
     in: N(log((5/2)))
+    out: "0.916290731874155"
   rust:
     in: nf(ln(rational(n(5), n(2))))
     out: "0.9162907318741551"
@@ -263,6 +266,7 @@ evaluates-at-a-complex-argument:
     out: (0.990500734433291704174403894723 + 0.38050637711236488630358791681j)
   sage:
     in: log((2.5 + 1*I))
+    out: 0.990500734433292 + 0.380506377112365*I
 a-negative-float-gives-the-principal-complex:
   epsil:
     in: Ln(-2.5)
@@ -282,6 +286,7 @@ a-negative-float-gives-the-principal-complex:
     out: (0.916290731874155065183527211768 + 3.14159265358979323846264338328j)
   sage:
     in: log(-2.5)
+    out: 0.916290731874155 + 3.14159265358979*I
   rust:
     in: ln(x(-2.5))
     out: NaN
@@ -313,6 +318,7 @@ threads-element-wise-over-a-list:
     out: "[mpf('0.0'), mpf('0.741937344729377354776816987592111'), mpf('1.13140211149110059056208963437813'), mpf('1.41098697371026203319721877687743')]"
   sage:
     in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+    out: "[0, 0.741937344729377, 1.13140211149110, 1.41098697371026]"
   rust:
     in: ln(list(vec![n(1), x(2.1), x(3.1), x(4.1)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -339,6 +345,7 @@ an-integer-power-is-pulled-out-ln-1000-3-ln-10:
     out: "6.90775527898213705205397436405"
   sage:
     in: log(1000)
+    out: 3*log(10)
   rust:
     in: ln(n(1000))
     out: "6.907755278982137"
@@ -361,6 +368,7 @@ ln-exponentiale-pow-3:
     out: "3.0"
   sage:
     in: log(((e)^3))
+    out: "3"
   rust:
     in: ln(power(x(std::f64::consts::E), n(3)))
     out: "3.0"
@@ -405,6 +413,7 @@ ln-i-i-pi-2-exactly:
     out: (0.0 + 1.57079632679489661923132169164j)
   sage:
     in: log(I)
+    out: 1/2*I*pi
 a-unit-fraction-becomes-a-negated-logarithm-ln:
   epsil:
     in: Ln(1 / 2)
@@ -424,6 +433,7 @@ a-unit-fraction-becomes-a-negated-logarithm-ln:
     out: "-0.693147180559945309417232121458"
   sage:
     in: log((1/2))
+    out: log(1/2)
   rust:
     in: ln(rational(n(1), n(2)))
     out: "-0.6931471805599453"
@@ -513,6 +523,7 @@ to-40-significant-digits-every-one-correctly:
     out: "0.693147180559945309417232121458"
   sage:
     in: N(log(2))
+    out: "0.693147180559945"
   rust:
     in: nf(ln(n(2)))
     out: "0.6931471805599453"
@@ -535,6 +546,7 @@ ln-frac-12-i-pi-ln-2-a-negative-rational-folded:
     out: (-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
   sage:
     in: log((-1/2))
+    out: I*pi + log(1/2)
   rust:
     in: ln(rational(n(-1), n(2)))
     out: NaN
@@ -560,6 +572,7 @@ n-decimalizes-ln-i-not-just-the-exact-form:
     out: (0.0 + 1.57079632679489661923132169164j)
   sage:
     in: N(log(I))
+    out: 1.57079632679490*I
 a-machine-precision-negative-argument:
   epsil:
     in: Ln(-4.705)
@@ -577,6 +590,7 @@ a-machine-precision-negative-argument:
     in: log(-4.705)
   sage:
     in: log(-4.705)
+    out: 1.54862577303734 + 3.14159265358979*I
   rust:
     in: ln(x(-4.705))
     out: NaN
@@ -600,6 +614,7 @@ an-integer-power-negative-argument:
     in: log(-2)
   sage:
     in: log(-2)
+    out: I*pi + log(2)
   rust:
     in: ln(n(-2))
     out: NaN
@@ -623,6 +638,7 @@ n-of-a-negative-integer-argument:
     in: (log(-2))
   sage:
     in: N(log(-2))
+    out: 0.693147180559945 + 3.14159265358979*I
   rust:
     in: nf(ln(n(-2)))
     out: NaN
@@ -646,6 +662,7 @@ ln-neg-6:
     in: log(-6)
   sage:
     in: log(-6)
+    out: I*pi + log(6)
   rust:
     in: ln(n(-6))
     out: NaN
@@ -669,6 +686,7 @@ n-of-a-negative-rational-argument:
     in: (log((mpf(-1)/2)))
   sage:
     in: N(log((-1/2)))
+    out: -0.693147180559945 + 3.14159265358979*I
   rust:
     in: nf(ln(rational(n(-1), n(2))))
     out: NaN

@@ -159,6 +159,7 @@ an-inexact-a-evaluates-numerically-without-n:
     out: "125.739018057217945694903993229"
   sage:
     in: hurwitz_zeta(3, 0.2)
+    out: "125.739018057218"
 inside-the-critical-strip-under-n:
   epsil:
     in: N(HurwitzZeta(0.51, 0.87))
@@ -181,6 +182,7 @@ inside-the-critical-strip-under-n:
     out: "-1.32015502369495840434831283695"
   sage:
     in: N(hurwitz_zeta(0.51, 0.87))
+    out: "-1.32015502369496"
 a-positive-integer-a-peels-off-the-first-terms:
   epsil:
     in: HurwitzZeta(7, 5)
@@ -203,6 +205,7 @@ a-positive-integer-a-peels-off-the-first-terms:
     out: "0.0000184948548452090985995617382284"
   sage:
     in: hurwitz_zeta(7, 5)
+    out: zeta(7) - 36130315/35831808
 complex-a:
   epsil:
     in: N(HurwitzZeta(2.3, 8 + i))
@@ -225,6 +228,7 @@ complex-a:
     out: (0.0544700827321306866228092072147 - 0.00944851533647025008110366459698j)
   sage:
     in: N(hurwitz_zeta(2.3, (8 + 1*I)))
+    out: 0.0544700827321307 - 0.00944851533647025*I
 listable-threads-over-a-list-of-orders:
   epsil:
     in: HurwitzZeta([2, 3, 4], 0.5)
@@ -250,6 +254,10 @@ listable-threads-over-a-list-of-orders:
     note: compute-engine's HurwitzZeta threads over the list; mpmath's takes scalars.
   sage:
     in: hurwitz_zeta([2, 3, 4], 0.5)
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: unclassified
+    note:
 uncertainty-in-a:
   epsil:
     in: HurwitzZeta(2, Around(0.5, 0.01))
@@ -286,6 +294,7 @@ zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2:
     out: "4.93480220054467930941724549994"
   sage:
     in: hurwitz_zeta(2, (1/2))
+    out: 1/2*pi^2
 zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
   epsil:
     in: HurwitzZeta(2, 1 / 4)
@@ -314,6 +323,10 @@ zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g:
     note: compute-engine gives the closed form π² + 8G; mpmath gives the number it equals.
   sage:
     in: hurwitz_zeta(2, (1/4))
+    out: psi(1, 1/4)
+    verdict: inconclusive
+    kind: unclassified
+    note:
 zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s:
   epsil:
     in: HurwitzZeta(s, 1 / 2)
@@ -360,6 +373,7 @@ zeta-0-a-frac-12-a-holds-at-a-0-too:
     out: "0.5"
   sage:
     in: hurwitz_zeta(0, 0)
+    out: 1/2
 zeta-2-a-b-3-a-3:
   epsil:
     in: HurwitzZeta(-2, a)
@@ -406,6 +420,7 @@ to-30-significant-digits-not-yet-the-last-digit:
     out: "27.5610611997008037762278779774"
   sage:
     in: N(hurwitz_zeta(3, (1/3)))
+    out: "27.5610611997008"
 far-left-of-the-strip-all-40-digits-agree-with:
   epsil:
     in: N(HurwitzZeta(-41 / 2, 3 / 10), 40)
@@ -428,6 +443,7 @@ far-left-of-the-strip-all-40-digits-agree-with:
     out: "136.361935791831144171775099936"
   sage:
     in: N(hurwitz_zeta((-41/2), (3/10)))
+    out: "136.361935791831"
 left-of-the-strip-at-a-non-integer-a:
   epsil:
     in: N(HurwitzZeta(-20, 0.7))
@@ -450,6 +466,7 @@ left-of-the-strip-at-a-non-integer-a:
     out: "-80.0909738762535840749199398913"
   sage:
     in: N(hurwitz_zeta(-20, 0.7))
+    out: "-80.0909738762536"
 left-of-the-strip-at-a-non-integer-a-and-s:
   epsil:
     in: N(HurwitzZeta(-40.5, 0.4))
@@ -472,6 +489,7 @@ left-of-the-strip-at-a-non-integer-a-and-s:
     out: "7724997484091588.58607882278333"
   sage:
     in: N(hurwitz_zeta(-40.5, 0.4))
+    out: "7.72499748409159e15"
 a-negative-a-frac-12-5-is-real-and-so-is-the:
   epsil:
     in: N(HurwitzZeta(5, -1 / 2))
@@ -494,6 +512,7 @@ a-negative-a-frac-12-5-is-real-and-so-is-the:
     out: "0.144760409444467716272330080168"
   sage:
     in: N(hurwitz_zeta(5, (-1/2)))
+    out: "0.144760409444473"
 zeta-4-2-pi-4-90-1:
   epsil:
     in: HurwitzZeta(4, 2)
@@ -516,6 +535,7 @@ zeta-4-2-pi-4-90-1:
     out: "0.0823232337111381915160036965412"
   sage:
     in: hurwitz_zeta(4, 2)
+    out: 1/90*pi^4 - 1
 certified-digits-zeta-1-2-1-3:
   epsil:
     in: N(HurwitzZeta(1 / 2, 1 / 3), 40)
@@ -538,6 +558,7 @@ certified-digits-zeta-1-2-1-3:
     out: "-0.118083327934221719094454170794"
   sage:
     in: N(hurwitz_zeta((1/2), (1/3)))
+    out: "-0.118083327934222"
 zeta-0-a-exact-at-a-3:
   epsil:
     in: HurwitzZeta(0, 3)
@@ -560,6 +581,7 @@ zeta-0-a-exact-at-a-3:
     out: "-2.5"
   sage:
     in: hurwitz_zeta(0, 3)
+    out: -5/2
 zeta-0-a-exact-at-a-5-over-2:
   epsil:
     in: HurwitzZeta(0, 5 / 2)
@@ -582,6 +604,7 @@ zeta-0-a-exact-at-a-5-over-2:
     out: "-2.0"
   sage:
     in: hurwitz_zeta(0, (5/2))
+    out: "-2"
 zeta-neg-1-a-exact-at-a-3:
   epsil:
     in: HurwitzZeta(-1, 3)
@@ -604,6 +627,7 @@ zeta-neg-1-a-exact-at-a-3:
     out: "-3.08333333333333333333333333333"
   sage:
     in: hurwitz_zeta(-1, 3)
+    out: -37/12
 zeta-neg-1-a-exact-at-a-5-over-2:
   epsil:
     in: HurwitzZeta(-1, 5 / 2)
@@ -626,6 +650,7 @@ zeta-neg-1-a-exact-at-a-5-over-2:
     out: "-1.95833333333333333333333333333"
   sage:
     in: hurwitz_zeta(-1, (5/2))
+    out: -47/24
 zeta-neg-1-a-exact-at-a-7-over-3:
   epsil:
     in: HurwitzZeta(-1, 7 / 3)
@@ -648,6 +673,7 @@ zeta-neg-1-a-exact-at-a-7-over-3:
     out: "-1.63888888888888888888888888889"
   sage:
     in: hurwitz_zeta(-1, (7/3))
+    out: -59/36
 zeta-neg-2-a-exact-at-a-5-over-2:
   epsil:
     in: HurwitzZeta(-2, 5 / 2)
@@ -670,6 +696,7 @@ zeta-neg-2-a-exact-at-a-5-over-2:
     out: "-2.5"
   sage:
     in: hurwitz_zeta(-2, (5/2))
+    out: -5/2
 zeta-neg-3-a-exact-at-a-5-over-2:
   epsil:
     in: HurwitzZeta(-3, 5 / 2)
@@ -692,6 +719,7 @@ zeta-neg-3-a-exact-at-a-5-over-2:
     out: "-3.50729166666666666666666666667"
   sage:
     in: hurwitz_zeta(-3, (5/2))
+    out: -3367/960
 zeta-neg-4-a-exact-at-a-5-over-2:
   epsil:
     in: HurwitzZeta(-4, 5 / 2)
@@ -714,6 +742,7 @@ zeta-neg-4-a-exact-at-a-5-over-2:
     out: "-5.125"
   sage:
     in: hurwitz_zeta(-4, (5/2))
+    out: -41/8
 pole-at-s-1-for-symbolic-a:
   epsil:
     in: HurwitzZeta(1, a)
@@ -754,6 +783,10 @@ pole-at-a-neg-2-re-s-positive:
     note: compute-engine answers ComplexInfinity at the pole; mpmath raises.
   sage:
     in: N(hurwitz_zeta(2, -2))
+    out: "ValueError: psi2_eval(): pole"
+    verdict: error
+    kind: unclassified
+    note:
 pole-at-a-neg-1-inexact-s:
   epsil:
     in: N(HurwitzZeta(0.158, -1))
@@ -782,6 +815,10 @@ pole-at-a-neg-1-inexact-s:
     note: compute-engine answers ComplexInfinity at the pole; mpmath raises.
   sage:
     in: N(hurwitz_zeta(0.158, -1))
+    out: "ValueError: Hurwitz zeta complex infinity"
+    verdict: error
+    kind: unclassified
+    note:
 pole-at-a-0-re-s-positive:
   epsil:
     in: N(HurwitzZeta(3, 0))
@@ -810,6 +847,10 @@ pole-at-a-0-re-s-positive:
     note: compute-engine answers ComplexInfinity at the pole; mpmath raises.
   sage:
     in: N(hurwitz_zeta(3, 0))
+    out: "ValueError: psi2_eval(): pole"
+    verdict: error
+    kind: unclassified
+    note:
 re-s-0-a-0-is-indeterminate:
   epsil:
     in: N(HurwitzZeta(-i, 0))
@@ -835,6 +876,10 @@ re-s-0-a-0-is-indeterminate:
     note: mpmath's zeta counts the dropped term's 0^(-s) as 1 when Re(s)=0 (off by exactly that from ours); Wolfram calls this Indeterminate instead, which is the convention we follow (see the caption).
   sage:
     in: N(hurwitz_zeta((0 + -1*I), 0))
+    out: 1.00330022368532 + 0.418155449141322*I
+    verdict: disagree
+    kind: unclassified
+    note:
 re-s-0-a-neg-1-is-indeterminate:
   epsil:
     in: N(HurwitzZeta(-i, -1))
@@ -860,6 +905,10 @@ re-s-0-a-neg-1-is-indeterminate:
     note: Same underlying gap as a=0 above -- mpmath's zeta doesn't treat 0^(-s) at Re(s)=0 as indeterminate the way Wolfram (and we) do, and its own algorithm fails differently here.
   sage:
     in: N(hurwitz_zeta((0 + -1*I), -1))
+    out: "ValueError: Hurwitz zeta complex infinity"
+    verdict: error
+    kind: unclassified
+    note:
 re-s-negative-a-drops-the-term-cleanly:
   epsil:
     in: N(HurwitzZeta(-1.5 + 0.5i, -2))
@@ -888,6 +937,10 @@ re-s-negative-a-drops-the-term-cleanly:
     note: mpmath's zeta(s,a) gives up at a nonpositive integer a combined with a non-integer complex s; ours computes it by dropping the (cleanly zero) singular term. Cross-checked against the recursion zeta(s,a)=zeta(s,a+1)+a^-s down to the 1-argument zeta(s), which mpmath computes fine and agrees with ours.
   sage:
     in: N(hurwitz_zeta((-1.5 + 0.5*I), -2))
+    out: "ValueError: Hurwitz zeta complex infinity"
+    verdict: error
+    kind: unclassified
+    note:
 re-s-positive-complex-s-is-a-pole:
   epsil:
     in: N(HurwitzZeta(2 + i, 0))
@@ -916,6 +969,10 @@ re-s-positive-complex-s-is-a-pole:
     note: mpmath's zeta doesn't treat a=0 (the dropped-term pole) as singular when Re(s)>0 the way Wolfram (and we) do -- it just computes a value from its own series.
   sage:
     in: N(hurwitz_zeta((2 + 1*I), 0))
+    out: 2.15035570325490 - 0.437530865919608*I
+    verdict: disagree
+    kind: unclassified
+    note:
 n-hurwitzzeta-2-1:
   epsil:
     in: N(HurwitzZeta(2, 1))

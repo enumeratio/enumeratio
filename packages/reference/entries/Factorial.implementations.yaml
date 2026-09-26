@@ -401,8 +401,13 @@ real-arguments-evaluate-as-gamma-n-1:
     out: "11.6317283965674"
   sage:
     in: factorial(3.5)
+    out: "11.6317283965674"
   oscar:
     in: factorial(ZZ(3.5))
+    out: "InexactError: convert(ZZRingElem, 3.5)"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: factorial(ZZ(3.5))
     out: "InexactError: convert(ZZRingElem, 3.5)"
@@ -433,8 +438,13 @@ negative-non-integers-are-defined-too-2-5-gamma:
     out: "2.36327180120735"
   sage:
     in: factorial(-2.5)
+    out: "2.36327180120735"
   oscar:
     in: factorial(ZZ(-2.5))
+    out: "InexactError: convert(ZZRingElem, -2.5)"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: factorial(ZZ(-2.5))
     out: "InexactError: convert(ZZRingElem, -2.5)"
@@ -465,8 +475,16 @@ complex-arguments-1-i-gamma-2-i:
     out: factorial(1 + I)
   sage:
     in: factorial((1 + 1*I))
+    out: factorial(I + 1)
+    verdict: disagree
+    kind: unclassified
+    note:
   oscar:
     in: factorial(ZZ(complex(1, 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: factorial(ZZ(complex(1, 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -490,8 +508,13 @@ frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
     out: factorial(-1/2)
   sage:
     in: factorial((-1/2))
+    out: sqrt(pi)
   oscar:
     in: factorial(ZZ((-1 // 2)))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: factorial(ZZ((-1 // 2)))
     out: "AssertionError: denominator(x) == 1"
@@ -536,6 +559,7 @@ n-gamma-n-1-see-gamma:
     out: True
   sage:
     in: bool(factorial(5) == gamma(6))
+    out: True
   rust:
     in: equal(factorial(n(5)), gamma(n(6)))
     out: "true"
@@ -566,8 +590,10 @@ the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e:
     out: "265252859812191058636308480000000"
   sage:
     in: factorial(30)
+    out: "265252859812191058636308480000000"
   oscar:
     in: factorial(ZZ(30))
+    out: "265252859812191058636308480000000"
   julia:
     in: factorial(ZZ(30))
     out: "265252859812191058636308480000000"

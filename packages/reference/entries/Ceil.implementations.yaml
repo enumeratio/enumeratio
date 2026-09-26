@@ -71,6 +71,7 @@ ceil-3p7:
     out: "4.0"
   sage:
     in: ceil(3.7)
+    out: "4"
   rust:
     in: ceil(x(3.7))
     out: "4.0"
@@ -239,6 +240,10 @@ a-zero-divisor-inside-ceil:
     in: ceiling((S(16) / 0))
   sage:
     in: ceil((16 / 0))
+    out: "ZeroDivisionError: rational division by zero"
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: ceil((n(16) / n(0)))
     out: "panic: denominator == 0"
@@ -306,6 +311,7 @@ ceil-2p4:
     out: "3.0"
   sage:
     in: ceil(2.4)
+    out: "3"
   rust:
     in: ceil(x(2.4))
     out: "3.0"
@@ -328,6 +334,7 @@ ceil-2p6:
     out: "3.0"
   sage:
     in: ceil(2.6)
+    out: "3"
   rust:
     in: ceil(x(2.6))
     out: "3.0"
@@ -359,6 +366,7 @@ exact-radicals-are-decided-numerically:
     out: "8.0"
   sage:
     in: ceil(sqrt(50))
+    out: "8"
   rust:
     in: ceil(sqrt(n(50)))
     out: "8.0"
@@ -381,6 +389,7 @@ evaluates-at-an-exact-constant-lceil-pi-rceil-4:
     out: "4.0"
   sage:
     in: ceil(pi)
+    out: "4"
   rust:
     in: ceil(x(std::f64::consts::PI))
     out: "4.0"
@@ -436,6 +445,10 @@ rounds-the-real-and-imaginary-parts-up:
     out: (6.0 - 1.0j)
   sage:
     in: ceil((5.37 + -1.3*I))
+    out: ceil(5.37000000000000 - 1.30000000000000*I)
+    verdict: disagree
+    kind: unclassified
+    note:
 ten-bits-are-enough-to-number-1000-items-lceil:
   epsil:
     in: Ceil(Log(1_000, 2))

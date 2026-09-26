@@ -361,13 +361,16 @@ reduce-12-18-to-lowest-terms-by-dividing-out-the:
     out: "2"
   sage:
     in: (12 / gcd(12, 18))
+    out: "2"
   oscar:
     in: (12 // gcd(ZZ(12), ZZ(18)))
+    out: "2.0"
   julia:
     in: (12 // gcd(ZZ(12), ZZ(18)))
     out: "2.0"
   mathlib4:
     in: "((12 : ℚ) / (Int.gcd 12 18))"
+    out: "2"
   rust:
     in: (n(12) / gcd(n(12), n(18)))
     out: "2"
@@ -387,8 +390,16 @@ gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i:
     out: 2 + 3*I
   sage:
     in: gcd((-3 + 2*I), (10 + 15*I))
+    out: "1"
+    verdict: inconclusive
+    kind: unclassified
+    note:
   oscar:
     in: gcd(ZZ(complex(-3, 2)), ZZ(complex(10, 15)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: gcd(ZZ(complex(-3, 2)), ZZ(complex(10, 15)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -411,8 +422,16 @@ gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2:
     out: 1/2 + I/3
   sage:
     in: gcd((5 + (10/3)*I), ((3/2) + 1*I))
+    out: "1"
+    verdict: inconclusive
+    kind: unclassified
+    note:
   oscar:
     in: gcd(ZZ(complex(5, (10 // 3))), ZZ(complex((3 // 2), 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: gcd(ZZ(complex(5, (10 // 3))), ZZ(complex((3 // 2), 1)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
@@ -435,13 +454,16 @@ big-integers-gcd-20-10-100-3-7-exact-past-where:
     out: "7"
   sage:
     in: gcd(factorial(20), (((10)^100) + 3))
+    out: "7"
   oscar:
     in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+    out: "7"
   julia:
     in: gcd(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
     out: "7"
   mathlib4:
     in: (Int.gcd (Nat.factorial 20) ((10 ^ 100) + 3))
+    out: "7"
   rust:
     in: gcd(factorial(n(20)), (power(n(10), n(100)) + n(3)))
     out: "panic: an integer, not 2.43290200817664e18"
@@ -464,13 +486,22 @@ listable-a-single-list-argument-threads-element:
     out: "[3, 1, 4]"
   sage:
     in: "[gcd(12, 3), gcd(12, 7), gcd(12, 40)]"
+    out: "[3, 1, 4]"
   oscar:
     in: gcd(ZZ(12), ZZ([3, 7, 40]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: "[gcd(ZZ(12), ZZ(3)), gcd(ZZ(12), ZZ(7)), gcd(ZZ(12), ZZ(40))]"
     out: "[3, 1, 4]"
   mathlib4:
     in: (Int.gcd 12 [3, 7, 40])
+    out: "Application type mismatch: The argument"
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: gcd(n(12), list(vec![n(3), n(7), n(40)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -496,13 +527,16 @@ gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci:
     out: "8"
   sage:
     in: gcd(fibonacci(12), fibonacci(18))
+    out: "8"
   oscar:
     in: gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18)))
+    out: "8"
   julia:
     in: gcd(ZZ(BigInt(fibonacci(ZZ(12)))), ZZ(BigInt(fibonacci(ZZ(18)))))
     out: "8"
   mathlib4:
     in: (Int.gcd (Nat.fib 12) (Nat.fib 18))
+    out: "8"
 gcd-0-0-0-by-convention:
   epsil:
     in: GCD(0, 0)
@@ -519,13 +553,16 @@ gcd-0-0-0-by-convention:
     out: "0"
   sage:
     in: gcd(0, 0)
+    out: "0"
   oscar:
     in: gcd(ZZ(0), ZZ(0))
+    out: "0"
   julia:
     in: gcd(ZZ(0), ZZ(0))
     out: "0"
   mathlib4:
     in: (Int.gcd 0 0)
+    out: "0"
   rust:
     in: gcd(n(0), n(0))
     out: "0"

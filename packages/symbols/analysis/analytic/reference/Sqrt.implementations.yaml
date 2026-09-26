@@ -298,6 +298,7 @@ an-approximate-number-gives-an-approximate-root:
     out: "1.87082869338697069279187436616"
   sage:
     in: sqrt(3.5)
+    out: "1.87082869338697"
   rust:
     in: sqrt(x(3.5))
     out: "1.8708286933869707"
@@ -320,6 +321,7 @@ pulls-perfect-square-factors-out-of-the-radical:
     out: "14.1421356237309504880168872421"
   sage:
     in: sqrt(200)
+    out: 10*sqrt(2)
   rust:
     in: sqrt(n(200))
     out: "14.142135623730951"
@@ -342,6 +344,7 @@ sqrt-neg-25:
     out: (0.0 + 5.0j)
   sage:
     in: sqrt(-25)
+    out: 5*I
   rust:
     in: sqrt(n(-25))
     out: NaN
@@ -367,6 +370,7 @@ sqrt-8:
     out: "2.82842712474619009760337744842"
   sage:
     in: sqrt(8)
+    out: 2*sqrt(2)
   rust:
     in: sqrt(n(8))
     out: "2.8284271247461903"
@@ -389,6 +393,7 @@ rationalizes-the-denominator:
     out: "0.707106781186547524400844362105"
   sage:
     in: sqrt((1/2))
+    out: sqrt(1/2)
   rust:
     in: sqrt(rational(n(1), n(2)))
     out: "0.7071067811865476"
@@ -411,6 +416,7 @@ sqrt-12-over-5:
     out: "1.54919333848296675407170615991"
   sage:
     in: sqrt((12/5))
+    out: 2*sqrt(3/5)
   rust:
     in: sqrt(rational(n(12), n(5)))
     out: "1.5491933384829668"
@@ -433,6 +439,7 @@ sqrt-neg-2p5:
     out: (0.0 + 1.58113883008418966599944677222j)
   sage:
     in: sqrt(-2.5)
+    out: 1.58113883008419*I
   rust:
     in: sqrt(x(-2.5))
     out: NaN
@@ -458,6 +465,7 @@ an-exact-complex-square-2-i-2-3-4i:
     out: (2.0 + 1.0j)
   sage:
     in: sqrt((3 + 4*I))
+    out: I + 2
 sqrt-positiveinfinity:
   epsil:
     in: Sqrt(PositiveInfinity)
@@ -488,6 +496,7 @@ threads-element-wise-over-a-list:
     out: "[mpf('1.0'), mpf('2.0'), mpf('3.0')]"
   sage:
     in: "[sqrt(1), sqrt(4), sqrt(9)]"
+    out: "[1, 2, 3]"
   rust:
     in: sqrt(list(vec![n(1), n(4), n(9)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -513,6 +522,7 @@ threads-over-a-matrix-entry-by-entry-this-is-not:
     out: "[[mpf('0.707106781186547524400844362104884'), mpc(real='0.0', imag='1.0')], [mpf('0.0'), mpf('0.707106781186547524400844362104884')]]"
   sage:
     in: "[[sqrt((1/2)), sqrt(-1)], [sqrt(0), sqrt((1/2))]]"
+    out: "[[sqrt(1/2), I], [0, sqrt(1/2)]]"
   rust:
     in: sqrt(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(1), n(2))])]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -578,6 +588,7 @@ at-x-1-sqrt-x-2-1-not-1:
     out: "1.0"
   sage:
     in: sqrt(((-1)^2))
+    out: "1"
   rust:
     in: sqrt(power(n(-1), n(2)))
     out: "1.0"
@@ -600,6 +611,7 @@ sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
     out: (-1.0 + 0.0j)
   sage:
     in: (sqrt(-1) * sqrt(-1))
+    out: "-1"
   rust:
     in: (sqrt(n(-1)) * sqrt(n(-1)))
     out: NaN
@@ -625,6 +637,7 @@ while-sqrt-1-1-1:
     out: "1.0"
   sage:
     in: sqrt((-1 * -1))
+    out: "1"
   rust:
     in: sqrt((n(-1) * n(-1)))
     out: "1.0"
@@ -647,6 +660,7 @@ to-45-significant-digits-every-one-correctly:
     out: "1.41421356237309504880168872421"
   sage:
     in: N(sqrt(2))
+    out: "1.41421356237310"
   rust:
     in: nf(sqrt(n(2)))
     out: "1.4142135623730951"
@@ -667,6 +681,7 @@ an-approximate-negative-radicand-stays-complex:
     in: sqrt(-2.875)
   sage:
     in: sqrt(-2.875)
+    out: 1.69558249578132*I
   rust:
     in: sqrt(x(-2.875))
     out: NaN
@@ -690,6 +705,7 @@ sqrt-36-negative:
     in: sqrt(-36)
   sage:
     in: sqrt(-36)
+    out: 6*I
   rust:
     in: sqrt(n(-36))
     out: NaN
@@ -713,6 +729,7 @@ sqrt-2-times-sqrt-neg-1:
     in: (sqrt(1) * sqrt(-1))
   sage:
     in: (sqrt(1) * sqrt(-1))
+    out: I
   rust:
     in: (sqrt(n(1)) * sqrt(n(-1)))
     out: NaN
@@ -736,6 +753,7 @@ sqrt-neg-4-over-9:
     in: sqrt((mpf(-4)/9))
   sage:
     in: sqrt((-4/9))
+    out: 2/3*I
   rust:
     in: sqrt(rational(n(-4), n(9)))
     out: NaN
@@ -759,6 +777,7 @@ sqrt-neg-1-half:
     in: sqrt((mpf(-1)/2))
   sage:
     in: sqrt((-1/2))
+    out: sqrt(-1/2)
   rust:
     in: sqrt(rational(n(-1), n(2)))
     out: NaN
@@ -782,6 +801,7 @@ sqrt-neg-1:
     in: sqrt(-1)
   sage:
     in: sqrt(-1)
+    out: I
   rust:
     in: sqrt(n(-1))
     out: NaN
@@ -805,6 +825,7 @@ sqrt-neg-12-over-5:
     in: sqrt((mpf(-12)/5))
   sage:
     in: sqrt((-12/5))
+    out: 2*sqrt(-3/5)
   rust:
     in: sqrt(rational(n(-12), n(5)))
     out: NaN

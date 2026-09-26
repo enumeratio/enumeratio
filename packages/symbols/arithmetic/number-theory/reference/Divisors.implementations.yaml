@@ -155,6 +155,10 @@ threads-element-wise-over-a-list-as-wolfram-s:
       out: \{\{1,2,4\},\{1,2,3,6\}\}
   sage:
     in: divisors([4, 6])
+    out: "TypeError: unable to factor [4, 6]"
+    verdict: error
+    kind: unclassified
+    note:
 divisors-3-plus-4i:
   epsil:
     in: Divisors(3 + 4i)
@@ -201,6 +205,7 @@ divisors-6:
     in: Divisors[6]
   sage:
     in: divisors(6)
+    out: "[1, 2, 3, 6]"
 6-4i-i-1-i-2-3-2i:
   epsil:
     in: Divisors(6 + 4i)
@@ -214,6 +219,10 @@ divisors-6:
     in: Divisors[Complex[6, 4]]
   sage:
     in: divisors((6 + 4*I))
+    out: "[6*I - 4, -2*I - 3, I - 1, -2*I, 1, -I + 5]"
+    verdict: disagree
+    kind: unclassified
+    note:
 listable-threads-over-a-list:
   epsil:
     in: Divisors([605, 871, 824])
@@ -227,6 +236,10 @@ listable-threads-over-a-list:
     in: Divisors[List[605, 871, 824]]
   sage:
     in: divisors([605, 871, 824])
+    out: "TypeError: unable to factor [605, 871, 824]"
+    verdict: error
+    kind: unclassified
+    note:
 only-positive-divisors-even-for-negative-n:
   epsil:
     in: Divisors(-6)
@@ -240,6 +253,7 @@ only-positive-divisors-even-for-negative-n:
     in: Divisors[-6]
   sage:
     in: divisors(-6)
+    out: "[1, 2, 3, 6]"
 divisors-neg-12:
   epsil:
     in: Divisors(-12)
@@ -253,6 +267,7 @@ divisors-neg-12:
     in: Divisors[-12]
   sage:
     in: divisors(-12)
+    out: "[1, 2, 3, 4, 6, 12]"
 divisors-0-stays-unevaluated:
   epsil:
     in: Divisors(0)
@@ -266,6 +281,10 @@ divisors-0-stays-unevaluated:
     in: Divisors[0]
   sage:
     in: divisors(0)
+    out: "ValueError: n must be nonzero"
+    verdict: error
+    kind: unclassified
+    note:
 a-non-integer-stays-unevaluated:
   epsil:
     in: Divisors(5 / 2)
@@ -279,6 +298,10 @@ a-non-integer-stays-unevaluated:
     in: Divisors[Rational[5, 2]]
   sage:
     in: divisors((5/2))
+    out: "[1, 5]"
+    verdict: disagree
+    kind: unclassified
+    note:
 5-in-the-gaussian-integers:
   epsil:
     in: Divisors(5, GaussianIntegers -> True)

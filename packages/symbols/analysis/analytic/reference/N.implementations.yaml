@@ -17,6 +17,7 @@ n-pi-30:
     out: "3.14159265358979323846264338328"
   sage:
     in: N(pi)
+    out: "3.14159265358979"
   rust:
     in: nf(x(std::f64::consts::PI))
     out: "3.141592653589793"
@@ -56,6 +57,10 @@ a-list-number-by-number:
     note: "The mapping drops N, and mpmath prints its constants as lazy objects (<pi: 3.14159~>) rather than digits."
   sage:
     in: N([pi, e, sqrt(2)])
+    out: "ValueError: too many values to unpack (expected 2)"
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: nf(list(vec![x(std::f64::consts::PI), x(std::f64::consts::E), sqrt(n(2))]))
     out: "[3.141592653589793, 2.718281828459045, 1.4142135623730951]"
@@ -87,8 +92,16 @@ an-exact-tie-rounds-to-the-even-digit-0-125:
     note: The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.
   sage:
     in: N((1/8))
+    out: "0.125000000000000"
+    verdict: disagree
+    kind: unclassified
+    note:
   oscar:
     in: ((1 // 8))
+    out: "0.125"
+    verdict: disagree
+    kind: unclassified
+    note:
   julia:
     in: ((1 // 8))
     out: "0.125"
@@ -126,8 +139,16 @@ and-0-375-to-0-38:
     note: The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.
   sage:
     in: N((3/8))
+    out: "0.375000000000000"
+    verdict: disagree
+    kind: unclassified
+    note:
   oscar:
     in: ((3 // 8))
+    out: "0.375"
+    verdict: disagree
+    kind: unclassified
+    note:
   julia:
     in: ((3 // 8))
     out: "0.375"
@@ -157,6 +178,10 @@ n-pi-1-digit:
     in: (pi)
   sage:
     in: N(pi)
+    out: "3.14159265358979"
+    verdict: disagree
+    kind: unclassified
+    note:
   rust:
     in: nf(x(std::f64::consts::PI))
     out: "3.141592653589793"

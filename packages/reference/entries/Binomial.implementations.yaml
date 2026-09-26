@@ -437,13 +437,22 @@ threads-element-wise-over-a-list-as-wolfram-s:
     out: "[0, 1, 10, 35, 165]"
   sage:
     in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
+    out: "[0, 1, 10, 35, 165]"
   oscar:
     in: binomial(ZZ([2, 3, 5, 7, 11]), ZZ(3))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: "[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]"
     out: "[0, 1, 10, 35, 165]"
   mathlib4:
     in: (Nat.choose [2, 3, 5, 7, 11] 3)
+    out: "Application type mismatch: The argument"
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(list(vec![n(2), n(3), n(5), n(7), n(11)]), n(3))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -470,8 +479,13 @@ half-integer-arguments-evaluate-exactly-through:
     out: 9/2
   sage:
     in: binomial((9/2), (7/2))
+    out: 9/2
   oscar:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ((9 // 2)), ZZ((7 // 2)))
     out: "AssertionError: denominator(x) == 1"
@@ -480,6 +494,10 @@ half-integer-arguments-evaluate-exactly-through:
     note: Nemo's ZZ is integers only; it can't hold a half-integer argument. Ours evaluates a half-integer Binomial exactly through the Gamma function.
   mathlib4:
     in: "(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))"
+    out: Type mismatch
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(rational(n(9), n(2)), rational(n(7), n(2)))
     out: "panic: an integer, not 9/2"
@@ -502,13 +520,16 @@ binomial-8-4:
     out: "70"
   sage:
     in: binomial(8, 4)
+    out: "70"
   oscar:
     in: binomial(ZZ(8), ZZ(4))
+    out: "70"
   julia:
     in: binomial(ZZ(8), ZZ(4))
     out: "70"
   mathlib4:
     in: (Nat.choose 8 4)
+    out: "70"
   rust:
     in: binomial(n(8), n(4))
     out: "70"
@@ -564,8 +585,16 @@ real-arguments-evaluate-through-the-gamma:
     out: "6.04992484022837e-5"
   sage:
     in: binomial(8.5, -4.2)
+    out: "TypeError: either m or x-m must be an integer"
+    verdict: error
+    kind: unclassified
+    note:
   oscar:
     in: binomial(ZZ(8.5), ZZ(-4.2))
+    out: "InexactError: convert(ZZRingElem, 8.5)"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ(8.5), ZZ(-4.2))
     out: "InexactError: convert(ZZRingElem, 8.5)"
@@ -574,6 +603,10 @@ real-arguments-evaluate-through-the-gamma:
     note: Nemo's ZZ can't hold a non-integer real; ours extends Binomial to real n and k through the Gamma function.
   mathlib4:
     in: (Nat.choose 8.5 (-4.2))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(x(8.5), x(-4.2))
     out: "panic: an integer, not 8.5"
@@ -596,8 +629,13 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     out: "0.0625000000000000"
   sage:
     in: binomial(0.5, 3)
+    out: "0.0625000000000000"
   oscar:
     in: binomial(ZZ(0.5), ZZ(3))
+    out: "InexactError: convert(ZZRingElem, 0.5)"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ(0.5), ZZ(3))
     out: "InexactError: convert(ZZRingElem, 0.5)"
@@ -606,6 +644,10 @@ a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
     note: ZZ(0.5) has no exact integer value; ours extends Binomial to a real n through the Gamma function.
   mathlib4:
     in: (Nat.choose 0.5 3)
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(x(0.5), n(3))
     out: "panic: an integer, not 0.5"
@@ -628,8 +670,13 @@ a-rational-n-with-integer-k-gives-the-exact:
     out: -1/8
   sage:
     in: binomial((1/2), 2)
+    out: -1/8
   oscar:
     in: binomial(ZZ((1 // 2)), ZZ(2))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ((1 // 2)), ZZ(2))
     out: "AssertionError: denominator(x) == 1"
@@ -638,6 +685,10 @@ a-rational-n-with-integer-k-gives-the-exact:
     note: ZZ needs an integer; ours extends Binomial to a rational n through the Gamma function.
   mathlib4:
     in: "(Nat.choose ((1 : ℚ) / 2) 2)"
+    out: Type mismatch
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(rational(n(1), n(2)), n(2))
     out: "panic: an integer, not 1/2"
@@ -660,8 +711,13 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     out: -5/16
   sage:
     in: binomial((-1/2), 3)
+    out: -5/16
   oscar:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ((-1 // 2)), ZZ(3))
     out: "AssertionError: denominator(x) == 1"
@@ -670,6 +726,10 @@ binom-1-2-3-frac-5-16-the-central-binomial:
     note: ZZ needs an integer; ours extends Binomial to a negative rational n through the Gamma function.
   mathlib4:
     in: "(Nat.choose (((-1) : ℚ) / 2) 3)"
+    out: Type mismatch
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(rational(n(-1), n(2)), n(3))
     out: "panic: an integer, not -1/2"
@@ -710,8 +770,13 @@ a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
     out: -1/12 - I/12
   sage:
     in: binomial((1 + 1*I), 5)
+    out: -1/12*I - 1/12
   oscar:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ(complex(1, 1)), ZZ(5))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -734,8 +799,16 @@ complex-n-and-k-evaluate-through-the-gamma:
     out: gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))
   sage:
     in: binomial((2 + 1*I), (7 + -3*I))
+    out: "TypeError: either m or x-m must be an integer"
+    verdict: error
+    kind: unclassified
+    note:
   oscar:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -811,13 +884,16 @@ the-factorial-form-binom-n-k-frac-n-k-n-k-see:
     out: True
   sage:
     in: bool(binomial(7, 3) == (factorial(7) / (factorial(3) * factorial(4))))
+    out: True
   oscar:
     in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
+    out: "true"
   julia:
     in: (binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))
     out: "true"
   mathlib4:
     in: "(decide ((Nat.choose 7 3) = (((Nat.factorial 7) : ℚ) / ((Nat.factorial 3) * (Nat.factorial 4)))))"
+    out: "true"
   rust:
     in: equal(binomial(n(7), n(3)), (factorial(n(7)) / (factorial(n(3)) * factorial(n(4)))))
     out: "true"
@@ -837,13 +913,16 @@ the-probability-of-exactly-3-heads-in-10-fair:
     out: 15/128
   sage:
     in: (binomial(10, 3) / ((2)^10))
+    out: 15/128
   oscar:
     in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
+    out: "0.1171875"
   julia:
     in: (binomial(ZZ(10), ZZ(3)) // (big(2)^10))
     out: "0.1171875"
   mathlib4:
     in: "(((Nat.choose 10 3) : ℚ) / (2 ^ 10))"
+    out: 15/128
   rust:
     in: (binomial(n(10), n(3)) / power(n(2), n(10)))
     out: 15/128
@@ -866,8 +945,16 @@ both-arguments-negative-integers-the-limiting:
     note: compute-engine and Wolfram take binom(-3, -5) = 6 by the limit through Γ; SymPy gives 0.
   sage:
     in: binomial(-3, -5)
+    out: "0"
+    verdict: disagree
+    kind: unclassified
+    note:
   oscar:
     in: binomial(ZZ(-3), ZZ(-5))
+    out: "0"
+    verdict: disagree
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ(-3), ZZ(-5))
     out: "0"
@@ -876,6 +963,10 @@ both-arguments-negative-integers-the-limiting:
     note: Nemo's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n; ours extends through the reflection identities (Wolfram's convention), giving 6 — see the mapping's note.
   mathlib4:
     in: (Nat.choose (-3) (-5))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(-3), n(-5))
     out: "1"
@@ -897,8 +988,16 @@ equal-negative-arguments-binom-2-2-1:
     in: binomial(-2, -2)
   sage:
     in: binomial(-2, -2)
+    out: "0"
+    verdict: disagree
+    kind: unclassified
+    note:
   oscar:
     in: binomial(ZZ(-2), ZZ(-2))
+    out: "0"
+    verdict: disagree
+    kind: unclassified
+    note:
   julia:
     in: binomial(ZZ(-2), ZZ(-2))
     out: "0"
@@ -907,6 +1006,10 @@ equal-negative-arguments-binom-2-2-1:
     note: Nemo's binomial follows the combinatorial C(n,k)=0 convention outside 0≤k≤n; ours extends through the reflection identities (Wolfram's convention), giving 1 -- verified against a Wolfram kernel, same gap as the mapping's note.
   mathlib4:
     in: (Nat.choose (-2) (-2))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(-2), n(-2))
 the-central-binomial-coefficient-binom-100-50:
@@ -925,13 +1028,16 @@ the-central-binomial-coefficient-binom-100-50:
     out: "100891344545564193334812497256"
   sage:
     in: binomial(100, 50)
+    out: "100891344545564193334812497256"
   oscar:
     in: binomial(ZZ(100), ZZ(50))
+    out: "100891344545564193334812497256"
   julia:
     in: binomial(ZZ(100), ZZ(50))
     out: "100891344545564193334812497256"
   mathlib4:
     in: (Nat.choose 100 50)
+    out: "100891344545564193334812497256"
   rust:
     in: binomial(n(100), n(50))
     out: "100891344545564193334812497256"
@@ -950,12 +1056,18 @@ a-negative-n-with-a-positive-k-binom-9-1:
     in: binomial(-9, 1)
   sage:
     in: binomial(-9, 1)
+    out: "-9"
   oscar:
     in: binomial(ZZ(-9), ZZ(1))
+    out: "-9"
   julia:
     in: binomial(ZZ(-9), ZZ(1))
   mathlib4:
     in: (Nat.choose (-9) 1)
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(-9), n(1))
     out: "0"
@@ -977,12 +1089,18 @@ a-negative-n-with-k-0-binom-1-4:
     in: binomial(-1, 4)
   sage:
     in: binomial(-1, 4)
+    out: "1"
   oscar:
     in: binomial(ZZ(-1), ZZ(4))
+    out: "1"
   julia:
     in: binomial(ZZ(-1), ZZ(4))
   mathlib4:
     in: (Nat.choose (-1) 4)
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(-1), n(4))
     out: "0"
@@ -1004,12 +1122,18 @@ a-negative-k-with-n-10-binom-10-neg-10:
     in: binomial(10, -10)
   sage:
     in: binomial(10, -10)
+    out: "0"
   oscar:
     in: binomial(ZZ(10), ZZ(-10))
+    out: "0"
   julia:
     in: binomial(ZZ(10), ZZ(-10))
   mathlib4:
     in: (Nat.choose 10 (-10))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(10), n(-10))
     out: "1"
@@ -1031,12 +1155,18 @@ a-negative-k-past-n-binom-4-neg-13:
     in: binomial(4, -13)
   sage:
     in: binomial(4, -13)
+    out: "0"
   oscar:
     in: binomial(ZZ(4), ZZ(-13))
+    out: "0"
   julia:
     in: binomial(ZZ(4), ZZ(-13))
   mathlib4:
     in: (Nat.choose 4 (-13))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(4), n(-13))
     out: "1"
@@ -1058,12 +1188,18 @@ a-negative-n-again-binom-neg-4-1:
     in: binomial(-4, 1)
   sage:
     in: binomial(-4, 1)
+    out: "-4"
   oscar:
     in: binomial(ZZ(-4), ZZ(1))
+    out: "-4"
   julia:
     in: binomial(ZZ(-4), ZZ(1))
   mathlib4:
     in: (Nat.choose (-4) 1)
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(-4), n(1))
     out: "0"
@@ -1085,12 +1221,18 @@ a-negative-k-with-n-2-binom-2-neg-2:
     in: binomial(-2, 2)
   sage:
     in: binomial(-2, 2)
+    out: "3"
   oscar:
     in: binomial(ZZ(-2), ZZ(2))
+    out: "3"
   julia:
     in: binomial(ZZ(-2), ZZ(2))
   mathlib4:
     in: (Nat.choose (-2) 2)
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(-2), n(2))
     out: "0"
@@ -1112,12 +1254,18 @@ a-negative-n-zero-k-binom-neg-1-0:
     in: binomial(-1, 0)
   sage:
     in: binomial(-1, 0)
+    out: "1"
   oscar:
     in: binomial(ZZ(-1), ZZ(0))
+    out: "1"
   julia:
     in: binomial(ZZ(-1), ZZ(0))
   mathlib4:
     in: (Nat.choose (-1) 0)
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(-1), n(0))
     out: "0"
@@ -1139,12 +1287,18 @@ a-negative-k-past-n-binom-100-neg-50:
     in: binomial(100, -50)
   sage:
     in: binomial(100, -50)
+    out: "0"
   oscar:
     in: binomial(ZZ(100), ZZ(-50))
+    out: "0"
   julia:
     in: binomial(ZZ(100), ZZ(-50))
   mathlib4:
     in: (Nat.choose 100 (-50))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: binomial(n(100), n(-50))
     out: "1"
@@ -1169,8 +1323,10 @@ symmetry-doesn-t-hold-across-mismatched-n:
     in: enumeratio_equal(binomial(2, 6), binomial(-18, 2))
   sage:
     in: bool(binomial(2, 6) == binomial(-18, 2))
+    out: False
   oscar:
     in: (binomial(ZZ(2), ZZ(6)) == binomial(ZZ(-18), ZZ(2)))
+    out: "false"
   julia:
     in: (binomial(ZZ(2), ZZ(6)) == binomial(ZZ(-18), ZZ(2)))
   mathlib4:
@@ -1199,8 +1355,10 @@ not-pascal-s-rule-across-mismatched-n:
     in: enumeratio_equal((binomial(-23, 2) + binomial(-2, 3)), binomial(-20, 6))
   sage:
     in: bool((binomial(-23, 2) + binomial(-2, 3)) == binomial(-20, 6))
+    out: False
   oscar:
     in: ((binomial(ZZ(-23), ZZ(2)) + binomial(ZZ(-2), ZZ(3))) == binomial(ZZ(-20), ZZ(6)))
+    out: "false"
   julia:
     in: ((binomial(ZZ(-23), ZZ(2)) + binomial(ZZ(-2), ZZ(3))) == binomial(ZZ(-20), ZZ(6)))
   mathlib4:

@@ -165,10 +165,7 @@ threads-element-wise-over-a-list:
     out: "[-1, 2, -3]"
   sage:
     in: "[(-1), (--2), (-3)]"
-    out: "TypeError: bad operand type for unary -: 'list'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Negate is Listable and threads over the list; Sage's takes scalars only.
+    out: "[-1, 2, -3]"
   oscar:
     in: (-([1, -2, 3]))
     out: "[-1, 2, -3]"
@@ -284,8 +281,10 @@ neg-1-plus-2i:
     out: (-1.0 - 2.0j)
   sage:
     in: (-(1 + 2*I))
+    out: -2*I - 1
   oscar:
     in: (-(complex(1, 2)))
+    out: (-1-2j)
   julia:
     in: (-(complex(1, 2)))
     out: (-1-2j)
@@ -308,13 +307,19 @@ threads-over-a-matrix-entry-by-entry:
     out: "[[-1, 2], [-3, -4]]"
   sage:
     in: "[[(-1), (--2)], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
   oscar:
     in: (-([[1, -2], [3, 4]]))
+    out: "[[-1, 2], [-3, -4]]"
   julia:
     in: "[[(-(1)), (-(-2))], [(-(3)), (-(4))]]"
     out: "[[-1, 2], [-3, -4]]"
   mathlib4:
     in: (-([[1, (-2)], [3, 4]]))
+    out: failed to synthesize instance of type class
+    verdict: error
+    kind: unclassified
+    note:
   rust:
     in: (-(list(vec![list(vec![n(1), n(-2)]), list(vec![n(3), n(4)])])))
     out: "panic: negating [[1, -2], [3, 4]]"
