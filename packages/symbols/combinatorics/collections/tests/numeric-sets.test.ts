@@ -123,6 +123,39 @@ test("SmoothNumbers(k) is a one-parameter operator", () => {
   ).toBe(`[${SMOOTH_7.slice(0, 10).join(",")}]`);
 });
 
+// --- Primes at bench scale (issue #205/#276): the segmented sieve/BPSW primality of
+// @enumeratio/residues, not a separate scan of our own -- compared against a naive
+// trial-division reference over a range, plus the bench's own golden value. ---
+
+function isPrimeTrial(n: number): boolean {
+  if (n < 2) return false;
+  for (let d = 2; d * d <= n; d++) if (n % d === 0) return false;
+  return true;
+}
+
+test("Primes kernel agrees with trial division over 0..2000", () => {
+  const entry = byHead.get("Primes")!;
+  const primes: number[] = [];
+  for (let n = 0; n <= 2000; n++) if (isPrimeTrial(n)) primes.push(n);
+  for (let n = 0; n <= 2000; n++) {
+    expect(entry.valid(n, [])).toBe(isPrimeTrial(n));
+    expect(entry.rank(n, [])).toBe(isPrimeTrial(n) ? primes.indexOf(n) : -1);
+  }
+  for (let r = 0; r < primes.length; r++) expect(entry.unrank([], r)).toBe(primes[r]);
+});
+
+test("At(Primes, 10^5) is exact and matches NthPrime (bench golden, issue #205)", () => {
+  expect(ce.box(["At", "Primes", 100000]).evaluate().re).toBe(1299709);
+});
+
+test("Primes rank of a large prime matches PrimePi - 1", () => {
+  const entry = byHead.get("Primes")!;
+  // 1299709 is the 100000th prime (0-indexed rank 99999).
+  expect(entry.rank(1299709, [])).toBe(99999);
+  expect(entry.valid(1299709, [])).toBe(true);
+  expect(entry.valid(1299710, [])).toBe(false);
+});
+
 test("SmoothNumbers(k) below 2 is just {1}, finite", () => {
   const entry = byHead.get("SmoothNumbers");
   if (!entry) throw new Error("SmoothNumbers missing");
