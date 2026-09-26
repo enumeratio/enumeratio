@@ -811,6 +811,16 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "5.2",
     },
   ],
+  RisingFactorial: [
+    {
+      system: "wikipedia",
+      identity: "Falling and rising factorials",
+    },
+    {
+      system: "dlmf",
+      identity: "5.2",
+    },
+  ],
   Stirling: [
     {
       system: "wikipedia",
@@ -2049,6 +2059,34 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "5.12",
     },
   ],
+  ChebyshevT: [
+    {
+      system: "wikipedia",
+      identity: "Chebyshev polynomials",
+    },
+    {
+      system: "mathworld",
+      identity: "ChebyshevPolynomialoftheFirstKind",
+    },
+    {
+      system: "dlmf",
+      identity: "18.3",
+    },
+  ],
+  ChebyshevU: [
+    {
+      system: "wikipedia",
+      identity: "Chebyshev polynomials",
+    },
+    {
+      system: "mathworld",
+      identity: "ChebyshevPolynomialoftheSecondKind",
+    },
+    {
+      system: "dlmf",
+      identity: "18.3",
+    },
+  ],
   ClausenCl: [
     {
       system: "wikipedia",
@@ -2217,6 +2255,20 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "dlmf",
       identity: "4.13",
+    },
+  ],
+  LegendrePolynomial: [
+    {
+      system: "wikipedia",
+      identity: "Legendre polynomials",
+    },
+    {
+      system: "mathworld",
+      identity: "LegendrePolynomial",
+    },
+    {
+      system: "dlmf",
+      identity: "18.3",
     },
   ],
   LerchPhi: [

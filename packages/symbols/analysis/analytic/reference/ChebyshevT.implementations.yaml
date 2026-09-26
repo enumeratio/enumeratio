@@ -1,0 +1,282 @@
+the-cubic:
+  epsil:
+    in: ChebyshevT(3, x)
+    out: 4 * x ^ 3 - 3x
+  tex:
+    in: \mathrm{ChebyshevT}(3, x)
+    out: 4x^3-3x
+  fullform:
+    in: ChebyshevT[3, x]
+the-quartic:
+  epsil:
+    in: ChebyshevT(4, x)
+    out: 8 * x ^ 4 - 8 * x ^ 2 + 1
+  tex:
+    in: \mathrm{ChebyshevT}(4, x)
+    out: 8x^4-8x^2+1
+  fullform:
+    in: ChebyshevT[4, x]
+at-an-integer:
+  epsil:
+    in: ChebyshevT(5, 2)
+    out: "362"
+  tex:
+    in: \mathrm{ChebyshevT}(5, 2)
+    out: "362"
+  fullform:
+    in: ChebyshevT[5, 2]
+  wolfram:
+    in: ChebyshevT[5, 2]
+    out: "362"
+    tex:
+      in: T_5(2)
+      out: "362"
+at-a-real:
+  epsil:
+    in: ChebyshevT(5, 0.7)
+    out: -0.670_879_999_999_999_8
+  tex:
+    in: \mathrm{ChebyshevT}(5, 0.7)
+    out: -0.670\,879\,999\,999\,999\,8
+  fullform:
+    in: ChebyshevT[5, 0.7]
+  wolfram:
+    in: ChebyshevT[5, 0.7]
+    out: "-0.6708799999999998"
+    tex:
+      in: T_5(0.7)
+      out: "-0.67088"
+at-a-rational:
+  epsil:
+    in: ChebyshevT(5, 1 / 3)
+    out: 241 / 243
+  tex:
+    in: \mathrm{ChebyshevT}(5, \frac{1}{3})
+    out: \frac{241}{243}
+  fullform:
+    in: ChebyshevT[5, Rational[1, 3]]
+  wolfram:
+    in: ChebyshevT[5, Rational[1, 3]]
+    out: 241/243
+    tex:
+      in: T_5\left(\frac{1}{3}\right)
+      out: \frac{241}{243}
+at-a-complex-argument:
+  epsil:
+    in: ChebyshevT(4, 2 + 3i)
+    out: -911 - 1_056i
+  tex:
+    in: \mathrm{ChebyshevT}(4, 2+3i)
+    out: -911-1\,056i
+  fullform:
+    in: ChebyshevT[4, Complex[2, 3]]
+  wolfram:
+    in: ChebyshevT[4, Complex[2, 3]]
+    out: -911 - 1056*I
+    tex:
+      in: T_4(2+3 i)
+      out: -911-1056 i
+a-symbolic-order-stays-unevaluated:
+  epsil:
+    in: ChebyshevT(n, x)
+    out: ChebyshevT(n, x)
+  tex:
+    in: \mathrm{ChebyshevT}(n, x)
+    out: \mathrm{ChebyshevT}(n, x)
+  fullform:
+    in: ChebyshevT[n, x]
+cos-n-theta:
+  epsil:
+    in: ChebyshevT(6, 1 / 2) == Cos(6 * (Pi / 3))
+    out: True
+  tex:
+    in: \mathrm{ChebyshevT}(6, \frac{1}{2})=\cos(\frac{6\pi}{3})
+    out: \top
+  traditional:
+    in: \mathrm{ChebyshevT}(6, \frac{1}{2})=\cos(\frac{6\pi}{3})
+    out: \mathrm{True}
+  fullform:
+    in: Equal[ChebyshevT[6, Rational[1, 2]], Cos[Times[6, Divide[Pi, 3]]]]
+  wolfram:
+    in: (ChebyshevT[6, Rational[1, 2]] == Cos[Times[6, Divide[Pi, 3]]])
+    out: True
+    tex:
+      in: T_6\left(\frac{1}{2}\right)=\cos \left(6 \frac{\pi }{3}\right)
+      out: \text{True}
+at-1:
+  epsil:
+    in: ChebyshevT(7, 1)
+    out: "1"
+  tex:
+    in: \mathrm{ChebyshevT}(7, 1)
+    out: "1"
+  fullform:
+    in: ChebyshevT[7, 1]
+  wolfram:
+    in: ChebyshevT[7, 1]
+    out: "1"
+    tex:
+      in: T_7(1)
+      out: "1"
+at-minus-1:
+  epsil:
+    in: ChebyshevT(7, -1)
+    out: "-1"
+  tex:
+    in: \mathrm{ChebyshevT}(7, -1)
+    out: "-1"
+  fullform:
+    in: ChebyshevT[7, -1]
+  wolfram:
+    in: ChebyshevT[7, -1]
+    out: "-1"
+    tex:
+      in: T_7(-1)
+      out: "-1"
+parity:
+  epsil:
+    in: ChebyshevT(5, -1 / 3) == -ChebyshevT(5, 1 / 3)
+    out: True
+  tex:
+    in: \mathrm{ChebyshevT}(5, -\frac{1}{3})=-\mathrm{ChebyshevT}(5, \frac{1}{3})
+    out: \top
+  traditional:
+    in: \mathrm{ChebyshevT}(5, -\frac{1}{3})=-\mathrm{ChebyshevT}(5, \frac{1}{3})
+    out: \mathrm{True}
+  fullform:
+    in: Equal[ChebyshevT[5, Rational[-1, 3]], Minus[ChebyshevT[5, Rational[1, 3]]]]
+  wolfram:
+    in: (ChebyshevT[5, Rational[-1, 3]] == Minus[ChebyshevT[5, Rational[1, 3]]])
+    out: True
+    tex:
+      in: T_5\left(-\frac{1}{3}\right)=-T_5\left(\frac{1}{3}\right)
+      out: \text{True}
+negative-order:
+  epsil:
+    in: ChebyshevT(-3, x)
+    out: 4 * x ^ 3 - 3x
+  tex:
+    in: \mathrm{ChebyshevT}(-3, x)
+    out: 4x^3-3x
+  fullform:
+    in: ChebyshevT[-3, x]
+pell-identity:
+  epsil:
+    in: ChebyshevT(4, 3) ^ 2 - 8 * ChebyshevU(3, 3) ^ 2
+    out: "1"
+  tex:
+    in: \mathrm{ChebyshevT}(4, 3)^2-8\mathrm{ChebyshevU}(3, 3)^2
+    out: "1"
+  fullform:
+    in: Subtract[Power[ChebyshevT[4, 3], 2], Times[8, Power[ChebyshevU[3, 3], 2]]]
+  wolfram:
+    in: Subtract[Power[ChebyshevT[4, 3], 2], Times[8, Power[ChebyshevU[3, 3], 2]]]
+    out: "1"
+    tex:
+      in: T_4(3){}^2-8 U_3(3){}^2
+      out: "1"
+at-t0-0-7:
+  epsil:
+    in: N(ChebyshevT(0, 0.7))
+    out: "1"
+  tex:
+    in: N(\mathrm{ChebyshevT}(0, 0.7))
+    out: "1"
+  fullform:
+    in: N[ChebyshevT[0, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[0, 0.7]]
+    out: 1.
+    tex:
+      in: N[T_0(0.7)]
+      out: 1.
+at-t1-0-7:
+  epsil:
+    in: N(ChebyshevT(1, 0.7))
+    out: "0.7"
+  tex:
+    in: N(\mathrm{ChebyshevT}(1, 0.7))
+    out: "0.7"
+  fullform:
+    in: N[ChebyshevT[1, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[1, 0.7]]
+    out: "0.7"
+    tex:
+      in: N[T_1(0.7)]
+      out: "0.7"
+at-t2-0-7:
+  epsil:
+    in: N(ChebyshevT(2, 0.7))
+    out: -0.020_000_000_000_000_13
+  tex:
+    in: N(\mathrm{ChebyshevT}(2, 0.7))
+    out: -0.020\,000\,000\,000\,000\,13
+  fullform:
+    in: N[ChebyshevT[2, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[2, 0.7]]
+    out: "-0.02000000000000013"
+    tex:
+      in: N[T_2(0.7)]
+      out: "-0.02"
+at-t5-0-7:
+  epsil:
+    in: N(ChebyshevT(5, 0.7))
+    out: -0.670_879_999_999_999_8
+  tex:
+    in: N(\mathrm{ChebyshevT}(5, 0.7))
+    out: -0.670\,879\,999\,999\,999\,8
+  fullform:
+    in: N[ChebyshevT[5, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[5, 0.7]]
+    out: "-0.6708799999999998"
+    tex:
+      in: N[T_5(0.7)]
+      out: "-0.67088"
+at-t5-2:
+  epsil:
+    in: N(ChebyshevT(5, 2))
+    out: "362"
+  tex:
+    in: N(\mathrm{ChebyshevT}(5, 2))
+    out: "362"
+  fullform:
+    in: N[ChebyshevT[5, 2]]
+  wolfram:
+    in: N[ChebyshevT[5, 2]]
+    out: 362.
+    tex:
+      in: N[T_5(2)]
+      out: 362.
+at-t-5-0-7:
+  epsil:
+    in: N(ChebyshevT(-5, 0.7))
+    out: -0.670_879_999_999_999_8
+  tex:
+    in: N(\mathrm{ChebyshevT}(-5, 0.7))
+    out: -0.670\,879\,999\,999\,999\,8
+  fullform:
+    in: N[ChebyshevT[-5, 0.7]]
+  wolfram:
+    in: N[ChebyshevT[-5, 0.7]]
+    out: "-0.6708799999999998"
+    tex:
+      in: N[T_{-5}(0.7)]
+      out: "-0.67088"
+at-t4-2-3i:
+  epsil:
+    in: N(ChebyshevT(4, 2 + 3i))
+    out: -911 - 1_056i
+  tex:
+    in: N(\mathrm{ChebyshevT}(4, 2+3i))
+    out: -911-1\,056i
+  fullform:
+    in: N[ChebyshevT[4, Complex[2, 3]]]
+  wolfram:
+    in: N[ChebyshevT[4, Complex[2, 3]]]
+    out: -911. - 1056.*I
+    tex:
+      in: N[T_4(2+3 i)]
+      out: -911.-1056. i

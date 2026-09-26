@@ -1,7 +1,0 @@
-name: LegendrePolynomial
-domain: Wolfram
-signature: LegendrePolynomial(...)
-summary: Wolfram's own LegendreP, mapped through for the transpiler and the oracle but not yet written up here.
-names:
-  wolfram: LegendreP
-stub: carrier

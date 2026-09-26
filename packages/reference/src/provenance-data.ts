@@ -2871,7 +2871,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["sympy"],
   },
   {
     name: "AdditiveEnergy",
@@ -3032,7 +3032,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "BoundedPartPartitions",
@@ -3193,7 +3193,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["sympy"],
   },
   {
     name: "ContinuedFractions",
@@ -3389,7 +3389,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["sympy"],
   },
   {
     name: "Dyck",
@@ -3410,7 +3410,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["sympy"],
   },
   {
     name: "EgyptianFractions",
@@ -3648,7 +3648,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "GaussianRational",
@@ -3767,7 +3767,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "ImaginaryPart",
@@ -4565,7 +4565,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["sympy", "mpmath"],
   },
   {
     name: "OrbitSize",
@@ -4862,6 +4862,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "RisingFactorial",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "Pochhammer",
+    elsewhere: ["sympy"],
+  },
+  {
     name: "RookPlacement",
     provenance: "unknown",
     declared: null,
@@ -5013,7 +5020,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "Singleton",
@@ -5573,7 +5580,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "ZeckendorfRepresentation",
@@ -5608,7 +5615,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["sympy", "mpmath"],
   },
   {
     name: "AGM",
@@ -5797,7 +5804,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram", "sympy"],
   },
   {
     name: "Coth",
@@ -5832,7 +5839,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "Determinant",
@@ -6133,7 +6140,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "Or",
@@ -6315,14 +6322,14 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "Trace",
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram", "sympy"],
   },
   {
     name: "Transpose",
@@ -8117,6 +8124,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "ChebyshevT",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "ChebyshevT",
+    elsewhere: ["wolfram", "sympy"],
+  },
+  {
+    name: "ChebyshevU",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "ChebyshevU",
+    elsewhere: ["wolfram", "sympy"],
+  },
+  {
     name: "ClausenCl",
     provenance: "extension",
     declared: "enumeratio-analytic",
@@ -8488,6 +8509,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
+    name: "LegendrePolynomial",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "LegendreP",
+    elsewhere: [],
+  },
+  {
     name: "LerchPhi",
     provenance: "extension",
     declared: "enumeratio-analytic",
@@ -8852,20 +8880,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
-    name: "ChebyshevT",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: "ChebyshevT",
-    elsewhere: ["wolfram", "sympy"],
-  },
-  {
-    name: "ChebyshevU",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: "ChebyshevU",
-    elsewhere: ["wolfram", "sympy"],
-  },
-  {
     name: "CircleTimes",
     provenance: "unknown",
     declared: null,
@@ -8943,13 +8957,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "LegendrePolynomial",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: "LegendreP",
-    elsewhere: [],
-  },
-  {
     name: "MixedRadix",
     provenance: "unknown",
     declared: null,
@@ -8990,13 +8997,6 @@ export const provenance: readonly HeadRecord[] = [
     declared: null,
     wolframAlias: "Rasterize",
     elsewhere: ["wolfram"],
-  },
-  {
-    name: "RisingFactorial",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: "Pochhammer",
-    elsewhere: ["sympy"],
   },
   {
     name: "TestResultObject",

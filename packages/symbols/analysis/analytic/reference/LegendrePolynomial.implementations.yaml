@@ -1,0 +1,260 @@
+the-quadratic:
+  epsil:
+    in: LegendrePolynomial(2, x)
+    out: 3 / 2 * x ^ 2 + -1 / 2
+  tex:
+    in: \mathrm{LegendrePolynomial}(2, x)
+    out: \frac{3x^2}{2}-\frac{1}{2}
+  fullform:
+    in: LegendreP[2, x]
+the-cubic:
+  epsil:
+    in: LegendrePolynomial(3, x)
+    out: 5 / 2 * x ^ 3 + -3 / 2 * x
+  tex:
+    in: \mathrm{LegendrePolynomial}(3, x)
+    out: \frac{5x^3}{2}-\frac{3x}{2}
+  fullform:
+    in: LegendreP[3, x]
+the-quartic:
+  epsil:
+    in: LegendrePolynomial(4, x)
+    out: 35 / 8 * x ^ 4 + -15 / 4 * x ^ 2 + 3 / 8
+  tex:
+    in: \mathrm{LegendrePolynomial}(4, x)
+    out: \frac{35x^4}{8}-\frac{15x^2}{4}+\frac{3}{8}
+  fullform:
+    in: LegendreP[4, x]
+at-a-real:
+  epsil:
+    in: LegendrePolynomial(5, 0.7)
+    out: -0.365_198_749_999_999_9
+  tex:
+    in: \mathrm{LegendrePolynomial}(5, 0.7)
+    out: -0.365\,198\,749\,999\,999\,9
+  fullform:
+    in: LegendreP[5, 0.7]
+  wolfram:
+    in: LegendreP[5, 0.7]
+    out: "-0.3651987499999999"
+    tex:
+      in: P_5(0.7)
+      out: "-0.365199"
+at-a-rational:
+  epsil:
+    in: LegendrePolynomial(3, 1 / 2)
+    out: -7 / 16
+  tex:
+    in: \mathrm{LegendrePolynomial}(3, \frac{1}{2})
+    out: -\frac{7}{16}
+  fullform:
+    in: LegendreP[3, Rational[1, 2]]
+  wolfram:
+    in: LegendreP[3, Rational[1, 2]]
+    out: -7/16
+    tex:
+      in: P_3\left(\frac{1}{2}\right)
+      out: -\frac{7}{16}
+at-a-complex-argument:
+  epsil:
+    in: LegendrePolynomial(3, 2 + 3i)
+    out: -118 + 18i
+  tex:
+    in: \mathrm{LegendrePolynomial}(3, 2+3i)
+    out: -118+18i
+  fullform:
+    in: LegendreP[3, Complex[2, 3]]
+  wolfram:
+    in: LegendreP[3, Complex[2, 3]]
+    out: -118 + 18*I
+    tex:
+      in: P_3(2+3 i)
+      out: -118+18 i
+a-symbolic-order-stays-unevaluated:
+  epsil:
+    in: LegendrePolynomial(n, x)
+    out: LegendrePolynomial(n, x)
+  tex:
+    in: \mathrm{LegendrePolynomial}(n, x)
+    out: \mathrm{LegendrePolynomial}(n, x)
+  fullform:
+    in: LegendreP[n, x]
+at-1:
+  epsil:
+    in: LegendrePolynomial(6, 1)
+    out: "1"
+  tex:
+    in: \mathrm{LegendrePolynomial}(6, 1)
+    out: "1"
+  fullform:
+    in: LegendreP[6, 1]
+  wolfram:
+    in: LegendreP[6, 1]
+    out: "1"
+    tex:
+      in: P_6(1)
+      out: "1"
+at-minus-1:
+  epsil:
+    in: LegendrePolynomial(5, -1)
+    out: "-1"
+  tex:
+    in: \mathrm{LegendrePolynomial}(5, -1)
+    out: "-1"
+  fullform:
+    in: LegendreP[5, -1]
+  wolfram:
+    in: LegendreP[5, -1]
+    out: "-1"
+    tex:
+      in: P_5(-1)
+      out: "-1"
+at-0:
+  epsil:
+    in: LegendrePolynomial(4, 0)
+    out: 3 / 8
+  tex:
+    in: \mathrm{LegendrePolynomial}(4, 0)
+    out: \frac{3}{8}
+  fullform:
+    in: LegendreP[4, 0]
+  wolfram:
+    in: LegendreP[4, 0]
+    out: 3/8
+    tex:
+      in: P_4(0)
+      out: \frac{3}{8}
+bonnet-recurrence:
+  epsil:
+    in: |-
+      4 * LegendrePolynomial(4, 3) == 7 * 3 * LegendrePolynomial(3, 3) - 3 *
+                                                                         LegendrePolynomial(2, 3)
+    out: True
+  tex:
+    in: 4\mathrm{LegendrePolynomial}(4, 3)=7\times3\mathrm{LegendrePolynomial}(3, 3)-3\mathrm{LegendrePolynomial}(2, 3)
+    out: \top
+  traditional:
+    in: 4\mathrm{LegendrePolynomial}(4, 3)=7\times3\mathrm{LegendrePolynomial}(3, 3)-3\mathrm{LegendrePolynomial}(2, 3)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Times[4, LegendreP[4, 3]], Subtract[Times[7, 3, LegendreP[3, 3]], Times[3, LegendreP[2, 3]]]]
+  wolfram:
+    in: (Times[4, LegendreP[4, 3]] == Subtract[Times[7, 3, LegendreP[3, 3]], Times[3, LegendreP[2, 3]]])
+    out: True
+    tex:
+      in: 4 P_4(3)=7\ 3 P_3(3)-3 P_2(3)
+      out: \text{True}
+negative-order:
+  epsil:
+    in: LegendrePolynomial(-3, x)
+    out: 3 / 2 * x ^ 2 + -1 / 2
+  tex:
+    in: \mathrm{LegendrePolynomial}(-3, x)
+    out: \frac{3x^2}{2}-\frac{1}{2}
+  fullform:
+    in: LegendreP[-3, x]
+at-p0-0-7:
+  epsil:
+    in: N(LegendrePolynomial(0, 0.7))
+    out: "1"
+  tex:
+    in: N(\mathrm{LegendrePolynomial}(0, 0.7))
+    out: "1"
+  fullform:
+    in: N[LegendreP[0, 0.7]]
+  wolfram:
+    in: N[LegendreP[0, 0.7]]
+    out: 1.
+    tex:
+      in: N[P_0(0.7)]
+      out: 1.
+at-p1-0-7:
+  epsil:
+    in: N(LegendrePolynomial(1, 0.7))
+    out: "0.7"
+  tex:
+    in: N(\mathrm{LegendrePolynomial}(1, 0.7))
+    out: "0.7"
+  fullform:
+    in: N[LegendreP[1, 0.7]]
+  wolfram:
+    in: N[LegendreP[1, 0.7]]
+    out: "0.7"
+    tex:
+      in: N[P_1(0.7)]
+      out: "0.7"
+at-p2-0-7:
+  epsil:
+    in: N(LegendrePolynomial(2, 0.7))
+    out: 0.234_999_999_999_999_88
+  tex:
+    in: N(\mathrm{LegendrePolynomial}(2, 0.7))
+    out: 0.234\,999\,999\,999\,999\,88
+  fullform:
+    in: N[LegendreP[2, 0.7]]
+  wolfram:
+    in: N[LegendreP[2, 0.7]]
+    out: "0.2349999999999998"
+    tex:
+      in: N[P_2(0.7)]
+      out: "0.235"
+at-p5-0-7:
+  epsil:
+    in: N(LegendrePolynomial(5, 0.7))
+    out: -0.365_198_749_999_999_9
+  tex:
+    in: N(\mathrm{LegendrePolynomial}(5, 0.7))
+    out: -0.365\,198\,749\,999\,999\,9
+  fullform:
+    in: N[LegendreP[5, 0.7]]
+  wolfram:
+    in: N[LegendreP[5, 0.7]]
+    out: "-0.3651987499999999"
+    tex:
+      in: N[P_5(0.7)]
+      out: "-0.365199"
+at-p-1-0-7:
+  epsil:
+    in: N(LegendrePolynomial(-1, 0.7))
+    out: "1"
+  tex:
+    in: N(\mathrm{LegendrePolynomial}(-1, 0.7))
+    out: "1"
+  fullform:
+    in: N[LegendreP[-1, 0.7]]
+  wolfram:
+    in: N[LegendreP[-1, 0.7]]
+    out: 1.
+    tex:
+      in: N[P_{-1}(0.7)]
+      out: 1.
+at-p-4-0-7:
+  epsil:
+    in: N(LegendrePolynomial(-4, 0.7))
+    out: -0.192_500_000_000_000_14
+  tex:
+    in: N(\mathrm{LegendrePolynomial}(-4, 0.7))
+    out: -0.192\,500\,000\,000\,000\,14
+  fullform:
+    in: N[LegendreP[-4, 0.7]]
+  wolfram:
+    in: N[LegendreP[-4, 0.7]]
+    out: "-0.19250000000000025"
+    tex:
+      in: N[P_{-4}(0.7)]
+      out: "-0.1925"
+at-p4-2-3i:
+  epsil:
+    in: N(LegendrePolynomial(4, 2 + 3i))
+    out: -501.5 - 570i
+  tex:
+    in: N(\mathrm{LegendrePolynomial}(4, 2+3i))
+    out: -501.5-570i
+  fullform:
+    in: N[LegendreP[4, Complex[2, 3]]]
+  wolfram:
+    in: N[LegendreP[4, Complex[2, 3]]]
+    out: -501.5 - 570.*I
+    tex:
+      in: N[P_4(2+3 i)]
+      out: -501.5-570. i

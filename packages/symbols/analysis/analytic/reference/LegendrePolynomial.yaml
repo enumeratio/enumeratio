@@ -1,0 +1,37 @@
+name: LegendrePolynomial
+domain: Special functions
+signature: LegendrePolynomial(n, x)
+summary: The Legendre polynomial $P_n(x)$, orthogonal on $[-1, 1]$ with unit weight and normalised by $P_n(1) = 1$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: LegendrePolynomial(n, x)
+    description: the degree-$n$ Legendre polynomial at $x$, for an integer $n$.
+    library: "@enumeratio/analytic"
+details:
+  - $P_0 = 1$, $P_1 = x$, and Bonnet's recurrence $(n+1)\,P_{n+1} = (2n+1)\,x\,P_n - n\,P_{n-1}$. The coefficients are rationals whose denominators are powers of 2.
+  - $\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = \dfrac{2}{2n+1}\,\delta_{mn}$.
+  - "$P_n(1) = 1$ and $P_n(-1) = (-1)^n$. Parity follows the degree: $P_n(-x) = (-1)^n P_n(x)$."
+  - "A negative order folds as Wolfram does: $P_{-n} = P_{n-1}$."
+  - At an integer $n$ and a symbolic or exact $x$ the result is the expanded polynomial. At a floating-point or complex $x$ the recurrence runs directly on the number.
+  - The name is Fungrim's. Wolfram calls it `LegendreP`, which also takes a non-integer degree and, with three arguments, the associated functions; only the integer-degree polynomial is implemented here.
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/legendre.ts
+  - origin: mapped
+    form: wolfram / mpmath / sympy
+    environment: external
+    note: LegendreP[n, x]; mpmath.legendre(n, x); sympy.legendre(n, x).
+seeAlso:
+  - ChebyshevT
+  - ChebyshevU
+references:
+  - system: wikipedia
+    identity: Legendre polynomials
+  - system: mathworld
+    identity: LegendrePolynomial
+  - system: dlmf
+    identity: "18.3"
+names:
+  wolfram: LegendreP

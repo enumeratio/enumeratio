@@ -323,3 +323,17 @@ rising-and-falling-factorials-x-underline-n-1-n:
     in: Equal[FactorialPower[5, 3], Times[-1, Pochhammer[-5, 3]]]
   wolfram:
     in: (FactorialPower[5, 3] == Times[-1, Pochhammer[-5, 3]])
+at-pochhammer-3-2:
+  epsil:
+    in: N(Pochhammer(3, 2))
+    out: "12"
+  tex:
+    in: N(\mathrm{Pochhammer}(3, 2))
+    out: "12"
+  traditional:
+    in: N(\left(3\right)_{2})
+    out: "12"
+  fullform:
+    in: N[Pochhammer[3, 2]]
+  wolfram:
+    in: N[Pochhammer[3, 2]]

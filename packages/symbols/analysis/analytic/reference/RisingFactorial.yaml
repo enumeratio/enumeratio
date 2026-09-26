@@ -1,0 +1,37 @@
+name: RisingFactorial
+domain: Combinatorics
+signature: RisingFactorial(a, n)
+summary: "The rising factorial $a(a+1)\\cdots(a+n-1)$: Fungrim's name for [[Pochhammer]], which it delegates to, extended to a complex non-integer order. Provided by `@enumeratio/analytic`."
+signatures:
+  - call: RisingFactorial(a, n)
+    description: the rising factorial $(a)_n = \Gamma(a+n)/\Gamma(a)$.
+    library: "@enumeratio/analytic"
+details:
+  - Evaluates as [[Pochhammer]] wherever that head gives an answer, exact or numeric, so the two agree on every shared input. A symbolic order comes back as `Pochhammer(a, n)`.
+  - Where the native head gives NaN, a complex $a$ with a non-integer order, the value is $\Gamma(a+n)/\Gamma(a)$ through [[LogGamma]]. At a pole of $\Gamma(a)$, $a = 0, -1, -2, \dots$, with $n$ off the integers, $1/\Gamma(a) = 0$ makes the value 0, as in Wolfram and mpmath.
+  - Unlike [[Pochhammer]], it does not thread over a list.
+bindings:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [Pochhammer, _a, _n]
+    note: The native head, wherever it answers.
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/rising-factorial.ts
+  - origin: mapped
+    form: wolfram / mpmath / sympy
+    environment: external
+    note: Pochhammer[a, n]; mpmath.rf(a, n); sympy.rf(a, n).
+seeAlso:
+  - Pochhammer
+  - FallingFactorial
+  - Gamma
+references:
+  - system: wikipedia
+    identity: Falling and rising factorials
+  - system: dlmf
+    identity: "5.2"
+names:
+  wolfram: Pochhammer
