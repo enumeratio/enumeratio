@@ -34,7 +34,7 @@ export const CUBIC = new Set([
 export const SMALL = [0, 1, 2, 3, 4, 5].flatMap(permutations);
 
 export const evaluate = (head: string, p: number[]): number => {
-  const definition = index.get(`${head}@Permutation`);
+  const definition = index.get(`${head}@Permutations`);
   if (!definition) throw new Error(`no definition for ${head}`);
   return applyDefinition(ce, definition, ce.box(["List", ...p])).re;
 };

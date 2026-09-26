@@ -259,9 +259,8 @@ export function crosswalkFor(name: string, entry?: ReferenceEntry): ResolvedRefe
       ),
     );
 
-  // A carrier is what its collections enumerate, so what is known about `SetPartitions`
-  // is known about `SetPartition` -- recorded against the collection, and said so.
-  // What the finder established for this head on each carrier, said against the carrier.
+  // A carrier IS its plain collection now, so this needs no separate lookup -- what the
+  // finder established for this head on each carrier, said against the carrier.
   const byValue = findstat
     .filter((m) => m.head === name)
     .flatMap((m) => foundByValue(m.head, m.on).map((row) => ({ ...row, via: m.on })));
@@ -269,10 +268,10 @@ export function crosswalkFor(name: string, entry?: ReferenceEntry): ResolvedRefe
   const alias = CATALOG_ALIASES[name];
   const aliased = alias ? catalogRows(alias).map((row) => ({ ...row, via: alias })) : [];
 
-  // The plain family (`SetCompositions` for `SetComposition`) speaks first; the refined
-  // ones (`Permutahedron`) add what it did not say.
+  // The plain family (now the same head as the carrier itself) speaks first; the refined
+  // ones (`Permutahedron`, carried by `Permutations`) add what it did not say.
   const carried = COLLECTIONS.filter((collection) => collection.carrier === name)
-    .sort((a, b) => Number(b.name === `${name}s`) - Number(a.name === `${name}s`))
+    .sort((a, b) => Number(b.name === name) - Number(a.name === name))
     .flatMap((collection) => catalogRows(collection.name).map((row) => ({ ...row, via: collection.name })));
 
   // Derived rows outrank the catalog's for the same pointer: the engine's Wikidata id and

@@ -87,13 +87,14 @@ test("every reference with a URL scheme resolves to a link", () => {
 });
 
 test("a carrier inherits what the catalog knows about its collections", () => {
-  // SetComposition is Sage's OrderedSetPartitions; the catalog recorded that against the
-  // collection, and the carrier page is where a reader looks for it.
-  const sage = crosswalkFor("SetComposition").find((r) => r.system === "sage");
+  // SetCompositions is Sage's OrderedSetPartitions; the catalog recorded that directly
+  // against it -- the carrier IS the collection now, so this is an own row, not a carried
+  // one (`via` stays unset; see crosswalk/index.ts).
+  const sage = crosswalkFor("SetCompositions").find((r) => r.system === "sage");
   expect(sage?.identity).toContain("OrderedSetPartitions(n)");
-  expect(sage?.via).toBe("SetCompositions");
+  expect(sage?.via).toBeUndefined();
   expect(sage?.href).toContain("set_partition_ordered");
-  const wikipedia = crosswalkFor("SetPartition").filter((r) => r.system === "wikipedia");
+  const wikipedia = crosswalkFor("SetPartitions").filter((r) => r.system === "wikipedia");
   expect(wikipedia[0]?.origin).toBe("curated");
   expect(wikipedia[0]?.href).toBe("https://en.wikipedia.org/wiki/Partition_of_a_set");
 });
@@ -125,12 +126,12 @@ test("Zeta is Riemann's at one argument and Hurwitz's at two", () => {
 });
 
 test("a statistic links to its FindStat number on the carrier it is recorded for", () => {
-  const findstat = crosswalkForStatistic("Descents", "Permutation").filter((r) => r.system === "findstat");
+  const findstat = crosswalkForStatistic("Descents", "Permutations").filter((r) => r.system === "findstat");
   expect(findstat.map((r) => r.identity)).toEqual(["St000021"]);
   expect(findstat[0]?.href).toBe("https://www.findstat.org/St000021");
   // On the head's own page the same row says which carrier it was recorded against.
   expect(crosswalkFor("Descents").find((r) => r.system === "findstat" && r.identity === "St000021")?.via).toBe(
-    "Permutation",
+    "Permutations",
   );
 });
 
@@ -174,7 +175,7 @@ test("a Wikidata item answers for the encyclopaedias at once", () => {
   ]);
   expect(gamma.find((r) => r.system === "nlab")?.href).toBe("https://ncatlab.org/nlab/show/Gamma+function");
   // Reached from a curated Wikipedia title: the item supplies the Q-id itself.
-  const partition = crosswalkFor("SetPartition");
+  const partition = crosswalkFor("SetPartitions");
   expect(partition.find((r) => r.system === "wikidata")?.origin).toBe("wikidata");
   // The curated MathWorld row and Wikidata's agree on one pointer, shown once.
   expect(partition.filter((r) => r.system === "mathworld").map((r) => r.identity)).toEqual(["SetPartition"]);
@@ -216,9 +217,9 @@ test("what the finder established by value agrees with what the catalog recorded
   expect(disagreements).toEqual(KNOWN);
   // And the rows show up on the statistic, marked as found by value; a contradicted
   // catalog id does not.
-  const descents = crosswalkForStatistic("Descents", "Permutation");
+  const descents = crosswalkForStatistic("Descents", "Permutations");
   expect(descents.filter((r) => r.system === "findstat").map((r) => r.identity)).toEqual(["St000021"]);
-  const crank = crosswalkForStatistic("Crank", "IntegerPartition");
+  const crank = crosswalkForStatistic("Crank", "IntegerPartitions");
   expect(crank.filter((r) => r.system === "findstat").map((r) => r.identity)).toEqual(["St000474"]);
 });
 
@@ -270,7 +271,7 @@ test("what the OEIS established by count agrees with what the catalog recorded",
 });
 
 test("a value-verified pointer keeps the row that recorded it and gains the mark", () => {
-  const descents = crosswalkForStatistic("Descents", "Permutation").find((r) => r.system === "findstat");
+  const descents = crosswalkForStatistic("Descents", "Permutations").find((r) => r.system === "findstat");
   expect(descents?.origin).toBe("catalog");
   expect(descents?.verified).toEqual({ by: "values", count: 153 });
 });

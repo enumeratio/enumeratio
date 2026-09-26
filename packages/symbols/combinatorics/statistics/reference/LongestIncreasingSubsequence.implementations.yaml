@@ -1,12 +1,12 @@
 the-one-line-word-312:
   epsil:
-    in: LongestIncreasingSubsequence(Permutation([3, 1, 2]))
+    in: LongestIncreasingSubsequence(Permutations([3, 1, 2]))
     out: "2"
   tex:
-    in: \mathrm{LongestIncreasingSubsequence}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    in: \mathrm{LongestIncreasingSubsequence}(\mathrm{Permutations}(\bigl\lbrack3, 1, 2\bigr\rbrack))
     out: "2"
   fullform:
-    in: LongestIncreasingSubsequence[Permutation[List[3, 1, 2]]]
+    in: LongestIncreasingSubsequence[Permutations[List[3, 1, 2]]]
 the-one-line-word-312-as-a-plain-list:
   epsil:
     in: LongestIncreasingSubsequence([3, 1, 2])
@@ -18,10 +18,10 @@ the-one-line-word-312-as-a-plain-list:
     in: LongestIncreasingSubsequence[List[3, 1, 2]]
 the-one-line-word-2413:
   epsil:
-    in: LongestIncreasingSubsequence(Permutation([2, 4, 1, 3]))
+    in: LongestIncreasingSubsequence(Permutations([2, 4, 1, 3]))
     out: "2"
   tex:
-    in: \mathrm{LongestIncreasingSubsequence}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
+    in: \mathrm{LongestIncreasingSubsequence}(\mathrm{Permutations}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
     out: "2"
   fullform:
-    in: LongestIncreasingSubsequence[Permutation[List[2, 4, 1, 3]]]
+    in: LongestIncreasingSubsequence[Permutations[List[2, 4, 1, 3]]]

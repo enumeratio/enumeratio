@@ -23,8 +23,10 @@ every `declare*` installed:
 | **heads**                                            | **~375** |
 
 The 86 lowercase entries are minted types, not functions — compute-engine keeps types and
-symbols in one table, and the three-name convention in `domains/types.ts` is what keeps
-`permutation` / `Permutation` / `Permutations` apart. They are not namespace pressure.
+symbols in one table, and the two-name convention in `domains/types.ts` is what keeps
+`permutation` (the type) and `Permutations` (the constructor, and the plain collection —
+one head, since design/domains.md §2's 2026-09-26 naming note) apart. They are not
+namespace pressure.
 
 The rest divides as the packages do: carriers and their constructors, the statistics, the
 collection families, and one package per subject area (modular, braid, hopf, hecke, quiver,
