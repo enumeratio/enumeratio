@@ -13,20 +13,20 @@
     tex:
       in: 5!
       out: "120"
-  sympy:
-    in: factorial(5)
-    out: "120"
   sage:
     in: factorial(5)
     out: "120"
   oscar:
     in: factorial(ZZ(5))
     out: "120"
-  julia:
-    in: factorial(ZZ(5))
-    out: "120"
   mathlib4:
     in: (Nat.factorial 5)
+    out: "120"
+  sympy:
+    in: factorial(5)
+    out: "120"
+  julia:
+    in: factorial(ZZ(5))
     out: "120"
   rust:
     in: factorial(n(5))
@@ -46,20 +46,20 @@
     tex:
       in: 6!
       out: "720"
-  sympy:
-    in: factorial(6)
-    out: "720"
   sage:
     in: factorial(6)
     out: "720"
   oscar:
     in: factorial(ZZ(6))
     out: "720"
-  julia:
-    in: factorial(ZZ(6))
-    out: "720"
   mathlib4:
     in: (Nat.factorial 6)
+    out: "720"
+  sympy:
+    in: factorial(6)
+    out: "720"
+  julia:
+    in: factorial(ZZ(6))
     out: "720"
   rust:
     in: factorial(n(6))
@@ -79,20 +79,20 @@ the-empty-product-is-1-by-convention:
     tex:
       in: 0!
       out: "1"
-  sympy:
-    in: factorial(0)
-    out: "1"
   sage:
     in: factorial(0)
     out: "1"
   oscar:
     in: factorial(ZZ(0))
     out: "1"
-  julia:
-    in: factorial(ZZ(0))
-    out: "1"
   mathlib4:
     in: (Nat.factorial 0)
+    out: "1"
+  sympy:
+    in: factorial(0)
+    out: "1"
+  julia:
+    in: factorial(ZZ(0))
     out: "1"
   rust:
     in: factorial(n(0))
@@ -112,20 +112,20 @@ the-empty-product-is-1-by-convention:
     tex:
       in: 10!
       out: "3628800"
-  sympy:
-    in: factorial(10)
-    out: "3628800"
   sage:
     in: factorial(10)
     out: "3628800"
   oscar:
     in: factorial(ZZ(10))
     out: "3628800"
-  julia:
-    in: factorial(ZZ(10))
-    out: "3628800"
   mathlib4:
     in: (Nat.factorial 10)
+    out: "3628800"
+  sympy:
+    in: factorial(10)
+    out: "3628800"
+  julia:
+    in: factorial(ZZ(10))
     out: "3628800"
   rust:
     in: factorial(n(10))
@@ -145,12 +145,6 @@ threads-element-wise-over-a-list:
     tex:
       in: \{1,2,3,4\}!
       out: \{1,2,6,24\}
-  sympy:
-    in: factorial([1, 2, 3, 4])
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Factorial threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: factorial([1, 2, 3, 4])
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
@@ -163,18 +157,24 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Factorial is Listable and threads over the list; Oscar's takes scalars only.
-  julia:
-    in: factorial(ZZ([1, 2, 3, 4]))
-    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
-    verdict: error
-    kind: threading
-    note: compute-engine's Factorial is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.
   mathlib4:
     in: (Nat.factorial [1, 2, 3, 4])
     out: "Application type mismatch: The argument"
     verdict: error
     kind: threading
     note: compute-engine's Factorial is Listable and threads over the list; Mathlib's takes scalars only.
+  sympy:
+    in: factorial([1, 2, 3, 4])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Factorial threads over (or pools) the list; SymPy's takes scalars.
+  julia:
+    in: factorial(ZZ([1, 2, 3, 4]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: threading
+    note: compute-engine's Factorial is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.
   rust:
     in: factorial(list(vec![n(1), n(2), n(3), n(4)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -199,20 +199,20 @@ recurrence-n-n-n-1:
     tex:
       in: 5!=5 4!
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(factorial(5), (5 * factorial(4)))
-    out: True
   sage:
     in: bool(factorial(5) == (5 * factorial(4)))
     out: True
   oscar:
     in: (factorial(ZZ(5)) == (5 * factorial(ZZ(4))))
     out: "true"
-  julia:
-    in: (factorial(ZZ(5)) == (5 * factorial(ZZ(4))))
-    out: "true"
   mathlib4:
     in: (decide ((Nat.factorial 5) = (5 * (Nat.factorial 4))))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(factorial(5), (5 * factorial(4)))
+    out: True
+  julia:
+    in: (factorial(ZZ(5)) == (5 * factorial(ZZ(4))))
     out: "true"
   rust:
     in: equal(factorial(n(5)), (n(5) * factorial(n(4))))
@@ -232,9 +232,6 @@ extends-to-non-integers-via-the-gamma-function:
     tex:
       in: \frac{1}{2}!
       out: \frac{\sqrt{\pi }}{2}
-  sympy:
-    in: factorial(Rational(1, 2))
-    out: factorial(1/2)
   sage:
     in: factorial((1/2))
     out: 1/2*sqrt(pi)
@@ -244,18 +241,21 @@ extends-to-non-integers-via-the-gamma-function:
     verdict: error
     kind: domain
     note: compute-engine extends Factorial to non-integers through Gamma; Oscar's factorial takes integers only.
-  julia:
-    in: factorial(ZZ((1 // 2)))
-    out: "AssertionError: denominator(x) == 1"
-    verdict: error
-    kind: domain
-    note: compute-engine extends Factorial to non-integers through Gamma; Nemo/Combinatorics.jl's factorial takes integers only.
   mathlib4:
     in: "(Nat.factorial ((1 : ℚ) / 2))"
     out: Type mismatch
     verdict: error
     kind: domain
     note: compute-engine extends Factorial to non-integers through Gamma; Mathlib's factorial takes integers only.
+  sympy:
+    in: factorial(Rational(1, 2))
+    out: factorial(1/2)
+  julia:
+    in: factorial(ZZ((1 // 2)))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: compute-engine extends Factorial to non-integers through Gamma; Nemo/Combinatorics.jl's factorial takes integers only.
   rust:
     in: factorial(rational(n(1), n(2)))
     out: "panic: an integer, not 1/2"
@@ -277,20 +277,20 @@ the-number-of-ways-to-arrange-8-distinct-books:
     tex:
       in: 8!
       out: "40320"
-  sympy:
-    in: factorial(8)
-    out: "40320"
   sage:
     in: factorial(8)
     out: "40320"
   oscar:
     in: factorial(ZZ(8))
     out: "40320"
-  julia:
-    in: factorial(ZZ(8))
-    out: "40320"
   mathlib4:
     in: (Nat.factorial 8)
+    out: "40320"
+  sympy:
+    in: factorial(8)
+    out: "40320"
+  julia:
+    in: factorial(ZZ(8))
     out: "40320"
   rust:
     in: factorial(n(8))
@@ -310,9 +310,6 @@ negative-integers-are-poles-of-the-gamma:
     tex:
       in: (-1)!
       out: \text{ComplexInfinity}
-  sympy:
-    in: factorial(-1)
-    out: zoo
   sage:
     in: factorial(-1)
     out: "ValueError: factorial only defined for nonnegative integers"
@@ -325,18 +322,21 @@ negative-integers-are-poles-of-the-gamma:
     verdict: error
     kind: undefined-form
     note: 'Both decline: compute-engine answers "ComplexInfinity" and Oscar raises an error.'
-  julia:
-    in: factorial(ZZ(-1))
-    out: "DomainError with -1: Argument must be non-negative"
-    verdict: error
-    kind: undefined-form
-    note: 'Both decline: compute-engine answers "ComplexInfinity" and Nemo/Combinatorics.jl raises an error.'
   mathlib4:
     in: (Nat.factorial (-1))
     out: failed to synthesize instance of type class
     verdict: error
     kind: domain
     note: The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Factorial to this argument.
+  sympy:
+    in: factorial(-1)
+    out: zoo
+  julia:
+    in: factorial(ZZ(-1))
+    out: "DomainError with -1: Argument must be non-negative"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "ComplexInfinity" and Nemo/Combinatorics.jl raises an error.'
   rust:
     in: factorial(n(-1))
     out: "panic: a non-negative integer"
@@ -358,20 +358,20 @@ factorials-grow-fast-20-already-exceeds-2-times:
     tex:
       in: 20!
       out: "2432902008176640000"
-  sympy:
-    in: factorial(20)
-    out: "2432902008176640000"
   sage:
     in: factorial(20)
     out: "2432902008176640000"
   oscar:
     in: factorial(ZZ(20))
     out: "2432902008176640000"
-  julia:
-    in: factorial(ZZ(20))
-    out: "2432902008176640000"
   mathlib4:
     in: (Nat.factorial 20)
+    out: "2432902008176640000"
+  sympy:
+    in: factorial(20)
+    out: "2432902008176640000"
+  julia:
+    in: factorial(ZZ(20))
     out: "2432902008176640000"
   rust:
     in: factorial(n(20))
@@ -396,18 +396,27 @@ real-arguments-evaluate-as-gamma-n-1:
     in: Factorial[3.5]
   wolfram:
     in: Factorial[3.5]
-  sympy:
-    in: factorial(3.5)
   sage:
     in: factorial(3.5)
   oscar:
     in: factorial(ZZ(3.5))
-  julia:
-    in: factorial(ZZ(3.5))
   mathlib4:
     in: (Nat.factorial 3.5)
+  sympy:
+    in: factorial(3.5)
+    out: "11.6317283965674"
+  julia:
+    in: factorial(ZZ(3.5))
+    out: "InexactError: convert(ZZRingElem, 3.5)"
+    verdict: error
+    kind: domain
+    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
   rust:
     in: factorial(x(3.5))
+    out: "panic: an integer, not 3.5"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Factorial extends past them.
 negative-non-integers-are-defined-too-2-5-gamma:
   epsil:
     in: (-2.5)!
@@ -419,18 +428,27 @@ negative-non-integers-are-defined-too-2-5-gamma:
     in: Factorial[-2.5]
   wolfram:
     in: Factorial[-2.5]
-  sympy:
-    in: factorial(-2.5)
   sage:
     in: factorial(-2.5)
   oscar:
     in: factorial(ZZ(-2.5))
-  julia:
-    in: factorial(ZZ(-2.5))
   mathlib4:
     in: (Nat.factorial (-2.5))
+  sympy:
+    in: factorial(-2.5)
+    out: "2.36327180120735"
+  julia:
+    in: factorial(ZZ(-2.5))
+    out: "InexactError: convert(ZZRingElem, -2.5)"
+    verdict: error
+    kind: domain
+    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
   rust:
     in: factorial(x(-2.5))
+    out: "panic: an integer, not -2.5"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Factorial extends past them.
 complex-arguments-1-i-gamma-2-i:
   epsil:
     in: (1 + i)!
@@ -442,14 +460,19 @@ complex-arguments-1-i-gamma-2-i:
     in: Factorial[Complex[1, 1]]
   wolfram:
     in: Factorial[Complex[1, 1]]
-  sympy:
-    in: factorial((1 + 1*I))
   sage:
     in: factorial((1 + 1*I))
   oscar:
     in: factorial(ZZ(complex(1, 1)))
+  sympy:
+    in: factorial((1 + 1*I))
+    out: factorial(1 + I)
   julia:
     in: factorial(ZZ(complex(1, 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
 frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
   epsil:
     in: (-1 / 2)!
@@ -462,18 +485,27 @@ frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
   wolfram:
     in: Factorial[Rational[-1, 2]]
     note: Wolfram returns the exact Sqrt[Pi].
-  sympy:
-    in: factorial(Rational(-1, 2))
   sage:
     in: factorial((-1/2))
   oscar:
     in: factorial(ZZ((-1 // 2)))
-  julia:
-    in: factorial(ZZ((-1 // 2)))
   mathlib4:
     in: "(Nat.factorial (((-1) : ℚ) / 2))"
+  sympy:
+    in: factorial(Rational(-1, 2))
+    out: factorial(-1/2)
+  julia:
+    in: factorial(ZZ((-1 // 2)))
+    out: "AssertionError: denominator(x) == 1"
+    verdict: error
+    kind: domain
+    note: The Julia mapping converts to ZZ, integers only; compute-engine's Factorial extends to rational, real and complex arguments.
   rust:
     in: factorial(rational(n(-1), n(2)))
+    out: "panic: an integer, not -1/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's Factorial extends past them.
 infty-infty:
   epsil:
     in: PositiveInfinity!
@@ -499,12 +531,14 @@ n-gamma-n-1-see-gamma:
     in: Equal[Factorial[5], Gamma[6]]
   wolfram:
     in: (Factorial[5] == Gamma[6])
-  sympy:
-    in: enumeratio_equal(factorial(5), gamma(6))
   sage:
     in: bool(factorial(5) == gamma(6))
+  sympy:
+    in: enumeratio_equal(factorial(5), gamma(6))
+    out: True
   rust:
     in: equal(factorial(n(5)), gamma(n(6)))
+    out: "true"
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e:
   epsil:
     in: Sum(1 / k!, (k, 0, PositiveInfinity))
@@ -527,15 +561,18 @@ the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e:
     in: Factorial[30]
   wolfram:
     in: Factorial[30]
-  sympy:
-    in: factorial(30)
   sage:
     in: factorial(30)
   oscar:
     in: factorial(ZZ(30))
-  julia:
-    in: factorial(ZZ(30))
   mathlib4:
     in: (Nat.factorial 30)
+  sympy:
+    in: factorial(30)
+    out: "265252859812191058636308480000000"
+  julia:
+    in: factorial(ZZ(30))
+    out: "265252859812191058636308480000000"
   rust:
     in: factorial(n(30))
+    out: "2.6525285981219103e32"

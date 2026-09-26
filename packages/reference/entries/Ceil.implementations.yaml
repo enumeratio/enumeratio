@@ -13,11 +13,11 @@ ceil-7-over-2:
     tex:
       in: \left\lceil \frac{7}{2}\right\rceil
       out: "4"
-  sympy:
-    in: ceiling(Rational(7, 2))
-    out: "4"
   sage:
     in: ceil((7/2))
+    out: "4"
+  sympy:
+    in: ceiling(Rational(7, 2))
     out: "4"
   rust:
     in: ceil(rational(n(7), n(2)))
@@ -37,14 +37,14 @@ ceil-3p2:
     tex:
       in: \lceil 3.2\rceil
       out: "4"
-  sympy:
-    in: ceiling(3.2)
+  sage:
+    in: ceil(3.2)
     out: "4"
   mpmath:
     in: ceil(3.2)
     out: "4.0"
-  sage:
-    in: ceil(3.2)
+  sympy:
+    in: ceiling(3.2)
     out: "4"
   rust:
     in: ceil(x(3.2))
@@ -60,14 +60,17 @@ ceil-3p7:
     in: Ceiling[3.7]
   wolfram:
     in: Ceiling[3.7]
-  sympy:
-    in: ceiling(3.7)
-  mpmath:
-    in: ceil(3.7)
   sage:
     in: ceil(3.7)
+  mpmath:
+    in: ceil(3.7)
+    out: "4.0"
+  sympy:
+    in: ceiling(3.7)
+    out: "4"
   rust:
     in: ceil(x(3.7))
+    out: "4.0"
 integers-pass-through-unchanged:
   epsil:
     in: Ceil(5)
@@ -83,14 +86,14 @@ integers-pass-through-unchanged:
     tex:
       in: \lceil 5\rceil
       out: "5"
-  sympy:
-    in: ceiling(5)
+  sage:
+    in: ceil(5)
     out: "5"
   mpmath:
     in: ceil(5)
     out: "5.0"
-  sage:
-    in: ceil(5)
+  sympy:
+    in: ceiling(5)
     out: "5"
   rust:
     in: ceil(n(5))
@@ -110,18 +113,18 @@ threads-element-wise-over-a-list:
     tex:
       in: \lceil \{1.2,-1.2,3.7\}\rceil
       out: \{2,-1,4\}
-  sympy:
-    in: ceiling([1.2, -1.2, 3.7])
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.
   sage:
     in: ceil([1.2, -1.2, 3.7])
     out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
     verdict: error
     kind: threading
     note: compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only.
+  sympy:
+    in: ceiling([1.2, -1.2, 3.7])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.
   rust:
     in: ceil(list(vec![x(1.2), x(-1.2), x(3.7)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -146,11 +149,11 @@ lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer:
     tex:
       in: \left\lceil \frac{7}{2}\right\rceil =\left\lfloor \frac{7}{2}\right\rfloor +1
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))
-    out: True
   sage:
     in: bool(ceil((7/2)) == (floor((7/2)) + 1))
+    out: True
+  sympy:
+    in: enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))
     out: True
   rust:
     in: equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))
@@ -173,14 +176,14 @@ floor-and-ceil-agree-exactly-on-integers:
     tex:
       in: \lceil 5\rceil =\lfloor 5\rfloor
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(ceiling(5), floor(5))
+  sage:
+    in: bool(ceil(5) == floor(5))
     out: True
   mpmath:
     in: almosteq(ceil(5), floor(5), 1e-20)
     out: True
-  sage:
-    in: bool(ceil(5) == floor(5))
+  sympy:
+    in: enumeratio_equal(ceiling(5), floor(5))
     out: True
   rust:
     in: equal(ceil(n(5)), floor(n(5)))
@@ -200,11 +203,11 @@ how-many-5-seat-vans-are-needed-to-carry-17:
     tex:
       in: \left\lceil \frac{17}{5}\right\rceil
       out: "4"
-  sympy:
-    in: ceiling((S(17) / 5))
-    out: "4"
   sage:
     in: ceil((17 / 5))
+    out: "4"
+  sympy:
+    in: ceiling((S(17) / 5))
     out: "4"
   rust:
     in: ceil((n(17) / n(5)))
@@ -224,14 +227,14 @@ rounds-toward-infty-not-toward-0-ceil-3-7-is-3:
     tex:
       in: \lceil -3.7\rceil
       out: "-3"
-  sympy:
-    in: ceiling(-3.7)
+  sage:
+    in: ceil(-3.7)
     out: "-3"
   mpmath:
     in: ceil(-3.7)
     out: "-3.0"
-  sage:
-    in: ceil(-3.7)
+  sympy:
+    in: ceiling(-3.7)
     out: "-3"
   rust:
     in: ceil(x(-3.7))
@@ -262,14 +265,17 @@ ceil-2p4:
     in: Ceiling[2.4]
   wolfram:
     in: Ceiling[2.4]
-  sympy:
-    in: ceiling(2.4)
-  mpmath:
-    in: ceil(2.4)
   sage:
     in: ceil(2.4)
+  mpmath:
+    in: ceil(2.4)
+    out: "3.0"
+  sympy:
+    in: ceiling(2.4)
+    out: "3"
   rust:
     in: ceil(x(2.4))
+    out: "3.0"
 ceil-2p6:
   epsil:
     in: Ceil(2.6)
@@ -281,14 +287,17 @@ ceil-2p6:
     in: Ceiling[2.6]
   wolfram:
     in: Ceiling[2.6]
-  sympy:
-    in: ceiling(2.6)
-  mpmath:
-    in: ceil(2.6)
   sage:
     in: ceil(2.6)
+  mpmath:
+    in: ceil(2.6)
+    out: "3.0"
+  sympy:
+    in: ceiling(2.6)
+    out: "3"
   rust:
     in: ceil(x(2.6))
+    out: "3.0"
 stays-symbolic:
   epsil:
     in: Ceil(x)
@@ -309,14 +318,17 @@ exact-radicals-are-decided-numerically:
     in: Ceiling[Sqrt[50]]
   wolfram:
     in: Ceiling[Sqrt[50]]
-  sympy:
-    in: ceiling(sqrt(50))
-  mpmath:
-    in: ceil(sqrt(50))
   sage:
     in: ceil(sqrt(50))
+  mpmath:
+    in: ceil(sqrt(50))
+    out: "8.0"
+  sympy:
+    in: ceiling(sqrt(50))
+    out: "8"
   rust:
     in: ceil(sqrt(n(50)))
+    out: "8.0"
 evaluates-at-an-exact-constant-lceil-pi-rceil-4:
   epsil:
     in: Ceil(Pi)
@@ -328,14 +340,17 @@ evaluates-at-an-exact-constant-lceil-pi-rceil-4:
     in: Ceiling[Pi]
   wolfram:
     in: Ceiling[Pi]
-  sympy:
-    in: ceiling(pi)
-  mpmath:
-    in: ceil(pi)
   sage:
     in: ceil(pi)
+  mpmath:
+    in: ceil(pi)
+    out: "4.0"
+  sympy:
+    in: ceiling(pi)
+    out: "4"
   rust:
     in: ceil(x(std::f64::consts::PI))
+    out: "4.0"
 a-second-argument-rounds-up-to-a-multiple-of-it:
   epsil:
     in: Ceil(226, 10)
@@ -380,12 +395,14 @@ rounds-the-real-and-imaginary-parts-up:
     in: Ceiling[Complex[5.37, -1.3]]
   wolfram:
     in: Ceiling[Complex[5.37, -1.3]]
-  sympy:
-    in: ceiling((5.37 + -1.3*I))
-  mpmath:
-    in: ceil(mpc(5.37, -1.3))
   sage:
     in: ceil((5.37 + -1.3*I))
+  mpmath:
+    in: ceil(mpc(5.37, -1.3))
+    out: (6.0 - 1.0j)
+  sympy:
+    in: ceiling((5.37 + -1.3*I))
+    out: 6 - I
 ten-bits-are-enough-to-number-1000-items-lceil:
   epsil:
     in: Ceil(Log(1_000, 2))
