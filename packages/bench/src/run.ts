@@ -199,9 +199,12 @@ export function judge(
     return { name, status: "timeout", reason: reply.error };
   if (reply.error !== undefined) return { name, status: "error", reason: reply.error };
   const value = reply.value;
-  if (expected !== undefined && (value === undefined || !agrees(value, expected, precision)))
-    return { name, status: "wrong", value, reason: `expected ${expected}` };
   const samplesNs = reply.samplesNs ?? [];
+  // A wrong answer keeps its timing, for the record; nothing compares against it.
+  if (expected !== undefined && (value === undefined || !agrees(value, expected, precision))) {
+    const timing = samplesNs.length === 0 ? {} : { k: reply.k, samplesNs, ...summarise(samplesNs) };
+    return { name, status: "wrong", ...timing, value, reason: `expected ${expected}` };
+  }
   const summary = summarise(samplesNs);
   const status = reply.timedOut === true ? "timeout" : summary.median < PROTOCOL.tooFastNs ? "too-fast" : "ok";
   return { name, status, k: reply.k, samplesNs, ...summary, value };

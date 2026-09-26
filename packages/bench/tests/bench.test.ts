@@ -71,7 +71,10 @@ describe("protocol", () => {
 describe("judge", () => {
   const samplesNs = [2e6, 2.1e6, 1.9e6, 2e6, 2e6];
   test("the correctness gate runs before the timing counts", () => {
-    expect(judge("F/x", { value: "7", samplesNs, k: 1 }, "8", "exact").status).toBe("wrong");
+    const wrong = judge("F/x", { value: "7", samplesNs, k: 1 }, "8", "exact");
+    expect(wrong.status).toBe("wrong");
+    // Kept for the record: the viewer shows it struck through, outside every comparison.
+    expect(wrong.median).toBe(2e6);
     expect(judge("F/x", { value: "8", samplesNs, k: 1 }, "8", "exact").status).toBe("ok");
   });
   test("exact answers compare as text, never through a double", () => {
