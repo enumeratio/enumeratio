@@ -1,0 +1,198 @@
+- id: fibonacci-order-2
+  expr: [DifferenceRootReduce, [Fibonacci, n], n]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            Block,
+            [
+              List,
+              [Equal, [Add, [Negate, [y, n2]], [Negate, [y, [Add, n2, 1]]], [y, [Add, n2, 2]]], 0],
+              [Equal, [y, 0], 0],
+              [Equal, [y, 1], 1],
+            ],
+          ],
+          y,
+          n2,
+        ],
+      ],
+      n,
+    ]
+  caption: "Fibonacci: $y(n{+}2) - y(n{+}1) - y(n) = 0$, $y(0){=}0, y(1){=}1$"
+- id: factorial-order-1
+  expr: [DifferenceRootReduce, [Factorial, n], n]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            Block,
+            [
+              List,
+              [Equal, [Add, [Multiply, [Add, [Negate, n2], -1], [y, n2]], [y, [Add, n2, 1]]], 0],
+              [Equal, [y, 0], 1],
+            ],
+          ],
+          y,
+          n2,
+        ],
+      ],
+      n,
+    ]
+  caption: "Factorial: $(n{+}1) y(n) = y(n{+}1)$, $y(0){=}1$"
+- id: binomial-anchors-either-side-of-the-pole
+  expr: [DifferenceRootReduce, [Binomial, n, 3], n]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            Block,
+            [
+              List,
+              [
+                Equal,
+                [Add, [Multiply, [Add, n2, -2], [y, [Add, n2, 1]]], [Multiply, [Add, [Negate, n2], -1], [y, n2]]],
+                0,
+              ],
+              [Equal, [y, -1], -1],
+              [Equal, [y, 3], 1],
+            ],
+          ],
+          y,
+          n2,
+        ],
+      ],
+      n,
+    ]
+  caption: "$\\binom{n}{3}$: anchors at $n=-1$ and $n=3$, either side of the recurrence's pole at $n=2$"
+- id: harmonicnumber-order-1-inhomogeneous
+  expr: [DifferenceRootReduce, [HarmonicNumber, n], n]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            Block,
+            [
+              List,
+              [
+                Equal,
+                [Add, [Multiply, [Add, n2, 1], [y, [Add, n2, 1]]], [Multiply, [Add, [Negate, n2], -1], [y, n2]], -1],
+                0,
+              ],
+              [Equal, [y, 0], 0],
+            ],
+          ],
+          y,
+          n2,
+        ],
+      ],
+      n,
+    ]
+  category: Scope
+  caption: "$H_n$: $(n{+}1)(y(n{+}1) - y(n)) = 1$ — order 1, not the order-2 homogeneous form"
+- id: sum-of-two-hypergeometric-terms
+  expr: [DifferenceRootReduce, [Add, [Power, 2, n], [Power, 3, n]], n]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            Block,
+            [
+              List,
+              [Equal, [Add, [Multiply, -5, [y, [Add, n2, 1]]], [Multiply, 6, [y, n2]], [y, [Add, n2, 2]]], 0],
+              [Equal, [y, 0], 2],
+              [Equal, [y, 1], 5],
+            ],
+          ],
+          y,
+          n2,
+        ],
+      ],
+      n,
+    ]
+  category: Scope
+  caption: "$2^n + 3^n$: sum-of-two-hypergeometric closure, order 2"
+- role: test
+  id: catalannumber-order-1
+  expr: [DifferenceRootReduce, [CatalanNumber, n], n]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            Block,
+            [
+              List,
+              [
+                Equal,
+                [
+                  Add,
+                  [Multiply, -2, [Add, [Multiply, 2, n2], 1], [y, n2]],
+                  [Multiply, [Add, n2, 2], [y, [Add, n2, 1]]],
+                ],
+                0,
+              ],
+              [Equal, [y, 0], 1],
+            ],
+          ],
+          y,
+          n2,
+        ],
+      ],
+      n,
+    ]
+- role: test
+  id: lucasl-order-2
+  expr: [DifferenceRootReduce, [LucasL, n], n]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            Block,
+            [
+              List,
+              [Equal, [Add, [Negate, [y, n2]], [Negate, [y, [Add, n2, 1]]], [y, [Add, n2, 2]]], 0],
+              [Equal, [y, 0], 2],
+              [Equal, [y, 1], 1],
+            ],
+          ],
+          y,
+          n2,
+        ],
+      ],
+      n,
+    ]
+- role: test
+  id: evaluated-at-a-concrete-n-runs-the-recurrence
+  expr: [N, [[DifferenceRootReduce, [Fibonacci, n], n], 20]]
+  expected: 6765
+- role: test
+  id: a-symbolic-order-declines
+  expr: [DifferenceRootReduce, [Binomial, n, k], n]
+  expected: [DifferenceRootReduce, [Binomial, n, k], n]

@@ -1,0 +1,57 @@
+- id: a-hand-built-first-order-recurrence
+  expr:
+    [
+      [
+        DifferenceRoot,
+        [Function, [List, [Equal, [Add, [Negate, [y, n]], [y, [Add, n, 1]], -1], 0], [Equal, [y, 0], 0]], y, n],
+      ],
+      5,
+    ]
+  expected: 5
+  caption: "$y(n{+}1) = y(n) + 1$, $y(0){=}0$: $y(5) = 5$"
+- id: symbolic-n-stays-inert
+  expr:
+    [
+      [
+        DifferenceRoot,
+        [Function, [List, [Equal, [Add, [Negate, [y, n]], [y, [Add, n, 1]], -1], 0], [Equal, [y, 0], 0]], y, n],
+      ],
+      n,
+    ]
+  expected:
+    [
+      Apply,
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [Block, [List, [Equal, [Add, [Negate, [y, n]], [y, [Add, n, 1]], -1], 0], [Equal, [y, 0], 0]]],
+          y,
+          n,
+        ],
+      ],
+      n,
+    ]
+  category: Properties
+  caption: A symbolic index leaves the call unevaluated rather than dropping the argument
+- role: test
+  id: a-hand-built-fibonacci-recurrence-at-10
+  expr:
+    [
+      [
+        DifferenceRoot,
+        [
+          Function,
+          [
+            List,
+            [Equal, [Add, [Negate, [y, n]], [Negate, [y, [Add, n, 1]]], [y, [Add, n, 2]]], 0],
+            [Equal, [y, 0], 0],
+            [Equal, [y, 1], 1],
+          ],
+          y,
+          n,
+        ],
+      ],
+      10,
+    ]
+  expected: 55
