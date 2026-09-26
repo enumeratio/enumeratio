@@ -8,7 +8,7 @@ const ce = new ComputeEngine();
 declareDomains(ce);
 declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
 
-const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
+const perm = (...entries: number[]): unknown => ["Permutations", ["List", ...entries]];
 const contents = (expr: unknown): unknown => {
   const evaluated = ce.box(expr as never).evaluate();
   return (evaluated as unknown as { ops?: { json: unknown }[] }).ops?.[0]?.json;
@@ -102,7 +102,7 @@ test("RskInsertion and RskShape are typed by carrier", () => {
   expect(String(ce.box(["RskShape", p] as never).evaluate().type)).toBe("integer_partition");
   // A standard tableau is a ROW WORD, not a nested list — the carrier shape says so, and a
   // nested result would be rejected by the type rather than quietly accepted.
-  expect(DOMAINS.find((d) => d.name === "StandardTableau")?.shape).toBe("list<integer>");
+  expect(DOMAINS.find((d) => d.name === "StandardTableaux")?.shape).toBe("list<integer>");
 });
 
 test("RskRecording records where each insertion landed", () => {

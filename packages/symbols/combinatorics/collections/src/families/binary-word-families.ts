@@ -438,7 +438,7 @@ export const entries: NumberKernel[] = [
       (a, [n, k]) => braceletValid(a, n, k),
       (a, [n, k]) => braceletRank(a, n, k),
     ),
-    declared: wordClass("Word"),
+    declared: wordClass("Words"),
   },
   // TriStrings(n): binary words with no 3 consecutive 1s.
   ints(

@@ -229,6 +229,6 @@ export const recordingRowWord: MathJSON = bind("pq", rskPair, rowWordOf(at("pq",
  *  run for the pair, not one per half. */
 export const rskRowWords: MathJSON = bind("pq", rskPair, [
   "Tuple",
-  ["StandardTableau", rowWordOf(at("pq", 1))],
-  ["StandardTableau", rowWordOf(at("pq", 2))],
+  ["StandardTableaux", rowWordOf(at("pq", 1))],
+  ["StandardTableaux", rowWordOf(at("pq", 2))],
 ]);

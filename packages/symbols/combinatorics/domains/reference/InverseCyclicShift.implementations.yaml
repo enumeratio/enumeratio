@@ -1,9 +1,9 @@
 the-one-line-word-231:
   epsil:
-    in: InverseCyclicShift(Permutation([2, 3, 1]))
-    out: Permutation([1, 2, 3])
+    in: InverseCyclicShift(Permutations([2, 3, 1]))
+    out: Permutations([1, 2, 3])
   tex:
-    in: \mathrm{InverseCyclicShift}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
-    out: \mathrm{Permutation}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    in: \mathrm{InverseCyclicShift}(\mathrm{Permutations}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Permutations}(\bigl\lbrack1, 2, 3\bigr\rbrack)
   fullform:
-    in: InverseCyclicShift[Permutation[List[2, 3, 1]]]
+    in: InverseCyclicShift[Permutations[List[2, 3, 1]]]

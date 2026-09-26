@@ -70,7 +70,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "AffinePermutations",
     id: "affine_permutations",
-    carrier: "AffinePermutation",
+    carrier: "AffinePermutations",
     grades: [
       {
         name: "n",
@@ -96,7 +96,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "AlternatingPermutations",
     id: "alternating_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -109,7 +109,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "AlternatingSignMatrices",
     id: "alternating_sign_matrices",
-    carrier: "AlternatingSignMatrix",
+    carrier: "AlternatingSignMatrices",
     grades: [
       {
         name: "size",
@@ -140,7 +140,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Arrangements",
     id: "arrangements",
-    carrier: "Arrangement",
+    carrier: "Arrangements",
     grades: [
       {
         name: "size",
@@ -157,7 +157,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "AscentSequences",
     id: "ascent_sequences",
-    carrier: "AscentSequence",
+    carrier: "AscentSequences",
     grades: [
       {
         name: "n",
@@ -170,7 +170,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Associahedron",
     id: "associahedron",
-    carrier: "Dissection",
+    carrier: "Dissections",
     grades: [
       {
         name: "n",
@@ -192,7 +192,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BallotSequences",
     id: "ballot_sequences",
-    carrier: "DyckPath",
+    carrier: "DyckPaths",
     grades: [
       {
         name: "n",
@@ -205,7 +205,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BaxterPermutations",
     id: "baxter_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -227,7 +227,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BinaryBracelets",
     id: "binary_bracelets",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -240,7 +240,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BinaryNecklaces",
     id: "binary_necklaces",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -253,7 +253,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BinaryPalindromes",
     id: "binary_palindromes",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -266,7 +266,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BinaryTrees",
     id: "binary_trees",
-    carrier: "BinaryTree",
+    carrier: "BinaryTrees",
     grades: [
       {
         name: "n",
@@ -279,7 +279,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BinaryWords",
     id: "binary_words",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -292,7 +292,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BinaryWordsByWeight",
     id: "binary_words_by_weight",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -309,7 +309,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BooleanAlgebra",
     id: "boolean_algebra",
-    carrier: "Finset",
+    carrier: "Finsets",
     grades: [
       {
         name: "n",
@@ -322,7 +322,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BooleanPermutations",
     id: "boolean_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -335,7 +335,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BoundedPartPartitions",
     id: "bounded_part_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -353,7 +353,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BoxConfinedPartitions",
     id: "box_confined_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "parts",
@@ -372,7 +372,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "BoxedPlanePartitions",
     id: "boxed_plane_partitions",
-    carrier: "PlanePartition",
+    carrier: "PlanePartitions",
     grades: [
       {
         name: "a",
@@ -393,7 +393,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CalkinWilfPaths",
     id: "calkin_wilf_paths",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -417,7 +417,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CarlitzCompositions",
     id: "carlitz_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -501,7 +501,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CograssmannianPermutations",
     id: "cograssmannian_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -514,7 +514,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CollatzTrajectories",
     id: "collatz_trajectories",
-    carrier: "CollatzTrajectory",
+    carrier: "CollatzTrajectories",
     grades: [
       {
         name: "n",
@@ -535,7 +535,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ColoredMotzkinPaths",
     id: "colored_motzkin_paths",
-    carrier: "ColoredMotzkinPath",
+    carrier: "ColoredMotzkinPaths",
     grades: [
       {
         name: "n",
@@ -552,7 +552,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CompositionsIntoKParts",
     id: "compositions_into_k_parts",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -569,7 +569,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ConnectedLabeledGraphs",
     id: "connected_labeled_graphs",
-    carrier: "LabeledGraph",
+    carrier: "LabeledGraphs",
     grades: [
       {
         name: "n",
@@ -582,7 +582,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ConnectedPermutations",
     id: "connected_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -608,7 +608,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CorePartitions",
     id: "core_partitions",
-    carrier: "CorePartition",
+    carrier: "CorePartitions",
     grades: [
       {
         name: "k",
@@ -634,7 +634,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CrossPolytope",
     id: "cross_polytope",
-    carrier: "SignedSubset",
+    carrier: "SignedSubsets",
     grades: [
       {
         name: "n",
@@ -666,7 +666,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "CyclicPermutations",
     id: "cyclic_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -679,7 +679,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Cyclohedron",
     id: "cyclohedron",
-    carrier: "Dissection",
+    carrier: "Dissections",
     grades: [
       {
         name: "n",
@@ -692,7 +692,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "DecoratedPermutations",
     id: "decorated_permutations",
-    carrier: "DecoratedPermutation",
+    carrier: "DecoratedPermutations",
     grades: [
       {
         name: "size",
@@ -714,7 +714,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "DelannoyPaths",
     id: "delannoy_paths",
-    carrier: "DelannoyPath",
+    carrier: "DelannoyPaths",
     grades: [
       {
         name: "n",
@@ -727,7 +727,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Derangements",
     id: "derangements",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -740,7 +740,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Dissections",
     id: "dissections",
-    carrier: "Dissection",
+    carrier: "Dissections",
     grades: [
       {
         name: "n",
@@ -753,7 +753,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "DistinctPartitions",
     id: "distinct_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -775,7 +775,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "DyadicCompositions",
     id: "dyadic_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -788,7 +788,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "DyckPaths",
     id: "dyck_paths",
-    carrier: "DyckPath",
+    carrier: "DyckPaths",
     grades: [
       {
         name: "n",
@@ -801,7 +801,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "DyckPathsByHeight",
     id: "dyck_paths_by_height",
-    carrier: "DyckPath",
+    carrier: "DyckPaths",
     grades: [
       {
         name: "n",
@@ -818,7 +818,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "EgyptianFractions",
     id: "egyptian_fractions",
-    carrier: "EgyptianFraction",
+    carrier: "EgyptianFractions",
     grades: [
       {
         name: "k",
@@ -840,7 +840,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Endofunctions",
     id: "endofunctions",
-    carrier: "Endofunction",
+    carrier: "Endofunctions",
     grades: [
       {
         name: "n",
@@ -853,7 +853,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "EvenPermutations",
     id: "even_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -875,7 +875,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "FactoradicNumerals",
     id: "factoradic_numerals",
-    carrier: "FactoradicNumeral",
+    carrier: "FactoradicNumerals",
     grades: [],
     title: "Factoradic numerals",
     description: "The factorial-base (mixed-radix) numerals; bijective with ℕ, rank = value.",
@@ -893,7 +893,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "FareySequences",
     id: "farey_sequences",
-    carrier: "RationalNumber",
+    carrier: "RationalNumbers",
     grades: [
       {
         name: "n",
@@ -906,7 +906,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "FibStrings",
     id: "fib_strings",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -919,7 +919,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "FibonacciCompositions",
     id: "fibonacci_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -949,7 +949,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "FinePaths",
     id: "fine_paths",
-    carrier: "DyckPath",
+    carrier: "DyckPaths",
     grades: [
       {
         name: "n",
@@ -962,7 +962,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "FiniteSetElements",
     id: "finite_set_elements",
-    carrier: "FiniteSetElement",
+    carrier: "FiniteSetElements",
     grades: [
       {
         name: "n",
@@ -976,7 +976,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Finsets",
     id: "finsets",
-    carrier: "Finset",
+    carrier: "Finsets",
     grades: [],
     title: "Finite Sets",
     description:
@@ -986,7 +986,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "FractionalNumbers",
     id: "fractional_numbers",
-    carrier: "FractionalNumber",
+    carrier: "FractionalNumbers",
     grades: [],
     title: "Fractional Numbers",
     description: "Unreduced fractions n/d over ℤ×ℕ⁺ — the formal pair, not the reduced value it names.",
@@ -1004,7 +1004,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GaussianFractionals",
     id: "gaussian_fractionals",
-    carrier: "GaussianFractional",
+    carrier: "GaussianFractionals",
     grades: [],
     title: "Gaussian Fractionals",
     description: "ℚ(i) carried as a pair of unreduced fractions — the unreduced companion to the Gaussian rationals.",
@@ -1013,7 +1013,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GaussianIntegers",
     id: "gaussian_integers",
-    carrier: "GaussianInteger",
+    carrier: "GaussianIntegers",
     grades: [],
     title: "Gaussian Integers",
     description: "The ring ℤ[i] = {a+bi} — carries ring arithmetic and the multiplicative norm.",
@@ -1022,7 +1022,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GaussianRationals",
     id: "gaussian_rationals",
-    carrier: "GaussianRational",
+    carrier: "GaussianRationals",
     grades: [],
     title: "Gaussian Rationals",
     description: "The field ℚ(i) = {p+qi : p,q ∈ ℚ}, enumerated by a Cantor pairing over a signed-ℚ index.",
@@ -1031,7 +1031,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GelfandTsetlin",
     id: "gelfand_tsetlin",
-    carrier: "GelfandTsetlinPattern",
+    carrier: "GelfandTsetlinPatterns",
     grades: [
       {
         name: "n",
@@ -1056,7 +1056,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Glyphs",
     id: "glyphs",
-    carrier: "GlyphKind",
+    carrier: "GlyphKinds",
     grades: [],
     title: "Glyphs",
     description: "The page-space glyph kinds the renderer draws.",
@@ -1064,7 +1064,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GoldbachPartitions",
     id: "goldbach_partitions",
-    carrier: "GoldbachPartition",
+    carrier: "GoldbachPartitions",
     grades: [
       {
         name: "n",
@@ -1077,7 +1077,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GrandDyckPaths",
     id: "grand_dyck_paths",
-    carrier: "DyckPath",
+    carrier: "DyckPaths",
     grades: [
       {
         name: "n",
@@ -1090,7 +1090,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GrassmannianPermutations",
     id: "grassmannian_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -1103,7 +1103,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "GrayCodes",
     id: "gray_codes",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -1161,7 +1161,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "HyperbinaryRepresentations",
     id: "hyperbinary_representations",
-    carrier: "HyperbinaryWord",
+    carrier: "HyperbinaryWords",
     grades: [
       {
         name: "n",
@@ -1174,7 +1174,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Hypernumerary",
     id: "hypernumerary",
-    carrier: "HypernumeraryWord",
+    carrier: "HypernumeraryWords",
     grades: [
       {
         name: "b",
@@ -1204,7 +1204,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "IncreasingBinaryTrees",
     id: "increasing_binary_trees",
-    carrier: "IncreasingBinaryTree",
+    carrier: "IncreasingBinaryTrees",
     grades: [
       {
         name: "n",
@@ -1217,7 +1217,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "IndependentSetsCycle",
     id: "independent_sets_cycle",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -1232,7 +1232,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "IntegerCompositions",
     id: "integer_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -1245,7 +1245,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "IntegerFactorizations",
     id: "integer_factorizations",
-    carrier: "IntegerFactorization",
+    carrier: "IntegerFactorizations",
     grades: [],
     title: "Integer Factorizations",
     description: "Positive integers carried by their prime factorization.",
@@ -1263,7 +1263,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "IntegerPartitions",
     id: "integer_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -1276,7 +1276,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Involutions",
     id: "involutions",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -1312,7 +1312,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KAryTrees",
     id: "k_ary_trees",
-    carrier: "KAryTree",
+    carrier: "KAryTrees",
     grades: [
       {
         name: "n",
@@ -1329,7 +1329,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KBoundedCompositions",
     id: "k_bounded_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -1346,7 +1346,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KBracelets",
     id: "k_bracelets",
-    carrier: "Word",
+    carrier: "Words",
     grades: [
       {
         name: "size",
@@ -1363,7 +1363,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KColoredPermutations",
     id: "k_colored_permutations",
-    carrier: "ColoredPermutation",
+    carrier: "ColoredPermutations",
     grades: [
       {
         name: "size",
@@ -1380,7 +1380,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KCyclePermutations",
     id: "k_cycle_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "n",
@@ -1397,7 +1397,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KDescentPermutations",
     id: "k_descent_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "n",
@@ -1414,7 +1414,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KDyckPaths",
     id: "k_dyck_paths",
-    carrier: "KDyckPath",
+    carrier: "KDyckPaths",
     grades: [
       {
         name: "n",
@@ -1445,7 +1445,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KInversionPermutations",
     id: "k_inversion_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "n",
@@ -1462,7 +1462,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KLyndonWords",
     id: "k_lyndon_words",
-    carrier: "Word",
+    carrier: "Words",
     grades: [
       {
         name: "size",
@@ -1479,7 +1479,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KMotzkinPaths",
     id: "k_motzkin_paths",
-    carrier: "KMotzkinPath",
+    carrier: "KMotzkinPaths",
     grades: [
       {
         name: "n",
@@ -1496,7 +1496,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KNecklaces",
     id: "k_necklaces",
-    carrier: "Word",
+    carrier: "Words",
     grades: [
       {
         name: "size",
@@ -1513,7 +1513,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KPartPartitions",
     id: "k_part_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -1531,7 +1531,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "KSubsets",
     id: "k_subsets",
-    carrier: "Finset",
+    carrier: "Finsets",
     grades: [
       {
         name: "n",
@@ -1558,7 +1558,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LabeledForests",
     id: "labeled_forests",
-    carrier: "LabeledTree",
+    carrier: "LabeledTrees",
     grades: [
       {
         name: "n",
@@ -1572,7 +1572,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LabeledGraphs",
     id: "labeled_graphs",
-    carrier: "LabeledGraph",
+    carrier: "LabeledGraphs",
     grades: [
       {
         name: "n",
@@ -1585,7 +1585,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LabeledGraphsByEdges",
     id: "labeled_graphs_by_edges",
-    carrier: "LabeledGraph",
+    carrier: "LabeledGraphs",
     grades: [
       {
         name: "n",
@@ -1602,7 +1602,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LabeledTrees",
     id: "labeled_trees",
-    carrier: "LabeledTree",
+    carrier: "LabeledTrees",
     grades: [
       {
         name: "n",
@@ -1615,7 +1615,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LargestPartPartitions",
     id: "largest_part_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -1632,7 +1632,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LehmerCodes",
     id: "lehmer_codes",
-    carrier: "PermutationInversion",
+    carrier: "PermutationInversions",
     grades: [
       {
         name: "size",
@@ -1654,7 +1654,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LittleSchroderTriangle",
     id: "little_schroder_triangle",
-    carrier: "SchroederPath",
+    carrier: "SchroederPaths",
     grades: [
       {
         name: "n",
@@ -1680,7 +1680,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LucasStrings",
     id: "lucas_strings",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -1702,7 +1702,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LukasiewiczPaths",
     id: "lukasiewicz_paths",
-    carrier: "LukasiewiczPath",
+    carrier: "LukasiewiczPaths",
     grades: [
       {
         name: "n",
@@ -1715,7 +1715,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "LyndonWords",
     id: "lyndon_words",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -1737,7 +1737,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ModularResidues",
     id: "modular_residues",
-    carrier: "ModularResidue",
+    carrier: "ModularResidues",
     grades: [
       {
         name: "modulus",
@@ -1759,7 +1759,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "MotzkinPaths",
     id: "motzkin_paths",
-    carrier: "MotzkinPath",
+    carrier: "MotzkinPaths",
     grades: [
       {
         name: "n",
@@ -1772,7 +1772,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "MotzkinPathsByPeaks",
     id: "motzkin_paths_by_peaks",
-    carrier: "MotzkinPath",
+    carrier: "MotzkinPaths",
     grades: [
       {
         name: "n",
@@ -1789,7 +1789,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "MulticomplexNumbers",
     id: "multicomplex_numbers",
-    carrier: "Multicomplex",
+    carrier: "Multicomplexes",
     grades: [
       {
         name: "modulus",
@@ -1807,7 +1807,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "MultiplicativePartitions",
     id: "multiplicative_partitions",
-    carrier: "MultiplicativePartition",
+    carrier: "MultiplicativePartitions",
     grades: [
       {
         name: "n",
@@ -1820,7 +1820,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Multisets",
     id: "multisets",
-    carrier: "Multiset",
+    carrier: "Multisets",
     grades: [
       {
         name: "n",
@@ -1838,7 +1838,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NarayanaNumbers",
     id: "narayana_numbers",
-    carrier: "DyckPath",
+    carrier: "DyckPaths",
     grades: [
       {
         name: "n",
@@ -1873,7 +1873,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NonCrossingMatchings",
     id: "non_crossing_matchings",
-    carrier: "PerfectMatching",
+    carrier: "PerfectMatchings",
     grades: [
       {
         name: "n",
@@ -1886,7 +1886,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NonCrossingPartitions",
     id: "non_crossing_partitions",
-    carrier: "SetPartition",
+    carrier: "SetPartitions",
     grades: [
       {
         name: "n",
@@ -1899,7 +1899,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NonCrossingPermutations",
     id: "non_crossing_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -1912,7 +1912,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NonCrossingTrees",
     id: "non_crossing_trees",
-    carrier: "NonCrossingTree",
+    carrier: "NonCrossingTrees",
     grades: [
       {
         name: "n",
@@ -1925,7 +1925,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NonDecreasingParkingFunctions",
     id: "non_decreasing_parking_functions",
-    carrier: "ParkingFunction",
+    carrier: "ParkingFunctions",
     grades: [
       {
         name: "n",
@@ -1938,7 +1938,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NonNestingMatchings",
     id: "non_nesting_matchings",
-    carrier: "PerfectMatching",
+    carrier: "PerfectMatchings",
     grades: [
       {
         name: "n",
@@ -1951,7 +1951,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "NonNestingPartitions",
     id: "non_nesting_partitions",
-    carrier: "SetPartition",
+    carrier: "SetPartitions",
     grades: [
       {
         name: "n",
@@ -1973,7 +1973,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "OddCompositions",
     id: "odd_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -1986,7 +1986,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "OddPartitions",
     id: "odd_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -2018,7 +2018,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "OrderedFactorizations",
     id: "ordered_factorizations",
-    carrier: "OrderedFactorization",
+    carrier: "OrderedFactorizations",
     grades: [
       {
         name: "n",
@@ -2031,7 +2031,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "OrderedTrees",
     id: "ordered_trees",
-    carrier: "OrderedTree",
+    carrier: "OrderedTrees",
     grades: [
       {
         name: "n",
@@ -2053,7 +2053,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PalindromicCompositions",
     id: "palindromic_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -2075,7 +2075,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ParkingFunctions",
     id: "parking_functions",
-    carrier: "ParkingFunction",
+    carrier: "ParkingFunctions",
     grades: [
       {
         name: "n",
@@ -2088,7 +2088,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PartitionAlgebra",
     id: "partition_algebra",
-    carrier: "SetPartition",
+    carrier: "SetPartitions",
     grades: [
       {
         name: "n",
@@ -2137,7 +2137,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PerfectMatchings",
     id: "perfect_matchings",
-    carrier: "PerfectMatching",
+    carrier: "PerfectMatchings",
     grades: [
       {
         name: "n",
@@ -2168,7 +2168,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Permutahedron",
     id: "permutahedron",
-    carrier: "SetComposition",
+    carrier: "SetCompositions",
     grades: [
       {
         name: "n",
@@ -2181,7 +2181,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Permutations",
     id: "permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2194,7 +2194,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PermutationsAvoiding123",
     id: "permutations_avoiding_123",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2207,7 +2207,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PermutationsAvoiding132",
     id: "permutations_avoiding_132",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2220,7 +2220,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PermutationsAvoiding213",
     id: "permutations_avoiding_213",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2233,7 +2233,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PermutationsAvoiding231",
     id: "permutations_avoiding_231",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2246,7 +2246,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PermutationsAvoiding312",
     id: "permutations_avoiding_312",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2259,7 +2259,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PermutationsAvoiding321",
     id: "permutations_avoiding_321",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2290,7 +2290,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PhylogeneticTrees",
     id: "phylogenetic_trees",
-    carrier: "PhylogeneticTree",
+    carrier: "PhylogeneticTrees",
     grades: [
       {
         name: "n",
@@ -2303,7 +2303,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PlanePartitions",
     id: "plane_partitions",
-    carrier: "PlanePartition",
+    carrier: "PlanePartitions",
     grades: [
       {
         name: "size",
@@ -2316,7 +2316,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PlaneTrees",
     id: "plane_trees",
-    carrier: "PlaneTree",
+    carrier: "PlaneTrees",
     grades: [
       {
         name: "n",
@@ -2343,7 +2343,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PowerSet",
     id: "power_set",
-    carrier: "Finset",
+    carrier: "Finsets",
     grades: [
       {
         name: "n",
@@ -2384,7 +2384,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PrimeCompositions",
     id: "prime_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -2429,7 +2429,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PrimePartition",
     id: "prime_partition",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -2451,7 +2451,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PrimitiveBinaryStrings",
     id: "primitive_binary_strings",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -2482,7 +2482,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ProperCompositions",
     id: "proper_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -2495,7 +2495,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PruferSequences",
     id: "prufer_sequences",
-    carrier: "LabeledTree",
+    carrier: "LabeledTrees",
     grades: [
       {
         name: "n",
@@ -2508,7 +2508,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "PythagoreanTriples",
     id: "pythagorean_triples",
-    carrier: "PythagoreanTriple",
+    carrier: "PythagoreanTriples",
     grades: [
       {
         name: "hypotenuse",
@@ -2521,7 +2521,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "RationalDyckPaths",
     id: "rational_dyck_paths",
-    carrier: "RationalDyckPath",
+    carrier: "RationalDyckPaths",
     grades: [
       {
         name: "a",
@@ -2538,7 +2538,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "RationalNumbers",
     id: "rational_numbers",
-    carrier: "RationalNumber",
+    carrier: "RationalNumbers",
     grades: [],
     title: "Rational Numbers",
     description: "Fractions p/q in lowest terms.",
@@ -2547,7 +2547,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "RecursiveTrees",
     id: "recursive_trees",
-    carrier: "RootedLabeledTree",
+    carrier: "RootedLabeledTrees",
     grades: [
       {
         name: "n",
@@ -2560,7 +2560,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "RestrictedGrowthStrings",
     id: "restricted_growth_strings",
-    carrier: "SetPartition",
+    carrier: "SetPartitions",
     grades: [
       {
         name: "n",
@@ -2573,7 +2573,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "RiordanPaths",
     id: "riordan_paths",
-    carrier: "MotzkinPath",
+    carrier: "MotzkinPaths",
     grades: [
       {
         name: "n",
@@ -2586,7 +2586,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "RookPlacements",
     id: "rook_placements",
-    carrier: "RookPlacement",
+    carrier: "RookPlacements",
     grades: [
       {
         name: "n",
@@ -2599,7 +2599,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "RootedUnlabeledTrees",
     id: "rooted_unlabeled_trees",
-    carrier: "RootedUnlabeledTree",
+    carrier: "RootedUnlabeledTrees",
     grades: [
       {
         name: "n",
@@ -2644,7 +2644,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SchroederPaths",
     id: "schroeder_paths",
-    carrier: "SchroederPath",
+    carrier: "SchroederPaths",
     grades: [
       {
         name: "n",
@@ -2657,7 +2657,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SchroederTriangle",
     id: "schroeder_triangle",
-    carrier: "SchroederPath",
+    carrier: "SchroederPaths",
     grades: [
       {
         name: "n",
@@ -2674,7 +2674,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SelfConjugatePartitions",
     id: "self_conjugate_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -2705,7 +2705,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SemistandardTableaux",
     id: "semistandard_tableaux",
-    carrier: "SemistandardTableau",
+    carrier: "SemistandardTableaux",
     grades: [
       {
         name: "size",
@@ -2722,7 +2722,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SeparablePermutations",
     id: "separable_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2735,7 +2735,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SetCompositions",
     id: "set_compositions",
-    carrier: "SetComposition",
+    carrier: "SetCompositions",
     grades: [
       {
         name: "n",
@@ -2748,7 +2748,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SetPartitions",
     id: "set_partitions",
-    carrier: "SetPartition",
+    carrier: "SetPartitions",
     grades: [
       {
         name: "n",
@@ -2761,7 +2761,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SetPartitionsIntoKBlocks",
     id: "set_partitions_into_k_blocks",
-    carrier: "SetPartition",
+    carrier: "SetPartitions",
     grades: [
       {
         name: "n",
@@ -2787,7 +2787,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ShiftedStandardTableaux",
     id: "shifted_standard_tableaux",
-    carrier: "StandardTableau",
+    carrier: "StandardTableaux",
     grades: [
       {
         name: "size",
@@ -2800,7 +2800,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SignedPermutations",
     id: "signed_permutations",
-    carrier: "SignedPermutation",
+    carrier: "SignedPermutations",
     grades: [
       {
         name: "size",
@@ -2813,7 +2813,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SignedSetCompositions",
     id: "signed_set_compositions",
-    carrier: "SignedSetComposition",
+    carrier: "SignedSetCompositions",
     grades: [
       {
         name: "n",
@@ -2826,7 +2826,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SignedSubsets",
     id: "signed_subsets",
-    carrier: "SignedSubset",
+    carrier: "SignedSubsets",
     grades: [
       {
         name: "n",
@@ -2839,7 +2839,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SimplePermutations",
     id: "simple_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2852,7 +2852,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Simplex",
     id: "simplex",
-    carrier: "Finset",
+    carrier: "Finsets",
     grades: [
       {
         name: "n",
@@ -2865,7 +2865,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SingletonSpecies",
     id: "singleton_species",
-    carrier: "Singleton",
+    carrier: "Singletons",
     grades: [
       {
         name: "n",
@@ -2879,7 +2879,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SkewPartitions",
     id: "skew_partitions",
-    carrier: "SkewPartition",
+    carrier: "SkewPartitions",
     grades: [
       {
         name: "size",
@@ -2892,7 +2892,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SkewStandardTableaux",
     id: "skew_standard_tableaux",
-    carrier: "SkewTableau",
+    carrier: "SkewTableaux",
     grades: [
       {
         name: "size",
@@ -2928,7 +2928,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SmoothPermutations",
     id: "smooth_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -2950,7 +2950,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SparseSubsets",
     id: "sparse_subsets",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -2973,7 +2973,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SquareDecompositions",
     id: "square_decompositions",
-    carrier: "SquareDecomposition",
+    carrier: "SquareDecompositions",
     grades: [],
     title: "Square Decompositions",
     description: "The unique factorization n = s²·q with q squarefree, as the pair (s, q).",
@@ -3000,7 +3000,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SquarePartitions",
     id: "square_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -3031,7 +3031,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "StandardTableauPairs",
     id: "standard_tableau_pairs",
-    carrier: "StandardTableauPair",
+    carrier: "StandardTableauPairs",
     grades: [
       {
         name: "size",
@@ -3045,7 +3045,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "StandardTableaux",
     id: "standard_tableaux",
-    carrier: "StandardTableau",
+    carrier: "StandardTableaux",
     grades: [
       {
         name: "size",
@@ -3067,7 +3067,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "StepCompositions",
     id: "step_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -3081,7 +3081,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SternBrocotPaths",
     id: "stern_brocot_paths",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -3104,7 +3104,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "StirlingPermutations",
     id: "stirling_permutations",
-    carrier: "Word",
+    carrier: "Words",
     grades: [
       {
         name: "n",
@@ -3118,7 +3118,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SubexcedantSeqs",
     id: "subexcedant_seqs",
-    carrier: "SubexcedantSeq",
+    carrier: "SubexcedantSeqs",
     grades: [
       {
         name: "n",
@@ -3131,7 +3131,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Subsets",
     id: "subsets",
-    carrier: "Finset",
+    carrier: "Finsets",
     grades: [
       {
         name: "n",
@@ -3144,7 +3144,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SumsOfTwoSquares",
     id: "sums_of_two_squares",
-    carrier: "GaussianInteger",
+    carrier: "GaussianIntegers",
     grades: [
       {
         name: "n",
@@ -3166,7 +3166,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Surjections",
     id: "surjections",
-    carrier: "Surjection",
+    carrier: "Surjections",
     grades: [
       {
         name: "n",
@@ -3179,7 +3179,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SurjectionsOntoK",
     id: "surjections_onto_k",
-    carrier: "Surjection",
+    carrier: "Surjections",
     grades: [
       {
         name: "n",
@@ -3211,7 +3211,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SytHookShape",
     id: "syt_hook_shape",
-    carrier: "StandardTableau",
+    carrier: "StandardTableaux",
     grades: [
       {
         name: "size",
@@ -3224,7 +3224,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SytTwoColumn",
     id: "syt_two_column",
-    carrier: "StandardTableau",
+    carrier: "StandardTableaux",
     grades: [
       {
         name: "size",
@@ -3237,7 +3237,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "SytTwoRow",
     id: "syt_two_row",
-    carrier: "StandardTableau",
+    carrier: "StandardTableaux",
     grades: [
       {
         name: "size",
@@ -3250,7 +3250,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "TernaryGrayCodes",
     id: "ternary_gray_codes",
-    carrier: "TernaryGrayCode",
+    carrier: "TernaryGrayCodes",
     grades: [
       {
         name: "n",
@@ -3264,7 +3264,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "TetraCompositions",
     id: "tetra_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -3295,7 +3295,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "TotalPartitions",
     id: "total_partitions",
-    carrier: "TotalPartition",
+    carrier: "TotalPartitions",
     grades: [
       {
         name: "n",
@@ -3309,7 +3309,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Tournaments",
     id: "tournaments",
-    carrier: "Tournament",
+    carrier: "Tournaments",
     grades: [
       {
         name: "n",
@@ -3330,7 +3330,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "TriCompositions",
     id: "tri_compositions",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -3343,7 +3343,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "TriStrings",
     id: "tri_strings",
-    carrier: "BinaryWord",
+    carrier: "BinaryWords",
     grades: [
       {
         name: "n",
@@ -3356,7 +3356,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "TriangularComposition",
     id: "triangular_composition",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -3378,7 +3378,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "TriangularPartitions",
     id: "triangular_partitions",
-    carrier: "IntegerPartition",
+    carrier: "IntegerPartitions",
     grades: [
       {
         name: "n",
@@ -3409,7 +3409,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "UnlabeledFreeTrees",
     id: "unlabeled_free_trees",
-    carrier: "UnlabeledFreeTree",
+    carrier: "UnlabeledFreeTrees",
     grades: [
       {
         name: "n",
@@ -3432,7 +3432,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "VexillaryPermutations",
     id: "vexillary_permutations",
-    carrier: "Permutation",
+    carrier: "Permutations",
     grades: [
       {
         name: "size",
@@ -3445,7 +3445,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Weak3Compositions",
     id: "weak3_compositions",
-    carrier: "WeakComposition",
+    carrier: "WeakCompositions",
     grades: [
       {
         name: "n",
@@ -3458,7 +3458,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "WeakCompositionsIntoKParts",
     id: "weak_compositions_into_k_parts",
-    carrier: "WeakComposition",
+    carrier: "WeakCompositions",
     grades: [
       {
         name: "n",
@@ -3485,7 +3485,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "Words",
     id: "words",
-    carrier: "Word",
+    carrier: "Words",
     grades: [
       {
         name: "size",
@@ -3502,7 +3502,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   {
     name: "ZigzagComposition",
     id: "zigzag_composition",
-    carrier: "Composition",
+    carrier: "Compositions",
     grades: [
       {
         name: "n",
@@ -3516,27 +3516,27 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
 
 export const CARRIERS: readonly CatalogCarrier[] = [
   {
-    name: "AffinePermutation",
+    name: "AffinePermutations",
     id: "affine_permutation",
   },
   {
-    name: "AlternatingSignMatrix",
+    name: "AlternatingSignMatrices",
     id: "alternating_sign_matrix",
   },
   {
-    name: "Arrangement",
+    name: "Arrangements",
     id: "arrangement",
   },
   {
-    name: "AscentSequence",
+    name: "AscentSequences",
     id: "ascent_sequence",
   },
   {
-    name: "BinaryTree",
+    name: "BinaryTrees",
     id: "binary_tree",
   },
   {
-    name: "BinaryWord",
+    name: "BinaryWords",
     id: "binary_word",
   },
   {
@@ -3544,19 +3544,19 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     id: "cardinal",
   },
   {
-    name: "CollatzTrajectory",
+    name: "CollatzTrajectories",
     id: "collatz_trajectory",
   },
   {
-    name: "ColoredMotzkinPath",
+    name: "ColoredMotzkinPaths",
     id: "colored_motzkin_path",
   },
   {
-    name: "ColoredPermutation",
+    name: "ColoredPermutations",
     id: "colored_permutation",
   },
   {
-    name: "Composition",
+    name: "Compositions",
     id: "composition",
   },
   {
@@ -3564,87 +3564,87 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     id: "continued_fraction",
   },
   {
-    name: "CorePartition",
+    name: "CorePartitions",
     id: "core_partition",
   },
   {
-    name: "DecoratedPermutation",
+    name: "DecoratedPermutations",
     id: "decorated_permutation",
   },
   {
-    name: "DelannoyPath",
+    name: "DelannoyPaths",
     id: "delannoy_path",
   },
   {
-    name: "Dissection",
+    name: "Dissections",
     id: "dissection",
   },
   {
-    name: "DyckPath",
+    name: "DyckPaths",
     id: "dyck_path",
   },
   {
-    name: "EgyptianFraction",
+    name: "EgyptianFractions",
     id: "egyptian_fraction",
   },
   {
-    name: "Endofunction",
+    name: "Endofunctions",
     id: "endofunction",
   },
   {
-    name: "FactoradicNumeral",
+    name: "FactoradicNumerals",
     id: "factoradic_numeral",
   },
   {
-    name: "FiniteSetElement",
+    name: "FiniteSetElements",
     id: "finite_set_element",
   },
   {
-    name: "Finset",
+    name: "Finsets",
     id: "finset",
   },
   {
-    name: "FractionalNumber",
+    name: "FractionalNumbers",
     id: "fractional_number",
   },
   {
-    name: "GaussianFractional",
+    name: "GaussianFractionals",
     id: "gaussian_fractional",
   },
   {
-    name: "GaussianInteger",
+    name: "GaussianIntegers",
     id: "gaussian_integer",
   },
   {
-    name: "GaussianRational",
+    name: "GaussianRationals",
     id: "gaussian_rational",
   },
   {
-    name: "GelfandTsetlinPattern",
+    name: "GelfandTsetlinPatterns",
     id: "gelfand_tsetlin_pattern",
   },
   {
-    name: "GlyphKind",
+    name: "GlyphKinds",
     id: "glyph_kind",
   },
   {
-    name: "GoldbachPartition",
+    name: "GoldbachPartitions",
     id: "goldbach_partition",
   },
   {
-    name: "HyperbinaryWord",
+    name: "HyperbinaryWords",
     id: "hyperbinary_word",
   },
   {
-    name: "HypernumeraryWord",
+    name: "HypernumeraryWords",
     id: "hypernumerary_word",
   },
   {
-    name: "IncreasingBinaryTree",
+    name: "IncreasingBinaryTrees",
     id: "increasing_binary_tree",
   },
   {
-    name: "IntegerFactorization",
+    name: "IntegerFactorizations",
     id: "integer_factorization",
   },
   {
@@ -3652,55 +3652,55 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     id: "integer_number",
   },
   {
-    name: "IntegerPartition",
+    name: "IntegerPartitions",
     id: "integer_partition",
   },
   {
-    name: "KAryTree",
+    name: "KAryTrees",
     id: "k_ary_tree",
   },
   {
-    name: "KDyckPath",
+    name: "KDyckPaths",
     id: "k_dyck_path",
   },
   {
-    name: "KMotzkinPath",
+    name: "KMotzkinPaths",
     id: "k_motzkin_path",
   },
   {
-    name: "LabeledGraph",
+    name: "LabeledGraphs",
     id: "labeled_graph",
   },
   {
-    name: "LabeledTree",
+    name: "LabeledTrees",
     id: "labeled_tree",
   },
   {
-    name: "LukasiewiczPath",
+    name: "LukasiewiczPaths",
     id: "lukasiewicz_path",
   },
   {
-    name: "ModularResidue",
+    name: "ModularResidues",
     id: "modular_residue",
   },
   {
-    name: "MotzkinPath",
+    name: "MotzkinPaths",
     id: "motzkin_path",
   },
   {
-    name: "Multicomplex",
+    name: "Multicomplexes",
     id: "multicomplex",
   },
   {
-    name: "MultiplicativePartition",
+    name: "MultiplicativePartitions",
     id: "multiplicative_partition",
   },
   {
-    name: "Multiset",
+    name: "Multisets",
     id: "multiset",
   },
   {
-    name: "NonCrossingTree",
+    name: "NonCrossingTrees",
     id: "non_crossing_tree",
   },
   {
@@ -3712,23 +3712,23 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     id: "omega_ordinal",
   },
   {
-    name: "OrderedFactorization",
+    name: "OrderedFactorizations",
     id: "ordered_factorization",
   },
   {
-    name: "OrderedTree",
+    name: "OrderedTrees",
     id: "ordered_tree",
   },
   {
-    name: "ParkingFunction",
+    name: "ParkingFunctions",
     id: "parking_function",
   },
   {
-    name: "PerfectMatching",
+    name: "PerfectMatchings",
     id: "perfect_matching",
   },
   {
-    name: "Permutation",
+    name: "Permutations",
     id: "permutation",
   },
   {
@@ -3736,107 +3736,107 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     id: "permutation_cycles",
   },
   {
-    name: "PermutationInversion",
+    name: "PermutationInversions",
     id: "permutation_inversion",
   },
   {
-    name: "PhylogeneticTree",
+    name: "PhylogeneticTrees",
     id: "phylogenetic_tree",
   },
   {
-    name: "PlanePartition",
+    name: "PlanePartitions",
     id: "plane_partition",
   },
   {
-    name: "PlaneTree",
+    name: "PlaneTrees",
     id: "plane_tree",
   },
   {
-    name: "PythagoreanTriple",
+    name: "PythagoreanTriples",
     id: "pythagorean_triple",
   },
   {
-    name: "RationalDyckPath",
+    name: "RationalDyckPaths",
     id: "rational_dyck_path",
   },
   {
-    name: "RationalNumber",
+    name: "RationalNumbers",
     id: "rational_number",
   },
   {
-    name: "RookPlacement",
+    name: "RookPlacements",
     id: "rook_placement",
   },
   {
-    name: "RootedLabeledTree",
+    name: "RootedLabeledTrees",
     id: "rooted_labeled_tree",
   },
   {
-    name: "RootedUnlabeledTree",
+    name: "RootedUnlabeledTrees",
     id: "rooted_unlabeled_tree",
   },
   {
-    name: "SchroederPath",
+    name: "SchroederPaths",
     id: "schroeder_path",
   },
   {
-    name: "SemistandardTableau",
+    name: "SemistandardTableaux",
     id: "semistandard_tableau",
   },
   {
-    name: "SetComposition",
+    name: "SetCompositions",
     id: "set_composition",
   },
   {
-    name: "SetPartition",
+    name: "SetPartitions",
     id: "set_partition",
   },
   {
-    name: "SignedPermutation",
+    name: "SignedPermutations",
     id: "signed_permutation",
   },
   {
-    name: "SignedSetComposition",
+    name: "SignedSetCompositions",
     id: "signed_set_composition",
   },
   {
-    name: "SignedSubset",
+    name: "SignedSubsets",
     id: "signed_subset",
   },
   {
-    name: "Singleton",
+    name: "Singletons",
     id: "singleton",
   },
   {
-    name: "SkewPartition",
+    name: "SkewPartitions",
     id: "skew_partition",
   },
   {
-    name: "SkewTableau",
+    name: "SkewTableaux",
     id: "skew_tableau",
   },
   {
-    name: "SquareDecomposition",
+    name: "SquareDecompositions",
     id: "square_decomposition",
   },
   {
-    name: "StandardTableau",
+    name: "StandardTableaux",
     id: "standard_tableau",
   },
   {
-    name: "StandardTableauPair",
+    name: "StandardTableauPairs",
     id: "standard_tableau_pair",
   },
   {
-    name: "SubexcedantSeq",
+    name: "SubexcedantSeqs",
     id: "subexcedant_seq",
   },
   {
-    name: "Surjection",
+    name: "Surjections",
     id: "surjection",
   },
   {
-    name: "TernaryGrayCode",
+    name: "TernaryGrayCodes",
     id: "ternary_gray_code",
   },
   {
@@ -3844,23 +3844,23 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     id: "text",
   },
   {
-    name: "TotalPartition",
+    name: "TotalPartitions",
     id: "total_partition",
   },
   {
-    name: "Tournament",
+    name: "Tournaments",
     id: "tournament",
   },
   {
-    name: "UnlabeledFreeTree",
+    name: "UnlabeledFreeTrees",
     id: "unlabeled_free_tree",
   },
   {
-    name: "WeakComposition",
+    name: "WeakCompositions",
     id: "weak_composition",
   },
   {
-    name: "Word",
+    name: "Words",
     id: "word",
   },
 ];
@@ -3868,47 +3868,47 @@ export const CARRIERS: readonly CatalogCarrier[] = [
 export const STATS: readonly CatalogOverload[] = [
   {
     name: "Abundance",
-    on: ["IntegerFactorization"],
+    on: ["IntegerFactorizations"],
     title: "σ(n) − 2n — perfect = 0, abundant > 0, deficient < 0",
   },
   {
     name: "AdditiveEnergy",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Additive energy E⁺(A) = #{a+b=c+d}",
   },
   {
     name: "AliquotSum",
-    on: ["IntegerFactorization"],
+    on: ["IntegerFactorizations"],
     title: "s(n) = σ(n) − n — the aliquot sum",
   },
   {
     name: "AntiLoops",
-    on: ["DecoratedPermutation"],
+    on: ["DecoratedPermutations"],
     title: "Anti-loops",
   },
   {
     name: "Area",
-    on: ["DelannoyPath", "DyckPath", "MotzkinPath", "PythagoreanTriple"],
+    on: ["DelannoyPaths", "DyckPaths", "MotzkinPaths", "PythagoreanTriples"],
     title: "Area (signed)",
   },
   {
     name: "ArmOfFirstCell",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Arm of the first cell",
   },
   {
     name: "Ascents",
-    on: ["Arrangement", "AscentSequence", "Composition", "Permutation", "Word"],
+    on: ["Arrangements", "AscentSequences", "Compositions", "Permutations", "Words"],
     title: "Ascents",
   },
   {
     name: "Balance",
-    on: ["BinaryTree"],
+    on: ["BinaryTrees"],
     title: "Root balance",
   },
   {
     name: "BigOmega",
-    on: ["IntegerFactorization", "Numeric"],
+    on: ["IntegerFactorizations", "Numeric"],
     title: "Ω — prime factors with multiplicity",
   },
   {
@@ -3918,37 +3918,37 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Blocks",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Number of blocks (wired groups)",
   },
   {
     name: "BlocksAtLeast2",
-    on: ["SetComposition"],
+    on: ["SetCompositions"],
     title: "Number of blocks of size ≥ 2",
   },
   {
     name: "BlocksAtLeastTwo",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Number of blocks of size at least two",
   },
   {
     name: "BlockSizeSpan",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Spread between the largest and smallest block",
   },
   {
     name: "BlocksSizeTwo",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Number of blocks of size two",
   },
   {
     name: "Bounce",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Bounce",
   },
   {
     name: "Cardinality",
-    on: ["BinaryWord", "Finset"],
+    on: ["BinaryWords", "Finsets"],
     title: "Cardinality",
   },
   {
@@ -3958,7 +3958,7 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Coarea",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Area of the reverse-complement image",
   },
   {
@@ -3968,27 +3968,27 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "ColorSum",
-    on: ["ColoredMotzkinPath", "ColoredPermutation"],
+    on: ["ColoredMotzkinPaths", "ColoredPermutations"],
     title: "Sum of level-step colors",
   },
   {
     name: "Columns",
-    on: ["SemistandardTableau", "StandardTableau"],
+    on: ["SemistandardTableaux", "StandardTableaux"],
     title: "Number of columns",
   },
   {
     name: "Components",
-    on: ["Endofunction"],
+    on: ["Endofunctions"],
     title: "Components",
   },
   {
     name: "ConjugateDistinctParts",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Distinct parts of the conjugate",
   },
   {
     name: "ConjugateOddParts",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Odd parts of the conjugate",
   },
   {
@@ -3998,68 +3998,68 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Corners",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Number of removable cells (corners)",
   },
   {
     name: "Crank",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Andrews-Garvan crank",
   },
   {
     name: "CrossingNestingTotal",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Total crossing+nesting arc pairs",
   },
   {
     name: "Crossings",
-    on: ["PerfectMatching", "SetPartition"],
+    on: ["PerfectMatchings", "SetPartitions"],
     title: "Number of crossings",
   },
   {
     name: "Cycles",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Number of cycles",
   },
   {
     name: "CyclicDescents",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Cyclic descents",
   },
   {
     name: "CyclicPoints",
-    on: ["Endofunction"],
+    on: ["Endofunctions"],
     title: "Cyclic points",
   },
   {
     name: "Denert",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Denert's statistic (St000156)",
   },
   {
     name: "Denominator",
-    on: ["BinaryWord", "RationalNumber"],
+    on: ["BinaryWords", "RationalNumbers"],
     title: "Denominator",
   },
   {
     name: "Depth",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Depth (St000029)",
   },
   {
     name: "Descents",
     on: [
-      "Arrangement",
-      "BinaryWord",
-      "Composition",
-      "DecoratedPermutation",
-      "ParkingFunction",
-      "Permutation",
-      "SetComposition",
-      "SignedPermutation",
-      "StandardTableau",
-      "Surjection",
-      "Word",
+      "Arrangements",
+      "BinaryWords",
+      "Compositions",
+      "DecoratedPermutations",
+      "ParkingFunctions",
+      "Permutations",
+      "SetCompositions",
+      "SignedPermutations",
+      "StandardTableaux",
+      "Surjections",
+      "Words",
     ],
     title: "Descents",
   },
@@ -4070,12 +4070,12 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Diagonals",
-    on: ["Dissection"],
+    on: ["Dissections"],
     title: "Number of diagonals",
   },
   {
     name: "DiagonalSteps",
-    on: ["DelannoyPath"],
+    on: ["DelannoyPaths"],
     title: "Number of diagonal steps",
   },
   {
@@ -4090,162 +4090,162 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Dimension",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Face dimension (|S|−1)",
   },
   {
     name: "Dinv",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Dinv",
   },
   {
     name: "Displacement",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Total displacement",
   },
   {
     name: "DistinctCycleLengths",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Number of distinct cycle lengths",
   },
   {
     name: "DistinctElements",
-    on: ["Multiset"],
+    on: ["Multisets"],
     title: "Distinct elements",
   },
   {
     name: "DistinctEntries",
-    on: ["GelfandTsetlinPattern", "SemistandardTableau"],
+    on: ["GelfandTsetlinPatterns", "SemistandardTableaux"],
     title: "Number of distinct entries",
   },
   {
     name: "DistinctLetters",
-    on: ["Word"],
+    on: ["Words"],
     title: "Number of distinct letters",
   },
   {
     name: "DistinctNonzeroValues",
-    on: ["AscentSequence"],
+    on: ["AscentSequences"],
     title: "Number of distinct nonzero values",
   },
   {
     name: "DistinctParts",
-    on: ["CorePartition", "IntegerPartition"],
+    on: ["CorePartitions", "IntegerPartitions"],
     title: "Number of distinct parts",
   },
   {
     name: "DistinctPreferences",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Distinct preferences",
   },
   {
     name: "DistinctValues",
-    on: ["AscentSequence"],
+    on: ["AscentSequences"],
     title: "Number of distinct values",
   },
   {
     name: "DivisorCount",
-    on: ["IntegerFactorization", "Numeric"],
+    on: ["IntegerFactorizations", "Numeric"],
     title: "τ = σ₀ — number of divisors",
   },
   {
     name: "DivisorSum",
-    on: ["IntegerFactorization", "Numeric"],
+    on: ["IntegerFactorizations", "Numeric"],
     title: "σ = σ₁ — sum of divisors",
   },
   {
     name: "DoubleRises",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Number of double rises",
   },
   {
     name: "DurfeeSquare",
-    on: ["CorePartition", "IntegerPartition"],
+    on: ["CorePartitions", "IntegerPartitions"],
     title: "Durfee square size",
   },
   {
     name: "DysonRank",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Dyson rank",
   },
   {
     name: "EastSteps",
-    on: ["DelannoyPath"],
+    on: ["DelannoyPaths"],
     title: "Number of east steps",
   },
   {
     name: "EntrySum",
-    on: ["SemistandardTableau"],
+    on: ["SemistandardTableaux"],
     title: "Sum of entries",
   },
   {
     name: "EvenDepthNodes",
-    on: ["OrderedTree"],
+    on: ["OrderedTrees"],
     title: "Nodes at even depth",
   },
   {
     name: "EvenElements",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Number of even elements",
   },
   {
     name: "EvenParts",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Number of even parts",
   },
   {
     name: "Excedances",
-    on: ["DecoratedPermutation", "Permutation"],
+    on: ["DecoratedPermutations", "Permutations"],
     title: "Excedances",
   },
   {
     name: "FaceDim",
-    on: ["Dissection", "SetComposition", "SignedSubset"],
+    on: ["Dissections", "SetCompositions", "SignedSubsets"],
     title: "Associahedron face dimension",
   },
   {
     name: "Factors",
-    on: ["MultiplicativePartition", "OrderedFactorization"],
+    on: ["MultiplicativePartitions", "OrderedFactorizations"],
     title: "Number of factors",
   },
   {
     name: "FirstBlockSize",
-    on: ["SetComposition"],
+    on: ["SetCompositions"],
     title: "First block size",
   },
   {
     name: "FirstDescent",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "First descent position",
   },
   {
     name: "FixedPoints",
-    on: ["DecoratedPermutation", "Endofunction", "Permutation", "SignedPermutation"],
+    on: ["DecoratedPermutations", "Endofunctions", "Permutations", "SignedPermutations"],
     title: "Fixed points",
   },
   {
     name: "FlatSteps",
-    on: ["SchroederPath"],
+    on: ["SchroederPaths"],
     title: "Flat steps",
   },
   {
     name: "FlatStepsAtZero",
-    on: ["ColoredMotzkinPath", "MotzkinPath"],
+    on: ["ColoredMotzkinPaths", "MotzkinPaths"],
     title: "Flat steps at height 0",
   },
   {
     name: "FlipPosition",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Flip position",
   },
   {
     name: "Gap",
-    on: ["GoldbachPartition"],
+    on: ["GoldbachPartitions"],
     title: "Gap between the two primes (q−p)",
   },
   {
     name: "Gaps",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Number of gaps",
   },
   {
@@ -4256,112 +4256,112 @@ export const STATS: readonly CatalogOverload[] = [
   {
     name: "Height",
     on: [
-      "BinaryTree",
-      "ColoredMotzkinPath",
-      "DelannoyPath",
-      "DyckPath",
-      "KDyckPath",
-      "KMotzkinPath",
-      "MotzkinPath",
-      "OrderedTree",
-      "PlaneTree",
-      "SchroederPath",
+      "BinaryTrees",
+      "ColoredMotzkinPaths",
+      "DelannoyPaths",
+      "DyckPaths",
+      "KDyckPaths",
+      "KMotzkinPaths",
+      "MotzkinPaths",
+      "OrderedTrees",
+      "PlaneTrees",
+      "SchroederPaths",
     ],
     title: "Height",
   },
   {
     name: "Hills",
-    on: ["DyckPath", "SchroederPath"],
+    on: ["DyckPaths", "SchroederPaths"],
     title: "Number of hills",
   },
   {
     name: "HookProduct",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Product of hook lengths",
   },
   {
     name: "Humps",
-    on: ["MotzkinPath"],
+    on: ["MotzkinPaths"],
     title: "Number of humps",
   },
   {
     name: "ImageSize",
-    on: ["Endofunction", "Surjection"],
+    on: ["Endofunctions", "Surjections"],
     title: "Image size",
   },
   {
     name: "ImaginaryPart",
-    on: ["GaussianInteger"],
+    on: ["GaussianIntegers"],
     title: "Imaginary part",
   },
   {
     name: "InitialRise",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Initial rise",
   },
   {
     name: "InnerSize",
-    on: ["SkewPartition"],
+    on: ["SkewPartitions"],
     title: "Size of the inner shape",
   },
   {
     name: "InteriorReturns",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Returns to the axis beyond the mandatory final one",
   },
   {
     name: "InternalNodes",
-    on: ["OrderedTree"],
+    on: ["OrderedTrees"],
     title: "Number of internal nodes",
   },
   {
     name: "InternalVertices",
-    on: ["LabeledTree"],
+    on: ["LabeledTrees"],
     title: "Number of internal (non-leaf) vertices",
   },
   {
     name: "Inversions",
-    on: ["Arrangement", "Permutation", "PermutationCycles", "PermutationInversion", "SignedPermutation"],
+    on: ["Arrangements", "Permutations", "PermutationCycles", "PermutationInversions", "SignedPermutations"],
     title: "Inversions",
   },
   {
     name: "IsPrimitive",
-    on: ["PythagoreanTriple"],
+    on: ["PythagoreanTriples"],
     title: "Is primitive (gcd(a,b)=1)",
   },
   {
     name: "IsSelfConjugate",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Is self-conjugate (0/1)",
   },
   {
     name: "LargestBlock",
-    on: ["SetComposition", "SetPartition"],
+    on: ["SetCompositions", "SetPartitions"],
     title: "Largest block",
   },
   {
     name: "LargestCycleLength",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Length of the largest cycle",
   },
   {
     name: "LargestDenominator",
-    on: ["EgyptianFraction"],
+    on: ["EgyptianFractions"],
     title: "Largest denominator",
   },
   {
     name: "LargestFactor",
-    on: ["MultiplicativePartition", "OrderedFactorization"],
+    on: ["MultiplicativePartitions", "OrderedFactorizations"],
     title: "Largest factor",
   },
   {
     name: "LargestFiber",
-    on: ["Surjection"],
+    on: ["Surjections"],
     title: "Largest fiber",
   },
   {
     name: "LargestPart",
-    on: ["Composition", "CorePartition", "IntegerPartition", "PlanePartition", "WeakComposition"],
+    on: ["Compositions", "CorePartitions", "IntegerPartitions", "PlanePartitions", "WeakCompositions"],
     title: "Largest part",
   },
   {
@@ -4371,407 +4371,407 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "LargestRow",
-    on: ["SkewPartition"],
+    on: ["SkewPartitions"],
     title: "Largest number of cells in a row",
   },
   {
     name: "LargestRunLength",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Length of the longest maximal ascending run",
   },
   {
     name: "LastBlockSize",
-    on: ["SetComposition", "SetPartition"],
+    on: ["SetCompositions", "SetPartitions"],
     title: "Last block size",
   },
   {
     name: "LastDescent",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Last descent position",
   },
   {
     name: "LastEntry",
-    on: ["AscentSequence"],
+    on: ["AscentSequences"],
     title: "Last entry",
   },
   {
     name: "LeadingZeros",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Leading zeros",
   },
   {
     name: "Leaves",
-    on: ["BinaryTree", "LabeledTree", "OrderedTree", "PlaneTree"],
+    on: ["BinaryTrees", "LabeledTrees", "OrderedTrees", "PlaneTrees"],
     title: "Number of leaves",
   },
   {
     name: "LeftmostPath",
-    on: ["OrderedTree"],
+    on: ["OrderedTrees"],
     title: "Leftmost path length",
   },
   {
     name: "LeftSpine",
-    on: ["BinaryTree"],
+    on: ["BinaryTrees"],
     title: "Left spine length",
   },
   {
     name: "LeftToRightMaxima",
-    on: ["Arrangement", "Permutation"],
+    on: ["Arrangements", "Permutations"],
     title: "Left-to-right maxima",
   },
   {
     name: "LeftToRightMinima",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Left-to-right minima",
   },
   {
     name: "LegOfFirstCell",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Leg of the first cell",
   },
   {
     name: "Length",
-    on: ["ContinuedFraction", "IntegerPartition", "LabeledTree"],
+    on: ["ContinuedFraction", "IntegerPartitions", "LabeledTrees"],
     title: "Length (number of partial quotients)",
   },
   {
     name: "LevelSteps",
-    on: ["ColoredMotzkinPath", "KMotzkinPath", "MotzkinPath"],
+    on: ["ColoredMotzkinPaths", "KMotzkinPaths", "MotzkinPaths"],
     title: "Number of level steps",
   },
   {
     name: "LittleOmega",
-    on: ["IntegerFactorization", "Numeric"],
+    on: ["IntegerFactorizations", "Numeric"],
     title: "ω — distinct prime factors",
   },
   {
     name: "LongerLeg",
-    on: ["PythagoreanTriple"],
+    on: ["PythagoreanTriples"],
     title: "Longer leg",
   },
   {
     name: "LongestAscent",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Longest ascent",
   },
   {
     name: "LongestCycleLength",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Length of the longest cycle",
   },
   {
     name: "LongestDecreasingSubsequence",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Longest decreasing subsequence length",
   },
   {
     name: "LongestDescent",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Longest descent",
   },
   {
     name: "LongestFlatRun",
-    on: ["MotzkinPath"],
+    on: ["MotzkinPaths"],
     title: "Longest flat run",
   },
   {
     name: "LongestIncreasingSubsequence",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Longest increasing subsequence length",
   },
   {
     name: "LongestRun",
-    on: ["Permutation", "Word"],
+    on: ["Permutations", "Words"],
     title: "Length of the longest ascending run",
   },
   {
     name: "LongestRunOfOnes",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Longest run of ones",
   },
   {
     name: "Loops",
-    on: ["DecoratedPermutation"],
+    on: ["DecoratedPermutations"],
     title: "Loops",
   },
   {
     name: "LuckyCars",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Number of lucky cars",
   },
   {
     name: "MajorIndex",
-    on: ["DyckPath", "Permutation", "StandardTableau"],
+    on: ["DyckPaths", "Permutations", "StandardTableaux"],
     title: "Major index",
   },
   {
     name: "MaxColumn",
-    on: ["RookPlacement"],
+    on: ["RookPlacements"],
     title: "Maximum column",
   },
   {
     name: "MaxDegree",
-    on: ["LabeledTree", "OrderedTree"],
+    on: ["LabeledTrees", "OrderedTrees"],
     title: "Maximum vertex degree",
   },
   {
     name: "MaxElement",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Largest element",
   },
   {
     name: "MaxEntry",
-    on: ["AscentSequence", "SemistandardTableau"],
+    on: ["AscentSequences", "SemistandardTableaux"],
     title: "Maximum entry",
   },
   {
     name: "MaximumDegree",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "Maximum degree",
   },
   {
     name: "MaxLetter",
-    on: ["Word"],
+    on: ["Words"],
     title: "Largest letter",
   },
   {
     name: "MaxMultiplicity",
-    on: ["Multiset"],
+    on: ["Multisets"],
     title: "Maximum multiplicity",
   },
   {
     name: "MaxPreference",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Max preference",
   },
   {
     name: "MaxPreimage",
-    on: ["Endofunction"],
+    on: ["Endofunctions"],
     title: "Max preimage size",
   },
   {
     name: "MaxValue",
-    on: ["Arrangement"],
+    on: ["Arrangements"],
     title: "Largest value used",
   },
   {
     name: "MinElement",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Smallest element",
   },
   {
     name: "MinGap",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Minimum gap",
   },
   {
     name: "MinimumDegree",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "Minimum degree",
   },
   {
     name: "MinValue",
-    on: ["Arrangement"],
+    on: ["Arrangements"],
     title: "Smallest value used",
   },
   {
     name: "MultiplicativeEnergy",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Multiplicative energy E×(A) = #{a·b=c·d}",
   },
   {
     name: "MultiplicityOfLargestPart",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Multiplicity of the largest part",
   },
   {
     name: "NegativeBlocksCount",
-    on: ["SignedSetComposition"],
+    on: ["SignedSetCompositions"],
     title: "Number of negative blocks",
   },
   {
     name: "NegativeFixedPoints",
-    on: ["SignedPermutation"],
+    on: ["SignedPermutations"],
     title: "Number of negative fixed points",
   },
   {
     name: "NegativeOnes",
-    on: ["AlternatingSignMatrix"],
+    on: ["AlternatingSignMatrices"],
     title: "Number of -1s",
   },
   {
     name: "NegativesCount",
-    on: ["SignedPermutation"],
+    on: ["SignedPermutations"],
     title: "Number of negatives",
   },
   {
     name: "Nestings",
-    on: ["PerfectMatching", "SetPartition"],
+    on: ["PerfectMatchings", "SetPartitions"],
     title: "Number of nestings",
   },
   {
     name: "NoLeftChild",
-    on: ["BinaryTree"],
+    on: ["BinaryTrees"],
     title: "Nodes with no left child",
   },
   {
     name: "NonzeroDigits",
-    on: ["TernaryGrayCode"],
+    on: ["TernaryGrayCodes"],
     title: "Nonzero digits",
   },
   {
     name: "NonzeroEntries",
-    on: ["PermutationInversion"],
+    on: ["PermutationInversions"],
     title: "Nonzero entries",
   },
   {
     name: "Nonzeros",
-    on: ["AlternatingSignMatrix"],
+    on: ["AlternatingSignMatrices"],
     title: "Number of nonzero entries",
   },
   {
     name: "NoRightChild",
-    on: ["BinaryTree"],
+    on: ["BinaryTrees"],
     title: "Nodes with no right child",
   },
   {
     name: "Norm",
-    on: ["GaussianInteger", "Multicomplex"],
+    on: ["GaussianIntegers", "Multicomplexes"],
     title: "Norm (a²+b²)",
   },
   {
     name: "NumberOfBlocks",
-    on: ["SetComposition"],
+    on: ["SetCompositions"],
     title: "Number of blocks",
   },
   {
     name: "NumberOfComponents",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "Number of connected components",
   },
   {
     name: "NumberOfCyclesOfLength2",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Number of 2-cycles",
   },
   {
     name: "NumberOfCyclesOfLength3",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Number of 3-cycles",
   },
   {
     name: "NumberOfEdges",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "Number of edges",
   },
   {
     name: "NumberOfIsolatedVertices",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "Number of isolated vertices",
   },
   {
     name: "NumberOfOccurrencesOf213",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Number of occurrences of the vincular pattern 21-3",
   },
   {
     name: "NumberOfOnes",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Number of ones",
   },
   {
     name: "NumberOfParts",
-    on: ["CorePartition"],
+    on: ["CorePartitions"],
     title: "Number of parts",
   },
   {
     name: "NumberOfRuns",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Number of runs",
   },
   {
     name: "NumberOfSingletons",
-    on: ["SetComposition"],
+    on: ["SetCompositions"],
     title: "Number of singleton blocks",
   },
   {
     name: "NumberOfStandardTableaux",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Number of standard tableaux (f^λ)",
   },
   {
     name: "NumberOfTouchPoints",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "Number of touch points",
   },
   {
     name: "NumberOfTriangles",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "Number of triangles",
   },
   {
     name: "NumColumns",
-    on: ["PlanePartition", "SkewPartition"],
+    on: ["PlanePartitions", "SkewPartitions"],
     title: "Number of columns",
   },
   {
     name: "Numerator",
-    on: ["BinaryWord", "RationalNumber"],
+    on: ["BinaryWords", "RationalNumbers"],
     title: "Numerator",
   },
   {
     name: "NumParts",
-    on: ["PlanePartition"],
+    on: ["PlanePartitions"],
     title: "Number of parts",
   },
   {
     name: "NumRows",
-    on: ["PlanePartition", "SkewPartition"],
+    on: ["PlanePartitions", "SkewPartitions"],
     title: "Number of rows",
   },
   {
     name: "OccurrencesOf123",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Number of occurrences of the pattern 123",
   },
   {
     name: "OccurrencesOf132",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Number of occurrences of the pattern 132",
   },
   {
     name: "OddDepthNodes",
-    on: ["OrderedTree"],
+    on: ["OrderedTrees"],
     title: "Nodes at odd depth",
   },
   {
     name: "OddElements",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Number of odd elements",
   },
   {
     name: "OddParts",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Number of odd parts",
   },
   {
     name: "Ones",
-    on: ["HyperbinaryWord"],
+    on: ["HyperbinaryWords"],
     title: "Ones",
   },
   {
     name: "OrbitSize",
-    on: ["Word"],
+    on: ["Words"],
     title: "Period-block repetition count (n / period)",
   },
   {
     name: "Order",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Order (lcm of cycle lengths)",
   },
   {
     name: "OuterSize",
-    on: ["SkewPartition"],
+    on: ["SkewPartitions"],
     title: "Size of the outer shape",
   },
   {
@@ -4781,76 +4781,76 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "PartsAtLeastTwo",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Number of parts of size at least two",
   },
   {
     name: "PartsCount",
-    on: ["Composition"],
+    on: ["Compositions"],
     title: "Number of parts",
   },
   {
     name: "PartsEqualOne",
-    on: ["Composition", "IntegerPartition"],
+    on: ["Compositions", "IntegerPartitions"],
     title: "Number of parts equal to 1",
   },
   {
     name: "Peak",
-    on: ["CollatzTrajectory"],
+    on: ["CollatzTrajectories"],
     title: "Peak value reached",
   },
   {
     name: "Peaks",
     on: [
-      "ColoredMotzkinPath",
-      "DelannoyPath",
-      "DyckPath",
-      "KDyckPath",
-      "KMotzkinPath",
-      "MotzkinPath",
-      "Permutation",
-      "SchroederPath",
+      "ColoredMotzkinPaths",
+      "DelannoyPaths",
+      "DyckPaths",
+      "KDyckPaths",
+      "KMotzkinPaths",
+      "MotzkinPaths",
+      "Permutations",
+      "SchroederPaths",
     ],
     title: "Number of peaks",
   },
   {
     name: "Perimeter",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Perimeter of the Young diagram",
   },
   {
     name: "Period",
-    on: ["Word"],
+    on: ["Words"],
     title: "Rotation period (= the rotation orbit size)",
   },
   {
     name: "PreferenceSum",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Sum of preferences",
   },
   {
     name: "PrefersFirst",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Cars preferring the first spot",
   },
   {
     name: "Rank",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Rank (cardinality) in the lattice",
   },
   {
     name: "RealPart",
-    on: ["GaussianInteger"],
+    on: ["GaussianIntegers"],
     title: "Real part",
   },
   {
     name: "ReflectionLength",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Reflection length",
   },
   {
     name: "Repeats",
-    on: ["AscentSequence"],
+    on: ["AscentSequences"],
     title: "Repeats",
   },
   {
@@ -4860,137 +4860,137 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Returns",
-    on: ["ColoredMotzkinPath", "DelannoyPath", "DyckPath", "KDyckPath", "MotzkinPath"],
+    on: ["ColoredMotzkinPaths", "DelannoyPaths", "DyckPaths", "KDyckPaths", "MotzkinPaths"],
     title: "Number of returns",
   },
   {
     name: "RightmostPath",
-    on: ["OrderedTree"],
+    on: ["OrderedTrees"],
     title: "Rightmost path length",
   },
   {
     name: "RightSpine",
-    on: ["BinaryTree"],
+    on: ["BinaryTrees"],
     title: "Right spine length",
   },
   {
     name: "RightToLeftMaxima",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Right-to-left maxima",
   },
   {
     name: "RightToLeftMinima",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Right-to-left minima",
   },
   {
     name: "Rooks",
-    on: ["RookPlacement"],
+    on: ["RookPlacements"],
     title: "Rooks",
   },
   {
     name: "RootDegree",
-    on: ["OrderedTree", "PlaneTree"],
+    on: ["OrderedTrees", "PlaneTrees"],
     title: "Root degree",
   },
   {
     name: "Rows",
-    on: ["SemistandardTableau", "StandardTableau"],
+    on: ["SemistandardTableaux", "StandardTableaux"],
     title: "Number of rows",
   },
   {
     name: "Runs",
-    on: ["BinaryWord", "Permutation"],
+    on: ["BinaryWords", "Permutations"],
     title: "Number of runs",
   },
   {
     name: "ShapeLength",
-    on: ["StandardTableauPair"],
+    on: ["StandardTableauPairs"],
     title: "Shape length",
   },
   {
     name: "ShorterLeg",
-    on: ["PythagoreanTriple"],
+    on: ["PythagoreanTriples"],
     title: "Shorter leg",
   },
   {
     name: "ShortPairs",
-    on: ["PerfectMatching"],
+    on: ["PerfectMatchings"],
     title: "Number of short pairs",
   },
   {
     name: "Sign",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Sign (parity: 0 even, 1 odd)",
   },
   {
     name: "SingletonBlocks",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Number of singleton blocks",
   },
   {
     name: "Size",
-    on: ["CorePartition"],
+    on: ["CorePartitions"],
     title: "Size",
   },
   {
     name: "SmallestBlock",
-    on: ["SetComposition", "SetPartition"],
+    on: ["SetCompositions", "SetPartitions"],
     title: "Smallest block",
   },
   {
     name: "SmallestDenominator",
-    on: ["EgyptianFraction"],
+    on: ["EgyptianFractions"],
     title: "Smallest denominator",
   },
   {
     name: "SmallestFiber",
-    on: ["Surjection"],
+    on: ["Surjections"],
     title: "Smallest fiber",
   },
   {
     name: "SmallestPart",
-    on: ["Composition"],
+    on: ["Compositions"],
     title: "Smallest part",
   },
   {
     name: "Span",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Span",
   },
   {
     name: "SqrtCount",
-    on: ["ModularResidue"],
+    on: ["ModularResidues"],
     title: "Number of square roots",
   },
   {
     name: "SquareFreeKernel",
-    on: ["SquareDecomposition"],
+    on: ["SquareDecompositions"],
     title: "q — the square-free kernel in n = s²·q",
   },
   {
     name: "SquareRoot",
-    on: ["SquareDecomposition"],
+    on: ["SquareDecompositions"],
     title: "s — the root of the square part in n = s²·q",
   },
   {
     name: "StackSortable",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Stack-sortable (0/1)",
   },
   {
     name: "StoppingTime",
-    on: ["CollatzTrajectory"],
+    on: ["CollatzTrajectories"],
     title: "Stopping time (steps to reach 1)",
   },
   {
     name: "Sum",
-    on: ["Finset", "PermutationInversion", "SubexcedantSeq"],
+    on: ["Finsets", "PermutationInversions", "SubexcedantSeqs"],
     title: "Sum (inversions)",
   },
   {
     name: "SumOfHookLengths",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Sum of hook lengths",
   },
   {
@@ -5000,7 +5000,7 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Ties",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Ties (repeated preferences)",
   },
   {
@@ -5010,17 +5010,17 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "TopRowSum",
-    on: ["GelfandTsetlinPattern"],
+    on: ["GelfandTsetlinPatterns"],
     title: "Top-row sum",
   },
   {
     name: "Trace",
-    on: ["PlanePartition"],
+    on: ["PlanePartitions"],
     title: "Trace",
   },
   {
     name: "TrailingZeros",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Trailing zeros",
   },
   {
@@ -5030,62 +5030,62 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "TransientPoints",
-    on: ["Endofunction"],
+    on: ["Endofunctions"],
     title: "Transient points",
   },
   {
     name: "Transitions",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Transitions",
   },
   {
     name: "Translation",
-    on: ["AffinePermutation"],
+    on: ["AffinePermutations"],
     title: "Translation norm (tile distance)",
   },
   {
     name: "Turns",
-    on: ["DelannoyPath"],
+    on: ["DelannoyPaths"],
     title: "Number of turns",
   },
   {
     name: "Twos",
-    on: ["HyperbinaryWord"],
+    on: ["HyperbinaryWords"],
     title: "Twos",
   },
   {
     name: "UnaryNodes",
-    on: ["OrderedTree"],
+    on: ["OrderedTrees"],
     title: "Number of unary nodes",
   },
   {
     name: "UpSteps",
-    on: ["ColoredMotzkinPath", "MotzkinPath"],
+    on: ["ColoredMotzkinPaths", "MotzkinPaths"],
     title: "Number of up steps",
   },
   {
     name: "Valleys",
-    on: ["DyckPath", "Permutation"],
+    on: ["DyckPaths", "Permutations"],
     title: "Number of valleys",
   },
   {
     name: "Value",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Value",
   },
   {
     name: "WeakExceedances",
-    on: ["DecoratedPermutation", "Permutation"],
+    on: ["DecoratedPermutations", "Permutations"],
     title: "Weak exceedances",
   },
   {
     name: "Weight",
-    on: ["BinaryWord", "TernaryGrayCode"],
+    on: ["BinaryWords", "TernaryGrayCodes"],
     title: "Weight",
   },
   {
     name: "WidestArc",
-    on: ["PerfectMatching"],
+    on: ["PerfectMatchings"],
     title: "Widest arc",
   },
   {
@@ -5095,17 +5095,17 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "ZeroEntries",
-    on: ["SubexcedantSeq"],
+    on: ["SubexcedantSeqs"],
     title: "Zero entries",
   },
   {
     name: "ZeroParts",
-    on: ["WeakComposition"],
+    on: ["WeakCompositions"],
     title: "Zero parts",
   },
   {
     name: "Zeros",
-    on: ["AscentSequence"],
+    on: ["AscentSequences"],
     title: "Number of zeros",
   },
 ];
@@ -5113,17 +5113,17 @@ export const STATS: readonly CatalogOverload[] = [
 export const MAPS: readonly CatalogOverload[] = [
   {
     name: "BetaSet",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Beta-set (first-column hook lengths)",
   },
   {
     name: "BinarySearchTree",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Binary search tree (sylvester / permutohedron ↠ associahedron)",
   },
   {
     name: "BlockSizes",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Block sizes",
   },
   {
@@ -5133,12 +5133,12 @@ export const MAPS: readonly CatalogOverload[] = [
   },
   {
     name: "CanonicalDihedral",
-    on: ["Word"],
+    on: ["Words"],
     title: "Canonical rotation+reflection (bracelet representative)",
   },
   {
     name: "CanonicalRotation",
-    on: ["Finset", "Word"],
+    on: ["Finsets", "Words"],
     title: "Canonical rotation (as a binary necklace)",
   },
   {
@@ -5148,177 +5148,177 @@ export const MAPS: readonly CatalogOverload[] = [
   },
   {
     name: "Complement",
-    on: ["BinaryWord", "Composition", "Permutation"],
+    on: ["BinaryWords", "Compositions", "Permutations"],
     title: "Complement",
   },
   {
     name: "ConjugacyClassRepresentative",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Conjugacy class representative",
   },
   {
     name: "Conjugate",
-    on: ["Composition", "CorePartition", "IntegerPartition"],
+    on: ["Compositions", "CorePartitions", "IntegerPartitions"],
     title: "Conjugate",
   },
   {
     name: "ConjugateAfterCycleType",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Conjugate of the cycle type",
   },
   {
     name: "Content",
-    on: ["ParkingFunction"],
+    on: ["ParkingFunctions"],
     title: "Preference content",
   },
   {
     name: "CyclePartition",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Cycle partition",
   },
   {
     name: "CycleType",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Cycle type",
   },
   {
     name: "CyclicShift",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Cyclic value shift (rotation)",
   },
   {
     name: "DegreeSequence",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "Degree sequence (isolated vertices dropped)",
   },
   {
     name: "Demotion",
-    on: ["StandardTableau"],
+    on: ["StandardTableaux"],
     title: "Demotion (inverse promotion)",
   },
   {
     name: "DescentComposition",
-    on: ["Permutation", "StandardTableau"],
+    on: ["Permutations", "StandardTableaux"],
     title: "Descent composition",
   },
   {
     name: "DescentSet",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Descent set",
   },
   {
     name: "Dissection",
-    on: ["Dissection"],
+    on: ["Dissections"],
     title: "Dissection",
   },
   {
     name: "Dyck",
-    on: ["PlaneTree"],
+    on: ["PlaneTrees"],
     title: "The DFS Dyck word of the tree",
   },
   {
     name: "Evacuation",
-    on: ["StandardTableau"],
+    on: ["StandardTableaux"],
     title: "Evacuation (Schützenberger involution)",
   },
   {
     name: "Finset",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "As a single-graded finset",
   },
   {
     name: "Foata",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Foata's fundamental bijection (maj → inv)",
   },
   {
     name: "ForgetGround",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "Forget the ground",
   },
   {
     name: "FromPermutation",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Minimum-splitting recursion → increasing binary tree",
   },
   {
     name: "GaussianInteger",
-    on: ["GaussianInteger"],
+    on: ["GaussianIntegers"],
     title: "As a Gaussian integer",
   },
   {
     name: "GeneratingPair",
-    on: ["PythagoreanTriple"],
+    on: ["PythagoreanTriples"],
     title: "Euclid generating pair (m,n)",
   },
   {
     name: "GreaterPrime",
-    on: ["GoldbachPartition"],
+    on: ["GoldbachPartitions"],
     title: "Greater prime",
   },
   {
     name: "InnerShape",
-    on: ["SkewPartition"],
+    on: ["SkewPartitions"],
     title: "Inner shape",
   },
   {
     name: "Inverse",
-    on: ["Permutation", "SignedPermutation"],
+    on: ["Permutations", "SignedPermutations"],
     title: "Inverse",
   },
   {
     name: "InverseAfterComplementAfterReverse",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Inverse of the reverse-complement (composes the two permutohedron symmetries with permutation inversion)",
   },
   {
     name: "InverseCyclicShift",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Inverse cyclic value shift",
   },
   {
     name: "JeuDeTaquin",
-    on: ["SkewTableau"],
+    on: ["SkewTableaux"],
     title: "Jeu de taquin rectification",
   },
   {
     name: "KnuthClassRepresentative",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Knuth (plactic) class representative",
   },
   {
     name: "KrewerasComplement",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Kreweras complement",
   },
   {
     name: "LabeledGraph",
-    on: ["LabeledGraph"],
+    on: ["LabeledGraphs"],
     title: "As a single-graded labeled_graph",
   },
   {
     name: "LesserPrime",
-    on: ["GoldbachPartition"],
+    on: ["GoldbachPartitions"],
     title: "Lesser prime",
   },
   {
     name: "LyndonFactorLengths",
-    on: ["Word"],
+    on: ["Words"],
     title: "Lyndon factorization (factor lengths)",
   },
   {
     name: "LyndonFirstFactor",
-    on: ["Word"],
+    on: ["Words"],
     title: "Lyndon factorization (first factor)",
   },
   {
     name: "OuterShape",
-    on: ["SkewPartition"],
+    on: ["SkewPartitions"],
     title: "Outer shape",
   },
   {
     name: "PeakSet",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Peak set",
   },
   {
@@ -5328,178 +5328,178 @@ export const MAPS: readonly CatalogOverload[] = [
   },
   {
     name: "PermutahedronVertex",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "Permutahedron vertex",
   },
   {
     name: "Promotion",
-    on: ["StandardTableau"],
+    on: ["StandardTableaux"],
     title: "Promotion",
   },
   {
     name: "RationalNumber",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "To rational number",
   },
   {
     name: "ReadingWord",
-    on: ["StandardTableau"],
+    on: ["StandardTableaux"],
     title: "Reading word",
   },
   {
     name: "RemoveLargestPart",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Remove the largest part",
   },
   {
     name: "Reverse",
-    on: ["BinaryWord", "Composition", "Permutation", "SetPartition"],
+    on: ["BinaryWords", "Compositions", "Permutations", "SetPartitions"],
     title: "Reverse",
   },
   {
     name: "ReverseComplement",
-    on: ["DyckPath", "MotzkinPath", "Permutation"],
+    on: ["DyckPaths", "MotzkinPaths", "Permutations"],
     title: "Reverse-complement",
   },
   {
     name: "Rsk",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "RSK correspondence: permutation → (P,Q) SYT pair",
   },
   {
     name: "RskInsertion",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "RSK insertion tableau",
   },
   {
     name: "RskRecording",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "RSK recording tableau",
   },
   {
     name: "RskShape",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "RSK shape",
   },
   {
     name: "SetComposition",
-    on: ["SetComposition"],
+    on: ["SetCompositions"],
     title: "Set composition",
   },
   {
     name: "Shape",
-    on: ["PlanePartition", "SemistandardTableau", "SetPartition", "StandardTableau"],
+    on: ["PlanePartitions", "SemistandardTableaux", "SetPartitions", "StandardTableaux"],
     title: "Shape",
   },
   {
     name: "SignedSubset",
-    on: ["SignedSubset"],
+    on: ["SignedSubsets"],
     title: "Signed subset",
   },
   {
     name: "SquareFreePart",
-    on: ["IntegerFactorization"],
+    on: ["IntegerFactorizations"],
     title: "q in n = ±s²·q — the square-free kernel",
   },
   {
     name: "SquarePartRoot",
-    on: ["IntegerFactorization"],
+    on: ["IntegerFactorizations"],
     title: "s in n = ±s²·q — the root of the square part",
   },
   {
     name: "SubtreeSizes",
-    on: ["OrderedTree"],
+    on: ["OrderedTrees"],
     title: "Root-subtree sizes",
   },
   {
     name: "SuperRootTree",
-    on: ["LabeledTree"],
+    on: ["LabeledTrees"],
     title: "As the super-root labeled tree",
   },
   {
     name: "ThreeCore",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "3-core",
   },
   {
     name: "ToBinaryTree",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "To binary tree",
   },
   {
     name: "ToBinaryWord",
-    on: ["Finset"],
+    on: ["Finsets"],
     title: "the k-subset as a weight-k binary word",
   },
   {
     name: "ToComposition",
-    on: ["Finset", "Surjection"],
+    on: ["Finsets", "Surjections"],
     title: "To composition",
   },
   {
     name: "ToCycleNotation",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "To cycle notation",
   },
   {
     name: "ToDistinct",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Euler (Glaisher): odd → distinct",
   },
   {
     name: "ToDyckPath",
-    on: ["BinaryTree", "OrderedTree"],
+    on: ["BinaryTrees", "OrderedTrees"],
     title: "To Dyck path",
   },
   {
     name: "ToFactoradic",
-    on: ["PermutationInversion", "SubexcedantSeq"],
+    on: ["PermutationInversions", "SubexcedantSeqs"],
     title: "To factoradic",
   },
   {
     name: "ToKSubset",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "1-positions (combinatorial number system)",
   },
   {
     name: "ToLehmerCode",
-    on: ["Permutation"],
+    on: ["Permutations"],
     title: "To Lehmer code",
   },
   {
     name: "ToNonCrossing",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Crossing↔nesting swap: non-nesting → non-crossing",
   },
   {
     name: "ToNoncrossingPartition",
-    on: ["DyckPath"],
+    on: ["DyckPaths"],
     title: "To non-crossing partition",
   },
   {
     name: "ToNonNesting",
-    on: ["SetPartition"],
+    on: ["SetPartitions"],
     title: "Crossing↔nesting swap: non-crossing → non-nesting",
   },
   {
     name: "ToOdd",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "Euler (Glaisher): distinct → odd",
   },
   {
     name: "ToPartition",
-    on: ["Composition", "CorePartition", "DyckPath", "Finset"],
+    on: ["Compositions", "CorePartitions", "DyckPaths", "Finsets"],
     title: "To partition",
   },
   {
     name: "ToPermutation",
     on: [
-      "AffinePermutation",
-      "IncreasingBinaryTree",
+      "AffinePermutations",
+      "IncreasingBinaryTrees",
       "PermutationCycles",
-      "PermutationInversion",
-      "SignedPermutation",
-      "StandardTableauPair",
+      "PermutationInversions",
+      "SignedPermutations",
+      "StandardTableauPairs",
     ],
     title: "Finite part (S_n)",
   },
@@ -5510,27 +5510,27 @@ export const MAPS: readonly CatalogOverload[] = [
   },
   {
     name: "ToSetPartition",
-    on: ["PerfectMatching", "SetComposition"],
+    on: ["PerfectMatchings", "SetCompositions"],
     title: "To set partition",
   },
   {
     name: "ToSubset",
-    on: ["Composition"],
+    on: ["Compositions"],
     title: "To finset",
   },
   {
     name: "Transpose",
-    on: ["PlanePartition", "StandardTableau"],
+    on: ["PlanePartitions", "StandardTableaux"],
     title: "Transpose",
   },
   {
     name: "TwoCore",
-    on: ["IntegerPartition"],
+    on: ["IntegerPartitions"],
     title: "2-core",
   },
   {
     name: "UnderlyingPermutation",
-    on: ["DecoratedPermutation"],
+    on: ["DecoratedPermutations"],
     title: "Underlying permutation",
   },
   {
@@ -5540,7 +5540,7 @@ export const MAPS: readonly CatalogOverload[] = [
   },
   {
     name: "ZeckendorfValue",
-    on: ["BinaryWord"],
+    on: ["BinaryWords"],
     title: "Zeckendorf evaluation",
   },
 ];
@@ -8785,7 +8785,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Complement",
-    on: "Composition",
+    on: "Compositions",
     system: "findstat",
     identity: "Mp00039",
     url: "https://www.findstat.org/Mp00039",
@@ -8793,7 +8793,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Complement",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "Mp00069",
     url: "https://www.findstat.org/Mp00069",
@@ -8801,7 +8801,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Conjugate",
-    on: "Composition",
+    on: "Compositions",
     system: "findstat",
     identity: "Mp00041",
     url: "https://www.findstat.org/Mp00041",
@@ -8809,7 +8809,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Conjugate",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "Mp00202",
     url: "https://www.findstat.org/Mp00202",
@@ -8817,7 +8817,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Conjugate",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "sage",
     identity: "Partitions(n).map(lambda p: p.conjugate())",
     url: "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html",
@@ -8826,7 +8826,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "CycleType",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "Mp00108",
     url: "https://www.findstat.org/Mp00108",
@@ -8834,7 +8834,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Evacuation",
-    on: "StandardTableau",
+    on: "StandardTableaux",
     system: "findstat",
     identity: "Mp00085",
     url: "https://www.findstat.org/Mp00085",
@@ -8842,7 +8842,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Foata",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "Mp00067",
     url: "https://www.findstat.org/Mp00067",
@@ -8850,7 +8850,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Inverse",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "Mp00066",
     url: "https://www.findstat.org/Mp00066",
@@ -8858,7 +8858,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "KrewerasComplement",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "Mp00088",
     url: "https://www.findstat.org/Mp00088",
@@ -8866,7 +8866,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Promotion",
-    on: "StandardTableau",
+    on: "StandardTableaux",
     system: "findstat",
     identity: "Mp00155",
     url: "https://www.findstat.org/Mp00155",
@@ -8874,7 +8874,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "ReadingWord",
-    on: "StandardTableau",
+    on: "StandardTableaux",
     system: "findstat",
     identity: "Mp00081",
     url: "https://www.findstat.org/Mp00081",
@@ -8882,7 +8882,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Reverse",
-    on: "Composition",
+    on: "Compositions",
     system: "findstat",
     identity: "Mp00038",
     url: "https://www.findstat.org/Mp00038",
@@ -8890,7 +8890,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Reverse",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "Mp00064",
     url: "https://www.findstat.org/Mp00064",
@@ -8898,7 +8898,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "ReverseComplement",
-    on: "DyckPath",
+    on: "DyckPaths",
     system: "findstat",
     identity: "Mp00028",
     url: "https://www.findstat.org/Mp00028",
@@ -8906,7 +8906,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "RskRecording",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "Mp00070",
     url: "https://www.findstat.org/Mp00070",
@@ -8914,7 +8914,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Shape",
-    on: "SemistandardTableau",
+    on: "SemistandardTableaux",
     system: "findstat",
     identity: "Mp00077",
     url: "https://www.findstat.org/Mp00077",
@@ -8922,7 +8922,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Shape",
-    on: "SetPartition",
+    on: "SetPartitions",
     system: "findstat",
     identity: "Mp00079",
     url: "https://www.findstat.org/Mp00079",
@@ -8930,7 +8930,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Shape",
-    on: "StandardTableau",
+    on: "StandardTableaux",
     system: "findstat",
     identity: "Mp00083",
     url: "https://www.findstat.org/Mp00083",
@@ -8938,7 +8938,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "ToPartition",
-    on: "Composition",
+    on: "Compositions",
     system: "findstat",
     identity: "Mp00040",
     url: "https://www.findstat.org/Mp00040",
@@ -8946,7 +8946,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "ToSetPartition",
-    on: "PerfectMatching",
+    on: "PerfectMatchings",
     system: "findstat",
     identity: "Mp00092",
     url: "https://www.findstat.org/Mp00092",
@@ -8954,7 +8954,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "map",
     subject: "Transpose",
-    on: "StandardTableau",
+    on: "StandardTableaux",
     system: "findstat",
     identity: "Mp00084",
     url: "https://www.findstat.org/Mp00084",
@@ -9000,7 +9000,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Area",
-    on: "DyckPath",
+    on: "DyckPaths",
     system: "findstat",
     identity: "St000012",
     url: "https://www.findstat.org/St000012",
@@ -9008,7 +9008,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Ascents",
-    on: "Composition",
+    on: "Compositions",
     system: "findstat",
     identity: "St000761",
     url: "https://www.findstat.org/St000761",
@@ -9016,7 +9016,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Ascents",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000245",
     url: "https://www.findstat.org/St000245",
@@ -9024,7 +9024,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Blocks",
-    on: "SetPartition",
+    on: "SetPartitions",
     system: "findstat",
     identity: "St000105",
     url: "https://www.findstat.org/St000105",
@@ -9032,7 +9032,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Bounce",
-    on: "DyckPath",
+    on: "DyckPaths",
     system: "findstat",
     identity: "St000005",
     url: "https://www.findstat.org/St000005",
@@ -9040,7 +9040,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Corners",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "St000159",
     url: "https://www.findstat.org/St000159",
@@ -9048,7 +9048,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Crank",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "St000146",
     url: "https://www.findstat.org/St000146",
@@ -9056,7 +9056,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Crossings",
-    on: "PerfectMatching",
+    on: "PerfectMatchings",
     system: "findstat",
     identity: "St000042",
     url: "https://www.findstat.org/St000042",
@@ -9064,7 +9064,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Crossings",
-    on: "SetPartition",
+    on: "SetPartitions",
     system: "findstat",
     identity: "St000232",
     url: "https://www.findstat.org/St000232",
@@ -9072,7 +9072,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Cycles",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000031",
     url: "https://www.findstat.org/St000031",
@@ -9080,7 +9080,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Descents",
-    on: "ParkingFunction",
+    on: "ParkingFunctions",
     system: "findstat",
     identity: "St001946",
     url: "https://www.findstat.org/St001946",
@@ -9088,7 +9088,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Descents",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000021",
     url: "https://www.findstat.org/St000021",
@@ -9096,7 +9096,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Descents",
-    on: "SignedPermutation",
+    on: "SignedPermutations",
     system: "findstat",
     identity: "St001427",
     url: "https://www.findstat.org/St001427",
@@ -9104,7 +9104,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Descents",
-    on: "StandardTableau",
+    on: "StandardTableaux",
     system: "findstat",
     identity: "St000157",
     url: "https://www.findstat.org/St000157",
@@ -9112,7 +9112,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Dinv",
-    on: "DyckPath",
+    on: "DyckPaths",
     system: "findstat",
     identity: "St000006",
     url: "https://www.findstat.org/St000006",
@@ -9120,7 +9120,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Displacement",
-    on: "ParkingFunction",
+    on: "ParkingFunctions",
     system: "findstat",
     identity: "St000188",
     url: "https://www.findstat.org/St000188",
@@ -9128,7 +9128,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "DistinctEntries",
-    on: "GelfandTsetlinPattern",
+    on: "GelfandTsetlinPatterns",
     system: "findstat",
     identity: "St001404",
     url: "https://www.findstat.org/St001404",
@@ -9136,7 +9136,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "DistinctEntries",
-    on: "SemistandardTableau",
+    on: "SemistandardTableaux",
     system: "findstat",
     identity: "St001401",
     url: "https://www.findstat.org/St001401",
@@ -9144,7 +9144,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "DistinctParts",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "St000159",
     url: "https://www.findstat.org/St000159",
@@ -9152,7 +9152,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "DoubleRises",
-    on: "DyckPath",
+    on: "DyckPaths",
     system: "findstat",
     identity: "St000024",
     url: "https://www.findstat.org/St000024",
@@ -9160,7 +9160,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "DurfeeSquare",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "St000183",
     url: "https://www.findstat.org/St000183",
@@ -9168,7 +9168,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "DysonRank",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "St000145",
     url: "https://www.findstat.org/St000145",
@@ -9176,7 +9176,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "EntrySum",
-    on: "SemistandardTableau",
+    on: "SemistandardTableaux",
     system: "findstat",
     identity: "St000103",
     url: "https://www.findstat.org/St000103",
@@ -9184,7 +9184,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Excedances",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000155",
     url: "https://www.findstat.org/St000155",
@@ -9192,7 +9192,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "FixedPoints",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000022",
     url: "https://www.findstat.org/St000022",
@@ -9200,7 +9200,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Height",
-    on: "BinaryTree",
+    on: "BinaryTrees",
     system: "findstat",
     identity: "St000050",
     url: "https://www.findstat.org/St000050",
@@ -9208,7 +9208,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Height",
-    on: "OrderedTree",
+    on: "OrderedTrees",
     system: "findstat",
     identity: "St000166",
     url: "https://www.findstat.org/St000166",
@@ -9216,7 +9216,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "HookProduct",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "St000179",
     url: "https://www.findstat.org/St000179",
@@ -9224,7 +9224,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Inversions",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000018",
     url: "https://www.findstat.org/St000018",
@@ -9232,7 +9232,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "LargestBlock",
-    on: "SetPartition",
+    on: "SetPartitions",
     system: "findstat",
     identity: "St001062",
     url: "https://www.findstat.org/St001062",
@@ -9240,7 +9240,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "LargestPart",
-    on: "PlanePartition",
+    on: "PlanePartitions",
     system: "findstat",
     identity: "St001447",
     url: "https://www.findstat.org/St001447",
@@ -9248,7 +9248,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Leaves",
-    on: "BinaryTree",
+    on: "BinaryTrees",
     system: "findstat",
     identity: "St000201",
     url: "https://www.findstat.org/St000201",
@@ -9256,7 +9256,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Leaves",
-    on: "OrderedTree",
+    on: "OrderedTrees",
     system: "findstat",
     identity: "St000167",
     url: "https://www.findstat.org/St000167",
@@ -9264,7 +9264,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "LeftToRightMaxima",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000314",
     url: "https://www.findstat.org/St000314",
@@ -9272,7 +9272,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "LuckyCars",
-    on: "ParkingFunction",
+    on: "ParkingFunctions",
     system: "findstat",
     identity: "St000135",
     url: "https://www.findstat.org/St000135",
@@ -9280,7 +9280,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "MajorIndex",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000004",
     url: "https://www.findstat.org/St000004",
@@ -9288,7 +9288,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "MajorIndex",
-    on: "StandardTableau",
+    on: "StandardTableaux",
     system: "findstat",
     identity: "St000330",
     url: "https://www.findstat.org/St000330",
@@ -9296,7 +9296,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "MaxEntry",
-    on: "SemistandardTableau",
+    on: "SemistandardTableaux",
     system: "findstat",
     identity: "St001409",
     url: "https://www.findstat.org/St001409",
@@ -9311,7 +9311,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "NegativeOnes",
-    on: "AlternatingSignMatrix",
+    on: "AlternatingSignMatrices",
     system: "findstat",
     identity: "St000065",
     url: "https://www.findstat.org/St000065",
@@ -9319,7 +9319,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "NegativesCount",
-    on: "SignedPermutation",
+    on: "SignedPermutations",
     system: "findstat",
     identity: "St001429",
     url: "https://www.findstat.org/St001429",
@@ -9327,7 +9327,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Nestings",
-    on: "PerfectMatching",
+    on: "PerfectMatchings",
     system: "findstat",
     identity: "St000041",
     url: "https://www.findstat.org/St000041",
@@ -9335,7 +9335,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Nestings",
-    on: "SetPartition",
+    on: "SetPartitions",
     system: "findstat",
     identity: "St000233",
     url: "https://www.findstat.org/St000233",
@@ -9343,7 +9343,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Nonzeros",
-    on: "AlternatingSignMatrix",
+    on: "AlternatingSignMatrices",
     system: "findstat",
     identity: "St000890",
     url: "https://www.findstat.org/St000890",
@@ -9351,7 +9351,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "NumberOfStandardTableaux",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     system: "findstat",
     identity: "St000003",
     url: "https://www.findstat.org/St000003",
@@ -9359,7 +9359,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "NumColumns",
-    on: "PlanePartition",
+    on: "PlanePartitions",
     system: "findstat",
     identity: "St001460",
     url: "https://www.findstat.org/St001460",
@@ -9367,7 +9367,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "NumParts",
-    on: "PlanePartition",
+    on: "PlanePartitions",
     system: "findstat",
     identity: "St001922",
     url: "https://www.findstat.org/St001922",
@@ -9375,7 +9375,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "NumRows",
-    on: "PlanePartition",
+    on: "PlanePartitions",
     system: "findstat",
     identity: "St001446",
     url: "https://www.findstat.org/St001446",
@@ -9383,7 +9383,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Peaks",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000023",
     url: "https://www.findstat.org/St000023",
@@ -9391,7 +9391,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "PreferenceSum",
-    on: "ParkingFunction",
+    on: "ParkingFunctions",
     system: "findstat",
     identity: "St000165",
     url: "https://www.findstat.org/St000165",
@@ -9399,7 +9399,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Returns",
-    on: "DyckPath",
+    on: "DyckPaths",
     system: "findstat",
     identity: "St000011",
     url: "https://www.findstat.org/St000011",
@@ -9407,7 +9407,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "ShortPairs",
-    on: "PerfectMatching",
+    on: "PerfectMatchings",
     system: "findstat",
     identity: "St000164",
     url: "https://www.findstat.org/St000164",
@@ -9415,7 +9415,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "SingletonBlocks",
-    on: "SetPartition",
+    on: "SetPartitions",
     system: "findstat",
     identity: "St000247",
     url: "https://www.findstat.org/St000247",
@@ -9423,7 +9423,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Size",
-    on: "CorePartition",
+    on: "CorePartitions",
     system: "findstat",
     identity: "St000190",
     url: "https://www.findstat.org/St000190",
@@ -9431,7 +9431,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "SmallestBlock",
-    on: "SetPartition",
+    on: "SetPartitions",
     system: "findstat",
     identity: "St001075",
     url: "https://www.findstat.org/St001075",
@@ -9439,7 +9439,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "SmallestPart",
-    on: "Composition",
+    on: "Compositions",
     system: "findstat",
     identity: "St000657",
     url: "https://www.findstat.org/St000657",
@@ -9447,7 +9447,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "TopRowSum",
-    on: "GelfandTsetlinPattern",
+    on: "GelfandTsetlinPatterns",
     system: "findstat",
     identity: "St000186",
     url: "https://www.findstat.org/St000186",
@@ -9455,7 +9455,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Trace",
-    on: "PlanePartition",
+    on: "PlanePartitions",
     system: "findstat",
     identity: "St001919",
     url: "https://www.findstat.org/St001919",
@@ -9463,7 +9463,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Valleys",
-    on: "DyckPath",
+    on: "DyckPaths",
     system: "findstat",
     identity: "St000053",
     url: "https://www.findstat.org/St000053",
@@ -9471,7 +9471,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "Valleys",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000353",
     url: "https://www.findstat.org/St000353",
@@ -9479,7 +9479,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   {
     kind: "stat",
     subject: "WeakExceedances",
-    on: "Permutation",
+    on: "Permutations",
     system: "findstat",
     identity: "St000213",
     url: "https://www.findstat.org/St000213",

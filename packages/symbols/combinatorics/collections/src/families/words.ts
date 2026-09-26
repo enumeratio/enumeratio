@@ -495,7 +495,7 @@ export const entries: NumberKernel[] = [
       (a, [n, k]) => necklacesValid(a, n, k),
       (a, [n, k]) => necklacesRank(a, n, k),
     ),
-    declared: wordClass("Word"),
+    declared: wordClass("Words"),
   },
   // KLyndonWords(size, base): aperiodic base-letter necklaces.
   {
@@ -507,6 +507,6 @@ export const entries: NumberKernel[] = [
       (a, [n, k]) => lyndonWordsValid(a, n, k),
       (a, [n, k]) => lyndonWordsRank(a, n, k),
     ),
-    declared: wordClass("Word"),
+    declared: wordClass("Words"),
   },
 ];

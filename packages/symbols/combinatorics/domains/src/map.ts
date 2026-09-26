@@ -277,12 +277,12 @@ const krewerasBody: MathJSON = forEach(positions, ["IndexOf", "_raw", longCycleA
 /**
  * w sits below c in absolute order — equivalently, its cycles form a non-crossing partition —
  * iff the reflection lengths of w and K(w) split c's exactly: `cyc(w) + cyc(K(w)) = n + 1`.
- * Each side is wrapped back into a `Permutation` because `CycleCount` is declared over the
- * carrier, not the raw word.
+ * Each side is wrapped back into a `Permutations` value because `CycleCount` is declared over
+ * the carrier, not the raw word.
  */
 const krewerasGuard: MathJSON = [
   "Equal",
-  ["Add", ["CycleCount", ["Permutation", "_raw"]], ["CycleCount", ["Permutation", "_image"]]],
+  ["Add", ["CycleCount", ["Permutations", "_raw"]], ["CycleCount", ["Permutations", "_image"]]],
   ["Add", size, 1],
 ];
 
