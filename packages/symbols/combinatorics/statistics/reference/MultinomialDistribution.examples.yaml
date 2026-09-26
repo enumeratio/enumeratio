@@ -1,0 +1,18 @@
+- id: multinomial-pdf
+  expr:
+    [PDF, [MultinomialDistribution, 4, [List, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 6]]], [List, 2, 1, 1]]
+  expected: [Rational, 1, 6]
+  caption: $4!/(2!1!1!) \cdot (1/2)^2(1/3)^1(1/6)^1 = 12/72$
+- id: multinomial-pdf-zero
+  expr: [PDF, [MultinomialDistribution, 4, [List, [Rational, 1, 2], [Rational, 1, 2]]], [List, 1, 1]]
+  expected: 0
+  caption: the count vector sums to 2, not the distribution's own n = 4.
+- id: multinomial-mean
+  expr: [Mean, [MultinomialDistribution, 10, [List, [Rational, 1, 5], [Rational, 4, 5]]]]
+  expected: [List, 2, 8]
+- id: multinomial-variance
+  expr: [Variance, [MultinomialDistribution, 10, [List, [Rational, 1, 5], [Rational, 4, 5]]]]
+  expected: [List, [Rational, 8, 5], [Rational, 8, 5]]
+- id: multinomial-covariance
+  expr: [Covariance, [MultinomialDistribution, 10, [List, [Rational, 1, 5], [Rational, 4, 5]]]]
+  expected: [List, [List, [Rational, 8, 5], [Rational, -8, 5]], [List, [Rational, -8, 5], [Rational, 8, 5]]]
