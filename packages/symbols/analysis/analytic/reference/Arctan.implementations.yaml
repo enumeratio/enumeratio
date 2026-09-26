@@ -288,7 +288,7 @@ the-limit-at-infty:
 as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2:
   epsil:
     in: TrigToExp(Arctan(x))
-    out: -1 / 2 * i * Ln(i * x + 1) + 1 / 2 * i * Ln(-1 * i * x + 1)
+    out: -1 / 2 * i * Ln(i * x + 1) + 1 / 2 * i * Ln(-i * x + 1)
   tex:
     in: \mathrm{TrigToExp}(\arctan(x))
     out: (-\frac{1}{2}i)\ln(i x+1)+(\frac{1}{2}i)\ln(1-i x)

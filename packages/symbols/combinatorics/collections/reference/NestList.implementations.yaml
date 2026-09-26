@@ -11,6 +11,7 @@ powers-of-2:
   epsil:
     in: NestList(Function(2 * _1), 1, 5)
     out: "[1, 2, 4, 8, 16, 32]"
+    back: Unreadable
   tex:
     in: \mathrm{NestList}(()\mapsto2\operatorname{\_1}, 1, 5)
     out: \bigl\lbrack1, 2, 4, 8, 16, 32\bigr\rbrack
@@ -22,6 +23,7 @@ powers-of-2:
   epsil:
     in: NestList(Function(3 * _1 % 7), 1, 6)
     out: "[1, 3, 2, 6, 4, 5, 1]"
+    back: Unreadable
   tex:
     in: \mathrm{NestList}(()\mapsto3\operatorname{\_1}\bmod7, 1, 6)
     out: \bigl\lbrack1, 3, 2, 6, 4, 5, 1\bigr\rbrack
@@ -33,6 +35,7 @@ newton-iterates-converging-to-sqrt-2:
   epsil:
     in: NestList(Function((_1 + 2 / _1) / 2), 1, 3)
     out: "[1, 3 / 2, 17 / 12, 577 / 408]"
+    back: Unreadable
   tex:
     in: \mathrm{NestList}(()\mapsto\frac{\operatorname{\_1}+\frac{2}{\operatorname{\_1}}}{2}, 1, 3)
     out: \bigl\lbrack1, \frac{3}{2}, \frac{17}{12}, \frac{577}{408}\bigr\rbrack

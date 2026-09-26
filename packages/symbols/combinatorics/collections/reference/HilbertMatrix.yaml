@@ -1,0 +1,36 @@
+name: HilbertMatrix
+domain: Collections
+signature: HilbertMatrix(n) / HilbertMatrix({m, n})
+summary: The (possibly rectangular) Hilbert matrix, entry (i, j) = 1/(i + j - 1), kept exact.
+signatures:
+  - call: HilbertMatrix(n)
+    description: the n×n Hilbert matrix
+    library: enumeratio-collections
+  - call: HilbertMatrix({m, n})
+    description: the m×n Hilbert matrix
+    library: enumeratio-collections
+details:
+  - Every entry is an exact rational, never a float — Wolfram's own default.
+  - "Symmetric when square, and famously ill-conditioned (its determinant shrinks fast: det(HilbertMatrix(3)) = 1/2160)."
+  - "The rectangular dimensions are a {m, n} LIST, not two bare arguments — kernel-checked: Wolfram's HilbertMatrix has no 2-argument form, only HilbertMatrix[n] and HilbertMatrix[{m, n}]."
+examples:
+  - id: three-by-three
+    expr: [HilbertMatrix, 3]
+    expected:
+      [
+        List,
+        [List, 1, [Rational, 1, 2], [Rational, 1, 3]],
+        [List, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 4]],
+        [List, [Rational, 1, 3], [Rational, 1, 4], [Rational, 1, 5]],
+      ]
+  - id: rectangular
+    expr: [HilbertMatrix, [List, 2, 3]]
+    expected:
+      [
+        List,
+        [List, 1, [Rational, 1, 2], [Rational, 1, 3]],
+        [List, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 4]],
+      ]
+    category: Scope
+seeAlso:
+  - DiagonalMatrix

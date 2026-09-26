@@ -94,6 +94,10 @@ const exact = (head: string, what: string, n: number, p: number[]): bigint => {
   return BigInt(n);
 };
 
+/** A NumberKernel declining past 2^53 (see `numberKernel`): unknown, not wrong. */
+export const needsBigint = (error: unknown): boolean =>
+  error instanceof RangeError && error.message.includes("not bigint yet");
+
 /** Lift a NumberKernel into the bigint contract, refusing (RangeError) rather than
  *  converting a value a double has already rounded. */
 export function numberKernel(k: NumberKernel): FamilyKernel {

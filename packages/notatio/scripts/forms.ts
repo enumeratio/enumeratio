@@ -11,6 +11,7 @@
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import type { ExampleImplementations, HeadImplementations, MathJSON, SystemImplementation } from "@enumeratio/entry";
 import { toInputForm } from "@enumeratio/formats/inputform";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
@@ -31,11 +32,59 @@ const attempt = (f: () => string): string | undefined => {
 
 const box = (json: MathJSON) => ce.box(json as never, { form: "raw" });
 
+/**
+ * `json` with each complex literal InputForm spells out -- `2.5 + 3i`, `1 - i`, `3i`, `-i` --
+ * put back as the `Complex` number it came from: the same value, and the spelling a person
+ * types. Only those shapes: a bare `i` may be a bound variable (`Product(i ^ 2, (i, 1, 6))`).
+ */
+function complexLiterals(json: unknown): unknown {
+  if (!Array.isArray(json)) return json;
+  const node = json.map(complexLiterals);
+  const imaginary = (n: unknown): number | undefined => {
+    if (n === "i") return 1;
+    if (Array.isArray(n) && n[0] === "Complex" && n[1] === 0) return n[2];
+    if (Array.isArray(n) && n[0] === "Multiply" && n.length === 3 && typeof n[1] === "number" && n[2] === "i")
+      return n[1];
+    return undefined;
+  };
+  const [head, a, b] = node;
+  if (head === "Negate" && node.length === 2 && imaginary(a) !== undefined) return ["Complex", 0, -imaginary(a)!];
+  if (head === "Multiply" && imaginary(node) !== undefined) return ["Complex", 0, imaginary(node)];
+  if (
+    (head === "Add" || head === "Subtract") &&
+    node.length === 3 &&
+    typeof a === "number" &&
+    imaginary(b) !== undefined
+  )
+    return ["Complex", a, (head === "Subtract" ? -1 : 1) * imaginary(b)!];
+  return node;
+}
+
+/**
+ * What InputForm `printed` reads back as through Epsil, as a notebook cell reads it, where
+ * that is not `expr` -- the same canonical expression, not merely the same value (a complex
+ * literal aside). Absent when the trip is exact; `Unreadable` when the cell would refuse it.
+ */
+function inputFormBack(expr: MathJSON, printed: string): MathJSON | undefined {
+  const { json, errors } = parseExpression(printed, { allow: ["Assign"] });
+  if (errors.length > 0) return "Unreadable";
+  const reread = attempt(() => JSON.stringify(ce.box(complexLiterals(box(json as MathJSON).json) as never).json));
+  if (reread === attempt(() => JSON.stringify(ce.box(expr as never).json))) return undefined;
+  return reread === undefined ? "Unreadable" : (box(json as MathJSON).json as MathJSON);
+}
+
 /** Our own forms of one example, and each system's `in`, in the order a record lists them. */
 export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementations {
   const out: Record<string, SystemImplementation> = {};
   const epsil = [attempt(() => toInputForm(expr as never)), attempt(() => toInputForm(expected as never))];
-  if (epsil[0] !== undefined) out.epsil = { in: epsil[0], ...(epsil[1] === undefined ? {} : { out: epsil[1] }) };
+  if (epsil[0] !== undefined) {
+    const back = inputFormBack(expr, epsil[0]);
+    out.epsil = {
+      in: epsil[0],
+      ...(epsil[1] === undefined ? {} : { out: epsil[1] }),
+      ...(back === undefined ? {} : { back }),
+    };
+  }
   const tex = [attempt(() => portableTeX(box(expr).latex)), attempt(() => portableTeX(box(expected).latex))];
   if (tex[0] !== undefined) out.tex = { in: tex[0], ...(tex[1] === undefined ? {} : { out: tex[1] }) };
   const traditional = [

@@ -22,7 +22,7 @@ const str = (s: string): string => `"${s.replace(/\\/g, "\\\\").replace(/"/g, '\
 const markDecimals = (source: string, mark: string): string =>
   source.replace(/(?<![\w`.])(\d+\.\d+(?:\*\^-?\d+)?)(?![\d`])/g, `$1\`${mark}`);
 
-const numeric = (source: string, precision: Precision): string =>
+export const numeric = (source: string, precision: Precision): string =>
   precision === "exact"
     ? source
     : precision === "machine"

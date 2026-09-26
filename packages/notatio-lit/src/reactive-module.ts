@@ -1,6 +1,6 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import {
   affected,
   boundName,
@@ -110,11 +110,11 @@ export class ReactiveModule {
     for (const el of root.querySelectorAll("notatio-cell")) {
       if (this.#known.has(el)) continue;
       this.#known.add(el);
-      // Only `format="notatio"` (the default, and what a lowered `Cell(...)` always
+      // Only `format="epsil"` (the default, and what a lowered `Cell(...)` always
       // gets) is read this way; a hand-authored LaTeX/MathJSON/Wolfram cell registers
       // for real the first time it commits.
-      const format = el.getAttribute("format") ?? "notatio";
-      if (format !== "notatio") continue;
+      const format = el.getAttribute("format") ?? "epsil";
+      if (format !== "epsil") continue;
       discovered.push(this.#update(el, valueOf(el)));
     }
     const sched = this.#applyDiagnostics();
@@ -138,7 +138,7 @@ export class ReactiveModule {
     this.#elements.set(id, el);
     let json: MathJsonExpression | undefined;
     try {
-      json = parseNotatio(source, { allow: ["Assign"] }).json;
+      json = parseExpression(source, { allow: ["Assign"] }).json;
     } catch {
       json = undefined;
     }

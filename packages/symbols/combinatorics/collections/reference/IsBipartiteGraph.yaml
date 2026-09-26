@@ -18,6 +18,14 @@ examples:
   - id: a-self-loop-is-never-bipartite
     expr: [IsBipartiteGraph, [Graph, [List, [UndirectedEdge, 1, 1]]]]
     expected: False
+  - id: a-4-cycle-is-bipartite
+    expr: [IsBipartiteGraph, [CycleGraph, 4]]
+    expected: True
+    role: test
+  - id: a-path-is-always-bipartite
+    expr: [IsBipartiteGraph, [PathGraph, 7]]
+    expected: True
+    role: test
 seeAlso:
   - IsConnectedGraph
   - CycleGraph

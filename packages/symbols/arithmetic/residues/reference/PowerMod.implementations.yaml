@@ -64,6 +64,7 @@ powermod-3-2-7:
     in: power_mod(3, 2, 7)
   rust:
     in: powermod(n(3), n(2), n(7))
+    out: "2"
 3-1-equiv-5-and-5-2-25-equiv-4:
   epsil:
     in: PowerMod(3, -2, 7)
@@ -82,6 +83,10 @@ powermod-3-2-7:
     in: power_mod(3, -2, 7)
   rust:
     in: powermod(n(3), n(-2), n(7))
+    out: "panic: negative exponentiation is not supported!"
+    verdict: error
+    kind: domain
+    note: num's modpow rejects negative exponents; compute-engine inverts modulo 7 first.
 a-square-root-of-3-equiv-1-pmod-2:
   epsil:
     in: PowerMod(3, 1 / 2, 2)
@@ -100,6 +105,10 @@ a-square-root-of-3-equiv-1-pmod-2:
     in: power_mod(3, (1/2), 2)
   rust:
     in: powermod(n(3), rational(n(1), n(2)), n(2))
+    out: "panic: an integer, not 1/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's PowerMod extends past them.
 threads-over-a-list-of-bases:
   epsil:
     in: PowerMod([2, 3, 4], 2, 5)
@@ -115,6 +124,10 @@ threads-over-a-list-of-bases:
     in: power_mod([2, 3, 4], 2, 5)
   rust:
     in: powermod(list(vec![n(2), n(3), n(4)]), n(2), n(5))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's PowerMod is Listable and threads over the list; the Rust crates take scalars only.
 a-negative-exponent-gives-the-modular-inverse:
   epsil:
     in: PowerMod(2, -1, 7)
@@ -185,7 +198,7 @@ by-definition-a-b-bmod-m-computed-without-ever:
       in: (2^{10} \bmod 3)=(2^{10} \bmod 3)
       out: \text{True}
   sage:
-    in: bool(power_mod(2, 10, 3) == ((2^10) % 3))
+    in: bool(power_mod(2, 10, 3) == (((2)^10) % 3))
     out: True
   rust:
     in: equal(powermod(n(2), n(10), n(3)), mod_floor(power(n(2), n(10)), n(3)))
@@ -238,6 +251,7 @@ exponent-0-evaluates-even-at-a-negative-modulus:
     in: power_mod(-2, 0, -14)
   rust:
     in: powermod(n(-2), n(0), n(-14))
+    out: "-13"
 a-nonzero-exponent-at-the-same-negative-modulus:
   epsil:
     in: PowerMod(-2, 3, -14)
@@ -256,6 +270,10 @@ a-nonzero-exponent-at-the-same-negative-modulus:
     in: power_mod(-2, 3, -14)
   rust:
     in: powermod(n(-2), n(3), n(-14))
+    out: "-8"
+    verdict: inconclusive
+    kind: unevaluated
+    note: compute-engine leaves PowerMod with a negative modulus unevaluated; the Rust mapping reduces it to -8.
 a-rational-exponent-is-a-modular-root-the-least:
   epsil:
     in: PowerMod(4, 1 / 2, 7)
@@ -332,7 +350,7 @@ a-301-digit-base:
       in: (\left(10^{300}+1\right)^7 \bmod 5)
       out: "1"
   sage:
-    in: power_mod(((10^300) + 1), 7, 5)
+    in: power_mod((((10)^300) + 1), 7, 5)
     out: "1"
   rust:
     in: powermod((power(n(10), n(300)) + n(1)), n(7), n(5))
@@ -356,7 +374,7 @@ a-square-root-of-3-modulo-the-prime-10-30-57:
       in: (3^{\frac{1}{2}} \bmod \left(10^{30}+57\right))
       out: "492767688934650018614948489645"
   sage:
-    in: power_mod(3, (1/2), ((10^30) + 57))
+    in: power_mod(3, (1/2), (((10)^30) + 57))
     out: "TypeError: no conversion of this rational to integer"
     verdict: error
     kind: domain
@@ -440,15 +458,15 @@ a-gaussian-modulus-and-an-exponent-of-10-30:
       in: ((1+2 i)^{10^{30}} \bmod (7+2 i))
       out: 1+2 i
   sage:
-    in: power_mod((1 + 2*I), (10^30), (7 + 2*I))
+    in: power_mod((1 + 2*I), ((10)^30), (7 + 2*I))
     out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
 11-7i-is-a-unit-mod-7-4i-so-it-has-negative:
   epsil:
-    in: PowerMod(11 + -7 * i, -4, 7 + 4i)
-    out: -2 + -1 * i
+    in: PowerMod(11 - 7i, -4, 7 + 4i)
+    out: -2 - i
   tex:
     in: \mathrm{PowerMod}(11-7i, -4, 7+4i)
     out: -2-i
@@ -589,6 +607,10 @@ a-square-root-of-3-mod-2-is-1-trivially:
     in: power_mod(3, (1/2), 2)
   rust:
     in: powermod(n(3), rational(n(1), n(2)), n(2))
+    out: "panic: an integer, not 1/2"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's PowerMod extends past them.
 exponent-0-base-minus-4-modulus-minus-2:
   epsil:
     in: PowerMod(-4, 0, -2)
@@ -607,6 +629,7 @@ exponent-0-base-minus-4-modulus-minus-2:
     in: power_mod(-4, 0, -2)
   rust:
     in: powermod(n(-4), n(0), n(-2))
+    out: "-1"
 exponent-0-base-5-modulus-minus-7:
   epsil:
     in: PowerMod(5, 0, -7)
@@ -625,6 +648,7 @@ exponent-0-base-5-modulus-minus-7:
     in: power_mod(5, 0, -7)
   rust:
     in: powermod(n(5), n(0), n(-7))
+    out: "-6"
 exponent-0-with-a-positive-modulus:
   epsil:
     in: PowerMod(2, 0, 14)
@@ -643,3 +667,4 @@ exponent-0-with-a-positive-modulus:
     in: power_mod(2, 0, 14)
   rust:
     in: powermod(n(2), n(0), n(14))
+    out: "1"

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
@@ -18,7 +18,7 @@ import { ensureStyles } from "./styles.ts";
  */
 export class NotatioDynamic extends LitElement {
   static properties = {
-    /** The notatio expression to evaluate and typeset. */
+    /** The Epsil expression to evaluate and typeset. */
     value: { type: String },
     /** Typeset as a centred display equation rather than inline. */
     display: { type: Boolean, reflect: true },
@@ -57,7 +57,7 @@ export class NotatioDynamic extends LitElement {
       return;
     }
     const [engine, convert] = await Promise.all([loadEngine(), loadMarkup()]);
-    const { json, errors } = parseNotatio(this.value, {
+    const { json, errors } = parseExpression(this.value, {
       parseLatex: (tex: string) => engine.parse(tex).json,
     });
     // Unparseable input renders nothing rather than an error, as everywhere else here;

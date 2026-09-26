@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { ENVIRONMENTS } from "@enumeratio/notatio";
 import { afterAll, expect, test } from "vite-plus/test";
 import { visualMarkup } from "../src/visual.ts";
@@ -18,7 +18,7 @@ const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(
 const fresh: Record<string, unknown> = {};
 
 for (const src of OUTS) {
-  const { json, errors } = parseNotatio(src);
+  const { json, errors } = parseExpression(src);
   expect(errors).toEqual([]);
   for (const env of ENVIRONMENTS) {
     const key = `${env.name}: Cell(${src})`;

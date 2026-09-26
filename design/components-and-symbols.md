@@ -15,8 +15,8 @@ the part component-naming already owns.
 ## 1. What exists
 
 - **`@enumeratio/notatio`**: ~30 Lit custom elements, `notatio-*`. Every expression
-  attribute is notatio; LaTeX lives only in `$…$` islands, and the editable elements
-  (`notatio-cell`, `notatio-notebook`, `notatio-worksheet`) convert notatio to LaTeX
+  attribute is Epsil; LaTeX lives only in `$…$` islands, and the editable elements
+  (`notatio-cell`, `notatio-notebook`, `notatio-worksheet`) convert Epsil to LaTeX
   for the MathLive field through one seam, `source.ts`. `in-form="latex"` is the escape
   hatch. `notatio-in` _is_ the field and keeps LaTeX; `notatio-out` renders a given
   encoding and keeps `format`.

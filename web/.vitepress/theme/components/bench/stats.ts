@@ -30,6 +30,18 @@ export function geomean(xs: readonly number[]): number {
 }
 
 /** A lookup by case name for one system's results within a run. */
+/**
+ * `report` keeping only results of the formula `plan` names for each case: another run of a
+ * case that has since changed is another benchmark. Results from before formulas were recorded
+ * never match a plan that records them.
+ */
+export function sameFormula<R extends { readonly results: readonly CaseResult[] }>(
+  report: R,
+  formulas: ReadonlyMap<string, string | undefined>,
+): R {
+  return { ...report, results: report.results.filter((r) => formulas.get(r.name) === r.formula) };
+}
+
 export function byName(results: readonly CaseResult[]): ReadonlyMap<string, CaseResult> {
   return new Map(results.map((r) => [r.name, r]));
 }

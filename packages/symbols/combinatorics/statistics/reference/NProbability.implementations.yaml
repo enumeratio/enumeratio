@@ -1,0 +1,27 @@
+nprobability-normal-outside-one-sigma-ish:
+  epsil:
+    in: NProbability(x ^ 2 > 1, Distributed(x, NormalDistribution(0, 1)))
+    out: 0.317_310_507_838_716_9
+  tex:
+    in: \mathrm{NProbability}(x^2\gt1, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))
+    out: 0.317\,310\,507\,838\,716\,9
+  fullform:
+    in: NProbability[Greater[Power[x, 2], 1], Distributed[x, NormalDistribution[0, 1]]]
+nprobability-poisson-is-even:
+  epsil:
+    in: NProbability(x % 2 == 0, Distributed(x, PoissonDistribution(4)))
+    out: 0.500_167_731_313_946_8
+  tex:
+    in: \mathrm{NProbability}(x\bmod2=0, \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(4)))
+    out: 0.500\,167\,731\,313\,946\,8
+  fullform:
+    in: NProbability[Equal[Mod[x, 2], 0], Distributed[x, PoissonDistribution[4]]]
+nprobability-agrees-with-exact-cdf:
+  epsil:
+    in: NProbability(x <= 5, Distributed(x, PoissonDistribution(3)))
+    out: 0.916_082_057_968_696_6
+  tex:
+    in: \mathrm{NProbability}(x\le5, \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))
+    out: 0.916\,082\,057\,968\,696\,6
+  fullform:
+    in: NProbability[LessEqual[x, 5], Distributed[x, PoissonDistribution[3]]]

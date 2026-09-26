@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
+import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { afterAll, expect, test } from "vite-plus/test";
 import {
   browserEnvironment,
@@ -55,7 +55,7 @@ const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(
 const fresh: Record<string, unknown> = {};
 
 for (const src of CORPUS) {
-  const { json, errors } = parseNotatio(src);
+  const { json, errors } = parseExpression(src);
   expect(errors).toEqual([]);
   for (const env of ENVS) {
     const key = `${env.name}: ${src}`;
@@ -63,7 +63,7 @@ for (const src of CORPUS) {
       const reduced = reduce(json, env);
       const rendering = renderingOf(reduced);
       const result = {
-        notatio: serializeNotatio(reduced),
+        epsil: serializeExpression(reduced),
         markup: rendering === undefined ? undefined : markupOf(rendering),
       };
       if (updating) {
@@ -81,18 +81,18 @@ afterAll(() => {
 
 test("an environment that can drive its controls leaves the expression alone", () => {
   for (const src of CORPUS) {
-    const { json } = parseNotatio(src);
+    const { json } = parseExpression(src);
     for (const env of [WEB, TTY]) {
-      expect(serializeNotatio(reduce(json, env))).toBe(serializeNotatio(json));
+      expect(serializeExpression(reduce(json, env))).toBe(serializeExpression(json));
     }
   }
 });
 
 test("declarations: a start, a range, a list; Manipulate parameters read the same way", () => {
   const decls = declarations(
-    parseNotatio("Row([Slider((k, 2), (0, 5)), Manipulate(a + b, (a, 0, 1), (b, [1, 2]))])").json,
+    parseExpression("Row([Slider((k, 2), (0, 5)), Manipulate(a + b, (a, 0, 1), (b, [1, 2]))])").json,
   );
-  expect(decls.map((d) => [d.name, d.kind, serializeNotatio(pinValue(d)!)])).toEqual([
+  expect(decls.map((d) => [d.name, d.kind, serializeExpression(pinValue(d)!)])).toEqual([
     ["k", "ranged", "2"],
     ["a", "ranged", "0"],
     ["b", "listed", "1"],
@@ -100,12 +100,12 @@ test("declarations: a start, a range, a list; Manipulate parameters read the sam
 });
 
 test("sampling stays on the step grid, and caps at n", () => {
-  const [d] = declarations(parseNotatio("Slider(k, (0, 1, 0.25))").json);
+  const [d] = declarations(parseExpression("Slider(k, (0, 1, 0.25))").json);
   expect(sampleValues(d!, 6)).toEqual([0, 0.25, 0.5, 0.75, 1]);
   expect(sampleValues(d!, 3)).toEqual([0, 0.5, 1]);
-  const [e] = declarations(parseNotatio("Slider(k, (0, 10))").json);
+  const [e] = declarations(parseExpression("Slider(k, (0, 10))").json);
   expect(sampleValues(e!, 3)).toEqual([0, 5, 10]);
-  const [c] = declarations(parseNotatio("Checkbox(on)").json);
+  const [c] = declarations(parseExpression("Checkbox(on)").json);
   expect(sampleValues(c!, 6)).toEqual(["False", "True"]);
 });
 
@@ -122,10 +122,10 @@ test("detectors: a pipe, a plain tty, a kitty; print, a phone, the web", () => {
 });
 
 test("a static host evaluates each readout under the pins", () => {
-  const { json } = parseNotatio('Row([Slider((k, 2), (0, 5)), "squared is", Dynamic(k^2)])');
+  const { json } = parseExpression('Row([Slider((k, 2), (0, 5)), "squared is", Dynamic(k^2)])');
   const pinned = reduce(json, PIPE);
   const seen: string[] = [];
-  const out = evaluateReadouts(pinned, (e) => (seen.push(serializeNotatio(e)), 4));
+  const out = evaluateReadouts(pinned, (e) => (seen.push(serializeExpression(e)), 4));
   expect(seen).toEqual(["2 ^ 2"]);
-  expect(serializeNotatio(out)).toBe('Labeled(Row(["squared is", 4]), "k = 2 (0 ≤ k ≤ 5)", Bottom)');
+  expect(serializeExpression(out)).toBe('Labeled(Row(["squared is", 4]), "k = 2 (0 ≤ k ≤ 5)", Bottom)');
 });

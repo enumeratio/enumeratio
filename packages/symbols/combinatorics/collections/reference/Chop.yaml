@@ -80,5 +80,19 @@ examples:
     expected: 0
     category: Possible issues
     caption: An exact small number is chopped too
+  - id: chop-0p001-0p0001-keeps-a-value-inside-the
+    expr: [Chop, 0.001, 0.0001]
+    expected: 0.001
+    role: test
+    caption: A tighter tolerance keeps a value the default second-argument threshold would chop
+  - id: chop-1e-15-with-the-default-tolerance
+    expr: [Chop, 1e-15]
+    expected: 0
+    role: test
+  - id: chops-parts-independently-with-a-tolerance
+    expr: [Chop, [Complex, 0.005, 3], 0.01]
+    expected: [Complex, 0, 3]
+    role: test
+    caption: With an explicit tolerance, still chops the real and imaginary parts independently
 seeAlso:
   - Round

@@ -1,0 +1,20 @@
+removes-a-literal-value:
+  epsil:
+    in: DeleteCases([1, 2, 3, 2, 4], 2)
+    out: "[1, 3, 4]"
+  tex:
+    in: \mathrm{DeleteCases}(\bigl\lbrack1, 2, 3, 2, 4\bigr\rbrack, 2)
+    out: \bigl\lbrack1, 3, 4\bigr\rbrack
+  fullform:
+    in: DeleteCases[List[1, 2, 3, 2, 4], 2]
+  wolfram:
+    in: DeleteCases[List[1, 2, 3, 2, 4], 2]
+wildcard-pattern-removes-everything:
+  epsil:
+    in: DeleteCases([x, y, z], _a)
+    out: "[]"
+  tex:
+    in: \mathrm{DeleteCases}(\bigl\lbrack x, y, z\bigr\rbrack, \operatorname{\_a})
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: DeleteCases[List[x, y, z], _a]

@@ -162,7 +162,7 @@ a-machine-precision-argument:
     in: Erf[0.95]
 complex-arguments-evaluate-directly:
   epsil:
-    in: Erf(1.5 + -1 * i)
+    in: Erf(1.5 - i)
     out: 1.078_399_207_498_933_5 + 0.027_963_711_238_655_833i
   tex:
     in: \operatorname{erf}(1.5-i)

@@ -11,6 +11,7 @@ repeated-squaring-2-2-2-2:
   epsil:
     in: Nest(Function(_1 ^ 2), 2, 3)
     out: "256"
+    back: Unreadable
   tex:
     in: \mathrm{Nest}(()\mapsto\operatorname{\_1}^2, 2, 3)
     out: "256"
@@ -31,6 +32,7 @@ nest-function-2-times-1-1-10:
   epsil:
     in: Nest(Function(2 * _1), 1, 10)
     out: 1_024
+    back: Unreadable
   tex:
     in: \mathrm{Nest}(()\mapsto2\operatorname{\_1}, 1, 10)
     out: 1\,024
@@ -42,6 +44,7 @@ three-newton-steps-toward-sqrt-2:
   epsil:
     in: Nest(Function((_1 + 2 / _1) / 2), 1, 3)
     out: 577 / 408
+    back: Unreadable
   tex:
     in: \mathrm{Nest}(()\mapsto\frac{\operatorname{\_1}+\frac{2}{\operatorname{\_1}}}{2}, 1, 3)
     out: \frac{577}{408}

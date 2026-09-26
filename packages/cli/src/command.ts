@@ -59,7 +59,7 @@ export interface EvalRequest {
   input: string;
   /** Input syntax (default: the session default, Epsil). */
   syntax?: Syntax;
-  /** Forms to render, in order; the first is the primary `form`/`result`. Default `["notatio"]`. */
+  /** Forms to render, in order; the first is the primary `form`/`result`. Default `["inputform"]`. */
   forms?: readonly Form[];
   /** Evaluate the parsed expression (default true); false converts it as written. */
   evaluate?: boolean;
@@ -99,7 +99,7 @@ export type EvalReply = EvalOk | EvalError;
  * on the serve host — so they agree on what a result looks like.
  */
 export function evaluateCommand(req: EvalRequest, defaults: SessionDefaults = {}): EvalReply {
-  const forms = req.forms?.length ? [...new Set(req.forms)] : [defaults.form ?? "notatio"];
+  const forms = req.forms?.length ? [...new Set(req.forms)] : [defaults.form ?? "inputform"];
   const session = new Session({
     ...defaults,
     syntax: req.syntax ?? defaults.syntax,
@@ -250,7 +250,7 @@ export function runCommand(argv: readonly string[], stdin?: string, defaults: Se
 
   switch (parsed.subcommand) {
     case "forms":
-      return listForms(parsed.json, defaults.form ?? "notatio");
+      return listForms(parsed.json, defaults.form ?? "inputform");
     case "formats":
       return parsed.json ? ok(`${JSON.stringify(formatsJson())}\n`) : ok(`${formatsTable()}\n`);
     case "completion": {
@@ -282,7 +282,7 @@ function evaluate(p: ParsedArgs, stdin: string | undefined, defaults: SessionDef
     forms.push(form);
   }
   // Structured output carries the interchange forms too, unless forms were named.
-  if (p.json && forms.length === 0) forms.push(defaults.form ?? "notatio", "tex", "mathjson", "wolfram");
+  if (p.json && forms.length === 0) forms.push(defaults.form ?? "inputform", "tex", "mathjson", "wolfram");
 
   let syntax: Syntax | undefined;
   if (p.syntax !== undefined) {

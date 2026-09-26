@@ -9,3 +9,19 @@ vertex-count-of-k4:
     in: VertexCount[CompleteGraph[4]]
   wolfram:
     in: VertexCount[CompleteGraph[4]]
+vertex-count-of-a-triangle:
+  epsil:
+    in: |-
+      VertexCount(Graph([
+                          UndirectedEdge(1, 2),
+                          UndirectedEdge(2, 3),
+                          UndirectedEdge(3, 1),
+                        ]))
+    out: "3"
+  tex:
+    in: \mathrm{VertexCount}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 1)\bigr\rbrack))
+    out: "3"
+  fullform:
+    in: VertexCount[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 1]]]]
+  wolfram:
+    in: VertexCount[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 1]]]]

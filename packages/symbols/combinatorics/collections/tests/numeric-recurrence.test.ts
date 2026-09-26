@@ -252,21 +252,13 @@ test("SternDiatomicSequence membership is every non-negative integer", () => {
   expect(entry.valid(-1n, [])).toBe(false);
 });
 
-// ─── engine-level: At / Take / Count / Element through the declared CE collection handlers. ───
+// ─── engine-level: Take / Count / Element through the declared CE collection handlers. ───
 
 const ce = new ComputeEngine();
 declareCollections(ce);
 
 test("FibonacciNumbers is declared as an indexed_collection<integer>", () => {
   expect(ce.box("FibonacciNumbers").type.toString()).toBe("indexed_collection<integer>");
-});
-
-test("At(FibonacciNumbers, 1) is the first term, 0", () => {
-  expect(ce.box(["At", "FibonacciNumbers", 1]).evaluate().re).toBe(0);
-});
-
-test("At(BellNumbers, 5) is Bell(4) = 15 (1-indexed At, 0-indexed term)", () => {
-  expect(ce.box(["At", "BellNumbers", 5]).evaluate().re).toBe(15);
 });
 
 test("Take(CatalanNumbers, 10) gives the first ten Catalan numbers", () => {

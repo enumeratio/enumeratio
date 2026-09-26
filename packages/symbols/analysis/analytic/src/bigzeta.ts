@@ -121,7 +121,7 @@ function emCoeff(j: number): BigDecimal {
   return p === coeffDigits ? coeffs[j] : coeffs[j].toPrecision(p);
 }
 
-interface Plan {
+export interface Plan {
   terms: number;
   pairs: number;
   /** log10 of the largest single term, which sets how many digits the sum cancels. */
@@ -137,7 +137,7 @@ const lnAbsPow = (wr: number, wi: number, s: Cx): number =>
  * 10^(−digits). A direct term costs a log, an exp and a sin/cos; a pair costs a few
  * multiplies — so of the N that work, take the one that minimises N + M/8.
  */
-function plan(s: Cx, a: Cx, digits: number): Plan {
+export function plan(s: Cx, a: Cx, digits: number): Plan {
   const target = -digits * LN10 - LN10;
   const n0 = Math.max(0, Math.ceil(1 - a.re)); // Re z ≥ 1
   const maxPairs = 4 * digits + 50;

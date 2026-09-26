@@ -1,4 +1,4 @@
-// InputForm -- an expression printed as notatio you could have typed. Wolfram's
+// InputForm -- an expression printed as Epsil you could have typed. Wolfram's
 // `InputForm` is a printer, not a hold: it renders whatever tree it is handed, so a
 // held expression prints as written and an evaluated one prints as evaluated. This is
 // the same deal, over `serializeEpsil`.
@@ -58,9 +58,21 @@ function foldSubtraction(ops: MathJsonExpression[]): MathJsonExpression {
   return left;
 }
 
+/**
+ * compute-engine's `serializeEpsil` drops a mantissa of exactly 1, so `1e-16` prints as
+ * `e-16` -- Euler's e minus 16 when read back. It prints any other mantissa as given, so
+ * the same value spelled `10e-17` survives the trip. Only a number that would print that
+ * way is respelled; the rest keep the serializer's own choice.
+ */
+function unitMantissa(node: unknown): MathJsonExpression | undefined {
+  if (typeof node !== "number" && typeof (node as { num?: unknown })?.num !== "string") return undefined;
+  const match = /^(-?)e([+-]?\d+)$/.exec(serializeEpsil(node as MathJsonExpression));
+  return match ? { num: `${match[1]}10e${Number(match[2]) - 1}` } : undefined;
+}
+
 function rewrite(node: unknown): MathJsonExpression {
   const head = headOf(node);
-  if (head === undefined) return node as MathJsonExpression;
+  if (head === undefined) return unitMantissa(node) ?? (node as MathJsonExpression);
   const ops = opsOf(node).map(rewrite);
 
   switch (head) {
@@ -105,8 +117,9 @@ function rewrite(node: unknown): MathJsonExpression {
       const zero = (v: unknown) => Number((v as { num?: string })?.num ?? v) === 0;
       const one = (v: unknown) => Number((v as { num?: string })?.num ?? v) === 1;
       if (zero(re) && one(im)) return "i" as MathJsonExpression;
-      if (zero(re)) return ["Multiply", im, "i"];
-      return one(im) ? ["Add", re, "i"] : ["Add", re, ["Multiply", im, "i"]];
+      // Through the rules again, so a negative imaginary part subtracts: `1 - i`, not `1 + -1 * i`.
+      if (zero(re)) return rewrite(["Multiply", im, "i"]);
+      return rewrite(one(im) ? ["Add", re, "i"] : ["Add", re, ["Multiply", im, "i"]]);
     }
 
     default:
@@ -119,7 +132,7 @@ export function normalizeInputForm(json: MathJsonExpression): MathJsonExpression
   return rewrite(json);
 }
 
-/** Print `json` as InputForm: notatio you could type back in. */
+/** Print `json` as InputForm: Epsil you could type back in. */
 export function toInputForm(json: MathJsonExpression): string {
   return serializeEpsil(normalizeInputForm(json));
 }

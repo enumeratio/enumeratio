@@ -65,6 +65,8 @@ interface Channel {
 class Harness {
   private channel: Promise<Channel> | undefined;
   private waiting = new Map<string, (reply: Reply) => void>();
+  /** Killed past a budget: their late "close" must not touch the harness that replaced them. */
+  private retired = new WeakSet<ChildProcess>();
   private readonly start: HarnessCommand;
 
   constructor(start: HarnessCommand) {
@@ -94,6 +96,7 @@ class Harness {
     // "close", not "exit": a process can exit before its last line is read.
     child.on("close", () => {
       clearInterval(watchdog);
+      if (this.retired.has(child)) return;
       const error = overMemory ? `over the ${memoryCapMb()} MB memory cap` : "harness exited";
       for (const resolve of this.waiting.values()) resolve({ error });
       this.waiting.clear();
@@ -145,6 +148,9 @@ class Harness {
     return new Promise((resolve) => {
       const timer = setTimeout(() => {
         this.waiting.delete(name);
+        // Retire it now: the next case starts a fresh harness instead of writing to this one.
+        this.retired.add(channel.child);
+        this.channel = undefined;
         killGroup(channel.child);
         resolve({ timedOut: true, error: "killed past budget" });
       }, timeoutSeconds * 1000);
@@ -193,9 +199,12 @@ export function judge(
     return { name, status: "timeout", reason: reply.error };
   if (reply.error !== undefined) return { name, status: "error", reason: reply.error };
   const value = reply.value;
-  if (expected !== undefined && (value === undefined || !agrees(value, expected, precision)))
-    return { name, status: "wrong", value, reason: `expected ${expected}` };
   const samplesNs = reply.samplesNs ?? [];
+  // A wrong answer keeps its timing, for the record; nothing compares against it.
+  if (expected !== undefined && (value === undefined || !agrees(value, expected, precision))) {
+    const timing = samplesNs.length === 0 ? {} : { k: reply.k, samplesNs, ...summarise(samplesNs) };
+    return { name, status: "wrong", ...timing, value, reason: `expected ${expected}` };
+  }
   const summary = summarise(samplesNs);
   const status = reply.timedOut === true ? "timeout" : summary.median < PROTOCOL.tooFastNs ? "too-fast" : "ok";
   return { name, status, k: reply.k, samplesNs, ...summary, value };
@@ -237,7 +246,7 @@ export async function runPlan(
     if (result === undefined) {
       const reply = await harness!.ask(c.name, c.budget * 4 + GRACE_SECONDS);
       if (reply.version !== undefined) options.onVersion?.(system, reply.version);
-      result = judge(c.name, reply, c.expected, c.precision);
+      result = { ...judge(c.name, reply, c.expected, c.precision), formula: c.formula };
     }
     results.get(system)!.push(result);
     options.onResult?.(system, result);
