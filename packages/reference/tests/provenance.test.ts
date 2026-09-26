@@ -395,10 +395,14 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * nminmax.ts, nsum.ts) are the same story yet again: all seven are genuinely Wolfram's own
  * names (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
  * `elsewhere`.
+ *
+ * WeightedAdjacencyMatrix (graph-weights.ts) is the same story once more: genuinely
+ * Wolfram's own name (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run.
  */
 const NOVEL = [
   "DifferenceRootReduce",
   "DifferentialRootReduce",
+  "WeightedAdjacencyMatrix",
   "TimeConstrained",
   "MemoryConstrained",
   "VerificationTest",

@@ -222,7 +222,7 @@ test("KaryTree(n) defaults to k = 2 (binary)", () => {
 });
 
 // ─── not implemented / out of scope, documented on the module ──────────────────────────
-test("WeightedAdjacencyMatrix and BooleanConvert are intentionally not declared", () => {
-  expect(ce.lookupDefinition("WeightedAdjacencyMatrix")).toBeUndefined();
+// WeightedAdjacencyMatrix has since landed (graph-weights.ts) -- see graph-weights.test.ts.
+test("BooleanConvert is intentionally not declared", () => {
   expect(ce.lookupDefinition("BooleanConvert")).toBeUndefined();
 });

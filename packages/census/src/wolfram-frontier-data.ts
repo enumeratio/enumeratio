@@ -277,10 +277,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 18,
   },
   {
-    head: "WeightedAdjacencyMatrix",
-    uses: 18,
-  },
-  {
     head: "Control",
     uses: 17,
   },

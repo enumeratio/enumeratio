@@ -678,6 +678,12 @@ export const HEADS: Record<string, string> = {
   AdjacencyGraph: "AdjacencyGraph",
   RandomGraph: "RandomGraph",
 
+  // Edge weights (graph-weights.ts): `EdgeWeight` is Wolfram's own option name, same call
+  // shape (`Graph(edges, EdgeWeight -> {…})` is legal WL too), so no SPECIAL entry is
+  // needed for Graph itself; WeightedAdjacencyMatrix is a plain rename like the rest of
+  // this file's graph heads.
+  WeightedAdjacencyMatrix: "WeightedAdjacencyMatrix",
+
   // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
   //
   // Deliberately Wolfram-named: "Wolfram's `Plot`, `Histogram`, `Manipulate` print as

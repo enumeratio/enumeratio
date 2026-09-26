@@ -2230,6 +2230,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "WeightedAdjacencyMatrix",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "WeightedAdjacencyMatrix",
+    elsewhere: [],
+  },
+  {
     name: "WeirdNumbers",
     provenance: "unknown",
     declared: null,
