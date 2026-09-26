@@ -2576,7 +2576,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "FunctionContinuous",
     provenance: "extension",
     declared: "enumeratio-analytic",
-    wolframAlias: null,
+    wolframAlias: "FunctionContinuous",
     elsewhere: [],
   },
   {

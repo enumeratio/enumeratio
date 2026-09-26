@@ -544,6 +544,9 @@ export const HEADS: Record<string, string> = {
   // `C[1]`) — a plain rename.
   DSolveValue: "DSolveValue",
   C: "C",
+  // Restructured below (SPECIAL) — this entry only marks the name collision decided
+  // (the alignment check), matching BigO/Round/Sum's own SPECIAL+HEADS pairing.
+  FunctionContinuous: "FunctionContinuous",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",

@@ -2116,6 +2116,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FunctionAnalytic",
   },
   {
+    name: "FunctionContinuous",
+    wolfram: "FunctionContinuous",
+  },
+  {
     name: "FunctionConvexity",
     wolfram: "FunctionConvexity",
   },

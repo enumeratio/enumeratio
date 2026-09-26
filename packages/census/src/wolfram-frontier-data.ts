@@ -269,10 +269,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 18,
   },
   {
-    head: "FunctionContinuous",
-    uses: 18,
-  },
-  {
     head: "Inset",
     uses: 18,
   },
@@ -357,23 +353,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 14,
   },
   {
-    head: "MellinTransform",
-    uses: 14,
-  },
-  {
     head: "OverVector",
     uses: 14,
   },
   {
     head: "AbsolutePointSize",
-    uses: 13,
-  },
-  {
-    head: "CaputoD",
-    uses: 13,
-  },
-  {
-    head: "DSolveValue",
     uses: 13,
   },
   {
@@ -390,10 +374,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "PopupWindow",
-    uses: 13,
-  },
-  {
-    head: "TrigFactor",
     uses: 13,
   },
   {
@@ -562,10 +542,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "EllipticTheta",
-    uses: 9,
-  },
-  {
-    head: "HankelTransform",
     uses: 9,
   },
   {
