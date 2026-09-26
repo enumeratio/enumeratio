@@ -1,0 +1,5 @@
+- id: count-cograssmannianpermutations-5-2-5-5-27
+  expr: [Count, [CograssmannianPermutations, 5]]
+  expected: 27
+  category: Basic
+  caption: $Count(CograssmannianPermutations(5)) = 2^5 - 5 = 27$, A000325

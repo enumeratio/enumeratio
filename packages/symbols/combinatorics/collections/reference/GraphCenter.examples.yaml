@@ -1,0 +1,11 @@
+- id: path-5-center-is-the-middle-vertex
+  expr:
+    [
+      GraphCenter,
+      [
+        Graph,
+        [List, 1, 2, 3, 4, 5],
+        [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4], [UndirectedEdge, 4, 5]],
+      ],
+    ]
+  expected: [List, 3]

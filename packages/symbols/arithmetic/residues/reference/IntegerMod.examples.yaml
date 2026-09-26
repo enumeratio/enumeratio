@@ -1,0 +1,88 @@
+- id: integermod-10-7
+  expr: [IntegerMod, 10, 7]
+  expected: [IntegerMod, 3, 7]
+- id: 1-3-is-the-inverse-of-3-3-cdot-5-15-equiv-1
+  expr: [IntegerMod, [Rational, 1, 3], 7]
+  expected: [IntegerMod, 5, 7]
+  caption: '$1/3$ is the inverse of 3: $3 \cdot 5 = 15 \equiv 1$'
+- id: fermat-3-6-equiv-1-pmod-7
+  expr: [Power, [IntegerMod, 3, 7], 6]
+  expected: [IntegerMod, 1, 7]
+  caption: 'Fermat: $3^6 \equiv 1 \pmod 7$'
+- id: 1-over-integermod-3-7
+  expr: [Divide, 1, [IntegerMod, 3, 7]]
+  expected: [IntegerMod, 5, 7]
+  category: Scope
+- id: different-moduli-meet-in-z-gcd-4-6
+  expr: [Add, [IntegerMod, 2, 4], [IntegerMod, 1, 6]]
+  expected: [IntegerMod, 1, 2]
+  caption: different moduli meet in $\mathbb{Z}/\gcd(4, 6)$
+  category: Scope
+- id: chineseremainder-integermod-2-3-integermod-3-5
+  expr: [ChineseRemainder, [IntegerMod, 2, 3], [IntegerMod, 3, 5]]
+  expected: [IntegerMod, 8, 15]
+  category: Applications
+- id: multiplicativeorder-integermod-2-7
+  expr: [MultiplicativeOrder, [IntegerMod, 2, 7]]
+  expected: 3
+  category: Applications
+- id: 2-is-not-a-unit-mod-4-and-the-message-says-so
+  expr: [Divide, 1, [IntegerMod, 2, 4]]
+  expected: [Divide, 1, [IntegerMod, 2, 4]]
+  caption: 2 is not a unit mod 4, and the message says so
+  category: Possible issues
+- id: odd-mod-4-and-even-mod-6-at-once-no-such-class
+  expr: [ChineseRemainder, [IntegerMod, 1, 4], [IntegerMod, 2, 6]]
+  expected: [ChineseRemainder, [IntegerMod, 1, 4], [IntegerMod, 2, 6]]
+  caption: "odd mod 4 and even mod 6 at once: no such class"
+  category: Possible issues
+- id: integermod-negative-1-7
+  expr: [IntegerMod, -1, 7]
+  expected: [IntegerMod, 6, 7]
+  role: test
+- id: a-non-unit-denominator-mod-4-stays-unevaluated
+  expr: [IntegerMod, [Rational, 1, 2], 4]
+  expected: [IntegerMod, [Rational, 1, 2], 4]
+  role: test
+  category: Possible issues
+- id: adding-two-classes-mod-7
+  expr: [Add, [IntegerMod, 5, 7], [IntegerMod, 4, 7]]
+  expected: [IntegerMod, 2, 7]
+  role: test
+  category: Scope
+- id: adding-a-plain-integer-to-a-class
+  expr: [Add, [IntegerMod, 5, 7], 3]
+  expected: [IntegerMod, 1, 7]
+  role: test
+  category: Scope
+- id: subtracting-two-classes-mod-7
+  expr: [Subtract, [IntegerMod, 2, 7], [IntegerMod, 5, 7]]
+  expected: [IntegerMod, 4, 7]
+  role: test
+  category: Scope
+- id: multiplying-two-classes-mod-7
+  expr: [Multiply, [IntegerMod, 3, 7], [IntegerMod, 5, 7]]
+  expected: [IntegerMod, 1, 7]
+  role: test
+  category: Scope
+- id: power-with-exponent-negative-1-is-the-inverse
+  expr: [Power, [IntegerMod, 3, 7], -1]
+  expected: [IntegerMod, 5, 7]
+  role: test
+  category: Scope
+- id: negating-a-class-mod-7
+  expr: [Negate, [IntegerMod, 3, 7]]
+  expected: [IntegerMod, 4, 7]
+  role: test
+  category: Scope
+- id: power-with-negative-exponent-of-a-non-unit
+  expr: [Power, [IntegerMod, 2, 4], -1]
+  expected: [Divide, 1, [IntegerMod, 2, 4]]
+  role: test
+  category: Possible issues
+  caption: 2 is not a unit mod 4, so the negative power stays as a `Divide`
+- id: chineseremainder-integermod-1-4-integermod-3-6
+  expr: [ChineseRemainder, [IntegerMod, 1, 4], [IntegerMod, 3, 6]]
+  expected: [IntegerMod, 9, 12]
+  role: test
+  category: Applications

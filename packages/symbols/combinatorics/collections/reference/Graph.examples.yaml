@@ -1,0 +1,13 @@
+- id: a-triangle-vertices-inferred
+  expr: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]
+  expected: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]
+  caption: A triangle, vertices inferred from the edges
+- id: an-isolated-vertex-needs-the-explicit-form
+  expr: [VertexList, [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2]]]]
+  expected: [List, 1, 2, 3]
+  caption: An isolated vertex needs the explicit two-argument form
+- id: the-1-arg-form-is-not-normalized-to-2-arg
+  expr: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]]]
+  expected: [Graph, [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]]]
+  role: test
+  caption: The 1-argument form holds exactly as written, never normalized into the 2-argument form

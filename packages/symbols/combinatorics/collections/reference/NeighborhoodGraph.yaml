@@ -10,14 +10,6 @@ signatures:
     description: distance $\leq n$, by BFS on the underlying (direction-blind) graph.
     library: enumeratio-collections
     arity: 3
-examples:
-  - id: immediate-neighbours-on-a-path
-    expr: [VertexList, [NeighborhoodGraph, [PathGraph, 7], 4]]
-    expected: [List, 3, 4, 5]
-    caption: Default radius 1 around the middle of a 7-vertex path
-  - id: radius-2
-    expr: [VertexList, [NeighborhoodGraph, [PathGraph, 7], 4, 2]]
-    expected: [List, 2, 3, 4, 5, 6]
 seeAlso:
   - Subgraph
   - GraphDistance

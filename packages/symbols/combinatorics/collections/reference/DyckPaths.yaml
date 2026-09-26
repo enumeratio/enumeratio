@@ -9,15 +9,6 @@ signatures:
 details:
   - Count is the Catalan number $C_n$ (see [[CatalanNumber]])
   - Each element is a 0/1 step sequence with every prefix having at least as many 1s as 0s
-examples:
-  - id: c-3
-    expr: [Count, [DyckPaths, 3]]
-    expected: 5
-    caption: $C_3$
-  - id: three-ups-then-three-downs
-    expr: [At, [DyckPaths, 3], 1]
-    expected: [List, 1, 1, 1, 0, 0, 0]
-    caption: three ups then three downs
 seeAlso:
   - BinaryTrees
   - CatalanNumber

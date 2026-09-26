@@ -1,0 +1,4 @@
+- id: inversecdf-normal-median
+  expr: [InverseCDF, [NormalDistribution, 0, 1], [Rational, 1, 2]]
+  expected: -6.957290979756837e-17
+  caption: The median of a standard normal is 0 — bisection lands within double precision of it (deterministic, since the bisection is unseeded and non-random).

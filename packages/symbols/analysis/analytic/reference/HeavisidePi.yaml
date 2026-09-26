@@ -8,18 +8,3 @@ signatures:
     library: "@enumeratio/analytic"
 details:
   - The same rectangular pulse as [[UnitBox]], but the boundary is left open rather than closed -- [[UnitBox]](±1/2) = 1, HeavisidePi(±1/2) unevaluated. The two heads exist for the two conventions.
-examples:
-  - id: heavisidepi-inside
-    expr: [HeavisidePi, 0]
-    expected: 1
-  - id: heavisidepi-boundary-unevaluated
-    expr: [HeavisidePi, [Rational, 1, 2]]
-    expected: [HeavisidePi, [Rational, 1, 2]]
-    caption: Unevaluated at the boundary -- unlike [[UnitBox]]
-  - id: heavisidepi-neg-boundary-unevaluated
-    expr: [HeavisidePi, [Rational, -1, 2]]
-    expected: [HeavisidePi, [Rational, -1, 2]]
-  - id: heavisidepi-outside
-    expr: [HeavisidePi, 1]
-    expected: 0
-    category: Scope

@@ -14,7 +14,7 @@ import { declareAnalytic } from "@enumeratio/analytic/src";
 import { dirname, join } from "node:path";
 import { dedupeId, type ReferenceExample, type SystemImplementation } from "@enumeratio/entry";
 import { emit } from "@enumeratio/oracle/src";
-import { writeYaml } from "@enumeratio/entry/node";
+import { writeEntry, writeYaml } from "@enumeratio/entry/node";
 import { baseId } from "./example-id.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 
@@ -118,7 +118,7 @@ for (const [head, grid] of Object.entries(byHead)) {
     const { wolframNote: _note, ...example } = e;
     return { id, ...example } as ReferenceExample;
   });
-  await writeYaml(entryPath, { ...entry, examples: [...kept, ...points] });
+  await writeEntry(dirname(entryPath), { ...entry, examples: [...kept, ...points] });
   // A grid point's Wolfram note lives on its implementations row, beside the scan's answer.
   const record: Record<string, Record<string, SystemImplementation>> = structuredClone(implementations ?? {});
   grid.forEach((e, i) => {

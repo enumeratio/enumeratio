@@ -9,7 +9,6 @@ details:
   - "A lazy indexed collection: $Count(PowerfulNumbers) = +\\infty$ (every perfect square is powerful), and $At$ unranks the $k$-th by scanning forward, testing each candidate's factorisation."
   - OEIS A001694. Every powerful number factors uniquely as $a^2 b^3$ for squarefree $b$.
   - "Membership goes through [[Element]]: $Element(8, PowerfulNumbers)$ is true ($8 = 2^3$), $Element(12, PowerfulNumbers)$ is false ($12 = 2^2 \\cdot 3$, and $3$'s exponent is only $1$)."
-examples: []
 enumerate:
   expr: Take(PowerfulNumbers, 20)
 seeAlso:

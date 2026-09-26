@@ -6,11 +6,6 @@ signatures:
   - call: EdgeList(g)
     description: every edge of $g$ ([[UndirectedEdge]]/[[DirectedEdge]]), in declaration order.
     library: enumeratio-collections
-examples:
-  - id: edges-of-a-mixed-graph
-    expr: [EdgeList, [Graph, [List, [UndirectedEdge, 2, 1], [DirectedEdge, 1, 3]]]]
-    expected: [List, [UndirectedEdge, 2, 1], [DirectedEdge, 1, 3]]
-    caption: Edges of a mixed undirected/directed graph
 seeAlso:
   - Graph
   - VertexList

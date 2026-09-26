@@ -1,0 +1,40 @@
+- id: the-first-prime-is-2
+  expr: [NthPrime, 1]
+  expected: 2
+  caption: The first prime is 2
+- id: nthprime-10
+  expr: [NthPrime, 10]
+  expected: 29
+- id: nthprime-100
+  expr: [NthPrime, 100]
+  expected: 541
+- id: the-1000th-prime
+  expr: [NthPrime, 1000]
+  expected: 7919
+  category: Neat examples
+  caption: The 1000th prime
+- id: primepi-and-nthprime-are-inverses-pi-p-n-n
+  expr: [Equal, [PrimePi, [NthPrime, 100]], 100]
+  expected: True
+  category: Properties
+  caption: '[[PrimePi]] and NthPrime are inverses: $\pi(p_n)=n$'
+- id: n-must-be-a-positive-integer-compute-engine
+  expr: [NthPrime, 0]
+  expected: [NthPrime, 0]
+  category: Possible issues
+  caption: n must be a positive integer; compute-engine leaves NthPrime(0) unevaluated
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [NthPrime, [List, 1, 3, 4, 10]]
+  expected: [List, 2, 5, 7, 29]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: the-millionth-prime
+  expr: [NthPrime, 1000000]
+  expected: 15485863
+  category: Scope
+  caption: The millionth prime
+- id: a-prime-gap-p-31-p-30-127-113
+  expr: [Subtract, [NthPrime, 31], [NthPrime, 30]]
+  expected: 14
+  category: Applications
+  caption: "A prime gap: $p_{31}-p_{30}=127-113$"

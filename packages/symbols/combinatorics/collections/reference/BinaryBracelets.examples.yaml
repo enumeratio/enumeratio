@@ -1,0 +1,5 @@
+- id: count-binarybracelets-6-13-a000029
+  expr: [Count, [BinaryBracelets, 6]]
+  expected: 13
+  category: Basic
+  caption: $Count(BinaryBracelets(6)) = 13$, A000029

@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection with no known closed form; the count is the cached enumeration's length, summed over every reduced skew shape from [[SkewPartitions]].
   - Each element packs `[λ, μ, rowWord]`, where `rowWord[i]` is the 0-based row entry $i{+}1$ was placed in, in placement order; $\mu = 0$ (every row) recovers a plain standard Young tableau.
   - Unranked by shape ([[SkewPartitions]]'s $\lambda$-then-$\mu$ order), then by row-word within a shape.
-examples:
-  - id: count-skewstandardtableaux-3-24-standard
-    expr: [Count, [SkewStandardTableaux, 3]]
-    expected: 24
-    category: Basic
-    caption: "$Count(SkewStandardTableaux(3)) = 24$: standard fillings of every skew shape of 3 cells"
 enumerate:
   expr: SkewStandardTableaux(3)
 seeAlso:

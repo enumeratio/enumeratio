@@ -6,21 +6,6 @@ signatures:
   - call: GraphDiameter(g)
     description: max over v of VertexEccentricity(g, v); PositiveInfinity if g is disconnected.
     library: enumeratio-collections
-examples:
-  - id: path-5-has-diameter-4
-    expr:
-      [
-        GraphDiameter,
-        [
-          Graph,
-          [List, 1, 2, 3, 4, 5],
-          [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4], [UndirectedEdge, 4, 5]],
-        ],
-      ]
-    expected: 4
-  - id: disconnected-graph-has-infinite-diameter
-    expr: [GraphDiameter, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]
-    expected: PositiveInfinity
 seeAlso:
   - GraphRadius
   - GraphPeriphery

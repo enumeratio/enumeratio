@@ -1,0 +1,11 @@
+- id: posetelements-divisorlattice-12
+  expr: [PosetElements, [DivisorLattice, 12]]
+  expected: [List, 1, 2, 3, 4, 6, 12]
+- id: posetelements-chain-4
+  expr: [PosetElements, [Chain, 4]]
+  expected: [List, 1, 2, 3, 4]
+- id: 3-3-intervals
+  expr: [AlgebraDimension, [IncidenceAlgebra, [BooleanLattice, 3]]]
+  expected: 27
+  caption: $3^3$ intervals
+  category: Properties

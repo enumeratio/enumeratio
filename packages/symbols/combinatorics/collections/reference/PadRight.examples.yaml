@@ -1,0 +1,18 @@
+- id: padded-with-zeros-on-the-right
+  expr: [PadRight, [List, 1, 2, 3], 5]
+  expected: [List, 1, 2, 3, 0, 0]
+  caption: Padded with zeros on the right
+- id: a-padding-element
+  expr: [PadRight, [List, 1, 2, 3], 5, x]
+  expected: [List, 1, 2, 3, x, x]
+  caption: A padding element
+- id: a-shorter-length-drops-elements-from-the-right
+  expr: [PadRight, [List, 1, 2, 3, 4, 5], 3]
+  expected: [List, 1, 2, 3]
+  category: Scope
+  caption: A shorter length drops elements from the right
+- id: with-no-length-a-ragged-array-is-padded-to-a
+  expr: [PadRight, [List, [List, 1], [List, 2, 3]]]
+  expected: [List, [List, 1, 0], [List, 2, 3]]
+  category: Scope
+  caption: With no length, a ragged array is padded to a full matrix

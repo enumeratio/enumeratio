@@ -1,0 +1,5 @@
+- id: count-shiftedstandardtableaux-5-6-standard
+  expr: [Count, [ShiftedStandardTableaux, 5]]
+  expected: 6
+  category: Basic
+  caption: "$Count(ShiftedStandardTableaux(5)) = 6$: standard fillings of every shifted shape of a strict partition of 5"

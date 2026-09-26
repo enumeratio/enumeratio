@@ -1,0 +1,8 @@
+- id: sum-one-to-five
+  expr: [List, [Assign, total, 0], [Do, [Assign, total, [Add, total, i]], [List, i, 1, 5]], total]
+  expected: [List, 0, 15]
+  caption: sum 1 through 5 with a named loop variable
+- id: repeat-with-no-loop-variable
+  expr: [List, [Assign, count, 0], [Do, [Assign, count, [Add, count, 1]], 4], count]
+  expected: [List, 0, 4]
+  caption: Do(body, n) repeats with no loop variable

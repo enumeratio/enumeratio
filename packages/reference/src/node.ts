@@ -1,5 +1,6 @@
 // The fs-based loader for the YAML records (design/examples-as-data.md §8 step 1). Reads
-// `<package>/reference/<Head>.yaml` and its optional `<Head>.implementations.yaml`, through
+// `<package>/reference/<Head>.yaml` with its optional `<Head>.examples.yaml` and
+// `<Head>.implementations.yaml`, through
 // `@enumeratio/entry`'s strict reader, validated against its JSON Schema, and checks for `id`
 // collisions on a head shared between two packages (§9 "Shared heads").
 //
@@ -15,9 +16,15 @@ import {
   type OtherSystemRun,
   parseYaml,
   type ReferenceEntry,
+  type ReferenceExample,
   type SystemImplementation,
 } from "@enumeratio/entry";
-import { HEAD_IMPLEMENTATIONS_SCHEMA, REFERENCE_ENTRY_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
+import {
+  HEAD_IMPLEMENTATIONS_SCHEMA,
+  REFERENCE_ENTRY_SCHEMA,
+  REFERENCE_EXAMPLES_SCHEMA,
+  validateSchema,
+} from "@enumeratio/entry/schema";
 import { isCrosswalkSystem } from "./crosswalk/sources.ts";
 
 export interface LoadedHead {
@@ -27,6 +34,8 @@ export interface LoadedHead {
   readonly head: string;
   readonly entryPath: string;
   readonly entry: ReferenceEntry;
+  /** Absent when the head has no examples. */
+  readonly examplesPath?: string;
   readonly implementationsPath?: string;
   readonly implementations?: HeadImplementations;
 }
@@ -42,6 +51,7 @@ export interface LoadResult {
 }
 
 const ENTRY_SUFFIX = ".yaml";
+const EXAMPLES_SUFFIX = ".examples.yaml";
 const IMPLEMENTATIONS_SUFFIX = ".implementations.yaml";
 
 function headName(fileName: string): string {
@@ -91,20 +101,33 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
 
   for (const { package: pkg, dir: referenceDir } of dataDirs(packagesRoot)) {
     const files = readdirSync(referenceDir).filter(
-      (f) => f.endsWith(ENTRY_SUFFIX) && !f.endsWith(IMPLEMENTATIONS_SUFFIX),
+      (f) => f.endsWith(ENTRY_SUFFIX) && !f.endsWith(EXAMPLES_SUFFIX) && !f.endsWith(IMPLEMENTATIONS_SUFFIX),
     );
 
     for (const file of files.sort()) {
       const head = headName(file);
       const entryPath = join(referenceDir, file);
-      let entry: ReferenceEntry;
+      let fields: Omit<ReferenceEntry, "examples">;
       try {
-        entry = parseYaml(readFileSync(entryPath, "utf8")) as ReferenceEntry;
+        fields = parseYaml(readFileSync(entryPath, "utf8")) as Omit<ReferenceEntry, "examples">;
       } catch (error) {
         issues.push({ file: entryPath, message: `failed to parse: ${(error as Error).message}` });
         continue;
       }
-      for (const message of validateSchema(REFERENCE_ENTRY_SCHEMA, entry)) issues.push({ file: entryPath, message });
+      for (const message of validateSchema(REFERENCE_ENTRY_SCHEMA, fields)) issues.push({ file: entryPath, message });
+
+      const examplesPath = join(referenceDir, `${head}${EXAMPLES_SUFFIX}`);
+      let examples: ReferenceExample[] = [];
+      if (existsSync(examplesPath)) {
+        try {
+          examples = parseYaml(readFileSync(examplesPath, "utf8")) as ReferenceExample[];
+        } catch (error) {
+          issues.push({ file: examplesPath, message: `failed to parse: ${(error as Error).message}` });
+        }
+        for (const message of validateSchema(REFERENCE_EXAMPLES_SCHEMA, examples))
+          issues.push({ file: examplesPath, message });
+      }
+      const entry: ReferenceEntry = { ...fields, examples };
 
       const implementationsPath = join(referenceDir, `${head}${IMPLEMENTATIONS_SUFFIX}`);
       let implementations: HeadImplementations | undefined;
@@ -128,10 +151,10 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
         const seenIn = seenIds.get(globalId);
         if (seenIn !== undefined)
           issues.push({
-            file: entryPath,
+            file: examplesPath,
             message: `id collision: "${globalId}" is also declared in ${seenIn}`,
           });
-        else seenIds.set(globalId, entryPath);
+        else seenIds.set(globalId, examplesPath);
       }
 
       heads.push({
@@ -139,6 +162,7 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
         head,
         entryPath,
         entry,
+        examplesPath: examples.length > 0 ? examplesPath : undefined,
         implementationsPath: implementations !== undefined ? implementationsPath : undefined,
         implementations,
       });

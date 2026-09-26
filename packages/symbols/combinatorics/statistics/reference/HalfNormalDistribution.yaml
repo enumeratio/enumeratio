@@ -11,19 +11,6 @@ details:
   - $CDF(x) = Erf(x\theta/\sqrt{2})$ via [[Erf]], clamped to $0$ below $x=0$.
   - $Mean = \sqrt{2/\pi}/\theta$, $Variance = (\pi-2)/(\pi\theta^2)$, both exact.
   - '[[RandomVariate]] samples $|Z|/\theta$ for a standard normal $Z$.'
-examples:
-  - id: halfnormal-pdf-exact
-    expr: [PDF, [HalfNormalDistribution, 1], 1]
-    expected: [Divide, [Sqrt, 2], [Sqrt, [Multiply, ExponentialE, Pi]]]
-  - id: halfnormal-cdf-exact
-    expr: [CDF, [HalfNormalDistribution, 1], 1]
-    expected: [Erf, [Divide, [Sqrt, 2], 2]]
-  - id: halfnormal-mean-exact
-    expr: [Mean, [HalfNormalDistribution, 1]]
-    expected: [Sqrt, [Divide, 2, Pi]]
-  - id: halfnormal-variance-exact
-    expr: [Variance, [HalfNormalDistribution, 1]]
-    expected: [Divide, [Add, -2, Pi], Pi]
 seeAlso:
   - ChiDistribution
   - NormalDistribution

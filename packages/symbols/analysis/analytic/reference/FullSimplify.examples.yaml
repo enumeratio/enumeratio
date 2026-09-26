@@ -1,0 +1,28 @@
+- id: the-pythagorean-identity
+  expr: [FullSimplify, [Add, [Power, [Sin, x], 2], [Power, [Cos, x], 2]]]
+  expected: 1
+  caption: The Pythagorean identity
+- id: recognizes-the-definition-of-sinh
+  expr: [FullSimplify, [Divide, [Subtract, [Exp, x], [Exp, [Negate, x]]], 2]]
+  expected: [Sinh, x]
+  caption: Recognizes the definition of [[Sinh]]
+- id: folds-the-double-angle-product
+  expr: [FullSimplify, [Multiply, 2, [Sin, x], [Cos, x]]]
+  expected: [Sin, [Multiply, 2, x]]
+  category: Scope
+  caption: Folds the double-angle product
+- id: the-functional-equation-of-gamma
+  expr: [FullSimplify, [Divide, [Gamma, [Add, x, 1]], [Gamma, x]]]
+  expected: x
+  category: Scope
+  caption: The functional equation of [[Gamma]]
+- id: denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3
+  expr: [FullSimplify, [Subtract, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]]]
+  expected: 0
+  category: Scope
+  caption: Denests $\sqrt{5 + 2\sqrt6} = \sqrt2 + \sqrt3$
+- id: the-hyperbolic-pythagorean-identity
+  expr: [FullSimplify, [Subtract, [Power, [Cosh, x], 2], [Power, [Sinh, x], 2]]]
+  expected: 1
+  category: Scope
+  caption: The hyperbolic Pythagorean identity

@@ -9,7 +9,6 @@ details:
   - A lazy indexed collection; whether there are infinitely many is open, so $Count(SophieGermainPrimes) = NaN$. OEIS A005384.
   - $At(SophieGermainPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $2n+1$ -- $At(SophieGermainPrimes, 4) = 11$ ($23$ is prime).
   - "Membership goes through [[Element]]: $Element(11, SophieGermainPrimes)$ is true, $Element(7, SophieGermainPrimes)$ is false ($15$ is not prime)."
-examples: []
 enumerate:
   expr: Take(SophieGermainPrimes, 20)
 seeAlso:

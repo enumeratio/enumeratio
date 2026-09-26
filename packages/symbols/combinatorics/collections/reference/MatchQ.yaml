@@ -9,19 +9,6 @@ signatures:
 details:
   - "Built directly on compute-engine's own wildcard grammar (`BoxedExpression.match`): `_`/`_name` matches one element, `__`/`__name` one-or-more, `___`/`___name` zero-or-more — Wolfram's Blank/BlankSequence/BlankNullSequence, unnamed or named."
   - "There is no head-restricted blank (Wolfram's `_Integer`): a wildcard binds to whatever it lands on, with no type filter. `Pattern`/`Optional` (`x_:default`) and condition patterns (`_?test`) aren't implemented either."
-examples:
-  - id: add-of-two-wildcards-matches-an-add
-    expr: [MatchQ, [Add, x, 1], [Add, _a, _b]]
-    expected: True
-  - id: a-product-does-not-match-an-add-pattern
-    expr: [MatchQ, [Multiply, x, y], [Add, _a, _b]]
-    expected: False
-    category: Scope
-  - id: a-sequence-wildcard-matches-the-rest-of-a-list
-    expr: [MatchQ, [List, 1, 2, 3], [List, _a, __rest]]
-    expected: True
-    category: Scope
-    caption: "`__rest` (a sequence wildcard) absorbs one or more trailing elements"
 seeAlso:
   - FreeQ
   - Replace

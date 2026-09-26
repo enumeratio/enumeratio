@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection; the count is A005802 — $1, 2, 6, 23, 103, 513, …$
   - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2143$.
   - Vexillary ("flag") permutations are exactly those whose Schubert polynomial is a single Schur polynomial — the name is Lascoux and Schützenberger's.
-examples:
-  - id: count-vexillarypermutations-5-103-a005802
-    expr: [Count, [VexillaryPermutations, 5]]
-    expected: 103
-    category: Basic
-    caption: $Count(VexillaryPermutations(5)) = 103$, A005802
 enumerate:
   expr: VexillaryPermutations(4)
   columns: Descents, MajorIndex

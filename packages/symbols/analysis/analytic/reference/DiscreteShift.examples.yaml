@@ -1,0 +1,9 @@
+- id: discreteshift-one-step
+  expr: [DiscreteShift, [a, n], n]
+  expected: [a, [Add, n, 1]]
+  caption: One-step forward shift
+- id: discreteshift-h-step
+  expr: [DiscreteShift, [a, n], [List, n, 2]]
+  expected: [a, [Add, n, 2]]
+  category: Scope
+  caption: The h-step form -- {n, h}, not a third argument

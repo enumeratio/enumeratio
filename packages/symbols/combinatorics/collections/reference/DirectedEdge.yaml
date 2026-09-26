@@ -9,11 +9,6 @@ signatures:
 details:
   - Inert, like [[Graph]] itself — it holds exactly as written.
   - Wolfram prints this infix as $u \to v$ (`u -> v`); Epsil's own `->` already means [[KeyValuePair]] (not this), so this round-trips through call-form syntax, `DirectedEdge(u, v)`, which Wolfram accepts as equivalent input.
-examples:
-  - id: an-edge-from-1-to-2
-    expr: [DirectedEdge, 1, 2]
-    expected: [DirectedEdge, 1, 2]
-    caption: An edge from 1 to 2
 seeAlso:
   - UndirectedEdge
   - Graph

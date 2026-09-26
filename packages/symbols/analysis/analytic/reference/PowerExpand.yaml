@@ -9,29 +9,6 @@ signatures:
 details:
   - "A bottom-up rewrite: Ln(xy) → Ln(x) + Ln(y), Ln(x^n) → n·Ln(x), (ab)^c → a^c·b^c, and the same two rules specialized for Sqrt."
   - Does not check or track positivity -- it assumes it unconditionally, same as Wolfram's default (`PowerExpand` ignores `Assumptions` unless told otherwise, which this does not model either).
-examples:
-  - id: sqrt-x-2-x-for-positive-x
-    expr: [PowerExpand, [Sqrt, [Power, x, 2]]]
-    expected: x
-    caption: $\sqrt{x^2} = x$ for positive $x$
-  - id: splits-a-logarithm-of-a-product
-    expr: [PowerExpand, [Ln, [Multiply, x, y]]]
-    expected: [Add, [Ln, x], [Ln, y]]
-    caption: Splits a logarithm of a product
-  - id: pulls-out-an-exponent
-    expr: [PowerExpand, [Ln, [Power, x, n]]]
-    expected: [Multiply, n, [Ln, x]]
-    category: Scope
-    caption: Pulls out an exponent
-  - id: distributes-a-power-over-a-product
-    expr: [PowerExpand, [Power, [Multiply, a, b], c]]
-    expected: [Multiply, [Power, a, c], [Power, b, c]]
-    category: Scope
-    caption: Distributes a power over a product
-  - id: powerexpand-sqrt-a-times-b
-    expr: [PowerExpand, [Sqrt, [Multiply, a, b]]]
-    expected: [Multiply, [Sqrt, a], [Sqrt, b]]
-    category: Scope
 seeAlso:
   - FunctionExpand
   - Ln

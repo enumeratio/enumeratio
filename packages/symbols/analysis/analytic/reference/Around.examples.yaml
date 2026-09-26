@@ -1,0 +1,71 @@
+- id: independent-uncertainties-add-in-quadrature
+  expr: [Add, [Around, 1, 0.1], [Around, 2, 0.2]]
+  expected: [Around, 3, 0.223606797749979]
+  caption: Independent uncertainties add in quadrature
+- id: scaling-scales-the-uncertainty
+  expr: [Multiply, 3, [Around, 2, 0.1]]
+  expected: [Around, 6, 0.3]
+  caption: Scaling scales the uncertainty
+- id: through-a-function-f-x-delta-x
+  expr: [Power, [Around, 2, 0.1], 2]
+  expected: [Around, 4, 0.4]
+  category: Scope
+  caption: "Through a function: $|f'(x)|\\,\\delta x$"
+- id: sqrt-around-4-0p4
+  expr: [Sqrt, [Around, 4, 0.4]]
+  expected: [Around, 2, 0.1]
+  category: Scope
+- id: independent-uncertainties-add-in-quadrature-2
+  expr: [Add, [Around, 2, 0.01], [Around, 3, 0.02]]
+  expected: [Around, 5, 0.022360679774997897]
+  caption: Independent uncertainties add in quadrature
+- id: 3-times-around-2-0p01
+  expr: [Multiply, 3, [Around, 2, 0.01]]
+  expected: [Around, 6, 0.03]
+- id: through-a-function-f-2-3-5-not-yet-multinomial
+  expr: [Multinomial, [Around, 2, 0.01], 2]
+  expected: [Around, 6, 0.035]
+  category: Scope
+  caption: "Through a function, to first order: $f'(2) = 3.5$, so $\\mathrm{Multinomial}(2 \\pm 0.01, 2) = 6 \\pm 0.035$"
+- id: independent-uncertainties-add-in-quadrature-sqrt
+  expr: [Add, [Around, 5, 0.1], [Around, 3, 0.2]]
+  expected: [Around, 8, 0.223606797749979]
+  caption: 'Independent uncertainties add in quadrature: $\sqrt{0.1^2 + 0.2^2}$'
+- id: relative-uncertainties-combine-6-sqrt-0-1-2-2-0
+  expr: [Multiply, [Around, 2, 0.1], [Around, 3, 0.2]]
+  expected: [Around, 6, 0.5]
+  caption: 'Relative uncertainties combine: $6\sqrt{(0.1/2)^2 + (0.2/3)^2} = 0.5$'
+- id: a-power-scales-the-uncertainty-by-the-derivative
+  expr: [Power, [Around, 3, 0.1], 2]
+  expected: [Around, 9, 0.6000000000000001]
+  category: Scope
+  caption: A power scales the uncertainty by the derivative, $2 \cdot 3 \cdot 0.1$
+- id: frac-0-2-2-sqrt-4
+  expr: [Sqrt, [Around, 4, 0.2]]
+  expected: [Around, 2, 0.05]
+  category: Scope
+  caption: $\frac{0.2}{2\sqrt4}$
+- id: an-exact-factor-scales-the-uncertainty
+  expr: [Multiply, 10, [Around, 1.5, 0.02]]
+  expected: [Around, 15, 0.2]
+  category: Scope
+  caption: An exact factor scales the uncertainty
+- id: through-an-elementary-function-delta-cdot-e-2
+  expr: [Exp, [Around, 2, 0.01]]
+  expected: [Around, 7.38905609893065, 0.0738905609893065]
+  category: Scope
+  caption: 'Through an elementary function: $\delta \cdot e^2$'
+- id: through-a-special-function-with-its-derivative
+  expr: [Erf, [Around, 2, 0.01]]
+  expected: [Around, 0.9953222650189527, 0.00020666985354092054]
+  category: Scope
+  caption: Through a special function, with its derivative as slope
+- id: first-order-propagation-the-uncertainty-scales
+  expr: [N, [Sin, [Around, 1, 0.1]]]
+  expected: [Around, 0.8414709848078965, 0.05403023058681398]
+  category: Scope
+  caption: 'First-order propagation: the uncertainty scales by $|\cos 1|$'
+- id: ln-around-2-0p01
+  expr: [Ln, [Around, 2, 0.01]]
+  expected: [Around, 0.6931471805599453, 0.005]
+  category: Scope

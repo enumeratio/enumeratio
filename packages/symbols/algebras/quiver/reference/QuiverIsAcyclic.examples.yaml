@@ -1,0 +1,13 @@
+- id: quiverisacyclic-linearquiver-4
+  expr: [QuiverIsAcyclic, [LinearQuiver, 4]]
+  expected: True
+- id: a-loop-is-a-cycle
+  expr: [QuiverIsAcyclic, JordanQuiver]
+  expected: False
+  caption: a loop is a cycle
+  category: Properties
+- id: binom-7-2-the-same-as-incidencealgebra-chain-6
+  expr: [AlgebraDimension, [PathAlgebra, [LinearQuiver, 6]]]
+  expected: 21
+  caption: $\binom{7}{2}$ — the same as `IncidenceAlgebra(Chain(6))`
+  category: Properties

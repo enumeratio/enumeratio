@@ -1,0 +1,14 @@
+- id: the-order-of-s-5-is-5
+  expr: [GroupOrder, [SymmetricGroup, 5]]
+  expected: 120
+  caption: The order of $S_5$ is $5!$
+- id: s-10-10
+  expr: [GroupOrder, [SymmetricGroup, 10]]
+  expected: 3628800
+  category: Scope
+  caption: $|S_{10}| = 10!$
+- id: the-one-line-words-are-compute-engine-s
+  expr: [Length, [Permutations, [List, 1, 2, 3]]]
+  expected: 6
+  category: Properties
+  caption: The one-line words are compute-engine's Permutations of $1, …, n$, $n!$ of them. See [[Factorial]]

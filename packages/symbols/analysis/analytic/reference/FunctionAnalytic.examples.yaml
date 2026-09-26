@@ -1,0 +1,16 @@
+- id: polynomials-are-entire
+  expr: [FunctionAnalytic, [Power, x, 2], x]
+  expected: True
+  caption: Polynomials are entire
+- id: a-pole-anywhere-in-the-plane-disqualifies-it
+  expr: [FunctionAnalytic, [Divide, 1, x], x]
+  expected: False
+  caption: A pole anywhere in the complex plane disqualifies it, real domain or not
+- id: sqrt-has-a-branch-point
+  expr: [FunctionAnalytic, [Sqrt, x], x]
+  expected: False
+  caption: Sqrt has a branch point at the origin
+- id: sine-is-entire
+  expr: [FunctionAnalytic, [Sin, x], x]
+  expected: True
+  caption: Sine is entire

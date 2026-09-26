@@ -10,12 +10,6 @@ details:
   - A lazy indexed collection with no known simple closed form, unlike ordinary partitions' generating function; the count is the cached enumeration's length — $Count(PlanePartitions(6)) = 48$.
   - Each element is the array's rows; entries weakly decrease along every row and down every column, and the whole array sums to $n$.
   - "Unranked in shape-then-entries order: by row-length shape first, then the flattened array."
-examples:
-  - id: count-planepartitions-4-13-a000219
-    expr: [Count, [PlanePartitions, 4]]
-    expected: 13
-    category: Basic
-    caption: $Count(PlanePartitions(4)) = 13$, A000219
 enumerate:
   expr: PlanePartitions(6)
   columns: Length

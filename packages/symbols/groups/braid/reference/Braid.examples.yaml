@@ -1,0 +1,19 @@
+- id: sigma1sigma2-cycles-the-three-strands
+  expr: [BraidPermutation, [Braid, 3, [List, 1, 2]]]
+  expected: [List, 2, 3, 1]
+  caption: σ₁σ₂ cycles the three strands
+- id: the-hopf-link
+  expr: [BraidComponents, [Braid, 2, [List, 1, 1]]]
+  expected: 2
+  caption: the Hopf link
+  category: Properties
+- id: t-2-q-is-a-knot-for-odd-q
+  expr: [BraidIsKnot, [TorusBraid, 2, 5]]
+  expected: True
+  caption: $T(2,q)$ is a knot for odd $q$
+  category: Properties
+- id: two-positive-crossings-and-one-negative
+  expr: [BraidWrithe, [Braid, 3, [List, 1, -2, 1]]]
+  expected: 1
+  caption: two positive crossings and one negative
+  category: Scope

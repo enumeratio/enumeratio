@@ -1,0 +1,3 @@
+- id: line-graph-of-a-triangle-is-a-triangle
+  expr: [EdgeCount, [LineGraph, [CompleteGraph, 3]]]
+  expected: 3

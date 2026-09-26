@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-statistics
 details:
   - Exact wherever [[CDF]] is exact for `dist`; unevaluated otherwise.
-examples:
-  - id: survivalfunction-chisquare
-    expr: [SurvivalFunction, [ChiSquareDistribution, 3], 2]
-    expected: [GammaRegularized, [Rational, 3, 2], 1]
 seeAlso:
   - CDF
   - HazardFunction

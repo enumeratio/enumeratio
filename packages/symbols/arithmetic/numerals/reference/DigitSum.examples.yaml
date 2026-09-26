@@ -1,0 +1,63 @@
+- id: digitsum-58-127
+  expr: [DigitSum, 58127]
+  expected: 23
+- id: in-base-2-this-is-the-number-of-set-bits
+  expr: [DigitSum, 58127, 2]
+  expected: 9
+  caption: In base 2 this is the number of set bits
+- id: digitsum-0
+  expr: [DigitSum, 0]
+  expected: 0
+  category: Possible issues
+- id: digit-sum-n-mod-9-the-basis-of-the-classic
+  expr: [Equal, [Mod, [DigitSum, 58127], 9], [Mod, 58127, 9]]
+  expected: True
+  category: Properties
+  caption: "Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root"
+- id: 255-ff-16-15-15
+  expr: [DigitSum, 255, 16]
+  expected: 30
+  category: Scope
+  caption: '$255 = \mathrm{ff}_{16}$: $15 + 15$'
+- id: the-sign-is-discarded
+  expr: [DigitSum, -123]
+  expected: 6
+  category: Possible issues
+  caption: The sign is discarded
+- id: threads-element-wise-over-a-list-as-wolfram-s
+  expr: [DigitSum, [List, 12, 345]]
+  expected: [List, 3, 12]
+  category: Scope
+  caption: Threads element-wise over a list, as Wolfram's Listable heads do
+- id: digitsum-100-factorial
+  expr: [DigitSum, [Factorial, 100]]
+  expected: 648
+  category: Neat examples
+- id: the-digit-sum-of-2-1000
+  expr: [DigitSum, [Power, 2, 1000]]
+  expected: 1366
+  category: Neat examples
+  caption: The digit sum of $2^{1000}$
+- id: just-the-first-4-digits-6-3-4-5-18-not-the-full
+  expr: [DigitSum, 6345354, 10, 4]
+  expected: 18
+  category: Scope
+  caption: Just the first 4 digits, $6+3+4+5=18$, not the full digit sum (30)
+- id: a-negative-k-sums-the-last-3-digits-instead
+  expr: [DigitSum, 6345354, 10, -3]
+  expected: 12
+  caption: "a negative $k$ sums the last 3 digits instead: $3+5+4=12$"
+  role: test
+  category: Scope
+- id: k-at-least-the-digit-count-is-the-plain-sum
+  expr: [DigitSum, 6345354, 10, 7]
+  expected: 30
+  caption: $k$ at least the digit count is the plain digit sum
+  role: test
+  category: Scope
+- id: sign-is-discarded-in-the-3-argument-form-too
+  expr: [DigitSum, -6345354, 10, 4]
+  expected: 18
+  caption: the sign is discarded in the 3-argument form too
+  role: test
+  category: Possible issues

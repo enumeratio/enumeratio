@@ -9,7 +9,6 @@ details:
   - 'A lazy indexed collection: $Count(SquarefreeSemiprimes) = +\infty$; the squarefree subset of [[SemiprimeNumbers]] (which also allows $p^2$). OEIS A006881.'
   - $At(SquarefreeSemiprimes, k)$ unranks by scanning forward, factoring each candidate -- $At(SquarefreeSemiprimes, 1) = 6$.
   - 'Membership goes through [[Element]]: $Element(6, SquarefreeSemiprimes)$ is true ($2 \times 3$), $Element(4, SquarefreeSemiprimes)$ is false ($2^2$, not squarefree).'
-examples: []
 enumerate:
   expr: Take(SquarefreeSemiprimes, 20)
 seeAlso:

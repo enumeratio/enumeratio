@@ -1,0 +1,5 @@
+- id: count-ternarygraycodes-4-3-4-81
+  expr: [Count, [TernaryGrayCodes, 4]]
+  expected: 81
+  category: Basic
+  caption: $Count(TernaryGrayCodes(4)) = 3^4 = 81$

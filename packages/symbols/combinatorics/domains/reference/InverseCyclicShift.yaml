@@ -4,8 +4,3 @@ signature: InverseCyclicShift(Permutation)
 summary: Rotate the word one place to the right.
 details:
   - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-examples:
-  - id: the-one-line-word-231
-    expr: [InverseCyclicShift, [Permutations, [List, 2, 3, 1]]]
-    expected: [Permutations, [List, 1, 2, 3]]
-    caption: the one-line word $231$

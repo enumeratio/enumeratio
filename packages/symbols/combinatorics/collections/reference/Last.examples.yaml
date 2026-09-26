@@ -1,0 +1,56 @@
+- id: last-list-1-2-3
+  expr: [Last, [List, 1, 2, 3]]
+  expected: 3
+- id: last-list-10-20-30
+  expr: [Last, [List, 10, 20, 30]]
+  expected: 30
+- id: last-c-at-c-1-see-at
+  expr: [Equal, [Last, [List, 1, 2, 3]], [At, [List, 1, 2, 3], -1]]
+  expected: True
+  category: Properties
+  caption: $Last(c) = At(c, -1)$. See [[At]]
+- id: a-second-argument-supplies-a-default-for-an
+  expr: [Last, [List], 99]
+  expected: 99
+  category: Scope
+  caption: A second argument supplies a default for an empty collection
+- id: last-list-a-b-c
+  expr: [Last, [List, a, b, c]]
+  expected: c
+- id: of-a-matrix-the-last-row
+  expr: [Last, [List, [List, a, b], [List, c, d], [List, f, g]]]
+  expected: [List, f, g]
+  category: Scope
+  caption: Of a matrix, the last row
+- id: a-lazy-range-works-too
+  expr: [Last, [Range, 5, 10]]
+  expected: 10
+  category: Scope
+  caption: A lazy [[Range]] works too
+- id: any-expression-not-just-a-list-the-last-term-of
+  expr: [Last, [Add, [Power, a, 2], [Power, b, 2]]]
+  expected: [Power, b, 2]
+  category: Scope
+  caption: "Any expression, not just a list: the last term of a sum"
+- id: a-default-is-ignored-when-the-collection-has-a
+  expr: [Last, [List, a, b], x]
+  expected: b
+  category: Scope
+  caption: A default is ignored when the collection has a last element
+- id: an-empty-collection-has-no-last-element-compute
+  expr: [Last, [List]]
+  expected: Missing
+  category: Possible issues
+  caption: An empty collection has no last element; compute-engine returns the symbol $Missing$
+- id: last-default-ignored-when-nonempty
+  expr: [Last, [List, 1, 2, 3], 99]
+  expected: 3
+  role: test
+- id: last-of-association-is-last-value
+  expr: [Last, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]
+  expected: c
+  role: test
+- id: last-of-empty-association-falls-through
+  expr: [Last, [Association], 99]
+  expected: 99
+  role: test

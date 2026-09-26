@@ -1,0 +1,26 @@
+- id: unittriangle-peak
+  expr: [UnitTriangle, 0]
+  expected: 1
+  caption: The peak
+- id: unittriangle-endpoint
+  expr: [UnitTriangle, 1]
+  expected: 0
+  caption: Zero at the endpoint
+- id: unittriangle-neg-endpoint
+  expr: [UnitTriangle, -1]
+  expected: 0
+- id: unittriangle-outside
+  expr: [UnitTriangle, 2]
+  expected: 0
+  category: Scope
+  caption: Zero past the endpoints
+- id: unittriangle-1-3
+  expr: [UnitTriangle, [Rational, 1, 3]]
+  expected: [Rational, 2, 3]
+  category: Scope
+  caption: Exact rational input, exact rational output
+- id: unittriangle-same-as-heavisidelambda
+  expr: [Equal, [UnitTriangle, [Rational, 1, 4]], [HeavisideLambda, [Rational, 1, 4]]]
+  expected: True
+  category: Properties
+  caption: The same function as [[HeavisideLambda]]

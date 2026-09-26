@@ -1,0 +1,11 @@
+- id: pairs-keys-with-values-two-argument-form
+  expr: [AssociationThread, [List, a, b], [List, 1, 2]]
+  expected: [Association, [Rule, a, 1], [Rule, b, 2]]
+- id: accepts-the-one-argument-rule-keys-values-form
+  expr: [AssociationThread, [Rule, [List, a, b], [List, 1, 2]]]
+  expected: [Association, [Rule, a, 1], [Rule, b, 2]]
+  category: Scope
+- id: length-on-the-result-agrees-with-association
+  expr: [Length, [AssociationThread, [List, a, b, c], [List, 1, 2, 3]]]
+  expected: 3
+  category: Scope

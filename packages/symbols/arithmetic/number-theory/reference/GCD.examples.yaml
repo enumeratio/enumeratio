@@ -1,0 +1,98 @@
+- id: gcd-12-18
+  expr: [GCD, 12, 18]
+  expected: 6
+- id: gcd-24-36
+  expr: [GCD, 24, 36]
+  expected: 12
+- id: gcd-is-variadic-it-accepts-any-number-of
+  expr: [GCD, 20, 30, 45]
+  expected: 5
+  caption: "GCD is variadic: it accepts any number of arguments"
+- id: a-single-argument-is-returned-unchanged
+  expr: [GCD, 4]
+  expected: 4
+  category: Possible issues
+  caption: A single argument is returned unchanged
+- id: with-no-arguments-compute-engine-returns-0-the
+  expr: [GCD]
+  expected: 0
+  category: Possible issues
+  caption: With no arguments compute-engine returns 0, the identity element
+- id: 0-is-absorbed-every-integer-divides-it-so-gcd-0
+  expr: [GCD, 0, 5]
+  expected: 5
+  category: Possible issues
+  caption: '0 is absorbed: every integer divides it, so $\gcd(0,n)=n$'
+- id: signs-are-discarded-before-computing-the-gcd
+  expr: [GCD, -12, 9, 57]
+  expected: 3
+  category: Possible issues
+  caption: Signs are discarded before computing the GCD
+- id: lists-aren-t-threaded-element-wise-they-re
+  expr: [GCD, [List, 2, 4], [List, 6, 8]]
+  expected: 2
+  category: Possible issues
+  caption: Lists aren't threaded element-wise; they're flattened into extra arguments, so this equals $\gcd(2,4,6,8)$
+- id: commutative-gcd-a-b-gcd-b-a
+  expr: [Equal, [GCD, 12, 18], [GCD, 18, 12]]
+  expected: True
+  category: Properties
+  caption: 'Commutative: $\gcd(a,b)=\gcd(b,a)$'
+- id: gcd-a-b-cdot-lcm-a-b-ab-see-lcm
+  expr: [Equal, [Multiply, [GCD, 12, 18], [LCM, 12, 18]], [Multiply, 12, 18]]
+  expected: True
+  category: Properties
+  caption: $\gcd(a,b)\cdot\mathrm{lcm}(a,b)=ab$. See [[LCM]]
+- id: over-the-rationals-the-gcd-of-the-numerators
+  expr: [GCD, [Rational, 1, 3], [Rational, 2, 5], [Rational, 3, 7]]
+  expected: [Rational, 1, 105]
+  category: Scope
+  caption: "Over the rationals: the gcd of the numerators over the lcm of the denominators"
+- id: gaussian-integers-the-associate-in-the-first
+  expr: [GCD, [Complex, 3, 1], [Complex, 1, 3]]
+  expected: [Complex, 1, 1]
+  category: Scope
+  caption: "Gaussian integers: the associate in the first quadrant"
+- id: gcd-2-6-10
+  expr: [GCD, 2, 6, 10]
+  expected: 2
+- id: reduce-12-18-to-lowest-terms-by-dividing-out-the
+  expr: [Divide, 12, [GCD, 12, 18]]
+  expected: 2
+  category: Applications
+  caption: Reduce $12/18$ to lowest terms by dividing out the GCD
+- id: gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i
+  expr: [GCD, [Complex, -3, 2], [Complex, 10, 15]]
+  expected: [Complex, 2, 3]
+  category: Scope
+  caption: "Gaussian integers: $-3+2i=i(2+3i)$ and $10+15i=5(2+3i)$"
+- id: gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2
+  expr: [GCD, [Complex, 5, [Rational, 10, 3]], [Complex, [Rational, 3, 2], 1]]
+  expected: [Complex, [Rational, 1, 2], [Rational, 1, 3]]
+  category: Scope
+  caption: 'Gaussian rationals: $\gcd(15+10i,\,3+2i)/\operatorname{lcm}(3,2)$'
+- id: big-integers-gcd-20-10-100-3-7-exact-past-where
+  expr: [GCD, [Factorial, 20], [Add, [Power, 10, 100], 3]]
+  expected: 7
+  category: Scope
+  caption: 'Big integers: $\gcd(20!,\,10^{100}+3)=7$, exact past where a double rounds'
+- id: listable-a-single-list-argument-threads-element
+  expr: [GCD, 12, [List, 3, 7, 40]]
+  expected: [List, 3, 1, 4]
+  category: Scope
+  caption: "Listable: a single list argument threads element-wise against the rest"
+- id: gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci
+  expr: [GCD, [Fibonacci, 12], [Fibonacci, 18]]
+  expected: 8
+  category: Properties
+  caption: '$\gcd(F_m,F_n)=F_{\gcd(m,n)}$: here $F_6=8$. See [[Fibonacci]]'
+- id: gcd-0-0-0-by-convention
+  expr: [GCD, 0, 0]
+  expected: 0
+  category: Possible issues
+  caption: $\gcd(0,0)=0$ by convention
+- id: symbolic-arguments-stay-unevaluated
+  expr: [GCD, x, y]
+  expected: [GCD, x, y]
+  category: Possible issues
+  caption: Symbolic arguments stay unevaluated

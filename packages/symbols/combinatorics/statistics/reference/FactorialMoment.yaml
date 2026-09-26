@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-statistics
 details:
   - Generic over every distribution this package's [[Moment]] answers, old or new.
-examples:
-  - id: factorialmoment-order-2
-    expr: [FactorialMoment, [GeometricDistribution, [Rational, 1, 4]], 2]
-    expected: 18
 seeAlso:
   - Moment
   - CentralMoment

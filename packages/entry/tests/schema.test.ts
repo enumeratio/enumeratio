@@ -5,13 +5,17 @@
 
 import { readFileSync } from "node:fs";
 import { expect, test } from "vite-plus/test";
-import { HEAD_IMPLEMENTATIONS_SCHEMA, REFERENCE_ENTRY_SCHEMA } from "../src/schema.ts";
+import { HEAD_IMPLEMENTATIONS_SCHEMA, REFERENCE_ENTRY_SCHEMA, REFERENCE_EXAMPLES_SCHEMA } from "../src/schema.ts";
 
 const schemaFile = (name: string): unknown =>
   JSON.parse(readFileSync(new URL(`../schema/${name}`, import.meta.url), "utf8"));
 
 test("reference-entry.schema.json is up to date with schema.ts", () => {
   expect(schemaFile("reference-entry.schema.json")).toEqual(REFERENCE_ENTRY_SCHEMA);
+});
+
+test("reference-examples.schema.json is up to date with schema.ts", () => {
+  expect(schemaFile("reference-examples.schema.json")).toEqual(REFERENCE_EXAMPLES_SCHEMA);
 });
 
 test("head-implementations.schema.json is up to date with schema.ts", () => {

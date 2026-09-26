@@ -9,11 +9,6 @@ signatures:
 details:
   - Count is the Bell number $B_n$ (see [[BellNumber]])
   - Each element is a list of blocks (a list of index lists)
-examples:
-  - id: b-4
-    expr: [Count, [SetPartitions, 4]]
-    expected: 15
-    caption: $B_4$
 seeAlso:
   - IntegerPartitions
   - BellNumber

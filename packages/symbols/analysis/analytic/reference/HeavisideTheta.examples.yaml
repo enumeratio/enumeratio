@@ -1,0 +1,25 @@
+- id: heavisidetheta-negative
+  expr: [HeavisideTheta, -1]
+  expected: 0
+- id: heavisidetheta-positive
+  expr: [HeavisideTheta, 1]
+  expected: 1
+- id: heavisidetheta-zero-unevaluated
+  expr: [HeavisideTheta, 0]
+  expected: [HeavisideTheta, 0]
+  caption: Unevaluated at exactly 0 -- unlike [[UnitStep]]
+- id: heavisidetheta-product-both-positive
+  expr: [HeavisideTheta, 1, 2]
+  expected: 1
+  category: Scope
+  caption: "Several arguments: the product of their steps"
+- id: heavisidetheta-product-one-negative
+  expr: [HeavisideTheta, 1, -1]
+  expected: 0
+  category: Scope
+  caption: Zero as soon as any argument is negative
+- id: heavisidetheta-derivative
+  expr: [D, [HeavisideTheta, x], x]
+  expected: [DiracDelta, x]
+  category: Properties
+  caption: Derivative is [[DiracDelta]]

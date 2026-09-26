@@ -1,0 +1,11 @@
+- id: an-integer-literal
+  expr: [NumberQ, 2]
+  expected: True
+- id: a-symbolic-constant-is-not-numberq
+  expr: [NumberQ, Pi]
+  expected: False
+  category: Scope
+- id: a-plain-symbol-is-not-numberq
+  expr: [NumberQ, x]
+  expected: False
+  category: Scope
