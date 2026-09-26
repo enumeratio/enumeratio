@@ -73,6 +73,13 @@ const CALLS: unknown[] = [
   ["Pochhammer", "a", "n"],
   ["RisingFactorial", "x", "n"],
   ["FallingFactorial", ["Add", "x", 1], "n"],
+  // Bases that aren't a symbol or a non-negative integer are parenthesised.
+  ["RisingFactorial", ["Complex", 2, 5], ["Complex", 3, 2]],
+  ["RisingFactorial", ["Rational", 1, 2], 3],
+  ["FallingFactorial", -3, 2],
+  ["FallingFactorial", 1.5, 2],
+  ["ModularInverse", -3, 7],
+  ["Subfactorial", ["Rational", 1, 2]],
   ["Multinomial", 1, 2, 1],
   ["Stirling", 5, 2],
   ["StirlingS1", 5, 2],

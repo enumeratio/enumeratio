@@ -51,6 +51,15 @@ const constant = (name: string, plain: string, traditional: string): Entry => ({
 });
 
 const tex = (s: Serializer, x: MathJsonExpression | undefined): string => s.serialize(x ?? null);
+/** Bare when a symbol or a non-negative integer, parenthesised otherwise: `wrapShort` leaves
+ *  complex numbers, fractions and negatives bare, so `2+5i^{\\overline{3}}` misreads. */
+const base = (s: Serializer, x: MathJsonExpression): string => {
+  const bare =
+    (typeof x === "number" && Number.isInteger(x) && x >= 0) ||
+    (typeof x === "string" && /^[^'+\-\d]/.test(x)) ||
+    (typeof x === "object" && x !== null && !Array.isArray(x) && "sym" in x);
+  return bare ? tex(s, x) : `(${tex(s, x)})`;
+};
 const call = (s: Serializer, args: Args): string => `(${args.map((a) => tex(s, a)).join(", ")})`;
 
 /** `symbol(args)` for a function of a fixed arity. */
@@ -171,7 +180,7 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("ModularInverse", (s, [a, n, ...rest]) =>
     a === undefined || n === undefined || rest.length > 0
       ? undefined
-      : `\\left(${s.wrapShort(a)}^{-1}\\bmod ${tex(s, n)}\\right)`,
+      : `\\left(${base(s, a)}^{-1}\\bmod ${tex(s, n)}\\right)`,
   ),
   head("JacobiSymbol", legendre),
   head("KroneckerSymbol", legendre),
@@ -209,10 +218,10 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
     a === undefined || n === undefined || rest.length > 0 ? undefined : `\\left(${tex(s, a)}\\right)_{${tex(s, n)}}`,
   ),
   head("RisingFactorial", (s, [x, n, ...rest]) =>
-    x === undefined || n === undefined || rest.length > 0 ? undefined : `${s.wrapShort(x)}^{\\overline{${tex(s, n)}}}`,
+    x === undefined || n === undefined || rest.length > 0 ? undefined : `${base(s, x)}^{\\overline{${tex(s, n)}}}`,
   ),
   head("FallingFactorial", (s, [x, n, ...rest]) =>
-    x === undefined || n === undefined || rest.length > 0 ? undefined : `${s.wrapShort(x)}^{\\underline{${tex(s, n)}}}`,
+    x === undefined || n === undefined || rest.length > 0 ? undefined : `${base(s, x)}^{\\underline{${tex(s, n)}}}`,
   ),
   head("Multinomial", (s, args) => {
     if (args.length < 2) return undefined;
@@ -224,7 +233,7 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("Stirling", stacked("\\lbrace", "\\rbrace")),
   // Signed, as Wolfram's StirlingS1: lowercase s, not Knuth's unsigned brackets.
   head("StirlingS1", fn("s", 2)),
-  head("Subfactorial", (s, [n, ...rest]) => (n === undefined || rest.length > 0 ? undefined : `{!}${s.wrapShort(n)}`)),
+  head("Subfactorial", (s, [n, ...rest]) => (n === undefined || rest.length > 0 ? undefined : `{!}${base(s, n)}`)),
   // enumeratio's own heads, where the mathematics has a settled notation.
   // Valuations and norms, p taken from a literal numeral.
   head("IntegerExponent", (s, [n, b, ...rest]) =>

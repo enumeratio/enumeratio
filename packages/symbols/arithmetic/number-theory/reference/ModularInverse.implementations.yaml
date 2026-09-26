@@ -44,7 +44,7 @@ a-negative-argument-3-cdot-2-6-equiv-1:
     in: \mathrm{ModularInverse}(-3, 7)
     out: "2"
   traditional:
-    in: \left(-3^{-1}\bmod 7\right)
+    in: \left((-3)^{-1}\bmod 7\right)
     out: "2"
   fullform:
     in: ModularInverse[-3, 7]
@@ -129,7 +129,7 @@ a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
     in: \mathrm{ModularInverse}(2+i, 7)
     out: 6+4i
   traditional:
-    in: \left(2+i^{-1}\bmod 7\right)
+    in: \left((2+i)^{-1}\bmod 7\right)
     out: 6+4i
   fullform:
     in: ModularInverse[Complex[2, 1], 7]
@@ -153,7 +153,7 @@ modularinverse-11-plus-neg-7-times-i-7-plus-4i:
     in: \mathrm{ModularInverse}(11-7i, 7+4i)
     out: -1+2i
   traditional:
-    in: \left(11-7i^{-1}\bmod 7+4i\right)
+    in: \left((11-7i)^{-1}\bmod 7+4i\right)
     out: -1+2i
   fullform:
     in: ModularInverse[Complex[11, -7], Complex[7, 4]]
@@ -201,7 +201,7 @@ a-gaussian-base-and-a-gaussian-modulus:
     in: \mathrm{ModularInverse}(3-i, 5+2i)
     out: -1-i
   traditional:
-    in: \left(3-i^{-1}\bmod 5+2i\right)
+    in: \left((3-i)^{-1}\bmod 5+2i\right)
     out: -1-i
   fullform:
     in: ModularInverse[Complex[3, -1], Complex[5, 2]]
