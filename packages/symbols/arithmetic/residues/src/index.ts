@@ -1,5 +1,5 @@
 export { declareResidues } from "./declare.ts";
-export { crt, crtSolve, extendedGcd, gcd, invMod, isqrt, mod, powMod, valuation } from "./arith.ts";
+export { crt, crtSolve, extendedGcd, gcd, invMod, isqrt, lehmerGcd, mod, powMod, valuation } from "./arith.ts";
 export { factorInteger, isPrime, RHO_BUDGET, totientOf } from "./primes.ts";
 export { nthPrime, PRIME_SIEVE_LIMIT, primeCountUpTo } from "./sieve.ts";
 export { MAX_ROOTS, powerModList, powerModRoots, unitsMod } from "./roots.ts";
