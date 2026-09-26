@@ -51,6 +51,63 @@ export function gcd(a: bigint, b: bigint): bigint {
   return x << shift;
 }
 
+// Leading-digit window for Lehmer's algorithm: two ~26-bit numbers multiply to ~52 bits,
+// safely inside float64's 53-bit mantissa, with room left for the small (A, B, C, D)
+// cofactors added in.
+const LEHMER_WORD_BITS = 26n;
+// Below this, x and y already fit comfortably in a machine word — a plain bigint `%` is as
+// fast as simulating one, so Lehmer only kicks in once division itself gets expensive.
+const LEHMER_SMALL = 1n << 32n;
+
+/**
+ * Lehmer's GCD (HAC Algorithm 14.4): simulates many Euclidean steps at once over the leading
+ * ~26 bits of x and y using plain (non-bigint) arithmetic, then applies the accumulated 2×2
+ * cofactor matrix to the full bigints in one shot — trading most of the O(log n) bigint
+ * divisions Euclid needs for a handful of full-width reductions. When the single-precision
+ * simulation can't agree on a quotient (small y relative to x, or it exhausts its digits) it
+ * falls back to one ordinary `x mod y` step, so it is always at least as correct as Euclid,
+ * and degrades to it gracefully for small inputs (issue #205: measured faster than Stein's
+ * binary `gcd` above on 10000-bit pairs, where full-width division dominates the cost).
+ */
+export function lehmerGcd(a: bigint, b: bigint): bigint {
+  let x = a < 0n ? -a : a;
+  let y = b < 0n ? -b : b;
+  if (x < y) [x, y] = [y, x];
+  while (y > 0n) {
+    if (y < LEHMER_SMALL) {
+      [x, y] = [y, x % y];
+      continue;
+    }
+    const totalBits = BigInt(x.toString(2).length);
+    const shift = totalBits > LEHMER_WORD_BITS ? totalBits - LEHMER_WORD_BITS : 0n;
+    let xHat = Number(x >> shift);
+    let yHat = Number(y >> shift);
+    let A = 1;
+    let B = 0;
+    let C = 0;
+    let D = 1;
+    for (;;) {
+      const yC = yHat + C;
+      const yD = yHat + D;
+      if (yC === 0 || yD === 0) break;
+      const q = Math.floor((xHat + A) / yC);
+      if (q !== Math.floor((xHat + B) / yD)) break;
+      [A, B, xHat, C, D, yHat] = [C, D, yHat, A - q * C, B - q * D, xHat - q * yHat];
+    }
+    if (B === 0) {
+      // The simulation made no progress (y too small relative to x's leading digits to pin
+      // down a shared quotient) — fall back to one full-precision step.
+      [x, y] = [y, x % y];
+    } else {
+      const nx = BigInt(A) * x + BigInt(B) * y;
+      const ny = BigInt(C) * x + BigInt(D) * y;
+      x = nx < 0n ? -nx : nx;
+      y = ny < 0n ? -ny : ny;
+    }
+  }
+  return x;
+}
+
 /** [g, u, v] with u·a + v·b = g = gcd(a, b). */
 export function extendedGcd(a: bigint, b: bigint): [bigint, bigint, bigint] {
   let [oldR, r] = [a, b];
