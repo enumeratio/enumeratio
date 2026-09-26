@@ -6,6 +6,18 @@
   expr: [N, [DigammaFunctionZero, 1]]
   expected: -0.5040830082644554
   caption: the zero in $(-1, 0)$
+- id: the-zero-in-2-1
+  expr: [N, [DigammaFunctionZero, 2]]
+  expected: -1.5734984731623904
+  role: test
+- id: the-zero-in-3-2
+  expr: [N, [DigammaFunctionZero, 3]]
+  expected: -2.6107208684441447
+  role: test
+- id: the-zero-in-4-3
+  expr: [N, [DigammaFunctionZero, 4]]
+  expected: -3.635293366436901
+  role: test
 - id: psi-vanishes-exactly-there-by-construction
   expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 2]]]]
   expected: 0
