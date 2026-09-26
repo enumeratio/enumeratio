@@ -151,6 +151,33 @@ closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n:
   rust:
     in: (binomial((n(2) * n(5)), n(5)) / (n(5) + n(1)))
     out: "42"
+the-closed-form-through-a-negative-n-in-binomial:
+  epsil:
+    in: Binomial(2 * -13, 5) / (4 + 1)
+    out: -142_506 / 5
+  tex:
+    in: \frac{\binom{-2\times13}{5}}{4+1}
+    out: -\frac{142\,506}{5}
+  fullform:
+    in: Divide[Binomial[Times[2, -13], 5], Plus[4, 1]]
+  wolfram:
+    in: Divide[Binomial[Times[2, -13], 5], Plus[4, 1]]
+  sympy:
+    in: (S(binomial((2 * -13), 5)) / (4 + 1))
+  sage:
+    in: (binomial((2 * -13), 5) / (4 + 1))
+  oscar:
+    in: (binomial(ZZ((2 * -13)), ZZ(5)) // (4 + 1))
+  julia:
+    in: (binomial(ZZ((2 * -13)), ZZ(5)) // (4 + 1))
+  mathlib4:
+    in: "(((Nat.choose (2 * (-13)) 5) : ℚ) / (4 + 1))"
+  rust:
+    in: (binomial((n(2) * n(-13)), n(5)) / (n(4) + n(1)))
+    out: "0"
+    verdict: disagree
+    kind: domain
+    note: Rust's Binomial(negative n) gap (see Binomial's own examples) propagates through this closed form; num-integer's binomial returns 0 rather than the generalized value.
 equivalently-c-n-binom-2n-n-binom-2n-n-1:
   epsil:
     in: Binomial(10, 5) - Binomial(10, 6)

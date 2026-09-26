@@ -109,6 +109,12 @@ examples:
     expected: [Add, 2, [Negate, [Sqrt, 2]]]
     category: Scope
     caption: Decides the sign of an exact numeric expression and gives $2-\sqrt{2}$
+  - role: test
+    id: a-complex-radicand-inside-the-subtraction
+    expr: [Abs, [Subtract, [Sqrt, -10], 2]]
+    expected: [Sqrt, 14]
+    category: Scope
+    caption: $|\sqrt{-10} - 2| = |{-2 + i\sqrt{10}}| = \sqrt{4+10} = \sqrt{14}$
   - id: z-2-z-bar-z
     expr: [Equal, [Power, [Abs, [Complex, 3, 4]], 2], [Multiply, [Complex, 3, 4], [Conjugate, [Complex, 3, 4]]]]
     expected: True

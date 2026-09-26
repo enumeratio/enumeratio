@@ -154,6 +154,33 @@ examples:
     expected: 1
     role: test
     category: Scope
+  - id: a-positive-exponent-at-a-negative-modulus-1-2
+    expr: [PowerMod, 1, 2, -2]
+    expected: [PowerMod, 1, 2, -2]
+    role: test
+    category: Possible issues
+    caption: A positive exponent still declines at a negative modulus, like Wolfram, unlike Rust's num-bigint
+  - id: a-positive-exponent-at-a-negative-modulus-3-2-7
+    expr: [PowerMod, 3, 2, -7]
+    expected: [PowerMod, 3, 2, -7]
+    role: test
+    category: Possible issues
+  - id: a-positive-exponent-at-a-negative-modulus-341
+    expr: [PowerMod, -1, 340, -2]
+    expected: [PowerMod, -1, 340, -2]
+    role: test
+    category: Possible issues
+  - id: a-positive-exponent-at-a-negative-modulus-5-1-7
+    expr: [PowerMod, 5, 1, -7]
+    expected: [PowerMod, 5, 1, -7]
+    role: test
+    category: Possible issues
+  - id: a-negative-exponent-at-a-negative-modulus-2-1-5
+    expr: [PowerMod, 2, -1, -5]
+    expected: [PowerMod, 2, -1, -5]
+    role: test
+    category: Possible issues
+    caption: A negative exponent declines too, even though an inverse exists and Rust's num-bigint would reduce it into a negative residue
 seeAlso:
   - Mod
   - PowerModList

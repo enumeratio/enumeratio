@@ -182,6 +182,58 @@ examples:
     expected: { num: "100891344545564193334812497256" }
     category: Neat examples
     caption: The central binomial coefficient $\binom{100}{50}$ has 30 digits
+  - role: test
+    id: a-negative-n-with-a-positive-k-binom-9-1
+    expr: [Binomial, -9, 1]
+    expected: -9
+    category: Possible issues
+  - role: test
+    id: a-negative-n-with-k-0-binom-1-4
+    expr: [Binomial, -1, 4]
+    expected: 1
+    category: Possible issues
+  - role: test
+    id: a-negative-k-with-n-10-binom-10-neg-10
+    expr: [Binomial, 10, -10]
+    expected: 0
+    category: Possible issues
+  - role: test
+    id: a-negative-k-past-n-binom-4-neg-13
+    expr: [Binomial, 4, -13]
+    expected: 0
+    category: Possible issues
+  - role: test
+    id: a-negative-n-again-binom-neg-4-1
+    expr: [Binomial, -4, 1]
+    expected: -4
+    category: Possible issues
+  - role: test
+    id: a-negative-k-with-n-2-binom-2-neg-2
+    expr: [Binomial, -2, 2]
+    expected: 3
+    category: Possible issues
+  - role: test
+    id: a-negative-n-zero-k-binom-neg-1-0
+    expr: [Binomial, -1, 0]
+    expected: 1
+    category: Possible issues
+  - role: test
+    id: a-negative-k-past-n-binom-100-neg-50
+    expr: [Binomial, 100, -50]
+    expected: 0
+    category: Possible issues
+  - role: test
+    id: symmetry-doesn-t-hold-across-mismatched-n
+    expr: [Equal, [Binomial, 2, 6], [Binomial, -18, 2]]
+    expected: False
+    category: Possible issues
+    caption: 'A coincidental resample, not the symmetry identity: $\binom{2}{6}=0$ (ordinary) is not $\binom{-18}{2}=171$ (generalized), so this correctly disagrees'
+  - role: test
+    id: not-pascal-s-rule-across-mismatched-n
+    expr: [Equal, [Add, [Binomial, -23, 2], [Binomial, -2, 3]], [Binomial, -20, 6]]
+    expected: False
+    category: Possible issues
+    caption: Another resample where the arguments don't line up into an identity, so False is correct
 seeAlso:
   - Factorial
   - Multinomial

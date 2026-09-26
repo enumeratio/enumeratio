@@ -83,6 +83,11 @@ examples:
     expected: False
     category: Possible issues
     caption: Non-integers are not prime
+  - role: test
+    id: another-non-integer-3-halves
+    expr: [IsPrime, [Rational, 3, 2]]
+    expected: False
+    category: Possible issues
   - id: a-symbol-stays-unevaluated
     expr: [IsPrime, x]
     expected: [IsPrime, x]
