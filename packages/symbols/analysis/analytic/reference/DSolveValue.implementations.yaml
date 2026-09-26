@@ -1,20 +1,20 @@
 harmonic-oscillator:
   epsil:
-    in: DSolveValue(Apply(Derivative(y, 2), x) + y(x) == 0, y(x), x)
+    in: DSolveValue(Apply(Derivative(Y, 2), x) + Y(x) == 0, Y(x), x)
     out: Sin(x) * C(2) + Cos(x) * C(1)
   tex:
-    in: \mathrm{DSolveValue}(y^{\doubleprime}(x)+y(x)=0, y(x), x)
+    in: \mathrm{DSolveValue}(Y^{\doubleprime}(x)+Y(x)=0, Y(x), x)
     out: \sin(x)C(2)+\cos(x)C(1)
   fullform:
-    in: DSolveValue[Equal[Plus[Derivative[2][y][x], y[x]], 0], y[x], x]
+    in: DSolveValue[Equal[Plus[Derivative[2][Y][x], Y[x]], 0], Y[x], x]
     back: Unreadable
 distinct-real-roots:
   epsil:
     in: |-
       DSolveValue(
-                   Apply(Derivative(y, 2), x) - 3 * Apply(Derivative(y, 1), x) + 2 *
-                                                                                 y(x) == 0,
-                   y(x),
+                   Apply(Derivative(Y, 2), x) - 3 * Apply(Derivative(Y, 1), x) + 2 *
+                                                                                 Y(x) == 0,
+                   Y(x),
                    x,
                  )
     out: C(1) * ExponentialE ^ (2x) + C(2) * ExponentialE ^ x
@@ -25,27 +25,27 @@ distinct-real-roots:
           Equal,
           [
             Add,
-            [Subtract, [Apply, [Derivative, y, 2], x], [Multiply, 3, [Apply, [Derivative, y, 1], x]]],
-            [Multiply, 2, [y, x]],
+            [Subtract, [Apply, [Derivative, Y, 2], x], [Multiply, 3, [Apply, [Derivative, Y, 1], x]]],
+            [Multiply, 2, [Y, x]],
           ],
           0,
         ],
-        [y, x],
+        [Y, x],
         x,
       ]
   tex:
-    in: \mathrm{DSolveValue}(y^{\doubleprime}(x)-3y^{\prime}(x)+2y(x)=0, y(x), x)
+    in: \mathrm{DSolveValue}(Y^{\doubleprime}(x)-3Y^{\prime}(x)+2Y(x)=0, Y(x), x)
     out: C(1)\exp(2x)+C(2)e^{x}
   fullform:
-    in: DSolveValue[Equal[Plus[Derivative[2][y][x], Minus[Times[3, Derivative[1][y][x]]], Times[2, y[x]]], 0], y[x], x]
+    in: DSolveValue[Equal[Plus[Derivative[2][Y][x], Minus[Times[3, Derivative[1][Y][x]]], Times[2, Y[x]]], 0], Y[x], x]
     back: Unreadable
 repeated-root:
   epsil:
     in: |-
       DSolveValue(
-                   Apply(Derivative(y, 2), x) - 4 * Apply(Derivative(y, 1), x) + 4 *
-                                                                                 y(x) == 0,
-                   y(x),
+                   Apply(Derivative(Y, 2), x) - 4 * Apply(Derivative(Y, 1), x) + 4 *
+                                                                                 Y(x) == 0,
+                   Y(x),
                    x,
                  )
     out: (x * C(2) + C(1)) * ExponentialE ^ (2x)
@@ -56,42 +56,42 @@ repeated-root:
           Equal,
           [
             Add,
-            [Subtract, [Apply, [Derivative, y, 2], x], [Multiply, 4, [Apply, [Derivative, y, 1], x]]],
-            [Multiply, 4, [y, x]],
+            [Subtract, [Apply, [Derivative, Y, 2], x], [Multiply, 4, [Apply, [Derivative, Y, 1], x]]],
+            [Multiply, 4, [Y, x]],
           ],
           0,
         ],
-        [y, x],
+        [Y, x],
         x,
       ]
   tex:
-    in: \mathrm{DSolveValue}(y^{\doubleprime}(x)-4y^{\prime}(x)+4y(x)=0, y(x), x)
+    in: \mathrm{DSolveValue}(Y^{\doubleprime}(x)-4Y^{\prime}(x)+4Y(x)=0, Y(x), x)
     out: (xC(2)+C(1))\exp(2x)
   fullform:
-    in: DSolveValue[Equal[Plus[Derivative[2][y][x], Minus[Times[4, Derivative[1][y][x]]], Times[4, y[x]]], 0], y[x], x]
+    in: DSolveValue[Equal[Plus[Derivative[2][Y][x], Minus[Times[4, Derivative[1][Y][x]]], Times[4, Y[x]]], 0], Y[x], x]
     back: Unreadable
 resonance-sine-forcing:
   epsil:
-    in: DSolveValue(Apply(Derivative(y, 2), x) + y(x) == Sin(x), y(x), x)
+    in: DSolveValue(Apply(Derivative(Y, 2), x) + Y(x) == Sin(x), Y(x), x)
     out: -1 / 2 * x * Cos(x) + Sin(x) * C(2) + Cos(x) * C(1)
   tex:
-    in: \mathrm{DSolveValue}(y^{\doubleprime}(x)+y(x)=\sin(x), y(x), x)
+    in: \mathrm{DSolveValue}(Y^{\doubleprime}(x)+Y(x)=\sin(x), Y(x), x)
     out: -\frac{x\cos(x)}{2}+\sin(x)C(2)+\cos(x)C(1)
   fullform:
-    in: DSolveValue[Equal[Plus[Derivative[2][y][x], y[x]], Sin[x]], y[x], x]
+    in: DSolveValue[Equal[Plus[Derivative[2][Y][x], Y[x]], Sin[x]], Y[x], x]
     back: Unreadable
 with-initial-conditions:
   epsil:
     in: |-
       DSolveValue([
-                    Apply(Derivative(y, 2), x) + y(x) == 0,
-                    y(0) == 1,
-                    Apply(Derivative(y, 1), 0) == 0,
-                  ], y(x), x)
+                    Apply(Derivative(Y, 2), x) + Y(x) == 0,
+                    Y(0) == 1,
+                    Apply(Derivative(Y, 1), 0) == 0,
+                  ], Y(x), x)
     out: Cos(x)
   tex:
-    in: \mathrm{DSolveValue}(\begin{cases}y^{\doubleprime}(x)+y(x)=0\\y(0)=1\\y^{\prime}(0)=0\end{cases}, y(x), x)
+    in: \mathrm{DSolveValue}(\begin{cases}Y^{\doubleprime}(x)+Y(x)=0\\Y(0)=1\\Y^{\prime}(0)=0\end{cases}, Y(x), x)
     out: \cos(x)
   fullform:
-    in: DSolveValue[List[Equal[Plus[Derivative[2][y][x], y[x]], 0], Equal[y[0], 1], Equal[Derivative[1][y][0], 0]], y[x], x]
+    in: DSolveValue[List[Equal[Plus[Derivative[2][Y][x], Y[x]], 0], Equal[Y[0], 1], Equal[Derivative[1][Y][0], 0]], Y[x], x]
     back: Unreadable

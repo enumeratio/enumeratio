@@ -675,8 +675,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "C",
+    wolfram: "C",
+  },
+  {
     name: "CDF",
     wolfram: "CDF",
+  },
+  {
+    name: "CaputoD",
+    wolfram: "CaputoD",
   },
   {
     name: "CarmichaelLambda",
@@ -1028,6 +1036,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Cycles",
     wolfram: "Cycles",
+  },
+  {
+    name: "DSolveValue",
+    wolfram: "DSolveValue",
   },
   {
     name: "DedekindEta",
@@ -2473,6 +2485,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "HankelMatrix",
   },
   {
+    name: "HankelTransform",
+    wolfram: "HankelTransform",
+  },
+  {
     name: "HararyGraph",
     wolfram: "HararyGraph",
   },
@@ -2805,6 +2821,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "InverseLaplaceTransform",
     wolfram: "InverseLaplaceTransform",
+  },
+  {
+    name: "InverseMellinTransform",
+    wolfram: "InverseMellinTransform",
   },
   {
     name: "InversePermutation",
@@ -3597,6 +3617,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MeijerGReduce",
     wolfram: "MeijerGReduce",
+  },
+  {
+    name: "MellinTransform",
+    wolfram: "MellinTransform",
   },
   {
     name: "MemoryConstrained",
@@ -4929,6 +4953,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "TriangleWave",
     wolfram: "TriangleWave",
+  },
+  {
+    name: "TrigFactor",
+    wolfram: "TrigFactor",
   },
   {
     name: "True",

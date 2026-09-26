@@ -1,25 +1,26 @@
 name: DSolveValue
 domain: Analytic
-signature: DSolveValue(eqn, y(x), x)
-summary: Solves a linear, constant-coefficient ODE of order 1 or 2 for y(x), with optional initial conditions.
+signature: DSolveValue(eqn, Y(x), x)
+summary: Solves a linear, constant-coefficient ODE of order 1 or 2 for Y(x), with optional initial conditions.
 signatures:
-  - call: DSolveValue(eqn, y(x), x)
+  - call: DSolveValue(eqn, Y(x), x)
     description: the general solution, with arbitrary constants C(1) (and C(2) for order 2).
     library: "@enumeratio/analytic"
-  - call: DSolveValue({eqn, ic1, ic2, ...}, y(x), x)
+  - call: DSolveValue({eqn, ic1, ic2, ...}, Y(x), x)
     description: the particular solution satisfying the stated initial conditions.
     library: "@enumeratio/analytic"
 details:
-  - "`y'`/`y''` are written the way compute-engine itself represents an undifferentiated function's derivative -- `D(y(x), x)` / `D(y(x), x, x)` (boxing to `Apply(Derivative(y, n), x)`) -- no new notation introduced. An initial condition is the same shape applied at a NUMBER instead of `x`: `Equal(D(y(x), x), b)` at `x=0` is `Equal(Apply(Derivative(y, 1), 0), b)` for $y'(0)=b$. Arbitrary constants print as `C(1)`/`C(2)`, matching Wolfram's own `C[1]`/`C[2]` (confirmed directly: compute-engine's native `C`, called `C(1)`, stays a plain, inert expression, exactly like Wolfram's own `C[1]`)."
+  - "`Y'`/`Y''` are written the way compute-engine itself represents an undifferentiated function's derivative -- `D(Y(x), x)` / `D(Y(x), x, x)` (boxing to `Apply(Derivative(Y, n), x)`) -- no new notation introduced. An initial condition is the same shape applied at a NUMBER instead of `x`: `Equal(D(Y(x), x), b)` at `x=0` is `Equal(Apply(Derivative(Y, 1), 0), b)` for $Y'(0)=b$. Arbitrary constants print as `C(1)`/`C(2)`, matching Wolfram's own `C[1]`/`C[2]` (confirmed directly: compute-engine's native `C`, called `C(1)`, stays a plain, inert expression, exactly like Wolfram's own `C[1]`)."
   - "Homogeneous part: the characteristic polynomial's roots -- a single real root (order 1); two distinct real roots; a repeated real root ($(C(1)+C(2)x)e^{rx}$); or a complex-conjugate pair ($e^{px}(C(1)\\cos(qx)+C(2)\\sin(qx))$)."
   - "Nonhomogeneous part, by undetermined coefficients, ONE forcing shape at a time (not sums of different shapes): a polynomial in `x` (any degree), $Ae^{cx}$, or $A\\sin(wx)+B\\cos(wx)$. Each gets $x^s$ times its own trial basis, `s` = how many times the forcing's own characteristic value already appears as a homogeneous root (the standard resonance bump) -- confirmed against `wolframscript`'s own `DSolveValue` for every case below, matching up to relabeling which root gets `C(1)` vs `C(2)`."
   - "Every solution is verified before being returned: substituted back with `D`, the residual must come back exactly 0 symbolically or measure below `1e-9` at several numeric points -- declining, not guessing, otherwise."
-  - "Declined: order > 2; a non-constant or non-numeric-literal coefficient (including a leading coefficient of 0); a nonlinear term ($y(x)^2$, $\\sin(y(x))$, ...); forcing that mixes shapes or isn't one of the three above; and initial conditions at anything but a plain real-number point."
+  - "Declined: order > 2; a non-constant or non-numeric-literal coefficient (including a leading coefficient of 0); a nonlinear term ($Y(x)^2$, $\\sin(Y(x))$, ...); forcing that mixes shapes or isn't one of the three above; and initial conditions at anything but a plain real-number point."
+  - Examples use the unknown function `Y` (capitalized) rather than `y` deliberately -- an unrelated repo-wide provenance check reuses one shared compute-engine instance across every reference example, and boxing `Derivative(y, n)` for a lowercase `y` marks that SYMBOL incompatibly typed there ever after, which then breaks other examples elsewhere that use bare `y` as an ordinary variable (confirmed directly). `Y` avoids the collision; the head itself takes any function name.
 examples:
   - id: harmonic-oscillator
-    expr: [DSolveValue, [Equal, [Add, [Apply, [Derivative, y, 2], x], [y, x]], 0], [y, x], x]
+    expr: [DSolveValue, [Equal, [Add, [Apply, [Derivative, Y, 2], x], [Y, x]], 0], [Y, x], x]
     expected: [Add, [Multiply, [Sin, x], [C, 2]], [Multiply, [Cos, x], [C, 1]]]
-    caption: $y''+y=0 \Rightarrow C(1)\cos x + C(2)\sin x$ — complex-conjugate roots $\pm i$
+    caption: $Y''+Y=0 \Rightarrow C(1)\cos x + C(2)\sin x$ — complex-conjugate roots $\pm i$
   - id: distinct-real-roots
     expr:
       [
@@ -28,19 +29,19 @@ examples:
           Equal,
           [
             Add,
-            [Apply, [Derivative, y, 2], x],
-            [Negate, [Multiply, 3, [Apply, [Derivative, y, 1], x]]],
-            [Multiply, 2, [y, x]],
+            [Apply, [Derivative, Y, 2], x],
+            [Negate, [Multiply, 3, [Apply, [Derivative, Y, 1], x]]],
+            [Multiply, 2, [Y, x]],
           ],
           0,
         ],
-        [y, x],
+        [Y, x],
         x,
       ]
     expected:
       [Add, [Multiply, [C, 1], [Power, ExponentialE, [Multiply, 2, x]]], [Multiply, [C, 2], [Power, ExponentialE, x]]]
     category: Scope
-    caption: $y''-3y'+2y=0 \Rightarrow$ roots $1,2$
+    caption: $Y''-3Y'+2Y=0 \Rightarrow$ roots $1,2$
   - id: repeated-root
     expr:
       [
@@ -49,39 +50,39 @@ examples:
           Equal,
           [
             Add,
-            [Apply, [Derivative, y, 2], x],
-            [Negate, [Multiply, 4, [Apply, [Derivative, y, 1], x]]],
-            [Multiply, 4, [y, x]],
+            [Apply, [Derivative, Y, 2], x],
+            [Negate, [Multiply, 4, [Apply, [Derivative, Y, 1], x]]],
+            [Multiply, 4, [Y, x]],
           ],
           0,
         ],
-        [y, x],
+        [Y, x],
         x,
       ]
     expected: [Multiply, [Add, [Multiply, x, [C, 2]], [C, 1]], [Power, ExponentialE, [Multiply, 2, x]]]
     category: Scope
-    caption: $y''-4y'+4y=0 \Rightarrow$ repeated root $2$
+    caption: $Y''-4Y'+4Y=0 \Rightarrow$ repeated root $2$
   - id: resonance-sine-forcing
-    expr: [DSolveValue, [Equal, [Add, [Apply, [Derivative, y, 2], x], [y, x]], [Sin, x]], [y, x], x]
+    expr: [DSolveValue, [Equal, [Add, [Apply, [Derivative, Y, 2], x], [Y, x]], [Sin, x]], [Y, x], x]
     expected:
       [Add, [Multiply, [Rational, -1, 2], x, [Cos, x]], [Multiply, [Sin, x], [C, 2]], [Multiply, [Cos, x], [C, 1]]]
     category: Scope
-    caption: resonance — $y''+y=\sin x$, forcing frequency matches the homogeneous roots $\pm i$
+    caption: resonance — $Y''+Y=\sin x$, forcing frequency matches the homogeneous roots $\pm i$
   - id: with-initial-conditions
     expr:
       [
         DSolveValue,
         [
           List,
-          [Equal, [Add, [Apply, [Derivative, y, 2], x], [y, x]], 0],
-          [Equal, [y, 0], 1],
-          [Equal, [Apply, [Derivative, y, 1], 0], 0],
+          [Equal, [Add, [Apply, [Derivative, Y, 2], x], [Y, x]], 0],
+          [Equal, [Y, 0], 1],
+          [Equal, [Apply, [Derivative, Y, 1], 0], 0],
         ],
-        [y, x],
+        [Y, x],
         x,
       ]
     expected: [Cos, x]
-    caption: $y''+y=0,\ y(0)=1,\ y'(0)=0 \Rightarrow \cos x$
+    caption: $Y''+Y=0,\ Y(0)=1,\ Y'(0)=0 \Rightarrow \cos x$
 primitive: kernel
 implementations:
   - origin: native
