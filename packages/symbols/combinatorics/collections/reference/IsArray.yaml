@@ -1,0 +1,17 @@
+name: IsArray
+domain: Collections
+signature: IsArray(t) / IsArray(t, test)
+summary: Tests whether t is a List with a uniform (non-ragged) shape at every depth, any rank, optionally with every leaf satisfying test.
+signatures:
+  - call: IsArray(t)
+    description: True if t is a List whose nesting is rectangular at every level (a "full array")
+    library: enumeratio-collections
+  - call: IsArray(t, test)
+    description: as above, and test holds of every leaf
+    library: enumeratio-collections
+details:
+  - Generalizes IsVector (rank 1) and IsMatrix (rank 2) to any rank, including a flat List (rank 1) and a ragged List (False, same as the other two).
+  - A non-List is False — a bare scalar isn't an array of rank 0 here.
+seeAlso:
+  - IsVector
+  - IsMatrix
