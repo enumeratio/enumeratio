@@ -35,6 +35,12 @@ examples:
     expected: [AdicNumeral, 5, [Rational, 3, 5]]
     caption: 'prime base: $\mathbb{Q}_5$ is a field, so the point moves'
     category: Scope
+  - role: test
+    id: dividing-by-zero-stays-complexinfinity
+    expr: [Divide, [AdicNumeral, 5, -1], 0]
+    expected: ComplexInfinity
+    category: Possible issues
+    caption: Dividing an adic value by 0 gives ComplexInfinity, same as anywhere else
   - id: composite-base-2-is-not-a-unit-of-z-10-so-this
     expr: [Divide, [AdicNumeral, 10, 3], 2]
     expected: [Multiply, [Rational, 1, 2], [AdicNumeral, 10, 3]]

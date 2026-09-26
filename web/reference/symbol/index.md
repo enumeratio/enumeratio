@@ -42,7 +42,7 @@ Wikidata ids) and `crosswalk:check` (follows every link).
 - the **Wolfram** symbol the transpiler vouches for, and the **oracle**'s equivalent call in
   each kernel — resolved to its documentation anchor through the system's Sphinx inventory
 
-Prose can lean on the same table: `<Symbol type="sage">SetComposition</Symbol>` is our
+Prose can lean on the same table: `<Symbol type="sage">SetCompositions</Symbol>` is our
 name, and the link is whatever Sage calls it.
 
 <ReferenceIndex />

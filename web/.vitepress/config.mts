@@ -54,8 +54,8 @@ for (const dir of packageDirs) {
   }
 }
 
-// design/speculative/ (gitignored): open design, rendered by `vitepress dev` only. It is
-// linked into the site as web/speculative (also gitignored) and left out of builds.
+// design/speculative/: open design, rendered by `vitepress dev` only. It is linked into the
+// site as web/speculative (a gitignored symlink) and left out of builds.
 const dev = process.argv.includes("dev");
 const webDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const speculativeDir = resolve(webDir, "../design/speculative");

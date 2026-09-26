@@ -1,5 +1,5 @@
 // Permutation-class families (catalogued in packages/catalog/src/catalog-data.ts, carrier
-// "Permutation") that were never wired to a kernel: Baxter/Boolean/Grassmannian/Cograssmannian/
+// "Permutations") that were never wired to a kernel: Baxter/Boolean/Grassmannian/Cograssmannian/
 // NonCrossing/Separable/Simple/Smooth/Vexillary permutations. Reuses ./kernels.ts and
 // ./kernels-extra.ts wherever the element representation already matches (Boolean permutations are
 // literally Fibonacci words in disguise; Grassmannian/Cograssmannian are k-subsets in disguise).
@@ -68,7 +68,7 @@ function makeBruteForceClass(
     /** What Plausible reads: it filters all n! permutations to unrank or rank, and to count
      *  too unless a closed count was given. */
     declared: {
-      carrier: "Permutation",
+      carrier: "Permutations",
       params: [{ name: "size", role: "axis", min: 0 }],
       cost: {
         count: exactCount ? "closed" : "enumerative",

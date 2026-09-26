@@ -1,9 +1,9 @@
-// The id `add-ids.ts` gives an example before deduping: its caption's, or, with no
-// caption, its InputForm's, with the operators spelled out so `-1` and `1` differ.
+// A new example's id before deduping: its caption's, or, with no caption, its InputForm's,
+// with the operators spelled out so `-1` and `1` differ.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { captionId, slugId } from "@enumeratio/entry";
-import { toInputForm } from "../../../formats/src/inputform.ts";
+import { toInputForm } from "../../formats/src/inputform.ts";
 
 const inputFormId = (expr: unknown): string => {
   let text: string;

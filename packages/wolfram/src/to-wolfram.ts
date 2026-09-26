@@ -81,6 +81,15 @@ export const HEADS: Record<string, string> = {
   Rule: "Rule",
   // Same argument order both sides: expr, vars, [domain], [n].
   FindInstance: "FindInstance",
+  // Same argument order and `{f, cons}`/`{n, a, b}` shapes both sides -- see
+  // @enumeratio/analytic's optimize.ts, nminmax.ts, nsum.ts.
+  Minimize: "Minimize",
+  Maximize: "Maximize",
+  MinValue: "MinValue",
+  MaxValue: "MaxValue",
+  NMinimize: "NMinimize",
+  NMaximize: "NMaximize",
+  NSum: "NSum",
   And: "And",
   Or: "Or",
   Not: "Not",
@@ -774,6 +783,7 @@ export const HEADS: Record<string, string> = {
   NumberQ: "NumberQ",
   ReIm: "ReIm",
   RandomComplex: "RandomComplex",
+  KaryTree: "KaryTree",
 };
 
 /** Wolfram heads we answer under one of our own heads, but only in a particular CALL
@@ -807,9 +817,10 @@ export const FOREIGN: Record<string, string> = {
   Perimeter: "the perimeter of a geometric region",
   Depth: "the number of indices needed to reach any part of an expression",
   Order: "the canonical-order comparison Order[a, b]",
-  Composition: "a composition of functions, Composition[f, g]",
-  Word: "the token specification used by Read and Find",
   Restricted: "an Interpreter form narrowed by a condition",
+  // Ours is the carrier/collection constructor (GaussianIntegers([2, 3])); Wolfram's is an
+  // option flag (IsPrime[n, GaussianIntegers -> True]), never a callable on its own.
+  GaussianIntegers: "the GaussianIntegers -> True/False option several number-theory functions take",
   // Nearly ours, which is the trap: Wolfram's is a raster image built from a pixel array or
   // a graphics object, never from a URI, so `Image["data:image/png;…"]` is not an image over
   // there — it is an Image of a string.

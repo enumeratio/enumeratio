@@ -42,6 +42,12 @@ examples:
     expected: True
     category: Properties
     caption: 'Periodicity: $a \bmod n = (a+kn) \bmod n$ for any integer $k$'
+  - role: test
+    id: periodicity-with-a-zero-modulus-on-one-side
+    expr: [Equal, [Mod, 35, 13], [Mod, [Add, 17, [Multiply, 3, 5]], 0]]
+    expected: False
+    category: Possible issues
+    caption: A zero modulus on one side of the identity -- NaN never equals 9, so the comparison itself is well-defined
   - id: a-third-argument-offsets-the-range-the-result
     expr: [Mod, 17, 5, 1]
     expected: 2

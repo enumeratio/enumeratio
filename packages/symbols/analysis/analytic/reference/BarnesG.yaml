@@ -96,6 +96,30 @@ examples:
     expected: { num: "0.603244281209446206191429224535" }
     category: Scope
     caption: To 30 significant digits, past a double's reach
+  - role: test
+    id: g-1-1
+    expr: [BarnesG, 1]
+    expected: 1
+  - role: test
+    id: g-2-1
+    expr: [BarnesG, 2]
+    expected: 1
+  - role: test
+    id: g-4-2
+    expr: [BarnesG, 4]
+    expected: 2
+  - role: test
+    id: g-6-288
+    expr: [BarnesG, 6]
+    expected: 288
+  - role: test
+    id: barnesg-of-a-symbol-stays-symbolic
+    expr: [BarnesG, z]
+    expected: [BarnesG, z]
+  - role: test
+    id: n-barnesg-5-over-2
+    expr: [N, [BarnesG, [Rational, 5, 2]]]
+    expected: { num: "0.947573901083825776884" }
 implementations:
   - origin: reference
     form: notatio

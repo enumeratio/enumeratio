@@ -101,5 +101,11 @@ examples:
     expected: True
     category: Properties
     caption: Touchard's congruence $B_{p+n} \equiv B_n + B_{n+1} \pmod p$, here $p = 7$, $n = 2$
+  - role: test
+    id: a-zero-modulus-inside-a-congruence-check-is-nan
+    expr: [Equal, [Mod, [BellNumber, 9], 23], [Mod, [Add, [BellNumber, 4], [BellNumber, 5]], 0]]
+    expected: False
+    category: Possible issues
+    caption: A zero modulus on one side is `NaN` (see [[Mod]]), so the equality is False regardless of the Bell numbers involved
 seeAlso:
   - StirlingS1

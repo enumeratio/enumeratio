@@ -1696,6 +1696,81 @@ n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i:
   sage:
     in: N(polylog((0.5 + -1*I), (0.4 + 0.3*I)))
     out: 0.246545234792889 + 0.432156736424443*I
+li-0-1-a-pole-of-the-rational-form:
+  epsil:
+    in: PolyLog(0, 1)
+    out: ComplexInfinity
+  tex:
+    in: \operatorname{Li}_{0}(1)
+    out: \tilde\infty
+  fullform:
+    in: PolyLog[0, 1]
+  wolfram:
+    in: PolyLog[0, 1]
+  sympy:
+    in: polylog(0, 1)
+    out: -1/2
+    verdict: inconclusive
+    kind: convention
+    note: Same as the mpmath row -- SymPy also takes zeta(0) rather than the rational form's pole.
+  mpmath:
+    in: polylog(0, 1)
+    out: "-0.5"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours treat z=1 as the pole of the rational Li_0(z)=z/(1-z) (ComplexInfinity); mpmath takes zeta(s) by analytic continuation in s at fixed z=1 instead (-1/2 here).
+  sage:
+    in: polylog(0, 1)
+li-neg-1-1-a-pole-of-the-rational-form:
+  epsil:
+    in: PolyLog(-1, 1)
+    out: ComplexInfinity
+  tex:
+    in: \operatorname{Li}_{-1}(1)
+    out: \tilde\infty
+  fullform:
+    in: PolyLog[-1, 1]
+  wolfram:
+    in: PolyLog[-1, 1]
+  sympy:
+    in: polylog(-1, 1)
+    out: -1/12
+    verdict: inconclusive
+    kind: convention
+    note: Same as the mpmath row -- SymPy also takes zeta(-1) rather than the rational form's pole.
+  mpmath:
+    in: polylog(-1, 1)
+    out: "-0.0833333333333333333333333333333"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours treat z=1 as the pole of the rational Li_-1(z)=z/(1-z)^2 (ComplexInfinity); mpmath takes zeta(-1)=-1/12 by analytic continuation in s at fixed z=1 instead.
+  sage:
+    in: polylog(-1, 1)
+li-neg-2-1-a-pole-of-the-rational-form:
+  epsil:
+    in: PolyLog(-2, 1)
+    out: ComplexInfinity
+  tex:
+    in: \operatorname{Li}_{-2}(1)
+    out: \tilde\infty
+  fullform:
+    in: PolyLog[-2, 1]
+  wolfram:
+    in: PolyLog[-2, 1]
+  sympy:
+    in: polylog(-2, 1)
+    out: "0"
+    verdict: inconclusive
+    kind: convention
+    note: Same as the mpmath row -- SymPy also takes zeta(-2) rather than the rational form's pole.
+  mpmath:
+    in: polylog(-2, 1)
+    out: "0.0"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours treat z=1 as the pole of the rational Li_-2(z) (ComplexInfinity); mpmath takes zeta(-2)=0 by analytic continuation in s at fixed z=1 instead.
+  sage:
+    in: polylog(-2, 1)
 li-3-over-2-1-zeta-3-2-non-integer-order:
   epsil:
     in: N(PolyLog(3 / 2, 1))

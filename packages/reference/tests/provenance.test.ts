@@ -381,6 +381,11 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * the same story once more: all seventeen are genuinely Wolfram's own control/scoping heads
  * (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
  * `elsewhere`.
+ *
+ * Minimize, Maximize, MinValue, MaxValue, NMinimize, NMaximize and NSum (optimize.ts,
+ * nminmax.ts, nsum.ts) are the same story yet again: all seven are genuinely Wolfram's own
+ * names (see `HEADS` in @enumeratio/wolfram), waiting on the same coverage run to fill in
+ * `elsewhere`.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -408,6 +413,15 @@ const NOVEL = [
   "IntegerMod",
   "IntegerModRing",
   "RationalReconstruction",
+  // optimize.ts/nminmax.ts/nsum.ts: genuinely Wolfram's own names, waiting on a coverage
+  // run with a Wolfram kernel to fill in `elsewhere` -- see the module doc above.
+  "Minimize",
+  "Maximize",
+  "MinValue",
+  "MaxValue",
+  "NMinimize",
+  "NMaximize",
+  "NSum",
   // The Wolfram-sweep backlog (packages/reference/src/backlog.json), landed in number-theory:
   // Wolfram has every one of these (see HEADS in @enumeratio/wolfram), but this offline suite
   // has no kernel to confirm it, so they land here rather than in the "known" list below.
@@ -750,7 +764,7 @@ const NOVEL = [
   "Pick",
   "ReplacePart",
   "AssociationThread",
-  // The Wolfram-frontier misc heads (misc-frontier.ts): all nine are genuinely Wolfram's own
+  // The Wolfram-frontier misc heads (misc-frontier.ts): all ten are genuinely Wolfram's own
   // names (see HEADS in @enumeratio/wolfram), waiting on the same coverage run to fill in
   // `elsewhere`.
   "DiagonalMatrix",
@@ -773,6 +787,7 @@ const NOVEL = [
   "TrigFactor",
   "FunctionContinuous",
   "DSolveValue",
+  "KaryTree",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

@@ -989,6 +989,9 @@ importers:
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../../../formats
+      '@enumeratio/residues':
+        specifier: workspace:*
+        version: link:../../arithmetic/residues
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.134.0

@@ -3,10 +3,10 @@ domain: Combinatorial maps
 signature: Foata(Permutation)
 summary: "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased."
 details:
-  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)
 examples:
   - id: the-one-line-word-231
-    expr: [Foata, [Permutation, [List, 2, 3, 1]]]
-    expected: [Permutation, [List, 3, 1, 2]]
+    expr: [Foata, [Permutations, [List, 2, 3, 1]]]
+    expected: [Permutations, [List, 3, 1, 2]]
     caption: the one-line word $231$

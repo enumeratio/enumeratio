@@ -61,8 +61,10 @@ function degreeOf(coeffs: readonly number[]): number {
 /** Is `expr` exactly the bare symbol named `x`? */
 const isSym = (expr: BoxedExpression, x: string): boolean => symbolNameOf(expr) === x;
 
-/** Does `expr` mention the symbol named `x` anywhere in its tree? */
-function containsVar(expr: BoxedExpression, x: string): boolean {
+/** Does `expr` mention the symbol named `x` anywhere in its tree? Exported for
+ * `optimize-core.ts`, which needs the same free-variable test when parsing an interval
+ * constraint's endpoints. */
+export function containsVar(expr: BoxedExpression, x: string): boolean {
   if (symbolNameOf(expr) === x) return true;
   return operandsOf(expr).some((o) => containsVar(o, x));
 }
@@ -261,13 +263,17 @@ export function recognize(expr: BoxedExpression, x: string): Recognized | undefi
  *    the sign for x beyond the LAST zero (and, symmetrically, its negation for x
  *    below the FIRST zero when there are two zeros — see `signAt` below).
  */
-interface SignShape {
+export interface SignShape {
   readonly zeros: readonly number[]; // ascending, deduplicated
   readonly sign: "pos" | "neg" | "nonneg" | "nonpos" | "mixed";
   readonly outsideSign?: 1 | -1;
 }
 
-function signShape(coeffs: readonly number[]): SignShape | undefined {
+/** Exported for `optimize-core.ts`: the same degree <= 2 (or bare monomial) sign/root
+ * shape, used there ONLY for structural decisions (how many real zeros, which side is
+ * unbounded) -- never for the numeric VALUE of an answer, which always comes back out of
+ * the original exact expression via compute-engine's own `D`/`Solve`/`Limit`/`subs`. */
+export function signShape(coeffs: readonly number[]): SignShape | undefined {
   const c = trim(coeffs);
   const d = degreeOf(c);
   if (d < 0) return undefined; // identically zero: not a meaningful denominator/radicand

@@ -1,18 +1,18 @@
 the-step-word-uuddud:
   epsil:
-    in: LongestDescent(DyckPath([1, 1, 0, 0, 1, 0]))
+    in: LongestDescent(DyckPaths([1, 1, 0, 0, 1, 0]))
     out: "2"
   tex:
-    in: \mathrm{LongestDescent}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
+    in: \mathrm{LongestDescent}(\mathrm{DyckPaths}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))
     out: "2"
   fullform:
-    in: LongestDescent[DyckPath[List[1, 1, 0, 0, 1, 0]]]
+    in: LongestDescent[DyckPaths[List[1, 1, 0, 0, 1, 0]]]
 the-step-word-uduudd:
   epsil:
-    in: LongestDescent(DyckPath([1, 0, 1, 1, 0, 0]))
+    in: LongestDescent(DyckPaths([1, 0, 1, 1, 0, 0]))
     out: "2"
   tex:
-    in: \mathrm{LongestDescent}(\mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
+    in: \mathrm{LongestDescent}(\mathrm{DyckPaths}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))
     out: "2"
   fullform:
-    in: LongestDescent[DyckPath[List[1, 0, 1, 1, 0, 0]]]
+    in: LongestDescent[DyckPaths[List[1, 0, 1, 1, 0, 0]]]

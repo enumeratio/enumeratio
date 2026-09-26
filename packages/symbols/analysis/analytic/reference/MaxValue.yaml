@@ -1,0 +1,33 @@
+name: MaxValue
+domain: Calculus
+signature: MaxValue(f, x)
+summary: The global maximum VALUE of f -- Maximize's value alone, without the witnessing point.
+signatures:
+  - call: MaxValue(f, x)
+    description: the global maximum of f over its own natural domain.
+    library: "@enumeratio/analytic"
+  - call: MaxValue({f, cons}, x)
+    description: the global maximum of f restricted to a simple interval constraint cons.
+    library: "@enumeratio/analytic"
+details:
+  - A projection of [[Maximize]] onto just the value -- same scope, same machinery; see [[Minimize]]'s `details` for the full account.
+  - The one case this covers that Maximize itself declines -- Sin/Cos of an affine argument, unconstrained -- because a value alone doesn't need a witnessing point Wolfram's own choice of (among infinitely many) isn't reproducible here. Its exact amplitude, +-1, is well defined regardless.
+examples:
+  - id: a-downward-parabola-s-maximum-value
+    expr: [MaxValue, [Add, [Negate, [Power, x, 2]], [Multiply, 4, x], -1], x]
+    expected: 3
+    caption: A downward parabola's vertex value
+  - id: the-amplitude-of-sine-alone-is-exact
+    expr: [MaxValue, [Sin, x], x]
+    expected: 1
+    category: Scope
+    caption: Sin's exact maximum value, 1 -- Maximize itself would decline this (no reproducible point)
+  - id: an-unbounded-cubic
+    expr: [MaxValue, [Power, x, 3], x]
+    expected: PositiveInfinity
+    category: Scope
+    caption: An odd-degree polynomial is unbounded above
+seeAlso:
+  - Maximize
+  - MinValue
+  - Minimize
