@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { symbolNameOf } from "@enumeratio/boxed";
@@ -6,31 +5,14 @@ import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
 // The Wolfram signal / piecewise-waveform family (signals.ts). Every case here is exact
-// (rational in, rational out), so the golden file is checked with `.isSame`, not a numeric
-// tolerance -- unlike elementary.test.ts's Gudermannian/Hyperfactorial cases, there is no
-// oracle drift to budget for. `Clip` is not tested here: it is answered by compute-engine's
-// native `Clamp`, exercised in packages/symbols/combinatorics/collections/tests instead.
-
-interface GoldenCase {
-  label: string;
-  expr: unknown[];
-  expected: unknown;
-}
+// (rational in, rational out) -- unlike elementary.test.ts's Gudermannian/Hyperfactorial
+// cases, there is no oracle drift to budget for, and each head's exact cases are pinned
+// as examples on its own record. `Clip` is not tested here: it is answered by
+// compute-engine's native `Clamp`, exercised in packages/symbols/combinatorics/collections/tests
+// instead.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
-
-const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./signals.golden.json", import.meta.url), "utf8"));
-
-test("signals: every golden case evaluates exactly", () => {
-  const off: string[] = [];
-  for (const g of goldens) {
-    const got = ce.box(g.expr as never).evaluate();
-    const want = ce.box(g.expected as never).evaluate();
-    if (!got.isSame(want)) off.push(`${g.label}: got ${got.toString()}, want ${want.toString()}`);
-  }
-  expect(off).toEqual([]);
-});
 
 test("HeavisideTheta(0), HeavisidePi(±1/2) and DiracDelta(0) stay unevaluated", () => {
   expect(ce.box(["HeavisideTheta", 0]).evaluate().operator).toBe("HeavisideTheta");
