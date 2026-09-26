@@ -46,6 +46,14 @@ export interface NotatioResult {
   wildcards: string[];
   /** Diagnostic messages; empty iff the input is valid notatio. */
   errors: string[];
+  /** `errors` again, each with the span of `src` it is about when there is one. */
+  diagnostics: NotatioDiagnostic[];
+}
+
+export interface NotatioDiagnostic {
+  message: string;
+  /** Offsets into the source, `[start, end)`; absent for a whole-input complaint. */
+  range?: [number, number];
 }
 
 /** Flatten an Epsil diagnostic message (a string or a `[code, ...args]` tuple). */
@@ -117,7 +125,9 @@ function exactDecimals(json: MathJsonExpression, src: string): void {
 export function parseNotatio(src: string, options?: NotatioOptions): NotatioResult {
   const [json, diagnostics] = parseEpsil(src, undefined, options);
   exactDecimals(json, src);
-  const errors = diagnostics.filter((d) => d.severity === "error").map((d) => diagText(d.message));
+  const found: NotatioDiagnostic[] = diagnostics
+    .filter((d) => d.severity === "error")
+    .map((d) => ({ message: diagText(d.message), ...(d.range ? { range: [d.range[0], d.range[1]] } : {}) }));
   const allowed = new Set(options?.allow);
   // A `Cell`'s input is a cell, and a cell may be one `:=` binding (`Cell(a := 5)`).
   const cellBindings = new Set<unknown>();
@@ -129,10 +139,11 @@ export function parseNotatio(src: string, options?: NotatioOptions): NotatioResu
   walk(json, (n) => {
     const head = headOf(n);
     if (head && STATEMENT_HEADS.has(head) && !allowed.has(head) && !cellBindings.has(n)) {
-      errors.push(`notatio: ${head} is not allowed`);
+      const at = (n as { sourceOffsets?: [number, number] }).sourceOffsets;
+      found.push({ message: `notatio: ${head} is not allowed`, ...(at ? { range: [at[0], at[1]] } : {}) });
     }
   });
-  return { json, wildcards: collectWildcards(json), errors };
+  return { json, wildcards: collectWildcards(json), errors: found.map((d) => d.message), diagnostics: found };
 }
 
 /** Serialize MathJSON back to notatio text (Epsil surface syntax). */

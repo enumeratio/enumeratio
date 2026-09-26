@@ -61,3 +61,10 @@ test("a decimal reads as the digits it was typed with", () => {
     expect(ce.box(parseNotatio(src).json).re, src).toBe(value);
   }
 });
+
+test("a diagnostic carries the span it is about", () => {
+  const { errors, diagnostics } = parseNotatio("10^-16");
+  expect(errors.length).toBeGreaterThan(0);
+  expect(diagnostics[0]).toEqual({ message: errors[0], range: [2, 4] });
+  expect(parseNotatio("f := 1").diagnostics[0]).toEqual({ message: "notatio: Assign is not allowed", range: [0, 6] });
+});
