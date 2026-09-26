@@ -83,10 +83,7 @@ powermod-3-2-7:
     in: power_mod(3, -2, 7)
   rust:
     in: powermod(n(3), n(-2), n(7))
-    out: "panic: negative exponentiation is not supported!"
-    verdict: error
-    kind: domain
-    note: num's modpow rejects negative exponents; compute-engine inverts modulo 7 first.
+    out: "4"
 a-square-root-of-3-equiv-1-pmod-2:
   epsil:
     in: PowerMod(3, 1 / 2, 2)
@@ -151,10 +148,7 @@ a-negative-exponent-gives-the-modular-inverse:
     out: "4"
   rust:
     in: powermod(n(2), n(-1), n(7))
-    out: "panic: negative exponentiation is not supported!"
-    verdict: error
-    kind: domain
-    note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
+    out: "4"
 one-step-of-rsa-style-modular-exponentiation-7:
   epsil:
     in: PowerMod(7, 13, 33)
@@ -229,7 +223,7 @@ no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2:
     note: 'Both decline: compute-engine answers ["PowerMod", 2, -1, 4] and Sage raises an error.'
   rust:
     in: powermod(n(2), n(-1), n(4))
-    out: "panic: negative exponentiation is not supported!"
+    out: "panic: no modular inverse: base and modulus share a factor"
     verdict: error
     kind: domain
     note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
@@ -686,6 +680,10 @@ a-positive-exponent-at-a-negative-modulus-1-2:
     in: power_mod(1, 2, -2)
   rust:
     in: powermod(n(1), n(2), n(-2))
+    out: "-1"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours leave PowerMod unevaluated for a modulus <= 0 (outside the exponent-0 case); Rust's num-bigint reduces it into a negative residue instead.
 a-positive-exponent-at-a-negative-modulus-3-2-7:
   epsil:
     in: PowerMod(3, 2, -7)
@@ -704,6 +702,10 @@ a-positive-exponent-at-a-negative-modulus-3-2-7:
     in: power_mod(3, 2, -7)
   rust:
     in: powermod(n(3), n(2), n(-7))
+    out: "-5"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours leave PowerMod unevaluated for a modulus <= 0 (outside the exponent-0 case); Rust's num-bigint reduces it into a negative residue instead.
 a-positive-exponent-at-a-negative-modulus-341:
   epsil:
     in: PowerMod(-1, 340, -2)
@@ -722,6 +724,10 @@ a-positive-exponent-at-a-negative-modulus-341:
     in: power_mod(-1, 340, -2)
   rust:
     in: powermod(n(-1), n(340), n(-2))
+    out: "-1"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours leave PowerMod unevaluated for a modulus <= 0 (outside the exponent-0 case); Rust's num-bigint reduces it into a negative residue instead.
 a-positive-exponent-at-a-negative-modulus-5-1-7:
   epsil:
     in: PowerMod(5, 1, -7)
@@ -740,6 +746,10 @@ a-positive-exponent-at-a-negative-modulus-5-1-7:
     in: power_mod(5, 1, -7)
   rust:
     in: powermod(n(5), n(1), n(-7))
+    out: "-2"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours leave PowerMod unevaluated for a modulus <= 0 (outside the exponent-0 case); Rust's num-bigint reduces it into a negative residue instead.
 a-negative-exponent-at-a-negative-modulus-2-1-5:
   epsil:
     in: PowerMod(2, -1, -5)
@@ -758,3 +768,7 @@ a-negative-exponent-at-a-negative-modulus-2-1-5:
     in: power_mod(2, -1, -5)
   rust:
     in: powermod(n(2), n(-1), n(-5))
+    out: "-2"
+    verdict: inconclusive
+    kind: convention
+    note: Wolfram and ours leave PowerMod unevaluated for a modulus <= 0 (outside the exponent-0 case); Rust's num-bigint reduces it into a negative residue instead.

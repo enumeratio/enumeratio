@@ -403,7 +403,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## rust — agree 229, disagree 46, inconclusive 10, error 79
+## rust — agree 231, disagree 46, inconclusive 15, error 77
 
 | example                                                          | kind           | ours                                                | theirs                                                       |
 | ---------------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------------------------------ |
@@ -433,7 +433,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Ln/ln-1-i-pi-the-principal-value-past-the-branch`               | domain         | `{"re":0,"im":3.141592653589793}`                   | `NaN`                                                        |
 | `Ln/ln-frac-12-i-pi-ln-2-a-negative-rational-folded`             | domain         | `{"re":-0.6931471805599453,"im":3.141592653589793}` | `NaN`                                                        |
 | `Ln/ln-neg-6`                                                    | domain         | `{"re":1.791759469228055,"im":3.141592653589793}`   | `NaN`                                                        |
-| `Ln/n-of-a-negative-integer-argument`                            | domain         | `{"re":0.6931471805599453,"im":3.141592653589793}`  | `NaN`                                                        |
+| `Ln/n-of-a-negative-integer-argument`                            | domain         | `{"re":0.6931471806,"im":3.141592654}`              | `NaN`                                                        |
 | `Ln/n-of-a-negative-rational-argument`                           | domain         | `{"re":-0.6931471805599453,"im":3.141592653589793}` | `NaN`                                                        |
 | `N/a-list-number-by-number`                                      | precision      | `[3.1416, 2.7183, 1.4142]`                          | `[3.141592653589793, 2.718281828459045, 1.4142135623730951]` |
 | `N/an-exact-tie-rounds-to-the-even-digit-0-125`                  | precision      | `0.12`                                              | `0.125`                                                      |
@@ -456,86 +456,84 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                                                        | message                                                   |
-| -------------------------------------------------------------- | --------------------------------------------------------- |
-| `Abs/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
-| `Abs/threads-over-a-matrix-entry-by-entry`                     | `panic: threading: a list where the crate takes a scalar` |
-| `AdicNumeral/6667-3-1-1-3-is-a-10-adic-integer`                | `panic: the adic crate takes a prime base, not 10`        |
-| `AdicNumeral/999-1-0-carrying-forever`                         | `panic: the adic crate takes a prime base, not 10`        |
-| `AdicNumeral/a-negative-power-inverts-exactly-3-1-1-3-in-z-10` | `panic: the adic crate takes a prime base, not 10`        |
-| `AdicNumeral/composite-base-2-is-not-a-unit-of-z-10-so-this`   | `panic: the adic crate takes a prime base, not 10`        |
-| `AdicNumeral/dividing-by-zero-stays-complexinfinity`           | `panic: Error during QAdic<EAdic> division: DivideByZero` |
-| `AdicNumeral/numerals-over-different-bases-never-combine-and`  | `panic: MixedCharacteristic`                              |
-| `AdicNumeral/the-exact-zero-has-infinite-valuation`            | `panic: the adic crate takes a prime base, not 10`        |
-| `Binomial/a-rational-n-with-integer-k-gives-the-exact`         | `panic: an integer, not 1/2`                              |
-| `Binomial/a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0`        | `panic: an integer, not 0.5`                              |
-| `Binomial/binom-1-2-3-frac-5-16-the-central-binomial`          | `panic: an integer, not -1/2`                             |
-| `Binomial/half-integer-arguments-evaluate-exactly-through`     | `panic: an integer, not 9/2`                              |
-| `Binomial/real-arguments-evaluate-through-the-gamma`           | `panic: an integer, not 8.5`                              |
-| `Binomial/threads-element-wise-over-a-list-as-wolfram-s`       | `panic: threading: a list where the crate takes a scalar` |
-| `Ceil/a-zero-divisor-inside-ceil`                              | `panic: denominator == 0`                                 |
-| `Ceil/threads-element-wise-over-a-list`                        | `panic: threading: a list where the crate takes a scalar` |
-| `Cos/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
-| `Cos/threads-element-wise-over-a-matrix`                       | `panic: threading: a list where the crate takes a scalar` |
-| `Exp/broadcasts-element-wise-giving-begin-pmatrix-1-e`         | `panic: threading: a list where the crate takes a scalar` |
-| `Exp/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
-| `Factorial/extends-to-non-integers-via-the-gamma-function`     | `panic: an integer, not 1/2`                              |
-| `Factorial/frac-12-gamma-frac-12-sqrt-pi-returned-as-a`        | `panic: an integer, not -1/2`                             |
-| `Factorial/negative-integers-are-poles-of-the-gamma`           | `panic: a non-negative integer`                           |
-| `Factorial/negative-non-integers-are-defined-too-2-5-gamma`    | `panic: an integer, not -2.5`                             |
-| `Factorial/real-arguments-evaluate-as-gamma-n-1`               | `panic: an integer, not 3.5`                              |
-| `Factorial/threads-element-wise-over-a-list`                   | `panic: threading: a list where the crate takes a scalar` |
-| `Floor/a-zero-divisor-inside-floor`                            | `panic: denominator == 0`                                 |
-| `Floor/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
-| `Gamma/threads-over-a-list-and-reduces-each-integer`           | `panic: threading: a list where the crate takes a scalar` |
-| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`       | `panic: threading: a list where the crate takes a scalar` |
-| `GCD/big-integers-gcd-20-10-100-3-7-exact-past-where`          | `panic: an integer, not 2.43290200817664e18`              |
-| `GCD/listable-a-single-list-argument-threads-element`          | `panic: threading: a list where the crate takes a scalar` |
-| `GCD/lists-aren-t-threaded-element-wise-they-re`               | `panic: threading: a list where the crate takes a scalar` |
-| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`     | `panic: a non-negative integer`                           |
-| `IsPrime/another-non-integer-3-halves`                         | `panic: an integer, not 3/2`                              |
-| `IsPrime/isprime-neg-1-is-false`                               | `panic: a non-negative integer`                           |
-| `IsPrime/isprime-neg-2-is-true`                                | `panic: a non-negative integer`                           |
-| `IsPrime/isprime-neg-4-is-false`                               | `panic: a non-negative integer`                           |
-| `IsPrime/large-integers-10-3000-1-is-divisible-by-10-8-1`      | `panic: a non-negative integer`                           |
-| `IsPrime/non-integers-are-not-prime`                           | `panic: an integer, not 1/2`                              |
-| `IsPrime/threads-element-wise-over-a-list`                     | `panic: threading: a list where the crate takes a scalar` |
-| `IsPrime/threads-element-wise-over-a-short-list`               | `panic: threading: a list where the crate takes a scalar` |
-| `LCM/big-integers-the-exact-118-digit-lcm-past-where`          | `panic: an integer, not 2.43290200817664e18`              |
-| `LCM/listable-a-single-list-argument-threads-element`          | `panic: threading: a list where the crate takes a scalar` |
-| `Ln/threads-element-wise-over-a-list`                          | `panic: threading: a list where the crate takes a scalar` |
-| `Mod/3p14-mod-2`                                               | `panic: an integer, not 3.14`                             |
-| `Mod/a-symbolic-constant-reduces-exactly-to-pi-2`              | `panic: an integer, not 3.141592653589793`                |
-| `Mod/an-exact-irrational-reduces-exactly-to-2-sqrt-7`          | `panic: an integer, not 5.291502622129181`                |
-| `Mod/division-by-a-0-modulus-yields-nan-rather-than`           | `panic: attempt to divide by zero`                        |
-| `Mod/eulers-number-mod-2-reduces-exactly`                      | `panic: an integer, not 2.718281828459045`                |
-| `Mod/periodicity-with-a-zero-modulus-on-one-side`              | `panic: attempt to divide by zero`                        |
-| `Mod/rationals-are-reduced-exactly`                            | `panic: an integer, not 5/2`                              |
-| `Mod/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
-| `Mod/threads-over-a-list-of-moduli`                            | `panic: threading: a list where the crate takes a scalar` |
-| `Negate/threads-element-wise-over-a-list`                      | `panic: negating [1, -2, 3]`                              |
-| `Negate/threads-over-a-matrix-entry-by-entry`                  | `panic: negating [[1, -2], [3, 4]]`                       |
-| `PowerMod/2-is-not-a-square-mod-5-so-there-is-no-root`         | `panic: an integer, not 1/2`                              |
-| `PowerMod/3-1-equiv-5-and-5-2-25-equiv-4`                      | `panic: negative exponentiation is not supported!`        |
-| `PowerMod/a-negative-exponent-gives-the-modular-inverse`       | `panic: negative exponentiation is not supported!`        |
-| `PowerMod/a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod`    | `panic: an integer, not 2/3`                              |
-| `PowerMod/a-rational-exponent-is-a-modular-root-the-least`     | `panic: an integer, not 1/2`                              |
-| `PowerMod/a-square-root-of-3-equiv-1-pmod-2`                   | `panic: an integer, not 1/2`                              |
-| `PowerMod/a-square-root-of-3-mod-2-is-1-trivially`             | `panic: an integer, not 1/2`                              |
-| `PowerMod/a-square-root-of-3-modulo-the-prime-10-30-57`        | `panic: an integer, not 1/2`                              |
-| `PowerMod/no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2`     | `panic: negative exponentiation is not supported!`        |
-| `PowerMod/threads-over-a-list-of-bases`                        | `panic: threading: a list where the crate takes a scalar` |
-| `PowerMod/threads-over-lists-the-period-is-the-order-of-2`     | `panic: threading: a list where the crate takes a scalar` |
-| `PrimePi/listable-threads-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
-| `PrimePi/no-primes-are-a-negative-number`                      | `panic: a non-negative integer`                           |
-| `PrimePi/rational-arguments-the-primes-up-to-7-2-are-2`        | `panic: an integer, not 7/2`                              |
-| `PrimePi/real-arguments`                                       | `panic: an integer, not 15.25`                            |
-| `PrimePi/threads-element-wise-over-a-list-as-wolfram-s`        | `panic: threading: a list where the crate takes a scalar` |
-| `Sin/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
-| `Sin/threads-element-wise-over-a-matrix`                       | `panic: threading: a list where the crate takes a scalar` |
-| `Sqrt/threads-element-wise-over-a-list`                        | `panic: threading: a list where the crate takes a scalar` |
-| `Sqrt/threads-over-a-matrix-entry-by-entry-this-is-not`        | `panic: threading: a list where the crate takes a scalar` |
-| `Tan/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar` |
-| `Tan/threads-element-wise-over-a-matrix`                       | `panic: threading: a list where the crate takes a scalar` |
+| example                                                        | message                                                      |
+| -------------------------------------------------------------- | ------------------------------------------------------------ |
+| `Abs/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar`    |
+| `Abs/threads-over-a-matrix-entry-by-entry`                     | `panic: threading: a list where the crate takes a scalar`    |
+| `AdicNumeral/6667-3-1-1-3-is-a-10-adic-integer`                | `panic: the adic crate takes a prime base, not 10`           |
+| `AdicNumeral/999-1-0-carrying-forever`                         | `panic: the adic crate takes a prime base, not 10`           |
+| `AdicNumeral/a-negative-power-inverts-exactly-3-1-1-3-in-z-10` | `panic: the adic crate takes a prime base, not 10`           |
+| `AdicNumeral/composite-base-2-is-not-a-unit-of-z-10-so-this`   | `panic: the adic crate takes a prime base, not 10`           |
+| `AdicNumeral/dividing-by-zero-stays-complexinfinity`           | `panic: Error during QAdic<EAdic> division: DivideByZero`    |
+| `AdicNumeral/numerals-over-different-bases-never-combine-and`  | `panic: MixedCharacteristic`                                 |
+| `AdicNumeral/the-exact-zero-has-infinite-valuation`            | `panic: the adic crate takes a prime base, not 10`           |
+| `Binomial/a-rational-n-with-integer-k-gives-the-exact`         | `panic: an integer, not 1/2`                                 |
+| `Binomial/a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0`        | `panic: an integer, not 0.5`                                 |
+| `Binomial/binom-1-2-3-frac-5-16-the-central-binomial`          | `panic: an integer, not -1/2`                                |
+| `Binomial/half-integer-arguments-evaluate-exactly-through`     | `panic: an integer, not 9/2`                                 |
+| `Binomial/real-arguments-evaluate-through-the-gamma`           | `panic: an integer, not 8.5`                                 |
+| `Binomial/threads-element-wise-over-a-list-as-wolfram-s`       | `panic: threading: a list where the crate takes a scalar`    |
+| `Ceil/a-zero-divisor-inside-ceil`                              | `panic: denominator == 0`                                    |
+| `Ceil/threads-element-wise-over-a-list`                        | `panic: threading: a list where the crate takes a scalar`    |
+| `Cos/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar`    |
+| `Cos/threads-element-wise-over-a-matrix`                       | `panic: threading: a list where the crate takes a scalar`    |
+| `Exp/broadcasts-element-wise-giving-begin-pmatrix-1-e`         | `panic: threading: a list where the crate takes a scalar`    |
+| `Exp/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar`    |
+| `Factorial/extends-to-non-integers-via-the-gamma-function`     | `panic: an integer, not 1/2`                                 |
+| `Factorial/frac-12-gamma-frac-12-sqrt-pi-returned-as-a`        | `panic: an integer, not -1/2`                                |
+| `Factorial/negative-integers-are-poles-of-the-gamma`           | `panic: a non-negative integer`                              |
+| `Factorial/negative-non-integers-are-defined-too-2-5-gamma`    | `panic: an integer, not -2.5`                                |
+| `Factorial/real-arguments-evaluate-as-gamma-n-1`               | `panic: an integer, not 3.5`                                 |
+| `Factorial/threads-element-wise-over-a-list`                   | `panic: threading: a list where the crate takes a scalar`    |
+| `Floor/a-zero-divisor-inside-floor`                            | `panic: denominator == 0`                                    |
+| `Floor/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar`    |
+| `Gamma/threads-over-a-list-and-reduces-each-integer`           | `panic: threading: a list where the crate takes a scalar`    |
+| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`       | `panic: threading: a list where the crate takes a scalar`    |
+| `GCD/big-integers-gcd-20-10-100-3-7-exact-past-where`          | `panic: an integer, not 2.43290200817664e18`                 |
+| `GCD/listable-a-single-list-argument-threads-element`          | `panic: threading: a list where the crate takes a scalar`    |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`               | `panic: threading: a list where the crate takes a scalar`    |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`     | `panic: a non-negative integer`                              |
+| `IsPrime/another-non-integer-3-halves`                         | `panic: an integer, not 3/2`                                 |
+| `IsPrime/isprime-neg-1-is-false`                               | `panic: a non-negative integer`                              |
+| `IsPrime/isprime-neg-2-is-true`                                | `panic: a non-negative integer`                              |
+| `IsPrime/isprime-neg-4-is-false`                               | `panic: a non-negative integer`                              |
+| `IsPrime/large-integers-10-3000-1-is-divisible-by-10-8-1`      | `panic: a non-negative integer`                              |
+| `IsPrime/non-integers-are-not-prime`                           | `panic: an integer, not 1/2`                                 |
+| `IsPrime/threads-element-wise-over-a-list`                     | `panic: threading: a list where the crate takes a scalar`    |
+| `IsPrime/threads-element-wise-over-a-short-list`               | `panic: threading: a list where the crate takes a scalar`    |
+| `LCM/big-integers-the-exact-118-digit-lcm-past-where`          | `panic: an integer, not 2.43290200817664e18`                 |
+| `LCM/listable-a-single-list-argument-threads-element`          | `panic: threading: a list where the crate takes a scalar`    |
+| `Ln/threads-element-wise-over-a-list`                          | `panic: threading: a list where the crate takes a scalar`    |
+| `Mod/3p14-mod-2`                                               | `panic: an integer, not 3.14`                                |
+| `Mod/a-symbolic-constant-reduces-exactly-to-pi-2`              | `panic: an integer, not 3.141592653589793`                   |
+| `Mod/an-exact-irrational-reduces-exactly-to-2-sqrt-7`          | `panic: an integer, not 5.291502622129181`                   |
+| `Mod/division-by-a-0-modulus-yields-nan-rather-than`           | `panic: attempt to divide by zero`                           |
+| `Mod/eulers-number-mod-2-reduces-exactly`                      | `panic: an integer, not 2.718281828459045`                   |
+| `Mod/periodicity-with-a-zero-modulus-on-one-side`              | `panic: attempt to divide by zero`                           |
+| `Mod/rationals-are-reduced-exactly`                            | `panic: an integer, not 5/2`                                 |
+| `Mod/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar`    |
+| `Mod/threads-over-a-list-of-moduli`                            | `panic: threading: a list where the crate takes a scalar`    |
+| `Negate/threads-element-wise-over-a-list`                      | `panic: negating [1, -2, 3]`                                 |
+| `Negate/threads-over-a-matrix-entry-by-entry`                  | `panic: negating [[1, -2], [3, 4]]`                          |
+| `PowerMod/2-is-not-a-square-mod-5-so-there-is-no-root`         | `panic: an integer, not 1/2`                                 |
+| `PowerMod/a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod`    | `panic: an integer, not 2/3`                                 |
+| `PowerMod/a-rational-exponent-is-a-modular-root-the-least`     | `panic: an integer, not 1/2`                                 |
+| `PowerMod/a-square-root-of-3-equiv-1-pmod-2`                   | `panic: an integer, not 1/2`                                 |
+| `PowerMod/a-square-root-of-3-mod-2-is-1-trivially`             | `panic: an integer, not 1/2`                                 |
+| `PowerMod/a-square-root-of-3-modulo-the-prime-10-30-57`        | `panic: an integer, not 1/2`                                 |
+| `PowerMod/no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2`     | `panic: no modular inverse: base and modulus share a factor` |
+| `PowerMod/threads-over-a-list-of-bases`                        | `panic: threading: a list where the crate takes a scalar`    |
+| `PowerMod/threads-over-lists-the-period-is-the-order-of-2`     | `panic: threading: a list where the crate takes a scalar`    |
+| `PrimePi/listable-threads-over-a-list`                         | `panic: threading: a list where the crate takes a scalar`    |
+| `PrimePi/no-primes-are-a-negative-number`                      | `panic: a non-negative integer`                              |
+| `PrimePi/rational-arguments-the-primes-up-to-7-2-are-2`        | `panic: an integer, not 7/2`                                 |
+| `PrimePi/real-arguments`                                       | `panic: an integer, not 15.25`                               |
+| `PrimePi/threads-element-wise-over-a-list-as-wolfram-s`        | `panic: threading: a list where the crate takes a scalar`    |
+| `Sin/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar`    |
+| `Sin/threads-element-wise-over-a-matrix`                       | `panic: threading: a list where the crate takes a scalar`    |
+| `Sqrt/threads-element-wise-over-a-list`                        | `panic: threading: a list where the crate takes a scalar`    |
+| `Sqrt/threads-over-a-matrix-entry-by-entry-this-is-not`        | `panic: threading: a list where the crate takes a scalar`    |
+| `Tan/threads-element-wise-over-a-list`                         | `panic: threading: a list where the crate takes a scalar`    |
+| `Tan/threads-element-wise-over-a-matrix`                       | `panic: threading: a list where the crate takes a scalar`    |
 
 </details>
