@@ -2427,7 +2427,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     unbounded: true,
   },
   {
-    name: "PrimePartition",
+    name: "PrimePartitions",
     id: "prime_partition",
     carrier: "IntegerPartition",
     grades: [
@@ -3354,7 +3354,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     description: "Binary words with no three consecutive 1s — the tribonacci count.",
   },
   {
-    name: "TriangularComposition",
+    name: "TriangularCompositions",
     id: "triangular_composition",
     carrier: "Composition",
     grades: [
@@ -3500,7 +3500,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     description: "Strings over a size-b alphabet.",
   },
   {
-    name: "ZigzagComposition",
+    name: "ZigzagCompositions",
     id: "zigzag_composition",
     carrier: "Composition",
     grades: [
@@ -7802,7 +7802,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   },
   {
     kind: "collection",
-    subject: "PrimePartition",
+    subject: "PrimePartitions",
     system: "oeis",
     identity: "A000607",
     url: "https://oeis.org/A000607",
@@ -8513,7 +8513,7 @@ export const REFERENCES: readonly CatalogReference[] = [
   },
   {
     kind: "collection",
-    subject: "TriangularComposition",
+    subject: "TriangularCompositions",
     system: "oeis",
     identity: "A023361",
     url: "https://oeis.org/A023361",
