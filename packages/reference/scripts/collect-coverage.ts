@@ -22,12 +22,12 @@
 // the Hurwitz function restricted to real s > 1. Sage bundles mpmath and SymPy, so a Sage lane would subsume both,
 // at the cost of a much heavier dependency for no extra coverage. We call mpmath directly.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { writeFormatted } from "@enumeratio/entry/node";
 import { KernelKilled, runKernel } from "@enumeratio/oracle/bounded";
+import { provenance } from "../src/provenance-data.ts";
+import { renderProvenance } from "./provenance.ts";
 
-const dataPath = new URL("../src/provenance-data.ts", import.meta.url);
-const source = readFileSync(dataPath, "utf8");
-const names = [...source.matchAll(/"name": "([^"]+)"/g)].map((match) => match[1] as string);
+const names = provenance.map((record) => record.name);
 
 /** Which names Wolfram knows as built-in System` symbols. */
 async function askWolfram(heads: readonly string[]): Promise<Set<string>> {
@@ -86,19 +86,14 @@ print(json.dumps(out))
 const wolfram = await askWolfram(names);
 const { sympy, mpmath } = await askPython(names);
 
-/** Rewrite one record's coverage arrays in place, preserving everything else. */
-const updated = source.replace(
-  /(\{\s*"name": "([^"]+)",[\s\S]*?)"elsewhere": \[[^\]]*\]/g,
-  (_whole: string, prefix: string, name: string) => {
-    const systems = [
-      wolfram.has(name) ? '"wolfram"' : "",
-      sympy.has(name) ? '"sympy"' : "",
-      mpmath.has(name) ? '"mpmath"' : "",
-    ].filter(Boolean);
-    return `${prefix}"elsewhere": [${systems.join(", ")}]`;
-  },
-);
-writeFileSync(dataPath, updated);
+const found = { wolfram, sympy, mpmath };
+const records = provenance.map((record) => ({
+  ...record,
+  elsewhere: Object.entries(found)
+    .filter(([, has]) => has.has(record.name))
+    .map(([system]) => system),
+}));
+await writeFormatted(new URL("../src/provenance-data.ts", import.meta.url), renderProvenance(records));
 
 const report = (label: string, found: Set<string>): string => `${label} ${found.size}/${names.length}`;
 process.stdout.write(`${report("wolfram", wolfram)}  ${report("sympy", sympy)}  ${report("mpmath", mpmath)}\n`);
