@@ -573,6 +573,7 @@ a-machine-precision-negative-argument:
     in: Log[-4.705]
   sympy:
     in: log(-4.705)
+    out: 1.54862577303734 + I*pi
   mpmath:
     in: log(-4.705)
     out: (1.54862577303734297246018360519 + 3.14159265358979323846264338328j)
@@ -597,6 +598,7 @@ an-integer-power-negative-argument:
     in: Log[-2]
   sympy:
     in: log(-2)
+    out: log(2) + I*pi
   mpmath:
     in: log(-2)
     out: (0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
@@ -621,6 +623,7 @@ n-of-a-negative-integer-argument:
     in: N[Log[-2], 10]
   sympy:
     in: N(log(-2), 30)
+    out: 0.693147180559945309417232121458 + 3.14159265358979323846264338328*I
   mpmath:
     in: (log(-2))
     out: (0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
@@ -645,6 +648,7 @@ ln-neg-6:
     in: Log[-6]
   sympy:
     in: log(-6)
+    out: log(6) + I*pi
   mpmath:
     in: log(-6)
     out: (1.79175946922805500081247735838 + 3.14159265358979323846264338328j)
@@ -669,6 +673,7 @@ n-of-a-negative-rational-argument:
     in: N[Log[Rational[-1, 2]]]
   sympy:
     in: N(log(Rational(-1, 2)), 30)
+    out: -0.693147180559945309417232121458 + 3.14159265358979323846264338328*I
   mpmath:
     in: (log((mpf(-1)/2)))
     out: (-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)

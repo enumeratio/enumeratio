@@ -251,6 +251,10 @@ periodicity-with-a-zero-modulus-on-one-side:
     in: (Mod[35, 13] == Mod[Plus[17, Times[3, 5]], 0])
   sympy:
     in: enumeratio_equal((35 % 13), ((17 + (3 * 5)) % 0))
+    out: "ZeroDivisionError: integer modulo by zero"
+    verdict: error
+    kind: undefined-form
+    note: "A zero modulus: compute-engine's Mod gives NaN, so the comparison is False; SymPy's % raises ZeroDivisionError."
   sage:
     in: bool((35 % 13) == ((17 + (3 * 5)) % 0))
   oscar:

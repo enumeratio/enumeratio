@@ -895,6 +895,10 @@ equal-negative-arguments-binom-2-2-1:
     in: Binomial[-2, -2]
   sympy:
     in: binomial(-2, -2)
+    out: "0"
+    verdict: disagree
+    kind: convention
+    note: "compute-engine and Wolfram take binom(-2, -2) = 1 by the limit through Γ; SymPy gives 0."
   sage:
     in: binomial(-2, -2)
   oscar:
@@ -949,6 +953,7 @@ a-negative-n-with-a-positive-k-binom-9-1:
     in: Binomial[-9, 1]
   sympy:
     in: binomial(-9, 1)
+    out: "-9"
   sage:
     in: binomial(-9, 1)
   oscar:
@@ -976,6 +981,7 @@ a-negative-n-with-k-0-binom-1-4:
     in: Binomial[-1, 4]
   sympy:
     in: binomial(-1, 4)
+    out: "1"
   sage:
     in: binomial(-1, 4)
   oscar:
@@ -1003,6 +1009,7 @@ a-negative-k-with-n-10-binom-10-neg-10:
     in: Binomial[10, -10]
   sympy:
     in: binomial(10, -10)
+    out: "0"
   sage:
     in: binomial(10, -10)
   oscar:
@@ -1030,6 +1037,7 @@ a-negative-k-past-n-binom-4-neg-13:
     in: Binomial[4, -13]
   sympy:
     in: binomial(4, -13)
+    out: "0"
   sage:
     in: binomial(4, -13)
   oscar:
@@ -1057,6 +1065,7 @@ a-negative-n-again-binom-neg-4-1:
     in: Binomial[-4, 1]
   sympy:
     in: binomial(-4, 1)
+    out: "-4"
   sage:
     in: binomial(-4, 1)
   oscar:
@@ -1084,6 +1093,7 @@ a-negative-k-with-n-2-binom-2-neg-2:
     in: Binomial[-2, 2]
   sympy:
     in: binomial(-2, 2)
+    out: "3"
   sage:
     in: binomial(-2, 2)
   oscar:
@@ -1111,6 +1121,7 @@ a-negative-n-zero-k-binom-neg-1-0:
     in: Binomial[-1, 0]
   sympy:
     in: binomial(-1, 0)
+    out: "1"
   sage:
     in: binomial(-1, 0)
   oscar:
@@ -1138,6 +1149,7 @@ a-negative-k-past-n-binom-100-neg-50:
     in: Binomial[100, -50]
   sympy:
     in: binomial(100, -50)
+    out: "0"
   sage:
     in: binomial(100, -50)
   oscar:
@@ -1168,6 +1180,7 @@ symmetry-doesn-t-hold-across-mismatched-n:
     in: (Binomial[2, 6] == Binomial[-18, 2])
   sympy:
     in: enumeratio_equal(binomial(2, 6), binomial(-18, 2))
+    out: False
   sage:
     in: bool(binomial(2, 6) == binomial(-18, 2))
   oscar:
@@ -1198,6 +1211,7 @@ not-pascal-s-rule-across-mismatched-n:
     in: (Plus[Binomial[-23, 2], Binomial[-2, 3]] == Binomial[-20, 6])
   sympy:
     in: enumeratio_equal((binomial(-23, 2) + binomial(-2, 3)), binomial(-20, 6))
+    out: False
   sage:
     in: bool((binomial(-23, 2) + binomial(-2, 3)) == binomial(-20, 6))
   oscar:

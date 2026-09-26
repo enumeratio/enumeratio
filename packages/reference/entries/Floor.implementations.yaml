@@ -215,6 +215,11 @@ a-zero-divisor-inside-floor:
     in: Floor[Divide[17, 0]]
   sympy:
     in: floor((S(17) / 0))
+    out: zoo
+    verdict: disagree
+    kind: ours
+    note: "compute-engine leaves Floor(ComplexInfinity) symbolic; SymPy's zoo matches Wolfram's ComplexInfinity."
+    issue: 292
   sage:
     in: floor((17 / 0))
   rust:
@@ -353,6 +358,7 @@ a-negative-radicand-inside-floor:
     in: Floor[Sqrt[-1]]
   sympy:
     in: floor(sqrt(-1))
+    out: I
   mpmath:
     in: floor(sqrt(-1))
     out: (0.0 + 1.0j)

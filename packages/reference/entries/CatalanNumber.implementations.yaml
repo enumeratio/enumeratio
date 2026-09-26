@@ -164,6 +164,7 @@ the-closed-form-through-a-negative-n-in-binomial:
     in: Divide[Binomial[Times[2, -13], 5], Plus[4, 1]]
   sympy:
     in: (S(binomial((2 * -13), 5)) / (4 + 1))
+    out: -142506/5
   sage:
     in: (binomial((2 * -13), 5) / (4 + 1))
   oscar:

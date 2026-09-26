@@ -632,6 +632,7 @@ a-pole-at-negative-pi-over-2-too:
     in: Tan[Divide[Pi, -2]]
   sympy:
     in: tan((S(pi) / -2))
+    out: zoo
   sage:
     in: tan((pi / -2))
   rust:
@@ -653,6 +654,7 @@ a-pole-reached-through-periodicity-unreduced:
     in: Tan[Plus[Divide[Pi, -2], Pi]]
   sympy:
     in: tan(((S(pi) / -2) + pi))
+    out: zoo
   sage:
     in: tan(((pi / -2) + pi))
   rust:

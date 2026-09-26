@@ -375,6 +375,7 @@ a-large-integer-against-a-negative-rational:
     in: LCM[Factorial[20], Plus[Power[10, -1], -2]]
   sympy:
     in: lcm(factorial(20), ((S(10)**-1) + -2))
+    out: "2432902008176640000"
   sage:
     in: lcm(factorial(20), (((10)^-1) + -2))
   oscar:

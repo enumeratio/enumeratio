@@ -468,6 +468,7 @@ a-complex-radicand-inside-the-subtraction:
     in: Abs[Subtract[Sqrt[-10], 2]]
   sympy:
     in: Abs((sqrt(-10) - 2))
+    out: sqrt(14)
   mpmath:
     in: fabs((sqrt(-10) - 2))
     out: "3.74165738677394138558374873232"

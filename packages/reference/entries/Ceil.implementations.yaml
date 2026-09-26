@@ -237,6 +237,11 @@ a-zero-divisor-inside-ceil:
     in: Ceiling[Divide[16, 0]]
   sympy:
     in: ceiling((S(16) / 0))
+    out: zoo
+    verdict: disagree
+    kind: ours
+    note: "compute-engine leaves Ceil(ComplexInfinity) symbolic; SymPy's zoo matches Wolfram's ComplexInfinity."
+    issue: 292
   sage:
     in: ceil((16 / 0))
   rust:
