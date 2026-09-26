@@ -1,0 +1,32 @@
+name: RandomComplex
+domain: Collections
+signature: RandomComplex() / RandomComplex(zmax) / RandomComplex({zmin, zmax})
+summary: A uniformly random complex number in a rectangle of the complex plane.
+signatures:
+  - call: RandomComplex()
+    description: uniform over the unit square (real and imaginary parts each in [0, 1])
+    library: enumeratio-collections
+  - call: RandomComplex(zmax)
+    description: uniform over the rectangle with corners 0 and zmax
+    library: enumeratio-collections
+  - call: RandomComplex({zmin, zmax})
+    description: uniform over the rectangle with corners zmin and zmax
+    library: enumeratio-collections
+details:
+  - Draws from the SAME seeded stream as [[RandomInteger]] (call [[SeedRandom]](seed) first for a reproducible sequence) — our own generator, not Wolfram's, so only the shape and range of the answer are guaranteed to match.
+examples:
+  - id: unit-square-default-seed
+    expr: [Last, [List, [SeedRandom, 42], [RandomComplex]]]
+    expected: [Complex, 0.6011037519201636, 0.44829055899754167]
+    caption: Reseeded explicitly so the example stays reproducible regardless of whatever else has already drawn from this engine's shared stream
+  - id: rectangle-from-0-to-zmax
+    expr: [Last, [List, [SeedRandom, 7], [RandomComplex, [Complex, 2, 3]]]]
+    expected: [Complex, 0.023409506306052208, 0.18587477272376418]
+    category: Scope
+  - id: rectangle-from-zmin-to-zmax
+    expr: [Last, [List, [SeedRandom, 9], [RandomComplex, [List, [Complex, -1, -1], [Complex, 1, 1]]]]]
+    expected: [Complex, -0.6025421638041735, 0.7024215925484896]
+    category: Scope
+seeAlso:
+  - RandomInteger
+  - SeedRandom

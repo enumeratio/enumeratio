@@ -1,0 +1,32 @@
+name: NProbability
+domain: Statistics
+signature: NProbability(cond, x \[Distributed] dist)
+summary: A numeric-only $P(cond)$ — handles any condition compute-engine can evaluate at a point, not just the shapes `Probability` recognizes symbolically.
+signatures:
+  - call: NProbability(cond, Distributed(x, dist))
+    description: tries the exact Probability first; otherwise sums (discrete) or integrates (continuous) the indicator of cond against the PDF numerically. Always returns a machine float.
+    library: enumeratio-statistics
+details:
+  - Tries `Probability(cond, Distributed(x, dist))` first, converted to a float, whenever it resolves.
+  - Otherwise sums/integrates `PDF(x)` over exactly the points/region where `cond` holds — evaluated by direct numeric substitution, so `cond` can be any boolean expression compute-engine can evaluate at a concrete point (`Mod`, `Or`, `x^2 > 1`, ...), not only `Equal`/`Less`/`LessEqual`/`And`.
+  - Continuous conditions are NOT generally smooth indicators (`x^2 > 1` jumps at $x=\pm 1$) — plain tanh-sinh quadrature loses most of its accuracy right at a jump, so the boundary is located first (by bisection) and each constant-truth piece is integrated on its own.
+  - Same $10^{-12}$ tail/convergence tolerance as [[NExpectation]]; same scope gap for wave-4 compound distributions.
+examples:
+  - id: nprobability-normal-outside-one-sigma-ish
+    expr: [NProbability, [Greater, [Power, x, 2], 1], [Distributed, x, [NormalDistribution, 0, 1]]]
+    expected: 0.3173105078387169
+    caption: $P(X^2 > 1) = 2(1-\Phi(1)) \approx 0.3173105079$ for standard normal $X$ — `Probability` itself stays unevaluated (`x^2 > 1` isn't `Equal`/`Less`/`LessEqual`/`And`), and the indicator has two jumps ($x=\pm1$), split off before integrating. Cross-checked against wolframscript's `N[NProbability[x^2 > 1, x \[Distributed] NormalDistribution[0,1]], 10]`.
+  - id: nprobability-poisson-is-even
+    expr: [NProbability, [Equal, [Mod, x, 2], 0], [Distributed, x, [PoissonDistribution, 4]]]
+    expected: 0.5001677313139468
+    category: Scope
+    caption: $P(X \text{ even}) = (1+e^{-2\mu})/2 \approx 0.5001677313$ for $X \sim \mathrm{Poisson}(4)$ — an infinite discrete sum, condition on `Mod`. Cross-checked against wolframscript's `N[NProbability[Mod[x,2] == 0, x \[Distributed] PoissonDistribution[4]], 10]`.
+  - id: nprobability-agrees-with-exact-cdf
+    expr: [NProbability, [LessEqual, x, 5], [Distributed, x, [PoissonDistribution, 3]]]
+    expected: 0.9160820579686966
+    category: Scope
+    caption: Agrees with `Probability`'s own exact `CDF`-based answer for the same condition (`N[92/(5 e^3)]`) — the exact path is tried first and used whenever it resolves.
+seeAlso:
+  - Probability
+  - NExpectation
+  - Distributed

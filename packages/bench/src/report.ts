@@ -31,8 +31,14 @@ export function runInfo(env: NodeJS.ProcessEnv = process.env, date = new Date())
   };
 }
 
-export function report(run: RunInfo, system: Report["system"], results: readonly CaseResult[]): Report {
-  return { schema: 1, run, system, machine: machine(), protocol: PROTOCOL, results };
+export function report(
+  run: RunInfo,
+  system: Report["system"],
+  results: readonly CaseResult[],
+  during?: Report["conditions"],
+): Report {
+  const conditions = during === undefined ? {} : { conditions: during };
+  return { schema: 1, run, system, machine: machine(), ...conditions, protocol: PROTOCOL, results };
 }
 
 /** A system's version (as its harness reported it, or probed) and cache policy. */

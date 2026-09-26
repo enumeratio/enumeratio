@@ -238,9 +238,6 @@ a-non-integer-order-past-z-1-is-left-unevaluated:
   sympy:
     in: polylog(2.5, 2)
     out: polylog(2.5, 2)
-    verdict: disagree
-    kind: undefined-form
-    note: SymPy leaves Li_2.5(2) unevaluated on the branch cut; ours continues to the complex value Wolfram, Sage and mpmath give.
   mpmath:
     in: polylog(2.5, 2)
     out: (2.78966033238277714404754430876 - 1.36380370053935279437171941141j)
@@ -281,8 +278,10 @@ a-machine-precision-argument:
     in: PolyLog[2, 0.9]
   sympy:
     in: polylog(2, 0.9)
+    out: polylog(2, 0.9)
   mpmath:
     in: polylog(2, 0.9)
+    out: "1.2997147230049587819795713031"
   sage:
     in: polylog(2, 0.9)
 li-0-z-z-1-z-past-the-unit-disk:
@@ -298,8 +297,10 @@ li-0-z-z-1-z-past-the-unit-disk:
     in: PolyLog[0, 5.5]
   sympy:
     in: polylog(0, 5.5)
+    out: "-1.22222222222222"
   mpmath:
     in: polylog(0, 5.5)
+    out: "-1.22222222222222222222222222222"
   sage:
     in: polylog(0, 5.5)
 li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
@@ -315,6 +316,7 @@ li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
     in: PolyLog[3, Rational[1, 2]]
   sympy:
     in: polylog(3, Rational(1, 2))
+    out: polylog(3, 1/2)
   sage:
     in: polylog(3, (1/2))
 complex-order-and-argument:
@@ -330,8 +332,10 @@ complex-order-and-argument:
     in: PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]
   sympy:
     in: polylog((0.2 + 1*I), (0.5 + -0.5*I))
+    out: 0.0703265205505161 - 0.563293262539874*I
   mpmath:
     in: polylog(mpc(0.2, 1), mpc(0.5, -0.5))
+    out: (0.0703265205505160488207107039144 - 0.563293262539874483087247237706j)
   sage:
     in: polylog((0.2 + 1*I), (0.5 + -0.5*I))
 past-z-1-the-continuation-is-complex:
@@ -347,8 +351,10 @@ past-z-1-the-continuation-is-complex:
     in: PolyLog[2, 2.5]
   sympy:
     in: polylog(2, 2.5)
+    out: polylog(2, 2.5)
   mpmath:
     in: polylog(2, 2.5)
+    out: (2.42079080656593384391365659389 - 2.87861223180826055148866875379j)
   sage:
     in: polylog(2, 2.5)
 li-3-1-eta-3-frac-34-zeta-3:
@@ -364,8 +370,10 @@ li-3-1-eta-3-frac-34-zeta-3:
     in: PolyLog[3, -1]
   sympy:
     in: polylog(3, -1)
+    out: -dirichlet_eta(3)
   mpmath:
     in: polylog(3, -1)
+    out: "-0.901542677369695714049803621134"
   sage:
     in: polylog(3, -1)
 li-2-2-pi-2-4-i-pi-ln-2-exactly:
@@ -381,8 +389,10 @@ li-2-2-pi-2-4-i-pi-ln-2-exactly:
     in: PolyLog[2, 2]
   sympy:
     in: polylog(2, 2)
+    out: pi**2/4 - I*pi*log(2)
   mpmath:
     in: polylog(2, 2)
+    out: (2.46740110027233965470862274997 - 2.17758609030360213050068889824j)
   sage:
     in: polylog(2, 2)
 li-n-1-1-2-1-n-zeta-n-for-symbolic-n:
@@ -478,6 +488,7 @@ to-30-significant-digits-not-yet-the-requested:
     in: N[PolyLog[2, Rational[1, 2]], 30]
   sympy:
     in: N(polylog(2, Rational(1, 2)), 30)
+    out: "0.582240526465012505902656320160"
   sage:
     in: N(polylog(2, (1/2)))
 certified-digits-li-2-1-3:
@@ -1651,6 +1662,7 @@ li-3-over-2-1-zeta-3-2-non-integer-order:
     in: N[PolyLog[Rational[3, 2], 1]]
   sympy:
     in: N(polylog(Rational(3, 2), 1), 30)
+    out: "2.61237534868548834334856756792"
   sage:
     in: N(polylog((3/2), 1))
 li-1-1-2-ln-2:
@@ -1666,6 +1678,7 @@ li-1-1-2-ln-2:
     in: N[PolyLog[1, Rational[1, 2]]]
   sympy:
     in: N(polylog(1, Rational(1, 2)), 30)
+    out: "0.693147180559945309417232121458"
   sage:
     in: N(polylog(1, (1/2)))
 n-polylog-rim-theta-0p5-s-neg-0p5-z:
@@ -1681,8 +1694,10 @@ n-polylog-rim-theta-0p5-s-neg-0p5-z:
     in: N[PolyLog[-0.5, Complex[0.8775825618903728, 0.479425538604203]]]
   sympy:
     in: N(polylog(-0.5, (0.8775825618903728 + 0.479425538604203*I)), 30)
+    out: -1.98141280324163027160011552041 + 1.75961802809541900671774783405*I
   mpmath:
     in: (polylog(-0.5, mpc(0.8775825618903728, 0.479425538604203)))
+    out: (-1.98141280324163035428655766009 + 1.7596180280954191138331411993j)
   sage:
     in: N(polylog(-0.5, (0.8775825618903728 + 0.479425538604203*I)))
 polylog-rim-theta-0p5-s-0-z:
@@ -1698,8 +1713,10 @@ polylog-rim-theta-0p5-s-0-z:
     in: N[PolyLog[0, Complex[0.8775825618903728, 0.479425538604203]]]
   sympy:
     in: N(polylog(0, (0.8775825618903728 + 0.479425538604203*I)), 30)
+    out: -0.500000000000000162772180044563 + 1.95815868232297011768855635329*I
   mpmath:
     in: (polylog(0, mpc(0.8775825618903728, 0.479425538604203)))
+    out: (-0.500000000000000162772180044563 + 1.95815868232297011768855635329j)
   sage:
     in: N(polylog(0, (0.8775825618903728 + 0.479425538604203*I)))
 polylog-rim-theta-0p5-s-0p5-z:
@@ -1715,8 +1732,10 @@ polylog-rim-theta-0p5-s-0p5-z:
     in: N[PolyLog[0.5, Complex[0.8775825618903728, 0.479425538604203]]]
   sympy:
     in: N(polylog(0.5, (0.8775825618903728 + 0.479425538604203*I)), 30)
+    out: 0.31529661575870832068702043216 + 1.66833249299676555921223553014*I
   mpmath:
     in: (polylog(0.5, mpc(0.8775825618903728, 0.479425538604203)))
+    out: (0.315296615758708340889423388656 + 1.6683324929967655223652807247j)
   sage:
     in: N(polylog(0.5, (0.8775825618903728 + 0.479425538604203*I)))
 polylog-rim-theta-0p5-s-1-z:
@@ -1732,8 +1751,10 @@ polylog-rim-theta-0p5-s-1-z:
     in: N[PolyLog[1, Complex[0.8775825618903728, 0.479425538604203]]]
   sympy:
     in: N(polylog(1, (0.8775825618903728 + 0.479425538604203*I)), 30)
+    out: 0.703585635137844674746273612566 + 1.32079632679489670524619759661*I
   mpmath:
     in: (polylog(1, mpc(0.8775825618903728, 0.479425538604203)))
+    out: (0.703585635137844674746273612566 + 1.32079632679489670524619759661j)
   sage:
     in: N(polylog(1, (0.8775825618903728 + 0.479425538604203*I)))
 polylog-rim-theta-0p5-s-1p5-z:
@@ -1749,8 +1770,10 @@ polylog-rim-theta-0p5-s-1p5-z:
     in: N[PolyLog[1.5, Complex[0.8775825618903728, 0.479425538604203]]]
   sympy:
     in: N(polylog(1.5, (0.8775825618903728 + 0.479425538604203*I)), 30)
+    out: 0.865929522764988246485984291212 + 1.04280869887883143043438849418*I
   mpmath:
     in: (polylog(1.5, mpc(0.8775825618903728, 0.479425538604203)))
+    out: (0.865929522764988280552884461071 + 1.04280869887883137594918850979j)
   sage:
     in: N(polylog(1.5, (0.8775825618903728 + 0.479425538604203*I)))
 polylog-rim-theta-1p7-s-0-z:
@@ -1766,8 +1789,10 @@ polylog-rim-theta-1p7-s-0-z:
     in: N[PolyLog[0, Complex[-0.12884449429552464, 0.9916648104524686]]]
   sympy:
     in: N(polylog(0, (-0.12884449429552464 + 0.9916648104524686*I)), 30)
+    out: -0.499999999999999977487794537038 + 0.439238892276005904440122695821*I
   mpmath:
     in: (polylog(0, mpc(-0.12884449429552464, 0.9916648104524686)))
+    out: (-0.499999999999999977487794537038 + 0.439238892276005904440122695821j)
   sage:
     in: N(polylog(0, (-0.12884449429552464 + 0.9916648104524686*I)))
 polylog-rim-theta-1p7-s-0p5-z:
@@ -1783,8 +1808,10 @@ polylog-rim-theta-1p7-s-0p5-z:
     in: N[PolyLog[0.5, Complex[-0.12884449429552464, 0.9916648104524686]]]
   sympy:
     in: N(polylog(0.5, (-0.12884449429552464 + 0.9916648104524686*I)), 30)
+    out: -0.460639226197527840156453748932 + 0.600477816055078328361105377553*I
   mpmath:
     in: (polylog(0.5, mpc(-0.12884449429552464, 0.9916648104524686)))
+    out: (-0.460639226197527842017307762687 + 0.60047781605507833325428051208j)
   sage:
     in: N(polylog(0.5, (-0.12884449429552464 + 0.9916648104524686*I)))
 polylog-rim-theta-1p7-s-1-z:
@@ -1800,8 +1827,10 @@ polylog-rim-theta-1p7-s-1-z:
     in: N[PolyLog[1, Complex[-0.12884449429552464, 0.9916648104524686]]]
   sympy:
     in: N(polylog(1, (-0.12884449429552464 + 0.9916648104524686*I)), 30)
+    out: -0.407170859340729374328160080788 + 0.720796326794896617651288524145*I
   mpmath:
     in: (polylog(1, mpc(-0.12884449429552464, 0.9916648104524686)))
+    out: (-0.407170859340729374328160080788 + 0.720796326794896617651288524145j)
   sage:
     in: N(polylog(1, (-0.12884449429552464 + 0.9916648104524686*I)))
 polylog-rim-theta-1p7-s-1p5-z:
@@ -1817,8 +1846,10 @@ polylog-rim-theta-1p7-s-1p5-z:
     in: N[PolyLog[1.5, Complex[-0.12884449429552464, 0.9916648104524686]]]
   sympy:
     in: N(polylog(1.5, (-0.12884449429552464 + 0.9916648104524686*I)), 30)
+    out: -0.352399886639668535881497746232 + 0.807057229069461645742933342262*I
   mpmath:
     in: (polylog(1.5, mpc(-0.12884449429552464, 0.9916648104524686)))
+    out: (-0.352399886639668539880641902264 + 0.807057229069461640290489366502j)
   sage:
     in: N(polylog(1.5, (-0.12884449429552464 + 0.9916648104524686*I)))
 polylog-rim-theta-2p4-s-0-z:
@@ -1834,8 +1865,10 @@ polylog-rim-theta-2p4-s-0-z:
     in: N[PolyLog[0, Complex[-0.7373937155412454, 0.675463180551151]]]
   sympy:
     in: N(polylog(0, (-0.7373937155412454 + 0.675463180551151*I)), 30)
+    out: -0.499999999999999993326488594745 + 0.194389784684102472862670134434*I
   mpmath:
     in: (polylog(0, mpc(-0.7373937155412454, 0.675463180551151)))
+    out: (-0.499999999999999993326488594745 + 0.194389784684102472862670134434j)
   sage:
     in: N(polylog(0, (-0.7373937155412454 + 0.675463180551151*I)))
 polylog-rim-theta-2p4-s-0p5-z:
@@ -1851,8 +1884,10 @@ polylog-rim-theta-2p4-s-0p5-z:
     in: N[PolyLog[0.5, Complex[-0.7373937155412454, 0.675463180551151]]]
   sympy:
     in: N(polylog(0.5, (-0.7373937155412454 + 0.675463180551151*I)), 30)
+    out: -0.570995313100137624751084786112 + 0.288122350544688710094476391532*I
   mpmath:
     in: (polylog(0.5, mpc(-0.7373937155412454, 0.675463180551151)))
+    out: (-0.570995313100137620681665622821 + 0.288122350544688681239495794311j)
   sage:
     in: N(polylog(0.5, (-0.7373937155412454 + 0.675463180551151*I)))
 polylog-rim-theta-2p4-s-1-z:
@@ -1868,8 +1903,10 @@ polylog-rim-theta-2p4-s-1-z:
     in: N[PolyLog[1, Complex[-0.7373937155412454, 0.675463180551151]]]
   sympy:
     in: N(polylog(1, (-0.7373937155412454 + 0.675463180551151*I)), 30)
+    out: -0.622766653117112758665859429544 + 0.37079632679489664433848426139*I
   mpmath:
     in: (polylog(1, mpc(-0.7373937155412454, 0.675463180551151)))
+    out: (-0.622766653117112758665859429544 + 0.37079632679489664433848426139j)
   sage:
     in: N(polylog(1, (-0.7373937155412454 + 0.675463180551151*I)))
 polylog-rim-theta-2p4-s-1p5-z:
@@ -1885,8 +1922,10 @@ polylog-rim-theta-2p4-s-1p5-z:
     in: N[PolyLog[1.5, Complex[-0.7373937155412454, 0.675463180551151]]]
   sympy:
     in: N(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)), 30)
+    out: -0.659486088090073474532459840702 + 0.440335525424699725238752989753*I
   mpmath:
     in: (polylog(1.5, mpc(-0.7373937155412454, 0.675463180551151)))
+    out: (-0.659486088090073466165234915645 + 0.440335525424699717082212758762j)
   sage:
     in: N(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)))
 order-one-half-at-1-is-zeta-one-half:
@@ -1902,5 +1941,6 @@ order-one-half-at-1-is-zeta-one-half:
     in: N[PolyLog[Rational[1, 2], 1]]
   sympy:
     in: N(polylog(Rational(1, 2), 1), 30)
+    out: "-1.46035450880958681288949915252"
   sage:
     in: N(polylog((1/2), 1))

@@ -13,20 +13,20 @@ lcm-4-6:
     tex:
       in: \text{lcm}(4,6)
       out: "12"
-  sympy:
-    in: lcm(4, 6)
-    out: "12"
   sage:
     in: lcm(4, 6)
     out: "12"
   oscar:
     in: lcm(ZZ(4), ZZ(6))
     out: "12"
-  julia:
-    in: lcm(ZZ(4), ZZ(6))
-    out: "12"
   mathlib4:
     in: (Int.lcm 4 6)
+    out: "12"
+  sympy:
+    in: lcm(4, 6)
+    out: "12"
+  julia:
+    in: lcm(ZZ(4), ZZ(6))
     out: "12"
   rust:
     in: lcm(n(4), n(6))
@@ -76,20 +76,20 @@ a-single-argument-is-returned-unchanged:
     tex:
       in: \text{lcm}(0,5)
       out: "0"
-  sympy:
-    in: lcm(0, 5)
-    out: "0"
   sage:
     in: lcm(0, 5)
     out: "0"
   oscar:
     in: lcm(ZZ(0), ZZ(5))
     out: "0"
-  julia:
-    in: lcm(ZZ(0), ZZ(5))
-    out: "0"
   mathlib4:
     in: (Int.lcm 0 5)
+    out: "0"
+  sympy:
+    in: lcm(0, 5)
+    out: "0"
+  julia:
+    in: lcm(ZZ(0), ZZ(5))
     out: "0"
   rust:
     in: lcm(n(0), n(5))
@@ -109,20 +109,20 @@ signs-are-discarded-before-computing-the-lcm:
     tex:
       in: \text{lcm}(-3,7)
       out: "21"
-  sympy:
-    in: lcm(-3, 7)
-    out: "21"
   sage:
     in: lcm(-3, 7)
     out: "21"
   oscar:
     in: lcm(ZZ(-3), ZZ(7))
     out: "21"
-  julia:
-    in: lcm(ZZ(-3), ZZ(7))
-    out: "21"
   mathlib4:
     in: (Int.lcm (-3) 7)
+    out: "21"
+  sympy:
+    in: lcm(-3, 7)
+    out: "21"
+  julia:
+    in: lcm(ZZ(-3), ZZ(7))
     out: "21"
   rust:
     in: lcm(n(-3), n(7))
@@ -145,20 +145,20 @@ gcd-a-b-cdot-lcm-a-b-ab-see-gcd:
     tex:
       in: \gcd (27,81) \text{lcm}(27,81)=27\ 81
       out: \text{True}
-  sympy:
-    in: enumeratio_equal((gcd(27, 81) * lcm(27, 81)), (27 * 81))
-    out: True
   sage:
     in: bool((gcd(27, 81) * lcm(27, 81)) == (27 * 81))
     out: True
   oscar:
     in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
     out: "true"
-  julia:
-    in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
-    out: "true"
   mathlib4:
     in: (decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal((gcd(27, 81) * lcm(27, 81)), (27 * 81))
+    out: True
+  julia:
+    in: ((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))
     out: "true"
   rust:
     in: equal((gcd(n(27), n(81)) * lcm(n(27), n(81))), (n(27) * n(81)))
@@ -193,12 +193,6 @@ over-the-rationals-the-lcm-of-the-numerators:
     tex:
       in: \text{lcm}(3+i,-1+3 i)
       out: 3+i
-  sympy:
-    in: lcm((3 + 1*I), (-1 + 3*I))
-    out: -1 + 3*I
-    verdict: disagree
-    kind: convention
-    note: Gaussian lcm is defined up to a unit; SymPy picks a different associate.
   sage:
     in: lcm((3 + 1*I), (-1 + 3*I))
     out: "1"
@@ -211,6 +205,12 @@ over-the-rationals-the-lcm-of-the-numerators:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sympy:
+    in: lcm((3 + 1*I), (-1 + 3*I))
+    out: -1 + 3*I
+    verdict: disagree
+    kind: convention
+    note: Gaussian lcm is defined up to a unit; SymPy picks a different associate.
   julia:
     in: lcm(ZZ(complex(3, 1)), ZZ(complex(-1, 3)))
     out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
@@ -261,14 +261,22 @@ gaussian-primes-of-norm-41-and-13-the-lcm-is-the:
     in: LCM[Complex[-4, 5], Complex[2, 3]]
   wolfram:
     in: LCM[Complex[-4, 5], Complex[2, 3]]
-  sympy:
-    in: lcm((-4 + 5*I), (2 + 3*I))
   sage:
     in: lcm((-4 + 5*I), (2 + 3*I))
   oscar:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
+  sympy:
+    in: lcm((-4 + 5*I), (2 + 3*I))
+    out: -23 - 2*I
+    verdict: disagree
+    kind: convention
+    note: A Gaussian LCM is defined up to a unit; compute-engine normalises it into the first quadrant, as Wolfram does, and SymPy doesn't.
   julia:
     in: lcm(ZZ(complex(-4, 5)), ZZ(complex(2, 3)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but"
+    verdict: error
+    kind: domain
+    note: The Julia mapping converts to ZZ, integers only; compute-engine's LCM extends to rational, real and complex arguments.
 gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
   epsil:
     in: LCM(1 / 2 + 3 / 5 * i, 1 / 3 + i)
@@ -280,14 +288,22 @@ gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3:
     in: LCM[Complex[Rational[1, 2], Rational[3, 5]], Complex[Rational[1, 3], 1]]
   wolfram:
     in: LCM[Complex[Rational[1, 2], Rational[3, 5]], Complex[Rational[1, 3], 1]]
-  sympy:
-    in: lcm((Rational(1, 2) + Rational(3, 5)*I), (Rational(1, 3) + 1*I))
   sage:
     in: lcm(((1/2) + (3/5)*I), ((1/3) + 1*I))
   oscar:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
+  sympy:
+    in: lcm((Rational(1, 2) + Rational(3, 5)*I), (Rational(1, 3) + 1*I))
+    out: -13 + 21*I
+    verdict: disagree
+    kind: convention
+    note: A Gaussian LCM is defined up to a unit; compute-engine normalises it into the first quadrant, as Wolfram does, and SymPy doesn't.
   julia:
     in: lcm(ZZ(complex((1 // 2), (3 // 5))), ZZ(complex((1 // 3), 1)))
+    out: "MethodError: no method matching (::ZZRing)(::Complex{Rational{Int64}}) The object of type `ZZRing` e"
+    verdict: error
+    kind: domain
+    note: The Julia mapping converts to ZZ, integers only; compute-engine's LCM extends to rational, real and complex arguments.
 big-integers-the-exact-118-digit-lcm-past-where:
   epsil:
     in: LCM(20!, 10 ^ 100 + 3)
@@ -299,18 +315,24 @@ big-integers-the-exact-118-digit-lcm-past-where:
     in: LCM[Factorial[20], Plus[Power[10, 100], 3]]
   wolfram:
     in: LCM[Factorial[20], Plus[Power[10, 100], 3]]
-  sympy:
-    in: lcm(factorial(20), ((10**100) + 3))
   sage:
     in: lcm(factorial(20), ((10^100) + 3))
   oscar:
     in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
-  julia:
-    in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
   mathlib4:
     in: (Int.lcm (Nat.factorial 20) ((10 ^ 100) + 3))
+  sympy:
+    in: lcm(factorial(20), ((10**100) + 3))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
+  julia:
+    in: lcm(ZZ(factorial(ZZ(20))), ZZ(((big(10)^100) + 3)))
+    out: "3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000"
   rust:
     in: lcm(factorial(n(20)), (power(n(10), n(100)) + n(3)))
+    out: "panic: an integer, not 2.43290200817664e18"
+    verdict: error
+    kind: domain
+    note: The Rust adapter takes integers here; compute-engine's LCM extends past them.
 listable-a-single-list-argument-threads-element:
   epsil:
     in: LCM(12, [3, 7, 40])
@@ -322,15 +344,24 @@ listable-a-single-list-argument-threads-element:
     in: LCM[12, List[3, 7, 40]]
   wolfram:
     in: LCM[12, List[3, 7, 40]]
-  sympy:
-    in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
   sage:
     in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
   oscar:
     in: lcm(ZZ(12), ZZ([3, 7, 40]))
-  julia:
-    in: lcm(ZZ(12), ZZ([3, 7, 40]))
   mathlib4:
     in: (Int.lcm 12 [3, 7, 40])
+  sympy:
+    in: "[lcm(12, 3), lcm(12, 7), lcm(12, 40)]"
+    out: "[12, 84, 120]"
+  julia:
+    in: lcm(ZZ(12), ZZ([3, 7, 40]))
+    out: "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but "
+    verdict: error
+    kind: threading
+    note: compute-engine's LCM is Listable and threads over the list; Nemo/Combinatorics.jl takes scalars only.
   rust:
     in: lcm(n(12), list(vec![n(3), n(7), n(40)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's LCM is Listable and threads over the list; the Rust crates take scalars only.

@@ -1,0 +1,27 @@
+nested-path-drills-in:
+  epsil:
+    in: Extract([[a, b], [c, d]], [2, 1])
+    out: c
+  tex:
+    in: \mathrm{Extract}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack)
+    out: c
+  fullform:
+    in: Extract[List[List[a, b], List[c, d]], List[2, 1]]
+negative-position-counts-from-the-end:
+  epsil:
+    in: Extract([a, b, c], -1)
+    out: c
+  tex:
+    in: \mathrm{Extract}(\bigl\lbrack a, b, c\bigr\rbrack, -1)
+    out: c
+  fullform:
+    in: Extract[List[a, b, c], -1]
+list-of-paths-extracts-several-parts:
+  epsil:
+    in: Extract([[a, b], [c, d]], [[1, 1], [2, 2]])
+    out: "[a, d]"
+  tex:
+    in: \mathrm{Extract}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2, 2\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack a, d\bigr\rbrack
+  fullform:
+    in: Extract[List[List[a, b], List[c, d]], List[List[1, 1], List[2, 2]]]

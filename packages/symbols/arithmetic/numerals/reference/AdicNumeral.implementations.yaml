@@ -93,6 +93,10 @@ a-negative-power-inverts-exactly-3-1-1-3-in-z-10:
     in: Power[AdicNumeral[10, 3], -1]
   rust:
     in: power(adic(n(10), n(3)), n(-1))
+    out: "panic: the adic crate takes a prime base, not 10"
+    verdict: error
+    kind: domain
+    note: The adic crate works over a single prime base; compute-engine's AdicNumeral takes any base b ≥ 2 and mixes them symbolically.
 numerals-over-different-bases-never-combine-and:
   epsil:
     in: AdicNumeral(7, 2) + AdicNumeral(5, 2)
@@ -104,6 +108,10 @@ numerals-over-different-bases-never-combine-and:
     in: Plus[AdicNumeral[7, 2], AdicNumeral[5, 2]]
   rust:
     in: (adic(n(7), n(2)) + adic(n(5), n(2)))
+    out: "panic: MixedCharacteristic"
+    verdict: error
+    kind: domain
+    note: The adic crate works over a single prime base; compute-engine's AdicNumeral takes any base b ≥ 2 and mixes them symbolically.
 the-exact-zero-has-infinite-valuation:
   epsil:
     in: AdicValuation(AdicNumeral(10, 0))
@@ -118,6 +126,10 @@ the-exact-zero-has-infinite-valuation:
     in: AdicValuation[AdicNumeral[10, 0]]
   rust:
     in: adic_valuation(adic(n(10), n(0)))
+    out: "panic: the adic crate takes a prime base, not 10"
+    verdict: error
+    kind: domain
+    note: The adic crate works over a single prime base; compute-engine's AdicNumeral takes any base b ≥ 2 and mixes them symbolically.
 a-capped-zero-is-only-o-b-prec-so-its-valuation:
   epsil:
     in: AdicValuation(AdicNumeral(10, 0, 8))

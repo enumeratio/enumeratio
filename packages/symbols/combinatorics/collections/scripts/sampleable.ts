@@ -7,7 +7,7 @@
 // too-expensive draw is a DISCARD (Plausible's gaveUp), never a failure.
 
 import { between, randomBelow, type Rng } from "@enumeratio/plausible";
-import type { Declared, FamilyKernel } from "../src/families/types.ts";
+import { type Declared, type FamilyKernel, needsBigint } from "../src/families/types.ts";
 
 export interface Address {
   readonly params: number[];
@@ -30,9 +30,7 @@ export interface Sampleable {
 /** Undeclared families: every param an axis from 0, and at most this size. */
 const UNDECLARED_SIZE = 4;
 
-/** A kernel still in plain numbers declining past 2^53 (see `numberKernel`). */
-export const needsBigint = (error: unknown): boolean =>
-  error instanceof RangeError && error.message.includes("not bigint yet");
+export { needsBigint } from "../src/families/types.ts";
 
 const enumerates = (declared: Declared): boolean => Object.values(declared.cost).some((cost) => cost === "enumerative");
 
