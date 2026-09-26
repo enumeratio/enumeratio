@@ -85,6 +85,12 @@ examples:
     expected: 0
     category: Possible issues
     caption: $k > n$ is 0
+  - role: test
+    id: a-negative-k-stays-symbolic
+    expr: [StirlingS1, 4, -1]
+    expected: [StirlingS1, 4, -1]
+    category: Possible issues
+    caption: A negative $k$ is outside the textbook domain and stays unevaluated
 seeAlso:
   - Binomial
   - Stirling

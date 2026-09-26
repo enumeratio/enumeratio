@@ -377,3 +377,25 @@ touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
   julia:
     in: (mod(bell(ZZ(9)), 7) == mod((bell(ZZ(2)) + bell(ZZ(3))), 7))
     out: "true"
+a-zero-modulus-inside-a-congruence-check-is-nan:
+  epsil:
+    in: BellNumber(9) % 23 == (BellNumber(4) + BellNumber(5)) % 0
+    out: False
+  tex:
+    in: \mathrm{BellNumber}(9)\bmod23=(\mathrm{BellNumber}(4)+\mathrm{BellNumber}(5))\bmod0
+    out: \bot
+  traditional:
+    in: B_{9}\bmod23=(B_{4}+B_{5})\bmod0
+    out: \mathrm{False}
+  fullform:
+    in: Equal[Mod[BellB[9], 23], Mod[Plus[BellB[4], BellB[5]], 0]]
+  wolfram:
+    in: (Mod[BellB[9], 23] == Mod[Plus[BellB[4], BellB[5]], 0])
+  sympy:
+    in: enumeratio_equal((bell(9) % 23), ((bell(4) + bell(5)) % 0))
+  sage:
+    in: bool((bell_number(9) % 23) == ((bell_number(4) + bell_number(5)) % 0))
+  oscar:
+    in: (mod(bell(9), 23) == mod((bell(4) + bell(5)), 0))
+  julia:
+    in: (mod(bell(ZZ(9)), 23) == mod((bell(ZZ(4)) + bell(ZZ(5))), 0))

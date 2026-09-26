@@ -366,3 +366,23 @@ k-n-is-0:
     out: "0"
   mathlib4:
     in: (Nat.stirlingFirst 5 6)
+a-negative-k-stays-symbolic:
+  epsil:
+    in: StirlingS1(4, -1)
+    out: StirlingS1(4, -1)
+  tex:
+    in: \mathrm{StirlingS1}(4, -1)
+    out: \mathrm{StirlingS1}(4, -1)
+  traditional:
+    in: s(4, -1)
+    out: s(4, -1)
+  fullform:
+    in: StirlingS1[4, -1]
+  wolfram:
+    in: StirlingS1[4, -1]
+  sage:
+    in: stirling_number1(4, -1)
+  julia:
+    in: Combinatorics.stirlings1(big(4), -1)
+  mathlib4:
+    in: (Nat.stirlingFirst 4 (-1))

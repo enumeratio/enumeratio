@@ -177,6 +177,12 @@ examples:
     expected: 6
     category: Possible issues
     caption: 'Both arguments negative integers: the limiting definition gives $\binom{-3}{-5} = \binom{-3}{2} = 6$, not 0'
+  - role: test
+    id: equal-negative-arguments-binom-2-2-1
+    expr: [Binomial, -2, -2]
+    expected: 1
+    category: Possible issues
+    caption: 'Equal negative arguments: $\binom{-2}{-2} = 1$, verified against Wolfram'
   - id: the-central-binomial-coefficient-binom-100-50
     expr: [Binomial, 100, 50]
     expected: { num: "100891344545564193334812497256" }
