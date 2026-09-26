@@ -209,6 +209,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "AllTrue",
   },
   {
+    name: "AlternatingGroup",
+    wolfram: "AlternatingGroup",
+  },
+  {
     name: "And",
     wolfram: "And",
   },
@@ -3951,6 +3955,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "PermutationGroup",
     wolfram: "PermutationGroup",
+  },
+  {
+    name: "PermutationList",
+    wolfram: "PermutationList",
+  },
+  {
+    name: "PermutationReplace",
+    wolfram: "PermutationReplace",
   },
   {
     name: "Permute",

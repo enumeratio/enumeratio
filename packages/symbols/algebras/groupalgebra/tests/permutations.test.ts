@@ -102,3 +102,73 @@ test("a list that is not a permutation is left unevaluated, not crashed on", () 
   }
   same(["Permute", L(7, 8, 9), L(1, 1, 2)], ["Permute", L(7, 8, 9), L(1, 1, 2)]);
 });
+
+test("PermutationList: Cycles -> one-line image list, optionally padded", () => {
+  same(["PermutationList", C([1, 3, 2])], L(3, 1, 2));
+  same(["PermutationList", C([2, 3]), 5], L(1, 3, 2, 4, 5));
+  same(["PermutationList", C()], L());
+  // n shorter than the cycles' own support: nowhere for the extra point to go.
+  same(["PermutationList", C([2, 3]), 2], ["PermutationList", C([2, 3]), 2]);
+  // only Cycles convert -- a one-line word is already this head's own answer.
+  same(["PermutationList", L(3, 1, 2)], ["PermutationList", L(3, 1, 2)]);
+});
+
+test("PermutationList . PermutationCycles round-trips", () => {
+  const cases: readonly number[][][] = [
+    [
+      [1, 2, 5],
+      [4, 6, 8, 9],
+    ],
+    [
+      [1, 9, 6],
+      [3, 7],
+    ],
+    [],
+  ];
+  for (const cycles of cases) {
+    const c = C(...cycles);
+    same(["PermutationCycles", ["PermutationList", c]], c);
+  }
+});
+
+test("PermutationReplace: points, lists, and conjugation on Cycles", () => {
+  same(["PermutationReplace", 2, C([1, 2, 3])], 3);
+  same(["PermutationReplace", 4, C([1, 2, 3])], 4); // past the cycle's support: fixed
+  same(["PermutationReplace", L(1, 2, 3, 4), C([1, 2, 3])], L(2, 3, 1, 4));
+  same(["PermutationReplace", C([1, 2, 3]), C([1, 2])], C([2, 1, 3]));
+});
+
+test("PermutationReplace composition law: conjugating twice is conjugating by the composite", () => {
+  // p = (1 2), q = (2 3); their composite (apply p, then q) is the one-line word {3, 1, 2}.
+  same(["PermutationReplace", ["PermutationReplace", C([1, 2, 3]), C([1, 2])], C([2, 3])], C([3, 1, 2]));
+  same(["PermutationReplace", C([1, 2, 3]), L(3, 1, 2)], C([3, 1, 2]));
+});
+
+test("GroupOrder(AlternatingGroup(n)) is n!/2, by enumeration, for n <= 6", () => {
+  const factorial = (n: number): number => (n <= 1 ? 1 : n * factorial(n - 1));
+  for (let n = 1; n <= 6; n++) {
+    const closureSize = (ce.box(["GroupElements", ["AlternatingGroup", n]]).evaluate().json as unknown as unknown[])
+      .length;
+    const order = ce.box(["GroupOrder", ["AlternatingGroup", n]]).evaluate().json;
+    const expected = n <= 2 ? 1 : factorial(n) / 2;
+    expect(order).toBe(expected);
+    expect(closureSize - 1).toBe(expected); // [1] is the "List" head itself
+  }
+});
+
+test("AlternatingGroup(3): the cyclic group of order 3", () => {
+  same(["GroupElements", ["AlternatingGroup", 3]], L(C(), C([1, 2, 3]), C([1, 3, 2])));
+  same(["GroupGenerators", ["AlternatingGroup", 3]], L(C([1, 2, 3])));
+});
+
+test("AlternatingGroup's GroupGenerators: Wolfram's choice, odd n vs even n", () => {
+  same(["GroupGenerators", ["AlternatingGroup", 5]], L(C([1, 2, 3]), C([1, 2, 3, 4, 5])));
+  same(["GroupGenerators", ["AlternatingGroup", 4]], L(C([1, 2, 3]), C([2, 3, 4])));
+  same(["GroupGenerators", ["AlternatingGroup", 1]], L());
+  same(["GroupGenerators", ["AlternatingGroup", 2]], L());
+});
+
+test("GroupElements(AlternatingGroup(n), positions) selects by position, Part-style", () => {
+  same(["GroupElements", ["AlternatingGroup", 3], L(1, 2)], L(C(), C([1, 2, 3])));
+  same(["GroupElements", ["AlternatingGroup", 3], L(-1)], L(C([1, 3, 2])));
+});

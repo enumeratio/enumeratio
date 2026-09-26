@@ -1,0 +1,30 @@
+- id: order-is-n-factorial-over-two
+  expr: [GroupOrder, [AlternatingGroup, 5]]
+  expected: 60
+  caption: $|A_5| = 5!/2 = 60$
+- id: trivial-for-n-equals-one
+  expr: [GroupOrder, [AlternatingGroup, 1]]
+  expected: 1
+  caption: $A_1$ is the trivial group — $1!/2$ isn't even an integer, so this is a base case, not the formula
+  category: Scope
+- id: trivial-for-n-equals-two
+  expr: [GroupOrder, [AlternatingGroup, 2]]
+  expected: 1
+  caption: $A_2$ is trivial too — $S_2$'s only even permutation is the identity
+  category: Scope
+- id: generators-odd-n
+  expr: [GroupGenerators, [AlternatingGroup, 5]]
+  expected: [List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2, 3, 4, 5]]]]
+  caption: for odd $n$, an $n$-cycle is even — $(1\,2\,3\,4\,5)$ decomposes into 4 transpositions
+- id: generators-even-n
+  expr: [GroupGenerators, [AlternatingGroup, 4]]
+  expected: [List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 2, 3, 4]]]]
+  caption: 'for even $n$, the full $n$-cycle would be odd, so the second generator is one point shorter: $(2\,3\,4)$'
+- id: generators-collapse-at-three
+  expr: [GroupGenerators, [AlternatingGroup, 3]]
+  expected: [List, [Cycles, [List, [List, 1, 2, 3]]]]
+  caption: at $n = 3$ the two generators coincide, so there is only one
+- id: elements-of-a3
+  expr: [GroupElements, [AlternatingGroup, 3]]
+  expected: [List, [Cycles, [List]], [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 3, 2]]]]
+  caption: $A_3$ is cyclic of order 3 — the identity and the two 3-cycles

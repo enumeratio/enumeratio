@@ -470,6 +470,7 @@ export const HEADS: Record<string, string> = {
   MixedRadix: "MixedRadix",
   Coproduct: "Coproduct",
   SymmetricGroup: "SymmetricGroup",
+  AlternatingGroup: "AlternatingGroup",
   CyclicGroup: "CyclicGroup",
   DihedralGroup: "DihedralGroup",
   GroupOrder: "GroupOrder",
@@ -484,6 +485,8 @@ export const HEADS: Record<string, string> = {
   Subsets: "Subsets",
   Tuples: "Tuples",
   PermutationCycles: "PermutationCycles",
+  PermutationList: "PermutationList",
+  PermutationReplace: "PermutationReplace",
   Rasterize: "Rasterize",
   // The analytic heads. `LogGamma` is also what `GammaLn` lowers to, so the reverse map
   // keeps `GammaLn` (first entry wins) and this direction is one-way.

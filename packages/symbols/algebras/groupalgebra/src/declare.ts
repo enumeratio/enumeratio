@@ -16,11 +16,13 @@ import {
   order,
 } from "./group.ts";
 import {
+  alternatingGenerators,
   applyPermutation,
   type Cycle,
   cyclesAreValid,
   cyclesToPermutation,
   dropFixedCycles,
+  factorial,
   identityPermutation,
   invertPermutation,
   isPermutation,
@@ -246,10 +248,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     (ops) => ops[0]?.operator === "SymmetricGroup",
     () => (ops) => {
       const n = integerAt(operandsOf(ops[0]!)[0]);
-      if (n === undefined) return undefined;
-      let f = 1;
-      for (let i = 2; i <= n; i++) f *= i;
-      return ce.number(f);
+      return n === undefined ? undefined : ce.number(factorial(n));
     },
     1,
   );
@@ -268,6 +267,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     },
     1,
   );
+
   aboutGroup("GroupIsAbelian", "(value) -> boolean", (g) => ce.symbol(isAbelian(g) ? "True" : "False"));
   aboutGroup("GroupElements", "(value) -> list", (g) =>
     ce.function(
@@ -474,6 +474,72 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     },
   });
 
+  /** `PermutationList(Cycles(...))` -> its one-line image list; `PermutationList(perm, n)`
+   *  pads that list to length `n` with fixed points (an `n` short of the cycles' own
+   *  support leaves the call unevaluated — there is nowhere for the extra points to go). */
+  ce.declare("PermutationList", {
+    signature: "(value, integer?) -> list",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const input = ops[0];
+      if (input === undefined || input.operator !== "Cycles") return undefined;
+      const cycles = cyclesOf(input);
+      if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
+      const support = maxSupport(cycles);
+      const requestedN = ops[1] === undefined ? undefined : integerAt(ops[1]);
+      if (ops[1] !== undefined && requestedN === undefined) return undefined;
+      if (requestedN !== undefined && requestedN < support) return undefined;
+      const word = cyclesToPermutation(cycles, requestedN ?? support);
+      return ce.function(
+        "List",
+        word.map((x) => ce.number(x)),
+      );
+    },
+  });
+
+  /** `PermutationReplace(expr, perm)` -- Wolfram's other permutation action, by VALUE
+   *  rather than by position (unlike `Permute`): a bare point `i` becomes `perm(i)`, a
+   *  list has each entry replaced the same way, and `Cycles(...)` is conjugated —
+   *  `perm . cyc . perm⁻¹` — since conjugation is exactly relabelling the points a cycle
+   *  names. A point past `perm`'s own support is a fixed point of `perm` and passes
+   *  through unchanged. */
+  ce.declare("PermutationReplace", {
+    signature: "(value, value) -> value",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const expr = ops[0];
+      const permExpr = ops[1];
+      if (expr === undefined || permExpr === undefined) return undefined;
+      const perm = permutationOf(permExpr);
+      if (perm === undefined) return undefined;
+      const replacePoint = (i: number): number | undefined => {
+        if (!Number.isSafeInteger(i) || i < 1) return undefined;
+        return i <= perm.length ? perm[i - 1]! : i;
+      };
+      if (expr.operator === "Cycles") {
+        const cycles = cyclesOf(expr);
+        if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
+        const degree = Math.max(maxSupport(cycles), perm.length);
+        const widePerm = permutationOf(permExpr, degree)!;
+        const conjugated = cycles.map((cycle) => cycle.map((x) => widePerm[x - 1]!));
+        return cyclesExpression(ce, conjugated);
+      }
+      if (expr.operator === "List") {
+        const replaced = operandsOf(expr).map((item) => {
+          const n = integerAt(item);
+          return n === undefined ? undefined : replacePoint(n);
+        });
+        if (!replaced.every((x): x is number => x !== undefined)) return undefined;
+        return ce.function(
+          "List",
+          replaced.map((x) => ce.number(x)),
+        );
+      }
+      const n = integerAt(expr);
+      if (n === undefined) return undefined;
+      const result = replacePoint(n);
+      return result === undefined ? undefined : ce.number(result);
+    },
+  });
+
   // PermutationGroup(List(Cycles(...), …)) and PermutationGroup(List(...), n) are pure
   // carriers, read by `permutationGroupOf` above -- same shape as CyclicGroup/DihedralGroup,
   // which stay symbolic rather than evaluating to anything.
@@ -491,6 +557,68 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       );
     },
   });
+
+  // AlternatingGroup(n): the even permutations of {1..n} — a pure carrier, same shape as
+  // SymmetricGroup and PermutationGroup, read by its own GroupOrder/GroupElements/
+  // GroupGenerators wrappers rather than through `groupOf` (no Cayley table: n!/2 elements
+  // would make the TABLE, not the answer, the expensive part). Declared down here, after
+  // GroupOrder/GroupElements/GroupGenerators all exist, since `wrapOperator` needs the
+  // probed head already declared.
+  ce.declare("AlternatingGroup", { signature: "(integer) -> value" });
+  wrapOperator(
+    ce,
+    ["GroupOrder", ["AlternatingGroup", 1]],
+    (ops) => ops[0]?.operator === "AlternatingGroup",
+    () => (ops) => {
+      const n = integerAt(operandsOf(ops[0]!)[0]);
+      if (n === undefined || n < 1) return undefined;
+      return ce.number(n <= 2 ? 1 : factorial(n) / 2); // A_1, A_2 are trivial: 1!/2 isn't an integer
+    },
+    1,
+  );
+  wrapOperator(
+    ce,
+    ["GroupGenerators", ["AlternatingGroup", 1]],
+    (ops) => ops[0]?.operator === "AlternatingGroup",
+    () => (ops) => {
+      const n = integerAt(operandsOf(ops[0]!)[0]);
+      if (n === undefined || n < 1) return undefined;
+      return ce.function(
+        "List",
+        alternatingGenerators(n).map((sigma) => cyclesExpression(ce, permutationToCycles(sigma))),
+      );
+    },
+    1,
+  );
+  // GroupElements(AlternatingGroup(n)) -- BFS closure over alternatingGenerators, same
+  // Part-style position selector as PermutationGroup's GroupElements above.
+  wrapOperator(
+    ce,
+    ["GroupElements", ["AlternatingGroup", 1]],
+    (ops) => ops[0]?.operator === "AlternatingGroup",
+    () => (ops) => {
+      const n = integerAt(operandsOf(ops[0]!)[0]);
+      if (n === undefined || n < 1) return undefined;
+      const closure = permutationGroupClosure(alternatingGenerators(n), n);
+      if (closure === undefined) return undefined;
+      const elements = closure.map((sigma) => permutationToCycles(sigma));
+      if (ops[1] === undefined) {
+        return ce.function(
+          "List",
+          elements.map((cycles) => cyclesExpression(ce, cycles)),
+        );
+      }
+      const positions = oneLineOf(ops[1]);
+      if (positions === undefined) return undefined;
+      const picked = positions.map((p) => resolvePosition(p, elements.length));
+      if (!picked.every((p): p is number => p !== undefined)) return undefined;
+      return ce.function(
+        "List",
+        picked.map((i) => cyclesExpression(ce, elements[i]!)),
+      );
+    },
+    { min: 1, max: 2 },
+  );
 
   registerAlgebra(ce, {
     name: "groupalgebra",
